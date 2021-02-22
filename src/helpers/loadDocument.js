@@ -15,7 +15,8 @@ export default (dispatch, src, options = {}) => {
   options.onError = fireError;
 
   dispatch(actions.closeElement('passwordModal'));
-  core.loadDocument(src, options);
+  // ignore caught errors because they are already being handled in the onError callback
+  core.loadDocument(src, options).catch(() => {});
   dispatch(actions.openElement('progressModal'));
 };
 
