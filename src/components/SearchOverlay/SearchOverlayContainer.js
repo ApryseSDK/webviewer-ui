@@ -10,7 +10,7 @@ export function executeSearch(searchValue, options = {}) {
     regex: false,
     ...options,
   };
-  if (searchValue) {
+  if (searchValue !== null && searchValue !== undefined) {
     // user can override search execution with instance.overrideSearchExecution()
     // Here we check if user has done that and call that rather than default search execution
     const overrideSearchExecution = getOverrideSearchExecution();
