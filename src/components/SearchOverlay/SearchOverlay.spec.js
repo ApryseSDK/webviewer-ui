@@ -34,8 +34,8 @@ jest.mock('core');
 describe('SearchOverlay', () => {
 
   beforeEach(() => {
-    searchTextFullFactory.mockClear();
-    getOverrideSearchExecution.mockClear();
+    searchTextFullFactory.mockReset();
+    getOverrideSearchExecution.mockReset();
   });
   describe('Component', () => {
     // It's good practice to test that all stories of current component work without throwing errors.
@@ -219,14 +219,24 @@ describe('SearchOverlay', () => {
       expect(overrideSearchExecutionFnMock).toHaveBeenCalledWith(searchValue, expectedSearchOptions);
     });
 
-    it('Should not call neither search when search value is not set', () => {
+    it('Should call search when search value is empty', () => {
+      const searchTextFullMock = jest.fn();
+      searchTextFullFactory.mockReturnValue(searchTextFullMock);
+      // When we call executeSearch without searchValue (or with empty string)
+      // Search should not be initiated.
+      executeSearch('', {});
+      expect(searchTextFullMock).toHaveBeenCalled();
+    });
+
+    it('Should not call search when search value null or undefined', () => {
       const overrideSearchExecutionFnMock = jest.fn();
       getOverrideSearchExecution.mockReturnValue(overrideSearchExecutionFnMock);
       const searchTextFullMock = jest.fn();
       searchTextFullFactory.mockReturnValue(searchTextFullMock);
       // When we call executeSearch without searchValue (or with empty string)
       // Search should not be initiated.
-      executeSearch('', {});
+      executeSearch(null, {});
+      executeSearch(undefined, {});
       expect(searchTextFullMock).not.toHaveBeenCalled();
       expect(overrideSearchExecutionFnMock).not.toHaveBeenCalled();
     });
