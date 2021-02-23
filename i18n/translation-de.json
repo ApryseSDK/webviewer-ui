@@ -89,7 +89,9 @@
     "underline": "Unterstrichen",
     "custom": "Angepasst",
     "rubberStamp": "Stempel",
-    "note": "Hinweis"
+    "note": "Hinweis",
+    "link": "Verknüpfung",
+    "other": "Andere"
   },
   "rubberStamp": {
     "Approved": "Genehmigt",

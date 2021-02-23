@@ -1,5 +1,5 @@
 import { Frame } from 'puppeteer';
-import { loadViewerSample } from '../../utils';
+import { loadViewerSample, Timeouts } from '../../utils';
 
 const addAndCreateAnnot = (iFrame: Frame, isFreeTextAnnot: boolean, isLockedContents: boolean, noteContent = '', author = '',) => {
   return (iFrame as Frame).evaluate(async(isFreeTextAnnot, isLockedContents, noteContent, author) => {
@@ -71,6 +71,7 @@ describe('Test cases for comment panel', () => {
       'viewing/viewing',
     );
     await result.waitForWVEvent('annotationsLoaded');
+    await page.waitFor(Timeouts.PDF_PRIME_DOCUMENT);
   });
 
   it.skip('should not be able to edit comment for not locked content non-free text annotation', async() => {
