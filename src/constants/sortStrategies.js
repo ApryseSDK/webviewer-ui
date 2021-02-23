@@ -1,15 +1,33 @@
 import i18next from 'i18next';
 import dayjs from 'dayjs';
-import orientationManager from 'helpers/orientationManager';
+import core from 'core';
 import { rotateRad } from 'helpers/rotate';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
+
+function getDocumentCenter(pageNumber) {
+  let result;
+  if (pageNumber <= core.getTotalPages()) {
+    result = core.getPageInfo(pageNumber);
+  } else {
+    result = {
+      width: 0,
+      height: 0,
+    };
+  }
+  return { x: result.width / 2, y: result.height / 2 };
+}
+
+function getRotationRad(pageNumber) {
+  const orientation = core.getRotation(pageNumber);
+  return (4 - orientation) * (Math.PI / 2);
+}
 
 const sortStrategies = {
   position: {
     getSortedNotes: notes => notes.sort((a, b) => {
       if (a.PageNumber === b.PageNumber) {
-        const rotation = orientationManager.getRotationRad(a.PageNumber);
-        const center = orientationManager.getDocumentCenter(a.PageNumber);
+        const rotation = getRotationRad(a.PageNumber);
+        const center = getDocumentCenter(a.PageNumber);
 
         // Simulated with respect to the document origin
         const rotatedA = [
