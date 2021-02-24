@@ -1,0 +1,7 @@
+contact_links:
+  - name: PDFTron Tech Support
+    url: https://www.pdftron.com/form/request/
+    about: This is the recommended alternative for opening a Github issue. It helps us analyze tickets and we respond faster in general.
+  - name: PDFTron Professional Services Request
+    url: https://www.pdftron.com/form/professional-services/
+    about: Use this service if you have a feature request that is not currently on our roadmap but is crucial to your users and you want it to be implemented in a timely fashion.
