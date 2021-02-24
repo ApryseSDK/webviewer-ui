@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -26,6 +26,7 @@ const TextSignature = ({
   const fonts = useSelector(state => selectors.getSignatureFonts(state));
   const [value, setValue] = useState(core.getCurrentUser());
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isDefaultValue, setIsDefaultValue] = useState(true);
   const inputRef = useRef();
   const canvasRef = useRef();
   const textDivsRef = useRef([]);
@@ -95,6 +96,19 @@ const TextSignature = ({
     }
   }, [isTabPanelSelected]);
 
+  useEffect(() => {
+    const onUpdateAnnotationPermission = () => {
+      if (isDefaultValue) {
+        setValue(core.getCurrentUser());
+      }
+    };
+
+    core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+    return () => {
+      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+    };
+  }, [isDefaultValue]);
+
   const setSignature = () => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
     const canvas = canvasRef.current;
@@ -108,6 +122,7 @@ const TextSignature = ({
   };
 
   const handleInputChange = e => {
+    setIsDefaultValue(false);
     // Use regex instead of 'trimStart' for IE11 compatibility
     const value = e.target.value.replace(/^\s+/g, '');
     setValue(value);
