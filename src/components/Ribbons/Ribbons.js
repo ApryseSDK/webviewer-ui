@@ -37,14 +37,11 @@ const Ribbons = () => {
 
   useEffect(() => {
     if (ribbonsRef?.current && containerRef?.current) {
-      // const ribbonsRight = ribbonsRef.current.getBoundingClientRect().right;
       const ribbonsWidth = ribbonsRef.current.getBoundingClientRect().width + 4;
-      const containerLeft = containerRef.current.getBoundingClientRect().left;
       const containerWidth = containerRef.current.getBoundingClientRect().width;
-      const ribbonsRight = ((window.innerWidth - ribbonsWidth) / 2) + ribbonsWidth;
-      const remainingSpace = ribbonsRight - containerLeft;
+      const remainingSpace = (window.innerWidth - ribbonsWidth) / 2;
 
-      if (remainingSpace - ribbonsWidth > 0) {
+      if (ribbonsWidth < remainingSpace ) {
         setHasEnoughSpace(true);
       } else {
         setHasEnoughSpace(false);
@@ -119,7 +116,7 @@ const Ribbons = () => {
           <div
             className={classNames({
               'ribbons': true,
-              'is-hidden': hasEnoughCenteredSpace,
+              'is-hidden': (hasEnoughSpace || hasEnoughCenteredSpace),
             })}
           >
             {isEditingWidgets ? (
