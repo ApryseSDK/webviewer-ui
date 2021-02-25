@@ -546,6 +546,11 @@
       "noLocation": "場所は提供されていません",
       "noReason": "理由はありません",
       "noSigningTime": "署名時間が見つかりません"
+    },
+    "panelMessages": {
+      "noSignatureFields": "このドキュメントには署名フィールドがありません",
+      "certificateDownloadError": "信頼できる証明書をダウンロードしようとしたときにエラーが発生しました",
+      "localCertificateError": "ローカル証明書の読み取りにいくつかの問題があります"
     }
   }
 }

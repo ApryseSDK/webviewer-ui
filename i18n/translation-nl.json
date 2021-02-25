@@ -546,6 +546,11 @@
       "noLocation": "Geen locatie opgegeven",
       "noReason": "Geen reden opgegeven",
       "noSigningTime": "Geen ondertekeningstijd gevonden"
+    },
+    "panelMessages": {
+      "noSignatureFields": "Dit document heeft geen handtekeningvelden",
+      "certificateDownloadError": "Er is een fout opgetreden bij het downloaden van een vertrouwd certificaat",
+      "localCertificateError": "Er zijn enkele problemen met het lezen van een lokaal certificaat"
     }
   }
 }

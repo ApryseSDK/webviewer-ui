@@ -546,6 +546,11 @@
       "noLocation": "Kein Ort angegeben",
       "noReason": "Kein Grund angegeben",
       "noSigningTime": "Keine Signierzeit gefunden"
+    },
+    "panelMessages": {
+      "noSignatureFields": "Dieses Dokument enthält keine Signaturfelder",
+      "certificateDownloadError": "Beim Versuch, ein vertrauenswürdiges Zertifikat herunterzuladen, ist ein Fehler aufgetreten",
+      "localCertificateError": "Es gibt einige Probleme beim Lesen eines lokalen Zertifikats"
     }
   }
 }

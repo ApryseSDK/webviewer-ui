@@ -546,6 +546,11 @@
       "noLocation": "没有提供位置",
       "noReason": "没有提供原因",
       "noSigningTime": "找不到签名时间"
+    },
+    "panelMessages": {
+      "noSignatureFields": "该文档没有签名字段",
+      "certificateDownloadError": "尝试下载受信任的证书时遇到错误",
+      "localCertificateError": "读取本地证书存在一些问题"
     }
   }
 }

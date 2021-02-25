@@ -7,6 +7,7 @@ import {
   useDispatch,
   useSelector,
 } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import actions from 'actions';
 import core from 'core';
@@ -27,6 +28,7 @@ const SignaturePanel = () => {
     selectors.isElementDisabled(state, 'signaturePanel'),
     selectors.getCertificates(state),
   ]);
+  const [translate] = useTranslation();
 
   const onDocumentLoaded = async() => {
     setShowSpinner(true);
@@ -36,6 +38,9 @@ const SignaturePanel = () => {
     const _sigWidgets = core
       .getAnnotationsList()
       .filter(annotation => annotation instanceof Annotations.SignatureWidgetAnnotation);
+    if (!_sigWidgets.length) {
+      setShowSpinner(false);
+    }
     setSigWidgets(_sigWidgets);
   };
 
@@ -92,11 +97,11 @@ const SignaturePanel = () => {
     } else if (
       certificateErrorMessage === 'Error reading the local certificate'
     ) {
-      result = 'There are some issues with reading the local certificate.';
+      result = translate('digitalSignatureVerification.panelMessages.localCertificateError');
     } else if (certificateErrorMessage === 'Download Failed') {
-      result = 'There are some issues with downloading the certificate.';
+      result = translate('digitalSignatureVerification.panelMessages.certificateDownloadError');
     } else if (!sigWidgets.length) {
-      result = 'This document has no signature fields.';
+      result = translate('digitalSignatureVerification.panelMessages.noSignatureFields');
     } else {
       /**
        * If document has completed loading, there are no errors, and there are
