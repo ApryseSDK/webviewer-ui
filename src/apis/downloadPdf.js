@@ -9,30 +9,37 @@
  * @param {boolean} [options.flatten] Whether or not to flatten all the annotations in the downloaded document. Only useful fullAPI is enabled and either `xfdfString` or `includeAnnotations` is used.
  * @param {boolean} [options.useDisplayAuthor] Whether to export annotations with the Display Author name from annotationManager.getDisplayAuthor()
  * @param {number} [options.flags=CoreControls.SaveOptions.REMOVE_UNUSED] The flags with which to save the document. Possible values include `CoreControls.SaveOptions.REMOVE_UNUSED` (remove unused objects during save) and `CoreControls.SaveOptions.LINEARIZED` (optimize the document for fast web view and remove unused objects).
+ * @returns {Promise<any>} A promise that is resolved once the document is downloaded.
  * @example
 WebViewer(...)
-  .then(function(instance) {
+  .then(async function(instance) {
     var docViewer = instance.docViewer;
     var annotManager = instance.annotManager;
 
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', async function() {
       // download pdf without annotations added by WebViewer UI
-      instance.downloadPdf({
+      await instance.downloadPdf({
         includeAnnotations: false,
       });
 
+      console.log('Downloaded the first time!')
+
       // download pdf with all annotations flattened
-      instance.downloadPdf({
+      await instance.downloadPdf({
         includeAnnotations: true,
         flatten: true,
       });
 
+      console.log('Downloaded a second time!')
+
       // download pdf without links
       const xfdfString = await annotManager.exportAnnotations({ links: false });
-      instance.downloadPdf({
+      await instance.downloadPdf({
         xfdfString: xfdfString,
       });
+
+      console.log('Downloaded a third time!')
     });
   });
  */
@@ -41,7 +48,7 @@ import downloadPdf from 'helpers/downloadPdf';
 import { workerTypes } from 'constants/types';
 import core from 'core';
 
-export default store => (options = { includeAnnotations: true }) => {
+export default store => async(options = { includeAnnotations: true }) => {
   const documentType = core.getDocument()?.getType();
   const { PDF, BLACKBOX, OFFICE } = workerTypes;
 
@@ -51,7 +58,7 @@ export default store => (options = { includeAnnotations: true }) => {
     documentType !== BLACKBOX
   ) {
     console.warn('Document type is not PDF. Cannot be downloaded.');
-    return;
+    return Promise.reject();
   }
 
   // legacy interface: instance.downloadPdf(true);
@@ -61,5 +68,5 @@ export default store => (options = { includeAnnotations: true }) => {
     };
   }
 
-  downloadPdf(store.dispatch, options);
+  return downloadPdf(store.dispatch, options);
 };
