@@ -23,20 +23,37 @@ export const getAnnotationPosition = annotation => {
 
   const pageNumber = annotation.getPageNumber();
   const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageNumber);
-  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber);
+  const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber);
 
-  const isNote = annotation instanceof window.Annotations.StickyAnnotation;
-  if (isNote) {
-    const zoom = core.getZoom();
-    const width = bottomRight.x - topLeft.x;
-    const height = bottomRight.y - topLeft.y;
-
-    // the visual size of a sticky annotation isn't the same as the rect we get above due to its NoZoom property
-    // here we do some calculations to try to make the rect have the same size as what the annotation looks in the canvas
-    bottomRight = {
-      x: topLeft.x + width / zoom * 1.2,
-      y: topLeft.y + height / zoom * 1.2,
-    };
+  if (annotation['NoZoom']) {
+    const isNote = annotation instanceof window.Annotations.StickyAnnotation;
+    const rect = annotation.getRect();
+    const width = isNote ? window.Annotations.StickyAnnotation['SIZE'] : rect.getWidth();
+    const height = isNote ? window.Annotations.StickyAnnotation['SIZE'] : rect.getHeight();
+    const rotation = core.getCompleteRotation(annotation.PageNumber);
+    if (rotation === 0) {
+      bottomRight.x = topLeft.x + width;
+      bottomRight.y = topLeft.y + height;
+      if (isNote) {
+        bottomRight.x += width * 0.2;
+      }
+    } else {
+      if (isNote) {
+        bottomRight.x = topLeft.x + width * 1.2;
+        bottomRight.y = topLeft.y + height;
+      } else {
+        if (rotation === 1) {
+          topLeft.x = bottomRight.x - height;
+          bottomRight.y = topLeft.y + width;
+        } else if (rotation === 2) {
+          topLeft.x = bottomRight.x - width;
+          topLeft.y = bottomRight.y - height;
+        } else if (rotation === 3) {
+          topLeft.y = bottomRight.y - width;
+          bottomRight.x = topLeft.x + height;
+        }
+      }
+    }
   }
 
   return { topLeft, bottomRight };
@@ -47,7 +64,7 @@ const getAnnotationPageCoordinates = annotation => {
   let { x1: left, y1: top, x2: right, y2: bottom } = rect;
 
   const isNote = annotation instanceof window.Annotations.StickyAnnotation;
-  const noteAdjustment = annotation.Width;
+  const noteAdjustment = window.Annotations.StickyAnnotation['SIZE'];
 
   const rotation = core.getCompleteRotation(annotation.PageNumber);
   if (rotation === 1) {
