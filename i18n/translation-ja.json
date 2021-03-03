@@ -7,22 +7,22 @@
     "clear": "クリア",
     "close": "閉じる",
     "undo": "元に戻す",
-    "redo": "準備ができて",
+    "redo": "やり直し",
     "comment": "コメント",
     "reply": "返信",
     "copy": "コピー",
     "delete": "削除",
-    "group": "グループ",
+    "group": "グループ化",
     "ungroup": "グループ解除",
     "download": "ダウンロード",
     "edit": "編集",
-    "extract": "エキス",
+    "extract": "抽出",
     "enterFullscreen": "全画面表示",
     "exitFullscreen": "全画面表示を終了",
     "fit": "フィット",
-    "fitToPage": "ページに合わせる",
+    "fitToPage": "高さに合わせる",
     "fitToWidth": "幅に合わせる",
-    "more": "もっと多く",
+    "more": "さらに表示",
     "openFile": "ファイルを開く",
     "pagePrev": "前のページ",
     "pageNext": "次のページ",
@@ -30,13 +30,13 @@
     "print": "印刷",
     "name": "名前",
     "ok": "OK",
-    "rotate": "回転",
-    "rotateClockwise": "時計回り",
-    "rotateCounterClockwise": "反時計回り",
+    "rotate": "ページの方向",
+    "rotateClockwise": "右90°回転",
+    "rotateCounterClockwise": "左90°回転",
     "save": "保存",
     "post": "投稿",
     "create": "作成",
-    "showMoreResults": "より多くの結果を表示",
+    "showMoreResults": "さらに結果を表示",
     "sign": "署名",
     "style": "スタイル",
     "submit": "送信",
@@ -45,9 +45,9 @@
     "zoomOut": "ズームアウト",
     "zoomSet": "ズームを設定",
     "zoomControls": "ズームコントロール",
-    "draw": "ドロー",
-    "type": "タイプ",
-    "upload": "アップロードする",
+    "draw": "手書き",
+    "type": "タイピング",
+    "upload": "アップロード",
     "link": "リンク",
     "darkMode": "ダークモード",
     "lightMode": "ライトモード",
@@ -56,121 +56,121 @@
     "nextResult": "次の結果",
     "prev": "前",
     "next": "次",
-    "startFormEditing": "フォームの編集を開始",
-    "exitFormEditing": "フォーム編集モードを終了する",
-    "exit": "出口",
+    "startFormEditing": "フォームエディタを開始",
+    "exitFormEditing": "フォームエディタモードを終了する",
+    "exit": "終了",
     "markAllRead": "すべて既読にする"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
     "arrow": "矢印",
-    "callout": "コールアウト",
-    "crop": "切り抜きページ",
+    "callout": "吹き出し",
+    "crop": "ページをトリミング",
     "caret": "キャレット",
     "distanceMeasurement": "距離測定",
     "countMeasurement": "カウント測定",
     "ellipse": "楕円",
     "eraser": "消しゴム",
-    "fileattachment": "添付ファイル",
+    "fileattachment": "ファイル添付",
     "freehand": "フリーハンド",
     "freetext": "フリーテキスト",
     "highlight": "ハイライト",
-    "line": "線",
-    "perimeterMeasurement": "境界測定",
-    "polygon": "ポリゴン",
-    "polygonCloud": "曇り",
-    "polyline": "ポリライン",
-    "rectangle": "矩形",
+    "line": "直線",
+    "perimeterMeasurement": "周長測定",
+    "polygon": "多角形",
+    "polygonCloud": "雲型",
+    "polyline": "折れ線",
+    "rectangle": "長方形",
     "redact": "改訂",
     "signature": "署名",
     "squiggly": "波線",
     "stamp": "スタンプ",
-    "stickyNote": "コメント",
-    "strikeout": "抹消線",
+    "stickyNote": "注釈",
+    "strikeout": "取り消し線",
     "underline": "下線",
     "custom": "カスタム",
     "rubberStamp": "ゴム印",
-    "note": "注意",
+    "note": "注釈",
     "link": "リンク",
     "other": "その他"
   },
   "rubberStamp": {
-    "Approved": "承認済み",
-    "AsIs": "そのまま",
-    "Completed": "完了しました",
-    "Confidential": "機密",
+    "Approved": "承認済",
+    "AsIs": "現状",
+    "Completed": "完了",
+    "Confidential": "社外秘",
     "Departmental": "部門別",
-    "Draft": "ドラフト",
-    "Experimental": "実験的",
-    "Expired": "期限切れ",
-    "Final": "最後の",
-    "ForComment": "コメント用",
-    "ForPublicRelease": "公開リリース",
-    "InformationOnly": "情報のみ",
-    "NotApproved": "未承認",
-    "NotForPublicRelease": "非公開リリース",
-    "PreliminaryResults": "予備結果",
-    "Sold": "販売済み",
-    "TopSecret": "トップシークレット",
-    "Void": "ボイド",
-    "SHSignHere": "ここに署名",
+    "Draft": "草稿",
+    "Experimental": "試験的",
+    "Expired": "失効",
+    "Final": "最終",
+    "ForComment": "評価用",
+    "ForPublicRelease": "公開用",
+    "InformationOnly": "参照用",
+    "NotApproved": "却下",
+    "NotForPublicRelease": "非公開",
+    "PreliminaryResults": "試用結果",
+    "Sold": "売約済",
+    "TopSecret": "極秘",
+    "Void": "無効",
+    "SHSignHere": "署名",
     "SHWitness": "証人",
-    "SHInitialHere": "初期",
-    "SHAccepted": "受け入れられた",
-    "SBRejected": "拒否されました"
+    "SHInitialHere": "イニシャル",
+    "SHAccepted": "同意",
+    "SBRejected": "拒否"
   },
   "component": {
     "leftPanel": "パネル",
-    "toolsHeader": "道具",
+    "toolsHeader": "ツール",
     "searchOverlay": "検索",
-    "searchPanel": "探す",
+    "searchPanel": "検索",
     "menuOverlay": "メニュー",
-    "notesPanel": "備考",
+    "notesPanel": "コメント",
     "outlinesPanel": "概要",
-    "bookmarksPanel": "しおり",
+    "bookmarksPanel": "ブックマーク",
     "newBookmark": "新しいブックマーク",
     "bookmarkPage": "ページ",
     "layersPanel": "レイヤー",
     "thumbnailsPanel": "サムネイル",
     "toolsButton": "ツール",
     "redaction": "改訂",
-    "viewControlsOverlay": "コントロールの表示",
-    "calibration": "較正",
+    "viewControlsOverlay": "ページ表示",
+    "calibration": "調整",
     "zoomOverlay": "ズームオーバーレイ",
     "textPopup": "テキストポップアップ",
     "createStampButton": "新しいスタンプを作成",
-    "filter": "フィルタ"
+    "filter": "フィルター"
   },
   "message": {
     "toolsOverlayNoPresets": "プリセットなし",
     "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、無効です。",
     "customPrintPlaceholder": "例：3, 4-10",
-    "encryptedAttemptsExceeded": "暗号化されたドキュメントを読み込めませんでした。試行回数が多すぎます。",
-    "encryptedUserCancelled": "暗号化されたドキュメントを読み込目ませんでした。パスワード入力が取り消されました。",
-    "enterPassword": "このドキュメントは、パスワード保護されています。 パスワードを入力してください。",
+    "encryptedAttemptsExceeded": "暗号化されたドキュメントの読み込みに失敗しました。試行回数が多すぎます。",
+    "encryptedUserCancelled": "暗号化されたドキュメントの読み込みに失敗しました。パスワード入力が取り消されました。",
+    "enterPassword": "このドキュメントは、パスワードで保護されています。 パスワードを入力してください。",
     "incorrectPassword": "パスワードが正しくありません。残りの試行回数：{{ remainingAttempts }}",
     "noAnnotations": "このドキュメントには注釈がありません。",
-    "noAnnotationsFilter": "注釈の作成を開始すると、フィルターがここに表示されます。",
+    "noAnnotationsFilter": "注釈を追加すると、フィルターがここに表示されます。",
     "noOutlines": "このドキュメントには概要がありません。",
     "noResults": "結果が見つかりませんでした。",
     "numResultsFound": "結果が見つかりました",
-    "notSupported": "このファイルの種類はサポートされていません。",
+    "notSupported": "このファイル形式はサポートされていません。",
     "passwordRequired": "パスワードが必要です",
     "preparingToPrint": "印刷の準備をしています...",
-    "annotationReplyCount": "{{count}} 応答",
+    "annotationReplyCount": "{{count}} 返信",
     "annotationReplyCount_plural": "{{count}} 返信",
     "printTotalPageCount": "{{count}} ページ",
     "printTotalPageCount_plural": "{{count}} ページ",
     "processing": "処理中...",
     "searching": "検索中...",
     "searchCommentsPlaceholder": "コメントを検索",
-    "searchDocumentPlaceholder": "ドキュメントを検索",
-    "signHere": "ここに署名",
+    "searchDocumentPlaceholder": "ドキュメント内を検索",
+    "signHere": "ここに署名してください",
     "insertTextHere": "ここにテキストを挿入",
-    "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが受け入れられます",
+    "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが許可されています",
     "enterMeasurement": "2点間の測定値を入力します",
     "errorEnterMeasurement": "入力した数値は無効です。7.5や7 1/2などの値を入力できます",
-    "linkURLorPage": "リンクURLまたはページ",
+    "linkURLorPage": "ページまたはURLのリンクを挿入",
     "enterReplacementText": "置き換えるテキストを入力してください",
     "sortBy": "並び替え",
     "emptyCustomStampInput": "スタンプテキストを空にすることはできません",
@@ -178,41 +178,41 @@
   },
   "option": {
     "notesOrder": {
-      "dropdownLabel": "ソート順リス",
-      "position": "ポジション",
-      "time": "時間",
+      "dropdownLabel": "ソート順リスト",
+      "position": "位置",
+      "time": "時刻",
       "status": "状態",
-      "author": "著者",
-      "type": "タイプ"
+      "author": "作成者",
+      "type": "種類"
     },
     "toolbarGroup": {
-      "dropdownLabel": "ツールバーグループ",
-      "toolbarGroup-View": "見る",
-      "toolbarGroup-Annotate": "注釈を付ける",
-      "toolbarGroup-Shapes": "形",
-      "toolbarGroup-Insert": "インサート",
-      "toolbarGroup-Measure": "測る",
-      "toolbarGroup-Edit": "編集する"
+      "dropdownLabel": "ツールバー・グループ",
+      "toolbarGroup-View": "閲覧",
+      "toolbarGroup-Annotate": "注釈",
+      "toolbarGroup-Shapes": "図形",
+      "toolbarGroup-Insert": "挿入",
+      "toolbarGroup-Measure": "測定",
+      "toolbarGroup-Edit": "編集"
     },
     "annotationColor": {
-      "StrokeColor": "罫線の色",
-      "FillColor": "塗りつぶしの色",
-      "TextColor": "テキストの色"
+      "StrokeColor": "枠線",
+      "FillColor": "塗りつぶし",
+      "TextColor": "テキスト"
     },
     "colorPalette": {
       "colorLabel": "色"
     },
     "displayMode": {
       "layout": "レイアウト",
-      "pageTransition": "ページ遷移"
+      "pageTransition": "ページ移動"
     },
     "documentControls": {
-      "placeholder": "ページを入力して選択します（例：2、5-9）"
+      "placeholder": "ページを選択（例：2, 5-9）"
     },
     "layout": {
-      "cover": "カバー",
-      "double": "ダブル",
-      "single": "シングル"
+      "cover": "表紙見開きページ",
+      "double": "見開きページ",
+      "single": "単一ページ"
     },
     "notesPanel": {
       "separator": {
@@ -221,21 +221,21 @@
       }
     },
     "pageTransition": {
-      "continuous": "続く",
-      "default": "ページごと",
-      "reader": "読者"
+      "continuous": "連続表示",
+      "default": "単一ページ表示",
+      "reader": "リーダー"
     },
     "print": {
       "all": "すべて",
       "current": "現在のページ",
-      "pages": "ページ",
+      "pages": "印刷ページ",
       "view": "現在のビュー",
       "pageQuality": "印刷品質",
-      "qualityNormal": "正常",
-      "qualityHigh": "高い",
+      "qualityNormal": "標準",
+      "qualityHigh": "きれい",
       "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
-      "addWatermarkSettings": "透かし設定を追加"
+      "addWatermarkSettings": "透かしを追加"
     },
     "printInfo": {
       "author": "著者",
@@ -259,11 +259,11 @@
       "addStamp": "新しいスタンプを追加"
     },
     "signatureOverlay": {
-      "addSignature": "署名を追加"
+      "addSignature": "新しい署名を追加"
     },
     "signatureModal": {
       "saveSignature": "署名を保存",
-      "dragAndDrop": "ここに画像をドラッグアンドドロップします",
+      "dragAndDrop": "ここに画像をドラッグ＆ドロップ",
       "or": "または",
       "pickImage": "署名画像を選択"
     },
@@ -275,41 +275,41 @@
       "status": "状態"
     },
     "state": {
-      "accepted": "受け入れられた",
-      "rejected": "拒否されました",
-      "completed": "完了しました",
+      "accepted": "承認",
+      "rejected": "却下",
+      "completed": "完了",
       "cancelled": "キャンセル",
-      "set": "ステータスを設定：",
-      "setBy": "によって設定されました",
-      "none": "無し",
-      "marked": "マークされた",
-      "unmarked": "マークなし"
+      "set": "状態を設定：",
+      "setBy": "が設定されました",
+      "none": "なし",
+      "marked": "マーク",
+      "unmarked": "アンマーク"
     },
     "measurementOverlay": {
-      "scale": "スケール比",
+      "scale": "縮尺比",
       "angle": "角度",
       "distance": "距離",
-      "perimeter": "境界",
+      "perimeter": "周長",
       "area": "領域",
       "distanceMeasurement": "距離測定",
-      "perimeterMeasurement": "境界測定",
+      "perimeterMeasurement": "周長測定",
       "areaMeasurement": "面積測定",
       "countMeasurement": "カウント測定",
       "radius": "半径",
       "count": "カウント"
     },
     "measurementOption": {
-      "scale": "スケール"
+      "scale": "縮尺"
     },
     "styleOption": {
       "style": "スタイル",
-      "solid": "固体",
-      "cloudy": "曇り"
+      "solid": "直線",
+      "cloudy": "雲"
     },
     "slider": {
       "opacity": "不透明度",
-      "thickness": "厚さ",
-      "text": "テキスト サイズ"
+      "thickness": "太さ",
+      "text": "フォントサイズ"
     },
     "shared": {
       "page": "ページ",
@@ -318,50 +318,50 @@
     },
     "watermark": {
       "size": "サイズ",
-      "location": "透かしを編集する場所を選択してください",
+      "location": "透かしを入れる位置を選択してください",
       "text": "テキスト",
       "style": "スタイル",
       "resetAllSettings": "すべての設定をリセット",
       "font": "フォント",
       "locations": {
-        "center": "センター",
+        "center": "中央",
         "topLeft": "左上",
         "topRight": "右上",
-        "topCenter": "トップセンター",
+        "topCenter": "中央上",
         "bottomLeft": "左下",
         "bottomRight": "右下",
-        "bottomCenter": "下部中央"
+        "bottomCenter": "中央下"
       }
     },
     "thumbnailPanel": {
-      "delete": "削除する",
-      "rotateClockwise": "時計回り",
-      "rotateCounterClockwise": "反時計回り"
+      "delete": "削除",
+      "rotateClockwise": "右90°回転",
+      "rotateCounterClockwise": "左90°回転"
     },
     "richText": {
       "bold": "太字",
-      "italic": "イタリック",
+      "italic": "斜体",
       "underline": "下線",
       "strikeout": "取り消し線"
     },
     "customStampModal": {
-      "stampText": "スタンプテキスト：",
-      "timestampText": "タイムスタンプテキスト：",
-      "stampColor": "スタンプ色：",
+      "stampText": "スタンプのテキスト：",
+      "timestampText": "タイムスタンプ：",
+      "stampColor": "スタンプの色：",
       "Username": "ユーザー名",
       "Date": "日付",
-      "Time": "時間"
+      "Time": "時刻"
     }
   },
   "warning": {
     "deletePage": {
       "deleteTitle": "ページを削除",
-      "deleteMessage": "選択したページを削除してもよろしいですか？これは元に戻せません",
-      "deleteLastPageMessage": "これにより、ページが残りません。少なくとも1ページ残してください"
+      "deleteMessage": "選択したページを本当に削除してもよろしいですか？この変更は元に戻せません",
+      "deleteLastPageMessage": "これ以上削除すると、表示するページがなくなります。少なくとも1ページは残してください"
     },
     "redaction": {
-      "applyTile": "リダクションを適用",
-      "applyMessage": "この操作により、編集用に選択されたすべてのアイテムが完全に削除されます。元に戻すことはできません。"
+      "applyTile": "改訂を適用",
+      "applyMessage": "この操作により、改訂のために選択されたすべてのアイテムが完全に削除されます。この変更は元に戻せません。"
     },
     "selectPage": {
       "selectTitle": "ページが選択されていません",
@@ -409,33 +409,33 @@
   "tool": {
     "pan": "パン",
     "select": "選択",
-    "Marquee": "マーキーズーム",
-    "Link": "リンクURLまたはページ",
+    "Marquee": "拡大鏡",
+    "Link": "ページまたはURLをリンク",
     "Standard": "標準",
     "Custom": "カスタム"
   },
   "link": {
     "url": "URL",
     "page": "ページ",
-    "enterurl": "リンクするURLを入力してください",
-    "enterpage": "リンクするページ番号を選択します"
+    "enterurl": "リンク先URLを入力してください",
+    "enterpage": "リンク先のページ番号を選択してください"
   },
   "datePicker": {
     "previousMonth": "前月",
-    "nextMonth": "来月",
+    "nextMonth": "翌月",
     "months": {
-      "0": "一月",
-      "1": "二月",
-      "2": "三月",
-      "3": "四月",
-      "4": "五月",
-      "5": "六月",
-      "6": "七月",
-      "7": "八月",
-      "8": "九月",
-      "9": "十月",
-      "10": "十一月",
-      "11": "十二月"
+      "0": "1月",
+      "1": "2月",
+      "2": "3月",
+      "3": "4月",
+      "4": "5月",
+      "5": "6月",
+      "6": "7月",
+      "7": "8月",
+      "8": "9月",
+      "9": "10月",
+      "10": "11月",
+      "11": "12月"
     },
     "weekdays": {
       "0": "日曜日",
