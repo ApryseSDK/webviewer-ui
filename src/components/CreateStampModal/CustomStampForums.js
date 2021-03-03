@@ -4,11 +4,12 @@ import core from 'core';
 import './CustomStampForums.scss';
 import ColorPalette from 'components/ColorPalette';
 import Choice from '../Choice/Choice';
-
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const COLOR_CHOICES = window.Tools.RubberStampCreateTool['FILL_COLORS'];
-const DEFAULT_COLOR =  new window.Annotations.Color(COLOR_CHOICES[0]);
+const DEFAULT_COLOR = new window.Annotations.Color(COLOR_CHOICES[0]);
 
 const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) => {
   const updateTimestampLabel = (usernameChk, dateChk, timeChk) => {
@@ -41,6 +42,7 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
   const canvasRef = useRef();
   const canvasContainerRef = useRef();
   const inputRef = useRef();
+  const userName = useSelector(state => selectors.getUserName(state));
 
   const updateCanvas = (title, subtitle, color) => {
     const parameters = {
@@ -79,7 +81,7 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
 
   useEffect(() => {
     updateCanvas(stampTextInputValue, timestampFormat, colorInput);
-  }, []);
+  }, [userName]);
 
   const handleDateInputChange = () => {
     setDateCheckbox(!dateCheckbox);
