@@ -35,6 +35,7 @@ const ThumbnailsPanel = () => {
     isThumbnailReorderingEnabled,
     isMultipleViewerMerging,
     isThumbnailControlDisabled,
+    isThumbnailSliderDisabled,
     isReaderMode,
   ] = useSelector(
     state => [
@@ -47,6 +48,7 @@ const ThumbnailsPanel = () => {
       selectors.getIsThumbnailReorderingEnabled(state),
       selectors.getIsMultipleViewerMerging(state),
       selectors.isElementDisabled(state, 'thumbnailControl'),
+      selectors.isElementDisabled(state, 'thumbnailsSizeSlider'),
       selectors.isReaderMode(state),
     ],
     shallowEqual,
@@ -446,7 +448,7 @@ const ThumbnailsPanel = () => {
 
   return (
     <React.Fragment>
-      <div data-element="thumbnailsSizeSlider" className="thumbnail-slider-container">
+      {!isThumbnailSliderDisabled && <div data-element="thumbnailsSizeSlider" className="thumbnail-slider-container">
         <Button
           img="icon-zoom-thumb-out"
           title="action.thumbZoomOut"
@@ -482,7 +484,7 @@ const ThumbnailsPanel = () => {
           }}
           dataElement="zoomThumbInButton"
         />
-      </div>
+      </div>}
       <Measure bounds onResize={onPanelResize} key={thumbnailSize}>
         {({ measureRef }) => (
           <div className="Panel ThumbnailsPanel" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
