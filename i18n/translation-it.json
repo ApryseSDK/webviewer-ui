@@ -89,7 +89,9 @@
     "underline": "Sottolineare",
     "custom": "costume",
     "rubberStamp": "Timbro",
-    "note": "Nota"
+    "note": "Nota",
+    "link": "Collegamento",
+    "other": "Altro"
   },
   "rubberStamp": {
     "Approved": "Approvato",

@@ -29,7 +29,7 @@ import ProgressModal from 'components/ProgressModal';
 import CalibrationModal from 'components/CalibrationModal';
 import LinkModal from 'components/LinkModal';
 import EditTextModal from 'components/EditTextModal';
-import FilterAnnotModal from '../FilterAnnotMondal';
+import FilterAnnotModal from '../FilterAnnotModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';

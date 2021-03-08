@@ -57,4 +57,12 @@ export default state => {
       callback,
     );
   }
+
+  // set custom rules. since i18next doesn't support 'zh-ch', 'zh-tw', or 'pt-br'
+  const plRule = i18next.services.pluralResolver.getRule('pt-BR');
+  i18next.services.pluralResolver.addRule('pt_br', plRule);
+
+  const zhRule = i18next.services.pluralResolver.getRule('zh');
+  i18next.services.pluralResolver.addRule('zh_ch', zhRule);
+  i18next.services.pluralResolver.addRule('zh_tw', zhRule);
 };

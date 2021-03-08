@@ -44,23 +44,19 @@ class Thumbnail extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.loadThumbnailTimeout = setTimeout(() => {
-      // wrap loadThumbnailAsync inside a setTimeout so that we are not calling it a lot of times when users scroll the panel frantically
-      // this is a workaround for WVS where proper cancelLoadThumbnail hasn't been implemented, and too many requests to the server will add a lot of overhead to it
-      this.loadThumbnailTimeout = null;
-      this.loadThumbnailAsync();
-    }, 100);
-
+    this.loadThumbnailTimeout = this.loadThumbnailAsyncDelayed();
     core.addEventListener('layoutChanged', this.onLayoutChangedHandler);
   }
 
   componentDidUpdate(prevProps) {
     const { onCancel, index } = this.props;
 
-    if (!prevProps.canLoad && this.props.canLoad) {
-      this.loadThumbnailAsync();
+    const hasNoThumbnails = this.thumbContainer.current.childElementCount === 0;
+    if (!prevProps.canLoad && this.props.canLoad && hasNoThumbnails) {
+      this.loadThumbnailTimeout = this.loadThumbnailAsyncDelayed();
     }
     if (prevProps.canLoad && !this.props.canLoad) {
+      clearTimeout(this.loadThumbnailTimeout);
       onCancel(index);
     }
   }
@@ -102,11 +98,23 @@ class Thumbnail extends React.PureComponent {
     }
   }
 
+  loadThumbnailAsyncDelayed = () => {
+    const timeoutId = setTimeout(() => {
+      // wrap loadThumbnailAsync inside a setTimeout so that we are not calling it a lot of times when users scroll the panel frantically
+      // this is a workaround for WVS where proper cancelLoadThumbnail hasn't been implemented, and too many requests to the server will add a lot of overhead to it
+      this.loadThumbnailTimeout = null;
+      this.loadThumbnailAsync();
+    }, 100);
+
+    return timeoutId;
+  }
+
   loadThumbnailAsync = () => {
     const { index, onLoad } = this.props;
     const { thumbContainer } = this;
     const { current } = thumbContainer;
     const pageNum = index + 1;
+    const viewerRotation = core.getRotation(pageNum);
 
     const id = core.loadThumbnailAsync(pageNum, thumb => {
       thumb.className = 'page-image';
@@ -114,6 +122,21 @@ class Thumbnail extends React.PureComponent {
       const ratio = Math.min(THUMBNAIL_SIZE / thumb.width, THUMBNAIL_SIZE / thumb.height);
       thumb.style.width = `${thumb.width * ratio}px`;
       thumb.style.height = `${thumb.height * ratio}px`;
+
+      if (Math.abs(viewerRotation)) {
+        const cssTransform = `rotate(${viewerRotation * 90}deg) translate(-50%,-50%)`;
+        const cssTransformOrigin = 'top left';
+        thumb.style['transform'] = cssTransform;
+        thumb.style['transform-origin'] = cssTransformOrigin;
+        thumb.style['ms-transform'] = cssTransform;
+        thumb.style['ms-transform-origin'] = cssTransformOrigin;
+        thumb.style['-moz-transform'] = cssTransform;
+        thumb.style['-moz-transform-origin'] = cssTransformOrigin;
+        thumb.style['-webkit-transform-origin'] = cssTransformOrigin;
+        thumb.style['-webkit-transform'] = cssTransform;
+        thumb.style['-o-transform'] = cssTransform;
+        thumb.style['-o-transform-origin'] = cssTransformOrigin;
+      }
 
       const childElement = current?.querySelector('.page-image');
       if (childElement) {
@@ -135,21 +158,22 @@ class Thumbnail extends React.PureComponent {
     const { index, currentPage, closeElement, selectedPageIndexes, setSelectedPageThumbnails, isThumbnailMultiselectEnabled, isReaderMode } = this.props;
 
     if (isThumbnailMultiselectEnabled && !isReaderMode) {
-      const togglingSelectedPage = e.ctrlKey || e.metaKey;
+      const multiSelectionKeyPressed = e.ctrlKey || e.metaKey;
       let updatedSelectedPages = [...selectedPageIndexes];
 
-      if (togglingSelectedPage) {
+      if (multiSelectionKeyPressed) {
         // Include current page as part of selection if we just started multi-selecting
         if (selectedPageIndexes.length === 0) {
           updatedSelectedPages.push(currentPage - 1);
         }
+
         if (selectedPageIndexes.includes(index)) {
           updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
-        } else if (!updatedSelectedPages.includes(index)) {
+        } else {
           updatedSelectedPages.push(index);
         }
       } else {
-        updatedSelectedPages = [];
+        updatedSelectedPages = [index];
       }
 
       setSelectedPageThumbnails(updatedSelectedPages);

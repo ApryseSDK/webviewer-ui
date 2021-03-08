@@ -89,7 +89,9 @@
     "underline": "Underline",
     "custom": "Custom",
     "rubberStamp": "Rubber Stamp",
-    "note": "Note"
+    "note": "Note",
+    "link": "Link",
+    "other": "Other"
   },
   "rubberStamp": {
     "Approved": "Approved",

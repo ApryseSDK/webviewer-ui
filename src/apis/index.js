@@ -148,6 +148,7 @@ import setActiveResult from './setActiveResult';
 import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
 import overrideSearchExecution from "./overrideSearchExecution";
 import reactElements from './reactElements';
+import toggleReaderMode from './toggleReaderMode';
 
 /**
  * Triggered when the UI theme is changed
@@ -324,6 +325,7 @@ export default store => {
     setReadOnly,
     setSortNotesBy: setSortNotesBy(store),
     getCustomData,
+    toggleReaderMode: toggleReaderMode(store),
 
     // undocumented
     useNativeScroll,

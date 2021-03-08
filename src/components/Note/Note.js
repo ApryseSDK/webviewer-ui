@@ -93,7 +93,7 @@ const Note = ({
     } else if (isDocumentReadOnly || !isContentEditable) {
       setIsEditing(false, 0);
     }
-  }, [isDocumentReadOnly, isContentEditable, pendingEditTextMap, setIsEditing, annotation]);
+  }, [isDocumentReadOnly, isContentEditable, setIsEditing, annotation]);
 
   const handleNoteClick = e => {
     // stop bubbling up otherwise the note will be closed

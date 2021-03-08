@@ -165,7 +165,7 @@ class ThumbnailsPanel extends React.PureComponent {
     }
 
     if (!draggingSelectedPage) {
-      setSelectedPageThumbnails([]);
+      setSelectedPageThumbnails([index]);
     }
 
     core.setCurrentPage(index + 1);
@@ -219,6 +219,7 @@ class ThumbnailsPanel extends React.PureComponent {
         core.movePages(pageNumbersToMove, targetPageNumber);
       }
     }
+
     this.setState({ draggingOverPageIndex: null });
   };
 
@@ -310,7 +311,7 @@ class ThumbnailsPanel extends React.PureComponent {
     const ctx = annotCanvas.getContext('2d');
 
     let zoom = 1;
-    let rotation = core.getCompleteRotation(pageNumber) - core.getRotation(pageNumber);
+    let rotation = core.getCompleteRotation(pageNumber);
     if (rotation < 0) {
       rotation += 4;
     }
@@ -527,7 +528,7 @@ class ThumbnailsPanel extends React.PureComponent {
                   // use ceiling rather than floor so that an extra row can be created in case the items can't be evenly distributed between rows
                   rowCount={Math.ceil(totalPages / numberOfColumns)}
                   rowRenderer={this.renderThumbnails}
-                  overscanRowCount={10}
+                  overscanRowCount={2}
                   className={'thumbnailsList'}
                   style={{ outline: 'none' }}
                 />

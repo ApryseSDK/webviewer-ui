@@ -44,6 +44,7 @@ export default store => () => {
   });
 
   const doc = core.getDocument();
+  doc.on('bookmarksUpdated', () => core.getOutlines(outlines => dispatch(actions.setOutlines(outlines))));
   if (!doc.isWebViewerServerDocument()) {
     doc.getLayersArray().then(layers => {
       if (layers.length === 0) {

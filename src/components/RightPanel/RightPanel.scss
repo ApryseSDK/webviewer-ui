@@ -5,6 +5,10 @@
   right: 0px;
   transition: transform .3s ease-in-out;
   @include panel-height-fix;
+  max-width: calc(100% - 16px);
+  @include mobile {
+    max-width: 100%;
+  } 
 
   &.closed {
     transform: translateX(100%);

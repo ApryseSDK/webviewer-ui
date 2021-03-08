@@ -21,26 +21,27 @@ const LinkModal = () => {
     totalPages,
     currentPage,
     tabSelected,
+    pageLabels,
   ] = useSelector(state => [
     selectors.isElementDisabled(state, 'linkModal'),
     selectors.isElementOpen(state, 'linkModal'),
     selectors.getTotalPages(state),
     selectors.getCurrentPage(state),
     selectors.getSelectedTab(state, 'linkModal'),
+    selectors.getPageLabels(state),
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
   const urlInput = React.createRef();
-  const pageNumberInput = React.createRef();
+  const pageLabelInput = React.createRef();
 
   const [url, setURL] = useState('');
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageLabel, setPageLabel] = useState("");
 
   const closeModal = () => {
     dispatch(actions.closeElement('linkModal'));
     setURL('');
-    setPageNumber(1);
     core.setToolMode(defaultTool);
   };
 
@@ -150,13 +151,18 @@ const LinkModal = () => {
     closeModal();
   };
 
+  const isValidPageLabel = () => {
+    return pageLabels?.includes(pageLabel);
+  };
+
   const addPageLink = e => {
     e.preventDefault();
 
     const links = createLink();
 
     const Dest = window.Actions.GoTo.Dest;
-    const options = { dest: new Dest({ page: pageNumber }) };
+
+    const options = { dest: new Dest({ page: pageLabels.indexOf(pageLabel) + 1 }) };
     const action = new window.Actions.GoTo(options);
 
     links.forEach(link => {
@@ -184,16 +190,18 @@ const LinkModal = () => {
           setURL(urls[0]);
         }
       }
+
+      setPageLabel(pageLabels.length > 0 ? pageLabels[0] : "1");
     }
   }, [totalPages, isOpen]);
 
   useEffect(() => {
     if (tabSelected === 'PageNumberPanelButton' && isOpen) {
-      pageNumberInput.current.focus();
+      pageLabelInput.current.focus();
     } else if (tabSelected === 'URLPanelButton' && isOpen) {
       urlInput.current.focus();
     }
-  }, [tabSelected, isOpen, pageNumberInput, urlInput]);
+  }, [tabSelected, isOpen, pageLabelInput, urlInput]);
 
   const modalClass = classNames({
     Modal: true,
@@ -250,18 +258,15 @@ const LinkModal = () => {
                 <div>{t('link.enterpage')}</div>
                 <div className="linkInput">
                   <input
-                    type="number"
-                    ref={pageNumberInput}
-                    value={pageNumber}
-                    onChange={e => setPageNumber(parseInt(e.target.value, 10))}
-                    min={1}
-                    max={totalPages}
+                    ref={pageLabelInput}
+                    value={pageLabel}
+                    onChange={e => setPageLabel(e.target.value)}
                   />
                   <Button
                     dataElement="linkSubmitButton"
                     label={t('action.link')}
                     onClick={addPageLink}
-                    disabled={pageNumber < 1 || pageNumber > totalPages}
+                    disabled={!isValidPageLabel()}
                   />
                 </div>
               </form>

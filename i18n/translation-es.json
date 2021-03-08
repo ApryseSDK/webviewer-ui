@@ -89,7 +89,9 @@
     "underline": "Subrayado",
     "custom": "Personalizado",
     "rubberStamp": "Sello de goma",
-    "note": "Nota"
+    "note": "Nota",
+    "link": "Enlace",
+    "other": "Otro"
   },
   "rubberStamp": {
     "Approved": "Aprobada",

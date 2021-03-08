@@ -93,7 +93,7 @@ class PageNavOverlay extends React.PureComponent {
   render() {
     const { currentPage, totalPages, allowPageNavigation, isMobile, t, dataElement } = this.props;
 
-    const inputWidth = this.state.input ? (this.state.input.length) * (isMobile ? 10: 8) : 0;
+    const inputWidth = this.state.input ? (this.state.input.length) * (isMobile ? 10 : 8) : 0;
 
     return (
       <DataElementWrapper
@@ -162,7 +162,6 @@ const mapStateToProps = state => ({
 });
 
 const ConnectedPageNavOverlay = connect(mapStateToProps)(withTranslation()(PageNavOverlay));
-
 
 export default props => {
   const isMobile = useMedia(
