@@ -60,6 +60,7 @@ const propTypes = {
 const App = ({ removeEventHandlers }) => {
   const store = useStore();
   const dispatch = useDispatch();
+  let timeoutReturn;
 
   useEffect(() => {
     defineReaderControlAPIs(store);
@@ -82,16 +83,25 @@ const App = ({ removeEventHandlers }) => {
       }
     }
 
+    function loadDocumentAndCleanup() {
+      loadInitialDocument();
+      window.removeEventListener('message', messageHandler);
+      clearTimeout(timeoutReturn)
+    }
+
     function messageHandler(event) {
       if (event.isTrusted &&
         typeof event.data === 'object' &&
         event.data.type === 'viewerLoaded') {
-          loadInitialDocument();
-          window.removeEventListener('message', messageHandler);
+          loadDocumentAndCleanup();
       }
     }
 
     window.addEventListener('message', messageHandler, false);
+
+    // In case WV is used outside of iframe, postMessage will not
+    // receive the message, and this timeout will trigger loadInitialDocument
+    timeoutReturn = setTimeout(loadDocumentAndCleanup, 100);
 
     return removeEventHandlers;
     // eslint-disable-next-line
