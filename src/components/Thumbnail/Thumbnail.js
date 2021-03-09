@@ -79,7 +79,8 @@ const Thumbnail = ({
 
             onFinishLoading(index);
           },
-          source: 'thumbnail'
+          source: 'thumbnail',
+          'isInternalRender': true,
         });
         onLoad(index, thumbnailContainer, id);
       }
