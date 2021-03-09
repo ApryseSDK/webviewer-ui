@@ -137,8 +137,10 @@ const FilterAnnotModal = () => {
       if (core.getDisplayAuthor(annot) && core.getDisplayAuthor(annot) !== '') {
         authorsToBeAdded.add(core.getDisplayAuthor(annot));
       }
-      // We don't show it in the filter for WidgetAnnotation or StickyAnnotation from the comments  
-      if (annot instanceof Annotations.WidgetAnnotation || (annot instanceof Annotations.StickyAnnotation && annot.isReply())){
+      // We don't show it in the filter for WidgetAnnotation or StickyAnnotation or LinkAnnotation from the comments  
+      if (annot instanceof Annotations.WidgetAnnotation 
+        || (annot instanceof Annotations.StickyAnnotation && annot.isReply())
+        || (annot instanceof Annotations.Link)){
           return;
       }
       annotTypesToBeAdded.add(getAnnotationClass(annot));
