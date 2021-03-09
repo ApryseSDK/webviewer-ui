@@ -121,7 +121,7 @@ class WatermarkModal extends React.PureComponent {
       );
     } else {
       this.removeWatermarkCreatedByModal();
-      core.setWatermark(this.preExistingWatermarks);
+      core.setWatermark(this.preExistingWatermark);
     }
   };
 
