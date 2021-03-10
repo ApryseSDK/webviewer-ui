@@ -280,7 +280,10 @@ const ContentArea = ({
     }
 
     setIsEditing(false, noteIndex);
-    onTextAreaValueChange(undefined, annotation.Id);
+    // Only set comment to unposted state if it is not empty
+    if (textAreaValue !== ''){
+      onTextAreaValueChange(undefined, annotation.Id);
+    }
   };
 
   return (
