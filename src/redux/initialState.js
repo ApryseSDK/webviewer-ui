@@ -8,6 +8,7 @@ import { defaultZoomList } from 'constants/zoomFactors';
 
 import core from 'core';
 import getHashParams from 'helpers/getHashParams';
+import localStorageManager from 'helpers/localStorageManager';
 import { copyMapWithDataProperties } from 'constants/map';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import Ribbons from 'components/Ribbons';
@@ -442,7 +443,7 @@ export default {
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
-    customColors: window.localStorage.getItem("customColors") ? JSON.parse(window.localStorage.getItem("customColors")) : [],
+    customColors: localStorageManager.isLocalStorageEnabled() && window.localStorage.getItem("customColors") ? JSON.parse(window.localStorage.getItem("customColors")) : [],
     activeLeftPanel: 'thumbnailsPanel',
     activeToolGroup: '',
     notePopupId: '',

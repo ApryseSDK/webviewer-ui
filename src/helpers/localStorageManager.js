@@ -1,6 +1,6 @@
 class LocalStorageManager {
   constructor() {
-    this.localStorageEnabled = true;
+    this.localStorageEnabled = !!window.localStorage;
   }
 
   enableLocalStorage() {
