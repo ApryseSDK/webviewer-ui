@@ -47,6 +47,9 @@ const FilterAnnotModal = () => {
     if (annotation instanceof Annotations.FreeHandAnnotation) {
       return 'freehand';
     }
+    if (annotation instanceof Annotations.FreeTextAnnotation && annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeTextCallout) {
+      return 'callout';
+    }
     if (annotation instanceof Annotations.FreeTextAnnotation) {
       return 'freetext';
     }
