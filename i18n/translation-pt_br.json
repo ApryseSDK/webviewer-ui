@@ -546,6 +546,11 @@
       "noLocation": "Nenhum local fornecido",
       "noReason": "Nenhum motivo fornecido",
       "noSigningTime": "Nenhuma hora de assinatura encontrada"
+    },
+    "panelMessages": {
+      "noSignatureFields": "Este documento não possui campos de assinatura",
+      "certificateDownloadError": "Erro encontrado ao tentar baixar um certificado confiável",
+      "localCertificateError": "Existem alguns problemas com a leitura de um certificado local"
     }
   }
 }

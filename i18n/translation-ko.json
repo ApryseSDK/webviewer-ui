@@ -546,6 +546,11 @@
       "noLocation": "제공된 위치 없음",
       "noReason": "제공된 이유 없음",
       "noSigningTime": "서명 시간이 없습니다."
+    },
+    "panelMessages": {
+      "noSignatureFields": "이 문서에는 서명 필드가 없습니다.",
+      "certificateDownloadError": "신뢰할 수있는 인증서를 다운로드하려고 할 때 오류가 발생했습니다.",
+      "localCertificateError": "로컬 인증서를 읽는 데 몇 가지 문제가 있습니다."
     }
   }
 }

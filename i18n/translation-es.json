@@ -546,6 +546,11 @@
       "noLocation": "No se proporcionó ubicación",
       "noReason": "Sin motivo proporcionado",
       "noSigningTime": "No se encontró el tiempo de firma"
+    },
+    "panelMessages": {
+      "noSignatureFields": "Este documento no tiene campos de firma",
+      "certificateDownloadError": "Se produjo un error al intentar descargar un certificado de confianza",
+      "localCertificateError": "Hay algunos problemas con la lectura de un certificado local."
     }
   }
 }

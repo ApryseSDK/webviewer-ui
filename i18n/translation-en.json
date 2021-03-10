@@ -546,6 +546,11 @@
       "noLocation": "No location provided",
       "noReason": "No reason provided",
       "noSigningTime": "No signing time found"
+    },
+    "panelMessages": {
+      "noSignatureFields": "This document has no signature fields",
+      "certificateDownloadError": "Error encountered when trying to download a trusted certificate",
+      "localCertificateError": "There are some issues with reading a local certificate"
     }
   }
 }
