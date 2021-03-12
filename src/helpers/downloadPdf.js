@@ -31,7 +31,7 @@ export default (dispatch, options = {}) => {
       return name;
     };
 
-    const downloadName = getDownloadFilename(filename, '.pdf');
+    const downloadName = core.getDocument()?.getType() === 'video' ? filename : getDownloadFilename(filename, '.pdf');
     const doc = core.getDocument();
 
     if (externalURL) {
