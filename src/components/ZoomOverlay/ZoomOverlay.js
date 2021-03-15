@@ -1,4 +1,3 @@
-import Icon from 'components/Icon';
 import { zoomTo, fitToPage, fitToWidth } from 'helpers/zoom';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +6,7 @@ import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import OverlayItem from '../OverlayItem';
 import ToolButton from '../ToolButton';
+import Button from 'components/Button';
 import './ZoomOverlay.scss';
 
 function ZoomOverlay() {
@@ -14,18 +14,27 @@ function ZoomOverlay() {
 
   const zoomList = useSelector(selectors.getZoomList);
   const isReaderMode = useSelector(selectors.isReaderMode);
+  const isMarqueeToolButtonDisabled = useSelector(state => selectors.isElementDisabled(state, 'marqueeToolButton'));
 
   return (
     <FlyoutMenu menu="zoomOverlay" trigger="zoomOverlayButton" ariaLabel={t('component.zoomOverlay')}>
-      <button className="ZoomItem" onClick={fitToWidth} aria-label={t('action.fitToWidth')} role="option">
-        <Icon className="ZoomIcon" glyph="icon-header-zoom-fit-to-width" />
-        <div className="ZoomLabel">{t('action.fitToWidth')}</div>
-      </button>
+      <Button
+        className="ZoomItem"
+        img="icon-header-zoom-fit-to-width"
+        label={t('action.fitToWidth')}
+        ariaLabel={t('action.fitToWidth')}
+        role="option"
+        onClick={fitToWidth}
+      />
       {!isReaderMode && (
-        <button className="ZoomItem" onClick={fitToPage} aria-label={t('action.fitToPage')} role="option">
-          <Icon className="ZoomIcon" glyph="icon-header-zoom-fit-to-page" />
-          <div className="ZoomLabel">{t('action.fitToPage')}</div>
-        </button>
+        <Button
+          className="ZoomItem"
+          img="icon-header-zoom-fit-to-page"
+          label={t('action.fitToPage')}
+          ariaLabel={t('action.fitToPage')}
+          role="option"
+          onClick={fitToPage}
+        />
       )}
       <div className="divider" />
       {zoomList.map((zoomValue, i) => (
@@ -33,11 +42,16 @@ function ZoomOverlay() {
       ))}
       {!isReaderMode && (
         <>
-          <div className="dividerSmall" />
-          <div className="ZoomItem" role="option">
-            <Icon className="ZoomIcon" glyph="icon-header-zoom-marquee" />
-            <ToolButton className="ZoomToolButton" toolName="MarqueeZoomTool" label={t('tool.Marquee')} />
-          </div>
+          {!isMarqueeToolButtonDisabled && (
+            <div className="dividerSmall" />
+          )}
+          <ToolButton
+            className="ZoomItem"
+            role="option"
+            toolName="MarqueeZoomTool"
+            label={t('tool.Marquee')}
+            img="icon-header-zoom-marquee"
+          />
         </>
       )}
     </FlyoutMenu>

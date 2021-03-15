@@ -15,20 +15,15 @@
     background: var(--popup-button-hover);
   }
 
-  .ZoomIcon {
-    margin: 4px;
-  }
-
-  .ZoomLabel {
-    margin: 0 4px;
+  .Icon {
+    margin: 4px 8px 4px 4px;
   }
 
   Button {
     height: auto;
   }
-}
 
-// High specificity to override ".tool-button.Button"
-button.tool-button.ZoomToolButton {
-  width: auto;
+  &.Button {
+    justify-content: flex-start;
+  }
 }
