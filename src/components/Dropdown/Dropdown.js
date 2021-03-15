@@ -8,7 +8,7 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
 
-const DEFAULT_WIDTH = 94;
+const DEFAULT_WIDTH = 98;
 
 const propTypes = {
   onClickItem: PropTypes.func,
@@ -23,8 +23,7 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [itemsWidth] = useState(DEFAULT_WIDTH);
-
+ 
   const onClose = useCallback(() => setIsOpen(false), []);
   const onToggle = useCallback(() => setIsOpen(prev => !prev), []);
 
@@ -46,7 +45,6 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
     },
     [onClickItem],
   );
-
   const dropdownItems = useMemo(
     () =>
       items.map(key => (
@@ -65,11 +63,8 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
   );
 
   const optionIsSelected = items.some(key => key === currentSelectionKey);
-
-  const buttonStyle = useMemo(
-    () => ({ width: `${(itemsWidth || DEFAULT_WIDTH) + 2}px` }),
-    [itemsWidth],
-  );
+  const buttonStyle = { width: `${DEFAULT_WIDTH + 2}px` }
+   
 
   return (
     <DataElementWrapper
