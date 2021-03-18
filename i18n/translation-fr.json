@@ -464,12 +464,18 @@
     "valid": "valide",
     "invalid": "invalide",
     "unknown": "inconnue",
-    "title": "{{Type de propriétés",
+    "title": "{{type}} propriétés",
     "header": {
       "documentIntegrity": "Intégrité des documents",
       "identitiesTrust": "Identités et confiance",
       "generalErrors": "Erreurs générales",
       "digestStatus": "État du résumé"
+    },
+    "documentPermission": {
+      "noChangesAllowed": "Le {{editor}} a spécifié qu'aucune modification n'est autorisée pour ce document",
+      "formfillingSigningAllowed": "Le {{editor}} a spécifié que le remplissage et la signature de formulaire sont autorisés pour ce document. Aucun autre changement n'est autorisé.",
+      "annotatingFormfillingSigningAllowed": "Le {{editor}} a spécifié que le remplissage, la signature et les commentaires de formulaire sont autorisés pour ce document. Aucun autre changement n'est autorisé.",
+      "unrestricted": "Le {{editor}} a spécifié qu'il n'y avait aucune restriction pour ce document."
     },
     "digestAlgorithm": {
       "preamble": "L'algorithme de résumé utilisé pour signer la signature:",

@@ -471,6 +471,12 @@
       "generalErrors": "Algemene fouten",
       "digestStatus": "Digest-status"
     },
+    "documentPermission": {
+      "noChangesAllowed": "De {{editor}} heeft aangegeven dat er geen wijzigingen zijn toegestaan voor dit document",
+      "formfillingSigningAllowed": "De {{editor}} heeft aangegeven dat het invullen en ondertekenen van formulieren is toegestaan voor dit document. Andere wijzigingen zijn niet toegestaan.",
+      "annotatingFormfillingSigningAllowed": "De {{editor}} heeft aangegeven dat het invullen, ondertekenen en reageren op formulieren is toegestaan voor dit document. Andere wijzigingen zijn niet toegestaan.",
+      "unrestricted": "De {{editor}} heeft aangegeven dat er geen beperkingen zijn voor dit document."
+    },
     "digestAlgorithm": {
       "preamble": "Het digest-algoritme dat is gebruikt om de handtekening te ondertekenen:",
       "unknown": "Het digest-algoritme dat is gebruikt om de handtekening te ondertekenen, is onbekend."

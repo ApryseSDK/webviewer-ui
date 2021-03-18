@@ -109,7 +109,6 @@ const WidgetInfo = ({ name, collapsible, widget }) => {
 
   const {
     signed,
-    signer,
     signTime,
     id,
     verificationStatus,
@@ -123,7 +122,7 @@ const WidgetInfo = ({ name, collapsible, widget }) => {
     contactInfo,
     location,
     reason,
-    subjectField,
+    signerName,
   } = verificationResult;
 
   const dispatch = useDispatch();
@@ -177,11 +176,7 @@ const WidgetInfo = ({ name, collapsible, widget }) => {
     let content = isCertification
       ? translate('digitalSignatureVerification.Certified')
       : translate('digitalSignatureVerification.Signed');
-    if (signer) {
-      content += ` ${translate('digitalSignatureVerification.by')} ${signer}`;
-    } else if (!signer && subjectField.e_commonName) {
-      content += ` ${translate('digitalSignatureVerification.by')} ${subjectField.e_commonName}`;
-    }
+    content += ` ${translate('digitalSignatureVerification.by')} ${signerName || translate('digitalSignatureModal.unknown')}`;
     if (signTime) {
       content += ` ${translate('digitalSignatureVerification.on')} ${signTime}`;
     }
