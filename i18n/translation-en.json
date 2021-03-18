@@ -471,6 +471,12 @@
       "generalErrors": "General Errors",
       "digestStatus": "Digest Status"
     },
+    "documentPermission": {
+      "noChangesAllowed": "The {{editor}} has specified that no changes are allowed for this document",
+      "formfillingSigningAllowed": "The {{editor}} has specified that Form Fill-in and Signing are allowed for this document. No other changes are permitted.",
+      "annotatingFormfillingSigningAllowed": "The {{editor}} has specified that Form Fill-in, Signing and Commenting are allowed for this document. No other changes are permitted.",
+      "unrestricted": "The {{editor}} has specified that there are no restrictions for this document."
+    },
     "digestAlgorithm": {
       "preamble": "The digest algorithm that was used to sign the signature: ",
       "unknown": "The digest algorithm that was used to sign the signature is unknown."

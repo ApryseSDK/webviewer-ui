@@ -471,6 +471,12 @@
       "generalErrors": "一般错误",
       "digestStatus": "摘要状态"
     },
+    "documentPermission": {
+      "noChangesAllowed": "{{editor}}已指定不允许对此文档进行任何更改",
+      "formfillingSigningAllowed": "{{editor}}已指定允许此文档使用“表单填写”和“签名”。不允许其他更改。",
+      "annotatingFormfillingSigningAllowed": "{{editor}}已指定允许该文档的表单填写，签名和注释。不允许其他更改。",
+      "unrestricted": "{{editor}}已指定此文档没有任何限制。"
+    },
     "digestAlgorithm": {
       "preamble": "用于签名签名的摘要算法：",
       "unknown": "用于签名签名的摘要算法未知。"

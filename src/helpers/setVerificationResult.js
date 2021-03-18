@@ -145,6 +145,7 @@ const getVerificationResult = async(doc, sigWidgets, certificates) => {
         let location;
         let reason;
         let validAtTimeOfSigning;
+        let signerName;
         const issuerField = {};
         const subjectField = {};
 
@@ -231,9 +232,16 @@ const getVerificationResult = async(doc, sigWidgets, certificates) => {
           badgeIcon = 'digital_signature_error';
         }
 
+        if (signer) {
+          signerName = signer;
+        } else if (!signer && subjectField.e_commonName) {
+          signerName = subjectField.e_commonName;
+        }
+
         verificationResults[fieldName] = {
           signed,
           signer,
+          signerName,
           signTime,
           verificationStatus,
           documentStatus,

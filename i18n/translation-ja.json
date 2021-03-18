@@ -471,6 +471,12 @@
       "generalErrors": "一般的なエラー",
       "digestStatus": "ダイジェストステータス"
     },
+    "documentPermission": {
+      "noChangesAllowed": "{{editor}}は、このドキュメントに変更を加えることはできないと指定しています",
+      "formfillingSigningAllowed": "{{editor}}は、このドキュメントでフォームへの入力と署名を許可するように指定しています。その他の変更は許可されていません。",
+      "annotatingFormfillingSigningAllowed": "{{editor}}は、このドキュメントでフォームへの入力、署名、コメントを許可するように指定しています。その他の変更は許可されていません。",
+      "unrestricted": "{{editor}}は、このドキュメントに制限がないことを指定しています。"
+    },
     "digestAlgorithm": {
       "preamble": "署名に署名するために使用されたダイジェストアルゴリズム：",
       "unknown": "署名の署名に使用されたダイジェストアルゴリズムは不明です。"

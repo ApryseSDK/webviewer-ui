@@ -471,6 +471,12 @@
       "generalErrors": "Erros Gerais",
       "digestStatus": "Status de resumo"
     },
+    "documentPermission": {
+      "noChangesAllowed": "O {{editor}} especificou que nenhuma alteração é permitida para este documento",
+      "formfillingSigningAllowed": "O {{editor}} especificou que o preenchimento de formulário e assinatura são permitidos para este documento. Nenhuma outra alteração é permitida.",
+      "annotatingFormfillingSigningAllowed": "O {{editor}} especificou que o preenchimento de formulários, assinatura e comentários são permitidos para este documento. Nenhuma outra alteração é permitida.",
+      "unrestricted": "O {{editor}} especificou que não há restrições para este documento."
+    },
     "digestAlgorithm": {
       "preamble": "O algoritmo de resumo usado para assinar a assinatura:",
       "unknown": "O algoritmo de resumo usado para assinar a assinatura é desconhecido."

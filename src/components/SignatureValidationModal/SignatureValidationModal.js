@@ -84,10 +84,10 @@ const SignatureValidationModal = () => {
     timeOfTrustVerificationEnum,
     trustVerificationTime,
     digestAlgorithm,
-    signer,
     digestStatus,
     documentStatus,
     trustStatus,
+    signerName,
   } = verificationResult;
   const {
     DigestAlgorithm,
@@ -148,7 +148,7 @@ const SignatureValidationModal = () => {
               badgeIcon === 'digital_signature_valid'
                 ? translate(
                   'digitalSignatureModal.summaryBox.signedBy',
-                  { name: signer },
+                  { name: signerName || translate('digitalSignatureModal.unknown') },
                 ) : ''
             }
           </div>
@@ -179,16 +179,16 @@ const SignatureValidationModal = () => {
 
     switch (documentPermission) {
       case e_no_changes_allowed:
-        content += `The ${editor} has specified that no changes are allowed for this document.`;
+        content += translate('digitalSignatureModal.documentPermission.noChangesAllowed', { editor });
         break;
       case e_formfilling_signing_allowed:
-        content += `The ${editor} has specified that Form Fill-in and Signing are allowed for this document. No other changes are permitted.`;
+        content += translate('digitalSignatureModal.documentPermission.formfillingSigningAllowed', { editor });
         break;
       case e_annotating_formfilling_signing_allowed:
-        content += `The ${editor} has specified that Form Fill-in, Signing and Commenting are allowed for this document. No other changes are permitted.`;
+        content += translate('digitalSignatureModal.documentPermission.annotatingFormfillingSigningAllowed', { editor });
         break;
       case e_unrestricted:
-        content += `The ${editor} has specified that there are no restrictions for this document.`;
+        content += translate('digitalSignatureModal.documentPermission.unrestricted', { editor });
         break;
     }
 

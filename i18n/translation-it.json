@@ -471,6 +471,12 @@
       "generalErrors": "Errori generali",
       "digestStatus": "Stato digest"
     },
+    "documentPermission": {
+      "noChangesAllowed": "L '{{editor}} ha specificato che non sono consentite modifiche per questo documento",
+      "formfillingSigningAllowed": "L '{{editor}} ha specificato che la compilazione del modulo e la firma sono consentite per questo documento. Non sono consentite altre modifiche.",
+      "annotatingFormfillingSigningAllowed": "L '{{editor}} ha specificato che per questo documento sono consentite la compilazione di moduli, la firma e i commenti. Non sono consentite altre modifiche.",
+      "unrestricted": "L '{{editor}} ha specificato che non ci sono restrizioni per questo documento."
+    },
     "digestAlgorithm": {
       "preamble": "L'algoritmo digest utilizzato per firmare la firma:",
       "unknown": "L'algoritmo digest utilizzato per firmare la firma è sconosciuto."

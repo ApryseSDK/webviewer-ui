@@ -471,6 +471,12 @@
       "generalErrors": "일반 오류",
       "digestStatus": "다이제스트 상태"
     },
+    "documentPermission": {
+      "noChangesAllowed": "{{editor}}에서이 문서를 변경할 수 없도록 지정했습니다.",
+      "formfillingSigningAllowed": "{{editor}}는이 문서에 대해 양식 채우기 및 서명이 허용되도록 지정했습니다. 다른 변경은 허용되지 않습니다.",
+      "annotatingFormfillingSigningAllowed": "{{editor}}는이 문서에 대해 양식 채우기, 서명 및 주석 달기가 허용되도록 지정했습니다. 다른 변경은 허용되지 않습니다.",
+      "unrestricted": "{{editor}}는이 문서에 대한 제한이 없음을 지정했습니다."
+    },
     "digestAlgorithm": {
       "preamble": "서명에 서명하는 데 사용 된 다이제스트 알고리즘 :",
       "unknown": "서명에 서명하는 데 사용 된 다이제스트 알고리즘을 알 수 없습니다."
