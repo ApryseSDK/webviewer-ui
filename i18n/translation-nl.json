@@ -147,7 +147,7 @@
     "customPrintPlaceholder": "bijv. 3, 4-10",
     "encryptedAttemptsExceeded": "Fout bij het laden van versleuteld document. Te veel pogingen.",
     "encryptedUserCancelled": "Fout bij het laden van versleuteld document. Wachtwoord invoer geannuleerd.",
-    "enterPassword": "Dit document heeft een wachtwoord beveiliging. Geen een wachtwoord",
+    "enterPassword": "Dit document heeft een wachtwoord beveiliging. Geef een wachtwoord",
     "incorrectPassword": "Fout wachtwoord, overgebleven pogingen: {{ remainingAttempts }}",
     "noAnnotations": "Dit document heeft geen annotaties.",
     "noAnnotationsFilter": "Begin met het maken van aantekeningen en filters verschijnen hier.",
