@@ -1,3 +1,3 @@
-import ZoomOverlay from './ZoomOverlay';
+import ZoomOverlay from './ZoomOverlayContainer';
 
 export default ZoomOverlay;

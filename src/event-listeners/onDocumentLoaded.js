@@ -91,5 +91,8 @@ export default store => () => {
       );
     });
 
+  // init zoom level value in redux
+  dispatch(actions.setZoom(core.getZoom()));
+
   fireEvent('documentLoaded');
 };
