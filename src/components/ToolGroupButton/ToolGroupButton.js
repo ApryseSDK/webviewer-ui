@@ -128,7 +128,7 @@ class ToolGroupButton extends React.PureComponent {
         isActive={isActive}
         onClick={this.onClick}
         dataElement={dataElement}
-        img={this.props.img || toolButtonObjects[toolName].img}
+        img={this.props.img || toolButtonObjects[toolName]?.img}
         color={this.getColor()}
       />
     );
