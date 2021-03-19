@@ -68,7 +68,8 @@ export default (dispatch, options = {}) => {
         },
       );
     }
-  }).catch(() => {
+  }).catch(error => {
+    console.warn(error);
     dispatch(actions.closeElement('loadingModal'));
   });
 };
