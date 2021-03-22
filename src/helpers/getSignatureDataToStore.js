@@ -13,16 +13,6 @@ export default async annotations => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
   const newAnnotations = annotations.map(core.getAnnotationCopy);
 
-  newAnnotations.forEach(annotation => {
-    const pageRotation = core.getCompleteRotation(annotation.PageNumber);
-
-    if (pageRotation === 0) {
-      return;
-    }
-
-    rotateAnnotation(annotation, -pageRotation * 90);
-  });
-
   await previewsPromise;
 
   previewsPromise = Promise.all(
@@ -42,36 +32,3 @@ export default async annotations => {
     imgSrc: previews[i],
   }));
 };
-
-/**
- * Rotate the annotation by the amount of rotation to make sure its preview's rotation is correct
- * @ignore
- */
-function rotateAnnotation(annotation, rotation) {
-  const rect = annotation.getRect();
-  const center = {
-    x: (rect.x1 + rect.x2) / 2,
-    y: (rect.y1 + rect.y2) / 2,
-  };
-
-  if (annotation instanceof window.Annotations.FreeHandAnnotation) {
-    const radianAngle = (-rotation * Math.PI) / 180;
-    annotation.rotate(radianAngle, center);
-  }
-
-  if (annotation instanceof window.Annotations.StampAnnotation) {
-    annotation.Rotation = (annotation.Rotation || 0) + rotation;
-    rotation = Math.abs(rotation);
-
-    if (rotation === 90 || rotation === 270) {
-      annotation.setRect(
-        new Annotations.Rect(
-          center.x - annotation.Height / 2,
-          center.y - annotation.Width / 2,
-          center.x + annotation.Height / 2,
-          center.y + annotation.Width / 2
-        ),
-      );
-    }
-  }
-}
