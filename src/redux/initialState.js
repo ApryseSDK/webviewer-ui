@@ -468,6 +468,7 @@ export default {
     useEmbeddedPrint: false,
     pageLabels: [],
     selectedThumbnailPageIndexes: [],
+    shiftKeyThumbnailPivotIndex: null,
     noteDateFormat: defaultNoteDateFormat,
     printedNoteDateFormat: defaultPrintedNoteDateFormat,
     colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),

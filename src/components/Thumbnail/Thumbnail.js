@@ -10,6 +10,7 @@ const Thumbnail = ({
   index,
   isSelected,
   updateAnnotations,
+  shiftKeyThumbnailPivotIndex,
   onFinishLoading,
   onLoad,
   onRemove = () => {},
@@ -123,9 +124,21 @@ const Thumbnail = ({
   const handleClick = e => {
     if (isThumbnailMultiselectEnabled && !isReaderMode) {
       const multiSelectionKeyPressed = e.ctrlKey || e.metaKey;
+      const shiftKeyPressed = e.shiftKey;
       let updatedSelectedPages = [...selectedPageIndexes];
 
-      if (multiSelectionKeyPressed) {
+      if (shiftKeyPressed) {
+        // Include current page as part of selection if we just started shift-selecting
+        let shiftKeyPivot = shiftKeyThumbnailPivotIndex;
+        if (shiftKeyPivot === null) {
+          shiftKeyPivot = currentPage - 1;
+          dispatch(actions.setShiftKeyThumbnailsPivotIndex(shiftKeyPivot));
+        }
+        // get the range of the selected index and update selected page
+        const currSelectMinIndex = Math.min(shiftKeyPivot, index);
+        const currSelectMaxIndex = Math.max(shiftKeyPivot, index);
+        updatedSelectedPages = Array.from({ length: currSelectMaxIndex - currSelectMinIndex + 1 }, (_, i) => i + currSelectMinIndex);
+      } else if (multiSelectionKeyPressed) {
         // Include current page as part of selection if we just started multi-selecting
         if (selectedPageIndexes.length === 0) {
           updatedSelectedPages.push(currentPage - 1);
@@ -139,7 +152,8 @@ const Thumbnail = ({
       } else {
         updatedSelectedPages = [index];
       }
-
+      // set shiftKeyPivot when press ctr key or single key
+      !shiftKeyPressed && dispatch(actions.setShiftKeyThumbnailsPivotIndex(updatedSelectedPages[updatedSelectedPages.length - 1]));
       dispatch(actions.setSelectedPageThumbnails(updatedSelectedPages));
     } else if (isMobile()) {
       dispatch(actions.closeElement('leftPanel'));
@@ -160,6 +174,7 @@ const Thumbnail = ({
       })}
       onClick={handleClick}
       onDragOver={e => onDragOver(e, index)}
+      id="Thumbnail-contianer"
     >
       <div
         className="container"

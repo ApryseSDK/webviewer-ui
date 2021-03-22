@@ -403,6 +403,10 @@ export const setSelectedPageThumbnails = (selectedThumbnailPageIndexes = []) => 
   type: 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES',
   payload: { selectedThumbnailPageIndexes },
 });
+export const setShiftKeyThumbnailsPivotIndex = (shiftKeyThumbnailPivotIndex = null) => ({
+  type: 'SET_SHIFT_KEY_THUMBNAIL_PIVOT_INDEX',
+  payload: { shiftKeyThumbnailPivotIndex },
+});
 export const setSwipeOrientation = swipeOrientation => ({
   type: 'SET_SWIPE_ORIENTATION',
   payload: { swipeOrientation },
@@ -489,8 +493,8 @@ export const setAnnotationContentOverlayHandler = annotationContentOverlayHandle
 
 export const setAnnotationReadState = ({ isRead, annotationId }) => ({
   type: 'SET_ANNOTATION_READ_STATE',
-  payload: { isRead, annotationId } 
-})
+  payload: { isRead, annotationId }
+});
 export const addTrustedCertificates = certificates => ({
   type: 'ADD_TRUSTED_CERTIFICATES',
   payload: { certificates },
