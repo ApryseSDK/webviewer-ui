@@ -35,7 +35,8 @@
     position: relative;
     flex: 1;
     display: flex;
-    padding: 3px 12px 12px 42px;
+    margin: 3px 12px 0 42px;
+    padding-bottom: 12px;
 
     &.unread {
       background: rgba($color:$pdftron-blue, $alpha: 0.08);
@@ -64,9 +65,6 @@
       }
     }
 
-    .reply-button-container {
-      position: relative;
-    }
     .reply-button {
       @include button-reset;
       background: var(--primary-button);
@@ -77,7 +75,7 @@
       justify-content: center;
       color: var(--primary-button-text);
       position: absolute;
-      bottom: 2px;
+      top: 2px;
       right: 2px;
       padding: 0 13px;
 

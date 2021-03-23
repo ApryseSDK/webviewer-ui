@@ -136,11 +136,9 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         placeholder={`${t('action.reply')}...`}
         aria-label={`${t('action.reply')}...`}
       />
-      <div className="reply-button-container">
-        <button className="reply-button" onClick={e => postReply(e)}>
-          {t('action.post')}
-        </button>
-      </div>
+      <button className="reply-button" onClick={e => postReply(e)}>
+        {t('action.post')}
+      </button>
     </div>
   );
 };
