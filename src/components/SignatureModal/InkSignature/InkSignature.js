@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useSelector } from "react-redux";
 import Measure from 'react-measure';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import StylePopup from 'components/StylePopup';
-import selectors from "selectors";
 import setToolStyles from 'helpers/setToolStyles';
-import { useSwipeable, Swipeable } from 'react-swipeable';
+import { Swipeable } from 'react-swipeable';
 import ColorPalette from 'components/ColorPalette';
 
 import core from 'core';
@@ -22,6 +18,7 @@ const useForceUpdate = () => {
 const propTypes = {
   isModalOpen: PropTypes.bool,
   _setSaveSignature: PropTypes.func,
+  createSignature: PropTypes.func,
   isTabPanelSelected: PropTypes.bool,
 };
 
@@ -37,22 +34,10 @@ const InkSignature = ({
   const freeHandPathsRef = useRef();
   // the ref holds an id that will be used to check if the newly added signature annotation is the same as the freehand annotation that's drawn in the canvas
   const annotIdRef = useRef();
-  const [canClear, setCanClear] = useState(false);
   const [t] = useTranslation();
   const [dimension, setDimension] = useState({});
 
   const forceUpdate = useForceUpdate();
-
-  const [
-    activeToolName,
-    activeToolStyles,
-  ] = useSelector(
-    state => [
-      selectors.getActiveToolName(state),
-      selectors.getActiveToolStyles(state),
-    ],
-    useSelector,
-  );
 
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -80,7 +65,6 @@ const InkSignature = ({
       annotIdRef.current = signatureTool.annot?.Id;
       // use resizeCanvas here mainly for redawing the underlying signature annotation to make it show on the canvas
       signatureTool.resizeCanvas();
-      setCanClear(!!freeHandPathsRef.current);
     }
   }, [isTabPanelSelected, isModalOpen]);
 
@@ -94,7 +78,6 @@ const InkSignature = ({
   const clearCanvas = useCallback(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
     signatureTool.clearSignatureCanvas();
-    setCanClear(false);
     freeHandPathsRef.current = null;
     annotIdRef.current = null;
   }, []);
@@ -103,8 +86,6 @@ const InkSignature = ({
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
     if (!signatureTool.isEmptySignature()) {
-      setCanClear(true);
-
       // need to deep copy the paths because it will be modified
       // when the annotation is added to the document
       // we want to keep the unmodified paths so that users can keep drawing on the canvas
@@ -120,7 +101,7 @@ const InkSignature = ({
         if (!pathsCopy[i]) {
           pathsCopy[i] = [];
         }
-        pathsCopy[i][j] = new CoreControls.Math.Point(paths[i][j].x, paths[i][j].y);
+        pathsCopy[i][j] = new window.CoreControls.Math.Point(paths[i][j].x, paths[i][j].y);
       }
     }
 
