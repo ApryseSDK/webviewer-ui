@@ -253,7 +253,10 @@ const ContentArea = ({
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
     if (isNotesPanelOpen && textareaRef.current) {
-      textareaRef.current.focus();
+      setTimeout(() => {
+        // need setTimeout because textarea seem to rerender and unfocus
+        textareaRef.current.focus();
+      }, 0);
       const textLength = textareaRef.current.value.length;
       textareaRef.current.setSelectionRange(textLength, textLength);
     }
