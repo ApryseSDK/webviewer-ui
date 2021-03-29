@@ -95,6 +95,10 @@ input, textarea, select {
 
   div, canvas {
     user-select: none;
+
+    &.ql-clipboard {
+      user-select: text;
+    }
   }
 
   textarea {
