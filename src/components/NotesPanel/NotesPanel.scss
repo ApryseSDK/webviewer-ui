@@ -61,7 +61,6 @@
     }
   }
 
-
   .no-annotations {
     display: flex;
     flex-direction: column;
@@ -91,7 +90,7 @@
     }
   }
 
-  >.header {
+  > .header {
     padding-right: 18px;
 
     .sort-row {
@@ -99,11 +98,11 @@
       justify-content: space-between;
       margin-bottom: 16px;
 
-      .filter-annotation-button {
+      .filterAnnotationButton {
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 1px solid var(--border);;
+        border: 1px solid var(--border);
         color: var(--text-color);
         padding: 6px 18px;
         width: auto;
@@ -111,6 +110,10 @@
         border-radius: 4px;
         height: 28px;
         cursor: pointer;
+
+        &.active {
+          background: var(--popup-button-active);
+        }
       }
 
       .sort-container {
@@ -142,12 +145,10 @@
         padding-right: 8px;
         padding-top: 4px;
 
-
         &:focus {
           outline: none;
           border: 1px solid var(--focus-border);
         }
-
 
         &::placeholder {
           color: var(--placeholder-text);
@@ -188,9 +189,7 @@
       background: var(--divider);
       margin: 16px 0px;
     }
-
   }
-
 
   .virtualized-notes-container,
   .normal-notes-container {

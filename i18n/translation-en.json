@@ -183,7 +183,8 @@
       "time": "Time",
       "status": "Status",
       "author": "Author",
-      "type": "Type"
+      "type": "Type",
+      "color": "Color"
     },
     "toolbarGroup": {
       "dropdownLabel": "Toolbar Groups",
@@ -269,7 +270,8 @@
     },
     "filterAnnotModal": {
       "commentBy": "Comment by",
-      "types": "Types"
+      "types": "Types",
+      "color": "Color"
     },
     "status": {
       "status": "Status"

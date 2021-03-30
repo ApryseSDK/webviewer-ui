@@ -183,7 +183,8 @@
       "time": "Время",
       "status": "Статус",
       "author": "Автор",
-      "type": "Тип"
+      "type": "Тип",
+      "color": "Цвет"
     },
     "toolbarGroup": {
       "dropdownLabel": "Группы панелей инструментов",
@@ -269,7 +270,8 @@
     },
     "filterAnnotModal": {
       "commentBy": "Комментарий от",
-      "types": "Типы"
+      "types": "Типы",
+      "color": "Цвет"
     },
     "status": {
       "status": "Статус"

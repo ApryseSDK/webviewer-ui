@@ -183,7 +183,8 @@
       "time": "Zeit",
       "status": "Status",
       "author": "Autor",
-      "type": "Art"
+      "type": "Art",
+      "color": "Farbe"
     },
     "toolbarGroup": {
       "dropdownLabel": "Symbolleistengruppen",
@@ -269,7 +270,8 @@
     },
     "filterAnnotModal": {
       "commentBy": "Kommentar von",
-      "types": "Typen"
+      "types": "Typen",
+      "color": "Farbe"
     },
     "status": {
       "status": "Status"

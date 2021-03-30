@@ -77,7 +77,19 @@
             grid-template-columns: 100px 100px;
           }
 
-          label{
+          .colorSelect {
+            display: flex;
+            flex-direction: row;
+
+            .colorCell {
+              width: 15px;
+              height: 15px;
+              border-radius: 10000000px;
+              margin: 4px;
+            }
+          }
+
+          label {
             overflow: hidden;
             text-overflow: ellipsis;
           }
@@ -102,11 +114,11 @@
           border-radius: 4px;
           height: 30px;
           cursor: pointer;
-    
+
           &:hover {
             background: var(--primary-button-hover);
           }
-    
+
           &.disabled {
             background: var(--gray-6);
             border-color: var(--gray-6);
@@ -127,8 +139,6 @@
             background: none;
           }
         }
-
-
       }
     }
   }

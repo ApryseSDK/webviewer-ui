@@ -64,6 +64,8 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
 
   const [notes, setNotes] = useState([]);
 
+  const [filterEnabled, setFilterEnabled] = useState(false);
+
   // the object will be in a shape of { [note.Id]: true }
   // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
   const [selectedNoteIds, setSelectedNoteIds] = useState({});
@@ -95,9 +97,19 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       );
     };
 
+    const toggleFilterStyle = (e) => {
+      const { types, authors, colors } = e.detail;
+      if (types.length > 0 || authors.length > 0 || colors.length > 0) {
+        setFilterEnabled(true);
+      } else {
+        setFilterEnabled(false);
+      }
+    }
+
     core.addEventListener('annotationChanged', _setNotes);
     core.addEventListener('annotationHidden', _setNotes);
     core.addEventListener('updateAnnotationPermission', _setNotes);
+    window.addEventListener('annotationFilterChanged', toggleFilterStyle);
 
     _setNotes();
 
@@ -105,6 +117,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       core.removeEventListener('annotationChanged', _setNotes);
       core.removeEventListener('annotationHidden', _setNotes);
       core.removeEventListener('updateAnnotationPermission', _setNotes);
+      window.removeEventListener('annotationFilterChanged', toggleFilterStyle);
     };
   }, []);
 
@@ -366,7 +379,10 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
           <div className="sort-row">
             <Button
               dataElement="filterAnnotationButton"
-              className="filter-annotation-button"
+              className={classNames({
+                filterAnnotationButton: true,
+                active: filterEnabled
+              })}
               disabled={notes.length === 0}
               label={t('component.filter')}
               onClick={() => dispatch(actions.openElement('filterModal'))}

@@ -183,7 +183,8 @@
       "time": "時間",
       "status": "狀態",
       "author": "作者",
-      "type": "類型"
+      "type": "類型",
+      "color": "顏色"
     },
     "toolbarGroup": {
       "dropdownLabel": "工具欄組",
@@ -269,7 +270,8 @@
     },
     "filterAnnotModal": {
       "commentBy": "評論者",
-      "types": "種類"
+      "types": "種類",
+      "color": "顏色"
     },
     "status": {
       "status": "狀態"

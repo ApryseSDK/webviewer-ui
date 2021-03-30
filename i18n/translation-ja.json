@@ -183,7 +183,8 @@
       "time": "時刻",
       "status": "状態",
       "author": "作成者",
-      "type": "種類"
+      "type": "種類",
+      "color": "色"
     },
     "toolbarGroup": {
       "dropdownLabel": "ツールバー・グループ",
@@ -269,7 +270,8 @@
     },
     "filterAnnotModal": {
       "commentBy": "によるコメント",
-      "types": "タイプ"
+      "types": "タイプ",
+      "color": "色"
     },
     "status": {
       "status": "状態"

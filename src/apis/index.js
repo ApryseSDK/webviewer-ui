@@ -194,8 +194,8 @@ import disableClearSearchOnPanelClose from './disableClearSearchOnPanelClose';
  // Listening to this event
   WebViewer(...).then(function(instance) {
     instance.iframeWindow.addEventListener('annotationFilterChanged', e => {
-      const { types, authors } = e.detail;
-      console.log(types, authors);
+      const { types, authors, colors } = e.detail;
+      console.log(types, authors, colors);
     })
   });
  */

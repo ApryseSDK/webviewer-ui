@@ -183,7 +183,8 @@
       "time": "Tempo",
       "status": "Stato",
       "author": "Autore",
-      "type": "genere"
+      "type": "genere",
+      "color": "Colore"
     },
     "toolbarGroup": {
       "dropdownLabel": "Gruppi della barra degli strumenti",
@@ -269,7 +270,8 @@
     },
     "filterAnnotModal": {
       "commentBy": "Commento di",
-      "types": "tipi"
+      "types": "tipi",
+      "color": "Colore"
     },
     "status": {
       "status": "Stato"

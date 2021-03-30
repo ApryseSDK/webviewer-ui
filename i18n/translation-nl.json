@@ -183,7 +183,8 @@
       "time": "Tijd",
       "status": "Toestand",
       "author": "Auteur",
-      "type": "Type"
+      "type": "Type",
+      "color": "Kleur"
     },
     "toolbarGroup": {
       "dropdownLabel": "Werkbalkgroepen",
@@ -269,7 +270,8 @@
     },
     "filterAnnotModal": {
       "commentBy": "Reageer door",
-      "types": "Soorten"
+      "types": "Soorten",
+      "color": "Kleur"
     },
     "status": {
       "status": "staat"

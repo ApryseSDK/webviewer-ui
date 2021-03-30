@@ -183,7 +183,8 @@
       "time": "시각",
       "status": "상태",
       "author": "저자",
-      "type": "유형"
+      "type": "유형",
+      "color": "색깔"
     },
     "toolbarGroup": {
       "dropdownLabel": "도구 모음 그룹",
@@ -269,7 +270,8 @@
     },
     "filterAnnotModal": {
       "commentBy": "의 댓글",
-      "types": "종류"
+      "types": "종류",
+      "color": "색깔"
     },
     "status": {
       "status": "지위"

@@ -1,7 +1,9 @@
 import i18next from 'i18next';
 import dayjs from 'dayjs';
 import core from 'core';
+import React from 'react';
 import { rotateRad } from 'helpers/rotate';
+import { rgbaToHex } from 'helpers/color';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 
 function getDocumentCenter(pageNumber) {
@@ -118,6 +120,45 @@ const sortStrategies = {
     shouldRenderSeparator: (prevNote, currNote) => prevNote.Subject !== currNote.Subject,
     getSeparatorContent: (prevNote, currNote) => {
       return currNote.Subject;
+    },
+  },
+  color: {
+    getSortedNotes: notes =>
+      notes.sort((prevNote, currNote) => {
+        let colorA = '#485056';
+        let colorB = '#485056';
+        if (currNote.Color) {
+          colorA = rgbaToHex(currNote.Color.R, currNote.Color.G, currNote.Color.B, currNote.Color.A);
+        }
+        if (prevNote.Color) {
+          colorB = rgbaToHex(prevNote.Color.R, prevNote.Color.G, prevNote.Color.B, prevNote.Color.A);
+        }
+        return colorA < colorB ? -1 : colorA > colorB ? 1 : 0;
+      }),
+    shouldRenderSeparator: (prevNote, currNote) => {
+      let colorA = '#485056';
+      let colorB = '#485056';
+      if (currNote.Color) {
+        colorA = rgbaToHex(currNote.Color.R, currNote.Color.G, currNote.Color.B, currNote.Color.A);
+      }
+      if (prevNote.Color) {
+        colorB = rgbaToHex(prevNote.Color.R, prevNote.Color.G, prevNote.Color.B, prevNote.Color.A);
+      }
+      return colorA !== colorB;
+    },
+    getSeparatorContent: (prevNote, currNote) => {
+      let color = '#485056';
+      if (currNote.Color) {
+        color = rgbaToHex(currNote.Color.R, currNote.Color.G, currNote.Color.B, currNote.Color.A);
+      }
+      return (
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          {i18next.t('option.notesOrder.color')}
+          <div
+            style={{ background: color, width: '7px', height: '7px', borderRadius: '10000000px', marginLeft: '10px' }}
+          ></div>
+        </div>
+      );
     },
   },
 };

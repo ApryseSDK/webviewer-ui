@@ -183,7 +183,8 @@
       "time": "时间",
       "status": "状态",
       "author": "作者",
-      "type": "类型"
+      "type": "类型",
+      "color": "颜色"
     },
     "toolbarGroup": {
       "dropdownLabel": "工具栏组",
@@ -269,7 +270,8 @@
     },
     "filterAnnotModal": {
       "commentBy": "评论者",
-      "types": "种类"
+      "types": "种类",
+      "color": "颜色"
     },
     "status": {
       "status": "状态"

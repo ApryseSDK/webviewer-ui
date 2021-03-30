@@ -183,7 +183,8 @@
       "time": "Temps",
       "status": "Statut",
       "author": "Auteur",
-      "type": "Type"
+      "type": "Type",
+      "color": "Couleur"
     },
     "toolbarGroup": {
       "dropdownLabel": "Groupes de barres d'outils",
@@ -269,7 +270,8 @@
     },
     "filterAnnotModal": {
       "commentBy": "Commentaire de",
-      "types": "Les types"
+      "types": "Les types",
+      "color": "Couleur"
     },
     "status": {
       "status": "Statut"
