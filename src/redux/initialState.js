@@ -229,6 +229,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'areaTools', dataElement: 'areaToolGroupButton', title: 'annotation.areaMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'ellipseAreaTools', dataElement: 'ellipseAreaToolGroupButton', title: 'annotation.areaMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'rectangleAreaTools', dataElement: 'rectangleAreaToolGroupButton', title: 'annotation.areaMeasurement' },
+        { type: 'toolGroupButton', toolGroup: 'cloudyRectangleAreaTools', dataElement: 'cloudyRectangleAreaToolGroupButton', title: 'annotation.areaMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'countTools', dataElement: 'countToolGroupButton', title: 'annotation.countMeasurement' },
         { type: 'divider' },
         {
@@ -362,6 +363,10 @@ export default {
       AnnotationCreateRectangularAreaMeasurement2: { dataElement: 'rectangularAreaMeasurementToolButton2', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-area-line', group: 'rectangleAreaTools', showColor: 'always' },
       AnnotationCreateRectangularAreaMeasurement3: { dataElement: 'rectangularAreaMeasurementToolButton3', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-area-line', group: 'rectangleAreaTools', showColor: 'always' },
       AnnotationCreateRectangularAreaMeasurement4: { dataElement: 'rectangularAreaMeasurementToolButton4', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-area-line', group: 'rectangleAreaTools', showColor: 'always' },
+      AnnotationCreateCloudyRectangularAreaMeasurement: { dataElement: 'cloudyRectangularAreaMeasurementToolButton', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-cloud-area-line', group: 'cloudyRectangleAreaTools', showColor: 'always' },
+      AnnotationCreateCloudyRectangularAreaMeasurement2: { dataElement: 'cloudyRectangularAreaMeasurementToolButton2', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-cloud-area-line', group: 'cloudyRectangleAreaTools', showColor: 'always' },
+      AnnotationCreateCloudyRectangularAreaMeasurement3: { dataElement: 'cloudyRectangularAreaMeasurementToolButton3', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-cloud-area-line', group: 'cloudyRectangleAreaTools', showColor: 'always' },
+      AnnotationCreateCloudyRectangularAreaMeasurement4: { dataElement: 'cloudyRectangularAreaMeasurementToolButton4', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-cloud-area-line', group: 'cloudyRectangleAreaTools', showColor: 'always' },
       AnnotationCreateFreeHand: { dataElement: 'freeHandToolButton', title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand2: { dataElement: 'freeHandToolButton2', title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand3: { dataElement: 'freeHandToolButton3', title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },

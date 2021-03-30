@@ -26,6 +26,18 @@ export default {
   AnnotationCreateRectangularAreaMeasurement4: {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
+  AnnotationCreateCloudyRectangularAreaMeasurement: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateCloudyRectangularAreaMeasurement2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateCloudyRectangularAreaMeasurement3: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateCloudyRectangularAreaMeasurement4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
   AnnotationCreateEllipseMeasurement: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },

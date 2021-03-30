@@ -98,6 +98,23 @@ const map = {
       annotation.Measure &&
       annotation.isRectangularPolygon(),
   },
+  cloudyRectangularAreaMeasurement: {
+    icon: 'ic_annotation_cloudy_rectangular_area_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
+    toolNames: [
+      'AnnotationCreateCloudyRectangularAreaMeasurement',
+      'AnnotationCreateCloudyRectangularAreaMeasurement2',
+      'AnnotationCreateCloudyRectangularAreaMeasurement3',
+      'AnnotationCreateCloudyRectangularAreaMeasurement4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.PolygonAnnotation &&
+      annotation.IT === 'PolygonDimension' &&
+      annotation.Measure &&
+      annotation.isRectangularPolygon(),
+  },
   areaMeasurement: {
     icon: 'ic_annotation_area_black_24px',
     iconColor: 'StrokeColor',

@@ -75,6 +75,9 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateRectangularAreaMeasurement2 = new window.Tools.RectangularAreaMeasurementCreateTool(docViewer, ToolNames.RECTANGULAR_AREA_MEASUREMENT2);
   toolModeMap.AnnotationCreateRectangularAreaMeasurement3 = new window.Tools.RectangularAreaMeasurementCreateTool(docViewer, ToolNames.RECTANGULAR_AREA_MEASUREMENT3);
   toolModeMap.AnnotationCreateRectangularAreaMeasurement4 = new window.Tools.RectangularAreaMeasurementCreateTool(docViewer, ToolNames.RECTANGULAR_AREA_MEASUREMENT4);
+  toolModeMap.AnnotationCreateCloudyRectangularAreaMeasurement2 = new window.Tools.CloudyRectangularAreaMeasurementCreateTool(docViewer, ToolNames.CLOUDY_RECTANGULAR_AREA_MEASUREMENT2);
+  toolModeMap.AnnotationCreateCloudyRectangularAreaMeasurement3 = new window.Tools.CloudyRectangularAreaMeasurementCreateTool(docViewer, ToolNames.CLOUDY_RECTANGULAR_AREA_MEASUREMENT3);
+  toolModeMap.AnnotationCreateCloudyRectangularAreaMeasurement4 = new window.Tools.CloudyRectangularAreaMeasurementCreateTool(docViewer, ToolNames.CLOUDY_RECTANGULAR_AREA_MEASUREMENT4);
 };
 
 export default setupDocViewer;
