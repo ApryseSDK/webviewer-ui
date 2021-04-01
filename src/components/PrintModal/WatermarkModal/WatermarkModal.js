@@ -246,17 +246,9 @@ class WatermarkModal extends React.PureComponent {
     );
   };
 
-  getCirclePosn = lineLength => {
+  getCirclePosn = (lineLength, opacity) => {
     const lineStart = circleRadius;
-    const currSelectedLocation = this.getCurrentSelectedLocation();
-    return (
-      (this.state.locationSettings[currSelectedLocation][
-        FORM_FIELD_KEYS.opacity
-      ] /
-        100) *
-        lineLength +
-      lineStart
-    );
+    return opacity * lineLength + lineStart
   };
 
   setColorPaletteVisibility = visible => {
@@ -447,12 +439,13 @@ class WatermarkModal extends React.PureComponent {
                       <Slider
                         property={'opacity'} // arbitrary property name. this property isn't used in this file
                         displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
-                        value={formInfo[FORM_FIELD_KEYS.opacity]}
-                        displayValue={`${formInfo[FORM_FIELD_KEYS.opacity]}%`}
+                        value={formInfo[FORM_FIELD_KEYS.opacity] / 100}
+                        getDisplayValue={(opacity) => `${Math.round(opacity * 100)}%`}
                         getCirclePosition={this.getCirclePosn}
                         convertRelativeCirclePositionToValue={circlePosn =>
                           circlePosn
                         }
+                        onSliderChange={() => {}}
                         onStyleChange={(property, value) =>
                           this.handleInputChange(
                             FORM_FIELD_KEYS.opacity,

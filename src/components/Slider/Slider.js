@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 
+import core from 'core';
 import useMedia from 'hooks/useMedia';
 import { isIE11 } from 'helpers/device';
 import { getCircleRadius } from 'constants/slider';
@@ -16,10 +17,8 @@ class Slider extends React.PureComponent {
       PropTypes.string,
     ]),
     displayProperty: PropTypes.string.isRequired,
-    displayValue: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
+    getDisplayValue: PropTypes.func.isRequired,
+    onSliderChange: PropTypes.func.isRequired,
     dataElement: PropTypes.string,
     getCirclePosition: PropTypes.func.isRequired,
     convertRelativeCirclePositionToValue: PropTypes.func.isRequired,
@@ -32,6 +31,9 @@ class Slider extends React.PureComponent {
     this.isMouseDown = false;
     this.sliderSvg = React.createRef();
     this.lineLength = 0;
+    this.state = {
+        localValue: props.value
+    }
   }
 
   componentDidMount() {
@@ -43,6 +45,12 @@ class Slider extends React.PureComponent {
     this.updateSvg();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.value) {
+      this.setState({ localValue: this.props.value })
+    }
+  }
+  
   // Fix for slider having the wrong size
   UNSAFE_componentWillUpdate() {
     this.setLineLength();
@@ -70,15 +78,26 @@ class Slider extends React.PureComponent {
     this.onMove(e.nativeEvent);
   }
 
-  onMouseUp = () => {
+  onMouseUp = (e) => {   
+    const isUsingMouse = !e.touches;
+    if (isUsingMouse && !this.isMouseDown) {
+      return;
+    } 
+
+    const { property, onStyleChange, convertRelativeCirclePositionToValue } = this.props;
+    const relativeCirclePosition = this.getRelativeCirclePosition(e);
+    const value = convertRelativeCirclePositionToValue(relativeCirclePosition);
+    
+    onStyleChange(property, value);
     this.isMouseDown = false;
+
   }
 
   onTouchStart = e => {
     this.onMove(e);
   }
 
-  onMove = e => {
+  onMove = e => {    
     const isUsingMouse = !e.touches;
     if (isUsingMouse && !this.isMouseDown) {
       return;
@@ -86,11 +105,15 @@ class Slider extends React.PureComponent {
 
     e.preventDefault();
 
-    const { property, onStyleChange, convertRelativeCirclePositionToValue } = this.props;
+    const { property, onSliderChange, convertRelativeCirclePositionToValue } = this.props;
     const relativeCirclePosition = this.getRelativeCirclePosition(e);
     const value = convertRelativeCirclePositionToValue(relativeCirclePosition);
-
-    onStyleChange(property, value);
+    
+    onSliderChange(property, value);
+    
+    this.setState({
+        localValue: value
+    })
   }
 
   getRelativeCirclePosition = e => {
@@ -116,9 +139,9 @@ class Slider extends React.PureComponent {
   }
 
   renderSlider = () => {
-    const { dataElement, displayProperty, displayValue, getCirclePosition, t } = this.props;
-    const circleCenter = getCirclePosition(this.lineLength);
-
+    const { dataElement, displayProperty, getDisplayValue, getCirclePosition, t } = this.props;
+    const circleCenter = getCirclePosition(this.lineLength, this.state.localValue);
+    
     return (
       <div className="slider" data-element={dataElement}>
         <div className="slider-property">
@@ -130,7 +153,7 @@ class Slider extends React.PureComponent {
             <line x1={circleCenter} y1="50%" x2={this.lineLength + getCircleRadius(this.props.isMobile)} y2="50%" strokeWidth="2" stroke="#e0e0e0" strokeLinecap="round" />
             <circle cx={circleCenter} cy="50%" r={getCircleRadius(this.props.isMobile)} fill="#00a5e4" />
           </svg>
-          <div className="slider-value">{displayValue}</div>
+          <div className="slider-value">{getDisplayValue(this.state.localValue)}</div>
         </div>
       </div>
     );

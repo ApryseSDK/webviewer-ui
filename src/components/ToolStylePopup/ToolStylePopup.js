@@ -117,6 +117,7 @@ class ToolStylePopup extends React.PureComponent {
         isFreeText={isFreeText}
         hideSnapModeCheckbox={isEllipseMeasurementTool || !core.isFullPDFEnabled()}
         onStyleChange={this.handleStyleChange}
+        onSliderChange={this.handleStyleChange}
       />
     );
 
