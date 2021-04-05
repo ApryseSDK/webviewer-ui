@@ -1,11 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'components/Icon';
+import Button from 'components/Button';
+import OutlineContext from './Context';
 
 import core from 'core';
+import outlineUtils from 'helpers/OutlineUtils';
 import { isMobile } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -18,19 +21,26 @@ const propTypes = {
 
 function Outline({ outline }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { setSelectedOutlinePath, isOutlineSelected } = useContext(OutlineContext);
   const dispatch = useDispatch();
 
   const handleClickExpand = useCallback(function() {
     setIsExpanded(expand => !expand);
   }, []);
 
-  const handleOutlineClick = useCallback(function() {
-    core.goToOutline(outline);
+  const handleOutlineClick = useCallback(
+    function() {
+      core.goToOutline(outline);
+      setSelectedOutlinePath(outlineUtils.getPath(outline));
 
-    if (isMobile()) {
-      dispatch(actions.closeElement('leftPanel'));
-    }
-  }, [dispatch]);
+      if (isMobile()) {
+        dispatch(actions.closeElement('leftPanel'));
+      }
+    },
+    [dispatch],
+  );
+
+  const isSelected = isOutlineSelected(outline);
 
   return (
     <div className="Outline">
@@ -47,11 +57,12 @@ function Outline({ outline }) {
           </div>
         )}
       </div>
-      <div className="content">
-        <button className="title" onClick={handleOutlineClick}>
-          {outline.getName()}
-        </button>
-        {isExpanded && outline.getChildren().map((outline, i) => <Outline outline={outline} key={i} />)}
+      <div className={classNames({ content: true, editable: core.isFullPDFEnabled() })}>
+        <div className={classNames({ row: true, selected: isSelected })}>
+          <Button className="contentButton" label={outline.getName()} onClick={handleOutlineClick} />
+        </div>
+        {isExpanded &&
+          outline.getChildren().map(outline => <Outline outline={outline} key={outlineUtils.getOutlineId(outline)} />)}
       </div>
     </div>
   );

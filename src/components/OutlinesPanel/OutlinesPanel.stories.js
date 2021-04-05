@@ -4,11 +4,6 @@ import { Provider as ReduxProvider } from 'react-redux';
 import OutlinesPanel from './OutlinesPanel';
 import { createOutlines } from '../Outline/Outline.spec';
 
-export default {
-  title: 'Components/OutlinesPanel',
-  component: OutlinesPanel,
-};
-
 export function Basic() {
   const outlines = createOutlines([
     {
@@ -39,6 +34,7 @@ export function Basic() {
     return {
       viewer: {
         disabledElements: {},
+        customElementOverrides: {},
       },
       document: {
         outlines: outlines,
@@ -60,6 +56,7 @@ export function NoOutlines() {
     return {
       viewer: {
         disabledElements: {},
+        customElementOverrides: {}
       },
       document: {
         outlines: [],

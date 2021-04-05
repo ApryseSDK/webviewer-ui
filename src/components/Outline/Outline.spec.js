@@ -9,18 +9,26 @@ const BasicOutline = withI18n(Basic);
 export function createOutlines(plainOutlines) {
   // given outline objects which have only string key-value pairs
   // add getters for each key
-  return plainOutlines.map(outline => createOutline(outline));
+  return plainOutlines.map((outline, i) => createOutline(outline, null, i));
 }
 
-export function createOutline(outline) {
-  const children = outline.children.map(child => createOutline(child));
+export function createOutline(outline, parent, i) {
+  const children = [];
 
-  return {
+  const copy = {
     name: outline.name,
     getName: () => outline.name,
     children: children,
     getChildren: () => children,
+    index: i,
+    getIndex: () => i,
+    parent: parent,
+    getParent: () => parent,
   };
+
+  outline.children.forEach((child, i) => children.push(createOutline(child, copy, i)));
+
+  return copy;
 }
 
 jest.mock('core');
