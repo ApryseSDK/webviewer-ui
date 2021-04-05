@@ -15,7 +15,7 @@ function ZoomOverlayContainer(props) {
     zoomTo(zoomLevel);
     dispatch(actions.closeElements(['zoomOverlay']));
   }
-  
+
   function onClickMarqueeZoom() {
     dispatch(actions.closeElements(['zoomOverlay']));
   }
@@ -28,8 +28,8 @@ function ZoomOverlayContainer(props) {
         isReaderMode={useSelector(selectors.isReaderMode)}
         isMarqueeZoomActive={useSelector(selectors.getActiveToolName) === 'MarqueeZoomTool'}
         isMarqueeToolButtonDisabled={useSelector(state => selectors.isElementDisabled(state, 'marqueeToolButton'))}
-        fitToWidth={fitToPage}
-        fitToPage={fitToWidth}
+        fitToWidth={fitToWidth}
+        fitToPage={fitToPage}
         onClickZoomLevelOption={onClickZoomLevelOption}
         onClickMarqueeZoom={onClickMarqueeZoom}
       />
