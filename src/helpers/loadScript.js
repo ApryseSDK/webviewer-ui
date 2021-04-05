@@ -1,4 +1,5 @@
 import getHashParams from 'helpers/getHashParams';
+import wildCardMatch from 'helpers/wildCardMatch';
 
 const loadScript = (scriptSrc, warning) =>
   new Promise(resolve => {
@@ -45,7 +46,7 @@ const loadConfig = () =>
 
                 data = data.replace(/\r|\t/g, '\n');
                 const allowedOrigins = data.split('\n').filter(Boolean);
-                if (!allowedOrigins.includes(`${e.origin}`)) {
+                if (!wildCardMatch(allowedOrigins, `${e.origin}`)) {
                   console.warn(`Config file requested to be loaded by origin ${e.origin}. Please include this origin inside lib/ui/configorigin.txt to allow it to request config files.`);
                   return;
                 }
