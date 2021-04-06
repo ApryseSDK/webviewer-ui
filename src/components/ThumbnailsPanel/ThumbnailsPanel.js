@@ -451,7 +451,8 @@ const ThumbnailsPanel = () => {
       {!isThumbnailSliderDisabled && <div data-element="thumbnailsSizeSlider" className="thumbnail-slider-container">
         <Button
           img="icon-zoom-thumb-out"
-          title="action.thumbZoomOut"
+          title="action.zoomOut"
+          hideTooltipShortcut
           onClick={() => {
             if (thumbnailSize - Number(ZOOM_RANGE_STEP) > Number(ZOOM_RANGE_STEP)) {
               setThumbnailSize(thumbnailSize - Number(ZOOM_RANGE_STEP));
@@ -475,7 +476,8 @@ const ThumbnailsPanel = () => {
         />
         <Button
           img="icon-zoom-thumb-in"
-          title="action.thumbZoomIn"
+          title="action.zoomIn"
+          hideTooltipShortcut
           onClick={() => {
             if (thumbnailSize + Number(ZOOM_RANGE_STEP) < 1001) {
               setThumbnailSize(thumbnailSize + Number(ZOOM_RANGE_STEP));

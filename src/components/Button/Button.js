@@ -27,6 +27,7 @@ const propTypes = {
   /** Will override translated title if both given. */
   ariaLabel: PropTypes.string,
   role: PropTypes.string,
+  hideTooltipShortcut: PropTypes.bool,
 };
 
 const Button = props => {
@@ -56,6 +57,7 @@ const Button = props => {
     ariaLabel,
     role,
     fillColor,
+    hideTooltipShortcut,
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
 
@@ -107,7 +109,7 @@ const Button = props => {
   );
 
   return removeElement ? null : shouldRenderTooltip ? (
-    <Tooltip content={title} hideShortcut={actuallyDisabled}>{children}</Tooltip>
+    <Tooltip content={title} hideShortcut={hideTooltipShortcut || actuallyDisabled}>{children}</Tooltip>
   ) : (
     children
   );
