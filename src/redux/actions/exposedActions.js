@@ -99,7 +99,7 @@ export const enableRibbons = () => (dispatch, getState) => {
   const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
     .filter(key => key.includes('toolbarGroup-'));
 
-  enableElements(toolbarGroupsToEnable,PRIORITY_TWO)(dispatch, getState);
+  enableElements(toolbarGroupsToEnable, PRIORITY_TWO)(dispatch, getState);
 };
 
 const isElementDisabled = (state, dataElement) =>
@@ -502,4 +502,14 @@ export const addTrustedCertificates = certificates => ({
 export const setSignatureValidationModalWidgetName = widgetName => ({
   type: 'SET_VALIDATION_MODAL_WIDGET_NAME',
   payload: { validationModalWidgetName: widgetName },
+});
+
+export const enableFadePageNavigationComponent = () => ({
+  type: 'SET_FADE_PAGE_NAVIGATION_COMPONENT',
+  payload: { fadePageNavigationComponent: true },
+});
+
+export const disableFadePageNavigationComponent = () => ({
+  type: 'SET_FADE_PAGE_NAVIGATION_COMPONENT',
+  payload: { fadePageNavigationComponent: false },
 });

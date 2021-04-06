@@ -352,7 +352,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     case 'SET_CUSTOM_MODAL': {
-      const existingDataElementFiltered = state.customModals.filter(function(modal) {
+      const existingDataElementFiltered = state.customModals.filter(function (modal) {
         return modal.dataElement !== payload.dataElement;
       });
       return {
@@ -399,6 +399,11 @@ export default initialState => (state = initialState, action) => {
       return { ...state, unreadAnnotationIdSet: new Set(unreadAnnotationIdSet) };
     case 'SET_LANGUAGE':
       return { ...state, currentLanguage: payload.language };
+    case 'SET_FADE_PAGE_NAVIGATION_COMPONENT':
+      return {
+        ...state,
+        fadePageNavigationComponent: payload.fadePageNavigationComponent
+      }
     default:
       return state;
   }

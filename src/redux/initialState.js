@@ -36,6 +36,7 @@ export default {
     lastPickedToolGroup: {},
     highContrastMode: getHashParams('highContrastMode', false),
     notesInLeftPanel: getHashParams('notesInLeftPanel', false),
+    fadePageNavigationComponent: true,
     headers: {
       default: [
         { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },

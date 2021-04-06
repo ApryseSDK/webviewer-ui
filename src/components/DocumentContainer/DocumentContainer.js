@@ -22,6 +22,9 @@ import ReaderModeViewer from 'components/ReaderModeViewer';
 import Measure from 'react-measure';
 
 import './DocumentContainer.scss';
+import _ from 'lodash';
+
+const PAGE_NAVIGATION_OVERLAY_FADEOUT = 4000;
 
 class DocumentContainer extends React.PureComponent {
   static propTypes = {
@@ -53,6 +56,10 @@ class DocumentContainer extends React.PureComponent {
     this.wheelToNavigatePages = _.throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
     this.wheelToZoom = _.throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
     this.handleResize = _.throttle(this.handleResize.bind(this), 200);
+    this.debouncedHidePageNavigationOverlay = _.debounce(this.hidePageNavigationOverlay, PAGE_NAVIGATION_OVERLAY_FADEOUT);
+    this.state = {
+      showNavOverlay: true,
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -60,6 +67,7 @@ class DocumentContainer extends React.PureComponent {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
   }
+
 
   componentDidMount() {
     touchEventManager.initialize(this.document.current, this.container.current);
@@ -77,6 +85,8 @@ class DocumentContainer extends React.PureComponent {
 
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
     this.updateContainerSize();
+    core.addEventListener('documentLoaded', this.showAndFadeNavigationOverlay);
+
   }
 
   componentWillUnmount() {
@@ -91,6 +101,8 @@ class DocumentContainer extends React.PureComponent {
     }
 
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
+    core.removeEventListener('documentLoaded', this.showAndFadeNavigationOverlay);
+
   }
 
   preventDefault = e => e.preventDefault();
@@ -176,6 +188,31 @@ class DocumentContainer extends React.PureComponent {
       'textPopup',
       'annotationNoteConnectorLine',
     ]);
+
+    // Show overlay and then hide it, but the hide call is debounced
+    this.showPageNavigationOverlay();
+    this.debouncedHidePageNavigationOverlay();
+  }
+
+  showAndFadeNavigationOverlay = () => {
+    this.showPageNavigationOverlay();
+    setTimeout(this.hidePageNavigationOverlay, PAGE_NAVIGATION_OVERLAY_FADEOUT);
+  }
+
+  hidePageNavigationOverlay = () => {
+    this.setState({ showNavOverlay: false })
+  }
+
+  showPageNavigationOverlay = () => {
+    this.setState({ showNavOverlay: true })
+  }
+
+  pageNavOnMouseEnter = () => {
+    this.showPageNavigationOverlay();
+  };
+
+  pageNavOnMouseLeave = () => {
+    this.hidePageNavigationOverlay();
   }
 
   getClassName = props => {
@@ -221,14 +258,23 @@ class DocumentContainer extends React.PureComponent {
     }
   }
 
+
   render() {
-    const { leftPanelWidth, isLeftPanelOpen, isToolsHeaderOpen, isMobile, currentToolbarGroup, documentContentContainerWidthStyle } = this.props;
+    const {
+      leftPanelWidth,
+      isLeftPanelOpen,
+      isMobile,
+      documentContentContainerWidthStyle,
+      totalPages
+    } = this.props;
 
     const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
     const documentClassName = classNames({
       document: true,
       hidden: this.props.isReaderMode
     });
+    const showPageNav = totalPages > 1;
+
 
     return (
       <div
@@ -269,7 +315,14 @@ class DocumentContainer extends React.PureComponent {
                   marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
                 }}
               >
-                <PageNavOverlay />
+                {showPageNav &&
+                  <PageNavOverlay
+                    showNavOverlay={this.state.showNavOverlay}
+                    onMouseEnter={this.pageNavOnMouseEnter}
+                    onMouseLeave={this.pageNavOnMouseLeave}
+                  />
+                }
+
                 {isMobile && <ToolsOverlay />}
               </div>
             </div>
@@ -283,8 +336,6 @@ class DocumentContainer extends React.PureComponent {
 
 const mapStateToProps = state => ({
   documentContentContainerWidthStyle: selectors.getDocumentContentContainerWidthStyle(state),
-  currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
-  isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),
   leftPanelWidth: selectors.getLeftPanelWidthWithReszieBar(state),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),

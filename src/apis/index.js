@@ -157,6 +157,8 @@ import setAnnotationReadState from './setAnnotationReadState';
 import getAnnotationReadState from './getAnnotationReadState';
 import enableClearSearchOnPanelClose from './enableClearSearchOnPanelClose';
 import disableClearSearchOnPanelClose from './disableClearSearchOnPanelClose';
+import disableFadePageNavigationComponent from './disableFadePageNavigationComponent';
+import enableFadePageNavigationComponent from './enableFadePageNavigationComponent';
 
 /**
  * Triggered when the UI theme is changed
@@ -367,5 +369,7 @@ export default store => {
     disableClearSearchOnPanelClose: disableClearSearchOnPanelClose(store),
     setAnnotationReadState: setAnnotationReadState(store),
     getAnnotationReadState: getAnnotationReadState(store),
+    disableFadePageNavigationComponent: disableFadePageNavigationComponent(store),
+    enableFadePageNavigationComponent: enableFadePageNavigationComponent(store),
   };
 };

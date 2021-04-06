@@ -91,7 +91,7 @@ export const getEnabledToolbarGroups = state => {
     const toolGroupButtons = headerItems.filter(({ dataElement }) => {
       return dataElement && dataElement.includes('ToolGroupButton');
     });
-    const isEveryToolGroupButtonDisabled  = !dataElement.includes('toolbarGroup-View') && toolGroupButtons.every(({ dataElement: toolGroupDataElement }) => {
+    const isEveryToolGroupButtonDisabled = !dataElement.includes('toolbarGroup-View') && toolGroupButtons.every(({ dataElement: toolGroupDataElement }) => {
       return isElementDisabled(state, toolGroupDataElement);
     });
     return !isElementDisabled(state, `${dataElement}`) && !isEveryToolGroupButtonDisabled;
@@ -349,3 +349,5 @@ export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;
 export const getUnreadAnnotationIdSet = state => state.viewer.unreadAnnotationIdSet;
 
 export const getCurrentLanguage = state => state.viewer.currentLanguage;
+
+export const shouldFadePageNavigationComponent = state => state.viewer.fadePageNavigationComponent;

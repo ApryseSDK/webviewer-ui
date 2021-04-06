@@ -23,6 +23,7 @@ class PageNavOverlay extends React.PureComponent {
     totalPages: PropTypes.number,
     pageLabels: PropTypes.array.isRequired,
     allowPageNavigation: PropTypes.bool.isRequired,
+    enableFadePageNavigation: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -30,7 +31,8 @@ class PageNavOverlay extends React.PureComponent {
     this.textInput = React.createRef();
     this.state = {
       input: '',
-      isCustomPageLabels: false
+      isCustomPageLabels: false,
+      isFocused: false,
     };
   }
 
@@ -87,11 +89,23 @@ class PageNavOverlay extends React.PureComponent {
   onBlur = () => {
     const { currentPage, pageLabels } = this.props;
 
-    this.setState({ input: pageLabels[currentPage - 1] });
+    this.setState({ input: pageLabels[currentPage - 1], isFocused: false });
   };
 
+  onFocus = () => {
+    this.setState({ isFocused: true });
+  }
+
   render() {
-    const { currentPage, totalPages, allowPageNavigation, isMobile, t, dataElement } = this.props;
+    const {
+      currentPage,
+      totalPages,
+      allowPageNavigation,
+      isMobile,
+      t,
+      dataElement,
+      enableFadePageNavigation
+    } = this.props;
 
     const inputWidth = this.state.input ? (this.state.input.length) * (isMobile ? 10 : 8) : 0;
 
@@ -100,8 +114,11 @@ class PageNavOverlay extends React.PureComponent {
         className={classNames({
           Overlay: true,
           PageNavOverlay: true,
+          FadeOut: enableFadePageNavigation && !this.props.showNavOverlay && !this.state.isFocused
         })}
         dataElement={dataElement || "pageNavOverlay"}
+        onMouseEnter={this.props.onMouseEnter}
+        onMouseLeave={this.props.onMouseLeave}
       >
         <button
           className="side-arrow-container"
@@ -117,7 +134,7 @@ class PageNavOverlay extends React.PureComponent {
           <Icon className="side-arrow" glyph="icon-chevron-left" />
         </button>
         <div className="formContainer" onClick={this.onClick}>
-          <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
+          <form onSubmit={this.onSubmit} onBlur={this.onBlur} onFocus={this.onFocus}>
             <input
               ref={this.textInput}
               type="text"
@@ -159,6 +176,7 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
   pageLabels: selectors.getPageLabels(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
+  enableFadePageNavigation: selectors.shouldFadePageNavigationComponent(state),
 });
 
 const ConnectedPageNavOverlay = connect(mapStateToProps)(withTranslation()(PageNavOverlay));
