@@ -1,8 +1,9 @@
 import { zoomTo, fitToPage, fitToWidth } from 'helpers/zoom';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'selectors';
+import actions from 'actions';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import OverlayItem from '../OverlayItem';
 import ToolButton from '../ToolButton';
@@ -11,10 +12,17 @@ import './ZoomOverlay.scss';
 
 function ZoomOverlay() {
   const [t] = useTranslation();
+  const dispatch = useDispatch();
 
   const zoomList = useSelector(selectors.getZoomList);
+  const currentZoomLevel = useSelector(selectors.getZoom);
   const isReaderMode = useSelector(selectors.isReaderMode);
   const isMarqueeToolButtonDisabled = useSelector(state => selectors.isElementDisabled(state, 'marqueeToolButton'));
+
+  function onClick(zoomValue) {
+    zoomTo(zoomValue);
+    dispatch(actions.closeElements(['zoomOverlay']));
+  }
 
   return (
     <FlyoutMenu menu="zoomOverlay" trigger="zoomOverlayButton" ariaLabel={t('component.zoomOverlay')}>
@@ -38,7 +46,7 @@ function ZoomOverlay() {
       )}
       <div className="divider" />
       {zoomList.map((zoomValue, i) => (
-        <OverlayItem key={i} onClick={() => zoomTo(zoomValue)} buttonName={`${zoomValue * 100}%`} role="option" />
+        <OverlayItem key={i} onClick={() => onClick(zoomValue)} buttonName={`${zoomValue * 100}%`} selected={currentZoomLevel === zoomValue} role="option" />
       ))}
       {!isReaderMode && (
         <>
