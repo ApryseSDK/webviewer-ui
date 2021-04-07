@@ -29,6 +29,7 @@
     "pageSet": "Установить страницу",
     "print": "Распечатать",
     "name": "название",
+    "rename": "Переименовать",
     "ok": "OK",
     "rotate": "Повернуть",
     "rotateClockwise": "По часовой",
@@ -174,7 +175,8 @@
     "enterReplacementText": "Введите текст, который хотите заменить",
     "sortBy": "Сортировать по",
     "emptyCustomStampInput": "Текст штампа не может быть пустым",
-    "unpostedComment": "Неопубликованный комментарий"
+    "unpostedComment": "Неопубликованный комментарий",
+    "untitled": "Без названия"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "Введите страницы для выбора, то есть 2, 5-9"
+    },
+    "outlineControls": {
+      "add": "Добавить элемент",
+      "reorder": "Изменение порядка"
     },
     "layout": {
       "cover": "Полный",

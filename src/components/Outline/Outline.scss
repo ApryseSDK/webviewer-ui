@@ -1,32 +1,35 @@
+$arrow-size: 19px;
+
 .Outline {
   color: var(--outline-color);
-  cursor: pointer;
   display: flex;
-
+  width: 100%;
+  flex-grow: 1;
   flex-shrink: 0;
   align-items: flex-start;
 
   .padding {
+    cursor: pointer;
     flex-shrink: 0;
-    flex-basis: 19px;
+    flex-basis: $arrow-size;
 
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px 0px;
-    margin-left: 0px;
     border-radius: 4px;
     
     .arrow {
       transition: transform .1s ease;
+      transform: none;
       
       &.expanded {
         transform: rotate(90deg);
       }
 
       .Icon {
-        width: 19px;
-        height: 19px;
+        width: $arrow-size;
+        height: $arrow-size;
       }
     }
 

@@ -29,6 +29,7 @@
     "pageSet": "设定页面",
     "print": "打印",
     "name": "名称",
+    "rename": "改名",
     "ok": "好的",
     "rotate": "旋转",
     "rotateClockwise": "顺时针",
@@ -174,7 +175,8 @@
     "enterReplacementText": "输入您要替换的文字",
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能为空",
-    "unpostedComment": "未发布评论"
+    "unpostedComment": "未发布评论",
+    "untitled": "无标题"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "输入页面以选择2、5-9"
+    },
+    "outlineControls": {
+      "add": "添加项目",
+      "reorder": "重新排序"
     },
     "layout": {
       "cover": "封面",

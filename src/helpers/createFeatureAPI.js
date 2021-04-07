@@ -219,6 +219,22 @@ export default (enable, store) => features => {
     [Feature.MathSymbols]: {
       dataElements: ['mathSymbolsButton'],
     },
+    [Feature.OutlineEditing]: {
+      dataElements: [
+        'outlineControls',
+        'addNewOutlineButtonContainer',
+        'addNewOutlineButton',
+        'outlineReorderButtonGroup',
+        'moveOutlineUpButton',
+        'moveOutlineDownButton',
+        'moveOutlineOutwardButton',
+        'moveOutlineInwardButton',
+        'editOutlineButton',
+        'outlineEditPopup',
+        'renameOutlineButton',
+        'deleteOutlineButton',
+      ],
+    },
   };
 
   if (!Array.isArray(features)) {

@@ -29,6 +29,7 @@
     "pageSet": "Set page",
     "print": "Print",
     "name": "Name",
+    "rename": "Rename",
     "ok": "OK",
     "rotate": "Page Orientation",
     "rotateClockwise": "Rotate Clockwise",
@@ -174,7 +175,8 @@
     "enterReplacementText": "Enter the text you want to replace",
     "sortBy": "Sort by",
     "emptyCustomStampInput": "Stamp text cannot be empty",
-    "unpostedComment": "Unposted Comment"
+    "unpostedComment": "Unposted Comment",
+    "untitled": "Untitled"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "Pages to select i.e. 2, 5-9"
+    },
+    "outlineControls": {
+      "add": "Add item",
+      "reorder": "Reorder"
     },
     "layout": {
       "cover": "Cover Facing Page",

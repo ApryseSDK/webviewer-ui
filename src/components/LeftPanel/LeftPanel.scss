@@ -38,16 +38,11 @@
     width: 100vw;
   }
 
-  .left-panel-container{
+  .left-panel-container {
     display: flex;
     flex-direction: column;
-    // width: 100%;
-    padding-right: 8px;
+    padding: 16px 16px 0px 16px;
 
-    // Needed
-    // overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
-
-    padding-top: 16px;
     @include mobile {
       padding-top: 0px;
       width: 100vw;
@@ -77,9 +72,7 @@
   .left-panel-header {
     display: flex;
     align-items: center;
-    margin: 16px;
-    margin-top: 0px;
-    margin-right: 8px;
+    margin-bottom: 16px;
   }
 
   .Panel {

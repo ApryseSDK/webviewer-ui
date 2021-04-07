@@ -29,6 +29,7 @@
     "pageSet": "設定頁面",
     "print": "列印",
     "name": "名稱",
+    "rename": "改名",
     "ok": "OK",
     "rotate": "旋轉",
     "rotateClockwise": "順時針",
@@ -174,7 +175,8 @@
     "enterReplacementText": "輸入您要替換的文字",
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能為空",
-    "unpostedComment": "未發布評論"
+    "unpostedComment": "未發布評論",
+    "untitled": "無標題"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "輸入頁面以選擇2、5-9"
+    },
+    "outlineControls": {
+      "add": "添加項目",
+      "reorder": "重新排序"
     },
     "layout": {
       "cover": "封面",

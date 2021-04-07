@@ -29,6 +29,7 @@
     "pageSet": "Configurar página",
     "print": "Imprimir",
     "name": "Nombre",
+    "rename": "Rebautizar",
     "ok": "OK",
     "rotate": "Girar",
     "rotateClockwise": "Sentido horario",
@@ -174,7 +175,8 @@
     "enterReplacementText": "Ingrese el texto que desea reemplazar",
     "sortBy": "Ordenar por",
     "emptyCustomStampInput": "El texto del sello no puede estar vacío",
-    "unpostedComment": "Comentario no publicado"
+    "unpostedComment": "Comentario no publicado",
+    "untitled": "Intitulado"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "Ingrese las páginas para seleccionar, es decir, 2, 5-9"
+    },
+    "outlineControls": {
+      "add": "Añadir artículo",
+      "reorder": "Reordenar"
     },
     "layout": {
       "cover": "Portada",

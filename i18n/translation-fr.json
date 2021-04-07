@@ -29,6 +29,7 @@
     "pageSet": "Mettre en place la page",
     "print": "Imprimer",
     "name": "Nom",
+    "rename": "Renommer",
     "ok": "OK",
     "rotate": "Tourner",
     "rotateClockwise": "Tourner horaire",
@@ -174,7 +175,8 @@
     "enterReplacementText": "Entrez le texte que vous souhaitez remplacer",
     "sortBy": "Trier par",
     "emptyCustomStampInput": "Le texte du tampon ne peut pas être vide",
-    "unpostedComment": "Commentaire non publié"
+    "unpostedComment": "Commentaire non publié",
+    "untitled": "Sans titre"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "Entrez les pages à sélectionner, c'est-à-dire 2, 5-9"
+    },
+    "outlineControls": {
+      "add": "Ajouter un item",
+      "reorder": "Réorganiser"
     },
     "layout": {
       "cover": "Couverture",

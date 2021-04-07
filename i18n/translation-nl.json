@@ -29,6 +29,7 @@
     "pageSet": "Zet pagina",
     "print": "Printen",
     "name": "Naam",
+    "rename": "Hernoemen",
     "ok": "OK",
     "rotate": "Roteren",
     "rotateClockwise": "Met de klok mee",
@@ -174,7 +175,8 @@
     "enterReplacementText": "Voer de tekst in die u wilt vervangen",
     "sortBy": "Sorteer op",
     "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn",
-    "unpostedComment": "Niet-geplaatste reactie"
+    "unpostedComment": "Niet-geplaatste reactie",
+    "untitled": "Ongetiteld"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "Voer pagina's in om te selecteren, d.w.z. 2, 5-9"
+    },
+    "outlineControls": {
+      "add": "Voeg item toe",
+      "reorder": "Opnieuw ordenen"
     },
     "layout": {
       "cover": "Blad",

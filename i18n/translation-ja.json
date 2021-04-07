@@ -29,6 +29,7 @@
     "pageSet": "ページを設定",
     "print": "印刷",
     "name": "名前",
+    "rename": "名前を変更する",
     "ok": "OK",
     "rotate": "ページの方向",
     "rotateClockwise": "右90°回転",
@@ -174,7 +175,8 @@
     "enterReplacementText": "置き換えるテキストを入力してください",
     "sortBy": "並び替え",
     "emptyCustomStampInput": "スタンプテキストを空にすることはできません",
-    "unpostedComment": "未投稿コメント"
+    "unpostedComment": "未投稿コメント",
+    "untitled": "無題"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "ページを選択（例：2, 5-9）"
+    },
+    "outlineControls": {
+      "add": "アイテムを追加",
+      "reorder": "再注文"
     },
     "layout": {
       "cover": "表紙見開きページ",

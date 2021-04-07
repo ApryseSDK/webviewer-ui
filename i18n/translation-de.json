@@ -29,6 +29,7 @@
     "pageSet": "Seite einstellen",
     "print": "Drucken",
     "name": "Name",
+    "rename": "Umbenennen",
     "ok": "OK",
     "rotate": "Drehen",
     "rotateClockwise": "Im Uhrzeigersinn",
@@ -174,7 +175,8 @@
     "enterReplacementText": "Geben Sie den Text ein, den Sie ersetzen möchten",
     "sortBy": "Sortiere nach",
     "emptyCustomStampInput": "Stempeltext darf nicht leer sein",
-    "unpostedComment": "Unposted Kommentar"
+    "unpostedComment": "Unposted Kommentar",
+    "untitled": "Ohne Titel"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "Geben Sie die gewünschten Seiten ein, z. B. 2, 5-9"
+    },
+    "outlineControls": {
+      "add": "Artikel hinzufügen",
+      "reorder": "Nachbestellen"
     },
     "layout": {
       "cover": "Deckblatt",

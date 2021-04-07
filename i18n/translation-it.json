@@ -29,6 +29,7 @@
     "pageSet": "Imposta pagina",
     "print": "Stampa",
     "name": "Nome",
+    "rename": "Rinominare",
     "ok": "ok",
     "rotate": "Ruotare",
     "rotateClockwise": "Senso orario",
@@ -174,7 +175,8 @@
     "enterReplacementText": "Immettere il testo che si desidera sostituire",
     "sortBy": "Ordina per",
     "emptyCustomStampInput": "Il testo del timbro non può essere vuoto",
-    "unpostedComment": "Commento non pubblicato"
+    "unpostedComment": "Commento non pubblicato",
+    "untitled": "Senza titolo"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "Immettere le pagine per selezionare cioè 2, 5-9"
+    },
+    "outlineControls": {
+      "add": "Aggiungi articolo",
+      "reorder": "Riordina"
     },
     "layout": {
       "cover": "Copertina",

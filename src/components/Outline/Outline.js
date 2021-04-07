@@ -1,11 +1,13 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import OutlineContext from './Context';
+import OutlineTextInput from 'components/OutlineTextInput';
 
 import core from 'core';
 import outlineUtils from 'helpers/OutlineUtils';
@@ -21,8 +23,31 @@ const propTypes = {
 
 function Outline({ outline }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { setSelectedOutlinePath, isOutlineSelected } = useContext(OutlineContext);
+  const {
+    setSelectedOutlinePath,
+    selectedOutlinePath,
+    isOutlineSelected,
+    setIsAddingNewOutline,
+    isAddingNewOutline,
+    addNewOutline,
+  } = useContext(OutlineContext);
   const dispatch = useDispatch();
+  const [t] = useTranslation();
+
+  useLayoutEffect(() => {
+    // automatically sets the current outline to be expanded in two cases
+    // 1. another outline is nested into this outline (by listening to the change of selectedOutlinePath)
+    // 2. a new child outline is going to be added (by listening to the change of isAddingNewOutline)
+    const path = outlineUtils.getPath(outline);
+
+    if (
+      selectedOutlinePath !== null &&
+      selectedOutlinePath !== path &&
+      selectedOutlinePath.startsWith(path)
+    ) {
+      setIsExpanded(true);
+    }
+  }, [selectedOutlinePath, isAddingNewOutline, outline]);
 
   const handleClickExpand = useCallback(function() {
     setIsExpanded(expand => !expand);
@@ -63,6 +88,14 @@ function Outline({ outline }) {
         </div>
         {isExpanded &&
           outline.getChildren().map(outline => <Outline outline={outline} key={outlineUtils.getOutlineId(outline)} />)}
+        {isAddingNewOutline && isSelected && (
+          <OutlineTextInput
+            defaultValue={t('message.untitled')}
+            onEscape={() => setIsAddingNewOutline(false)}
+            onEnter={addNewOutline}
+            onBlur={addNewOutline}
+          />
+        )}
       </div>
     </div>
   );

@@ -29,6 +29,7 @@
     "pageSet": "Definir página",
     "print": "Imprimir",
     "name": "Nome",
+    "rename": "Renomear",
     "ok": "OK",
     "rotate": "Girar",
     "rotateClockwise": "Sentido horário",
@@ -174,7 +175,8 @@
     "enterReplacementText": "Insira o texto que deseja substituir",
     "sortBy": "Ordenar por",
     "emptyCustomStampInput": "O texto do carimbo não pode estar vazio",
-    "unpostedComment": "Comentário Não Postado"
+    "unpostedComment": "Comentário Não Postado",
+    "untitled": "Sem título"
   },
   "option": {
     "notesOrder": {
@@ -209,6 +211,10 @@
     },
     "documentControls": {
       "placeholder": "Insira as páginas para selecionar. Por exemplo: 2, 5-9"
+    },
+    "outlineControls": {
+      "add": "Adicionar Item",
+      "reorder": "Reordenar"
     },
     "layout": {
       "cover": "Capa",
