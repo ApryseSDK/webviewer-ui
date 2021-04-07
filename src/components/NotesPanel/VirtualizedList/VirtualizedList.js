@@ -65,7 +65,10 @@ const VirtualizedList = React.forwardRef(
       listRef.current?.recomputeRowHeights(index);
 
       if(selectedIndex !== -1) {
-        listRef.current?.scrollToRow(selectedIndex);
+        setTimeout(() => {
+          // need setTimeout or else sometime it won't scroll to the correct replies
+          listRef.current?.scrollToRow(selectedIndex);
+        }, 0);
       }
     };
 

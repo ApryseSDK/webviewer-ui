@@ -345,7 +345,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       })}
       style={style}
       data-element="notesPanel"
-      onClick={core.deselectAllAnnotations}
+      onMouseUp={() => core.deselectAllAnnotations}
     >
       {isMobile && !notesInLeftPanel &&
         <div
