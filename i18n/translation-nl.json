@@ -361,6 +361,12 @@
       "deleteMessage": "Weet u zeker dat u de geselecteerde pagina ('s) wilt verwijderen. Dit kan niet ongedaan worden gemaakt",
       "deleteLastPageMessage": "Hierdoor zouden er geen pagina's meer overblijven. Laat minstens één pagina achter"
     },
+    "extractPage": {
+      "title": "Pagina uitpakken",
+      "message": "Weet u zeker dat u de geselecteerde pagina ('s) wilt extraheren?",
+      "confirmBtn": "Extraheer pagina's",
+      "secondaryBtn": "Extraheer en verwijder pagina ('s)"
+    },
     "redaction": {
       "applyTile": "Redactie toepassen",
       "applyMessage": "Met deze actie worden alle items verwijderd die zijn geselecteerd voor redactie. Het kan niet ongedaan gemaakt worden."

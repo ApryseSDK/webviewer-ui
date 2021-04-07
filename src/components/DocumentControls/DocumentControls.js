@@ -22,9 +22,7 @@ function getPageString(selectedPageArray, pageLabels) {
     if (sortedPages[i + 1] === sortedPages[i] + 1) {
       prevIndex = prevIndex !== null ? prevIndex : sortedPages[i];
     } else if (prevIndex !== null) {
-      pagesToPrint = `${pagesToPrint}${pageLabels[prevIndex]}-${
-        pageLabels[sortedPages[i]]
-      }, `;
+      pagesToPrint = `${pagesToPrint}${pageLabels[prevIndex]}-${pageLabels[sortedPages[i]]}, `;
       prevIndex = null;
     } else {
       pagesToPrint = `${pagesToPrint}${pageLabels[sortedPages[i]]}, `;
@@ -49,9 +47,7 @@ const DocumentControls = props => {
   const initialPagesString = getPageString(selectedPageIndexes, pageLabels);
 
   const [pageString, setPageString] = useState(initialPagesString);
-  const [previousPageString, setPreviousPageString] = useState(
-    initialPagesString,
-  );
+  const [previousPageString, setPreviousPageString] = useState(initialPagesString);
 
   useEffect(() => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
@@ -80,7 +76,7 @@ const DocumentControls = props => {
     }
 
     const pageNumbersToRotate = selectedPageIndexes.map(p => p + 1);
-    pageNumbersToRotate.forEach((index) => {
+    pageNumbersToRotate.forEach(index => {
       core.rotatePages([index], window.CoreControls.PageRotation.e_90);
     });
   };
@@ -106,9 +102,7 @@ const DocumentControls = props => {
         }),
     };
 
-    if (
-      core.getDocumentViewer().getPageCount() === pageNumbersToDelete.length
-    ) {
+    if (core.getDocumentViewer().getPageCount() === pageNumbersToDelete.length) {
       message = t('warning.deletePage.deleteLastPageMessage');
 
       warning = {
@@ -128,18 +122,37 @@ const DocumentControls = props => {
       return;
     }
 
-    extractPagesWithAnnotations(
-      selectedPageIndexes.map(index => index + 1),
-    ).then(file => {
-      saveAs(file, 'extractedDocument.pdf');
-    });
+    const message = t('warning.extractPage.message');
+    const title = t('warning.extractPage.title');
+    const confirmBtnText = t('warning.extractPage.confirmBtn');
+    const pageNumbersToDelete = selectedPageIndexes.map(p => p + 1);
+    const secondaryBtnText = t('warning.extractPage.secondaryBtn');
+
+    let warning = {
+      message,
+      title,
+      confirmBtnText,
+      onConfirm: () =>
+        extractPagesWithAnnotations(selectedPageIndexes.map(index => index + 1)).then(file => {
+          saveAs(file, 'extractedDocument.pdf');
+        }),
+      secondaryBtnText,
+      onSecondary: () => {
+        extractPagesWithAnnotations(selectedPageIndexes.map(index => index + 1)).then(file => {
+          saveAs(file, 'extractedDocument.pdf');
+          core.removePages(pageNumbersToDelete).then(() => {
+            dispatch(actions.setSelectedPageThumbnails([]));
+          });
+        });
+      },
+    };
+
+    dispatch(actions.showWarningMessage(warning));
   };
 
   const onBlur = e => {
     const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pages = !selectedPagesString
-      ? []
-      : getPageArrayFromString(selectedPagesString, pageLabels);
+    const pages = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels);
     const pageIndexes = pages.map(page => page - 1);
 
     if (pages.length || !selectedPagesString) {
@@ -159,10 +172,7 @@ const DocumentControls = props => {
   };
 
   return isDisabled ? null : (
-    <div
-      className={'documentControlsContainer'}
-      data-element={'documentControl'}
-    >
+    <div className={'documentControlsContainer'} data-element={'documentControl'}>
       {shouldShowControls ? (
         <div className={'documentControls'}>
           <div className={'divider'}></div>

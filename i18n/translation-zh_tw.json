@@ -361,6 +361,12 @@
       "deleteMessage": "您確定要刪除所選頁面嗎？這是無法撤消的",
       "deleteLastPageMessage": "這將導致沒有剩餘頁面。請至少留一頁"
     },
+    "extractPage": {
+      "title": "提取頁面",
+      "message": "您確定要提取所選頁面嗎？",
+      "confirmBtn": "提取頁面",
+      "secondaryBtn": "提取並刪除頁面"
+    },
     "redaction": {
       "applyTile": "應用編輯",
       "applyMessage": "此操作將永久刪除所有要編輯的項目。無法撤消。"

@@ -361,6 +361,12 @@
       "deleteMessage": "Sei sicuro di voler eliminare le pagine selezionate. Questo non può essere annullato",
       "deleteLastPageMessage": "Ciò comporterebbe che non restino pagine. Si prega di lasciare almeno una pagina"
     },
+    "extractPage": {
+      "title": "Estrai pagina",
+      "message": "Sei sicuro di voler estrarre le pagine selezionate?",
+      "confirmBtn": "Estrai pagine",
+      "secondaryBtn": "Estrai e rimuovi pagine"
+    },
     "redaction": {
       "applyTile": "Applica redazione",
       "applyMessage": "Questa azione rimuoverà permanentemente tutti gli elementi selezionati per la redazione. Non può essere annullato."

@@ -361,6 +361,12 @@
       "deleteMessage": "您确定要删除所选页面吗？这是无法撤消的",
       "deleteLastPageMessage": "这将导致没有剩余页面。请至少留一页"
     },
+    "extractPage": {
+      "title": "提取页面",
+      "message": "您确定要提取所选页面吗？",
+      "confirmBtn": "提取页面",
+      "secondaryBtn": "提取并删除页面"
+    },
     "redaction": {
       "applyTile": "应用编辑",
       "applyMessage": "此操作将永久删除所有要编辑的项目。无法撤消。"

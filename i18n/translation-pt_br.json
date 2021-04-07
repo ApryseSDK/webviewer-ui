@@ -361,6 +361,12 @@
       "deleteMessage": "Esta ação excluirá permanentemente as páginas selecionadas. Isso não pode ser desfeito",
       "deleteLastPageMessage": "Esta ação resultaria em nenhuma página restante. Deixe pelo menos uma página"
     },
+    "extractPage": {
+      "title": "Extrair página",
+      "message": "Tem certeza de que deseja extrair as páginas selecionadas?",
+      "confirmBtn": "Extrair páginas",
+      "secondaryBtn": "Extrair e remover página (s)"
+    },
     "redaction": {
       "applyTile": "Aplicar supressão",
       "applyMessage": "Esta ação suprimirá permanentemente todos os itens selecionados para remoção. Isso não pode ser desfeito."

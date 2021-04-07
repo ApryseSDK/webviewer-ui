@@ -361,6 +361,12 @@
       "deleteMessage": "Voulez-vous vraiment supprimer les pages sélectionnées? Cela ne peut pas être annulé",
       "deleteLastPageMessage": "Il en résulterait aucune page restante. Veuillez laisser au moins une page"
     },
+    "extractPage": {
+      "title": "Extraire la page",
+      "message": "Voulez-vous vraiment extraire la ou les pages sélectionnées?",
+      "confirmBtn": "Extraire des pages",
+      "secondaryBtn": "Extraire et supprimer des pages"
+    },
     "redaction": {
       "applyTile": "Appliquer la rédaction",
       "applyMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour la rédaction. Ça ne peut pas être défait."

@@ -1,13 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import i18next from 'i18next';
 import core from 'core';
 
 import Button from 'components/Button';
 
 import getClassName from 'helpers/getClassName';
-import getPopupElements from 'helpers/getPopupElements';
 
 import actions from 'actions';
 import selectors from 'selectors';
@@ -16,110 +14,110 @@ import { Swipeable } from 'react-swipeable';
 
 import './WarningModal.scss';
 
-class WarningModal extends React.PureComponent {
-  static propTypes = {
-    isDisabled: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    closeElement: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
+const WarningModal = () => {
+  const [
+    title,
+    message,
+    onConfirm,
+    confirmBtnText,
+    onSecondary,
+    secondaryBtnText,
+    onCancel,
+    isDisabled,
+    isOpen,
+  ] = useSelector(
+    state => [
+      selectors.getWarningTitle(state) || '',
+      selectors.getWarningMessage(state),
+      selectors.getWarningConfirmEvent(state),
+      selectors.getWarningConfirmBtnText(state),
+      selectors.getWarningSecondaryEvent(state),
+      selectors.getWarningSecondaryBtnText(state),
+      selectors.getWarningCancelEvent(state),
+      selectors.isElementDisabled(state, 'warningModal'),
+      selectors.isElementOpen(state, 'warningModal'),
+    ],
+    shallowEqual,
+  );
 
-    confirmBtnText: PropTypes.string,
-    title: PropTypes.string,
-    message: PropTypes.string,
-    onConfirm: PropTypes.func,
-    onCancel: PropTypes.func,
-  };
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    core.addEventListener('documentUnloaded', this.onCancel);
+  if (isDisabled) {
+    return null;
   }
 
-  componentDidUpdate(prevProps) {
-    const { isOpen, closeElements } = this.props;
+  const className = getClassName('Modal WarningModal', { isOpen });
+  const label = confirmBtnText || i18next.t('action.ok');
+  const cancelBtnText = i18next.t('action.cancel');
 
-    // if (!prevProps.isOpen && isOpen) {
-    //   closeElements(getPopupElements());
-    // }
-  }
+  useEffect(() => {
+    core.addEventListener('documentUnloaded', cancel);
 
-  componentWillUnmount() {
-    core.removeEventListener('documentUnloaded', this.onCancel);
-  }
+    return () => {
+      core.removeEventListener('documentUnloaded', cancel);
+    };
+  }, []);
 
-  onCancel = () => {
-    // fire cancel event from 'componentDidUpdate'
-    if (this.props.onCancel) {
-      this.props.onCancel().then(() => {
-        this.props.closeElement('warningModal');
-      });
+  const cancel = async () => {
+    if (onCancel) {
+      await onCancel();
+      dispatch(actions.closeElements(['warningModal']));
     } else {
-      this.props.closeElement('warningModal');
+      dispatch(actions.closeElements(['warningModal']));
     }
   };
 
-  onConfirm = () => {
-    this.props.onConfirm().then(() => {
-      this.props.closeElement('warningModal');
-    });
+  const confirm = async () => {
+    if (onConfirm) {
+      await onConfirm();
+      dispatch(actions.closeElements(['warningModal']));
+    } else {
+      dispatch(actions.closeElements(['warningModal']));
+    }
   };
 
-  render() {
-    const { title, message, confirmBtnText } = this.props;
-
-    if (this.props.isDisabled) {
-      return null;
+  const secondary = async () => {
+    if (onSecondary) {
+      await onSecondary();
+      dispatch(actions.closeElements(['warningModal']));
+    } else {
+      dispatch(actions.closeElements(['warningModal']));
     }
+  };
 
-    const className = getClassName('Modal WarningModal', this.props);
-    const label = confirmBtnText || i18next.t('action.ok');
-
-    const cancelBtnText = i18next.t('action.cancel');
-
-    return (
-      <Swipeable
-        onSwipedUp={this.onCancel}
-        onSwipedDown={this.onCancel}
-        preventDefaultTouchmoveEvent
-      >
-        <div className={className} onMouseDown={this.onCancel}>
-          <div className="container" onMouseDown={e => e.stopPropagation()}>
-            <div className="swipe-indicator" />
-            <div className="header">{title}</div>
-            <div className="body">{message}</div>
-            <div className="footer">
+  return (
+    <Swipeable onSwipedUp={cancel} onSwipedDown={cancel} preventDefaultTouchmoveEvent>
+      <div className={className} onMouseDown={cancel}>
+        <div className="container" onMouseDown={e => e.stopPropagation()}>
+          <div className="swipe-indicator" />
+          <div className="header">{title}</div>
+          <div className="body">{message}</div>
+          <div className="footer">
+            {onSecondary && (
               <Button
                 className="cancel modal-button"
                 dataElement="WarningModalClearButton"
-                label={cancelBtnText}
-                onClick={this.onCancel}
+                label={secondaryBtnText}
+                onClick={secondary}
               />
-              <Button
-                className="confirm modal-button"
-                dataElement="WarningModalSignButton"
-                label={label}
-                onClick={this.onConfirm}
-              />
-            </div>
+            )}
+            <Button
+              className="cancel modal-button"
+              dataElement="WarningModalClearButton"
+              label={cancelBtnText}
+              onClick={cancel}
+            />
+            <Button
+              className="confirm modal-button"
+              dataElement="WarningModalSignButton"
+              label={label}
+              onClick={confirm}
+            />
           </div>
         </div>
-      </Swipeable>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  title: selectors.getWarningTitle(state) || '',
-  message: selectors.getWarningMessage(state),
-  onConfirm: selectors.getWarningConfirmEvent(state),
-  confirmBtnText: selectors.getWarningConfirmBtnText(state),
-  onCancel: selectors.getWarningCancelEvent(state),
-  isDisabled: selectors.isElementDisabled(state, 'warningModal'),
-  isOpen: selectors.isElementOpen(state, 'warningModal'),
-});
-
-const mapDispatchToProps = {
-  closeElement: actions.closeElement,
-  closeElements: actions.closeElements,
+      </div>
+    </Swipeable>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(WarningModal);
+export default WarningModal;

@@ -361,6 +361,12 @@
       "deleteMessage": "선택한 페이지를 삭제 하시겠습니까? 취소 할 수 없습니다",
       "deleteLastPageMessage": "그러면 페이지가 남아 있지 않습니다. 한 페이지 이상 남겨주세요"
     },
+    "extractPage": {
+      "title": "페이지 추출",
+      "message": "선택한 페이지를 추출 하시겠습니까?",
+      "confirmBtn": "페이지 추출",
+      "secondaryBtn": "페이지 추출 및 제거"
+    },
     "redaction": {
       "applyTile": "수정 적용",
       "applyMessage": "이 작업은 편집을 위해 선택된 모든 항목을 영구적으로 제거합니다. 취소 할 수 없습니다."

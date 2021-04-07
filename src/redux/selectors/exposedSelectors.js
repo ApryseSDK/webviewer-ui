@@ -295,6 +295,11 @@ export const getWarningConfirmEvent = state => state.viewer.warning?.onConfirm;
 export const getWarningConfirmBtnText = state =>
   state.viewer.warning?.confirmBtnText;
 
+export const getWarningSecondaryEvent = state => state.viewer.warning?.onSecondary;
+
+export const getWarningSecondaryBtnText = state =>
+  state.viewer.warning?.secondaryBtnText;
+
 export const getWarningCancelEvent = state => state.viewer.warning?.onCancel;
 
 export const isAccessibleMode = state => state.viewer.isAccessibleMode;

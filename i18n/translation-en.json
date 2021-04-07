@@ -361,6 +361,12 @@
       "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone",
       "deleteLastPageMessage": "This would result in no pages remaining. Please leave at least one page"
     },
+    "extractPage": {
+      "title": "Extract Page",
+      "message": "Are you sure you want to extract the selected page(s)?",
+      "confirmBtn": "Extract pages",
+      "secondaryBtn": "Extract and remove page(s)"
+    },
     "redaction": {
       "applyTile": "Apply Redaction",
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."

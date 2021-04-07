@@ -361,6 +361,12 @@
       "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden",
       "deleteLastPageMessage": "Dies würde dazu führen, dass keine Seiten verbleiben. Bitte hinterlassen Sie mindestens eine Seite"
     },
+    "extractPage": {
+      "title": "Seite extrahieren",
+      "message": "Möchten Sie die ausgewählten Seiten wirklich extrahieren?",
+      "confirmBtn": "Seiten extrahieren",
+      "secondaryBtn": "Seite (n) extrahieren und entfernen"
+    },
     "redaction": {
       "applyTile": "Schwärzung anwenden",
       "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht rückgängig gemacht werden."

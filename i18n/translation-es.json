@@ -361,6 +361,12 @@
       "deleteMessage": "¿Está seguro de que desea eliminar las páginas seleccionadas? Esto no se puede deshacer",
       "deleteLastPageMessage": "Esto resultaría en que no quedan páginas. Por favor, deje al menos una página"
     },
+    "extractPage": {
+      "title": "Extraer página",
+      "message": "¿Está seguro de que desea extraer las páginas seleccionadas?",
+      "confirmBtn": "Extraer páginas",
+      "secondaryBtn": "Extraer y eliminar página (s)"
+    },
     "redaction": {
       "applyTile": "Aplicar redacción",
       "applyMessage": "Esta acción eliminará permanentemente todos los elementos seleccionados para su redacción. No se puede deshacer."
