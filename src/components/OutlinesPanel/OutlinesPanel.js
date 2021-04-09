@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -10,7 +8,6 @@ import Icon from 'components/Icon';
 import Button from 'components/Button';
 import OutlineControls from 'components/OutlineControls';
 import OutlineTextInput from 'components/OutlineTextInput';
-import HorizontalDivider from 'components/HorizontalDivider';
 import DataElementWrapper from 'components/DataElementWrapper';
 
 import core from 'core';
@@ -38,7 +35,7 @@ function OutlinesPanel() {
       setSelectedOutlinePath(nextPathRef.current);
       nextPathRef.current = null;
     }
-  }, [outlines])
+  }, [outlines]);
 
   async function addNewOutline(e) {
     const name = e.target.value;

@@ -10,7 +10,7 @@ function OutlineTextInput({ className, defaultValue, onEnter, onEscape, ...rest 
     inputRef.current.focus();
     inputRef.current.select();
   }, []);
-  
+
   function handleKeyDown(e) {
     if (e.key === 'Enter' && onEnter) {
       onEnter(e);

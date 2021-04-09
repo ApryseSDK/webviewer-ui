@@ -24,6 +24,7 @@ const propTypes = {
   dataElement: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func,
+  onDoubleClick: PropTypes.func,
   /** Will override translated title if both given. */
   ariaLabel: PropTypes.string,
   role: PropTypes.string,
@@ -51,6 +52,7 @@ const Button = props => {
     color,
     dataElement,
     onClick,
+    onDoubleClick,
     className,
     title,
     style,
@@ -92,6 +94,7 @@ const Button = props => {
       // Because mouse events won't fire and we want them to
       // so that we can show the button tooltip
       onClick={actuallyDisabled ? NOOP : onClick}
+      onDoubleClick={actuallyDisabled ? NOOP : onDoubleClick}
       aria-label={aLabel}
       role={role}
       aria-keyshortcuts={ariaKeyshortcuts}

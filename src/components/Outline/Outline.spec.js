@@ -6,6 +6,33 @@ import core from 'core';
 
 const BasicOutline = withI18n(Basic);
 
+export function getDefaultOutlines() {
+  return createOutlines([
+    {
+      name: 'Introduction',
+      children: [
+        {
+          name: 'Overview',
+          children: [
+            {
+              name: 'Why WebViewer?',
+              children: [],
+            },
+            {
+              name: 'Supported File Formats',
+              children: [],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'Pick the right SDK',
+      children: [],
+    },
+  ]);
+}
+
 export function createOutlines(plainOutlines) {
   // given outline objects which have only string key-value pairs
   // add getters for each key

@@ -2,17 +2,21 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import Outline from './Outline';
-import { createOutline } from '../Outline/Outline.spec';
+import { createOutline, getDefaultOutlines } from '../Outline/Outline.spec';
 import OutlineContext from './Context';
 
 function noop() {}
 
 export function Basic() {
+
   function reducer(state) {
     return {
       viewer: {
         disabledElements: {},
         customElementOverrides: {},
+      },
+      document: {
+        outlines: getDefaultOutlines(),
       },
     };
   }

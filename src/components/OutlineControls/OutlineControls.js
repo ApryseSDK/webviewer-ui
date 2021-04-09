@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef, useReducer } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +8,6 @@ import OutlineContext from 'components/Outline/Context';
 
 import core from 'core';
 import outlineUtils from 'helpers/OutlineUtils';
-import dataElement from 'constants/dataElement';
 import selectors from 'selectors';
 
 import './OutlineControls.scss';
@@ -39,7 +38,7 @@ function OutlineControls() {
       setSelectedOutlinePath(nextIndexRef.current);
       nextIndexRef.current = null;
     }
-  }, [outlines]);
+  }, [outlines, setSelectedOutlinePath]);
 
   async function moveOutlineUp() {
     const nextIndex = await outlineUtils.moveOutlineUp(selectedOutlinePath);

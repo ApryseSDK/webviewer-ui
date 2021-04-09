@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { Basic } from './OutlineTextInput.stories';
 
 describe.only('OutlineTextInput', () => {
