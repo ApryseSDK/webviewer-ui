@@ -84,6 +84,7 @@ function SearchResult(props) {
   const cellMeasureCache = React.useMemo(() => {
     return new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
   }, []);
+  const listRef = React.useRef(null);
 
   if (searchResults.length === 0) {
     // clear measure cache, when doing a new search
@@ -121,6 +122,12 @@ function SearchResult(props) {
     );
   }, [cellMeasureCache, searchResults, activeResultIndex, t, pageLabels]);
 
+  React.useEffect(() => {
+    if (listRef) {
+      listRef.current?.scrollToRow(activeResultIndex);
+    }
+  }, [activeResultIndex]);
+
   if (height == null) { // eslint-disable-line eqeqeq
     // VirtualizedList requires width and height of the component which is calculated by withContentRect HOC.
     // On first render when HOC haven't yet set these values, both are undefined, thus having this check here
@@ -143,6 +150,7 @@ function SearchResult(props) {
       deferredMeasurementCache={cellMeasureCache}
       rowHeight={cellMeasureCache.rowHeight}
       rowRenderer={rowRenderer}
+      ref={listRef}
     />
   );
 }
