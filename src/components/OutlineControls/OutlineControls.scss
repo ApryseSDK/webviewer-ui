@@ -1,0 +1,30 @@
+@import '../../constants/styles';
+
+.OutlineControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px 0px 12px 0px;
+  border-top: 1.5px solid var(--border);
+  border-bottom: 1.5px solid var(--border);
+  padding: 4px 0px;
+  color: var(--faded-text);
+
+  .Button {
+    height: 30px;
+    padding: 0px;
+    width: 30px;
+    margin: 0px 4px;
+
+    .Icon {
+      height: 24px;
+      width: 24px;
+      color: var(--icon-color);
+    }
+
+    &:hover {
+      background: var(--view-header-button-hover);
+      border-radius: 4px;
+    }
+  }
+}

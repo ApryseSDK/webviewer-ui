@@ -21,6 +21,9 @@
 
   &.disabled {
     fill: var(--disabled-icon);
+    path {
+      fill: var(--disabled-icon);
+    }
   }
 
   path[fill=none],

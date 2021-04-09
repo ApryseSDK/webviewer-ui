@@ -8,6 +8,7 @@ import Outline from 'components/Outline';
 import OutlineContext from 'components/Outline/Context';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
+import OutlineControls from 'components/OutlineControls';
 import OutlineTextInput from 'components/OutlineTextInput';
 import HorizontalDivider from 'components/HorizontalDivider';
 import DataElementWrapper from 'components/DataElementWrapper';
@@ -78,6 +79,7 @@ function OutlinesPanel() {
           reRenderPanel,
         }}
       >
+        <OutlineControls />
         <div className="Outlines">
           {!isAddingNewOutline && outlines.length === 0 && (
             <div className="no-outlines">
