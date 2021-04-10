@@ -34,7 +34,7 @@
       }
     }
   }
-  
+
   .author-and-overflow {
     display: flex;
     justify-content: space-between;
@@ -74,7 +74,7 @@
       }
     }
   }
- 
+
   .author-and-date {
     flex: 1;
     min-width: 0;
@@ -135,6 +135,10 @@
   .container {
     margin-top: 7px;
     overflow: hidden;
+
+    .contents {
+      cursor: text;
+    }
   }
 
   .edit-content {
