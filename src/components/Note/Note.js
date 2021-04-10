@@ -7,16 +7,15 @@ import { useTranslation } from 'react-i18next';
 import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 import ReplyArea from 'components/Note/ReplyArea';
-import ActionButton from 'components/ActionButton';
 
 import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
 import AnnotationNoteConnectorLine from 'components/AnnotationNoteConnectorLine';
 import useDidUpdate from 'hooks/useDidUpdate';
+import Button from 'components/Button';
 
 import './Note.scss';
-import Button from '../Button';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -48,11 +47,11 @@ const Note = ({
     ],
     shallowEqual,
   );
-  
+
   const replies = annotation
-  .getReplies()
-  .sort((a, b) => a['DateCreated'] - b['DateCreated']);
-  
+    .getReplies()
+    .sort((a, b) => a['DateCreated'] - b['DateCreated']);
+
   replies.filter(r => unreadAnnotationIdSet.has(r.Id)).forEach(r => unreadReplyIdSet.add(r.Id));
 
   useEffect(() => {
@@ -131,34 +130,19 @@ const Note = ({
   }, [isDocumentReadOnly, isContentEditable, setIsEditing])
 
   const handleNoteClick = e => {
-    if (isNotePanelOpen && unreadAnnotationIdSet.has(annotation.Id)) {
-      dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: annotation.Id }));
-    }
     // stop bubbling up otherwise the note will be closed
     // due to annotation deselection
     e && e.stopPropagation();
-    if (!isSelected) {
-      const currSelection = window.getSelection();
-      const focusNode = currSelection.focusNode;
-      const selectStart = currSelection.baseOffset;
-      const selectEnd = currSelection.extentOffset;
 
+    if (isNotePanelOpen && unreadAnnotationIdSet.has(annotation.Id)) {
+      dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: annotation.Id }));
+    }
+
+    if (!isSelected) {
       customNoteSelectionFunction && customNoteSelectionFunction(annotation);
       core.deselectAllAnnotations();
       core.selectAnnotation(annotation);
       core.jumpToAnnotation(annotation);
-
-      setTimeout(() => {
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(focusNode);
-
-        range.setStart(focusNode, selectStart);
-        range.setEnd(focusNode, selectEnd);
-
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }, 0);
 
       // Need this delay to ensure all other event listeners fire before we open the line
       setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
@@ -177,7 +161,7 @@ const Note = ({
     replies: true,
     hidden: !isSelected,
   });
-  
+
   useEffect(() => {
     //Must also restore the isEdit for  any replies, in case someone was editing a
     //reply when a comment was placed above
@@ -226,7 +210,7 @@ const Note = ({
     },
     [setIsEditingMap],
   );
-  
+
   //apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
   return (

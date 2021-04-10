@@ -1,10 +1,9 @@
 import React, {
-  useState,
   useRef,
   useEffect,
   useContext,
   useMemo,
-  useCallback,
+  useCallback
 } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
@@ -60,7 +59,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const { isSelected, searchInput, resize, isContentEditable, pendingEditTextMap, onTopNoteContentClicked } = useContext(
     NoteContext,
   );
-  
+
   const dispatch = useDispatch();
   const isReply = annotation.isReply();
 
@@ -155,6 +154,13 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     }
   };
 
+  const handleContentsClicked = (e) => {
+    if (window.getSelection()?.toString()) {
+      e?.stopPropagation();
+      return;
+    }
+  };
+
   const noteContentClass = classNames({
     NoteContent: true,
     isReply,
@@ -213,7 +219,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           />
         ) : (
             contentsToRender && (
-              <div className="container">{renderContents(contentsToRender)}</div>
+              <div className="container" onClick={handleContentsClicked}>{renderContents(contentsToRender)}</div>
             )
           )}
       </div>
