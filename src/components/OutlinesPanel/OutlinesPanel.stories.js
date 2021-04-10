@@ -2,46 +2,17 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import OutlinesPanel from './OutlinesPanel';
-import { createOutlines } from '../Outline/Outline.spec';
-
-export default {
-  title: 'Components/OutlinesPanel',
-  component: OutlinesPanel,
-};
+import { getDefaultOutlines } from '../Outline/Outline.spec';
 
 export function Basic() {
-  const outlines = createOutlines([
-    {
-      name: 'Introduction',
-      children: [
-        {
-          name: 'Overview',
-          children: [
-            {
-              name: 'Why WebViewer?',
-              children: [],
-            },
-            {
-              name: 'Supported File Formats',
-              children: [],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'Pick the right SDK',
-      children: [],
-    },
-  ]);
-
   function reducer() {
     return {
       viewer: {
         disabledElements: {},
+        customElementOverrides: {},
       },
       document: {
-        outlines: outlines,
+        outlines: getDefaultOutlines(),
       },
     };
   }
@@ -60,6 +31,7 @@ export function NoOutlines() {
     return {
       viewer: {
         disabledElements: {},
+        customElementOverrides: {},
       },
       document: {
         outlines: [],

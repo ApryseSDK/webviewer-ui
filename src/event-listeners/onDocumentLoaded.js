@@ -7,6 +7,7 @@ import selectors from 'selectors';
 import { workerTypes } from 'constants/types';
 import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
 import { print } from 'helpers/print';
+import outlineUtils from 'helpers/OutlineUtils';
 
 let onFirstLoad = true;
 
@@ -45,6 +46,9 @@ export default store => () => {
 
   const doc = core.getDocument();
   doc.on('bookmarksUpdated', () => core.getOutlines(outlines => dispatch(actions.setOutlines(outlines))));
+
+  outlineUtils.setDoc(core.getDocument());
+
   if (!doc.isWebViewerServerDocument()) {
     doc.getLayersArray().then(layers => {
       if (layers.length === 0) {

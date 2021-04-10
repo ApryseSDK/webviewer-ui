@@ -93,6 +93,7 @@ export default store => {
         PRIORITY_THREE,
       ),
     );
+    disableFeatures([Feature.OutlineEditing]);
   }
 
   dispatch(

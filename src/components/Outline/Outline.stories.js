@@ -2,14 +2,25 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import Outline from './Outline';
-import { createOutline } from '../Outline/Outline.spec';
+import { createOutline, getDefaultOutlines } from '../Outline/Outline.spec';
+import OutlineContext from './Context';
 
-export default {
-  title: 'Components/Outline',
-  component: Outline,
-};
+function noop() {}
 
 export function Basic() {
+
+  function reducer(state) {
+    return {
+      viewer: {
+        disabledElements: {},
+        customElementOverrides: {},
+      },
+      document: {
+        outlines: getDefaultOutlines(),
+      },
+    };
+  }
+
   const outline = createOutline({
     name: 'root',
     children: [
@@ -26,9 +37,17 @@ export function Basic() {
   });
 
   return (
-    <ReduxProvider store={createStore((state = {}) => state)}>
+    <ReduxProvider store={createStore(reducer)}>
       <div style={{ width: 300 }}>
-        <Outline outline={outline} />
+        <OutlineContext.Provider
+          value={{
+            setSelectedOutlinePath: noop,
+            selectedOutlinePath: '',
+            isOutlineSelected: noop,
+          }}
+        >
+          <Outline outline={outline} />
+        </OutlineContext.Provider>
       </div>
     </ReduxProvider>
   );

@@ -14,20 +14,28 @@ export default (element, overlay, isTabletAndMobile) => {
     bottom: buttonBottom,
     left: buttonLeft,
   } = button.getBoundingClientRect();
-  const { width: overlayWidth } = overlay.current.getBoundingClientRect();
+  const { width: overlayWidth, height: overlayHeight } = overlay.current.getBoundingClientRect();
 
   if (buttonLeft + overlayWidth > window.innerWidth) {
-    const rightMargin = 2;
-    left = 'auto';
-    right = rightMargin;
+    const rightMargin = 6;
+    left = window.innerWidth - rightMargin - overlayWidth;
+    right = 'auto';
   } else {
     left = buttonLeft;
     right = 'auto';
   }
 
+  const verticalGap = isTabletAndMobile ? 14 : 6;
+  let top = 0;
+  if (buttonBottom + overlayHeight > window.innerHeight) {
+    top = window.innerHeight - overlayHeight - verticalGap;
+  } else {
+    top = buttonBottom + verticalGap;
+  }
+
   return {
     left: !isNaN(left) ? Math.max(left, 0) : left,
     right,
-    top: buttonBottom + (isTabletAndMobile ? 14 : 6),
+    top,
   };
 };
