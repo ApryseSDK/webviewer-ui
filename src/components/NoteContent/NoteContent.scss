@@ -181,6 +181,7 @@
       }
 
       .save-button {
+        @include button-reset;
         cursor: pointer;
         flex-shrink: 0;
         background: var(--primary-button);
@@ -200,6 +201,7 @@
       }
 
       .cancel-button {
+        @include button-reset;
         color: var(--secondary-button-text);
         padding: 0 10px;
         height: 24px;
@@ -207,6 +209,7 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        margin-right: 2px;
 
         &:hover {
           color: var(--secondary-button-hover);

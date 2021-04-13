@@ -308,7 +308,7 @@ const ContentArea = ({
         aria-label={`${t('action.comment')}...`}
       />
       <div className="edit-buttons">
-        <div
+        <button
           className="cancel-button"
           onClick={e => {
             e.stopPropagation();
@@ -318,8 +318,8 @@ const ContentArea = ({
           }}
         >
           {t('action.cancel')}
-        </div>
-        <div
+        </button>
+        <button
           className="save-button"
           onClick={e => {
             e.stopPropagation();
@@ -327,7 +327,7 @@ const ContentArea = ({
           }}
         >
           {t('action.save')}
-        </div>
+        </button>
       </div>
     </div>
   );
