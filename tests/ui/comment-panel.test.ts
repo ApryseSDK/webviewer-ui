@@ -188,4 +188,30 @@ describe('Test cases for comment panel', () => {
       customSnapshotIdentifier: 'can-only-add-reply-non-admin-diff-user',
     });
   });
+
+  it('should be able to scroll to group annotation', async() => {
+    const instance = await result.waitForInstance();
+    await instance('loadDocument', '/test-files/annots1-rotated-cropped.pdf');
+    await result.waitForWVEvent('annotationsLoaded');
+  
+    instance('openElement', 'notesPanel');
+  
+    await result.iframe.evaluate(async() => {
+      const annotManager = window.docViewer.getAnnotationManager();
+      annotManager.setIsAdminUser(true);
+  
+      let annotations = annotManager.getAnnotationsList().filter(a => a.PageNumber === 5);
+  
+      let parentAnnot = annotations[0];
+      let childrenAnnots = annotations.slice(1,5);
+  
+      annotManager.groupAnnotations(parentAnnot, childrenAnnots);
+      annotManager.selectAnnotation(childrenAnnots[0]);
+    });
+  
+    await page.waitFor(Timeouts.REACT_RERENDER);
+  
+    const pageContainer = await result.iframe.$('.Note.expanded');
+    expect(await pageContainer.evaluate((node) => node.innerHTML)).toBeTruthy();
+  });
 });

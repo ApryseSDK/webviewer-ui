@@ -330,6 +330,14 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const ids = Object.keys(selectedNoteIds);
   if (ids.length === 1) {
     singleSelectedNoteIndex = notesToRender.findIndex(note => note.Id === ids[0]);
+  } else if (ids.length) {
+    // when selecting annotations that are grouped together, scroll to parent annotation that is in "notesToRender"
+    // selectedNoteIds will have every ID in the group, while only the parent is in notesToRender
+    const existingSelectedNotes = notesToRender.filter(note => selectedNoteIds[note.Id]);
+
+    if (existingSelectedNotes.length) {
+      singleSelectedNoteIndex = notesToRender.findIndex(note => note.Id === existingSelectedNotes[0].Id);
+    }
   }
 
   let style = {};
