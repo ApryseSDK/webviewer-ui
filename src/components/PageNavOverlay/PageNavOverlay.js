@@ -11,6 +11,7 @@ import useMedia from 'hooks/useMedia';
 
 import Icon from "components/Icon";
 import DataElementWrapper from 'components/DataElementWrapper';
+import Button from 'components/Button';
 
 import "./PageNavOverlay.scss";
 
@@ -96,6 +97,22 @@ class PageNavOverlay extends React.PureComponent {
     this.setState({ isFocused: true });
   }
 
+  goToPrevPage = () => {
+    if (window.docViewer.getCurrentPage() - 1 > 0) {
+      window.docViewer.setCurrentPage(
+        Math.max(window.docViewer.getCurrentPage() - 1, 1),
+      );
+    }
+  }
+
+  goToNextPage = () => {
+    if (window.docViewer.getCurrentPage() + 1 <= window.docViewer.getPageCount()) {
+      window.docViewer.setCurrentPage(
+        Math.min(window.docViewer.getCurrentPage() + 1, window.docViewer.getPageCount())
+      );
+    }
+  }
+
   render() {
     const {
       currentPage,
@@ -120,19 +137,16 @@ class PageNavOverlay extends React.PureComponent {
         onMouseEnter={this.props.onMouseEnter}
         onMouseLeave={this.props.onMouseLeave}
       >
-        <button
+        <Button
           className="side-arrow-container"
-          onClick={() => {
-            if (window.docViewer.getCurrentPage() - 1 > 0) {
-              window.docViewer.setCurrentPage(
-                Math.max(window.docViewer.getCurrentPage() - 1, 1),
-              );
-            }
-          }}
-          aria-label={t('action.pagePrev')}
-        >
-          <Icon className="side-arrow" glyph="icon-chevron-left" />
-        </button>
+          img="icon-chevron-left"
+          title={t('action.pagePrev')}
+          ariaLabel={t('action.pagePrev')}
+          onClick={this.goToPrevPage}
+          iconClassName="side-arrow"
+          forceTooltipPosition='top'
+          disabled={window.docViewer.getCurrentPage() === 1}
+        />
         <div className="formContainer" onClick={this.onClick}>
           <form onSubmit={this.onSubmit} onBlur={this.onBlur} onFocus={this.onFocus}>
             <input
@@ -150,22 +164,16 @@ class PageNavOverlay extends React.PureComponent {
               : ` / ${totalPages}`}
           </form>
         </div>
-        <button
+        <Button
           className="side-arrow-container"
-          onClick={() => {
-            if (window.docViewer.getCurrentPage() + 1 <= window.docViewer.getPageCount()) {
-              window.docViewer.setCurrentPage(
-                Math.min(
-                  window.docViewer.getCurrentPage() + 1,
-                  window.docViewer.getPageCount(),
-                ),
-              );
-            }
-          }}
-          aria-label={t('action.pageNext')}
-        >
-          <Icon className="side-arrow" glyph="icon-chevron-right" />
-        </button>
+          img="icon-chevron-right"
+          title={t('action.pageNext')}
+          ariaLabel={t('action.pageNext')}
+          onClick={this.goToNextPage}
+          iconClassName="side-arrow"
+          forceTooltipPosition='top'
+          disabled={window.docViewer.getCurrentPage() === window.docViewer.getPageCount()}
+        />
       </DataElementWrapper>
     );
   }

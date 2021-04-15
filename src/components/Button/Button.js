@@ -60,6 +60,8 @@ const Button = props => {
     role,
     fillColor,
     hideTooltipShortcut,
+    iconClassName,
+    forceTooltipPosition
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
 
@@ -105,6 +107,7 @@ const Button = props => {
           glyph={imgToShow}
           color={color}
           fillColor={fillColor}
+          className={iconClassName}
         />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
       {label && <span>{t(label)}</span>}
@@ -112,7 +115,12 @@ const Button = props => {
   );
 
   return removeElement ? null : shouldRenderTooltip ? (
-    <Tooltip content={title} hideShortcut={hideTooltipShortcut || actuallyDisabled}>{children}</Tooltip>
+    <Tooltip
+      content={title}
+      hideShortcut={hideTooltipShortcut || actuallyDisabled}
+      forcePosition={forceTooltipPosition}>
+      {children}
+    </Tooltip>
   ) : (
     children
   );

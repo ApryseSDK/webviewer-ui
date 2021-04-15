@@ -11,9 +11,10 @@ const propTypes = {
   children: PropTypes.element.isRequired,
   content: PropTypes.string,
   hideShortcut: PropTypes.bool,
+  forcePosition: PropTypes.string
 };
 
-const Tooltip = forwardRef( ({ content = '', children, hideShortcut }, ref) => {
+const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePosition }, ref) => {
   const timeoutRef = useRef(null);
   const childRef = useRef(null);
   useImperativeHandle(ref, () => childRef.current);
@@ -77,14 +78,18 @@ const Tooltip = forwardRef( ({ content = '', children, hideShortcut }, ref) => {
       // starting from placing the tooltip at the bottom location
       // if the tooltip can't fit into the window, try placing it counterclockwise until we can find a location to fit it
       const bestLocation = Object.keys(locationTopLeftMap).find(location => {
-        const { top: newTop, left: newLeft } = locationTopLeftMap[location];
+        if (forcePosition) {
+          return location === forcePosition;
+        } else {
+          const { top: newTop, left: newLeft } = locationTopLeftMap[location];
 
-        return (
-          newTop > 0
-          && newTop + tooltipRect.height < window.innerHeight
-          && newLeft > 0
-          && newLeft + tooltipRect.width < window.innerWidth
-        );
+          return (
+            newTop > 0
+            && newTop + tooltipRect.height < window.innerHeight
+            && newLeft > 0
+            && newLeft + tooltipRect.width < window.innerWidth
+          );
+        }
       }) || 'bottom';
 
       const { top: tooltipTop, left: tooltipLeft } = locationTopLeftMap[
