@@ -29,7 +29,7 @@ const createTextAnnotation = annotationConstructor => {
       setRedactionStyle(annotation);
     }
 
-    setAnnotationColor(annotation);
+    setAnnotationStyle(annotation);
 
     annotations.push(annotation);
   });
@@ -46,12 +46,14 @@ const createAnnotation = (annotationConstructor, pageNumber, quads) => {
   return annotation;
 };
 
-const setAnnotationColor = annotation => {
+const setAnnotationStyle = annotation => {
   const toolName = mapAnnotationToToolName(annotation);
 
   if (toolName) {
-    const { StrokeColor } = getToolStyles(toolName);
-    annotation.StrokeColor = StrokeColor;
+    const newStyles = getToolStyles(toolName);
+    Object.keys(newStyles).forEach(property => {
+      annotation[property] = newStyles[property];
+    });
   }
 };
 
