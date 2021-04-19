@@ -14,10 +14,11 @@ class Header extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     activeHeaderItems: PropTypes.array.isRequired,
+    isToolGroupReorderingEnabled: PropTypes.bool,
   }
 
   render() {
-    const { isDisabled, activeHeaderItems, isOpen, isToolsHeaderOpen, currentToolbarGroup } = this.props;
+    const { isDisabled, activeHeaderItems, isOpen, isToolsHeaderOpen, currentToolbarGroup, isToolGroupReorderingEnabled } = this.props;
 
     if (isDisabled || !isOpen) {
       return null;
@@ -31,7 +32,7 @@ class Header extends React.PureComponent {
           })}
           data-element="header"
         >
-          <HeaderItems items={activeHeaderItems} />
+          <HeaderItems items={activeHeaderItems} isToolGroupReorderingEnabled={isToolGroupReorderingEnabled} />
           {(!isToolsHeaderOpen || currentToolbarGroup === 'toolbarGroup-View')
             && <div className="view-header-border" />}
         </div>
@@ -46,6 +47,7 @@ const mapStateToProps = state => ({
   isDisabled: selectors.isElementDisabled(state, 'header'),
   isOpen: selectors.isElementOpen(state, 'header'),
   activeHeaderItems: selectors.getActiveHeaderItems(state),
+  isToolGroupReorderingEnabled: selectors.isToolGroupReorderingEnabled(state),
 });
 
 export default connect(mapStateToProps)(Header);

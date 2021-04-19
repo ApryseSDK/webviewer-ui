@@ -109,7 +109,9 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
               const key = `${type}-${dataElement || i}`;
               return (
                 <React.Fragment key={key}>
-                  <ToolGroupButton mediaQueryClassName={mediaQueryClassName} {...item} />
+                  {
+                    <ToolGroupButton mediaQueryClassName={mediaQueryClassName} {...item} />
+                  }
                 </React.Fragment>
               );
             })}

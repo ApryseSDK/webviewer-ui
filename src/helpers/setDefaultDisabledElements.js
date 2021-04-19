@@ -50,6 +50,11 @@ export default store => {
     disableFeatures([Feature.NotesPanel]);
   }
 
+  const toolGroupReorderingDisabled = getHashParams('disableToolGroupReordering', false);
+  if (toolGroupReorderingDisabled) {
+    dispatch(actions.setEnableToolGroupReordering(false));
+  }
+
   const measurementsDisabled = !getHashParams('enableMeasurement', false);
   if (measurementsDisabled) {
     disableFeatures([Feature.Measurement]);
