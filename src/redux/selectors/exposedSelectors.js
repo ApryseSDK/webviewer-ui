@@ -124,6 +124,10 @@ export const getToolButtonObjects = state => {
   return state.viewer.toolButtonObjects;
 };
 
+export const isToolGroupReorderingEnabled = state => {
+  return state.viewer.enableToolGroupReordering;
+};
+
 export const getActiveToolNamesForActiveToolGroup = state => {
   const { activeToolGroup } = state.viewer;
   const toolButtonObjects = getToolButtonObjects(state);

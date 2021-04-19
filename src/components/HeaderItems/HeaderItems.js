@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ToolButton from 'components/ToolButton';
 import ToggleElementButton from 'components/ToggleElementButton';
+import ToolGroupButton from 'components/ToolGroupButton';
 import ActionButton from 'components/ActionButton';
 import StatefulButton from 'components/StatefulButton';
 import CustomElement from 'components/CustomElement';
@@ -14,51 +15,55 @@ import './HeaderItems.scss';
 
 class HeaderItems extends React.PureComponent {
   static propTypes = {
+    isToolGroupReorderingEnabled: PropTypes.bool.isRequired,
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
   }
 
   render() {
-    const { items } = this.props;
+    const { items, isToolGroupReorderingEnabled } = this.props;
 
-    const toolGroupButtonsItems = items.filter(({ type }) => type === 'toolGroupButton');
+    const toolGroupButtonsItems = items.filter(({ type }) => (type === 'toolGroupButton'));
     let handledToolGroupButtons = false;
+
+    let headers = items.map((item, i) => {
+      const { type, dataElement, hidden, toolName, hiddenOnMobileDevice } = item;
+      let mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
+      if (hiddenOnMobileDevice && isMobileDeviceFunc()) {
+        mediaQueryClassName += ' hide-in-mobile hide-in-small-mobile';
+      }
+      const key = `${type}-${dataElement || i}`;
+
+      switch (type) {
+        case 'toolButton':
+          return <ToolButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+          case 'toolGroupButton':
+          if (!isToolGroupReorderingEnabled) {
+            return <ToolGroupButton  key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+          } else if (!handledToolGroupButtons) {
+            handledToolGroupButtons = true;
+            return <ToolGroupButtonsScroll key={key} toolGroupButtonsItems={toolGroupButtonsItems} />;
+          }
+          return null;
+        case 'toggleElementButton':
+          return <ToggleElementButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+        case 'actionButton':
+          return <ActionButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+        case 'statefulButton':
+          return <StatefulButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+        case 'customElement':
+          return <CustomElement key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+        case 'spacer':
+        case 'divider':
+          return <div key={key} className={`${type} ${mediaQueryClassName}`}></div>;
+        default:
+          console.warn(`${type} is not a valid header item type.`);
+          return null;
+      }
+    });
 
     return (
       <div className="HeaderItems">
-        {items.map((item, i) => {
-          const { type, dataElement, hidden, toolName, hiddenOnMobileDevice } = item;
-          let mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
-          if (hiddenOnMobileDevice && isMobileDeviceFunc()) {
-            mediaQueryClassName += ' hide-in-mobile hide-in-small-mobile';
-          }
-          const key = `${type}-${dataElement || i}`;
-
-          switch (type) {
-            case 'toolButton':
-              return <ToolButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-            case 'toolGroupButton':
-              if (!handledToolGroupButtons) {
-                handledToolGroupButtons = true;
-
-                return <ToolGroupButtonsScroll key={key} toolGroupButtonsItems={toolGroupButtonsItems} />;
-              }
-              return null;
-            case 'toggleElementButton':
-              return <ToggleElementButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-            case 'actionButton':
-              return <ActionButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-            case 'statefulButton':
-              return <StatefulButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-            case 'customElement':
-              return <CustomElement key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-            case 'spacer':
-            case 'divider':
-              return <div key={key} className={`${type} ${mediaQueryClassName}`}></div>;
-            default:
-              console.warn(`${type} is not a valid header item type.`);
-              return null;
-          }
-        })}
+        { headers }
       </div>
     );
   }

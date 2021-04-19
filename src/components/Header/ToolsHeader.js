@@ -17,10 +17,11 @@ class ToolsHeader extends React.PureComponent {
     isDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     activeHeaderItems: PropTypes.array.isRequired,
+    isToolGroupReorderingEnabled: PropTypes.bool,
   }
 
   render() {
-    const { isDisabled, activeHeaderItems, isOpen, currentToolbarGroup } = this.props;
+    const { isDisabled, activeHeaderItems, isOpen, currentToolbarGroup, isToolGroupReorderingEnabled } = this.props;
 
     const isVisible = !isDisabled && isOpen && currentToolbarGroup !== 'toolbarGroup-View';
 
@@ -35,7 +36,7 @@ class ToolsHeader extends React.PureComponent {
         <div
           className="Header Tools"
         >
-          <HeaderItems items={activeHeaderItems} />
+          <HeaderItems items={activeHeaderItems} isToolGroupReorderingEnabled={isToolGroupReorderingEnabled} />
         </div>
       </div>
     );
@@ -51,6 +52,7 @@ const mapStateToProps = state => ({
   isToolsOverlayDisabled: selectors.isElementDisabled(state, 'toolsOverlay'),
   isSignatureOverlayOpen: selectors.isElementOpen(state, 'signatureOverlay'),
   isSignatureOverlayDisabled: selectors.isElementDisabled(state, 'signatureOverlay'),
+  isToolGroupReorderingEnabled: selectors.isToolGroupReorderingEnabled(state),
 });
 
 const mapDispatchToProps = {

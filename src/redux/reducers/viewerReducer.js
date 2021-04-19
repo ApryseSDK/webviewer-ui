@@ -156,6 +156,8 @@ export default initialState => (state = initialState, action) => {
         ...state,
         openElements: { ...state.openElements, [payload.dataElement]: false },
       };
+    case 'ENABLE_TOOL_GROUP_REORDERING':
+      return { ...state, enableToolGroupReordering: payload.enableToolGroupReordering };
     case 'SET_ACTIVE_HEADER_GROUP':
       return { ...state, activeHeaderGroup: payload.headerGroup };
     case 'SET_ACTIVE_TOOL_NAME':

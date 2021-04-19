@@ -115,6 +115,10 @@ export const setLastPickedToolForGroup = (group, toolName) => ({
   type: 'SET_LAST_PICKED_TOOL_FOR_GROUP',
   payload: { group, toolName },
 });
+export const setEnableToolGroupReordering = (enableToolGroupReordering = true) => ({
+  type: 'ENABLE_TOOL_GROUP_REORDERING',
+  payload: { enableToolGroupReordering },
+});
 export const setActiveToolNameAndStyle = toolObject => (dispatch, getState) => {
   const state = getState();
   let name;
