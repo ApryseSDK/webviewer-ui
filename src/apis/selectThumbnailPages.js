@@ -42,7 +42,7 @@ export default store => pageNumbers => {
     console.warn(`The following pages are out of range: ${outOfRangePages.join(', ')}`);
   }
 
-  let pagesToSelect = pageNumbers.filter(pageNumber => pageNumber >= 1 && pageNumber < pageCount && !selectedPages.includes(pageNumber) && !isNaN(pageNumber));
+  let pagesToSelect = pageNumbers.filter(pageNumber => pageNumber >= 1 && pageNumber <= pageCount && !selectedPages.includes(pageNumber) && !isNaN(pageNumber));
 
   pagesToSelect = pagesToSelect.filter(function(page, index, self) {
     return self.indexOf(page) === index;
