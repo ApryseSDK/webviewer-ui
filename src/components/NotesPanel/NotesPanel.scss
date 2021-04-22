@@ -92,7 +92,13 @@
   }
 
   >.header {
-    padding-right: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .title{
+      margin-top: auto;
+      margin-bottom: auto;
+    }
 
     .sort-row {
       display: flex;

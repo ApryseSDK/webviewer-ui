@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-
+import AddCommentIcon from '../../../assets/icons/comment.svg';
 import Button from 'components/Button';
 import defaultTool from 'constants/defaultTool';
 
@@ -104,7 +104,7 @@ class ToolGroupButton extends React.PureComponent {
           title={title}
           mediaQueryClassName={mediaQueryClassName}
           isActive={isActive}
-          img={img}
+          img={AddCommentIcon}
           color={color}
           fillColor={fillColor}
           dataElement={dataElement}

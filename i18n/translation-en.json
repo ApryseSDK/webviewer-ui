@@ -281,8 +281,8 @@
       "status": "Status"
     },
     "state": {
-      "accepted": "Accepted",
-      "rejected": "Rejected",
+      "accepted": "Agreed",
+      "rejected": "Disagreed",
       "completed": "Completed",
       "cancelled": "Cancelled",
       "set": "Set status:",

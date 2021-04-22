@@ -20,7 +20,8 @@ import useMedia from 'hooks/useMedia';
 import { isIE } from "helpers/device";
 
 import './NotesPanel.scss';
-
+import HeaderItems from '../HeaderItems';
+const AddComment = [{ type: 'toolGroupButton', toolGroup: 'stickyTools', dataElement: 'stickyToolGroupButton', title: 'annotation.stickyNote' }];
 const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [
     sortStrategy,
@@ -47,12 +48,12 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const currentWidth = currentLeftPanelWidth || currentNotesPanelWidth;
 
   const dispatch = useDispatch();
-  const inputRef = useRef(null);
-  useEffect(() => {
-    if (isOpen && core.getSelectedAnnotations().length === 0) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
+  // const inputRef = useRef(null);
+  // useEffect(() => {
+  //   if (isOpen && core.getSelectedAnnotations().length === 0) {
+  //     inputRef.current.focus();
+  //   }
+  // }, [isOpen]);
 
   const isMobile = useMedia(
     // Media queries
@@ -349,7 +350,9 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
         </div>}
       <React.Fragment>
         <div className="header">
-          <div className="input-container">
+          <div className="title">Comments</div>
+          <HeaderItems style="w-auto" items={AddComment} isToolGroupReorderingEnabled={false}/>
+          {/* <div className="input-container">
             <input
               type="text"
               placeholder={t('message.searchCommentsPlaceholder')}
@@ -381,7 +384,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
                 }}
               />
             </div>
-          </div>
+          </div> */}
         </div>
         {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
           <NormalList

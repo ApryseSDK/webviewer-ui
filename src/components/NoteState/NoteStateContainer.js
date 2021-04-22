@@ -26,7 +26,7 @@ function createStateAnnotation(t, annotation, state) {
 
   const displayAuthor = core.getDisplayAuthor(stateAnnotation);
   const stateMessage = t(`option.state.${state.toLowerCase()}`);
-  const contents = `${stateMessage} ${t('option.state.setBy')} ${displayAuthor}`;
+  const contents = `${displayAuthor} ${stateMessage}`;
   stateAnnotation.setContents(contents);
 
   return stateAnnotation;

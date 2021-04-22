@@ -171,12 +171,13 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const header = useMemo(() => (
     <React.Fragment>
       {!isReply &&
-        <div className="type-icon-container">
-          {isUnread &&
-            <div className="unread-notification"></div>
-          }
-          <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
-        </div>
+        <>{isUnread &&
+          <div className="unread-notification"></div>
+        }</>
+        // <div className="type-icon-container">
+          
+        //   <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
+        // </div>
       }
       <div className="author-and-date">
         <div className="author-and-overflow">
@@ -230,6 +231,9 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   return useMemo(
     () => (
       <div className={noteContentClass} onClick={handleNoteContentClicked}>
+         {!isUnread &&
+            <div className="unread-notification"></div>
+          }
         {header}
       </div>
     ),
