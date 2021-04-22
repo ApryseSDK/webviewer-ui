@@ -8,6 +8,9 @@
   position: relative;
   padding: 0 4px;
 
+  &.w-auto{
+    width: auto;
+  }
   >.Button, >.toggle-element-button {
     margin: 0 6px;
     @include mobile {

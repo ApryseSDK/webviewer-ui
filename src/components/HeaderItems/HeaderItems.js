@@ -10,6 +10,7 @@ import CustomElement from 'components/CustomElement';
 import ToolGroupButtonsScroll from './ToolGroupButtonsScroll';
 import useMedia from 'hooks/useMedia';
 import { isMobileDeviceFunc } from 'helpers/device';
+import ToggleZoomOverlay from '../../components/ToggleZoomOverlay';
 
 import './HeaderItems.scss';
 
@@ -20,7 +21,8 @@ class HeaderItems extends React.PureComponent {
   }
 
   render() {
-    const { items, isToolGroupReorderingEnabled } = this.props;
+    const { items, isToolGroupReorderingEnabled, style } = this.props;
+
 
     const toolGroupButtonsItems = items.filter(({ type }) => (type === 'toolGroupButton'));
     let handledToolGroupButtons = false;
@@ -60,10 +62,11 @@ class HeaderItems extends React.PureComponent {
           return null;
       }
     });
-
+    
     return (
-      <div className="HeaderItems">
+      <div className={`HeaderItems ${style}`}>
         { headers }
+        
       </div>
     );
   }

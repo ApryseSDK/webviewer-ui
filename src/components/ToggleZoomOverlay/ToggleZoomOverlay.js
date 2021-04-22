@@ -113,13 +113,6 @@ const ToggleZoomOverlay = () => {
               />
               <span>%</span>
             </div>
-            <ToggleElementButton
-              className="OverlayButton"
-              img="icon-chevron-down"
-              element="zoomOverlay"
-              dataElement="zoomOverlay"
-              ariaLabel={t('action.zoomControls')}
-            />
           </div>
         </div>}
       <ActionButton
