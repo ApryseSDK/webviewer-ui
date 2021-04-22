@@ -60,22 +60,37 @@ const sortStrategies = {
       `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
   time: {
-    getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
-    shouldRenderSeparator: (prevNote, currNote) =>
-      dayjs(getLatestActivityDate(prevNote)).format('MMM D, YYYY') !==
-      dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY'),
+    getSortedNotes: notes => notes.sort((a, b) => (getLatestActivityDate(b) || 0) - (getLatestActivityDate(a) || 0)),
+    shouldRenderSeparator: (prevNote, currNote) => {
+      const prevNoteDate = getLatestActivityDate(prevNote);
+      const currNoteDate = getLatestActivityDate(currNote);
+      if (prevNoteDate && currNoteDate) {
+        const dayFormat = 'MMM D, YYYY';
+        return dayjs(prevNoteDate).format(dayFormat) !== dayjs(currNoteDate).format(dayFormat);
+      } else if (!prevNoteDate && !currNoteDate) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     getSeparatorContent: (prevNote, currNote) => {
-      const today = dayjs(new Date()).format('MMM D, YYYY');
-      const yesterday = dayjs(new Date(new Date() - 86400000)).format('MMM D, YYYY');
-      const latestActivityDate = dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY');
+      const latestActivityDate = getLatestActivityDate(currNote);
+      if (latestActivityDate) {
+        const dayFormat = 'MMM D, YYYY';
+        const today = dayjs(new Date()).format(dayFormat);
+        const yesterday = dayjs(new Date(new Date() - 86400000)).format(dayFormat);
+        const latestActivityDay = dayjs(latestActivityDate).format(dayFormat);
 
-      if (latestActivityDate === today) {
-        return i18next.t('option.notesPanel.separator.today');
+        if (latestActivityDay === today) {
+          return i18next.t('option.notesPanel.separator.today');
+        }
+        if (latestActivityDay === yesterday) {
+          return i18next.t('option.notesPanel.separator.yesterday');
+        }
+        return latestActivityDay;
+      } else {
+        return i18next.t('option.notesPanel.separator.unknown');
       }
-      if (latestActivityDate === yesterday) {
-        return i18next.t('option.notesPanel.separator.yesterday');
-      }
-      return latestActivityDate;
     },
   },
   status: {

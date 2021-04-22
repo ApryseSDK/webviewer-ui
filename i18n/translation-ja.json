@@ -224,7 +224,12 @@
     "notesPanel": {
       "separator": {
         "today": "今日",
-        "yesterday": "昨日"
+        "yesterday": "昨日",
+        "unknown": "わからない"
+      },
+      "noteContent": {
+        "noName": "（ノーネーム）",
+        "noDate": "（日付なし）"
       }
     },
     "pageTransition": {

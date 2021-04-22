@@ -224,7 +224,12 @@
     "notesPanel": {
       "separator": {
         "today": "Vandaag",
-        "yesterday": "Gisteren"
+        "yesterday": "Gisteren",
+        "unknown": "Onbekend"
+      },
+      "noteContent": {
+        "noName": "(geen naam)",
+        "noDate": "(geen datum)"
       }
     },
     "pageTransition": {

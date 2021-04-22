@@ -224,7 +224,12 @@
     "notesPanel": {
       "separator": {
         "today": "Hoy",
-        "yesterday": "Ayer"
+        "yesterday": "Ayer",
+        "unknown": "Desconocido"
+      },
+      "noteContent": {
+        "noName": "(sin nombre)",
+        "noDate": "(sin cita)"
       }
     },
     "pageTransition": {

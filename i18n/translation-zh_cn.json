@@ -224,7 +224,12 @@
     "notesPanel": {
       "separator": {
         "today": "今天",
-        "yesterday": "昨天"
+        "yesterday": "昨天",
+        "unknown": "未知"
+      },
+      "noteContent": {
+        "noName": "（无名）",
+        "noDate": "（未注明日期的）"
       }
     },
     "pageTransition": {

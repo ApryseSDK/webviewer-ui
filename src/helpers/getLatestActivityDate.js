@@ -18,5 +18,6 @@ export default annotation => {
   if (annotation.DateCreated) {
     return annotation.DateCreated;
   }
-  return new Date();
+
+  return undefined;
 };

@@ -224,7 +224,12 @@
     "notesPanel": {
       "separator": {
         "today": "Сегодня",
-        "yesterday": "Вчера"
+        "yesterday": "Вчера",
+        "unknown": "Неизвестный"
+      },
+      "noteContent": {
+        "noName": "(без имени)",
+        "noDate": "(без даты)"
       }
     },
     "pageTransition": {
