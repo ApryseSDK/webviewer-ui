@@ -2,23 +2,14 @@ import React from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
-import LeftPanelTabs from 'components/LeftPanelTabs';
-import ThumbnailsPanel from 'components/ThumbnailsPanel';
-import OutlinesPanel from 'components/OutlinesPanel';
-import BookmarksPanel from 'components/BookmarksPanel';
-import LayersPanel from 'components/LayersPanel';
-import NotesPanel from 'components/NotesPanel';
-import SignaturePanel from 'components/SignaturePanel';
-import CustomElement from 'components/CustomElement';
 import ResizeBar from 'components/ResizeBar';
 import Icon from 'components/Icon';
 
-import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
 
-import './LeftPanel.scss';
+import './SignaturesLeftPanel.scss';
 
 const LeftPanel = () => {
   const isMobile = useMedia(
@@ -37,16 +28,13 @@ const LeftPanel = () => {
     false,
   );
 
-  const [currentToolbarGroup, isToolsHeaderOpen,isOpen, isDisabled, activePanel, customPanels, currentWidth, notesInLeftPanel] = useSelector(
+  const [currentToolbarGroup, isToolsHeaderOpen,isOpen, isDisabled, currentWidth] = useSelector(
     state => [
       selectors.getCurrentToolbarGroup(state),
       selectors.isElementOpen(state, 'toolsHeader'),
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementDisabled(state, 'leftPanel'),
-      selectors.getActiveLeftPanel(state),
-      selectors.getCustomPanels(state),
       selectors.getLeftPanelWidth(state),
-      selectors.getNotesInLeftPanel(state),
     ],
     shallowEqual,
   );
@@ -64,7 +52,7 @@ const LeftPanel = () => {
     e.preventDefault();
   };
 
-  const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
+ 
 
   let style = {};
   if (!isMobile) {
@@ -78,7 +66,7 @@ const LeftPanel = () => {
       className={classNames({
         Panel: true,
         LeftPanel: true,
-        'closed': false,
+        'closed': !isVisible,
         'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
       })}
       onDrop={onDrop}
@@ -104,25 +92,40 @@ const LeftPanel = () => {
                 className="close-icon"
               />
             </div>
-          </div>}
-        <div className="left-panel-header">
-          <LeftPanelTabs />
+          </div>
+        }
+
+        <div className="d-flex justify-between">
+          <div>
+            Signatures Pending
+          </div>
+          <div>
+            0/2
+          </div>
         </div>
-        {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel/>}
-        {activePanel === 'outlinesPanel' && <OutlinesPanel />}
-        {activePanel === 'bookmarksPanel' && <BookmarksPanel />}
-        {activePanel === 'layersPanel' && <LayersPanel />}
-        {core.isFullPDFEnabled() && activePanel === 'signaturePanel' && <SignaturePanel />}
-        {notesInLeftPanel && activePanel === 'notesPanel' && <NotesPanel currentLeftPanelWidth={currentWidth} />}
-        {customPanels.map(({ panel }, index) => (
-          <CustomElement
-            key={panel.dataElement || index}
-            className={`Panel ${panel.dataElement}`}
-            display={getDisplay(panel.dataElement)}
-            dataElement={panel.dataElement}
-            render={panel.render}
-          />
-        ))}
+        <div className="divider" />
+        <div className="d-flex justify-between mb-2 cursor-pointer">
+          <div>
+            Page 1
+          </div>
+          <div className="">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 15.5C3.85775 15.5 0.5 12.1423 0.5 8C0.5 3.85775 3.85775 0.5 8 0.5C12.1423 0.5 15.5 3.85775 15.5 8C15.5 12.1423 12.1423 15.5 8 15.5ZM8 14C9.5913 14 11.1174 13.3679 12.2426 12.2426C13.3679 11.1174 14 9.5913 14 8C14 6.4087 13.3679 4.88258 12.2426 3.75736C11.1174 2.63214 9.5913 2 8 2C6.4087 2 4.88258 2.63214 3.75736 3.75736C2.63214 4.88258 2 6.4087 2 8C2 9.5913 2.63214 11.1174 3.75736 12.2426C4.88258 13.3679 6.4087 14 8 14Z" fill="currentColor"/>
+          </svg>
+          </div>
+        </div>
+
+        <div className="d-flex justify-between cursor-pointer">
+          <div>
+            Page 1
+          </div>
+          <div className="">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 15.5C3.85775 15.5 0.5 12.1423 0.5 8C0.5 3.85775 3.85775 0.5 8 0.5C12.1423 0.5 15.5 3.85775 15.5 8C15.5 12.1423 12.1423 15.5 8 15.5ZM8 14C9.5913 14 11.1174 13.3679 12.2426 12.2426C13.3679 11.1174 14 9.5913 14 8C14 6.4087 13.3679 4.88258 12.2426 3.75736C11.1174 2.63214 9.5913 2 8 2C6.4087 2 4.88258 2.63214 3.75736 3.75736C2.63214 4.88258 2 6.4087 2 8C2 9.5913 2.63214 11.1174 3.75736 12.2426C4.88258 13.3679 6.4087 14 8 14Z" fill="currentColor"/>
+          </svg>
+          </div>
+        </div>
+
       </div>
       {!isTabletAndMobile &&
         <ResizeBar

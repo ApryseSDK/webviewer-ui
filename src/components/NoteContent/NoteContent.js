@@ -231,7 +231,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   return useMemo(
     () => (
       <div className={noteContentClass} onClick={handleNoteContentClicked}>
-         {!isUnread &&
+         {isUnread &&
             <div className="unread-notification"></div>
           }
         {header}

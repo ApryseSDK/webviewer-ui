@@ -38,7 +38,7 @@ import ZoomOverlay from 'components/ZoomOverlay';
 import CreateStampModal from 'components/CreateStampModal';
 import CustomModal from 'components/CustomModal';
 import ColorPickerModal from 'components/ColorPickerModal';
-
+import SignaturesLeftPanel from 'components/SignaturesLeftPanel'
 import core from 'core';
 import defineReaderControlAPIs from 'src/apis';
 import loadDocument from 'helpers/loadDocument';
@@ -61,7 +61,7 @@ const App = ({ removeEventHandlers }) => {
   const store = useStore();
   const dispatch = useDispatch();
   let timeoutReturn;
-  const [prepare, handlePrepare] = useState(true);
+  const [prepare, handlePrepare] = useState(false);
 
   useEffect(() => {
     defineReaderControlAPIs(store);
@@ -129,10 +129,10 @@ const App = ({ removeEventHandlers }) => {
       <div className="App">
         <Accessibility />
 
-        <Header />
-        <ToolsHeader />
+        {/* <Header />
+        <ToolsHeader /> */}
         <div className="content">
-          {prepare? <LeftPanel />:''}
+          {prepare? <LeftPanel />:<SignaturesLeftPanel/>}
           <DocumentContainer />
           <RightPanel
             dataElement="searchPanel"
