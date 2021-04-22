@@ -187,6 +187,16 @@ const AnnotationPopup = () => {
     core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
   };
 
+  const shouldShowLinkButton = !([
+    'CropPage',
+    'AnnotationCreateSignature',
+    'AnnotationCreateRedaction',
+    'AnnotationCreateSticky',
+    'AnnotationCreateSticky2',
+    'AnnotationCreateSticky3',
+    'AnnotationCreateSticky4'
+  ].includes(firstAnnotation.ToolName)) && !isEditingWidgets;
+
   const annotationPopup =
     <div
       className={classNames({
@@ -294,12 +304,7 @@ const AnnotationPopup = () => {
               }}
             />
           )}
-          {!([
-            'CropPage',
-            'AnnotationCreateSignature',
-            'AnnotationCreateRedaction',
-            'AnnotationCreateSticky'
-          ].includes(firstAnnotation.ToolName)) && !isEditingWidgets && (
+          {shouldShowLinkButton && (
             <ActionButton
               title="tool.Link"
               img={firstAnnotation.getAssociatedLinks().length > 0 ? 'icon-tool-unlink' : 'icon-tool-link'}
