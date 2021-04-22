@@ -1,6 +1,7 @@
 @import '../../constants/styles';
 @import '../../constants/font.scss';
 @import '../../constants/light.scss';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
 * {
   transition: background-color .25s ease;
@@ -39,19 +40,19 @@ html, body , #app {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: var(--text-color);
 }
 
 input, button, label, textarea, form, select, #app {
   font-size: 13px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: var(--text-color);
 
   @include mobile {
     font-size : 16px;
   }
-  font-family: 'Lato', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 input, textarea, select {
@@ -107,7 +108,7 @@ input, textarea, select {
   }
 
   input[type=text] {
-    font-family: 'Lato';
+    font-family: 'Montserrat', sans-serif;
     appearance: none;
     user-select: text !important;
   }
