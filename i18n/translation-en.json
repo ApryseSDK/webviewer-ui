@@ -150,7 +150,7 @@
     "encryptedUserCancelled": "Failed to load encrypted document. Password entry cancelled.",
     "enterPassword": "This document is password protected. Please enter a password",
     "incorrectPassword": "Incorrect password, attempts left: {{ remainingAttempts }}",
-    "noAnnotations": "Start making annotations to leave a comment.",
+    "noAnnotations": "This document has no annotations.",
     "noAnnotationsFilter": "Start making annotations and filters will appear here.",
     "noOutlines": "This document has no outline.",
     "noResults": "No results found.",
