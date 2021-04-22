@@ -42,21 +42,19 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const [
     noteDateFormat,
     iconColor,
-    isNoteEditingTriggeredByAnnotationPopup,
     isStateDisabled,
     language,
   ] = useSelector(
     state => [
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
-      selectors.getIsNoteEditing(state),
       selectors.isElementDisabled(state, 'notePopupState'),
       selectors.getCurrentLanguage(state),
     ],
     shallowEqual,
   );
 
-  const { isSelected, searchInput, resize, isContentEditable, pendingEditTextMap, onTopNoteContentClicked } = useContext(
+  const { isSelected, searchInput, resize, pendingEditTextMap, onTopNoteContentClicked } = useContext(
     NoteContext,
   );
 
@@ -73,19 +71,6 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     resize();
   }, [isEditing]);
 
-  useEffect(() => {
-    // when the comment button in the annotation popup is clicked,
-    // this effect will run and we set isEditing to true so that
-    // the textarea will be rendered and focused after it is mounted
-    if (
-      isNoteEditingTriggeredByAnnotationPopup &&
-      isSelected &&
-      isContentEditable
-    ) {
-      setIsEditing(true, noteIndex);
-    }
-  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected, setIsEditing, noteIndex]);
-
   const renderAuthorName = useCallback(
     annotation => {
       const name = core.getDisplayAuthor(annotation);
@@ -97,8 +82,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           }}
         />
       ) : (
-          t('option.notesPanel.noteContent.noName')
-        );
+        t('option.notesPanel.noteContent.noName')
+      );
     },
     [searchInput],
   );
@@ -223,10 +208,10 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                 onTextAreaValueChange={onTextChange}
               />
             ) : (
-                contentsToRender && (
-                  <div className="container" onClick={handleContentsClicked}>{renderContents(contentsToRender)}</div>
-                )
-              )}
+              contentsToRender && (
+                <div className="container" onClick={handleContentsClicked}>{renderContents(contentsToRender)}</div>
+              )
+            )}
           </div>
         </React.Fragment>
       );
@@ -297,7 +282,7 @@ const ContentArea = ({
 
     setIsEditing(false, noteIndex);
     // Only set comment to unposted state if it is not empty
-    if (textAreaValue !== ''){
+    if (textAreaValue !== '') {
       onTextAreaValueChange(undefined, annotation.Id);
     }
   };
