@@ -26,7 +26,7 @@ let currId = 0;
 const Note = ({
   annotation,
 }) => {
-  const { isSelected, resize, pendingEditTextMap, setPendingEditText, isContentEditable, isDocumentReadOnly, isNotePanelOpen } = useContext(NoteContext);
+  const { isSelected, resize, pendingEditTextMap, setPendingEditText, isContentEditable, isDocumentReadOnly, isNotePanelOpen, isExpandedFromSearch } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
@@ -233,7 +233,7 @@ const Note = ({
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
       />
-      {isSelected && (
+      {(isSelected || isExpandedFromSearch) && (
         <React.Fragment>
           <div className={repliesClass}>
             {hasUnreadReplies && (

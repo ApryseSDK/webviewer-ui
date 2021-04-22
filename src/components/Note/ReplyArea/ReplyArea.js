@@ -34,7 +34,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     ],
     shallowEqual
   );
-  const { resize, isContentEditable, isSelected, pendingReplyMap, setPendingReply } = useContext(NoteContext);
+  const { resize, isContentEditable, isSelected, pendingReplyMap, setPendingReply, isExpandedFromSearch } = useContext(NoteContext);
   const [isFocused, setIsFocused] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
   const [t] = useTranslation();
@@ -50,12 +50,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     if(!isPosting) {
       resize();
     }
-    resize();
   }, [isFocused]);
-
-  useEffect(() => {
-    textareaRef.current?.focus();
-  }, []);
 
   useEffect(() => {
     if (
@@ -70,7 +65,8 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
     if (textareaRef.current) {
-      textareaRef.current.focus();
+      // when search item, should disable auto focus 
+      !isExpandedFromSearch && textareaRef.current.focus();
 
       const textLength = textareaRef.current.value.length;
       textareaRef.current.setSelectionRange(textLength, textLength);
