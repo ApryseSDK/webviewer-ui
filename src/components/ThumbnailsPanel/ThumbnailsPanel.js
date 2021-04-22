@@ -448,7 +448,7 @@ const ThumbnailsPanel = () => {
 
   return (
     <React.Fragment>
-      {!isThumbnailSliderDisabled && <div data-element="thumbnailsSizeSlider" className="thumbnail-slider-container">
+      {/* {!isThumbnailSliderDisabled && <div data-element="thumbnailsSizeSlider" className="thumbnail-slider-container">
         <Button
           img="icon-zoom-thumb-out"
           title="action.zoomOut"
@@ -486,7 +486,7 @@ const ThumbnailsPanel = () => {
           }}
           dataElement="zoomThumbInButton"
         />
-      </div>}
+      </div>} */}
       <Measure bounds onResize={onPanelResize} key={thumbnailSize}>
         {({ measureRef }) => (
           <div className="Panel ThumbnailsPanel" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
@@ -508,7 +508,7 @@ const ThumbnailsPanel = () => {
           </div>
         )}
       </Measure>
-      <DocumentControls shouldShowControls={shouldShowControls} />
+      {/* <DocumentControls shouldShowControls={shouldShowControls} /> */}
     </React.Fragment>
   );
 };

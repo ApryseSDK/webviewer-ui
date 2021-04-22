@@ -1,5 +1,5 @@
 import { hot } from 'react-hot-loader/root';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState} from 'react';
 import { useStore, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -61,6 +61,7 @@ const App = ({ removeEventHandlers }) => {
   const store = useStore();
   const dispatch = useDispatch();
   let timeoutReturn;
+  const [prepare, handlePrepare] = useState(true);
 
   useEffect(() => {
     defineReaderControlAPIs(store);
@@ -131,7 +132,7 @@ const App = ({ removeEventHandlers }) => {
         <Header />
         <ToolsHeader />
         <div className="content">
-          <LeftPanel />
+          {prepare? <LeftPanel />:''}
           <DocumentContainer />
           <RightPanel
             dataElement="searchPanel"
@@ -148,7 +149,7 @@ const App = ({ removeEventHandlers }) => {
         </div>
         <ViewControlsOverlay />
         <MenuOverlay />
-        <ZoomOverlay />
+        {/* <ZoomOverlay /> */}
         <AnnotationContentOverlay />
 
         <AnnotationPopup />
