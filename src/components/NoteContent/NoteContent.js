@@ -63,6 +63,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const dispatch = useDispatch();
   const isReply = annotation.isReply();
 
+  const [t] = useTranslation();
+
   useDidUpdate(() => {
     if (!isEditing) {
       dispatch(actions.finishNoteEditing());
@@ -95,7 +97,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           }}
         />
       ) : (
-          '(no name)'
+          t('option.notesPanel.noteContent.noName')
         );
     },
     [searchInput],
@@ -168,64 +170,69 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     clicked: isNonReplyNoteRead, //The top note content is read
   });
 
-  const header = useMemo(() => (
-    <React.Fragment>
-      {!isReply &&
-        <div className="type-icon-container">
-          {isUnread &&
-            <div className="unread-notification"></div>
-          }
-          <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
-        </div>
-      }
-      <div className="author-and-date">
-        <div className="author-and-overflow">
-          <div className="author-and-time">
-            {renderAuthorName(annotation)}
-            <div className="date-and-num-replies">
-            <div className="date-and-time">
-              {dayjs(getLatestActivityDate(annotation)).locale(language).format(noteDateFormat)}
+  const header = useMemo(
+    () => {
+      const latestActivityDate = getLatestActivityDate(annotation);
+      return (
+        <React.Fragment>
+          {!isReply &&
+            <div className="type-icon-container">
+              {isUnread &&
+                <div className="unread-notification"></div>
+              }
+              <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
             </div>
-               {numberOfReplies > 0 &&
-                <div className="num-replies-container">
-                  <Icon className="num-reply-icon" glyph={"icon-chat-bubble"} />
-                  <div className="num-replies">{numberOfReplies}</div>
-                </div>}
+          }
+          <div className="author-and-date">
+            <div className="author-and-overflow">
+              <div className="author-and-time">
+                {renderAuthorName(annotation)}
+                <div className="date-and-num-replies">
+                  <div className="date-and-time">
+                    {latestActivityDate ? dayjs(latestActivityDate).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate')}
+                  </div>
+                  {numberOfReplies > 0 &&
+                    <div className="num-replies-container">
+                      <Icon className="num-reply-icon" glyph={"icon-chat-bubble"} />
+                      <div className="num-replies">{numberOfReplies}</div>
+                    </div>}
                 </div>
-          </div>
-          <div className="state-and-overflow">
-            <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
-            {!isStateDisabled && !isReply &&
-              <NoteState
+              </div>
+              <div className="state-and-overflow">
+                <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
+                {!isStateDisabled && !isReply &&
+                  <NoteState
+                    annotation={annotation}
+                    isSelected={isSelected}
+                  />
+                }
+                {!isEditing && isSelected &&
+                  <NotePopup
+                    noteIndex={noteIndex}
+                    annotation={annotation}
+                    setIsEditing={setIsEditing}
+                  />}
+              </div>
+            </div>
+            {isEditing && isSelected ? (
+              <ContentArea
                 annotation={annotation}
-                isSelected={isSelected}
-              />
-            }
-            {!isEditing && isSelected &&
-              <NotePopup
                 noteIndex={noteIndex}
-                annotation={annotation}
                 setIsEditing={setIsEditing}
-              />}
+                textAreaValue={textAreaValue}
+                onTextAreaValueChange={onTextChange}
+              />
+            ) : (
+                contentsToRender && (
+                  <div className="container" onClick={handleContentsClicked}>{renderContents(contentsToRender)}</div>
+                )
+              )}
           </div>
-        </div>
-        {isEditing && isSelected ? (
-          <ContentArea
-            annotation={annotation}
-            noteIndex={noteIndex}
-            setIsEditing={setIsEditing}
-            textAreaValue={textAreaValue}
-            onTextAreaValueChange={onTextChange}
-          />
-        ) : (
-            contentsToRender && (
-              <div className="container" onClick={handleContentsClicked}>{renderContents(contentsToRender)}</div>
-            )
-          )}
-      </div>
-    </React.Fragment>
-  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange, language, isUnread]);
-
+        </React.Fragment>
+      );
+    },
+    [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange, language, isUnread]
+  );
 
   return useMemo(
     () => (
