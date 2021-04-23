@@ -47,7 +47,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       setIsPosting(false);
     }
 
-    if(!isPosting) {
+    if (!isPosting) {
       resize();
     }
   }, [isFocused]);
@@ -110,11 +110,10 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   const ifReplyNotAllowed =
     isReadOnly ||
     isReplyDisabled ||
-    isReplyDisabledForAnnotation ||
-    (isNoteEditingTriggeredByAnnotationPopup && isContentEditable);
+    isReplyDisabledForAnnotation;
 
   const replyAreaClass = classNames({
-    "reply-area-container" : true,
+    "reply-area-container": true,
     unread: isUnread,
   });
 
@@ -123,7 +122,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     onPendingReplyChange();
   }
   return ifReplyNotAllowed ? null : (
-    <div 
+    <div
       className={replyAreaClass}
       // stop bubbling up otherwise the note will be closed
       // due to annotation deselection
@@ -142,9 +141,9 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         aria-label={`${t('action.reply')}...`}
       />
       <div className="reply-button-container">
-        <button className="reply-button"         
-        onMouseDown={() => setIsPosting(true)}
-        onMouseUp={e => postReply(e)}
+        <button className="reply-button"
+          onMouseDown={() => setIsPosting(true)}
+          onMouseUp={e => postReply(e)}
         >
           {t('action.post')}
         </button>
