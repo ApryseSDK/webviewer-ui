@@ -1,12 +1,15 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import {  DndProvider } from 'react-dnd';
+import { isMobileDevice } from 'helpers/device';
+import HTML5Backend from 'react-dnd-html5-backend';
+import TouchBackEnd from 'react-dnd-touch-backend';
 
 import Outline from 'components/Outline';
 import OutlineContext from 'components/Outline/Context';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
-import OutlineControls from 'components/OutlineControls';
 import OutlineTextInput from 'components/OutlineTextInput';
 import DataElementWrapper from 'components/DataElementWrapper';
 
@@ -63,6 +66,30 @@ function OutlinesPanel() {
     });
   }
 
+  async function moveOutlineAfterTarget(dragOutline, dropOutline) {
+    outlineUtils.moveOutlineAfterTarget(outlineUtils.getPath(dragOutline), outlineUtils.getPath(dropOutline)).then(path => {
+      reRenderPanel();
+      nextPathRef.current = path;
+    });
+    core.goToOutline(dragOutline);
+  }
+
+  async function moveOutlineBeforeTarget(dragOutline, dropOutline) {
+    outlineUtils.moveOutlineBeforeTarget(outlineUtils.getPath(dragOutline), outlineUtils.getPath(dropOutline)).then(path => {
+      reRenderPanel();
+      nextPathRef.current = path;
+    });
+    core.goToOutline(dragOutline);
+  }
+
+  async function moveOutlineInward(dragOutline, dropOutline) {
+    outlineUtils.moveOutlineInTarget(outlineUtils.getPath(dragOutline), outlineUtils.getPath(dropOutline)).then(path => {
+      reRenderPanel();
+      nextPathRef.current = path;
+    });
+    core.goToOutline(dragOutline);
+  }
+
   return isDisabled ? null : (
     <div className="Panel OutlinesPanel" data-element={DataElements.OUTLINES_PANEL}>
       <OutlineContext.Provider
@@ -76,27 +103,34 @@ function OutlinesPanel() {
           reRenderPanel,
         }}
       >
-        <OutlineControls />
-        <div className="Outlines">
-          {!isAddingNewOutline && outlines.length === 0 && (
-            <div className="no-outlines">
-              <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
-              <div className="msg">{t('message.noOutlines')}</div>
-            </div>
-          )}
-          {outlines.map(outline => (
-            <Outline key={outlineUtils.getOutlineId(outline)} outline={outline} />
-          ))}
-          {isAddingNewOutline && selectedOutlinePath === null && (
-            <OutlineTextInput
-              className="marginLeft"
-              defaultValue={t('message.untitled')}
-              onEnter={addNewOutline}
-              onEscape={() => setIsAddingNewOutline(false)}
-              onBlur={addNewOutline}
-            />
-          )}
-        </div>
+        <DndProvider backend={isMobileDevice ? TouchBackEnd : HTML5Backend}>
+          <div className="Outlines">
+            {!isAddingNewOutline && outlines.length === 0 && (
+              <div className="no-outlines">
+                <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
+                <div className="msg">{t('message.noOutlines')}</div>
+              </div>
+            )}
+            {outlines.map(outline => (
+              <Outline
+                key={outlineUtils.getOutlineId(outline)}
+                outline={outline}
+                moveOutlineInward={moveOutlineInward}
+                moveOutlineBeforeTarget={moveOutlineBeforeTarget}
+                moveOutlineAfterTarget={moveOutlineAfterTarget}
+              />
+            ))}
+            {isAddingNewOutline && selectedOutlinePath === null && (
+              <OutlineTextInput
+                className="marginLeft"
+                defaultValue={t('message.untitled')}
+                onEnter={addNewOutline}
+                onEscape={() => setIsAddingNewOutline(false)}
+                onBlur={addNewOutline}
+              />
+            )}
+          </div>
+        </DndProvider>
         <DataElementWrapper className="addNewOutlineButtonContainer" dataElement="addNewOutlineButtonContainer">
           <Button
             dataElement="addNewOutlineButton"
