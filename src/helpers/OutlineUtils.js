@@ -98,6 +98,28 @@ const OutlineUtils = {
 
     return this.findPathInTree(copy);
   },
+  async moveOutlineBeforeTarget(path, targetPath) {
+    const currTarget = await this.findPDFNetOutline(path);
+    const target = await this.findPDFNetOutline(targetPath);
+    if (!target || !currTarget) {
+      return path;
+    }
+    const copy = await currTarget.copy();
+    await currTarget.delete();
+    await target.addPrev(copy);
+    return this.findPathInTree(copy);
+  },
+  async moveOutlineAfterTarget(path, targetPath) {
+    const currTarget = await this.findPDFNetOutline(path);
+    const target = await this.findPDFNetOutline(targetPath);
+    if (!target || !currTarget) {
+      return path;
+    }
+    const copy = await currTarget.copy();
+    await currTarget.delete();
+    await target.addNext(copy);
+    return this.findPathInTree(copy);
+  },
   async moveOutlineOutward(path) {
     const target = await this.findPDFNetOutline(path);
 
@@ -110,6 +132,59 @@ const OutlineUtils = {
     await target.delete();
 
     await parent.addNext(copy);
+
+    return this.findPathInTree(copy);
+  },
+  async moveOutlineOutwardBeforeParent(path) {
+    const target = await this.findPDFNetOutline(path);
+
+    if (!target || (await target.getIndent()) === 1) {
+      return path;
+    }
+
+    const parent = await target.getParent();
+    const copy = await target.copy();
+    await target.delete();
+
+    await parent.addPrev(copy);
+
+    return this.findPathInTree(copy);
+  },
+  async moveOutlineOutwardBeforeAncestor(path, ancestorPath) {
+    const target = await this.findPDFNetOutline(path);
+    const ancestorTarget = await this.findPDFNetOutline(ancestorPath);
+
+    if (!target || (await target.getIndent()) === 1 || !ancestorTarget) {
+      return path;
+    }
+
+    const copy = await target.copy();
+    await target.delete();
+
+    await ancestorTarget.addPrev(copy);
+
+    return this.findPathInTree(copy);
+  },
+  async moveOutlineInTarget(path, targetPath) {
+    const target = await this.findPDFNetOutline(path);
+    const targetOutline = await this.findPDFNetOutline(targetPath);
+    if (!target || !targetOutline) {
+      return path;
+    }
+
+    if (!(await this.isValid(targetOutline))) {
+      return path;
+    }
+
+    const copy = await target.copy();
+    await target.delete();
+
+    if (await targetOutline.hasChildren()) {
+      const lastChild = await targetOutline.getLastChild();
+      await lastChild.addNext(copy);
+    } else {
+      await targetOutline.addChild(copy);
+    }
 
     return this.findPathInTree(copy);
   },
@@ -250,6 +325,19 @@ const OutlineUtils = {
 
       return (await this.isValid(curr)) ? curr : null;
     });
+  },
+  isAncestor(outline, targetOutline) {
+    if (outline === targetOutline) {
+      return false;
+    }
+    let parentOutline = outline.parent;
+    while (parentOutline) {
+      if (parentOutline === targetOutline) {
+        return true;
+      }
+      parentOutline = parentOutline.parent;
+    }
+    return false;
   },
   getPath(outline) {
     const paths = [];
