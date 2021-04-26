@@ -244,7 +244,8 @@ class DocumentContainer extends React.PureComponent {
 
   onTransitionEnd(event) {
     // I don't know if this is needed. But better safe than sorry.
-    if (!(event.propertyName === 'background-color')) {
+    const transitionProperiesToIgnore = ['background-color', 'opacity'];
+    if (!transitionProperiesToIgnore.includes(event.propertyName)) {
       // We have a corner case where if you have 1st and 2nd page different size and you are in fit page mode
       // if you have callout (freetext) annotation on second page. If you open notes panel then click annotation and click
       // edit on it. This will cause our document container to re-render. We also have background-color transition
@@ -254,6 +255,9 @@ class DocumentContainer extends React.PureComponent {
       // background color is the one that causes this transition.
       // This effect is still happening in above case but if instead of clicking edit, user changes width of the notes panel
       // It is currently expected behaviour
+      // Note Update after fading page nav was added: 
+      // This also causes a doc container re-render as we fire the opacity transition when we fade the page nav
+      // we must skip updating the scrollViewUpdated call as well or it causes re-renders on docs with different page sizes
       core.scrollViewUpdated();
     }
   }
