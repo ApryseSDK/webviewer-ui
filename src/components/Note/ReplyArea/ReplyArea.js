@@ -34,7 +34,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     ],
     shallowEqual
   );
-  const { resize, isContentEditable, isSelected, pendingReplyMap, setPendingReply, isExpandedFromSearch } = useContext(NoteContext);
+  const { resize, isContentEditable, isSelected, pendingReplyMap, setPendingReply, isExpandedFromSearch, scrollToSelectedAnnot } = useContext(NoteContext);
   const [isFocused, setIsFocused] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
   const [t] = useTranslation();
@@ -66,7 +66,14 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     // on initial mount, focus the last character of the textarea
     if (textareaRef.current) {
       // when search item, should disable auto focus 
-      !isExpandedFromSearch && textareaRef.current.focus();
+      if (!isExpandedFromSearch && scrollToSelectedAnnot) {
+        // use "setTimeout" to wait for element to be added before focusing to have the blinking text cursor appear
+        setTimeout(() => {
+          // calling focus() cause the "NotePanel" to scroll to note that being focused.
+          // we don't want to jump to the selected annotation when scrolling up and down, so only focus once
+          textareaRef.current.focus();
+        }, (0));
+      }
 
       const textLength = textareaRef.current.value.length;
       textareaRef.current.setSelectionRange(textLength, textLength);

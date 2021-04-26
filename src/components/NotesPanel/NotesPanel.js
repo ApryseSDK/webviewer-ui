@@ -68,6 +68,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
   const [selectedNoteIds, setSelectedNoteIds] = useState({});
   const [searchInput, setSearchInput] = useState('');
+  const [scrollToSelectedAnnot, setScrollToSelectedAnnot] = useState(false);
   const [t] = useTranslation();
   const listRef = useRef();
   // a ref that is used to keep track of the current scroll position
@@ -117,6 +118,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       });
       if (isOpen) {
         setSelectedNoteIds(ids);
+        setScrollToSelectedAnnot(true);
       }
     };
     onAnnotationSelected();
@@ -272,10 +274,12 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       isNotePanelOpen: isOpen,
       onTopNoteContentClicked: handleNoteClicked,
       isExpandedFromSearch: onlyReplyContainsSearchInput(currNote),
+      scrollToSelectedAnnot,
     };
 
     if (index === singleSelectedNoteIndex) {
       setTimeout(() => {
+        setScrollToSelectedAnnot(false);
         // open the 'annotationNoteConnectorLine' since the note it's pointing to is being rendered
         dispatch(actions.openElement('annotationNoteConnectorLine'));
       }, 0);
