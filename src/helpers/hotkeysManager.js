@@ -313,6 +313,12 @@ WebViewer(...)
       },
       [concatKeys(Keys.CTRL_F, Keys.COMMAND_F)]: e => {
         e.preventDefault();
+
+        const isNotesPanelOpen = selectors.isElementOpen(getState(), 'notesPanel');
+        if (isNotesPanelOpen) {
+          dispatch(actions.closeElement('notesPanel'));
+        }
+
         dispatch(actions.openElement('searchPanel'));
       },
       [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: e => {
