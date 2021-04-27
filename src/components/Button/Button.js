@@ -12,7 +12,10 @@ import selectors from 'selectors';
 
 import './Button.scss';
 
-const NOOP = () => {};
+const NOOP = e => {
+  e.stopPropagation();
+  e.preventDefault();
+};
 
 const propTypes = {
   isActive: PropTypes.bool,

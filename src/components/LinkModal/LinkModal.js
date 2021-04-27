@@ -203,6 +203,13 @@ const LinkModal = () => {
     }
   }, [tabSelected, isOpen, pageLabelInput, urlInput]);
 
+  useEffect(() => {
+    core.addEventListener('documentUnloaded', closeModal);
+    return () => {
+      core.removeEventListener('documentUnloaded', closeModal);
+    };
+  }, []);
+
   const modalClass = classNames({
     Modal: true,
     LinkModal: true,
