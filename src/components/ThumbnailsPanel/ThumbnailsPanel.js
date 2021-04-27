@@ -172,7 +172,7 @@ const ThumbnailsPanel = () => {
       } else {
         setAllowPageOperations(false);
       }
-  
+
       dispatch(actions.setSelectedPageThumbnails([]));
     };
 
@@ -187,7 +187,7 @@ const ThumbnailsPanel = () => {
     core.addEventListener('finishedRendering', onFinishedRendering);
     core.addEventListener('documentLoaded', onDocumentLoaded);
     core.addEventListener('pageComplete', onPageComplete);
-    
+
 
     // The document might have already been loaded before this component is mounted.
     // If document is already loaded, call 'onDocumentLoaded()' manually to update the state properly.
@@ -266,7 +266,7 @@ const ThumbnailsPanel = () => {
   }, [isReaderMode]);
 
   // if disabled or is not open return
-  if(isDisabled || !isOpen){
+  if (isDisabled || !isOpen) {
     return null
   }
 
@@ -503,6 +503,8 @@ const ThumbnailsPanel = () => {
                 overscanRowCount={3}
                 className={'thumbnailsList'}
                 style={{ outline: 'none' }}
+                // Ensure we show the current page in the thumbnails when we open the panel
+                scrollToIndex={currentPage - 1}
               />
             </div>
           </div>
