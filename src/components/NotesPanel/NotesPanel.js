@@ -48,11 +48,6 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
 
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-  useEffect(() => {
-    if (isOpen && core.getSelectedAnnotations().length === 0) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
 
   const isMobile = useMedia(
     // Media queries
