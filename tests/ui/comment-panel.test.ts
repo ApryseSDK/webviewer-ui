@@ -193,25 +193,62 @@ describe('Test cases for comment panel', () => {
     const instance = await result.waitForInstance();
     await instance('loadDocument', '/test-files/annots1-rotated-cropped.pdf');
     await result.waitForWVEvent('annotationsLoaded');
-  
+
     instance('openElement', 'notesPanel');
-  
+
     await result.iframe.evaluate(async() => {
       const annotManager = window.docViewer.getAnnotationManager();
       annotManager.setIsAdminUser(true);
-  
+
       let annotations = annotManager.getAnnotationsList().filter(a => a.PageNumber === 5);
-  
+
       let parentAnnot = annotations[0];
       let childrenAnnots = annotations.slice(1,5);
-  
+
       annotManager.groupAnnotations(parentAnnot, childrenAnnots);
       annotManager.selectAnnotation(childrenAnnots[0]);
     });
-  
+
     await page.waitFor(Timeouts.REACT_RERENDER);
-  
+
     const pageContainer = await result.iframe.$('.Note.expanded');
     expect(await pageContainer.evaluate((node) => node.innerHTML)).toBeTruthy();
+  });
+
+  it('Buttons should be disabled if there is nothing to persist', async() => {
+    await page.waitFor(Timeouts.PDF_PRIME_DOCUMENT);
+
+    const instance = await result.waitForInstance();
+
+    await instance('setToolMode', 'AnnotationCreateSticky');
+    const pageContainer = await result.iframe.$('#pageContainer1');
+    const { x, y } = await pageContainer.boundingBox();
+    await page.mouse.click(x + 100, y + 20);
+
+    await page.waitFor(1000);
+
+    const saveButton = await result.iframe.$('.save-button');
+    expect(await saveButton.evaluate((element) => element.classList.contains('disabled'))).toBeTruthy();
+
+    await result.iframe.focus('div.edit-content textarea');
+    await page.keyboard.type('Some content');
+
+    await page.waitFor(500);
+
+    expect(await saveButton.evaluate((element) => !element.classList.contains('disabled'))).toBeTruthy();
+
+    await result.iframe.$eval( '.save-button', (element) => element.click());
+
+    await page.waitFor(1000);
+
+    const replyButton = await result.iframe.$('.reply-button');
+    expect(await replyButton.evaluate((element) => element.classList.contains('disabled'))).toBeTruthy();
+
+    await result.iframe.focus('div.reply-area-container textarea');
+    await page.keyboard.type('Some reply');
+
+    await page.waitFor(500);
+
+    expect(await replyButton.evaluate((element) => !element.classList.contains('disabled'))).toBeTruthy();
   });
 });

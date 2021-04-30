@@ -1,0 +1,14 @@
+@import '../../../constants/styles';
+@import '../../../constants/note';
+
+.Note {
+  .reply-area-container {
+    .reply-button {
+      &.disabled {
+        background: var(--gray-6);
+        border-color: var(--gray-6);
+        cursor: not-allowed;
+      }
+    }
+  }
+}

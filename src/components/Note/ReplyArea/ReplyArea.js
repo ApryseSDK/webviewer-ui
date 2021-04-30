@@ -12,6 +12,8 @@ import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import './ReplyArea.scss';
+
 const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
@@ -65,7 +67,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
     if (textareaRef.current) {
-      // when search item, should disable auto focus 
+      // when search item, should disable auto focus
       if (!isExpandedFromSearch && scrollToSelectedAnnot) {
         // use "setTimeout" to wait for element to be added before focusing to have the blinking text cursor appear
         setTimeout(() => {
@@ -147,7 +149,8 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         placeholder={`${t('action.reply')}...`}
         aria-label={`${t('action.reply')}...`}
       />
-      <button className="reply-button"
+      <button className={`reply-button${!pendingReplyMap[annotation.Id] ? ' disabled' : ''}`}
+        disabled={!pendingReplyMap[annotation.Id]}
         onMouseDown={() => setIsPosting(true)}
         onMouseUp={e => postReply(e)}
       >

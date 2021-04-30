@@ -198,6 +198,12 @@
           background: var(--primary-button-hover);
           color: var(--primary-button-text);
         }
+
+        &.disabled {
+          background: var(--gray-6);
+          border-color: var(--gray-6);
+          cursor: not-allowed;
+        }
       }
 
       .cancel-button {
