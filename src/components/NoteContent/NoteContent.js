@@ -312,7 +312,8 @@ const ContentArea = ({
           {t('action.cancel')}
         </button>
         <button
-          className="save-button"
+          className={`save-button${!textAreaValue ? ' disabled' : ''}`}
+          disabled={!textAreaValue}
           onClick={e => {
             e.stopPropagation();
             setContents(e);
