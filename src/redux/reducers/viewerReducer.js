@@ -190,6 +190,8 @@ export default initialState => (state = initialState, action) => {
           [payload.toolbarGroup]: payload.toolGroup,
         },
       };
+    case 'SET_OUTLINE_CONTROL_VISIBILITY':
+      return { ...state, outlineControlVisibility: payload.outlineControlVisibility };
     case 'SET_NOTE_POPUP_ID':
       return { ...state, notePopupId: payload.id };
     case 'SET_NOTE_EDITING':

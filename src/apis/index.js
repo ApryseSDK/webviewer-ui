@@ -62,6 +62,7 @@ import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
 import goToPrevPage from './goToPrevPage';
+import hideOutlineControl from './hideOutlineControl';
 import hotkeys from './hotkeys';
 import isAdminUser from './isAdminUser';
 import isElementDisabled from './isElementDisabled';
@@ -123,6 +124,7 @@ import setToolMode from './setToolMode';
 import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
 import showErrorMessage from './showErrorMessage';
+import showOutlineControl from './showOutlineControl';
 import showWarningMessage from './showWarningMessage';
 import textPopup from './textPopup';
 import toggleElement from './toggleElement';
@@ -233,6 +235,7 @@ export default store => {
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),
+    hideOutlineControl: hideOutlineControl(store),
     loadDocument: loadDocument(store),
     settingsMenuOverlay: settingsMenuOverlay(store),
     openElements: openElements(store),
@@ -291,6 +294,7 @@ export default store => {
     getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
     setDisplayedSignaturesFilter: setDisplayedSignaturesFilterFunction(store),
     selectThumbnailPages: selectThumbnailPages(store),
+    showOutlineControl: showOutlineControl(store),
     unselectThumbnailPages: unselectThumbnailPages(store),
     setAnnotationContentOverlayHandler: setAnnotationContentOverlayHandler(store),
     verificationOptions: {

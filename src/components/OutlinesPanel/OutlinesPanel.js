@@ -1,11 +1,11 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import {  DndProvider } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import { isMobileDevice } from 'helpers/device';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackEnd from 'react-dnd-touch-backend';
-
+import OutlineControls from '../OutlineControls';
 import Outline from 'components/Outline';
 import OutlineContext from 'components/Outline/Context';
 import Icon from 'components/Icon';
@@ -24,6 +24,7 @@ import './OutlinesPanel.scss';
 function OutlinesPanel() {
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, DataElements.OUTLINES_PANEL));
   const outlines = useSelector(state => selectors.getOutlines(state));
+  const outlineControlVisibility = useSelector(state => selectors.isOutlineControlVisible(state));
   const [selectedOutlinePath, setSelectedOutlinePath] = useState(null);
   const [isAddingNewOutline, setIsAddingNewOutline] = useState(false);
   const [t] = useTranslation();
@@ -66,28 +67,27 @@ function OutlinesPanel() {
     });
   }
 
-  async function moveOutlineAfterTarget(dragOutline, dropOutline) {
-    outlineUtils.moveOutlineAfterTarget(outlineUtils.getPath(dragOutline), outlineUtils.getPath(dropOutline)).then(path => {
-      reRenderPanel();
-      nextPathRef.current = path;
-    });
+  function generalMoveOutlineAction(dragOutline, dropOutline, moveDirection) {
+    const dragPath = outlineUtils.getPath(dragOutline);
+    const dropPath = outlineUtils.getPath(dropOutline);
+    moveDirection.call(outlineUtils, dragPath, dropPath)
+      .then(path => {
+        reRenderPanel();
+        nextPathRef.current = path;
+      });
     core.goToOutline(dragOutline);
   }
 
-  async function moveOutlineBeforeTarget(dragOutline, dropOutline) {
-    outlineUtils.moveOutlineBeforeTarget(outlineUtils.getPath(dragOutline), outlineUtils.getPath(dropOutline)).then(path => {
-      reRenderPanel();
-      nextPathRef.current = path;
-    });
-    core.goToOutline(dragOutline);
+  function moveOutlineAfterTarget(dragOutline, dropOutline) {
+    generalMoveOutlineAction(dragOutline, dropOutline, outlineUtils.moveOutlineAfterTarget);
   }
 
-  async function moveOutlineInward(dragOutline, dropOutline) {
-    outlineUtils.moveOutlineInTarget(outlineUtils.getPath(dragOutline), outlineUtils.getPath(dropOutline)).then(path => {
-      reRenderPanel();
-      nextPathRef.current = path;
-    });
-    core.goToOutline(dragOutline);
+  function moveOutlineBeforeTarget(dragOutline, dropOutline) {
+    generalMoveOutlineAction(dragOutline, dropOutline, outlineUtils.moveOutlineBeforeTarget);
+  }
+
+  function moveOutlineInward(dragOutline, dropOutline) {
+    generalMoveOutlineAction(dragOutline, dropOutline, outlineUtils.moveOutlineInTarget);
   }
 
   return isDisabled ? null : (
@@ -103,6 +103,7 @@ function OutlinesPanel() {
           reRenderPanel,
         }}
       >
+        {outlineControlVisibility && <OutlineControls />}
         <DndProvider backend={isMobileDevice ? TouchBackEnd : HTML5Backend}>
           <div className="Outlines">
             {!isAddingNewOutline && outlines.length === 0 && (

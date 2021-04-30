@@ -224,6 +224,8 @@ export const getDisabledCustomPanelTabs = state =>
 
 export const isEmbedPrintSupported = state => isChrome && !isAndroid && state.viewer.useEmbeddedPrint;
 
+export const isOutlineControlVisible = state => state.viewer.outlineControlVisibility;
+
 export const getColorMap = state => state.viewer.colorMap;
 
 export const getCursorOverlayData = state => state.viewer.cursorOverlay;

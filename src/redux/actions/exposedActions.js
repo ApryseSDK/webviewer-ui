@@ -182,6 +182,10 @@ export const setSelectedStampIndex = index => ({
   type: 'SET_SELECTED_STAMP_INDEX',
   payload: { index },
 });
+export const setOutlineControlVisibility = outlineControlVisibility => ({
+  type: 'SET_OUTLINE_CONTROL_VISIBILITY',
+  payload: { outlineControlVisibility },
+});
 export const setSelectedDisplayedSignatureIndex = index => ({
   type: 'SET_SELECTED_DISPLAYED_SIGNATURE_INDEX',
   payload: { index },
