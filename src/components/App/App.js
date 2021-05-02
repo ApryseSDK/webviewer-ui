@@ -44,7 +44,7 @@ import defineReaderControlAPIs from 'src/apis';
 import loadDocument from 'helpers/loadDocument';
 import getHashParams from 'helpers/getHashParams';
 import fireEvent from 'helpers/fireEvent';
-
+import PrepareSignaturesPanel from 'components/PrepareSignaturesPanel';
 import actions from 'actions';
 
 import './App.scss';
@@ -61,7 +61,7 @@ const App = ({ removeEventHandlers }) => {
   const store = useStore();
   const dispatch = useDispatch();
   let timeoutReturn;
-  const [prepare, handlePrepare] = useState(false);
+  const [prepare, handlePrepare] = useState(true);
 
   useEffect(() => {
     defineReaderControlAPIs(store);
@@ -128,6 +128,7 @@ const App = ({ removeEventHandlers }) => {
     <React.Fragment>
       <div className="App">
         <Accessibility />
+        {console.log(core.getActiveSearchResult())}
 
         {/* <Header />
         <ToolsHeader /> */}
@@ -144,7 +145,7 @@ const App = ({ removeEventHandlers }) => {
             dataElement="notesPanel"
             onResize={width => dispatch(actions.setNotesPanelWidth(width))}
           >
-            <NotesPanel />
+            {prepare? <PrepareSignaturesPanel/>:<NotesPanel />}
           </RightPanel>
         </div>
         <ViewControlsOverlay />
