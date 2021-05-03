@@ -8,17 +8,19 @@ const propTypes = {
   children: PropTypes.func.isRequired,
   onScroll: PropTypes.func.isRequired,
   initialScrollTop: PropTypes.number.isRequired,
-  selectedIndex: PropTypes.number
+  selectedIndex: PropTypes.number,
+  scrollToSelectedAnnot: PropTypes.bool,
 };
 
 const cache = new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
 
 const VirtualizedList = React.forwardRef(
-  ({ notes, children, onScroll, initialScrollTop, selectedIndex }, forwardedRef) => {
+  ({ notes, children, onScroll, initialScrollTop, selectedIndex, scrollToSelectedAnnot }, forwardedRef) => {
     const listRef = useRef();
     const [offset, setOffset] = useState(0);
     const [dimension, setDimension] = useState({ width: 0, height: 0 });
     let prevWindowHeight = window.innerHeight;
+    let resizeTimeout = null;
 
     useImperativeHandle(forwardedRef, () => ({
       scrollToPosition: scrollTop => {
@@ -34,11 +36,20 @@ const VirtualizedList = React.forwardRef(
     }, [initialScrollTop]);
 
     useEffect(() => {
+      if (selectedIndex !== -1) {
+        // scroll to selected row, before recalculating rows. 
+        // If this isn't done it'll just recalcuate top rows and have incorrect values for where the selected row is
+        listRef.current?.scrollToRow(selectedIndex);
+      }
+
       cache.clearAll();
-      listRef?.current?.recomputeRowHeights();
+      listRef?.current?.measureAllRows();
 
       if(selectedIndex !== -1) {
-        listRef.current?.scrollToRow(selectedIndex);
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          listRef.current?.scrollToRow(selectedIndex);
+        }, 0);
       }
     }, [notes.length, selectedIndex]);
 
@@ -64,7 +75,7 @@ const VirtualizedList = React.forwardRef(
       cache.clear(index);
       listRef.current?.recomputeRowHeights(index);
 
-      if(selectedIndex !== -1) {
+      if (selectedIndex !== -1 && scrollToSelectedAnnot) {
         setTimeout(() => {
           // need setTimeout or else sometime it won't scroll to the correct replies
           listRef.current?.scrollToRow(selectedIndex);
@@ -118,7 +129,6 @@ const VirtualizedList = React.forwardRef(
               rowHeight={cache.rowHeight}
               rowRenderer={rowRenderer}
               onScroll={handleScroll}
-              scrollToAlignment={"start"}
             />
           </div>
         )}

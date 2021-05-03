@@ -221,6 +221,7 @@ const Note = ({
       className={noteClass}
       onClick={handleNoteClick}
       onKeyDown={handleNoteKeydown}
+      id={`note_${annotation.Id}`}
     >
       <NoteContent
         noteIndex={0}
@@ -246,7 +247,7 @@ const Note = ({
             )}
             {replies.length > 0 && <div className="divider" />}
             {replies.map((reply, i) => (
-              <div className="reply" key={`note_reply_${reply.Id}`}>
+              <div className="reply"  id={`note_reply_${reply.Id}`} key={`note_reply_${reply.Id}`}>
                 {i > 0 && <div className="reply-divider" />}
                 <NoteContent
                   noteIndex={i + 1}

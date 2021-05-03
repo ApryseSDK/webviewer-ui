@@ -195,8 +195,8 @@ describe('Test cases for comment panel', () => {
     await result.waitForWVEvent('annotationsLoaded');
 
     instance('openElement', 'notesPanel');
-
     await result.iframe.evaluate(async() => {
+
       const annotManager = window.docViewer.getAnnotationManager();
       annotManager.setIsAdminUser(true);
 
@@ -213,6 +213,59 @@ describe('Test cases for comment panel', () => {
 
     const pageContainer = await result.iframe.$('.Note.expanded');
     expect(await pageContainer.evaluate((node) => node.innerHTML)).toBeTruthy();
+  });
+
+  it('should be able to scroll to selected annotation for VirtualizedList', async() => {
+    const instance = await result.waitForInstance();
+
+    await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
+    await result.waitForWVEvent('annotationsLoaded');
+  
+    instance('openElement', 'notesPanel');
+  
+    const selectAnnotAndTest = async (index) => {
+      let annotId = await (result.iframe as Frame).evaluate(async(index) => {
+        const annotManager = window.docViewer.getAnnotationManager();
+        annotManager.deselectAllAnnotations();
+
+        const annots = annotManager.getAnnotationsList().filter(annot => annot instanceof window.Annotations.FreeTextAnnotation);
+        annotManager.selectAnnotation(annots[index]);
+
+        return annots[index].Id;
+      }, index);
+
+      await page.waitFor(500);
+
+      // check if the note is being rendered in the virtualized list
+      // testing like this to try to prevent it from being buggy if scroll is off by a little bit
+      const noteContainer = await result.iframe.$(`#note_${annotId}`);
+      expect(await noteContainer.evaluate((node) => node.innerHTML)).toBeTruthy();
+
+      let focusedElement = await (result.iframe as Frame).evaluate(async() => {
+        return document.activeElement.constructor.name;
+      });
+
+      // check if focusing on the textarea, can't think of any other way to tell if there is a blinking text cursor
+      expect(focusedElement).toBe("HTMLTextAreaElement");
+
+      const notePanel = await result.iframe.$(`.NotesPanel .ReactVirtualized__Grid`);
+      const selectedScrollTop = await notePanel.evaluate((node) => node.scrollTop);
+
+      await (result.iframe as Frame).evaluate(async(index) => {
+        const annotManager = window.docViewer.getAnnotationManager();
+        annotManager.deselectAllAnnotations();
+      }, index);
+      await page.waitFor(500);
+
+      const deselectedScrollTop = await notePanel.evaluate((node) => node.scrollTop);
+      // check if the note panel stay near the same location when closing the note
+      expect(Math.abs(selectedScrollTop - deselectedScrollTop)).toBeLessThan(5);
+    };
+
+    await selectAnnotAndTest(30);
+    await selectAnnotAndTest(60);
+    await selectAnnotAndTest(10);
+    await selectAnnotAndTest(88);
   });
 
   it('Buttons should be disabled if there is nothing to persist', async() => {

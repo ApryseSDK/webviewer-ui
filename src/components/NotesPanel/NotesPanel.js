@@ -425,6 +425,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
             onScroll={handleScroll}
             initialScrollTop={scrollTopRef.current}
             selectedIndex={singleSelectedNoteIndex}
+            scrollToSelectedAnnot={scrollToSelectedAnnot}
           >
             {renderChild}
           </VirtualizedList>

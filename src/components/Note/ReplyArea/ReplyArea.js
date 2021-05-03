@@ -73,8 +73,8 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         setTimeout(() => {
           // calling focus() cause the "NotePanel" to scroll to note that being focused.
           // we don't want to jump to the selected annotation when scrolling up and down, so only focus once
-          textareaRef.current.focus();
-        }, (0));
+          textareaRef.current?.focus();
+        }, 0);
       }
 
       const textLength = textareaRef.current.value.length;
