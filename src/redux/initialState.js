@@ -1210,6 +1210,7 @@ export default {
     isThumbnailMerging: true,
     isThumbnailReordering: true,
     isThumbnailMultiselect: true,
+    enableNotesPanelVirtualizedList: true,
     allowPageNavigation: true,
     enableToolGroupReordering: true,
     enableMouseWheelZoom: true,

@@ -107,6 +107,10 @@ export const setIsMultipleViewerMerging = (isMultipleViewerMerging = false) => (
   type: 'SET_MULTI_VIEWER_MERGING',
   payload: { isMultipleViewerMerging },
 });
+export const setEnableNotesPanelVirtualizedList = (enableNotesPanelVirtualizedList = true) => ({
+  type: 'SET_ENABLE_NOTE_PANEL_VIRTUALIZED_LIST',
+  payload: { enableNotesPanelVirtualizedList },
+});
 export const setAllowPageNavigation = (allowPageNavigation = true) => ({
   type: 'SET_ALLOW_PAGE_NAVIGATION',
   payload: { allowPageNavigation },
