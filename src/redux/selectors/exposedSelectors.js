@@ -275,6 +275,8 @@ export const getIsThumbnailMultiselectEnabled = state => state.viewer.isThumbnai
 
 export const getIsMultipleViewerMerging = state => state.viewer.isMultipleViewerMerging;
 
+export const getEnableNotesPanelVirtualizedList = state => state.viewer.enableNotesPanelVirtualizedList;
+
 export const getAllowPageNavigation = state => state.viewer.allowPageNavigation;
 
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;

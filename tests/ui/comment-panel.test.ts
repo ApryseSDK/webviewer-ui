@@ -304,4 +304,47 @@ describe('Test cases for comment panel', () => {
 
     expect(await replyButton.evaluate((element) => !element.classList.contains('disabled'))).toBeTruthy();
   });
+
+  it('should be able enable and disable virtualized list', async() => {
+    const instance = await result.waitForInstance();
+
+    await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
+    await result.waitForWVEvent('annotationsLoaded');
+  
+    instance('openElement', 'notesPanel');
+    await page.waitFor(500);
+
+    let annotCount = await (result.iframe as Frame).evaluate(async() => {
+      return window.readerControl.docViewer.getAnnotationManager().getAnnotationsList().filter(a => !a.InReplyTo && a.Listable).length;
+    });
+
+    let noteEleCount = await (result.iframe as Frame).evaluate(async() => {
+      return Array.from(document.querySelectorAll('.Note')).length;
+    });
+
+    await page.waitFor(500);
+    expect(annotCount).toBeGreaterThan(noteEleCount);
+
+    await (result.iframe as Frame).evaluate(async() => {
+      window.readerControl.disableFeatures(window.readerControl.Feature.NotesPanelVirtualizedList);
+    });
+
+    await page.waitFor(2000);
+
+    let nonVirtualListNoteEleCount = await (result.iframe as Frame).evaluate(async() => {
+      return Array.from(document.querySelectorAll('.Note')).length;
+    });
+
+    expect(annotCount).toEqual(nonVirtualListNoteEleCount);
+
+    await (result.iframe as Frame).evaluate(async() => {
+      window.readerControl.enableFeatures(window.readerControl.Feature.NotesPanelVirtualizedList);
+    });
+
+    let virtualNoteEleCount = await (result.iframe as Frame).evaluate(async() => {
+      return Array.from(document.querySelectorAll('.Note')).length;
+    });
+
+    expect(virtualNoteEleCount).toEqual(noteEleCount);
+  });
 });

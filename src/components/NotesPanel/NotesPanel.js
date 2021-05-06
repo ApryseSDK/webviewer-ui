@@ -31,6 +31,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     currentNotesPanelWidth,
     notesInLeftPanel,
     isDocumentReadOnly,
+    enableNotesPanelVirtualizedList,
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -41,6 +42,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       selectors.getNotesPanelWidth(state),
       selectors.getNotesInLeftPanel(state),
       selectors.isDocumentReadOnly(state),
+      selectors.getEnableNotesPanelVirtualizedList(state),
     ],
     shallowEqual,
   );
@@ -72,7 +74,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   // when the number of notesToRender goes over/below the threshold, we will unmount the current list and mount the other one
   // this will result in losing the scroll position and we will use this ref to recover
   const scrollTopRef = useRef(0);
-  const VIRTUALIZATION_THRESHOLD = isIE ? 25 : 100;
+  const VIRTUALIZATION_THRESHOLD = enableNotesPanelVirtualizedList ? (isIE ? 25 : 100) : Infinity;
 
   useEffect(() => {
     const onDocumentUnloaded = () => {

@@ -170,6 +170,11 @@ export default (enable, store) => features => {
         store.dispatch(actions.setThumbnailMultiselect(enable));
       },
     },
+    [Feature.NotesPanelVirtualizedList]: {
+      fn: () => {
+        store.dispatch(actions.setEnableNotesPanelVirtualizedList(enable));
+      },
+    },
     [Feature.PageNavigation]: {
       fn: () => {
         const {
