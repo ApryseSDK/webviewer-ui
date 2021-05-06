@@ -13,8 +13,8 @@ import selectors from 'selectors';
 import './Button.scss';
 
 const NOOP = e => {
-  e.stopPropagation();
-  e.preventDefault();
+  e?.stopPropagation();
+  e?.preventDefault();
 };
 
 const propTypes = {

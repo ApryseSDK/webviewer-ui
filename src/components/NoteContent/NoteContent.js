@@ -90,11 +90,14 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
 
   const renderContents = useCallback(
     contents => {
-      contents = escapeHtml(contents);
-
       let text;
       const transformedContents = Autolinker.link(contents, {
         stripPrefix: false,
+        replaceFn: function (match) {
+          const tag = match.buildTag();
+          tag.setInnerHtml(escapeHtml(match.getAnchorText()));
+          return tag;
+        }
       });
       if (transformedContents.includes('<a')) {
         // if searchInput is 't', replace <a ...>text</a> with
