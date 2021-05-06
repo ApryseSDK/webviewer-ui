@@ -36,20 +36,11 @@ const VirtualizedList = React.forwardRef(
     }, [initialScrollTop]);
 
     useEffect(() => {
-      if (selectedIndex !== -1) {
-        // scroll to selected row, before recalculating rows. 
-        // If this isn't done it'll just recalcuate top rows and have incorrect values for where the selected row is
-        listRef.current?.scrollToRow(selectedIndex);
-      }
-
       cache.clearAll();
       listRef?.current?.measureAllRows();
 
       if(selectedIndex !== -1) {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-          listRef.current?.scrollToRow(selectedIndex);
-        }, 0);
+        listRef.current?.scrollToRow(selectedIndex);
       }
     }, [notes.length, selectedIndex]);
 
@@ -74,13 +65,6 @@ const VirtualizedList = React.forwardRef(
     const _resize = index => {
       cache.clear(index);
       listRef.current?.recomputeRowHeights(index);
-
-      if (selectedIndex !== -1 && scrollToSelectedAnnot) {
-        setTimeout(() => {
-          // need setTimeout or else sometime it won't scroll to the correct replies
-          listRef.current?.scrollToRow(selectedIndex);
-        }, 0);
-      }
     };
 
     const handleScroll = ({ scrollTop }) => {
@@ -100,9 +84,13 @@ const VirtualizedList = React.forwardRef(
           parent={parent}
           rowIndex={index}
         >
+        {({ measure }) => (    
           <div style={{ ...style, paddingRight: '12px' }}>
-            {children(notes, index, () => _resize(index))}
-          </div>
+            {children(notes, index, () => {
+              _resize(index);
+              measure();
+            })}
+          </div>)}
         </CellMeasurer>
       );
     };
