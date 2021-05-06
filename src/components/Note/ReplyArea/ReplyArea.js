@@ -36,9 +36,8 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     ],
     shallowEqual
   );
-  const { resize, isContentEditable, isSelected, pendingReplyMap, setPendingReply, isExpandedFromSearch, scrollToSelectedAnnot } = useContext(NoteContext);
+  const { isContentEditable, isSelected, pendingReplyMap, setPendingReply, isExpandedFromSearch, scrollToSelectedAnnot } = useContext(NoteContext);
   const [isFocused, setIsFocused] = useState(false);
-  const [isPosting, setIsPosting] = useState(false);
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const textareaRef = useRef();
@@ -46,12 +45,8 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   useDidUpdate(() => {
     if (!isFocused) {
       dispatch(actions.finishNoteEditing());
-      setIsPosting(false);
     }
 
-    if (!isPosting) {
-      resize();
-    }
   }, [isFocused]);
 
   useEffect(() => {
@@ -85,7 +80,6 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   const postReply = e => {
     // prevent the textarea from blurring out
     e.preventDefault();
-    setIsPosting(false);
     const replyText = pendingReplyMap[annotation.Id]
 
     if (!replyText) {
@@ -152,7 +146,6 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       <div className="reply-button-container">
         <button className={`reply-button${!pendingReplyMap[annotation.Id] ? ' disabled' : ''}`}
           disabled={!pendingReplyMap[annotation.Id]}
-          onMouseDown={() => setIsPosting(true)}
           onMouseUp={e => postReply(e)}
         >
           {t('action.post')}
