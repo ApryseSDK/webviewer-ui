@@ -206,7 +206,7 @@ class MentionsManager {
    * @ignore
    */
   extractMentionDataFromAnnot(annotation) {
-    const mentionData = annotation.getCustomData('trn-mention');
+    let mentionData = annotation.getCustomData('trn-mention');
     const userData = this.getUserData();
     const contents = annotation.getContents();
     const result = {
@@ -214,8 +214,10 @@ class MentionsManager {
       contentWithoutMentions: contents,
     };
 
-    if (!mentionData) {
+    if (mentionData === '') {
       return result;
+    } else {
+      mentionData = JSON.parse(mentionData);
     }
 
     userData.forEach(user => {
