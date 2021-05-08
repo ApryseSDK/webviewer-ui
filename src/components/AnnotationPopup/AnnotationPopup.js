@@ -68,7 +68,14 @@ const AnnotationPopup = () => {
     }
   });
 
-  const getAssociatedLinkedAnnotations = annotation => Array.isArray(annotation.getCustomData(AnnotationCustomData.LINK_ID)) ? annotation.getCustomData(AnnotationCustomData.LINK_ID) : [];
+  const getAssociatedLinkedAnnotations = annotation => {
+    const rawCustomData = annotation.getCustomData(AnnotationCustomData.LINK_ID);
+    let customData = [];
+    if (rawCustomData) {
+      customData = JSON.parse(rawCustomData);
+    }
+    return Array.isArray(customData) ? customData : [];
+  };
 
   useEffect(() => {
     if (firstAnnotation) {

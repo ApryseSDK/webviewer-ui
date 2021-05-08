@@ -120,7 +120,13 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
   const color = annotation[iconColor]?.toHexString?.();
   const fillColor = getFillColor(annotation.FillColor);
-  const contents = annotation.getCustomData('trn-mention')?.contents || annotation.getContents();
+  let customData;
+  try {
+    customData = JSON.parse(annotation.getCustomData('trn-mention'));
+  } catch (e) {
+    customData = annotation.getCustomData('trn-mention');
+  }
+  const contents = customData?.contents || annotation.getContents();
   const contentsToRender = annotation.getContents();
   const numberOfReplies = annotation.getReplies().length;
   const formatNumberOfReplies = Math.min(numberOfReplies, 9);
