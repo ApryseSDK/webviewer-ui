@@ -176,6 +176,8 @@
     "sortBy": "Sort by",
     "emptyCustomStampInput": "Stamp text cannot be empty",
     "unpostedComment": "Unposted Comment",
+    "lockedLayer": "Layer is locked",
+    "layerVisibililtyNoChange": "Layer visibililty can't be changed",
     "untitled": "Untitled"
   },
   "option": {

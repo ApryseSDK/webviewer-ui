@@ -26,6 +26,7 @@ import onSignatureDeleted from './onSignatureDeleted';
 import onWidgetEditingStarted from './onWidgetEditingStarted';
 import onWidgetEditingEnded from './onWidgetEditingEnded';
 import onDigitalSignatureAvailable from './onDigitalSignatureAvailable';
+import onLayersUpdated from './onLayersUpdated';
 
 export {
   onSignatureSaved,
@@ -56,4 +57,5 @@ export {
   onWidgetEditingStarted,
   onWidgetEditingEnded,
   onDigitalSignatureAvailable,
+  onLayersUpdated
 };

@@ -1,3 +1,3 @@
-import LayersPanel from './LayersPanel';
+import LayersPanelRedux from './LayersPanelRedux';
 
-export default LayersPanel;
+export default LayersPanelRedux;

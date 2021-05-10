@@ -74,6 +74,6 @@ const getEventToObjectMap = () => {
     editorTextChanged: editBoxManager,
     editorSelectionChanged: editBoxManager,
     editingStarted: widgetEditingManager,
-    editingEnded: widgetEditingManager,
+    editingEnded: widgetEditingManager
   };
 };

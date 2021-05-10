@@ -11,10 +11,11 @@ const propTypes = {
   children: PropTypes.element.isRequired,
   content: PropTypes.string,
   hideShortcut: PropTypes.bool,
-  forcePosition: PropTypes.string
+  forcePosition: PropTypes.string,
+  hideOnClick: PropTypes.bool
 };
 
-const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePosition }, ref) => {
+const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePosition, hideOnClick }, ref) => {
   const timeoutRef = useRef(null);
   const childRef = useRef(null);
   useImperativeHandle(ref, () => childRef.current);
@@ -45,8 +46,10 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
 
     childRef.current?.addEventListener('mouseenter', showToolTip);
     childRef.current?.addEventListener('mouseleave', hideTooltip);
-    childRef.current?.addEventListener('click', hideTooltip);
-  }, [childRef]);
+    if (hideOnClick) {
+      childRef.current?.addEventListener('click', hideTooltip);
+    }
+  }, [childRef, hideOnClick]);
 
   useLayoutEffect(() => {
     const childEle = childRef.current;
@@ -57,9 +60,14 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       const tooltipRect = tooltipEle.getBoundingClientRect();
 
       const locationTopLeftMap = {
+        // TODO be able to support other directions too
         bottom: {
           top: childRect.bottom,
           left: childRect.left + childRect.width / 2 - tooltipRect.width / 2,
+        },
+        bottomLeft: {
+          top: childRect.bottom,
+          left: childRect.left,
         },
         left: {
           top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
@@ -91,7 +99,6 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
           );
         }
       }) || 'bottom';
-
       const { top: tooltipTop, left: tooltipLeft } = locationTopLeftMap[
         bestLocation
       ];

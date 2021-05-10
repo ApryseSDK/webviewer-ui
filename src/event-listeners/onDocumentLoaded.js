@@ -9,6 +9,8 @@ import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
 import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
 
+import onLayersUpdated from './onLayersUpdated';
+
 let onFirstLoad = true;
 
 export default store => () => {
@@ -50,6 +52,11 @@ export default store => () => {
   outlineUtils.setDoc(core.getDocument());
 
   if (!doc.isWebViewerServerDocument()) {
+    doc.on('layersUpdated', async() => {
+      const newLayers = await doc.getLayersArray();
+      const currentLayers = selectors.getLayers(getState());
+      onLayersUpdated(newLayers, currentLayers, dispatch);
+    });
     doc.getLayersArray().then(layers => {
       if (layers.length === 0) {
         dispatch(actions.disableElement('layersPanel', PRIORITY_ONE));
@@ -62,13 +69,12 @@ export default store => () => {
           const nextActivePanel = getLeftPanelDataElements(state).find(
             dataElement => !selectors.isElementDisabled(state, dataElement),
           );
-
           dispatch(actions.setActiveLeftPanel(nextActivePanel));
         }
       } else {
         dispatch(actions.enableElement('layersPanel', PRIORITY_ONE));
         dispatch(actions.enableElement('layersPanelButton', PRIORITY_ONE));
-        dispatch(actions.setLayers(layers));
+        onLayersUpdated(layers, undefined, dispatch);
       }
     });
   }

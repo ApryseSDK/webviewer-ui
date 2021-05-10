@@ -73,6 +73,9 @@
     display: flex;
     align-items: center;
     margin-bottom: 16px;
+    margin-left: $left-panel-header-margin-left;
+    margin-top: 0px;
+    margin-right: 8px;
   }
 
   .Panel {
