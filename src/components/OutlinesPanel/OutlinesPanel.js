@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { DndProvider } from 'react-dnd';
 import { isMobileDevice } from 'helpers/device';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import TouchBackEnd from 'react-dnd-touch-backend';
 import OutlineControls from '../OutlineControls';
 import Outline from 'components/Outline';
@@ -70,11 +70,10 @@ function OutlinesPanel() {
   function generalMoveOutlineAction(dragOutline, dropOutline, moveDirection) {
     const dragPath = outlineUtils.getPath(dragOutline);
     const dropPath = outlineUtils.getPath(dropOutline);
-    moveDirection.call(outlineUtils, dragPath, dropPath)
-      .then(path => {
-        reRenderPanel();
-        nextPathRef.current = path;
-      });
+    moveDirection.call(outlineUtils, dragPath, dropPath).then(path => {
+      reRenderPanel();
+      nextPathRef.current = path;
+    });
     core.goToOutline(dragOutline);
   }
 

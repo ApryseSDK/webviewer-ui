@@ -36,6 +36,8 @@
     "node-sass": "^4.13.1",
     "react": "^17.0.0",
     "react-color": "^2.18.1",
+    "react-dnd": "^14.0.2",
+    "react-dnd-html5-backend": "^14.0.0",
     "react-dom": "^17.0.0",
     "react-draggable": "^4.3.1",
     "react-hot-loader": "^4.12.19",
