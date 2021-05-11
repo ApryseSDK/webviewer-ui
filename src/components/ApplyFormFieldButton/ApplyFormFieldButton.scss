@@ -1,0 +1,15 @@
+.apply-form-field-button {
+  background-color: var(--blue-5);
+  border: 1px solid var(--blue-5);
+  color: var(--gray-0);
+  padding: 7px 14px;
+  width: fit-content;
+  border-radius: 5px;
+  height: 30px;
+  cursor: pointer;
+
+  &:hover {
+    background: #1A4971 !important;
+    border-radius: 5px !important;
+  }
+}

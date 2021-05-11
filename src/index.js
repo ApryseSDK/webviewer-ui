@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
 import thunk from 'redux-thunk';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import core from 'core';
 import actions from 'actions';
@@ -166,7 +168,9 @@ if (window.CanvasRenderingContext2D) {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <I18nextProvider i18n={i18next}>
-            <App removeEventHandlers={removeEventHandlers} />
+            <DndProvider backend={HTML5Backend}>
+              <App removeEventHandlers={removeEventHandlers} />
+            </DndProvider>
           </I18nextProvider>
         </PersistGate>
       </Provider>,

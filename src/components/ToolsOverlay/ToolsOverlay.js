@@ -124,8 +124,15 @@ class ToolsOverlay extends React.PureComponent {
       return null;
     }
 
-    // TODO: There should be a better way to do this...
-    const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools' || activeToolGroup === 'fileAttachmentTools';
+    const toolsWithNoStylingPresets = [
+      'stampTools',
+      'cropTools',
+      'redactionTools',
+      'fileAttachmentTools',
+      'radioButtonFieldTools',
+      'checkBoxFieldTools'
+    ];
+    const noPresets = !activeToolGroup || toolsWithNoStylingPresets.includes(activeToolGroup);
 
     let Component = (
       <div
@@ -147,21 +154,12 @@ class ToolsOverlay extends React.PureComponent {
       );
     } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
-        <SelectedRubberStamp/>
+        <SelectedRubberStamp />
       );
-    // } else if (activeToolGroup === 'stampTools') {
-    //   Component = (
-    //     <SelectedToolsOverlayItem
-    //       textTranslationKey="option.stampOverlay.addStamp"
-    //       onClick={() => {
-    //         core.setToolMode('AnnotationCreateStamp');
-    //       }}
-    //     />
-    //   );
     } else if (noPresets) {
       Component = (
         <div className="no-presets">
-          {tReady? t('message.toolsOverlayNoPresets') : ''}
+          {tReady ? t('message.toolsOverlayNoPresets') : ''}
         </div>
       );
     }
@@ -210,7 +208,7 @@ class ToolsOverlay extends React.PureComponent {
               </button>}
           </div>
           {isToolStyleOpen &&
-            <ToolStylePopup/>}
+            <ToolStylePopup />}
         </div>
       </Swipeable>
     );

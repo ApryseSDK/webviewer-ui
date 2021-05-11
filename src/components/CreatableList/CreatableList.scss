@@ -1,0 +1,21 @@
+.creatable-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.creatable-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.add-item-button {
+  display: flex;
+  align-items: center;
+  width: 78px;
+  cursor: pointer;
+}
+
+.icon-handle {
+  cursor: grab;
+}

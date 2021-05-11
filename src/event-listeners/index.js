@@ -25,6 +25,8 @@ import onSignatureSaved from './onSignatureSaved';
 import onSignatureDeleted from './onSignatureDeleted';
 import onWidgetEditingStarted from './onWidgetEditingStarted';
 import onWidgetEditingEnded from './onWidgetEditingEnded';
+import onFormFieldCreationModeStarted from './onFormFieldCreationModeStarted';
+import onFormFieldCreationModeEnded from './onFormFieldCreationModeEnded';
 import onDigitalSignatureAvailable from './onDigitalSignatureAvailable';
 import onLayersUpdated from './onLayersUpdated';
 
@@ -56,6 +58,8 @@ export {
   onFileAttachmentDataAvailable,
   onWidgetEditingStarted,
   onWidgetEditingEnded,
+  onFormFieldCreationModeStarted,
+  onFormFieldCreationModeEnded,
   onDigitalSignatureAvailable,
   onLayersUpdated
 };

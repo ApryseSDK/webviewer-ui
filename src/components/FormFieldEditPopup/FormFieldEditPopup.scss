@@ -1,0 +1,131 @@
+@import '../../constants/styles.scss';
+@import '../../constants/popup.scss';
+
+.FormFieldEditPopup {
+  padding-top: 8px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+
+  .fields-container {
+    margin-bottom: 5px;
+  }
+
+  .radio-group-label {
+    grid-area: group-message;
+    font-size: 10px;
+    width: 240px;
+    padding-top: 5px;
+  }
+
+  .field-input {
+    padding: 5px 0px 5px 0px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+      "label dropdown"
+      "group-message group-message";
+    
+    label {
+      padding-top: 10px;
+      padding-right: 10px;
+      grid-area: label;
+    }
+  }
+
+  .field-flags-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .field-flags-title {
+    padding-bottom: 5px;
+  }
+
+  .form-buttons-container {
+    display: flex;
+    flex-direction: row;
+    margin-left: 90px;
+  }
+
+  .ok-form-field-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--blue-5);
+    border: 1px solid var(--blue-5);
+    color: var(--gray-0);
+    padding: 6px 18px;
+    width: fit-content;
+    border-radius: 4px;
+    height: 28px;
+    cursor: pointer;
+  }
+
+  .cancel-form-field-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--blue-5);
+    padding: 6px 18px;
+    width: fit-content;
+    height: 28px;
+    cursor: pointer;
+  }
+}
+
+.field-options-container {
+  width: 180px;
+
+  .creatable-list {
+    max-height: 200px;
+    overflow: auto;
+  }
+  input {
+    width: 120px;
+    height: 28px; 
+  }
+
+  .Button.add-item-button {
+    width: 90px;
+    margin-left: 0px;
+    justify-content: left;
+  }
+}
+
+.form-dimension {
+  padding-top: 10px;
+  display: flex;
+}
+
+.form-dimension-input {
+  padding-left: 5px;
+
+
+  /* Dont show spin buttons */
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  input {
+    width: 35px;
+    height: 17px;
+  }
+}
+
+
+
+.FormFieldEditPopupContainer {
+  @extend %popup;
+  border-radius: 4px;
+  box-shadow: 0 0 3px 0 var(--document-box-shadow);
+  background: var(--component-background);
+}

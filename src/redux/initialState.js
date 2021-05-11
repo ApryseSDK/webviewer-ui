@@ -12,6 +12,7 @@ import localStorageManager from 'helpers/localStorageManager';
 import { copyMapWithDataProperties } from 'constants/map';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import Ribbons from 'components/Ribbons';
+import ApplyFormFieldButton from 'components/ApplyFormFieldButton';
 
 export default {
   viewer: {
@@ -303,6 +304,28 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
+      "toolbarGroup-Forms": [
+        { type: 'spacer' },
+        { type: 'toolGroupButton', toolGroup: 'formFieldTools', dataElement: 'textFieldToolGroupButton', title: 'annotation.textField', showColor: 'always' },
+        { type: 'toolGroupButton', toolGroup: 'sigFieldTools', dataElement: 'signatureFieldToolGroupButton', title: 'annotation.signatureFormField', showColor: 'always' },
+        { type: 'toolGroupButton', toolGroup: 'checkBoxFieldTools', dataElement: 'checkBoxFieldToolGroupButton', title: 'annotation.checkBoxFormField', showColor: 'never' },
+        { type: 'toolGroupButton', toolGroup: 'radioButtonFieldTools', dataElement: 'radioButtonFieldToolGroupButton', title: 'annotation.radioButtonFormField', showColor: 'never' },
+        { type: 'toolGroupButton', toolGroup: 'listBoxFieldTools', dataElement: 'listBoxFieldToolGroupButton', title: 'annotation.listBoxFormField', showColor: 'always' },
+        { type: 'toolGroupButton', toolGroup: 'comboBoxFieldTools', dataElement: 'comboBoxFieldToolGroupButton', title: 'annotation.comboBoxFormField', showColor: 'always' },
+        { type: 'divider' },
+        {
+          type: 'customElement',
+          render: () => <ToolsOverlay />,
+          dataElement: 'toolsOverlay',
+          hidden: ['small-mobile', 'mobile'],
+        },
+        {
+          type: 'customElement',
+          dataElement: 'applyFormFieldsButton',
+          render: () => <ApplyFormFieldButton />
+        },
+        { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
+      ]
     },
     annotationPopup: [
       { dataElement: 'annotationCommentButton' },
@@ -311,6 +334,7 @@ export default {
       { dataElement: 'annotationCropButton' },
       { dataElement: 'annotationGroupButton' },
       { dataElement: 'annotationUngroupButton' },
+      { dataElement: 'formFieldEditButton' },
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'calibrateButton' },
       { dataElement: 'linkButton' },
@@ -440,6 +464,25 @@ export default {
       TextSelect: { dataElement: 'textSelectButton', img: 'icon - header - select - line', showColor: 'never' },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
       AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'icon-operation-eraser', showColor: 'never' },
+      TextFormFieldCreateTool: { dataElement: 'textFieldToolButton', title: 'annotation.textField', img: 'icon-form-field-text', group: 'formFieldTools', showColor: 'always' },
+      TextFormFieldCreateTool2: { dataElement: 'textFieldToolButton2', title: 'annotation.textField', img: 'icon-form-field-text', group: 'formFieldTools', showColor: 'always' },
+      TextFormFieldCreateTool3: { dataElement: 'textFieldToolButton3', title: 'annotation.textField', img: 'icon-form-field-text', group: 'formFieldTools', showColor: 'always' },
+      TextFormFieldCreateTool4: { dataElement: 'textFieldToolButton4', title: 'annotation.textField', img: 'icon-form-field-text', group: 'formFieldTools', showColor: 'always' },
+      SignatureFormFieldCreateTool: { dataElement: 'signatureFieldToolButton', title: 'annotation.signatureFormField', img: 'icon-form-field-signature', group: 'sigFieldTools', showColor: 'always' },
+      SignatureFormFieldCreateTool2: { dataElement: 'signatureFieldToolButton2', title: 'annotation.signatureFormField', img: 'icon-form-field-signature', group: 'sigFieldTools', showColor: 'always' },
+      SignatureFormFieldCreateTool3: { dataElement: 'signatureFieldToolButton3', title: 'annotation.signatureFormField', img: 'icon-form-field-signature', group: 'sigFieldTools', showColor: 'always' },
+      SignatureFormFieldCreateTool4: { dataElement: 'signatureFieldToolButton4', title: 'annotation.signatureFormField', img: 'icon-form-field-signature', group: 'sigFieldTools', showColor: 'always' },
+      CheckBoxFormFieldCreateTool: { dataElement: 'checkBoxFieldCreateToolButton', title: 'annotation.checkBoxFormField', img: 'icon-form-field-checkbox', group: 'checkBoxFieldTools', showColor: 'never' },
+      RadioButtonFormFieldCreateTool: { dataElement: 'radioButtonFieldCreateToolButton', title: 'annotation.radioButtonFormField', img: 'icon-form-field-radiobutton', group: 'radioButtonFieldTools', showColor: 'never' },
+      ListBoxFormFieldCreateTool: { dataElement: 'listBoxFieldCreateToolButton', title: 'annotation.listBoxFormField', img: 'icon-form-field-listbox', group: 'listBoxFieldTools', showColor: 'always' },
+      ListBoxFormFieldCreateTool2: { dataElement: 'listBoxFieldCreateToolButton2', title: 'annotation.listBoxFormField', img: 'icon-form-field-listbox', group: 'listBoxFieldTools', showColor: 'always' },
+      ListBoxFormFieldCreateTool3: { dataElement: 'listBoxFieldCreateToolButton3', title: 'annotation.listBoxFormField', img: 'icon-form-field-listbox', group: 'listBoxFieldTools', showColor: 'always' },
+      ListBoxFormFieldCreateTool4: { dataElement: 'listBoxFieldCreateToolButton4', title: 'annotation.listBoxFormField', img: 'icon-form-field-listbox', group: 'listBoxFieldTools', showColor: 'always' },
+      ComboBoxFormFieldCreateTool: { dataElement: 'comboBoxFieldCreateToolButton', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
+      ComboBoxFormFieldCreateTool2: { dataElement: 'comboBoxFieldCreateToolButton2', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
+      ComboBoxFormFieldCreateTool3: { dataElement: 'comboBoxFieldCreateToolButton3', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
+      ComboBoxFormFieldCreateTool4: { dataElement: 'comboBoxFieldCreateToolButton4', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
+
     },
     tab: {
       signatureModal: 'inkSignaturePanelButton',

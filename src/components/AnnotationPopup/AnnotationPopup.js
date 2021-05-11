@@ -51,6 +51,7 @@ const AnnotationPopup = () => {
   const [hasAssociatedLink, setHasAssociatedLink] = useState(false);
   const isEditingWidgets = useWidgetEditing();
   const popupRef = useRef();
+  const [includesFormFieldAnnotation, setIncludesFormFieldAnnotation] = useState(false);
 
   useOnClickOutside(popupRef, e => {
     const notesPanel = document.querySelector('[data-element="notesPanel"]');
@@ -151,6 +152,7 @@ const AnnotationPopup = () => {
       dispatch(actions.closeElement('annotationPopup'));
       setPosition({ left: 0, top: 0 });
       setFirstAnnotation(null);
+      setIncludesFormFieldAnnotation(false);
       setCanModify(false);
       setIsStylePopupOpen(false);
     };
@@ -158,6 +160,7 @@ const AnnotationPopup = () => {
     const onAnnotationSelected = (annotations, action) => {
       if (action === 'selected' && annotations.length) {
         setFirstAnnotation(annotations[0]);
+        setIncludesFormFieldAnnotation(annotations.some(annotation => annotation.isFormFieldPlaceholder()));
         setCanModify(core.canModify(annotations[0]));
         if (isNotesPanelOpen) {
           setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
@@ -178,7 +181,7 @@ const AnnotationPopup = () => {
     return () => {
       core.removeEventListener('annotationSelected', onAnnotationSelected);
       core.removeEventListener('documentUnloaded', closeAndReset);
-      window.addEventListener('resize', closeAndReset);
+      window.removeEventListener('resize', closeAndReset);
     };
   }, [dispatch, isNotesPanelOpen, firstAnnotation]);
 
@@ -218,16 +221,54 @@ const AnnotationPopup = () => {
     core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
   };
 
-  const shouldShowLinkButton =
-    ![
-      'CropPage',
-      'AnnotationCreateSignature',
-      'AnnotationCreateRedaction',
-      'AnnotationCreateSticky',
-      'AnnotationCreateSticky2',
-      'AnnotationCreateSticky3',
-      'AnnotationCreateSticky4',
-    ].includes(firstAnnotation.ToolName) && !isEditingWidgets;
+  const toolNames = window.Tools.ToolNames;
+  const toolsWithNoStyling = [
+    toolNames.CROP,
+    toolNames.RADIO_FORM_FIELD,
+    toolNames.CHECK_BOX_FIELD,
+  ];
+
+  const toolsThatCantHaveLinks = [
+    toolNames.CROP,
+    toolNames.SIGNATURE,
+    toolNames.REDACTION,
+    toolNames.STICKY,
+    toolNames.STICKY2,
+    toolNames.STICKY3,
+    toolNames.STICKY4,
+  ];
+
+  const showCommentButton = !isNotesPanelDisabled &&
+    !multipleAnnotationsSelected &&
+    !isEditingWidgets &&
+    firstAnnotation.ToolName !== toolNames.CROP &&
+    !includesFormFieldAnnotation;
+
+  const showEditStyleButton = canModify &&
+    hasStyle &&
+    !isAnnotationStylePopupDisabled &&
+    !isEditingWidgets &&
+    (!multipleAnnotationsSelected || canUngroup) &&
+    !toolsWithNoStyling.includes(firstAnnotation.ToolName);
+
+  const showRedactionButton = redactionEnabled &&
+    !multipleAnnotationsSelected &&
+    !includesFormFieldAnnotation;
+
+  const showGroupButton = canGroup &&
+    !isEditingWidgets &&
+    !includesFormFieldAnnotation;
+
+  const showCalibrateButton = canModify &&
+    firstAnnotation.Measure &&
+    firstAnnotation instanceof Annotations.LineAnnotation;
+
+  const showFileDownloadButton = firstAnnotation instanceof window.Annotations.FileAttachmentAnnotation;
+
+  const showLinkButton =
+    !toolsThatCantHaveLinks.includes(firstAnnotation.ToolName) &&
+    !isEditingWidgets &&
+    !includesFormFieldAnnotation;
 
   const annotationPopup = (
     <div
@@ -246,30 +287,22 @@ const AnnotationPopup = () => {
         <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} />
       ) : (
         <CustomizablePopup dataElement="annotationPopup">
-          {!isNotesPanelDisabled &&
-            !multipleAnnotationsSelected &&
-            !isEditingWidgets &&
-            firstAnnotation.ToolName !== 'CropPage' && (
-              <ActionButton
-                dataElement="annotationCommentButton"
-                title="action.comment"
-                img="icon-header-chat-line"
-                onClick={commentOnAnnotation}
-              />
-            )}
-          {canModify &&
-            hasStyle &&
-            !isAnnotationStylePopupDisabled &&
-            !isEditingWidgets &&
-            (!multipleAnnotationsSelected || canUngroup) &&
-            firstAnnotation.ToolName !== 'CropPage' && (
-              <ActionButton
-                dataElement="annotationStyleEditButton"
-                title="action.style"
-                img="icon-menu-style-line"
-                onClick={() => setIsStylePopupOpen(true)}
-              />
-            )}
+          {showCommentButton && (
+            <ActionButton
+              dataElement="annotationCommentButton"
+              title="action.comment"
+              img="icon-header-chat-line"
+              onClick={commentOnAnnotation}
+            />
+          )}
+          {showEditStyleButton && (
+            <ActionButton
+              dataElement="annotationStyleEditButton"
+              title="action.style"
+              img="icon-menu-style-line"
+              onClick={() => setIsStylePopupOpen(true)}
+            />
+          )}
           {firstAnnotation.ToolName === 'CropPage' && (
             <ActionButton
               dataElement="annotationCropButton"
@@ -281,7 +314,7 @@ const AnnotationPopup = () => {
               }}
             />
           )}
-          {redactionEnabled && !multipleAnnotationsSelected && (
+          {showRedactionButton && (
             <ActionButton
               dataElement="annotationRedactButton"
               title="action.apply"
@@ -292,7 +325,7 @@ const AnnotationPopup = () => {
               }}
             />
           )}
-          {canGroup && !isEditingWidgets && (
+          {showGroupButton && (
             <ActionButton
               dataElement="annotationGroupButton"
               title="action.group"
@@ -308,7 +341,19 @@ const AnnotationPopup = () => {
               onClick={() => core.ungroupAnnotations(selectedAnnotations)}
             />
           )}
-          {canModify && !firstAnnotation.NoDelete && (
+          {includesFormFieldAnnotation && (
+            <ActionButton
+              title="action.formFieldEdit"
+              img="icon-edit-form-field"
+              onClick={() => {
+                dispatch(actions.closeElement('annotationPopup'));
+                dispatch(actions.openElement('formFieldEditPopup'));
+              }}
+              dataElement="formFieldEditButton"
+            />
+          )
+          }
+          {canModify && (
             <ActionButton
               dataElement="annotationDeleteButton"
               title="action.delete"
@@ -319,7 +364,7 @@ const AnnotationPopup = () => {
               }}
             />
           )}
-          {canModify && firstAnnotation.Measure && firstAnnotation instanceof Annotations.LineAnnotation && (
+          {showCalibrateButton && (
             <ActionButton
               dataElement="calibrateButton"
               title="action.calibrate"
@@ -330,39 +375,41 @@ const AnnotationPopup = () => {
               }}
             />
           )}
-          {shouldShowLinkButton && (
+          {showLinkButton && (
             <ActionButton
               title="tool.Link"
               img={hasAssociatedLink ? 'icon-tool-unlink' : 'icon-tool-link'}
               onClick={
                 hasAssociatedLink
                   ? () => {
-                      const annotManager = core.getAnnotationManager();
-                      selectedAnnotations.forEach(annot => {
-                        const linkAnnotations = getAssociatedLinkedAnnotations(annot);
-                        linkAnnotations.forEach(annotId => {
-                          const linkAnnot = annotManager.getAnnotationById(annotId);
-                          annotManager.deleteAnnotation(linkAnnot, null, true);
-                        });
-                        annot.deleteCustomData(AnnotationCustomData.LINK_ID);
-                        if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0) {
-                          annotManager.deleteAnnotation(annot);
-                        }
+                    const annotManager = core.getAnnotationManager();
+                    selectedAnnotations.forEach(annot => {
+                      const linkAnnotations = getAssociatedLinkedAnnotations(annot);
+                      linkAnnotations.forEach(annotId => {
+                        const linkAnnot = annotManager.getAnnotationById(annotId);
+                        annotManager.deleteAnnotation(linkAnnot, null, true);
                       });
-                    }
+                      annot.deleteCustomData(AnnotationCustomData.LINK_ID);
+                      if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0) {
+                        annotManager.deleteAnnotation(annot);
+                      }
+                    });
+                  }
                   : () => dispatch(actions.openElement('linkModal'))
               }
               dataElement="linkButton"
             />
           )}
-          {firstAnnotation instanceof window.Annotations.FileAttachmentAnnotation && (
-            <ActionButton
-              title="action.fileAttachmentDownload"
-              img="icon-download"
-              onClick={() => downloadFileAttachment(firstAnnotation)}
-              dataElement="fileAttachmentDownload"
-            />
-          )}
+          {showFileDownloadButton &&
+            (
+              <ActionButton
+                title="action.fileAttachmentDownload"
+                img="icon-download"
+                onClick={() => downloadFileAttachment(firstAnnotation)}
+                dataElement="fileAttachmentDownload"
+              />
+            )
+          }
         </CustomizablePopup>
       )}
     </div>

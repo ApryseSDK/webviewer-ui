@@ -37,6 +37,7 @@ import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 import CreateStampModal from 'components/CreateStampModal';
 import CustomModal from 'components/CustomModal';
+import FormFieldEditPopup from 'components/FormFieldEditPopup';
 import ColorPickerModal from 'components/ColorPickerModal';
 
 import core from 'core';
@@ -93,7 +94,7 @@ const App = ({ removeEventHandlers }) => {
       if (event.isTrusted &&
         typeof event.data === 'object' &&
         event.data.type === 'viewerLoaded') {
-          loadDocumentAndCleanup();
+        loadDocumentAndCleanup();
       }
     }
 
@@ -152,6 +153,7 @@ const App = ({ removeEventHandlers }) => {
         <AnnotationContentOverlay />
 
         <AnnotationPopup />
+        <FormFieldEditPopup />
         <TextPopup />
         <ContextMenuPopup />
         <RichTextPopup />

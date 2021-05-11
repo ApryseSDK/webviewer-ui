@@ -60,6 +60,8 @@
     "startFormEditing": "Start Form Editing",
     "exitFormEditing": "Exit Form Editing Mode",
     "exit": "Exit",
+    "addOption": "Add Option",
+    "formFieldEdit": "Edit Form Field",
     "markAllRead": "Mark all as read"
   },
   "annotation": {
@@ -92,6 +94,12 @@
     "custom": "Custom",
     "rubberStamp": "Rubber Stamp",
     "note": "Note",
+    "textField": "Text Field",
+    "signatureFormField": "Signature Field",
+    "checkBoxFormField": "Checkbox Field",
+    "radioButtonFormField": "RadioButton Field",
+    "listBoxFormField": "List Box Field",
+    "comboBoxFormField": "Combo Box Field",
     "link": "Link",
     "other": "Other"
   },
@@ -197,7 +205,8 @@
       "toolbarGroup-Shapes": "Shapes",
       "toolbarGroup-Insert": "Insert",
       "toolbarGroup-Measure": "Measure",
-      "toolbarGroup-Edit": "Edit"
+      "toolbarGroup-Edit": "Edit",
+      "toolbarGroup-Forms": "Forms"
     },
     "annotationColor": {
       "StrokeColor": "Stroke",
@@ -476,6 +485,26 @@
       "Fri",
       "Sat"
     ]
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "Field Name",
+      "fieldValue": "Default Value",
+      "readOnly": "Read Only",
+      "multiSelect": "Multi Select",
+      "required": "Required",
+      "multiLine": "Multiline",
+      "apply": "Apply",
+      "cancel": "Cancel",
+      "flags": "Field Flags",
+      "options": "Options",
+      "radioGroups": "Radio buttons with the same Field Name will belong in the same grouping.",
+      "nameRequired": "Field name is required",
+      "size": "Size",
+      "width": "Width",
+      "height": "Height"
+    },
+    "apply": "Apply Fields"
   },
   "digitalSignatureModal": {
     "certification": "certification",

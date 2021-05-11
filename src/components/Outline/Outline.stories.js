@@ -7,7 +7,7 @@ import OutlineContext from './Context';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
-function noop() {}
+function noop() { }
 
 export function Basic() {
   function reducer(state) {
@@ -37,11 +37,11 @@ export function Basic() {
     ],
   });
 
-  const moveOutlineInward = () => {};
+  const moveOutlineInward = () => { };
 
-  const moveOutlineBeforeTarget = () => {};
+  const moveOutlineBeforeTarget = () => { };
 
-  const moveOutlineAfterTarget = () => {};
+  const moveOutlineAfterTarget = () => { };
 
   return (
     <ReduxProvider store={createStore(reducer)}>

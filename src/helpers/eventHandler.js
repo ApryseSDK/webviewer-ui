@@ -31,6 +31,8 @@ export default store => {
   const onHistoryChanged = eventListeners.onHistoryChanged(dispatch, store);
   const onWidgetEditingStarted = eventListeners.onWidgetEditingStarted(dispatch);
   const onWidgetEditingEnded = eventListeners.onWidgetEditingEnded(dispatch);
+  const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch);
+  const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch);
   const onDigitalSignatureAvailable = eventListeners.onDigitalSignatureAvailable(dispatch);
 
   return {
@@ -53,6 +55,8 @@ export default store => {
       core.addEventListener('pageComplete', onPageComplete);
       core.addEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable);
       core.addEventListener('editingStarted', onWidgetEditingStarted);
+      core.addEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted);
+      core.addEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded);
       core.addEventListener('editingEnded', onWidgetEditingEnded);
       core.addEventListener('digitalSignatureAvailable', onDigitalSignatureAvailable);
       core.getTool('AnnotationCreateStamp').on('annotationAdded', onStampAnnotationAdded);

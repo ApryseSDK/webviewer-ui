@@ -35,13 +35,33 @@ const Ribbons = () => {
   // which is an action button that does not have an active background
   const shouldPickTool = toolbarGroup => toolbarGroup !== 'toolbarGroup-Edit';
 
+  const toggleFormFieldCreationMode = toolGroup => {
+    const formFieldCreationManager = core.getFormFieldCreationManager();
+    if (toolGroup === 'toolbarGroup-Forms') {
+      if (!formFieldCreationManager.isInFormFieldCreationMode()) {
+        formFieldCreationManager.startFormFieldCreationMode();
+      }
+    } else if (formFieldCreationManager.isInFormFieldCreationMode()) {
+      formFieldCreationManager.endFormFieldCreationMode();
+    }
+  };
+
+  useEffect(() => {
+    // When we initialize the Viewer we don't want to start off in the Forms tab as
+    // this may confuse users, since in Forms creation mode regular annotations are hidden.
+    // If for some reason we are in this mode on init, we default to switching to the Annotate tab
+    if (currentToolbarGroup === 'toolbarGroup-Forms') {
+      setToolbarGroup('toolbarGroup-Annotate', shouldPickTool('toolbarGroup-Annotate'));
+    }
+  }, [])
+
   useEffect(() => {
     if (ribbonsRef?.current && containerRef?.current) {
       const ribbonsWidth = ribbonsRef.current.getBoundingClientRect().width + 4;
       const containerWidth = containerRef.current.getBoundingClientRect().width;
       const remainingSpace = (window.innerWidth - ribbonsWidth) / 2;
 
-      if (ribbonsWidth < remainingSpace ) {
+      if (ribbonsWidth < remainingSpace) {
         setHasEnoughSpace(true);
       } else {
         setHasEnoughSpace(false);
@@ -94,19 +114,20 @@ const Ribbons = () => {
                 {isEditingWidgets ? (
                   <ExitWidgetEditingButton containerWidth={containerWidth} />
                 ) : (
-                  toolbarGroups.map(key => (
+                  toolbarGroups.map(toolbarGroup => (
                     <button
-                      key={key}
-                      data-element={`${key}`}
+                      key={toolbarGroup}
+                      data-element={`${toolbarGroup}`}
                       className={classNames({
                         'ribbon-group': true,
-                        'active': key === currentToolbarGroup,
+                        'active': toolbarGroup === currentToolbarGroup,
                       })}
                       onClick={() => {
-                        setToolbarGroup(key, shouldPickTool(key));
+                        setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
+                        toggleFormFieldCreationMode(toolbarGroup);
                       }}
                     >
-                      {t(`option.toolbarGroup.${key}`)}
+                      {t(`option.toolbarGroup.${toolbarGroup}`)}
                     </button>
                   ))
                 )}
@@ -129,6 +150,7 @@ const Ribbons = () => {
                 currentSelectionKey={currentToolbarGroup}
                 onClickItem={toolbarGroup => {
                   setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
+                  toggleFormFieldCreationMode(toolbarGroup);
                 }}
               />
             )}

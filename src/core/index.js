@@ -114,6 +114,7 @@ import updateAnnotationState from './updateAnnotationState';
 import getFontStyles from './getFontStyles';
 import mergeDocument from './mergeDocument';
 import getWidgetEditingManager from './getWidgetEditingManager';
+import getFormFieldCreationManager from './getFormFieldCreationManager';
 
 export default {
   setToolMode,
@@ -233,4 +234,5 @@ export default {
   getFontStyles,
   mergeDocument,
   getWidgetEditingManager,
+  getFormFieldCreationManager,
 };

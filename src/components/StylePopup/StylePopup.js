@@ -121,8 +121,6 @@ class StylePopup extends React.PureComponent {
       return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onSliderChange}/>;
     });
 
-    // return null;
-
     return (
       <React.Fragment>
         {sliderComponents.length > 0 && (
@@ -193,7 +191,7 @@ class StylePopup extends React.PureComponent {
             />
           </React.Fragment>
         )}
-        {!isStyleOptionDisabled && colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style}/>}
+        {!isStyleOptionDisabled && colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style} />}
       </div>
     );
   }
