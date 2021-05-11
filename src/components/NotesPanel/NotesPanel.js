@@ -322,7 +322,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       <div>
         <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
       </div>
-      <div className="msg">{t('message.noAnnotations')}</div>
+      <div className="msg">{isDocumentReadOnly ? t('message.noAnnotationsReadOnly') : t('message.noAnnotations')}</div>
     </div>
   );
 
