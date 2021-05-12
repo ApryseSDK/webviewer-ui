@@ -1,7 +1,9 @@
 import i18next from 'i18next';
 import dayjs from 'dayjs';
 import core from 'core';
+import capitalize from 'helpers/capitalize';
 import { rotateRad } from 'helpers/rotate';
+import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 
 function getDocumentCenter(pageNumber) {
@@ -126,13 +128,15 @@ const sortStrategies = {
   type: {
     getSortedNotes: notes =>
       notes.sort((a, b) => {
-        const typeA = a.Subject.toUpperCase();
-        const typeB = b.Subject.toUpperCase();
+        const typeA = getAnnotationClass(a);
+        const typeB = getAnnotationClass(b);
         return typeA < typeB ? -1 : typeA > typeB ? 1 : 0;
       }),
-    shouldRenderSeparator: (prevNote, currNote) => prevNote.Subject !== currNote.Subject,
+    shouldRenderSeparator: (prevNote, currNote) => {
+      return getAnnotationClass(prevNote) !== getAnnotationClass(currNote);
+    },
     getSeparatorContent: (prevNote, currNote) => {
-      return currNote.Subject;
+      return capitalize(getAnnotationClass(currNote));
     },
   },
 };
