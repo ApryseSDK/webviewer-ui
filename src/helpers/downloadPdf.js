@@ -5,7 +5,7 @@ import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import actions from 'actions';
 
-export default (dispatch, options = {}) => {
+export default async(dispatch, options = {}) => {
   const {
     filename = core.getDocument()?.getFilename() || 'document',
     includeAnnotations = true,
@@ -19,7 +19,14 @@ export default (dispatch, options = {}) => {
 
   dispatch(actions.openElement('loadingModal'));
 
-  const annotationsPromise = (includeAnnotations && !options.xfdfString) ? core.exportAnnotations({ useDisplayAuthor }) : Promise.resolve('<xfdf></xfdf>');
+  let annotationsPromise = Promise.resolve('<xfdf></xfdf>');
+  if (includeAnnotations && !options.xfdfString) {
+    if (options.documentToBeDownloaded) {
+      annotationsPromise = Promise.resolve((await options.documentToBeDownloaded.extractXFDF()).xfdfString);
+    } else {
+      annotationsPromise = core.exportAnnotations({ useDisplayAuthor });
+    }
+  }
 
   return annotationsPromise.then(xfdfString => {
     options.xfdfString = options.xfdfString || xfdfString;
@@ -32,7 +39,15 @@ export default (dispatch, options = {}) => {
     };
 
     const downloadName = core.getDocument()?.getType() === 'video' ? filename : getDownloadFilename(filename, '.pdf');
-    const doc = core.getDocument();
+    let doc = core.getDocument();
+
+    //Cloning the options object to be able to delete the customDocument property if needed.
+    //doc.getFileData(options) will throw an error if this customDocument property is passed in
+    const clonedOptions = Object.assign({}, options);
+    if (clonedOptions.documentToBeDownloaded) {
+      doc = clonedOptions.documentToBeDownloaded;
+      delete clonedOptions.documentToBeDownloaded;
+    }
 
     if (externalURL) {
       const downloadIframe =
@@ -47,7 +62,7 @@ export default (dispatch, options = {}) => {
       dispatch(actions.closeElement('loadingModal'));
       fireEvent('finishedSavingPDF');
     } else {
-      return doc.getFileData(options).then(
+      return doc.getFileData(clonedOptions).then(
         data => {
           const arr = new Uint8Array(data);
           let file;
