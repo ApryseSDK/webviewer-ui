@@ -60,20 +60,20 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
-    if (textareaRef.current) {
-      // when search item, should disable auto focus
-      if (!isExpandedFromSearch && scrollToSelectedAnnot) {
-        // use "setTimeout" to wait for element to be added before focusing to have the blinking text cursor appear
-        setTimeout(() => {
-          // calling focus() cause the "NotePanel" to scroll to note that being focused.
-          // we don't want to jump to the selected annotation when scrolling up and down, so only focus once
-          textareaRef.current?.focus();
-        }, 0);
-      }
-
-      const textLength = textareaRef.current.value.length;
-      textareaRef.current.setSelectionRange(textLength, textLength);
+    // when search item, should disable auto focus
+    if (!isExpandedFromSearch && scrollToSelectedAnnot) {
+      // use "setTimeout" to wait for element to be added before focusing to have the blinking text cursor appear
+      setTimeout(() => {
+        // calling focus() cause the "NotePanel" to scroll to note that being focused.
+        // we don't want to jump to the selected annotation when scrolling up and down, so only focus once
+        if (textareaRef && textareaRef.current) {
+          textareaRef.current.focus();
+        }
+      }, 0);
     }
+
+    const textLength = textareaRef.current.value.length;
+    textareaRef.current.setSelectionRange(textLength, textLength);
   }, []);
 
   const postReply = e => {
