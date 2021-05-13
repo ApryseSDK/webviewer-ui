@@ -185,5 +185,9 @@ $gray-3: #343A40;
         height: calc(100% - 104px); // minus the height of both headers;
       }
     }
+
+    &.tools-header-and-header-hidden {
+      height: 100%;
+    }
   }
 }
