@@ -6,6 +6,7 @@ import PresetButton from 'components/ToolButton/PresetButton';
 import ToolStylePopup from 'components/ToolStylePopup';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
 import SelectedRubberStamp from 'components/RubberStampOverlay/SelectedRubberStamp';
+import SelectedStamp from 'src/components/SelectedStamp/SelectedStamp';
 import { withTranslation } from 'react-i18next';
 
 import defaultTool from 'constants/defaultTool';
@@ -162,6 +163,10 @@ class ToolsOverlay extends React.PureComponent {
           {tReady ? t('message.toolsOverlayNoPresets') : ''}
         </div>
       );
+    } else if (['crossStampTools', 'checkStampTools', 'dotStampTools'].includes(activeToolGroup)) {
+      Component = (
+        <SelectedStamp tReady={tReady} toolName={toolNames[0]}/>
+      );
     }
 
     if (noPresets && isMobile) {
@@ -192,7 +197,7 @@ class ToolsOverlay extends React.PureComponent {
             })}
           >
             {Component}
-            {this.props.isMobile &&
+            {isMobile &&
               <button
                 className="close-icon-container"
                 onClick={() => {

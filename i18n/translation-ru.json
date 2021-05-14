@@ -68,6 +68,8 @@
     "callout": "Вызыв",
     "crop": "Обрезать страницу",
     "caret": "Знак вставки",
+    "formFillCheckmark": "Галочка",
+    "formFillCross": "Крест",
     "distanceMeasurement": "Дистанция",
     "countMeasurement": "Измерение счета",
     "ellipse": "Эллипс",
@@ -83,6 +85,7 @@
     "polyline": "Ломаная",
     "rectangle": "Прямоугольник",
     "redact": "Редактировать",
+    "formFillDot": "Точка",
     "signature": "Подпись",
     "squiggly": "Волнистая линия",
     "stamp": "Штамп",
@@ -196,7 +199,8 @@
       "toolbarGroup-Shapes": "Формы",
       "toolbarGroup-Insert": "Вставить",
       "toolbarGroup-Measure": "Мера",
-      "toolbarGroup-Edit": "редактировать"
+      "toolbarGroup-Edit": "редактировать",
+      "toolbarGroup-FillAndSign": "Заполните и подпишите"
     },
     "annotationColor": {
       "StrokeColor": "Цвет границ",

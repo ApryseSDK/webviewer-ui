@@ -1,4 +1,6 @@
 import onBeforeDocumentLoaded from './onBeforeDocumentLoaded';
+import onCheckStampAnnotationAdded from './onCheckStampAnnotationAdded';
+import onCrossStampAnnotationAdded from './onCrossStampAnnotationAdded';
 import onDisplayModeUpdated from './onDisplayModeUpdated';
 import onDocumentLoaded from './onDocumentLoaded';
 import onDocumentUnloaded from './onDocumentUnloaded';
@@ -18,6 +20,7 @@ import onFullScreenChange from './onFullScreenChange';
 import onUpdateAnnotationPermission from './onUpdateAnnotationPermission';
 import onLayoutChanged from './onLayoutChanged';
 import onLocationSelected from './onLocationSelected';
+import onDotStampAnnotationAdded from './onDotStampAnnotationAdded';
 import onRubberStampAnnotationAdded from './onRubberStampAnnotationAdded';
 import onPageComplete from './onPageComplete';
 import onFileAttachmentDataAvailable from './onFileAttachmentDataAvailable';
@@ -34,6 +37,8 @@ export {
   onSignatureSaved,
   onSignatureDeleted,
   onBeforeDocumentLoaded,
+  onCheckStampAnnotationAdded,
+  onCrossStampAnnotationAdded,
   onDisplayModeUpdated,
   onDocumentLoaded,
   onDocumentUnloaded,
@@ -52,6 +57,7 @@ export {
   onUpdateAnnotationPermission,
   onLayoutChanged,
   onLocationSelected,
+  onDotStampAnnotationAdded,
   onRubberStampAnnotationAdded,
   onPageComplete,
   onFileAttachmentAnnotationAdded,

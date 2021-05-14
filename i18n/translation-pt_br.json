@@ -68,6 +68,8 @@
     "callout": "Texto explicativo",
     "crop": "Cortar página",
     "caret": "Cursor",
+    "formFillCheckmark": "Carraça",
+    "formFillCross": "Cruzar",
     "distanceMeasurement": "Medição de distância",
     "countMeasurement": "Medição de contagem",
     "ellipse": "Elipse",
@@ -83,6 +85,7 @@
     "polyline": "Polilinha",
     "rectangle": "Retângulo",
     "redact": "Suprimir",
+    "formFillDot": "Ponto",
     "signature": "Assinatura",
     "squiggly": "Linha ondulada",
     "stamp": "Carimbo",
@@ -196,7 +199,8 @@
       "toolbarGroup-Shapes": "Formas",
       "toolbarGroup-Insert": "Inserir",
       "toolbarGroup-Measure": "Medir",
-      "toolbarGroup-Edit": "Editar"
+      "toolbarGroup-Edit": "Editar",
+      "toolbarGroup-FillAndSign": "Preencher e assinar"
     },
     "annotationColor": {
       "StrokeColor": "Cor da borda",

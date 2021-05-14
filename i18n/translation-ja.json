@@ -68,6 +68,8 @@
     "callout": "吹き出し",
     "crop": "ページをトリミング",
     "caret": "キャレット",
+    "formFillCheckmark": "ダニ",
+    "formFillCross": "クロス",
     "distanceMeasurement": "距離測定",
     "countMeasurement": "カウント測定",
     "ellipse": "楕円",
@@ -83,6 +85,7 @@
     "polyline": "折れ線",
     "rectangle": "長方形",
     "redact": "改訂",
+    "formFillDot": "ドット",
     "signature": "署名",
     "squiggly": "波線",
     "stamp": "スタンプ",
@@ -196,7 +199,8 @@
       "toolbarGroup-Shapes": "図形",
       "toolbarGroup-Insert": "挿入",
       "toolbarGroup-Measure": "測定",
-      "toolbarGroup-Edit": "編集"
+      "toolbarGroup-Edit": "編集",
+      "toolbarGroup-FillAndSign": "記入して署名する"
     },
     "annotationColor": {
       "StrokeColor": "枠線",

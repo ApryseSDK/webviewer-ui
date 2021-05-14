@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <style>.cls-1{fill:#abb0c4;}</style>
+    </defs>
+    <title>icon - tool - cross - stamp</title>
+    <path class="cls-1" fill-rule="evenodd" clip-rule="evenodd" d="M19.2 3H4.8C3.80816 3.00546 3.00546 3.80816 3 4.8V19.2C3.00546 20.1918 3.80816 20.9945 4.8 21H19.2C20.1918 20.9945 20.9945 20.1918 21 19.2V4.8C20.9945 3.80816 20.1918 3.00546 19.2 3ZM4.8 19.2V4.8H19.2V19.2H4.8Z" />
+    <path class="cls-1" fill-rule="evenodd" clip-rule="evenodd" d="M14.5399 8.18005L11.9999 10.7301L9.45993 8.18005L8.17993 9.46005L10.7299 12.0001L8.17993 14.5401L9.45993 15.8201L11.9999 13.2701L14.5399 15.8201L15.8199 14.5401L13.2699 12.0001L15.8199 9.46005L14.5399 8.18005V8.18005Z" />
+</svg>

@@ -68,6 +68,8 @@
     "callout": "설명선",
     "crop": "자르기 페이지",
     "caret": "캐럿",
+    "formFillCheckmark": "진드기",
+    "formFillCross": "가로 질러 가다",
     "distanceMeasurement": "거리 측정",
     "countMeasurement": "카운트 측정",
     "ellipse": "타원",
@@ -83,6 +85,7 @@
     "polyline": "폴리라인",
     "rectangle": "직사각형",
     "redact": "개정",
+    "formFillDot": "점",
     "signature": "서명",
     "squiggly": "곡선",
     "stamp": "스탬프",
@@ -196,7 +199,8 @@
       "toolbarGroup-Shapes": "모양",
       "toolbarGroup-Insert": "끼워 넣다",
       "toolbarGroup-Measure": "법안",
-      "toolbarGroup-Edit": "편집하다"
+      "toolbarGroup-Edit": "편집하다",
+      "toolbarGroup-FillAndSign": "채우기 및 서명"
     },
     "annotationColor": {
       "StrokeColor": "테두리 색",

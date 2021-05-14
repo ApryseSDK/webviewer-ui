@@ -68,6 +68,8 @@
     "callout": "标注",
     "crop": "裁剪页面",
     "caret": "插入符号",
+    "formFillCheckmark": "打钩",
+    "formFillCross": "叉",
     "distanceMeasurement": "距离测量",
     "countMeasurement": "计数测量",
     "ellipse": "椭圆",
@@ -83,6 +85,7 @@
     "polyline": "折线",
     "rectangle": "矩形",
     "redact": "新版本",
+    "formFillDot": "点",
     "signature": "签名",
     "squiggly": "曲线",
     "stamp": "盖章",
@@ -196,7 +199,8 @@
       "toolbarGroup-Shapes": "形状",
       "toolbarGroup-Insert": "插",
       "toolbarGroup-Measure": "测量",
-      "toolbarGroup-Edit": "编辑"
+      "toolbarGroup-Edit": "编辑",
+      "toolbarGroup-FillAndSign": "填写并签名"
     },
     "annotationColor": {
       "StrokeColor": "边框颜色",

@@ -68,6 +68,8 @@
     "callout": "Callout",
     "crop": "Seite zuschneiden",
     "caret": "Caret",
+    "formFillCheckmark": "Tick",
+    "formFillCross": "Kreuz",
     "distanceMeasurement": "Abstandsmessung",
     "countMeasurement": "Zählmessung",
     "ellipse": "Ellipse",
@@ -83,6 +85,7 @@
     "polyline": "Linienzug",
     "rectangle": "Rechteck",
     "redact": "Schwärzen",
+    "formFillDot": "Punkt",
     "signature": "Unterschrift",
     "squiggly": "Gewellte Linie",
     "stamp": "Stempel",
@@ -196,7 +199,8 @@
       "toolbarGroup-Shapes": "Formen",
       "toolbarGroup-Insert": "Einfügen",
       "toolbarGroup-Measure": "Messen",
-      "toolbarGroup-Edit": "Bearbeiten"
+      "toolbarGroup-Edit": "Bearbeiten",
+      "toolbarGroup-FillAndSign": "Füllen und unterschreiben"
     },
     "annotationColor": {
       "StrokeColor": "Randfarbe",

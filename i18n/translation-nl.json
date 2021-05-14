@@ -68,6 +68,8 @@
     "callout": "Opmerking met pijl",
     "crop": "Pagina bijsnijden",
     "caret": "Dakje",
+    "formFillCheckmark": "Kruis aan",
+    "formFillCross": "Kruis",
     "distanceMeasurement": "Afstandsmeting",
     "countMeasurement": "Tel meting",
     "ellipse": "Ellips",
@@ -83,6 +85,7 @@
     "polyline": "Polyline",
     "rectangle": "Rechthoek",
     "redact": "Redigeren",
+    "formFillDot": "Punt",
     "signature": "Handtekening",
     "squiggly": "Squiggly",
     "stamp": "Stempel",
@@ -196,7 +199,8 @@
       "toolbarGroup-Shapes": "Vormen",
       "toolbarGroup-Insert": "Invoegen",
       "toolbarGroup-Measure": "Meten",
-      "toolbarGroup-Edit": "Bewerk"
+      "toolbarGroup-Edit": "Bewerk",
+      "toolbarGroup-FillAndSign": "Invullen en ondertekenen"
     },
     "annotationColor": {
       "StrokeColor": "Rand kleur",

@@ -12,6 +12,7 @@ import localStorageManager from 'helpers/localStorageManager';
 import { copyMapWithDataProperties } from 'constants/map';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import Ribbons from 'components/Ribbons';
+const { ToolNames } = window.Tools;
 import ApplyFormFieldButton from 'components/ApplyFormFieldButton';
 
 export default {
@@ -304,6 +305,45 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
+      "toolbarGroup-FillAndSign": [
+        { type: 'spacer' },
+        { type: 'toolGroupButton', toolGroup: 'signatureTools', img: 'icon-tool-signature', dataElement: 'signatureToolGroupButton', title: 'annotation.signature', showColor: 'never' },
+        { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'annotation.freetext' },
+        { type: 'toolGroupButton', toolGroup: 'crossStampTools', img: 'icon-tool-cross-stamp', dataElement: 'crossStampToolButton', title: 'annotation.formFillCross', showColor: 'never'  },
+        { type: 'toolGroupButton', toolGroup: 'checkStampTools', img: 'icon-tool-check-stamp', dataElement: 'checkStampToolButton', title: 'annotation.formFillCheckmark', showColor: 'never'  },
+        { type: 'toolGroupButton', toolGroup: 'dotStampTools', img: 'icon-tool-dot-stamp', dataElement: 'dotStampToolButton', title: 'annotation.formFillDot', showColor: 'never'  },
+        { type: 'toolGroupButton', toolGroup: 'rubberStampTools', img: 'icon-tool-stamp-line', dataElement: 'rubberStampToolGroupButton', title: 'annotation.rubberStamp' },
+        { type: 'divider' },
+        {
+          type: 'customElement',
+          render: () => <ToolsOverlay />,
+          dataElement: 'toolsOverlay',
+          hidden: ['small-mobile', 'mobile'],
+        },
+        {
+          type: 'actionButton',
+          style: { 'marginLeft': '0px' },
+          dataElement: 'undoButton',
+          title: 'action.undo',
+          img: 'icon-operation-undo',
+          onClick: () => {
+            core.undo();
+          },
+          isNotClickableSelector: state => !state.viewer.canUndo,
+        },
+        {
+          type: 'actionButton',
+          dataElement: 'redoButton',
+          title: 'action.redo',
+          img: 'icon-operation-redo',
+          onClick: () => {
+            core.redo();
+          },
+          isNotClickableSelector: state => !state.viewer.canRedo,
+        },
+        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+        { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
+      ],
       "toolbarGroup-Forms": [
         { type: 'spacer' },
         { type: 'toolGroupButton', toolGroup: 'formFieldTools', dataElement: 'textFieldToolGroupButton', title: 'annotation.textField', showColor: 'always' },
@@ -457,6 +497,9 @@ export default {
       AnnotationCreateFileAttachment: { dataElement: 'fileAttachmentToolButton', title: 'annotation.fileattachment', img: 'ic_fileattachment_24px', group: 'fileAttachmentTools', showColor: 'never' },
       AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'icon-tool-image-line', group: 'stampTools', showColor: 'active' },
       AnnotationCreateRubberStamp: { dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp', img: 'icon-tool-stamp-line', group: 'rubberStampTools', showColor: 'active' },
+      [ToolNames.FORM_FILL_CROSS]: { dataElement: 'crossStampToolButton', title: 'annotation.formFillCross', img: 'icon-tool-cross-stamp', group: 'crossStampTools', showColor: 'active' },
+      [ToolNames.FORM_FILL_CHECKMARK]: { dataElement: 'checkStampToolButton', title: 'annotation.formFillCheckmark', img: 'icon-tool-check-stamp', group: 'checkStampTools', showColor: 'active' },
+      [ToolNames.FORM_FILL_DOT]: { dataElement: 'dotStampToolButton', title: 'annotation.formFillDot', img: 'icon-tool-dot-stamp', group: 'dotStampTools', showColor: 'active' },
       CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'cropTools' },
       AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'icon-tool-redaction-area', group: 'redactionTools', showColor: 'never' },
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },

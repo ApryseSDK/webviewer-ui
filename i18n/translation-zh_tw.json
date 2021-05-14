@@ -68,6 +68,8 @@
     "callout": "圖說文字",
     "crop": "裁剪頁面",
     "caret": "插入號",
+    "formFillCheckmark": "打鉤",
+    "formFillCross": "叉",
     "distanceMeasurement": "測量距離",
     "countMeasurement": "計數測量",
     "ellipse": "橢圓",
@@ -83,6 +85,7 @@
     "polyline": "聚合線條",
     "rectangle": "矩形",
     "redact": "修訂",
+    "formFillDot": "點",
     "signature": "簽名",
     "squiggly": "曲線",
     "stamp": "圖章",
@@ -196,7 +199,8 @@
       "toolbarGroup-Shapes": "形狀",
       "toolbarGroup-Insert": "插",
       "toolbarGroup-Measure": "測量",
-      "toolbarGroup-Edit": "編輯"
+      "toolbarGroup-Edit": "編輯",
+      "toolbarGroup-FillAndSign": "填寫並簽名"
     },
     "annotationColor": {
       "StrokeColor": "邊框顏色",

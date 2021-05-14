@@ -70,6 +70,8 @@
     "callout": "Callout",
     "crop": "Crop Page",
     "caret": "Caret",
+    "formFillCheckmark": "Tick",
+    "formFillCross": "Cross",
     "distanceMeasurement": "Distance",
     "countMeasurement": "Count measurement",
     "ellipse": "Ellipse",
@@ -85,6 +87,7 @@
     "polyline": "Polyline",
     "rectangle": "Rectangle",
     "redact": "Redact",
+    "formFillDot": "Dot",
     "signature": "Signature",
     "squiggly": "Squiggly",
     "stamp": "Stamp",
@@ -207,6 +210,7 @@
       "toolbarGroup-Insert": "Insert",
       "toolbarGroup-Measure": "Measure",
       "toolbarGroup-Edit": "Edit",
+      "toolbarGroup-FillAndSign": "Fill and Sign",
       "toolbarGroup-Forms": "Forms"
     },
     "annotationColor": {

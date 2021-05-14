@@ -1,10 +1,13 @@
 import * as eventListeners from 'src/event-listeners';
 import hotkeysManager from 'helpers/hotkeysManager';
 import core from 'core';
+const { ToolNames } = window.Tools;
 
 export default store => {
   const { dispatch } = store;
   const onBeforeDocumentLoaded = eventListeners.onBeforeDocumentLoaded(dispatch);
+  const onCheckStampAnnotationAdded = eventListeners.onCheckStampAnnotationAdded(dispatch);
+  const onCrossStampAnnotationAdded = eventListeners.onCrossStampAnnotationAdded(dispatch);
   const onDisplayModeUpdated = eventListeners.onDisplayModeUpdated(dispatch);
   const onDocumentLoaded = eventListeners.onDocumentLoaded(store);
   const onDocumentUnloaded = eventListeners.onDocumentUnloaded(dispatch);
@@ -22,6 +25,7 @@ export default store => {
   const onFullScreenChange = eventListeners.onFullScreenChange(store);
   const onLayoutChanged = eventListeners.onLayoutChanged(dispatch);
   const onLocationSelected = eventListeners.onLocationSelected(store);
+  const onDotStampAnnotationAdded = eventListeners.onDotStampAnnotationAdded(dispatch);
   const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(dispatch);
   const onPageComplete = eventListeners.onPageComplete(store);
   const onFileAttachmentAnnotationAdded = eventListeners.onFileAttachmentAnnotationAdded(dispatch);
@@ -68,8 +72,11 @@ export default store => {
       core.getTool('AnnotationCreateSignature').on('annotationAdded', onSignatureAnnotationAdded);
       core.getTool('AnnotationCreateSignature').on('signatureSaved', onSignatureSaved);
       core.getTool('AnnotationCreateSignature').on('signatureDeleted', onSignatureDeleted);
+      core.getTool(ToolNames.FORM_FILL_DOT).on('annotationAdded', onDotStampAnnotationAdded);
       core.getTool('AnnotationCreateRubberStamp').on('annotationAdded', onRubberStampAnnotationAdded);
       core.getTool('AnnotationCreateFileAttachment').on('annotationAdded', onFileAttachmentAnnotationAdded);
+      core.getTool(ToolNames.FORM_FILL_CROSS).on('annotationAdded', onCrossStampAnnotationAdded);
+      core.getTool(ToolNames.FORM_FILL_CHECKMARK).on('annotationAdded', onCheckStampAnnotationAdded);
       hotkeysManager.initialize(store);
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
@@ -101,8 +108,11 @@ export default store => {
       core.getTool('AnnotationCreateSticky3').off('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSticky4').off('annotationAdded', onStickyAnnotationAdded);
       core.getTool('AnnotationCreateSignature').off('locationSelected', onLocationSelected);
+      core.getTool(ToolNames.FORM_FILL_DOT).off('annotationAdded', onDotStampAnnotationAdded);
       core.getTool('AnnotationCreateRubberStamp').off('annotationAdded', onRubberStampAnnotationAdded);
       core.getTool('AnnotationCreateFileAttachment').off('annotationAdded', onFileAttachmentAnnotationAdded);
+      core.getTool(ToolNames.FORM_FILL_CROSS).off('annotationAdded', onCrossStampAnnotationAdded);
+      core.getTool(ToolNames.FORM_FILL_CHECKMARK).off('annotationAdded', onCheckStampAnnotationAdded);
       hotkeysManager.off();
       document.removeEventListener('fullscreenchange', onFullScreenChange);
       document.removeEventListener('mozfullscreenchange', onFullScreenChange);
