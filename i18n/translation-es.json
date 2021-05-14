@@ -280,6 +280,7 @@
     },
     "filterAnnotModal": {
       "commentBy": "Comentario de",
+      "includeReplies": "Incluir respuestas",
       "types": "Tipos"
     },
     "status": {

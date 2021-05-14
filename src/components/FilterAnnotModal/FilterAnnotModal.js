@@ -31,6 +31,7 @@ const FilterAnnotModal = () => {
 
   const [authorFilter, setAuthorFilter] = useState([]);
   const [typesFilter, setTypesFilter] = useState([]);
+  const [checkRepliesForAuthorFilter, setCheckRepliesForAuthorFilter] = useState(true);
 
   const filterApply = () => {
     dispatch(
@@ -42,11 +43,26 @@ const FilterAnnotModal = () => {
         }
         if (authorFilter.length > 0) {
           author = authorFilter.includes(core.getDisplayAuthor(annot));
+          if (!author && checkRepliesForAuthorFilter) {
+            const allReplies = annot.getReplies();
+            for (const reply of allReplies) {
+              // Short-circuit the search if at least one reply is created by
+              // one of the desired authors
+              if (authorFilter.includes(core.getDisplayAuthor(reply))) {
+                author = true;
+                break;
+              }
+            }
+          }
         }
         return type && author;
       }),
     );
-    fireEvent('annotationFilterChanged', { types: typesFilter, authors: authorFilter });
+    fireEvent('annotationFilterChanged', {
+      types: typesFilter,
+      authors: authorFilter,
+      checkRepliesForAuthorFilter,
+    });
     closeModal();
   };
 
@@ -56,9 +72,14 @@ const FilterAnnotModal = () => {
         return true;
       }),
     );
+    setCheckRepliesForAuthorFilter(false);
     setAuthorFilter([]);
     setTypesFilter([]);
-    fireEvent('annotationFilterChanged', { types: [], authors: [] });
+    fireEvent('annotationFilterChanged', {
+      types: [],
+      authors: [],
+      checkRepliesForAuthorFilter: false,
+    });
   };
 
   const closeModal = () => {
@@ -130,6 +151,17 @@ const FilterAnnotModal = () => {
                           />
                         );
                       })}
+                    </div>
+                    <div className="buttons">
+                      <Choice
+                        type="checkbox"
+                        label={t('option.filterAnnotModal.includeReplies')}
+                        checked={checkRepliesForAuthorFilter}
+                        onChange={
+                          e => setCheckRepliesForAuthorFilter(e.target.checked)
+                        }
+                        id="filter-annot-modal-include-replies"
+                      />
                     </div>
                   </div>
                   <div className="filter">

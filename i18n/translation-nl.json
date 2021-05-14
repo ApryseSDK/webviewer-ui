@@ -280,6 +280,7 @@
     },
     "filterAnnotModal": {
       "commentBy": "Reageer door",
+      "includeReplies": "Inclusief antwoorden",
       "types": "Soorten"
     },
     "status": {

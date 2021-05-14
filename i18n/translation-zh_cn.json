@@ -280,6 +280,7 @@
     },
     "filterAnnotModal": {
       "commentBy": "评论者",
+      "includeReplies": "包括回覆",
       "types": "种类"
     },
     "status": {

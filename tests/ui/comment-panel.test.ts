@@ -346,4 +346,61 @@ describe('Test cases for comment panel', () => {
 
     expect(virtualNoteEleCount).toEqual(noteEleCount);
   });
+
+  it(
+    'should continue to render the comment by Justin if Sally is filtered and replies are included',
+    async() => {
+      const instance = await result.waitForInstance();
+
+      await instance('loadDocument', '/test-files/filter-by-comment-replies.pdf');
+      await result.waitForWVEvent('annotationsLoaded');
+
+      instance('openElement', 'notesPanel');
+      await page.waitFor(500);
+      instance('openElement', 'filterModal');
+      await page.waitFor(500);
+
+      await (result.iframe as Frame).evaluate(async() => {
+        const sallyCheckbox = document.getElementById('Sally');
+        sallyCheckbox.click();
+        return;
+      });
+
+      await (result.iframe as Frame).evaluate(async() => {
+        const searchForApplyBtn = document.getElementsByClassName('filter-annot-apply');
+        const applyBtn = searchForApplyBtn[0] as HTMLButtonElement;
+        applyBtn.click();
+        return;
+      });
+
+      let noteEleCount = await (result.iframe as Frame).evaluate(async() => {
+        return Array.from(document.querySelectorAll('.Note')).length;
+      });
+
+      await page.waitFor(500);
+      expect(noteEleCount).toBe(1);
+
+      instance('openElement', 'filterModal');
+      await page.waitFor(500);
+
+      await (result.iframe as Frame).evaluate(async() => {
+        const includeRepliesCheckbox = document.getElementById(
+          'filter-annot-modal-include-replies'
+        );
+        // Turn off Including Replies
+        includeRepliesCheckbox.click();
+        const searchForApplyBtn = document.getElementsByClassName('filter-annot-apply');
+        const applyBtn = searchForApplyBtn[0] as HTMLButtonElement;
+        applyBtn.click();
+        return;
+      });
+
+      noteEleCount = await (result.iframe as Frame).evaluate(async() => {
+        return Array.from(document.querySelectorAll('.Note')).length;
+      });
+
+      await page.waitFor(500);
+      expect(noteEleCount).toBe(0);
+    }
+  );
 });

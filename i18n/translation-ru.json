@@ -280,6 +280,7 @@
     },
     "filterAnnotModal": {
       "commentBy": "Комментарий от",
+      "includeReplies": "Включить ответы",
       "types": "Типы"
     },
     "status": {

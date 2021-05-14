@@ -280,6 +280,7 @@
     },
     "filterAnnotModal": {
       "commentBy": "によるコメント",
+      "includeReplies": "返信を含める",
       "types": "タイプ"
     },
     "status": {

@@ -280,6 +280,7 @@
     },
     "filterAnnotModal": {
       "commentBy": "의 댓글",
+      "includeReplies": "답글 포함",
       "types": "종류"
     },
     "status": {
