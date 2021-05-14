@@ -7,7 +7,6 @@ import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
 import closeDocument from './closeDocument';
-import closeElement from './closeElement';
 import closeElements from './closeElements';
 import contextMenuPopup from './contextMenuPopup';
 import disableAnnotations from './disableAnnotations';
@@ -302,7 +301,6 @@ export default store => {
     },
 
     // undocumented and deprecated, to be removed in 7.0
-    closeElement: closeElement(store),
     disableAnnotations: disableAnnotations(store),
     disableDownload: disableDownload(store),
     disableElement: disableElement(store),
