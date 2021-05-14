@@ -17,6 +17,7 @@ import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
+import { isIE } from 'helpers/device';
 
 import './LeftPanel.scss';
 
@@ -141,7 +142,12 @@ const LeftPanel = () => {
           dataElement="leftPanelResizeBar"
           minWidth={minWidth}
           onResize={_width => {
-            dispatch(actions.setLeftPanelWidth(_width));
+            let maxAllowedWidth = window.innerWidth
+            // there will be a scroll bar in IE, so we don't allow 100% page width
+            if (isIE) {
+              maxAllowedWidth = maxAllowedWidth - 30;
+            } 
+            dispatch(actions.setLeftPanelWidth(Math.min(_width, maxAllowedWidth)));
           }}
         />}
     </div>
