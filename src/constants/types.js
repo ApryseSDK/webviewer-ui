@@ -1,7 +1,7 @@
 export const workerTypes = {
   PDF: 'pdf',
   OFFICE: 'office',
-  BLACKBOX: 'blackbox',
+  WEBVIEWER_SERVER: 'webviewerServer',
   XOD: 'xod',
   ALL: 'all',
 };

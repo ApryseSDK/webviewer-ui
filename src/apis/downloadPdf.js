@@ -51,12 +51,12 @@ import core from 'core';
 
 export default store => async(options = { includeAnnotations: true }) => {
   const documentType = core.getDocument()?.getType();
-  const { PDF, BLACKBOX, OFFICE } = workerTypes;
+  const { PDF, WEBVIEWER_SERVER, OFFICE } = workerTypes;
 
   if (
     documentType !== PDF &&
     documentType !== OFFICE &&
-    documentType !== BLACKBOX
+    documentType !== WEBVIEWER_SERVER
   ) {
     console.warn('Document type is not PDF. Cannot be downloaded.');
     return Promise.reject();

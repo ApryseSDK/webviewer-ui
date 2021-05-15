@@ -80,7 +80,7 @@ export default store => () => {
   }
 
   const docType = doc.getType();
-  if (docType === workerTypes.PDF || (docType  === workerTypes.BLACKBOX && !doc.isWebViewerServerDocument())) {
+  if (docType === workerTypes.PDF || (docType  === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
     dispatch(actions.enableElement('cropToolGroupButton', PRIORITY_ONE));
   } else {
     dispatch(actions.disableElement('cropToolGroupButton', PRIORITY_ONE));

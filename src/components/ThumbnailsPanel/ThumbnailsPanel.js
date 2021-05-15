@@ -167,7 +167,7 @@ const ThumbnailsPanel = () => {
 
     const onDocumentLoaded = () => {
       const doc = core.getDocument();
-      if (doc.type === workerTypes.PDF || (doc.type === workerTypes.BLACKBOX && !doc.isWebViewerServerDocument())) {
+      if (doc.type === workerTypes.PDF || (doc.type === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
         setAllowPageOperations(true);
       } else {
         setAllowPageOperations(false);
