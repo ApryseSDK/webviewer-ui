@@ -262,7 +262,9 @@ const ContentArea = ({
     if (isNotesPanelOpen && textareaRef.current) {
       setTimeout(() => {
         // need setTimeout because textarea seem to rerender and unfocus
-        textareaRef.current.focus();
+        if (textareaRef && textareaRef.current) {
+          textareaRef.current.focus();
+        }
       }, 0);
       const textLength = textareaRef.current.value.length;
       textareaRef.current.setSelectionRange(textLength, textLength);
