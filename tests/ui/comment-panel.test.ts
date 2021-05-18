@@ -347,4 +347,75 @@ describe('Test cases for comment panel', () => {
 
     expect(virtualNoteEleCount).toEqual(noteEleCount);
   });
+
+  it('should be able to handle duplicate Ids', async() => {
+    const instance = await result.waitForInstance();
+
+    await instance('loadDocument', '/test-files/demo-annotated.pdf');
+    await result.waitForWVEvent('annotationsLoaded');
+  
+    instance('openElement', 'notesPanel');
+    await page.waitFor(500);
+
+    // import annotation with duplicate IDs on different pages    
+    await (result.iframe as Frame).evaluate(async() => {
+      await window.readerControl.docViewer.getAnnotationManager().importAnnotations(`<?xml version="1.0" encoding="UTF-8"?>
+      <xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve">
+        <pdf-info xmlns="http://www.pdftron.com/pdfinfo" version="2" import-version="3"/>
+        <fields/>
+        <annots>
+		    <ink width="5.39018" color="#E44234" creationdate="D:20191108141059-08'00'" flags="print" date="D:20191108141102-08'00'" name="aa9d15ae-46bd-f5df-9247-3c0d18c22959" page="5" rect="333.745,293.745,401.315,416.845" subject="FreeHand" title="Guest">
+			<popup flags="print,nozoom,norotate" open="no" page="5" rect="612,299.65,816,413.65"/>
+			<inklist>
+				<gesture>352.94,413.65;355.76,411.76;361.41,408;364.24,406.12;366.12,405.18;367.06,403.29;368,402.35;369.88,399.53;375.53,392.94;379.29,389.18;382.12,386.35;384,382.59;385.88,379.76;387.76,377.88;389.65,374.12;390.59,372.24;391.53,371.29;392.47,367.53;394.35,364.71;395.29,360.94;396.24,358.12;397.18,354.35;397.18,350.59;397.18,348.71;398.12,348.71;398.12,347.76;397.18,344;396.24,342.12;394.35,339.29;392.47,337.41;390.59,335.53;390.59,334.59;389.65,334.59;388.71,334.59;385.88,331.76;383.06,328.94;380.24,327.06;376.47,324.24;375.53,323.29;370.82,320.47;366.12,316.71;363.29,313.88;359.53,311.06;358.59,310.12;355.76,308.24;352.94,307.29;350.12,305.41;348.24,303.53;343.53,300.71;341.65,298.82;338.82,296.94;336.94,296.94</gesture>
+			</inklist>
+			<apref y="416.845" x="333.745" gennum="0" objnum="227"/>
+		</ink>
+    <highlight color="#B54800" creationdate="D:20191108142144-08'00'" flags="print" date="D:20191108142245-08'00'" name="689c80ad-d18e-73d6-66c5-79bde33a1d3c" page="5" coords="36,311.48,96.7,311.48,36,293.88,96.7,293.88" rect="36,293.884,96.704,311.482" subject="Highlight" title="Guest">
+			<popup flags="print,nozoom,norotate" open="no" page="5" rect="612,197.48,816,311.48"/>
+			<contents>ADAM PEZ</contents>
+			<apref blend-mode="multiply" y="311.482" x="36" gennum="0" objnum="228"/>
+		</highlight>
+		<square width="2.4504" color="#FF8D00" creationdate="D:20191108142201-08'00'" flags="print" date="D:20191108142233-08'00'" name="a698eb86-1317-870f-cd87-cbf2607b4e04" page="5" rect="280.471,25.8824,595.765,268.706" subject="Rectangle" title="Guest">
+				<popup flags="print,nozoom,norotate" open="no" page="5" rect="612,154.706,816,268.706"/>
+			</square>
+		<text page="5" rect="280.471,237.70600000000002,311.471,268.706" color="#FFFF00" flags="hidden,print,nozoom,norotate" name="3841c575-9fcf-05c3-4fec-7c4d3e94a5df" title="Guest" subject="Sticky Note" date="D:20210513141119-07'00'" creationdate="D:20210513141119-07'00'" inreplyto="a698eb86-1317-870f-cd87-cbf2607b4e04" icon="Comment" state="Accepted" statemodel="Review">
+		  <contents>Accepted set by Guest</contents>
+		</text>
+		<text page="5" rect="36,280.482,67,311.482" color="#FFFF00" flags="hidden,print,nozoom,norotate" name="d050949f-f7c1-dd1c-ee98-d00539af16bc" title="Guest" subject="Sticky Note" date="D:20210513141123-07'00'" creationdate="D:20210513141123-07'00'" inreplyto="689c80ad-d18e-73d6-66c5-79bde33a1d3c" icon="Comment" state="Accepted" statemodel="Review">
+		  <contents>Accepted set by Guest</contents>
+		</text>
+		<text page="5" rect="333.745,385.845,364.745,416.845" color="#FFFF00" flags="hidden,print,nozoom,norotate" name="6720505b-68f7-e0ad-156c-fbbb22291be9" title="Guest" subject="Sticky Note" date="D:20210513141126-07'00'" creationdate="D:20210513141126-07'00'" inreplyto="aa9d15ae-46bd-f5df-9247-3c0d18c22959" icon="Comment" state="Accepted" statemodel="Review">
+		  <contents>Accepted set by Guest</contents>
+		</text
+        </annots>
+        <pages>
+          <defmtx matrix="1,0,0,-1,0,792"/>
+        </pages>
+      </xfdf>`);
+
+      (document.querySelector('button[data-element="dropdown-item-time"]') as HTMLElement).click();
+    });
+
+    await page.waitFor(500);
+    await (result.iframe as Frame).evaluate(async() => {
+      (document.querySelector('button[data-element="dropdown-item-position"]') as HTMLElement).click();
+    });
+
+    await page.waitFor(500);
+    await (result.iframe as Frame).evaluate(async() => {
+      (document.querySelector('button[data-element="dropdown-item-time"]') as HTMLElement).click();
+    });
+
+    await page.waitFor(500);
+    await (result.iframe as Frame).evaluate(async() => {
+      (document.querySelector('button[data-element="dropdown-item-position"]') as HTMLElement).click();
+    });
+
+    const duplicateCount = await (result.iframe as Frame).evaluate(async() => {
+      return document.querySelectorAll('#note_a698eb86-1317-870f-cd87-cbf2607b4e04').length;
+    });
+
+    expect(duplicateCount).toEqual(2);
+  });
 });
