@@ -59,7 +59,7 @@ const Ribbons = () => {
     if (ribbonsRef?.current && containerRef?.current) {
       const ribbonsWidth = ribbonsRef.current.getBoundingClientRect().width + 4;
       const containerWidth = containerRef.current.getBoundingClientRect().width;
-      const remainingSpace = (window.innerWidth - ribbonsWidth) / 2;
+      const remainingSpace = (window.innerWidth - containerWidth) / 2;
 
       if (ribbonsWidth < remainingSpace) {
         setHasEnoughSpace(true);
