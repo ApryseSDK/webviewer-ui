@@ -118,8 +118,8 @@ const sortStrategies = {
   author: {
     getSortedNotes: notes =>
       notes.sort((a, b) => {
-        const authorA = core.getDisplayAuthor(a).toUpperCase();
-        const authorB = core.getDisplayAuthor(b).toUpperCase();
+        const authorA = core.getDisplayAuthor(a)?.toUpperCase();
+        const authorB = core.getDisplayAuthor(b)?.toUpperCase();
         return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
       }),
     shouldRenderSeparator: (prevNote, currNote) => core.getDisplayAuthor(prevNote) !== core.getDisplayAuthor(currNote),

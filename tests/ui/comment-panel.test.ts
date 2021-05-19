@@ -268,6 +268,62 @@ describe('Test cases for comment panel', () => {
     await selectAnnotAndTest(88);
   });
 
+  it('for VirtualizedList should not scroll, when new comment is added', async() => {
+    const instance = await result.waitForInstance();
+
+    await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
+    await result.waitForWVEvent('annotationsLoaded');
+
+    instance('openElement', 'notesPanel');
+
+    await (result.iframe as Frame).evaluate(async() => {
+      const annotManager = window.docViewer.getAnnotationManager();
+
+      const replyList = annotManager.getAnnotationsList().filter(a => a.InReplyTo).map(a => a.InReplyTo);
+      const map = replyList.reduce((acc, e) => {
+        let nextAcc = {...acc};
+        nextAcc[e] = nextAcc[e] ? (nextAcc[e] + 1) : 1;
+        return nextAcc;
+      }, {});
+
+      const annotIDWithMostReplies = Array.from(Object.entries(map)).sort((a, b) => (b[1] as number) -(a[1] as number))[0][0];
+      annotManager.selectAnnotation(annotManager.getAnnotationById(annotIDWithMostReplies));
+    });
+
+    await page.waitFor(500);
+
+    const notePanel = await result.iframe.$(`.NotesPanel .ReactVirtualized__Grid`);
+
+    await notePanel.evaluate((node) => {
+      // scroll down a bit so that it looking at the "reply" area
+      node.scrollTop = node.scrollTop + 300;
+      return node.scrollTop;
+    });
+
+    await page.waitFor(500);
+
+    await (result.iframe as Frame).evaluate(async () => {
+      const annotManager = window.docViewer.getAnnotationManager();
+      await annotManager.importAnnotations(`
+      <?xml version="1.0" encoding="UTF-8"?>
+      <xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve">
+        <annots>
+          <text page="0" rect="96,466,127,497" color="#FFFF00" flags="hidden,print,nozoom,norotate" name="7094c86e-0b2e-fb7b-b611-7cce80589299" title="Guest" subject="Sticky Note" date="D:20210517142304-07'00'" creationdate="D:20210517142304-07'00'" inreplyto="32d38690-104f-fbaa-2fc0-70be1f5eb27d" icon="Comment" state="Accepted" statemodel="Review">
+            <contents>Accepted set by Guest</contents>
+          </text>
+        </annots>
+      </xfdf>>`);
+        // blurring so we don't have a blinking text cursor causing screenshot test to fail
+        (document.querySelector('.reply-area-container > textarea') as HTMLElement).blur();
+    });
+
+    await page.waitFor(500);
+
+    expect(await notePanel.screenshot()).toMatchImageSnapshot({
+      customSnapshotIdentifier: `note-panel-scrolling-when-added`,
+    });
+  });
+
   it('Buttons should be disabled if there is nothing to persist', async() => {
     await page.waitFor(Timeouts.PDF_PRIME_DOCUMENT);
 
@@ -329,7 +385,7 @@ describe('Test cases for comment panel', () => {
       window.readerControl.disableFeatures(window.readerControl.Feature.NotesPanelVirtualizedList);
     });
 
-    await page.waitFor(2000);
+    await page.waitFor(1000);
 
     let nonVirtualListNoteEleCount = await (result.iframe as Frame).evaluate(async() => {
       return Array.from(document.querySelectorAll('.Note')).length;
@@ -346,6 +402,43 @@ describe('Test cases for comment panel', () => {
     });
 
     expect(virtualNoteEleCount).toEqual(noteEleCount);
+  });
+
+  it('should update row positions when changing sort strategies', async() => {
+    const instance = await result.waitForInstance();
+
+    await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
+    await result.waitForWVEvent('annotationsLoaded');
+
+    instance('openElement', 'notesPanel');
+    await page.waitFor(500);
+
+    const notesTopStyle = await (result.iframe as Frame).evaluate(async() => {
+      return  (Array.from(document.querySelectorAll('.virtualized-notes-container .ReactVirtualized__Grid__innerScrollContainer > div')) as Array<HTMLElement>).map((a) => a.style.top);
+    });
+    
+    await (result.iframe as Frame).evaluate(async() => {
+      (document.querySelector('button[data-element="dropdown-item-time"]') as HTMLElement).click();
+    });
+
+    await page.waitFor(1000);
+
+    const notesTopStyleAfter = await (result.iframe as Frame).evaluate(async() => {
+      return  (Array.from(document.querySelectorAll('.virtualized-notes-container .ReactVirtualized__Grid__innerScrollContainer > div')) as Array<HTMLElement>).map((a) => a.style.top);
+    });
+
+    // we expect that "top" of some rows will change when we go from "position" to "time" sorting
+    const notesToCompare = Math.min(notesTopStyle.length, notesTopStyleAfter.length);
+    let doesPositionsChange = false;
+
+    for(let i = 0; i < notesToCompare; i++) {
+      if (notesTopStyle[i] !== notesTopStyleAfter[i]) {
+        doesPositionsChange = true;
+        break;
+      }
+    }
+
+    expect(doesPositionsChange).toEqual(true);
   });
 
   it('should be able to handle duplicate Ids', async() => {

@@ -9,18 +9,17 @@ const propTypes = {
   onScroll: PropTypes.func.isRequired,
   initialScrollTop: PropTypes.number.isRequired,
   selectedIndex: PropTypes.number,
-  scrollToSelectedAnnot: PropTypes.bool,
+  sortStrategy: PropTypes.string,
 };
 
 const cache = new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
 
 const VirtualizedList = React.forwardRef(
-  ({ notes, children, onScroll, initialScrollTop, selectedIndex, scrollToSelectedAnnot }, forwardedRef) => {
+  ({ notes, children, onScroll, initialScrollTop, selectedIndex, sortStrategy }, forwardedRef) => {
     const listRef = useRef();
     const [offset, setOffset] = useState(0);
     const [dimension, setDimension] = useState({ width: 0, height: 0 });
     let prevWindowHeight = window.innerHeight;
-    let resizeTimeout = null;
 
     useImperativeHandle(forwardedRef, () => ({
       scrollToPosition: scrollTop => {
@@ -36,13 +35,18 @@ const VirtualizedList = React.forwardRef(
     }, [initialScrollTop]);
 
     useEffect(() => {
-      cache.clearAll();
-      listRef?.current?.measureAllRows();
-
       if(selectedIndex !== -1) {
+        cache.clear(selectedIndex);
         listRef.current?.scrollToRow(selectedIndex);
       }
-    }, [notes.length, selectedIndex]);
+    }, [selectedIndex]);
+
+    useEffect(() => {
+      cache.clearAll();
+      listRef?.current?.measureAllRows();
+      listRef?.current?.forceUpdateGrid();
+
+    }, [notes.length, sortStrategy]);
 
     useEffect(() => {
       const windowResizeHandler = () => {

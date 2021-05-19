@@ -138,14 +138,6 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   }, [isOpen]);
 
   let singleSelectedNoteIndex = -1;
-  useEffect(() => {
-    if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
-      listRef.current?.scrollToRow(singleSelectedNoteIndex);
-    }
-    // For newly created annotations the "annotationSelected" event fires before the "annotationChanged" event
-    // So "singleSelectedNoteIndex" will be -1 till "notes" are updated
-    // eslint-disable-next-line
-  }, [selectedNoteIds, notes]);
 
   // useEffect(() => {
   //   if (isOpen) {
@@ -193,6 +185,15 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const notesToRender = getSortStrategies()
     [sortStrategy].getSortedNotes(notes)
     .filter(filterNote);
+
+  useEffect(() => {
+    if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
+      setTimeout(() => {
+        // wait for the previous selected annotation to resize() after closing before scrolling to the newly selected one
+        listRef.current?.scrollToRow(singleSelectedNoteIndex);
+      }, 0);
+    }
+  }, [selectedNoteIds]);
 
   //expand a reply note when search content is match
   const onlyReplyContainsSearchInput = currNote => {
@@ -424,10 +425,10 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
           <VirtualizedList
             ref={listRef}
             notes={notesToRender}
+            sortStrategy={sortStrategy}
             onScroll={handleScroll}
             initialScrollTop={scrollTopRef.current}
             selectedIndex={singleSelectedNoteIndex}
-            scrollToSelectedAnnot={scrollToSelectedAnnot}
           >
             {renderChild}
           </VirtualizedList>
