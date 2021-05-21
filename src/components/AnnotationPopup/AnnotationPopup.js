@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import ActionButton from 'components/ActionButton';
 import AnnotationStylePopup from 'components/AnnotationStylePopup';
@@ -43,12 +44,14 @@ const AnnotationPopup = () => {
     shallowEqual,
   );
   const dispatch = useDispatch();
+  const [t] = useTranslation();
   const [position, setPosition] = useState({ left: 0, top: 0 });
   // first annotation in the array when there're multiple annotations selected
   const [firstAnnotation, setFirstAnnotation] = useState(null);
   const [canModify, setCanModify] = useState(false);
   const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
   const [hasAssociatedLink, setHasAssociatedLink] = useState(false);
+  const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(false);
   const isEditingWidgets = useWidgetEditing();
   const popupRef = useRef();
   const [includesFormFieldAnnotation, setIncludesFormFieldAnnotation] = useState(false);
@@ -215,6 +218,14 @@ const AnnotationPopup = () => {
     dispatch(actions.closeElement('annotationPopup'));
   };
 
+  const ShortCutKeysFor3DComponent = () => {
+    return (<div className="shortCuts3D">
+      <div className="closeButton" onClick={() => setShortCutKeysFor3DVisible(false)}>x</div>
+      <div className="row">{t('action.rotate3D')} <span>{t('shortcut.rotate3D')}</span></div>
+      <div className="row">{t('action.zoom')} <span>{t('shortcut.zoom3D')}</span></div>
+    </div>)
+  }
+
   const downloadFileAttachment = annot => {
     // no need to check that annot is of type file annot as the check is done in the JSX
     // trigger the annotationDoubleClicked event so that it will download the file
@@ -285,7 +296,8 @@ const AnnotationPopup = () => {
     >
       {isStylePopupOpen ? (
         <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} />
-      ) : (
+      ) : (shortCutKeysFor3DVisible && firstAnnotation instanceof Annotations.Model3DAnnotation) ?
+        <ShortCutKeysFor3DComponent /> : (
         <CustomizablePopup dataElement="annotationPopup">
           {showCommentButton && (
             <ActionButton
@@ -408,6 +420,17 @@ const AnnotationPopup = () => {
                 onClick={() => downloadFileAttachment(firstAnnotation)}
                 dataElement="fileAttachmentDownload"
               />
+            )
+          }
+          {
+            firstAnnotation instanceof Annotations.Model3DAnnotation &&
+            (
+              <ActionButton
+                title="action.viewShortCutKeysFor3D"
+                img="icon-keyboard"
+                onClick={() => setShortCutKeysFor3DVisible(true)}
+                dataElement="shortCutKeysFor3D"
+                />
             )
           }
         </CustomizablePopup>

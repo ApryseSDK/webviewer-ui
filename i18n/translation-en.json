@@ -32,6 +32,7 @@
     "rename": "Rename",
     "ok": "OK",
     "rotate": "Page Orientation",
+    "rotate3D": "Rotate",
     "rotateClockwise": "Rotate Clockwise",
     "rotateCounterClockwise": "Rotate Counterclockwise",
     "save": "Save",
@@ -62,6 +63,7 @@
     "exit": "Exit",
     "addOption": "Add Option",
     "formFieldEdit": "Edit Form Field",
+    "viewShortCutKeysFor3D": "View Shortcut Keys",
     "markAllRead": "Mark all as read"
   },
   "annotation": {
@@ -104,7 +106,8 @@
     "listBoxFormField": "List Box Field",
     "comboBoxFormField": "Combo Box Field",
     "link": "Link",
-    "other": "Other"
+    "other": "Other",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -439,7 +442,9 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    }
+    },
+    "rotate3D": "Shift + Drag",
+    "zoom3D": "Shift + Scroll"
   },
   "tool": {
     "pan": "Pan",
@@ -454,6 +459,12 @@
     "page": "Page",
     "enterurl": "Enter URL you would like to link to",
     "enterpage": "Select the page number you would like to link to"
+  },
+  "Model3D": {
+    "add3D": "Add 3D object",
+    "enterurl": "Enter the URL of the 3D object in glTF format",
+    "enterurlOrLocalFile": "Enter the URL or upload a 3D object in glTF format",
+    "formatError": "Only glTF (.glb) format is supported"
   },
   "datePicker": {
     "previousMonth": "Previous Month",

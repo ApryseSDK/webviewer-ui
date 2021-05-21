@@ -62,6 +62,9 @@ export const getAnnotationClass = annotation => {
   if (annotation instanceof Annotations.TextSquigglyAnnotation) {
     return 'squiggly';
   }
+  if (annotation instanceof Annotations.Model3DAnnotation) {
+    return '3D';
+  }
 
   return 'other';
 };

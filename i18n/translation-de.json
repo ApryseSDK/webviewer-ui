@@ -32,6 +32,7 @@
     "rename": "Umbenennen",
     "ok": "OK",
     "rotate": "Drehen",
+    "rotate3D": "Drehen",
     "rotateClockwise": "Im Uhrzeigersinn",
     "rotateCounterClockwise": "Gegen den Uhrzeigersinn",
     "save": "Speichern",
@@ -60,6 +61,9 @@
     "startFormEditing": "Starten Sie die Formularbearbeitung",
     "exitFormEditing": "Beenden Sie den Formularbearbeitungsmodus",
     "exit": "Ausgang",
+    "addOption": "Option hinzufügen",
+    "formFieldEdit": "Formularfeld bearbeiten",
+    "viewShortCutKeysFor3D": "Tastenkombinationen anzeigen",
     "markAllRead": "markiere alles Gelesene"
   },
   "annotation": {
@@ -95,8 +99,15 @@
     "custom": "Angepasst",
     "rubberStamp": "Stempel",
     "note": "Hinweis",
+    "textField": "Textfeld",
+    "signatureFormField": "Signaturfeld",
+    "checkBoxFormField": "Kontrollkästchen Feld",
+    "radioButtonFormField": "RadioButton-Feld",
+    "listBoxFormField": "Listenfeld",
+    "comboBoxFormField": "Kombinationsfeld",
     "link": "Verknüpfung",
-    "other": "Andere"
+    "other": "Andere",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "Genehmigt",
@@ -180,6 +191,8 @@
     "sortBy": "Sortiere nach",
     "emptyCustomStampInput": "Stempeltext darf nicht leer sein",
     "unpostedComment": "Unposted Kommentar",
+    "lockedLayer": "Ebene ist gesperrt",
+    "layerVisibililtyNoChange": "Die Sichtbarkeit der Ebene kann nicht geändert werden",
     "untitled": "Ohne Titel"
   },
   "option": {
@@ -200,6 +213,7 @@
       "toolbarGroup-Insert": "Einfügen",
       "toolbarGroup-Measure": "Messen",
       "toolbarGroup-Edit": "Bearbeiten",
+      "toolbarGroup-Forms": "Formen",
       "toolbarGroup-FillAndSign": "Füllen und unterschreiben"
     },
     "annotationColor": {
@@ -428,7 +442,9 @@
       "italic": "(Strg I)",
       "underline": "(Strg U)",
       "strikeout": "(Strg K)"
-    }
+    },
+    "rotate3D": "Umschalt + Ziehen",
+    "zoom3D": "Umschalt + Bildlauf"
   },
   "tool": {
     "pan": "Hand",
@@ -443,6 +459,12 @@
     "page": "Seite",
     "enterurl": "Geben Sie die URL ein, zu der Sie einen Link erstellen möchten",
     "enterpage": "Wählen Sie die Seitennummer aus, zu der Sie einen Link erstellen möchten"
+  },
+  "Model3D": {
+    "add3D": "Fügen Sie eine 3D-Anmerkung hinzu, indem Sie die URL eingeben",
+    "enterurl": "Geben Sie die URL für das 3D-Objekt im glTF-Format ein",
+    "enterurlOrLocalFile": "Geben Sie die URL ein oder laden Sie ein 3D-Objekt im glTF-Format hoch",
+    "formatError": "Es wird nur das glTF-Format (.glb) unterstützt"
   },
   "datePicker": {
     "previousMonth": "Vorheriger Monat",
@@ -479,6 +501,26 @@
       "5": "Fr.",
       "6": "Sa."
     }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "Feldname",
+      "fieldValue": "Standardwert",
+      "readOnly": "Schreibgeschützt",
+      "multiSelect": "Mehrfachauswahl",
+      "required": "Erforderlich",
+      "multiLine": "Mehrzeilig",
+      "apply": "Anwenden",
+      "cancel": "Stornieren",
+      "flags": "Feldflaggen",
+      "options": "Optionen",
+      "radioGroups": "Optionsfelder mit demselben Feldnamen gehören zur selben Gruppierung.",
+      "nameRequired": "Feldname ist erforderlich",
+      "size": "Größe",
+      "width": "Breite",
+      "height": "Höhe"
+    },
+    "apply": "Felder anwenden"
   },
   "digitalSignatureModal": {
     "certification": "Zertifizierung",

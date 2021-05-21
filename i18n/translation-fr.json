@@ -32,6 +32,7 @@
     "rename": "Renommer",
     "ok": "OK",
     "rotate": "Tourner",
+    "rotate3D": "Tourner",
     "rotateClockwise": "Tourner horaire",
     "rotateCounterClockwise": "Tourner antihoraire",
     "save": "Enregistrer",
@@ -60,6 +61,9 @@
     "startFormEditing": "Commencer l'édition du formulaire",
     "exitFormEditing": "Quitter le mode d'édition de formulaire",
     "exit": "Sortie",
+    "addOption": "Ajouter une option",
+    "formFieldEdit": "Modifier le champ de formulaire",
+    "viewShortCutKeysFor3D": "Afficher les touches de raccourci",
     "markAllRead": "Marquer tout comme lu"
   },
   "annotation": {
@@ -95,8 +99,15 @@
     "custom": "personnalisation",
     "rubberStamp": "Rubber Stamp",
     "note": "Remarque",
+    "textField": "Champ de texte",
+    "signatureFormField": "Champ de signature",
+    "checkBoxFormField": "Champ de case à cocher",
+    "radioButtonFormField": "Champ RadioButton",
+    "listBoxFormField": "Champ de zone de liste",
+    "comboBoxFormField": "Champ de zone de liste déroulante",
     "link": "Lien",
-    "other": "Autre"
+    "other": "Autre",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "Approuvée",
@@ -180,6 +191,8 @@
     "sortBy": "Trier par",
     "emptyCustomStampInput": "Le texte du tampon ne peut pas être vide",
     "unpostedComment": "Commentaire non publié",
+    "lockedLayer": "Le calque est verrouillé",
+    "layerVisibililtyNoChange": "La visibilité de la couche ne peut pas être modifiée",
     "untitled": "Sans titre"
   },
   "option": {
@@ -200,6 +213,7 @@
       "toolbarGroup-Insert": "Insérer",
       "toolbarGroup-Measure": "Mesure",
       "toolbarGroup-Edit": "Éditer",
+      "toolbarGroup-Forms": "Formes",
       "toolbarGroup-FillAndSign": "Remplir et signer"
     },
     "annotationColor": {
@@ -428,7 +442,9 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    }
+    },
+    "rotate3D": "Maj + Glisser",
+    "zoom3D": "Maj + Défilement"
   },
   "tool": {
     "pan": "Panoramique",
@@ -443,6 +459,12 @@
     "page": "Page",
     "enterurl": "Entrez l'URL à laquelle vous souhaitez créer un lien",
     "enterpage": "Sélectionnez le numéro de page auquel vous souhaitez lier"
+  },
+  "Model3D": {
+    "add3D": "Ajoutez une annotation 3D en saisissant une URL",
+    "enterurl": "Entrez l'URL de l'objet 3D au format glTF",
+    "enterurlOrLocalFile": "Entrez l'URL ou téléchargez un objet 3D au format glTF",
+    "formatError": "Seul le format glTF (.glb) est pris en charge"
   },
   "datePicker": {
     "previousMonth": "Le mois précédent",
@@ -479,6 +501,26 @@
       "5": "ven.",
       "6": "sam."
     }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "Nom de domaine",
+      "fieldValue": "Valeur par défaut",
+      "readOnly": "Lecture seulement",
+      "multiSelect": "Sélection multiple",
+      "required": "Obligatoire",
+      "multiLine": "Multiligne",
+      "apply": "Appliquer",
+      "cancel": "Annuler",
+      "flags": "Drapeaux de terrain",
+      "options": "Options",
+      "radioGroups": "Les boutons radio avec le même nom de champ appartiendront au même groupement.",
+      "nameRequired": "Le nom du champ est obligatoire",
+      "size": "Taille",
+      "width": "Largeur",
+      "height": "Hauteur"
+    },
+    "apply": "Appliquer les champs"
   },
   "digitalSignatureModal": {
     "certification": "certification",

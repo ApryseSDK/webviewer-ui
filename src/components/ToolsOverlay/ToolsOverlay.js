@@ -157,6 +157,12 @@ class ToolsOverlay extends React.PureComponent {
       Component = (
         <SelectedRubberStamp />
       );
+    } else if (activeToolGroup === 'model3DTools') {
+      Component = (
+        <div className="signature-row-content add-btn" onClick={() => this.props.openElement('Model3DModal')}>
+          {t('Model3D.add3D')} 
+        </div>
+      );
     } else if (noPresets) {
       Component = (
         <div className="no-presets">
@@ -180,7 +186,7 @@ class ToolsOverlay extends React.PureComponent {
         preventDefaultTouchmoveEvent
         className="ToolsOverlayContainer"
       >
-        <div
+        <div 
           className={classNames({
             Overlay: true,
             ToolsOverlay: true,

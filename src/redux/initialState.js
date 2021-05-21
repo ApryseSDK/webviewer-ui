@@ -195,6 +195,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'stampTools', img: 'icon-tool-image-line', dataElement: 'stampToolGroupButton', title: 'annotation.stamp' },
         { type: 'toolGroupButton', toolGroup: 'fileAttachmentTools', img: 'ic_fileattachment_24px', dataElement: 'fileAttachmentToolGroupButton', title: 'annotation.fileattachment', showColor: 'never' },
         { type: 'toolGroupButton', toolGroup: 'calloutTools', dataElement: 'calloutToolGroupButton', title: 'annotation.callout' },
+        { type: 'toolGroupButton', toolGroup: 'model3DTools', img: 'icon-tool-model3d', dataElement: 'threeDToolGroupButton', title: 'annotation.3D', showColor: 'never' },
         { type: 'divider' },
         {
           type: 'customElement',
@@ -379,6 +380,7 @@ export default {
       { dataElement: 'calibrateButton' },
       { dataElement: 'linkButton' },
       { dataElement: 'fileAttachmentDownload' },
+      { dataElement: 'shortCutKeysFor3D' },
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },
@@ -495,6 +497,7 @@ export default {
       AnnotationCreateArrow4: { dataElement: 'arrowToolButton4', title: 'annotation.arrow', img: 'icon-tool-shape-arrow', group: 'arrowTools', showColor: 'always' },
       AnnotationCreateSignature: { dataElement: 'signatureToolButton', title: 'annotation.signature', img: 'icon-tool-signature', group: 'signatureTools', showColor: 'never' },
       AnnotationCreateFileAttachment: { dataElement: 'fileAttachmentToolButton', title: 'annotation.fileattachment', img: 'ic_fileattachment_24px', group: 'fileAttachmentTools', showColor: 'never' },
+      AnnotationCreateThreeD: { dataElement: 'threeDToolGroupButton', title: 'annotation.3D', img: 'icon-tool-model3d', group: 'model3DTools', showColor: 'never' },
       AnnotationCreateStamp: { dataElement: 'stampToolButton', title: 'annotation.stamp', img: 'icon-tool-image-line', group: 'stampTools', showColor: 'active' },
       AnnotationCreateRubberStamp: { dataElement: 'rubberStampToolButton', title: 'annotation.rubberStamp', img: 'icon-tool-stamp-line', group: 'rubberStampTools', showColor: 'active' },
       [ToolNames.FORM_FILL_CROSS]: { dataElement: 'crossStampToolButton', title: 'annotation.formFillCross', img: 'icon-tool-cross-stamp', group: 'crossStampTools', showColor: 'active' },

@@ -32,6 +32,7 @@
     "rename": "Переименовать",
     "ok": "OK",
     "rotate": "Повернуть",
+    "rotate3D": "Повернуть",
     "rotateClockwise": "По часовой",
     "rotateCounterClockwise": "Против часовой",
     "save": "Сохранить",
@@ -60,6 +61,9 @@
     "startFormEditing": "Начать редактирование формы",
     "exitFormEditing": "Выйти из режима редактирования формы",
     "exit": "Выход",
+    "addOption": "Добавить вариант",
+    "formFieldEdit": "Изменить поле формы",
+    "viewShortCutKeysFor3D": "Просмотр горячих клавиш",
     "markAllRead": "Отметить все как прочитанные"
   },
   "annotation": {
@@ -95,8 +99,15 @@
     "custom": "Свой стиль",
     "rubberStamp": "Штамп",
     "note": "Заметка",
+    "textField": "Текстовое поле",
+    "signatureFormField": "Поле для подписи",
+    "checkBoxFormField": "Поле флажка",
+    "radioButtonFormField": "Поле RadioButton",
+    "listBoxFormField": "Поле списка",
+    "comboBoxFormField": "Поле со списком",
     "link": "Ссылка на сайт",
-    "other": "Другие"
+    "other": "Другие",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "Одобренный",
@@ -180,6 +191,8 @@
     "sortBy": "Сортировать по",
     "emptyCustomStampInput": "Текст штампа не может быть пустым",
     "unpostedComment": "Неопубликованный комментарий",
+    "lockedLayer": "Слой заблокирован",
+    "layerVisibililtyNoChange": "Видимость слоя не может быть изменена",
     "untitled": "Без названия"
   },
   "option": {
@@ -200,6 +213,7 @@
       "toolbarGroup-Insert": "Вставить",
       "toolbarGroup-Measure": "Мера",
       "toolbarGroup-Edit": "редактировать",
+      "toolbarGroup-Forms": "Формы",
       "toolbarGroup-FillAndSign": "Заполните и подпишите"
     },
     "annotationColor": {
@@ -428,7 +442,9 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    }
+    },
+    "rotate3D": "Shift + перетащить",
+    "zoom3D": "Shift + прокрутка"
   },
   "tool": {
     "pan": "Панорамирование",
@@ -443,6 +459,12 @@
     "page": "страница",
     "enterurl": "Введите URL, на который вы хотите сослаться",
     "enterpage": "Выберите номер страницы, на которую вы хотите сослаться"
+  },
+  "Model3D": {
+    "add3D": "Добавьте 3D-аннотацию, введя URL",
+    "enterurl": "Введите URL-адрес 3D-объекта в формате glTF",
+    "enterurlOrLocalFile": "Введите URL или загрузите 3D-объект в формате glTF",
+    "formatError": "Поддерживается только формат glTF (.glb)"
   },
   "datePicker": {
     "previousMonth": "Предыдущий месяц",
@@ -479,6 +501,26 @@
       "5": "пт",
       "6": "сб"
     }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "Имя поля",
+      "fieldValue": "Значение по умолчанию",
+      "readOnly": "Только чтение",
+      "multiSelect": "Выбор из нескольких вариантов",
+      "required": "Обязательный",
+      "multiLine": "Многострочный",
+      "apply": "Применять",
+      "cancel": "Отмена",
+      "flags": "Флаги поля",
+      "options": "Параметры",
+      "radioGroups": "Радиокнопки с одинаковым именем поля будут входить в одну группу.",
+      "nameRequired": "Требуется название поля",
+      "size": "Размер",
+      "width": "Ширина",
+      "height": "Высота"
+    },
+    "apply": "Применить поля"
   },
   "digitalSignatureModal": {
     "certification": "сертификация",

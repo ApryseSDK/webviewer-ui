@@ -32,6 +32,7 @@
     "rename": "이름 바꾸기",
     "ok": "확인",
     "rotate": "회전",
+    "rotate3D": "회전",
     "rotateClockwise": "시계 방향으로",
     "rotateCounterClockwise": "시계 반대 방향으로",
     "save": "저장",
@@ -60,6 +61,9 @@
     "startFormEditing": "양식 편집 시작",
     "exitFormEditing": "양식 편집 모드 종료",
     "exit": "출구",
+    "addOption": "옵션 추가",
+    "formFieldEdit": "양식 필드 편집",
+    "viewShortCutKeysFor3D": "바로 가기 키보기",
     "markAllRead": "모두 읽은 상태로 표시"
   },
   "annotation": {
@@ -95,8 +99,15 @@
     "custom": "사용자 지정",
     "rubberStamp": "고무 도장",
     "note": "노트",
+    "textField": "텍스트 필드",
+    "signatureFormField": "서명 필드",
+    "checkBoxFormField": "체크 박스 필드",
+    "radioButtonFormField": "RadioButton 필드",
+    "listBoxFormField": "목록 상자 필드",
+    "comboBoxFormField": "콤보 박스 필드",
     "link": "링크",
-    "other": "다른"
+    "other": "다른",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "승인",
@@ -180,6 +191,8 @@
     "sortBy": "정렬 기준",
     "emptyCustomStampInput": "스탬프 텍스트는 비워 둘 수 없습니다",
     "unpostedComment": "게시되지 않은 댓글",
+    "lockedLayer": "레이어가 잠겨 있습니다.",
+    "layerVisibililtyNoChange": "레이어 가시성을 변경할 수 없습니다.",
     "untitled": "제목 없음"
   },
   "option": {
@@ -200,6 +213,7 @@
       "toolbarGroup-Insert": "끼워 넣다",
       "toolbarGroup-Measure": "법안",
       "toolbarGroup-Edit": "편집하다",
+      "toolbarGroup-Forms": "양식",
       "toolbarGroup-FillAndSign": "채우기 및 서명"
     },
     "annotationColor": {
@@ -428,7 +442,9 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    }
+    },
+    "rotate3D": "Shift + 끌기",
+    "zoom3D": "Shift + 스크롤"
   },
   "tool": {
     "pan": "이동",
@@ -443,6 +459,12 @@
     "page": "페이지",
     "enterurl": "연결할 URL을 입력하십시오",
     "enterpage": "연결하려는 페이지 번호를 선택하십시오"
+  },
+  "Model3D": {
+    "add3D": "URL을 입력하여 3D 주석 추가",
+    "enterurl": "3D 개체의 URL을 glTF 형식으로 입력하세요.",
+    "enterurlOrLocalFile": "URL을 입력하거나 glTF 형식으로 3D 개체를 업로드합니다.",
+    "formatError": "glTF (.glb) 형식 만 지원됩니다."
   },
   "datePicker": {
     "previousMonth": "지난달",
@@ -479,6 +501,26 @@
       "5": "금",
       "6": "토"
     }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "분야 명",
+      "fieldValue": "기본값",
+      "readOnly": "읽기 전용",
+      "multiSelect": "다중 선택",
+      "required": "필수",
+      "multiLine": "여러 줄",
+      "apply": "대다",
+      "cancel": "취소",
+      "flags": "필드 플래그",
+      "options": "옵션",
+      "radioGroups": "동일한 필드 이름을 가진 라디오 버튼은 동일한 그룹에 속합니다.",
+      "nameRequired": "필드 이름이 필요합니다.",
+      "size": "크기",
+      "width": "폭",
+      "height": "신장"
+    },
+    "apply": "적용 분야"
   },
   "digitalSignatureModal": {
     "certification": "인증",

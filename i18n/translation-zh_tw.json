@@ -32,6 +32,7 @@
     "rename": "改名",
     "ok": "OK",
     "rotate": "旋轉",
+    "rotate3D": "旋轉",
     "rotateClockwise": "順時針",
     "rotateCounterClockwise": "逆時針",
     "save": "儲存",
@@ -60,6 +61,9 @@
     "startFormEditing": "開始表格編輯",
     "exitFormEditing": "退出表格編輯模式",
     "exit": "出口",
+    "addOption": "新增選項",
+    "formFieldEdit": "編輯表格欄位",
+    "viewShortCutKeysFor3D": "查看快捷鍵",
     "markAllRead": "將所有內容標記為已讀"
   },
   "annotation": {
@@ -95,8 +99,15 @@
     "custom": "自訂",
     "rubberStamp": "橡皮圖章",
     "note": "注意",
+    "textField": "文本域",
+    "signatureFormField": "簽名欄",
+    "checkBoxFormField": "複選框字段",
+    "radioButtonFormField": "單選按鈕字段",
+    "listBoxFormField": "列錶框字段",
+    "comboBoxFormField": "組合框字段",
     "link": "鏈接",
-    "other": "其他"
+    "other": "其他",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -180,6 +191,8 @@
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能為空",
     "unpostedComment": "未發布評論",
+    "lockedLayer": "圖層已鎖定",
+    "layerVisibililtyNoChange": "圖層可見性無法更改",
     "untitled": "無標題"
   },
   "option": {
@@ -200,6 +213,7 @@
       "toolbarGroup-Insert": "插",
       "toolbarGroup-Measure": "測量",
       "toolbarGroup-Edit": "編輯",
+      "toolbarGroup-Forms": "形式",
       "toolbarGroup-FillAndSign": "填寫並簽名"
     },
     "annotationColor": {
@@ -428,7 +442,9 @@
       "italic": "（Ctrl I）",
       "underline": "（Ctrl U）",
       "strikeout": "（Ctrl K）"
-    }
+    },
+    "rotate3D": "Shift +拖動",
+    "zoom3D": "Shift +滾動"
   },
   "tool": {
     "pan": "移動瀏覽",
@@ -443,6 +459,12 @@
     "page": "頁",
     "enterurl": "輸入您想要鏈接的URL",
     "enterpage": "選擇您要鏈接的頁碼"
+  },
+  "Model3D": {
+    "add3D": "通過輸入URL添加3D註釋",
+    "enterurl": "輸入glTF格式的3D對象的URL",
+    "enterurlOrLocalFile": "輸入URL或以glTF格式上傳3D對象",
+    "formatError": "僅支持glTF（.glb）格式"
   },
   "datePicker": {
     "previousMonth": "前一個月",
@@ -479,6 +501,26 @@
       "5": "週五",
       "6": "週六"
     }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "欄位名稱",
+      "fieldValue": "默認值",
+      "readOnly": "只讀",
+      "multiSelect": "多選",
+      "required": "必需的",
+      "multiLine": "多行",
+      "apply": "申請",
+      "cancel": "取消",
+      "flags": "場旗",
+      "options": "選項",
+      "radioGroups": "具有相同字段名稱的單選按鈕將屬於同一分組。",
+      "nameRequired": "字段名稱為必填項",
+      "size": "尺寸",
+      "width": "寬度",
+      "height": "高度"
+    },
+    "apply": "套用欄位"
   },
   "digitalSignatureModal": {
     "certification": "認證證書",

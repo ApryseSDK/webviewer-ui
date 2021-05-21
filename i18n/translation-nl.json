@@ -32,6 +32,7 @@
     "rename": "Hernoemen",
     "ok": "OK",
     "rotate": "Roteren",
+    "rotate3D": "Draaien",
     "rotateClockwise": "Met de klok mee",
     "rotateCounterClockwise": "Tegen de klok in",
     "save": "Bewaren",
@@ -60,6 +61,9 @@
     "startFormEditing": "Begin met het bewerken van formulieren",
     "exitFormEditing": "Sluit de modus voor het bewerken van formulieren af",
     "exit": "Uitgang",
+    "addOption": "Optie toevoegen",
+    "formFieldEdit": "Formulierveld bewerken",
+    "viewShortCutKeysFor3D": "Bekijk sneltoetsen",
     "markAllRead": "Markeer alles als gelezen"
   },
   "annotation": {
@@ -95,8 +99,15 @@
     "custom": "maatwerk",
     "rubberStamp": "Rubberen stempel",
     "note": "Notitie",
+    "textField": "Tekstveld",
+    "signatureFormField": "Handtekeningveld",
+    "checkBoxFormField": "Selectievakje veld",
+    "radioButtonFormField": "RadioButton-veld",
+    "listBoxFormField": "Keuzelijstveld",
+    "comboBoxFormField": "Veld met invoervak",
     "link": "Koppeling",
-    "other": "Andere"
+    "other": "Andere",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "Goedgekeurd",
@@ -180,6 +191,8 @@
     "sortBy": "Sorteer op",
     "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn",
     "unpostedComment": "Niet-geplaatste reactie",
+    "lockedLayer": "Laag is vergrendeld",
+    "layerVisibililtyNoChange": "De zichtbaarheid van de laag kan niet worden gewijzigd",
     "untitled": "Ongetiteld"
   },
   "option": {
@@ -200,6 +213,7 @@
       "toolbarGroup-Insert": "Invoegen",
       "toolbarGroup-Measure": "Meten",
       "toolbarGroup-Edit": "Bewerk",
+      "toolbarGroup-Forms": "Formulieren",
       "toolbarGroup-FillAndSign": "Invullen en ondertekenen"
     },
     "annotationColor": {
@@ -428,7 +442,9 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    }
+    },
+    "rotate3D": "Shift + slepen",
+    "zoom3D": "Shift + Scroll"
   },
   "tool": {
     "pan": "Schuiven",
@@ -443,6 +459,12 @@
     "page": "Bladzijde",
     "enterurl": "Voer de URL in waarnaar u wilt linken",
     "enterpage": "Selecteer het paginanummer waarnaar u wilt linken"
+  },
+  "Model3D": {
+    "add3D": "Voeg een 3D-annotatie toe door een URL in te voeren",
+    "enterurl": "Voer de URL voor het 3D-object in glTF-indeling in",
+    "enterurlOrLocalFile": "Voer de URL in of upload een 3D-object in glTF-indeling",
+    "formatError": "Alleen het glTF-formaat (.glb) wordt ondersteund"
   },
   "datePicker": {
     "previousMonth": "Vorige maand",
@@ -479,6 +501,26 @@
       "5": "vr.",
       "6": "za."
     }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "Veldnaam",
+      "fieldValue": "Standaardwaarde",
+      "readOnly": "Alleen lezen",
+      "multiSelect": "Multi-Select",
+      "required": "Verplicht",
+      "multiLine": "Multiline",
+      "apply": "Van toepassing zijn",
+      "cancel": "annuleren",
+      "flags": "Veldvlaggen",
+      "options": "Opties",
+      "radioGroups": "Keuzerondjes met dezelfde veldnaam horen in dezelfde groep.",
+      "nameRequired": "Veldnaam is verplicht",
+      "size": "Grootte",
+      "width": "Breedte",
+      "height": "Hoogte"
+    },
+    "apply": "Velden toepassen"
   },
   "digitalSignatureModal": {
     "certification": "certificering",

@@ -32,6 +32,7 @@
     "rename": "改名",
     "ok": "好的",
     "rotate": "旋转",
+    "rotate3D": "旋转",
     "rotateClockwise": "顺时针",
     "rotateCounterClockwise": "逆时针",
     "save": "保存",
@@ -60,6 +61,9 @@
     "startFormEditing": "开始表格编辑",
     "exitFormEditing": "退出表格编辑模式",
     "exit": "出口",
+    "addOption": "新增选项",
+    "formFieldEdit": "编辑表格栏位",
+    "viewShortCutKeysFor3D": "查看快捷键",
     "markAllRead": "将所有内容标记为已读"
   },
   "annotation": {
@@ -95,8 +99,15 @@
     "custom": "自定义",
     "rubberStamp": "橡皮图章",
     "note": "注意",
+    "textField": "文本域",
+    "signatureFormField": "签名栏",
+    "checkBoxFormField": "复选框字段",
+    "radioButtonFormField": "单选按钮字段",
+    "listBoxFormField": "列表框字段",
+    "comboBoxFormField": "组合框字段",
     "link": "链接",
-    "other": "其他"
+    "other": "其他",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -180,6 +191,8 @@
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能为空",
     "unpostedComment": "未发布评论",
+    "lockedLayer": "图层已锁定",
+    "layerVisibililtyNoChange": "图层可见性无法更改",
     "untitled": "无标题"
   },
   "option": {
@@ -200,6 +213,7 @@
       "toolbarGroup-Insert": "插",
       "toolbarGroup-Measure": "测量",
       "toolbarGroup-Edit": "编辑",
+      "toolbarGroup-Forms": "形式",
       "toolbarGroup-FillAndSign": "填写并签名"
     },
     "annotationColor": {
@@ -428,7 +442,9 @@
       "italic": "（Ctrl I）",
       "underline": "（Ctrl U）",
       "strikeout": "（Ctrl K）"
-    }
+    },
+    "rotate3D": "Shift +拖动",
+    "zoom3D": "Shift +滚动"
   },
   "tool": {
     "pan": "移动",
@@ -443,6 +459,12 @@
     "page": "页",
     "enterurl": "输入您想要链接的URL",
     "enterpage": "选择您要链接的页码"
+  },
+  "Model3D": {
+    "add3D": "通过输入URL添加3D注释",
+    "enterurl": "输入glTF格式的3D对象的URL",
+    "enterurlOrLocalFile": "输入URL或以glTF格式上传3D对象",
+    "formatError": "仅支持glTF（.glb）格式"
   },
   "datePicker": {
     "previousMonth": "前一个月",
@@ -479,6 +501,26 @@
       "5": "周五",
       "6": "周六"
     }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "栏位名称",
+      "fieldValue": "默认值",
+      "readOnly": "只读",
+      "multiSelect": "多选",
+      "required": "必需的",
+      "multiLine": "多行",
+      "apply": "申请",
+      "cancel": "取消",
+      "flags": "场旗",
+      "options": "选项",
+      "radioGroups": "具有相同字段名称的单选按钮将属于同一分组。",
+      "nameRequired": "字段名称为必填项",
+      "size": "尺寸",
+      "width": "宽度",
+      "height": "高度"
+    },
+    "apply": "套用栏位"
   },
   "digitalSignatureModal": {
     "certification": "认证证书",

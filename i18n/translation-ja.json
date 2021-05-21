@@ -32,6 +32,7 @@
     "rename": "名前を変更する",
     "ok": "OK",
     "rotate": "ページの方向",
+    "rotate3D": "回転する",
     "rotateClockwise": "右90°回転",
     "rotateCounterClockwise": "左90°回転",
     "save": "保存",
@@ -60,6 +61,9 @@
     "startFormEditing": "フォームエディタを開始",
     "exitFormEditing": "フォームエディタモードを終了する",
     "exit": "終了",
+    "addOption": "オプションを追加",
+    "formFieldEdit": "フォームフィールドの編集",
+    "viewShortCutKeysFor3D": "ショートカットキーを表示する",
     "markAllRead": "すべて既読にする"
   },
   "annotation": {
@@ -95,8 +99,15 @@
     "custom": "カスタム",
     "rubberStamp": "ゴム印",
     "note": "注釈",
+    "textField": "テキストフィールド",
+    "signatureFormField": "署名フィールド",
+    "checkBoxFormField": "チェックボックスフィールド",
+    "radioButtonFormField": "RadioButtonフィールド",
+    "listBoxFormField": "リストボックスフィールド",
+    "comboBoxFormField": "コンボボックスフィールド",
     "link": "リンク",
-    "other": "その他"
+    "other": "その他",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "承認済",
@@ -180,6 +191,8 @@
     "sortBy": "並び替え",
     "emptyCustomStampInput": "スタンプテキストを空にすることはできません",
     "unpostedComment": "未投稿コメント",
+    "lockedLayer": "レイヤーがロックされています",
+    "layerVisibililtyNoChange": "レイヤーの可視性は変更できません",
     "untitled": "無題"
   },
   "option": {
@@ -200,6 +213,7 @@
       "toolbarGroup-Insert": "挿入",
       "toolbarGroup-Measure": "測定",
       "toolbarGroup-Edit": "編集",
+      "toolbarGroup-Forms": "フォーム",
       "toolbarGroup-FillAndSign": "記入して署名する"
     },
     "annotationColor": {
@@ -428,7 +442,9 @@
       "italic": "（Ctrl I）",
       "underline": "（Ctrl U）",
       "strikeout": "（Ctrl K）"
-    }
+    },
+    "rotate3D": "Shift +ドラッグ",
+    "zoom3D": "Shift +スクロール"
   },
   "tool": {
     "pan": "パン",
@@ -443,6 +459,12 @@
     "page": "ページ",
     "enterurl": "リンク先URLを入力してください",
     "enterpage": "リンク先のページ番号を選択してください"
+  },
+  "Model3D": {
+    "add3D": "URLを入力して3D注釈を追加する",
+    "enterurl": "3DオブジェクトのURLをglTF形式で入力します",
+    "enterurlOrLocalFile": "URLを入力するか、3DオブジェクトをglTF形式でアップロードします",
+    "formatError": "glTF（.glb）形式のみがサポートされています"
   },
   "datePicker": {
     "previousMonth": "前月",
@@ -479,6 +501,26 @@
       "5": "金",
       "6": "土"
     }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "フィールド名",
+      "fieldValue": "デフォルト値",
+      "readOnly": "読み取り専用",
+      "multiSelect": "複数選択",
+      "required": "必須",
+      "multiLine": "マルチライン",
+      "apply": "適用する",
+      "cancel": "キャンセル",
+      "flags": "フィールドフラグ",
+      "options": "オプション",
+      "radioGroups": "同じフィールド名のラジオボタンは同じグループに属します。",
+      "nameRequired": "フィールド名は必須です",
+      "size": "サイズ",
+      "width": "幅",
+      "height": "高さ"
+    },
+    "apply": "フィールドを適用する"
   },
   "digitalSignatureModal": {
     "certification": "認証",

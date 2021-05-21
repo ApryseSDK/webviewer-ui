@@ -431,6 +431,14 @@ const map = {
     toolNames: ['AnnotationCreateFileAttachment'],
     annotationCheck: annotation => annotation instanceof window.Annotations.FileAttachmentAnnotation,
   },
+  threeDAnnotation: {
+    icon: 'icon-tool-model3d',
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: ['AnnotationCreateThreeD'],
+    annotationCheck: annotation => annotation instanceof window.Annotations.Model3DAnnotation,
+  },
   textField: {
     icon: 'icon-form-field-text',
     iconColor: 'TextColor',

@@ -32,6 +32,7 @@
     "rename": "Rebautizar",
     "ok": "OK",
     "rotate": "Girar",
+    "rotate3D": "Girar",
     "rotateClockwise": "Sentido horario",
     "rotateCounterClockwise": "Sentido antihorario",
     "save": "Guardar",
@@ -60,6 +61,9 @@
     "startFormEditing": "Iniciar la edición del formulario",
     "exitFormEditing": "Salir del modo de edición de formularios",
     "exit": "Salida",
+    "addOption": "Agregar opción",
+    "formFieldEdit": "Editar campo de formulario",
+    "viewShortCutKeysFor3D": "Ver teclas de acceso directo",
     "markAllRead": "marcar todo como leido"
   },
   "annotation": {
@@ -95,8 +99,15 @@
     "custom": "Personalizado",
     "rubberStamp": "Sello de goma",
     "note": "Nota",
+    "textField": "Campo de texto",
+    "signatureFormField": "Campo de firma",
+    "checkBoxFormField": "Campo de casilla de verificación",
+    "radioButtonFormField": "RadioButton Field",
+    "listBoxFormField": "Campo de cuadro de lista",
+    "comboBoxFormField": "Campo de cuadro combinado",
     "link": "Enlace",
-    "other": "Otro"
+    "other": "Otro",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "Aprobada",
@@ -180,6 +191,8 @@
     "sortBy": "Ordenar por",
     "emptyCustomStampInput": "El texto del sello no puede estar vacío",
     "unpostedComment": "Comentario no publicado",
+    "lockedLayer": "La capa está bloqueada",
+    "layerVisibililtyNoChange": "La visibilidad de la capa no se puede cambiar",
     "untitled": "Intitulado"
   },
   "option": {
@@ -200,6 +213,7 @@
       "toolbarGroup-Insert": "Insertar",
       "toolbarGroup-Measure": "Medida",
       "toolbarGroup-Edit": "Editar",
+      "toolbarGroup-Forms": "Formularios",
       "toolbarGroup-FillAndSign": "Llenar y firmar"
     },
     "annotationColor": {
@@ -428,7 +442,9 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    }
+    },
+    "rotate3D": "Mayús + Arrastrar",
+    "zoom3D": "Mayús + Desplazamiento"
   },
   "tool": {
     "pan": "Panorámica",
@@ -443,6 +459,12 @@
     "page": "Página",
     "enterurl": "Ingrese la URL a la que desea vincular",
     "enterpage": "Seleccione el número de página que desea vincular"
+  },
+  "Model3D": {
+    "add3D": "Agregue una anotación 3D ingresando URL",
+    "enterurl": "Ingrese la URL del objeto 3D en formato glTF",
+    "enterurlOrLocalFile": "Ingrese la URL o cargue un objeto 3D en formato glTF",
+    "formatError": "Solo se admite el formato glTF (.glb)"
   },
   "datePicker": {
     "previousMonth": "Mes anterior",
@@ -479,6 +501,26 @@
       "5": "vie.",
       "6": "sáb."
     }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "Nombre del campo",
+      "fieldValue": "Valor por defecto",
+      "readOnly": "Solo lectura",
+      "multiSelect": "Selección múltiple",
+      "required": "Requerido",
+      "multiLine": "Multilínea",
+      "apply": "Solicitar",
+      "cancel": "Cancelar",
+      "flags": "Banderas de campo",
+      "options": "Opciones",
+      "radioGroups": "Los botones de opción con el mismo nombre de campo pertenecerán al mismo grupo.",
+      "nameRequired": "El nombre del campo es obligatorio",
+      "size": "Tamaño",
+      "width": "Ancho",
+      "height": "Altura"
+    },
+    "apply": "Aplicar campos"
   },
   "digitalSignatureModal": {
     "certification": "Certificación",

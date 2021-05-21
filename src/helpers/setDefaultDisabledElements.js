@@ -113,6 +113,7 @@ export default store => {
         'readerPageTransitionButton',
         'editTextButton',
         'mathSymbolsButton',
+        'threeDToolGroupButton',
         // disable it by default as PDFTron server side SDK currently can't handle this
         'richTextPopup'
       ],
