@@ -1,6 +1,6 @@
 /**
  * Programmatically print the document without opening a modal with the print options provided. Not supported by legacy-ui
- * @method WebViewerInstance#printInBackground
+ * @method UI.printInBackground
  * @param {object} [options] Options for the printing.
  * @param {Array.<number>} [options.pagesToPrint] Optionally pass in the pages you want to print. By default, all pages will be printed.
  * @param {boolean} [options.includeAnnotations=false] If true, will print the documents with the annotations
@@ -9,14 +9,14 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var docViewer = instance.docViewer;
+    const docViewer = instance.Core.docViewer;
 
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', function() {
-      instance.printInBackground({
+      instance.UI.printInBackground({
         includeComments:true,
         includeAnnotations: true,
-        onProgress: function(pageNumber, img) {},
+        onProgress: function(pageNumber, htmlElement) {},
       });
     });
   });

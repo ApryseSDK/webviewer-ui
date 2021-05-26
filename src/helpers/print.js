@@ -112,15 +112,21 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnotations,
     const printableAnnotationNotes = getPrintableAnnotationNotes(pageNumber);
     createdPages.push(creatingImage(pageNumber, includeAnnotations, isPrintCurrentView));
 
+    if (onProgress) {
+      createdPages[createdPages.length - 1].then(htmlElement => {
+        onProgress(pageNumber, htmlElement);
+      });
+    }
+
     if (includeComments && printableAnnotationNotes) {
       const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotationNotes);
       createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat, language));
-    }
 
-    if (onProgress) {
-      createdPages[createdPages.length - 1].then(img => {
-        onProgress(pageNumber, img);
-      });
+      if (onProgress) {
+        createdPages[createdPages.length - 1].then(htmlElement => {
+          onProgress(pageNumber, htmlElement);
+        });
+      }
     }
   });
 
