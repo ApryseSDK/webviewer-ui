@@ -266,8 +266,11 @@ const ContentArea = ({
           textareaRef.current.focus();
         }
       }, 0);
-      const textLength = textareaRef.current.value.length;
-      textareaRef.current.setSelectionRange(textLength, textLength);
+
+      if (textareaRef && textareaRef.current) {
+        const textLength = textareaRef.current.value.length;
+        textareaRef.current.setSelectionRange(textLength, textLength);
+      }
     }
   }, [isNotesPanelOpen]);
 

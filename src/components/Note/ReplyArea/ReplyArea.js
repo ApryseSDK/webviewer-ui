@@ -52,9 +52,11 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     if (
       isNoteEditingTriggeredByAnnotationPopup &&
       isSelected &&
-      !isContentEditable
+      !isContentEditable && 
+      textareaRef &&
+      textareaRef.current
     ) {
-      textareaRef.current?.focus();
+      textareaRef.current.focus();
     }
   }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
 
@@ -71,9 +73,10 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         }
       }, 0);
     }
-
-    const textLength = textareaRef.current.value.length;
-    textareaRef.current.setSelectionRange(textLength, textLength);
+    if (textareaRef && textareaRef.current) {
+      const textLength = textareaRef.current.value.length;
+      textareaRef.current.setSelectionRange(textLength, textLength);
+    }
   }, []);
 
   const postReply = e => {
