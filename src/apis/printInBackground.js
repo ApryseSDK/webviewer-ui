@@ -16,7 +16,7 @@ WebViewer(...)
       instance.printInBackground({
         includeComments:true,
         includeAnnotations: true,
-        onProgress: function(pageNumber, img) {},
+        onProgress: function(pageNumber, htmlElement) {},
       });
     });
   });
