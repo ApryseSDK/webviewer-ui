@@ -67,7 +67,7 @@ class Icon extends React.PureComponent {
         svgElement = svgElement.replace('fill="none"', `fill="#${fillColor.slice(2)}"`);
       }
     }
-
+    
     return (
       <div
         ref={this.icon}

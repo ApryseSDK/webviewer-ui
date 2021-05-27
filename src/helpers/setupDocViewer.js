@@ -18,6 +18,9 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateFreeHand2 = new window.Tools.FreeHandCreateTool(docViewer, ToolNames.FREEHAND2);
   toolModeMap.AnnotationCreateFreeHand3 = new window.Tools.FreeHandCreateTool(docViewer, ToolNames.FREEHAND3);
   toolModeMap.AnnotationCreateFreeHand4 = new window.Tools.FreeHandCreateTool(docViewer, ToolNames.FREEHAND4);
+  toolModeMap.AnnotationCreateFreeHandHighlight2 = new window.Tools.FreeHandHighlightCreateTool(docViewer, ToolNames.FREEHAND_HIGHLIGHT2);
+  toolModeMap.AnnotationCreateFreeHandHighlight3 = new window.Tools.FreeHandHighlightCreateTool(docViewer, ToolNames.FREEHAND_HIGHLIGHT3);
+  toolModeMap.AnnotationCreateFreeHandHighlight4 = new window.Tools.FreeHandHighlightCreateTool(docViewer, ToolNames.FREEHAND_HIGHLIGHT4);
   toolModeMap.AnnotationCreateFreeText2 = new window.Tools.FreeTextCreateTool(docViewer, ToolNames.FREETEXT2);
   toolModeMap.AnnotationCreateFreeText3 = new window.Tools.FreeTextCreateTool(docViewer, ToolNames.FREETEXT3);
   toolModeMap.AnnotationCreateFreeText4 = new window.Tools.FreeTextCreateTool(docViewer, ToolNames.FREETEXT4);

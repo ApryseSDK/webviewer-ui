@@ -126,6 +126,12 @@ const ContextMenuPopup = () => {
           onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHand')}
         />
         <ActionButton
+          dataElement="freeHandHighlightToolButton"
+          title="annotation.freeHandHighlight"
+          img="icon-tool-pen-highlight"
+          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHandHighlight')}
+        />
+        <ActionButton
           dataElement="freeTextToolButton"
           title="annotation.freetext"
           img="icon-tool-text-free-text"

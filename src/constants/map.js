@@ -33,6 +33,20 @@ const map = {
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.FreeHandAnnotation,
   },
+  freeHandHighlight: {
+    icon: 'icon-tool-pen-highlight',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: [
+      'AnnotationCreateFreeHandHighlight',
+      'AnnotationCreateFreeHandHighlight2',
+      'AnnotationCreateFreeHandHighlight3',
+      'AnnotationCreateFreeHandHighlight4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.FreeHandAnnotation,
+  },
   freeText: {
     icon: 'icon-tool-text-free-text',
     iconColor: 'TextColor',
