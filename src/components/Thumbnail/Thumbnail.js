@@ -96,7 +96,7 @@ const Thumbnail = ({
       const didPageChange = contentChanged.some(changedPage => currentPage === changedPage);
       const didPageMove = Object.keys(moved).some(movedPage => currentPage === parseInt(movedPage));
       const isPageRemoved = removed.includes(currentPage);
-      const newPageCount = core.getTotalPages() - removed.length;
+      const newPageCount = core.getTotalPages();
 
       if (removed.length > 0 && index + 1 > newPageCount) {
         return;
