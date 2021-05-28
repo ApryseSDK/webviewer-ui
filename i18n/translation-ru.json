@@ -267,15 +267,11 @@
       "status": "Статус"
     },
     "state": {
-      "accepted": "Принято",
-      "rejected": "Отклонено",
-      "completed": "Завершенно",
+      "accepted": "Первичное",
+      "rejected": "Повторное",
+      "completed": "Выполнено",
       "cancelled": "Отменено",
-      "set": "Поставить статус:",
-      "setBy": "статус поставлен",
-      "none": "Пустой",
-      "marked": "отмечен",
-      "unmarked": "немаркированный"
+      "none": "В работе"
     },
     "measurementOverlay": {
       "scale": "Масштаб",
