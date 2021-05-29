@@ -113,8 +113,8 @@ if (window.CanvasRenderingContext2D) {
   const { preloadWorker } = state.advanced;
 
   function initTransports() {
-    const { PDF, OFFICE, ALL } = workerTypes;
-    if (preloadWorker === PDF || preloadWorker === ALL) {
+    const { PDF, OFFICE, LEGACY_OFFICE, ALL } = workerTypes;
+    if (preloadWorker.includes(PDF) || preloadWorker === ALL) {
       getBackendPromise(getHashParams('pdf', 'auto')).then(pdfType => {
         window.CoreControls.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
@@ -124,9 +124,19 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker === OFFICE || preloadWorker === ALL) {
+    if (preloadWorker.includes(OFFICE) || preloadWorker === ALL) {
       getBackendPromise(getHashParams('office', 'auto')).then(officeType => {
         window.CoreControls.initOfficeWorkerTransports(officeType, {
+          workerLoadingProgress: percent => {
+            store.dispatch(actions.setLoadingProgress(percent));
+          },
+        }, window.sampleL);
+      });
+    }
+
+    if (preloadWorker.includes(LEGACY_OFFICE) || preloadWorker === ALL) {
+      getBackendPromise(getHashParams('legacyOffice', 'auto')).then(officeType => {
+        window.CoreControls.initLegacyOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
@@ -148,7 +158,7 @@ if (window.CanvasRenderingContext2D) {
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     const docViewer = new window.CoreControls.DocumentViewer();
 
-    window.docViewer = docViewer;
+    window.documentViewer = docViewer;
     if (getHashParams('enableViewStateAnnotations', false)) {
       const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);
