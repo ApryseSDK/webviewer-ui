@@ -15,8 +15,10 @@ import disableElement from './disableElement';
 import disableElements from './disableElements';
 import disableFeatures from './disableFeatures';
 import disableFilePicker from './disableFilePicker';
+import disableHighContrastMode from './disableHighContrastMode';
 import disableLocalStorage from './disableLocalStorage';
 import disableMeasurement from './disableMeasurement';
+import disableNativeScrolling from './disableNativeScrolling';
 import disableNotesPanel from './disableNotesPanel';
 import disablePrint from './disablePrint';
 import disableRedaction from './disableRedaction';
@@ -24,16 +26,19 @@ import disableTextSelection from './disableTextSelection';
 import disableTool from './disableTool';
 import disableTools from './disableTools';
 import disableTouchScrollLock from './disableTouchScrollLock';
+import displayErrorMessage from './displayErrorMessage';
 import downloadPdf from './downloadPdf';
 import enableAllElements from './enableAllElements';
 import enableAnnotations from './enableAnnotations';
 import enableDownload from './enableDownload';
 import enableElement from './enableElement';
 import enableElements from './enableElements';
+import enableHighContrastMode from './enableHighContrastMode';
 import enableFeatures from './enableFeatures';
 import enableFilePicker from './enableFilePicker';
 import enableLocalStorage from './enableLocalStorage';
 import enableMeasurement from './enableMeasurement';
+import enableNativeScrolling from './enableNativeScrolling';
 import enableNotesPanel from './enableNotesPanel';
 import enablePrint from './enablePrint';
 import enableRedaction from './enableRedaction';
@@ -66,6 +71,7 @@ import hotkeys from './hotkeys';
 import isAdminUser from './isAdminUser';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
+import isHighContrastModeEnabled from './isHighContrastModeEnabled';
 import isMobileDevice from './isMobileDevice';
 import isReadOnly from './isReadOnly';
 import isToolDisabled from './isToolDisabled';
@@ -110,9 +116,7 @@ import setPrintedNoteDateFormat from './setPrintedNoteDateFormat';
 import setNotesPanelSort from './setNotesPanelSort';
 import setPageLabels from './setPageLabels';
 import setPrintQuality from './setPrintQuality';
-import setReadOnly from './setReadOnly';
 import setSelectedTab from './setSelectedTab';
-import setShowSideWindow from './setShowSideWindow';
 import setSideWindowVisibility from './setSideWindowVisibility';
 import setSortNotesBy from './setSortNotesBy';
 import setSortStrategy from './setSortStrategy';
@@ -148,12 +152,11 @@ import unselectThumbnailPages from './unselectThumbnailPages';
 import setSearchResults from './setSearchResults';
 import setActiveResult from './setActiveResult';
 import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
-import overrideSearchExecution from "./overrideSearchExecution";
+import overrideSearchExecution from './overrideSearchExecution';
 import reactElements from './reactElements';
-import {
-  addTrustedCertificates,
-} from './verificationOptions';
+import { addTrustedCertificates } from './verificationOptions';
 import toggleReaderMode from './toggleReaderMode';
+import toggleElementVisibility from './toggleElementVisibility';
 import setAnnotationReadState from './setAnnotationReadState';
 import getAnnotationReadState from './getAnnotationReadState';
 import enableClearSearchOnPanelClose from './enableClearSearchOnPanelClose';
@@ -163,12 +166,12 @@ import enableFadePageNavigationComponent from './enableFadePageNavigationCompone
 
 /**
  * Triggered when the UI theme is changed
- * @name WebViewerInstance#themeChanged
+ * @name UI.themeChanged
  * @event
  * @example
  // Listening to this event
   WebViewer(...).then(function(instance) {
-    instance.iframeWindow.addEventListener('themeChanged', e => {
+    instance.UI.iframeWindow.addEventListener('themeChanged', e => {
       const theme = e.detail;
       console.log(theme);
     })
@@ -177,12 +180,12 @@ import enableFadePageNavigationComponent from './enableFadePageNavigationCompone
 
 /**
  * Triggered when the panels are resized
- * @name WebViewerInstance#panelResized
+ * @name UI.panelResized
  * @event
  * @example
  // Listening to this event
   WebViewer(...).then(function(instance) {
-    instance.iframeWindow.addEventListener('panelResized', e => {
+    instance.UI.iframeWindow.addEventListener('panelResized', e => {
       const { element, width } = e.detail;
       console.log(element, width);
     })
@@ -191,12 +194,12 @@ import enableFadePageNavigationComponent from './enableFadePageNavigationCompone
 
 /**
  * Triggered when the annotation filter is changed. Returns empty arrays if the filter is cleared.
- * @name WebViewerInstance#annotationFilterChanged
+ * @name UI.annotationFilterChanged
  * @event
  * @example
  // Listening to this event
   WebViewer(...).then(function(instance) {
-    instance.iframeWindow.addEventListener('annotationFilterChanged', e => {
+    instance.UI.iframeWindow.addEventListener('annotationFilterChanged', e => {
       const { types, authors, colors } = e.detail;
       console.log(types, authors, colors);
     })
@@ -204,8 +207,17 @@ import enableFadePageNavigationComponent from './enableFadePageNavigationCompone
  */
 
 export default store => {
-  window.readerControl = {
-    docViewer: window.docViewer,
+  const CORE_NAMESPACE = 'Core';
+  const UI_NAMESPACE = 'UI';
+  const objForWebViewerCore = {
+    Tools: window.Tools,
+    Annotations: window.Annotations,
+    CoreControls: window.CoreControls,
+    PartRetrievers: window.CoreControls.PartRetrievers,
+    Actions: window.Actions,
+    PDFNet: window.PDFNet,
+  };
+  const objForWebViewerUI = {
     FitMode,
     LayoutMode,
     Feature,
@@ -219,6 +231,8 @@ export default store => {
     disableFeatures: disableFeatures(store),
     disableTools: disableTools(store),
     disableReplyForAnnotations: disableReplyForAnnotations(store),
+    displayErrorMessage: displayErrorMessage(store),
+    disableHighContrastMode: disableHighContrastMode(store),
     downloadPdf: downloadPdf(store),
     enableElements: enableElements(store),
     enableFeatures: enableFeatures(store),
@@ -231,10 +245,11 @@ export default store => {
     getMaxZoomLevel,
     getMinZoomLevel,
     hotkeys,
+    hideOutlineControl: hideOutlineControl(store),
     isElementDisabled: isElementDisabled(store),
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),
-    hideOutlineControl: hideOutlineControl(store),
+    isHighContrastModeEnabled: isHighContrastModeEnabled(store),
     loadDocument: loadDocument(store),
     settingsMenuOverlay: settingsMenuOverlay(store),
     openElements: openElements(store),
@@ -249,6 +264,7 @@ export default store => {
     setActiveHeaderGroup: setActiveHeaderGroup(store),
     setActiveLeftPanel: setActiveLeftPanel(store),
     setCustomModal: setCustomModal(store),
+    showOutlineControl: showOutlineControl(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
     exportBookmarks: exportBookmarks(store),
@@ -277,9 +293,8 @@ export default store => {
     setZoomList: setZoomList(store),
     setSearchResults,
     setActiveResult,
-    showErrorMessage: showErrorMessage(store),
     textPopup: textPopup(store),
-    toggleElement: toggleElement(store),
+    toggleElementVisibility: toggleElementVisibility(store),
     toggleFullScreen,
     unregisterTool: unregisterTool(store),
     updateTool: updateTool(store),
@@ -293,13 +308,11 @@ export default store => {
     getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
     setDisplayedSignaturesFilter: setDisplayedSignaturesFilterFunction(store),
     selectThumbnailPages: selectThumbnailPages(store),
-    showOutlineControl: showOutlineControl(store),
     unselectThumbnailPages: unselectThumbnailPages(store),
     setAnnotationContentOverlayHandler: setAnnotationContentOverlayHandler(store),
-    verificationOptions: {
+    VerificationOptions: {
       addTrustedCertificates: addTrustedCertificates(store),
     },
-
     // undocumented and deprecated, to be removed in 7.0
     disableAnnotations: disableAnnotations(store),
     disableDownload: disableDownload(store),
@@ -316,6 +329,7 @@ export default store => {
     enableDownload: enableDownload(store),
     enableElement: enableElement(store),
     enableFilePicker: enableFilePicker(store),
+    enableHighContrastMode: enableHighContrastMode(store),
     enableLocalStorage,
     enableMeasurement: enableMeasurement(store),
     enableNotesPanel: enableNotesPanel(store),
@@ -324,18 +338,15 @@ export default store => {
     enableTextSelection: enableTextSelection(store),
     enableTool: enableTool(store),
     enableTouchScrollLock,
+    enableNativeScrolling,
     getAnnotationUser,
     getCurrentPageNumber: getCurrentPageNumber(store),
     getPageCount: getPageCount(store),
     getShowSideWindow: getShowSideWindow(store),
     getSideWindowVisibility: getSideWindowVisibility(store),
     setNotesPanelSort: setNotesPanelSort(store),
-    setShowSideWindow: setShowSideWindow(store),
-    setSideWindowVisibility: setSideWindowVisibility(store),
     setActivePalette: setActivePalette(store),
     setColorPalette: setColorPalette(store),
-    setHighContrastMode: setHighContrastMode(store),
-    getIsHighContrastMode: getIsHighContrastMode(store),
     disableTool: disableTool(store),
     enableAllElements: enableAllElements(store),
     goToFirstPage,
@@ -352,13 +363,19 @@ export default store => {
     setAdminUser,
     setAnnotationUser,
     setCurrentPageNumber,
-    setReadOnly,
     setSortNotesBy: setSortNotesBy(store),
     getCustomData,
     toggleReaderMode: toggleReaderMode(store),
 
-    // undocumented
+    //deprecated, to be removed in 8.0
     useNativeScroll,
+    showErrorMessage: showErrorMessage(store),
+    toggleElement: toggleElement(store),
+    setSideWindowVisibility: setSideWindowVisibility(store),
+    setHighContrastMode: setHighContrastMode(store),
+    getIsHighContrastMode: getIsHighContrastMode(store),
+
+    // undocumented
     loadedFromServer: false,
     serverFailed: false,
     i18n: i18next,
@@ -369,9 +386,29 @@ export default store => {
     reactElements,
     enableClearSearchOnPanelClose: enableClearSearchOnPanelClose(store),
     disableClearSearchOnPanelClose: disableClearSearchOnPanelClose(store),
+    disableNativeScrolling,
     setAnnotationReadState: setAnnotationReadState(store),
     getAnnotationReadState: getAnnotationReadState(store),
     disableFadePageNavigationComponent: disableFadePageNavigationComponent(store),
     enableFadePageNavigationComponent: enableFadePageNavigationComponent(store),
+  };
+
+  window.instance = {
+    // keys needed for webviewer.js
+    CORE_NAMESPACE_KEY: CORE_NAMESPACE,
+    UI_NAMESPACE_KEY: UI_NAMESPACE,
+    [CORE_NAMESPACE]: {
+      ...objForWebViewerCore,
+      ...window.CoreControls,
+      documentViewer: window.documentViewer,
+      annotationManager: window.documentViewer.getAnnotationManager(),
+    },
+    [UI_NAMESPACE]: objForWebViewerUI,
+
+    // keep them here for backwards compatibililty. should remove them in 9.0
+    ...objForWebViewerCore,
+    ...objForWebViewerUI,
+    docViewer: window.documentViewer,
+    annotManager: window.documentViewer.getAnnotationManager(),
   };
 };
