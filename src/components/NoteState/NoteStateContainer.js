@@ -24,7 +24,7 @@ function createStateAnnotation(t, annotation, state) {
   stateAnnotation['StateModel'] = state === 'Marked' || state === 'Unmarked' ? 'Marked' : 'Review';
   stateAnnotation['Hidden'] = true;
 
-  const displayAuthor = core.getDisplayAuthor(stateAnnotation);
+  const displayAuthor = core.getDisplayAuthor(stateAnnotation['Author']);
   const stateMessage = t(`option.state.${state.toLowerCase()}`);
   const contents = `${stateMessage} ${t('option.state.setBy')} ${displayAuthor}`;
   stateAnnotation.setContents(contents);
@@ -49,7 +49,7 @@ function NoteStateContainer(props) {
   }, [annotation]);
 
   return (
-    <NoteState handleStateChange={handleStateChange} {...props}/>
+    <NoteState handleStateChange={handleStateChange} {...props} />
   );
 }
 

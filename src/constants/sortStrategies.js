@@ -118,13 +118,13 @@ const sortStrategies = {
   author: {
     getSortedNotes: notes =>
       notes.sort((a, b) => {
-        const authorA = core.getDisplayAuthor(a)?.toUpperCase();
-        const authorB = core.getDisplayAuthor(b)?.toUpperCase();
+        const authorA = core.getDisplayAuthor(a['Author'])?.toUpperCase();
+        const authorB = core.getDisplayAuthor(b['Author'])?.toUpperCase();
         return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
       }),
-    shouldRenderSeparator: (prevNote, currNote) => core.getDisplayAuthor(prevNote) !== core.getDisplayAuthor(currNote),
+    shouldRenderSeparator: (prevNote, currNote) => core.getDisplayAuthor(prevNote['Author']) !== core.getDisplayAuthor(currNote['Author']),
     getSeparatorContent: (prevNote, currNote) => {
-      return core.getDisplayAuthor(currNote);
+      return core.getDisplayAuthor(currNote['Author']);
     },
   },
   type: {

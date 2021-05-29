@@ -73,7 +73,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
 
   const renderAuthorName = useCallback(
     annotation => {
-      const name = core.getDisplayAuthor(annotation);
+      const name = core.getDisplayAuthor(annotation['Author']);
 
       return name ? (
         <span

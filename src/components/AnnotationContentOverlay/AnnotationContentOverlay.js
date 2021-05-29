@@ -102,7 +102,7 @@ const AnnotationContentOverlay = () => {
       style={{ ...overlayPosition }}
       ref={overlayRef}
     >
-      <div className="author">{core.getDisplayAuthor(annotation)}</div>
+      <div className="author">{core.getDisplayAuthor(annotation['Author'])}</div>
       <div className="contents">
         {contents.length > MAX_CHARACTERS
           ? `${contents.slice(0, MAX_CHARACTERS)}...`

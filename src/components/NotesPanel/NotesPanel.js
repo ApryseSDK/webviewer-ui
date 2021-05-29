@@ -96,8 +96,8 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     };
 
     const toggleFilterStyle = (e) => {
-      const { types, authors, colors } = e.detail;
-      if (types.length > 0 || authors.length > 0 || colors.length > 0) {
+      const { types, authors, colors, statuses } = e.detail;
+      if (types.length > 0 || authors.length > 0 || colors.length > 0 || statuses.length > 0) {
         setFilterEnabled(true);
       } else {
         setFilterEnabled(false);
@@ -154,7 +154,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
 
   const filterNotesWithSearch = note => {
     const content = note.getContents();
-    const authorName = core.getDisplayAuthor(note);
+    const authorName = core.getDisplayAuthor(note['Author']);
 
     // didn't use regex here because the search input may form an invalid regex, e.g. *
     return (
@@ -183,7 +183,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   };
 
   const notesToRender = getSortStrategies()
-    [sortStrategy].getSortedNotes(notes)
+  [sortStrategy].getSortedNotes(notes)
     .filter(filterNote);
 
   useEffect(() => {

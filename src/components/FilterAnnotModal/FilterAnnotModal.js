@@ -30,10 +30,12 @@ const FilterAnnotModal = () => {
   const [authors, setAuthors] = useState([]);
   const [annotTypes, setAnnotTypes] = useState([]);
   const [colors, setColorTypes] = useState([]);
+  const [statuses, setStatusTypes] = useState([]);
 
   const [authorFilter, setAuthorFilter] = useState([]);
   const [typesFilter, setTypesFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
+  const [statusFilter, setStatusFilter] = useState([]);
 
   const filterApply = () => {
     dispatch(
@@ -41,11 +43,12 @@ const FilterAnnotModal = () => {
         let type = true;
         let author = true;
         let color = true;
+        let status = true;
         if (typesFilter.length > 0) {
           type = typesFilter.includes(getAnnotationClass(annot));
         }
         if (authorFilter.length > 0) {
-          author = authorFilter.includes(core.getDisplayAuthor(annot));
+          author = authorFilter.includes(core.getDisplayAuthor(annot['Author']));
         }
         if (colorFilter.length > 0) {
           if (annot.Color) {
@@ -55,10 +58,17 @@ const FilterAnnotModal = () => {
             color = colorFilter.includes('#485056');
           }
         }
-        return type && author && color;
+        if (statusFilter.length > 0) {
+          if (annot.getStatus()) {
+            status = statusFilter.includes(annot.getStatus());
+          } else {
+            status = statusFilter.includes('None');
+          }
+        }
+        return type && author && color && status;
       }),
     );
-    fireEvent('annotationFilterChanged', { types: typesFilter, authors: authorFilter, colors: colorFilter });
+    fireEvent('annotationFilterChanged', { types: typesFilter, authors: authorFilter, colors: colorFilter, statuses: statusFilter });
     closeModal();
   };
 
@@ -71,7 +81,8 @@ const FilterAnnotModal = () => {
     setAuthorFilter([]);
     setTypesFilter([]);
     setColorFilter([]);
-    fireEvent('annotationFilterChanged', { types: [], authors: [], colors: [] });
+    setStatusFilter([]);
+    fireEvent('annotationFilterChanged', { types: [], authors: [], colors: [], statuses: [] });
   };
 
   const closeModal = () => {
@@ -86,9 +97,11 @@ const FilterAnnotModal = () => {
     const authorsToBeAdded = new Set();
     const annotTypesToBeAdded = new Set();
     const annotColorsToBeAdded = new Set();
+    const annotStatusesToBeAdded = new Set();
     annots.forEach(annot => {
-      if (core.getDisplayAuthor(annot) && core.getDisplayAuthor(annot) !== '') {
-        authorsToBeAdded.add(core.getDisplayAuthor(annot));
+      const displayAuthor = core.getDisplayAuthor(annot['Author']);
+      if (displayAuthor && displayAuthor !== '') {
+        authorsToBeAdded.add(displayAuthor);
       }
       // We don't show it in the filter for WidgetAnnotation or StickyAnnotation or LinkAnnotation from the comments
       if (
@@ -104,10 +117,18 @@ const FilterAnnotModal = () => {
       } else {
         annotColorsToBeAdded.add('#485056');
       }
+
+      if (annot.getStatus()) {
+        annotStatusesToBeAdded.add(annot.getStatus());
+      } else {
+        annotStatusesToBeAdded.add('None');
+      }
     });
+
     setAuthors([...authorsToBeAdded]);
     setAnnotTypes([...annotTypesToBeAdded]);
     setColorTypes([...annotColorsToBeAdded]);
+    setStatusTypes([...annotStatusesToBeAdded]);
 
     core.addEventListener('documentUnloaded', closeModal);
     return () => {
@@ -207,6 +228,39 @@ const FilterAnnotModal = () => {
     );
   };
 
+  const renderStatusTypes = () => {
+    // Hide status filter if there is only on status type
+    if (statuses.length === 1) {
+      return null;
+    }
+
+    return (
+      <div className="filter">
+        <div className="heading">{t('option.status.status')}</div>
+        <div className="buttons">
+          {[...statuses].map((val, index) => {
+            return (
+              <Choice
+                type="checkbox"
+                key={index}
+                checked={statusFilter.includes(val)}
+                label={t(`option.state.${val.toLocaleLowerCase()}`)}
+                id={val}
+                onChange={e => {
+                  if (statusFilter.indexOf(e.target.getAttribute('id')) === -1) {
+                    setStatusFilter([...statusFilter, e.target.getAttribute('id')]);
+                  } else {
+                    setStatusFilter(statusFilter.filter(status => status !== e.target.getAttribute('id')));
+                  }
+                }}
+              />
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
   const modalClass = classNames({
     Modal: true,
     FilterAnnotModal: true,
@@ -226,6 +280,7 @@ const FilterAnnotModal = () => {
                   {renderAuthors()}
                   {renderAnnotTypes()}
                   {renderColorTypes()}
+                  {renderStatusTypes()}
                 </div>
                 <div className="footer">
                   <Button className="filter-annot-clear" onClick={filterClear} label={t('action.clear')} />

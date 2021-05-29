@@ -293,19 +293,19 @@ const positionCanvas = (canvas, pageIndex) => {
     switch (documentRotation) {
       case 0:
         ctx.translate(height, 0);
-        ctx.rotate(( 90 * Math.PI) / 180);
+        ctx.rotate((90 * Math.PI) / 180);
         break;
       case 1:
         ctx.translate(0, height);
-        ctx.rotate(( 270 * Math.PI) / 180);
+        ctx.rotate((270 * Math.PI) / 180);
         break;
       case 2:
         ctx.translate(height, 0);
-        ctx.rotate(( -270 * Math.PI) / 180);
+        ctx.rotate((-270 * Math.PI) / 180);
         break;
       case 3:
         ctx.translate(0, height);
-        ctx.rotate(( 270 * Math.PI) / 180);
+        ctx.rotate((270 * Math.PI) / 180);
         break;
     }
 
@@ -427,7 +427,7 @@ const getNoteInfo = (annotation, dateFormat, language) => {
 
   info.className = 'note__info';
   info.innerHTML = `
-    ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation) || ''} &nbsp;&nbsp;
+    ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''} &nbsp;&nbsp;
     ${i18n.t('option.printInfo.subject')}: ${annotation.Subject} &nbsp;&nbsp;
     ${i18n.t('option.printInfo.subject')}: ${date}
   `;
