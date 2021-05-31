@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#updateCopiedAnnotations__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#updateCopiedAnnotations__anchor
  */
 export default () => {
-  window.docViewer.getAnnotationManager().updateCopiedAnnotations();
+  window.documentViewer.getAnnotationManager().updateCopiedAnnotations();
 };

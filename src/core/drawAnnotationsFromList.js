@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#drawAnnotationsFromList__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#drawAnnotationsFromList__anchor
  */
 export default annotations => {
-  window.docViewer.getAnnotationManager().drawAnnotationsFromList(annotations);
+  window.documentViewer.getAnnotationManager().drawAnnotationsFromList(annotations);
 };

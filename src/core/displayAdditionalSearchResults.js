@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#displayAdditionalSearchResults__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#displayAdditionalSearchResults__anchor
  */
 export default results => {
-  window.docViewer.displayAdditionalSearchResults(results);
+  window.documentViewer.displayAdditionalSearchResults(results);
 };

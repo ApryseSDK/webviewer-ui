@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#jumpToAnnotationd__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#jumpToAnnotationd__anchor
  */
 export default annotation => {
-  window.docViewer.getAnnotationManager().jumpToAnnotation(annotation);
+  window.documentViewer.getAnnotationManager().jumpToAnnotation(annotation);
 };

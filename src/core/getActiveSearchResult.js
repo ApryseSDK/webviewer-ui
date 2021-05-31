@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getActiveSearchResult__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getActiveSearchResult__anchor
  */
 export default function getActiveSearchResult() {
-  return window.docViewer.getActiveSearchResult();
+  return window.documentViewer.getActiveSearchResult();
 }

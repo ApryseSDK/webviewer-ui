@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getZoom__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getZoom__anchor
  */
-export default () => window.docViewer.getZoom();
+export default () => window.documentViewer.getZoom();

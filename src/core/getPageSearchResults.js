@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getPageSearchResults__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getPageSearchResults__anchor
  */
 export default function getPageSearchResults(pageNumber) {
-  return window.docViewer.getPageSearchResults(pageNumber);
+  return window.documentViewer.getPageSearchResults(pageNumber);
 }

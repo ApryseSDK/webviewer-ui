@@ -1,12 +1,12 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#setDisplayMode__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#setDisplayMode__anchor
  * @fires displayModeUpdated on AnnotationManager
- * @see https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#event:displayModeUpdated__anchor
+ * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:displayModeUpdated__anchor
  * @fires zoomUpdated on AnnotationManager
- * @see https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#event:zoomUpdated__anchor
+ * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:zoomUpdated__anchor
  */
 export default mode => {
-  const displayMode = new window.CoreControls.DisplayMode(window.docViewer, mode);
+  const displayMode = new window.Core.DisplayMode(window.documentViewer, mode);
 
-  window.docViewer.getDisplayModeManager().setDisplayMode(displayMode);
+  window.documentViewer.getDisplayModeManager().setDisplayMode(displayMode);
 };

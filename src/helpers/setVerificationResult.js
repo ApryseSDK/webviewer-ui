@@ -52,7 +52,7 @@ export default async(certificates, sigWidgets, dispatch) => {
     const verificationResult = await getVerificationResult(doc, sigWidgets, certificates);
     dispatch(actions.setVerificationResult(verificationResult));
   } else {
-    window.docViewer.one('documentLoaded', async() => {
+    window.documentViewer.one('documentLoaded', async() => {
       const verificationResult = await getVerificationResult(
         core.getDocument(),
         sigWidgets,
@@ -67,7 +67,7 @@ export default async(certificates, sigWidgets, dispatch) => {
  * Iterates through each signature widget in the document, retrieves and returns
  * all pertinent information pertaining to Digital Signature Verification
  *
- * @param {CoreControls.Document} doc The document with signatures to verify
+ * @param {Core.Document} doc The document with signatures to verify
  * with the given certificate
  * @param {Array<Annotations.SignatureWidgetAnnotation>} sigWidgets An array of
  * signature widgets to verify with the given certificate

@@ -81,16 +81,16 @@ if (window.CanvasRenderingContext2D) {
   const state = store.getState();
 
   if (state.advanced.fullAPI) {
-    window.CoreControls.enableFullPDF(true);
+    window.Core.enableFullPDF(true);
     fullAPIReady = loadScript('../core/pdf/PDFNet.js');
   }
 
   if (getHashParams('disableLogs', false)) {
-    window.CoreControls.disableLogs(true);
+    window.Core.disableLogs(true);
   }
 
-  window.CoreControls.setWorkerPath('../core');
-  window.CoreControls.setResourcesPath('../core/assets');
+  window.Core.setWorkerPath('../core');
+  window.Core.setResourcesPath('../core/assets');
 
   try {
     if (state.advanced.useSharedWorker && window.parent.WebViewer) {
@@ -98,9 +98,9 @@ if (window.CanvasRenderingContext2D) {
       // originally the option was just for the pdf worker transport promise, now it can be an object
       // containing both the pdf and office promises
       if (workerTransportPromise.pdf || workerTransportPromise.office) {
-        window.CoreControls.setWorkerTransportPromise(workerTransportPromise);
+        window.Core.setWorkerTransportPromise(workerTransportPromise);
       } else {
-        window.CoreControls.setWorkerTransportPromise({ 'pdf': workerTransportPromise });
+        window.Core.setWorkerTransportPromise({ 'pdf': workerTransportPromise });
       }
     }
   } catch (e) {
@@ -116,7 +116,7 @@ if (window.CanvasRenderingContext2D) {
     const { PDF, OFFICE, LEGACY_OFFICE, ALL } = workerTypes;
     if (preloadWorker.includes(PDF) || preloadWorker === ALL) {
       getBackendPromise(getHashParams('pdf', 'auto')).then(pdfType => {
-        window.CoreControls.initPDFWorkerTransports(pdfType, {
+        window.Core.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
@@ -126,7 +126,7 @@ if (window.CanvasRenderingContext2D) {
 
     if (preloadWorker.includes(OFFICE) || preloadWorker === ALL) {
       getBackendPromise(getHashParams('office', 'auto')).then(officeType => {
-        window.CoreControls.initOfficeWorkerTransports(officeType, {
+        window.Core.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
@@ -156,7 +156,7 @@ if (window.CanvasRenderingContext2D) {
     }
 
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
-    const docViewer = new window.CoreControls.DocumentViewer();
+    const docViewer = new window.Core.DocumentViewer();
 
     window.documentViewer = docViewer;
     if (getHashParams('enableViewStateAnnotations', false)) {

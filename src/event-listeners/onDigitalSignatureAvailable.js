@@ -1,11 +1,11 @@
 export default () => async(/* widget */) => {
-  if (!window.CoreControls.isFullPDFEnabled()) {
+  if (!window.Core.isFullPDFEnabled()) {
     return;
   }
 
   await window.PDFNet.initialize(undefined, 'ems');
 
-  // const pdfDoc = await window.docViewer.getDocument().getPDFDoc();
+  // const pdfDoc = await window.documentViewer.getDocument().getPDFDoc();
   // const fieldName = widget.getField().name;
   // const field = await pdfDoc.getDigitalSignatureField(fieldName);
   /**

@@ -101,7 +101,7 @@ const InkSignature = ({
         if (!pathsCopy[i]) {
           pathsCopy[i] = [];
         }
-        pathsCopy[i][j] = new window.CoreControls.Math.Point(paths[i][j].x, paths[i][j].y);
+        pathsCopy[i][j] = new window.Core.Math.Point(paths[i][j].x, paths[i][j].y);
       }
     }
 

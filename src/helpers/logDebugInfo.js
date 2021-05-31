@@ -4,8 +4,8 @@ import packageConfig from '../../package.json';
 /* eslint-disable no-console */
 export default () => {
   // log UI and Core versions and warn/error if necessary
-  const coreVersion = window.CoreControls.DocumentViewer.prototype.version;
-  const coreBuild = window.CoreControls.DocumentViewer.prototype.build;
+  const coreVersion = window.Core.DocumentViewer.prototype.version;
+  const coreBuild = window.Core.DocumentViewer.prototype.build;
   const uiVersion = packageConfig.version;
   const pdftronServer = !!getHashParams('pdftronServer', null);
   const fullAPI = !!getHashParams('pdfnet', false);

@@ -172,7 +172,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     if (searchInput) {
       const replies = note.getReplies();
       // reply is also a kind of annotation
-      // https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#createAnnotationReply__anchor
+      // https://www.pdftron.com/api/web/Core.AnnotationManager.html#createAnnotationReply__anchor
       const noteAndReplies = [note, ...replies];
 
       shouldRender =

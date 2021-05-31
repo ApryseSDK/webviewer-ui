@@ -53,7 +53,7 @@ const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.isUnderlined]: false,
 };
 
-// Values come from https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setWatermark__anchor
+// Values come from https://www.pdftron.com/api/web/Core.DocumentViewer.html#setWatermark__anchor
 const WATERMARK_API_LOCATIONS = {
   [WATERMARK_LOCATIONS.CENTER]: 'diagonal',
   [WATERMARK_LOCATIONS.TOP_LEFT]: 'headerLeft',

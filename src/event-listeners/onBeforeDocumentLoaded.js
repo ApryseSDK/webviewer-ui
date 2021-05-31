@@ -12,11 +12,11 @@ export default dispatch => () => {
 
   if (isIOS) {
     // enough so that we can enable high res thumb
-    window.CoreControls.SetPreRenderLevel(2);
+    window.Core.SetPreRenderLevel(2);
   }
 
   if (totalPages >= 500) {
-    core.setDisplayMode(window.CoreControls.DisplayModes.Single);
+    core.setDisplayMode(window.Core.DisplayModes.Single);
   }
 
   dispatch(actions.setPageLabels(getDefaultPageLabels(totalPages)));

@@ -1,4 +1,4 @@
 export default docType =>
   (docType === 'auto' || docType === 'wait'
-    ? window.CoreControls.getDefaultBackendType()
+    ? window.Core.getDefaultBackendType()
     : Promise.resolve(docType));

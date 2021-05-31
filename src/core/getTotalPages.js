@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getPageCount__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getPageCount__anchor
  */
-export default () => window.docViewer.getPageCount();
+export default () => window.documentViewer.getPageCount();

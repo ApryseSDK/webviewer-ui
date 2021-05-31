@@ -212,8 +212,10 @@ export default store => {
   const objForWebViewerCore = {
     Tools: window.Tools,
     Annotations: window.Annotations,
-    CoreControls: window.CoreControls,
-    PartRetrievers: window.CoreControls.PartRetrievers,
+    // keep CoreControls for backwards compabililty
+    // remove this in 9.0
+    CoreControls: window.Core,
+    PartRetrievers: window.Core.PartRetrievers,
     Actions: window.Actions,
     PDFNet: window.PDFNet,
   };
@@ -399,7 +401,7 @@ export default store => {
     UI_NAMESPACE_KEY: UI_NAMESPACE,
     [CORE_NAMESPACE]: {
       ...objForWebViewerCore,
-      ...window.CoreControls,
+      ...window.Core,
       documentViewer: window.documentViewer,
       annotationManager: window.documentViewer.getAnnotationManager(),
     },

@@ -1,1 +1,1 @@
-export default () => window.CoreControls.Search.Mode;
+export default () => window.Core.Search.Mode;

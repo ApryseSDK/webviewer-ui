@@ -1,5 +1,5 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#hideAnnotations__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#hideAnnotations__anchor
  */
 export default annotations =>
-  window.docViewer.getAnnotationManager().hideAnnotations(annotations);
+  window.documentViewer.getAnnotationManager().hideAnnotations(annotations);

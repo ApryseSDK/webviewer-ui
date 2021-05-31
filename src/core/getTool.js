@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getTool__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getTool__anchor
  */
-export default toolName => window.docViewer.getTool(toolName);
+export default toolName => window.documentViewer.getTool(toolName);

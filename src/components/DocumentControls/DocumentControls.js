@@ -77,7 +77,7 @@ const DocumentControls = props => {
 
     const pageNumbersToRotate = selectedPageIndexes.map(p => p + 1);
     pageNumbersToRotate.forEach(index => {
-      core.rotatePages([index], window.CoreControls.PageRotation.e_90);
+      core.rotatePages([index], window.Core.PageRotation.e_90);
     });
   };
 

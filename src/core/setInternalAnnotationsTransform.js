@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setInternalAnnotationsTransform__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#setInternalAnnotationsTransform__anchor
  */
 export default callback => {
-  window.docViewer.setInternalAnnotationsTransform(callback);
+  window.documentViewer.setInternalAnnotationsTransform(callback);
 };
