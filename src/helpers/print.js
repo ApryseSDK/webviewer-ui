@@ -429,7 +429,7 @@ const getNoteInfo = (annotation, dateFormat, language) => {
   info.innerHTML = `
     ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''} &nbsp;&nbsp;
     ${i18n.t('option.printInfo.subject')}: ${annotation.Subject} &nbsp;&nbsp;
-    ${i18n.t('option.printInfo.subject')}: ${date}
+    ${i18n.t('option.printInfo.date')}: ${date}
   `;
   return info;
 };
