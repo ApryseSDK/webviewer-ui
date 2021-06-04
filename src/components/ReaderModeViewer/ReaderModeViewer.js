@@ -5,16 +5,27 @@ import selectors from 'selectors';
 import zoomFactors from 'constants/zoomFactors';
 import { connect } from 'react-redux';
 import setMaxZoomLevel from 'helpers/setMaxZoomLevel';
+import ReaderModeStylePopup from 'components/ReaderModeStylePopup';
 
 class ReaderModeViewer extends React.PureComponent {
   static propTypes = {
     containerWidth: PropTypes.number.isRequired,
   }
+
   constructor(props) {
     super(props);
 
     this.viewer = React.createRef();
     this.originalMaxZoom = zoomFactors.getMaxZoomLevel();
+    this.setAnnotColor = undefined;
+    this.doneSetAnnotColor = undefined;
+
+    this.state = {
+      colorMapKey: undefined,
+      showStylePopup: false,
+      style: undefined,
+      annotPosition: undefined
+    };
   }
 
   componentDidMount() {
@@ -27,12 +38,16 @@ class ReaderModeViewer extends React.PureComponent {
     core.addEventListener('documentLoaded', this.renderDocument);
     core.addEventListener('pageNumberUpdated', this.goToPage);
     core.addEventListener('zoomUpdated', this.setZoom);
+    core.addEventListener('toolUpdated', this.setAddAnnotConfig);
+    core.addEventListener('toolModeUpdated', this.setAddAnnotConfig);
   }
 
   componentWillUnmount() {
     core.removeEventListener('documentLoaded', this.renderDocument);
     core.removeEventListener('pageNumberUpdated', this.goToPage);
     core.removeEventListener('zoomUpdated', this.setZoom);
+    core.removeEventListener('toolUpdated', this.setAddAnnotConfig);
+    core.removeEventListener('toolModeUpdated', this.setAddAnnotConfig);
 
     this.wvReadingMode?.unmount();
 
@@ -47,12 +62,24 @@ class ReaderModeViewer extends React.PureComponent {
 
   render() {
     return (
-      <div
-        className="reader-mode-viewer"
-        ref={this.viewer}
-        style={{ height: "100%" }}
-      >
-      </div>
+      <>
+        <div
+          className="reader-mode-viewer"
+          ref={this.viewer}
+          style={{ height: "100%", width: "100%" }}
+        >
+        </div>
+        {this.state.showStylePopup && (
+          <ReaderModeStylePopup
+            colorMapKey={this.state.colorMapKey}
+            style={this.state.style}
+            onStyleChange={this.handleStyleChange}
+            onClose={this.handleStylePopupClose}
+            annotPosition={this.state.annotPosition}
+            viewer={this.viewer}
+          />
+        )}
+      </>
     );
   }
 
@@ -69,10 +96,12 @@ class ReaderModeViewer extends React.PureComponent {
         this.viewer.current,
         {
           pageNumberUpdateHandler: core.setCurrentPage,
-          pageNum: core.getCurrentPage()
+          pageNum: core.getCurrentPage(),
+          editStyleHandler: this.onEditStyle
         }
       );
       this.setZoom(core.getZoom());
+      this.setAddAnnotConfig();
     });
   }
 
@@ -81,10 +110,12 @@ class ReaderModeViewer extends React.PureComponent {
   }
 
   setZoom = (zoom) => {
-    this.wvReadingMode?.setZoom(zoom);
+    if (!this.wvReadingMode) return;
+    this.wvReadingMode.setZoom(zoom);
     const pageWidth = core.getDocumentViewer().getPageWidth(1);
-    if (pageWidth) {
-      this.viewer.current.style.width = `${pageWidth * zoom}px`;
+    const readerModeElement = this.viewer.current.firstChild;
+    if (pageWidth && readerModeElement) {
+      readerModeElement.style.padding = `0 ${(this.props.containerWidth - pageWidth * zoom) / 2}px`;
     }
   }
 
@@ -96,6 +127,69 @@ class ReaderModeViewer extends React.PureComponent {
     if (maxZoomLevel < core.getZoom()) {
       core.zoomTo(maxZoomLevel);
     }
+  }
+
+  getAnnotTypeFromToolMode = (toolMode) => {
+    if (toolMode instanceof window.Core.Tools.TextHighlightCreateTool) {
+      return WebViewerReadingMode.AnnotationType.Highlight;
+    } else if (toolMode instanceof window.Core.Tools.TextUnderlineCreateTool) {
+      return WebViewerReadingMode.AnnotationType.Underline;
+    } else if (toolMode instanceof window.Core.Tools.TextStrikeoutCreateTool) {
+      return WebViewerReadingMode.AnnotationType.Strikeout;
+    } else if (toolMode instanceof window.Core.Tools.TextSquigglyCreateTool) {
+      return WebViewerReadingMode.AnnotationType.Squiggly;
+    }
+    return undefined;
+  }
+
+  setAddAnnotConfig = () => {
+    if (!this.wvReadingMode) return;
+    const toolMode = core.getToolMode();
+    const annotType = this.getAnnotTypeFromToolMode(toolMode);
+    this.wvReadingMode.setAddAnnotConfig({
+      type: annotType,
+      color: annotType ? toolMode['defaults']['StrokeColor'].toHexString() : undefined
+    });
+  }
+
+  onEditStyle = ({ color, type, position }, setAnnotColor, doneSetAnnotColor) => {
+    this.setAnnotColor = setAnnotColor;
+    this.doneSetAnnotColor = doneSetAnnotColor;
+    this.setState({
+      colorMapKey: this.getColorMapKey(type),
+      style: { StrokeColor: new window.Core.Annotations.Color(color) },
+      showStylePopup: true,
+      annotPosition: position
+    });
+  }
+
+  getColorMapKey(annotType) {
+    if (annotType === WebViewerReadingMode.AnnotationType.Highlight) {
+      return 'highlight';
+    } else if (annotType === WebViewerReadingMode.AnnotationType.Underline) {
+      return 'underline';
+    } else if (annotType === WebViewerReadingMode.AnnotationType.Strikeout) {
+      return 'strikeout';
+    } else if (annotType === WebViewerReadingMode.AnnotationType.Squiggly) {
+      return 'squiggly';
+    }
+    return "";
+  }
+
+  handleStyleChange = (property, color) => {
+    if (property === 'StrokeColor' && this.setAnnotColor) {
+      this.setAnnotColor(color.toHexString());
+      this.setState({
+        style: { StrokeColor: color }
+      });
+    }
+  }
+
+  handleStylePopupClose = () => {
+    this.setState({
+      showStylePopup: false
+    });
+    this.doneSetAnnotColor();
   }
 }
 

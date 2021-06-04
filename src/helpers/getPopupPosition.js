@@ -1,5 +1,8 @@
 import core from 'core';
 
+// gap between the annotation selection box and the popup element
+const gap = 17;
+
 export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
   const { left, top } = calcAnnotationPopupPosition(
     getAnnotationPosition(annotation),
@@ -215,8 +218,6 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
     bottom: boundingBox.top + scrollContainer.scrollTop + boundingBox.height,
   };
 
-  // gap between the annotation selection box and the popup element
-  const gap = 17;
   const annotTop = topLeft.y - gap;
   const annotBottom = bottomRight.y + gap;
 
@@ -231,4 +232,31 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
   }
 
   return Math.round(top - scrollContainer.scrollTop);
+};
+
+export const getReaderModePopupPositionBasedOn = (annotPosition, popup, viewer) => {
+  const { width, height } = popup.current.getBoundingClientRect();
+  const viewerRect = viewer.current.getBoundingClientRect();
+
+  let top = 5;
+  const annotTop = annotPosition.top - gap;
+  const annotBottom = annotPosition.bottom + gap;
+  if (annotBottom + height < viewerRect.height) {
+    top = annotBottom;
+  } else if (annotTop > height) {
+    top = annotTop - height;
+  }
+  top = Math.round(top + viewerRect.top);
+
+  const paddingLeft = parseFloat(viewer.current.firstChild.style.paddingLeft);
+  const center = (annotPosition.left + annotPosition.right) / 2 + paddingLeft;
+  let left = center - width / 2;
+  if (left < 0) {
+    left = 0;
+  } else if (left + width > viewerRect.width) {
+    left = viewerRect.width - width;
+  }
+  left = Math.round(left + viewerRect.left);
+
+  return { top, left };
 };

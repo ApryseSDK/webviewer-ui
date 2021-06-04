@@ -13,6 +13,7 @@ import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
 import { isMobile, isIE } from 'helpers/device';
+import { getOpenedWarningModal, getOpenedColorPicker } from 'helpers/getElements';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import useWidgetEditing from 'hooks/useWidgetEditing';
 import actions from 'actions';
@@ -60,8 +61,8 @@ const AnnotationPopup = () => {
     const notesPanel = document.querySelector('[data-element="notesPanel"]');
     const clickedInNotesPanel = notesPanel?.contains(e.target);
 
-    const warningModal = document.querySelector('.WarningModal.open .container');
-    const colorPicker = document.querySelector('.ColorPickerModal.open');
+    const warningModal = getOpenedWarningModal();
+    const colorPicker = getOpenedColorPicker();
 
     // the notes panel has mousedown handlers to handle the opening/closing states of this component
     // we don't want this handler to run when clicked in the notes panel otherwise the opening/closing states may mess up

@@ -22,7 +22,7 @@ class StylePopup extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
-    isFreeText: PropTypes.bool.isRequired,
+    isFreeText: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     isColorPaletteDisabled: PropTypes.bool,

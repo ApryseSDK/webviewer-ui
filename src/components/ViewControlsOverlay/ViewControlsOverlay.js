@@ -42,7 +42,6 @@ function ViewControlsOverlay() {
 
   const handleReaderModeClick = () => {
     if (isReaderMode) return;
-    core.setDisplayMode('Single');
     enterReaderMode(store);
   };
 

@@ -8,6 +8,7 @@ import core from 'core';
 import StylePopup from 'components/StylePopup';
 import SignatureStylePopup from 'components/SignatureStylePopup';
 import setToolStyles from 'helpers/setToolStyles';
+import { getOpenedWarningModal, getOpenedColorPicker, getAllOpenedModals } from 'helpers/getElements';
 import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -68,9 +69,9 @@ class ToolStylePopup extends React.PureComponent {
     const pageNavOverlays = Array.from(document.querySelectorAll(
       '[data-element="pageNavOverlay"]',
     ));
-    const warningModal = document.querySelector('.WarningModal.open .container');
-    const colorPicker = document.querySelector('.ColorPickerModal.open');
-    const openedModal = Array.from(document.querySelectorAll('.Modal.open'));
+    const warningModal = getOpenedWarningModal();
+    const colorPicker = getOpenedColorPicker();
+    const openedModal = Array.from(getAllOpenedModals());
 
     const clickedOnToolsOverlay = toolsOverlays.some(toolsOverlay => {
       return toolsOverlay?.contains(e.target);

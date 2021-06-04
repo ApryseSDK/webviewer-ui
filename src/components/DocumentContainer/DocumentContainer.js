@@ -307,10 +307,11 @@ class DocumentContainer extends React.PureComponent {
               >
                 {/* tabIndex="-1" to keep document focused when in single page mode */}
                 <div className={documentClassName} ref={this.document} tabIndex="-1" />
-                {this.props.isReaderMode && (
-                  <ReaderModeViewer />
-                )}
+
               </div>
+              {this.props.isReaderMode && (
+                <ReaderModeViewer />
+              )}
               <MeasurementOverlay />
               <div
                 className="footer"
