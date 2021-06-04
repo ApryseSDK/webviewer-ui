@@ -35,8 +35,10 @@ const VirtualizedList = React.forwardRef(
     }, [initialScrollTop]);
 
     useEffect(() => {
+      cache.clearAll();
+      listRef?.current?.measureAllRows();
+
       if(selectedIndex !== -1) {
-        cache.clear(selectedIndex);
         listRef.current?.scrollToRow(selectedIndex);
       }
     }, [selectedIndex]);
