@@ -6,6 +6,7 @@
  * @param {string} [options.extension] The extension of the file. If file is a blob/file object or a URL without an extension then this is necessary so that WebViewer knows what type of file to load.
  * @param {string} [options.filename] Filename of the document, which is used when downloading the PDF.
  * @param {object} [options.customHeaders] An object of custom HTTP headers to use when retrieving the document from the specified url.
+ * @param {object} [options.webViewerServerCustomQueryParameters] An object of custom query parameters to be appended to every WebViewer Server request.
  * @param {string} [options.documentId] Unique id of the document.
  * @param {boolean} [options.withCredentials] Whether or not cross-site requests should be made using credentials.
  * @param {string} [options.cacheKey] A key that will be used for caching the document on WebViewer Server.
