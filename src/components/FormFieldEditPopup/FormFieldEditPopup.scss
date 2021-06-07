@@ -9,6 +9,7 @@
 
   .fields-container {
     margin-bottom: 5px;
+    padding-right: 17px;
   }
 
   .radio-group-label {
@@ -45,7 +46,8 @@
   .form-buttons-container {
     display: flex;
     flex-direction: row;
-    margin-left: 90px;
+    justify-content: flex-end;
+    padding-top: 5px;
   }
 
   .ok-form-field-button {
@@ -60,6 +62,10 @@
     border-radius: 4px;
     height: 28px;
     cursor: pointer;
+
+    &:hover {
+      color: var(--blue-5);
+    }
   }
 
   .cancel-form-field-button {
@@ -96,6 +102,7 @@
 .form-dimension {
   padding-top: 10px;
   display: flex;
+  align-items: center;
 }
 
 .form-dimension-input {
@@ -116,8 +123,8 @@
   }
 
   input {
-    width: 35px;
-    height: 17px;
+    width: 55px;
+    height: 28px;
   }
 }
 

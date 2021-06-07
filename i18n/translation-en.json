@@ -519,9 +519,22 @@
       "nameRequired": "Field name is required",
       "size": "Size",
       "width": "Width",
-      "height": "Height"
+      "height": "Height",
+      "invalidField": {
+        "duplicate": "Field Name already exists",
+        "empty": "Field Name cannot be empty"
+      }
     },
-    "apply": "Apply Fields"
+    "apply": "Apply Fields",
+    "type": "Field Type",
+    "types": {
+      "text": "Text",
+      "signature": "Signature",
+      "checkbox": "Check box",
+      "radio": "Radio button",
+      "listbox": "List box",
+      "combobox": "Combo box"
+    }
   },
   "digitalSignatureModal": {
     "certification": "certification",

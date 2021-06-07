@@ -45,6 +45,7 @@ const props = {
     onCreateOption,
     textPlaceholder,
     isClearable,
+    messageText: 'Use this to add some text for errors'
 }
 
 

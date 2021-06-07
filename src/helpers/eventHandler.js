@@ -59,9 +59,9 @@ export default store => {
       core.addEventListener('pageComplete', onPageComplete);
       core.addEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable);
       core.addEventListener('editingStarted', onWidgetEditingStarted);
+      core.addEventListener('editingEnded', onWidgetEditingEnded);
       core.addEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted);
       core.addEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded);
-      core.addEventListener('editingEnded', onWidgetEditingEnded);
       core.addEventListener('digitalSignatureAvailable', onDigitalSignatureAvailable);
       core.getTool('AnnotationCreateStamp').on('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').on('annotationAdded', onStickyAnnotationAdded);
@@ -101,6 +101,8 @@ export default store => {
       core.removeEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable);
       core.removeEventListener('editingStarted', onWidgetEditingStarted);
       core.removeEventListener('editingEnded', onWidgetEditingEnded);
+      core.removeEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted);
+      core.removeEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded);
       core.removeEventListener('digitalSignatureAvailable', onDigitalSignatureAvailable);
       core.getTool('AnnotationCreateStamp').off('annotationAdded', onStampAnnotationAdded);
       core.getTool('AnnotationCreateSticky').off('annotationAdded', onStickyAnnotationAdded);

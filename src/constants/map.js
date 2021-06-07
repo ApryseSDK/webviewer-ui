@@ -457,7 +457,7 @@ const map = {
     icon: 'icon-form-field-text',
     iconColor: 'TextColor',
     currentPalette: 'TextColor',
-    availablePalettes: ['TextColor', 'FillColor'],
+    availablePalettes: ['TextColor', 'FillColor', 'StrokeColor'],
     toolNames: [
       'TextFormFieldCreateTool',
       'TextFormFieldCreateTool2',

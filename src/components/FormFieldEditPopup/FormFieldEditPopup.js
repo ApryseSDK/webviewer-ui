@@ -14,6 +14,7 @@ const FormFieldEditPopup = ({
   flags,
   closeFormFieldEditPopup,
   isValid,
+  validationMessage,
   radioButtonGroups,
   options,
   onOptionsChange,
@@ -118,8 +119,9 @@ const FormFieldEditPopup = ({
         onChange={event => field.onChange(event.target.value)}
         value={field.value}
         fillWidth="false"
-        messageText={field.required && !isValid ? t(field.message) : ''}
+        messageText={field.required && !isValid ? t(validationMessage) : ''}
         message={field.required && !isValid ? 'warning' : 'default'}
+        autoFocus={field.focus}
       />
     )
   };
@@ -133,6 +135,8 @@ const FormFieldEditPopup = ({
           options={displayRadioGroups}
           onChange={(inputValue) => onSelectInputChange(field, inputValue)}
           value={radioButtonGroup}
+          isValid={isValid}
+          messageText={t(validationMessage)}
         />
         <div className='radio-group-label'>{t('formField.formFieldPopup.radioGroups')}</div>
       </>)
@@ -152,7 +156,6 @@ const FormFieldEditPopup = ({
 
   return (
     <div className={className}>
-      {options && renderListOptions()}
       <div className="fields-container">
         {fields.map(field => (
           <div className="field-input" key={field.label}>
@@ -163,6 +166,7 @@ const FormFieldEditPopup = ({
           </div>
         ))}
       </div>
+      {options && renderListOptions()}
       <div className="field-flags-container">
         <span className="field-flags-title">{t('formField.formFieldPopup.flags')}</span>
         {flags.map(flag => (
@@ -203,7 +207,7 @@ const DimensionsInput = ({ width, height, onWidthChange, onHeightChange }) => {
 
   return (
     <div className="form-dimension">
-      {t("formField.formFieldPopup.size")}:
+      <div>{t("formField.formFieldPopup.size")}:</div>
       <div className="form-dimension-input">
         <input
           id='form-field-width'

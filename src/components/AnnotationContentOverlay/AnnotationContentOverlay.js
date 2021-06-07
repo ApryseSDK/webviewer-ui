@@ -11,6 +11,7 @@ import './AnnotationContentOverlay.scss';
 import actions from 'actions';
 
 import CustomElement from '../CustomElement';
+import FormFieldPlaceHolderOverlay from './FormFieldPlaceHolderOverlay';
 
 const MAX_CHARACTERS = 100;
 
@@ -134,6 +135,15 @@ const AnnotationContentOverlay = () => {
       );
     }
     return null;
+  }
+
+  if (annotation.isFormFieldPlaceholder() && isOverlayOpen) {
+    return (
+      <FormFieldPlaceHolderOverlay
+        annotation={annotation}
+        overlayPosition={overlayPosition}
+        overlayRef={overlayRef} />
+    )
   }
 
   if (contents && isOverlayOpen) {

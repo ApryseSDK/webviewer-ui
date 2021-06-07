@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, getByText } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FormFieldEditPopup from './FormFieldEditPopup';
 import { Basic } from './FormFieldEditPopup.stories';
@@ -152,7 +152,7 @@ describe('FormFieldEditPopup', () => {
       expect(closeFormFieldEditPopup).toBeCalled();
     });
 
-    it('Should render with Warning if popup is not valid', () => {
+    it('Should render text input with Warning if field is not valid', () => {
       const { container } = render(
         <TestFormFieldEditPopup
           fields={inputFields}
@@ -168,6 +168,26 @@ describe('FormFieldEditPopup', () => {
       );
 
       expect(container.querySelector('.ui__input--message-warning')).toBeInTheDocument();
+    })
+
+    it('Should render select with warning message if passed', () => {
+      const { container } = render(
+        <TestFormFieldEditPopup
+          fields={selectField}
+          flags={sampleFlags}
+          closeFormFieldEditPopup={noop}
+          isOpen={true}
+          isValid={false} // NOT VALID!!
+          annotation={createMockAnnotation()}
+          redrawAnnotation={noop}
+          getPageHeight={noop}
+          getPageWidth={noop}
+          validationMessage={'Field Name already exists'}
+          radioButtonGroups={[]}
+        />
+      );
+      getByText(container, 'Field Name already exists')
+      expect(container.querySelector('.messageText')).toBeInTheDocument();
     })
 
     describe('Width and Height inputs', () => {

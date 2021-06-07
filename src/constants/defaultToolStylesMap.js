@@ -291,10 +291,10 @@ export default {
     TextColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   SignatureFormFieldCreateTool: {
-    StrokeColor: { R: 211, G: 211, B: 211, A: 0.5 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   SignatureFormFieldCreateTool2: {
-    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   SignatureFormFieldCreateTool3: {
     StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
@@ -303,10 +303,10 @@ export default {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   ListBoxFormFieldCreateTool: {
-    StrokeColor: { R: 211, G: 211, B: 211, A: 0.5 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   ListBoxFormFieldCreateTool2: {
-    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   ListBoxFormFieldCreateTool3: {
     StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
@@ -315,10 +315,10 @@ export default {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   ComboBoxFormFieldCreateTool: {
-    StrokeColor: { R: 211, G: 211, B: 211, A: 0.5 },
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   ComboBoxFormFieldCreateTool2: {
-    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
   ComboBoxFormFieldCreateTool3: {
     StrokeColor: { R: 78, G: 125, B: 233, A: 1 },

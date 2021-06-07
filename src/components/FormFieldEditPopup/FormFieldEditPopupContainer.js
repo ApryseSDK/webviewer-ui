@@ -22,9 +22,10 @@ function FormFieldEditPopupContainer() {
   const [isMultiLine, setMultiLine] = useState(false);
   const [isRequired, setIsRequired] = useState(false);
   const [isMultiSelect, setIsMultiSelect] = useState(false);
-  const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(true);
   const [radioButtonGroups, setRadioButtonGroups] = useState([]);
   const [position, setPosition] = useState({ left: 0, top: 0 });
+  const [validationMessage, setValidationMessage] = useState('')
   const popupRef = useRef();
 
   const [isOpen] = useSelector(state => [selectors.isElementOpen(state, 'formFieldEditPopup')], shallowEqual);
@@ -44,8 +45,7 @@ function FormFieldEditPopupContainer() {
     setMultiLine(false);
     setIsRequired(false);
     setIsMultiSelect(false);
-    setRadioButtonGroups([]);
-    setIsValid(false);
+    setIsValid(true);
   }
 
   const formFieldAnnotation = useOnFormFieldAnnotationAddedOrSelected(openFormFieldPopup);
@@ -93,14 +93,32 @@ function FormFieldEditPopupContainer() {
       // Field name is required, so if this is an empty string
       // the field is not valid and should not be converted to a real field
       setIsValid(!!formFieldCreationManager.getFieldName(formFieldAnnotation));
+      setValidationMessage('')
     }
   }, [isOpen]);
 
   const onFieldNameChange = useCallback(name => {
-    setIsValid(name !== '');
+    const validatedResponse = formFieldCreationManager.setFieldName(formFieldAnnotation, name);
+    setIsValid(validatedResponse.isValid);
+    mapValidationResponseToTranslation(validatedResponse);
     setFieldName(name);
-    formFieldCreationManager.setFieldName(formFieldAnnotation, name);
   }, [formFieldAnnotation]);
+
+  const mapValidationResponseToTranslation = (validationResponse) => {
+    const { errorType } = validationResponse;
+    let translationKey = ''
+
+    switch (errorType) {
+      case 'empty':
+        translationKey = 'formField.formFieldPopup.invalidField.empty';
+        break;
+      case 'duplicate':
+        translationKey = 'formField.formFieldPopup.invalidField.duplicate';
+        break;
+    }
+
+    setValidationMessage(translationKey);
+  }
 
   const onFieldValueChange = useCallback(value => {
     setFieldValue(value);
@@ -132,15 +150,15 @@ function FormFieldEditPopupContainer() {
   }, [formFieldAnnotation]);
 
   const closeFormFieldEditPopup = useCallback(() => {
-    dispatch(actions.closeElement('formFieldEditPopup'));
+    closeAndReset();
   }, []);
 
   const onCloseRadioButtonPopup = useCallback(() => {
-    // Add new radio group (if any) to existing radio groups
-    if (radioButtonGroups.indexOf(fieldName) === -1 && fieldName !== '') {
+    // Add new radio group (if any) to existing radio groups and we were in a valid state
+    if (isValid && radioButtonGroups.indexOf(fieldName) === -1 && fieldName !== '') {
       setRadioButtonGroups([fieldName, ...radioButtonGroups])
     }
-    dispatch(actions.closeElement('formFieldEditPopup'));
+    closeAndReset();
   }, [fieldName, radioButtonGroups]);
 
   const redrawAnnotation = useCallback((annotation) => {
@@ -162,7 +180,7 @@ function FormFieldEditPopupContainer() {
       value: fieldName,
       required: true,
       type: 'text',
-      message: 'formField.formFieldPopup.nameRequired',
+      focus: true,
     },
     VALUE: {
       label: 'formField.formFieldPopup.fieldValue',
@@ -261,6 +279,7 @@ function FormFieldEditPopupContainer() {
       flags={textFieldFlags}
       closeFormFieldEditPopup={closeFormFieldEditPopup}
       isValid={isValid}
+      validationMessage={validationMessage}
       annotation={formFieldAnnotation}
       redrawAnnotation={redrawAnnotation}
       getPageHeight={getPageHeight}
@@ -274,6 +293,7 @@ function FormFieldEditPopupContainer() {
       flags={signatureFlags}
       closeFormFieldEditPopup={closeFormFieldEditPopup}
       isValid={isValid}
+      validationMessage={validationMessage}
       annotation={formFieldAnnotation}
       redrawAnnotation={redrawAnnotation}
       getPageHeight={getPageHeight}
@@ -287,6 +307,7 @@ function FormFieldEditPopupContainer() {
       flags={checkBoxFlags}
       closeFormFieldEditPopup={closeFormFieldEditPopup}
       isValid={isValid}
+      validationMessage={validationMessage}
       annotation={formFieldAnnotation}
       redrawAnnotation={redrawAnnotation}
       getPageHeight={getPageHeight}
@@ -300,6 +321,7 @@ function FormFieldEditPopupContainer() {
       flags={radioButtonFlags}
       closeFormFieldEditPopup={onCloseRadioButtonPopup}
       isValid={isValid}
+      validationMessage={validationMessage}
       radioButtonGroups={radioButtonGroups}
       annotation={formFieldAnnotation}
       selectedRadioGroup={fieldName}
@@ -320,6 +342,7 @@ function FormFieldEditPopupContainer() {
         onOptionsChange={onFieldOptionsChange}
         closeFormFieldEditPopup={closeFormFieldEditPopup}
         isValid={isValid}
+        validationMessage={validationMessage}
         annotation={formFieldAnnotation}
         redrawAnnotation={redrawAnnotation}
         getPageHeight={getPageHeight}
@@ -339,6 +362,7 @@ function FormFieldEditPopupContainer() {
         onOptionsChange={onFieldOptionsChange}
         closeFormFieldEditPopup={closeFormFieldEditPopup}
         isValid={isValid}
+        validationMessage={validationMessage}
         annotation={formFieldAnnotation}
         redrawAnnotation={redrawAnnotation}
         getPageHeight={getPageHeight}
