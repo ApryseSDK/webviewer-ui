@@ -3,6 +3,8 @@ import i18next from 'i18next';
 import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import Feature from 'constants/feature';
+import Events from 'constants/events';
+
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
@@ -163,48 +165,8 @@ import enableClearSearchOnPanelClose from './enableClearSearchOnPanelClose';
 import disableClearSearchOnPanelClose from './disableClearSearchOnPanelClose';
 import disableFadePageNavigationComponent from './disableFadePageNavigationComponent';
 import enableFadePageNavigationComponent from './enableFadePageNavigationComponent';
-
-/**
- * Triggered when the UI theme is changed
- * @name UI.themeChanged
- * @event
- * @example
- // Listening to this event
-  WebViewer(...).then(function(instance) {
-    instance.UI.iframeWindow.addEventListener('themeChanged', e => {
-      const theme = e.detail;
-      console.log(theme);
-    })
-  });
- */
-
-/**
- * Triggered when the panels are resized
- * @name UI.panelResized
- * @event
- * @example
- // Listening to this event
-  WebViewer(...).then(function(instance) {
-    instance.UI.iframeWindow.addEventListener('panelResized', e => {
-      const { element, width } = e.detail;
-      console.log(element, width);
-    })
-  });
- */
-
-/**
- * Triggered when the annotation filter is changed. Returns empty arrays if the filter is cleared.
- * @name UI.annotationFilterChanged
- * @event
- * @example
- // Listening to this event
-  WebViewer(...).then(function(instance) {
-    instance.UI.iframeWindow.addEventListener('annotationFilterChanged', e => {
-      const { types, authors, colors } = e.detail;
-      console.log(types, authors, colors);
-    })
-  });
- */
+import addEventListener from './addEventListener';
+import removeEventListener from './removeEventListener';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -223,6 +185,7 @@ export default store => {
     FitMode,
     LayoutMode,
     Feature,
+    Events,
     addSearchListener,
     addSortStrategy: addSortStrategy(store),
     annotationPopup: annotationPopup(store),
@@ -368,6 +331,8 @@ export default store => {
     setSortNotesBy: setSortNotesBy(store),
     getCustomData,
     toggleReaderMode: toggleReaderMode(store),
+    addEventListener,
+    removeEventListener,
 
     //deprecated, to be removed in 8.0
     useNativeScroll,

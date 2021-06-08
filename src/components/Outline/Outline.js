@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DragSource, DropTarget } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
 import { ItemTypes, DropLocation, BUFFER_ROOM } from 'constants/dnd';
+import Events from 'constants/events';
 import fireEvent from 'helpers/fireEvent';
 
 import OutlineContext from './Context';
@@ -290,7 +291,7 @@ const DropOutine = DropTarget(ItemTypes.OUTLINE, {
         node.style.backgroundColor = 'transparent';
         break;
     }
-    fireEvent('onDraggingItem',
+    fireEvent(Events.DRAG_OUTLINE,
       {
         targetOutline: props.outline,
         draggedOutline: dragSourceState.getItem().outline,
@@ -315,7 +316,7 @@ const DropOutine = DropTarget(ItemTypes.OUTLINE, {
         break;
     }
     dragSourceState.getItem().node.style.backgroundColor = 'transparent';
-    fireEvent('onDropItem',
+    fireEvent(Events.DROP_OUTLINE,
       {
         targetOutline: outline,
         draggedOutline: dragSourceState.getItem().outline,

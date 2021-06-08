@@ -3,6 +3,7 @@ import { saveAs } from 'file-saver';
 import core from 'core';
 import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
+import Events from 'constants/events';
 import actions from 'actions';
 
 export default async(dispatch, options = {}) => {
@@ -60,7 +61,7 @@ export default async(dispatch, options = {}) => {
       document.body.appendChild(downloadIframe);
       downloadIframe.src = externalURL;
       dispatch(actions.closeElement('loadingModal'));
-      fireEvent('finishedSavingPDF');
+      fireEvent(Events.FINISHED_SAVING_PDF);
     } else {
       return doc.getFileData(clonedOptions).then(
         data => {
@@ -75,7 +76,7 @@ export default async(dispatch, options = {}) => {
 
           saveAs(file, downloadName);
           dispatch(actions.closeElement('loadingModal'));
-          fireEvent('finishedSavingPDF');
+          fireEvent(Events.FINISHED_SAVING_PDF);
         },
         error => {
           dispatch(actions.closeElement('loadingModal'));

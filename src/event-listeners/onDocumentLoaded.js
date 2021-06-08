@@ -6,6 +6,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { workerTypes } from 'constants/types';
 import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
+import Events from 'constants/events';
 import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
 
@@ -29,7 +30,7 @@ export default store => () => {
     onFirstLoad = false;
     // redaction button starts hidden. when the user first loads a document, check HashParams the first time
     core.enableRedaction(getHashParams('enableRedaction', false) || core.isCreateRedactionEnabled());
-    // if redaction is already enabled for some reason (i.e. calling readerControl.enableRedaction() before loading a doc), keep it enabled
+    // if redaction is already enabled for some reason (i.e. calling instance.enableRedaction() before loading a doc), keep it enabled
 
     if (core.isCreateRedactionEnabled()) {
       dispatch(actions.enableElement('redactionToolGroupButton', PRIORITY_ONE));
@@ -86,10 +87,10 @@ export default store => () => {
     dispatch(actions.disableElement('cropToolGroupButton', PRIORITY_ONE));
   }
 
-  window.readerControl.loadedFromServer = false;
-  window.readerControl.serverFailed = false;
+  window.instance.UI.loadedFromServer = false;
+  window.instance.UI.serverFailed = false;
 
-  window.docViewer
+  window.documentViewer
     .getAnnotationManager()
     .getFieldManager()
     .setPrintHandler(() => {
@@ -104,5 +105,5 @@ export default store => () => {
   // init zoom level value in redux
   dispatch(actions.setZoom(core.getZoom()));
 
-  fireEvent('documentLoaded');
+  fireEvent(Events.DOCUMENT_LOADED);
 };

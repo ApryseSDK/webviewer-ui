@@ -42,15 +42,15 @@ import FormFieldEditPopup from 'components/FormFieldEditPopup';
 import ColorPickerModal from 'components/ColorPickerModal';
 
 import core from 'core';
-import defineReaderControlAPIs from 'src/apis';
+import defineWebViewerInstanceUIAPIs from 'src/apis';
 import loadDocument from 'helpers/loadDocument';
 import getHashParams from 'helpers/getHashParams';
 import fireEvent from 'helpers/fireEvent';
+import Events from 'constants/events';
 
 import actions from 'actions';
 
 import './App.scss';
-
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -65,8 +65,8 @@ const App = ({ removeEventHandlers }) => {
   let timeoutReturn;
 
   useEffect(() => {
-    defineReaderControlAPIs(store);
-    fireEvent('viewerLoaded');
+    defineWebViewerInstanceUIAPIs(store);
+    fireEvent(Events.VIEWER_LOADED);
 
     function loadInitialDocument() {
       const doesAutoLoad = getHashParams('auto_load', true);

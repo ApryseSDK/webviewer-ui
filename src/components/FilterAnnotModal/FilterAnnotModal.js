@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import defaultTool from 'constants/defaultTool';
+import Events from 'constants/events';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -68,7 +69,7 @@ const FilterAnnotModal = () => {
         return type && author && color && status;
       }),
     );
-    fireEvent('annotationFilterChanged', { types: typesFilter, authors: authorFilter, colors: colorFilter, statuses: statusFilter });
+    fireEvent(Events.ANNOTATION_FILTER_CHANGED, { types: typesFilter, authors: authorFilter, colors: colorFilter, statuses: statusFilter });
     closeModal();
   };
 
@@ -82,7 +83,7 @@ const FilterAnnotModal = () => {
     setTypesFilter([]);
     setColorFilter([]);
     setStatusFilter([]);
-    fireEvent('annotationFilterChanged', { types: [], authors: [], colors: [], statuses: [] });
+    fireEvent(Events.ANNOTATION_FILTER_CHANGED, { types: [], authors: [], colors: [], statuses: [] });
   };
 
   const closeModal = () => {

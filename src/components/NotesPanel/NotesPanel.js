@@ -14,10 +14,11 @@ import Button from 'components/Button';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
+import Events from 'constants/events';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
-import { isIE } from "helpers/device";
+import { isIE } from 'helpers/device';
 
 import './NotesPanel.scss';
 
@@ -107,7 +108,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     core.addEventListener('annotationChanged', _setNotes);
     core.addEventListener('annotationHidden', _setNotes);
     core.addEventListener('updateAnnotationPermission', _setNotes);
-    window.addEventListener('annotationFilterChanged', toggleFilterStyle);
+    window.addEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
 
     _setNotes();
 
@@ -115,7 +116,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       core.removeEventListener('annotationChanged', _setNotes);
       core.removeEventListener('annotationHidden', _setNotes);
       core.removeEventListener('updateAnnotationPermission', _setNotes);
-      window.removeEventListener('annotationFilterChanged', toggleFilterStyle);
+      window.removeEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
     };
   }, []);
 

@@ -3,9 +3,9 @@ import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import { enableElements, disableElements } from 'actions/internalActions';
-
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
+import Events from 'constants/events';
 
 export const setHighContrastMode = useHighContrastMode => ({
   type: 'SET_HIGH_CONTRAST_MODE',
@@ -240,15 +240,15 @@ export const openElement = dataElement => (dispatch, getState) => {
   if (isDataElementLeftPanel(dataElement, state)) {
     if (!isLeftPanelOpen) {
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
-      fireEvent('visibilityChanged', { element: 'leftPanel', isVisible: true });
+      fireEvent(Events.VISIBILITY_CHANGED, { element: 'leftPanel', isVisible: true });
     }
     dispatch(setActiveLeftPanel(dataElement));
   } else {
     dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement } });
-    fireEvent('visibilityChanged', { element: dataElement, isVisible: true });
+    fireEvent(Events.VISIBILITY_CHANGED, { element: dataElement, isVisible: true });
 
     if (dataElement === 'leftPanel' && !isLeftPanelOpen) {
-      fireEvent('visibilityChanged', {
+      fireEvent(Events.VISIBILITY_CHANGED, {
         element: state.viewer.activeLeftPanel,
         isVisible: true,
       });
@@ -282,13 +282,13 @@ export const closeElement = dataElement => (dispatch, getState) => {
     state.viewer.openElements['leftPanel']
   ) {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: 'leftPanel' } });
-    fireEvent('visibilityChanged', { element: 'leftPanel', isVisible: false });
+    fireEvent(Events.VISIBILITY_CHANGED, { element: 'leftPanel', isVisible: false });
   } else {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement } });
-    fireEvent('visibilityChanged', { element: dataElement, isVisible: false });
+    fireEvent(Events.VISIBILITY_CHANGED, { element: dataElement, isVisible: false });
 
     if (dataElement === 'leftPanel' && state.viewer.openElements['leftPanel']) {
-      fireEvent('visibilityChanged', {
+      fireEvent(Events.VISIBILITY_CHANGED, {
         element: state.viewer.activeLeftPanel,
         isVisible: false,
       });
@@ -348,12 +348,12 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
         type: 'CLOSE_ELEMENT',
         payload: { dataElement: state.viewer.activeLeftPanel },
       });
-      fireEvent('visibilityChanged', {
+      fireEvent(Events.VisibilityChanged, {
         element: state.viewer.activeLeftPanel,
         isVisible: false,
       });
       dispatch({ type: 'SET_ACTIVE_LEFT_PANEL', payload: { dataElement } });
-      fireEvent('visibilityChanged', { element: dataElement, isVisible: true });
+      fireEvent(Events.VisibilityChanged, { element: dataElement, isVisible: true });
     }
   } else {
     const panelDataElements = [
@@ -473,7 +473,7 @@ export const setCustomElementOverrides = (dataElement, overrides) => ({
   payload: { dataElement, overrides },
 });
 export const setActiveTheme = theme => {
-  fireEvent('themeChanged', theme);
+  fireEvent(Events.THEME_CHANGED, theme);
 
   return ({
     type: 'SET_ACTIVE_THEME',

@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-
 import Icon from 'components/Icon';
 import fireEvent from 'helpers/fireEvent';
 import selectors from 'selectors';
+import Events from 'constants/events';
 
 import './ResizeBar.scss';
-
 
 const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement }) => {
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
@@ -23,7 +22,7 @@ const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement }) => {
       if (isMouseDownRef.current) {
         const newWidth = Math.max(minWidth, Math.min(window.innerWidth, leftDirection ? window.innerWidth - clientX : clientX));
         onResize(newWidth);
-        fireEvent('panelResized', { element: dataElement, width: newWidth });
+        fireEvent(Events.PANEL_RESIZED, { element: dataElement, width: newWidth });
       }
     };
 

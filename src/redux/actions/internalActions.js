@@ -1,6 +1,7 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
 import { isIOS, isAndroid } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
+import Events from 'constants/events';
 import selectors from 'selectors';
 import core from 'core';
 
@@ -289,7 +290,7 @@ export const addBookmark = (pageIndex, text) => (dispatch, getState) => {
   });
 
   const bookmarks = selectors.getBookmarks(getState());
-  fireEvent('userBookmarksChanged', bookmarks);
+  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
 };
 export const editBookmark = (pageIndex, text) => (dispatch, getState) => {
   dispatch({
@@ -297,7 +298,7 @@ export const editBookmark = (pageIndex, text) => (dispatch, getState) => {
     payload: { pageIndex, text },
   });
   const bookmarks = selectors.getBookmarks(getState());
-  fireEvent('userBookmarksChanged', bookmarks);
+  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
 };
 export const removeBookmark = pageIndex => (dispatch, getState) => {
   dispatch({
@@ -305,7 +306,7 @@ export const removeBookmark = pageIndex => (dispatch, getState) => {
     payload: { pageIndex },
   });
   const bookmarks = selectors.getBookmarks(getState());
-  fireEvent('userBookmarksChanged', bookmarks);
+  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
 };
 export const setLayers = layers => ({
   type: 'SET_LAYERS',
