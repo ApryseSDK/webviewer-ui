@@ -134,6 +134,10 @@ import showWarningMessage from './showWarningMessage';
 import textPopup from './textPopup';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
+import {
+  enableToolDefaultStyleUpdateFromAnnotationPopup,
+  disableToolDefaultStyleUpdateFromAnnotationPopup
+} from './toolDefaultStyleUpdateFromAnnotationPopup';
 import unregisterTool from './unregisterTool';
 import updateElement from './updateElement';
 import updateOutlines from './updateOutlines';
@@ -331,6 +335,8 @@ export default store => {
     setSortNotesBy: setSortNotesBy(store),
     getCustomData,
     toggleReaderMode: toggleReaderMode(store),
+    enableToolDefaultStyleUpdateFromAnnotationPopup,
+    disableToolDefaultStyleUpdateFromAnnotationPopup,
     addEventListener,
     removeEventListener,
 

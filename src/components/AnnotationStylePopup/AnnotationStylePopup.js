@@ -11,6 +11,7 @@ import { isMobile } from 'helpers/device';
 import { mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
+import { isToolDefaultStyleUpdateFromAnnotationPopupEnabled } from '../../apis/toolDefaultStyleUpdateFromAnnotationPopup';
 
 import './AnnotationStylePopup.scss';
 
@@ -37,7 +38,9 @@ class AnnotationStylePopup extends React.Component {
       [property]: value,
     });
 
-    setToolStyles(annotation.ToolName, property, value);
+    if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      setToolStyles(annotation.ToolName, property, value);
+    }
   };
 
   handleClick = e => {
