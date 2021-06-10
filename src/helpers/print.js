@@ -371,7 +371,7 @@ const getNote = (annotation, dateFormat, language) => {
   const noteIcon = getNoteIcon(annotation);
 
   noteRootInfo.appendChild(noteIcon);
-  noteRootInfo.appendChild(getNoteInfo(annotation));
+  noteRootInfo.appendChild(getNoteInfo(annotation, dateFormat, language));
   noteRoot.appendChild(noteRootInfo);
   noteRoot.appendChild(getNoteContent(annotation));
 
