@@ -43,7 +43,7 @@ const TextSignature = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const multiplier = window.utils.getCanvasMultiplier();
+    const multiplier = window.Core.getCanvasMultiplier();
 
     const resizeCanvas = () => {
       const { width, height } = textDivsRef.current[

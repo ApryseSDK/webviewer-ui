@@ -44,7 +44,7 @@ const InkSignature = ({
     const canvas = canvasRef.current;
 
     signatureTool.setSignatureCanvas(canvas);
-    const multiplier = window.utils.getCanvasMultiplier();
+    const multiplier = window.Core.getCanvasMultiplier();
     canvas.getContext('2d').scale(multiplier, multiplier);
   }, []);
 

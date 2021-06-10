@@ -115,7 +115,7 @@ const ThumbnailsPanel = () => {
     if (rotation < 0) {
       rotation += 4;
     }
-    const multiplier = window.utils.getCanvasMultiplier();
+    const multiplier = window.Core.getCanvasMultiplier();
 
     if (rotation % 2 === 0) {
       annotCanvas.width = width;

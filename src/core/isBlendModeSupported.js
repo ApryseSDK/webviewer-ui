@@ -1,5 +1,5 @@
 /**
- * https://www.pdftron.com/api/web/utils.html#isBlendModeSupported__anchor
- * @see https://www.pdftron.com/api/web/utils.html#isBlendModeSupported__anchor
+ * https://www.pdftron.com/api/web/Core.html#isBlendModeSupported__anchor
+ * @see https://www.pdftron.com/api/web/Core.html#isBlendModeSupported__anchor
  */
-export default type => window.utils.isBlendModeSupported(type);
+export default type => window.Core.isBlendModeSupported(type);
