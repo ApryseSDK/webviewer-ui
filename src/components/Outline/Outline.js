@@ -7,22 +7,18 @@ import { useTranslation } from 'react-i18next';
 import { ItemTypes, DropLocation, BUFFER_ROOM } from 'constants/dnd';
 import Events from 'constants/events';
 import fireEvent from 'helpers/fireEvent';
-
 import OutlineContext from './Context';
 import Icon from 'components/Icon';
 import Button from 'components/Button';
 import DataElementWrapper from 'components/DataElementWrapper';
 import OutlineEditPopup from 'components/OutlineEditPopup';
 import OutlineTextInput from 'components/OutlineTextInput';
-
 import core from 'core';
 import outlineUtils from 'helpers/OutlineUtils';
 import { isMobile, isIE } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
-
 import './Outline.scss';
-
 const propTypes = {
   outline: PropTypes.object.isRequired,
   moveOutlineInward: PropTypes.func.isRequired,
@@ -32,7 +28,7 @@ const propTypes = {
   connectDropTarget: PropTypes.func,
   isDragging: PropTypes.bool,
   isDraggedUpwards: PropTypes.bool,
-  isDraggedDownwards: PropTypes.bool
+  isDraggedDownwards: PropTypes.bool,
 };
 
 const Outline = forwardRef(
@@ -97,6 +93,12 @@ const Outline = forwardRef(
       setIsExpanded(expand => !expand);
     }, []);
 
+    const handleKeyPress = useCallback(function(event) {
+      if (event.key === 'Enter') {
+        handleClickExpand();
+      }
+    });
+
     const handleOutlineClick = useCallback(
       function() {
         core.goToOutline(outline);
@@ -143,7 +145,9 @@ const Outline = forwardRef(
                 arrow: true,
                 expanded: isExpanded,
               })}
-              onClick={handleClickExpand}
+            tabIndex="0"
+            onClick={handleClickExpand}
+            onKeyPress={handleKeyPress}
             >
               <Icon glyph="ic_chevron_right_black_24px" />
             </div>
@@ -202,7 +206,6 @@ Outline.propTypes = propTypes;
 
 function OutlineEditButton({ outline, setIsEditingName, onPopupOpen, onPopupClose }) {
   const [isOpen, setIsOpen] = useState(false);
-
   useEffect(() => {
     if (isOpen) {
       onPopupOpen();
@@ -210,13 +213,10 @@ function OutlineEditButton({ outline, setIsEditingName, onPopupOpen, onPopupClos
       onPopupClose();
     }
   }, [isOpen, onPopupOpen, onPopupClose]);
-
   function handleButtonClick() {
     setIsOpen(open => !open);
   }
-
   const trigger = `edit-button-${outlineUtils.getPath(outline)}`;
-
   return (
     <DataElementWrapper className="editOutlineButton" dataElement="editOutlineButton">
       <Button dataElement={trigger} img="icon-tool-more" onClick={handleButtonClick} />
