@@ -5,6 +5,7 @@
  * @param {Array.<number>} [options.pagesToPrint] Optionally pass in the pages you want to print. By default, all pages will be printed.
  * @param {boolean} [options.includeAnnotations=false] If true, will print the documents with the annotations
  * @param {boolean} [options.includeComments=false] If true, will append comments to the document printed
+ * @param {boolean} [options.isPrintCurrentView] If true, will print the current viewport view of the current page
  * @param {function} [options.onProgress] A callback function that is executed on each page processed
  * @example
 WebViewer(...)

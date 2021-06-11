@@ -24,6 +24,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
     printQuality = PRINT_QUALITY,
     printWithoutModal = false,
     language,
+    isPrintCurrentView,
   } = options;
   let { pagesToPrint } = options;
 
@@ -52,6 +53,9 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
         pagesToPrint.push(i);
       }
     }
+    if (isPrintCurrentView) {
+      pagesToPrint = [core.getDocumentViewer().getCurrentPage()];
+    }
 
     const createPages = creatingPages(
       pagesToPrint,
@@ -62,6 +66,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       colorMap,
       undefined,
       onProgress,
+      isPrintCurrentView,
       language,
     );
     Promise.all(createPages)
