@@ -171,6 +171,10 @@
       height: 30px;
       cursor: pointer;
 
+      @include ie11 {
+        padding-left: 11px;
+      }
+
       &:hover {
         background: var(--primary-button-hover);
       }
