@@ -7,7 +7,7 @@ export default () => {
   const coreVersion = window.Core.DocumentViewer.prototype.version;
   const coreBuild = window.Core.DocumentViewer.prototype.build;
   const uiVersion = packageConfig.version;
-  const pdftronServer = !!getHashParams('pdftronServer', null);
+  const wvServer = !!getHashParams('webviewerServerURL', null);
   const fullAPI = !!getHashParams('pdfnet', false);
   const disableLogs = getHashParams('disableLogs', false);
 
@@ -29,13 +29,13 @@ export default () => {
         'UI version': uiVersion,
         'Core version': coreVersion,
         'Build': coreBuild,
-        'WebViewer Server': pdftronServer,
+        'WebViewer Server': wvServer,
         'Full API': fullAPI,
       };
       console.table(versions);
     } else {
       console.log(
-        `[WebViewer] UI version: ${uiVersion}, Core version: ${coreVersion}, Build: ${coreBuild}, WebViewer Server: ${pdftronServer}, Full API: ${fullAPI}`,
+        `[WebViewer] UI version: ${uiVersion}, Core version: ${coreVersion}, Build: ${coreBuild}, WebViewer Server: ${wvServer}, Full API: ${fullAPI}`,
       );
     }
 
