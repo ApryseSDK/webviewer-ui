@@ -205,10 +205,12 @@ export const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
 
 /**
  * @ignore
- * @param {number} approximateHeight The max height of the popup element.
+ * @param {number} annotationPosition The position of the annotation (topLeft, bottomRight)
+ * @param {number} popupDimension The deminition of the popup (width, height)
  * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
  */
 export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
+  const padding = 5;
   const scrollContainer = core.getScrollViewElement();
   const boundingBox = scrollContainer.getBoundingClientRect();
   const visibleRegion = {
@@ -227,8 +229,13 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
   } else if (annotTop - height > visibleRegion.top) {
     top = annotTop - height;
   } else {
-    // there's no room for it in the vertical axis, so just choose the top of the visible region
-    top = visibleRegion.top + 5;
+    // if there is no enough room to fit the style popup in either way (top or bottom)
+    // We want to place it on the side that has more space
+    if (annotTop > visibleRegion.bottom - annotBottom) { // if top has more space, place it to top
+      top = visibleRegion.top + padding;
+    } else { // otherwise, place it to bottom
+      top = visibleRegion.bottom - padding - height;
+    }
   }
 
   return Math.round(top - scrollContainer.scrollTop);
