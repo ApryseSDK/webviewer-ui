@@ -407,6 +407,7 @@ const AnnotationPopup = () => {
                         annotManager.deleteAnnotation(annot);
                       }
                     });
+                    dispatch(actions.closeElement('annotationPopup'));
                   }
                   : () => dispatch(actions.openElement('linkModal'))
               }
