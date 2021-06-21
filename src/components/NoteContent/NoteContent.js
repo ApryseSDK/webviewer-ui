@@ -76,11 +76,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
       const name = core.getDisplayAuthor(annotation['Author']);
 
       return name ? (
-        <span
-          dangerouslySetInnerHTML={{
-            __html: highlightSearchInput(name, searchInput),
-          }}
-        />
+        highlightSearchInput(name, searchInput)
       ) : (
         t('option.notesPanel.noteContent.noName')
       );
@@ -90,29 +86,72 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
 
   const renderContents = useCallback(
     contents => {
-      let text;
-      const transformedContents = Autolinker.link(contents, {
+      const autolinkerContent = [];
+      Autolinker.link(contents, {
         stripPrefix: false,
-        replaceFn: function (match) {
-          const tag = match.buildTag();
-          tag.setInnerHtml(escapeHtml(match.getAnchorText()));
-          return tag;
-        }
+        stripTrailingSlash: false,
+        replaceFn : function(match) {
+          const href = match.getAnchorHref();
+          const anchorText = match.getAnchorText();
+          const offset = match.getOffset();
+          switch(match.getType()) {
+            case 'url':
+            case 'email':
+            case 'phone':
+              autolinkerContent.push({
+                href,
+                text: anchorText,
+                start: offset,
+                end: offset + anchorText.length,
+              });
+              return;
+          }
+        },
       });
-      if (transformedContents.includes('<a')) {
-        // if searchInput is 't', replace <a ...>text</a> with
-        // <a ...><span class="highlight">t</span>ext</a>
-        text = transformedContents.replace(
-          />(.+)</i,
-          (_, p1) => `>${highlightSearchInput(p1, searchInput)}<`,
-        );
-      } else {
-        text = highlightSearchInput(contents, searchInput);
+      if (!autolinkerContent.length) {
+        return highlightSearchInput(contents, searchInput);
       }
-
-      return (
-        <span className="contents" dangerouslySetInnerHTML={{ __html: text }} />
-      );
+      const contentToRender = [];
+      let strIdx = 0;
+      // Iterate through each case detected by Autolinker, wrap all content
+      // before the current link in a span tag, and wrap the current link
+      // in our own anchor tag
+      autolinkerContent.forEach((anchorData, forIdx) => {
+        const { start, end, href, text } = anchorData;
+        if (strIdx < start) {
+          contentToRender.push(
+            <span key={`span_${forIdx}`}>
+              {
+                highlightSearchInput(
+                  contents.slice(strIdx, start),
+                  searchInput,
+                )
+              }
+            </span>
+          );
+        }
+        contentToRender.push(
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            key={`a_${forIdx}`}
+          >
+            {
+              highlightSearchInput(
+                text,
+                searchInput,
+              )
+            }
+          </a>
+        );
+        strIdx = end;
+      });
+      // Ensure any content after the last link is accounted for
+      if (strIdx < contents.length - 1) {
+        contentToRender.push(highlightSearchInput(contents.slice(strIdx), searchInput));
+      }
+      return contentToRender;
     },
     [searchInput],
   );
@@ -349,19 +388,45 @@ ContentArea.propTypes = {
 };
 
 const highlightSearchInput = (text, searchInput) => {
-  if (searchInput.trim()) {
-    try {
-      text = text.replace(
-        new RegExp(`(${searchInput})`, 'gi'),
-        '<span class="highlight">$1</span>',
-      );
-    } catch (e) {
-      // this condition is usually met when a search input contains symbols like *?!
-      text = text
-        .split(searchInput)
-        .join(`<span class="highlight">${searchInput}</span>`);
-    }
+  const loweredText = text.toLowerCase();
+  const loweredSearchInput = searchInput.toLowerCase();
+  let lastFoundInstance = loweredText.indexOf(loweredSearchInput);
+  if (!loweredSearchInput.trim() || lastFoundInstance === -1) {
+    return text;
   }
-
-  return text;
+  const contentToRender = [];
+  const allFoundPositions = [lastFoundInstance];
+  // Escape all RegExp special characters
+  const regexSafeSearchInput = loweredSearchInput.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  if (new RegExp(`(${regexSafeSearchInput})`, 'gi').test(loweredText)) {
+    while (lastFoundInstance !== -1) {
+      lastFoundInstance = loweredText.indexOf(loweredSearchInput, lastFoundInstance + loweredSearchInput.length);
+      if (lastFoundInstance !== -1) {
+        allFoundPositions.push(lastFoundInstance);
+      }
+    };
+  }
+  allFoundPositions.forEach((position, idx) => {
+    // Account for any content at the beginning of the string before the first
+    // instance of the searchInput
+    if (idx === 0 && position !== 0) {
+      contentToRender.push(text.substring(0, position));
+    }
+    contentToRender.push(
+      <span className="highlight" key={`highlight_span_${idx}`}>
+        {text.substring(position, position + loweredSearchInput.length)}
+      </span>
+    );
+    if (
+      // Ensure that we do not try to make an out-of-bounds access
+      position + loweredSearchInput.length < loweredText.length
+      // Ensure that this is the end of the allFoundPositions array
+      && position + loweredSearchInput.length !== allFoundPositions[idx+1]
+    ) {
+      contentToRender.push(
+        text.substring(position + loweredSearchInput.length, allFoundPositions[idx+1])
+      );
+    }
+  });
+  return contentToRender;
 };

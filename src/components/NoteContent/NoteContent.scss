@@ -135,6 +135,7 @@
   .container {
     margin-top: 7px;
     overflow: hidden;
+    white-space: pre-wrap;
 
     .contents {
       cursor: text;

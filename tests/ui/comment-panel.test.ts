@@ -566,4 +566,24 @@ describe('Test cases for comment panel', () => {
 
     expect(duplicateCount).toEqual(2);
   });
+
+  it(
+    'should have a comment with an anchor tag that captures the prefix "https://" and trailing slash',
+    async() => {
+      const instance = await result.waitForInstance();
+
+      await instance('loadDocument', '/test-files/autolinker-prefix-and-trailing-slash.pdf');
+      await result.waitForWVEvent('annotationsLoaded');
+
+      instance('openElement', 'notesPanel');
+      await page.waitFor(500);
+
+      const hrefFromAnchor = await (result.iframe as Frame).evaluate(async() => {
+        return String(document.querySelectorAll('.Note')[0].getElementsByTagName('a')[0].getAttribute('href'));
+      });
+
+      await page.waitFor(500);
+      expect(hrefFromAnchor).toBe('https://www.pdftron.com/');
+    }
+  );
 });
