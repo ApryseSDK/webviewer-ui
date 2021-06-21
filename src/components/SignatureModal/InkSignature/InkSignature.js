@@ -59,20 +59,26 @@ const InkSignature = ({
   }, [clearCanvas]);
 
   useEffect(() => {
-    if (isModalOpen && isTabPanelSelected) {
-      const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.setSignature(freeHandPathsRef.current);
-      annotIdRef.current = signatureTool.annot?.Id;
-      // use resizeCanvas here mainly for redawing the underlying signature annotation to make it show on the canvas
-      signatureTool.resizeCanvas();
+    async function resizeCanvasAsyncCall() {
+      if (isModalOpen && isTabPanelSelected) {
+        const signatureTool = core.getTool('AnnotationCreateSignature');
+        signatureTool.setSignature(freeHandPathsRef.current);
+        annotIdRef.current = signatureTool.annot?.Id;
+        // use resizeCanvas here mainly for redawing the underlying signature annotation to make it show on the canvas
+        await signatureTool.resizeCanvas();
+      }
     }
+    resizeCanvasAsyncCall();
   }, [isTabPanelSelected, isModalOpen]);
 
   useEffect(() => {
-    if (dimension.height && dimension.width) {
-      const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.resizeCanvas();
+    async function resizeCanvasAsyncCall() {
+      if (dimension.height && dimension.width) {
+        const signatureTool = core.getTool('AnnotationCreateSignature');
+        await signatureTool.resizeCanvas();
+      }
     }
+    resizeCanvasAsyncCall();
   }, [dimension]);
 
   const clearCanvas = useCallback(() => {
@@ -82,10 +88,10 @@ const InkSignature = ({
     annotIdRef.current = null;
   }, []);
 
-  const handleFinishDrawing = () => {
+  const handleFinishDrawing = async () => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
-    if (!signatureTool.isEmptySignature()) {
+    if (!(await signatureTool.isEmptySignature())) {
       // need to deep copy the paths because it will be modified
       // when the annotation is added to the document
       // we want to keep the unmodified paths so that users can keep drawing on the canvas

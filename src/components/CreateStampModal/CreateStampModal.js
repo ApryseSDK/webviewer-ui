@@ -33,11 +33,11 @@ const CustomStampModal = () => {
     closed: !isOpen,
   });
 
-  const createCustomStamp = () => {
+  const createCustomStamp = async () => {
     core.setToolMode(TOOL_NAME);
     stampTool.addCustomStamp(state);
-    const annot = stampTool.createCustomStampAnnotation(state);
-    stampTool.setRubberStamp(annot);
+    const annot = await stampTool.createCustomStampAnnotation(state);
+    await stampTool.setRubberStamp(annot);
     stampTool.showPreview();
     dispatch(actions.closeElement('customStampModal'));
     const standardStampCount = stampTool.getStandardStamps().length;

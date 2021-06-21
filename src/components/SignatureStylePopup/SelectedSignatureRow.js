@@ -28,11 +28,11 @@ const SelectedSignatureRow = ({ t }) => {
       {displayedSignature ?
         <SignatureRowContent
           imgSrc={displayedSignature.imgSrc}
-          onClick={() => {
-            signatureTool.setSignature(displayedSignature.annotation);
+          onClick={async () => {
+            await signatureTool.setSignature(displayedSignature.annotation);
             core.setToolMode('AnnotationCreateSignature');
             if (signatureTool.hasLocation()) {
-              signatureTool.addSignature();
+              await signatureTool.addSignature();
             } else {
               signatureTool.showPreview();
             }

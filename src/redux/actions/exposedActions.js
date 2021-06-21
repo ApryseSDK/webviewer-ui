@@ -73,10 +73,12 @@ export const setCustomStamps = t => async dispatch => {
     }),
   );
 
-  const customStamps = annotations.map(annotation => ({
-    annotation,
-    imgSrc: annotation['ImageData'],
-  }));
+  const customStamps = await Promise.all(
+    annotations.map(async (annotation) => ({
+      annotation,
+      imgSrc: await annotation.getImageData(),
+    }))
+  );
 
   dispatch({
     type: 'SET_CUSTOM_STAMPS',

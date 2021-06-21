@@ -59,15 +59,15 @@ const SignatureModal = () => {
     dispatch(actions.closeElement('signatureModal'));
   };
 
-  const createSignature = () => {
-    if (!signatureTool.isEmptySignature()) {
+  const createSignature = async () => {
+    if (!(await signatureTool.isEmptySignature())) {
       signatureTool.saveSignatures(signatureTool.annot);
 
       dispatch(actions.setSelectedDisplayedSignatureIndex(displayedSignatures.length));
       core.setToolMode('AnnotationCreateSignature');
 
       if (signatureTool.hasLocation()) {
-        signatureTool.addSignature();
+        await signatureTool.addSignature();
       } else {
         signatureTool.showPreview();
       }
