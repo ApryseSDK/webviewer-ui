@@ -21,10 +21,6 @@ import selectors from 'selectors';
 
 import './AnnotationPopup.scss';
 
-const AnnotationCustomData = {
-  LINK_ID: 'trn-link-id',
-};
-
 const AnnotationPopup = () => {
   const [
     isDisabled,
@@ -51,11 +47,19 @@ const AnnotationPopup = () => {
   const [firstAnnotation, setFirstAnnotation] = useState(null);
   const [canModify, setCanModify] = useState(false);
   const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
-  const [hasAssociatedLink, setHasAssociatedLink] = useState(false);
+  const [hasAssociatedLink, setHasAssociatedLink] = useState(true);
   const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(false);
   const isEditingWidgets = useWidgetEditing();
   const popupRef = useRef();
   const [includesFormFieldAnnotation, setIncludesFormFieldAnnotation] = useState(false);
+
+  // helper function to get all the link annotations that are grouped with the passed in annotation
+  const getGroupedLinkAnnotations = (annotation) => {
+    const groupedLinks = core.getAnnotationManager().getGroupAnnotations(annotation).filter((groupedAnnotation) => {
+      return groupedAnnotation instanceof Annotations.Link;
+    });
+    return groupedLinks;
+  }
 
   useOnClickOutside(popupRef, e => {
     const notesPanel = document.querySelector('[data-element="notesPanel"]');
@@ -73,19 +77,10 @@ const AnnotationPopup = () => {
     }
   });
 
-  const getAssociatedLinkedAnnotations = annotation => {
-    const rawCustomData = annotation.getCustomData(AnnotationCustomData.LINK_ID);
-    let customData = [];
-    if (rawCustomData) {
-      customData = JSON.parse(rawCustomData);
-    }
-    return Array.isArray(customData) ? customData : [];
-  };
-
   useEffect(() => {
     if (firstAnnotation) {
-      const linkAnnotations = getAssociatedLinkedAnnotations(firstAnnotation);
-      setHasAssociatedLink(linkAnnotations.length);
+      const linkAnnotations = getGroupedLinkAnnotations(firstAnnotation);
+      setHasAssociatedLink(!!linkAnnotations.length);
     }
   }, [firstAnnotation]);
 
@@ -207,6 +202,8 @@ const AnnotationPopup = () => {
   const isFreeTextAnnot = firstAnnotation instanceof window.Annotations.FreeTextAnnotation;
   const isFreeTextAndCanEdit =
     isFreeTextAnnot && core.getAnnotationManager().useFreeTextEditing() && core.canModifyContents(firstAnnotation);
+  
+  
 
   const commentOnAnnotation = () => {
     if (isFreeTextAndCanEdit) {
@@ -232,7 +229,7 @@ const AnnotationPopup = () => {
     // trigger the annotationDoubleClicked event so that it will download the file
     core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
   };
-
+  
   const toolNames = window.Tools.ToolNames;
   const toolsWithNoStyling = [
     toolNames.CROP,
@@ -397,12 +394,11 @@ const AnnotationPopup = () => {
                   ? () => {
                     const annotManager = core.getAnnotationManager();
                     selectedAnnotations.forEach(annot => {
-                      const linkAnnotations = getAssociatedLinkedAnnotations(annot);
-                      linkAnnotations.forEach(annotId => {
-                        const linkAnnot = annotManager.getAnnotationById(annotId);
+                      const linkAnnotations = getGroupedLinkAnnotations(annot);
+                      linkAnnotations.forEach(linkAnnot => {
+                        annotManager.ungroupAnnotations([linkAnnot]);
                         annotManager.deleteAnnotation(linkAnnot, null, true);
                       });
-                      annot.deleteCustomData(AnnotationCustomData.LINK_ID);
                       if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0) {
                         annotManager.deleteAnnotation(annot);
                       }
