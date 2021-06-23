@@ -176,7 +176,7 @@ class StylePopup extends React.PureComponent {
               color={style[currentPalette]}
               property={currentPalette}
               onStyleChange={onStyleChange}
-              enableEdit={true}
+              enableEdit
             />
           </React.Fragment>
         )}

@@ -8,7 +8,7 @@ import defaultTool from 'constants/defaultTool';
 
 import core from 'core';
 import getToolStyles from 'helpers/getToolStyles';
-import getFillColor from 'helpers/getFillColor';
+import getColor from 'helpers/getColor';
 import { mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -84,12 +84,18 @@ class ToolGroupButton extends React.PureComponent {
       : toolButtonObjects[toolName]?.img;
     let color = '';
     let fillColor = '';
+    let strokeColor = '';
     if (showColor !== 'never' && isActive) {
       const toolStyles = getToolStyles(toolName);
       if (iconColorKey) {
         color = toolStyles[iconColorKey]?.toHexString?.();
       }
-      fillColor = getFillColor(toolStyles.FillColor);
+      fillColor = getColor(toolStyles.FillColor);
+      strokeColor = getColor(toolStyles.StrokeColor);
+      if (toolName.indexOf('AnnotationCreateFreeText') > -1 && toolStyles?.StrokeThickness === 0) {
+        // transparent
+        strokeColor = 'ff000000';
+      }
     }
 
     return allButtonsInGroupDisabled ? null : (
@@ -107,6 +113,7 @@ class ToolGroupButton extends React.PureComponent {
           img={img}
           color={color}
           fillColor={fillColor}
+          strokeColor={strokeColor}
           dataElement={dataElement}
           onClick={this.onClick}
         />

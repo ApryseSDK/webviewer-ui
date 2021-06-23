@@ -61,6 +61,7 @@ const Button = props => {
     style,
     ariaLabel,
     role,
+    strokeColor,
     fillColor,
     hideTooltipShortcut,
     iconClassName,
@@ -110,6 +111,7 @@ const Button = props => {
           glyph={imgToShow}
           color={color}
           fillColor={fillColor}
+          strokeColor={strokeColor}
           className={iconClassName}
         />}
       {imgToShow && !isGlyph && <img src={imgToShow} />}

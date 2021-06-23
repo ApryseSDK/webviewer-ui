@@ -24,7 +24,7 @@ import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import escapeHtml from 'helpers/escapeHtml';
-import getFillColor from 'helpers/getFillColor';
+import getColor from 'helpers/getColor';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
@@ -158,7 +158,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
 
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
   const color = annotation[iconColor]?.toHexString?.();
-  const fillColor = getFillColor(annotation.FillColor);
+  const fillColor = getColor(annotation.FillColor);
   let customData;
   try {
     customData = JSON.parse(annotation.getCustomData('trn-mention'));
