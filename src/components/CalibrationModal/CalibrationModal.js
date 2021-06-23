@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +17,7 @@ import { Swipeable } from 'react-swipeable';
 
 import './CalibrationModal.scss';
 
-const numberRegex = /^\d*(\.\d*)?$/;
+const numberRegex = /^(?!0+$)\d*(\.\d*)?$/;
 const fractionRegex = /^\d*(\s\d\/\d*)$/;
 const pureFractionRegex = /^(\d\/\d*)*$/;
 
@@ -37,6 +37,11 @@ const CalibrationModal = () => {
   const [unitTo, setUnitTo] = useState('');
   const [showError, setShowError] = useState(false);
   const [t] = useTranslation();
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    isOpen && inputRef.current && inputRef.current.focus();
+  }, [isOpen]);
 
   useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
@@ -186,7 +191,14 @@ const CalibrationModal = () => {
           <div className="calibration__body">
             <div>{t('message.enterMeasurement')}</div>
             <div className="calibration__input">
-              <input className={showError ? 'error' : ''} type="text" value={value} onChange={handleInputChange} onBlur={validateInput}/>
+              <input
+                className={showError ? 'error' : ''}
+                ref={inputRef}
+                type="text"
+                value={value}
+                onChange={handleInputChange}
+                onBlur={validateInput}
+              />
               <select
                 className="unitToInput"
                 value={unitTo}
