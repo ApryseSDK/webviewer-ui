@@ -1,15 +1,15 @@
 /**
  * Return the min zoom level
- * @method WebViewerInstance#getMinZoomLevel
+ * @method UI.getMinZoomLevel
  * @return {number} min zoom level
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var docViewer = instance.docViewer;
+    const docViewer = instance.Core.documentViewer;
 
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', function() {
-      console.log(instance.getMinZoomLevel());
+      console.log(instance.UI.getMinZoomLevel());
     });
   });
  */

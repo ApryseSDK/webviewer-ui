@@ -10,7 +10,7 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    const docViewer = instance.Core.docViewer;
+    const docViewer = instance.Core.documentViewer;
 
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', function() {

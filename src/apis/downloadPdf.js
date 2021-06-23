@@ -14,8 +14,8 @@
  * @example
 WebViewer(...)
   .then(async function(instance) {
-    const docViewer = instance.Core.docViewer;
-    const annotManager = instance.Core.annotManager;
+    const docViewer = instance.Core.documentViewer;
+    const annotManager = instance.Core.annotationManager;
 
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', async function() {

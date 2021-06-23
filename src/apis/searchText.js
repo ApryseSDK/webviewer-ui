@@ -2,7 +2,7 @@
  * Searches the document one by one for the text matching searchValue. To go to the next result this
  * function must be called again. Once document end is reach it will jump back to the first found result.
  *
- * @method WebViewerInstance#searchText
+ * @method UI.searchText
  * @param {string} searchValue The text value to look for.
  * @param {object} [options] Search options.
  * @param {boolean} [options.caseSensitive=false] Search with matching cases.
@@ -14,11 +14,11 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var docViewer = instance.docViewer;
+    const docViewer = instance.Core.documentViewer;
 
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', function() {
-      instance.searchText('test', {
+      instance.UI.searchText('test', {
         caseSensitive: true,
         wholeWord: true
       });

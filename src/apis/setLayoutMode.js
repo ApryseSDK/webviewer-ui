@@ -1,17 +1,17 @@
 /**
  * Sets the layout mode of the viewer.
- * @method WebViewerInstance#setLayoutMode
- * @param {string} layoutMode Layout mode of WebViewerInstance.
- * @see WebViewerInstance#LayoutMode
+ * @method UI.setLayoutMode
+ * @param {string} layoutMode Layout mode of WebViewerInstance UI.
+ * @see UI.LayoutMode
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var docViewer = instance.docViewer;
-    var LayoutMode = instance.LayoutMode;
+    const docViewer = instance.Core.documentViewer;
+    const LayoutMode = instance.UI.LayoutMode;
 
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', function() {
-      instance.setLayoutMode(LayoutMode.FacingContinuous);
+      instance.UI.setLayoutMode(LayoutMode.FacingContinuous);
     });
   });
  */

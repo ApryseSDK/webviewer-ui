@@ -2,12 +2,12 @@ import action from 'actions';
 
 /**
  * Adds a custom overlay to annotations if that annotation currently support it. Currently only the Ellipsis annotation supports it.
- * @method WebViewerInstance#setCustomMeasurementOverlay
+ * @method UI.setCustomMeasurementOverlay
  * @param {array} customOverlayInfo an array of customOverlay configurations. The configuration object has five properties: title, label, validate, value, and onChange
  * @example
 WebViewer(...)
   .then(function(instance) {
-      instance.setCustomMeasurementOverlayInfo([
+      instance.UI.setCustomMeasurementOverlayInfo([
       {
         title: "Radius Measurement", //Title for overlay
         label: "Radius", // Label to be shown for the value
@@ -18,7 +18,7 @@ WebViewer(...)
         // onChange will be called whenever the value in the overlay changes from user input
         onChange: (e, annotation) => {
           // Do something with the annot like resize/redraw
-          instance.annotManager.redrawAnnotation(annotation);
+          instance.Core.annotationManager.redrawAnnotation(annotation);
         }
       }
     ])

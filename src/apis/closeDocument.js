@@ -1,16 +1,16 @@
 /**
  * Closes the document that's currently opened.
- * @method WebViewerInstance#closeDocument
+ * @method UI.closeDocument
  * @return {Promise<void>} A promise resolved after document is closed.
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var docViewer = instance.docViewer;
+    const docViewer = instance.Core.documentViewer;
 
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', function() {
       setTimeout(function() {
-        instance.closeDocument().then(function() {
+        instance.UI.closeDocument().then(function() {
           console.log('Document is closed');
         });
       }, 3000);

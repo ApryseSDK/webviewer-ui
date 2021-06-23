@@ -1,6 +1,6 @@
 /**
  * Searches the full document for the texts matching searchValue.
- * @method WebViewerInstance#searchTextFull
+ * @method UI.searchTextFull
  * @param {string} searchValue The text value to look for.
  * @param {object} [options] Search options.
  * @param {boolean} [options.caseSensitive=false] Search with matching cases.
@@ -10,11 +10,11 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var docViewer = instance.docViewer;
+    const docViewer = instance.Core.documentViewer;
 
     // you must have a document loaded when calling this api
     docViewer.on('documentLoaded', function() {
-      instance.searchTextFull('test', {
+      instance.UI.searchTextFull('test', {
         wholeWord: true
       });
     });
