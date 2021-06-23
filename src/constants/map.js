@@ -557,7 +557,7 @@ export const copyMapWithDataProperties = (...properties) =>
     return newMap;
   }, {});
 
-export const register = (tool, customAnnotCheckFunc) => {
+export const register = (tool, annotationConstructor, customAnnotCheckFunc) => {
   const { toolName, buttonImage, toolObject } = tool;
   const key = toolName;
   const availablePalettes = ['TextColor', 'StrokeColor', 'FillColor'].filter(
@@ -572,7 +572,7 @@ export const register = (tool, customAnnotCheckFunc) => {
     toolNames: [toolName],
     annotationCheck: customAnnotCheckFunc ?
       annotation => customAnnotCheckFunc(annotation) :
-      null
+      (annotationConstructor ? annotation => annotation instanceof annotationConstructor : null)
   };
 };
 
