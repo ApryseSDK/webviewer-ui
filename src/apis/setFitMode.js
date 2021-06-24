@@ -10,7 +10,7 @@ WebViewer(...)
     var FitMode = instance.UI.FitMode;
 
     // you must have a document loaded when calling this api
-    docViewer.on('documentLoaded', function() {
+    docViewer.addEventListener('documentLoaded', function() {
       instance.UI.setFitMode(FitMode.FitWidth);
     });
   });

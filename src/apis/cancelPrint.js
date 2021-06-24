@@ -6,7 +6,7 @@ WebViewer(...)
   .then(function(instance) {
     var docViewer = instance.Core.documentViewer;
     // you must have a document loaded when calling this api
-    docViewer.on('documentLoaded', function() {
+    docViewer.addEventListener('documentLoaded', function() {
       instance.UI.print();
       instance.UI.cancelPrint();
     });

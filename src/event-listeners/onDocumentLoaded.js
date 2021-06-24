@@ -48,12 +48,12 @@ export default store => () => {
   });
 
   const doc = core.getDocument();
-  doc.on('bookmarksUpdated', () => core.getOutlines(outlines => dispatch(actions.setOutlines(outlines))));
+  doc.addEventListener('bookmarksUpdated', () => core.getOutlines(outlines => dispatch(actions.setOutlines(outlines))));
 
   outlineUtils.setDoc(core.getDocument());
 
   if (!doc.isWebViewerServerDocument()) {
-    doc.on('layersUpdated', async() => {
+    doc.addEventListener('layersUpdated', async() => {
       const newLayers = await doc.getLayersArray();
       const currentLayers = selectors.getLayers(getState());
       onLayersUpdated(newLayers, currentLayers, dispatch);

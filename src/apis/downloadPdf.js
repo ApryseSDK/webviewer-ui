@@ -18,7 +18,7 @@ WebViewer(...)
     const annotManager = instance.Core.annotationManager;
 
     // you must have a document loaded when calling this api
-    docViewer.on('documentLoaded', async function() {
+    docViewer.addEventListener('documentLoaded', async function() {
       // download pdf without annotations added by WebViewer UI
       await instance.UI.downloadPdf({
         includeAnnotations: false,

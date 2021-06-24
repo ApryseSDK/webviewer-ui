@@ -85,7 +85,7 @@ describe.skip('Test extension and preloadWorker options', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
       cy.wrap(null).then(() => {
         return waitOneSecond().then((str) => {
           expect(spy).to.be.called.once
@@ -111,7 +111,7 @@ describe.skip('Test extension and preloadWorker options', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
       cy.wrap(null).then(() => {
         return waitOneSecond().then((str) => {
           expect(spy).to.be.called.once;
@@ -124,7 +124,7 @@ describe.skip('Test extension and preloadWorker options', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
       cy.wrap(null).then(() => {
         return waitOneSecond(3000).then((str) => {
           expect(spy).to.be.called.once
@@ -138,7 +138,7 @@ describe.skip('Test extension and preloadWorker options', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
 
       cy.wrap(null).then(() => {
         return waitOneSecond(1000).then((str) => {
@@ -153,7 +153,7 @@ describe.skip('Test extension and preloadWorker options', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
 
       cy.wrap(null).then(() => {
         return waitOneSecond().then((str) => {
@@ -168,7 +168,7 @@ describe.skip('Test extension and preloadWorker options', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
 
       cy.wrap(null).then(() => {
         return waitOneSecond().then((str) => {
@@ -189,7 +189,7 @@ describe.skip('Test extension in url', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
       cy.wrap(null).then(() => {
         return waitOneSecond(2000).then(() => {
           expect(spy).not.to.be.called;
@@ -203,7 +203,7 @@ describe.skip('Test extension in url', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
       cy.wrap(null).then(() => {
         return waitOneSecond(3000).then(() => {
           expect(spy).to.be.called.once;
@@ -217,7 +217,7 @@ describe.skip('Test extension in url', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
       cy.wrap(null).then(() => {
         return waitOneSecond(2000).then(() => {
           expect(spy).to.be.called.once;
@@ -238,7 +238,7 @@ describe.skip('Test loadDocument extension and preloadWorker options', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
       win.instance.loadDocument(testFilesPath + '/xod_file', {extension: 'xod'})
       cy.wrap(null).then(() => {
         return waitOneSecond(2000).then(() => {
@@ -253,7 +253,7 @@ describe.skip('Test loadDocument extension and preloadWorker options', () => {
     let spy
     cy.window().then((win) => {
       spy = cy.spy()
-      win.instance.Core.documentViewer.on('documentLoaded', spy)
+      win.instance.Core.documentViewer.addEventListener('documentLoaded', spy)
       win.instance.loadDocument(testFilesPath + '/pdf_file', {extension: 'pdf'})
       cy.wrap(null).then(() => {
         return waitOneSecond(2000).then(() => {

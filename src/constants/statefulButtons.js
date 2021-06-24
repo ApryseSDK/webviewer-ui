@@ -6,10 +6,10 @@ export default {
     initialState: 'newSignature',
     mount: update => {
       const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.on('saveDefault.sigTool', () => {
+      signatureTool.addEventListener('saveDefault.sigTool', () => {
         update('defaultSignature');
       });
-      signatureTool.on('noDefaultSignatures', () => {
+      signatureTool.addEventListener('noDefaultSignatures', () => {
         update('newSignature');
       });
     },
@@ -20,8 +20,8 @@ export default {
     },
     unmount: () => {
       const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.off('saveDefault.sigTool');
-      signatureTool.off('noDefaultSignatures');
+      signatureTool.removeEventListener('saveDefault.sigTool');
+      signatureTool.removeEventListener('noDefaultSignatures');
     },
     states: {
       newSignature: {

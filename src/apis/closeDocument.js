@@ -8,7 +8,7 @@ WebViewer(...)
     const docViewer = instance.Core.documentViewer;
 
     // you must have a document loaded when calling this api
-    docViewer.on('documentLoaded', function() {
+    docViewer.addEventListener('documentLoaded', function() {
       setTimeout(function() {
         instance.UI.closeDocument().then(function() {
           console.log('Document is closed');

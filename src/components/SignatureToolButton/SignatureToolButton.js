@@ -37,11 +37,11 @@ const SignatureToolButton = () => {
     const onSignatureDeleted = () =>
       setHasSavedSignature(!!signatureTool.getSavedSignatures().length);
 
-    signatureTool.on('signatureSaved', onSignatureSaved);
-    signatureTool.on('signatureDeleted', onSignatureDeleted);
+    signatureTool.addEventListener('signatureSaved', onSignatureSaved);
+    signatureTool.addEventListener('signatureDeleted', onSignatureDeleted);
     return () => {
-      signatureTool.off('signatureSaved', onSignatureSaved);
-      signatureTool.off('signatureDeleted', onSignatureDeleted);
+      signatureTool.removeEventListener('signatureSaved', onSignatureSaved);
+      signatureTool.removeEventListener('signatureDeleted', onSignatureDeleted);
     };
   }, []);
 

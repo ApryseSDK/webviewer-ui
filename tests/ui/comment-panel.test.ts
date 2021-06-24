@@ -4,7 +4,7 @@ import { loadViewerSample, Timeouts } from '../../utils';
 const addAndCreateAnnot = (iFrame: Frame, isFreeTextAnnot: boolean, isLockedContents: boolean, noteContent = '', author = '',) => {
   return (iFrame as Frame).evaluate(async(isFreeTextAnnot, isLockedContents, noteContent, author) => {
     const promise = new Promise((resolve) => {
-      window.instance.Core.documentViewer.getAnnotationManager().on('annotationChanged', (annotations, action) => {
+      window.instance.Core.documentViewer.getAnnotationManager().addEventListener('annotationChanged', (annotations, action) => {
         if (action === 'add') {
           resolve();
         }
@@ -42,7 +42,7 @@ const addAndCreateAnnot = (iFrame: Frame, isFreeTextAnnot: boolean, isLockedCont
 const selectAnnotation = (id: string, iframe: Frame) => {
   return (iframe as Frame).evaluate(async(id: string) => {
     const promise = new Promise((resolve) => {
-      window.instance.Core.documentViewer.getAnnotationManager().on('annotationSelected', (annotations, action) => {
+      window.instance.Core.documentViewer.getAnnotationManager().addEventListener('annotationSelected', (annotations, action) => {
         if (action === 'selected') {
           resolve();
         }
@@ -167,7 +167,7 @@ describe('Test cases for comment panel', () => {
     await (result.iframe as Frame).evaluate(async() => {
       window.instance.Core.documentViewer.getAnnotationManager().setIsAdminUser(false);
       const promise = new Promise((resolve) => {
-        window.instance.Core.documentViewer.getAnnotationManager().on('updateAnnotationPermission', () => {
+        window.instance.Core.documentViewer.getAnnotationManager().addEventListener('updateAnnotationPermission', () => {
           resolve();
         });
       });
@@ -220,9 +220,9 @@ describe('Test cases for comment panel', () => {
 
     await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
     await result.waitForWVEvent('annotationsLoaded');
-  
+
     instance('openElement', 'notesPanel');
-  
+
     const selectAnnotAndTest = async (index) => {
       let annotId = await (result.iframe as Frame).evaluate(async(index) => {
         const annotManager = window.instance.Core.documentViewer.getAnnotationManager();
@@ -416,7 +416,7 @@ describe('Test cases for comment panel', () => {
     const notesTopStyle = await (result.iframe as Frame).evaluate(async() => {
       return  (Array.from(document.querySelectorAll('.virtualized-notes-container .ReactVirtualized__Grid__innerScrollContainer > div')) as Array<HTMLElement>).map((a) => a.style.top);
     });
-    
+
     await (result.iframe as Frame).evaluate(async() => {
       (document.querySelector('button[data-element="dropdown-item-time"]') as HTMLElement).click();
     });
@@ -501,11 +501,11 @@ describe('Test cases for comment panel', () => {
 
     await instance('loadDocument', '/test-files/demo-annotated.pdf');
     await result.waitForWVEvent('annotationsLoaded');
-  
+
     instance('openElement', 'notesPanel');
     await page.waitFor(500);
 
-    // import annotation with duplicate IDs on different pages    
+    // import annotation with duplicate IDs on different pages
     await (result.iframe as Frame).evaluate(async() => {
       await window.instance.Core.documentViewer.getAnnotationManager().importAnnotations(`<?xml version="1.0" encoding="UTF-8"?>
       <xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve">

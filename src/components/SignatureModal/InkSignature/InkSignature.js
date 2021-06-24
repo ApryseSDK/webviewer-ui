@@ -51,7 +51,7 @@ const InkSignature = ({
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
 
-    signatureTool.on('annotationAdded', annot => {
+    signatureTool.addEventListener('annotationAdded', annot => {
       if (annot.Id === annotIdRef.current) {
         clearCanvas();
       }

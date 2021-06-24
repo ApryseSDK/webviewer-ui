@@ -8,7 +8,7 @@ WebViewer(...)
     var docViewer = instance.Core.documentViewer;
 
     // you must have a document loaded when calling this api
-    docViewer.on('documentLoaded', function() {
+    docViewer.addEventListener('documentLoaded', function() {
       instance.UI.setPageLabels(['i', 'ii', 'iii', '4', '5']); // assume a document has 5 pages
     });
   });

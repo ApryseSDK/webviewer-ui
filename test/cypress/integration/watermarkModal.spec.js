@@ -110,14 +110,14 @@ describe.skip('Tests for watermark modal', () => {
         // Cypress will wait for this Promise to resolve
         const onDocloaded = () => {
           // cleanup
-          $window.docViewer.off('documentLoaded', onDocloaded);
+          $window.documentViewer.removeEventListener('documentLoaded', onDocloaded);
           cy.get('[data-element="printModal"]').as('printModal');
           cy.get('[data-element="menuButton"]').as('menuButton');
           cy.get('[data-element="printButton"]').as('printButton');
           // resolve and allow Cypress to continue
           resolve();
         };
-        $window.docViewer.on('documentLoaded', onDocloaded);
+        $window.documentViewer.addEventListener('documentLoaded', onDocloaded);
       }));
   });
 
@@ -247,9 +247,9 @@ describe.skip('Tests for watermark modal', () => {
     beforeEach(() => {
       cy.window()
         .then({ timeout: 30000 }, window => {
-          window.docViewer.setWatermark(WATERMARK);
-          window.docViewer.refreshAll();
-          window.docViewer.updateView();
+          window.documentViewer.setWatermark(WATERMARK);
+          window.documentViewer.refreshAll();
+          window.documentViewer.updateView();
         });
     });
 
@@ -269,10 +269,10 @@ describe.skip('Tests for watermark modal', () => {
       beforeEach(() => {
         cy.window()
           .then(async window => {
-            window.docViewer.setWatermark({});
-            window.docViewer.refreshAll();
-            window.docViewer.updateView();
-            await window.docViewer.getWatermark();
+            window.documentViewer.setWatermark({});
+            window.documentViewer.refreshAll();
+            window.documentViewer.updateView();
+            await window.documentViewer.getWatermark();
             cy.get('@menuButton').click();
             cy.get('@printButton').click();
             cy.get('@printModal').should('visible');
@@ -300,10 +300,10 @@ describe.skip('Tests for watermark modal', () => {
 
             cy.get('#printModalCloseButton').as('printModalCloseButton').click()
               .then(async () => {
-                window.docViewer.setWatermark(WATERMARK);
-                window.docViewer.refreshAll();
-                window.docViewer.updateView();
-                await window.docViewer.getWatermark();
+                window.documentViewer.setWatermark(WATERMARK);
+                window.documentViewer.refreshAll();
+                window.documentViewer.updateView();
+                await window.documentViewer.getWatermark();
               });
 
             cy.get('@menuButton').click();
@@ -312,10 +312,10 @@ describe.skip('Tests for watermark modal', () => {
 
             cy.get('@printModalCloseButton').click()
               .then(async () => {
-                window.docViewer.setWatermark({});
-                window.docViewer.refreshAll();
-                window.docViewer.updateView();
-                await window.docViewer.getWatermark();
+                window.documentViewer.setWatermark({});
+                window.documentViewer.refreshAll();
+                window.documentViewer.updateView();
+                await window.documentViewer.getWatermark();
               });
 
             cy.get('@menuButton').click();

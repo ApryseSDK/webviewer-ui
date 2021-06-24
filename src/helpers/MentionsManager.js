@@ -65,7 +65,7 @@ class MentionsManager {
     this.idMentionDataMap = {};
     this.allowedTrailingCharacters = [' '];
 
-    annotManager.on('annotationChanged', (annotations, action, { imported }) => {
+    annotManager.addEventListener('annotationChanged', (annotations, action, { imported }) => {
       if (imported || !annotations.length || !this.getUserData().length) {
         return;
       }

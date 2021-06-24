@@ -52,14 +52,14 @@ export default async(certificates, sigWidgets, dispatch) => {
     const verificationResult = await getVerificationResult(doc, sigWidgets, certificates);
     dispatch(actions.setVerificationResult(verificationResult));
   } else {
-    window.documentViewer.one('documentLoaded', async() => {
+    window.documentViewer.addEventListener('documentLoaded', async() => {
       const verificationResult = await getVerificationResult(
         core.getDocument(),
         sigWidgets,
         certificates
       );
       dispatch(actions.setVerificationResult(verificationResult));
-    });
+    }, { 'once': true });
   }
 };
 
