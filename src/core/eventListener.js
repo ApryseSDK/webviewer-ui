@@ -16,7 +16,6 @@ const getEventToObjectMap = () => {
   const annotManager = window.documentViewer.getAnnotationManager();
   const historyManager = window.documentViewer.getAnnotationHistoryManager();
   const editBoxManager = annotManager.getEditBoxManager();
-  const widgetEditingManager = annotManager.getWidgetEditingManager();
   const formFieldCreationManager = annotManager.getFormFieldCreationManager();
 
   return {
@@ -74,8 +73,6 @@ const getEventToObjectMap = () => {
     editorBlur: editBoxManager,
     editorTextChanged: editBoxManager,
     editorSelectionChanged: editBoxManager,
-    editingStarted: widgetEditingManager,
-    editingEnded: widgetEditingManager,
     formFieldCreationModeStarted: formFieldCreationManager,
     formFieldCreationModeEnded: formFieldCreationManager
   };

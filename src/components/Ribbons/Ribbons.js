@@ -7,7 +7,6 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
-import useWidgetEditing from 'hooks/useWidgetEditing';
 import core from 'core';
 
 import Measure from 'react-measure';
@@ -22,7 +21,6 @@ const Ribbons = () => {
   const [containerWidth, setContainerWidth] = useState(0);
   const [hasEnoughSpace, setHasEnoughSpace] = useState(false);
   const [hasEnoughCenteredSpace, setHasEnoughCenteredSpace] = useState(false);
-  const isEditingWidgets = useWidgetEditing();
   const ribbonsRef = useRef();
   const containerRef = useRef();
   const dispatch = useDispatch();
@@ -111,26 +109,23 @@ const Ribbons = () => {
                   'is-hidden': !(hasEnoughSpace || hasEnoughCenteredSpace),
                 })}
               >
-                {isEditingWidgets ? (
-                  <ExitWidgetEditingButton containerWidth={containerWidth} />
-                ) : (
-                  toolbarGroups.map(toolbarGroup => (
-                    <button
-                      key={toolbarGroup}
-                      data-element={`${toolbarGroup}`}
-                      className={classNames({
-                        'ribbon-group': true,
-                        'active': toolbarGroup === currentToolbarGroup,
-                      })}
-                      onClick={() => {
-                        setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
-                        toggleFormFieldCreationMode(toolbarGroup);
-                      }}
-                    >
-                      {t(`option.toolbarGroup.${toolbarGroup}`)}
-                    </button>
-                  ))
-                )}
+                {toolbarGroups.map(toolbarGroup => (
+                  <button
+                    key={toolbarGroup}
+                    data-element={`${toolbarGroup}`}
+                    className={classNames({
+                      'ribbon-group': true,
+                      'active': toolbarGroup === currentToolbarGroup,
+                    })}
+                    onClick={() => {
+                      setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
+                      toggleFormFieldCreationMode(toolbarGroup);
+                    }}
+                  >
+                    {t(`option.toolbarGroup.${toolbarGroup}`)}
+                  </button>
+                ))
+                }
               </div>
             )}
           </Measure>
@@ -140,38 +135,21 @@ const Ribbons = () => {
               'is-hidden': (hasEnoughSpace || hasEnoughCenteredSpace),
             })}
           >
-            {isEditingWidgets ? (
-              <ExitWidgetEditingButton containerWidth={containerWidth} />
-            ) : (
-              <Dropdown
-                dataElement="ribbonsDropdown"
-                items={toolbarGroups}
-                translationPrefix="option.toolbarGroup"
-                currentSelectionKey={currentToolbarGroup}
-                onClickItem={toolbarGroup => {
-                  setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
-                  toggleFormFieldCreationMode(toolbarGroup);
-                }}
-              />
-            )}
+            <Dropdown
+              dataElement="ribbonsDropdown"
+              items={toolbarGroups}
+              translationPrefix="option.toolbarGroup"
+              currentSelectionKey={currentToolbarGroup}
+              onClickItem={toolbarGroup => {
+                setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
+                toggleFormFieldCreationMode(toolbarGroup);
+              }}
+            />
           </div>
         </DataElementWrapper>
       )}
     </Measure>
   );
 };
-
-function ExitWidgetEditingButton({ containerWidth }) {
-  return (
-    <ActionButton
-      dataElement="exitFormEditingButton"
-      label={containerWidth < 150 ? 'action.exit' : 'action.exitFormEditing'}
-      onClick={() => {
-        const widgetEditingManager = core.getWidgetEditingManager();
-        widgetEditingManager.endEditing();
-      }}
-    />
-  );
-}
 
 export default Ribbons;

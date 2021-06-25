@@ -271,16 +271,6 @@ export default {
       ],
       "toolbarGroup-Edit": [
         { type: 'spacer' },
-        {
-          type: 'actionButton',
-          dataElement: 'startFormEditingToolGroupButton',
-          title: 'action.startFormEditing',
-          img: 'icon-widget-editing',
-          onClick: () => {
-            const widgetEditingManager = core.getWidgetEditingManager();
-            widgetEditingManager.startEditing();
-          }
-        },
         { type: 'toolGroupButton', toolGroup: 'cropTools', dataElement: 'cropToolGroupButton', title: 'annotation.crop' },
         { type: 'toolGroupButton', toolGroup: 'redactionTools', dataElement: 'redactionToolGroupButton', title: 'annotation.redact', showColor: 'never' },
         { type: 'divider' },
@@ -312,9 +302,9 @@ export default {
         { type: 'spacer' },
         { type: 'toolGroupButton', toolGroup: 'signatureTools', img: 'icon-tool-signature', dataElement: 'signatureToolGroupButton', title: 'annotation.signature', showColor: 'never' },
         { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'annotation.freetext' },
-        { type: 'toolGroupButton', toolGroup: 'crossStampTools', img: 'icon-tool-cross-stamp', dataElement: 'crossStampToolButton', title: 'annotation.formFillCross', showColor: 'never'  },
-        { type: 'toolGroupButton', toolGroup: 'checkStampTools', img: 'icon-tool-check-stamp', dataElement: 'checkStampToolButton', title: 'annotation.formFillCheckmark', showColor: 'never'  },
-        { type: 'toolGroupButton', toolGroup: 'dotStampTools', img: 'icon-tool-dot-stamp', dataElement: 'dotStampToolButton', title: 'annotation.formFillDot', showColor: 'never'  },
+        { type: 'toolGroupButton', toolGroup: 'crossStampTools', img: 'icon-tool-cross-stamp', dataElement: 'crossStampToolButton', title: 'annotation.formFillCross', showColor: 'never' },
+        { type: 'toolGroupButton', toolGroup: 'checkStampTools', img: 'icon-tool-check-stamp', dataElement: 'checkStampToolButton', title: 'annotation.formFillCheckmark', showColor: 'never' },
+        { type: 'toolGroupButton', toolGroup: 'dotStampTools', img: 'icon-tool-dot-stamp', dataElement: 'dotStampToolButton', title: 'annotation.formFillDot', showColor: 'never' },
         { type: 'toolGroupButton', toolGroup: 'rubberStampTools', img: 'icon-tool-stamp-line', dataElement: 'rubberStampToolGroupButton', title: 'annotation.rubberStamp' },
         { type: 'divider' },
         {
@@ -438,11 +428,11 @@ export default {
       AnnotationCreateCloudyRectangularAreaMeasurement2: { dataElement: 'cloudyRectangularAreaMeasurementToolButton2', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-cloud-area-line', group: 'cloudyRectangleAreaTools', showColor: 'always' },
       AnnotationCreateCloudyRectangularAreaMeasurement3: { dataElement: 'cloudyRectangularAreaMeasurementToolButton3', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-cloud-area-line', group: 'cloudyRectangleAreaTools', showColor: 'always' },
       AnnotationCreateCloudyRectangularAreaMeasurement4: { dataElement: 'cloudyRectangularAreaMeasurementToolButton4', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-cloud-area-line', group: 'cloudyRectangleAreaTools', showColor: 'always' },
-      AnnotationCreateFreeHand:  { dataElement: 'freeHandToolButton',  title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },
+      AnnotationCreateFreeHand: { dataElement: 'freeHandToolButton', title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand2: { dataElement: 'freeHandToolButton2', title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand3: { dataElement: 'freeHandToolButton3', title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },
       AnnotationCreateFreeHand4: { dataElement: 'freeHandToolButton4', title: 'annotation.freehand', img: 'icon-tool-pen-line', group: 'freeHandTools', showColor: 'always' },
-      AnnotationCreateFreeHandHighlight:  { dataElement: 'freeHandHighlightToolButton',  title: 'annotation.freeHandHighlight', img: 'icon-tool-pen-highlight', group: 'freeHandHighlightTools', showColor: 'always' },
+      AnnotationCreateFreeHandHighlight: { dataElement: 'freeHandHighlightToolButton', title: 'annotation.freeHandHighlight', img: 'icon-tool-pen-highlight', group: 'freeHandHighlightTools', showColor: 'always' },
       AnnotationCreateFreeHandHighlight2: { dataElement: 'freeHandHighlightToolButton2', title: 'annotation.freeHandHighlight', img: 'icon-tool-pen-highlight', group: 'freeHandHighlightTools', showColor: 'always' },
       AnnotationCreateFreeHandHighlight3: { dataElement: 'freeHandHighlightToolButton3', title: 'annotation.freeHandHighlight', img: 'icon-tool-pen-highlight', group: 'freeHandHighlightTools', showColor: 'always' },
       AnnotationCreateFreeHandHighlight4: { dataElement: 'freeHandHighlightToolButton4', title: 'annotation.freeHandHighlight', img: 'icon-tool-pen-highlight', group: 'freeHandHighlightTools', showColor: 'always' },

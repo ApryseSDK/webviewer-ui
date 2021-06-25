@@ -33,8 +33,6 @@ export default store => {
   const onSignatureSaved = eventListeners.onSignatureSaved(dispatch, store);
   const onSignatureDeleted = eventListeners.onSignatureDeleted(dispatch, store);
   const onHistoryChanged = eventListeners.onHistoryChanged(dispatch, store);
-  const onWidgetEditingStarted = eventListeners.onWidgetEditingStarted(dispatch);
-  const onWidgetEditingEnded = eventListeners.onWidgetEditingEnded(dispatch);
   const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch);
   const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch);
   const onDigitalSignatureAvailable = eventListeners.onDigitalSignatureAvailable(dispatch);
@@ -58,8 +56,6 @@ export default store => {
       core.addEventListener('historyChanged', onHistoryChanged);
       core.addEventListener('pageComplete', onPageComplete);
       core.addEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable);
-      core.addEventListener('editingStarted', onWidgetEditingStarted);
-      core.addEventListener('editingEnded', onWidgetEditingEnded);
       core.addEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted);
       core.addEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded);
       core.addEventListener('digitalSignatureAvailable', onDigitalSignatureAvailable);
@@ -99,8 +95,6 @@ export default store => {
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('pageComplete', onPageComplete);
       core.removeEventListener('fileAttachmentDataAvailable', onFileAttachmentDataAvailable);
-      core.removeEventListener('editingStarted', onWidgetEditingStarted);
-      core.removeEventListener('editingEnded', onWidgetEditingEnded);
       core.removeEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted);
       core.removeEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded);
       core.removeEventListener('digitalSignatureAvailable', onDigitalSignatureAvailable);

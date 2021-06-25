@@ -113,7 +113,6 @@ import redo from './redo';
 import updateAnnotationState from './updateAnnotationState';
 import getFontStyles from './getFontStyles';
 import mergeDocument from './mergeDocument';
-import getWidgetEditingManager from './getWidgetEditingManager';
 import getFormFieldCreationManager from './getFormFieldCreationManager';
 
 export default {
@@ -233,6 +232,5 @@ export default {
   updateAnnotationState,
   getFontStyles,
   mergeDocument,
-  getWidgetEditingManager,
   getFormFieldCreationManager,
 };
