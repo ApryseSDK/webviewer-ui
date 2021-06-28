@@ -158,8 +158,11 @@ const Thumbnail = ({
     } else if (isMobile()) {
       dispatch(actions.closeElement('leftPanel'));
     }
-
-    core.setCurrentPage(index + 1);
+    // due to the race condition, we need a settimeout here
+    // otherwise, sometimes the current page will not be visible in left panel 
+    setTimeout(()=>{
+      core.setCurrentPage(index + 1);
+    }, 0)
   };
 
   const isActive = currentPage === index + 1;
