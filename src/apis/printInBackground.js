@@ -37,6 +37,7 @@ export default store => options => {
     ...options,
     printWithoutModal: true,
     printQuality: selectors.getPrintQuality(store.getState()),
+    printedNoteDateFormat: selectors.getPrintedNoteDateFormat(store.getState()),
   };
 
   const { pagesToPrint } = printOptions;

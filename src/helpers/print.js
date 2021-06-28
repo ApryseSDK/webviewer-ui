@@ -25,6 +25,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
     printWithoutModal = false,
     language,
     isPrintCurrentView,
+    printedNoteDateFormat: dateFormat
   } = options;
   let { pagesToPrint } = options;
 
@@ -64,7 +65,7 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       printQuality,
       sortStrategy,
       colorMap,
-      undefined,
+      dateFormat,
       onProgress,
       isPrintCurrentView,
       language,
