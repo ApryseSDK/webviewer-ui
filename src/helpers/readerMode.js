@@ -22,6 +22,7 @@ const dataElements = [
   'freeTextToolGroupButton',
   'shapeToolGroupButton',
   'freeHandToolGroupButton',
+  'freeHandHighlightToolGroupButton',
   'undoButton',
   'redoButton',
   'eraserToolButton'
@@ -33,8 +34,10 @@ export const enterReaderMode = store => {
   PDFNet.initialize().then(() => {
     const main = async() => {
       try {
+        const docViewer = core.getDocumentViewer();
+
         // Sync text annotations
-        const pdfDoc = await core.getDocumentViewer().getDocument().getPDFDoc();
+        const pdfDoc = await docViewer.getDocument().getPDFDoc();
         const xfdf = await core.getAnnotationManager().exportAnnotations({
           widgets: false,
           fields: false
@@ -53,6 +56,7 @@ export const enterReaderMode = store => {
         } else {
           store.dispatch(actions.setToolbarGroup('toolbarGroup-View'));
         }
+        docViewer.setToolMode(docViewer.getTool(window.Core.Tools.ToolNames.EDIT));
       } catch (err) {
         console.warn(err);
       }
