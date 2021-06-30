@@ -133,7 +133,7 @@ const App = ({ removeEventHandlers }) => {
         {/* <Header />
         <ToolsHeader /> */}
         <div className="content">
-          {prepare? <LeftPanel />:<SignaturesLeftPanel/>}
+          <LeftPanel/>
           <DocumentContainer />
           <RightPanel
             dataElement="searchPanel"
@@ -145,7 +145,7 @@ const App = ({ removeEventHandlers }) => {
             dataElement="notesPanel"
             onResize={width => dispatch(actions.setNotesPanelWidth(width))}
           >
-            {prepare? <PrepareSignaturesPanel/>:<NotesPanel />}
+            <NotesPanel/>
           </RightPanel>
         </div>
         <ViewControlsOverlay />

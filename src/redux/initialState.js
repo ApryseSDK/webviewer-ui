@@ -22,10 +22,8 @@ export default {
     currentLanguage: 'en',
     disabledElements: {},
     openElements: {
-      header: false,
-      toolsHeader: false,
-      leftPanel: true,
-      notesPanel: true,
+      header: true,
+      toolsHeader: true,
     },
     panelWidths: {
       leftPanel: 264,

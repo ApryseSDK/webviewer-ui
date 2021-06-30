@@ -78,7 +78,7 @@ const LeftPanel = () => {
       className={classNames({
         Panel: true,
         LeftPanel: true,
-        'closed': false,
+        'closed': !isVisible,
         'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
       })}
       onDrop={onDrop}
