@@ -12,7 +12,7 @@ import localStorageManager from 'helpers/localStorageManager';
 import { copyMapWithDataProperties } from 'constants/map';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import Ribbons from 'components/Ribbons';
-const { ToolNames } = window.Tools;
+const { ToolNames } = window.Core.Tools;
 import ApplyFormFieldButton from 'components/ApplyFormFieldButton';
 
 export default {

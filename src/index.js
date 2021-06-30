@@ -160,7 +160,7 @@ if (window.CanvasRenderingContext2D) {
 
     window.documentViewer = docViewer;
     if (getHashParams('enableViewStateAnnotations', false)) {
-      const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
+      const tool = docViewer.getTool(window.Core.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);
     }
 

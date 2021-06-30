@@ -1,7 +1,7 @@
 import * as eventListeners from 'src/event-listeners';
 import hotkeysManager from 'helpers/hotkeysManager';
 import core from 'core';
-const { ToolNames } = window.Tools;
+const { ToolNames } = window.Core.Tools;
 
 export default store => {
   const { dispatch } = store;

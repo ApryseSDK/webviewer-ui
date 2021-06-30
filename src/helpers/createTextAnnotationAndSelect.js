@@ -21,7 +21,7 @@ const createTextAnnotation = annotationConstructor => {
     pageNumber = parseInt(pageNumber, 10);
     const annotation = createAnnotation(annotationConstructor, pageNumber, quads);
 
-    if (window.Tools.TextAnnotationCreateTool.AUTO_SET_TEXT && !(annotation instanceof window.Annotations.RedactionAnnotation)) {
+    if (window.Core.Tools.TextAnnotationCreateTool.AUTO_SET_TEXT && !(annotation instanceof window.Annotations.RedactionAnnotation)) {
       annotation.setContents(core.getSelectedText(pageNumber));
     }
 

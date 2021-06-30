@@ -131,7 +131,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
           core.clearSelection();
           core.setToolMode('AnnotationEdit');
         }
-        window.Tools.Tool.ENABLE_TEXT_SELECTION = enable;
+        window.Core.Tools.Tool.ENABLE_TEXT_SELECTION = enable;
       },
     },
     [Feature.TouchScrollLock]: {

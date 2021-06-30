@@ -62,8 +62,8 @@ export function shortcutAria(shortcut) {
 const NOOP = () => {};
 
 /**
- * Available hotkeys that can be passed to {@link WebViewerInstance.Hotkeys#on instance.hotkeys.on} or {@link WebViewerInstance.Hotkeys#off instance.hotkeys.off}. <br/><br/>
- * @name WebViewerInstance.Hotkeys.Keys
+ * Available hotkeys that can be passed to {@link UI.Hotkeys#on instance.hotkeys.on} or {@link UI.Hotkeys#off instance.hotkeys.off}. <br/><br/>
+ * @name UI.Hotkeys.Keys
  * @enum {string}
  * @property {string} CTRL_SHIFT_EQUAL Rotate the document clockwise
  * @property {string} COMMAND_SHIFT_EQUAL Rotate the document clockwise
@@ -169,9 +169,9 @@ export function concatKeys(...keys) {
 
 /**
  * A class which contains hotkeys APIs.<br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link WebViewerInstance#hotkeys instance.hotkeys}
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link UI.hotkeys instance.hotkeys}
  * @namespace Hotkeys
- * @memberof WebViewerInstance
+ * @memberof UI
  */
 const HotkeysManager = {
   initialize(store) {
@@ -186,8 +186,8 @@ const HotkeysManager = {
   },
   /**
    * Add an event handler for the given hotkey
-   * @method WebViewerInstance.Hotkeys.on
-   * @param {string|WebViewerInstance.Hotkeys.Keys} key A keyboard key <br/>
+   * @method UI.Hotkeys.on
+   * @param {string|UI.Hotkeys.Keys} key A keyboard key <br/>
    * If a hotkey is consisted of more than one key. Those keys should be connected using '+'.
    * @param {function|object} [handler] An optional argument <br/>
    * If it is undefined, the default handler of the given key will be registered <br/>
@@ -243,8 +243,8 @@ WebViewer(...)
   },
   /**
    * Remove an event handler for the given hotkey
-   * @method WebViewerInstance.Hotkeys.off
-   * @param {string|WebViewerInstance.Hotkeys.Keys} [key] An optional keyboard key. If not passed, all handlers will be removed
+   * @method UI.Hotkeys.off
+   * @param {string|UI.Hotkeys.Keys} [key] An optional keyboard key. If not passed, all handlers will be removed
    * @param {function} [handler] An optional function. If not passed, all handlers of the given key will be removed
    * @example
 WebViewer(...)
@@ -508,7 +508,7 @@ WebViewer(...)
       const currentToolName = core.getToolMode().name;
 
       // disable changing tool when the signature overlay is opened.
-      const isSignatureModalOpen = currentToolName === window.Tools.ToolNames.SIGNATURE && openElements['signatureModal'];
+      const isSignatureModalOpen = currentToolName === window.Core.Tools.ToolNames.SIGNATURE && openElements['signatureModal'];
 
       if (isFocusingElement() || isSignatureModalOpen) {
         return;

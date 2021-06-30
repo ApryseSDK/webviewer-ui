@@ -2,7 +2,7 @@ import core from 'core';
 
 export default toolName => {
   const tool = core.getTool(toolName);
-  const ToolNames = window.Tools.ToolNames;
+  const ToolNames = window.Core.Tools.ToolNames;
 
   if (tool?.name === ToolNames.REDACTION) {
     // don't want sliders to show up for redaction tool

@@ -227,8 +227,8 @@ const AnnotationPopup = () => {
     // trigger the annotationDoubleClicked event so that it will download the file
     core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
   };
-
-  const toolNames = window.Tools.ToolNames;
+  
+  const toolNames = window.Core.Tools.ToolNames;
   const toolsWithNoStyling = [
     toolNames.CROP,
     toolNames.RADIO_FORM_FIELD,

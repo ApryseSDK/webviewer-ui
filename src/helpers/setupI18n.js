@@ -32,15 +32,15 @@ export default state => {
       t(`annotation.${type}`),
     );
 
-    window.Tools.SignatureCreateTool.setTextHandler(() =>
+    window.Core.Tools.SignatureCreateTool.setTextHandler(() =>
       t('message.signHere'),
     );
 
-    window.Tools.FreeTextCreateTool.setTextHandler(() =>
+    window.Core.Tools.FreeTextCreateTool.setTextHandler(() =>
       t('message.insertTextHere'),
     );
 
-    window.Tools.CalloutCreateTool.setTextHandler(() =>
+    window.Core.Tools.CalloutCreateTool.setTextHandler(() =>
       t('message.insertTextHere'),
     );
   };

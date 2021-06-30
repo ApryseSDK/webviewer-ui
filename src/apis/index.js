@@ -176,7 +176,7 @@ export default store => {
   const CORE_NAMESPACE = 'Core';
   const UI_NAMESPACE = 'UI';
   const objForWebViewerCore = {
-    Tools: window.Tools,
+    Tools: window.Core.Tools,
     Annotations: window.Annotations,
     // keep CoreControls for backwards compabililty
     // remove this in 9.0

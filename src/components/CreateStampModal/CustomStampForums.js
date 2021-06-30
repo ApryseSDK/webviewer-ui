@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
-const COLOR_CHOICES = window.Tools.RubberStampCreateTool['FILL_COLORS'];
+const COLOR_CHOICES = window.Core.Tools.RubberStampCreateTool['FILL_COLORS'];
 const DEFAULT_COLOR = new window.Annotations.Color(COLOR_CHOICES[0]);
 
 const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) => {

@@ -10,7 +10,7 @@ export default dispatch => zoomLevel => {
     const zoomList = defaultZoomList.filter(zoom => zoom <= maxZoom && zoom >= minZoom);
     zoomFactors.setMaxZoomLevel(maxZoom);
     dispatch(actions.setZoomList(zoomList));
-    window.Tools.MarqueeZoomTool.setMaxZoomLevel(maxZoom);
+    window.Core.Tools.MarqueeZoomTool.setMaxZoomLevel(maxZoom);
   } else {
     console.warn('Type of the argument for setMaxZoomLevel must be either string or number');
   }
