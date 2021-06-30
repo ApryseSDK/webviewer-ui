@@ -214,8 +214,8 @@
       "toolbarGroup-Insert": "挿入",
       "toolbarGroup-Measure": "測定",
       "toolbarGroup-Edit": "編集",
-      "toolbarGroup-Forms": "フォーム",
-      "toolbarGroup-FillAndSign": "記入して署名する"
+      "toolbarGroup-FillAndSign": "記入して署名する",
+      "toolbarGroup-Forms": "フォーム"
     },
     "annotationColor": {
       "StrokeColor": "枠線",
@@ -241,6 +241,7 @@
       "double": "見開きページ",
       "single": "単一ページ"
     },
+    "mathSymbols": "数学記号",
     "notesPanel": {
       "separator": {
         "today": "今日",
@@ -519,9 +520,22 @@
       "nameRequired": "フィールド名は必須です",
       "size": "サイズ",
       "width": "幅",
-      "height": "高さ"
+      "height": "高さ",
+      "invalidField": {
+        "duplicate": "フィールド名はすでに存在します",
+        "empty": "フィールド名を空にすることはできません"
+      }
     },
-    "apply": "フィールドを適用する"
+    "apply": "フィールドを適用する",
+    "type": "フィールドタイプ",
+    "types": {
+      "text": "テキスト",
+      "signature": "署名",
+      "checkbox": "チェックボックス",
+      "radio": "ラジオボタン",
+      "listbox": "リストボックス",
+      "combobox": "コンボボックス"
+    }
   },
   "digitalSignatureModal": {
     "certification": "認証",

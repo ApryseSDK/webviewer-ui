@@ -214,8 +214,8 @@
       "toolbarGroup-Insert": "Вставить",
       "toolbarGroup-Measure": "Мера",
       "toolbarGroup-Edit": "редактировать",
-      "toolbarGroup-Forms": "Формы",
-      "toolbarGroup-FillAndSign": "Заполните и подпишите"
+      "toolbarGroup-FillAndSign": "Заполните и подпишите",
+      "toolbarGroup-Forms": "Формы"
     },
     "annotationColor": {
       "StrokeColor": "Цвет границ",
@@ -241,6 +241,7 @@
       "double": "Двойной",
       "single": "Единый"
     },
+    "mathSymbols": "Математические символы",
     "notesPanel": {
       "separator": {
         "today": "Сегодня",
@@ -519,9 +520,22 @@
       "nameRequired": "Требуется название поля",
       "size": "Размер",
       "width": "Ширина",
-      "height": "Высота"
+      "height": "Высота",
+      "invalidField": {
+        "duplicate": "Имя поля уже существует",
+        "empty": "Имя поля не может быть пустым"
+      }
     },
-    "apply": "Применить поля"
+    "apply": "Применить поля",
+    "type": "Тип поля",
+    "types": {
+      "text": "Текст",
+      "signature": "Подпись",
+      "checkbox": "Флажок",
+      "radio": "Переключатель",
+      "listbox": "Окно списка",
+      "combobox": "Поле со списком"
+    }
   },
   "digitalSignatureModal": {
     "certification": "сертификация",

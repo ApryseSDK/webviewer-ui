@@ -222,7 +222,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
       },
     },
     [Feature.MathSymbols]: {
-      dataElements: ['mathSymbolsButton'],
+      dataElements: ['mathSymbolsButton', 'richTextPopup'],
     },
     [Feature.OutlineEditing]: {
       dataElements: [

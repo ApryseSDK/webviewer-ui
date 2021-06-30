@@ -214,8 +214,8 @@
       "toolbarGroup-Insert": "插",
       "toolbarGroup-Measure": "測量",
       "toolbarGroup-Edit": "編輯",
-      "toolbarGroup-Forms": "形式",
-      "toolbarGroup-FillAndSign": "填寫並簽名"
+      "toolbarGroup-FillAndSign": "填寫並簽名",
+      "toolbarGroup-Forms": "形式"
     },
     "annotationColor": {
       "StrokeColor": "邊框顏色",
@@ -241,6 +241,7 @@
       "double": "2 頁",
       "single": "單面"
     },
+    "mathSymbols": "數學符號",
     "notesPanel": {
       "separator": {
         "today": "今天",
@@ -519,9 +520,22 @@
       "nameRequired": "字段名稱為必填項",
       "size": "尺寸",
       "width": "寬度",
-      "height": "高度"
+      "height": "高度",
+      "invalidField": {
+        "duplicate": "字段名稱已存在",
+        "empty": "字段名稱不能為空"
+      }
     },
-    "apply": "套用欄位"
+    "apply": "套用欄位",
+    "type": "字段類型",
+    "types": {
+      "text": "文本",
+      "signature": "簽名",
+      "checkbox": "複選框",
+      "radio": "單選按鈕",
+      "listbox": "列錶框",
+      "combobox": "組合框"
+    }
   },
   "digitalSignatureModal": {
     "certification": "認證證書",

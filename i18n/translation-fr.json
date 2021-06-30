@@ -214,8 +214,8 @@
       "toolbarGroup-Insert": "Insérer",
       "toolbarGroup-Measure": "Mesure",
       "toolbarGroup-Edit": "Éditer",
-      "toolbarGroup-Forms": "Formes",
-      "toolbarGroup-FillAndSign": "Remplir et signer"
+      "toolbarGroup-FillAndSign": "Remplir et signer",
+      "toolbarGroup-Forms": "Formes"
     },
     "annotationColor": {
       "StrokeColor": "Couleur de bordure",
@@ -241,6 +241,7 @@
       "double": "Deux",
       "single": "Une"
     },
+    "mathSymbols": "Symboles mathématiques",
     "notesPanel": {
       "separator": {
         "today": "Aujourd'hui",
@@ -519,9 +520,22 @@
       "nameRequired": "Le nom du champ est obligatoire",
       "size": "Taille",
       "width": "Largeur",
-      "height": "Hauteur"
+      "height": "Hauteur",
+      "invalidField": {
+        "duplicate": "Le nom du champ existe déjà",
+        "empty": "Le nom du champ ne peut pas être vide"
+      }
     },
-    "apply": "Appliquer les champs"
+    "apply": "Appliquer les champs",
+    "type": "Type de champ",
+    "types": {
+      "text": "Texte",
+      "signature": "Signature",
+      "checkbox": "Case à cocher",
+      "radio": "Bouton radio",
+      "listbox": "Zone de liste",
+      "combobox": "Boîte combo"
+    }
   },
   "digitalSignatureModal": {
     "certification": "certification",

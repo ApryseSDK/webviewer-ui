@@ -214,8 +214,8 @@
       "toolbarGroup-Insert": "Invoegen",
       "toolbarGroup-Measure": "Meten",
       "toolbarGroup-Edit": "Bewerk",
-      "toolbarGroup-Forms": "Formulieren",
-      "toolbarGroup-FillAndSign": "Invullen en ondertekenen"
+      "toolbarGroup-FillAndSign": "Invullen en ondertekenen",
+      "toolbarGroup-Forms": "Formulieren"
     },
     "annotationColor": {
       "StrokeColor": "Rand kleur",
@@ -241,6 +241,7 @@
       "double": "Dubbel",
       "single": "Enkel"
     },
+    "mathSymbols": "Wiskundige symbolen",
     "notesPanel": {
       "separator": {
         "today": "Vandaag",
@@ -519,9 +520,22 @@
       "nameRequired": "Veldnaam is verplicht",
       "size": "Grootte",
       "width": "Breedte",
-      "height": "Hoogte"
+      "height": "Hoogte",
+      "invalidField": {
+        "duplicate": "Veldnaam bestaat al",
+        "empty": "Veldnaam mag niet leeg zijn"
+      }
     },
-    "apply": "Velden toepassen"
+    "apply": "Velden toepassen",
+    "type": "Veld soort",
+    "types": {
+      "text": "Tekst",
+      "signature": "Handtekening",
+      "checkbox": "Selectievakje",
+      "radio": "Radio knop",
+      "listbox": "Keuzelijst",
+      "combobox": "Combobox"
+    }
   },
   "digitalSignatureModal": {
     "certification": "certificering",

@@ -214,8 +214,8 @@
       "toolbarGroup-Insert": "Inserire",
       "toolbarGroup-Measure": "Misurare",
       "toolbarGroup-Edit": "modificare",
-      "toolbarGroup-Forms": "Forme",
-      "toolbarGroup-FillAndSign": "Compila e firma"
+      "toolbarGroup-FillAndSign": "Compila e firma",
+      "toolbarGroup-Forms": "Forme"
     },
     "annotationColor": {
       "StrokeColor": "Colore del bordo",
@@ -241,6 +241,7 @@
       "double": "Doppio",
       "single": "singolo"
     },
+    "mathSymbols": "Simboli matematici",
     "notesPanel": {
       "separator": {
         "today": "Oggi",
@@ -519,9 +520,22 @@
       "nameRequired": "Il nome del campo è obbligatorio",
       "size": "Dimensione",
       "width": "Larghezza",
-      "height": "Altezza"
+      "height": "Altezza",
+      "invalidField": {
+        "duplicate": "Il nome del campo esiste già",
+        "empty": "Il nome del campo non può essere vuoto"
+      }
     },
-    "apply": "Applica campi"
+    "apply": "Applica campi",
+    "type": "Tipo di campo",
+    "types": {
+      "text": "Testo",
+      "signature": "Firma",
+      "checkbox": "Casella di controllo",
+      "radio": "Pulsante di opzione",
+      "listbox": "Casella di riepilogo",
+      "combobox": "Casella combinata"
+    }
   },
   "digitalSignatureModal": {
     "certification": "certificazione",

@@ -214,8 +214,8 @@
       "toolbarGroup-Insert": "Einfügen",
       "toolbarGroup-Measure": "Messen",
       "toolbarGroup-Edit": "Bearbeiten",
-      "toolbarGroup-Forms": "Formen",
-      "toolbarGroup-FillAndSign": "Füllen und unterschreiben"
+      "toolbarGroup-FillAndSign": "Füllen und unterschreiben",
+      "toolbarGroup-Forms": "Formen"
     },
     "annotationColor": {
       "StrokeColor": "Randfarbe",
@@ -241,6 +241,7 @@
       "double": "Zweiseitig",
       "single": "Einseitig"
     },
+    "mathSymbols": "Mathe-Symbole",
     "notesPanel": {
       "separator": {
         "today": "Heute",
@@ -519,9 +520,22 @@
       "nameRequired": "Feldname ist erforderlich",
       "size": "Größe",
       "width": "Breite",
-      "height": "Höhe"
+      "height": "Höhe",
+      "invalidField": {
+        "duplicate": "Feldname existiert bereits",
+        "empty": "Feldname darf nicht leer sein"
+      }
     },
-    "apply": "Felder anwenden"
+    "apply": "Felder anwenden",
+    "type": "Feldtyp",
+    "types": {
+      "text": "Text",
+      "signature": "Unterschrift",
+      "checkbox": "Kontrollkästchen",
+      "radio": "Radio knopf",
+      "listbox": "Listenfeld",
+      "combobox": "Kombinationsfeld"
+    }
   },
   "digitalSignatureModal": {
     "certification": "Zertifizierung",

@@ -214,8 +214,8 @@
       "toolbarGroup-Insert": "끼워 넣다",
       "toolbarGroup-Measure": "법안",
       "toolbarGroup-Edit": "편집하다",
-      "toolbarGroup-Forms": "양식",
-      "toolbarGroup-FillAndSign": "채우기 및 서명"
+      "toolbarGroup-FillAndSign": "채우기 및 서명",
+      "toolbarGroup-Forms": "양식"
     },
     "annotationColor": {
       "StrokeColor": "테두리 색",
@@ -241,6 +241,7 @@
       "double": "더블",
       "single": "싱글"
     },
+    "mathSymbols": "수학 기호",
     "notesPanel": {
       "separator": {
         "today": "오늘",
@@ -519,9 +520,22 @@
       "nameRequired": "필드 이름이 필요합니다.",
       "size": "크기",
       "width": "폭",
-      "height": "신장"
+      "height": "신장",
+      "invalidField": {
+        "duplicate": "필드 이름이 이미 있습니다.",
+        "empty": "필드 이름은 비워 둘 수 없습니다."
+      }
     },
-    "apply": "적용 분야"
+    "apply": "적용 분야",
+    "type": "필드 유형",
+    "types": {
+      "text": "본문",
+      "signature": "서명",
+      "checkbox": "체크 박스",
+      "radio": "라디오 버튼",
+      "listbox": "리스트 박스",
+      "combobox": "콤보 박스"
+    }
   },
   "digitalSignatureModal": {
     "certification": "인증",
