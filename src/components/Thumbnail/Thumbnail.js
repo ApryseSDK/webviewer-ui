@@ -142,9 +142,7 @@ const Thumbnail = ({
         // Include current page as part of selection if we just started multi-selecting
         if (selectedPageIndexes.length === 0) {
           updatedSelectedPages.push(currentPage - 1);
-        }
-
-        if (selectedPageIndexes.includes(index)) {
+        } else if (selectedPageIndexes.includes(index)) {
           updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
         } else {
           updatedSelectedPages.push(index);
