@@ -16,7 +16,8 @@ const DESIRED_WIDTH = 300;
 const DESIRED_HEIGHT = 300;
 
 // numbers were taken from font dropdown menu in google docs
-const FONT_SIZES = [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48];
+const FONT_SIZES = [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72, 96];
+const DEFAULT_FONT_SIZE = 48;
 
 const WATERMARK_LOCATIONS = {
   CENTER: 'center',
@@ -42,7 +43,7 @@ const FORM_FIELD_KEYS = {
 
 const DEFAULT_VALS = {
   [FORM_FIELD_KEYS.location]: WATERMARK_LOCATIONS.CENTER,
-  [FORM_FIELD_KEYS.fontSize]: FONT_SIZES[FONT_SIZES.length - 1],
+  [FORM_FIELD_KEYS.fontSize]: DEFAULT_FONT_SIZE,
   [FORM_FIELD_KEYS.text]: '',
   // red
   [FORM_FIELD_KEYS.color]: new window.Annotations.Color(228, 66, 52),
