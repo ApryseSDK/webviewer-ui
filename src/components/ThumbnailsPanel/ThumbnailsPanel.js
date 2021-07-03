@@ -338,7 +338,9 @@ const ThumbnailsPanel = () => {
       if (externalPageWebViewerFrameId && window.frameElement.id !== externalPageWebViewerFrameId) {
         dispatch(mergeExternalWebViewerDocument(externalPageWebViewerFrameId, insertTo));
       } else if (files.length) {
-        dispatch(mergeDocument(files[0], insertTo));
+        files.forEach(file => {
+          dispatch(mergeDocument(file, insertTo));
+        });
       }
     } else if (isThumbnailReorderingEnabled && !mergingDocument) {
       if (draggingOverPageIndex !== null) {
