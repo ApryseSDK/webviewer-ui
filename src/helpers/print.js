@@ -432,11 +432,19 @@ const getNoteInfo = (annotation, dateFormat, language) => {
   }
 
   info.className = 'note__info';
-  info.innerHTML = `
-    ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''} &nbsp;&nbsp;
-    ${i18n.t('option.printInfo.subject')}: ${annotation.Subject} &nbsp;&nbsp;
-    ${i18n.t('option.printInfo.date')}: ${date}
-  `;
+  if (annotation.Subject === '' || annotation.Subject === null || annotation.Subject === undefined) {
+    info.innerHTML = `
+      ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''} &nbsp;&nbsp;
+      ${i18n.t('option.printInfo.date')}: ${date}
+    `;
+  } else {
+    info.innerHTML = `
+      ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''} &nbsp;&nbsp;
+      ${i18n.t('option.printInfo.subject')}: ${annotation.Subject} &nbsp;&nbsp;
+      ${i18n.t('option.printInfo.date')}: ${date}
+    `;
+  }
+
   return info;
 };
 
