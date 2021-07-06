@@ -18,6 +18,7 @@ const dataElementName = 'thumbnailControl';
 
 const ThumbnailControls = ({ index }) => {
   const [isElementDisabled] = useSelector(state => [selectors.isElementDisabled(state, dataElementName)]);
+  const [isPageDeletionConfirmationModalEnabled] = useSelector(state => [selectors.pageDeletionConfirmationModalEnabled(state)]);
 
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -31,29 +32,33 @@ const ThumbnailControls = ({ index }) => {
   };
 
   const handleDelete = () => {
-    let message = t('warning.deletePage.deleteMessage');
-    const title = t('warning.deletePage.deleteTitle');
-    const confirmBtnText = t('action.ok');
+    if(isPageDeletionConfirmationModalEnabled) {
+      let message = t('warning.deletePage.deleteMessage');
+      const title = t('warning.deletePage.deleteTitle');
+      const confirmButtonText = t('action.ok');
 
-    let warning = {
-      message,
-      title,
-      confirmBtnText,
-      onConfirm: () => core.removePages([index + 1]),
-    };
-
-    if (core.getDocumentViewer().getPageCount() === 1) {
-      message = t('warning.deletePage.deleteLastPageMessage');
-
-      warning = {
+      let warning = {
         message,
         title,
-        confirmBtnText,
-        onConfirm: () => Promise.resolve(),
+        confirmButtonText,
+        onConfirm: () => core.removePages([index + 1]),
       };
-    }
 
-    dispatch(actions.showWarningMessage(warning));
+      if (core.getDocumentViewer().getPageCount() === 1) {
+        message = t('warning.deletePage.deleteLastPageMessage');
+
+        warning = {
+          message,
+          title,
+          confirmButtonText,
+          onConfirm: () => Promise.resolve(),
+        };
+      }
+
+      dispatch(actions.showWarningMessage(warning));
+    } else {
+      core.removePages([index + 1])
+    }
   };
 
   return isElementDisabled ? null : (

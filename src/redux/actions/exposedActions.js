@@ -519,3 +519,13 @@ export const disableFadePageNavigationComponent = () => ({
   type: 'SET_FADE_PAGE_NAVIGATION_COMPONENT',
   payload: { fadePageNavigationComponent: false },
 });
+
+export const enablePageDeletionConfirmationModal = () => ({
+  type: "PAGE_DELETION_CONFIRMATION_MODAL_POPUP",
+  payload: { pageDeletionConfirmationModalEnabled: true }
+});
+
+export const disablePageDeletionConfirmationModal = () => ({
+  type: "PAGE_DELETION_CONFIRMATION_MODAL_POPUP",
+  payload: { pageDeletionConfirmationModalEnabled: false }
+});

@@ -169,6 +169,8 @@ import enableClearSearchOnPanelClose from './enableClearSearchOnPanelClose';
 import disableClearSearchOnPanelClose from './disableClearSearchOnPanelClose';
 import disableFadePageNavigationComponent from './disableFadePageNavigationComponent';
 import enableFadePageNavigationComponent from './enableFadePageNavigationComponent';
+import disablePageDeletionConfirmationModal from './disablePageDeletionConfirmationModal';
+import enablePageDeletionConfirmationModal from './enablePageDeletionConfirmationModal';
 import addEventListener from './addEventListener';
 import removeEventListener from './removeEventListener';
 
@@ -364,6 +366,8 @@ export default store => {
     getAnnotationReadState: getAnnotationReadState(store),
     disableFadePageNavigationComponent: disableFadePageNavigationComponent(store),
     enableFadePageNavigationComponent: enableFadePageNavigationComponent(store),
+    disablePageDeletionConfirmationModal: disablePageDeletionConfirmationModal(store),
+    enablePageDeletionConfirmationModal: enablePageDeletionConfirmationModal(store),
   };
 
   window.instance = {

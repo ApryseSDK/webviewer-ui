@@ -39,6 +39,7 @@ export default {
     highContrastMode: getHashParams('highContrastMode', false),
     notesInLeftPanel: getHashParams('notesInLeftPanel', false),
     fadePageNavigationComponent: true,
+    pageDeletionConfirmationModalEnabled: true,
     outlineControlVisibility: false,
     headers: {
       default: [

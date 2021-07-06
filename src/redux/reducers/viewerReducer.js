@@ -410,6 +410,11 @@ export default initialState => (state = initialState, action) => {
         ...state,
         fadePageNavigationComponent: payload.fadePageNavigationComponent
       }
+    case 'PAGE_DELETION_CONFIRMATION_MODAL_POPUP':
+      return {
+        ...state,
+        pageDeletionConfirmationModalEnabled : payload.pageDeletionConfirmationModalEnabled
+      }
     default:
       return state;
   }
