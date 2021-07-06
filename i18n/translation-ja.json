@@ -391,7 +391,7 @@
     "deletePage": {
       "deleteTitle": "ページを削除",
       "deleteMessage": "選択したページを本当に削除してもよろしいですか？この変更は元に戻せません",
-      "deleteLastPageMessage": "これ以上削除すると、表示するページがなくなります。少なくとも1ページは残してください"
+      "deleteLastPageMessage": "ドキュメント内のすべてのページを削除することはできません。"
     },
     "extractPage": {
       "title": "ページの抽出",

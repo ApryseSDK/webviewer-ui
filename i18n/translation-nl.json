@@ -391,7 +391,7 @@
     "deletePage": {
       "deleteTitle": "Pagina verwijderen",
       "deleteMessage": "Weet u zeker dat u de geselecteerde pagina ('s) wilt verwijderen. Dit kan niet ongedaan worden gemaakt",
-      "deleteLastPageMessage": "Hierdoor zouden er geen pagina's meer overblijven. Laat minstens één pagina achter"
+      "deleteLastPageMessage": "U kunt niet alle pagina's in het document verwijderen."
     },
     "extractPage": {
       "title": "Pagina uitpakken",

@@ -391,7 +391,7 @@
     "deletePage": {
       "deleteTitle": "Excluir página",
       "deleteMessage": "Esta ação excluirá permanentemente as páginas selecionadas. Isso não pode ser desfeito",
-      "deleteLastPageMessage": "Esta ação resultaria em nenhuma página restante. Deixe pelo menos uma página"
+      "deleteLastPageMessage": "Você não pode excluir todas as páginas do documento."
     },
     "extractPage": {
       "title": "Extrair página",

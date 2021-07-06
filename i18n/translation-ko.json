@@ -391,7 +391,7 @@
     "deletePage": {
       "deleteTitle": "페이지 삭제",
       "deleteMessage": "선택한 페이지를 삭제 하시겠습니까? 취소 할 수 없습니다",
-      "deleteLastPageMessage": "그러면 페이지가 남아 있지 않습니다. 한 페이지 이상 남겨주세요"
+      "deleteLastPageMessage": "문서의 모든 페이지를 삭제할 수 없습니다."
     },
     "extractPage": {
       "title": "페이지 추출",

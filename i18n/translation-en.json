@@ -391,7 +391,7 @@
     "deletePage": {
       "deleteTitle": "Delete Page",
       "deleteMessage": "Are you sure you want to delete the selected page(s). This can't be undone",
-      "deleteLastPageMessage": "This would result in no pages remaining. Please leave at least one page"
+      "deleteLastPageMessage": "You cannot delete all pages in the document."
     },
     "extractPage": {
       "title": "Extract Page",

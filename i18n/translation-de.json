@@ -391,7 +391,7 @@
     "deletePage": {
       "deleteTitle": "Seite löschen",
       "deleteMessage": "Möchten Sie die ausgewählten Seiten wirklich löschen? Dies kann nicht rückgängig gemacht werden",
-      "deleteLastPageMessage": "Dies würde dazu führen, dass keine Seiten verbleiben. Bitte hinterlassen Sie mindestens eine Seite"
+      "deleteLastPageMessage": "Sie können nicht alle Seiten im Dokument löschen."
     },
     "extractPage": {
       "title": "Seite extrahieren",

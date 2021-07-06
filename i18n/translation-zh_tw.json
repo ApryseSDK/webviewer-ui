@@ -391,7 +391,7 @@
     "deletePage": {
       "deleteTitle": "刪除頁面",
       "deleteMessage": "您確定要刪除所選頁面嗎？這是無法撤消的",
-      "deleteLastPageMessage": "這將導致沒有剩餘頁面。請至少留一頁"
+      "deleteLastPageMessage": "您無法刪除文檔中的所有頁面。"
     },
     "extractPage": {
       "title": "提取頁面",

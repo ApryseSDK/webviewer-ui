@@ -391,7 +391,7 @@
     "deletePage": {
       "deleteTitle": "Elimina pagina",
       "deleteMessage": "Sei sicuro di voler eliminare le pagine selezionate. Questo non può essere annullato",
-      "deleteLastPageMessage": "Ciò comporterebbe che non restino pagine. Si prega di lasciare almeno una pagina"
+      "deleteLastPageMessage": "Non è possibile eliminare tutte le pagine del documento."
     },
     "extractPage": {
       "title": "Estrai pagina",
