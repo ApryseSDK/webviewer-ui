@@ -38,6 +38,7 @@ class StylePopup extends React.PureComponent {
     const {
       style: { Opacity, StrokeThickness, FontSize },
       onStyleChange,
+      onSliderChange,
       isFreeText,
       // TODO: Actually disable these elements
       isOpacitySliderDisabled,
@@ -53,9 +54,9 @@ class StylePopup extends React.PureComponent {
         property: 'Opacity',
         displayProperty: 'opacity',
         value: Opacity,
-        displayValue: `${Math.round(Opacity * 100)}%`,
+        getDisplayValue: (Opacity) => `${Math.round(Opacity * 100)}%`,
         dataElement: DataElements.OPACITY_SLIDER,
-        getCirclePosition: lineLength => Opacity * lineLength + lineStart,
+        getCirclePosition: (lineLength, Opacity) => Opacity * lineLength + lineStart,
         convertRelativeCirclePositionToValue: circlePosition => circlePosition,
       };
     }
@@ -64,10 +65,10 @@ class StylePopup extends React.PureComponent {
         property: 'StrokeThickness',
         displayProperty: 'thickness',
         value: StrokeThickness,
-        displayValue: `${Math.round(StrokeThickness)}pt`,
+        getDisplayValue: (StrokeThickness) => `${Math.round(StrokeThickness)}pt`,
         dataElement: DataElements.STROKE_THICKNESS_SLIDER,
         // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
-        getCirclePosition: lineLength =>
+        getCirclePosition: (lineLength, StrokeThickness) =>
           (isFreeText
             ? (StrokeThickness / 20) * lineLength + lineStart
             : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
@@ -80,9 +81,9 @@ class StylePopup extends React.PureComponent {
         property: 'FontSize',
         displayProperty: 'text',
         value: FontSize,
-        displayValue: `${Math.round(parseInt(FontSize, 10))}pt`,
+        getDisplayValue: (FontSize) => `${Math.round(parseInt(FontSize, 10))}pt`,
         dataElement: DataElements.FONT_SIZE_SLIDER,
-        getCirclePosition: lineLength =>
+        getCirclePosition: (lineLength, FontSize) =>
           ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
         convertRelativeCirclePositionToValue: circlePosition =>
           `${circlePosition * 40 + 5}pt`,
@@ -117,7 +118,7 @@ class StylePopup extends React.PureComponent {
     const sliderComponents = Object.keys(sliders).map(key => {
       const props = sliderProps[key];
 
-      return <Slider {...props} key={key} onStyleChange={onStyleChange} />;
+      return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onSliderChange}/>;
     });
 
     // return null;
