@@ -9,6 +9,11 @@
 
   .thumbnail-slider {
     width: 100%;
+    height: 20px;
+    padding: 0px 0px;
+    color: transparent;
+    background-color: transparent;
+    border: 0px 0px transparent;
   }
 
   input[type=range] {
@@ -63,13 +68,15 @@
     cursor: pointer;
   }
   input[type=range]::-ms-track {
+    padding: 5px 0px 0px 0px;
     width: 100%;
     height: 3px;
-    cursor: pointer;
-    animate: 0.2s;
     background: transparent;
     border-color: transparent;
     color: transparent;
+    cursor: pointer;
+    border-width: 6px 0;
+    animate: 0.2s;
   }
   input[type=range]::-ms-fill-lower {
     background: var(--slider-filled);
@@ -88,7 +95,7 @@
     border: 0px solid #000000;
     height: 15px;
     width: 15px;
-    border-radius: 50px;
+    border-radius: 50%;
     background: var(--slider-filled);
     cursor: pointer;
   }
