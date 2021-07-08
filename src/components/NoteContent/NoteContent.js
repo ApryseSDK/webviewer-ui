@@ -87,11 +87,14 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const renderAuthorName = useCallback(
     annotation => {
       const name = core.getDisplayAuthor(annotation);
-
+      let shortName = name;
+      if (name.length>10){
+        shortName = name.substr(0, 5) + '...' + name.substr(name.length - 3)
+      }
       return name ? (
         <span
           dangerouslySetInnerHTML={{
-            __html: highlightSearchInput(name, searchInput),
+            __html: highlightSearchInput(shortName, searchInput),
           }}
         />
       ) : (
