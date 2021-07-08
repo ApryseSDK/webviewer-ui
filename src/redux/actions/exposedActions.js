@@ -405,10 +405,14 @@ export const setPageLabels = pageLabels => dispatch => {
     payload: { pageLabels: pageLabels.map(String) },
   });
 };
-export const setSelectedPageThumbnails = (selectedThumbnailPageIndexes = []) => ({
-  type: 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES',
-  payload: { selectedThumbnailPageIndexes },
-});
+export const setSelectedPageThumbnails = (selectedThumbnailPageIndexes = []) =>{ 
+  fireEvent(Events.SELECTED_THUMBNAIL_CHANGED, selectedThumbnailPageIndexes);
+
+  return ({
+    type: 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES',
+    payload: { selectedThumbnailPageIndexes },
+  });
+};
 export const setShiftKeyThumbnailsPivotIndex = (shiftKeyThumbnailPivotIndex = null) => ({
   type: 'SET_SHIFT_KEY_THUMBNAIL_PIVOT_INDEX',
   payload: { shiftKeyThumbnailPivotIndex },
