@@ -1,3 +1,4 @@
+import { debounce } from 'lodash';
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { List } from 'react-virtualized';
@@ -70,6 +71,12 @@ const ThumbnailsPanel = () => {
   const [thumbnailSize, setThumbnailSize] = useState(150);
 
   const dispatch = useDispatch();
+
+  // If memory becomes an issue, change this to use pageNumbers.
+  // Instead of a debounced drawAnnotations function, perhaps use
+  // a function that first checks for the pageNumber in this map
+  // before calling drawAnnotations on a page.
+  let activeThumbRenders = {};
 
   const getThumbnailSize = (pageWidth, pageHeight) => {
     let width;
@@ -151,7 +158,11 @@ const ThumbnailsPanel = () => {
       return;
     }
 
-    core.drawAnnotations(options);
+    if (!activeThumbRenders[pageNumber]) {
+      activeThumbRenders[pageNumber] = debounce(core.drawAnnotations, 112);
+    }
+    const debouncedDraw = activeThumbRenders[pageNumber];
+    debouncedDraw(options);
   };
 
   useEffect(() => {
@@ -172,7 +183,7 @@ const ThumbnailsPanel = () => {
       } else {
         setAllowPageOperations(false);
       }
-
+      activeThumbRenders = {};
       dispatch(actions.setSelectedPageThumbnails([]));
     };
 
