@@ -17,8 +17,8 @@ class ReaderModeViewer extends React.PureComponent {
 
     this.viewer = React.createRef();
     this.originalMaxZoom = zoomFactors.getMaxZoomLevel();
-    this.setAnnotColor = undefined;
-    this.doneSetAnnotColor = undefined;
+    this.setAnnotStyleCb = undefined;
+    this.doneSetAnnotColorCb = undefined;
 
     this.state = {
       colorMapKey: undefined,
@@ -73,7 +73,8 @@ class ReaderModeViewer extends React.PureComponent {
           <ReaderModeStylePopup
             colorMapKey={this.state.colorMapKey}
             style={this.state.style}
-            onStyleChange={this.handleStyleChange}
+            onStyleChange={this.handleColorChange}
+            onSliderChange={this.handleOpacityChange}
             onClose={this.handleStylePopupClose}
             annotPosition={this.state.annotPosition}
             viewer={this.viewer}
@@ -146,18 +147,28 @@ class ReaderModeViewer extends React.PureComponent {
     if (!this.wvReadingMode) return;
     const toolMode = core.getToolMode();
     const annotType = this.getAnnotTypeFromToolMode(toolMode);
-    this.wvReadingMode.setAddAnnotConfig({
-      type: annotType,
-      color: annotType ? toolMode['defaults']['StrokeColor'].toHexString() : undefined
-    });
+    if (annotType) {
+      this.wvReadingMode.setAddAnnotConfig({
+        type: annotType,
+        color: toolMode['defaults']['StrokeColor'].toHexString(),
+        opacity: toolMode['defaults']['Opacity']
+      });
+    } else {
+      this.wvReadingMode.setAddAnnotConfig({
+        type: undefined
+      });
+    }
   }
 
-  onEditStyle = ({ color, type, position }, setAnnotColor, doneSetAnnotColor) => {
-    this.setAnnotColor = setAnnotColor;
-    this.doneSetAnnotColor = doneSetAnnotColor;
+  onEditStyle = ({ color, opacity, type, position }, setAnnotStyleCb, doneSetAnnotColorCb) => {
+    this.setAnnotStyleCb = setAnnotStyleCb;
+    this.doneSetAnnotColorCb = doneSetAnnotColorCb;
     this.setState({
       colorMapKey: this.getColorMapKey(type),
-      style: { StrokeColor: new window.Core.Annotations.Color(color) },
+      style: {
+        StrokeColor: new window.Core.Annotations.Color(color),
+        Opacity: opacity
+      },
       showStylePopup: true,
       annotPosition: position
     });
@@ -176,11 +187,32 @@ class ReaderModeViewer extends React.PureComponent {
     return "";
   }
 
-  handleStyleChange = (property, color) => {
-    if (property === 'StrokeColor' && this.setAnnotColor) {
-      this.setAnnotColor(color.toHexString());
+  handleColorChange = (property, color) => {
+    if (property === 'StrokeColor' && this.setAnnotStyleCb) {
+      this.setAnnotStyleCb({
+        color: color.toHexString(),
+        opacity: this.state.style.Opacity
+      });
       this.setState({
-        style: { StrokeColor: color }
+        style: {
+          ...this.state.style,
+          StrokeColor: color
+        }
+      });
+    }
+  }
+
+  handleOpacityChange = (property, opacity) => {
+    if (property === 'Opacity' && this.setAnnotStyleCb) {
+      this.setAnnotStyleCb({
+        color: this.state.style.StrokeColor.toHexString(),
+        opacity
+      });
+      this.setState({
+        style: {
+          ...this.state.style,
+          Opacity: opacity
+        }
       });
     }
   }
@@ -189,7 +221,7 @@ class ReaderModeViewer extends React.PureComponent {
     this.setState({
       showStylePopup: false
     });
-    this.doneSetAnnotColor();
+    this.doneSetAnnotColorCb();
   }
 }
 

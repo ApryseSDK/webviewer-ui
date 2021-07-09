@@ -51,6 +51,8 @@ function ViewControlsOverlay() {
 
   const { pageTransition, layout } = displayModeObjects.find(obj => obj.displayMode === displayMode);
 
+  const showReaderButton = core.isFullPDFEnabled() && window.documentViewer?.getDocument()?.getType() === 'pdf';
+
   return (
     <FlyoutMenu menu="viewControlsOverlay" trigger="viewControlsButton" onClose={undefined} ariaLabel={t('component.viewControlsOverlay')}>
       {totalPages < totalPageThreshold && (
@@ -87,7 +89,7 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('option.pageTransition.default')}</div>
           </DataElementWrapper>
-          {core.isFullPDFEnabled() && (
+          {showReaderButton && (
             <DataElementWrapper
               className={classNames({ row: true, active: isReaderMode })}
               onClick={() => handleReaderModeClick()}
