@@ -199,7 +199,7 @@ const AnnotationPopup = () => {
 
   const isFreeTextAnnot = firstAnnotation instanceof window.Annotations.FreeTextAnnotation;
   const isFreeTextAndCanEdit =
-    isFreeTextAnnot && core.getAnnotationManager().useFreeTextEditing() && core.canModifyContents(firstAnnotation);
+    isFreeTextAnnot && core.getAnnotationManager().isFreeTextEditingEnabled() && core.canModifyContents(firstAnnotation);
 
 
 
@@ -227,7 +227,7 @@ const AnnotationPopup = () => {
     // trigger the annotationDoubleClicked event so that it will download the file
     core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
   };
-  
+
   const toolNames = window.Core.Tools.ToolNames;
   const toolsWithNoStyling = [
     toolNames.CROP,

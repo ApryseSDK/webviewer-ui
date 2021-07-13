@@ -20,7 +20,7 @@ function NotePopupContainer(props) {
 
   const handleEdit = React.useCallback(function handleEdit(){
     const isFreeText = annotation instanceof window.Annotations.FreeTextAnnotation;
-    if (isFreeText && core.getAnnotationManager().useFreeTextEditing()) {
+    if (isFreeText && core.getAnnotationManager().isFreeTextEditingEnabled()) {
       core.getAnnotationManager().trigger('annotationDoubleClicked', annotation);
     } else {
       setIsEditing(true, noteIndex);
