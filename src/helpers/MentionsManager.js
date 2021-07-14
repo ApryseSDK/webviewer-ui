@@ -265,10 +265,10 @@ class MentionsManager {
     replyAnnot['PageNumber'] = annotation['PageNumber'];
     replyAnnot['Author'] = core.getCurrentUser();
     replyAnnot.setContents(plainTextValue || '');
-    replyAnnot.setCustomData('trn-mention', {
+    replyAnnot.setCustomData('trn-mention', JSON.stringify({
       contents: value,
       ids,
-    });
+    }));
 
     annotation.addReply(replyAnnot);
 

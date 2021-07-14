@@ -18,7 +18,7 @@ import NotePopup from 'components/NotePopup';
 import NoteState from 'components/NoteState';
 import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
-import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator'
+import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
 
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
@@ -90,11 +90,11 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
       Autolinker.link(contents, {
         stripPrefix: false,
         stripTrailingSlash: false,
-        replaceFn : function(match) {
+        replaceFn(match) {
           const href = match.getAnchorHref();
           const anchorText = match.getAnchorText();
           const offset = match.getOffset();
-          switch(match.getType()) {
+          switch (match.getType()) {
             case 'url':
             case 'email':
             case 'phone':
@@ -189,7 +189,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     }
   };
 
-  const handleContentsClicked = (e) => {
+  const handleContentsClicked = e => {
     if (window.getSelection()?.toString()) {
       e?.stopPropagation();
       return;
@@ -320,10 +320,10 @@ const ContentArea = ({
     if (isMentionEnabled) {
       const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
 
-      annotation.setCustomData('trn-mention', {
+      annotation.setCustomData('trn-mention', JSON.stringify({
         contents: textAreaValue,
         ids,
-      });
+      }));
       core.setNoteContents(annotation, plainTextValue);
     } else {
       core.setNoteContents(annotation, textAreaValue);
@@ -404,7 +404,7 @@ const highlightSearchInput = (text, searchInput) => {
       if (lastFoundInstance !== -1) {
         allFoundPositions.push(lastFoundInstance);
       }
-    };
+    }
   }
   allFoundPositions.forEach((position, idx) => {
     // Account for any content at the beginning of the string before the first
