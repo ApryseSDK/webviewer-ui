@@ -320,6 +320,8 @@ export const getPasswordAttempts = state => state.document.passwordAttempts;
 
 export const getPrintQuality = state => state.document.printQuality;
 
+export const getDefaultPrintOptions = state => state.document.defaultPrintOptions;
+
 export const getTotalPages = state => state.document.totalPages;
 
 export const getOutlines = state => state.document.outlines;

@@ -58,7 +58,8 @@ class PrintModal extends React.PureComponent {
       watermarkModalOption: null,
       existingWatermarks: null,
       includeAnnotations: true,
-      includeComments: false
+      includeComments: false,
+      allowDefaultPrintOptions: true,
     };
   }
 
@@ -222,8 +223,12 @@ class PrintModal extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-
-    const { count, pagesToPrint, includeAnnotations } = this.state;
+    if (this.state.allowDefaultPrintOptions && this.props.printOptions) {
+      this.state.includeAnnotations = typeof this.props.printOptions.includeAnnotations !== 'undefined' ? this.props.printOptions.includeAnnotations : this.state.includeAnnotations;
+      this.state.includeComments = typeof this.props.printOptions.includeComments !== 'undefined' ? this.props.printOptions.includeComments : this.state.includeComments;
+      this.state.allowDefaultPrintOptions = false;
+    }
+    const { count, pagesToPrint, includeAnnotations, includeComments } = this.state;
     const isPrinting = count >= 0;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = (
@@ -322,6 +327,7 @@ class PrintModal extends React.PureComponent {
                         }))
                       }
                       disabled={isPrinting}
+                      checked={includeComments}
                       center
                     />
                     <Choice
@@ -407,6 +413,7 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'printModal'),
   currentPage: selectors.getCurrentPage(state),
   printQuality: selectors.getPrintQuality(state),
+  defaultPrintOptions: selectors.getDefaultPrintOptions(state),
   pageLabels: selectors.getPageLabels(state),
   sortStrategy: selectors.getSortStrategy(state),
   colorMap: selectors.getColorMap(state),
