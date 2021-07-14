@@ -415,7 +415,7 @@ const AnnotationPopup = () => {
               )
             }
             {
-              firstAnnotation instanceof Annotations.Model3DAnnotation &&
+              firstAnnotation instanceof Annotations.Model3DAnnotation && !isMobile() && 
               (
                 <ActionButton
                   title="action.viewShortCutKeysFor3D"
