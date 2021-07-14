@@ -408,7 +408,7 @@ function FormFieldEditPopupContainer() {
     //Note: Draggable and react-dnd don't play nice, and having both is redundant. Maybe in the future we can refactor to only use react-dnd
     return (
       <Draggable
-        cancel=".Button, .cell, .sliders-container svg, .creatable-list, .ui__input__input, .form-dimension-input">
+        cancel=".Button, .cell, .sliders-container svg, .creatable-list, .ui__input__input, .form-dimension-input, .ui__choice__input">
         {renderFormFieldEditPopup()}
       </Draggable>);
   } else {

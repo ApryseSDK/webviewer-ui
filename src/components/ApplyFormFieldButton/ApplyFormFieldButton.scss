@@ -1,3 +1,5 @@
+@import '../../constants/styles';
+
 .apply-form-field-button {
   background-color: var(--blue-5);
   border: 1px solid var(--blue-5);
@@ -11,5 +13,10 @@
   &:hover {
     background: #1A4971 !important;
     border-radius: 5px !important;
+  }
+
+  @include mobile {
+    padding: 7px 12px;
+    white-space: nowrap;
   }
 }
