@@ -51,6 +51,7 @@ const Button = props => {
     isActive,
     mediaQueryClassName,
     img,
+    tabIndex,
     label,
     color,
     dataElement,
@@ -103,6 +104,7 @@ const Button = props => {
       onDoubleClick={actuallyDisabled ? NOOP : onDoubleClick}
       aria-label={aLabel}
       role={role}
+      tabIndex={tabIndex}
       aria-keyshortcuts={ariaKeyshortcuts}
     >
       {isGlyph &&

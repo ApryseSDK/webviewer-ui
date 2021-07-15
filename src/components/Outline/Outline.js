@@ -93,7 +93,7 @@ const Outline = forwardRef(
       setIsExpanded(expand => !expand);
     }, []);
 
-    const handleKeyPress = useCallback(function(event) {
+    const handleArrowKeyPress = useCallback(function(event) {
       if (event.key === 'Enter') {
         handleClickExpand();
       }
@@ -110,7 +110,11 @@ const Outline = forwardRef(
       },
       [dispatch, setSelectedOutlinePath, outline],
     );
-
+    const handleOutlineKeyPress = event => {
+      if (event.key === 'Enter') {
+        handleOutlineClick();
+      }
+    }
     function handleOutlineDoubleClick() {
       if (!core.isFullPDFEnabled()) {
         return;
@@ -145,9 +149,9 @@ const Outline = forwardRef(
                 arrow: true,
                 expanded: isExpanded,
               })}
-            tabIndex="0"
+            tabIndex={0}
             onClick={handleClickExpand}
-            onKeyPress={handleKeyPress}
+            onKeyPress={handleArrowKeyPress}
             >
               <Icon glyph="ic_chevron_right_black_24px" />
             </div>
@@ -163,12 +167,13 @@ const Outline = forwardRef(
               onBlur={changeOutlineName}
             />
           ) : (
-            <div className={classNames({ row: true, selected: isSelected, hover: showHoverBackground && !isSelected })} ref={elementRef}>
+            <div className={classNames({ row: true, selected: isSelected, hover: showHoverBackground && !isSelected })} ref={elementRef} onKeyPress={handleOutlineKeyPress} tabIndex={0}>
               <Button
                 className="contentButton"
                 onDoubleClick={handleOutlineDoubleClick}
                 label={outline.getName()}
                 onClick={handleOutlineClick}
+                tabIndex={-1}
               />
               <OutlineEditButton
                 outline={outline}
@@ -219,7 +224,7 @@ function OutlineEditButton({ outline, setIsEditingName, onPopupOpen, onPopupClos
   const trigger = `edit-button-${outlineUtils.getPath(outline)}`;
   return (
     <DataElementWrapper className="editOutlineButton" dataElement="editOutlineButton">
-      <Button dataElement={trigger} img="icon-tool-more" onClick={handleButtonClick} />
+      <Button dataElement={trigger} img="icon-tool-more" onClick={handleButtonClick} tabIndex={-1}/>
       {isOpen && (
         <OutlineEditPopup
           outline={outline}
