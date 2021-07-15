@@ -9,7 +9,7 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import fireEvent from 'helpers/fireEvent';
-import { rgbaToHex } from 'helpers/color';
+import { rgbaToHex, hexToRgba } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 
 import Choice from 'components/Choice';
@@ -218,7 +218,7 @@ const FilterAnnotModal = () => {
                 <div
                   className="colorCell"
                   style={{
-                    background: val,
+                    background: hexToRgba(val),
                   }}
                 ></div>
               </div>
