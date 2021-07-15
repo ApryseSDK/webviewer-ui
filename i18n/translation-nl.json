@@ -486,6 +486,20 @@
       "10": "november",
       "11": "december"
     },
+    "monthsShort": [
+      "jan",
+      "feb",
+      "maart",
+      "apr",
+      "mei",
+      "juni",
+      "juli",
+      "aug",
+      "sept",
+      "okt",
+      "nov",
+      "dec"
+    ],
     "weekdays": {
       "0": "zondag",
       "1": "maandag",

@@ -486,6 +486,20 @@
       "10": "Novembro",
       "11": "Dezembro"
     },
+    "monthsShort": [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dec"
+    ],
     "weekdays": {
       "0": "Domingo",
       "1": "Segunda-feira",
