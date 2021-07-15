@@ -55,8 +55,8 @@ $arrow-size: 19px;
       align-items: center;
       cursor: pointer;
       border-radius: 4px;
-      padding: 6px;
-      
+      padding: 0px 6px;
+
       .Button {
         width: auto;
         height: auto;
@@ -67,6 +67,7 @@ $arrow-size: 19px;
       .contentButton {
         flex-grow: 1;
         justify-content: flex-start;
+        padding: 6px 0px;
       }
 
       .editOutlineButton {
