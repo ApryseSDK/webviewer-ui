@@ -17,17 +17,30 @@ class HeaderItems extends React.PureComponent {
   static propTypes = {
     isToolGroupReorderingEnabled: PropTypes.bool.isRequired,
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isInDesktopOnlyMode: PropTypes.bool
   }
 
   render() {
-    const { items, isToolGroupReorderingEnabled } = this.props;
-
+    const { items, isToolGroupReorderingEnabled, isInDesktopOnlyMode } = this.props;
     const toolGroupButtonsItems = items.filter(({ type }) => (type === 'toolGroupButton'));
     let handledToolGroupButtons = false;
 
-    let headers = items.map((item, i) => {
+    const headers = items.map((item, i) => {
       const { type, dataElement, hidden, toolName, hiddenOnMobileDevice } = item;
-      let mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
+      let mediaQueryClassName = hidden ? hidden.map(screen => {
+        let result = '';
+        if (isInDesktopOnlyMode) {
+          // if in desktop only mode and if it should hide in desktop
+          // append style to always make it hidden
+          if (screen === 'desktop') {
+            result = `always-hide hide-in-${screen}`;
+          }
+        } else {
+          result = `hide-in-${screen}`;
+        }
+        return result;
+      })
+        .join(' ') : '';
       if (hiddenOnMobileDevice && isMobileDeviceFunc()) {
         mediaQueryClassName += ' hide-in-mobile hide-in-small-mobile';
       }
@@ -36,7 +49,7 @@ class HeaderItems extends React.PureComponent {
       switch (type) {
         case 'toolButton':
           return <ToolButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-          case 'toolGroupButton':
+        case 'toolGroupButton':
           if (!isToolGroupReorderingEnabled) {
             return <ToolGroupButton  key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
           } else if (!handledToolGroupButtons) {

@@ -9,11 +9,12 @@ import SearchPanel from './SearchPanel';
 function SearchPanelContainer(props) {
   const isMobile = useMedia(['(max-width: 640px)'],[true], false);
 
-  const [isOpen, currentWidth, pageLabels, shouldClearSearchPanelOnClose] = useSelector(state => [
+  const [isOpen, currentWidth, pageLabels, shouldClearSearchPanelOnClose, isInDesktopOnlyMode] = useSelector(state => [
     selectors.isElementOpen(state, 'searchPanel'),
     selectors.getSearchPanelWidth(state),
     selectors.getPageLabels(state),
     selectors.shouldClearSearchPanelOnClose(state),
+    selectors.isInDesktopOnlyMode(state)
   ], shallowEqual);
 
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ function SearchPanelContainer(props) {
    */
 
   React.useEffect(function clearSearchResult() {
-    if (isMobile) {
+    if (!isInDesktopOnlyMode && isMobile) {
       // for mobile we want to keep results in panel as search panel is on top of the content
       // and user will need to close the panel to view the content.
       return;
@@ -68,7 +69,7 @@ function SearchPanelContainer(props) {
       core.clearSearchResults();
       clearSearchInputValue();
     }
-  }, [isMobile, isOpen, shouldClearSearchPanelOnClose]);
+  }, [isMobile, isOpen, shouldClearSearchPanelOnClose, isInDesktopOnlyMode]);
 
   const combinedProps = {
     ...props,
@@ -78,6 +79,7 @@ function SearchPanelContainer(props) {
     closeSearchPanel,
     setActiveResult,
     isMobile,
+    isInDesktopOnlyMode
   };
 
   return (

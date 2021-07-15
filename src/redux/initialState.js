@@ -17,6 +17,7 @@ import ApplyFormFieldButton from 'components/ApplyFormFieldButton';
 
 export default {
   viewer: {
+    isInDesktopOnlyMode: false,
     canUndo: false,
     canRedo: false,
     toolbarGroup: 'toolbarGroup-Annotate',
@@ -453,10 +454,10 @@ export default {
       AnnotationCreateTextStrikeout2: { dataElement: 'strikeoutToolButton2', title: 'annotation.strikeout', img: 'icon-tool-text-manipulation-strikethrough', group: 'strikeoutTools', showColor: 'always' },
       AnnotationCreateTextStrikeout3: { dataElement: 'strikeoutToolButton3', title: 'annotation.strikeout', img: 'icon-tool-text-manipulation-strikethrough', group: 'strikeoutTools', showColor: 'always' },
       AnnotationCreateTextStrikeout4: { dataElement: 'strikeoutToolButton4', title: 'annotation.strikeout', img: 'icon-tool-text-manipulation-strikethrough', group: 'strikeoutTools', showColor: 'always' },
-      AnnotationCreateFreeText: { dataElement: 'freeTextToolButton', title: 'annotation.freetext', img: 'icon-tool-free-text', group: 'freeTextTools', showColor: 'always' },
-      AnnotationCreateFreeText2: { dataElement: 'freeTextToolButton2', title: 'annotation.freetext', img: 'icon-tool-free-text', group: 'freeTextTools', showColor: 'always' },
-      AnnotationCreateFreeText3: { dataElement: 'freeTextToolButton3', title: 'annotation.freetext', img: 'icon-tool-free-text', group: 'freeTextTools', showColor: 'always' },
-      AnnotationCreateFreeText4: { dataElement: 'freeTextToolButton4', title: 'annotation.freetext', img: 'icon-tool-free-text', group: 'freeTextTools', showColor: 'always' },
+      AnnotationCreateFreeText: { dataElement: 'freeTextToolButton', title: 'annotation.freetext', img: 'icon-tool-text-free-text', group: 'freeTextTools', showColor: 'always' },
+      AnnotationCreateFreeText2: { dataElement: 'freeTextToolButton2', title: 'annotation.freetext', img: 'icon-tool-text-free-text', group: 'freeTextTools', showColor: 'always' },
+      AnnotationCreateFreeText3: { dataElement: 'freeTextToolButton3', title: 'annotation.freetext', img: 'icon-tool-text-free-text', group: 'freeTextTools', showColor: 'always' },
+      AnnotationCreateFreeText4: { dataElement: 'freeTextToolButton4', title: 'annotation.freetext', img: 'icon-tool-text-free-text', group: 'freeTextTools', showColor: 'always' },
       AnnotationCreateCallout: { dataElement: 'calloutToolButton', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },
       AnnotationCreateCallout2: { dataElement: 'calloutToolButton2', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },
       AnnotationCreateCallout3: { dataElement: 'calloutToolButton3', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },

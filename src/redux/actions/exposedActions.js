@@ -7,6 +7,11 @@ import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 
+export const setEnableDesktopOnlyMode = enableDesktopOnlyMode => ({
+  type: 'SET_ENABLE_DESKTOP_ONLY_MODE',
+  payload: { enableDesktopOnlyMode },
+});
+
 export const setHighContrastMode = useHighContrastMode => ({
   type: 'SET_HIGH_CONTRAST_MODE',
   payload: { useHighContrastMode },

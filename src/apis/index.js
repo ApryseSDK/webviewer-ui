@@ -174,6 +174,9 @@ import disablePageDeletionConfirmationModal from './disablePageDeletionConfirmat
 import enablePageDeletionConfirmationModal from './enablePageDeletionConfirmationModal';
 import addEventListener from './addEventListener';
 import removeEventListener from './removeEventListener';
+import enableDesktopOnlyMode from './enableDesktopOnlyMode';
+import disableDesktopOnlyMode from './disableDesktopOnlyMode';
+import isInDesktopOnlyMode from './isInDesktopOnlyMode';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -368,6 +371,9 @@ export default store => {
     getAnnotationReadState: getAnnotationReadState(store),
     disableFadePageNavigationComponent: disableFadePageNavigationComponent(store),
     enableFadePageNavigationComponent: enableFadePageNavigationComponent(store),
+    enableDesktopOnlyMode: enableDesktopOnlyMode(store),
+    disableDesktopOnlyMode: disableDesktopOnlyMode(store),
+    isInDesktopOnlyMode: isInDesktopOnlyMode(store),
     disablePageDeletionConfirmationModal: disablePageDeletionConfirmationModal(store),
     enablePageDeletionConfirmationModal: enablePageDeletionConfirmationModal(store),
   };
