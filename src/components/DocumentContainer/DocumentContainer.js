@@ -188,6 +188,7 @@ class DocumentContainer extends React.PureComponent {
       'annotationPopup',
       'textPopup',
       'annotationNoteConnectorLine',
+      'formFieldEditPopup',
     ]);
 
     // Show overlay and then hide it, but the hide call is debounced
