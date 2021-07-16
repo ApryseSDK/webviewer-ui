@@ -9,7 +9,7 @@ import actions from 'actions';
 import enableTools from 'src/apis/enableTools';
 import disableTools from 'src/apis/disableTools';
 
-// a higher older function that creates the enableFeatures and disableFeatures APIs
+// a higher order function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => (features, priority = PRIORITY_TWO) => {
   // map a feature to the dataElements that should be enabled/disabled and the function to run
   const map = {
@@ -244,7 +244,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
   }
 
   features.forEach(feature => {
-    const { dataElements = [], fn = () => {} } = map[feature];
+    const { dataElements = [], fn = () => { } } = map[feature];
 
     if (enable) {
       store.dispatch(actions.enableElements(dataElements, priority));
