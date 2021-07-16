@@ -2,11 +2,11 @@ import actions from 'actions';
 
 /**
  * Show outline control
- * @method WebViewerInstance#showOutlineControl
+ * @method UI.showOutlineControl
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.showOutlineControl();
+    instance.UI.showOutlineControl();
   });
  */
 

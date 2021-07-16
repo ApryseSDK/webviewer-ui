@@ -3,24 +3,24 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 /**
- * @typedef WebViewerInstance.PaletteOption
+ * @typedef UI.PaletteOption
  * @property {string[]} toolNames Tools that will have the same colors in the palette.
  * @property {string[]} colors An array of hex colors. Use 'transparency' for a transparent color.
  */
 
 /**
  * Sets the colors in the palette globally or for specific tools and their associated annotations
- * @method WebViewerInstance#setColorPalette
- * @param {string[]|WebViewerInstance.PaletteOption} An array of hex colors that will override the default colors for every tool.
+ * @method UI.setColorPalette
+ * @param {string[]|UI.PaletteOption} An array of hex colors that will override the default colors for every tool.
  * An object can be passed to specify colors for particular tools.
  * @example
 WebViewer(...)
   .then(function(instance) {
     // this sets the palette globally. All the tools will use these colors. Can use empty string for blank spaces and 'transparency' for a transparent color.
-    instance.setColorPalette(['#FFFFFF', '', '#DDDDDD', 'transparency']);
+    instance.UI.setColorPalette(['#FFFFFF', '', '#DDDDDD', 'transparency']);
 
     // use a different set of colors for the freetext and rectangle tool.
-    instance.setColorPalette({
+    instance.UI.setColorPalette({
       toolNames: ['AnnotationCreateFreeText', 'AnnotationCreateRectangle'],
       colors: ['#333333'],
     })

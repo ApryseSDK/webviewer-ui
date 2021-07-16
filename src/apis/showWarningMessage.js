@@ -1,6 +1,6 @@
 /**
  * Displays the custom error message
- * @method WebViewerInstance#showWarningMessage
+ * @method UI.showWarningMessage
  * @param {string} options.confirmBtnText The text that will be rendered in the confirm button
  * @param {string} options.title The title of the modal
  * @param {string} options.message The text that will rendered in the body of the modal
@@ -9,7 +9,7 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.showWarningMessage({
+    instance.UI.showWarningMessage({
       title: 'This is my warning modal title',
       message: 'This is the body of my modal',
       confirmBtnText: 'Okay!',

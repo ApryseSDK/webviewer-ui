@@ -98,17 +98,17 @@ class PageNavOverlay extends React.PureComponent {
   }
 
   goToPrevPage = () => {
-    if (window.docViewer.getCurrentPage() - 1 > 0) {
-      window.docViewer.setCurrentPage(
-        Math.max(window.docViewer.getCurrentPage() - 1, 1),
+    if (window.documentViewer.getCurrentPage() - 1 > 0) {
+      window.documentViewer.setCurrentPage(
+        Math.max(window.documentViewer.getCurrentPage() - 1, 1),
       );
     }
   }
 
   goToNextPage = () => {
-    if (window.docViewer.getCurrentPage() + 1 <= window.docViewer.getPageCount()) {
-      window.docViewer.setCurrentPage(
-        Math.min(window.docViewer.getCurrentPage() + 1, window.docViewer.getPageCount())
+    if (window.documentViewer.getCurrentPage() + 1 <= window.documentViewer.getPageCount()) {
+      window.documentViewer.setCurrentPage(
+        Math.min(window.documentViewer.getCurrentPage() + 1, window.documentViewer.getPageCount())
       );
     }
   }
@@ -145,7 +145,7 @@ class PageNavOverlay extends React.PureComponent {
           onClick={this.goToPrevPage}
           iconClassName="side-arrow"
           forceTooltipPosition='top'
-          disabled={window.docViewer.getCurrentPage() === 1}
+          disabled={window.documentViewer.getCurrentPage() === 1}
         />
         <div className="formContainer" onClick={this.onClick}>
           <form onSubmit={this.onSubmit} onBlur={this.onBlur} onFocus={this.onFocus}>
@@ -172,7 +172,7 @@ class PageNavOverlay extends React.PureComponent {
           onClick={this.goToNextPage}
           iconClassName="side-arrow"
           forceTooltipPosition='top'
-          disabled={window.docViewer.getCurrentPage() === window.docViewer.getPageCount()}
+          disabled={window.documentViewer.getCurrentPage() === window.documentViewer.getPageCount()}
         />
       </DataElementWrapper>
     );

@@ -1,11 +1,11 @@
 /**
  * Return the current tool object.
- * @method WebViewerInstance#getToolMode
- * @return {Tools.Tool} Instance of the current tool
+ * @method UI.getToolMode
+ * @return {Core.Tools.Tool} Instance of the current tool
  * @example
 WebViewer(...)
   .then(function(instance) {
-    console.log(instance.getToolMode().name, instance.getToolMode());
+    console.log(instance.UI.getToolMode().name, instance.UI.getToolMode());
   });
  */
 

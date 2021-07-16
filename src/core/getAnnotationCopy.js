@@ -1,1 +1,1 @@
-export default annotation => window.docViewer.getAnnotationManager().getAnnotationCopy(annotation);
+export default annotation => window.documentViewer.getAnnotationManager().getAnnotationCopy(annotation);

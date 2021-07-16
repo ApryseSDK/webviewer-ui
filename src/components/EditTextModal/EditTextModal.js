@@ -58,8 +58,8 @@ function EditTextModal() {
           const convertedTextCoordinates = [];
           Object.keys(textCoordinates).forEach(pageNum => {
             textCoordinates[pageNum].forEach(rect => {
-              const point1 = window.docViewer.getDocument().getPDFCoordinates(pageNum, rect.x1, rect.y1);
-              const point2 = window.docViewer.getDocument().getPDFCoordinates(pageNum, rect.x3, rect.y3);
+              const point1 = window.documentViewer.getDocument().getPDFCoordinates(pageNum, rect.x1, rect.y1);
+              const point2 = window.documentViewer.getDocument().getPDFCoordinates(pageNum, rect.x3, rect.y3);
               convertedTextCoordinates.push({ x1: point1.x, x2: point2.x, y1: point1.y, y2: point2.y,pageNum:Number(pageNum) });
             });
           });
@@ -82,7 +82,7 @@ function EditTextModal() {
   const updateText = e => {
     e.preventDefault();
     window.PDFNet.runWithCleanup(async() => {
-      const doc = await window.docViewer.getDocument().getPDFDoc();
+      const doc = await window.documentViewer.getDocument().getPDFDoc();
       // Treat each line as a rectangle region and update them separately
       const lines = newText.split(/\r?\n/);
       doc.initSecurityHandler();
@@ -103,12 +103,12 @@ function EditTextModal() {
         }
 
         // clear the cache
-        window.docViewer.refreshAll();
+        window.documentViewer.refreshAll();
         // update viewer with new document
-        window.docViewer.updateView();
+        window.documentViewer.updateView();
         // Annotations may contain text so we need to regenerate
         // our text representation
-        window.docViewer.getDocument().refreshTextData();
+        window.documentViewer.getDocument().refreshTextData();
       }
       // doc.unlock();
     });

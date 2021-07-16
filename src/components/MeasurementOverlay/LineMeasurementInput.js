@@ -72,8 +72,8 @@ function LineMeasurementInput(props) {
 
   const getMaxLineLengthInPts = useCallback(() => {
     const currentPageNumber = core.getCurrentPage();
-    const documentWidth = window.docViewer.getPageWidth(currentPageNumber);
-    const documentHeight = window.docViewer.getPageHeight(currentPageNumber);
+    const documentWidth = window.documentViewer.getPageWidth(currentPageNumber);
+    const documentHeight = window.documentViewer.getPageHeight(currentPageNumber);
     const angleInDegrees = annotation.getAngle() * (180 / Math.PI).toFixed(2);
     const startPoint = annotation.getStartPoint();
     const startX = startPoint.x;

@@ -1,8 +1,8 @@
 import actions from 'actions';
 
 export default dispatch => () => {
-  const canUndo = window.docViewer.getAnnotationHistoryManager().canUndo();
+  const canUndo = window.documentViewer.getAnnotationHistoryManager().canUndo();
   dispatch(actions.setCanUndo(canUndo));
-  const canRedo = window.docViewer.getAnnotationHistoryManager().canRedo();
+  const canRedo = window.documentViewer.getAnnotationHistoryManager().canRedo();
   dispatch(actions.setCanRedo(canRedo));
 };

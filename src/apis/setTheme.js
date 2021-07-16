@@ -11,13 +11,13 @@ import cssVars from 'css-vars-ponyfill';
 
 /**
  * Sets the theme of WebViewer UI. Please note that this does not work in IE11.
- * @method WebViewerInstance#setTheme
+ * @method UI.setTheme
  * @param {string} theme Either the string 'light' or 'dark'.
  * @example
 // Using predefined string
 WebViewer(...)
   .then(function(instance) {
-    instance.setTheme('dark');
+    instance.UI.setTheme('dark');
   });
  */
 

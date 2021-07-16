@@ -1,12 +1,12 @@
 /**
  * Returns whether the element is disabled.
- * @method WebViewerInstance#isElementDisabled
+ * @method UI.isElementDisabled
  * @param {string} dataElement data-element attribute value for a DOM element. To find data-element of a DOM element, refer to <a href='https://www.pdftron.com/documentation/web/guides/hiding-elements/#finding-dataelement-attribute-values' target='_blank'>Finding data-element attribute values</a>.
  * @returns {boolean} Whether the element is disabled.
  * @example
 WebViewer(...)
   .then(function(instance) {
-    console.log(instance.isElementDisabled('leftPanel'));
+    console.log(instance.UI.isElementDisabled('leftPanel'));
   });
  */
 

@@ -23,8 +23,8 @@ function LayersPanelRedux(props) {
     const doc = core.getDocument();
     if (doc) {
       doc.setLayersArray(layers);
-      window.docViewer.refreshAll();
-      window.docViewer.updateView();
+      window.documentViewer.refreshAll();
+      window.documentViewer.updateView();
     }
   }, [layers]);
 

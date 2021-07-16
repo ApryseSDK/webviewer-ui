@@ -1,12 +1,12 @@
 /**
  * Set the fonts that are used when typing a signature in the signature dialog.
- * @method WebViewerInstance#setSignatureFonts
- * @param {Array.<string>|WebViewerInstance.setSignatureFontsCallback} fonts An array of font families.
+ * @method UI.setSignatureFonts
+ * @param {Array.<string>|UI.setSignatureFontsCallback} fonts An array of font families.
  * @example // 6.1
 WebViewer(...)
   .then(function(instance) {
-    instance.setSignatureFonts(['GreatVibes-Regular']);
-    instance.setSignatureFonts(currentFonts => [
+    instance.UI.setSignatureFonts(['GreatVibes-Regular']);
+    instance.UI.setSignatureFonts(currentFonts => [
       ...currentFonts,
       'sans-serif',
     ]);
@@ -14,7 +14,7 @@ WebViewer(...)
  */
 
 /**
- * @callback WebViewerInstance.setSignatureFontsCallback
+ * @callback UI.setSignatureFontsCallback
  * @param {Array.<string>} fonts current font families
  * @returns {Array.<string>} fonts to set.
  */

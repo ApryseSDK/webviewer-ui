@@ -3,9 +3,9 @@ import mentionsManager from 'helpers/MentionsManager';
 
 /**
  * An instance of MentionsManager that can be used to allow mentioning people in a textarea in the notes panel.
- * @name WebViewerInstance#mentions
- * @see WebViewerInstance.MentionsManager
- * @type {WebViewerInstance.MentionsManager}
+ * @name UI.mentions
+ * @see UI.MentionsManager
+ * @type {UI.MentionsManager}
  */
 
 export default store => {

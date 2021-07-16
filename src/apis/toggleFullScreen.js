@@ -1,10 +1,10 @@
 /**
  * Toggles full scree mode of the browser.
- * @method WebViewerInstance#toggleFullScreen
+ * @method UI.toggleFullScreen
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.toggleFullScreen();
+    instance.UI.toggleFullScreen();
   });
  */
 

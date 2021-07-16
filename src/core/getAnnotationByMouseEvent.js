@@ -1,1 +1,1 @@
-export default e => window.docViewer.getAnnotationManager().getAnnotationByMouseEvent(e);
+export default e => window.documentViewer.getAnnotationManager().getAnnotationByMouseEvent(e);

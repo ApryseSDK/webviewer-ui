@@ -1,12 +1,12 @@
 /**
  * An instance of Popup that can be used to edit items in the annotation popup component
- * @name WebViewerInstance#annotationPopup
- * @implements {WebViewerInstance.Popup}
- * @type {WebViewerInstance.Popup}
+ * @name UI.annotationPopup
+ * @implements {UI.Popup}
+ * @type {UI.Popup}
  * @example
 WebViewer(...)
   .then(function (instance) {
-    instance.annotationPopup.someAPI();
+    instance.UI.annotationPopup.someAPI();
   });
  */
 import createPopupAPI from 'helpers/createPopupAPI';

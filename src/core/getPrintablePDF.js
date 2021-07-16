@@ -1,1 +1,1 @@
-export default () => window.docViewer.getDocument().getPrintablePDF();
+export default () => window.documentViewer.getDocument().getPrintablePDF();

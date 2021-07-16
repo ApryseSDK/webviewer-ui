@@ -5,7 +5,7 @@ function generateSetCustomModal(store) {
   /**
    * Add custom modal element to WebViewer.
    * <br /><br />
-   * Controlling custom modals is done using element API for example {@link WebViewerInstance#openElements openElements}, {@link WebViewerInstance#closeElements closeElements}, {@link WebViewerInstance#toggleElement toggleElement}, and {@link WebViewerInstance#disableElements disableElements}.
+   * Controlling custom modals is done using element API for example {@link UI.openElements openElements}, {@link UI.closeElements closeElements}, {@link UI.toggleElement toggleElement}, and {@link UI.disableElements disableElements}.
    * dateElement string passed on these function should be same as you set in options.dataElement.
    * <br /><br />
    * Every custom modal will add new &lt;div&gt; element with <b>CustomModal</b> and <b>&lt;options.dataElement string&gt;</b> set as class attribute
@@ -30,19 +30,19 @@ WebWiewer(...).then(function(instance) {
       return div
     }
   }
-  instance.setCustomModal(modal);
-  instance.openElements([modal.dataElement]);
+  instance.UI.setCustomModal(modal);
+  instance.UI.openElements([modal.dataElement]);
 });
-   * @method WebViewerInstance#setCustomModal
+   * @method UI.setCustomModal
    * @param {object} options
    * @param {string} options.dataElement Unique name of custom modal.
    * @param {boolean} [options.disableBackdropClick=false] Disable closing modal when user clicks outside of content area
    * @param {boolean} [options.disableEscapeKeyDown=false] Disable closing modal when user hit escape from keyboard
-   * @param {WebViewerInstance.renderCustomModal} options.render Function rendering custom model contents
+   * @param {UI.renderCustomModal} options.render Function rendering custom model contents
    */
   /**
-   * Callback that gets passed to `options.render` in {@link WebViewerInstance#setCustomModal setCustomModal}.
-   * @callback WebViewerInstance.renderCustomModal
+   * Callback that gets passed to `options.render` in {@link UI.setCustomModal setCustomModal}.
+   * @callback UI.renderCustomModal
    * @returns {(HTMLElement|string)} Modal element. If string is returned, it will be displayed as is inside modal
    */
   return function setCustomModal(customModal) {

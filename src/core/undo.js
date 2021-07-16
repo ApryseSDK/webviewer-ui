@@ -1,3 +1,3 @@
 export default () => {
-  window.docViewer.getAnnotationHistoryManager().undo();
+  window.documentViewer.getAnnotationHistoryManager().undo();
 };
