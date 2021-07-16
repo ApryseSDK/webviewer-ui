@@ -1,7 +1,7 @@
 /**
  * Removes the search listener function.
- * @method WebViewerInstance#removeSearchListener
- * @param {WebViewerInstance.searchListener} listener Search listener function that was added.
+ * @method UI.removeSearchListener
+ * @param {UI.searchListener} listener Search listener function that was added.
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -9,8 +9,8 @@ WebViewer(...)
       console.log(searchValue, options, results);
     };
 
-    instance.addSearchListener(searchListener);
-    instance.removeSearchListener(searchListener);
+    instance.UI.addSearchListener(searchListener);
+    instance.UI.removeSearchListener(searchListener);
   });
  */
 

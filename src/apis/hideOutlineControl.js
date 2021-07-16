@@ -2,11 +2,11 @@ import actions from 'actions';
 
 /**
  * hide outline control
- * @method WebViewerInstance#hideOutlineControl
+ * @method UI.hideOutlineControl
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.hideOutlineControl();
+    instance.UI.hideOutlineControl();
   });
  */
 

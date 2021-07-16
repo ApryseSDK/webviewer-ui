@@ -3,14 +3,14 @@ import core from 'core';
 
 /**
  * Return the read/unread state of an annotation. True for read, false for unread.
- * @method WebViewerInstance#getAnnotationReadState
+ * @method UI.getAnnotationReadState
  * @param {string} annotationId Id of the annotation.
  * @return {boolean} Whether the annotation is read.
  * @throws Will throw an error if the annotation with the given ID does not exist.
  * @example
 WebViewer(...)
   .then(function(instance) {
-    const isAnnotationRead = instance.getAnnotationReadState('test-annotation-id');
+    const isAnnotationRead = instance.UI.getAnnotationReadState('test-annotation-id');
  */
 export default store => annotationId => {
   if (typeof annotationId !== 'string') {

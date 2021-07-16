@@ -320,10 +320,6 @@ export const setPrintQuality = quality => ({
   type: 'SET_PRINT_QUALITY',
   payload: { quality },
 });
-export const setDefaultPrintOptions = options => ({
-  type: 'SET_DEFAULT_PRINT_OPTIONS',
-  payload: { options },
-});
 export const setLoadingProgress = percent => ({
   type: 'SET_LOADING_PROGRESS',
   payload: { progress: percent },

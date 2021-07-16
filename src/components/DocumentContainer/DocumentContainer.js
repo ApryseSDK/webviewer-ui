@@ -46,7 +46,6 @@ class DocumentContainer extends React.PureComponent {
     isReaderMode: PropTypes.bool,
     setDocumentContainerWidth: PropTypes.func.isRequired,
     setDocumentContainerHeight: PropTypes.func.isRequired,
-    isInDesktopOnlyMode: PropTypes.bool
   }
 
   constructor(props) {
@@ -229,7 +228,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   handleResize() {
-    this.updateContainerSize();
+    this.updateContainerSize()
 
     if (!this.props.isReaderMode) {
       // Skip when in reader mode, otherwise will cause error.
@@ -271,8 +270,7 @@ class DocumentContainer extends React.PureComponent {
       isLeftPanelOpen,
       isMobile,
       documentContentContainerWidthStyle,
-      totalPages,
-      isInDesktopOnlyMode
+      totalPages
     } = this.props;
 
     const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
@@ -331,7 +329,7 @@ class DocumentContainer extends React.PureComponent {
                   />
                 }
 
-                {(isMobile && !isInDesktopOnlyMode) && <ToolsOverlay />}
+                {isMobile && <ToolsOverlay />}
               </div>
             </div>
           )}
@@ -356,8 +354,7 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
   isMouseWheelZoomEnabled: selectors.getEnableMouseWheelZoom(state),
-  isReaderMode: selectors.isReaderMode(state),
-  isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state)
+  isReaderMode: selectors.isReaderMode(state)
 });
 
 const mapDispatchToProps = dispatch => ({

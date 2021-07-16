@@ -1,14 +1,14 @@
 /**
  * Select thumbnails in the thumbnail panel. This requires the "ThumbnailMultiselect" feature to be enabled
- * @method WebViewerInstance#selectThumbnailPages
+ * @method UI.selectThumbnailPages
  * @param {Array<number>} pageNumbers array of page numbers to select
  * @example // 6.1 and after
 WebViewer(...)
   .then(function(instance) {
-    instance.enableFeatures(['ThumbnailMultiselect']);
+    instance.UI.enableFeatures(['ThumbnailMultiselect']);
 
     const pageNumbersToSelect = [1, 2, 3];
-    instance.selectThumbnailPages(pageNumbersToSelect);
+    instance.UI.selectThumbnailPages(pageNumbersToSelect);
   });
  */
 import selectors from 'selectors';

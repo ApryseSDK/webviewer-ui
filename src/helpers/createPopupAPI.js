@@ -1,7 +1,7 @@
 /**
  * A class which contains popup APIs.<br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> If you want to remove an item in a popup, use {@link WebViewerInstance#disableElements disableElements}.
- * @interface WebViewerInstance.Popup
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> If you want to remove an item in a popup, use {@link UI.disableElements disableElements}.
+ * @interface UI.Popup
  */
 import actions from 'actions';
 import selectors from 'selectors';
@@ -16,7 +16,7 @@ const PopupAPI = {
   },
   /**
    * Add an array of items after the item that has the given data element.
-   * @method WebViewerInstance.Popup#add
+   * @method UI.Popup#add
    * @param {Array.<object>} items Same as <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>header items</a>
    * @param {string} [dataElement] An optional string. If not given, items will be added in the beginning
    * @returns {this} The instance itself
@@ -46,8 +46,8 @@ WebViewer(...)
   },
   /**
    * Update all the items in the popup.
-   * To update an individual item, use {@link WebViewerInstance#updateElement updateElement}
-   * @method WebViewerInstance.Popup#update
+   * To update an individual item, use {@link UI.updateElement updateElement}
+   * @method UI.Popup#update
    * @param {Array.<object>} [items] the items that will be rendered in the popup
    * @returns {this} The instance itself
    * @example
@@ -78,7 +78,7 @@ WebViewer(...)
   },
   /**
    * Return the array of items in the popup.
-   * @method WebViewerInstance.Popup#getItems
+   * @method UI.Popup#getItems
    * @returns {Array.<object>} Current items in the popup.
    * @example
 WebViewer(...)

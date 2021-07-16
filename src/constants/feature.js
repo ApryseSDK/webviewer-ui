@@ -1,6 +1,6 @@
 /**
  * Contains string enums for all features for WebViewer UI
- * @name WebViewerInstance#Feature
+ * @name UI.Feature
  * @property {string} Measurement Measurement tools that can create annotations to measure distance, perimeter and area.
  * @property {string} Ribbons A collection of toolbar groups to switch between.
  * @property {string} Annotations Render annotations in the document and be able to edit them.
@@ -25,9 +25,9 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var Feature = instance.Feature;
-    instance.enableFeatures([Feature.Measurement]);
-    instance.disableFeatures([Feature.Copy]);
+    var Feature = instance.UI.Feature;
+    instance.UI.enableFeatures([Feature.Measurement]);
+    instance.UI.disableFeatures([Feature.Copy]);
   });
  */
 

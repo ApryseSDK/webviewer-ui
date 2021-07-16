@@ -1,5 +1,5 @@
 export default (primaryAnnotation, annotationsToGroup) =>
-  window.docViewer.getAnnotationManager().groupAnnotations(
+  window.documentViewer.getAnnotationManager().groupAnnotations(
     primaryAnnotation,
     annotationsToGroup,
   );

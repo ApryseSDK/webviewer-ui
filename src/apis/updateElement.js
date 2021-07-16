@@ -3,13 +3,13 @@ import setColorPalette from './setColorPalette';
 
 /**
  * Update an element in the viewer.
- * @method WebViewerInstance#updateElement
+ * @method UI.updateElement
  * @param {string} dataElement the data element of the element that will be updated. Only the data element of HTML elements that have 'Button' in the class name will work.
- * @param {*} props An object that is used to override an existing item's properties.
+ * @param {object} props An object that is used to override an existing item's properties.
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.updateElement('thumbnailsPanelButton', {
+    instance.UI.updateElement('thumbnailsPanelButton', {
       img: 'path/to/image',
       title: 'new_tooltip',
     })

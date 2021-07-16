@@ -3,6 +3,9 @@
 
 .LeftPanel {
   z-index: 65;
+  @include mobile {
+    z-index: 95;
+  }
   display: flex;
   flex-direction: column;
   background-color: var(--panel-background);
@@ -14,7 +17,6 @@
   left: 0px;
   transition: transform .3s ease-in-out;
   max-width: calc(100% - 16px);
-
   @include mobile {
     max-width: 100%;
   }
@@ -34,7 +36,6 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    z-index: 95;
   }
 
   .left-panel-container {
@@ -46,7 +47,6 @@
       padding-top: 0px;
       width: 100vw;
       min-width: 100vw;
-
       .close-container {
         display: flex;
         align-items: center;

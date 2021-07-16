@@ -14,7 +14,6 @@ const RightPanel = ({ children, dataElement, onResize }) => {
     isToolsHeaderOpen,
     isOpen,
     isDisabled,
-    isInDesktopOnlyMode
   ] = useSelector(
     state => [
       selectors.getCurrentToolbarGroup(state),
@@ -22,7 +21,6 @@ const RightPanel = ({ children, dataElement, onResize }) => {
       selectors.isElementOpen(state, 'toolsHeader'),
       selectors.isElementOpen(state, dataElement),
       selectors.isElementDisabled(state, dataElement),
-      selectors.isInDesktopOnlyMode(state)
     ],
     shallowEqual,
   );
@@ -34,6 +32,7 @@ const RightPanel = ({ children, dataElement, onResize }) => {
     // Default value
     false,
   );
+
   const isVisible = isOpen && !isDisabled;
 
   return (
@@ -42,10 +41,10 @@ const RightPanel = ({ children, dataElement, onResize }) => {
         'right-panel': true,
         'closed': !isVisible,
         'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
-        'tools-header-and-header-hidden': !isHeaderOpen && !isToolsHeaderOpen
+        'tools-header-and-header-hidden': !isHeaderOpen && !isToolsHeaderOpen,
       })}
     >
-      {(isInDesktopOnlyMode || !isTabletAndMobile) &&
+      {!isTabletAndMobile &&
         <ResizeBar
           dataElement={`${dataElement}ResizeBar`}
           minWidth={293}

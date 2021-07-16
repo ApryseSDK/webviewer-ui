@@ -1,3 +1,3 @@
 export default () => {
-  window.docViewer.getAnnotationHistoryManager().redo();
+  window.documentViewer.getAnnotationHistoryManager().redo();
 };

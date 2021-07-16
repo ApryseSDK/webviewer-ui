@@ -1,7 +1,7 @@
 /**
  * Adds a listener function to be called when search is completed.
- * @method WebViewerInstance#addSearchListener
- * @param {WebViewerInstance.searchListener} searchListener Callback function that will be triggered when search completed
+ * @method UI.addSearchListener
+ * @param {UI.searchListener} searchListener Callback function that will be triggered when search completed
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -9,12 +9,12 @@ WebViewer(...)
       console.log(searchValue, options, results);
     };
 
-    instance.addSearchListener(searchListener);
+    instance.UI.addSearchListener(searchListener);
   });
  */
 /**
- * Callback that gets passed to {@link CoreControls.ReaderControl#addSearchListener addSearchListener}.
- * @callback WebViewerInstance.searchListener
+ * Callback that gets passed to {@link UI.addSearchListener addSearchListener}.
+ * @callback UI.searchListener
  * @param {string} searchValue Search value
  * @param {object} options Search options object, which includes 'caseSensitive', 'wholeWord', 'wildcard' and 'regex'
  * @param {Array.<object>} results Search results

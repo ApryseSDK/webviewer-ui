@@ -320,8 +320,6 @@ export const getPasswordAttempts = state => state.document.passwordAttempts;
 
 export const getPrintQuality = state => state.document.printQuality;
 
-export const getDefaultPrintOptions = state => state.document.defaultPrintOptions;
-
 export const getTotalPages = state => state.document.totalPages;
 
 export const getOutlines = state => state.document.outlines;
@@ -366,7 +364,5 @@ export const getUnreadAnnotationIdSet = state => state.viewer.unreadAnnotationId
 export const getCurrentLanguage = state => state.viewer.currentLanguage;
 
 export const shouldFadePageNavigationComponent = state => state.viewer.fadePageNavigationComponent;
-
-export const isInDesktopOnlyMode = state => state.viewer.isInDesktopOnlyMode;
 
 export const pageDeletionConfirmationModalEnabled = state => state.viewer.pageDeletionConfirmationModalEnabled;

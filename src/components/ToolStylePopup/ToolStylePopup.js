@@ -27,8 +27,7 @@ class ToolStylePopup extends React.PureComponent {
     toolButtonObjects: PropTypes.object.isRequired,
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired,
-    isInDesktopOnlyMode: PropTypes.bool
+    closeElements: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -57,7 +56,7 @@ class ToolStylePopup extends React.PureComponent {
     // when we click outside because we are always clicking on this component
     // as a result we have this handler to specifically close this component
     // if this comment is removed, please also remove the comment in handleClick, AnnotationStylePopup.js
-    if ((!this.props.isInDesktopOnlyMode && isMobile()) && e.target === e.currentTarget) {
+    if (isMobile() && e.target === e.currentTarget) {
       this.props.closeElement('toolStylePopup');
     }
   };
@@ -166,7 +165,6 @@ const mapStateToProps = state => {
     isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
     isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
     toolButtonObjects: selectors.getToolButtonObjects(state),
-    isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state)
   };
 };
 

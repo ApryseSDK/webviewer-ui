@@ -39,13 +39,13 @@ const Model3DModal = ({
     } else if (typeOfInput === 'file') {
     }
     //reset x and y position with current zoom level
-    const zoom = window.docViewer.getZoom();
+    const zoom = window.documentViewer.getZoom();
     model3DAnnotation.X = e.layerX / zoom;
     model3DAnnotation.Y = e.layerY / zoom;
     model3DAnnotation.Width = defaultW;
     model3DAnnotation.Height = defaultH;
     model3DAnnotation.Author = core.getCurrentUser();
-    model3DAnnotation.setPageNumber(window.docViewer.getCurrentPage());
+    model3DAnnotation.setPageNumber(window.documentViewer.getCurrentPage());
     core.addAnnotations([model3DAnnotation]);
     // const options = {
     //   pageNumber: model3DAnnotation.PageNumber,
@@ -98,7 +98,7 @@ const Model3DModal = ({
 
     closeModal();
     core.setToolMode('Pan');
-    const viewer = docViewer.getViewerElement();
+    const viewer = documentViewer.getViewerElement();
     viewer.style.cursor = 'crosshair';
     core.addEventListener('click', draw3DAnnotation);
   };

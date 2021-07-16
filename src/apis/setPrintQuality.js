@@ -1,11 +1,11 @@
 /**
  * Sets the print quality. Higher values are higher quality but takes longer to complete and use more memory. The viewer's default quality is 1.
- * @method WebViewerInstance#setPrintQuality
+ * @method UI.setPrintQuality
  * @param {number} quality The quality of the document to print. Must be a positive number.
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.setPrintQuality(2);
+    instance.UI.setPrintQuality(2);
   });
  */
 

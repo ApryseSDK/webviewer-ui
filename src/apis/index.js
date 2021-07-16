@@ -118,7 +118,6 @@ import setPrintedNoteDateFormat from './setPrintedNoteDateFormat';
 import setNotesPanelSort from './setNotesPanelSort';
 import setPageLabels from './setPageLabels';
 import setPrintQuality from './setPrintQuality';
-import setDefaultPrintOptions from './setDefaultPrintOptions';
 import setSelectedTab from './setSelectedTab';
 import setSideWindowVisibility from './setSideWindowVisibility';
 import setSortNotesBy from './setSortNotesBy';
@@ -174,9 +173,6 @@ import disablePageDeletionConfirmationModal from './disablePageDeletionConfirmat
 import enablePageDeletionConfirmationModal from './enablePageDeletionConfirmationModal';
 import addEventListener from './addEventListener';
 import removeEventListener from './removeEventListener';
-import enableDesktopOnlyMode from './enableDesktopOnlyMode';
-import disableDesktopOnlyMode from './disableDesktopOnlyMode';
-import isInDesktopOnlyMode from './isInDesktopOnlyMode';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -257,7 +253,6 @@ export default store => {
     setMeasurementUnits: setMeasurementUnits(store),
     setPageLabels: setPageLabels(store),
     setPrintQuality: setPrintQuality(store),
-    setDefaultPrintOptions: setDefaultPrintOptions(store),
     setSortStrategy: setSortStrategy(store),
     setSwipeOrientation,
     setTheme: setTheme(store),
@@ -371,9 +366,6 @@ export default store => {
     getAnnotationReadState: getAnnotationReadState(store),
     disableFadePageNavigationComponent: disableFadePageNavigationComponent(store),
     enableFadePageNavigationComponent: enableFadePageNavigationComponent(store),
-    enableDesktopOnlyMode: enableDesktopOnlyMode(store),
-    disableDesktopOnlyMode: disableDesktopOnlyMode(store),
-    isInDesktopOnlyMode: isInDesktopOnlyMode(store),
     disablePageDeletionConfirmationModal: disablePageDeletionConfirmationModal(store),
     enablePageDeletionConfirmationModal: enablePageDeletionConfirmationModal(store),
   };

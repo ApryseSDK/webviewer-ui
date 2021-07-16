@@ -1,12 +1,12 @@
 /**
  * Returns a dictionary with page indices as keys and the bookmark text as the values
- * @method WebViewerInstance#exportBookmarks
+ * @method UI.exportBookmarks
  * @return {Object} A dictionary with page indices as keys and the bookmark text as the values. ex: {"0":"Bookmark 1","2":"Bookmark 2"}
  * @example
 WebViewer(...)
   .then(function(instance) {
     // Save the annotation data for doc123
-    const bookmarks = instance.exportBookmarks();
+    const bookmarks = instance.UI.exportBookmarks();
     const bookmarksString = JSON.stringify(bookmarks);
     fetch('/server/bookmarksHandler.js?documentId=doc123', {
       method: 'POST',

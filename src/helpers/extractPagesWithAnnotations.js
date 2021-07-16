@@ -1,8 +1,8 @@
 import { isIE } from 'helpers/device';
 
 export default async pageNumbersToExtract => {
-  const doc = window.docViewer.getDocument();
-  const annotManager = window.docViewer.getAnnotationManager();
+  const doc = window.documentViewer.getDocument();
+  const annotManager = window.documentViewer.getAnnotationManager();
 
   const pageCount = doc.getPageCount();
   const pageOutOfRange = pageNumbersToExtract.some(page => page < 1 || page > pageCount);

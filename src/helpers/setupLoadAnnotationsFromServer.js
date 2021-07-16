@@ -14,11 +14,11 @@ export default store => {
     const state = store.getState();
     const { id: documentId } = state.document;
 
-    if (window.readerControl.serverFailed) {
+    if (window.instance.UI.serverFailed) {
       callback(originalData);
       return;
     }
-    if (window.readerControl.loadedFromServer) {
+    if (window.instance.UI.loadedFromServer) {
       callback('');
       return;
     }
@@ -49,15 +49,15 @@ export default store => {
       })
       .then(data => {
         if (data !== null && data !== undefined) {
-          window.readerControl.loadedFromServer = true;
+          window.instance.UI.loadedFromServer = true;
           callback(data);
         } else {
-          window.readerControl.serverFailed = true;
+          window.instance.UI.serverFailed = true;
           callback(originalData);
         }
       })
       .catch(e => {
-        window.readerControl.serverFailed = true;
+        window.instance.UI.serverFailed = true;
         console.warn(
           `Error ${e.status}: Annotations could not be loaded from the server.`,
         );
@@ -72,9 +72,9 @@ export default store => {
     },
   );
   core.addEventListener('documentLoaded', function() {
-    if (window.docViewer.getDocument().getType() === workerTypes.OFFICE) {
+    if (window.documentViewer.getDocument().getType() === workerTypes.OFFICE) {
       getAnnotsFromServer(null, function(data) {
-        window.docViewer.getAnnotationManager().importAnnotations(data);
+        window.documentViewer.getAnnotationManager().importAnnotations(data);
       });
     }
   });

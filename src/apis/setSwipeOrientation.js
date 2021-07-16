@@ -1,11 +1,11 @@
 /**
  * Sets the swipe orientation between pages of WebViewer UI on mobile devices. Default is horizontal.
- * @method WebViewerInstance#setSwipeOrientation
+ * @method UI.setSwipeOrientation
  * @param {string} swipeOrientation The swipe orientation to navigate between pages. Available orientations are: horizontal, vertical and both.
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.setSwipeOrientation('vertical'); // set the swipe orientation to vertical.
+    instance.UI.setSwipeOrientation('vertical'); // set the swipe orientation to vertical.
   });
  */
 import TouchEventManager from 'helpers/TouchEventManager';

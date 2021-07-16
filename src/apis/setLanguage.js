@@ -32,18 +32,16 @@ export default store => language => {
   }).finally(() => {
     store.dispatch(actions.setLanguage(language));
     const promise = i18next.changeLanguage(language);
-    setDatePickerLocale(promise, language);
+    setDatePickerLocale(promise);
   });
 };
 
-const setDatePickerLocale = (i18nextPromise, language) => {
+const setDatePickerLocale = i18nextPromise => {
   i18nextPromise.then(t => {
     const { DatePickerWidgetAnnotation } = window.Annotations;
     const obj = t('datePicker', { 'returnObjects': true });
     const options = DatePickerWidgetAnnotation.datePickerOptions;
     options['i18n'] = obj;
-    options['local'] = language;
-
     DatePickerWidgetAnnotation.datePickerOptions = options;
 
     core.getAnnotationsList()

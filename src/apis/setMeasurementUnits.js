@@ -1,12 +1,12 @@
 /**
  * Sets the units that will be displayed in the measurement tools' styles popup
  * Valid units are: 'mm', 'cm', 'm', 'km', 'mi', 'yd', 'ft', 'in', 'pt'
- * @method WebViewerInstance#setMeasurementUnits
+ * @method UI.setMeasurementUnits
  * @param {Object} units an object which contains the from units and to units
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.setMeasurementUnits({
+    instance.UI.setMeasurementUnits({
       from: ['in', 'cm', 'm'],
       to: ['cm', 'm', 'km']
     });

@@ -48,7 +48,6 @@ const LeftPanel = () => {
     customPanels,
     currentWidth,
     notesInLeftPanel,
-    isInDesktopOnlyMode
   ] = useSelector(
     state => [
       selectors.getCurrentToolbarGroup(state),
@@ -60,7 +59,6 @@ const LeftPanel = () => {
       selectors.getCustomPanels(state),
       selectors.getLeftPanelWidth(state),
       selectors.getNotesInLeftPanel(state),
-      selectors.isInDesktopOnlyMode(state)
     ],
     shallowEqual,
   );
@@ -81,7 +79,7 @@ const LeftPanel = () => {
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 
   let style = {};
-  if (isInDesktopOnlyMode || !isMobile) {
+  if (!isMobile) {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
 
@@ -95,8 +93,6 @@ const LeftPanel = () => {
         'closed': !isVisible,
         'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
         'tools-header-and-header-hidden': !isHeaderOpen && !isToolsHeaderOpen,
-        'thumbnail-panel-active': activePanel === 'thumbnailsPanel',
-        'outlines-panel-active': activePanel === 'outlinesPanel'
       })}
       onDrop={onDrop}
       onDragOver={onDragOver}
@@ -106,7 +102,7 @@ const LeftPanel = () => {
         className="left-panel-container"
         style={style}
       >
-        {!isInDesktopOnlyMode && isMobile &&
+        {isMobile &&
           <div
             className="close-container"
           >
@@ -141,16 +137,16 @@ const LeftPanel = () => {
           />
         ))}
       </div>
-      {(isInDesktopOnlyMode || !isTabletAndMobile) &&
+      {!isTabletAndMobile &&
         <ResizeBar
           dataElement="leftPanelResizeBar"
           minWidth={minWidth}
           onResize={_width => {
-            let maxAllowedWidth = window.innerWidth;
+            let maxAllowedWidth = window.innerWidth
             // there will be a scroll bar in IE, so we don't allow 100% page width
             if (isIE) {
               maxAllowedWidth = maxAllowedWidth - 30;
-            }
+            } 
             dispatch(actions.setLeftPanelWidth(Math.min(_width, maxAllowedWidth)));
           }}
         />}
