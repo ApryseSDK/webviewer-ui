@@ -118,8 +118,8 @@ const Ribbons = () => {
                       'active': toolbarGroup === currentToolbarGroup,
                     })}
                     onClick={() => {
-                      setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
                       toggleFormFieldCreationMode(toolbarGroup);
+                      setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
                     }}
                   >
                     {t(`option.toolbarGroup.${toolbarGroup}`)}
@@ -141,8 +141,8 @@ const Ribbons = () => {
               translationPrefix="option.toolbarGroup"
               currentSelectionKey={currentToolbarGroup}
               onClickItem={toolbarGroup => {
-                setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
                 toggleFormFieldCreationMode(toolbarGroup);
+                setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
               }}
             />
           </div>

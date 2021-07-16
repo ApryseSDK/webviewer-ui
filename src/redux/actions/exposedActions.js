@@ -102,7 +102,13 @@ export const setReadOnlyRibbons = () => (dispatch, getState) => {
 
 export const enableRibbons = () => (dispatch, getState) => {
   const state = getState();
-  dispatch(setToolbarGroup(state.viewer.toolbarGroup || 'toolbarGroup-Annotate', false));
+  // There can be a situation where we switch to FormBuilder mode and we get a race condition between setting
+  // the active toolbarGroup as what is in the current state and Forms, as redux hasnt dispatched the update to the Forms tool bar yet.
+  // We double check here if we are in form mode and set the correct tool bar group
+  // We enable ribbons when going into form mode, as we temporarily elevate the user's permissions
+  const isInFormFieldCreationMode = core.getFormFieldCreationManager().isInFormFieldCreationMode();
+  const toolbarGroup = isInFormFieldCreationMode ? 'toolbarGroup-Forms' : state.viewer.toolbarGroup
+  dispatch(setToolbarGroup(toolbarGroup || 'toolbarGroup-Annotate'));
   const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
     .filter(key => key.includes('toolbarGroup-'));
 
@@ -410,7 +416,7 @@ export const setPageLabels = pageLabels => dispatch => {
     payload: { pageLabels: pageLabels.map(String) },
   });
 };
-export const setSelectedPageThumbnails = (selectedThumbnailPageIndexes = []) =>{ 
+export const setSelectedPageThumbnails = (selectedThumbnailPageIndexes = []) => {
   fireEvent(Events.SELECTED_THUMBNAIL_CHANGED, selectedThumbnailPageIndexes);
 
   return ({
