@@ -1,8 +1,9 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
-import { useStore, useDispatch } from 'react-redux';
+import classNames from 'classnames';
+import { useStore, useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import selectors from 'selectors';
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
 import ToolsHeader from 'components/Header/ToolsHeader';
@@ -64,6 +65,10 @@ const App = ({ removeEventHandlers }) => {
   const dispatch = useDispatch();
   let timeoutReturn;
 
+  const [isInDesktopOnlyMode] = useSelector(state => [
+    selectors.isInDesktopOnlyMode(state)
+  ]);
+
   useEffect(() => {
     defineWebViewerInstanceUIAPIs(store);
     fireEvent(Events.VIEWER_LOADED);
@@ -88,7 +93,7 @@ const App = ({ removeEventHandlers }) => {
     function loadDocumentAndCleanup() {
       loadInitialDocument();
       window.removeEventListener('message', messageHandler);
-      clearTimeout(timeoutReturn)
+      clearTimeout(timeoutReturn);
     }
 
     function messageHandler(event) {
@@ -127,7 +132,7 @@ const App = ({ removeEventHandlers }) => {
 
   return (
     <React.Fragment>
-      <div className="App">
+      <div className={classNames({ "App": true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
         <Accessibility />
 
         <Header />

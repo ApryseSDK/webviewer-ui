@@ -63,31 +63,41 @@ $light-gray: #e7ebee;
 
 @mixin tablet {
   @media (min-width: #{$mobile-width + 1px}) and (max-width: #{$tablet-width}) {
-    @content;
+    @at-root .App:not(.is-in-desktop-only-mode) & {
+      @content;
+    }
   }
 }
 
 @mixin tablet-and-desktop {
   @media (min-width: #{$mobile-width + 1px}) {
-    @content;
+    @at-root .App:not(.is-in-desktop-only-mode) & {
+      @content;
+    }
   }
 }
 
 @mixin mobile {
   @media (max-width: #{$mobile-width}) {
-    @content;
+    @at-root .App:not(.is-in-desktop-only-mode) & {
+      @content;
+    }
   }
 }
 
 @mixin small-mobile {
   @media (max-width: #{$small-mobile-width}) {
-    @content;
+    @at-root .App:not(.is-in-desktop-only-mode) & {
+      @content;
+    }
   }
 }
 
 @mixin tablet-and-mobile {
   @media (max-width: #{$tablet-width}) {
-    @content;
+    @at-root .App:not(.is-in-desktop-only-mode) & {
+      @content;
+    }
   }
 }
 
@@ -122,7 +132,7 @@ $light-gray: #e7ebee;
 }
 
 .hide-in-small-mobile {
-  @include small-mobile {
+  @media (max-width: #{$small-mobile-width}) {
     display: none;
   }
 }
@@ -173,8 +183,20 @@ $light-gray: #e7ebee;
 // to get an explicit height.
 // https://stackoverflow.com/questions/12070759/make-absolute-positioned-div-expand-parent-div-height
 @mixin panel-height-fix {
-  @include tablet-and-desktop {
 
+  height: calc(100% - 40px);
+  &.tools-header-open {
+    height: calc(100% - 80px);
+  }
+
+  @include desktop {
+    height: calc(100% - 40px);
+    &.tools-header-open {
+      height: calc(100% - 74px); // minus the height of both headers;
+    }
+  }
+
+  @include tablet-and-desktop {
     height: calc(100% - 37px); // minus the height of the top header;
     @include tablet {
       height: calc(100% - 53px); // minus the height of the top header;
@@ -192,4 +214,8 @@ $light-gray: #e7ebee;
       height: 100%;
     }
   }
+}
+
+.always-hide {
+  display: none;
 }

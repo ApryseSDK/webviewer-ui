@@ -45,6 +45,8 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, menu));
   const isOpen = useSelector(state => selectors.isElementOpen(state, menu));
 
+  const isInDesktopOnlyMode = useSelector(state => selectors.isInDesktopOnlyMode(state));
+
   const closeMenu = useCallback(() => {
     dispatch(actions.closeElements([menu]));
     onClose && onClose();
@@ -76,7 +78,7 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
       dispatch(actions.closeElements(allOtherMenus));
 
       const onResize = () => {
-        const overlayPosition = getOverlayPositionBasedOn(trigger, overlayRef, isTabletOrMobile);
+        const overlayPosition = getOverlayPositionBasedOn(trigger, overlayRef, isMobile && isTabletOrMobile);
 
         if (isSmallBrowserHeight) {
           overlayPosition.top = 0;
@@ -89,21 +91,21 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
       window.addEventListener('resize', onResize);
       return () => window.removeEventListener('resize', onResize);
     }
-  }, [allOtherMenus, dispatch, isOpen, isTabletOrMobile, trigger, isSmallBrowserHeight]);
+  }, [allOtherMenus, dispatch, isOpen, isTabletOrMobile, trigger, isSmallBrowserHeight, isMobile]);
 
   if (isDisabled) {
     return null;
   }
 
   const overlayClass = classNames('Overlay', 'FlyoutMenu', {
-    mobile: isMobile,
+    mobile: isMobile && !isInDesktopOnlyMode,
     closed: !isOpen,
   });
 
   return (
     <Swipeable onSwipedUp={closeMenu} onSwipedDown={closeMenu} preventDefaultTouchmoveEvent>
-      <div className={overlayClass} data-element={menu} style={!isMobile ? position : undefined} ref={overlayRef} role="listbox" aria-label={ariaLabel}>
-        {isMobile && <div className="swipe-indicator" />}
+      <div className={overlayClass} data-element={menu} style={(!isMobile || isInDesktopOnlyMode) ? position : undefined} ref={overlayRef} role="listbox" aria-label={ariaLabel}>
+        {isMobile && !isInDesktopOnlyMode && <div className="swipe-indicator" />}
         {children}
       </div>
     </Swipeable>

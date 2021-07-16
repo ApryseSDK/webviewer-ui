@@ -30,6 +30,7 @@ class ToolsOverlay extends React.PureComponent {
     activeToolGroup: PropTypes.string,
     closeElements: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
+    isInDesktopOnlyMode: PropTypes.bool
   };
 
   constructor() {
@@ -118,6 +119,7 @@ class ToolsOverlay extends React.PureComponent {
       isToolStyleOpen,
       isDesktop,
       isMobile,
+      isInDesktopOnlyMode
     } = this.props;
 
     const isVisible = (isOpen || true) && !isDisabled;
@@ -160,7 +162,7 @@ class ToolsOverlay extends React.PureComponent {
     } else if (activeToolGroup === 'model3DTools') {
       Component = (
         <div className="signature-row-content add-btn" onClick={() => this.props.openElement('Model3DModal')}>
-          {t('Model3D.add3D')} 
+          {t('Model3D.add3D')}
         </div>
       );
     } else if (noPresets) {
@@ -175,7 +177,7 @@ class ToolsOverlay extends React.PureComponent {
       );
     }
 
-    if (noPresets && isMobile) {
+    if (noPresets && (isMobile && !isInDesktopOnlyMode)) {
       return null;
     }
 
@@ -184,14 +186,16 @@ class ToolsOverlay extends React.PureComponent {
         onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
         onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
         preventDefaultTouchmoveEvent
-        className="ToolsOverlayContainer"
+        className={classNames({
+          ToolsOverlayContainer: true
+        })}
       >
-        <div 
+        <div
           className={classNames({
             Overlay: true,
             ToolsOverlay: true,
             open: isOpen,
-            shadow: isToolStyleOpen || isMobile,
+            shadow: isToolStyleOpen || (isMobile && !isInDesktopOnlyMode)
           })}
           ref={this.overlay}
           data-element="toolsOverlay"
@@ -199,11 +203,11 @@ class ToolsOverlay extends React.PureComponent {
           <div
             className={classNames({
               "tools-container": true,
-              "is-styling-open": isToolStyleOpen,
+              "is-styling-open": isToolStyleOpen
             })}
           >
             {Component}
-            {isMobile &&
+            {(isMobile && !isInDesktopOnlyMode) &&
               <button
                 className="close-icon-container"
                 onClick={() => {
@@ -234,6 +238,7 @@ const mapStateToProps = state => ({
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
   activeToolName: selectors.getActiveToolName(state),
+  isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state)
 });
 
 const mapDispatchToProps = {

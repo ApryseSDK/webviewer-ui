@@ -33,6 +33,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     notesInLeftPanel,
     isDocumentReadOnly,
     enableNotesPanelVirtualizedList,
+    isInDesktopOnlyMode
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -44,6 +45,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       selectors.getNotesInLeftPanel(state),
       selectors.isDocumentReadOnly(state),
       selectors.getEnableNotesPanelVirtualizedList(state),
+      selectors.isInDesktopOnlyMode(state)
     ],
     shallowEqual,
   );
@@ -183,8 +185,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     return shouldRender;
   };
 
-  const notesToRender = getSortStrategies()
-  [sortStrategy].getSortedNotes(notes)
+  const notesToRender = getSortStrategies()[sortStrategy].getSortedNotes(notes)
     .filter(filterNote);
 
   useEffect(() => {
@@ -344,7 +345,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   }
 
   let style = {};
-  if (!isMobile) {
+  if ((isInDesktopOnlyMode || !isMobile)) {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
 
@@ -352,13 +353,13 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     <div
       className={classNames({
         Panel: true,
-        NotesPanel: true,
+        NotesPanel: true
       })}
       style={style}
       data-element="notesPanel"
       onMouseUp={() => core.deselectAllAnnotations}
     >
-      {isMobile && !notesInLeftPanel &&
+      {(!isInDesktopOnlyMode && isMobile) && !notesInLeftPanel &&
         <div
           className="close-container"
         >

@@ -7,6 +7,11 @@ import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 
+export const setEnableDesktopOnlyMode = enableDesktopOnlyMode => ({
+  type: 'SET_ENABLE_DESKTOP_ONLY_MODE',
+  payload: { enableDesktopOnlyMode },
+});
+
 export const setHighContrastMode = useHighContrastMode => ({
   type: 'SET_HIGH_CONTRAST_MODE',
   payload: { useHighContrastMode },
@@ -73,12 +78,10 @@ export const setCustomStamps = t => async dispatch => {
     }),
   );
 
-  const customStamps = await Promise.all(
-    annotations.map(async (annotation) => ({
-      annotation,
-      imgSrc: await annotation.getImageData(),
-    }))
-  );
+  const customStamps = annotations.map(annotation => ({
+    annotation,
+    imgSrc: annotation['ImageData'],
+  }));
 
   dispatch({
     type: 'SET_CUSTOM_STAMPS',

@@ -18,6 +18,7 @@ const propTypes = {
   currentWidth: PropTypes.number,
   closeSearchPanel: PropTypes.func,
   setActiveResult: PropTypes.func,
+  isInDesktopOnlyMode: PropTypes.bool,
 };
 
 function noop() {}
@@ -30,6 +31,7 @@ function SearchPanel(props) {
     closeSearchPanel = noop,
     setActiveResult = noop,
     isMobile = false,
+    isInDesktopOnlyMode
   } = props;
 
   const { t } = useTranslation();
@@ -43,13 +45,13 @@ function SearchPanel(props) {
 
   const onClickResult = React.useCallback(function onClickResult(resultIndex, result) {
     setActiveResult(result);
-    if (isMobile) {
+    if (!isInDesktopOnlyMode && isMobile) {
       closeSearchPanel();
     }
   }, [setActiveResult, closeSearchPanel]);
 
   const className = getClassName('Panel SearchPanel', { isOpen });
-  const style = isMobile ? {} : { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
+  const style = !isInDesktopOnlyMode && isMobile ? {} : { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
 
   return (
     <DataElementWrapper
@@ -57,7 +59,7 @@ function SearchPanel(props) {
       dataElement="searchPanel"
       style={style}
     >
-      {isMobile &&
+      {!isInDesktopOnlyMode && isMobile &&
       <div
         className="close-container"
       >

@@ -409,12 +409,17 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         fadePageNavigationComponent: payload.fadePageNavigationComponent
-      }
+      };
+    case 'SET_ENABLE_DESKTOP_ONLY_MODE':
+      return {
+        ...state,
+        isInDesktopOnlyMode: payload.enableDesktopOnlyMode
+      };
     case 'PAGE_DELETION_CONFIRMATION_MODAL_POPUP':
       return {
         ...state,
         pageDeletionConfirmationModalEnabled : payload.pageDeletionConfirmationModalEnabled
-      }
+      };
     default:
       return state;
   }
