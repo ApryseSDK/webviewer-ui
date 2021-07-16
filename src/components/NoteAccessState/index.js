@@ -1,0 +1,3 @@
+import NoteAccessStateContainer from "components/NoteAccessState/NoteAccessStateContainer";
+
+export default NoteAccessStateContainer;

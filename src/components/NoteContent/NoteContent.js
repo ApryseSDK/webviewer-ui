@@ -16,6 +16,7 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import NoteTextarea from 'components/NoteTextarea';
 import NotePopup from 'components/NotePopup';
 import NoteState from 'components/NoteState';
+import NoteAccessState from 'components/NoteAccessState';
 import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
 import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator'
@@ -226,6 +227,9 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
               </div>
               <div className="state-and-overflow">
                 <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
+                <div>
+                  Tester
+                </div>
                 {!isStateDisabled && !isReply &&
                   <NoteState
                     annotation={annotation}
