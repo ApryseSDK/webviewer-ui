@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
 import Button from 'components/Button';
-
 import core from 'core';
 import { mapAnnotationToKey } from 'constants/map';
 import setToolStyles from 'helpers/setToolStyles';
@@ -12,12 +10,11 @@ import parseMeasurementContents from 'helpers/parseMeasurementContents';
 import evalFraction from 'helpers/evalFraction';
 import actions from 'actions';
 import selectors from 'selectors';
-
 import { Swipeable } from 'react-swipeable';
 
 import './CalibrationModal.scss';
 
-const numberRegex = /^(?!0+$)\d*(\.\d*)?$/;
+const numberRegex = /^\d*(\.\d*)?$/;
 const fractionRegex = /^\d*(\s\d\/\d*)$/;
 const pureFractionRegex = /^(\d\/\d*)*$/;
 
@@ -40,7 +37,7 @@ const CalibrationModal = () => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    isOpen && inputRef.current && inputRef.current.focus();
+    isOpen && inputRef?.current?.focus();
   }, [isOpen]);
 
   useEffect(() => {
@@ -95,9 +92,17 @@ const CalibrationModal = () => {
 
   const validateInput = e => {
     const inputValue = e.target.value.trim();
+    if (inputValue === '') {
+      setShowError(true);
+    }
     if (numberRegex.test(inputValue)) {
-      setNewDistance(parseFloat(inputValue));
-      setValue(inputValue);
+      const newDistance = parseFloat(inputValue);
+      if (newDistance !== 0) {
+        setNewDistance(parseFloat(inputValue));
+        setValue(inputValue);
+      } else {
+        setShowError(true);
+      }
     } else if (fractionRegex.test(inputValue)) {
       const [whole, fraction] = inputValue.split(' ');
       if (Number.isFinite(evalFraction(fraction))) {
