@@ -10,6 +10,10 @@
   height: 30px;
   cursor: pointer;
 
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    width: 100%;
+  }
+
   &:hover {
     background: #1A4971 !important;
     border-radius: 5px !important;
