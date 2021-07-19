@@ -161,7 +161,7 @@ class ToolsOverlay extends React.PureComponent {
       );
     } else if (activeToolGroup === 'model3DTools') {
       Component = (
-        <div className="signature-row-content add-btn" onClick={() => this.props.openElement('Model3DModal')}>
+        <div className="model-3D-btn add-btn" onClick={() => this.props.openElement('Model3DModal')}>
           {t('Model3D.add3D')}
         </div>
       );

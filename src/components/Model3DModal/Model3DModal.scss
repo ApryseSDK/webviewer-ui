@@ -127,3 +127,44 @@
     
   }
 }
+
+.model-3D-btn{
+  @include button-reset;
+  border: 1px solid var(--icon-color);
+  width: 162px;
+  height: 26px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 8px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  &.interactable {
+    &:hover {
+      background: var(--tools-overlay-button-hover);
+    }
+    &.active {
+      background: var(--tools-overlay-button-active);
+    }
+  }
+
+  &.active {
+    background: var(--tools-overlay-button-active);
+  }
+  
+  &.add-btn {
+    @include mobile {
+      width: auto;
+      padding-left: 0px;
+      width: 190px;
+      height: 30px;
+    }
+  }
+  
+}
