@@ -87,6 +87,35 @@ export default store => () => {
     dispatch(actions.disableElement('cropToolGroupButton', PRIORITY_ONE));
   }
 
+  if (core.isFullPDFEnabled()) {
+    const PDFNet = window.Core.PDFNet;
+
+    PDFNet.initialize().then(() => {
+      const main = async() => {
+        try {
+          const docViewer = core.getDocumentViewer();
+
+          const pdfDoc = await docViewer.getDocument().getPDFDoc();
+          const pageCount = await pdfDoc.getPageCount();
+
+          const pageLabels = [];
+
+          for (let i = 1; i <= pageCount; i++) {
+            const pageLabel =  await pdfDoc.getPageLabel(i);
+            const label = await pageLabel.getLabelTitle(i);
+            pageLabels.push(label.length > 0 ? label : i.toString());
+          }
+
+          store.dispatch(actions.setPageLabels(pageLabels));
+        } catch (e) {
+          console.warn(e);
+        }
+      };
+
+      PDFNet.runWithCleanup(main);
+    });
+  }
+
   window.instance.UI.loadedFromServer = false;
   window.instance.UI.serverFailed = false;
 
