@@ -227,9 +227,11 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
               </div>
               <div className="state-and-overflow">
                 <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
-                <div>
-                  Tester
-                </div>
+
+                <NoteAccessState
+                  annotation={annotation}
+                />
+
                 {!isStateDisabled && !isReply &&
                   <NoteState
                     annotation={annotation}
