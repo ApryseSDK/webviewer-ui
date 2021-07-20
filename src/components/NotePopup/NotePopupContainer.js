@@ -28,7 +28,7 @@ function NotePopupContainer(props) {
   }, [annotation, setIsEditing, noteIndex]);
 
   const handleDelete = React.useCallback(function handleDelete() {
-    core.deleteAnnotations([annotation]);
+    core.deleteAnnotations([annotation, ...annotation.getGroupedChildren()]);
   },[annotation]);
 
   const isEditable = canModifyContents;
