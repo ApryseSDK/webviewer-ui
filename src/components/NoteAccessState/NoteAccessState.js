@@ -5,6 +5,8 @@ import core from 'core';
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from "components/Icon";
 
+import './NoteAccessState.scss';
+
 const propTypes = {
   annotation: PropTypes.object
 };
@@ -22,30 +24,30 @@ function NoteAccessState(props) {
     setAnnotationIsPrivate(!annotationIsPrivate);
     annotation.setCustomData('isPrivate', !annotationIsPrivate);
 
-    const annotationManager = core.getAnnotationManager();
-    annotationManager.trigger('annotationChanged', [[annotation], 'modify', {}]);
-  };
+    const modifiedAnnotations = [annotation];
+    const replies = annotation.getReplies();
 
-  function getIcon(annotation) {
-    let icon;
-
-    if (annotation.getCustomData('isPrivate')) {
-      icon = `icon-tool-measurement-area-ellipse-line`;
-    } else {
-      icon = `ic_annotation_apply_redact_black_24px`;
+    for (const reply of replies) {
+      reply.setCustomData('isPrivate', !annotationIsPrivate);
+      modifiedAnnotations.push(reply);
     }
 
-    return icon;
-  }
-
-  let icon = getIcon(annotation);
+    const annotationManager = core.getAnnotationManager();
+    annotationManager.trigger('annotationChanged', [modifiedAnnotations, 'modify', {}]);
+  };
 
   if (annotation.isReply() || annotation.Author !== core.getCurrentUser()) {
     return null;
   }
 
+  const icon = annotation.getCustomData('isPrivate') ? 'eye-off-outline' : 'eye-outline';
+
   return (
-    <DataElementWrapper dataElement="noteAccessState" onClick={e => toggleAnnotationAccessState(e, annotation)}>
+    <DataElementWrapper
+      className="NoteAccessState"
+      dataElement="noteAccessState"
+      onClick={e => toggleAnnotationAccessState(e, annotation)}
+    >
       <Icon glyph={icon} />
     </DataElementWrapper>
   );
