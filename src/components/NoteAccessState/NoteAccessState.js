@@ -40,12 +40,14 @@ function NoteAccessState(props) {
     return null;
   }
 
-  const icon = annotation.getCustomData('isPrivate') ? 'eye-off-outline' : 'eye-outline';
+  const icon = annotationIsPrivate ? 'eye-off-outline' : 'eye-outline';
+  const title = annotationIsPrivate ? 'Annotation is private' : 'Annotation is public';
 
   return (
     <DataElementWrapper
       className="NoteAccessState"
       dataElement="noteAccessState"
+      title={title}
       onClick={e => toggleAnnotationAccessState(e, annotation)}
     >
       <Icon glyph={icon} />
