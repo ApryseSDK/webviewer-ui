@@ -4,10 +4,10 @@ import { Provider as ReduxProvider } from 'react-redux';
 import Outline from './Outline';
 import { createOutline, getDefaultOutlines } from '../Outline/Outline.spec';
 import OutlineContext from './Context';
-import HTML5Backend from 'react-dnd-html5-backend';
-import {  DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
-function noop() {}
+function noop() { }
 
 export function Basic() {
 
@@ -38,11 +38,11 @@ export function Basic() {
     ],
   });
 
-  const moveOutlineInward = () => {};
+  const moveOutlineInward = () => { };
 
-  const moveOutlineBeforeTarget = () => {};
+  const moveOutlineBeforeTarget = () => { };
 
-  const moveOutlineAfterTarget = () => {};
+  const moveOutlineAfterTarget = () => { };
 
   return (
     <ReduxProvider store={createStore(reducer)}>
@@ -55,7 +55,7 @@ export function Basic() {
           }}
         >
           <DndProvider backend={HTML5Backend}>
-            <Outline outline={outline} moveOutlineInward={moveOutlineInward} moveOutlineBeforeTarget={moveOutlineBeforeTarget} moveOutlineAfterTarget={moveOutlineAfterTarget}/>
+            <Outline outline={outline} moveOutlineInward={moveOutlineInward} moveOutlineBeforeTarget={moveOutlineBeforeTarget} moveOutlineAfterTarget={moveOutlineAfterTarget} />
           </DndProvider>
         </OutlineContext.Provider>
       </div>
