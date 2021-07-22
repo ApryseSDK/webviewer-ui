@@ -9,6 +9,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 
 import './ThumbnailControls.scss';
+import PageManipulationOverlayButton from 'components/PageManipulationOverlayButton';
 
 const propTypes = {
   index: PropTypes.number.isRequired,
@@ -32,7 +33,7 @@ const ThumbnailControls = ({ index }) => {
   };
 
   const handleDelete = () => {
-    if(isPageDeletionConfirmationModalEnabled) {
+    if (isPageDeletionConfirmationModalEnabled) {
       let message = t('warning.deletePage.deleteMessage');
       const title = t('warning.deletePage.deleteTitle');
       const confirmButtonText = t('action.ok');
@@ -61,29 +62,69 @@ const ThumbnailControls = ({ index }) => {
     }
   };
 
-  return isElementDisabled ? null : (
-    <div className="thumbnailControls" data-element={dataElementName}>
-      <Button
-        img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
-        onClick={rotateCounterClockwise}
-        title="option.thumbnailPanel.rotateCounterClockwise"
-        dataElement="thumbRotateCounterClockwise"
-      />
-      <Button
-        img="icon-delete-line"
-        onClick={handleDelete}
-        title="option.thumbnailPanel.delete"
-        dataElement="thumbDelete"
-      />
-      <Button
-        img="icon-header-page-manipulation-page-rotation-clockwise-line"
-        onClick={rotateClockwise}
-        title="option.thumbnailPanel.rotateClockwise"
-        dataElement="thumbRotateClockwise"
-      />
-    </div>
-  );
+  // Feature flag for new thumbnail page manipulation overlay
+  const { pageManipulationOverlay } = useSelector(state => selectors.getFeatureFlags(state));
+
+  function renderThumbnailControlsWithOverlay() {
+    return (
+      <div className="thumbnailControls-overlay" data-element={dataElementName}>
+        <Button
+          className="rotate-button"
+          img="icon-header-page-manipulation-page-rotation-clockwise-line"
+          onClick={rotateClockwise}
+          title="option.thumbnailPanel.rotateClockwise"
+          dataElement="thumbRotateClockwise"
+        />
+        <Button
+          className="delete-button"
+          img="icon-delete-line"
+          onClick={handleDelete}
+          title="option.thumbnailPanel.delete"
+          dataElement="thumbDelete"
+        />
+        <PageManipulationOverlayButton
+          className={'more-options'}
+          pageIndex={index}
+        />
+      </div>
+
+    )
+  };
+
+  function renderThumbnailControls() {
+    return (
+      <div className="thumbnailControls" data-element={dataElementName}>
+        <Button
+          img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
+          onClick={rotateCounterClockwise}
+          title="option.thumbnailPanel.rotateCounterClockwise"
+          dataElement="thumbRotateCounterClockwise"
+        />
+        <Button
+          img="icon-delete-line"
+          onClick={handleDelete}
+          title="option.thumbnailPanel.delete"
+          dataElement="thumbDelete"
+        />
+        <Button
+          img="icon-header-page-manipulation-page-rotation-clockwise-line"
+          onClick={rotateClockwise}
+          title="option.thumbnailPanel.rotateClockwise"
+          dataElement="thumbRotateClockwise"
+        />
+      </div>
+    )
+  };
+
+  if (isElementDisabled) {
+    return null;
+  } else if (pageManipulationOverlay) {
+    return renderThumbnailControlsWithOverlay();
+  } else {
+    return renderThumbnailControls();
+  }
 };
+
 
 ThumbnailControls.propTypes = propTypes;
 

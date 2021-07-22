@@ -367,6 +367,8 @@ export const getCurrentLanguage = state => state.viewer.currentLanguage;
 
 export const shouldFadePageNavigationComponent = state => state.viewer.fadePageNavigationComponent;
 
+export const getFeatureFlags = state => state.featureFlags;
+
 export const isInDesktopOnlyMode = state => state.viewer.isInDesktopOnlyMode;
 
 export const pageDeletionConfirmationModalEnabled = state => state.viewer.pageDeletionConfirmationModalEnabled;

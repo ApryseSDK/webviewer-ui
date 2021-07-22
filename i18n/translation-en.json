@@ -64,7 +64,12 @@
     "addOption": "Add Option",
     "formFieldEdit": "Edit Form Field",
     "viewShortCutKeysFor3D": "View Shortcut Keys",
-    "markAllRead": "Mark all as read"
+    "markAllRead": "Mark all as read",
+    "insertPage": "Page Insertion",
+    "insertPageAbove": "Insert Above",
+    "insertPageBelow": "Insert Below",
+    "pageManipulation": "Page Manipulation",
+    "replace": "Replace"
   },
   "annotation": {
     "areaMeasurement": "Area",

@@ -4,7 +4,7 @@ import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import useMedia from 'hooks/useMedia';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Swipeable } from 'react-swipeable';
 import selectors from 'selectors';
@@ -20,9 +20,10 @@ const MENUS = [
   'zoomOverlay',
   'redactionOverlay',
   'toolStylePopup',
+  'pageManipulationOverlay',
 ];
 
-const TRIGGERS = ['menuButton', 'viewControlsButton', 'zoomOverlayButton'];
+const TRIGGERS = ['menuButton', 'viewControlsButton', 'zoomOverlayButton', 'pageManipulationOverlayButton'];
 
 const propTypes = {
   /** Menu must be one of the available menus. */
@@ -73,7 +74,8 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const isSmallBrowserHeight = useMedia(['(max-height: 500px)'], [true], false);
 
   // When open: close others, position, and listen for resizes to position.
-  useEffect(() => {
+  // Uselayouteffect prevents "jumpy" behaviour from opening in old position and immediately repositioning the flyout
+  useLayoutEffect(() => {
     if (isOpen) {
       dispatch(actions.closeElements(allOtherMenus));
 

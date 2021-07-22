@@ -36,13 +36,13 @@ describe('Thumbnail', () => {
   describe('Shift key Press', () => {
     it('Should set shiftKeyPivotIndex when just press a single key', () => {
       const actions = {
-        setSelectedPageThumbnails: () => {},
+        setSelectedPageThumbnails: () => { },
         setShiftKeyThumbnailsPivotIndex: jest.fn(),
       };
       const pressedIndex = 2;
       const { container } = render(
         <TestThumbnail
-          dispatch={() => {}}
+          dispatch={() => { }}
           isMobile={false}
           shiftKeyThumbnailPivotIndex={null}
           isThumbnailMultiselectEnabled
@@ -52,18 +52,18 @@ describe('Thumbnail', () => {
           index={pressedIndex}
           currentPage={1}
         />);
-      const tcontainer = container.querySelector('#Thumbnail-contianer');
+      const tcontainer = container.querySelector('.container');
       fireEvent.click(tcontainer);
       expect(actions.setShiftKeyThumbnailsPivotIndex).toBeCalledWith(pressedIndex);
     });
     it('Should select page 3 when only click index 2', () => {
       const actions = {
         setSelectedPageThumbnails: jest.fn(),
-        setShiftKeyThumbnailsPivotIndex: () => {},
+        setShiftKeyThumbnailsPivotIndex: () => { },
       };
       const { container } = render(
         <TestThumbnail
-          dispatch={() => {}}
+          dispatch={() => { }}
           isMobile={false}
           shiftKeyThumbnailPivotIndex={null}
           isThumbnailMultiselectEnabled
@@ -73,18 +73,18 @@ describe('Thumbnail', () => {
           index={2}
           currentPage={1}
         />);
-      const tcontainer = container.querySelector('#Thumbnail-contianer');
+      const tcontainer = container.querySelector('.container');
       fireEvent.click(tcontainer);
       expect(actions.setSelectedPageThumbnails).toBeCalledWith([2]);
     });
     it('Should select page1, page2 and page3 when first select page 3', () => {
       const actions = {
         setSelectedPageThumbnails: jest.fn(),
-        setShiftKeyThumbnailsPivotIndex: () => {},
+        setShiftKeyThumbnailsPivotIndex: () => { },
       };
       const { container } = render(
         <TestThumbnail
-          dispatch={() => {}}
+          dispatch={() => { }}
           isMobile={false}
           isThumbnailMultiselectEnabled
           shiftKeyThumbnailPivotIndex={null}
@@ -94,7 +94,7 @@ describe('Thumbnail', () => {
           index={2}
           currentPage={1}
         />);
-      const tcontainer = container.querySelector('#Thumbnail-contianer');
+      const tcontainer = container.querySelector('.container');
       fireEvent.click(tcontainer, { shiftKey: true });
       expect(actions.setSelectedPageThumbnails).toBeCalledWith([0, 1, 2]);
     });
@@ -103,7 +103,7 @@ describe('Thumbnail', () => {
       actions.setSelectedPageThumbnails = jest.fn();
       const { container } = render(
         <TestThumbnail
-          dispatch={() => {}}
+          dispatch={() => { }}
           isMobile={false}
           shiftKeyThumbnailPivotIndex={1}
           isThumbnailMultiselectEnabled
@@ -113,7 +113,7 @@ describe('Thumbnail', () => {
           index={3}
           currentPage={1}
         />);
-      const tcontainer = container.querySelector('#Thumbnail-contianer');
+      const tcontainer = container.querySelector('.container');
       fireEvent.click(tcontainer, { shiftKey: true });
       expect(actions.setSelectedPageThumbnails).toBeCalledWith([1, 2, 3]);
     });
@@ -122,7 +122,7 @@ describe('Thumbnail', () => {
       actions.setSelectedPageThumbnails = jest.fn();
       const { container } = render(
         <TestThumbnail
-          dispatch={() => {}}
+          dispatch={() => { }}
           isMobile={false}
           shiftKeyThumbnailPivotIndex={2}
           isThumbnailMultiselectEnabled
@@ -132,7 +132,7 @@ describe('Thumbnail', () => {
           index={0}
           currentPage={1}
         />);
-      const tcontainer = container.querySelector('#Thumbnail-contianer');
+      const tcontainer = container.querySelector('.container');
       fireEvent.click(tcontainer, { shiftKey: true });
       expect(actions.setSelectedPageThumbnails).toBeCalledWith([0, 1, 2]);
     });
@@ -141,7 +141,7 @@ describe('Thumbnail', () => {
       actions.setSelectedPageThumbnails = jest.fn();
       const { container } = render(
         <TestThumbnail
-          dispatch={() => {}}
+          dispatch={() => { }}
           isMobile={false}
           shiftKeyThumbnailPivotIndex={2}
           isThumbnailMultiselectEnabled
@@ -151,7 +151,7 @@ describe('Thumbnail', () => {
           index={1}
           currentPage={1}
         />);
-      const tcontainer = container.querySelector('#Thumbnail-contianer');
+      const tcontainer = container.querySelector('.container');
       fireEvent.click(tcontainer, { shiftKey: true });
       expect(actions.setSelectedPageThumbnails).toBeCalledWith([1, 2]);
     });

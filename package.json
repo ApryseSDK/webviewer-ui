@@ -17,7 +17,7 @@
     "build": "npm run clean && npm run bundle",
     "translation": "node ./scripts/translate-i18n-files.js",
     "storybook": "start-storybook -p 6006 --ci",
-    "jest": "jest",
+    "jest": "jest --runInBand --logHeapUsage",
     "jest:watch": "jest --watch"
   },
   "dependencies": {

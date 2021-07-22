@@ -634,4 +634,7 @@ export default {
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null
   },
+  featureFlags: {
+    pageManipulationOverlay: false
+  }
 };

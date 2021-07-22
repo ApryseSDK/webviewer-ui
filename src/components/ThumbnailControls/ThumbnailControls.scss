@@ -1,5 +1,51 @@
 @import '../../constants/panel';
 
+.thumbnailControls-overlay {
+  display: grid;
+  text-align: center;
+  z-index: 2;
+  margin-top: 5px;
+  grid-template-areas: 'rotate delete . more';
+  grid-template-columns: repeat(3, 1fr);
+
+  .Button {
+    height: 32px;
+    padding: 0px;
+    width: 32px;
+
+    .Icon {
+      height: 24px;
+      width: 24px;
+      color: var(--icon-color);
+    }
+
+    &:hover {
+      background: var(--view-header-button-hover);
+      border-radius: 4px;
+    }
+
+    &.active {
+      background: var(--view-header-button-active);
+
+      .Icon {
+        color: var(--selected-icon-color);
+      }
+    }
+  }
+
+  .rotate-button {
+    grid-area: rotate;
+  }
+
+  .delete-button {
+    grid-area: delete;
+  }
+
+  .more-options {
+    grid-area: more;
+  }
+}
+
 .thumbnailControls {
   display: flex;
   flex-direction: row;
@@ -25,3 +71,5 @@
     }
   }
 }
+
+

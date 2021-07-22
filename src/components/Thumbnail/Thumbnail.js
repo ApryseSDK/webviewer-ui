@@ -13,7 +13,7 @@ const Thumbnail = ({
   shiftKeyThumbnailPivotIndex,
   onFinishLoading,
   onLoad,
-  onRemove = () => {},
+  onRemove = () => { },
   onDragStart,
   onDragOver,
   isDraggable,
@@ -37,8 +37,10 @@ const Thumbnail = ({
       const viewerRotation = core.getRotation(pageNum);
 
       const doc = core.getDocument();
+      // Possible race condition can happen where we try to render a thumbnail for a page that has
+      // been deleted. Prevent that by checking if pageInfo exists
 
-      if (doc) {
+      if (doc && doc.getPageInfo(pageNum)) {
         const id = doc.loadCanvasAsync({
           pageNumber: pageNum,
           zoom: thumbSize > 150 ? 1 : 0.5,
@@ -158,7 +160,7 @@ const Thumbnail = ({
     }
     // due to the race condition, we need a settimeout here
     // otherwise, sometimes the current page will not be visible in left panel 
-    setTimeout(()=>{
+    setTimeout(() => {
       core.setCurrentPage(index + 1);
     }, 0)
   };
@@ -173,9 +175,8 @@ const Thumbnail = ({
         active: isActive,
         selected: isSelected,
       })}
-      onClick={handleClick}
       onDragOver={e => onDragOver(e, index)}
-      id="Thumbnail-contianer"
+      id="Thumbnail-container"
     >
       <div
         className="container"
@@ -185,6 +186,8 @@ const Thumbnail = ({
         }}
         onDragStart={e => onDragStart(e, index)}
         draggable={isDraggable}
+        onClick={handleClick}
+
       >
         <div id={`pageThumb${index}`} className="thumbnail" />
       </div>

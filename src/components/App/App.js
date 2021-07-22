@@ -41,6 +41,7 @@ import CustomModal from 'components/CustomModal';
 import Model3DModal from 'components/Model3DModal';
 import FormFieldEditPopup from 'components/FormFieldEditPopup';
 import ColorPickerModal from 'components/ColorPickerModal';
+import PageManipulationOverlay from 'components/PageManipulationOverlay';
 
 import core from 'core';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
@@ -157,6 +158,7 @@ const App = ({ removeEventHandlers }) => {
         <MenuOverlay />
         <ZoomOverlay />
         <AnnotationContentOverlay />
+        <PageManipulationOverlay />
 
         <AnnotationPopup />
         <FormFieldEditPopup />
