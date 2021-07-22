@@ -29,7 +29,19 @@ const CalibrationModal = () => {
   const [annotation, setAnnotation] = useState(null);
   const [value, setValue] = useState('');
   const [unitTo, setUnitTo] = useState('');
+  const [disable, setDisable] = useState(false);
   const [t] = useTranslation();
+
+  useEffect(() => {
+    setDisable(false);
+    if (value === "") {
+      setDisable(true);
+    }
+    const newDistance = parseFloat(value);
+    if (newDistance === 0) {
+      setDisable(true);
+    }
+  }, [value]);
 
   useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
@@ -174,6 +186,7 @@ const CalibrationModal = () => {
             dataElement="passwordSubmitButton"
             label={t('action.apply')}
             onClick={handleApply}
+            disable={disable}
           />
           <Button
             dataElement="passwordCancelButton"
