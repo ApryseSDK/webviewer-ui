@@ -46,6 +46,9 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     ],
     shallowEqual,
   );
+  const annotationManager = core.getAnnotationManager();
+  const annotationsExist = !!annotationManager.getAnnotationsList().length;
+
   const currentWidth = currentLeftPanelWidth || currentNotesPanelWidth;
 
   const dispatch = useDispatch();
@@ -193,7 +196,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       return note.getReplies().some(filterNotesWithSearch);
     }).some(replies => replies.Id === currNote.Id);
   };
-  
+
   const handleInputChange = e => {
     _handleInputChange(e.target.value);
   };
@@ -378,7 +381,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
             <Button
               dataElement="filterAnnotationButton"
               className="filter-annotation-button"
-              disabled={notes.length === 0}
+              disabled={!annotationsExist}
               label={t('component.filter')}
               onClick={() => dispatch(actions.openElement('filterModal'))}
             />
