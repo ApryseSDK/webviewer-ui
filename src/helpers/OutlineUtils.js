@@ -42,7 +42,7 @@ const OutlineUtils = {
   createOutline(newName, pageNum) {
     const PDFNet = window.PDFNet;
 
-    return PDFNet.runWithCleanup(async() => {
+    return PDFNet.runWithCleanup(async () => {
       const doc = await this.doc.getPDFDoc();
       const newOutline = await PDFNet.Bookmark.create(doc, newName);
 
@@ -245,7 +245,7 @@ const OutlineUtils = {
     return `${path}${this.getSplitter()}${name}`;
   },
   getLastOutline() {
-    return window.PDFNet.runWithCleanup(async() => {
+    return window.PDFNet.runWithCleanup(async () => {
       const doc = await this.doc.getPDFDoc();
       const root = await doc.getFirstBookmark();
 
@@ -304,7 +304,7 @@ const OutlineUtils = {
 
     const paths = path.split(this.getSplitter());
 
-    return window.PDFNet.runWithCleanup(async() => {
+    return window.PDFNet.runWithCleanup(async () => {
       const doc = await this.doc.getPDFDoc();
       const rootOutline = await doc.getFirstBookmark();
 

@@ -16,7 +16,7 @@ let colorMap;
 
 dayjs.extend(LocalizedFormat);
 
-export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {
+export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {
   const {
     includeAnnotations,
     includeComments,

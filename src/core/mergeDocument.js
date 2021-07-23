@@ -2,7 +2,7 @@
  * https://www.pdftron.com/api/web/Core.Document.html#mergeDocument__anchor
  */
 
-export default async(documentToMerge, position) => {
+export default async (documentToMerge, position) => {
   const { documentViewer } = window;
   if (documentViewer.getDocument()) {
     return documentViewer.getDocument().mergeDocument(documentToMerge, position);

@@ -6,7 +6,7 @@ import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import actions from 'actions';
 
-export default async(dispatch, options = {}) => {
+export default async (dispatch, options = {}) => {
   const {
     filename = core.getDocument()?.getFilename() || 'document',
     includeAnnotations = true,
