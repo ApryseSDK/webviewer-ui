@@ -141,10 +141,10 @@ const ImageSignature = ({
       <div
         className="footer"
       >
-        <button className="signature-clear" onClick={() => setImageSrc(null)} disabled={!(isModalOpen && isTabPanelSelected)}>
+        <button className="signature-clear" onClick={() => setImageSrc(null)} disabled={!(isModalOpen && isTabPanelSelected) || imageSrc === null}>
           {t('action.clear')}
         </button>
-        <button className="signature-create" onClick={createSignature} disabled={!(isModalOpen && isTabPanelSelected)}>
+        <button className="signature-create" onClick={createSignature} disabled={!(isModalOpen && isTabPanelSelected) || imageSrc === null}>
           {t('action.create')}
         </button>
       </div>

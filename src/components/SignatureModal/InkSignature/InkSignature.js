@@ -36,6 +36,7 @@ const InkSignature = ({
   const annotIdRef = useRef();
   const [t] = useTranslation();
   const [dimension, setDimension] = useState({});
+  const [drawn, setDrawn] = useState(false);
 
   const forceUpdate = useForceUpdate();
 
@@ -86,11 +87,11 @@ const InkSignature = ({
     signatureTool.clearSignatureCanvas();
     freeHandPathsRef.current = null;
     annotIdRef.current = null;
+    setDrawn(false)
   }, []);
 
   const handleFinishDrawing = async () => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
-
     if (!(await signatureTool.isEmptySignature())) {
       // need to deep copy the paths because it will be modified
       // when the annotation is added to the document
@@ -98,6 +99,7 @@ const InkSignature = ({
       freeHandPathsRef.current = deepCopy(signatureTool.annot.getPaths());
       annotIdRef.current = signatureTool.annot.Id;
     }
+    setDrawn(true)
   };
 
   const deepCopy = paths => {
@@ -151,7 +153,7 @@ const InkSignature = ({
               />
               <div className="ink-signature-background">
                 <div className="ink-signature-sign-here">
-                  {t('message.signHere')}
+                  {drawn ? '' : t('message.signHere')}
                 </div>
               </div>
             </Swipeable>
@@ -161,10 +163,10 @@ const InkSignature = ({
       <div
         className="footer"
       >
-        <button className="signature-clear" onClick={clearCanvas}>
+        <button className="signature-clear" onClick={clearCanvas} disabled={!drawn}>
           {t('action.clear')}
         </button>
-        <button className="signature-create" onClick={createSignature}>
+        <button className="signature-create" onClick={createSignature} disabled={!drawn}>
           {t('action.create')}
         </button>
       </div>
