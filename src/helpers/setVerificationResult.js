@@ -46,13 +46,13 @@ import actions from 'actions';
  * Invalid.
  * @ignore
  */
-export default async(certificates, sigWidgets, dispatch) => {
+export default async (certificates, sigWidgets, dispatch) => {
   const doc = core.getDocument();
   if (doc) {
     const verificationResult = await getVerificationResult(doc, sigWidgets, certificates);
     dispatch(actions.setVerificationResult(verificationResult));
   } else {
-    window.documentViewer.addEventListener('documentLoaded', async() => {
+    window.documentViewer.addEventListener('documentLoaded', async () => {
       const verificationResult = await getVerificationResult(
         core.getDocument(),
         sigWidgets,
@@ -79,7 +79,7 @@ export default async(certificates, sigWidgets, dispatch) => {
  * to their verification results
  * @ignore
  */
-const getVerificationResult = async(doc, sigWidgets, certificates) => {
+const getVerificationResult = async (doc, sigWidgets, certificates) => {
   const { PDFNet } = window;
   const { VerificationResult } = PDFNet;
   const {
@@ -90,7 +90,7 @@ const getVerificationResult = async(doc, sigWidgets, certificates) => {
   } = VerificationResult;
   const verificationResults = {};
 
-  await PDFNet.runWithCleanup(async() => {
+  await PDFNet.runWithCleanup(async () => {
     /**
      * @todo Remove re-assignment of argument from original code?
      */

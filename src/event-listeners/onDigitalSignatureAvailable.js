@@ -1,4 +1,4 @@
-export default () => async(/* widget */) => {
+export default () => async (/* widget */) => {
   if (!window.Core.isFullPDFEnabled()) {
     return;
   }

@@ -53,7 +53,7 @@ export default store => () => {
   outlineUtils.setDoc(core.getDocument());
 
   if (!doc.isWebViewerServerDocument()) {
-    doc.addEventListener('layersUpdated', async() => {
+    doc.addEventListener('layersUpdated', async () => {
       const newLayers = await doc.getLayersArray();
       const currentLayers = selectors.getLayers(getState());
       onLayersUpdated(newLayers, currentLayers, dispatch);
@@ -91,7 +91,7 @@ export default store => () => {
     const PDFNet = window.Core.PDFNet;
 
     PDFNet.initialize().then(() => {
-      const main = async() => {
+      const main = async () => {
         try {
           const docViewer = core.getDocumentViewer();
 

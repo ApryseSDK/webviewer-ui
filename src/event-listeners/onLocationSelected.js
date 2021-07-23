@@ -2,7 +2,7 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 
-export default store => async() => {
+export default store => async () => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
   if (!(await signatureTool.isEmptySignature())) {
     await signatureTool.addSignature();

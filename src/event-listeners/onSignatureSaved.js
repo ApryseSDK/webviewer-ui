@@ -3,7 +3,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 import getSignatureDataToStore from 'helpers/getSignatureDataToStore';
 
-export default (dispatch, store) => async() => {
+export default (dispatch, store) => async () => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
   let savedSignatures = signatureTool.getSavedSignatures();
   const maxSignaturesCount = selectors.getMaxSignaturesCount(store.getState());

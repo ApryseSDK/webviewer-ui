@@ -32,7 +32,7 @@ export const enterReaderMode = store => {
   const state = store.getState();
   const PDFNet = window.Core.PDFNet;
   PDFNet.initialize().then(() => {
-    const main = async() => {
+    const main = async () => {
       try {
         const docViewer = core.getDocumentViewer();
 
