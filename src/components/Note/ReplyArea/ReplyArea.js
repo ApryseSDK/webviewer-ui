@@ -146,14 +146,12 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         placeholder={`${t('action.reply')}...`}
         aria-label={`${t('action.reply')}...`}
       />
-      <div className="reply-button-container">
-        <button className={`reply-button${!pendingReplyMap[annotation.Id] ? ' disabled' : ''}`}
-          disabled={!pendingReplyMap[annotation.Id]}
-          onMouseUp={e => postReply(e)}
-        >
-          {t('action.post')}
-        </button>
-      </div>
+      <button className={`reply-button${!pendingReplyMap[annotation.Id] ? ' disabled' : ''}`}
+        disabled={!pendingReplyMap[annotation.Id]}
+        onMouseUp={e => postReply(e)}
+      >
+        {t('action.post')}
+      </button>
     </div>
   );
 };
