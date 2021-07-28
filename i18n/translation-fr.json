@@ -304,7 +304,8 @@
     "filterAnnotModal": {
       "commentBy": "Commentaire de",
       "types": "Les types",
-      "color": "Couleur"
+      "color": "Couleur",
+      "includeReplies": "Inclure les réponses"
     },
     "status": {
       "status": "Statut"

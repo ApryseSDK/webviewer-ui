@@ -304,7 +304,8 @@
     "filterAnnotModal": {
       "commentBy": "Comentado por",
       "types": "Tipos",
-      "color": "Cor"
+      "color": "Cor",
+      "includeReplies": "Incluir Respostas"
     },
     "status": {
       "status": "Status"

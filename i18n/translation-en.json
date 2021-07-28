@@ -309,7 +309,8 @@
     "filterAnnotModal": {
       "commentBy": "Comment by",
       "types": "Types",
-      "color": "Color"
+      "color": "Color",
+      "includeReplies": "Include Replies"
     },
     "status": {
       "status": "Status"

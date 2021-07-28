@@ -36,6 +36,7 @@ const FilterAnnotModal = () => {
   const [authorFilter, setAuthorFilter] = useState([]);
   const [typesFilter, setTypesFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
+  const [checkRepliesForAuthorFilter, setCheckRepliesForAuthorFilter] = useState(true);
   const [statusFilter, setStatusFilter] = useState([]);
 
   const filterApply = () => {
@@ -50,6 +51,17 @@ const FilterAnnotModal = () => {
         }
         if (authorFilter.length > 0) {
           author = authorFilter.includes(core.getDisplayAuthor(annot['Author']));
+          if (!author && checkRepliesForAuthorFilter) {
+            const allReplies = annot.getReplies();
+            for (const reply of allReplies) {
+              // Short-circuit the search if at least one reply is created by
+              // one of the desired authors
+              if (authorFilter.includes(core.getDisplayAuthor(reply))) {
+                author = true;
+                break;
+              }
+            }
+          }
         }
         if (colorFilter.length > 0) {
           if (annot.Color) {
@@ -69,7 +81,16 @@ const FilterAnnotModal = () => {
         return type && author && color && status;
       }),
     );
-    fireEvent(Events.ANNOTATION_FILTER_CHANGED, { types: typesFilter, authors: authorFilter, colors: colorFilter, statuses: statusFilter });
+    fireEvent(
+      Events.ANNOTATION_FILTER_CHANGED,
+      {
+        types: typesFilter,
+        authors: authorFilter,
+        colors: colorFilter,
+        statuses: statusFilter,
+        checkRepliesForAuthorFilter
+      }
+    );
     closeModal();
   };
 
@@ -79,11 +100,18 @@ const FilterAnnotModal = () => {
         return true;
       }),
     );
+    setCheckRepliesForAuthorFilter(false);
     setAuthorFilter([]);
     setTypesFilter([]);
     setColorFilter([]);
     setStatusFilter([]);
-    fireEvent(Events.ANNOTATION_FILTER_CHANGED, { types: [], authors: [], colors: [], statuses: [] });
+    fireEvent('annotationFilterChanged', {
+      types: [],
+      authors: [],
+      colors: [],
+      statuses: [],
+      checkRepliesForAuthorFilter: false,
+    });
   };
 
   const closeModal = () => {
@@ -160,6 +188,17 @@ const FilterAnnotModal = () => {
               />
             );
           })}
+        </div>
+        <div className="buttons">
+          <Choice
+            type="checkbox"
+            label={t('option.filterAnnotModal.includeReplies')}
+            checked={checkRepliesForAuthorFilter}
+            onChange={
+              e => setCheckRepliesForAuthorFilter(e.target.checked)
+            }
+            id="filter-annot-modal-include-replies"
+          />
         </div>
       </div>
     );
