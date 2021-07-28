@@ -34,7 +34,7 @@ const CalibrationModal = () => {
 
   useEffect(() => {
     setDisable(false);
-    if (value === "") {
+    if (value === '') {
       setDisable(true);
     }
     const newDistance = parseFloat(value);
