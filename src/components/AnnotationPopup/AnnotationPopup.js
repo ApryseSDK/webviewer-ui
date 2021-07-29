@@ -172,13 +172,17 @@ const AnnotationPopup = () => {
       }
     };
 
+    const onResize = () => {
+      firstAnnotation && setPosition(getAnnotationPopupPositionBasedOn(firstAnnotation, popupRef));
+    }
+
     core.addEventListener('annotationSelected', onAnnotationSelected);
     core.addEventListener('documentUnloaded', closeAndReset);
-    window.addEventListener('resize', closeAndReset);
+    window.addEventListener('resize', onResize);
     return () => {
       core.removeEventListener('annotationSelected', onAnnotationSelected);
       core.removeEventListener('documentUnloaded', closeAndReset);
-      window.removeEventListener('resize', closeAndReset);
+      window.removeEventListener('resize', onResize);
     };
   }, [dispatch, isNotesPanelOpen, firstAnnotation]);
 
