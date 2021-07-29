@@ -254,7 +254,7 @@ const AnnotationPopup = () => {
     hasStyle &&
     !isAnnotationStylePopupDisabled &&
     (!multipleAnnotationsSelected || canUngroup) &&
-    !toolsWithNoStyling.includes(firstAnnotation.ToolName);
+    !toolsWithNoStyling.includes(firstAnnotation.ToolName) && !(firstAnnotation instanceof Annotations.Model3DAnnotation);
 
   const showRedactionButton = redactionEnabled &&
     !multipleAnnotationsSelected &&
@@ -272,6 +272,8 @@ const AnnotationPopup = () => {
   const showLinkButton =
     !toolsThatCantHaveLinks.includes(firstAnnotation.ToolName) &&
     !includesFormFieldAnnotation;
+
+  const show3DShortCutButton = firstAnnotation instanceof Annotations.Model3DAnnotation && !isMobile();
 
   const annotationPopup = (
     <div
@@ -415,7 +417,7 @@ const AnnotationPopup = () => {
               )
             }
             {
-              firstAnnotation instanceof Annotations.Model3DAnnotation && !isMobile() && 
+              show3DShortCutButton && 
               (
                 <ActionButton
                   title="action.viewShortCutKeysFor3D"
