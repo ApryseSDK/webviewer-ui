@@ -64,7 +64,12 @@
     "addOption": "옵션 추가",
     "formFieldEdit": "양식 필드 편집",
     "viewShortCutKeysFor3D": "바로 가기 키보기",
-    "markAllRead": "모두 읽은 상태로 표시"
+    "markAllRead": "모두 읽은 상태로 표시",
+    "insertPage": "페이지 삽입",
+    "insertBlankPageAbove": "위에 빈 페이지 삽입",
+    "insertBlankPageBelow": "아래에 빈 페이지 삽입",
+    "pageManipulation": "페이지 조작",
+    "replace": "바꾸다"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
@@ -487,20 +492,20 @@
       "10": "11월",
       "11": "12월"
     },
-    "monthsShort": [
-      "1월",
-      "2월",
-      "3월",
-      "4월",
-      "5월",
-      "6월",
-      "7월",
-      "8월",
-      "9월",
-      "10월",
-      "11월",
-      "12월"
-    ],
+    "monthsShort": {
+      "0": "1월",
+      "1": "2월",
+      "2": "3월",
+      "3": "4월",
+      "4": "5월",
+      "5": "6월",
+      "6": "7월",
+      "7": "8월",
+      "8": "9월",
+      "9": "10월",
+      "10": "11월",
+      "11": "12월"
+    },
     "weekdays": {
       "0": "일요일",
       "1": "월요일",

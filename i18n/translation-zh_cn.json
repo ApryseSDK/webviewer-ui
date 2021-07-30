@@ -64,7 +64,12 @@
     "addOption": "新增选项",
     "formFieldEdit": "编辑表格栏位",
     "viewShortCutKeysFor3D": "查看快捷键",
-    "markAllRead": "将所有内容标记为已读"
+    "markAllRead": "将所有内容标记为已读",
+    "insertPage": "页面插入",
+    "insertBlankPageAbove": "在上方插入空白页",
+    "insertBlankPageBelow": "在下方插入空白页",
+    "pageManipulation": "页面操作",
+    "replace": "代替"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -487,20 +492,20 @@
       "10": "十一月",
       "11": "十二月"
     },
-    "monthsShort": [
-      "一月",
-      "二月",
-      "三月",
-      "四月",
-      "五月",
-      "六月",
-      "七月",
-      "八月",
-      "九月",
-      "十月",
-      "十一月",
-      "十二月"
-    ],
+    "monthsShort": {
+      "0": "一月",
+      "1": "二月",
+      "2": "三月",
+      "3": "四月",
+      "4": "五月",
+      "5": "六月",
+      "6": "七月",
+      "7": "八月",
+      "8": "九月",
+      "9": "十月",
+      "10": "十一月",
+      "11": "十二月"
+    },
     "weekdays": {
       "0": "星期日",
       "1": "星期一",

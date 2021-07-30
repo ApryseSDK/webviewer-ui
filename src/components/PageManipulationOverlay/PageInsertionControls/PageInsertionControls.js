@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next'
 import DataElementWrapper from 'components/DataElementWrapper';
 import Button from 'components/Button';
 
-function PageInsertionControls() {
+function PageInsertionControls(props) {
   const { t } = useTranslation();
+  const { insertAbove, insertBelow } = props;
 
   return (
     <>
@@ -17,26 +18,26 @@ function PageInsertionControls() {
       <DataElementWrapper
         className={'row'}
         dataElement='insertPageAbove'
-        onClick={() => console.log('insert page above')}
+        onClick={insertAbove}
       >
         <Button
           title='action.insertPageAbove'
           img='icon-page-insertion-insert-above'
           role='option'
         />
-        <div className='title'>{t('action.insertPageAbove')}</div>
+        <div className='title'>{t('action.insertBlankPageAbove')}</div>
       </DataElementWrapper>
-      <DataElementWrapper
+      <DataElementWrapper 
         className={'row'}
         dataElement='insertPageBelow'
-        onClick={() => console.log('insert page below')}
+        onClick={insertBelow}
       >
         <Button
           title='action.insertPageBelow'
           img='icon-page-insertion-insert-below'
           role='option'
         />
-        <div className='title'>{t('action.insertPageBelow')}</div>
+        <div className='title'>{t('action.insertBlankPageBelow')}</div>
       </DataElementWrapper>
     </>
   )

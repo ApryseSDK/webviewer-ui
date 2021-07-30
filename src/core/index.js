@@ -89,6 +89,7 @@ import setAnnotationStyles from './setAnnotationStyles';
 import deselectAnnotation from './deselectAnnotation';
 import deselectAllAnnotations from './deselectAllAnnotations';
 import jumpToAnnotation from './jumpToAnnotation';
+import insertBlankPages from './insertBlankPages';
 import createAnnotationReply from './createAnnotationReply';
 import getIsReadOnly from './getIsReadOnly';
 import setNoteContents from './setNoteContents';
@@ -206,6 +207,7 @@ export default {
   deselectAnnotation,
   deselectAllAnnotations,
   jumpToAnnotation,
+  insertBlankPages,
   createAnnotationReply,
   setNoteContents,
   getAnnotationsList,

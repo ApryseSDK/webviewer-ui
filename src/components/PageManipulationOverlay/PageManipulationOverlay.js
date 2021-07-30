@@ -7,13 +7,13 @@ import PageManipulationControls from './PageManipulationControls';
 
 
 function PageManipulationOverlay(props) {
-  const { pageNumbers } = props;
+  const { pageNumbers, currentPage } = props;
 
   return (
     <>
       <PageRotationControls pageNumbers={pageNumbers} />
       <div className='divider'></div>
-      <PageInsertionControls />
+      <PageInsertionControls pageNumbers={pageNumbers}/>
       <div className='divider'></div>
       <PageManipulationControls pageNumbers={pageNumbers} />
     </>

@@ -64,7 +64,12 @@
     "addOption": "Option hinzufügen",
     "formFieldEdit": "Formularfeld bearbeiten",
     "viewShortCutKeysFor3D": "Tastenkombinationen anzeigen",
-    "markAllRead": "markiere alles Gelesene"
+    "markAllRead": "markiere alles Gelesene",
+    "insertPage": "Seiteneinfügung",
+    "insertBlankPageAbove": "Leere Seite oben einfügen",
+    "insertBlankPageBelow": "Leere Seite unten einfügen page",
+    "pageManipulation": "Seitenmanipulation",
+    "replace": "Ersetzen"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -487,20 +492,20 @@
       "10": "November",
       "11": "Dezember"
     },
-    "monthsShort": [
-      "Jän",
-      "Feb",
-      "März",
-      "Apr",
-      "Mai",
-      "Juni",
-      "Juli",
-      "Aug",
-      "Sept",
-      "Okt",
-      "Nov",
-      "Dez"
-    ],
+    "monthsShort": {
+      "0": "Jän",
+      "1": "Feb",
+      "2": "März",
+      "3": "Apr",
+      "4": "Mai",
+      "5": "Juni",
+      "6": "Juli",
+      "7": "Aug",
+      "8": "Sept",
+      "9": "Okt",
+      "10": "Nov",
+      "11": "Dez"
+    },
     "weekdays": {
       "0": "Sonntag",
       "1": "Montag",

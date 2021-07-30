@@ -64,7 +64,12 @@
     "addOption": "Optie toevoegen",
     "formFieldEdit": "Formulierveld bewerken",
     "viewShortCutKeysFor3D": "Bekijk sneltoetsen",
-    "markAllRead": "Markeer alles als gelezen"
+    "markAllRead": "Markeer alles als gelezen",
+    "insertPage": "Pagina invoegen",
+    "insertBlankPageAbove": "Lege pagina hierboven invoegen",
+    "insertBlankPageBelow": "Lege pagina hieronder invoegen",
+    "pageManipulation": "Paginamanipulatie",
+    "replace": "Vervangen"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -487,20 +492,20 @@
       "10": "november",
       "11": "december"
     },
-    "monthsShort": [
-      "jan",
-      "feb",
-      "maart",
-      "apr",
-      "mei",
-      "juni",
-      "juli",
-      "aug",
-      "sept",
-      "okt",
-      "nov",
-      "dec"
-    ],
+    "monthsShort": {
+      "0": "jan",
+      "1": "feb",
+      "2": "maart",
+      "3": "apr",
+      "4": "mei",
+      "5": "juni",
+      "6": "juli",
+      "7": "aug",
+      "8": "sept",
+      "9": "okt",
+      "10": "nov",
+      "11": "dec"
+    },
     "weekdays": {
       "0": "zondag",
       "1": "maandag",

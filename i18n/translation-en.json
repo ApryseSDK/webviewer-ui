@@ -66,8 +66,8 @@
     "viewShortCutKeysFor3D": "View Shortcut Keys",
     "markAllRead": "Mark all as read",
     "insertPage": "Page Insertion",
-    "insertPageAbove": "Insert Above",
-    "insertPageBelow": "Insert Below",
+    "insertBlankPageAbove": "Insert blank page above",
+    "insertBlankPageBelow": "Insert blank page below",
     "pageManipulation": "Page Manipulation",
     "replace": "Replace"
   },
