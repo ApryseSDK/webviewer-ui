@@ -46,9 +46,13 @@ function LineMeasurementInput(props) {
   };
 
   const validateLineLength = event => {
-    const length = Math.abs(event.target.value);
+    let length = Math.abs(event.target.value);
     if (!length) {
       return;
+    }
+    if (length < annotation.Precision) {
+      length = annotation.Precision;
+      setLength(length);
     }
     const factor = annotation.Measure.axis[0].factor;
     const lengthInPts = length / factor;

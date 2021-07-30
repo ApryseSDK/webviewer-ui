@@ -36,6 +36,7 @@ const CalibrationModal = () => {
     setDisable(false);
     if (value === '') {
       setDisable(true);
+      return;
     }
     const newDistance = parseFloat(value);
     if (newDistance === 0) {
@@ -93,6 +94,13 @@ const CalibrationModal = () => {
     setUnitTo(e.target.value);
   };
 
+  const onValidateInput = e => {
+    const newDistance = parseFloat(e.target.value);
+    if (newDistance < annotation.Precision) {
+      setValue(annotation.Precision);
+    }
+  };
+
   const handleApply = () => {
     const newScale = getNewScale();
 
@@ -138,7 +146,7 @@ const CalibrationModal = () => {
   const getNewScale = () => {
     const currentDistance = parseMeasurementContents(annotation.getContents());
     const newDistance = parseFloat(value);
-    const ratio = newDistance / currentDistance;
+    const ratio = currentDistance === 0? newDistance / annotation.Precision : newDistance / currentDistance;
 
     const currentScale = annotation.Scale;
     const newScale = [
@@ -167,7 +175,7 @@ const CalibrationModal = () => {
         <div className="calibration__body">
           <div>{t('message.enterMeasurement')}</div>
           <div>
-            <input type="text" value={value} onChange={handleInputChange} />
+            <input type="text" value={value} onChange={handleInputChange} onBlur={onValidateInput}/>
             <select
               className="unitToInput"
               value={unitTo}
