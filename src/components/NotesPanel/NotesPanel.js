@@ -92,7 +92,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       setNotes(
         core
           .getAnnotationsList()
-          .filter(annot => annot.Listable && annot.Subject != "Signature" && !annot.isReply() && !annot.Hidden && !annot.isGrouped()),
+          .filter(annot => annot.Listable && annot.Subject != "Signature"  && annot.Subject != "SignatureField"  && !annot.isReply() && !annot.Hidden && !annot.isGrouped()),
       );
     };
 
