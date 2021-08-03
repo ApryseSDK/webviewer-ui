@@ -55,7 +55,7 @@ class MeasurementOption extends React.Component {
   componentDidUpdate(prevProps) {
     const { scale, precision } = this.props;
 
-    if (this.props.scale !== prevProps.scale) {
+    if (scale !== prevProps.scale) {
       this.setState({
         currScaleFrom: scale[0][0],
         currUnitFrom: scale[0][1],
@@ -63,7 +63,7 @@ class MeasurementOption extends React.Component {
         currUnitTo: scale[1][1],
       });
     }
-    if (this.props.precision !== prevProps.precision) {
+    if (precision !== prevProps.precision) {
       this.setState({
         currPrecision: precision,
       });
@@ -81,11 +81,14 @@ class MeasurementOption extends React.Component {
   }
 
   onScaleChange = (value, type) => {
+    const inputValue = Number(value);
     this.setState({ [type]: Number(value) }, () => {
-      this.props.onStyleChange('Scale', [
-        [this.state.currScaleFrom, this.state.currUnitFrom],
-        [this.state.currScaleTo, this.state.currUnitTo],
-      ]);
+      if (inputValue) {
+        this.props.onStyleChange('Scale', [
+          [this.state.currScaleFrom, this.state.currUnitFrom],
+          [this.state.currScaleTo, this.state.currUnitTo],
+        ]);
+      }
     });
   };
 
@@ -103,6 +106,21 @@ class MeasurementOption extends React.Component {
       ]);
     });
   };
+
+  onScaleBlur = event => {
+    const inputValue = Number(event.target.value);
+    if (inputValue) {
+      return;
+    }
+    const { scale } = this.props;
+    this.setState({
+      currScaleFrom: scale[0][0],
+      currUnitFrom: scale[0][1],
+      currScaleTo: scale[1][0],
+      currUnitTo: scale[1][1],
+    });
+  }
+
 
   onSnappingChange = event => {
     if (!core.isFullPDFEnabled()) {
@@ -156,6 +174,7 @@ class MeasurementOption extends React.Component {
           step="any"
           value={val}
           onChange={e => this.onScaleChange(e.target.value, type)}
+          onBlur={this.onScaleBlur}
         />
       );
     }
@@ -167,7 +186,7 @@ class MeasurementOption extends React.Component {
           step="any"
           value={val}
           onChange={e => this.onScaleChange(e.target.value, type)}
-          onBlur={this.toggleEditing}
+          onBlur={this.onScaleBlur}
         />
       );
     }

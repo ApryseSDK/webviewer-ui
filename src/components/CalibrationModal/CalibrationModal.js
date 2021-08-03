@@ -145,9 +145,8 @@ const CalibrationModal = () => {
 
   const getNewScale = () => {
     const currentDistance = parseMeasurementContents(annotation.getContents());
-    const newDistance = parseFloat(value);
+    const newDistance = Math.max(parseFloat(value), annotation.Precision);
     const ratio = currentDistance === 0? newDistance / annotation.Precision : newDistance / currentDistance;
-
     const currentScale = annotation.Scale;
     const newScale = [
       [currentScale[0][0], currentScale[0][1]],
@@ -195,6 +194,7 @@ const CalibrationModal = () => {
             label={t('action.apply')}
             onClick={handleApply}
             disable={disable}
+            onMouseDown={e => e.preventDefault()}
           />
           <Button
             dataElement="passwordCancelButton"

@@ -20,6 +20,7 @@ const propTypes = {
   dataElement: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
+  onMouseDown: PropTypes.func
 };
 
 const NOOP = () => {};
@@ -44,6 +45,7 @@ const Button = props => {
     onClick = NOOP,
     className,
     title,
+    onMouseDown,
   } = { ...props, ...customOverrides };
 
   const isBase64 = img?.trim().startsWith('data:');
@@ -62,6 +64,7 @@ const Button = props => {
       })}
       data-element={dataElement}
       onClick={disable ? NOOP : onClick}
+      onMouseDown={onMouseDown}
     >
       {isGlyph && <Icon glyph={img} color={color} />}
       {img && !isGlyph && <img src={img} />}
