@@ -17,6 +17,7 @@ import NoteTextarea from 'components/NoteTextarea';
 import NotePopup from 'components/NotePopup';
 import NoteState from 'components/NoteState';
 import NoteAccessState from 'components/NoteAccessState';
+import NoteSharedWithCount from "components/NoteSharedWithCount";
 import NoteContext from 'components/Note/Context';
 import Icon from 'components/Icon';
 import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator'
@@ -223,6 +224,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                       <Icon className="num-reply-icon" glyph={"icon-chat-bubble"} />
                       <div className="num-replies">{numberOfReplies}</div>
                     </div>}
+                  <NoteSharedWithCount annotation={annotation} />
                 </div>
               </div>
               <div className="state-and-overflow">

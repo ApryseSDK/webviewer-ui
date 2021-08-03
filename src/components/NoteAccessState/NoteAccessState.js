@@ -20,9 +20,11 @@ function NoteAccessState(props) {
 
   const toggleAnnotationAccessState = (event, annotation) => {
     event.stopPropagation();
+    const annotationManager = core.getAnnotationManager();
 
     setAnnotationIsPrivate(!annotationIsPrivate);
     annotation.setCustomData('isPrivate', !annotationIsPrivate);
+    annotationManager.trigger('annotationAccessStateChanged', annotation, !annotationIsPrivate);
 
     const modifiedAnnotations = [annotation];
     const replies = annotation.getReplies();
@@ -32,7 +34,6 @@ function NoteAccessState(props) {
       modifiedAnnotations.push(reply);
     }
 
-    const annotationManager = core.getAnnotationManager();
     annotationManager.trigger('annotationChanged', [modifiedAnnotations, 'modify', {}]);
   };
 

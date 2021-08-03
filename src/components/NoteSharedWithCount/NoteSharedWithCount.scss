@@ -1,0 +1,23 @@
+@import '../../constants/styles';
+
+.num-shares-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding-left: 5px;
+
+  .num-share-icon {
+    display: flex;
+    height: 12px;
+    width: 12px;
+    margin-right: 1px;
+  }
+
+  .num-shares {
+    opacity: 0.8;
+    font-size: 10px;
+    @include mobile {
+      font-size: 12px;
+    }
+  }
+}
