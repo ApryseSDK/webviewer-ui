@@ -183,6 +183,7 @@
         background: var(--gray-6);
         border-color: var(--gray-6);
         cursor: not-allowed;
+        pointer-events: none;
       }
     }
   }
