@@ -237,7 +237,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                     isSelected={isSelected}
                   />
                 }
-                {!isEditing && isSelected &&
+                {!isEditing &&
                   <NotePopup
                     noteIndex={noteIndex}
                     annotation={annotation}
