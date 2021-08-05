@@ -30,7 +30,7 @@
     "fast-deep-equal": "^3.1.3",
     "file-saver": "git+https://github.com/ZhijieZhang/FileSaver.js.git",
     "hotkeys-js": "^3.7.3",
-    "html2canvas": "git+https://github.com/PDFTron/html2canvas.git#pdftron-1.1.4",
+    "html2canvas": "git+https://github.com/PDFTron/html2canvas.git#pdftron-alpha10",
     "i18next": "^19.0.3",
     "i18next-http-backend": "^1.0.16",
     "react": "^17.0.0",
