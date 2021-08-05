@@ -1,4 +1,5 @@
 {
+  "comments": "Comments",
   "action": {
     "apply": "套用",
     "applyAll": "全部套用",
@@ -281,6 +282,8 @@
       "status": "狀態"
     },
     "state": {
+      "accept": "Agree",
+      "reject": "Disagree",
       "accepted": "公認",
       "rejected": "被拒絕",
       "completed": "已完成",

@@ -1,4 +1,5 @@
 {
+  "comments": "Comments",
   "action": {
     "apply": "Применить",
     "applyAll": "Применить все",
@@ -281,6 +282,8 @@
       "status": "Статус"
     },
     "state": {
+      "accept": "Agree",
+      "reject": "Disagree",
       "accepted": "Принято",
       "rejected": "Отклонено",
       "completed": "Завершенно",

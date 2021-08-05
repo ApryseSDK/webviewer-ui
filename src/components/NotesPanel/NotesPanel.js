@@ -350,7 +350,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
         </div>}
       <React.Fragment>
         <div className="header">
-          <div className="title">Comments</div>
+          <div className="title">{t('comments')}</div>
           <HeaderItems style="w-auto" items={AddComment} isToolGroupReorderingEnabled={false}/>
           {/* <div className="input-container">
             <input

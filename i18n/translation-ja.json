@@ -1,4 +1,5 @@
 {
+  "comments": "Comments",
   "action": {
     "apply": "適用",
     "applyAll": "すべて適用",
@@ -281,6 +282,8 @@
       "status": "状態"
     },
     "state": {
+      "accept": "Agree",
+      "reject": "Disagree",
       "accepted": "承認",
       "rejected": "却下",
       "completed": "完了",

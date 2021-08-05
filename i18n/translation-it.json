@@ -1,4 +1,5 @@
 {
+  "comments": "Comments",
   "action": {
     "apply": "Applicare",
     "applyAll": "Applicare tutte",
@@ -281,6 +282,8 @@
       "status": "Stato"
     },
     "state": {
+      "accept": "Agree",
+      "reject": "Disagree",
       "accepted": "Accettato",
       "rejected": "Respinto",
       "completed": "Completato",

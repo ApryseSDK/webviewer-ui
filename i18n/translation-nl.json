@@ -1,4 +1,5 @@
 {
+  "comments": "Comments",
   "action": {
     "apply": "Toepassen",
     "applyAll": "Alles toepassen",
@@ -281,6 +282,8 @@
       "status": "staat"
     },
     "state": {
+      "accept": "Agree",
+      "reject": "Disagree",
       "accepted": "Geaccepteerd",
       "rejected": "Afgekeurd",
       "completed": "Voltooid",

@@ -1,4 +1,5 @@
 {
+  "comments": "评论",
   "action": {
     "apply": "应用",
     "applyAll": "全部申请",
@@ -281,8 +282,10 @@
       "status": "状态"
     },
     "state": {
-      "accepted": "公认",
-      "rejected": "被拒绝",
+      "accept": "同意",
+      "reject": "不同意",
+      "accepted": "已同意",
+      "rejected": "已不同意",
       "completed": "已完成",
       "cancelled": "取消",
       "set": "设定状态：",
