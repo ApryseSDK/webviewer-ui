@@ -517,7 +517,7 @@ const ThumbnailsPanel = () => {
                 className={'thumbnailsList'}
                 style={{ outline: 'none' }}
                 // Ensure we show the current page in the thumbnails when we open the panel
-                scrollToIndex={currentPage - 1}
+                scrollToIndex={Math.floor((currentPage - 1)/numberOfColumns)}
               />
             </div>
           </div>
