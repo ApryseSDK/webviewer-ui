@@ -101,7 +101,15 @@ const getVerificationResult = async (doc, sigWidgets, certificates) => {
 
     for (const certificate of certificates) {
       if (typeof certificate === 'string') {
-        await opts.addTrustedCertificateFromURL(certificate);
+        try {
+          await opts.addTrustedCertificateFromURL(certificate);
+        } catch {
+          console.error(
+            `Error encountered when trying to load certificate from URL: ${certificate}\n`
+            + 'Certificate will not be used as part of verification process.'
+          );
+          continue;
+        }
       } else if (
         certificate instanceof File ||
         Object.prototype.toString.call(certificate) === '[object File]'
@@ -117,15 +125,30 @@ const getVerificationResult = async (doc, sigWidgets, certificates) => {
 
           fileReader.readAsArrayBuffer(certificate);
         });
-
-        await opts.addTrustedCertificate(await arrayBufferPromise);
+        try {
+          await opts.addTrustedCertificate(await arrayBufferPromise);
+        } catch (error) {
+          console.error(
+            `Error encountered when trying to load certificate: ${error}`
+            + 'Certificate will not be used as part of the verification process.'
+          );
+          continue;
+        }
       } else if (
         certificate instanceof ArrayBuffer
         || certificate instanceof Int8Array
         || certificate instanceof Uint8Array
         || certificate instanceof Uint8ClampedArray
       ) {
-        await opts.addTrustedCertificate(await certificate);
+        try {
+          await opts.addTrustedCertificate(certificate);
+        } catch (error) {
+          console.error(
+            `Error encountered when trying to load certificate: ${error}`
+            + 'Certificate will not be used as part of the verification process.'
+          );
+          continue;
+        }
       }
     }
 
