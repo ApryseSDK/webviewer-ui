@@ -29,7 +29,11 @@ function NoteSharedWithCount(props) {
   if (!watchersAreSet) {
     setWatchersAreSet(true);
 
-    if (core.canModify(annotation) && !annotation.isReply()) {
+    if (
+      core.canModify(annotation) &&
+      !annotation.isReply() &&
+      (annotation.Author === core.getCurrentUser())
+    ) {
       core.getAnnotationManager().on('annotationSharedWithCountChanged', (changedAnnotation, changedSharedWithCount) => {
         if (changedAnnotation.Id === annotation.Id) {
           const newSharedWithCount = parseInt(changedSharedWithCount);
@@ -47,7 +51,12 @@ function NoteSharedWithCount(props) {
     });
   }
 
-  if (!sharedWithCount || !annotationIsPrivate || annotation.isReply()) {
+  if (
+    !sharedWithCount ||
+    !annotationIsPrivate ||
+    annotation.isReply() ||
+    (annotation.Author !== core.getCurrentUser())
+  ) {
     return null;
   }
 

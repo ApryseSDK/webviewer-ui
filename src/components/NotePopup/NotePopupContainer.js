@@ -37,7 +37,13 @@ function NotePopupContainer(props) {
 
   const isEditable = canModifyContents;
   const isDeletable = canModify && !annotation?.NoDelete;
-  const isShareable = (isEditable || isDeletable) && annotation && !annotation.isReply() && !!annotation.getCustomData('isPrivate');
+  const isShareable = (
+    (isEditable || isDeletable) &&
+    annotation &&
+    !annotation.isReply() &&
+    !!annotation.getCustomData('isPrivate') &&
+    (annotation.Author === core.getCurrentUser())
+  );
   const isOpen = notePopupId === annotation?.Id;
 
   const passProps = {
