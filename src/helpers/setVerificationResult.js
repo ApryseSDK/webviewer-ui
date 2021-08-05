@@ -173,8 +173,14 @@ const getVerificationResult = async (doc, sigWidgets, certificates) => {
         const subjectField = {};
 
         if (signed) {
-          signer =
-            (await digitalSigField.getSignatureName()) || (await digitalSigField.getContactInfo());
+          const signerCert = await digitalSigField.getSignerCertFromCMS();
+          const retrievedIssuerField = await signerCert.getIssuerField();
+          const processedIssuerField = await processX501DistinguishedName(retrievedIssuerField) || {};
+          signer = (
+            processedIssuerField['e_commonName']
+            || await digitalSigField.getSignatureName()
+            || await digitalSigField.getContactInfo()
+          );
           signTime = await digitalSigField.getSigningTime();
 
           if (await signTime.isValid()) {
