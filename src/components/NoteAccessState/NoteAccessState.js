@@ -24,17 +24,11 @@ function NoteAccessState(props) {
 
     setAnnotationIsPrivate(!annotationIsPrivate);
     annotation.setCustomData('isPrivate', !annotationIsPrivate);
+
+    // We're listening for this event in NoteSharedWithCount component so
+    // we can show or hide the icon based on the annotation access state
     annotationManager.trigger('annotationAccessStateChanged', annotation, !annotationIsPrivate);
-
-    const modifiedAnnotations = [annotation];
-    const replies = annotation.getReplies();
-
-    for (const reply of replies) {
-      reply.setCustomData('isPrivate', !annotationIsPrivate);
-      modifiedAnnotations.push(reply);
-    }
-
-    annotationManager.trigger('annotationChanged', [modifiedAnnotations, 'modify', {}]);
+    annotationManager.trigger('annotationChanged', [[annotation], 'modify', {}]);
   };
 
   if (annotation.isReply() || annotation.Author !== core.getCurrentUser()) {
