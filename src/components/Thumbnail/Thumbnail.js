@@ -43,7 +43,8 @@ const Thumbnail = ({
       if (doc && doc.getPageInfo(pageNum)) {
         const id = doc.loadCanvasAsync({
           pageNumber: pageNum,
-          zoom: thumbSize > 150 ? 1 : 0.5,
+          width: thumbSize,
+          height: thumbSize,
           drawComplete: async thumb => {
             const thumbnailContainer = document.getElementById(`pageThumb${index}`);
             if (thumbnailContainer) {
@@ -159,7 +160,7 @@ const Thumbnail = ({
       dispatch(actions.closeElement('leftPanel'));
     }
     // due to the race condition, we need a settimeout here
-    // otherwise, sometimes the current page will not be visible in left panel 
+    // otherwise, sometimes the current page will not be visible in left panel
     setTimeout(() => {
       core.setCurrentPage(index + 1);
     }, 0)
