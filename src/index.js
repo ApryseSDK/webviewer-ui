@@ -81,7 +81,7 @@ if (window.CanvasRenderingContext2D) {
   const state = store.getState();
 
   if (state.advanced.fullAPI) {
-    window.Core.enableFullPDF(true);
+    window.Core.enableFullPDF();
     fullAPIReady = loadScript('../core/pdf/PDFNet.js');
   }
 
