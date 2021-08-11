@@ -34,7 +34,7 @@ const SelectedSignatureRow = ({ t }) => {
             if (signatureTool.hasLocation()) {
               await signatureTool.addSignature();
             } else {
-              signatureTool.showPreview();
+              await signatureTool.showPreview();
             }
           }}
           isActive={activeToolName === 'AnnotationCreateSignature'}

@@ -50,14 +50,10 @@ const InkSignature = ({
   }, []);
 
   useEffect(() => {
-    const signatureTool = core.getTool('AnnotationCreateSignature');
-
-    signatureTool.addEventListener('annotationAdded', annot => {
-      if (annot.Id === annotIdRef.current) {
-        clearCanvas();
-      }
-    });
-  }, [clearCanvas]);
+    if (isModalOpen) {
+      clearCanvas();
+    }
+  }, [isModalOpen]);
 
   useEffect(() => {
     async function resizeCanvasAsyncCall() {

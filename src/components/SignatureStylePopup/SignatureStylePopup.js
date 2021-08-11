@@ -35,7 +35,7 @@ const SignatureStylePopup = props => {
     if (signatureTool.hasLocation()) {
       await signatureTool.addSignature();
     } else {
-      signatureTool.showPreview();
+      await signatureTool.showPreview();
     }
   };
 
