@@ -126,8 +126,9 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnotations,
 
     if (includeComments && printableAnnotationNotes) {
       const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotationNotes);
-      createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat, language));
-
+      if (sortedNotes.length) {
+        createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat, language));
+      }
       if (onProgress) {
         createdPages[createdPages.length - 1].then(htmlElement => {
           onProgress(pageNumber, htmlElement);
