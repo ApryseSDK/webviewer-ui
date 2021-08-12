@@ -61,7 +61,8 @@
     "exitFormEditing": "Exit Form Editing Mode",
     "exit": "Exit",
     "markAllRead": "Mark all as read",
-    "share": "Share"
+    "share": "Share",
+    "repair": "Repair"
   },
   "annotation": {
     "areaMeasurement": "Area",

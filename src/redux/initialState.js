@@ -534,6 +534,7 @@ export default {
       { dataElement: 'downloadButton' },
       { dataElement: 'printButton' },
       { dataElement: 'themeChangeButton' },
+      { dataElement: 'repairPdfButton' },
     ],
     toolButtonObjects: {
       AnnotationCreateCountMeasurement: {
