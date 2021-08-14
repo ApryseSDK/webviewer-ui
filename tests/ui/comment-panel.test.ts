@@ -268,6 +268,32 @@ describe('Test cases for comment panel', () => {
     await selectAnnotAndTest(88);
   });
 
+  it('should be able to select text in the note panel', async() => {
+    const instance = await result.waitForInstance();
+
+    await instance('loadDocument', '/test-files/demo-annotated.pdf');
+    await result.waitForWVEvent('annotationsLoaded');
+
+    instance('openElement', 'notesPanel');
+    await page.waitFor(2000);
+
+    const annotNote = await result.iframe.$(`#note_140aed30-b8f5-49f7-374f-b8a7cbd88e17 .container`);
+    const bounding_box = await annotNote.boundingBox();
+
+    await page.mouse.move(bounding_box.x, bounding_box.y);
+    await page.waitFor(500);
+    await page.mouse.down();
+
+    await page.mouse.move(bounding_box.x + bounding_box.width / 2, bounding_box.y + bounding_box.height / 2);
+    await page.waitFor(500);
+    await page.mouse.up();
+    const selectedText = await (result.iframe as Frame).evaluate(() => {
+      return window.getSelection().toString();
+    });
+
+    expect(selectedText).toEqual('Great quotes! Do we have any more?');
+  });
+
   it('for VirtualizedList should not scroll, when new comment is added', async() => {
     const instance = await result.waitForInstance();
 
