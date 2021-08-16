@@ -37,14 +37,14 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     [Feature.Measurement]: {
       dataElements: [
         "toolbarGroup-Measure",
-        // TODO: everything below this is probably outdated for measurments
         'measurementOverlay',
         'distanceToolGroupButton',
         'perimeterToolGroupButton',
         'areaToolGroupButton',
         'rectangleAreaToolGroupButton',
         'ellipseAreaToolGroupButton',
-        'countToolGroupButton'
+        'countToolGroupButton',
+        'cloudyRectangleAreaToolGroupButton',
       ],
     },
     [Feature.Annotations]: {

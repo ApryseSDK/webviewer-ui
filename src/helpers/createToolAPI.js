@@ -5,7 +5,7 @@ import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
 import actions from 'actions';
 import selectors from 'selectors';
 
-// a higher older function that creates the enableTools and disableTools APIs
+// a higher order function that creates the enableTools and disableTools APIs
 export default (enable, store) => (
   toolNames = getAnnotationCreateToolNames(),
 ) => {
