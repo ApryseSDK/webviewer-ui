@@ -18,7 +18,7 @@ const AutoResizeTextarea = React.forwardRef(
   ({ value, onChange, onKeyDown, onBlur, onFocus, placeholder }, ref) => {
     const textareaRef = useRef();
     useImperativeHandle(ref, () => textareaRef.current);
-    const TEXTAREA_HEIGHT = '28px';
+    const TEXTAREA_HEIGHT = '22px';
 
     useLayoutEffect(() => {
       // for auto-resize the height of the textarea

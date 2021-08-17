@@ -18,6 +18,7 @@
 
   &.expanded {
     border: none;
+    padding-bottom: 12px;
   }
 
   .mark-all-read-button {
@@ -34,30 +35,31 @@
     display: flex;
     position: relative;
     flex: 1;
-    display: flex;
     margin: 3px 12px 0 42px;
-    padding-bottom: 12px;
-
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    align-items: center;
+    padding-right:4px;
     &.unread {
       background: rgba($color:$pdftron-blue, $alpha: 0.08);
+    }
+    &:focus-within{
+      border: 1px solid var(--focus-border);
     }
 
     textarea {
       width: 100%;
       padding-left: 8px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
+      border: none;
       color: var(--text-color);
-      padding-top: 4px;
-      padding-bottom: 4px;
+      padding: 6px 56px 4px 4px;
       resize: none;
       overflow: hidden;
-      padding-right: 56px;
+      height: 24px;
       box-sizing: border-box;
-
       &:focus {
         outline: none;
-        border: 1px solid var(--focus-border);
+        border: none;
       }
 
       &::placeholder {
@@ -67,16 +69,17 @@
 
     .reply-button {
       @include button-reset;
+      // for IE only
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        width: 80px;
+      }
       background: var(--primary-button);
       border-radius: 4px;
       height: 24px;
-      display: flex;
+      
       align-items: center;
       justify-content: center;
       color: var(--primary-button-text);
-      position: absolute;
-      top: 2px;
-      right: 2px;
       padding: 0 13px;
 
       &:hover {
