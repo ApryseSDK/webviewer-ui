@@ -403,6 +403,17 @@ const ThumbnailsPanel = () => {
 
   const onRemove = pageIndex => {
     onCancel(pageIndex);
+    const canvases = thumbs.current[pageIndex]?.element?.querySelectorAll('canvas');
+    if (canvases.length) {
+      canvases.forEach((c) => {
+        c.height = 0;
+        c.width = 0;
+      });
+    }
+
+    if (activeThumbRenders[pageIndex]) {
+      activeThumbRenders[pageIndex].cancel();
+    }
     thumbs.current[pageIndex] = null;
   };
 
