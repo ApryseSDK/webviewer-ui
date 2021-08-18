@@ -555,6 +555,7 @@ export default {
     isThumbnailReordering: true,
     isThumbnailMultiselect: true,
     enableNotesPanelVirtualizedList: true,
+    notesShowLastUpdatedDate: false,
     allowPageNavigation: true,
     enableToolGroupReordering: true,
     enableMouseWheelZoom: true,

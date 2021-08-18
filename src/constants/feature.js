@@ -54,4 +54,5 @@ export default {
   MathSymbols: 'MathSymbols',
   OutlineEditing: 'OutlineEditing',
   NotesPanelVirtualizedList: 'NotesPanelVirtualizedList',
+  NotesShowLastUpdatedDate: "NotesShowLastUpdatedDate"
 };

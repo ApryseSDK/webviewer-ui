@@ -112,6 +112,10 @@ export const setEnableNotesPanelVirtualizedList = (enableNotesPanelVirtualizedLi
   type: 'SET_ENABLE_NOTE_PANEL_VIRTUALIZED_LIST',
   payload: { enableNotesPanelVirtualizedList },
 });
+export const setNotesShowLastUpdatedDate = (notesShowLastUpdatedDate = false) => ({
+  type: 'SET_NOTES_SHOW_LAST_UPDATED_DATE',
+  payload: { notesShowLastUpdatedDate },
+});
 export const setAllowPageNavigation = (allowPageNavigation = true) => ({
   type: 'SET_ALLOW_PAGE_NAVIGATION',
   payload: { allowPageNavigation },

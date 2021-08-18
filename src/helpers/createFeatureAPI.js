@@ -237,6 +237,11 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'deleteOutlineButton',
       ],
     },
+    [Feature.NotesShowLastUpdatedDate]: {
+      fn: () => {
+        store.dispatch(actions.setNotesShowLastUpdatedDate(enable));
+      }
+    }
   };
 
   if (!Array.isArray(features)) {

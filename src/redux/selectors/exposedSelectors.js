@@ -277,6 +277,8 @@ export const getIsMultipleViewerMerging = state => state.viewer.isMultipleViewer
 
 export const getEnableNotesPanelVirtualizedList = state => state.viewer.enableNotesPanelVirtualizedList;
 
+export const notesShowLastUpdatedDate = state => state.viewer.notesShowLastUpdatedDate;
+
 export const getAllowPageNavigation = state => state.viewer.allowPageNavigation;
 
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;

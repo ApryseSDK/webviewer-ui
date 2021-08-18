@@ -1,12 +1,6 @@
-import React, {
-  useRef,
-  useEffect,
-  useContext,
-  useMemo,
-  useCallback
-} from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
@@ -22,15 +16,14 @@ import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicato
 
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
-import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
-import escapeHtml from 'helpers/escapeHtml';
+import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
 import getColor from 'helpers/getColor';
-import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './NoteContent.scss';
+import getLatestActivityDate from "helpers/getLatestActivityDate";
 
 dayjs.extend(LocalizedFormat);
 
@@ -44,12 +37,14 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     iconColor,
     isStateDisabled,
     language,
+    notesShowLastUpdatedDate
   ] = useSelector(
     state => [
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
       selectors.isElementDisabled(state, 'notePopupState'),
       selectors.getCurrentLanguage(state),
+      selectors.notesShowLastUpdatedDate(state),
     ],
     shallowEqual,
   );
@@ -203,9 +198,10 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     clicked: isNonReplyNoteRead, //The top note content is read
   });
 
+  const date = notesShowLastUpdatedDate ? getLatestActivityDate(annotation) : annotation.DateCreated;
+
   const header = useMemo(
     () => {
-      const latestActivityDate = getLatestActivityDate(annotation);
       return (
         <React.Fragment>
           {!isReply &&
@@ -222,7 +218,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                 {renderAuthorName(annotation)}
                 <div className="date-and-num-replies">
                   <div className="date-and-time">
-                    {latestActivityDate ? dayjs(latestActivityDate).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate')}
+                    {date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate')}
                   </div>
                   {numberOfReplies > 0 &&
                     <div className="num-replies-container">
@@ -264,7 +260,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
         </React.Fragment>
       );
     },
-    [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange, language, isUnread]
+    [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange, language, isUnread, date]
   );
 
   return useMemo(
