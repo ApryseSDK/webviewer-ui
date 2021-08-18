@@ -520,6 +520,7 @@
     "by": "por",
     "on": "en",
     "disallowedChange": "Cambio no permitido: {{type}}, objnum: {{objnum}}",
+    "unsignedSignatureField": "Campo de firma sin firmar: {{fieldName}}",
     "trustVerification": {
       "current": "La hora de verificación utilizada fue la hora actual",
       "signing": "La hora de verificación es del reloj de la computadora del firmante",

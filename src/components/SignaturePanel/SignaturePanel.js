@@ -21,9 +21,10 @@ import './SignaturePanel.scss';
 
 const SignaturePanel = () => {
   const dispatch = useDispatch();
-  const [sigWidgets, setSigWidgets] = useState([]);
+  const [fields, setFields] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
   const [certificateErrorMessage, setCertificateErrorMessage] = useState('');
+  const [document, setDocument] = useState(core.getDocument());
   const [isDisabled, certificate] = useSelector(state => [
     selectors.isElementDisabled(state, 'signaturePanel'),
     selectors.getCertificates(state),
@@ -31,17 +32,7 @@ const SignaturePanel = () => {
   const [translate] = useTranslation();
 
   const onDocumentLoaded = async() => {
-    setShowSpinner(true);
-
-    await core.getAnnotationsLoadedPromise();
-
-    const _sigWidgets = core
-      .getAnnotationsList()
-      .filter(annotation => annotation instanceof Annotations.SignatureWidgetAnnotation);
-    if (!_sigWidgets.length) {
-      setShowSpinner(false);
-    }
-    setSigWidgets(_sigWidgets);
+    setDocument(core.getDocument());
   };
 
   const onDocumentUnloaded = useCallback(() => {
@@ -50,36 +41,43 @@ const SignaturePanel = () => {
   }, [setShowSpinner, dispatch]);
 
   useEffect(() => {
+    // This ensures that when the document loads, the state of this component is
+    // updated accordingly
     core.addEventListener('documentLoaded', onDocumentLoaded);
     core.addEventListener('documentUnloaded', onDocumentUnloaded);
     return () => {
       core.removeEventListener('documentLoaded', onDocumentLoaded);
       core.removeEventListener('documentUnloaded', onDocumentUnloaded);
     };
-  }, [dispatch, sigWidgets, onDocumentUnloaded]);
+  }, [onDocumentUnloaded]);
 
   useEffect(() => {
-    if (sigWidgets.length && certificate.length) {
-      setVerificationResult(certificate, sigWidgets, dispatch)
-        .then(() => {
+    // Need certificates for PDFNet to verify against, and for the document
+    // to be loaded in order to iterate through the signature fields in the
+    // document
+    if (certificate.length && document) {
+      setShowSpinner(true);
+      setVerificationResult(certificate, dispatch)
+        .then(async (verificationResult) => {
+          // We need to wait for the annotationsLoaded event, otherwise the
+          // Field will not exist in the document
+          await core.getAnnotationsLoadedPromise();
+          const fieldManager = core.getAnnotationManager().getFieldManager();
+          setFields(Object.keys(verificationResult).map(fieldName => fieldManager.getField(fieldName)));
           setCertificateErrorMessage('');
-        })
-        /**
-         * @todo Consolidate into a single .then?
-         */
-        .then(() => {
           setShowSpinner(false);
         })
         .catch(e => {
-          setCertificateErrorMessage(e.message);
+          if (e && e.message) {
+            setCertificateErrorMessage(e.message);
+          } else {
+            console.error(e);
+          }
         });
-    } else if (!sigWidgets.length && core.getDocument()) {
-      // The document is loaded, and the signature widgets need to be retrieved
-      onDocumentLoaded();
     } else {
-      setShowSpinner(false);
+      setShowSpinner(true);
     }
-  }, [certificate, dispatch, sigWidgets]);
+  }, [certificate, document, dispatch]);
 
   if (isDisabled) {
     return null;
@@ -100,7 +98,7 @@ const SignaturePanel = () => {
       result = translate('digitalSignatureVerification.panelMessages.localCertificateError');
     } else if (certificateErrorMessage === 'Download Failed') {
       result = translate('digitalSignatureVerification.panelMessages.certificateDownloadError');
-    } else if (!sigWidgets.length) {
+    } else if (!fields.length) {
       result = translate('digitalSignatureVerification.panelMessages.noSignatureFields');
     } else {
       /**
@@ -124,15 +122,14 @@ const SignaturePanel = () => {
     >
       {renderLoadingOrErrors()}
       {
-        !showSpinner && sigWidgets.length > 0 && (
-          sigWidgets.map((widget, index) => {
-            const name = widget.getField().name;
+        !showSpinner && fields.length > 0 && (
+          fields.map((field, index) => {
             return (
               <WidgetInfo
                 key={index}
-                name={name}
+                name={field.name}
                 collapsible
-                widget={widget}
+                field={field}
               />
             );
           })
