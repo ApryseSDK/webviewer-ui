@@ -135,14 +135,22 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-direction: column;
   }
 
   .thumbnailPlaceholder {
+    width: 150px;
     margin: 2px;
     border: 1px solid var(--focus-border);
   }
 
   .columnsOfThumbnails {
+    &.row{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: row;
+    }
     .cellThumbContainer {
       display: flex;
       flex-direction: row;
@@ -154,7 +162,11 @@
 
     .thumbnailPlaceholder {
       width: 116px;
+      min-width: 116px;
       height: 150px;
+      margin-bottom: 30px;
     }
   }
+
+
 }

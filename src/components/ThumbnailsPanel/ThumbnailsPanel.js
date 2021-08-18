@@ -289,7 +289,6 @@ const ThumbnailsPanel = () => {
     // 'preventDefault' to prevent opening pdf dropped in and 'stopPropagation' to keep parent from opening pdf
     e.preventDefault();
     e.stopPropagation();
-
     if (!isThumbnailReorderingEnabled && !isThumbnailMergingEnabled) {
       return;
     }
@@ -423,34 +422,35 @@ const ThumbnailsPanel = () => {
       row: true,
     });
     const allowPageOperationsUI = allowPageOperations && !isReaderMode;
-
     return (
       <div role="row" aria-label="row" className={className} key={key} style={style}>
         {new Array(numberOfColumns).fill().map((_, columnIndex) => {
           const thumbIndex = index * numberOfColumns + columnIndex;
-          const allowDragAndDrop = allowPageOperationsUI && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled);
+          const allowDragAndDrop = allowPageOperationsUI && ( isThumbnailMergingEnabled || isThumbnailReorderingEnabled );
           const showPlaceHolder = allowDragAndDrop && draggingOverPageIndex === thumbIndex;
 
           return thumbIndex < totalPages ? (
-            <div role="cell" key={thumbIndex} onDragEnd={onDragEnd} className="cellThumbContainer">
-              {showPlaceHolder && isDraggingToPreviousPage && <div className="thumbnailPlaceholder" />}
-              <Thumbnail
-                isDraggable={allowDragAndDrop}
-                isSelected={selectedPageIndexes.includes(thumbIndex)}
-                index={thumbIndex}
-                canLoad={canLoad}
-                onLoad={onLoad}
-                onCancel={onCancel}
-                onRemove={onRemove}
-                onDragStart={onDragStart}
-                onDragOver={onDragOver}
-                onFinishLoading={removeFromPendingThumbs}
-                updateAnnotations={updateAnnotations}
-                shouldShowControls={allowPageOperationsUI}
-                thumbnailSize={thumbnailSize}
-              />
+            <>
+              { ( numberOfColumns > 1 || thumbIndex === 0 ) && showPlaceHolder && isDraggingToPreviousPage && <div className="thumbnailPlaceholder" />}
+              <div role="cell" key={thumbIndex} onDragEnd={onDragEnd} className="cellThumbContainer">
+                <Thumbnail
+                  isDraggable={allowDragAndDrop}
+                  isSelected={selectedPageIndexes.includes(thumbIndex)}
+                  index={thumbIndex}
+                  canLoad={canLoad}
+                  onLoad={onLoad}
+                  onCancel={onCancel}
+                  onRemove={onRemove}
+                  onDragStart={onDragStart}
+                  onDragOver={onDragOver}
+                  onFinishLoading={removeFromPendingThumbs}
+                  updateAnnotations={updateAnnotations}
+                  shouldShowControls={allowPageOperationsUI}
+                  thumbnailSize={thumbnailSize}
+                />
+              </div>
               {showPlaceHolder && !isDraggingToPreviousPage && <div className="thumbnailPlaceholder" />}
-            </div>
+            </>
           ) : null;
         })}
       </div>
