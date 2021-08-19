@@ -37,7 +37,7 @@ const Thumbnail = ({
 
       const doc = core.getDocument();
 
-      if (doc) {
+      if (doc && doc.getPageInfo(pageNum)) {
         const id = doc.loadCanvasAsync({
           pageNumber: pageNum,
           zoom: thumbSize > 150 ? 1 : 0.5,
