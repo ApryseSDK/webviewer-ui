@@ -403,7 +403,7 @@ const ThumbnailsPanel = () => {
   const onRemove = pageIndex => {
     onCancel(pageIndex);
     const canvases = thumbs.current[pageIndex]?.element?.querySelectorAll('canvas');
-    if (canvases && canvases.length) {
+    if (canvases?.length) {
       canvases.forEach((c) => {
         c.height = 0;
         c.width = 0;
