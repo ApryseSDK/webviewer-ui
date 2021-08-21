@@ -273,6 +273,12 @@ export const setReaderMode = isReaderMode => ({
   type: 'SET_READER_MODE',
   payload: { isReaderMode },
 });
+export const setPageManipulationOverlayItems = items => ({
+  type: 'SET_PAGE_MANIPULATION_OVERLAY_ITEMS',
+  payload: {
+    items,
+  },
+});
 
 // document
 export const setTotalPages = totalPages => ({

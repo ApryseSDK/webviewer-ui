@@ -16,7 +16,7 @@ function PageInsertionControls(props) {
         {t('action.insertPage')}
       </DataElementWrapper>
       <DataElementWrapper
-        className={'row'}
+        className='row'
         dataElement='insertPageAbove'
         onClick={insertAbove}
       >
@@ -27,8 +27,8 @@ function PageInsertionControls(props) {
         />
         <div className='title'>{t('action.insertBlankPageAbove')}</div>
       </DataElementWrapper>
-      <DataElementWrapper 
-        className={'row'}
+      <DataElementWrapper
+        className='row'
         dataElement='insertPageBelow'
         onClick={insertBelow}
       >

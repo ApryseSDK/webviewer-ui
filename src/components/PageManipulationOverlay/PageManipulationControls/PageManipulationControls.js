@@ -16,7 +16,7 @@ function PageManipulationControls(props) {
         {t('action.pageManipulation')}
       </DataElementWrapper>
       <DataElementWrapper
-        className={'row'}
+        className='row'
         dataElement='replacePage'
         onClick={replacePages}
       >
@@ -28,7 +28,7 @@ function PageManipulationControls(props) {
         <div className='title'>{t('action.replace')}</div>
       </DataElementWrapper>
       <DataElementWrapper
-        className={'row'}
+        className='row'
         dataElement='extractPage'
         onClick={extractPages}
       >
@@ -40,7 +40,7 @@ function PageManipulationControls(props) {
         <div className='title'>{t('action.extract')}</div>
       </DataElementWrapper>
       <DataElementWrapper
-        className={'row'}
+        className='row'
         dataElement='deletePage'
         onClick={deletePages}
       >

@@ -177,6 +177,7 @@ import removeEventListener from './removeEventListener';
 import enableDesktopOnlyMode from './enableDesktopOnlyMode';
 import disableDesktopOnlyMode from './disableDesktopOnlyMode';
 import isInDesktopOnlyMode from './isInDesktopOnlyMode';
+import pageManipulationOverlay from './pageManipulationOverlay';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -227,6 +228,7 @@ export default store => {
     isHighContrastModeEnabled: isHighContrastModeEnabled(store),
     loadDocument: loadDocument(store),
     settingsMenuOverlay: settingsMenuOverlay(store),
+    pageManipulationOverlay: pageManipulationOverlay(store),
     openElements: openElements(store),
     print: print(store),
     printInBackground: printInBackground(store),

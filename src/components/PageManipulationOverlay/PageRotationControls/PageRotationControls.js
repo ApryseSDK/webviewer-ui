@@ -18,7 +18,7 @@ function PageRotationControls(props) {
         {t('action.rotate')}
       </DataElementWrapper>
       <DataElementWrapper
-        className={'row'}
+        className='row'
         dataElement='rotatePageClockwise'
         onClick={rotateClockwise}
       >
@@ -30,7 +30,7 @@ function PageRotationControls(props) {
         <div className='title'>{t('action.rotateClockwise')}</div>
       </DataElementWrapper>
       <DataElementWrapper
-        className={'row'}
+        className='row'
         dataElement='rotatePageCounterClockwise'
         onClick={rotateCounterClockwise}
       >

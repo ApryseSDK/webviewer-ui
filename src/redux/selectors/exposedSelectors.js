@@ -374,3 +374,5 @@ export const getFeatureFlags = state => state.featureFlags;
 export const isInDesktopOnlyMode = state => state.viewer.isInDesktopOnlyMode;
 
 export const pageDeletionConfirmationModalEnabled = state => state.viewer.pageDeletionConfirmationModalEnabled;
+
+export const getPageManipulationOverlayItems = state => state.viewer.pageManipulationOverlay;

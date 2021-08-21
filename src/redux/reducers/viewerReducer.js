@@ -280,7 +280,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ENABLE_NOTE_PANEL_VIRTUALIZED_LIST':
       return { ...state, enableNotesPanelVirtualizedList: payload.enableNotesPanelVirtualizedList };
     case 'SET_NOTES_SHOW_LAST_UPDATED_DATE':
-      return { ... state, notesShowLastUpdatedDate: payload.notesShowLastUpdatedDate };
+      return { ...state, notesShowLastUpdatedDate: payload.notesShowLastUpdatedDate };
     case 'SET_ALLOW_PAGE_NAVIGATION':
       return { ...state, allowPageNavigation: payload.allowPageNavigation };
     case 'SET_READ_ONLY':
@@ -360,7 +360,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     case 'SET_CUSTOM_MODAL': {
-      const existingDataElementFiltered = state.customModals.filter(function(modal) {
+      const existingDataElementFiltered = state.customModals.filter(function (modal) {
         return modal.dataElement !== payload.dataElement;
       });
       return {
@@ -420,7 +420,12 @@ export default initialState => (state = initialState, action) => {
     case 'PAGE_DELETION_CONFIRMATION_MODAL_POPUP':
       return {
         ...state,
-        pageDeletionConfirmationModalEnabled : payload.pageDeletionConfirmationModalEnabled
+        pageDeletionConfirmationModalEnabled: payload.pageDeletionConfirmationModalEnabled
+      };
+    case 'SET_PAGE_MANIPULATION_OVERLAY_ITEMS':
+      return {
+        ...state,
+        pageManipulationOverlay: payload.items,
       };
     default:
       return state;

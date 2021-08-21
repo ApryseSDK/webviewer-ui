@@ -401,6 +401,13 @@ export default {
       { dataElement: 'printButton' },
       { dataElement: 'themeChangeButton' },
     ],
+    pageManipulationOverlay: [
+      { dataElement: 'pageRotationControls' },
+      { type: 'divider' },
+      { dataElement: 'pageInsertionControls' },
+      { type: 'divider' },
+      { dataElement: 'pageManipulationControls' },
+    ],
     toolButtonObjects: {
       AnnotationCreateCountMeasurement: { dataElement: 'countMeasurementToolButton', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
       AnnotationCreateCountMeasurement2: { dataElement: 'countMeasurementToolButton2', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
