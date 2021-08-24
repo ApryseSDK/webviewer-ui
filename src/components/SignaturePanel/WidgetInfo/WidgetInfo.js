@@ -86,10 +86,10 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   collapsible: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
-  widget: PropTypes.instanceOf(Annotations.SignatureWidgetAnnotation),
+  field: PropTypes.instanceOf(Annotations.Forms.Field),
 };
 
-const WidgetInfo = ({ name, collapsible, widget }) => {
+const WidgetInfo = ({ name, collapsible, field }) => {
   const verificationResult = useSelector(state => selectors.getVerificationResult(state, name));
   const [isExpanded, setIsExpanded] = useState(true);
   const [locatorRect, setLocatorRect] = useState(null);
@@ -137,10 +137,14 @@ const WidgetInfo = ({ name, collapsible, widget }) => {
    * pertaining to the text element that was clicked by using core code to find
    * the coordinates of the widget on the page it is placed on
    *
-   * @param {Annotations.SignatureWidgetAnnotation} widget The widget pertaining
+   * @param {Annotations.Forms.Field} field The field pertaining
    * to the text element clicked in the Signature Panel
    */
-  const jumpToWidget = widget => {
+  const jumpToWidget = field => {
+    if (!field.widgets.length) {
+      return;
+    }
+    const widget = field.widgets[0];
     core.jumpToAnnotation(widget);
 
     const { scrollLeft, scrollTop } = core.getScrollViewElement();
@@ -169,7 +173,7 @@ const WidgetInfo = ({ name, collapsible, widget }) => {
    */
   const titleInteraction = event => {
     handleArrowClick(event);
-    jumpToWidget(widget);
+    jumpToWidget(field);
   };
 
   const renderTitle = () => {
@@ -502,9 +506,14 @@ const WidgetInfo = ({ name, collapsible, widget }) => {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <div className="title">
+          <div
+            className="title link"
+            tabIndex={0}
+            onClick={() => jumpToWidget(field)}
+            onKeyPress={() => jumpToWidget(field)}
+          >
             <SignatureIcon />
-            <p>Unsigned signature field with object number {id}</p>
+            <p>{translate('digitalSignatureVerification.unsignedSignatureField', { fieldName: field.name })}</p>
           </div>
         </React.Fragment>
       )}

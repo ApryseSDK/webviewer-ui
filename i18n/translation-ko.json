@@ -589,6 +589,7 @@
     "by": "으로",
     "on": "의 위에",
     "disallowedChange": "허용되지 않는 변경 : {{type}}, objnum : {{objnum}}",
+    "unsignedSignatureField": "서명되지 않은 서명 필드: {{fieldName}}",
     "trustVerification": {
       "current": "사용 된 확인 시간은 현재 시간입니다.",
       "signing": "확인 시간은 서명자의 컴퓨터 시계에 있습니다.",

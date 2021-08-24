@@ -589,6 +589,7 @@
     "by": "par",
     "on": "sur",
     "disallowedChange": "Modification interdite: {{type}}, objnum: {{objnum}}",
+    "unsignedSignatureField": "Champ de signature non signé : {{fieldName}}",
     "trustVerification": {
       "current": "L'heure de vérification utilisée était l'heure actuelle",
       "signing": "L'heure de vérification provient de l'horloge de l'ordinateur du signataire",

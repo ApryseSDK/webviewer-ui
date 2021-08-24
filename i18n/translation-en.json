@@ -589,6 +589,7 @@
     "by": "by",
     "on": "on",
     "disallowedChange": "Disallowed Change: {{type}}, objnum: {{objnum}}",
+    "unsignedSignatureField": "Unsigned signature field: {{fieldName}}",
     "trustVerification": {
       "current": "Verification time used was the current time",
       "signing": "Verification time is from the clock on the signer's computer",

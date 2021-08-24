@@ -589,6 +589,7 @@
     "by": "di",
     "on": "sopra",
     "disallowedChange": "Modifica non consentita: {{type}}, objnum: {{objnum}}",
+    "unsignedSignatureField": "Campo firma non firmato: {{fieldName}}",
     "trustVerification": {
       "current": "L'ora di verifica utilizzata era l'ora corrente",
       "signing": "L'ora della verifica è dall'orologio sul computer del firmatario",

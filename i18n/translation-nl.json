@@ -589,6 +589,7 @@
     "by": "door",
     "on": "Aan",
     "disallowedChange": "Niet-toegestane wijziging: {{type}}, objnum: {{objnum}}",
+    "unsignedSignatureField": "Niet ondertekend handtekeningveld: {{fieldName}}",
     "trustVerification": {
       "current": "De gebruikte verificatietijd was de huidige tijd",
       "signing": "De verificatietijd is van de klok op de computer van de ondertekenaar",

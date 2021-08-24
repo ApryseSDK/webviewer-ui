@@ -589,6 +589,7 @@
     "by": "通過",
     "on": "上",
     "disallowedChange": "不允許更改：{{type}}，objnum：{{objnum}}",
+    "unsignedSignatureField": "未簽名的簽名字段：{{fieldName}}",
     "trustVerification": {
       "current": "驗證時間為當前時間",
       "signing": "驗證時間是來自簽名者計算機上的時鐘",

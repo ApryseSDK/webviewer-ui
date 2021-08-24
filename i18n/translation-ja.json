@@ -589,6 +589,7 @@
     "by": "沿って",
     "on": "オン",
     "disallowedChange": "許可されていない変更：{{type}}、objnum：{{objnum}}",
+    "unsignedSignatureField": "署名されていない署名フィールド：{{fieldName}}",
     "trustVerification": {
       "current": "使用した検証時間は現在の時間でした",
       "signing": "確認時間は署名者のコンピューターの時計からです",
