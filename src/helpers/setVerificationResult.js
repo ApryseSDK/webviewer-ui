@@ -46,20 +46,12 @@ import actions from 'actions';
  * Invalid.
  * @ignore
  */
-export default async (certificates, sigWidgets, dispatch) => {
+export default async (certificates, dispatch) => {
   const doc = core.getDocument();
   if (doc) {
-    const verificationResult = await getVerificationResult(doc, sigWidgets, certificates);
+    const verificationResult = await getVerificationResult(doc, certificates);
     dispatch(actions.setVerificationResult(verificationResult));
-  } else {
-    window.documentViewer.addEventListener('documentLoaded', async () => {
-      const verificationResult = await getVerificationResult(
-        core.getDocument(),
-        sigWidgets,
-        certificates
-      );
-      dispatch(actions.setVerificationResult(verificationResult));
-    }, { 'once': true });
+    return verificationResult;
   }
 };
 
@@ -69,8 +61,6 @@ export default async (certificates, sigWidgets, dispatch) => {
  *
  * @param {Core.Document} doc The document with signatures to verify
  * with the given certificate
- * @param {Array<Annotations.SignatureWidgetAnnotation>} sigWidgets An array of
- * signature widgets to verify with the given certificate
  * @param {Array<File | string>} certificates The certificate files to be used
  * for verification. Can be passed as a File object, or a URL in the form
  * of a string, in which a GET call will be made to retrieve the certificate
@@ -79,7 +69,7 @@ export default async (certificates, sigWidgets, dispatch) => {
  * to their verification results
  * @ignore
  */
-const getVerificationResult = async (doc, sigWidgets, certificates) => {
+const getVerificationResult = async (doc, certificates) => {
   const { PDFNet } = window;
   const { VerificationResult } = PDFNet;
   const {
@@ -152,14 +142,20 @@ const getVerificationResult = async (doc, sigWidgets, certificates) => {
       }
     }
 
-    for (const widget of sigWidgets) {
+    const fieldIterator = await doc.getFieldIteratorBegin();
+    for (; (await fieldIterator.hasNext()); fieldIterator.next()) {
+      const field = await fieldIterator.current();
+      if (
+        !(await field.isValid())
+        || await field.getType() !== PDFNet.Field.Type.e_signature
+      ) {
+        continue;
+      }
+      const digitalSigField = await PDFNet.DigitalSignatureField.createFromField(field);
       try {
-        const fieldName = widget.getField().name;
-        const digitalSigField = await doc.getDigitalSignatureField(fieldName);
         const result = await digitalSigField.verify(opts);
         const id = await (await digitalSigField.getSDFObj()).getObjNum();
 
-        const signed = await digitalSigField.hasCryptographicSignature();
         let signer;
         let signTime;
         let documentPermission;
@@ -172,6 +168,7 @@ const getVerificationResult = async (doc, sigWidgets, certificates) => {
         const issuerField = {};
         const subjectField = {};
 
+        const signed = await digitalSigField.hasCryptographicSignature();
         if (signed) {
           const signerCert = await digitalSigField.getSignerCertFromCMS();
           const retrievedIssuerField = await signerCert.getIssuerField();
@@ -266,7 +263,7 @@ const getVerificationResult = async (doc, sigWidgets, certificates) => {
         } else if (!signer && subjectField.e_commonName) {
           signerName = subjectField.e_commonName;
         }
-
+        const fieldName = await field.getName();
         verificationResults[fieldName] = {
           signed,
           signer,

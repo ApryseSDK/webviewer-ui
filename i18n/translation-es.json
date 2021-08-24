@@ -67,7 +67,7 @@
     "markAllRead": "marcar todo como leido",
     "insertPage": "Inserción de página",
     "insertBlankPageAbove": "Insertar página en blanco arriba",
-"insertBlankPageBelow": "Insertar una página en blanco debajo",
+    "insertBlankPageBelow": "Insertar una página en blanco debajo",
     "pageManipulation": "Manipulación de página",
     "replace": "Reemplazar"
   },
@@ -88,6 +88,7 @@
     "freeHandHighlight": "Resaltado de mano libre",
     "freetext": "Texto libre",
     "highlight": "Resaltar",
+    "image": "Imagen",
     "line": "Línea",
     "perimeterMeasurement": "Medición del perímetro",
     "polygon": "Polígono",
@@ -437,7 +438,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "stamp": "(I)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -609,6 +610,7 @@
     "by": "por",
     "on": "en",
     "disallowedChange": "Cambio no permitido: {{type}}, objnum: {{objnum}}",
+    "unsignedSignatureField": "Campo de firma sin firmar: {{fieldName}}",
     "trustVerification": {
       "current": "La hora de verificación utilizada fue la hora actual",
       "signing": "La hora de verificación es del reloj de la computadora del firmante",
