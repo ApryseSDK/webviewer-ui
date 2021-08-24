@@ -21,9 +21,11 @@ import './ThumbnailsPanel.scss';
 
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 
-const ZOOM_RANGE_MIN = "100";
-const ZOOM_RANGE_MAX = "1000";
-const ZOOM_RANGE_STEP = "50";
+const ZOOM_RANGE_MIN = '100';
+const ZOOM_RANGE_MAX = '1000';
+const ZOOM_RANGE_STEP = '50';
+
+const hoverAreaHeight = 25;
 
 const ThumbnailsPanel = () => {
   const [
@@ -67,8 +69,11 @@ const ThumbnailsPanel = () => {
   const [isDraggingToPreviousPage, setDraggingToPreviousPage] = useState(false);
   const [allowPageOperations, setAllowPageOperations] = useState(true);
   const [numberOfColumns, setNumberOfColumns] = useState(1);
+  const [isDragging, setIsDragging] = useState(false);
 
   const [thumbnailSize, setThumbnailSize] = useState(150);
+  const [lastTimeTriggered, setLastTimeTriggered] = useState(0);
+  const [globalIndex, setGlobalIndex] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -268,8 +273,7 @@ const ThumbnailsPanel = () => {
       core.removeEventListener('pageNumberUpdated', onPageNumberUpdated);
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('annotationHidden', onAnnotationChanged);
-    }
-
+    };
   }, [thumbnailSize, numberOfColumns]);
 
   useEffect(() => {
@@ -278,11 +282,21 @@ const ThumbnailsPanel = () => {
 
   // if disabled or is not open return
   if (isDisabled || !isOpen) {
-    return null
+    return null;
   }
-
   const onDragEnd = () => {
+    setIsDragging(false);
     setDraggingOverPageIndex(null);
+  };
+
+  const scrollToRowHelper = (index, change, time) => {
+    var now = new Date().getTime();
+    if (index < totalPages-1 && index > 0 && now - lastTimeTriggered >= time) {
+      listRef.current?.scrollToRow(Math.floor((index + change) / numberOfColumns));
+      setLastTimeTriggered(now);
+      return index + change;
+    }
+    return index;
   };
 
   const onDragOver = (e, index) => {
@@ -302,9 +316,26 @@ const ThumbnailsPanel = () => {
     }
 
     setDraggingOverPageIndex(index);
+    const virtualizedThumbnailContainerElement = document.getElementById('virtualized-thumbnails-container');
+    const { y, bottom } = virtualizedThumbnailContainerElement.getBoundingClientRect();
+
+    if (e.pageY < y + hoverAreaHeight * 4) {
+      setGlobalIndex(scrollToRowHelper(index, -1, 400));
+    } else if (e.pageY > bottom - hoverAreaHeight * 4) {
+      setGlobalIndex(scrollToRowHelper(index, 1, 400));
+    }
+  };
+
+  const scrollDown = () => {
+    setGlobalIndex(scrollToRowHelper(globalIndex, 1, 200));
+  };
+  const scrollUp = () => {
+    setGlobalIndex(scrollToRowHelper(globalIndex, -1, 200));
   };
 
   const onDragStart = (e, index) => {
+    setGlobalIndex(index);
+    setIsDragging(true);
     const draggingSelectedPage = selectedPageIndexes.some(i => i === index);
     const pagesToMove = draggingSelectedPage ? selectedPageIndexes.map(index => index + 1) : [index + 1];
 
@@ -470,6 +501,10 @@ const ThumbnailsPanel = () => {
   const thumbnailHeight = isThumbnailControlDisabled ? Number(thumbnailSize) + 50 : Number(thumbnailSize) + 80;
   const shouldShowControls = !isReaderMode && (allowPageOperations || selectedPageIndexes.length > 0);
 
+  const thumbnailAutoScrollAreaStyle = {
+    'height': `${hoverAreaHeight}px`,
+  };
+
   return (
     <React.Fragment>
       {!isThumbnailSliderDisabled && <div data-element="thumbnailsSizeSlider" className="thumbnail-slider-container">
@@ -513,8 +548,12 @@ const ThumbnailsPanel = () => {
       </div>}
       <Measure bounds onResize={onPanelResize} key={thumbnailSize}>
         {({ measureRef }) => (
-          <div className="Panel ThumbnailsPanel" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
+          <div className="Panel ThumbnailsPanel" id="virtualized-thumbnails-container" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
             <div className="virtualized-thumbnails-container">
+              { isDragging ? 
+                <div className="thumbnailAutoScollArea" onDragOver={scrollUp} style={thumbnailAutoScrollAreaStyle}
+              ></div> : ""
+              }
               <List
                 ref={listRef}
                 height={height}
@@ -530,6 +569,9 @@ const ThumbnailsPanel = () => {
                 // Ensure we show the current page in the thumbnails when we open the panel
                 scrollToIndex={Math.floor((currentPage - 1)/numberOfColumns)}
               />
+              { isDragging ? 
+                <div className='thumbnailAutoScollArea' onDragOver={scrollDown} style={{...thumbnailAutoScrollAreaStyle, 'bottom': '70px'}} ></div> : ""
+              }
             </div>
           </div>
         )}

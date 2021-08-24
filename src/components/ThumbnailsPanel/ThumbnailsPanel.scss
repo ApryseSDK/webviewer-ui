@@ -127,7 +127,7 @@
   display: flex;
   height: 100%;
 
-  .virtualized-thumbnails-container {
+  #virtualized-thumbnails-container {
     flex: 1;
   }
 
@@ -169,4 +169,11 @@
   }
 
 
+}
+
+.thumbnailAutoScollArea{
+  position: absolute;
+  width: calc(100% - 55px);
+  z-index: 10;
+  background:rgba(255, 255, 255, 0);
 }
