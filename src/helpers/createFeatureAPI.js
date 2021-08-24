@@ -120,8 +120,6 @@ export default (enable, store) => features => {
         } else {
           core.setToolMode('AnnotationEdit');
         }
-
-        core.enableRedaction(enable);
       },
     },
     [Feature.TextSelection]: {
