@@ -120,8 +120,6 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         } else {
           core.setToolMode('AnnotationEdit');
         }
-
-        core.enableRedaction(enable);
       },
     },
     [Feature.TextSelection]: {
