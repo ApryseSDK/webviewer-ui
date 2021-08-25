@@ -89,6 +89,7 @@ if (window.CanvasRenderingContext2D) {
     window.Core.disableLogs(true);
   }
 
+  window._disableStreaming = getHashParams('disableStreaming', false);
   window.Core.setWorkerPath('../core');
   window.Core.setResourcesPath('../core/assets');
 
