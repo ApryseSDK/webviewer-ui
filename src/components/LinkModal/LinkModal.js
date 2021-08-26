@@ -60,7 +60,7 @@ const LinkModal = () => {
     return link;
   };
 
-  const createLink = () => {
+  const createLink = action => {
     const linksResults = [];
 
     const quads = core.getSelectedTextQuads();
@@ -85,6 +85,7 @@ const LinkModal = () => {
           currPageLinks,
           quads[currPageNumber],
           selectedText,
+          action
         );
         linksResults.push(...currPageLinks);
       }
@@ -103,6 +104,8 @@ const LinkModal = () => {
         }
 
         const link = newLink(annot.X, annot.Y, annot.Width, annot.Height);
+        link.addAction('U', action);
+        core.addAnnotations([link]);
         linksResults.push(link);
         annot.associateLink([link.Id]);
       });
@@ -111,7 +114,7 @@ const LinkModal = () => {
     return linksResults;
   };
 
-  const createHighlightAnnot = async(linkAnnotArray, quads, text) => {
+  const createHighlightAnnot = async(linkAnnotArray, quads, text, action) => {
     const linkAnnot = linkAnnotArray[0];
     const highlight = new Annotations.TextHighlightAnnotation();
     highlight.PageNumber = linkAnnot.PageNumber;
@@ -128,19 +131,17 @@ const LinkModal = () => {
     const linkAnnotIdArray = linkAnnotArray.map(link => link.Id);
     highlight.associateLink(linkAnnotIdArray);
 
-    core.addAnnotations([highlight]);
+    linkAnnotArray.forEach((link, index) => {
+      link.addAction('U', action);
+      index === 0 ?  core.addAnnotations([link, highlight]) : core.addAnnotations([link]);
+    });
   };
 
   const addURLLink = e => {
     e.preventDefault();
 
-    const links = createLink();
-
     const action = new window.Actions.URI({ uri: url });
-    links.forEach(link => {
-      link.addAction('U', action);
-      core.addAnnotations([link]);
-    });
+    const links = createLink(action);
 
     let pageNumbersToDraw = links.map(link => link.PageNumber);
     pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
@@ -158,17 +159,12 @@ const LinkModal = () => {
   const addPageLink = e => {
     e.preventDefault();
 
-    const links = createLink();
-
     const Dest = window.Actions.GoTo.Dest;
 
     const options = { dest: new Dest({ page: pageLabels.indexOf(pageLabel) + 1 }) };
     const action = new window.Actions.GoTo(options);
 
-    links.forEach(link => {
-      link.addAction('U', action);
-      core.addAnnotations([link]);
-    });
+    const links = createLink(action);
 
     let pageNumbersToDraw = links.map(link => link.PageNumber);
     pageNumbersToDraw = [...new Set(pageNumbersToDraw)];

@@ -243,26 +243,26 @@ const AnnotationPopup = () => {
             !multipleAnnotationsSelected &&
             !isEditingWidgets &&
             firstAnnotation.ToolName !== 'CropPage' && (
-              <ActionButton
-                dataElement="annotationCommentButton"
-                title="action.comment"
-                img="icon-header-chat-line"
-                onClick={commentOnAnnotation}
-              />
-            )}
+            <ActionButton
+              dataElement="annotationCommentButton"
+              title="action.comment"
+              img="icon-header-chat-line"
+              onClick={commentOnAnnotation}
+            />
+          )}
           {canModify &&
             hasStyle &&
             !isAnnotationStylePopupDisabled &&
             !isEditingWidgets &&
             (!multipleAnnotationsSelected || canUngroup) &&
             firstAnnotation.ToolName !== 'CropPage' && (
-              <ActionButton
-                dataElement="annotationStyleEditButton"
-                title="action.style"
-                img="icon-menu-style-line"
-                onClick={() => setIsStylePopupOpen(true)}
-              />
-            )}
+            <ActionButton
+              dataElement="annotationStyleEditButton"
+              title="action.style"
+              img="icon-menu-style-line"
+              onClick={() => setIsStylePopupOpen(true)}
+            />
+          )}
           {firstAnnotation.ToolName === 'CropPage' && (
             <ActionButton
               dataElement="annotationCropButton"
@@ -330,19 +330,21 @@ const AnnotationPopup = () => {
               onClick={
                 hasAssociatedLink
                   ? () => {
-                      const annotManager = core.getAnnotationManager();
-                      selectedAnnotations.forEach(annot => {
-                        const linkAnnotations = getAssociatedLinkedAnnotations(annot);
-                        linkAnnotations.forEach(annotId => {
-                          const linkAnnot = annotManager.getAnnotationById(annotId);
+                    const annotManager = core.getAnnotationManager();
+                    selectedAnnotations.forEach(annot => {
+                      const linkAnnotations = getAssociatedLinkedAnnotations(annot);
+                      annot.deleteCustomData(AnnotationCustomData.LINK_ID);
+                      linkAnnotations.forEach((annotId, index) => {
+                        const linkAnnot = annotManager.getAnnotationById(annotId);
+                        if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0 && index === 0) {
+                          annotManager.deleteAnnotations([linkAnnot, annot], null, true);
+                        } else {
                           annotManager.deleteAnnotation(linkAnnot, null, true);
-                        });
-                        annot.deleteCustomData(AnnotationCustomData.LINK_ID);
-                        if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0) {
-                          annotManager.deleteAnnotation(annot);
                         }
+
                       });
-                    }
+                    });
+                  }
                   : () => dispatch(actions.openElement('linkModal'))
               }
               dataElement="linkButton"
