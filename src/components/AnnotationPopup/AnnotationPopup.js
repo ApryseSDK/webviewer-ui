@@ -52,12 +52,12 @@ const AnnotationPopup = () => {
   const [includesFormFieldAnnotation, setIncludesFormFieldAnnotation] = useState(false);
 
   // helper function to get all the link annotations that are grouped with the passed in annotation
-  const getGroupedLinkAnnotations = (annotation) => {
-    const groupedLinks = core.getAnnotationManager().getGroupAnnotations(annotation).filter((groupedAnnotation) => {
+  const getGroupedLinkAnnotations = annotation => {
+    const groupedLinks = core.getAnnotationManager().getGroupAnnotations(annotation).filter(groupedAnnotation => {
       return groupedAnnotation instanceof Annotations.Link;
     });
     return groupedLinks;
-  }
+  };
 
   useOnClickOutside(popupRef, e => {
     const notesPanel = document.querySelector('[data-element="notesPanel"]');
@@ -174,7 +174,7 @@ const AnnotationPopup = () => {
 
     const onResize = () => {
       firstAnnotation && setPosition(getAnnotationPopupPositionBasedOn(firstAnnotation, popupRef));
-    }
+    };
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
     core.addEventListener('documentUnloaded', closeAndReset);
@@ -223,8 +223,8 @@ const AnnotationPopup = () => {
       <div className="closeButton" onClick={() => setShortCutKeysFor3DVisible(false)}>x</div>
       <div className="row">{t('action.rotate3D')} <span>{t('shortcut.rotate3D')}</span></div>
       <div className="row">{t('action.zoom')} <span>{t('shortcut.zoom3D')}</span></div>
-    </div>)
-  }
+    </div>);
+  };
 
   const downloadFileAttachment = annot => {
     // no need to check that annot is of type file annot as the check is done in the JSX
@@ -395,13 +395,12 @@ const AnnotationPopup = () => {
                       const annotManager = core.getAnnotationManager();
                       selectedAnnotations.forEach(annot => {
                         const linkAnnotations = getGroupedLinkAnnotations(annot);
-                        linkAnnotations.forEach(linkAnnot => {
+                        linkAnnotations.forEach((linkAnnot, index) => {
                           annotManager.ungroupAnnotations([linkAnnot]);
-                          annotManager.deleteAnnotation(linkAnnot, null, true);
+                          if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0 && index === 0) {
+                            annotManager.deleteAnnotations([annot, linkAnnot], null, true);
+                          }
                         });
-                        if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0) {
-                          annotManager.deleteAnnotation(annot);
-                        }
                       });
                       dispatch(actions.closeElement('annotationPopup'));
                     }
@@ -421,7 +420,7 @@ const AnnotationPopup = () => {
               )
             }
             {
-              show3DShortCutButton && 
+              show3DShortCutButton &&
               (
                 <ActionButton
                   title="action.viewShortCutKeysFor3D"
