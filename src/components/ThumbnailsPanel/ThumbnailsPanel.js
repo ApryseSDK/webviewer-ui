@@ -393,6 +393,7 @@ const ThumbnailsPanel = () => {
       }
     }
     setDraggingOverPageIndex(null);
+    setIsDragging(false);
   };
 
   const onLoad = (pageIndex, element, id) => {
@@ -453,17 +454,18 @@ const ThumbnailsPanel = () => {
       row: true,
     });
     const allowPageOperationsUI = allowPageOperations && !isReaderMode;
+
     return (
       <div role="row" aria-label="row" className={className} key={key} style={style}>
         {new Array(numberOfColumns).fill().map((_, columnIndex) => {
           const thumbIndex = index * numberOfColumns + columnIndex;
-          const allowDragAndDrop = allowPageOperationsUI && ( isThumbnailMergingEnabled || isThumbnailReorderingEnabled );
+          const allowDragAndDrop = allowPageOperationsUI && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled);
           const showPlaceHolder = allowDragAndDrop && draggingOverPageIndex === thumbIndex;
 
           return thumbIndex < totalPages ? (
-            <>
-              { ( numberOfColumns > 1 || thumbIndex === 0 ) && showPlaceHolder && isDraggingToPreviousPage && <div className="thumbnailPlaceholder" />}
-              <div role="cell" key={thumbIndex} onDragEnd={onDragEnd} className="cellThumbContainer">
+            <div key={thumbIndex}>
+              {(numberOfColumns > 1 || thumbIndex === 0) && showPlaceHolder && isDraggingToPreviousPage && <div className="thumbnailPlaceholder" />}
+              <div role="cell" onDragEnd={onDragEnd} className="cellThumbContainer">
                 <Thumbnail
                   isDraggable={allowDragAndDrop}
                   isSelected={selectedPageIndexes.includes(thumbIndex)}
@@ -481,7 +483,7 @@ const ThumbnailsPanel = () => {
                 />
               </div>
               {showPlaceHolder && !isDraggingToPreviousPage && <div className="thumbnailPlaceholder" />}
-            </>
+            </div>
           ) : null;
         })}
       </div>
@@ -550,9 +552,8 @@ const ThumbnailsPanel = () => {
         {({ measureRef }) => (
           <div className="Panel ThumbnailsPanel" id="virtualized-thumbnails-container" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
             <div className="virtualized-thumbnails-container">
-              { isDragging ? 
-                <div className="thumbnailAutoScollArea" onDragOver={scrollUp} style={thumbnailAutoScrollAreaStyle}
-              ></div> : ""
+              {isDragging ?
+                <div className="thumbnailAutoScollArea" onDragOver={scrollUp} style={thumbnailAutoScrollAreaStyle}></div> : ""
               }
               <List
                 ref={listRef}
@@ -567,10 +568,10 @@ const ThumbnailsPanel = () => {
                 className={'thumbnailsList'}
                 style={{ outline: 'none' }}
                 // Ensure we show the current page in the thumbnails when we open the panel
-                scrollToIndex={Math.floor((currentPage - 1)/numberOfColumns)}
+                scrollToIndex={Math.floor((currentPage - 1) / numberOfColumns)}
               />
-              { isDragging ? 
-                <div className='thumbnailAutoScollArea' onDragOver={scrollDown} style={{...thumbnailAutoScrollAreaStyle, 'bottom': '70px'}} ></div> : ""
+              {isDragging ?
+                <div className='thumbnailAutoScollArea' onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ""
               }
             </div>
           </div>
