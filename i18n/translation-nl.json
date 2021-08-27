@@ -237,7 +237,7 @@
       "pageTransition": "Pagina overgang"
     },
     "documentControls": {
-      "placeholder": "Voer pagina's in om te selecteren, d.w.z. 2, 5-9"
+      "placeholder": "1, 3, 5-10"
     },
     "outlineControls": {
       "add": "Voeg item toe",

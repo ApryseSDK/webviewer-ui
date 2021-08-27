@@ -237,7 +237,7 @@
       "pageTransition": "Переход страниц"
     },
     "documentControls": {
-      "placeholder": "Введите страницы для выбора, то есть 2, 5-9"
+      "placeholder": "1, 3, 5-10"
     },
     "outlineControls": {
       "add": "Добавить элемент",

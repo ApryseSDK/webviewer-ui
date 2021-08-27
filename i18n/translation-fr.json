@@ -237,7 +237,7 @@
       "pageTransition": "Transition de page"
     },
     "documentControls": {
-      "placeholder": "Entrez les pages à sélectionner, c'est-à-dire 2, 5-9"
+      "placeholder": "1, 3, 5-10"
     },
     "outlineControls": {
       "add": "Ajouter un item",

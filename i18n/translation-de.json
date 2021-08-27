@@ -237,7 +237,7 @@
       "pageTransition": "Seitenübergang"
     },
     "documentControls": {
-      "placeholder": "Geben Sie die gewünschten Seiten ein, z. B. 2, 5-9"
+      "placeholder": "1, 3, 5-10"
     },
     "outlineControls": {
       "add": "Artikel hinzufügen",

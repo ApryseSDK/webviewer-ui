@@ -237,7 +237,7 @@
       "pageTransition": "頁面切換"
     },
     "documentControls": {
-      "placeholder": "輸入頁面以選擇2、5-9"
+      "placeholder": "1, 3, 5-10"
     },
     "outlineControls": {
       "add": "添加項目",

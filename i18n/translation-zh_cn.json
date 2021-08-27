@@ -237,7 +237,7 @@
       "pageTransition": "页面转换"
     },
     "documentControls": {
-      "placeholder": "输入页面以选择2、5-9"
+      "placeholder": "1, 3, 5-10"
     },
     "outlineControls": {
       "add": "添加项目",

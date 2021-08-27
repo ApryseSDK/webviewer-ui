@@ -237,7 +237,7 @@
       "pageTransition": "ページ移動"
     },
     "documentControls": {
-      "placeholder": "ページを選択（例：2, 5-9）"
+      "placeholder": "1, 3, 5-10"
     },
     "outlineControls": {
       "add": "アイテムを追加",
