@@ -399,6 +399,8 @@ const AnnotationPopup = () => {
                           annotManager.ungroupAnnotations([linkAnnot]);
                           if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0 && index === 0) {
                             annotManager.deleteAnnotations([annot, linkAnnot], null, true);
+                          } else {
+                            annotManager.deleteAnnotation(linkAnnot, null, true);
                           }
                         });
                       });

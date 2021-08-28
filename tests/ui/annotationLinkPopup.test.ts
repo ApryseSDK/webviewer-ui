@@ -1,4 +1,5 @@
-import { loadViewerSample } from '../../utils';
+import { loadViewerSample, Timeouts } from '../../utils';
+import { ElementHandle } from 'puppeteer';
 
 // Skipping this test because it fails multiple times even after updating image in circleci
 it.skip('link annotation modal should accept page labels', async () => {
@@ -84,6 +85,9 @@ it('page should refresh after press unlink icon', async () => {
   await iframe.waitForSelector('[data-element=URLPanel]');
   await iframe.type('.urlInput', 'https://www.google.ca/');
   await iframe.click('[data-element=linkSubmitButton]');
+  await page.waitFor(Timeouts.UI_CSS_ANIMATION);
+  let link = await iframe.$('#pageWidgetContainer1 > div > span');
+  expect(link).not.toBeNull();
   const selectTopLeftCoords = { x: annotationTopLeftCoords.x - 10, y: annotationTopLeftCoords.y - 10 };
   const selectBottomRightCoords = { x: annotationBottomRightCoords.x + 10, y: annotationBottomRightCoords.y + 10 };
   await page.mouse.move(selectTopLeftCoords.x, selectTopLeftCoords.y);
@@ -94,6 +98,12 @@ it('page should refresh after press unlink icon', async () => {
   await iframe.waitForSelector('[data-element=linkButton] > div > svg > defs', { hidden: true });
   await iframe.click('[data-element=linkButton]');
   await iframe.waitForSelector('[data-element=linkButton] > div > svg > defs');
+  await page.mouse.move(selectBottomRightCoords.x + 10, selectBottomRightCoords.y + 10);
+  await page.mouse.down();
+  await page.mouse.up();
+  await page.waitFor(Timeouts.UI_CSS_ANIMATION);
+  link = await iframe.$('#pageWidgetContainer1 > div > span');
+  expect(link).toBeNull();
 });
 
 it('should release two annotations in a single event when adding link annotation and deleting link annotation', async () => {
