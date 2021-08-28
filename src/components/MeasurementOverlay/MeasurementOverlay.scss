@@ -26,6 +26,14 @@
     pointer-events: none;
   }
 }
+.measurement__value {
+  display: flex;
+  flex-direction: row;
+  .distance-show {
+    margin-left: 3px;
+    cursor: pointer;
+  }
+}
 
 .measurement__title {
   .measurement__icon {

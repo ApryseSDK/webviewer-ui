@@ -10,6 +10,7 @@ import Icon from 'components/Icon';
 import core from 'core';
 import { mapAnnotationToKey, mapToolNameToKey, getDataWithKey } from 'constants/map';
 import parseMeasurementContents from 'helpers/parseMeasurementContents';
+import getFormatedUnit from 'helpers/getFormatedUnit';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -313,7 +314,7 @@ class MeasurementOverlay extends React.PureComponent {
   renderDeltas = () => {
     const { annotation } = this.state;
     const angle = this.getAngleInRadians(annotation.Start, annotation.End);
-    const unit = annotation.Scale[1][1];
+    const unit = getFormatedUnit(annotation.DisplayUnits[0]);
     const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
     const distance = parseMeasurementContents(annotation.getContents());
     const deltaX = Math.abs(distance * Math.cos(angle)).toFixed(decimalPlaces);

@@ -1,17 +1,24 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import core from 'core';
 import { isMobileDevice } from 'helpers/device';
 import selectors from 'selectors';
+import useOnClickOutside from 'src/hooks/useOnClickOutside';
+import getFormatedUnit from 'helpers/getFormatedUnit';
+
 
 function LineMeasurementInput(props) {
   const { t, annotation, isOpen } = props;
   const isReadOnly = useSelector(state => selectors.isDocumentReadOnly(state));
   const factor = annotation.Measure.axis[0].factor;
-  const unit = annotation.Scale[1][1];
+  const unit = getFormatedUnit(annotation.DisplayUnits[annotation.DisplayUnits.length - 1]);
   const [length, setLength] = useState((annotation.getLineLength() * factor).toFixed(2));
+  const [showQuotMark, setShowQuotMark] = useState(true);
+  const inputRef = useRef();
+
+  useOnClickOutside(inputRef, () => setShowQuotMark(true));
 
   useEffect(() => {
     const onAnnotationChanged = () => {
@@ -138,25 +145,32 @@ function LineMeasurementInput(props) {
     <div>
       <div className="measurement__value">
         {t('option.measurementOverlay.distance')}: {' '}
-        <input
-          className="lineMeasurementInput"
-          type="number"
-          min="0"
-          disabled={isReadOnly}
-          value={length}
-          autoFocus={!isMobileDevice}
-          onChange={event => {
-            onInputChanged(event);
-            selectAnnotation();
-          }}
-          onBlur={event => validateLineLength(event)}
-          onKeyDown={event => {
-            if (event.key === 'Enter') {
-              onInputChanged(event);
-              deselectAnnotation();
-            }
-          }}
-        /> {unit}
+        {showQuotMark && annotation.DisplayUnits.length > 1 ? (
+          <div onClick={() => setShowQuotMark(false)} className="distance-show" >{annotation.getContents()}</div>
+        ) : (
+          <>
+            <input
+              className="lineMeasurementInput"
+              type="number"
+              min="0"
+              disabled={isReadOnly}
+              value={length}
+              ref={inputRef}
+              autoFocus={!isMobileDevice}
+              onChange={event => {
+                onInputChanged(event);
+                selectAnnotation();
+              }}
+              onBlur={event => validateLineLength(event)}
+              onKeyDown={event => {
+                if (event.key === 'Enter') {
+                  onInputChanged(event);
+                  deselectAnnotation();
+                }
+              }}
+            /> {unit}
+          </>
+        )}
       </div>
       <div className="angle_input">
         {t('option.measurementOverlay.angle')}: {' '}
