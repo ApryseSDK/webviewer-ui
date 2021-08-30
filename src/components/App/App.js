@@ -76,7 +76,9 @@ const App = ({ removeEventHandlers }) => {
 
     function loadInitialDocument() {
       const doesAutoLoad = getHashParams('auto_load', true);
-      const initialDoc = getHashParams('d', '');
+      let initialDoc = getHashParams('d', '');
+      // Split URL into main part and query string. Apply fix to main part and avoid touching query string.
+      initialDoc = initialDoc.split('?').map((part, idx) => idx === 0 ? part = decodeURI(encodeURI(encodeURI(part))) : part).join('?');
       const startOffline = getHashParams('startOffline', false);
 
       if ((initialDoc && doesAutoLoad) || startOffline) {
