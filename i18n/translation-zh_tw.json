@@ -304,7 +304,8 @@
     "filterAnnotModal": {
       "commentBy": "評論者",
       "types": "種類",
-      "color": "顏色"
+      "color": "顏色",
+      "includeReplies": "包括回覆"
     },
     "status": {
       "status": "狀態"

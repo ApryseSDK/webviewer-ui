@@ -304,7 +304,8 @@
     "filterAnnotModal": {
       "commentBy": "によるコメント",
       "types": "タイプ",
-      "color": "色"
+      "color": "色",
+      "includeReplies": "返信を含める"
     },
     "status": {
       "status": "状態"

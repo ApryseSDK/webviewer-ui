@@ -304,7 +304,8 @@
     "filterAnnotModal": {
       "commentBy": "의 댓글",
       "types": "종류",
-      "color": "색깔"
+      "color": "색깔",
+      "includeReplies": "답글 포함"
     },
     "status": {
       "status": "지위"

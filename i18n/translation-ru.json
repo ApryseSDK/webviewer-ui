@@ -304,7 +304,8 @@
     "filterAnnotModal": {
       "commentBy": "Комментарий от",
       "types": "Типы",
-      "color": "Цвет"
+      "color": "Цвет",
+      "includeReplies": "Включить ответы"
     },
     "status": {
       "status": "Статус"

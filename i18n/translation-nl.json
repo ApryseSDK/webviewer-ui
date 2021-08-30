@@ -304,7 +304,8 @@
     "filterAnnotModal": {
       "commentBy": "Reageer door",
       "types": "Soorten",
-      "color": "Kleur"
+      "color": "Kleur",
+      "includeReplies": "Inclusief antwoorden"
     },
     "status": {
       "status": "staat"
