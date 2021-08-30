@@ -14,7 +14,7 @@ import onLayersUpdated from './onLayersUpdated';
 
 let onFirstLoad = true;
 
-export default store => () => {
+export default store => async () => {
   const { dispatch, getState } = store;
 
   dispatch(actions.openElement('pageNavOverlay'));
@@ -89,19 +89,17 @@ export default store => () => {
 
   if (core.isFullPDFEnabled()) {
     const PDFNet = window.Core.PDFNet;
+    const docViewer = core.getDocumentViewer();
+    const pdfDoc = await docViewer.getDocument().getPDFDoc();
 
     PDFNet.initialize().then(() => {
       const main = async () => {
         try {
-          const docViewer = core.getDocumentViewer();
-
-          const pdfDoc = await docViewer.getDocument().getPDFDoc();
           const pageCount = await pdfDoc.getPageCount();
-
           const pageLabels = [];
 
           for (let i = 1; i <= pageCount; i++) {
-            const pageLabel =  await pdfDoc.getPageLabel(i);
+            const pageLabel = await pdfDoc.getPageLabel(i);
             const label = await pageLabel.getLabelTitle(i);
             pageLabels.push(label.length > 0 ? label : i.toString());
           }
