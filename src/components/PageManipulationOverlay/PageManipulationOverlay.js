@@ -40,7 +40,7 @@ function PageManipulationOverlay(props) {
   return (
     <InitialPageManipulationOverlay pageNumbers={pageNumbers} pageManipulationOverlayItems={pageManipulationOverlayItems}>
       <PageRotationControls pageNumbers={pageNumbers} dataElement='pageRotationControls' />
-      <PageInsertionControls dataElement='pageInsertionControls' />
+      <PageInsertionControls pageNumbers={pageNumbers} dataElement='pageInsertionControls' />
       <PageManipulationControls pageNumbers={pageNumbers} dataElement='pageManipulationControls' />
     </InitialPageManipulationOverlay>
   )

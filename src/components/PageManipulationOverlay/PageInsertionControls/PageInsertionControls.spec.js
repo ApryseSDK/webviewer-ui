@@ -24,7 +24,7 @@ describe('PageInsertionControls', () => {
         insertBlow={noop}
       />)
 
-      const insertAboveButton = container.querySelector('.Button[aria-label="action.insertPageAbove"]');
+      const insertAboveButton = container.querySelector('.Button[aria-label="Insert blank page above"]');
       expect(insertAboveButton).toBeInTheDocument();
       fireEvent.click(insertAboveButton);
       expect(insertAbove).toBeCalled();
@@ -33,11 +33,11 @@ describe('PageInsertionControls', () => {
     it('Should call insertAbove handler when the Insert blank page below pages button is clicked', () => {
       const insertBelow = jest.fn();
       const { container } = render(<TestPageInsertionControls
-        insertAbove={insertBelow}
-        insertBlow={noop}
+        insertAbove={noop}
+        insertBelow={insertBelow}
       />)
 
-      const insertBelowButton = container.querySelector('.Button[aria-label="action.insertPageAbove"]');
+      const insertBelowButton = container.querySelector('.Button[aria-label="Insert blank page below"]');
       expect(insertBelowButton).toBeInTheDocument();
       fireEvent.click(insertBelowButton);
       expect(insertBelow).toBeCalled();

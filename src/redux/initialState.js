@@ -196,7 +196,7 @@ export default {
         { type: 'spacer' },
         { type: 'toolGroupButton', toolGroup: 'signatureTools', img: 'icon-tool-signature', dataElement: 'signatureToolGroupButton', title: 'annotation.signature', showColor: 'never' },
         { type: 'toolGroupButton', toolGroup: 'rubberStampTools', img: 'icon-tool-stamp-line', dataElement: 'rubberStampToolGroupButton', title: 'annotation.rubberStamp' },
-        { type: 'toolGroupButton', toolGroup: 'stampTools', img: 'icon-tool-image-line', dataElement: 'stampToolGroupButton', title: 'annotation.stamp' },
+        { type: 'toolGroupButton', toolGroup: 'stampTools', img: 'icon-tool-image-line', dataElement: 'stampToolGroupButton', title: 'annotation.image' },
         { type: 'toolGroupButton', toolGroup: 'fileAttachmentTools', img: 'ic_fileattachment_24px', dataElement: 'fileAttachmentToolGroupButton', title: 'annotation.fileattachment', showColor: 'never' },
         { type: 'toolGroupButton', toolGroup: 'calloutTools', dataElement: 'calloutToolGroupButton', title: 'annotation.callout' },
         { type: 'toolGroupButton', toolGroup: 'model3DTools', img: 'icon-tool-model3d', dataElement: 'threeDToolGroupButton', title: 'annotation.3D', showColor: 'never' },
@@ -643,6 +643,5 @@ export default {
     officeWorkerTransportPromise: null
   },
   featureFlags: {
-    pageManipulationOverlay: false
   }
 };

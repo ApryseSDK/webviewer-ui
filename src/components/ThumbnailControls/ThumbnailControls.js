@@ -28,10 +28,6 @@ const ThumbnailControls = ({ index }) => {
     core.rotatePages([index + 1], window.Core.PageRotation.e_90);
   };
 
-  const rotateCounterClockwise = () => {
-    core.rotatePages([index + 1], window.Core.PageRotation.e_270);
-  };
-
   const handleDelete = () => {
     if (isPageDeletionConfirmationModalEnabled) {
       let message = t('warning.deletePage.deleteMessage');
@@ -62,10 +58,9 @@ const ThumbnailControls = ({ index }) => {
     }
   };
 
-  // Feature flag for new thumbnail page manipulation overlay
-  const { pageManipulationOverlay } = useSelector(state => selectors.getFeatureFlags(state));
-
-  function renderThumbnailControlsWithOverlay() {
+  if (isElementDisabled) {
+    return null;
+  } else {
     return (
       <div className="thumbnailControls-overlay" data-element={dataElementName}>
         <Button
@@ -87,41 +82,7 @@ const ThumbnailControls = ({ index }) => {
           pageIndex={index}
         />
       </div>
-
     )
-  };
-
-  function renderThumbnailControls() {
-    return (
-      <div className="thumbnailControls" data-element={dataElementName}>
-        <Button
-          img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
-          onClick={rotateCounterClockwise}
-          title="option.thumbnailPanel.rotateCounterClockwise"
-          dataElement="thumbRotateCounterClockwise"
-        />
-        <Button
-          img="icon-delete-line"
-          onClick={handleDelete}
-          title="option.thumbnailPanel.delete"
-          dataElement="thumbDelete"
-        />
-        <Button
-          img="icon-header-page-manipulation-page-rotation-clockwise-line"
-          onClick={rotateClockwise}
-          title="option.thumbnailPanel.rotateClockwise"
-          dataElement="thumbRotateClockwise"
-        />
-      </div>
-    )
-  };
-
-  if (isElementDisabled) {
-    return null;
-  } else if (pageManipulationOverlay) {
-    return renderThumbnailControlsWithOverlay();
-  } else {
-    return renderThumbnailControls();
   }
 };
 

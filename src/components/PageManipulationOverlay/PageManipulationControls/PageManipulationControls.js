@@ -15,7 +15,7 @@ function PageManipulationControls(props) {
       >
         {t('action.pageManipulation')}
       </DataElementWrapper>
-      <DataElementWrapper
+      {/* <DataElementWrapper
         className='row'
         dataElement='replacePage'
         onClick={replacePages}
@@ -26,7 +26,7 @@ function PageManipulationControls(props) {
           role='option'
         />
         <div className='title'>{t('action.replace')}</div>
-      </DataElementWrapper>
+      </DataElementWrapper> */}
       <DataElementWrapper
         className='row'
         dataElement='extractPage'

@@ -14,7 +14,7 @@ describe('PageManipulationControls', () => {
         replacePages={noop}
       />)
 
-      expect(container.querySelectorAll('.Button')).toHaveLength(3);
+      expect(container.querySelectorAll('.Button')).toHaveLength(2);
       expect(container.querySelectorAll('.type')).toHaveLength(1);
     });
 
@@ -46,7 +46,7 @@ describe('PageManipulationControls', () => {
       expect(extractPages).toBeCalled();
     });
 
-    it('Should call replacePages handler when the replace pages button is clicked', () => {
+    it.skip('Should call replacePages handler when the replace pages button is clicked', () => {
       const replacePages = jest.fn();
       const { container } = render(<TestPageManipulationControls
         deletePages={noop}

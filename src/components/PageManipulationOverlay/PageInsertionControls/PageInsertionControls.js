@@ -21,7 +21,7 @@ function PageInsertionControls(props) {
         onClick={insertAbove}
       >
         <Button
-          title='action.insertPageAbove'
+          title='action.insertBlankPageAbove'
           img='icon-page-insertion-insert-above'
           role='option'
         />
@@ -33,7 +33,7 @@ function PageInsertionControls(props) {
         onClick={insertBelow}
       >
         <Button
-          title='action.insertPageBelow'
+          title='action.insertBlankPageBelow'
           img='icon-page-insertion-insert-below'
           role='option'
         />

@@ -31,15 +31,15 @@ describe('PageManipulationOverlay', () => {
        * - Rotate CounterClockwise
        * - Insert page above
        * - Insert page below
-       * - Replace Page
+       * - Replace Page// NOT SUPPORTED RIGHT NOW
        * - Extract page
        * - Delete Page
        */
-      const supportedOperations = 7;
+      const supportedOperations = 6;
       const { container } = render(
         <TestPageManipulationOverlay {...basicProps} />
       );
-      expect(container.querySelectorAll('.row')).toHaveLength(7);
+      expect(container.querySelectorAll('.row')).toHaveLength(supportedOperations);
     });
 
     it('I can remove page operation sections by modifying the pageManipulationOverlayItems props', () => {
@@ -55,7 +55,7 @@ describe('PageManipulationOverlay', () => {
       const { container } = render(
         <TestPageManipulationOverlay {...testProps} />
       );
-      expect(container.querySelectorAll('.row')).toHaveLength(5);
+      expect(container.querySelectorAll('.row')).toHaveLength(4);
     });
 
     it('I can customize the page manipulation overlay with custom operations', () => {

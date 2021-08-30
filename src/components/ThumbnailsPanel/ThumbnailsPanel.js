@@ -291,7 +291,7 @@ const ThumbnailsPanel = () => {
 
   const scrollToRowHelper = (index, change, time) => {
     var now = new Date().getTime();
-    if (index < totalPages-1 && index > 0 && now - lastTimeTriggered >= time) {
+    if (index < totalPages - 1 && index > 0 && now - lastTimeTriggered >= time) {
       listRef.current?.scrollToRow(Math.floor((index + change) / numberOfColumns));
       setLastTimeTriggered(now);
       return index + change;
