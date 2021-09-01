@@ -16,7 +16,7 @@
     "bundle": "webpack --progress --config ./webpack.config.prod.js",
     "build": "npm run clean && npm run bundle",
     "translation": "node ./scripts/translate-i18n-files.js",
-    "storybook": "start-storybook -p 6006 --ci",
+    "storybook": "start-storybook -s ../../build -p 6006 --ci",
     "jest": "jest --runInBand --logHeapUsage",
     "jest:watch": "jest --watch"
   },
@@ -33,6 +33,7 @@
     "html2canvas": "git+https://github.com/PDFTron/html2canvas.git#pdftron-alpha10",
     "i18next": "^19.0.3",
     "i18next-http-backend": "^1.0.16",
+    "jest-canvas-mock": "^2.3.1",
     "react": "^17.0.0",
     "react-color": "^2.18.1",
     "react-dnd": "^14.0.2",
