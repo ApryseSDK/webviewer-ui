@@ -75,7 +75,7 @@ const App = ({ removeEventHandlers }) => {
 
     function loadInitialDocument() {
       const doesAutoLoad = getHashParams('auto_load', true);
-      const initialDoc = decodeURI(encodeURI(encodeURI(getHashParams('d', ''))));
+      const initialDoc = getHashParams('d', '');
       const startOffline = getHashParams('startOffline', false);
 
       if ((initialDoc && doesAutoLoad) || startOffline) {
