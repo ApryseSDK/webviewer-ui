@@ -2,6 +2,7 @@ import React from 'react';
 import core from 'core';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
+import actions from 'actions';
 import zoomFactors from 'constants/zoomFactors';
 import { connect } from 'react-redux';
 import setMaxZoomLevel from 'helpers/setMaxZoomLevel';
@@ -10,6 +11,7 @@ import ReaderModeStylePopup from 'components/ReaderModeStylePopup';
 class ReaderModeViewer extends React.PureComponent {
   static propTypes = {
     containerWidth: PropTypes.number.isRequired,
+    enableFadePageNavigation: PropTypes.bool.isRequired
   }
 
   constructor(props) {
@@ -19,6 +21,7 @@ class ReaderModeViewer extends React.PureComponent {
     this.originalMaxZoom = zoomFactors.getMaxZoomLevel();
     this.setAnnotStyleCb = undefined;
     this.doneSetAnnotColorCb = undefined;
+    this.originalEnableFadePageNavigation = props.enableFadePageNavigation;
 
     this.state = {
       colorMapKey: undefined,
@@ -32,6 +35,7 @@ class ReaderModeViewer extends React.PureComponent {
     if (this.props.containerWidth > 0) {
       this.updateMaxZoom();
     }
+    this.props.dispatch(actions.disableFadePageNavigationComponent());
 
     this.renderDocument();
 
@@ -52,6 +56,11 @@ class ReaderModeViewer extends React.PureComponent {
     this.wvReadingMode?.unmount();
 
     setMaxZoomLevel(this.props.dispatch)(this.originalMaxZoom);
+    if (this.originalEnableFadePageNavigation) {
+      this.props.dispatch(actions.enableFadePageNavigationComponent());
+    } else {
+      this.props.dispatch(actions.disableFadePageNavigationComponent());
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -227,6 +236,7 @@ class ReaderModeViewer extends React.PureComponent {
 
 const mapStateToProps = state => ({
   containerWidth: selectors.getDocumentContainerWidth(state),
+  enableFadePageNavigation: selectors.shouldFadePageNavigationComponent(state)
 });
 
 export default connect(mapStateToProps)(ReaderModeViewer);
