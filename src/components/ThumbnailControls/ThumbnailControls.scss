@@ -2,6 +2,9 @@
 
 .thumbnailControls-overlay {
   display: grid;
+  @include ie11 {
+    display: flex;
+  }
   text-align: center;
   z-index: 2;
   margin-top: 5px;
