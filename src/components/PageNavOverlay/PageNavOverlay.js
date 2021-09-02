@@ -144,7 +144,7 @@ class PageNavOverlay extends React.PureComponent {
           ariaLabel={t('action.pagePrev')}
           onClick={this.goToPrevPage}
           iconClassName="side-arrow"
-          forceTooltipPosition='top'
+          forceTooltipPosition="top"
           disabled={window.documentViewer.getCurrentPage() === 1}
         />
         <div className="formContainer" onClick={this.onClick}>
@@ -171,7 +171,7 @@ class PageNavOverlay extends React.PureComponent {
           ariaLabel={t('action.pageNext')}
           onClick={this.goToNextPage}
           iconClassName="side-arrow"
-          forceTooltipPosition='top'
+          forceTooltipPosition="top"
           disabled={window.documentViewer.getCurrentPage() === window.documentViewer.getPageCount()}
         />
       </DataElementWrapper>

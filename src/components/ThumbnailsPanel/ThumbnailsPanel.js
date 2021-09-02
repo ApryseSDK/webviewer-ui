@@ -4,6 +4,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { List } from 'react-virtualized';
 import Measure from 'react-measure';
 import classNames from 'classnames';
+import { isMobile } from "helpers/device";
 
 import { isIE11 } from 'helpers/device';
 
@@ -290,7 +291,7 @@ const ThumbnailsPanel = () => {
   };
 
   const scrollToRowHelper = (index, change, time) => {
-    var now = new Date().getTime();
+    const now = new Date().getTime();
     if (index < totalPages - 1 && index > 0 && now - lastTimeTriggered >= time) {
       listRef.current?.scrollToRow(Math.floor((index + change) / numberOfColumns));
       setLastTimeTriggered(now);
@@ -436,7 +437,7 @@ const ThumbnailsPanel = () => {
     onCancel(pageIndex);
     const canvases = thumbs.current[pageIndex]?.element?.querySelectorAll('canvas');
     if (canvases?.length) {
-      canvases.forEach((c) => {
+      canvases.forEach(c => {
         c.height = 0;
         c.width = 0;
       });
@@ -569,9 +570,10 @@ const ThumbnailsPanel = () => {
                 style={{ outline: 'none' }}
                 // Ensure we show the current page in the thumbnails when we open the panel
                 scrollToIndex={Math.floor((currentPage - 1) / numberOfColumns)}
+                scrollToAlignment={isMobile() ? "start" : "auto"}
               />
               {isDragging ?
-                <div className='thumbnailAutoScollArea' onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ""
+                <div className="thumbnailAutoScollArea" onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ""
               }
             </div>
           </div>
