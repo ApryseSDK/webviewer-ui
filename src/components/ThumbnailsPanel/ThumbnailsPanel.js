@@ -464,27 +464,27 @@ const ThumbnailsPanel = () => {
           const showPlaceHolder = allowDragAndDrop && draggingOverPageIndex === thumbIndex;
 
           return thumbIndex < totalPages ? (
-            <div key={thumbIndex}>
-              {(numberOfColumns > 1 || thumbIndex === 0) && showPlaceHolder && isDraggingToPreviousPage && <div className="thumbnailPlaceholder" />}
-              <div role="cell" onDragEnd={onDragEnd} className="cellThumbContainer">
-                <Thumbnail
-                  isDraggable={allowDragAndDrop}
-                  isSelected={selectedPageIndexes.includes(thumbIndex)}
-                  index={thumbIndex}
-                  canLoad={canLoad}
-                  onLoad={onLoad}
-                  onCancel={onCancel}
-                  onRemove={onRemove}
-                  onDragStart={onDragStart}
-                  onDragOver={onDragOver}
-                  onFinishLoading={removeFromPendingThumbs}
-                  updateAnnotations={updateAnnotations}
-                  shouldShowControls={allowPageOperationsUI}
-                  thumbnailSize={thumbnailSize}
-                />
+            <>
+              {(numberOfColumns > 1 || thumbIndex === 0) && showPlaceHolder && isDraggingToPreviousPage && <div key={`placeholder1-${thumbIndex}`} className="thumbnailPlaceholder" />}
+              <div key={thumbIndex} role="cell" onDragEnd={onDragEnd} className="cellThumbContainer">
+              <Thumbnail
+                isDraggable={allowDragAndDrop}
+                isSelected={selectedPageIndexes.includes(thumbIndex)}
+                index={thumbIndex}
+                canLoad={canLoad}
+                onLoad={onLoad}
+                onCancel={onCancel}
+                onRemove={onRemove}
+                onDragStart={onDragStart}
+                onDragOver={onDragOver}
+                onFinishLoading={removeFromPendingThumbs}
+                updateAnnotations={updateAnnotations}
+                shouldShowControls={allowPageOperationsUI}
+                thumbnailSize={thumbnailSize}
+              />
               </div>
-              {showPlaceHolder && !isDraggingToPreviousPage && <div className="thumbnailPlaceholder" />}
-            </div>
+              {showPlaceHolder && !isDraggingToPreviousPage && <div key={`placeholder2-${thumbIndex}`} className="thumbnailPlaceholder" />}
+            </>
           ) : null;
         })}
       </div>
