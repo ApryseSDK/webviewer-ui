@@ -53,6 +53,10 @@ $modal-z-index: 100;
           background: var(--primary-button-hover);
         }
       }
+
+      @include mobile {
+        padding: 23px 8px;
+      }
     }
   }
 }

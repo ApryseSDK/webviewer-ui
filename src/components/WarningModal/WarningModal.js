@@ -95,23 +95,23 @@ const WarningModal = () => {
           <div className="footer">
             {onSecondary && (
               <Button
-                className="cancel modal-button"
+                className="confirm modal-button"
                 dataElement="WarningModalClearButton"
                 label={secondaryBtnText}
                 onClick={secondary}
               />
             )}
             <Button
-              className="cancel modal-button"
-              dataElement="WarningModalClearButton"
-              label={cancelBtnText}
-              onClick={cancel}
-            />
-            <Button
               className="confirm modal-button"
               dataElement="WarningModalSignButton"
               label={label}
               onClick={confirm}
+            />
+            <Button
+              className="cancel modal-button"
+              dataElement="WarningModalClearButton"
+              label={cancelBtnText}
+              onClick={cancel}
             />
           </div>
         </div>
