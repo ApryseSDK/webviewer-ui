@@ -14,6 +14,20 @@ import { Swipeable } from 'react-swipeable';
 
 import './CalibrationModal.scss';
 
+const parseMeasurementContentByUnit = (content, unit) => {
+  if (content.includes('\'')|| content.includes('"')) {
+    const ftNum = parseFloat(content.slice(0, content.indexOf('\'')));
+    const inNum = parseFloat(content.slice(content.indexOf('\'') + 1, content.indexOf(('"'))));
+    if (unit === 'ft') {
+      return ftNum + inNum / 12;
+    } else {
+      return ftNum * 12 + inNum;
+    }
+  } else {
+    return parseMeasurementContents(content);
+  }
+};
+
 const numberRegex = /^\d*(\.\d*)?$/;
 const fractionRegex = /^\d*(\s\d\/\d*)$/;
 const pureFractionRegex = /^(\d\/\d*)*$/;
@@ -49,7 +63,7 @@ const CalibrationModal = () => {
       ) {
         const annot = annotations[0];
         setAnnotation(annot);
-        const value = parseMeasurementContents(annot.getContents());
+        const value = parseMeasurementContentByUnit(annot.getContents(), annot.Scale[1][1]);
         setValue(value);
         setUnitTo(annot.Scale[1][1]);
         // initial new distance should be the same as the value
@@ -75,7 +89,7 @@ const CalibrationModal = () => {
         annotations.length === 1 &&
         annotations[0] === annotation
       ) {
-        setValue(parseMeasurementContents(annotation.getContents()));
+        setValue(parseMeasurementContentByUnit(annotation.getContents(), annotation.Scale[1][1]));
         setUnitTo(annotation.Scale[1][1]);
       }
     };
@@ -157,7 +171,7 @@ const CalibrationModal = () => {
   };
 
   const getNewScale = () => {
-    const currentDistance = parseMeasurementContents(annotation.getContents());
+    const currentDistance = parseMeasurementContentByUnit(annotation.getContents(), annotation.Scale[1][1]);
     const ratio = newDistance / currentDistance;
 
     const currentScale = annotation.Scale;
