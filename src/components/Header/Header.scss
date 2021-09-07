@@ -15,6 +15,9 @@
   height: 40px;
   @include tablet-and-mobile {
     height: 52px;
+    &.closed {
+      height: 0px;
+    }
   }
 
   &.closed {
