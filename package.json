@@ -69,7 +69,7 @@
     "@google-cloud/translate": "^5.1.4",
     "@hot-loader/react-dom": "^16.11.0",
     "@pdftron/webviewer-downloader": "^1.4.2",
-    "@pdftron/webviewer-reading-mode": "1.0.5",
+    "@pdftron/webviewer-reading-mode": "1.0.6",
     "@storybook/addon-actions": "^6.1.11",
     "@storybook/addon-essentials": "^6.1.11",
     "@storybook/addon-links": "^6.1.11",

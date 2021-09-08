@@ -133,10 +133,10 @@ class ReaderModeViewer extends React.PureComponent {
     // Calling the FitWidth function to get the calculated fit width zoom level for normal page rendering
     const maxZoomLevel = core.getDocumentViewer().FitMode.FitWidth.call(core.getDocumentViewer());
     setMaxZoomLevel(this.props.dispatch)(maxZoomLevel);
-
     if (maxZoomLevel < core.getZoom()) {
-      core.zoomTo(maxZoomLevel);
+      core.fitToWidth();
     }
+    this.setZoom(core.getZoom());
   }
 
   getAnnotTypeFromToolMode = (toolMode) => {
