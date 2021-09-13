@@ -49,7 +49,14 @@ function ViewControlsOverlay() {
     return null;
   }
 
-  const { pageTransition, layout } = displayModeObjects.find(obj => obj.displayMode === displayMode);
+  let pageTransition;
+  let layout;
+
+  const displayModeObject = displayModeObjects.find(obj => obj.displayMode === displayMode);
+  if (displayModeObject) {
+    pageTransition = displayModeObject.pageTransition;
+    layout = displayModeObject.layout;
+  }
 
   const showReaderButton = core.isFullPDFEnabled() && window.documentViewer?.getDocument()?.getType() === 'pdf';
 
