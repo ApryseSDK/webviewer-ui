@@ -11,5 +11,6 @@ export default dispatch => () => {
   ]));
   dispatch(actions.setOutlines([]));
   dispatch(actions.setTotalPages(0));
+  dispatch(actions.setSearchValue(''));
   core.clearSearchResults();
 };
