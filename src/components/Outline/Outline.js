@@ -172,6 +172,7 @@ const Outline = forwardRef(
                 className="contentButton"
                 onDoubleClick={handleOutlineDoubleClick}
                 label={outline.getName()}
+                useI18String={false}
                 onClick={handleOutlineClick}
                 tabIndex={-1}
               />

@@ -32,6 +32,7 @@ const propTypes = {
   ariaLabel: PropTypes.string,
   role: PropTypes.string,
   hideTooltipShortcut: PropTypes.bool,
+  useI18String: PropTypes.bool,
 };
 
 const Button = props => {
@@ -53,6 +54,7 @@ const Button = props => {
     img,
     tabIndex,
     label,
+    useI18String=true,
     color,
     dataElement,
     onClick,
@@ -107,7 +109,7 @@ const Button = props => {
       tabIndex={tabIndex}
       aria-keyshortcuts={ariaKeyshortcuts}
     >
-      {isGlyph &&
+      {isGlyph && (
         <Icon
           disabled={actuallyDisabled}
           glyph={imgToShow}
@@ -115,9 +117,14 @@ const Button = props => {
           fillColor={fillColor}
           strokeColor={strokeColor}
           className={iconClassName}
-        />}
+        />
+      )}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
-      {label && <span>{t(label)}</span>}
+      {
+        label && (useI18String ? 
+        <span>{t(label)}</span> :
+        <span>{label}</span>)
+      }
     </button>
   );
 
