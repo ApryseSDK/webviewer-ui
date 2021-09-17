@@ -190,6 +190,7 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
     type: 'SET_TOOLBAR_GROUP',
     payload: { toolbarGroup },
   });
+  fireEvent(Events.HEADER_GROUP_CHANGED, toolbarGroup);
 };
 export const setSelectedStampIndex = index => ({
   type: 'SET_SELECTED_STAMP_INDEX',
