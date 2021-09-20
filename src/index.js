@@ -32,6 +32,7 @@ import rootReducer from 'reducers/rootReducer';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import getHashParams from 'helpers/getHashParams';
+import defineWebViewerInstanceUIAPIs from 'src/apis';
 
 import './index.scss';
 
@@ -151,17 +152,20 @@ if (window.CanvasRenderingContext2D) {
 
   logDebugInfo();
 
+  const documentViewer = new window.Core.DocumentViewer();
+  window.documentViewer = documentViewer;
+
+  defineWebViewerInstanceUIAPIs(store);
+
   fullAPIReady.then(() => loadConfig()).then(() => {
     if (preloadWorker) {
       initTransports();
     }
 
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
-    const docViewer = new window.Core.DocumentViewer();
 
-    window.documentViewer = docViewer;
     if (getHashParams('enableViewStateAnnotations', false)) {
-      const tool = docViewer.getTool(window.Core.Tools.ToolNames.STICKY);
+      const tool = documentViewer.getTool(window.Core.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);
     }
 

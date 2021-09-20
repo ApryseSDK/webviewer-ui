@@ -1,7 +1,7 @@
 import { loadViewerSample, Timeouts } from '../../utils';
 import {Frame} from "puppeteer";
 
-it.only('should need to call enableFeatures just once to re-enable Redaction', async() => {
+it('should need to call enableFeatures just once to re-enable Redaction', async() => {
   const {
     iframe,
     waitForInstance,

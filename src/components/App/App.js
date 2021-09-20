@@ -44,7 +44,6 @@ import ColorPickerModal from 'components/ColorPickerModal';
 import PageManipulationOverlay from 'components/PageManipulationOverlay';
 
 import core from 'core';
-import defineWebViewerInstanceUIAPIs from 'src/apis';
 import loadDocument from 'helpers/loadDocument';
 import getHashParams from 'helpers/getHashParams';
 import fireEvent from 'helpers/fireEvent';
@@ -71,7 +70,6 @@ const App = ({ removeEventHandlers }) => {
   ]);
 
   useEffect(() => {
-    defineWebViewerInstanceUIAPIs(store);
     fireEvent(Events.VIEWER_LOADED);
 
     function loadInitialDocument() {
