@@ -55,6 +55,10 @@ const AnnotationContentOverlay = () => {
         top = e.clientY - overlayRect.height - gap;
       }
 
+      if (top <= 0) {
+        top = 0
+      }
+
       return { left, top };
     }
 
