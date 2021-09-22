@@ -1,5 +1,6 @@
 import actions from 'actions';
 import core from 'core';
+import overlays from '../constants/overlays';
 
 export default dispatch => () => {
   dispatch(actions.closeElements([
@@ -8,6 +9,7 @@ export default dispatch => () => {
     'searchPanel',
     'leftPanel',
     'signatureValidationModal',
+    ...overlays
   ]));
   dispatch(actions.setOutlines([]));
   dispatch(actions.setTotalPages(0));

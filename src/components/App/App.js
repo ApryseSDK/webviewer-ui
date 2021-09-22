@@ -48,6 +48,7 @@ import loadDocument from 'helpers/loadDocument';
 import getHashParams from 'helpers/getHashParams';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
+import overlays from 'constants/overlays';
 
 import actions from 'actions';
 
@@ -103,6 +104,7 @@ const App = ({ removeEventHandlers }) => {
       }
     }
 
+    window.addEventListener('blur', () => { dispatch(actions.closeElements(overlays)); });
     window.addEventListener('message', messageHandler, false);
 
     // In case WV is used outside of iframe, postMessage will not

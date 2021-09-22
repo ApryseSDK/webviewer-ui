@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
-import React, { useCallback, useRef, useState, useMemo } from 'react';
+import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
 import useArrowFocus from '../../hooks/useArrowFocus';
@@ -26,6 +26,13 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
  
   const onClose = useCallback(() => setIsOpen(false), []);
   const onToggle = useCallback(() => setIsOpen(prev => !prev), []);
+
+  // Close dropdown if WebViewer loses focus (ie, user clicks outside iframe).
+  useEffect(() => {
+    window.addEventListener('blur', () => {
+      setIsOpen(false);
+    });
+  }, []);
 
   useArrowFocus(isOpen, onClose, overlayRef);
 
