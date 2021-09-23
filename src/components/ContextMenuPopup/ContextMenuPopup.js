@@ -42,6 +42,12 @@ const ContextMenuPopup = () => {
       const { tagName } = e.target;
       const clickedOnInput = tagName === 'INPUT';
       const clickedOnTextarea = tagName === 'TEXTAREA';
+      const clickedOnFreeTextarea = (
+        e.target.className === 'ql-editor'
+        || e.target.parentNode.className === 'ql-editor'
+        || e.target.parentNode.parentNode.className === 'ql-editor'
+      ) ? true : false;
+
       const clickedOnDocumentContainer = document
         .querySelector('.DocumentContainer')
         .contains(e.target);
@@ -51,7 +57,7 @@ const ContextMenuPopup = () => {
         clickedOnDocumentContainer &&
         // when clicking on these two elements we want to display the default context menu
         // so that users can use auto-correction, look up dictionary, etc...
-        !(clickedOnInput || clickedOnTextarea)
+        !(clickedOnInput || clickedOnTextarea || clickedOnFreeTextarea)
       ) {
         e.preventDefault();
         let { pageX: left, pageY: top } = e;
