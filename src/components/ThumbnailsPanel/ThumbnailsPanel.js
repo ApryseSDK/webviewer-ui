@@ -17,6 +17,8 @@ import { extractPagesToMerge, mergeExternalWebViewerDocument, mergeDocument } fr
 import { workerTypes } from 'constants/types';
 import selectors from 'selectors';
 import actions from 'actions';
+import Events from 'constants/events';
+import fireEvent from 'helpers/fireEvent';
 
 import './ThumbnailsPanel.scss';
 
@@ -339,7 +341,7 @@ const ThumbnailsPanel = () => {
     setIsDragging(true);
     const draggingSelectedPage = selectedPageIndexes.some(i => i === index);
     const pagesToMove = draggingSelectedPage ? selectedPageIndexes.map(index => index + 1) : [index + 1];
-
+    fireEvent(Events.THUMBNAIL_DRAGGED);
     // need to set 'text' to empty for drag to work in FireFox and mobile
     e.dataTransfer.setData('text', '');
 
@@ -366,7 +368,6 @@ const ThumbnailsPanel = () => {
     e.preventDefault();
     const { files } = e.dataTransfer;
     const insertTo = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
-
     let externalPageWebViewerFrameId;
     if (!isIE11) {
       // at this time of writing, IE11 does not really have support for getData
@@ -391,6 +392,11 @@ const ThumbnailsPanel = () => {
         const pageNumbersToMove = draggingSelectedPage ? selectedPageIndexes.map(i => i + 1) : [currentPage];
         afterMovePageNumber.current = targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
         core.movePages(pageNumbersToMove, targetPageNumber);
+        const updatedPagesNumbers = [];
+        for (let offset = 0; offset < pageNumbersToMove.length; offset++) {
+          updatedPagesNumbers.push(afterMovePageNumber.current + offset);
+        }
+        fireEvent(Events.THUMBNAIL_DROPPED, {pageNumbersBeforeMove:pageNumbersToMove, pagesNumbersAfterMove:updatedPagesNumbers, numberOfPagesMoved:updatedPagesNumbers.length});
       }
     }
     setDraggingOverPageIndex(null);

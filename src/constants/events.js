@@ -12,6 +12,8 @@
  * @property {string} THEME_CHANGED {@link UI#event:themeChanged UI.Events.themeChanged}
  * @property {string} HEADER_GROUP_CHANGED {@link UI#event:headerGroupChanged UI.Events.headerGroupChanged}
  * @property {string} SELECTED_THUMBNAIL_CHANGED {@link UI#event:selectedThumbnailChanged UI.Events.selectedThumbnailChanged}
+ * @property {string} THUMBNAIL_DRAGGED {@link UI#event:thumbnailDragged UI.Events.thumbnailDragged}
+ * @property {string} THUMBNAIL_DROPPED {@link UI#event:thumbnailDropped UI.Events.thumbnailDropped}
  * @property {string} USER_BOOKMARKS_CHANGED {@link UI#event:userBookmarksChanged UI.Events.userBookmarksChanged}
  * @property {string} VIEWER_LOADED {@link UI#event:viewerLoaded UI.Events.viewerLoaded}
  * @property {string} VISIBILITY_CHANGED {@link UI#event:visibilityChanged UI.Events.visibilityChanged}
@@ -37,6 +39,8 @@ export default {
   'THEME_CHANGED': 'themeChanged',
   'HEADER_GROUP_CHANGED': 'headerGroupChanged',
   'SELECTED_THUMBNAIL_CHANGED':'selectedThumbnailChanged',
+  'THUMBNAIL_DRAGGED':'thumbnailDragged',
+  'THUMBNAIL_DROPPED':'thumbnailDropped',
   'USER_BOOKMARKS_CHANGED': 'userBookmarksChanged',
   'VIEWER_LOADED': 'viewerLoaded',
   'VISIBILITY_CHANGED': 'visibilityChanged'
@@ -122,6 +126,22 @@ export default {
 * @name UI#selectedThumbnailChanged
 * @event
 * @param {array} selectedThumbnailPageIndexes The array of indexes of currently selected thumbnails
+*/
+
+/**
+* Triggered when thumbnail(s) are dragged in the thumbnail panel
+* @name UI#thumbnailDragged
+* @event
+*/
+
+/**
+* Triggered when dragged thumbnail(s) are dropped to a new location in the thumbnail panel
+* @name UI#thumbnailDropped
+* @event
+* @type {object}
+* @property {Array<number>} pageNumbersBeforeMove The array of page numbers to be moved
+* @property {Array<number>} pageNumbersAfterMove The array of page numbers of where thumbnails being dropped
+* @property {number} numberOfPagesMoved Number of page(s) being moved
 */
 
 /**
