@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import ActionButton from 'components/ActionButton';
 import AnnotationStylePopup from 'components/AnnotationStylePopup';
+import DatePicker from 'src/components/DatePicker';
 import CustomizablePopup from 'components/CustomizablePopup';
 
 import core from 'core';
@@ -13,7 +14,7 @@ import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
 import { isMobile, isIE } from 'helpers/device';
-import { getOpenedWarningModal, getOpenedColorPicker } from 'helpers/getElements';
+import { getOpenedWarningModal, getOpenedColorPicker, getDatePicker } from 'helpers/getElements';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -46,6 +47,8 @@ const AnnotationPopup = () => {
   const [firstAnnotation, setFirstAnnotation] = useState(null);
   const [canModify, setCanModify] = useState(false);
   const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+  const [isDatePickerMount, setDatePickerMount] = useState(false);
   const [hasAssociatedLink, setHasAssociatedLink] = useState(true);
   const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(false);
   const popupRef = useRef();
@@ -60,9 +63,10 @@ const AnnotationPopup = () => {
   };
 
   useOnClickOutside(popupRef, e => {
+
     const notesPanel = document.querySelector('[data-element="notesPanel"]');
     const clickedInNotesPanel = notesPanel?.contains(e.target);
-
+    const datePicker = getDatePicker();
     const warningModal = getOpenedWarningModal();
     const colorPicker = getOpenedColorPicker();
 
@@ -70,7 +74,7 @@ const AnnotationPopup = () => {
     // we don't want this handler to run when clicked in the notes panel otherwise the opening/closing states may mess up
     // for example: click on a note will call core.selectAnnotation which triggers the annotationSelected event
     // and opens this component. If we don't exclude the notes panel this handler will run and close it after
-    if (!clickedInNotesPanel && !warningModal && !colorPicker) {
+    if (!clickedInNotesPanel && !warningModal && !colorPicker && !datePicker) {
       dispatch(actions.closeElement('annotationPopup'));
     }
   });
@@ -92,7 +96,7 @@ const AnnotationPopup = () => {
       }
     };
 
-    if (firstAnnotation || isStylePopupOpen) {
+    if (firstAnnotation || isStylePopupOpen || isDatePickerMount) {
       setPopupPositionAndShow();
     }
 
@@ -142,7 +146,7 @@ const AnnotationPopup = () => {
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
     };
-  }, [dispatch, canModify, firstAnnotation, isStylePopupOpen, popupItems]);
+  }, [dispatch, canModify, firstAnnotation, isStylePopupOpen, popupItems, isDatePickerMount]);
 
   useEffect(() => {
     const closeAndReset = () => {
@@ -152,6 +156,7 @@ const AnnotationPopup = () => {
       setIncludesFormFieldAnnotation(false);
       setCanModify(false);
       setIsStylePopupOpen(false);
+      setDatePickerOpen(false);
     };
 
     const onAnnotationSelected = (annotations, action) => {
@@ -190,6 +195,7 @@ const AnnotationPopup = () => {
     return null;
   }
 
+  const toggleDatePicker = () => setDatePickerOpen(isOpen => !isOpen);
   const style = getAnnotationStyles(firstAnnotation);
   const hasStyle = Object.keys(style).length > 0;
   const redactionEnabled = core.isAnnotationRedactable(firstAnnotation);
@@ -202,12 +208,14 @@ const AnnotationPopup = () => {
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
   const isFreeTextAnnot = firstAnnotation instanceof window.Annotations.FreeTextAnnotation;
-  const isFreeTextAndCanEdit =
-    isFreeTextAnnot && core.getAnnotationManager().isFreeTextEditingEnabled() && core.canModifyContents(firstAnnotation);
-
-
+  const isFreeTextAndCanEdit = isFreeTextAnnot && core.getAnnotationManager().isFreeTextEditingEnabled() && core.canModifyContents(firstAnnotation);
+  const isDateFreeTextCanEdit = isFreeTextAnnot && firstAnnotation.getDateFormat() && core.canModifyContents(firstAnnotation);
 
   const commentOnAnnotation = () => {
+    if (isDateFreeTextCanEdit) {
+      toggleDatePicker();
+      return;
+    }
     if (isFreeTextAndCanEdit) {
       core.getAnnotationManager().trigger('annotationDoubleClicked', firstAnnotation);
     } else {
@@ -218,6 +226,10 @@ const AnnotationPopup = () => {
     dispatch(actions.closeElement('annotationPopup'));
   };
 
+  const handleDateChange = text => {
+    core.getAnnotationManager().setNoteContents(firstAnnotation, text);
+    core.getAnnotationManager().updateAnnotation(firstAnnotation);
+  };
   const ShortCutKeysFor3DComponent = () => {
     return (<div className="shortCuts3D">
       <div className="closeButton" onClick={() => setShortCutKeysFor3DVisible(false)}>x</div>
@@ -249,33 +261,33 @@ const AnnotationPopup = () => {
     toolNames.STICKY4,
   ];
 
-  const showCommentButton = !isNotesPanelDisabled &&
+  const showCommentButton =
+    !isNotesPanelDisabled &&
     !multipleAnnotationsSelected &&
     firstAnnotation.ToolName !== toolNames.CROP &&
     !includesFormFieldAnnotation;
 
-  const showEditStyleButton = canModify &&
+  const showEditStyleButton =
+    canModify &&
     hasStyle &&
     !isAnnotationStylePopupDisabled &&
     (!multipleAnnotationsSelected || canUngroup) &&
     !toolsWithNoStyling.includes(firstAnnotation.ToolName) && !(firstAnnotation instanceof Annotations.Model3DAnnotation);
 
-  const showRedactionButton = redactionEnabled &&
-    !multipleAnnotationsSelected &&
-    !includesFormFieldAnnotation;
+  const showRedactionButton = redactionEnabled && !multipleAnnotationsSelected && !includesFormFieldAnnotation;
 
-  const showGroupButton = canGroup &&
-    !includesFormFieldAnnotation;
+  const showGroupButton = canGroup && !includesFormFieldAnnotation;
 
-  const showCalibrateButton = canModify &&
-    firstAnnotation.Measure &&
-    firstAnnotation instanceof Annotations.LineAnnotation;
+  const showCalibrateButton =
+    canModify && firstAnnotation.Measure && firstAnnotation instanceof Annotations.LineAnnotation;
 
   const showFileDownloadButton = firstAnnotation instanceof window.Annotations.FileAttachmentAnnotation;
 
-  const showLinkButton =
-    !toolsThatCantHaveLinks.includes(firstAnnotation.ToolName) &&
-    !includesFormFieldAnnotation;
+  const showLinkButton = !toolsThatCantHaveLinks.includes(firstAnnotation.ToolName) && !includesFormFieldAnnotation;
+
+  const onDatePickerShow = isDatePickerShowed => {
+    setDatePickerMount(isDatePickerShowed);
+  };
 
   const show3DShortCutButton = firstAnnotation instanceof Annotations.Model3DAnnotation && !isMobile();
 
@@ -292,8 +304,12 @@ const AnnotationPopup = () => {
       data-element="annotationPopup"
       style={{ ...position }}
     >
-      {isStylePopupOpen ? (
-        <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} />
+      {isStylePopupOpen || isDatePickerOpen ? (
+        isStylePopupOpen ? (
+          <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} />
+        ) : (
+          <DatePicker onClick={handleDateChange} annotation={firstAnnotation} onDatePickerShow={onDatePickerShow} />
+        )
       ) : (shortCutKeysFor3DVisible && firstAnnotation instanceof Annotations.Model3DAnnotation) ?
         <ShortCutKeysFor3DComponent /> : (
           <CustomizablePopup dataElement="annotationPopup">

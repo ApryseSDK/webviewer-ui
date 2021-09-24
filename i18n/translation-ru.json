@@ -2,6 +2,7 @@
   "action": {
     "apply": "Применить",
     "applyAll": "Применить все",
+    "calendar": "Календарь",
     "calibrate": "калибровать",
     "cancel": "Отменить",
     "clear": "Очистить",
@@ -77,6 +78,7 @@
     "callout": "Вызыв",
     "crop": "Обрезать страницу",
     "caret": "Знак вставки",
+    "dateFreeText": "Календарь",
     "formFillCheckmark": "Галочка",
     "formFillCross": "Крест",
     "distanceMeasurement": "Дистанция",

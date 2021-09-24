@@ -63,6 +63,22 @@ const map = {
       annotation.getIntent() ===
       window.Annotations.FreeTextAnnotation.Intent.FreeText,
   },
+  dateFreeText: {
+    icon: 'icon-tool-fill-and-sign-calendar',
+    iconColor: 'TextColor',
+    currentPalette: 'TextColor',
+    availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
+    toolNames: [
+      'AnnotationCreateDateFreeText',
+      'AnnotationCreateDateFreeText2',
+      'AnnotationCreateDateFreeText3',
+      'AnnotationCreateDateFreeText4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.FreeTextAnnotation &&
+      annotation.getIntent() ===
+        window.Annotations.FreeTextAnnotation.Intent.FreeText,
+  },
   distanceMeasurement: {
     icon: 'ic_annotation_distance_black_24px',
     iconColor: 'StrokeColor',

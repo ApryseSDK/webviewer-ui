@@ -9,3 +9,7 @@ export function getOpenedColorPicker() {
 export function getAllOpenedModals() {
   return document.querySelectorAll('.Modal.open');
 }
+
+export function getDatePicker() {
+  return document.querySelector('[data-element="datePickerContainer"]');
+}

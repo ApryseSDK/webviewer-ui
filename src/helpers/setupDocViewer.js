@@ -24,6 +24,9 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateFreeText2 = new window.Core.Tools.FreeTextCreateTool(docViewer, ToolNames.FREETEXT2);
   toolModeMap.AnnotationCreateFreeText3 = new window.Core.Tools.FreeTextCreateTool(docViewer, ToolNames.FREETEXT3);
   toolModeMap.AnnotationCreateFreeText4 = new window.Core.Tools.FreeTextCreateTool(docViewer, ToolNames.FREETEXT4);
+  toolModeMap.AnnotationCreateDateFreeText2 = new window.Core.Tools.DateFreeTextCreateTool(docViewer, ToolNames.DATEFREETEXT2);
+  toolModeMap.AnnotationCreateDateFreeText3 = new window.Core.Tools.DateFreeTextCreateTool(docViewer, ToolNames.DATEFREETEXT3);
+  toolModeMap.AnnotationCreateDateFreeText4 = new window.Core.Tools.DateFreeTextCreateTool(docViewer, ToolNames.DATEFREETEXT4);
   toolModeMap.AnnotationCreateCallout2 = new window.Core.Tools.CalloutCreateTool(docViewer, ToolNames.CALLOUT2);
   toolModeMap.AnnotationCreateCallout3 = new window.Core.Tools.CalloutCreateTool(docViewer, ToolNames.CALLOUT3);
   toolModeMap.AnnotationCreateCallout4 = new window.Core.Tools.CalloutCreateTool(docViewer, ToolNames.CALLOUT4);

@@ -2,6 +2,7 @@
   "action": {
     "apply": "適用",
     "applyAll": "すべて適用",
+    "calendar": "カレンダー",
     "calibrate": "調整する",
     "cancel": "キャンセル",
     "clear": "クリア",
@@ -77,6 +78,7 @@
     "callout": "吹き出し",
     "crop": "ページをトリミング",
     "caret": "キャレット",
+    "dateFreeText": "カレンダー",
     "formFillCheckmark": "ダニ",
     "formFillCross": "クロス",
     "distanceMeasurement": "距離測定",

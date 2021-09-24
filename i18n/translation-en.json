@@ -2,6 +2,7 @@
   "action": {
     "apply": "Apply",
     "applyAll": "Apply all",
+    "calendar": "Calendar",
     "calibrate": "Calibrate",
     "cancel": "Cancel",
     "clear": "Clear",
@@ -77,6 +78,7 @@
     "callout": "Callout",
     "crop": "Crop Page",
     "caret": "Caret",
+    "dateFreeText": "Calendar",
     "formFillCheckmark": "Tick",
     "formFillCross": "Cross",
     "distanceMeasurement": "Distance",

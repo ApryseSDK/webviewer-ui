@@ -2,6 +2,7 @@
   "action": {
     "apply": "적용",
     "applyAll": "모두 적용",
+    "calendar": "캘린더",
     "calibrate": "교정",
     "cancel": "취소",
     "clear": "지우기",
@@ -77,6 +78,7 @@
     "callout": "설명선",
     "crop": "자르기 페이지",
     "caret": "캐럿",
+    "dateFreeText": "달력",
     "formFillCheckmark": "진드기",
     "formFillCross": "가로 질러 가다",
     "distanceMeasurement": "거리 측정",

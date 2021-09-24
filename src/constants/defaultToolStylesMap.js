@@ -206,6 +206,18 @@ export default {
   AnnotationCreateFreeText4: {
     TextColor: { R: 0, G: 122, B: 59, A: 1 },
   },
+  AnnotationCreateDateFreeText: {
+    TextColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateDateFreeText2: {
+    TextColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateDateFreeText3: {
+    TextColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateDateFreeText4: {
+    TextColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
   AnnotationCreateCallout: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },

@@ -308,6 +308,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'checkStampTools', img: 'icon-tool-check-stamp', dataElement: 'checkStampToolButton', title: 'annotation.formFillCheckmark', showColor: 'never' },
         { type: 'toolGroupButton', toolGroup: 'dotStampTools', img: 'icon-tool-dot-stamp', dataElement: 'dotStampToolButton', title: 'annotation.formFillDot', showColor: 'never' },
         { type: 'toolGroupButton', toolGroup: 'rubberStampTools', img: 'icon-tool-stamp-line', dataElement: 'rubberStampToolGroupButton', title: 'annotation.rubberStamp' },
+        { type: 'toolGroupButton', toolGroup: 'dateFreeTextTools', dataElement: 'dateFreeTextToolButton', title: 'annotation.dateFreeText' },
         { type: 'divider' },
         {
           type: 'customElement',
@@ -365,6 +366,7 @@ export default {
     annotationPopup: [
       { dataElement: 'annotationCommentButton' },
       { dataElement: 'annotationStyleEditButton' },
+      { dataElement: 'annotationDateEditButton' },
       { dataElement: 'annotationRedactButton' },
       { dataElement: 'annotationCropButton' },
       { dataElement: 'annotationGroupButton' },
@@ -465,6 +467,10 @@ export default {
       AnnotationCreateFreeText2: { dataElement: 'freeTextToolButton2', title: 'annotation.freetext', img: 'icon-tool-text-free-text', group: 'freeTextTools', showColor: 'always' },
       AnnotationCreateFreeText3: { dataElement: 'freeTextToolButton3', title: 'annotation.freetext', img: 'icon-tool-text-free-text', group: 'freeTextTools', showColor: 'always' },
       AnnotationCreateFreeText4: { dataElement: 'freeTextToolButton4', title: 'annotation.freetext', img: 'icon-tool-text-free-text', group: 'freeTextTools', showColor: 'always' },
+      AnnotationCreateDateFreeText: { dataElement: 'dateFreeTextToolButton', title: 'annotation.dateFreeText', img: 'icon-tool-fill-and-sign-calendar', group: 'dateFreeTextTools', showColor: 'always' },
+      AnnotationCreateDateFreeText2: { dataElement: 'dateFreeTextToolButton2', title: 'annotation.dateFreeText', img: 'icon-tool-fill-and-sign-calendar', group: 'dateFreeTextTools', showColor: 'always' },
+      AnnotationCreateDateFreeText3: { dataElement: 'dateFreeTextToolButton3', title: 'annotation.dateFreeText', img: 'icon-tool-fill-and-sign-calendar', group: 'dateFreeTextTools', showColor: 'always' },
+      AnnotationCreateDateFreeText4: { dataElement: 'dateFreeTextToolButton4', title: 'annotation.dateFreeText', img: 'icon-tool-fill-and-sign-calendar', group: 'dateFreeTextTools', showColor: 'always' },
       AnnotationCreateCallout: { dataElement: 'calloutToolButton', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },
       AnnotationCreateCallout2: { dataElement: 'calloutToolButton2', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },
       AnnotationCreateCallout3: { dataElement: 'calloutToolButton3', title: 'annotation.callout', img: 'icon-tool-callout-line', group: 'calloutTools', showColor: 'always' },

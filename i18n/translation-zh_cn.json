@@ -2,6 +2,7 @@
   "action": {
     "apply": "应用",
     "applyAll": "全部申请",
+    "calendar": "日历",
     "calibrate": "校准",
     "cancel": "取消",
     "clear": "清除",
@@ -77,6 +78,7 @@
     "callout": "标注",
     "crop": "裁剪页面",
     "caret": "插入符号",
+    "dateFreeText": "日历",
     "formFillCheckmark": "打钩",
     "formFillCross": "叉",
     "distanceMeasurement": "距离测量",
