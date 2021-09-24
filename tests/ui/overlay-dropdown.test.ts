@@ -22,7 +22,7 @@ it('should close overlays on click outside WebViewer iframe', async () => {
   await iframe.evaluate(async() => {
     window.instance.UI.enableFeatures(window.instance.UI.Feature.Measurement);
   });
-  
+
   const viewerAside = await page.$('body aside');
   const appContainer = await iframe.$('div.App');
 
@@ -73,12 +73,12 @@ it('should close overlays when document unloads', async () => {
     // Assert overlay is closed by default.
     let isElementOpen = await instance('isElementOpen', [overlays[i]]);
     expect(isElementOpen).toBe(false);
-  
+
     // Open overlay dropdown.
     await instance('openElements', [overlays[i]]);
     isElementOpen = await instance('isElementOpen', [overlays[i]]);
     expect(isElementOpen).toBe(true);
-    
+
     // Load new document.
     await instance('loadDocument', '/test-files/blank.pdf');
     await waitForWVEvents(['pageComplete', 'annotationsLoaded']);
