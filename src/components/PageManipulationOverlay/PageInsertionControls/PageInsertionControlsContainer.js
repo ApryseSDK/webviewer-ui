@@ -1,34 +1,34 @@
 import React from 'react';
-import core from 'core';
 import PageInsertionControls from './PageInsertionControls';
+import { insertAbove, insertBelow, noPagesSelectedWarning } from "helpers/pageManipulationFunctions";
+import { useDispatch } from "react-redux";
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  pageNumbers: PropTypes.arrayOf(PropTypes.number),
+  warn: PropTypes.bool,
+};
 
 function PageInsertionControlsContainer(props) {
-  const { pageNumbers } = props;
+  const dispatch = useDispatch();
+  const { pageNumbers, warn } = props;
 
-  const getPageDimensions = () => {
-    return {
-      width: core.getPageWidth(pageNumbers[0]),
-      height: core.getPageHeight(pageNumbers[0])
-    }
-  };
-
-  const insertAbove = () => {
-    let pageDimensions = getPageDimensions()
-    core.insertBlankPages(pageNumbers, pageDimensions.width, pageDimensions.height);
-  };
-
-  const insertBelow = () => {
-    let pageDimensions = getPageDimensions()
-    let newPageNumbers = pageNumbers.map((page)=> page + 1)
-    core.insertBlankPages(newPageNumbers, pageDimensions.width, pageDimensions.height);
-  };
-
+  if (warn) {
+    return (
+      <PageInsertionControls
+        insertAbove={() => !noPagesSelectedWarning(pageNumbers, dispatch) && insertAbove(pageNumbers)}
+        insertBelow={() => !noPagesSelectedWarning(pageNumbers, dispatch) && insertBelow(pageNumbers)}
+      />
+    );
+  }
   return (
-    <PageInsertionControls 
-      insertAbove={insertAbove}
-      insertBelow={insertBelow}
+    <PageInsertionControls
+      insertAbove={() => insertAbove(pageNumbers)}
+      insertBelow={() => insertBelow(pageNumbers)}
     />
-  )
-};
+  );
+}
+
+PageInsertionControlsContainer.propTypes = propTypes;
 
 export default PageInsertionControlsContainer;

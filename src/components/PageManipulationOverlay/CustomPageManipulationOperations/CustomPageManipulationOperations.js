@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import DataElementWrapper from 'components/DataElementWrapper';
 import Button from 'components/Button';
 
@@ -11,17 +11,17 @@ function CustomPageManipulationOperations(props) {
         <Button
           title={operation.title}
           img={operation.img}
-          role='option'
+          role="option"
         />
-      )
+      );
     }
-  };
+  }
 
   return (
     <>
       <DataElementWrapper
         dataElement={dataElement}
-        className='type'
+        className="type"
       >
         {header}
       </DataElementWrapper>
@@ -29,17 +29,17 @@ function CustomPageManipulationOperations(props) {
         return (
           <DataElementWrapper
             key={operation.dataElement}
-            className='row'
+            className="row"
             dataElement={operation.dataElement}
             onClick={() => operation.onClick(pageNumbers)}
           >
             {renderIcon(operation)}
-            <div className='title'>{operation.title}</div>
+            <div className="title">{operation.title}</div>
           </DataElementWrapper>
-        )
+        );
       })}
     </>
-  )
+  );
 }
 
 export default CustomPageManipulationOperations;

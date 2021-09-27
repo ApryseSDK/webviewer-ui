@@ -7,11 +7,11 @@
   .container {
     @extend %modal-shared-container-style;
     display: flex;
+    width: 480px;
     flex-direction: column;
     align-items: flex-start;
     border-radius: 4px;
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-    padding: 16px;
     background: var(--component-background);
 
     @include mobile {
@@ -42,18 +42,60 @@
         }
       }
     }
+  }
 
-    .header {
-      display: flex;
-      justify-content: flex-start;
-      width: 100%;
-      margin-top: 4px;
-      margin-bottom: 20px;
-      font-size: 15px;
+  .header {
+    position: relative;
+    width: 100%;
+    padding: 6px;
+
+    .header-text {
+      padding: 10px;
+
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .Button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+
+      .Icon {
+        height: 22px;
+        width: 22px;
+        color: var(--icon-color);
+        @include mobile {
+          height: 28px;
+          width: 28px;
+        }
+      }
+    }
+  }
+
+  .body {
+    font-size: 14px;
+    padding: 16px;
+    @include mobile {
+      padding: 16px 8px;
     }
 
     .footer {
       justify-content: flex-start;
     }
   }
+
+  .footer {
+    padding: 0 8px 8px 8px;
+  }
+
+  .divider {
+    @include mobile {
+      display: none;
+    }
+    height: 0.5px;
+    width: 100%;
+    background: var(--divider);
+  }
 }
+

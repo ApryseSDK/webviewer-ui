@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { saveAs } from 'file-saver';
 import { useTranslation } from 'react-i18next';
 
 import Button from 'components/Button';
 import './DocumentControls.scss';
 import getPageArrayFromString from 'helpers/getPageArrayFromString';
-import core from 'core';
-import extractPagesWithAnnotations from '../../helpers/extractPagesWithAnnotations';
 
 import selectors from 'selectors';
 import actions from 'actions';
@@ -38,10 +35,11 @@ const DocumentControls = props => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
-  const [selectedPageIndexes, isDisabled, pageLabels] = useSelector(state => [
+  const [selectedPageIndexes, isDisabled, pageLabels, isThumbnailSelectingPages] = useSelector(state => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.isElementDisabled(state, 'documentControl'),
     selectors.getPageLabels(state),
+    selectors.isThumbnailSelectingPages(state),
   ]);
 
   const initialPagesString = getPageString(selectedPageIndexes, pageLabels);
@@ -52,103 +50,6 @@ const DocumentControls = props => {
   useEffect(() => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
   }, [setPageString, selectedPageIndexes, shouldShowControls, pageLabels]);
-
-  const noPagesSelectedWarning = () => {
-    const title = t('warning.selectPage.selectTitle');
-    const message = t('warning.selectPage.selectMessage');
-    const confirmBtnText = t('action.ok');
-
-    const warning = {
-      message,
-      title,
-      confirmBtnText,
-      onConfirm: () => Promise.resolve(),
-      keepOpen: ['leftPanel'],
-    };
-
-    dispatch(actions.showWarningMessage(warning));
-  };
-
-  const rotateClockwise = () => {
-    if (selectedPageIndexes.length === 0) {
-      noPagesSelectedWarning();
-      return;
-    }
-
-    const pageNumbersToRotate = selectedPageIndexes.map(p => p + 1);
-    pageNumbersToRotate.forEach(index => {
-      core.rotatePages([index], window.Core.PageRotation.e_90);
-    });
-  };
-
-  const onDeletePages = () => {
-    if (selectedPageIndexes.length === 0) {
-      noPagesSelectedWarning();
-      return;
-    }
-
-    let message = t('warning.deletePage.deleteMessage');
-    const title = t('warning.deletePage.deleteTitle');
-    const confirmBtnText = t('action.ok');
-    const pageNumbersToDelete = selectedPageIndexes.map(p => p + 1);
-
-    let warning = {
-      message,
-      title,
-      confirmBtnText,
-      onConfirm: () =>
-        core.removePages(pageNumbersToDelete).then(() => {
-          dispatch(actions.setSelectedPageThumbnails([]));
-        }),
-    };
-
-    if (core.getDocumentViewer().getPageCount() === pageNumbersToDelete.length) {
-      message = t('warning.deletePage.deleteLastPageMessage');
-
-      warning = {
-        message,
-        title,
-        confirmBtnText,
-        onConfirm: () => Promise.resolve(),
-      };
-    }
-
-    dispatch(actions.showWarningMessage(warning));
-  };
-
-  const extractPages = () => {
-    if (selectedPageIndexes.length === 0) {
-      noPagesSelectedWarning();
-      return;
-    }
-
-    const message = t('warning.extractPage.message');
-    const title = t('warning.extractPage.title');
-    const confirmBtnText = t('warning.extractPage.confirmBtn');
-    const pageNumbersToDelete = selectedPageIndexes.map(p => p + 1);
-    const secondaryBtnText = t('warning.extractPage.secondaryBtn');
-
-    let warning = {
-      message,
-      title,
-      confirmBtnText,
-      onConfirm: () =>
-        extractPagesWithAnnotations(selectedPageIndexes.map(index => index + 1)).then(file => {
-          saveAs(file, 'extractedDocument.pdf');
-        }),
-      secondaryBtnText,
-      onSecondary: () => {
-        extractPagesWithAnnotations(selectedPageIndexes.map(index => index + 1)).then(file => {
-          saveAs(file, 'extractedDocument.pdf');
-          core.removePages(pageNumbersToDelete).then(() => {
-            dispatch(actions.setSelectedPageThumbnails([]));
-          });
-        });
-      },
-    };
-
-    dispatch(actions.showWarningMessage(warning));
-  };
 
   const onBlur = e => {
     const selectedPagesString = e.target.value.replace(/ /g, '');
@@ -171,6 +72,15 @@ const DocumentControls = props => {
     setPageString(e.target.value);
   };
 
+  const disableThumbnailSelectingPages = () => {
+    dispatch(actions.setSelectedPageThumbnails([]));
+    dispatch(actions.setThumbnailSelectingPages(false));
+  };
+
+  const enableThumbnailSelectingPages = () => {
+    dispatch(actions.setThumbnailSelectingPages(true));
+  };
+
   return isDisabled ? null : (
     <div className={'documentControlsContainer'} data-element={'documentControl'}>
       {shouldShowControls ? (
@@ -187,24 +97,21 @@ const DocumentControls = props => {
               type="text"
             />
             <div className={'documentControlsButton'}>
-              <Button
-                img="icon-delete-line"
-                onClick={onDeletePages}
-                title="option.thumbnailPanel.delete"
-                dataElement="thumbMultiDelete"
-              />
-              <Button
-                img="icon-header-page-manipulation-page-rotation-clockwise-line"
-                onClick={rotateClockwise}
-                title="option.thumbnailPanel.rotateClockwise"
-                dataElement="thumbMultiRotate"
-              />
-              <Button
-                img="ic-operation-export-line"
-                title="action.extract"
-                onClick={extractPages}
-                dataElement="thumbExtract"
-              />
+              {!isThumbnailSelectingPages ?
+                <Button
+                  img={"icon-tool-select-pages"}
+                  title={"option.documentControls.selectTooltip"}
+                  onClick={enableThumbnailSelectingPages}
+                  dataElement={"thumbMultiSelect"}
+                />
+                :
+                <Button
+                  img={"icon-close"}
+                  title={"option.documentControls.closeTooltip"}
+                  onClick={disableThumbnailSelectingPages}
+                  dataElement={"thumbCloseMultiSelect"}
+                />
+              }
             </div>
           </div>
         </div>

@@ -70,7 +70,9 @@
     "insertBlankPageAbove": "Insert blank page above",
     "insertBlankPageBelow": "Insert blank page below",
     "pageManipulation": "Page Manipulation",
-    "replace": "Replace"
+    "replace": "Replace",
+    "moveToTop": "Move to top",
+    "moveToBottom": "Move to bottom"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -239,7 +241,9 @@
       "pageTransition": "Page Transition"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10"
+      "placeholder": "1, 3, 5-10",
+      "selectTooltip": "Select multiple pages",
+      "closeTooltip": "Close multiselect"
     },
     "outlineControls": {
       "add": "Add item",
@@ -382,6 +386,9 @@
       "rotateClockwise": "Clockwise",
       "rotateCounterClockwise": "Counterclockwise"
     },
+    "thumbnailsControlOverlay": {
+      "move": "Move pages"
+    },
     "richText": {
       "bold": "Bold",
       "italic": "Italic",
@@ -406,8 +413,8 @@
     "extractPage": {
       "title": "Extract Page",
       "message": "Are you sure you want to extract the selected page(s)?",
-      "confirmBtn": "Extract pages",
-      "secondaryBtn": "Extract and remove page(s)"
+      "confirmBtn": "Extract",
+      "secondaryBtn": "Extract and Delete"
     },
     "redaction": {
       "applyTile": "Apply Redaction",

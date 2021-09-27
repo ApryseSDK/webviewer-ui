@@ -48,7 +48,6 @@ const WarningModal = () => {
 
   const className = getClassName('Modal WarningModal', { isOpen });
   const label = confirmBtnText || i18next.t('action.ok');
-  const cancelBtnText = i18next.t('action.cancel');
 
   useEffect(() => {
     core.addEventListener('documentUnloaded', cancel);
@@ -59,39 +58,41 @@ const WarningModal = () => {
   }, []);
 
   const cancel = async () => {
-    if (onCancel) {
-      await onCancel();
-      dispatch(actions.closeElements(['warningModal']));
-    } else {
-      dispatch(actions.closeElements(['warningModal']));
-    }
+    onCancel && await onCancel();
+    closeModal();
   };
 
   const confirm = async () => {
-    if (onConfirm) {
-      await onConfirm();
-      dispatch(actions.closeElements(['warningModal']));
-    } else {
-      dispatch(actions.closeElements(['warningModal']));
-    }
+    onConfirm && await onConfirm();
+    closeModal();
   };
 
   const secondary = async () => {
-    if (onSecondary) {
-      await onSecondary();
-      dispatch(actions.closeElements(['warningModal']));
-    } else {
-      dispatch(actions.closeElements(['warningModal']));
-    }
+    onSecondary && await onSecondary();
+    closeModal();
   };
+
+  const closeModal = () => dispatch(actions.closeElements(['warningModal']));
 
   return (
     <Swipeable onSwipedUp={cancel} onSwipedDown={cancel} preventDefaultTouchmoveEvent>
       <div className={className} onMouseDown={cancel}>
         <div className="container" onMouseDown={e => e.stopPropagation()}>
           <div className="swipe-indicator" />
-          <div className="header">{title}</div>
+          <div className="header">
+            <div className="header-text">
+              {title}
+            </div>
+            <Button
+              img="icon-close"
+              onClick={cancel}
+              dataElement="closeModalButton"
+              title="action.cancel"
+            />
+          </div>
+          <div className="divider"/>
           <div className="body">{message}</div>
+          <div className="divider"/>
           <div className="footer">
             {onSecondary && (
               <Button
@@ -106,12 +107,6 @@ const WarningModal = () => {
               dataElement="WarningModalSignButton"
               label={label}
               onClick={confirm}
-            />
-            <Button
-              className="cancel modal-button"
-              dataElement="WarningModalClearButton"
-              label={cancelBtnText}
-              onClick={cancel}
             />
           </div>
         </div>

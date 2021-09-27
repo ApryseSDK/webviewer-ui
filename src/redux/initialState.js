@@ -17,6 +17,7 @@ import ApplyFormFieldButton from 'components/ApplyFormFieldButton';
 
 export default {
   viewer: {
+    thumbnailSelectingPages: false,
     isInDesktopOnlyMode: false,
     canUndo: false,
     canRedo: false,
@@ -404,6 +405,8 @@ export default {
       { dataElement: 'themeChangeButton' },
     ],
     pageManipulationOverlay: [
+      { dataElement: 'pageAdditionalControls' },
+      { type: 'divider' },
       { dataElement: 'pageRotationControls' },
       { type: 'divider' },
       { dataElement: 'pageInsertionControls' },

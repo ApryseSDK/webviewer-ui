@@ -295,6 +295,8 @@ export const getValidationModalWidgetName = state => state.viewer.validationModa
 
 export const getVerificationResult = (state, fieldName) => state.viewer.verificationResult[fieldName] || {};
 
+export const isThumbnailSelectingPages = state => state.viewer.thumbnailSelectingPages;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 

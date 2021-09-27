@@ -1,24 +1,34 @@
 import React from 'react';
-import core from 'core';
-import PageRotationControls from './PageRotationControls'
+import PageRotationControls from './PageRotationControls';
+import { noPagesSelectedWarning, rotateClockwise, rotateCounterClockwise } from "helpers/pageManipulationFunctions";
+import { useDispatch } from "react-redux";
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  pageNumbers: PropTypes.arrayOf(PropTypes.number),
+  warn: PropTypes.bool,
+};
 
 function PageRotationControlsContainer(props) {
-  const { pageNumbers } = props;
+  const dispatch = useDispatch();
+  const { pageNumbers, warn } = props;
 
-  const rotateClockwise = () => {
-    core.rotatePages(pageNumbers, window.Core.PageRotation.e_90);
-  };
-
-  const rotateCounterClockwise = () => {
-    core.rotatePages(pageNumbers, window.Core.PageRotation.e_270);
-  };
-
+  if (warn) {
+    return (
+      <PageRotationControls
+        rotateClockwise={() => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateClockwise(pageNumbers)}
+        rotateCounterClockwise={() => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateCounterClockwise(pageNumbers)}
+      />
+    );
+  }
   return (
     <PageRotationControls
-      rotateClockwise={rotateClockwise}
-      rotateCounterClockwise={rotateCounterClockwise}
+      rotateClockwise={() => rotateClockwise(pageNumbers)}
+      rotateCounterClockwise={() => rotateCounterClockwise(pageNumbers)}
     />
-  )
+  );
 }
+
+PageRotationControlsContainer.propTypes = propTypes;
 
 export default PageRotationControlsContainer;

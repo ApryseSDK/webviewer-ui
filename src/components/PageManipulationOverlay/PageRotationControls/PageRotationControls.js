@@ -1,5 +1,5 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
 import Button from 'components/Button';
 
@@ -12,37 +12,37 @@ function PageRotationControls(props) {
   return (
     <>
       <DataElementWrapper
-        dataElement='pageRotationHeader'
-        className='type'
+        dataElement="pageRotationHeader"
+        className="type"
       >
         {t('action.rotate')}
       </DataElementWrapper>
       <DataElementWrapper
-        className='row'
-        dataElement='rotatePageClockwise'
+        dataElement="rotatePageClockwise"
+        className="row"
         onClick={rotateClockwise}
       >
         <Button
-          title='action.rotateClockwise'
-          img='icon-header-page-manipulation-page-rotation-clockwise-line'
-          role='option'
+          title="action.rotateClockwise"
+          img="icon-header-page-manipulation-page-rotation-clockwise-line"
+          role="option"
         />
-        <div className='title'>{t('action.rotateClockwise')}</div>
+        <div className="title">{t('action.rotateClockwise')}</div>
       </DataElementWrapper>
       <DataElementWrapper
-        className='row'
-        dataElement='rotatePageCounterClockwise'
+        dataElement="rotatePageCounterClockwise"
+        className="row"
         onClick={rotateCounterClockwise}
       >
         <Button
-          title='action.rotateCounterClockwise'
-          img='icon-header-page-manipulation-page-rotation-counterclockwise-line'
-          role='option'
+          title="action.rotateCounterClockwise"
+          img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
+          role="option"
         />
-        <div className='title'>{t('action.rotateCounterClockwise')}</div>
+        <div className="title">{t('action.rotateCounterClockwise')}</div>
       </DataElementWrapper>
     </>
-  )
+  );
 }
 
 export default PageRotationControls;

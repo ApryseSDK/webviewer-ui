@@ -1,0 +1,3 @@
+import LeftPanelOverlayContainer from "components/LeftPanelOverlay/LeftPanelOverlayContainer";
+
+export default LeftPanelOverlayContainer;

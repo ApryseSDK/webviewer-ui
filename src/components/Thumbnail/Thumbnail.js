@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import core from 'core';
 import ThumbnailControls from 'components/ThumbnailControls';
 
 import './Thumbnail.scss';
+import { Choice } from "@pdftron/webviewer-react-toolkit";
 
 const Thumbnail = ({
   index,
@@ -26,9 +27,14 @@ const Thumbnail = ({
   isReaderMode,
   dispatch,
   actions,
-  isMobile
+  isMobile,
+  isThumbnailSelectingPages
 }) => {
   const thumbSize = thumbnailSize ? Number(thumbnailSize) : 150;
+
+  const [dimensions, setDimensions] = useState({ width: thumbSize, height: thumbSize });
+  // To ensure checkmark loads after thumbnail
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const loadThumbnailAsync = () => {
@@ -58,6 +64,7 @@ const Thumbnail = ({
               const ratio = Math.min(thumbSize / thumb.width, thumbSize / thumb.height);
               thumb.style.width = `${thumb.width * ratio}px`;
               thumb.style.height = `${thumb.height * ratio}px`;
+              setDimensions({ width: Number(thumb.width), height: Number(thumb.height) });
 
               if (Math.abs(viewerRotation)) {
                 const cssTransform = `rotate(${viewerRotation * 90}deg) translate(-50%,-50%)`;
@@ -82,6 +89,7 @@ const Thumbnail = ({
             }
 
             onFinishLoading(index);
+            setLoaded(true);
           },
           source: 'thumbnail',
           'isInternalRender': true,
@@ -111,6 +119,7 @@ const Thumbnail = ({
     };
 
     const onRotationUpdated = () => {
+      setLoaded(false);
       loadThumbnailAsync();
     };
 
@@ -141,9 +150,9 @@ const Thumbnail = ({
         const currSelectMinIndex = Math.min(shiftKeyPivot, index);
         const currSelectMaxIndex = Math.max(shiftKeyPivot, index);
         updatedSelectedPages = Array.from({ length: currSelectMaxIndex - currSelectMinIndex + 1 }, (_, i) => i + currSelectMinIndex);
-      } else if (multiSelectionKeyPressed) {
+      } else if (multiSelectionKeyPressed || isThumbnailSelectingPages) {
         // Include current page as part of selection if we just started multi-selecting
-        if (selectedPageIndexes.length === 0) {
+        if (selectedPageIndexes.length === 0 && !isThumbnailSelectingPages) {
           updatedSelectedPages.push(currentPage - 1);
         } else if (selectedPageIndexes.includes(index)) {
           updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
@@ -163,11 +172,20 @@ const Thumbnail = ({
     // otherwise, sometimes the current page will not be visible in left panel
     setTimeout(() => {
       core.setCurrentPage(index + 1);
-    }, 0)
+    }, 0);
   };
 
   const isActive = currentPage === index + 1;
   const pageLabel = pageLabels[index];
+  let checkboxRotateClass = "default";
+  const rotation = core.getRotation(index + 1);
+  if ((!rotation || rotation === 2) && dimensions.width > dimensions.height) {
+    checkboxRotateClass = "rotated";
+  } else if ((rotation === 1 || rotation === 3) && dimensions.width < dimensions.height) {
+    checkboxRotateClass = "rotated";
+  }
+
+  const ratio = Math.min(thumbSize / dimensions.width, thumbSize / dimensions.height);
 
   return (
     <div
@@ -188,9 +206,14 @@ const Thumbnail = ({
         onDragStart={e => onDragStart(e, index)}
         draggable={isDraggable}
         onClick={handleClick}
-
       >
         <div id={`pageThumb${index}`} className="thumbnail" />
+        ${isThumbnailSelectingPages && <div className={"dim"} style={{ width: dimensions.width * ratio, height: dimensions.height * ratio }} />}
+        {isThumbnailSelectingPages && loaded &&
+        <Choice
+          className={`checkbox ${checkboxRotateClass}`}
+          checked={selectedPageIndexes.includes(index)}
+        />}
       </div>
       <div className="page-label">{pageLabel}</div>
       {isActive && shouldShowControls && <ThumbnailControls index={index} />}

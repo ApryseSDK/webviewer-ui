@@ -21,9 +21,20 @@ const MENUS = [
   'redactionOverlay',
   'toolStylePopup',
   'pageManipulationOverlay',
+  'thumbnailsControlRotatePopup',
+  'thumbnailsControlInsertPopup',
+  'thumbnailsControlManipulatePopup',
 ];
 
-const TRIGGERS = ['menuButton', 'viewControlsButton', 'zoomOverlayButton', 'pageManipulationOverlayButton'];
+const TRIGGERS = [
+  'menuButton',
+  'viewControlsButton',
+  'zoomOverlayButton',
+  'pageManipulationOverlayButton',
+  'thumbnailsControlRotatePopupTrigger',
+  'thumbnailsControlInsertPopupTrigger',
+  'thumbnailsControlManipulatePopupTrigger',
+];
 
 const propTypes = {
   /** Menu must be one of the available menus. */

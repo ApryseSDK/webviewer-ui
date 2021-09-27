@@ -53,6 +53,7 @@ import overlays from 'constants/overlays';
 import actions from 'actions';
 
 import './App.scss';
+import LeftPanelOverlayContainer from "components/LeftPanelOverlay";
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -159,6 +160,7 @@ const App = ({ removeEventHandlers }) => {
         <ZoomOverlay />
         <AnnotationContentOverlay />
         <PageManipulationOverlay />
+        <LeftPanelOverlayContainer />
 
         <AnnotationPopup />
         <FormFieldEditPopup />

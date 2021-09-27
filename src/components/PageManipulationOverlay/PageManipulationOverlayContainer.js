@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector, shallowEqual } from 'react-redux';
+import React from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 import PageManipulationOverlay from './PageManipulationOverlay';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import selectors from 'selectors';
@@ -18,17 +18,16 @@ function PageManipulationOverlayContainer() {
 
 
   // If we start drilling this prop, maybe create a context
-  const selectedPageNumbers = selectedPageIndexes.map(index => index + 1);
-  const pageNumbers = selectedPageNumbers.length > 0 ? selectedPageNumbers : [currentPage];
+  const pageNumbers = selectedPageIndexes.length > 0 ? selectedPageIndexes.map(i => i + 1) : [currentPage];
 
   return (
-    <FlyoutMenu menu='pageManipulationOverlay' trigger="pageManipulationOverlayButton" onClose={undefined}>
+    <FlyoutMenu menu="pageManipulationOverlay" trigger="pageManipulationOverlayButton" onClose={undefined}>
       <PageManipulationOverlay
         pageNumbers={pageNumbers}
         pageManipulationOverlayItems={pageManipulationOverlayItems}
       />
     </ FlyoutMenu>
-  )
+  );
 }
 
 export default PageManipulationOverlayContainer;

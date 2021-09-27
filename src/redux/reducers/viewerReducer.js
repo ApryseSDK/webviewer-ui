@@ -4,6 +4,11 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_THUMBNAIL_PAGE_SELECT':
+      return {
+        ...state,
+        thumbnailSelectingPages: payload.isSelecting
+      };
     case 'SET_HIGH_CONTRAST_MODE':
       return {
         ...state,

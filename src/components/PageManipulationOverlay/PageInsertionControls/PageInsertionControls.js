@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
 import Button from 'components/Button';
 
@@ -10,38 +10,38 @@ function PageInsertionControls(props) {
   return (
     <>
       <DataElementWrapper
-        dataElement='pageInsertionHeader'
-        className='type'
+        dataElement="pageInsertionHeader"
+        className="type"
       >
         {t('action.insertPage')}
       </DataElementWrapper>
       <DataElementWrapper
-        className='row'
-        dataElement='insertPageAbove'
+        className="row"
+        dataElement="insertPageAbove"
         onClick={insertAbove}
       >
         <Button
-          title='action.insertBlankPageAbove'
-          img='icon-page-insertion-insert-above'
-          role='option'
+          title="action.insertBlankPageAbove"
+          img="icon-page-insertion-insert-above"
+          role="option"
         />
-        <div className='title'>{t('action.insertBlankPageAbove')}</div>
+        <div className="title">{t('action.insertBlankPageAbove')}</div>
       </DataElementWrapper>
       <DataElementWrapper
-        className='row'
-        dataElement='insertPageBelow'
+        className="row"
+        dataElement="insertPageBelow"
         onClick={insertBelow}
       >
         <Button
-          title='action.insertBlankPageBelow'
-          img='icon-page-insertion-insert-below'
-          role='option'
+          title="action.insertBlankPageBelow"
+          img="icon-page-insertion-insert-below"
+          role="option"
         />
-        <div className='title'>{t('action.insertBlankPageBelow')}</div>
+        <div className="title">{t('action.insertBlankPageBelow')}</div>
       </DataElementWrapper>
     </>
-  )
+  );
 
-};
+}
 
 export default PageInsertionControls;
