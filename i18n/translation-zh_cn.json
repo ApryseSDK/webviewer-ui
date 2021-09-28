@@ -144,6 +144,7 @@
     "SBRejected": "拒绝"
   },
   "component": {
+    "attachmentPanel": "附件",
     "leftPanel": "面板",
     "toolsHeader": "工具类",
     "searchOverlay": "搜索",
@@ -178,6 +179,7 @@
     "noAnnotationsReadOnly": "此文档没有注释。",
     "noAnnotationsFilter": "开始制作注释，过滤器将显示在此处。",
     "noOutlines": "此文档没有大纲。",
+    "noAttachments": "本文档没有附件。",
     "noResults": "未找到结果。",
     "numResultsFound": "找到结果",
     "notSupported": "不支持该文件类型。",
@@ -203,7 +205,10 @@
     "unpostedComment": "未发布评论",
     "lockedLayer": "图层已锁定",
     "layerVisibililtyNoChange": "图层可见性无法更改",
-    "untitled": "无标题"
+    "untitled": "无标题",
+    "embeddedFiles": "嵌入文件",
+    "fileAttachmentAnnotations": "文件附件注释",
+    "pageNum": "页码"
   },
   "option": {
     "notesOrder": {

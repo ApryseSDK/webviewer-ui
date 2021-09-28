@@ -144,6 +144,7 @@
     "SBRejected": "Respinto"
   },
   "component": {
+    "attachmentPanel": "Allegati",
     "leftPanel": "Pannello",
     "toolsHeader": "Utensili",
     "searchOverlay": "Ricerca",
@@ -178,6 +179,7 @@
     "noAnnotationsReadOnly": "Questo documento non ha annotazioni.",
     "noAnnotationsFilter": "Inizia a creare annotazioni e filtri verranno visualizzati qui.",
     "noOutlines": "Questo documento non ha contorni.",
+    "noAttachments": "Questo documento non ha allegati.",
     "noResults": "Nessun risultato trovato.",
     "numResultsFound": "risultati trovati",
     "notSupported": "Quel tipo di file non è supportato.",
@@ -203,7 +205,10 @@
     "unpostedComment": "Commento non pubblicato",
     "lockedLayer": "Il livello è bloccato",
     "layerVisibililtyNoChange": "La visibilità del livello non può essere modificata",
-    "untitled": "Senza titolo"
+    "untitled": "Senza titolo",
+    "embeddedFiles": "File incorporati",
+    "fileAttachmentAnnotations": "Annotazioni file allegati",
+    "pageNum": "Numero di pagina"
   },
   "option": {
     "notesOrder": {

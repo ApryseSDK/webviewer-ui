@@ -144,6 +144,7 @@
     "SBRejected": "拒否"
   },
   "component": {
+    "attachmentPanel": "添付ファイル",
     "leftPanel": "パネル",
     "toolsHeader": "ツール",
     "searchOverlay": "検索",
@@ -178,6 +179,7 @@
     "noAnnotationsReadOnly": "このドキュメントには注釈がありません。",
     "noAnnotationsFilter": "注釈を追加すると、フィルターがここに表示されます。",
     "noOutlines": "このドキュメントには概要がありません。",
+    "noAttachments": "このドキュメントには添付ファイルはありません。",
     "noResults": "結果が見つかりませんでした。",
     "numResultsFound": "結果が見つかりました",
     "notSupported": "このファイル形式はサポートされていません。",
@@ -203,7 +205,10 @@
     "unpostedComment": "未投稿コメント",
     "lockedLayer": "レイヤーがロックされています",
     "layerVisibililtyNoChange": "レイヤーの可視性は変更できません",
-    "untitled": "無題"
+    "untitled": "無題",
+    "embeddedFiles": "埋め込みファイル",
+    "fileAttachmentAnnotations": "添付ファイルの注釈",
+    "pageNum": "ページ番号"
   },
   "option": {
     "notesOrder": {

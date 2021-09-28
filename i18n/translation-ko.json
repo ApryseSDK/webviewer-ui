@@ -144,6 +144,7 @@
     "SBRejected": "거부"
   },
   "component": {
+    "attachmentPanel": "첨부 파일",
     "leftPanel": "패널",
     "toolsHeader": "도구",
     "searchOverlay": "검색",
@@ -178,6 +179,7 @@
     "noAnnotationsReadOnly": "이 문서에는 주석이 없습니다.",
     "noAnnotationsFilter": "주석 만들기를 시작하면 여기에 필터가 표시됩니다.",
     "noOutlines": "이 문서에는 개요가 없습니다.",
+    "noAttachments": "이 문서에는 첨부 파일이 없습니다.",
     "noResults": "결과를 찾을 수 없습니다.",
     "numResultsFound": "찾은 결과",
     "notSupported": "해당 파일 유형은 지원되지 않습니다.",
@@ -203,7 +205,10 @@
     "unpostedComment": "게시되지 않은 댓글",
     "lockedLayer": "레이어가 잠겨 있습니다.",
     "layerVisibililtyNoChange": "레이어 가시성을 변경할 수 없습니다.",
-    "untitled": "제목 없음"
+    "untitled": "제목 없음",
+    "embeddedFiles": "포함된 파일",
+    "fileAttachmentAnnotations": "파일 첨부 주석",
+    "pageNum": "페이지 번호"
   },
   "option": {
     "notesOrder": {

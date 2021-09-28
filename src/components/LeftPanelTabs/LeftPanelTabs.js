@@ -20,7 +20,6 @@ class LeftPanelTabs extends React.Component {
     setActiveLeftPanel: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   };
-
   isActive = panel => this.props.activePanel === panel;
 
   render() {
@@ -71,6 +70,13 @@ class LeftPanelTabs extends React.Component {
           img="icon-tool-signature"
           onClick={() => setActiveLeftPanel('signaturePanel')}
           title="component.signaturePanel"
+        />
+        <Button
+          isActive={this.isActive('attachmentPanel')}
+          dataElement="attachmentPanelButton"
+          img="ic_fileattachment_24px"
+          onClick={() => setActiveLeftPanel('attachmentPanel')}
+          title="component.attachmentPanel"
         />
         {notesInLeftPanel &&
           <Button

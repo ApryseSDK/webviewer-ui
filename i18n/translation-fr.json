@@ -144,6 +144,7 @@
     "SBRejected": "Rejeté"
   },
   "component": {
+    "attachmentPanel": "Pièces jointes",
     "leftPanel": "Panneau de gauche",
     "toolsHeader": "Outils",
     "searchOverlay": "Recherche",
@@ -178,6 +179,7 @@
     "noAnnotationsReadOnly": "Ce document n'a pas d'annotations.",
     "noAnnotationsFilter": "Commencez à créer des annotations et des filtres apparaîtront ici.",
     "noOutlines": "Ce document n'a pas de plan.",
+    "noAttachments": "Ce document n'a pas de pièces jointes.",
     "noResults": "Aucun résultat trouvé.",
     "numResultsFound": "résultats trouvés",
     "notSupported": "Ce type de fichier n'est pas pris en charge.",
@@ -203,7 +205,10 @@
     "unpostedComment": "Commentaire non publié",
     "lockedLayer": "Le calque est verrouillé",
     "layerVisibililtyNoChange": "La visibilité de la couche ne peut pas être modifiée",
-    "untitled": "Sans titre"
+    "untitled": "Sans titre",
+    "embeddedFiles": "Fichiers intégrés",
+    "fileAttachmentAnnotations": "Annotations des pièces jointes",
+    "pageNum": "Numéro de page"
   },
   "option": {
     "notesOrder": {

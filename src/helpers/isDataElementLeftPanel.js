@@ -7,6 +7,7 @@ export const getLeftPanelDataElements = state => {
     'layersPanel',
     'bookmarksPanel',
     'signaturePanel',
+    'attachmentPanel',
   ];
 
   if (state.viewer.notesInLeftPanel) {

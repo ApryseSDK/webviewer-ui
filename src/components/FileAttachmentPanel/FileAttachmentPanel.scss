@@ -1,0 +1,52 @@
+@import '../../constants/styles';
+
+.no-attachment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .msg {
+    @include tablet-and-desktop {
+      line-height: 15px;
+      width: 92px;
+    }
+    text-align: center;
+  }
+
+  .empty-icon {
+    width: 65px;
+    height: 83px;
+
+    svg {
+      width: 65px;
+      height: 83px;
+    }
+
+    * {
+      fill: var(--gray-5);
+      color: var(--gray-5);
+    }
+  }
+}
+.fileAttachmentPanel{
+  .section{
+    margin-bottom: 10px;
+    p.title{
+      margin-left:16px;
+    }
+    ul.downloadable{
+      &>li{
+        cursor: pointer;
+        color: var(--secondary-button-text);
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;text-overflow: ellipsis;
+      }
+    }
+    ul ul{
+      padding-left: 10px;
+      list-style-type:none;
+    }
+  }
+}

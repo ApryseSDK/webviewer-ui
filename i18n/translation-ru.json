@@ -144,6 +144,7 @@
     "SBRejected": "Отклонено"
   },
   "component": {
+    "attachmentPanel": "Вложения",
     "leftPanel": "Панель",
     "toolsHeader": "инструменты",
     "searchOverlay": "Поиск",
@@ -178,6 +179,7 @@
     "noAnnotationsReadOnly": "Документ не имеет аннотаций.",
     "noAnnotationsFilter": "Начните делать аннотации и фильтры появятся здесь.",
     "noOutlines": "Документ не имеет оглавления.",
+    "noAttachments": "К этому документу нет приложений.",
     "noResults": "Поиск не вернул результатов.",
     "numResultsFound": "найдены результаты",
     "notSupported": "Расширение файла не поддерживается.",
@@ -203,7 +205,10 @@
     "unpostedComment": "Неопубликованный комментарий",
     "lockedLayer": "Слой заблокирован",
     "layerVisibililtyNoChange": "Видимость слоя не может быть изменена",
-    "untitled": "Без названия"
+    "untitled": "Без названия",
+    "embeddedFiles": "Встроенные файлы",
+    "fileAttachmentAnnotations": "Аннотации к прикрепленным файлам",
+    "pageNum": "Номер страницы"
   },
   "option": {
     "notesOrder": {

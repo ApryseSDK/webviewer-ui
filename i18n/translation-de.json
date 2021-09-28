@@ -144,6 +144,7 @@
     "SBRejected": "Abgelehnt"
   },
   "component": {
+    "attachmentPanel": "Anhänge",
     "leftPanel": "Linke Leiste",
     "toolsHeader": "Werkzeuge",
     "searchOverlay": "Suche",
@@ -178,6 +179,7 @@
     "noAnnotationsReadOnly": "Dieses Dokument hat keine Annotationen.",
     "noAnnotationsFilter": "Beginnen Sie hier mit der Erstellung von Anmerkungen und Filtern.",
     "noOutlines": "Dieses Dokument enthält keine Gliederung.",
+    "noAttachments": "Dieses Dokument hat keine Anhänge.",
     "noResults": "Keine Ergebnisse gefunden.",
     "numResultsFound": "gefundene Ergebnisse",
     "notSupported": "Dieser Dateityp ist nicht unterstützt.",
@@ -203,7 +205,10 @@
     "unpostedComment": "Unposted Kommentar",
     "lockedLayer": "Ebene ist gesperrt",
     "layerVisibililtyNoChange": "Die Sichtbarkeit der Ebene kann nicht geändert werden",
-    "untitled": "Ohne Titel"
+    "untitled": "Ohne Titel",
+    "embeddedFiles": "Eingebettete Dateien",
+    "fileAttachmentAnnotations": "Anmerkungen zu Dateianhängen",
+    "pageNum": "Seitennummer"
   },
   "option": {
     "notesOrder": {

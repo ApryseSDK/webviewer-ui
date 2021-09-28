@@ -146,6 +146,7 @@
     "SBRejected": "Rejected"
   },
   "component": {
+    "attachmentPanel": "Attachments",
     "leftPanel": "Panel",
     "toolsHeader": "Tools",
     "searchOverlay": "Search",
@@ -180,6 +181,7 @@
     "noAnnotationsReadOnly": "This document has no annotations.",
     "noAnnotationsFilter": "Start making annotations and filters will appear here.",
     "noOutlines": "This document has no outline.",
+    "noAttachments": "This document has no attachments.",
     "noResults": "No results found.",
     "numResultsFound": "results found",
     "notSupported": "That file type is not supported.",
@@ -205,7 +207,9 @@
     "unpostedComment": "Unposted Comment",
     "lockedLayer": "Layer is locked",
     "layerVisibililtyNoChange": "Layer visibililty can't be changed",
-    "untitled": "Untitled"
+    "untitled": "Untitled",
+    "embeddedFiles": "Embedded Files",
+    "pageNum": "Page Number"
   },
   "option": {
     "notesOrder": {

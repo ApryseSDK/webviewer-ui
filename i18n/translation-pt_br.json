@@ -144,6 +144,7 @@
     "SBRejected": "Rejeitado"
   },
   "component": {
+    "attachmentPanel": "Anexos",
     "leftPanel": "Painel",
     "toolsHeader": "Ferramentas",
     "searchOverlay": "Procurar",
@@ -178,6 +179,7 @@
     "noAnnotationsReadOnly": "Esse documento não tem anotações.",
     "noAnnotationsFilter": "Comece a fazer anotações e filtros aparecerão aqui.",
     "noOutlines": "Esse documento não tem contorno.",
+    "noAttachments": "Este documento não possui anexos.",
     "noResults": "Nenhum resultado encontrado.",
     "numResultsFound": "resultados encontrados",
     "notSupported": "Esse tipo de arquivo não é compatível.",
@@ -203,7 +205,10 @@
     "unpostedComment": "Comentário Não Postado",
     "lockedLayer": "Camada está bloqueada",
     "layerVisibililtyNoChange": "A visibilidade da camada não pode ser alterada",
-    "untitled": "Sem título"
+    "untitled": "Sem título",
+    "embeddedFiles": "Arquivos incorporados",
+    "fileAttachmentAnnotations": "Anotações de anexo de arquivo",
+    "pageNum": "Número de página"
   },
   "option": {
     "notesOrder": {

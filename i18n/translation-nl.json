@@ -144,6 +144,7 @@
     "SBRejected": "Afgekeurd"
   },
   "component": {
+    "attachmentPanel": "Bijlagen",
     "leftPanel": "Panel",
     "toolsHeader": "Gereedschap",
     "searchOverlay": "Zoeken",
@@ -178,6 +179,7 @@
     "noAnnotationsReadOnly": "Dit document heeft geen annotaties.",
     "noAnnotationsFilter": "Begin met het maken van aantekeningen en filters verschijnen hier.",
     "noOutlines": "Dit document heeft geen hoofdlijnen.",
+    "noAttachments": "Dit document heeft geen bijlagen.",
     "noResults": "Geen resultaten.",
     "numResultsFound": "gevonden resultaten",
     "notSupported": "Dit bestandstype wordt niet ondersteund.",
@@ -203,7 +205,10 @@
     "unpostedComment": "Niet-geplaatste reactie",
     "lockedLayer": "Laag is vergrendeld",
     "layerVisibililtyNoChange": "De zichtbaarheid van de laag kan niet worden gewijzigd",
-    "untitled": "Ongetiteld"
+    "untitled": "Ongetiteld",
+    "embeddedFiles": "Ingesloten bestanden",
+    "fileAttachmentAnnotations": "Annotaties bij bestandsbijlagen",
+    "pageNum": "Paginanummer"
   },
   "option": {
     "notesOrder": {
