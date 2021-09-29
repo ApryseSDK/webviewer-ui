@@ -55,7 +55,9 @@
     align-items: center;
     margin-block-start: 0em;
     margin-block-end: 0em;
-    height: 32px;
+    min-height: 32px;
+    margin-top: -5px;
+    margin-bottom: -5px;
     overflow: hidden;
 
     div + * {
