@@ -55,7 +55,7 @@ const SignaturePanel = () => {
     // Need certificates for PDFNet to verify against, and for the document
     // to be loaded in order to iterate through the signature fields in the
     // document
-    if (certificate.length && document) {
+    if (document) {
       setShowSpinner(true);
       setVerificationResult(certificate, dispatch)
         .then(async (verificationResult) => {
