@@ -4,5 +4,9 @@
  * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:updateAnnotationPermission__anchor
  */
 export default isReadOnly => {
-  window.documentViewer.getAnnotationManager().setReadOnly(isReadOnly);
+  if (isReadOnly) {
+    window.documentViewer.getAnnotationManager().enableReadOnlyMode();
+  } else {
+    window.documentViewer.getAnnotationManager().disableReadOnlyMode();
+  }
 };
