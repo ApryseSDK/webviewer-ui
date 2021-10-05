@@ -19,6 +19,38 @@ i18next.languages = [
   'zh_tw'
 ];
 
+// this is required for Cordova https://github.com/i18next/i18next-http-backend/issues/23#issuecomment-718929822
+const requestWithXmlHttpRequest = (options, url, payload, callback) => {
+  try {
+    const request = new XMLHttpRequest();
+    request.open('GET', url, 1);
+    if (!options.crossDomain) {
+      request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    }
+    request.withCredentials = !!options.withCredentials;
+    if (payload) {
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    }
+    if (request.overrideMimeType) {
+      request.overrideMimeType('application/json');
+    }
+    let headers = options.customHeaders;
+    headers = typeof headers === 'function' ? headers() : headers;
+    if (headers) {
+      for (const i in headers) {
+        request.setRequestHeader(i, headers[i]);
+      }
+    }
+    request.onreadystatechange = () => {
+      // in android webview loading a file is status status 0
+      request.readyState > 3 && callback(request.status >= 400 ? request.statusText : null, { status: request.status || 200, data: request.responseText });
+    };
+    request.send(payload);
+  } catch (e) {
+    console.warn(e);
+  }
+};
+
 export default state => {
   const options = {
     fallbackLng: 'en',
@@ -53,6 +85,7 @@ export default state => {
         ...options,
         backend: {
           loadPath: './i18n/{{ns}}-{{lng}}.json',
+          request: requestWithXmlHttpRequest,
         },
       },
       callback,
