@@ -546,3 +546,8 @@ export const disablePageDeletionConfirmationModal = () => ({
   type: "PAGE_DELETION_CONFIRMATION_MODAL_POPUP",
   payload: { pageDeletionConfirmationModalEnabled: false }
 });
+
+export const setWatermarkModalOptions = watermarkModalOptions => ({
+  type: 'SET_WATERMARK_MODAL_OPTIONS',
+  payload: { watermarkModalOptions }
+});

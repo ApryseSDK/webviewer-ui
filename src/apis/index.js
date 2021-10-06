@@ -178,6 +178,7 @@ import enableDesktopOnlyMode from './enableDesktopOnlyMode';
 import disableDesktopOnlyMode from './disableDesktopOnlyMode';
 import isInDesktopOnlyMode from './isInDesktopOnlyMode';
 import pageManipulationOverlay from './pageManipulationOverlay';
+import getWatermarkModalOptions from './getWatermarkModalOptions';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -291,6 +292,7 @@ export default store => {
     VerificationOptions: {
       addTrustedCertificates: addTrustedCertificates(store),
     },
+    getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
     disableAnnotations: disableAnnotations(store),
     disableDownload: disableDownload(store),

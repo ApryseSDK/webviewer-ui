@@ -432,6 +432,8 @@ export default initialState => (state = initialState, action) => {
         ...state,
         pageManipulationOverlay: payload.items,
       };
+    case 'SET_WATERMARK_MODAL_OPTIONS':
+      return { ...state, watermarkModalOptions: payload.watermarkModalOptions };
     default:
       return state;
   }

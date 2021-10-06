@@ -39,6 +39,8 @@ class PrintModal extends React.PureComponent {
     isApplyWatermarkDisabled: PropTypes.bool,
     printedNoteDateFormat: PropTypes.string,
     language: PropTypes.string,
+    setWatermarkModalOptions: PropTypes.func.isRequired,
+    watermarkModalOptions: PropTypes.object,
   };
 
   constructor() {
@@ -55,7 +57,6 @@ class PrintModal extends React.PureComponent {
       count: -1,
       pagesToPrint: [],
       isWatermarkModalVisible: false,
-      watermarkModalOption: null,
       existingWatermarks: null,
       includeAnnotations: true,
       includeComments: false,
@@ -163,7 +164,7 @@ class PrintModal extends React.PureComponent {
     this.setState({ count: 0 });
 
     if (this.state.allowWatermarkModal) {
-      core.setWatermark(this.state.watermarkModalOption);
+      core.setWatermark(this.props.watermarkModalOptions);
     } else {
       core.setWatermark(this.state.existingWatermarks);
     }
@@ -211,12 +212,6 @@ class PrintModal extends React.PureComponent {
     });
   };
 
-  setWatermarkModalOption = watermarkOptions => {
-    this.setState({
-      watermarkModalOption: watermarkOptions
-    });
-  };
-
   render() {
     const { isDisabled, t, isApplyWatermarkDisabled, isOpen } = this.props;
 
@@ -254,7 +249,7 @@ class PrintModal extends React.PureComponent {
             // pageIndex starts at index 0 and getCurrPage number starts at index 1
             pageIndexToView={this.props.currentPage - 1}
             modalClosed={this.setWatermarkModalVisibility}
-            formSubmitted={this.setWatermarkModalOption}
+            formSubmitted={this.props.setWatermarkModalOptions}
           />
           <FocusTrap locked={isOpen && !this.state.isWatermarkModalVisible}>
             <div
@@ -420,6 +415,7 @@ const mapStateToProps = state => ({
   layoutMode: selectors.getDisplayMode(state),
   printedNoteDateFormat: selectors.getPrintedNoteDateFormat(state),
   language: selectors.getCurrentLanguage(state),
+  watermarkModalOptions: selectors.getWatermarkModalOptions(state),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -427,6 +423,7 @@ const mapDispatchToProps = dispatch => ({
   closeElement: dataElement => dispatch(actions.closeElement(dataElement)),
   closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
   setPrintQuality: dataElements => dispatch(actions.setPrintQuality(dataElements)),
+  setWatermarkModalOptions: dataElements => dispatch(actions.setWatermarkModalOptions(dataElements)),
 });
 
 export default connect(

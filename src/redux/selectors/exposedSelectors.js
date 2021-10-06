@@ -297,6 +297,8 @@ export const getVerificationResult = (state, fieldName) => state.viewer.verifica
 
 export const isThumbnailSelectingPages = state => state.viewer.thumbnailSelectingPages;
 
+export const getWatermarkModalOptions = state => state.viewer.watermarkModalOptions;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 

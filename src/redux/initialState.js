@@ -12,8 +12,10 @@ import localStorageManager from 'helpers/localStorageManager';
 import { copyMapWithDataProperties } from 'constants/map';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import Ribbons from 'components/Ribbons';
-const { ToolNames } = window.Core.Tools;
 import ApplyFormFieldButton from 'components/ApplyFormFieldButton';
+import DataElements from "constants/dataElement";
+
+const { ToolNames } = window.Core.Tools;
 
 export default {
   viewer: {
@@ -28,6 +30,7 @@ export default {
     openElements: {
       header: true,
       toolsHeader: true,
+      [DataElements.FREE_TEXT_STYLE_TEXT_CONTAINER]: true,
     },
     panelWidths: {
       leftPanel: 264,
@@ -614,6 +617,7 @@ export default {
     certificates: [],
     validationModalWidgetName: '',
     verificationResult: {},
+    watermarkModalOptions: null,
   },
   search: {
     value: '',
