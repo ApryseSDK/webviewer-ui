@@ -1,7 +1,6 @@
 import React from 'react';
 import PageInsertionControls from './PageInsertionControls';
-import PageRotationControls from './PageRotationControls'
-import './PageManipulationOverlay.scss'
+import PageRotationControls from './PageRotationControls';
 import PageManipulationControls from './PageManipulationControls';
 import CustomPageManipulationOperations from './CustomPageManipulationOperations';
 
@@ -16,11 +15,11 @@ function InitialPageManipulationOverlay({ children, pageNumbers, pageManipulatio
 
     if (!component) {
       if (type === 'divider') {
-        component = <div className='divider'></div>;
+        component = <div className="divider"></div>;
       }
 
       if (type === 'customPageOperation') {
-        component = <CustomPageManipulationOperations key={dataElement} pageNumbers={pageNumbers} {...item} />
+        component = <CustomPageManipulationOperations key={dataElement} pageNumbers={pageNumbers} {...item} />;
       }
     }
 
@@ -29,7 +28,7 @@ function InitialPageManipulationOverlay({ children, pageNumbers, pageManipulatio
         key,
       })
       : null;
-  })
+  });
 
 }
 
@@ -39,11 +38,11 @@ function PageManipulationOverlay(props) {
 
   return (
     <InitialPageManipulationOverlay pageNumbers={pageNumbers} pageManipulationOverlayItems={pageManipulationOverlayItems}>
-      <PageRotationControls pageNumbers={pageNumbers} dataElement='pageRotationControls' />
-      <PageInsertionControls pageNumbers={pageNumbers} dataElement='pageInsertionControls' />
-      <PageManipulationControls pageNumbers={pageNumbers} dataElement='pageManipulationControls' />
+      <PageRotationControls pageNumbers={pageNumbers} dataElement="pageRotationControls" />
+      <PageInsertionControls pageNumbers={pageNumbers} dataElement="pageInsertionControls" />
+      <PageManipulationControls pageNumbers={pageNumbers} dataElement="pageManipulationControls" />
     </InitialPageManipulationOverlay>
-  )
-};
+  );
+}
 
 export default PageManipulationOverlay;
