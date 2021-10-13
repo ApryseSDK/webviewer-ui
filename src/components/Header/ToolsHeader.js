@@ -61,7 +61,7 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(ToolsHeader);
+// export default connect(mapStateToProps, mapDispatchToProps)(ToolsHeader) ;
 
 const ConnectedToolsHeader = connect(
   mapStateToProps,
