@@ -10,7 +10,7 @@ import { shortcutAria } from 'helpers/hotkeysManager';
 
 import selectors from 'selectors';
 
-import './Button.scss';
+import './Button.scss'; 
 
 const NOOP = e => {
   e?.stopPropagation();
@@ -45,7 +45,7 @@ const Button = props => {
   );
 
   const {
-    // old name for disabled. We are keeping it for backwards comptability
+    // old name for disabled. We are keeping it for backwards compatibility
     // should remove in the future.
     disable,
     disabled,
@@ -121,7 +121,7 @@ const Button = props => {
       )}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
       {
-        label && (useI18String ? 
+        label && (useI18String ?
         <span>{t(label)}</span> :
         <span>{label}</span>)
       }
