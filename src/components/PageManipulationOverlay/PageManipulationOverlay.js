@@ -1,7 +1,6 @@
 import React from 'react';
 import PageInsertionControls from './PageInsertionControls';
 import PageRotationControls from './PageRotationControls';
-import './PageManipulationOverlay.scss';
 import PageManipulationControls from './PageManipulationControls';
 import PageAdditionalControls from "components/PageManipulationOverlay/PageAdditionalControls";
 import CustomPageManipulationOperations from './CustomPageManipulationOperations';
