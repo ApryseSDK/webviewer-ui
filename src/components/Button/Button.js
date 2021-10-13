@@ -46,7 +46,7 @@ const Button = props => {
 
   const {
     // old name for disabled. We are keeping it for backwards compatibility
-    // should remove in the future.
+    // should remove in the future .
     disable,
     disabled,
     isActive,
