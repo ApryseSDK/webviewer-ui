@@ -95,16 +95,45 @@ class ToolStylePopup extends React.PureComponent {
     if (typeof tool.complete === 'function') {
       tool.complete();
     }
-    setToolStyles(this.props.activeToolName, property, value);
+    setToolStyles(activeToolName, property, value);
   };
+
+  handleRichTextStyleChange = (property, value) => {
+    const { activeToolName, activeToolStyle } = this.props;
+    const tool = core.getTool(activeToolName);
+    if (typeof tool.complete === 'function') {
+      tool.complete();
+    }
+    const richTextStyle = {
+      0: {
+        ...activeToolStyle["RichTextStyle"][0],
+        [property]: value,
+      }
+    };
+    setToolStyles(activeToolName, "RichTextStyle", richTextStyle);
+  }
 
   render() {
     const { activeToolGroup, isDisabled, activeToolName, activeToolStyle, isMobile } = this.props;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
+    let freeTextProperties = {};
     const colorMapKey = mapToolNameToKey(activeToolName);
 
     if (isDisabled) {
       return null;
+    }
+
+    if (isFreeText) {
+      freeTextProperties = {
+        Font: activeToolStyle.Font,
+        FontSize: activeToolStyle.FontSize,
+        TextAlign: activeToolStyle.TextAlign,
+        TextVerticalAlign: activeToolStyle.TextVerticalAlign,
+        bold: activeToolStyle['RichTextStyle'][0]["font-weight"] === "bold",
+        italic: activeToolStyle['RichTextStyle'][0]["font-style"] === "italic",
+        underline: activeToolStyle['RichTextStyle'][0]["text-decoration"]?.includes("underline") || activeToolStyle["text-decoration"]?.includes("word"),
+        strikeout: activeToolStyle['RichTextStyle'][0]["text-decoration"]?.includes("line-through"),
+      };
     }
 
     const { availablePalettes } = getDataWithKey(colorMapKey);
@@ -118,8 +147,11 @@ class ToolStylePopup extends React.PureComponent {
         style={activeToolStyle}
         isFreeText={isFreeText}
         hideSnapModeCheckbox={isEllipseMeasurementTool || !core.isFullPDFEnabled()}
+        onPropertyChange={this.handleStyleChange}
         onStyleChange={this.handleStyleChange}
-        onSliderChange={this.handleStyleChange}
+        onRichTextStyleChange={this.handleRichTextStyleChange}
+        isFontSizeSliderDisabled={isFreeText}
+        freeTextProperties={freeTextProperties}
       />
     );
 

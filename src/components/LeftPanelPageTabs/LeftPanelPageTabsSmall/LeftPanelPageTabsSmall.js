@@ -18,7 +18,7 @@ function LeftPanelPageTabsSmall({ onReplace, onExtractPages, onDeletePages }) {
       </div>
       <div className={"dropdown-menu"}>
         <ToggleElementButton
-          title="action.insert"
+          title="action.insertPage"
           className={"dropdown-menu"}
           element="thumbnailsControlInsertPopup"
           dataElement="thumbnailsControlInsertPopupTrigger"
