@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "在上方插入空白頁",
     "insertBlankPageBelow": "在下方插入空白頁",
     "pageManipulation": "頁面操作",
-    "replace": "代替"
+    "replace": "代替",
+    "chooseFile": "選擇一個文件",
+    "selectYourOption": "選擇您的選項",
+    "open": "打開",
+    "deselectAll": "取消全選",
+    "select": "選擇"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -165,7 +170,9 @@
     "zoomOverlay": "縮放疊加",
     "textPopup": "文字彈出",
     "createStampButton": "創建新圖章",
-    "filter": "過濾"
+    "filter": "過濾",
+    "pageReplaceModalTitle": "替換頁面",
+    "files": "文件"
   },
   "message": {
     "toolsOverlayNoPresets": "無預設",
@@ -206,6 +213,12 @@
     "lockedLayer": "圖層已鎖定",
     "layerVisibililtyNoChange": "圖層可見性無法更改",
     "untitled": "無標題",
+    "selectHowToLoadFile": "選擇如何加載文檔",
+    "openFileByUrl": "通過 URL 打開文件：",
+    "enterUrlHere": "在此輸入網址",
+    "openLocalFile" : "打開本地文件：",
+    "selectFile": "選擇文件",
+    "selectPageToReplace": "選擇文檔中要替換的頁面。",
     "embeddedFiles": "嵌入文件",
     "fileAttachmentAnnotations": "文件附件註釋",
     "pageNum": "頁碼"
@@ -313,6 +326,11 @@
       "dragAndDrop": "將圖片拖放到此處",
       "or": "要么",
       "pickImage": "選擇簽名圖像"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "將您的文件拖放到此處",
+      "or": "或者",
+      "chooseFile": "選擇一個文件"
     },
     "filterAnnotModal": {
       "commentBy": "評論者",

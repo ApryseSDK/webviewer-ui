@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "Insertar página en blanco arriba",
     "insertBlankPageBelow": "Insertar una página en blanco debajo",
     "pageManipulation": "Manipulación de página",
-    "replace": "Reemplazar"
+    "replace": "Reemplazar",
+    "chooseFile": "Escoge un archivo",
+    "selectYourOption": "Seleccione su opción",
+    "open": "Abrir",
+    "deselectAll": "Deseleccionar todo",
+    "select": "Seleccione"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -165,7 +170,9 @@
     "zoomOverlay": "Superposición de zoom",
     "textPopup": "Ventana emergente de texto",
     "createStampButton": "Crear nuevo sello",
-    "filter": "Filtrar"
+    "filter": "Filtrar",
+    "pageReplaceModalTitle": "Reemplazar página",
+    "files": "Archivos"
   },
   "message": {
     "toolsOverlayNoPresets": "Sin preajustes",
@@ -205,6 +212,13 @@
     "unpostedComment": "Comentario no publicado",
     "lockedLayer": "La capa está bloqueada",
     "layerVisibililtyNoChange": "La visibilidad de la capa no se puede cambiar",
+    "untitled": "Sin título",
+    "selectHowToLoadFile": "Seleccione cómo cargar su documento",
+    "openFileByUrl": "Abrir archivo por URL:",
+    "enterUrlHere": "Ingrese dirección URL aquí",
+    "openLocalFile" : "Abrir archivo local:",
+    "selectFile": "Seleccione Archivo",
+    "selectPageToReplace": "Seleccione las páginas del documento por las que le gustaría reemplazar.",
     "untitled": "Intitulado",
     "embeddedFiles": "Archivos incrustados",
     "fileAttachmentAnnotations": "Anotaciones de archivos adjuntos",
@@ -313,6 +327,11 @@
       "dragAndDrop": "Arrastra y suelta tu imagen aquí",
       "or": "O",
       "pickImage": "Elegir imagen de firma"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "Arrastra y suelta tu archivo aquí",
+      "or": "O",
+      "chooseFile": "Escoge un archivo"
     },
     "filterAnnotModal": {
       "commentBy": "Comentario de",

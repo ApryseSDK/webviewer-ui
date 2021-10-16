@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "上に空白のページを挿入",
     "insertBlankPageBelow": "下に空白のページを挿入",
     "pageManipulation": "ページ操作",
-    "replace": "交換"
+    "replace": "交換",
+    "chooseFile": "ファイルを選択してください",
+    "selectYourOption": "オプションを選択してください",
+    "open": "開ける",
+    "deselectAll": "すべての選択を解除",
+    "select": "選択する"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -165,7 +170,9 @@
     "zoomOverlay": "ズームオーバーレイ",
     "textPopup": "テキストポップアップ",
     "createStampButton": "新しいスタンプを作成",
-    "filter": "フィルター"
+    "filter": "フィルター",
+    "pageReplaceModalTitle": "ページを置き換える",
+    "files": "ファイル"
   },
   "message": {
     "toolsOverlayNoPresets": "プリセットなし",
@@ -206,6 +213,12 @@
     "lockedLayer": "レイヤーがロックされています",
     "layerVisibililtyNoChange": "レイヤーの可視性は変更できません",
     "untitled": "無題",
+    "selectHowToLoadFile": "ドキュメントの読み込み方法を選択します",
+    "openFileByUrl": "URLでファイルを開く：",
+    "enterUrlHere": "ここにURLを入力してください",
+    "openLocalFile" : "ローカルファイルを開く：",
+    "selectFile": "ファイルを選ぶ",
+    "selectPageToReplace": "置き換えるドキュメント内のページを選択します。",
     "embeddedFiles": "埋め込みファイル",
     "fileAttachmentAnnotations": "添付ファイルの注釈",
     "pageNum": "ページ番号"
@@ -313,6 +326,11 @@
       "dragAndDrop": "ここに画像をドラッグ＆ドロップ",
       "or": "または",
       "pickImage": "署名画像を選択"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "ここにファイルをドラッグアンドドロップします",
+      "or": "また",
+      "chooseFile": "ファイルを選択してください"
     },
     "filterAnnotModal": {
       "commentBy": "によるコメント",

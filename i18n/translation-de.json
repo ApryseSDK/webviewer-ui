@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "Leere Seite oben einfügen",
     "insertBlankPageBelow": "Leere Seite unten einfügen page",
     "pageManipulation": "Seitenmanipulation",
-    "replace": "Ersetzen"
+    "replace": "Ersetzen",
+    "chooseFile": "Wähle eine Datei",
+    "selectYourOption": "Wählen Sie Ihre Option",
+    "open": "Offen",
+    "deselectAll": "Alle abwählen",
+    "select": "Auswählen"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -165,7 +170,9 @@
     "zoomOverlay": "Zoom-Overlay",
     "textPopup": "Text Popup",
     "createStampButton": "Neuen Stempel erstellen",
-    "filter": "Filter"
+    "filter": "Filter",
+    "pageReplaceModalTitle": "Seite Ersetzen",
+    "files": "Dateien"
   },
   "message": {
     "toolsOverlayNoPresets": "Keine Voreinstellungen",
@@ -206,6 +213,12 @@
     "lockedLayer": "Ebene ist gesperrt",
     "layerVisibililtyNoChange": "Die Sichtbarkeit der Ebene kann nicht geändert werden",
     "untitled": "Ohne Titel",
+    "selectHowToLoadFile": "Wählen Sie aus, wie Sie Ihr Dokument laden möchten",
+    "openFileByUrl": "Datei nach URL öffnen:",
+    "enterUrlHere": "URL hier eingeben",
+    "openLocalFile" : "Lokale Datei öffnen:",
+    "selectFile": "Datei aussuchen",
+    "selectPageToReplace": "Wählen Sie die Seite(n) im Dokument aus, die Sie ersetzen möchten.",
     "embeddedFiles": "Eingebettete Dateien",
     "fileAttachmentAnnotations": "Anmerkungen zu Dateianhängen",
     "pageNum": "Seitennummer"
@@ -313,6 +326,11 @@
       "dragAndDrop": "Ziehen Sie Ihr Bild per Drag & Drop hierher",
       "or": "Oder",
       "pickImage": "Wählen Sie das Signaturbild"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",
+      "or": "Oder",
+      "chooseFile": "Wähle eine Datei aus"
     },
     "filterAnnotModal": {
       "commentBy": "Kommentar von",

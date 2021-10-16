@@ -15,18 +15,18 @@ function PageManipulationControls(props) {
       >
         {t('action.pageManipulation')}
       </DataElementWrapper>
-      {/*<DataElementWrapper*/}
-      {/*  className="row"*/}
-      {/*  dataElement="replacePage"*/}
-      {/*  onClick={replacePages}*/}
-      {/*>*/}
-      {/*  <Button*/}
-      {/*    title="action.replace"*/}
-      {/*    img="icon-page-insertion-insert-below"//we dont have this icon yet, this is a placeholder*/}
-      {/*    role="option"*/}
-      {/*  />*/}
-      {/*  <div className="title">{t('action.replace')}</div>*/}
-      {/*</DataElementWrapper>*/}
+      <DataElementWrapper
+        className='row'
+        dataElement='replacePage'
+        onClick={replacePages}
+      >
+        <Button
+          title='action.replace'
+          img='icon-page-replacement'
+          role='option'
+        />
+        <div className='title'>{t('action.replace')}</div>
+      </DataElementWrapper>
       <DataElementWrapper
         className="row"
         dataElement="extractPage"

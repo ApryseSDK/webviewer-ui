@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "Insérer une page vierge ci-dessus",
     "insertBlankPageBelow": "Insérez une page vierge ci-dessous",
     "pageManipulation": "Manipulation des pages",
-    "replace": "Remplacer"
+    "replace": "Remplacer",
+    "chooseFile": "Choisissez un fichier",
+    "selectYourOption": "Sélectionnez votre option",
+    "open": "Ouvert",
+    "deselectAll": "Tout déselectionner",
+    "select": "Sélectionner"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -165,7 +170,9 @@
     "zoomOverlay": "Superposition de zoom",
     "textPopup": "Popup texte",
     "createStampButton": "Créer un nouveau tampon",
-    "filter": "Filtre"
+    "filter": "Filtre",
+    "pageReplaceModalTitle": "Remplacer la page",
+    "files": "Des dossiers"
   },
   "message": {
     "toolsOverlayNoPresets": "Aucun préréglage",
@@ -206,6 +213,12 @@
     "lockedLayer": "Le calque est verrouillé",
     "layerVisibililtyNoChange": "La visibilité de la couche ne peut pas être modifiée",
     "untitled": "Sans titre",
+    "selectHowToLoadFile": "Sélectionnez comment charger votre document",
+    "openFileByUrl": "Ouvrir le fichier par URL:",
+    "enterUrlHere": "Entrez l'URL ici",
+    "openLocalFile" : "Ouvrir le fichier local:",
+    "selectFile": "Choisir le dossier",
+    "selectPageToReplace": "Sélectionnez les pages du document que vous souhaitez remplacer.",
     "embeddedFiles": "Fichiers intégrés",
     "fileAttachmentAnnotations": "Annotations des pièces jointes",
     "pageNum": "Numéro de page"
@@ -313,6 +326,11 @@
       "dragAndDrop": "Faites glisser et déposez votre image ici",
       "or": "Ou",
       "pickImage": "Choisir l'image de signature"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "Glissez & Déposez votre fichier ici",
+      "or": "Ou",
+      "chooseFile": "Choisissez un fichier"
     },
     "filterAnnotModal": {
       "commentBy": "Commentaire de",

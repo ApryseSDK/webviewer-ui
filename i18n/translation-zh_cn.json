@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "在上方插入空白页",
     "insertBlankPageBelow": "在下方插入空白页",
     "pageManipulation": "页面操作",
-    "replace": "代替"
+    "replace": "代替",
+    "chooseFile": "选择一个文件",
+    "selectYourOption": "选择您的选项",
+    "open": "打开",
+    "deselectAll": "取消全选",
+    "select": "选择"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -165,7 +170,9 @@
     "zoomOverlay": "缩放叠加",
     "textPopup": "文字弹出",
     "createStampButton": "创建新图章",
-    "filter": "过滤"
+    "filter": "过滤",
+    "pageReplaceModalTitle": "替换页面",
+    "files": "文件"
   },
   "message": {
     "toolsOverlayNoPresets": "无预设",
@@ -206,6 +213,12 @@
     "lockedLayer": "图层已锁定",
     "layerVisibililtyNoChange": "图层可见性无法更改",
     "untitled": "无标题",
+    "selectHowToLoadFile": "选择如何加载文档",
+    "openFileByUrl": "通过 URL 打开文件：",
+    "enterUrlHere": "在此输入网址",
+    "openLocalFile" : "打开本地文件：",
+    "selectFile": "选择文件",
+    "selectPageToReplace": "选择文档中要替换的页面。",
     "embeddedFiles": "嵌入文件",
     "fileAttachmentAnnotations": "文件附件注释",
     "pageNum": "页码"
@@ -313,6 +326,11 @@
       "dragAndDrop": "将图片拖放到此处",
       "or": "要么",
       "pickImage": "选择签名图像"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "将您的文件拖放到此处",
+      "or": "或者",
+      "chooseFile": "选择一个文件"
     },
     "filterAnnotModal": {
       "commentBy": "评论者",

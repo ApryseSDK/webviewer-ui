@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "Вставить пустую страницу выше",
     "insertBlankPageBelow": "Вставьте пустую страницу ниже",
     "pageManipulation": "Манипуляции со страницей",
-    "replace": "Заменять"
+    "replace": "Заменять",
+    "chooseFile": "Выберите файл",
+    "selectYourOption": "Выберите свой вариант",
+    "open": "Открыть",
+    "deselectAll": "Убрать выделение со всего",
+    "select": "Выбирать"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -165,7 +170,9 @@
     "zoomOverlay": "Наложение масштаба",
     "textPopup": "Текстовое всплывающее окно",
     "createStampButton": "Создать новую марку",
-    "filter": "Фильтр"
+    "filter": "Фильтр",
+    "pageReplaceModalTitle": "Заменить страницу",
+    "files": "Файлы"
   },
   "message": {
     "toolsOverlayNoPresets": "Нет пресетов",
@@ -206,6 +213,12 @@
     "lockedLayer": "Слой заблокирован",
     "layerVisibililtyNoChange": "Видимость слоя не может быть изменена",
     "untitled": "Без названия",
+    "selectHowToLoadFile": "Выберите способ загрузки документа",
+    "openFileByUrl": "Открыть файл по URL:",
+    "enterUrlHere": "Введите здесь URL",
+    "openLocalFile" : "Открыть локальный файл:",
+    "selectFile": "Выберите файл",
+    "selectPageToReplace": "Выберите страницы в документе, которые вы хотите заменить.",
     "embeddedFiles": "Встроенные файлы",
     "fileAttachmentAnnotations": "Аннотации к прикрепленным файлам",
     "pageNum": "Номер страницы"
@@ -313,6 +326,11 @@
       "dragAndDrop": "Перетащите изображение сюда",
       "or": "Или",
       "pickImage": "Выберите Подпись Изображение"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "Перетащите файл сюда",
+      "or": "Или",
+      "chooseFile": "Выберите файл"
     },
     "filterAnnotModal": {
       "commentBy": "Комментарий от",

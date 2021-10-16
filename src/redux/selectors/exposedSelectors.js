@@ -379,4 +379,6 @@ export const isInDesktopOnlyMode = state => state.viewer.isInDesktopOnlyMode;
 
 export const pageDeletionConfirmationModalEnabled = state => state.viewer.pageDeletionConfirmationModalEnabled;
 
+export const getPageReplacementFileList = state => state.viewer.pageReplacementFileList;
+
 export const getPageManipulationOverlayItems = state => state.viewer.pageManipulationOverlay;

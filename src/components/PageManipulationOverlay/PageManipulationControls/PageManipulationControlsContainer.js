@@ -22,15 +22,16 @@ function PageManipulationControlsContainer(props) {
       <PageManipulationControls
         deletePages={() => !noPagesSelectedWarning(pageNumbers, dispatch) && deletePages(pageNumbers, dispatch, isPageDeletionConfirmationModalEnabled)}
         extractPages={() => !noPagesSelectedWarning(pageNumbers, dispatch) && extractPages(pageNumbers, dispatch)}
-        replacePages={() => !noPagesSelectedWarning(pageNumbers, dispatch) && replace()} // TODO: Integrate with replace
+        replacePages={() => !noPagesSelectedWarning(pageNumbers, dispatch) && replace(dispatch)}
       />
     );
   }
+
   return (
     <PageManipulationControls
       deletePages={() => deletePages(pageNumbers, dispatch, isPageDeletionConfirmationModalEnabled)}
       extractPages={() => extractPages(pageNumbers, dispatch)}
-      replacePages={() => replace()} // TODO: Integrate with replace
+      replacePages={() => replace(dispatch)}
     />
   );
 }

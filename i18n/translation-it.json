@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "Inserisci una pagina vuota sopra",
     "insertBlankPageBelow": "Inserisci una pagina vuota qui sotto",
     "pageManipulation": "Manipolazione della pagina",
-    "replace": "Sostituire"
+    "replace": "Sostituire",
+    "chooseFile": "Scegli un file",
+    "selectYourOption": "Seleziona la tua opzione",
+    "open": "Aprire",
+    "deselectAll": "Deselezionare tutto",
+    "select": "Selezionare"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -165,7 +170,8 @@
     "zoomOverlay": "Sovrapposizione zoom",
     "textPopup": "Popup di testo",
     "createStampButton": "Crea nuovo timbro",
-    "filter": "Filtro"
+    "filter": "Filtro",
+    "pageReplaceModalTitle": "Sostituisci pagina"
   },
   "message": {
     "toolsOverlayNoPresets": "Nessun preset",
@@ -206,6 +212,12 @@
     "lockedLayer": "Il livello è bloccato",
     "layerVisibililtyNoChange": "La visibilità del livello non può essere modificata",
     "untitled": "Senza titolo",
+    "selectHowToLoadFile": "Seleziona come caricare il tuo documento",
+    "openFileByUrl": "Apri file tramite URL:",
+    "enterUrlHere": "Inserisci l'URL qui",
+    "openLocalFile" : "Apri file locale:",
+    "selectFile": "Seleziona il file",
+    "selectPageToReplace": "Seleziona le pagine del documento con cui desideri sostituire.",
     "embeddedFiles": "File incorporati",
     "fileAttachmentAnnotations": "Annotazioni file allegati",
     "pageNum": "Numero di pagina"
@@ -313,6 +325,11 @@
       "dragAndDrop": "Trascina e rilascia l'immagine qui",
       "or": "O",
       "pickImage": "Scegli l'immagine della firma"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "Trascina e rilascia il tuo file qui",
+      "or": "O",
+      "chooseFile": "Scegli un file"
     },
     "filterAnnotModal": {
       "commentBy": "Commento di",

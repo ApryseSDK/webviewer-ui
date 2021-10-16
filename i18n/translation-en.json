@@ -71,6 +71,11 @@
     "insertBlankPageBelow": "Insert blank page below",
     "pageManipulation": "Page Manipulation",
     "replace": "Replace",
+    "chooseFile": "Choose a file",
+    "selectYourOption": "Select your option",
+    "open": "Open",
+    "deselectAll": "Deselect All",
+    "select": "Select",
     "moveToTop": "Move to top",
     "moveToBottom": "Move to bottom"
   },
@@ -167,7 +172,9 @@
     "zoomOverlay": "Zoom Overlay",
     "textPopup": "Text Popup",
     "createStampButton": "Create New Stamp",
-    "filter": "Filter"
+    "filter": "Filter",
+    "pageReplaceModalTitle": "Replace Page",
+    "files": "Files"
   },
   "message": {
     "toolsOverlayNoPresets": "No Presets",
@@ -208,6 +215,12 @@
     "lockedLayer": "Layer is locked",
     "layerVisibililtyNoChange": "Layer visibililty can't be changed",
     "untitled": "Untitled",
+    "selectHowToLoadFile": "Select how to load your document",
+    "openFileByUrl": "Open file by URL:",
+    "enterUrlHere": "Enter URL here",
+    "openLocalFile" : "Open local file:",
+    "selectFile": "Select file",
+    "selectPageToReplace": "Select the pages in the document you would like to replace with.",
     "embeddedFiles": "Embedded Files",
     "pageNum": "Page Number"
   },
@@ -317,6 +330,11 @@
       "or": "Or",
       "pickImage": "Choose a signature"
     },
+    "pageReplacementModal": {
+      "dragAndDrop": "Drag & Drop your file here",
+      "or": "Or",
+      "chooseFile": "Choose a file"
+    },
     "filterAnnotModal": {
       "commentBy": "Comment by",
       "types": "Types",
@@ -352,6 +370,11 @@
     },
     "measurementOption": {
       "scale": "Scale"
+    },
+    "stylePopup": {
+      "textStyle": "Text Style",
+      "colorStyle": "Colors",
+      "invalidFontSize": "Font size must be less than "
     },
     "styleOption": {
       "style": "Style",
@@ -397,7 +420,14 @@
       "bold": "Bold",
       "italic": "Italic",
       "underline": "Underline",
-      "strikeout": "Strikeout"
+      "strikeout": "Strikeout",
+      "alignLeft": "Text align left",
+      "alignRight": "Text align right",
+      "alignCenter": "Text align center",
+      "justifyCenter": "Text justify center",
+      "alignTop": "Align top",
+      "alignMiddle": "Align middle",
+      "alignBottom": "Align bottom"
     },
     "customStampModal": {
       "stampText": "Stamp text:",

@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "Inserir página em branco acima",
     "insertBlankPageBelow": "Inserir página em branco abaixo",
     "pageManipulation": "Manipulação de página",
-    "replace": "Substituir"
+    "replace": "Substituir",
+    "chooseFile": "Escolha um arquivo",
+    "selectYourOption": "Selecione sua opção",
+    "open": "Aberto",
+    "deselectAll": "Desmarcar todos",
+    "select": "Selecione"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -165,7 +170,9 @@
     "zoomOverlay": "Sobreposição de zoom",
     "textPopup": "Texto Popup",
     "createStampButton": "Criar novo carimbo",
-    "filter": "Filtro"
+    "filter": "Filtro",
+    "pageReplaceModalTitle": "Substituir página",
+    "files": "Arquivos"
   },
   "message": {
     "toolsOverlayNoPresets": "Sem predefinições",
@@ -206,6 +213,12 @@
     "lockedLayer": "Camada está bloqueada",
     "layerVisibililtyNoChange": "A visibilidade da camada não pode ser alterada",
     "untitled": "Sem título",
+    "selectHowToLoadFile": "Selecione como carregar seu documento",
+    "openFileByUrl": "Abrir arquivo por URL:",
+    "enterUrlHere": "Insira o URL aqui",
+    "openLocalFile" : "Abra o arquivo local:",
+    "selectFile": "Selecione o arquivo",
+    "selectPageToReplace": "Selecione as páginas do documento que deseja substituir.",
     "embeddedFiles": "Arquivos incorporados",
     "fileAttachmentAnnotations": "Anotações de anexo de arquivo",
     "pageNum": "Número de página"
@@ -313,6 +326,11 @@
       "dragAndDrop": "Arraste e solte sua imagem aqui",
       "or": "Ou",
       "pickImage": "Escolher imagem da assinatura"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "Arraste e solte seu arquivo aqui",
+      "or": "Ou",
+      "chooseFile": "Escolha um arquivo"
     },
     "filterAnnotModal": {
       "commentBy": "Comentado por",

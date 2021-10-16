@@ -550,6 +550,7 @@ export default {
     },
     tab: {
       signatureModal: 'inkSignaturePanelButton',
+      pageReplacementModal: 'urlInputPanelButton',
       linkModal: 'URLPanelButton',
       rubberStampTab: 'standardStampPanelButton',
     },
@@ -655,6 +656,5 @@ export default {
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null
   },
-  featureFlags: {
-  }
+  featureFlags: {}
 };

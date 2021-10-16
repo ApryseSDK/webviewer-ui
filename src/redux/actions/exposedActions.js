@@ -491,6 +491,10 @@ export const setCustomElementOverrides = (dataElement, overrides) => ({
   type: 'SET_CUSTOM_ELEMENT_OVERRIDES',
   payload: { dataElement, overrides },
 });
+export const setPageReplacementModalFileList = (list) => ({
+  type: 'SET_PAGE_REPLACEMENT_FILE_LIST',
+  payload: { list },
+});
 export const setActiveTheme = theme => {
   fireEvent(Events.THEME_CHANGED, theme);
 

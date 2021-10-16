@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "Lege pagina hierboven invoegen",
     "insertBlankPageBelow": "Lege pagina hieronder invoegen",
     "pageManipulation": "Paginamanipulatie",
-    "replace": "Vervangen"
+    "replace": "Vervangen",
+    "chooseFile": "Kies een bestand",
+    "selectYourOption": "Selecteer uw optie",
+    "open": "Open",
+    "deselectAll": "Deselecteer alles",
+    "select": "Selecteer"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -165,7 +170,9 @@
     "zoomOverlay": "Zoom-overlay",
     "textPopup": "Tekstpop-up",
     "createStampButton": "Maak een nieuwe stempel",
-    "filter": "Filter"
+    "filter": "Filter",
+    "pageReplaceModalTitle": "Pagina vervangen",
+    "files": "Bestanden"
   },
   "message": {
     "toolsOverlayNoPresets": "Geen voorinstellingen",
@@ -206,6 +213,12 @@
     "lockedLayer": "Laag is vergrendeld",
     "layerVisibililtyNoChange": "De zichtbaarheid van de laag kan niet worden gewijzigd",
     "untitled": "Ongetiteld",
+    "selectHowToLoadFile": "Selecteer hoe u uw document wilt laden",
+    "openFileByUrl": "Bestand openen op URL:",
+    "enterUrlHere": "Voer hier de URL in",
+    "openLocalFile" : "Lokaal bestand openen:",
+    "selectFile": "Selecteer bestand",
+    "selectPageToReplace": "Selecteer de pagina's in het document die u wilt vervangen.",
     "embeddedFiles": "Ingesloten bestanden",
     "fileAttachmentAnnotations": "Annotaties bij bestandsbijlagen",
     "pageNum": "Paginanummer"
@@ -313,6 +326,11 @@
       "dragAndDrop": "Sleep je afbeelding hiernaartoe",
       "or": "Of",
       "pickImage": "Kies handtekening afbeelding"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "Sleep en zet uw bestand hier neer",
+      "or": "Of",
+      "chooseFile": "Kies een bestand"
     },
     "filterAnnotModal": {
       "commentBy": "Reageer door",

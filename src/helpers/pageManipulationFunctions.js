@@ -25,8 +25,8 @@ const insertBelow = pageNumbers => {
   core.insertBlankPages(pageNumbers.map(i => i + 1), core.getPageWidth(pageNumbers[0]), core.getPageHeight(pageNumbers[0]));
 };
 
-// TODO: Link with page replace
-const replace = () => {
+const replace = dispatch => {
+  dispatch(actions.openElement('pageReplacementModal'));
 };
 
 const extractPages = (pageNumbers, dispatch) => {

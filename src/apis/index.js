@@ -98,6 +98,7 @@ import setAdminUser from './setAdminUser';
 import setAnnotationUser from './setAnnotationUser';
 import setActivePalette from './setActivePalette';
 import setColorPalette from './setColorPalette';
+import setPageReplacementModalFileList from './setPageReplacementModalFileList';
 import setHighContrastMode from './setHighContrastMode';
 import getIsHighContrastMode from './getIsHighContrastMode';
 import setCurrentPageNumber from './setCurrentPageNumber';
@@ -132,6 +133,7 @@ import setZoomList from './setZoomList';
 import showErrorMessage from './showErrorMessage';
 import showOutlineControl from './showOutlineControl';
 import showWarningMessage from './showWarningMessage';
+import syncNamespaces from './syncNamespaces';
 import textPopup from './textPopup';
 import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
@@ -192,6 +194,7 @@ export default store => {
     PartRetrievers: window.Core.PartRetrievers,
     Actions: window.Actions,
     PDFNet: window.PDFNet,
+    syncNamespaces,
   };
   const objForWebViewerUI = {
     FitMode,
@@ -327,6 +330,7 @@ export default store => {
     setNotesPanelSort: setNotesPanelSort(store),
     setActivePalette: setActivePalette(store),
     setColorPalette: setColorPalette(store),
+    setPageReplacementModalFileList: setPageReplacementModalFileList(store),
     disableTool: disableTool(store),
     enableAllElements: enableAllElements(store),
     goToFirstPage,

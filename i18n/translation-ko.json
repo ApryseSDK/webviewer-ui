@@ -70,7 +70,12 @@
     "insertBlankPageAbove": "위에 빈 페이지 삽입",
     "insertBlankPageBelow": "아래에 빈 페이지 삽입",
     "pageManipulation": "페이지 조작",
-    "replace": "바꾸다"
+    "replace": "바꾸다",
+    "chooseFile": "파일 선택",
+    "selectYourOption": "옵션을 선택하세요",
+    "open": "열려있는",
+    "deselectAll": "모두 선택 해제",
+    "select": "선택하다"
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
@@ -165,7 +170,9 @@
     "zoomOverlay": "줌 오버레이",
     "textPopup": "텍스트 팝업",
     "createStampButton": "새 스탬프 생성",
-    "filter": "필터"
+    "filter": "필터",
+    "pageReplaceModalTitle": "페이지 바꾸기",
+    "files": "파일"
   },
   "message": {
     "toolsOverlayNoPresets": "사전 설정 없음",
@@ -206,6 +213,12 @@
     "lockedLayer": "레이어가 잠겨 있습니다.",
     "layerVisibililtyNoChange": "레이어 가시성을 변경할 수 없습니다.",
     "untitled": "제목 없음",
+    "selectHowToLoadFile": "문서 로드 방법 선택",
+    "openFileByUrl": "URL로 파일 열기:",
+    "enterUrlHere": "여기에 URL을 입력하세요.",
+    "openLocalFile" : "로컬 파일 열기:",
+    "selectFile": "파일 선택",
+    "selectPageToReplace": "문서에서 교체할 페이지를 선택합니다.",
     "embeddedFiles": "포함된 파일",
     "fileAttachmentAnnotations": "파일 첨부 주석",
     "pageNum": "페이지 번호"
@@ -313,6 +326,11 @@
       "dragAndDrop": "여기에 이미지를 드래그 앤 드롭",
       "or": "또는",
       "pickImage": "서명 이미지 선택"
+    },
+    "pageReplacementModal": {
+      "dragAndDrop": "여기에 파일을 드래그 앤 드롭하세요.",
+      "or": "또는",
+      "chooseFile": "파일 선택"
     },
     "filterAnnotModal": {
       "commentBy": "의 댓글",

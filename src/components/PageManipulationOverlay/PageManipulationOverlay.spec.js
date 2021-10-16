@@ -39,7 +39,9 @@ describe('PageManipulationOverlay', () => {
        * - Move Page to top
        * - Move Page to bottom
        */
-      const supportedOperations = 8;
+
+      const supportedOperations = 9;
+
       const { container } = render(
         <TestPageManipulationOverlay {...basicProps} />
       );
@@ -59,7 +61,7 @@ describe('PageManipulationOverlay', () => {
       const { container } = render(
         <TestPageManipulationOverlay {...testProps} />
       );
-      expect(container.querySelectorAll('.row')).toHaveLength(4);
+      expect(container.querySelectorAll('.row')).toHaveLength(5);
     });
 
     it('I can customize the page manipulation overlay with custom operations', () => {

@@ -37,6 +37,7 @@ import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 import CreateStampModal from 'components/CreateStampModal';
+import PageReplacementModal from 'src/components/PageReplacementModal';
 import CustomModal from 'components/CustomModal';
 import Model3DModal from 'components/Model3DModal';
 import FormFieldEditPopup from 'components/FormFieldEditPopup';
@@ -176,6 +177,7 @@ const App = ({ removeEventHandlers }) => {
         <ProgressModal />
         <CalibrationModal />
         <CreateStampModal />
+        <PageReplacementModal />
         <LinkModal />
         <EditTextModal />
         <FilterAnnotModal />
