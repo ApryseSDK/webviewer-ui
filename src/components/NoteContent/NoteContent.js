@@ -18,12 +18,12 @@ import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
 import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
 import getColor from 'helpers/getColor';
+import getLatestActivityDate from "helpers/getLatestActivityDate";
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './NoteContent.scss';
-import getLatestActivityDate from "helpers/getLatestActivityDate";
 
 dayjs.extend(LocalizedFormat);
 
@@ -80,7 +80,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   );
 
   const renderContents = useCallback(
-    contents => {
+    (contents, richTextStyle) => {
       const autolinkerContent = [];
       Autolinker.link(contents, {
         stripPrefix: false,
@@ -89,6 +89,10 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           const href = match.getAnchorHref();
           const anchorText = match.getAnchorText();
           const offset = match.getOffset();
+          if (anchorText !== match.getMatchedText()) {
+            // If not match, the 'highlightSearchInput()' function below will not work properly
+            throw new Error("anchorText and matchedText are different");
+          }
           switch (match.getType()) {
             case 'url':
             case 'email':
@@ -97,14 +101,14 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                 href,
                 text: anchorText,
                 start: offset,
-                end: offset + anchorText.length,
+                end: offset + anchorText.length
               });
               return;
           }
-        },
+        }
       });
       if (!autolinkerContent.length) {
-        return highlightSearchInput(contents, searchInput);
+        return highlightSearchInput(contents, searchInput, richTextStyle);
       }
       const contentToRender = [];
       let strIdx = 0;
@@ -112,14 +116,17 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
       // before the current link in a span tag, and wrap the current link
       // in our own anchor tag
       autolinkerContent.forEach((anchorData, forIdx) => {
-        const { start, end, href, text } = anchorData;
+        const { start, end, href } = anchorData;
         if (strIdx < start) {
           contentToRender.push(
             <span key={`span_${forIdx}`}>
               {
                 highlightSearchInput(
-                  contents.slice(strIdx, start),
+                  contents,
                   searchInput,
+                  richTextStyle,
+                  strIdx,
+                  start
                 )
               }
             </span>
@@ -134,8 +141,11 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           >
             {
               highlightSearchInput(
-                text,
+                contents,
                 searchInput,
+                richTextStyle,
+                start,
+                end
               )
             }
           </a>
@@ -144,11 +154,16 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
       });
       // Ensure any content after the last link is accounted for
       if (strIdx < contents.length - 1) {
-        contentToRender.push(highlightSearchInput(contents.slice(strIdx), searchInput));
+        contentToRender.push(highlightSearchInput(
+          contents,
+          searchInput,
+          richTextStyle,
+          strIdx
+        ));
       }
       return contentToRender;
     },
-    [searchInput],
+    [searchInput]
   );
 
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
@@ -162,6 +177,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   }
   const contents = customData?.contents || annotation.getContents();
   const contentsToRender = annotation.getContents();
+  const richTextStyle = annotation.getRichTextStyle();
   const numberOfReplies = annotation.getReplies().length;
   const formatNumberOfReplies = Math.min(numberOfReplies, 9);
   // This is the text placeholder passed to the ContentArea
@@ -253,7 +269,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
               />
             ) : (
               contentsToRender && (
-                <div className="container" onClick={handleContentsClicked}>{renderContents(contentsToRender)}</div>
+                <div className="container" onClick={handleContentsClicked}>{renderContents(contentsToRender, richTextStyle)}</div>
               )
             )}
           </div>
@@ -383,12 +399,58 @@ ContentArea.propTypes = {
   onTextAreaValueChange: PropTypes.func.isRequired,
 };
 
-const highlightSearchInput = (text, searchInput) => {
+const getRichTextSpan = (text, richTextStyle, key) => {
+  const style = {
+    fontWeight: richTextStyle['font-weight'],
+    fontStyle: richTextStyle['font-style'],
+    textDecoration: richTextStyle['text-decoration']
+  };
+  if (style.textDecoration) {
+    style.textDecoration = style.textDecoration.replace('word', 'underline');
+  }
+  return (
+    <span style={style} key={key}>{text}</span>
+  );
+};
+
+const renderRichText = (text, richTextStyle, start) => {
+  if (!richTextStyle || !text) return text;
+
+  const styles = {};
+  const indices = Object.keys(richTextStyle).map(Number).sort((a, b) => a - b);
+  for (let i = 0; i < indices.length; i++) {
+    let index = indices[i] - start;
+    index = Math.min(Math.max(index, 0), text.length);
+    styles[index] = richTextStyle[indices[i]];
+    if (index === text.length) {
+      break;
+    }
+  }
+
+  const contentToRender = [];
+  const styleIndices = Object.keys(styles).map(Number).sort((a, b) => a - b);
+  for (let i = 1; i < styleIndices.length; i++) {
+    contentToRender.push(getRichTextSpan(
+      text.slice(styleIndices[i - 1], styleIndices[i]),
+      styles[styleIndices[i - 1]],
+      `richtext_span_${i}`
+    ));
+  }
+
+  return contentToRender;
+};
+
+const highlightSearchInput = (fullText, searchInput, richTextStyle, start = 0, end = fullText.length) => {
+  const text = fullText.slice(start, end);
   const loweredText = text.toLowerCase();
   const loweredSearchInput = searchInput.toLowerCase();
+  if (richTextStyle) {
+    richTextStyle['0'] = richTextStyle['0'] || {};
+    richTextStyle[fullText.length] = richTextStyle[fullText.length] || {};
+  }
   let lastFoundInstance = loweredText.indexOf(loweredSearchInput);
   if (!loweredSearchInput.trim() || lastFoundInstance === -1) {
-    return text;
+    return renderRichText(text, richTextStyle, start);
   }
   const contentToRender = [];
   const allFoundPositions = [lastFoundInstance];
@@ -406,11 +468,16 @@ const highlightSearchInput = (text, searchInput) => {
     // Account for any content at the beginning of the string before the first
     // instance of the searchInput
     if (idx === 0 && position !== 0) {
-      contentToRender.push(text.substring(0, position));
+      contentToRender.push(renderRichText(text.substring(0, position), richTextStyle, start));
     }
     contentToRender.push(
       <span className="highlight" key={`highlight_span_${idx}`}>
-        {text.substring(position, position + loweredSearchInput.length)}
+        {
+          renderRichText(
+            text.substring(position, position + loweredSearchInput.length),
+            richTextStyle,
+            start + position)
+        }
       </span>
     );
     if (
@@ -419,9 +486,11 @@ const highlightSearchInput = (text, searchInput) => {
       // Ensure that this is the end of the allFoundPositions array
       && position + loweredSearchInput.length !== allFoundPositions[idx+1]
     ) {
-      contentToRender.push(
-        text.substring(position + loweredSearchInput.length, allFoundPositions[idx+1])
-      );
+      contentToRender.push(renderRichText(
+        text.substring(position + loweredSearchInput.length, allFoundPositions[idx + 1]),
+        richTextStyle,
+        start + position + loweredSearchInput.length
+      ));
     }
   });
   return contentToRender;

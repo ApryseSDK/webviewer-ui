@@ -1,8 +1,15 @@
 import { Frame } from 'puppeteer';
 import { loadViewerSample, Timeouts } from '../../utils';
 
-const addAndCreateAnnot = (iFrame: Frame, isFreeTextAnnot: boolean, isLockedContents: boolean, noteContent = '', author = '',) => {
-  return (iFrame as Frame).evaluate(async(isFreeTextAnnot, isLockedContents, noteContent, author) => {
+const addAndCreateAnnot = (
+  iFrame: Frame,
+  isFreeTextAnnot: boolean,
+  isLockedContents: boolean,
+  noteContent = '',
+  author = '',
+  richTextStyle = {}
+) => {
+  return (iFrame as Frame).evaluate(async (isFreeTextAnnot, isLockedContents, noteContent, author, richTextStyle) => {
     const promise = new Promise((resolve) => {
       window.instance.Core.documentViewer.getAnnotationManager().addEventListener('annotationChanged', (annotations, action) => {
         if (action === 'add') {
@@ -21,6 +28,7 @@ const addAndCreateAnnot = (iFrame: Frame, isFreeTextAnnot: boolean, isLockedCont
       annot.Height = 50;
       annot.setPadding(new window.Annotations.Rect(0, 0, 0, 0));
       annot.setContents(noteContent);
+      annot.setRichTextStyle(richTextStyle);
     } else {
       annot = new window.Annotations.RectangleAnnotation();
       annot.PageNumber = 1;
@@ -35,8 +43,8 @@ const addAndCreateAnnot = (iFrame: Frame, isFreeTextAnnot: boolean, isLockedCont
     window.instance.Core.documentViewer.getAnnotationManager().addAnnotation(annot);
     // need to draw the annotation otherwise it won't show up until the page is refreshed
     window.instance.Core.documentViewer.getAnnotationManager().redrawAnnotation(annot);
-    await  promise;
-  }, isFreeTextAnnot, isLockedContents, noteContent, author);
+    await promise;
+  }, isFreeTextAnnot, isLockedContents, noteContent, author, richTextStyle);
 };
 
 const selectAnnotation = (id: string, iframe: Frame) => {
@@ -54,6 +62,7 @@ const selectAnnotation = (id: string, iframe: Frame) => {
     await promise;
   }, id);
 };
+
 // hide date time else e2e will always throw error as date time will depend on current time of when annot was added
 const hideDateTimeInNotesPanel = (iframe: Frame) => {
   return (iframe).evaluate(async() => {
@@ -152,6 +161,41 @@ describe('Test cases for comment panel', () => {
     expect(await pageContainer.screenshot()).toMatchImageSnapshot({
       customSnapshotIdentifier: 'comment-panel-free-text-annot-not-locked-content',
     });
+  });
+
+  it('freetext annotation with rich text should render with rich text stylings', async () => {
+    const richTextStyle = {
+      "0": { "font-style": "italic" },
+      "1": { "font-weight": "bold", "font-style": "italic" },
+      "3": { "font-style": "italic" },
+      "4": {},
+      "7": { "text-decoration": "line-through" },
+      "11": {},
+      "17": { "font-weight": "bold" },
+      "21": { "text-decoration": "word" }
+    };
+    await addAndCreateAnnot(result.iframe, true, false, 'Test www.google.ca 1234', '', richTextStyle);
+    const instance = await result.waitForInstance();
+
+    const annotId = await (result.iframe as Frame).evaluate(async () => {
+      const annots = window.instance.Core.documentViewer.getAnnotationManager().getAnnotationsList();
+      return annots[0].Id;
+    });
+
+    instance('openElement', 'notesPanel');
+    await page.waitFor(1000);
+    await selectAnnotation(annotId, result.iframe);
+
+    const noteContainer = await result.iframe.$(`#note_${annotId} .container`);
+    const innerHTML = await noteContainer.evaluate((node) => node.innerHTML);
+    expect(innerHTML).toBe(`<span><span style="font-style: italic;">T</span><span style="font-weight: bold; font-style: italic;">es</span><span style="font-style: italic;">t</span><span> </span></span><a href="http://www.google.ca" target="_blank" rel="noopener noreferrer"><span>ww</span><span style="text-decoration: line-through;">w.go</span><span>ogle.c</span><span style="font-weight: bold;">a</span></a><span style="font-weight: bold;"> 12</span><span style="text-decoration: underline;">34</span>`);
+
+    // Search comments
+    const searchInput = await result.iframe.$(`#NotesPanel__input`);
+    await searchInput.type('www');
+    await page.waitFor(2000);
+    const innerHTML1 = await noteContainer.evaluate((node) => node.innerHTML);
+    expect(innerHTML1).toBe(`<span><span style="font-style: italic;">T</span><span style="font-weight: bold; font-style: italic;">es</span><span style="font-style: italic;">t</span><span> </span></span><a href="http://www.google.ca" target="_blank" rel="noopener noreferrer"><span class="highlight"><span>ww</span><span style="text-decoration: line-through;">w</span></span><span style="text-decoration: line-through;">.go</span><span>ogle.c</span><span style="font-weight: bold;">a</span></a><span style="font-weight: bold;"> 12</span><span style="text-decoration: underline;">34</span>`);
   });
 
   it.skip('should be able to only add reply to annotation that does not belong to user', async() => {
