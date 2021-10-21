@@ -19,7 +19,6 @@ const Ribbons = () => {
   const { t, ready: tReady } = useTranslation();
   const [ribbonsWidth, setRibbonsWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
-  const [hasEnoughSpace, setHasEnoughSpace] = useState(false);
   const [hasEnoughCenteredSpace, setHasEnoughCenteredSpace] = useState(false);
   const ribbonsRef = useRef();
   const containerRef = useRef();
@@ -57,13 +56,6 @@ const Ribbons = () => {
     if (ribbonsRef?.current && containerRef?.current) {
       const ribbonsWidth = ribbonsRef.current.getBoundingClientRect().width + 4;
       const containerWidth = containerRef.current.getBoundingClientRect().width;
-      const remainingSpace = (window.innerWidth - containerWidth) / 2;
-
-      if (ribbonsWidth < remainingSpace) {
-        setHasEnoughSpace(true);
-      } else {
-        setHasEnoughSpace(false);
-      }
 
       if (ribbonsWidth < containerWidth) {
         setHasEnoughCenteredSpace(true);
@@ -88,10 +80,7 @@ const Ribbons = () => {
       {({ measureRef }) => (
         <DataElementWrapper
           dataElement="ribbons"
-          className={classNames({
-            'ribbons-container': true,
-            'centered-on-empty-space': !hasEnoughSpace,
-          })}
+          className={classNames('ribbons-container centered-on-empty-space')}
           ref={measureRef}
         >
           <Measure
@@ -106,7 +95,7 @@ const Ribbons = () => {
                 ref={measureRef}
                 className={classNames({
                   'ribbons': true,
-                  'is-hidden': !(hasEnoughSpace || hasEnoughCenteredSpace),
+                  'is-hidden': !hasEnoughCenteredSpace,
                 })}
               >
                 {toolbarGroups.map(toolbarGroup => (
@@ -132,7 +121,7 @@ const Ribbons = () => {
           <div
             className={classNames({
               'ribbons': true,
-              'is-hidden': (hasEnoughSpace || hasEnoughCenteredSpace),
+              'is-hidden': hasEnoughCenteredSpace,
             })}
           >
             <Dropdown
