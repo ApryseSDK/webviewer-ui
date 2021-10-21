@@ -10,6 +10,7 @@
  * @property {string} DROP_OUTLINE {@link UI#event:dragOutline UI.Events.dragOutline}
  * @property {string} PANEL_RESIZED {@link UI#event:panelResized UI.Events.panelResized}
  * @property {string} THEME_CHANGED {@link UI#event:themeChanged UI.Events.themeChanged}
+ * @property {string} TOOLBAR_GROUP_CHANGED  {@link UI#event:toolbarGroupChanged UI.Events.toolbarGroupChanged}
  * @property {string} SELECTED_THUMBNAIL_CHANGED {@link UI#event:selectedThumbnailChanged UI.Events.selectedThumbnailChanged}
  * @property {string} USER_BOOKMARKS_CHANGED {@link UI#event:userBookmarksChanged UI.Events.userBookmarksChanged}
  * @property {string} VIEWER_LOADED {@link UI#event:viewerLoaded UI.Events.viewerLoaded}
@@ -34,6 +35,7 @@ export default {
   'DROP_OUTLINE': 'dropOutline',
   'PANEL_RESIZED': 'panelResized',
   'THEME_CHANGED': 'themeChanged',
+  'TOOLBAR_GROUP_CHANGED': 'toolbarGroupChanged',
   'SELECTED_THUMBNAIL_CHANGED':'selectedThumbnailChanged',
   'USER_BOOKMARKS_CHANGED': 'userBookmarksChanged',
   'VIEWER_LOADED': 'viewerLoaded',
@@ -106,6 +108,13 @@ export default {
 * @name UI#themeChanged
 * @event
 * @param {string} theme The new UI theme
+*/
+
+/**
+* Triggered when the toolbar group has changed.
+* @name UI#toolbarGroupChanged
+* @event
+* @param {string} toolbarGroup The new toolbar group
 */
 
 /**
