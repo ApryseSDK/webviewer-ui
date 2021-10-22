@@ -361,6 +361,8 @@ export const isAmbientString = state => state.search.isAmbientString;
 
 export const isRegex = state => state.search.isRegex;
 
+export const isProcessingSearchResults = state => state.search.isProcessingSearchResults;
+
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
 
 export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFunction;

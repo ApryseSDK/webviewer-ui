@@ -19,6 +19,7 @@ const propTypes = {
   closeSearchPanel: PropTypes.func,
   setActiveResult: PropTypes.func,
   isInDesktopOnlyMode: PropTypes.bool,
+  isProcessingSearchResults: PropTypes.bool
 };
 
 function noop() {}
@@ -31,7 +32,8 @@ function SearchPanel(props) {
     closeSearchPanel = noop,
     setActiveResult = noop,
     isMobile = false,
-    isInDesktopOnlyMode
+    isInDesktopOnlyMode,
+    isProcessingSearchResults
   } = props;
 
   const { t } = useTranslation();
@@ -86,6 +88,7 @@ function SearchPanel(props) {
         activeResultIndex={activeSearchResultIndex}
         onClickResult={onClickResult}
         pageLabels={pageLabels}
+        isProcessingSearchResults={isProcessingSearchResults}
       />
     </DataElementWrapper>
   );

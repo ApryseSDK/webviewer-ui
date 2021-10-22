@@ -9,12 +9,13 @@ import SearchPanel from './SearchPanel';
 function SearchPanelContainer(props) {
   const isMobile = useMedia(['(max-width: 640px)'],[true], false);
 
-  const [isOpen, currentWidth, pageLabels, shouldClearSearchPanelOnClose, isInDesktopOnlyMode] = useSelector(state => [
+  const [isOpen, currentWidth, pageLabels, shouldClearSearchPanelOnClose, isInDesktopOnlyMode, isProcessingSearchResults] = useSelector(state => [
     selectors.isElementOpen(state, 'searchPanel'),
     selectors.getSearchPanelWidth(state),
     selectors.getPageLabels(state),
     selectors.shouldClearSearchPanelOnClose(state),
-    selectors.isInDesktopOnlyMode(state)
+    selectors.isInDesktopOnlyMode(state),
+    selectors.isProcessingSearchResults(state),
   ], shallowEqual);
 
   const dispatch = useDispatch();
@@ -79,7 +80,8 @@ function SearchPanelContainer(props) {
     closeSearchPanel,
     setActiveResult,
     isMobile,
-    isInDesktopOnlyMode
+    isInDesktopOnlyMode,
+    isProcessingSearchResults
   };
 
   return (

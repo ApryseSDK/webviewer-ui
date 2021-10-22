@@ -12,6 +12,7 @@ const SearchResultListSeparatorPropTypes = {
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   t: PropTypes.func.isRequired,
   pageLabels: PropTypes.arrayOf(PropTypes.any).isRequired,
+  isProcessingSearchResults: PropTypes.bool
 };
 
 function SearchResultListSeparator(props) {
@@ -80,7 +81,7 @@ const SearchResultPropTypes = {
 };
 
 function SearchResult(props) {
-  const { height, searchStatus, searchResults, activeResultIndex, t, onClickResult, pageLabels } = props;
+  const { height, searchStatus, searchResults, activeResultIndex, t, onClickResult, pageLabels, isProcessingSearchResults } = props;
   const cellMeasureCache = React.useMemo(() => {
     return new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
   }, []);
@@ -135,7 +136,9 @@ function SearchResult(props) {
     return null;
   }
 
-  if (searchStatus === 'SEARCH_DONE' && searchResults.length === 0) {
+  if (searchStatus === 'SEARCH_DONE' 
+    && searchResults.length === 0
+    && !isProcessingSearchResults) {
     return (
       <div className="info">{t('message.noResults')}</div>
     );

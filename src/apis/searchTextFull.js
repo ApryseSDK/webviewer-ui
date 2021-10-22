@@ -25,6 +25,9 @@ import actions from 'actions';
 import core from "core";
 import { getSearchListeners } from 'helpers/search';
 
+const onResultThrottleTimeout = 100;
+let isStillProcessingResults = false;
+
 function buildSearchModeFlag(options = {}) {
   const SearchMode = core.getSearchMode();
   let searchMode = SearchMode.PAGE_STOP | SearchMode.HIGHLIGHT;
@@ -57,10 +60,30 @@ export default function searchTextFull(dispatch) {
     }
 
     const searchMode = buildSearchModeFlag(options);
+    let doneCallback = () => {};
 
     let hasActiveResultBeenSet = false;
+    let throttleResults = [];
+    let resultTimeout;
     function onResult(result) {
-      core.displayAdditionalSearchResult(result);
+      throttleResults.push(result);
+
+      if (!resultTimeout) {
+        if (!isStillProcessingResults) {
+          isStillProcessingResults = true;
+          if (dispatch) {
+            dispatch(actions.setProcessingSearchResults(true));
+          }
+        }
+
+        resultTimeout = setTimeout(() => {
+          core.displayAdditionalSearchResults(throttleResults);
+          throttleResults = [];
+          resultTimeout = null;
+          doneCallback();
+        }, onResultThrottleTimeout);
+      }
+
       if (!hasActiveResultBeenSet) {
         // when full search is done, we make first found result to be the active result
         core.setActiveSearchResult(result);
@@ -71,26 +94,36 @@ export default function searchTextFull(dispatch) {
     function searchInProgressCallback(isSearching) {
       // execute search listeners when search is complete, thus hooking functionality search in progress event.
       if (isSearching === false) {
-        const results = core.getPageSearchResults();
-        const searchOptions = {
-          // default values
-          caseSensitive: false,
-          wholeWord: false,
-          wildcard: false,
-          regex: false,
-          searchUp: false,
-          ambientString: true,
-          // override values with those user gave
-          ...options,
-        };
-        const searchListeners = getSearchListeners() || [];
-        searchListeners.forEach(listener => {
-          try {
-            listener(searchValue, searchOptions, results);
-          } catch (e) {
-            console.error(e);
+        doneCallback = () => {
+          if (dispatch) {
+            dispatch(actions.setProcessingSearchResults(false));
           }
-        });
+          const results = core.getPageSearchResults();
+          const searchOptions = {
+            // default values
+            caseSensitive: false,
+            wholeWord: false,
+            wildcard: false,
+            regex: false,
+            searchUp: false,
+            ambientString: true,
+            // override values with those user gave
+            ...options,
+          };
+          const searchListeners = getSearchListeners() || [];
+          searchListeners.forEach(listener => {
+            try {
+              listener(searchValue, searchOptions, results);
+            } catch (e) {
+              console.error(e);
+            }
+          });
+        };
+        isStillProcessingResults = false;
+
+        if (!resultTimeout) {
+          doneCallback();
+        }
         core.removeEventListener('searchInProgress', searchInProgressCallback);
       }
     }
@@ -98,6 +131,7 @@ export default function searchTextFull(dispatch) {
     function onDocumentEnd() {}
 
     function handleSearchError(error) {
+      dispatch(actions.setProcessingSearchResults(false));
       console.error(error);
     }
     const textSearchInitOptions = {

@@ -414,3 +414,8 @@ export const setLanguage = language => ({
   type: 'SET_LANGUAGE',
   payload: { language },
 });
+
+export const setProcessingSearchResults = isProcessingSearchResults => ({
+  type: 'SET_PROCESSING_SEARCH_RESULTS',
+  payload: { isProcessingSearchResults },
+});
