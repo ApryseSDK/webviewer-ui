@@ -6,6 +6,7 @@ import ThumbnailControls from 'components/ThumbnailControls';
 
 import './Thumbnail.scss';
 import { Choice } from "@pdftron/webviewer-react-toolkit";
+import { workerTypes } from "constants/types";
 
 const Thumbnail = ({
   index,
@@ -187,6 +188,8 @@ const Thumbnail = ({
 
   const ratio = Math.min(thumbSize / dimensions.width, thumbSize / dimensions.height);
 
+  const rotateDimDiv = core.getDocument()?.type === workerTypes.XOD;
+
   return (
     <div
       className={classNames({
@@ -208,7 +211,7 @@ const Thumbnail = ({
         onClick={handleClick}
       >
         <div id={`pageThumb${index}`} className="thumbnail" />
-        ${isThumbnailSelectingPages && <div className={"dim"} style={{ width: dimensions.width * ratio, height: dimensions.height * ratio }} />}
+        {isThumbnailSelectingPages && <div className={`dim ${rotateDimDiv && checkboxRotateClass}`} style={{ width: dimensions.width * ratio, height: dimensions.height * ratio }} />}
         {isThumbnailSelectingPages && loaded &&
         <Choice
           className={`checkbox ${checkboxRotateClass}`}

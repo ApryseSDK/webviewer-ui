@@ -13,6 +13,9 @@ import {
 } from "helpers/pageManipulationFunctions";
 import LeftPanelPageTabsSmall from "components/LeftPanelPageTabs/LeftPanelPageTabsSmall/LeftPanelPageTabsSmall";
 import LeftPanelPageTabs from "components/LeftPanelPageTabs/LeftPanelPageTabs/LeftPanelPageTabs";
+import { workerTypes } from "constants/types";
+import core from "src/core";
+import LeftPanelPageTabsXOD from "components/LeftPanelPageTabs/LeftPanelPageTabsXOD/LeftPanelPageTabsXOD";
 
 function LeftPanelPageTabsContainer() {
   const dispatch = useDispatch();
@@ -28,7 +31,17 @@ function LeftPanelPageTabsContainer() {
   const onReplace = () => !noPagesSelectedWarning(pageNumbers, dispatch) && replace();
   const onExtractPages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && extractPages(pageNumbers, dispatch);
   const onDeletePages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && deletePages(pageNumbers, dispatch, deleteModalEnabled);
+  const onRotateClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateClockwise(pageNumbers);
+  const onRotateCounterClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateCounterClockwise(pageNumbers);
+  const onInsertAbove = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertAbove(pageNumbers);
+  const onInsertBelow = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertBelow(pageNumbers);
 
+  const isXod = workerTypes.XOD === core.getDocument().type;
+  if (isXod) {
+    return (
+      <LeftPanelPageTabsXOD onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise}/>
+    );
+  }
   // Breakpoint to convert to popups
   const breakPoint = 360;
   const isPanelSmall = leftPanelWidth < breakPoint;
@@ -37,10 +50,6 @@ function LeftPanelPageTabsContainer() {
     return <LeftPanelPageTabsSmall onReplace={onReplace} onExtractPages={onExtractPages} onDeletePages={onDeletePages}/>;
   }
 
-  const onRotateClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateClockwise(pageNumbers);
-  const onRotateCounterClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateCounterClockwise(pageNumbers);
-  const onInsertAbove = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertAbove(pageNumbers);
-  const onInsertBelow = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertBelow(pageNumbers);
 
   return (
     <LeftPanelPageTabs

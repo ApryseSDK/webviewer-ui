@@ -1,19 +1,17 @@
 import { debounce } from 'lodash';
-import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { List } from 'react-virtualized';
 import Measure from 'react-measure';
 import classNames from 'classnames';
-import { isMobile } from "helpers/device";
-
-import { isIE11 } from 'helpers/device';
+import { isIE11, isMobile } from "helpers/device";
 
 import Thumbnail from 'components/Thumbnail';
 import DocumentControls from 'components/DocumentControls';
 import Button from 'components/Button';
 
 import core from 'core';
-import { extractPagesToMerge, mergeExternalWebViewerDocument, mergeDocument } from 'helpers/pageManipulation';
+import { extractPagesToMerge, mergeDocument, mergeExternalWebViewerDocument } from 'helpers/pageManipulation';
 import { workerTypes } from 'constants/types';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -186,7 +184,7 @@ const ThumbnailsPanel = () => {
 
     const onDocumentLoaded = () => {
       const doc = core.getDocument();
-      if (doc.type === workerTypes.PDF || (doc.type === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
+      if (doc.type === workerTypes.PDF || doc.type === workerTypes.XOD || (doc.type === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
         setAllowPageOperations(true);
       } else {
         setAllowPageOperations(false);
@@ -396,7 +394,7 @@ const ThumbnailsPanel = () => {
         for (let offset = 0; offset < pageNumbersToMove.length; offset++) {
           updatedPagesNumbers.push(afterMovePageNumber.current + offset);
         }
-        fireEvent(Events.THUMBNAIL_DROPPED, {pageNumbersBeforeMove:pageNumbersToMove, pagesNumbersAfterMove:updatedPagesNumbers, numberOfPagesMoved:updatedPagesNumbers.length});
+        fireEvent(Events.THUMBNAIL_DROPPED, { pageNumbersBeforeMove:pageNumbersToMove, pagesNumbersAfterMove:updatedPagesNumbers, numberOfPagesMoved:updatedPagesNumbers.length });
       }
     }
     setDraggingOverPageIndex(null);
@@ -473,21 +471,21 @@ const ThumbnailsPanel = () => {
             <>
               {(numberOfColumns > 1 || thumbIndex === 0) && showPlaceHolder && isDraggingToPreviousPage && <div key={`placeholder1-${thumbIndex}`} className="thumbnailPlaceholder" />}
               <div key={thumbIndex} role="cell" onDragEnd={onDragEnd} className="cellThumbContainer">
-              <Thumbnail
-                isDraggable={allowDragAndDrop}
-                isSelected={selectedPageIndexes.includes(thumbIndex)}
-                index={thumbIndex}
-                canLoad={canLoad}
-                onLoad={onLoad}
-                onCancel={onCancel}
-                onRemove={onRemove}
-                onDragStart={onDragStart}
-                onDragOver={onDragOver}
-                onFinishLoading={removeFromPendingThumbs}
-                updateAnnotations={updateAnnotations}
-                shouldShowControls={allowPageOperationsUI}
-                thumbnailSize={thumbnailSize}
-              />
+                <Thumbnail
+                  isDraggable={allowDragAndDrop}
+                  isSelected={selectedPageIndexes.includes(thumbIndex)}
+                  index={thumbIndex}
+                  canLoad={canLoad}
+                  onLoad={onLoad}
+                  onCancel={onCancel}
+                  onRemove={onRemove}
+                  onDragStart={onDragStart}
+                  onDragOver={onDragOver}
+                  onFinishLoading={removeFromPendingThumbs}
+                  updateAnnotations={updateAnnotations}
+                  shouldShowControls={allowPageOperationsUI}
+                  thumbnailSize={thumbnailSize}
+                />
               </div>
               {showPlaceHolder && !isDraggingToPreviousPage && <div key={`placeholder2-${thumbIndex}`} className="thumbnailPlaceholder" />}
             </>

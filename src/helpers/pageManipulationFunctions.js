@@ -3,15 +3,43 @@ import core from 'core';
 import { saveAs } from 'file-saver';
 import actions from 'actions';
 import i18next from 'i18next';
+import { workerTypes } from "constants/types";
 
+const getNewRotation = (curr, counter_clockwise = false) => {
+  const { e_0, e_90, e_180, e_270 } = window.Core.PageRotation;
+  switch (curr) {
+    case e_270:
+      return counter_clockwise ? e_180 : e_0;
+    case e_180:
+      return counter_clockwise ? e_90 : e_270;
+    case e_90:
+      return counter_clockwise ? e_0 : e_180;
+    default:
+      return counter_clockwise ? e_270 : e_90;
+  }
+};
 
 const rotateClockwise = pageNumbers => {
+  if (workerTypes.XOD === core.getDocument().type) {
+    const docViewer = core.getDocumentViewer();
+    const currentRotations = docViewer.getPageRotations();
+    for (const page of pageNumbers) {
+      docViewer.setRotation(getNewRotation(currentRotations[page], false), page);
+    }
+  }
   pageNumbers.forEach(index => {
     core.rotatePages([index], window.Core.PageRotation.e_90);
   });
 };
 
 const rotateCounterClockwise = pageNumbers => {
+  if (workerTypes.XOD === core.getDocument().type) {
+    const docViewer = core.getDocumentViewer();
+    const currentRotations = docViewer.getPageRotations();
+    for (const page of pageNumbers) {
+      docViewer.setRotation(getNewRotation(currentRotations[page], true), page);
+    }
+  }
   pageNumbers.forEach(index => {
     core.rotatePages([index], window.Core.PageRotation.e_270);
   });
