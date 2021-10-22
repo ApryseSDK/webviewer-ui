@@ -93,6 +93,7 @@ import insertBlankPages from './insertBlankPages';
 import createAnnotationReply from './createAnnotationReply';
 import getIsReadOnly from './getIsReadOnly';
 import setNoteContents from './setNoteContents';
+import setAnnotationRichTextStyle from './setAnnotationRichTextStyle';
 import getAnnotationsList from './getAnnotationsList';
 import getAnnotationsLoadedPromise from './getAnnotationsLoadedPromise';
 import getPrintablePDF from './getPrintablePDF';
@@ -115,6 +116,7 @@ import updateAnnotationState from './updateAnnotationState';
 import getFontStyles from './getFontStyles';
 import mergeDocument from './mergeDocument';
 import getFormFieldCreationManager from './getFormFieldCreationManager';
+import syncNamespaces from './syncNamespaces';
 
 export default {
   setToolMode,
@@ -210,6 +212,7 @@ export default {
   insertBlankPages,
   createAnnotationReply,
   setNoteContents,
+  setAnnotationRichTextStyle,
   getAnnotationsList,
   getAnnotationsLoadedPromise,
   getPrintablePDF,
@@ -235,4 +238,5 @@ export default {
   getFontStyles,
   mergeDocument,
   getFormFieldCreationManager,
+  syncNamespaces,
 };

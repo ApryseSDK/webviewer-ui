@@ -25,10 +25,10 @@ class AnnotationStylePopup extends React.Component {
 
   handlePropertyChange = (property, value) => {
     const { annotation } = this.props;
-    const annotManager = core.getAnnotationManager();
 
-    annotation[property] = value;
-    annotManager.redrawAnnotation(annotation);
+    core.setAnnotationStyles(annotation, {
+      [property]: value,
+    });
   }
 
   handleStyleChange = (property, value) => {
@@ -45,16 +45,14 @@ class AnnotationStylePopup extends React.Component {
 
   handleRichTextStyleChange = (property, value) => {
     const { annotation } = this.props;
-    const annotManager = core.getAnnotationManager();
-
     const curr = annotation.getRichTextStyle();
-    annotation.setRichTextStyle({
+
+    core.setAnnotationStyles(annotation, {
       0: {
         ...curr[0],
         [property] : value
       },
     });
-    annotManager.redrawAnnotation(annotation);
   }
 
   handleClick = e => {
