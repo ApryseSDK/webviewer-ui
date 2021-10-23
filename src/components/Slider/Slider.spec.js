@@ -45,9 +45,16 @@ const mockProps = {
 
 describe('Slider', () => {
   it('should not be able to render without any props', () => {
+    //Mock the console.error so we don't dump a wall of red text
+    //to the console even though the test pass as it can be misleading.
+    jest.spyOn(console, 'error');
+    console.error.mockImplementation(() => { });
+
     expect(() => {
       render(<TestSlider />);
     }).toThrow();
+
+    console.error.mockRestore();
   });
 
   it('should be able to render Slider with all props provided', () => {
