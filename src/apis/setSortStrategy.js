@@ -1,7 +1,7 @@
 /**
  * Sets a sorting algorithm in NotesPanel.
  * @method UI.setSortStrategy
- * @param {string} sortStrategy Name of the algorithm. By default, there are two algorithm options: position and time.
+ * @param {string} sortStrategy Name of the algorithm. There are a number of algorithm options: position, createDate, modifiedDate, status, author, type, and color.
  * @example
 WebViewer(...)
   .then(function(instance) {

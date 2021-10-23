@@ -286,6 +286,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       onTopNoteContentClicked: handleNoteClicked,
       isExpandedFromSearch: onlyReplyContainsSearchInput(currNote),
       scrollToSelectedAnnot,
+      sortStrategy,
     };
 
     if (index === singleSelectedNoteIndex) {

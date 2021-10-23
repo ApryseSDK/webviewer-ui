@@ -31,7 +31,7 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
-const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextChange, isUnread, isNonReplyNoteRead, onReplyClicked, }) => {
+const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextChange, isUnread, isNonReplyNoteRead, onReplyClicked }) => {
   const [
     noteDateFormat,
     iconColor,
@@ -49,7 +49,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     shallowEqual,
   );
 
-  const { isSelected, searchInput, resize, pendingEditTextMap, onTopNoteContentClicked } = useContext(
+  const { isSelected, searchInput, resize, pendingEditTextMap, onTopNoteContentClicked, sortStrategy } = useContext(
     NoteContext,
   );
 
@@ -214,7 +214,13 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     clicked: isNonReplyNoteRead, //The top note content is read
   });
 
-  const date = notesShowLastUpdatedDate ? getLatestActivityDate(annotation) : annotation.DateCreated;
+  let date = '';
+  if (sortStrategy === 'modifiedDate' || (notesShowLastUpdatedDate && sortStrategy !== 'createDate') ) { 
+    date = getLatestActivityDate(annotation);
+  } else {
+    date = annotation.DateCreated;
+  }
+  const dateToRender = date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate');
 
   const header = useMemo(
     () => {
@@ -234,9 +240,9 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                 {renderAuthorName(annotation)}
                 <div className="date-and-num-replies">
                   <div className="date-and-time">
-                    {date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate')}
+                    {dateToRender}
                   </div>
-                  {numberOfReplies > 0 &&
+                  {numberOfReplies > 0 && !isSelected &&
                     <div className="num-replies-container">
                       <Icon className="num-reply-icon" glyph={"icon-chat-bubble"} />
                       <div className="num-replies">{numberOfReplies}</div>
@@ -276,8 +282,12 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
         </React.Fragment>
       );
     },
-    [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange, language, isUnread, date]
+    [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, 
+      annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, 
+      contents, renderContents, textAreaValue,
+       onTextChange, language, isUnread, date, sortStrategy, notesShowLastUpdatedDate]
   );
+   
 
   return useMemo(
     () => (

@@ -61,7 +61,41 @@ const sortStrategies = {
     getSeparatorContent: (prevNote, currNote, { pageLabels }) =>
       `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
-  time: {
+  createDate: {
+    getSortedNotes: notes => notes.sort((a, b) => ( a.DateCreated || 0) - (b.DateCreated || 0)),
+    shouldRenderSeparator: (prevNote, currNote) => {
+      const prevNoteDate = prevNote.DateCreated;
+      const currNoteDate = currNote.DateCreated;
+      if (prevNoteDate && currNoteDate) {
+        const dayFormat = 'MMM D, YYYY';
+        return dayjs(prevNoteDate).format(dayFormat) !== dayjs(currNoteDate).format(dayFormat);
+      } else if (!prevNoteDate && !currNoteDate) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    getSeparatorContent: (prevNote, currNote) => {
+      const createDate = currNote.DateCreated;
+      if (createDate) {
+        const dayFormat = 'MMM D, YYYY';
+        const today = dayjs(new Date()).format(dayFormat);
+        const yesterday = dayjs(new Date(new Date() - 86400000)).format(dayFormat);
+        const createDateString = dayjs(new Date(createDate)).format(dayFormat);
+
+        if (createDateString === today) {
+          return i18next.t('option.notesPanel.separator.today');
+        }
+        if (createDateString === yesterday) {
+          return i18next.t('option.notesPanel.separator.yesterday');
+        }
+        return createDateString;
+      } else {
+        return i18next.t('option.notesPanel.separator.unknown');
+      }
+    },
+  },
+  modifiedDate: {
     getSortedNotes: notes => notes.sort((a, b) => (getLatestActivityDate(b) || 0) - (getLatestActivityDate(a) || 0)),
     shouldRenderSeparator: (prevNote, currNote) => {
       const prevNoteDate = getLatestActivityDate(prevNote);

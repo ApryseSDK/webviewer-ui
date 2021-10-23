@@ -232,8 +232,10 @@
       "status": "Status",
       "author": "Author",
       "type": "Type",
-      "color": "Color"
-    },
+      "color": "Color",
+      "createDate": "Created Date",
+      "modifiedDate": "Modified Date"
+  },
     "toolbarGroup": {
       "dropdownLabel": "Toolbar Groups",
       "toolbarGroup-View": "View",

@@ -488,7 +488,7 @@ describe('Test cases for comment panel', () => {
     });
 
     await (result.iframe as Frame).evaluate(async() => {
-      (document.querySelector('button[data-element="dropdown-item-time"]') as HTMLElement).click();
+      (document.querySelector('button[data-element="dropdown-item-modifiedDate"]') as HTMLElement).click();
     });
 
     await page.waitFor(1000);
@@ -612,7 +612,7 @@ describe('Test cases for comment panel', () => {
         </pages>
       </xfdf>`);
 
-      (document.querySelector('button[data-element="dropdown-item-time"]') as HTMLElement).click();
+      (document.querySelector('button[data-element="dropdown-item-modifiedDate"]') as HTMLElement).click();
     });
 
     await page.waitFor(500);
@@ -622,7 +622,7 @@ describe('Test cases for comment panel', () => {
 
     await page.waitFor(500);
     await (result.iframe as Frame).evaluate(async() => {
-      (document.querySelector('button[data-element="dropdown-item-time"]') as HTMLElement).click();
+      (document.querySelector('button[data-element="dropdown-item-modifiedDate"]') as HTMLElement).click();
     });
 
     await page.waitFor(500);
