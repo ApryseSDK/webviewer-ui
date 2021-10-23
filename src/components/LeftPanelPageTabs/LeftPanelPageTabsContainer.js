@@ -27,8 +27,7 @@ function LeftPanelPageTabsContainer() {
 
   const pageNumbers = selectedPageIndexes.map(index => index + 1);
 
-  // TODO: Integrate with replace
-  const onReplace = () => !noPagesSelectedWarning(pageNumbers, dispatch) && replace();
+  const onReplace = () => !noPagesSelectedWarning(pageNumbers, dispatch) && replace(dispatch);
   const onExtractPages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && extractPages(pageNumbers, dispatch);
   const onDeletePages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && deletePages(pageNumbers, dispatch, deleteModalEnabled);
   const onRotateClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateClockwise(pageNumbers);

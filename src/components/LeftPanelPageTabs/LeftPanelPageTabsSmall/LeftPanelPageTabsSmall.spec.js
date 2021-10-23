@@ -29,21 +29,20 @@ describe('LeftPanelPageTabsSmall', () => {
   describe('Component', () => {
     it('Should render component correctly with all buttons', () => {
       const { container } = render(<LeftPanelPageTabsSmallRedux
-        // TODO: Enable tests for replace
-        // onReplace={noop()}
+        onReplace={noop()}
         onExtractPages={noop}
         onDeletePages={noop}
       />);
 
-      expect(container.querySelectorAll('.Button')).toHaveLength(5/*6*/);
+      expect(container.querySelectorAll('.Button')).toHaveLength(6);
     });
 
     it('Should call each handler when clicked', () => {
       const handlers = {
-        // onReplace: {
-        //   fn: jest.fn(),
-        //   dataElement: "thumbnailsControlReplace"
-        // },
+        onReplace: {
+          fn: jest.fn(),
+          dataElement: "thumbnailsControlReplace"
+        },
         onExtractPages: {
           fn: jest.fn(),
           dataElement: "thumbnailsControlExtract"
@@ -54,7 +53,7 @@ describe('LeftPanelPageTabsSmall', () => {
         },
       };
       const { container } = render(<LeftPanelPageTabsSmallRedux
-        // onReplace={handlers.onReplace.fn}
+        onReplace={handlers.onReplace.fn}
         onExtractPages={handlers.onExtractPages.fn}
         onDeletePages={handlers.onDeletePages.fn}
       />);

@@ -29,8 +29,7 @@ describe('LeftPanelPageTabs', () => {
   describe('Component', () => {
     it('Should render component correctly with all buttons', () => {
       const { container } = render(<LeftPanelPageTabsWithRedux
-        // TODO: Enable tests for replace
-        // onReplace={noop()}
+        onReplace={noop()}
         onExtractPages={noop}
         onDeletePages={noop}
         onRotateCounterClockwise={noop}
@@ -39,15 +38,15 @@ describe('LeftPanelPageTabs', () => {
         onInsertBelow={noop}
       />);
 
-      expect(container.querySelectorAll('.Button')).toHaveLength(7/*8*/);
+      expect(container.querySelectorAll('.Button')).toHaveLength(8);
     });
 
     it('Should call each handler when clicked', () => {
       const handlers = {
-        // onReplace: {
-        //   fn: jest.fn(),
-        //   dataElement: "thumbnailsControlReplace"
-        // },
+        onReplace: {
+          fn: jest.fn(),
+          dataElement: "thumbnailsControlReplace"
+        },
         onExtractPages: {
           fn: jest.fn(),
           dataElement: "thumbnailsControlExtract"
@@ -74,7 +73,7 @@ describe('LeftPanelPageTabs', () => {
         },
       };
       const { container } = render(<LeftPanelPageTabsWithRedux
-        // onReplace={handlers.onReplace.fn}
+        onReplace={handlers.onReplace.fn}
         onExtractPages={handlers.onExtractPages.fn}
         onDeletePages={handlers.onDeletePages.fn}
         onRotateCounterClockwise={handlers.onRotateCounterClockwise.fn}

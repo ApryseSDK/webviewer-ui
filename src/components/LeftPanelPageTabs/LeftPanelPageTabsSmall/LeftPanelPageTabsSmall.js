@@ -26,13 +26,13 @@ function LeftPanelPageTabsSmall({ onReplace, onExtractPages, onDeletePages }) {
         />
         <div className={"indicator"}/>
       </div>
-      {/*<Button*/}
-      {/*  className={"button-hover"}*/}
-      {/*  dataElement="thumbnailsControlReplace"*/}
-      {/*  img="icon-header-page-manipulation-page-transition-reader"*/}
-      {/*  onClick={onReplace}*/}
-      {/*  title="action.replace"*/}
-      {/*/>*/}
+      <Button
+        className={"button-hover"}
+        dataElement="thumbnailsControlReplace"
+        img="icon-page-replacement"
+        onClick={onReplace}
+        title="action.replace"
+      />
       <Button
         className={"button-hover"}
         dataElement="thumbnailsControlExtract"
