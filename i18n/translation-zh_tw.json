@@ -224,6 +224,29 @@
     "pageNum": "頁碼"
   },
   "option": {
+    "type": {
+      "caret": "缺乏",
+      "custom": "風俗",
+      "ellipse": "橢圓",
+      "fileattachment": "文件附件",
+      "freehand": "空手",
+      "callout": "大喊",
+      "freetext": "自由文本",
+      "line": "線",
+      "polygon": "多邊形",
+      "polyline": "折線",
+      "rectangle": "長方形",
+      "redact": "纂",
+      "signature": "簽名",
+      "stamp": "郵票",
+      "stickyNote": "粘滯便箋",
+      "highlight": "強調",
+      "strikeout": "三振",
+      "underline": "強調",
+      "squiggly": "彎彎曲曲的",
+      "3D": "3D",
+      "other": "其他"
+    },
     "notesOrder": {
       "dropdownLabel": "排序訂單清單",
       "position": "位置",

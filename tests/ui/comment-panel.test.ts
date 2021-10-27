@@ -163,6 +163,29 @@ describe('Test cases for comment panel', () => {
     });
   });
 
+  it('should change annotations type labels according to the current language set', async () => {
+    await addAndCreateAnnot(result.iframe, false, true, 'some-content');
+    await addAndCreateAnnot(result.iframe, true, false, 'Testing Annotations type labels', '');
+
+    const instance = await result.waitForInstance();
+    instance('openElement', 'notesPanel');
+
+    await result.iframe.click('[data-element=notesOrderDropdown] .down-arrow');
+    await result.iframe.click('[data-element=dropdown-item-type]');
+
+    let notesContainer = await result.iframe.$('.normal-notes-container .ListSeparator');
+    let innerHTML = await notesContainer.evaluate((node) => node.innerHTML);
+
+    expect(innerHTML).toBe('Free Text');
+
+    await instance('setLanguage', 'zh_cn');
+    await page.waitFor(2000);
+
+    notesContainer = await result.iframe.$('.normal-notes-container .ListSeparator');
+    innerHTML = await notesContainer.evaluate((node) => node.innerHTML);
+    expect(innerHTML).toBe('自由文本');
+  });
+
   it('freetext annotation with rich text should render with rich text stylings', async () => {
     const richTextStyle = {
       "0": { "font-style": "italic" },

@@ -224,6 +224,29 @@
     "pageNum": "페이지 번호"
   },
   "option": {
+    "type": {
+      "caret": "부족하다",
+      "custom": "관습",
+      "ellipse": "타원",
+      "fileattachment": "파일 첨부",
+      "freehand": "자유 재량",
+      "callout": "호출",
+      "freetext": "무료 문자",
+      "line": "선",
+      "polygon": "다각형",
+      "polyline": "폴리라인",
+      "rectangle": "직사각형",
+      "redact": "수정",
+      "signature": "서명",
+      "stamp": "우표",
+      "stickyNote": "스티커 메모",
+      "highlight": "가장 밝은 부분",
+      "strikeout": "삼진",
+      "underline": "밑줄",
+      "squiggly": "구불구불한",
+      "3D": "3D",
+      "other": "다른"
+    },
     "notesOrder": {
       "dropdownLabel": "정렬 순서 목록",
       "position": "위치",

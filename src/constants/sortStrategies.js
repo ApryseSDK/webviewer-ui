@@ -2,7 +2,6 @@ import i18next from 'i18next';
 import dayjs from 'dayjs';
 import core from 'core';
 import React from 'react';
-import capitalize from 'helpers/capitalize';
 import { rotateRad } from 'helpers/rotate';
 import { rgbaToHex } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
@@ -172,7 +171,7 @@ const sortStrategies = {
       return getAnnotationClass(prevNote) !== getAnnotationClass(currNote);
     },
     getSeparatorContent: (prevNote, currNote) => {
-      return capitalize(getAnnotationClass(currNote));
+      return i18next.t(`option.type.${getAnnotationClass(currNote)}`);
     },
   },
   color: {

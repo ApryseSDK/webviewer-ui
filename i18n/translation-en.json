@@ -225,6 +225,29 @@
     "pageNum": "Page Number"
   },
   "option": {
+    "type": {
+      "caret": "Caret",
+      "custom": "Custom",
+      "ellipse": "Ellipse",
+      "fileattachment": "File Attachment",
+      "freehand": "Free Hand",
+      "callout": "Callout",
+      "freetext": "Free Text",
+      "line": "Line",
+      "polygon": "Polygon",
+      "polyline": "Polyline",
+      "rectangle": "Rectangle",
+      "redact": "Redact",
+      "signature": "Signature",
+      "stamp": "Stamp",
+      "stickyNote": "Sticky Note",
+      "highlight": "Highlight",
+      "strikeout": "Strikeout",
+      "underline": "Underline",
+      "squiggly": "Squiggly",
+      "3D": "3D",
+      "other": "Other"
+    },
     "notesOrder": {
       "dropdownLabel": "Sort Order List",
       "position": "Position",

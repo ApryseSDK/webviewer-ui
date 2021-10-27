@@ -224,6 +224,29 @@
     "pageNum": "Seitennummer"
   },
   "option": {
+    "type": {
+      "caret": "fehlt",
+      "custom": "Benutzerdefiniert",
+      "ellipse": "Ellipse",
+      "fileattachment": "Dateianhang",
+      "freehand": "Freihand",
+      "callout": "Aufbieten, ausrufen, zurufen",
+      "freetext": "Freier Text",
+      "line": "Leitung",
+      "polygon": "Polygon",
+      "polyline": "Polylinie",
+      "rectangle": "Rechteck",
+      "redact": "Schwärzen",
+      "signature": "Unterschrift",
+      "stamp": "Stempel",
+      "stickyNote": "Haftnotiz",
+      "highlight": "Markieren",
+      "strikeout": "Durchgestrichen",
+      "underline": "Unterstreichen",
+      "squiggly": "Schnörkellos",
+      "3D": "3D",
+      "other": "Sonstiges"
+    },
     "notesOrder": {
       "dropdownLabel": "Sortierreihenfolge Liste",
       "position": "Position",

@@ -223,6 +223,29 @@
     "pageNum": "Numero di pagina"
   },
   "option": {
+    "type": {
+      "caret": "manca",
+      "custom": "Costume",
+      "ellipse": "Ellisse",
+      "fileattachment": "File allegato",
+      "freehand": "Mano libera",
+      "callout": "Chiamare",
+      "freetext": "Testo libero",
+      "line": "Linea",
+      "polygon": "Poligono",
+      "polyline": "polilinea",
+      "rectangle": "Rettangolo",
+      "redact": "Redigere",
+      "signature": "Firma",
+      "stamp": "Francobollo",
+      "stickyNote": "Nota adesiva",
+      "highlight": "Evidenziare",
+      "strikeout": "barrato",
+      "underline": "Sottolineare",
+      "squiggly": "ondulato",
+      "3D": "3D",
+      "other": "Altro"
+    },
     "notesOrder": {
       "dropdownLabel": "Ordina elenco",
       "position": "Posizione",

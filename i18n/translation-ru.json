@@ -224,6 +224,29 @@
     "pageNum": "Номер страницы"
   },
   "option": {
+    "type": {
+      "caret": "не хватает",
+      "custom": "Обычай",
+      "ellipse": "Эллипс",
+      "fileattachment": "Файл вложения",
+      "freehand": "Свободная рука",
+      "callout": "Вызывать",
+      "freetext": "Открытый текст",
+      "line": "Линия",
+      "polygon": "Многоугольник",
+      "polyline": "Ломаная линия",
+      "rectangle": "Прямоугольник",
+      "redact": "Редактировать",
+      "signature": "Подпись",
+      "stamp": "Печать",
+      "stickyNote": "Заметка",
+      "highlight": "Выделять",
+      "strikeout": "Вычеркнутый",
+      "underline": "Подчеркивание",
+      "squiggly": "Волнистый",
+      "3D": "3D",
+      "other": "Другой"
+    },
     "notesOrder": {
       "dropdownLabel": "Список порядка сортировки",
       "position": "Позиция",

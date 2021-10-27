@@ -224,6 +224,29 @@
     "pageNum": "Paginanummer"
   },
   "option": {
+    "type": {
+      "caret": "mist",
+      "custom": "Aangepast",
+      "ellipse": "Ovaal",
+      "fileattachment": "Bestandsbijlage",
+      "freehand": "Vrije Hand",
+      "callout": "Uitroepen",
+      "freetext": "Vrije tekst",
+      "line": "Lijn",
+      "polygon": "Veelhoek",
+      "polyline": "Polylijn",
+      "rectangle": "Rechthoek",
+      "redact": "Redigeren",
+      "signature": "Handtekening",
+      "stamp": "Stempel",
+      "stickyNote": "Notitie",
+      "highlight": "Markeer",
+      "strikeout": "Strike-out",
+      "underline": "Onderstrepen",
+      "squiggly": "kronkelig",
+      "3D": "3D",
+      "other": "Ander"
+    },
     "notesOrder": {
       "dropdownLabel": "Sorteer Bestellijst",
       "position": "Positie",

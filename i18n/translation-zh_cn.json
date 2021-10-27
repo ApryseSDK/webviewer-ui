@@ -224,6 +224,29 @@
     "pageNum": "页码"
   },
   "option": {
+    "type": {
+      "caret": "缺乏",
+      "custom": "风俗",
+      "ellipse": "椭圆",
+      "fileattachment": "文件附件",
+      "freehand": "空手",
+      "callout": "大喊",
+      "freetext": "自由文本",
+      "line": "线",
+      "polygon": "多边形",
+      "polyline": "折线",
+      "rectangle": "长方形",
+      "redact": "纂",
+      "signature": "签名",
+      "stamp": "邮票",
+      "stickyNote": "粘滞便笺",
+      "highlight": "强调",
+      "strikeout": "三振",
+      "underline": "强调",
+      "squiggly": "弯弯曲曲的",
+      "3D": "3D",
+      "other": "其他"
+    },
     "notesOrder": {
       "dropdownLabel": "排序订单清单",
       "position": "位置",

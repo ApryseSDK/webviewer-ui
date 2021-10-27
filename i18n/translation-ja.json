@@ -224,6 +224,29 @@
     "pageNum": "ページ番号"
   },
   "option": {
+    "type": {
+      "caret": "欠けている",
+      "custom": "カスタム",
+      "ellipse": "楕円",
+      "fileattachment": "添付ファイル",
+      "freehand": "フリーハンド",
+      "callout": "叫ぶ",
+      "freetext": "フリーテキスト",
+      "line": "ライン",
+      "polygon": "ポリゴン",
+      "polyline": "ポリライン",
+      "rectangle": "矩形",
+      "redact": "墨消し",
+      "signature": "サイン",
+      "stamp": "スタンプ",
+      "stickyNote": "付箋",
+      "highlight": "ハイライト",
+      "strikeout": "三振",
+      "underline": "下線を引く",
+      "squiggly": "波打つ",
+      "3D": "3D",
+      "other": "他の"
+    },
     "notesOrder": {
       "dropdownLabel": "ソート順リスト",
       "position": "位置",

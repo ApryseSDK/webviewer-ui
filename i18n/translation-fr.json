@@ -224,6 +224,29 @@
     "pageNum": "Numéro de page"
   },
   "option": {
+    "type": {
+      "caret": "manque",
+      "custom": "Personnalisé",
+      "ellipse": "Ellipse",
+      "fileattachment": "Pièce jointe",
+      "freehand": "Main libre",
+      "callout": "Faire appel à",
+      "freetext": "Texte libre",
+      "line": "Ligne",
+      "polygon": "Polygone",
+      "polyline": "Polyligne",
+      "rectangle": "Rectangle",
+      "redact": "Rédiger",
+      "signature": "Signature",
+      "stamp": "Timbre",
+      "stickyNote": "Note collante",
+      "highlight": "Surligner",
+      "strikeout": "Barré",
+      "underline": "Souligner",
+      "squiggly": "Onduler",
+      "3D": "3D",
+      "other": "Autre"
+    },
     "notesOrder": {
       "dropdownLabel": "Liste des ordres de tri",
       "position": "Position",
