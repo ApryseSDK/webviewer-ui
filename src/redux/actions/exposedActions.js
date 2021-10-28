@@ -78,12 +78,10 @@ export const setCustomStamps = t => async dispatch => {
     }),
   );
 
-  const customStamps = await Promise.all(
-    annotations.map(async (annotation) => ({
-      annotation,
-      imgSrc: await annotation.getImageData(),
-    }))
-  );
+  const customStamps = annotations.map(annotation => ({
+    annotation,
+    imgSrc: annotation['ImageData'],
+  }));
 
   dispatch({
     type: 'SET_CUSTOM_STAMPS',
@@ -190,7 +188,7 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
     type: 'SET_TOOLBAR_GROUP',
     payload: { toolbarGroup },
   });
-  fireEvent(Events.HEADER_GROUP_CHANGED, toolbarGroup);
+  fireEvent(Events.TOOLBAR_GROUP_CHANGED, toolbarGroup);
 };
 export const setSelectedStampIndex = index => ({
   type: 'SET_SELECTED_STAMP_INDEX',

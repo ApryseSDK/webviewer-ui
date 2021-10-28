@@ -10,11 +10,12 @@
  * @property {string} DROP_OUTLINE {@link UI#event:dragOutline UI.Events.dragOutline}
  * @property {string} PANEL_RESIZED {@link UI#event:panelResized UI.Events.panelResized}
  * @property {string} THEME_CHANGED {@link UI#event:themeChanged UI.Events.themeChanged}
- * @property {string} HEADER_GROUP_CHANGED {@link UI#event:headerGroupChanged UI.Events.headerGroupChanged}
+ * @property {string} TOOLBAR_GROUP_CHANGED {@link UI#event:event:toolbarGroupChanged UI.Events.event:toolbarGroupChanged}
  * @property {string} SELECTED_THUMBNAIL_CHANGED {@link UI#event:selectedThumbnailChanged UI.Events.selectedThumbnailChanged}
  * @property {string} THUMBNAIL_DRAGGED {@link UI#event:thumbnailDragged UI.Events.thumbnailDragged}
  * @property {string} THUMBNAIL_DROPPED {@link UI#event:thumbnailDropped UI.Events.thumbnailDropped}
  * @property {string} USER_BOOKMARKS_CHANGED {@link UI#event:userBookmarksChanged UI.Events.userBookmarksChanged}
+ * @property {string} OUTLINE_BOOKMARKS_CHANGED {@link UI#event:outlineBookmarksChanged UI.Events.outlineBookmarksChanged}
  * @property {string} VIEWER_LOADED {@link UI#event:viewerLoaded UI.Events.viewerLoaded}
  * @property {string} VISIBILITY_CHANGED {@link UI#event:visibilityChanged UI.Events.visibilityChanged}
  * @example
@@ -37,11 +38,12 @@ export default {
   'DROP_OUTLINE': 'dropOutline',
   'PANEL_RESIZED': 'panelResized',
   'THEME_CHANGED': 'themeChanged',
-  'HEADER_GROUP_CHANGED': 'headerGroupChanged',
+  'TOOLBAR_GROUP_CHANGED': 'toolbarGroupChanged',
   'SELECTED_THUMBNAIL_CHANGED':'selectedThumbnailChanged',
   'THUMBNAIL_DRAGGED':'thumbnailDragged',
   'THUMBNAIL_DROPPED':'thumbnailDropped',
   'USER_BOOKMARKS_CHANGED': 'userBookmarksChanged',
+  'OUTLINE_BOOKMARKS_CHANGED': 'outlineBookmarksChanged',
   'VIEWER_LOADED': 'viewerLoaded',
   'VISIBILITY_CHANGED': 'visibilityChanged'
 };
@@ -115,10 +117,10 @@ export default {
 */
 
 /**
-* Triggered when the header group has changed.
-* @name UI#headerGroupChanged
+* Triggered when the toolbar group has changed.
+* @name UI#toolbarGroupChanged
 * @event
-* @param {string} headerGroup The new header group
+* @param {string} toolbarGroup The new toolbar group
 */
 
 /**
@@ -149,6 +151,13 @@ export default {
 * @name UI#userBookmarksChanged
 * @event
 * @param {object} bookmarks The new bookmarks
+*/
+
+/**
+* Triggered when outline bookmarks have changed.
+* @name UI#outlineBookmarksChanged
+* @event
+* @param {object} bookmark The changed bookmark
 */
 
 /**
