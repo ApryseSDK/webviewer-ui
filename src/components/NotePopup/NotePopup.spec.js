@@ -12,7 +12,7 @@ const BasicStory = withI18n(Basic);
 const DifferentStatesStory = withI18n(DifferentStates);
 
 function createDisabledStateForDataElement(dataElement) {
-  const state = { viewer: { disabledElements : {} } };
+  const state = { viewer: { disabledElements: {} } };
   state.viewer.disabledElements[dataElement] = { disabled: true };
   return state;
 }
@@ -51,14 +51,14 @@ describe('NotePopup', () => {
 
   it('Should show popup options when isOpen is true', () => {
     const { container } = render(
-      <NotePopup isEditable isDeletable isOpen/>
+      <NotePopup isEditable isDeletable isOpen />
     );
     expect(container.querySelector('div.note-popup-options')).toBeInTheDocument();
   });
 
   it('Should show popup options when isOpen is true', () => {
     const { container } = render(
-      <NotePopup isEditable isDeletable isOpen={false}/>
+      <NotePopup isEditable isDeletable isOpen={false} />
     );
     expect(container.querySelector('div.note-popup-options')).not.toBeInTheDocument();
   });
@@ -76,7 +76,7 @@ describe('NotePopup', () => {
     const dataElement = 'notePopupDelete';
     const state = createDisabledStateForDataElement(dataElement);
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockImplementation(function(selector) {
+    useSelectorMock.mockImplementation(function (selector) {
       return selector(state);
     });
     const { container } = render(
@@ -111,7 +111,7 @@ describe('NotePopup', () => {
     const dataElement = 'notePopupEdit';
     const state = createDisabledStateForDataElement(dataElement);
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockImplementation(function(selector) {
+    useSelectorMock.mockImplementation(function (selector) {
       return selector(state);
     });
     const { container } = render(
@@ -151,7 +151,7 @@ describe('NotePopup', () => {
     expect(container.querySelector('.note-popup-options')).not.toBeInTheDocument();
     const button = container.querySelector('.note-popup-toggle-trigger');
     fireEvent.click(button);
-    expect(openPopup).toHaveBeenCalledWith(annotation.Id);
+    expect(openPopup).toHaveBeenCalledWith();
   });
 
   it('Should close when clicked outside of popup', () => {

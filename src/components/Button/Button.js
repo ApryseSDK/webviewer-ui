@@ -28,6 +28,7 @@ const propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   onDoubleClick: PropTypes.func,
+  onMouseUp: PropTypes.func,
   /** Will override translated title if both given. */
   ariaLabel: PropTypes.string,
   role: PropTypes.string,
@@ -59,6 +60,7 @@ const Button = props => {
     dataElement,
     onClick,
     onDoubleClick,
+    onMouseUp,
     className,
     title,
     style,
@@ -104,6 +106,7 @@ const Button = props => {
       // so that we can show the button tooltip
       onClick={actuallyDisabled ? NOOP : onClick}
       onDoubleClick={actuallyDisabled ? NOOP : onDoubleClick}
+      onMouseUp={actuallyDisabled ? NOOP : onMouseUp}
       aria-label={aLabel}
       role={role}
       tabIndex={tabIndex}

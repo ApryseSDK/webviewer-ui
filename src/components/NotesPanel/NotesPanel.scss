@@ -25,6 +25,17 @@
   }
 }
 
+.comments-counter {
+  height: 19px;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-size: 16px;
+
+  span {
+    font-weight: bold;
+  }
+}
+
 .NotesPanel {
   padding-left: 16px;
   padding-bottom: 0px;
@@ -99,17 +110,13 @@
       margin-bottom: 16px;
 
       .filterAnnotationButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid var(--border);
-        color: var(--text-color);
-        padding: 6px 18px;
-        width: auto;
-        width: fit-content;
-        border-radius: 4px;
         height: 28px;
+        width: 28px;
         cursor: pointer;
+        
+        &:hover {
+          background: var(--blue-1)
+        }
 
         &.active {
           background: var(--popup-button-active);
@@ -122,10 +129,13 @@
         align-items: center;
         justify-content: flex-end;
         align-self: flex-end;
-        margin-left: auto;
 
         .label {
           margin-right: 8px;
+        }
+
+        .picked-option {
+          text-align: left;
         }
       }
     }

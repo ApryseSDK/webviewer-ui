@@ -6,24 +6,38 @@
   display: flex;
   justify-content: flex-end;
   user-select: none;
-  padding-top: 5px;
   padding-left: 15px;
-  right: -10px;
-  top: -8px;
+  padding-right: 10px;
 
   .overflow {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+
     .Icon {
-      width: 18px;
-      height: 18px;
+      margin: 4px;
+      width: 20px;
+      height: 20px;
     }
 
     &:hover {
-      opacity: 1;
+      background: var(--blue-1)
+    }
+
+    &.active {
+      background: var(--popup-button-active);
+    }
+  }
+
+  .Button {
+    &.active {
+      background: var(--popup-button-active);
     }
   }
 
   .note-state-options {
     @include button-reset;
+    top: 40px;
     font-size: inherit;
     display: flex;
     flex-direction: column;

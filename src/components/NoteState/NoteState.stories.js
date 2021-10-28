@@ -28,7 +28,7 @@ export function Basic() {
     return (
       <React.Fragment key={state}>
         <span>{state}:</span>
-        <NoteState annotation={getAnnotationWithStatus(state)} isSelected handleStateChange={handleStateChange}/>
+        <NoteState annotation={getAnnotationWithStatus(state)} isSelected handleStateChange={handleStateChange} />
       </React.Fragment>
     );
   });

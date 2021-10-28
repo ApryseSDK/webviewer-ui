@@ -236,39 +236,39 @@ const Note = ({
       />
       {(isSelected || isExpandedFromSearch) && (
         <React.Fragment>
-          <div className={repliesClass}>
-            {hasUnreadReplies && (
-              <Button
-                dataElement="markAllReadButton"
-                className="mark-all-read-button"
-                label={t('action.markAllRead')}
-                onClick={markAllRepliesRead}
-              />
-            )}
-            {replies.length > 0 && <div className="divider" />}
-            {replies.map((reply, i) => (
-              <div className="reply"  id={`note_reply_${reply.Id}`} key={`note_reply_${reply.Id}`}>
-                {i > 0 && <div className="reply-divider" />}
-                <NoteContent
-                  noteIndex={i + 1}
-                  key={reply.Id}
-                  annotation={reply}
-                  setIsEditing={setIsEditing}
-                  isEditing={isEditingMap[i + 1]}
-                  onTextChange={setPendingEditText}
-                  onReplyClicked={handleReplyClicked}
-                  isUnread={unreadAnnotationIdSet.has(reply.Id)}
+          {replies.length > 0 && (
+            <div className={repliesClass}>
+              {hasUnreadReplies && (
+                <Button
+                  dataElement="markAllReadButton"
+                  className="mark-all-read-button"
+                  label={t('action.markAllRead')}
+                  onClick={markAllRepliesRead}
                 />
-              </div>
-            ))}
-            {showReplyArea && (
-              <ReplyArea
-                isUnread={lastReplyId && unreadAnnotationIdSet.has(lastReplyId)}
-                onPendingReplyChange={markAllRepliesRead}
-                annotation={annotation}
-              />
-            )}
-          </div>
+              )}
+              {replies.map((reply, i) => (
+                <div className="reply" id={`note_reply_${reply.Id}`} key={`note_reply_${reply.Id}`}>
+                  <NoteContent
+                    noteIndex={i + 1}
+                    key={reply.Id}
+                    annotation={reply}
+                    setIsEditing={setIsEditing}
+                    isEditing={isEditingMap[i + 1]}
+                    onTextChange={setPendingEditText}
+                    onReplyClicked={handleReplyClicked}
+                    isUnread={unreadAnnotationIdSet.has(reply.Id)}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+          {showReplyArea && (
+            <ReplyArea
+              isUnread={lastReplyId && unreadAnnotationIdSet.has(lastReplyId)}
+              onPendingReplyChange={markAllRepliesRead}
+              annotation={annotation}
+            />
+          )}
         </React.Fragment>
       )}
       {isSelected && <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef} />}

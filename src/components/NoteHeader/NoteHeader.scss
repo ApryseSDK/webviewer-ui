@@ -1,0 +1,108 @@
+@import '../../constants/styles';
+@import '../../constants/note';
+
+.NoteHeader {
+  padding-right: 12px;
+  position: relative;
+  flex: 1;
+  color: var(--text-color);
+
+  .author-and-overflow {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .state-and-overflow {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .author-and-time {
+    display: flex;
+    flex-direction: column;
+    word-break: break-word;
+  }
+
+  .author {
+    font-weight: bold;
+  }
+
+  .date-and-num-replies{
+    display: flex;
+
+    .num-replies-container {
+      display: flex;
+      flex-grow: 1;
+      padding-left: 10px;
+
+      .num-reply-icon {
+        height: 12px;
+        width: 12px;
+      }
+
+      .num-replies {
+        opacity: 0.8;
+        font-size: 10px;
+        @include mobile {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .author-and-date {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    padding-top: 12px;
+  }
+
+  .unread-notification {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    right: -2px;
+    top: -2px;
+    border-radius: 10000px;
+    border: 2px solid var(--component-background);
+    background: $pdftron-blue;
+  }
+
+  .type-icon-container {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .type-icon {
+    margin: 2px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .date-and-time {
+    opacity: 0.8;
+    font-size: 10px;
+    @include mobile {
+      font-size: 12px;
+    }
+    color: var(--faded-text);
+  }
+
+  .author-name {
+    font-weight: bold;
+  }
+
+  .isReply {
+    padding-left: 0px;
+    padding-top: 0px;
+    font-size: 10px;
+  }
+}
+
+.parent {
+  padding-left: 52px;
+}

@@ -25,6 +25,8 @@ const createTextAnnotation = annotationConstructor => {
       annotation.setContents(core.getSelectedText(pageNumber));
     }
 
+    annotation.setCustomData('trn-annot-preview', core.getSelectedText(pageNumber));
+
     if (annotation instanceof window.Annotations.RedactionAnnotation) {
       setRedactionStyle(annotation);
     }

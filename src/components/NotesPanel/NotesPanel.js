@@ -142,12 +142,6 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
 
   let singleSelectedNoteIndex = -1;
 
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     dispatch(actions.closeElements(['searchPanel', 'searchOverlay']));
-  //   }
-  // }, [dispatch, isOpen]);
-
   const handleScroll = scrollTop => {
     if (scrollTop) {
       scrollTopRef.current = scrollTop;
@@ -388,18 +382,10 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
               id="NotesPanel__input"
             />
           </div>
-          <div className="divider" />
+          <div className='comments-counter'>
+            <span className='main-comment'>{t('component.notesPanel')}</span> {`(${notesToRender.length})`}
+          </div>
           <div className="sort-row">
-            <Button
-              dataElement="filterAnnotationButton"
-              className={classNames({
-                filterAnnotationButton: true,
-                active: filterEnabled
-              })}
-              disabled={notes.length === 0}
-              label={t('component.filter')}
-              onClick={() => dispatch(actions.openElement('filterModal'))}
-            />
             <div className="sort-container">
               <div className="label">{`${t('message.sortBy')}:`}</div>
               <Dropdown
@@ -413,6 +399,17 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
                 }}
               />
             </div>
+            <Button
+              dataElement="filterAnnotationButton"
+              className={classNames({
+                filterAnnotationButton: true,
+                active: filterEnabled
+              })}
+              disabled={notes.length === 0}
+              img="icon-comments-filter"
+              onClick={() => dispatch(actions.openElement('filterModal'))}
+              title={t('component.filter')}
+            />
           </div>
         </div>
         {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (

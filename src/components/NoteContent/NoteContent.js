@@ -8,22 +8,20 @@ import classNames from 'classnames';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 import NoteTextarea from 'components/NoteTextarea';
-import NotePopup from 'components/NotePopup';
-import NoteState from 'components/NoteState';
 import NoteContext from 'components/Note/Context';
-import Icon from 'components/Icon';
-import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
 
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
-import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
-import getColor from 'helpers/getColor';
 import getLatestActivityDate from "helpers/getLatestActivityDate";
+import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './NoteContent.scss';
+import NoteHeader from 'components/NoteHeader';
+import NoteTextPreview from 'src/components/NoteTextPreview';
+import isString from 'lodash/isString';
 
 dayjs.extend(LocalizedFormat);
 
@@ -35,7 +33,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const [
     noteDateFormat,
     iconColor,
-    isStateDisabled,
+    isNoteStateDisabled,
     language,
     notesShowLastUpdatedDate
   ] = useSelector(
@@ -108,7 +106,17 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
         }
       });
       if (!autolinkerContent.length) {
-        return highlightSearchInput(contents, searchInput, richTextStyle);
+        const highlightResult = highlightSearchInput(contents, searchInput, richTextStyle);
+        if (isString(highlightResult)) {
+          // Only support preview for pure text contents
+          return (
+            <NoteTextPreview linesToBreak={3} comment>
+              {highlightResult}
+            </NoteTextPreview>
+          )
+        } else {
+          return highlightResult
+        }
       }
       const contentToRender = [];
       let strIdx = 0;
@@ -167,8 +175,6 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   );
 
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
-  const color = annotation[iconColor]?.toHexString?.();
-  const fillColor = getColor(annotation.FillColor);
   let customData;
   try {
     customData = JSON.parse(annotation.getCustomData('trn-mention'));
@@ -178,8 +184,6 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const contents = customData?.contents || annotation.getContents();
   const contentsToRender = annotation.getContents();
   const richTextStyle = annotation.getRichTextStyle();
-  const numberOfReplies = annotation.getReplies().length;
-  const formatNumberOfReplies = Math.min(numberOfReplies, 9);
   // This is the text placeholder passed to the ContentArea
   // It ensures that if we try and edit, we get the right placeholder
   // depending on whether the comment has been saved to the annotation or not
@@ -214,89 +218,80 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     clicked: isNonReplyNoteRead, //The top note content is read
   });
 
-  let date = '';
-  if (sortStrategy === 'modifiedDate' || (notesShowLastUpdatedDate && sortStrategy !== 'createDate') ) { 
-    date = getLatestActivityDate(annotation);
-  } else {
-    date = annotation.DateCreated;
-  }
-  const dateToRender = date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate');
+  const content = useMemo(
+    () => {
+      return (
+        <React.Fragment>
+          {isEditing && isSelected ? (
+            <ContentArea
+              annotation={annotation}
+              noteIndex={noteIndex}
+              setIsEditing={setIsEditing}
+              textAreaValue={textAreaValue}
+              onTextAreaValueChange={onTextChange}
+            />
+          ) : (
+            contentsToRender && (
+              <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked}>
+                {renderContents(contentsToRender, richTextStyle)}
+              </div>
+            )
+          )}
+        </React.Fragment >
+      );
+    },
+    [annotation, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange]
+  );
+   
+
+  const text = annotation.getCustomData('trn-annot-preview');
+  const textPreview = useMemo(
+    () => {
+      if (text === '') {
+        return null;
+      }
+
+      return (
+        <div className="selected-text-preview">
+          <NoteTextPreview linesToBreak={1}>
+            {`"${text}"`}
+          </NoteTextPreview>
+        </div>
+
+      )
+    }, [text])
 
   const header = useMemo(
     () => {
       return (
-        <React.Fragment>
-          {!isReply &&
-            <div className="type-icon-container">
-              {isUnread &&
-                <div className="unread-notification"></div>
-              }
-              <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
-            </div>
-          }
-          <div className="author-and-date">
-            <div className="author-and-overflow">
-              <div className="author-and-time">
-                {renderAuthorName(annotation)}
-                <div className="date-and-num-replies">
-                  <div className="date-and-time">
-                    {dateToRender}
-                  </div>
-                  {numberOfReplies > 0 && !isSelected &&
-                    <div className="num-replies-container">
-                      <Icon className="num-reply-icon" glyph={"icon-chat-bubble"} />
-                      <div className="num-replies">{numberOfReplies}</div>
-                    </div>}
-                </div>
-              </div>
-              <div className="state-and-overflow">
-                <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
-                {!isStateDisabled && !isReply &&
-                  <NoteState
-                    annotation={annotation}
-                    isSelected={isSelected}
-                  />
-                }
-                {!isEditing && isSelected &&
-                  <NotePopup
-                    noteIndex={noteIndex}
-                    annotation={annotation}
-                    setIsEditing={setIsEditing}
-                  />}
-              </div>
-            </div>
-            {isEditing && isSelected ? (
-              <ContentArea
-                annotation={annotation}
-                noteIndex={noteIndex}
-                setIsEditing={setIsEditing}
-                textAreaValue={textAreaValue}
-                onTextAreaValueChange={onTextChange}
-              />
-            ) : (
-              contentsToRender && (
-                <div className="container" onClick={handleContentsClicked}>{renderContents(contentsToRender, richTextStyle)}</div>
-              )
-            )}
-          </div>
-        </React.Fragment>
-      );
-    },
-    [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, 
-      annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, 
-      contents, renderContents, textAreaValue,
-       onTextChange, language, isUnread, date, sortStrategy, notesShowLastUpdatedDate]
+        <NoteHeader
+          icon={icon}
+          iconColor={iconColor}
+          annotation={annotation}
+          language={language}
+          noteDateFormat={noteDateFormat}
+          isSelected={isSelected}
+          setIsEditing={setIsEditing}
+          notesShowLastUpdatedDate={notesShowLastUpdatedDate}
+          isReply={isReply}
+          isUnread={isUnread}
+          renderAuthorName={renderAuthorName}
+          isNoteStateDisabled={isNoteStateDisabled}
+          isEditing={isEditing}
+          noteIndex={noteIndex}
+          sortStrategy={sortStrategy}
+        />
+      )
+    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy]
   );
-   
 
-  return useMemo(
-    () => (
-      <div className={noteContentClass} onClick={handleNoteContentClicked}>
-        {header}
-      </div>
-    ),
-    [header],
-  );
+  return (
+    <div className={noteContentClass} onClick={handleNoteContentClicked}>
+      {header}
+      {textPreview}
+      {content}
+    </div>
+  )
 };
 
 NoteContent.propTypes = propTypes;
@@ -317,6 +312,7 @@ const ContentArea = ({
   ]);
   const [t] = useTranslation();
   const textareaRef = useRef();
+  const isReply = annotation.isReply();
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
@@ -362,8 +358,10 @@ const ContentArea = ({
     }
   };
 
+  const contentClassName = classNames('edit-content', { 'reply-content': isReply })
+
   return (
-    <div className="edit-content">
+    <div className={contentClassName}>
       <NoteTextarea
         ref={el => {
           textareaRef.current = el;
@@ -494,7 +492,7 @@ const highlightSearchInput = (fullText, searchInput, richTextStyle, start = 0, e
       // Ensure that we do not try to make an out-of-bounds access
       position + loweredSearchInput.length < loweredText.length
       // Ensure that this is the end of the allFoundPositions array
-      && position + loweredSearchInput.length !== allFoundPositions[idx+1]
+      && position + loweredSearchInput.length !== allFoundPositions[idx + 1]
     ) {
       contentToRender.push(renderRichText(
         text.substring(position + loweredSearchInput.length, allFoundPositions[idx + 1]),

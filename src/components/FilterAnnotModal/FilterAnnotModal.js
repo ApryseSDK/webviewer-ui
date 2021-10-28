@@ -56,7 +56,7 @@ const FilterAnnotModal = () => {
             for (const reply of allReplies) {
               // Short-circuit the search if at least one reply is created by
               // one of the desired authors
-              if (authorFilter.includes(core.getDisplayAuthor(reply))) {
+              if (authorFilter.includes(core.getDisplayAuthor(reply['Author']))) {
                 author = true;
                 break;
               }

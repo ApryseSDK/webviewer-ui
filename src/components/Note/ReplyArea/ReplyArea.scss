@@ -1,14 +1,69 @@
 @import '../../../constants/styles';
 @import '../../../constants/note';
 
-.Note {
-  .reply-area-container {
-    .reply-button {
-      &.disabled {
-        background: var(--gray-6);
-        border-color: var(--gray-6);
-        cursor: not-allowed;
-      }
+.reply-area-container {
+  border-top: 1px solid var(--divider);
+  display: flex;
+
+  .reply-button-container {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+
+  .reply-button {
+    width: 28px;
+    height: 28px;
+    @include button-reset;
+    // for IE only
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      width: 80px;
+    }
+    right: 10px;
+    bottom: 12px;
+    
+    &:hover {
+      background: var(--blue-1)
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.reply-area {
+  display: flex;
+  position: relative;
+  flex: 1;
+  margin: 13px 17px 12px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  align-items: center;
+  &.unread {
+    background: rgba($color:$pdftron-blue, $alpha: 0.08);
+  }
+  &:focus-within{
+    border: 1px solid var(--focus-border);
+  }
+
+  textarea {
+    width: 100%;
+    padding-left: 8px;
+    border: none;
+    color: var(--text-color);
+    padding: 4px 4px 4px 4px;
+    resize: none;
+    overflow: hidden;
+    height: 24px;
+    box-sizing: border-box;
+    &:focus {
+      outline: none;
+      border: none;
+    }
+
+    &::placeholder {
+      color: var(--placeholder-text);
     }
   }
 }

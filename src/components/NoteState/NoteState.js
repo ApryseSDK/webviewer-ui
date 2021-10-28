@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
@@ -64,17 +65,20 @@ function NoteState(props) {
     return null;
   }
 
+  const noteStateButtonClassName = classNames('overflow', { active: isOpen });
+
   return (
     <DataElementWrapper
       className="NoteState"
       dataElement="noteState"
       onClick={togglePopup}
+      ref={popupRef}
     >
-      <div className="overflow">
+      <div className={noteStateButtonClassName}>
         <Icon glyph={icon} />
       </div>
       {isOpen && (
-        <button ref={popupRef} className="note-state-options" onClick={onStateOptionsButtonClick}>
+        <button className="note-state-options" onClick={onStateOptionsButtonClick}>
           <DataElementWrapper dataElement="notePopupState">
             <DataElementWrapper
               dataElement="notePopupStateAccepted"

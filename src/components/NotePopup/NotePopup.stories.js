@@ -6,7 +6,7 @@ export default {
   component: NotePopup,
 };
 
-function noop() {}
+function noop() { }
 function handleEdit() {
   console.log('Would handle Edit');
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import PageManipulationOverlay from './PageManipulationOverlay'
-import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 
 import { createStore } from 'redux';
 

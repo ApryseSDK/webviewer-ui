@@ -48,7 +48,7 @@ const addAndCreateAnnot = (
 };
 
 const selectAnnotation = (id: string, iframe: Frame) => {
-  return (iframe as Frame).evaluate(async(id: string) => {
+  return (iframe as Frame).evaluate(async (id: string) => {
     const promise = new Promise((resolve) => {
       window.instance.Core.documentViewer.getAnnotationManager().addEventListener('annotationSelected', (annotations, action) => {
         if (action === 'selected') {
@@ -65,7 +65,7 @@ const selectAnnotation = (id: string, iframe: Frame) => {
 
 // hide date time else e2e will always throw error as date time will depend on current time of when annot was added
 const hideDateTimeInNotesPanel = (iframe: Frame) => {
-  return (iframe).evaluate(async() => {
+  return (iframe).evaluate(async () => {
     const nodes = document.querySelectorAll('.date-and-time');
     for (const node of nodes) {
       node.style.opacity = 0;
@@ -76,18 +76,18 @@ const hideDateTimeInNotesPanel = (iframe: Frame) => {
 describe('Test cases for comment panel', () => {
   let result: { iframe: Frame; waitForInstance; waitForWVEvent };
 
-  beforeEach(async() => {
+  beforeEach(async () => {
     result = await loadViewerSample('viewing/blank');
     const instance = await result.waitForInstance();
     await instance('enableElements', ['richTextPopup']);
     await result.waitForWVEvent('annotationsLoaded');
   });
 
-  it.skip('should not be able to edit comment for not locked content non-free text annotation', async() => {
+  it.skip('should not be able to edit comment for not locked content non-free text annotation', async () => {
     await addAndCreateAnnot(result.iframe, false, true, 'some-content');
     const instance = await result.waitForInstance();
 
-    const annotId = await (result.iframe as Frame).evaluate(async() => {
+    const annotId = await (result.iframe as Frame).evaluate(async () => {
       const annots = window.instance.Core.documentViewer.getAnnotationManager().getAnnotationsList()
         .filter((annot) => annot.LockedContents === true);
       return annots[0].Id;
@@ -106,11 +106,11 @@ describe('Test cases for comment panel', () => {
     });
   });
 
-  it.skip('should be able to edit comment for locked content non-free text annotation', async() => {
+  it.skip('should be able to edit comment for locked content non-free text annotation', async () => {
     await addAndCreateAnnot(result.iframe, false, false, 'some-content');
     const instance = await result.waitForInstance();
 
-    const annotId = await (result.iframe as Frame).evaluate(async() => {
+    const annotId = await (result.iframe as Frame).evaluate(async () => {
       const annots = window.instance.Core.documentViewer.getAnnotationManager().getAnnotationsList()
         .filter((annot) => annot instanceof window.Annotations.RectangleAnnotation && annot.LockedContents === false);
       return annots[0].Id;
@@ -129,11 +129,11 @@ describe('Test cases for comment panel', () => {
     });
   });
 
-  it.skip('should not be able to edit comment for locked content free text annotation', async() => {
+  it.skip('should not be able to edit comment for locked content free text annotation', async () => {
     await addAndCreateAnnot(result.iframe, true, true, 'some-content');
     const instance = await result.waitForInstance();
 
-    const annotId = await (result.iframe as Frame).evaluate(async() => {
+    const annotId = await (result.iframe as Frame).evaluate(async () => {
       const annots = window.instance.Core.documentViewer.getAnnotationManager().getAnnotationsList()
         .filter((annot) => annot.LockedContents === true);
       return annots[0].Id;
@@ -152,7 +152,7 @@ describe('Test cases for comment panel', () => {
     });
   });
 
-  it('should be able to edit comment for not locked content free text annotation', async() => {
+  it('should be able to edit comment for not locked content free text annotation', async () => {
     await page.waitFor(Timeouts.PDF_PRIME_DOCUMENT);
 
     await addAndCreateAnnot(result.iframe, true, false, 'some-content');
@@ -188,14 +188,14 @@ describe('Test cases for comment panel', () => {
 
   it('freetext annotation with rich text should render with rich text stylings', async () => {
     const richTextStyle = {
-      "0": { "font-style": "italic" },
-      "1": { "font-weight": "bold", "font-style": "italic" },
-      "3": { "font-style": "italic" },
-      "4": {},
-      "7": { "text-decoration": "line-through" },
-      "11": {},
-      "17": { "font-weight": "bold" },
-      "21": { "text-decoration": "word" }
+      '0': { 'font-style': 'italic' },
+      '1': { 'font-weight': 'bold', 'font-style': 'italic' },
+      '3': { 'font-style': 'italic' },
+      '4': {},
+      '7': { 'text-decoration': 'line-through' },
+      '11': {},
+      '17': { 'font-weight': 'bold' },
+      '21': { 'text-decoration': 'word' }
     };
     await addAndCreateAnnot(result.iframe, true, false, 'Test www.google.ca 1234', '', richTextStyle);
     const instance = await result.waitForInstance();
@@ -211,27 +211,27 @@ describe('Test cases for comment panel', () => {
 
     const noteContainer = await result.iframe.$(`#note_${annotId} .container`);
     const innerHTML = await noteContainer.evaluate((node) => node.innerHTML);
-    expect(innerHTML).toBe(`<span><span style="font-style: italic;">T</span><span style="font-weight: bold; font-style: italic;">es</span><span style="font-style: italic;">t</span><span> </span></span><a href="http://www.google.ca" target="_blank" rel="noopener noreferrer"><span>ww</span><span style="text-decoration: line-through;">w.go</span><span>ogle.c</span><span style="font-weight: bold;">a</span></a><span style="font-weight: bold;"> 12</span><span style="text-decoration: underline;">34</span>`);
+    expect(innerHTML).toBe('<span><span style="font-style: italic;">T</span><span style="font-weight: bold; font-style: italic;">es</span><span style="font-style: italic;">t</span><span> </span></span><a href="http://www.google.ca" target="_blank" rel="noopener noreferrer"><span>ww</span><span style="text-decoration: line-through;">w.go</span><span>ogle.c</span><span style="font-weight: bold;">a</span></a><span style="font-weight: bold;"> 12</span><span style="text-decoration: underline;">34</span>');
 
     // Search comments
-    const searchInput = await result.iframe.$(`#NotesPanel__input`);
+    const searchInput = await result.iframe.$('#NotesPanel__input');
     await searchInput.type('www');
     await page.waitFor(2000);
     const innerHTML1 = await noteContainer.evaluate((node) => node.innerHTML);
-    expect(innerHTML1).toBe(`<span><span style="font-style: italic;">T</span><span style="font-weight: bold; font-style: italic;">es</span><span style="font-style: italic;">t</span><span> </span></span><a href="http://www.google.ca" target="_blank" rel="noopener noreferrer"><span class="highlight"><span>ww</span><span style="text-decoration: line-through;">w</span></span><span style="text-decoration: line-through;">.go</span><span>ogle.c</span><span style="font-weight: bold;">a</span></a><span style="font-weight: bold;"> 12</span><span style="text-decoration: underline;">34</span>`);
+    expect(innerHTML1).toBe('<span><span style="font-style: italic;">T</span><span style="font-weight: bold; font-style: italic;">es</span><span style="font-style: italic;">t</span><span> </span></span><a href="http://www.google.ca" target="_blank" rel="noopener noreferrer"><span class="highlight"><span>ww</span><span style="text-decoration: line-through;">w</span></span><span style="text-decoration: line-through;">.go</span><span>ogle.c</span><span style="font-weight: bold;">a</span></a><span style="font-weight: bold;"> 12</span><span style="text-decoration: underline;">34</span>');
   });
 
-  it.skip('should be able to only add reply to annotation that does not belong to user', async() => {
+  it.skip('should be able to only add reply to annotation that does not belong to user', async () => {
     await addAndCreateAnnot(result.iframe, false, true, undefined, 'a');
     const instance = await result.waitForInstance();
 
-    const annotId = await (result.iframe as Frame).evaluate(async() => {
+    const annotId = await (result.iframe as Frame).evaluate(async () => {
       const annots = window.instance.Core.documentViewer.getAnnotationManager().getAnnotationsList()
         .filter((annot) => annot.Author === 'a');
       return annots[0].Id;
     });
 
-    await (result.iframe as Frame).evaluate(async() => {
+    await (result.iframe as Frame).evaluate(async () => {
       window.instance.Core.documentViewer.getAnnotationManager().setIsAdminUser(false);
       const promise = new Promise((resolve) => {
         window.instance.Core.documentViewer.getAnnotationManager().addEventListener('updateAnnotationPermission', () => {
@@ -256,21 +256,21 @@ describe('Test cases for comment panel', () => {
     });
   });
 
-  it('should be able to scroll to group annotation', async() => {
+  it('should be able to scroll to group annotation', async () => {
     const instance = await result.waitForInstance();
     await instance('loadDocument', '/test-files/annots1-rotated-cropped.pdf');
     await result.waitForWVEvent('annotationsLoaded');
 
     instance('openElement', 'notesPanel');
-    await result.iframe.evaluate(async() => {
+    await result.iframe.evaluate(async () => {
 
       const annotManager = window.instance.Core.documentViewer.getAnnotationManager();
       annotManager.setIsAdminUser(true);
 
-      let annotations = annotManager.getAnnotationsList().filter(a => a.PageNumber === 5);
+      const annotations = annotManager.getAnnotationsList().filter((a) => a.PageNumber === 5);
 
-      let parentAnnot = annotations[0];
-      let childrenAnnots = annotations.slice(1,5);
+      const parentAnnot = annotations[0];
+      const childrenAnnots = annotations.slice(1,5);
 
       annotManager.groupAnnotations(parentAnnot, childrenAnnots);
       annotManager.selectAnnotation(childrenAnnots[0]);
@@ -282,7 +282,7 @@ describe('Test cases for comment panel', () => {
     expect(await pageContainer.evaluate((node) => node.innerHTML)).toBeTruthy();
   });
 
-  it('should be able to scroll to selected annotation for VirtualizedList', async() => {
+  it('should be able to scroll to selected annotation for VirtualizedList', async () => {
     const instance = await result.waitForInstance();
 
     await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
@@ -291,11 +291,11 @@ describe('Test cases for comment panel', () => {
     instance('openElement', 'notesPanel');
 
     const selectAnnotAndTest = async (index) => {
-      let annotId = await (result.iframe as Frame).evaluate(async(index) => {
+      const annotId = await (result.iframe as Frame).evaluate(async (index) => {
         const annotManager = window.instance.Core.documentViewer.getAnnotationManager();
         annotManager.deselectAllAnnotations();
 
-        const annots = annotManager.getAnnotationsList().filter(annot => annot instanceof window.Annotations.FreeTextAnnotation);
+        const annots = annotManager.getAnnotationsList().filter((annot) => annot instanceof window.Annotations.FreeTextAnnotation);
         annotManager.selectAnnotation(annots[index]);
 
         return annots[index].Id;
@@ -308,17 +308,17 @@ describe('Test cases for comment panel', () => {
       const noteContainer = await result.iframe.$(`#note_${annotId}`);
       expect(await noteContainer.evaluate((node) => node.innerHTML)).toBeTruthy();
 
-      let focusedElement = await (result.iframe as Frame).evaluate(async() => {
+      const focusedElement = await (result.iframe as Frame).evaluate(async () => {
         return document.activeElement.constructor.name;
       });
 
       // check if focusing on the textarea, can't think of any other way to tell if there is a blinking text cursor
-      expect(focusedElement).toBe("HTMLTextAreaElement");
+      expect(focusedElement).toBe('HTMLTextAreaElement');
 
-      const notePanel = await result.iframe.$(`.NotesPanel .ReactVirtualized__Grid`);
+      const notePanel = await result.iframe.$('.NotesPanel .ReactVirtualized__Grid');
       const selectedScrollTop = await notePanel.evaluate((node) => node.scrollTop);
 
-      await (result.iframe as Frame).evaluate(async(index) => {
+      await (result.iframe as Frame).evaluate(async (index) => {
         const annotManager = window.instance.Core.documentViewer.getAnnotationManager();
         annotManager.deselectAllAnnotations();
       }, index);
@@ -335,7 +335,7 @@ describe('Test cases for comment panel', () => {
     await selectAnnotAndTest(88);
   });
 
-  it('should be able to select text in the note panel', async() => {
+  it('should be able to select text in the note panel', async () => {
     const instance = await result.waitForInstance();
 
     await instance('loadDocument', '/test-files/demo-annotated.pdf');
@@ -344,7 +344,7 @@ describe('Test cases for comment panel', () => {
     instance('openElement', 'notesPanel');
     await page.waitFor(2000);
 
-    const annotNote = await result.iframe.$(`#note_140aed30-b8f5-49f7-374f-b8a7cbd88e17 .container`);
+    const annotNote = await result.iframe.$('#note_140aed30-b8f5-49f7-374f-b8a7cbd88e17 .container .note-text-preview');
     const bounding_box = await annotNote.boundingBox();
 
     await page.mouse.move(bounding_box.x, bounding_box.y);
@@ -358,10 +358,10 @@ describe('Test cases for comment panel', () => {
       return window.getSelection().toString();
     });
 
-    expect(selectedText).toEqual('Great quotes! Do we have any more?');
+    expect(selectedText.trim()).toEqual('Great quotes! Do we have any more?');
   });
 
-  it('for VirtualizedList should not scroll, when new comment is added', async() => {
+  it('for VirtualizedList should not scroll, when new comment is added', async () => {
     const instance = await result.waitForInstance();
 
     await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
@@ -369,12 +369,12 @@ describe('Test cases for comment panel', () => {
 
     instance('openElement', 'notesPanel');
 
-    await (result.iframe as Frame).evaluate(async() => {
+    await (result.iframe as Frame).evaluate(async () => {
       const annotManager = window.instance.Core.documentViewer.getAnnotationManager();
 
-      const replyList = annotManager.getAnnotationsList().filter(a => a.InReplyTo).map(a => a.InReplyTo);
+      const replyList = annotManager.getAnnotationsList().filter((a) => a.InReplyTo).map((a) => a.InReplyTo);
       const map = replyList.reduce((acc, e) => {
-        let nextAcc = {...acc};
+        const nextAcc = { ...acc };
         nextAcc[e] = nextAcc[e] ? (nextAcc[e] + 1) : 1;
         return nextAcc;
       }, {});
@@ -385,7 +385,7 @@ describe('Test cases for comment panel', () => {
 
     await page.waitFor(500);
 
-    const notePanel = await result.iframe.$(`.NotesPanel .ReactVirtualized__Grid`);
+    const notePanel = await result.iframe.$('.NotesPanel .ReactVirtualized__Grid');
 
     await notePanel.evaluate((node) => {
       // scroll down a bit so that it looking at the "reply" area
@@ -406,18 +406,18 @@ describe('Test cases for comment panel', () => {
           </text>
         </annots>
       </xfdf>>`);
-        // blurring so we don't have a blinking text cursor causing screenshot test to fail
-        (document.querySelector('.reply-area-container > textarea') as HTMLElement).blur();
+      // blurring so we don't have a blinking text cursor causing screenshot test to fail
+      (document.querySelector('.reply-area-container > div > textarea') as HTMLElement).blur();
     });
 
     await page.waitFor(500);
 
     expect(await notePanel.screenshot()).toMatchImageSnapshot({
-      customSnapshotIdentifier: `note-panel-scrolling-when-added`,
+      customSnapshotIdentifier: 'note-panel-scrolling-when-added',
     });
   });
 
-  it('Buttons should be disabled if there is nothing to persist', async() => {
+  it('Buttons should be disabled if there is nothing to persist', async () => {
     await page.waitFor(Timeouts.PDF_PRIME_DOCUMENT);
 
     const instance = await result.waitForInstance();
@@ -454,7 +454,7 @@ describe('Test cases for comment panel', () => {
     expect(await replyButton.evaluate((element) => !element.classList.contains('disabled'))).toBeTruthy();
   });
 
-  it('should be able enable and disable virtualized list', async() => {
+  it('should be able enable and disable virtualized list', async () => {
     const instance = await result.waitForInstance();
 
     await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
@@ -463,41 +463,41 @@ describe('Test cases for comment panel', () => {
     instance('openElement', 'notesPanel');
     await page.waitFor(500);
 
-    let annotCount = await (result.iframe as Frame).evaluate(async() => {
-      return window.instance.Core.documentViewer.getAnnotationManager().getAnnotationsList().filter(a => !a.InReplyTo && a.Listable).length;
+    const annotCount = await (result.iframe as Frame).evaluate(async () => {
+      return window.instance.Core.documentViewer.getAnnotationManager().getAnnotationsList().filter((a) => !a.InReplyTo && a.Listable).length;
     });
 
-    let noteEleCount = await (result.iframe as Frame).evaluate(async() => {
+    const noteEleCount = await (result.iframe as Frame).evaluate(async () => {
       return Array.from(document.querySelectorAll('.Note')).length;
     });
 
     await page.waitFor(500);
     expect(annotCount).toBeGreaterThan(noteEleCount);
 
-    await (result.iframe as Frame).evaluate(async() => {
+    await (result.iframe as Frame).evaluate(async () => {
       window.instance.UI.disableFeatures(window.instance.UI.Feature.NotesPanelVirtualizedList);
     });
 
     await page.waitFor(1000);
 
-    let nonVirtualListNoteEleCount = await (result.iframe as Frame).evaluate(async() => {
+    const nonVirtualListNoteEleCount = await (result.iframe as Frame).evaluate(async () => {
       return Array.from(document.querySelectorAll('.Note')).length;
     });
 
     expect(annotCount).toEqual(nonVirtualListNoteEleCount);
 
-    await (result.iframe as Frame).evaluate(async() => {
+    await (result.iframe as Frame).evaluate(async () => {
       window.instance.UI.enableFeatures(window.instance.UI.Feature.NotesPanelVirtualizedList);
     });
 
-    let virtualNoteEleCount = await (result.iframe as Frame).evaluate(async() => {
+    const virtualNoteEleCount = await (result.iframe as Frame).evaluate(async () => {
       return Array.from(document.querySelectorAll('.Note')).length;
     });
 
     expect(virtualNoteEleCount).toEqual(noteEleCount);
   });
 
-  it('should update row positions when changing sort strategies', async() => {
+  it('should update row positions when changing sort strategies', async () => {
     const instance = await result.waitForInstance();
 
     await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
@@ -506,17 +506,17 @@ describe('Test cases for comment panel', () => {
     instance('openElement', 'notesPanel');
     await page.waitFor(500);
 
-    const notesTopStyle = await (result.iframe as Frame).evaluate(async() => {
+    const notesTopStyle = await (result.iframe as Frame).evaluate(async () => {
       return  (Array.from(document.querySelectorAll('.virtualized-notes-container .ReactVirtualized__Grid__innerScrollContainer > div')) as Array<HTMLElement>).map((a) => a.style.top);
     });
 
-    await (result.iframe as Frame).evaluate(async() => {
+    await (result.iframe as Frame).evaluate(async () => {
       (document.querySelector('button[data-element="dropdown-item-modifiedDate"]') as HTMLElement).click();
     });
 
     await page.waitFor(1000);
 
-    const notesTopStyleAfter = await (result.iframe as Frame).evaluate(async() => {
+    const notesTopStyleAfter = await (result.iframe as Frame).evaluate(async () => {
       return  (Array.from(document.querySelectorAll('.virtualized-notes-container .ReactVirtualized__Grid__innerScrollContainer > div')) as Array<HTMLElement>).map((a) => a.style.top);
     });
 
@@ -524,7 +524,7 @@ describe('Test cases for comment panel', () => {
     const notesToCompare = Math.min(notesTopStyle.length, notesTopStyleAfter.length);
     let doesPositionsChange = false;
 
-    for(let i = 0; i < notesToCompare; i++) {
+    for (let i = 0; i < notesToCompare; i++) {
       if (notesTopStyle[i] !== notesTopStyleAfter[i]) {
         doesPositionsChange = true;
         break;
@@ -534,7 +534,7 @@ describe('Test cases for comment panel', () => {
     expect(doesPositionsChange).toEqual(true);
   });
 
-  it('should be able resize when selection change for virtualizedList', async() => {
+  it('should be able resize when selection change for virtualizedList', async () => {
     const instance = await result.waitForInstance();
 
     await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
@@ -543,11 +543,11 @@ describe('Test cases for comment panel', () => {
     instance('openElement', 'notesPanel');
     await page.waitFor(500);
 
-   let annotIDToSelect = await (result.iframe as Frame).evaluate(async() => {
+    const annotIDToSelect = await (result.iframe as Frame).evaluate(async () => {
       const annotManager = window.instance.docViewer.getAnnotationManager();
       const annotList = annotManager.getAnnotationsList();
 
-      const replyCount = annotList.filter(a => a.PageNumber === 2 && a.InReplyTo).reduce((cur, val) => {
+      const replyCount = annotList.filter((a) => a.PageNumber === 2 && a.InReplyTo).reduce((cur, val) => {
         cur[val.InReplyTo] = cur[val.InReplyTo] ? cur[val.InReplyTo] + 1 : 1;
         return cur;
       }, {});
@@ -559,20 +559,20 @@ describe('Test cases for comment panel', () => {
 
     await page.waitFor(1000);
 
-    let selectedHeight = await (result.iframe as Frame).evaluate(async(id) => {
+    const selectedHeight = await (result.iframe as Frame).evaluate(async (id) => {
       return document.querySelector(`#note_${id}`).getBoundingClientRect().height;
     }, annotIDToSelect);
 
-    const notePanel = await result.iframe.$(`.NotesPanel .ReactVirtualized__Grid`);
+    const notePanel = await result.iframe.$('.NotesPanel .ReactVirtualized__Grid');
     // want selected annotation to be removed from DOM
     await notePanel.evaluate((node) => node.scrollTop = 5000);
 
-    await (result.iframe as Frame).evaluate(async() => {
+    await (result.iframe as Frame).evaluate(async () => {
       const annotManager = window.instance.docViewer.getAnnotationManager();
       const annotList = annotManager.getAnnotationsList();
 
       annotManager.deselectAllAnnotations();
-      const annot = annotList.filter(a => a.PageNumber === 23 && !a.InReplyTo)[0];
+      const annot = annotList.filter((a) => a.PageNumber === 23 && !a.InReplyTo)[0];
       annotManager.selectAnnotation(annot);
     });
 
@@ -582,14 +582,14 @@ describe('Test cases for comment panel', () => {
     await notePanel.evaluate((node) => node.scrollTop = 0);
     await page.waitFor(1000);
 
-    let deselectedHeight = await (result.iframe as Frame).evaluate(async(id) => {
+    const deselectedHeight = await (result.iframe as Frame).evaluate(async (id) => {
       return document.querySelector(`#note_${id}`).getBoundingClientRect().height;
     }, annotIDToSelect);
 
     expect(selectedHeight).not.toEqual(deselectedHeight);
   });
 
-  it('should be able to handle duplicate Ids', async() => {
+  it('should be able to handle duplicate Ids', async () => {
     const instance = await result.waitForInstance();
 
     await instance('loadDocument', '/test-files/demo-annotated.pdf');
@@ -599,7 +599,7 @@ describe('Test cases for comment panel', () => {
     await page.waitFor(500);
 
     // import annotation with duplicate IDs on different pages
-    await (result.iframe as Frame).evaluate(async() => {
+    await (result.iframe as Frame).evaluate(async () => {
       await window.instance.Core.documentViewer.getAnnotationManager().importAnnotations(`<?xml version="1.0" encoding="UTF-8"?>
       <xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve">
         <pdf-info xmlns="http://www.pdftron.com/pdfinfo" version="2" import-version="3"/>
@@ -639,21 +639,21 @@ describe('Test cases for comment panel', () => {
     });
 
     await page.waitFor(500);
-    await (result.iframe as Frame).evaluate(async() => {
+    await (result.iframe as Frame).evaluate(async () => {
       (document.querySelector('button[data-element="dropdown-item-position"]') as HTMLElement).click();
     });
 
     await page.waitFor(500);
-    await (result.iframe as Frame).evaluate(async() => {
+    await (result.iframe as Frame).evaluate(async () => {
       (document.querySelector('button[data-element="dropdown-item-modifiedDate"]') as HTMLElement).click();
     });
 
     await page.waitFor(500);
-    await (result.iframe as Frame).evaluate(async() => {
+    await (result.iframe as Frame).evaluate(async () => {
       (document.querySelector('button[data-element="dropdown-item-position"]') as HTMLElement).click();
     });
 
-    const duplicateCount = await (result.iframe as Frame).evaluate(async() => {
+    const duplicateCount = await (result.iframe as Frame).evaluate(async () => {
       return document.querySelectorAll('#note_a698eb86-1317-870f-cd87-cbf2607b4e04').length;
     });
 
@@ -662,7 +662,7 @@ describe('Test cases for comment panel', () => {
 
   it(
     'should have a comment with an anchor tag that captures the prefix "https://" and trailing slash',
-    async() => {
+    async () => {
       const instance = await result.waitForInstance();
 
       await instance('loadDocument', '/test-files/autolinker-prefix-and-trailing-slash.pdf');
@@ -671,7 +671,7 @@ describe('Test cases for comment panel', () => {
       instance('openElement', 'notesPanel');
       await page.waitFor(500);
 
-      const hrefFromAnchor = await (result.iframe as Frame).evaluate(async() => {
+      const hrefFromAnchor = await (result.iframe as Frame).evaluate(async () => {
         return String(document.querySelectorAll('.Note')[0].getElementsByTagName('a')[0].getAttribute('href'));
       });
 
@@ -682,7 +682,7 @@ describe('Test cases for comment panel', () => {
 
   it(
     'should continue to render the comment by Justin if Sally is filtered and replies are included',
-    async() => {
+    async () => {
       const instance = await result.waitForInstance();
 
       await instance('loadDocument', '/test-files/filter-by-comment-replies.pdf');
@@ -693,20 +693,20 @@ describe('Test cases for comment panel', () => {
       instance('openElement', 'filterModal');
       await page.waitFor(500);
 
-      await (result.iframe as Frame).evaluate(async() => {
+      await (result.iframe as Frame).evaluate(async () => {
         const sallyCheckbox = document.getElementById('Sally');
         sallyCheckbox.click();
         return;
       });
 
-      await (result.iframe as Frame).evaluate(async() => {
+      await (result.iframe as Frame).evaluate(async () => {
         const searchForApplyBtn = document.getElementsByClassName('filter-annot-apply');
         const applyBtn = searchForApplyBtn[0] as HTMLButtonElement;
         applyBtn.click();
         return;
       });
 
-      let noteEleCount = await (result.iframe as Frame).evaluate(async() => {
+      let noteEleCount = await (result.iframe as Frame).evaluate(async () => {
         return Array.from(document.querySelectorAll('.Note')).length;
       });
 
@@ -716,7 +716,7 @@ describe('Test cases for comment panel', () => {
       instance('openElement', 'filterModal');
       await page.waitFor(500);
 
-      await (result.iframe as Frame).evaluate(async() => {
+      await (result.iframe as Frame).evaluate(async () => {
         const includeRepliesCheckbox = document.getElementById(
           'filter-annot-modal-include-replies'
         );
@@ -728,7 +728,7 @@ describe('Test cases for comment panel', () => {
         return;
       });
 
-      noteEleCount = await (result.iframe as Frame).evaluate(async() => {
+      noteEleCount = await (result.iframe as Frame).evaluate(async () => {
         return Array.from(document.querySelectorAll('.Note')).length;
       });
 

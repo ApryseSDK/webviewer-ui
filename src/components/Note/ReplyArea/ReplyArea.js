@@ -11,6 +11,7 @@ import mentionsManager from 'helpers/MentionsManager';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
+import Button from 'src/components/Button';
 
 import './ReplyArea.scss';
 
@@ -118,7 +119,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     isReplyDisabledForAnnotation;
 
   const replyAreaClass = classNames({
-    "reply-area-container": true,
+    "reply-area": true,
     unread: isUnread,
   });
 
@@ -127,30 +128,33 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     onPendingReplyChange();
   };
   return ifReplyNotAllowed ? null : (
-    <div
-      className={replyAreaClass}
-      // stop bubbling up otherwise the note will be closed
-      // due to annotation deselection
-      onMouseDown={e => e.stopPropagation()}
-    >
-      <NoteTextarea
-        ref={el => {
-          textareaRef.current = el;
-        }}
-        value={pendingReplyMap[annotation.Id]}
-        onChange={value => handleNoteTextareaChange(value)}
-        onSubmit={postReply}
-        onBlur={() => setIsFocused(false)}
-        onFocus={() => setIsFocused(true)}
-        placeholder={`${t('action.reply')}...`}
-        aria-label={`${t('action.reply')}...`}
-      />
-      <button className={`reply-button${!pendingReplyMap[annotation.Id] ? ' disabled' : ''}`}
-        disabled={!pendingReplyMap[annotation.Id]}
-        onMouseUp={e => postReply(e)}
+    <div className='reply-area-container'>
+      <div
+        className={replyAreaClass}
+        // stop bubbling up otherwise the note will be closed
+        // due to annotation deselection
+        onMouseDown={e => e.stopPropagation()}
       >
-        {t('action.post')}
-      </button>
+        <NoteTextarea
+          ref={el => {
+            textareaRef.current = el;
+          }}
+          value={pendingReplyMap[annotation.Id]}
+          onChange={value => handleNoteTextareaChange(value)}
+          onSubmit={postReply}
+          onBlur={() => setIsFocused(false)}
+          onFocus={() => setIsFocused(true)}
+          placeholder={`${t('action.reply')}...`}
+          aria-label={`${t('action.reply')}...`}
+        />
+      </div>
+      <div className='reply-button-container'>
+        <Button
+          img="icon-post-reply"
+          className={`reply-button${!pendingReplyMap[annotation.Id] ? ' disabled' : ''}`}
+          onMouseUp={e => postReply(e)}
+        />
+      </div>
     </div>
   );
 };

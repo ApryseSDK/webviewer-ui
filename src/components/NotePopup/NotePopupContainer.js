@@ -1,12 +1,18 @@
 import React from 'react';
 import core from 'core';
 import NotePopup from './NotePopup';
+import Tooltip from 'components/Tooltip';
+import { useTranslation } from 'react-i18next';
+
+
 
 function NotePopupContainer(props) {
-  const { annotation, setIsEditing, noteIndex, notePopupId } = props; // eslint-disable-line react/prop-types
+  const { annotation, setIsEditing, noteIndex } = props; // eslint-disable-line react/prop-types
 
   const [canModify, setCanModify] = React.useState(core.canModify(annotation));
   const [canModifyContents, setCanModifyContents] = React.useState(core.canModifyContents(annotation));
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [t] = useTranslation();
 
   React.useEffect(() => {
     function onUpdateAnnotationPermission() {
@@ -18,7 +24,7 @@ function NotePopupContainer(props) {
       core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
   }, [annotation]);
 
-  const handleEdit = React.useCallback(function handleEdit(){
+  const handleEdit = React.useCallback(function handleEdit() {
     const isFreeText = annotation instanceof window.Annotations.FreeTextAnnotation;
     if (isFreeText && core.getAnnotationManager().isFreeTextEditingEnabled()) {
       core.getAnnotationManager().trigger('annotationDoubleClicked', annotation);
@@ -29,22 +35,31 @@ function NotePopupContainer(props) {
 
   const handleDelete = React.useCallback(function handleDelete() {
     core.deleteAnnotations([annotation, ...annotation.getGroupedChildren()]);
-  },[annotation]);
+  }, [annotation]);
+
+  const openPopup = () => setIsOpen(true);
+  const closePopup = () => setIsOpen(false);
 
   const isEditable = canModifyContents;
   const isDeletable = canModify && !annotation?.NoDelete;
-  const isOpen = notePopupId === annotation?.Id;
 
   const passProps = {
     handleEdit,
     handleDelete,
     isEditable,
     isDeletable,
-    isOpen
+    isOpen,
+    closePopup,
+    openPopup,
   };
 
+  // We wrap the element in a div so the tooltip works properly
   return (
-    <NotePopup {...props} {...passProps} />
+    <Tooltip content={t('formField.formFieldPopup.options')}>
+      <div>
+        <NotePopup {...props} {...passProps} />
+      </div>
+    </Tooltip>
   );
 }
 
