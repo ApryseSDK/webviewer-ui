@@ -18,6 +18,7 @@
  * @property {string} OUTLINE_BOOKMARKS_CHANGED {@link UI#event:outlineBookmarksChanged UI.Events.outlineBookmarksChanged}
  * @property {string} VIEWER_LOADED {@link UI#event:viewerLoaded UI.Events.viewerLoaded}
  * @property {string} VISIBILITY_CHANGED {@link UI#event:visibilityChanged UI.Events.visibilityChanged}
+ * @property {string} FULLSCREEN_MODE_TOGGLED {@link UI#event:fullscreenModeToggled UI.Events.fullscreenModeToggled}
  * @example
   WebViewer(...).then(function(instance) {
     const UIEvents = instance.UI.Events;
@@ -45,7 +46,8 @@ export default {
   'USER_BOOKMARKS_CHANGED': 'userBookmarksChanged',
   'OUTLINE_BOOKMARKS_CHANGED': 'outlineBookmarksChanged',
   'VIEWER_LOADED': 'viewerLoaded',
-  'VISIBILITY_CHANGED': 'visibilityChanged'
+  'VISIBILITY_CHANGED': 'visibilityChanged',
+  'FULLSCREEN_MODE_TOGGLED': 'fullscreenModeToggled'
 };
 
 /**
@@ -173,4 +175,12 @@ export default {
 * @type {object}
 * @property {string} element DataElement name
 * @property {boolean} isVisible The new visibility
+*/
+
+/**
+* Triggered when fullscreen mode is toggled.
+* @name UI#fullscreenModeToggled
+* @event
+* @type {object}
+* @property {boolean} isInFullscreen Whether in fullscreen mode or not.
 */

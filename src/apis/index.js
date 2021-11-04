@@ -64,6 +64,7 @@ import getToolMode from './getToolMode';
 import getZoomLevel from './getZoomLevel';
 import getMaxZoomLevel from './getMaxZoomLevel';
 import getMinZoomLevel from './getMinZoomLevel';
+import getIsHighContrastMode from './getIsHighContrastMode';
 import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
@@ -77,6 +78,7 @@ import isHighContrastModeEnabled from './isHighContrastModeEnabled';
 import isMobileDevice from './isMobileDevice';
 import isReadOnly from './isReadOnly';
 import isToolDisabled from './isToolDisabled';
+import isFullscreen from './isFullscreen';
 import loadDocument from './loadDocument';
 import mentions from './mentions';
 import settingsMenuOverlay from './menuOverlay';
@@ -100,7 +102,6 @@ import setActivePalette from './setActivePalette';
 import setColorPalette from './setColorPalette';
 import setPageReplacementModalFileList from './setPageReplacementModalFileList';
 import setHighContrastMode from './setHighContrastMode';
-import getIsHighContrastMode from './getIsHighContrastMode';
 import setCurrentPageNumber from './setCurrentPageNumber';
 import setCustomModal from './setCustomModal';
 import setCustomNoteFilter from './setCustomNoteFilter';
@@ -230,6 +231,7 @@ export default store => {
     isElementOpen: isElementOpen(store),
     isToolDisabled: isToolDisabled(store),
     isHighContrastModeEnabled: isHighContrastModeEnabled(store),
+    isFullscreen,
     loadDocument: loadDocument(store),
     settingsMenuOverlay: settingsMenuOverlay(store),
     pageManipulationOverlay: pageManipulationOverlay(store),
