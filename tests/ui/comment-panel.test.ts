@@ -194,7 +194,7 @@ describe('Test cases for comment panel', () => {
       '4': {},
       '7': { 'text-decoration': 'line-through' },
       '11': {},
-      '17': { 'font-weight': 'bold' },
+      '17': { 'font-weight': 'bold', 'color': '#e44234' },
       '21': { 'text-decoration': 'word' }
     };
     await addAndCreateAnnot(result.iframe, true, false, 'Test www.google.ca 1234', '', richTextStyle);
@@ -211,14 +211,14 @@ describe('Test cases for comment panel', () => {
 
     const noteContainer = await result.iframe.$(`#note_${annotId} .container`);
     const innerHTML = await noteContainer.evaluate((node) => node.innerHTML);
-    expect(innerHTML).toBe('<span><span style="font-style: italic;">T</span><span style="font-weight: bold; font-style: italic;">es</span><span style="font-style: italic;">t</span><span> </span></span><a href="http://www.google.ca" target="_blank" rel="noopener noreferrer"><span>ww</span><span style="text-decoration: line-through;">w.go</span><span>ogle.c</span><span style="font-weight: bold;">a</span></a><span style="font-weight: bold;"> 12</span><span style="text-decoration: underline;">34</span>');
+    expect(innerHTML).toBe('<span><span style="font-style: italic;">T</span><span style="font-weight: bold; font-style: italic;">es</span><span style="font-style: italic;">t</span><span> </span></span><a href="http://www.google.ca" target="_blank" rel="noopener noreferrer"><span>ww</span><span style="text-decoration: line-through;">w.go</span><span>ogle.c</span><span style=\"font-weight: bold; color: rgb(228, 66, 52);\">a</span></a><span style=\"font-weight: bold; color: rgb(228, 66, 52);\"> 12</span><span style=\"text-decoration: underline;\">34</span>');
 
     // Search comments
     const searchInput = await result.iframe.$('#NotesPanel__input');
     await searchInput.type('www');
     await page.waitFor(2000);
     const innerHTML1 = await noteContainer.evaluate((node) => node.innerHTML);
-    expect(innerHTML1).toBe('<span><span style="font-style: italic;">T</span><span style="font-weight: bold; font-style: italic;">es</span><span style="font-style: italic;">t</span><span> </span></span><a href="http://www.google.ca" target="_blank" rel="noopener noreferrer"><span class="highlight"><span>ww</span><span style="text-decoration: line-through;">w</span></span><span style="text-decoration: line-through;">.go</span><span>ogle.c</span><span style="font-weight: bold;">a</span></a><span style="font-weight: bold;"> 12</span><span style="text-decoration: underline;">34</span>');
+    expect(innerHTML1).toBe('<span><span style="font-style: italic;">T</span><span style="font-weight: bold; font-style: italic;">es</span><span style="font-style: italic;">t</span><span> </span></span><a href="http://www.google.ca" target="_blank" rel="noopener noreferrer"><span class="highlight"><span>ww</span><span style="text-decoration: line-through;">w</span></span><span style="text-decoration: line-through;">.go</span><span>ogle.c</span><span style=\"font-weight: bold; color: rgb(228, 66, 52);\">a</span></a><span style=\"font-weight: bold; color: rgb(228, 66, 52);\"> 12</span><span style=\"text-decoration: underline;\">34</span>');
   });
 
   it.skip('should be able to only add reply to annotation that does not belong to user', async () => {
@@ -383,7 +383,7 @@ describe('Test cases for comment panel', () => {
       annotManager.selectAnnotation(annotManager.getAnnotationById(annotIDWithMostReplies));
     });
 
-    await page.waitFor(500);
+    await page.waitFor(1000);
 
     const notePanel = await result.iframe.$('.NotesPanel .ReactVirtualized__Grid');
 
@@ -393,7 +393,7 @@ describe('Test cases for comment panel', () => {
       return node.scrollTop;
     });
 
-    await page.waitFor(500);
+    await page.waitFor(1000);
 
     await (result.iframe as Frame).evaluate(async () => {
       const annotManager = window.instance.Core.documentViewer.getAnnotationManager();
@@ -410,7 +410,7 @@ describe('Test cases for comment panel', () => {
       (document.querySelector('.reply-area-container > div > textarea') as HTMLElement).blur();
     });
 
-    await page.waitFor(500);
+    await page.waitFor(1000);
 
     expect(await notePanel.screenshot()).toMatchImageSnapshot({
       customSnapshotIdentifier: 'note-panel-scrolling-when-added',

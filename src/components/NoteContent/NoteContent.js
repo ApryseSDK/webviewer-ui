@@ -115,7 +115,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             </NoteTextPreview>
           )
         } else {
-          return highlightResult
+          return highlightResult;
         }
       }
       const contentToRender = [];
@@ -184,6 +184,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const contents = customData?.contents || annotation.getContents();
   const contentsToRender = annotation.getContents();
   const richTextStyle = annotation.getRichTextStyle();
+  const textColor = annotation['TextColor'];
   // This is the text placeholder passed to the ContentArea
   // It ensures that if we try and edit, we get the right placeholder
   // depending on whether the comment has been saved to the annotation or not
@@ -220,6 +221,11 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
 
   const content = useMemo(
     () => {
+      const contentStyle = {};
+      if (textColor) {
+        contentStyle.color = textColor.toHexString();
+      }
+
       return (
         <React.Fragment>
           {isEditing && isSelected ? (
@@ -232,17 +238,16 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             />
           ) : (
             contentsToRender && (
-              <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked}>
+                <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked} style={contentStyle}>
                 {renderContents(contentsToRender, richTextStyle)}
               </div>
             )
           )}
-        </React.Fragment >
+        </React.Fragment>
       );
     },
     [annotation, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange]
   );
-   
 
   const text = annotation.getCustomData('trn-annot-preview');
   const textPreview = useMemo(
@@ -411,7 +416,8 @@ const getRichTextSpan = (text, richTextStyle, key) => {
   const style = {
     fontWeight: richTextStyle['font-weight'],
     fontStyle: richTextStyle['font-style'],
-    textDecoration: richTextStyle['text-decoration']
+    textDecoration: richTextStyle['text-decoration'],
+    color: richTextStyle['color']
   };
   if (style.textDecoration) {
     style.textDecoration = style.textDecoration.replace('word', 'underline');
