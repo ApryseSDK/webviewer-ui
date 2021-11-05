@@ -30,7 +30,7 @@ const ErrorModal = () => {
 
   useEffect(() => {
     const onError = error => {
-      error = error.detail?.message || error.detail || error.message;
+      /*error = error.detail?.message || error.detail || error.message;
 
       let errorMessage;
 
@@ -47,7 +47,7 @@ const ErrorModal = () => {
 
       if (errorMessage) {
         dispatch(actions.showErrorMessage(errorMessage));
-      }
+      }*/
     };
 
     window.addEventListener('loaderror', onError);

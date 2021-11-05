@@ -124,6 +124,7 @@ import setSideWindowVisibility from './setSideWindowVisibility';
 import setSortNotesBy from './setSortNotesBy';
 import setSortStrategy from './setSortStrategy';
 import setSwipeOrientation from './setSwipeOrientation';
+import enableMomentumScroll from './enableMomentumScroll';
 import setTheme from './setTheme';
 import setToolbarGroup from './setToolbarGroup';
 import setToolMode from './setToolMode';
@@ -262,6 +263,7 @@ export default store => {
     setDefaultPrintOptions: setDefaultPrintOptions(store),
     setSortStrategy: setSortStrategy(store),
     setSwipeOrientation,
+    enableMomentumScroll,
     setTheme: setTheme(store),
     setToolbarGroup: setToolbarGroup(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),

@@ -37,6 +37,7 @@ const TouchEventManager = {
       zoom: 1,
       type: '',
     };
+    this.momentumScrollEnabled = true;
     this.handleTouchStart = this.handleTouchStart.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
@@ -273,8 +274,10 @@ const TouchEventManager = {
           const touchDuration = (Date.now() - this.touch.touchStartTimeStamp) / millisecondsToSeconds;
 
           if (touchDuration < 0.2) {
-            this.touch.stopMomentumScroll = false;
-            this.startMomentumScroll(touchDuration);
+            if (this.momentumScrollEnabled) {
+              this.touch.stopMomentumScroll = false;
+              this.startMomentumScroll(touchDuration);
+            }
           } else {
             this.horziontalLock = false;
             this.verticalLock = false;
@@ -349,6 +352,11 @@ const TouchEventManager = {
     const dHorizontal = this.touch.horizontalDistance / touchDuration / 1.85;
     const dVertical = this.touch.verticalDistance / touchDuration / 1.85;
     const momentumScroll = () => {
+      if (!this.momentumScrollEnabled) {
+        this.touch.stopMomentumScroll = true;
+        return;
+      }
+      
       const nextLeft = this.easeOutQuad(currentIteration, initScrollLeft, dHorizontal, iterationsCount);
       const nextTop = this.easeOutQuad(currentIteration, initScrollTop, dVertical, iterationsCount);
       this.verticalMomentum = dVertical;
