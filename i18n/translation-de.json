@@ -71,11 +71,15 @@
     "insertBlankPageBelow": "Leere Seite unten einfügen page",
     "pageManipulation": "Seitenmanipulation",
     "replace": "Ersetzen",
+    "showLess": "zeige weniger",
+    "showMore": "...mehr",
     "chooseFile": "Datei auswählen",
     "selectYourOption": "Option wählen",
     "open": "Öffnen",
     "deselectAll": "Auswahl aufheben",
-    "select": "Auswählen"
+    "select": "Auswählen",
+    "moveToTop": "Nach oben verschieben",
+    "moveToBottom": "Nach unten gehen"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -216,11 +220,10 @@
     "selectHowToLoadFile": "Wählen Sie aus, wie Sie Ihr Dokument laden möchten",
     "openFileByUrl": "Datei von URL öffnen:",
     "enterUrlHere": "URL hier eingeben",
-    "openLocalFile" : "Lokale Datei öffnen:",
+    "openLocalFile": "Lokale Datei öffnen:",
     "selectFile": "Datei auswählen",
     "selectPageToReplace": "Wählen Sie die Seite(n) im Dokument aus, die Sie ersetzen möchten.",
     "embeddedFiles": "Eingebettete Dateien",
-    "fileAttachmentAnnotations": "Anmerkungen zu Dateianhängen",
     "pageNum": "Seitennummer"
   },
   "option": {
@@ -254,7 +257,9 @@
       "status": "Status",
       "author": "Autor",
       "type": "Art",
-      "color": "Farbe"
+      "color": "Farbe",
+      "createDate": "Erstellungsdatum",
+      "modifiedDate": "Geändertes Datum"
     },
     "toolbarGroup": {
       "dropdownLabel": "Symbolleistengruppen",
@@ -280,7 +285,9 @@
       "pageTransition": "Seitenübergang"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10"
+      "placeholder": "1, 3, 5-10",
+      "selectTooltip": "Mehrere Seiten auswählen",
+      "closeTooltip": "Mehrfachauswahl schließen"
     },
     "outlineControls": {
       "add": "Artikel hinzufügen",
@@ -391,6 +398,11 @@
     "measurementOption": {
       "scale": "Maßstab"
     },
+    "stylePopup": {
+      "textStyle": "Textstil",
+      "colorStyle": "Farben",
+      "invalidFontSize": "Schriftgröße muss kleiner sein als"
+    },
     "styleOption": {
       "style": "Stil",
       "solid": "Regulär",
@@ -428,11 +440,21 @@
       "rotateClockwise": "Im Uhrzeigersinn",
       "rotateCounterClockwise": "Gegen den Uhrzeigersinn"
     },
+    "thumbnailsControlOverlay": {
+      "move": "Seiten verschieben"
+    },
     "richText": {
       "bold": "Fett",
       "italic": "Kursiv",
       "underline": "Unterstreichen",
-      "strikeout": "Durchstreichen"
+      "strikeout": "Durchstreichen",
+      "alignLeft": "Text linksbündig ausrichten",
+      "alignRight": "Text rechtsbündig ausrichten",
+      "alignCenter": "Text mittig ausrichten",
+      "justifyCenter": "Textausrichtung zentrieren",
+      "alignTop": "Oben ausrichten",
+      "alignMiddle": "Mitte ausrichten",
+      "alignBottom": "Unterseite ausrichten"
     },
     "customStampModal": {
       "stampText": "Stempeltext:",

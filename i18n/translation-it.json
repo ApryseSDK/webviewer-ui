@@ -71,11 +71,15 @@
     "insertBlankPageBelow": "Inserisci una pagina vuota qui sotto",
     "pageManipulation": "Manipolazione della pagina",
     "replace": "Sostituire",
+    "showLess": "mostra meno",
+    "showMore": "...Di più",
     "chooseFile": "Scegli un file",
     "selectYourOption": "Seleziona la tua opzione",
     "open": "Aprire",
     "deselectAll": "Deselezionare tutto",
-    "select": "Selezionare"
+    "select": "Selezionare",
+    "moveToTop": "Sposta in alto",
+    "moveToBottom": "Sposta in basso"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -171,7 +175,8 @@
     "textPopup": "Popup di testo",
     "createStampButton": "Crea nuovo timbro",
     "filter": "Filtro",
-    "pageReplaceModalTitle": "Sostituisci pagina"
+    "pageReplaceModalTitle": "Sostituisci pagina",
+    "files": "File"
   },
   "message": {
     "toolsOverlayNoPresets": "Nessun preset",
@@ -215,11 +220,10 @@
     "selectHowToLoadFile": "Seleziona come caricare il tuo documento",
     "openFileByUrl": "Apri file tramite URL:",
     "enterUrlHere": "Inserisci l'URL qui",
-    "openLocalFile" : "Apri file locale:",
+    "openLocalFile": "Apri file locale:",
     "selectFile": "Seleziona il file",
     "selectPageToReplace": "Seleziona le pagine del documento con cui desideri sostituire.",
     "embeddedFiles": "File incorporati",
-    "fileAttachmentAnnotations": "Annotazioni file allegati",
     "pageNum": "Numero di pagina"
   },
   "option": {
@@ -253,7 +257,9 @@
       "status": "Stato",
       "author": "Autore",
       "type": "genere",
-      "color": "Colore"
+      "color": "Colore",
+      "createDate": "Data di Creazione",
+      "modifiedDate": "Data modificata"
     },
     "toolbarGroup": {
       "dropdownLabel": "Gruppi della barra degli strumenti",
@@ -279,7 +285,9 @@
       "pageTransition": "Transizione di pagina"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10"
+      "placeholder": "1, 3, 5-10",
+      "selectTooltip": "Seleziona più pagine",
+      "closeTooltip": "Chiudi selezione multipla"
     },
     "outlineControls": {
       "add": "Aggiungi articolo",
@@ -390,6 +398,11 @@
     "measurementOption": {
       "scale": "Scala"
     },
+    "stylePopup": {
+      "textStyle": "Stile di testo",
+      "colorStyle": "Colori",
+      "invalidFontSize": "La dimensione del carattere deve essere inferiore a"
+    },
     "styleOption": {
       "style": "Stile",
       "solid": "Solido",
@@ -427,11 +440,21 @@
       "rotateClockwise": "Senso orario",
       "rotateCounterClockwise": "Antiorario"
     },
+    "thumbnailsControlOverlay": {
+      "move": "Sposta pagine"
+    },
     "richText": {
       "bold": "Grassetto",
       "italic": "Corsivo",
       "underline": "Sottolineato",
-      "strikeout": "Barrato"
+      "strikeout": "Barrato",
+      "alignLeft": "Testo allineato a sinistra",
+      "alignRight": "Allineamento del testo a destra",
+      "alignCenter": "Allineamento del testo al centro",
+      "justifyCenter": "Centro di giustificazione del testo",
+      "alignTop": "Allinea in alto",
+      "alignMiddle": "Allinea al centro",
+      "alignBottom": "Allinea in basso"
     },
     "customStampModal": {
       "stampText": "Testo del timbro:",

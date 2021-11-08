@@ -71,11 +71,15 @@
     "insertBlankPageBelow": "Вставьте пустую страницу ниже",
     "pageManipulation": "Манипуляции со страницей",
     "replace": "Заменять",
+    "showLess": "показывай меньше",
+    "showMore": "...более",
     "chooseFile": "Выберите файл",
     "selectYourOption": "Выберите свой вариант",
     "open": "Открыть",
     "deselectAll": "Убрать выделение со всего",
-    "select": "Выбирать"
+    "select": "Выбирать",
+    "moveToTop": "Наверх",
+    "moveToBottom": "Вниз"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -216,11 +220,10 @@
     "selectHowToLoadFile": "Выберите способ загрузки документа",
     "openFileByUrl": "Открыть файл по URL:",
     "enterUrlHere": "Введите здесь URL",
-    "openLocalFile" : "Открыть локальный файл:",
+    "openLocalFile": "Открыть локальный файл:",
     "selectFile": "Выберите файл",
     "selectPageToReplace": "Выберите страницы в документе, которые вы хотите заменить.",
     "embeddedFiles": "Встроенные файлы",
-    "fileAttachmentAnnotations": "Аннотации к прикрепленным файлам",
     "pageNum": "Номер страницы"
   },
   "option": {
@@ -254,7 +257,9 @@
       "status": "Статус",
       "author": "Автор",
       "type": "Тип",
-      "color": "Цвет"
+      "color": "Цвет",
+      "createDate": "Дата создания",
+      "modifiedDate": "Дата изменения"
     },
     "toolbarGroup": {
       "dropdownLabel": "Группы панелей инструментов",
@@ -280,7 +285,9 @@
       "pageTransition": "Переход страниц"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10"
+      "placeholder": "1, 3, 5-10",
+      "selectTooltip": "Выбрать несколько страниц",
+      "closeTooltip": "Закрыть множественный выбор"
     },
     "outlineControls": {
       "add": "Добавить элемент",
@@ -391,6 +398,11 @@
     "measurementOption": {
       "scale": "Масштаб"
     },
+    "stylePopup": {
+      "textStyle": "Текстовый стиль",
+      "colorStyle": "Цвета",
+      "invalidFontSize": "Размер шрифта должен быть меньше"
+    },
     "styleOption": {
       "style": "Стиль",
       "solid": "твердый",
@@ -428,11 +440,21 @@
       "rotateClockwise": "по часовой стрелке",
       "rotateCounterClockwise": "Против часовой стрелки"
     },
+    "thumbnailsControlOverlay": {
+      "move": "Переместить страницы"
+    },
     "richText": {
       "bold": "Жирное лицо",
       "italic": "курсивный",
       "underline": "Подчеркнутый",
-      "strikeout": "Зачеркнутый"
+      "strikeout": "Зачеркнутый",
+      "alignLeft": "Выровнять текст по левому краю",
+      "alignRight": "Выровнять текст по правому краю",
+      "alignCenter": "Выровнять текст по центру",
+      "justifyCenter": "Выравнивание текста по центру",
+      "alignTop": "Выровнять по верху",
+      "alignMiddle": "Выровнять по центру",
+      "alignBottom": "Выровнять по низу"
     },
     "customStampModal": {
       "stampText": "Штамп текст:",

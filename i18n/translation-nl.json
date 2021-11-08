@@ -71,11 +71,15 @@
     "insertBlankPageBelow": "Lege pagina hieronder invoegen",
     "pageManipulation": "Paginamanipulatie",
     "replace": "Vervangen",
+    "showLess": "laat minder zien",
+    "showMore": "...meer",
     "chooseFile": "Kies een bestand",
     "selectYourOption": "Selecteer uw optie",
     "open": "Open",
     "deselectAll": "Deselecteer alles",
-    "select": "Selecteer"
+    "select": "Selecteer",
+    "moveToTop": "Ga naar boven",
+    "moveToBottom": "Naar beneden verplaatsen"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -216,11 +220,10 @@
     "selectHowToLoadFile": "Selecteer hoe u uw document wilt laden",
     "openFileByUrl": "Bestand openen op URL:",
     "enterUrlHere": "Voer hier de URL in",
-    "openLocalFile" : "Lokaal bestand openen:",
+    "openLocalFile": "Lokaal bestand openen:",
     "selectFile": "Selecteer bestand",
     "selectPageToReplace": "Selecteer de pagina's in het document die u wilt vervangen.",
     "embeddedFiles": "Ingesloten bestanden",
-    "fileAttachmentAnnotations": "Annotaties bij bestandsbijlagen",
     "pageNum": "Paginanummer"
   },
   "option": {
@@ -254,7 +257,9 @@
       "status": "Toestand",
       "author": "Auteur",
       "type": "Type",
-      "color": "Kleur"
+      "color": "Kleur",
+      "createDate": "Aanmaakdatum",
+      "modifiedDate": "Aangepaste datum"
     },
     "toolbarGroup": {
       "dropdownLabel": "Werkbalkgroepen",
@@ -280,7 +285,9 @@
       "pageTransition": "Pagina overgang"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10"
+      "placeholder": "1, 3, 5-10",
+      "selectTooltip": "Selecteer meerdere pagina's",
+      "closeTooltip": "Sluit meervoudige selectie"
     },
     "outlineControls": {
       "add": "Voeg item toe",
@@ -391,6 +398,11 @@
     "measurementOption": {
       "scale": "Schaal"
     },
+    "stylePopup": {
+      "textStyle": "Tekststijl",
+      "colorStyle": "Kleuren",
+      "invalidFontSize": "Lettergrootte moet kleiner zijn dan"
+    },
     "styleOption": {
       "style": "Stijl",
       "solid": "Solide",
@@ -428,11 +440,21 @@
       "rotateClockwise": "Met de klok mee",
       "rotateCounterClockwise": "Tegen de klok in"
     },
+    "thumbnailsControlOverlay": {
+      "move": "Pagina's verplaatsen"
+    },
     "richText": {
       "bold": "Vet",
       "italic": "Cursief",
       "underline": "Onderstrepen",
-      "strikeout": "Doorhalen"
+      "strikeout": "Doorhalen",
+      "alignLeft": "Tekst links uitlijnen",
+      "alignRight": "Tekst rechts uitlijnen",
+      "alignCenter": "Tekst midden uitlijnen",
+      "justifyCenter": "Tekst midden uitvullen",
+      "alignTop": "Boven uitlijnen",
+      "alignMiddle": "Midden uitlijnen",
+      "alignBottom": "Onderuit uitlijnen"
     },
     "customStampModal": {
       "stampText": "Stempel tekst:",

@@ -71,11 +71,15 @@
     "insertBlankPageBelow": "Insérez une page vierge ci-dessous",
     "pageManipulation": "Manipulation des pages",
     "replace": "Remplacer",
+    "showLess": "Montrer moins",
+    "showMore": "...Suite",
     "chooseFile": "Choisissez un fichier",
     "selectYourOption": "Sélectionnez votre option",
     "open": "Ouvert",
     "deselectAll": "Tout déselectionner",
-    "select": "Sélectionner"
+    "select": "Sélectionner",
+    "moveToTop": "Déplacer vers le haut",
+    "moveToBottom": "Déplacer vers le bas"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -216,11 +220,10 @@
     "selectHowToLoadFile": "Sélectionnez comment charger votre document",
     "openFileByUrl": "Ouvrir le fichier par URL:",
     "enterUrlHere": "Entrez l'URL ici",
-    "openLocalFile" : "Ouvrir le fichier local:",
+    "openLocalFile": "Ouvrir le fichier local:",
     "selectFile": "Choisir le dossier",
     "selectPageToReplace": "Sélectionnez les pages du document que vous souhaitez remplacer.",
     "embeddedFiles": "Fichiers intégrés",
-    "fileAttachmentAnnotations": "Annotations des pièces jointes",
     "pageNum": "Numéro de page"
   },
   "option": {
@@ -254,7 +257,9 @@
       "status": "Statut",
       "author": "Auteur",
       "type": "Type",
-      "color": "Couleur"
+      "color": "Couleur",
+      "createDate": "Date de création",
+      "modifiedDate": "Date modifiée"
     },
     "toolbarGroup": {
       "dropdownLabel": "Groupes de barres d'outils",
@@ -280,7 +285,9 @@
       "pageTransition": "Transition de page"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10"
+      "placeholder": "1, 3, 5-10",
+      "selectTooltip": "Sélectionnez plusieurs pages",
+      "closeTooltip": "Fermer la sélection multiple"
     },
     "outlineControls": {
       "add": "Ajouter un item",
@@ -391,6 +398,11 @@
     "measurementOption": {
       "scale": "Échelle"
     },
+    "stylePopup": {
+      "textStyle": "Style de texte",
+      "colorStyle": "Couleurs",
+      "invalidFontSize": "La taille de la police doit être inférieure à"
+    },
     "styleOption": {
       "style": "Style",
       "solid": "Solide",
@@ -428,11 +440,21 @@
       "rotateClockwise": "Dans le sens horaire",
       "rotateCounterClockwise": "Dans le sens antihoraire"
     },
+    "thumbnailsControlOverlay": {
+      "move": "Déplacer des pages"
+    },
     "richText": {
       "bold": "Audacieux",
       "italic": "Italique",
       "underline": "Souligner",
-      "strikeout": "Barré"
+      "strikeout": "Barré",
+      "alignLeft": "Texte aligné à gauche",
+      "alignRight": "Texte aligné à droite",
+      "alignCenter": "Centre d'alignement du texte",
+      "justifyCenter": "Centre de justification du texte",
+      "alignTop": "Aligner en haut",
+      "alignMiddle": "Aligner au milieu",
+      "alignBottom": "Aligner en bas"
     },
     "customStampModal": {
       "stampText": "Texte du tampon:",

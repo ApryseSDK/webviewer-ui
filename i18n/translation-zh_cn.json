@@ -71,11 +71,15 @@
     "insertBlankPageBelow": "在下方插入空白页",
     "pageManipulation": "页面操作",
     "replace": "代替",
+    "showLess": "显示较少",
+    "showMore": "...更多的",
     "chooseFile": "选择一个文件",
     "selectYourOption": "选择您的选项",
     "open": "打开",
     "deselectAll": "取消全选",
-    "select": "选择"
+    "select": "选择",
+    "moveToTop": "移到顶部",
+    "moveToBottom": "移到底部"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -216,11 +220,10 @@
     "selectHowToLoadFile": "选择如何加载文档",
     "openFileByUrl": "通过 URL 打开文件：",
     "enterUrlHere": "在此输入网址",
-    "openLocalFile" : "打开本地文件：",
+    "openLocalFile": "打开本地文件：",
     "selectFile": "选择文件",
     "selectPageToReplace": "选择文档中要替换的页面。",
     "embeddedFiles": "嵌入文件",
-    "fileAttachmentAnnotations": "文件附件注释",
     "pageNum": "页码"
   },
   "option": {
@@ -254,7 +257,9 @@
       "status": "状态",
       "author": "作者",
       "type": "类型",
-      "color": "颜色"
+      "color": "颜色",
+      "createDate": "创建日期",
+      "modifiedDate": "修改日期"
     },
     "toolbarGroup": {
       "dropdownLabel": "工具栏组",
@@ -280,7 +285,9 @@
       "pageTransition": "页面转换"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10"
+      "placeholder": "1, 3, 5-10",
+      "selectTooltip": "选择多个页面",
+      "closeTooltip": "关闭多选"
     },
     "outlineControls": {
       "add": "添加项目",
@@ -391,6 +398,11 @@
     "measurementOption": {
       "scale": "比例"
     },
+    "stylePopup": {
+      "textStyle": "文字样式",
+      "colorStyle": "颜色",
+      "invalidFontSize": "字体大小必须小于"
+    },
     "styleOption": {
       "style": "样式",
       "solid": "固体",
@@ -428,11 +440,21 @@
       "rotateClockwise": "顺时针",
       "rotateCounterClockwise": "逆时针方向"
     },
+    "thumbnailsControlOverlay": {
+      "move": "移动页面"
+    },
     "richText": {
       "bold": "粗体",
       "italic": "斜体",
       "underline": "下划线",
-      "strikeout": "删除线"
+      "strikeout": "删除线",
+      "alignLeft": "文字左对齐",
+      "alignRight": "文字右对齐",
+      "alignCenter": "文字居中对齐",
+      "justifyCenter": "文本对齐中心",
+      "alignTop": "顶部对齐",
+      "alignMiddle": "居中对齐",
+      "alignBottom": "底部对齐"
     },
     "customStampModal": {
       "stampText": "印章文字：",
