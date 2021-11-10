@@ -1,34 +1,16 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import LeftPanelPageTabsXOD from "components/LeftPanelPageTabs/LeftPanelPageTabsXOD/LeftPanelPageTabsXOD";
+import LeftPanelPageTabsRotate from "components/LeftPanelPageTabs/LeftPanelPageTabsRotate/LeftPanelPageTabsRotate";
+import withMockRedux from "../../../../jest/withMockRedux";
 
-// create test component with mock redux
-const initialState = {
-  viewer: {
-    disabledElements: {},
-    openElements: [],
-    customElementOverrides: []
-  },
-};
-function rootReducer(state = initialState, action) { // eslint-disable-line no-unused-vars
-  return state;
-}
-const store = createStore(rootReducer);
-const LeftPanelPageTabsXODRedux = function(props) {
-  return (
-    <Provider store={store}>
-      <LeftPanelPageTabsXOD {...props} />
-    </Provider>
-  );
-};
+const LeftPanelPageTabsRotateRedux = withMockRedux(LeftPanelPageTabsRotate);
+
 function noop() {}
 
-describe('LeftPanelPageTabsXOD', () => {
+describe('LeftPanelPageTabsRotate', () => {
   describe('Component', () => {
     it('Should render component correctly with all buttons', () => {
-      const { container } = render(<LeftPanelPageTabsXODRedux
+      const { container } = render(<LeftPanelPageTabsRotateRedux
         onRotateClockwise={noop}
         onRotateCounterClockwise={noop}
       />);
@@ -47,7 +29,7 @@ describe('LeftPanelPageTabsXOD', () => {
           dataElement: "thumbnailsControlRotateClockwise"
         },
       };
-      const { container } = render(<LeftPanelPageTabsXODRedux
+      const { container } = render(<LeftPanelPageTabsRotateRedux
         onRotateCounterClockwise={handlers.onRotateCounterClockwise.fn}
         onRotateClockwise={handlers.onRotateClockwise.fn}
       />);

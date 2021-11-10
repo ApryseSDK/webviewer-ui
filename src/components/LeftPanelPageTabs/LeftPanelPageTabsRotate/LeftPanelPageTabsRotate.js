@@ -2,7 +2,7 @@ import React from 'react';
 import Button from "components/Button";
 import "../LeftPanelPageTabs/LeftPanelPageTabsContainer.scss";
 
-function LeftPanelPageTabsXOD({ onRotateClockwise, onRotateCounterClockwise }) {
+function LeftPanelPageTabsRotate({ onRotateClockwise, onRotateCounterClockwise }) {
   return (
     <div className={`PageControlContainer root small`}>
       <Button
@@ -23,4 +23,4 @@ function LeftPanelPageTabsXOD({ onRotateClockwise, onRotateCounterClockwise }) {
   );
 }
 
-export default LeftPanelPageTabsXOD;
+export default LeftPanelPageTabsRotate;

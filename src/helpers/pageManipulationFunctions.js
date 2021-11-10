@@ -20,7 +20,7 @@ const getNewRotation = (curr, counter_clockwise = false) => {
 };
 
 const rotateClockwise = pageNumbers => {
-  if (workerTypes.XOD === core.getDocument().type) {
+  if (workerTypes.PDF !== core.getDocument()?.type) {
     const docViewer = core.getDocumentViewer();
     const currentRotations = docViewer.getPageRotations();
     for (const page of pageNumbers) {
@@ -33,7 +33,7 @@ const rotateClockwise = pageNumbers => {
 };
 
 const rotateCounterClockwise = pageNumbers => {
-  if (workerTypes.XOD === core.getDocument().type) {
+  if (workerTypes.PDF !== core.getDocument()?.type) {
     const docViewer = core.getDocumentViewer();
     const currentRotations = docViewer.getPageRotations();
     for (const page of pageNumbers) {

@@ -12,7 +12,6 @@ import Button from 'components/Button';
 
 import core from 'core';
 import { extractPagesToMerge, mergeDocument, mergeExternalWebViewerDocument } from 'helpers/pageManipulation';
-import { workerTypes } from 'constants/types';
 import selectors from 'selectors';
 import actions from 'actions';
 import Events from 'constants/events';
@@ -183,12 +182,6 @@ const ThumbnailsPanel = () => {
     };
 
     const onDocumentLoaded = () => {
-      const doc = core.getDocument();
-      if (doc.type === workerTypes.PDF || doc.type === workerTypes.XOD || (doc.type === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
-        setAllowPageOperations(true);
-      } else {
-        setAllowPageOperations(false);
-      }
       activeThumbRenders = {};
       dispatch(actions.setSelectedPageThumbnails([]));
     };

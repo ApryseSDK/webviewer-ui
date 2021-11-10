@@ -15,7 +15,7 @@ import LeftPanelPageTabsSmall from "components/LeftPanelPageTabs/LeftPanelPageTa
 import LeftPanelPageTabs from "components/LeftPanelPageTabs/LeftPanelPageTabs/LeftPanelPageTabs";
 import { workerTypes } from "constants/types";
 import core from "src/core";
-import LeftPanelPageTabsXOD from "components/LeftPanelPageTabs/LeftPanelPageTabsXOD/LeftPanelPageTabsXOD";
+import LeftPanelPageTabsRotate from "components/LeftPanelPageTabs/LeftPanelPageTabsRotate/LeftPanelPageTabsRotate";
 
 function LeftPanelPageTabsContainer() {
   const dispatch = useDispatch();
@@ -35,10 +35,10 @@ function LeftPanelPageTabsContainer() {
   const onInsertAbove = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertAbove(pageNumbers);
   const onInsertBelow = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertBelow(pageNumbers);
 
-  const isXod = workerTypes.XOD === core.getDocument().type;
-  if (isXod) {
+  const isPdf = workerTypes.PDF === core.getDocument()?.type;
+  if (!isPdf) {
     return (
-      <LeftPanelPageTabsXOD onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise}/>
+      <LeftPanelPageTabsRotate onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise}/>
     );
   }
   // Breakpoint to convert to popups
