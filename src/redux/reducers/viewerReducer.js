@@ -241,6 +241,7 @@ export default initialState => (state = initialState, action) => {
             group: payload.buttonGroup,
             img: payload.buttonImage,
             showColor: payload.showColor || 'active',
+            showPresets: payload.showPresets ?? true,
           },
         },
       };
@@ -279,7 +280,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_MULTI_VIEWER_MERGING':
       return { ...state, isMultipleViewerMerging: payload.isMultipleViewerMerging };
     case 'SET_ENABLE_NOTE_PANEL_VIRTUALIZED_LIST':
-      return { ...state, enableNotesPanelVirtualizedList: payload.enableNotesPanelVirtualizedList };  
+      return { ...state, enableNotesPanelVirtualizedList: payload.enableNotesPanelVirtualizedList };
     case 'SET_ALLOW_PAGE_NAVIGATION':
       return { ...state, allowPageNavigation: payload.allowPageNavigation };
     case 'SET_READ_ONLY':
@@ -397,9 +398,9 @@ export default initialState => (state = initialState, action) => {
       const { unreadAnnotationIdSet } = state;
       const { annotationId, isRead } = payload;
       if (isRead){
-        unreadAnnotationIdSet.delete(annotationId);   
+        unreadAnnotationIdSet.delete(annotationId);
       } else {
-        unreadAnnotationIdSet.add(annotationId);   
+        unreadAnnotationIdSet.add(annotationId);
       }
       return { ...state, unreadAnnotationIdSet: new Set(unreadAnnotationIdSet) };
     case 'SET_LANGUAGE':

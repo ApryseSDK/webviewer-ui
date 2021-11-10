@@ -29,6 +29,7 @@ class ToolsOverlay extends React.PureComponent {
     activeToolGroup: PropTypes.string,
     closeElements: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
+    showPresets: PropTypes.bool,
   };
 
   constructor() {
@@ -117,6 +118,7 @@ class ToolsOverlay extends React.PureComponent {
       isToolStyleOpen,
       isDesktop,
       isMobile,
+      showPresets,
     } = this.props;
 
     const isVisible = (isOpen || true) && !isDisabled;
@@ -158,7 +160,7 @@ class ToolsOverlay extends React.PureComponent {
     //       }}
     //     />
     //   );
-    } else if (noPresets) {
+    } else if (noPresets || !showPresets) {
       Component = (
         <div className="no-presets">
           {tReady? t('message.toolsOverlayNoPresets') : ''}
@@ -224,6 +226,7 @@ const mapStateToProps = state => ({
   toolNames: selectors.getActiveToolNamesForActiveToolGroup(state),
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
+  showPresets: selectors.shouldShowPresets(state),
   activeToolName: selectors.getActiveToolName(state),
 });
 

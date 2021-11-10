@@ -355,3 +355,8 @@ export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;
 export const getUnreadAnnotationIdSet = state => state.viewer.unreadAnnotationIdSet;
 
 export const getCurrentLanguage = state => state.viewer.currentLanguage;
+
+export const shouldShowPresets = (state) => {
+  const response = state.viewer.toolButtonObjects[state.viewer.activeToolName];
+  return response?.showPresets ?? true;
+};
