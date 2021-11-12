@@ -376,3 +376,8 @@ export const isInDesktopOnlyMode = state => state.viewer.isInDesktopOnlyMode;
 export const pageDeletionConfirmationModalEnabled = state => state.viewer.pageDeletionConfirmationModalEnabled;
 
 export const getPageManipulationOverlayItems = state => state.viewer.pageManipulationOverlay;
+
+export const shouldShowPresets = (state) => {
+  const response = state.viewer.toolButtonObjects[state.viewer.activeToolName];
+  return response?.showPresets ?? true;
+};
