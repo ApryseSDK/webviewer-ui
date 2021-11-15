@@ -96,6 +96,10 @@
     width: 90px;
     margin-left: 0px;
     justify-content: left;
+
+    @include mobile {
+      width: 110px;
+    }
   }
 }
 
