@@ -240,6 +240,7 @@ export default initialState => (state = initialState, action) => {
             group: payload.buttonGroup,
             img: payload.buttonImage,
             showColor: payload.showColor || 'active',
+            showPresets: payload.showPresets ?? true,
           },
         },
       };
