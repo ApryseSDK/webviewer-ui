@@ -1,0 +1,124 @@
+@import '../../constants/popup';
+
+.AnnotationMovePopup {
+  width: 350px;
+  .annotationMovePopupActions {
+    float: right;
+    margin: 15px 10px;
+    .btn {
+      margin-right: 10px;
+    }
+  }
+  p {
+    font-size: 13px;
+  }
+
+  .btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 12px;
+    line-height: 1.2;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+  }
+  .btn-primary {
+    color: #fff;
+    background-color: #296498;
+    border-color: #296498;
+  }
+  .btn.disabled,
+  .btn:disabled {
+    opacity: 0.65;
+  }
+
+  .destination {
+    font-size: 13px;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .annotationPreviewContainer {
+    margin: 0 45px;
+    display: block;
+    color: #333;
+    text-align: center;
+  }
+  .pageIndexInput {
+    height: 24px;
+    padding: 2px;
+    border: 1px solid #dde2e8;
+  }
+  .header {
+    color: #333;
+    font-size: 18px;
+  }
+  .center {
+    text-align: center;
+  }
+
+  //Override Thumbnail specific styles for the popup
+  .Thumbnail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 260px;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 25px;
+
+    .container {
+      position: relative;
+      display: flex;
+      height: 260px;
+      justify-content: center;
+      align-items: center;
+
+      .page-image {
+        width: auto !important;
+        max-width: 220px;
+        height: auto !important;
+        max-height: 260px;
+        border: 1px solid transparent;
+      }
+
+      .annotation-image {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 220px;
+        max-height: 260px;
+      }
+    }
+
+    .page-label {
+      display: none;
+    }
+
+    &.active {
+      .page-image {
+        border: 1px solid $gray-3;
+        border: 1px solid var(--border-color);
+      }
+    }
+  }
+}
+
