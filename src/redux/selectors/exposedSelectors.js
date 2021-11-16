@@ -24,6 +24,8 @@ export const getSelectedDisplayedSignatureIndex = state => state.viewer.selected
 export const getSelectedDisplayedSignature = state => getDisplayedSignatures(state)[getSelectedDisplayedSignatureIndex(state)];
 export const getDisplayedSignaturesFilterFunction = state => state.viewer.displayedSignaturesFilterFunction;
 
+export const getAutoFocusReplyInputOnAnnotationSelect = state =>
+  state.viewer.autoFocusReplyInputOnAnnotationSelect
 export const getNotesInLeftPanel = state =>
   state.viewer.notesInLeftPanel;
 export const getLeftPanelWidth = state =>
@@ -384,3 +386,8 @@ export const pageDeletionConfirmationModalEnabled = state => state.viewer.pageDe
 export const getPageReplacementFileList = state => state.viewer.pageReplacementFileList;
 
 export const getPageManipulationOverlayItems = state => state.viewer.pageManipulationOverlay;
+
+export const shouldShowPresets = (state) => {
+  const response = state.viewer.toolButtonObjects[state.viewer.activeToolName];
+  return response?.showPresets ?? true;
+};

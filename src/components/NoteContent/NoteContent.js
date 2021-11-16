@@ -311,7 +311,12 @@ const ContentArea = ({
   textAreaValue,
   onTextAreaValueChange,
 }) => {
-  const [isMentionEnabled, isNotesPanelOpen] = useSelector(state => [
+  const [
+    autoFocusReplyInputOnAnnotationSelect,
+    isMentionEnabled,
+    isNotesPanelOpen
+  ] = useSelector(state => [
+    selectors.getAutoFocusReplyInputOnAnnotationSelect(state),
     selectors.getIsMentionEnabled(state),
     selectors.isElementOpen(state, 'notesPanel'),
   ]);
@@ -324,7 +329,7 @@ const ContentArea = ({
     if (isNotesPanelOpen && textareaRef.current) {
       setTimeout(() => {
         // need setTimeout because textarea seem to rerender and unfocus
-        if (textareaRef && textareaRef.current) {
+        if (textareaRef && textareaRef.current && autoFocusReplyInputOnAnnotationSelect) {
           textareaRef.current.focus();
         }
       }, 0);
