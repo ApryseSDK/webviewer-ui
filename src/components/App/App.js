@@ -16,6 +16,7 @@ import NotesPanel from 'components/NotesPanel';
 import SearchPanel from 'components/SearchPanel';
 import RightPanel from 'components/RightPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
+import AnnotationShareModal from 'components/AnnotationShareModal';
 import TextPopup from 'components/TextPopup';
 import ContextMenuPopup from 'components/ContextMenuPopup';
 import RichTextPopup from 'components/RichTextPopup';
@@ -181,6 +182,7 @@ const App = ({ removeEventHandlers }) => {
         <Model3DModal />
         <ColorPickerModal />
         {core.isFullPDFEnabled() && <SignatureValidationModal />}
+        <AnnotationShareModal />
       </div>
 
       <PrintHandler />

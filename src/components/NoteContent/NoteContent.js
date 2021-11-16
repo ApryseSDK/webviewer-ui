@@ -202,6 +202,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
 
   const header = useMemo(
     () => {
+      const publicAnnotation = (annotation.getCustomData('customKeyIsPublic') == 'true' ? true : false)
+
       return (
         <React.Fragment>
           {!isReply &&
@@ -227,6 +229,12 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                     </div>}
                 </div>
               </div>
+              <div className="publicAnnotationPlaceholder">
+                  {publicAnnotation &&
+                    <Icon className="icon" glyph='users-solid' />
+                  }
+                  {publicAnnotation && t('annotation.public')}
+              </div>
               <div className="state-and-overflow">
                 <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
                 {!isStateDisabled && !isReply &&
@@ -243,7 +251,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                   />}
               </div>
             </div>
-            {isEditing && isSelected ? (
+            {isEditing && isSelected && annotation.elementName === 'text' ? (
               <ContentArea
                 annotation={annotation}
                 noteIndex={noteIndex}

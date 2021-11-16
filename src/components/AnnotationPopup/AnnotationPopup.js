@@ -6,14 +6,19 @@ import { useTranslation } from 'react-i18next';
 
 import ActionButton from 'components/ActionButton';
 import AnnotationStylePopup from 'components/AnnotationStylePopup';
+import AnnotationMovePopup from 'components/AnnotationMovePopup';
 import CustomizablePopup from 'components/CustomizablePopup';
+import AnnotationShareModal from 'components/AnnotationShareModal';
 
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
 import { isMobile, isIE } from 'helpers/device';
-import { getOpenedWarningModal, getOpenedColorPicker } from 'helpers/getElements';
+import {
+  getOpenedWarningModal,
+  getOpenedColorPicker,
+} from 'helpers/getElements';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -37,7 +42,7 @@ const AnnotationPopup = () => {
       selectors.getPopupItems(state, 'annotationPopup'),
       selectors.isElementOpen(state, 'notesPanel'),
     ],
-    shallowEqual,
+    shallowEqual
   );
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -46,16 +51,27 @@ const AnnotationPopup = () => {
   const [firstAnnotation, setFirstAnnotation] = useState(null);
   const [canModify, setCanModify] = useState(false);
   const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
+  const [isMovePopupOpen, setIsMovePopupOpen] = useState(false);
   const [hasAssociatedLink, setHasAssociatedLink] = useState(true);
-  const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(false);
+  const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(
+    false
+  );
   const popupRef = useRef();
-  const [includesFormFieldAnnotation, setIncludesFormFieldAnnotation] = useState(false);
+  const [
+    includesFormFieldAnnotation,
+    setIncludesFormFieldAnnotation,
+  ] = useState(false);
+  const [annotationShared, setAnnotationShared] = useState(false);
+  const [isSharePopupOpen, setIsSharePopupOpen] = useState(false);
 
   // helper function to get all the link annotations that are grouped with the passed in annotation
   const getGroupedLinkAnnotations = annotation => {
-    const groupedLinks = core.getAnnotationManager().getGroupAnnotations(annotation).filter(groupedAnnotation => {
-      return groupedAnnotation instanceof Annotations.Link;
-    });
+    const groupedLinks = core
+      .getAnnotationManager()
+      .getGroupAnnotations(annotation)
+      .filter(groupedAnnotation => {
+        return groupedAnnotation instanceof Annotations.Link;
+      });
     return groupedLinks;
   };
 
@@ -87,12 +103,19 @@ const AnnotationPopup = () => {
     // because the position state always has a new object reference
     const setPopupPositionAndShow = () => {
       if (popupRef.current && popupItems.length > 0) {
-        setPosition(getAnnotationPopupPositionBasedOn(firstAnnotation, popupRef));
+        setPosition(
+          getAnnotationPopupPositionBasedOn(firstAnnotation, popupRef)
+        );
         dispatch(actions.openElement('annotationPopup'));
+        let shared_annotation =
+          firstAnnotation.getCustomData('customKeyIsPublic') == 'true'
+            ? true
+            : false;
+        setAnnotationShared(shared_annotation);
       }
     };
 
-    if (firstAnnotation || isStylePopupOpen) {
+    if (firstAnnotation || isStylePopupOpen || isMovePopupOpen) {
       setPopupPositionAndShow();
     }
 
@@ -116,7 +139,9 @@ const AnnotationPopup = () => {
       if (action === 'modify') {
         setPopupPositionAndShow();
       }
-      const hasLinkAnnotation = annotations.some(annotation => annotation instanceof Annotations.Link);
+      const hasLinkAnnotation = annotations.some(
+        annotation => annotation instanceof Annotations.Link
+      );
       if (!hasLinkAnnotation) {
         return;
       }
@@ -136,13 +161,31 @@ const AnnotationPopup = () => {
 
     core.addEventListener('mouseLeftUp', onMouseLeftUp);
     core.addEventListener('annotationChanged', onAnnotationChanged);
-    core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+    core.addEventListener(
+      'updateAnnotationPermission',
+      onUpdateAnnotationPermission
+    );
     return () => {
       core.removeEventListener('mouseLeftUp', onMouseLeftUp);
       core.removeEventListener('annotationChanged', onAnnotationChanged);
-      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+      core.removeEventListener(
+        'updateAnnotationPermission',
+        onUpdateAnnotationPermission
+      );
     };
   }, [dispatch, canModify, firstAnnotation, isStylePopupOpen, popupItems]);
+
+  useEffect(() => {
+    const showShareConfirmation = () => {
+      if (popupRef.current && popupItems.length > 0) {
+        dispatch(actions.openElement('annotationShareModal'));
+      }
+    };
+
+    if (isSharePopupOpen) {
+      showShareConfirmation();
+    }
+  }, [dispatch, canModify, firstAnnotation, isSharePopupOpen]);
 
   useEffect(() => {
     const closeAndReset = () => {
@@ -152,18 +195,28 @@ const AnnotationPopup = () => {
       setIncludesFormFieldAnnotation(false);
       setCanModify(false);
       setIsStylePopupOpen(false);
+      setIsMovePopupOpen(false);
+      setIsSharePopupOpen(false);
     };
 
     const onAnnotationSelected = (annotations, action) => {
       if (action === 'selected' && annotations.length) {
         setFirstAnnotation(annotations[0]);
-        setIncludesFormFieldAnnotation(annotations.some(annotation => annotation.isFormFieldPlaceholder()));
+        setIncludesFormFieldAnnotation(
+          annotations.some(annotation => annotation.isFormFieldPlaceholder())
+        );
         setCanModify(core.canModify(annotations[0]));
         if (isNotesPanelOpen) {
-          setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
+          setTimeout(
+            () => dispatch(actions.openElement('annotationNoteConnectorLine')),
+            300
+          );
         }
       } else {
-        const actionOnOtherAnnotation = firstAnnotation && annotations && !annotations.includes(firstAnnotation);
+        const actionOnOtherAnnotation =
+          firstAnnotation &&
+          annotations &&
+          !annotations.includes(firstAnnotation);
         if (action === 'deselected' && actionOnOtherAnnotation) {
           return;
         } else {
@@ -172,17 +225,13 @@ const AnnotationPopup = () => {
       }
     };
 
-    const onResize = () => {
-      firstAnnotation && setPosition(getAnnotationPopupPositionBasedOn(firstAnnotation, popupRef));
-    };
-
     core.addEventListener('annotationSelected', onAnnotationSelected);
     core.addEventListener('documentUnloaded', closeAndReset);
-    window.addEventListener('resize', onResize);
+    window.addEventListener('resize', closeAndReset);
     return () => {
       core.removeEventListener('annotationSelected', onAnnotationSelected);
       core.removeEventListener('documentUnloaded', closeAndReset);
-      window.removeEventListener('resize', onResize);
+      window.removeEventListener('resize', closeAndReset);
     };
   }, [dispatch, isNotesPanelOpen, firstAnnotation]);
 
@@ -194,22 +243,27 @@ const AnnotationPopup = () => {
   const hasStyle = Object.keys(style).length > 0;
   const redactionEnabled = core.isAnnotationRedactable(firstAnnotation);
   const selectedAnnotations = core.getSelectedAnnotations();
-  const primaryAnnotation = selectedAnnotations.find(selectedAnnotation => !selectedAnnotation.InReplyTo);
+  const primaryAnnotation = selectedAnnotations.find(
+    selectedAnnotation => !selectedAnnotation.InReplyTo
+  );
   const numberOfSelectedAnnotations = selectedAnnotations.length;
   const numberOfGroups = core.getNumberOfGroups(selectedAnnotations);
   const canGroup = numberOfGroups > 1;
   const canUngroup = numberOfGroups === 1 && numberOfSelectedAnnotations > 1;
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
-  const isFreeTextAnnot = firstAnnotation instanceof window.Annotations.FreeTextAnnotation;
+  const isFreeTextAnnot =
+    firstAnnotation instanceof window.Annotations.FreeTextAnnotation;
   const isFreeTextAndCanEdit =
-    isFreeTextAnnot && core.getAnnotationManager().isFreeTextEditingEnabled() && core.canModifyContents(firstAnnotation);
-
-
+    isFreeTextAnnot &&
+    core.getAnnotationManager().isFreeTextEditingEnabled() &&
+    core.canModifyContents(firstAnnotation);
 
   const commentOnAnnotation = () => {
     if (isFreeTextAndCanEdit) {
-      core.getAnnotationManager().trigger('annotationDoubleClicked', firstAnnotation);
+      core
+        .getAnnotationManager()
+        .trigger('annotationDoubleClicked', firstAnnotation);
     } else {
       dispatch(actions.openElement('notesPanel'));
       dispatch(actions.closeElement('searchPanel'));
@@ -219,17 +273,40 @@ const AnnotationPopup = () => {
   };
 
   const ShortCutKeysFor3DComponent = () => {
-    return (<div className="shortCuts3D">
-      <div className="closeButton" onClick={() => setShortCutKeysFor3DVisible(false)}>x</div>
-      <div className="row">{t('action.rotate3D')} <span>{t('shortcut.rotate3D')}</span></div>
-      <div className="row">{t('action.zoom')} <span>{t('shortcut.zoom3D')}</span></div>
-    </div>);
+    return (
+      <div className="shortCuts3D">
+        <div
+          className="closeButton"
+          onClick={() => setShortCutKeysFor3DVisible(false)}
+        >
+          x
+        </div>
+        <div className="row">
+          {t('action.rotate3D')} <span>{t('shortcut.rotate3D')}</span>
+        </div>
+        <div className="row">
+          {t('action.zoom')} <span>{t('shortcut.zoom3D')}</span>
+        </div>
+      </div>
+    );
   };
 
   const downloadFileAttachment = annot => {
     // no need to check that annot is of type file annot as the check is done in the JSX
     // trigger the annotationDoubleClicked event so that it will download the file
     core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
+  };
+
+  const makeAnnotationPrivate = () => {
+    const annotManager = core.getAnnotationManager();
+    core.setAnnotationCustomData(firstAnnotation, 'customKeyIsPublic', 'false');
+    annotManager.deselectAllAnnotations();
+    annotManager.trigger('annotationChanged', [
+      [firstAnnotation],
+      'modify',
+      [],
+    ]);
+    setAnnotationShared(false);
   };
 
   const toolNames = window.Core.Tools.ToolNames;
@@ -249,53 +326,65 @@ const AnnotationPopup = () => {
     toolNames.STICKY4,
   ];
 
-  const showCommentButton = !isNotesPanelDisabled &&
+  const showCommentButton =
+    !isNotesPanelDisabled &&
     !multipleAnnotationsSelected &&
     firstAnnotation.ToolName !== toolNames.CROP &&
     !includesFormFieldAnnotation;
 
-  const showEditStyleButton = canModify &&
+  const showEditStyleButton =
+    canModify &&
     hasStyle &&
     !isAnnotationStylePopupDisabled &&
     (!multipleAnnotationsSelected || canUngroup) &&
-    !toolsWithNoStyling.includes(firstAnnotation.ToolName) && !(firstAnnotation instanceof Annotations.Model3DAnnotation);
+    !toolsWithNoStyling.includes(firstAnnotation.ToolName);
 
-  const showRedactionButton = redactionEnabled &&
+  const showRedactionButton =
+    redactionEnabled &&
     !multipleAnnotationsSelected &&
     !includesFormFieldAnnotation;
 
-  const showGroupButton = canGroup &&
-    !includesFormFieldAnnotation;
+  const showGroupButton = canGroup && !includesFormFieldAnnotation;
 
-  const showCalibrateButton = canModify &&
+  const showCalibrateButton =
+    canModify &&
     firstAnnotation.Measure &&
     firstAnnotation instanceof Annotations.LineAnnotation;
 
-  const showFileDownloadButton = firstAnnotation instanceof window.Annotations.FileAttachmentAnnotation;
+  const showFileDownloadButton =
+    firstAnnotation instanceof window.Annotations.FileAttachmentAnnotation;
 
   const showLinkButton =
     !toolsThatCantHaveLinks.includes(firstAnnotation.ToolName) &&
     !includesFormFieldAnnotation;
 
-  const show3DShortCutButton = firstAnnotation instanceof Annotations.Model3DAnnotation && !isMobile();
-
   const annotationPopup = (
-    <div
-      className={classNames({
-        Popup: true,
-        AnnotationPopup: true,
-        open: isOpen,
-        closed: !isOpen,
-        stylePopupOpen: isStylePopupOpen,
-      })}
-      ref={popupRef}
-      data-element="annotationPopup"
-      style={{ ...position }}
-    >
-      {isStylePopupOpen ? (
-        <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} />
-      ) : (shortCutKeysFor3DVisible && firstAnnotation instanceof Annotations.Model3DAnnotation) ?
-        <ShortCutKeysFor3DComponent /> : (
+    <>
+      <div
+        className={classNames({
+          Popup: true,
+          AnnotationPopup: true,
+          open: isOpen,
+          closed: !isOpen,
+          stylePopupOpen: isStylePopupOpen,
+          movePopupOpen: isMovePopupOpen,
+        })}
+        ref={popupRef}
+        data-element="annotationPopup"
+        style={{ ...position }}
+      >
+        {isStylePopupOpen ? (
+          <AnnotationStylePopup
+            annotation={firstAnnotation}
+            style={style}
+            isOpen={isOpen}
+          />
+        ) : isMovePopupOpen ? (
+          <AnnotationMovePopup annotation={firstAnnotation} />
+        ) : shortCutKeysFor3DVisible &&
+          firstAnnotation instanceof Annotations.Model3DAnnotation ? (
+          <ShortCutKeysFor3DComponent />
+        ) : (
           <CustomizablePopup dataElement="annotationPopup">
             {showCommentButton && (
               <ActionButton
@@ -340,7 +429,9 @@ const AnnotationPopup = () => {
                 dataElement="annotationGroupButton"
                 title="action.group"
                 img="ic_group_24px"
-                onClick={() => core.groupAnnotations(primaryAnnotation, selectedAnnotations)}
+                onClick={() =>
+                  core.groupAnnotations(primaryAnnotation, selectedAnnotations)
+                }
               />
             )}
             {canUngroup && (
@@ -361,8 +452,7 @@ const AnnotationPopup = () => {
                 }}
                 dataElement="formFieldEditButton"
               />
-            )
-            }
+            )}
             {canModify && (
               <ActionButton
                 dataElement="annotationDeleteButton"
@@ -392,55 +482,91 @@ const AnnotationPopup = () => {
                 onClick={
                   hasAssociatedLink
                     ? () => {
-                      const annotManager = core.getAnnotationManager();
-                      selectedAnnotations.forEach(annot => {
-                        const linkAnnotations = getGroupedLinkAnnotations(annot);
-                        linkAnnotations.forEach((linkAnnot, index) => {
-                          annotManager.ungroupAnnotations([linkAnnot]);
-                          if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0 && index === 0) {
-                            annotManager.deleteAnnotations([annot, linkAnnot], null, true);
-                          } else {
-                            annotManager.deleteAnnotation(linkAnnot, null, true);
+                        const annotManager = core.getAnnotationManager();
+                        selectedAnnotations.forEach(annot => {
+                          const linkAnnotations = getGroupedLinkAnnotations(
+                            annot
+                          );
+                          linkAnnotations.forEach(linkAnnot => {
+                            annotManager.ungroupAnnotations([linkAnnot]);
+                            annotManager.deleteAnnotation(
+                              linkAnnot,
+                              null,
+                              true
+                            );
+                          });
+                          if (
+                            annot instanceof
+                              Annotations.TextHighlightAnnotation &&
+                            annot.Opacity === 0
+                          ) {
+                            annotManager.deleteAnnotation(annot);
                           }
                         });
-                      });
-                      dispatch(actions.closeElement('annotationPopup'));
-                    }
+                        dispatch(actions.closeElement('annotationPopup'));
+                      }
                     : () => dispatch(actions.openElement('linkModal'))
                 }
                 dataElement="linkButton"
               />
             )}
-            {showFileDownloadButton &&
-              (
-                <ActionButton
-                  title="action.fileAttachmentDownload"
-                  img="icon-download"
-                  onClick={() => downloadFileAttachment(firstAnnotation)}
-                  dataElement="fileAttachmentDownload"
-                />
-              )
-            }
-            {
-              show3DShortCutButton &&
-              (
+            {showFileDownloadButton && (
+              <ActionButton
+                title="action.fileAttachmentDownload"
+                img="icon-download"
+                onClick={() => downloadFileAttachment(firstAnnotation)}
+                dataElement="fileAttachmentDownload"
+              />
+            )}
+            {firstAnnotation instanceof Annotations.Model3DAnnotation &&
+              !isMobile() && (
                 <ActionButton
                   title="action.viewShortCutKeysFor3D"
                   img="icon-keyboard"
                   onClick={() => setShortCutKeysFor3DVisible(true)}
                   dataElement="shortCutKeysFor3D"
                 />
-              )
-            }
+              )}
+            {canModify && (
+              <ActionButton
+                dataElement="annotationMoveButton"
+                title="action.move"
+                img="ic_annotation_move_black_24px"
+                onClick={() => setIsMovePopupOpen(true)}
+              />
+            )}
+            {canModify && annotationShared && (
+              <ActionButton
+                dataElement="annotationPrivateButton"
+                title="action.private"
+                img="lock-solid"
+                onClick={makeAnnotationPrivate}
+              />
+            )}
+            {canModify && !annotationShared && (
+              <ActionButton
+                dataElement="annotationShareButton"
+                title="action.share"
+                img="users-solid"
+                onClick={() => setIsSharePopupOpen(true)}
+              />
+            )}
           </CustomizablePopup>
         )}
-    </div>
+      </div>
+      <AnnotationShareModal
+        annotation={firstAnnotation}
+        isOpen={isSharePopupOpen}
+      />
+    </>
   );
 
   return isIE || isMobile() ? (
     annotationPopup
   ) : (
-    <Draggable cancel=".Button, .cell, .sliders-container svg, select, button">{annotationPopup}</Draggable>
+    <Draggable cancel=".Button, .cell, .sliders-container svg, select, button">
+      {annotationPopup}
+    </Draggable>
   );
 };
 

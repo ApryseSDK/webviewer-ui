@@ -261,13 +261,6 @@ const Note = ({
                 />
               </div>
             ))}
-            {showReplyArea && (
-              <ReplyArea
-                isUnread={lastReplyId && unreadAnnotationIdSet.has(lastReplyId)}
-                onPendingReplyChange={markAllRepliesRead}
-                annotation={annotation}
-              />
-            )}
           </div>
         </React.Fragment>
       )}

@@ -243,4 +243,14 @@
   .highlight {
     background: #fffc95;
   }
+
+  .publicAnnotationPlaceholder {
+    padding-top: 6px;
+    .Icon {
+      width: 20px;
+      height: 20px;
+      float: left;
+      margin-right: 4px;
+    }
+  }
 }

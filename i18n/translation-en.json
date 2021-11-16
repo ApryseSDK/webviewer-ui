@@ -65,6 +65,12 @@
     "formFieldEdit": "Edit Form Field",
     "viewShortCutKeysFor3D": "View Shortcut Keys",
     "markAllRead": "Mark all as read",
+    "share": "Share",
+    "private": "Unshare",
+    "yes": "Yes",
+    "confirm_share_annotation": "This annotation will be shared with all other board members who have access to this meeting book.",
+    "are_you_sure": "Are you sure?",
+    "move": "Move",
     "insertPage": "Page Insertion",
     "insertBlankPageAbove": "Insert blank page above",
     "insertBlankPageBelow": "Insert blank page below",
@@ -114,7 +120,10 @@
     "comboBoxFormField": "Combo Box Field",
     "link": "Link",
     "other": "Other",
-    "3D": "3D"
+    "3D": "3D",
+    "public": "Public",
+    "move_help": "Enter a page number in the destination page field to move the annotation.",
+    "destination_page": "Destination page"
   },
   "rubberStamp": {
     "Approved": "Approved",

@@ -371,10 +371,13 @@ export default {
       { dataElement: 'annotationUngroupButton' },
       { dataElement: 'formFieldEditButton' },
       { dataElement: 'annotationDeleteButton' },
+      { dataElement: 'annotationMoveButton' },
       { dataElement: 'calibrateButton' },
       { dataElement: 'linkButton' },
       { dataElement: 'fileAttachmentDownload' },
       { dataElement: 'shortCutKeysFor3D' },
+      { dataElement: 'annotationPrivateButton' },
+      { dataElement: 'annotationShareButton' }
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },
