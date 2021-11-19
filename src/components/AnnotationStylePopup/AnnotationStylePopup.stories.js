@@ -112,3 +112,14 @@ FreeText.args = {
 	style: getAnnotationStyles(freeTextAnnot),
 	closeElement: () => {},
 };
+
+const widgetPlaceHolderAnnot = new window.Core.Annotations.RectangleAnnotation();
+widgetPlaceHolderAnnot.setCustomData('trn-form-field-type', 'TextFormField');
+widgetPlaceHolderAnnot
+
+export const WidgetPlaceHolder = BasicTemplate.bind({});
+WidgetPlaceHolder.args = {
+	annotation: widgetPlaceHolderAnnot,
+	style: getAnnotationStyles(widgetPlaceHolderAnnot),
+	closeElement: () => {},
+};

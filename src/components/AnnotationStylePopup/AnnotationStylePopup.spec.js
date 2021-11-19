@@ -1,15 +1,17 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import {
   Basic as BasicStory, 
   FreeText as FreeTextPopUpStory,
   DistanceMeasurement as DistanceMeasurementStory,
+  WidgetPlaceHolder as WidgetPlaceHolderStory
 } from "./AnnotationStylePopup.stories";
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 
 const AnnotationStylePopupStory = withI18n(BasicStory);
 const FreeTextStory = withI18n(FreeTextPopUpStory);
 const DistanceStory = withI18n(DistanceMeasurementStory);
+const WidgetStory = withI18n(WidgetPlaceHolderStory);
 
 const lineAnnot = new window.Core.Annotations.LineAnnotation();
 
@@ -62,6 +64,9 @@ distanceMeasurementAnnot['Scale'] = [[1, 'in'],[1, 'in']];
 distanceMeasurementAnnot['Precision'] = 0.01;
 
 const freeTextAnnot = new window.Core.Annotations.FreeTextAnnotation();
+
+const widgetPlaceHolderAnnot = new window.Core.Annotations.RectangleAnnotation();
+widgetPlaceHolderAnnot.setCustomData('trn-form-field-type', 'TextFormField');
 
 describe('AnnotationStylePopup component', () => {
   beforeEach(() => {
@@ -121,5 +126,19 @@ describe('AnnotationStylePopup component', () => {
     expect(headersOptions.filter(h => h.textContent === 'Stroke').length).toEqual(1);
     expect(headersOptions.filter(h => h.textContent === 'Text').length).toEqual(1);
     expect(headersOptions.filter(h => h.textContent === 'Fill').length).toEqual(1);
+  });
+
+  it('Widget placeholder story should not render opacity slider', async () => {
+    const { container } = render(<WidgetStory 
+      annotation={widgetPlaceHolderAnnot}
+      style={getAnnotationStyles(widgetPlaceHolderAnnot)}
+      closeElement={() => {}}
+    />);
+
+    container.querySelectorAll('.palette-options-button')[2].click();
+
+    await waitFor(() => {
+      expect(container.querySelectorAll('.slider[data-element="opacitySlider"]').length).toEqual(0);
+    }, {});
   });
 });

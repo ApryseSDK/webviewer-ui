@@ -3,6 +3,7 @@ import '../src/components/App/App.scss';
 import core from 'core'
 
 core.getTool = function () { }
+core.isFullPDFEnabled = function () { return false; };
 
 Core.setWorkerPath('./core');
 
