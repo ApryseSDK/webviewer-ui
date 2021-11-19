@@ -33,7 +33,7 @@ const keyMap = {
   "select":                 "Escape",
   "signature":              "S",
   "squiggly":               "G",
-  "stamp":                  "I",
+  "image":                  "I",
   "redo":                   "Control+Shift+Z",
   "undo":                   "Control+Z",
   "stickyNote":             "N",
@@ -62,7 +62,7 @@ export function shortcutAria(shortcut) {
 const NOOP = () => {};
 
 /**
- * Available hotkeys that can be passed to {@link UI.Hotkeys#on instance.hotkeys.on} or {@link UI.Hotkeys#off instance.hotkeys.off}. <br/><br/>
+ * Available hotkeys that can be passed to {@link UI.Hotkeys#on instance.UI.hotkeys.on} or {@link UI.Hotkeys#off instance.UI.hotkeys.off}. <br/><br/>
  * @name UI.Hotkeys.Keys
  * @enum {string}
  * @property {string} CTRL_SHIFT_EQUAL Rotate the document clockwise
@@ -169,7 +169,7 @@ export function concatKeys(...keys) {
 
 /**
  * A class which contains hotkeys APIs.<br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link UI.hotkeys instance.hotkeys}
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link UI.hotkeys instance.UI.hotkeys}
  * @namespace Hotkeys
  * @memberof UI
  */
@@ -196,17 +196,18 @@ const HotkeysManager = {
    * @example
 WebViewer(...)
   .then(function(instance) {
+    const { UI } = instance;
       // this will register the default zoom in handler
-      instance.hotkeys.on(instance.hotkeys.Keys.CTRL_EQUAL);
-      instance.hotkeys.on(instance.hotkeys.Keys.COMMAND_EQUAL);
+      UI.hotkeys.on(UI.hotkeys.Keys.CTRL_EQUAL);
+      UI.hotkeys.on(UI.hotkeys.Keys.COMMAND_EQUAL);
 
       // this will be called on keydown
-      instance.hotkeys.on('ctrl+d, command+d', e => {
+      UI.hotkeys.on('ctrl+d, command+d', e => {
         e.preventDefault();
-        instance.closeDocument();
+        instance.Core.documentViewer.closeDocument();
       });
 
-      instance.hotkeys.on('ctrl+g', {
+      UI.hotkeys.on('ctrl+g', {
         keydown: e => {
           console.log('ctrl+g is pressed!');
         },
@@ -250,8 +251,8 @@ WebViewer(...)
 WebViewer(...)
   .then(function(instance) {
       // this will remove all handlers for ctrl = and command =
-      instance.hotkeys.off(instance.hotkeys.Keys.CTRL_EQUAL);
-      instance.hotkeys.off(instance.hotkeys.Keys.COMMAND_EQUAL);
+      instance.UI.hotkeys.off(instance.UI.hotkeys.Keys.CTRL_EQUAL);
+      instance.UI.hotkeys.off(instance.UI.hotkeys.Keys.COMMAND_EQUAL);
   });
    */
   off(key, handler) {

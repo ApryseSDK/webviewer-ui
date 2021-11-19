@@ -17,7 +17,7 @@ function generateSetCustomModal(store) {
    * active element. This can be done by setting focus to iframe programmatically.
    *
    * @example
-WebWiewer(...).then(function(instance) {
+WebViewer(...).then(function(instance) {
   var modal = {
     dataElement: 'meanwhileInFinlandModal',
     render: function renderCustomModal(){

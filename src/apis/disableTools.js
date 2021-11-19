@@ -5,8 +5,9 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
+    const { Tools } = instance.Core;
     // disable sticky annotation tool and free text tool
-    instance.UI.disableTools([ 'AnnotationCreateSticky', 'AnnotationCreateFreeText' ]);
+    instance.UI.disableTools([Tools.ToolNames.STICKY, Tools.ToolNames.FREETEXT]);
   });
  */
 
