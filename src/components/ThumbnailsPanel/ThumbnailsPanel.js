@@ -4,7 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { List } from 'react-virtualized';
 import Measure from 'react-measure';
 import classNames from 'classnames';
-import { isIE11, isMobile } from "helpers/device";
+import { isIE11 } from "helpers/device";
 
 import Thumbnail from 'components/Thumbnail';
 import DocumentControls from 'components/DocumentControls';
@@ -372,7 +372,7 @@ const ThumbnailsPanel = () => {
       if (externalPageWebViewerFrameId && window.frameElement.id !== externalPageWebViewerFrameId) {
         dispatch(mergeExternalWebViewerDocument(externalPageWebViewerFrameId, insertTo));
       } else if (files.length) {
-        files.forEach(file => {
+        Array.from(files).forEach(file => {
           dispatch(mergeDocument(file, insertTo));
         });
       }
@@ -567,7 +567,6 @@ const ThumbnailsPanel = () => {
                 style={{ outline: 'none' }}
                 // Ensure we show the current page in the thumbnails when we open the panel
                 scrollToIndex={Math.floor((currentPage - 1) / numberOfColumns)}
-                scrollToAlignment={isMobile() ? "start" : "auto"}
               />
               {isDragging ?
                 <div className="thumbnailAutoScollArea" onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ""
