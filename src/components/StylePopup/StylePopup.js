@@ -254,9 +254,9 @@ class StylePopup extends React.PureComponent {
                 />
               </>
             )}
-            {(!isFreeText || currentPalette !== "TextColor" || isColorContainerActive) && this.renderSliders()}
           </>
         )}
+        {(!isFreeText || currentPalette !== "TextColor" || isColorContainerActive) && this.renderSliders()}
         {Scale && Precision && (
           <>
             <MeasurementOption
