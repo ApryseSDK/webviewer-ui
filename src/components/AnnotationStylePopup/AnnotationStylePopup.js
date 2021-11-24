@@ -21,7 +21,13 @@ class AnnotationStylePopup extends React.Component {
     annotation: PropTypes.object.isRequired,
     style: PropTypes.object.isRequired,
     closeElement: PropTypes.func.isRequired,
+    onPopupChange: PropTypes.func
   };
+
+  onStylePopupChange = (palette) => {
+    const { onPopupChange } = this.props;
+    onPopupChange && onPopupChange(palette);
+  }
 
   handlePropertyChange = (property, value) => {
     const { annotation } = this.props;
@@ -103,6 +109,7 @@ class AnnotationStylePopup extends React.Component {
           isFreeText={isFreeText}
           onStyleChange={this.handleStyleChange}
           onPropertyChange={this.handlePropertyChange}
+          onCurrentStylePopupChange={this.onStylePopupChange}
           disableSeparator
           freeTextProperties={freeTextProperties}
           isFontSizeSliderDisabled={isFreeText}

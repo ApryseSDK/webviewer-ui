@@ -46,6 +46,7 @@ const AnnotationPopup = () => {
   // first annotation in the array when there're multiple annotations selected
   const [firstAnnotation, setFirstAnnotation] = useState(null);
   const [canModify, setCanModify] = useState(false);
+  const [stylePopup, setStylePopup] = useState(null);
   const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
   const [isDatePickerMount, setDatePickerMount] = useState(false);
@@ -146,7 +147,7 @@ const AnnotationPopup = () => {
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
     };
-  }, [dispatch, canModify, firstAnnotation, isStylePopupOpen, popupItems, isDatePickerMount]);
+  }, [dispatch, canModify, firstAnnotation, isStylePopupOpen, popupItems, isDatePickerMount, stylePopup]);
 
   useEffect(() => {
     const closeAndReset = () => {
@@ -289,6 +290,10 @@ const AnnotationPopup = () => {
     setDatePickerMount(isDatePickerShowed);
   };
 
+  const onPopupChange = (palette) => {
+    setStylePopup(palette);
+  }
+
   const show3DShortCutButton = firstAnnotation instanceof Annotations.Model3DAnnotation && !isMobile();
 
   const annotationPopup = (
@@ -306,7 +311,7 @@ const AnnotationPopup = () => {
     >
       {isStylePopupOpen || isDatePickerOpen ? (
         isStylePopupOpen ? (
-          <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} />
+          <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} onPopupChange={onPopupChange} />
         ) : (
           <DatePicker onClick={handleDateChange} annotation={firstAnnotation} onDatePickerShow={onDatePickerShow} />
         )
