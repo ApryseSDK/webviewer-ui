@@ -1,4 +1,4 @@
-export default (element, overlay, isTabletAndMobile) => {
+export default (element, overlay, isTabletAndMobile, isSmallBrowserHeight) => {
   const button = document.querySelector(`[data-element=${element}]`);
   let left = 0;
   let right = 'auto';
@@ -25,17 +25,20 @@ export default (element, overlay, isTabletAndMobile) => {
     right = 'auto';
   }
 
+  let maxHeight;
   const verticalGap = isTabletAndMobile ? 14 : 6;
-  let top = 0;
-  if (buttonBottom + overlayHeight > window.innerHeight) {
+  let top = buttonBottom + verticalGap;
+  if (buttonBottom > window.innerHeight/2) {
+    top = 0;
+    maxHeight = window.innerHeight;
+  } else if ((buttonBottom + overlayHeight > window.innerHeight) && !isSmallBrowserHeight) {
     top = window.innerHeight - overlayHeight - verticalGap;
-  } else {
-    top = buttonBottom + verticalGap;
   }
 
   return {
     left: !isNaN(left) ? Math.max(left, 0) : left,
     right,
     top,
+    ...(maxHeight && { maxHeight })
   };
 };

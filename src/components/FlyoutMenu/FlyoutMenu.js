@@ -91,10 +91,10 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
       dispatch(actions.closeElements(allOtherMenus));
 
       const onResize = () => {
-        const overlayPosition = getOverlayPositionBasedOn(trigger, overlayRef, isMobile && isTabletOrMobile);
+        const overlayPosition = getOverlayPositionBasedOn(trigger, overlayRef, isMobile && isTabletOrMobile, isSmallBrowserHeight);
 
         if (isSmallBrowserHeight) {
-          overlayPosition.top = 0;
+          overlayPosition.maxHeight = window.innerHeight - overlayPosition.top
         }
 
         setPosition(overlayPosition);
