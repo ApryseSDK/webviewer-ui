@@ -195,7 +195,6 @@ export default store => {
     PartRetrievers: window.Core.PartRetrievers,
     Actions: window.Actions,
     PDFNet: window.PDFNet,
-    syncNamespaces,
   };
   const objForWebViewerUI = {
     FitMode,
@@ -356,6 +355,7 @@ export default store => {
     disableToolDefaultStyleUpdateFromAnnotationPopup,
     addEventListener,
     removeEventListener,
+    syncNamespaces,
 
     //deprecated, to be removed in 8.0
     useNativeScroll,
