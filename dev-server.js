@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const devMiddleware = require('webpack-dev-middleware');
 const hotMiddleware = require('webpack-hot-middleware');
 const ip = require('ip');
-const opn = require('opn');
+const opn = require('open');
 const config = require('./webpack.config.dev');
 
 const app = express();

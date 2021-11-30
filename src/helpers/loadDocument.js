@@ -36,6 +36,7 @@ const getDefaultOptions = () => ({
   forceClientSideInit: getHashParams('forceClientSideInit', false),
   disableWebsockets: getHashParams('disableWebsockets', false),
   cacheKey: JSON.parse(getHashParams('cacheKey', null)),
+  officeLocale: JSON.parse(getHashParams('officeLocale', null)),
   streaming: getHashParams('streaming', null),
   useDownloader: getHashParams('useDownloader', true),
   backendType: getHashParams('pdf', null),

@@ -2,6 +2,14 @@
 
 .AnnotationStylePopup {
 	@include mobile {
-		padding-top: 4px;
+		width: 100vw;
+		margin: 0;
+		position: relative;
+		max-width: initial;
+
+		border-radius: 4px 4px 0 0;
+		border: 0;
+		padding-bottom: 24px;
+		box-shadow: none;
 	}
 }

@@ -22,6 +22,7 @@ import onLayoutChanged from './onLayoutChanged';
 import onLocationSelected from './onLocationSelected';
 import onDotStampAnnotationAdded from './onDotStampAnnotationAdded';
 import onRubberStampAnnotationAdded from './onRubberStampAnnotationAdded';
+import onReadOnlyModeChanged from './onReadOnlyModeChanged';
 import onPageComplete from './onPageComplete';
 import onFileAttachmentDataAvailable from './onFileAttachmentDataAvailable';
 import onSignatureSaved from './onSignatureSaved';
@@ -57,6 +58,7 @@ export {
   onLocationSelected,
   onDotStampAnnotationAdded,
   onRubberStampAnnotationAdded,
+  onReadOnlyModeChanged,
   onPageComplete,
   onFileAttachmentAnnotationAdded,
   onFileAttachmentDataAvailable,

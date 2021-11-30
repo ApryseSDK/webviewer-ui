@@ -43,7 +43,6 @@ export default {
     lastPickedToolGroup: {},
     highContrastMode: getHashParams('highContrastMode', false),
     notesInLeftPanel: getHashParams('notesInLeftPanel', false),
-    autoFocusReplyInputOnAnnotationSelect: getHashParams('autoFocusReplyInputOnAnnotationSelect', true),
     fadePageNavigationComponent: true,
     pageDeletionConfirmationModalEnabled: true,
     outlineControlVisibility: false,

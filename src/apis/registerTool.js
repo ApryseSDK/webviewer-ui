@@ -9,6 +9,7 @@
  * @param {string} [properties.buttonGroup] Group of the tool button belongs to.
  * @param {string} [properties.tooltip] Tooltip of the tool button.
  * @param {'always'|'active'|'never'} [properties.showColor] Controls when the tool button should show the color.
+ * @param {boolean} [properties.showPresets] Option to whether show or hide preset styles. Default is true.
  * @param {function} [annotationConstructor] Deprecated Please use customAnnotationCheckFunc instead. Will be removed in the future.
  * @param {function} [customAnnotationCheckFunc] Function that takes in a parameter of an annotation. Returns a boolean if the specified annotation is a certain type of annotation. This function is used by the viewer to check if the annotation passed in is associated(created) with the registered tool.
  * @example

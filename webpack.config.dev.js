@@ -58,7 +58,7 @@ module.exports = {
               plugins: loader => [
                 require('postcss-import')({ root: loader.resourcePath }),
                 require('postcss-preset-env')(),
-                require('cssnano')(),
+                // require('cssnano')(),
               ],
             },
           },

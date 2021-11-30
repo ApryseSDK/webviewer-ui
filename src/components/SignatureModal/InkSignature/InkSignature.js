@@ -94,8 +94,8 @@ const InkSignature = ({
       // we want to keep the unmodified paths so that users can keep drawing on the canvas
       freeHandPathsRef.current = deepCopy(signatureTool.annot.getPaths());
       annotIdRef.current = signatureTool.annot.Id;
+      setDrawn(true);
     }
-    setDrawn(true)
   };
 
   const deepCopy = paths => {
@@ -144,6 +144,7 @@ const InkSignature = ({
               <canvas
                 className="ink-signature-canvas"
                 onMouseUp={handleFinishDrawing}
+                onMouseLeave={handleFinishDrawing}
                 onTouchEnd={handleFinishDrawing}
                 ref={canvasRef}
               />

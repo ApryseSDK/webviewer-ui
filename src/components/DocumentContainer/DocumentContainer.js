@@ -151,6 +151,9 @@ class DocumentContainer extends React.PureComponent {
     } else if (scrollingDown && reachedBottom && currentPage < totalPages) {
       this.pageDown();
     }
+
+    this.showPageNavigationOverlay();
+    this.debouncedHidePageNavigationOverlay();
   }
 
   pageUp = () => {
@@ -257,7 +260,7 @@ class DocumentContainer extends React.PureComponent {
       // background color is the one that causes this transition.
       // This effect is still happening in above case but if instead of clicking edit, user changes width of the notes panel
       // It is currently expected behaviour
-      // Note Update after fading page nav was added: 
+      // Note Update after fading page nav was added:
       // This also causes a doc container re-render as we fire the opacity transition when we fade the page nav
       // we must skip updating the scrollViewUpdated call as well or it causes re-renders on docs with different page sizes
       core.scrollViewUpdated();

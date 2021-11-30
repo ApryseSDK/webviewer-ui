@@ -36,6 +36,7 @@ const getEventToObjectMap = () => {
     mouseRightDown: window.documentViewer,
     mouseRightUp: window.documentViewer,
     pageComplete: window.documentViewer,
+    readOnlyModeChanged: window.documentViewer,
     searchInProgress: window.documentViewer,
     activeSearchResultChanged: window.documentViewer,
     searchResultsChanged: window.documentViewer,

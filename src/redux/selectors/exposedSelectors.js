@@ -24,8 +24,6 @@ export const getSelectedDisplayedSignatureIndex = state => state.viewer.selected
 export const getSelectedDisplayedSignature = state => getDisplayedSignatures(state)[getSelectedDisplayedSignatureIndex(state)];
 export const getDisplayedSignaturesFilterFunction = state => state.viewer.displayedSignaturesFilterFunction;
 
-export const getAutoFocusReplyInputOnAnnotationSelect = state =>
-  state.viewer.autoFocusReplyInputOnAnnotationSelect
 export const getNotesInLeftPanel = state =>
   state.viewer.notesInLeftPanel;
 export const getLeftPanelWidth = state =>

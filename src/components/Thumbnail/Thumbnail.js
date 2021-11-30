@@ -164,7 +164,7 @@ const Thumbnail = ({
         updatedSelectedPages = [index];
       }
       // set shiftKeyPivot when press ctr key or single key
-      !isThumbnailSelectingPages && !shiftKeyPressed && dispatch(actions.setShiftKeyThumbnailsPivotIndex(updatedSelectedPages[updatedSelectedPages.length - 1]));
+      !shiftKeyPressed && dispatch(actions.setShiftKeyThumbnailsPivotIndex(updatedSelectedPages[updatedSelectedPages.length - 1]));
       dispatch(actions.setSelectedPageThumbnails(updatedSelectedPages));
     } else if (isMobile()) {
       dispatch(actions.closeElement('leftPanel'));
@@ -211,6 +211,7 @@ const Thumbnail = ({
         onClick={handleClick}
       >
         <div id={`pageThumb${index}`} className="thumbnail" />
+        {isThumbnailSelectingPages && <div className={`dim ${rotateDimDiv && checkboxRotateClass}`} style={{ width: dimensions.width * ratio, height: dimensions.height * ratio }} />}
         {isThumbnailSelectingPages && loaded &&
         <Choice
           className={`checkbox ${checkboxRotateClass}`}
@@ -218,7 +219,7 @@ const Thumbnail = ({
         />}
       </div>
       <div className="page-label">{pageLabel}</div>
-      {!isThumbnailSelectingPages && isActive && shouldShowControls && <ThumbnailControls index={index} />}
+      {isActive && shouldShowControls && <ThumbnailControls index={index} />}
     </div>
   );
 };

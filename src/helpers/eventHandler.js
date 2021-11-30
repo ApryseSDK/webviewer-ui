@@ -27,6 +27,7 @@ export default store => {
   const onLocationSelected = eventListeners.onLocationSelected(store);
   const onDotStampAnnotationAdded = eventListeners.onDotStampAnnotationAdded(dispatch);
   const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(dispatch);
+  const onReadOnlyModeChanged = eventListeners.onReadOnlyModeChanged(store);
   const onPageComplete = eventListeners.onPageComplete(store);
   const onFileAttachmentAnnotationAdded = eventListeners.onFileAttachmentAnnotationAdded(dispatch);
   const onFileAttachmentDataAvailable = eventListeners.onFileAttachmentDataAvailable(dispatch);
@@ -34,7 +35,7 @@ export default store => {
   const onSignatureDeleted = eventListeners.onSignatureDeleted(dispatch, store);
   const onHistoryChanged = eventListeners.onHistoryChanged(dispatch, store);
   const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch);
-  const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch);
+  const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch, store);
   const onDigitalSignatureAvailable = eventListeners.onDigitalSignatureAvailable(dispatch);
 
   return {
@@ -51,6 +52,7 @@ export default store => {
       core.addEventListener('zoomUpdated', onZoomUpdated);
       core.addEventListener('pageNumberUpdated', onPageNumberUpdated);
       core.addEventListener('layoutChanged', onLayoutChanged);
+      core.addEventListener('readOnlyModeChanged', onReadOnlyModeChanged);
       core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.addEventListener('annotationChanged', onAnnotationChanged);
       core.addEventListener('historyChanged', onHistoryChanged);

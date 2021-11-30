@@ -22,7 +22,6 @@ const propTypes = {
 // a component that contains the reply textarea, the reply button and the cancel button
 const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   const [
-    autoFocusReplyInputOnAnnotationSelect,
     isReadOnly,
     isReplyDisabled,
     isReplyDisabledForAnnotation,
@@ -30,7 +29,6 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     isNoteEditingTriggeredByAnnotationPopup,
   ] = useSelector(
     state => [
-      selectors.getAutoFocusReplyInputOnAnnotationSelect(state),
       selectors.isDocumentReadOnly(state),
       selectors.isElementDisabled(state, 'noteReply'),
       selectors.getIsReplyDisabled(state)?.(annotation),
@@ -56,7 +54,6 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       isNoteEditingTriggeredByAnnotationPopup &&
       isSelected &&
       !isContentEditable &&
-      autoFocusReplyInputOnAnnotationSelect &&
       textareaRef &&
       textareaRef.current
     ) {
@@ -72,7 +69,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       setTimeout(() => {
         // calling focus() cause the "NotePanel" to scroll to note that being focused.
         // we don't want to jump to the selected annotation when scrolling up and down, so only focus once
-        if (textareaRef && textareaRef.current && autoFocusReplyInputOnAnnotationSelect) {
+        if (textareaRef && textareaRef.current) {
           textareaRef.current.focus();
         }
       }, 0);

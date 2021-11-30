@@ -18,7 +18,6 @@ import { Swipeable } from 'react-swipeable';
 import './PrintModal.scss';
 import Choice from '../Choice/Choice';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
-import { setPrintQuality } from 'src/apis/setPrintQuality';
 
 
 class PrintModal extends React.PureComponent {
@@ -185,7 +184,7 @@ class PrintModal extends React.PureComponent {
       await pagePromise;
       this.setState({
         count:
-          this.state.count < this.state.pagesToPrint.length
+          this.state.count < this.state.pagesToPrint.length && this.state.count !== -1
             ? this.state.count + 1
             : this.state.count
       });

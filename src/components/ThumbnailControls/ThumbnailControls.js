@@ -17,32 +17,27 @@ const dataElementName = 'thumbnailControl';
 
 const ThumbnailControls = ({ index }) => {
   const [isElementDisabled] = useSelector(state => [selectors.isElementDisabled(state, dataElementName)]);
-  const [isPageDeletionConfirmationModalEnabled, selectedIndexes] = useSelector(state => [
-    selectors.pageDeletionConfirmationModalEnabled(state),
-    selectors.getSelectedThumbnailPageIndexes(state),
-  ]);
+  const [isPageDeletionConfirmationModalEnabled] = useSelector(state => [selectors.pageDeletionConfirmationModalEnabled(state)]);
   const dispatch = useDispatch();
 
-  const pageNumbers = selectedIndexes.length > 0 ? selectedIndexes.map(i => i + 1) : [index + 1];
-
-  const isPDF = workerTypes.PDF === core.getDocument().type;
+  const isXod = workerTypes.XOD === core.getDocument().type;
 
   if (isElementDisabled) {
     return null;
-  } else if (!isPDF) {
+  } else if (isXod) {
     return (
       <div className="thumbnailControls-overlay" data-element={dataElementName}
         style={{ display: 'flex' }}
       >
         <Button
           img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
-          onClick={() => rotateCounterClockwise(pageNumbers)}
+          onClick={() => rotateCounterClockwise([index + 1])}
           title="option.thumbnailPanel.rotateCounterClockwise"
           dataElement="thumbRotateCounterClockwise"
         />
         <Button
           img="icon-header-page-manipulation-page-rotation-clockwise-line"
-          onClick={() => rotateClockwise(pageNumbers)}
+          onClick={() => rotateClockwise([index + 1])}
           title="option.thumbnailPanel.rotateClockwise"
           dataElement="thumbRotateClockwise"
         />
@@ -54,14 +49,14 @@ const ThumbnailControls = ({ index }) => {
         <Button
           className="rotate-button"
           img="icon-header-page-manipulation-page-rotation-clockwise-line"
-          onClick={() => rotateClockwise(pageNumbers)}
+          onClick={() => rotateClockwise([index + 1])}
           title="option.thumbnailPanel.rotateClockwise"
           dataElement="thumbRotateClockwise"
         />
         <Button
           className="delete-button"
           img="icon-delete-line"
-          onClick={() => deletePages(pageNumbers, dispatch, isPageDeletionConfirmationModalEnabled)}
+          onClick={() => deletePages([index + 1], dispatch, isPageDeletionConfirmationModalEnabled)}
           title="option.thumbnailPanel.delete"
           dataElement="thumbDelete"
         />
