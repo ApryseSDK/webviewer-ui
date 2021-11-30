@@ -30,7 +30,8 @@ class ToolsOverlay extends React.PureComponent {
     activeToolGroup: PropTypes.string,
     closeElements: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
-    isInDesktopOnlyMode: PropTypes.bool
+    isInDesktopOnlyMode: PropTypes.bool,
+    showPresets: PropTypes.bool,
   };
 
   constructor() {
@@ -119,7 +120,8 @@ class ToolsOverlay extends React.PureComponent {
       isToolStyleOpen,
       isDesktop,
       isMobile,
-      isInDesktopOnlyMode
+      isInDesktopOnlyMode,
+      showPresets,
     } = this.props;
 
     const isVisible = (isOpen || true) && !isDisabled;
@@ -165,7 +167,7 @@ class ToolsOverlay extends React.PureComponent {
           {t('Model3D.add3D')}
         </div>
       );
-    } else if (noPresets) {
+    } else if (noPresets || !showPresets) {
       Component = (
         <div className="no-presets">
           {tReady ? t('message.toolsOverlayNoPresets') : ''}
@@ -238,7 +240,8 @@ const mapStateToProps = state => ({
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
   activeToolName: selectors.getActiveToolName(state),
-  isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state)
+  isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state),
+  showPresets: selectors.shouldShowPresets(state),
 });
 
 const mapDispatchToProps = {
