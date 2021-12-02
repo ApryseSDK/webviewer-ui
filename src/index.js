@@ -35,6 +35,7 @@ import getHashParams from 'helpers/getHashParams';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
 
 import './index.scss';
+import hotkeysManager from "helpers/hotkeysManager";
 
 const middleware = [thunk];
 
@@ -154,25 +155,28 @@ if (window.CanvasRenderingContext2D) {
 
   const documentViewer = new window.Core.DocumentViewer();
   window.documentViewer = documentViewer;
+  hotkeysManager.initialize(store);
+
 
   defineWebViewerInstanceUIAPIs(store);
+
 
   fullAPIReady.then(() => loadConfig()).then(() => {
     if (preloadWorker) {
       initTransports();
     }
 
-    const { addEventHandlers, removeEventHandlers } = eventHandler(store);
-
     if (getHashParams('enableViewStateAnnotations', false)) {
       const tool = documentViewer.getTool(window.Core.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);
     }
 
+    const { addEventHandlers, removeEventHandlers } = eventHandler(store);
     setupDocViewer();
     setupI18n(state);
     setUserPermission(state);
     setAutoSwitch();
+
     addEventHandlers();
     setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);

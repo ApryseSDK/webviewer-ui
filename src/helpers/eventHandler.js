@@ -75,7 +75,7 @@ export default store => {
       core.getTool('AnnotationCreateFileAttachment').addEventListener('annotationAdded', onFileAttachmentAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CROSS).addEventListener('annotationAdded', onCrossStampAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CHECKMARK).addEventListener('annotationAdded', onCheckStampAnnotationAdded);
-      hotkeysManager.initialize(store);
+
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
