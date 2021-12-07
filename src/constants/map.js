@@ -461,6 +461,14 @@ const map = {
     toolNames: ['AnnotationCreateFileAttachment'],
     annotationCheck: annotation => annotation instanceof window.Annotations.FileAttachmentAnnotation,
   },
+  sound: {
+    icon: 'ic_sound_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: [],
+    annotationCheck: annotation => annotation instanceof window.Annotations.SoundAnnotation,
+  },
   threeDAnnotation: {
     icon: 'icon-tool-model3d',
     iconColor: null,

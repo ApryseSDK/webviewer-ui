@@ -125,7 +125,8 @@
     "comboBoxFormField": "Combo Box Field",
     "link": "Link",
     "other": "Other",
-    "3D": "3D"
+    "3D": "3D",
+    "sound": "Sound"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -352,10 +353,11 @@
       "addSignature": "Add New Signature"
     },
     "signatureModal": {
-      "saveSignature": "Save signature",
+      "modalName": "Create New Signature",
       "dragAndDrop": "Drag & Drop your image here",
       "or": "Or",
-      "pickImage": "Choose a signature"
+      "pickImage": "Choose a signature",
+      "selectImage": "Select your image here"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Drag & Drop your file here",
@@ -457,8 +459,9 @@
       "alignBottom": "Align bottom"
     },
     "customStampModal": {
-      "stampText": "Stamp text:",
-      "timestampText": "Timestamp text:",
+      "modalName": "Create New Stamp",
+      "stampText": "Stamp text",
+      "timestampText": "Timestamp text",
       "stampColor": "Stamp color:",
       "Username": "Username",
       "Date": "Date",

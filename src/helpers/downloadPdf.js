@@ -20,7 +20,7 @@ export default async (dispatch, options = {}) => {
 
   dispatch(actions.openElement('loadingModal'));
 
-  let annotationsPromise = Promise.resolve('<xfdf ><pdf-info xmlns="http://www.pdftron.com/pdfinfo" version="2" import-version="3"/></xfdf>');
+  let annotationsPromise = Promise.resolve('<xfdf ><pdf-info xmlns="http://www.pdftron.com/pdfinfo" version="2" import-version="4"/></xfdf>');
   if (includeAnnotations && !options.xfdfString) {
     if (options.documentToBeDownloaded) {
       annotationsPromise = Promise.resolve((await options.documentToBeDownloaded.extractXFDF()).xfdfString);
