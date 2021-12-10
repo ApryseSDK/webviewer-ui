@@ -32,7 +32,6 @@ class StylePopup extends React.PureComponent {
     isFreeText: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
-    onCurrentStylePopupChange: PropTypes.func,
     isColorPaletteDisabled: PropTypes.bool,
     isOpacitySliderDisabled: PropTypes.bool,
     isStrokeThicknessSliderDisabled: PropTypes.bool,
@@ -165,7 +164,6 @@ class StylePopup extends React.PureComponent {
       freeTextProperties,
       onPropertyChange,
       onRichTextStyleChange,
-      onCurrentStylePopupChange
     } = this.props;
 
     const { Scale, Precision, Style } = style;
@@ -177,7 +175,6 @@ class StylePopup extends React.PureComponent {
       } else {
         closeElement(DataElements.FREE_TEXT_STYLE_TEXT_CONTAINER);
       }
-      onStylePopupChange && onStylePopupChange(isColorContainerActive);
     };
 
     const openColorStyle = () => {
@@ -187,13 +184,7 @@ class StylePopup extends React.PureComponent {
       } else {
         closeElement(DataElements.FREE_TEXT_STYLE_COLOR_CONTAINER);
       }
-      onStylePopupChange && onStylePopupChange(isColorContainerActive);
     };
-
-    // Tracking palette change to resize the popup when necessary
-    const onStylePopupChange = (palette) => {
-      onCurrentStylePopupChange && onCurrentStylePopupChange(palette);
-    }
 
     const className = classNames({
       Popup: true,
@@ -209,11 +200,10 @@ class StylePopup extends React.PureComponent {
               style={style}
               toolName={toolName}
               disableSeparator={disableSeparator}
-              onPaletteChange={onStylePopupChange}
             />
             {isFreeText && currentPalette === "TextColor" ? (
               <>
-                <div className="collapsible-menu" onClick={openTextStyle} role={"toolbar"}>
+                <div className="collapsible-menu" onClick={openTextStyle} onTouchStart={openTextStyle} role={"toolbar"}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.textStyle')}
                   </div>
@@ -225,7 +215,7 @@ class StylePopup extends React.PureComponent {
 
                 <div className="divider"/>
 
-                <div className="collapsible-menu" onClick={openColorStyle} role={"toolbar"}>
+                <div className="collapsible-menu" onClick={openColorStyle} onTouchStart={openColorStyle} role={"toolbar"}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.colorStyle')}
                   </div>
