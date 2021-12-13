@@ -35,6 +35,7 @@ import getHashParams from 'helpers/getHashParams';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
 
 import './index.scss';
+import hotkeysManager from './helpers/hotkeysManager';
 
 const middleware = [thunk];
 
@@ -154,14 +155,13 @@ if (window.CanvasRenderingContext2D) {
 
   const documentViewer = new window.Core.DocumentViewer();
   window.documentViewer = documentViewer;
-
   defineWebViewerInstanceUIAPIs(store);
-
+  hotkeysManager.initialize(store);
+  
   fullAPIReady.then(() => loadConfig()).then(() => {
     if (preloadWorker) {
       initTransports();
     }
-
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
 
     if (getHashParams('enableViewStateAnnotations', false)) {
@@ -174,11 +174,9 @@ if (window.CanvasRenderingContext2D) {
     setUserPermission(state);
     setAutoSwitch();
     addEventHandlers();
-    setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
     setDefaultToolStyles();
     core.setToolMode(defaultTool);
-
     ReactDOM.render(
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
@@ -190,8 +188,9 @@ if (window.CanvasRenderingContext2D) {
         </PersistGate>
       </Provider>,
       document.getElementById('app'),
-    );
-  });
+      );
+    });
+    setDefaultDisabledElements(store);
 }
 
 window.addEventListener('hashchange', () => {
