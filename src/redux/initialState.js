@@ -19,6 +19,8 @@ const { ToolNames } = window.Core.Tools;
 
 export default {
   viewer: {
+    TabManager: null,
+    isMultiTab: false,
     thumbnailSelectingPages: false,
     isInDesktopOnlyMode: false,
     canUndo: false,
@@ -43,7 +45,7 @@ export default {
     lastPickedToolGroup: {},
     highContrastMode: getHashParams('highContrastMode', false),
     notesInLeftPanel: getHashParams('notesInLeftPanel', false),
-    autoFocusReplyInputOnAnnotationSelect: getHashParams('autoFocusReplyInputOnAnnotationSelect', true),
+    autoFocusNoteOnAnnotationSelection: getHashParams('autoFocusNoteOnAnnotationSelection', true),
     fadePageNavigationComponent: true,
     pageDeletionConfirmationModalEnabled: true,
     outlineControlVisibility: false,
@@ -655,7 +657,9 @@ export default {
     useSharedWorker: getHashParams('useSharedWorker', false),
     disableI18n: getHashParams('disableI18n', false),
     pdfWorkerTransportPromise: null,
-    officeWorkerTransportPromise: null
+    officeWorkerTransportPromise: null,
+    disableIndexedDB: getHashParams('disableIndexedDB', false),
   },
-  featureFlags: {}
+  featureFlags: {
+  }
 };

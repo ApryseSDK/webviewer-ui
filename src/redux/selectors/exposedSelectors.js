@@ -1,7 +1,9 @@
-import { isChrome, isAndroid } from 'helpers/device';
+import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 
 // viewer
+export const getIsMultiTab = state => state.viewer.isMultiTab;
+export const getTabManager = state => state.viewer.TabManager;
 export const getIsHighContrastMode = state => state.viewer.highContrastMode;
 export const getLastPickedToolForGroup = (state, group) => state.viewer.lastPickedToolForGroup[group];
 export const getStandardStamps = state => state.viewer.standardStamps;
@@ -24,8 +26,8 @@ export const getSelectedDisplayedSignatureIndex = state => state.viewer.selected
 export const getSelectedDisplayedSignature = state => getDisplayedSignatures(state)[getSelectedDisplayedSignatureIndex(state)];
 export const getDisplayedSignaturesFilterFunction = state => state.viewer.displayedSignaturesFilterFunction;
 
-export const getAutoFocusReplyInputOnAnnotationSelect = state =>
-  state.viewer.autoFocusReplyInputOnAnnotationSelect
+export const getAutoFocusNoteOnAnnotationSelection = state =>
+  state.viewer.autoFocusNoteOnAnnotationSelection
 export const getNotesInLeftPanel = state =>
   state.viewer.notesInLeftPanel;
 export const getLeftPanelWidth = state =>
