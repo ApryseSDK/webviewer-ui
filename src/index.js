@@ -157,7 +157,14 @@ if (window.CanvasRenderingContext2D) {
   window.documentViewer = documentViewer;
   defineWebViewerInstanceUIAPIs(store);
   hotkeysManager.initialize(store);
-  
+
+  setupDocViewer();
+  setupI18n(state);
+  setUserPermission(state);
+  setAutoSwitch();
+  setDefaultToolStyles();
+  core.setToolMode(defaultTool);
+
   fullAPIReady.then(() => loadConfig()).then(() => {
     if (preloadWorker) {
       initTransports();
@@ -169,14 +176,8 @@ if (window.CanvasRenderingContext2D) {
       tool?.setSaveViewState(true);
     }
 
-    setupDocViewer();
-    setupI18n(state);
-    setUserPermission(state);
-    setAutoSwitch();
-    addEventHandlers();
     setupLoadAnnotationsFromServer(store);
-    setDefaultToolStyles();
-    core.setToolMode(defaultTool);
+    addEventHandlers();
     ReactDOM.render(
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
@@ -188,9 +189,9 @@ if (window.CanvasRenderingContext2D) {
         </PersistGate>
       </Provider>,
       document.getElementById('app'),
-      );
-    });
-    setDefaultDisabledElements(store);
+    );
+  });
+  setDefaultDisabledElements(store);
 }
 
 window.addEventListener('hashchange', () => {
