@@ -12,6 +12,7 @@ export default dispatch => () => {
     ...overlays
   ]));
   dispatch(actions.setOutlines([]));
+  dispatch(actions.setBookmarks({}));
   dispatch(actions.setTotalPages(0));
   dispatch(actions.setSearchValue(''));
   core.clearSearchResults();
