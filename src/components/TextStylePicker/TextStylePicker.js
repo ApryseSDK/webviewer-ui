@@ -36,14 +36,14 @@ const TextStylePicker = ({ onPropertyChange, properties, onRichTextStyleChange }
 
   const [bold, setBold] = useState(properties?.bold || false);
   const toggleBold = () => {
-    onRichTextStyleChange("font-weight", !bold ? "bold" : "normal");
+    onRichTextStyleChange("fontWeight", !bold ? "bold" : "");
     setBold(!bold);
   };
 
 
   const [italic, setItalic] = useState(properties?.italic || false);
   const toggleItalic = () => {
-    onRichTextStyleChange("font-style", !italic ? "italic" : "normal");
+    onRichTextStyleChange("fontStyle", !italic ? "italic" : "");
     setItalic(!italic);
   };
 
@@ -51,27 +51,19 @@ const TextStylePicker = ({ onPropertyChange, properties, onRichTextStyleChange }
   const [strikeout, setStrikeout] = useState(properties?.strikeout || false);
   const toggleUnderline = () => {
     const newUnderline = !underline;
-    if (newUnderline && strikeout) {
-      onRichTextStyleChange("text-decoration", "line-through underline");
-    } else if (strikeout) {
-      onRichTextStyleChange("text-decoration", "line-through");
-    } else if (newUnderline) {
-      onRichTextStyleChange("text-decoration", "underline");
+    if (newUnderline) {
+      onRichTextStyleChange("underline", true);
     } else {
-      onRichTextStyleChange("text-decoration", "none");
+      onRichTextStyleChange("underline", false);
     }
     setUnderline(newUnderline);
   };
   const toggleStrikeout = () => {
     const newStrikeout = !strikeout;
-    if (underline && newStrikeout) {
-      onRichTextStyleChange("text-decoration", "line-through underline");
-    } else if (newStrikeout) {
-      onRichTextStyleChange("text-decoration", "line-through");
-    } else if (underline) {
-      onRichTextStyleChange("text-decoration", "underline");
+    if (newStrikeout) {
+      onRichTextStyleChange("lineThrough", true);
     } else {
-      onRichTextStyleChange("text-decoration", "none");
+      onRichTextStyleChange("lineThrough", false);
     }
     setStrikeout(newStrikeout);
   };

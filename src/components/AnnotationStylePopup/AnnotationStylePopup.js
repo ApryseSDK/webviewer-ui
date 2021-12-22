@@ -53,12 +53,7 @@ class AnnotationStylePopup extends React.Component {
     const { annotation } = this.props;
     const curr = annotation.getRichTextStyle();
 
-    core.setAnnotationStyles(annotation, {
-      0: {
-        ...curr[0],
-        [property] : value
-      },
-    });
+    core.updateAnnotationRichTextStyle(annotation, { [property]: value });
   }
 
   handleClick = e => {
