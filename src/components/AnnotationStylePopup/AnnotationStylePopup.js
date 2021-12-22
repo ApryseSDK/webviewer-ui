@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Measure from 'react-measure';
 
 import StylePopup from 'components/StylePopup';
 
@@ -21,13 +22,7 @@ class AnnotationStylePopup extends React.Component {
     annotation: PropTypes.object.isRequired,
     style: PropTypes.object.isRequired,
     closeElement: PropTypes.func.isRequired,
-    onPopupChange: PropTypes.func
   };
-
-  onStylePopupChange = (palette) => {
-    const { onPopupChange } = this.props;
-    onPopupChange && onPopupChange(palette);
-  }
 
   handlePropertyChange = (property, value) => {
     const { annotation } = this.props;
@@ -53,12 +48,7 @@ class AnnotationStylePopup extends React.Component {
     const { annotation } = this.props;
     const curr = annotation.getRichTextStyle();
 
-    core.setAnnotationStyles(annotation, {
-      0: {
-        ...curr[0],
-        [property] : value
-      },
-    });
+    core.updateAnnotationRichTextStyle(annotation, { [property]: value });
   }
 
   handleClick = e => {
@@ -66,6 +56,11 @@ class AnnotationStylePopup extends React.Component {
     if (isMobile() && e.target === e.currentTarget) {
       this.props.closeElement('annotationPopup');
     }
+  }
+
+  handleResize = () => {
+    const { onResize } = this.props;
+    onResize && onResize();
   }
 
   render() {
@@ -96,26 +91,32 @@ class AnnotationStylePopup extends React.Component {
     }
 
     return (
-      <div
-        className={className}
-        data-element="annotationStylePopup"
-        onClick={this.handleClick}
+      <Measure
+        onResize={this.handleResize}
       >
-        {/* Do not show checkbox for ellipse as snap mode does not exist for it */}
-        <StylePopup
-          hideSnapModeCheckbox={(annotation instanceof window.Annotations.EllipseAnnotation || !core.isFullPDFEnabled())}
-          colorMapKey={colorMapKey}
-          style={style}
-          isFreeText={isFreeText}
-          onStyleChange={this.handleStyleChange}
-          onPropertyChange={this.handlePropertyChange}
-          onCurrentStylePopupChange={this.onStylePopupChange}
-          disableSeparator
-          freeTextProperties={freeTextProperties}
-          isFontSizeSliderDisabled={isFreeText}
-          onRichTextStyleChange={this.handleRichTextStyleChange}
-        />
-      </div>
+        {({ measureRef }) => (
+          <div
+            className={className}
+            data-element="annotationStylePopup"
+            onClick={this.handleClick}
+            ref={measureRef}
+          >
+            {/* Do not show checkbox for ellipse as snap mode does not exist for it */}
+            <StylePopup
+              hideSnapModeCheckbox={(annotation instanceof window.Annotations.EllipseAnnotation || !core.isFullPDFEnabled())}
+              colorMapKey={colorMapKey}
+              style={style}
+              isFreeText={isFreeText}
+              onStyleChange={this.handleStyleChange}
+              onPropertyChange={this.handlePropertyChange}
+              disableSeparator
+              freeTextProperties={freeTextProperties}
+              isFontSizeSliderDisabled={isFreeText}
+              onRichTextStyleChange={this.handleRichTextStyleChange}
+            />
+          </div>
+        )}
+      </Measure>
     );
   }
 }

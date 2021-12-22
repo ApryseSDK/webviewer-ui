@@ -94,6 +94,7 @@ import createAnnotationReply from './createAnnotationReply';
 import getIsReadOnly from './getIsReadOnly';
 import setNoteContents from './setNoteContents';
 import setAnnotationRichTextStyle from './setAnnotationRichTextStyle';
+import updateAnnotationRichTextStyle from './updateAnnotationRichTextStyle';
 import getAnnotationsList from './getAnnotationsList';
 import getAnnotationsLoadedPromise from './getAnnotationsLoadedPromise';
 import getPrintablePDF from './getPrintablePDF';
@@ -213,6 +214,7 @@ export default {
   createAnnotationReply,
   setNoteContents,
   setAnnotationRichTextStyle,
+  updateAnnotationRichTextStyle,
   getAnnotationsList,
   getAnnotationsLoadedPromise,
   getPrintablePDF,
