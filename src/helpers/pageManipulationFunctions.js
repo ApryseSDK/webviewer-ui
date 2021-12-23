@@ -115,7 +115,9 @@ const deletePages = (pageNumbers, dispatch, isModalEnabled = true) => {
 
     dispatch(actions.showWarningMessage(warning));
   } else {
-    core.removePages();
+    core.removePages(pageNumbers).then(() => {
+      dispatch(actions.setSelectedPageThumbnails([]));
+    });
   }
 };
 
