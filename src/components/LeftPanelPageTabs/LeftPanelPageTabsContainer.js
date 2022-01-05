@@ -35,7 +35,7 @@ function LeftPanelPageTabsContainer() {
   const onInsertAbove = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertAbove(pageNumbers);
   const onInsertBelow = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertBelow(pageNumbers);
 
-  const isXod = workerTypes.XOD === core.getDocument().type;
+  const isXod = workerTypes.XOD === core.getDocument()?.type;
   if (isXod) {
     return (
       <LeftPanelPageTabsXOD onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise}/>
