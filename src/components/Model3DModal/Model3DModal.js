@@ -39,7 +39,7 @@ const Model3DModal = ({
     } else if (typeOfInput === 'file') {
     }
     //reset x and y position with current zoom level
-    const zoom = window.documentViewer.getZoom();
+    const zoom = window.documentViewer.getZoomLevel();
     model3DAnnotation.X = e.layerX / zoom;
     model3DAnnotation.Y = e.layerY / zoom;
     model3DAnnotation.Width = defaultW;
