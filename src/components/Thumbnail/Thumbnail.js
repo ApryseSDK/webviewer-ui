@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-
+import useDidUpdate from 'hooks/useDidUpdate';
 import core from 'core';
 import ThumbnailControls from 'components/ThumbnailControls';
 
@@ -29,6 +29,8 @@ const Thumbnail = ({
   dispatch,
   actions,
   isMobile,
+  canLoad,
+  onCancel,
   isThumbnailSelectingPages
 }) => {
   const thumbSize = thumbnailSize ? Number(thumbnailSize) : 150;
@@ -37,68 +39,68 @@ const Thumbnail = ({
   // To ensure checkmark loads after thumbnail
   const [loaded, setLoaded] = useState(false);
 
+  const loadThumbnailAsync = () => {
+    const thumbnailContainer = document.getElementById(`pageThumb${index}`);
+    const pageNum = index + 1;
+    const viewerRotation = core.getRotation(pageNum);
+
+    const doc = core.getDocument();
+    // Possible race condition can happen where we try to render a thumbnail for a page that has
+    // been deleted. Prevent that by checking if pageInfo exists
+
+    if (doc && doc.getPageInfo(pageNum)) {
+      const id = doc.loadCanvas({
+        pageNumber: pageNum,
+        width: thumbSize,
+        height: thumbSize,
+        drawComplete: async thumb => {
+          const thumbnailContainer = document.getElementById(`pageThumb${index}`);
+          if (thumbnailContainer) {
+            const childElement = thumbnailContainer.querySelector('.page-image');
+            if (childElement) {
+              thumbnailContainer.removeChild(childElement);
+            }
+
+            thumb.className = 'page-image';
+
+            const ratio = Math.min(thumbSize / thumb.width, thumbSize / thumb.height);
+            thumb.style.width = `${thumb.width * ratio}px`;
+            thumb.style.height = `${thumb.height * ratio}px`;
+            setDimensions({ width: Number(thumb.width), height: Number(thumb.height) });
+
+            if (Math.abs(viewerRotation)) {
+              const cssTransform = `rotate(${viewerRotation * 90}deg) translate(-50%,-50%)`;
+              const cssTransformOrigin = 'top left';
+              thumb.style['transform'] = cssTransform;
+              thumb.style['transform-origin'] = cssTransformOrigin;
+              thumb.style['ms-transform'] = cssTransform;
+              thumb.style['ms-transform-origin'] = cssTransformOrigin;
+              thumb.style['-moz-transform'] = cssTransform;
+              thumb.style['-moz-transform-origin'] = cssTransformOrigin;
+              thumb.style['-webkit-transform-origin'] = cssTransformOrigin;
+              thumb.style['-webkit-transform'] = cssTransform;
+              thumb.style['-o-transform'] = cssTransform;
+              thumb.style['-o-transform-origin'] = cssTransformOrigin;
+            }
+
+            thumbnailContainer.appendChild(thumb);
+          }
+
+          if (updateAnnotations) {
+            updateAnnotations(index);
+          }
+
+          onFinishLoading(index);
+          setLoaded(true);
+        },
+        source: 'thumbnail',
+        'isInternalRender': true,
+      });
+      onLoad(index, thumbnailContainer, id);
+    }
+  };
+
   useEffect(() => {
-    const loadThumbnailAsync = () => {
-      const thumbnailContainer = document.getElementById(`pageThumb${index}`);
-      const pageNum = index + 1;
-      const viewerRotation = core.getRotation(pageNum);
-
-      const doc = core.getDocument();
-      // Possible race condition can happen where we try to render a thumbnail for a page that has
-      // been deleted. Prevent that by checking if pageInfo exists
-
-      if (doc && doc.getPageInfo(pageNum)) {
-        const id = doc.loadCanvasAsync({
-          pageNumber: pageNum,
-          width: thumbSize,
-          height: thumbSize,
-          drawComplete: async thumb => {
-            const thumbnailContainer = document.getElementById(`pageThumb${index}`);
-            if (thumbnailContainer) {
-              const childElement = thumbnailContainer.querySelector('.page-image');
-              if (childElement) {
-                thumbnailContainer.removeChild(childElement);
-              }
-
-              thumb.className = 'page-image';
-
-              const ratio = Math.min(thumbSize / thumb.width, thumbSize / thumb.height);
-              thumb.style.width = `${thumb.width * ratio}px`;
-              thumb.style.height = `${thumb.height * ratio}px`;
-              setDimensions({ width: Number(thumb.width), height: Number(thumb.height) });
-
-              if (Math.abs(viewerRotation)) {
-                const cssTransform = `rotate(${viewerRotation * 90}deg) translate(-50%,-50%)`;
-                const cssTransformOrigin = 'top left';
-                thumb.style['transform'] = cssTransform;
-                thumb.style['transform-origin'] = cssTransformOrigin;
-                thumb.style['ms-transform'] = cssTransform;
-                thumb.style['ms-transform-origin'] = cssTransformOrigin;
-                thumb.style['-moz-transform'] = cssTransform;
-                thumb.style['-moz-transform-origin'] = cssTransformOrigin;
-                thumb.style['-webkit-transform-origin'] = cssTransformOrigin;
-                thumb.style['-webkit-transform'] = cssTransform;
-                thumb.style['-o-transform'] = cssTransform;
-                thumb.style['-o-transform-origin'] = cssTransformOrigin;
-              }
-
-              thumbnailContainer.appendChild(thumb);
-            }
-
-            if (updateAnnotations) {
-              updateAnnotations(index);
-            }
-
-            onFinishLoading(index);
-            setLoaded(true);
-          },
-          source: 'thumbnail',
-          'isInternalRender': true,
-        });
-        onLoad(index, thumbnailContainer, id);
-      }
-    };
-
     const onLayoutChanged = changes => {
       const { contentChanged, moved, added, removed } = changes;
 
@@ -126,13 +128,23 @@ const Thumbnail = ({
 
     core.addEventListener('layoutChanged', onLayoutChanged);
     core.addEventListener('rotationUpdated', onRotationUpdated);
-    loadThumbnailAsync();
+    if (canLoad) {
+      loadThumbnailAsync();
+    }
     return () => {
       core.removeEventListener('layoutChanged', onLayoutChanged);
       core.removeEventListener('rotationUpdated', onRotationUpdated);
       onRemove(index);
     };
   }, []);
+
+  useDidUpdate(() => {
+    if (canLoad) {
+      loadThumbnailAsync()
+    } else {
+      onCancel(index);
+    }
+  }, [canLoad])
 
   const handleClick = e => {
     if (isThumbnailMultiselectEnabled && !isReaderMode) {
