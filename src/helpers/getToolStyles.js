@@ -10,7 +10,6 @@ export default toolName => {
       ...tool.defaults,
       StrokeThickness: null,
       Opacity: null,
-      FontSize: null,
     };
   }
 
