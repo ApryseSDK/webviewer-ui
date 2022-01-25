@@ -6,6 +6,9 @@ WebViewer UI sits on top of [WebViewer](https://www.pdftron.com/webviewer), a po
 
 This repo is specifically designed for any users interested in advanced customizations. With the source code access, it gives developers full control to customize & style the UI, build custom controls & logic, integrate into workflows, or build a UI from scratch.
 
+Any approved pull requests made to this repository are merged into WebViewer's internal builds, and can be accessed through the nightly builds. 
+Any approved pull requests to the master branch will go to WebViewer's [nightly experimental builds](https://www.pdftron.com/nightly/#experimental/) and pull requests to version number branches will go to that version's [nightly stable](https://www.pdftron.com/nightly/#stable/).
+
 ## Install
 
 ```
