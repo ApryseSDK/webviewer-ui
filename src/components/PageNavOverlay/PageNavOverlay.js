@@ -148,7 +148,7 @@ class PageNavOverlay extends React.PureComponent {
           disabled={window.documentViewer.getCurrentPage() === 1}
         />
         <div className="formContainer" onClick={this.onClick}>
-          <form onSubmit={this.onSubmit} onBlur={this.onBlur} onFocus={this.onFocus}>
+          <form action='' onSubmit={this.onSubmit} onBlur={this.onBlur} onFocus={this.onFocus}>
             <input
               ref={this.textInput}
               type="text"
