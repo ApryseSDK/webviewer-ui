@@ -1,8 +1,8 @@
 import core from 'core';
 import createDisableFeatures from 'src/apis/disableFeatures';
-import getHashParams from 'helpers/getHashParams';
+import getHashParameters from 'helpers/getHashParameters';
 import { isIOS, isMobileDevice } from 'helpers/device';
-import { PRIORITY_THREE, PRIORITY_ONE } from 'constants/actionPriority';
+import { PRIORITY_THREE, PRIORITY_TWO, PRIORITY_ONE } from 'constants/actionPriority';
 import Feature from 'constants/feature';
 import actions from 'actions';
 
@@ -24,7 +24,7 @@ export default store => {
     core.setReadOnly(state.viewer.isReadOnly);
   }
 
-  const notesInLeftPanel = getHashParams('notesInLeftPanel', false);
+  const notesInLeftPanel = getHashParameters('notesInLeftPanel', false);
   if (notesInLeftPanel) {
     dispatch(
       actions.disableElements(
@@ -35,39 +35,39 @@ export default store => {
     );
   }
 
-  const annotationDisabled = !getHashParams('a', false);
+  const annotationDisabled = !getHashParameters('a', false);
   if (annotationDisabled) {
     disableFeatures([Feature.Annotations]);
   }
 
-  const filePickerDisabled = !getHashParams('filepicker', false);
+  const filePickerDisabled = !getHashParameters('filepicker', false);
   if (filePickerDisabled) {
     disableFeatures([Feature.FilePicker]);
   }
 
-  const hideAnnotationPanel = getHashParams('hideAnnotationPanel', false);
+  const hideAnnotationPanel = getHashParameters('hideAnnotationPanel', false);
   if (hideAnnotationPanel) {
     disableFeatures([Feature.NotesPanel]);
   }
 
-  const toolGroupReorderingDisabled = getHashParams('disableToolGroupReordering', false);
+  const toolGroupReorderingDisabled = getHashParameters('disableToolGroupReordering', false);
   if (toolGroupReorderingDisabled) {
     dispatch(actions.setEnableToolGroupReordering(false));
   }
 
-  const measurementsDisabled = !getHashParams('enableMeasurement', false);
+  const measurementsDisabled = !getHashParameters('enableMeasurement', false);
   if (measurementsDisabled) {
     disableFeatures([Feature.Measurement]);
   }
 
   const redactionsDisabled = !(
-    getHashParams('enableRedaction', false) || core.isCreateRedactionEnabled()
+    getHashParameters('enableRedaction', false) || core.isCreateRedactionEnabled()
   );
   if (redactionsDisabled) {
     disableFeatures([Feature.Redaction]);
   }
 
-  const toolBarDisabled = !getHashParams('toolbar', true);
+  const toolBarDisabled = !getHashParameters('toolbar', true);
   if (toolBarDisabled) {
     dispatch(actions.disableElement('header', PRIORITY_ONE));
   }
@@ -101,6 +101,8 @@ export default store => {
     disableFeatures([Feature.OutlineEditing]);
   }
 
+  dispatch(actions.disableElements(['contentEditButton'], PRIORITY_TWO));
+
   dispatch(
     actions.disableElements(
       [
@@ -111,12 +113,8 @@ export default store => {
         'bookmarksPanelButton',
         'wildCardSearchOption',
         'readerPageTransitionButton',
-        'editTextButton',
         'mathSymbolsButton',
         'threeDToolGroupButton',
-        // disable it by default as PDFTron server side SDK currently can't handle this
-        'richTextPopup',
-        // disable file attachment list from the left panel
         'attachmentPanelButton'
       ],
       PRIORITY_ONE,
