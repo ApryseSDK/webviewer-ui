@@ -8,6 +8,7 @@ import core from 'core';
 import StylePopup from 'components/StylePopup';
 import SignatureStylePopup from 'components/SignatureStylePopup';
 import setToolStyles from 'helpers/setToolStyles';
+import { getOpenedWarningModal, getOpenedColorPicker, getAllOpenedModals } from 'helpers/getElements';
 import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -26,7 +27,8 @@ class ToolStylePopup extends React.PureComponent {
     toolButtonObjects: PropTypes.object.isRequired,
     colorMapKey: PropTypes.string,
     closeElement: PropTypes.func.isRequired,
-    closeElements: PropTypes.func.isRequired
+    closeElements: PropTypes.func.isRequired,
+    isInDesktopOnlyMode: PropTypes.bool
   };
 
   constructor(props) {
@@ -55,7 +57,7 @@ class ToolStylePopup extends React.PureComponent {
     // when we click outside because we are always clicking on this component
     // as a result we have this handler to specifically close this component
     // if this comment is removed, please also remove the comment in handleClick, AnnotationStylePopup.js
-    if (isMobile() && e.target === e.currentTarget) {
+    if ((!this.props.isInDesktopOnlyMode && isMobile()) && e.target === e.currentTarget) {
       this.props.closeElement('toolStylePopup');
     }
   };
@@ -68,9 +70,9 @@ class ToolStylePopup extends React.PureComponent {
     const pageNavOverlays = Array.from(document.querySelectorAll(
       '[data-element="pageNavOverlay"]',
     ));
-    const warningModal = document.querySelector('.WarningModal.open .container');
-    const colorPicker = document.querySelector('.ColorPickerModal.open');
-    const openedModal = Array.from(document.querySelectorAll('.Modal.open'));
+    const warningModal = getOpenedWarningModal();
+    const colorPicker = getOpenedColorPicker();
+    const openedModal = Array.from(getAllOpenedModals());
 
     const clickedOnToolsOverlay = toolsOverlays.some(toolsOverlay => {
       return toolsOverlay?.contains(e.target);
@@ -79,7 +81,7 @@ class ToolStylePopup extends React.PureComponent {
       return pageNavOverlay?.contains(e.target);
     });
     const clickedONCreateStampModal = openedModal.some(pageModal => {
-      return pageModal.classList.contains('CustomStampModal')
+      return pageModal.classList.contains('CustomStampModal');
     });
 
     if (!clickedOnToolsOverlay && !clickedONPageNavOverlay && !clickedONCreateStampModal && !warningModal && !colorPicker) {
@@ -93,16 +95,45 @@ class ToolStylePopup extends React.PureComponent {
     if (typeof tool.complete === 'function') {
       tool.complete();
     }
-    setToolStyles(this.props.activeToolName, property, value);
+    setToolStyles(activeToolName, property, value);
   };
+
+  handleRichTextStyleChange = (property, value) => {
+    const { activeToolName, activeToolStyle } = this.props;
+    const tool = core.getTool(activeToolName);
+    if (typeof tool.complete === 'function') {
+      tool.complete();
+    }
+    const richTextStyle = {
+      0: {
+        ...activeToolStyle["RichTextStyle"][0],
+        [property]: value,
+      }
+    };
+    setToolStyles(activeToolName, "RichTextStyle", richTextStyle);
+  }
 
   render() {
     const { activeToolGroup, isDisabled, activeToolName, activeToolStyle, isMobile } = this.props;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
+    let freeTextProperties = {};
     const colorMapKey = mapToolNameToKey(activeToolName);
 
     if (isDisabled) {
       return null;
+    }
+
+    if (isFreeText) {
+      freeTextProperties = {
+        Font: activeToolStyle.Font,
+        FontSize: activeToolStyle.FontSize,
+        TextAlign: activeToolStyle.TextAlign,
+        TextVerticalAlign: activeToolStyle.TextVerticalAlign,
+        bold: activeToolStyle['RichTextStyle'][0]["font-weight"] === "bold",
+        italic: activeToolStyle['RichTextStyle'][0]["font-style"] === "italic",
+        underline: activeToolStyle['RichTextStyle'][0]["text-decoration"]?.includes("underline") || activeToolStyle["text-decoration"]?.includes("word"),
+        strikeout: activeToolStyle['RichTextStyle'][0]["text-decoration"]?.includes("line-through"),
+      };
     }
 
     const { availablePalettes } = getDataWithKey(colorMapKey);
@@ -116,7 +147,11 @@ class ToolStylePopup extends React.PureComponent {
         style={activeToolStyle}
         isFreeText={isFreeText}
         hideSnapModeCheckbox={isEllipseMeasurementTool || !core.isFullPDFEnabled()}
+        onPropertyChange={this.handleStyleChange}
         onStyleChange={this.handleStyleChange}
+        onRichTextStyleChange={this.handleRichTextStyleChange}
+        isFontSizeSliderDisabled={isFreeText}
+        freeTextProperties={freeTextProperties}
       />
     );
 
@@ -163,6 +198,7 @@ const mapStateToProps = state => {
     isDisabled: selectors.isElementDisabled(state, 'toolStylePopup'),
     isOpen: selectors.isElementOpen(state, 'toolStylePopup'),
     toolButtonObjects: selectors.getToolButtonObjects(state),
+    isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state)
   };
 };
 

@@ -26,6 +26,18 @@ export default {
   AnnotationCreateRectangularAreaMeasurement4: {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
+  AnnotationCreateCloudyRectangularAreaMeasurement: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateCloudyRectangularAreaMeasurement2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateCloudyRectangularAreaMeasurement3: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateCloudyRectangularAreaMeasurement4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
   AnnotationCreateEllipseMeasurement: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
@@ -170,6 +182,18 @@ export default {
   AnnotationCreateFreeHand4: {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
+  AnnotationCreateFreeHandHighlight: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateFreeHandHighlight2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateFreeHandHighlight3: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateFreeHandHighlight4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
   AnnotationCreateFreeText: {
     TextColor: { R: 228, G: 66, B: 52, A: 1 },
   },
@@ -180,6 +204,18 @@ export default {
     TextColor: { R: 78, G: 125, B: 233, A: 1 },
   },
   AnnotationCreateFreeText4: {
+    TextColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
+  AnnotationCreateDateFreeText: {
+    TextColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateDateFreeText2: {
+    TextColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateDateFreeText3: {
+    TextColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateDateFreeText4: {
     TextColor: { R: 0, G: 122, B: 59, A: 1 },
   },
   AnnotationCreateCallout: {
@@ -252,6 +288,54 @@ export default {
     StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
   },
   AnnotationCreateTextStrikeout4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
+  TextFormFieldCreateTool: {
+    TextColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  TextFormFieldCreateTool2: {
+    TextColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  TextFormFieldCreateTool3: {
+    TextColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  TextFormFieldCreateTool4: {
+    TextColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
+  SignatureFormFieldCreateTool: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  SignatureFormFieldCreateTool2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  SignatureFormFieldCreateTool3: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  SignatureFormFieldCreateTool4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
+  ListBoxFormFieldCreateTool: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  ListBoxFormFieldCreateTool2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  ListBoxFormFieldCreateTool3: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  ListBoxFormFieldCreateTool4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
+  ComboBoxFormFieldCreateTool: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  ComboBoxFormFieldCreateTool2: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  ComboBoxFormFieldCreateTool3: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  ComboBoxFormFieldCreateTool4: {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
 };

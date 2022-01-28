@@ -1,4 +1,4 @@
 /**
  * @see displayModeObjects.js for more information
  */
-export default () => window.docViewer.getDisplayModeManager().getDisplayMode().IsScrollable();
+export default () => window.documentViewer.getDisplayModeManager().getDisplayMode().IsScrollable();

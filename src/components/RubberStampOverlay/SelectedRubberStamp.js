@@ -52,9 +52,9 @@ const SelectedSignatureRow = () => {
   };
 
   useEffect(() => {
-    rubberStampTool.on('stampsUpdated', onStampsAdded);
+    rubberStampTool.addEventListener('stampsUpdated', onStampsAdded);
     return () => {
-      rubberStampTool.off('stampsUpdated', onStampsAdded);
+      rubberStampTool.removeEventListener('stampsUpdated', onStampsAdded);
     };
   }, []);
 
@@ -73,10 +73,10 @@ const SelectedSignatureRow = () => {
         {selectedStamp &&
           <SignatureRowContent
             imgSrc={selectedStamp.imgSrc}
-            onClick={() => {
+            onClick={async () => {
               core.setToolMode('AnnotationCreateRubberStamp');
               const text = t(`rubberStamp.${selectedStamp.annotation['Icon']}`);
-              rubberStampTool.setRubberStamp(selectedStamp.annotation, text);
+              await rubberStampTool.setRubberStamp(selectedStamp.annotation, text);
               rubberStampTool.showPreview();
             }}
             isActive={activeToolName === 'AnnotationCreateRubberStamp'}

@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
   isCaseSensitive: selectors.isCaseSensitive(state),
   isWholeWord: selectors.isWholeWord(state),
   isWildcard: selectors.isWildcard(state),
+  isProcessingSearchResults: selectors.isProcessingSearchResults(state),
 });
 
 const mapDispatchToProps = {

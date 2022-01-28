@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './OverlayItem.scss';
-import classNames from "classnames";
+import classNames from 'classnames';
 
 class OverlayItem extends React.PureComponent {
   static propTypes = {

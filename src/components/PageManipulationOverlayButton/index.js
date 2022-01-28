@@ -1,0 +1,3 @@
+import PageManipulationOverlayButton from './PageManipulationOverlayButtonContainer';
+
+export default PageManipulationOverlayButton;

@@ -16,7 +16,7 @@ let colorMap;
 
 dayjs.extend(LocalizedFormat);
 
-export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {
+export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, colorMap, options = {}) => {
   const {
     includeAnnotations,
     includeComments,
@@ -24,6 +24,8 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
     printQuality = PRINT_QUALITY,
     printWithoutModal = false,
     language,
+    isPrintCurrentView,
+    printedNoteDateFormat: dateFormat
   } = options;
   let { pagesToPrint } = options;
 
@@ -52,6 +54,9 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
         pagesToPrint.push(i);
       }
     }
+    if (isPrintCurrentView) {
+      pagesToPrint = [core.getDocumentViewer().getCurrentPage()];
+    }
 
     const createPages = creatingPages(
       pagesToPrint,
@@ -60,8 +65,9 @@ export const print = async(dispatch, isEmbedPrintSupported, sortStrategy, colorM
       printQuality,
       sortStrategy,
       colorMap,
-      undefined,
+      dateFormat,
       onProgress,
+      isPrintCurrentView,
       language,
     );
     Promise.all(createPages)
@@ -112,15 +118,22 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnotations,
     const printableAnnotationNotes = getPrintableAnnotationNotes(pageNumber);
     createdPages.push(creatingImage(pageNumber, includeAnnotations, isPrintCurrentView));
 
-    if (includeComments && printableAnnotationNotes) {
-      const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotationNotes);
-      createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat, language));
+    if (onProgress) {
+      createdPages[createdPages.length - 1].then(htmlElement => {
+        onProgress(pageNumber, htmlElement);
+      });
     }
 
-    if (onProgress) {
-      createdPages[createdPages.length - 1].then(img => {
-        onProgress(pageNumber, img);
-      });
+    if (includeComments && printableAnnotationNotes) {
+      const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotationNotes);
+      if (sortedNotes.length) {
+        createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat, language));
+      }
+      if (onProgress) {
+        createdPages[createdPages.length - 1].then(htmlElement => {
+          onProgress(pageNumber, htmlElement);
+        });
+      }
     }
   });
 
@@ -287,19 +300,19 @@ const positionCanvas = (canvas, pageIndex) => {
     switch (documentRotation) {
       case 0:
         ctx.translate(height, 0);
-        ctx.rotate(( 90 * Math.PI) / 180);
+        ctx.rotate((90 * Math.PI) / 180);
         break;
       case 1:
         ctx.translate(0, height);
-        ctx.rotate(( 270 * Math.PI) / 180);
+        ctx.rotate((270 * Math.PI) / 180);
         break;
       case 2:
         ctx.translate(height, 0);
-        ctx.rotate(( -270 * Math.PI) / 180);
+        ctx.rotate((-270 * Math.PI) / 180);
         break;
       case 3:
         ctx.translate(0, height);
-        ctx.rotate(( 270 * Math.PI) / 180);
+        ctx.rotate((270 * Math.PI) / 180);
         break;
     }
 
@@ -365,7 +378,7 @@ const getNote = (annotation, dateFormat, language) => {
   const noteIcon = getNoteIcon(annotation);
 
   noteRootInfo.appendChild(noteIcon);
-  noteRootInfo.appendChild(getNoteInfo(annotation));
+  noteRootInfo.appendChild(getNoteInfo(annotation, dateFormat, language));
   noteRoot.appendChild(noteRootInfo);
   noteRoot.appendChild(getNoteContent(annotation));
 
@@ -420,11 +433,19 @@ const getNoteInfo = (annotation, dateFormat, language) => {
   }
 
   info.className = 'note__info';
-  info.innerHTML = `
-    ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation) || ''} &nbsp;&nbsp;
-    ${i18n.t('option.printInfo.subject')}: ${annotation.Subject} &nbsp;&nbsp;
-    ${i18n.t('option.printInfo.subject')}: ${date}
-  `;
+  if (annotation.Subject === '' || annotation.Subject === null || annotation.Subject === undefined) {
+    info.innerHTML = `
+      ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''} &nbsp;&nbsp;
+      ${i18n.t('option.printInfo.date')}: ${date}
+    `;
+  } else {
+    info.innerHTML = `
+      ${i18n.t('option.printInfo.author')}: ${core.getDisplayAuthor(annotation['Author']) || ''} &nbsp;&nbsp;
+      ${i18n.t('option.printInfo.subject')}: ${annotation.Subject} &nbsp;&nbsp;
+      ${i18n.t('option.printInfo.date')}: ${date}
+    `;
+  }
+
   return info;
 };
 

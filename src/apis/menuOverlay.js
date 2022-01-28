@@ -1,20 +1,20 @@
 /**
  * An instance of MenuOverlay that can be used to edit items in the settings menu overlay component.
- * @name WebViewerInstance#settingsMenuOverlay
- * @implements {WebViewerInstance.MenuOverlay}
- * @type {WebViewerInstance.MenuOverlay}
+ * @name UI.settingsMenuOverlay
+ * @implements {UI.MenuOverlay}
+ * @type {UI.MenuOverlay}
  * @example
 WebViewer(...)
   .then(function (instance) {
-    instance.settingsMenuOverlay.someAPI();
+    instance.UI.settingsMenuOverlay.someAPI();
   });
  */
 
 
 /**
  * A class which contains MenuOverlay APIs.<br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> If you want to remove an item in a MenuOverlay, use {@link WebViewerInstance#disableElements disableElements}.
- * @interface WebViewerInstance.MenuOverlay
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> If you want to remove an item in a MenuOverlay, use {@link UI.disableElements disableElements}.
+ * @interface UI.MenuOverlay
  */
 import actions from 'actions';
 import selectors from 'selectors';
@@ -28,14 +28,14 @@ const MenuOverlayAPI = {
   },
   /**
    * Add an array of Actions Buttons after the item that has the given data element.
-   * @method WebViewerInstance.MenuOverlay#add
+   * @method UI.MenuOverlay#add
    * @param {Array.<object>} items Same as <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#actionbutton' target='_blank'>ActionButton</a>
    * @param {string} [dataElement] An optional string. If not given, items will be added in the beginning
    * @returns {this} The instance itself
    * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.settingsMenuOverlay.add({
+    instance.UI.settingsMenuOverlay.add({
       type: 'actionButton',
       className:"row",
       img: 'icon-header-print-line',
@@ -63,15 +63,15 @@ WebViewer(...)
   },
   /**
    * Update all the items in the menuOverlay dropdown.
-   * To update an individual item, use {@link WebViewerInstance#updateElement updateElement}
-   * @method WebViewerInstance.MenuOverlay#update
+   * To update an individual item, use {@link UI.updateElement updateElement}
+   * @method UI.MenuOverlay#update
    * @param {Array.<object>} [items] the items that will be rendered in the menuOverlay dropdown
    * @returns {this} The instance itself
    * @example
 WebViewer(...)
   .then(function(instance) {
     // replace existing items with a new array of items
-    instance.settingsMenuOverlay.update([
+    instance.UI.settingsMenuOverlay.update([
       {
         type: 'actionButton',
         className:"row",
@@ -107,12 +107,12 @@ WebViewer(...)
   },
   /**
    * Return the array of items in the menuOverlay dropdown.
-   * @method WebViewerInstance.MenuOverlay#getItems
+   * @method UI.MenuOverlay#getItems
    * @returns {Array.<object>} Current items in the menuOverlay dropdown.
    * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.settingsMenuOverlay.getItems();
+    instance.UI.settingsMenuOverlay.getItems();
   });
    */
   getItems() {

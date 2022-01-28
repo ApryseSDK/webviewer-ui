@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DisplayModeManager.html#getDisplayMode__anchor
+ * https://www.pdftron.com/api/web/Core.DisplayModeManager.html#getDisplayMode__anchor
  */
-export default () => window.docViewer.getDisplayModeManager().getDisplayMode();
+export default () => window.documentViewer.getDisplayModeManager().getDisplayMode();

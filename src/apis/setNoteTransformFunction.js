@@ -2,10 +2,10 @@ import actions from 'actions';
 
 /**
  * @callback NoteTransformFunction
- * @memberof WebViewerInstance
+ * @memberof UI
  * @param {HTMLElement} wrapperElement  A reference to the DOM node that wraps the note. You can use this to query select child elements to mutate (see the examples below)
  * @param {object} state The state of the note. Contains two properties, 'annotation' and 'isSelected'
- * @param {Annotations.Annotation} state.annotation A reference to the annotation object associated with the note
+ * @param {Core.Annotations.Annotation} state.annotation A reference to the annotation object associated with the note
  * @param {boolean} state.isSelected whether or not the note is currently expanded
  * @param {function} createElement A utility function that should be used when creating DOM nodes. This is a replacement for `document.createElement`.
  * Accepts the same parameters as `document.createElement`. Using document.createElement instead of this function will cause your DOM nodes to not be cleaned up on subsequent renders.
@@ -36,12 +36,12 @@ import actions from 'actions';
  *  <b>Do not use HTMLElement.removeChild or any other APIs that remove elements from the DOM.</b> Doing so will cause React to lose reference to this node, and will crash.
  *  If you need to hide an HTML element, set the style to `display: none` instead.
  * <br><br>
- * @method WebViewerInstance#dangerouslySetNoteTransformFunction
- * @param {WebViewerInstance.NoteTransformFunction} noteTransformFunction The function that will be used to transform notes in the left panel
+ * @method UI.dangerouslySetNoteTransformFunction
+ * @param {UI.NoteTransformFunction} noteTransformFunction The function that will be used to transform notes in the left panel
  * @example
 Webviewer(...)
   .then(instance => {
-    instance.dangerouslySetNoteTransformFunction((wrapper, state, createElement) => {
+    instance.UI.dangerouslySetNoteTransformFunction((wrapper, state, createElement) => {
       // Change the title of every note
       wrapper.querySelector('.author-and-time>span').innerHTML = 'My custom note title';
 
@@ -61,7 +61,7 @@ Webviewer(...)
       const button = createElement('button');
       button.onmousedown = (e) => {
         state.annotation.StrokeColor = new instance.Annotations.Color(0, 0, 255);
-        instance.annotManager.redrawAnnotation(state.annotation)
+        instance.UI.annotManager.redrawAnnotation(state.annotation)
       };
       button.innerHTML = 'Make me blue'
       wrapper.appendChild(button);

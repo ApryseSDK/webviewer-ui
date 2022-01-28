@@ -9,7 +9,7 @@ import core from "core";
 import toolStylesExist from "helpers/toolStylesExist";
 import getToolStyles from "helpers/getToolStyles";
 import hotkeysManager from "helpers/hotkeysManager";
-import getFillColor from 'helpers/getFillColor';
+import getColor from 'helpers/getColor';
 import { mapToolNameToKey } from "constants/map";
 import defaultTool from 'constants/defaultTool';
 import actions from "actions";
@@ -90,11 +90,17 @@ const ToolButton = ({
 
   let color = '';
   let fillColor = '';
+  let strokeColor = '';
   const showColor = customOverrides?.showColor || toolButtonObject.showColor;
   if (showColor === 'always' || (showColor === 'active' && isActive)) {
     const toolStyles = getToolStyles(toolName);
     color = toolStyles?.[iconColorKey]?.toHexString?.();
-    fillColor = getFillColor(toolStyles?.FillColor);
+    fillColor = getColor(toolStyles?.FillColor);
+    strokeColor = getColor(toolStyles?.StrokeColor);
+    if (toolName.indexOf('AnnotationCreateFreeText') > -1 && toolStyles?.StrokeThickness === 0) {
+      // transparent
+      strokeColor = 'ff000000';
+    }
   }
 
   return (
@@ -108,6 +114,7 @@ const ToolButton = ({
       isActive={isActive}
       color={color}
       fillColor={fillColor}
+      strokeColor={strokeColor}
       {...restProps}
       {...restObjectData}
     />

@@ -1,7 +1,10 @@
 import i18next from 'i18next';
 import dayjs from 'dayjs';
 import core from 'core';
+import React from 'react';
 import { rotateRad } from 'helpers/rotate';
+import { rgbaToHex } from 'helpers/color';
+import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 
 function getDocumentCenter(pageNumber) {
@@ -57,23 +60,72 @@ const sortStrategies = {
     getSeparatorContent: (prevNote, currNote, { pageLabels }) =>
       `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
-  time: {
-    getSortedNotes: notes => notes.sort((a, b) => getLatestActivityDate(b) - getLatestActivityDate(a)),
-    shouldRenderSeparator: (prevNote, currNote) =>
-      dayjs(getLatestActivityDate(prevNote)).format('MMM D, YYYY') !==
-      dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY'),
+  createDate: {
+    getSortedNotes: notes => notes.sort((a, b) => ( a.DateCreated || 0) - (b.DateCreated || 0)),
+    shouldRenderSeparator: (prevNote, currNote) => {
+      const prevNoteDate = prevNote.DateCreated;
+      const currNoteDate = currNote.DateCreated;
+      if (prevNoteDate && currNoteDate) {
+        const dayFormat = 'MMM D, YYYY';
+        return dayjs(prevNoteDate).format(dayFormat) !== dayjs(currNoteDate).format(dayFormat);
+      } else if (!prevNoteDate && !currNoteDate) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     getSeparatorContent: (prevNote, currNote) => {
-      const today = dayjs(new Date()).format('MMM D, YYYY');
-      const yesterday = dayjs(new Date(new Date() - 86400000)).format('MMM D, YYYY');
-      const latestActivityDate = dayjs(getLatestActivityDate(currNote)).format('MMM D, YYYY');
+      const createDate = currNote.DateCreated;
+      if (createDate) {
+        const dayFormat = 'MMM D, YYYY';
+        const today = dayjs(new Date()).format(dayFormat);
+        const yesterday = dayjs(new Date(new Date() - 86400000)).format(dayFormat);
+        const createDateString = dayjs(new Date(createDate)).format(dayFormat);
 
-      if (latestActivityDate === today) {
-        return i18next.t('option.notesPanel.separator.today');
+        if (createDateString === today) {
+          return i18next.t('option.notesPanel.separator.today');
+        }
+        if (createDateString === yesterday) {
+          return i18next.t('option.notesPanel.separator.yesterday');
+        }
+        return createDateString;
+      } else {
+        return i18next.t('option.notesPanel.separator.unknown');
       }
-      if (latestActivityDate === yesterday) {
-        return i18next.t('option.notesPanel.separator.yesterday');
+    },
+  },
+  modifiedDate: {
+    getSortedNotes: notes => notes.sort((a, b) => (getLatestActivityDate(b) || 0) - (getLatestActivityDate(a) || 0)),
+    shouldRenderSeparator: (prevNote, currNote) => {
+      const prevNoteDate = getLatestActivityDate(prevNote);
+      const currNoteDate = getLatestActivityDate(currNote);
+      if (prevNoteDate && currNoteDate) {
+        const dayFormat = 'MMM D, YYYY';
+        return dayjs(prevNoteDate).format(dayFormat) !== dayjs(currNoteDate).format(dayFormat);
+      } else if (!prevNoteDate && !currNoteDate) {
+        return false;
+      } else {
+        return true;
       }
-      return latestActivityDate;
+    },
+    getSeparatorContent: (prevNote, currNote) => {
+      const latestActivityDate = getLatestActivityDate(currNote);
+      if (latestActivityDate) {
+        const dayFormat = 'MMM D, YYYY';
+        const today = dayjs(new Date()).format(dayFormat);
+        const yesterday = dayjs(new Date(new Date() - 86400000)).format(dayFormat);
+        const latestActivityDay = dayjs(latestActivityDate).format(dayFormat);
+
+        if (latestActivityDay === today) {
+          return i18next.t('option.notesPanel.separator.today');
+        }
+        if (latestActivityDay === yesterday) {
+          return i18next.t('option.notesPanel.separator.yesterday');
+        }
+        return latestActivityDay;
+      } else {
+        return i18next.t('option.notesPanel.separator.unknown');
+      }
     },
   },
   status: {
@@ -99,25 +151,66 @@ const sortStrategies = {
   author: {
     getSortedNotes: notes =>
       notes.sort((a, b) => {
-        const authorA = core.getDisplayAuthor(a).toUpperCase();
-        const authorB = core.getDisplayAuthor(b).toUpperCase();
+        const authorA = core.getDisplayAuthor(a['Author'])?.toUpperCase();
+        const authorB = core.getDisplayAuthor(b['Author'])?.toUpperCase();
         return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
       }),
-    shouldRenderSeparator: (prevNote, currNote) => core.getDisplayAuthor(prevNote) !== core.getDisplayAuthor(currNote),
+    shouldRenderSeparator: (prevNote, currNote) => core.getDisplayAuthor(prevNote['Author']) !== core.getDisplayAuthor(currNote['Author']),
     getSeparatorContent: (prevNote, currNote) => {
-      return core.getDisplayAuthor(currNote);
+      return core.getDisplayAuthor(currNote['Author']);
     },
   },
   type: {
     getSortedNotes: notes =>
       notes.sort((a, b) => {
-        const typeA = a.Subject.toUpperCase();
-        const typeB = b.Subject.toUpperCase();
+        const typeA = getAnnotationClass(a);
+        const typeB = getAnnotationClass(b);
         return typeA < typeB ? -1 : typeA > typeB ? 1 : 0;
       }),
-    shouldRenderSeparator: (prevNote, currNote) => prevNote.Subject !== currNote.Subject,
+    shouldRenderSeparator: (prevNote, currNote) => {
+      return getAnnotationClass(prevNote) !== getAnnotationClass(currNote);
+    },
     getSeparatorContent: (prevNote, currNote) => {
-      return currNote.Subject;
+      return i18next.t(`option.type.${getAnnotationClass(currNote)}`);
+    },
+  },
+  color: {
+    getSortedNotes: notes =>
+      notes.sort((prevNote, currNote) => {
+        let colorA = '#485056';
+        let colorB = '#485056';
+        if (currNote.Color) {
+          colorA = rgbaToHex(currNote.Color.R, currNote.Color.G, currNote.Color.B, currNote.Color.A);
+        }
+        if (prevNote.Color) {
+          colorB = rgbaToHex(prevNote.Color.R, prevNote.Color.G, prevNote.Color.B, prevNote.Color.A);
+        }
+        return colorA < colorB ? -1 : colorA > colorB ? 1 : 0;
+      }),
+    shouldRenderSeparator: (prevNote, currNote) => {
+      let colorA = '#485056';
+      let colorB = '#485056';
+      if (currNote.Color) {
+        colorA = rgbaToHex(currNote.Color.R, currNote.Color.G, currNote.Color.B, currNote.Color.A);
+      }
+      if (prevNote.Color) {
+        colorB = rgbaToHex(prevNote.Color.R, prevNote.Color.G, prevNote.Color.B, prevNote.Color.A);
+      }
+      return colorA !== colorB;
+    },
+    getSeparatorContent: (prevNote, currNote) => {
+      let color = '#485056';
+      if (currNote.Color) {
+        color = rgbaToHex(currNote.Color.R, currNote.Color.G, currNote.Color.B, currNote.Color.A);
+      }
+      return (
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          {i18next.t('option.notesOrder.color')}
+          <div
+            style={{ background: color, width: '7px', height: '7px', borderRadius: '10000000px', marginLeft: '10px' }}
+          ></div>
+        </div>
+      );
     },
   },
 };

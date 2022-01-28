@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getAnnotationManager__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getAnnotationManager__anchor
  */
-export default () => window.docViewer.getAnnotationManager();
+export default () => window.documentViewer.getAnnotationManager();

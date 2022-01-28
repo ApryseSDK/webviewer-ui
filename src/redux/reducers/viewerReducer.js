@@ -4,6 +4,11 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_THUMBNAIL_PAGE_SELECT':
+      return {
+        ...state,
+        thumbnailSelectingPages: payload.isSelecting
+      };
     case 'SET_HIGH_CONTRAST_MODE':
       return {
         ...state,
@@ -169,8 +174,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_CUSTOM_COLORS':
       if (localStorageManager.isLocalStorageEnabled()) {
         window.localStorage.setItem('customColors', JSON.stringify(payload.customColors));
-      }
-      else {
+      } else {
         console.error("localStorage is disabled, customColors cannot be restored");
       }
       return { ...state, customColors: payload.customColors };
@@ -191,6 +195,8 @@ export default initialState => (state = initialState, action) => {
           [payload.toolbarGroup]: payload.toolGroup,
         },
       };
+    case 'SET_OUTLINE_CONTROL_VISIBILITY':
+      return { ...state, outlineControlVisibility: payload.outlineControlVisibility };
     case 'SET_NOTE_POPUP_ID':
       return { ...state, notePopupId: payload.id };
     case 'SET_NOTE_EDITING':
@@ -239,6 +245,7 @@ export default initialState => (state = initialState, action) => {
             group: payload.buttonGroup,
             img: payload.buttonImage,
             showColor: payload.showColor || 'active',
+            showPresets: payload.showPresets ?? true,
           },
         },
       };
@@ -276,6 +283,10 @@ export default initialState => (state = initialState, action) => {
       return { ...state, isThumbnailMultiselect: payload.useThumbnailMultiselect };
     case 'SET_MULTI_VIEWER_MERGING':
       return { ...state, isMultipleViewerMerging: payload.isMultipleViewerMerging };
+    case 'SET_ENABLE_NOTE_PANEL_VIRTUALIZED_LIST':
+      return { ...state, enableNotesPanelVirtualizedList: payload.enableNotesPanelVirtualizedList };
+    case 'SET_NOTES_SHOW_LAST_UPDATED_DATE':
+      return { ...state, notesShowLastUpdatedDate: payload.notesShowLastUpdatedDate };
     case 'SET_ALLOW_PAGE_NAVIGATION':
       return { ...state, allowPageNavigation: payload.allowPageNavigation };
     case 'SET_READ_ONLY':
@@ -291,6 +302,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, pageLabels: [...payload.pageLabels] };
     case 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES':
       return { ...state, selectedThumbnailPageIndexes: payload.selectedThumbnailPageIndexes };
+    case 'SET_SHIFT_KEY_THUMBNAIL_PIVOT_INDEX':
+      return { ...state, shiftKeyThumbnailPivotIndex: payload.shiftKeyThumbnailPivotIndex };
     case 'SET_ACTIVE_PALETTE': {
       const { colorMapKey, colorPalette } = payload;
       return {
@@ -346,6 +359,9 @@ export default initialState => (state = initialState, action) => {
       return { ...state, tab: { ...state.tab, [payload.id]: payload.dataElement } };
     case 'SET_CUSTOM_ELEMENT_OVERRIDES':
       return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
+    case 'SET_PAGE_REPLACEMENT_FILE_LIST':
+      return { ...state, pageReplacementFileList: payload.list };
+
     case 'SET_NOTE_TRANSFORM_FUNCTION':
       return { ...state, noteTransformFunction: payload.noteTransformFunction };
     case 'SET_CUSTOM_NOTE_SELECTION_FUNCTION':
@@ -353,7 +369,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     case 'SET_CUSTOM_MODAL': {
-      const existingDataElementFiltered = state.customModals.filter(function(modal) {
+      const existingDataElementFiltered = state.customModals.filter(function (modal) {
         return modal.dataElement !== payload.dataElement;
       });
       return {
@@ -371,7 +387,7 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         validationModalWidgetName: payload.validationModalWidgetName,
-      }
+      };
     case 'ADD_TRUSTED_CERTIFICATES':
       /**
        * To mimic the behavior of the Core implementation, where certificates
@@ -392,14 +408,36 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ANNOTATION_READ_STATE':
       const { unreadAnnotationIdSet } = state;
       const { annotationId, isRead } = payload;
-      if (isRead){
-        unreadAnnotationIdSet.delete(annotationId);   
+      if (isRead) {
+        unreadAnnotationIdSet.delete(annotationId);
       } else {
-        unreadAnnotationIdSet.add(annotationId);   
+        unreadAnnotationIdSet.add(annotationId);
       }
       return { ...state, unreadAnnotationIdSet: new Set(unreadAnnotationIdSet) };
     case 'SET_LANGUAGE':
       return { ...state, currentLanguage: payload.language };
+    case 'SET_FADE_PAGE_NAVIGATION_COMPONENT':
+      return {
+        ...state,
+        fadePageNavigationComponent: payload.fadePageNavigationComponent
+      };
+    case 'SET_ENABLE_DESKTOP_ONLY_MODE':
+      return {
+        ...state,
+        isInDesktopOnlyMode: payload.enableDesktopOnlyMode
+      };
+    case 'PAGE_DELETION_CONFIRMATION_MODAL_POPUP':
+      return {
+        ...state,
+        pageDeletionConfirmationModalEnabled: payload.pageDeletionConfirmationModalEnabled
+      };
+    case 'SET_PAGE_MANIPULATION_OVERLAY_ITEMS':
+      return {
+        ...state,
+        pageManipulationOverlay: payload.items,
+      };
+    case 'SET_WATERMARK_MODAL_OPTIONS':
+      return { ...state, watermarkModalOptions: payload.watermarkModalOptions };
     default:
       return state;
   }

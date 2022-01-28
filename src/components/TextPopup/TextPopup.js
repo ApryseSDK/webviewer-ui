@@ -51,8 +51,8 @@ const TextPopup = ({ t }) => {
       }
     };
 
-    textSelectTool.on('selectionComplete', onSelectionComplete);
-    return () => textSelectTool.off('selectionComplete', onSelectionComplete);
+    textSelectTool.addEventListener('selectionComplete', onSelectionComplete);
+    return () => textSelectTool.removeEventListener('selectionComplete', onSelectionComplete);
   }, [dispatch, popupItems]);
 
   const onClose = useCallback(() => dispatch(actions.closeElement('textPopup')), [dispatch]);

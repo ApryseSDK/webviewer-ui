@@ -1,8 +1,9 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect, useState} from 'react';
-import { useStore, useDispatch } from 'react-redux';
+import classNames from 'classnames';
+import { useStore, useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import selectors from 'selectors';
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
 import ToolsHeader from 'components/Header/ToolsHeader';
@@ -36,19 +37,26 @@ import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 import CreateStampModal from 'components/CreateStampModal';
+import PageReplacementModal from 'src/components/PageReplacementModal';
 import CustomModal from 'components/CustomModal';
+import Model3DModal from 'components/Model3DModal';
+import FormFieldEditPopup from 'components/FormFieldEditPopup';
 import ColorPickerModal from 'components/ColorPickerModal';
 import SignaturesLeftPanel from 'components/SignaturesLeftPanel'
+import PageManipulationOverlay from 'components/PageManipulationOverlay';
+
 import core from 'core';
-import defineReaderControlAPIs from 'src/apis';
 import loadDocument from 'helpers/loadDocument';
 import getHashParams from 'helpers/getHashParams';
 import fireEvent from 'helpers/fireEvent';
 import PrepareSignaturesPanel from 'components/PrepareSignaturesPanel';
+import Events from 'constants/events';
+import overlays from 'constants/overlays';
+
 import actions from 'actions';
 
 import './App.scss';
-
+import LeftPanelOverlayContainer from "components/LeftPanelOverlay";
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -63,9 +71,12 @@ const App = ({ removeEventHandlers }) => {
   let timeoutReturn;
   const [prepare, handlePrepare] = useState(true);
 
+  const [isInDesktopOnlyMode] = useSelector(state => [
+    selectors.isInDesktopOnlyMode(state)
+  ]);
+
   useEffect(() => {
-    defineReaderControlAPIs(store);
-    fireEvent('viewerLoaded');
+    fireEvent(Events.VIEWER_LOADED);
 
     function loadInitialDocument() {
       const doesAutoLoad = getHashParams('auto_load', true);
@@ -87,17 +98,18 @@ const App = ({ removeEventHandlers }) => {
     function loadDocumentAndCleanup() {
       loadInitialDocument();
       window.removeEventListener('message', messageHandler);
-      clearTimeout(timeoutReturn)
+      clearTimeout(timeoutReturn);
     }
 
     function messageHandler(event) {
       if (event.isTrusted &&
         typeof event.data === 'object' &&
         event.data.type === 'viewerLoaded') {
-          loadDocumentAndCleanup();
+        loadDocumentAndCleanup();
       }
     }
 
+    window.addEventListener('blur', () => { dispatch(actions.closeElements(overlays)); });
     window.addEventListener('message', messageHandler, false);
 
     // In case WV is used outside of iframe, postMessage will not
@@ -126,7 +138,7 @@ const App = ({ removeEventHandlers }) => {
 
   return (
     <React.Fragment>
-      <div className="App">
+      <div className={classNames({ "App": true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
         <Accessibility />
         {console.log(core.getActiveSearchResult())}
 
@@ -152,8 +164,11 @@ const App = ({ removeEventHandlers }) => {
         <MenuOverlay />
         {/* <ZoomOverlay /> */}
         <AnnotationContentOverlay />
+        <PageManipulationOverlay />
+        <LeftPanelOverlayContainer />
 
         <AnnotationPopup />
+        <FormFieldEditPopup />
         <TextPopup />
         <ContextMenuPopup />
         <RichTextPopup />
@@ -166,10 +181,12 @@ const App = ({ removeEventHandlers }) => {
         <ProgressModal />
         <CalibrationModal />
         <CreateStampModal />
+        <PageReplacementModal />
         <LinkModal />
         <EditTextModal />
         <FilterAnnotModal />
         <CustomModal />
+        <Model3DModal />
         <ColorPickerModal />
         {core.isFullPDFEnabled() && <SignatureValidationModal />}
       </div>

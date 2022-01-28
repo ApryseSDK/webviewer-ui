@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#isAnnotationSelected__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#isAnnotationSelected__anchor
  */
-export default annotation => window.docViewer.getAnnotationManager().isAnnotationSelected(annotation);
+export default annotation => window.documentViewer.getAnnotationManager().isAnnotationSelected(annotation);

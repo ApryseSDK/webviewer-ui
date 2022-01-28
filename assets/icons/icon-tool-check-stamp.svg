@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <style>.cls-1{fill:#abb0c4;}</style>
+    </defs>
+    <title>icon - tool - check - stamp</title>
+    <path class="cls-1" fill-rule="evenodd" clip-rule="evenodd" d="M19.19 3H4.8C3.80589 3 3 3.80589 3 4.8V19.2C3 20.1941 3.80589 21 4.8 21H19.19C20.1818 20.9945 20.9845 20.1918 20.99 19.2V4.8C20.9845 3.80816 20.1818 3.00546 19.19 3ZM4.8 19.2V4.8H19.19V19.2H4.8Z" />
+    <path class="cls-1" fill-rule="evenodd" clip-rule="evenodd" d="M11.01 12.99L8.99998 10.99L7.72998 12.26L11.13 15.66L16.26 9.49998L14.88 8.34998L11.01 12.99V12.99Z" />
+</svg>

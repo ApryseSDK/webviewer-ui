@@ -11,10 +11,9 @@
   justify-content: space-between;
   align-items: center;
   z-index: 80;
-
   border-radius: 4px;
   height: 28px;
-  border: 1px solid	var(--border);
+  border: 1px solid var(--border);
   padding-left: 8px;
   padding-right: 4px;
   position: relative;
@@ -23,17 +22,26 @@
   cursor: pointer;
 
   .down-arrow {
+    flex: 0.2;
     width: 12px;
     height: 16px;
     margin-top: 2px;
   }
 
   .picked-option {
-    flex: 1;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    .picked-option-text {
+      flex: 0.8;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   &:disabled {
@@ -53,7 +61,10 @@
   box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
 
   background: var(--component-background);
-  overflow: hidden; // necessary so that children respect border-radius on hover
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden; // necessary so that children respect border-radius on hover
+  overflow-y: auto; // necessary so that children respect border-radius on hover
 
   &.hide {
     // Required to get width for positioning.

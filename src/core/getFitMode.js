@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getFitMode__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getFitMode__anchor
  */
-export default () => window.docViewer.getFitMode();
+export default () => window.documentViewer.getFitMode();

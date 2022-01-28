@@ -1,0 +1,20 @@
+.note-text-preview {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--gray-7);
+  padding-right: 12px;
+  user-select: text !important;
+  cursor: text;
+}
+
+.preview-comment {
+  color: var(--text-color);
+}
+
+.note-text-preview-prompt {
+  color: var(--primary-button);
+
+  &:hover {
+    color: var(--primary-button-hover);
+  }
+}

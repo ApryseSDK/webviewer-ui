@@ -5,7 +5,7 @@ import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
 import actions from 'actions';
 import selectors from 'selectors';
 
-// a higher older function that creates the enableTools and disableTools APIs
+// a higher order function that creates the enableTools and disableTools APIs
 export default (enable, store) => (
   toolNames = getAnnotationCreateToolNames(),
 ) => {
@@ -31,7 +31,7 @@ export default (enable, store) => (
 
   const currTool = core.getToolMode();
   if (!enable && toolNames.indexOf(currTool?.name) > -1) {
-    core.setToolMode(window.Tools.ToolNames.EDIT);
+    core.setToolMode(window.Core.Tools.ToolNames.EDIT);
   }
 
   if (enable) {

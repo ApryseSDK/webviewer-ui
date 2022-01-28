@@ -1,10 +1,8 @@
 import actions from 'actions';
 
-
 /**
- * @namespace VerificationOptions
- * @type {WebViewerInstance.VerificationOptions}
  * NOTE: Digital Signature Verification requires the WebViewer Full API
+ * @namespace UI.VerificationOptions
  */
 
 /**
@@ -16,7 +14,7 @@ import actions from 'actions';
  * Privacy-Enhanced Mail (PEM) format, which includes an appropriate header,
  * Base64 encoded DER representing the public key certificate, and appropriate
  * footer.
- * @method VerificationOptions#addTrustedCertificates
+ * @method UI.VerificationOptions.addTrustedCertificates
  *
  * @param {
  *  Array<
@@ -32,7 +30,7 @@ import actions from 'actions';
  *     'https://mydomain.com/api/returns/certificate/as/arraybuffer'
  *   );
  *   const certificateAsArrayBuffer = await response.arrayBuffer();
- *   instance.verificationOptions.addTrustedCertificates([
+ *   instance.UI.VerificationOptions.addTrustedCertificates([
  *      certificateAsArrayBuffer,
  *     'https://mydomain.com/path/to/certificate1.cer',
  *     'https://mydomain.com/path/to/certificate2.crt',

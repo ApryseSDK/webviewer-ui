@@ -1,8 +1,8 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#clearSelection__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#clearSelection__anchor
  * @fires textSelected on DocumentViewer
- * @see https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#event:textSelected__anchor
+ * @see https://www.pdftron.com/api/web/Core.DocumentViewer.html#event:textSelected__anchor
  */
 export default () => {
-  window.docViewer.clearSelection();
+  window.documentViewer.clearSelection();
 };

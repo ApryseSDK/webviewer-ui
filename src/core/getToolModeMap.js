@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getToolModeMap__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getToolModeMap__anchor
  */
-export default () => window.docViewer.getToolModeMap();
+export default () => window.documentViewer.getToolModeMap();

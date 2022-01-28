@@ -2,6 +2,7 @@ import actions from 'actions';
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
 import ActionButton from 'components/ActionButton';
+import CustomElement from 'components/CustomElement';
 import { workerTypes } from 'constants/types';
 import core from 'core';
 import { isIOS, isIE } from 'helpers/device';
@@ -30,8 +31,13 @@ const InitialMenuOverLayItem = ({ dataElement, children }) => {
     if (!component) {
       const props = { ...item, mediaQueryClassName };
 
-      if (type === 'actionButton') {
-        component = <ActionButton {...props} />;
+      switch (type) {
+        case 'actionButton':
+          component = <ActionButton {...props} />;
+          break;
+        case 'customElement':
+          component = <CustomElement {...props} />;
+          break;
       }
     }
 

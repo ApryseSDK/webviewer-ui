@@ -1,6 +1,5 @@
 import core from 'core';
 import actions from 'actions';
-import fireEvent from 'helpers/fireEvent';
 
 export default dispatch => (newTool, oldTool) => {
   if (oldTool && oldTool.name === 'TextSelect') {
@@ -9,6 +8,4 @@ export default dispatch => (newTool, oldTool) => {
   }
 
   dispatch(actions.setActiveToolNameAndStyle(newTool));
-
-  fireEvent('toolModeChanged', [newTool, oldTool]);
 };

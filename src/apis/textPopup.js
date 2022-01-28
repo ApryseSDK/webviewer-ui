@@ -1,12 +1,12 @@
 /**
  * An instance of Popup that can be used to edit items in the text popup component
- * @name WebViewerInstance#textPopup
- * @implements {WebViewerInstance.Popup}
- * @type {WebViewerInstance.Popup}
+ * @name UI.textPopup
+ * @implements {UI.Popup}
+ * @type {UI.Popup}
  * @example
 WebViewer(...)
   .then(function (instance) {
-    instance.textPopup.someAPI();
+    instance.UI.textPopup.someAPI();
   });
  */
 import createPopupAPI from 'helpers/createPopupAPI';

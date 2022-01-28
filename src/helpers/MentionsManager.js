@@ -3,7 +3,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 /**
- * @typedef {Object} WebViewerInstance.MentionsManager.Mention
+ * @typedef {Object} UI.MentionsManager.Mention
  * @property {string} email The email of the mentioned person. This is passed from setUserData.
  * @property {string} value The value(display name) of the mentioned person. This is passed from setUserData.
  * @property {string} type The type of the mentioned person. This is passed from setUserData.
@@ -13,13 +13,13 @@ import selectors from 'selectors';
 
 /**
  * @typedef {Object} mentionData
- * @property {WebViewerInstance.MentionsManager.Mention} mentions an array of mentions that an annotation contains
+ * @property {UI.MentionsManager.Mention} mentions an array of mentions that an annotation contains
  * @property {string} contentWithoutMentions the content of an annotation, but without mentions
  * @ignore
  */
 
 /**
- * @typedef {Object.<string, string>} WebViewerInstance.MentionsManager.UserData
+ * @typedef {Object.<string, string>} UI.MentionsManager.UserData
  * @property {string} value The display name of the user, which will be displayed in the suggestion overlay.
  * @property {string} [id] The unique id of the user. Default to `value`.
  * @property {string} [email] The email of the user, which will be displayed under `value` in the suggestion overlay, if present.
@@ -28,8 +28,8 @@ import selectors from 'selectors';
 /**
  * @class
  * @name MentionsManager
- * @memberof WebViewerInstance
- * @extends EventHandler
+ * @memberof UI
+ * @extends Core.EventHandler
  */
 class MentionsManager {
   initialize(store, annotManager) {
@@ -65,7 +65,7 @@ class MentionsManager {
     this.idMentionDataMap = {};
     this.allowedTrailingCharacters = [' '];
 
-    annotManager.on('annotationChanged', (annotations, action, { imported }) => {
+    annotManager.addEventListener('annotationChanged', (annotations, action, { imported }) => {
       if (imported || !annotations.length || !this.getUserData().length) {
         return;
       }
@@ -206,7 +206,7 @@ class MentionsManager {
    * @ignore
    */
   extractMentionDataFromAnnot(annotation) {
-    const mentionData = annotation.getCustomData('trn-mention');
+    let mentionData = annotation.getCustomData('trn-mention');
     const userData = this.getUserData();
     const contents = annotation.getContents();
     const result = {
@@ -214,8 +214,10 @@ class MentionsManager {
       contentWithoutMentions: contents,
     };
 
-    if (!mentionData) {
+    if (mentionData === '') {
       return result;
+    } else {
+      mentionData = JSON.parse(mentionData);
     }
 
     userData.forEach(user => {
@@ -263,10 +265,10 @@ class MentionsManager {
     replyAnnot['PageNumber'] = annotation['PageNumber'];
     replyAnnot['Author'] = core.getCurrentUser();
     replyAnnot.setContents(plainTextValue || '');
-    replyAnnot.setCustomData('trn-mention', {
+    replyAnnot.setCustomData('trn-mention', JSON.stringify({
       contents: value,
       ids,
-    });
+    }));
 
     annotation.addReply(replyAnnot);
 
@@ -275,8 +277,8 @@ class MentionsManager {
 
   /**
    * Sets the user data that will be displayed in the suggestions overlay when an @ is entered in the textarea.
-   * @method WebViewerInstance.MentionsManager#setUserData
-   * @param {WebViewerInstance.MentionsManager.UserData[]} userData An array of user data
+   * @method UI.MentionsManager#setUserData
+   * @param {UI.MentionsManager.UserData[]} userData An array of user data
    * @example
 WebViewer(...)
   .then(function(instance) {
@@ -302,8 +304,8 @@ WebViewer(...)
 
   /**
    * Gets the user data
-   * @method WebViewerInstance.MentionsManager#getUserData
-   * @returns {WebViewerInstance.MentionsManager.UserData[]} An array of user data
+   * @method UI.MentionsManager#getUserData
+   * @returns {UI.MentionsManager.UserData[]} An array of user data
    */
   getUserData() {
     return selectors.getUserData(this.store.getState());
@@ -312,7 +314,7 @@ WebViewer(...)
   /**
    * Sets the characters that can follow a mention, while not invalidating it
    * By default, a mention can only be followed by a space, or is located at the end of the string
-   * @method WebViewerInstance.MentionsManager#setAllowedTrailingCharacters
+   * @method UI.MentionsManager#setAllowedTrailingCharacters
    * @param {string[]|'*'} chars An array of characters. If `*` is passed, then a mention can be followed by any characters
    * @example
 WebViewer(...)
@@ -344,7 +346,7 @@ WebViewer(...)
 
   /**
    * Gets the allowed trailing characters
-   * @method WebViewerInstance.MentionsManager#getAllowedTrailingCharacters
+   * @method UI.MentionsManager#getAllowedTrailingCharacters
    * @returns {string[]|'*'} An array of trailing characters, or '*'
    */
   getAllowedTrailingCharacters() {
@@ -434,9 +436,9 @@ WebViewer(...)
 /**
  * Triggered when a mention or mentions have been changed (added, deleted, modified).
  * Attach like instance.mentions.on('mentionChanged', callback)
- * @name WebViewerInstance.MentionsManager#mentionChanged
+ * @name UI.MentionsManager#mentionChanged
  * @event
- * @param {WebViewerInstance.MentionsManager.Mention} mentions The mentions that were changed
+ * @param {UI.MentionsManager.Mention} mentions The mentions that were changed
  * @param {'add'|'modify'|'delete'} action The action that occurred (add, delete, modify)
  */
 

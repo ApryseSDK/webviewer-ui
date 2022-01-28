@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#displayBookmark__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#displayBookmark__anchor
  */
 export default outline => {
-  window.docViewer.displayBookmark(outline);
+  window.documentViewer.displayBookmark(outline);
 };

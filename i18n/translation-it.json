@@ -3,6 +3,7 @@
   "action": {
     "apply": "Applicare",
     "applyAll": "Applicare tutte",
+    "calendar": "Calendario",
     "calibrate": "Calibrare",
     "cancel": "Annulla",
     "clear": "Chiaro",
@@ -33,6 +34,7 @@
     "rename": "Rinominare",
     "ok": "ok",
     "rotate": "Ruotare",
+    "rotate3D": "Ruotare",
     "rotateClockwise": "Senso orario",
     "rotateCounterClockwise": "Antiorario",
     "save": "Salva",
@@ -61,7 +63,24 @@
     "startFormEditing": "Inizia la modifica del modulo",
     "exitFormEditing": "Esci dalla modalità di modifica del modulo",
     "exit": "Uscita",
-    "markAllRead": "segna tutto come letto"
+    "addOption": "Aggiungi opzione",
+    "formFieldEdit": "Modifica campo modulo",
+    "viewShortCutKeysFor3D": "Visualizza i tasti di scelta rapida",
+    "markAllRead": "segna tutto come letto",
+    "insertPage": "Inserimento pagina",
+    "insertBlankPageAbove": "Inserisci una pagina vuota sopra",
+    "insertBlankPageBelow": "Inserisci una pagina vuota qui sotto",
+    "pageManipulation": "Manipolazione della pagina",
+    "replace": "Sostituire",
+    "showLess": "mostra meno",
+    "showMore": "...Di più",
+    "chooseFile": "Scegli un file",
+    "selectYourOption": "Seleziona la tua opzione",
+    "open": "Aprire",
+    "deselectAll": "Deselezionare tutto",
+    "select": "Selezionare",
+    "moveToTop": "Sposta in alto",
+    "moveToBottom": "Sposta in basso"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -69,14 +88,19 @@
     "callout": "Chiamare",
     "crop": "Ritaglia pagina",
     "caret": "non",
+    "dateFreeText": "Calendario",
+    "formFillCheckmark": "Tick",
+    "formFillCross": "Attraversare",
     "distanceMeasurement": "Misurazione della distanza",
     "countMeasurement": "Misurazione del conteggio",
     "ellipse": "Ellisse",
     "eraser": "Gomma per cancellare",
     "fileattachment": "File allegato",
     "freehand": "Mano libera",
+    "freeHandHighlight": "Evidenziazione a mano libera",
     "freetext": "Testo libero",
     "highlight": "Evidenziare",
+    "image": "Immagine",
     "line": "Linea",
     "perimeterMeasurement": "Misurazione perimetrale",
     "polygon": "Poligono",
@@ -84,6 +108,7 @@
     "polyline": "polilinea",
     "rectangle": "Rettangolo",
     "redact": "Oscura",
+    "formFillDot": "Punto",
     "signature": "Firma",
     "squiggly": "Squiggly",
     "stamp": "Francobollo",
@@ -93,8 +118,15 @@
     "custom": "costume",
     "rubberStamp": "Timbro",
     "note": "Nota",
+    "textField": "Campo di testo",
+    "signatureFormField": "Campo firma",
+    "checkBoxFormField": "Campo casella di controllo",
+    "radioButtonFormField": "Campo RadioButton",
+    "listBoxFormField": "Campo casella di riepilogo",
+    "comboBoxFormField": "Campo casella combinata",
     "link": "Collegamento",
-    "other": "Altro"
+    "other": "Altro",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "Approvato",
@@ -122,6 +154,7 @@
     "SBRejected": "Respinto"
   },
   "component": {
+    "attachmentPanel": "Allegati",
     "leftPanel": "Pannello",
     "toolsHeader": "Utensili",
     "searchOverlay": "Ricerca",
@@ -130,6 +163,7 @@
     "notesPanel": "Appunti",
     "outlinesPanel": "Lineamenti",
     "bookmarksPanel": "segnalibri",
+    "signaturePanel": "firme",
     "newBookmark": "Nuovo segnalibro",
     "bookmarkPage": "Pagina",
     "layersPanel": "Livelli",
@@ -141,7 +175,9 @@
     "zoomOverlay": "Sovrapposizione zoom",
     "textPopup": "Popup di testo",
     "createStampButton": "Crea nuovo timbro",
-    "filter": "Filtro"
+    "filter": "Filtro",
+    "pageReplaceModalTitle": "Sostituisci pagina",
+    "files": "File"
   },
   "message": {
     "toolsOverlayNoPresets": "Nessun preset",
@@ -151,9 +187,11 @@
     "encryptedUserCancelled": "Caricamento del documento crittografato non riuscito. Inserimento password annullato.",
     "enterPassword": "Questo documento è protetto da password. Per favore inserire una password",
     "incorrectPassword": "Password errata, tentativi rimasti: {{rimanendo tentativi}}",
-    "noAnnotations": "Questo documento non ha annotazioni.",
+    "noAnnotations": "Inizia a fare annotazioni per lasciare un commento.",
+    "noAnnotationsReadOnly": "Questo documento non ha annotazioni.",
     "noAnnotationsFilter": "Inizia a creare annotazioni e filtri verranno visualizzati qui.",
     "noOutlines": "Questo documento non ha contorni.",
+    "noAttachments": "Questo documento non ha allegati.",
     "noResults": "Nessun risultato trovato.",
     "numResultsFound": "risultati trovati",
     "notSupported": "Quel tipo di file non è supportato.",
@@ -177,16 +215,52 @@
     "sortBy": "Ordina per",
     "emptyCustomStampInput": "Il testo del timbro non può essere vuoto",
     "unpostedComment": "Commento non pubblicato",
-    "untitled": "Senza titolo"
+    "lockedLayer": "Il livello è bloccato",
+    "layerVisibililtyNoChange": "La visibilità del livello non può essere modificata",
+    "untitled": "Senza titolo",
+    "selectHowToLoadFile": "Seleziona come caricare il tuo documento",
+    "openFileByUrl": "Apri file tramite URL:",
+    "enterUrlHere": "Inserisci l'URL qui",
+    "openLocalFile": "Apri file locale:",
+    "selectFile": "Seleziona il file",
+    "selectPageToReplace": "Seleziona le pagine del documento con cui desideri sostituire.",
+    "embeddedFiles": "File incorporati",
+    "pageNum": "Numero di pagina"
   },
   "option": {
+    "type": {
+      "caret": "manca",
+      "custom": "Costume",
+      "ellipse": "Ellisse",
+      "fileattachment": "File allegato",
+      "freehand": "Mano libera",
+      "callout": "Chiamare",
+      "freetext": "Testo libero",
+      "line": "Linea",
+      "polygon": "Poligono",
+      "polyline": "polilinea",
+      "rectangle": "Rettangolo",
+      "redact": "Redigere",
+      "signature": "Firma",
+      "stamp": "Francobollo",
+      "stickyNote": "Nota adesiva",
+      "highlight": "Evidenziare",
+      "strikeout": "barrato",
+      "underline": "Sottolineare",
+      "squiggly": "ondulato",
+      "3D": "3D",
+      "other": "Altro"
+    },
     "notesOrder": {
       "dropdownLabel": "Ordina elenco",
       "position": "Posizione",
       "time": "Tempo",
       "status": "Stato",
       "author": "Autore",
-      "type": "genere"
+      "type": "genere",
+      "color": "Colore",
+      "createDate": "Data di Creazione",
+      "modifiedDate": "Data modificata"
     },
     "toolbarGroup": {
       "dropdownLabel": "Gruppi della barra degli strumenti",
@@ -195,7 +269,9 @@
       "toolbarGroup-Shapes": "forme",
       "toolbarGroup-Insert": "Inserire",
       "toolbarGroup-Measure": "Misurare",
-      "toolbarGroup-Edit": "modificare"
+      "toolbarGroup-Edit": "modificare",
+      "toolbarGroup-FillAndSign": "Compila e firma",
+      "toolbarGroup-Forms": "Forme"
     },
     "annotationColor": {
       "StrokeColor": "Colore del bordo",
@@ -210,7 +286,9 @@
       "pageTransition": "Transizione di pagina"
     },
     "documentControls": {
-      "placeholder": "Immettere le pagine per selezionare cioè 2, 5-9"
+      "placeholder": "1, 3, 5-10",
+      "selectTooltip": "Seleziona più pagine",
+      "closeTooltip": "Chiudi selezione multipla"
     },
     "outlineControls": {
       "add": "Aggiungi articolo",
@@ -221,10 +299,16 @@
       "double": "Doppio",
       "single": "singolo"
     },
+    "mathSymbols": "Simboli matematici",
     "notesPanel": {
       "separator": {
         "today": "Oggi",
-        "yesterday": "Ieri"
+        "yesterday": "Ieri",
+        "unknown": "Sconosciuto"
+      },
+      "noteContent": {
+        "noName": "(senza nome)",
+        "noDate": "(nessuna data)"
       }
     },
     "pageTransition": {
@@ -274,9 +358,16 @@
       "or": "O",
       "pickImage": "Scegli l'immagine della firma"
     },
+    "pageReplacementModal": {
+      "dragAndDrop": "Trascina e rilascia il tuo file qui",
+      "or": "O",
+      "chooseFile": "Scegli un file"
+    },
     "filterAnnotModal": {
       "commentBy": "Commento di",
-      "types": "tipi"
+      "types": "tipi",
+      "color": "Colore",
+      "includeReplies": "Includi risposte"
     },
     "status": {
       "status": "Stato"
@@ -309,6 +400,11 @@
     },
     "measurementOption": {
       "scale": "Scala"
+    },
+    "stylePopup": {
+      "textStyle": "Stile di testo",
+      "colorStyle": "Colori",
+      "invalidFontSize": "La dimensione del carattere deve essere inferiore a"
     },
     "styleOption": {
       "style": "Stile",
@@ -347,11 +443,21 @@
       "rotateClockwise": "Senso orario",
       "rotateCounterClockwise": "Antiorario"
     },
+    "thumbnailsControlOverlay": {
+      "move": "Sposta pagine"
+    },
     "richText": {
       "bold": "Grassetto",
       "italic": "Corsivo",
       "underline": "Sottolineato",
-      "strikeout": "Barrato"
+      "strikeout": "Barrato",
+      "alignLeft": "Testo allineato a sinistra",
+      "alignRight": "Allineamento del testo a destra",
+      "alignCenter": "Allineamento del testo al centro",
+      "justifyCenter": "Centro di giustificazione del testo",
+      "alignTop": "Allinea in alto",
+      "alignMiddle": "Allinea al centro",
+      "alignBottom": "Allinea in basso"
     },
     "customStampModal": {
       "stampText": "Testo del timbro:",
@@ -366,7 +472,13 @@
     "deletePage": {
       "deleteTitle": "Elimina pagina",
       "deleteMessage": "Sei sicuro di voler eliminare le pagine selezionate. Questo non può essere annullato",
-      "deleteLastPageMessage": "Ciò comporterebbe che non restino pagine. Si prega di lasciare almeno una pagina"
+      "deleteLastPageMessage": "Non è possibile eliminare tutte le pagine del documento."
+    },
+    "extractPage": {
+      "title": "Estrai pagina",
+      "message": "Sei sicuro di voler estrarre le pagine selezionate?",
+      "confirmBtn": "Estrai pagine",
+      "secondaryBtn": "Estrai e rimuovi pagine"
     },
     "redaction": {
       "applyTile": "Applica redazione",
@@ -399,7 +511,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "stamp": "(IO)",
+    "image": "(IO)",
     "redo": "(Ctrl Maiusc Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -413,7 +525,9 @@
       "italic": "(Ctrl I)",
       "underline": "(Ctrl U)",
       "strikeout": "(Ctrl K)"
-    }
+    },
+    "rotate3D": "Maiusc + trascina",
+    "zoom3D": "Maiusc + Scorrimento"
   },
   "tool": {
     "pan": "Padella",
@@ -428,6 +542,12 @@
     "page": "Pagina",
     "enterurl": "Inserisci l'URL che desideri collegare",
     "enterpage": "Seleziona il numero di pagina che desideri collegare"
+  },
+  "Model3D": {
+    "add3D": "Aggiungi un'annotazione 3D inserendo l'URL",
+    "enterurl": "Immettere l'URL per l'oggetto 3D in formato glTF",
+    "enterurlOrLocalFile": "Inserisci l'URL o carica un oggetto 3D in formato glTF",
+    "formatError": "È supportato solo il formato glTF (.glb)"
   },
   "datePicker": {
     "previousMonth": "Il mese scorso",
@@ -446,6 +566,20 @@
       "10": "novembre",
       "11": "dicembre"
     },
+    "monthsShort": {
+      "0": "genn",
+      "1": "febbr",
+      "2": "mar",
+      "3": "apr",
+      "4": "magg",
+      "5": "giugno",
+      "6": "luglio",
+      "7": "ag",
+      "8": "sett",
+      "9": "ott",
+      "10": "nov",
+      "11": "dic"
+    },
     "weekdays": {
       "0": "domenica",
       "1": "lunedì",
@@ -463,6 +597,39 @@
       "4": "gio",
       "5": "ven",
       "6": "sab"
+    }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "Nome campo",
+      "fieldValue": "Valore predefinito",
+      "readOnly": "Sola lettura",
+      "multiSelect": "Selezione multipla",
+      "required": "necessario",
+      "multiLine": "Multilinea",
+      "apply": "Applicare",
+      "cancel": "Annulla",
+      "flags": "Bandiere di campo",
+      "options": "Opzioni",
+      "radioGroups": "I pulsanti di opzione con lo stesso nome di campo apparterranno allo stesso raggruppamento.",
+      "nameRequired": "Il nome del campo è obbligatorio",
+      "size": "Dimensione",
+      "width": "Larghezza",
+      "height": "Altezza",
+      "invalidField": {
+        "duplicate": "Il nome del campo esiste già",
+        "empty": "Il nome del campo non può essere vuoto"
+      }
+    },
+    "apply": "Applica campi",
+    "type": "Tipo di campo",
+    "types": {
+      "text": "Testo",
+      "signature": "Firma",
+      "checkbox": "Casella di controllo",
+      "radio": "Pulsante di opzione",
+      "listbox": "Casella di riepilogo",
+      "combobox": "Casella combinata"
     }
   },
   "digitalSignatureModal": {
@@ -516,6 +683,7 @@
     "by": "di",
     "on": "sopra",
     "disallowedChange": "Modifica non consentita: {{type}}, objnum: {{objnum}}",
+    "unsignedSignatureField": "Campo firma non firmato: {{fieldName}}",
     "trustVerification": {
       "current": "L'ora di verifica utilizzata era l'ora corrente",
       "signing": "L'ora della verifica è dall'orologio sul computer del firmatario",

@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#getAnnotationById__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#getAnnotationById__anchor
  */
-export default Id => window.docViewer.getAnnotationManager().getAnnotationById(Id);
+export default Id => window.documentViewer.getAnnotationManager().getAnnotationById(Id);

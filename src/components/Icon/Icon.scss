@@ -7,14 +7,15 @@
   color: var(--icon-color);
 
   // color for svgs
-  path:not([fill*="#"]),
-  rect:not([fill*="#"]),
-  polygon:not([fill*="#"]) {
+  path:not([fill*='#']),
+  circle:not([fill*='#']),
+  rect:not([fill*='#']),
+  polygon:not([fill*='#']) {
     fill: currentColor;
   }
 
   &:not(.disabled) {
-    path[fill=default] {
+    path[fill='default'] {
       fill: var(--icon-color);
     }
   }
@@ -26,16 +27,21 @@
     }
   }
 
-  path[fill=none],
-  rect[fill=none],
-  polygon[fill=none] {
+  path[fill='none'],
+  rect[fill='none'],
+  circle[fill='none'],
+  polygon[fill='none'] {
     fill: none;
   }
 
-  path[fill=fill],
-  rect[fill=fill],
-  polygon[fill=fill] {
+  path[fill='fill'],
+  rect[fill='fill'],
+  circle[fill='fill'],
+  polygon[fill='fill'] {
     fill: none;
   }
 
+  path[fill='stroke'] {
+    fill: none;
+  }
 }

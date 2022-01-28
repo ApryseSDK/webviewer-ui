@@ -1,17 +1,17 @@
 /**
  * Sets the fit mode of the viewer.
- * @method WebViewerInstance#setFitMode
+ * @method UI.setFitMode
  * @param {string} fitMode Fit mode of WebViewer.
- * @see WebViewerInstance#FitMode
+ * @see UI.FitMode
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var docViewer = instance.docViewer;
-    var FitMode = instance.FitMode;
+    var docViewer = instance.Core.documentViewer;
+    var FitMode = instance.UI.FitMode;
 
     // you must have a document loaded when calling this api
-    docViewer.on('documentLoaded', function() {
-      instance.setFitMode(FitMode.FitWidth);
+    docViewer.addEventListener('documentLoaded', function() {
+      instance.UI.setFitMode(FitMode.FitWidth);
     });
   });
  */

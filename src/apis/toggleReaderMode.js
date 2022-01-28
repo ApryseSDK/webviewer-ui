@@ -1,11 +1,11 @@
 /**
  * Toggles Reader mode of the viewer.
  * Note that Reader mode only works with fullAPI enabled.
- * @method WebViewerInstance#toggleReaderMode
+ * @method UI.toggleReaderMode
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.toggleReaderMode();
+    instance.UI.toggleReaderMode();
   });
  */
 
@@ -27,7 +27,6 @@ export default store => () => {
     }
   } else {
     previousDisplayMode = core.getDisplayMode();
-    core.setDisplayMode('Single');
     enterReaderMode(store);
   }
 };

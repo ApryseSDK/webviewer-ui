@@ -24,8 +24,8 @@ const FilePickerHandler = () => {
     }
   };
 
-  const pdftronServer = !!getHashParams('pdftronServer', null);
-  const acceptFormats = pdftronServer ? window.CoreControls.SupportedFileFormats.SERVER : window.CoreControls.SupportedFileFormats.CLIENT;
+  const wvServer = !!getHashParams('webviewerServerURL', null);
+  const acceptFormats = wvServer ? window.Core.SupportedFileFormats.SERVER : window.Core.SupportedFileFormats.CLIENT;
 
   return isDisabled ? null : (
     <div className="FilePickerHandler">

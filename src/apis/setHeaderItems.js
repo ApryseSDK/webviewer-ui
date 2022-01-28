@@ -1,17 +1,17 @@
 /**
  * Customize header. Refer to <a href='https://www.pdftron.com/documentation/web/guides/customizing-header' target='_blank'>Customizing header</a> for details.
- * @method WebViewerInstance#setHeaderItems
- * @param {WebViewerInstance.headerCallback} headerCallback Callback function to perform different operations on the header.
+ * @method UI.setHeaderItems
+ * @param {UI.headerCallback} headerCallback Callback function to perform different operations on the header.
  * @example
 // Adding save annotations button to the end of the top header
 WebViewer(...)
   .then(function(instance) {
-    instance.setHeaderItems(function(header) {
+    instance.UI.setHeaderItems(function(header) {
       var myCustomButton = {
         type: 'actionButton',
         img: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>',
         onClick: function() {
-          instance.saveAnnotations();
+
         }
       }
 
@@ -22,7 +22,7 @@ WebViewer(...)
 // Removing existing buttons from the top header
 WebViewer(...)
   .then(function(instance) {
-    instance.setHeaderItems(function(header) {
+    instance.UI.setHeaderItems(function(header) {
       header.update([]);
     });
   });
@@ -30,7 +30,7 @@ WebViewer(...)
 // Appending logo to the 'Annotate' toolbar group and shifting existing buttons to the right
 WebViewer(...)
   .then(function(instance) {
-    instance.setHeaderItems(function(header) {
+    instance.UI.setHeaderItems(function(header) {
       header.getHeader('toolbarGroup-Annotate').unshift({
         type: 'customElement',
         render: function() {
@@ -53,7 +53,7 @@ WebViewer(...)
 // Moving the line tool from the 'Shapes' toolbar group to the 'Annotate' toolbar group
 WebViewer(...)
   .then(function(instance) {
-    instance.setHeaderItems(function(header) {
+    instance.UI.setHeaderItems(function(header) {
       header.getHeader('toolbarGroup-Annotate').push({ type: 'toolGroupButton', toolGroup: 'lineTools', dataElement: 'lineToolGroupButton', title: 'annotation.line' });
       header.getHeader('toolbarGroup-Shapes').delete(6);
     });
@@ -61,9 +61,9 @@ WebViewer(...)
  */
 
 /**
- * Callback that gets passed to {@link CoreControls.ReaderControl#setHeaderItems setHeaderItems}.
- * @callback WebViewerInstance.headerCallback
- * @param {Header} header Header instance with helper functions
+ * Callback that gets passed to {@link UI.setHeaderItems setHeaderItems}.
+ * @callback UI.headerCallback
+ * @param {UI.Header} header Header instance with helper functions
  */
 
 import actions from 'actions';
@@ -81,13 +81,14 @@ export default store => callback => {
 
 /**
  * A class which contains header APIs.<br/><br/>
- * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access the header instance in {@link WebViewerInstance#setHeaderItems setHeaderItems} as follows:
+ * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access the header instance in {@link UI.setHeaderItems setHeaderItems} as follows:
  * @name Header
+ * @memberof UI
  * @class
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.setHeaderItems(function(header) {
+    instance.UI.setHeaderItems(function(header) {
       // instance of Header is passed to the callback
     });
   });
@@ -103,9 +104,9 @@ const Header = {
   },
   /**
    * Select a button from header to edit.
-   * @method Header#get
+   * @method UI.Header#get
    * @param {string} dataElement data-element of the button.
-   * @returns {Header} Header object for chaining. You can call {@link Header#insertBefore insertBefore}, {@link Header#insertAfter insertAfter} and {@link Header#delete delete} to perform an operation on the button.
+   * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#insertBefore insertBefore}, {@link UI.Header#insertAfter insertAfter} and {@link UI.Header#delete delete} to perform an operation on the button.
    */
   get(dataElement) {
     if (this.index !== -1) {
@@ -130,18 +131,18 @@ const Header = {
     return this;
   },
   /**
-   * Get all list of header items from a group selected from {@link Header#getHeader getHeader}. By default, it returns the items from 'default' group.
-   * @method Header#getItems
-   * @returns {Array.<object>} List of header item objects. You can edit it using normal array operations and update the whole header by passing it to {@link Header#update update}.
+   * Get all list of header items from a group selected from {@link UI.Header#getHeader getHeader}. By default, it returns the items from 'default' group.
+   * @method UI.Header#getItems
+   * @returns {Array.<object>} List of header item objects. You can edit it using normal array operations and update the whole header by passing it to {@link UI.Header#update update}.
    */
   getItems() {
     return this.headers[this.headerGroup];
   },
   /**
    * Select a header group to edit.
-   * @method Header#getHeader
+   * @method UI.Header#getHeader
    * @param {string} headerGroup Name of the header group. Possible options are 'default', 'small-mobile-more-buttons', 'toolbarGroup-View', 'toolbarGroup-Annotate', 'toolbarGroup-Shapes', 'toolbarGroup-Insert', 'toolbarGroup-Measure', and 'toolbarGroup-Edit'
-   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
+   * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   getHeader(headerGroup) {
     const headerGroups = Object.keys(this.headers);
@@ -156,10 +157,10 @@ const Header = {
     return this;
   },
   /**
-   * Insert a button before the selected button from {@link Header#get get}.
-   * @method Header#insertBefore
+   * Insert a button before the selected button from {@link UI.Header#get get}.
+   * @method UI.Header#insertBefore
    * @param {object} obj A header object. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
-   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
+   * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   insertBefore(newItem) {
     if (this.index === -1) {
@@ -171,10 +172,10 @@ const Header = {
     return this;
   },
   /**
-   * Insert a button after the selected button from {@link Header#get get}.
-   * @method Header#insertAfter
+   * Insert a button after the selected button from {@link UI.Header#get get}.
+   * @method UI.Header#insertAfter
    * @param {object} obj A header object. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
-   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
+   * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   insertAfter(newItem) {
     if (this.index === -1) {
@@ -188,9 +189,9 @@ const Header = {
   },
   /**
    * Delete a button.
-   * @method Header#delete
-   * @param {(number|string)} [id] You can either pass an index or `data-element` of the button to delete. If you already selected a button from {@link Header#get get}, passing null would delete the selected button.
-   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
+   * @method UI.Header#delete
+   * @param {(number|string)} [id] You can either pass an index or `data-element` of the button to delete. If you already selected a button from {@link UI.Header#get get}, passing null would delete the selected button.
+   * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   delete(arg) {
     let index;
@@ -226,8 +227,8 @@ const Header = {
   },
   /**
    * Removes the first button in the header.
-   * @method Header#shift
-   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
+   * @method UI.Header#shift
+   * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   shift() {
     this.headers[this.headerGroup].shift();
@@ -236,9 +237,9 @@ const Header = {
   },
   /**
    * Adds a button (or buttons) to the beginning of the header.
-   * @method Header#unshift
+   * @method UI.Header#unshift
    * @param {object|Array.<object>} obj Either one or array of header objects. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
-   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
+   * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   unshift(...newItem) {
     this.headers[this.headerGroup].unshift(...newItem);
@@ -247,9 +248,9 @@ const Header = {
   },
   /**
    * Adds a button (or buttons) to the end of the header.
-   * @method Header#push
+   * @method UI.Header#push
    * @param {object|Array.<object>} obj Either one or array of header objects. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
-   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
+   * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   push(...newItem) {
     this.headers[this.headerGroup].push(...newItem);
@@ -258,8 +259,8 @@ const Header = {
   },
   /**
    * Removes the last button in the header.
-   * @method Header#pop
-   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
+   * @method UI.Header#pop
+   * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   pop() {
     this.headers[this.headerGroup].pop();
@@ -268,9 +269,9 @@ const Header = {
   },
   /**
    * Updates the header with new list of header items.
-   * @method Header#update
-   * @param {Array.<object>} headerObjects List of header objects to replace the exising header. You can use {@link Header#getItems getItems} to refer to existing header objects.
-   * @returns {Header} Header object for chaining. You can call {@link Header#get get}, {@link Header#getItems getItems}, {@link Header#shift shift}, {@link Header#unshift unshift}, {@link Header#push push}, {@link Header#pop pop} and {@link Header#update update}.
+   * @method UI.Header#update
+   * @param {Array.<object>} headerObjects List of header objects to replace the exising header. You can use {@link UI.Header#getItems getItems} to refer to existing header objects.
+   * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   update(arg) {
     if (Array.isArray(arg)) {

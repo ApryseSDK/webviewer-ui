@@ -5,11 +5,11 @@ import actions from 'actions';
  * closes and reopens search panel.
  *
  * Note, mobile devices never clear search results even if this setting is enabled. This is because the panel needs to be closed to view the search results on the document.
- * @method WebViewerInstance#disableClearSearchOnPanelClose
+ * @method UI.disableClearSearchOnPanelClose
  * @example
  WebViewer(...)
  .then(function(instance) {
-    instance.disableClearSearchOnPanelClose();
+    instance.UI.disableClearSearchOnPanelClose();
   });
  */
 function disableClearSearchOnPanelCloseClosure(store) {

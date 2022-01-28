@@ -36,6 +36,7 @@ const InkSignature = ({
   const annotIdRef = useRef();
   const [t] = useTranslation();
   const [dimension, setDimension] = useState({});
+  const [drawn, setDrawn] = useState(false);
 
   const forceUpdate = useForceUpdate();
 
@@ -44,35 +45,37 @@ const InkSignature = ({
     const canvas = canvasRef.current;
 
     signatureTool.setSignatureCanvas(canvas);
-    const multiplier = window.utils.getCanvasMultiplier();
+    const multiplier = window.Core.getCanvasMultiplier();
     canvas.getContext('2d').scale(multiplier, multiplier);
   }, []);
 
   useEffect(() => {
-    const signatureTool = core.getTool('AnnotationCreateSignature');
-
-    signatureTool.on('annotationAdded', annot => {
-      if (annot.Id === annotIdRef.current) {
-        clearCanvas();
-      }
-    });
-  }, [clearCanvas]);
+    if (isModalOpen) {
+      clearCanvas();
+    }
+  }, [isModalOpen]);
 
   useEffect(() => {
-    if (isModalOpen && isTabPanelSelected) {
-      const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.setSignature(freeHandPathsRef.current);
-      annotIdRef.current = signatureTool.annot?.Id;
-      // use resizeCanvas here mainly for redawing the underlying signature annotation to make it show on the canvas
-      signatureTool.resizeCanvas();
+    async function resizeCanvasAsyncCall() {
+      if (isModalOpen && isTabPanelSelected) {
+        const signatureTool = core.getTool('AnnotationCreateSignature');
+        signatureTool.setSignature(freeHandPathsRef.current);
+        annotIdRef.current = signatureTool.annot?.Id;
+        // use resizeCanvas here mainly for redawing the underlying signature annotation to make it show on the canvas
+        await signatureTool.resizeCanvas();
+      }
     }
+    resizeCanvasAsyncCall();
   }, [isTabPanelSelected, isModalOpen]);
 
   useEffect(() => {
-    if (dimension.height && dimension.width) {
-      const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.resizeCanvas();
+    async function resizeCanvasAsyncCall() {
+      if (dimension.height && dimension.width) {
+        const signatureTool = core.getTool('AnnotationCreateSignature');
+        await signatureTool.resizeCanvas();
+      }
     }
+    resizeCanvasAsyncCall();
   }, [dimension]);
 
   const clearCanvas = useCallback(() => {
@@ -80,17 +83,18 @@ const InkSignature = ({
     signatureTool.clearSignatureCanvas();
     freeHandPathsRef.current = null;
     annotIdRef.current = null;
+    setDrawn(false)
   }, []);
 
-  const handleFinishDrawing = () => {
+  const handleFinishDrawing = async () => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
-
-    if (!signatureTool.isEmptySignature()) {
+    if (!(await signatureTool.isEmptySignature())) {
       // need to deep copy the paths because it will be modified
       // when the annotation is added to the document
       // we want to keep the unmodified paths so that users can keep drawing on the canvas
       freeHandPathsRef.current = deepCopy(signatureTool.annot.getPaths());
       annotIdRef.current = signatureTool.annot.Id;
+      setDrawn(true);
     }
   };
 
@@ -101,7 +105,7 @@ const InkSignature = ({
         if (!pathsCopy[i]) {
           pathsCopy[i] = [];
         }
-        pathsCopy[i][j] = new window.CoreControls.Math.Point(paths[i][j].x, paths[i][j].y);
+        pathsCopy[i][j] = new window.Core.Math.Point(paths[i][j].x, paths[i][j].y);
       }
     }
 
@@ -140,12 +144,13 @@ const InkSignature = ({
               <canvas
                 className="ink-signature-canvas"
                 onMouseUp={handleFinishDrawing}
+                onMouseLeave={handleFinishDrawing}
                 onTouchEnd={handleFinishDrawing}
                 ref={canvasRef}
               />
               <div className="ink-signature-background">
                 <div className="ink-signature-sign-here">
-                  {t('message.signHere')}
+                  {drawn ? '' : t('message.signHere')}
                 </div>
               </div>
             </Swipeable>
@@ -155,10 +160,10 @@ const InkSignature = ({
       <div
         className="footer"
       >
-        <button className="signature-clear" onClick={clearCanvas}>
+        <button className="signature-clear" onClick={clearCanvas} disabled={!drawn}>
           {t('action.clear')}
         </button>
-        <button className="signature-create" onClick={createSignature}>
+        <button className="signature-create" onClick={createSignature} disabled={!drawn}>
           {t('action.create')}
         </button>
       </div>

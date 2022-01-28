@@ -87,6 +87,12 @@ export default initialState => (state = initialState, action) => {
         clearSearchPanelOnClose: payload,
       };
     }
+    case 'SET_PROCESSING_SEARCH_RESULTS': {
+      return {
+        ...state,
+        isProcessingSearchResults: payload.isProcessingSearchResults,
+      };
+    }
     default:
       return state;
   }

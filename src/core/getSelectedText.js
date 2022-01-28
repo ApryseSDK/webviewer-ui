@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getSelectedText__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getSelectedText__anchor
  */
-export default () => window.docViewer.getSelectedText();
+export default () => window.documentViewer.getSelectedText();

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon / tool / form / combo box / line</title>
+    <g id="Form-Builder" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Default-" transform="translate(-675.000000, -45.000000)" fill="#868E96">
+            <g id="Group-5" transform="translate(450.000000, 38.000000)">
+                <g id="Group-4" transform="translate(0.000000, 7.000000)">
+                    <g id="icon-/-tool-/-form-/-combo-box-/-line" transform="translate(225.000000, 0.000000)">
+                        <path d="M20,2 L4,2 C3.04293208,2.00550048 2.27,2.78291627 2.27,3.74 L2.27,20.26 C2.27,21.2170837 3.04293208,21.9944995 4,22 L13.56,22 C14.5209755,22 15.3,21.2209755 15.3,20.26 L15.3,10.32 L20,10.32 C20.9609755,10.32 21.74,9.54097546 21.74,8.58 L21.74,3.74 C21.74,2.77902454 20.9609755,2 20,2 Z M13.6,20.28 L4,20.28 L4,10.28 L13.56,10.28 L13.6,20.28 Z M13.6,8.58 L4,8.58 L4,3.76 L13.56,3.76 L13.6,8.58 Z M20.02,8.58 L15.34,8.58 L15.34,3.74 L20,3.74 L20.02,8.58 Z M11.89,14.4 L5.89,14.4 L5.89,12.66 L11.89,12.66 L11.89,14.4 Z M11.89,18.75 L5.89,18.75 L5.89,17 L11.89,17 L11.89,18.75 Z M11.88,7 L6,7 L6,5.3 L11.9,5.3 L11.88,7 Z M17.14,6.13 L16.52,5.26 L19,5.26 L18.37,6.13 L17.78,7 L17.14,6.13 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

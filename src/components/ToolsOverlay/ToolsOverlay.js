@@ -6,6 +6,7 @@ import PresetButton from 'components/ToolButton/PresetButton';
 import ToolStylePopup from 'components/ToolStylePopup';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
 import SelectedRubberStamp from 'components/RubberStampOverlay/SelectedRubberStamp';
+import SelectedStamp from 'src/components/SelectedStamp/SelectedStamp';
 import { withTranslation } from 'react-i18next';
 
 import defaultTool from 'constants/defaultTool';
@@ -29,6 +30,8 @@ class ToolsOverlay extends React.PureComponent {
     activeToolGroup: PropTypes.string,
     closeElements: PropTypes.func.isRequired,
     setActiveToolGroup: PropTypes.func.isRequired,
+    isInDesktopOnlyMode: PropTypes.bool,
+    showPresets: PropTypes.bool,
   };
 
   constructor() {
@@ -117,6 +120,8 @@ class ToolsOverlay extends React.PureComponent {
       isToolStyleOpen,
       isDesktop,
       isMobile,
+      isInDesktopOnlyMode,
+      showPresets,
     } = this.props;
 
     const isVisible = (isOpen || true) && !isDisabled;
@@ -124,8 +129,15 @@ class ToolsOverlay extends React.PureComponent {
       return null;
     }
 
-    // TODO: There should be a better way to do this...
-    const noPresets = !activeToolGroup || activeToolGroup === 'stampTools' || activeToolGroup === 'cropTools' || activeToolGroup === 'redactionTools' || activeToolGroup === 'fileAttachmentTools';
+    const toolsWithNoStylingPresets = [
+      'stampTools',
+      'cropTools',
+      'redactionTools',
+      'fileAttachmentTools',
+      'radioButtonFieldTools',
+      'checkBoxFieldTools'
+    ];
+    const noPresets = !activeToolGroup || toolsWithNoStylingPresets.includes(activeToolGroup);
 
     let Component = (
       <div
@@ -147,26 +159,27 @@ class ToolsOverlay extends React.PureComponent {
       );
     } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
-        <SelectedRubberStamp/>
+        <SelectedRubberStamp />
       );
-    // } else if (activeToolGroup === 'stampTools') {
-    //   Component = (
-    //     <SelectedToolsOverlayItem
-    //       textTranslationKey="option.stampOverlay.addStamp"
-    //       onClick={() => {
-    //         core.setToolMode('AnnotationCreateStamp');
-    //       }}
-    //     />
-    //   );
-    } else if (noPresets) {
+    } else if (activeToolGroup === 'model3DTools') {
+      Component = (
+        <div className="model-3D-btn add-btn" onClick={() => this.props.openElement('Model3DModal')}>
+          {t('Model3D.add3D')}
+        </div>
+      );
+    } else if (noPresets || !showPresets) {
       Component = (
         <div className="no-presets">
-          {tReady? t('message.toolsOverlayNoPresets') : ''}
+          {tReady ? t('message.toolsOverlayNoPresets') : ''}
         </div>
+      );
+    } else if (['crossStampTools', 'checkStampTools', 'dotStampTools'].includes(activeToolGroup)) {
+      Component = (
+        <SelectedStamp tReady={tReady} toolName={toolNames[0]}/>
       );
     }
 
-    if (noPresets && isMobile) {
+    if (noPresets && (isMobile && !isInDesktopOnlyMode)) {
       return null;
     }
 
@@ -175,14 +188,16 @@ class ToolsOverlay extends React.PureComponent {
         onSwipedUp={() => this.props.closeElements(['toolStylePopup'])}
         onSwipedDown={() => this.props.closeElements(['toolStylePopup'])}
         preventDefaultTouchmoveEvent
-        className="ToolsOverlayContainer"
+        className={classNames({
+          ToolsOverlayContainer: true
+        })}
       >
         <div
           className={classNames({
             Overlay: true,
             ToolsOverlay: true,
             open: isOpen,
-            shadow: isToolStyleOpen || isMobile,
+            shadow: isToolStyleOpen || (isMobile && !isInDesktopOnlyMode)
           })}
           ref={this.overlay}
           data-element="toolsOverlay"
@@ -190,11 +205,11 @@ class ToolsOverlay extends React.PureComponent {
           <div
             className={classNames({
               "tools-container": true,
-              "is-styling-open": isToolStyleOpen,
+              "is-styling-open": isToolStyleOpen
             })}
           >
             {Component}
-            {this.props.isMobile &&
+            {(isMobile && !isInDesktopOnlyMode) &&
               <button
                 className="close-icon-container"
                 onClick={() => {
@@ -210,7 +225,7 @@ class ToolsOverlay extends React.PureComponent {
               </button>}
           </div>
           {isToolStyleOpen &&
-            <ToolStylePopup/>}
+            <ToolStylePopup />}
         </div>
       </Swipeable>
     );
@@ -225,6 +240,8 @@ const mapStateToProps = state => ({
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   activeToolGroup: selectors.getActiveToolGroup(state),
   activeToolName: selectors.getActiveToolName(state),
+  isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state),
+  showPresets: selectors.shouldShowPresets(state),
 });
 
 const mapDispatchToProps = {

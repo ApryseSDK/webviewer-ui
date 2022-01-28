@@ -5,13 +5,13 @@ import mapAnnotationColorPropertyToPalette from 'constants/mapAnnotationColorPro
 
 /**
  * Sets the active color palette of a tool and its associated annotation
- * @method WebViewerInstance#setActivePalette
+ * @method UI.setActivePalette
  * @param {string} toolName Name of the tool, either from <a href='https://www.pdftron.com/documentation/web/guides/annotations-and-tools/#list-of-tool-names' target='_blank'>tool names list</a> or the name you registered your custom tool with.
  * @param {'text'|'border'|'fill'} colorPalette The palette to be activated. One of 'text', 'border' and 'fill'.
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.setActivePalette('AnnotationCreateFreeText', 'fill')
+    instance.UI.setActivePalette('AnnotationCreateFreeText', 'fill')
   });
  */
 

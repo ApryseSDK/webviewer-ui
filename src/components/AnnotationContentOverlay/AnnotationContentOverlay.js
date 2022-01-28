@@ -11,6 +11,7 @@ import './AnnotationContentOverlay.scss';
 import actions from 'actions';
 
 import CustomElement from '../CustomElement';
+import FormFieldPlaceHolderOverlay from './FormFieldPlaceHolderOverlay';
 
 const MAX_CHARACTERS = 100;
 
@@ -52,6 +53,10 @@ const AnnotationContentOverlay = () => {
 
       if (top + overlayRect.height > window.innerHeight) {
         top = e.clientY - overlayRect.height - gap;
+      }
+
+      if (top <= 0) {
+        top = 0
       }
 
       return { left, top };
@@ -102,7 +107,7 @@ const AnnotationContentOverlay = () => {
       style={{ ...overlayPosition }}
       ref={overlayRef}
     >
-      <div className="author">{core.getDisplayAuthor(annotation)}</div>
+      <div className="author">{core.getDisplayAuthor(annotation['Author'])}</div>
       <div className="contents">
         {contents.length > MAX_CHARACTERS
           ? `${contents.slice(0, MAX_CHARACTERS)}...`
@@ -134,6 +139,15 @@ const AnnotationContentOverlay = () => {
       );
     }
     return null;
+  }
+
+  if (annotation.isFormFieldPlaceholder() && isOverlayOpen) {
+    return (
+      <FormFieldPlaceHolderOverlay
+        annotation={annotation}
+        overlayPosition={overlayPosition}
+        overlayRef={overlayRef} />
+    )
   }
 
   if (contents && isOverlayOpen) {

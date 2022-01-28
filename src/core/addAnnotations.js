@@ -1,8 +1,8 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#addAnnotations__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#addAnnotations__anchor
  * @fires annotationChanged on AnnotationManager
- * @see https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#event:annotationChanged__anchor
+ * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:annotationChanged__anchor
  */
 export default annotations => {
-  window.docViewer.getAnnotationManager().addAnnotations(annotations);
+  window.documentViewer.getAnnotationManager().addAnnotations(annotations);
 };

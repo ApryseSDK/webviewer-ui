@@ -11,6 +11,7 @@ import useMedia from 'hooks/useMedia';
 
 import Icon from "components/Icon";
 import DataElementWrapper from 'components/DataElementWrapper';
+import Button from 'components/Button';
 
 import "./PageNavOverlay.scss";
 import ToggleZoomOverlay from '../../components/ToggleZoomOverlay';
@@ -31,6 +32,7 @@ class PageNavOverlay extends React.PureComponent {
     totalPages: PropTypes.number,
     pageLabels: PropTypes.array.isRequired,
     allowPageNavigation: PropTypes.bool.isRequired,
+    enableFadePageNavigation: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -38,7 +40,8 @@ class PageNavOverlay extends React.PureComponent {
     this.textInput = React.createRef();
     this.state = {
       input: '',
-      isCustomPageLabels: false
+      isCustomPageLabels: false,
+      isFocused: false,
     };
   }
 
@@ -95,12 +98,40 @@ class PageNavOverlay extends React.PureComponent {
   onBlur = () => {
     const { currentPage, pageLabels } = this.props;
 
-    this.setState({ input: pageLabels[currentPage - 1] });
+    this.setState({ input: pageLabels[currentPage - 1], isFocused: false });
   };
   
 
+  onFocus = () => {
+    this.setState({ isFocused: true });
+  }
+
+  goToPrevPage = () => {
+    if (window.documentViewer.getCurrentPage() - 1 > 0) {
+      window.documentViewer.setCurrentPage(
+        Math.max(window.documentViewer.getCurrentPage() - 1, 1),
+      );
+    }
+  }
+
+  goToNextPage = () => {
+    if (window.documentViewer.getCurrentPage() + 1 <= window.documentViewer.getPageCount()) {
+      window.documentViewer.setCurrentPage(
+        Math.min(window.documentViewer.getCurrentPage() + 1, window.documentViewer.getPageCount())
+      );
+    }
+  }
+
   render() {
-    const { currentPage, totalPages, allowPageNavigation, isMobile, t, dataElement } = this.props;
+    const {
+      currentPage,
+      totalPages,
+      allowPageNavigation,
+      isMobile,
+      t,
+      dataElement,
+      enableFadePageNavigation
+    } = this.props;
 
     const inputWidth = this.state.input ? (this.state.input.length) * (isMobile ? 10 : 8) : 0;
 
@@ -109,25 +140,25 @@ class PageNavOverlay extends React.PureComponent {
         className={classNames({
           Overlay: true,
           PageNavOverlay: true,
+          FadeOut: enableFadePageNavigation && !this.props.showNavOverlay && !this.state.isFocused
         })}
         dataElement={dataElement || "pageNavOverlay"}
+        onMouseEnter={this.props.onMouseEnter}
+        onMouseLeave={this.props.onMouseLeave}
       >
         <HeaderItems style="w-auto" items={zoomMenu} isToolGroupReorderingEnabled={false} />
-        <button
+        <Button
           className="side-arrow-container"
-          onClick={() => {
-            if (window.docViewer.getCurrentPage() - 1 > 0) {
-              window.docViewer.setCurrentPage(
-                Math.max(window.docViewer.getCurrentPage() - 1, 1),
-              );
-            }
-          }}
-          aria-label={t('action.pagePrev')}
-        >
-          <Icon className="side-arrow" glyph="icon-chevron-left" />
-        </button>
+          img="icon-chevron-left"
+          title={t('action.pagePrev')}
+          ariaLabel={t('action.pagePrev')}
+          onClick={this.goToPrevPage}
+          iconClassName="side-arrow"
+          forceTooltipPosition="top"
+          disabled={window.documentViewer.getCurrentPage() === 1}
+        />
         <div className="formContainer" onClick={this.onClick}>
-          <form onSubmit={this.onSubmit} onBlur={this.onBlur}>
+          <form onSubmit={this.onSubmit} onBlur={this.onBlur} onFocus={this.onFocus}>
             <input
               ref={this.textInput}
               type="text"
@@ -143,22 +174,16 @@ class PageNavOverlay extends React.PureComponent {
               : ` / ${totalPages}`}
           </form>
         </div>
-        <button
+        <Button
           className="side-arrow-container"
-          onClick={() => {
-            if (window.docViewer.getCurrentPage() + 1 <= window.docViewer.getPageCount()) {
-              window.docViewer.setCurrentPage(
-                Math.min(
-                  window.docViewer.getCurrentPage() + 1,
-                  window.docViewer.getPageCount(),
-                ),
-              );
-            }
-          }}
-          aria-label={t('action.pageNext')}
-        >
-          <Icon className="side-arrow" glyph="icon-chevron-right" />
-        </button>
+          img="icon-chevron-right"
+          title={t('action.pageNext')}
+          ariaLabel={t('action.pageNext')}
+          onClick={this.goToNextPage}
+          iconClassName="side-arrow"
+          forceTooltipPosition="top"
+          disabled={window.documentViewer.getCurrentPage() === window.documentViewer.getPageCount()}
+        />
       </DataElementWrapper>
     );
   }
@@ -169,6 +194,7 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
   pageLabels: selectors.getPageLabels(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
+  enableFadePageNavigation: selectors.shouldFadePageNavigationComponent(state),
 });
 
 const ConnectedPageNavOverlay = connect(mapStateToProps)(withTranslation()(PageNavOverlay));

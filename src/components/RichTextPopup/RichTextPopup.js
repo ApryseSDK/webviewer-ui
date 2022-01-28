@@ -19,12 +19,13 @@ import selectors from 'selectors';
 import './RichTextPopup.scss';
 
 const RichTextPopup = () => {
-  const [isDisabled, isOpen, isPaletteDisabled, customColors] = useSelector(
+  const [isDisabled, isOpen, isPaletteDisabled, customColors, isInDesktopOnlyMode] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'richTextPopup'),
       selectors.isElementOpen(state, 'richTextPopup'),
       selectors.isElementDisabled(state, 'colorPalette'),
       selectors.getCustomColors(state, 'customColors'),
+      selectors.isInDesktopOnlyMode(state)
     ],
     shallowEqual,
   );
@@ -180,7 +181,7 @@ const RichTextPopup = () => {
   };
 
   // TODO for now don't show it in mobile
-  return isDisabled || isMobile() ? null : (
+  return isDisabled || (isMobile() && !isInDesktopOnlyMode) ? null : (
     <Draggable
       position={draggablePosition}
       onDrag={syncDraggablePosition}

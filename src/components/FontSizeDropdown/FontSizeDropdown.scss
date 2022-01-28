@@ -1,0 +1,112 @@
+@import '../../constants/styles';
+
+.FontSizeDropdown {
+  position: relative;
+  width: 100%;
+  display: flex;
+  background: var(--component-background);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 28px;
+  padding: 3px 4px;
+
+  input {
+    width: 25px;
+    border: 0;
+    height: 100%;
+    flex: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &.error {
+      border-color: var(--error-border-color);
+    }
+  }
+  // To remove arrows from input
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  .icon-button {
+    flex: inherit;
+    height: 16px;
+    width: 16px;
+
+    .Icon {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  .Dropdown__items {
+    z-index: 1; // Needed to not trigger mouse events underneath the dropdown
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+
+    background: var(--component-background);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden; // necessary so that children respect border-radius on hover
+    overflow-y: auto;
+    max-height: 200px;
+    width: 100%;
+
+    &.hide {
+      // Required to get width for positioning.
+      visibility: hidden;
+    }
+
+
+
+    .Dropdown__item {
+      @include button-reset;
+      height: 28px;
+      padding-left: 8px;
+      align-items: center;
+      display: flex;
+      border-radius: 0px;
+      padding-right: 32px;
+      font-size: var(--font-size-medium);
+
+      &.active {
+        background-color: var(--popup-button-active);
+      }
+
+      &:hover {
+        background-color: var(--popup-button-hover);
+      }
+
+      &:first-child {
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+      }
+
+      &:last-child {
+        border-bottom-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+    }
+  }
+
+}
+

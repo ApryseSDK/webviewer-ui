@@ -4,7 +4,7 @@ import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import useMedia from 'hooks/useMedia';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Swipeable } from 'react-swipeable';
 import selectors from 'selectors';
@@ -20,9 +20,21 @@ const MENUS = [
   'zoomOverlay',
   'redactionOverlay',
   'toolStylePopup',
+  'pageManipulationOverlay',
+  'thumbnailsControlRotatePopup',
+  'thumbnailsControlInsertPopup',
+  'thumbnailsControlManipulatePopup',
 ];
 
-const TRIGGERS = ['menuButton', 'viewControlsButton', 'zoomOverlayButton'];
+const TRIGGERS = [
+  'menuButton',
+  'viewControlsButton',
+  'zoomOverlayButton',
+  'pageManipulationOverlayButton',
+  'thumbnailsControlRotatePopupTrigger',
+  'thumbnailsControlInsertPopupTrigger',
+  'thumbnailsControlManipulatePopupTrigger',
+];
 
 const propTypes = {
   /** Menu must be one of the available menus. */
@@ -44,6 +56,8 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
 
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, menu));
   const isOpen = useSelector(state => selectors.isElementOpen(state, menu));
+
+  const isInDesktopOnlyMode = useSelector(state => selectors.isInDesktopOnlyMode(state));
 
   const closeMenu = useCallback(() => {
     dispatch(actions.closeElements([menu]));
@@ -71,12 +85,13 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const isSmallBrowserHeight = useMedia(['(max-height: 500px)'], [true], false);
 
   // When open: close others, position, and listen for resizes to position.
-  useEffect(() => {
+  // Uselayouteffect prevents "jumpy" behaviour from opening in old position and immediately repositioning the flyout
+  useLayoutEffect(() => {
     if (isOpen) {
       dispatch(actions.closeElements(allOtherMenus));
 
       const onResize = () => {
-        const overlayPosition = getOverlayPositionBasedOn(trigger, overlayRef, isTabletOrMobile);
+        const overlayPosition = getOverlayPositionBasedOn(trigger, overlayRef, isMobile && isTabletOrMobile);
 
         if (isSmallBrowserHeight) {
           overlayPosition.top = 0;
@@ -89,21 +104,21 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
       window.addEventListener('resize', onResize);
       return () => window.removeEventListener('resize', onResize);
     }
-  }, [allOtherMenus, dispatch, isOpen, isTabletOrMobile, trigger, isSmallBrowserHeight]);
+  }, [allOtherMenus, dispatch, isOpen, isTabletOrMobile, trigger, isSmallBrowserHeight, isMobile]);
 
   if (isDisabled) {
     return null;
   }
 
   const overlayClass = classNames('Overlay', 'FlyoutMenu', {
-    mobile: isMobile,
+    mobile: isMobile && !isInDesktopOnlyMode,
     closed: !isOpen,
   });
 
   return (
     <Swipeable onSwipedUp={closeMenu} onSwipedDown={closeMenu} preventDefaultTouchmoveEvent>
-      <div className={overlayClass} data-element={menu} style={!isMobile ? position : undefined} ref={overlayRef} role="listbox" aria-label={ariaLabel}>
-        {isMobile && <div className="swipe-indicator" />}
+      <div className={overlayClass} data-element={menu} style={(!isMobile || isInDesktopOnlyMode) ? position : undefined} ref={overlayRef} role="listbox" aria-label={ariaLabel}>
+        {isMobile && !isInDesktopOnlyMode && <div className="swipe-indicator" />}
         {children}
       </div>
     </Swipeable>

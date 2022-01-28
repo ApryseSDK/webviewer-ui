@@ -8,6 +8,7 @@ import OutlinesPanel from 'components/OutlinesPanel';
 import BookmarksPanel from 'components/BookmarksPanel';
 import LayersPanel from 'components/LayersPanel';
 import NotesPanel from 'components/NotesPanel';
+import FileAttachmentPanel from 'components/FileAttachmentPanel';
 import SignaturePanel from 'components/SignaturePanel';
 import CustomElement from 'components/CustomElement';
 import ResizeBar from 'components/ResizeBar';
@@ -17,8 +18,10 @@ import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
+import { isIE } from 'helpers/device';
 
 import './LeftPanel.scss';
+import LeftPanelPageTabs from "components/LeftPanelPageTabs";
 
 const LeftPanel = () => {
   const isMobile = useMedia(
@@ -37,9 +40,22 @@ const LeftPanel = () => {
     false,
   );
 
-  const [currentToolbarGroup, isToolsHeaderOpen,isOpen, isDisabled, activePanel, customPanels, currentWidth, notesInLeftPanel] = useSelector(
+  const [
+    currentToolbarGroup,
+    isHeaderOpen,
+    isToolsHeaderOpen,
+    isOpen,
+    isDisabled,
+    activePanel,
+    customPanels,
+    currentWidth,
+    notesInLeftPanel,
+    isInDesktopOnlyMode,
+    isThumbnailSelectingPages
+  ] = useSelector(
     state => [
       selectors.getCurrentToolbarGroup(state),
+      selectors.isElementOpen(state, 'header'),
       selectors.isElementOpen(state, 'toolsHeader'),
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementDisabled(state, 'leftPanel'),
@@ -47,6 +63,8 @@ const LeftPanel = () => {
       selectors.getCustomPanels(state),
       selectors.getLeftPanelWidth(state),
       selectors.getNotesInLeftPanel(state),
+      selectors.isInDesktopOnlyMode(state),
+      selectors.isThumbnailSelectingPages(state),
     ],
     shallowEqual,
   );
@@ -67,7 +85,7 @@ const LeftPanel = () => {
   const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
 
   let style = {};
-  if (!isMobile) {
+  if (isInDesktopOnlyMode || !isMobile) {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
 
@@ -80,6 +98,9 @@ const LeftPanel = () => {
         LeftPanel: true,
         'closed': !isVisible,
         'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
+        'tools-header-and-header-hidden': !isHeaderOpen && !isToolsHeaderOpen,
+        'thumbnail-panel-active': activePanel === 'thumbnailsPanel',
+        'outlines-panel-active': activePanel === 'outlinesPanel'
       })}
       onDrop={onDrop}
       onDragOver={onDragOver}
@@ -89,7 +110,7 @@ const LeftPanel = () => {
         className="left-panel-container"
         style={style}
       >
-        {isMobile &&
+        {!isInDesktopOnlyMode && isMobile &&
           <div
             className="close-container"
           >
@@ -106,13 +127,14 @@ const LeftPanel = () => {
             </div>
           </div>}
         <div className="left-panel-header">
-          <LeftPanelTabs />
+          {isThumbnailSelectingPages ? <LeftPanelPageTabs /> : <LeftPanelTabs />}
         </div>
         {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel/>}
         {activePanel === 'outlinesPanel' && <OutlinesPanel />}
         {activePanel === 'bookmarksPanel' && <BookmarksPanel />}
         {activePanel === 'layersPanel' && <LayersPanel />}
         {core.isFullPDFEnabled() && activePanel === 'signaturePanel' && <SignaturePanel />}
+        {activePanel === 'attachmentPanel' && <FileAttachmentPanel />}
         {notesInLeftPanel && activePanel === 'notesPanel' && <NotesPanel currentLeftPanelWidth={currentWidth} />}
         {customPanels.map(({ panel }, index) => (
           <CustomElement
@@ -124,12 +146,17 @@ const LeftPanel = () => {
           />
         ))}
       </div>
-      {!isTabletAndMobile &&
+      {(isInDesktopOnlyMode || !isTabletAndMobile) &&
         <ResizeBar
           dataElement="leftPanelResizeBar"
           minWidth={minWidth}
           onResize={_width => {
-            dispatch(actions.setLeftPanelWidth(_width));
+            let maxAllowedWidth = window.innerWidth;
+            // there will be a scroll bar in IE, so we don't allow 100% page width
+            if (isIE) {
+              maxAllowedWidth = maxAllowedWidth - 30;
+            }
+            dispatch(actions.setLeftPanelWidth(Math.min(_width, maxAllowedWidth)));
           }}
         />}
     </div>

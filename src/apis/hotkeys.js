@@ -1,8 +1,8 @@
 /**
  * An instance of Hotkeys that can be used to enable, disable or register custom hotkeys in the viewer
- * @name WebViewerInstance#hotkeys
- * @see WebViewerInstance.Hotkeys
- * @type {Class<WebViewerInstance.Hotkeys>}
+ * @name UI.hotkeys
+ * @see UI.Hotkeys
+ * @type {Class<UI.Hotkeys>}
  */
 
 import hotkeysManager, { Keys } from 'helpers/hotkeysManager';

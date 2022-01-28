@@ -1,1 +1,1 @@
-export default (...args) => window.docViewer.loadDocument(...args);
+export default (...args) => window.documentViewer.loadDocument(...args);

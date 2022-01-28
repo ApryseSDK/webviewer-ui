@@ -10,5 +10,5 @@ export default () => {
     Cover: 2,
   };
 
-  return mapDisplayModeToNumberOfPages[core.getDisplayMode()];
+  return mapDisplayModeToNumberOfPages[core.getDisplayMode()] || 1;
 };

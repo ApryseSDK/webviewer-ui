@@ -2,29 +2,34 @@ import core from 'core';
 import defaultToolStylesMap from 'constants/defaultToolStylesMap';
 import localStorageManager from 'helpers/localStorageManager';
 
+const setDefaultToolStyle = toolName => {
+  let toolStyles = null;
+  const toolModeMap = core.getToolModeMap();
+
+  try {
+    toolStyles = localStorage.getItem(`toolData-${toolName}`);
+  } catch (ex) {
+    console.warn(`Disabling "localStorage" because it could not be accessed.`);
+    localStorageManager.disableLocalStorage();
+  }
+
+  if (!toolStyles && defaultToolStylesMap[toolName]) {
+    toolStyles = JSON.stringify(defaultToolStylesMap[toolName]);
+  }
+
+  if (toolStyles) {
+    const tool = toolModeMap[toolName];
+
+    toolStyles = getParsedToolStyles(toolStyles);
+    tool.setStyles(toolStyles);
+  }
+};
+
 const setDefaultToolStyles = () => {
   const toolModeMap = core.getToolModeMap();
 
   Object.keys(toolModeMap).forEach(toolName => {
-    let toolStyles = null;
-
-    try {
-      toolStyles = localStorage.getItem(`toolData-${toolName}`);
-    } catch (ex) {
-      console.warn(`Disabling "localStorage" because it could not be accessed.`);
-      localStorageManager.disableLocalStorage();
-    }
-
-    if (!toolStyles && defaultToolStylesMap[toolName]) {
-      toolStyles = JSON.stringify(defaultToolStylesMap[toolName]);
-    }
-
-    if (toolStyles) {
-      const tool = toolModeMap[toolName];
-
-      toolStyles = getParsedToolStyles(toolStyles);
-      tool.setStyles(toolStyles);
-    }
+    setDefaultToolStyle(toolName);
   });
 };
 
@@ -49,3 +54,5 @@ const isKeyColorProperty = key =>
   ['TextColor', 'StrokeColor', 'FillColor'].includes(key);
 
 export default setDefaultToolStyles;
+
+export { setDefaultToolStyle };

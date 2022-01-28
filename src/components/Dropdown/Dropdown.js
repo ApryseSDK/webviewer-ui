@@ -2,13 +2,13 @@ import classNames from 'classnames';
 import Icon from 'components/Icon';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
-import React, { useCallback, useRef, useState, useMemo } from 'react';
+import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
 import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
 
-const DEFAULT_WIDTH = 94;
+const DEFAULT_WIDTH = 98;
 
 const propTypes = {
   onClickItem: PropTypes.func,
@@ -16,17 +16,25 @@ const propTypes = {
   currentSelectionKey: PropTypes.string,
   translationPrefix: PropTypes.string,
   dataElement: PropTypes.string,
+  disabled: PropTypes.bool,
+  isFont: PropTypes.bool,
 };
 
-function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem, dataElement, disabled=false }) {
+function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem, dataElement, disabled=false, isFont =false }) {
   const  { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [itemsWidth] = useState(DEFAULT_WIDTH);
 
   const onClose = useCallback(() => setIsOpen(false), []);
   const onToggle = useCallback(() => setIsOpen(prev => !prev), []);
+
+  // Close dropdown if WebViewer loses focus (ie, user clicks outside iframe).
+  useEffect(() => {
+    window.addEventListener('blur', () => {
+      setIsOpen(false);
+    });
+  }, []);
 
   useArrowFocus(isOpen, onClose, overlayRef);
 
@@ -46,7 +54,6 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
     },
     [onClickItem],
   );
-
   const dropdownItems = useMemo(
     () =>
       items.map(key => (
@@ -57,6 +64,7 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
           className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
           onClick={e => onClickDropdownItem(e, key)}
           tabIndex={isOpen ? undefined : -1} // Just to be safe.
+          style={isFont ? { fontFamily: key } : undefined}
         >
           {t(`${translationPrefix}.${key}`, key)}
         </DataElementWrapper>
@@ -65,11 +73,8 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
   );
 
   const optionIsSelected = items.some(key => key === currentSelectionKey);
+  const buttonStyle = { width: `${DEFAULT_WIDTH + 2}px` };
 
-  const buttonStyle = useMemo(
-    () => ({ width: `${(itemsWidth || DEFAULT_WIDTH) + 2}px` }),
-    [itemsWidth],
-  );
 
   return (
     <DataElementWrapper
@@ -85,7 +90,7 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
       >
         <div className="picked-option">
           {optionIsSelected && (
-            <div className="picked-option-text">
+            <div className="picked-option-text" style={isFont ? { fontFamily: currentSelectionKey } : undefined}>
               {tReady? t(`${translationPrefix}.${currentSelectionKey}`, currentSelectionKey) : ''}
             </div>
           )}

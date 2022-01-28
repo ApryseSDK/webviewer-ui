@@ -44,11 +44,11 @@ class RubberStampOverlay extends React.Component {
     this.stampTool = core.getTool(TOOL_NAME);
   }
 
-  setRubberStamp(annotation, index) {
+  async setRubberStamp(annotation, index) {
     core.setToolMode(TOOL_NAME);
     this.props.closeElement("toolStylePopup");
     const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
-    this.stampTool.setRubberStamp(annotation, text);
+    await this.stampTool.setRubberStamp(annotation, text);
     this.stampTool.showPreview();
     this.props.setSelectedStampIndex(index);
   }

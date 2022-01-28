@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#setOptions__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#setOptions__anchor
  */
 export default options => {
-  window.docViewer.setOptions(options);
+  window.documentViewer.setOptions(options);
 };

@@ -1,14 +1,14 @@
 /**
  * Stops on-going page processing to cancel a print job.
- * @method WebViewerInstance#cancelPrint
+ * @method UI.cancelPrint
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var docViewer = instance.docViewer;
+    var docViewer = instance.Core.documentViewer;
     // you must have a document loaded when calling this api
-    docViewer.on('documentLoaded', function() {
-      instance.print();
-      instance.cancelPrint();
+    docViewer.addEventListener('documentLoaded', function() {
+      instance.UI.print();
+      instance.UI.cancelPrint();
     });
   });
  */

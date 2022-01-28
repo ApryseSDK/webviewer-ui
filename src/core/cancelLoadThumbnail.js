@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.Document.html#cancelLoadThumbnail__anchor
+ * https://www.pdftron.com/api/web/Core.Document.html#cancelLoadThumbnail__anchor
  */
 export default requestId => {
-  window.docViewer.getDocument().cancelLoadThumbnail(requestId);
+  window.documentViewer.getDocument().cancelLoadThumbnail(requestId);
 };

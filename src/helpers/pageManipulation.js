@@ -2,6 +2,7 @@ import core from 'core';
 import actions from 'actions';
 import extractPagesWithAnnotations from './extractPagesWithAnnotations';
 import fireEvent from './fireEvent';
+import Events from 'constants/events';
 
 export const extractPagesToMerge = pageNumbers => {
   // extract pages and put the data on the iFrame window element for another instance of WebViewer to access
@@ -18,7 +19,7 @@ export const mergeDocument = (srcToMerge, mergeToPage, shouldFireEvent = true) =
       core.setCurrentPage(mergeToPage);
 
       if (shouldFireEvent) {
-        fireEvent('documentMerged', mergeResults);
+        fireEvent(Events.DOCUMENT_MERGED, mergeResults);
       }
 
       resolve(mergeResults);
@@ -47,7 +48,7 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => dispatc
     extractedDataPromise.then(docToMerge => {
       dispatch(mergeDocument(docToMerge, mergeToPage, false)).then(({ filename, pages }) => {
 
-        fireEvent('documentMerged', { filename, pages: otherWebViewerIframe.contentWindow.pagesExtracted });
+        fireEvent(Events.DOCUMENT_MERGED, { filename, pages: otherWebViewerIframe.contentWindow.pagesExtracted });
         dispatch(actions.closeElement('loadingModal'));
         resolve({ filename, pages });
       });

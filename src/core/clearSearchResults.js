@@ -1,6 +1,6 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#clearSearchResults__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#clearSearchResults__anchor
  */
 export default () => {
-  window.docViewer.clearSearchResults();
+  window.documentViewer.clearSearchResults();
 };

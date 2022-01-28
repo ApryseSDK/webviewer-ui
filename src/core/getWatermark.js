@@ -1,1 +1,1 @@
-export default () => window.docViewer.getWatermark();
+export default () => window.documentViewer.getWatermark();

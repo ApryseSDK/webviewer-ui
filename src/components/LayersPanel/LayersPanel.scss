@@ -1,6 +1,10 @@
+@import '../../constants/styles';
 @import '../../constants/panel';
 
 .LayersPanel {
-  padding: 0px 0px;
-
+  padding-left: 15px;
+  // we don't want to style its recursive subchild
+  > .Layer:first-child {
+    margin-top: 0;
+  }
 }

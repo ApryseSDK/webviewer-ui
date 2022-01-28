@@ -3,9 +3,14 @@ import { Provider } from "react-redux";
 import React from "react";
 
 // mock initial state.
-// There should not be need to set any initial state as
-// we should only test "display" components and not the redux part.
-const initialState = {};
+// UI Buttons are redux connected, and they need a state or the
+// tests will error out
+const initialState = {
+  viewer: {
+    disabledElements: {},
+    customElementOverrides: {},
+  }
+};
 
 function rootReducer(state = initialState, action) { // eslint-disable-line no-unused-vars
   return state;

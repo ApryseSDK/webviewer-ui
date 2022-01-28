@@ -1,0 +1,26 @@
+@import '../../constants/styles';
+
+.apply-form-field-button {
+  background-color: var(--blue-5);
+  border: 1px solid var(--blue-5);
+  color: var(--gray-0);
+  padding: 7px 14px;
+  width: fit-content;
+  border-radius: 5px;
+  height: 30px;
+  cursor: pointer;
+
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    width: 100%;
+  }
+
+  &:hover {
+    background: #1A4971 !important;
+    border-radius: 5px !important;
+  }
+
+  @include mobile {
+    padding: 7px 12px;
+    white-space: nowrap;
+  }
+}

@@ -84,7 +84,8 @@
 
   --list-separator-color: var(--gray-7);
   --scrollbar-color: var(--gray-5);
-  --note-box-shadow: transparent;
+  --note-box-shadow: var(--gray-2);
+  --note-box-shadow-expanded: var(--gray-2);
 
   --tools-header-background: var(--gray-1);
   --view-header-background: var(--gray-3);

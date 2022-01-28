@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getPageWidth__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getPageWidth__anchor
  */
-export default pageNumber => window.docViewer.getPageWidth(pageNumber);
+export default pageNumber => window.documentViewer.getPageWidth(pageNumber);

@@ -8,20 +8,22 @@ import { isMobile } from 'helpers/device';
 import Thumbnail from './Thumbnail';
 
 const ThumbnailRedux = props => {
-  const [currentPage, pageLabels, selectedPageIndexes, isThumbnailMultiselectEnabled, isReaderMode] = useSelector(
+  const [currentPage, pageLabels, selectedPageIndexes, isThumbnailMultiselectEnabled, isReaderMode, shiftKeyThumbnailPivotIndex, isThumbnailSelectingPages] = useSelector(
     state => [
       selectors.getCurrentPage(state),
       selectors.getPageLabels(state),
       selectors.getSelectedThumbnailPageIndexes(state),
       selectors.getIsThumbnailMultiselectEnabled(state),
       selectors.isReaderMode(state),
+      selectors.getShiftKeyThumbnailPivotIndex(state),
+      selectors.isThumbnailSelectingPages(state),
     ],
     shallowEqual,
   );
 
   const dispatch = useDispatch();
 
-  return <Thumbnail {...props} {...{currentPage, pageLabels, selectedPageIndexes, isThumbnailMultiselectEnabled, isReaderMode, dispatch, actions, isMobile}}/>
+  return <Thumbnail {...props} {...{ currentPage, pageLabels, selectedPageIndexes, isThumbnailMultiselectEnabled, isReaderMode, dispatch, actions, isMobile, shiftKeyThumbnailPivotIndex, isThumbnailSelectingPages }}/>;
 };
 
 export default ThumbnailRedux;

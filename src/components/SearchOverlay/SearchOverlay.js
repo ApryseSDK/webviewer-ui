@@ -23,11 +23,12 @@ const propTypes = {
   executeSearch: PropTypes.func.isRequired,
   selectNextResult: PropTypes.func,
   selectPreviousResult: PropTypes.func,
+  isProcessingSearchResults: PropTypes.bool
 };
 
 function SearchOverlay(props) {
   const { t } = useTranslation();
-  const { isSearchOverlayDisabled, searchResults, activeResultIndex, selectNextResult, selectPreviousResult } = props;
+  const { isSearchOverlayDisabled, searchResults, activeResultIndex, selectNextResult, selectPreviousResult, isProcessingSearchResults } = props;
   const { searchValue, setSearchValue, executeSearch } = props;
   const { isCaseSensitive, setCaseSensitive, isWholeWord, setWholeWord, isWildcard, setWildcard } = props;
   const { searchStatus, isPanelOpen } = props;
@@ -119,7 +120,7 @@ function SearchOverlay(props) {
   }
   const numberOfResultsFound = searchResults ? searchResults.length : 0;
 
-  const showSpinner = searchStatus === 'SEARCH_DONE' ? (
+  const showSpinner = (searchStatus === 'SEARCH_DONE' && !isProcessingSearchResults)? (
     <div>
       {numberOfResultsFound} {t('message.numResultsFound')}
     </div>

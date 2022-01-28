@@ -33,6 +33,20 @@ const map = {
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.FreeHandAnnotation,
   },
+  freeHandHighlight: {
+    icon: 'icon-tool-pen-highlight',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: [
+      'AnnotationCreateFreeHandHighlight',
+      'AnnotationCreateFreeHandHighlight2',
+      'AnnotationCreateFreeHandHighlight3',
+      'AnnotationCreateFreeHandHighlight4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.FreeHandAnnotation,
+  },
   freeText: {
     icon: 'icon-tool-text-free-text',
     iconColor: 'TextColor',
@@ -43,6 +57,22 @@ const map = {
       'AnnotationCreateFreeText2',
       'AnnotationCreateFreeText3',
       'AnnotationCreateFreeText4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.FreeTextAnnotation &&
+      annotation.getIntent() ===
+      window.Annotations.FreeTextAnnotation.Intent.FreeText,
+  },
+  dateFreeText: {
+    icon: 'icon-tool-fill-and-sign-calendar',
+    iconColor: 'TextColor',
+    currentPalette: 'TextColor',
+    availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
+    toolNames: [
+      'AnnotationCreateDateFreeText',
+      'AnnotationCreateDateFreeText2',
+      'AnnotationCreateDateFreeText3',
+      'AnnotationCreateDateFreeText4',
     ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.FreeTextAnnotation &&
@@ -91,6 +121,23 @@ const map = {
       'AnnotationCreateRectangularAreaMeasurement2',
       'AnnotationCreateRectangularAreaMeasurement3',
       'AnnotationCreateRectangularAreaMeasurement4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.PolygonAnnotation &&
+      annotation.IT === 'PolygonDimension' &&
+      annotation.Measure &&
+      annotation.isRectangularPolygon(),
+  },
+  cloudyRectangularAreaMeasurement: {
+    icon: 'ic_annotation_cloudy_rectangular_area_black_24px',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor', 'FillColor'],
+    toolNames: [
+      'AnnotationCreateCloudyRectangularAreaMeasurement',
+      'AnnotationCreateCloudyRectangularAreaMeasurement2',
+      'AnnotationCreateCloudyRectangularAreaMeasurement3',
+      'AnnotationCreateCloudyRectangularAreaMeasurement4',
     ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolygonAnnotation &&
@@ -159,7 +206,7 @@ const map = {
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===
-        window.Annotations.FreeTextAnnotation.Intent.FreeTextCallout,
+      window.Annotations.FreeTextAnnotation.Intent.FreeTextCallout,
   },
   line: {
     icon: 'icon-tool-shape-line',
@@ -300,7 +347,8 @@ const map = {
       'AnnotationCreateRectangle4',
     ],
     annotationCheck: annotation =>
-      annotation instanceof window.Annotations.RectangleAnnotation,
+      annotation instanceof window.Annotations.RectangleAnnotation &&
+      annotation.getCustomData('trn-form-field-type') === '',
   },
   ellipse: {
     icon: 'icon-tool-shape-oval',
@@ -413,6 +461,94 @@ const map = {
     toolNames: ['AnnotationCreateFileAttachment'],
     annotationCheck: annotation => annotation instanceof window.Annotations.FileAttachmentAnnotation,
   },
+  threeDAnnotation: {
+    icon: 'icon-tool-model3d',
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: ['AnnotationCreateThreeD'],
+    annotationCheck: annotation => annotation instanceof window.Annotations.Model3DAnnotation,
+  },
+  textField: {
+    icon: 'icon-form-field-text',
+    iconColor: 'TextColor',
+    currentPalette: 'TextColor',
+    availablePalettes: ['TextColor', 'FillColor', 'StrokeColor'],
+    toolNames: [
+      'TextFormFieldCreateTool',
+      'TextFormFieldCreateTool2',
+      'TextFormFieldCreateTool3',
+      'TextFormFieldCreateTool4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.RectangleAnnotation &&
+      annotation.getCustomData('trn-form-field-type') === 'TextFormField'
+  },
+  signatureFormField: {
+    icon: 'icon-form-field-signature',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor',],
+    toolNames: [
+      'SignatureFormFieldCreateTool',
+      'SignatureFormFieldCreateTool2',
+      'SignatureFormFieldCreateTool3',
+      'SignatureFormFieldCreateTool4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.RectangleAnnotation &&
+      annotation.getCustomData('trn-form-field-type') === 'SignatureFormField'
+  },
+  checkBoxFormField: {
+    icon: 'icon-form-field-checkbox',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: ['CheckBoxFormFieldCreateTool'],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.RectangleAnnotation &&
+      annotation.getCustomData('trn-form-field-type') === 'CheckBoxFormField'
+  },
+  radioButtonFormField: {
+    icon: 'icon-form-field-radiobutton',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: ['RadioButtonFormFieldCreateTool'],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.RectangleAnnotation &&
+      annotation.getCustomData('trn-form-field-type') === 'RadioButtonFormField'
+  },
+  listBoxFormField: {
+    icon: 'icon-form-field-listbox',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
+    toolNames: [
+      'ListBoxFormFieldCreateTool',
+      'ListBoxFormFieldCreateTool2',
+      'ListBoxFormFieldCreateTool3',
+      'ListBoxFormFieldCreateTool4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.RectangleAnnotation &&
+      annotation.getCustomData('trn-form-field-type') === 'ListBoxFormField'
+  },
+  comboBoxFormField: {
+    icon: 'icon-form-field-combobox',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
+    toolNames: [
+      'ComboBoxFormFieldCreateTool',
+      'ComboBoxFormFieldCreateTool2',
+      'ComboBoxFormFieldCreateTool3',
+      'ComboBoxFormFieldCreateTool4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.RectangleAnnotation &&
+      annotation.getCustomData('trn-form-field-type') === 'ComboBoxFormField'
+  },
 };
 
 export const mapToolNameToKey = toolName =>
@@ -452,7 +588,7 @@ export const register = (tool, annotationConstructor, customAnnotCheckFunc) => {
     toolNames: [toolName],
     annotationCheck: customAnnotCheckFunc ?
       annotation => customAnnotCheckFunc(annotation) :
-      (annotationConstructor ? annotation => annotation instanceof annotationConstructor: null),
+      (annotationConstructor ? annotation => annotation instanceof annotationConstructor : null)
   };
 };
 

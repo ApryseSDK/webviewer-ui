@@ -24,7 +24,7 @@ const TextSignature = ({
   createSignature,
 }) => {
   const fonts = useSelector(state => selectors.getSignatureFonts(state));
-  const [value, setValue] = useState(core.getCurrentUser());
+  const [value, setValue] = useState(core.getDisplayAuthor(core.getCurrentUser()));
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDefaultValue, setIsDefaultValue] = useState(true);
   const inputRef = useRef();
@@ -43,7 +43,7 @@ const TextSignature = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const multiplier = window.utils.getCanvasMultiplier();
+    const multiplier = window.Core.getCanvasMultiplier();
 
     const resizeCanvas = () => {
       const { width, height } = textDivsRef.current[
@@ -80,6 +80,7 @@ const TextSignature = ({
 
   useEffect(() => {
     if (isModalOpen && isTabPanelSelected) {
+      setValue(core.getDisplayAuthor(core.getCurrentUser()));
       setSignature();
     }
   }, [isModalOpen, isTabPanelSelected]);
@@ -99,7 +100,7 @@ const TextSignature = ({
   useEffect(() => {
     const onUpdateAnnotationPermission = () => {
       if (isDefaultValue) {
-        setValue(core.getCurrentUser());
+        setValue(core.getDisplayAuthor(core.getCurrentUser()));
       }
     };
 
@@ -166,10 +167,10 @@ const TextSignature = ({
       <div
         className="footer"
       >
-        <button className="signature-clear" onClick={() => setValue('')} disabled={!(isModalOpen && isTabPanelSelected)}>
+        <button className="signature-clear" onClick={() => setValue('')} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
           {t('action.clear')}
         </button>
-        <button className="signature-create" onClick={createSignature} disabled={!(isModalOpen && isTabPanelSelected)}>
+        <button className="signature-create" onClick={createSignature} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
           {t('action.create')}
         </button>
       </div>

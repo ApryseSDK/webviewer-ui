@@ -10,6 +10,7 @@ import Icon from 'components/Icon';
 import core from 'core';
 import { mapAnnotationToKey, mapToolNameToKey, getDataWithKey } from 'constants/map';
 import parseMeasurementContents from 'helpers/parseMeasurementContents';
+import getFormatedUnit from 'helpers/getFormatedUnit';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -191,6 +192,7 @@ class MeasurementOverlay extends React.PureComponent {
       'perimeterMeasurement',
       'areaMeasurement',
       'rectangularAreaMeasurement',
+      'cloudyRectangularAreaMeasurement',
       'ellipseMeasurement',
       'countMeasurement'
     ].includes(mapAnnotationToKey(annotation));
@@ -201,6 +203,7 @@ class MeasurementOverlay extends React.PureComponent {
       'perimeterMeasurement',
       'areaMeasurement',
       'rectangularAreaMeasurement',
+      'cloudyRectangularAreaMeasurement',
       'ellipseMeasurement',
       'countMeasurement'
     ].includes(mapToolNameToKey(toolName));
@@ -216,7 +219,8 @@ class MeasurementOverlay extends React.PureComponent {
     if (
       key === 'perimeterMeasurement' ||
       key === 'areaMeasurement' ||
-      key === 'rectangularAreaMeasurement'
+      key === 'rectangularAreaMeasurement',
+      key === 'cloudyRectangularAreaMeasurement'
     ) {
       // for polyline and polygon, there's no useful information we can show if it has no vertices or only one vertex.
       showInfo = annotation.getPath().length > 1;
@@ -268,6 +272,7 @@ class MeasurementOverlay extends React.PureComponent {
       perimeterMeasurement: t('option.measurementOverlay.perimeterMeasurement'),
       areaMeasurement: t('option.measurementOverlay.areaMeasurement'),
       rectangularAreaMeasurement: t('option.measurementOverlay.areaMeasurement'),
+      cloudyRectangularAreaMeasurement: t('option.measurementOverlay.areaMeasurement'),
     };
 
     return (
@@ -296,6 +301,7 @@ class MeasurementOverlay extends React.PureComponent {
       perimeterMeasurement: t('option.measurementOverlay.perimeter'),
       areaMeasurement: t('option.measurementOverlay.area'),
       rectangularAreaMeasurement: t('option.measurementOverlay.area'),
+      cloudyRectangularAreaMeasurement: t('option.measurementOverlay.area'),
     };
 
     return (
@@ -308,7 +314,7 @@ class MeasurementOverlay extends React.PureComponent {
   renderDeltas = () => {
     const { annotation } = this.state;
     const angle = this.getAngleInRadians(annotation.Start, annotation.End);
-    const unit = annotation.Scale[1][1];
+    const unit = getFormatedUnit(annotation.DisplayUnits[0]);
     const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
     const distance = parseMeasurementContents(annotation.getContents());
     const deltaX = Math.abs(distance * Math.cos(angle)).toFixed(decimalPlaces);
@@ -339,6 +345,7 @@ class MeasurementOverlay extends React.PureComponent {
       perimeterMeasurement: getIPathAnnotationPts,
       areaMeasurement: getIPathAnnotationPts,
       rectangularAreaMeasurement: getIPathAnnotationPts,
+      cloudyRectangularAreaMeasurement: getIPathAnnotationPts,
     };
     const pts = keyPtMap[key](annotation).filter(pt => !!pt);
 
@@ -389,6 +396,7 @@ class MeasurementOverlay extends React.PureComponent {
           {key === 'distanceMeasurement' && this.renderDeltas()}
           {key !== 'rectangularAreaMeasurement' &&
             key !== 'distanceMeasurement' &&
+            key !== 'cloudyRectangularAreaMeasurement' &&
             this.renderAngle()}
         </>
       );

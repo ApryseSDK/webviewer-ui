@@ -60,7 +60,7 @@ const LinkModal = () => {
     return link;
   };
 
-  const createLink = () => {
+  const createLink = action => {
     const linksResults = [];
 
     const quads = core.getSelectedTextQuads();
@@ -85,6 +85,7 @@ const LinkModal = () => {
           currPageLinks,
           quads[currPageNumber],
           selectedText,
+          action
         );
         linksResults.push(...currPageLinks);
       }
@@ -92,26 +93,31 @@ const LinkModal = () => {
 
     if (selectedAnnotations) {
       selectedAnnotations.forEach(annot => {
-        const associatedLinks = annot.getAssociatedLinks();
-        if (associatedLinks.length > 0) {
-          const linksToDelete = [];
-          associatedLinks.forEach(linkId => {
-            linksToDelete.push(core.getAnnotationById(linkId));
-          });
-          core.deleteAnnotations(linksToDelete);
-          annot.unassociateLinks();
+        const annotManager = core.getAnnotationManager();
+        const groupedAnnots = annotManager.getGroupAnnotations(annot);
+
+        // ungroup and delete any previously created links
+        if (groupedAnnots.length > 1) {
+          const linksToDelete = groupedAnnots.filter(annot => annot instanceof Annotations.Link);
+          if (linksToDelete.length > 0) {
+            annotManager.ungroupAnnotations(groupedAnnots);
+            core.deleteAnnotations(linksToDelete);
+          }
         }
 
         const link = newLink(annot.X, annot.Y, annot.Width, annot.Height);
+        link.addAction('U', action);
+        core.addAnnotations([link]);
         linksResults.push(link);
-        annot.associateLink([link.Id]);
+        annotManager.groupAnnotations(annot, [link]);
       });
     }
 
     return linksResults;
   };
 
-  const createHighlightAnnot = async(linkAnnotArray, quads, text) => {
+  const createHighlightAnnot = async (linkAnnotArray, quads, text, action) => {
+    const annotManager = core.getAnnotationManager();
     const linkAnnot = linkAnnotArray[0];
     const highlight = new Annotations.TextHighlightAnnotation();
     highlight.PageNumber = linkAnnot.PageNumber;
@@ -125,22 +131,18 @@ const LinkModal = () => {
     highlight.Author = core.getCurrentUser();
     highlight.setContents(text);
 
-    const linkAnnotIdArray = linkAnnotArray.map(link => link.Id);
-    highlight.associateLink(linkAnnotIdArray);
-
-    core.addAnnotations([highlight]);
+    linkAnnotArray.forEach((link, index) => {
+      link.addAction('U', action);
+      index === 0 ?  core.addAnnotations([link, highlight]) : core.addAnnotations([link]);
+    });
+    annotManager.groupAnnotations(highlight, linkAnnotArray);
   };
 
   const addURLLink = e => {
     e.preventDefault();
 
-    const links = createLink();
-
     const action = new window.Actions.URI({ uri: url });
-    links.forEach(link => {
-      link.addAction('U', action);
-      core.addAnnotations([link]);
-    });
+    const links = createLink(action);
 
     let pageNumbersToDraw = links.map(link => link.PageNumber);
     pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
@@ -158,17 +160,14 @@ const LinkModal = () => {
   const addPageLink = e => {
     e.preventDefault();
 
-    const links = createLink();
-
     const Dest = window.Actions.GoTo.Dest;
 
     const options = { dest: new Dest({ page: pageLabels.indexOf(pageLabel) + 1 }) };
     const action = new window.Actions.GoTo(options);
 
-    links.forEach(link => {
-      link.addAction('U', action);
-      core.addAnnotations([link]);
-    });
+    const links = createLink(action);
+
+
 
     let pageNumbersToDraw = links.map(link => link.PageNumber);
     pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
@@ -202,6 +201,13 @@ const LinkModal = () => {
       urlInput.current.focus();
     }
   }, [tabSelected, isOpen, pageLabelInput, urlInput]);
+
+  useEffect(() => {
+    core.addEventListener('documentUnloaded', closeModal);
+    return () => {
+      core.removeEventListener('documentUnloaded', closeModal);
+    };
+  }, []);
 
   const modalClass = classNames({
     Modal: true,

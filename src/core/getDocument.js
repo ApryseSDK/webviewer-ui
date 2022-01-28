@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.DocumentViewer.html#getDocument__anchor
+ * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getDocument__anchor
  */
-export default () => window.docViewer.getDocument();
+export default () => window.documentViewer.getDocument();

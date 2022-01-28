@@ -91,7 +91,7 @@ export const getEnabledToolbarGroups = state => {
     const toolGroupButtons = headerItems.filter(({ dataElement }) => {
       return dataElement && dataElement.includes('ToolGroupButton');
     });
-    const isEveryToolGroupButtonDisabled  = !dataElement.includes('toolbarGroup-View') && toolGroupButtons.every(({ dataElement: toolGroupDataElement }) => {
+    const isEveryToolGroupButtonDisabled = !dataElement.includes('toolbarGroup-View') && toolGroupButtons.every(({ dataElement: toolGroupDataElement }) => {
       return isElementDisabled(state, toolGroupDataElement);
     });
     return !isElementDisabled(state, `${dataElement}`) && !isEveryToolGroupButtonDisabled;
@@ -212,6 +212,8 @@ export const getPageLabels = state => state.viewer.pageLabels;
 
 export const getSelectedThumbnailPageIndexes = state => state.viewer.selectedThumbnailPageIndexes;
 
+export const getShiftKeyThumbnailPivotIndex = state => state.viewer.shiftKeyThumbnailPivotIndex;
+
 export const getDisabledCustomPanelTabs = state =>
   state.viewer.customPanels.reduce((disabledTabs, { tab }) => {
     if (state.viewer.disabledElements[tab.dataElement]?.disabled) {
@@ -221,6 +223,8 @@ export const getDisabledCustomPanelTabs = state =>
   }, []);
 
 export const isEmbedPrintSupported = state => isChrome && !isAndroid && state.viewer.useEmbeddedPrint;
+
+export const isOutlineControlVisible = state => state.viewer.outlineControlVisibility;
 
 export const getColorMap = state => state.viewer.colorMap;
 
@@ -271,6 +275,10 @@ export const getIsThumbnailMultiselectEnabled = state => state.viewer.isThumbnai
 
 export const getIsMultipleViewerMerging = state => state.viewer.isMultipleViewerMerging;
 
+export const getEnableNotesPanelVirtualizedList = state => state.viewer.enableNotesPanelVirtualizedList;
+
+export const notesShowLastUpdatedDate = state => state.viewer.notesShowLastUpdatedDate;
+
 export const getAllowPageNavigation = state => state.viewer.allowPageNavigation;
 
 export const getCustomMeasurementOverlay = state => state.viewer.customMeasurementOverlay;
@@ -287,6 +295,10 @@ export const getValidationModalWidgetName = state => state.viewer.validationModa
 
 export const getVerificationResult = (state, fieldName) => state.viewer.verificationResult[fieldName] || {};
 
+export const isThumbnailSelectingPages = state => state.viewer.thumbnailSelectingPages;
+
+export const getWatermarkModalOptions = state => state.viewer.watermarkModalOptions;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 
@@ -296,6 +308,11 @@ export const getWarningConfirmEvent = state => state.viewer.warning?.onConfirm;
 
 export const getWarningConfirmBtnText = state =>
   state.viewer.warning?.confirmBtnText;
+
+export const getWarningSecondaryEvent = state => state.viewer.warning?.onSecondary;
+
+export const getWarningSecondaryBtnText = state =>
+  state.viewer.warning?.secondaryBtnText;
 
 export const getWarningCancelEvent = state => state.viewer.warning?.onCancel;
 
@@ -308,6 +325,8 @@ export const getErrorMessage = state => state.viewer.errorMessage || '';
 export const getPasswordAttempts = state => state.document.passwordAttempts;
 
 export const getPrintQuality = state => state.document.printQuality;
+
+export const getDefaultPrintOptions = state => state.document.defaultPrintOptions;
 
 export const getTotalPages = state => state.document.totalPages;
 
@@ -342,6 +361,8 @@ export const isAmbientString = state => state.search.isAmbientString;
 
 export const isRegex = state => state.search.isRegex;
 
+export const isProcessingSearchResults = state => state.search.isProcessingSearchResults;
+
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
 
 export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFunction;
@@ -351,3 +372,20 @@ export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;
 export const getUnreadAnnotationIdSet = state => state.viewer.unreadAnnotationIdSet;
 
 export const getCurrentLanguage = state => state.viewer.currentLanguage;
+
+export const shouldFadePageNavigationComponent = state => state.viewer.fadePageNavigationComponent;
+
+export const getFeatureFlags = state => state.featureFlags;
+
+export const isInDesktopOnlyMode = state => state.viewer.isInDesktopOnlyMode;
+
+export const pageDeletionConfirmationModalEnabled = state => state.viewer.pageDeletionConfirmationModalEnabled;
+
+export const getPageReplacementFileList = state => state.viewer.pageReplacementFileList;
+
+export const getPageManipulationOverlayItems = state => state.viewer.pageManipulationOverlay;
+
+export const shouldShowPresets = (state) => {
+  const response = state.viewer.toolButtonObjects[state.viewer.activeToolName];
+  return response?.showPresets ?? true;
+};

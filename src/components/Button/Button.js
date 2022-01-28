@@ -10,9 +10,12 @@ import { shortcutAria } from 'helpers/hotkeysManager';
 
 import selectors from 'selectors';
 
-import './Button.scss';
+import './Button.scss'; 
 
-const NOOP = () => {};
+const NOOP = e => {
+  e?.stopPropagation();
+  e?.preventDefault();
+};
 
 const propTypes = {
   isActive: PropTypes.bool,
@@ -25,10 +28,12 @@ const propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   onDoubleClick: PropTypes.func,
+  onMouseUp: PropTypes.func,
   /** Will override translated title if both given. */
   ariaLabel: PropTypes.string,
   role: PropTypes.string,
   hideTooltipShortcut: PropTypes.bool,
+  useI18String: PropTypes.bool,
 };
 
 const Button = props => {
@@ -41,25 +46,31 @@ const Button = props => {
   );
 
   const {
-    // old name for disabled. We are keeping it for backwards comptability
-    // should remove in the future.
+    // old name for disabled. We are keeping it for backwards compatibility
+    // should remove in the future .
     disable,
     disabled,
     isActive,
     mediaQueryClassName,
     img,
+    tabIndex,
     label,
+    useI18String=true,
     color,
     dataElement,
     onClick,
     onDoubleClick,
+    onMouseUp,
     className,
     title,
     style,
     ariaLabel,
     role,
+    strokeColor,
     fillColor,
     hideTooltipShortcut,
+    iconClassName,
+    forceTooltipPosition
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
 
@@ -95,24 +106,38 @@ const Button = props => {
       // so that we can show the button tooltip
       onClick={actuallyDisabled ? NOOP : onClick}
       onDoubleClick={actuallyDisabled ? NOOP : onDoubleClick}
+      onMouseUp={actuallyDisabled ? NOOP : onMouseUp}
       aria-label={aLabel}
       role={role}
+      tabIndex={tabIndex}
       aria-keyshortcuts={ariaKeyshortcuts}
     >
-      {isGlyph &&
+      {isGlyph && (
         <Icon
           disabled={actuallyDisabled}
           glyph={imgToShow}
           color={color}
           fillColor={fillColor}
-        />}
+          strokeColor={strokeColor}
+          className={iconClassName}
+        />
+      )}
       {imgToShow && !isGlyph && <img src={imgToShow} />}
-      {label && <span>{t(label)}</span>}
+      {
+        label && (useI18String ?
+        <span>{t(label)}</span> :
+        <span>{label}</span>)
+      }
     </button>
   );
 
   return removeElement ? null : shouldRenderTooltip ? (
-    <Tooltip content={title} hideShortcut={hideTooltipShortcut || actuallyDisabled}>{children}</Tooltip>
+    <Tooltip
+      content={title}
+      hideShortcut={hideTooltipShortcut || actuallyDisabled}
+      forcePosition={forceTooltipPosition}>
+      {children}
+    </Tooltip>
   ) : (
     children
   );

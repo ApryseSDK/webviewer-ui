@@ -33,11 +33,11 @@ const CustomStampModal = () => {
     closed: !isOpen,
   });
 
-  const createCustomStamp = () => {
+  const createCustomStamp = async () => {
     core.setToolMode(TOOL_NAME);
     stampTool.addCustomStamp(state);
-    const annot = stampTool.createCustomStampAnnotation(state);
-    stampTool.setRubberStamp(annot);
+    const annot = await stampTool.createCustomStampAnnotation(state);
+    await stampTool.setRubberStamp(annot);
     stampTool.showPreview();
     dispatch(actions.closeElement('customStampModal'));
     const standardStampCount = stampTool.getStandardStamps().length;
@@ -46,33 +46,36 @@ const CustomStampModal = () => {
   };
 
   return (
-    <div
-      className={modalClass}
-      data-element="customStampModal"
-      onMouseDown={closeModal}
-    >
-      <FocusTrap locked={isOpen}>
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
-          <div className="header">
-            <p style={{ textAlign: 'center' }}>{t(`component.createStampButton`)}</p>
-            {/* Temporarily commented out */}
-            {/* <ActionButton
+    isOpen ?
+      <div
+        className={modalClass}
+        data-element="customStampModal"
+        onMouseDown={closeModal}
+      >
+        <FocusTrap locked={isOpen}>
+          <div className="container" onMouseDown={e => e.stopPropagation()}>
+            <div className="header">
+              <p style={{ textAlign: 'center' }}>{t(`component.createStampButton`)}</p>
+              {/* Temporarily commented out */}
+              {/* <ActionButton
               dataElement="customStampModalCloseButton"
               title="action.close"
               img="ic_close_black_24px"
               onClick={closeModal}
             /> */}
+            </div>
+            <CustomStampForums
+              isModalOpen={isOpen}
+              state={state}
+              setState={setState}
+              closeModal={closeModal}
+              createCustomStamp={createCustomStamp}
+            />
           </div>
-          <CustomStampForums
-            isModalOpen={isOpen}
-            state={state}
-            setState={setState}
-            closeModal={closeModal}
-            createCustomStamp={createCustomStamp}
-          />
-        </div>
-      </FocusTrap>
-    </div>
+        </FocusTrap>
+      </div>
+      :
+      null
   );
 };
 

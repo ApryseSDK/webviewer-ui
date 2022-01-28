@@ -1,13 +1,13 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#deleteAnnotations__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#deleteAnnotations__anchor
  * @fires annotationSelected on AnnotationManager
- * @see https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#event:annotationSelected__anchor
+ * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:annotationSelected__anchor
  * @fires deleteReply on AnnotationManager if the annotation deleted is a reply
- * @see https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#event:deleteReply__anchor
+ * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:deleteReply__anchor
  * @fires annotationChanged on AnnotationManager
- * @see https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#event:annotationChanged__anchor
+ * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:annotationChanged__anchor
  * @fires notify on DocumentViewer if requires delete notification
  */
 export default (...args) => {
-  window.docViewer.getAnnotationManager().deleteAnnotations(...args);
+  window.documentViewer.getAnnotationManager().deleteAnnotations(...args);
 };

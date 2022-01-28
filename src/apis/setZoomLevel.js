@@ -1,15 +1,15 @@
 /**
  * Sets zoom level.
- * @method WebViewerInstance#setZoomLevel
+ * @method UI.setZoomLevel
  * @param {(string|number)} zoomLevel Zoom level in either number or percentage.
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var docViewer = instance.docViewer;
+    var docViewer = instance.Core.documentViewer;
 
     // you must have a document loaded when calling this api
-    docViewer.on('documentLoaded', function() {
-      instance.setZoomLevel('150%'); // or setZoomLevel(1.5)
+    docViewer.addEventListener('documentLoaded', function() {
+      instance.UI.setZoomLevel('150%'); // or setZoomLevel(1.5)
     });
   });
  */

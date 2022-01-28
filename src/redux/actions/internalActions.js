@@ -1,6 +1,7 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
 import { isIOS, isAndroid } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
+import Events from 'constants/events';
 import selectors from 'selectors';
 import core from 'core';
 
@@ -106,6 +107,14 @@ export const setThumbnailMultiselect = (useThumbnailMultiselect = true) => ({
 export const setIsMultipleViewerMerging = (isMultipleViewerMerging = false) => ({
   type: 'SET_MULTI_VIEWER_MERGING',
   payload: { isMultipleViewerMerging },
+});
+export const setEnableNotesPanelVirtualizedList = (enableNotesPanelVirtualizedList = true) => ({
+  type: 'SET_ENABLE_NOTE_PANEL_VIRTUALIZED_LIST',
+  payload: { enableNotesPanelVirtualizedList },
+});
+export const setNotesShowLastUpdatedDate = (notesShowLastUpdatedDate = false) => ({
+  type: 'SET_NOTES_SHOW_LAST_UPDATED_DATE',
+  payload: { notesShowLastUpdatedDate },
 });
 export const setAllowPageNavigation = (allowPageNavigation = true) => ({
   type: 'SET_ALLOW_PAGE_NAVIGATION',
@@ -264,6 +273,16 @@ export const setReaderMode = isReaderMode => ({
   type: 'SET_READER_MODE',
   payload: { isReaderMode },
 });
+export const setThumbnailSelectingPages = (isSelecting = true) => ({
+  type: "SET_THUMBNAIL_PAGE_SELECT",
+  payload: { isSelecting },
+});
+export const setPageManipulationOverlayItems = items => ({
+  type: 'SET_PAGE_MANIPULATION_OVERLAY_ITEMS',
+  payload: {
+    items,
+  },
+});
 
 // document
 export const setTotalPages = totalPages => ({
@@ -285,7 +304,7 @@ export const addBookmark = (pageIndex, text) => (dispatch, getState) => {
   });
 
   const bookmarks = selectors.getBookmarks(getState());
-  fireEvent('userBookmarksChanged', bookmarks);
+  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
 };
 export const editBookmark = (pageIndex, text) => (dispatch, getState) => {
   dispatch({
@@ -293,7 +312,7 @@ export const editBookmark = (pageIndex, text) => (dispatch, getState) => {
     payload: { pageIndex, text },
   });
   const bookmarks = selectors.getBookmarks(getState());
-  fireEvent('userBookmarksChanged', bookmarks);
+  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
 };
 export const removeBookmark = pageIndex => (dispatch, getState) => {
   dispatch({
@@ -301,7 +320,7 @@ export const removeBookmark = pageIndex => (dispatch, getState) => {
     payload: { pageIndex },
   });
   const bookmarks = selectors.getBookmarks(getState());
-  fireEvent('userBookmarksChanged', bookmarks);
+  fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
 };
 export const setLayers = layers => ({
   type: 'SET_LAYERS',
@@ -314,6 +333,10 @@ export const setPasswordAttempts = attempt => ({
 export const setPrintQuality = quality => ({
   type: 'SET_PRINT_QUALITY',
   payload: { quality },
+});
+export const setDefaultPrintOptions = options => ({
+  type: 'SET_DEFAULT_PRINT_OPTIONS',
+  payload: { options },
 });
 export const setLoadingProgress = percent => ({
   type: 'SET_LOADING_PROGRESS',
@@ -390,4 +413,9 @@ export const setEnableSnapMode = enable => ({
 export const setLanguage = language => ({
   type: 'SET_LANGUAGE',
   payload: { language },
+});
+
+export const setProcessingSearchResults = isProcessingSearchResults => ({
+  type: 'SET_PROCESSING_SEARCH_RESULTS',
+  payload: { isProcessingSearchResults },
 });

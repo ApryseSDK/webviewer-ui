@@ -1,5 +1,9 @@
+import fireEvent from './fireEvent';
+import Events from 'constants/events';
+import isFullscreen from './isFullscreen';
+
 export default () => {
-  if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+  if (isFullscreen()) {
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.msExitFullscreen) {
@@ -9,6 +13,7 @@ export default () => {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
+    fireEvent(Events.FULLSCREEN_MODE_TOGGLED, { isInFullscreen: false });
   } else {
     const docElm = document.documentElement;
     if (docElm.requestFullscreen) {
@@ -25,5 +30,6 @@ export default () => {
         }
       }, 200);
     }
+    fireEvent(Events.FULLSCREEN_MODE_TOGGLED, { isInFullscreen: true });
   }
 };

@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#getIsAdminUser__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#getIsAdminUser__anchor
  */
-export default () => window.docViewer.getAnnotationManager().getIsAdminUser();
+export default () => window.documentViewer.getAnnotationManager().isUserAdmin();

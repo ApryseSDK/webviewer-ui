@@ -22,6 +22,9 @@ import ReaderModeViewer from 'components/ReaderModeViewer';
 import Measure from 'react-measure';
 
 import './DocumentContainer.scss';
+import _ from 'lodash';
+
+const PAGE_NAVIGATION_OVERLAY_FADEOUT = 4000;
 
 class DocumentContainer extends React.PureComponent {
   static propTypes = {
@@ -43,6 +46,7 @@ class DocumentContainer extends React.PureComponent {
     isReaderMode: PropTypes.bool,
     setDocumentContainerWidth: PropTypes.func.isRequired,
     setDocumentContainerHeight: PropTypes.func.isRequired,
+    isInDesktopOnlyMode: PropTypes.bool
   }
 
   constructor(props) {
@@ -53,6 +57,10 @@ class DocumentContainer extends React.PureComponent {
     this.wheelToNavigatePages = _.throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
     this.wheelToZoom = _.throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
     this.handleResize = _.throttle(this.handleResize.bind(this), 200);
+    this.debouncedHidePageNavigationOverlay = _.debounce(this.hidePageNavigationOverlay, PAGE_NAVIGATION_OVERLAY_FADEOUT);
+    this.state = {
+      showNavOverlay: true,
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -60,6 +68,7 @@ class DocumentContainer extends React.PureComponent {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
   }
+
 
   componentDidMount() {
     touchEventManager.initialize(this.document.current, this.container.current);
@@ -77,6 +86,8 @@ class DocumentContainer extends React.PureComponent {
 
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
     this.updateContainerSize();
+    core.addEventListener('documentLoaded', this.showAndFadeNavigationOverlay);
+
   }
 
   componentWillUnmount() {
@@ -91,6 +102,8 @@ class DocumentContainer extends React.PureComponent {
     }
 
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
+    core.removeEventListener('documentLoaded', this.showAndFadeNavigationOverlay);
+
   }
 
   preventDefault = e => e.preventDefault();
@@ -110,7 +123,7 @@ class DocumentContainer extends React.PureComponent {
 
   onWheel = e => {
     const { isMouseWheelZoomEnabled } = this.props;
-    if (isMouseWheelZoomEnabled && e.metaKey || e.ctrlKey) {
+    if (isMouseWheelZoomEnabled && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
       this.wheelToZoom(e);
     } else if (!core.isContinuousDisplayMode() && this.props.allowPageNavigation && !this.props.isReaderMode && core.isScrollableDisplayMode()) {
@@ -138,6 +151,9 @@ class DocumentContainer extends React.PureComponent {
     } else if (scrollingDown && reachedBottom && currentPage < totalPages) {
       this.pageDown();
     }
+
+    this.showPageNavigationOverlay();
+    this.debouncedHidePageNavigationOverlay();
   }
 
   pageUp = () => {
@@ -175,7 +191,33 @@ class DocumentContainer extends React.PureComponent {
       'annotationPopup',
       'textPopup',
       'annotationNoteConnectorLine',
+      'formFieldEditPopup',
     ]);
+
+    // Show overlay and then hide it, but the hide call is debounced
+    this.showPageNavigationOverlay();
+    this.debouncedHidePageNavigationOverlay();
+  }
+
+  showAndFadeNavigationOverlay = () => {
+    this.showPageNavigationOverlay();
+    setTimeout(this.hidePageNavigationOverlay, PAGE_NAVIGATION_OVERLAY_FADEOUT);
+  }
+
+  hidePageNavigationOverlay = () => {
+    this.setState({ showNavOverlay: false })
+  }
+
+  showPageNavigationOverlay = () => {
+    this.setState({ showNavOverlay: true })
+  }
+
+  pageNavOnMouseEnter = () => {
+    this.showPageNavigationOverlay();
+  };
+
+  pageNavOnMouseLeave = () => {
+    this.hidePageNavigationOverlay();
   }
 
   getClassName = props => {
@@ -190,7 +232,7 @@ class DocumentContainer extends React.PureComponent {
   }
 
   handleResize() {
-    this.updateContainerSize()
+    this.updateContainerSize();
 
     if (!this.props.isReaderMode) {
       // Skip when in reader mode, otherwise will cause error.
@@ -207,7 +249,8 @@ class DocumentContainer extends React.PureComponent {
 
   onTransitionEnd(event) {
     // I don't know if this is needed. But better safe than sorry.
-    if (!(event.propertyName === 'background-color')) {
+    const transitionProperiesToIgnore = ['background-color', 'opacity'];
+    if (!transitionProperiesToIgnore.includes(event.propertyName)) {
       // We have a corner case where if you have 1st and 2nd page different size and you are in fit page mode
       // if you have callout (freetext) annotation on second page. If you open notes panel then click annotation and click
       // edit on it. This will cause our document container to re-render. We also have background-color transition
@@ -217,18 +260,31 @@ class DocumentContainer extends React.PureComponent {
       // background color is the one that causes this transition.
       // This effect is still happening in above case but if instead of clicking edit, user changes width of the notes panel
       // It is currently expected behaviour
+      // Note Update after fading page nav was added:
+      // This also causes a doc container re-render as we fire the opacity transition when we fade the page nav
+      // we must skip updating the scrollViewUpdated call as well or it causes re-renders on docs with different page sizes
       core.scrollViewUpdated();
     }
   }
 
+
   render() {
-    const { leftPanelWidth, isLeftPanelOpen, isToolsHeaderOpen, isMobile, currentToolbarGroup, documentContentContainerWidthStyle } = this.props;
+    const {
+      leftPanelWidth,
+      isLeftPanelOpen,
+      isMobile,
+      documentContentContainerWidthStyle,
+      totalPages,
+      isInDesktopOnlyMode
+    } = this.props;
 
     const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
     const documentClassName = classNames({
       document: true,
       hidden: this.props.isReaderMode
     });
+    const showPageNav = totalPages > 1;
+
 
     return (
       <div
@@ -257,10 +313,11 @@ class DocumentContainer extends React.PureComponent {
               >
                 {/* tabIndex="-1" to keep document focused when in single page mode */}
                 <div className={documentClassName} ref={this.document} tabIndex="-1" />
-                {this.props.isReaderMode && (
-                  <ReaderModeViewer />
-                )}
+
               </div>
+              {this.props.isReaderMode && (
+                <ReaderModeViewer />
+              )}
               <MeasurementOverlay />
               <div
                 className="footer"
@@ -269,8 +326,15 @@ class DocumentContainer extends React.PureComponent {
                   marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
                 }}
               >
-                <PageNavOverlay />
-                {isMobile && <ToolsOverlay />}
+                {showPageNav &&
+                  <PageNavOverlay
+                    showNavOverlay={this.state.showNavOverlay}
+                    onMouseEnter={this.pageNavOnMouseEnter}
+                    onMouseLeave={this.pageNavOnMouseLeave}
+                  />
+                }
+
+                {(isMobile && !isInDesktopOnlyMode) && <ToolsOverlay />}
               </div>
             </div>
           )}
@@ -283,8 +347,6 @@ class DocumentContainer extends React.PureComponent {
 
 const mapStateToProps = state => ({
   documentContentContainerWidthStyle: selectors.getDocumentContentContainerWidthStyle(state),
-  currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
-  isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),
   leftPanelWidth: selectors.getLeftPanelWidthWithReszieBar(state),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
@@ -297,7 +359,8 @@ const mapStateToProps = state => ({
   totalPages: selectors.getTotalPages(state),
   allowPageNavigation: selectors.getAllowPageNavigation(state),
   isMouseWheelZoomEnabled: selectors.getEnableMouseWheelZoom(state),
-  isReaderMode: selectors.isReaderMode(state)
+  isReaderMode: selectors.isReaderMode(state),
+  isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state)
 });
 
 const mapDispatchToProps = dispatch => ({

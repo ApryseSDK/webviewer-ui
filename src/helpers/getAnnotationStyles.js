@@ -41,5 +41,10 @@ export default annotation => {
     style.FontSize = null;
   }
 
+  // widget don't support opacity
+  if (annotation.isFormFieldPlaceholder()) {
+    style.Opacity = null;
+  }
+
   return style;
 };

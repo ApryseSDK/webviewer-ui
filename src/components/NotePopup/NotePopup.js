@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import Icon from 'components/Icon';
-
 import './NotePopup.scss';
 
 const propTypes = {
-  annotation: PropTypes.object,
   handleEdit: PropTypes.func,
   handleDelete: PropTypes.func,
   closePopup: PropTypes.func,
@@ -19,11 +18,10 @@ const propTypes = {
   isOpen: PropTypes.bool,
 };
 
-function noop() {}
+function noop() { }
 
 function NotePopup(props) {
   const {
-    annotation,
     handleEdit = noop,
     handleDelete = noop,
     closePopup = noop,
@@ -31,6 +29,7 @@ function NotePopup(props) {
     isEditable,
     isDeletable,
     isOpen,
+    isReply,
   } = props;
 
   const [t] = useTranslation();
@@ -45,7 +44,7 @@ function NotePopup(props) {
     if (isOpen) {
       closePopup();
     } else {
-      openPopup(annotation?.Id);
+      openPopup();
     }
   };
 
@@ -64,16 +63,19 @@ function NotePopup(props) {
     return null;
   }
 
+  const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger', { active: isOpen })
+  const optionsClass = classNames('options note-popup-options', { 'options-reply': isReply })
   return (
     <DataElementWrapper
       className="NotePopup"
       dataElement="notePopup"
+      ref={popupRef}
     >
-      <div className="overflow note-popup-toggle-trigger" onClick={togglePopup}>
+      <div className={notePopupButtonClass} onClick={togglePopup}>
         <Icon glyph="icon-tools-more" />
       </div>
       {isOpen && (
-        <div ref={popupRef} className="options note-popup-options">
+        <div className={optionsClass}>
           {isEditable && (
             <DataElementWrapper
               type="button"

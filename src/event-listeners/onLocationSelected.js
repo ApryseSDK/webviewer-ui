@@ -2,10 +2,10 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 
-export default store => () => {
+export default store => async () => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
-  if (!signatureTool.isEmptySignature()) {
-    signatureTool.addSignature();
+  if (!(await signatureTool.isEmptySignature())) {
+    await signatureTool.addSignature();
   } else {
     !selectors.isElementDisabled(store.getState(), 'toolbarGroup-Insert') && store.dispatch(actions.setToolbarGroup('toolbarGroup-Insert'));
     // this condition is usually met when we click on a signature widget but UI doesn't know which signature to draw

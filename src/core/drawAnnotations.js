@@ -1,8 +1,8 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#drawAnnotations__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#drawAnnotations__anchor
  */
 export default (pageNumber, overrideCanvas, majorRedraw, overrideContainer) =>
-  window.docViewer
+  window.documentViewer
     .getAnnotationManager()
     .drawAnnotations(
       pageNumber,

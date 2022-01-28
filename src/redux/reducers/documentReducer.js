@@ -34,6 +34,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, passwordAttempts: payload.attempt };
     case 'SET_PRINT_QUALITY':
       return { ...state, printQuality: payload.quality };
+    case 'SET_DEFAULT_PRINT_OPTIONS':
+      return {...state, defaultPrintOptions: payload.options };
     case 'SET_LOADING_PROGRESS':
       return { ...state, loadingProgress: payload.progress };
     default:

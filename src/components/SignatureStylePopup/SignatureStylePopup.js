@@ -27,15 +27,15 @@ const SignatureStylePopup = props => {
   const signatureTool = core.getTool('AnnotationCreateSignature');
   const dispatch = useDispatch();
 
-  const setSignature = index => {
+  const setSignature = async (index) => {
     dispatch(actions.setSelectedDisplayedSignatureIndex(index));
     const { annotation } = displayedSignatures[index];
     signatureTool.setSignature(annotation);
     core.setToolMode('AnnotationCreateSignature');
     if (signatureTool.hasLocation()) {
-      signatureTool.addSignature();
+      await signatureTool.addSignature();
     } else {
-      signatureTool.showPreview();
+      await signatureTool.showPreview();
     }
   };
 

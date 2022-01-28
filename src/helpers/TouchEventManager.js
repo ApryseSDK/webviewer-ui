@@ -4,6 +4,14 @@ import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 
+const touchType = {
+  TAP: 'tap',
+  DOUBLE_TAP: 'doubleTap',
+  PINCH: 'pinch',
+  PAN: 'pan',
+  SWIPE: 'swipe'
+};
+
 const TouchEventManager = {
   initialize(document, container) {
     this.document = document;
@@ -50,14 +58,14 @@ const TouchEventManager = {
         const touch = e.touches[0];
         const scrollWidth = this.container.clientWidth;
         const viewerWidth = this.document.clientWidth;
-        const isDoubleTap = this.touch.type === 'tap' && this.getDistance(this.touch, touch) <= 10;
+        const isDoubleTap = this.touch.type === touchType.TAP && this.getDistance(this.touch, touch) <= 10;
         this.touch = {
           clientX: touch.clientX,
           clientY: touch.clientY,
           distance: 0,
           scale: scrollWidth / viewerWidth,
           zoom: core.getZoom(),
-          type: isDoubleTap ? 'doubleTap' : 'tap',
+          type: isDoubleTap ? touchType.DOUBLE_TAP : touchType.TAP,
           touchStartTimeStamp: Date.now(),
           stopMomentumScroll: true,
           touchMoveCount: 0,
@@ -89,13 +97,15 @@ const TouchEventManager = {
           distance: this.getDistance(t1, t2),
           scale: 1,
           zoom: core.getZoom(),
-          type: 'pinch',
           touchStartTimeStamp: Date.now(),
           stopMomentumScroll: true,
+          touchMoveCount: 0,
         };
         if (!isIOS) {
           this.document.style.transformOrigin = `${docX}px ${docY}px`;
         }
+        this.startingScrollLeft = this.container.scrollLeft;
+        this.startingScrollTop = this.container.scrollTop;
         break;
       }
     }
@@ -115,78 +125,110 @@ const TouchEventManager = {
     // using 'touchMoveCount' to disable scroll locking when user is dragging
     return !doesPagesFitOnScreen && this.enableTouchScrollLock && this.touch.touchMoveCount < 6 && !alreadyLocked;
   },
+
+  handleScroll(t) {
+    if (this.useNativeScroll) {
+      return;
+    }
+    this.touch.horizontalDistance = this.touch.clientX - t.clientX;
+    this.touch.verticalDistance = this.touch.clientY - t.clientY;
+
+    if (this.canLockScrolling()) {
+      this.verticalLock = this.isScrollingVertically();
+      this.horziontalLock = this.isScrollingHorziontally();
+    }
+
+    if (this.enableTouchScrollLock) {
+      // scroll vertically
+      if (this.verticalLock) {
+        // calc the position in container
+        this.container.scrollTo(this.startingScrollLeft, this.container.scrollTop);
+        this.touch.horizontalDistance = 0;
+      }
+
+      // scroll horizontally
+      if (this.horziontalLock) {
+        // calc the position in container
+        this.container.scrollTo(this.container.scrollLeft, this.startingScrollTop);
+        this.touch.verticalDistance = 0;
+      }
+    }
+  },
   handleTouchMove(e) {
     switch (e.touches.length) {
       case 1: {
-        const t = e.touches[0];
-        this.touch.horizontalDistance = this.touch.clientX - t.clientX;
-        this.touch.verticalDistance = this.touch.clientY - t.clientY;
-
-        if (this.useNativeScroll) {
-          return;
-        }
-
         if (e.cancelable) {
           e.preventDefault();
         }
 
-        if (this.canLockScrolling()) {
-          this.verticalLock = this.isScrollingVertically();
-          this.horziontalLock = this.isScrollingHorziontally();
-        }
+        const t = e.touches[0];
 
         if (this.getDistance(this.touch, t) > 10) {
-          this.touch.type = 'swipe';
+          this.touch.type = touchType.SWIPE;
         }
 
-        if (this.enableTouchScrollLock) {
-          if (this.verticalLock) {
-            // undo horizontal scrolling caused by native touch when scrolling is disabled
-            this.container.scrollTo(this.startingScrollLeft, this.container.scrollTop);
-            // set 'horizontalDistance' to '0' to get rid of horiztonal momentum in 'handleTouchEnd'
-            this.touch.horizontalDistance = 0;
-          }
-
-          if (this.horziontalLock) {
-            this.container.scrollTo(this.container.scrollLeft, this.startingScrollTop);
-            this.touch.verticalDistance = 0;
-          }
-        }
+        this.handleScroll(t);
 
         this.touch.touchMoveCount++;
         break;
       }
       case 2: {
-        if (e.cancelable) {
-          e.preventDefault();
-        }
-
         const t1 = e.touches[0];
         const t2 = e.touches[1];
-        this.touch.scale = this.getDistance(t1, t2) / this.touch.distance;
+        const panTool = core.getTool('Pan');
+        const isPanning = panTool.isPanning();
+        const isPinching = panTool.isPinching();
 
-        if (this.touch.scale * this.touch.zoom < getMinZoomLevel()) {
-          this.touch.scale = getMinZoomLevel() / this.touch.zoom;
-        } else if (this.touch.scale * this.touch.zoom > getMaxZoomLevel()) {
-          this.touch.scale = getMaxZoomLevel() / this.touch.zoom;
+        if (isPanning) {
+          this.touch.type = touchType.PAN;
+          if (e.cancelable) {
+            e.preventDefault();
+          }
+
+          const t = {
+            clientX: (t1.clientX + t2.clientX) / 2,
+            clientY: (t1.clientY + t2.clientY) / 2
+          };
+
+          if (this.getDistance(this.touch, t) > 10) {
+            this.touch.type = touchType.SWIPE;
+          }
+
+          this.handleScroll(t);
+          this.touch.touchMoveCount++;
+          break;
         }
 
-        if (isIOS) {
-          const marginLeft = (this.touch.marginLeft + (1 - this.touch.scale) * this.touch.docX) / this.touch.scale;
-          const marginTop = (this.touch.marginTop + (1 - this.touch.scale) * this.touch.docY) / this.touch.scale;
-          this.document.style.marginLeft = `${marginLeft}px`;
-          this.document.style.marginTop = `${marginTop}px`;
-          this.document.style.zoom = this.touch.scale;
-        } else {
-          this.document.style.transform = `scale(${this.touch.scale})`;
+        if (isPinching) {
+          this.touch.type = touchType.PINCH;
+          if (e.cancelable) {
+            e.preventDefault();
+          }
+          this.touch.scale = this.getDistance(t1, t2) / this.touch.distance;
+
+          if (this.touch.scale * this.touch.zoom < getMinZoomLevel()) {
+            this.touch.scale = getMinZoomLevel() / this.touch.zoom;
+          } else if (this.touch.scale * this.touch.zoom > getMaxZoomLevel()) {
+            this.touch.scale = getMaxZoomLevel() / this.touch.zoom;
+          }
+
+          if (isIOS) {
+            const marginLeft = (this.touch.marginLeft + (1 - this.touch.scale) * this.touch.docX) / this.touch.scale;
+            const marginTop = (this.touch.marginTop + (1 - this.touch.scale) * this.touch.docY) / this.touch.scale;
+            this.document.style.marginLeft = `${marginLeft}px`;
+            this.document.style.marginTop = `${marginTop}px`;
+            this.document.style.zoom = this.touch.scale;
+          } else {
+            this.document.style.transform = `scale(${this.touch.scale})`;
+          }
+          break;
         }
-        break;
       }
     }
   },
   handleTouchEnd(e) {
     switch (this.touch.type) {
-      case 'tap': {
+      case touchType.TAP: {
         this.doubleTapTimeout = setTimeout(() => {
           this.touch.type = '';
         }, 300);
@@ -195,7 +237,7 @@ const TouchEventManager = {
         this.verticalLock = false;
         break;
       }
-      case 'swipe': {
+      case touchType.SWIPE: {
         if (
           !this.allowSwipe ||
           this.isUsingAnnotationTools() ||
@@ -240,7 +282,7 @@ const TouchEventManager = {
         }
         break;
       }
-      case 'doubleTap': {
+      case touchType.DOUBLE_TAP: {
         const annotationUnderMouse = core.getAnnotationByMouseEvent(e);
         const isFreeTextUnderMouse = annotationUnderMouse && annotationUnderMouse instanceof Annotations.FreeTextAnnotation;
 
@@ -268,10 +310,10 @@ const TouchEventManager = {
 
         break;
       }
-      case 'pinch': {
+      case touchType.PINCH: {
         // sometimes handleTouchEnd will be called twice with the same value of this.touch.scale
         // depending on how fast two fingers are away of the screen
-        // as a result the document will be zoomed in twice, and we do this cehck to prevent that from happening
+        // as a result the document will be zoomed in twice, and we do this check to prevent that from happening
         if (this.touch.previousPinchScale === this.touch.scale) {
           return;
         }

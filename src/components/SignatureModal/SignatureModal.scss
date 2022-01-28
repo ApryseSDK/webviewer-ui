@@ -202,8 +202,12 @@
         justify-content: center;
         cursor: pointer;
 
-        &:hover {
+        &:enabled:hover {
           color: var(--secondary-button-hover);
+        }
+
+        &:disabled {
+          opacity: 0.5;
         }
       }
 
@@ -226,8 +230,12 @@
           width: 128px;
         }
 
-        &:hover {
+        &:enabled:hover {
           background: var(--primary-button-hover);
+        }
+
+        &:disabled {
+          opacity: 0.5;
         }
       }
     }

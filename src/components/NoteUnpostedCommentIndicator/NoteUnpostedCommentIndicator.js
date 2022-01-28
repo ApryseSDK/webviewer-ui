@@ -19,7 +19,7 @@ const NoteUnpostedCommentIndicatorContainer = (props) => {
       <div data-element="unpostedCommentIndicator">
         <Tooltip content={t('message.unpostedComment')}>
           <div>
-            <Icon glyph={'icon-unposted-comment'} />
+            <Icon className="type-icon" glyph={'icon-unposted-comment'} />
           </div>
         </Tooltip>
       </div> :

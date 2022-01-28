@@ -1,4 +1,5 @@
 import { isIE11 } from 'helpers/device';
+import Events from 'constants/events';
 
 const fireEvent = (eventName, data) => {
   let event;
@@ -14,5 +15,5 @@ const fireEvent = (eventName, data) => {
 
 export default fireEvent;
 export const fireError = message => {
-  fireEvent('loaderror', message);
+  fireEvent(Events.LOAD_ERROR, message);
 };

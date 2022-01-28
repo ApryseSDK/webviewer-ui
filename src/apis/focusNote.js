@@ -1,17 +1,17 @@
 /**
  * Focuses a note input field for the annotation. If the notes panel is closed, it is automatically opened before focusing.
- * @method WebViewerInstance#focusNote
+ * @method UI.focusNote
  * @param {string} annotationId Id of an annotation.
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var annotManager = instance.annotManager;
+    var annotManager = instance.Core.annotationManager;
 
-    annotManager.on('annotationChanged', function(annotations, action) {
+    annotManager.addEventListener('annotationChanged', function(annotations, action) {
       annotations.forEach(function(annotation) {
         // Focus the note when annotation is created
         if (action === 'add' && annotation.Listable) {
-          instance.focusNote(annotation.Id); // note it is a capital i
+          instance.UI.focusNote(annotation.Id); // note it is a capital i
         }
       });
     });

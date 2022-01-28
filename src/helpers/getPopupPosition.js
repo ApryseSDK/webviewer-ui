@@ -1,5 +1,8 @@
 import core from 'core';
 
+// gap between the annotation selection box and the popup element
+const gap = 17;
+
 export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
   const { left, top } = calcAnnotationPopupPosition(
     getAnnotationPosition(annotation),
@@ -23,20 +26,37 @@ export const getAnnotationPosition = annotation => {
 
   const pageNumber = annotation.getPageNumber();
   const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageNumber);
-  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber);
+  const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber);
 
-  const isNote = annotation instanceof window.Annotations.StickyAnnotation;
-  if (isNote) {
-    const zoom = core.getZoom();
-    const width = bottomRight.x - topLeft.x;
-    const height = bottomRight.y - topLeft.y;
-
-    // the visual size of a sticky annotation isn't the same as the rect we get above due to its NoZoom property
-    // here we do some calculations to try to make the rect have the same size as what the annotation looks in the canvas
-    bottomRight = {
-      x: topLeft.x + width / zoom * 1.2,
-      y: topLeft.y + height / zoom * 1.2,
-    };
+  if (annotation['NoZoom']) {
+    const isNote = annotation instanceof window.Annotations.StickyAnnotation;
+    const rect = annotation.getRect();
+    const width = isNote ? window.Annotations.StickyAnnotation['SIZE'] : rect.getWidth();
+    const height = isNote ? window.Annotations.StickyAnnotation['SIZE'] : rect.getHeight();
+    const rotation = core.getCompleteRotation(annotation.PageNumber);
+    if (rotation === 0) {
+      bottomRight.x = topLeft.x + width;
+      bottomRight.y = topLeft.y + height;
+      if (isNote) {
+        bottomRight.x += width * 0.2;
+      }
+    } else {
+      if (isNote) {
+        bottomRight.x = topLeft.x + width * 1.2;
+        bottomRight.y = topLeft.y + height;
+      } else {
+        if (rotation === 1) {
+          topLeft.x = bottomRight.x - height;
+          bottomRight.y = topLeft.y + width;
+        } else if (rotation === 2) {
+          topLeft.x = bottomRight.x - width;
+          topLeft.y = bottomRight.y - height;
+        } else if (rotation === 3) {
+          topLeft.y = bottomRight.y - width;
+          bottomRight.x = topLeft.x + height;
+        }
+      }
+    }
   }
 
   return { topLeft, bottomRight };
@@ -47,7 +67,7 @@ const getAnnotationPageCoordinates = annotation => {
   let { x1: left, y1: top, x2: right, y2: bottom } = rect;
 
   const isNote = annotation instanceof window.Annotations.StickyAnnotation;
-  const noteAdjustment = annotation.Width;
+  const noteAdjustment = window.Annotations.StickyAnnotation['SIZE'];
 
   const rotation = core.getCompleteRotation(annotation.PageNumber);
   if (rotation === 1) {
@@ -185,10 +205,12 @@ export const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
 
 /**
  * @ignore
- * @param {number} approximateHeight The max height of the popup element.
+ * @param {number} annotationPosition The position of the annotation (topLeft, bottomRight)
+ * @param {number} popupDimension The deminition of the popup (width, height)
  * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
  */
 export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
+  const padding = 5;
   const scrollContainer = core.getScrollViewElement();
   const boundingBox = scrollContainer.getBoundingClientRect();
   const visibleRegion = {
@@ -198,8 +220,6 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
     bottom: boundingBox.top + scrollContainer.scrollTop + boundingBox.height,
   };
 
-  // gap between the annotation selection box and the popup element
-  const gap = 17;
   const annotTop = topLeft.y - gap;
   const annotBottom = bottomRight.y + gap;
 
@@ -209,9 +229,41 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
   } else if (annotTop - height > visibleRegion.top) {
     top = annotTop - height;
   } else {
-    // there's no room for it in the vertical axis, so just choose the top of the visible region
-    top = visibleRegion.top + 5;
+    // if there is no enough room to fit the style popup in either way (top or bottom)
+    // We want to place it on the side that has more space
+    if (annotTop > visibleRegion.bottom - annotBottom) { // if top has more space, place it to top
+      top = visibleRegion.top + padding;
+    } else { // otherwise, place it to bottom
+      top = visibleRegion.bottom - padding - height;
+    }
   }
 
   return Math.round(top - scrollContainer.scrollTop);
+};
+
+export const getReaderModePopupPositionBasedOn = (annotPosition, popup, viewer) => {
+  const { width, height } = popup.current.getBoundingClientRect();
+  const viewerRect = viewer.current.getBoundingClientRect();
+
+  let top = 5;
+  const annotTop = annotPosition.top - gap;
+  const annotBottom = annotPosition.bottom + gap;
+  if (annotBottom + height < viewerRect.height) {
+    top = annotBottom;
+  } else if (annotTop > height) {
+    top = annotTop - height;
+  }
+  top = Math.round(top + viewerRect.top);
+
+  const paddingLeft = parseFloat(viewer.current.firstChild.style.paddingLeft);
+  const center = (annotPosition.left + annotPosition.right) / 2 + paddingLeft;
+  let left = center - width / 2;
+  if (left < 0) {
+    left = 0;
+  } else if (left + width > viewerRect.width) {
+    left = viewerRect.width - width;
+  }
+  left = Math.round(left + viewerRect.left);
+
+  return { top, left };
 };

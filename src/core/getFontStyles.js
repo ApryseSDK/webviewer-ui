@@ -1,1 +1,1 @@
-export default () => window.CoreControls.FontStyles;
+export default () => window.Core.FontStyles;

@@ -1,12 +1,6 @@
-import React, {
-  useRef,
-  useEffect,
-  useContext,
-  useMemo,
-  useCallback
-} from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
@@ -14,23 +8,20 @@ import classNames from 'classnames';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 import NoteTextarea from 'components/NoteTextarea';
-import NotePopup from 'components/NotePopup';
-import NoteState from 'components/NoteState';
 import NoteContext from 'components/Note/Context';
-import Icon from 'components/Icon';
-import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator'
 
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
-import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
-import escapeHtml from 'helpers/escapeHtml';
-import getFillColor from 'helpers/getFillColor';
-import getLatestActivityDate from 'helpers/getLatestActivityDate';
+import getLatestActivityDate from "helpers/getLatestActivityDate";
+import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './NoteContent.scss';
+import NoteHeader from 'components/NoteHeader';
+import NoteTextPreview from 'src/components/NoteTextPreview';
+import isString from 'lodash/isString';
 
 dayjs.extend(LocalizedFormat);
 
@@ -38,30 +29,32 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
-const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextChange, isUnread, isNonReplyNoteRead, onReplyClicked, }) => {
+const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextChange, isUnread, isNonReplyNoteRead, onReplyClicked }) => {
   const [
     noteDateFormat,
     iconColor,
-    isNoteEditingTriggeredByAnnotationPopup,
-    isStateDisabled,
+    isNoteStateDisabled,
     language,
+    notesShowLastUpdatedDate
   ] = useSelector(
     state => [
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
-      selectors.getIsNoteEditing(state),
       selectors.isElementDisabled(state, 'notePopupState'),
       selectors.getCurrentLanguage(state),
+      selectors.notesShowLastUpdatedDate(state),
     ],
     shallowEqual,
   );
 
-  const { isSelected, searchInput, resize, isContentEditable, pendingEditTextMap, onTopNoteContentClicked } = useContext(
+  const { isSelected, searchInput, resize, pendingEditTextMap, onTopNoteContentClicked, sortStrategy } = useContext(
     NoteContext,
   );
 
   const dispatch = useDispatch();
   const isReply = annotation.isReply();
+
+  const [t] = useTranslation();
 
   useDidUpdate(() => {
     if (!isEditing) {
@@ -71,72 +64,130 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     resize();
   }, [isEditing]);
 
-  useEffect(() => {
-    // when the comment button in the annotation popup is clicked,
-    // this effect will run and we set isEditing to true so that
-    // the textarea will be rendered and focused after it is mounted
-    if (
-      isNoteEditingTriggeredByAnnotationPopup &&
-      isSelected &&
-      isContentEditable
-    ) {
-      setIsEditing(true, noteIndex);
-    }
-  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected, setIsEditing, noteIndex]);
-
   const renderAuthorName = useCallback(
     annotation => {
-      const name = core.getDisplayAuthor(annotation);
+      const name = core.getDisplayAuthor(annotation['Author']);
       let shortName = name;
       if (name.length>10){
         shortName = name.substr(0, 5) + '...' + name.substr(name.length - 3)
       }
       return name ? (
-        <span
-          dangerouslySetInnerHTML={{
-            __html: highlightSearchInput(shortName, searchInput),
-          }}
-        />
+        highlightSearchInput(shortName, searchInput)
       ) : (
-          '(no name)'
-        );
-    },
-    [searchInput],
-  );
-
-  const renderContents = useCallback(
-    contents => {
-      contents = escapeHtml(contents);
-
-      let text;
-      const transformedContents = Autolinker.link(contents, {
-        stripPrefix: false,
-      });
-      if (transformedContents.includes('<a')) {
-        // if searchInput is 't', replace <a ...>text</a> with
-        // <a ...><span class="highlight">t</span>ext</a>
-        text = transformedContents.replace(
-          />(.+)</i,
-          (_, p1) => `>${highlightSearchInput(p1, searchInput)}<`,
-        );
-      } else {
-        text = highlightSearchInput(contents, searchInput);
-      }
-
-      return (
-        <span className="contents" dangerouslySetInnerHTML={{ __html: text }} />
+        t('option.notesPanel.noteContent.noName')
       );
     },
     [searchInput],
   );
 
+  const renderContents = useCallback(
+    (contents, richTextStyle) => {
+      const autolinkerContent = [];
+      Autolinker.link(contents, {
+        stripPrefix: false,
+        stripTrailingSlash: false,
+        replaceFn(match) {
+          const href = match.getAnchorHref();
+          const anchorText = match.getAnchorText();
+          const offset = match.getOffset();
+          if (anchorText !== match.getMatchedText()) {
+            // If not match, the 'highlightSearchInput()' function below will not work properly
+            throw new Error("anchorText and matchedText are different");
+          }
+          switch (match.getType()) {
+            case 'url':
+            case 'email':
+            case 'phone':
+              autolinkerContent.push({
+                href,
+                text: anchorText,
+                start: offset,
+                end: offset + anchorText.length
+              });
+              return;
+          }
+        }
+      });
+      if (!autolinkerContent.length) {
+        const highlightResult = highlightSearchInput(contents, searchInput, richTextStyle);
+        if (isString(highlightResult)) {
+          // Only support preview for pure text contents
+          return (
+            <NoteTextPreview linesToBreak={3} comment>
+              {highlightResult}
+            </NoteTextPreview>
+          )
+        } else {
+          return highlightResult;
+        }
+      }
+      const contentToRender = [];
+      let strIdx = 0;
+      // Iterate through each case detected by Autolinker, wrap all content
+      // before the current link in a span tag, and wrap the current link
+      // in our own anchor tag
+      autolinkerContent.forEach((anchorData, forIdx) => {
+        const { start, end, href } = anchorData;
+        if (strIdx < start) {
+          contentToRender.push(
+            <span key={`span_${forIdx}`}>
+              {
+                highlightSearchInput(
+                  contents,
+                  searchInput,
+                  richTextStyle,
+                  strIdx,
+                  start
+                )
+              }
+            </span>
+          );
+        }
+        contentToRender.push(
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            key={`a_${forIdx}`}
+          >
+            {
+              highlightSearchInput(
+                contents,
+                searchInput,
+                richTextStyle,
+                start,
+                end
+              )
+            }
+          </a>
+        );
+        strIdx = end;
+      });
+      // Ensure any content after the last link is accounted for
+      if (strIdx < contents.length - 1) {
+        contentToRender.push(highlightSearchInput(
+          contents,
+          searchInput,
+          richTextStyle,
+          strIdx
+        ));
+      }
+      return contentToRender;
+    },
+    [searchInput]
+  );
+
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
-  const color = annotation[iconColor]?.toHexString?.();
-  const fillColor = getFillColor(annotation.FillColor);
-  const contents = annotation.getCustomData('trn-mention')?.contents || annotation.getContents();
+  let customData;
+  try {
+    customData = JSON.parse(annotation.getCustomData('trn-mention'));
+  } catch (e) {
+    customData = annotation.getCustomData('trn-mention');
+  }
+  const contents = customData?.contents || annotation.getContents();
   const contentsToRender = annotation.getContents();
-  const numberOfReplies = annotation.getReplies().length;
-  const formatNumberOfReplies = Math.min(numberOfReplies, 9);
+  const richTextStyle = annotation.getRichTextStyle();
+  const textColor = annotation['TextColor'];
   // This is the text placeholder passed to the ContentArea
   // It ensures that if we try and edit, we get the right placeholder
   // depending on whether the comment has been saved to the annotation or not
@@ -157,7 +208,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     }
   };
 
-  const handleContentsClicked = (e) => {
+  const handleContentsClicked = e => {
     if (window.getSelection()?.toString()) {
       e?.stopPropagation();
       return;
@@ -171,77 +222,87 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     clicked: isNonReplyNoteRead, //The top note content is read
   });
 
-  const header = useMemo(() => (
-    <React.Fragment>
-      {!isReply &&
-        <>{isUnread &&
-          <div className="unread-notification"></div>
-        }</>
-        // <div className="type-icon-container">
-          
-        //   <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
-        // </div>
+  const content = useMemo(
+    () => {
+      const contentStyle = {};
+      if (textColor) {
+        contentStyle.color = textColor.toHexString();
       }
-      <div className="author-and-date">
-        <div className="author-and-overflow">
-          <div className="author-and-time">
-            {renderAuthorName(annotation)}
-            <div className="date-and-num-replies">
-            <div className="date-and-time">
-              {dayjs(getLatestActivityDate(annotation)).locale(language).format(noteDateFormat)}
-            </div>
-               {numberOfReplies > 0 &&
-                <div className="num-replies-container">
-                  <Icon className="num-reply-icon" glyph={"icon-chat-bubble"} />
-                  <div className="num-replies">{numberOfReplies}</div>
-                </div>}
-                </div>
-          </div>
-          <div className="state-and-overflow">
-            <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
-            {!isStateDisabled && !isReply &&
-              <NoteState
-                annotation={annotation}
-                isSelected={isSelected}
-              />
-            }
-            {!isEditing && isSelected &&
-              <NotePopup
-                noteIndex={noteIndex}
-                annotation={annotation}
-                setIsEditing={setIsEditing}
-              />}
-          </div>
-        </div>
-        {isEditing && isSelected ? (
-          <ContentArea
-            annotation={annotation}
-            noteIndex={noteIndex}
-            setIsEditing={setIsEditing}
-            textAreaValue={textAreaValue}
-            onTextAreaValueChange={onTextChange}
-          />
-        ) : (
+
+      return (
+        <React.Fragment>
+          {isEditing && isSelected ? (
+            <ContentArea
+              annotation={annotation}
+              noteIndex={noteIndex}
+              setIsEditing={setIsEditing}
+              textAreaValue={textAreaValue}
+              onTextAreaValueChange={onTextChange}
+            />
+          ) : (
             contentsToRender && (
-              <div className="container" onClick={handleContentsClicked}>{renderContents(contentsToRender)}</div>
+                <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked} style={contentStyle}>
+                {renderContents(contentsToRender, richTextStyle)}
+              </div>
             )
           )}
-      </div>
-    </React.Fragment>
-  ), [isReply, numberOfReplies, formatNumberOfReplies, icon, color, renderAuthorName, annotation, noteDateFormat, isStateDisabled, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange, language, isUnread]);
-
-
-  return useMemo(
-    () => (
-      <div className={noteContentClass} onClick={handleNoteContentClicked}>
-         {isUnread &&
-            <div className="unread-notification"></div>
-          }
-        {header}
-      </div>
-    ),
-    [header],
+        </React.Fragment>
+      );
+    },
+    [annotation, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange]
   );
+
+  const text = annotation.getCustomData('trn-annot-preview');
+  const textPreview = useMemo(
+    () => {
+      if (text === '') {
+        return null;
+      }
+
+      return (
+        <div className="selected-text-preview">
+          <NoteTextPreview linesToBreak={1}>
+            {`"${text}"`}
+          </NoteTextPreview>
+        </div>
+
+      )
+    }, [text])
+
+  const header = useMemo(
+    () => {
+      return (
+        <NoteHeader
+          icon={icon}
+          iconColor={iconColor}
+          annotation={annotation}
+          language={language}
+          noteDateFormat={noteDateFormat}
+          isSelected={isSelected}
+          setIsEditing={setIsEditing}
+          notesShowLastUpdatedDate={notesShowLastUpdatedDate}
+          isReply={isReply}
+          isUnread={isUnread}
+          renderAuthorName={renderAuthorName}
+          isNoteStateDisabled={isNoteStateDisabled}
+          isEditing={isEditing}
+          noteIndex={noteIndex}
+          sortStrategy={sortStrategy}
+        />
+      )
+    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy]
+  );
+
+  return (
+    <div className={noteContentClass} onClick={handleNoteContentClicked}>
+      {isUnread &&
+        <div className="unread-notification"></div>
+      }
+      {header}
+      {textPreview}
+      {content}
+    </div>
+  )
 };
 
 NoteContent.propTypes = propTypes;
@@ -262,16 +323,22 @@ const ContentArea = ({
   ]);
   const [t] = useTranslation();
   const textareaRef = useRef();
+  const isReply = annotation.isReply();
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
     if (isNotesPanelOpen && textareaRef.current) {
       setTimeout(() => {
         // need setTimeout because textarea seem to rerender and unfocus
-        textareaRef.current.focus();
+        if (textareaRef && textareaRef.current) {
+          textareaRef.current.focus();
+        }
       }, 0);
-      const textLength = textareaRef.current.value.length;
-      textareaRef.current.setSelectionRange(textLength, textLength);
+
+      if (textareaRef && textareaRef.current) {
+        const textLength = textareaRef.current.value.length;
+        textareaRef.current.setSelectionRange(textLength, textLength);
+      }
     }
   }, [isNotesPanelOpen]);
 
@@ -282,10 +349,10 @@ const ContentArea = ({
     if (isMentionEnabled) {
       const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
 
-      annotation.setCustomData('trn-mention', {
+      annotation.setCustomData('trn-mention', JSON.stringify({
         contents: textAreaValue,
         ids,
-      });
+      }));
       core.setNoteContents(annotation, plainTextValue);
     } else {
       core.setNoteContents(annotation, textAreaValue);
@@ -297,13 +364,15 @@ const ContentArea = ({
 
     setIsEditing(false, noteIndex);
     // Only set comment to unposted state if it is not empty
-    if (textAreaValue !== ''){
+    if (textAreaValue !== '') {
       onTextAreaValueChange(undefined, annotation.Id);
     }
   };
 
+  const contentClassName = classNames('edit-content', { 'reply-content': isReply })
+
   return (
-    <div className="edit-content">
+    <div className={contentClassName}>
       <NoteTextarea
         ref={el => {
           textareaRef.current = el;
@@ -327,7 +396,8 @@ const ContentArea = ({
           {t('action.cancel')}
         </button>
         <button
-          className="save-button"
+          className={`save-button${!textAreaValue ? ' disabled' : ''}`}
+          disabled={!textAreaValue}
           onClick={e => {
             e.stopPropagation();
             setContents(e);
@@ -348,20 +418,100 @@ ContentArea.propTypes = {
   onTextAreaValueChange: PropTypes.func.isRequired,
 };
 
-const highlightSearchInput = (text, searchInput) => {
-  if (searchInput.trim()) {
-    try {
-      text = text.replace(
-        new RegExp(`(${searchInput})`, 'gi'),
-        '<span class="highlight">$1</span>',
-      );
-    } catch (e) {
-      // this condition is usually met when a search input contains symbols like *?!
-      text = text
-        .split(searchInput)
-        .join(`<span class="highlight">${searchInput}</span>`);
+const getRichTextSpan = (text, richTextStyle, key) => {
+  const style = {
+    fontWeight: richTextStyle['font-weight'],
+    fontStyle: richTextStyle['font-style'],
+    textDecoration: richTextStyle['text-decoration'],
+    color: richTextStyle['color']
+  };
+  if (style.textDecoration) {
+    style.textDecoration = style.textDecoration.replace('word', 'underline');
+  }
+  return (
+    <span style={style} key={key}>{text}</span>
+  );
+};
+
+const renderRichText = (text, richTextStyle, start) => {
+  if (!richTextStyle || !text) return text;
+
+  const styles = {};
+  const indices = Object.keys(richTextStyle).map(Number).sort((a, b) => a - b);
+  for (let i = 0; i < indices.length; i++) {
+    let index = indices[i] - start;
+    index = Math.min(Math.max(index, 0), text.length);
+    styles[index] = richTextStyle[indices[i]];
+    if (index === text.length) {
+      break;
     }
   }
 
-  return text;
+  const contentToRender = [];
+  const styleIndices = Object.keys(styles).map(Number).sort((a, b) => a - b);
+  for (let i = 1; i < styleIndices.length; i++) {
+    contentToRender.push(getRichTextSpan(
+      text.slice(styleIndices[i - 1], styleIndices[i]),
+      styles[styleIndices[i - 1]],
+      `richtext_span_${i}`
+    ));
+  }
+
+  return contentToRender;
+};
+
+const highlightSearchInput = (fullText, searchInput, richTextStyle, start = 0, end = fullText.length) => {
+  const text = fullText.slice(start, end);
+  const loweredText = text.toLowerCase();
+  const loweredSearchInput = searchInput.toLowerCase();
+  if (richTextStyle) {
+    richTextStyle['0'] = richTextStyle['0'] || {};
+    richTextStyle[fullText.length] = richTextStyle[fullText.length] || {};
+  }
+  let lastFoundInstance = loweredText.indexOf(loweredSearchInput);
+  if (!loweredSearchInput.trim() || lastFoundInstance === -1) {
+    return renderRichText(text, richTextStyle, start);
+  }
+  const contentToRender = [];
+  const allFoundPositions = [lastFoundInstance];
+  // Escape all RegExp special characters
+  const regexSafeSearchInput = loweredSearchInput.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  if (new RegExp(`(${regexSafeSearchInput})`, 'gi').test(loweredText)) {
+    while (lastFoundInstance !== -1) {
+      lastFoundInstance = loweredText.indexOf(loweredSearchInput, lastFoundInstance + loweredSearchInput.length);
+      if (lastFoundInstance !== -1) {
+        allFoundPositions.push(lastFoundInstance);
+      }
+    }
+  }
+  allFoundPositions.forEach((position, idx) => {
+    // Account for any content at the beginning of the string before the first
+    // instance of the searchInput
+    if (idx === 0 && position !== 0) {
+      contentToRender.push(renderRichText(text.substring(0, position), richTextStyle, start));
+    }
+    contentToRender.push(
+      <span className="highlight" key={`highlight_span_${idx}`}>
+        {
+          renderRichText(
+            text.substring(position, position + loweredSearchInput.length),
+            richTextStyle,
+            start + position)
+        }
+      </span>
+    );
+    if (
+      // Ensure that we do not try to make an out-of-bounds access
+      position + loweredSearchInput.length < loweredText.length
+      // Ensure that this is the end of the allFoundPositions array
+      && position + loweredSearchInput.length !== allFoundPositions[idx + 1]
+    ) {
+      contentToRender.push(renderRichText(
+        text.substring(position + loweredSearchInput.length, allFoundPositions[idx + 1]),
+        richTextStyle,
+        start + position + loweredSearchInput.length
+      ));
+    }
+  });
+  return contentToRender;
 };

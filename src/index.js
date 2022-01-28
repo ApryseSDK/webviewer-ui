@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
 import thunk from 'redux-thunk';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import core from 'core';
 import actions from 'actions';
@@ -30,8 +32,10 @@ import rootReducer from 'reducers/rootReducer';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import getHashParams from 'helpers/getHashParams';
+import defineWebViewerInstanceUIAPIs from 'src/apis';
 
 import './index.scss';
+import hotkeysManager from './helpers/hotkeysManager';
 
 const middleware = [thunk];
 
@@ -79,17 +83,17 @@ if (window.CanvasRenderingContext2D) {
   const state = store.getState();
 
   if (state.advanced.fullAPI) {
-    window.CoreControls.enableFullPDF(true);
+    window.Core.enableFullPDF();
     fullAPIReady = loadScript('../core/pdf/PDFNet.js');
   }
 
   if (getHashParams('disableLogs', false)) {
-    window.CoreControls.disableLogs(true);
+    window.Core.disableLogs(true);
   }
 
   window._disableStreaming = getHashParams('disableStreaming', false);
-  window.CoreControls.setWorkerPath('../core');
-  window.CoreControls.setResourcesPath('../core/assets');
+  window.Core.setWorkerPath('../core');
+  window.Core.setResourcesPath('../core/assets');
 
   try {
     if (state.advanced.useSharedWorker && window.parent.WebViewer) {
@@ -97,9 +101,9 @@ if (window.CanvasRenderingContext2D) {
       // originally the option was just for the pdf worker transport promise, now it can be an object
       // containing both the pdf and office promises
       if (workerTransportPromise.pdf || workerTransportPromise.office) {
-        window.CoreControls.setWorkerTransportPromise(workerTransportPromise);
+        window.Core.setWorkerTransportPromise(workerTransportPromise);
       } else {
-        window.CoreControls.setWorkerTransportPromise({ 'pdf': workerTransportPromise });
+        window.Core.setWorkerTransportPromise({ 'pdf': workerTransportPromise });
       }
     }
   } catch (e) {
@@ -112,10 +116,10 @@ if (window.CanvasRenderingContext2D) {
   const { preloadWorker } = state.advanced;
 
   function initTransports() {
-    const { PDF, OFFICE, ALL } = workerTypes;
-    if (preloadWorker === PDF || preloadWorker === ALL) {
+    const { PDF, OFFICE, LEGACY_OFFICE, ALL } = workerTypes;
+    if (preloadWorker.includes(PDF) || preloadWorker === ALL) {
       getBackendPromise(getHashParams('pdf', 'auto')).then(pdfType => {
-        window.CoreControls.initPDFWorkerTransports(pdfType, {
+        window.Core.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
@@ -123,9 +127,19 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker === OFFICE || preloadWorker === ALL) {
+    if (preloadWorker.includes(OFFICE) || preloadWorker === ALL) {
       getBackendPromise(getHashParams('office', 'auto')).then(officeType => {
-        window.CoreControls.initOfficeWorkerTransports(officeType, {
+        window.Core.initOfficeWorkerTransports(officeType, {
+          workerLoadingProgress: percent => {
+            store.dispatch(actions.setLoadingProgress(percent));
+          },
+        }, window.sampleL);
+      });
+    }
+
+    if (preloadWorker.includes(LEGACY_OFFICE) || preloadWorker === ALL) {
+      getBackendPromise(getHashParams('legacyOffice', 'auto')).then(officeType => {
+        window.CoreControls.initLegacyOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
@@ -139,41 +153,45 @@ if (window.CanvasRenderingContext2D) {
 
   logDebugInfo();
 
+  const documentViewer = new window.Core.DocumentViewer();
+  window.documentViewer = documentViewer;
+  defineWebViewerInstanceUIAPIs(store);
+  hotkeysManager.initialize(store);
+
+  setupDocViewer();
+  setupI18n(state);
+  setUserPermission(state);
+  setAutoSwitch();
+  setDefaultToolStyles();
+  core.setToolMode(defaultTool);
+
   fullAPIReady.then(() => loadConfig()).then(() => {
     if (preloadWorker) {
       initTransports();
     }
-
     const { addEventHandlers, removeEventHandlers } = eventHandler(store);
-    const docViewer = new window.CoreControls.DocumentViewer();
 
-    window.docViewer = docViewer;
     if (getHashParams('enableViewStateAnnotations', false)) {
-      const tool = docViewer.getTool(window.Tools.ToolNames.STICKY);
+      const tool = documentViewer.getTool(window.Core.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);
     }
 
-    setupDocViewer();
-    setupI18n(state);
-    setUserPermission(state);
-    setAutoSwitch();
-    addEventHandlers();
-    setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
-    setDefaultToolStyles();
-    core.setToolMode(defaultTool);
-
+    addEventHandlers();
     ReactDOM.render(
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <I18nextProvider i18n={i18next}>
-            <App removeEventHandlers={removeEventHandlers} />
+            <DndProvider backend={HTML5Backend}>
+              <App removeEventHandlers={removeEventHandlers} />
+            </DndProvider>
           </I18nextProvider>
         </PersistGate>
       </Provider>,
       document.getElementById('app'),
     );
   });
+  setDefaultDisabledElements(store);
 }
 
 window.addEventListener('hashchange', () => {

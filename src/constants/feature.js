@@ -1,6 +1,6 @@
 /**
  * Contains string enums for all features for WebViewer UI
- * @name WebViewerInstance#Feature
+ * @name UI.Feature
  * @property {string} Measurement Measurement tools that can create annotations to measure distance, perimeter and area.
  * @property {string} Ribbons A collection of toolbar groups to switch between.
  * @property {string} Annotations Render annotations in the document and be able to edit them.
@@ -21,12 +21,13 @@
  * @property {string} Search Ctrl/Cmd + F hotkey and a search button that can be clicked to search the current document.
  * @property {string} MathSymbols Ability to add math symbols in free text editor
  * @property {string} OutlineEditing Ability to add, move and delete outlines in the outlines panel. This feature is only available when `fullAPI: true` is used.
+ * @property {string} NotesPanelVirtualizedList Ability to use a virtualized list in the note panel. Will limit the number of notes rendered on the DOM
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var Feature = instance.Feature;
-    instance.enableFeatures([Feature.Measurement]);
-    instance.disableFeatures([Feature.Copy]);
+    var Feature = instance.UI.Feature;
+    instance.UI.enableFeatures([Feature.Measurement]);
+    instance.UI.disableFeatures([Feature.Copy]);
   });
  */
 
@@ -52,4 +53,6 @@ export default {
   Search: 'Search',
   MathSymbols: 'MathSymbols',
   OutlineEditing: 'OutlineEditing',
+  NotesPanelVirtualizedList: 'NotesPanelVirtualizedList',
+  NotesShowLastUpdatedDate: "NotesShowLastUpdatedDate"
 };

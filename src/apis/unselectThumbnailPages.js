@@ -1,12 +1,12 @@
 /**
  * Unselect selected thumbnails
- * @method WebViewerInstance#unselectThumbnailPages
+ * @method UI.unselectThumbnailPages
  * @param {Array<number>} pageNumbers array of page numbers to unselect
  * @example // 6.1 and after
 WebViewer(...)
   .then(function(instance) {
     const pageNumbersToUnselect = [1, 2];
-    instance.unselectThumbnailPages(pageNumbersToUnselect);
+    instance.UI.unselectThumbnailPages(pageNumbersToUnselect);
   });
  */
 import selectors from 'selectors';

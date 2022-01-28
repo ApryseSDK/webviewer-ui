@@ -1,13 +1,13 @@
 /**
  * Print the current document.
- * @method WebViewerInstance#print
+ * @method UI.print
  * @example
 WebViewer(...)
   .then(function(instance) {
-    var docViewer = instance.docViewer;
+    const docViewer = instance.Core.documentViewer;
     // you must have a document loaded when calling this api
-    docViewer.on('documentLoaded', function() {
-      instance.print();
+    docViewer.addEventListener('documentLoaded', function() {
+      instance.UI.print();
     });
   });
  */

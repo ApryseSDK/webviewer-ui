@@ -1,11 +1,11 @@
 /**
  * Set the number of signatures that can be stored in the WebViewer (default is 2)
- * @method WebViewerInstance#setMaxSignaturesCount
+ * @method UI.setMaxSignaturesCount
  * @param {number} [maxSignaturesCount=2] Number of signature webViewer can store
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.setMaxSignaturesCount(5); // allow up to 5 stored signatures
+    instance.UI.setMaxSignaturesCount(5); // allow up to 5 stored signatures
   });
  */
 

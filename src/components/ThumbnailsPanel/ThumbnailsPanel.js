@@ -1,28 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { debounce } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { List } from 'react-virtualized';
 import Measure from 'react-measure';
 import classNames from 'classnames';
-
-import { isIE11 } from 'helpers/device';
+import { isIE11 } from "helpers/device";
 
 import Thumbnail from 'components/Thumbnail';
 import DocumentControls from 'components/DocumentControls';
 import Button from 'components/Button';
 
 import core from 'core';
-import { extractPagesToMerge, mergeExternalWebViewerDocument, mergeDocument } from 'helpers/pageManipulation';
+import { extractPagesToMerge, mergeDocument, mergeExternalWebViewerDocument } from 'helpers/pageManipulation';
 import { workerTypes } from 'constants/types';
 import selectors from 'selectors';
 import actions from 'actions';
+import Events from 'constants/events';
+import fireEvent from 'helpers/fireEvent';
 
 import './ThumbnailsPanel.scss';
 
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 
-const ZOOM_RANGE_MIN = "100";
-const ZOOM_RANGE_MAX = "1000";
-const ZOOM_RANGE_STEP = "50";
+const ZOOM_RANGE_MIN = '100';
+const ZOOM_RANGE_MAX = '1000';
+const ZOOM_RANGE_STEP = '50';
+
+const hoverAreaHeight = 25;
 
 const ThumbnailsPanel = () => {
   const [
@@ -66,10 +70,19 @@ const ThumbnailsPanel = () => {
   const [isDraggingToPreviousPage, setDraggingToPreviousPage] = useState(false);
   const [allowPageOperations, setAllowPageOperations] = useState(true);
   const [numberOfColumns, setNumberOfColumns] = useState(1);
+  const [isDragging, setIsDragging] = useState(false);
 
   const [thumbnailSize, setThumbnailSize] = useState(150);
+  const [lastTimeTriggered, setLastTimeTriggered] = useState(0);
+  const [globalIndex, setGlobalIndex] = useState(0);
 
   const dispatch = useDispatch();
+
+  // If memory becomes an issue, change this to use pageNumbers.
+  // Instead of a debounced drawAnnotations function, perhaps use
+  // a function that first checks for the pageNumber in this map
+  // before calling drawAnnotations on a page.
+  let activeThumbRenders = {};
 
   const getThumbnailSize = (pageWidth, pageHeight) => {
     let width;
@@ -115,7 +128,7 @@ const ThumbnailsPanel = () => {
     if (rotation < 0) {
       rotation += 4;
     }
-    const multiplier = window.utils.getCanvasMultiplier();
+    const multiplier = window.Core.getCanvasMultiplier();
 
     if (rotation % 2 === 0) {
       annotCanvas.width = width;
@@ -151,7 +164,11 @@ const ThumbnailsPanel = () => {
       return;
     }
 
-    core.drawAnnotations(options);
+    if (!activeThumbRenders[pageNumber]) {
+      activeThumbRenders[pageNumber] = debounce(core.drawAnnotations, 112);
+    }
+    const debouncedDraw = activeThumbRenders[pageNumber];
+    debouncedDraw(options);
   };
 
   useEffect(() => {
@@ -167,12 +184,12 @@ const ThumbnailsPanel = () => {
 
     const onDocumentLoaded = () => {
       const doc = core.getDocument();
-      if (doc.type === workerTypes.PDF || (doc.type === workerTypes.BLACKBOX && !doc.isWebViewerServerDocument())) {
+      if (doc.type === workerTypes.PDF || doc.type === workerTypes.XOD || (doc.type === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
         setAllowPageOperations(true);
       } else {
         setAllowPageOperations(false);
       }
-  
+      activeThumbRenders = {};
       dispatch(actions.setSelectedPageThumbnails([]));
     };
 
@@ -187,7 +204,7 @@ const ThumbnailsPanel = () => {
     core.addEventListener('finishedRendering', onFinishedRendering);
     core.addEventListener('documentLoaded', onDocumentLoaded);
     core.addEventListener('pageComplete', onPageComplete);
-    
+
 
     // The document might have already been loaded before this component is mounted.
     // If document is already loaded, call 'onDocumentLoaded()' manually to update the state properly.
@@ -257,8 +274,7 @@ const ThumbnailsPanel = () => {
       core.removeEventListener('pageNumberUpdated', onPageNumberUpdated);
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('annotationHidden', onAnnotationChanged);
-    }
-
+    };
   }, [thumbnailSize, numberOfColumns]);
 
   useEffect(() => {
@@ -266,19 +282,28 @@ const ThumbnailsPanel = () => {
   }, [isReaderMode]);
 
   // if disabled or is not open return
-  if(isDisabled || !isOpen){
-    return null
+  if (isDisabled || !isOpen) {
+    return null;
   }
-
   const onDragEnd = () => {
+    setIsDragging(false);
     setDraggingOverPageIndex(null);
+  };
+
+  const scrollToRowHelper = (index, change, time) => {
+    const now = new Date().getTime();
+    if (index < totalPages - 1 && index > 0 && now - lastTimeTriggered >= time) {
+      listRef.current?.scrollToRow(Math.floor((index + change) / numberOfColumns));
+      setLastTimeTriggered(now);
+      return index + change;
+    }
+    return index;
   };
 
   const onDragOver = (e, index) => {
     // 'preventDefault' to prevent opening pdf dropped in and 'stopPropagation' to keep parent from opening pdf
     e.preventDefault();
     e.stopPropagation();
-
     if (!isThumbnailReorderingEnabled && !isThumbnailMergingEnabled) {
       return;
     }
@@ -292,12 +317,29 @@ const ThumbnailsPanel = () => {
     }
 
     setDraggingOverPageIndex(index);
+    const virtualizedThumbnailContainerElement = document.getElementById('virtualized-thumbnails-container');
+    const { y, bottom } = virtualizedThumbnailContainerElement.getBoundingClientRect();
+
+    if (e.pageY < y + hoverAreaHeight * 4) {
+      setGlobalIndex(scrollToRowHelper(index, -1, 400));
+    } else if (e.pageY > bottom - hoverAreaHeight * 4) {
+      setGlobalIndex(scrollToRowHelper(index, 1, 400));
+    }
+  };
+
+  const scrollDown = () => {
+    setGlobalIndex(scrollToRowHelper(globalIndex, 1, 200));
+  };
+  const scrollUp = () => {
+    setGlobalIndex(scrollToRowHelper(globalIndex, -1, 200));
   };
 
   const onDragStart = (e, index) => {
+    setGlobalIndex(index);
+    setIsDragging(true);
     const draggingSelectedPage = selectedPageIndexes.some(i => i === index);
     const pagesToMove = draggingSelectedPage ? selectedPageIndexes.map(index => index + 1) : [index + 1];
-
+    fireEvent(Events.THUMBNAIL_DRAGGED);
     // need to set 'text' to empty for drag to work in FireFox and mobile
     e.dataTransfer.setData('text', '');
 
@@ -324,7 +366,6 @@ const ThumbnailsPanel = () => {
     e.preventDefault();
     const { files } = e.dataTransfer;
     const insertTo = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
-
     let externalPageWebViewerFrameId;
     if (!isIE11) {
       // at this time of writing, IE11 does not really have support for getData
@@ -338,7 +379,9 @@ const ThumbnailsPanel = () => {
       if (externalPageWebViewerFrameId && window.frameElement.id !== externalPageWebViewerFrameId) {
         dispatch(mergeExternalWebViewerDocument(externalPageWebViewerFrameId, insertTo));
       } else if (files.length) {
-        dispatch(mergeDocument(files[0], insertTo));
+        Array.from(files).forEach(file => {
+          dispatch(mergeDocument(file, insertTo));
+        });
       }
     } else if (isThumbnailReorderingEnabled && !mergingDocument) {
       if (draggingOverPageIndex !== null) {
@@ -347,9 +390,15 @@ const ThumbnailsPanel = () => {
         const pageNumbersToMove = draggingSelectedPage ? selectedPageIndexes.map(i => i + 1) : [currentPage];
         afterMovePageNumber.current = targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
         core.movePages(pageNumbersToMove, targetPageNumber);
+        const updatedPagesNumbers = [];
+        for (let offset = 0; offset < pageNumbersToMove.length; offset++) {
+          updatedPagesNumbers.push(afterMovePageNumber.current + offset);
+        }
+        fireEvent(Events.THUMBNAIL_DROPPED, { pageNumbersBeforeMove:pageNumbersToMove, pagesNumbersAfterMove:updatedPagesNumbers, numberOfPagesMoved:updatedPagesNumbers.length });
       }
     }
     setDraggingOverPageIndex(null);
+    setIsDragging(false);
   };
 
   const onLoad = (pageIndex, element, id) => {
@@ -390,6 +439,17 @@ const ThumbnailsPanel = () => {
 
   const onRemove = pageIndex => {
     onCancel(pageIndex);
+    const canvases = thumbs.current[pageIndex]?.element?.querySelectorAll('canvas');
+    if (canvases?.length) {
+      canvases.forEach(c => {
+        c.height = 0;
+        c.width = 0;
+      });
+    }
+
+    if (activeThumbRenders[pageIndex]) {
+      activeThumbRenders[pageIndex].cancel();
+    }
     thumbs.current[pageIndex] = null;
   };
 
@@ -408,25 +468,27 @@ const ThumbnailsPanel = () => {
           const showPlaceHolder = allowDragAndDrop && draggingOverPageIndex === thumbIndex;
 
           return thumbIndex < totalPages ? (
-            <div role="cell" key={thumbIndex} onDragEnd={onDragEnd} className="cellThumbContainer">
-              {showPlaceHolder && isDraggingToPreviousPage && <div className="thumbnailPlaceholder" />}
-              <Thumbnail
-                isDraggable={allowDragAndDrop}
-                isSelected={selectedPageIndexes.includes(thumbIndex)}
-                index={thumbIndex}
-                canLoad={canLoad}
-                onLoad={onLoad}
-                onCancel={onCancel}
-                onRemove={onRemove}
-                onDragStart={onDragStart}
-                onDragOver={onDragOver}
-                onFinishLoading={removeFromPendingThumbs}
-                updateAnnotations={updateAnnotations}
-                shouldShowControls={allowPageOperationsUI}
-                thumbnailSize={thumbnailSize}
-              />
-              {showPlaceHolder && !isDraggingToPreviousPage && <div className="thumbnailPlaceholder" />}
-            </div>
+            <>
+              {(numberOfColumns > 1 || thumbIndex === 0) && showPlaceHolder && isDraggingToPreviousPage && <div key={`placeholder1-${thumbIndex}`} className="thumbnailPlaceholder" />}
+              <div key={thumbIndex} role="cell" onDragEnd={onDragEnd} className="cellThumbContainer">
+                <Thumbnail
+                  isDraggable={allowDragAndDrop}
+                  isSelected={selectedPageIndexes.includes(thumbIndex)}
+                  index={thumbIndex}
+                  canLoad={canLoad}
+                  onLoad={onLoad}
+                  onCancel={onCancel}
+                  onRemove={onRemove}
+                  onDragStart={onDragStart}
+                  onDragOver={onDragOver}
+                  onFinishLoading={removeFromPendingThumbs}
+                  updateAnnotations={updateAnnotations}
+                  shouldShowControls={allowPageOperationsUI}
+                  thumbnailSize={thumbnailSize}
+                />
+              </div>
+              {showPlaceHolder && !isDraggingToPreviousPage && <div key={`placeholder2-${thumbIndex}`} className="thumbnailPlaceholder" />}
+            </>
           ) : null;
         })}
       </div>
@@ -445,6 +507,10 @@ const ThumbnailsPanel = () => {
 
   const thumbnailHeight = isThumbnailControlDisabled ? Number(thumbnailSize) + 50 : Number(thumbnailSize) + 80;
   const shouldShowControls = !isReaderMode && (allowPageOperations || selectedPageIndexes.length > 0);
+
+  const thumbnailAutoScrollAreaStyle = {
+    'height': `${hoverAreaHeight}px`,
+  };
 
   return (
     <React.Fragment>
@@ -489,8 +555,11 @@ const ThumbnailsPanel = () => {
       </div>} */}
       <Measure bounds onResize={onPanelResize} key={thumbnailSize}>
         {({ measureRef }) => (
-          <div className="Panel ThumbnailsPanel" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
+          <div className="Panel ThumbnailsPanel" id="virtualized-thumbnails-container" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
             <div className="virtualized-thumbnails-container">
+              {isDragging ?
+                <div className="thumbnailAutoScollArea" onDragOver={scrollUp} style={thumbnailAutoScrollAreaStyle}></div> : ""
+              }
               <List
                 ref={listRef}
                 height={height}
@@ -503,7 +572,12 @@ const ThumbnailsPanel = () => {
                 overscanRowCount={3}
                 className={'thumbnailsList'}
                 style={{ outline: 'none' }}
+                // Ensure we show the current page in the thumbnails when we open the panel
+                scrollToIndex={Math.floor((currentPage - 1) / numberOfColumns)}
               />
+              {isDragging ?
+                <div className="thumbnailAutoScollArea" onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ""
+              }
             </div>
           </div>
         )}

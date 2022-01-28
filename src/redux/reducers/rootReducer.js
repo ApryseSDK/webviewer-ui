@@ -22,4 +22,5 @@ export default combineReducers({
   document: documentReducer(initialState.document),
   // TODO: refactor in another PR to remove state.advanced. It's not necessary to have this because those states never change.
   advanced: () => initialState.advanced,
+  featureFlags: () => initialState.featureFlags,
 });

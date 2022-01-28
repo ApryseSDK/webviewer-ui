@@ -8,11 +8,11 @@ import i18next from 'i18next';
 import Choice from 'components/Choice/Choice';
 
 import core from 'core';
-import { MEASUREMENT_TOOL_NAMES } from 'helpers/setToolStyles';
 import { workerTypes } from 'constants/types';
 import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
 import actions from 'actions';
+import getMeasurementTools from 'src/helpers/getMeasurementTools';
 
 import './MeasurementOption.scss';
 
@@ -114,8 +114,8 @@ class MeasurementOption extends React.Component {
     }
 
     const enableSnapping = event.target.checked;
-    const mode = enableSnapping ? window.docViewer.SnapMode.e_DefaultSnapMode : null;
-    const measurementTools = MEASUREMENT_TOOL_NAMES.map(core.getTool);
+    const mode = enableSnapping ? window.documentViewer.SnapMode.e_DefaultSnapMode : null;
+    const measurementTools = getMeasurementTools();
 
     measurementTools.forEach(tool => {
       tool.setSnapMode?.(mode);

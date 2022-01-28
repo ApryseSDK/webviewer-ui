@@ -1,5 +1,5 @@
 /**
- * https://www.pdftron.com/api/web/CoreControls.AnnotationManager.html#canModifyContents__anchor
+ * https://www.pdftron.com/api/web/Core.AnnotationManager.html#canModifyContents__anchor
  */
 export default annotation =>
-  window.docViewer.getAnnotationManager().canModifyContents(annotation);
+  window.documentViewer.getAnnotationManager().canModifyContents(annotation);

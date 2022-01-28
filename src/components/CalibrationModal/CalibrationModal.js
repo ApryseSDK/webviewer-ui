@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
 import Button from 'components/Button';
-
 import core from 'core';
 import { mapAnnotationToKey } from 'constants/map';
 import setToolStyles from 'helpers/setToolStyles';
@@ -12,10 +10,23 @@ import parseMeasurementContents from 'helpers/parseMeasurementContents';
 import evalFraction from 'helpers/evalFraction';
 import actions from 'actions';
 import selectors from 'selectors';
-
 import { Swipeable } from 'react-swipeable';
 
 import './CalibrationModal.scss';
+
+const parseMeasurementContentByUnit = (content, unit) => {
+  if (content.includes('\'')|| content.includes('"')) {
+    const ftNum = parseFloat(content.slice(0, content.indexOf('\'')));
+    const inNum = parseFloat(content.slice(content.indexOf('\'') + 1, content.indexOf(('"'))));
+    if (unit === 'ft') {
+      return ftNum + inNum / 12;
+    } else {
+      return ftNum * 12 + inNum;
+    }
+  } else {
+    return parseMeasurementContents(content);
+  }
+};
 
 const numberRegex = /^\d*(\.\d*)?$/;
 const fractionRegex = /^\d*(\s\d\/\d*)$/;
@@ -37,6 +48,11 @@ const CalibrationModal = () => {
   const [unitTo, setUnitTo] = useState('');
   const [showError, setShowError] = useState(false);
   const [t] = useTranslation();
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    isOpen && inputRef?.current?.focus();
+  }, [isOpen]);
 
   useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
@@ -47,7 +63,7 @@ const CalibrationModal = () => {
       ) {
         const annot = annotations[0];
         setAnnotation(annot);
-        const value = parseMeasurementContents(annot.getContents());
+        const value = parseMeasurementContentByUnit(annot.getContents(), annot.Scale[1][1]);
         setValue(value);
         setUnitTo(annot.Scale[1][1]);
         // initial new distance should be the same as the value
@@ -73,7 +89,7 @@ const CalibrationModal = () => {
         annotations.length === 1 &&
         annotations[0] === annotation
       ) {
-        setValue(parseMeasurementContents(annotation.getContents()));
+        setValue(parseMeasurementContentByUnit(annotation.getContents(), annotation.Scale[1][1]));
         setUnitTo(annotation.Scale[1][1]);
       }
     };
@@ -90,9 +106,17 @@ const CalibrationModal = () => {
 
   const validateInput = e => {
     const inputValue = e.target.value.trim();
+    if (inputValue === '') {
+      setShowError(true);
+    }
     if (numberRegex.test(inputValue)) {
-      setNewDistance(parseFloat(inputValue));
-      setValue(inputValue);
+      const newDistance = parseFloat(inputValue);
+      if (newDistance !== 0) {
+        setNewDistance(parseFloat(inputValue));
+        setValue(inputValue);
+      } else {
+        setShowError(true);
+      }
     } else if (fractionRegex.test(inputValue)) {
       const [whole, fraction] = inputValue.split(' ');
       if (Number.isFinite(evalFraction(fraction))) {
@@ -147,7 +171,7 @@ const CalibrationModal = () => {
   };
 
   const getNewScale = () => {
-    const currentDistance = parseMeasurementContents(annotation.getContents());
+    const currentDistance = parseMeasurementContentByUnit(annotation.getContents(), annotation.Scale[1][1]);
     const ratio = newDistance / currentDistance;
 
     const currentScale = annotation.Scale;
@@ -186,7 +210,14 @@ const CalibrationModal = () => {
           <div className="calibration__body">
             <div>{t('message.enterMeasurement')}</div>
             <div className="calibration__input">
-              <input className={showError ? 'error' : ''} type="text" value={value} onChange={handleInputChange} onBlur={validateInput}/>
+              <input
+                className={showError ? 'error' : ''}
+                ref={inputRef}
+                type="text"
+                value={value}
+                onChange={handleInputChange}
+                onBlur={validateInput}
+              />
               <select
                 className="unitToInput"
                 value={unitTo}

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import core from 'core';
+import Tooltip from '../Tooltip';
 
 import NoteState from './NoteState';
 
@@ -24,7 +25,7 @@ function createStateAnnotation(t, annotation, state) {
   stateAnnotation['StateModel'] = state === 'Marked' || state === 'Unmarked' ? 'Marked' : 'Review';
   stateAnnotation['Hidden'] = true;
 
-  const displayAuthor = core.getDisplayAuthor(stateAnnotation);
+  const displayAuthor = core.getDisplayAuthor(stateAnnotation['Author']);
   const stateMessage = t(`option.state.${state.toLowerCase()}`);
   const contents = `${displayAuthor} ${stateMessage}`;
   stateAnnotation.setContents(contents);
@@ -49,7 +50,11 @@ function NoteStateContainer(props) {
   }, [annotation]);
 
   return (
-    <NoteState handleStateChange={handleStateChange} {...props}/>
+    <Tooltip content={t('option.notesOrder.status')}>
+      <div>
+        <NoteState handleStateChange={handleStateChange} {...props} />
+      </div>
+    </Tooltip>
   );
 }
 

@@ -89,9 +89,12 @@ import setAnnotationStyles from './setAnnotationStyles';
 import deselectAnnotation from './deselectAnnotation';
 import deselectAllAnnotations from './deselectAllAnnotations';
 import jumpToAnnotation from './jumpToAnnotation';
+import insertBlankPages from './insertBlankPages';
 import createAnnotationReply from './createAnnotationReply';
 import getIsReadOnly from './getIsReadOnly';
 import setNoteContents from './setNoteContents';
+import setAnnotationRichTextStyle from './setAnnotationRichTextStyle';
+import updateAnnotationRichTextStyle from './updateAnnotationRichTextStyle';
 import getAnnotationsList from './getAnnotationsList';
 import getAnnotationsLoadedPromise from './getAnnotationsLoadedPromise';
 import getPrintablePDF from './getPrintablePDF';
@@ -113,7 +116,8 @@ import redo from './redo';
 import updateAnnotationState from './updateAnnotationState';
 import getFontStyles from './getFontStyles';
 import mergeDocument from './mergeDocument';
-import getWidgetEditingManager from './getWidgetEditingManager';
+import getFormFieldCreationManager from './getFormFieldCreationManager';
+import syncNamespaces from './syncNamespaces';
 
 export default {
   setToolMode,
@@ -206,8 +210,11 @@ export default {
   deselectAnnotation,
   deselectAllAnnotations,
   jumpToAnnotation,
+  insertBlankPages,
   createAnnotationReply,
   setNoteContents,
+  setAnnotationRichTextStyle,
+  updateAnnotationRichTextStyle,
   getAnnotationsList,
   getAnnotationsLoadedPromise,
   getPrintablePDF,
@@ -232,5 +239,6 @@ export default {
   updateAnnotationState,
   getFontStyles,
   mergeDocument,
-  getWidgetEditingManager,
+  getFormFieldCreationManager,
+  syncNamespaces,
 };

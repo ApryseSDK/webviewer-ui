@@ -3,6 +3,7 @@
   "action": {
     "apply": "套用",
     "applyAll": "全部套用",
+    "calendar": "日曆",
     "calibrate": "校準",
     "cancel": "取消",
     "clear": "清除",
@@ -33,6 +34,7 @@
     "rename": "改名",
     "ok": "OK",
     "rotate": "旋轉",
+    "rotate3D": "旋轉",
     "rotateClockwise": "順時針",
     "rotateCounterClockwise": "逆時針",
     "save": "儲存",
@@ -61,7 +63,24 @@
     "startFormEditing": "開始表格編輯",
     "exitFormEditing": "退出表格編輯模式",
     "exit": "出口",
-    "markAllRead": "將所有內容標記為已讀"
+    "addOption": "新增選項",
+    "formFieldEdit": "編輯表格欄位",
+    "viewShortCutKeysFor3D": "查看快捷鍵",
+    "markAllRead": "將所有內容標記為已讀",
+    "insertPage": "頁面插入",
+    "insertBlankPageAbove": "在上方插入空白頁",
+    "insertBlankPageBelow": "在下方插入空白頁",
+    "pageManipulation": "頁面操作",
+    "replace": "代替",
+    "showLess": "顯示較少",
+    "showMore": "...更多的",
+    "chooseFile": "選擇一個文件",
+    "selectYourOption": "選擇您的選項",
+    "open": "打開",
+    "deselectAll": "取消全選",
+    "select": "選擇",
+    "moveToTop": "移到頂部",
+    "moveToBottom": "移到底部"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -69,14 +88,19 @@
     "callout": "圖說文字",
     "crop": "裁剪頁面",
     "caret": "插入號",
+    "dateFreeText": "日曆",
+    "formFillCheckmark": "打鉤",
+    "formFillCross": "叉",
     "distanceMeasurement": "測量距離",
     "countMeasurement": "計數測量",
     "ellipse": "橢圓",
     "eraser": "橡皮",
     "fileattachment": "文件附件",
     "freehand": "手繪",
+    "freeHandHighlight": "自由手精選",
     "freetext": "任意文字",
     "highlight": "強調顯示",
+    "image": "圖像",
     "line": "線條",
     "perimeterMeasurement": "測量周長",
     "polygon": "多邊形",
@@ -84,6 +108,7 @@
     "polyline": "聚合線條",
     "rectangle": "矩形",
     "redact": "修訂",
+    "formFillDot": "點",
     "signature": "簽名",
     "squiggly": "曲線",
     "stamp": "圖章",
@@ -93,8 +118,15 @@
     "custom": "自訂",
     "rubberStamp": "橡皮圖章",
     "note": "注意",
+    "textField": "文本域",
+    "signatureFormField": "簽名欄",
+    "checkBoxFormField": "複選框字段",
+    "radioButtonFormField": "單選按鈕字段",
+    "listBoxFormField": "列錶框字段",
+    "comboBoxFormField": "組合框字段",
     "link": "鏈接",
-    "other": "其他"
+    "other": "其他",
+    "3D": "3D"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -122,6 +154,7 @@
     "SBRejected": "拒絕"
   },
   "component": {
+    "attachmentPanel": "附件",
     "leftPanel": "面板",
     "toolsHeader": "工具類",
     "searchOverlay": "搜尋",
@@ -130,6 +163,7 @@
     "notesPanel": "備忘稿",
     "outlinesPanel": "大綱",
     "bookmarksPanel": "書籤",
+    "signaturePanel": "簽名",
     "newBookmark": "新書籤",
     "bookmarkPage": "頁",
     "layersPanel": "圖層",
@@ -141,7 +175,9 @@
     "zoomOverlay": "縮放疊加",
     "textPopup": "文字彈出",
     "createStampButton": "創建新圖章",
-    "filter": "過濾"
+    "filter": "過濾",
+    "pageReplaceModalTitle": "替換頁面",
+    "files": "文件"
   },
   "message": {
     "toolsOverlayNoPresets": "無預設",
@@ -151,9 +187,11 @@
     "encryptedUserCancelled": "無法載入加密文件。已取消密碼輸入。",
     "enterPassword": "文件有密碼保護。請輸入密碼",
     "incorrectPassword": "密碼不正確，剩下 {{ remainingAttempts }} 次嘗試機會",
-    "noAnnotations": "此文件沒有註釋。",
+    "noAnnotations": "開始製作註釋以發表評論。",
+    "noAnnotationsReadOnly": "此文件沒有註釋。",
     "noAnnotationsFilter": "開始製作註釋，過濾器將顯示在此處。",
     "noOutlines": "此文件沒有大綱。",
+    "noAttachments": "本文檔沒有附件。",
     "noResults": "沒有找到結果。",
     "numResultsFound": "找到結果",
     "notSupported": "不支援該檔案類型。",
@@ -177,16 +215,52 @@
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能為空",
     "unpostedComment": "未發布評論",
-    "untitled": "無標題"
+    "lockedLayer": "圖層已鎖定",
+    "layerVisibililtyNoChange": "圖層可見性無法更改",
+    "untitled": "無標題",
+    "selectHowToLoadFile": "選擇如何加載文檔",
+    "openFileByUrl": "通過 URL 打開文件：",
+    "enterUrlHere": "在此輸入網址",
+    "openLocalFile": "打開本地文件：",
+    "selectFile": "選擇文件",
+    "selectPageToReplace": "選擇文檔中要替換的頁面。",
+    "embeddedFiles": "嵌入文件",
+    "pageNum": "頁碼"
   },
   "option": {
+    "type": {
+      "caret": "缺乏",
+      "custom": "風俗",
+      "ellipse": "橢圓",
+      "fileattachment": "文件附件",
+      "freehand": "空手",
+      "callout": "大喊",
+      "freetext": "自由文本",
+      "line": "線",
+      "polygon": "多邊形",
+      "polyline": "折線",
+      "rectangle": "長方形",
+      "redact": "纂",
+      "signature": "簽名",
+      "stamp": "郵票",
+      "stickyNote": "粘滯便箋",
+      "highlight": "強調",
+      "strikeout": "三振",
+      "underline": "強調",
+      "squiggly": "彎彎曲曲的",
+      "3D": "3D",
+      "other": "其他"
+    },
     "notesOrder": {
       "dropdownLabel": "排序訂單清單",
       "position": "位置",
       "time": "時間",
       "status": "狀態",
       "author": "作者",
-      "type": "類型"
+      "type": "類型",
+      "color": "顏色",
+      "createDate": "創建日期",
+      "modifiedDate": "修改日期"
     },
     "toolbarGroup": {
       "dropdownLabel": "工具欄組",
@@ -195,7 +269,9 @@
       "toolbarGroup-Shapes": "形狀",
       "toolbarGroup-Insert": "插",
       "toolbarGroup-Measure": "測量",
-      "toolbarGroup-Edit": "編輯"
+      "toolbarGroup-Edit": "編輯",
+      "toolbarGroup-FillAndSign": "填寫並簽名",
+      "toolbarGroup-Forms": "形式"
     },
     "annotationColor": {
       "StrokeColor": "邊框顏色",
@@ -210,7 +286,9 @@
       "pageTransition": "頁面切換"
     },
     "documentControls": {
-      "placeholder": "輸入頁面以選擇2、5-9"
+      "placeholder": "1, 3, 5-10",
+      "selectTooltip": "選擇多個頁面",
+      "closeTooltip": "關閉多選"
     },
     "outlineControls": {
       "add": "添加項目",
@@ -221,10 +299,16 @@
       "double": "2 頁",
       "single": "單面"
     },
+    "mathSymbols": "數學符號",
     "notesPanel": {
       "separator": {
         "today": "今天",
-        "yesterday": "昨天"
+        "yesterday": "昨天",
+        "unknown": "未知"
+      },
+      "noteContent": {
+        "noName": "（無名）",
+        "noDate": "（未註明日期的）"
       }
     },
     "pageTransition": {
@@ -274,9 +358,16 @@
       "or": "要么",
       "pickImage": "選擇簽名圖像"
     },
+    "pageReplacementModal": {
+      "dragAndDrop": "將您的文件拖放到此處",
+      "or": "或者",
+      "chooseFile": "選擇一個文件"
+    },
     "filterAnnotModal": {
       "commentBy": "評論者",
-      "types": "種類"
+      "types": "種類",
+      "color": "顏色",
+      "includeReplies": "包括回覆"
     },
     "status": {
       "status": "狀態"
@@ -309,6 +400,11 @@
     },
     "measurementOption": {
       "scale": "比例"
+    },
+    "stylePopup": {
+      "textStyle": "文字樣式",
+      "colorStyle": "顏色",
+      "invalidFontSize": "字體大小必須小於"
     },
     "styleOption": {
       "style": "樣式",
@@ -347,11 +443,21 @@
       "rotateClockwise": "順時針",
       "rotateCounterClockwise": "逆時針方向"
     },
+    "thumbnailsControlOverlay": {
+      "move": "移動頁面"
+    },
     "richText": {
       "bold": "粗體",
       "italic": "斜體",
       "underline": "下劃綫",
-      "strikeout": "刪除綫"
+      "strikeout": "刪除綫",
+      "alignLeft": "文字左對齊",
+      "alignRight": "文字右對齊",
+      "alignCenter": "文字居中對齊",
+      "justifyCenter": "文本對齊中心",
+      "alignTop": "頂部對齊",
+      "alignMiddle": "居中對齊",
+      "alignBottom": "底部對齊"
     },
     "customStampModal": {
       "stampText": "印章文字：",
@@ -366,7 +472,13 @@
     "deletePage": {
       "deleteTitle": "刪除頁面",
       "deleteMessage": "您確定要刪除所選頁面嗎？這是無法撤消的",
-      "deleteLastPageMessage": "這將導致沒有剩餘頁面。請至少留一頁"
+      "deleteLastPageMessage": "您無法刪除文檔中的所有頁面。"
+    },
+    "extractPage": {
+      "title": "提取頁面",
+      "message": "您確定要提取所選頁面嗎？",
+      "confirmBtn": "提取頁面",
+      "secondaryBtn": "提取並刪除頁面"
     },
     "redaction": {
       "applyTile": "應用編輯",
@@ -399,7 +511,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "stamp": "(I)",
+    "image": "（一世）",
     "redo": "（Ctrl Shift Z）",
     "redo_windows": "(Ctrl Y)",
     "undo": "（Ctrl Z）",
@@ -413,7 +525,9 @@
       "italic": "（Ctrl I）",
       "underline": "（Ctrl U）",
       "strikeout": "（Ctrl K）"
-    }
+    },
+    "rotate3D": "Shift +拖動",
+    "zoom3D": "Shift +滾動"
   },
   "tool": {
     "pan": "移動瀏覽",
@@ -429,10 +543,30 @@
     "enterurl": "輸入您想要鏈接的URL",
     "enterpage": "選擇您要鏈接的頁碼"
   },
+  "Model3D": {
+    "add3D": "通過輸入URL添加3D註釋",
+    "enterurl": "輸入glTF格式的3D對象的URL",
+    "enterurlOrLocalFile": "輸入URL或以glTF格式上傳3D對象",
+    "formatError": "僅支持glTF（.glb）格式"
+  },
   "datePicker": {
     "previousMonth": "前一個月",
     "nextMonth": "下個月",
     "months": {
+      "0": "一月",
+      "1": "二月",
+      "2": "三月",
+      "3": "四月",
+      "4": "五月",
+      "5": "六月",
+      "6": "七月",
+      "7": "八月",
+      "8": "九月",
+      "9": "十月",
+      "10": "十一月",
+      "11": "十二月"
+    },
+    "monthsShort": {
       "0": "一月",
       "1": "二月",
       "2": "三月",
@@ -463,6 +597,39 @@
       "4": "週四",
       "5": "週五",
       "6": "週六"
+    }
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "欄位名稱",
+      "fieldValue": "默認值",
+      "readOnly": "只讀",
+      "multiSelect": "多選",
+      "required": "必需的",
+      "multiLine": "多行",
+      "apply": "申請",
+      "cancel": "取消",
+      "flags": "場旗",
+      "options": "選項",
+      "radioGroups": "具有相同字段名稱的單選按鈕將屬於同一分組。",
+      "nameRequired": "字段名稱為必填項",
+      "size": "尺寸",
+      "width": "寬度",
+      "height": "高度",
+      "invalidField": {
+        "duplicate": "字段名稱已存在",
+        "empty": "字段名稱不能為空"
+      }
+    },
+    "apply": "套用欄位",
+    "type": "字段類型",
+    "types": {
+      "text": "文本",
+      "signature": "簽名",
+      "checkbox": "複選框",
+      "radio": "單選按鈕",
+      "listbox": "列錶框",
+      "combobox": "組合框"
     }
   },
   "digitalSignatureModal": {
@@ -516,6 +683,7 @@
     "by": "通過",
     "on": "上",
     "disallowedChange": "不允許更改：{{type}}，objnum：{{objnum}}",
+    "unsignedSignatureField": "未簽名的簽名字段：{{fieldName}}",
     "trustVerification": {
       "current": "驗證時間為當前時間",
       "signing": "驗證時間是來自簽名者計算機上的時鐘",

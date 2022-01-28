@@ -1,0 +1,30 @@
+.image-signature {
+  width: 450px;
+  height: 220px;
+  position: relative;
+  border-radius: 4px;
+  background: var(--faded-component-background);
+}
+
+.FilePickerPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  .label-separator {
+    margin: 10px;
+  }
+  .modal-btn-file {
+    border-radius: 4px;
+    border: 1px solid var(--primary-button);
+    color: var(--primary-button);
+    padding-top: 2px;
+    padding-right: 20px;
+    padding-bottom: 4px;
+    padding-left: 20px;
+    cursor: pointer;
+  }
+}
