@@ -8,6 +8,9 @@ import './Thumbnail.scss';
 import { Choice } from "@pdftron/webviewer-react-toolkit";
 import { workerTypes } from "constants/types";
 
+// adds a delay in ms so thumbs that are only on the screen briefly are not loaded.
+const THUMBNAIL_LOAD_DELAY = 50;
+
 const Thumbnail = ({
   index,
   isSelected,
@@ -39,65 +42,70 @@ const Thumbnail = ({
   // To ensure checkmark loads after thumbnail
   const [loaded, setLoaded] = useState(false);
 
+  let loadTimeout = null;
+
   const loadThumbnailAsync = () => {
-    const thumbnailContainer = document.getElementById(`pageThumb${index}`);
-    const pageNum = index + 1;
-    const viewerRotation = core.getRotation(pageNum);
+    loadTimeout = setTimeout(() => {
+      const thumbnailContainer = document.getElementById(`pageThumb${index}`);
 
-    const doc = core.getDocument();
-    // Possible race condition can happen where we try to render a thumbnail for a page that has
-    // been deleted. Prevent that by checking if pageInfo exists
+      const pageNum = index + 1;
+      const viewerRotation = core.getRotation(pageNum);
 
-    if (doc && doc.getPageInfo(pageNum)) {
-      const id = doc.loadCanvas({
-        pageNumber: pageNum,
-        width: thumbSize,
-        height: thumbSize,
-        drawComplete: async thumb => {
-          const thumbnailContainer = document.getElementById(`pageThumb${index}`);
-          if (thumbnailContainer) {
-            const childElement = thumbnailContainer.querySelector('.page-image');
-            if (childElement) {
-              thumbnailContainer.removeChild(childElement);
+      const doc = core.getDocument();
+      // Possible race condition can happen where we try to render a thumbnail for a page that has
+      // been deleted. Prevent that by checking if pageInfo exists
+
+      if (doc && doc.getPageInfo(pageNum)) {
+        const id = doc.loadCanvas({
+          pageNumber: pageNum,
+          width: thumbSize,
+          height: thumbSize,
+          drawComplete: async thumb => {
+            const thumbnailContainer = document.getElementById(`pageThumb${index}`);
+            if (thumbnailContainer) {
+              const childElement = thumbnailContainer.querySelector('.page-image');
+              if (childElement) {
+                thumbnailContainer.removeChild(childElement);
+              }
+
+              thumb.className = 'page-image';
+
+              const ratio = Math.min(thumbSize / thumb.width, thumbSize / thumb.height);
+              thumb.style.width = `${thumb.width * ratio}px`;
+              thumb.style.height = `${thumb.height * ratio}px`;
+              setDimensions({ width: Number(thumb.width), height: Number(thumb.height) });
+
+              if (Math.abs(viewerRotation)) {
+                const cssTransform = `rotate(${viewerRotation * 90}deg) translate(-50%,-50%)`;
+                const cssTransformOrigin = 'top left';
+                thumb.style['transform'] = cssTransform;
+                thumb.style['transform-origin'] = cssTransformOrigin;
+                thumb.style['ms-transform'] = cssTransform;
+                thumb.style['ms-transform-origin'] = cssTransformOrigin;
+                thumb.style['-moz-transform'] = cssTransform;
+                thumb.style['-moz-transform-origin'] = cssTransformOrigin;
+                thumb.style['-webkit-transform-origin'] = cssTransformOrigin;
+                thumb.style['-webkit-transform'] = cssTransform;
+                thumb.style['-o-transform'] = cssTransform;
+                thumb.style['-o-transform-origin'] = cssTransformOrigin;
+              }
+
+              thumbnailContainer.appendChild(thumb);
             }
 
-            thumb.className = 'page-image';
-
-            const ratio = Math.min(thumbSize / thumb.width, thumbSize / thumb.height);
-            thumb.style.width = `${thumb.width * ratio}px`;
-            thumb.style.height = `${thumb.height * ratio}px`;
-            setDimensions({ width: Number(thumb.width), height: Number(thumb.height) });
-
-            if (Math.abs(viewerRotation)) {
-              const cssTransform = `rotate(${viewerRotation * 90}deg) translate(-50%,-50%)`;
-              const cssTransformOrigin = 'top left';
-              thumb.style['transform'] = cssTransform;
-              thumb.style['transform-origin'] = cssTransformOrigin;
-              thumb.style['ms-transform'] = cssTransform;
-              thumb.style['ms-transform-origin'] = cssTransformOrigin;
-              thumb.style['-moz-transform'] = cssTransform;
-              thumb.style['-moz-transform-origin'] = cssTransformOrigin;
-              thumb.style['-webkit-transform-origin'] = cssTransformOrigin;
-              thumb.style['-webkit-transform'] = cssTransform;
-              thumb.style['-o-transform'] = cssTransform;
-              thumb.style['-o-transform-origin'] = cssTransformOrigin;
+            if (updateAnnotations) {
+              updateAnnotations(index);
             }
 
-            thumbnailContainer.appendChild(thumb);
-          }
-
-          if (updateAnnotations) {
-            updateAnnotations(index);
-          }
-
-          onFinishLoading(index);
-          setLoaded(true);
-        },
-        source: 'thumbnail',
-        'isInternalRender': true,
-      });
-      onLoad(index, thumbnailContainer, id);
-    }
+            onFinishLoading(index);
+            setLoaded(true);
+          },
+          source: 'thumbnail',
+          'isInternalRender': true,
+        });
+        onLoad(index, thumbnailContainer, id);
+      }
+    }, THUMBNAIL_LOAD_DELAY);
   };
 
   useEffect(() => {
@@ -134,13 +142,14 @@ const Thumbnail = ({
     return () => {
       core.removeEventListener('layoutChanged', onLayoutChanged);
       core.removeEventListener('rotationUpdated', onRotationUpdated);
+      clearTimeout(loadTimeout);
       onRemove(index);
     };
   }, []);
 
   useDidUpdate(() => {
     if (canLoad) {
-      loadThumbnailAsync()
+      loadThumbnailAsync();
     } else {
       onCancel(index);
     }
