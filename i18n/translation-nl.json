@@ -29,6 +29,7 @@
     "pageNext": "Volgende bladzijde",
     "pageSet": "Zet pagina",
     "print": "Printen",
+    "proceed": "Doorgaan",
     "name": "Naam",
     "rename": "Hernoemen",
     "ok": "OK",
@@ -79,7 +80,9 @@
     "deselectAll": "Deselecteer alles",
     "select": "Selecteer",
     "moveToTop": "Ga naar boven",
-    "moveToBottom": "Naar beneden verplaatsen"
+    "moveToBottom": "Naar beneden verplaatsen",
+    "playAudio": "Audio afspelen",
+    "pauseAudio": "audio pauze"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -125,7 +128,8 @@
     "comboBoxFormField": "Veld met invoervak",
     "link": "Koppeling",
     "other": "Andere",
-    "3D": "3D"
+    "3D": "3D",
+    "sound": "Geluid"
   },
   "rubberStamp": {
     "Approved": "Goedgekeurd",
@@ -210,6 +214,11 @@
     "enterMeasurement": "Voer de meting tussen de twee punten in",
     "errorEnterMeasurement": "Het getal dat je hebt ingevoerd is ongeldig, je kunt waarden invoeren zoals 7,5 of 7 1/2",
     "linkURLorPage": "Link-URL of een pagina",
+    "warning": "Waarschuwing",
+    "enterContentEditingMode": "U staat op het punt om naar de tekstbewerkingsmodus te gaan.",
+    "existingAnnotationWarning": "Bestaande annotaties komen mogelijk niet overeen met de tekst nadat deze is bewerkt.",
+    "changesCannotBeUndone": "Aangebrachte wijzigingen kunnen niet ongedaan worden gemaakt.",
+    "doNotShowAgain": "laat mij dit niet meer zien",
     "enterReplacementText": "Voer de tekst in die u wilt vervangen",
     "sortBy": "Sorteer op",
     "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn",
@@ -258,7 +267,7 @@
       "author": "Auteur",
       "type": "Type",
       "color": "Kleur",
-      "createDate": "Aanmaakdatum",
+      "createdDate": "Aanmaakdatum",
       "modifiedDate": "Aangepaste datum"
     },
     "toolbarGroup": {
@@ -270,7 +279,8 @@
       "toolbarGroup-Measure": "Meten",
       "toolbarGroup-Edit": "Bewerk",
       "toolbarGroup-FillAndSign": "Invullen en ondertekenen",
-      "toolbarGroup-Forms": "Formulieren"
+      "toolbarGroup-Forms": "Formulieren",
+      "toolbarGroup-Redact": "Redigeren"
     },
     "annotationColor": {
       "StrokeColor": "Rand kleur",
@@ -352,15 +362,19 @@
       "addSignature": "Voeg een handtekening toe"
     },
     "signatureModal": {
-      "saveSignature": "Bewaar handtekening",
+      "modalName": "Nieuwe handtekening maken",
       "dragAndDrop": "Sleep je afbeelding hiernaartoe",
       "or": "Of",
-      "pickImage": "Kies handtekening afbeelding"
+      "pickImage": "Kies handtekening afbeelding",
+      "selectImage": "Selecteer hier uw afbeelding"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Sleep en zet uw bestand hier neer",
       "or": "Of",
-      "chooseFile": "Kies een bestand"
+      "chooseFile": "Kies een bestand",
+      "localFile": "Lokaal bestand",
+      "pageReplaceInputLabel": "Pagina('s) vervangen",
+      "pageReplaceInputFromSource": "met pagina('s)"
     },
     "filterAnnotModal": {
       "commentBy": "Reageer door",
@@ -400,8 +414,10 @@
     },
     "stylePopup": {
       "textStyle": "Tekststijl",
-      "colorStyle": "Kleuren",
-      "invalidFontSize": "Lettergrootte moet kleiner zijn dan"
+      "colors": "Kleuren",
+      "invalidFontSize": "Lettergrootte moet kleiner zijn dan",
+      "labelText": "Labeltekst",
+      "labelTextPlaceholder": "Labeltekst toevoegen"
     },
     "styleOption": {
       "style": "Stijl",
@@ -457,8 +473,9 @@
       "alignBottom": "Onderuit uitlijnen"
     },
     "customStampModal": {
-      "stampText": "Stempel tekst:",
-      "timestampText": "Tijdstempel tekst:",
+      "modalName": "Nieuwe stempel maken",
+      "stampText": "Stempel tekst",
+      "timestampText": "Tijdstempel tekst",
       "stampColor": "Stempelkleur:",
       "Username": "Gebruikersnaam",
       "Date": "Datum",
@@ -538,13 +555,20 @@
     "url": "URL",
     "page": "Bladzijde",
     "enterurl": "Voer de URL in waarnaar u wilt linken",
-    "enterpage": "Selecteer het paginanummer waarnaar u wilt linken"
+    "enterpage": "Selecteer het paginanummer waarnaar u wilt linken",
+    "urlLink": "URL-link"
   },
   "Model3D": {
     "add3D": "Voeg een 3D-annotatie toe door een URL in te voeren",
     "enterurl": "Voer de URL voor het 3D-object in glTF-indeling in",
     "enterurlOrLocalFile": "Voer de URL in of upload een 3D-object in glTF-indeling",
     "formatError": "Alleen het glTF-formaat (.glb) wordt ondersteund"
+  },
+  "OpenFile": {
+    "enterUrlOrChooseFile": "Voer een URL in of kies een bestand om in WebViewer te laden",
+    "enterUrl": "Voer bestands-URL in",
+    "extension": "Bestandsextensie",
+    "existingFile": "Bestand is al geopend"
   },
   "datePicker": {
     "previousMonth": "Vorige maand",

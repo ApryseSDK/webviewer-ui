@@ -1,8 +1,8 @@
 import core from 'core';
 import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
-import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
-import { enableElements, disableElements } from 'actions/internalActions';
+import { getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
+import { disableElements, enableElements } from 'actions/internalActions';
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
@@ -78,6 +78,7 @@ export const setCustomStamps = t => async dispatch => {
     }),
   );
 
+
   const customStamps = annotations.map(annotation => ({
     annotation,
     imgSrc: annotation['ImageData'],
@@ -105,7 +106,7 @@ export const enableRibbons = () => (dispatch, getState) => {
   // We double check here if we are in form mode and set the correct tool bar group
   // We enable ribbons when going into form mode, as we temporarily elevate the user's permissions
   const isInFormFieldCreationMode = core.getFormFieldCreationManager().isInFormFieldCreationMode();
-  const toolbarGroup = isInFormFieldCreationMode ? 'toolbarGroup-Forms' : state.viewer.toolbarGroup
+  const toolbarGroup = isInFormFieldCreationMode ? 'toolbarGroup-Forms' : state.viewer.toolbarGroup;
   dispatch(setToolbarGroup(toolbarGroup || 'toolbarGroup-Annotate'));
   const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
     .filter(key => key.includes('toolbarGroup-'));
@@ -383,16 +384,16 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
     );
   }
 };
-export const setSortStrategy = sortStrategy => ({
-  type: 'SET_SORT_STRATEGY',
+export const setNotesPanelSortStrategy = sortStrategy => ({
+  type: 'SET_NOTES_PANEL_SORT_STRATEGY',
   payload: { sortStrategy },
 });
 export const setSortNotesBy = sortStrategy => {
   console.warn(
-    'setSortNotesBy is deprecated, please use setSortStrategy instead',
+    'setSortNotesBy is deprecated, please use setNotesPanelSortStrategy instead',
   );
 
-  return setSortStrategy(sortStrategy);
+  return setNotesPanelSortStrategy(sortStrategy);
 };
 export const setNoteDateFormat = noteDateFormat => ({
   type: 'SET_NOTE_DATE_FORMAT',
@@ -489,7 +490,7 @@ export const setCustomElementOverrides = (dataElement, overrides) => ({
   type: 'SET_CUSTOM_ELEMENT_OVERRIDES',
   payload: { dataElement, overrides },
 });
-export const setPageReplacementModalFileList = (list) => ({
+export const setPageReplacementModalFileList = list => ({
   type: 'SET_PAGE_REPLACEMENT_FILE_LIST',
   payload: { list },
 });
@@ -527,6 +528,11 @@ export const addTrustedCertificates = certificates => ({
 export const setSignatureValidationModalWidgetName = widgetName => ({
   type: 'SET_VALIDATION_MODAL_WIDGET_NAME',
   payload: { validationModalWidgetName: widgetName },
+});
+
+export const setNoteSubmissionEnabledWithEnter = enableNoteSubmissionWithEnter => ({
+  type: 'SET_SUBMIT_COMMENT_MODE',
+  payload: { enableNoteSubmissionWithEnter },
 });
 
 export const enableFadePageNavigationComponent = () => ({

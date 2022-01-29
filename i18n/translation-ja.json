@@ -10,7 +10,7 @@
     "undo": "元に戻す",
     "redo": "やり直し",
     "comment": "コメント",
-    "reply": "返信",
+    "reply": "返信する",
     "copy": "コピー",
     "delete": "削除",
     "group": "グループ化",
@@ -29,6 +29,7 @@
     "pageNext": "次のページ",
     "pageSet": "ページを設定",
     "print": "印刷",
+    "proceed": "続行",
     "name": "名前",
     "rename": "名前を変更する",
     "ok": "OK",
@@ -70,16 +71,18 @@
     "insertBlankPageAbove": "上に空白のページを挿入",
     "insertBlankPageBelow": "下に空白のページを挿入",
     "pageManipulation": "ページ操作",
-    "replace": "交換",
+    "replace": "入れ替え",
     "showLess": "表示を減らす",
-    "showMore": "...もっと",
+    "showMore": "...さらに表示",
     "chooseFile": "ファイルを選択してください",
     "selectYourOption": "オプションを選択してください",
     "open": "開ける",
     "deselectAll": "すべての選択を解除",
     "select": "選択する",
     "moveToTop": "上に移動",
-    "moveToBottom": "下に移動"
+    "moveToBottom": "下に移動",
+    "playAudio": "オーディオを再生する",
+    "pauseAudio": "オーディオの一時停止"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -88,7 +91,7 @@
     "crop": "ページをトリミング",
     "caret": "キャレット",
     "dateFreeText": "カレンダー",
-    "formFillCheckmark": "ダニ",
+    "formFillCheckmark": "チェックマーク",
     "formFillCross": "クロス",
     "distanceMeasurement": "距離測定",
     "countMeasurement": "カウント測定",
@@ -120,12 +123,13 @@
     "textField": "テキストフィールド",
     "signatureFormField": "署名フィールド",
     "checkBoxFormField": "チェックボックスフィールド",
-    "radioButtonFormField": "RadioButtonフィールド",
+    "radioButtonFormField": "ラジオボタンフィールド",
     "listBoxFormField": "リストボックスフィールド",
     "comboBoxFormField": "コンボボックスフィールド",
     "link": "リンク",
     "other": "その他",
-    "3D": "3D"
+    "3D": "3D",
+    "sound": "音"
   },
   "rubberStamp": {
     "Approved": "承認済",
@@ -149,7 +153,7 @@
     "SHSignHere": "署名",
     "SHWitness": "証人",
     "SHInitialHere": "イニシャル",
-    "SHAccepted": "同意",
+    "SHAccepted": "受理",
     "SBRejected": "拒否"
   },
   "component": {
@@ -175,18 +179,18 @@
     "textPopup": "テキストポップアップ",
     "createStampButton": "新しいスタンプを作成",
     "filter": "フィルター",
-    "pageReplaceModalTitle": "ページを置き換える",
+    "pageReplaceModalTitle": "ページを入れ替える",
     "files": "ファイル"
   },
   "message": {
     "toolsOverlayNoPresets": "プリセットなし",
-    "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、無効です。",
+    "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、有効ではありません。",
     "customPrintPlaceholder": "例：3, 4-10",
     "encryptedAttemptsExceeded": "暗号化されたドキュメントの読み込みに失敗しました。試行回数が多すぎます。",
     "encryptedUserCancelled": "暗号化されたドキュメントの読み込みに失敗しました。パスワード入力が取り消されました。",
     "enterPassword": "このドキュメントは、パスワードで保護されています。 パスワードを入力してください。",
     "incorrectPassword": "パスワードが正しくありません。残りの試行回数：{{ remainingAttempts }}",
-    "noAnnotations": "コメントを残すために注釈を付け始めます。",
+    "noAnnotations": "コメントを残すには、注釈を追加してください。",
     "noAnnotationsReadOnly": "このドキュメントには注釈がありません。",
     "noAnnotationsFilter": "注釈を追加すると、フィルターがここに表示されます。",
     "noOutlines": "このドキュメントには概要がありません。",
@@ -205,15 +209,20 @@
     "searchCommentsPlaceholder": "コメントを検索",
     "searchDocumentPlaceholder": "ドキュメント内を検索",
     "signHere": "ここに署名してください",
-    "insertTextHere": "ここにテキストを挿入",
+    "insertTextHere": "ここにテキストを挿入してください",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが許可されています",
     "enterMeasurement": "2点間の測定値を入力します",
     "errorEnterMeasurement": "入力した数値は無効です。7.5や7 1/2などの値を入力できます",
     "linkURLorPage": "ページまたはURLのリンクを挿入",
+    "warning": "警告",
+    "enterContentEditingMode": "テキスト編集モードを開始しようとしています。",
+    "existingAnnotationWarning": "編集後、既存の注釈がテキストと一致しない場合があります。",
+    "changesCannotBeUndone": "行った変更は元に戻せません。",
+    "doNotShowAgain": "また僕にこれを見せないでください",
     "enterReplacementText": "置き換えるテキストを入力してください",
     "sortBy": "並び替え",
     "emptyCustomStampInput": "スタンプテキストを空にすることはできません",
-    "unpostedComment": "未投稿コメント",
+    "unpostedComment": "未投稿のコメント",
     "lockedLayer": "レイヤーがロックされています",
     "layerVisibililtyNoChange": "レイヤーの可視性は変更できません",
     "untitled": "無題",
@@ -222,43 +231,43 @@
     "enterUrlHere": "ここにURLを入力してください",
     "openLocalFile": "ローカルファイルを開く：",
     "selectFile": "ファイルを選ぶ",
-    "selectPageToReplace": "置き換えるドキュメント内のページを選択します。",
+    "selectPageToReplace": "ドキュメント内の入れ替えたいページを選択します。",
     "embeddedFiles": "埋め込みファイル",
     "pageNum": "ページ番号"
   },
   "option": {
     "type": {
-      "caret": "欠けている",
+      "caret": "キャレット",
       "custom": "カスタム",
       "ellipse": "楕円",
       "fileattachment": "添付ファイル",
       "freehand": "フリーハンド",
-      "callout": "叫ぶ",
+      "callout": "吹き出し",
       "freetext": "フリーテキスト",
       "line": "ライン",
       "polygon": "ポリゴン",
       "polyline": "ポリライン",
-      "rectangle": "矩形",
-      "redact": "墨消し",
-      "signature": "サイン",
+      "rectangle": "長方形",
+      "redact": "改訂",
+      "signature": "署名",
       "stamp": "スタンプ",
       "stickyNote": "付箋",
       "highlight": "ハイライト",
-      "strikeout": "三振",
-      "underline": "下線を引く",
-      "squiggly": "波打つ",
+      "strikeout": "取り消し線",
+      "underline": "下線",
+      "squiggly": "波線",
       "3D": "3D",
-      "other": "他の"
+      "other": "その他"
     },
     "notesOrder": {
       "dropdownLabel": "ソート順リスト",
       "position": "位置",
       "time": "時刻",
-      "status": "状態",
+      "status": "ステータス",
       "author": "作成者",
       "type": "種類",
       "color": "色",
-      "createDate": "作成日",
+      "createdDate": "作成日",
       "modifiedDate": "変更日"
     },
     "toolbarGroup": {
@@ -269,8 +278,9 @@
       "toolbarGroup-Insert": "挿入",
       "toolbarGroup-Measure": "測定",
       "toolbarGroup-Edit": "編集",
-      "toolbarGroup-FillAndSign": "記入して署名する",
-      "toolbarGroup-Forms": "フォーム"
+      "toolbarGroup-FillAndSign": "入力と署名",
+      "toolbarGroup-Forms": "フォーム",
+      "toolbarGroup-Redact": "墨消し"
     },
     "annotationColor": {
       "StrokeColor": "枠線",
@@ -291,7 +301,7 @@
     },
     "outlineControls": {
       "add": "アイテムを追加",
-      "reorder": "再注文"
+      "reorder": "再追加"
     },
     "layout": {
       "cover": "表紙見開きページ",
@@ -328,7 +338,7 @@
       "addWatermarkSettings": "透かしを追加"
     },
     "printInfo": {
-      "author": "著者",
+      "author": "作成者",
       "subject": "件名",
       "date": "日付"
     },
@@ -358,25 +368,28 @@
       "pickImage": "署名画像を選択"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "ここにファイルをドラッグアンドドロップします",
-      "or": "また",
-      "chooseFile": "ファイルを選択してください"
+      "dragAndDrop": "ここにファイルをドラッグ＆ドロップ",
+      "or": "または",
+      "chooseFile": "ファイルを選択",
+      "localFile": "ローカルファイル",
+      "pageReplaceInputLabel": "ページを置き換える",
+      "pageReplaceInputFromSource": "ページ付き"
     },
     "filterAnnotModal": {
-      "commentBy": "によるコメント",
-      "types": "タイプ",
+      "commentBy": "コメント者",
+      "types": "種類",
       "color": "色",
       "includeReplies": "返信を含める"
     },
     "status": {
-      "status": "状態"
+      "status": "ステータス"
     },
     "state": {
       "accepted": "承認",
       "rejected": "却下",
       "completed": "完了",
       "cancelled": "キャンセル",
-      "set": "状態を設定：",
+      "set": "ステータスを設定：",
       "setBy": "が設定されました",
       "none": "なし",
       "marked": "マーク",
@@ -400,8 +413,10 @@
     },
     "stylePopup": {
       "textStyle": "テキストスタイル",
-      "colorStyle": "色",
-      "invalidFontSize": "フォントサイズは以下でなければなりません"
+      "colors": "色",
+      "invalidFontSize": "フォントサイズは次より小さくしてください。",
+      "labelText": "ラベルテキスト",
+      "labelTextPlaceholder": "ラベルテキストを追加"
     },
     "styleOption": {
       "style": "スタイル",
@@ -411,7 +426,7 @@
     "slider": {
       "opacity": "不透明度",
       "thickness": "太さ",
-      "text": "フォントサイズ"
+      "text": "テキストサイズ"
     },
     "shared": {
       "page": "ページ",
@@ -457,8 +472,8 @@
       "alignBottom": "底を揃える"
     },
     "customStampModal": {
-      "stampText": "スタンプのテキスト：",
-      "timestampText": "タイムスタンプ：",
+      "stampText": "スタンプテキスト：",
+      "timestampText": "タイムスタンプテキスト：",
       "stampColor": "スタンプの色：",
       "Username": "ユーザー名",
       "Date": "日付",
@@ -508,23 +523,23 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "（NS）",
+    "image": "(I)",
     "redo": "（Ctrl Shift Z）",
     "redo_windows": "(Ctrl Y)",
-    "undo": "（Ctrl Z）",
+    "undo": "(Ctrl Z)",
     "stickyNote": "(N)",
     "strikeout": "(K)",
     "underline": "(U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
     "richText": {
-      "bold": "（Ctrl B）",
-      "italic": "（Ctrl I）",
-      "underline": "（Ctrl U）",
-      "strikeout": "（Ctrl K）"
+      "bold": "(Ctrl B)",
+      "italic": "(Ctrl I)",
+      "underline": "(Ctrl U)",
+      "strikeout": "(Ctrl K)"
     },
-    "rotate3D": "Shift +ドラッグ",
-    "zoom3D": "Shift +スクロール"
+    "rotate3D": "Shift + ドラッグ",
+    "zoom3D": "Shift + スクロール"
   },
   "tool": {
     "pan": "パン",
@@ -538,13 +553,20 @@
     "url": "URL",
     "page": "ページ",
     "enterurl": "リンク先URLを入力してください",
-    "enterpage": "リンク先のページ番号を選択してください"
+    "enterpage": "リンク先のページ番号を選択してください",
+    "urlLink": "URLリンク"
   },
   "Model3D": {
-    "add3D": "URLを入力して3D注釈を追加する",
+    "add3D": "3Dオブジェクトを追加",
     "enterurl": "3DオブジェクトのURLをglTF形式で入力します",
-    "enterurlOrLocalFile": "URLを入力するか、3DオブジェクトをglTF形式でアップロードします",
+    "enterurlOrLocalFile": "glTF形式のURLを入力するか、3Dオブジェクトをアップロードします",
     "formatError": "glTF（.glb）形式のみがサポートされています"
+  },
+  "OpenFile": {
+    "enterUrlOrChooseFile": "URLを入力するか、WebViewerにロードするファイルを選択してください",
+    "enterUrl": "ファイルのURLを入力してください",
+    "extension": "ファイル拡張子",
+    "existingFile": "ファイルはすでに開いています"
   },
   "datePicker": {
     "previousMonth": "前月",
@@ -599,12 +621,12 @@
   "formField": {
     "formFieldPopup": {
       "fieldName": "フィールド名",
-      "fieldValue": "デフォルト値",
+      "fieldValue": "初期値",
       "readOnly": "読み取り専用",
       "multiSelect": "複数選択",
       "required": "必須",
-      "multiLine": "マルチライン",
-      "apply": "適用する",
+      "multiLine": "複数行",
+      "apply": "適用",
       "cancel": "キャンセル",
       "flags": "フィールドフラグ",
       "options": "オプション",
@@ -618,7 +640,7 @@
         "empty": "フィールド名を空にすることはできません"
       }
     },
-    "apply": "フィールドを適用する",
+    "apply": "フィールドを適用",
     "type": "フィールドタイプ",
     "types": {
       "text": "テキスト",
@@ -636,28 +658,28 @@
     "Signature": "署名",
     "valid": "有効",
     "invalid": "無効",
-    "unknown": "わからない",
+    "unknown": "不明",
     "title": "{{type}}プロパティ",
     "header": {
-      "documentIntegrity": "ドキュメントの整合性",
-      "identitiesTrust": "アイデンティティと信頼",
+      "documentIntegrity": "ドキュメントの完全性",
+      "identitiesTrust": "アイデンティティと信頼性",
       "generalErrors": "一般的なエラー",
       "digestStatus": "ダイジェストステータス"
     },
     "documentPermission": {
-      "noChangesAllowed": "{{editor}}は、このドキュメントに変更を加えることはできないと指定しています",
-      "formfillingSigningAllowed": "{{editor}}は、このドキュメントでフォームへの入力と署名を許可するように指定しています。その他の変更は許可されていません。",
-      "annotatingFormfillingSigningAllowed": "{{editor}}は、このドキュメントでフォームへの入力、署名、コメントを許可するように指定しています。その他の変更は許可されていません。",
-      "unrestricted": "{{editor}}は、このドキュメントに制限がないことを指定しています。"
+      "noChangesAllowed": "{{editor}}は、このドキュメントに変更を加えることを禁止しています",
+      "formfillingSigningAllowed": "{{editor}}は、このドキュメントでフォーム入力と署名のみを許可しています。その他の変更を加えることは許可されていません。",
+      "annotatingFormfillingSigningAllowed": "{{editor}}は、このドキュメントでフォーム入力、署名、コメントのみを許可しています。その他の変更を加えることは許可されていません。",
+      "unrestricted": "{{editor}}は、このドキュメントには何も制限を設けていません。"
     },
     "digestAlgorithm": {
-      "preamble": "署名に署名するために使用されたダイジェストアルゴリズム：",
-      "unknown": "署名の署名に使用されたダイジェストアルゴリズムは不明です。"
+      "preamble": "署名に使用されたダイジェストアルゴリズム：",
+      "unknown": "署名に使用されたダイジェストアルゴリズムは不明です。"
     },
     "trustVerification": {
-      "none": "詳細な信頼検証結果はありません。",
-      "current": "現在の時刻に関して信頼の検証が試行されました",
-      "signing": "署名時間に関して信頼の検証が試行されました：{{trustVerificationTime}}",
+      "none": "詳細な信頼性検証結果はありません。",
+      "current": "現在の時刻に関して信頼性検証が試行されました",
+      "signing": "署名時刻に関して信頼性検証が試行されました：{{trustVerificationTime}}",
       "timestamp": "安全な埋め込みタイムスタンプに関して信頼の検証が試行されました：{{trustVerificationTime}}"
     },
     "signerIdentity": {
@@ -666,66 +688,66 @@
       "unknown": "わからない。"
     },
     "summaryBox": {
-      "summary": "デジタル{{type}}は{{status}}です",
-      "signedBy": "、{{name}}による署名"
+      "summary": "デジタル{{type}}は{{status}}で",
+      "signedBy": "、{{name}}が署名しました"
     }
   },
   "digitalSignatureVerification": {
-    "certifier": "証明する",
-    "certified": "認証済み",
-    "Certified": "認証済み",
-    "signer": "符号",
-    "signed": "手話",
-    "Signed": "手話",
-    "by": "沿って",
-    "on": "オン",
+    "certifier": "認証者",
+    "certified": "認証済",
+    "Certified": "認証済",
+    "signer": "署名者",
+    "signed": "署名済",
+    "Signed": "署名済",
+    "by": "by",
+    "on": "on",
     "disallowedChange": "許可されていない変更：{{type}}、objnum：{{objnum}}",
     "unsignedSignatureField": "署名されていない署名フィールド：{{fieldName}}",
     "trustVerification": {
-      "current": "使用した検証時間は現在の時間でした",
-      "signing": "確認時間は署名者のコンピューターの時計からです",
-      "timestamp": "検証時間は、ドキュメントに埋め込まれている安全なタイムスタンプからのものです",
-      "verifiedTrust": "信頼検証結果：検証済み",
-      "noTrustVerification": "詳細な信頼検証結果はありません。"
+      "current": "使用した認証時刻は現在の時刻です",
+      "signing": "認証時刻は署名者のコンピューターの時計を基にしています",
+      "timestamp": "認証時刻は、ドキュメントに埋め込まれているセキュアなタイムスタンプを基にしています",
+      "verifiedTrust": "信頼性認証結果：認証済",
+      "noTrustVerification": "詳細な信頼性認証結果はありません。"
     },
     "permissionStatus": {
-      "noPermissionsStatus": "レポートする権限ステータスがありません。",
-      "permissionsVerificationDisabled": "権限の検証が無効になっています。",
-      "hasAllowedChanges": "ドキュメントには、署名のアクセス許可設定で許可されている変更があります。",
-      "invalidatedByDisallowedChanges": "ドキュメントには、署名のアクセス許可設定で許可されていない変更があります。",
-      "unmodified": "ドキュメントは変更されていません。"
+      "noPermissionsStatus": "報告する権限ステータスがありません。",
+      "permissionsVerificationDisabled": "権限の認証が無効になっています。",
+      "hasAllowedChanges": "このドキュメントには、署名権限設定で許可されている変更があります。",
+      "invalidatedByDisallowedChanges": "このドキュメントには、署名権限設定で許可されていない変更があります。",
+      "unmodified": "このドキュメントに変更はありません。"
     },
     "trustStatus": {
-      "trustVerified": "{{verificationType}}への信頼が正常に確立されました。",
-      "untrusted": "信頼を確立できませんでした。",
-      "trustVerificationDisabled": "信頼の検証が無効になっています。",
-      "noTrustStatus": "報告する信頼ステータスはありません。"
+      "trustVerified": "{{verificationType}}の信頼性が正常に確保されました。",
+      "untrusted": "信頼性を確保できませんでした。",
+      "trustVerificationDisabled": "信頼性の認証が無効になっています。",
+      "noTrustStatus": "報告する信頼性ステータスはありません。"
     },
     "digestStatus": {
       "digestInvalid": "ダイジェストが正しくありません。",
-      "digestVerified": "ダイジェストは正しいです。",
-      "digestVerificationDisabled": "ダイジェスト検証が無効になっています。",
-      "weakDigestAlgorithmButDigestVerifiable": "ダイジェストは正しいですが、ダイジェストアルゴリズムは弱く、安全ではありません。",
+      "digestVerified": "ダイジェストが正しいです。",
+      "digestVerificationDisabled": "ダイジェスト認証が無効になっています。",
+      "weakDigestAlgorithmButDigestVerifiable": "ダイジェストは正しいですが、ダイジェストアルゴリズムが弱く、セキュアではありません。",
       "noDigestStatus": "報告するダイジェストステータスはありません。",
-      "unsupportedEncoding": "インストールされたSignatureHandlerは署名のエンコーディングを認識できませんでした"
+      "unsupportedEncoding": "インストールされたSignatureHandlerが署名のエンコーディングを認識できませんでした"
     },
     "documentStatus": {
       "noError": "報告する一般的なエラーはありません。",
       "corruptFile": "SignatureHandlerがファイルの破損を報告しました。",
-      "unsigned": "署名はまだ暗号で署名されていません。",
-      "badByteRanges": "SignatureHandlerは、デジタル署名のByteRangesの破損を報告します。",
+      "unsigned": "署名がまだ暗号化されていません。",
+      "badByteRanges": "SignatureHandlerがデジタル署名のByteRangesの破損を報告しています。",
       "corruptCryptographicContents": "SignatureHandlerは、デジタル署名の内容の破損を報告します。"
     },
     "signatureDetails": {
       "signatureDetails": "署名の詳細",
       "contactInformation": "連絡先",
-      "location": "ロケーション",
+      "location": "場所",
       "reason": "理由",
-      "signingTime": "署名時間",
-      "noContactInformation": "連絡先情報は提供されていません",
-      "noLocation": "場所は提供されていません",
-      "noReason": "理由はありません",
-      "noSigningTime": "署名時間が見つかりません"
+      "signingTime": "署名時刻",
+      "noContactInformation": "連絡先情報が提供されていません",
+      "noLocation": "場所が提供されていません",
+      "noReason": "理由が提供されていません",
+      "noSigningTime": "署名時刻が見つかりません"
     },
     "panelMessages": {
       "noSignatureFields": "このドキュメントには署名フィールドがありません",

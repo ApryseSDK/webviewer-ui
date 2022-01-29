@@ -29,6 +29,7 @@
     "pageNext": "下一页",
     "pageSet": "设定页面",
     "print": "打印",
+    "proceed": "继续",
     "name": "名称",
     "rename": "改名",
     "ok": "好的",
@@ -79,7 +80,9 @@
     "deselectAll": "取消全选",
     "select": "选择",
     "moveToTop": "移到顶部",
-    "moveToBottom": "移到底部"
+    "moveToBottom": "移到底部",
+    "playAudio": "播放音频",
+    "pauseAudio": "音频暂停"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -125,7 +128,8 @@
     "comboBoxFormField": "组合框字段",
     "link": "链接",
     "other": "其他",
-    "3D": "3D"
+    "3D": "3D",
+    "sound": "声音"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -210,7 +214,12 @@
     "enterMeasurement": "在两点之间输入测量值",
     "errorEnterMeasurement": "您输入的数字无效，您可以输入7.5或7 1/2之类的值",
     "linkURLorPage": "链接网址或页面",
-    "enterReplacementText": "输入您要替换的文字",
+    "warning": "警告",
+    "enterContentEditingMode": "您即将进入文本编辑模式。",
+    "existingAnnotationWarning": "现有注释在编辑后可能与文本不匹配。",
+    "changesCannotBeUndone": "所做的任何更改都无法撤消。",
+    "doNotShowAgain": "别再给我看这个了",
+    "enterReplacementText": "输入要替换的文本",
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能为空",
     "unpostedComment": "未发布评论",
@@ -258,7 +267,7 @@
       "author": "作者",
       "type": "类型",
       "color": "颜色",
-      "createDate": "创建日期",
+      "createdDate": "创建日期",
       "modifiedDate": "修改日期"
     },
     "toolbarGroup": {
@@ -270,7 +279,8 @@
       "toolbarGroup-Measure": "测量",
       "toolbarGroup-Edit": "编辑",
       "toolbarGroup-FillAndSign": "填写并签名",
-      "toolbarGroup-Forms": "形式"
+      "toolbarGroup-Forms": "形式",
+      "toolbarGroup-Redact": "纂"
     },
     "annotationColor": {
       "StrokeColor": "边框颜色",
@@ -352,15 +362,19 @@
       "addSignature": "添加签名"
     },
     "signatureModal": {
-      "saveSignature": "保存签名",
+      "modalName": "创建新签名",
       "dragAndDrop": "将图片拖放到此处",
       "or": "要么",
-      "pickImage": "选择签名图像"
+      "pickImage": "选择签名图像",
+      "selectImage": "在此处选择您的图片"
     },
     "pageReplacementModal": {
       "dragAndDrop": "将您的文件拖放到此处",
       "or": "或者",
-      "chooseFile": "选择一个文件"
+      "chooseFile": "选择一个文件",
+      "localFile": "本地文件",
+      "pageReplaceInputLabel": "替换页面",
+      "pageReplaceInputFromSource": "有页面"
     },
     "filterAnnotModal": {
       "commentBy": "评论者",
@@ -400,8 +414,10 @@
     },
     "stylePopup": {
       "textStyle": "文字样式",
-      "colorStyle": "颜色",
-      "invalidFontSize": "字体大小必须小于"
+      "colors": "颜色",
+      "invalidFontSize": "字体大小必须小于",
+      "labelText": "标签文本",
+      "labelTextPlaceholder": "添加标签文本"
     },
     "styleOption": {
       "style": "样式",
@@ -457,8 +473,9 @@
       "alignBottom": "底部对齐"
     },
     "customStampModal": {
-      "stampText": "印章文字：",
-      "timestampText": "时间戳记文字：",
+      "modalName": "创建新图章",
+      "stampText": "印章文字",
+      "timestampText": "时间戳记文字",
       "stampColor": "印章颜色：",
       "Username": "用户名",
       "Date": "日期",
@@ -538,13 +555,20 @@
     "url": "网址",
     "page": "页",
     "enterurl": "输入您想要链接的URL",
-    "enterpage": "选择您要链接的页码"
+    "enterpage": "选择您要链接的页码",
+    "urlLink": "网址链接"
   },
   "Model3D": {
     "add3D": "通过输入URL添加3D注释",
     "enterurl": "输入glTF格式的3D对象的URL",
     "enterurlOrLocalFile": "输入URL或以glTF格式上传3D对象",
     "formatError": "仅支持glTF（.glb）格式"
+  },
+  "OpenFile": {
+    "enterUrlOrChooseFile": "输入 URL 或选择要加载到 WebViewer 的文件",
+    "enterUrl": "输入文件网址",
+    "extension": "文件扩展名",
+    "existingFile": "文件已经打开"
   },
   "datePicker": {
     "previousMonth": "前一个月",

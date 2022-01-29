@@ -60,7 +60,7 @@ const sortStrategies = {
     getSeparatorContent: (prevNote, currNote, { pageLabels }) =>
       `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
-  createDate: {
+  createdDate: {
     getSortedNotes: notes => notes.sort((a, b) => ( a.DateCreated || 0) - (b.DateCreated || 0)),
     shouldRenderSeparator: (prevNote, currNote) => {
       const prevNoteDate = prevNote.DateCreated;
@@ -75,20 +75,20 @@ const sortStrategies = {
       }
     },
     getSeparatorContent: (prevNote, currNote) => {
-      const createDate = currNote.DateCreated;
-      if (createDate) {
+      const createdDate = currNote.DateCreated;
+      if (createdDate) {
         const dayFormat = 'MMM D, YYYY';
         const today = dayjs(new Date()).format(dayFormat);
         const yesterday = dayjs(new Date(new Date() - 86400000)).format(dayFormat);
-        const createDateString = dayjs(new Date(createDate)).format(dayFormat);
+        const createdDateString = dayjs(new Date(createdDate)).format(dayFormat);
 
-        if (createDateString === today) {
+        if (createdDateString === today) {
           return i18next.t('option.notesPanel.separator.today');
         }
-        if (createDateString === yesterday) {
+        if (createdDateString === yesterday) {
           return i18next.t('option.notesPanel.separator.yesterday');
         }
-        return createDateString;
+        return createdDateString;
       } else {
         return i18next.t('option.notesPanel.separator.unknown');
       }
@@ -225,4 +225,32 @@ export const addSortStrategy = newStrategy => {
     shouldRenderSeparator,
     getSeparatorContent,
   };
+};
+
+/**
+ * Contains string enums for all the possible sorting algorithms available in NotesPanel.
+ * @name UI.NotesPanelSortStrategy
+ * @property {string} POSITION Sort notes by position.
+ * @property {string} CREATED_DATE Sort notes by creation date.
+ * @property {string} MODIFIED_DATE Sort notes by last modification date.
+ * @property {string} STATUS Sort notes by status.
+ * @property {string} AUTHOR Sort notes by the author.
+ * @property {string} TYPE Sort notes by type.
+ * @property {string} COLOR Sort notes by color.
+ *
+ * @example
+WebViewer(...)
+  .then(function(instance) {
+    const sortStrategy = instance.UI.NotesPanelSortStrategy;
+    instance.UI.setNotesPanelSortStrategy(sortStrategy.AUTHOR);
+  });
+ */
+export const NotesPanelSortStrategy = {
+  POSITION: 'position',
+  CREATED_DATE: 'createdDate',
+  MODIFIED_DATE: 'modifiedDate',
+  STATUS: 'status',
+  AUTHOR: 'author',
+  TYPE: 'type',
+  COLOR: 'color'
 };

@@ -4,6 +4,16 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_IS_MULTI_TAB':
+      return {
+        ...state,
+        isMultiTab: payload.isMultiTab,
+      };
+    case 'SET_TAB_MANAGER':
+      return {
+        ...state,
+        TabManager: payload.TabManager,
+      };
     case 'SET_THUMBNAIL_PAGE_SELECT':
       return {
         ...state,
@@ -211,7 +221,7 @@ export default initialState => (state = initialState, action) => {
       return { ...state, displayMode: payload.displayMode };
     case 'SET_CURRENT_PAGE':
       return { ...state, currentPage: payload.currentPage };
-    case 'SET_SORT_STRATEGY':
+    case 'SET_NOTES_PANEL_SORT_STRATEGY':
       return { ...state, sortStrategy: payload.sortStrategy };
     case 'SET_NOTE_DATE_FORMAT':
       return { ...state, noteDateFormat: payload.noteDateFormat };
@@ -245,6 +255,7 @@ export default initialState => (state = initialState, action) => {
             group: payload.buttonGroup,
             img: payload.buttonImage,
             showColor: payload.showColor || 'active',
+            showPresets: payload.showPresets ?? true,
           },
         },
       };
@@ -368,7 +379,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     case 'SET_CUSTOM_MODAL': {
-      const existingDataElementFiltered = state.customModals.filter(function (modal) {
+      const existingDataElementFiltered = state.customModals.filter(function(modal) {
         return modal.dataElement !== payload.dataElement;
       });
       return {
@@ -387,6 +398,11 @@ export default initialState => (state = initialState, action) => {
         ...state,
         validationModalWidgetName: payload.validationModalWidgetName,
       };
+    case 'SET_SUBMIT_COMMENT_MODE':
+      return {
+        ...state,
+        enableNoteSubmissionWithEnter: payload.enableNoteSubmissionWithEnter
+      }
     case 'ADD_TRUSTED_CERTIFICATES':
       /**
        * To mimic the behavior of the Core implementation, where certificates
@@ -419,6 +435,31 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         fadePageNavigationComponent: payload.fadePageNavigationComponent
+      }
+    case 'SET_HIDE_CONTENT_EDIT_WARNING':
+      if (localStorageManager.isLocalStorageEnabled()) {
+        window.localStorage.setItem('hideContentEditWarning', JSON.stringify(payload.hideWarning));
+      } else {
+        console.error("localStorage is disabled, hideContentEditWarning cannot be restored");
+      }
+      return { ...state, hideContentEditWarning: payload.hideWarning };
+    case 'SET_CURRENT_CONTENT_BEING_EDITED':
+      return {
+        ...state,
+        currentContentBeingEdited: payload
+      };
+    case 'UPDATE_CURRENT_CONTENT_BEING_EDITED':
+      return {
+        ...state,
+        currentContentBeingEdited: {
+          ...state.currentContentBeingEdited,
+          content: payload.content
+        }
+      };
+    case 'CLEAR_CURRENT_CONTENT_BEING_EDITED':
+      return {
+        ...state,
+        currentContentBeingEdited: null
       };
     case 'SET_ENABLE_DESKTOP_ONLY_MODE':
       return {
@@ -437,6 +478,10 @@ export default initialState => (state = initialState, action) => {
       };
     case 'SET_WATERMARK_MODAL_OPTIONS':
       return { ...state, watermarkModalOptions: payload.watermarkModalOptions };
+    case 'SET_RESET_AUDIO_PLAYBACK_POSITION':
+      return { ...state, shouldResetAudioPlaybackPosition: payload.shouldResetAudioPlaybackPosition };
+    case 'SET_ACTIVE_SOUND_ANNOTATION':
+      return { ...state, activeSoundAnnotation: payload.activeSoundAnnotation };
     default:
       return state;
   }

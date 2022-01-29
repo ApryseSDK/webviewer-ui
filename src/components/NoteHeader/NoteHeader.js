@@ -9,6 +9,7 @@ import getColor from 'helpers/getColor';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 
 
 import './NoteHeader.scss';
@@ -55,7 +56,7 @@ function NoteHeader(props) {
   } = props;
 
   const [t] = useTranslation();
-  const date = (sortStrategy === 'modifiedDate' || (notesShowLastUpdatedDate && sortStrategy !== 'createDate')) ? getLatestActivityDate(annotation) : annotation.DateCreated;
+  const date = (sortStrategy === NotesPanelSortStrategy.MODIFIED_DATE || (notesShowLastUpdatedDate && sortStrategy !== NotesPanelSortStrategy.CREATED_DATE)) ? getLatestActivityDate(annotation) : annotation.DateCreated;
   const numberOfReplies = annotation.getReplies().length;
   const color = annotation[iconColor]?.toHexString?.();
   const fillColor = getColor(annotation.FillColor);

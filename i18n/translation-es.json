@@ -29,6 +29,7 @@
     "pageNext": "Siguiente página",
     "pageSet": "Configurar página",
     "print": "Imprimir",
+    "proceed": "Continuar",
     "name": "Nombre",
     "rename": "Rebautizar",
     "ok": "OK",
@@ -79,7 +80,9 @@
     "deselectAll": "Deseleccionar todo",
     "select": "Seleccione",
     "moveToTop": "Mover al principio",
-    "moveToBottom": "Mover al final"
+    "moveToBottom": "Mover al final",
+    "playAudio": "reproducir audio",
+    "pauseAudio": "pausa de audio"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -125,7 +128,8 @@
     "comboBoxFormField": "Campo de cuadro combinado",
     "link": "Enlace",
     "other": "Otro",
-    "3D": "3D"
+    "3D": "3D",
+    "sound": "Sonar"
   },
   "rubberStamp": {
     "Approved": "Aprobada",
@@ -210,6 +214,11 @@
     "enterMeasurement": "Ingrese la medición entre los dos puntos",
     "errorEnterMeasurement": "El número que ingresó no es válido, puede ingresar valores como 7.5 o 7 1/2",
     "linkURLorPage": "URL de enlace o una página",
+    "warning": "Advertencia",
+    "enterContentEditingMode": "Está a punto de ingresar al modo de edición de texto.",
+    "existingAnnotationWarning": "Es posible que las anotaciones existentes no coincidan con el texto después de editarlo.",
+    "changesCannotBeUndone": "Los cambios realizados no se pueden deshacer.",
+    "doNotShowAgain": "no me muestres esto otra vez",
     "enterReplacementText": "Ingrese el texto que desea reemplazar",
     "sortBy": "Ordenar por",
     "emptyCustomStampInput": "El texto del sello no puede estar vacío",
@@ -258,7 +267,7 @@
       "author": "Autor",
       "type": "Tipo",
       "color": "Color",
-      "createDate": "Fecha de creación",
+      "createdDate": "Fecha de creación",
       "modifiedDate": "Fecha de modificación"
     },
     "toolbarGroup": {
@@ -270,7 +279,8 @@
       "toolbarGroup-Measure": "Medida",
       "toolbarGroup-Edit": "Editar",
       "toolbarGroup-FillAndSign": "Llenar y firmar",
-      "toolbarGroup-Forms": "Formularios"
+      "toolbarGroup-Forms": "Formularios",
+      "toolbarGroup-Redact": "Redactar"
     },
     "annotationColor": {
       "StrokeColor": "Color del borde",
@@ -352,15 +362,19 @@
       "addSignature": "Añadir una firma"
     },
     "signatureModal": {
-      "saveSignature": "Guardar firma",
+      "modalName": "Crear nueva firma",
       "dragAndDrop": "Arrastra y suelta tu imagen aquí",
       "or": "O",
-      "pickImage": "Elegir imagen de firma"
+      "pickImage": "Elegir imagen de firma",
+      "selectImage": "Seleccione su imagen aquí"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Arrastra y suelta tu archivo aquí",
       "or": "O",
-      "chooseFile": "Escoge un archivo"
+      "chooseFile": "Escoge un archivo",
+      "localFile": "Archivo local",
+      "pageReplaceInputLabel": "Reemplazar página(s)",
+      "pageReplaceInputFromSource": "con página(s)"
     },
     "filterAnnotModal": {
       "commentBy": "Comentario de",
@@ -400,8 +414,10 @@
     },
     "stylePopup": {
       "textStyle": "Estilo de texto",
-      "colorStyle": "Colores",
-      "invalidFontSize": "El tamaño de la fuente debe ser menor que"
+      "colors": "Colores",
+      "invalidFontSize": "El tamaño de la fuente debe ser menor que",
+      "labelText": "Texto de la etiqueta",
+      "labelTextPlaceholder": "Agregar texto de etiqueta"
     },
     "styleOption": {
       "style": "Estilo",
@@ -457,8 +473,9 @@
       "alignBottom": "Alinear la parte inferior"
     },
     "customStampModal": {
-      "stampText": "Texto de sello:",
-      "timestampText": "Texto de marca de tiempo:",
+      "modalName": "Crear nuevo sello",
+      "stampText": "Texto de sello",
+      "timestampText": "Texto de marca de tiempo",
       "stampColor": "Color del sello:",
       "Username": "Nombre de usuario",
       "Date": "Fecha",
@@ -538,13 +555,20 @@
     "url": "URL",
     "page": "Página",
     "enterurl": "Ingrese la URL a la que desea vincular",
-    "enterpage": "Seleccione el número de página que desea vincular"
+    "enterpage": "Seleccione el número de página que desea vincular",
+    "urlLink": "enlace URL"
   },
   "Model3D": {
     "add3D": "Agregue una anotación 3D ingresando URL",
     "enterurl": "Ingrese la URL del objeto 3D en formato glTF",
     "enterurlOrLocalFile": "Ingrese la URL o cargue un objeto 3D en formato glTF",
     "formatError": "Solo se admite el formato glTF (.glb)"
+  },
+  "OpenFile": {
+    "enterUrlOrChooseFile": "Ingrese una URL o elija un archivo para cargar en WebViewer",
+    "enterUrl": "Introduzca la URL del archivo",
+    "extension": "Extensión de archivo",
+    "existingFile": "El archivo ya está abierto"
   },
   "datePicker": {
     "previousMonth": "Mes anterior",

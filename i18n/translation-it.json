@@ -29,6 +29,7 @@
     "pageNext": "Pagina successiva",
     "pageSet": "Imposta pagina",
     "print": "Stampa",
+    "proceed": "Procedere",
     "name": "Nome",
     "rename": "Rinominare",
     "ok": "ok",
@@ -79,7 +80,9 @@
     "deselectAll": "Deselezionare tutto",
     "select": "Selezionare",
     "moveToTop": "Sposta in alto",
-    "moveToBottom": "Sposta in basso"
+    "moveToBottom": "Sposta in basso",
+    "playAudio": "Riproduci l'audio",
+    "pauseAudio": "pausa audio"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -125,7 +128,8 @@
     "comboBoxFormField": "Campo casella combinata",
     "link": "Collegamento",
     "other": "Altro",
-    "3D": "3D"
+    "3D": "3D",
+    "sound": "Suono"
   },
   "rubberStamp": {
     "Approved": "Approvato",
@@ -210,7 +214,12 @@
     "enterMeasurement": "Immettere la misurazione tra i due punti",
     "errorEnterMeasurement": "Il numero che hai inserito non è valido, puoi inserire valori come 7,5 o 7 1/2",
     "linkURLorPage": "Link URL o una pagina",
-    "enterReplacementText": "Immettere il testo che si desidera sostituire",
+    "warning": "Avvertimento",
+    "enterContentEditingMode": "Stai per accedere alla modalità di modifica del testo.",
+    "existingAnnotationWarning": "Le annotazioni esistenti potrebbero non corrispondere al testo dopo che è stato modificato.",
+    "changesCannotBeUndone": "Eventuali modifiche apportate non possono essere annullate.",
+    "doNotShowAgain": "Non mostrarmelo di nuovo",
+    "enterReplacementText": "Inserisci il testo che vuoi sostituire",
     "sortBy": "Ordina per",
     "emptyCustomStampInput": "Il testo del timbro non può essere vuoto",
     "unpostedComment": "Commento non pubblicato",
@@ -258,7 +267,7 @@
       "author": "Autore",
       "type": "genere",
       "color": "Colore",
-      "createDate": "Data di Creazione",
+      "createdDate": "Data di Creazione",
       "modifiedDate": "Data modificata"
     },
     "toolbarGroup": {
@@ -270,7 +279,8 @@
       "toolbarGroup-Measure": "Misurare",
       "toolbarGroup-Edit": "modificare",
       "toolbarGroup-FillAndSign": "Compila e firma",
-      "toolbarGroup-Forms": "Forme"
+      "toolbarGroup-Forms": "Forme",
+      "toolbarGroup-Redact": "Redigere"
     },
     "annotationColor": {
       "StrokeColor": "Colore del bordo",
@@ -352,15 +362,19 @@
       "addSignature": "Aggiungi una firma"
     },
     "signatureModal": {
-      "saveSignature": "Salva firma",
+      "modalName": "Crea nuova firma",
       "dragAndDrop": "Trascina e rilascia l'immagine qui",
       "or": "O",
-      "pickImage": "Scegli l'immagine della firma"
+      "pickImage": "Scegli l'immagine della firma",
+      "selectImage": "Seleziona qui la tua immagine"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Trascina e rilascia il tuo file qui",
       "or": "O",
-      "chooseFile": "Scegli un file"
+      "chooseFile": "Scegli un file",
+      "localFile": "File locale",
+      "pageReplaceInputLabel": "Sostituisci pagina/e",
+      "pageReplaceInputFromSource": "con pagina/e"
     },
     "filterAnnotModal": {
       "commentBy": "Commento di",
@@ -400,8 +414,10 @@
     },
     "stylePopup": {
       "textStyle": "Stile di testo",
-      "colorStyle": "Colori",
-      "invalidFontSize": "La dimensione del carattere deve essere inferiore a"
+      "colors": "Colori",
+      "invalidFontSize": "La dimensione del carattere deve essere inferiore a",
+      "labelText": "Testo etichetta",
+      "labelTextPlaceholder": "Aggiungi il testo dell'etichetta"
     },
     "styleOption": {
       "style": "Stile",
@@ -457,8 +473,9 @@
       "alignBottom": "Allinea in basso"
     },
     "customStampModal": {
-      "stampText": "Testo del timbro:",
-      "timestampText": "Testo data / ora:",
+      "modalName": "Crea nuovo timbro",
+      "stampText": "Testo del timbro",
+      "timestampText": "Testo data / ora",
       "stampColor": "Colore del timbro:",
       "Username": "Nome utente",
       "Date": "Data",
@@ -538,13 +555,20 @@
     "url": "URL",
     "page": "Pagina",
     "enterurl": "Inserisci l'URL che desideri collegare",
-    "enterpage": "Seleziona il numero di pagina che desideri collegare"
+    "enterpage": "Seleziona il numero di pagina che desideri collegare",
+    "urlLink": "collegamento URL"
   },
   "Model3D": {
     "add3D": "Aggiungi un'annotazione 3D inserendo l'URL",
     "enterurl": "Immettere l'URL per l'oggetto 3D in formato glTF",
     "enterurlOrLocalFile": "Inserisci l'URL o carica un oggetto 3D in formato glTF",
     "formatError": "È supportato solo il formato glTF (.glb)"
+  },
+  "OpenFile": {
+    "enterUrlOrChooseFile": "Inserisci un URL o scegli un file da caricare in WebViewer",
+    "enterUrl": "Inserisci l'URL del file",
+    "extension": "Estensione del file",
+    "existingFile": "Il file è già aperto"
   },
   "datePicker": {
     "previousMonth": "Il mese scorso",

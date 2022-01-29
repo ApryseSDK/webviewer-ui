@@ -29,6 +29,7 @@
     "pageNext": "Next page",
     "pageSet": "Set page",
     "print": "Print",
+    "proceed": "Proceed",
     "name": "Name",
     "rename": "Rename",
     "ok": "OK",
@@ -79,7 +80,9 @@
     "deselectAll": "Deselect All",
     "select": "Select",
     "moveToTop": "Move to top",
-    "moveToBottom": "Move to bottom"
+    "moveToBottom": "Move to bottom",
+    "playAudio": "Play audio",
+    "pauseAudio": "Pause audio"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -211,6 +214,11 @@
     "enterMeasurement": "Enter measurement between the two points",
     "errorEnterMeasurement": "The number you have entered is invalid, you can enter values like 7.5 or 7 1/2",
     "linkURLorPage": "Link URL or a Page",
+    "warning": "Warning",
+    "enterContentEditingMode": "You are about to enter content editing mode.",
+    "existingAnnotationWarning": "Existing annotations may not match up with the text after it has been edited.",
+    "changesCannotBeUndone": "Any changes made cannot be undone.",
+    "doNotShowAgain": "Do not show me this again",
     "enterReplacementText": "Enter the text you want to replace",
     "sortBy": "Sort",
     "emptyCustomStampInput": "Stamp text cannot be empty",
@@ -259,9 +267,9 @@
       "author": "Author",
       "type": "Type",
       "color": "Color",
-      "createDate": "Created Date",
+      "createdDate": "Created Date",
       "modifiedDate": "Modified Date"
-  },
+    },
     "toolbarGroup": {
       "dropdownLabel": "Toolbar Groups",
       "toolbarGroup-View": "View",
@@ -271,7 +279,8 @@
       "toolbarGroup-Measure": "Measure",
       "toolbarGroup-Edit": "Edit",
       "toolbarGroup-FillAndSign": "Fill and Sign",
-      "toolbarGroup-Forms": "Forms"
+      "toolbarGroup-Forms": "Forms",
+      "toolbarGroup-Redact": "Redact"
     },
     "annotationColor": {
       "StrokeColor": "Stroke",
@@ -362,7 +371,10 @@
     "pageReplacementModal": {
       "dragAndDrop": "Drag & Drop your file here",
       "or": "Or",
-      "chooseFile": "Choose a file"
+      "chooseFile": "Choose a file",
+      "localFile": "Local File",
+      "pageReplaceInputLabel": "Replace Page(s)",
+      "pageReplaceInputFromSource": "with page(s)"
     },
     "filterAnnotModal": {
       "commentBy": "Comment by",
@@ -402,8 +414,10 @@
     },
     "stylePopup": {
       "textStyle": "Text Style",
-      "colorStyle": "Colors",
-      "invalidFontSize": "Font size must be less than "
+      "colors": "Colors",
+      "invalidFontSize": "Font size must be less than ",
+      "labelText": "Label Text",
+      "labelTextPlaceholder": "Add label text"
     },
     "styleOption": {
       "style": "Style",
@@ -541,13 +555,20 @@
     "url": "URL",
     "page": "Page",
     "enterurl": "Enter URL you would like to link to",
-    "enterpage": "Select the page number you would like to link to"
+    "enterpage": "Select the page number you would like to link to",
+    "urlLink": "URL link"
   },
   "Model3D": {
     "add3D": "Add 3D object",
     "enterurl": "Enter the URL of the 3D object in glTF format",
     "enterurlOrLocalFile": "Enter the URL or upload a 3D object in glTF format",
     "formatError": "Only glTF (.glb) format is supported"
+  },
+  "OpenFile": {
+    "enterUrlOrChooseFile": "Enter a URL or choose a file to load into WebViewer",
+    "enterUrl": "Enter file URL",
+    "extension": "File extension",
+    "existingFile": "File is already open"
   },
   "datePicker": {
     "previousMonth": "Previous Month",

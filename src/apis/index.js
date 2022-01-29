@@ -4,7 +4,9 @@ import LayoutMode from 'constants/layoutMode';
 import FitMode from 'constants/fitMode';
 import Feature from 'constants/feature';
 import Events from 'constants/events';
-
+import ToolbarGroup from 'constants/toolbar';
+import { NotesPanelSortStrategy } from 'constants/sortStrategies';
+import Theme from 'constants/theme';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
@@ -22,6 +24,7 @@ import disableLocalStorage from './disableLocalStorage';
 import disableMeasurement from './disableMeasurement';
 import disableNativeScrolling from './disableNativeScrolling';
 import disableNotesPanel from './disableNotesPanel';
+import disableNoteSubmissionWithEnter from './disableNoteSubmissionWithEnter';
 import disablePrint from './disablePrint';
 import disableRedaction from './disableRedaction';
 import disableTextSelection from './disableTextSelection';
@@ -112,6 +115,7 @@ import setFitMode from './setFitMode';
 import setHeaderItems from './setHeaderItems';
 import setIconColor from './setIconColor';
 import setLanguage from './setLanguage';
+import setTranslations from './setTranslations';
 import setLayoutMode from './setLayoutMode';
 import setMaxZoomLevel from './setMaxZoomLevel';
 import setMinZoomLevel from './setMinZoomLevel';
@@ -124,7 +128,7 @@ import setDefaultPrintOptions from './setDefaultPrintOptions';
 import setSelectedTab from './setSelectedTab';
 import setSideWindowVisibility from './setSideWindowVisibility';
 import setSortNotesBy from './setSortNotesBy';
-import setSortStrategy from './setSortStrategy';
+import setNotesPanelSortStrategy from './setNotesPanelSortStrategy';
 import setSwipeOrientation from './setSwipeOrientation';
 import setTheme from './setTheme';
 import setToolbarGroup from './setToolbarGroup';
@@ -182,6 +186,8 @@ import disableDesktopOnlyMode from './disableDesktopOnlyMode';
 import isInDesktopOnlyMode from './isInDesktopOnlyMode';
 import pageManipulationOverlay from './pageManipulationOverlay';
 import getWatermarkModalOptions from './getWatermarkModalOptions';
+import enableNoteSubmissionWithEnter from './enableNoteSubmissionWithEnter';
+import reloadOutline from './reloadOutline';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -201,6 +207,9 @@ export default store => {
     LayoutMode,
     Feature,
     Events,
+    ToolbarGroup,
+    NotesPanelSortStrategy,
+    Theme,
     addSearchListener,
     addSortStrategy: addSortStrategy(store),
     annotationPopup: annotationPopup(store),
@@ -256,6 +265,7 @@ export default store => {
     setHeaderItems: setHeaderItems(store),
     setIconColor: setIconColor(store),
     setLanguage: setLanguage(store),
+    setTranslations,
     setLayoutMode,
     setMaxZoomLevel: setMaxZoomLevel(store),
     setMinZoomLevel: setMinZoomLevel(store),
@@ -265,13 +275,13 @@ export default store => {
     setPageLabels: setPageLabels(store),
     setPrintQuality: setPrintQuality(store),
     setDefaultPrintOptions: setDefaultPrintOptions(store),
-    setSortStrategy: setSortStrategy(store),
+    setNotesPanelSortStrategy: setNotesPanelSortStrategy(store),
     setSwipeOrientation,
     setTheme: setTheme(store),
     setToolbarGroup: setToolbarGroup(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setCustomNoteSelectionFunction: setCustomNoteSelectionFunction(store),
-    setToolMode: setToolMode(store),
+    setToolMode,
     setZoomLevel,
     setZoomList: setZoomList(store),
     setSearchResults,
@@ -305,6 +315,7 @@ export default store => {
     disableLocalStorage,
     disableMeasurement: disableMeasurement(store),
     disableNotesPanel: disableNotesPanel(store),
+    disableNoteSubmissionWithEnter: disableNoteSubmissionWithEnter(store),
     disablePrint: disablePrint(store),
     disableRedaction: disableRedaction(store),
     disableTextSelection: disableTextSelection(store),
@@ -317,6 +328,7 @@ export default store => {
     enableLocalStorage,
     enableMeasurement: enableMeasurement(store),
     enableNotesPanel: enableNotesPanel(store),
+    enableNoteSubmissionWithEnter: enableNoteSubmissionWithEnter(store),
     enablePrint: enablePrint(store),
     enableRedaction: enableRedaction(store),
     enableTextSelection: enableTextSelection(store),
@@ -356,6 +368,7 @@ export default store => {
     addEventListener,
     removeEventListener,
     syncNamespaces,
+    reloadOutline: reloadOutline(store),
 
     //deprecated, to be removed in 8.0
     useNativeScroll,
@@ -365,12 +378,14 @@ export default store => {
     setHighContrastMode: setHighContrastMode(store),
     getIsHighContrastMode: getIsHighContrastMode(store),
 
+    //deprecated, to be removed in 9.0
+    updateOutlines: updateOutlines(store),
+
     // undocumented
     loadedFromServer: false,
     serverFailed: false,
     i18n: i18next,
     showWarningMessage: showWarningMessage(store),
-    updateOutlines: updateOutlines(store),
     getBBAnnotManager,
     selectors: getSelectors(store),
     reactElements,

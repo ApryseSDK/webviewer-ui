@@ -29,6 +29,7 @@
     "pageNext": "Следующая страница",
     "pageSet": "Установить страницу",
     "print": "Распечатать",
+    "proceed": "Продолжить",
     "name": "название",
     "rename": "Переименовать",
     "ok": "OK",
@@ -79,7 +80,9 @@
     "deselectAll": "Убрать выделение со всего",
     "select": "Выбирать",
     "moveToTop": "Наверх",
-    "moveToBottom": "Вниз"
+    "moveToBottom": "Вниз",
+    "playAudio": "Воспроизвести аудио",
+    "pauseAudio": "аудио пауза"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -125,7 +128,8 @@
     "comboBoxFormField": "Поле со списком",
     "link": "Ссылка на сайт",
     "other": "Другие",
-    "3D": "3D"
+    "3D": "3D",
+    "sound": "Звук"
   },
   "rubberStamp": {
     "Approved": "Одобренный",
@@ -210,7 +214,12 @@
     "enterMeasurement": "Введите измерение между двумя точками",
     "errorEnterMeasurement": "Введенное вами число недействительно, вы можете ввести такие значения, как 7,5 или 7 1/2.",
     "linkURLorPage": "Ссылка URL или страница",
-    "enterReplacementText": "Введите текст, который хотите заменить",
+    "warning": "Предупреждение",
+    "enterContentEditingMode": "Вы собираетесь войти в режим редактирования текста.",
+    "existingAnnotationWarning": "Существующие аннотации могут не совпадать с текстом после его редактирования.",
+    "changesCannotBeUndone": "Любые внесенные изменения не могут быть отменены.",
+    "doNotShowAgain": "Не показывай мне это больше",
+    "enterReplacementText": "Введите текст, который вы хотите заменить",
     "sortBy": "Сортировать по",
     "emptyCustomStampInput": "Текст штампа не может быть пустым",
     "unpostedComment": "Неопубликованный комментарий",
@@ -258,7 +267,7 @@
       "author": "Автор",
       "type": "Тип",
       "color": "Цвет",
-      "createDate": "Дата создания",
+      "createdDate": "Дата создания",
       "modifiedDate": "Дата изменения"
     },
     "toolbarGroup": {
@@ -270,7 +279,8 @@
       "toolbarGroup-Measure": "Мера",
       "toolbarGroup-Edit": "редактировать",
       "toolbarGroup-FillAndSign": "Заполните и подпишите",
-      "toolbarGroup-Forms": "Формы"
+      "toolbarGroup-Forms": "Формы",
+      "toolbarGroup-Redact": "Редактировать"
     },
     "annotationColor": {
       "StrokeColor": "Цвет границ",
@@ -352,15 +362,19 @@
       "addSignature": "Добавить подпись"
     },
     "signatureModal": {
-      "saveSignature": "Сохранить подпись",
+      "modalName": "Создать новую подпись",
       "dragAndDrop": "Перетащите изображение сюда",
       "or": "Или",
-      "pickImage": "Выберите Подпись Изображение"
+      "pickImage": "Выберите Подпись Изображение",
+      "selectImage": "Выберите здесь свое изображение"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Перетащите файл сюда",
       "or": "Или",
-      "chooseFile": "Выберите файл"
+      "chooseFile": "Выберите файл",
+      "localFile": "Локальный файл",
+      "pageReplaceInputLabel": "Заменить страницу(ы)",
+      "pageReplaceInputFromSource": "со страницей(ами)"
     },
     "filterAnnotModal": {
       "commentBy": "Комментарий от",
@@ -400,8 +414,10 @@
     },
     "stylePopup": {
       "textStyle": "Текстовый стиль",
-      "colorStyle": "Цвета",
-      "invalidFontSize": "Размер шрифта должен быть меньше"
+      "colors": "Цвета",
+      "invalidFontSize": "Размер шрифта должен быть меньше",
+      "labelText": "Текст метки",
+      "labelTextPlaceholder": "Добавить текст ярлыка"
     },
     "styleOption": {
       "style": "Стиль",
@@ -457,8 +473,9 @@
       "alignBottom": "Выровнять по низу"
     },
     "customStampModal": {
-      "stampText": "Штамп текст:",
-      "timestampText": "Текст метки времени:",
+      "modalName": "Создать новый штамп",
+      "stampText": "Штамп текст",
+      "timestampText": "Текст метки времени",
       "stampColor": "Цвет марки:",
       "Username": "имя пользователя",
       "Date": "Дата",
@@ -538,13 +555,20 @@
     "url": "URL",
     "page": "страница",
     "enterurl": "Введите URL, на который вы хотите сослаться",
-    "enterpage": "Выберите номер страницы, на которую вы хотите сослаться"
+    "enterpage": "Выберите номер страницы, на которую вы хотите сослаться",
+    "urlLink": "URL-ссылка"
   },
   "Model3D": {
     "add3D": "Добавьте 3D-аннотацию, введя URL",
     "enterurl": "Введите URL-адрес 3D-объекта в формате glTF",
     "enterurlOrLocalFile": "Введите URL или загрузите 3D-объект в формате glTF",
     "formatError": "Поддерживается только формат glTF (.glb)"
+  },
+  "OpenFile": {
+    "enterUrlOrChooseFile": "Введите URL-адрес или выберите файл для загрузки в WebViewer.",
+    "enterUrl": "Введите URL-адрес файла",
+    "extension": "Расширение файла",
+    "existingFile": "Файл уже открыт"
   },
   "datePicker": {
     "previousMonth": "Предыдущий месяц",

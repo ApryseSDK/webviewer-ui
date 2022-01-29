@@ -29,6 +29,7 @@
     "pageNext": "Page suivante",
     "pageSet": "Mise en page",
     "print": "Imprimer",
+    "proceed": "Procéder",
     "name": "Nommer",
     "rename": "Renommer",
     "ok": "OK",
@@ -79,7 +80,9 @@
     "deselectAll": "Tout déselectionner",
     "select": "Sélectionner",
     "moveToTop": "Déplacer vers le haut",
-    "moveToBottom": "Déplacer vers le bas"
+    "moveToBottom": "Déplacer vers le bas",
+    "playAudio": "Lecture audio",
+    "pauseAudio": "Pause audio"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -125,7 +128,8 @@
     "comboBoxFormField": "Champ de zone de liste déroulante",
     "link": "Lien",
     "other": "Autre",
-    "3D": "3D"
+    "3D": "3D",
+    "sound": "Sonner"
   },
   "rubberStamp": {
     "Approved": "Approuvée",
@@ -210,6 +214,11 @@
     "enterMeasurement": "Entrez la mesure entre les deux points",
     "errorEnterMeasurement": "Le nombre que vous avez entré est invalide, vous pouvez entrer des valeurs comme 7,5 ou 7 1/2",
     "linkURLorPage": "Lien URL ou une page",
+    "warning": "Avertissement",
+    "enterContentEditingMode": "Vous êtes sur le point d'entrer en mode d'édition de texte.",
+    "existingAnnotationWarning": "Les annotations existantes peuvent ne pas correspondre au texte une fois qu'il a été modifié.",
+    "changesCannotBeUndone": "Toute modification apportée ne peut être annulée.",
+    "doNotShowAgain": "Ne me montre plus jamais ça",
     "enterReplacementText": "Entrez le texte que vous souhaitez remplacer",
     "sortBy": "Trier par",
     "emptyCustomStampInput": "Le texte du tampon ne peut pas être vide",
@@ -258,7 +267,7 @@
       "author": "Auteur",
       "type": "Type",
       "color": "Couleur",
-      "createDate": "Date de création",
+      "createdDate": "Date de création",
       "modifiedDate": "Date modifiée"
     },
     "toolbarGroup": {
@@ -270,7 +279,8 @@
       "toolbarGroup-Measure": "Mesure",
       "toolbarGroup-Edit": "Éditer",
       "toolbarGroup-FillAndSign": "Remplir et signer",
-      "toolbarGroup-Forms": "Formulaire"
+      "toolbarGroup-Forms": "Formulaire",
+      "toolbarGroup-Redact": "Rédiger"
     },
     "annotationColor": {
       "StrokeColor": "Bordure",
@@ -361,7 +371,10 @@
     "pageReplacementModal": {
       "dragAndDrop": "Glissez & Déposez votre fichier ici",
       "or": "Ou",
-      "chooseFile": "Choisissez un fichier"
+      "chooseFile": "Choisissez un fichier",
+      "localFile": "Fichier local",
+      "pageReplaceInputLabel": "Remplacer les pages",
+      "pageReplaceInputFromSource": "avec page(s)"
     },
     "filterAnnotModal": {
       "commentBy": "Commentaire de",
@@ -401,8 +414,10 @@
     },
     "stylePopup": {
       "textStyle": "Style de texte",
-      "colorStyle": "Couleurs",
-      "invalidFontSize": "La taille de la police doit être inférieure à"
+      "colors": "Couleurs",
+      "invalidFontSize": "La taille de la police doit être inférieure à",
+      "labelText": "Texte de l'étiquette",
+      "labelTextPlaceholder": "Ajouter un texte d'étiquette"
     },
     "styleOption": {
       "style": "Style",
@@ -510,7 +525,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "stamp": "(I)",
+    "image": "(JE)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -540,13 +555,20 @@
     "url": "URL",
     "page": "Page",
     "enterurl": "Entrez l'URL vers laquelle vous souhaitez créer un lien",
-    "enterpage": "Sélectionnez le numéro de page que vous souhaitez lier"
+    "enterpage": "Sélectionnez le numéro de page que vous souhaitez lier",
+    "urlLink": "Lien URL"
   },
   "Model3D": {
     "add3D": "Ajoutez une annotation 3D en saisissant une URL",
     "enterurl": "Entrez l'URL de l'objet 3D au format glTF",
     "enterurlOrLocalFile": "Entrez l'URL ou téléchargez un objet 3D au format glTF",
     "formatError": "Seul le format glTF (.glb) est pris en charge"
+  },
+  "OpenFile": {
+    "enterUrlOrChooseFile": "Entrez une URL ou choisissez un fichier à charger dans WebViewer",
+    "enterUrl": "Entrez l'URL du fichier",
+    "extension": "Extension de fichier",
+    "existingFile": "Le fichier est déjà ouvert"
   },
   "datePicker": {
     "previousMonth": "Mois précédent",

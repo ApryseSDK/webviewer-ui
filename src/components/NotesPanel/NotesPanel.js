@@ -94,7 +94,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       setNotes(
         core
           .getAnnotationsList()
-          .filter(annot => annot.Listable && !annot.isReply() && !annot.Hidden && !annot.isGrouped() && annot.ToolName !== window.Core.Tools.ToolNames.CROP),
+          .filter(annot => annot.Listable && !annot.isReply() && !annot.Hidden && !annot.isGrouped() && annot.ToolName !== window.Core.Tools.ToolNames.CROP && !annot.isContentEditPlaceholder()),
       );
     };
 
@@ -395,7 +395,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
                 translationPrefix="option.notesOrder"
                 currentSelectionKey={sortStrategy}
                 onClickItem={sortStrategy => {
-                  dispatch(actions.setSortStrategy(sortStrategy));
+                  dispatch(actions.setNotesPanelSortStrategy(sortStrategy));
                 }}
               />
             </div>
