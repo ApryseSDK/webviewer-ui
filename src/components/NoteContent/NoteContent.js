@@ -68,7 +68,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     annotation => {
       const name = core.getDisplayAuthor(annotation['Author']);
       let shortName = name;
-      if (name.length>10){
+      if (name?.length>10){
         shortName = name.substr(0, 5) + '...' + name.substr(name.length - 3)
       }
       return name ? (
