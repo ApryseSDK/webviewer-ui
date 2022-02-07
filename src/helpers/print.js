@@ -420,7 +420,7 @@ const getNoteIcon = annotation => {
   }
 
   noteIcon.className = 'note__icon';
-  noteIcon.style.color = iconColor && annotation[iconColor].toHexString();
+  noteIcon.style.color = iconColor && annotation[iconColor]?.toHexString();
   return noteIcon;
 };
 

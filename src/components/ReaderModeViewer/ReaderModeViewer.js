@@ -159,7 +159,7 @@ class ReaderModeViewer extends React.PureComponent {
     if (annotType) {
       this.wvReadingMode.setAddAnnotConfig({
         type: annotType,
-        color: toolMode['defaults']['StrokeColor'].toHexString(),
+        color: toolMode['defaults']['StrokeColor']?.toHexString(),
         opacity: toolMode['defaults']['Opacity']
       });
     } else {
@@ -199,7 +199,7 @@ class ReaderModeViewer extends React.PureComponent {
   handleColorChange = (property, color) => {
     if (property === 'StrokeColor' && this.setAnnotStyleCb) {
       this.setAnnotStyleCb({
-        color: color.toHexString(),
+        color: color?.toHexString(),
         opacity: this.state.style.Opacity
       });
       this.setState({
@@ -214,7 +214,7 @@ class ReaderModeViewer extends React.PureComponent {
   handleOpacityChange = (property, opacity) => {
     if (property === 'Opacity' && this.setAnnotStyleCb) {
       this.setAnnotStyleCb({
-        color: this.state.style.StrokeColor.toHexString(),
+        color: this.state.style.StrokeColor?.toHexString(),
         opacity
       });
       this.setState({

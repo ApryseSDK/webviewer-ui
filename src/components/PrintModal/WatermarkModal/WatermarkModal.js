@@ -465,7 +465,7 @@ class WatermarkModal extends React.PureComponent {
                           style={{
                             backgroundColor: formInfo[
                               FORM_FIELD_KEYS.color
-                            ].toHexString(),
+                            ]?.toHexString(),
                           }}
                           onClick={() =>
                             this.setColorPaletteVisibility(

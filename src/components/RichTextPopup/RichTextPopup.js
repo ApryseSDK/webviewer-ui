@@ -148,7 +148,7 @@ const RichTextPopup = () => {
   };
 
   const handleColorChange = (_, color) => {
-    applyFormat('color', color.toHexString());
+    applyFormat('color', color?.toHexString());
   };
 
   const applyFormat = (formatKey, value) => {
