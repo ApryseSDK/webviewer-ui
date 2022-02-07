@@ -140,7 +140,6 @@ const App = ({ removeEventHandlers }) => {
     <React.Fragment>
       <div className={classNames({ "App": true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
         <Accessibility />
-        {console.log(core.getActiveSearchResult())}
 
         {/* <Header />
         <ToolsHeader /> */}
