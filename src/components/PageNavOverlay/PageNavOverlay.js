@@ -9,7 +9,6 @@ import selectors from "selectors";
 import { isIOS } from "helpers/device";
 import useMedia from 'hooks/useMedia';
 
-import Icon from "components/Icon";
 import DataElementWrapper from 'components/DataElementWrapper';
 import Button from 'components/Button';
 
@@ -125,6 +124,8 @@ class PageNavOverlay extends React.PureComponent {
     } = this.props;
 
     const inputWidth = this.state.input ? (this.state.input.length) * (isMobile ? 10 : 8) : 0;
+    const isFirstPage = window.documentViewer.getCurrentPage() === 1;
+    const isLastPage = window.documentViewer.getCurrentPage() === window.documentViewer.getPageCount();
 
     return (
       <DataElementWrapper
@@ -140,12 +141,12 @@ class PageNavOverlay extends React.PureComponent {
         <Button
           className="side-arrow-container"
           img="icon-chevron-left"
-          title={t('action.pagePrev')}
+          title={isFirstPage ? null : t('action.pagePrev')} // Don't show tooltip on a disabled button
           ariaLabel={t('action.pagePrev')}
           onClick={this.goToPrevPage}
           iconClassName="side-arrow"
           forceTooltipPosition="top"
-          disabled={window.documentViewer.getCurrentPage() === 1}
+          disabled={isFirstPage}
         />
         <div className="formContainer" onClick={this.onClick}>
           <form onSubmit={this.onSubmit} onBlur={this.onBlur} onFocus={this.onFocus}>
@@ -167,12 +168,12 @@ class PageNavOverlay extends React.PureComponent {
         <Button
           className="side-arrow-container"
           img="icon-chevron-right"
-          title={t('action.pageNext')}
+          title={isLastPage ? null : t('action.pageNext')}
           ariaLabel={t('action.pageNext')}
           onClick={this.goToNextPage}
           iconClassName="side-arrow"
           forceTooltipPosition="top"
-          disabled={window.documentViewer.getCurrentPage() === window.documentViewer.getPageCount()}
+          disabled={isLastPage}
         />
       </DataElementWrapper>
     );
