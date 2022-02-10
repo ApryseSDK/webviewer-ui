@@ -27,7 +27,7 @@
     "openFile": "Open bestand",
     "pagePrev": "Vorige pagina",
     "pageNext": "Volgende bladzijde",
-    "pageSet": "Zet pagina",
+    "pageSet": "Kies pagina",
     "print": "Printen",
     "name": "Naam",
     "rename": "Hernoemen",
@@ -37,7 +37,7 @@
     "rotateClockwise": "Met de klok mee",
     "rotateCounterClockwise": "Tegen de klok in",
     "save": "Bewaren",
-    "post": "Post",
+    "post": "Plaats",
     "create": "creëren",
     "showMoreResults": "Toon meer resultaten",
     "sign": "Ondertekenen",
@@ -48,7 +48,7 @@
     "zoomOut": "Zoom uit",
     "zoomSet": "Zoom instellen",
     "zoomControls": "Zoomregelaars",
-    "draw": "Trek",
+    "draw": "Teken",
     "type": "Type",
     "upload": "Uploaden",
     "link": "Koppeling",
@@ -93,7 +93,7 @@
     "distanceMeasurement": "Afstandsmeting",
     "countMeasurement": "Tel meting",
     "ellipse": "Ellips",
-    "eraser": "Gom",
+    "eraser": "Gum",
     "fileattachment": "Bestandsbijlage",
     "freehand": "Vrije hand",
     "freeHandHighlight": "Markering uit de vrije hand",
@@ -133,7 +133,7 @@
     "Completed": "Voltooid",
     "Confidential": "Vertrouwelijk",
     "Departmental": "departementale",
-    "Draft": "Droogte",
+    "Draft": "Concept",
     "Experimental": "experimenteel",
     "Expired": "Niet meer geldig",
     "Final": "Laatste",
@@ -168,7 +168,7 @@
     "layersPanel": "Lagen",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
-    "redaction": "Redigeren",
+    "redaction": "Redacteren",
     "viewControlsOverlay": "Scherm opties",
     "calibration": "ijking",
     "zoomOverlay": "Zoom-overlay",
@@ -196,8 +196,8 @@
     "notSupported": "Dit bestandstype wordt niet ondersteund.",
     "passwordRequired": "Wachtwoord vereist",
     "preparingToPrint": "Printen voorbereiden...",
-    "annotationReplyCount": "{{count}} Antwoord",
-    "annotationReplyCount_plural": "{{count}} Antwoorden",
+    "annotationReplyCount": "{{count}} reactie",
+    "annotationReplyCount_plural": "{{count}} reacties",
     "printTotalPageCount": "{{count}} pagina",
     "printTotalPageCount_plural": "{{count}} pagina's",
     "processing": "Bezig...",
@@ -228,7 +228,7 @@
   },
   "option": {
     "type": {
-      "caret": "mist",
+      "caret": "caret",
       "custom": "Aangepast",
       "ellipse": "Ovaal",
       "fileattachment": "Bestandsbijlage",
@@ -239,12 +239,12 @@
       "polygon": "Veelhoek",
       "polyline": "Polylijn",
       "rectangle": "Rechthoek",
-      "redact": "Redigeren",
+      "redact": "Redacteren",
       "signature": "Handtekening",
       "stamp": "Stempel",
       "stickyNote": "Notitie",
       "highlight": "Markeer",
-      "strikeout": "Strike-out",
+      "strikeout": "Doorhalen",
       "underline": "Onderstrepen",
       "squiggly": "kronkelig",
       "3D": "3D",
@@ -263,7 +263,7 @@
     },
     "toolbarGroup": {
       "dropdownLabel": "Werkbalkgroepen",
-      "toolbarGroup-View": "Visie",
+      "toolbarGroup-View": "Bekijken",
       "toolbarGroup-Annotate": "Annoteren",
       "toolbarGroup-Shapes": "Vormen",
       "toolbarGroup-Insert": "Invoegen",
@@ -363,7 +363,7 @@
       "chooseFile": "Kies een bestand"
     },
     "filterAnnotModal": {
-      "commentBy": "Reageer door",
+      "commentBy": "Reactie door",
       "types": "Soorten",
       "color": "Kleur",
       "includeReplies": "Inclusief antwoorden"
@@ -436,7 +436,7 @@
       }
     },
     "thumbnailPanel": {
-      "delete": "Delete",
+      "delete": "Verwijderen",
       "rotateClockwise": "Met de klok mee",
       "rotateCounterClockwise": "Tegen de klok in"
     },
@@ -468,14 +468,14 @@
   "warning": {
     "deletePage": {
       "deleteTitle": "Pagina verwijderen",
-      "deleteMessage": "Weet u zeker dat u de geselecteerde pagina ('s) wilt verwijderen. Dit kan niet ongedaan worden gemaakt",
+      "deleteMessage": "Weet u zeker dat u de geselecteerde pagina('s) wilt verwijderen. Dit kan niet ongedaan worden gemaakt",
       "deleteLastPageMessage": "U kunt niet alle pagina's in het document verwijderen."
     },
     "extractPage": {
       "title": "Pagina uitpakken",
-      "message": "Weet u zeker dat u de geselecteerde pagina ('s) wilt extraheren?",
+      "message": "Weet u zeker dat u de geselecteerde pagina('s) wilt extraheren?",
       "confirmBtn": "Extraheer pagina's",
-      "secondaryBtn": "Extraheer en verwijder pagina ('s)"
+      "secondaryBtn": "Extraheer en verwijder pagina('s)"
     },
     "redaction": {
       "applyTile": "Redactie toepassen",
