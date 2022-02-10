@@ -327,11 +327,16 @@ const map = {
       annotation instanceof window.Annotations.TextStrikeoutAnnotation,
   },
   redaction: {
-    icon: 'ic_annotation_redact_black_24px',
+    icon: 'icon-tool-select-area-redaction',
     iconColor: 'StrokeColor',
-    currentPalette: 'StrokeColor',
-    availablePalettes: ['StrokeColor', 'FillColor'],
-    toolNames: ['AnnotationCreateRedaction'],
+    currentPalette: 'TextColor',
+    availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
+    toolNames: [
+      'AnnotationCreateRedaction',
+      'AnnotationCreateRedaction2',
+      'AnnotationCreateRedaction3',
+      'AnnotationCreateRedaction4'
+    ],
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.RedactionAnnotation,
   },
@@ -420,6 +425,14 @@ const map = {
     toolNames: ['Pan'],
     annotationCheck: null,
   },
+  ContentEditTool: {
+    icon: 'ic_edit_page_24px',
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: ['ContentEditTool'],
+    annotationCheck: null,
+  },
   textSelect: {
     icon: 'textselect_cursor',
     iconColor: null,
@@ -463,9 +476,9 @@ const map = {
   },
   sound: {
     icon: 'ic_sound_24px',
-    iconColor: 'StrokeColor',
-    currentPalette: 'StrokeColor',
-    availablePalettes: ['StrokeColor'],
+    iconColor: 'FillColor',
+    currentPalette: 'FillColor',
+    availablePalettes: ['FillColor', 'StrokeColor'],
     toolNames: [],
     annotationCheck: annotation => annotation instanceof window.Annotations.SoundAnnotation,
   },
@@ -481,7 +494,7 @@ const map = {
     icon: 'icon-form-field-text',
     iconColor: 'TextColor',
     currentPalette: 'TextColor',
-    availablePalettes: ['TextColor', 'FillColor', 'StrokeColor'],
+    availablePalettes: ['TextColor', 'StrokeColor', 'FillColor'],
     toolNames: [
       'TextFormFieldCreateTool',
       'TextFormFieldCreateTool2',
