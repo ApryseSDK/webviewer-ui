@@ -39,6 +39,22 @@ const FilterAnnotModal = () => {
   const [checkRepliesForAuthorFilter, setCheckRepliesForAuthorFilter] = useState(true);
   const [statusFilter, setStatusFilter] = useState([]);
 
+  const similarColorExist = (currColor, newColor) => {
+    const colorObject = currColor.map(c => Object.assign({
+      R: parseInt(`${c[1]}${c[2]}`, 16),
+      G: parseInt(`${c[3]}${c[4]}`, 16),
+      B: parseInt(`${c[5]}${c[6]}`, 16)
+    }));
+
+    const threshold = 10;
+    const similarColors = colorObject
+    .filter(c => Math.abs(newColor.R - c.R) < threshold
+      && Math.abs(newColor.G - c.G) < threshold
+      && Math.abs(newColor.B - c.B) < threshold);
+
+    return !!similarColors.length;
+  }
+
   const filterApply = () => {
     dispatch(
       actions.setCustomNoteFilter(annot => {
@@ -65,7 +81,7 @@ const FilterAnnotModal = () => {
         }
         if (colorFilter.length > 0) {
           if (annot.Color) {
-            color = colorFilter.includes(rgbaToHex(annot.Color.R, annot.Color.G, annot.Color.B, annot.Color.A));
+            color = similarColorExist(colorFilter, annot.Color);
           } else {
             // check for default color if no color is available
             color = colorFilter.includes('#485056');
@@ -141,7 +157,7 @@ const FilterAnnotModal = () => {
         return;
       }
       annotTypesToBeAdded.add(getAnnotationClass(annot));
-      if (annot.Color) {
+      if (annot.Color && !similarColorExist([...annotColorsToBeAdded], annot.Color)) {
         annotColorsToBeAdded.add(rgbaToHex(annot.Color.R, annot.Color.G, annot.Color.B, annot.Color.A));
       } else {
         annotColorsToBeAdded.add('#485056');
