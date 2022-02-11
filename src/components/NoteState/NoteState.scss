@@ -9,6 +9,10 @@
   padding-left: 15px;
   padding-right: 10px;
 
+  @include ie11 { // for IE11 only
+    padding-left: 0px;
+    padding-right: 5px;
+  }
   .overflow {
     width: 28px;
     height: 28px;

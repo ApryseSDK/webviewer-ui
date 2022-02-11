@@ -63,6 +63,10 @@
     padding-left: 52px;
     padding-right: 12px;
 
+    @include ie11 {
+      flex: none;
+    }
+
     textarea {
       width: 100%;
       padding-left: 8px;

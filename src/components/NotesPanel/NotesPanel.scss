@@ -47,6 +47,13 @@
   // Needed
   // overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
 
+
+  .reply-area-container .reply-button {
+    @include ie11 { // For ie11 only
+      width: 28px;
+    }
+  }
+
   padding-top: 16px;
   @include mobile {
     width: 100vw;
@@ -113,7 +120,7 @@
         height: 28px;
         width: 28px;
         cursor: pointer;
-        
+
         &:hover {
           background: var(--blue-1)
         }
