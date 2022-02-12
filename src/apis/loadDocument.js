@@ -10,7 +10,9 @@
  * @param {string} [options.documentId] Unique id of the document.
  * @param {boolean} [options.withCredentials] Whether or not cross-site requests should be made using credentials.
  * @param {string} [options.cacheKey] A key that will be used for caching the document on WebViewer Server.
+ * @param {string} [options.officeOptions] The options to set when converting office documents.
  * @param {string} [options.password] A string that will be used to as the password to load a password protected document.
+ * @param {function} [options.onError] - A callback function that will be called when error occurs in the process of loading a document. The function signature is `function(e) {}`
  * @param {object} [options.xodOptions] - An object that contains the options for a XOD document.
  * @param {boolean} [options.xodOptions.decrypt] - Function to be called to decrypt a part of the XOD file. For default XOD AES encryption pass Core.Encryption.decrypt.
  * @param {boolean} [options.xodOptions.decryptOptions] -  An object with options for the decryption e.g. {p: "pass", type: "aes"} where is p is the password.
