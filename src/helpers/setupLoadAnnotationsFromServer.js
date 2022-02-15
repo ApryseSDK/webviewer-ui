@@ -11,9 +11,7 @@ export default store => {
   }
 
   const getAnnotsFromServer = (originalData, callback) => {
-    const state = store.getState();
-    const { id: documentId } = state.document;
-
+    const documentId = core.getDocument().getDocumentId();
     if (window.instance.UI.serverFailed) {
       callback(originalData);
       return;
