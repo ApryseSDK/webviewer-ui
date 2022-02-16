@@ -22,8 +22,9 @@
   top: auto;
   margin-left: auto;
   margin-right: auto;
-  background: #485056;
+  background: var(--component-background);
   border-radius: 4px;
+  box-shadow: 0px 0px 3px 0px var(--box-shadow);
   z-index: 0;
   bottom: 20px;
 
@@ -42,15 +43,15 @@
     align-items: center;
     justify-content: center;
     margin: 0 4px;
+    cursor: pointer;
 
     &:hover {
-      background: #21242A;
+      background: var(--view-header-button-hover);
     }
 
     .side-arrow {
       width: 16px;
       height: 16px;
-      color: #FFFFFF;
     }
   }
 
@@ -62,7 +63,6 @@
     form {
       top: -1px;
       position: relative;
-      color: #FFFFFF;
 
       input {
         min-width: 8px;
@@ -72,8 +72,7 @@
         font-family: 'Lato';
         font-weight: bold;
         background: transparent;
-        color: #FFFFFF;
-
+        color: var(--text-color);
         cursor: pointer;
         outline: none;
         border-bottom: 1px solid var(--icon-color);

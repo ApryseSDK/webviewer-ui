@@ -1,13 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deletePages, rotateClockwise, rotateCounterClockwise } from "helpers/pageManipulationFunctions";
+import { useTranslation } from 'react-i18next';
+
 import Button from 'components/Button';
+import core from 'core';
 import selectors from 'selectors';
+import actions from 'actions';
+
 import './ThumbnailControls.scss';
-import PageManipulationOverlayButton from 'components/PageManipulationOverlayButton';
-import { workerTypes } from "constants/types";
-import core from "src/core";
 
 const propTypes = {
   index: PropTypes.number.isRequired,
@@ -17,58 +18,67 @@ const dataElementName = 'thumbnailControl';
 
 const ThumbnailControls = ({ index }) => {
   const [isElementDisabled] = useSelector(state => [selectors.isElementDisabled(state, dataElementName)]);
-  const [isPageDeletionConfirmationModalEnabled] = useSelector(state => [selectors.pageDeletionConfirmationModalEnabled(state)]);
+
+  const [t] = useTranslation();
   const dispatch = useDispatch();
 
-  const isXod = workerTypes.XOD === core.getDocument().type;
+  const rotateClockwise = () => {
+    core.rotatePages([index + 1], window.CoreControls.PageRotation.e_90);
+  };
 
-  if (isElementDisabled) {
-    return null;
-  } else if (isXod) {
-    return (
-      <div className="thumbnailControls-overlay" data-element={dataElementName}
-        style={{ display: 'flex' }}
-      >
-        <Button
-          img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
-          onClick={() => rotateCounterClockwise([index + 1])}
-          title="option.thumbnailPanel.rotateCounterClockwise"
-          dataElement="thumbRotateCounterClockwise"
-        />
-        <Button
-          img="icon-header-page-manipulation-page-rotation-clockwise-line"
-          onClick={() => rotateClockwise([index + 1])}
-          title="option.thumbnailPanel.rotateClockwise"
-          dataElement="thumbRotateClockwise"
-        />
-      </div>
-    );
-  } else {
-    return (
-      <div className="thumbnailControls-overlay" data-element={dataElementName}>
-        <Button
-          className="rotate-button"
-          img="icon-header-page-manipulation-page-rotation-clockwise-line"
-          onClick={() => rotateClockwise([index + 1])}
-          title="option.thumbnailPanel.rotateClockwise"
-          dataElement="thumbRotateClockwise"
-        />
-        <Button
-          className="delete-button"
-          img="icon-delete-line"
-          onClick={() => deletePages([index + 1], dispatch, isPageDeletionConfirmationModalEnabled)}
-          title="option.thumbnailPanel.delete"
-          dataElement="thumbDelete"
-        />
-        <PageManipulationOverlayButton
-          className={'more-options'}
-          pageIndex={index}
-        />
-      </div>
-    );
-  }
+  const rotateCounterClockwise = () => {
+    core.rotatePages([index + 1], window.CoreControls.PageRotation.e_270);
+  };
+
+  const handleDelete = () => {
+    let message = t('warning.deletePage.deleteMessage');
+    const title = t('warning.deletePage.deleteTitle');
+    const confirmBtnText = t('action.ok');
+
+    let warning = {
+      message,
+      title,
+      confirmBtnText,
+      onConfirm: () => core.removePages([index + 1]),
+    };
+
+    if (core.getDocumentViewer().getPageCount() === 1) {
+      message = t('warning.deletePage.deleteLastPageMessage');
+
+      warning = {
+        message,
+        title,
+        confirmBtnText,
+        onConfirm: () => Promise.resolve(),
+      };
+    }
+
+    dispatch(actions.showWarningMessage(warning));
+  };
+
+  return isElementDisabled ? null : (
+    <div className="thumbnailControls" data-element={dataElementName}>
+      <Button
+        img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
+        onClick={rotateCounterClockwise}
+        title="option.thumbnailPanel.rotateCounterClockwise"
+        dataElement="thumbRotateCounterClockwise"
+      />
+      <Button
+        img="icon-delete-line"
+        onClick={handleDelete}
+        title="option.thumbnailPanel.delete"
+        dataElement="thumbDelete"
+      />
+      <Button
+        img="icon-header-page-manipulation-page-rotation-clockwise-line"
+        onClick={rotateClockwise}
+        title="option.thumbnailPanel.rotateClockwise"
+        dataElement="thumbRotateClockwise"
+      />
+    </div>
+  );
 };
-
 
 ThumbnailControls.propTypes = propTypes;
 
