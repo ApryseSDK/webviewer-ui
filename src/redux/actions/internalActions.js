@@ -334,6 +334,10 @@ export const setPrintQuality = quality => ({
   type: 'SET_PRINT_QUALITY',
   payload: { quality },
 });
+export const setPrintPageLimit = limit => ({
+  type: 'SET_PRINT_PAGE_LIMIT',
+  payload: { limit },
+});
 export const setDefaultPrintOptions = options => ({
   type: 'SET_DEFAULT_PRINT_OPTIONS',
   payload: { options },

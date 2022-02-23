@@ -640,6 +640,7 @@ export default {
     bookmarks: {},
     layers: [],
     printQuality: 1,
+    printPageLimit: 0,
     passwordAttempts: -1,
     loadingProgress: 0,
   },

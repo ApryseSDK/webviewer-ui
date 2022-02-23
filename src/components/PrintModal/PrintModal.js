@@ -27,6 +27,7 @@ class PrintModal extends React.PureComponent {
     isOpen: PropTypes.bool,
     currentPage: PropTypes.number,
     printQuality: PropTypes.number.isRequired,
+    printPageLimit: PropTypes.number.isRequired,
     pageLabels: PropTypes.array.isRequired,
     closeElement: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
@@ -52,6 +53,7 @@ class PrintModal extends React.PureComponent {
     this.includeComments = React.createRef();
     this.currentView = React.createRef();
     this.pendingCanvases = [];
+    this.cancelPrint = false;
     this.state = {
       allowWatermarkModal: false,
       count: -1,
@@ -153,7 +155,7 @@ class PrintModal extends React.PureComponent {
     }
   };
 
-  createPagesAndPrint = e => {
+  createPagesAndPrint = async e => {
     e.preventDefault();
 
     if (this.state.pagesToPrint.length < 1) {
@@ -162,43 +164,54 @@ class PrintModal extends React.PureComponent {
 
     const { language } = this.props;
     this.setState({ count: 0 });
+    this.cancelPrint = false;
 
     if (this.state.allowWatermarkModal) {
       core.setWatermark(this.props.watermarkModalOptions);
     } else {
       core.setWatermark(this.state.existingWatermarks);
     }
-
-    const createPages = creatingPages(
-      this.state.pagesToPrint,
-      this.state.includeComments,
-      this.state.includeAnnotations,
-      this.props.printQuality,
-      this.props.sortStrategy,
-      this.props.colorMap,
-      this.props.printedNoteDateFormat,
-      undefined,
-      this.currentView.current?.checked,
-      language,
-    );
-    createPages.forEach(async pagePromise => {
-      await pagePromise;
-      this.setState({
-        count:
+    
+    const limit = this.props.printPageLimit === 0 ? Number.MAX_SAFE_INTEGER : this.props.printPageLimit ;
+    const runs = Math.ceil(this.state.pagesToPrint.length / limit);
+    for (let i = 0; i < runs; ++i) {
+      if (this.cancelPrint){
+        break;
+      }
+      const createPages = creatingPages(
+          this.state.pagesToPrint.slice(i * limit, Math.min((i+1)*limit, this.state.pagesToPrint.length)),
+          this.state.includeComments,
+          this.state.includeAnnotations,
+          this.props.printQuality,
+          this.props.sortStrategy,
+          this.props.colorMap,
+          this.props.printedNoteDateFormat,
+          undefined,
+          this.currentView.current?.checked,
+          language,
+      );
+      createPages.forEach(pagePromise => {
+        pagePromise.then(()=> {
+          this.setState({
+            count:
           this.state.count < this.state.pagesToPrint.length
-            ? this.state.count + 1
-            : this.state.count
+                    ? this.state.count + 1
+                    : this.state.count
+          });
+        });
       });
-    });
-    Promise.all(createPages)
-      .then(pages => {
+      
+      try {
+        const pages = await Promise.all(createPages);
         printPages(pages);
-        this.closePrintModal();
-      })
-      .catch(e => {
+      }
+      catch(e) {
         console.error(e);
-        this.setState({ count: -1 });
-      });
+        this.setState({count: -1});
+      }
+    }
+
+    this.closePrintModal();
   };
 
   closePrintModal = () => {
@@ -211,6 +224,12 @@ class PrintModal extends React.PureComponent {
       isWatermarkModalVisible: visible
     });
   };
+  
+  onCancelPrint= () =>{
+    this.cancelPrint = true;
+    cancelPrint();
+    this.closePrintModal();
+  }
 
   render() {
     const { isDisabled, t, isApplyWatermarkDisabled, isOpen } = this.props;
@@ -255,10 +274,7 @@ class PrintModal extends React.PureComponent {
             <div
               className={className}
               data-element="printModal"
-              onClick={() => {
-                cancelPrint();
-                this.closePrintModal();
-              }}
+              onClick={this.onCancelPrint}
             >
               <div className="container" onClick={e => e.stopPropagation()}>
                 <div className="swipe-indicator" />
@@ -408,6 +424,7 @@ const mapStateToProps = state => ({
   isOpen: selectors.isElementOpen(state, 'printModal'),
   currentPage: selectors.getCurrentPage(state),
   printQuality: selectors.getPrintQuality(state),
+  printPageLimit: selectors.getPrintPageLimit(state),
   defaultPrintOptions: selectors.getDefaultPrintOptions(state),
   pageLabels: selectors.getPageLabels(state),
   sortStrategy: selectors.getSortStrategy(state),
