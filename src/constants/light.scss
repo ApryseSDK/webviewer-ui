@@ -1,27 +1,30 @@
 :root {
-  --blue-1: #E7EDF3;
-  --blue-2: #DDE6EE;
-  --blue-3: #CFD8E0;
-  --blue-4: #C7D2DD;
-  --blue-5: #3183C8;
-  --blue-6: #1A4971;
+  --blue-1: #e7edf3;
+  --blue-2: #dde6ee;
+  --blue-3: #cfd8e0;
+  --blue-4: #c7d2dd;
+  --blue-5: #3183c8;
+  --blue-6: #1a4971;
 
-  --gray-0: #FFFFFF;
-  --gray-1: #F8F9FA;
-  --gray-2: #F1F3F5;
-  --gray-3: #E7EBEE;
-  --gray-4: #DEE2E6;
-  --gray-5: #CFD4DA;
-  --gray-6: #ADB5BD;
-  --gray-7: #868E96;
+  --gray-0: #ffffff;
+  --gray-1: #f8f9fa;
+  --gray-2: #f1f3f5;
+  --gray-3: #e7ebee;
+  --gray-4: #dee2e6;
+  --gray-5: #cfd4da;
+  --gray-6: #adb5bd;
+  --gray-7: #868e96;
   --gray-8: #485056;
-  --gray-9: #343A40;
-  --gray-10: #21242A;
+  --gray-9: #343a40;
+  --gray-10: #21242a;
   --gray-11: #101214;
   --gray-12: #000000;
+  --gray-custom: #373b46;
 
-  --yellow-1: #FACE0080;
+  --yellow-1: #face0080;
   --red: red;
+
+  --orange-6: #e27019;
 
   --component-background: var(--gray-0);
   --mobile-presets-background: var(--gray-1);
@@ -89,7 +92,6 @@
   --scrollbar-color: var(--gray-6);
   --note-box-shadow: var(--gray-7);
   --note-box-shadow-expanded: rgba(134, 142, 150, 0.24);
-
 
   --tools-header-background: var(--gray-3);
   --view-header-background: var(--gray-1);

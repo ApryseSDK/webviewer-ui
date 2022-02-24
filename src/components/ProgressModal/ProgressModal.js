@@ -55,21 +55,22 @@ const ProgressModal = () => {
       data-element="progressModal"
     >
       <div className="container">
-        <svg className="progress-ring" width="54" height="54">
+        <svg className="progress-ring" width="52" height="52">
           <circle
             className="progress-ring__fill"
-            r="25"
-            cx="27"
-            cy="27"
+            r="22"
+            cx="26"
+            cy="26"
           />
           <circle
             ref={progressCircle}
             className="progress-ring__circle"
-            r="25"
-            cx="27"
-            cy="27"
+            r="22"
+            cx="26"
+            cy="26"
           />
         </svg>
+        <div className="msg">Processing...</div>
       </div>
     </div>
   );

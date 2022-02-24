@@ -6,17 +6,21 @@
   background: var(--spinner-negative-space);
 
   &.open {
-    opacity: 1;
+    opacity: 0.8;
     transition: opacity 1s 2s;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index:999;
+    z-index: 999;
   }
 
   &.closed {
     opacity: 0;
+  }
+
+  .progress-ring {
+    margin-left: 15px;
   }
 
   .progress-ring__fill {
@@ -25,7 +29,7 @@
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
   }
-  
+
   .progress-ring__circle {
     transition: 0.35s stroke-dashoffset;
     // axis compensation
@@ -39,13 +43,21 @@
       stroke-width: 4;
 
       &.progress-ring__fill {
-        stroke: var(--slider-background);
+        stroke: var(--gray-custom);
       }
 
       &.progress-ring__circle {
-        stroke: var(--slider-filled);
+        stroke: var(--orange-6);
       }
-
     }
+  }
+
+  .msg {
+    text-align: center;
+    font-family: 'Lato';
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 10px;
+    color: var(--gray-custom);
   }
 }
