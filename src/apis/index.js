@@ -168,7 +168,7 @@ import setActiveResult from './setActiveResult';
 import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
 import overrideSearchExecution from './overrideSearchExecution';
 import reactElements from './reactElements';
-import { addTrustedCertificates } from './verificationOptions';
+import { addTrustedCertificates, loadTrustList } from './verificationOptions';
 import toggleReaderMode from './toggleReaderMode';
 import toggleElementVisibility from './toggleElementVisibility';
 import setAnnotationReadState from './setAnnotationReadState';
@@ -187,7 +187,9 @@ import isInDesktopOnlyMode from './isInDesktopOnlyMode';
 import pageManipulationOverlay from './pageManipulationOverlay';
 import getWatermarkModalOptions from './getWatermarkModalOptions';
 import enableNoteSubmissionWithEnter from './enableNoteSubmissionWithEnter';
+import willUseEmbeddedPrinting from 'src/apis/willUseEmbeddedPrinting';
 import reloadOutline from './reloadOutline';
+import getAvailableLanguages from './getAvailableLanguages';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -293,6 +295,7 @@ export default store => {
     updateTool: updateTool(store),
     updateElement: updateElement(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
+    willUseEmbeddedPrinting: willUseEmbeddedPrinting(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),
     mentions: mentions(store),
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
@@ -305,6 +308,7 @@ export default store => {
     setAnnotationContentOverlayHandler: setAnnotationContentOverlayHandler(store),
     VerificationOptions: {
       addTrustedCertificates: addTrustedCertificates(store),
+      loadTrustList: loadTrustList(store),
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
@@ -369,6 +373,7 @@ export default store => {
     removeEventListener,
     syncNamespaces,
     reloadOutline: reloadOutline(store),
+    getAvailableLanguages,
 
     //deprecated, to be removed in 8.0
     useNativeScroll,

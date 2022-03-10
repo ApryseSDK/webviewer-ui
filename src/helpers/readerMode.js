@@ -52,7 +52,7 @@ export const enterReaderMode = store => {
         store.dispatch(actions.disableElements(dataElements, PRIORITY_ONE));
         if (!selectors.isElementDisabled(state, 'toolbarGroup-Annotate')) {
           store.dispatch(actions.setToolbarGroup('toolbarGroup-Annotate'));
-          store.dispatch(actions.setActiveToolGroup(""));
+          store.dispatch(actions.setActiveToolGroup(''));
         } else {
           store.dispatch(actions.setToolbarGroup('toolbarGroup-View'));
         }

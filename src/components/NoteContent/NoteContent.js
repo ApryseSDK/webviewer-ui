@@ -87,10 +87,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           const href = match.getAnchorHref();
           const anchorText = match.getAnchorText();
           const offset = match.getOffset();
-          if (anchorText !== match.getMatchedText()) {
-            // If not match, the 'highlightSearchInput()' function below will not work properly
-            throw new Error("anchorText and matchedText are different");
-          }
+
           switch (match.getType()) {
             case 'url':
             case 'email':
@@ -99,7 +96,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                 href,
                 text: anchorText,
                 start: offset,
-                end: offset + anchorText.length
+                end: offset + match.getMatchedText().length
               });
               return;
           }
@@ -287,7 +284,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           sortStrategy={sortStrategy}
         />
       )
-    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy]
+    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy]
   );
 
   return (

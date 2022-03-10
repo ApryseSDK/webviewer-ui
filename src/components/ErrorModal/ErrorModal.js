@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import actions from 'actions';
@@ -9,11 +9,12 @@ import selectors from 'selectors';
 import './ErrorModal.scss';
 
 const ErrorModal = () => {
-  const [message, isDisabled, isOpen] = useSelector(
+  const [message, isDisabled, isOpen, isMultiTab] = useSelector(
     state => [
       selectors.getErrorMessage(state),
       selectors.isElementDisabled(state, 'errorModal'),
       selectors.isElementOpen(state, 'errorModal'),
+      selectors.getIsMultiTab(state),
     ],
     shallowEqual
   );
@@ -56,6 +57,12 @@ const ErrorModal = () => {
 
   const shouldTranslate = message.startsWith('message.');
 
+  let tabsPadding = 0;
+  if (isMultiTab) {
+    // Add tabsheader padding
+    tabsPadding += document.getElementsByClassName("TabsHeader")[0]?.getBoundingClientRect().bottom;
+  }
+
   return isDisabled ? null : (
     <div
       className={classNames({
@@ -64,6 +71,7 @@ const ErrorModal = () => {
         open: isOpen,
         closed: !isOpen,
       })}
+      style={isMultiTab ? { height: `calc(100% - ${tabsPadding}px)` } : undefined}
       data-element="errorModal"
     >
       <div className="container">{shouldTranslate ? t(message) : message}</div>

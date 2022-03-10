@@ -17,6 +17,7 @@ import selectors from 'selectors';
 import './MeasurementOverlay.scss';
 import CustomMeasurementOverlay from './CustomMeasurementOverlay';
 import EllipseMeasurementOverlay from './EllipseMeasurementOverlay';
+import ArcMeasurementOverlay from './ArcMeasurementOverlay';
 import LineMeasurementInput from './LineMeasurementInput';
 import CountMeasurementOverlay from './CountMeasurementOverlay';
 
@@ -190,6 +191,7 @@ class MeasurementOverlay extends React.PureComponent {
     [
       'distanceMeasurement',
       'perimeterMeasurement',
+      'arcMeasurement',
       'areaMeasurement',
       'rectangularAreaMeasurement',
       'cloudyRectangularAreaMeasurement',
@@ -201,6 +203,7 @@ class MeasurementOverlay extends React.PureComponent {
     [
       'distanceMeasurement',
       'perimeterMeasurement',
+      'arcMeasurement',
       'areaMeasurement',
       'rectangularAreaMeasurement',
       'cloudyRectangularAreaMeasurement',
@@ -218,6 +221,7 @@ class MeasurementOverlay extends React.PureComponent {
     let showInfo;
     if (
       key === 'perimeterMeasurement' ||
+      key === 'arcMeasurement' ||
       key === 'areaMeasurement' ||
       key === 'rectangularAreaMeasurement',
       key === 'cloudyRectangularAreaMeasurement'
@@ -270,6 +274,7 @@ class MeasurementOverlay extends React.PureComponent {
     const keyTitleMap = {
       distanceMeasurement: t('option.measurementOverlay.distanceMeasurement'),
       perimeterMeasurement: t('option.measurementOverlay.perimeterMeasurement'),
+      arcMeasurement: t('option.measurementOverlay.arcMeasurement'),
       areaMeasurement: t('option.measurementOverlay.areaMeasurement'),
       rectangularAreaMeasurement: t('option.measurementOverlay.areaMeasurement'),
       cloudyRectangularAreaMeasurement: t('option.measurementOverlay.areaMeasurement'),
@@ -299,6 +304,7 @@ class MeasurementOverlay extends React.PureComponent {
     const keyDisplayNameMap = {
       distanceMeasurement: t('option.measurementOverlay.distance'),
       perimeterMeasurement: t('option.measurementOverlay.perimeter'),
+      arcMeasurement: t('option.measurementOverlay.arc'),
       areaMeasurement: t('option.measurementOverlay.area'),
       rectangularAreaMeasurement: t('option.measurementOverlay.area'),
       cloudyRectangularAreaMeasurement: t('option.measurementOverlay.area'),
@@ -343,6 +349,7 @@ class MeasurementOverlay extends React.PureComponent {
     const keyPtMap = {
       distanceMeasurement: ({ Start, End }) => [Start, End],
       perimeterMeasurement: getIPathAnnotationPts,
+      arcMeasurement: getIPathAnnotationPts,
       areaMeasurement: getIPathAnnotationPts,
       rectangularAreaMeasurement: getIPathAnnotationPts,
       cloudyRectangularAreaMeasurement: getIPathAnnotationPts,
@@ -378,6 +385,8 @@ class MeasurementOverlay extends React.PureComponent {
       return <EllipseMeasurementOverlay annotation={annotation} isOpen={isOpen} />;
     } else if (key === 'countMeasurement') {
       return <CountMeasurementOverlay annotation={annotation} t={t} />;
+    } else if (key === 'arcMeasurement') {
+      return (<ArcMeasurementOverlay annotation={annotation} translate={t} />);
     } else {
       return (
         <>

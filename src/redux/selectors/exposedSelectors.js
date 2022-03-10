@@ -37,6 +37,9 @@ export const getSearchPanelWidth = state =>
 export const getNotesPanelWidth = state =>
   state.viewer.panelWidths.notesPanel;
 
+export const getRedactionPanelWidth = state =>
+  state.viewer.panelWidths.redactionPanel;
+
 const RESIZE_BAR_WIDTH = 14; // 14px Need to update this if styling results in a change to width.
 export const getLeftPanelWidthWithReszieBar = state =>
   state.viewer.panelWidths.leftPanel + RESIZE_BAR_WIDTH;
@@ -48,14 +51,17 @@ export const getDocumentContentContainerWidthStyle = state => {
   const notesPanelWidth = getNotesPanelWidthWithReszieBar(state);
   const searchPanelWidth = getSearchPanelWidthWithReszieBar(state);
   const leftPanelWidth = getLeftPanelWidthWithReszieBar(state);
+  const redactionPanelWidth = getRedactionPanelWidth(state);
   const isLeftPanelOpen = isElementOpen(state, 'leftPanel');
   const isNotesPanelOpen = isElementOpen(state, 'notesPanel');
   const isSearchPanelOpen = isElementOpen(state, 'searchPanel');
+  const isRedactionPanelOpen = isElementOpen(state, 'redactionPanel');
 
   const spaceTakenUpByPanels = 0 +
     (isLeftPanelOpen ? leftPanelWidth : 0) +
     (isNotesPanelOpen ? notesPanelWidth : 0) +
-    (isSearchPanelOpen ? searchPanelWidth : 0);
+    (isSearchPanelOpen ? searchPanelWidth : 0) +
+    (isRedactionPanelOpen ? redactionPanelWidth : 0);
 
   return `calc(100% - ${spaceTakenUpByPanels}px)`;
 };
@@ -92,7 +98,19 @@ export const getEnabledToolbarGroups = state => {
   const toolbarGroupDataElements = getToolbarGroupDataElements(state);
   return toolbarGroupDataElements.filter(dataElement => {
     const headerItems = state.viewer.headers[dataElement];
-    const toolGroupButtons = headerItems.filter(({ dataElement }) => {
+    const flattenHeaderItems = (dataItems) => {
+      return dataItems.reduce((total, item) => {
+        if (item.children) {
+          total.push(...flattenHeaderItems(item.children));
+        } else {
+          total.push(item);
+        }
+        return total;
+      }, [])
+    };
+    
+    const itemsToCheck = flattenHeaderItems(headerItems);
+    const toolGroupButtons = itemsToCheck.filter(({ dataElement }) => {
       return dataElement && dataElement.includes('ToolGroupButton');
     });
     const isEveryToolGroupButtonDisabled = !dataElement.includes('toolbarGroup-View') && toolGroupButtons.every(({ dataElement: toolGroupDataElement }) => {
@@ -131,6 +149,10 @@ export const getToolButtonObjects = state => {
 export const isToolGroupReorderingEnabled = state => {
   return state.viewer.enableToolGroupReordering;
 };
+
+export const isNoteSubmissionWithEnterEnabled = state => {
+  return state.viewer.enableNoteSubmissionWithEnter;
+}
 
 export const getActiveToolNamesForActiveToolGroup = state => {
   const { activeToolGroup } = state.viewer;
@@ -295,6 +317,8 @@ export const isReaderMode = state => state.viewer.isReaderMode;
 
 export const getCertificates = state => state.viewer.certificates;
 
+export const getTrustLists = state => state.viewer.trustLists;
+
 export const getValidationModalWidgetName = state => state.viewer.validationModalWidgetName;
 
 export const getVerificationResult = (state, fieldName) => state.viewer.verificationResult[fieldName] || {};
@@ -335,6 +359,8 @@ export const getDefaultPrintOptions = state => state.document.defaultPrintOption
 export const getTotalPages = state => state.document.totalPages;
 
 export const getOutlines = state => state.document.outlines;
+
+export const getIsOutlineEditing = state => state.viewer.isOutlineEditing;
 
 export const getBookmarks = state => state.document.bookmarks;
 
@@ -379,6 +405,10 @@ export const getCurrentLanguage = state => state.viewer.currentLanguage;
 
 export const shouldFadePageNavigationComponent = state => state.viewer.fadePageNavigationComponent;
 
+export const isContentEditWarningHidden = state => state.viewer.hideContentEditWarning;
+
+export const getCurrentContentBeingEdited = state => state.viewer.currentContentBeingEdited;
+
 export const getFeatureFlags = state => state.featureFlags;
 
 export const isInDesktopOnlyMode = state => state.viewer.isInDesktopOnlyMode;
@@ -393,3 +423,7 @@ export const shouldShowPresets = (state) => {
   const response = state.viewer.toolButtonObjects[state.viewer.activeToolName];
   return response?.showPresets ?? true;
 };
+
+export const shouldResetAudioPlaybackPosition = state => state.viewer.shouldResetAudioPlaybackPosition;
+
+export const getActiveSoundAnnotation = state => state.viewer.activeSoundAnnotation;

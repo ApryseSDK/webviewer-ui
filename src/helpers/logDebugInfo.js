@@ -1,4 +1,4 @@
-import getHashParams from 'helpers/getHashParams';
+import getHashParameters from 'helpers/getHashParameters';
 import packageConfig from '../../package.json';
 
 /* eslint-disable no-console */
@@ -7,9 +7,9 @@ export default () => {
   const coreVersion = window.Core.DocumentViewer.prototype.version;
   const coreBuild = window.Core.DocumentViewer.prototype.build;
   const uiVersion = packageConfig.version;
-  const wvServer = !!getHashParams('webviewerServerURL', null);
-  const fullAPI = !!getHashParams('pdfnet', false);
-  const disableLogs = getHashParams('disableLogs', false);
+  const wvServer = !!getHashParameters('webviewerServerURL', null);
+  const fullAPI = !!getHashParameters('pdfnet', false);
+  const disableLogs = getHashParameters('disableLogs', false);
 
   if (disableLogs) {
     return;

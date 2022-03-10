@@ -1,8 +1,8 @@
-import React, {useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
-import { useSelector, useDispatch} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Model3DModalContainer from './Model3DModalContainer';
 
 function Model3DModalRedux(props) {
@@ -53,7 +53,7 @@ function Model3DModalRedux(props) {
   useEffect(() => {
     if (isOpen) {
       urlInput.current.focus();
-      dispatch(actions.closeElements(['printModal', 'loadingModal', 'progressModal', 'errorModal']));
+      dispatch(actions.closeElements(['printModal', 'loadingModal', 'progressModal', 'errorModal', 'OpenFileModal']));
     }
   }, [dispatch, isOpen]);
 

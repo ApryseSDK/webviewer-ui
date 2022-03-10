@@ -29,6 +29,7 @@ const createTextAnnotation = annotationConstructor => {
 
     if (annotation instanceof window.Annotations.RedactionAnnotation) {
       setRedactionStyle(annotation);
+      annotation.IsText = true;
     }
 
     setAnnotationStyle(annotation);

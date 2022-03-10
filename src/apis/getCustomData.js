@@ -1,4 +1,4 @@
-import getHashParams from 'helpers/getHashParams';
+import getHashParameters from 'helpers/getHashParameters';
 
 /**
  * A getter that returns a stringified version of the 'custom' property that is passed to the WebViewer constructor
@@ -6,4 +6,4 @@ import getHashParams from 'helpers/getHashParams';
  * @method UI.getCustomData
  * @returns {string} returns a stringified version of the 'custom' property that is passed to the WebViewer constructor
  */
-export default () => getHashParams('custom', null);
+export default () => getHashParameters('custom', null);

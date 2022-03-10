@@ -46,10 +46,10 @@ import actions from 'actions';
  * Invalid.
  * @ignore
  */
-export default async (certificates, dispatch) => {
+export default async (certificates, trustLists, dispatch) => {
   const doc = core.getDocument();
   if (doc) {
-    const verificationResult = await getVerificationResult(doc, certificates);
+    const verificationResult = await getVerificationResult(doc, certificates, trustLists);
     dispatch(actions.setVerificationResult(verificationResult));
     return verificationResult;
   }
@@ -64,12 +64,14 @@ export default async (certificates, dispatch) => {
  * @param {Array<File | string>} certificates The certificate files to be used
  * for verification. Can be passed as a File object, or a URL in the form
  * of a string, in which a GET call will be made to retrieve the certificate
- *
+ * @param {
+ *   Array<Blob | ArrayBuffer | Int8Array | Uint8Array | Uint8ClampedArray>
+ * } trustLists The Trust Lists to load for verification.
  * @returns {object} An object mapping the field name of each signature widget
  * to their verification results
  * @ignore
  */
-const getVerificationResult = async (doc, certificates) => {
+const getVerificationResult = async (doc, certificates, trustLists) => {
   const { PDFNet } = window;
   const { VerificationResult } = PDFNet;
   const {
@@ -142,6 +144,39 @@ const getVerificationResult = async (doc, certificates) => {
       }
     }
 
+    for (const trustList of trustLists) {
+      const trustListDataStructure = trustList.constructor.name;
+      const supportedDataStructures = [
+        'ArrayBuffer',
+        'Int8Array',
+        'Uint8Array',
+        'Uint8ClampedArray',
+      ];
+      let fdfDocBuffer;
+      if (trustListDataStructure === 'Blob') {
+        fdfDocBuffer = await trustList.arrayBuffer();
+      } else if (supportedDataStructures.includes(trustListDataStructure)) {
+        fdfDocBuffer = trustList;
+      } else {
+        console.error(
+          'The provided TrustList is an unsupported data-structure. '
+          + 'Please ensure the TrustList is formatted as one of the following '
+          + `data-structures: ${[...supportedDataStructures, 'Blob'].join('|')}`
+        );
+        continue;
+      }
+      try {
+        const fdf = await PDFNet.FDFDoc.createFromMemoryBuffer(fdfDocBuffer);
+        await opts.loadTrustList(fdf);
+      } catch (error) {
+        console.error(
+          `Error encountered when trying to load certificate: ${error}. `
+          + 'Certificate will not be used as part of the verification process.'
+        );
+        continue;
+      }
+    }
+
     const fieldIterator = await doc.getFieldIteratorBegin();
     for (; (await fieldIterator.hasNext()); fieldIterator.next()) {
       const field = await fieldIterator.current();
@@ -171,10 +206,22 @@ const getVerificationResult = async (doc, certificates) => {
         const signed = await digitalSigField.hasCryptographicSignature();
         if (signed) {
           const signerCert = await digitalSigField.getSignerCertFromCMS();
-          const retrievedIssuerField = await signerCert.getIssuerField();
-          const processedIssuerField = await processX501DistinguishedName(retrievedIssuerField) || {};
+          /**
+           * @note "Issuer" refers to the Certificate Authority that issued the
+           * certificate
+           * "Subject" refers to the organization/person that the Certificate
+           * Auhority issued this certificate to
+           *
+           * It is likely that future UI iterations will leverage Issuer
+           * information, so the code has been commented out for now, but will
+           * be uncommented in future feature implementations
+           */
+          // const retrievedIssuerField = await signerCert.getIssuerField();
+          // const processedIssuerField = await processX501DistinguishedName(retrievedIssuerField) || {};
+          const retrievedSubjectField = await signerCert.getSubjectField();
+          const processedSubjectField = await processX501DistinguishedName(retrievedSubjectField) || {};
           signer = (
-            processedIssuerField['e_commonName']
+            processedSubjectField['e_commonName']
             || await digitalSigField.getSignatureName()
             || await digitalSigField.getContactInfo()
           );

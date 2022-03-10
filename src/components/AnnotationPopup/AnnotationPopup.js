@@ -45,6 +45,7 @@ const AnnotationPopup = () => {
   const [position, setPosition] = useState({ left: 0, top: 0 });
   // first annotation in the array when there're multiple annotations selected
   const [firstAnnotation, setFirstAnnotation] = useState(null);
+  const [selectedMultipleAnnotations, setSelectedMultipleAnnotations] = useState(false);
   const [canModify, setCanModify] = useState(false);
   const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
@@ -163,6 +164,7 @@ const AnnotationPopup = () => {
     const onAnnotationSelected = (annotations, action) => {
       if (action === 'selected' && annotations.length) {
         setFirstAnnotation(annotations[0]);
+        setSelectedMultipleAnnotations(annotations.length > 1);
         setIncludesFormFieldAnnotation(annotations.some(annotation => annotation.isFormFieldPlaceholder()));
         setCanModify(core.canModify(annotations[0]));
         if (isNotesPanelOpen) {
@@ -209,7 +211,6 @@ const AnnotationPopup = () => {
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
   const isFreeTextAnnot = firstAnnotation instanceof window.Annotations.FreeTextAnnotation;
-  const isFreeTextAndCanEdit = isFreeTextAnnot && core.getAnnotationManager().isFreeTextEditingEnabled() && core.canModifyContents(firstAnnotation);
   const isDateFreeTextCanEdit = isFreeTextAnnot && firstAnnotation.getDateFormat() && core.canModifyContents(firstAnnotation);
 
   const commentOnAnnotation = () => {
@@ -243,6 +244,12 @@ const AnnotationPopup = () => {
     core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
   };
 
+  const handlePlaySound = annotation => {
+    dispatch(actions.setActiveSoundAnnotation(annotation));
+    dispatch(actions.triggerResetAudioPlaybackPosition(true));
+    dispatch(actions.openElement('audioPlaybackPopup'));
+  };
+
   const toolNames = window.Core.Tools.ToolNames;
   const toolsWithNoStyling = [
     toolNames.CROP,
@@ -254,6 +261,9 @@ const AnnotationPopup = () => {
     toolNames.CROP,
     toolNames.SIGNATURE,
     toolNames.REDACTION,
+    toolNames.REDACTION2,
+    toolNames.REDACTION3,
+    toolNames.REDACTION4,
     toolNames.STICKY,
     toolNames.STICKY2,
     toolNames.STICKY3,
@@ -264,14 +274,16 @@ const AnnotationPopup = () => {
     !isNotesPanelDisabled &&
     !multipleAnnotationsSelected &&
     firstAnnotation.ToolName !== toolNames.CROP &&
-    !includesFormFieldAnnotation;
+    !includesFormFieldAnnotation &&
+    !firstAnnotation.isContentEditPlaceholder();
 
   const showEditStyleButton =
     canModify &&
     hasStyle &&
     !isAnnotationStylePopupDisabled &&
     (!multipleAnnotationsSelected || canUngroup) &&
-    !toolsWithNoStyling.includes(firstAnnotation.ToolName) && !(firstAnnotation instanceof Annotations.Model3DAnnotation);
+    !toolsWithNoStyling.includes(firstAnnotation.ToolName) && !(firstAnnotation instanceof Annotations.Model3DAnnotation) &&
+    !firstAnnotation.isContentEditPlaceholder();
 
   const showRedactionButton = redactionEnabled && !multipleAnnotationsSelected && !includesFormFieldAnnotation;
 
@@ -281,8 +293,19 @@ const AnnotationPopup = () => {
     canModify && firstAnnotation.Measure && firstAnnotation instanceof Annotations.LineAnnotation;
 
   const showFileDownloadButton = firstAnnotation instanceof window.Annotations.FileAttachmentAnnotation;
+  const shouldShowAudioPlayButton = (
+    !isIE &&
+    !selectedMultipleAnnotations &&
+    firstAnnotation instanceof window.Annotations.SoundAnnotation &&
+    firstAnnotation.hasAudioData()
+  );
 
-  const showLinkButton = !toolsThatCantHaveLinks.includes(firstAnnotation.ToolName) && !includesFormFieldAnnotation;
+  const showLinkButton = (
+    !toolsThatCantHaveLinks.includes(firstAnnotation.ToolName) &&
+    !includesFormFieldAnnotation &&
+    !firstAnnotation.isContentEditPlaceholder() &&
+    !(firstAnnotation instanceof Annotations.SoundAnnotation) // TODO(Adam): Update this once SoundAnnotation tool is created.
+  );
 
   const onDatePickerShow = isDatePickerShowed => {
     setDatePickerMount(isDatePickerShowed);
@@ -339,6 +362,19 @@ const AnnotationPopup = () => {
                 img="ic_check_black_24px"
                 onClick={() => {
                   core.getTool('CropPage').applyCrop();
+                  dispatch(actions.closeElement('annotationPopup'));
+                }}
+              />
+            )}
+            {firstAnnotation.isContentEditPlaceholder() && firstAnnotation.getContentEditType() === window.Core.ContentEdit.Types.TEXT && (
+              <ActionButton
+                dataElement="annotationContentEditButton"
+                title="action.edit"
+                img="ic_edit_page_24px"
+                onClick={async () => {
+                  const content = await instance.Core.ContentEdit.getDocumentContent(firstAnnotation);
+                  dispatch(actions.setCurrentContentBeingEdited({ content, annotation: firstAnnotation }));
+                  dispatch(actions.openElement('contentEditModal'));
                   dispatch(actions.closeElement('annotationPopup'));
                 }}
               />
@@ -451,6 +487,17 @@ const AnnotationPopup = () => {
                 />
               )
             }
+            {
+              shouldShowAudioPlayButton &&
+              (
+                <ActionButton
+                  title="action.playAudio"
+                  img="ic_play_24px"
+                  onClick={() => handlePlaySound(firstAnnotation)}
+                  dataElement="playSoundButton"
+                />
+              )
+            }
           </CustomizablePopup>
         )}
     </div>
@@ -459,7 +506,7 @@ const AnnotationPopup = () => {
   return isIE || isMobile() ? (
     annotationPopup
   ) : (
-    <Draggable cancel=".Button, .cell, .sliders-container svg, select, button">{annotationPopup}</Draggable>
+    <Draggable cancel=".Button, .cell, .sliders-container svg, select, button, input">{annotationPopup}</Draggable>
   );
 };
 

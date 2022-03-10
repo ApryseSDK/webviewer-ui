@@ -1,0 +1,86 @@
+@import '../../../constants/styles';
+
+.draggable-tab {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  padding-top: 2px;
+}
+
+.Tab {
+  height: 32px;
+  min-width: 140px;
+  max-width: 180px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  direction: ltr;
+
+  .file-text {
+    min-width: 60%;
+    padding-left: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    p {
+      font-size: var(--font-size-default);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: capitalize;
+    }
+
+    &.disabled {
+      user-select: none;
+      cursor: wait;
+    }
+  }
+
+  .Button {
+    margin: 6px;
+    width: 24px;
+    height: 24px;
+    .Icon {
+      width: 16px;
+      height: 16px;
+      flex: inherit;
+    }
+    &:hover {
+      background-color: var(--view-header-button-hover);
+    }
+  }
+
+  .divider {
+    background-color: var(--divider);
+    width: 1px;
+    height: 50%;
+  }
+
+  &:not(.active) {
+    border-bottom: 1px solid var(--divider);
+  }
+
+  &.active {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border: 1px solid var(--divider);
+    border-bottom: 0;
+    background-color: var(--document-background-color);
+    @include mobile {
+      background-color: var(--tools-header-background);
+    }
+  }
+
+  transition: 400ms ease-in-out;
+  transition-property: background-color;
+
+  &:hover {
+    background-color: var(--view-header-button-hover);
+  }
+
+  .hide {
+    display: none;
+  }
+}

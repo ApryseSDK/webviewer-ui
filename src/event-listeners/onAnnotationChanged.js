@@ -1,4 +1,4 @@
-import getHashParams from 'helpers/getHashParams';
+import getHashParameters from 'helpers/getHashParameters';
 import core from 'core';
 
 
@@ -8,7 +8,7 @@ export default () => (annotations, action, info) => {
   }
 
   const selectAnnotationOnCreation =
-    getHashParams('selectAnnotationOnCreation', false);
+    getHashParameters('selectAnnotationOnCreation', false);
   if (selectAnnotationOnCreation) {
     if (action === 'add' && !info.imported) {
       if (annotations.length > 0 && !annotations[0].InReplyTo) {

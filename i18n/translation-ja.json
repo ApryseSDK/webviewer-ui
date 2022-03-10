@@ -86,6 +86,8 @@
   },
   "annotation": {
     "areaMeasurement": "面積測定",
+    "arc": "アーク",
+    "arcMeasurement": "アーク測定",
     "arrow": "矢印",
     "callout": "吹き出し",
     "crop": "ページをトリミング",
@@ -180,7 +182,8 @@
     "createStampButton": "新しいスタンプを作成",
     "filter": "フィルター",
     "pageReplaceModalTitle": "ページを入れ替える",
-    "files": "ファイル"
+    "files": "ファイル",
+    "editText": "テキストの編集"
   },
   "message": {
     "toolsOverlayNoPresets": "プリセットなし",
@@ -403,10 +406,12 @@
       "area": "領域",
       "distanceMeasurement": "距離測定",
       "perimeterMeasurement": "周長測定",
+      "arcMeasurement": "アーク測定",
       "areaMeasurement": "面積測定",
       "countMeasurement": "カウント測定",
       "radius": "半径",
-      "count": "カウント"
+      "count": "カウント",
+      "length": "長さ"
     },
     "measurementOption": {
       "scale": "縮尺"
@@ -616,7 +621,9 @@
       "4": "木",
       "5": "金",
       "6": "土"
-    }
+    },
+    "today": "今日",
+    "invalidDateTime": "無効な日付/時刻：入力は形式と一致する必要があります"
   },
   "formField": {
     "formFieldPopup": {

@@ -24,6 +24,8 @@ function rootReducer(state = initialState, action) {
 const testProps = {
   pageNumbers: [],
   pageManipulationOverlayItems: [
+    { dataElement: 'pageAdditionalControls' },
+    { type: 'divider' },
     { dataElement: 'pageRotationControls' },
     { type: 'divider' },
     { dataElement: 'pageInsertionControls' },
@@ -38,8 +40,10 @@ export function Basic() {
 
   return (
     <Provider store={store}>
-      <div className='Overlay FlyoutMenu'>
-        <PageManipulationOverlay {...testProps} />
+      <div id="app">
+        <div className='Overlay FlyoutMenu'>
+          <PageManipulationOverlay {...testProps} />
+        </div>
       </div>
     </Provider>
   );

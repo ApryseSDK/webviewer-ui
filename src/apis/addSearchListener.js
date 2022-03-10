@@ -20,7 +20,7 @@ WebViewer(...)
  * @param {Array.<object>} results Search results
  */
 
-import { addSearchListener as addSearchListenerHelper } from "helpers/search";
+import { addSearchListener as addSearchListenerHelper } from 'helpers/search';
 
 export default function addSearchListener(listener) {
   addSearchListenerHelper(listener);

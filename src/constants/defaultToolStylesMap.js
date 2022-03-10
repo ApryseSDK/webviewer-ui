@@ -74,6 +74,18 @@ export default {
   AnnotationCreatePerimeterMeasurement4: {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
+  AnnotationCreateArcMeasurement: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateArcMeasurement2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateArcMeasurement3: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateArcMeasurement4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
   AnnotationCreateDistanceMeasurement: {
     StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
   },
@@ -338,4 +350,16 @@ export default {
   ComboBoxFormFieldCreateTool4: {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
+  AnnotationCreateRedaction: {
+    StrokeColor: { R: 255, G: 0, B: 0, A: 1 }
+  },
+  AnnotationCreateRedaction2: {
+    StrokeColor: { R: 0, G: 0, B: 255, A: 1 }
+  },
+  AnnotationCreateRedaction3: {
+    StrokeColor: { R: 255, G: 255, B: 0, A: 1 }
+  },
+  AnnotationCreateRedaction4: {
+    StrokeColor: { R: 0, G: 128, B: 0, A: 1 }
+  }
 };

@@ -7,6 +7,21 @@ import { Basic } from './NoteTextPreview.stories';
 const BasicNoteTextPreview = withI18n(Basic);
 const TestNoteTextPreview = withProviders(NoteTextPreview);
 const sampleText = `Space: the final frontier. These are the voyages of the starship Enterprise. Its continuing mission: to explore strange new worlds. To seek out new life and new civilizations. To boldly go where no one has gone before!`
+// Mock the ref element so we render some text
+export const setMockRefElement = (node) => {
+  const mockRef = {
+    get current() {
+      // jest dom elements have no width,
+      // so mocking a browser situation
+      return node;
+    },
+    // we need a setter here because it gets called when you 
+    // pass a ref to <component ref={ref} />
+    set current(_value) { },
+  };
+
+  jest.spyOn(React, 'useRef').mockReturnValue(mockRef);
+};
 
 describe('NoteTextPreview', () => {
   describe('Component', () => {
@@ -14,21 +29,6 @@ describe('NoteTextPreview', () => {
       jest.restoreAllMocks();
     });
 
-    // Mock the ref element so we render some text
-    const setMockRefElement = (node) => {
-      const mockRef = {
-        get current() {
-          // jest dom elements have no width,
-          // so mocking a browser situation
-          return node;
-        },
-        // we need a setter here because it gets called when you 
-        // pass a ref to <component ref={ref} />
-        set current(_value) { },
-      };
-
-      jest.spyOn(React, 'useRef').mockReturnValue(mockRef);
-    };
     const panelWidth = 300;
     const clientWidth = 150;
 
@@ -42,7 +42,7 @@ describe('NoteTextPreview', () => {
     it('Renders a "...more" prompt and truncates text', () => {
       setMockRefElement({ clientWidth });
       const { container } = render(
-        <TestNoteTextPreview linesToBreak={1} notePanelWidth={panelWidth}>
+        <TestNoteTextPreview linesToBreak={1} panelWidth={panelWidth}>
           {sampleText}
         </TestNoteTextPreview>
       );
@@ -52,7 +52,7 @@ describe('NoteTextPreview', () => {
     it('When user clicks "...more" it shows the full text', () => {
       setMockRefElement({ clientWidth });
       const { container } = render(
-        <TestNoteTextPreview linesToBreak={1} notePanelWidth={panelWidth}>
+        <TestNoteTextPreview linesToBreak={1} panelWidth={panelWidth}>
           {sampleText}
         </TestNoteTextPreview>
       );

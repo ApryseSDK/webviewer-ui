@@ -96,6 +96,14 @@ export default initialState => (state = initialState, action) => {
           notesPanel: payload.width,
         }
       };
+    case 'SET_REDACTION_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          redactionPanel: payload.width,
+        }
+      };
     case 'SET_DOCUMENT_CONTAINER_WIDTH':
       return {
         ...state,
@@ -207,6 +215,8 @@ export default initialState => (state = initialState, action) => {
       };
     case 'SET_OUTLINE_CONTROL_VISIBILITY':
       return { ...state, outlineControlVisibility: payload.outlineControlVisibility };
+    case 'SET_OUTLINE_EDITING':
+      return { ...state, isOutlineEditing: payload.isOutlineEditing };
     case 'SET_NOTE_POPUP_ID':
       return { ...state, notePopupId: payload.id };
     case 'SET_NOTE_EDITING':
@@ -379,7 +389,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     case 'SET_CUSTOM_MODAL': {
-      const existingDataElementFiltered = state.customModals.filter(function(modal) {
+      const existingDataElementFiltered = state.customModals.filter(function (modal) {
         return modal.dataElement !== payload.dataElement;
       });
       return {
@@ -415,6 +425,20 @@ export default initialState => (state = initialState, action) => {
           ...state.certificates,
           ...payload.certificates,
         ]
+      };
+    case 'ADD_TRUST_LIST':
+      /**
+       * The Core implementation only allows a single Trust List to be passed
+       * as a parameter, but in order to allow flexibility of future potential
+       * requirements where a developer may want to add multiple Trust Lists,
+       * we are storing an Array of Trust Lists
+       */
+      return {
+        ...state,
+        trustLists: [
+          ...state.trustLists,
+          payload.trustList,
+        ],
       };
     case 'SET_VERIFICATION_RESULT':
       return { ...state, verificationResult: payload.result };

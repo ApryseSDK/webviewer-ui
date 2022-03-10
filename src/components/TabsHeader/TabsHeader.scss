@@ -1,0 +1,40 @@
+.TabsHeader{
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-end;
+  background: var(--view-header-background);
+  overflow-y: hidden;
+  overflow-x: auto;
+
+  .add-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--divider);
+
+    .Button {
+      .Icon {
+        width: 14px;
+        height: 14px;
+      }
+
+      &:hover {
+        background-color: var(--view-header-button-hover);
+      }
+    }
+
+    .tab-dropdown-button {
+      margin: 0 0 2px 6px;
+      text-align: center;
+      padding: 2px 6px;
+      border-radius: 2px;
+      border: 1px solid var(--divider);
+
+      &:hover {
+        cursor: pointer;
+        background-color: var(--tools-button-hover);
+      }
+    }
+  }
+}

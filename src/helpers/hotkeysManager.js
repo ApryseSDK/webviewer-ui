@@ -16,35 +16,35 @@ import selectors from 'selectors';
 
 // prettier-ignore
 const keyMap = {
-  "arrow":                  "A",
-  "callout":                "C",
-  "copy":                   "Control+C",
-  "delete":                 "Delete",
-  "ellipse":                "O",
-  "eraser":                 "E",
-  "freehand":               "F",
-  "freetext":               "T",
-  "highlight":              "H",
-  "line":                   "L",
-  "pan":                    "P",
-  "rectangle":              "R",
-  "rotateClockwise":        "Control+Shift+=",
-  "rotateCounterClockwise": "Control+Shift+-",
-  "select":                 "Escape",
-  "signature":              "S",
-  "squiggly":               "G",
-  "image":                  "I",
-  "redo":                   "Control+Shift+Z",
-  "undo":                   "Control+Z",
-  "stickyNote":             "N",
-  "strikeout":              "K",
-  "underline":              "U",
-  "zoomIn":                 "Control+=",
-  "zoomOut":                "Control+-",
-  "richText.bold":          "Control+B",
-  "richText.italic":        "Control+I",
-  "richText.underline":     "Control+U",
-  "richText.strikeout":     "Control+K",
+  'arrow':                  'A',
+  'callout':                'C',
+  'copy':                   'Control+C',
+  'delete':                 'Delete',
+  'ellipse':                'O',
+  'eraser':                 'E',
+  'freehand':               'F',
+  'freetext':               'T',
+  'highlight':              'H',
+  'line':                   'L',
+  'pan':                    'P',
+  'rectangle':              'R',
+  'rotateClockwise':        'Control+Shift+=',
+  'rotateCounterClockwise': 'Control+Shift+-',
+  'select':                 'Escape',
+  'signature':              'S',
+  'squiggly':               'G',
+  'image':                  'I',
+  'redo':                   'Control+Shift+Z',
+  'undo':                   'Control+Z',
+  'stickyNote':             'N',
+  'strikeout':              'K',
+  'underline':              'U',
+  'zoomIn':                 'Control+=',
+  'zoomOut':                'Control+-',
+  'richText.bold':          'Control+B',
+  'richText.italic':        'Control+I',
+  'richText.underline':     'Control+U',
+  'richText.strikeout':     'Control+K',
 };
 
 export function shortcutAria(shortcut) {
@@ -167,6 +167,8 @@ export function concatKeys(...keys) {
   return keys.join(', ');
 }
 
+const unbindedHotkeysMap = {};
+
 /**
  * A class which contains hotkeys APIs.<br/><br/>
  * <span style="color: red; font-size: 1.2em; font-weight: bold">⚠</span> You must NOT instantiate this yourself. Access instances of this class using {@link UI.hotkeys instance.UI.hotkeys}
@@ -183,6 +185,7 @@ const HotkeysManager = {
     Object.keys(this.keyHandlerMap).forEach(key => {
       this.on(key, this.keyHandlerMap[key]);
     });
+    this.didInitializeAllKeys = true;
   },
   /**
    * Add an event handler for the given hotkey
@@ -227,20 +230,45 @@ WebViewer(...)
       handler = this.keyHandlerMap[key];
     }
 
+    function enableHotkey(_key, _handler) {
+      // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
+      const { keyup = NOOP, keydown = _handler } = _handler;
+      hotkeys(_key, { keyup: true }, e => {
+        if (e.type === 'keyup') {
+          keyup(e);
+        }
+        if (e.type === 'keydown') {
+          keydown(e);
+        }
+      });
+    }
+
+    if ((!key || !handler) && !this.didInitializeAllKeys) {
+      this.keyHandlerMap = this.createKeyHandlerMap(this.store);
+      this.prevToolName = null;
+      Object.keys(this.keyHandlerMap).forEach(_key => {
+        // Check if the "key" has already been inilized
+        if (!unbindedHotkeysMap[_key]) {
+          enableHotkey(_key, this.keyHandlerMap[_key]);
+        }
+      });
+      this.didInitializeAllKeys = true;
+    }
+
+    // when key is undefined we need to set all keys to true
+    if (!key) {
+      for (const property in Keys) {
+        unbindedHotkeysMap[Keys[property]] = true;
+      }
+    } else {
+      unbindedHotkeysMap[key.toLocaleLowerCase()] = true;
+    }
+
     if (!key || !handler) {
       return;
     }
 
-    // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
-    const { keyup = NOOP, keydown = handler } = handler;
-    hotkeys(key, { keyup: true }, e => {
-      if (e.type === 'keyup') {
-        keyup(e);
-      }
-      if (e.type === 'keydown') {
-        keydown(e);
-      }
-    });
+    enableHotkey(key, handler);
   },
   /**
    * Remove an event handler for the given hotkey
@@ -267,9 +295,36 @@ WebViewer(...)
       }
     }
 
+    // when key is undefined hotkeysjs unbinds all handler
+    // here we need to flag all keys too
+    if (!key) {
+      for (const property in Keys) {
+        unbindedHotkeysMap[Keys[property]] = false;
+      }
+      this.didInitializeAllKeys = false;
+    } else {
+      unbindedHotkeysMap[key.toLocaleLowerCase()] = false;
+    }
+
     // https://github.com/jaywcjlove/hotkeys#unbind
     hotkeys.unbind(key, handler);
   },
+
+  isActive(shortcut) {
+    const key = keyMap[shortcut];
+    if (key) {
+      let hotkeyName;
+      // change 'ctrl' to 'command' for Mac OS
+      if (isMac) {
+        hotkeyName = key.replace('Control', 'command').toLocaleLowerCase();
+      } else {
+        hotkeyName = key.replace('Control', 'ctrl').toLocaleLowerCase();
+      }
+      return unbindedHotkeysMap[hotkeyName];
+    }
+    return true;
+  },
+
   createKeyHandlerMap(store) {
     const { dispatch, getState } = store;
 
@@ -318,6 +373,11 @@ WebViewer(...)
         const isNotesPanelOpen = selectors.isElementOpen(getState(), 'notesPanel');
         if (isNotesPanelOpen) {
           dispatch(actions.closeElement('notesPanel'));
+        }
+
+        const isRedactionPanelOpen = selectors.isElementOpen(getState(), 'redactionPanel');
+        if (isRedactionPanelOpen) {
+          dispatch(actions.closeElement('redactionPanel'));
         }
 
         dispatch(actions.openElement('searchPanel'));
@@ -418,7 +478,7 @@ WebViewer(...)
             'customStampModal',
             'printModal',
             'rubberStampOverlay',
-            'editTextModal',
+            'contentEditModal',
             'filterModal',
           ])
         );

@@ -1,23 +1,10 @@
 import i18next from 'i18next';
 import HttpApi from 'i18next-http-backend';
 import languageRules from '../constants/languageRules';
+import { availableLanguages } from '../apis/getAvailableLanguages';
 
 // https://github.com/isaachinman/next-i18next/issues/562
-// the values in this array should match the language codes of the json files inside the i18n folder
-i18next.languages = [
-  'en',
-  'de',
-  'es',
-  'fr',
-  'it',
-  'ja',
-  'ko',
-  'nl',
-  'pt_br',
-  'ru',
-  'zh_cn',
-  'zh_tw'
-];
+i18next.languages = availableLanguages;
 
 // this is required for Cordova https://github.com/i18next/i18next-http-backend/issues/23#issuecomment-718929822
 const requestWithXmlHttpRequest = (options, url, payload, callback) => {
@@ -56,7 +43,6 @@ export default state => {
     fallbackLng: 'en',
     react: {
       useSuspense: false,
-      wait: true,
     },
   };
   const callback = (err, t) => {

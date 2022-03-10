@@ -9,6 +9,11 @@ const initialState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
+    panelWidths: {
+      redactionPanel: 330,
+    },
+    currentLanguage: 'en',
+    openElements: {},
   }
 };
 

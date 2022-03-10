@@ -28,7 +28,7 @@ WebViewer(...)
 
 import core from 'core';
 import actions from 'actions';
-import { getSearchListeners } from "helpers/search";
+import { getSearchListeners } from 'helpers/search';
 
 function buildSearchModeFlag(options = {}) {
   const SearchMode = core.getSearchMode();

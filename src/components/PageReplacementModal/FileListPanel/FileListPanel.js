@@ -11,26 +11,43 @@ const FileListPanel = ({ defaultValue, onFileSelect, list = [] }) => {
     onFileSelect(list.find(item => item.id === id));
   };
 
+  const onRowKeyDown = (event, id) => {
+    if (event.key === 'Enter') {
+      onFileSelect(list.find(item => item.id === id));
+    }
+  };
+
+  const getFileThumbnail = (item) => {
+    if (item.hasOwnProperty('thumbnail')) {
+      let src = null;
+      const thumbnail = item.thumbnail;
+      if (thumbnail.url) {
+        src = thumbnail.url;
+      } else if (thumbnail.toDataURL) {
+        src = thumbnail.toDataURL();
+      }
+      //If thumbnail doesnt have a url or is canvas then we just show a blank square
+      const img = <img src={src} className="li-div-img" />
+      return (<div className="li-div">{img}</div>);
+    } else {
+      return null;
+    }
+  }
+
   const elements = list.map((item, i) => {
     const isSelected = id === item.id;
-    let img = null;
-    if (item.hasOwnProperty('thumbnail') && item.thumbnail === '') {
-      img = <div className="li-div-img with-border"></div>
-    } else if (item.hasOwnProperty('thumbnail')) {
-      img = <img src={item.thumbnail} className="li-div-img" />
-    }
-    let imgHolder = null;
-    if (item.hasOwnProperty('thumbnail')) {
-      imgHolder = <div className="li-div">{img}</div>
-    }
     const modalClass = classNames({
       selected: isSelected
     });
 
-    return (<li key={i} onClick={() => onRowClick(item.id)} className={modalClass}>
-      {imgHolder}
-      <div className="li-div-txt" >{item.filename}</div>
-    </li>);
+    const thumbnail = getFileThumbnail(item);
+
+    return (
+      <li tabIndex="0" key={i} onClick={() => onRowClick(item.id)} onKeyDown={(event) => onRowKeyDown(event, item.id)} className={modalClass}>
+        {thumbnail}
+        <div className="li-div-txt" >{item.filename}</div>
+      </li>
+    );
   });
 
   return (

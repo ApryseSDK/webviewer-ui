@@ -9,6 +9,9 @@ import ColorPalettePicker from 'components/ColorPalettePicker';
 import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
+import Icon from "components/Icon";
+import TextStylePicker from "components/TextStylePicker";
+import LabelTextEditor from "components/LabelTextEditor";
 
 import { circleRadius } from 'constants/slider';
 import DataElements from 'constants/dataElement';
@@ -17,11 +20,9 @@ import actions from 'actions';
 import pickBy from 'lodash/pickBy';
 import useMedia from 'hooks/useMedia';
 import classNames from 'classnames';
+import { isMobile } from "helpers/device";
 
 import './StylePopup.scss';
-import Icon from "components/Icon";
-import TextStylePicker from "components/TextStylePicker";
-import { isMobile } from "helpers/device";
 
 class StylePopup extends React.PureComponent {
   static propTypes = {
@@ -41,7 +42,8 @@ class StylePopup extends React.PureComponent {
     hideSnapModeCheckbox: PropTypes.bool,
     closeElement: PropTypes.func,
     openElement: PropTypes.func,
-    freeTextProperties: PropTypes.object,
+    properties: PropTypes.object,
+    isRedaction: PropTypes.bool
   };
 
   renderSliders = () => {
@@ -157,39 +159,60 @@ class StylePopup extends React.PureComponent {
       disableSeparator,
       hideSnapModeCheckbox,
       isFreeText,
-      isTextContainerActive,
-      isColorContainerActive,
+      isTextStyleContainerActive,
+      isColorsContainerActive,
+      isLabelTextContainerActive,
       openElement,
       closeElement,
-      freeTextProperties,
+      properties,
       onPropertyChange,
       onRichTextStyleChange,
+      isRedaction
     } = this.props;
+
+    // We do not have sliders to show up for redaction annots
+    if (isRedaction) {
+      style.Opacity = null;
+      style.StrokeThickness = null;
+    }
 
     const { Scale, Precision, Style } = style;
 
-    const openTextStyle = () => {
-      if (!isTextContainerActive) {
-        openElement(DataElements.FREE_TEXT_STYLE_TEXT_CONTAINER);
-        isMobile() && closeElement(DataElements.FREE_TEXT_STYLE_COLOR_CONTAINER);
-      } else {
-        closeElement(DataElements.FREE_TEXT_STYLE_TEXT_CONTAINER);
-      }
+    const textMenuItems = {
+      [DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER]: isTextStyleContainerActive,
+      [DataElements.STYLE_POPUP_COLORS_CONTAINER]: isColorsContainerActive,
+      [DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER]: isLabelTextContainerActive
     };
 
-    const openColorStyle = () => {
-      if (!isColorContainerActive) {
-        openElement(DataElements.FREE_TEXT_STYLE_COLOR_CONTAINER);
-        isMobile() && closeElement(DataElements.FREE_TEXT_STYLE_TEXT_CONTAINER);
+    const openTextMenuItem = (dataElement) => {
+      if (!textMenuItems[dataElement]) {
+        openElement(dataElement);
+        if (isMobile()) {
+          for (let element in textMenuItems) {
+            if (element !== dataElement) {
+              closeElement(element);
+            }
+          }
+        }
       } else {
-        closeElement(DataElements.FREE_TEXT_STYLE_COLOR_CONTAINER);
+        closeElement(dataElement);
       }
     };
+    const openLabelText = () => openTextMenuItem(DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER);
+    const openTextStyle = () => openTextMenuItem(DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER);
+    const openColors = () => openTextMenuItem(DataElements.STYLE_POPUP_COLORS_CONTAINER);
 
     const className = classNames({
       Popup: true,
       StylePopup: true,
     });
+
+    const showTextStyle = (currentPalette === "TextColor" && (isFreeText || isRedaction));
+    const showColorsMenu = (currentPalette === "TextColor" && (isFreeText || isRedaction));
+    const showColorPicker = !(showColorsMenu && !isColorsContainerActive);
+    const showLabelText = (currentPalette === "TextColor" && isRedaction);
+    const showSliders = isColorPaletteDisabled || showColorPicker;
+
     return (
       <div className={className} data-element="stylePopup">
         {currentPalette && !isColorPaletteDisabled && (
@@ -201,43 +224,57 @@ class StylePopup extends React.PureComponent {
               toolName={toolName}
               disableSeparator={disableSeparator}
             />
-            {isFreeText && currentPalette === "TextColor" ? (
+            {showLabelText && (
+              <>
+                <div className="collapsible-menu" onClick={openLabelText} onTouchStart={openLabelText} role={"toolbar"}>
+                  <div className="menu-title">
+                    {i18next.t('option.stylePopup.labelText')}
+                  </div>
+                  <Icon glyph={`icon-chevron-${isLabelTextContainerActive ? "up" : "down"}`} />
+                </div>
+                {isLabelTextContainerActive && (
+                  <div className="menu-items">
+                    <LabelTextEditor
+                      properties={properties}
+                      onPropertyChange={onPropertyChange}
+                    />
+                  </div>
+                )}
+                <div className="divider" />
+              </>
+            )}
+            {showTextStyle && (
               <>
                 <div className="collapsible-menu" onClick={openTextStyle} onTouchStart={openTextStyle} role={"toolbar"}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.textStyle')}
                   </div>
-                  <Icon glyph={`icon-chevron-${isTextContainerActive ? "up" : "down"}`}/>
+                  <Icon glyph={`icon-chevron-${isTextStyleContainerActive ? "up" : "down"}`} />
                 </div>
-                <div className={`menu-items ${!isTextContainerActive && "closed"}`}>
-                  <TextStylePicker onPropertyChange={onPropertyChange} onRichTextStyleChange={onRichTextStyleChange} properties={freeTextProperties} />
-                </div>
-
-                <div className="divider"/>
-
-                <div className="collapsible-menu" onClick={openColorStyle} onTouchStart={openColorStyle} role={"toolbar"}>
-                  <div className="menu-title">
-                    {i18next.t('option.stylePopup.colorStyle')}
+                {isTextStyleContainerActive && (
+                  <div className="menu-items">
+                    <TextStylePicker
+                      onPropertyChange={onPropertyChange}
+                      onRichTextStyleChange={onRichTextStyleChange}
+                      properties={properties}
+                      isRedaction={isRedaction}
+                    />
                   </div>
-                  <Icon glyph={`icon-chevron-${isColorContainerActive ? "up" : "down"}`}/>
-                </div>
-                <div className={`menu-items ${!isColorContainerActive && "closed"}`}>
-                  <ColorPalette
-                    color={style[currentPalette]}
-                    property={currentPalette}
-                    onStyleChange={onStyleChange}
-                    colorMapKey={colorMapKey}
-                    useMobileMinMaxWidth
-                  />
-                  <ColorPalettePicker
-                    color={style[currentPalette]}
-                    property={currentPalette}
-                    onStyleChange={onStyleChange}
-                    enableEdit
-                  />
+                )}
+                <div className="divider" />
+              </>
+            )}
+            {showColorsMenu && (
+              <>
+                <div className="collapsible-menu" onClick={openColors} onTouchStart={openColors} role={"toolbar"}>
+                  <div className="menu-title">
+                    {i18next.t('option.stylePopup.colors')}
+                  </div>
+                  <Icon glyph={`icon-chevron-${isColorsContainerActive ? "up" : "down"}`} />
                 </div>
               </>
-            ) : (
+            )}
+            {showColorPicker && (
               <>
                 <ColorPalette
                   color={style[currentPalette]}
@@ -256,7 +293,7 @@ class StylePopup extends React.PureComponent {
             )}
           </>
         )}
-        {(!isFreeText || currentPalette !== "TextColor" || isColorContainerActive) && this.renderSliders()}
+        {showSliders && this.renderSliders()}
         {Scale && Precision && (
           <>
             <MeasurementOption
@@ -273,17 +310,18 @@ class StylePopup extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, { colorMapKey, isFontSizeSliderDisabled }) => ({
+const mapStateToProps = (state, { colorMapKey, isFreeText, isRedaction }) => ({
   currentPalette: selectors.getCurrentPalette(state, colorMapKey),
   isStylePopupDisabled: selectors.isElementDisabled(state, DataElements.STYLE_POPUP),
   isColorPaletteDisabled: selectors.isElementDisabled(state, DataElements.COLOR_PALETTE),
   isOpacitySliderDisabled: selectors.isElementDisabled(state, DataElements.OPACITY_SLIDER),
   isStrokeThicknessSliderDisabled: selectors.isElementDisabled(state, DataElements.STROKE_THICKNESS_SLIDER),
-  isFontSizeSliderDisabled: isFontSizeSliderDisabled || selectors.isElementDisabled(state, DataElements.FONT_SIZE_SLIDER),
+  isFontSizeSliderDisabled: selectors.isElementDisabled(state, DataElements.FONT_SIZE_SLIDER) || isFreeText || isRedaction,
   isStyleOptionDisabled: selectors.isElementDisabled(state, DataElements.STYLE_OPTION),
   isTextStyleOpen: selectors.isElementDisabled(state, DataElements.STYLE_OPTION),
-  isTextContainerActive: selectors.isElementOpen(state, DataElements.FREE_TEXT_STYLE_TEXT_CONTAINER),
-  isColorContainerActive: selectors.isElementOpen(state, DataElements.FREE_TEXT_STYLE_COLOR_CONTAINER),
+  isTextStyleContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER),
+  isColorsContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_COLORS_CONTAINER),
+  isLabelTextContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER)
 });
 
 const mapDispatchToProps = {

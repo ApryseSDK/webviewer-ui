@@ -22,7 +22,7 @@ WebViewer(...)
  */
 
 import actions from 'actions';
-import core from "core";
+import core from 'core';
 import { getSearchListeners } from 'helpers/search';
 
 const onResultThrottleTimeout = 100;

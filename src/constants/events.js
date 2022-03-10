@@ -4,13 +4,14 @@
  * @property {string} ANNOTATION_FILTER_CHANGED {@link UI#event:annotationFilterChanged UI.Events.annotationFilterChanged}
  * @property {string} DOCUMENT_LOADED {@link UI#event:documentLoaded UI.Events.documentLoaded}
  * @property {string} DOCUMENT_MERGED {@link UI#event:documentMerged UI.Events.documentMerged}
+ * @property {string} FILE_DOWNLOADED {@link UI#event:fileDownloaded UI.Events.fileDownloaded}
  * @property {string} FINISHED_SAVING_PDF {@link UI#event:finishedSavingPDF UI.Events.finishedSavingPDF}
  * @property {string} LOAD_ERROR {@link UI#event:loaderror UI.Events.loaderror}
  * @property {string} DRAG_OUTLINE {@link UI#event:dragOutline UI.Events.dragOutline}
  * @property {string} DROP_OUTLINE {@link UI#event:dragOutline UI.Events.dragOutline}
  * @property {string} PANEL_RESIZED {@link UI#event:panelResized UI.Events.panelResized}
  * @property {string} THEME_CHANGED {@link UI#event:themeChanged UI.Events.themeChanged}
- * @property {string} TOOLBAR_GROUP_CHANGED {@link UI#event:event:toolbarGroupChanged UI.Events.event:toolbarGroupChanged}
+ * @property {string} TOOLBAR_GROUP_CHANGED {@link UI#event:toolbarGroupChanged UI.Events.toolbarGroupChanged}
  * @property {string} SELECTED_THUMBNAIL_CHANGED {@link UI#event:selectedThumbnailChanged UI.Events.selectedThumbnailChanged}
  * @property {string} THUMBNAIL_DRAGGED {@link UI#event:thumbnailDragged UI.Events.thumbnailDragged}
  * @property {string} THUMBNAIL_DROPPED {@link UI#event:thumbnailDropped UI.Events.thumbnailDropped}
@@ -19,6 +20,10 @@
  * @property {string} VIEWER_LOADED {@link UI#event:viewerLoaded UI.Events.viewerLoaded}
  * @property {string} VISIBILITY_CHANGED {@link UI#event:visibilityChanged UI.Events.visibilityChanged}
  * @property {string} FULLSCREEN_MODE_TOGGLED {@link UI#event:fullscreenModeToggled UI.Events.fullscreenModeToggled}
+ * @property {string} BEFORE_TAB_CHANGED {@link UI#event:beforeTabChanged UI.Events.beforeTabChanged}
+ * @property {string} TAB_DELETED {@link UI#event:beforeTabChanged UI.Events.tabDeleted}
+ * @property {string} TAB_ADDED {@link UI#event:beforeTabChanged UI.Events.tabAdded}
+ * @property {string} TAB_MOVED {@link UI#event:beforeTabChanged UI.Events.tabMoved}
  * @example
   WebViewer(...).then(function(instance) {
     const UIEvents = instance.UI.Events;
@@ -33,6 +38,7 @@ export default {
   'ANNOTATION_FILTER_CHANGED': 'annotationFilterChanged',
   'DOCUMENT_LOADED': 'documentLoaded',
   'DOCUMENT_MERGED': 'documentMerged',
+  'FILE_DOWNLOADED': 'fileDownloaded',
   'FINISHED_SAVING_PDF': 'finishedSavingPDF',
   'LOAD_ERROR': 'loaderror',
   'DRAG_OUTLINE': 'dragOutline',
@@ -47,7 +53,11 @@ export default {
   'OUTLINE_BOOKMARKS_CHANGED': 'outlineBookmarksChanged',
   'VIEWER_LOADED': 'viewerLoaded',
   'VISIBILITY_CHANGED': 'visibilityChanged',
-  'FULLSCREEN_MODE_TOGGLED': 'fullscreenModeToggled'
+  'FULLSCREEN_MODE_TOGGLED': 'fullscreenModeToggled',
+  'BEFORE_TAB_CHANGED': 'beforeTabChanged',
+  'TAB_DELETED': 'tabDeleted',
+  'TAB_ADDED': 'tabAdded',
+  'TAB_MOVED': 'tabMoved',
 };
 
 /**
@@ -78,8 +88,14 @@ export default {
 */
 
 /**
-* Triggered when the PDF has finished saving.
-* @name UI#finishedSavingPDF
+ * @name UI#finishedSavingPDF
+ * @event
+ * @deprecated Since version 8.3. Use [fileDownloaded]{@link UI#event:fileDownloaded UI.Events.fileDownloaded} instead
+ */
+
+/**
+* Triggered when the file has finished downloading.
+* @name UI#fileDownloaded
 * @event
 */
 
@@ -159,7 +175,12 @@ export default {
 * Triggered when outline bookmarks have changed.
 * @name UI#outlineBookmarksChanged
 * @event
-* @param {object} bookmark The changed bookmark
+* @param {object} bookmarkData
+* @param {object} bookmarkData.bookmark The changed bookmark
+* @param {string} bookmarkData.bookmark.id Changed outline bookmark id
+* @param {string} bookmarkData.bookmark.name Changed outline bookmark name
+* @param {string} bookmarkData.path Changed outline path in the outline tree
+* @param {string} bookmarkData.action The action that triggered the outline bookmarks change
 */
 
 /**
@@ -183,4 +204,43 @@ export default {
 * @event
 * @type {object}
 * @property {boolean} isInFullscreen Whether in fullscreen mode or not.
+*/
+
+/**
+* Triggered before the UI switches tabs
+* @name UI#beforeTabChanged
+* @event
+* @type {object}
+* @property {string} src Source of current tab
+* @property {string} options Tab load options
+* @property {boolean} annotationsChanged True if the annotations have been changed since loading the tab
+*/
+
+/**
+* Triggered when a Tab is deleted
+* @name UI#tabDeleted
+* @event
+* @type {object}
+* @property {string} src Source of current tab
+* @property {string} options Tab load options
+*/
+
+/**
+* Triggered when a Tab is added
+* @name UI#tabAdded
+* @event
+* @type {object}
+* @property {string} src Source of current tab
+* @property {string} options Tab load options
+*/
+
+/**
+* Triggered when a Tab is moved
+* @name UI#tabMoved
+* @event
+* @type {object}
+* @property {string} src Source of moved tab
+* @property {string} options Tab load options
+* @property {number} prevIndex Previous index of tab
+* @property {number} newIndex New index of tab
 */

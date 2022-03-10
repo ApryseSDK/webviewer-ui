@@ -2,7 +2,13 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import OutlinesPanel from './OutlinesPanel';
-import { getDefaultOutlines } from '../Outline/Outline.spec';
+import { getDefaultOutlines } from '../Outline/Outline.stories';
+
+
+export default {
+  title: 'Components/OutlinesPanel',
+  component: OutlinesPanel,
+};
 
 export function Basic() {
   function reducer() {

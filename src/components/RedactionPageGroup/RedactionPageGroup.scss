@@ -1,0 +1,40 @@
+.redaction-items {
+  margin-top: 8px;
+  background-color: var(--component-background);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+
+  >:first-child {
+    padding-top: 16px;
+  }
+
+  >:last-child {
+    padding-bottom: 16px;
+  }
+}
+
+.redaction-page-group {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.redaction-page-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.redaction-page-group-number {
+  font-size: 13px;
+  color: var(--gray-7);
+}
+
+.expand-arrow {
+  height: 16px;
+  cursor: pointer;
+
+  .Icon {
+    width: 12px;
+    height: 5px;
+  }
+}

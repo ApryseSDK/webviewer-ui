@@ -1,7 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { useStore, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import Accessibility from 'components/Accessibility';
@@ -29,7 +29,7 @@ import PasswordModal from 'components/PasswordModal';
 import ProgressModal from 'components/ProgressModal';
 import CalibrationModal from 'components/CalibrationModal';
 import LinkModal from 'components/LinkModal';
-import EditTextModal from 'components/EditTextModal';
+import ContentEditModal from 'components/ContentEditModal';
 import FilterAnnotModal from '../FilterAnnotModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
@@ -43,10 +43,13 @@ import Model3DModal from 'components/Model3DModal';
 import FormFieldEditPopup from 'components/FormFieldEditPopup';
 import ColorPickerModal from 'components/ColorPickerModal';
 import PageManipulationOverlay from 'components/PageManipulationOverlay';
+import PageRedactionModal from "components/PageRedactionModal";
+import RedactionPanel from 'components/RedactionPanel';
+import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
 
 import core from 'core';
 import loadDocument from 'helpers/loadDocument';
-import getHashParams from 'helpers/getHashParams';
+import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
@@ -55,6 +58,7 @@ import actions from 'actions';
 
 import './App.scss';
 import LeftPanelOverlayContainer from "components/LeftPanelOverlay";
+import { prepareMultiTab } from "helpers/TabManager";
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -69,26 +73,40 @@ const App = ({ removeEventHandlers }) => {
   let timeoutReturn;
 
   const [isInDesktopOnlyMode] = useSelector(state => [
-    selectors.isInDesktopOnlyMode(state)
+    selectors.isInDesktopOnlyMode(state),
   ]);
 
   useEffect(() => {
     fireEvent(Events.VIEWER_LOADED);
 
-    function loadInitialDocument() {
-      const doesAutoLoad = getHashParams('auto_load', true);
-      const initialDoc = getHashParams('d', '');
-      const startOffline = getHashParams('startOffline', false);
+    async function loadInitialDocument() {
+      const doesAutoLoad = getHashParameters('auto_load', true);
+      let initialDoc = getHashParameters('d', '');
+      initialDoc = initialDoc.split(",");
+      const isMultiDoc = initialDoc.length > 1;
+      const startOffline = getHashParameters('startOffline', false);
+      if (isMultiDoc) {
+        prepareMultiTab(initialDoc, store);
+        initialDoc = initialDoc[0];
+        if ((initialDoc && doesAutoLoad) || startOffline) {
+          const options = {
+            externalPath: getHashParameters('p', ''),
+            documentId: getHashParameters('did', null),
+          };
+          loadDocument(dispatch, initialDoc, options);
+        }
+      } else {
+        initialDoc = initialDoc[0];
+        if ((initialDoc && doesAutoLoad) || startOffline) {
+          const options = {
+            extension: getHashParameters('extension', null),
+            filename: getHashParameters('filename', null),
+            externalPath: getHashParameters('p', ''),
+            documentId: getHashParameters('did', null),
+          };
 
-      if ((initialDoc && doesAutoLoad) || startOffline) {
-        const options = {
-          extension: getHashParams('extension', null),
-          filename: getHashParams('filename', null),
-          externalPath: getHashParams('p', ''),
-          documentId: getHashParams('did', null),
-        };
-
-        loadDocument(dispatch, initialDoc, options);
+          loadDocument(dispatch, initialDoc, options);
+        }
       }
     }
 
@@ -106,12 +124,14 @@ const App = ({ removeEventHandlers }) => {
       }
     }
 
-    window.addEventListener('blur', () => { dispatch(actions.closeElements(overlays)); });
+    window.addEventListener('blur', () => {
+      dispatch(actions.closeElements(overlays));
+    });
     window.addEventListener('message', messageHandler, false);
 
     // In case WV is used outside of iframe, postMessage will not
     // receive the message, and this timeout will trigger loadInitialDocument
-    timeoutReturn = setTimeout(loadDocumentAndCleanup, 100);
+    timeoutReturn = setTimeout(loadDocumentAndCleanup, 500);
 
     return removeEventHandlers;
     // eslint-disable-next-line
@@ -155,6 +175,12 @@ const App = ({ removeEventHandlers }) => {
           >
             <NotesPanel />
           </RightPanel>
+          <RightPanel
+            dataElement="redactionPanel"
+            onResize={width => dispatch(actions.setRedactionPanelWidth(width))}
+          >
+            <RedactionPanel />
+          </RightPanel>
         </div>
         <ViewControlsOverlay />
         <MenuOverlay />
@@ -179,11 +205,13 @@ const App = ({ removeEventHandlers }) => {
         <CreateStampModal />
         <PageReplacementModal />
         <LinkModal />
-        <EditTextModal />
+        <ContentEditModal />
         <FilterAnnotModal />
         <CustomModal />
         <Model3DModal />
         <ColorPickerModal />
+        <PageRedactionModal />
+        <AudioPlaybackPopup />
         {core.isFullPDFEnabled() && <SignatureValidationModal />}
       </div>
 

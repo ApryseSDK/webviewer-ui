@@ -2,26 +2,41 @@
 @import '../../../constants/modal';
 
 .text-signature {
-  display: flex;
-  flex-direction: column;
-  width: 450px;
-  height: 220px;
-
-  @include mobile {
-    width: 100%;
-    height: 162px;
-  }
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  
   canvas {
     display: none;
   }
 
+  &-input-container{
+    background: var(--signature-draw-background);
+    border-top: 1px solid var(--modal-stroke-and-border);
+    border-right: 1px solid var(--modal-stroke-and-border);
+    border-left: 1px solid var(--modal-stroke-and-border);
+    display: flex;
+    align-items: center;  
+    padding: 16px;
+    width: 100%;
+    height: 196px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  
   &-input {
     outline: none;
-    border-radius: 4px;
-    border: 1px solid var(--focus-border);
-    box-shadow: none;
-    padding: 5px;
     width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--modal-stroke-and-border);
+    border-radius: 0;
+    text-align: center;
+  }
+
+  &-input:focus {
+    border: none;
+    border-bottom: 1px solid var(--modal-stroke-and-border);
   }
 
   &-inner-container {
@@ -33,14 +48,16 @@
   &-text {
     display: flex;
     align-items: center;
-    background: var(--faded-component-background);
+    background: var(--signature-draw-background);
     white-space: nowrap;
     border-radius: 4px;
     padding: 0 8px;
     margin-top: 10px;
     overflow-y: auto;
     flex-grow: 1;
-
+    visibility:hidden;
+    position: fixed;
+    
     &:hover {
       cursor: pointer;
     }
@@ -54,5 +71,15 @@
       margin: auto;
       padding: 0 20px;
     }
+  }
+
+  .colorpalette-clear-container{
+    display: flex;
+    height: 44px;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border: 1px solid var(--modal-stroke-and-border);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 }

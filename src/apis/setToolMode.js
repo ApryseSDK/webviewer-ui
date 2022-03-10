@@ -10,23 +10,7 @@ WebViewer(...)
  */
 
 import core from 'core';
-import actions from 'actions';
-import selectors from 'selectors';
 
-export default store => toolName => {
-  const state = store.getState();
-  const { group = '' } = selectors.getToolButtonObject(state, toolName);
-
+export default toolName => {
   core.setToolMode(toolName);
-  setActiveToolGroupAndToolsOverlay(store, group);
-};
-
-const setActiveToolGroupAndToolsOverlay = (store, group) => {
-  if (!group) {
-    store.dispatch(actions.setActiveToolGroup(''));
-    store.dispatch(actions.closeElement('toolsOverlay'));
-  } else {
-    store.dispatch(actions.setActiveToolGroup(group));
-    store.dispatch(actions.openElement('toolsOverlay'));
-  }
 };

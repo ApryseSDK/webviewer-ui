@@ -22,7 +22,7 @@ const propTypes = {
   isProcessingSearchResults: PropTypes.bool
 };
 
-function noop() {}
+function noop() { }
 
 function SearchPanel(props) {
   const {
@@ -50,7 +50,7 @@ function SearchPanel(props) {
     if (!isInDesktopOnlyMode && isMobile) {
       closeSearchPanel();
     }
-  }, [setActiveResult, closeSearchPanel]);
+  }, [closeSearchPanel, isMobile]);
 
   const className = getClassName('Panel SearchPanel', { isOpen });
   const style = !isInDesktopOnlyMode && isMobile ? {} : { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
@@ -62,19 +62,19 @@ function SearchPanel(props) {
       style={style}
     >
       {!isInDesktopOnlyMode && isMobile &&
-      <div
-        className="close-container"
-      >
-        <button
-          className="close-icon-container"
-          onClick={onCloseButtonClick}
+        <div
+          className="close-container"
         >
-          <Icon
-            glyph="ic_close_black_24px"
-            className="close-icon"
-          />
-        </button>
-      </div>}
+          <button
+            className="close-icon-container"
+            onClick={onCloseButtonClick}
+          >
+            <Icon
+              glyph="ic_close_black_24px"
+              className="close-icon"
+            />
+          </button>
+        </div>}
       <SearchOverlay
         searchStatus={searchStatus}
         searchResults={searchResults}

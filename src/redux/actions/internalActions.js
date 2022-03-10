@@ -1,5 +1,5 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
-import { isIOS, isAndroid } from 'helpers/device';
+import { isAndroid, isIOS } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import selectors from 'selectors';
@@ -283,6 +283,14 @@ export const setPageManipulationOverlayItems = items => ({
     items,
   },
 });
+export const setTabManager = TabManager => ({
+  type: "SET_TAB_MANAGER",
+  payload: { TabManager },
+});
+export const setMultiTab = (isMultiTab = true) => ({
+  type: "SET_IS_MULTI_TAB",
+  payload: { isMultiTab },
+});
 
 // document
 export const setTotalPages = totalPages => ({
@@ -292,6 +300,10 @@ export const setTotalPages = totalPages => ({
 export const setOutlines = outlines => ({
   type: 'SET_OUTLINES',
   payload: { outlines },
+});
+export const setIsOutlineEditing = (isOutlineEditing = true) => ({
+  type: 'SET_OUTLINE_EDITING',
+  payload: { isOutlineEditing },
 });
 export const setBookmarks = bookmarks => ({
   type: 'SET_BOOKMARKS',
@@ -415,7 +427,37 @@ export const setLanguage = language => ({
   payload: { language },
 });
 
+export const setHideContentEditWarning = hideWarning => ({
+  type: 'SET_HIDE_CONTENT_EDIT_WARNING',
+  payload: { hideWarning },
+});
+
+export const setCurrentContentBeingEdited = ({ content, annotation }) => ({
+  type: 'SET_CURRENT_CONTENT_BEING_EDITED',
+  payload: { content, annotation },
+});
+
+export const updateCurrentContentBeingEdited = (content) => ({
+  type: 'UPDATE_CURRENT_CONTENT_BEING_EDITED',
+  payload: { content },
+});
+
+export const clearCurrentContentBeingEdited = () => ({
+  type: 'CLEAR_CURRENT_CONTENT_BEING_EDITED',
+  payload: {},
+});
+
 export const setProcessingSearchResults = isProcessingSearchResults => ({
   type: 'SET_PROCESSING_SEARCH_RESULTS',
   payload: { isProcessingSearchResults },
+});
+
+export const triggerResetAudioPlaybackPosition = shouldResetAudioPlaybackPosition => ({
+  type: 'SET_RESET_AUDIO_PLAYBACK_POSITION',
+  payload: { shouldResetAudioPlaybackPosition },
+});
+
+export const setActiveSoundAnnotation = activeSoundAnnotation => ({
+  type: 'SET_ACTIVE_SOUND_ANNOTATION',
+  payload: { activeSoundAnnotation },
 });

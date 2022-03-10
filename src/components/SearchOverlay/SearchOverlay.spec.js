@@ -32,11 +32,11 @@ jest.mock('core');
 
 
 describe('SearchOverlay', () => {
-
   beforeEach(() => {
     searchTextFullFactory.mockReset();
     getOverrideSearchExecution.mockReset();
   });
+
   describe('Component', () => {
     // It's good practice to test that all stories of current component work without throwing errors.
     // In some cases when changing code (or configuration), we forget to make necessary changes to
@@ -222,8 +222,7 @@ describe('SearchOverlay', () => {
     it('Should call search when search value is empty', () => {
       const searchTextFullMock = jest.fn();
       searchTextFullFactory.mockReturnValue(searchTextFullMock);
-      // When we call executeSearch without searchValue (or with empty string)
-      // Search should not be initiated.
+      // When we call executeSearch with empty string, search should be initiated.
       executeSearch('', {});
       expect(searchTextFullMock).toHaveBeenCalled();
     });
@@ -233,8 +232,7 @@ describe('SearchOverlay', () => {
       getOverrideSearchExecution.mockReturnValue(overrideSearchExecutionFnMock);
       const searchTextFullMock = jest.fn();
       searchTextFullFactory.mockReturnValue(searchTextFullMock);
-      // When we call executeSearch without searchValue (or with empty string)
-      // Search should not be initiated.
+      // When we call executeSearch without searchValue, search should not be initiated.
       executeSearch(null, {});
       executeSearch(undefined, {});
       expect(searchTextFullMock).not.toHaveBeenCalled();

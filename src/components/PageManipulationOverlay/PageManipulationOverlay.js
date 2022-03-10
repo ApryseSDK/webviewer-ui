@@ -12,11 +12,11 @@ function InitialPageManipulationOverlay({ children, pageNumbers, pageManipulatio
   return pageManipulationOverlayItems.map((item, index) => {
     const { dataElement, type } = item;
     let component = childrenArray.find(child => child.props.dataElement === dataElement);
-    const key = dataElement || `${type  }-${  index}`;
+    const key = dataElement || `${type}-${index}`;
 
     if (!component) {
       if (type === 'divider') {
-        component = <div className="divider"/>;
+        component = <div className="divider" />;
       }
 
       if (type === 'customPageOperation') {

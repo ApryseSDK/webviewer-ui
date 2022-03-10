@@ -116,15 +116,16 @@ class ToolStylePopup extends React.PureComponent {
   render() {
     const { activeToolGroup, isDisabled, activeToolName, activeToolStyle, isMobile } = this.props;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
-    let freeTextProperties = {};
+    let properties = {};
     const colorMapKey = mapToolNameToKey(activeToolName);
+    const isRedaction = activeToolName.includes('AnnotationCreateRedaction');
 
     if (isDisabled) {
       return null;
     }
 
     if (isFreeText) {
-      freeTextProperties = {
+      properties = {
         Font: activeToolStyle.Font,
         FontSize: activeToolStyle.FontSize,
         TextAlign: activeToolStyle.TextAlign,
@@ -133,6 +134,15 @@ class ToolStylePopup extends React.PureComponent {
         italic: activeToolStyle['RichTextStyle'][0]["font-style"] === "italic",
         underline: activeToolStyle['RichTextStyle'][0]["text-decoration"]?.includes("underline") || activeToolStyle["text-decoration"]?.includes("word"),
         strikeout: activeToolStyle['RichTextStyle'][0]["text-decoration"]?.includes("line-through"),
+      };
+    }
+
+    if (isRedaction) {
+      properties = {
+        OverlayText: activeToolStyle['OverlayText'],
+        Font: activeToolStyle['Font'],
+        FontSize: activeToolStyle['FontSize'],
+        TextAlign: activeToolStyle['TextAlign']
       };
     }
 
@@ -150,8 +160,8 @@ class ToolStylePopup extends React.PureComponent {
         onPropertyChange={this.handleStyleChange}
         onStyleChange={this.handleStyleChange}
         onRichTextStyleChange={this.handleRichTextStyleChange}
-        isFontSizeSliderDisabled={isFreeText}
-        freeTextProperties={freeTextProperties}
+        properties={properties}
+        isRedaction={isRedaction}
       />
     );
 

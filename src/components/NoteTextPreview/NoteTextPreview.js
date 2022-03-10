@@ -6,7 +6,12 @@ import './NoteTextPreview.scss'
 
 function NoteTextPreview(props) {
   const text = props.children;
-  const { notePanelWidth, linesToBreak, comment } = props;
+  const {
+    panelWidth,
+    linesToBreak,
+    /** If text being previewed is a comment it gets a darker font color */
+    comment = false
+  } = props;
   const [expanded, setExpand] = useState(false);
   const [previewElementWidth, setPreviewWidth] = useState(null);
   const [charsPerLine, setCharsperLine] = useState(null);
@@ -26,7 +31,7 @@ function NoteTextPreview(props) {
   useEffect(() => {
     const textNodeWidth = ref.current.clientWidth;
     setPreviewWidth(textNodeWidth)
-  }, [notePanelWidth]);
+  }, [panelWidth]);
 
   //useLayoutEffect to avoid a flicker before we get the final text prop
   useLayoutEffect(() => {

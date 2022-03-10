@@ -86,6 +86,8 @@
   },
   "annotation": {
     "areaMeasurement": "면적 측정",
+    "arc": "호",
+    "arcMeasurement": "아크 측정",
     "arrow": "화살표",
     "callout": "설명선",
     "crop": "잘라내기",
@@ -180,7 +182,8 @@
     "createStampButton": "새 스탬프 생성",
     "filter": "필터",
     "pageReplaceModalTitle": "페이지 바꾸기",
-    "files": "파일"
+    "files": "파일",
+    "editText": "텍스트 편집"
   },
   "message": {
     "toolsOverlayNoPresets": "사전 설정 없음",
@@ -404,10 +407,12 @@
       "area": "면적",
       "distanceMeasurement": "거리 측정",
       "perimeterMeasurement": "둘레 측정",
+      "arcMeasurement": "아크 측정",
       "areaMeasurement": "면적 측정",
       "countMeasurement": "카운트 측정",
       "radius": "반지름",
-      "count": "카운트"
+      "count": "카운트",
+      "length": "길이"
     },
     "measurementOption": {
       "scale": "배율"
@@ -618,7 +623,9 @@
       "4": "목",
       "5": "금",
       "6": "토"
-    }
+    },
+    "today": "오늘",
+    "invalidDateTime": "잘못된 날짜/시간: 입력은 형식과 일치해야 합니다"
   },
   "formField": {
     "formFieldPopup": {

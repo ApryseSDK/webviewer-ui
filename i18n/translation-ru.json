@@ -86,6 +86,8 @@
   },
   "annotation": {
     "areaMeasurement": "Площадь",
+    "arc": "дуга",
+    "arcMeasurement": "измерение дуги",
     "arrow": "Стрела",
     "callout": "Вызыв",
     "crop": "Обрезать страницу",
@@ -180,7 +182,8 @@
     "createStampButton": "Создать новую марку",
     "filter": "Фильтр",
     "pageReplaceModalTitle": "Заменить страницу",
-    "files": "Файлы"
+    "files": "Файлы",
+    "editText": "Редактировать текст"
   },
   "message": {
     "toolsOverlayNoPresets": "Нет пресетов",
@@ -404,10 +407,12 @@
       "area": "Площадь",
       "distanceMeasurement": "Замерение дистанции",
       "perimeterMeasurement": "Замерение периметера",
+      "arcMeasurement": "измерение дуги",
       "areaMeasurement": "Замерение площади",
       "countMeasurement": "Измерение счета",
       "radius": "Радиус",
-      "count": "подсчитывать"
+      "count": "подсчитывать",
+      "length": "Длина"
     },
     "measurementOption": {
       "scale": "Масштаб"
@@ -618,7 +623,9 @@
       "4": "чт",
       "5": "пт",
       "6": "сб"
-    }
+    },
+    "today": "Сегодня",
+    "invalidDateTime": "Неверная дата/время: ввод должен соответствовать формату"
   },
   "formField": {
     "formFieldPopup": {

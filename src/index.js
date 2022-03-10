@@ -31,10 +31,11 @@ import logDebugInfo from 'helpers/logDebugInfo';
 import rootReducer from 'reducers/rootReducer';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import getHashParams from 'helpers/getHashParams';
+import getHashParameters from 'helpers/getHashParameters';
 import defineWebViewerInstanceUIAPIs from 'src/apis';
 
 import './index.scss';
+import hotkeysManager from './helpers/hotkeysManager';
 
 const middleware = [thunk];
 
@@ -86,11 +87,11 @@ if (window.CanvasRenderingContext2D) {
     fullAPIReady = loadScript('../core/pdf/PDFNet.js');
   }
 
-  if (getHashParams('disableLogs', false)) {
+  if (getHashParameters('disableLogs', false)) {
     window.Core.disableLogs(true);
   }
 
-  window._disableStreaming = getHashParams('disableStreaming', false);
+  window._disableStreaming = getHashParameters('disableStreaming', false);
   window.Core.setWorkerPath('../core');
   window.Core.setResourcesPath('../core/assets');
 
@@ -112,12 +113,17 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
+  const backendType = getHashParameters('pdf');
+  if (backendType) {
+    window.Core.forceBackendType(backendType);
+  }
+
   const { preloadWorker } = state.advanced;
 
   function initTransports() {
-    const { PDF, OFFICE, LEGACY_OFFICE, ALL } = workerTypes;
+    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, ALL } = workerTypes;
     if (preloadWorker.includes(PDF) || preloadWorker === ALL) {
-      getBackendPromise(getHashParams('pdf', 'auto')).then(pdfType => {
+      getBackendPromise(getHashParameters('pdf', 'auto')).then(pdfType => {
         window.Core.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
@@ -127,7 +133,7 @@ if (window.CanvasRenderingContext2D) {
     }
 
     if (preloadWorker.includes(OFFICE) || preloadWorker === ALL) {
-      getBackendPromise(getHashParams('office', 'auto')).then(officeType => {
+      getBackendPromise(getHashParameters('office', 'auto')).then(officeType => {
         window.Core.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
@@ -137,13 +143,17 @@ if (window.CanvasRenderingContext2D) {
     }
 
     if (preloadWorker.includes(LEGACY_OFFICE) || preloadWorker === ALL) {
-      getBackendPromise(getHashParams('legacyOffice', 'auto')).then(officeType => {
+      getBackendPromise(getHashParameters('legacyOffice', 'auto')).then(officeType => {
         window.CoreControls.initLegacyOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
         }, window.sampleL);
       });
+    }
+
+    if (preloadWorker.includes(CONTENT_EDIT) || preloadWorker === ALL) {
+      window.Core.ContentEdit.preloadWorker(window.documentViewer);
     }
   }
 
@@ -154,30 +164,29 @@ if (window.CanvasRenderingContext2D) {
 
   const documentViewer = new window.Core.DocumentViewer();
   window.documentViewer = documentViewer;
-
   defineWebViewerInstanceUIAPIs(store);
+  hotkeysManager.initialize(store);
+
+  setupDocViewer();
+  setupI18n(state);
+  setUserPermission(state);
+  setAutoSwitch();
+  setDefaultToolStyles();
+  core.setToolMode(defaultTool);
+
+  const { addEventHandlers, removeEventHandlers } = eventHandler(store);
 
   fullAPIReady.then(() => loadConfig()).then(() => {
     if (preloadWorker) {
       initTransports();
     }
 
-    const { addEventHandlers, removeEventHandlers } = eventHandler(store);
-
-    if (getHashParams('enableViewStateAnnotations', false)) {
+    if (getHashParameters('enableViewStateAnnotations', false)) {
       const tool = documentViewer.getTool(window.Core.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);
     }
 
-    setupDocViewer();
-    setupI18n(state);
-    setUserPermission(state);
-    setAutoSwitch();
-    addEventHandlers();
-    setDefaultDisabledElements(store);
     setupLoadAnnotationsFromServer(store);
-    setDefaultToolStyles();
-    core.setToolMode(defaultTool);
 
     ReactDOM.render(
       <Provider store={store}>
@@ -192,6 +201,9 @@ if (window.CanvasRenderingContext2D) {
       document.getElementById('app'),
     );
   });
+
+  addEventHandlers();
+  setDefaultDisabledElements(store);
 }
 
 window.addEventListener('hashchange', () => {

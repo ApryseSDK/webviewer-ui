@@ -22,6 +22,8 @@ import { isIE } from 'helpers/device';
 
 import './NotesPanel.scss';
 
+const SORT_CONTAINER_ELEMENT = 'sortContainer';
+
 const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [
     sortStrategy,
@@ -33,7 +35,8 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     notesInLeftPanel,
     isDocumentReadOnly,
     enableNotesPanelVirtualizedList,
-    isInDesktopOnlyMode
+    isInDesktopOnlyMode,
+    isSortContainerDisabled
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -45,7 +48,8 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       selectors.getNotesInLeftPanel(state),
       selectors.isDocumentReadOnly(state),
       selectors.getEnableNotesPanelVirtualizedList(state),
-      selectors.isInDesktopOnlyMode(state)
+      selectors.isInDesktopOnlyMode(state),
+      selectors.isElementDisabled(state, SORT_CONTAINER_ELEMENT)
     ],
     shallowEqual,
   );
@@ -386,19 +390,22 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
             <span className='main-comment'>{t('component.notesPanel')}</span> {`(${notesToRender.length})`}
           </div>
           <div className="sort-row">
-            <div className="sort-container">
-              <div className="label">{`${t('message.sortBy')}:`}</div>
-              <Dropdown
-                dataElement="notesOrderDropdown"
-                disabled={notesToRender.length === 0}
-                items={Object.keys(getSortStrategies())}
-                translationPrefix="option.notesOrder"
-                currentSelectionKey={sortStrategy}
-                onClickItem={sortStrategy => {
-                  dispatch(actions.setNotesPanelSortStrategy(sortStrategy));
-                }}
-              />
-            </div>
+            {
+              (isSortContainerDisabled) ? <div className="sort-container"></div> :
+                <div className="sort-container" data-element={SORT_CONTAINER_ELEMENT}>
+                  <div className="label">{`${t('message.sortBy')}:`}</div>
+                  <Dropdown
+                    dataElement="notesOrderDropdown"
+                    disabled={notesToRender.length === 0}
+                    items={Object.keys(getSortStrategies())}
+                    translationPrefix="option.notesOrder"
+                    currentSelectionKey={sortStrategy}
+                    onClickItem={sortStrategy => {
+                      dispatch(actions.setNotesPanelSortStrategy(sortStrategy));
+                    }}
+                  />
+                </div>
+            }
             <Button
               dataElement="filterAnnotationButton"
               className={classNames({
