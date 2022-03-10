@@ -9,6 +9,9 @@ function PageRotationControls(props) {
   const { t } = useTranslation();
   const { rotateClockwise, rotateCounterClockwise } = props;
 
+  
+
+
   return (
     <>
       <DataElementWrapper

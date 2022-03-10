@@ -131,7 +131,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     onPendingReplyChange();
   };
   return ifReplyNotAllowed ? null : (
-    <div className='reply-area-container'>
+    <form onSubmit={postReply} className='reply-area-container'>
       <div
         className={replyAreaClass}
         // stop bubbling up otherwise the note will be closed
@@ -155,10 +155,11 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         <Button
           img="icon-post-reply"
           className={`reply-button${!pendingReplyMap[annotation.Id] ? ' disabled' : ''}`}
-          onMouseUp={e => postReply(e)}
+          onMouseUp={e => postReply(e)} 
+          isSubmitType={true}
         />
       </div>
-    </div>
+    </form>
   );
 };
 

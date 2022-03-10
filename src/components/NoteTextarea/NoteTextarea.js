@@ -18,7 +18,7 @@ const propTypes = {
   onBlur: PropTypes.func,
   // same the onBlur attribute of a HTML textarea element
   onFocus: PropTypes.func,
-  // a function that will be invoked when Ctrl + Enter or Cmd + Enter are pressed
+  // a function that will be invoked when Ctrl + Enter or Cmd + Enter or only Enter are pressed
   onSubmit: PropTypes.func,
 };
 
@@ -27,7 +27,13 @@ const MentionsTextarea = React.lazy(() =>
 );
 
 const NoteTextarea = React.forwardRef((props, forwardedRef) => {
-  const userData = useSelector(selectors.getUserData, shallowEqual);
+  const [userData, canSubmitByEnter] = useSelector(
+    state => [
+      selectors.getUserData(state),
+      selectors.isNoteSubmissionWithEnterEnabled(state),
+    ],
+    shallowEqual,
+  );
   const { resize } = useContext(NoteContext);
   const textareaRef = useRef();
   const prevHeightRef = useRef();
@@ -46,8 +52,11 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   }, [props.value, resize]);
 
   const handleKeyDown = e => {
-    // (Cmd/Ctrl + Enter)
-    if ((e.metaKey || e.ctrlKey) && e.which === 13) {
+    const enterKey = 13;
+    const isSubmittingByEnter = canSubmitByEnter && e.which === enterKey;
+    const isSubmittingByCtrlEnter = (e.metaKey || e.ctrlKey) && e.which === enterKey;
+
+    if (isSubmittingByEnter || isSubmittingByCtrlEnter) {
       props.onSubmit(e);
     }
   };

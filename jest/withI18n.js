@@ -1,6 +1,6 @@
 import React from 'react';
 import i18next from 'i18next';
-import { I18nextProvider } from "react-i18next";
+import { I18nextProvider, initReactI18next } from "react-i18next";
 
 i18next.languages = [
   'en',
@@ -17,7 +17,7 @@ i18next.languages = [
   'zh_tw'
 ];
 
-const resources = i18next.languages.reduce((accumulator, language, ) => {
+const resources = i18next.languages.reduce((accumulator, language,) => {
   const translation = require(`../i18n/translation-${language}.json`);
   accumulator[language] = {
     translation
@@ -29,11 +29,12 @@ const options = {
   fallbackLng: 'en',
   react: {
     useSuspense: false,
-    wait: true,
   },
   resources
 };
-i18next.init(options);
+i18next
+  .use(initReactI18next)
+  .init(options);
 
 export default function withI18n(Component) {
   return function WithI18nWrapper(props) {

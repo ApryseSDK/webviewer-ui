@@ -26,7 +26,6 @@
   --component-background: var(--gray-0);
   --mobile-presets-background: var(--gray-1);
   --faded-component-background: var(--gray-2);
-  --signature-draw-background: var(--gray-2);
   --toggle-zoom-overlay-background: var(--gray-2);
   --ribbons-background: var(--gray-3);
   --document-background-color: var(--gray-2);
@@ -80,6 +79,10 @@
   --focus-border: var(--blue-5);
   --color-palette-border: var(--gray-8);
 
+  --image-signature-drop-background: var(--blue-1);
+  --image-signature-drop-border: var(--blue-5);
+  --signature-draw-background: var(--gray-2);
+  --modal-stroke-and-border: var(--gray-5);
   --modal-negative-space: rgba(0, 0, 0, 0.3);
   --spinner-negative-space: rgba(0, 0, 0, 0.3);
 

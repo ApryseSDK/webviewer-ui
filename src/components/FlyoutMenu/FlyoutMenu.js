@@ -24,6 +24,7 @@ const MENUS = [
   'thumbnailsControlRotatePopup',
   'thumbnailsControlInsertPopup',
   'thumbnailsControlManipulatePopup',
+  'tabMenu',
 ];
 
 const TRIGGERS = [
@@ -34,6 +35,7 @@ const TRIGGERS = [
   'thumbnailsControlRotatePopupTrigger',
   'thumbnailsControlInsertPopupTrigger',
   'thumbnailsControlManipulatePopupTrigger',
+  'tabTrigger',
 ];
 
 const propTypes = {

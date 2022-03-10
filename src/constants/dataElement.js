@@ -6,7 +6,10 @@ const DataElements = {
   STYLE_OPTION: 'styleOption',
   STYLE_POPUP: 'stylePopup',
   SCALE_INPUT_CONTAINER: 'scaleInputContainer',
-  PRECISION_INPUT_CONTAINER: 'precisionInputContainer'
+  PRECISION_INPUT_CONTAINER: 'precisionInputContainer',
+  STYLE_POPUP_TEXT_STYLE_CONTAINER: 'stylePopupTextStyleContainer',
+  STYLE_POPUP_COLORS_CONTAINER: 'stylePopupColorsContainer',
+  STYLE_POPUP_LABEL_TEXT_CONTAINER: 'stylePopupLabelTextContainer'
   // TODO add more here
 };
 

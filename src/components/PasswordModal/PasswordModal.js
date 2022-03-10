@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
@@ -16,10 +16,11 @@ export const setCheckPasswordFunction = fn => {
 };
 
 const PasswordModal = () => {
-  const [isOpen, attempt] = useSelector(
+  const [isOpen, attempt, isMultiTab] = useSelector(
     state => [
       selectors.isElementOpen(state, 'passwordModal'),
       selectors.getPasswordAttempts(state),
+      selectors.getIsMultiTab(state)
     ],
     shallowEqual,
   );
@@ -116,6 +117,13 @@ const PasswordModal = () => {
     );
   };
 
+
+  let tabsPadding = 0;
+  if (isMultiTab) {
+    // Add tabsheader padding
+    tabsPadding += document.getElementsByClassName("TabsHeader")[0]?.getBoundingClientRect().bottom;
+  }
+
   return (
     <div
       className={classNames({
@@ -125,6 +133,7 @@ const PasswordModal = () => {
         closed: !isOpen,
       })}
       data-element="passwordModal"
+      style={isMultiTab ? { height: `calc(100% - ${tabsPadding}px)` } : undefined}
     >
       <div className="container">{renderContent()}</div>
     </div>

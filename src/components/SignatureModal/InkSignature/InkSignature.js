@@ -94,9 +94,20 @@ const InkSignature = ({
       // we want to keep the unmodified paths so that users can keep drawing on the canvas
       freeHandPathsRef.current = deepCopy(signatureTool.annot.getPaths());
       annotIdRef.current = signatureTool.annot.Id;
+      setDrawn(true);
     }
-    setDrawn(true)
   };
+
+  const handleColorInputChange = (property, value) => {
+    setToolStyles('AnnotationCreateSignature', property, value);
+    const signatureTool = core.getTool('AnnotationCreateSignature');
+    if (signatureTool.annot) {
+      signatureTool.annot.StrokeColor = value;
+      signatureTool.resizeCanvas();
+    }
+    // hack for tool styles for signature not being on state
+    forceUpdate();
+  }
 
   const deepCopy = paths => {
     const pathsCopy = [];
@@ -117,41 +128,36 @@ const InkSignature = ({
 
   return (
     <React.Fragment>
-      <ColorPalette
-        color={toolStyles['StrokeColor']}
-        property="StrokeColor"
-        onStyleChange={(property, value) => {
-          setToolStyles('AnnotationCreateSignature', property, value);
-          const signatureTool = core.getTool('AnnotationCreateSignature');
-          if (signatureTool.annot) {
-            signatureTool.annot.StrokeColor = value;
-            signatureTool.resizeCanvas();
-          }
-          // hack for tool styles for signature not being on state
-          forceUpdate();
-        }}
-        overridePalette2={['#E44234', '#4E7DE9', '#000000']}
-      />
-      <div
-        className="divider-horizontal"
-      />
       <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
         {({ measureRef }) => (
           <div className="ink-signature" ref={measureRef}>
             <Swipeable
-              onSwiping={({ event }) => event.stopPropagation()}
+              onSwiping={({ event }) => event.stopPropagation()} 
+              className="canvas-colorpalette-container"
             >
-              <canvas
-                className="ink-signature-canvas"
-                onMouseUp={handleFinishDrawing}
-                onTouchEnd={handleFinishDrawing}
-                ref={canvasRef}
-              />
-              <div className="ink-signature-background">
+              <div className="ink-signature-canvas-container">
                 <div className="ink-signature-sign-here">
                   {drawn ? '' : t('message.signHere')}
                 </div>
+                <canvas
+                  className="ink-signature-canvas"
+                  onMouseUp={handleFinishDrawing}
+                  onTouchEnd={handleFinishDrawing}
+                  onMouseLeave={handleFinishDrawing}
+                  ref={canvasRef}
+                />
               </div>
+              <div className="colorpalette-clear-container">
+                <ColorPalette
+                    color={toolStyles['StrokeColor']}
+                    property="StrokeColor"
+                    onStyleChange={(property, value) => handleColorInputChange(property, value)}
+                    overridePalette2={['#000000', '#4E7DE9', '#E44234']}
+                />
+                <button className="signature-clear" onClick={clearCanvas} disabled={!drawn}>
+                  {t('action.clear')}
+                </button>
+              </div>              
             </Swipeable>
           </div>
         )}
@@ -159,9 +165,6 @@ const InkSignature = ({
       <div
         className="footer"
       >
-        <button className="signature-clear" onClick={clearCanvas} disabled={!drawn}>
-          {t('action.clear')}
-        </button>
         <button className="signature-create" onClick={createSignature} disabled={!drawn}>
           {t('action.create')}
         </button>

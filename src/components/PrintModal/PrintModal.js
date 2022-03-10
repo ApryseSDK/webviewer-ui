@@ -18,7 +18,6 @@ import { Swipeable } from 'react-swipeable';
 import './PrintModal.scss';
 import Choice from '../Choice/Choice';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
-import { setPrintQuality } from 'src/apis/setPrintQuality';
 
 
 class PrintModal extends React.PureComponent {
@@ -61,6 +60,7 @@ class PrintModal extends React.PureComponent {
       includeAnnotations: true,
       includeComments: false,
       allowDefaultPrintOptions: true,
+      maintainPageOrientation: false,
     };
   }
 
@@ -173,6 +173,7 @@ class PrintModal extends React.PureComponent {
       this.state.pagesToPrint,
       this.state.includeComments,
       this.state.includeAnnotations,
+      this.state.maintainPageOrientation,
       this.props.printQuality,
       this.props.sortStrategy,
       this.props.colorMap,
@@ -185,7 +186,7 @@ class PrintModal extends React.PureComponent {
       await pagePromise;
       this.setState({
         count:
-          this.state.count < this.state.pagesToPrint.length
+          this.state.count < this.state.pagesToPrint.length && this.state.count !== -1
             ? this.state.count + 1
             : this.state.count
       });
@@ -218,9 +219,10 @@ class PrintModal extends React.PureComponent {
     if (isDisabled) {
       return null;
     }
-    if (this.state.allowDefaultPrintOptions && this.props.printOptions) {
-      this.state.includeAnnotations = typeof this.props.printOptions.includeAnnotations !== 'undefined' ? this.props.printOptions.includeAnnotations : this.state.includeAnnotations;
-      this.state.includeComments = typeof this.props.printOptions.includeComments !== 'undefined' ? this.props.printOptions.includeComments : this.state.includeComments;
+    if (this.state.allowDefaultPrintOptions && this.props.defaultPrintOptions) {
+      this.state.includeAnnotations = this.props.defaultPrintOptions.includeAnnotations ?? this.state.includeAnnotations;
+      this.state.includeComments = this.props.defaultPrintOptions.includeComments ?? this.state.includeComments;
+      this.state.maintainPageOrientation = this.props.defaultPrintOptions.maintainPageOrientation ?? this.state.maintainPageOrientation;
       this.state.allowDefaultPrintOptions = false;
     }
     const { count, pagesToPrint, includeAnnotations, includeComments } = this.state;

@@ -16,14 +16,16 @@ const propTypes = {
   currentSelectionKey: PropTypes.string,
   translationPrefix: PropTypes.string,
   dataElement: PropTypes.string,
+  disabled: PropTypes.bool,
+  isFont: PropTypes.bool,
 };
 
-function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem, dataElement, disabled=false }) {
+function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem, dataElement, disabled=false, isFont =false }) {
   const  { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
- 
+
   const onClose = useCallback(() => setIsOpen(false), []);
   const onToggle = useCallback(() => setIsOpen(prev => !prev), []);
 
@@ -62,6 +64,7 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
           className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
           onClick={e => onClickDropdownItem(e, key)}
           tabIndex={isOpen ? undefined : -1} // Just to be safe.
+          style={isFont ? { fontFamily: key } : undefined}
         >
           {t(`${translationPrefix}.${key}`, key)}
         </DataElementWrapper>
@@ -70,8 +73,8 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
   );
 
   const optionIsSelected = items.some(key => key === currentSelectionKey);
-  const buttonStyle = { width: `${DEFAULT_WIDTH + 2}px` }
-   
+  const buttonStyle = { width: `${DEFAULT_WIDTH + 2}px` };
+
 
   return (
     <DataElementWrapper
@@ -87,7 +90,7 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
       >
         <div className="picked-option">
           {optionIsSelected && (
-            <div className="picked-option-text">
+            <div className="picked-option-text" style={isFont ? { fontFamily: currentSelectionKey } : undefined}>
               {tReady? t(`${translationPrefix}.${currentSelectionKey}`, currentSelectionKey) : ''}
             </div>
           )}

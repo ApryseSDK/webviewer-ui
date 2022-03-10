@@ -338,4 +338,16 @@ export default {
   ComboBoxFormFieldCreateTool4: {
     StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
   },
+  AnnotationCreateRedaction: {
+    StrokeColor: { R: 255, G: 0, B: 0, A: 1 }
+  },
+  AnnotationCreateRedaction2: {
+    StrokeColor: { R: 0, G: 0, B: 255, A: 1 }
+  },
+  AnnotationCreateRedaction3: {
+    StrokeColor: { R: 255, G: 255, B: 0, A: 1 }
+  },
+  AnnotationCreateRedaction4: {
+    StrokeColor: { R: 0, G: 128, B: 0, A: 1 }
+  }
 };

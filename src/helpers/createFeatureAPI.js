@@ -8,6 +8,8 @@ import { PRIORITY_TWO } from 'constants/actionPriority';
 import actions from 'actions';
 import enableTools from 'src/apis/enableTools';
 import disableTools from 'src/apis/disableTools';
+import setToolMode from 'src/apis/setToolMode';
+import selectors from 'selectors';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => (features, priority = PRIORITY_TWO) => {
@@ -111,16 +113,18 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
       },
     },
     [Feature.Redaction]: {
-      dataElements: ['redactionButton'],
+      dataElements: ['redactionToolGroupButton'],
       fn: () => {
         if (enable && !core.isFullPDFEnabled()) {
-          console.warn(
-            'Full api is not enabled, applying redactions is disabled',
-          );
+          console.warn('Full api is not enabled, applying redactions is disabled');
         } else {
-          core.setToolMode('AnnotationEdit');
+          core.enableRedaction(enable);
+          const currentToolbarGroup = selectors.getCurrentToolbarGroup(store.getState());
+          if (!enable && currentToolbarGroup === 'toolbarGroup-Redact') {
+            setToolMode('AnnotationEdit');
+          }
         }
-      },
+      }
     },
     [Feature.TextSelection]: {
       dataElements: ['textPopup', 'textSelectButton'],

@@ -26,10 +26,11 @@ const rotateClockwise = pageNumbers => {
     for (const page of pageNumbers) {
       docViewer.setRotation(getNewRotation(currentRotations[page], false), page);
     }
+  } else {
+    pageNumbers.forEach(index => {
+      core.rotatePages([index], window.Core.PageRotation.e_90);
+    });
   }
-  pageNumbers.forEach(index => {
-    core.rotatePages([index], window.Core.PageRotation.e_90);
-  });
 };
 
 const rotateCounterClockwise = pageNumbers => {
@@ -39,10 +40,11 @@ const rotateCounterClockwise = pageNumbers => {
     for (const page of pageNumbers) {
       docViewer.setRotation(getNewRotation(currentRotations[page], true), page);
     }
+  } else {
+    pageNumbers.forEach(index => {
+      core.rotatePages([index], window.Core.PageRotation.e_270);
+    });
   }
-  pageNumbers.forEach(index => {
-    core.rotatePages([index], window.Core.PageRotation.e_270);
-  });
 };
 
 const insertAbove = pageNumbers => {
@@ -149,6 +151,25 @@ const noPagesSelectedWarning = (pageNumbers, dispatch) => {
   return false;
 };
 
+
+const replacePages = async (sourceDoc, pagesToRemove, pagesToReplaceIntoDocument) => {
+  const documentLoadedInViewer = core.getDocument();
+  const pageCountOfLoadedDocument = documentLoadedInViewer.getPageCount();
+  const pagesToRemoveFromOriginal = pagesToRemove.sort((a, b) => a - b);
+
+  // If document to replace into has only one page, or we are replacing all pages
+  // then we can insert pages at the end, and then remove the pages to avoid an error of removing all pages
+  if (pageCountOfLoadedDocument === 1 || pagesToRemoveFromOriginal.length === pageCountOfLoadedDocument) {
+    await documentLoadedInViewer.insertPages(sourceDoc, pagesToReplaceIntoDocument);
+    await documentLoadedInViewer.removePages(pagesToRemoveFromOriginal);
+  } else {
+    // If document to replace into has > 1 page we need insert the new pages at the spot of the first removed page
+    // pagesToRemoveFromOriginal is sorted in ascending order. Interleaving pages would be complex.
+    await documentLoadedInViewer.removePages(pagesToRemoveFromOriginal);
+    await documentLoadedInViewer.insertPages(sourceDoc, pagesToReplaceIntoDocument, pagesToRemoveFromOriginal[0]);
+  }
+};
+
 export {
   rotateClockwise,
   rotateCounterClockwise,
@@ -160,4 +181,5 @@ export {
   movePagesToBottom,
   movePagesToTop,
   noPagesSelectedWarning,
+  replacePages,
 };

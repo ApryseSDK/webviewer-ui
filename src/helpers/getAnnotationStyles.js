@@ -7,7 +7,6 @@ import core from 'core';
  * @param annotation is an annotation created by a tool
  * @return current style of that object.
  */
-
 export default annotation => {
   const styleProperty = [
     'FillColor',
@@ -33,12 +32,6 @@ export default annotation => {
   // Special case for the highlight annotation. It only have opacity when blend mode is working
   if (annotation.elementName === 'highlight' && !core.isBlendModeSupported(annotation['BlendMode'])) {
     style.Opacity = null;
-  }
-  // we do not have sliders to show up for redaction annots
-  if (annotation instanceof window.Annotations.RedactionAnnotation) {
-    style.Opacity = null;
-    style.StrokeThickness = null;
-    style.FontSize = null;
   }
 
   // widget don't support opacity

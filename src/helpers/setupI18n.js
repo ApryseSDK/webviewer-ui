@@ -56,7 +56,6 @@ export default state => {
     fallbackLng: 'en',
     react: {
       useSuspense: false,
-      wait: true,
     },
   };
   const callback = (err, t) => {

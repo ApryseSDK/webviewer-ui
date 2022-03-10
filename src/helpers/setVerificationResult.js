@@ -171,10 +171,22 @@ const getVerificationResult = async (doc, certificates) => {
         const signed = await digitalSigField.hasCryptographicSignature();
         if (signed) {
           const signerCert = await digitalSigField.getSignerCertFromCMS();
-          const retrievedIssuerField = await signerCert.getIssuerField();
-          const processedIssuerField = await processX501DistinguishedName(retrievedIssuerField) || {};
+          /**
+           * @note "Issuer" refers to the Certificate Authority that issued the
+           * certificate
+           * "Subject" refers to the organization/person that the Certificate
+           * Auhority issued this certificate to
+           *
+           * It is likely that future UI iterations will leverage Issuer
+           * information, so the code has been commented out for now, but will
+           * be uncommented in future feature implementations
+           */
+          // const retrievedIssuerField = await signerCert.getIssuerField();
+          // const processedIssuerField = await processX501DistinguishedName(retrievedIssuerField) || {};
+          const retrievedSubjectField = await signerCert.getSubjectField();
+          const processedSubjectField = await processX501DistinguishedName(retrievedSubjectField) || {};
           signer = (
-            processedIssuerField['e_commonName']
+            processedSubjectField['e_commonName']
             || await digitalSigField.getSignatureName()
             || await digitalSigField.getContactInfo()
           );

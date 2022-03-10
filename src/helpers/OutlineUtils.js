@@ -1,3 +1,6 @@
+import fireEvent from 'helpers/fireEvent';
+import Events from 'constants/events';
+
 const OutlineUtils = {
   setDoc(doc) {
     this.doc = doc;
@@ -11,6 +14,7 @@ const OutlineUtils = {
 
     await target.setTitle(newName);
 
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, target);
     return path;
   },
   async addRootOutline(newName, pageNum) {
@@ -19,6 +23,7 @@ const OutlineUtils = {
 
     await doc.addRootBookmark(newOutline);
 
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, newOutline);
     return '0';
   },
   async addNewOutline(newName, path, pageNum) {
@@ -37,6 +42,7 @@ const OutlineUtils = {
     const newOutline = await this.createOutline(newName, pageNum);
     await target.addNext(newOutline);
 
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, newOutline);
     return this.findPathInTree(newOutline);
   },
   createOutline(newName, pageNum) {
@@ -58,6 +64,7 @@ const OutlineUtils = {
 
     if (target) {
       await target.delete();
+      fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, target);
     }
 
     return null;
@@ -78,6 +85,7 @@ const OutlineUtils = {
     await target.delete();
     await prev.addPrev(copy);
 
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, copy);
     return this.findPathInTree(copy);
   },
   async moveOutlineDown(path) {
@@ -96,6 +104,7 @@ const OutlineUtils = {
     await target.delete();
     await next.addNext(copy);
 
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, copy);
     return this.findPathInTree(copy);
   },
   async moveOutlineBeforeTarget(path, targetPath) {
@@ -107,6 +116,8 @@ const OutlineUtils = {
     const copy = await currTarget.copy();
     await currTarget.delete();
     await target.addPrev(copy);
+
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, copy);
     return this.findPathInTree(copy);
   },
   async moveOutlineAfterTarget(path, targetPath) {
@@ -118,6 +129,8 @@ const OutlineUtils = {
     const copy = await currTarget.copy();
     await currTarget.delete();
     await target.addNext(copy);
+
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, copy);
     return this.findPathInTree(copy);
   },
   async moveOutlineOutward(path) {
@@ -133,6 +146,7 @@ const OutlineUtils = {
 
     await parent.addNext(copy);
 
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, copy);
     return this.findPathInTree(copy);
   },
   async moveOutlineOutwardBeforeParent(path) {
@@ -148,6 +162,7 @@ const OutlineUtils = {
 
     await parent.addPrev(copy);
 
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, copy);
     return this.findPathInTree(copy);
   },
   async moveOutlineOutwardBeforeAncestor(path, ancestorPath) {
@@ -163,6 +178,7 @@ const OutlineUtils = {
 
     await ancestorTarget.addPrev(copy);
 
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, copy);
     return this.findPathInTree(copy);
   },
   async moveOutlineInTarget(path, targetPath) {
@@ -186,6 +202,7 @@ const OutlineUtils = {
       await targetOutline.addChild(copy);
     }
 
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, copy);
     return this.findPathInTree(copy);
   },
   async moveOutlineInward(path) {
@@ -210,6 +227,7 @@ const OutlineUtils = {
       await prev.addChild(copy);
     }
 
+    fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, copy);
     return this.findPathInTree(copy);
   },
   async getCanMoveState(path) {

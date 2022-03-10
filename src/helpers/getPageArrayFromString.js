@@ -1,7 +1,9 @@
 import core from 'core';
 
-export default (customInput, pageLabels) => {
-  const totalPages = core.getTotalPages();
+export default (customInput, pageLabels, totalPages = core.getTotalPages()) => {
+  // By default we use total pages of loaded doc. But we could also use this for a doc
+  // that is not loaded (like in page replacement) so we want the option to pass it as a param
+
   const pagesToPrint = [];
 
   // no input, assume every page

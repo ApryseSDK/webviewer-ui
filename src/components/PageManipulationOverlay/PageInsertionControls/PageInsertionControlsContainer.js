@@ -3,6 +3,8 @@ import PageInsertionControls from './PageInsertionControls';
 import { insertAbove, insertBelow, noPagesSelectedWarning } from "helpers/pageManipulationFunctions";
 import { useDispatch } from "react-redux";
 import PropTypes from 'prop-types';
+import actions from 'actions';
+import { isMobile } from 'helpers/device';
 
 const propTypes = {
   pageNumbers: PropTypes.arrayOf(PropTypes.number),
@@ -13,18 +15,26 @@ function PageInsertionControlsContainer(props) {
   const dispatch = useDispatch();
   const { pageNumbers, warn } = props;
 
-  if (warn) {
-    return (
-      <PageInsertionControls
-        insertAbove={() => !noPagesSelectedWarning(pageNumbers, dispatch) && insertAbove(pageNumbers)}
-        insertBelow={() => !noPagesSelectedWarning(pageNumbers, dispatch) && insertBelow(pageNumbers)}
-      />
-    );
-  }
+  const onInsertAbove = () => {
+    if (warn) {
+      !noPagesSelectedWarning(pageNumbers, dispatch) && insertAbove(pageNumbers);
+    } else {
+      insertAbove(pageNumbers);
+    }
+    isMobile() && dispatch(actions.closeElement("pageManipulationOverlay"));
+  };
+  const onInsertBelow = () => {
+    if (warn) {
+      !noPagesSelectedWarning(pageNumbers, dispatch) && insertBelow(pageNumbers);
+    } else {
+      insertBelow(pageNumbers);
+    }
+    isMobile() && dispatch(actions.closeElement("pageManipulationOverlay"));
+  };
   return (
     <PageInsertionControls
-      insertAbove={() => insertAbove(pageNumbers)}
-      insertBelow={() => insertBelow(pageNumbers)}
+      insertAbove={onInsertAbove}
+      insertBelow={onInsertBelow}
     />
   );
 }

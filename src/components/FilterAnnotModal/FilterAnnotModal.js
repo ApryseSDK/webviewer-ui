@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
+import { mapAnnotationToKey } from 'constants/map';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -21,9 +22,10 @@ import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import './FilterAnnotModal.scss';
 
 const FilterAnnotModal = () => {
-  const [isDisabled, isOpen] = useSelector(state => [
+  const [isDisabled, isOpen, colorMap] = useSelector(state => [
     selectors.isElementDisabled(state, 'filterModal'),
     selectors.isElementOpen(state, 'filterModal'),
+    selectors.getColorMap(state),
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -39,8 +41,15 @@ const FilterAnnotModal = () => {
   const [checkRepliesForAuthorFilter, setCheckRepliesForAuthorFilter] = useState(true);
   const [statusFilter, setStatusFilter] = useState([]);
 
-  const similarColorExist = (currColor, newColor) => {
-    const colorObject = currColor.map(c => Object.assign({
+  const getIconColor = (annot) => {
+    const key = mapAnnotationToKey(annot);
+    const iconColorProperty = colorMap[key]?.iconColor;
+
+    return annot[iconColorProperty];
+  }
+
+  const similarColorExist = (currColors, newColor) => {
+    const colorObject = currColors.map(c => Object.assign({
       R: parseInt(`${c[1]}${c[2]}`, 16),
       G: parseInt(`${c[3]}${c[4]}`, 16),
       B: parseInt(`${c[5]}${c[6]}`, 16)
@@ -80,8 +89,9 @@ const FilterAnnotModal = () => {
           }
         }
         if (colorFilter.length > 0) {
-          if (annot.Color) {
-            color = similarColorExist(colorFilter, annot.Color);
+          const iconColor = getIconColor(annot);
+          if (iconColor) {
+            color = similarColorExist(colorFilter, iconColor);
           } else {
             // check for default color if no color is available
             color = colorFilter.includes('#485056');
@@ -157,10 +167,9 @@ const FilterAnnotModal = () => {
         return;
       }
       annotTypesToBeAdded.add(getAnnotationClass(annot));
-      if (annot.Color && !similarColorExist([...annotColorsToBeAdded], annot.Color)) {
-        annotColorsToBeAdded.add(rgbaToHex(annot.Color.R, annot.Color.G, annot.Color.B, annot.Color.A));
-      } else {
-        annotColorsToBeAdded.add('#485056');
+      const iconColor = getIconColor(annot);
+      if (iconColor && !similarColorExist([...annotColorsToBeAdded], iconColor)) {
+        annotColorsToBeAdded.add(rgbaToHex(iconColor.R, iconColor.G, iconColor.B, iconColor.A));
       }
 
       if (annot.getStatus()) {

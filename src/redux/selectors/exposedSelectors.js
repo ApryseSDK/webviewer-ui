@@ -132,6 +132,10 @@ export const isToolGroupReorderingEnabled = state => {
   return state.viewer.enableToolGroupReordering;
 };
 
+export const isNoteSubmissionWithEnterEnabled = state => {
+  return state.viewer.enableNoteSubmissionWithEnter;
+}
+
 export const getActiveToolNamesForActiveToolGroup = state => {
   const { activeToolGroup } = state.viewer;
   const toolButtonObjects = getToolButtonObjects(state);
@@ -379,6 +383,10 @@ export const getCurrentLanguage = state => state.viewer.currentLanguage;
 
 export const shouldFadePageNavigationComponent = state => state.viewer.fadePageNavigationComponent;
 
+export const isContentEditWarningHidden = state => state.viewer.hideContentEditWarning;
+
+export const getCurrentContentBeingEdited = state => state.viewer.currentContentBeingEdited;
+
 export const getFeatureFlags = state => state.featureFlags;
 
 export const isInDesktopOnlyMode = state => state.viewer.isInDesktopOnlyMode;
@@ -393,3 +401,7 @@ export const shouldShowPresets = (state) => {
   const response = state.viewer.toolButtonObjects[state.viewer.activeToolName];
   return response?.showPresets ?? true;
 };
+
+export const shouldResetAudioPlaybackPosition = state => state.viewer.shouldResetAudioPlaybackPosition;
+
+export const getActiveSoundAnnotation = state => state.viewer.activeSoundAnnotation;
