@@ -7,9 +7,6 @@ import selectors from 'selectors';
 import actions from 'actions';
 import useMedia from 'hooks/useMedia';
 
-import core from 'core';
-import defaultTool from 'constants/defaultTool';
-
 const ToggleElementButton = ({
   onClick,
   dataElement,

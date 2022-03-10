@@ -158,7 +158,7 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
     core.setToolMode(defaultTool);
     dispatch({
       type: 'SET_ACTIVE_TOOL_GROUP',
-      payload: { toolGroup: '' },
+      payload: { toolGroup: '', toolbarGroup },
     });
   } else {
     dispatch(openElements(['toolsHeader']));
@@ -167,20 +167,21 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
     const lastPickedToolName = state.viewer.lastPickedToolForGroup[lastPickedToolGroup]
       || getFirstToolNameForGroup(state, lastPickedToolGroup);
     if (pickTool) {
+      dispatch({
+        type: 'SET_ACTIVE_TOOL_GROUP',
+        payload: { toolGroup: lastPickedToolGroup, toolbarGroup },
+      });
+
       if (lastPickedToolName === 'AnnotationCreateSignature') {
         core.setToolMode(defaultTool);
       } else {
         core.setToolMode(lastPickedToolName);
       }
-      dispatch({
-        type: 'SET_ACTIVE_TOOL_GROUP',
-        payload: { toolGroup: lastPickedToolGroup },
-      });
     } else {
       core.setToolMode(defaultTool);
       dispatch({
         type: 'SET_ACTIVE_TOOL_GROUP',
-        payload: { toolGroup: '' },
+        payload: { toolGroup: '', toolbarGroup },
       });
     }
   }
@@ -221,6 +222,10 @@ export const setSearchPanelWidth = width => ({
 });
 export const setNotesPanelWidth = width => ({
   type: 'SET_NOTES_PANEL_WIDTH',
+  payload: { width },
+});
+export const setRedactionPanelWidth = width => ({
+  type: 'SET_REDACTION_PANEL_WIDTH',
   payload: { width },
 });
 export const setDocumentContainerWidth = width => ({
@@ -331,8 +336,13 @@ export const toggleElement = dataElement => (dispatch, getState) => {
   if (!state.viewer.notesInLeftPanel) {
     if (dataElement === 'searchPanel') {
       dispatch(closeElement('notesPanel'));
+      dispatch(closeElement('redactionPanel'));
     } else if (dataElement === 'notesPanel') {
       dispatch(closeElement('searchPanel'));
+      dispatch(closeElement('redactionPanel'));
+    } else if (dataElement === 'redactionPanel') {
+      dispatch(closeElement('searchPanel'));
+      dispatch(closeElement('notesPanel'));
     }
   }
 
@@ -524,6 +534,10 @@ export const setAnnotationReadState = ({ isRead, annotationId }) => ({
 export const addTrustedCertificates = certificates => ({
   type: 'ADD_TRUSTED_CERTIFICATES',
   payload: { certificates },
+});
+export const addTrustList = trustList => ({
+  type: 'ADD_TRUST_LIST',
+  payload: { trustList },
 });
 export const setSignatureValidationModalWidgetName = widgetName => ({
   type: 'SET_VALIDATION_MODAL_WIDGET_NAME',

@@ -13,7 +13,7 @@ function NoteTextPreviewContainer(props) {
   );
 
   return (
-    <NoteTextPreview {...props} notePanelWidth={notePanelWidth} />
+    <NoteTextPreview {...props} panelWidth={notePanelWidth} />
   )
 };
 

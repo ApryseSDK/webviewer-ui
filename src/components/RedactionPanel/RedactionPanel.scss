@@ -1,0 +1,129 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.RedactionPanel {
+  padding: 16px 16px 13px 16px;
+  display: flex;
+  flex-direction: column;
+
+  @include mobile {
+    width: 100vw;
+    min-width: 100vw;
+    padding-top: 0px;
+
+    .close-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 64px;
+
+      width: 100%;
+      padding-right: 12px;
+
+      .close-icon-container {
+        cursor: pointer;
+        .close-icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+
+  .marked-redaction-counter {
+    height: 19px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-size: 16px;
+  
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .no-marked-redactions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    .msg {
+      @include tablet-and-desktop {
+        line-height: 15px;
+        width: 146px;
+      }
+      text-align: center;
+    }
+  
+    .empty-icon {
+      width: 65px;
+      height: 83px;
+  
+      svg {
+        width: 65px;
+        height: 83px;
+      }
+  
+      * {
+        fill: var(--gray-5);
+        color: var(--gray-5);
+      }
+    }
+  }
+
+  .redaction-panel-controls {
+    position: absolute;
+    bottom: 0px;
+    left: 16px;
+    border-top: 1px solid var(--divider);
+    display: flex;
+    background-color: #FFFFFF;
+    height: 57px;
+    width: inherit;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 16px;
+
+    .redact-all-marked {
+      @include button-reset;
+      background-color: var(--primary-button);
+      color: var(--primary-button-text);
+      border-radius: 4px;
+      height: 32px;
+      width: 90px;
+      cursor: pointer;
+
+      &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+    }
+
+    .clear-all-marked {
+      @include button-reset;
+      color: var(--secondary-button-text);
+      background-color: transparent;
+      border: none;
+      height: 32px;
+      width: 70px;
+      padding-right: 5px;
+      cursor: pointer;
+      
+      &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    @include mobile {
+      left: 0px;
+    }
+  }
+
+  .redaction-group-container {
+    overflow-y: scroll;
+    height: calc(100% - 140px);
+  }
+  
+}
+

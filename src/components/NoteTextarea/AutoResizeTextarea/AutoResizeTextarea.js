@@ -15,7 +15,7 @@ const propTypes = {
 };
 
 const AutoResizeTextarea = React.forwardRef(
-  ({ value, onChange, onKeyDown, onBlur, onFocus, placeholder }, ref) => {
+  ({ value, onChange, onKeyDown, onBlur, onFocus, placeholder, id="" }, ref) => {
     const textareaRef = useRef();
     useImperativeHandle(ref, () => textareaRef.current);
     const TEXTAREA_HEIGHT = '22px';
@@ -36,6 +36,7 @@ const AutoResizeTextarea = React.forwardRef(
 
     return (
       <textarea
+        id={id}
         ref={textareaRef}
         onChange={onChange}
         onKeyDown={onKeyDown}

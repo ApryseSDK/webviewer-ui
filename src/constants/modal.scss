@@ -38,8 +38,11 @@ $modal-z-index: 100;
 
       &.cancel {
         color: var(--secondary-button-text);
+        border: solid 1px var(--secondary-button-text);
         &:hover {
+          background-color: var(--document-background-color);
           color: var(--secondary-button-hover);
+          border: solid 1px var(--secondary-button-hover);
         }
       }
 
@@ -66,6 +69,8 @@ $modal-z-index: 100;
   border-radius: 4px;
   box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
   background: var(--component-background);
+  overflow-y: auto;
+  max-height: 100%;
 
   @include small-browser-height {
     // show scroll bar when height of screen is very small

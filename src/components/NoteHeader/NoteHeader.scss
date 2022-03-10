@@ -7,6 +7,10 @@
   flex: 1;
   color: var(--text-color);
 
+  @include ie11 {
+    flex: none;
+  }
+
   .author-and-overflow {
     display: flex;
     justify-content: space-between;

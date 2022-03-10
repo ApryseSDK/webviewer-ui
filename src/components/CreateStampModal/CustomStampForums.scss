@@ -4,24 +4,22 @@
 $border-radius: 4px;
 
 .text-customstamp {
-  height: unset;
-
+  height: 396px;
+  padding: 16px;
+  margin: 0px 0px;
   display: flex;
   flex-direction: column;
 
-  .ui__choice {
-    padding-right: 10px;
-    @include mobile {
-      padding-right: 20px;
-    }
+  @include mobile {
+    height: 428px;
   }
+
   &-input {
     outline: none;
     border-radius: $border-radius;
-    border: 1px solid $signature-modal-shared-color;
+    border: 1px solid var(--modal-stroke-and-border);
     box-shadow: none;
     padding: 5px;
-
   }
   .txt-uppercase {
     text-transform: uppercase;
@@ -31,7 +29,7 @@ $border-radius: 4px;
     position: relative;
     margin-top: 10px;
     flex: 1;
-    border: 1px solid $signature-modal-shared-color;
+    border: 1px solid var(--modal-stroke-and-border);
     border-radius: $border-radius;
     overflow: auto;
 
@@ -50,52 +48,141 @@ $border-radius: 4px;
     min-width: 100%;
   }
 
-  &-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 100%;
-    height: 100%;
-    border: 1px solid transparent;
-    border-radius: $border-radius;
-    background: #f8f8f8;
-    white-space: nowrap;
 
-    &:hover {
-      cursor: pointer;
+  .canvas-colorpalette-container{
+    border: 1px solid var(--modal-stroke-and-border);
+    border-radius: $border-radius;
+    height: 240px;
+    box-sizing: border-box;
+
+    .canvas-container {
+      position: relative;
+      overflow: hidden;
+      height: 196px;
+      background-color: var(--signature-draw-background);
+      border-radius: $border-radius;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      padding: 48px 74px;
+      border-radius: $border-radius $border-radius 0 0;
+
+      @include mobile {
+        padding: 58px 0.5px;
+      }
+      .canvas-holder {
+        background-color: transparent;
+
+        .custom-stamp-canvas {
+          box-sizing: border-box;
+          @media (max-width: 430px) {
+            transform: scale(0.8);
+          }
+        }
+      }
+    }
+    .colorpalette-container{
+      box-sizing: border-box;
+      border-top: 1px solid var(--modal-stroke-and-border);
+      width: 100%;
+      height: 44px;
+
+      .ColorPalette {
+        margin: 8px;
+        grid-template-columns: repeat(3,1fr);
+        width: 100px;
+  
+        :not(:last-child) {
+          margin-right: 8px;
+        }
+
+        .cell-container{
+          width: 28px;
+          height: 28px;
+
+          .cell-outer {
+            .cell{
+              width: 16px;
+              height: 16px;
+            }
+          }
+          .cell-outer.active {
+            width: 28px;
+            height: 28px;
+          }
+        } 
+      }
     }
 
-    &.active {
-      border: 1px solid #0088e7;
+  }
+  .stamp-input-container{
+    padding: 0px;
+    height: 52px;
+    margin: 16px 0;
+
+    .stamp-label {
+      font-weight: bold;
+      margin-bottom: 8px;
+      line-height: 16px;
+
+      @include mobile {
+        font-size: 13px;
+      }
+    }
+    .text-customstamp-input {
+      width: 100%;
+      padding: 6px;
     }
   }
 
+  .timestamp-container{
+    padding: 0px;
+    height: 40px;
 
-  .canvas-container {
-    position: relative;
-    overflow: hidden;
-    border-radius: 3px;
-    background-color: #f8f8f8;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 15px;
+    .stamp-sublabel {
+      font-weight: bold;
+      margin-bottom: 8px;
 
-    .canvas-holder {
-      background-color: transparent;
+      @include mobile {
+        font-size: 13px;
+        height: 16px;
 
-      .custom-stamp-canvas {
-        box-sizing: border-box;
+      }
+    }
+    .timeStamp-choice{
+      height: 16px;
+      display: grid;
+      width: 100%;
+      grid-template-columns: 22.32% 22.32% 22.32% 33.04%;
+      grid-gap: 16px;
+
+      @media (max-width: 430px) {
+        grid-template-columns: 50% 50%;
+        height: 100%;
+        font-size: 13px;
+
+      }
+      // hack for IE11
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        .ui__choice {
+          display:-ms-inline-flexbox;
+          width: 33.33%;
+        }
+     }
+      .ui__choice {
+        margin: 0;
+        line-height: 1;
+
+        .ui__choice__label {
+          padding-left: 4px;
+        }
       }
     }
   }
 
-
   #default-time {
     margin-left: 20px;
   }
-
-
 
   .custom-checkbox {
     position: relative;
@@ -114,7 +201,7 @@ $border-radius: 4px;
         vertical-align: text-top;
         width: 16px;
         height: 16px;
-        border-radius: 4px;
+        border-radius: $border-radius;
         border: 1px solid #979797;
       }
 
@@ -138,28 +225,7 @@ $border-radius: 4px;
     }
 
     label {
-      display: flex;
       align-items: center;
-    }
-  }
-
-
-  .stamp-label {
-    @include mobile {
-      display: none;
-    }
-  }
-
-  .stamp-sublabel {
-    @include mobile {
-      display: none;
-    }
-  }
-
-  .text-customstamp-input {
-    width: 80%;
-    @include mobile {
-      width: 100%;
     }
   }
 

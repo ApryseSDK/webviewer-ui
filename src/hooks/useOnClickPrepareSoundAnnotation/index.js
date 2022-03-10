@@ -1,0 +1,3 @@
+import useOnClickPrepareSoundAnnotation from './useOnClickPrepareSoundAnnotation';
+
+export default useOnClickPrepareSoundAnnotation;

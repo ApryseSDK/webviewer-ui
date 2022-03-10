@@ -1,0 +1,28 @@
+@import '../../../constants/modal.scss';
+
+.replace-page-input-container {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: baseline;
+
+  :first-child {
+    padding-left: 0px;
+  }
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.replace-page-input {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.page-replace-doc-name {
+  font-weight: bold;
+}
+
+ 
+    
+    

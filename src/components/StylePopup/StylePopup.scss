@@ -2,12 +2,13 @@
 @import '../../constants/popup.scss';
 
 .StylePopup {
-  padding-top: 4px;
-  padding-bottom: 8px;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 12px 12px;
   display: flex;
   flex-direction: column;
+  width: 220px;
+  @include mobile {
+    width: 100vw;
+  }
   // overflow: auto;
 
   // @include mobile {
@@ -19,5 +20,44 @@
     padding-left: 6px;
     padding-right: 6px;
     margin-top: 4px;
+  }
+
+  .collapsible-menu {
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    align-items: center;
+
+    .menu-title {
+      padding-left: 4px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .Icon {
+      position: absolute;
+      right: 0;
+
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  .divider {
+    background-color: var(--divider);
+    width: 100%;
+    height: 1px;
+    margin: 6px 0;
+  }
+
+  .menu-items {
+    padding: 6px 4px;
+  }
+
+  .closed {
+    display: none;
   }
 }

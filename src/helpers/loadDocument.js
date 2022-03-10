@@ -2,17 +2,27 @@ import { setCheckPasswordFunction } from 'components/PasswordModal';
 
 import core from 'core';
 import { fireError } from 'helpers/fireEvent';
-import getHashParams from 'helpers/getHashParams';
+import getHashParameters from 'helpers/getHashParameters';
 import actions from 'actions';
 
 export default (dispatch, src, options = {}) => {
+  core.closeDocument();
   options = { ...getDefaultOptions(), ...options };
 
   options.docId = options.documentId || null;
   options.onLoadingProgress = percent => dispatch(actions.setLoadingProgress(percent));
   options.password = transformPasswordOption(options.password, dispatch);
   options.xodOptions = extractXodOptions(options);
-  options.onError = fireError;
+  if ('onError' in options) {
+    const userDefinedOnErrorCallback = options.onError;
+    options.onError = function(error) {
+      userDefinedOnErrorCallback(error);
+      fireError(error);
+    };
+  } else {
+    options.onError = fireError;
+  }
+
 
   dispatch(actions.closeElement('passwordModal'));
   // ignore caught errors because they are already being handled in the onError callback
@@ -28,18 +38,19 @@ export default (dispatch, src, options = {}) => {
  * @ignore
  */
 const getDefaultOptions = () => ({
-  startOffline: getHashParams('startOffline', false),
-  azureWorkaround: getHashParams('azureWorkaround', false),
-  webviewerServerURL: getHashParams('webviewerServerURL', ''),
-  fallbackToClientSide: getHashParams('fallbackToClientSide', false),
-  singleServerMode: getHashParams('singleServerMode', false),
-  forceClientSideInit: getHashParams('forceClientSideInit', false),
-  disableWebsockets: getHashParams('disableWebsockets', false),
-  cacheKey: JSON.parse(getHashParams('cacheKey', null)),
-  streaming: getHashParams('streaming', null),
-  useDownloader: getHashParams('useDownloader', true),
-  backendType: getHashParams('pdf', null),
-  loadAsPDF: getHashParams('loadAsPDF', null),
+  startOffline: getHashParameters('startOffline', false),
+  azureWorkaround: getHashParameters('azureWorkaround', false),
+  webviewerServerURL: getHashParameters('webviewerServerURL', ''),
+  fallbackToClientSide: getHashParameters('fallbackToClientSide', false),
+  singleServerMode: getHashParameters('singleServerMode', false),
+  forceClientSideInit: getHashParameters('forceClientSideInit', false),
+  disableWebsockets: getHashParameters('disableWebsockets', false),
+  cacheKey: JSON.parse(getHashParameters('cacheKey', null)),
+  officeOptions: JSON.parse(getHashParameters('officeOptions', null)),
+  streaming: getHashParameters('streaming', null),
+  useDownloader: getHashParameters('useDownloader', true),
+  backendType: getHashParameters('pdf', null),
+  loadAsPDF: getHashParameters('loadAsPDF', null),
 });
 
 /**

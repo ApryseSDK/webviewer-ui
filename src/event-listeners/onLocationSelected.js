@@ -18,6 +18,7 @@ export default store => async () => {
     if (savedSignatures.length === 0 || isToolsOverlayDisabled) {
       store.dispatch(actions.openElement('signatureModal'));
     } else {
+      core.setToolMode(window.Core.Tools.ToolNames.SIGNATURE);
       store.dispatch(actions.openElement('toolStylePopup'));
     }
   }

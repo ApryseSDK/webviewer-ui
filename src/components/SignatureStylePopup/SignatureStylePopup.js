@@ -13,7 +13,15 @@ import './SignatureStylePopup.scss';
 
 const SignatureStylePopup = props => {
   const { t } = props;
-  const [activeToolName, savedSignatures, displayedSignatures, selectedDisplayedSignatureIndex, maxSignaturesCount, displayedSignaturesFilterFunction] = useSelector(
+  const [
+    activeToolName,
+    savedSignatures,
+    displayedSignatures,
+    selectedDisplayedSignatureIndex,
+    maxSignaturesCount,
+    displayedSignaturesFilterFunction,
+    isSignatureDeleteButtonDisabled
+  ] = useSelector(
     state => [
       selectors.getActiveToolName(state),
       selectors.getSavedSignatures(state),
@@ -21,7 +29,8 @@ const SignatureStylePopup = props => {
       selectors.getSelectedDisplayedSignatureIndex(state),
       selectors.getMaxSignaturesCount(state),
       selectors.getDisplayedSignaturesFilterFunction(state),
-    ],
+      selectors.isElementDisabled(state, 'defaultSignatureDeleteButton')
+    ]
   );
 
   const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -75,13 +84,15 @@ const SignatureStylePopup = props => {
               isActive={selectedDisplayedSignatureIndex === indexOfDisplayedSignature && activeToolName === 'AnnotationCreateSignature'}
               altText={`${t('option.toolsOverlay.signatureAltText')} ${indexOfDisplayedSignature + 1}`}
             />
-            <button
-              className="icon"
-              data-element="defaultSignatureDeleteButton"
-              onClick={() => deleteSignature(indexOfDisplayedSignature, savedSignatureIndex)}
-            >
-              <Icon glyph="icon-delete-line" />
-            </button>
+            {!isSignatureDeleteButtonDisabled && (
+              <button
+                className="icon"
+                data-element="defaultSignatureDeleteButton"
+                onClick={() => deleteSignature(indexOfDisplayedSignature, savedSignatureIndex)}
+              >
+                <Icon glyph="icon-delete-line" />
+              </button>
+            )}
           </div>
         )}
       <SignatureAddBtn

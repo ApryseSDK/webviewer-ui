@@ -25,7 +25,6 @@ import getType from './getType';
 import isWebViewerServerDocument from './isWebViewerServerDocument';
 import getSelectedText from './getSelectedText';
 import clearSelection from './clearSelection';
-import setOptions from './setOptions';
 import closeDocument from './closeDocument';
 import getToolModeMap from './getToolModeMap';
 import getCurrentUser from './getCurrentUser';
@@ -118,6 +117,7 @@ import getFontStyles from './getFontStyles';
 import mergeDocument from './mergeDocument';
 import getFormFieldCreationManager from './getFormFieldCreationManager';
 import syncNamespaces from './syncNamespaces';
+import createDocument from './createDocument';
 
 export default {
   setToolMode,
@@ -147,7 +147,6 @@ export default {
   isWebViewerServerDocument,
   getSelectedText,
   clearSelection,
-  setOptions,
   closeDocument,
   getToolModeMap,
   getCurrentUser,
@@ -241,4 +240,5 @@ export default {
   mergeDocument,
   getFormFieldCreationManager,
   syncNamespaces,
+  createDocument,
 };

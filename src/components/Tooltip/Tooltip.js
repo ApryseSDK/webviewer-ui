@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useLayoutEffect, forwardRef, useImp
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import hotkeysManager, { Keys } from 'helpers/hotkeysManager';
 
 import { isMac, isWindows, isIOS, isAndroid } from 'helpers/device';
 
@@ -49,6 +50,23 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
     if (hideOnClick) {
       childRef.current?.addEventListener('click', hideTooltip);
     }
+
+    const observer = new MutationObserver((mutations) => {
+      // hide tooltip when button get disabled, disable buttons don't have "mouseleave" events
+      const lastMutation = mutations[mutations.length - 1];
+      if (lastMutation && lastMutation.attributeName == 'disabled' && lastMutation.target.disabled ) {
+        hideTooltip();
+      }
+    });
+
+    observer.observe(childRef.current, { attributes: true, childList: false, characterData: false  });
+
+    return () => {
+      hideTooltip();
+      observer.disconnect();
+      childRef.current?.removeEventListener('mouseenter', showToolTip);
+      childRef.current?.removeEventListener('mouseleave', hideTooltip);
+    };
   }, [childRef, hideOnClick]);
 
   useLayoutEffect(() => {
@@ -131,10 +149,16 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
   if (isWindows && shortcutKey === 'redo') {
     shortcutKey = 'redo_windows';
   }
-  const hasShortcut = t(`shortcut.${shortcutKey}`).indexOf('.') === -1;
+  let isActive = hotkeysManager.isActive(shortcutKey);
+
+  let hasShortcut = t(`shortcut.${shortcutKey}`).indexOf('.') === -1;
   let shortcut = t(`shortcut.${shortcutKey}`);
   if (isMac) {
     shortcut = shortcut.replace('Ctrl', 'Cmd');
+  }
+
+  if (!isActive) {
+    hasShortcut = false;
   }
 
   return (

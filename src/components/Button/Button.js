@@ -10,7 +10,7 @@ import { shortcutAria } from 'helpers/hotkeysManager';
 
 import selectors from 'selectors';
 
-import './Button.scss'; 
+import './Button.scss';
 
 const NOOP = e => {
   e?.stopPropagation();
@@ -29,6 +29,7 @@ const propTypes = {
   onClick: PropTypes.func,
   onDoubleClick: PropTypes.func,
   onMouseUp: PropTypes.func,
+  isSubmitType: PropTypes.bool,
   /** Will override translated title if both given. */
   ariaLabel: PropTypes.string,
   role: PropTypes.string,
@@ -55,7 +56,7 @@ const Button = props => {
     img,
     tabIndex,
     label,
-    useI18String=true,
+    useI18String = true,
     color,
     dataElement,
     onClick,
@@ -70,7 +71,9 @@ const Button = props => {
     fillColor,
     hideTooltipShortcut,
     iconClassName,
-    forceTooltipPosition
+    forceTooltipPosition,
+    isSubmitType,
+    hideOnClick,
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
 
@@ -111,6 +114,8 @@ const Button = props => {
       role={role}
       tabIndex={tabIndex}
       aria-keyshortcuts={ariaKeyshortcuts}
+      type={isSubmitType ? 'submit' : 'button'}
+      disabled={actuallyDisabled}
     >
       {isGlyph && (
         <Icon
@@ -125,8 +130,8 @@ const Button = props => {
       {imgToShow && !isGlyph && <img src={imgToShow} />}
       {
         label && (useI18String ?
-        <span>{t(label)}</span> :
-        <span>{label}</span>)
+          <span>{t(label)}</span> :
+          <span>{label}</span>)
       }
     </button>
   );
@@ -135,7 +140,8 @@ const Button = props => {
     <Tooltip
       content={title}
       hideShortcut={hideTooltipShortcut || actuallyDisabled}
-      forcePosition={forceTooltipPosition}>
+      forcePosition={forceTooltipPosition}
+      hideOnClick={hideOnClick}>
       {children}
     </Tooltip>
   ) : (

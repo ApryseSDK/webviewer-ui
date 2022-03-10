@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import Dropdown from 'components/Dropdown';
-import ActionButton from 'components/ActionButton';
 import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
@@ -56,6 +55,14 @@ const Ribbons = () => {
     if (ribbonsRef?.current && containerRef?.current) {
       const ribbonsWidth = ribbonsRef.current.getBoundingClientRect().width + 4;
       const containerWidth = containerRef.current.getBoundingClientRect().width;
+
+      const spaceLeftOfContainer = window.innerWidth / 2 - containerRef.current.getBoundingClientRect().left;
+      const spaceForLeftHalfOfRibbons = ribbonsWidth / 2;
+      // If there is enough space for the Ribbon to fit in half the screen, move it to the center
+      // otherwise keep it next to the buttons on the left
+      const spaceForRibbons = Math.max(spaceLeftOfContainer, spaceForLeftHalfOfRibbons);
+
+      ribbonsRef.current.style.left = spaceForRibbons + 'px';
 
       if (ribbonsWidth < containerWidth) {
         setHasEnoughCenteredSpace(true);

@@ -86,6 +86,8 @@
   },
   "annotation": {
     "areaMeasurement": "面积测量",
+    "arc": "弧",
+    "arcMeasurement": "电弧测量",
     "arrow": "箭头",
     "callout": "标注",
     "crop": "裁剪页面",
@@ -180,7 +182,8 @@
     "createStampButton": "创建新图章",
     "filter": "过滤",
     "pageReplaceModalTitle": "替换页面",
-    "files": "文件"
+    "files": "文件",
+    "editText": "编辑文本"
   },
   "message": {
     "toolsOverlayNoPresets": "无预设",
@@ -404,10 +407,12 @@
       "area": "面积",
       "distanceMeasurement": "距离测量",
       "perimeterMeasurement": "周长测量",
+      "arcMeasurement": "电弧测量",
       "areaMeasurement": "面积测量",
       "countMeasurement": "计数测量",
       "radius": "半径",
-      "count": "计数"
+      "count": "计数",
+      "length": "长度"
     },
     "measurementOption": {
       "scale": "比例"
@@ -618,7 +623,9 @@
       "4": "周四",
       "5": "周五",
       "6": "周六"
-    }
+    },
+    "today": "今天",
+    "invalidDateTime": "无效的日期/时间：输入应匹配格式"
   },
   "formField": {
     "formFieldPopup": {

@@ -11,7 +11,7 @@ const TOOL_NAME = 'AnnotationCreateRubberStamp';
 const COLOR_CHOICES = window.Core.Tools.RubberStampCreateTool['FILL_COLORS'];
 const DEFAULT_COLOR = new window.Annotations.Color(COLOR_CHOICES[0]);
 
-const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) => {
+const CustomStampForums = ({ state, setState, closeModal, createCustomStamp, setEmptyInput }) => {
   const updateTimestampLabel = (usernameChk, dateChk, timeChk) => {
     let tmpText = '';
     if (usernameChk) {
@@ -72,6 +72,7 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
   const handleInputChange = e => {
     const value = e.target.value || '';
     setStampText(value);
+    setEmptyInput(!value);
     updateCanvas(value, timestampFormat, colorInput);
   };
   const handleColorInputChange = (property, value) => {
@@ -108,18 +109,26 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
 
   return (
     <div className="text-customstamp">
-
-      <div className="canvas-container" ref={canvasContainerRef}>
-        <div className="canvas-holder">
-          <canvas
-            className="custom-stamp-canvas"
-            ref={canvasRef}
+      <div className="canvas-colorpalette-container">
+        <div className="canvas-container" ref={canvasContainerRef}>
+          <div className="canvas-holder">
+            <canvas
+              className="custom-stamp-canvas"
+              ref={canvasRef}
+            />
+          </div>
+        </div>
+        <div className="colorpalette-container">
+          <ColorPalette
+              color={colorInput}
+              property="StrokeColor"
+              onStyleChange={handleColorInputChange}
+              overridePalette2={COLOR_CHOICES}
           />
         </div>
       </div>
-
-      <div style={{ marginTop: 10, display: 'flex' }}>
-        <div className="stamp-label" style={{ width: '20%', alignSelf: 'center' }}> {stampInputLabel} </div>
+      <div className="stamp-input-container">
+        <div className="stamp-label"> {stampInputLabel} </div>
         <input
           className="text-customstamp-input"
           ref={inputRef}
@@ -130,26 +139,28 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
         />
       </div>
 
-      <div style={{ marginTop: 10, marginBottom: 8, display: 'flex' }}>
-        <div className="stamp-sublabel" style={{ width: '20%', alignSelf: 'center' }}> {t('option.customStampModal.timestampText')} </div>
-        <Choice
-          id="default-username"
-          checked={usernameCheckbox}
-          onChange={handleUsernameCheckbox}
-          label={t('option.customStampModal.Username')}
-        />
-        <Choice
-          id="default-date"
-          checked={dateCheckbox}
-          onChange={handleDateInputChange}
-          label={t('option.customStampModal.Date')}
-        />
-        <Choice
-          id="default-time-input"
-          checked={timeCheckbox}
-          onChange={handleTimeInputChange}
-          label={t('option.customStampModal.Time')}
-        />
+      <div className="timestamp-container">
+        <div className="stamp-sublabel"> {t('option.customStampModal.timestampText')} </div>
+        <div className="timeStamp-choice">
+          <Choice
+            id="default-username"
+            checked={usernameCheckbox}
+            onChange={handleUsernameCheckbox}
+            label={t('option.customStampModal.Username')}
+          />
+          <Choice
+            id="default-date"
+            checked={dateCheckbox}
+            onChange={handleDateInputChange}
+            label={t('option.customStampModal.Date')}
+          />
+          <Choice
+            id="default-time-input"
+            checked={timeCheckbox}
+            onChange={handleTimeInputChange}
+            label={t('option.customStampModal.Time')}
+          />
+        </div>
       </div>
       {
         !stampTextInputValue
@@ -159,36 +170,6 @@ const CustomStampForums = ({ state, setState, closeModal, createCustomStamp }) =
           </div>
         )
       }
-      <div className="divider-horizontal"></div>
-      <div className="footer">
-        <button className="stamp-close" onClick={closeModal}>
-          {t('action.cancel')}
-        </button>
-        <ColorPalette
-          color={colorInput}
-          property="StrokeColor"
-          onStyleChange={handleColorInputChange}
-          overridePalette2={COLOR_CHOICES}
-        />
-        <div
-          className={
-            !stampTextInputValue
-              ? "stamp-create stamp-create-disabled"
-              : "stamp-create"
-          }
-          onClick={
-            () => {
-              if (!stampTextInputValue) {
-                return;
-              }
-              createCustomStamp();
-            }
-          }
-        >
-          {t('action.create')}
-        </div>
-      </div>
-
     </div>
   );
 };

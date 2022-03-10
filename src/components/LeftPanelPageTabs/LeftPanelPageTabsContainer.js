@@ -35,10 +35,14 @@ function LeftPanelPageTabsContainer() {
   const onInsertAbove = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertAbove(pageNumbers);
   const onInsertBelow = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertBelow(pageNumbers);
 
-  const isPdf = workerTypes.PDF === core.getDocument()?.type;
-  if (!isPdf) {
+  const document = core.getDocument();
+  const documentType = document?.type;
+  const isXod = documentType === workerTypes.XOD;
+  const isOffice = documentType === workerTypes.OFFICE || documentType === workerTypes.LEGACY_OFFICE;
+
+  if (isXod || isOffice || document?.isWebViewerServerDocument()) {
     return (
-      <LeftPanelPageTabsRotate onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise}/>
+      <LeftPanelPageTabsRotate onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise} />
     );
   }
   // Breakpoint to convert to popups
@@ -46,7 +50,7 @@ function LeftPanelPageTabsContainer() {
   const isPanelSmall = leftPanelWidth < breakPoint;
 
   if (isPanelSmall) {
-    return <LeftPanelPageTabsSmall onReplace={onReplace} onExtractPages={onExtractPages} onDeletePages={onDeletePages}/>;
+    return <LeftPanelPageTabsSmall onReplace={onReplace} onExtractPages={onExtractPages} onDeletePages={onDeletePages} />;
   }
 
 

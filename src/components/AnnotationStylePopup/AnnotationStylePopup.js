@@ -67,18 +67,19 @@ class AnnotationStylePopup extends React.Component {
     const { isDisabled, annotation, style } = this.props;
     const isFreeText =
       annotation instanceof window.Annotations.FreeTextAnnotation &&
-      annotation.getIntent() ===
-        window.Annotations.FreeTextAnnotation.Intent.FreeText;
-    let freeTextProperties = {};
+      annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeText;
+    let properties = {};
     const className = getClassName('Popup AnnotationStylePopup', this.props);
     const colorMapKey = mapAnnotationToKey(annotation);
+    const isRedaction = annotation instanceof window.Annotations.RedactionAnnotation;
 
     if (isDisabled) {
       return null;
     }
+
     if (isFreeText) {
       const richTextStyles = annotation.getRichTextStyle();
-      freeTextProperties = {
+      properties = {
         Font: annotation.Font,
         FontSize: annotation.FontSize,
         TextAlign: annotation.TextAlign,
@@ -87,6 +88,15 @@ class AnnotationStylePopup extends React.Component {
         italic: richTextStyles?.[0]["font-style"] === "italic" ?? false,
         underline: richTextStyles?.[0]["text-decoration"]?.includes("underline") || richTextStyles?.[0]["text-decoration"]?.includes("word"),
         strikeout: richTextStyles?.[0]["text-decoration"]?.includes("line-through") ?? false,
+      };
+    }
+
+    if (isRedaction) {
+      properties = {
+        OverlayText: annotation['OverlayText'],
+        Font: annotation['Font'],
+        FontSize: annotation['FontSize'],
+        TextAlign: annotation['TextAlign']
       };
     }
 
@@ -110,9 +120,9 @@ class AnnotationStylePopup extends React.Component {
               onStyleChange={this.handleStyleChange}
               onPropertyChange={this.handlePropertyChange}
               disableSeparator
-              freeTextProperties={freeTextProperties}
-              isFontSizeSliderDisabled={isFreeText}
+              properties={properties}
               onRichTextStyleChange={this.handleRichTextStyleChange}
+              isRedaction={isRedaction}
             />
           </div>
         )}

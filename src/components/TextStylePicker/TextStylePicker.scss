@@ -1,0 +1,93 @@
+@import '../../constants/styles.scss';
+
+.container-fluid {
+  width: 100%;
+  display: flex;
+  position: relative;
+  gap: 8px;
+
+  .Dropdown {
+    padding: 3px 4px;
+    text-align: left;
+    @include mobile {
+      width: calc(100vw - 125px) !important;
+    }
+
+    .Icon {
+      width: 16px;
+      height: 16px;
+      flex: inherit;
+    }
+  }
+
+  .FontSizeDropdown {
+    width: 100px;
+  }
+
+  .error-text {
+    position: absolute;
+    bottom: -20px;
+    font-size: var(--font-size-small);
+    color: var(--error-text-color);
+    text-align: center;
+  }
+
+  &.error{
+    margin-bottom: 20px;
+  }
+}
+
+.icon-grid {
+  position: static;
+  @include mobile {
+    .row {
+      display: flex;
+    }
+    .rich-text-format {
+      float: left;
+    }
+    .text-horizontal-alignment {
+      float: right;
+
+      &.isRedaction {
+        float: left;
+      }
+    }
+    .text-vertical-alignment {
+      float: left;
+    }
+  }
+  @include tablet-and-desktop {
+    display: grid;
+    .row {
+      display: flex;
+    }
+  }
+  .row {
+    gap: 8px;
+    padding-top: 8px;
+
+    .Button {
+      // Important used to prevent popup styles from overriding it
+      background: none;
+      width: 34px !important;
+      height: 34px !important;
+      margin: 0 !important;
+
+      .Icon {
+        height: 26px !important;
+        width: 26px !important;
+        color: var(--icon-color);
+      }
+
+      &.active {
+        background: var(--popup-button-active);
+
+        .Icon {
+          color: var(--blue-6);
+        }
+      }
+    }
+  }
+}
+

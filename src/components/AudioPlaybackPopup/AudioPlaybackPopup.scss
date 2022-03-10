@@ -1,0 +1,31 @@
+@import '../../constants/styles';
+@import '../../constants/popup';
+
+.AudioPlaybackPopup {
+  .audio-popup-draggable-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15px;
+  }
+
+  .audio-popup-ui {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  span.current-time, span.duration {
+    padding: 0 5px;
+  }
+}
+
+.AudioPlaybackPopupContainer {
+  @extend %popup;
+  border-radius: 4px;
+  box-shadow: 0 0 3px 0 var(--document-box-shadow);
+  background: var(--component-background);
+  width: 325px;
+  top: 90%;
+  left: calc(50% - 150px);
+}

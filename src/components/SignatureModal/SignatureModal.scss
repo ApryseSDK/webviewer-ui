@@ -4,49 +4,56 @@
 .SignatureModal {
   @extend %modal;
 
-  .tab-list {
-    font-size: 14px; // hack for extra area in the tab list. 13px looks bad.
-  }
-
-  .ColorPalette {
-    margin-bottom: 8px;
-    width: auto;
-  }
-
   .container {
     @extend %modal-shared-container-style;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    width: 480px;
+    height: 436px;
+    padding: 0px;
     border-radius: 4px;
-    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-    padding: 8px 8px;
+    box-shadow: 0px 0px 3px var(--document-box-shadow);
     background: var(--component-background);
 
     @include mobile {
       width: 100%;
       position: fixed;
+      border-radius: 0;
       left: 0;
       bottom: 0;
-      padding-top: 24px;
-      padding-bottom: 16px;
-      padding-left: 24px;
-      padding-right: 24px;
+    }
 
-      .swipe-indicator {
-        background: var(--divider);
-        border-radius: 2px;
-        height: 4px;
-        width: 38px;
-        position: absolute;
-        top: 12px;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
+    .header-container {
+      box-shadow: inset 0px -1px 0px var(--modal-stroke-and-border);
+      padding: 20px 16px 16px 16px;
+    }
 
-        @include tablet-and-desktop {
-          display: none;
+    .header{
+      margin: 0;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 24px;
+      
+      p {
+        font-size: 16px;
+        font-weight: 700;
+        width: 89.286%;
+        margin: 0;
+        margin-right: 16px;
+      }
+
+      .signatureModalCloseButton {
+        position: static;
+        height: 32px;
+        width: 32px;
+        &:hover {
+          background: var(--view-header-button-hover);
+          border-radius: 4px;
+        }
+        &.selected {
+          background: var(--view-header-button-active);
+          cursor: default;
         }
       }
     }
@@ -56,34 +63,22 @@
       box-shadow: none;
     }
 
-    .divider-horizontal {
-      width: 100%;
-      height: 1px;
-      margin-bottom: 8px;
-      background: var(--divider);
-    }
-
     .tab-panel {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-
-      .ColorPalette {
-        display: grid;
-        grid-template-columns: repeat(3,1fr);
-      }
     }
 
     .tab-list {
+      font-size: 14px; // hack for extra area in the tab list. 13px looks bad.
+      width: 100%;
+      margin-top: 12px;
       display: flex;
-      margin-bottom: 16px;
       border-radius: 4px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--modal-stroke-and-border);
       height: 28px;
       color: var(--text-color);
-      margin: 8px 0;
-      width: 100%;
 
       .tab-options-button {
         @include button-reset;
@@ -123,93 +118,67 @@
 
       .tab-options-divider {
         width: 1px;
-        background: var(--divider);
+        background: var(--modal-stroke-and-border);
       }
     }
 
-    .ActionButton {
-      margin-right: -13px;
+    .ColorPalette {
+      margin: 8px;
+      grid-template-columns: repeat(3,1fr);
+      width: 100px;
 
-      &:hover {
-        background: transparent;
+      :not(:last-child) {
+        margin-right: 8px;
+      }
 
-        svg {
-          color: $pdftron-blue;
+      .cell-container{
+        width: 28px;
+        height: 28px;
+
+        .cell-outer {
+          .cell{
+            width: 16px;
+            height: 16px;
+          }
         }
-      }
+        .cell-outer.active {
+          width: 28px;
+          height: 28px;
+        }
+      } 
     }
 
+    .signature-clear {
+      @include button-reset;
+      color: var(--secondary-button-text);
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      height: 28px;
+      width: 63px;
+      margin: 8px;
+      font-size: 13px;
+      
+      &:enabled:hover {
+        color: var(--secondary-button-hover);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
 
     .footer {
       display: flex;
-      padding-top: 12px;
+      padding: 16px;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       width: 100%;
-
-      .signature-save {
-        position: relative;
-        margin-left: 8px;
-        user-select: none;
-
-        input {
-          display: none;
-
-          & + label:before {
-            cursor: pointer;
-            content: '';
-            margin: 1px 10px 0px 0px;
-            display: inline-block;
-            vertical-align: text-top;
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-            border: 1px solid #979797;
-          }
-
-          &:checked + label:before {
-            background: $pdftron-blue;
-            border: 1px solid transparent;
-          }
-
-          &:checked + label:after {
-            content: '';
-            position: absolute;
-            left: 4px;
-            top: 9px;
-            background: #ffffff;
-            width: 2px;
-            height: 2px;
-            box-shadow: 2px 0 0 #ffffff, 4px 0 0 #ffffff, 4px -2px 0 #ffffff,
-              4px -4px 0 #ffffff, 4px -6px 0 #ffffff, 4px -8px 0 #ffffff;
-            transform: rotate(45deg);
-          }
-        }
-
-        label {
-          display: flex;
-          align-items: center;
-        }
-      }
-
-      .signature-clear {
-        @include button-reset;
-        color: var(--secondary-button-text);
-        padding: 0 16px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-
-        &:enabled:hover {
-          color: var(--secondary-button-hover);
-        }
-
-        &:disabled {
-          opacity: 0.5;
-        }
-      }
+      box-shadow: inset 0px 1px 0px var(--modal-stroke-and-border);
+      margin: 0;
 
       .signature-create {
         @include button-reset;
@@ -217,17 +186,16 @@
         border-radius: 4px;
         padding: 0 8px;
         height: 32px;
+        width: 72px;
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
         color: var(--primary-button-text);
-        font-weight: bold;
         cursor: pointer;
 
         @include mobile {
-          height: 40px;
-          width: 128px;
+          font-size: 13px;
         }
 
         &:enabled:hover {

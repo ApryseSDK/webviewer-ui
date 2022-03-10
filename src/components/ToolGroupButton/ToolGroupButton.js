@@ -98,6 +98,11 @@ class ToolGroupButton extends React.PureComponent {
       }
     }
 
+    if (toolName.indexOf('AnnotationCreateRedaction') > -1 && !isActive) {
+      // The redaction icon needs a default fill for it's inactive state
+      fillColor = '868E96';
+    }
+
     return allButtonsInGroupDisabled ? null : (
       <DataElementWrapper
         className={classNames({

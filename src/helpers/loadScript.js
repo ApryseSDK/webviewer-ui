@@ -1,4 +1,4 @@
-import getHashParams from 'helpers/getHashParams';
+import getHashParameters from 'helpers/getHashParameters';
 import wildCardMatch from 'helpers/wildCardMatch';
 
 const loadScript = (scriptSrc, warning) =>
@@ -63,7 +63,7 @@ const loadConfig = () =>
 
       window.parent.postMessage({
         type: 'requestConfig',
-        id: parseInt(getHashParams('id'), 10),
+        id: parseInt(getHashParameters('id'), 10),
       }, '*');
     }
   });

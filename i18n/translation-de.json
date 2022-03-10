@@ -86,6 +86,8 @@
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
+    "arc": "Bogen",
+    "arcMeasurement": "Lichtbogenmessung",
     "arrow": "Pfeil",
     "callout": "Callout",
     "crop": "Seite zuschneiden",
@@ -180,7 +182,8 @@
     "createStampButton": "Neuen Stempel erstellen",
     "filter": "Filter",
     "pageReplaceModalTitle": "Seite Ersetzen",
-    "files": "Dateien"
+    "files": "Dateien",
+    "editText": "Text bearbeiten"
   },
   "message": {
     "toolsOverlayNoPresets": "Keine Voreinstellungen",
@@ -404,10 +407,12 @@
       "area": "Fläche",
       "distanceMeasurement": "Abstandsmessung",
       "perimeterMeasurement": "Umfangsmessung",
+      "arcMeasurement": "Lichtbogenmessung",
       "areaMeasurement": "Flächenmessung",
       "countMeasurement": "Zählen",
       "radius": "Radius",
-      "count": "Anzahl"
+      "count": "Anzahl",
+      "length": "Länge"
     },
     "measurementOption": {
       "scale": "Maßstab"
@@ -618,7 +623,9 @@
       "4": "Do.",
       "5": "Fr.",
       "6": "Sa."
-    }
+    },
+    "today": "Heute",
+    "invalidDateTime": "Ungültiges Datum/Uhrzeit: Die Eingabe muss dem Format entsprechen"
   },
   "formField": {
     "formFieldPopup": {

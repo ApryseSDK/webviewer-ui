@@ -1,4 +1,4 @@
-import { overrideSearchExecution as overrideSearchExecutionHelper } from "helpers/search";
+import { overrideSearchExecution as overrideSearchExecutionHelper } from 'helpers/search';
 
 /**
  * Add custom override function for default search on UI.

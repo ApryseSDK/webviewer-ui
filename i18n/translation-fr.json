@@ -8,7 +8,7 @@
     "clear": "Effacer",
     "close": "Fermer",
     "undo": "Défaire",
-    "redo": "Prêt",
+    "redo": "Refaire",
     "comment": "Commenter",
     "reply": "Répondre",
     "copy": "Copier",
@@ -86,6 +86,8 @@
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
+    "arc": "Arc",
+    "arcMeasurement": "Mesure d'arc",
     "arrow": "Flèche",
     "callout": "Faire appel à",
     "crop": "Rogner",
@@ -180,7 +182,8 @@
     "createStampButton": "Créer un nouveau tampon",
     "filter": "Filtre",
     "pageReplaceModalTitle": "Remplacer la page",
-    "files": "Des dossiers"
+    "files": "Des dossiers",
+    "editText": "Éditer le texte"
   },
   "message": {
     "toolsOverlayNoPresets": "Aucun préréglage",
@@ -404,10 +407,12 @@
       "area": "Surface",
       "distanceMeasurement": "Mesure de distance",
       "perimeterMeasurement": "Mesure du périmètre",
+      "arcMeasurement": "Mesure d'arc",
       "areaMeasurement": "Mesure de surface",
       "countMeasurement": "Mesure de décompte",
       "radius": "Rayon",
-      "count": "Compte"
+      "count": "Compte",
+      "length": "Longueur"
     },
     "measurementOption": {
       "scale": "Échelle"
@@ -618,7 +623,9 @@
       "4": "jeu.",
       "5": "ven.",
       "6": "sam."
-    }
+    },
+    "today": "Aujourd'hui",
+    "invalidDateTime": "Date/heure non valide : l'entrée doit correspondre au format"
   },
   "formField": {
     "formFieldPopup": {

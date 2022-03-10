@@ -1,0 +1,3 @@
+import useOnRedactionAnnotationChanged from './useOnRedactionAnnotationChanged';
+
+export default useOnRedactionAnnotationChanged;

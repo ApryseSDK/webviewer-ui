@@ -1,9 +1,9 @@
-import extractPagesWithAnnotations from "helpers/extractPagesWithAnnotations";
+import extractPagesWithAnnotations from 'helpers/extractPagesWithAnnotations';
 import core from 'core';
 import { saveAs } from 'file-saver';
 import actions from 'actions';
 import i18next from 'i18next';
-import { workerTypes } from "constants/types";
+import { workerTypes } from 'constants/types';
 
 const getNewRotation = (curr, counter_clockwise = false) => {
   const { e_0, e_90, e_180, e_270 } = window.Core.PageRotation;
@@ -26,10 +26,11 @@ const rotateClockwise = pageNumbers => {
     for (const page of pageNumbers) {
       docViewer.setRotation(getNewRotation(currentRotations[page], false), page);
     }
+  } else {
+    pageNumbers.forEach(index => {
+      core.rotatePages([index], window.Core.PageRotation.e_90);
+    });
   }
-  pageNumbers.forEach(index => {
-    core.rotatePages([index], window.Core.PageRotation.e_90);
-  });
 };
 
 const rotateCounterClockwise = pageNumbers => {
@@ -39,10 +40,11 @@ const rotateCounterClockwise = pageNumbers => {
     for (const page of pageNumbers) {
       docViewer.setRotation(getNewRotation(currentRotations[page], true), page);
     }
+  } else {
+    pageNumbers.forEach(index => {
+      core.rotatePages([index], window.Core.PageRotation.e_270);
+    });
   }
-  pageNumbers.forEach(index => {
-    core.rotatePages([index], window.Core.PageRotation.e_270);
-  });
 };
 
 const insertAbove = pageNumbers => {
@@ -149,6 +151,45 @@ const noPagesSelectedWarning = (pageNumbers, dispatch) => {
   return false;
 };
 
+const redactPages = pageNumbers => {
+  core.applyRedactions(createPageRedactions(pageNumbers));
+};
+
+const createPageRedactions = pageNumbers => {
+  const annots = [];
+  for (const page of pageNumbers) {
+    const pageInfo = core.getPageInfo(page);
+    if (pageInfo) {
+      const redaction = new Annotations.RedactionAnnotation({
+        PageNumber: page,
+        Rect: new Annotations.Rect(0, 0, pageInfo.width, pageInfo.height),
+      });
+      annots.push(redaction);
+    }
+  }
+  core.getAnnotationManager().addAnnotations(annots);
+  core.getAnnotationManager().drawAnnotationsFromList(annots);
+  return annots;
+};
+
+const replacePages = async (sourceDoc, pagesToRemove, pagesToReplaceIntoDocument) => {
+  const documentLoadedInViewer = core.getDocument();
+  const pageCountOfLoadedDocument = documentLoadedInViewer.getPageCount();
+  const pagesToRemoveFromOriginal = pagesToRemove.sort((a, b) => a - b);
+
+  // If document to replace into has only one page, or we are replacing all pages
+  // then we can insert pages at the end, and then remove the pages to avoid an error of removing all pages
+  if (pageCountOfLoadedDocument === 1 || pagesToRemoveFromOriginal.length === pageCountOfLoadedDocument) {
+    await documentLoadedInViewer.insertPages(sourceDoc, pagesToReplaceIntoDocument);
+    await documentLoadedInViewer.removePages(pagesToRemoveFromOriginal);
+  } else {
+    // If document to replace into has > 1 page we need insert the new pages at the spot of the first removed page
+    // pagesToRemoveFromOriginal is sorted in ascending order. Interleaving pages would be complex.
+    await documentLoadedInViewer.removePages(pagesToRemoveFromOriginal);
+    await documentLoadedInViewer.insertPages(sourceDoc, pagesToReplaceIntoDocument, pagesToRemoveFromOriginal[0]);
+  }
+};
+
 export {
   rotateClockwise,
   rotateCounterClockwise,
@@ -160,4 +201,7 @@ export {
   movePagesToBottom,
   movePagesToTop,
   noPagesSelectedWarning,
+  redactPages,
+  createPageRedactions,
+  replacePages,
 };

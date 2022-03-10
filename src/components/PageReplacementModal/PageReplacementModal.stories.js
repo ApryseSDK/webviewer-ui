@@ -8,12 +8,6 @@ export default {
   component: PageReplacementModal,
 };
 
-window.Core = {
-  SupportedFileFormats: {
-    CLIENT: []
-  }
-}
-
 const initialState = {
   viewer: {
     openElements: { pageReplacementModal: true },
@@ -31,7 +25,7 @@ function rootReducer(state = initialState, action) {
 
 const store = createStore(rootReducer);
 
-export function Basic() {
+export function ReplaceURL() {
   function closeModal() {
     console.log('closeModal');
   }
@@ -43,9 +37,7 @@ export function Basic() {
 
   return (
     <Provider store={store}>
-      <div className='Overlay FlyoutMenu'>
-        <PageReplacementModal  {...props}/>
-      </div>
+      <PageReplacementModal  {...props} />
     </Provider>
   );
 }
@@ -65,7 +57,7 @@ function rootReducerTwo(state = initialStateTwo, action) {
   return state;
 }
 const storeTwo = createStore(rootReducerTwo);
-export function BasicUpload() {
+export function ReplaceUpload() {
   function closeModal() {
     console.log('closeModal');
   }
@@ -76,9 +68,7 @@ export function BasicUpload() {
   };
   return (
     <Provider store={storeTwo}>
-      <div className='Overlay FlyoutMenu'>
-        <PageReplacementModal  {...props}/>
-      </div>
+      <PageReplacementModal  {...props} />
     </Provider>
   );
 }
@@ -98,7 +88,7 @@ function rootReducerThree(state = initialStateThree, action) {
   return state;
 }
 const storeThree = createStore(rootReducerThree);
-export function BasicCustom() {
+export function ReplaceCustomFile() {
   function closeModal() {
     console.log('closeModal');
   }
@@ -119,8 +109,8 @@ export function BasicCustom() {
   };
   return (
     <Provider store={storeThree}>
-      <div className='Overlay FlyoutMenu'>
-        <PageReplacementModal  {...props}/>
+      <div style={{ 'box-sizing': 'border-box' }}>
+        <PageReplacementModal  {...props} />
       </div>
     </Provider>
   );

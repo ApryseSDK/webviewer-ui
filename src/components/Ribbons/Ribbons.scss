@@ -17,10 +17,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    &.centered-on-empty-space {
-      position: relative;
-    }
+    position: relative;
 
     .ribbons {
       display: flex;
@@ -31,7 +28,7 @@
       height: 28px;
 
       position: absolute;
-      left: 50%;	
+      left: 50%;
       transform: translateX(-50%);
       top: 0px; // hack for ie11. centers vertically.
       bottom: 0px; // hack for ie11. centers vertically.
@@ -50,7 +47,8 @@
 
         @include ie11 {
           // hack for group having 0 width sometimes in ie11
-          min-width: 50px;
+          min-width: 70px;
+          margin: 0px 12px;
         }
       }
 
@@ -64,5 +62,3 @@
     }
   }
 }
-
-

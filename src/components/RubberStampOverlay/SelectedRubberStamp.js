@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -18,17 +18,20 @@ const usePrevious = value => {
   return ref.current;
 };
 
-const SelectedSignatureRow = () => {
+const SelectedRubberStamp = () => {
   const dispatch = useDispatch();
   const [t, i18n] = useTranslation();
   const prevLanguage = usePrevious(i18n.language);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [
     activeToolName,
     selectedStamp,
+    activeToolGroup,
   ] = useSelector(state => [
     selectors.getActiveToolName(state),
     selectors.getSelectedStamp(state),
+    selectors.getActiveToolGroup(state),
   ]);
 
   useEffect(() => {
@@ -63,6 +66,23 @@ const SelectedSignatureRow = () => {
       selectors.isElementOpen(state, 'toolStylePopup'),
     ],
   );
+
+  useEffect(() => {
+    async function preselectRubberStamp() {
+      core.setToolMode('AnnotationCreateRubberStamp');
+      const text = t(`rubberStamp.${selectedStamp.annotation['Icon']}`);
+      await rubberStampTool.setRubberStamp(selectedStamp.annotation, text);
+      rubberStampTool.showPreview();
+    }
+
+    if (!isOpen && activeToolGroup === 'rubberStampTools' && selectedStamp) {
+      setIsOpen(true);
+      preselectRubberStamp();
+    } else if (isOpen && activeToolGroup !== 'rubberStampTools') {
+      setIsOpen(false);
+    }
+  });
+
   return (
     <div
       className="selected-rubber-stamp-container"
@@ -81,7 +101,8 @@ const SelectedSignatureRow = () => {
             }}
             isActive={activeToolName === 'AnnotationCreateRubberStamp'}
             altText={t('option.toolsOverlay.currentStamp')}
-          />}
+          />
+        }
       </div>
       <ToolsDropdown
         onClick={() => dispatch(actions.toggleElement('toolStylePopup'))}
@@ -91,4 +112,4 @@ const SelectedSignatureRow = () => {
   );
 };
 
-export default SelectedSignatureRow;
+export default SelectedRubberStamp;

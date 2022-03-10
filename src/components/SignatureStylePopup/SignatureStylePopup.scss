@@ -52,11 +52,14 @@
   width: 100%;
   padding-left: 8px;
   padding-right: 4px;
+  max-height: 300px;
+  overflow-y: scroll;
 
   @include mobile {
     width: auto;
     padding: 0;
     margin-top: 12px;
+    height: 236px;
   }
 
   .signature-row {

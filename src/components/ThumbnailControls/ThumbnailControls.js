@@ -25,11 +25,14 @@ const ThumbnailControls = ({ index }) => {
 
   const pageNumbers = selectedIndexes.length > 0 ? selectedIndexes.map(i => i + 1) : [index + 1];
 
-  const isPDF = workerTypes.PDF === core.getDocument().type;
+  const document = core.getDocument();
+  const documentType = document?.type;
+  const isXod = documentType === workerTypes.XOD;
+  const isOffice = documentType === workerTypes.OFFICE || documentType === workerTypes.LEGACY_OFFICE;
 
   if (isElementDisabled) {
     return null;
-  } else if (!isPDF) {
+  } else if (isXod || isOffice || document?.isWebViewerServerDocument()) {
     return (
       <div className="thumbnailControls-overlay" data-element={dataElementName}
         style={{ display: 'flex' }}

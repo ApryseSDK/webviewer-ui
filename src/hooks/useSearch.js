@@ -1,6 +1,6 @@
 import React from 'react';
 import core from 'core';
-import isSearchResultSame from "helpers/isSearchResultSame";
+import isSearchResultSame from 'helpers/isSearchResultSame';
 
 function useSearch() {
   const [searchResults, setSearchResults] = React.useState([]);

@@ -67,7 +67,6 @@ const ThumbnailsPanel = () => {
   const [width, setWidth] = useState(0);
   const [draggingOverPageIndex, setDraggingOverPageIndex] = useState(null);
   const [isDraggingToPreviousPage, setDraggingToPreviousPage] = useState(false);
-  const [allowPageOperations, setAllowPageOperations] = useState(true);
   const [numberOfColumns, setNumberOfColumns] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -148,7 +147,6 @@ const ThumbnailsPanel = () => {
     let options = {
       pageNumber,
       overrideCanvas: annotCanvas,
-      namespace: 'thumbnails',
     };
 
     const thumb = thumbContainer.querySelector('.page-image');
@@ -387,7 +385,7 @@ const ThumbnailsPanel = () => {
         for (let offset = 0; offset < pageNumbersToMove.length; offset++) {
           updatedPagesNumbers.push(afterMovePageNumber.current + offset);
         }
-        fireEvent(Events.THUMBNAIL_DROPPED, { pageNumbersBeforeMove:pageNumbersToMove, pagesNumbersAfterMove:updatedPagesNumbers, numberOfPagesMoved:updatedPagesNumbers.length });
+        fireEvent(Events.THUMBNAIL_DROPPED, { pageNumbersBeforeMove: pageNumbersToMove, pagesNumbersAfterMove: updatedPagesNumbers, numberOfPagesMoved: updatedPagesNumbers.length });
       }
     }
     setDraggingOverPageIndex(null);
@@ -451,7 +449,7 @@ const ThumbnailsPanel = () => {
       columnsOfThumbnails: numberOfColumns > 1,
       row: true,
     });
-    const allowPageOperationsUI = allowPageOperations && !isReaderMode;
+    const allowPageOperationsUI = !isReaderMode;
 
     return (
       <div role="row" aria-label="row" className={className} key={key} style={style}>
@@ -499,8 +497,7 @@ const ThumbnailsPanel = () => {
   };
 
   const thumbnailHeight = isThumbnailControlDisabled ? Number(thumbnailSize) + 50 : Number(thumbnailSize) + 80;
-  const shouldShowControls = !isReaderMode && (allowPageOperations || selectedPageIndexes.length > 0);
-
+  const shouldShowControls = !isReaderMode;
   const thumbnailAutoScrollAreaStyle = {
     'height': `${hoverAreaHeight}px`,
   };

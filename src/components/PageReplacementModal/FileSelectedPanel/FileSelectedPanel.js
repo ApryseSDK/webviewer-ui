@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ThumbnailCard from '../ThumbnailCard';
 import PageNumberInput from '../PageNumberInput';
 import '../PageReplacementModal.scss';
-import './FileSelectedPanel.scss'
+import './FileSelectedPanel.scss';
 
 // Need to forward the ref so the FocusTrap works correctly
 const FileSelectedPanel = React.forwardRef((
@@ -169,13 +169,13 @@ const FileSelectedPanel = React.forwardRef((
           <PageNumberInput
             selectedPageNumbers={currentDocSelectedPageNumbers}
             pageCount={loadedDocumentPageCount}
-            onSelectedPageNumbersChange={setCurrentDocSelectedPageNumbers}
+            onBlurHandler={setCurrentDocSelectedPageNumbers}
           />
           <div className="replace-page-input"><span className="page-replace-doc-name">{currentDocumentName}</span> {t('option.pageReplacementModal.pageReplaceInputFromSource')}</div>
           <PageNumberInput
             selectedPageNumbers={getPageNumbersFromSelectedThumbnails()}
             pageCount={sourceDocumentPageCount}
-            onSelectedPageNumbersChange={onSourceDocumentNumberInputChange}
+            onBlurHandler={onSourceDocumentNumberInputChange}
           />
           <div className="replace-page-input"><span className="page-replace-doc-name">{sourceDocumentName}</span></div>
         </div>
