@@ -49,6 +49,23 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
     if (hideOnClick) {
       childRef.current?.addEventListener('click', hideTooltip);
     }
+
+    const observer = new MutationObserver((mutations) => {
+      // hide tooltip when button get disabled, disable buttons don't have "mouseleave" events
+      const lastMutation = mutations[mutations.length - 1];
+      if (lastMutation && lastMutation.attributeName == 'disabled' && lastMutation.target.disabled ) {
+        hideTooltip();
+      }
+    });
+
+    observer.observe(childRef.current, { attributes: true, childList: false, characterData: false  });
+
+    return () => {
+      hideTooltip();
+      observer.disconnect();
+      childRef.current?.removeEventListener('mouseenter', showToolTip);
+      childRef.current?.removeEventListener('mouseleave', hideTooltip);
+    };
   }, [childRef, hideOnClick]);
 
   useLayoutEffect(() => {
