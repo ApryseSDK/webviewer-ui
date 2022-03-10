@@ -93,7 +93,7 @@ function ContentEditModal() {
     closed: !isOpen,
   });
 
-  const toolbarOptions = [['bold', 'italic', 'underline']];
+  const toolbarOptions = [['bold', 'italic', 'underline'], ['link']];
 
   const isEditing = !!currentContentBeingEdited;
 
