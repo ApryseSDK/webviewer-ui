@@ -418,7 +418,7 @@ WebViewer(...)
             'customStampModal',
             'printModal',
             'rubberStampOverlay',
-            'editTextModal',
+            'contentEditModal',
             'filterModal',
           ])
         );

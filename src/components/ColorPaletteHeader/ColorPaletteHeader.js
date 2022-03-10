@@ -16,7 +16,6 @@ class ColorPaletteHeader extends React.PureComponent {
   static propTypes = {
     style: PropTypes.object.isRequired,
     colorPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
-    onPaletteChange: PropTypes.func,
     colorMapKey: PropTypes.string.isRequired,
     setActivePalette: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
@@ -26,9 +25,9 @@ class ColorPaletteHeader extends React.PureComponent {
   }
 
   setActivePalette = newPalette => {
-    const { setActivePalette, colorMapKey, onPaletteChange } = this.props;
+    const { setActivePalette, colorMapKey } = this.props;
+
     setActivePalette(colorMapKey, newPalette);
-    onPaletteChange && onPaletteChange(newPalette);
   }
 
   render() {

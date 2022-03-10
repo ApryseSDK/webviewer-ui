@@ -158,7 +158,7 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
     core.setToolMode(defaultTool);
     dispatch({
       type: 'SET_ACTIVE_TOOL_GROUP',
-      payload: { toolGroup: '' },
+      payload: { toolGroup: '', toolbarGroup },
     });
   } else {
     dispatch(openElements(['toolsHeader']));
@@ -167,20 +167,21 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
     const lastPickedToolName = state.viewer.lastPickedToolForGroup[lastPickedToolGroup]
       || getFirstToolNameForGroup(state, lastPickedToolGroup);
     if (pickTool) {
+      dispatch({
+        type: 'SET_ACTIVE_TOOL_GROUP',
+        payload: { toolGroup: lastPickedToolGroup, toolbarGroup },
+      });
+
       if (lastPickedToolName === 'AnnotationCreateSignature') {
         core.setToolMode(defaultTool);
       } else {
         core.setToolMode(lastPickedToolName);
       }
-      dispatch({
-        type: 'SET_ACTIVE_TOOL_GROUP',
-        payload: { toolGroup: lastPickedToolGroup },
-      });
     } else {
       core.setToolMode(defaultTool);
       dispatch({
         type: 'SET_ACTIVE_TOOL_GROUP',
-        payload: { toolGroup: '' },
+        payload: { toolGroup: '', toolbarGroup },
       });
     }
   }

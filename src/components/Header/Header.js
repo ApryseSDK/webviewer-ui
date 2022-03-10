@@ -15,11 +15,14 @@ class Header extends React.PureComponent {
     isOpen: PropTypes.bool,
     activeHeaderItems: PropTypes.array.isRequired,
     isToolGroupReorderingEnabled: PropTypes.bool,
-    isInDesktopOnlyMode: PropTypes.bool
+    isInDesktopOnlyMode: PropTypes.bool,
+    isToolsHeaderOpen: PropTypes.bool,
+    isMultiTab: PropTypes.bool,
+    currentToolbarGroup: PropTypes.string,
   }
 
   render() {
-    const { isDisabled, activeHeaderItems, isOpen, isToolsHeaderOpen, currentToolbarGroup, isToolGroupReorderingEnabled, isInDesktopOnlyMode } = this.props;
+    const { isDisabled, activeHeaderItems, isOpen, isToolsHeaderOpen, currentToolbarGroup, isMultiTab, isToolGroupReorderingEnabled, isInDesktopOnlyMode } = this.props;
 
     if (isDisabled || !isOpen) {
       return null;
@@ -34,8 +37,8 @@ class Header extends React.PureComponent {
           data-element="header"
         >
           <HeaderItems items={activeHeaderItems} isToolGroupReorderingEnabled={isToolGroupReorderingEnabled} isInDesktopOnlyMode={isInDesktopOnlyMode} />
-          {(!isToolsHeaderOpen || currentToolbarGroup === 'toolbarGroup-View')
-            && <div className="view-header-border" />}
+          {(!isToolsHeaderOpen || currentToolbarGroup === 'toolbarGroup-View') && !isMultiTab
+          && <div className="view-header-border" />}
         </div>
       </React.Fragment>
     );
@@ -43,6 +46,7 @@ class Header extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
+  isMultiTab: selectors.getIsMultiTab(state),
   currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),
   isDisabled: selectors.isElementDisabled(state, 'header'),

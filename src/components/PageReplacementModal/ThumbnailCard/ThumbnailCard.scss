@@ -1,16 +1,17 @@
 @import '../../../constants/styles';
 
 .thumb-card {
-  width: 145px;
+  width: 152px;
   float: left;
   background: #F8F9FA;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  margin-right: 14px;
+  margin-bottom: 16px;
   border-radius: 6px;
   padding: 10px;
   padding-top: 24px;
   padding-bottom: 8px;
   position: relative;
+  cursor: pointer;
 
   @include tablet {
     width: 142px;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, getByText } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import NoteHeader from './NoteHeader';
 import * as reactRedux from 'react-redux';
 import { Basic, testProps, } from './NoteHeader.stories';

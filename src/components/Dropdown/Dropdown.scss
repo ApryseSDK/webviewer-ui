@@ -63,7 +63,8 @@
   background: var(--component-background);
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden; // necessary so that children respect border-radius on hover
+  overflow-x: hidden; // necessary so that children respect border-radius on hover
+  overflow-y: auto; // necessary so that children respect border-radius on hover
 
   &.hide {
     // Required to get width for positioning.

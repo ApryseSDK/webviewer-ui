@@ -22,7 +22,11 @@ import i18next from 'i18next';
 
 export default (language, translationObject) => {
   i18next.on('loaded', () => {
-    i18next.addResources(language, 'translation', translationObject);
+    i18next.addResources(
+      language,
+      'translation',
+      translationObject
+    );
   });
 
   i18next.reloadResources([language]);

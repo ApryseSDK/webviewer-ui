@@ -1,21 +1,44 @@
 import React from 'react';
+import actions from 'actions';
+import core from 'core';
 
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
-import actions from 'actions';
-import defaultTool from 'constants/defaultTool';
-import { defaultZoomList } from 'constants/zoomFactors';
-
-import core from 'core';
-import getHashParams from 'helpers/getHashParams';
-import localStorageManager from 'helpers/localStorageManager';
-import { copyMapWithDataProperties } from 'constants/map';
-import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import Ribbons from 'components/Ribbons';
 import ApplyFormFieldButton from 'components/ApplyFormFieldButton';
+
 import DataElements from "constants/dataElement";
+import defaultTool from 'constants/defaultTool';
+import { defaultZoomList } from 'constants/zoomFactors';
+import { copyMapWithDataProperties } from 'constants/map';
+import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
+import getHashParameters from 'helpers/getHashParameters';
+import localStorageManager from 'helpers/localStorageManager';
+import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
 
 const { ToolNames } = window.Core.Tools;
+
+const undoButton = {
+  type: 'actionButton',
+  style: { 'marginLeft': '0px' },
+  dataElement: 'undoButton',
+  title: 'action.undo',
+  img: 'icon-operation-undo',
+  onClick: () => {
+    core.undo();
+  },
+  isNotClickableSelector: state => !state.viewer.canUndo
+};
+const redoButton = {
+  type: 'actionButton',
+  dataElement: 'redoButton',
+  title: 'action.redo',
+  img: 'icon-operation-redo',
+  onClick: () => {
+    core.redo();
+  },
+  isNotClickableSelector: state => !state.viewer.canRedo
+};
 
 export default {
   viewer: {
@@ -32,7 +55,8 @@ export default {
     openElements: {
       header: true,
       toolsHeader: true,
-      [DataElements.FREE_TEXT_STYLE_TEXT_CONTAINER]: true,
+      [DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER]: true,
+      [DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER]: true
     },
     panelWidths: {
       leftPanel: 264,
@@ -43,12 +67,14 @@ export default {
     documentContainerHeight: null,
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
-    highContrastMode: getHashParams('highContrastMode', false),
-    notesInLeftPanel: getHashParams('notesInLeftPanel', false),
-    autoFocusNoteOnAnnotationSelection: getHashParams('autoFocusNoteOnAnnotationSelection', true),
+    highContrastMode: getHashParameters('highContrastMode', false),
+    notesInLeftPanel: getHashParameters('notesInLeftPanel', false),
+    autoFocusNoteOnAnnotationSelection: getHashParameters('autoFocusNoteOnAnnotationSelection', true),
     fadePageNavigationComponent: true,
     pageDeletionConfirmationModalEnabled: true,
     outlineControlVisibility: false,
+    hideContentEditWarning: isContentEditWarningHidden(),
+    currentContentBeingEdited: null,
     headers: {
       default: [
         { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
@@ -134,25 +160,12 @@ export default {
           hidden: ['small-mobile', 'mobile'],
         },
         {
-          type: 'actionButton',
-          style: { 'marginLeft': '0px' },
-          dataElement: 'undoButton',
-          title: 'action.undo',
-          img: 'icon-operation-undo',
-          onClick: () => {
-            core.undo();
-          },
-          isNotClickableSelector: state => !state.viewer.canUndo,
+          ...undoButton,
+          hideOnClick: true
         },
         {
-          type: 'actionButton',
-          dataElement: 'redoButton',
-          title: 'action.redo',
-          img: 'icon-operation-redo',
-          onClick: () => {
-            core.redo();
-          },
-          isNotClickableSelector: state => !state.viewer.canRedo,
+          ...redoButton,
+          hideOnClick: true
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
@@ -175,27 +188,23 @@ export default {
           dataElement: 'toolsOverlay',
           hidden: ['small-mobile', 'mobile'],
         },
+        undoButton,
+        redoButton,
+        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+        { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
+      ],
+      "toolbarGroup-Redact": [
+        { type: 'spacer' },
+        { type: 'toolGroupButton', toolGroup: 'redactionTools', dataElement: 'redactionToolGroupButton', title: 'annotation.redact' },
+        { type: 'divider' },
         {
-          type: 'actionButton',
-          style: { 'marginLeft': '0px' },
-          dataElement: 'undoButton',
-          title: 'action.undo',
-          img: 'icon-operation-undo',
-          onClick: () => {
-            core.undo();
-          },
-          isNotClickableSelector: state => !state.viewer.canUndo,
+          type: 'customElement',
+          render: () => <ToolsOverlay />,
+          dataElement: 'toolsOverlay',
+          hidden: ['small-mobile', 'mobile']
         },
-        {
-          type: 'actionButton',
-          dataElement: 'redoButton',
-          title: 'action.redo',
-          img: 'icon-operation-redo',
-          onClick: () => {
-            core.redo();
-          },
-          isNotClickableSelector: state => !state.viewer.canRedo,
-        },
+        undoButton,
+        redoButton,
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
@@ -214,27 +223,8 @@ export default {
           dataElement: 'toolsOverlay',
           hidden: ['small-mobile', 'mobile'],
         },
-        {
-          type: 'actionButton',
-          style: { 'marginLeft': '0px' },
-          dataElement: 'undoButton',
-          title: 'action.undo',
-          img: 'icon-operation-undo',
-          onClick: () => {
-            core.undo();
-          },
-          isNotClickableSelector: state => !state.viewer.canUndo,
-        },
-        {
-          type: 'actionButton',
-          dataElement: 'redoButton',
-          title: 'action.redo',
-          img: 'icon-operation-redo',
-          onClick: () => {
-            core.redo();
-          },
-          isNotClickableSelector: state => !state.viewer.canRedo,
-        },
+        undoButton,
+        redoButton,
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
@@ -254,57 +244,15 @@ export default {
           dataElement: 'toolsOverlay',
           hidden: ['small-mobile', 'mobile'],
         },
-        {
-          type: 'actionButton',
-          style: { 'marginLeft': '0px' },
-          dataElement: 'undoButton',
-          title: 'action.undo',
-          img: 'icon-operation-undo',
-          onClick: () => {
-            core.undo();
-          },
-          isNotClickableSelector: state => !state.viewer.canUndo,
-        },
-        {
-          type: 'actionButton',
-          dataElement: 'redoButton',
-          title: 'action.redo',
-          img: 'icon-operation-redo',
-          onClick: () => {
-            core.redo();
-          },
-          isNotClickableSelector: state => !state.viewer.canRedo,
-        },
+        undoButton,
+        redoButton,
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
       "toolbarGroup-Edit": [
         { type: 'spacer' },
         { type: 'toolGroupButton', toolGroup: 'cropTools', dataElement: 'cropToolGroupButton', title: 'annotation.crop' },
-        { type: 'toolGroupButton', toolGroup: 'redactionTools', dataElement: 'redactionToolGroupButton', title: 'annotation.redact', showColor: 'never' },
-        { type: 'divider' },
-        {
-          type: 'actionButton',
-          style: { 'marginLeft': '0px' },
-          dataElement: 'undoButton',
-          title: 'action.undo',
-          img: 'icon-operation-undo',
-          onClick: () => {
-            core.undo();
-          },
-          isNotClickableSelector: state => !state.viewer.canUndo,
-        },
-        {
-          type: 'actionButton',
-          dataElement: 'redoButton',
-          title: 'action.redo',
-          img: 'icon-operation-redo',
-          onClick: () => {
-            core.redo();
-          },
-          isNotClickableSelector: state => !state.viewer.canRedo,
-        },
-        { type: 'toolButton', toolName: 'AnnotationEraserTool' },
+        { type: 'toolGroupButton', toolGroup: 'contentEditTools', dataElement: 'contentEditButton', title: 'action.edit' },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
       "toolbarGroup-FillAndSign": [
@@ -323,27 +271,8 @@ export default {
           dataElement: 'toolsOverlay',
           hidden: ['small-mobile', 'mobile'],
         },
-        {
-          type: 'actionButton',
-          style: { 'marginLeft': '0px' },
-          dataElement: 'undoButton',
-          title: 'action.undo',
-          img: 'icon-operation-undo',
-          onClick: () => {
-            core.undo();
-          },
-          isNotClickableSelector: state => !state.viewer.canUndo,
-        },
-        {
-          type: 'actionButton',
-          dataElement: 'redoButton',
-          title: 'action.redo',
-          img: 'icon-operation-redo',
-          onClick: () => {
-            core.redo();
-          },
-          isNotClickableSelector: state => !state.viewer.canRedo,
-        },
+        undoButton,
+        redoButton,
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
@@ -376,6 +305,7 @@ export default {
       { dataElement: 'annotationDateEditButton' },
       { dataElement: 'annotationRedactButton' },
       { dataElement: 'annotationCropButton' },
+      { dataElement: 'annotationContentEditButton' },
       { dataElement: 'annotationGroupButton' },
       { dataElement: 'annotationUngroupButton' },
       { dataElement: 'formFieldEditButton' },
@@ -384,10 +314,10 @@ export default {
       { dataElement: 'linkButton' },
       { dataElement: 'fileAttachmentDownload' },
       { dataElement: 'shortCutKeysFor3D' },
+      { dataElement: 'playSoundButton' },
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },
-      { dataElement: 'editTextButton' },
       { dataElement: 'textHighlightToolButton' },
       { dataElement: 'textUnderlineToolButton' },
       { dataElement: 'textSquigglyToolButton' },
@@ -525,7 +455,11 @@ export default {
       [ToolNames.FORM_FILL_CHECKMARK]: { dataElement: 'checkStampToolButton', title: 'annotation.formFillCheckmark', img: 'icon-tool-check-stamp', group: 'checkStampTools', showColor: 'active' },
       [ToolNames.FORM_FILL_DOT]: { dataElement: 'dotStampToolButton', title: 'annotation.formFillDot', img: 'icon-tool-dot-stamp', group: 'dotStampTools', showColor: 'active' },
       CropPage: { dataElement: 'cropToolButton', title: 'annotation.crop', img: 'ic_crop_black_24px', showColor: 'never', group: 'cropTools' },
-      AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'icon-tool-redaction-area', group: 'redactionTools', showColor: 'never' },
+      ContentEditTool: { dataElement: 'contentEditButton', title: 'action.edit', img: 'ic_edit_page_24px', showColor: 'never', group: 'contentEditTools' },
+      AnnotationCreateRedaction: { dataElement: 'redactionButton', title: 'option.redaction.markForRedaction', img: 'icon-tool-select-area-redaction', group: 'redactionTools', showColor: 'always' },
+      AnnotationCreateRedaction2: { dataElement: 'redactionButton2', title: 'option.redaction.markForRedaction', img: 'icon-tool-select-area-redaction', group: 'redactionTools', showColor: 'always' },
+      AnnotationCreateRedaction3: { dataElement: 'redactionButton3', title: 'option.redaction.markForRedaction', img: 'icon-tool-select-area-redaction', group: 'redactionTools', showColor: 'always' },
+      AnnotationCreateRedaction4: { dataElement: 'redactionButton4', title: 'option.redaction.markForRedaction', img: 'icon-tool-select-area-redaction', group: 'redactionTools', showColor: 'always' },
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
       AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'multi select', showColor: 'never' },
       TextSelect: { dataElement: 'textSelectButton', img: 'icon - header - select - line', showColor: 'never' },
@@ -549,7 +483,6 @@ export default {
       ComboBoxFormFieldCreateTool2: { dataElement: 'comboBoxFieldCreateToolButton2', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
       ComboBoxFormFieldCreateTool3: { dataElement: 'comboBoxFieldCreateToolButton3', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
       ComboBoxFormFieldCreateTool4: { dataElement: 'comboBoxFieldCreateToolButton4', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
-
     },
     tab: {
       signatureModal: 'inkSignaturePanelButton',
@@ -581,9 +514,10 @@ export default {
     notesShowLastUpdatedDate: false,
     allowPageNavigation: true,
     enableToolGroupReordering: true,
+    enableNoteSubmissionWithEnter: false,
     enableMouseWheelZoom: true,
-    doesAutoLoad: getHashParams('auto_load', true),
-    isReadOnly: getHashParams('readonly', false),
+    doesAutoLoad: getHashParameters('auto_load', true),
+    isReadOnly: getHashParameters('readonly', false),
     customModals: [],
     customPanels: [],
     useEmbeddedPrint: false,
@@ -596,7 +530,7 @@ export default {
     warning: {},
     customNoteFilter: null,
     zoomList: defaultZoomList,
-    isAccessibleMode: getHashParams('accessibleMode', false),
+    isAccessibleMode: getHashParameters('accessibleMode', false),
     measurementUnits: {
       from: ['in', 'mm', 'cm', 'pt'],
       to: ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi'],
@@ -622,6 +556,8 @@ export default {
     validationModalWidgetName: '',
     verificationResult: {},
     watermarkModalOptions: null,
+    shouldResetAudioPlaybackPosition: false,
+    activeSoundAnnotation: null,
   },
   search: {
     value: '',
@@ -644,21 +580,21 @@ export default {
     loadingProgress: 0,
   },
   user: {
-    name: getHashParams('user', 'Guest'),
-    isAdmin: getHashParams('admin', false),
+    name: getHashParameters('user', 'Guest'),
+    isAdmin: getHashParameters('admin', false),
   },
   advanced: {
-    customCSS: getHashParams('css', null),
-    defaultDisabledElements: getHashParams('disabledElements', ''),
-    fullAPI: getHashParams('pdfnet', false),
-    preloadWorker: getHashParams('preloadWorker', false),
-    serverUrl: getHashParams('server_url', ''),
-    serverUrlHeaders: JSON.parse(getHashParams('serverUrlHeaders', '{}')),
-    useSharedWorker: getHashParams('useSharedWorker', false),
-    disableI18n: getHashParams('disableI18n', false),
+    customCSS: getHashParameters('css', null),
+    defaultDisabledElements: getHashParameters('disabledElements', ''),
+    fullAPI: getHashParameters('pdfnet', false),
+    preloadWorker: getHashParameters('preloadWorker', false),
+    serverUrl: getHashParameters('server_url', ''),
+    serverUrlHeaders: JSON.parse(getHashParameters('serverUrlHeaders', '{}')),
+    useSharedWorker: getHashParameters('useSharedWorker', false),
+    disableI18n: getHashParameters('disableI18n', false),
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null,
-    disableIndexedDB: getHashParams('disableIndexedDB', false),
+    disableIndexedDB: getHashParameters('disableIndexedDB', false),
   },
   featureFlags: {
   }

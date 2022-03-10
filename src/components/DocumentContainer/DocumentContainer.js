@@ -23,6 +23,7 @@ import Measure from 'react-measure';
 
 import './DocumentContainer.scss';
 import _ from 'lodash';
+import TabsHeader from "components/TabsHeader";
 
 const PAGE_NAVIGATION_OVERLAY_FADEOUT = 4000;
 
@@ -60,7 +61,7 @@ class DocumentContainer extends React.PureComponent {
     this.debouncedHidePageNavigationOverlay = _.debounce(this.hidePageNavigationOverlay, PAGE_NAVIGATION_OVERLAY_FADEOUT);
     this.state = {
       showNavOverlay: true,
-    }
+    };
   }
 
   componentDidUpdate(prevProps) {
@@ -151,6 +152,9 @@ class DocumentContainer extends React.PureComponent {
     } else if (scrollingDown && reachedBottom && currentPage < totalPages) {
       this.pageDown();
     }
+
+    this.showPageNavigationOverlay();
+    this.debouncedHidePageNavigationOverlay();
   }
 
   pageUp = () => {
@@ -202,11 +206,11 @@ class DocumentContainer extends React.PureComponent {
   }
 
   hidePageNavigationOverlay = () => {
-    this.setState({ showNavOverlay: false })
+    this.setState({ showNavOverlay: false });
   }
 
   showPageNavigationOverlay = () => {
-    this.setState({ showNavOverlay: true })
+    this.setState({ showNavOverlay: true });
   }
 
   pageNavOnMouseEnter = () => {
@@ -257,7 +261,7 @@ class DocumentContainer extends React.PureComponent {
       // background color is the one that causes this transition.
       // This effect is still happening in above case but if instead of clicking edit, user changes width of the notes panel
       // It is currently expected behaviour
-      // Note Update after fading page nav was added: 
+      // Note Update after fading page nav was added:
       // This also causes a doc container re-render as we fire the opacity transition when we fade the page nav
       // we must skip updating the scrollViewUpdated call as well or it causes re-renders on docs with different page sizes
       core.scrollViewUpdated();
@@ -294,6 +298,7 @@ class DocumentContainer extends React.PureComponent {
         className="document-content-container"
         onTransitionEnd={this.onTransitionEnd}
       >
+        <TabsHeader />
         <Measure
           onResize={this.handleResize}
         >

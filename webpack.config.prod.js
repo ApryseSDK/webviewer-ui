@@ -127,4 +127,5 @@ module.exports = {
       minSize: 0,
     },
   },
+  devtool: 'source-map',
 };

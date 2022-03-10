@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-
+import ColorPalette from 'components/ColorPalette';
 import core from 'core';
 import { isIOS } from 'helpers/device';
 import selectors from 'selectors';
@@ -18,19 +18,28 @@ const propTypes = {
 
 const FONT_SIZE = 96;
 
+const useForceUpdate = () => {
+  const [, setIt] = useState(false);
+  return () => setIt(it => !it);
+};
+
 const TextSignature = ({
   isModalOpen,
   isTabPanelSelected,
   createSignature,
 }) => {
   const fonts = useSelector(state => selectors.getSignatureFonts(state));
-  const [value, setValue] = useState(core.getDisplayAuthor(core.getCurrentUser()));
+  // const [value, setValue] = useState(core.getDisplayAuthor(core.getCurrentUser()));
+  const [value, setValue] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDefaultValue, setIsDefaultValue] = useState(true);
+  const [fontColor, setFontColor] = useState("#000000");
   const inputRef = useRef();
   const canvasRef = useRef();
   const textDivsRef = useRef([]);
   const [t] = useTranslation();
+
+  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     // this can happen when an user added a new signature font, select it and then removed it
@@ -56,12 +65,11 @@ const TextSignature = ({
     };
 
     const setFont = () => {
-      ctx.fillStyle = '#000';
+      ctx.fillStyle = fontColor;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.font = `${FONT_SIZE * multiplier}px ${fonts[activeIndex]}`;
     };
-
     const drawTextSignature = () => {
       const { width, height } = canvas;
       ctx.clearRect(0, 0, width, height);
@@ -76,9 +84,10 @@ const TextSignature = ({
         setSignature();
       }
     }
-  }, [activeIndex, isTabPanelSelected, value, fonts]);
+  }, [activeIndex, isTabPanelSelected, value, fonts, fontColor]);
 
   useEffect(() => {
+    setFontColor(fontColor);
     if (isModalOpen && isTabPanelSelected) {
       setValue(core.getDisplayAuthor(core.getCurrentUser()));
       setSignature();
@@ -95,6 +104,9 @@ const TextSignature = ({
         inputRef.current.select();
       }
     }
+    // else {
+
+    // }
   }, [isTabPanelSelected]);
 
   useEffect(() => {
@@ -126,22 +138,34 @@ const TextSignature = ({
     setIsDefaultValue(false);
     // Use regex instead of 'trimStart' for IE11 compatibility
     const value = e.target.value.replace(/^\s+/g, '');
+    setSignature();
     setValue(value);
   };
+
+  const handleColorInputChange = (property, value) => {
+    setFontColor(value)
+    // hack for tool styles for signature not being on state
+    forceUpdate();
+  }
+
 
   return (
     <React.Fragment>
       <div className="text-signature">
-        <label>
-          <input
-            className="text-signature-input"
-            ref={inputRef}
-            type="text"
-            value={value}
-            onChange={handleInputChange}
-            disabled={!(isModalOpen && isTabPanelSelected)}
-          />
-        </label>
+        <div className="text-signature-input-container">
+          <label>
+            <input
+              className="text-signature-input"
+              ref={inputRef}
+              type="text"
+              value={value}
+              placeholder="Type Signature"
+              onChange={handleInputChange}
+              style={{fontFamily: fonts, fontSize: FONT_SIZE*2/3, color:fontColor}}
+              disabled={!(isModalOpen && isTabPanelSelected)}
+            />
+          </label>
+        </div>
         {fonts.map((font, index) => (
           <div
             key={font}
@@ -149,7 +173,7 @@ const TextSignature = ({
               'text-signature-text': true,
               active: index === activeIndex,
             })}
-            style={{ fontFamily: font, fontSize: FONT_SIZE }}
+            style={{ fontFamily: font, fontSize: FONT_SIZE, color:fontColor}}
             onClick={() => setActiveIndex(index)}
           >
             <div
@@ -163,13 +187,21 @@ const TextSignature = ({
           </div>
         ))}
         <canvas ref={canvasRef} />
+        <div className="colorpalette-clear-container">
+          <ColorPalette
+            color={new window.Annotations.Color(fontColor)}
+            property="fontColor"
+            onStyleChange={(property, value) => handleColorInputChange(property, value)}
+            overridePalette2={['#000000', '#4E7DE9', '#E44234']}
+          />
+          <button className="signature-clear" onClick={() => setValue('')} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
+            {t('action.clear')}
+          </button>
+        </div>
       </div>
       <div
         className="footer"
       >
-        <button className="signature-clear" onClick={() => setValue('')} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
-          {t('action.clear')}
-        </button>
         <button className="signature-create" onClick={createSignature} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
           {t('action.create')}
         </button>

@@ -14,7 +14,7 @@ export default store => {
   const onFitModeUpdated = eventListeners.onFitModeUpdated(dispatch);
   const onRotationUpdated = eventListeners.onRotationUpdated(dispatch);
   const onToolUpdated = eventListeners.onToolUpdated(dispatch);
-  const onToolModeUpdated = eventListeners.onToolModeUpdated(dispatch);
+  const onToolModeUpdated = eventListeners.onToolModeUpdated(dispatch, store);
   const onZoomUpdated = eventListeners.onZoomUpdated(dispatch);
   const onPageNumberUpdated = eventListeners.onPageNumberUpdated(dispatch);
   const onUpdateAnnotationPermission = eventListeners.onUpdateAnnotationPermission(store);
@@ -27,6 +27,7 @@ export default store => {
   const onLocationSelected = eventListeners.onLocationSelected(store);
   const onDotStampAnnotationAdded = eventListeners.onDotStampAnnotationAdded(dispatch);
   const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(dispatch);
+  const onReadOnlyModeChanged = eventListeners.onReadOnlyModeChanged(store);
   const onPageComplete = eventListeners.onPageComplete(store);
   const onFileAttachmentAnnotationAdded = eventListeners.onFileAttachmentAnnotationAdded(dispatch);
   const onFileAttachmentDataAvailable = eventListeners.onFileAttachmentDataAvailable(dispatch);
@@ -34,7 +35,7 @@ export default store => {
   const onSignatureDeleted = eventListeners.onSignatureDeleted(dispatch, store);
   const onHistoryChanged = eventListeners.onHistoryChanged(dispatch, store);
   const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch);
-  const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch);
+  const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch, store);
   const onDigitalSignatureAvailable = eventListeners.onDigitalSignatureAvailable(dispatch);
 
   return {
@@ -51,6 +52,7 @@ export default store => {
       core.addEventListener('zoomUpdated', onZoomUpdated);
       core.addEventListener('pageNumberUpdated', onPageNumberUpdated);
       core.addEventListener('layoutChanged', onLayoutChanged);
+      core.addEventListener('readOnlyModeChanged', onReadOnlyModeChanged);
       core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.addEventListener('annotationChanged', onAnnotationChanged);
       core.addEventListener('historyChanged', onHistoryChanged);
@@ -73,7 +75,6 @@ export default store => {
       core.getTool('AnnotationCreateFileAttachment').addEventListener('annotationAdded', onFileAttachmentAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CROSS).addEventListener('annotationAdded', onCrossStampAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CHECKMARK).addEventListener('annotationAdded', onCheckStampAnnotationAdded);
-      hotkeysManager.initialize(store);
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);

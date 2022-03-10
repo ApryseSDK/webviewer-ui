@@ -8,21 +8,23 @@ import highContastLightModeString from '!!raw-loader!../constants/highContrastLi
 import darkModeString from '!!raw-loader!../constants/dark.scss';
 import highContrastDarkModeString from '!!raw-loader!../constants/highContrastDark.scss';
 import cssVars from 'css-vars-ponyfill';
+import Theme from '../constants/theme';
 
 /**
  * Sets the theme of WebViewer UI. Please note that this does not work in IE11.
  * @method UI.setTheme
- * @param {string} theme Either the string 'light' or 'dark'.
+ * @param {UI.Theme} theme Theme of WebViewerInstance UI.
+ * @see UI.Theme
  * @example
-// Using predefined string
 WebViewer(...)
   .then(function(instance) {
-    instance.UI.setTheme('dark');
+    const theme = instance.UI.Theme;
+    instance.UI.setTheme(theme.DARK);
   });
  */
 
 export default store => {
-  let previousActiveTheme = 'light'; // default
+  let previousActiveTheme = Theme.LIGHT; // default
   let previousIsHighContrastMode = false; // default
 
   cssVars({});
@@ -37,8 +39,9 @@ export default store => {
     }
   });
   return theme => {
-    if (theme !== 'dark' && theme !== 'light') {
-      throw new Error(`${theme} is not one of: light, dark`);
+    const values = Object.values(Theme);
+    if (values.indexOf(theme) < 0) {
+      throw new Error(`${theme} is not one of: ${values.join(',')}}`);
     }
     store.dispatch(actions.setActiveTheme(theme));
   };
@@ -54,9 +57,9 @@ const setVariables = (themeVarString = '') => {
 };
 
 const updateColors = (activeTheme, isHighContrastMode)  => {
-  if (activeTheme === 'light') {
+  if (activeTheme === Theme.LIGHT) {
     setVariables(isHighContrastMode ? highContastLightModeString : lightModeString);
-  } else if (activeTheme === 'dark') {
+  } else if (activeTheme === Theme.DARK) {
     setVariables(isHighContrastMode ? highContrastDarkModeString : darkModeString);
   }
   cssVars({

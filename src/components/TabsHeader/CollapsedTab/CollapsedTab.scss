@@ -1,0 +1,46 @@
+.draggable-collapsed-tab {
+  height: 30px;
+  width: 100%;
+
+
+  &:hover {
+    background-color: var(--document-background-color);
+  }
+}
+
+.CollapsedTab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 30px;
+  width: 100%;
+
+  .file-text {
+    width: 100%;
+    padding-left: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    p {
+      font-size: var(--font-size-default);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: capitalize;
+    }
+
+    &.disabled {
+      user-select: none;
+      cursor: wait;
+    }
+  }
+
+  .Button {
+    .Icon {
+      margin: 0;
+      width: 16px;
+      height: 16px;
+    }
+  }
+}

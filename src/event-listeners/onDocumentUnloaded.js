@@ -9,6 +9,7 @@ export default dispatch => () => {
     'searchPanel',
     'leftPanel',
     'signatureValidationModal',
+    'audioPlaybackPopup',
     ...overlays
   ]));
   dispatch(actions.setOutlines([]));

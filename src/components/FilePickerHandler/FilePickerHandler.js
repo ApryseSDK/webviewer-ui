@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
-import getHashParams from 'helpers/getHashParams';
+import getHashParameters from 'helpers/getHashParameters';
 import loadDocument from 'helpers/loadDocument';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -24,7 +24,7 @@ const FilePickerHandler = () => {
     }
   };
 
-  const wvServer = !!getHashParams('webviewerServerURL', null);
+  const wvServer = !!getHashParameters('webviewerServerURL', null);
   const acceptFormats = wvServer ? window.Core.SupportedFileFormats.SERVER : window.Core.SupportedFileFormats.CLIENT;
 
   return isDisabled ? null : (

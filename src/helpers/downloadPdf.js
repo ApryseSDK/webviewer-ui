@@ -20,7 +20,7 @@ export default async (dispatch, options = {}) => {
 
   dispatch(actions.openElement('loadingModal'));
 
-  let annotationsPromise = Promise.resolve('<xfdf ><pdf-info xmlns="http://www.pdftron.com/pdfinfo" version="2" import-version="4"/></xfdf>');
+  let annotationsPromise = Promise.resolve();
   if (includeAnnotations && !options.xfdfString) {
     if (options.documentToBeDownloaded) {
       annotationsPromise = Promise.resolve((await options.documentToBeDownloaded.extractXFDF()).xfdfString);
@@ -31,6 +31,9 @@ export default async (dispatch, options = {}) => {
 
   return annotationsPromise.then(xfdfString => {
     options.xfdfString = options.xfdfString || xfdfString;
+    if (!includeAnnotations) {
+      options.includeAnnotations = false;
+    }
 
     const getDownloadFilename = (name, extension) => {
       if (name.slice(-extension.length).toLowerCase() !== extension) {
@@ -62,6 +65,7 @@ export default async (dispatch, options = {}) => {
       downloadIframe.src = externalURL;
       dispatch(actions.closeElement('loadingModal'));
       fireEvent(Events.FINISHED_SAVING_PDF);
+      fireEvent(Events.FILE_DOWNLOADED);
     } else {
       return doc.getFileData(clonedOptions).then(
         data => {
@@ -77,6 +81,7 @@ export default async (dispatch, options = {}) => {
           saveAs(file, downloadName);
           dispatch(actions.closeElement('loadingModal'));
           fireEvent(Events.FINISHED_SAVING_PDF);
+          fireEvent(Events.FILE_DOWNLOADED);
         },
         error => {
           dispatch(actions.closeElement('loadingModal'));

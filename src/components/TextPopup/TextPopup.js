@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import getHashParams from 'helpers/getHashParams';
+import getHashParameters from 'helpers/getHashParameters';
 
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
@@ -19,7 +19,7 @@ import selectors from 'selectors';
 import './TextPopup.scss';
 
 const TextPopup = ({ t }) => {
-  const fullAPI = !!getHashParams('pdfnet', false);
+  const fullAPI = !!getHashParameters('pdfnet', false);
 
   const [isDisabled, isOpen, popupItems] = useSelector(
     state => [
@@ -58,10 +58,6 @@ const TextPopup = ({ t }) => {
   const onClose = useCallback(() => dispatch(actions.closeElement('textPopup')), [dispatch]);
   useArrowFocus(!isDisabled && isOpen, onClose, popupRef);
 
-  const textEditingHandler = useCallback(() => {
-    dispatch(actions.openElement('editTextModal'));
-  }, [dispatch]);
-
   return isDisabled ? null : (
     <div
       className={classNames({
@@ -78,15 +74,6 @@ const TextPopup = ({ t }) => {
       aria-label={t('component.textPopup')}
     >
       <CustomizablePopup dataElement="textPopup">
-        {fullAPI && (
-          <ActionButton
-            dataElement="editTextButton"
-            title="action.edit"
-            img="ic_edit_black_24px"
-            onClick={textEditingHandler}
-            role="option"
-          />
-        )}
         <ActionButton dataElement="copyTextButton" title="action.copy" img="ic_copy_black_24px" onClick={copyText} role="option" />
         <ActionButton
           dataElement="textHighlightToolButton"

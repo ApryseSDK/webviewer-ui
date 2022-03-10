@@ -1,0 +1,198 @@
+{
+  "action": {
+    "apply": "Áp dụng",
+    "applyAll": "Áp dụng tất cả",
+    "cancel": "Hủy",
+    "clear": "Xóa",
+    "close": "Đóng",
+    "comment": "Bình Luận",
+    "copy": "Sao chép",
+    "delete": "Xóa",
+    "download": "Tải xuống",
+    "edit": "Chỉnh sửa",
+    "enterFullscreen": "Toàn màn hình",
+    "exitFullscreen": "Thoát chế độ toàn màn hình",
+    "fit": "Làm vừa",
+    "fitToPage": "Làm vừa theo trang",
+    "fitToWidth": "Làm vừa theo chiều rộng",
+    "openFile": "Mở tệp",
+    "print": "In",
+    "ok": "OK",
+    "reply": "Trả lời",
+    "rotate": "Xoay",
+    "rotateClockwise": "Theo chiều kim đồng hồ",
+    "rotateCounterClockwise": "Ngược chiều kim đồng hồ",
+    "save": "Lưu",
+    "create": "Tạo",
+    "showMoreResults": "Hiển thị thêm kết quả",
+    "saveSignature": "Lưu chữ ký",
+    "sign": "Ký",
+    "style": "Kiểu",
+    "submit": "Gửi",
+    "zoom": "Thu phóng",
+    "zoomIn": "Thu phóng vào",
+    "zoomOut": "Thu phóng ra"
+  },
+  "annotation": {
+    "areaMeasurement": "Đo lường diện tích",
+    "arrow": "Mũi tên",
+    "callout": "Chú thích",
+    "caret": "Dấu sót",
+    "distanceMeasurement": "Đo lường khoảng cách",
+    "ellipse": "Elip",
+    "freehand": "Bằng tay",
+    "freehand2": "Bằng tay",
+    "freetext": "Văn bản tự do",
+    "freetext2": "Văn bản tự do",
+    "highlight": "Nổi bật",
+    "highlight2": "Nổi bật",
+    "line": "Đường kẻ",
+    "perimeterMeasurement": "Đo lường chu vi",
+    "polygon": "Đa giác",
+    "polygonCloud": "Đám mây",
+    "polyline": "Hình nhiều nét",
+    "rectangle": "Hình chữ nhật",
+    "redact": "Biên tập",
+    "signature": "Chữ ký",
+    "squiggly": "Nguệch ngoạc",
+    "stamp": "Tem",
+    "stickyNote": "Bình Luận",
+    "strikeout": "Gạch bỏ",
+    "underline": "Gạch chân",
+    "custom": "Tùy chỉnh"
+  },
+  "component": {
+    "freehandToolsButton": "Công cụ dùng tay",
+    "leftPanel": "Bảng",
+    "searchOverlay": "Tìm kiếm",
+    "menuOverlay": "Menu",
+    "miscToolsButton": "Công cụ khác",
+    "notesPanel": "Ghi chú",
+    "outlinesPanel": "Tóm tắt",
+    "shapeToolsButton": "Công cụ hình",
+    "textToolsButton": "Công cụ văn bản",
+    "thumbnailsPanel": "Hình nhỏ",
+    "toolsButton": "Công cụ",
+    "redaction": "Biên tập",
+    "viewControlsOverlay": "Xem điều khiển",
+    "measurementToolsButton": "Công cụ đo lường"
+  },
+  "message": {
+    "badDocument": "Không thể tải tài liệu. Tài liệu bị lỗi hoặc không hợp lệ.",
+    "customPrintPlaceholder": "Ví dụ: 3, 4-10",
+    "encryptedAttemptsExceeded": "Không thể tải được tài liệu mã hóa. Thử quá nhiều lần.",
+    "encryptedUserCancelled": "Không thể tải được tài liệu mã hóa. Đã hủy nhập mật khẩu.",
+    "enterPassword": "Tài liệu này được bảo vệ bằng mật khẩu. Vui lòng nhập mật khẩu",
+    "incorrectPassword": "Mật khẩu không chính xác, số lần thử còn lại: {{ remainingAttempts }}",
+    "noAnnotations": "Tài liệu này không có chú thích nào.",
+    "noOutlines": "Tài liệu này không có tóm tắt nào.",
+    "noResults": "Không tìm thấy kết quả nào.",
+    "notSupported": "Loại tệp đó không được hỗ trợ.",
+    "passwordRequired": "Yêu cầu mật khẩu",
+    "preparingToPrint": "Chuẩn bị in...",
+    "printTotalPageCount": "{{count}} trang",
+    "printTotalPageCount_plural": "{{count}} trang",
+    "processing": "Đang xử lý...",
+    "searching": "Đang tìm kiếm...",
+    "searchPlaceholder": "Tìm kiếm bình luận...",
+    "signHere": "Ký tại đây",
+    "insertTextHere": "Chèn văn bản tại đây"
+  },
+  "option": {
+    "annotationColor": {
+      "StrokeColor": "Màu viền",
+      "FillColor": "Màu nền",
+      "TextColor": "Màu văn bản"
+    },
+    "displayMode": {
+      "layout": "Bố cục",
+      "pageTransition": "Chuyển tiếp trang"
+    },
+    "layout": {
+      "cover": "Bìa",
+      "double": "Hai mặt",
+      "single": "Một mặt"
+    },
+    "notesPanel": {
+      "orderPosition": "Vị trí",
+      "orderTime": "Thời gian",
+      "separator": {
+        "today": "Hôm nay",
+        "yesterday": "Hôm qua"
+      }
+    },
+    "pageTransition": {
+      "continuous": "Liên tục",
+      "default": "Từng trang"
+    },
+    "print": {
+      "all": "Tất cả",
+      "current": "Hiện tại",
+      "pages": "Trang",
+      "includeComments": "Bao gồm bình luận"
+    },
+    "redaction": {
+      "markForRedaction": "Đánh dấu để biên tập",
+      "warningPopupMessage": "Hành động này sẽ gỡ vĩnh viễn tất cả các mục được chọn để biên tập. Không thể hoàn tác hành động này.",
+      "warningPopupTitle": "Áp Dụng Biên Tập"
+    },
+    "searchPanel": {
+      "caseSensitive": "Nhạy cảm viết hoa",
+      "wholeWordOnly": "Toàn bộ từ"
+    },
+    "signatureOverlay": {
+      "addSignature": "Thêm chữ ký"
+    },
+    "measurementOverlay": {
+      "scale": "Tỷ Lệ Quy Mô",
+      "angle": "Góc",
+      "distance": "Khoảng cách",
+      "perimeter": "Chu vi",
+      "area": "Diện tích",
+      "distanceMeasurement": "Đo Lường Khoảng Cách",
+      "perimeterMeasurement": "Đo Lường Chu Vi",
+      "areaMeasurement": "Đo Lường Diện Tích"
+    },
+    "measurementOption": {
+      "scale": "Quy mô"
+    },
+    "slider": {
+      "opacity": "Độ đục",
+      "thickness": "Độ dày",
+      "text": "Kích Cỡ Văn Bản"
+    },
+    "shared": {
+      "page": "Trang",
+      "precision": "Độ chính xác"
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "stamp": "(I)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)"
+  },
+  "tool": {
+    "pan": "Quét",
+    "select": "Chọn",
+    "Marquee": "Thu Phóng Màn"
+  }
+}

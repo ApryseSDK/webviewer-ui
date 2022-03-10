@@ -1,7 +1,7 @@
 import actions from 'actions';
 
 /**
- * Enable the confirmation modal when deleteing a page from the thumnail view
+ * Enable the confirmation modal when deleting a page from the thumbnail view
  *
  * @method UI.enablePageDeletionConfirmationModal
  * @example
