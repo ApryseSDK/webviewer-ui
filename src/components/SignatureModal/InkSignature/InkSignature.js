@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import setToolStyles from 'helpers/setToolStyles';
 import { Swipeable } from 'react-swipeable';
+import { Choice } from "@pdftron/webviewer-react-toolkit";
 import ColorPalette from 'components/ColorPalette';
 
 import core from 'core';
@@ -164,7 +165,14 @@ const InkSignature = ({
       </Measure>
       <div
         className="footer"
+        style={{
+          justifyContent: 'space-between'
+        }}
       >
+        <Choice
+          className={`checkbox`}
+          label={'Save Signature'}
+        />
         <button className="signature-create" onClick={createSignature} disabled={!drawn}>
           {t('action.create')}
         </button>
