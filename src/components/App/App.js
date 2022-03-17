@@ -76,6 +76,10 @@ const App = ({ removeEventHandlers }) => {
 
   useEffect(() => {
     fireEvent(Events.VIEWER_LOADED);
+    window.parent.postMessage({
+      type: 'viewerLoaded',
+      id: parseInt(getHashParameters('id'), 10)
+    }, '*');
 
     async function loadInitialDocument() {
       const doesAutoLoad = getHashParameters('auto_load', true);
