@@ -4,7 +4,7 @@
 .saved-signature-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 272px;
   line-height: 272px;
 }
@@ -24,10 +24,11 @@
 .saved-signature-image-container {
   width: 100%;
   background: var(--signature-draw-background);
-  padding: 20px;
   display: flex;
   flex-direction: row;
   position: relative;
+  min-width: 120px;
+  min-height: 100px;
 }
 
 .saved-signature-image {

@@ -7,6 +7,7 @@ import core from 'core';
 import { isIOS } from 'helpers/device';
 import cropImageFromCanvas from 'helpers/cropImageFromCanvas';
 import selectors from 'selectors';
+import { Choice } from '@pdftron/webviewer-react-toolkit';
 import { useTranslation } from 'react-i18next';
 
 import './TextSignature.scss';
@@ -24,17 +25,13 @@ const useForceUpdate = () => {
   return () => setIt(it => !it);
 };
 
-const TextSignature = ({
-  isModalOpen,
-  isTabPanelSelected,
-  createSignature,
-}) => {
+const TextSignature = ({ isModalOpen, isTabPanelSelected, createSignature }) => {
   const fonts = useSelector(state => selectors.getSignatureFonts(state));
   // const [value, setValue] = useState(core.getDisplayAuthor(core.getCurrentUser()));
   const [value, setValue] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDefaultValue, setIsDefaultValue] = useState(true);
-  const [fontColor, setFontColor] = useState("#000000");
+  const [fontColor, setFontColor] = useState('#000000');
   const inputRef = useRef();
   const canvasRef = useRef();
   const textDivsRef = useRef([]);
@@ -57,9 +54,7 @@ const TextSignature = ({
     const textClipPadding = 100;
 
     const resizeCanvas = () => {
-      let { width, height } = textDivsRef.current[
-        activeIndex
-      ].getBoundingClientRect();
+      let { width, height } = textDivsRef.current[activeIndex].getBoundingClientRect();
       width = width + textClipPadding;
       height = height + textClipPadding;
       canvas.style.width = `${width}px`;
@@ -132,11 +127,16 @@ const TextSignature = ({
 
     const signatureValue = value || '';
     if (signatureValue.trim()) {
-      const base64 = cropImageFromCanvas(canvas)
+      const base64 = cropImageFromCanvas(canvas);
       signatureTool.setSignature(base64);
     } else {
       signatureTool.setSignature(null);
     }
+  };
+
+  const handleSaveSignatureChange = e => {
+    const newValue = e.target.checked;
+    window.parent.handleSaveSignature?.(newValue);
   };
 
   const handleInputChange = e => {
@@ -148,11 +148,10 @@ const TextSignature = ({
   };
 
   const handleColorInputChange = (property, value) => {
-    setFontColor(value)
+    setFontColor(value);
     // hack for tool styles for signature not being on state
     forceUpdate();
-  }
-
+  };
 
   return (
     <React.Fragment>
@@ -166,7 +165,7 @@ const TextSignature = ({
               value={value}
               placeholder="Type Signature"
               onChange={handleInputChange}
-              style={{fontFamily: fonts, fontSize: FONT_SIZE*2/3, color:fontColor}}
+              style={{ fontFamily: fonts, fontSize: (FONT_SIZE * 2) / 3, color: fontColor }}
               disabled={!(isModalOpen && isTabPanelSelected)}
             />
           </label>
@@ -178,7 +177,7 @@ const TextSignature = ({
               'text-signature-text': true,
               active: index === activeIndex,
             })}
-            style={{ fontFamily: font, fontSize: FONT_SIZE, color:fontColor}}
+            style={{ fontFamily: font, fontSize: FONT_SIZE, color: fontColor }}
             onClick={() => setActiveIndex(index)}
           >
             <div
@@ -199,15 +198,27 @@ const TextSignature = ({
             onStyleChange={(property, value) => handleColorInputChange(property, value)}
             overridePalette2={['#000000', '#4E7DE9', '#E44234']}
           />
-          <button className="signature-clear" onClick={() => setValue('')} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
+          <button
+            className="signature-clear"
+            onClick={() => setValue('')}
+            disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}
+          >
             {t('action.clear')}
           </button>
         </div>
       </div>
       <div
         className="footer"
+        style={{
+          justifyContent: 'space-between',
+        }}
       >
-        <button className="signature-create" onClick={createSignature} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
+        <Choice className={`checkbox`} label={'Save Signature'} onChange={handleSaveSignatureChange} />
+        <button
+          className="signature-create"
+          onClick={createSignature}
+          disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}
+        >
           {t('action.create')}
         </button>
       </div>

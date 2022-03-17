@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { Choice } from '@pdftron/webviewer-react-toolkit';
 
 import core from 'core';
 
@@ -31,6 +32,11 @@ const ImageSignature = ({ isModalOpen, isTabPanelSelected, createSignature }) =>
       signatureTool.setSignature(imageSrc, fileSize);
     }
   }, [imageSrc, isTabPanelSelected, isModalOpen]);
+
+  const handleSaveSignatureChange = e => {
+    const newValue = e.target.checked;
+    window.parent.handleSaveSignature?.(newValue);
+  };
 
   const handleFileChange = e => {
     readFile(e.target.files[0]);
@@ -159,7 +165,13 @@ const ImageSignature = ({ isModalOpen, isTabPanelSelected, createSignature }) =>
           </>
         )}
       </div>
-      <div className="footer">
+      <div
+        className="footer"
+        style={{
+          justifyContent: 'space-between',
+        }}
+      >
+        <Choice className={`checkbox`} label={'Save Signature'} onChange={handleSaveSignatureChange} />
         <button
           className="signature-create"
           onClick={createSignature}
