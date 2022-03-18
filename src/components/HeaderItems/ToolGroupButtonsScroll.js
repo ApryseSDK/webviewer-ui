@@ -2,8 +2,8 @@ import React from 'react';
 import ToolGroupButton from 'components/ToolGroupButton';
 import ScrollGroup from './ScrollGroup';
 
-const ToolGroupButtonsScroll = ({ toolGroupButtonsItems, key }) => {
-  return <ScrollGroup key={key}>
+const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
+  return <ScrollGroup>
     {
       toolGroupButtonsItems.map((toolBtn, i) => {
         const { type, dataElement, hidden } = toolBtn;
