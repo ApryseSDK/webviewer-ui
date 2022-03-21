@@ -10,9 +10,12 @@
 }
 
 .saved-signature-choice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 50%;
   margin: 10px;
-  max-width: 40%;
+  max-width: 45%;
 }
 
 .saved-signature-icon-button {
@@ -29,6 +32,10 @@
   position: relative;
   min-width: 120px;
   min-height: 100px;
+
+  img {
+    object-fit: contain;
+  }
 }
 
 .saved-signature-image {
