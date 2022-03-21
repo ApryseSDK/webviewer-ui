@@ -22,6 +22,7 @@ const ImageSignature = ({ isModalOpen, isTabPanelSelected, createSignature }) =>
   const [errorMessage, setErrorMessage] = useState('');
   const fileInputRef = useRef();
   const [t] = useTranslation();
+  const [shouldSaveSignature, setShouldSaveSignature] = useState(false);
 
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -33,9 +34,22 @@ const ImageSignature = ({ isModalOpen, isTabPanelSelected, createSignature }) =>
     }
   }, [imageSrc, isTabPanelSelected, isModalOpen]);
 
+  useEffect(() => {
+    const listener = event => {
+      setShouldSaveSignature(event.detail);
+    };
+
+    window.parent.addEventListener('shouldSaveSignatureChanged', listener);
+
+    return () => {
+      window.parent.removeEventListener('shouldSaveSignatureChanged', listener);
+    };
+  }, []);
+
   const handleSaveSignatureChange = e => {
     const newValue = e.target.checked;
     window.parent.handleSaveSignature?.(newValue);
+    setShouldSaveSignature(newValue);
   };
 
   const handleFileChange = e => {
@@ -171,7 +185,12 @@ const ImageSignature = ({ isModalOpen, isTabPanelSelected, createSignature }) =>
           justifyContent: 'space-between',
         }}
       >
-        <Choice className={`checkbox`} label={'Save Signature'} onChange={handleSaveSignatureChange} />
+        <Choice
+          checked={shouldSaveSignature}
+          className={`checkbox`}
+          label={'Save Signature'}
+          onChange={handleSaveSignatureChange}
+        />
         <button
           className="signature-create"
           onClick={createSignature}

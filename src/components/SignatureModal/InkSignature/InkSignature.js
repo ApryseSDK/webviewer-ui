@@ -34,8 +34,21 @@ const InkSignature = ({ isModalOpen, isTabPanelSelected, createSignature }) => {
   const [t] = useTranslation();
   const [dimension, setDimension] = useState({});
   const [drawn, setDrawn] = useState(false);
+  const [shouldSaveSignature, setShouldSaveSignature] = useState(false);
 
   const forceUpdate = useForceUpdate();
+
+  useEffect(() => {
+    const listener = event => {
+      setShouldSaveSignature(event.detail);
+    };
+
+    window.parent.addEventListener('shouldSaveSignatureChanged', listener);
+
+    return () => {
+      window.parent.removeEventListener('shouldSaveSignatureChanged', listener);
+    };
+  }, []);
 
   useEffect(() => {
     const signatureTool = core.getTool('AnnotationCreateSignature');
@@ -165,7 +178,12 @@ const InkSignature = ({ isModalOpen, isTabPanelSelected, createSignature }) => {
           justifyContent: 'space-between',
         }}
       >
-        <Choice className={`checkbox`} label={'Save Signature'} onChange={handleSaveSignatureChange} />
+        <Choice
+          className={`checkbox`}
+          label={'Save Signature'}
+          onChange={handleSaveSignatureChange}
+          checked={shouldSaveSignature}
+        />
         <button className="signature-create" onClick={createSignature} disabled={!drawn}>
           {t('action.create')}
         </button>
