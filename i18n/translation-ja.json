@@ -29,7 +29,7 @@
     "pageNext": "次のページ",
     "pageSet": "ページを設定",
     "print": "印刷",
-    "proceed": "続行",
+    "proceed": "進む",
     "name": "名前",
     "rename": "名前を変更する",
     "ok": "OK",
@@ -81,7 +81,7 @@
     "select": "選択する",
     "moveToTop": "上に移動",
     "moveToBottom": "下に移動",
-    "playAudio": "オーディオを再生する",
+    "playAudio": "オーディオを再生",
     "pauseAudio": "オーディオの一時停止"
   },
   "annotation": {
@@ -109,7 +109,7 @@
     "polygonCloud": "雲型",
     "polyline": "折れ線",
     "rectangle": "長方形",
-    "redact": "改訂",
+    "redact": "墨消し",
     "formFillDot": "ドット",
     "signature": "署名",
     "squiggly": "波線",
@@ -129,7 +129,7 @@
     "link": "リンク",
     "other": "その他",
     "3D": "3D",
-    "sound": "音"
+    "sound": "サウンド"
   },
   "rubberStamp": {
     "Approved": "承認済",
@@ -172,7 +172,7 @@
     "layersPanel": "レイヤー",
     "thumbnailsPanel": "サムネイル",
     "toolsButton": "ツール",
-    "redaction": "改訂",
+    "redaction": "墨消し",
     "viewControlsOverlay": "ページ表示",
     "calibration": "調整",
     "zoomOverlay": "ズームオーバーレイ",
@@ -215,10 +215,10 @@
     "errorEnterMeasurement": "入力した数値は無効です。7.5や7 1/2などの値を入力できます",
     "linkURLorPage": "ページまたはURLのリンクを挿入",
     "warning": "警告",
-    "enterContentEditingMode": "テキスト編集モードを開始しようとしています。",
-    "existingAnnotationWarning": "編集後、既存の注釈がテキストと一致しない場合があります。",
+    "enterContentEditingMode": "編集モードを開始しようとしています。",
+    "existingAnnotationWarning": "編集内容が既存の注釈と一致しない場合があります。",
     "changesCannotBeUndone": "行った変更は元に戻せません。",
-    "doNotShowAgain": "また僕にこれを見せないでください",
+    "doNotShowAgain": "次回以降は表示しない",
     "enterReplacementText": "置き換えるテキストを入力してください",
     "sortBy": "並び替え",
     "emptyCustomStampInput": "スタンプテキストを空にすることはできません",
@@ -248,7 +248,7 @@
       "polygon": "ポリゴン",
       "polyline": "ポリライン",
       "rectangle": "長方形",
-      "redact": "改訂",
+      "redact": "墨消し",
       "signature": "署名",
       "stamp": "スタンプ",
       "stickyNote": "付箋",
@@ -313,7 +313,7 @@
       "separator": {
         "today": "今日",
         "yesterday": "昨日",
-        "unknown": "わからない"
+        "unknown": "不明"
       },
       "noteContent": {
         "noName": "（ノーネーム）",
@@ -343,7 +343,7 @@
       "date": "日付"
     },
     "redaction": {
-      "markForRedaction": "改訂マーク"
+      "markForRedaction": "墨消しマーク"
     },
     "searchPanel": {
       "caseSensitive": "大文字と小文字を区別",
@@ -373,7 +373,7 @@
       "chooseFile": "ファイルを選択",
       "localFile": "ローカルファイル",
       "pageReplaceInputLabel": "ページを置き換える",
-      "pageReplaceInputFromSource": "ページ付き"
+      "pageReplaceInputFromSource": "ページ"
     },
     "filterAnnotModal": {
       "commentBy": "コメント者",
@@ -465,11 +465,11 @@
       "strikeout": "取り消し線",
       "alignLeft": "テキストを左揃え",
       "alignRight": "テキストを右揃え",
-      "alignCenter": "テキストを中央に揃える",
+      "alignCenter": "テキストを中央揃え",
       "justifyCenter": "テキスト正当化センター",
-      "alignTop": "上を揃える",
-      "alignMiddle": "中央に揃える",
-      "alignBottom": "底を揃える"
+      "alignTop": "上揃え",
+      "alignMiddle": "中央揃え",
+      "alignBottom": "下揃え"
     },
     "customStampModal": {
       "stampText": "スタンプテキスト：",
@@ -493,8 +493,8 @@
       "secondaryBtn": "ページを抽出して削除する"
     },
     "redaction": {
-      "applyTile": "改訂を適用",
-      "applyMessage": "この操作により、改訂のために選択されたすべてのアイテムが完全に削除されます。この変更は元に戻せません。"
+      "applyTile": "墨消しを適用",
+      "applyMessage": "この操作により、墨消しのために選択されたものがすべて完全に削除されます。この変更は元に戻せません。"
     },
     "selectPage": {
       "selectTitle": "ページが選択されていません",
