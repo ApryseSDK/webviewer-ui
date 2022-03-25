@@ -75,6 +75,7 @@ function useSearch() {
     searchResults,
     activeSearchResult,
     activeSearchResultIndex,
+    setSearchStatus,
   };
 }
 

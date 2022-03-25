@@ -36,6 +36,7 @@ export function Basic() {
   const [isCaseSensitive, setCaseSensitive] = React.useState(false);
   const [isWholeWord, setWholeWord] = React.useState(false);
   const [isWildcard, setWildcard] = React.useState(false);
+  const [searchStatus, setSearchStatus] = React.useState('SEARCH_NOT_INITIATED');
   const props = {
     searchValue,
     setSearchValue,
@@ -46,6 +47,7 @@ export function Basic() {
     isWildcard,
     setWildcard,
     executeSearch,
+    setSearchStatus,
     selectNextResult,
     selectPreviousResult
   };

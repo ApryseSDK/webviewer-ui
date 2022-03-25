@@ -54,6 +54,7 @@ describe('SearchOverlay', () => {
         <TestSearchOverlay
           setSearchValue={noop}
           setCaseSensitive={noop}
+          setSearchStatus={noop}
           setWholeWord={noop}
           setWildcard={noop}
           executeSearch={noop}
@@ -70,6 +71,7 @@ describe('SearchOverlay', () => {
       const { container } = render(
         <TestSearchOverlay
           setSearchValue={noop}
+          setSearchStatus={noop}
           setCaseSensitive={noop}
           setWholeWord={noop}
           setWildcard={noop}
@@ -79,26 +81,11 @@ describe('SearchOverlay', () => {
       const searchInput = container.querySelector('#SearchPanel__input');
       expect(searchInput).toBeInTheDocument();
       fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
-      expect(executeSearch).toHaveBeenCalled();
+      setTimeout(() => {
+        expect(executeSearch).toHaveBeenCalled();
+      }, 1000);
     });
 
-    it('Should execute search when search button clicked', () => {
-      const executeSearch = jest.fn();
-      const { container } = render(
-        <TestSearchOverlay
-          setSearchValue={noop}
-          setCaseSensitive={noop}
-          setWholeWord={noop}
-          setWildcard={noop}
-          executeSearch={executeSearch}
-        />
-      );
-
-      const searchButton = container.querySelector('.input-button');
-      expect(searchButton).toBeInTheDocument();
-      fireEvent.click(searchButton);
-      expect(executeSearch).toHaveBeenCalled();
-    });
 
     it('Should execute search when case sensitive checkbox changed', () => {
       const executeSearch = jest.fn();
@@ -117,7 +104,7 @@ describe('SearchOverlay', () => {
       const checkbox = container.querySelector('#case-sensitive-option');
       expect(checkbox).toBeInTheDocument();
       fireEvent.click(checkbox);
-      expect(executeSearch).not.toBeCalled();
+      expect(executeSearch).toBeCalled();
     });
 
     it('Should execute search when whole word checkbox changed', () => {
@@ -137,7 +124,7 @@ describe('SearchOverlay', () => {
       const checkbox = container.querySelector('#whole-word-option');
       expect(checkbox).toBeInTheDocument();
       fireEvent.click(checkbox);
-      expect(executeSearch).not.toBeCalled();
+      expect(executeSearch).toBeCalled();
     });
 
     it('Should render wild card checkbox and execute search when checkbox changed', () => {
@@ -157,7 +144,7 @@ describe('SearchOverlay', () => {
       const checkbox = container.querySelector('#wild-card-option');
       expect(checkbox).toBeInTheDocument();
       fireEvent.click(checkbox);
-      expect(executeSearch).not.toBeCalled();
+      expect(executeSearch).toBeCalled();
     });
 
     it('Should not be focused on mount', () => {
@@ -165,6 +152,7 @@ describe('SearchOverlay', () => {
         <TestSearchOverlay
           setSearchValue={noop}
           setCaseSensitive={noop}
+          setSearchStatus={noop}
           setWholeWord={noop}
           setWildcard={noop}
           executeSearch={noop}

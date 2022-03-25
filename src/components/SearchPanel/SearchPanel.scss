@@ -28,16 +28,12 @@
 }
 
 .SearchPanel {
-  padding-top: 0px;
-  padding-left: 16px;
-  padding-bottom: 0px;
+  padding: 16px 8px 0 16px;
   display: flex;
   flex-direction: column;
-  padding-right: 8px;
   // Needed
   // overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
 
-  padding-top: 16px;
 
   .ListSeparator:first-child {
     margin-top: 0px;
@@ -85,7 +81,7 @@
 
     .ReactVirtualized__List{
       overflow: overlay !important;
-      padding-right: 16px;
+      padding-right: 8px;
 
       &:focus{
         outline: none;

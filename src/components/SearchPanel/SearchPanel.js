@@ -37,7 +37,7 @@ function SearchPanel(props) {
   } = props;
 
   const { t } = useTranslation();
-  const { searchStatus, searchResults, activeSearchResultIndex } = useSearch();
+  const { searchStatus, searchResults, activeSearchResultIndex, setSearchStatus } = useSearch();
 
   const onCloseButtonClick = React.useCallback(function onCloseButtonClick() {
     if (closeSearchPanel) {
@@ -77,6 +77,7 @@ function SearchPanel(props) {
         </div>}
       <SearchOverlay
         searchStatus={searchStatus}
+        setSearchStatus={setSearchStatus}
         searchResults={searchResults}
         activeResultIndex={activeSearchResultIndex}
         isPanelOpen={isOpen}

@@ -5,65 +5,52 @@
   position: static;
   display: flex;
   flex-direction: column;
-  padding: 0px;
+  padding-right: 8px;
   flex-wrap: nowrap;
   border: 0px;
   border-radius: 0px;
   background: transparent;
   visibility: visible !important;
-  padding-right: 18px;
   flex-grow: 0;
 
   .input-container {
     display: flex;
     position: relative;
-    flex: 1 0 auto;
+    box-sizing: border-box;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: var(--text-color);
+    padding: 6px 2px 6px 6px;
+    background: var(--gray-0);
 
     input {
       width: 100%;
-      padding-left: 8px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      color: var(--text-color);
-      padding-bottom: 6px;
-      padding-right: 42px;
-      padding-top: 4px;
-
-      &:focus {
-        outline: none;
-        border: 1px solid var(--focus-border);
-      }
-
-      &::placeholder {
-        color: var(--placeholder-text);
-      }
+      padding: 6px;
+      height: 16px;
+      border: none;
+      background: transparent;
     }
 
-    .input-button {
+    .clearSearch-button {
       @include button-reset;
       cursor: pointer;
-      background: var(--primary-button);
       border-radius: 4px;
-      width: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: absolute;
-      top: 0px;
-      bottom: 0px;
-      right: 0px;
-
-      .Icon {
-        width: 20px;
-        height: 20px;
-      }
+      width: 24px;
+      height: 24px;
 
       svg {
-        color: var(--primary-button-text);
+        color: var(--gray-7);
       }
-
       &:hover {
-        background: var(--primary-button-hover);
+        background: var(--blue-1);
       }
     }
   }
@@ -77,15 +64,12 @@
 
   .options {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-left: -16px;
-    margin-top: 5px;
+    margin-top: 8px;
 
     // toolkit choice component
     > span {
-      margin-left: 16px;
-
+      margin-right: 8px;
+      width: 50%;
       // label of toolkit choice component
       > label {
         white-space: nowrap;
@@ -100,11 +84,20 @@
     color: var(--faded-text);
     margin-bottom: 16px;
 
+    .spinner {
+      height:25px !important;
+      width:25px !important;
+      margin: 0px;
+    }
+    
     .buttons {
       display: flex;
       flex-direction: row;
       align-self: flex-end;
+      justify-content: space-evenly;
       margin-left: auto;
+      width: 64px;
+      height: 28px;
 
       .button {
         @include button-reset;
@@ -114,26 +107,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-left: 8px;
         cursor: pointer;
 
-        border: 1px solid var(--primary-button);
         svg {
-          color: var(--primary-button);
+          color: var(--gray-7);
         }
 
         &:hover {
-          background: var(--primary-button-hover);
-          border: 1px solid var(--primary-button-hover);
-          svg {
-            color: var(--primary-button-text);
-          }
+          background-color: var(--blue-1)
         }
       }
 
       .arrow {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
       }
     }
   }
