@@ -94,6 +94,7 @@ const SignatureModal = () => {
                   <Tab dataElement="savedSignaturePanelButton">
                     <button className="tab-options-button">Saved</button>
                   </Tab>
+                  <div className="tab-options-divider" />
                   <Tab dataElement="inkSignaturePanelButton">
                     <button className="tab-options-button">{t('action.draw')}</button>
                   </Tab>
