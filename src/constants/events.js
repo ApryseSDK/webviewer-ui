@@ -175,7 +175,12 @@ export default {
 * Triggered when outline bookmarks have changed.
 * @name UI#outlineBookmarksChanged
 * @event
-* @param {object} bookmark The changed bookmark
+* @param {object} bookmarkData
+* @param {object} bookmarkData.bookmark The changed bookmark
+* @param {string} bookmarkData.bookmark.id Changed outline bookmark id
+* @param {string} bookmarkData.bookmark.name Changed outline bookmark name
+* @param {string} bookmarkData.path Changed outline path in the outline tree
+* @param {string} bookmarkData.action The action that triggered the outline bookmarks change
 */
 
 /**

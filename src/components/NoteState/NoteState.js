@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import Tooltip from '../Tooltip';
 
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
@@ -74,9 +75,11 @@ function NoteState(props) {
       onClick={togglePopup}
       ref={popupRef}
     >
-      <div className={noteStateButtonClassName}>
-        <Icon glyph={icon} />
-      </div>
+      <Tooltip content={t('option.notesOrder.status')}>
+        <div className={noteStateButtonClassName}>
+          <Icon glyph={icon} />
+        </div>
+      </Tooltip>
       {isOpen && (
         <button className="note-state-options" onClick={onStateOptionsButtonClick}>
           <DataElementWrapper dataElement="notePopupState">
