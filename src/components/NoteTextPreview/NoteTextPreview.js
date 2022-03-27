@@ -9,7 +9,7 @@ function NoteTextPreview(props) {
   const {
     panelWidth,
     linesToBreak,
-    /** If text being previewed is a comment it gets a darker font color */
+    /* If text being previewed is a comment it gets a darker font color */
     comment = false
   } = props;
   const [expanded, setExpand] = useState(false);
