@@ -1,0 +1,120 @@
+@import '../../constants/styles';
+
+.redaction-search-counter-controls {
+  display: flex;
+  flex-direction: row;
+  margin-top: 49px;
+  font-size: var(--font-size-default);
+  padding: 16px;
+  border: 1px solid var(--border);
+  background-color: var(--gray-0);
+  border-radius: 4px 4px 0px 0px;
+  max-height: 50px;
+  min-height: 50px;
+
+  .redaction-search-results-counter {
+    flex: 3 1 auto;
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .spinner {
+    margin: auto;
+    flex: 3 1 '25px';
+  }
+
+  button {
+    @include button-reset;
+    flex: 1 1 auto;
+    color: var(--secondary-button-text);
+    border: none;
+    cursor: pointer;
+    
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+}
+
+.redaction-search-results-container {
+  flex: 1 1 auto;
+  background-color: var(--gray-2);
+  color: var(--placeholder-text);
+  font-size: 13px;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+
+  &.emptyList {
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.redaction-search-no-results {
+  justify-content: center;
+  align-items: center;
+}
+
+.redaction-search-panel-controls {
+  display: flex;
+  flex-direction: row;
+  flex: 0 1 52px;
+  padding: 12px;
+  background-color: var(--gray-0);
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+
+  button {
+    @include button-reset;
+    height: 28px;
+    padding: 6px 16px;
+    cursor: pointer;
+
+    @include mobile {
+      height: 32px;
+    }
+  }
+
+  .cancel {
+    flex: 2 1 auto;
+    color: var(--secondary-button-text);
+    border: none;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+
+  .redact-all-selected {
+    flex: 1 1 auto;
+    border: 1px solid var(--secondary-button-text);
+    border-radius: 4px;
+    color: var(--secondary-button-text);
+    margin-right: 8px;
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .mark-all-selected {
+    flex: 1 1 auto;
+    background-color: var(--primary-button);
+    border: 1px solid var(--primary-button);
+    border-radius: 4px;
+    color: var(--primary-button-text);
+    border-radius: 4px;
+    // width: 90px;
+    cursor: pointer;
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+

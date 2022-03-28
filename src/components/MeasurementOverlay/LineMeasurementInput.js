@@ -6,14 +6,14 @@ import core from 'core';
 import { isMobileDevice } from 'helpers/device';
 import selectors from 'selectors';
 import useOnClickOutside from 'src/hooks/useOnClickOutside';
-import getFormatedUnit from 'helpers/getFormatedUnit';
+import getFormattedUnit from 'src/helpers/getFormattedUnit';
 
 
 function LineMeasurementInput(props) {
   const { t, annotation, isOpen } = props;
   const isReadOnly = useSelector(state => selectors.isDocumentReadOnly(state));
   const factor = annotation.Measure.axis[0].factor;
-  const unit = getFormatedUnit(annotation.DisplayUnits[annotation.DisplayUnits.length - 1]);
+  const unit = getFormattedUnit(annotation.DisplayUnits[annotation.DisplayUnits.length - 1]);
   const [length, setLength] = useState((annotation.getLineLength() * factor).toFixed(2));
   const [showQuotMark, setShowQuotMark] = useState(true);
   const inputRef = useRef();

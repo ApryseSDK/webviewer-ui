@@ -4,6 +4,21 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_FONTS':
+      return {
+        ...state,
+        fonts: payload.fonts,
+      };
+    case 'SET_ACTIVE_TAB':
+      return {
+        ...state,
+        activeTab: payload.activeTab,
+      };
+    case 'SET_TABS':
+      return {
+        ...state,
+        tabs: payload.tabs,
+      };
     case 'SET_IS_MULTI_TAB':
       return {
         ...state,
@@ -193,7 +208,7 @@ export default initialState => (state = initialState, action) => {
       if (localStorageManager.isLocalStorageEnabled()) {
         window.localStorage.setItem('customColors', JSON.stringify(payload.customColors));
       } else {
-        console.error("localStorage is disabled, customColors cannot be restored");
+        console.error('localStorage is disabled, customColors cannot be restored');
       }
       return { ...state, customColors: payload.customColors };
     case 'SET_ACTIVE_TOOL_NAME_AND_STYLES':
@@ -389,7 +404,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     case 'SET_CUSTOM_MODAL': {
-      const existingDataElementFiltered = state.customModals.filter(function (modal) {
+      const existingDataElementFiltered = state.customModals.filter(function(modal) {
         return modal.dataElement !== payload.dataElement;
       });
       return {
@@ -412,7 +427,7 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         enableNoteSubmissionWithEnter: payload.enableNoteSubmissionWithEnter
-      }
+      };
     case 'ADD_TRUSTED_CERTIFICATES':
       /**
        * To mimic the behavior of the Core implementation, where certificates
@@ -459,12 +474,12 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         fadePageNavigationComponent: payload.fadePageNavigationComponent
-      }
+      };
     case 'SET_HIDE_CONTENT_EDIT_WARNING':
       if (localStorageManager.isLocalStorageEnabled()) {
         window.localStorage.setItem('hideContentEditWarning', JSON.stringify(payload.hideWarning));
       } else {
-        console.error("localStorage is disabled, hideContentEditWarning cannot be restored");
+        console.error('localStorage is disabled, hideContentEditWarning cannot be restored');
       }
       return { ...state, hideContentEditWarning: payload.hideWarning };
     case 'SET_CURRENT_CONTENT_BEING_EDITED':

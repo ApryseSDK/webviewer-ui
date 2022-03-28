@@ -1,12 +1,10 @@
 import React from 'react';
 import actions from 'actions';
 import core from 'core';
-
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import Ribbons from 'components/Ribbons';
 import ApplyFormFieldButton from 'components/ApplyFormFieldButton';
-
 import DataElements from 'constants/dataElement';
 import defaultTool from 'constants/defaultTool';
 import { defaultZoomList } from 'constants/zoomFactors';
@@ -14,6 +12,7 @@ import { copyMapWithDataProperties } from 'constants/map';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import getHashParameters from 'helpers/getHashParameters';
 import localStorageManager from 'helpers/localStorageManager';
+import defaultFonts from 'constants/defaultFonts';
 import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
 
 const { ToolNames } = window.Core.Tools;
@@ -43,6 +42,8 @@ const redoButton = {
 export default {
   viewer: {
     TabManager: null,
+    tabs: [],
+    activeTab: 0, // ID of active Tab (multi-tab)
     isMultiTab: false,
     thumbnailSelectingPages: false,
     isInDesktopOnlyMode: false,
@@ -312,6 +313,7 @@ export default {
       ]
     },
     annotationPopup: [
+      { dataElement: 'viewFileButton' },
       { dataElement: 'annotationCommentButton' },
       { dataElement: 'annotationStyleEditButton' },
       { dataElement: 'annotationDateEditButton' },
@@ -321,10 +323,10 @@ export default {
       { dataElement: 'annotationGroupButton' },
       { dataElement: 'annotationUngroupButton' },
       { dataElement: 'formFieldEditButton' },
-      { dataElement: 'annotationDeleteButton' },
       { dataElement: 'calibrateButton' },
       { dataElement: 'linkButton' },
       { dataElement: 'fileAttachmentDownload' },
+      { dataElement: 'annotationDeleteButton' },
       { dataElement: 'shortCutKeysFor3D' },
       { dataElement: 'playSoundButton' },
     ],
@@ -351,6 +353,7 @@ export default {
       { dataElement: 'downloadButton' },
       { dataElement: 'printButton' },
       { dataElement: 'themeChangeButton' },
+      { dataElement: 'languageButton' }
     ],
     pageManipulationOverlay: [
       { dataElement: 'pageAdditionalControls' },
@@ -550,7 +553,7 @@ export default {
     isAccessibleMode: getHashParameters('accessibleMode', false),
     measurementUnits: {
       from: ['in', 'mm', 'cm', 'pt'],
-      to: ['in', 'mm', 'cm', 'pt', 'ft', 'm', 'yd', 'km', 'mi'],
+      to: ['in', 'mm', 'cm', 'pt', 'ft', 'ft-in', 'm', 'yd', 'km', 'mi'],
     },
     maxSignaturesCount: 4,
     signatureFonts: ['GreatVibes-Regular'],
@@ -574,6 +577,7 @@ export default {
     validationModalWidgetName: '',
     verificationResult: {},
     watermarkModalOptions: null,
+    fonts: defaultFonts,
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
   },
@@ -587,6 +591,11 @@ export default {
     isAmbientString: false,
     clearSearchPanelOnClose: false,
     results: [],
+    redactionSearchPatterns: {
+      creditCards: '\\b(?:\\d[ -]*?){13,16}\\b',
+      phoneNumbers: '\\d?(\\s?|-?|\\+?|\\.?)((\\(\\d{1,4}\\))|(\\d{1,3})|\\s?)(\\s?|-?|\\.?)((\\(\\d{1,3}\\))|(\\d{1,3})|\\s?)(\\s?|-?|\\.?)((\\(\\d{1,3}\\))|(\\d{1,3})|\\s?)(\\s?|-?|\\.?)\\d{3}(-|\\.|\\s)\\d{4,5}',
+      emails: '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b',
+    }
   },
   document: {
     totalPages: 0,

@@ -5,6 +5,7 @@
   @extend %modal;
 
   .container {
+    overflow-y: visible;
     @extend %modal-shared-container-style;
     display: flex;
     flex-direction: column;
@@ -103,11 +104,18 @@
         }
 
         .Dropdown__items {
+          z-index: 200;
+          @include mobile {
+            top: 55%;
+            position: fixed;
+            bottom: 0;
+            width: 40%;
+            left: 30%;
+          }
           width: 100%;
           overflow-x: hidden;
           overflow-y: auto;
           max-height: 300px;
-
         }
       }
     }

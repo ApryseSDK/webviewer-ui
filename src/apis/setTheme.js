@@ -13,7 +13,7 @@ import Theme from '../constants/theme';
 /**
  * Sets the theme of WebViewer UI. Please note that this does not work in IE11.
  * @method UI.setTheme
- * @param {UI.Theme} theme Theme of WebViewerInstance UI.
+ * @param {string} theme Theme of WebViewerInstance UI.
  * @see UI.Theme
  * @example
 WebViewer(...)

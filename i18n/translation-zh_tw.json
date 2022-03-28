@@ -81,8 +81,11 @@
     "select": "選擇",
     "moveToTop": "移到頂部",
     "moveToBottom": "移到底部",
+    "redactPages": "編輯頁面",
     "playAudio": "播放音頻",
-    "pauseAudio": "音頻暫停"
+    "pauseAudio": "音頻暫停",
+    "viewFile": "查看文件",
+    "switchLanguage": "語言"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -183,7 +186,8 @@
     "filter": "過濾",
     "pageReplaceModalTitle": "替換頁面",
     "files": "文件",
-    "editText": "編輯文本"
+    "editText": "編輯文本",
+    "redactionPanel": "編輯面板"
   },
   "message": {
     "toolsOverlayNoPresets": "無預設",
@@ -485,6 +489,15 @@
       "Username": "用戶名",
       "Date": "日期",
       "Time": "時間"
+    },
+    "pageRedactModal": {
+      "addMark": "添加標記",
+      "pageSelection": "頁面選擇",
+      "current": "當前頁面",
+      "specify": "指定頁面",
+      "odd": "僅奇數頁",
+      "even": "僅偶數頁",
+      "header": "標記頁面密文"
     }
   },
   "warning": {
@@ -573,7 +586,8 @@
     "enterUrlOrChooseFile": "輸入 URL 或選擇要加載到 WebViewer 的文件",
     "enterUrl": "輸入文件網址",
     "extension": "文件擴展名",
-    "existingFile": "文件已經打開"
+    "existingFile": "文件已經打開",
+    "addTab": "添加標籤"
   },
   "datePicker": {
     "previousMonth": "前一個月",
@@ -763,5 +777,21 @@
       "certificateDownloadError": "嘗試下載受信任的證書時遇到錯誤",
       "localCertificateError": "讀取本地證書存在一些問題"
     }
+  },
+  "redactionPanel": {
+    "noMarkedRedactions": "通過標記文本、區域、頁面或進行搜索來開始編輯。",
+    "redactionSearchPlaceholder": "通過關鍵字搜索或模式添加",
+    "redactionCounter": "標記為編輯",
+    "clearMarked": "清除",
+    "redactAllMarked": "全部編輯",
+    "redactionItem": {
+      "regionRedaction": "區域編輯",
+      "fullPageRedaction": "整頁編輯"
+    },
+    "expand": "擴張",
+    "collapse": "坍塌"
+  },
+  "languageModal": {
+    "selectLanguage": "選擇語言"
   }
 }

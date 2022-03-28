@@ -81,8 +81,11 @@
     "select": "选择",
     "moveToTop": "移到顶部",
     "moveToBottom": "移到底部",
+    "redactPages": "编辑页面",
     "playAudio": "播放音频",
-    "pauseAudio": "音频暂停"
+    "pauseAudio": "音频暂停",
+    "viewFile": "查看文件",
+    "switchLanguage": "语言"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -183,7 +186,8 @@
     "filter": "过滤",
     "pageReplaceModalTitle": "替换页面",
     "files": "文件",
-    "editText": "编辑文本"
+    "editText": "编辑文本",
+    "redactionPanel": "编辑面板"
   },
   "message": {
     "toolsOverlayNoPresets": "无预设",
@@ -485,6 +489,15 @@
       "Username": "用户名",
       "Date": "日期",
       "Time": "时间"
+    },
+    "pageRedactModal": {
+      "addMark": "添加标记",
+      "pageSelection": "页面选择",
+      "current": "当前页面",
+      "specify": "指定页面",
+      "odd": "仅奇数页",
+      "even": "仅偶数页",
+      "header": "标记页面密文"
     }
   },
   "warning": {
@@ -530,7 +543,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "（一世）",
+    "image": "(I)",
     "redo": "（Ctrl Shift Z）",
     "redo_windows": "(Ctrl Y)",
     "undo": "（Ctrl Z）",
@@ -545,8 +558,8 @@
       "underline": "（Ctrl U）",
       "strikeout": "（Ctrl K）"
     },
-    "rotate3D": "Shift +拖动",
-    "zoom3D": "Shift +滚动"
+    "rotate3D": "Shift + 拖动",
+    "zoom3D": "Shift + 滚动"
   },
   "tool": {
     "pan": "移动",
@@ -573,7 +586,8 @@
     "enterUrlOrChooseFile": "输入 URL 或选择要加载到 WebViewer 的文件",
     "enterUrl": "输入文件网址",
     "extension": "文件扩展名",
-    "existingFile": "文件已经打开"
+    "existingFile": "文件已经打开",
+    "addTab": "添加标签"
   },
   "datePicker": {
     "previousMonth": "前一个月",
@@ -763,5 +777,21 @@
       "certificateDownloadError": "尝试下载受信任的证书时遇到错误",
       "localCertificateError": "读取本地证书存在一些问题"
     }
+  },
+  "redactionPanel": {
+    "noMarkedRedactions": "通过标记文本、区域、页面或进行搜索来开始编辑。",
+    "redactionSearchPlaceholder": "通过关键字搜索或模式添加",
+    "redactionCounter": "标记为编辑",
+    "clearMarked": "清除",
+    "redactAllMarked": "全部编辑",
+    "redactionItem": {
+      "regionRedaction": "区域编辑",
+      "fullPageRedaction": "整页编辑"
+    },
+    "expand": "扩张",
+    "collapse": "坍塌"
+  },
+  "languageModal": {
+    "selectLanguage": "选择语言"
   }
 }

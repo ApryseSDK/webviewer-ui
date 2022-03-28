@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -20,6 +20,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './AnnotationPopup.scss';
+import getHashParameters from 'helpers/getHashParameters';
 
 const AnnotationPopup = () => {
   const [
@@ -29,6 +30,9 @@ const AnnotationPopup = () => {
     isAnnotationStylePopupDisabled,
     popupItems,
     isNotesPanelOpen,
+    isMultiTab,
+    tabManager,
+    tabs,
   ] = useSelector(
     state => [
       selectors.isElementDisabled(state, 'annotationPopup'),
@@ -37,6 +41,9 @@ const AnnotationPopup = () => {
       selectors.isElementDisabled(state, 'annotationStylePopup'),
       selectors.getPopupItems(state, 'annotationPopup'),
       selectors.isElementOpen(state, 'notesPanel'),
+      selectors.getIsMultiTab(state),
+      selectors.getTabManager(state),
+      selectors.getTabs(state),
     ],
     shallowEqual,
   );
@@ -162,7 +169,7 @@ const AnnotationPopup = () => {
     };
 
     const onAnnotationSelected = (annotations, action) => {
-      if (action === 'selected' && annotations.length) {
+      if (action === 'selected' && annotations.length && annotations[0].ToolName !== window.Core.Tools.ToolNames.CROP) {
         setFirstAnnotation(annotations[0]);
         setSelectedMultipleAnnotations(annotations.length > 1);
         setIncludesFormFieldAnnotation(annotations.some(annotation => annotation.isFormFieldPlaceholder()));
@@ -194,6 +201,24 @@ const AnnotationPopup = () => {
     };
   }, [dispatch, isNotesPanelOpen, firstAnnotation]);
 
+  const onViewFile = useCallback(async () => {
+    if (!tabManager || !isMultiTab) {
+      return console.warn('Can\'t open file in non-multi-tab mode');
+    }
+    const metaData = firstAnnotation.getFileMetadata();
+    const fileAttachmentTab = tabs.find(tab => tab.options.filename === metaData.filename);
+    if (fileAttachmentTab) { // If already opened once
+      return await tabManager.setActiveTab(fileAttachmentTab.id, true);
+    }
+    await tabManager.addTab(await firstAnnotation.getFileData(), {
+      extension: window.Core.mimeTypeToExtension[metaData.mimeType],
+      filename: metaData.filename,
+      saveCurrent: true,
+      load: true,
+    });
+  }, [tabManager, firstAnnotation, tabs, isMultiTab]);
+
+
   if (isDisabled || !firstAnnotation) {
     return null;
   }
@@ -217,8 +242,7 @@ const AnnotationPopup = () => {
     if (isDateFreeTextCanEdit) {
       toggleDatePicker();
       return;
-    }
-    else {
+    } else {
       dispatch(actions.openElement('notesPanel'));
       dispatch(actions.closeElement('searchPanel'));
       dispatch(actions.triggerNoteEditing());
@@ -293,6 +317,12 @@ const AnnotationPopup = () => {
     canModify && firstAnnotation.Measure && firstAnnotation instanceof Annotations.LineAnnotation;
 
   const showFileDownloadButton = firstAnnotation instanceof window.Annotations.FileAttachmentAnnotation;
+
+  const wvServer = !!getHashParameters('webviewerServerURL', null);
+  const acceptFormats = wvServer ? window.Core.SupportedFileFormats.SERVER : window.Core.SupportedFileFormats.CLIENT;
+  const showViewFileButton = firstAnnotation instanceof Annotations.FileAttachmentAnnotation && isMultiTab
+    && acceptFormats.includes(window.Core.mimeTypeToExtension[firstAnnotation.getFileMetadata().mimeType]);
+
   const shouldShowAudioPlayButton = (
     !isIE &&
     !selectedMultipleAnnotations &&
@@ -315,7 +345,7 @@ const AnnotationPopup = () => {
 
   const onResize = () => {
     setStylePopupRepositionFlag(!stylePopupRepositionFlag);
-  }
+  };
 
   const annotationPopup = (
     <div
@@ -339,6 +369,14 @@ const AnnotationPopup = () => {
       ) : (shortCutKeysFor3DVisible && firstAnnotation instanceof Annotations.Model3DAnnotation) ?
         <ShortCutKeysFor3DComponent /> : (
           <CustomizablePopup dataElement="annotationPopup">
+            {showViewFileButton && (
+              <ActionButton
+                dataElement="viewFileButton"
+                img="icon-view"
+                title="action.viewFile"
+                onClick={onViewFile}
+              />
+            )}
             {showCommentButton && (
               <ActionButton
                 dataElement="annotationCommentButton"
@@ -353,17 +391,6 @@ const AnnotationPopup = () => {
                 title="action.style"
                 img="icon-menu-style-line"
                 onClick={() => setIsStylePopupOpen(true)}
-              />
-            )}
-            {firstAnnotation.ToolName === 'CropPage' && (
-              <ActionButton
-                dataElement="annotationCropButton"
-                title="action.apply"
-                img="ic_check_black_24px"
-                onClick={() => {
-                  core.getTool('CropPage').applyCrop();
-                  dispatch(actions.closeElement('annotationPopup'));
-                }}
               />
             )}
             {firstAnnotation.isContentEditPlaceholder() && firstAnnotation.getContentEditType() === window.Core.ContentEdit.Types.TEXT && (

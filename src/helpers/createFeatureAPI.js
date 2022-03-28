@@ -10,6 +10,7 @@ import enableTools from 'src/apis/enableTools';
 import disableTools from 'src/apis/disableTools';
 import setToolMode from 'src/apis/setToolMode';
 import selectors from 'selectors';
+import TabManager from 'helpers/TabManager';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => (features, priority = PRIORITY_TWO) => {
@@ -246,6 +247,30 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
       fn: () => {
         store.dispatch(actions.setNotesShowLastUpdatedDate(enable));
       }
+    },
+    [Feature.MultiTab]: {
+      fn: () => {
+        if (enable) {
+          const state = store.getState();
+          // if already in multi-tab mode do not recreate TabManager
+          if (selectors.getIsMultiTab(state) && selectors.getTabManager(state)) {
+            return;
+          }
+          const doc = core.getDocument();
+          const docArr = [];
+          if (doc) {
+            docArr.push(doc);
+          }
+          const tabManager = new TabManager(docArr, [], store);
+          store.dispatch(actions.setMultiTab(true));
+          store.dispatch(actions.setTabManager(tabManager));
+        } else {
+          store.dispatch(actions.setMultiTab(false));
+          store.dispatch(actions.setTabManager(null));
+          store.dispatch(actions.setTabs([]));
+          store.dispatch(actions.setActiveTab(0));
+        }
+      },
     }
   };
 

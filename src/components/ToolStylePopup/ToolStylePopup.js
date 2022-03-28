@@ -95,7 +95,7 @@ class ToolStylePopup extends React.PureComponent {
     if (typeof tool.complete === 'function') {
       tool.complete();
     }
-    setToolStyles(activeToolName, property, value);
+    setToolStyles(activeToolName, property, value, true);
   };
 
   handleRichTextStyleChange = (property, value) => {

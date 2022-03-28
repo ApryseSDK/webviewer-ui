@@ -42,9 +42,15 @@ export default function useOnRedactionAnnotationChanged() {
       };
     };
 
+    const onDocumentLoaded = () => {
+      setRedactionAnnotationsList([]);
+    };
+
+    core.addEventListener('documentLoaded', onDocumentLoaded);
     core.addEventListener('annotationChanged', setRedactionAnnotations);
 
     return () => {
+      core.removeEventListener('documentLoaded', onDocumentLoaded);
       core.removeEventListener('annotationChanged', setRedactionAnnotations);
     };
   }, [isNotesPanelOpen, isSearchPanelOpen]);

@@ -4,6 +4,9 @@ import classNames from 'classnames';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
+import core from 'core';
+import actions from 'actions';
+
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
 import ToolsHeader from 'components/Header/ToolsHeader';
@@ -30,7 +33,7 @@ import ProgressModal from 'components/ProgressModal';
 import CalibrationModal from 'components/CalibrationModal';
 import LinkModal from 'components/LinkModal';
 import ContentEditModal from 'components/ContentEditModal';
-import FilterAnnotModal from '../FilterAnnotModal';
+import FilterAnnotModal from 'components/FilterAnnotModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
@@ -43,22 +46,22 @@ import Model3DModal from 'components/Model3DModal';
 import FormFieldEditPopup from 'components/FormFieldEditPopup';
 import ColorPickerModal from 'components/ColorPickerModal';
 import PageManipulationOverlay from 'components/PageManipulationOverlay';
-import PageRedactionModal from "components/PageRedactionModal";
+import PageRedactionModal from 'components/PageRedactionModal';
 import RedactionPanel from 'components/RedactionPanel';
 import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
+import DocumentCropPopup from 'components/DocumentCropPopup';
+import LeftPanelOverlayContainer from 'components/LeftPanelOverlay';
+import LanguageModal from 'components/LanguageModal';
 
-import core from 'core';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
+import { prepareMultiTab } from 'helpers/TabManager';
+
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
 
-import actions from 'actions';
-
 import './App.scss';
-import LeftPanelOverlayContainer from "components/LeftPanelOverlay";
-import { prepareMultiTab } from "helpers/TabManager";
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -78,13 +81,20 @@ const App = ({ removeEventHandlers }) => {
 
   useEffect(() => {
     fireEvent(Events.VIEWER_LOADED);
+    window.parent.postMessage({
+      type: 'viewerLoaded',
+      id: parseInt(getHashParameters('id'), 10)
+    }, '*');
 
-    async function loadInitialDocument() {
+    function loadInitialDocument() {
       const doesAutoLoad = getHashParameters('auto_load', true);
       let initialDoc = getHashParameters('d', '');
-      initialDoc = initialDoc.split(",");
+      initialDoc = initialDoc.split(',');
       const isMultiDoc = initialDoc.length > 1;
       const startOffline = getHashParameters('startOffline', false);
+      const basePath = getHashParameters('basePath', "");
+      window.Core.setBasePath(basePath);
+
       if (isMultiDoc) {
         prepareMultiTab(initialDoc, store);
         initialDoc = initialDoc[0];
@@ -134,7 +144,6 @@ const App = ({ removeEventHandlers }) => {
     timeoutReturn = setTimeout(loadDocumentAndCleanup, 500);
 
     return removeEventHandlers;
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -155,7 +164,7 @@ const App = ({ removeEventHandlers }) => {
 
   return (
     <React.Fragment>
-      <div className={classNames({ "App": true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
+      <div className={classNames({ 'App': true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
         <Accessibility />
 
         <Header />
@@ -212,7 +221,9 @@ const App = ({ removeEventHandlers }) => {
         <ColorPickerModal />
         <PageRedactionModal />
         <AudioPlaybackPopup />
+        <DocumentCropPopup />
         {core.isFullPDFEnabled() && <SignatureValidationModal />}
+        <LanguageModal />
       </div>
 
       <PrintHandler />

@@ -2,6 +2,7 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from "react-redux";
 import RedactionPanel from './RedactionPanel';
+import RedactionPanelContainerWithProvider from './RedactionPanelContainer'
 import RightPanel from 'components/RightPanel';
 import { RedactionPanelContext } from './RedactionPanelContext';
 
@@ -10,6 +11,21 @@ const noop = () => { };
 export default {
   title: 'Components/RedactionPanel',
   component: RedactionPanel,
+  includeStories: ['EmptyList', 'PanelWithRedactionItems', 'RedactionPanelWithSearch']
+};
+
+export const RedactionContextMock = ({ children, mockContext }) => {
+  const context = {
+    selectedRedactionItemId: '1',
+    setSelectedRedactionItemId: (id) => { console.log({ id }) },
+    ...mockContext
+  };
+
+  return (
+    <RedactionPanelContext.Provider value={context}>
+      {children}
+    </RedactionPanelContext.Provider>
+  );
 };
 
 const initialState = {
@@ -25,8 +41,13 @@ const initialState = {
     panelWidths: {
       redactionPanel: 330,
     },
+  },
+  search: {
+    patterns: {
+    }
   }
 };
+
 function rootReducer(state = initialState, action) {
   return state;
 }
@@ -38,15 +59,27 @@ const basicProps = {
   redactionAnnotations: []
 }
 
-export function EmptyList() {
+export const RedactionPanelStoryWrapper = ({ children, mockContext }) => {
   return (
     <Provider store={store}>
       <RightPanel
         dataElement="redactionPanel"
         onResize={noop}>
-        <RedactionPanel {...basicProps} />
+        <RedactionContextMock mockContext={mockContext}>
+          {children}
+        </RedactionContextMock>
       </RightPanel>
-    </Provider>
+    </Provider >
+  )
+};
+
+export function EmptyList() {
+  return (
+    <RedactionPanelStoryWrapper>
+      <div className="Panel RedactionPanel" style={{ width: `330px`, minWidth: `$330px` }}>
+        <RedactionPanel {...basicProps} />
+      </div>
+    </RedactionPanelStoryWrapper>
   );
 }
 
@@ -96,31 +129,20 @@ const redactionAnnotations = [
   },
 ];
 
-const RedactionContextMock = ({ children }) => {
-  const context = {
-    selectedRedactionItemId: '1',
-    setSelectedRedactionItemId: (id) => { console.log({ id }) },
-  };
-
-  return (
-    <RedactionPanelContext.Provider value={context}>
-      {children}
-    </RedactionPanelContext.Provider>
-  );
-}
-
-
-
 export function PanelWithRedactionItems() {
   return (
-    <Provider store={store}>
-      <RightPanel
-        dataElement="redactionPanel"
-        onResize={noop}>
-        <RedactionContextMock>
-          <RedactionPanel {...basicProps} redactionAnnotations={redactionAnnotations} />
-        </RedactionContextMock>
-      </RightPanel>
-    </Provider>
+    <RedactionPanelStoryWrapper>
+      <div className="Panel RedactionPanel" style={{ width: `330px`, minWidth: `330px` }}>
+        <RedactionPanel {...basicProps} redactionAnnotations={redactionAnnotations} />
+      </div>
+    </RedactionPanelStoryWrapper>
   )
+};
+
+export function RedactionPanelWithSearch() {
+  return (
+    <RedactionPanelStoryWrapper>
+      <RedactionPanelContainerWithProvider />
+    </RedactionPanelStoryWrapper>
+  );
 };

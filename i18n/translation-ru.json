@@ -81,8 +81,11 @@
     "select": "Выбирать",
     "moveToTop": "Наверх",
     "moveToBottom": "Вниз",
+    "redactPages": "Редактировать страницы",
     "playAudio": "Воспроизвести аудио",
-    "pauseAudio": "аудио пауза"
+    "pauseAudio": "аудио пауза",
+    "viewFile": "Посмотреть файл",
+    "switchLanguage": "Язык"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -183,7 +186,8 @@
     "filter": "Фильтр",
     "pageReplaceModalTitle": "Заменить страницу",
     "files": "Файлы",
-    "editText": "Редактировать текст"
+    "editText": "Редактировать текст",
+    "redactionPanel": "Панель редактирования"
   },
   "message": {
     "toolsOverlayNoPresets": "Нет пресетов",
@@ -485,6 +489,15 @@
       "Username": "имя пользователя",
       "Date": "Дата",
       "Time": "Время"
+    },
+    "pageRedactModal": {
+      "addMark": "Добавить отметку",
+      "pageSelection": "Выбор страницы",
+      "current": "Текущая страница",
+      "specify": "Укажите страницы",
+      "odd": "Только нечетные страницы",
+      "even": "Только четные страницы",
+      "header": "Пометить страницы как отредактированные"
     }
   },
   "warning": {
@@ -573,7 +586,8 @@
     "enterUrlOrChooseFile": "Введите URL-адрес или выберите файл для загрузки в WebViewer.",
     "enterUrl": "Введите URL-адрес файла",
     "extension": "Расширение файла",
-    "existingFile": "Файл уже открыт"
+    "existingFile": "Файл уже открыт",
+    "addTab": "Добавить вкладку"
   },
   "datePicker": {
     "previousMonth": "Предыдущий месяц",
@@ -763,5 +777,21 @@
       "certificateDownloadError": "Ошибка при попытке скачать доверенный сертификат",
       "localCertificateError": "Есть некоторые проблемы с чтением локального сертификата"
     }
+  },
+  "redactionPanel": {
+    "noMarkedRedactions": "Начните редактирование, пометив текст, области, страницы или выполнив поиск.",
+    "redactionSearchPlaceholder": "Добавить по ключевому слову или шаблонам",
+    "redactionCounter": "Помечено для редактирования",
+    "clearMarked": "Прозрачный",
+    "redactAllMarked": "Редактировать все",
+    "redactionItem": {
+      "regionRedaction": "Редакция региона",
+      "fullPageRedaction": "Полная редакция страницы"
+    },
+    "expand": "Расширять",
+    "collapse": "Крах"
+  },
+  "languageModal": {
+    "selectLanguage": "Выбрать язык"
   }
 }

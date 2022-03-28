@@ -77,6 +77,7 @@ const mapI18nCodeToGoogleTranslationCode = code => {
     zh_cn: 'zh-CN',
     zh_tw: 'zh-TW',
     it: 'it',
+    vi: 'vi',
   };
 
   if (!map[code]) {

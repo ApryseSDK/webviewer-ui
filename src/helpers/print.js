@@ -202,6 +202,16 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
           annotation.Printable = false;
         });
       }
+
+      if (core.getDocumentViewer().isGrayscaleModeEnabled()) {
+        const ctx = canvas.getContext('2d');
+        ctx.globalCompositeOperation = 'color';
+        ctx.fillStyle = 'white';
+        ctx.globalAlpha = 1;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalCompositeOperation = 'source-over';
+      }
+
       await drawAnnotationsOnCanvas(canvas, pageNumber);
 
       printableAnnotInfo.forEach(info => {
@@ -337,6 +347,11 @@ const positionCanvas = (canvas, pageIndex) => {
 };
 
 const drawAnnotationsOnCanvas = (canvas, pageNumber) => {
+  if (core.getDocumentViewer().isGrayscaleAnnotationsModeEnabled()) {
+    const ctx = canvas.getContext('2d');
+    ctx.filter = 'grayscale(1)';
+  }
+
   const widgetAnnotations = core
     .getAnnotationsList()
     .filter(annotation => annotation.PageNumber === pageNumber && annotation instanceof window.Annotations.WidgetAnnotation);

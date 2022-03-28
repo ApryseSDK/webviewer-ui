@@ -156,13 +156,16 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const filterNotesWithSearch = note => {
     const content = note.getContents();
     const authorName = core.getDisplayAuthor(note['Author']);
+    const annotationPreview = note.getCustomData('trn-annot-preview');
 
     // didn't use regex here because the search input may form an invalid regex, e.g. *
     return (
       content?.toLowerCase().includes(searchInput.toLowerCase()) ||
-      authorName?.toLowerCase().includes(searchInput.toLowerCase())
+      authorName?.toLowerCase().includes(searchInput.toLowerCase()) ||
+      annotationPreview?.toLowerCase().includes(searchInput.toLowerCase())
     );
   };
+
   const filterNote = note => {
     let shouldRender = true;
 

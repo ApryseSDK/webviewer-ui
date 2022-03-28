@@ -4,6 +4,8 @@ export default unit => {
       return 'ft';
     case 'in"':
       return 'in';
+    case 'ft-in':
+      return 'ft';
     default:
       return unit;
   }

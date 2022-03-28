@@ -23,6 +23,7 @@
  * @property {string} OutlineEditing Ability to add, move and delete outlines in the outlines panel. This feature is only available when `fullAPI: true` is used.
  * @property {string} NotesPanelVirtualizedList Ability to use a virtualized list in the note panel. Will limit the number of notes rendered on the DOM
  * @property {string} NotesShowLastUpdatedDate Show last updated date in notes panel instead of created date
+ * @property {string} MultiTab toggle feature to open multiple documents in the same viewer instance
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -56,4 +57,5 @@ export default {
   OutlineEditing: 'OutlineEditing',
   NotesPanelVirtualizedList: 'NotesPanelVirtualizedList',
   NotesShowLastUpdatedDate: 'NotesShowLastUpdatedDate',
+  MultiTab: 'MultiTab',
 };

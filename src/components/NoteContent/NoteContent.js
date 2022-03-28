@@ -235,7 +235,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             />
           ) : (
             contentsToRender && (
-                <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked} style={contentStyle}>
+              <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked} style={contentStyle}>
                 {renderContents(contentsToRender, richTextStyle)}
               </div>
             )
@@ -253,15 +253,25 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
         return null;
       }
 
-      return (
-        <div className="selected-text-preview">
-          <NoteTextPreview linesToBreak={1}>
-            {`"${text}"`}
-          </NoteTextPreview>
-        </div>
-
-      )
-    }, [text])
+      const highlightSearchResult = highlightSearchInput(text, searchInput);
+      // If we have a search result do not use text
+      // preview but instead show the entire text
+      if (isString(highlightSearchResult)) {
+        return (
+          <div className='selected-text-preview'>
+            <NoteTextPreview linesToBreak={3}>
+              {`"${highlightSearchResult}"`}
+            </NoteTextPreview>
+          </div>
+        )
+      } else {
+        return (
+          <div className='selected-text-preview' style={{ paddingRight: '12px' }}>
+            {highlightSearchResult}
+          </div>
+        );
+      }
+    }, [text, searchInput]);
 
   const header = useMemo(
     () => {

@@ -81,8 +81,11 @@
     "select": "Sélectionner",
     "moveToTop": "Déplacer vers le haut",
     "moveToBottom": "Déplacer vers le bas",
+    "redactPages": "Masquer les pages",
     "playAudio": "Lecture audio",
-    "pauseAudio": "Pause audio"
+    "pauseAudio": "Pause audio",
+    "viewFile": "Voir la fiche",
+    "switchLanguage": "Langue"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -183,7 +186,8 @@
     "filter": "Filtre",
     "pageReplaceModalTitle": "Remplacer la page",
     "files": "Des dossiers",
-    "editText": "Éditer le texte"
+    "editText": "Éditer le texte",
+    "redactionPanel": "Panneau de rédaction"
   },
   "message": {
     "toolsOverlayNoPresets": "Aucun préréglage",
@@ -485,6 +489,15 @@
       "Username": "Nom d'utilisateur",
       "Date": "Date",
       "Time": "heure"
+    },
+    "pageRedactModal": {
+      "addMark": "Ajouter une marque",
+      "pageSelection": "Sélection de pages",
+      "current": "Page actuelle",
+      "specify": "Spécifiez les pages",
+      "odd": "Pages impaires seulement",
+      "even": "Seulement les pages paires",
+      "header": "Marquer la rédaction des pages"
     }
   },
   "warning": {
@@ -573,7 +586,8 @@
     "enterUrlOrChooseFile": "Entrez une URL ou choisissez un fichier à charger dans WebViewer",
     "enterUrl": "Entrez l'URL du fichier",
     "extension": "Extension de fichier",
-    "existingFile": "Le fichier est déjà ouvert"
+    "existingFile": "Le fichier est déjà ouvert",
+    "addTab": "Ajouter un onglet"
   },
   "datePicker": {
     "previousMonth": "Mois précédent",
@@ -763,5 +777,21 @@
       "certificateDownloadError": "Erreur rencontrée lors de la tentative de téléchargement d'un certificat de confiance",
       "localCertificateError": "Il y a quelques problèmes avec la lecture d'un certificat local"
     }
+  },
+  "redactionPanel": {
+    "noMarkedRedactions": "Commencez à rédiger en marquant du texte, des régions, des pages ou en effectuant une recherche.",
+    "redactionSearchPlaceholder": "Ajouter par recherche par mot-clé ou modèles",
+    "redactionCounter": "Marqué pour rédaction",
+    "clearMarked": "Dégager",
+    "redactAllMarked": "Tout expurger",
+    "redactionItem": {
+      "regionRedaction": "Caviardage de région",
+      "fullPageRedaction": "Caviardage pleine page"
+    },
+    "expand": "Développer",
+    "collapse": "S'effondrer"
+  },
+  "languageModal": {
+    "selectLanguage": "Choisir la langue"
   }
 }

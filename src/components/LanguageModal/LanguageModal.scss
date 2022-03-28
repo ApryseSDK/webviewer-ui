@@ -1,0 +1,44 @@
+@import "../../constants/styles";
+@import "../../constants/modal";
+
+.LanguageModal {
+  @extend %modal;
+
+  .container {
+    @extend %modal-shared-container-style;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
+    background: var(--component-background);
+    width: 480px;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: bold;
+      align-items: center;
+    }
+
+    .body {
+      padding: 16px;
+      display: grid;
+      grid-gap: 5px 16px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .footer {
+      margin-top: 8px;
+      margin-bottom: 16px;
+      padding-right: 16px;
+    }
+
+    .divider {
+      height: 1px;
+      width: 100%;
+      background: var(--divider);
+    }
+  }
+}

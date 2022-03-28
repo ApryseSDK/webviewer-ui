@@ -10,6 +10,8 @@ import { Provider } from "react-redux";
 export default {
   title: 'Components/Note/NoteHeader',
   component: NoteHeader,
+  includeStories: ['Basic'],
+  excludeStories: ['testProps'],
 };
 
 const initialState = {

@@ -81,8 +81,11 @@
     "select": "Seleccione",
     "moveToTop": "Mover al principio",
     "moveToBottom": "Mover al final",
+    "redactPages": "Redactar páginas",
     "playAudio": "reproducir audio",
-    "pauseAudio": "pausa de audio"
+    "pauseAudio": "pausa de audio",
+    "viewFile": "Ver archivo",
+    "switchLanguage": "Idioma"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -183,7 +186,8 @@
     "filter": "Filtrar",
     "pageReplaceModalTitle": "Reemplazar página",
     "files": "Archivos",
-    "editText": "Editar texto"
+    "editText": "Editar texto",
+    "redactionPanel": "Panel de Redacción"
   },
   "message": {
     "toolsOverlayNoPresets": "Sin preajustes",
@@ -485,6 +489,15 @@
       "Username": "Nombre de usuario",
       "Date": "Fecha",
       "Time": "Hora"
+    },
+    "pageRedactModal": {
+      "addMark": "Agregar marca",
+      "pageSelection": "Selección de página",
+      "current": "Página actual",
+      "specify": "Especificar páginas",
+      "odd": "Solo páginas impares",
+      "even": "Sólo las páginas pares",
+      "header": "Marcar la redacción de páginas"
     }
   },
   "warning": {
@@ -573,7 +586,8 @@
     "enterUrlOrChooseFile": "Ingrese una URL o elija un archivo para cargar en WebViewer",
     "enterUrl": "Introduzca la URL del archivo",
     "extension": "Extensión de archivo",
-    "existingFile": "El archivo ya está abierto"
+    "existingFile": "El archivo ya está abierto",
+    "addTab": "Añadir pestaña"
   },
   "datePicker": {
     "previousMonth": "Mes anterior",
@@ -763,5 +777,21 @@
       "certificateDownloadError": "Se produjo un error al intentar descargar un certificado de confianza",
       "localCertificateError": "Hay algunos problemas con la lectura de un certificado local."
     }
+  },
+  "redactionPanel": {
+    "noMarkedRedactions": "Comience a redactar marcando texto, regiones, páginas o realizando una búsqueda.",
+    "redactionSearchPlaceholder": "Agregar por búsqueda de palabra clave o patrones",
+    "redactionCounter": "Marcado para Redacción",
+    "clearMarked": "Claro",
+    "redactAllMarked": "Redactar todo",
+    "redactionItem": {
+      "regionRedaction": "Redacción de la región",
+      "fullPageRedaction": "Redacción de página completa"
+    },
+    "expand": "Expandir",
+    "collapse": "Colapso"
+  },
+  "languageModal": {
+    "selectLanguage": "Seleccione el idioma"
   }
 }

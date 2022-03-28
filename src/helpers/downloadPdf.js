@@ -42,7 +42,10 @@ export default async (dispatch, options = {}) => {
       return name;
     };
 
-    const downloadName = core.getDocument()?.getType() === 'video' ? filename : getDownloadFilename(filename, '.pdf');
+    const downloadName =
+      (core.getDocument()?.getType() === 'video' || core.getDocument()?.getType() === 'audio')
+        ? filename
+        : getDownloadFilename(filename, '.pdf');
     let doc = core.getDocument();
 
     //Cloning the options object to be able to delete the customDocument property if needed.

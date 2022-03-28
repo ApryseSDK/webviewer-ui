@@ -12,9 +12,36 @@ import { workerTypes } from 'constants/types';
 import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
 import actions from 'actions';
-import getMeasurementTools from 'src/helpers/getMeasurementTools';
+import getMeasurementTools, {
+  MeasurementUnits,
+} from 'src/helpers/getMeasurementTools';
 
 import './MeasurementOption.scss';
+
+const decimalPrecision = [
+  { value: 0.1, name: '0.1', format: 'D' },
+  { value: 0.01, name: '0.01', format: 'D' },
+  { value: 0.001, name: '0.001', format: 'D' },
+  { value: 0.0001, name: '0.0001', format: 'D' },
+];
+const fractionPrecision = [
+  { value: 0.125, name: '1/8', format: 'F' },
+  { value: 0.0625, name: '1/16', format: 'F' },
+  { value: 0.03125, name: '1/32', format: 'F' },
+  { value: 0.015625, name: '1/64', format: 'F' },
+];
+
+const getPrecisionByUnit = unit => {
+  switch (unit) {
+    case MeasurementUnits.IN:
+    case MeasurementUnits.FT_IN:
+      return [...fractionPrecision, ...decimalPrecision];
+    default:
+      return decimalPrecision;
+  }
+};
+const isImperialFractionUnit = unit => ['in', 'ft-in'].includes(unit);
+const isPrecisionInFractionMark = precision => [1 / 8, 1 / 16, 1 / 32, 1 / 64].includes(precision);
 
 class MeasurementOption extends React.Component {
   static propTypes = {
@@ -82,7 +109,7 @@ class MeasurementOption extends React.Component {
     this.setState({
       documentType: core.getDocument().getType(),
     });
-  }
+  };
 
   onScaleChange = (value, type) => {
     this.setState({ [type]: Number(value) }, () => {
@@ -94,17 +121,22 @@ class MeasurementOption extends React.Component {
   };
 
   onPrecisionChange = (value, type) => {
+    const { onStyleChange } = this.props;
     this.setState({ [type]: Number(value) }, () => {
-      this.props.onStyleChange('Precision', this.state.currPrecision);
+      const { currPrecision } = this.state;
+      onStyleChange('Precision', currPrecision);
     });
   };
 
   onUnitChange = (event, type) => {
-    this.setState({ [type]: event.target.value }, () => {
-      this.props.onStyleChange('Scale', [
+    const { onStyleChange } = this.props;
+    const value = event.target.value;
+    this.setState({ [type]: value }, () => {
+      const newScale = [
         [this.state.currScaleFrom, this.state.currUnitFrom],
         [this.state.currScaleTo, this.state.currUnitTo],
-      ]);
+      ];
+      onStyleChange('Scale', newScale);
     });
   };
 
@@ -123,7 +155,7 @@ class MeasurementOption extends React.Component {
     if (this.props.onSnapModeChange) {
       this.props.onSnapModeChange(enableSnapping);
     }
-  }
+  };
 
   getLanguage = () => {
     let lang = 'en';
@@ -179,25 +211,21 @@ class MeasurementOption extends React.Component {
       );
     }
     return (
-      <input
-        className="ScaleInput"
-        type="text"
-        value={this.formatValue(val)}
-        onFocus={this.toggleEditing}
-        readOnly
-      />
+      <input className="ScaleInput" type="text" value={this.formatValue(val)} onFocus={this.toggleEditing} readOnly />
     );
   };
 
   render() {
-    const { measurementUnits, t, isScaleInputDisabled, isPrecisionInputDisabled, isSnapModeEnabled, hideSnapModeCheckbox } = this.props;
+    const {
+      measurementUnits,
+      t,
+      isScaleInputDisabled,
+      isPrecisionInputDisabled,
+      isSnapModeEnabled,
+      hideSnapModeCheckbox,
+    } = this.props;
     const { from: unitFromOptions, to: unitToOptions } = measurementUnits;
-    const precisionOptions = [
-      { value: 0.1, name: '0.1' },
-      { value: 0.01, name: '0.01' },
-      { value: 0.001, name: '0.001' },
-      { value: 0.0001, name: '0.0001' },
-    ];
+    const precisionOptions = getPrecisionByUnit(this.state.currUnitTo);
 
     if (isScaleInputDisabled && isPrecisionInputDisabled) {
       return null;
@@ -248,14 +276,14 @@ class MeasurementOption extends React.Component {
               >
                 {precisionOptions.map(e => (
                   <option key={e.value} value={e.value}>
-                    {this.formatValue(e.value)}
+                    {e.format === 'F' ? e.name : this.formatValue(e.value)}
                   </option>
                 ))}
               </select>
             </div>
           </div>
         )}
-        {this.state.documentType === workerTypes.PDF && !hideSnapModeCheckbox &&
+        {this.state.documentType === workerTypes.PDF && !hideSnapModeCheckbox && (
           <div className="options">
             <Choice
               dataElement="measurementSnappingOption"
@@ -266,7 +294,7 @@ class MeasurementOption extends React.Component {
               onChange={this.onSnappingChange}
             />
           </div>
-        }
+        )}
       </div>
     );
   }
@@ -275,11 +303,9 @@ class MeasurementOption extends React.Component {
 const mapStateToProps = state => ({
   measurementUnits: selectors.getMeasurementUnits(state),
   isScaleInputDisabled: selectors.isElementDisabled(state, DataElements.SCALE_INPUT_CONTAINER),
-  isPrecisionInputDisabled: selectors.isElementDisabled(
-    state,
-    DataElements.PRECISION_INPUT_CONTAINER
-  ),
-  isSnapModeEnabled: selectors.isSnapModeEnabled(state)
+  isPrecisionInputDisabled: selectors.isElementDisabled(state, DataElements.PRECISION_INPUT_CONTAINER),
+  isSnapModeEnabled: selectors.isSnapModeEnabled(state),
+  activeToolName: selectors.getActiveToolName(state),
 });
 
 const mapDispatchToProps = {
