@@ -46,6 +46,8 @@ const SignatureModal = () => {
   const closeModal = () => {
     signatureTool.clearLocation();
     signatureTool.setSignature(null);
+    const modalClosedEvent = new CustomEvent('SignatureModalClosed');
+    window.parent.dispatchEvent(modalClosedEvent);
     dispatch(actions.closeElement('signatureModal'));
   };
 
