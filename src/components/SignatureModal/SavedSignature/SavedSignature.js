@@ -16,9 +16,9 @@ const propTypes = {
   showDeleteSavedSignature: PropTypes.bool,
 };
 
-const Signature = ({ signature, deleteSavedSignature, showDelete = false }) => {
+const Signature = ({ signature, deleteSavedSignature, isSelected, showDelete = false }) => {
   return (
-    <div className="saved-signature-image-container">
+    <div className={`saved-signature-image-container ${isSelected ? 'selected' : ''}`}>
       <img className="saved-signature-image" src={signature} alt="signature" />
       {showDelete && (
         <div className="saved-signature-icon-button">
@@ -64,6 +64,7 @@ Signature.propTypes = {
   signature: PropTypes.string,
   deleteSavedSignature: PropTypes.func,
   showDelete: PropTypes.bool,
+  isSelected: PropTypes.bool,
 };
 
 const SavedSignature = ({
@@ -102,7 +103,7 @@ const SavedSignature = ({
 
   return (
     <React.Fragment>
-      <div className="image-signature-image-container">
+      <div className="saved-signature-top-container">
         {savedSignatures.length === 0 ? (
           <div className="saved-signature-container">You do not have any saved signatures.</div>
         ) : (
@@ -121,6 +122,7 @@ const SavedSignature = ({
                         signature={savedSignature}
                         deleteSavedSignature={deleteSignature}
                         showDelete={showDeleteSavedSignature}
+                        isSelected={selectedSignatureIndex === index}
                       />
                     }
                     onClick={() => {
