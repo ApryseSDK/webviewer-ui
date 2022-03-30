@@ -1,5 +1,5 @@
 import core from 'core';
-import getMeasurementTools, { isMeasurementTool } from './getMeasurementTools';
+import { isMeasurementTool, getToolNamesByTheSamePreset } from './getMeasurementTools';
 
 export default (toolName, property, value) => {
   let tools = [];
@@ -8,7 +8,8 @@ export default (toolName, property, value) => {
   // currently we want to keep the styles of measurement tools syncs
   // Don't want to keep color or opacity in sync.
   if (isMeasurementTool(tool) && !(property === 'StrokeColor' || property === 'Opacity')) {
-    tools = getMeasurementTools();
+    const toolNames = getToolNamesByTheSamePreset(toolName);
+    tools = toolNames.map(core.getTool);
   } else {
     if (tool) {
       tools.push(tool);

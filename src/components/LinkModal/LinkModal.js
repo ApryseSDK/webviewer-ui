@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
 import defaultTool from 'constants/defaultTool';
 import core from 'core';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
 import actions from 'actions';
 import selectors from 'selectors';
-
 import { Swipeable } from 'react-swipeable';
+import DataElements from "constants/dataElement";
 
 import './LinkModal.scss';
 
@@ -23,11 +22,11 @@ const LinkModal = () => {
     tabSelected,
     pageLabels,
   ] = useSelector(state => [
-    selectors.isElementDisabled(state, 'linkModal'),
-    selectors.isElementOpen(state, 'linkModal'),
+    selectors.isElementDisabled(state, DataElements.LINK_MODAL),
+    selectors.isElementOpen(state, DataElements.LINK_MODAL),
     selectors.getTotalPages(state),
     selectors.getCurrentPage(state),
-    selectors.getSelectedTab(state, 'linkModal'),
+    selectors.getSelectedTab(state, DataElements.LINK_MODAL),
     selectors.getPageLabels(state),
   ]);
   const [t] = useTranslation();
@@ -40,7 +39,7 @@ const LinkModal = () => {
   const [pageLabel, setPageLabel] = useState("");
 
   const closeModal = () => {
-    dispatch(actions.closeElement('linkModal'));
+    dispatch(actions.closeElement(DataElements.LINK_MODAL));
     setURL('');
     core.setToolMode(defaultTool);
   };
@@ -167,8 +166,6 @@ const LinkModal = () => {
 
     const links = createLink(action);
 
-
-
     let pageNumbersToDraw = links.map(link => link.PageNumber);
     pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
     pageNumbersToDraw.forEach(pageNumberToDraw => {
@@ -224,7 +221,7 @@ const LinkModal = () => {
     >
       <div
         className={modalClass}
-        data-element="linkModal"
+        data-element={DataElements.LINK_MODAL}
         onMouseDown={closeModal}
       >
         <div className="container" onMouseDown={e => e.stopPropagation()}>

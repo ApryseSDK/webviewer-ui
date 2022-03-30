@@ -7,6 +7,7 @@ import Events from 'constants/events';
 import ToolbarGroup from 'constants/toolbar';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
+import RedactionSearchPatterns from 'constants/redactionSearchPatterns';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
@@ -189,7 +190,10 @@ import getWatermarkModalOptions from './getWatermarkModalOptions';
 import enableNoteSubmissionWithEnter from './enableNoteSubmissionWithEnter';
 import willUseEmbeddedPrinting from 'src/apis/willUseEmbeddedPrinting';
 import reloadOutline from './reloadOutline';
+import Fonts from 'src/apis/fonts';
+import TabManagerAPI from './TabManagerAPI';
 import getAvailableLanguages from './getAvailableLanguages';
+import replaceRedactionSearchPattern from './replaceRedactionSearchPattern';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -212,6 +216,7 @@ export default store => {
     ToolbarGroup,
     NotesPanelSortStrategy,
     Theme,
+    RedactionSearchPatterns,
     addSearchListener,
     addSortStrategy: addSortStrategy(store),
     annotationPopup: annotationPopup(store),
@@ -372,8 +377,11 @@ export default store => {
     addEventListener,
     removeEventListener,
     syncNamespaces,
+    Fonts: Fonts(store),
     reloadOutline: reloadOutline(store),
+    TabManager: TabManagerAPI(store),
     getAvailableLanguages,
+    replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
 
     //deprecated, to be removed in 8.0
     useNativeScroll,

@@ -420,10 +420,24 @@ const map = {
     availablePalettes: [],
     toolNames: [
       'AnnotationCreateStamp',
+    ],
+    annotationCheck: annotation => {
+      return annotation instanceof window.Annotations.StampAnnotation &&
+      annotation.ToolName === 'AnnotationCreateRubberStamp';
+    },
+  },
+  image: {
+    icon: 'icon-tool-image-line',
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: [
       'AnnotationCreateRubberStamp',
     ],
-    annotationCheck: annotation =>
-      annotation instanceof window.Annotations.StampAnnotation,
+    annotationCheck: annotation => {
+      return annotation instanceof window.Annotations.StampAnnotation &&
+      annotation.ToolName !== 'AnnotationCreateRubberStamp';
+    },
   },
   edit: {
     icon: 'ic_select_black_24px',

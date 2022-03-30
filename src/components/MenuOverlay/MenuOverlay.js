@@ -1,11 +1,9 @@
 import actions from 'actions';
-import DataElementWrapper from 'components/DataElementWrapper';
-import Icon from 'components/Icon';
 import ActionButton from 'components/ActionButton';
 import CustomElement from 'components/CustomElement';
 import { workerTypes } from 'constants/types';
 import core from 'core';
-import { isIOS, isIE } from 'helpers/device';
+import { isIE } from 'helpers/device';
 import downloadPdf from 'helpers/downloadPdf';
 import openFilePicker from 'helpers/openFilePicker';
 import { print } from 'helpers/print';
@@ -15,6 +13,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
+import DataElements from "constants/dataElement";
+
 import './MenuOverlay.scss';
 
 const InitialMenuOverLayItem = ({ dataElement, children }) => {
@@ -49,7 +49,6 @@ const InitialMenuOverLayItem = ({ dataElement, children }) => {
   });
 };
 
-
 function MenuOverlay() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -83,58 +82,72 @@ function MenuOverlay() {
     downloadPdf(dispatch);
   };
 
+  const handleLanguageButtonClick = () => {
+    closeMenuOverlay();
+    dispatch(actions.openElement(DataElements.LANGUAGE_MODAL));
+  };
+
   return (
     <FlyoutMenu menu="menuOverlay" trigger="menuButton" onClose={undefined} ariaLabel={t('component.menuOverlay')}>
       <InitialMenuOverLayItem>
-      <ActionButton
-        dataElement="filePickerButton"
-        className="row"
-        img="icon-header-file-picker-line"
-        label={t('action.openFile')}
-        ariaLabel={t('action.openFile')}
-        role="option"
-        onClick={openFilePicker}
-      />
-      <ActionButton
-        dataElement="fullscreenButton"
-        className="row"
-        img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
-        label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
-        ariaLabel={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
-        role="option"
-        onClick={toggleFullscreen}
-      />
-      {documentType !== workerTypes.XOD && (
         <ActionButton
-          dataElement="downloadButton"
+          dataElement="filePickerButton"
           className="row"
-          img="icon-header-download"
-          label={t('action.download')}
-          ariaLabel={t('action.download')}
+          img="icon-header-file-picker-line"
+          label={t('action.openFile')}
+          ariaLabel={t('action.openFile')}
           role="option"
-          onClick={downloadDocument}
+          onClick={openFilePicker}
         />
-      )}
-      <ActionButton
-        dataElement="printButton"
-        className="row"
-        img="icon-header-print-line"
-        label={t('action.print')}
-        ariaLabel={t('action.print')}
-        role="option"
-        onClick={handlePrintButtonClick}
-      />
-      {!isIE && (
         <ActionButton
-          dataElement="themeChangeButton"
+          dataElement="fullscreenButton"
           className="row"
-          img={`icon - header - mode - ${activeTheme === 'dark' ? 'day' : 'night'}`}
-          label={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
-          ariaLabel={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
+          img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+          label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
+          ariaLabel={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
           role="option"
-          onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}
+          onClick={toggleFullscreen}
         />
-      )}
+        {documentType !== workerTypes.XOD && (
+          <ActionButton
+            dataElement="downloadButton"
+            className="row"
+            img="icon-header-download"
+            label={t('action.download')}
+            ariaLabel={t('action.download')}
+            role="option"
+            onClick={downloadDocument}
+          />
+        )}
+        <ActionButton
+          dataElement="printButton"
+          className="row"
+          img="icon-header-print-line"
+          label={t('action.print')}
+          ariaLabel={t('action.print')}
+          role="option"
+          onClick={handlePrintButtonClick}
+        />
+        {!isIE && (
+          <ActionButton
+            dataElement="themeChangeButton"
+            className="row"
+            img={`icon - header - mode - ${activeTheme === 'dark' ? 'day' : 'night'}`}
+            label={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
+            ariaLabel={activeTheme === 'dark' ? t('action.lightMode') : t('action.darkMode')}
+            role="option"
+            onClick={activeTheme === 'dark' ? setActiveLightTheme : setActiveDarkTheme}
+          />
+        )}
+        <ActionButton
+          dataElement="languageButton"
+          className="row"
+          img="icon-header-language"
+          label={t('action.switchLanguage')}
+          ariaLabel={t('action.switchLanguage')}
+          role="option"
+          onClick={handleLanguageButtonClick}
+        />
       </InitialMenuOverLayItem>
     </FlyoutMenu>
   );

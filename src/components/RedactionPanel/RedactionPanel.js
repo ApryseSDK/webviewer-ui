@@ -1,26 +1,26 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import Icon from 'components/Icon'
+import { Virtuoso } from 'react-virtuoso';
+import { RedactionPanelContext } from './RedactionPanelContext';
 
-import DataElementWrapper from '../DataElementWrapper';
 import './RedactionPanel.scss'
 import RedactionPageGroup from '../RedactionPageGroup';
 
 const RedactionPanel = (props) => {
   const {
     redactionAnnotations,
-    currentWidth,
-    isInDesktopOnlyMode,
     applyAllRedactions,
     deleteAllRedactionAnnotations,
-    isMobile = false,
-    closeRedactionPanel,
   } = props;
 
   const { t } = useTranslation();
-  const style = !isInDesktopOnlyMode && isMobile ? {} : { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   const [redactionPageMap, setRedactionPageMap] = useState({});
+  const [redactionPageNumbers, setRedactionPageNumbers] = useState([]);
+  // The following prop is needed only for the tests to actually render a list of results
+  // it only is ever injected in the tests
+  const { isTestMode } = useContext(RedactionPanelContext);
 
   useEffect(() => {
     const redactionPageMap = {};
@@ -34,20 +34,28 @@ const RedactionPanel = (props) => {
     });
 
     setRedactionPageMap(redactionPageMap)
+    setRedactionPageNumbers(Object.keys(redactionPageMap));
 
   }, [redactionAnnotations]);
 
   const renderRedactionPageGroups = () => {
-    const pageNumbers = Object.keys(redactionPageMap);
+    // Needed for the tests to actually render a list of results
+    // Not needed for the actual app; if we set it it kills performance when there are a lot of annotations
+    const testModeProps = isTestMode ? { initialItemCount: redactionPageNumbers.length } : {}
     return (
       <div className="redaction-group-container" role="list">
-        {pageNumbers.map(pageNumber => (
-          <RedactionPageGroup
-            key={pageNumber}
-            pageNumber={pageNumber}
-            redactionItems={redactionPageMap[pageNumber]}
-          />)
-        )}
+        <Virtuoso
+          data={redactionPageNumbers}
+          itemContent={(index, pageNumber) => {
+            return (
+              <RedactionPageGroup
+                key={index}
+                pageNumber={pageNumber}
+                redactionItems={redactionPageMap[pageNumber]}
+              />)
+          }}
+          {...testModeProps}
+        />
       </div>
     );
   };
@@ -61,53 +69,32 @@ const RedactionPanel = (props) => {
     </div>
   );
 
-  const renderMobileCloseButton = () => {
-    return (
-      <div
-        className="close-container"
-      >
-        <div
-          className="close-icon-container"
-          onClick={closeRedactionPanel}
-        >
-          <Icon
-            glyph="ic_close_black_24px"
-            className="close-icon"
-          />
-        </div>
-      </div>
-    );
-  };
-
   const redactAllButtonClassName = classNames('redact-all-marked', { disabled: redactionAnnotations.length === 0 });
   const clearAllButtonClassName = classNames('clear-all-marked', { disabled: redactionAnnotations.length === 0 });
 
   return (
-    <DataElementWrapper
-      dataElement="redactionPanel"
-      className="Panel RedactionPanel"
-      style={style}
-    >
-      {(!isInDesktopOnlyMode && isMobile) && renderMobileCloseButton()}
+    <>
       <div className="marked-redaction-counter">
         <span>{t('redactionPanel.redactionCounter')}</span> {`(${redactionAnnotations.length})`}
       </div>
-      {redactionAnnotations.length > 0 ? renderRedactionPageGroups() : noRedactionAnnotations}
+      {redactionPageNumbers.length > 0 ? renderRedactionPageGroups() : noRedactionAnnotations}
       <div className="redaction-panel-controls">
         <button
           disabled={redactionAnnotations.length === 0}
           className={clearAllButtonClassName}
-          onClick={deleteAllRedactionAnnotations}>
+          onClick={deleteAllRedactionAnnotations}
+          aria-label={t('redactionPanel.clearMarked')}>
           {t('redactionPanel.clearMarked')}
         </button>
         <button
           disabled={redactionAnnotations.length === 0}
           className={redactAllButtonClassName}
-          onClick={applyAllRedactions}>
+          onClick={applyAllRedactions}
+          aria-label={t('redactionPanel.redactAllMarked')}>
           {t('redactionPanel.redactAllMarked')}
         </button>
       </div>
-    </DataElementWrapper>
+    </>
   );
 };
 

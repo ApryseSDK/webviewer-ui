@@ -81,11 +81,16 @@
     "select": "Chọn",
     "moveToTop": "Di chuyển lên trên cùng",
     "moveToBottom": "Di chuyển xuống dưới cùng",
+    "redactPages": "Biên tập lại các trang",
     "playAudio": "Phát âm thanh",
-    "pauseAudio": "Tạm dừng âm thanh"
+    "pauseAudio": "Tạm dừng âm thanh",
+    "viewFile": "Xem tài liệu",
+    "switchLanguage": "Ngôn ngữ"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
+    "arc": "Hồ quang",
+    "arcMeasurement": "Đo hồ quang",
     "arrow": "Mũi tên",
     "callout": "Chú thích",
     "crop": "Cắt Trang",
@@ -406,10 +411,12 @@
       "area": "Diện tích",
       "distanceMeasurement": "Đo Lường Khoảng Cách",
       "perimeterMeasurement": "Đo Lường Chu Vi",
+      "arcMeasurement": "Đo hồ quang",
       "areaMeasurement": "Đo Lường Diện Tích",
       "countMeasurement": "Đo đếm",
       "radius": "Bán kính",
-      "count": "Số lượng"
+      "count": "Số lượng",
+      "length": "Chiều dài"
     },
     "measurementOption": {
       "scale": "Quy mô"
@@ -482,6 +489,15 @@
       "Username": "Tên người dùng",
       "Date": "Ngày",
       "Time": "Thời gian"
+    },
+    "pageRedactModal": {
+      "addMark": "Thêm dấu",
+      "pageSelection": "Lựa chọn trang",
+      "current": "Trang hiện tại",
+      "specify": "Chỉ định các trang",
+      "odd": "Chỉ các trang lẻ",
+      "even": "Chỉ trang chẵn",
+      "header": "Đánh dấu trang Redaction"
     }
   },
   "warning": {
@@ -570,57 +586,59 @@
     "enterUrlOrChooseFile": "Nhập URL hoặc chọn tệp để tải vào WebViewer",
     "enterUrl": "Nhập URL tệp",
     "extension": "Phần mở rộng tệp",
-    "existingFile": "Tệp đã mở"
+    "existingFile": "Tệp đã mở",
+    "addTab": "Thêm tab"
   },
   "datePicker": {
     "previousMonth": "Tháng Trước",
     "nextMonth": "Tháng Tiếp Theo",
-    "months": [
-      "Tháng 1",
-      "Tháng 2",
-      "Tháng 3",
-      "Tháng 4",
-      "Tháng 5",
-      "Tháng 6",
-      "Tháng 7",
-      "Tháng 8",
-      "Tháng 9",
-      "Tháng 10",
-      "Tháng 11",
-      "Tháng 12"
-    ],
-    "monthsShort": [
-      "Tháng 1",
-      "Tháng 2",
-      "Tháng 3",
-      "Tháng 4",
-      "Tháng 5",
-      "Tháng 6",
-      "Tháng 7",
-      "Tháng 8",
-      "Tháng 9",
-      "Tháng 10",
-      "Tháng 11",
-      "Tháng 12"
-    ],
-    "weekdays": [
-      "Chủ Nhật",
-      "Thứ Hai",
-      "Thứ Ba",
-      "Thứ Tư",
-      "Thứ Năm",
-      "Thứ Sáu",
-      "Thứ Bảy"
-    ],
-    "weekdaysShort": [
-      "Chủ Nhật",
-      "Thứ Hai",
-      "Thứ Ba",
-      "Thứ Tư",
-      "Thứ Năm",
-      "Thứ Sáu",
-      "Thứ Bảy"
-    ],
+    "months": {
+      "0": "Tháng 1",
+      "1": "Tháng 2",
+      "2": "Tháng 3",
+      "3": "Tháng 4",
+      "4": "Tháng 5",
+      "5": "Tháng 6",
+      "6": "Tháng 7",
+      "7": "Tháng 8",
+      "8": "Tháng 9",
+      "9": "Tháng 10",
+      "10": "Tháng 11",
+      "11": "Tháng 12"
+    },
+    "monthsShort": {
+      "0": "Tháng 1",
+      "1": "Tháng 2",
+      "2": "Tháng 3",
+      "3": "Tháng 4",
+      "4": "Tháng 5",
+      "5": "Tháng 6",
+      "6": "Tháng 7",
+      "7": "Tháng 8",
+      "8": "Tháng 9",
+      "9": "Tháng 10",
+      "10": "Tháng 11",
+      "11": "Tháng 12"
+    },
+    "weekdays": {
+      "0": "Chủ Nhật",
+      "1": "Thứ Hai",
+      "2": "Thứ Ba",
+      "3": "Thứ Tư",
+      "4": "Thứ Năm",
+      "5": "Thứ Sáu",
+      "6": "Thứ Bảy"
+    },
+    "weekdaysShort": {
+      "0": "Chủ Nhật",
+      "1": "Thứ Hai",
+      "2": "Thứ Ba",
+      "3": "Thứ Tư",
+      "4": "Thứ Năm",
+      "5": "Thứ Sáu",
+      "6": "Thứ Bảy"
+    },
+    "today": "Hôm nay",
     "invalidDateTime": "Ngày/Giờ Không Hợp Lệ: Đầu vào phải khớp với định dạng"
   },
   "formField": {
@@ -772,5 +790,8 @@
     },
     "expand": "Mở rộng",
     "collapse": "Thu gọn"
+  },
+  "languageModal": {
+    "selectLanguage": "Chọn ngôn ngữ"
   }
 }

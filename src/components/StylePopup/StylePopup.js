@@ -43,7 +43,8 @@ class StylePopup extends React.PureComponent {
     closeElement: PropTypes.func,
     openElement: PropTypes.func,
     properties: PropTypes.object,
-    isRedaction: PropTypes.bool
+    isRedaction: PropTypes.bool,
+    fonts: PropTypes.array,
   };
 
   renderSliders = () => {
@@ -167,7 +168,8 @@ class StylePopup extends React.PureComponent {
       properties,
       onPropertyChange,
       onRichTextStyleChange,
-      isRedaction
+      isRedaction,
+      fonts,
     } = this.props;
 
     // We do not have sliders to show up for redaction annots
@@ -254,6 +256,7 @@ class StylePopup extends React.PureComponent {
                 {isTextStyleContainerActive && (
                   <div className="menu-items">
                     <TextStylePicker
+                      fonts={fonts}
                       onPropertyChange={onPropertyChange}
                       onRichTextStyleChange={onRichTextStyleChange}
                       properties={properties}
@@ -321,7 +324,8 @@ const mapStateToProps = (state, { colorMapKey, isFreeText, isRedaction }) => ({
   isTextStyleOpen: selectors.isElementDisabled(state, DataElements.STYLE_OPTION),
   isTextStyleContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER),
   isColorsContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_COLORS_CONTAINER),
-  isLabelTextContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER)
+  isLabelTextContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER),
+  fonts: selectors.getFonts(state),
 });
 
 const mapDispatchToProps = {

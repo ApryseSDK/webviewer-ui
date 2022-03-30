@@ -1,15 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 import './TabsHeader.scss';
-import Tab from "components/TabsHeader/Tab/Tab";
-import Button from "components/Button";
-import HoverTab from "components/TabsHeader/HoverTab/HoverTab";
-import CollapsedTab from "components/TabsHeader/CollapsedTab/CollapsedTab";
-import FlyoutMenu from "components/FlyoutMenu/FlyoutMenu";
-import OpenFileModal from "components/OpenFileModal";
+import Tab from 'components/TabsHeader/Tab/Tab';
+import Button from 'components/Button';
+import HoverTab from 'components/TabsHeader/HoverTab/HoverTab';
+import FlyoutMenu from 'components/FlyoutMenu/FlyoutMenu';
+import OpenFileModal from 'components/OpenFileModal';
+import CollapsedTab from 'components/TabsHeader/CollapsedTab/CollapsedTab';
 
 
 const TabsHeader = () => {
@@ -19,20 +19,29 @@ const TabsHeader = () => {
   const [dropTarget, setDropTarget] = useState();
   const [hovering, setHovering] = useState();
   const hoveredTab = useRef();
-  const [isMultiTab, tabManager, width] = useSelector(state => [
+  const [isMultiTab, tabManager, width, currTabs, activeTab] = useSelector(state => [
     selectors.getIsMultiTab(state),
     selectors.getTabManager(state),
     selectors.getDocumentContainerWidth(state),
+    selectors.getTabs(state),
+    selectors.getActiveTab(state),
   ]);
 
   const breakpoint = Math.floor(width / 180); // Divided by max-width of tab
 
   useEffect(() => {
-    const div = document.createElement("div");
-    div.id = "0";
+    const div = document.createElement('div');
+    div.id = '0';
     ReactDOM.render(<HoverTab onDragOver={onDragOverHoverTab} onDragLeave={onDragLeave}/>, div);
     hoveredTab.current = div;
   }, []);
+
+  const activeIndex = currTabs?.findIndex(t => t.id === activeTab);
+  useEffect(() => {
+    if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
+      tabManager.moveTab(activeIndex, breakpoint - 1);
+    }
+  }, [breakpoint, activeIndex, tabManager]);
 
   const onDragStart = (e, index) => {
     if (isDragging) {
@@ -60,7 +69,7 @@ const TabsHeader = () => {
     hoveredTab.current.id = id;
     if (moveLeft && index > dragIndex && index !== 0) {
       setDropTarget(index - 1);
-    } else if (!moveLeft && index < dragIndex && index !== tabManager.tabs.length - 1) {
+    } else if (!moveLeft && index < dragIndex && index !== currTabs.length - 1) {
       setDropTarget(index + 1);
     } else {
       setDropTarget(index);
@@ -101,16 +110,15 @@ const TabsHeader = () => {
     setDragIndex(null);
   };
 
-  const currTabs = tabManager?.tabs;
   const [tabs, additionalTabs] = useMemo(() => {
     if (!isMultiTab) {
       return [null, null];
     }
-    const activeIndex = currTabs?.findIndex(t => t.id === tabManager.activeTab);
+    const activeIndex = currTabs?.findIndex(t => t.id === activeTab);
     if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
       tabManager.moveTab(activeIndex, breakpoint - 1);
     }
-    const renderedTabs = tabManager?.map((tab, index) => {
+    const renderedTabs = currTabs.map((tab, index) => {
       if (index < breakpoint) {
         return <Tab
           onDragStart={e => onDragStart(e, index)}
@@ -119,7 +127,7 @@ const TabsHeader = () => {
           setActive={() => setActiveTab(tab.id)}
           key={tab.id}
           id={`tab-${tab.id}`}
-          isActive={tab.id === tabManager.activeTab}
+          isActive={tab.id === activeTab}
           closeTab={() => deleteTab(tab.id)}
           tab={tab}
           isToLeftOfActive={index === activeIndex - 1}
@@ -139,20 +147,18 @@ const TabsHeader = () => {
   }, [tabManager, currTabs, breakpoint, setActiveTab, deleteTab, onDragEnd, onDragStart, onDragOver, onDragLeave]);
 
   async function setActiveTab(id) {
-    const tabIndex = tabManager.tabs.findIndex(t => t.id === id);
+    const tabIndex = currTabs.findIndex(t => t.id === id);
     if (tabIndex >= breakpoint) {
       tabManager.moveTab(tabIndex, breakpoint - 1);
     }
-    tabManager.activeTab !== id && await tabManager.setActiveTab(id, dispatch,true);
+    activeTab !== id && await tabManager.setActiveTab(id, true);
   }
 
   function deleteTab(id) {
     tabManager.deleteTab(id, dispatch);
-    // React will delete the element but it has a delay, line below is to prevent delay from being visible
-    document.getElementById(`tab-${id}`).style.display = 'none';
   }
 
-  const openFile = () => dispatch(actions.openElement("OpenFileModal"));
+  const openFile = () => dispatch(actions.openElement('OpenFileModal'));
 
   if (!isMultiTab) {
     return null;
@@ -162,8 +168,8 @@ const TabsHeader = () => {
       {tabs}
       <div className="add-button">
         {additionalTabs?.length > 0 && <div
-          className={"dropdown-menu tab-dropdown-button"}
-          onClick={() => dispatch(actions.toggleElement("tabMenu"))}
+          className={'dropdown-menu tab-dropdown-button'}
+          onClick={() => dispatch(actions.toggleElement('tabMenu'))}
           data-element="tabTrigger"
         >
           {additionalTabs.length}

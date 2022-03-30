@@ -1,0 +1,268 @@
+@import '../../constants/styles';
+@import '../../constants/modal';
+@import '../../constants/popup.scss';
+
+.DocumentCropPopup {
+  width: 250px;
+
+  .document-crop-section {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-title {
+    padding-left: 4px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .collapsible-menu {
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .Icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  .menu-items {
+    padding: 6px 4px;
+  }
+
+  .Icon {
+    height: 18px;
+    width: 18px;
+  }
+
+  .divider {
+    border-top: 1px solid var(--divider);
+    width: 100%;
+  }
+
+  .buttons {
+    padding: 12px;
+    text-align: right;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .save-button {
+    background-color: transparent;
+    color: var(--primary-button-text);
+    padding: 6px 16px;
+    background: var(--primary-button);
+    border-radius: 4px;
+    border: 0;
+    height: 32px;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: auto;
+    }
+  }
+
+  .cancel-button {
+    cursor: pointer;
+    background: none;
+    border: 0;
+    color: var(--secondary-button-text);
+    padding: 6px 16px;
+    margin-right: 4px;
+    height: 32px;
+    &:hover {
+      color: var(--secondary-button-hover);
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.crop-dimensions {
+  padding-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  .crop-dimensions-input-container {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 12px;
+  }
+
+  .crop-dimensions-input {
+    display: flex;
+    align-items: center;
+    flex: 1 1 72px;
+
+    .input-field-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      background: var(--component-background);
+      color: var(--text-color);
+      border-radius: 4px;
+      width: 100%;
+      max-width: 79px;
+      height: 28px;
+      padding: 1px 2px;
+      margin: 4px;
+
+      ::placeholder {
+        color: var(--text-color);
+      }
+    }
+
+    .dimension-input-field {
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0;
+      padding: 0;
+      margin-right: 0;
+      text-align: right;
+    }
+
+    .dimension-input-unit {
+      color: var(--text-color);
+    }
+
+    .Icon {
+      margin: 4px;
+    }
+
+    input {
+      border: 0;
+    }
+
+    /* Dont show spin buttons */
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type='number'] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  .crop-dimensions-settings {
+    padding-top: 16px;
+    width: 100%;
+
+    label {
+      display: flex;
+      align-items: center;
+
+      .dimensions-settings-title-container {
+        display: flex;
+      }
+
+      .dimensions-settings-title {
+        margin: 4px;
+      }
+    }
+  }
+}
+
+.custom-select {
+  flex-grow: 2;
+  max-width: 100%;
+  margin: 4px;
+
+  .Dropdown {
+    height: 28px;
+    width: 100% !important;
+
+    .down-arrow {
+      flex: 0 1 auto;
+    }
+
+    .picked-option .picked-option-text {
+      flex: 0 1 auto;
+      width: auto;
+    }
+  }
+  .Dropdown__items {
+    top: 0;
+    z-index: 81;
+    width: 100%;
+  }
+
+  select {
+    height: 28px;
+    width: 100%;
+  }
+}
+
+.DocumentCropPopupContainer {
+  @extend %popup;
+  border-radius: 4px;
+  box-shadow: 0 0 3px 0 var(--document-box-shadow);
+  background: var(--component-background);
+
+  @include mobile {
+    width: 100%;
+    position: fixed;
+    bottom: 0 !important;
+    border-radius: 0;
+    justify-content: start;
+
+    .document-crop-mobile-section {
+      padding-top: 8px;
+      padding-bottom: 6px;
+      padding-left: 12px;
+      padding-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .DocumentCropPopup {
+      width: 100%;
+    }
+    
+    .document-crop-mobile-container {
+      display: flex;
+      align-items: center;
+    
+      .Dropdown {
+        height: 32px;
+        .picked-option .picked-option-text {
+          width: 150px;
+          text-align: left;
+        }
+      }
+
+      .Dropdown__items {
+        top: -24px;
+        z-index: 80;
+      }
+
+      .wrapper {
+        z-index: 79;
+      }
+    
+      .save-button {
+        margin-left: 6px;
+      }
+    }
+    .cancel-button {
+      padding: 0;
+    }
+  }
+}

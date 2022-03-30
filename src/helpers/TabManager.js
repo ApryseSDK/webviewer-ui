@@ -6,43 +6,48 @@ import actions from 'actions';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
+import { isString } from 'lodash';
 
 export function prepareMultiTab(initialDoc, store) {
   const extensions = getHashParameters('extension', null)?.split(',');
-  if (!extensions || extensions.length !== 1 && extensions.length !== initialDoc.length) {
-    throw new Error(`'initialDoc' array length doesn't match 'extension' array length. 
-          Please add an extension for each document or add one for all documents. 
-          ex: 
-          Webviewer({ initialDoc: ['pdf_doc', 'word_doc'], extension: ['pdf', 'docx'] }) 
+  if (extensions && extensions.length !== 1 && extensions.length !== initialDoc.length) {
+    throw new Error(`'initialDoc' array length doesn't match 'extension' array length.
+          Please add an extension for each document or add one for all documents.
+          ex:
+          Webviewer({ initialDoc: ['pdf_doc', 'word_doc'], extension: ['pdf', 'docx'] })
           OR
           Webviewer({ initialDoc: ['pdf_doc1', 'pdf_doc2', 'pdf_doc3'], extension: ['pdf'] })`);
   }
-  if (extensions.length === 1) {
-    console.warn(`Extension option '${extensions[0]}' will be applied to all tabs`);
+  if (extensions && extensions.length === 1) {
+    console.warn(`Extension option '${extensions[0]}' will be applied to all tabs from the constructor.`);
   }
   store.dispatch(actions.setMultiTab(true));
   const tabManager = new TabManager(initialDoc, extensions, store);
   store.dispatch(actions.setTabManager(tabManager));
   tabManager.listenForAnnotChanges();
+  fireEvent('onTabManagerReady', { tabManager });
 }
 
 export default class TabManager {
   db;
   store;
-  tabs = [];
-  activeTab = 0;
   useDB;
-  listeners = [];
 
   constructor(docArr, extensionArr, store) {
     this.store = store;
-    const { tabs } = this;
+    const { tabs } = this.store.getState().viewer;
     this.useDB = !this.store.getState().advanced.disableIndexedDB;
     docArr.forEach((doc, index) => {
-      const filename = doc.substring(doc.lastIndexOf('/') + 1);
+      const extension = extensionArr && isString(doc) ? extensionArr[extensionArr.length > 1 ? index : 0] : undefined;
+      let filename =   `Document ${tabs.length + 1}`;
+      if (isString(doc)) {
+        filename = doc.substring(doc.lastIndexOf('/') + 1);
+      } else if (doc instanceof window.Core.Document && doc.getFilename && doc.getFilename()) {
+        filename = doc.getFilename();
+      }
       tabs.push(new Tab(tabs.length, doc, {
-        extension: extensionArr[extensionArr.length > 1 ? index : 0],
         filename,
+        extension,
       }, this.useDB));
     });
     if (this.useDB) {
@@ -56,80 +61,109 @@ export default class TabManager {
         e.target.result.createObjectStore('files');
       };
     }
+    this.store.dispatch(actions.setTabs(tabs));
   }
 
   async setActiveTab(id, saveCurrent = false) {
     this.store.dispatch(actions.openElement('progressModal'));
     this.store.dispatch(setLoadingProgress(0));
-    const currentTab = this.tabs.find(tab => tab.id === this.activeTab);
+    const { tabs, activeTab } = this.store.getState().viewer;
+    const currentTab = tabs.find(tab => tab.id === activeTab);
     core.addEventListener('documentUnloaded', () => this.listenForAnnotChanges(), { once: true });
     if (currentTab) {
-      fireEvent(Events['BEFORE_TAB_CHANGED'], {
-        src: currentTab.src,
-        options: currentTab.options,
-        annotationsChanged: currentTab.changes.annotations
-      });
       saveCurrent && await currentTab.saveCurrent(this.db);
       core.closeDocument();
-    } else {
-      fireEvent(Events['BEFORE_TAB_CHANGED'], null);
     }
-    const newTab = this.tabs.find(tab => tab.id === id);
+    const newTab = tabs.find(tab => tab.id === id);
     if (!newTab) {
       return console.error(`Tab id not found: ${id}`);
     }
+    fireEvent(Events['BEFORE_TAB_CHANGED'], {
+      currentTab: currentTab ? {
+        src: currentTab.src,
+        options: currentTab.options,
+        annotationsChanged: currentTab.changes.annotations,
+        id: currentTab.id,
+      } : null,
+      nextTab: {
+        src: newTab.src,
+        options: newTab.options,
+        id: newTab.id,
+      },
+    });
     this.listenForAnnotChanges();
-    this.activeTab = id;
+    this.store.dispatch(actions.setActiveTab(id));
     await newTab.load(this.store.dispatch, this.db);
   }
 
   deleteTab(id) {
-    const [deletedTab] = this.tabs.splice(this.tabs.findIndex(tab => tab.id === id), 1);
+    const { tabs, activeTab } = this.store.getState().viewer;
+    const [deletedTab] = tabs.splice(tabs.findIndex(tab => tab.id === id), 1);
     deletedTab.delete(this.db);
     fireEvent(Events['TAB_DELETED'], {
       src: deletedTab.src,
       options: deletedTab.options,
+      id: deletedTab.id,
     });
-    if (id === this.activeTab && this.tabs.length) {
-      this.setActiveTab(this.tabs[0].id);
-    } else if (!this.tabs.length) {
+    if (id === activeTab && tabs.length) {
+      this.setActiveTab(tabs[0].id);
+    } else if (!tabs.length) {
       core.closeDocument();
-      this.activeTab = null;
+      this.store.dispatch(actions.setActiveTab(null));
     }
+    this.store.dispatch(actions.setTabs(tabs));
   }
 
-  async addTab(src, extension, filename, load = true) {
-    const { tabs } = this;
-    const currId = this.tabs.reduce((highestId, tab) => {
+  async addTab(src, options = {}) {
+    const saveCurrent = options['saveCurrent'] === false ? options['saveCurrent'] : true;
+    const useDB = options['useDB'] === false ? options['useDB'] && this.useDB : this.useDB;
+    const load = options['load'] === false ? options['load'] : true;
+    const { tabs } = this.store.getState().viewer;
+    const currId = tabs.reduce((highestId, tab) => {
       return tab.id > highestId ? tab.id : highestId;
     }, 0);
-    const tab = new Tab(currId + 1, src, { extension, filename }, this.useDB);
+    if (!('filename' in options)) {
+      options['filename'] = `Document ${currId + 2}`;
+      if (isString(src)) {
+        options['filename'] = src.substring(src.lastIndexOf('/') + 1);
+      } else if (src instanceof window.Core.Document && src.getFilename && src.getFilename()) {
+        options['filename'] = src.getFilename();
+      }
+    }
+    const tab = new Tab(currId + 1, src, options, useDB);
     tabs.push(tab);
     fireEvent(Events['TAB_ADDED'], {
       src: tab.src,
       options: tab.options,
+      id: tab.id,
     });
     if (load) {
-      this.moveTab(this.tabs.length - 1, 0);
-      await this.setActiveTab(tab.id);
+      this.moveTab(tabs.length - 1, 0);
+      await this.setActiveTab(tab.id, saveCurrent);
     }
+    this.store.dispatch(actions.setTabs(tabs));
+    return tab.id;
   }
 
   moveTab(from, to) {
-    const tab = this.tabs.splice(from, 1)[0];
-    this.tabs.splice(to, 0, tab);
+    const { tabs } = this.store.getState().viewer;
+    const tab = tabs.splice(from, 1)[0];
+    tabs.splice(to, 0, tab);
     fireEvent(Events['TAB_MOVED'], {
       src: tab.src,
       options: tab.options,
+      id: tab.id,
       prevIndex: from,
       newIndex: to,
     });
+    this.store.dispatch(actions.setTabs(tabs));
   }
 
   listenForAnnotChanges() {
+    const { tabs, activeTab } = this.store.getState().viewer;
     const onAnnotChange = () => {
-      const activeTab = this.tabs.find(t => t.id === this.activeTab);
-      activeTab.changes.annotations = true;
+      const tab = tabs.find(t => t.id === activeTab);
+      tab.changes.annotations = true;
     };
     const addAnnotListener = () => {
       core.addEventListener('annotationChanged', onAnnotChange, { once: true });
@@ -144,7 +178,8 @@ export default class TabManager {
   }
 
   *[Symbol.iterator]() {
-    for (const tab of this.tabs) {
+    const { tabs } = this.store.getState().viewer;
+    for (const tab of tabs) {
       yield tab;
     }
   }
@@ -152,7 +187,8 @@ export default class TabManager {
   map(cb) {
     const mapped = [];
     let index = 0;
-    for (const tab of this.tabs) {
+    const { tabs } = this.store.getState().viewer;
+    for (const tab of tabs) {
       mapped.push(cb(tab, index++));
     }
     return mapped;
@@ -182,7 +218,6 @@ export class Tab {
   changes = {
     annotations: false,
   };
-  listeners = [];
 
   id;
   src;
@@ -278,14 +313,18 @@ export class Tab {
 
   restorePageDataOnLoad() {
     const docContainer = document.getElementsByClassName('DocumentContainer')[0];
-    const updateScroll = () => {
+
+    const updateScroll = async () => {
+      await core.getDocument().getDocumentCompletePromise();
       docContainer.scrollTop = this.saveData.scrollTop;
       docContainer.scrollLeft =  this.saveData.scrollLeft;
     };
-    const updateZoom = () => {
+    const updateZoom = async () => {
+      await core.getDocument().getDocumentCompletePromise();
       core.zoomTo(this.saveData.zoom);
     };
-    const updatePage = () => {
+    const updatePage = async () => {
+      await core.getDocument().getDocumentCompletePromise();
       core.setCurrentPage(this.saveData.page);
     };
 
@@ -303,6 +342,7 @@ export class Tab {
 
   restoreAnnotDataOnLoad() {
     const updateAnnotations = async () => {
+      await core.getDocument().getDocumentCompletePromise();
       await core.getAnnotationManager().importAnnotations(this.saveData.annots);
       core.removeEventListener('annotationsLoaded', updateAnnotations);
     };
@@ -325,6 +365,7 @@ export class Tab {
       };
       await tx.commit();
       const updateAnnotations = async () => {
+        await core.getDocument().getDocumentCompletePromise();
         await core.getAnnotationManager().importAnnotations(annots);
         core.removeEventListener('annotationsLoaded', updateAnnotations);
       };

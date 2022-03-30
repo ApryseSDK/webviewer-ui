@@ -81,8 +81,11 @@
     "select": "Auswählen",
     "moveToTop": "Nach oben verschieben",
     "moveToBottom": "Nach unten gehen",
+    "redactPages": "Seiten schwärzen",
     "playAudio": "Audio abspielen",
-    "pauseAudio": "Audiopause"
+    "pauseAudio": "Audiopause",
+    "viewFile": "Datei ansehen",
+    "switchLanguage": "Sprache"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -183,7 +186,8 @@
     "filter": "Filter",
     "pageReplaceModalTitle": "Seite Ersetzen",
     "files": "Dateien",
-    "editText": "Text bearbeiten"
+    "editText": "Text bearbeiten",
+    "redactionPanel": "Redaktionsbereich"
   },
   "message": {
     "toolsOverlayNoPresets": "Keine Voreinstellungen",
@@ -485,6 +489,15 @@
       "Username": "Nutzername",
       "Date": "Datum",
       "Time": "Zeit"
+    },
+    "pageRedactModal": {
+      "addMark": "Markus hinzufügen",
+      "pageSelection": "Seitenauswahl",
+      "current": "Aktuelle Seite",
+      "specify": "Seiten angeben",
+      "odd": "Nur ungerade Seiten",
+      "even": "Nur gerade Seiten",
+      "header": "Schwärzung von Seiten markieren"
     }
   },
   "warning": {
@@ -573,7 +586,8 @@
     "enterUrlOrChooseFile": "Geben Sie eine URL ein oder wählen Sie eine Datei aus, die in WebViewer geladen werden soll",
     "enterUrl": "Datei-URL eingeben",
     "extension": "Dateierweiterung",
-    "existingFile": "Datei ist bereits geöffnet"
+    "existingFile": "Datei ist bereits geöffnet",
+    "addTab": "Registerkarte hinzufügen"
   },
   "datePicker": {
     "previousMonth": "Vorheriger Monat",
@@ -763,5 +777,21 @@
       "certificateDownloadError": "Beim Versuch, ein vertrauenswürdiges Zertifikat herunterzuladen, ist ein Fehler aufgetreten",
       "localCertificateError": "Es gibt einige Probleme beim Lesen eines lokalen Zertifikats"
     }
+  },
+  "redactionPanel": {
+    "noMarkedRedactions": "Beginnen Sie mit dem Schwärzen, indem Sie Text, Regionen, Seiten markieren oder eine Suche durchführen.",
+    "redactionSearchPlaceholder": "Hinzufügen nach Schlüsselwortsuche oder Mustern",
+    "redactionCounter": "Zur Schwärzung markiert",
+    "clearMarked": "Klar",
+    "redactAllMarked": "Alle schwärzen",
+    "redactionItem": {
+      "regionRedaction": "Regionsredaktion",
+      "fullPageRedaction": "Ganzseitige Redaktion"
+    },
+    "expand": "Erweitern",
+    "collapse": "Zusammenbruch"
+  },
+  "languageModal": {
+    "selectLanguage": "Sprache auswählen"
   }
 }

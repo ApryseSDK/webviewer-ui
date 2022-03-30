@@ -81,8 +81,11 @@
     "select": "Selecteer",
     "moveToTop": "Ga naar boven",
     "moveToBottom": "Naar beneden verplaatsen",
+    "redactPages": "Pagina's redigeren",
     "playAudio": "Audio afspelen",
-    "pauseAudio": "audio pauze"
+    "pauseAudio": "audio pauze",
+    "viewFile": "Bestand bekijken",
+    "switchLanguage": "Taal"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -183,7 +186,8 @@
     "filter": "Filter",
     "pageReplaceModalTitle": "Pagina vervangen",
     "files": "Bestanden",
-    "editText": "Tekst bewerken"
+    "editText": "Tekst bewerken",
+    "redactionPanel": "Redactiepaneel"
   },
   "message": {
     "toolsOverlayNoPresets": "Geen voorinstellingen",
@@ -485,6 +489,15 @@
       "Username": "Gebruikersnaam",
       "Date": "Datum",
       "Time": "Tijd"
+    },
+    "pageRedactModal": {
+      "addMark": "Markering toevoegen",
+      "pageSelection": "Paginaselectie",
+      "current": "Huidige pagina",
+      "specify": "Specificeer pagina's",
+      "odd": "Alleen oneven pagina's",
+      "even": "Alleen even pagina's",
+      "header": "Redactie van pagina's markeren"
     }
   },
   "warning": {
@@ -573,7 +586,8 @@
     "enterUrlOrChooseFile": "Voer een URL in of kies een bestand om in WebViewer te laden",
     "enterUrl": "Voer bestands-URL in",
     "extension": "Bestandsextensie",
-    "existingFile": "Bestand is al geopend"
+    "existingFile": "Bestand is al geopend",
+    "addTab": "Tabblad toevoegen"
   },
   "datePicker": {
     "previousMonth": "Vorige maand",
@@ -763,5 +777,21 @@
       "certificateDownloadError": "Er is een fout opgetreden bij het downloaden van een vertrouwd certificaat",
       "localCertificateError": "Er zijn enkele problemen met het lezen van een lokaal certificaat"
     }
+  },
+  "redactionPanel": {
+    "noMarkedRedactions": "Begin met redigeren door tekst, regio's, pagina's te markeren of een zoekopdracht uit te voeren.",
+    "redactionSearchPlaceholder": "Toevoegen op trefwoord zoeken of patronen",
+    "redactionCounter": "Gemarkeerd voor redactie",
+    "clearMarked": "Duidelijk",
+    "redactAllMarked": "Alles redigeren",
+    "redactionItem": {
+      "regionRedaction": "Regio redactie",
+      "fullPageRedaction": "Volledige pagina redactie"
+    },
+    "expand": "Uitbreiden",
+    "collapse": "Instorten"
+  },
+  "languageModal": {
+    "selectLanguage": "Selecteer taal"
   }
 }

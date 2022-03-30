@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import RedactionItem from './RedactionItem';
-import Button from 'components/Button';
+import CollapsiblePanelGroup from 'components/CollapsiblePanelGroup';
 import { useTranslation } from 'react-i18next';
 
 import './RedactionPageGroup.scss'
@@ -10,34 +10,29 @@ const RedactionPageGroup = (props) => {
     redactionItems,
   } = props;
 
-  const [isExpanded, setIsExpanded] = useState(true);
-
   const { t } = useTranslation();
 
-  return (
-    <div className="redaction-page-group">
-      <div className="redaction-page-group-header">
-        <div className="redaction-page-group-number">
-          {t('option.shared.page')} {pageNumber}
-        </div>
-        <Button
-          title={isExpanded ? t('redactionPanel.collapse') : t('redactionPanel.expand')}
-          img={isExpanded ? "icon-chevron-up" : "icon-chevron-down"}
-          className="expand-arrow"
-          onClick={() => setIsExpanded(!isExpanded)}
-        />
+  const header = () => {
+    return (
+      <div className="redaction-page-group-number">
+        {t('option.shared.page')} {pageNumber}
       </div>
-      {isExpanded && (
-        <div role="list" className="redaction-items">
-          {redactionItems.map(redactionItem => (
-            <RedactionItem
-              annotation={redactionItem}
-              key={`${redactionItem.Id}-${pageNumber}`}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+    );
+  };
+
+  return (
+    <CollapsiblePanelGroup
+      className="redaction-page-group"
+      header={header}>
+      <div role="list" className="redaction-items">
+        {redactionItems.map(redactionItem => (
+          <RedactionItem
+            annotation={redactionItem}
+            key={`${redactionItem.Id}-${pageNumber}`}
+          />
+        ))}
+      </div>
+    </CollapsiblePanelGroup>
   )
 };
 

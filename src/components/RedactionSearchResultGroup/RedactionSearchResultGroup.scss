@@ -1,0 +1,10 @@
+.redaction-search-results-page-number {
+  display: flex;
+  align-items: center;
+  margin-left: 11px;
+
+  label {
+    font-size: 13px;
+    color: var(--faded-text);
+  }
+}

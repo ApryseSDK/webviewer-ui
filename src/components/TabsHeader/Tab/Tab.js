@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Tab.scss';
-import Button from "components/Button";
-import classNames from "classnames";
+import Button from 'components/Button';
+import classNames from 'classnames';
 
 const propTypes = {
   tab: PropTypes.any.isRequired,
@@ -19,7 +19,7 @@ const propTypes = {
 const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, closeTab, id, isToLeftOfActive }) => {
   const [disabled, setDisabled] = useState(tab?.disabled);
   const removeExtension = true;
-  const name = removeExtension ? tab.options.filename.split(".")[0] : tab.options.filename;
+  const name = removeExtension ? tab.options.filename.split('.')[0] : tab.options.filename;
 
   useEffect(() => {
     if (tab && tab.disabled !== disabled) {
@@ -28,11 +28,11 @@ const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, c
   }, [tab]);
 
   return (
-    <div className={"draggable-tab"}
+    <div className={'draggable-tab'}
       onDragOver={onDragOver} onDragStart={onDragStart} onDragLeave={onDragLeave} draggable id={id}
     >
       <div className={classNames({ Tab: true, active: isActive })}>
-        <div className={classNames({ "file-text": true, disabled })} onClick={setActive}>
+        <div className={classNames({ 'file-text': true, disabled })} onClick={setActive}>
           <p>{name}</p>
         </div>
         <Button

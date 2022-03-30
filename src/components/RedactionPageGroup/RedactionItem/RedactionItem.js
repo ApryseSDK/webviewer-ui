@@ -8,19 +8,24 @@ import './RedactionItem.scss';
 import RedactionTextPreview from 'components/RedactionTextPreview';
 import classNames from 'classnames';
 
-const redactionTypeMap = {
+export const redactionTypeMap = {
   REGION: 'region',
   TEXT: 'text',
   FULL_PAGE: 'fullPage',
-}
+  CREDIT_CARD: 'creditCard',
+  PHONE: 'phone',
+  IMAGE: 'image',
+  EMAIL: 'email',
+};
 
 const mapAnnotationToRedactionType = (annotation) => {
   const isTextRedaction = annotation.IsText;
   if (isTextRedaction) {
     return redactionTypeMap['TEXT'];
-  } else {
-    return redactionTypeMap['REGION'];
   }
+
+  const { type } = annotation;
+  return type ? type : 'region';
 };
 
 const mapRedactionAnnotationToProperties = (annotation) => {
@@ -41,7 +46,28 @@ const mapRedactionAnnotationToProperties = (annotation) => {
     case redactionTypeMap['TEXT']:
       return {
         redactionType,
-        icon: 'icon-form-field-text'
+        icon: 'icon-form-field-text',
+      };
+    case redactionTypeMap['CREDIT_CARD']:
+      return {
+        redactionType,
+        icon: 'redact-icons-credit-card',
+      };
+    case redactionTypeMap['PHONE']:
+      return {
+        redactionType,
+        icon: 'redact-icons-phone-number',
+      };
+    case redactionTypeMap['IMAGE']:
+      return {
+        redactionType,
+        icon: 'redact-icons-image',
+        name: 'redactionPanel.redactionItem.image',
+      };
+    case redactionTypeMap['EMAIL']:
+      return {
+        redactionType,
+        icon: 'redact-icons-email',
       };
   };
 };
@@ -67,13 +93,15 @@ const RedactionItem = (props) => {
   const { redactionType, name, icon } = mapRedactionAnnotationToProperties(annotation);
 
   let redactionPreview;
-  if (redactionType === 'text') {
+  if (redactionType === redactionTypeMap['TEXT']) {
     redactionPreview = (
       <RedactionTextPreview linesToBreak={2}>
         {textPreview}
       </RedactionTextPreview>)
-  } else {
+  } else if (redactionType === redactionTypeMap['FULL_PAGE'] || redactionType === redactionTypeMap['REGION']) {
     redactionPreview = t(name);
+  } else {
+    redactionPreview = annotation.getContents();
   }
 
   const onKeyUp = (event) => {
@@ -99,6 +127,7 @@ const RedactionItem = (props) => {
         style={{ marginLeft: 'auto' }}
         img={"icon-close"}
         onClick={onRedactionItemDelete}
+        ariaLabel={t('action.delete')}
       />
     </div>
   )

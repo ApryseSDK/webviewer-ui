@@ -274,7 +274,7 @@ export const setReaderMode = isReaderMode => ({
   payload: { isReaderMode },
 });
 export const setThumbnailSelectingPages = (isSelecting = true) => ({
-  type: "SET_THUMBNAIL_PAGE_SELECT",
+  type: 'SET_THUMBNAIL_PAGE_SELECT',
   payload: { isSelecting },
 });
 export const setPageManipulationOverlayItems = items => ({
@@ -284,12 +284,24 @@ export const setPageManipulationOverlayItems = items => ({
   },
 });
 export const setTabManager = TabManager => ({
-  type: "SET_TAB_MANAGER",
+  type: 'SET_TAB_MANAGER',
   payload: { TabManager },
 });
 export const setMultiTab = (isMultiTab = true) => ({
-  type: "SET_IS_MULTI_TAB",
+  type: 'SET_IS_MULTI_TAB',
   payload: { isMultiTab },
+});
+export const setTabs = tabs => ({
+  type: 'SET_TABS',
+  payload: { tabs },
+});
+export const setActiveTab = activeTab => ({
+  type: 'SET_ACTIVE_TAB',
+  payload: { activeTab },
+});
+export const setFonts = (fonts = []) => ({
+  type: "SET_FONTS",
+  payload: { fonts },
 });
 
 // document
@@ -437,7 +449,7 @@ export const setCurrentContentBeingEdited = ({ content, annotation }) => ({
   payload: { content, annotation },
 });
 
-export const updateCurrentContentBeingEdited = (content) => ({
+export const updateCurrentContentBeingEdited = content => ({
   type: 'UPDATE_CURRENT_CONTENT_BEING_EDITED',
   payload: { content },
 });

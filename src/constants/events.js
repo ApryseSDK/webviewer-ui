@@ -21,9 +21,9 @@
  * @property {string} VISIBILITY_CHANGED {@link UI#event:visibilityChanged UI.Events.visibilityChanged}
  * @property {string} FULLSCREEN_MODE_TOGGLED {@link UI#event:fullscreenModeToggled UI.Events.fullscreenModeToggled}
  * @property {string} BEFORE_TAB_CHANGED {@link UI#event:beforeTabChanged UI.Events.beforeTabChanged}
- * @property {string} TAB_DELETED {@link UI#event:beforeTabChanged UI.Events.tabDeleted}
- * @property {string} TAB_ADDED {@link UI#event:beforeTabChanged UI.Events.tabAdded}
- * @property {string} TAB_MOVED {@link UI#event:beforeTabChanged UI.Events.tabMoved}
+ * @property {string} TAB_DELETED {@link UI#event:tabDeleted UI.Events.tabDeleted}
+ * @property {string} TAB_ADDED {@link UI#event:tabAdded UI.Events.tabAdded}
+ * @property {string} TAB_MOVED {@link UI#event:tabMoved UI.Events.tabMoved}
  * @example
   WebViewer(...).then(function(instance) {
     const UIEvents = instance.UI.Events;
@@ -211,9 +211,15 @@ export default {
 * @name UI#beforeTabChanged
 * @event
 * @type {object}
-* @property {string} src Source of current tab
-* @property {string} options Tab load options
-* @property {boolean} annotationsChanged True if the annotations have been changed since loading the tab
+* @property {object} currentTab An object containing the properties for the currently active tab (null if no currently active tab)
+* @property {number} currentTab.id The id of the tab being switched to
+* @property {string} currentTab.src Source of current tab
+* @property {string} currentTab.options Tab load options
+* @property {boolean} currentTab.annotationsChanged True if the annotations have been changed since loading the tab
+* @property {object} nextTab An object containing the properties for the tab being switched to
+* @property {number} nextTab.id The id of the tab being switched to
+* @property {string} nextTab.src Source of current tab
+* @property {string} nextTab.options Tab load options
 */
 
 /**
@@ -221,6 +227,7 @@ export default {
 * @name UI#tabDeleted
 * @event
 * @type {object}
+* @property {number} id The id of the tab being deleted
 * @property {string} src Source of current tab
 * @property {string} options Tab load options
 */
@@ -230,6 +237,7 @@ export default {
 * @name UI#tabAdded
 * @event
 * @type {object}
+* @property {number} id The id of the tab being added
 * @property {string} src Source of current tab
 * @property {string} options Tab load options
 */
@@ -239,6 +247,7 @@ export default {
 * @name UI#tabMoved
 * @event
 * @type {object}
+* @property {number} id The id of the tab being moved
 * @property {string} src Source of moved tab
 * @property {string} options Tab load options
 * @property {number} prevIndex Previous index of tab

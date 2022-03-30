@@ -4,6 +4,7 @@ import { saveAs } from 'file-saver';
 import actions from 'actions';
 import i18next from 'i18next';
 import { workerTypes } from 'constants/types';
+import { redactionTypeMap } from 'components/RedactionPageGroup/RedactionItem/RedactionItem';
 
 const getNewRotation = (curr, counter_clockwise = false) => {
   const { e_0, e_90, e_180, e_270 } = window.Core.PageRotation;
@@ -164,6 +165,9 @@ const createPageRedactions = pageNumbers => {
         PageNumber: page,
         Rect: new Annotations.Rect(0, 0, pageInfo.width, pageInfo.height),
       });
+      redaction.type = redactionTypeMap['FULL_PAGE'];
+      redaction.setCustomData('trn-redaction-type', redactionTypeMap['FULL_PAGE']);
+      redaction.Author = core.getCurrentUser();
       annots.push(redaction);
     }
   }

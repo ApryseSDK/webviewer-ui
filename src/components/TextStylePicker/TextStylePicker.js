@@ -1,27 +1,12 @@
 import React, { useState } from 'react';
+import './TextStylePicker.scss';
 import Dropdown from "components/Dropdown";
 import FontSizeDropdown from "components/FontSizeDropdown";
 import Button from "components/Button";
 
-import './TextStylePicker.scss';
-
-const TextStylePicker = ({ onPropertyChange, properties, onRichTextStyleChange, isRedaction }) => {
+const TextStylePicker = ({ onPropertyChange, properties, onRichTextStyleChange, isRedaction, fonts }) => {
   // List is not complete
-  const supportedFonts = [
-    "Helvetica",
-    "Times New Roman",
-    "Courier",
-    "Georgia",
-    "serif",
-    "Verdana",
-    "sans-serif",
-    "Lucida Console",
-    "monospace",
-    'Tahoma',
-    'Trebuchet MS',
-    'Garamond',
-    'Brush Script MT',
-  ];
+  const supportedFonts = fonts?.length ? fonts: ["Helvitica", "Times New Roman"];
 
   const font = properties?.Font || supportedFonts[0];
   const changeFont = font => {

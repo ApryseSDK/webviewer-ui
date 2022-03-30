@@ -14,6 +14,9 @@ const initialState = {
     },
     currentLanguage: 'en',
     openElements: {},
+  },
+  search: {
+    redactionSearchPatterns: {},
   }
 };
 

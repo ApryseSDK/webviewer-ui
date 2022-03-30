@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
-import TabManager from "helpers/TabManager";
-import classNames from "classnames";
-import getHashParameters from "helpers/getHashParameters";
-import { Swipeable } from "react-swipeable";
-import Dropdown from "components/Dropdown";
-import Button from "components/Button";
-import { useTranslation } from "react-i18next";
+import TabManager from 'helpers/TabManager';
+import classNames from 'classnames';
+import getHashParameters from 'helpers/getHashParameters';
+import { Swipeable } from 'react-swipeable';
+import Dropdown from 'components/Dropdown';
+import Button from 'components/Button';
+import { useTranslation } from 'react-i18next';
 import './FileModal.scss';
+import { Choice } from '@pdftron/webviewer-react-toolkit';
 
 const OpenFileModal = ({ isOpen, tabManager }) => {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
   const [filename, setFilename] = useState();
   const [size, setSize] = useState();
   const [error, setError] = useState({ 'fileError': '', 'urlError': '', 'extensionError': '' });
+  const [shouldOpen, setShouldOpen] = useState(true);
   const fileInputRef = useRef();
 
   const closeModal = () => {
@@ -25,7 +27,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
     setSrc('');
     setError({ 'fileError': '', 'urlError': '' });
     setFilename(null);
-    setExtension(null);
+    setExtension('pdf');
     setSize(null);
   };
 
@@ -33,19 +35,25 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
     if (isOpen) {
       dispatch(actions.closeElements(['printModal', 'loadingModal', 'progressModal', 'errorModal', 'Model3DModal']));
     } else {
-      fileInputRef.current.value = "";
+      fileInputRef.current.value = '';
     }
   }, [dispatch, isOpen]);
 
   const handleAddTab = async () => {
     if (!src) {
-      return setError({ "urlError": "URL or File must be provided" });
+      return setError({ 'urlError': 'URL or File must be provided' });
     }
     if (!extension || acceptFormats.indexOf(extension) === -1) {
-      return setError({ "extensionError": "Extension must be provided" });
+      return setError({ 'extensionError': 'Extension must be provided' });
     }
     const useDb = !size || TabManager.MAX_FILE_SIZE > size;
-    await tabManager.addTab(src, extension, filename || src, useDb, true);
+    await tabManager.addTab(src, {
+      extension,
+      filename,
+      load: shouldOpen,
+      saveCurrent: true,
+      useDB: useDb
+    });
     closeModal();
   };
 
@@ -67,15 +75,15 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
     }
     setFilename(file.name);
     setSrc(URL.createObjectURL(file));
-    setExtension(Core.mimeTypeToExtension[file.type] || extensionRegExp.exec(file.name)[1] || null);
+    setExtension(window.Core.mimeTypeToExtension[file.type] || extensionRegExp.exec(file.name)[1] || null);
     setSize(file.size);
   };
 
   const handleURLChange = async url => {
     setError(null);
-    fileInputRef.current.value = "";
+    fileInputRef.current.value = '';
     setSrc(url.trim());
-    const filename = url.substring(url.lastIndexOf('/')+1).split("?")[0];
+    const filename = url.substring(url.lastIndexOf('/')+1).split('?')[0];
     setFilename(filename);
     setExtension(extensionRegExp.exec(filename)[1]);
     setSize(null);
@@ -91,9 +99,10 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
   }, []);
 
   return (
-    <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
+    <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal}>
       <div className={modalClass} data-element="OpenFileModal" onMouseDown={closeModal}>
         <div className="container" onMouseDown={e => e.stopPropagation()}>
+          <div className="swipe-indicator"/>
           <form onSubmit={e => e.preventDefault()}>
             <div className="col">{t('OpenFile.enterUrlOrChooseFile')}</div>
             <input
@@ -115,6 +124,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
             {error?.fileError && <p className="error">* {error.fileError}</p>}
             <div className="extension-dropdown">
               <Dropdown
+                onClick={e => e.stopPropagation()}
                 onClickItem={setExtension}
                 items={acceptFormats}
                 currentSelectionKey={extension}
@@ -122,7 +132,8 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
               <p>{t('OpenFile.extension')}</p>
             </div>
             {error?.extensionError && <p className="error">* {error.extensionError}</p>}
-            <Button dataElement="linkSubmitButton" label={t('action.openFile')} onClick={handleAddTab} />
+            <Choice label={t('action.openFile')} checked={shouldOpen} onChange={() => setShouldOpen(!shouldOpen)} />
+            <Button dataElement="linkSubmitButton" label={t('OpenFile.addTab')} onClick={handleAddTab} />
           </form>
         </div>
       </div>

@@ -93,6 +93,15 @@ export default initialState => (state = initialState, action) => {
         isProcessingSearchResults: payload.isProcessingSearchResults,
       };
     }
+    case 'REPLACE_REDACTION_SEARCH_PATTERN': {
+      return {
+        ...state,
+        redactionSearchPatterns: {
+          ...state.redactionSearchPatterns,
+          [payload.searchPattern]: payload.regex,
+        }
+      };
+    }
     default:
       return state;
   }

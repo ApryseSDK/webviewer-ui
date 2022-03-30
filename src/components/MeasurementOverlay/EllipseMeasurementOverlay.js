@@ -9,6 +9,7 @@ import core from 'core';
 import selectors from 'selectors';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 import { isMobileDevice } from 'src/helpers/device';
+import getFormattedUnit from 'src/helpers/getFormattedUnit';
 
 function EllipseMeasurementOverlay(props) {
   const { t, annotation, isOpen } = props;
@@ -17,8 +18,8 @@ function EllipseMeasurementOverlay(props) {
   const { icon } = getDataWithKey(annotationKey);
   const scale = annotation.Scale;
   const precision = annotation.Precision;
-  const unit = annotation.Scale[1][1];
-  const renderScaleRatio = () => `${scale[0][0]} ${scale[0][1]} = ${scale[1][0]} ${scale[1][1]}`;
+  const unit = getFormattedUnit(annotation.Scale[1][1]);
+  const renderScaleRatio = () => `${scale[0][0]} ${scale[0][1]} = ${scale[1][0]} ${unit}`;
 
   useEffect(() => {
     const onAnnotationChanged = () => {
@@ -115,7 +116,7 @@ function EllipseMeasurementOverlay(props) {
     }
   }, [annotation, ensureDiameterIsWithinBounds, isOpen]);
 
-  const [ radius, setRadius ] = useState(computeRadius());
+  const [radius, setRadius] = useState(computeRadius());
 
   return (
     <>

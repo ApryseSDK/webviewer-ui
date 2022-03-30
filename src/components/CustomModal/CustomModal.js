@@ -110,7 +110,7 @@ function CustomModal() {
     dispatch(actions.closeElement(dataElement));
   }, [dispatch]);
 
-  return customModals.map(function customModalsMap(customModalItem) {
+  return customModals.map(customModalItem => {
     const { dataElement, render, disableBackdropClick = false, disableEscapeKeyDown = false } = customModalItem;
     const isModalOpen = openElements[dataElement];
     const disableElement = disableElements[dataElement];

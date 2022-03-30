@@ -2,6 +2,9 @@ import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 
 // viewer
+export const getFonts = state => state.viewer.fonts;
+export const getTabs = state => state.viewer.tabs;
+export const getActiveTab = state => state.viewer.activeTab;
 export const getIsMultiTab = state => state.viewer.isMultiTab;
 export const getTabManager = state => state.viewer.TabManager;
 export const getIsHighContrastMode = state => state.viewer.highContrastMode;
@@ -27,7 +30,7 @@ export const getSelectedDisplayedSignature = state => getDisplayedSignatures(sta
 export const getDisplayedSignaturesFilterFunction = state => state.viewer.displayedSignaturesFilterFunction;
 
 export const getAutoFocusNoteOnAnnotationSelection = state =>
-  state.viewer.autoFocusNoteOnAnnotationSelection
+  state.viewer.autoFocusNoteOnAnnotationSelection;
 export const getNotesInLeftPanel = state =>
   state.viewer.notesInLeftPanel;
 export const getLeftPanelWidth = state =>
@@ -108,7 +111,7 @@ export const getEnabledToolbarGroups = state => {
         return total;
       }, [])
     };
-    
+
     const itemsToCheck = flattenHeaderItems(headerItems);
     const toolGroupButtons = itemsToCheck.filter(({ dataElement }) => {
       return dataElement && dataElement.includes('ToolGroupButton');
@@ -152,7 +155,7 @@ export const isToolGroupReorderingEnabled = state => {
 
 export const isNoteSubmissionWithEnterEnabled = state => {
   return state.viewer.enableNoteSubmissionWithEnter;
-}
+};
 
 export const getActiveToolNamesForActiveToolGroup = state => {
   const { activeToolGroup } = state.viewer;
@@ -393,6 +396,8 @@ export const isRegex = state => state.search.isRegex;
 
 export const isProcessingSearchResults = state => state.search.isProcessingSearchResults;
 
+export const getRedactionSearchPattern = (state, pattern) => state.search.redactionSearchPatterns[pattern];
+
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
 
 export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFunction;
@@ -419,7 +424,7 @@ export const getPageReplacementFileList = state => state.viewer.pageReplacementF
 
 export const getPageManipulationOverlayItems = state => state.viewer.pageManipulationOverlay;
 
-export const shouldShowPresets = (state) => {
+export const shouldShowPresets = state => {
   const response = state.viewer.toolButtonObjects[state.viewer.activeToolName];
   return response?.showPresets ?? true;
 };

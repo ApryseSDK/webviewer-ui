@@ -83,7 +83,12 @@
     "moveToBottom": "Move to bottom",
     "redactPages": "Redact pages",
     "playAudio": "Play audio",
-    "pauseAudio": "Pause audio"
+    "pauseAudio": "Pause audio",
+    "selectAll": "Select all",
+    "unselect": "Unselect",
+    "addMark": "Add Mark",
+    "viewFile": "View file",
+    "switchLanguage": "Language"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -584,7 +589,8 @@
     "enterUrlOrChooseFile": "Enter a URL or choose a file to load into WebViewer",
     "enterUrl": "Enter file URL",
     "extension": "File extension",
-    "existingFile": "File is already open"
+    "existingFile": "File is already open",
+    "addTab": "Add Tab"
   },
   "datePicker": {
     "previousMonth": "Previous Month",
@@ -775,6 +781,22 @@
       "localCertificateError": "There are some issues with reading a local certificate"
     }
   },
+  "cropPopUp": {
+    "title": "Pages to Crop",
+    "allPages": "All",
+    "singlePage": "Current Page",
+    "cropDimensions":"Crop Dimensions",
+    "dimensionInput": {
+      "unitOfMeasurement": "Unit",
+      "autoTrim": "Auto-trim"
+    },
+    "cropModal": {
+      "applyTitle": "Apply crop?",
+      "applyMessage": "This action will permanently crop all selected pages selected. It cannot be undone.",
+      "cancelTitle": "Cancel crop?",
+      "cancelMessage": "Are you sure you want to cancel cropping all selected pages?" 
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Start redacting by marking text, regions, pages or making a search.",
     "redactionSearchPlaceholder": "Add by keyword search or patterns",
@@ -783,9 +805,22 @@
     "redactAllMarked": "Redact All",
     "redactionItem": {
       "regionRedaction": "Region redaction",
-      "fullPageRedaction": "Full page redaction"
+      "fullPageRedaction": "Full page redaction",
+      "image": "Image"
     },
     "expand": "Expand",
-    "collapse": "Collapse"
+    "collapse": "Collapse",
+    "searchResults": "Search results",
+    "search": {
+      "creditCards": "Credit Card",
+      "phoneNumbers": "Phone Numbers",
+      "images": "Images",
+      "emails": "Emails",
+      "pattern": "Pattern",
+      "start": "Start making your search"
+    }
+  },
+  "languageModal": {
+    "selectLanguage": "Select language"
   }
 }

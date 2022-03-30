@@ -144,7 +144,7 @@ if (window.CanvasRenderingContext2D) {
 
     if (preloadWorker.includes(LEGACY_OFFICE) || preloadWorker === ALL) {
       getBackendPromise(getHashParameters('legacyOffice', 'auto')).then(officeType => {
-        window.CoreControls.initLegacyOfficeWorkerTransports(officeType, {
+        window.Core.initLegacyOfficeWorkerTransports(officeType, {
           workerLoadingProgress: percent => {
             store.dispatch(actions.setLoadingProgress(percent));
           },

@@ -560,16 +560,21 @@ export const disableFadePageNavigationComponent = () => ({
 });
 
 export const enablePageDeletionConfirmationModal = () => ({
-  type: "PAGE_DELETION_CONFIRMATION_MODAL_POPUP",
+  type: 'PAGE_DELETION_CONFIRMATION_MODAL_POPUP',
   payload: { pageDeletionConfirmationModalEnabled: true }
 });
 
 export const disablePageDeletionConfirmationModal = () => ({
-  type: "PAGE_DELETION_CONFIRMATION_MODAL_POPUP",
+  type: 'PAGE_DELETION_CONFIRMATION_MODAL_POPUP',
   payload: { pageDeletionConfirmationModalEnabled: false }
 });
 
 export const setWatermarkModalOptions = watermarkModalOptions => ({
   type: 'SET_WATERMARK_MODAL_OPTIONS',
   payload: { watermarkModalOptions }
+});
+
+export const replaceRedactionSearchPattern = (searchPattern, regex) => ({
+  type: 'REPLACE_REDACTION_SEARCH_PATTERN',
+  payload: { searchPattern, regex }
 });

@@ -10,7 +10,7 @@ import Icon from 'components/Icon';
 import core from 'core';
 import { mapAnnotationToKey, mapToolNameToKey, getDataWithKey } from 'constants/map';
 import parseMeasurementContents from 'helpers/parseMeasurementContents';
-import getFormatedUnit from 'helpers/getFormatedUnit';
+import getFormattedUnit from 'src/helpers/getFormattedUnit';
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -20,6 +20,41 @@ import EllipseMeasurementOverlay from './EllipseMeasurementOverlay';
 import ArcMeasurementOverlay from './ArcMeasurementOverlay';
 import LineMeasurementInput from './LineMeasurementInput';
 import CountMeasurementOverlay from './CountMeasurementOverlay';
+
+const showFraction = precision => [1/8, 1/16, 1/32, 1/64].includes(precision);
+
+const greatestCommonDivisor = (firstNum, secondNum) => {
+  if (secondNum === 0) {
+    return firstNum;
+  }
+  return greatestCommonDivisor(secondNum, firstNum % secondNum);
+};
+
+const convertDecimalToFraction = (value, precision) => {
+  const denominator = precision;
+  const numerator = Math.round(value * denominator);
+  if (numerator === denominator) {
+    return '1';
+  }
+  const gcd = greatestCommonDivisor(numerator, denominator);
+  return numerator ? `${numerator/gcd}/${denominator/gcd}` : '';
+};
+
+const getFraction = (value, precision) => {
+  let integerPart = Math.floor(value);
+  let fractionPart = convertDecimalToFraction(value - integerPart, precision);
+  if (fractionPart === '1') {
+    fractionPart = '0';
+    integerPart++;
+  }
+
+  if (integerPart) {
+    return fractionPart !== '0' ? `${integerPart} ${fractionPart}` : integerPart;
+  } else if (fractionPart && fractionPart !== '0') {
+    return fractionPart;
+  }
+  return 0;
+};
 
 class MeasurementOverlay extends React.PureComponent {
   static propTypes = {
@@ -290,10 +325,13 @@ class MeasurementOverlay extends React.PureComponent {
 
   renderScaleRatio = () => {
     const { annotation } = this.state;
+    const isImperialMarksEnabled = showFraction(annotation.Precision);
+    const unit = getFormattedUnit(annotation.DisplayUnits[0]);
     const scale = annotation.Scale;
     const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
-
-    return `${scale[0][0]} ${scale[0][1]} = ${scale[1][0].toFixed(decimalPlaces)} ${scale[1][1]}`;
+    const scaleFrom = isImperialMarksEnabled ? getFraction(scale[0][0], 1 / annotation.Precision) : scale[0][0];
+    const scaleTo = isImperialMarksEnabled ? getFraction(scale[1][0], 1 / annotation.Precision) : scale[1][0].toFixed(decimalPlaces);
+    return `${scaleFrom} ${scale[0][1]} = ${scaleTo} ${unit}`;
   };
 
   renderValue = () => {
@@ -319,12 +357,15 @@ class MeasurementOverlay extends React.PureComponent {
 
   renderDeltas = () => {
     const { annotation } = this.state;
+    const isImperialMarksEnabled = showFraction(annotation.Precision);
     const angle = this.getAngleInRadians(annotation.Start, annotation.End);
-    const unit = getFormatedUnit(annotation.DisplayUnits[0]);
+    const unit = getFormattedUnit(annotation.DisplayUnits[0]);
     const decimalPlaces = this.getNumberOfDecimalPlaces(annotation);
     const distance = parseMeasurementContents(annotation.getContents());
-    const deltaX = Math.abs(distance * Math.cos(angle)).toFixed(decimalPlaces);
-    const deltaY = Math.abs(distance * Math.sin(angle)).toFixed(decimalPlaces);
+    const horizontalDistance = Math.abs(distance * Math.cos(angle));
+    const verticalDistance = Math.abs(distance * Math.sin(angle));
+    const deltaX = !isNaN(horizontalDistance) ? isImperialMarksEnabled ? getFraction(horizontalDistance, 1 / annotation.Precision) : horizontalDistance.toFixed(decimalPlaces) : 0;
+    const deltaY = !isNaN(verticalDistance) ? isImperialMarksEnabled ? getFraction(verticalDistance, 1 / annotation.Precision) : verticalDistance.toFixed(decimalPlaces) : 0;
 
     return (
       <div className="measurement__deltas">
@@ -388,6 +429,7 @@ class MeasurementOverlay extends React.PureComponent {
     } else if (key === 'arcMeasurement') {
       return (<ArcMeasurementOverlay annotation={annotation} translate={t} />);
     } else {
+      const isImperialMarksEnabled = showFraction(annotation.Precision);
       return (
         <>
           {this.renderTitle()}
@@ -395,7 +437,7 @@ class MeasurementOverlay extends React.PureComponent {
             {t('option.measurementOverlay.scale')}: {this.renderScaleRatio()}
           </div>
           <div className="measurement__precision">
-            {t('option.shared.precision')}: {annotation.Precision}
+            {t('option.shared.precision')}: {isImperialMarksEnabled ? convertDecimalToFraction(annotation.Precision, 1 / annotation.Precision) : annotation.Precision}
           </div>
           {key === 'distanceMeasurement' ? (
             <LineMeasurementInput annotation={annotation} isOpen={isOpen} t={t} />

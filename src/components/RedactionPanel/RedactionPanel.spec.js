@@ -52,10 +52,15 @@ describe('RedactionPanel', () => {
       mockRegionRedactionAnnotationPageTwo,
     ];
 
+    const providerProps = {
+      isTestMode: true,
+    };
+
     customRenderWithContext(
       <RedactionPanelWithRedux
         currentWidth={330}
-        redactionAnnotations={mockRedactionAnnotations} />
+        redactionAnnotations={mockRedactionAnnotations} />,
+      providerProps
     );
 
     // There should be two list of redactions, one for each page
@@ -128,7 +133,7 @@ describe('RedactionPanel', () => {
 
     const props = {
       currentWidth: 330,
-      redactionAnnotations: mockRedactionAnnotations
+      redactionAnnotations: mockRedactionAnnotations,
     }
 
     let selectedRedactionItemId = '';
@@ -137,6 +142,7 @@ describe('RedactionPanel', () => {
       setSelectedRedactionItemId: (id) => {
         selectedRedactionItemId = id
       },
+      isTestMode: true,
     };
 
     customRenderWithContext(<RedactionPanelWithRedux {...props} />, providerProps)
@@ -162,12 +168,13 @@ describe('RedactionPanel', () => {
 
     const props = {
       currentWidth: 330,
-      redactionAnnotations: mockRedactionAnnotations
+      redactionAnnotations: mockRedactionAnnotations,
     }
 
     const providerProps = {
       selectedRedactionItemId: mockTextRedactionAnnotation.Id,
       setSelectedRedactionItemId: jest.fn(),
+      isTestMode: true,
     };
 
     customRenderWithContext(<RedactionPanelWithRedux {...props} />, providerProps)
@@ -178,6 +185,4 @@ describe('RedactionPanel', () => {
     // Second one is not selected
     expect(redactionItems[1]).toHaveClass('redaction-item', { exact: true });
   });
-
-
 })
