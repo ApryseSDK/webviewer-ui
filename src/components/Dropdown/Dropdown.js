@@ -18,9 +18,19 @@ const propTypes = {
   dataElement: PropTypes.string,
   disabled: PropTypes.bool,
   isFont: PropTypes.bool,
+  placeholder: PropTypes.string,
 };
 
-function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem, dataElement, disabled=false, isFont =false }) {
+function Dropdown({
+  items = [],
+  currentSelectionKey,
+  translationPrefix,
+  onClickItem,
+  dataElement,
+  disabled=false,
+  isFont =false,
+  placeholder = null,
+}) {
   const  { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);
@@ -93,6 +103,9 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
             <div className="picked-option-text" style={isFont ? { fontFamily: currentSelectionKey } : undefined}>
               {tReady? t(`${translationPrefix}.${currentSelectionKey}`, currentSelectionKey) : ''}
             </div>
+          )}
+          {!optionIsSelected && placeholder && (
+            <div className="picked-option-text">{placeholder}</div>
           )}
           <Icon className="down-arrow" glyph="icon-chevron-down" />
         </div>

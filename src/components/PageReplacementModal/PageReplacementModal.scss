@@ -1,7 +1,7 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
 
-.PageReplacementModal {
+.PageReplacementModal, .FileModal {
   @extend %modal;
 
   .container {
