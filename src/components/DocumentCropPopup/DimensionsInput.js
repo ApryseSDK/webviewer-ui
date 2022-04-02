@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import Icon from 'components/Icon';
 import Dropdown from 'components/Dropdown';
 import { Choice } from '@pdftron/webviewer-react-toolkit';
 import { useTranslation } from 'react-i18next';
+import { isIE11 } from 'helpers/device';
 
 const DimensionsInput = ({
   top,
@@ -28,10 +29,16 @@ const DimensionsInput = ({
   const resizeInput = input => {
     let maxLength = 5;
     let length = input.toString().length;
+    let decimalSize = 0.3;
+    if (isIE11) {
+      const IE_ADJUSTMENT = 1.25;
+      length *= IE_ADJUSTMENT;
+      maxLength *= IE_ADJUSTMENT;
+      decimalSize *= IE_ADJUSTMENT;
+    }
     if (input.toString().includes('.')) {
-      const DECIMAL_SIZE = 0.3;
       if (length > maxLength) {
-        return maxLength + DECIMAL_SIZE;
+        return maxLength + decimalSize;
       }
     }
     if (length > maxLength) {

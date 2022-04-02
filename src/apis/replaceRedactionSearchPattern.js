@@ -7,7 +7,7 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.UI.replaceRedactionSearchPattern(instance.UI.RedactionSearchPatterns.EMAILS, '\\w+@\\w+\\.\\w+');
+    instance.UI.replaceRedactionSearchPattern(instance.UI.RedactionSearchPatterns.EMAILS, /\w+@\w+\.\w+/);
   });
  */
 

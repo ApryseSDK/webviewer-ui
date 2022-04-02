@@ -23,16 +23,17 @@ function multiSearch(store) {
 
     const searchArray = [...textSearch];
 
+    // Core search expects the pattern to be a string, so we use the source property of the regex to get it
     if (creditCards) {
-      searchArray.push(creditCardPattern);
+      searchArray.push(creditCardPattern.source);
     }
 
     if (phoneNumbers) {
-      searchArray.push(phoneNumbersPattern);
+      searchArray.push(phoneNumbersPattern.source);
     }
 
     if (emails) {
-      searchArray.push(emailsPattern);
+      searchArray.push(emailsPattern.source);
     }
 
     const searchString = searchArray.join('|');

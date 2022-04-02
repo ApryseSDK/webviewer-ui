@@ -104,7 +104,7 @@
   .crop-dimensions-input {
     display: flex;
     align-items: center;
-    flex: 1 1 72px;
+    flex: 1 1 100px;
 
     .input-field-container {
       display: flex;
@@ -115,6 +115,7 @@
       border-radius: 4px;
       width: 100%;
       max-width: 79px;
+      min-width: 64px;
       height: 28px;
       padding: 1px 2px;
       margin: 4px;
@@ -213,6 +214,7 @@
   border-radius: 4px;
   box-shadow: 0 0 3px 0 var(--document-box-shadow);
   background: var(--component-background);
+  top: 0;
 
   @include mobile {
     width: 100%;
