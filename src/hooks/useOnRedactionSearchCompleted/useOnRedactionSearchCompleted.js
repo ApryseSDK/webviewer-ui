@@ -5,22 +5,6 @@ import core from 'core';
 import { redactionTypeMap } from '../../components/RedactionPageGroup/RedactionItem/RedactionItem';
 import SearchStatus from 'constants/searchStatus';
 
-function createRegexesFromSearchPatterns(regexes) {
-  const patternLabels = Object.keys(regexes);
-  const searchPatternsWithRegex = {};
-
-  patternLabels.forEach(label => {
-    const { regexString, type } = regexes[label];
-    const regex = new RegExp(regexString);
-    searchPatternsWithRegex[label] = {
-      regex,
-      type,
-    };
-  });
-
-  return searchPatternsWithRegex;
-};
-
 function useOnRedactionSearchCompleted() {
 
   const [searchStatus, setSearchStatus] = useState(SearchStatus['SEARCH_NOT_INITIATED']);
@@ -38,32 +22,29 @@ function useOnRedactionSearchCompleted() {
     ]
   );
 
-  const searchPatterns = {
-    creditCard: {
-      regexString: creditCardsPattern,
-      type: redactionTypeMap['CREDIT_CARD']
-    },
-    phone: {
-      regexString: phoneNumbersPattern,
-      type: redactionTypeMap['PHONE']
-    },
-    email: {
-      regexString: emailsPattern,
-      type: redactionTypeMap['EMAIL']
-    }
-  };
-
-  // We memoize this because it is expensive to create the regexes every time we map over the search results to find out what type it is
-  const searchPatternsWithRegex = useMemo(() => createRegexesFromSearchPatterns(searchPatterns),
-    [creditCardsPattern, phoneNumbersPattern, emailsPattern]);
+  const searchPatterns = useMemo(() => (
+    {
+      creditCard: {
+        regex: creditCardsPattern,
+        type: redactionTypeMap['CREDIT_CARD']
+      },
+      phone: {
+        regex: phoneNumbersPattern,
+        type: redactionTypeMap['PHONE']
+      },
+      email: {
+        regex: emailsPattern,
+        type: redactionTypeMap['EMAIL']
+      }
+    }), [creditCardsPattern, phoneNumbersPattern, emailsPattern]);
 
   const mapResultToType = useCallback((result) => {
     // Iterate through the patterns and return the first match
     const { resultStr } = result;
-    const searchPatterns = Object.keys(searchPatternsWithRegex);
+    const searchPatternKeys = Object.keys(searchPatterns);
 
-    const resultType = searchPatterns.find(searchPattern => {
-      const { regex } = searchPatternsWithRegex[searchPattern];
+    const resultType = searchPatternKeys.find(key => {
+      const { regex } = searchPatterns[key];
       return regex.test(resultStr);
     });
 
@@ -71,7 +52,7 @@ function useOnRedactionSearchCompleted() {
     result.type = resultType === undefined ? redactionTypeMap['TEXT'] : resultType;
     return result;
 
-  }, [searchPatternsWithRegex]);//Dependency is an object but it is memoized so it will not re-create unless the patterns change
+  }, [searchPatterns]);//Dependency is an object but it is memoized so it will not re-create unless the patterns change
 
   const clearRedactionSearchResults = useCallback(() => {
     setRedactionSearchResults([]);
