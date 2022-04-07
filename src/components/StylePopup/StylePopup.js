@@ -163,6 +163,7 @@ class StylePopup extends React.PureComponent {
       isTextStyleContainerActive,
       isColorsContainerActive,
       isLabelTextContainerActive,
+      isLabelTextContainerDisabled,
       openElement,
       closeElement,
       properties,
@@ -226,7 +227,7 @@ class StylePopup extends React.PureComponent {
               toolName={toolName}
               disableSeparator={disableSeparator}
             />
-            {showLabelText && (
+            {showLabelText && !isLabelTextContainerDisabled && (
               <>
                 <div className="collapsible-menu" onClick={openLabelText} onTouchStart={openLabelText} role={"toolbar"}>
                   <div className="menu-title">
@@ -321,10 +322,10 @@ const mapStateToProps = (state, { colorMapKey, isFreeText, isRedaction }) => ({
   isStrokeThicknessSliderDisabled: selectors.isElementDisabled(state, DataElements.STROKE_THICKNESS_SLIDER),
   isFontSizeSliderDisabled: selectors.isElementDisabled(state, DataElements.FONT_SIZE_SLIDER) || isFreeText || isRedaction,
   isStyleOptionDisabled: selectors.isElementDisabled(state, DataElements.STYLE_OPTION),
-  isTextStyleOpen: selectors.isElementDisabled(state, DataElements.STYLE_OPTION),
   isTextStyleContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER),
   isColorsContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_COLORS_CONTAINER),
   isLabelTextContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER),
+  isLabelTextContainerDisabled: selectors.isElementDisabled(state, DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER),
   fonts: selectors.getFonts(state),
 });
 
