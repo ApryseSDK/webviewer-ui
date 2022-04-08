@@ -1,13 +1,3 @@
-/**
- * An  instance of Fonts that can be used to edit the items included in UI font pickers
- * @name UI.Fonts
- * @example
- WebViewer(...)
- .then(function (instance) {
-    instance.UI.Fonts.getFonts();
-  })
- */
-
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -15,6 +5,11 @@ import selectors from 'selectors';
  * A namespace which contains Font APIs for the UI. <br/><br/>
  * @namespace Fonts
  * @memberof UI
+ * @example
+ * WebViewer(...)
+ * .then(function (instance) {
+ *   instance.UI.Fonts.getFonts();
+ * });
  */
 export default store => Object.create(FontsAPI).initialize(store);
 

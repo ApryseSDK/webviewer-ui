@@ -2,7 +2,8 @@ import selectors from 'selectors';
 
 /**
  * An instance of TabManager that can be used to edit the open document Tabs **Only Multi-Tab Mode**.
- * @class UI.TabManager
+ * @namespace TabManager
+ * @memberof UI
  * @example
  WebViewer(...)
  .then(function (instance) {
