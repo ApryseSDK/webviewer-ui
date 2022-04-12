@@ -36,6 +36,7 @@
 
 export default {
   'ANNOTATION_FILTER_CHANGED': 'annotationFilterChanged',
+  'UNPOSTED_ANNOTATIONS_CHANGED': 'unpostedAnnotationsChanged',
   'DOCUMENT_LOADED': 'documentLoaded',
   'DOCUMENT_MERGED': 'documentMerged',
   'FILE_DOWNLOADED': 'fileDownloaded',
@@ -70,6 +71,16 @@ export default {
  * @property {string[]} authors Author filter
  * @property {string[]} colors Color filter
  * @property {string[]} statuses Status filter
+ */
+
+/**
+ * Triggered when number of unposted annotations are changed.
+ * Returns map of annotations with pending text edits.
+ * @name UI#unpostedAnnotationsChanged
+ * @event
+ * @type {object}
+ * @property {object} pendingEditTextMap Map of pending edit texts
+ * @property {number} unpostedAnnotationsCount Number of unposted annotations
  */
 
 /**
