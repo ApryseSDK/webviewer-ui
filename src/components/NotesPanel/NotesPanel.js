@@ -238,6 +238,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     }, 0)
     fireEvent('unpostedAnnotationsChanged', {pendingEditTextMap, unpostedAnnotationsCount});
   }, [pendingEditTextMap]);
+  // CUSTOM WISEFLOW end
 
   const [pendingReplyMap, setPendingReplyMap] = useState({});
   const setPendingReply = useCallback(
