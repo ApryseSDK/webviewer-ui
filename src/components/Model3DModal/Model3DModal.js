@@ -160,7 +160,7 @@ const Model3DModal = ({
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
       <div className={modalClass} data-element="Model3DModal" onMouseDown={closeModal}>
         <div className="container" onMouseDown={e => e.stopPropagation()}>
-          <form>
+          <form onSubmit={drawModel3DHandler}>
             <div className="col">{t('Model3D.enterurlOrLocalFile')}</div>
             <Choice
               dataElement="3DAnnotationLink"

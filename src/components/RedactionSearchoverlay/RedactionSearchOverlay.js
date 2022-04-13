@@ -42,7 +42,8 @@ const RedactionSearchOverlay = (props) => {
     setIsRedactionSearchActive,
     searchTerms,
     setSearchTerms,
-    executeRedactionSearch
+    executeRedactionSearch,
+    activeTheme,
   } = props;
 
   const handleChange = (
@@ -84,6 +85,7 @@ const RedactionSearchOverlay = (props) => {
         value={searchTerms}
         onCreateOption={handleCreate}
         onChange={handleChange}
+        activeTheme={activeTheme}
       />
 
     </DataElementWrapper>

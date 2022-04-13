@@ -11,6 +11,11 @@ export default (dispatch, store) => (newTool, oldTool) => {
   dispatch(actions.setActiveToolNameAndStyle(newTool));
 
   const state = store.getState();
+  const activeToolGroup = selectors.getActiveToolGroup(state);
+  const activeToolName = selectors.getActiveToolName(state);
+  if (activeToolName === 'AnnotationEdit' && activeToolGroup === 'signatureTools') {
+    return;
+  }
   const { group = '' } = selectors.getToolButtonObject(state, newTool.name);
   setActiveToolGroupAndToolsOverlay(store, group);
 };

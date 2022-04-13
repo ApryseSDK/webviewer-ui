@@ -1,13 +1,3 @@
-/**
- * An  instance of Fonts that can be used to edit the items included in UI font pickers
- * @name UI.Fonts
- * @example
- WebViewer(...)
- .then(function (instance) {
-    instance.UI.Fonts.getFonts();
-  })
- */
-
 import actions from 'actions';
 import selectors from 'selectors';
 
@@ -15,6 +5,11 @@ import selectors from 'selectors';
  * A namespace which contains Font APIs for the UI. <br/><br/>
  * @namespace Fonts
  * @memberof UI
+ * @example
+ * WebViewer(...)
+ * .then(function (instance) {
+ *   instance.UI.Fonts.getFonts();
+ * });
  */
 export default store => Object.create(FontsAPI).initialize(store);
 
@@ -25,7 +20,7 @@ const FontsAPI = {
   },
   /**
    * Return the currently available fonts in the UI to be used for Annotations.
-   * @method UI.Fonts#getAnnotationFonts
+   * @method UI.Fonts.getAnnotationFonts
    * @returns {Array.<String>} Fonts avaialable in the UI.
    * @example
    WebViewer(...)
@@ -38,7 +33,7 @@ const FontsAPI = {
   },
   /**
    * Add a font to be available in the UI for Annotation font pickers.
-   * @method UI.Fonts#addAnnotationFont
+   * @method UI.Fonts.addAnnotationFont
    * @param {String} font - The font to be added.
    * @example
    WebViewer(...)
@@ -59,7 +54,7 @@ const FontsAPI = {
   },
   /**
    * Remove a font from the UI's Annotation font pickers.
-   * @method UI.Fonts#removeAnnotationFont
+   * @method UI.Fonts.removeAnnotationFont
    * @param {String} font - The font to be removed.
    * @example
    WebViewer(...)
@@ -78,7 +73,7 @@ const FontsAPI = {
   },
   /**
    * Set the fonts available in the UI's Annotation font pickers.
-   * @method UI.Fonts#setAnnotationFonts
+   * @method UI.Fonts.setAnnotationFonts
    * @param {Array.<String>} fonts - The fonts to be set.
    * @example
    WebViewer(...)
@@ -91,7 +86,7 @@ const FontsAPI = {
   },
   /**
    * Returns the currently available fonts to be used when typing a signature in the signature dialog
-   * @method UI.Fonts#getSignatureFonts
+   * @method UI.Fonts.getSignatureFonts
    * @returns {Array.<String>} Fonts avaialable in the UI.
    */
   getSignatureFonts() {
@@ -99,7 +94,7 @@ const FontsAPI = {
   },
   /**
    * Add a font to be available in the UI for Signature font pickers.
-   * @method UI.Fonts#addSignatureFont
+   * @method UI.Fonts.addSignatureFont
    * @param {String} font - The font to be added.
    * @example
    WebViewer(...)
@@ -125,7 +120,7 @@ const FontsAPI = {
   },
   /**
    * Remove a font from the UI's Signature font pickers.
-   * @method UI.Fonts#removeSignatureFont
+   * @method UI.Fonts.removeSignatureFont
    * @param {String} font - The font to be removed.
    * @example
    WebViewer(...)
@@ -149,7 +144,7 @@ const FontsAPI = {
   },
   /**
    * Set the fonts available in the UI's Signature font pickers.
-   * @method UI.Fonts#setSignatureFonts
+   * @method UI.Fonts.setSignatureFonts
    * @param {Array.<String>} fonts - The fonts to be set.
    * @example
    WebViewer(...)
