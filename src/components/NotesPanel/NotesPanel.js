@@ -236,8 +236,8 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       }
       return count
     }, 0)
-    fireEvent('unpostedAnnotationChanged', {pendingEditTextMap, unpostedAnnotationsCount});
-  }, pendingEditTextMap)
+    fireEvent('unpostedAnnotationsChanged', {pendingEditTextMap, unpostedAnnotationsCount});
+  }, [pendingEditTextMap]);
 
   const [pendingReplyMap, setPendingReplyMap] = useState({});
   const setPendingReply = useCallback(
