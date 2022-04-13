@@ -229,15 +229,24 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   );
 
   // CUSTOM WISEFLOW unpostedAnnotationChanged event
-  useEffect(() => {
-    const unpostedAnnotationsCount = Object.values(pendingEditTextMap).reduce((count, pendingText) => {
-      if (pendingText !== undefined) {
-        return count + 1;
-      }
-      return count
-    }, 0)
-    fireEvent('unpostedAnnotationsChanged', {pendingEditTextMap, unpostedAnnotationsCount});
-  }, [pendingEditTextMap]);
+
+  // debounced callback to fire unpostedAnnotationsChanged event
+  const onUnpostedAnnotationChanged = useCallback(
+    debounce(pendingEditTextMap => {
+      const unpostedAnnotationsCount = Object.values(pendingEditTextMap).reduce((count, pendingText) => {
+        if (pendingText !== undefined) {
+          return count + 1;
+        }
+        return count;
+      }, 0);
+      fireEvent('unpostedAnnotationsChanged', { pendingEditTextMap, unpostedAnnotationsCount });
+    }, 200),
+    [],
+  );
+
+  // Throw event on changed to pendingEditTextMap
+  useEffect(() => onUnpostedAnnotationChanged(pendingEditTextMap), [pendingEditTextMap]);
+  
   // CUSTOM WISEFLOW end
 
   const [pendingReplyMap, setPendingReplyMap] = useState({});
