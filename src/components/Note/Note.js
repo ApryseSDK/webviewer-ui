@@ -40,18 +40,20 @@ const Note = ({ annotation }) => {
   const annotationState = annotation.getStatus();
 
   const getAnnotaionStatusColor = () => {
+    // this colors are taken from flow-ui-react secondry light colors
     switch (annotationState) {
       case 'Assessors':
-        return '#ff0000';
+        return '#8c71c1';
         break;
       case 'Participants':
-        return '#ffff00';
+        return '#719ec1';
         break;
       case 'All':
-        return '#ff00ff';
+        return '#7ec171';
         break;
+      case 'None':
       default:
-        return '#00ff00';
+        return '#b2b3b3';
         break;
     }
   };
