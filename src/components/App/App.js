@@ -55,36 +55,38 @@ import overlays from 'constants/overlays';
 import actions from 'actions';
 
 import './App.scss';
-import LeftPanelOverlayContainer from "components/LeftPanelOverlay";
-import { prepareMultiTab } from "helpers/TabManager";
+import LeftPanelOverlayContainer from 'components/LeftPanelOverlay';
+import { prepareMultiTab } from 'helpers/TabManager';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
+  coAssessor: PropTypes.array.isRequired,
 };
 
-const App = ({ removeEventHandlers }) => {
+const App = ({ removeEventHandlers, coAssessor }) => {
   const store = useStore();
   const dispatch = useDispatch();
   let timeoutReturn;
 
-  const [isInDesktopOnlyMode] = useSelector(state => [
-    selectors.isInDesktopOnlyMode(state),
-  ]);
+  const [isInDesktopOnlyMode] = useSelector(state => [selectors.isInDesktopOnlyMode(state)]);
 
   useEffect(() => {
     fireEvent(Events.VIEWER_LOADED);
-    window.parent.postMessage({
-      type: 'viewerLoaded',
-      id: parseInt(getHashParameters('id'), 10)
-    }, '*');
+    window.parent.postMessage(
+      {
+        type: 'viewerLoaded',
+        id: parseInt(getHashParameters('id'), 10),
+      },
+      '*',
+    );
 
     async function loadInitialDocument() {
       const doesAutoLoad = getHashParameters('auto_load', true);
       let initialDoc = getHashParameters('d', '');
-      initialDoc = initialDoc.split(",");
+      initialDoc = initialDoc.split(',');
       const isMultiDoc = initialDoc.length > 1;
       const startOffline = getHashParameters('startOffline', false);
       if (isMultiDoc) {
@@ -119,9 +121,7 @@ const App = ({ removeEventHandlers }) => {
     }
 
     function messageHandler(event) {
-      if (event.isTrusted &&
-        typeof event.data === 'object' &&
-        event.data.type === 'viewerLoaded') {
+      if (event.isTrusted && typeof event.data === 'object' && event.data.type === 'viewerLoaded') {
         loadDocumentAndCleanup();
       }
     }
@@ -157,7 +157,7 @@ const App = ({ removeEventHandlers }) => {
 
   return (
     <React.Fragment>
-      <div className={classNames({ "App": true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
+      <div className={classNames({ 'App': true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
         <Accessibility />
 
         <Header />
@@ -165,16 +165,10 @@ const App = ({ removeEventHandlers }) => {
         <div className="content">
           <LeftPanel />
           <DocumentContainer />
-          <RightPanel
-            dataElement="searchPanel"
-            onResize={width => dispatch(actions.setSearchPanelWidth(width))}
-          >
+          <RightPanel dataElement="searchPanel" onResize={width => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
           </RightPanel>
-          <RightPanel
-            dataElement="notesPanel"
-            onResize={width => dispatch(actions.setNotesPanelWidth(width))}
-          >
+          <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
             <NotesPanel />
           </RightPanel>
         </div>
@@ -202,7 +196,7 @@ const App = ({ removeEventHandlers }) => {
         <PageReplacementModal />
         <LinkModal />
         <ContentEditModal />
-        <FilterAnnotModal />
+        <FilterAnnotModal coAssessor={[{ id: '1', 'name': 'John' }]} />
         <CustomModal />
         <Model3DModal />
         <ColorPickerModal />

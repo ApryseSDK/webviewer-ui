@@ -21,7 +21,7 @@ import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import './FilterAnnotModal.scss';
 
-const FilterAnnotModal = () => {
+const FilterAnnotModal = ({ coAssessor }) => {
   const [isDisabled, isOpen, colorMap] = useSelector(state => [
     selectors.isElementDisabled(state, 'filterModal'),
     selectors.isElementOpen(state, 'filterModal'),
@@ -40,29 +40,34 @@ const FilterAnnotModal = () => {
   const [colorFilter, setColorFilter] = useState([]);
   const [checkRepliesForAuthorFilter, setCheckRepliesForAuthorFilter] = useState(true);
   const [statusFilter, setStatusFilter] = useState([]);
+  const [coAssessorFilter, setCoAssessorFilter] = useState([]);
 
-  const getIconColor = (annot) => {
+  const getIconColor = annot => {
     const key = mapAnnotationToKey(annot);
     const iconColorProperty = colorMap[key]?.iconColor;
 
     return annot[iconColorProperty];
-  }
+  };
 
   const similarColorExist = (currColors, newColor) => {
-    const colorObject = currColors.map(c => Object.assign({
-      R: parseInt(`${c[1]}${c[2]}`, 16),
-      G: parseInt(`${c[3]}${c[4]}`, 16),
-      B: parseInt(`${c[5]}${c[6]}`, 16)
-    }));
+    const colorObject = currColors.map(c =>
+      Object.assign({
+        R: parseInt(`${c[1]}${c[2]}`, 16),
+        G: parseInt(`${c[3]}${c[4]}`, 16),
+        B: parseInt(`${c[5]}${c[6]}`, 16),
+      }),
+    );
 
     const threshold = 10;
-    const similarColors = colorObject
-    .filter(c => Math.abs(newColor.R - c.R) < threshold
-      && Math.abs(newColor.G - c.G) < threshold
-      && Math.abs(newColor.B - c.B) < threshold);
+    const similarColors = colorObject.filter(
+      c =>
+        Math.abs(newColor.R - c.R) < threshold &&
+        Math.abs(newColor.G - c.G) < threshold &&
+        Math.abs(newColor.B - c.B) < threshold,
+    );
 
     return !!similarColors.length;
-  }
+  };
 
   const filterApply = () => {
     dispatch(
@@ -107,16 +112,13 @@ const FilterAnnotModal = () => {
         return type && author && color && status;
       }),
     );
-    fireEvent(
-      Events.ANNOTATION_FILTER_CHANGED,
-      {
-        types: typesFilter,
-        authors: authorFilter,
-        colors: colorFilter,
-        statuses: statusFilter,
-        checkRepliesForAuthorFilter
-      }
-    );
+    fireEvent(Events.ANNOTATION_FILTER_CHANGED, {
+      types: typesFilter,
+      authors: authorFilter,
+      colors: colorFilter,
+      statuses: statusFilter,
+      checkRepliesForAuthorFilter,
+    });
     closeModal();
   };
 
@@ -174,8 +176,6 @@ const FilterAnnotModal = () => {
 
       if (annot.getStatus()) {
         annotStatusesToBeAdded.add(annot.getStatus());
-      } else {
-        annotStatusesToBeAdded.add('None');
       }
     });
 
@@ -214,7 +214,7 @@ const FilterAnnotModal = () => {
             );
           })}
         </div>
-        <div className="buttons">
+        {/* <div className="buttons">
           <Choice
             type="checkbox"
             label={t('option.filterAnnotModal.includeReplies')}
@@ -224,7 +224,7 @@ const FilterAnnotModal = () => {
             }
             id="filter-annot-modal-include-replies"
           />
-        </div>
+        </div> */}
       </div>
     );
   };
@@ -295,13 +295,13 @@ const FilterAnnotModal = () => {
 
   const renderStatusTypes = () => {
     // Hide status filter if there is only on status type
-    if (statuses.length === 1) {
+    if (statuses.length === 0) {
       return null;
     }
 
     return (
       <div className="filter">
-        <div className="heading">{t('option.status.status')}</div>
+        <div className="heading">{t('option.filterAnnotModal.shareTypes')}</div>
         <div className="buttons">
           {[...statuses].map((val, index) => {
             return (
@@ -316,6 +316,34 @@ const FilterAnnotModal = () => {
                     setStatusFilter([...statusFilter, e.target.getAttribute('id')]);
                   } else {
                     setStatusFilter(statusFilter.filter(status => status !== e.target.getAttribute('id')));
+                  }
+                }}
+              />
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const renderCoAssessors = () => {
+    return (
+      <div className="filter">
+        <div className="heading">{t('option.filterAnnotModal.coAssessor')}</div>
+        <div className="buttons">
+          {[...coAssessor].map((val, index) => {
+            return (
+              <Choice
+                type="checkbox"
+                key={index}
+                label={val.name}
+                checked={coAssessorFilter.includes(val)}
+                id={val.id}
+                onChange={e => {
+                  if (coAssessorFilter.indexOf(e.target.getAttribute('id')) === -1) {
+                    setCoAssessorFilter([...coAssessorFilter, e.target.getAttribute('id')]);
+                  } else {
+                    setCoAssessorFilter(coAssessorFilter.filter(type => type !== e.target.getAttribute('id')));
                   }
                 }}
               />
@@ -343,9 +371,10 @@ const FilterAnnotModal = () => {
                 <div className="swipe-indicator" />
                 <div className="filter-options">
                   {renderAuthors()}
+                  {renderStatusTypes()}
                   {renderAnnotTypes()}
                   {renderColorTypes()}
-                  {renderStatusTypes()}
+                  {renderCoAssessors()}
                 </div>
                 <div className="footer">
                   <Button className="filter-annot-clear" onClick={filterClear} label={t('action.clear')} />

@@ -378,9 +378,11 @@
     },
     "filterAnnotModal": {
       "commentBy": "Comment by",
-      "types": "Types",
+      "types": "Annotaion types",
       "color": "Color",
-      "includeReplies": "Include Replies"
+      "includeReplies": "Include Replies",
+      "shareTypes": "Share types",
+      "coAssessor": "CoAssessor"
     },
     "status": {
       "status": "Status"
@@ -394,7 +396,10 @@
       "setBy": "set by",
       "none": "None",
       "marked": "Marked",
-      "unmarked": "Unmarked"
+      "unmarked": "Unmarked",
+      "assessors": "Assessors",
+      "participants": "Participants",
+      "all": "All"
     },
     "measurementOverlay": {
       "scale": "Scale Ratio",
@@ -587,38 +592,9 @@
       "November",
       "December"
     ],
-    "monthsShort": [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec"
-    ],
-    "weekdays": [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ],
-    "weekdaysShort": [
-      "Sun",
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat"
-    ]
+    "monthsShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
+    "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "weekdaysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
   },
   "formField": {
     "formFieldPopup": {
