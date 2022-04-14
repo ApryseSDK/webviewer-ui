@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { useStore } from 'react-redux';
+import { useStore, useSelector } from 'react-redux';
+import selectors from 'selectors';
 
 import RedactionSearchOverlay from './RedactionSearchOverlay';
 import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
@@ -15,11 +16,13 @@ const RedactionSearchOverlayContainer = (props) => {
 
   const { setIsRedactionSearchActive } = useContext(RedactionPanelContext);
   const store = useStore();
+  const activeTheme = useSelector(state => selectors.getActiveTheme(state));
 
   return (
     <RedactionSearchOverlay
       setIsRedactionSearchActive={setIsRedactionSearchActive}
       executeRedactionSearch={(options = {}) => executeRedactionSearch(options, store)}
+      activeTheme={activeTheme}
       {...props}
     />);
 };

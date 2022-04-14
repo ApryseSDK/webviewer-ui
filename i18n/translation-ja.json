@@ -81,9 +81,12 @@
     "select": "選択する",
     "moveToTop": "上に移動",
     "moveToBottom": "下に移動",
+    "redactPages": "ページを編集する",
     "playAudio": "オーディオを再生",
     "pauseAudio": "オーディオの一時停止",
-    "redactPages": "ページを編集する",
+    "selectAll": "すべて選択",
+    "unselect": "選択を解除",
+    "addMark": "マークを追加",
     "viewFile": "ファイルを閲覧する",
     "switchLanguage": "言語"
   },
@@ -778,6 +781,22 @@
       "localCertificateError": "ローカル証明書の読み取りにいくつかの問題があります"
     }
   },
+  "cropPopUp": {
+    "title": "切り抜くページ",
+    "allPages": "全て",
+    "singlePage": "現在のページ",
+    "cropDimensions": "作物の寸法",
+    "dimensionInput": {
+      "unitOfMeasurement": "単位",
+      "autoTrim": "自動トリム"
+    },
+    "cropModal": {
+      "applyTitle": "作物を適用しますか？",
+      "applyMessage": "このアクションにより、選択したすべての選択したページが永続的にトリミングされます。元に戻すことはできません。",
+      "cancelTitle": "作物をキャンセルしますか？",
+      "cancelMessage": "選択したすべてのページの切り抜きをキャンセルしてもよろしいですか？"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "テキスト、地域、ページにマークを付けるか、検索して、編集を開始します。",
     "redactionSearchPlaceholder": "キーワード検索またはパターンで追加",
@@ -786,10 +805,20 @@
     "redactAllMarked": "すべて編集",
     "redactionItem": {
       "regionRedaction": "地域の編集",
-      "fullPageRedaction": "全ページの編集"
+      "fullPageRedaction": "全ページの編集",
+      "image": "画像"
     },
     "expand": "拡大",
-    "collapse": "崩壊"
+    "collapse": "崩壊",
+    "searchResults": "の検索結果",
+    "search": {
+      "creditCards": "クレジットカード",
+      "phoneNumbers": "電話番号",
+      "images": "画像",
+      "emails": "メール",
+      "pattern": "パターン",
+      "start": "検索を開始します"
+    }
   },
   "languageModal": {
     "selectLanguage": "言語を選択する"

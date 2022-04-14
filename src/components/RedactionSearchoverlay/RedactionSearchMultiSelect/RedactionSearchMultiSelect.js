@@ -11,12 +11,12 @@ const redactionOptions = [
   // { value: 'images', label: 'redactionPanel.search.images', icon: 'redact-icons-image', type: 'image' }, Not to be part of first release
 ];
 
-const styles = {
+const getStyles = (isDarkMode) => ({
   groupHeading: (base) => ({
     ...base,
     textTransform: 'none',
     fontSize: '10px',
-    color: '#485056',
+    color: isDarkMode ? '#FFFFFF' : '#485056',
     paddingBottom: '8px',
     paddingLeft: '8px',
     paddingTop: '10px',
@@ -32,20 +32,26 @@ const styles = {
   menuList: (base) => ({
     ...base,
     padding: '0px',
+    backgroundColor: isDarkMode ? '#000000' : '#FFFFFF',
   }),
   multiValue: (base) => ({
     ...base,
-    backgroundColor: '#E7EDF3',
+    backgroundColor: isDarkMode ? '#192530' : '#E7EDF3',
+
     padding: '2px 8px',
     fontSize: '13px',
     borderRadius: '4px',
   }),
-  option: (base) => ({
+  option: (base, state) => ({
     ...base,
     height: '28px',
     display: 'flex',
     fontSize: '13px',
-    padding: '6px 8px'
+    padding: '6px 8px',
+    "&:hover": {
+      backgroundColor: isDarkMode ? '#192530' : '#E7EDF3',
+    },
+    backgroundColor: state.isFocused ? isDarkMode ? '#192530' : '#E7EDF3' : 'transparent',
   }),
   valueContainer: (base) => ({
     ...base,
@@ -55,14 +61,20 @@ const styles = {
   }),
   control: (base) => ({
     ...base,
+    backgroundColor: isDarkMode ? '#000000' : '#FFFFFF',
     minHeight: '29px',
   }),
   placeholder: (base) => ({
     ...base,
     fontSize: '13px',
     color: '#ADB5BD',
-  })
-};
+  }),
+  input: (base) => ({
+    ...base,
+    fontSize: '13px',
+    color: isDarkMode ? '#FFFFFF' : '#485056',
+  }),
+});
 
 const RedactionOption = (props) => {
   const { data } = props;
@@ -95,6 +107,10 @@ const RedactionSearchMultiSelect = (props) => {
       options: redactionOptions,
     }
   ];
+
+  const { activeTheme } = props;
+  const isDarkModde = activeTheme === 'dark';
+  const styles = getStyles(isDarkModde);
 
   return (
     <CreatableMultiSelect

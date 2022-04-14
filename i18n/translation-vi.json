@@ -84,6 +84,9 @@
     "redactPages": "Biên tập lại các trang",
     "playAudio": "Phát âm thanh",
     "pauseAudio": "Tạm dừng âm thanh",
+    "selectAll": "Chọn tất cả",
+    "unselect": "Bỏ chọn",
+    "addMark": "Thêm dấu",
     "viewFile": "Xem tài liệu",
     "switchLanguage": "Ngôn ngữ"
   },
@@ -778,6 +781,22 @@
       "localCertificateError": "Có một số vấn đề với việc đọc chứng chỉ cục bộ"
     }
   },
+  "cropPopUp": {
+    "title": "Các trang cần cắt",
+    "allPages": "Tất cả",
+    "singlePage": "Trang hiện tại",
+    "cropDimensions": "Kích thước cây trồng",
+    "dimensionInput": {
+      "unitOfMeasurement": "Đơn vị",
+      "autoTrim": "Tự động cắt"
+    },
+    "cropModal": {
+      "applyTitle": "Áp dụng cây trồng?",
+      "applyMessage": "Hành động này sẽ cắt vĩnh viễn tất cả các trang đã chọn đã chọn. Nó không thể được hoàn tác.",
+      "cancelTitle": "Hủy cắt?",
+      "cancelMessage": "Bạn có chắc chắn muốn hủy việc cắt xén tất cả các trang đã chọn không?"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Bắt đầu biên tập lại bằng cách đánh dấu văn bản, vùng, trang hoặc thực hiện tìm kiếm.",
     "redactionSearchPlaceholder": "Bổ sung theo tìm kiếm từ khóa hoặc mẫu",
@@ -786,10 +805,20 @@
     "redactAllMarked": "Biên Tập Tất Cả",
     "redactionItem": {
       "regionRedaction": "Biên tập vùng",
-      "fullPageRedaction": "Biên tập toàn trang"
+      "fullPageRedaction": "Biên tập toàn trang",
+      "image": "Hình ảnh"
     },
     "expand": "Mở rộng",
-    "collapse": "Thu gọn"
+    "collapse": "Thu gọn",
+    "searchResults": "Kết quả tìm kiếm",
+    "search": {
+      "creditCards": "Thẻ tín dụng",
+      "phoneNumbers": "Số điện thoại",
+      "images": "Hình ảnh",
+      "emails": "Email",
+      "pattern": "Mẫu",
+      "start": "Bắt đầu thực hiện tìm kiếm của bạn"
+    }
   },
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"

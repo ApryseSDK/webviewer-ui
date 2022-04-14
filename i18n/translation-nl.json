@@ -84,6 +84,9 @@
     "redactPages": "Pagina's redigeren",
     "playAudio": "Audio afspelen",
     "pauseAudio": "audio pauze",
+    "selectAll": "Selecteer alles",
+    "unselect": "Deselecteren",
+    "addMark": "Markering toevoegen",
     "viewFile": "Bestand bekijken",
     "switchLanguage": "Taal"
   },
@@ -778,6 +781,22 @@
       "localCertificateError": "Er zijn enkele problemen met het lezen van een lokaal certificaat"
     }
   },
+  "cropPopUp": {
+    "title": "Pagina's om bij te snijden",
+    "allPages": "Alle",
+    "singlePage": "Huidige pagina",
+    "cropDimensions": "Afmetingen bijsnijden",
+    "dimensionInput": {
+      "unitOfMeasurement": "Eenheid",
+      "autoTrim": "Automatisch trimmen"
+    },
+    "cropModal": {
+      "applyTitle": "Bijsnijden toepassen?",
+      "applyMessage": "Met deze actie worden alle geselecteerde geselecteerde pagina's permanent bijgesneden. Het kan niet ongedaan gemaakt worden.",
+      "cancelTitle": "Bijsnijden annuleren?",
+      "cancelMessage": "Weet u zeker dat u het bijsnijden van alle geselecteerde pagina's wilt annuleren?"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Begin met redigeren door tekst, regio's, pagina's te markeren of een zoekopdracht uit te voeren.",
     "redactionSearchPlaceholder": "Toevoegen op trefwoord zoeken of patronen",
@@ -786,10 +805,20 @@
     "redactAllMarked": "Alles redigeren",
     "redactionItem": {
       "regionRedaction": "Regio redactie",
-      "fullPageRedaction": "Volledige pagina redactie"
+      "fullPageRedaction": "Volledige pagina redactie",
+      "image": "Afbeelding"
     },
     "expand": "Uitbreiden",
-    "collapse": "Instorten"
+    "collapse": "Instorten",
+    "searchResults": "Zoekresultaten",
+    "search": {
+      "creditCards": "Kredietkaart",
+      "phoneNumbers": "Telefoonnummers",
+      "images": "Afbeeldingen",
+      "emails": "E-mails",
+      "pattern": "Patroon",
+      "start": "Begin met zoeken"
+    }
   },
   "languageModal": {
     "selectLanguage": "Selecteer taal"

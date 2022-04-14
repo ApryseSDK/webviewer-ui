@@ -20,32 +20,36 @@ const getNewRotation = (curr, counter_clockwise = false) => {
   }
 };
 
-const rotateClockwise = pageNumbers => {
-  if (workerTypes.PDF !== core.getDocument()?.type) {
+const canRotateLoadedDocument = () => {
+  const doc = core.getDocument();
+  const docType = doc?.type;
+  return (
+    workerTypes.PDF === docType ||
+    (docType === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())
+  );
+};
+
+const rotatePages = (pageNumbers, counter_clockwise) => {
+  if (canRotateLoadedDocument()) {
+    const rotation = counter_clockwise ? window.Core.PageRotation.e_270 : window.Core.PageRotation.e_90;
+    pageNumbers.forEach(index => {
+      core.rotatePages([index], rotation);
+    });
+  } else {
     const docViewer = core.getDocumentViewer();
     const currentRotations = docViewer.getPageRotations();
     for (const page of pageNumbers) {
-      docViewer.setRotation(getNewRotation(currentRotations[page], false), page);
+      docViewer.setRotation(getNewRotation(currentRotations[page], counter_clockwise), page);
     }
-  } else {
-    pageNumbers.forEach(index => {
-      core.rotatePages([index], window.Core.PageRotation.e_90);
-    });
   }
 };
 
+const rotateClockwise = pageNumbers => {
+  rotatePages(pageNumbers, false);
+};
+
 const rotateCounterClockwise = pageNumbers => {
-  if (workerTypes.PDF !== core.getDocument()?.type) {
-    const docViewer = core.getDocumentViewer();
-    const currentRotations = docViewer.getPageRotations();
-    for (const page of pageNumbers) {
-      docViewer.setRotation(getNewRotation(currentRotations[page], true), page);
-    }
-  } else {
-    pageNumbers.forEach(index => {
-      core.rotatePages([index], window.Core.PageRotation.e_270);
-    });
-  }
+  rotatePages(pageNumbers, true);
 };
 
 const insertAbove = pageNumbers => {

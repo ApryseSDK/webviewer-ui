@@ -84,6 +84,9 @@
     "redactPages": "編輯頁面",
     "playAudio": "播放音頻",
     "pauseAudio": "音頻暫停",
+    "selectAll": "全選",
+    "unselect": "取消選擇",
+    "addMark": "添加標記",
     "viewFile": "查看文件",
     "switchLanguage": "語言"
   },
@@ -778,6 +781,22 @@
       "localCertificateError": "讀取本地證書存在一些問題"
     }
   },
+  "cropPopUp": {
+    "title": "要裁剪的頁面",
+    "allPages": "全部",
+    "singlePage": "當前頁面",
+    "cropDimensions": "作物尺寸",
+    "dimensionInput": {
+      "unitOfMeasurement": "單元",
+      "autoTrim": "自動修剪"
+    },
+    "cropModal": {
+      "applyTitle": "應用作物？",
+      "applyMessage": "此操作將永久裁剪所有選定的選定頁面。它無法撤消。",
+      "cancelTitle": "取消裁剪？",
+      "cancelMessage": "您確定要取消裁剪所有選定的頁面嗎？"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "通過標記文本、區域、頁面或進行搜索來開始編輯。",
     "redactionSearchPlaceholder": "通過關鍵字搜索或模式添加",
@@ -786,10 +805,20 @@
     "redactAllMarked": "全部編輯",
     "redactionItem": {
       "regionRedaction": "區域編輯",
-      "fullPageRedaction": "整頁編輯"
+      "fullPageRedaction": "整頁編輯",
+      "image": "圖片"
     },
     "expand": "擴張",
-    "collapse": "坍塌"
+    "collapse": "坍塌",
+    "searchResults": "搜索結果",
+    "search": {
+      "creditCards": "信用卡",
+      "phoneNumbers": "電話號碼",
+      "images": "圖片",
+      "emails": "電子郵件",
+      "pattern": "圖案",
+      "start": "開始搜索"
+    }
   },
   "languageModal": {
     "selectLanguage": "選擇語言"
