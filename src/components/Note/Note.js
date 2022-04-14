@@ -23,7 +23,7 @@ const propTypes = {
 
 let currId = 0;
 
-const Note = ({ annotation }) => {
+const Note = ({ annotation, shareTypeColors }) => {
   const {
     isSelected,
     resize,
@@ -38,22 +38,20 @@ const Note = ({ annotation }) => {
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
   const annotationState = annotation.getStatus();
-
   const getAnnotaionStatusColor = () => {
-    // this colors are taken from flow-ui-react secondry light colors
     switch (annotationState) {
       case 'Assessors':
-        return '#8c71c1';
+        return shareTypeColors.assessors;
         break;
       case 'Participants':
-        return '#719ec1';
+        return shareTypeColors.participants;
         break;
       case 'All':
-        return '#7ec171';
+        return shareTypeColors.all;
         break;
       case 'None':
       default:
-        return '#b2b3b3';
+        return shareTypeColors.none;
         break;
     }
   };
