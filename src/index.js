@@ -181,6 +181,11 @@ if (window.CanvasRenderingContext2D) {
       initTransports();
     }
 
+    if (getHashParameters('disableVirtualDisplayMode', false)) {
+      const displayMode = documentViewer.getDisplayModeManager();
+      displayMode.disableVirtualDisplayMode();
+    }
+
     if (getHashParameters('enableViewStateAnnotations', false)) {
       const tool = documentViewer.getTool(window.Core.Tools.ToolNames.STICKY);
       tool?.setSaveViewState(true);

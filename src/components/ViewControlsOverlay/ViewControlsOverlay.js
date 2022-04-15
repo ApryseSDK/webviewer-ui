@@ -21,7 +21,12 @@ function ViewControlsOverlay() {
   const isReaderMode = useSelector(selectors.isReaderMode);
 
   const totalPageThreshold = 1000;
+  let isPageTransitionEnabled = totalPages < totalPageThreshold;
 
+  const displayModeManager = window.documentViewer?.getDisplayModeManager();
+  if (displayModeManager && displayModeManager.isVirtualDisplayEnabled()) {
+    isPageTransitionEnabled = true
+  }
   const handleClick = (pageTransition, layout) => {
     const setDisplayMode = () => {
       const displayModeObject = displayModeObjects.find(
@@ -62,7 +67,7 @@ function ViewControlsOverlay() {
 
   return (
     <FlyoutMenu menu="viewControlsOverlay" trigger="viewControlsButton" onClose={undefined} ariaLabel={t('component.viewControlsOverlay')}>
-      {totalPages < totalPageThreshold && (
+      {isPageTransitionEnabled && (
         <>
           <DataElementWrapper
             dataElement="pageTransitionHeader"
