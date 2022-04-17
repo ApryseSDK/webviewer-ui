@@ -24,6 +24,7 @@ const propTypes = {
   isSelected: PropTypes.bool,
   setIsEditing: PropTypes.func,
   setShareType: PropTypes.func,
+  share: PropTypes.object,
   notesShowLastUpdatedDate: PropTypes.bool,
   isUnread: PropTypes.bool,
   renderAuthorName: PropTypes.func,
@@ -43,6 +44,7 @@ function NoteHeader(props) {
     isSelected,
     setIsEditing,
     setShareType,
+    share,
     notesShowLastUpdatedDate,
     isReply,
     isUnread,
@@ -98,6 +100,7 @@ function NoteHeader(props) {
                 annotation={annotation}
                 isSelected={isSelected}
                 setShareType={setShareType}
+                share={share}
                 noteIndex={noteIndex}
               />
             )}

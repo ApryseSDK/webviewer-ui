@@ -261,6 +261,7 @@ const Note = ({ annotation, shareTypeColors }) => {
         setIsEditing={setIsEditing}
         isEditing={isEditingMap[0]}
         setShareType={setShareType}
+        share={share}
         textAreaValue={pendingEditTextMap[annotation.Id]}
         onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}

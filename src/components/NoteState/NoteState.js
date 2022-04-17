@@ -16,6 +16,7 @@ const propTypes = {
   openOnInitialLoad: PropTypes.bool,
   handleStateChange: PropTypes.func,
   setShareType: PropTypes.func,
+  share: PropTypes.object,
   noteIndex: PropTypes.number,
 };
 
@@ -26,6 +27,7 @@ function NoteState(props) {
     openOnInitialLoad = false,
     handleStateChange,
     setShareType,
+    share,
     noteIndex,
   } = props;
 
@@ -46,7 +48,7 @@ function NoteState(props) {
     setIsOpen(false);
   }
   const getStatusIcon = () => {
-    switch (annotationState) {
+    switch (share[0]) {
       case 'Assessors':
         return 'icon-page-insertion-insert-above';
         break;
@@ -56,6 +58,7 @@ function NoteState(props) {
       case 'All':
         return 'ic_annotation_apply_redact_black_24px';
         break;
+      case 'None':
       default:
         return 'icon-annotation-status-none';
         break;

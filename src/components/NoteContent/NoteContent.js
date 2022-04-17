@@ -34,6 +34,7 @@ const NoteContent = ({
   isEditing,
   setShareType,
   setIsEditing,
+  share,
   noteIndex,
   onTextChange,
   isUnread,
@@ -255,6 +256,7 @@ const NoteContent = ({
         isSelected={isSelected}
         setIsEditing={setIsEditing}
         setShareType={setShareType}
+        share={share}
         notesShowLastUpdatedDate={notesShowLastUpdatedDate}
         isReply={isReply}
         isUnread={isUnread}
