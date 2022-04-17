@@ -32,6 +32,7 @@ const propTypes = {
   isEditing: PropTypes.bool,
   noteIndex: PropTypes.number,
   sortStrategy: PropTypes.string,
+  annotationIndex: PropTypes.number,
 };
 
 function NoteHeader(props) {
@@ -54,6 +55,7 @@ function NoteHeader(props) {
     noteIndex,
     sortStrategy,
     headerBackgroundColor,
+    annotationIndex,
   } = props;
 
   const [t] = useTranslation();
@@ -102,6 +104,7 @@ function NoteHeader(props) {
                 setShareType={setShareType}
                 share={share}
                 noteIndex={noteIndex}
+                annotationIndex={annotationIndex}
               />
             )}
             {!isEditing && isSelected && (

@@ -23,7 +23,7 @@ const propTypes = {
 
 let currId = 0;
 
-const Note = ({ annotation, shareTypeColors }) => {
+const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
   const {
     isSelected,
     resize,
@@ -38,9 +38,8 @@ const Note = ({ annotation, shareTypeColors }) => {
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
   const [share, setShare] = useState({});
-  const annotationState = annotation.getStatus();
   const getAnnotaionStatusColor = () => {
-    switch (share[0]) {
+    switch (share[annotationIndex]) {
       case 'Assessors':
         return shareTypeColors.assessors;
         break;
@@ -262,6 +261,7 @@ const Note = ({ annotation, shareTypeColors }) => {
         isEditing={isEditingMap[0]}
         setShareType={setShareType}
         share={share}
+        annotationIndex={annotationIndex}
         textAreaValue={pendingEditTextMap[annotation.Id]}
         onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}

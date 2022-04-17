@@ -18,6 +18,7 @@ const propTypes = {
   setShareType: PropTypes.func,
   share: PropTypes.object,
   noteIndex: PropTypes.number,
+  annotationIndex: PropTypes.number,
 };
 
 function NoteState(props) {
@@ -29,6 +30,7 @@ function NoteState(props) {
     setShareType,
     share,
     noteIndex,
+    annotationIndex,
   } = props;
 
   const [t] = useTranslation();
@@ -48,7 +50,7 @@ function NoteState(props) {
     setIsOpen(false);
   }
   const getStatusIcon = () => {
-    switch (share[0]) {
+    switch (share[annotationIndex]) {
       case 'Assessors':
         return 'icon-page-insertion-insert-above';
         break;
@@ -68,7 +70,7 @@ function NoteState(props) {
     return function onStateOptionButtonClick() {
       if (handleStateChange) {
         handleStateChange(state);
-        setShareType(state, noteIndex);
+        setShareType(state, annotationIndex);
       }
     };
   }
@@ -90,6 +92,8 @@ function NoteState(props) {
   }
 
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
+  console.log(share);
+  console.log(`%c${annotationIndex}`, 'color:orange;font-family:system-ui;font-size:2rem;font-weight:bold');
   return (
     <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
       <Tooltip content={t('option.notesOrder.status')}>

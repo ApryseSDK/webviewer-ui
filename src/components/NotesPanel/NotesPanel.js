@@ -53,7 +53,6 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
 
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -311,7 +310,7 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
       <div role="listitem" className="note-wrapper">
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
-          <Note annotation={currNote} shareTypeColors={shareTypeColors} />
+          <Note annotation={currNote} shareTypeColors={shareTypeColors} annotationIndex={index} />
         </NoteContext.Provider>
       </div>
     );
