@@ -12,7 +12,7 @@ import NoteContext from 'components/Note/Context';
 
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
-import getLatestActivityDate from "helpers/getLatestActivityDate";
+import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
@@ -29,14 +29,17 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
 };
 
-const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextChange, isUnread, isNonReplyNoteRead, onReplyClicked }) => {
-  const [
-    noteDateFormat,
-    iconColor,
-    isNoteStateDisabled,
-    language,
-    notesShowLastUpdatedDate
-  ] = useSelector(
+const NoteContent = ({
+  annotation,
+  isEditing,
+  setIsEditing,
+  noteIndex,
+  onTextChange,
+  isUnread,
+  isNonReplyNoteRead,
+  onReplyClicked,
+}) => {
+  const [noteDateFormat, iconColor, isNoteStateDisabled, language, notesShowLastUpdatedDate] = useSelector(
     state => [
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
@@ -47,9 +50,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     shallowEqual,
   );
 
-  const { isSelected, searchInput, resize, pendingEditTextMap, onTopNoteContentClicked, sortStrategy } = useContext(
-    NoteContext,
-  );
+  const { isSelected, searchInput, resize, pendingEditTextMap, onTopNoteContentClicked, sortStrategy } =
+    useContext(NoteContext);
 
   const dispatch = useDispatch();
   const isReply = annotation.isReply();
@@ -68,11 +70,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     annotation => {
       const name = core.getDisplayAuthor(annotation['Author']);
 
-      return name ? (
-        highlightSearchInput(name, searchInput)
-      ) : (
-        t('option.notesPanel.noteContent.noName')
-      );
+      return name ? highlightSearchInput(name, searchInput) : t('option.notesPanel.noteContent.noName');
     },
     [searchInput],
   );
@@ -96,11 +94,11 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                 href,
                 text: anchorText,
                 start: offset,
-                end: offset + match.getMatchedText().length
+                end: offset + match.getMatchedText().length,
               });
               return;
           }
-        }
+        },
       });
       if (!autolinkerContent.length) {
         const highlightResult = highlightSearchInput(contents, searchInput, richTextStyle);
@@ -110,7 +108,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             <NoteTextPreview linesToBreak={3} comment>
               {highlightResult}
             </NoteTextPreview>
-          )
+          );
         } else {
           return highlightResult;
         }
@@ -125,50 +123,24 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
         if (strIdx < start) {
           contentToRender.push(
             <span key={`span_${forIdx}`}>
-              {
-                highlightSearchInput(
-                  contents,
-                  searchInput,
-                  richTextStyle,
-                  strIdx,
-                  start
-                )
-              }
-            </span>
+              {highlightSearchInput(contents, searchInput, richTextStyle, strIdx, start)}
+            </span>,
           );
         }
         contentToRender.push(
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            key={`a_${forIdx}`}
-          >
-            {
-              highlightSearchInput(
-                contents,
-                searchInput,
-                richTextStyle,
-                start,
-                end
-              )
-            }
-          </a>
+          <a href={href} target="_blank" rel="noopener noreferrer" key={`a_${forIdx}`}>
+            {highlightSearchInput(contents, searchInput, richTextStyle, start, end)}
+          </a>,
         );
         strIdx = end;
       });
       // Ensure any content after the last link is accounted for
       if (strIdx < contents.length - 1) {
-        contentToRender.push(highlightSearchInput(
-          contents,
-          searchInput,
-          richTextStyle,
-          strIdx
-        ));
+        contentToRender.push(highlightSearchInput(contents, searchInput, richTextStyle, strIdx));
       }
       return contentToRender;
     },
-    [searchInput]
+    [searchInput],
   );
 
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
@@ -216,94 +188,107 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     clicked: isNonReplyNoteRead, //The top note content is read
   });
 
-  const content = useMemo(
-    () => {
-      const contentStyle = {};
-      if (textColor) {
-        contentStyle.color = textColor.toHexString();
-      }
+  const content = useMemo(() => {
+    const contentStyle = {};
+    if (textColor) {
+      contentStyle.color = textColor.toHexString();
+    }
 
-      return (
-        <React.Fragment>
-          {isEditing && isSelected ? (
-            <ContentArea
-              annotation={annotation}
-              noteIndex={noteIndex}
-              setIsEditing={setIsEditing}
-              textAreaValue={textAreaValue}
-              onTextAreaValueChange={onTextChange}
-            />
-          ) : (
-            contentsToRender && (
-              <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked} style={contentStyle}>
-                {renderContents(contentsToRender, richTextStyle)}
-              </div>
-            )
-          )}
-        </React.Fragment>
-      );
-    },
-    [annotation, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange]
-  );
+    return (
+      <React.Fragment>
+        {isEditing && isSelected ? (
+          <ContentArea
+            annotation={annotation}
+            noteIndex={noteIndex}
+            setIsEditing={setIsEditing}
+            textAreaValue={textAreaValue}
+            onTextAreaValueChange={onTextChange}
+          />
+        ) : (
+          contentsToRender && (
+            <div
+              className={classNames('container', { 'reply-content': isReply })}
+              onClick={handleContentsClicked}
+              style={contentStyle}
+            >
+              {renderContents(contentsToRender, richTextStyle)}
+            </div>
+          )
+        )}
+      </React.Fragment>
+    );
+  }, [annotation, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange]);
 
   const text = annotation.getCustomData('trn-annot-preview');
-  const textPreview = useMemo(
-    () => {
-      if (text === '') {
-        return null;
-      }
+  const textPreview = useMemo(() => {
+    if (text === '') {
+      return null;
+    }
 
-      const highlightSearchResult = highlightSearchInput(text, searchInput);
-      // If we have a search result do not use text
-      // preview but instead show the entire text
-      if (isString(highlightSearchResult)) {
-        return (
-          <div className='selected-text-preview'>
-            <NoteTextPreview linesToBreak={3}>
-              {`"${highlightSearchResult}"`}
-            </NoteTextPreview>
-          </div>
-        )
-      } else {
-        return (
-          <div className='selected-text-preview' style={{ paddingRight: '12px' }}>
-            {highlightSearchResult}
-          </div>
-        );
-      }
-    }, [text, searchInput]);
-
-  const header = useMemo(
-    () => {
+    const highlightSearchResult = highlightSearchInput(text, searchInput);
+    // If we have a search result do not use text
+    // preview but instead show the entire text
+    if (isString(highlightSearchResult)) {
       return (
-        <NoteHeader
-          icon={icon}
-          iconColor={iconColor}
-          annotation={annotation}
-          language={language}
-          noteDateFormat={noteDateFormat}
-          isSelected={isSelected}
-          setIsEditing={setIsEditing}
-          notesShowLastUpdatedDate={notesShowLastUpdatedDate}
-          isReply={isReply}
-          isUnread={isUnread}
-          renderAuthorName={renderAuthorName}
-          isNoteStateDisabled={isNoteStateDisabled}
-          isEditing={isEditing}
-          noteIndex={noteIndex}
-          sortStrategy={sortStrategy}
-        />
-      )
-    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy]
-  );
+        <div className="selected-text-preview">
+          <NoteTextPreview linesToBreak={3}>{`"${highlightSearchResult}"`}</NoteTextPreview>
+        </div>
+      );
+    } else {
+      return (
+        <div className="selected-text-preview" style={{ paddingRight: '12px' }}>
+          {highlightSearchResult}
+        </div>
+      );
+    }
+  }, [text, searchInput]);
+
+  const header = useMemo(() => {
+    return (
+      <NoteHeader
+        icon={icon}
+        iconColor={iconColor}
+        annotation={annotation}
+        language={language}
+        noteDateFormat={noteDateFormat}
+        isSelected={isSelected}
+        setIsEditing={setIsEditing}
+        notesShowLastUpdatedDate={notesShowLastUpdatedDate}
+        isReply={isReply}
+        isUnread={isUnread}
+        renderAuthorName={renderAuthorName}
+        isNoteStateDisabled={isNoteStateDisabled}
+        isEditing={isEditing}
+        noteIndex={noteIndex}
+        sortStrategy={sortStrategy}
+      />
+    );
+  }, [
+    icon,
+    iconColor,
+    annotation,
+    language,
+    noteDateFormat,
+    isSelected,
+    setIsEditing,
+    notesShowLastUpdatedDate,
+    isReply,
+    isUnread,
+    renderAuthorName,
+    isNoteStateDisabled,
+    isEditing,
+    noteIndex,
+    getLatestActivityDate(annotation),
+    sortStrategy,
+  ]);
 
   return (
     <div className={noteContentClass} onClick={handleNoteContentClicked}>
       {header}
-      {textPreview}
+      {/* {textPreview} */}
       {content}
     </div>
-  )
+  );
 };
 
 NoteContent.propTypes = propTypes;
@@ -311,18 +296,8 @@ NoteContent.propTypes = propTypes;
 export default NoteContent;
 
 // a component that contains the content textarea, the save button and the cancel button
-const ContentArea = ({
-  annotation,
-  noteIndex,
-  setIsEditing,
-  textAreaValue,
-  onTextAreaValueChange,
-}) => {
-  const [
-    autoFocusNoteOnAnnotationSelection,
-    isMentionEnabled,
-    isNotesPanelOpen
-  ] = useSelector(state => [
+const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTextAreaValueChange }) => {
+  const [autoFocusNoteOnAnnotationSelection, isMentionEnabled, isNotesPanelOpen] = useSelector(state => [
     selectors.getAutoFocusNoteOnAnnotationSelection(state),
     selectors.getIsMentionEnabled(state),
     selectors.isElementOpen(state, 'notesPanel'),
@@ -355,10 +330,13 @@ const ContentArea = ({
     if (isMentionEnabled) {
       const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
 
-      annotation.setCustomData('trn-mention', JSON.stringify({
-        contents: textAreaValue,
-        ids,
-      }));
+      annotation.setCustomData(
+        'trn-mention',
+        JSON.stringify({
+          contents: textAreaValue,
+          ids,
+        }),
+      );
       core.setNoteContents(annotation, plainTextValue);
     } else {
       core.setNoteContents(annotation, textAreaValue);
@@ -375,7 +353,7 @@ const ContentArea = ({
     }
   };
 
-  const contentClassName = classNames('edit-content', { 'reply-content': isReply })
+  const contentClassName = classNames('edit-content', { 'reply-content': isReply });
 
   return (
     <div className={contentClassName}>
@@ -429,13 +407,15 @@ const getRichTextSpan = (text, richTextStyle, key) => {
     fontWeight: richTextStyle['font-weight'],
     fontStyle: richTextStyle['font-style'],
     textDecoration: richTextStyle['text-decoration'],
-    color: richTextStyle['color']
+    color: richTextStyle['color'],
   };
   if (style.textDecoration) {
     style.textDecoration = style.textDecoration.replace('word', 'underline');
   }
   return (
-    <span style={style} key={key}>{text}</span>
+    <span style={style} key={key}>
+      {text}
+    </span>
   );
 };
 
@@ -443,7 +423,9 @@ const renderRichText = (text, richTextStyle, start) => {
   if (!richTextStyle || !text) return text;
 
   const styles = {};
-  const indices = Object.keys(richTextStyle).map(Number).sort((a, b) => a - b);
+  const indices = Object.keys(richTextStyle)
+    .map(Number)
+    .sort((a, b) => a - b);
   for (let i = 0; i < indices.length; i++) {
     let index = indices[i] - start;
     index = Math.min(Math.max(index, 0), text.length);
@@ -454,13 +436,17 @@ const renderRichText = (text, richTextStyle, start) => {
   }
 
   const contentToRender = [];
-  const styleIndices = Object.keys(styles).map(Number).sort((a, b) => a - b);
+  const styleIndices = Object.keys(styles)
+    .map(Number)
+    .sort((a, b) => a - b);
   for (let i = 1; i < styleIndices.length; i++) {
-    contentToRender.push(getRichTextSpan(
-      text.slice(styleIndices[i - 1], styleIndices[i]),
-      styles[styleIndices[i - 1]],
-      `richtext_span_${i}`
-    ));
+    contentToRender.push(
+      getRichTextSpan(
+        text.slice(styleIndices[i - 1], styleIndices[i]),
+        styles[styleIndices[i - 1]],
+        `richtext_span_${i}`,
+      ),
+    );
   }
 
   return contentToRender;
@@ -498,25 +484,26 @@ const highlightSearchInput = (fullText, searchInput, richTextStyle, start = 0, e
     }
     contentToRender.push(
       <span className="highlight" key={`highlight_span_${idx}`}>
-        {
-          renderRichText(
-            text.substring(position, position + loweredSearchInput.length),
-            richTextStyle,
-            start + position)
-        }
-      </span>
+        {renderRichText(
+          text.substring(position, position + loweredSearchInput.length),
+          richTextStyle,
+          start + position,
+        )}
+      </span>,
     );
     if (
       // Ensure that we do not try to make an out-of-bounds access
-      position + loweredSearchInput.length < loweredText.length
+      position + loweredSearchInput.length < loweredText.length &&
       // Ensure that this is the end of the allFoundPositions array
-      && position + loweredSearchInput.length !== allFoundPositions[idx + 1]
+      position + loweredSearchInput.length !== allFoundPositions[idx + 1]
     ) {
-      contentToRender.push(renderRichText(
-        text.substring(position + loweredSearchInput.length, allFoundPositions[idx + 1]),
-        richTextStyle,
-        start + position + loweredSearchInput.length
-      ));
+      contentToRender.push(
+        renderRichText(
+          text.substring(position + loweredSearchInput.length, allFoundPositions[idx + 1]),
+          richTextStyle,
+          start + position + loweredSearchInput.length,
+        ),
+      );
     }
   });
   return contentToRender;
