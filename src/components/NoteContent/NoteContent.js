@@ -32,6 +32,7 @@ const propTypes = {
 const NoteContent = ({
   annotation,
   isEditing,
+  setShareType,
   setIsEditing,
   noteIndex,
   onTextChange,
@@ -253,6 +254,7 @@ const NoteContent = ({
         noteDateFormat={noteDateFormat}
         isSelected={isSelected}
         setIsEditing={setIsEditing}
+        setShareType={setShareType}
         notesShowLastUpdatedDate={notesShowLastUpdatedDate}
         isReply={isReply}
         isUnread={isUnread}

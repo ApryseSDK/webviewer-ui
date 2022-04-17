@@ -37,9 +37,10 @@ const Note = ({ annotation, shareTypeColors }) => {
   const containerRef = useRef();
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
+  const [share, setShare] = useState({});
   const annotationState = annotation.getStatus();
   const getAnnotaionStatusColor = () => {
-    switch (annotationState) {
+    switch (share[0]) {
       case 'Assessors':
         return shareTypeColors.assessors;
         break;
@@ -229,9 +230,19 @@ const Note = ({ annotation, shareTypeColors }) => {
     },
     [setIsEditingMap],
   );
-
+  const setShareType = useCallback(
+    (sharetype, index) => {
+      setShare(map => ({
+        ...map,
+        [index]: sharetype,
+      }));
+    },
+    [setShare],
+  );
   //apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
+  // console.log(`%c${share}`, 'color:orange;font-family:system-ui;font-size:2rem;font-weight:bold');
+  console.log(share);
   return (
     <div
       role="button"
@@ -249,6 +260,7 @@ const Note = ({ annotation, shareTypeColors }) => {
         isSelected={isSelected}
         setIsEditing={setIsEditing}
         isEditing={isEditingMap[0]}
+        setShareType={setShareType}
         textAreaValue={pendingEditTextMap[annotation.Id]}
         onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}

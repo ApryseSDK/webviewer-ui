@@ -15,10 +15,19 @@ const propTypes = {
   isSelected: PropTypes.bool,
   openOnInitialLoad: PropTypes.bool,
   handleStateChange: PropTypes.func,
+  setShareType: PropTypes.func,
+  noteIndex: PropTypes.number,
 };
 
 function NoteState(props) {
-  const { annotation, isSelected = false, openOnInitialLoad = false, handleStateChange } = props;
+  const {
+    annotation,
+    isSelected = false,
+    openOnInitialLoad = false,
+    handleStateChange,
+    setShareType,
+    noteIndex,
+  } = props;
 
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(openOnInitialLoad);
@@ -56,6 +65,7 @@ function NoteState(props) {
     return function onStateOptionButtonClick() {
       if (handleStateChange) {
         handleStateChange(state);
+        setShareType(state, noteIndex);
       }
     };
   }
