@@ -22,7 +22,7 @@ import { isIE } from 'helpers/device';
 
 import './NotesPanel.scss';
 
-const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
+const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors, setNotesShareType, notesShareTypesMap }) => {
   const [
     sortStrategy,
     isOpen,
@@ -310,7 +310,13 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
       <div role="listitem" className="note-wrapper">
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
-          <Note annotation={currNote} shareTypeColors={shareTypeColors} annotationIndex={index} />
+          <Note
+            annotation={currNote}
+            shareTypeColors={shareTypeColors}
+            annotationId={currNote.Id}
+            setNotesShareType={setNotesShareType}
+            notesShareTypesMap={notesShareTypesMap}
+          />
         </NoteContext.Provider>
       </div>
     );

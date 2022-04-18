@@ -23,7 +23,6 @@ const propTypes = {
   noteDateFormat: PropTypes.string,
   isSelected: PropTypes.bool,
   setIsEditing: PropTypes.func,
-  setShareType: PropTypes.func,
   share: PropTypes.object,
   notesShowLastUpdatedDate: PropTypes.bool,
   isUnread: PropTypes.bool,
@@ -32,7 +31,9 @@ const propTypes = {
   isEditing: PropTypes.bool,
   noteIndex: PropTypes.number,
   sortStrategy: PropTypes.string,
-  annotationIndex: PropTypes.number,
+  annotationId: PropTypes.number,
+  notesShareTypesMap: PropTypes.object,
+  setNotesShareType: PropTypes.func,
 };
 
 function NoteHeader(props) {
@@ -44,7 +45,6 @@ function NoteHeader(props) {
     noteDateFormat,
     isSelected,
     setIsEditing,
-    setShareType,
     share,
     notesShowLastUpdatedDate,
     isReply,
@@ -55,7 +55,9 @@ function NoteHeader(props) {
     noteIndex,
     sortStrategy,
     headerBackgroundColor,
-    annotationIndex,
+    annotationId,
+    notesShareTypesMap,
+    setNotesShareType,
   } = props;
 
   const [t] = useTranslation();
@@ -101,10 +103,11 @@ function NoteHeader(props) {
               <NoteState
                 annotation={annotation}
                 isSelected={isSelected}
-                setShareType={setShareType}
                 share={share}
                 noteIndex={noteIndex}
-                annotationIndex={annotationIndex}
+                annotationId={annotationId}
+                notesShareTypesMap={notesShareTypesMap}
+                setNotesShareType={setNotesShareType}
               />
             )}
             {!isEditing && isSelected && (

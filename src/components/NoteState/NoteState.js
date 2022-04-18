@@ -15,10 +15,11 @@ const propTypes = {
   isSelected: PropTypes.bool,
   openOnInitialLoad: PropTypes.bool,
   handleStateChange: PropTypes.func,
-  setShareType: PropTypes.func,
   share: PropTypes.object,
   noteIndex: PropTypes.number,
-  annotationIndex: PropTypes.number,
+  annotationId: PropTypes.number,
+  notesShareTypesMap: PropTypes.object,
+  setNotesShareType: PropTypes.func,
 };
 
 function NoteState(props) {
@@ -27,10 +28,11 @@ function NoteState(props) {
     isSelected = false,
     openOnInitialLoad = false,
     handleStateChange,
-    setShareType,
     share,
     noteIndex,
-    annotationIndex,
+    notesShareTypesMap,
+    annotationId,
+    setNotesShareType,
   } = props;
 
   const [t] = useTranslation();
@@ -50,7 +52,7 @@ function NoteState(props) {
     setIsOpen(false);
   }
   const getStatusIcon = () => {
-    switch (share[annotationIndex]) {
+    switch (notesShareTypesMap[annotationId]) {
       case 'Assessors':
         return 'icon-page-insertion-insert-above';
         break;
@@ -70,7 +72,7 @@ function NoteState(props) {
     return function onStateOptionButtonClick() {
       if (handleStateChange) {
         handleStateChange(state);
-        setShareType(state, annotationIndex);
+        setNotesShareType(state, annotationId);
       }
     };
   }
@@ -93,7 +95,7 @@ function NoteState(props) {
 
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
   console.log(share);
-  console.log(`%c${annotationIndex}`, 'color:orange;font-family:system-ui;font-size:2rem;font-weight:bold');
+  console.log(`%c${annotationId}`, 'color:orange;font-family:system-ui;font-size:2rem;font-weight:bold');
   return (
     <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
       <Tooltip content={t('option.notesOrder.status')}>

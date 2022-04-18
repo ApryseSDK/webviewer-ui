@@ -23,7 +23,7 @@ const propTypes = {
 
 let currId = 0;
 
-const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
+const Note = ({ annotation, shareTypeColors, annotationId, setNotesShareType, notesShareTypesMap }) => {
   const {
     isSelected,
     resize,
@@ -39,7 +39,7 @@ const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
   const [isEditingMap, setIsEditingMap] = useState({});
   const [share, setShare] = useState({});
   const getAnnotaionStatusColor = () => {
-    switch (share[annotationIndex]) {
+    switch (notesShareTypesMap[annotationId]) {
       case 'Assessors':
         return shareTypeColors.assessors;
         break;
@@ -229,15 +229,7 @@ const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
     },
     [setIsEditingMap],
   );
-  const setShareType = useCallback(
-    (sharetype, index) => {
-      setShare(map => ({
-        ...map,
-        [index]: sharetype,
-      }));
-    },
-    [setShare],
-  );
+
   //apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
   // console.log(`%c${share}`, 'color:orange;font-family:system-ui;font-size:2rem;font-weight:bold');
@@ -259,14 +251,15 @@ const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
         isSelected={isSelected}
         setIsEditing={setIsEditing}
         isEditing={isEditingMap[0]}
-        setShareType={setShareType}
         share={share}
-        annotationIndex={annotationIndex}
+        annotationId={annotationId}
         textAreaValue={pendingEditTextMap[annotation.Id]}
         onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
         headerBackgroundColor={getAnnotaionStatusColor()}
+        notesShareTypesMap={notesShareTypesMap}
+        setNotesShareType={setNotesShareType}
       />
       {(isSelected || isExpandedFromSearch) && (
         <React.Fragment>

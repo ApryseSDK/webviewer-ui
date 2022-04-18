@@ -1,5 +1,5 @@
 import { hot } from 'react-hot-loader/root';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -76,7 +76,15 @@ const App = ({
   let timeoutReturn;
 
   const [isInDesktopOnlyMode] = useSelector(state => [selectors.isInDesktopOnlyMode(state)]);
-
+  const [notesShareTypesMap, setNotesShareTypesMap] = useState([]);
+  console.log(`%c Notes Map`, 'color:red;font-family:system-ui;font-size:2rem;font-weight:bold');
+  console.log(notesShareTypesMap);
+  const setNotesShareType = useCallback(
+    (sharetype, index) => {
+      setNotesShareTypesMap(map => ({ ...map, [index]: sharetype }));
+    },
+    [setNotesShareTypesMap],
+  );
   useEffect(() => {
     fireEvent(Events.VIEWER_LOADED);
     window.parent.postMessage(
@@ -173,7 +181,11 @@ const App = ({
             <SearchPanel />
           </RightPanel>
           <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
-            <NotesPanel shareTypeColors={shareTypeColors} />
+            <NotesPanel
+              shareTypeColors={shareTypeColors}
+              setNotesShareType={setNotesShareType}
+              notesShareTypesMap={notesShareTypesMap}
+            />
           </RightPanel>
         </div>
         <ViewControlsOverlay />

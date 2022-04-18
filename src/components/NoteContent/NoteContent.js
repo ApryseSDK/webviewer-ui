@@ -32,9 +32,8 @@ const propTypes = {
 const NoteContent = ({
   annotation,
   isEditing,
-  setShareType,
   setIsEditing,
-  annotationIndex,
+  annotationId,
   share,
   noteIndex,
   onTextChange,
@@ -42,6 +41,8 @@ const NoteContent = ({
   isNonReplyNoteRead,
   onReplyClicked,
   headerBackgroundColor,
+  notesShareTypesMap,
+  setNotesShareType,
 }) => {
   const [noteDateFormat, iconColor, isNoteStateDisabled, language, notesShowLastUpdatedDate] = useSelector(
     state => [
@@ -256,7 +257,6 @@ const NoteContent = ({
         noteDateFormat={noteDateFormat}
         isSelected={isSelected}
         setIsEditing={setIsEditing}
-        setShareType={setShareType}
         share={share}
         notesShowLastUpdatedDate={notesShowLastUpdatedDate}
         isReply={isReply}
@@ -267,7 +267,9 @@ const NoteContent = ({
         noteIndex={noteIndex}
         sortStrategy={sortStrategy}
         headerBackgroundColor={headerBackgroundColor}
-        annotationIndex={annotationIndex}
+        annotationId={annotationId}
+        notesShareTypesMap={notesShareTypesMap}
+        setNotesShareType={setNotesShareType}
       />
     );
   }, [
