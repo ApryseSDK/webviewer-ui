@@ -23,41 +23,23 @@ const propTypes = {
 
 let currId = 0;
 
-const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
-  const {
-    isSelected,
-    resize,
-    pendingEditTextMap,
-    setPendingEditText,
-    isContentEditable,
-    isDocumentReadOnly,
-    isNotePanelOpen,
-    isExpandedFromSearch,
-  } = useContext(NoteContext);
+const Note = ({
+  annotation,
+}) => {
+  const { isSelected, resize, pendingEditTextMap, setPendingEditText, isContentEditable, isDocumentReadOnly, isNotePanelOpen, isExpandedFromSearch } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
-  const [share, setShare] = useState({});
-  const getAnnotaionStatusColor = () => {
-    console.log('share',annotationIndex);
-    switch (share[annotationIndex]) {
-      case 'Assessors':
-        return shareTypeColors.assessors;
-      case 'Participants':
-        return shareTypeColors.participants;
-      case 'All':
-        return shareTypeColors.all;
-      case 'None':
-      default:
-        return shareTypeColors.none;
-    }
-  };
   const ids = useRef([]);
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const unreadReplyIdSet = new Set();
 
-  const [noteTransformFunction, customNoteSelectionFunction, unreadAnnotationIdSet] = useSelector(
+  const [
+    noteTransformFunction,
+    customNoteSelectionFunction,
+    unreadAnnotationIdSet,
+  ] = useSelector(
     state => [
       selectors.getNoteTransformFunction(state),
       selectors.getCustomNoteSelectionFunction(state),
@@ -66,7 +48,9 @@ const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
     shallowEqual,
   );
 
-  const replies = annotation.getReplies().sort((a, b) => a['DateCreated'] - b['DateCreated']);
+  const replies = annotation
+    .getReplies()
+    .sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
   replies.filter(r => unreadAnnotationIdSet.has(r.Id)).forEach(r => unreadReplyIdSet.add(r.Id));
 
@@ -133,7 +117,7 @@ const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
 
   useEffect(() => {
     //If this is not a new one, rebuild the isEditing map
-    const pendingText = pendingEditTextMap[annotation.Id];
+    const pendingText = pendingEditTextMap[annotation.Id]
     if (pendingText !== '' && isContentEditable && !isDocumentReadOnly) {
       setIsEditing(true, 0);
     }
@@ -143,7 +127,7 @@ const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
     if (isDocumentReadOnly || !isContentEditable) {
       setIsEditing(false, 0);
     }
-  }, [isDocumentReadOnly, isContentEditable, setIsEditing]);
+  }, [isDocumentReadOnly, isContentEditable, setIsEditing])
 
   const handleNoteClick = e => {
     // stop bubbling up otherwise the note will be closed
@@ -182,11 +166,11 @@ const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
     //Must also restore the isEdit for  any replies, in case someone was editing a
     //reply when a comment was placed above
     replies.forEach((reply, index) => {
-      const pendingText = pendingEditTextMap[reply.Id];
-      if (pendingText !== '' && typeof pendingText !== 'undefined' && isSelected) {
+      const pendingText = pendingEditTextMap[reply.Id]
+      if ((pendingText !== '' && typeof pendingText !== 'undefined') && isSelected) {
         setIsEditing(true, 1 + index);
       }
-    });
+    })
   }, [isSelected]);
 
   const showReplyArea = !Object.values(isEditingMap).some(val => val);
@@ -226,19 +210,9 @@ const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
     },
     [setIsEditingMap],
   );
-  const setShareType = useCallback(
-    (sharetype, index) => {
-      setShare(map => ({
-        ...map,
-        [index]: sharetype,
-      }));
-    },
-    [setShare],
-  );
+
   //apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
-  // console.log(`%c${share}`, 'color:orange;font-family:system-ui;font-size:2rem;font-weight:bold');
-  console.log(share);
   return (
     <div
       role="button"
@@ -248,7 +222,6 @@ const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
       onClick={handleNoteClick}
       onKeyDown={handleNoteKeydown}
       id={`note_${annotation.Id}`}
-      style={{ borderBottom: `3px solid ${getAnnotaionStatusColor()}` }}
     >
       <NoteContent
         noteIndex={0}
@@ -256,14 +229,10 @@ const Note = ({ annotation, shareTypeColors, annotationIndex }) => {
         isSelected={isSelected}
         setIsEditing={setIsEditing}
         isEditing={isEditingMap[0]}
-        setShareType={setShareType}
-        share={share}
-        annotationIndex={annotationIndex}
         textAreaValue={pendingEditTextMap[annotation.Id]}
         onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
-        headerBackgroundColor={getAnnotaionStatusColor()}
       />
       {(isSelected || isExpandedFromSearch) && (
         <React.Fragment>

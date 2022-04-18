@@ -22,7 +22,7 @@ import { isIE } from 'helpers/device';
 
 import './NotesPanel.scss';
 
-const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
+const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [
     sortStrategy,
     isOpen,
@@ -33,7 +33,7 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
     notesInLeftPanel,
     isDocumentReadOnly,
     enableNotesPanelVirtualizedList,
-    isInDesktopOnlyMode,
+    isInDesktopOnlyMode
   ] = useSelector(
     state => [
       selectors.getSortStrategy(state),
@@ -45,7 +45,7 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
       selectors.getNotesInLeftPanel(state),
       selectors.isDocumentReadOnly(state),
       selectors.getEnableNotesPanelVirtualizedList(state),
-      selectors.isInDesktopOnlyMode(state),
+      selectors.isInDesktopOnlyMode(state)
     ],
     shallowEqual,
   );
@@ -94,26 +94,18 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
       setNotes(
         core
           .getAnnotationsList()
-          .filter(
-            annot =>
-              annot.Listable &&
-              !annot.isReply() &&
-              !annot.Hidden &&
-              !annot.isGrouped() &&
-              annot.ToolName !== window.Core.Tools.ToolNames.CROP &&
-              !annot.isContentEditPlaceholder(),
-          ),
+          .filter(annot => annot.Listable && !annot.isReply() && !annot.Hidden && !annot.isGrouped() && annot.ToolName !== window.Core.Tools.ToolNames.CROP && !annot.isContentEditPlaceholder()),
       );
     };
 
-    const toggleFilterStyle = e => {
+    const toggleFilterStyle = (e) => {
       const { types, authors, colors, statuses } = e.detail;
       if (types.length > 0 || authors.length > 0 || colors.length > 0 || statuses.length > 0) {
         setFilterEnabled(true);
       } else {
         setFilterEnabled(false);
       }
-    };
+    }
 
     core.addEventListener('annotationChanged', _setNotes);
     core.addEventListener('annotationHidden', _setNotes);
@@ -183,12 +175,15 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
       // https://www.pdftron.com/api/web/Core.AnnotationManager.html#createAnnotationReply__anchor
       const noteAndReplies = [note, ...replies];
 
-      shouldRender = shouldRender && noteAndReplies.some(filterNotesWithSearch);
+      shouldRender =
+        shouldRender &&
+        noteAndReplies.some(filterNotesWithSearch);
     }
     return shouldRender;
   };
 
-  const notesToRender = getSortStrategies()[sortStrategy].getSortedNotes(notes).filter(filterNote);
+  const notesToRender = getSortStrategies()[sortStrategy].getSortedNotes(notes)
+    .filter(filterNote);
 
   useEffect(() => {
     if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
@@ -204,14 +199,9 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
     if (Object.keys(selectedNoteIds).length) {
       return false;
     }
-    return (
-      searchInput &&
-      notesToRender
-        .filter(note => {
-          return note.getReplies().some(filterNotesWithSearch);
-        })
-        .some(replies => replies.Id === currNote.Id)
-    );
+    return searchInput && notesToRender.filter(note => {
+      return note.getReplies().some(filterNotesWithSearch);
+    }).some(replies => replies.Id === currNote.Id);
   };
 
   const handleInputChange = e => {
@@ -255,7 +245,7 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
     // this function needs to be called by a Note component whenever its height changes
     // to clear the cache(used by react-virtualized) and recompute the height so that each note
     // can have the correct position
-    resize = () => {},
+    resize = () => { },
   ) => {
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];
@@ -311,7 +301,9 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
       <div role="listitem" className="note-wrapper">
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
-          <Note annotation={currNote} shareTypeColors={shareTypeColors} annotationIndex={index} />
+          <Note
+            annotation={currNote}
+          />
         </NoteContext.Provider>
       </div>
     );
@@ -351,32 +343,36 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
   }
 
   let style = {};
-  if (isInDesktopOnlyMode || !isMobile) {
+  if ((isInDesktopOnlyMode || !isMobile)) {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
 
-  return isDisabled || !isOpen ? null : (
+  return ((isDisabled || !isOpen) ? null : (
     <div
       className={classNames({
         Panel: true,
-        NotesPanel: true,
+        NotesPanel: true
       })}
       style={style}
       data-element="notesPanel"
       onMouseUp={() => core.deselectAllAnnotations}
     >
-      {!isInDesktopOnlyMode && isMobile && !notesInLeftPanel && (
-        <div className="close-container">
+      {(!isInDesktopOnlyMode && isMobile) && !notesInLeftPanel &&
+        <div
+          className="close-container"
+        >
           <div
             className="close-icon-container"
             onClick={() => {
               dispatch(actions.closeElements(['notesPanel']));
             }}
           >
-            <Icon glyph="ic_close_black_24px" className="close-icon" />
+            <Icon
+              glyph="ic_close_black_24px"
+              className="close-icon"
+            />
           </div>
-        </div>
-      )}
+        </div>}
       <React.Fragment>
         <div className="header">
           <div className="input-container">
@@ -389,8 +385,8 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
               id="NotesPanel__input"
             />
           </div>
-          <div className="comments-counter">
-            <span className="main-comment">{t('component.notesPanel')}</span> {`(${notesToRender.length})`}
+          <div className='comments-counter'>
+            <span className='main-comment'>{t('component.notesPanel')}</span> {`(${notesToRender.length})`}
           </div>
           <div className="sort-row">
             <div className="sort-container">
@@ -410,7 +406,7 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
               dataElement="filterAnnotationButton"
               className={classNames({
                 filterAnnotationButton: true,
-                active: filterEnabled,
+                active: filterEnabled
               })}
               disabled={notes.length === 0}
               img="icon-comments-filter"
@@ -419,13 +415,7 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
             />
           </div>
         </div>
-        {notesToRender.length === 0 ? (
-          notes.length === 0 ? (
-            NoAnnotations
-          ) : (
-            NoResults
-          )
-        ) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
+        {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
           <NormalList
             ref={listRef}
             notes={notesToRender}
@@ -448,7 +438,7 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
         )}
       </React.Fragment>
     </div>
-  );
+  ));
 };
 
 export default NotesPanel;

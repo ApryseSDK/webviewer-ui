@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import Tooltip from '../Tooltip';
 
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
@@ -15,23 +14,10 @@ const propTypes = {
   isSelected: PropTypes.bool,
   openOnInitialLoad: PropTypes.bool,
   handleStateChange: PropTypes.func,
-  setShareType: PropTypes.func,
-  share: PropTypes.object,
-  noteIndex: PropTypes.number,
-  annotationIndex: PropTypes.number,
 };
 
 function NoteState(props) {
-  const {
-    annotation,
-    isSelected = false,
-    openOnInitialLoad = false,
-    handleStateChange,
-    setShareType,
-    share,
-    noteIndex,
-    annotationIndex,
-  } = props;
+  const { annotation, isSelected = false, openOnInitialLoad = false, handleStateChange } = props;
 
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(openOnInitialLoad);
@@ -49,25 +35,11 @@ function NoteState(props) {
   function onStateOptionsButtonClick() {
     setIsOpen(false);
   }
-  const getStatusIcon = () => {
-    switch (share[annotationIndex]) {
-      case 'Assessors':
-        return 'icon-page-insertion-insert-above';
-      case 'Participants':
-        return 'icon-tool-stamp-fill';
-      case 'All':
-        return 'ic_annotation_apply_redact_black_24px';
-      case 'None':
-      default:
-        return 'icon-annotation-status-none';
-    }
-  };
+
   function createOnStateOptionButtonClickHandler(state) {
     return function onStateOptionButtonClick() {
       if (handleStateChange) {
         handleStateChange(state);
-        setShareType(state, annotation.Id);
-        //alert(annotation.Id)
       }
     };
   }
@@ -89,34 +61,24 @@ function NoteState(props) {
   }
 
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
-  console.log(share);
-  console.log(`%c${annotationIndex}`, 'color:orange;font-family:system-ui;font-size:2rem;font-weight:bold');
+
   return (
     <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
-      <Tooltip content={t('option.notesOrder.status')}>
-        <div className={noteStateButtonClassName}>
-          <Icon glyph={getStatusIcon()} />
-        </div>
-      </Tooltip>
+      <div className={noteStateButtonClassName}>
+        <Icon glyph={icon} />
+      </div>
       {isOpen && (
         <button className="note-state-options" onClick={onStateOptionsButtonClick}>
           <DataElementWrapper dataElement="notePopupState">
             <DataElementWrapper
-              dataElement="notePopupStateNone"
-              className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('None')}
-            >
-              <Icon glyph="icon-colour-none" />
-              {t('option.state.none')}
-            </DataElementWrapper>
-            <DataElementWrapper
-              dataElement="notePopupStateAssessors"
+              dataElement="notePopupState-assessor"
               className="note-state-option"
               onClick={createOnStateOptionButtonClickHandler('Assessors')}
             >
               <Icon glyph="icon-page-insertion-insert-above" />
               {t('option.state.assessors')}
             </DataElementWrapper>
+
             <DataElementWrapper
               dataElement="notePopupStateParticipants"
               className="note-state-option"
@@ -125,6 +87,7 @@ function NoteState(props) {
               <Icon glyph="icon-tool-stamp-fill" />
               {t('option.state.participants')}
             </DataElementWrapper>
+
             <DataElementWrapper
               dataElement="notePopupStateAll"
               className="note-state-option"
@@ -133,6 +96,72 @@ function NoteState(props) {
               <Icon glyph="ic_annotation_apply_redact_black_24px" />
               {t('option.state.all')}
             </DataElementWrapper>
+
+            <DataElementWrapper
+              dataElement="notePopupStateNone"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('None')}
+            >
+              <Icon glyph="icon-colour-none" />
+              {t('option.state.none')}
+            </DataElementWrapper>
+
+            {/* <DataElementWrapper
+              dataElement="notePopupStateAccepted"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Accepted')}
+            >
+              <Icon glyph="icon-annotation-status-accepted" />
+              {t('option.state.accepted')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateRejected"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Rejected')}
+            >
+              <Icon glyph="icon-annotation-status-rejected" />
+              {t('option.state.rejected')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateCancelled"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Cancelled')}
+            >
+              <Icon glyph="icon-annotation-status-cancelled" />
+              {t('option.state.cancelled')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateCompleted"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Completed')}
+            >
+              <Icon glyph="icon-annotation-status-completed" />
+              {t('option.state.completed')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateNone"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('None')}
+            >
+              <Icon glyph="icon-annotation-status-none" />
+              {t('option.state.none')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateMarked"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Marked')}
+            >
+              <Icon glyph="icon-annotation-status-marked" />
+              {t('option.state.marked')}
+            </DataElementWrapper>
+            <DataElementWrapper
+              dataElement="notePopupStateUnmarked"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('Unmarked')}
+            >
+              <Icon glyph="icon-annotation-status-unmarked" />
+              {t('option.state.unmarked')}
+            </DataElementWrapper> */}
           </DataElementWrapper>
         </button>
       )}

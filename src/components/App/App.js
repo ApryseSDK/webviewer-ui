@@ -66,11 +66,7 @@ const propTypes = {
   coAssessor: PropTypes.array.isRequired,
 };
 
-const App = ({
-  removeEventHandlers,
-  coAssessor,
-  shareTypeColors = { assessors: '#8c71c1', participants: '#719ec1', all: '#7ec171', none: '#b2b3b3' },
-}) => {
+const App = ({ removeEventHandlers, coAssessor }) => {
   const store = useStore();
   const dispatch = useDispatch();
   let timeoutReturn;
@@ -173,7 +169,7 @@ const App = ({
             <SearchPanel />
           </RightPanel>
           <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
-            <NotesPanel shareTypeColors={shareTypeColors} />
+            <NotesPanel />
           </RightPanel>
         </div>
         <ViewControlsOverlay />
