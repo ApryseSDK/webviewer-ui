@@ -32,7 +32,7 @@
     font-weight: bold;
   }
 
-  .date-and-num-replies{
+  .date-and-num-replies {
     display: flex;
 
     .num-replies-container {
@@ -87,7 +87,8 @@
     height: 24px;
   }
 
-  .date-and-time {
+  .date-and-time,
+  .annotId {
     opacity: 0.8;
     font-size: 10px;
     @include mobile {
