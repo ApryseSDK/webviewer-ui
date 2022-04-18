@@ -247,7 +247,7 @@ const Note = ({ annotation }) => {
                   onClick={markAllRepliesRead}
                 />
               )}
-              {replies.map((reply, i) => (
+              {/* {replies.map((reply, i) => (
                 <div className="reply" id={`note_reply_${reply.Id}`} key={`note_reply_${reply.Id}`}>
                   <NoteContent
                     noteIndex={i + 1}
@@ -260,7 +260,7 @@ const Note = ({ annotation }) => {
                     isUnread={unreadAnnotationIdSet.has(reply.Id)}
                   />
                 </div>
-              ))}
+              ))} */}
             </div>
           )}
           {/* {showReplyArea && (
