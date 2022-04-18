@@ -14,10 +14,19 @@ const propTypes = {
   isSelected: PropTypes.bool,
   openOnInitialLoad: PropTypes.bool,
   handleStateChange: PropTypes.func,
+  setNotesShareType: PropTypes.func,
+  notesShareTypesMap: PropTypes.object,
 };
 
 function NoteState(props) {
-  const { annotation, isSelected = false, openOnInitialLoad = false, handleStateChange } = props;
+  const {
+    annotation,
+    isSelected = false,
+    openOnInitialLoad = false,
+    handleStateChange,
+    setNotesShareType,
+    notesShareTypesMap,
+  } = props;
 
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(openOnInitialLoad);
@@ -40,6 +49,7 @@ function NoteState(props) {
     return function onStateOptionButtonClick() {
       if (handleStateChange) {
         handleStateChange(state);
+        setNotesShareType(state, annotation.Id);
       }
     };
   }
@@ -105,63 +115,6 @@ function NoteState(props) {
               <Icon glyph="icon-colour-none" />
               {t('option.state.none')}
             </DataElementWrapper>
-
-            {/* <DataElementWrapper
-              dataElement="notePopupStateAccepted"
-              className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('Accepted')}
-            >
-              <Icon glyph="icon-annotation-status-accepted" />
-              {t('option.state.accepted')}
-            </DataElementWrapper>
-            <DataElementWrapper
-              dataElement="notePopupStateRejected"
-              className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('Rejected')}
-            >
-              <Icon glyph="icon-annotation-status-rejected" />
-              {t('option.state.rejected')}
-            </DataElementWrapper>
-            <DataElementWrapper
-              dataElement="notePopupStateCancelled"
-              className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('Cancelled')}
-            >
-              <Icon glyph="icon-annotation-status-cancelled" />
-              {t('option.state.cancelled')}
-            </DataElementWrapper>
-            <DataElementWrapper
-              dataElement="notePopupStateCompleted"
-              className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('Completed')}
-            >
-              <Icon glyph="icon-annotation-status-completed" />
-              {t('option.state.completed')}
-            </DataElementWrapper>
-            <DataElementWrapper
-              dataElement="notePopupStateNone"
-              className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('None')}
-            >
-              <Icon glyph="icon-annotation-status-none" />
-              {t('option.state.none')}
-            </DataElementWrapper>
-            <DataElementWrapper
-              dataElement="notePopupStateMarked"
-              className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('Marked')}
-            >
-              <Icon glyph="icon-annotation-status-marked" />
-              {t('option.state.marked')}
-            </DataElementWrapper>
-            <DataElementWrapper
-              dataElement="notePopupStateUnmarked"
-              className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('Unmarked')}
-            >
-              <Icon glyph="icon-annotation-status-unmarked" />
-              {t('option.state.unmarked')}
-            </DataElementWrapper> */}
           </DataElementWrapper>
         </button>
       )}

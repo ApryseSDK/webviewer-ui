@@ -21,7 +21,7 @@ import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import './FilterAnnotModal.scss';
 
-const FilterAnnotModal = ({ coAssessor }) => {
+const FilterAnnotModal = ({ coAssessor, notesShareTypesMap }) => {
   const [isDisabled, isOpen, colorMap] = useSelector(state => [
     selectors.isElementDisabled(state, 'filterModal'),
     selectors.isElementOpen(state, 'filterModal'),
@@ -104,7 +104,7 @@ const FilterAnnotModal = ({ coAssessor }) => {
         }
         if (statusFilter.length > 0) {
           if (annot.getStatus()) {
-            status = statusFilter.includes(annot.getStatus());
+            status = statusFilter.includes(notesShareTypesMap[annot.Id]);
           } else {
             status = statusFilter.includes('None');
           }
@@ -174,8 +174,8 @@ const FilterAnnotModal = ({ coAssessor }) => {
         annotColorsToBeAdded.add(rgbaToHex(iconColor.R, iconColor.G, iconColor.B, iconColor.A));
       }
 
-      if (annot.getStatus()) {
-        annotStatusesToBeAdded.add(annot.getStatus());
+      if (notesShareTypesMap[annot.Id]) {
+        annotStatusesToBeAdded.add(notesShareTypesMap[annot.Id]);
       }
     });
 

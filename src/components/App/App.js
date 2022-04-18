@@ -1,5 +1,5 @@
 import { hot } from 'react-hot-loader/root';
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -63,7 +63,7 @@ const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 9
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
-  coAssessor: PropTypes.array.isRequired,
+  // coAssessor: PropTypes.array.isRequired,
 };
 
 const App = ({ removeEventHandlers, coAssessor }) => {
@@ -72,7 +72,15 @@ const App = ({ removeEventHandlers, coAssessor }) => {
   let timeoutReturn;
 
   const [isInDesktopOnlyMode] = useSelector(state => [selectors.isInDesktopOnlyMode(state)]);
-
+  const [notesShareTypesMap, setNotesShareTypesMap] = useState([]);
+  console.log(`%c Notes Map`, 'color:red;font-family:system-ui;font-size:2rem;font-weight:bold');
+  console.log(notesShareTypesMap);
+  const setNotesShareType = useCallback(
+    (sharetype, index) => {
+      setNotesShareTypesMap(map => ({ ...map, [index]: sharetype }));
+    },
+    [setNotesShareTypesMap],
+  );
   useEffect(() => {
     fireEvent(Events.VIEWER_LOADED);
     window.parent.postMessage(
@@ -169,7 +177,7 @@ const App = ({ removeEventHandlers, coAssessor }) => {
             <SearchPanel />
           </RightPanel>
           <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
-            <NotesPanel />
+            <NotesPanel setNotesShareType={setNotesShareType} notesShareTypesMap={notesShareTypesMap} />
           </RightPanel>
         </div>
         <ViewControlsOverlay />
@@ -196,7 +204,7 @@ const App = ({ removeEventHandlers, coAssessor }) => {
         <PageReplacementModal />
         <LinkModal />
         <ContentEditModal />
-        <FilterAnnotModal coAssessor={[{ id: '1', 'name': 'John' }]} />
+        <FilterAnnotModal coAssessor={[{ id: '1', 'name': 'John' }]} notesShareTypesMap={notesShareTypesMap} />
         <CustomModal />
         <Model3DModal />
         <ColorPickerModal />
