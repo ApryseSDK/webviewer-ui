@@ -33,7 +33,6 @@ const NoteContent = ({
   annotation,
   isEditing,
   setIsEditing,
-  annotationId,
   share,
   noteIndex,
   onTextChange,
@@ -267,7 +266,6 @@ const NoteContent = ({
         noteIndex={noteIndex}
         sortStrategy={sortStrategy}
         headerBackgroundColor={headerBackgroundColor}
-        annotationId={annotationId}
         notesShareTypesMap={notesShareTypesMap}
         setNotesShareType={setNotesShareType}
       />

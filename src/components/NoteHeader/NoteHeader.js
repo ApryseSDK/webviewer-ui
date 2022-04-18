@@ -31,7 +31,6 @@ const propTypes = {
   isEditing: PropTypes.bool,
   noteIndex: PropTypes.number,
   sortStrategy: PropTypes.string,
-  annotationId: PropTypes.number,
   notesShareTypesMap: PropTypes.object,
   setNotesShareType: PropTypes.func,
 };
@@ -55,7 +54,6 @@ function NoteHeader(props) {
     noteIndex,
     sortStrategy,
     headerBackgroundColor,
-    annotationId,
     notesShareTypesMap,
     setNotesShareType,
   } = props;
@@ -105,7 +103,6 @@ function NoteHeader(props) {
                 isSelected={isSelected}
                 share={share}
                 noteIndex={noteIndex}
-                annotationId={annotationId}
                 notesShareTypesMap={notesShareTypesMap}
                 setNotesShareType={setNotesShareType}
               />

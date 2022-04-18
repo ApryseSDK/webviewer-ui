@@ -313,7 +313,6 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors, setNotesShareType,
           <Note
             annotation={currNote}
             shareTypeColors={shareTypeColors}
-            annotationId={currNote.Id}
             setNotesShareType={setNotesShareType}
             notesShareTypesMap={notesShareTypesMap}
           />

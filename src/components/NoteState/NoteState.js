@@ -17,7 +17,6 @@ const propTypes = {
   handleStateChange: PropTypes.func,
   share: PropTypes.object,
   noteIndex: PropTypes.number,
-  annotationId: PropTypes.number,
   notesShareTypesMap: PropTypes.object,
   setNotesShareType: PropTypes.func,
 };
@@ -52,7 +51,7 @@ function NoteState(props) {
     setIsOpen(false);
   }
   const getStatusIcon = () => {
-    switch (notesShareTypesMap[annotationId]) {
+    switch (notesShareTypesMap[annotation.Id]) {
       case 'Assessors':
         return 'icon-page-insertion-insert-above';
         break;
@@ -72,7 +71,7 @@ function NoteState(props) {
     return function onStateOptionButtonClick() {
       if (handleStateChange) {
         handleStateChange(state);
-        setNotesShareType(state, annotationId);
+        setNotesShareType(state, annotation.Id);
       }
     };
   }
