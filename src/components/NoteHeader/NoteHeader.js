@@ -10,9 +10,11 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
+import core from 'core';
 
 import './NoteHeader.scss';
 import Tooltip from '../Tooltip';
+import AnnotationStylePopupStories from '../AnnotationStylePopup/AnnotationStylePopup.stories';
 
 const propTypes = {
   icon: PropTypes.string,
@@ -67,10 +69,12 @@ function NoteHeader(props) {
   const noteHeaderClass = classNames('NoteHeader', { parent: !isReply });
 
   const pageNumber = annotation.getPageNumber();
-  const annotaionToolName = annotation.Subject;
+  const annotationList = core.getAnnotationsList();
+  const annotNumber =
+    annotationList?.filter(annot => annot.TD === pageNumber)?.findIndex(annot => annot.xy === annotation.Id) + 1;
 
-  const handleCopyAnnotId = async annotId => {
-    navigator.clipboard.writeText(annotId);
+  const handleCopyAnnotId = () => {
+    navigator.clipboard.writeText(`Page ${pageNumber}, annotation ${annotNumber}`);
     setCopyTooltip(t('action.copied'));
     setTimeout(() => {
       setCopyTooltip(t('action.copyText'));
@@ -101,9 +105,11 @@ function NoteHeader(props) {
               )}
             </div>
             <div className="annotId">
-              <span>ID: {annotation.Id.substring(0, 8) + '...'}</span>
-              <Tooltip content={`Page ${pageNumber} , ${annotaionToolName} Annotation (${copyTooltip})`}>
-                <div onClick={() => handleCopyAnnotId(annotation.Id)}>
+              <span>
+                Page {pageNumber} , Annotation {annotNumber}
+              </span>
+              <Tooltip content={copyTooltip}>
+                <div onClick={() => handleCopyAnnotId()}>
                   <Icon glyph="icon-header-page-manipulation-page-transition-reader" />
                 </div>
               </Tooltip>

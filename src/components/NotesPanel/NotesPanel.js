@@ -20,6 +20,7 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
+import { debounce } from 'lodash';
 
 import './NotesPanel.scss';
 
@@ -209,7 +210,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     _handleInputChange(e.target.value);
   };
 
-  const _handleInputChange = _.debounce(value => {
+  const _handleInputChange = debounce(value => {
     // this function is used to solve the issue with using synthetic event asynchronously.
     // https://reactjs.org/docs/events.html#event-pooling
     core.deselectAllAnnotations();
