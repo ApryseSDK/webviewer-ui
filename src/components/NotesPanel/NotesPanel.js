@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { debounce } from 'lodash';
 
 import VirtualizedList from 'components/NotesPanel/VirtualizedList';
 import NormalList from 'components/NotesPanel/NormalList';
@@ -21,7 +20,7 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
-
+import { debounce } from 'lodash';
 import './NotesPanel.scss';
 
 const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors, setNotesShareType, notesShareTypesMap }) => {
