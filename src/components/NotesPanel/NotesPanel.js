@@ -19,6 +19,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import { isIE } from 'helpers/device';
+import fireEvent from 'helpers/fireEvent';
 
 import './NotesPanel.scss';
 
@@ -226,6 +227,27 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     },
     [setPendingEditTextMap],
   );
+
+  // CUSTOM WISEFLOW unpostedAnnotationChanged event
+
+  // debounced callback to fire unpostedAnnotationsChanged event
+  const onUnpostedAnnotationChanged = useCallback(
+    debounce(pendingEditTextMap => {
+      const unpostedAnnotationsCount = Object.values(pendingEditTextMap).reduce((count, pendingText) => {
+        if (pendingText !== undefined) {
+          return count + 1;
+        }
+        return count;
+      }, 0);
+      fireEvent('unpostedAnnotationsChanged', { pendingEditTextMap, unpostedAnnotationsCount });
+    }, 200),
+    [],
+  );
+
+  // Throw event on changed to pendingEditTextMap
+  useEffect(() => onUnpostedAnnotationChanged(pendingEditTextMap), [pendingEditTextMap]);
+  
+  // CUSTOM WISEFLOW end
 
   const [pendingReplyMap, setPendingReplyMap] = useState({});
   const setPendingReply = useCallback(
