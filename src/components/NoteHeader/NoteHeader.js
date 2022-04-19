@@ -69,7 +69,7 @@ function NoteHeader(props) {
   const pageNumber = annotation.getPageNumber();
   const annotaionToolName = annotation.Subject;
 
-  const copyAnnotId = async annotId => {
+  const handleCopyAnnotId = async annotId => {
     navigator.clipboard.writeText(annotId);
     setCopyTooltip(t('action.copied'));
     setTimeout(() => {
@@ -100,10 +100,10 @@ function NoteHeader(props) {
                 </div>
               )}
             </div>
-            <div style={{ 'display': 'flex' }}>
-              <span className="annotId">ID: {annotation.Id.substring(0, 6) + '...'}</span>
-              <Tooltip content={`Page number ${pageNumber} , ${annotaionToolName} Annotation (${copyTooltip})`}>
-                <div onClick={() => copyAnnotId(annotation.Id)}>
+            <div className="annotId">
+              <span>ID: {annotation.Id.substring(0, 8) + '...'}</span>
+              <Tooltip content={`Page ${pageNumber} , ${annotaionToolName} Annotation (${copyTooltip})`}>
+                <div onClick={() => handleCopyAnnotId(annotation.Id)}>
                   <Icon glyph="icon-header-page-manipulation-page-transition-reader" />
                 </div>
               </Tooltip>

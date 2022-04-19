@@ -96,7 +96,12 @@
     }
     color: var(--faded-text);
   }
-
+  .annotId {
+    display: flex;
+    svg {
+      height: 13px;
+    }
+  }
   .author-name {
     font-weight: bold;
   }
