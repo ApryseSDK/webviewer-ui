@@ -53,7 +53,6 @@ function NoteHeader(props) {
     isEditing,
     noteIndex,
     sortStrategy,
-    headerBackgroundColor,
     notesShareTypesMap,
     setNotesShareType,
   } = props;
@@ -72,7 +71,7 @@ function NoteHeader(props) {
   const noteHeaderClass = classNames('NoteHeader', { parent: !isReply });
 
   return (
-    <div className={noteHeaderClass} style={{ backgroundColor: headerBackgroundColor }}>
+    <div className={noteHeaderClass}>
       {!isReply && (
         <div className="type-icon-container">
           {isUnread && <div className="unread-notification"></div>}

@@ -39,7 +39,6 @@ const NoteContent = ({
   isUnread,
   isNonReplyNoteRead,
   onReplyClicked,
-  headerBackgroundColor,
   notesShareTypesMap,
   setNotesShareType,
 }) => {
@@ -265,7 +264,6 @@ const NoteContent = ({
         isEditing={isEditing}
         noteIndex={noteIndex}
         sortStrategy={sortStrategy}
-        headerBackgroundColor={headerBackgroundColor}
         notesShareTypesMap={notesShareTypesMap}
         setNotesShareType={setNotesShareType}
       />

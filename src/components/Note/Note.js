@@ -241,7 +241,10 @@ const Note = ({ annotation, shareTypeColors, setNotesShareType, notesShareTypesM
       onClick={handleNoteClick}
       onKeyDown={handleNoteKeydown}
       id={`note_${annotation.Id}`}
-      style={{ borderBottom: `3px solid ${getAnnotaionStatusColor()}` }}
+      style={{
+        borderBottom: `4px solid ${getAnnotaionStatusColor()}`,
+        borderTop: `4px solid ${getAnnotaionStatusColor()}`,
+      }}
     >
       <NoteContent
         noteIndex={0}
@@ -254,7 +257,6 @@ const Note = ({ annotation, shareTypeColors, setNotesShareType, notesShareTypesM
         onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
-        headerBackgroundColor={getAnnotaionStatusColor()}
         notesShareTypesMap={notesShareTypesMap}
         setNotesShareType={setNotesShareType}
       />
