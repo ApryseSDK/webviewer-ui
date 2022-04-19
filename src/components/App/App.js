@@ -1,5 +1,5 @@
 import { hot } from 'react-hot-loader/root';
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -63,18 +63,21 @@ const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 9
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
-  // coAssessor: PropTypes.array.isRequired,
+  coAssessor: PropTypes.array,
 };
 
-const App = ({ removeEventHandlers, coAssessor }) => {
+const App = ({
+  removeEventHandlers,
+  // this colors are taken from flow-ui-react secondry light colors
+  shareTypeColors = { assessors: '#8c71c1', participants: '#719ec1', all: '#7ec171', none: '#b2b3b3' },
+  coAssessor
+}) => {
   const store = useStore();
   const dispatch = useDispatch();
   let timeoutReturn;
 
   const [isInDesktopOnlyMode] = useSelector(state => [selectors.isInDesktopOnlyMode(state)]);
   const [notesShareTypesMap, setNotesShareTypesMap] = useState([]);
-  console.log(`%c Notes Map`, 'color:red;font-family:system-ui;font-size:2rem;font-weight:bold');
-  console.log(notesShareTypesMap);
   const setNotesShareType = useCallback(
     (sharetype, index) => {
       setNotesShareTypesMap(map => ({ ...map, [index]: sharetype }));
@@ -177,7 +180,11 @@ const App = ({ removeEventHandlers, coAssessor }) => {
             <SearchPanel />
           </RightPanel>
           <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
-            <NotesPanel setNotesShareType={setNotesShareType} notesShareTypesMap={notesShareTypesMap} />
+            <NotesPanel
+              shareTypeColors={shareTypeColors}
+              setNotesShareType={setNotesShareType}
+              notesShareTypesMap={notesShareTypesMap}
+            />
           </RightPanel>
         </div>
         <ViewControlsOverlay />

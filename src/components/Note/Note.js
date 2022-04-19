@@ -23,7 +23,7 @@ const propTypes = {
 
 let currId = 0;
 
-const Note = ({ annotation, annotationId, setNotesShareType, notesShareTypesMap }) => {
+const Note = ({ annotation, shareTypeColors, setNotesShareType, notesShareTypesMap }) => {
   const {
     isSelected,
     resize,
@@ -37,6 +37,24 @@ const Note = ({ annotation, annotationId, setNotesShareType, notesShareTypesMap 
   const containerRef = useRef();
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
+  const [share, setShare] = useState({});
+  const getAnnotaionStatusColor = () => {
+    switch (notesShareTypesMap[annotation.Id]) {
+      case 'Assessors':
+        return shareTypeColors.assessors;
+        break;
+      case 'Participants':
+        return shareTypeColors.participants;
+        break;
+      case 'All':
+        return shareTypeColors.all;
+        break;
+      case 'None':
+      default:
+        return shareTypeColors.none;
+        break;
+    }
+  };
   const ids = useRef([]);
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -223,6 +241,10 @@ const Note = ({ annotation, annotationId, setNotesShareType, notesShareTypesMap 
       onClick={handleNoteClick}
       onKeyDown={handleNoteKeydown}
       id={`note_${annotation.Id}`}
+      style={{
+        borderBottom: `4px solid ${getAnnotaionStatusColor()}`,
+        borderTop: `4px solid ${getAnnotaionStatusColor()}`,
+      }}
     >
       <NoteContent
         noteIndex={0}
@@ -230,6 +252,7 @@ const Note = ({ annotation, annotationId, setNotesShareType, notesShareTypesMap 
         isSelected={isSelected}
         setIsEditing={setIsEditing}
         isEditing={isEditingMap[0]}
+        share={share}
         textAreaValue={pendingEditTextMap[annotation.Id]}
         onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}

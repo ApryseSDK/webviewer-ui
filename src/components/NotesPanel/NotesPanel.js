@@ -19,10 +19,12 @@ import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import { isIE } from 'helpers/device';
+import fireEvent from 'helpers/fireEvent';
+import { debounce } from 'lodash';
 
 import './NotesPanel.scss';
 
-const NotesPanel = ({ currentLeftPanelWidth, notesShareTypesMap, setNotesShareType }) => {
+const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors, setNotesShareType, notesShareTypesMap }) => {
   const [
     sortStrategy,
     isOpen,
@@ -53,7 +55,6 @@ const NotesPanel = ({ currentLeftPanelWidth, notesShareTypesMap, setNotesShareTy
 
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -218,7 +219,7 @@ const NotesPanel = ({ currentLeftPanelWidth, notesShareTypesMap, setNotesShareTy
     _handleInputChange(e.target.value);
   };
 
-  const _handleInputChange = _.debounce(value => {
+  const _handleInputChange = debounce(value => {
     // this function is used to solve the issue with using synthetic event asynchronously.
     // https://reactjs.org/docs/events.html#event-pooling
     core.deselectAllAnnotations();
@@ -236,6 +237,27 @@ const NotesPanel = ({ currentLeftPanelWidth, notesShareTypesMap, setNotesShareTy
     },
     [setPendingEditTextMap],
   );
+
+  // CUSTOM WISEFLOW unpostedAnnotationChanged event
+
+  // debounced callback to fire unpostedAnnotationsChanged event
+  const onUnpostedAnnotationChanged = useCallback(
+    debounce(pendingEditTextMap => {
+      const unpostedAnnotationsCount = Object.values(pendingEditTextMap).reduce((count, pendingText) => {
+        if (pendingText !== undefined) {
+          return count + 1;
+        }
+        return count;
+      }, 0);
+      fireEvent('unpostedAnnotationsChanged', { pendingEditTextMap, unpostedAnnotationsCount });
+    }, 200),
+    [],
+  );
+
+  // Throw event on changed to pendingEditTextMap
+  useEffect(() => onUnpostedAnnotationChanged(pendingEditTextMap), [pendingEditTextMap]);
+
+  // CUSTOM WISEFLOW end
 
   const [pendingReplyMap, setPendingReplyMap] = useState({});
   const setPendingReply = useCallback(
@@ -313,9 +335,9 @@ const NotesPanel = ({ currentLeftPanelWidth, notesShareTypesMap, setNotesShareTy
         <NoteContext.Provider value={contextValue}>
           <Note
             annotation={currNote}
+            shareTypeColors={shareTypeColors}
             setNotesShareType={setNotesShareType}
             notesShareTypesMap={notesShareTypesMap}
-            annotationId={currNote.Id}
           />
         </NoteContext.Provider>
       </div>

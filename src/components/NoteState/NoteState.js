@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import Tooltip from '../Tooltip';
 
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
@@ -14,8 +15,10 @@ const propTypes = {
   isSelected: PropTypes.bool,
   openOnInitialLoad: PropTypes.bool,
   handleStateChange: PropTypes.func,
-  setNotesShareType: PropTypes.func,
+  share: PropTypes.object,
+  noteIndex: PropTypes.number,
   notesShareTypesMap: PropTypes.object,
+  setNotesShareType: PropTypes.func,
 };
 
 function NoteState(props) {
@@ -24,8 +27,11 @@ function NoteState(props) {
     isSelected = false,
     openOnInitialLoad = false,
     handleStateChange,
-    setNotesShareType,
+    share,
+    noteIndex,
     notesShareTypesMap,
+    annotationId,
+    setNotesShareType,
   } = props;
 
   const [t] = useTranslation();
@@ -44,7 +50,23 @@ function NoteState(props) {
   function onStateOptionsButtonClick() {
     setIsOpen(false);
   }
-
+  const getStatusIcon = () => {
+    switch (notesShareTypesMap[annotation.Id]) {
+      case 'Assessors':
+        return 'icon-page-insertion-insert-above';
+        break;
+      case 'Participants':
+        return 'icon-tool-stamp-fill';
+        break;
+      case 'All':
+        return 'ic_annotation_apply_redact_black_24px';
+        break;
+      case 'None':
+      default:
+        return 'icon-annotation-status-none';
+        break;
+    }
+  };
   function createOnStateOptionButtonClickHandler(state) {
     return function onStateOptionButtonClick() {
       if (handleStateChange) {
@@ -71,12 +93,13 @@ function NoteState(props) {
   }
 
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
-
   return (
     <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
-      <div className={noteStateButtonClassName}>
-        <Icon glyph={icon} />
-      </div>
+      <Tooltip content={t('option.notesOrder.status')}>
+        <div className={noteStateButtonClassName}>
+          <Icon glyph={getStatusIcon()} />
+        </div>
+      </Tooltip>
       {isOpen && (
         <button className="note-state-options" onClick={onStateOptionsButtonClick}>
           <DataElementWrapper dataElement="notePopupState">
@@ -108,7 +131,7 @@ function NoteState(props) {
             </DataElementWrapper>
 
             <DataElementWrapper
-              dataElement="notePopupStateNone"
+              dataElement="notePopupStateAssessors"
               className="note-state-option"
               onClick={createOnStateOptionButtonClickHandler('None')}
             >

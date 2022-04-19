@@ -459,7 +459,7 @@ const ThumbnailsPanel = () => {
           const showPlaceHolder = allowDragAndDrop && draggingOverPageIndex === thumbIndex;
 
           return thumbIndex < totalPages ? (
-            <>
+            <React.Fragment key={thumbIndex}>
               {(numberOfColumns > 1 || thumbIndex === 0) && showPlaceHolder && isDraggingToPreviousPage && <div key={`placeholder1-${thumbIndex}`} className="thumbnailPlaceholder" />}
               <div key={thumbIndex} role="cell" onDragEnd={onDragEnd} className="cellThumbContainer">
                 <Thumbnail
@@ -479,7 +479,7 @@ const ThumbnailsPanel = () => {
                 />
               </div>
               {showPlaceHolder && !isDraggingToPreviousPage && <div key={`placeholder2-${thumbIndex}`} className="thumbnailPlaceholder" />}
-            </>
+            </React.Fragment>
           ) : null;
         })}
       </div>

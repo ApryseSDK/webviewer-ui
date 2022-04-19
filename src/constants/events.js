@@ -36,6 +36,7 @@
 
 export default {
   'ANNOTATION_FILTER_CHANGED': 'annotationFilterChanged',
+  'UNPOSTED_ANNOTATIONS_CHANGED': 'unpostedAnnotationsChanged',
   'DOCUMENT_LOADED': 'documentLoaded',
   'DOCUMENT_MERGED': 'documentMerged',
   'FILE_DOWNLOADED': 'fileDownloaded',
@@ -70,6 +71,16 @@ export default {
  * @property {string[]} authors Author filter
  * @property {string[]} colors Color filter
  * @property {string[]} statuses Status filter
+ */
+
+/**
+ * Triggered when number of unposted annotations are changed.
+ * Returns map of annotations with pending text edits.
+ * @name UI#unpostedAnnotationsChanged
+ * @event
+ * @type {object}
+ * @property {object} pendingEditTextMap Map of pending edit texts
+ * @property {number} unpostedAnnotationsCount Number of unposted annotations
  */
 
 /**
@@ -175,7 +186,12 @@ export default {
 * Triggered when outline bookmarks have changed.
 * @name UI#outlineBookmarksChanged
 * @event
-* @param {object} bookmark The changed bookmark
+* @param {object} bookmarkData
+* @param {object} bookmarkData.bookmark The changed bookmark
+* @param {string} bookmarkData.bookmark.id Changed outline bookmark id
+* @param {string} bookmarkData.bookmark.name Changed outline bookmark name
+* @param {string} bookmarkData.path Changed outline path in the outline tree
+* @param {string} bookmarkData.action The action that triggered the outline bookmarks change
 */
 
 /**

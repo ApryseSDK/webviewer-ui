@@ -33,6 +33,7 @@ const NoteContent = ({
   annotation,
   isEditing,
   setIsEditing,
+  share,
   noteIndex,
   onTextChange,
   isUnread,
@@ -51,7 +52,6 @@ const NoteContent = ({
     ],
     shallowEqual,
   );
-
   const { isSelected, searchInput, resize, pendingEditTextMap, onTopNoteContentClicked, sortStrategy } =
     useContext(NoteContext);
 
@@ -255,6 +255,7 @@ const NoteContent = ({
         noteDateFormat={noteDateFormat}
         isSelected={isSelected}
         setIsEditing={setIsEditing}
+        share={share}
         notesShowLastUpdatedDate={notesShowLastUpdatedDate}
         isReply={isReply}
         isUnread={isUnread}
