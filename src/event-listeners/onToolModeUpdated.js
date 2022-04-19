@@ -11,6 +11,12 @@ export default (dispatch, store) => (newTool, oldTool) => {
   dispatch(actions.setActiveToolNameAndStyle(newTool));
 
   const state = store.getState();
+  const activeToolGroup = selectors.getActiveToolGroup(state);
+  const isToolStylePopupOpen = selectors.isElementOpen(state, 'toolStylePopup');
+  // when current tool is signatureTools and we are on the process of selecting existed signature, we need to keep signatureTool and let toolStylePopup open
+  if (activeToolGroup === 'signatureTools' && isToolStylePopupOpen) {
+    return;
+  }
   const { group = '' } = selectors.getToolButtonObject(state, newTool.name);
   setActiveToolGroupAndToolsOverlay(store, group);
 };

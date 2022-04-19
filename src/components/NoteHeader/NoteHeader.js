@@ -26,6 +26,7 @@ const propTypes = {
   noteDateFormat: PropTypes.string,
   isSelected: PropTypes.bool,
   setIsEditing: PropTypes.func,
+  share: PropTypes.object,
   notesShowLastUpdatedDate: PropTypes.bool,
   isUnread: PropTypes.bool,
   renderAuthorName: PropTypes.func,
@@ -33,6 +34,8 @@ const propTypes = {
   isEditing: PropTypes.bool,
   noteIndex: PropTypes.number,
   sortStrategy: PropTypes.string,
+  notesShareTypesMap: PropTypes.object,
+  setNotesShareType: PropTypes.func,
 };
 
 function NoteHeader(props) {
@@ -44,6 +47,7 @@ function NoteHeader(props) {
     noteDateFormat,
     isSelected,
     setIsEditing,
+    share,
     notesShowLastUpdatedDate,
     isReply,
     isUnread,
@@ -52,6 +56,8 @@ function NoteHeader(props) {
     isEditing,
     noteIndex,
     sortStrategy,
+    notesShareTypesMap,
+    setNotesShareType,
   } = props;
 
   const [t] = useTranslation();
@@ -89,7 +95,7 @@ function NoteHeader(props) {
           <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
         </div>
       )}
-      <div className={authorAndDateClass}>
+      <div className={authorAndDateClass} style={{ paddingBottom: '6px' }}>
         <div className="author-and-overflow">
           <div className="author-and-time">
             <div className="author">{renderAuthorName(annotation)}</div>
@@ -118,7 +124,16 @@ function NoteHeader(props) {
 
           <div className="state-and-overflow">
             <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
-            {!isNoteStateDisabled && !isReply && <NoteState annotation={annotation} isSelected={isSelected} />}
+            {!isNoteStateDisabled && !isReply && (
+              <NoteState
+                annotation={annotation}
+                isSelected={isSelected}
+                share={share}
+                noteIndex={noteIndex}
+                notesShareTypesMap={notesShareTypesMap}
+                setNotesShareType={setNotesShareType}
+              />
+            )}
             {!isEditing && isSelected && (
               <NotePopup noteIndex={noteIndex} annotation={annotation} setIsEditing={setIsEditing} isReply={isReply} />
             )}
