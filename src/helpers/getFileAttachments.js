@@ -17,7 +17,7 @@ export async function getFileAttachments() {
       // Traverse the list of embedded files.
       const fileItr = await files.getIteratorBegin();
       for (let counter = 0; await fileItr.hasNext(); await fileItr.next(), ++counter) {
-        const filesIteratorValue =  await fileItr.value();
+        const filesIteratorValue = await fileItr.value();
         const fileObject = await filesIteratorValue.get('F');
         const fileData = await fileObject.value();
         const filename = await fileData.getAsPDFText();

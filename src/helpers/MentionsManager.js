@@ -183,6 +183,7 @@ class MentionsManager {
     //   plainTextValue: Hello! Zhijie Zhang,
     //   ids: ['zzhang@pdftron.com'],
     // }
+    // eslint-disable-next-line no-cond-assign
     while ((match = markupRegex.exec(str)) !== null) {
       const [wholeMatch, displayName, id] = match;
 
@@ -216,9 +217,9 @@ class MentionsManager {
 
     if (mentionData === '') {
       return result;
-    } else {
-      mentionData = JSON.parse(mentionData);
     }
+
+    mentionData = JSON.parse(mentionData);
 
     userData.forEach(user => {
       if (mentionData.ids.includes(user.id) && this.isValidMention(contents, user.value)) {
@@ -273,6 +274,8 @@ class MentionsManager {
     annotation.addReply(replyAnnot);
 
     core.addAnnotations([replyAnnot]);
+
+    return replyAnnot;
   }
 
   /**

@@ -170,6 +170,7 @@ import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHan
 import overrideSearchExecution from './overrideSearchExecution';
 import reactElements from './reactElements';
 import { addTrustedCertificates, loadTrustList } from './verificationOptions';
+import { enableTextCollapse, disableTextCollapse, enableReplyCollapse, disableReplyCollapse } from './notesPanel';
 import toggleReaderMode from './toggleReaderMode';
 import toggleElementVisibility from './toggleElementVisibility';
 import setAnnotationReadState from './setAnnotationReadState';
@@ -315,6 +316,12 @@ export default store => {
       addTrustedCertificates: addTrustedCertificates(store),
       loadTrustList: loadTrustList(store),
     },
+    NotesPanel: {
+      enableTextCollapse: enableTextCollapse(store),
+      disableTextCollapse: disableTextCollapse(store),
+      enableReplyCollapse: enableReplyCollapse(store),
+      disableReplyCollapse: disableReplyCollapse(store),
+    },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
     disableAnnotations: disableAnnotations(store),
@@ -383,7 +390,7 @@ export default store => {
     getAvailableLanguages,
     replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
 
-    //deprecated, to be removed in 8.0
+    // deprecated, to be removed in 8.0
     useNativeScroll,
     showErrorMessage: showErrorMessage(store),
     toggleElement: toggleElement(store),
@@ -391,7 +398,7 @@ export default store => {
     setHighContrastMode: setHighContrastMode(store),
     getIsHighContrastMode: getIsHighContrastMode(store),
 
-    //deprecated, to be removed in 9.0
+    // deprecated, to be removed in 9.0
     updateOutlines: updateOutlines(store),
 
     // undocumented

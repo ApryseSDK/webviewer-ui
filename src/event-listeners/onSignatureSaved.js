@@ -20,4 +20,3 @@ export default (dispatch, store) => async () => {
   const signaturesToStore = await getSignatureDataToStore(savedSignatures);
   dispatch(actions.setSavedSignatures(signaturesToStore));
 };
-

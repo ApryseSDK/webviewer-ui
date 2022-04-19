@@ -93,7 +93,6 @@ const extractPages = (pageNumbers, dispatch) => {
 };
 
 const deletePages = (pageNumbers, dispatch, isModalEnabled = true) => {
-
   if (isModalEnabled) {
     let message = i18next.t('warning.deletePage.deleteMessage');
     const title = i18next.t('warning.deletePage.deleteTitle');

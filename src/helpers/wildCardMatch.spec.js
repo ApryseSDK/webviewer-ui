@@ -2,8 +2,8 @@ import wildCardMatch from './wildCardMatch';
 
 const wildCards = ['google.com', 'pdftron.com', 'amazon*.com', '*baidu.cn', 'ali*baba.cn', 'apple.*', '*l.com'];
 const sildCardStar = ['*'];
-describe('wild card match function', () => {
 
+describe('wild card match function', () => {
   it('should match everything!!', () => {
     let count = wildCardMatch(sildCardStar, 'google.com');
     expect(count).toEqual(1);

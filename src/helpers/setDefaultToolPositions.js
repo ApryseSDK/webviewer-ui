@@ -10,7 +10,7 @@ const setDefaultToolPositions = store => {
 
   Object.keys(toolModeMap).forEach(toolName => {
     try {
-      const position = parseInt(localStorage.getItem(`toolPosition-${toolName}`));
+      const position = parseInt(localStorage.getItem(`toolPosition-${toolName}`), 10);
       if (Number.isInteger(position)) {
         positions.push({ toolName, position });
       }

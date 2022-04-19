@@ -21,7 +21,7 @@ const TabManagerAPI = {
   },
   /**
    * Set the currently open tab in the UI
-   * @method UI.TabManager#setActiveTab
+   * @method UI.TabManager.setActiveTab
    * @param tabId {number} The tab id to set as the current tab
    * @param [saveCurrent] {boolean} Whether to save the current tab state before switching to the new tab (default: true)
    * @returns {Promise<void>} Resolves when the tab is loaded
@@ -36,7 +36,7 @@ const TabManagerAPI = {
   },
   /**
    * Delete a tab by id in the UI
-   * @method UI.TabManager#deleteTab
+   * @method UI.TabManager.deleteTab
    * @param tabId {number} The tab id to be deleted from the tab header
    * @returns {void}
    * @example
@@ -50,7 +50,7 @@ const TabManagerAPI = {
   },
   /**
    * Add a new tab to the UI
-   * @method UI.TabManager#addTab
+   * @method UI.TabManager.addTab
    * @param {(string|File|Blob|Core.Document|Core.PDFNet.PDFDoc)} src The source of the tab to be added (e.g. a URL, a blob, ArrayBuffer, or a File)
    * @param {UI.loadDocumentOptions} [options] The options for the tab to be added
    * @param {boolean} [options.load] Whether to load the tab immediately after adding it (default: true)
@@ -63,11 +63,11 @@ const TabManagerAPI = {
    */
   async addTab(src, options) {
     const tabManager = selectors.getTabManager(this.store.getState());
-    return await tabManager.addTab(src, options);
+    return tabManager.addTab(src, options);
   },
   /**
    * Get the currently active tab id
-   * @method UI.TabManager#getActiveTab
+   * @method UI.TabManager.getActiveTab
    * @returns {object} The current tab with the following properties: { id: Number, options: Object, src: string|Blob|File|ArrayBuffer }
    */
   getActiveTab() {
@@ -83,7 +83,7 @@ const TabManagerAPI = {
   },
   /**
    * Get all the tabs from the UI
-   * @method UI.TabManager#getTabs
+   * @method UI.TabManager.getTabs
    * @returns {Array<Object>} Array of tab objects containing the following properties: { id: Number, options: Object, src: string|Blob|File|ArrayBuffer }
    */
   getAllTabs() {

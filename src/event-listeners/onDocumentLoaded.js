@@ -85,7 +85,7 @@ export default store => async () => {
   }
 
   const docType = doc.getType();
-  if (docType === workerTypes.PDF || (docType  === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
+  if (docType === workerTypes.PDF || (docType === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
     dispatch(actions.enableElement('cropToolGroupButton', PRIORITY_ONE));
     dispatch(actions.enableElement('contentEditButton', PRIORITY_ONE));
   } else {
@@ -108,9 +108,12 @@ export default store => async () => {
       }
     };
 
-    docViewer.addEventListener('documentUnloaded',documentUnloadedHandler, { 'once': true });
+    docViewer.addEventListener('documentUnloaded', documentUnloadedHandler, { 'once': true });
     checkIfDocumentClosed();
     const pdfDoc = await docViewer.getDocument().getPDFDoc();
+    if (!pdfDoc) {
+      return;
+    }
 
     PDFNet.initialize().then(() => {
       const main = async () => {

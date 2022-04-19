@@ -7,7 +7,7 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import { workerTypes } from 'constants/types';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
-import { isSafari, isChromeOniOS } from 'helpers/device';
+import { isSafari, isChromeOniOS, isFirefoxOniOS } from 'helpers/device';
 import core from 'core';
 
 let pendingCanvases = [];
@@ -153,10 +153,161 @@ export const printPages = pages => {
 
   printHandler.appendChild(fragment);
 
-  if (isSafari && !isChromeOniOS) {
+  if (isSafari && !(isChromeOniOS || isFirefoxOniOS)) {
     // Print for Safari browser. Makes Safari 11 consistently work.
     document.execCommand('print');
   } else {
+    // It looks like both Chrome and Firefox (on iOS) use the top window as target for window.print instead of the frame where it was triggered,
+    // so we need to teleport the print handler div to the top parent and inject some CSS to make it print nicely.
+    // This can be removed when Chrome and Firefox for iOS respect the origin frame as the actual target for window.print
+    if (isChromeOniOS || isFirefoxOniOS) {
+      if (window.parent.document.getElementById('print-handler')) {
+        window.parent.document.getElementById('print-handler').remove();
+      }
+      window.parent.document.body.appendChild(printHandler.cloneNode(true));
+
+      if (!window.parent.document.getElementById('print-handler-css')) {
+        const style = window.parent.document.createElement('style');
+        style.id = 'print-handler-css';
+
+        style.textContent = `
+          #print-handler {
+            display: none;
+          }
+
+          @media print {
+            * {
+              display: none! important;
+            }
+
+            html {
+              height: 100%;
+              display: block! important;
+            }
+
+            body {
+              height: 100%;
+              display: block! important;
+              overflow: visible !important;
+              padding: 0;
+            }
+
+            #print-handler {
+              display: block !important;
+              height: 100%;
+              padding: 0;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              position: absolute;
+            }
+
+            #print-handler img {
+              display: block !important;
+              max-width: 100%;
+              max-height: 100%;
+              height: 100%;
+              width: 100%;
+              object-fit: contain;
+              page-break-after: always;
+              padding: 0;
+              margin: 0;
+            }
+
+            #print-handler .page__container {
+              box-sizing: border-box;
+              display: flex !important;
+              flex-direction: column;
+              padding: 10px;
+              min-height: 100%;
+              min-width: 100%;
+              font-size: 10px;
+            }
+
+            #print-handler .page__container .page__header {
+              display: block !important;
+              align-self: flex-start;
+              font-size: 2rem;
+              margin-bottom: 2rem;
+              padding-bottom: 0.6rem;
+              border-bottom: 0.1rem solid black;
+            }
+
+            #print-handler .page__container .note {
+              display: flex !important;
+              flex-direction: column;
+              padding: 0.6rem;
+              border: 0.1rem lightgray solid;
+              border-radius: 0.4rem;
+              margin-bottom: 0.5rem;
+            }
+
+            #print-handler .page__container .note .note__info {
+              display: block !important;
+              font-size: 1.3rem;
+              margin-bottom: 0.1rem;
+            }
+
+            #print-handler .page__container .note .note__info--with-icon {
+              display: flex !important;
+            }
+
+            #print-handler .page__container .note .note__info--with-icon .note__icon {
+              display: block !important;
+              width: 1.65rem;
+              height: 1.65rem;
+              margin-top: -0.1rem;
+              margin-right: 0.2rem;
+            }
+
+            #print-handler .page__container .note .note__info--with-icon .note__icon path:not([fill=none]) {
+              display: block !important;
+              fill: currentColor;
+            }
+
+            #print-handler .page__container .note .note__root .note__content {
+              display: block !important;
+              margin-left: 0.3rem;
+            }
+
+            #print-handler .page__container .note .note__root {
+              display: block !important;
+            }
+
+            #print-handler .page__container .note .note__info--with-icon .note__icon svg {
+              display: block !important;
+            }
+
+            #print-handler .page__container .note .note__reply {
+              display: block !important;
+              margin: 0.5rem 0 0 2rem;
+            }
+
+            #print-handler .page__container .note .note__content {
+              display: block !important;
+              font-size: 1.2rem;
+              margin-top: 0.1rem;
+            }
+
+            #app {
+              overflow: visible !important;
+            }
+
+            .App {
+              display: none !important;
+            }
+
+            html, body, #app {
+              max-width: none !important;
+            }
+          }
+      `;
+
+        window.parent.document.head.appendChild(style);
+      }
+    }
+
     window.print();
   }
 };
@@ -329,7 +480,6 @@ const positionCanvas = (canvas, pageIndex) => {
         ctx.rotate((270 * Math.PI) / 180);
         break;
     }
-
   } else if (!window.utils.isPdfjs) {
     switch (documentRotation) {
       case 1:

@@ -39,7 +39,7 @@ export default class TabManager {
     this.useDB = !this.store.getState().advanced.disableIndexedDB;
     docArr.forEach((doc, index) => {
       const extension = extensionArr && isString(doc) ? extensionArr[extensionArr.length > 1 ? index : 0] : undefined;
-      let filename =   `Document ${tabs.length + 1}`;
+      let filename = `Document ${tabs.length + 1}`;
       if (isString(doc)) {
         filename = doc.substring(doc.lastIndexOf('/') + 1);
       } else if (doc instanceof window.Core.Document && doc.getFilename && doc.getFilename()) {
@@ -160,8 +160,8 @@ export default class TabManager {
   }
 
   listenForAnnotChanges() {
-    const { tabs, activeTab } = this.store.getState().viewer;
     const onAnnotChange = () => {
+      const { tabs, activeTab } = this.store.getState().viewer;
       const tab = tabs.find(t => t.id === activeTab);
       tab.changes.annotations = true;
     };
@@ -177,6 +177,7 @@ export default class TabManager {
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
   }
 
+  // eslint-disable-next-line generator-star-spacing
   *[Symbol.iterator]() {
     const { tabs } = this.store.getState().viewer;
     for (const tab of tabs) {
@@ -262,7 +263,7 @@ export class Tab {
     this.disabled = true;
     this.savePageData();
     const document = core.getDocument();
-    if (this.useDB && document?.type === workerTypes.PDF && document.doc?.arePagesAltered) {
+    if (this.useDB && document?.type === workerTypes.PDF && document.arePagesAltered()) {
       await this.saveFileData(db, document);
     } else if (this.useDB) {
       this.changes.annotations && await this.saveAnnotDataInDB(db);
@@ -317,7 +318,7 @@ export class Tab {
     const updateScroll = async () => {
       await core.getDocument().getDocumentCompletePromise();
       docContainer.scrollTop = this.saveData.scrollTop;
-      docContainer.scrollLeft =  this.saveData.scrollLeft;
+      docContainer.scrollLeft = this.saveData.scrollLeft;
     };
     const updateZoom = async () => {
       await core.getDocument().getDocumentCompletePromise();
