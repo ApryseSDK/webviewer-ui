@@ -54,17 +54,13 @@ function NoteState(props) {
     switch (notesShareTypesMap[annotation.Id]) {
       case 'Assessors':
         return 'icon-page-insertion-insert-above';
-        break;
       case 'Participants':
         return 'icon-tool-stamp-fill';
-        break;
       case 'All':
         return 'ic_annotation_apply_redact_black_24px';
-        break;
       case 'None':
       default:
         return 'icon-annotation-status-none';
-        break;
     }
   };
   function createOnStateOptionButtonClickHandler(state) {
