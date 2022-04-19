@@ -93,8 +93,6 @@ function NoteState(props) {
   }
 
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
-  console.log(share);
-  console.log(`%c${annotationId}`, 'color:orange;font-family:system-ui;font-size:2rem;font-weight:bold');
   return (
     <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
       <Tooltip content={t('option.notesOrder.status')}>

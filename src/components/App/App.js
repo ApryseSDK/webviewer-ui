@@ -77,8 +77,6 @@ const App = ({
 
   const [isInDesktopOnlyMode] = useSelector(state => [selectors.isInDesktopOnlyMode(state)]);
   const [notesShareTypesMap, setNotesShareTypesMap] = useState([]);
-  console.log(`%c Notes Map`, 'color:red;font-family:system-ui;font-size:2rem;font-weight:bold');
-  console.log(notesShareTypesMap);
   const setNotesShareType = useCallback(
     (sharetype, index) => {
       setNotesShareTypesMap(map => ({ ...map, [index]: sharetype }));

@@ -232,8 +232,6 @@ const Note = ({ annotation, shareTypeColors, setNotesShareType, notesShareTypesM
 
   //apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
-  // console.log(`%c${share}`, 'color:orange;font-family:system-ui;font-size:2rem;font-weight:bold');
-  console.log(share);
   return (
     <div
       role="button"
