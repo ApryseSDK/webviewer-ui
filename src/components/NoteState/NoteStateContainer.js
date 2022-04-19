@@ -40,13 +40,20 @@ function NoteStateContainer(props) {
   const [t] = useTranslation();
   const { annotation } = props;
 
-  const handleStateChange = React.useCallback(function handleStateChangeCallback(newValue) {
-    const stateAnnotation = createStateAnnotation(t, annotation, newValue);
-    annotation.addReply(stateAnnotation);
-    const annotationManager = core.getAnnotationManager();
-    annotationManager.addAnnotation(stateAnnotation);
-    annotationManager.trigger('addReply', [stateAnnotation, annotation, annotationManager.getRootAnnotation(annotation)]);
-  }, [annotation]);
+  const handleStateChange = React.useCallback(
+    function handleStateChangeCallback(newValue) {
+      const stateAnnotation = createStateAnnotation(t, annotation, newValue);
+      annotation.addReply(stateAnnotation);
+      const annotationManager = core.getAnnotationManager();
+      annotationManager.addAnnotation(stateAnnotation);
+      annotationManager.trigger('addReply', [
+        stateAnnotation,
+        annotation,
+        annotationManager.getRootAnnotation(annotation),
+      ]);
+    },
+    [annotation],
+  );
 
   return (
     <div>

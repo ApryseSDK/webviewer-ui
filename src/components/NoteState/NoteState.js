@@ -15,10 +15,24 @@ const propTypes = {
   isSelected: PropTypes.bool,
   openOnInitialLoad: PropTypes.bool,
   handleStateChange: PropTypes.func,
+  share: PropTypes.object,
+  noteIndex: PropTypes.number,
+  notesShareTypesMap: PropTypes.object,
+  setNotesShareType: PropTypes.func,
 };
 
 function NoteState(props) {
-  const { annotation, isSelected = false, openOnInitialLoad = false, handleStateChange } = props;
+  const {
+    annotation,
+    isSelected = false,
+    openOnInitialLoad = false,
+    handleStateChange,
+    share,
+    noteIndex,
+    notesShareTypesMap,
+    annotationId,
+    setNotesShareType,
+  } = props;
 
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(openOnInitialLoad);
@@ -37,25 +51,23 @@ function NoteState(props) {
     setIsOpen(false);
   }
   const getStatusIcon = () => {
-    switch (annotationState) {
+    switch (notesShareTypesMap[annotation.Id]) {
       case 'Assessors':
         return 'icon-page-insertion-insert-above';
-        break;
       case 'Participants':
         return 'icon-tool-stamp-fill';
-        break;
       case 'All':
         return 'ic_annotation_apply_redact_black_24px';
-        break;
+      case 'None':
       default:
         return 'icon-annotation-status-none';
-        break;
     }
   };
   function createOnStateOptionButtonClickHandler(state) {
     return function onStateOptionButtonClick() {
       if (handleStateChange) {
         handleStateChange(state);
+        setNotesShareType(state, annotation.Id);
       }
     };
   }

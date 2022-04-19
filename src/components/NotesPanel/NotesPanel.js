@@ -21,10 +21,11 @@ import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
+import { debounce } from 'lodash';
 
 import './NotesPanel.scss';
 
-const NotesPanel = ({ currentLeftPanelWidth }) => {
+const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors, setNotesShareType, notesShareTypesMap }) => {
   const [
     sortStrategy,
     isOpen,
@@ -55,7 +56,6 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
 
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -334,7 +334,12 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       <div role="listitem" className="note-wrapper">
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
-          <Note annotation={currNote} />
+          <Note
+            annotation={currNote}
+            shareTypeColors={shareTypeColors}
+            setNotesShareType={setNotesShareType}
+            notesShareTypesMap={notesShareTypesMap}
+          />
         </NoteContext.Provider>
       </div>
     );
