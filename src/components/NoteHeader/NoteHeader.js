@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import NotePopup from 'components/NotePopup';
 import NoteState from 'components/NoteState';
@@ -10,8 +10,11 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
+import core from 'core';
 
 import './NoteHeader.scss';
+import Tooltip from '../Tooltip';
+import AnnotationStylePopupStories from '../AnnotationStylePopup/AnnotationStylePopup.stories';
 
 const propTypes = {
   icon: PropTypes.string,
@@ -58,6 +61,7 @@ function NoteHeader(props) {
   } = props;
 
   const [t] = useTranslation();
+  const [copyTooltip, setCopyTooltip] = useState(t('action.copyText'));
   const date =
     sortStrategy === NotesPanelSortStrategy.MODIFIED_DATE ||
     (notesShowLastUpdatedDate && sortStrategy !== NotesPanelSortStrategy.CREATED_DATE)
@@ -69,6 +73,19 @@ function NoteHeader(props) {
 
   const authorAndDateClass = classNames('author-and-date', { isReply });
   const noteHeaderClass = classNames('NoteHeader', { parent: !isReply });
+
+  const pageNumber = annotation.getPageNumber();
+  const annotationList = core.getAnnotationsList();
+  const annotNumber =
+    annotationList?.filter(annot => annot.TD === pageNumber)?.findIndex(annot => annot.xy === annotation.Id) + 1;
+
+  const handleCopyAnnotId = () => {
+    navigator.clipboard.writeText(`Page ${pageNumber}, annotation ${annotNumber}`);
+    setCopyTooltip(t('action.copied'));
+    setTimeout(() => {
+      setCopyTooltip(t('action.copyText'));
+    }, 3000);
+  };
 
   return (
     <div className={noteHeaderClass}>
@@ -93,7 +110,18 @@ function NoteHeader(props) {
                 </div>
               )}
             </div>
+            <div className="annotId">
+              <span>
+                Page {pageNumber} , annotation {annotNumber}
+              </span>
+              <Tooltip content={copyTooltip}>
+                <div onClick={() => handleCopyAnnotId()}>
+                  <Icon glyph="icon-header-page-manipulation-page-transition-reader" />
+                </div>
+              </Tooltip>
+            </div>
           </div>
+
           <div className="state-and-overflow">
             <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
             {!isNoteStateDisabled && !isReply && (
