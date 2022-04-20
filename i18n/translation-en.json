@@ -270,7 +270,8 @@
       "type": "Type",
       "color": "Color",
       "createdDate": "Created Date",
-      "modifiedDate": "Modified Date"
+      "modifiedDate": "Modified Date",
+      "shareType": "Share type"
     },
     "toolbarGroup": {
       "dropdownLabel": "Toolbar Groups",
@@ -380,9 +381,12 @@
     },
     "filterAnnotModal": {
       "commentBy": "Comment by",
-      "types": "Types",
+      "types": "Annotation types",
       "color": "Color",
-      "includeReplies": "Include Replies"
+      "includeReplies": "Include Replies",
+      "shareType": "Share type",
+      "coAssessor": "Co-assessor",
+      "author": "Author"
     },
     "status": {
       "status": "Status"
@@ -397,9 +401,9 @@
       "none": "None",
       "marked": "Marked",
       "unmarked": "Unmarked",
-      "all": "All",
       "assessors": "Assessors",
-      "participants": "Participants"
+      "participants": "Participants",
+      "all": "All"
     },
     "measurementOverlay": {
       "scale": "Scale Ratio",

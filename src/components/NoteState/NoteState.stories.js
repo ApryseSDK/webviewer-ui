@@ -69,7 +69,7 @@ export function PopupOpen() {
       }}
     >
       <NoteState
-        annotation={getAnnotationWithStatus('Accepted')}
+        annotation={getAnnotationWithStatus('Private')}
         isSelected={false}
         openOnInitialLoad
         handleStateChange={handleStateChange}

@@ -91,7 +91,7 @@ function NoteState(props) {
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
   return (
     <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
-      <Tooltip content={t('option.notesOrder.status')}>
+      <Tooltip content={t('option.notesOrder.shareType')}>
         <div className={noteStateButtonClassName}>
           <Icon glyph={getStatusIcon()} />
         </div>
@@ -100,21 +100,14 @@ function NoteState(props) {
         <button className="note-state-options" onClick={onStateOptionsButtonClick}>
           <DataElementWrapper dataElement="notePopupState">
             <DataElementWrapper
-              dataElement="notePopupStateNone"
-              className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('None')}
-            >
-              <Icon glyph="icon-colour-none" />
-              {t('option.state.none')}
-            </DataElementWrapper>
-            <DataElementWrapper
-              dataElement="notePopupStateAssessors"
+              dataElement="notePopupState-assessor"
               className="note-state-option"
               onClick={createOnStateOptionButtonClickHandler('Assessors')}
             >
               <Icon glyph="icon-page-insertion-insert-above" />
               {t('option.state.assessors')}
             </DataElementWrapper>
+
             <DataElementWrapper
               dataElement="notePopupStateParticipants"
               className="note-state-option"
@@ -123,6 +116,7 @@ function NoteState(props) {
               <Icon glyph="icon-tool-stamp-fill" />
               {t('option.state.participants')}
             </DataElementWrapper>
+
             <DataElementWrapper
               dataElement="notePopupStateAll"
               className="note-state-option"
@@ -130,6 +124,15 @@ function NoteState(props) {
             >
               <Icon glyph="ic_annotation_apply_redact_black_24px" />
               {t('option.state.all')}
+            </DataElementWrapper>
+
+            <DataElementWrapper
+              dataElement="notePopupStateAssessors"
+              className="note-state-option"
+              onClick={createOnStateOptionButtonClickHandler('None')}
+            >
+              <Icon glyph="icon-colour-none" />
+              {t('option.state.none')}
             </DataElementWrapper>
           </DataElementWrapper>
         </button>

@@ -65,7 +65,8 @@
           flex-direction: column;
 
           .heading {
-            font-size: 15px;
+            font-size: 16px;
+            font-weight: bold;
             @include mobile {
               font-size: 18px;
             }
@@ -130,16 +131,20 @@
           font-weight: 600;
         }
 
-        .filter-annot-clear {
-          color: var(--secondary-button-text);
-          background: none;
+        .filter-annot-clear,
+        .filter-annot-cancel {
+          // color: var(--secondary-button-text);
+          background: #b2b3b3;
 
           &:hover {
-            color: var(--secondary-button-hover);
-            background: none;
+            //color: var(--secondary-button-hover);
+            background: #686969;
           }
         }
       }
+    }
+    .ui__choice__input__check {
+      border-radius: 4px !important;
     }
   }
 }
