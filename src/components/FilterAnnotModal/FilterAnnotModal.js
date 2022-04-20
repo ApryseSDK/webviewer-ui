@@ -294,11 +294,6 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap, shareTypeColors }) =
   };
 
   const renderStatusTypes = () => {
-    // Hide status filter if there is only on status type
-    if (statuses.length === 0) {
-      return null;
-    }
-
     return (
       <div className="filter">
         <div className="heading">{t('option.filterAnnotModal.shareType')}</div>
@@ -313,8 +308,9 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap, shareTypeColors }) =
                   <div
                     style={{
                       backgroundColor: `${shareTypeColors[val.toLocaleLowerCase()]}`,
-                      padding: `5px`,
+                      padding: `5px 10px`,
                       borderRadius: `5px`,
+                      color: `#fff`,
                     }}
                   >
                     {t(`option.state.${val.toLocaleLowerCase()}`)}
