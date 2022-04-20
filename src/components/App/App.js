@@ -211,7 +211,11 @@ const App = ({
         <PageReplacementModal />
         <LinkModal />
         <ContentEditModal />
-        <FilterAnnotModal coAssessor={coAssessor} notesShareTypesMap={notesShareTypesMap} />
+        <FilterAnnotModal
+          coAssessor={coAssessor}
+          notesShareTypesMap={notesShareTypesMap}
+          shareTypeColors={shareTypeColors}
+        />
         <CustomModal />
         <Model3DModal />
         <ColorPickerModal />
