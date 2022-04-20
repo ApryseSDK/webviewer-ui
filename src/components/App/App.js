@@ -63,14 +63,14 @@ const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 9
 
 const propTypes = {
   removeEventHandlers: PropTypes.func.isRequired,
-  coAssessor: PropTypes.array,
+  coAssessors: PropTypes.array,
 };
 
 const App = ({
   removeEventHandlers,
   // this colors are taken from flow-ui-react secondry light colors
   shareTypeColors = { assessors: '#8c71c1', participants: '#719ec1', all: '#7ec171', none: '#b2b3b3' },
-  coAssessor,
+  coAssessors,
 }) => {
   const store = useStore();
   const dispatch = useDispatch();
@@ -212,7 +212,7 @@ const App = ({
         <LinkModal />
         <ContentEditModal />
         <FilterAnnotModal
-          coAssessor={coAssessor}
+          coAssessors={coAssessors}
           notesShareTypesMap={notesShareTypesMap}
           shareTypeColors={shareTypeColors}
         />

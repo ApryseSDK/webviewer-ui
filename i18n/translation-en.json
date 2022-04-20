@@ -381,11 +381,11 @@
     },
     "filterAnnotModal": {
       "commentBy": "Comment by",
-      "types": "Annotaion types",
+      "types": "Annotation types",
       "color": "Color",
       "includeReplies": "Include Replies",
       "shareType": "Share type",
-      "coAssessor": "CoAssessor",
+      "coAssessor": "Co-assessor",
       "author": "Author"
     },
     "status": {

@@ -20,8 +20,9 @@ import { Swipeable } from 'react-swipeable';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import './FilterAnnotModal.scss';
+import getDisplayAuthor from 'src/core/getDisplayAuthor';
 
-const FilterAnnotModal = ({ coAssessor, notesShareTypesMap, shareTypeColors }) => {
+const FilterAnnotModal = ({ coAssessors, notesShareTypesMap, shareTypeColors }) => {
   const [isDisabled, isOpen, colorMap] = useSelector(state => [
     selectors.isElementDisabled(state, 'filterModal'),
     selectors.isElementOpen(state, 'filterModal'),
@@ -200,7 +201,7 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap, shareTypeColors }) =
               <Choice
                 type="checkbox"
                 key={index}
-                label={val === core.getCurrentUser() && 'You'}
+                label={getDisplayAuthor(val)}
                 checked={authorFilter.includes(val)}
                 id={val}
                 onChange={e => {
@@ -333,12 +334,12 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap, shareTypeColors }) =
   };
 
   const renderCoAssessors = () => {
-    if (!coAssessor) return null;
+    if (!coAssessors) return null;
     return (
       <div className="filter">
         <div className="heading">{t('option.filterAnnotModal.coAssessor')}</div>
         <div className="buttons">
-          {[...coAssessor].map((val, index) => {
+          {[...coAssessors].map((val, index) => {
             return (
               <Choice
                 type="checkbox"

@@ -1,1 +1,1 @@
-export const shareTypes = ['Assessors', 'Participants', 'All', 'None', 'Accepted'];
+export const shareTypes = ['Assessors', 'Participants', 'All', 'None'];
