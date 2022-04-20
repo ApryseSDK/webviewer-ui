@@ -384,7 +384,7 @@
       "types": "Annotaion types",
       "color": "Color",
       "includeReplies": "Include Replies",
-      "shareTypes": "Share types",
+      "shareType": "Share type",
       "coAssessor": "CoAssessor",
       "author": "Author"
     },

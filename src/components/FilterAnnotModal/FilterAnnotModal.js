@@ -33,7 +33,7 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap }) => {
   const [authors, setAuthors] = useState([]);
   const [annotTypes, setAnnotTypes] = useState([]);
   const [colors, setColorTypes] = useState([]);
-  const [statuses, setStatusTypes] = useState([]);
+  const [statuses, setStatusTypes] = useState(['Participants', 'Assessors', 'All', 'None']);
 
   const [authorFilter, setAuthorFilter] = useState([]);
   const [typesFilter, setTypesFilter] = useState([]);
@@ -182,7 +182,7 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap }) => {
     setAuthors([...authorsToBeAdded]);
     setAnnotTypes([...annotTypesToBeAdded]);
     setColorTypes([...annotColorsToBeAdded]);
-    setStatusTypes([...annotStatusesToBeAdded]);
+    //setStatusTypes([...annotStatusesToBeAdded]);
 
     core.addEventListener('documentUnloaded', closeModal);
     return () => {
@@ -191,7 +191,6 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap }) => {
   }, [isOpen]);
 
   const renderAuthors = () => {
-    console.log('someInfo', core.getDisplayAuthor());
     return (
       <div className="filter">
         <div className="heading">{t('option.filterAnnotModal.author')}</div>
@@ -302,7 +301,7 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap }) => {
 
     return (
       <div className="filter">
-        <div className="heading">{t('option.filterAnnotModal.shareTypes')}</div>
+        <div className="heading">{t('option.filterAnnotModal.shareType')}</div>
         <div className="buttons">
           {[...statuses].map((val, index) => {
             return (
@@ -379,6 +378,7 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap }) => {
                   {renderCoAssessors()}
                 </div>
                 <div className="footer">
+                  <Button className="filter-annot-cancel" onClick={closeModal} label={t('action.cancel')} />
                   <Button className="filter-annot-clear" onClick={filterClear} label={t('action.clear')} />
                   <Button className="filter-annot-apply" onClick={filterApply} label={t('action.apply')} />
                 </div>

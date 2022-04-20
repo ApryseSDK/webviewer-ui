@@ -130,13 +130,14 @@
           font-weight: 600;
         }
 
-        .filter-annot-clear {
-          color: var(--secondary-button-text);
-          background: none;
+        .filter-annot-clear,
+        .filter-annot-cancel {
+         // color: var(--secondary-button-text);
+          background: #b2b3b3;
 
           &:hover {
-            color: var(--secondary-button-hover);
-            background: none;
+            //color: var(--secondary-button-hover);
+            background: #686969;
           }
         }
       }
