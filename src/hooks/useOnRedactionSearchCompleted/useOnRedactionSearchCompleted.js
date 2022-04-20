@@ -1,77 +1,46 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import core from 'core';
-import { redactionTypeMap } from '../../components/RedactionPageGroup/RedactionItem/RedactionItem';
+import { redactionTypeMap } from 'constants/redactionTypes';
 import SearchStatus from 'constants/searchStatus';
-
-function createRegexesFromSearchPatterns(regexes) {
-  const patternLabels = Object.keys(regexes);
-  const searchPatternsWithRegex = {};
-
-  patternLabels.forEach(label => {
-    const { regexString, type } = regexes[label];
-    const regex = new RegExp(regexString);
-    searchPatternsWithRegex[label] = {
-      regex,
-      type,
-    };
-  });
-
-  return searchPatternsWithRegex;
-};
 
 function useOnRedactionSearchCompleted() {
 
   const [searchStatus, setSearchStatus] = useState(SearchStatus['SEARCH_NOT_INITIATED']);
   const [redactionSearchResults, setRedactionSearchResults] = useState([]);
   const [isProcessingRedactionResults, setIsProcessingRedactionResults] = useState(false);
-  const [
-    creditCardsPattern,
-    phoneNumbersPattern,
-    emailsPattern,
-  ] = useSelector(
-    state => [
-      selectors.getRedactionSearchPattern(state, 'creditCards'),
-      selectors.getRedactionSearchPattern(state, 'phoneNumbers'),
-      selectors.getRedactionSearchPattern(state, 'emails'),
-    ]
-  );
+  const redactionSearchPatterns = useSelector(state => selectors.getRedactionSearchPatterns(state), shallowEqual);
 
-  const searchPatterns = {
-    creditCard: {
-      regexString: creditCardsPattern,
-      type: redactionTypeMap['CREDIT_CARD']
-    },
-    phone: {
-      regexString: phoneNumbersPattern,
-      type: redactionTypeMap['PHONE']
-    },
-    email: {
-      regexString: emailsPattern,
-      type: redactionTypeMap['EMAIL']
-    }
-  };
-
-  // We memoize this because it is expensive to create the regexes every time we map over the search results to find out what type it is
-  const searchPatternsWithRegex = useMemo(() => createRegexesFromSearchPatterns(searchPatterns),
-    [creditCardsPattern, phoneNumbersPattern, emailsPattern]);
+  const searchPatterns = useMemo(() => {
+    return Object.keys(redactionSearchPatterns).reduce((map, key) => {
+      const { regex, type, icon } = redactionSearchPatterns[key];
+      map[type] = {
+        regex,
+        icon
+      };
+      return map;
+    }, {})
+  }, [redactionSearchPatterns]);
 
   const mapResultToType = useCallback((result) => {
     // Iterate through the patterns and return the first match
     const { resultStr } = result;
-    const searchPatterns = Object.keys(searchPatternsWithRegex);
+    const searchPatternKeys = Object.keys(searchPatterns);
 
-    const resultType = searchPatterns.find(searchPattern => {
-      const { regex } = searchPatternsWithRegex[searchPattern];
+    const resultType = searchPatternKeys.find(key => {
+      const { regex } = searchPatterns[key];
       return regex.test(resultStr);
     });
 
     // If it didn't match any of the patterns, return the default type which is text
     result.type = resultType === undefined ? redactionTypeMap['TEXT'] : resultType;
+    // And also set the icon to display in the panel. If no icon provided use the text icon
+    const { icon = 'icon-form-field-text' } = searchPatterns[result.type] || {};
+    result.icon = icon;
     return result;
 
-  }, [searchPatternsWithRegex]);//Dependency is an object but it is memoized so it will not re-create unless the patterns change
+  }, [searchPatterns]);//Dependency is an object but it is memoized so it will not re-create unless the patterns change
 
   const clearRedactionSearchResults = useCallback(() => {
     setRedactionSearchResults([]);

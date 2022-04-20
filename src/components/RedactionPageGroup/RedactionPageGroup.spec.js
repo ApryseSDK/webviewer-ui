@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import RedactionPageGroup from './RedactionPageGroup';
 import { Basic } from './RedactionPageGroup.stories'
 import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
+import { redactionTypeMap } from 'constants/redactionTypes';
 
 jest.mock('core', () => ({
   getDisplayAuthor: () => 'Duncan Idaho'
@@ -47,8 +48,8 @@ describe('RedactionPageGroup', () => {
   });
 
   it('renders the correct number of redaction items and page number', () => {
-    const textRedaction = getMockRedactionAnnotation();
-    const regionRedaction = getMockRedactionAnnotation({ isText: false });
+    const textRedaction = getMockRedactionAnnotation({ redactionType: redactionTypeMap['TEXT'] });
+    const regionRedaction = getMockRedactionAnnotation({ redactionType: redactionTypeMap['REGION'] });
     const redactionItems = [textRedaction, regionRedaction];
     const props = {
       pageNumber: 1,
@@ -62,8 +63,8 @@ describe('RedactionPageGroup', () => {
   });
 
   it('when I click on the chevron it collapses and expands the page group items', () => {
-    const textRedaction = getMockRedactionAnnotation();
-    const regionRedaction = getMockRedactionAnnotation({ isText: false });
+    const textRedaction = getMockRedactionAnnotation({ redactionType: redactionTypeMap['TEXT'] });
+    const regionRedaction = getMockRedactionAnnotation({ redactionType: redactionTypeMap['REGION'] });
     const redactionItems = [textRedaction, regionRedaction];
     const props = {
       pageNumber: 1,

@@ -4,7 +4,7 @@ import { saveAs } from 'file-saver';
 import actions from 'actions';
 import i18next from 'i18next';
 import { workerTypes } from 'constants/types';
-import { redactionTypeMap } from 'components/RedactionPageGroup/RedactionItem/RedactionItem';
+import { redactionTypeMap } from 'constants/redactionTypes';
 
 const getNewRotation = (curr, counter_clockwise = false) => {
   const { e_0, e_90, e_180, e_270 } = window.Core.PageRotation;

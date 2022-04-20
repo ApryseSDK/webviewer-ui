@@ -195,6 +195,8 @@ import Fonts from 'src/apis/fonts';
 import TabManagerAPI from './TabManagerAPI';
 import getAvailableLanguages from './getAvailableLanguages';
 import replaceRedactionSearchPattern from './replaceRedactionSearchPattern';
+import addRedactionSearchPattern from './addRedactionSearchPattern';
+import removeRedactionSearchPattern from './removeRedactionSearchPattern';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -389,6 +391,8 @@ export default store => {
     TabManager: TabManagerAPI(store),
     getAvailableLanguages,
     replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
+    addRedactionSearchPattern: addRedactionSearchPattern(store),
+    removeRedactionSearchPattern: removeRedactionSearchPattern(store),
 
     // deprecated, to be removed in 8.0
     useNativeScroll,

@@ -4,36 +4,32 @@ import core from 'core';
 
 
 function multiSearch(store) {
-  return function multiSearch({
-    textSearch = [],
-    creditCards = false,
-    phoneNumbers = false,
-    emails = false,
-    // images = false, Will not be included for first release
-  }) {
+  return function multiSearch(searchTerms) {
     const { getState } = store;
     const state = getState();
-    const creditCardPattern = selectors.getRedactionSearchPattern(state, 'creditCards');
-    const phoneNumbersPattern = selectors.getRedactionSearchPattern(state, 'phoneNumbers');
-    const emailsPattern = selectors.getRedactionSearchPattern(state, 'emails');
+    const redactionSearchPatterns = selectors.getRedactionSearchPatterns(state);
+    // collect all regexes into an array
+    const searchOptionsMap = Object.keys(redactionSearchPatterns).reduce((map, key) => {
+      const { regex, type } = redactionSearchPatterns[key];
+      map[type] = regex;
+      return map;
+    }, {});
+
+
     const options = {
       regex: true,
     };
 
+    const { textSearch } = searchTerms;
     const searchArray = [...textSearch];
 
-    // Core search expects the pattern to be a string, so we use the source property of the regex to get it
-    if (creditCards) {
-      searchArray.push(creditCardPattern.source);
-    }
-
-    if (phoneNumbers) {
-      searchArray.push(phoneNumbersPattern.source);
-    }
-
-    if (emails) {
-      searchArray.push(emailsPattern.source);
-    }
+    // Now we can map type to regex
+    Object.keys(searchTerms).forEach(searchType => {
+      const searchRegex = searchOptionsMap[searchType];
+      if (searchRegex) {
+        searchArray.push(searchRegex.source);
+      }
+    });
 
     const searchString = searchArray.join('|');
 

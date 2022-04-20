@@ -157,6 +157,14 @@ export const isNoteSubmissionWithEnterEnabled = state => {
   return state.viewer.enableNoteSubmissionWithEnter;
 };
 
+export const isNotesPanelTextCollapsingEnabled = state => {
+  return state.viewer.isNotesPanelTextCollapsingEnabled;
+};
+
+export const isNotesPanelRepliesCollapsingEnabled = state => {
+  return state.viewer.isNotesPanelRepliesCollapsingEnabled;
+};
+
 export const getActiveToolNamesForActiveToolGroup = state => {
   const { activeToolGroup } = state.viewer;
   const toolButtonObjects = getToolButtonObjects(state);
@@ -396,7 +404,7 @@ export const isRegex = state => state.search.isRegex;
 
 export const isProcessingSearchResults = state => state.search.isProcessingSearchResults;
 
-export const getRedactionSearchPattern = (state, pattern) => state.search.redactionSearchPatterns[pattern];
+export const getRedactionSearchPatterns = state => state.search.redactionSearchPatterns;
 
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
 

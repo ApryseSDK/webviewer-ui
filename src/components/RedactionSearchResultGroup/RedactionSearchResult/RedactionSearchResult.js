@@ -3,22 +3,7 @@ import { Choice } from '@pdftron/webviewer-react-toolkit';
 import Icon from 'components/Icon'
 import './RedactionSearchResult.scss'
 import classNames from 'classnames';
-import { redactionTypeMap } from 'components/RedactionPageGroup/RedactionItem/RedactionItem';
-
-const mapRedactionSearchTypeToIcon = (type) => {
-  switch (type) {
-    case redactionTypeMap['TEXT']:
-      return 'icon-form-field-text';
-    case redactionTypeMap['CREDIT_CARD']:
-      return 'redact-icons-credit-card';
-    case redactionTypeMap['PHONE']:
-      return 'redact-icons-phone-number';
-    case redactionTypeMap['IMAGE']:
-      return 'redact-icons-image';
-    case redactionTypeMap['EMAIL']:
-      return 'redact-icons-email';
-  };
-};
+import { redactionTypeMap } from 'constants/redactionTypes';
 
 // Alternatively wrap this in useCallback and declare inside component
 const displayRedactionSearchResult = (props) => {
@@ -41,15 +26,14 @@ const displayRedactionSearchResult = (props) => {
 
 const RedactionSearchResult = (props) => {
   const {
-    type,
     isChecked,
     onChange,
     onClickResult,
     isActive,
+    icon,
   } = props;
-  const icon = mapRedactionSearchTypeToIcon(type);
-  const displayResult = displayRedactionSearchResult(props);
 
+  const displayResult = displayRedactionSearchResult(props);
   const searchResultClassname = classNames('redaction-search-result', { active: isActive });
 
   return (

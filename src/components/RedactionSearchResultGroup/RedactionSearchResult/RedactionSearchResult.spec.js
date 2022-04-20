@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { redactionTypeMap } from 'components/RedactionPageGroup/RedactionItem/RedactionItem';
+import { redactionTypeMap } from 'constants/redactionTypes';
 import userEvent from '@testing-library/user-event';
 import RedactionSearchResult from './RedactionSearchResult';
 
@@ -11,8 +11,6 @@ import {
   PhoneNumber,
   Email,
 } from './RedactionSearchResult.stories';
-
-function noop() { };
 
 
 describe('RedactionSearchResult', () => {

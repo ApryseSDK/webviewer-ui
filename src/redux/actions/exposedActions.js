@@ -549,6 +549,16 @@ export const setNoteSubmissionEnabledWithEnter = enableNoteSubmissionWithEnter =
   payload: { enableNoteSubmissionWithEnter },
 });
 
+export const setNotesPanelTextCollapsing = enableNotesPanelTextCollapsing => ({
+  type: 'SET_NOTES_PANEL_TEXT_COLLAPSING',
+  payload: { enableNotesPanelTextCollapsing },
+});
+
+export const setNotesPanelRepliesCollapsing = enableNotesPanelRepliesCollapsing => ({
+  type: 'SET_NOTES_PANEL_REPLIES_COLLAPSING',
+  payload: { enableNotesPanelRepliesCollapsing },
+});
+
 export const enableFadePageNavigationComponent = () => ({
   type: 'SET_FADE_PAGE_NAVIGATION_COMPONENT',
   payload: { fadePageNavigationComponent: true },
@@ -577,4 +587,14 @@ export const setWatermarkModalOptions = watermarkModalOptions => ({
 export const replaceRedactionSearchPattern = (searchPattern, regex) => ({
   type: 'REPLACE_REDACTION_SEARCH_PATTERN',
   payload: { searchPattern, regex }
+});
+
+export const addRedactionSearchPattern = (searchPattern) => ({
+  type: 'ADD_REDACTION_SEARCH_PATTERN',
+  payload: { searchPattern }
+});
+
+export const removeRedactionSearchPattern = (searchPatternType) => ({
+  type: 'REMOVE_REDACTION_SEARCH_PATTERN',
+  payload: { searchPatternType }
 });

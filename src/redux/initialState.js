@@ -14,6 +14,7 @@ import getHashParameters from 'helpers/getHashParameters';
 import localStorageManager from 'helpers/localStorageManager';
 import defaultFonts from 'constants/defaultFonts';
 import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
+import { redactionTypeMap } from 'constants/redactionTypes';
 
 const { ToolNames } = window.Core.Tools;
 
@@ -535,6 +536,8 @@ export default {
     allowPageNavigation: true,
     enableToolGroupReordering: true,
     enableNoteSubmissionWithEnter: false,
+    isNotesPanelTextCollapsingEnabled: true,
+    isNotesPanelRepliesCollapsingEnabled: true,
     enableMouseWheelZoom: true,
     doesAutoLoad: getHashParameters('auto_load', true),
     isReadOnly: getHashParameters('readonly', false),
@@ -592,9 +595,24 @@ export default {
     clearSearchPanelOnClose: false,
     results: [],
     redactionSearchPatterns: {
-      creditCards: '\\b(?:\\d[ -]*?){13,16}\\b',
-      phoneNumbers: '\\d?(\\s?|-?|\\+?|\\.?)((\\(\\d{1,4}\\))|(\\d{1,3})|\\s?)(\\s?|-?|\\.?)((\\(\\d{1,3}\\))|(\\d{1,3})|\\s?)(\\s?|-?|\\.?)((\\(\\d{1,3}\\))|(\\d{1,3})|\\s?)(\\s?|-?|\\.?)\\d{3}(-|\\.|\\s)\\d{4,5}',
-      emails: '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b',
+      creditCards: {
+        label: 'redactionPanel.search.creditCards',
+        icon: 'redact-icons-credit-card',
+        type: redactionTypeMap['CREDIT_CARD'],
+        regex: /\b(?:\d[ -]*?){13,16}\b/,
+      },
+      phoneNumbers: {
+        label: 'redactionPanel.search.phoneNumbers',
+        icon: 'redact-icons-phone-number',
+        type: redactionTypeMap['PHONE'],
+        regex: /\d?(\s?|-?|\+?|\.?)((\(\d{1,4}\))|(\d{1,3})|\s?)(\s?|-?|\.?)((\(\d{1,3}\))|(\d{1,3})|\s?)(\s?|-?|\.?)((\(\d{1,3}\))|(\d{1,3})|\s?)(\s?|-?|\.?)\d{3}(-|\.|\s)\d{4,5}/,
+      },
+      emails: {
+        label: 'redactionPanel.search.emails',
+        icon: 'redact-icons-email',
+        type: redactionTypeMap['EMAIL'],
+        regex: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b/,
+      },
     }
   },
   document: {

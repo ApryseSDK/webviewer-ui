@@ -4,15 +4,30 @@ import { renderHook } from '@testing-library/react-hooks';
 import useOnRedactionSearchCompleted from './useOnRedactionSearchCompleted';
 import core from 'core';
 import { act } from 'react-dom/test-utils';
-import { redactionTypeMap } from '../../components/RedactionPageGroup/RedactionItem/RedactionItem';
+import { redactionTypeMap } from 'constants/redactionTypes';
 
 jest.mock('core');
 
 //These patterns will be used for the tests
-const patterns = {
-  creditCards: '\\b(?:\\d[ -]*?){13,16}\\b',
-  phoneNumbers: '\\d?(\\s?|-?|\\+?|\\.?)((\\(\\d{1,4}\\))|(\\d{1,3})|\\s?)(\\s?|-?|\\.?)((\\(\\d{1,3}\\))|(\\d{1,3})|\\s?)(\\s?|-?|\\.?)((\\(\\d{1,3}\\))|(\\d{1,3})|\\s?)(\\s?|-?|\\.?)\\d{3}(-|\\.|\\s)\\d{4,5}',
-  emails: '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b',
+const redactionSearchPatterns = {
+  creditCards: {
+    label: 'redactionPanel.search.creditCards',
+    icon: 'redact-icons-credit-card',
+    type: redactionTypeMap['CREDIT_CARD'],
+    regex: /\b(?:\d[ -]*?){13,16}\b/,
+  },
+  phoneNumbers: {
+    label: 'redactionPanel.search.phoneNumbers',
+    icon: 'redact-icons-phone-number',
+    type: redactionTypeMap['PHONE'],
+    regex: /\d?(\s?|-?|\+?|\.?)((\(\d{1,4}\))|(\d{1,3})|\s?)(\s?|-?|\.?)((\(\d{1,3}\))|(\d{1,3})|\s?)(\s?|-?|\.?)((\(\d{1,3}\))|(\d{1,3})|\s?)(\s?|-?|\.?)\d{3}(-|\.|\s)\d{4,5}/,
+  },
+  emails: {
+    label: 'redactionPanel.search.emails',
+    icon: 'redact-icons-email',
+    type: redactionTypeMap['EMAIL'],
+    regex: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b/,
+  },
 };
 
 const mockSearchResults = [
@@ -49,6 +64,8 @@ const wrapper = withProviders(MockComponent)
 describe('useOnRedactionSearchCompleted hook', () => {
   it('adds event listeners to searchResultsChanged and searchInProgress', () => {
     core.addEventListener = jest.fn();
+    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
+    useSelectorMock.mockReturnValue(redactionSearchPatterns);
 
     const { result } = renderHook(() => useOnRedactionSearchCompleted(), { wrapper });
 
@@ -61,6 +78,8 @@ describe('useOnRedactionSearchCompleted hook', () => {
 
   it('removes event listeners to searchResultsChanged and searchInProgress when unmounted', () => {
     core.removeEventListener = jest.fn();
+    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
+    useSelectorMock.mockReturnValue(redactionSearchPatterns);
 
     const { result, unmount } = renderHook(() => useOnRedactionSearchCompleted(), { wrapper });
 
@@ -81,11 +100,7 @@ describe('useOnRedactionSearchCompleted hook', () => {
     };
 
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockReturnValue([
-      patterns.creditCards,
-      patterns.phoneNumbers,
-      patterns.emails
-    ]);
+    useSelectorMock.mockReturnValue(redactionSearchPatterns);
 
 
     const { result } = renderHook(() => useOnRedactionSearchCompleted(), { wrapper });

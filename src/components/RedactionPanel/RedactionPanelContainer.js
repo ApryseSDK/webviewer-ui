@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import RedactionPanel from './RedactionPanel';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
@@ -11,6 +11,7 @@ import useMedia from 'hooks/useMedia';
 import DataElementWrapper from '../DataElementWrapper';
 import Icon from 'components/Icon'
 import RedactionSearchPanel from 'components/RedactionSearchPanel';
+import { defaultRedactionTypes } from 'constants/redactionTypes';
 
 export const RedactionPanelContainer = () => {
   const [
@@ -18,14 +19,15 @@ export const RedactionPanelContainer = () => {
     isDisabled,
     redactionPanelWidth,
     isInDesktopOnlyMode,
+    redactionSearchPatterns,
   ] = useSelector(
     state => [
       selectors.isElementOpen(state, 'redactionPanel'),
       selectors.isElementDisabled(state, 'redactionPanel'),
       selectors.getRedactionPanelWidth(state),
       selectors.isInDesktopOnlyMode(state),
-    ]
-  );
+      selectors.getRedactionSearchPatterns(state),
+    ], shallowEqual);
 
   const isMobile = useMedia(
     // Media queries
@@ -36,6 +38,19 @@ export const RedactionPanelContainer = () => {
   );
 
   const redactionAnnotationsList = useOnRedactionAnnotationChanged();
+
+  const redactionTypesDictionary = useMemo(() => {
+    const storedRedactionTypes = Object.keys(redactionSearchPatterns).reduce((map, key) => {
+      const { label, type, icon } = redactionSearchPatterns[key];
+      map[type] = {
+        label,
+        icon
+      };
+      return map;
+    }, {})
+
+    return { ...storedRedactionTypes, ...defaultRedactionTypes };
+  }, [redactionSearchPatterns]);
 
   const deleteAllRedactionAnnotations = () => {
     core.deleteAnnotations(redactionAnnotationsList);
@@ -76,6 +91,7 @@ export const RedactionPanelContainer = () => {
   } else {
     return (
       <DataElementWrapper
+        dataElement="redactionPanel"
         className="Panel RedactionPanel"
         style={style}
       >
@@ -84,6 +100,7 @@ export const RedactionPanelContainer = () => {
         {!isRedactionSearchActive &&
           <RedactionPanel
             redactionAnnotations={redactionAnnotationsList}
+            redactionTypesDictionary={redactionTypesDictionary}
             applyAllRedactions={applyAllRedactions}
             deleteAllRedactionAnnotations={deleteAllRedactionAnnotations} />}
       </DataElementWrapper>

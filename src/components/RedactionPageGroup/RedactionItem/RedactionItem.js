@@ -7,70 +7,7 @@ import Button from 'components/Button';
 import './RedactionItem.scss';
 import RedactionTextPreview from 'components/RedactionTextPreview';
 import classNames from 'classnames';
-
-export const redactionTypeMap = {
-  REGION: 'region',
-  TEXT: 'text',
-  FULL_PAGE: 'fullPage',
-  CREDIT_CARD: 'creditCard',
-  PHONE: 'phone',
-  IMAGE: 'image',
-  EMAIL: 'email',
-};
-
-const mapAnnotationToRedactionType = (annotation) => {
-  const isTextRedaction = annotation.IsText;
-  if (isTextRedaction) {
-    return redactionTypeMap['TEXT'];
-  }
-
-  const { type } = annotation;
-  return type ? type : 'region';
-};
-
-const mapRedactionAnnotationToProperties = (annotation) => {
-  const redactionType = mapAnnotationToRedactionType(annotation);
-  switch (redactionType) {
-    case redactionTypeMap['REGION']:
-      return {
-        redactionType,
-        icon: 'icon-tool-redaction-area',
-        name: 'redactionPanel.redactionItem.regionRedaction',
-      };
-    case redactionTypeMap['FULL_PAGE']:
-      return {
-        redactionType,
-        icon: 'icon-header-page-manipulation-page-transition-page-by-page-line',
-        name: 'redactionPanel.redactionItem.fullPageRedaction',
-      };
-    case redactionTypeMap['TEXT']:
-      return {
-        redactionType,
-        icon: 'icon-form-field-text',
-      };
-    case redactionTypeMap['CREDIT_CARD']:
-      return {
-        redactionType,
-        icon: 'redact-icons-credit-card',
-      };
-    case redactionTypeMap['PHONE']:
-      return {
-        redactionType,
-        icon: 'redact-icons-phone-number',
-      };
-    case redactionTypeMap['IMAGE']:
-      return {
-        redactionType,
-        icon: 'redact-icons-image',
-        name: 'redactionPanel.redactionItem.image',
-      };
-    case redactionTypeMap['EMAIL']:
-      return {
-        redactionType,
-        icon: 'redact-icons-email',
-      };
-  };
-};
+import { redactionTypeMap } from 'constants/redactionTypes';
 
 const RedactionItem = (props) => {
   const {
@@ -90,7 +27,11 @@ const RedactionItem = (props) => {
   const formattedDate = date ? dayjs(date).locale(language).format(dateFormat) : t('option.notesPanel.noteContent.noDate');
   const dateAndAuthor = `${author} - ${formattedDate}`;
   const className = classNames('redaction-item', { selected: isSelected });
-  const { redactionType, name, icon } = mapRedactionAnnotationToProperties(annotation);
+  const {
+    label,
+    icon = 'icon-form-field-text',// Default icon if none provided
+    redactionType
+  } = annotation;
 
   let redactionPreview;
   if (redactionType === redactionTypeMap['TEXT']) {
@@ -99,7 +40,7 @@ const RedactionItem = (props) => {
         {textPreview}
       </RedactionTextPreview>)
   } else if (redactionType === redactionTypeMap['FULL_PAGE'] || redactionType === redactionTypeMap['REGION']) {
-    redactionPreview = t(name);
+    redactionPreview = t(label);
   } else {
     redactionPreview = annotation.getContents();
   }
