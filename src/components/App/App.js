@@ -89,7 +89,8 @@ const App = ({ removeEventHandlers }) => {
     function loadInitialDocument() {
       const doesAutoLoad = getHashParameters('auto_load', true);
       let initialDoc = getHashParameters('d', '');
-      initialDoc = initialDoc.split(',');
+      initialDoc = initialDoc ? JSON.parse(initialDoc) : "";
+      initialDoc = Array.isArray(initialDoc) ? initialDoc : [initialDoc];
       const isMultiDoc = initialDoc.length > 1;
       const startOffline = getHashParameters('startOffline', false);
       const basePath = getHashParameters('basePath', "");
