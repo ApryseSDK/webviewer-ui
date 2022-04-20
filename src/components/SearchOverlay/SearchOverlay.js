@@ -148,6 +148,7 @@ function SearchOverlay(props) {
           placeholder={t('message.searchDocumentPlaceholder')}
           aria-label={t('message.searchDocumentPlaceholder')}
           id="SearchPanel__input"
+          tabIndex={isPanelOpen ? 0 : -1}
         />
         {(searchValue !== undefined) && searchValue.length > 0 && (
             <button
@@ -167,6 +168,7 @@ function SearchOverlay(props) {
           checked={isCaseSensitive}
           onChange={caseSensitiveSearchOptionOnChange}
           label={t('option.searchPanel.caseSensitive')}
+          tabIndex={isPanelOpen ? 0 : -1}
         />
         <Choice
           dataElement="wholeWordSearchOption"
@@ -174,6 +176,7 @@ function SearchOverlay(props) {
           checked={isWholeWord}
           onChange={wholeWordSearchOptionOnChange}
           label={t('option.searchPanel.wholeWordOnly')}
+          tabIndex={isPanelOpen ? 0 : -1}
         />
         <Choice
           dataElement="wildCardSearchOption"
@@ -181,6 +184,7 @@ function SearchOverlay(props) {
           checked={isWildcard}
           onChange={wildcardOptionOnChange}
           label={t('option.searchPanel.wildcard')}
+          tabIndex={isPanelOpen ? 0 : -1}
         />
       </div>
       <div className="divider" />

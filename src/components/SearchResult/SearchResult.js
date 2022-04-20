@@ -148,6 +148,7 @@ function SearchResult(props) {
     <VirtualizedList
       width={200}
       height={height}
+      tabIndex={-1}
       overscanRowCount={10}
       rowCount={searchResults.length}
       deferredMeasurementCache={cellMeasureCache}

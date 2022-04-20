@@ -13,6 +13,7 @@ import './LeftPanelTabs.scss';
 
 class LeftPanelTabs extends React.Component {
   static propTypes = {
+    isLeftPanelOpen: PropTypes.bool,
     activePanel: PropTypes.string.isRequired,
     disabledCustomPanelTabs: PropTypes.array.isRequired,
     customPanels: PropTypes.array.isRequired,
@@ -24,6 +25,7 @@ class LeftPanelTabs extends React.Component {
 
   render() {
     const {
+      isLeftPanelOpen,
       customPanels,
       isLeftPanelTabsDisabled,
       setActiveLeftPanel,
@@ -42,6 +44,7 @@ class LeftPanelTabs extends React.Component {
           img="icon-panel-thumbnail-line"
           onClick={() => setActiveLeftPanel('thumbnailsPanel')}
           title="component.thumbnailsPanel"
+          tabIndex={isLeftPanelOpen ? 0 : -1}
         />
         <Button
           isActive={this.isActive('outlinesPanel')}
@@ -49,6 +52,7 @@ class LeftPanelTabs extends React.Component {
           img="icon-panel-outlines"
           onClick={() => setActiveLeftPanel('outlinesPanel')}
           title="component.outlinesPanel"
+          tabIndex={isLeftPanelOpen ? 0 : -1}
         />
         <Button
           isActive={this.isActive('layersPanel')}
@@ -56,6 +60,7 @@ class LeftPanelTabs extends React.Component {
           img="ic_layers_24px"
           onClick={() => setActiveLeftPanel('layersPanel')}
           title="component.layersPanel"
+          tabIndex={isLeftPanelOpen ? 0 : -1}
         />
         <Button
           isActive={this.isActive('bookmarksPanel')}
@@ -63,6 +68,7 @@ class LeftPanelTabs extends React.Component {
           img="ic_bookmarks_black_24px"
           onClick={() => setActiveLeftPanel('bookmarksPanel')}
           title="component.bookmarksPanel"
+          tabIndex={isLeftPanelOpen ? 0 : -1}
         />
         <Button
           isActive={this.isActive('signaturePanel')}
@@ -70,6 +76,7 @@ class LeftPanelTabs extends React.Component {
           img="icon-tool-signature"
           onClick={() => setActiveLeftPanel('signaturePanel')}
           title="component.signaturePanel"
+          tabIndex={isLeftPanelOpen ? 0 : -1}
         />
         <Button
           isActive={this.isActive('attachmentPanel')}
@@ -77,6 +84,7 @@ class LeftPanelTabs extends React.Component {
           img="ic_fileattachment_24px"
           onClick={() => setActiveLeftPanel('attachmentPanel')}
           title="component.attachmentPanel"
+          tabIndex={isLeftPanelOpen ? 0 : -1}
         />
         {notesInLeftPanel &&
           <Button
@@ -105,6 +113,7 @@ class LeftPanelTabs extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   activePanel: selectors.getActiveLeftPanel(state),
   customPanels: selectors.getCustomPanels(state),
   disabledCustomPanelTabs: selectors.getDisabledCustomPanelTabs(state),
