@@ -95,7 +95,7 @@ function NoteState(props) {
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
   return (
     <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
-      <Tooltip content={t('option.notesOrder.status')}>
+      <Tooltip content={t('option.notesOrder.shareType')}>
         <div className={noteStateButtonClassName}>
           <Icon glyph={getStatusIcon()} />
         </div>

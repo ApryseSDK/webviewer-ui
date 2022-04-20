@@ -70,7 +70,7 @@ const App = ({
   removeEventHandlers,
   // this colors are taken from flow-ui-react secondry light colors
   shareTypeColors = { assessors: '#8c71c1', participants: '#719ec1', all: '#7ec171', none: '#b2b3b3' },
-  coAssessor
+  coAssessor,
 }) => {
   const store = useStore();
   const dispatch = useDispatch();
@@ -211,7 +211,7 @@ const App = ({
         <PageReplacementModal />
         <LinkModal />
         <ContentEditModal />
-        <FilterAnnotModal coAssessor={[{ id: '1', 'name': 'John' }]} notesShareTypesMap={notesShareTypesMap} />
+        <FilterAnnotModal coAssessor={coAssessor} notesShareTypesMap={notesShareTypesMap} />
         <CustomModal />
         <Model3DModal />
         <ColorPickerModal />

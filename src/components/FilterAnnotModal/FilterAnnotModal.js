@@ -191,16 +191,17 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap }) => {
   }, [isOpen]);
 
   const renderAuthors = () => {
+    console.log('someInfo', core.getDisplayAuthor());
     return (
       <div className="filter">
-        <div className="heading">{t('option.filterAnnotModal.commentBy')}</div>
+        <div className="heading">{t('option.filterAnnotModal.author')}</div>
         <div className="buttons">
           {[...authors].map((val, index) => {
             return (
               <Choice
                 type="checkbox"
                 key={index}
-                label={val}
+                label={val === core.getCurrentUser() && 'You'}
                 checked={authorFilter.includes(val)}
                 id={val}
                 onChange={e => {
@@ -327,6 +328,7 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap }) => {
   };
 
   const renderCoAssessors = () => {
+    if (!coAssessor) return null;
     return (
       <div className="filter">
         <div className="heading">{t('option.filterAnnotModal.coAssessor')}</div>

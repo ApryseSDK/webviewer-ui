@@ -270,7 +270,8 @@
       "type": "Type",
       "color": "Color",
       "createdDate": "Created Date",
-      "modifiedDate": "Modified Date"
+      "modifiedDate": "Modified Date",
+      "shareType": "Share type"
     },
     "toolbarGroup": {
       "dropdownLabel": "Toolbar Groups",
@@ -384,7 +385,8 @@
       "color": "Color",
       "includeReplies": "Include Replies",
       "shareTypes": "Share types",
-      "coAssessor": "CoAssessor"
+      "coAssessor": "CoAssessor",
+      "author": "Author"
     },
     "status": {
       "status": "Status"
