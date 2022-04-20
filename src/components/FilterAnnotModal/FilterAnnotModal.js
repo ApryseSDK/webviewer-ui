@@ -21,7 +21,7 @@ import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import './FilterAnnotModal.scss';
 
-const FilterAnnotModal = ({ coAssessor, notesShareTypesMap }) => {
+const FilterAnnotModal = ({ coAssessor, notesShareTypesMap, shareTypeColors }) => {
   const [isDisabled, isOpen, colorMap] = useSelector(state => [
     selectors.isElementDisabled(state, 'filterModal'),
     selectors.isElementOpen(state, 'filterModal'),
@@ -302,14 +302,24 @@ const FilterAnnotModal = ({ coAssessor, notesShareTypesMap }) => {
     return (
       <div className="filter">
         <div className="heading">{t('option.filterAnnotModal.shareType')}</div>
-        <div className="buttons">
+        <div className="buttons" style={{ gridTemplateColumns: `114px 100px` }}>
           {[...statuses].map((val, index) => {
             return (
               <Choice
                 type="checkbox"
                 key={index}
                 checked={statusFilter.includes(val)}
-                label={t(`option.state.${val.toLocaleLowerCase()}`)}
+                label={
+                  <div
+                    style={{
+                      backgroundColor: `${shareTypeColors[val.toLocaleLowerCase()]}`,
+                      padding: `5px`,
+                      borderRadius: `5px`,
+                    }}
+                  >
+                    {t(`option.state.${val.toLocaleLowerCase()}`)}
+                  </div>
+                }
                 id={val}
                 onChange={e => {
                   if (statusFilter.indexOf(e.target.getAttribute('id')) === -1) {

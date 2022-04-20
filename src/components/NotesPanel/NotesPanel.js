@@ -21,7 +21,6 @@ import useMedia from 'hooks/useMedia';
 import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import { debounce } from 'lodash';
-
 import './NotesPanel.scss';
 
 const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors, setNotesShareType, notesShareTypesMap }) => {
