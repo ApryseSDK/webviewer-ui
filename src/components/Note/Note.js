@@ -272,7 +272,7 @@ const Note = ({ annotation, shareTypeColors, setNotesShareType, notesShareTypesM
                   onClick={markAllRepliesRead}
                 />
               )}
-              {replies.map((reply, i) => (
+              {/* {replies.map((reply, i) => (
                 <div className="reply" id={`note_reply_${reply.Id}`} key={`note_reply_${reply.Id}`}>
                   <NoteContent
                     noteIndex={i + 1}
@@ -285,16 +285,16 @@ const Note = ({ annotation, shareTypeColors, setNotesShareType, notesShareTypesM
                     isUnread={unreadAnnotationIdSet.has(reply.Id)}
                   />
                 </div>
-              ))}
+              ))} */}
             </div>
           )}
-          {showReplyArea && (
+          {/* {showReplyArea && (
             <ReplyArea
               isUnread={lastReplyId && unreadAnnotationIdSet.has(lastReplyId)}
               onPendingReplyChange={markAllRepliesRead}
               annotation={annotation}
             />
-          )}
+          )} */}
         </React.Fragment>
       )}
       {isSelected && <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef} />}

@@ -23,7 +23,18 @@ function handleStateChange(newValue) {
 }
 
 export function Basic() {
-  const availableNoteStates = ['Accepted', 'Rejected', 'Cancelled', 'Completed', 'None', 'Marked', 'Unmarked', 'Hoba','Participants','Assessors','All'];
+  const availableNoteStates = [
+    'Accepted',
+    'Rejected',
+    'Cancelled',
+    'Completed',
+    'None',
+    'Marked',
+    'Unmarked',
+    'Participants',
+    'Assessors',
+    'All',
+  ];
   const allStates = availableNoteStates.map(state => {
     return (
       <React.Fragment key={state}>

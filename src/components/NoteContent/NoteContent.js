@@ -290,7 +290,7 @@ const NoteContent = ({
   return (
     <div className={noteContentClass} onClick={handleNoteContentClicked}>
       {header}
-      {textPreview}
+      {/* {textPreview} */}
       {content}
     </div>
   );
