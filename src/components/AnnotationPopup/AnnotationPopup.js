@@ -444,7 +444,7 @@ const AnnotationPopup = () => {
               }}
             />
           )}
-          {showLinkButton && (
+          {/* {showLinkButton && (
             <ActionButton
               title="tool.Link"
               img={hasAssociatedLink ? 'icon-tool-unlink' : 'icon-tool-link'}
@@ -473,7 +473,7 @@ const AnnotationPopup = () => {
               }
               dataElement="linkButton"
             />
-          )}
+          )} */}
           {showFileDownloadButton && (
             <ActionButton
               title="action.fileAttachmentDownload"
