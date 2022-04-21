@@ -7,18 +7,18 @@ export default function useOnCropAnnotationAddedOrSelected(openDocumentCropPopup
   useEffect(() => {
     const onAnnotationChanged = (annotations, action) => {
       const annotation = annotations[0];
-      if(action === 'add' && annotation.Subject === 'Rectangle' && annotation.ToolName === window.Core.Tools.ToolNames['CROP']) {
+      if(action === 'add' && annotation.ToolName === window.Core.Tools.ToolNames['CROP'] && annotation instanceof window.Annotations.RectangleAnnotation) {
         setCropAnnotation(annotation);
         openDocumentCropPopup();
       }
-      if(action === 'delete' && annotation.Subject === 'Rectangle' && annotation.ToolName === window.Core.Tools.ToolNames['CROP']) {
+      if(action === 'delete' && annotation.ToolName === window.Core.Tools.ToolNames['CROP'] && annotation instanceof window.Annotations.RectangleAnnotation) {
         setCropAnnotation(null);
       }
     };
 
     const onAnnotationSelected = (annotations, action) => {
       const annotation = annotations[0];
-      if(action === 'selected' && annotation.Subject === 'Rectangle' && annotation.ToolName === window.Core.Tools.ToolNames['CROP']) {
+      if(action === 'selected' && annotation.ToolName === window.Core.Tools.ToolNames['CROP'] && annotation instanceof window.Annotations.RectangleAnnotation) {
         setCropAnnotation(annotation);
         openDocumentCropPopup();
       }
