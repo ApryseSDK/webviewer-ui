@@ -70,7 +70,7 @@ export default {
  * @property {string[]} types Types filter
  * @property {string[]} authors Author filter
  * @property {string[]} colors Color filter
- * @property {string[]} statuses Status filter
+ * @property {string[]} shareTypes Status filter
  */
 
 /**
