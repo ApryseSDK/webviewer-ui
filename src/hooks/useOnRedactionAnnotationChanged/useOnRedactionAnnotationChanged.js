@@ -28,7 +28,7 @@ export default function useOnRedactionAnnotationChanged() {
 
   useEffect(() => {
     const setRedactionAnnotations = () => {
-      const redactionAnnotations = core.getAnnotationsList().filter(annotation => annotation.Subject === 'Redact');
+      const redactionAnnotations = core.getAnnotationsList().filter(annotation => annotation instanceof window.Annotations.RedactionAnnotation);
       setRedactionAnnotationsList(redactionAnnotations);
 
       if (redactionAnnotations.length > 0 && !isMobile) {

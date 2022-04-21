@@ -41,9 +41,9 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     core.addEventListener = (annotationManagerEvent, handler) => {
       onAnnotationChangedHandler = handler;
     }
+    const mockRedactionAnnotation = new window.Annotations.RedactionAnnotation();
     const mockRedactionAnnotations = [
-      { Subject: 'Redact' },
-      { Subject: 'Redact' },
+      mockRedactionAnnotation,
     ];
 
     const mockDispatch = jest.fn();
@@ -70,8 +70,13 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     core.addEventListener = (annotationManagerEvent, handler) => {
       onAnnotationChangedHandler = handler;
     }
+
+    const mockRedactionAnnotation = new window.Annotations.RedactionAnnotation();
+    const mockRedactionAnnotationTwo = new window.Annotations.RedactionAnnotation();
+
     const mockRedactionAnnotations = [
-      { Subject: 'Redact' },
+      mockRedactionAnnotation,
+      mockRedactionAnnotationTwo,
     ];
 
     const mockDispatch = jest.fn();
@@ -83,7 +88,7 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     const isSearchPanelOpen = false;
     useSelectorMock.mockReturnValue([isNotesPanelOpen, isSearchPanelOpen]);
 
-    core.getAnnotationsList = () => [{ Subject: 'Polygon' }, { Subject: 'PolyLine' }, ...mockRedactionAnnotations];
+    core.getAnnotationsList = () => [new window.Annotations.PolygonAnnotation(), new window.Annotations.LineAnnotation(), ...mockRedactionAnnotations];
 
     const { result } = renderHook(() => useOnRedactionAnnotationChanged(), { wrapper });
 
@@ -100,8 +105,10 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     core.addEventListener = (annotationManagerEvent, handler) => {
       onAnnotationChangedHandler = handler;
     }
+
+    const mockRedactionAnnotation = new window.Annotations.RedactionAnnotation();
     const mockRedactionAnnotations = [
-      { Subject: 'Redact' },
+      mockRedactionAnnotation,
     ];
 
     const mockDispatch = jest.fn();
