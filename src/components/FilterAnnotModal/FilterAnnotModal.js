@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
-import ShareTypes from 'constants/shareTypes';
+import ShareTypes, { ShareTypeColors } from 'constants/shareTypes';
 import { mapAnnotationToKey } from 'constants/map';
 import core from 'core';
 import actions from 'actions';
@@ -24,7 +24,7 @@ import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import './FilterAnnotModal.scss';
 import getDisplayAuthor from 'src/core/getDisplayAuthor';
 
-const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
+const FilterAnnotModal = ({ coAssessors }) => {
   const [isDisabled, isOpen, colorMap] = useSelector(state => [
     selectors.isElementDisabled(state, 'filterModal'),
     selectors.isElementOpen(state, 'filterModal'),
@@ -309,7 +309,7 @@ const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
                 label={
                   <div
                     style={{
-                      backgroundColor: `${shareTypeColors[val.toLocaleLowerCase()]}`,
+                      backgroundColor: `${ShareTypeColors[val]}`,
                       padding: `5px 10px`,
                       borderRadius: `5px`,
                       color: `#fff`,
