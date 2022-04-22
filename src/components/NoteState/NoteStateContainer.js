@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import core from 'core';
 
 import NoteState from './NoteState';
+import { setAnnotationShareType } from 'src/helpers/annotationShareType';
+import getAnnotationManager from 'src/core/getAnnotationManager';
 
 function createStateAnnotation(t, annotation, state) {
   // TODO: the code below is copied from annotManager.updateAnnotationState in WebViewer to work around the issue
@@ -42,15 +44,9 @@ function NoteStateContainer(props) {
 
   const handleStateChange = React.useCallback(
     function handleStateChangeCallback(newValue) {
-      const stateAnnotation = createStateAnnotation(t, annotation, newValue);
-      annotation.addReply(stateAnnotation);
-      const annotationManager = core.getAnnotationManager();
-      annotationManager.addAnnotation(stateAnnotation);
-      annotationManager.trigger('addReply', [
-        stateAnnotation,
-        annotation,
-        annotationManager.getRootAnnotation(annotation),
-      ]);
+      // CUSTOM WISEFLOW: Set custom data value called sharetype and trigger annotationChanged event
+      setAnnotationShareType(annotation, newValue);
+      getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', {}]);
     },
     [annotation],
   );

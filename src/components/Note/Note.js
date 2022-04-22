@@ -16,6 +16,8 @@ import useDidUpdate from 'hooks/useDidUpdate';
 import Button from 'components/Button';
 
 import './Note.scss';
+import { getAnnotationShareType } from 'src/helpers/annotationShareType';
+import ShareTypes from 'src/constants/shareTypes';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -23,7 +25,7 @@ const propTypes = {
 
 let currId = 0;
 
-const Note = ({ annotation, shareTypeColors, setNotesShareType, notesShareTypesMap }) => {
+const Note = ({ annotation, shareTypeColors }) => {
   const {
     isSelected,
     resize,
@@ -38,21 +40,17 @@ const Note = ({ annotation, shareTypeColors, setNotesShareType, notesShareTypesM
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
   const [share, setShare] = useState({});
-  const getAnnotaionStatusColor = () => {
-    switch (notesShareTypesMap[annotation.Id]) {
-      case 'Assessors':
+  const getAnnotationStatusColor = () => {
+    switch (getAnnotationShareType(annotation)) {
+      case ShareTypes.ASSESSORS:
         return shareTypeColors.assessors;
-        break;
-      case 'Participants':
+      case ShareTypes.PARTICIPANTS:
         return shareTypeColors.participants;
-        break;
-      case 'All':
+      case ShareTypes.ALL:
         return shareTypeColors.all;
-        break;
-      case 'None':
+      case ShareTypes.NONE:
       default:
         return shareTypeColors.none;
-        break;
     }
   };
   const ids = useRef([]);
@@ -242,8 +240,8 @@ const Note = ({ annotation, shareTypeColors, setNotesShareType, notesShareTypesM
       onKeyDown={handleNoteKeydown}
       id={`note_${annotation.Id}`}
       style={{
-        borderBottom: `4px solid ${getAnnotaionStatusColor()}`,
-        borderTop: `4px solid ${getAnnotaionStatusColor()}`,
+        borderBottom: `4px solid ${getAnnotationStatusColor()}`,
+        borderTop: `4px solid ${getAnnotationStatusColor()}`,
       }}
     >
       <NoteContent
@@ -257,8 +255,6 @@ const Note = ({ annotation, shareTypeColors, setNotesShareType, notesShareTypesM
         onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
-        notesShareTypesMap={notesShareTypesMap}
-        setNotesShareType={setNotesShareType}
       />
       {(isSelected || isExpandedFromSearch) && (
         <React.Fragment>

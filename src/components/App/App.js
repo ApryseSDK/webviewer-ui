@@ -77,13 +77,6 @@ const App = ({
   let timeoutReturn;
 
   const [isInDesktopOnlyMode] = useSelector(state => [selectors.isInDesktopOnlyMode(state)]);
-  const [notesShareTypesMap, setNotesShareTypesMap] = useState([]);
-  const setNotesShareType = useCallback(
-    (sharetype, index) => {
-      setNotesShareTypesMap(map => ({ ...map, [index]: sharetype }));
-    },
-    [setNotesShareTypesMap],
-  );
   useEffect(() => {
     fireEvent(Events.VIEWER_LOADED);
     window.parent.postMessage(
@@ -182,8 +175,6 @@ const App = ({
           <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
             <NotesPanel
               shareTypeColors={shareTypeColors}
-              setNotesShareType={setNotesShareType}
-              notesShareTypesMap={notesShareTypesMap}
             />
           </RightPanel>
         </div>
@@ -213,7 +204,6 @@ const App = ({
         <ContentEditModal />
         <FilterAnnotModal
           coAssessors={coAssessors}
-          notesShareTypesMap={notesShareTypesMap}
           shareTypeColors={shareTypeColors}
         />
         <CustomModal />

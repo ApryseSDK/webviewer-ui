@@ -39,8 +39,6 @@ const NoteContent = ({
   isUnread,
   isNonReplyNoteRead,
   onReplyClicked,
-  notesShareTypesMap,
-  setNotesShareType,
 }) => {
   const [noteDateFormat, iconColor, isNoteStateDisabled, language, notesShowLastUpdatedDate] = useSelector(
     state => [
@@ -264,8 +262,6 @@ const NoteContent = ({
         isEditing={isEditing}
         noteIndex={noteIndex}
         sortStrategy={sortStrategy}
-        notesShareTypesMap={notesShareTypesMap}
-        setNotesShareType={setNotesShareType}
       />
     );
   }, [

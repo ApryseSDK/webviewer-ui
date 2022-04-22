@@ -34,8 +34,6 @@ const propTypes = {
   isEditing: PropTypes.bool,
   noteIndex: PropTypes.number,
   sortStrategy: PropTypes.string,
-  notesShareTypesMap: PropTypes.object,
-  setNotesShareType: PropTypes.func,
 };
 
 function NoteHeader(props) {
@@ -56,8 +54,6 @@ function NoteHeader(props) {
     isEditing,
     noteIndex,
     sortStrategy,
-    notesShareTypesMap,
-    setNotesShareType,
   } = props;
 
   const [t] = useTranslation();
@@ -130,8 +126,6 @@ function NoteHeader(props) {
                 isSelected={isSelected}
                 share={share}
                 noteIndex={noteIndex}
-                notesShareTypesMap={notesShareTypesMap}
-                setNotesShareType={setNotesShareType}
               />
             )}
             {!isEditing && isSelected && (

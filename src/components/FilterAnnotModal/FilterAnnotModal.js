@@ -11,6 +11,7 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import fireEvent from 'helpers/fireEvent';
+import { getAnnotationShareType } from 'helpers/annotationShareType';
 import { rgbaToHex, hexToRgba } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 
@@ -106,8 +107,8 @@ const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
         }
         if (shareTypeFilter.length > 0) {
           // CUSTOM WISEFLOW: get customData sharetype
-          if (annot.getCustomData('sharetype')) {
-            sharetype = shareTypeFilter.includes(annot.getCustomData('sharetype'));
+          if (getAnnotationShareType(annot)) {
+            sharetype = shareTypeFilter.includes(getAnnotationShareType(annot));
           }
         }
         return type && author && color && sharetype;
@@ -155,7 +156,7 @@ const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
     const authorsToBeAdded = new Set();
     const annotTypesToBeAdded = new Set();
     const annotColorsToBeAdded = new Set();
-    const annotStatusesToBeAdded = new Set();
+    const annotShareTypesToBeAdded = new Set();
     annots.forEach(annot => {
       const displayAuthor = core.getDisplayAuthor(annot['Author']);
       if (displayAuthor && displayAuthor !== '') {
@@ -175,8 +176,8 @@ const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
         annotColorsToBeAdded.add(rgbaToHex(iconColor.R, iconColor.G, iconColor.B, iconColor.A));
       }
 
-      if (notesShareTypesMap[annot.Id]) {
-        annotStatusesToBeAdded.add(notesShareTypesMap[annot.Id]);
+      if (getAnnotationShareType(annot)) {
+        annotShareTypesToBeAdded.add(getAnnotationShareType(annot));
       }
     });
 

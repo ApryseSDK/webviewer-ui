@@ -7,8 +7,10 @@ import Tooltip from '../Tooltip';
 
 import DataElementWrapper from 'components/DataElementWrapper';
 import Icon from 'components/Icon';
+import ShareTypes from 'constants/shareTypes';
 
 import './NoteState.scss';
+import { getAnnotationShareType, setAnnotationShareType } from 'src/helpers/annotationShareType';
 
 const propTypes = {
   annotation: PropTypes.object,
@@ -17,8 +19,6 @@ const propTypes = {
   handleStateChange: PropTypes.func,
   share: PropTypes.object,
   noteIndex: PropTypes.number,
-  notesShareTypesMap: PropTypes.object,
-  setNotesShareType: PropTypes.func,
 };
 
 function NoteState(props) {
@@ -29,9 +29,7 @@ function NoteState(props) {
     handleStateChange,
     share,
     noteIndex,
-    notesShareTypesMap,
     annotationId,
-    setNotesShareType,
   } = props;
 
   const [t] = useTranslation();
@@ -51,14 +49,14 @@ function NoteState(props) {
     setIsOpen(false);
   }
   const getStatusIcon = () => {
-    switch (notesShareTypesMap[annotation.Id]) {
-      case 'Assessors':
+    switch (getAnnotationShareType(annotation)) {
+      case ShareTypes.ASSESSORS:
         return 'icon-page-insertion-insert-above';
-      case 'Participants':
+      case ShareTypes.PARTICIPANTS:
         return 'icon-tool-stamp-fill';
-      case 'All':
+      case ShareTypes.ALL:
         return 'ic_annotation_apply_redact_black_24px';
-      case 'None':
+      case ShareTypes.NONE:
       default:
         return 'icon-annotation-status-none';
     }
@@ -67,7 +65,7 @@ function NoteState(props) {
     return function onStateOptionButtonClick() {
       if (handleStateChange) {
         handleStateChange(state);
-        setNotesShareType(state, annotation.Id);
+        setAnnotationShareType(annotation, state);
       }
     };
   }
@@ -102,7 +100,7 @@ function NoteState(props) {
             <DataElementWrapper
               dataElement="notePopupState-assessor"
               className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('Assessors')}
+              onClick={createOnStateOptionButtonClickHandler(ShareTypes.ASSESSORS)}
             >
               <Icon glyph="icon-page-insertion-insert-above" />
               {t('option.state.assessors')}
@@ -111,7 +109,7 @@ function NoteState(props) {
             <DataElementWrapper
               dataElement="notePopupStateParticipants"
               className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('Participants')}
+              onClick={createOnStateOptionButtonClickHandler(ShareTypes.PARTICIPANTS)}
             >
               <Icon glyph="icon-tool-stamp-fill" />
               {t('option.state.participants')}
@@ -120,7 +118,7 @@ function NoteState(props) {
             <DataElementWrapper
               dataElement="notePopupStateAll"
               className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('All')}
+              onClick={createOnStateOptionButtonClickHandler(ShareTypes.ALL)}
             >
               <Icon glyph="ic_annotation_apply_redact_black_24px" />
               {t('option.state.all')}
@@ -129,7 +127,7 @@ function NoteState(props) {
             <DataElementWrapper
               dataElement="notePopupStateAssessors"
               className="note-state-option"
-              onClick={createOnStateOptionButtonClickHandler('None')}
+              onClick={createOnStateOptionButtonClickHandler(ShareTypes.NONE)}
             >
               <Icon glyph="icon-colour-none" />
               {t('option.state.none')}
