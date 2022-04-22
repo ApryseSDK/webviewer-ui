@@ -5,11 +5,13 @@ import { useTranslation } from 'react-i18next';
 
 import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
+import ShareTypes from 'constants/shareTypes';
 import { mapAnnotationToKey } from 'constants/map';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import fireEvent from 'helpers/fireEvent';
+import { getAnnotationShareType } from 'helpers/annotationShareType';
 import { rgbaToHex, hexToRgba } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 
@@ -22,7 +24,7 @@ import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import './FilterAnnotModal.scss';
 import getDisplayAuthor from 'src/core/getDisplayAuthor';
 
-const FilterAnnotModal = ({ coAssessors, notesShareTypesMap, shareTypeColors }) => {
+const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
   const [isDisabled, isOpen, colorMap] = useSelector(state => [
     selectors.isElementDisabled(state, 'filterModal'),
     selectors.isElementOpen(state, 'filterModal'),
@@ -34,13 +36,13 @@ const FilterAnnotModal = ({ coAssessors, notesShareTypesMap, shareTypeColors }) 
   const [authors, setAuthors] = useState([]);
   const [annotTypes, setAnnotTypes] = useState([]);
   const [colors, setColorTypes] = useState([]);
-  const [statuses, setStatusTypes] = useState(['Participants', 'Assessors', 'All', 'None']);
 
   const [authorFilter, setAuthorFilter] = useState([]);
   const [typesFilter, setTypesFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
   const [checkRepliesForAuthorFilter, setCheckRepliesForAuthorFilter] = useState(true);
-  const [statusFilter, setStatusFilter] = useState([]);
+  // CUSTOM WISEFLOW: sharetype filter
+  const [shareTypeFilter, setShareTypeFilter] = useState([]);
   const [coAssessorFilter, setCoAssessorFilter] = useState([]);
 
   const getIconColor = annot => {
@@ -76,7 +78,7 @@ const FilterAnnotModal = ({ coAssessors, notesShareTypesMap, shareTypeColors }) 
         let type = true;
         let author = true;
         let color = true;
-        let status = true;
+        let sharetype = true;
         if (typesFilter.length > 0) {
           type = typesFilter.includes(getAnnotationClass(annot));
         }
@@ -103,21 +105,20 @@ const FilterAnnotModal = ({ coAssessors, notesShareTypesMap, shareTypeColors }) 
             color = colorFilter.includes('#485056');
           }
         }
-        if (statusFilter.length > 0) {
-          if (annot.getStatus()) {
-            status = statusFilter.includes(notesShareTypesMap[annot.Id]);
-          } else {
-            status = statusFilter.includes('None');
+        if (shareTypeFilter.length > 0) {
+          // CUSTOM WISEFLOW: get customData sharetype
+          if (getAnnotationShareType(annot)) {
+            sharetype = shareTypeFilter.includes(getAnnotationShareType(annot));
           }
         }
-        return type && author && color && status;
+        return type && author && color && sharetype;
       }),
     );
     fireEvent(Events.ANNOTATION_FILTER_CHANGED, {
       types: typesFilter,
       authors: authorFilter,
       colors: colorFilter,
-      statuses: statusFilter,
+      shareTypes: shareTypeFilter,
       checkRepliesForAuthorFilter,
     });
     closeModal();
@@ -133,7 +134,7 @@ const FilterAnnotModal = ({ coAssessors, notesShareTypesMap, shareTypeColors }) 
     setAuthorFilter([]);
     setTypesFilter([]);
     setColorFilter([]);
-    setStatusFilter([]);
+    setShareTypeFilter([]);
     fireEvent('annotationFilterChanged', {
       types: [],
       authors: [],
@@ -155,7 +156,7 @@ const FilterAnnotModal = ({ coAssessors, notesShareTypesMap, shareTypeColors }) 
     const authorsToBeAdded = new Set();
     const annotTypesToBeAdded = new Set();
     const annotColorsToBeAdded = new Set();
-    const annotStatusesToBeAdded = new Set();
+    const annotShareTypesToBeAdded = new Set();
     annots.forEach(annot => {
       const displayAuthor = core.getDisplayAuthor(annot['Author']);
       if (displayAuthor && displayAuthor !== '') {
@@ -175,8 +176,8 @@ const FilterAnnotModal = ({ coAssessors, notesShareTypesMap, shareTypeColors }) 
         annotColorsToBeAdded.add(rgbaToHex(iconColor.R, iconColor.G, iconColor.B, iconColor.A));
       }
 
-      if (notesShareTypesMap[annot.Id]) {
-        annotStatusesToBeAdded.add(notesShareTypesMap[annot.Id]);
+      if (getAnnotationShareType(annot)) {
+        annotShareTypesToBeAdded.add(getAnnotationShareType(annot));
       }
     });
 
@@ -299,12 +300,12 @@ const FilterAnnotModal = ({ coAssessors, notesShareTypesMap, shareTypeColors }) 
       <div className="filter">
         <div className="heading">{t('option.filterAnnotModal.shareType')}</div>
         <div className="buttons" style={{ gridTemplateColumns: `114px 100px` }}>
-          {[...statuses].map((val, index) => {
+          {[...Object.keys(ShareTypes)].map((val, index) => {
             return (
               <Choice
                 type="checkbox"
                 key={index}
-                checked={statusFilter.includes(val)}
+                checked={shareTypeFilter.includes(val)}
                 label={
                   <div
                     style={{
@@ -319,10 +320,10 @@ const FilterAnnotModal = ({ coAssessors, notesShareTypesMap, shareTypeColors }) 
                 }
                 id={val}
                 onChange={e => {
-                  if (statusFilter.indexOf(e.target.getAttribute('id')) === -1) {
-                    setStatusFilter([...statusFilter, e.target.getAttribute('id')]);
+                  if (shareTypeFilter.indexOf(e.target.getAttribute('id')) === -1) {
+                    setShareTypeFilter([...shareTypeFilter, e.target.getAttribute('id')]);
                   } else {
-                    setStatusFilter(statusFilter.filter(status => status !== e.target.getAttribute('id')));
+                    setShareTypeFilter(shareTypeFilter.filter(status => status !== e.target.getAttribute('id')));
                   }
                 }}
               />

@@ -23,7 +23,7 @@ import fireEvent from 'helpers/fireEvent';
 import { debounce } from 'lodash';
 import './NotesPanel.scss';
 
-const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors, setNotesShareType, notesShareTypesMap }) => {
+const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
   const [
     sortStrategy,
     isOpen,
@@ -107,8 +107,8 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors, setNotesShareType,
     };
 
     const toggleFilterStyle = e => {
-      const { types, authors, colors, statuses } = e.detail;
-      if (types.length > 0 || authors.length > 0 || colors.length > 0 || statuses.length > 0) {
+      const { types, authors, colors, shareTypes } = e.detail;
+      if (types.length > 0 || authors.length > 0 || colors.length > 0 || shareTypes.length > 0) {
         setFilterEnabled(true);
       } else {
         setFilterEnabled(false);
@@ -335,8 +335,6 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors, setNotesShareType,
           <Note
             annotation={currNote}
             shareTypeColors={shareTypeColors}
-            setNotesShareType={setNotesShareType}
-            notesShareTypesMap={notesShareTypesMap}
           />
         </NoteContext.Provider>
       </div>
