@@ -1,13 +1,17 @@
 // CUSTOM WISEflow
 
-import ShareTypes from 'src/constants/shareTypes';
+import ShareTypes from 'constants/shareTypes';
+import getWiseflowCustomValues from 'helpers/getWiseflowCustomValues';
 
 /**
  * Get share type using custom data type "shareType"
  * @param {Annotation} annot annotation to add share type to
  * @return {string} share type [ASSESSORS, PARTICIPANTS, ALL, NONE]. Defaults to ShareTypes.NONE.
  */
-const getAnnotationShareType = annot => annot.getCustomData('shareType') || ShareTypes.NONE;
+const getAnnotationShareType = annot => {
+  const { defaultShareType } = getWiseflowCustomValues();
+  return annot.getCustomData('shareType') || (defaultShareType ?? ShareTypes.NONE);
+};
 
 /**
  * Get share type using custom data type "shareType"
