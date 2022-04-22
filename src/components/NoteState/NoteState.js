@@ -68,7 +68,8 @@ function NoteState(props) {
   const icon = getShareTypeIcon(annotationShareType);
   const isReply = annotation.isReply();
 
-  if ((annotationShareType === '' || annotationShareType === ShareTypes.NONE) && !isSelected) {
+  // Hide sharetype menu if annotation is not selected
+  if (!isSelected) {
     return null;
   }
 
