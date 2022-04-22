@@ -29,6 +29,7 @@ const propTypes = {
   isDragging: PropTypes.bool,
   isDraggedUpwards: PropTypes.bool,
   isDraggedDownwards: PropTypes.bool,
+  outlineEditingEnabled: PropTypes.bool,
 };
 
 const Outline = forwardRef(
@@ -38,6 +39,7 @@ const Outline = forwardRef(
       isDragging,
       isDraggedUpwards,
       isDraggedDownwards,
+      outlineEditingEnabled,
       connectDragSource,
       connectDropTarget,
       moveOutlineInward,
@@ -116,7 +118,7 @@ const Outline = forwardRef(
       }
     }
     function handleOutlineDoubleClick() {
-      if (!core.isFullPDFEnabled()) {
+      if (!core.isFullPDFEnabled()||!outlineEditingEnabled) {
         return;
       }
 
@@ -157,7 +159,7 @@ const Outline = forwardRef(
             </div>
           )}
         </div>
-        <div className={classNames({ content: true, editable: core.isFullPDFEnabled() })}>
+        <div className={classNames({ content: true, editable: core.isFullPDFEnabled() && outlineEditingEnabled})}>
           {isDraggedUpwards && <div style={{ borderTop: '1px solid #bbb' }}/>}
           {isEditingName ? (
             <OutlineTextInput
@@ -343,14 +345,16 @@ const DropOutine = DropTarget(ItemTypes.OUTLINE, {
     outline: props.outline,
     dropLocation: DropLocation.INITIAL,
   }),
-  canDrag() {
+  canDrag(props) {
     if (!core.isFullPDFEnabled() && !isIE) {
       console.warn('Full API must be enabled to drag and drop outlines');
     } else if (isIE) {
-      console.warn('Drag and drop for IE11 is not supported');
+      console.warn('Drag and drop outlines for IE11 is not supported');
+    } else if (!props.outlineEditingEnabled) {
+      console.warn('Drag and drop outlines disabled');
     }
     // enable fullPdfEnabled and disable IE
-    return core.isFullPDFEnabled() && !isIE;
+    return core.isFullPDFEnabled() && !isIE && props.outlineEditingEnabled;
   }
 }, (connect, dragSourceState) => ({
   connectDragSource: connect.dragSource(),

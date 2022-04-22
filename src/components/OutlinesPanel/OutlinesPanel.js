@@ -25,6 +25,7 @@ function OutlinesPanel() {
   const isDisabled = useSelector(state => selectors.isElementDisabled(state, DataElements.OUTLINES_PANEL));
   const outlines = useSelector(state => selectors.getOutlines(state));
   const outlineControlVisibility = useSelector(state => selectors.isOutlineControlVisible(state));
+  const outlineEditingEnabled = useSelector(state => selectors.getIsOutlineEditing(state));
   const [selectedOutlinePath, setSelectedOutlinePath] = useState(null);
   const [isAddingNewOutline, setIsAddingNewOutline] = useState(false);
   const [t] = useTranslation();
@@ -115,6 +116,7 @@ function OutlinesPanel() {
               <Outline
                 key={outlineUtils.getOutlineId(outline)}
                 outline={outline}
+                outlineEditingEnabled={outlineEditingEnabled}
                 moveOutlineInward={moveOutlineInward}
                 moveOutlineBeforeTarget={moveOutlineBeforeTarget}
                 moveOutlineAfterTarget={moveOutlineAfterTarget}

@@ -301,6 +301,10 @@ export const setOutlines = outlines => ({
   type: 'SET_OUTLINES',
   payload: { outlines },
 });
+export const setIsOutlineEditing = (isOutlineEditing = true) => ({
+  type: 'SET_OUTLINE_EDITING',
+  payload: { isOutlineEditing },
+});
 export const setBookmarks = bookmarks => ({
   type: 'SET_BOOKMARKS',
   payload: { bookmarks },

@@ -238,6 +238,9 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'renameOutlineButton',
         'deleteOutlineButton',
       ],
+      fn: () => {
+        store.dispatch(actions.setIsOutlineEditing(enable));
+      }
     },
     [Feature.NotesShowLastUpdatedDate]: {
       fn: () => {

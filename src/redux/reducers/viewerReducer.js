@@ -207,6 +207,8 @@ export default initialState => (state = initialState, action) => {
       };
     case 'SET_OUTLINE_CONTROL_VISIBILITY':
       return { ...state, outlineControlVisibility: payload.outlineControlVisibility };
+    case 'SET_OUTLINE_EDITING':
+      return { ...state, isOutlineEditing: payload.isOutlineEditing };
     case 'SET_NOTE_POPUP_ID':
       return { ...state, notePopupId: payload.id };
     case 'SET_NOTE_EDITING':
@@ -403,6 +405,16 @@ export default initialState => (state = initialState, action) => {
         ...state,
         enableNoteSubmissionWithEnter: payload.enableNoteSubmissionWithEnter
       }
+    case 'SET_NOTES_PANEL_TEXT_COLLAPSING':
+      return {
+        ...state,
+        isNotesPanelTextCollapsingEnabled: payload.enableNotesPanelTextCollapsing
+      };
+    case 'SET_NOTES_PANEL_REPLIES_COLLAPSING':
+      return {
+        ...state,
+        isNotesPanelRepliesCollapsingEnabled: payload.enableNotesPanelRepliesCollapsing
+      };
     case 'ADD_TRUSTED_CERTIFICATES':
       /**
        * To mimic the behavior of the Core implementation, where certificates

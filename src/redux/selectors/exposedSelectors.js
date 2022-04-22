@@ -92,7 +92,19 @@ export const getEnabledToolbarGroups = state => {
   const toolbarGroupDataElements = getToolbarGroupDataElements(state);
   return toolbarGroupDataElements.filter(dataElement => {
     const headerItems = state.viewer.headers[dataElement];
-    const toolGroupButtons = headerItems.filter(({ dataElement }) => {
+    const flattenHeaderItems = (dataItems) => {
+      return dataItems.reduce((total, item) => {
+        if (item.children) {
+          total.push(...flattenHeaderItems(item.children));
+        } else {
+          total.push(item);
+        }
+        return total;
+      }, [])
+    };
+    
+    const itemsToCheck = flattenHeaderItems(headerItems);
+    const toolGroupButtons = itemsToCheck.filter(({ dataElement }) => {
       return dataElement && dataElement.includes('ToolGroupButton');
     });
     const isEveryToolGroupButtonDisabled = !dataElement.includes('toolbarGroup-View') && toolGroupButtons.every(({ dataElement: toolGroupDataElement }) => {
@@ -135,6 +147,14 @@ export const isToolGroupReorderingEnabled = state => {
 export const isNoteSubmissionWithEnterEnabled = state => {
   return state.viewer.enableNoteSubmissionWithEnter;
 }
+
+export const isNotesPanelTextCollapsingEnabled = state => {
+  return state.viewer.isNotesPanelTextCollapsingEnabled;
+};
+
+export const isNotesPanelRepliesCollapsingEnabled = state => {
+  return state.viewer.isNotesPanelRepliesCollapsingEnabled;
+};
 
 export const getActiveToolNamesForActiveToolGroup = state => {
   const { activeToolGroup } = state.viewer;
@@ -339,6 +359,8 @@ export const getDefaultPrintOptions = state => state.document.defaultPrintOption
 export const getTotalPages = state => state.document.totalPages;
 
 export const getOutlines = state => state.document.outlines;
+
+export const getIsOutlineEditing = state => state.viewer.isOutlineEditing;
 
 export const getBookmarks = state => state.document.bookmarks;
 
