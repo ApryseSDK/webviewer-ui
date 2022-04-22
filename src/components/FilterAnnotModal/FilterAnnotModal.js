@@ -33,9 +33,11 @@ const FilterAnnotModal = ({ coAssessors }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
+  // Fields to be rendered
   const [authors, setAuthors] = useState([]);
   const [annotTypes, setAnnotTypes] = useState([]);
   const [colors, setColorTypes] = useState([]);
+  const [shareTypes, setShareTypes] = useState([]);
 
   const [authorFilter, setAuthorFilter] = useState([]);
   const [typesFilter, setTypesFilter] = useState([]);
@@ -184,7 +186,7 @@ const FilterAnnotModal = ({ coAssessors }) => {
     setAuthors([...authorsToBeAdded]);
     setAnnotTypes([...annotTypesToBeAdded]);
     setColorTypes([...annotColorsToBeAdded]);
-    //setStatusTypes([...annotStatusesToBeAdded]);
+    setShareTypes([...annotShareTypesToBeAdded]);
 
     core.addEventListener('documentUnloaded', closeModal);
     return () => {
@@ -295,12 +297,12 @@ const FilterAnnotModal = ({ coAssessors }) => {
     );
   };
 
-  const renderStatusTypes = () => {
+  const renderShareTypes = () => {
     return (
       <div className="filter">
         <div className="heading">{t('option.filterAnnotModal.shareType')}</div>
         <div className="buttons" style={{ gridTemplateColumns: `114px 100px` }}>
-          {[...Object.keys(ShareTypes)].map((val, index) => {
+          {shareTypes.map((val, index) => {
             return (
               <Choice
                 type="checkbox"
@@ -380,7 +382,7 @@ const FilterAnnotModal = ({ coAssessors }) => {
                 <div className="swipe-indicator" />
                 <div className="filter-options">
                   {renderAuthors()}
-                  {renderStatusTypes()}
+                  {renderShareTypes()}
                   {renderAnnotTypes()}
                   {renderColorTypes()}
                   {renderCoAssessors()}

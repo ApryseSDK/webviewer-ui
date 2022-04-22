@@ -108,7 +108,7 @@ function NoteHeader(props) {
             </div>
             <div className="annotId">
               <span>
-                Page {pageNumber} , annotation {annotNumber}
+                Page {pageNumber}, annotation {annotNumber}
               </span>
               <Tooltip content={copyTooltip}>
                 <div onClick={() => handleCopyAnnotId()}>

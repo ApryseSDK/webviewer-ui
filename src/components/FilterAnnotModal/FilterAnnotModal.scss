@@ -76,6 +76,7 @@
             display: grid;
             padding: 6px 0 6px 0;
             grid-template-columns: 100px 100px;
+            column-gap: 1em;
           }
 
           .colorSelect {

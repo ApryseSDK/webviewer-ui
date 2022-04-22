@@ -18,7 +18,7 @@
     height: 28px;
     border-radius: 4px;
 
-    .Icon {
+    .Icon, .share-type-icon {
       margin: 4px;
       width: 20px;
       height: 20px;
@@ -59,10 +59,14 @@
       padding: 8px;
       border-radius: 0px;
 
-      .Icon {
+      .Icon, .share-type-icon {
         margin-right: 5px;
         width: 18px;
         height: 18px;
+      }
+
+      &.selected {
+        background-color: var(--popup-button-active);
       }
 
       &:hover {
