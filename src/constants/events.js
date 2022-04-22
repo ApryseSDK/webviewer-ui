@@ -35,8 +35,11 @@
  */
 
 export default {
-  'ANNOTATION_FILTER_CHANGED': 'annotationFilterChanged',
+  // CUSTOM WISEFLOW
+  'WISEFLOW_ANNOTATION_CHANGED': 'wiseflowAnnotationChanged',
   'UNPOSTED_ANNOTATIONS_CHANGED': 'unpostedAnnotationsChanged',
+  // CUSTOM WISEFLOW END
+  'ANNOTATION_FILTER_CHANGED': 'annotationFilterChanged',
   'DOCUMENT_LOADED': 'documentLoaded',
   'DOCUMENT_MERGED': 'documentMerged',
   'FILE_DOWNLOADED': 'fileDownloaded',
@@ -62,15 +65,14 @@ export default {
 };
 
 /**
- * Triggered when annotation filter in the notes panel has changed.
- * Returns empty arrays if the filter is cleared.
- * @name UI#annotationFilterChanged
+ * Triggered when Core#annotationChanged is triggered.
+ * Implements custom annotation change handling, like adding default share type on create etc.
+ * @name UI#wiseflowAnnotationChanged
  * @event
  * @type {object}
- * @property {string[]} types Types filter
- * @property {string[]} authors Author filter
- * @property {string[]} colors Color filter
- * @property {string[]} shareTypes Status filter
+ * @property {Annotation[]} annotations - The updated annotations.
+ * @property {string} action - action: "add", .
+ * @property {object} info - Event info (https://www.pdftron.com/api/web/Core.AnnotationManager.html#.AnnotationChangedInfoObject).
  */
 
 /**
@@ -81,6 +83,18 @@ export default {
  * @type {object}
  * @property {object} pendingEditTextMap Map of pending edit texts
  * @property {number} unpostedAnnotationsCount Number of unposted annotations
+ */
+
+/**
+ * Triggered when annotation filter in the notes panel has changed.
+ * Returns empty arrays if the filter is cleared.
+ * @name UI#annotationFilterChanged
+ * @event
+ * @type {object}
+ * @property {string[]} types Types filter
+ * @property {string[]} authors Author filter
+ * @property {string[]} colors Color filter
+ * @property {string[]} shareTypes Status filter
  */
 
 /**
