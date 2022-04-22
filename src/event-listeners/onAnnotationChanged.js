@@ -28,9 +28,9 @@ export default () => (annotations, action, info) => {
     annotations = annotations.map(annot => setAnnotationShareType(annot, defaultShareType));
   }
 
-  // call custom UI_ANNOTATION_CHANGED event
+  // Call custom WISEFLOW_ANNOTATION_CHANGED event
   if (!info.imported) {
-    fireEvent(Events.UI_ANNOTATION_CHANGED, {
+    fireEvent(Events.WISEFLOW_ANNOTATION_CHANGED, {
       action,
       info,
       annotations,
