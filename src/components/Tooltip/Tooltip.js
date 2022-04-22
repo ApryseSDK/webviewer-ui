@@ -136,7 +136,7 @@ const Tooltip = forwardRef(({ content = '', translatedContent, children, hideSho
     } else {
       setOpacity(0);
     }
-  }, [childRef, show]);
+  }, [childRef, show, content, translatedContent]);
 
   const isUsingMobileDevices = isIOS || isAndroid;
   const child = React.cloneElement(children, {
