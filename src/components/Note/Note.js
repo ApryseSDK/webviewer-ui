@@ -17,7 +17,7 @@ import Button from 'components/Button';
 
 import './Note.scss';
 import { getAnnotationShareType } from 'src/helpers/annotationShareType';
-import ShareTypes from 'src/constants/shareTypes';
+import { ShareTypeColors } from 'src/constants/shareTypes';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -25,7 +25,7 @@ const propTypes = {
 
 let currId = 0;
 
-const Note = ({ annotation, shareTypeColors }) => {
+const Note = ({ annotation }) => {
   const {
     isSelected,
     resize,
@@ -41,17 +41,7 @@ const Note = ({ annotation, shareTypeColors }) => {
   const [isEditingMap, setIsEditingMap] = useState({});
   const [share, setShare] = useState({});
   const getAnnotationStatusColor = () => {
-    switch (getAnnotationShareType(annotation)) {
-      case ShareTypes.ASSESSORS:
-        return shareTypeColors.assessors;
-      case ShareTypes.PARTICIPANTS:
-        return shareTypeColors.participants;
-      case ShareTypes.ALL:
-        return shareTypeColors.all;
-      case ShareTypes.NONE:
-      default:
-        return shareTypeColors.none;
-    }
+    return ShareTypeColors[getAnnotationShareType(annotation)] ?? ShareTypeColors.NONE;
   };
   const ids = useRef([]);
   const dispatch = useDispatch();

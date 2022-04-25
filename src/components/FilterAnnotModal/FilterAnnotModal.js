@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
-import ShareTypes from 'constants/shareTypes';
+import ShareTypes, { ShareTypeColors } from 'constants/shareTypes';
 import { mapAnnotationToKey } from 'constants/map';
 import core from 'core';
 import actions from 'actions';
@@ -24,7 +24,7 @@ import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import './FilterAnnotModal.scss';
 import getDisplayAuthor from 'src/core/getDisplayAuthor';
 
-const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
+const FilterAnnotModal = ({ coAssessors }) => {
   const [isDisabled, isOpen, colorMap] = useSelector(state => [
     selectors.isElementDisabled(state, 'filterModal'),
     selectors.isElementOpen(state, 'filterModal'),
@@ -33,9 +33,11 @@ const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
+  // Fields to be rendered
   const [authors, setAuthors] = useState([]);
   const [annotTypes, setAnnotTypes] = useState([]);
   const [colors, setColorTypes] = useState([]);
+  const [shareTypes, setShareTypes] = useState([]);
 
   const [authorFilter, setAuthorFilter] = useState([]);
   const [typesFilter, setTypesFilter] = useState([]);
@@ -184,7 +186,7 @@ const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
     setAuthors([...authorsToBeAdded]);
     setAnnotTypes([...annotTypesToBeAdded]);
     setColorTypes([...annotColorsToBeAdded]);
-    //setStatusTypes([...annotStatusesToBeAdded]);
+    setShareTypes([...annotShareTypesToBeAdded]);
 
     core.addEventListener('documentUnloaded', closeModal);
     return () => {
@@ -295,12 +297,12 @@ const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
     );
   };
 
-  const renderStatusTypes = () => {
+  const renderShareTypes = () => {
     return (
       <div className="filter">
         <div className="heading">{t('option.filterAnnotModal.shareType')}</div>
         <div className="buttons" style={{ gridTemplateColumns: `114px 100px` }}>
-          {[...Object.keys(ShareTypes)].map((val, index) => {
+          {shareTypes.map((val, index) => {
             return (
               <Choice
                 type="checkbox"
@@ -309,7 +311,7 @@ const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
                 label={
                   <div
                     style={{
-                      backgroundColor: `${shareTypeColors[val.toLocaleLowerCase()]}`,
+                      backgroundColor: `${ShareTypeColors[val]}`,
                       padding: `5px 10px`,
                       borderRadius: `5px`,
                       color: `#fff`,
@@ -380,7 +382,7 @@ const FilterAnnotModal = ({ coAssessors, shareTypeColors }) => {
                 <div className="swipe-indicator" />
                 <div className="filter-options">
                   {renderAuthors()}
-                  {renderStatusTypes()}
+                  {renderShareTypes()}
                   {renderAnnotTypes()}
                   {renderColorTypes()}
                   {renderCoAssessors()}

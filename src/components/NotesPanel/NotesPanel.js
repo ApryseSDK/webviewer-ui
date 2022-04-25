@@ -23,7 +23,7 @@ import fireEvent from 'helpers/fireEvent';
 import { debounce } from 'lodash';
 import './NotesPanel.scss';
 
-const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
+const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [
     sortStrategy,
     isOpen,
@@ -334,7 +334,6 @@ const NotesPanel = ({ currentLeftPanelWidth, shareTypeColors }) => {
         <NoteContext.Provider value={contextValue}>
           <Note
             annotation={currNote}
-            shareTypeColors={shareTypeColors}
           />
         </NoteContext.Provider>
       </div>

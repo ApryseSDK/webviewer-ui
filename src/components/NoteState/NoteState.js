@@ -6,8 +6,8 @@ import classNames from 'classnames';
 import Tooltip from '../Tooltip';
 
 import DataElementWrapper from 'components/DataElementWrapper';
-import Icon from 'components/Icon';
 import ShareTypes from 'constants/shareTypes';
+import ShareTypeIcon from './ShareTypeIcon';
 
 import './NoteState.scss';
 import { getAnnotationShareType, setAnnotationShareType } from 'src/helpers/annotationShareType';
@@ -48,18 +48,8 @@ function NoteState(props) {
   function onStateOptionsButtonClick() {
     setIsOpen(false);
   }
-  const getStatusIcon = () => {
-    switch (getAnnotationShareType(annotation)) {
-      case ShareTypes.ASSESSORS:
-        return 'icon-page-insertion-insert-above';
-      case ShareTypes.PARTICIPANTS:
-        return 'icon-tool-stamp-fill';
-      case ShareTypes.ALL:
-        return 'ic_annotation_apply_redact_black_24px';
-      case ShareTypes.NONE:
-      default:
-        return 'icon-annotation-status-none';
-    }
+  const getShareTypeIcon = (shareType) => {
+    return <ShareTypeIcon shareType={shareType} />;
   };
   function createOnStateOptionButtonClickHandler(state) {
     return function onStateOptionButtonClick() {
@@ -74,11 +64,12 @@ function NoteState(props) {
     return null;
   }
 
-  const annotationState = annotation.getStatus();
-  const icon = `icon-annotation-status-${annotationState === '' ? 'none' : annotationState.toLowerCase()}`;
+  const annotationShareType = getAnnotationShareType(annotation) || ShareTypes.NONE;
+  const icon = getShareTypeIcon(annotationShareType);
   const isReply = annotation.isReply();
 
-  if ((annotationState === '' || annotationState === 'None') && !isSelected) {
+  // Hide sharetype menu if annotation is not selected
+  if (!isSelected) {
     return null;
   }
 
@@ -89,47 +80,45 @@ function NoteState(props) {
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
   return (
     <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
-      <Tooltip content={t('option.notesOrder.shareType')}>
-        <div className={noteStateButtonClassName}>
-          <Icon glyph={getStatusIcon()} />
-        </div>
+      <Tooltip translatedContent={`${t('option.notesOrder.shareType')}: ${t(`option.state.${annotationShareType.toLowerCase()}`)}`}>
+        <div className={noteStateButtonClassName}>{icon}</div>
       </Tooltip>
       {isOpen && (
         <button className="note-state-options" onClick={onStateOptionsButtonClick}>
           <DataElementWrapper dataElement="notePopupState">
             <DataElementWrapper
               dataElement="notePopupState-assessor"
-              className="note-state-option"
+              className={`note-state-option${annotationShareType === ShareTypes.ASSESSORS ? ' selected' : ''}`}
               onClick={createOnStateOptionButtonClickHandler(ShareTypes.ASSESSORS)}
             >
-              <Icon glyph="icon-page-insertion-insert-above" />
+              {getShareTypeIcon(ShareTypes.ASSESSORS)}
               {t('option.state.assessors')}
             </DataElementWrapper>
 
             <DataElementWrapper
               dataElement="notePopupStateParticipants"
-              className="note-state-option"
+              className={`note-state-option${annotationShareType === ShareTypes.PARTICIPANTS ? ' selected' : ''}`}
               onClick={createOnStateOptionButtonClickHandler(ShareTypes.PARTICIPANTS)}
             >
-              <Icon glyph="icon-tool-stamp-fill" />
+              {getShareTypeIcon(ShareTypes.PARTICIPANTS)}
               {t('option.state.participants')}
             </DataElementWrapper>
 
             <DataElementWrapper
               dataElement="notePopupStateAll"
-              className="note-state-option"
+              className={`note-state-option${annotationShareType === ShareTypes.ALL ? ' selected' : ''}`}
               onClick={createOnStateOptionButtonClickHandler(ShareTypes.ALL)}
             >
-              <Icon glyph="ic_annotation_apply_redact_black_24px" />
+              {getShareTypeIcon(ShareTypes.ALL)}
               {t('option.state.all')}
             </DataElementWrapper>
 
             <DataElementWrapper
               dataElement="notePopupStateAssessors"
-              className="note-state-option"
+              className={`note-state-option${annotationShareType === ShareTypes.NONE ? ' selected' : ''}`}
               onClick={createOnStateOptionButtonClickHandler(ShareTypes.NONE)}
             >
-              <Icon glyph="icon-colour-none" />
+              {getShareTypeIcon(ShareTypes.NONE)}
               {t('option.state.none')}
             </DataElementWrapper>
           </DataElementWrapper>
