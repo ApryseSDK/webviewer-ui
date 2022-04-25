@@ -45,6 +45,8 @@ function NoteStateContainer(props) {
   const handleStateChange = React.useCallback(
     function handleStateChangeCallback(newValue) {
       // CUSTOM WISEFLOW: Set custom data value called sharetype and trigger annotationChanged event
+
+      // Set share type and trigger annotationChanged "modify" event
       setAnnotationShareType(annotation, newValue);
       getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', {}]);
     },

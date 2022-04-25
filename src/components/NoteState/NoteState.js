@@ -5,12 +5,15 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import Tooltip from '../Tooltip';
 
+import core from 'core';
+
 import DataElementWrapper from 'components/DataElementWrapper';
 import ShareTypes from 'constants/shareTypes';
 import ShareTypeIcon from './ShareTypeIcon';
 
 import './NoteState.scss';
-import { getAnnotationShareType, setAnnotationShareType } from 'src/helpers/annotationShareType';
+
+import { getAnnotationShareType } from 'src/helpers/annotationShareType';
 
 const propTypes = {
   annotation: PropTypes.object,
@@ -36,6 +39,8 @@ function NoteState(props) {
   const [isOpen, setIsOpen] = useState(openOnInitialLoad);
   const popupRef = useRef();
 
+  const isOwnedByCurrentUser = annotation.Author === core.getCurrentUser();
+
   useOnClickOutside(popupRef, () => {
     setIsOpen(false);
   });
@@ -48,14 +53,18 @@ function NoteState(props) {
   function onStateOptionsButtonClick() {
     setIsOpen(false);
   }
-  const getShareTypeIcon = (shareType) => {
+
+  const getShareTypeIcon = shareType => {
     return <ShareTypeIcon shareType={shareType} />;
   };
+
   function createOnStateOptionButtonClickHandler(state) {
+    // If not current author, do not allow state change
+    if (!isOwnedByCurrentUser) return;
+
     return function onStateOptionButtonClick() {
       if (handleStateChange) {
         handleStateChange(state);
-        setAnnotationShareType(annotation, state);
       }
     };
   }
@@ -80,11 +89,18 @@ function NoteState(props) {
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
   return (
     <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
-      <Tooltip translatedContent={`${t('option.notesOrder.shareType')}: ${t(`option.state.${annotationShareType.toLowerCase()}`)}`}>
+      <Tooltip
+        translatedContent={`${t('option.notesOrder.shareType')}: ${t(
+          `option.state.${annotationShareType.toLowerCase()}`,
+        )}`}
+      >
         <div className={noteStateButtonClassName}>{icon}</div>
       </Tooltip>
       {isOpen && (
-        <button className="note-state-options" onClick={onStateOptionsButtonClick}>
+        <button
+          className={`note-state-options ${isOwnedByCurrentUser ? 'enabled' : 'disabled'}`}
+          onClick={onStateOptionsButtonClick}
+        >
           <DataElementWrapper dataElement="notePopupState">
             <DataElementWrapper
               dataElement="notePopupState-assessor"
