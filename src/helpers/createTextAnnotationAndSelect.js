@@ -5,7 +5,6 @@ import actions from 'actions';
 
 export default (dispatch, annotationConstructor) => {
   const annotations = createTextAnnotation(annotationConstructor);
-  console.log('hej');
 
   core.clearSelection();
   core.addAnnotations(annotations);
