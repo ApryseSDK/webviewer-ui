@@ -1,0 +1,15 @@
+.share-type-icon {
+  width: 22px;
+  height: 22px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .share-type-icon-inner {
+    width: 80%;
+    height: 80%;
+    border-radius: 0.2875rem;
+    background-color: #b2b3b3; // ShareType.NONE as default.
+  }
+}
