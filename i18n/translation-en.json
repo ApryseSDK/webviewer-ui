@@ -488,10 +488,19 @@
       "modalName": "Create New Stamp",
       "stampText": "Stamp text",
       "timestampText": "Timestamp text",
-      "stampColor": "Stamp color:",
       "Username": "Username",
       "Date": "Date",
-      "Time": "Time"
+      "Time": "Time",
+      "fontStyle": "Font style",
+      "dateFormat": "Date format",
+      "month": "Month",
+      "day": "Day",
+      "year": "Year",
+      "hour": "Hour",
+      "minute": "Minute",
+      "second": "Second",
+      "textColor": "Text color",
+      "backgroundColor": "Background color"
     },
     "pageRedactModal": {
       "addMark": "Add Mark",

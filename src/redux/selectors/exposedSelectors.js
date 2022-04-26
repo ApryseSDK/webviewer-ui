@@ -2,6 +2,7 @@ import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 
 // viewer
+export const getDateTimeFormats = state => state.viewer.dateTimeFormats;
 export const getFonts = state => state.viewer.fonts;
 export const getTabs = state => state.viewer.tabs;
 export const getActiveTab = state => state.viewer.activeTab;
@@ -101,7 +102,7 @@ export const getEnabledToolbarGroups = state => {
   const toolbarGroupDataElements = getToolbarGroupDataElements(state);
   return toolbarGroupDataElements.filter(dataElement => {
     const headerItems = state.viewer.headers[dataElement];
-    const flattenHeaderItems = (dataItems) => {
+    const flattenHeaderItems = dataItems => {
       return dataItems.reduce((total, item) => {
         if (item.children) {
           total.push(...flattenHeaderItems(item.children));
@@ -109,7 +110,7 @@ export const getEnabledToolbarGroups = state => {
           total.push(item);
         }
         return total;
-      }, [])
+      }, []);
     };
 
     const itemsToCheck = flattenHeaderItems(headerItems);

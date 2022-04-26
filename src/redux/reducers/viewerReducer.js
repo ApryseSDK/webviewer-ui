@@ -4,6 +4,11 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_DATE_TIME_FORMATS':
+      return {
+        ...state,
+        dateTimeFormats: payload.dateTimeFormats,
+      };
     case 'SET_FONTS':
       return {
         ...state,
@@ -427,6 +432,16 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         enableNoteSubmissionWithEnter: payload.enableNoteSubmissionWithEnter
+      };
+    case 'SET_NOTES_PANEL_TEXT_COLLAPSING':
+      return {
+        ...state,
+        isNotesPanelTextCollapsingEnabled: payload.enableNotesPanelTextCollapsing
+      };
+    case 'SET_NOTES_PANEL_REPLIES_COLLAPSING':
+      return {
+        ...state,
+        isNotesPanelRepliesCollapsingEnabled: payload.enableNotesPanelRepliesCollapsing
       };
     case 'ADD_TRUSTED_CERTIFICATES':
       /**
