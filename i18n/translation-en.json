@@ -131,7 +131,8 @@
     "link": "Link",
     "other": "Other",
     "3D": "3D",
-    "sound": "Sound"
+    "sound": "Sound",
+    "reference": "Reference"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -398,7 +399,7 @@
       "cancelled": "Cancelled",
       "set": "Set status:",
       "setBy": "set by",
-      "none": "None",
+      "none": "Private",
       "marked": "Marked",
       "unmarked": "Unmarked",
       "assessors": "Assessors",

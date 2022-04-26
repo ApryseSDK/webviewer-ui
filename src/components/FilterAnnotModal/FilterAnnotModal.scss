@@ -12,7 +12,7 @@
     align-items: center;
     border-radius: 4px;
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-    padding: 8px 8px;
+    padding: 1em;
     background: var(--component-background);
 
     @include mobile {
@@ -76,6 +76,7 @@
             display: grid;
             padding: 6px 0 6px 0;
             grid-template-columns: 100px 100px;
+            column-gap: 1em;
           }
 
           .colorSelect {
@@ -91,7 +92,8 @@
           }
 
           label {
-            overflow: hidden;
+            // Custom wiseflow
+            // overflow: hidden;
             text-overflow: ellipsis;
           }
         }

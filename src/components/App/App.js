@@ -66,24 +66,12 @@ const propTypes = {
   coAssessors: PropTypes.array,
 };
 
-const App = ({
-  removeEventHandlers,
-  // this colors are taken from flow-ui-react secondry light colors
-  shareTypeColors = { assessors: '#8c71c1', participants: '#719ec1', all: '#7ec171', none: '#b2b3b3' },
-  coAssessors,
-}) => {
+const App = ({ removeEventHandlers, coAssessors }) => {
   const store = useStore();
   const dispatch = useDispatch();
   let timeoutReturn;
 
   const [isInDesktopOnlyMode] = useSelector(state => [selectors.isInDesktopOnlyMode(state)]);
-  const [notesShareTypesMap, setNotesShareTypesMap] = useState([]);
-  const setNotesShareType = useCallback(
-    (sharetype, index) => {
-      setNotesShareTypesMap(map => ({ ...map, [index]: sharetype }));
-    },
-    [setNotesShareTypesMap],
-  );
   useEffect(() => {
     fireEvent(Events.VIEWER_LOADED);
     window.parent.postMessage(
@@ -180,11 +168,7 @@ const App = ({
             <SearchPanel />
           </RightPanel>
           <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
-            <NotesPanel
-              shareTypeColors={shareTypeColors}
-              setNotesShareType={setNotesShareType}
-              notesShareTypesMap={notesShareTypesMap}
-            />
+            <NotesPanel />
           </RightPanel>
         </div>
         <ViewControlsOverlay />
@@ -211,11 +195,7 @@ const App = ({
         <PageReplacementModal />
         <LinkModal />
         <ContentEditModal />
-        <FilterAnnotModal
-          coAssessors={coAssessors}
-          notesShareTypesMap={notesShareTypesMap}
-          shareTypeColors={shareTypeColors}
-        />
+        <FilterAnnotModal coAssessors={coAssessors} />
         <CustomModal />
         <Model3DModal />
         <ColorPickerModal />

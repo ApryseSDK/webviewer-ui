@@ -34,8 +34,6 @@ const propTypes = {
   isEditing: PropTypes.bool,
   noteIndex: PropTypes.number,
   sortStrategy: PropTypes.string,
-  notesShareTypesMap: PropTypes.object,
-  setNotesShareType: PropTypes.func,
 };
 
 function NoteHeader(props) {
@@ -56,8 +54,6 @@ function NoteHeader(props) {
     isEditing,
     noteIndex,
     sortStrategy,
-    notesShareTypesMap,
-    setNotesShareType,
   } = props;
 
   const [t] = useTranslation();
@@ -76,11 +72,16 @@ function NoteHeader(props) {
 
   const pageNumber = annotation.getPageNumber();
   const annotationList = core.getAnnotationsList();
+  // CUSTOM WISEFLOW: filter by page and sort by Y to get position index + 1
   const annotNumber =
-    annotationList?.filter(annot => annot.TD === pageNumber)?.findIndex(annot => annot.xy === annotation.Id) + 1;
+    annotationList
+      ?.filter(annot => annot.getPageNumber() === pageNumber)
+      ?.sort((a, b) => a.getY() - b.getY())
+      ?.findIndex(annot => annot.Id === annotation.Id) + 1;
 
-  const handleCopyAnnotId = () => {
-    navigator.clipboard.writeText(`Page ${pageNumber}, annotation ${annotNumber}`);
+  const handleCopyAnnotId = (e) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(`${pageNumber}-${annotNumber}`);
     setCopyTooltip(t('action.copied'));
     setTimeout(() => {
       setCopyTooltip(t('action.copyText'));
@@ -112,10 +113,10 @@ function NoteHeader(props) {
             </div>
             <div className="annotId">
               <span>
-                Page {pageNumber} , annotation {annotNumber}
+                {t('annotation.reference')}: {pageNumber}-{annotNumber}
               </span>
               <Tooltip content={copyTooltip}>
-                <div onClick={() => handleCopyAnnotId()}>
+                <div role="button" onClick={handleCopyAnnotId} className={"copy-reference-button"}>
                   <Icon glyph="icon-header-page-manipulation-page-transition-reader" />
                 </div>
               </Tooltip>
@@ -125,14 +126,7 @@ function NoteHeader(props) {
           <div className="state-and-overflow">
             <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
             {!isNoteStateDisabled && !isReply && (
-              <NoteState
-                annotation={annotation}
-                isSelected={isSelected}
-                share={share}
-                noteIndex={noteIndex}
-                notesShareTypesMap={notesShareTypesMap}
-                setNotesShareType={setNotesShareType}
-              />
+              <NoteState annotation={annotation} isSelected={isSelected} share={share} noteIndex={noteIndex} />
             )}
             {!isEditing && isSelected && (
               <NotePopup noteIndex={noteIndex} annotation={annotation} setIsEditing={setIsEditing} isReply={isReply} />
