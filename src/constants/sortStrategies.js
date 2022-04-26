@@ -6,6 +6,8 @@ import { rotateRad } from 'helpers/rotate';
 import { rgbaToHex } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
+import { getAnnotationShareType } from 'helpers/annotationShareType';
+import ShareTypes, { ShareTypeOrder } from './shareTypes';
 
 function getDocumentCenter(pageNumber) {
   let result;
@@ -61,7 +63,7 @@ const sortStrategies = {
       `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
   createdDate: {
-    getSortedNotes: notes => notes.sort((a, b) => ( a.DateCreated || 0) - (b.DateCreated || 0)),
+    getSortedNotes: notes => notes.sort((a, b) => (a.DateCreated || 0) - (b.DateCreated || 0)),
     shouldRenderSeparator: (prevNote, currNote) => {
       const prevNoteDate = prevNote.DateCreated;
       const currNoteDate = currNote.DateCreated;
@@ -128,24 +130,21 @@ const sortStrategies = {
       }
     },
   },
-  status: {
+  shareType: {
     getSortedNotes: notes =>
       notes.sort((a, b) => {
-        const statusA =
-          a.getStatus() === ''
-            ? i18next.t('option.state.none').toUpperCase()
-            : i18next.t(`option.state.${a.getStatus().toLowerCase()}`).toUpperCase();
-        const statusB =
-          b.getStatus() === ''
-            ? i18next.t('option.state.none').toUpperCase()
-            : i18next.t(`option.state.${b.getStatus().toLowerCase()}`).toUpperCase();
-        return statusA < statusB ? -1 : statusA > statusB ? 1 : 0;
+        const shareTypeA = getAnnotationShareType(a);
+        const shareTypeB = getAnnotationShareType(b);
+        return ShareTypeOrder[shareTypeA] - ShareTypeOrder[shareTypeB];
       }),
-    shouldRenderSeparator: (prevNote, currNote) => prevNote.getStatus() !== currNote.getStatus(),
+    shouldRenderSeparator: (prevNote, currNote) => {
+      if (prevNote === null) return true;
+      const prevShareType = getAnnotationShareType(prevNote);
+      const currShareType = getAnnotationShareType(currNote);
+      return prevShareType !== currShareType;
+    },
     getSeparatorContent: (prevNote, currNote) => {
-      return currNote.getStatus() === ''
-        ? i18next.t('option.state.none')
-        : i18next.t(`option.state.${currNote.getStatus().toLowerCase()}`);
+      return i18next.t(`option.state.${getAnnotationShareType(currNote).toLowerCase()}`);
     },
   },
   author: {
@@ -155,7 +154,8 @@ const sortStrategies = {
         const authorB = core.getDisplayAuthor(b['Author'])?.toUpperCase();
         return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
       }),
-    shouldRenderSeparator: (prevNote, currNote) => core.getDisplayAuthor(prevNote['Author']) !== core.getDisplayAuthor(currNote['Author']),
+    shouldRenderSeparator: (prevNote, currNote) =>
+      core.getDisplayAuthor(prevNote['Author']) !== core.getDisplayAuthor(currNote['Author']),
     getSeparatorContent: (prevNote, currNote) => {
       return core.getDisplayAuthor(currNote['Author']);
     },
@@ -233,10 +233,10 @@ export const addSortStrategy = newStrategy => {
  * @property {string} POSITION Sort notes by position.
  * @property {string} CREATED_DATE Sort notes by creation date.
  * @property {string} MODIFIED_DATE Sort notes by last modification date.
- * @property {string} STATUS Sort notes by status.
  * @property {string} AUTHOR Sort notes by the author.
  * @property {string} TYPE Sort notes by type.
  * @property {string} COLOR Sort notes by color.
+ * @property {string} SHARE_TYPE CUSTOM WISEFLOW Sort notes by share type.
  *
  * @example
 WebViewer(...)
@@ -249,8 +249,9 @@ export const NotesPanelSortStrategy = {
   POSITION: 'position',
   CREATED_DATE: 'createdDate',
   MODIFIED_DATE: 'modifiedDate',
-  STATUS: 'status',
   AUTHOR: 'author',
   TYPE: 'type',
-  COLOR: 'color'
+  COLOR: 'color',
+  // CUSTOM WISEFLOW: own sort strategy
+  SHARE_TYPE: 'shareType',
 };

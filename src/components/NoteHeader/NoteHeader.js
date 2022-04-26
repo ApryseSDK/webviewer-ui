@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo, memo } from 'react';
 import PropTypes from 'prop-types';
 import NotePopup from 'components/NotePopup';
 import NoteState from 'components/NoteState';
@@ -14,7 +14,6 @@ import core from 'core';
 
 import './NoteHeader.scss';
 import Tooltip from '../Tooltip';
-import AnnotationStylePopupStories from '../AnnotationStylePopup/AnnotationStylePopup.stories';
 
 const propTypes = {
   icon: PropTypes.string,
@@ -71,15 +70,36 @@ function NoteHeader(props) {
   const noteHeaderClass = classNames('NoteHeader', { parent: !isReply });
 
   const pageNumber = annotation.getPageNumber();
-  const annotationList = core.getAnnotationsList();
-  // CUSTOM WISEFLOW: filter by page and sort by Y to get position index + 1
-  const annotNumber =
-    annotationList
-      ?.filter(annot => annot.getPageNumber() === pageNumber)
-      ?.sort((a, b) => a.getY() - b.getY())
-      ?.findIndex(annot => annot.Id === annotation.Id) + 1;
 
-  const handleCopyAnnotId = (e) => {
+  // CUSTOM WISEFLOW: filter by page and sort by Y to get position index + 1
+  const getAnnotationNumber = useCallback(annotationList => {
+    return (
+      annotationList
+        ?.filter(annot => annot.getPageNumber() === annotation.getPageNumber())
+        ?.sort((a, b) => a.getY() - b.getY())
+        ?.findIndex(annot => annot.Id === annotation.Id) + 1
+    );
+  }, []);
+
+  // CUSTOM WISEFLOW: Get all annotations, Using same filter as PDFtron uses for notes panel
+  const annotationList = useMemo(() => {
+    return core
+      .getAnnotationsList()
+      .filter(
+        annot =>
+          annot.Listable &&
+          !annot.isReply() &&
+          !annot.Hidden &&
+          !annot.isGrouped() &&
+          annot.ToolName !== window.Core.Tools.ToolNames.CROP &&
+          !annot.isContentEditPlaceholder(),
+      );
+  }, [core.getAnnotationsList().length]);
+
+  // CUSTOM WISEFLOW: Set annotation number
+  const annotNumber = getAnnotationNumber(annotationList);
+
+  const handleCopyAnnotId = e => {
     e.stopPropagation();
     navigator.clipboard.writeText(`${pageNumber}-${annotNumber}`);
     setCopyTooltip(t('action.copied'));
@@ -104,19 +124,13 @@ function NoteHeader(props) {
               <div className="date-and-time">
                 {date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate')}
               </div>
-              {numberOfReplies > 0 && !isSelected && (
-                <div className="num-replies-container">
-                  <Icon className="num-reply-icon" glyph={'icon-chat-bubble'} />
-                  <div className="num-replies">{numberOfReplies}</div>
-                </div>
-              )}
             </div>
             <div className="annotId">
               <span>
                 {t('annotation.reference')}: {pageNumber}-{annotNumber}
               </span>
               <Tooltip content={copyTooltip}>
-                <div role="button" onClick={handleCopyAnnotId} className={"copy-reference-button"}>
+                <div role="button" onClick={handleCopyAnnotId} className={'copy-reference-button'}>
                   <Icon glyph="icon-header-page-manipulation-page-transition-reader" />
                 </div>
               </Tooltip>
