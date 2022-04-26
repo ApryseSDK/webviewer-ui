@@ -6,6 +6,7 @@ import { rotateRad } from 'helpers/rotate';
 import { rgbaToHex } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
+import { getAnnotationShareType } from 'src/helpers/annotationShareType';
 
 function getDocumentCenter(pageNumber) {
   let result;
@@ -61,7 +62,7 @@ const sortStrategies = {
       `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
   createdDate: {
-    getSortedNotes: notes => notes.sort((a, b) => ( a.DateCreated || 0) - (b.DateCreated || 0)),
+    getSortedNotes: notes => notes.sort((a, b) => (a.DateCreated || 0) - (b.DateCreated || 0)),
     shouldRenderSeparator: (prevNote, currNote) => {
       const prevNoteDate = prevNote.DateCreated;
       const currNoteDate = currNote.DateCreated;
@@ -129,23 +130,26 @@ const sortStrategies = {
     },
   },
   status: {
+    // WISEFLOW EDIT : fix sorting to sort according to sharetype correctly
+
     getSortedNotes: notes =>
       notes.sort((a, b) => {
         const statusA =
-          a.getStatus() === ''
+          getAnnotationShareType(a) === ''
             ? i18next.t('option.state.none').toUpperCase()
-            : i18next.t(`option.state.${a.getStatus().toLowerCase()}`).toUpperCase();
+            : i18next.t(`option.state.${getAnnotationShareType(a).toLowerCase()}`).toUpperCase();
         const statusB =
-          b.getStatus() === ''
+          getAnnotationShareType(b) === ''
             ? i18next.t('option.state.none').toUpperCase()
-            : i18next.t(`option.state.${b.getStatus().toLowerCase()}`).toUpperCase();
+            : i18next.t(`option.state.${getAnnotationShareType(b).toLowerCase()}`).toUpperCase();
         return statusA < statusB ? -1 : statusA > statusB ? 1 : 0;
       }),
-    shouldRenderSeparator: (prevNote, currNote) => prevNote.getStatus() !== currNote.getStatus(),
+    shouldRenderSeparator: (prevNote, currNote) =>
+      getAnnotationShareType(prevNote) !== getAnnotationShareType(currNote),
     getSeparatorContent: (prevNote, currNote) => {
-      return currNote.getStatus() === ''
+      return getAnnotationShareType(currNote) === ''
         ? i18next.t('option.state.none')
-        : i18next.t(`option.state.${currNote.getStatus().toLowerCase()}`);
+        : i18next.t(`option.state.${getAnnotationShareType(currNote).toLowerCase()}`);
     },
   },
   author: {
@@ -155,7 +159,8 @@ const sortStrategies = {
         const authorB = core.getDisplayAuthor(b['Author'])?.toUpperCase();
         return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
       }),
-    shouldRenderSeparator: (prevNote, currNote) => core.getDisplayAuthor(prevNote['Author']) !== core.getDisplayAuthor(currNote['Author']),
+    shouldRenderSeparator: (prevNote, currNote) =>
+      core.getDisplayAuthor(prevNote['Author']) !== core.getDisplayAuthor(currNote['Author']),
     getSeparatorContent: (prevNote, currNote) => {
       return core.getDisplayAuthor(currNote['Author']);
     },
@@ -252,5 +257,5 @@ export const NotesPanelSortStrategy = {
   STATUS: 'status',
   AUTHOR: 'author',
   TYPE: 'type',
-  COLOR: 'color'
+  COLOR: 'color',
 };
