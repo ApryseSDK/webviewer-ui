@@ -22,24 +22,18 @@ import selectors from 'selectors';
 import './AnnotationPopup.scss';
 
 const AnnotationPopup = () => {
-  const [
-    isDisabled,
-    isOpen,
-    isNotesPanelDisabled,
-    isAnnotationStylePopupDisabled,
-    popupItems,
-    isNotesPanelOpen,
-  ] = useSelector(
-    state => [
-      selectors.isElementDisabled(state, 'annotationPopup'),
-      selectors.isElementOpen(state, 'annotationPopup'),
-      selectors.isElementDisabled(state, 'notesPanel'),
-      selectors.isElementDisabled(state, 'annotationStylePopup'),
-      selectors.getPopupItems(state, 'annotationPopup'),
-      selectors.isElementOpen(state, 'notesPanel'),
-    ],
-    shallowEqual,
-  );
+  const [isDisabled, isOpen, isNotesPanelDisabled, isAnnotationStylePopupDisabled, popupItems, isNotesPanelOpen] =
+    useSelector(
+      state => [
+        selectors.isElementDisabled(state, 'annotationPopup'),
+        selectors.isElementOpen(state, 'annotationPopup'),
+        selectors.isElementDisabled(state, 'notesPanel'),
+        selectors.isElementDisabled(state, 'annotationStylePopup'),
+        selectors.getPopupItems(state, 'annotationPopup'),
+        selectors.isElementOpen(state, 'notesPanel'),
+      ],
+      shallowEqual,
+    );
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const [position, setPosition] = useState({ left: 0, top: 0 });
@@ -58,14 +52,16 @@ const AnnotationPopup = () => {
 
   // helper function to get all the link annotations that are grouped with the passed in annotation
   const getGroupedLinkAnnotations = annotation => {
-    const groupedLinks = core.getAnnotationManager().getGroupAnnotations(annotation).filter(groupedAnnotation => {
-      return groupedAnnotation instanceof Annotations.Link;
-    });
+    const groupedLinks = core
+      .getAnnotationManager()
+      .getGroupAnnotations(annotation)
+      .filter(groupedAnnotation => {
+        return groupedAnnotation instanceof Annotations.Link;
+      });
     return groupedLinks;
   };
 
   useOnClickOutside(popupRef, e => {
-
     const notesPanel = document.querySelector('[data-element="notesPanel"]');
     const clickedInNotesPanel = notesPanel?.contains(e.target);
     const datePicker = getDatePicker();
@@ -211,15 +207,18 @@ const AnnotationPopup = () => {
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
 
   const isFreeTextAnnot = firstAnnotation instanceof window.Annotations.FreeTextAnnotation;
-  const isFreeTextAndCanEdit = isFreeTextAnnot && core.getAnnotationManager().isFreeTextEditingEnabled() && core.canModifyContents(firstAnnotation);
-  const isDateFreeTextCanEdit = isFreeTextAnnot && firstAnnotation.getDateFormat() && core.canModifyContents(firstAnnotation);
+  const isFreeTextAndCanEdit =
+    isFreeTextAnnot &&
+    core.getAnnotationManager().isFreeTextEditingEnabled() &&
+    core.canModifyContents(firstAnnotation);
+  const isDateFreeTextCanEdit =
+    isFreeTextAnnot && firstAnnotation.getDateFormat() && core.canModifyContents(firstAnnotation);
 
   const commentOnAnnotation = () => {
     if (isDateFreeTextCanEdit) {
       toggleDatePicker();
       return;
-    }
-    else {
+    } else {
       dispatch(actions.openElement('notesPanel'));
       dispatch(actions.closeElement('searchPanel'));
       dispatch(actions.triggerNoteEditing());
@@ -232,11 +231,19 @@ const AnnotationPopup = () => {
     core.getAnnotationManager().updateAnnotation(firstAnnotation);
   };
   const ShortCutKeysFor3DComponent = () => {
-    return (<div className="shortCuts3D">
-      <div className="closeButton" onClick={() => setShortCutKeysFor3DVisible(false)}>x</div>
-      <div className="row">{t('action.rotate3D')} <span>{t('shortcut.rotate3D')}</span></div>
-      <div className="row">{t('action.zoom')} <span>{t('shortcut.zoom3D')}</span></div>
-    </div>);
+    return (
+      <div className="shortCuts3D">
+        <div className="closeButton" onClick={() => setShortCutKeysFor3DVisible(false)}>
+          x
+        </div>
+        <div className="row">
+          {t('action.rotate3D')} <span>{t('shortcut.rotate3D')}</span>
+        </div>
+        <div className="row">
+          {t('action.zoom')} <span>{t('shortcut.zoom3D')}</span>
+        </div>
+      </div>
+    );
   };
 
   const downloadFileAttachment = annot => {
@@ -252,11 +259,7 @@ const AnnotationPopup = () => {
   };
 
   const toolNames = window.Core.Tools.ToolNames;
-  const toolsWithNoStyling = [
-    toolNames.CROP,
-    toolNames.RADIO_FORM_FIELD,
-    toolNames.CHECK_BOX_FIELD,
-  ];
+  const toolsWithNoStyling = [toolNames.CROP, toolNames.RADIO_FORM_FIELD, toolNames.CHECK_BOX_FIELD];
 
   const toolsThatCantHaveLinks = [
     toolNames.CROP,
@@ -283,7 +286,8 @@ const AnnotationPopup = () => {
     hasStyle &&
     !isAnnotationStylePopupDisabled &&
     (!multipleAnnotationsSelected || canUngroup) &&
-    !toolsWithNoStyling.includes(firstAnnotation.ToolName) && !(firstAnnotation instanceof Annotations.Model3DAnnotation) &&
+    !toolsWithNoStyling.includes(firstAnnotation.ToolName) &&
+    !(firstAnnotation instanceof Annotations.Model3DAnnotation) &&
     !firstAnnotation.isContentEditPlaceholder();
 
   const showRedactionButton = redactionEnabled && !multipleAnnotationsSelected && !includesFormFieldAnnotation;
@@ -294,19 +298,17 @@ const AnnotationPopup = () => {
     canModify && firstAnnotation.Measure && firstAnnotation instanceof Annotations.LineAnnotation;
 
   const showFileDownloadButton = firstAnnotation instanceof window.Annotations.FileAttachmentAnnotation;
-  const shouldShowAudioPlayButton = (
+  const shouldShowAudioPlayButton =
     !isIE &&
     !selectedMultipleAnnotations &&
     firstAnnotation instanceof window.Annotations.SoundAnnotation &&
-    firstAnnotation.hasAudioData()
-  );
+    firstAnnotation.hasAudioData();
 
-  const showLinkButton = (
+  const showLinkButton =
     !toolsThatCantHaveLinks.includes(firstAnnotation.ToolName) &&
     !includesFormFieldAnnotation &&
     !firstAnnotation.isContentEditPlaceholder() &&
-    !(firstAnnotation instanceof Annotations.SoundAnnotation) // TODO(Adam): Update this once SoundAnnotation tool is created.
-  );
+    !(firstAnnotation instanceof Annotations.SoundAnnotation); // TODO(Adam): Update this once SoundAnnotation tool is created.
 
   const onDatePickerShow = isDatePickerShowed => {
     setDatePickerMount(isDatePickerShowed);
@@ -316,7 +318,7 @@ const AnnotationPopup = () => {
 
   const onResize = () => {
     setStylePopupRepositionFlag(!stylePopupRepositionFlag);
-  }
+  };
 
   const annotationPopup = (
     <div
@@ -337,37 +339,40 @@ const AnnotationPopup = () => {
         ) : (
           <DatePicker onClick={handleDateChange} annotation={firstAnnotation} onDatePickerShow={onDatePickerShow} />
         )
-      ) : (shortCutKeysFor3DVisible && firstAnnotation instanceof Annotations.Model3DAnnotation) ?
-        <ShortCutKeysFor3DComponent /> : (
-          <CustomizablePopup dataElement="annotationPopup">
-            {showCommentButton && (
-              <ActionButton
-                dataElement="annotationCommentButton"
-                title="action.comment"
-                img="icon-header-chat-line"
-                onClick={commentOnAnnotation}
-              />
-            )}
-            {showEditStyleButton && (
-              <ActionButton
-                dataElement="annotationStyleEditButton"
-                title="action.style"
-                img="icon-menu-style-line"
-                onClick={() => setIsStylePopupOpen(true)}
-              />
-            )}
-            {firstAnnotation.ToolName === 'CropPage' && (
-              <ActionButton
-                dataElement="annotationCropButton"
-                title="action.apply"
-                img="ic_check_black_24px"
-                onClick={() => {
-                  core.getTool('CropPage').applyCrop();
-                  dispatch(actions.closeElement('annotationPopup'));
-                }}
-              />
-            )}
-            {firstAnnotation.isContentEditPlaceholder() && firstAnnotation.getContentEditType() === window.Core.ContentEdit.Types.TEXT && (
+      ) : shortCutKeysFor3DVisible && firstAnnotation instanceof Annotations.Model3DAnnotation ? (
+        <ShortCutKeysFor3DComponent />
+      ) : (
+        <CustomizablePopup dataElement="annotationPopup">
+          {showCommentButton && (
+            <ActionButton
+              dataElement="annotationCommentButton"
+              title="action.openNotePanel"
+              // CUSTOM WISEFLOW: Changed icon
+              img="circle-right-solid"
+              onClick={commentOnAnnotation}
+            />
+          )}
+          {showEditStyleButton && (
+            <ActionButton
+              dataElement="annotationStyleEditButton"
+              title="action.style"
+              img="icon-menu-style-line"
+              onClick={() => setIsStylePopupOpen(true)}
+            />
+          )}
+          {firstAnnotation.ToolName === 'CropPage' && (
+            <ActionButton
+              dataElement="annotationCropButton"
+              title="action.apply"
+              img="ic_check_black_24px"
+              onClick={() => {
+                core.getTool('CropPage').applyCrop();
+                dispatch(actions.closeElement('annotationPopup'));
+              }}
+            />
+          )}
+          {firstAnnotation.isContentEditPlaceholder() &&
+            firstAnnotation.getContentEditType() === window.Core.ContentEdit.Types.TEXT && (
               <ActionButton
                 dataElement="annotationContentEditButton"
                 title="action.edit"
@@ -380,80 +385,83 @@ const AnnotationPopup = () => {
                 }}
               />
             )}
-            {showRedactionButton && (
-              <ActionButton
-                dataElement="annotationRedactButton"
-                title="action.apply"
-                img="ic_check_black_24px"
-                onClick={() => {
-                  dispatch(applyRedactions(firstAnnotation));
-                  dispatch(actions.closeElement('annotationPopup'));
-                }}
-              />
-            )}
-            {showGroupButton && (
-              <ActionButton
-                dataElement="annotationGroupButton"
-                title="action.group"
-                img="ic_group_24px"
-                onClick={() => core.groupAnnotations(primaryAnnotation, selectedAnnotations)}
-              />
-            )}
-            {canUngroup && (
-              <ActionButton
-                dataElement="annotationUngroupButton"
-                title="action.ungroup"
-                img="ic_ungroup_24px"
-                onClick={() => core.ungroupAnnotations(selectedAnnotations)}
-              />
-            )}
-            {includesFormFieldAnnotation && (
-              <ActionButton
-                title="action.formFieldEdit"
-                img="icon-edit-form-field"
-                onClick={() => {
-                  dispatch(actions.closeElement('annotationPopup'));
-                  dispatch(actions.openElement('formFieldEditPopup'));
-                }}
-                dataElement="formFieldEditButton"
-              />
-            )
-            }
-            {canModify && (
-              <ActionButton
-                dataElement="annotationDeleteButton"
-                title="action.delete"
-                img="icon-delete-line"
-                onClick={() => {
-                  core.deleteAnnotations(core.getSelectedAnnotations());
-                  dispatch(actions.closeElement('annotationPopup'));
-                }}
-              />
-            )}
-            {showCalibrateButton && (
-              <ActionButton
-                dataElement="calibrateButton"
-                title="action.calibrate"
-                img="calibrate"
-                onClick={() => {
-                  dispatch(actions.closeElement('annotationPopup'));
-                  dispatch(actions.openElement('calibrationModal'));
-                }}
-              />
-            )}
-            {showLinkButton && (
-              <ActionButton
-                title="tool.Link"
-                img={hasAssociatedLink ? 'icon-tool-unlink' : 'icon-tool-link'}
-                onClick={
-                  hasAssociatedLink
-                    ? () => {
+          {showRedactionButton && (
+            <ActionButton
+              dataElement="annotationRedactButton"
+              title="action.apply"
+              img="ic_check_black_24px"
+              onClick={() => {
+                dispatch(applyRedactions(firstAnnotation));
+                dispatch(actions.closeElement('annotationPopup'));
+              }}
+            />
+          )}
+          {showGroupButton && (
+            <ActionButton
+              dataElement="annotationGroupButton"
+              title="action.group"
+              img="ic_group_24px"
+              onClick={() => core.groupAnnotations(primaryAnnotation, selectedAnnotations)}
+            />
+          )}
+          {canUngroup && (
+            <ActionButton
+              dataElement="annotationUngroupButton"
+              title="action.ungroup"
+              img="ic_ungroup_24px"
+              onClick={() => core.ungroupAnnotations(selectedAnnotations)}
+            />
+          )}
+          {includesFormFieldAnnotation && (
+            <ActionButton
+              title="action.formFieldEdit"
+              img="icon-edit-form-field"
+              onClick={() => {
+                dispatch(actions.closeElement('annotationPopup'));
+                dispatch(actions.openElement('formFieldEditPopup'));
+              }}
+              dataElement="formFieldEditButton"
+            />
+          )}
+          {canModify && (
+            <ActionButton
+              dataElement="annotationDeleteButton"
+              title="action.delete"
+              img="icon-delete-line"
+              onClick={() => {
+                core.deleteAnnotations(core.getSelectedAnnotations());
+                dispatch(actions.closeElement('annotationPopup'));
+              }}
+            />
+          )}
+          {showCalibrateButton && (
+            <ActionButton
+              dataElement="calibrateButton"
+              title="action.calibrate"
+              img="calibrate"
+              onClick={() => {
+                dispatch(actions.closeElement('annotationPopup'));
+                dispatch(actions.openElement('calibrationModal'));
+              }}
+            />
+          )}
+          {/* {showLinkButton && (
+            <ActionButton
+              title="tool.Link"
+              img={hasAssociatedLink ? 'icon-tool-unlink' : 'icon-tool-link'}
+              onClick={
+                hasAssociatedLink
+                  ? () => {
                       const annotManager = core.getAnnotationManager();
                       selectedAnnotations.forEach(annot => {
                         const linkAnnotations = getGroupedLinkAnnotations(annot);
                         linkAnnotations.forEach((linkAnnot, index) => {
                           annotManager.ungroupAnnotations([linkAnnot]);
-                          if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0 && index === 0) {
+                          if (
+                            annot instanceof Annotations.TextHighlightAnnotation &&
+                            annot.Opacity === 0 &&
+                            index === 0
+                          ) {
                             annotManager.deleteAnnotations([annot, linkAnnot], null, true);
                           } else {
                             annotManager.deleteAnnotation(linkAnnot, null, true);
@@ -462,45 +470,37 @@ const AnnotationPopup = () => {
                       });
                       dispatch(actions.closeElement('annotationPopup'));
                     }
-                    : () => dispatch(actions.openElement('linkModal'))
-                }
-                dataElement="linkButton"
-              />
-            )}
-            {showFileDownloadButton &&
-              (
-                <ActionButton
-                  title="action.fileAttachmentDownload"
-                  img="icon-download"
-                  onClick={() => downloadFileAttachment(firstAnnotation)}
-                  dataElement="fileAttachmentDownload"
-                />
-              )
-            }
-            {
-              show3DShortCutButton &&
-              (
-                <ActionButton
-                  title="action.viewShortCutKeysFor3D"
-                  img="icon-keyboard"
-                  onClick={() => setShortCutKeysFor3DVisible(true)}
-                  dataElement="shortCutKeysFor3D"
-                />
-              )
-            }
-            {
-              shouldShowAudioPlayButton &&
-              (
-                <ActionButton
-                  title="action.playAudio"
-                  img="ic_play_24px"
-                  onClick={() => handlePlaySound(firstAnnotation)}
-                  dataElement="playSoundButton"
-                />
-              )
-            }
-          </CustomizablePopup>
-        )}
+                  : () => dispatch(actions.openElement('linkModal'))
+              }
+              dataElement="linkButton"
+            />
+          )} */}
+          {showFileDownloadButton && (
+            <ActionButton
+              title="action.fileAttachmentDownload"
+              img="icon-download"
+              onClick={() => downloadFileAttachment(firstAnnotation)}
+              dataElement="fileAttachmentDownload"
+            />
+          )}
+          {show3DShortCutButton && (
+            <ActionButton
+              title="action.viewShortCutKeysFor3D"
+              img="icon-keyboard"
+              onClick={() => setShortCutKeysFor3DVisible(true)}
+              dataElement="shortCutKeysFor3D"
+            />
+          )}
+          {shouldShowAudioPlayButton && (
+            <ActionButton
+              title="action.playAudio"
+              img="ic_play_24px"
+              onClick={() => handlePlaySound(firstAnnotation)}
+              dataElement="playSoundButton"
+            />
+          )}
+        </CustomizablePopup>
+      )}
     </div>
   );
 
