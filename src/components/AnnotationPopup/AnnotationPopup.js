@@ -346,7 +346,7 @@ const AnnotationPopup = () => {
           {showCommentButton && (
             <ActionButton
               dataElement="annotationCommentButton"
-              title="action.OpenNotePanel"
+              title="action.openNotePanel"
               // CUSTOM WISEFLOW: Changed icon
               img="circle-right-solid"
               onClick={commentOnAnnotation}
