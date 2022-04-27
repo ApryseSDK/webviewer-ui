@@ -118,6 +118,12 @@ if (window.CanvasRenderingContext2D) {
     window.Core.forceBackendType(backendType);
   }
 
+  const { enableOptimizedWorkers } = state.advanced;
+
+  if (!enableOptimizedWorkers) {
+    window.Core.disableOptimizedWorkers();
+  }
+
   const { preloadWorker } = state.advanced;
 
   function initTransports() {
@@ -156,7 +162,6 @@ if (window.CanvasRenderingContext2D) {
       window.Core.ContentEdit.preloadWorker(window.documentViewer);
     }
   }
-
 
   loadCustomCSS(state.advanced.customCSS);
 

@@ -635,6 +635,7 @@ export default {
     defaultDisabledElements: getHashParameters('disabledElements', ''),
     fullAPI: getHashParameters('pdfnet', false),
     preloadWorker: getHashParameters('preloadWorker', false),
+    enableOptimizedWorkers: getHashParameters('enableOptimizedWorkers', true),
     serverUrl: getHashParameters('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParameters('serverUrlHeaders', '{}')),
     useSharedWorker: getHashParameters('useSharedWorker', false),
