@@ -6,32 +6,34 @@ import i18next from 'i18next';
 import { workerTypes } from 'constants/types';
 import { redactionTypeMap } from 'constants/redactionTypes';
 
-const getNewRotation = (curr, counter_clockwise = false) => {
-  const { e_0, e_90, e_180, e_270 } = window.Core.PageRotation;
+const getNewRotation = (curr, counterClockwise = false) => {
+  const { E_0, E_90, E_180, E_270 } = window.Core.PageRotation;
   switch (curr) {
-    case e_270:
-      return counter_clockwise ? e_180 : e_0;
-    case e_180:
-      return counter_clockwise ? e_90 : e_270;
-    case e_90:
-      return counter_clockwise ? e_0 : e_180;
+    case E_270:
+      return counterClockwise ? E_180 : E_0;
+    case E_180:
+      return counterClockwise ? E_90 : E_270;
+    case E_90:
+      return counterClockwise ? E_0 : E_180;
     default:
-      return counter_clockwise ? e_270 : e_90;
+      return counterClockwise ? E_270 : E_90;
   }
 };
 
 const canRotateLoadedDocument = () => {
   const doc = core.getDocument();
   const docType = doc?.type;
+
   return (
     workerTypes.PDF === docType ||
+    workerTypes.IMAGE === docType ||
     (docType === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())
   );
 };
 
-const rotatePages = (pageNumbers, counter_clockwise) => {
+const rotatePages = (pageNumbers, counterClockwise) => {
   if (canRotateLoadedDocument()) {
-    const rotation = counter_clockwise ? window.Core.PageRotation.e_270 : window.Core.PageRotation.e_90;
+    const rotation = counterClockwise ? window.Core.PageRotation.E_270 : window.Core.PageRotation.E_90;
     pageNumbers.forEach(index => {
       core.rotatePages([index], rotation);
     });
@@ -39,7 +41,7 @@ const rotatePages = (pageNumbers, counter_clockwise) => {
     const docViewer = core.getDocumentViewer();
     const currentRotations = docViewer.getPageRotations();
     for (const page of pageNumbers) {
-      docViewer.setRotation(getNewRotation(currentRotations[page], counter_clockwise), page);
+      docViewer.setRotation(getNewRotation(currentRotations[page], counterClockwise), page);
     }
   }
 };

@@ -21,8 +21,8 @@ export async function getFileAttachments() {
         const fileObject = await filesIteratorValue.get('F');
         const fileData = await fileObject.value();
         const filename = await fileData.getAsPDFText();
-        const file_spec = await PDFNet.FileSpec.createFromObj(await fileItr.value());
-        const stm = await file_spec.getFileData();
+        const fileSpec = await PDFNet.FileSpec.createFromObj(await fileItr.value());
+        const stm = await fileSpec.getFileData();
         const filterReader = await PDFNet.FilterReader.create(stm);
         const dataArray = [];
         const chunkLength = 1024;
