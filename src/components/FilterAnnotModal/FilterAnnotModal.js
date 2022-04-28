@@ -22,7 +22,6 @@ import { Swipeable } from 'react-swipeable';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import './FilterAnnotModal.scss';
-import getDisplayAuthor from 'src/core/getDisplayAuthor';
 
 const FilterAnnotModal = ({ coAssessors }) => {
   const [isDisabled, isOpen, colorMap] = useSelector(state => [
@@ -204,7 +203,7 @@ const FilterAnnotModal = ({ coAssessors }) => {
               <Choice
                 type="checkbox"
                 key={index}
-                label={getDisplayAuthor(val)}
+                label={val}
                 checked={authorFilter.includes(val)}
                 id={val}
                 onChange={e => {
