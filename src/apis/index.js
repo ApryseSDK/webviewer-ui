@@ -162,6 +162,7 @@ import getCustomData from './getCustomData';
 import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 import setNoteTransformFunction from './setNoteTransformFunction';
 import setCustomNoteSelectionFunction from './setCustomNoteSelectionFunction';
+import setCustomApplyRedactionsHandler from './setCustomApplyRedactionsHandler';
 import selectThumbnailPages from './selectThumbnailPages';
 import unselectThumbnailPages from './unselectThumbnailPages';
 import setSearchResults from './setSearchResults';
@@ -292,6 +293,7 @@ export default store => {
     setToolbarGroup: setToolbarGroup(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setCustomNoteSelectionFunction: setCustomNoteSelectionFunction(store),
+    setCustomApplyRedactionsHandler: setCustomApplyRedactionsHandler(store),
     setToolMode,
     setZoomLevel,
     setZoomList: setZoomList(store),

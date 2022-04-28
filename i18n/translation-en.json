@@ -815,6 +815,7 @@
     "redactionItem": {
       "regionRedaction": "Region redaction",
       "fullPageRedaction": "Full page redaction",
+      "fullVideoFrameRedaction": "Video Redaction",
       "image": "Image"
     },
     "expand": "Expand",

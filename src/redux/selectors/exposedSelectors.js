@@ -411,6 +411,8 @@ export const getNoteTransformFunction = state => state.viewer.noteTransformFunct
 
 export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFunction;
 
+export const getCustomApplyRedactionsHandler = state => state.viewer.customApplyRedactionsHandler;
+
 export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;
 
 export const getUnreadAnnotationIdSet = state => state.viewer.unreadAnnotationIdSet;

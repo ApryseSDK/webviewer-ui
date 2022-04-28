@@ -19,6 +19,7 @@ export const RedactionPanelContainer = () => {
     isDisabled,
     redactionPanelWidth,
     isInDesktopOnlyMode,
+    customApplyRedactionsHandler,
     redactionSearchPatterns,
   ] = useSelector(
     state => [
@@ -26,6 +27,7 @@ export const RedactionPanelContainer = () => {
       selectors.isElementDisabled(state, 'redactionPanel'),
       selectors.getRedactionPanelWidth(state),
       selectors.isInDesktopOnlyMode(state),
+      selectors.getCustomApplyRedactionsHandler(state),
       selectors.getRedactionSearchPatterns(state),
     ], shallowEqual);
 
@@ -58,7 +60,14 @@ export const RedactionPanelContainer = () => {
 
   const dispatch = useDispatch();
   const applyAllRedactions = () => {
-    dispatch(applyRedactions(redactionAnnotationsList));
+    const originalApplyRedactions = () => {
+      dispatch(applyRedactions(redactionAnnotationsList));
+    };
+    if (customApplyRedactionsHandler) {
+      customApplyRedactionsHandler(redactionAnnotationsList, originalApplyRedactions);
+    } else {
+      originalApplyRedactions();
+    }
   };
   const closeRedactionPanel = () => {
     dispatch(actions.closeElement('redactionPanel'));

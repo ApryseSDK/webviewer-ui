@@ -406,6 +406,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, noteTransformFunction: payload.noteTransformFunction };
     case 'SET_CUSTOM_NOTE_SELECTION_FUNCTION':
       return { ...state, customNoteFunction: payload.customNoteFunction };
+    case 'SET_CUSTOM_APPLY_REDACTIONS_HANDLER':
+      return { ...state, customApplyRedactionsHandler: payload.customApplyRedactionsHandler };
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     case 'SET_CUSTOM_MODAL': {

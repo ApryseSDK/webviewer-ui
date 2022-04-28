@@ -2,6 +2,7 @@ export const redactionTypeMap = {
   REGION: 'region',
   TEXT: 'text',
   FULL_PAGE: 'fullPage',
+  FULL_VIDEO_FRAME: 'fullVideoFrame',
   CREDIT_CARD: 'creditCard',
   PHONE: 'phone',
   IMAGE: 'image',
@@ -16,6 +17,10 @@ export const defaultRedactionTypes = {
   [redactionTypeMap['FULL_PAGE']]: {
     icon: 'icon-header-page-manipulation-page-transition-page-by-page-line',
     label: 'redactionPanel.redactionItem.fullPageRedaction',
+  },
+  [redactionTypeMap['FULL_VIDEO_FRAME']]: {
+    icon: 'ic-full-frame-video-redact',
+    name: 'redactionPanel.redactionItem.fullVideoFrameRedaction',
   },
   [redactionTypeMap['TEXT']]: {
     icon: 'icon-form-field-text',

@@ -39,7 +39,11 @@ const RedactionItem = (props) => {
       <RedactionTextPreview linesToBreak={2}>
         {textPreview}
       </RedactionTextPreview>)
-  } else if (redactionType === redactionTypeMap['FULL_PAGE'] || redactionType === redactionTypeMap['REGION']) {
+  } else if (
+    redactionType === redactionTypeMap['FULL_PAGE'] 
+    || redactionType === redactionTypeMap['FULL_VIDEO_FRAME']
+    || redactionType === redactionTypeMap['REGION']
+  ) {
     redactionPreview = t(label);
   } else {
     redactionPreview = annotation.getContents();
