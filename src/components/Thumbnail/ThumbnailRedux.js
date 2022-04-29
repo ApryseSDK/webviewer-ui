@@ -13,7 +13,7 @@ const ThumbnailRedux = props => {
       selectors.getCurrentPage(state),
       selectors.getPageLabels(state),
       selectors.getSelectedThumbnailPageIndexes(state),
-      selectors.getIsThumbnailMultiselectEnabled(state),
+      selectors.isThumbnailMultiselectEnabled(state),
       selectors.isReaderMode(state),
       selectors.getShiftKeyThumbnailPivotIndex(state),
       selectors.isThumbnailSelectingPages(state),

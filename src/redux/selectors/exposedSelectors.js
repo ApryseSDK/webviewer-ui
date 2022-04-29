@@ -309,7 +309,7 @@ export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMer
 
 export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;
 
-export const getIsThumbnailMultiselectEnabled = state => state.viewer.isThumbnailMultiselect;
+export const isThumbnailMultiselectEnabled = state => state.viewer.isThumbnailMultiselect;
 
 export const getIsMultipleViewerMerging = state => state.viewer.isMultipleViewerMerging;
 

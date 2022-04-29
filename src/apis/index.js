@@ -172,6 +172,7 @@ import overrideSearchExecution from './overrideSearchExecution';
 import reactElements from './reactElements';
 import { addTrustedCertificates, loadTrustList } from './verificationOptions';
 import { enableTextCollapse, disableTextCollapse, enableReplyCollapse, disableReplyCollapse } from './notesPanel';
+import { enableMultiselect, disableMultiselect, selectPages, unselectPages, getSelectedPageNumbers, } from './thumbnailsPanel';
 import toggleReaderMode from './toggleReaderMode';
 import toggleElementVisibility from './toggleElementVisibility';
 import setAnnotationReadState from './setAnnotationReadState';
@@ -312,14 +313,20 @@ export default store => {
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
-    getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
+
     setDisplayedSignaturesFilter: setDisplayedSignaturesFilterFunction(store),
-    selectThumbnailPages: selectThumbnailPages(store),
-    unselectThumbnailPages: unselectThumbnailPages(store),
+
     setAnnotationContentOverlayHandler: setAnnotationContentOverlayHandler(store),
     VerificationOptions: {
       addTrustedCertificates: addTrustedCertificates(store),
       loadTrustList: loadTrustList(store),
+    },
+    ThumbnailsPanel: {
+      selectPages: selectPages(store),
+      unselectPages: unselectPages(store),
+      getSelectedPageNumbers: getSelectedPageNumbers(store),
+      enableMultiselect: enableMultiselect(store),
+      disableMultiselect: disableMultiselect(store),
     },
     NotesPanel: {
       enableTextCollapse: enableTextCollapse(store),
@@ -408,6 +415,9 @@ export default store => {
 
     // deprecated, to be removed in 9.0
     updateOutlines: updateOutlines(store),
+    selectThumbnailPages: selectThumbnailPages(store),
+    unselectThumbnailPages: unselectThumbnailPages(store),
+    getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
 
     // undocumented
     loadedFromServer: false,
