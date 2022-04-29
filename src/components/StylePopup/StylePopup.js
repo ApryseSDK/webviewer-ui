@@ -31,6 +31,7 @@ class StylePopup extends React.PureComponent {
     onPropertyChange: PropTypes.func.isRequired,
     onRichTextStyleChange: PropTypes.func,
     isFreeText: PropTypes.bool,
+    isMeasure: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
     currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     isColorPaletteDisabled: PropTypes.bool,
@@ -53,6 +54,7 @@ class StylePopup extends React.PureComponent {
       onStyleChange,
       onPropertyChange,
       isFreeText,
+      isMeasure = false,
       // TODO: Actually disable these elements
       isOpacitySliderDisabled,
       isStrokeThicknessSliderDisabled,
@@ -71,6 +73,12 @@ class StylePopup extends React.PureComponent {
         dataElement: DataElements.OPACITY_SLIDER,
         getCirclePosition: (lineLength, Opacity) => Opacity * lineLength + lineStart,
         convertRelativeCirclePositionToValue: circlePosition => circlePosition,
+        withInputField: true,
+        inputFieldType: 'number',
+        min: 0,
+        max: 100,
+        step: 1,
+        getLocalValue: opacity => parseInt(opacity) / 100,
       };
     }
     if (!isStrokeThicknessSliderDisabled) {
@@ -78,15 +86,42 @@ class StylePopup extends React.PureComponent {
         property: 'StrokeThickness',
         displayProperty: 'thickness',
         value: StrokeThickness,
-        getDisplayValue: StrokeThickness => `${Math.round(StrokeThickness)}pt`,
+        getDisplayValue: strokeThickness => {
+          const placeOfDecimal = Math.floor(strokeThickness) !== strokeThickness ? strokeThickness.toString().split(".")[1].length || 0 : 0;
+          if (StrokeThickness === 0 || StrokeThickness >= 1 && (placeOfDecimal > 2 || placeOfDecimal === 0)) {
+            return `${Math.round(strokeThickness)}pt`;
+          } else {
+            return `${parseFloat(strokeThickness).toFixed(2)}pt`
+          }
+        },
         dataElement: DataElements.STROKE_THICKNESS_SLIDER,
-        // FreeText Annotations can have the border thickness go down to 0. For others the minimum is 1.
-        getCirclePosition: (lineLength, StrokeThickness) =>
-          (isFreeText
-            ? (StrokeThickness / 20) * lineLength + lineStart
-            : ((StrokeThickness - 1) / 19) * lineLength + lineStart),
-        convertRelativeCirclePositionToValue: circlePosition =>
-          (isFreeText ? circlePosition * 20 : circlePosition * 19 + 1),
+        getCirclePosition: (lineLength, strokeThickness) => (strokeThickness / 20) * lineLength + lineStart,
+        convertRelativeCirclePositionToValue: circlePosition => {
+          if (circlePosition >= 1 / 20) {
+            return circlePosition * 20;
+          }
+          else if (circlePosition >= 0.75 / 20 && circlePosition < 1 / 20) {
+            return 0.75;
+          }
+          else if (circlePosition >= 0.5 / 20 && circlePosition < 0.75 / 20) {
+            return 0.5;
+          }
+          else if (circlePosition >= 0.25 / 20 && circlePosition < 0.5 / 20) {
+            return 0.25;
+          }
+          else if (circlePosition >= 0.08 / 20 && circlePosition < 0.25 / 20) {
+            return 0.1;
+          }
+          else {
+            return isFreeText ? 0 : 0.1;
+          }
+        },
+        withInputField: true,
+        inputFieldType: 'number',
+        min: isFreeText ? 0 : 0.1,
+        max: 20,
+        step: 1,
+        getLocalValue: strokeThickness => parseFloat(strokeThickness).toFixed(2)
       };
     }
     if (!isFontSizeSliderDisabled) {
@@ -113,6 +148,10 @@ class StylePopup extends React.PureComponent {
       sliders = { Opacity };
     }
 
+    if (isMeasure) {
+      sliders.FontSize = FontSize;
+    }
+
     if (isOpacitySliderDisabled) {
       delete sliders.Opacity;
     }
@@ -137,10 +176,7 @@ class StylePopup extends React.PureComponent {
     return (
       <React.Fragment>
         {sliderComponents.length > 0 && (
-          <div
-            className="sliders-container"
-            onMouseDown={e => e.preventDefault()}
-          >
+          <div className="sliders-container">
             {sliderComponents}
           </div>
         )}
@@ -163,6 +199,7 @@ class StylePopup extends React.PureComponent {
       isTextStyleContainerActive,
       isColorsContainerActive,
       isLabelTextContainerActive,
+      isLabelTextContainerDisabled,
       openElement,
       closeElement,
       properties,
@@ -226,7 +263,7 @@ class StylePopup extends React.PureComponent {
               toolName={toolName}
               disableSeparator={disableSeparator}
             />
-            {showLabelText && (
+            {showLabelText && !isLabelTextContainerDisabled && (
               <>
                 <div className="collapsible-menu" onClick={openLabelText} onTouchStart={openLabelText} role={"toolbar"}>
                   <div className="menu-title">
@@ -321,10 +358,10 @@ const mapStateToProps = (state, { colorMapKey, isFreeText, isRedaction }) => ({
   isStrokeThicknessSliderDisabled: selectors.isElementDisabled(state, DataElements.STROKE_THICKNESS_SLIDER),
   isFontSizeSliderDisabled: selectors.isElementDisabled(state, DataElements.FONT_SIZE_SLIDER) || isFreeText || isRedaction,
   isStyleOptionDisabled: selectors.isElementDisabled(state, DataElements.STYLE_OPTION),
-  isTextStyleOpen: selectors.isElementDisabled(state, DataElements.STYLE_OPTION),
   isTextStyleContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER),
   isColorsContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_COLORS_CONTAINER),
   isLabelTextContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER),
+  isLabelTextContainerDisabled: selectors.isElementDisabled(state, DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER),
   fonts: selectors.getFonts(state),
 });
 
