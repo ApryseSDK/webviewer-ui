@@ -114,7 +114,8 @@ const TextPopup = ({ t }) => {
           <ActionButton
             dataElement="textRedactToolButton"
             title="option.redaction.markForRedaction"
-            img="ic_annotation_add_redact_black_24px"
+            fillColor="868E96"
+            img="icon-tool-select-area-redaction"
             onClick={() => createTextAnnotationAndSelect(dispatch, Annotations.RedactionAnnotation)}
             role="option"
           />
