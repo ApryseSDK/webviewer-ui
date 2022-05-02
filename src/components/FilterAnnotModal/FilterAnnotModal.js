@@ -142,6 +142,7 @@ const FilterAnnotModal = ({ coAssessors }) => {
       colors: [],
       statuses: [],
       checkRepliesForAuthorFilter: false,
+      shareTypes: [],
     });
   };
 
