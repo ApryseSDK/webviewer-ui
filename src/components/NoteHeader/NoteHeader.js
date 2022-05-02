@@ -6,11 +6,12 @@ import Icon from 'components/Icon';
 import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
 import getLatestActivityDate from "helpers/getLatestActivityDate";
 import getColor from 'helpers/getColor';
+import { isDarkColorHex } from 'helpers/color';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
-
+import Theme from 'constants/theme';
 
 import './NoteHeader.scss';
 
@@ -33,6 +34,7 @@ const propTypes = {
   isEditing: PropTypes.bool,
   noteIndex: PropTypes.number,
   sortStrategy: PropTypes.string,
+  activeTheme: PropTypes.string,
 };
 
 
@@ -53,12 +55,18 @@ function NoteHeader(props) {
     isEditing,
     noteIndex,
     sortStrategy,
+    activeTheme,
   } = props;
 
   const [t] = useTranslation();
   const date = (sortStrategy === NotesPanelSortStrategy.MODIFIED_DATE || (notesShowLastUpdatedDate && sortStrategy !== NotesPanelSortStrategy.CREATED_DATE)) ? getLatestActivityDate(annotation) : annotation.DateCreated;
   const numberOfReplies = annotation.getReplies().length;
-  const color = annotation[iconColor]?.toHexString?.();
+  let color = annotation[iconColor]?.toHexString?.();
+
+  if (activeTheme === Theme.DARK && color && isDarkColorHex(color)) {
+    color = '#FFFFFF';
+  }
+
   const fillColor = getColor(annotation.FillColor);
 
   const authorAndDateClass = classNames('author-and-date', { isReply });

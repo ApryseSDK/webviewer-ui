@@ -31,3 +31,11 @@ export const hexToRgba = hexString => {
 
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 };
+
+export const isDarkColorHex = hexString => {
+  const R = parseInt(hexString.substring(1, 3), 16);
+  const G = parseInt(hexString.substring(3, 5), 16);
+  const B = parseInt(hexString.substring(5, 7), 16);
+
+  return R < 40 && G < 40 && B < 40;
+};
