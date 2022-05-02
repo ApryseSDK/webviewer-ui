@@ -1,7 +1,7 @@
 {
   "name": "webviewer-ui",
   "author": "PDFTron Systems Inc.",
-  "version": "8.4.0",
+  "version": "8.6.0",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
@@ -14,7 +14,8 @@
     "bundle": "webpack --progress --config ./webpack.config.prod.js",
     "build": "npm run clean && npm run bundle",
     "translation": "node ./scripts/translate-i18n-files.js",
-    "storybook": "start-storybook -s ../../build -p 6006 --ci",
+    "storybook": "start-storybook -p 6006 --ci",
+    "build-storybook": "build-storybook",
     "jest": "jest --runInBand --logHeapUsage",
     "jest:watch": "jest --watch"
   },
