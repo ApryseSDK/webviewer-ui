@@ -535,6 +535,8 @@ export default {
     allowPageNavigation: true,
     enableToolGroupReordering: true,
     enableNoteSubmissionWithEnter: false,
+    isNotesPanelTextCollapsingEnabled: true,
+    isNotesPanelRepliesCollapsingEnabled: true,
     enableMouseWheelZoom: true,
     doesAutoLoad: getHashParameters('auto_load', true),
     isReadOnly: getHashParameters('readonly', false),

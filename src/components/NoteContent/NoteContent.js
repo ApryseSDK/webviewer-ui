@@ -12,7 +12,9 @@ import NoteContext from 'components/Note/Context';
 
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
-import getLatestActivityDate from "helpers/getLatestActivityDate";
+import getLatestActivityDate from 'helpers/getLatestActivityDate';
+import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
+import setReactQuillContent from 'helpers/setReactQuillContent';
 import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
@@ -35,7 +37,9 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     iconColor,
     isNoteStateDisabled,
     language,
-    notesShowLastUpdatedDate
+    notesShowLastUpdatedDate,
+    canCollapseTextPreview,
+    canCollapseReplyPreview
   ] = useSelector(
     state => [
       selectors.getNoteDateFormat(state),
@@ -43,6 +47,8 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
       selectors.isElementDisabled(state, 'notePopupState'),
       selectors.getCurrentLanguage(state),
       selectors.notesShowLastUpdatedDate(state),
+      selectors.isNotesPanelTextCollapsingEnabled(state),
+      selectors.isNotesPanelRepliesCollapsingEnabled(state),
     ],
     shallowEqual,
   );
@@ -78,7 +84,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   );
 
   const renderContents = useCallback(
-    (contents, richTextStyle) => {
+    (contents, richTextStyle, fontColor) => {
       const autolinkerContent = [];
       Autolinker.link(contents, {
         stripPrefix: false,
@@ -104,11 +110,17 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
       });
       if (!autolinkerContent.length) {
         const highlightResult = highlightSearchInput(contents, searchInput, richTextStyle);
-        if (isString(highlightResult)) {
-          // Only support preview for pure text contents
+        const shouldCollapseAnnotationText = !isReply && canCollapseTextPreview;
+        const shouldCollapseReply = isReply && canCollapseReplyPreview;
+
+        /*
+         * Case there is no value on Search input, and the collapse of the text is allowed,
+         * just render the value with Text preview component
+         */
+        if (!searchInput && (shouldCollapseAnnotationText || shouldCollapseReply)) {
           return (
-            <NoteTextPreview linesToBreak={3} comment>
-              {highlightResult}
+            <NoteTextPreview linesToBreak={3} comment renderRichText={renderRichText} richTextStyle={richTextStyle} resize={resize} style={fontColor}>
+              {contents}
             </NoteTextPreview>
           )
         } else {
@@ -230,13 +242,14 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
               annotation={annotation}
               noteIndex={noteIndex}
               setIsEditing={setIsEditing}
+              isEditing={isEditing}
               textAreaValue={textAreaValue}
               onTextAreaValueChange={onTextChange}
             />
           ) : (
             contentsToRender && (
-              <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked} style={contentStyle}>
-                {renderContents(contentsToRender, richTextStyle)}
+              <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked}>
+                {renderContents(contentsToRender, richTextStyle, contentStyle)}
               </div>
             )
           )}
@@ -315,6 +328,7 @@ const ContentArea = ({
   annotation,
   noteIndex,
   setIsEditing,
+  isEditing,
   textAreaValue,
   onTextAreaValueChange,
 }) => {
@@ -334,23 +348,34 @@ const ContentArea = ({
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
     if (isNotesPanelOpen && textareaRef.current) {
+      const editor = textareaRef.current.getEditor();
+      annotation.editor = editor;
+
       setTimeout(() => {
         // need setTimeout because textarea seem to rerender and unfocus
         if (textareaRef && textareaRef.current && autoFocusNoteOnAnnotationSelection) {
           textareaRef.current.focus();
+          
+          const annotRichTextStyle = annotation.getRichTextStyle();
+          if (annotRichTextStyle && isEditing) {
+
+            setReactQuillContent(annotation);
+          }
         }
       }, 0);
 
-      if (textareaRef && textareaRef.current) {
-        const textLength = textareaRef.current.value.length;
-        textareaRef.current.setSelectionRange(textLength, textLength);
-      }
+    const textLength = editor.getText().length;
+    annotation.editor.setSelection(textLength, textLength);
     }
   }, [isNotesPanelOpen]);
 
   const setContents = e => {
     // prevent the textarea from blurring out which will unmount these two buttons
     e.preventDefault();
+
+    const editor = textareaRef.current.getEditor();
+    textAreaValue = editor.getText();
+    setAnnotationRichTextStyle(editor, annotation);
 
     if (isMentionEnabled) {
       const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);

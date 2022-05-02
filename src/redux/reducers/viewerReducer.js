@@ -428,6 +428,16 @@ export default initialState => (state = initialState, action) => {
         ...state,
         enableNoteSubmissionWithEnter: payload.enableNoteSubmissionWithEnter
       };
+    case 'SET_NOTES_PANEL_TEXT_COLLAPSING':
+      return {
+        ...state,
+        isNotesPanelTextCollapsingEnabled: payload.enableNotesPanelTextCollapsing
+      };
+    case 'SET_NOTES_PANEL_REPLIES_COLLAPSING':
+      return {
+        ...state,
+        isNotesPanelRepliesCollapsingEnabled: payload.enableNotesPanelRepliesCollapsing
+      };
     case 'ADD_TRUSTED_CERTIFICATES':
       /**
        * To mimic the behavior of the Core implementation, where certificates
