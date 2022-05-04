@@ -133,7 +133,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       core.getSelectedAnnotations().forEach(annot => {
         ids[annot.Id] = true;
       });
-      if (isOpen) {
+      if (isOpen || notesInLeftPanel) {
         setSelectedNoteIds(ids);
         setScrollToSelectedAnnot(true);
       }
@@ -142,7 +142,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
     return () => core.removeEventListener('annotationSelected', onAnnotationSelected);
-  }, [isOpen]);
+  }, [isOpen, notesInLeftPanel]);
 
   let singleSelectedNoteIndex = -1;
 
@@ -283,7 +283,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       pendingReplyMap,
       setPendingReply,
       isDocumentReadOnly,
-      isNotePanelOpen: isOpen,
+      isNotePanelOpen: isOpen || notesInLeftPanel,
       onTopNoteContentClicked: handleNoteClicked,
       isExpandedFromSearch: onlyReplyContainsSearchInput(currNote),
       scrollToSelectedAnnot,
@@ -350,8 +350,8 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   if ((isInDesktopOnlyMode || !isMobile)) {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
-
-  return ((isDisabled || !isOpen) ? null : (
+  const showNotePanel = !isDisabled && (isOpen || notesInLeftPanel);
+  return (!showNotePanel ? null : (
     <div
       className={classNames({
         Panel: true,
