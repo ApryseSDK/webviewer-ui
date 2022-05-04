@@ -83,7 +83,7 @@ const TabManagerAPI = {
   },
   /**
    * Get all the tabs from the UI
-   * @method UI.TabManager.getTabs
+   * @method UI.TabManager.getAllTabs
    * @returns {Array<Object>} Array of tab objects containing the following properties: { id: Number, options: Object, src: string|Blob|File|ArrayBuffer }
    */
   getAllTabs() {
