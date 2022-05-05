@@ -134,7 +134,7 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
 
 export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
-    const toolGroups = state.viewer.headers[_toolbarGroup];
+    const toolGroups = state.viewer.headers[_toolbarGroup].children || state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
     if (toolGroups) {
       const firstTool = Object.values(toolGroups).find(({ toolGroup, dataElement }) => {

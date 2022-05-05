@@ -15,6 +15,7 @@ import "./Ribbons.scss";
 const Ribbons = () => {
   const toolbarGroups = useSelector(selectors.getEnabledToolbarGroups);
   const currentToolbarGroup = useSelector(selectors.getCurrentToolbarGroup);
+  const toolbarHeaders = useSelector(selectors.getToolbarHeaders);
   const { t, ready: tReady } = useTranslation();
   const [ribbonsWidth, setRibbonsWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -76,6 +77,14 @@ const Ribbons = () => {
     return null;
   }
 
+  const getToolbarTranslationString = (toolbarGroup) => {
+    const toolbarGroupItems = toolbarHeaders[toolbarGroup];
+    if (toolbarGroupItems && toolbarGroupItems.name) {
+      return toolbarGroupItems.name;
+    }
+    return `option.toolbarGroup.${toolbarGroup}`;
+  }
+
   return (
     <Measure
       bounds
@@ -118,7 +127,7 @@ const Ribbons = () => {
                       setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
                     }}
                   >
-                    {t(`option.toolbarGroup.${toolbarGroup}`)}
+                    {t(getToolbarTranslationString(toolbarGroup))}
                   </button>
                 ))
                 }
@@ -134,7 +143,7 @@ const Ribbons = () => {
             <Dropdown
               dataElement="ribbonsDropdown"
               items={toolbarGroups}
-              translationPrefix="option.toolbarGroup"
+              getTranslationLabel={getToolbarTranslationString}
               currentSelectionKey={currentToolbarGroup}
               onClickItem={toolbarGroup => {
                 toggleFormFieldCreationMode(toolbarGroup);

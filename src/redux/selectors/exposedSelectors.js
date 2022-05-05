@@ -93,6 +93,10 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
+export const getToolbarHeaders = state => {
+  return state.viewer.headers;
+}
+
 const getToolbarGroupDataElements = state => {
   return Object.keys(state.viewer.headers)
     .filter(key => key.includes('toolbarGroup-'));
@@ -101,8 +105,9 @@ const getToolbarGroupDataElements = state => {
 export const getEnabledToolbarGroups = state => {
   const toolbarGroupDataElements = getToolbarGroupDataElements(state);
   return toolbarGroupDataElements.filter(dataElement => {
-    const headerItems = state.viewer.headers[dataElement];
-    const flattenHeaderItems = dataItems => {
+    // The items will come from 'children' if it is a ToolbarGroup created by the API createTool
+    const headerItems = state.viewer.headers[dataElement].children || state.viewer.headers[dataElement];
+    const flattenHeaderItems = (dataItems) => {
       return dataItems.reduce((total, item) => {
         if (item.children) {
           total.push(...flattenHeaderItems(item.children));
@@ -135,7 +140,8 @@ export const getDefaultHeaderItems = state => {
 };
 
 export const getActiveHeaderItems = state => {
-  return state.viewer.headers[state.viewer.activeHeaderGroup];
+  const activeHeaderGroupItems = state.viewer.headers[state.viewer.activeHeaderGroup];
+  return activeHeaderGroupItems.children || activeHeaderGroupItems;
 };
 
 export const getDisabledElementPriority = (state, dataElement) =>
@@ -143,8 +149,13 @@ export const getDisabledElementPriority = (state, dataElement) =>
 
 export const getToolsHeaderItems = state => {
   const toolbarGroup = getCurrentToolbarGroup(state);
-  return state.viewer.headers[toolbarGroup] || [];
+  const toolbarGroupHeaders =  state.viewer.headers[toolbarGroup];
+  return toolbarGroupHeaders && toolbarGroupHeaders.children ? toolbarGroupHeaders.children : toolbarGroupHeaders || [];
 };
+
+export const getToolbarGroupItems = toolbarGroup => state => {
+  return state.viewer.headers[toolbarGroup];
+}
 
 export const getToolButtonObjects = state => {
   return state.viewer.toolButtonObjects;

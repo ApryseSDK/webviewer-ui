@@ -12,34 +12,13 @@ import { copyMapWithDataProperties } from 'constants/map';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import getHashParameters from 'helpers/getHashParameters';
 import localStorageManager from 'helpers/localStorageManager';
+import { undoButton, redoButton } from 'helpers/commonToolbarElements';
 import defaultFonts from 'constants/defaultFonts';
 import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
 import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 
 const { ToolNames } = window.Core.Tools;
-
-const undoButton = {
-  type: 'actionButton',
-  style: { 'marginLeft': '0px' },
-  dataElement: 'undoButton',
-  title: 'action.undo',
-  img: 'icon-operation-undo',
-  onClick: () => {
-    core.undo();
-  },
-  isNotClickableSelector: state => !state.viewer.canUndo
-};
-const redoButton = {
-  type: 'actionButton',
-  dataElement: 'redoButton',
-  title: 'action.redo',
-  img: 'icon-operation-redo',
-  onClick: () => {
-    core.redo();
-  },
-  isNotClickableSelector: state => !state.viewer.canRedo
-};
 
 export default {
   viewer: {
