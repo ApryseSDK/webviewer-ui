@@ -352,7 +352,7 @@ const DocumentCropPopup = ({
       <div hidden={!isCropping}>
         <div className="divider" />
         <div className="document-crop-section">
-          <div className="collapsible-menu" onClick={toggleCropDimensions} onTouchStart={toggleCropDimensions}>
+          <div className="collapsible-menu" onClick={toggleCropDimensions}>
             <div className="menu-title">{t('cropPopUp.cropDimensions')}</div>
             <Icon
               data-testid="collapsible-menu-icon"
