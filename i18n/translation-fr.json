@@ -131,7 +131,7 @@
     "textField": "Champ de texte",
     "signatureFormField": "Champ de signature",
     "checkBoxFormField": "Champ de case à cocher",
-    "radioButtonFormField": "Champ RadioButton",
+    "radioButtonFormField": "Champ de bouton radio",
     "listBoxFormField": "Champ de zone de liste",
     "comboBoxFormField": "Champ de zone de liste déroulante",
     "link": "Lien",

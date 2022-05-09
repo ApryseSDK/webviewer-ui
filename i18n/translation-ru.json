@@ -131,7 +131,7 @@
     "textField": "Текстовое поле",
     "signatureFormField": "Поле для подписи",
     "checkBoxFormField": "Поле флажка",
-    "radioButtonFormField": "Поле RadioButton",
+    "radioButtonFormField": "Поле переключателя",
     "listBoxFormField": "Поле списка",
     "comboBoxFormField": "Поле со списком",
     "link": "Ссылка на сайт",
