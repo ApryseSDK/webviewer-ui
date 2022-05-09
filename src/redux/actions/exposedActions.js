@@ -7,6 +7,11 @@ import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 
+export const setDateTimeFormats = dateTimeFormats => ({
+  type: 'SET_DATE_TIME_FORMATS',
+  payload: { dateTimeFormats },
+});
+
 export const setEnableDesktopOnlyMode = enableDesktopOnlyMode => ({
   type: 'SET_ENABLE_DESKTOP_ONLY_MODE',
   payload: { enableDesktopOnlyMode },
@@ -371,12 +376,12 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
         type: 'CLOSE_ELEMENT',
         payload: { dataElement: state.viewer.activeLeftPanel },
       });
-      fireEvent(Events.VisibilityChanged, {
+      fireEvent(Events.VISIBILITY_CHANGED, {
         element: state.viewer.activeLeftPanel,
         isVisible: false,
       });
       dispatch({ type: 'SET_ACTIVE_LEFT_PANEL', payload: { dataElement } });
-      fireEvent(Events.VisibilityChanged, { element: dataElement, isVisible: true });
+      fireEvent(Events.VISIBILITY_CHANGED, { element: dataElement, isVisible: true });
     }
   } else {
     const panelDataElements = [
@@ -549,6 +554,16 @@ export const setNoteSubmissionEnabledWithEnter = enableNoteSubmissionWithEnter =
   payload: { enableNoteSubmissionWithEnter },
 });
 
+export const setNotesPanelTextCollapsing = enableNotesPanelTextCollapsing => ({
+  type: 'SET_NOTES_PANEL_TEXT_COLLAPSING',
+  payload: { enableNotesPanelTextCollapsing },
+});
+
+export const setNotesPanelRepliesCollapsing = enableNotesPanelRepliesCollapsing => ({
+  type: 'SET_NOTES_PANEL_REPLIES_COLLAPSING',
+  payload: { enableNotesPanelRepliesCollapsing },
+});
+
 export const enableFadePageNavigationComponent = () => ({
   type: 'SET_FADE_PAGE_NAVIGATION_COMPONENT',
   payload: { fadePageNavigationComponent: true },
@@ -577,4 +592,14 @@ export const setWatermarkModalOptions = watermarkModalOptions => ({
 export const replaceRedactionSearchPattern = (searchPattern, regex) => ({
   type: 'REPLACE_REDACTION_SEARCH_PATTERN',
   payload: { searchPattern, regex }
+});
+
+export const addRedactionSearchPattern = (searchPattern) => ({
+  type: 'ADD_REDACTION_SEARCH_PATTERN',
+  payload: { searchPattern }
+});
+
+export const removeRedactionSearchPattern = (searchPatternType) => ({
+  type: 'REMOVE_REDACTION_SEARCH_PATTERN',
+  payload: { searchPatternType }
 });
