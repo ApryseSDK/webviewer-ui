@@ -84,6 +84,9 @@
     "redactPages": "Redigere le pagine",
     "playAudio": "Riproduci l'audio",
     "pauseAudio": "pausa audio",
+    "selectAll": "Seleziona tutto",
+    "unselect": "Deseleziona",
+    "addMark": "Aggiungi Marco",
     "viewFile": "Vedi il file",
     "switchLanguage": "Lingua"
   },
@@ -128,7 +131,7 @@
     "textField": "Campo di testo",
     "signatureFormField": "Campo firma",
     "checkBoxFormField": "Campo casella di controllo",
-    "radioButtonFormField": "Campo RadioButton",
+    "radioButtonFormField": "Campo del pulsante di opzione",
     "listBoxFormField": "Campo casella di riepilogo",
     "comboBoxFormField": "Campo casella combinata",
     "link": "Collegamento",
@@ -778,6 +781,22 @@
       "localCertificateError": "Ci sono alcuni problemi con la lettura di un certificato locale"
     }
   },
+  "cropPopUp": {
+    "title": "Pagine da ritagliare",
+    "allPages": "Tutti",
+    "singlePage": "Pagina corrente",
+    "cropDimensions": "Dimensioni del raccolto",
+    "dimensionInput": {
+      "unitOfMeasurement": "Unità",
+      "autoTrim": "Taglio automatico"
+    },
+    "cropModal": {
+      "applyTitle": "Applicare il ritaglio?",
+      "applyMessage": "Questa azione ritaglierà in modo permanente tutte le pagine selezionate selezionate. Non può essere annullato.",
+      "cancelTitle": "Annullare il ritaglio?",
+      "cancelMessage": "Sei sicuro di voler annullare il ritaglio di tutte le pagine selezionate?"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Inizia a redigere contrassegnando testo, regioni, pagine o effettuando una ricerca.",
     "redactionSearchPlaceholder": "Aggiungi per ricerca per parola chiave o modelli",
@@ -786,10 +805,20 @@
     "redactAllMarked": "Redigere tutto",
     "redactionItem": {
       "regionRedaction": "Redazione della regione",
-      "fullPageRedaction": "Redazione a tutta pagina"
+      "fullPageRedaction": "Redazione a tutta pagina",
+      "image": "Immagine"
     },
     "expand": "Espandere",
-    "collapse": "Crollo"
+    "collapse": "Crollo",
+    "searchResults": "Risultati di ricerca",
+    "search": {
+      "creditCards": "Carta di credito",
+      "phoneNumbers": "Numeri di telefono",
+      "images": "immagini",
+      "emails": "E-mail",
+      "pattern": "Modello",
+      "start": "Inizia a fare la tua ricerca"
+    }
   },
   "languageModal": {
     "selectLanguage": "Seleziona la lingua"

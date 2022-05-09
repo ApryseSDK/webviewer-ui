@@ -84,6 +84,9 @@
     "redactPages": "Редактировать страницы",
     "playAudio": "Воспроизвести аудио",
     "pauseAudio": "аудио пауза",
+    "selectAll": "Выбрать все",
+    "unselect": "Отменить выбор",
+    "addMark": "Добавить отметку",
     "viewFile": "Посмотреть файл",
     "switchLanguage": "Язык"
   },
@@ -128,7 +131,7 @@
     "textField": "Текстовое поле",
     "signatureFormField": "Поле для подписи",
     "checkBoxFormField": "Поле флажка",
-    "radioButtonFormField": "Поле RadioButton",
+    "radioButtonFormField": "Поле переключателя",
     "listBoxFormField": "Поле списка",
     "comboBoxFormField": "Поле со списком",
     "link": "Ссылка на сайт",
@@ -778,6 +781,22 @@
       "localCertificateError": "Есть некоторые проблемы с чтением локального сертификата"
     }
   },
+  "cropPopUp": {
+    "title": "Страницы для обрезки",
+    "allPages": "Все",
+    "singlePage": "Текущая страница",
+    "cropDimensions": "Размеры обрезки",
+    "dimensionInput": {
+      "unitOfMeasurement": "Единица измерения",
+      "autoTrim": "Автообрезка"
+    },
+    "cropModal": {
+      "applyTitle": "Применить кадрирование?",
+      "applyMessage": "Это действие навсегда обрежет все выбранные выбранные страницы. Это не может быть отменено.",
+      "cancelTitle": "Отменить обрезку?",
+      "cancelMessage": "Вы уверены, что хотите отменить обрезку всех выбранных страниц?"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Начните редактирование, пометив текст, области, страницы или выполнив поиск.",
     "redactionSearchPlaceholder": "Добавить по ключевому слову или шаблонам",
@@ -786,10 +805,20 @@
     "redactAllMarked": "Редактировать все",
     "redactionItem": {
       "regionRedaction": "Редакция региона",
-      "fullPageRedaction": "Полная редакция страницы"
+      "fullPageRedaction": "Полная редакция страницы",
+      "image": "Изображение"
     },
     "expand": "Расширять",
-    "collapse": "Крах"
+    "collapse": "Крах",
+    "searchResults": "Результаты поиска",
+    "search": {
+      "creditCards": "Кредитная карта",
+      "phoneNumbers": "Телефонные номера",
+      "images": "Картинки",
+      "emails": "электронные письма",
+      "pattern": "Шаблон",
+      "start": "Начните поиск"
+    }
   },
   "languageModal": {
     "selectLanguage": "Выбрать язык"

@@ -84,6 +84,9 @@
     "redactPages": "Redactar páginas",
     "playAudio": "reproducir audio",
     "pauseAudio": "pausa de audio",
+    "selectAll": "Seleccionar todo",
+    "unselect": "Deseleccionar",
+    "addMark": "Agregar marca",
     "viewFile": "Ver archivo",
     "switchLanguage": "Idioma"
   },
@@ -128,7 +131,7 @@
     "textField": "Campo de texto",
     "signatureFormField": "Campo de firma",
     "checkBoxFormField": "Campo de casilla de verificación",
-    "radioButtonFormField": "RadioButton Field",
+    "radioButtonFormField": "Campo de botón de opción",
     "listBoxFormField": "Campo de cuadro de lista",
     "comboBoxFormField": "Campo de cuadro combinado",
     "link": "Enlace",
@@ -778,6 +781,22 @@
       "localCertificateError": "Hay algunos problemas con la lectura de un certificado local."
     }
   },
+  "cropPopUp": {
+    "title": "Páginas para recortar",
+    "allPages": "Todos",
+    "singlePage": "Página actual",
+    "cropDimensions": "Dimensiones de cultivo",
+    "dimensionInput": {
+      "unitOfMeasurement": "Unidad",
+      "autoTrim": "Recorte automático"
+    },
+    "cropModal": {
+      "applyTitle": "¿Aplicar cultivo?",
+      "applyMessage": "Esta acción recortará permanentemente todas las páginas seleccionadas. No se puede deshacer.",
+      "cancelTitle": "¿Cancelar cultivo?",
+      "cancelMessage": "¿Está seguro de que desea cancelar el recorte de todas las páginas seleccionadas?"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Comience a redactar marcando texto, regiones, páginas o realizando una búsqueda.",
     "redactionSearchPlaceholder": "Agregar por búsqueda de palabra clave o patrones",
@@ -786,10 +805,20 @@
     "redactAllMarked": "Redactar todo",
     "redactionItem": {
       "regionRedaction": "Redacción de la región",
-      "fullPageRedaction": "Redacción de página completa"
+      "fullPageRedaction": "Redacción de página completa",
+      "image": "Imagen"
     },
     "expand": "Expandir",
-    "collapse": "Colapso"
+    "collapse": "Colapso",
+    "searchResults": "Resultados de la búsqueda",
+    "search": {
+      "creditCards": "Tarjeta de crédito",
+      "phoneNumbers": "Números de teléfono",
+      "images": "Imágenes",
+      "emails": "Correos electrónicos",
+      "pattern": "Patrón",
+      "start": "Empieza a hacer tu búsqueda"
+    }
   },
   "languageModal": {
     "selectLanguage": "Seleccione el idioma"

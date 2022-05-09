@@ -84,6 +84,9 @@
     "redactPages": "Redigir páginas",
     "playAudio": "Reproduzir áudio",
     "pauseAudio": "pausa de áudio",
+    "selectAll": "Selecionar tudo",
+    "unselect": "Desmarcar",
+    "addMark": "Adicionar marca",
     "viewFile": "Visualizar arquivo",
     "switchLanguage": "Linguagem"
   },
@@ -127,9 +130,9 @@
     "note": "Nota",
     "textField": "Campo de texto",
     "signatureFormField": "Campo de Assinatura",
-    "checkBoxFormField": "Campo da caixa de seleção",
-    "radioButtonFormField": "RadioButton Field",
-    "listBoxFormField": "Campo da Caixa de Lista",
+    "checkBoxFormField": "Campo de caixa de seleção",
+    "radioButtonFormField": "Campo de caixa de seleção única",
+    "listBoxFormField": "Campo de lista de seleção",
     "comboBoxFormField": "Campo de caixa de combinação",
     "link": "Link",
     "other": "Outro",
@@ -778,6 +781,22 @@
       "localCertificateError": "Existem alguns problemas com a leitura de um certificado local"
     }
   },
+  "cropPopUp": {
+    "title": "Páginas para cortar",
+    "allPages": "Todo",
+    "singlePage": "Pagina atual",
+    "cropDimensions": "Dimensões de corte",
+    "dimensionInput": {
+      "unitOfMeasurement": "Unidade",
+      "autoTrim": "Corte automático"
+    },
+    "cropModal": {
+      "applyTitle": "Aplicar colheita?",
+      "applyMessage": "Esta ação cortará permanentemente todas as páginas selecionadas selecionadas. Não pode ser desfeito.",
+      "cancelTitle": "Cancelar colheita?",
+      "cancelMessage": "Tem certeza de que deseja cancelar o corte de todas as páginas selecionadas?"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Comece a redigir marcando texto, regiões, páginas ou fazendo uma pesquisa.",
     "redactionSearchPlaceholder": "Adicionar por pesquisa de palavras-chave ou padrões",
@@ -786,10 +805,20 @@
     "redactAllMarked": "Redigir tudo",
     "redactionItem": {
       "regionRedaction": "Redação da região",
-      "fullPageRedaction": "Redação de página inteira"
+      "fullPageRedaction": "Redação de página inteira",
+      "image": "Imagem"
     },
     "expand": "Expandir",
-    "collapse": "Colapso"
+    "collapse": "Colapso",
+    "searchResults": "Procurar Resultados",
+    "search": {
+      "creditCards": "Cartão de crédito",
+      "phoneNumbers": "Números de telefone",
+      "images": "Imagens",
+      "emails": "E-mails",
+      "pattern": "Padrão",
+      "start": "Comece a fazer sua pesquisa"
+    }
   },
   "languageModal": {
     "selectLanguage": "Selecione o idioma"

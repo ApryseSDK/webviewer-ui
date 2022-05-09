@@ -84,6 +84,9 @@
     "redactPages": "Seiten schwärzen",
     "playAudio": "Audio abspielen",
     "pauseAudio": "Audiopause",
+    "selectAll": "Wählen Sie Alle",
+    "unselect": "Auswahl aufheben",
+    "addMark": "Markus hinzufügen",
     "viewFile": "Datei ansehen",
     "switchLanguage": "Sprache"
   },
@@ -128,7 +131,7 @@
     "textField": "Textfeld",
     "signatureFormField": "Signaturfeld",
     "checkBoxFormField": "Kontrollkästchen Feld",
-    "radioButtonFormField": "RadioButton-Feld",
+    "radioButtonFormField": "Optionsfeld",
     "listBoxFormField": "Listenfeld",
     "comboBoxFormField": "Kombinationsfeld",
     "link": "Verknüpfung",
@@ -778,6 +781,22 @@
       "localCertificateError": "Es gibt einige Probleme beim Lesen eines lokalen Zertifikats"
     }
   },
+  "cropPopUp": {
+    "title": "Seiten zum Zuschneiden",
+    "allPages": "Alle",
+    "singlePage": "Aktuelle Seite",
+    "cropDimensions": "Crop-Abmessungen",
+    "dimensionInput": {
+      "unitOfMeasurement": "Einheit",
+      "autoTrim": "Automatisches Trimmen"
+    },
+    "cropModal": {
+      "applyTitle": "Ernte anwenden?",
+      "applyMessage": "Durch diese Aktion werden alle ausgewählten Seiten dauerhaft beschnitten. Es kann nicht ungeschehen gemacht werden.",
+      "cancelTitle": "Ernte abbrechen?",
+      "cancelMessage": "Möchten Sie das Zuschneiden aller ausgewählten Seiten wirklich abbrechen?"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Beginnen Sie mit dem Schwärzen, indem Sie Text, Regionen, Seiten markieren oder eine Suche durchführen.",
     "redactionSearchPlaceholder": "Hinzufügen nach Schlüsselwortsuche oder Mustern",
@@ -786,10 +805,20 @@
     "redactAllMarked": "Alle schwärzen",
     "redactionItem": {
       "regionRedaction": "Regionsredaktion",
-      "fullPageRedaction": "Ganzseitige Redaktion"
+      "fullPageRedaction": "Ganzseitige Redaktion",
+      "image": "Bild"
     },
     "expand": "Erweitern",
-    "collapse": "Zusammenbruch"
+    "collapse": "Zusammenbruch",
+    "searchResults": "Suchergebnisse",
+    "search": {
+      "creditCards": "Kreditkarte",
+      "phoneNumbers": "Telefonnummern",
+      "images": "Bilder",
+      "emails": "E-Mails",
+      "pattern": "Muster",
+      "start": "Starten Sie Ihre Suche"
+    }
   },
   "languageModal": {
     "selectLanguage": "Sprache auswählen"

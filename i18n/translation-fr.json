@@ -84,6 +84,9 @@
     "redactPages": "Masquer les pages",
     "playAudio": "Lecture audio",
     "pauseAudio": "Pause audio",
+    "selectAll": "Tout sélectionner",
+    "unselect": "Désélectionner",
+    "addMark": "Ajouter une marque",
     "viewFile": "Voir la fiche",
     "switchLanguage": "Langue"
   },
@@ -128,7 +131,7 @@
     "textField": "Champ de texte",
     "signatureFormField": "Champ de signature",
     "checkBoxFormField": "Champ de case à cocher",
-    "radioButtonFormField": "Champ RadioButton",
+    "radioButtonFormField": "Champ de bouton radio",
     "listBoxFormField": "Champ de zone de liste",
     "comboBoxFormField": "Champ de zone de liste déroulante",
     "link": "Lien",
@@ -778,6 +781,22 @@
       "localCertificateError": "Il y a quelques problèmes avec la lecture d'un certificat local"
     }
   },
+  "cropPopUp": {
+    "title": "Pages à recadrer",
+    "allPages": "Tous",
+    "singlePage": "Page actuelle",
+    "cropDimensions": "Dimensions du recadrage",
+    "dimensionInput": {
+      "unitOfMeasurement": "Unité",
+      "autoTrim": "Trim automatique"
+    },
+    "cropModal": {
+      "applyTitle": "Appliquer la culture ?",
+      "applyMessage": "Cette action recadrera de manière permanente toutes les pages sélectionnées sélectionnées. Ça ne peut pas être défait.",
+      "cancelTitle": "Annuler le recadrage ?",
+      "cancelMessage": "Voulez-vous vraiment annuler le recadrage de toutes les pages sélectionnées ?"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Commencez à rédiger en marquant du texte, des régions, des pages ou en effectuant une recherche.",
     "redactionSearchPlaceholder": "Ajouter par recherche par mot-clé ou modèles",
@@ -786,10 +805,20 @@
     "redactAllMarked": "Tout expurger",
     "redactionItem": {
       "regionRedaction": "Caviardage de région",
-      "fullPageRedaction": "Caviardage pleine page"
+      "fullPageRedaction": "Caviardage pleine page",
+      "image": "Image"
     },
     "expand": "Développer",
-    "collapse": "S'effondrer"
+    "collapse": "S'effondrer",
+    "searchResults": "Résultats de recherche",
+    "search": {
+      "creditCards": "Carte de crédit",
+      "phoneNumbers": "Les numéros de téléphone",
+      "images": "Images",
+      "emails": "E-mails",
+      "pattern": "Modèle",
+      "start": "Commencez à faire votre recherche"
+    }
   },
   "languageModal": {
     "selectLanguage": "Choisir la langue"
