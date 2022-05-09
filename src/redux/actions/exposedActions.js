@@ -376,12 +376,12 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
         type: 'CLOSE_ELEMENT',
         payload: { dataElement: state.viewer.activeLeftPanel },
       });
-      fireEvent(Events.VisibilityChanged, {
+      fireEvent(Events.VISIBILITY_CHANGED, {
         element: state.viewer.activeLeftPanel,
         isVisible: false,
       });
       dispatch({ type: 'SET_ACTIVE_LEFT_PANEL', payload: { dataElement } });
-      fireEvent(Events.VisibilityChanged, { element: dataElement, isVisible: true });
+      fireEvent(Events.VISIBILITY_CHANGED, { element: dataElement, isVisible: true });
     }
   } else {
     const panelDataElements = [
