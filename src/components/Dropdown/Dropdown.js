@@ -15,7 +15,6 @@ const propTypes = {
   items: PropTypes.array.isRequired,
   currentSelectionKey: PropTypes.string,
   translationPrefix: PropTypes.string,
-  getTranslationLabel: PropTypes.func,
   dataElement: PropTypes.string,
   disabled: PropTypes.bool,
   isFont: PropTypes.bool,
@@ -26,7 +25,6 @@ function Dropdown({
   items = [],
   currentSelectionKey,
   translationPrefix,
-  getTranslationLabel,
   onClickItem,
   dataElement,
   disabled=false,
@@ -66,15 +64,6 @@ function Dropdown({
     },
     [onClickItem],
   );
-
-  const getTranslation = (prefix, key) => {
-    if(getTranslationLabel) {
-      return t(getTranslationLabel(key));
-    }
-    
-    return t(`${prefix}.${key}`, key)
-  }
-
   const dropdownItems = useMemo(
     () =>
       items.map(key => (
@@ -87,7 +76,7 @@ function Dropdown({
           tabIndex={isOpen ? undefined : -1} // Just to be safe.
           style={isFont ? { fontFamily: key } : undefined}
         >
-          {getTranslation(translationPrefix, key)}
+          {t(`${translationPrefix}.${key}`, key)}
         </DataElementWrapper>
       )),
     [currentSelectionKey, isOpen, items, onClickDropdownItem, t, translationPrefix],
@@ -112,7 +101,7 @@ function Dropdown({
         <div className="picked-option">
           {optionIsSelected && (
             <div className="picked-option-text" style={isFont ? { fontFamily: currentSelectionKey } : undefined}>
-              {tReady? getTranslation(translationPrefix, currentSelectionKey) : ''}
+              {tReady? t(`${translationPrefix}.${currentSelectionKey}`, currentSelectionKey) : ''}
             </div>
           )}
           {!optionIsSelected && placeholder && (

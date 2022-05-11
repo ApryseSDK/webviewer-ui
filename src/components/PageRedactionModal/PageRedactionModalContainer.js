@@ -12,15 +12,12 @@ const MAX_CANVAS_COUNT = 10;
 
 const PageRedactionModalContainer = () => {
   const dispatch = useDispatch();
-  const [isOpen, currentPage, selectedIndexes, pageLabels, activeToolName, activeToolStyles] = useSelector(state => [
+  const [isOpen, currentPage, selectedIndexes, pageLabels] = useSelector(state => [
     selectors.isElementOpen(state, DataElements.PAGE_REDACT_MODAL),
     selectors.getCurrentPage(state),
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.getPageLabels(state),
-    selectors.getActiveToolName(state),
-    selectors.getActiveToolStyles(state)
   ]);
-
   const selectedPages = selectedIndexes.map(index => index + 1);
 
   useEffect(() => {
@@ -31,15 +28,13 @@ const PageRedactionModalContainer = () => {
 
   const closeModal = () => dispatch(actions.closeElement(DataElements.PAGE_REDACT_MODAL));
 
-  const getRedactionStyles = () => activeToolName?.includes('AnnotationCreateRedaction') ? activeToolStyles : {};
-
   const onRedact = pageNumbers => {
-    redactPages(pageNumbers, getRedactionStyles());
+    redactPages(pageNumbers);
     closeModal();
   };
 
   const markPages = pageNumbers => {
-    createPageRedactions(pageNumbers, getRedactionStyles());
+    createPageRedactions(pageNumbers);
     closeModal();
   };
 

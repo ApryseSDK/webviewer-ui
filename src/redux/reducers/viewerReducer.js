@@ -532,11 +532,6 @@ export default initialState => (state = initialState, action) => {
         ...state,
         pageManipulationOverlay: payload.items,
       };
-    case 'SET_THUMBNAIL_CONTROL_MENU_ITEMS':
-      return {
-        ...state,
-        thumbnailControlMenu: payload.items,
-      };
     case 'SET_WATERMARK_MODAL_OPTIONS':
       return { ...state, watermarkModalOptions: payload.watermarkModalOptions };
     case 'SET_RESET_AUDIO_PLAYBACK_POSITION':

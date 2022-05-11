@@ -283,12 +283,6 @@ export const setPageManipulationOverlayItems = items => ({
     items,
   },
 });
-export const setThumbnailControlMenuItems = items => ({
-  type: 'SET_THUMBNAIL_CONTROL_MENU_ITEMS',
-  payload: {
-    items,
-  },
-});
 export const setTabManager = TabManager => ({
   type: 'SET_TAB_MANAGER',
   payload: { TabManager },

@@ -157,11 +157,11 @@ const noPagesSelectedWarning = (pageNumbers, dispatch) => {
   return false;
 };
 
-const redactPages = (pageNumbers, redactionStyles) => {
-  core.applyRedactions(createPageRedactions(pageNumbers, redactionStyles));
+const redactPages = pageNumbers => {
+  core.applyRedactions(createPageRedactions(pageNumbers));
 };
 
-const createPageRedactions = (pageNumbers, redactionStyles) => {
+const createPageRedactions = pageNumbers => {
   const annots = [];
   for (const page of pageNumbers) {
     const pageInfo = core.getPageInfo(page);
@@ -169,7 +169,6 @@ const createPageRedactions = (pageNumbers, redactionStyles) => {
       const redaction = new Annotations.RedactionAnnotation({
         PageNumber: page,
         Rect: new Annotations.Rect(0, 0, pageInfo.width, pageInfo.height),
-        ...redactionStyles
       });
       redaction.type = redactionTypeMap['FULL_PAGE'];
       redaction.setCustomData('trn-redaction-type', redactionTypeMap['FULL_PAGE']);

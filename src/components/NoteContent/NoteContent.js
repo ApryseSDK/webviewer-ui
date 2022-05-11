@@ -16,8 +16,6 @@ import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
 import setReactQuillContent from 'helpers/setReactQuillContent';
 import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
-import Theme from 'constants/theme';
-import { isDarkColorHex } from 'helpers/color';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -41,8 +39,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     language,
     notesShowLastUpdatedDate,
     canCollapseTextPreview,
-    canCollapseReplyPreview,
-    activeTheme,
+    canCollapseReplyPreview
   ] = useSelector(
     state => [
       selectors.getNoteDateFormat(state),
@@ -51,8 +48,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
       selectors.getCurrentLanguage(state),
       selectors.notesShowLastUpdatedDate(state),
       selectors.isNotesPanelTextCollapsingEnabled(state),
-      selectors.isNotesPanelRepliesCollapsingEnabled(state),
-      selectors.getActiveTheme(state),
+      selectors.isNotesPanelRepliesCollapsingEnabled(state)
     ],
     shallowEqual,
   );
@@ -197,22 +193,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   const contents = customData?.contents || annotation.getContents();
   const contentsToRender = annotation.getContents();
   const richTextStyle = annotation.getRichTextStyle();
-  let textColor = annotation['TextColor'];
-
-  if (activeTheme === Theme.DARK) {
-    if (textColor && isDarkColorHex(textColor.toHexString())) {
-      textColor = new window.Annotations.Color(255, 255, 255, 1);
-    }
-
-    if (richTextStyle) {
-      const sections = Object.keys(richTextStyle);
-      sections.forEach((a) => {
-        if (richTextStyle[a]['color'] && isDarkColorHex(richTextStyle[a]['color'])) {
-          richTextStyle[a]['color'] = '#FFFFFF';
-        }
-      });
-    }
-  }
+  const textColor = annotation['TextColor'];
   // This is the text placeholder passed to the ContentArea
   // It ensures that if we try and edit, we get the right placeholder
   // depending on whether the comment has been saved to the annotation or not
@@ -324,7 +305,6 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           isEditing={isEditing}
           noteIndex={noteIndex}
           sortStrategy={sortStrategy}
-          activeTheme={activeTheme}
         />
       )
     }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy]
