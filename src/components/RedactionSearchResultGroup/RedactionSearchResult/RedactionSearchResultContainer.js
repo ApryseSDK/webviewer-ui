@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import RedactionSearchResult from './RedactionSearchResult';
 import { RedactionPanelContext } from 'components/RedactionPanel/RedactionPanelContext';
 import core from 'core';
@@ -11,7 +11,7 @@ const RedactionSearchResultContainer = (props) => {
 
   const { activeSearchResultIndex } = useContext(RedactionPanelContext);
 
-  const { ambientStr, resultStrStart, resultStrEnd, resultStr, type, index } = searchResult;
+  const { ambientStr, resultStrStart, resultStrEnd, resultStr, icon, index, type } = searchResult;
 
   const onChange = useCallback((event) => {
     checkResult(event, index)
@@ -27,6 +27,7 @@ const RedactionSearchResultContainer = (props) => {
       resultStrStart={resultStrStart}
       resultStrEnd={resultStrEnd}
       resultStr={resultStr}
+      icon={icon}
       type={type}
       isChecked={checked}
       onChange={onChange}

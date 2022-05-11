@@ -68,6 +68,7 @@ class AnnotationStylePopup extends React.Component {
     const isFreeText =
       annotation instanceof window.Annotations.FreeTextAnnotation &&
       annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeText;
+    const isMeasure = !!annotation.Measure;
     let properties = {};
     const className = getClassName('Popup AnnotationStylePopup', this.props);
     const colorMapKey = mapAnnotationToKey(annotation);
@@ -84,10 +85,10 @@ class AnnotationStylePopup extends React.Component {
         FontSize: annotation.FontSize,
         TextAlign: annotation.TextAlign,
         TextVerticalAlign: annotation.TextVerticalAlign,
-        bold: richTextStyles?.[0]["font-weight"] === "bold" ?? false,
-        italic: richTextStyles?.[0]["font-style"] === "italic" ?? false,
-        underline: richTextStyles?.[0]["text-decoration"]?.includes("underline") || richTextStyles?.[0]["text-decoration"]?.includes("word"),
-        strikeout: richTextStyles?.[0]["text-decoration"]?.includes("line-through") ?? false,
+        bold: richTextStyles?.[0]['font-weight'] === 'bold' ?? false,
+        italic: richTextStyles?.[0]['font-style'] === 'italic' ?? false,
+        underline: richTextStyles?.[0]['text-decoration']?.includes('underline') || richTextStyles?.[0]['text-decoration']?.includes('word'),
+        strikeout: richTextStyles?.[0]['text-decoration']?.includes('line-through') ?? false,
       };
     }
 
@@ -117,6 +118,7 @@ class AnnotationStylePopup extends React.Component {
               colorMapKey={colorMapKey}
               style={style}
               isFreeText={isFreeText}
+              isMeasure={isMeasure}
               onStyleChange={this.handleStyleChange}
               onPropertyChange={this.handlePropertyChange}
               disableSeparator

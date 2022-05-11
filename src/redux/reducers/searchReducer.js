@@ -98,8 +98,28 @@ export default initialState => (state = initialState, action) => {
         ...state,
         redactionSearchPatterns: {
           ...state.redactionSearchPatterns,
-          [payload.searchPattern]: payload.regex,
+          [payload.searchPattern]: {
+            ...state.redactionSearchPatterns[payload.searchPattern],
+            regex: payload.regex,
+          }
         }
+      };
+    }
+    case 'ADD_REDACTION_SEARCH_PATTERN': {
+      return {
+        ...state,
+        redactionSearchPatterns: {
+          ...state.redactionSearchPatterns,
+          [payload.searchPattern.type]: payload.searchPattern,
+        }
+      };
+    }
+    case 'REMOVE_REDACTION_SEARCH_PATTERN': {
+      const updatedRedactionSearchPatterns = { ...state.redactionSearchPatterns };
+      delete updatedRedactionSearchPatterns[payload.searchPatternType];
+      return {
+        ...state,
+        redactionSearchPatterns: updatedRedactionSearchPatterns,
       };
     }
     default:

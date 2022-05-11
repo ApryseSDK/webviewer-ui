@@ -1,7 +1,6 @@
 import actions from 'actions';
 
 function generateSetCustomModal(store) {
-
   /**
    * Add custom modal element to WebViewer.
    * <br /><br />

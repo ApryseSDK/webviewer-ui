@@ -243,7 +243,6 @@ const LinkModal = () => {
                 <div className="linkInput">
                   <input
                     className="urlInput"
-                    type="url"
                     ref={urlInput}
                     value={url}
                     onChange={e => setURL(e.target.value)}

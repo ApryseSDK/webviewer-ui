@@ -17,12 +17,12 @@ export async function getFileAttachments() {
       // Traverse the list of embedded files.
       const fileItr = await files.getIteratorBegin();
       for (let counter = 0; await fileItr.hasNext(); await fileItr.next(), ++counter) {
-        const filesIteratorValue =  await fileItr.value();
+        const filesIteratorValue = await fileItr.value();
         const fileObject = await filesIteratorValue.get('F');
         const fileData = await fileObject.value();
         const filename = await fileData.getAsPDFText();
-        const file_spec = await PDFNet.FileSpec.createFromObj(await fileItr.value());
-        const stm = await file_spec.getFileData();
+        const fileSpec = await PDFNet.FileSpec.createFromObj(await fileItr.value());
+        const stm = await fileSpec.getFileData();
         const filterReader = await PDFNet.FilterReader.create(stm);
         const dataArray = [];
         const chunkLength = 1024;

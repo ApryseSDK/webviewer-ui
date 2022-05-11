@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import './FileInputPanel.scss'
+import './FileInputPanel.scss';
+import Dropdown from 'components/Dropdown';
 
-const FileInputPanel = ({ defaultValue, onFileSelect }) => {
+const FileInputPanel = ({ defaultValue, onFileSelect, acceptFormats, extension, setExtension }) => {
   const [t] = useTranslation();
   const [value, setValue] = useState(defaultValue || '');
 
-  const onChange = (e) => {
+  const onChange = e => {
     setValue(e.target.value);
     onFileSelect(e.target.value);
   };
@@ -28,6 +29,19 @@ const FileInputPanel = ({ defaultValue, onFileSelect }) => {
           placeholder={t('link.urlLink')}
         />
       </div>
+      { (!setExtension) ? null :
+        <div className="extension-dropdown">
+          <Dropdown
+            disabled={!value}
+            placeholder={t('tool.select')}
+            onClick={e => e.stopPropagation()}
+            items={acceptFormats}
+            onClickItem={setExtension}
+            currentSelectionKey={extension}
+          />
+          <p>{t('OpenFile.extension')}</p>
+        </div>
+      }
     </div>
   );
 };

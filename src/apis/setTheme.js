@@ -56,7 +56,7 @@ const setVariables = (themeVarString = '') => {
   });
 };
 
-const updateColors = (activeTheme, isHighContrastMode)  => {
+const updateColors = (activeTheme, isHighContrastMode) => {
   if (activeTheme === Theme.LIGHT) {
     setVariables(isHighContrastMode ? highContastLightModeString : lightModeString);
   } else if (activeTheme === Theme.DARK) {

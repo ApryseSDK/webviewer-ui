@@ -458,6 +458,7 @@ const OutlineUtils = {
     return '-';
   },
   async isValid(pdfnetOutline) {
+    // eslint-disable-next-line no-return-await
     return pdfnetOutline && (await pdfnetOutline.isValid());
   },
 };

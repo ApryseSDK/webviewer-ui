@@ -20,7 +20,6 @@ const setIdsForChildren = (layers, parentLayerId, isParentDisabled, resultSoFar)
       newLayer.children = setIdsForChildren(layer.children, `${newLayer.id}`, newLayer.disabled, []);
     }
     resultSoFar.push(newLayer);
-
   });
   return resultSoFar;
 };

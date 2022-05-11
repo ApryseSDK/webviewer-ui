@@ -1,15 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import actions from 'actions';
 import TabManager from 'helpers/TabManager';
 import classNames from 'classnames';
 import getHashParameters from 'helpers/getHashParameters';
 import { Swipeable } from 'react-swipeable';
-import Dropdown from 'components/Dropdown';
 import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
+import { Tabs, Tab, TabPanel } from 'components/Tabs';
+import FileInputPanel from '../../PageReplacementModal/FileInputPanel';
+import FilePickerPanel from '../../PageReplacementModal/FilePickerPanel';
+import '../../PageReplacementModal/PageReplacementModal.scss';
 import './FileModal.scss';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
 
 const OpenFileModal = ({ isOpen, tabManager }) => {
   const { t } = useTranslation();
@@ -19,8 +21,6 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
   const [filename, setFilename] = useState();
   const [size, setSize] = useState();
   const [error, setError] = useState({ 'fileError': '', 'urlError': '', 'extensionError': '' });
-  const [shouldOpen, setShouldOpen] = useState(true);
-  const fileInputRef = useRef();
 
   const closeModal = () => {
     dispatch(actions.closeElement('OpenFileModal'));
@@ -35,53 +35,62 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
     if (isOpen) {
       dispatch(actions.closeElements(['printModal', 'loadingModal', 'progressModal', 'errorModal', 'Model3DModal']));
     } else {
-      fileInputRef.current.value = '';
+      setSrc('');
+      setError({ 'fileError': '', 'urlError': '' });
+      setFilename(null);
+      setExtension(null);
+      setSize(null);
     }
   }, [dispatch, isOpen]);
 
-  const handleAddTab = async () => {
-    if (!src) {
+  const handleAddTab = async (source, _extension, _filename, _size) => {
+    if (!source) {
       return setError({ 'urlError': 'URL or File must be provided' });
     }
-    if (!extension || acceptFormats.indexOf(extension) === -1) {
+    if (!_extension || acceptFormats.indexOf(_extension) === -1) {
       return setError({ 'extensionError': 'Extension must be provided' });
     }
-    const useDb = !size || TabManager.MAX_FILE_SIZE > size;
-    await tabManager.addTab(src, {
-      extension,
-      filename,
-      load: shouldOpen,
+    const useDb = !_size || TabManager.MAX_FILE_SIZE > _size;
+    await tabManager.addTab(source, {
+      extension: _extension,
+      filename: _filename,
+      load: true,
       saveCurrent: true,
       useDB: useDb
     });
     closeModal();
   };
 
-  const modalClass = classNames(
-    {
-      Modal: true,
-      FileModal: true,
-      open: isOpen,
-      closed: !isOpen,
-    });
+  const modalClass = classNames({
+    Modal: true,
+    FileModal: true,
+    open: isOpen,
+    closed: !isOpen,
+  });
 
   const extensionRegExp = /(?:\.([^.?]+))?$/;
 
-  const handleFileChange = async event => {
+  const handleFileChange = async file => {
     setError(null);
-    const file = event.target.files[0];
     if (!file) {
       return;
     }
-    setFilename(file.name);
-    setSrc(URL.createObjectURL(file));
-    setExtension(window.Core.mimeTypeToExtension[file.type] || extensionRegExp.exec(file.name)[1] || null);
-    setSize(file.size);
+    if (file instanceof window.Core.Document) {
+      await handleAddTab(file, file.type, file.filename);
+    }
+    const ext = window.Core.mimeTypeToExtension[file.type] || extensionRegExp.exec(file.name)[1] || null;
+    const filename = file.name;
+    const size = file.size;
+    const src = URL.createObjectURL(file);
+    setSrc(src);
+    setFilename(filename);
+    setExtension(ext);
+    setSize(size);
+    await handleAddTab(file, ext, filename, size);
   };
 
   const handleURLChange = async url => {
     setError(null);
-    fileInputRef.current.value = '';
     setSrc(url.trim());
     const filename = url.substring(url.lastIndexOf('/')+1).split('?')[0];
     setFilename(filename);
@@ -102,39 +111,68 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal}>
       <div className={modalClass} data-element="OpenFileModal" onMouseDown={closeModal}>
         <div className="container" onMouseDown={e => e.stopPropagation()}>
-          <div className="swipe-indicator"/>
-          <form onSubmit={e => e.preventDefault()}>
-            <div className="col">{t('OpenFile.enterUrlOrChooseFile')}</div>
-            <input
-              className="urlInput"
-              type="url"
-              value={src}
-              onChange={e => handleURLChange(e.target.value)}
-              placeholder={t('OpenFile.enterUrl')}
-            />
-            {error?.urlError && <p className="error">* {error.urlError}</p>}
-            <input
-              ref={fileInputRef}
-              type="file"
-              onChange={handleFileChange}
-              accept={acceptFormats.map(
-                format => `.${format}`,
-              ).join(',')}
-            />
-            {error?.fileError && <p className="error">* {error.fileError}</p>}
-            <div className="extension-dropdown">
-              <Dropdown
-                onClick={e => e.stopPropagation()}
-                onClickItem={setExtension}
-                items={acceptFormats}
-                currentSelectionKey={extension}
-              />
-              <p>{t('OpenFile.extension')}</p>
+
+          <Tabs className="page-replacement-tabs" id="pageReplacementModal">
+            <div className="header-container">
+              <div className="header">
+                <p>{t('OpenFile.enterUrlOrChooseFile')}</p>
+                <Button
+                  img={'icon-close'}
+                  onClick={closeModal}
+                  dataElement={'UNKNOWN'}
+                />
+              </div>
+
+              <div className="tab-list">
+                <Tab dataElement="urlInputPanelButton">
+                  <button className="tab-options-button">
+                    {t('link.url')}
+                  </button>
+                </Tab>
+                <div className="tab-options-divider" />
+                <Tab dataElement="filePickerPanelButton">
+                  <button className="tab-options-button">
+                    {t('option.pageReplacementModal.localFile')}
+                  </button>
+                </Tab>
+              </div>
             </div>
+            <div className="page-replacement-divider" />
+            <TabPanel dataElement="urlInputPanel">
+              <div className="panel-body">
+                <FileInputPanel
+                  onFileSelect={url => {
+                    handleURLChange(url);
+                  }}
+                  acceptFormats={acceptFormats}
+                  extension={extension}
+                  setExtension={setExtension}
+                  defaultValue={src}
+                />
+              </div>
+            </TabPanel>
+            <TabPanel dataElement="filePickerPanel">
+              <div className="panel-body">
+                <FilePickerPanel
+                  onFileProcessed={file => handleFileChange(file)}
+                />
+              </div>
+            </TabPanel>
+          </Tabs>
+          <div className="page-replacement-divider" />
+          <div className="footer">
+            {error?.urlError && <p className="error">* {error.urlError}</p>}
+            {error?.fileError && <p className="error">* {error.fileError}</p>}
             {error?.extensionError && <p className="error">* {error.extensionError}</p>}
-            <Choice label={t('action.openFile')} checked={shouldOpen} onChange={() => setShouldOpen(!shouldOpen)} />
-            <Button dataElement="linkSubmitButton" label={t('OpenFile.addTab')} onClick={handleAddTab} />
-          </form>
+            <Button
+              className="modal-btn"
+              dataElement="linkSubmitButton"
+              label={t('OpenFile.addTab')}
+              style={{ width: 90 }}
+              onClick={() => handleAddTab(src, extension, filename, size)}
+            />
+          </div>
+
         </div>
       </div>
     </Swipeable>

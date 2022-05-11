@@ -13,10 +13,12 @@ const RedactionItemContainer = (props) => {
   const [
     dateFormat,
     language,
+    customNoteSelectionFunction,
   ] = useSelector(
     state => [
       selectors.getNoteDateFormat(state),
       selectors.getCurrentLanguage(state),
+      selectors.getCustomNoteSelectionFunction(state),
     ],
     shallowEqual,
   );
@@ -26,6 +28,7 @@ const RedactionItemContainer = (props) => {
   const author = core.getDisplayAuthor(annotation['Author']);
 
   const onRedactionItemSelection = useCallback(() => {
+    customNoteSelectionFunction && customNoteSelectionFunction(annotation);
     core.deselectAllAnnotations();
     core.selectAnnotation(annotation);
     core.jumpToAnnotation(annotation);

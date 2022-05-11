@@ -2,6 +2,7 @@ import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 
 // viewer
+export const getDateTimeFormats = state => state.viewer.dateTimeFormats;
 export const getFonts = state => state.viewer.fonts;
 export const getTabs = state => state.viewer.tabs;
 export const getActiveTab = state => state.viewer.activeTab;
@@ -101,7 +102,7 @@ export const getEnabledToolbarGroups = state => {
   const toolbarGroupDataElements = getToolbarGroupDataElements(state);
   return toolbarGroupDataElements.filter(dataElement => {
     const headerItems = state.viewer.headers[dataElement];
-    const flattenHeaderItems = (dataItems) => {
+    const flattenHeaderItems = dataItems => {
       return dataItems.reduce((total, item) => {
         if (item.children) {
           total.push(...flattenHeaderItems(item.children));
@@ -109,7 +110,7 @@ export const getEnabledToolbarGroups = state => {
           total.push(item);
         }
         return total;
-      }, [])
+      }, []);
     };
 
     const itemsToCheck = flattenHeaderItems(headerItems);
@@ -155,6 +156,14 @@ export const isToolGroupReorderingEnabled = state => {
 
 export const isNoteSubmissionWithEnterEnabled = state => {
   return state.viewer.enableNoteSubmissionWithEnter;
+};
+
+export const isNotesPanelTextCollapsingEnabled = state => {
+  return state.viewer.isNotesPanelTextCollapsingEnabled;
+};
+
+export const isNotesPanelRepliesCollapsingEnabled = state => {
+  return state.viewer.isNotesPanelRepliesCollapsingEnabled;
 };
 
 export const getActiveToolNamesForActiveToolGroup = state => {
@@ -300,7 +309,7 @@ export const getIsThumbnailMergingEnabled = state => state.viewer.isThumbnailMer
 
 export const getIsThumbnailReorderingEnabled = state => state.viewer.isThumbnailReordering;
 
-export const getIsThumbnailMultiselectEnabled = state => state.viewer.isThumbnailMultiselect;
+export const isThumbnailMultiselectEnabled = state => state.viewer.isThumbnailMultiselect;
 
 export const getIsMultipleViewerMerging = state => state.viewer.isMultipleViewerMerging;
 
@@ -396,11 +405,13 @@ export const isRegex = state => state.search.isRegex;
 
 export const isProcessingSearchResults = state => state.search.isProcessingSearchResults;
 
-export const getRedactionSearchPattern = (state, pattern) => state.search.redactionSearchPatterns[pattern];
+export const getRedactionSearchPatterns = state => state.search.redactionSearchPatterns;
 
 export const getNoteTransformFunction = state => state.viewer.noteTransformFunction;
 
 export const getCustomNoteSelectionFunction = state => state.viewer.customNoteFunction;
+
+export const getCustomApplyRedactionsHandler = state => state.viewer.customApplyRedactionsHandler;
 
 export const isSnapModeEnabled = state => state.viewer.isSnapModeEnabled;
 

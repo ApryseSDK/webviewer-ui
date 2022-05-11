@@ -1,7 +1,7 @@
 import React from 'react';
 import DataElementWrapper from '../DataElementWrapper';
 import RedactionSearchMultiSelect from './RedactionSearchMultiSelect';
-import { redactionTypeMap } from '../RedactionPageGroup/RedactionItem/RedactionItem';
+import { redactionTypeMap } from 'constants/redactionTypes';
 import './RedactionSearchOverlay.scss';
 
 const buildSearchOptions = (searchTerms) => {
@@ -15,22 +15,10 @@ const buildSearchOptions = (searchTerms) => {
 
   searchTerms.forEach(searchTerm => {
     const { type } = searchTerm;
-    switch (type) {
-      case redactionTypeMap['CREDIT_CARD']:
-        options.creditCards = true;
-        break;
-      case redactionTypeMap['EMAIL']:
-        options.emails = true;
-        break;
-      case redactionTypeMap['PHONE']:
-        options.phoneNumbers = true;
-        break;
-      case redactionTypeMap['IMAGE']:
-        options.images = true;
-        break;
-      case redactionTypeMap['TEXT']:
-        options.textSearch.push(searchTerm.label);
-        break;
+    if (type === redactionTypeMap['TEXT']) {
+      options.textSearch.push(searchTerm.label);
+    } else {
+      options[type] = true;
     }
   });
 
@@ -44,6 +32,7 @@ const RedactionSearchOverlay = (props) => {
     setSearchTerms,
     executeRedactionSearch,
     activeTheme,
+    redactionSearchOptions,
   } = props;
 
   const handleChange = (
@@ -86,6 +75,7 @@ const RedactionSearchOverlay = (props) => {
         onCreateOption={handleCreate}
         onChange={handleChange}
         activeTheme={activeTheme}
+        redactionSearchOptions={redactionSearchOptions}
       />
 
     </DataElementWrapper>

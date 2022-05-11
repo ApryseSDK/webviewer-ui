@@ -9,6 +9,8 @@ import setLanguage from '../../apis/setLanguage';
 import Button from 'components/Button';
 import Choice from 'components/Choice';
 import { languages } from '../../apis/getAvailableLanguages';
+import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
+import { Swipeable } from 'react-swipeable';
 
 import './LanguageModal.scss';
 
@@ -38,47 +40,52 @@ const LanguageModal = () => {
   };
 
   const apply = () => {
-    setLanguage(store)(uiLanguage);
+    if (uiLanguage !== currentLanguage) {
+      setLanguage(store)(uiLanguage);
+    }
     closeModal(false);
   };
 
   return isDisabled ? null : (
-    <div className={className} data-element={DataElements.LANGUAGE_MODAL} onClick={closeModal}>
-      <div className="container" onClick={e => e.stopPropagation()}>
-        <div className="header">
-          <div>{t('languageModal.selectLanguage')}</div>
-          <Button
-            img="icon-close"
-            onClick={closeModal}
-            title="action.cancel"
-          />
-        </div>
-        <div className="divider"></div>
-        <div className="body">
-          {languages.map(language => (
-            <div key={language[0]}>
-              <Choice
-                radio={true}
-                checked={uiLanguage === language[0]}
-                onChange={() => setUiLanguage(language[0])}
-                label={language[1]}
+    <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
+      <FocusTrap locked={isOpen}>
+        <div className={className} data-element={DataElements.LANGUAGE_MODAL} onClick={closeModal}>
+          <div className="container" onClick={e => e.stopPropagation()}>
+            <div className="swipe-indicator" />
+            <div className="header">
+              <div>{t('languageModal.selectLanguage')}</div>
+              <Button
+                img="icon-close"
+                onClick={closeModal}
+                title="action.cancel"
               />
             </div>
-          ))}
-        </div>
-        <div className="divider"></div>
-        <div className="footer">
-          <div className="buttons">
-            <Button
-              className="confirm modal-button"
-              label="action.apply"
-              onClick={apply}
-              disabled={uiLanguage === currentLanguage}
-            />
+            <div className="divider"></div>
+            <div className="body">
+              {languages.map(language => (
+                <div key={language[0]}>
+                  <Choice
+                    radio
+                    checked={uiLanguage === language[0]}
+                    onChange={() => setUiLanguage(language[0])}
+                    label={language[1]}
+                    name="ui_language"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="divider"></div>
+            <div className="footer">
+              <Button
+                className="confirm modal-button"
+                label="action.apply"
+                onClick={apply}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </FocusTrap>
+    </Swipeable>
   );
 };
 

@@ -14,8 +14,8 @@ export default dispatch => () => {
     // enough so that we can enable high res thumb
     window.Core.SetPreRenderLevel(2);
   }
-
-  if (totalPages >= 500) {
+  const displayModeManager = window.documentViewer.getDisplayModeManager();
+  if (totalPages >= 500 && !displayModeManager.isVirtualDisplayEnabled()) {
     core.setDisplayMode(window.Core.DisplayModes.Single);
   }
 

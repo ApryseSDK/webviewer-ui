@@ -43,6 +43,44 @@ const mockProps = {
   onSliderChange: jest.fn(),
 };
 
+const mockPropertyStroke = 'StrokeThickness';
+const mockPropsStroke = {
+  property: mockPropertyStroke,
+  value: 2.05,
+  displayProperty: 'thickness',
+  getDisplayValue: jest.fn().mockReturnValue('2px'),
+  dataElement: 'strokeThicknessSlider',
+  getCirclePosition: jest.fn(),
+  convertRelativeCirclePositionToValue: jest.fn(),
+  onStyleChange: jest.fn(),
+  onSliderChange: jest.fn(),
+  withInputField: true,
+  inputFieldType: 'number',
+  min: 0,
+  max: 20,
+  step: 0.01,
+  getLocalValue: jest.fn().mockReturnValue(2.05),
+};
+
+const mockPropertyOpacity = 'Opacity';
+const mockPropsOpacity = {
+  property: mockPropertyOpacity,
+  value: 52,
+  displayProperty: 'opacity',
+  getDisplayValue: opacity => `${Math.round(opacity)}%`,
+  dataElement: 'opacitySlider',
+  getCirclePosition: jest.fn(),
+  convertRelativeCirclePositionToValue: jest.fn().mockReturnValue(52),
+  onStyleChange: jest.fn(),
+  onSliderChange: jest.fn(),
+  withInputField: true,
+  inputFieldType: 'number',
+  min: 0,
+  max: 100,
+  step: 1,
+  getLocalValue: jest.fn().mockReturnValue(52),
+};
+
 describe('Slider', () => {
   it('should not be able to render without any props', () => {
     //Mock the console.error so we don't dump a wall of red text
@@ -59,6 +97,14 @@ describe('Slider', () => {
 
   it('should be able to render Slider with all props provided', () => {
     render(<TestSlider {...mockProps} />);
+  });
+
+  it('should be able to render Slider with stroke props provided', () => {
+    render(<TestSlider {...mockPropsStroke} />);
+  });
+
+  it('should be able to render Slider with opacity props provided', () => {
+    render(<TestSlider {...mockPropsOpacity} />);
   });
 
   describe('adjusting the slider', () => {
@@ -112,6 +158,106 @@ describe('Slider', () => {
       expect(mockProps.onStyleChange).toHaveBeenCalledWith(mockProperty, 1);
       expect(mockProps.onSliderChange).not.toHaveBeenCalled();
       expect(container.querySelector('.slider-value').textContent).toBe('1');
+    });
+  });
+
+  describe('adjusting the stroke slider', () => {
+    let container;
+    let svg;
+    beforeEach(() => {
+      jest.clearAllMocks();
+
+      container = render(<TestSlider {...mockPropsStroke} />).container;
+      svg = container.querySelector('svg');
+
+      fireEvent(
+        svg,
+        getMouseEvent('mousedown', {
+          pageX: 250,
+        }),
+      );
+    });
+
+    it('changes to local value and editable input on input focus', () => {
+      container.querySelector('.slider-input-field').focus();
+      const editableInput = container.querySelector('.slider-input-field');
+      expect(container.querySelector('.slider-input-field').value).toBe('2');
+      editableInput.value = 2.07;
+      expect(container.querySelector('.slider-input-field').value).toBe('2.07');
+      editableInput.blur();
+      expect(container.querySelector('.slider-input-field').value).toBe('2px');
+    })
+
+    it('changes to value from getDisplayValue on input blur', () => {
+      container.querySelector('.slider-input-field').focus();
+      container.querySelector('.slider-input-field').blur();
+      expect(container.querySelector('.slider-input-field').value).toBe('2px');
+    })
+
+    it('shows value from getDisplayValue when mouse down on slider', () => {
+      expect(container.querySelector('.slider-input-field').value).toBe('2px');
+    });
+
+    it('shows value from getDisplayValue when mouse move on slider', () => {
+      jest.clearAllMocks();
+
+      fireEvent(
+        svg,
+        getMouseEvent('mousemove', {
+          pageX: 260,
+        }),
+      );
+      expect(container.querySelector('.slider-input-field').value).toBe('2px');
+    });
+  });
+
+  describe('adjusting the opacity slider', () => {
+    let container;
+    let svg;
+    beforeEach(() => {
+      jest.clearAllMocks();
+
+      container = render(<TestSlider {...mockPropsOpacity} />).container;
+      svg = container.querySelector('svg');
+
+      fireEvent(
+        svg,
+        getMouseEvent('mousedown', {
+          pageX: 250,
+        }),
+      );
+    });
+
+    it('changes to local value and editable input on input focus', () => {
+      container.querySelector('.slider-input-field').focus();
+      const editableInput = container.querySelector('.slider-input-field');
+      expect(container.querySelector('.slider-input-field').value).toBe('52');
+      editableInput.value = 53.57;
+      expect(container.querySelector('.slider-input-field').value).toBe('53.57');
+      editableInput.blur();
+      expect(container.querySelector('.slider-input-field').value).toBe('52%');
+    })
+
+    it('changes to value from getDisplayValue on input blur', () => {
+      container.querySelector('.slider-input-field').focus();
+      container.querySelector('.slider-input-field').blur();
+      expect(container.querySelector('.slider-input-field').value).toBe('52%');
+    })
+
+    it('shows value from getDisplayValue when mouse down on slider', () => {
+      expect(container.querySelector('.slider-input-field').value).toBe('52%');
+    });
+
+    it('shows value from getDisplayValue when mouse move on slider', () => {
+      jest.clearAllMocks();
+
+      fireEvent(
+        svg,
+        getMouseEvent('mousemove', {
+          pageX: 260,
+        }),
+      );
+      expect(container.querySelector('.slider-input-field').value).toBe('52%');
     });
   });
 });

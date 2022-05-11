@@ -1,6 +1,6 @@
 import React from 'react';
 import RedactionSearchResult from './RedactionSearchResult';
-import { redactionTypeMap } from 'src/components/RedactionPageGroup/RedactionItem/RedactionItem';
+import { redactionTypeMap } from 'constants/redactionTypes';
 
 export default {
   title: 'Components/RedactionSearchPanel/RedactionSearchResult',
@@ -15,6 +15,7 @@ export function Text() {
     ambientStr: "The spice must flow.",
     resultStrStart: 4,
     resultStrEnd: 9,
+    icon: 'icon-form-field-text',
   }
   return (
     <RedactionSearchResult {...props} />
@@ -24,7 +25,8 @@ export function Text() {
 export function CreditCard() {
   const props = {
     type: redactionTypeMap['CREDIT_CARD'],
-    resultStr: '4242 4242 4242 4242'
+    resultStr: '4242 4242 4242 4242',
+    icon: 'redact-icons-credit-card',
   }
   return (
     <RedactionSearchResult {...props} />
@@ -34,7 +36,8 @@ export function CreditCard() {
 export function Image() {
   const props = {
     type: redactionTypeMap['IMAGE'],
-    resultStr: "Image"
+    resultStr: "Image",
+    icon: 'redact-icons-image',
   }
   return (
     <RedactionSearchResult {...props} />
@@ -45,7 +48,8 @@ export function Image() {
 export function PhoneNumber() {
   const props = {
     type: redactionTypeMap['PHONE'],
-    resultStr: "867-5309"
+    resultStr: "867-5309",
+    icon: 'redact-icons-phone-number',
   }
   return (
     <RedactionSearchResult {...props} />
@@ -56,7 +60,8 @@ export function PhoneNumber() {
 export function Email() {
   const props = {
     type: redactionTypeMap['EMAIL'],
-    resultStr: "paul.atreides@dune.com"
+    resultStr: "paul.atreides@dune.com",
+    icon: 'redact-icons-email',
   }
   return (
     <RedactionSearchResult {...props} />

@@ -120,15 +120,40 @@ const PageRedactionModal = ({
               <div className="canvas-container" ref={canvasContainer} />
               <form className="selection-options" onChange={onSelectionChange} onSubmit={e => e.preventDefault()}>
                 <strong>{t("option.pageRedactModal.pageSelection")}</strong>
-                <Choice checked={selectionType === SelectionTypes.CURRENT} radio label={t("option.pageRedactModal.current")} value={SelectionTypes.CURRENT}/>
-                <Choice checked={selectionType === SelectionTypes.SPECIFY} radio label={t("option.pageRedactModal.specify")} value={SelectionTypes.SPECIFY} />
+                <Choice
+                  checked={selectionType === SelectionTypes.CURRENT}
+                  radio
+                  name='page-redaction-option'
+                  label={t("option.pageRedactModal.current")}
+                  value={SelectionTypes.CURRENT}
+                />
+                <Choice
+                  checked={selectionType === SelectionTypes.SPECIFY}
+                  radio
+                  name='page-redaction-option'
+                  label={t("option.pageRedactModal.specify")}
+                  value={SelectionTypes.SPECIFY}
+                />
                 {selectionType === "specify" && <PageNumberInput
                   selectedPageNumbers={pages}
                   pageCount={pageLabels.length}
                   onBlurHandler={onPagesChanged}
                 />}
-                <Choice checked={selectionType === SelectionTypes.ODD} radio label={t("option.pageRedactModal.odd")} value={SelectionTypes.ODD} />
-                <Choice checked={selectionType === SelectionTypes.EVEN} radio label={t("option.pageRedactModal.even")} value={SelectionTypes.EVEN} disabled={evenDisabled} />
+                <Choice
+                  checked={selectionType === SelectionTypes.ODD}
+                  radio
+                  name='page-redaction-option'
+                  label={t("option.pageRedactModal.odd")}
+                  value={SelectionTypes.ODD}
+                />
+                <Choice
+                  checked={selectionType === SelectionTypes.EVEN}
+                  radio
+                  name='page-redaction-option'
+                  label={t("option.pageRedactModal.even")}
+                  value={SelectionTypes.EVEN}
+                  disabled={evenDisabled}
+                />
               </form>
             </div>
             <div className="footer">

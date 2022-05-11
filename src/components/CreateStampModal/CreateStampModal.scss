@@ -9,15 +9,14 @@
     display: flex;
     flex-direction: column;
     width: 480px;
-    height: 524px;
     padding: 0px;
     border-radius: 4px;
     box-shadow: 0 0 3px 0 var(--document-box-shadow);
     background: var(--component-background);
-    
+    overflow-y: visible;
+
     @include mobile {
       width: 100%;
-      height: 556px;
       position: fixed;
       border-radius: 0;
       left: 0;
@@ -39,7 +38,7 @@
         margin: 0;
         margin-right: 16px;
       }
-      
+
       .Button {
         position: static;
         height: 32px;
@@ -61,7 +60,6 @@
       align-items: center;
       flex-direction: row-reverse;
       justify-content: space-between;
-      height: 64px;
       margin: 0;
       top: 460px;
       padding: 16px;

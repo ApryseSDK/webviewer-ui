@@ -11,6 +11,7 @@ import selectors from 'selectors';
   })
  */
 
+
 export default store => Object.create(TabManagerAPI).initialize(store);
 
 const TabManagerAPI = {
@@ -62,7 +63,7 @@ const TabManagerAPI = {
    */
   async addTab(src, options) {
     const tabManager = selectors.getTabManager(this.store.getState());
-    return await tabManager.addTab(src, options);
+    return tabManager.addTab(src, options);
   },
   /**
    * Get the currently active tab id

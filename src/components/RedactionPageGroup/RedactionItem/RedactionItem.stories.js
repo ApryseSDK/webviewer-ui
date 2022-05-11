@@ -2,7 +2,7 @@ import React from 'react';
 import RedactionItem from './RedactionItem';
 import { createStore } from 'redux';
 import { Provider } from "react-redux";
-import { redactionTypeMap } from './RedactionItem';
+import { redactionTypeMap, defaultRedactionTypes } from 'constants/redactionTypes';
 
 const initialState = {
   viewer: {
@@ -44,7 +44,8 @@ const getMockRedactionAnnotation = () => ({
 
 export function TextRedactionItem() {
   const mockTextRedactionAnnotation = getMockRedactionAnnotation();
-  mockTextRedactionAnnotation.IsText = true;
+  mockTextRedactionAnnotation.redactionType = redactionTypeMap['TEXT'];
+  mockTextRedactionAnnotation.icon = 'icon-form-field-text';
   const textRedactionItemProps = {
     iconColor: '#E44234',
     annotation: mockTextRedactionAnnotation,
@@ -60,7 +61,12 @@ export function TextRedactionItem() {
 };
 
 export function RegionRedactionItem() {
+  const { icon, label } = defaultRedactionTypes[redactionTypeMap['REGION']];
   const mockRegionRedactionAnnotation = getMockRedactionAnnotation();
+  mockRegionRedactionAnnotation.redactionType = redactionTypeMap['REGION'];
+  mockRegionRedactionAnnotation.icon = icon;
+  mockRegionRedactionAnnotation.label = label;
+
   const regionRedactionItemProps = {
     iconColor: '#E44234',
     annotation: mockRegionRedactionAnnotation,
@@ -74,8 +80,12 @@ export function RegionRedactionItem() {
 };
 
 export function FullPageRedactionItem() {
+  const { icon, label } = defaultRedactionTypes[redactionTypeMap['FULL_PAGE']];
   const mockFullPageRedactionAnnotation = getMockRedactionAnnotation();
-  mockFullPageRedactionAnnotation.type = redactionTypeMap['FULL_PAGE'];
+  mockFullPageRedactionAnnotation.redactionType = redactionTypeMap['FULL_PAGE'];
+  mockFullPageRedactionAnnotation.icon = icon;
+  mockFullPageRedactionAnnotation.label = label;
+
   const regionRedactionItemProps = {
     iconColor: '#E44234',
     annotation: mockFullPageRedactionAnnotation,
@@ -89,13 +99,16 @@ export function FullPageRedactionItem() {
 };
 
 export function CreditCardRedactionItem() {
-  const mockFullPageRedactionAnnotation = getMockRedactionAnnotation();
-  mockFullPageRedactionAnnotation.type = redactionTypeMap['CREDIT_CARD'];
-  mockFullPageRedactionAnnotation.getContents = () => '4444 4444 4444 4444';
+  const mockCreditCardRedaction = getMockRedactionAnnotation();
+  mockCreditCardRedaction.redactionType = redactionTypeMap['CREDIT_CARD'];
+  mockCreditCardRedaction.icon = 'redact-icons-credit-card';
+  mockCreditCardRedaction.label = 'redactionPanel.search.creditCards';
+
+  mockCreditCardRedaction.getContents = () => '4444 4444 4444 4444';
   const regionRedactionItemProps = {
     iconColor: '#E44234',
-    annotation: mockFullPageRedactionAnnotation,
-    author: mockFullPageRedactionAnnotation.Author,
+    annotation: mockCreditCardRedaction,
+    author: mockCreditCardRedaction.Author,
     dateFormat: 'MMM D, LT',
     language: 'en',
   };
@@ -105,14 +118,16 @@ export function CreditCardRedactionItem() {
 };
 
 export function PhoneNumberRedactionItem() {
-  const mockFullPageRedactionAnnotation = getMockRedactionAnnotation();
-  mockFullPageRedactionAnnotation.type = redactionTypeMap['PHONE'];
-  mockFullPageRedactionAnnotation.getContents = () => '867-5309';
+  const mockPhoneNumberRedaction = getMockRedactionAnnotation();
+  mockPhoneNumberRedaction.redactionType = redactionTypeMap['PHONE'];
+  mockPhoneNumberRedaction.icon = 'redact-icons-phone-number';
+  mockPhoneNumberRedaction.label = 'redactionPanel.search.phoneNumbers';
+  mockPhoneNumberRedaction.getContents = () => '867-5309';
   const regionRedactionItemProps = {
     icon: 'icon-header-page-manipulation-page-transition-page-by-page-line',
     iconColor: '#E44234',
-    annotation: mockFullPageRedactionAnnotation,
-    author: mockFullPageRedactionAnnotation.Author,
+    annotation: mockPhoneNumberRedaction,
+    author: mockPhoneNumberRedaction.Author,
     dateFormat: 'MMM D, LT',
     language: 'en',
   };
@@ -122,13 +137,15 @@ export function PhoneNumberRedactionItem() {
 };
 
 export function EmailRedactionItem() {
-  const mockFullPageRedactionAnnotation = getMockRedactionAnnotation();
-  mockFullPageRedactionAnnotation.type = redactionTypeMap['EMAIL'];
-  mockFullPageRedactionAnnotation.getContents = () => 'duncan@dune.com';
+  const mockEmailRedaction = getMockRedactionAnnotation();
+  mockEmailRedaction.redactionType = redactionTypeMap['EMAIL'];
+  mockEmailRedaction.icon = 'redact-icons-email';
+  mockEmailRedaction.label = 'redactionPanel.search.emails';
+  mockEmailRedaction.getContents = () => 'duncan@dune.com';
   const regionRedactionItemProps = {
     iconColor: '#E44234',
-    annotation: mockFullPageRedactionAnnotation,
-    author: mockFullPageRedactionAnnotation.Author,
+    annotation: mockEmailRedaction,
+    author: mockEmailRedaction.Author,
     dateFormat: 'MMM D, LT',
     language: 'en',
   };

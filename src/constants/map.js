@@ -539,7 +539,7 @@ const map = {
     icon: 'icon-form-field-signature',
     iconColor: 'StrokeColor',
     currentPalette: 'StrokeColor',
-    availablePalettes: ['StrokeColor',],
+    availablePalettes: ['StrokeColor'],
     toolNames: [
       'SignatureFormFieldCreateTool',
       'SignatureFormFieldCreateTool2',

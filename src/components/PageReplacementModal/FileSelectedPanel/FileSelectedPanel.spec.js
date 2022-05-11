@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FileSelectedPanel from './FileSelectedPanel';
-import { StoryForTest, ProcessingFile } from './FileSelectedPanel.stories';
+import { FileSelected, ProcessingFile } from './FileSelectedPanel.stories';
 
 const getMockDocument = ({ pageCount, documentName = 'test.pdf' }) => {
   return {
@@ -33,7 +33,7 @@ describe('FileSelectedPanel', () => {
       // and the component has rendered all updates based on state changes
       await waitFor(() => {
         expect(() => {
-          render(<StoryForTest />);
+          render(<FileSelected />);
         }).not.toThrow();
       })
     });

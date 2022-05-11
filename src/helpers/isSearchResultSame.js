@@ -18,7 +18,9 @@ function getQuadCoordinates(quad) {
     && quad.y4 != undefined) {
     /* eslint-enable eqeqeq */
     return quad;
-  } else if ( quad.getPoints) {
+  }
+
+  if (quad.getPoints) {
     return quad.getPoints();
   }
 }
