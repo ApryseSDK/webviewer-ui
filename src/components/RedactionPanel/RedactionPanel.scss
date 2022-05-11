@@ -22,6 +22,7 @@
 
       .close-icon-container {
         cursor: pointer;
+
         .close-icon {
           width: 24px;
           height: 24px;
@@ -35,7 +36,7 @@
     margin-top: 24px;
     margin-bottom: 12px;
     font-size: 16px;
-  
+
     span {
       font-weight: bold;
     }
@@ -46,24 +47,25 @@
     flex-direction: column;
     align-items: center;
     flex: 1 1 auto;
-  
+
     .msg {
       @include tablet-and-desktop {
         line-height: 15px;
         width: 146px;
       }
+
       text-align: center;
     }
-  
+
     .empty-icon {
       width: 65px;
       height: 83px;
-  
+
       svg {
         width: 65px;
         height: 83px;
       }
-  
+
       * {
         fill: var(--gray-5);
         color: var(--gray-5);
@@ -81,6 +83,10 @@
     width: inherit;
     justify-content: flex-end;
     padding-right: 16px;
+
+    @include tablet {
+      flex: 0 0 85px;
+    }
 
     .redact-all-marked {
       @include button-reset;
@@ -107,7 +113,7 @@
       width: 70px;
       padding-right: 5px;
       cursor: pointer;
-      
+
       &.disabled {
         opacity: 0.5;
         cursor: not-allowed;
@@ -123,6 +129,5 @@
     overflow-y: scroll;
     flex: 1 1 auto;
   }
-  
-}
 
+}
