@@ -17,6 +17,7 @@ const getEventToObjectMap = () => {
   const historyManager = window.documentViewer.getAnnotationHistoryManager();
   const editBoxManager = annotManager.getEditBoxManager();
   const formFieldCreationManager = annotManager.getFormFieldCreationManager();
+  const measurementManager = window.documentViewer.getMeasurementManager();
 
   return {
     signatureSaved: window.documentViewer,
@@ -74,6 +75,7 @@ const getEventToObjectMap = () => {
     editorTextChanged: editBoxManager,
     editorSelectionChanged: editBoxManager,
     formFieldCreationModeStarted: formFieldCreationManager,
-    formFieldCreationModeEnded: formFieldCreationManager
+    formFieldCreationModeEnded: formFieldCreationManager,
+    scaleUpdated: measurementManager
   };
 };

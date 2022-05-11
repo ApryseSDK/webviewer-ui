@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RedactionPanel from './RedactionPanel';
-import { EmptyList, PanelWithRedactionItems } from './RedactionPanel.stories';
+import { EmptyList, PanelWithRedactionItems, mockRedactionTypesDictionary } from './RedactionPanel.stories';
 import { RedactionPanelContext } from './RedactionPanelContext';
 import { getMockRedactionAnnotation } from '../RedactionPageGroup/RedactionPageGroup.spec';
 
@@ -59,6 +59,7 @@ describe('RedactionPanel', () => {
     customRenderWithContext(
       <RedactionPanelWithRedux
         currentWidth={330}
+        redactionTypesDictionary={mockRedactionTypesDictionary}
         redactionAnnotations={mockRedactionAnnotations} />,
       providerProps
     );
@@ -87,6 +88,7 @@ describe('RedactionPanel', () => {
         currentWidth={330}
         applyAllRedactions={mockedRedactAll}
         deleteAllRedactionAnnotations={mockClearAll}
+        redactionTypesDictionary={mockRedactionTypesDictionary}
         redactionAnnotations={[mockTextRedactionAnnotation]} />
     );
 
@@ -134,6 +136,7 @@ describe('RedactionPanel', () => {
     const props = {
       currentWidth: 330,
       redactionAnnotations: mockRedactionAnnotations,
+      redactionTypesDictionary: mockRedactionTypesDictionary,
     }
 
     let selectedRedactionItemId = '';
@@ -169,6 +172,7 @@ describe('RedactionPanel', () => {
     const props = {
       currentWidth: 330,
       redactionAnnotations: mockRedactionAnnotations,
+      redactionTypesDictionary: mockRedactionTypesDictionary,
     }
 
     const providerProps = {

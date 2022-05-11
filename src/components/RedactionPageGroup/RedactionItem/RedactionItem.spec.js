@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RedactionItem from './RedactionItem';
+import { redactionTypeMap, defaultRedactionTypes } from 'constants/redactionTypes';
 import { setMockRefElement } from '../../NoteTextPreview/NoteTextPreview.spec';
 
 import {
@@ -55,7 +56,8 @@ describe('RedactionItem', () => {
       // Handy helper to mock the ref that is used by the text preview component
       setMockRefElement({ clientWidth: 150 })
       const mockRedactionAnnotation = getMockRedactionAnnotation();
-      mockRedactionAnnotation.IsText = true;
+      mockRedactionAnnotation.redactionType = redactionTypeMap['TEXT'];
+      mockRedactionAnnotation.icon = 'icon-form-field-text';
       const textRedactionItemProps = {
         iconColor: '#E44234',
         annotation: mockRedactionAnnotation,
@@ -70,7 +72,12 @@ describe('RedactionItem', () => {
     });
 
     it('when it is a region redaction, it renders the correct message', () => {
+      const { icon, label } = defaultRedactionTypes[redactionTypeMap['REGION']];
+
       const mockRedactionAnnotation = getMockRedactionAnnotation();
+      mockRedactionAnnotation.redactionType = redactionTypeMap['REGION'];
+      mockRedactionAnnotation.icon = icon;
+      mockRedactionAnnotation.label = label;
       const regionRedactionItemProps = {
         iconColor: '#E44234',
         annotation: mockRedactionAnnotation,
@@ -83,9 +90,22 @@ describe('RedactionItem', () => {
       screen.getByText('Region redaction')
     });
 
-    it.skip('when it is a full page redaction, it renders the correct message', () => {
-      // TODO: Waiting on full page redaction stuff to get merged so I can add a flag
-      // or a way to mark these annotation
+    it('when it is a full page redaction, it renders the correct message', () => {
+      const { icon, label } = defaultRedactionTypes[redactionTypeMap['FULL_PAGE']];
+      const mockRedactionAnnotation = getMockRedactionAnnotation();
+      mockRedactionAnnotation.redactionType = redactionTypeMap['FULL_PAGE'];
+      mockRedactionAnnotation.icon = icon;
+      mockRedactionAnnotation.label = label;
+      const regionRedactionItemProps = {
+        iconColor: '#E44234',
+        annotation: mockRedactionAnnotation,
+        author: mockRedactionAnnotation.Author,
+        dateFormat: 'MMM D, LT',
+        language: 'en',
+      };
+
+      render(<RedactionItemWithRedux {...regionRedactionItemProps} />);
+      screen.getByText('Full page redaction');
     });
 
     it.skip('renders an icon with the correct color', () => {
@@ -94,6 +114,9 @@ describe('RedactionItem', () => {
 
     it('when the item is selected, it has the styling for selected items', () => {
       const mockRedactionAnnotation = getMockRedactionAnnotation();
+      mockRedactionAnnotation.redactionType = redactionTypeMap['REGION'];
+      mockRedactionAnnotation.icon = 'icon-tool-redaction-area';
+      mockRedactionAnnotation.label = 'redactionPanel.redactionItem.regionRedaction';
       const regionRedactionItemProps = {
         iconColor: '#E44234',
         annotation: mockRedactionAnnotation,
@@ -112,6 +135,9 @@ describe('RedactionItem', () => {
 
     it('when the redaction item is clicked, it calls the correct handler', () => {
       const mockRedactionAnnotation = getMockRedactionAnnotation();
+      mockRedactionAnnotation.redactionType = redactionTypeMap['REGION'];
+      mockRedactionAnnotation.icon = 'icon-tool-redaction-area';
+      mockRedactionAnnotation.label = 'redactionPanel.redactionItem.regionRedaction';
       const mockOnRedactionItemSelection = jest.fn();
       const regionRedactionItemProps = {
         iconColor: '#E44234',
@@ -131,6 +157,9 @@ describe('RedactionItem', () => {
 
     it('when the delete button is clicked, it calls the correct handler', () => {
       const mockRedactionAnnotation = getMockRedactionAnnotation();
+      mockRedactionAnnotation.redactionType = redactionTypeMap['REGION'];
+      mockRedactionAnnotation.icon = 'icon-tool-redaction-area';
+      mockRedactionAnnotation.label = 'redactionPanel.redactionItem.regionRedaction';
       const mockOnRedactionItemDelete = jest.fn();
       const regionRedactionItemProps = {
         iconColor: '#E44234',

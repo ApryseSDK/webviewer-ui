@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Icon from 'components/Icon'
 import { Virtuoso } from 'react-virtuoso';
 import { RedactionPanelContext } from './RedactionPanelContext';
+import { mapAnnotationToRedactionType } from 'constants/redactionTypes';
 
 import './RedactionPanel.scss'
 import RedactionPageGroup from '../RedactionPageGroup';
@@ -13,6 +14,7 @@ const RedactionPanel = (props) => {
     redactionAnnotations,
     applyAllRedactions,
     deleteAllRedactionAnnotations,
+    redactionTypesDictionary,
   } = props;
 
   const { t } = useTranslation();
@@ -25,6 +27,12 @@ const RedactionPanel = (props) => {
   useEffect(() => {
     const redactionPageMap = {};
     redactionAnnotations.forEach(annotation => {
+      const redactionType = mapAnnotationToRedactionType(annotation);
+      const { label, icon } = redactionTypesDictionary[redactionType];
+      annotation.label = label;
+      annotation.icon = icon;
+      annotation.redactionType = redactionType;
+
       const pageNumber = annotation.PageNumber;
       if (redactionPageMap[pageNumber] === undefined) {
         redactionPageMap[pageNumber] = [annotation];

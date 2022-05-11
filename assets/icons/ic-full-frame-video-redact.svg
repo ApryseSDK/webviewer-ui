@@ -1,0 +1,13 @@
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill="default" fill-rule="evenodd" clip-rule="evenodd" d="M4 7C3.44772 7 3 7.44772 3 8V16C3 16.5523 3.44772 17 4 17H20C20.5523 17 21 16.5523 21 16V8C21 7.44772 20.5523 7 20 7H4ZM13.8562 8.94727L15.0937 10.1847L13.2375 12.0409L15.0937 13.897L13.8562 15.1345L12.0001 13.2783L10.1439 15.1344L8.90649 13.897L10.7626 12.0409L8.9065 10.1847L10.1439 8.94727L12.0001 10.8034L13.8562 8.94727Z"/>
+<path d="M3 4.5C3 3.94772 3.44772 3.5 4 3.5H5V5.25H3V4.5Z" fill="black"/>
+<path d="M7 3.5H9V5.25H7V3.5Z" fill="black"/>
+<path d="M11 3.5H13V5.25H11V3.5Z" fill="black"/>
+<path d="M15 3.5H17V5.25H15V3.5Z" fill="black"/>
+<path d="M19 3.5H20C20.5523 3.5 21 3.94772 21 4.5V5.25H19V3.5Z" fill="black"/>
+<path d="M3 19.5V18.75H5V20.5H4C3.44772 20.5 3 20.0523 3 19.5Z" fill="black"/>
+<path d="M7 18.75H9V20.5H7V18.75Z" fill="black"/>
+<path d="M11 18.75H13V20.5H11V18.75Z" fill="black"/>
+<path d="M15 18.75H17V20.5H15V18.75Z" fill="black"/>
+<path d="M19 18.75H21V19.5C21 20.0523 20.5523 20.5 20 20.5H19V18.75Z" fill="black"/>
+</svg>

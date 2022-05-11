@@ -13,6 +13,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 
 export default store => pageNumbers => {
+  console.warn('UI.unselectThumbnailPages is deprecated since version 8.5. Please use UI.ThumbnailsPanel.unselectPages instead');
   const selectedIndex = selectors.getSelectedThumbnailPageIndexes(store.getState());
 
   if (!pageNumbers || !Array.isArray(pageNumbers)) {

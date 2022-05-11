@@ -21,9 +21,9 @@ const propTypes = {
 
 function ZoomOverlay(props) {
   const [t] = useTranslation();
-  
+
   const { zoomList, currentZoomLevel, isReaderMode, isMarqueeZoomActive, fitToWidth, fitToPage, onClickZoomLevelOption, onClickMarqueeZoom, isMarqueeToolButtonDisabled } = props;
-  
+
   return (
     <>
       <Button

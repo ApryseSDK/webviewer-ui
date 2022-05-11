@@ -16,11 +16,12 @@ import actions from 'actions';
 import core from 'core';
 
 export default store => pageNumbers => {
+  console.warn('UI.selectThumbnailPages is deprecated since version 8.5. Please use UI.ThumbnailsPanel.selectPages instead');
   const selectedIndex = selectors.getSelectedThumbnailPageIndexes(store.getState());
   const selectedPages = selectedIndex.map(index => index + 1);
 
   const pageCount = core.getTotalPages();
-  const mutliSelectEnable = selectors.getIsThumbnailMultiselectEnabled(store.getState());
+  const mutliSelectEnable = selectors.isThumbnailMultiselectEnabled(store.getState());
 
   if (!mutliSelectEnable) {
     console.warn(`Thumbnail multiselect is not enabled`);

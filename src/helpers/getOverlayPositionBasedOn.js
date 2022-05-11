@@ -28,7 +28,7 @@ export default (element, overlay, isTabletAndMobile, isSmallBrowserHeight) => {
   let maxHeight;
   const verticalGap = isTabletAndMobile ? 14 : 6;
   let top = buttonBottom + verticalGap;
-  if (buttonBottom > window.innerHeight/2) {
+  if (buttonBottom > window.innerHeight / 2) {
     top = 0;
     maxHeight = window.innerHeight;
   } else if ((buttonBottom + overlayHeight > window.innerHeight) && !isSmallBrowserHeight) {

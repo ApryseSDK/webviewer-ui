@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import RedactionSearchResultGroup from './RedactionSearchResultGroup';
 import { createStore } from 'redux';
 import { Provider } from "react-redux";
-import { redactionTypeMap } from '../RedactionPageGroup/RedactionItem/RedactionItem';
+import { redactionTypeMap } from 'constants/redactionTypes';
 import { RedactionContextMock } from '../RedactionPanel/RedactionPanel.stories';
 
 const initialState = {
@@ -47,26 +47,31 @@ export const mockSearchResults = [
     resultStrStart: 4,
     resultStrEnd: 9,
     index: 0,
+    icon: 'icon-form-field-text',
   },
   {
     type: redactionTypeMap['CREDIT_CARD'],
     resultStr: '4242 4242 4242 4242',
     index: 1,
+    icon: 'redact-icons-credit-card',
   },
   {
     type: redactionTypeMap['IMAGE'],
     resultStr: "Image",
     index: 2,
+    icon: 'redact-icons-image',
   },
   {
     type: redactionTypeMap['PHONE'],
     resultStr: "867-5309",
     index: 3,
+    icon: 'redact-icons-phone-number',
   },
   {
     type: redactionTypeMap['EMAIL'],
     resultStr: "paul.atreides@dune.com",
     index: 4,
+    icon: 'redact-icons-email',
   }
 ];
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Swipeable } from 'react-swipeable';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
@@ -25,7 +25,6 @@ function ContentEditModal() {
 
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const store = useStore();
 
   const [hideWarning, setHideWarning] = useState(true);
   const [showWarning, setShowWarning] = useState(false);
@@ -143,7 +142,7 @@ function ContentEditModal() {
 
             <div className="editing-controls footer-container">
               {showWarning ? (
-                <button className="button text-edit-proceed-button" onClick={() => closeWarningModal()}>
+                <button className="button text-edit-proceed-button" onClick={closeWarningModal}>
                   {t('action.proceed')}
                 </button>
               ) : (

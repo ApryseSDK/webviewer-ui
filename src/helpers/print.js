@@ -174,24 +174,24 @@ export const printPages = pages => {
           #print-handler {
             display: none;
           }
-          
+
           @media print {
             * {
               display: none! important;
             }
-            
+
             html {
               height: 100%;
               display: block! important;
             }
-          
+
             body {
               height: 100%;
               display: block! important;
               overflow: visible !important;
               padding: 0;
             }
-          
+
             #print-handler {
               display: block !important;
               height: 100%;
@@ -202,7 +202,7 @@ export const printPages = pages => {
               right: 0;
               position: absolute;
             }
-            
+
             #print-handler img {
               display: block !important;
               max-width: 100%;
@@ -214,7 +214,7 @@ export const printPages = pages => {
               padding: 0;
               margin: 0;
             }
-            
+
             #print-handler .page__container {
               box-sizing: border-box;
               display: flex !important;
@@ -224,7 +224,7 @@ export const printPages = pages => {
               min-width: 100%;
               font-size: 10px;
             }
-            
+
             #print-handler .page__container .page__header {
               display: block !important;
               align-self: flex-start;
@@ -233,7 +233,7 @@ export const printPages = pages => {
               padding-bottom: 0.6rem;
               border-bottom: 0.1rem solid black;
             }
-            
+
             #print-handler .page__container .note {
               display: flex !important;
               flex-direction: column;
@@ -242,17 +242,17 @@ export const printPages = pages => {
               border-radius: 0.4rem;
               margin-bottom: 0.5rem;
             }
-            
+
             #print-handler .page__container .note .note__info {
               display: block !important;
               font-size: 1.3rem;
               margin-bottom: 0.1rem;
             }
-            
+
             #print-handler .page__container .note .note__info--with-icon {
               display: flex !important;
             }
-            
+
             #print-handler .page__container .note .note__info--with-icon .note__icon {
               display: block !important;
               width: 1.65rem;
@@ -260,44 +260,44 @@ export const printPages = pages => {
               margin-top: -0.1rem;
               margin-right: 0.2rem;
             }
-            
+
             #print-handler .page__container .note .note__info--with-icon .note__icon path:not([fill=none]) {
               display: block !important;
               fill: currentColor;
             }
-            
+
             #print-handler .page__container .note .note__root .note__content {
               display: block !important;
               margin-left: 0.3rem;
             }
-            
+
             #print-handler .page__container .note .note__root {
               display: block !important;
             }
-            
+
             #print-handler .page__container .note .note__info--with-icon .note__icon svg {
               display: block !important;
             }
-            
+
             #print-handler .page__container .note .note__reply {
               display: block !important;
               margin: 0.5rem 0 0 2rem;
             }
-            
+
             #print-handler .page__container .note .note__content {
               display: block !important;
               font-size: 1.2rem;
               margin-top: 0.1rem;
             }
-          
+
             #app {
               overflow: visible !important;
             }
-          
+
             .App {
               display: none !important;
             }
-          
+
             html, body, #app {
               max-width: none !important;
             }
@@ -480,7 +480,6 @@ const positionCanvas = (canvas, pageIndex) => {
         ctx.rotate((270 * Math.PI) / 180);
         break;
     }
-
   } else if (!window.utils.isPdfjs) {
     switch (documentRotation) {
       case 1:

@@ -6,6 +6,7 @@
 
   .container {
     @extend %modal-shared-container-style;
+    @extend %modal-shared-container-style-mobile;
     display: flex;
     flex-direction: column;
     width: 480px;
@@ -16,11 +17,8 @@
     background: var(--component-background);
 
     @include mobile {
-      width: 100%;
-      position: fixed;
       border-radius: 0;
-      left: 0;
-      bottom: 0;
+      height: 440px;
     }
 
     .header-container {
@@ -34,7 +32,7 @@
       align-items: center;
       width: 100%;
       height: 24px;
-      
+
       p {
         font-size: 16px;
         font-weight: 700;
@@ -145,7 +143,7 @@
           width: 28px;
           height: 28px;
         }
-      } 
+      }
     }
 
     .signature-clear {
@@ -161,7 +159,7 @@
       width: 63px;
       margin: 8px;
       font-size: 13px;
-      
+
       &:enabled:hover {
         color: var(--secondary-button-hover);
       }

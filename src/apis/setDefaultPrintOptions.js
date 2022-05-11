@@ -15,7 +15,7 @@ WebViewer(...) .then(function(instance) {
 import actions from 'actions';
 
 export default store => options => {
-  if ( typeof options !== 'object' || options === undefined || Object.keys(options).filter(option => option !== 'includeComments' && option !== 'includeAnnotations' && option !== 'maintainPageOrientation').length !== 0 || Object.values(options).filter(val => val !== true && val !== false).length !== 0 ) {
+  if (typeof options !== 'object' || options === undefined || Object.keys(options).filter(option => option !== 'includeComments' && option !== 'includeAnnotations' && option !== 'maintainPageOrientation').length !== 0 || Object.values(options).filter(val => val !== true && val !== false).length !== 0) {
     throw Error('Invalid options provided');
   } else {
     store.dispatch(actions.setDefaultPrintOptions(options));

@@ -37,6 +37,7 @@ const ColorPickerModal = ({ isDisabled, isOpen, color, closeModal, handleChangeS
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
       <div className={modalClass} data-element="ColorPickerModal" onMouseDown={closeModal}>
         <div className="container" onMouseDown={e => e.stopPropagation()}>
+          <div className="swipe-indicator" />
           <SketchPicker
             color={selectedColor}
             disableAlpha={true}

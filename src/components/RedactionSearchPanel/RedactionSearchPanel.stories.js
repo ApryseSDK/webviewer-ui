@@ -1,7 +1,7 @@
 import React from 'react';
 import RedactionSearchPanel from './RedactionSearchPanel';
 import { RedactionPanelStoryWrapper } from 'components/RedactionPanel/RedactionPanel.stories';
-import { redactionTypeMap } from '../RedactionPageGroup/RedactionItem/RedactionItem';
+import { redactionTypeMap } from 'constants/redactionTypes';
 
 const noop = () => { };
 
@@ -13,31 +13,36 @@ export const mockSearchResults = [
     resultStrStart: 4,
     resultStrEnd: 9,
     index: 0,
-    pageNum: 1
+    pageNum: 1,
+    icon: 'icon-form-field-text',
   },
   {
     type: redactionTypeMap['CREDIT_CARD'],
     resultStr: '4242 4242 4242 4242',
     index: 1,
-    pageNum: 1
+    pageNum: 1,
+    icon: 'redact-icons-credit-card',
   },
   {
     type: redactionTypeMap['IMAGE'],
     resultStr: "Image",
     index: 2,
-    pageNum: 2
+    pageNum: 2,
+    icon: 'redact-icons-image',
   },
   {
     type: redactionTypeMap['PHONE'],
     resultStr: "867-5309",
     index: 3,
-    pageNum: 2
+    pageNum: 2,
+    icon: 'redact-icons-phone-number',
   },
   {
     type: redactionTypeMap['EMAIL'],
     resultStr: "paul.atreides@dune.com",
     index: 4,
-    pageNum: 3
+    pageNum: 3,
+    icon: 'redact-icons-email',
   }
 ];
 

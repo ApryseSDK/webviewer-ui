@@ -118,6 +118,12 @@ if (window.CanvasRenderingContext2D) {
     window.Core.forceBackendType(backendType);
   }
 
+  const { enableOptimizedWorkers } = state.advanced;
+
+  if (!enableOptimizedWorkers) {
+    window.Core.disableOptimizedWorkers();
+  }
+
   const { preloadWorker } = state.advanced;
 
   function initTransports() {
@@ -157,7 +163,6 @@ if (window.CanvasRenderingContext2D) {
     }
   }
 
-
   loadCustomCSS(state.advanced.customCSS);
 
   logDebugInfo();
@@ -179,6 +184,11 @@ if (window.CanvasRenderingContext2D) {
   fullAPIReady.then(() => loadConfig()).then(() => {
     if (preloadWorker) {
       initTransports();
+    }
+
+    if (getHashParameters('disableVirtualDisplayMode', false)) {
+      const displayMode = documentViewer.getDisplayModeManager();
+      displayMode.disableVirtualDisplayMode();
     }
 
     if (getHashParameters('enableViewStateAnnotations', false)) {

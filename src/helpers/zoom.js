@@ -125,7 +125,7 @@ export function zoomOut() {
   }
 
   let step = getStep(currentZoomFactor);
-  if (zoomStepHistory.length > 0 && zoomStepHistory[zoomStepHistory.length -1] > 0) {
+  if (zoomStepHistory.length > 0 && zoomStepHistory[zoomStepHistory.length - 1] > 0) {
     // if step history has steps and it has been opposite direction (zoomIn)
     // We use that step. This makes sure that when crossing step range, zoom level goes to same
     // as it was when zoomIn was done.

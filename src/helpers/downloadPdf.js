@@ -48,8 +48,8 @@ export default async (dispatch, options = {}) => {
         : getDownloadFilename(filename, '.pdf');
     let doc = core.getDocument();
 
-    //Cloning the options object to be able to delete the customDocument property if needed.
-    //doc.getFileData(options) will throw an error if this customDocument property is passed in
+    // Cloning the options object to be able to delete the customDocument property if needed.
+    // doc.getFileData(options) will throw an error if this customDocument property is passed in
     const clonedOptions = Object.assign({}, options);
     if (clonedOptions.documentToBeDownloaded) {
       doc = clonedOptions.documentToBeDownloaded;

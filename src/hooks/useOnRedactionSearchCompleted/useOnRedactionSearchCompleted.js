@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import core from 'core';
-import { redactionTypeMap } from '../../components/RedactionPageGroup/RedactionItem/RedactionItem';
+import { redactionTypeMap } from 'constants/redactionTypes';
 import SearchStatus from 'constants/searchStatus';
 
 function useOnRedactionSearchCompleted() {
@@ -10,33 +10,18 @@ function useOnRedactionSearchCompleted() {
   const [searchStatus, setSearchStatus] = useState(SearchStatus['SEARCH_NOT_INITIATED']);
   const [redactionSearchResults, setRedactionSearchResults] = useState([]);
   const [isProcessingRedactionResults, setIsProcessingRedactionResults] = useState(false);
-  const [
-    creditCardsPattern,
-    phoneNumbersPattern,
-    emailsPattern,
-  ] = useSelector(
-    state => [
-      selectors.getRedactionSearchPattern(state, 'creditCards'),
-      selectors.getRedactionSearchPattern(state, 'phoneNumbers'),
-      selectors.getRedactionSearchPattern(state, 'emails'),
-    ]
-  );
+  const redactionSearchPatterns = useSelector(state => selectors.getRedactionSearchPatterns(state), shallowEqual);
 
-  const searchPatterns = useMemo(() => (
-    {
-      creditCard: {
-        regex: creditCardsPattern,
-        type: redactionTypeMap['CREDIT_CARD']
-      },
-      phone: {
-        regex: phoneNumbersPattern,
-        type: redactionTypeMap['PHONE']
-      },
-      email: {
-        regex: emailsPattern,
-        type: redactionTypeMap['EMAIL']
-      }
-    }), [creditCardsPattern, phoneNumbersPattern, emailsPattern]);
+  const searchPatterns = useMemo(() => {
+    return Object.keys(redactionSearchPatterns).reduce((map, key) => {
+      const { regex, type, icon } = redactionSearchPatterns[key];
+      map[type] = {
+        regex,
+        icon
+      };
+      return map;
+    }, {})
+  }, [redactionSearchPatterns]);
 
   const mapResultToType = useCallback((result) => {
     // Iterate through the patterns and return the first match
@@ -50,6 +35,9 @@ function useOnRedactionSearchCompleted() {
 
     // If it didn't match any of the patterns, return the default type which is text
     result.type = resultType === undefined ? redactionTypeMap['TEXT'] : resultType;
+    // And also set the icon to display in the panel. If no icon provided use the text icon
+    const { icon = 'icon-form-field-text' } = searchPatterns[result.type] || {};
+    result.icon = icon;
     return result;
 
   }, [searchPatterns]);//Dependency is an object but it is memoized so it will not re-create unless the patterns change

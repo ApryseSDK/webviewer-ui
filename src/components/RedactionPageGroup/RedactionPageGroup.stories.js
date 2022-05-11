@@ -3,6 +3,7 @@ import RedactionPageGroup from './RedactionPageGroup';
 import { createStore } from 'redux';
 import { Provider } from "react-redux";
 import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
+import { redactionTypeMap, defaultRedactionTypes } from 'constants/redactionTypes';
 
 const initialState = {
   viewer: {
@@ -50,7 +51,9 @@ const mockRedactionTextAnnotation = {
   StrokeColor: {
     toString: () => 'rgba(255,205,69,1)'
   },
-  getCustomData: () => 'This is a preview of the text that will be redacted and it is too long to fit ',
+  getCustomData: () => 'Redact this text',
+  redactionType: redactionTypeMap['TEXT'],
+  icon: defaultRedactionTypes[redactionTypeMap['TEXT']].icon,
 }
 
 const mockRegionTextAnnotation = {
@@ -64,7 +67,10 @@ const mockRegionTextAnnotation = {
   StrokeColor: {
     toString: () => 'rgba(255,0,0,1)'
   },
-  getCustomData: () => 'This is a preview of the text that will be redacted and it is too long to fit ',
+  getCustomData: () => '',
+  redactionType: redactionTypeMap['REGION'],
+  icon: defaultRedactionTypes[redactionTypeMap['REGION']].icon,
+  label: defaultRedactionTypes[redactionTypeMap['REGION']].label,
 }
 
 const redactionItems = [

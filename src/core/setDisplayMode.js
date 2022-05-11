@@ -6,7 +6,10 @@
  * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:zoomUpdated__anchor
  */
 export default mode => {
-  const displayMode = new window.Core.DisplayMode(window.documentViewer, mode);
+  const displayModeManager = window.documentViewer.getDisplayModeManager();
+  const displayMode = (displayModeManager.isVirtualDisplayEnabled())
+    ? new window.Core.VirtualDisplayMode(window.documentViewer, mode)
+    : new window.Core.DisplayMode(window.documentViewer, mode);
 
-  window.documentViewer.getDisplayModeManager().setDisplayMode(displayMode);
+  displayModeManager.setDisplayMode(displayMode);
 };

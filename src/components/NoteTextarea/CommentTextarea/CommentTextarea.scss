@@ -1,0 +1,45 @@
+@import '../../../constants/styles';
+@import '../../../constants/note';
+
+.comment-textarea {
+    .ql-toolbar {
+        display: none;
+    }
+
+    .ql-container {
+        border: none;
+
+        .ql-editor {
+            width: 100%;
+            padding-left: 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-color);
+            padding-top: 4px;
+            padding-bottom: 4px;
+            resize: none;
+            overflow: hidden;
+            box-sizing: border-box;
+      
+            &:focus {
+              outline: none;
+              border: 1px solid var(--focus-border);
+            }
+
+            &.ql-blank::before {
+                left: 10px;
+                font-style: normal;
+                color: var(--placeholder-text);
+            }
+
+            p {
+                margin: 0;
+                word-break: break-all;
+            }
+        }
+
+        &.ql-snow {
+            border: none;
+        }
+    }
+}
