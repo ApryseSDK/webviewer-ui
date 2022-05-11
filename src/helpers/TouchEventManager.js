@@ -213,7 +213,7 @@ const TouchEventManager = {
           }
 
           if (isIOS) {
-            const marginLeft = (this.touch.marginLeft + (1 - this.touch.scale) * this.touch.docX) / this.touch.scale;
+            const marginLeft = ((this.touch.marginLeft - this.container.offsetLeft) + (1 - this.touch.scale) * this.touch.docX) / this.touch.scale;
             const marginTop = (this.touch.marginTop + (1 - this.touch.scale) * this.touch.docY) / this.touch.scale;
             this.document.style.marginLeft = `${marginLeft}px`;
             this.document.style.marginTop = `${marginTop}px`;
