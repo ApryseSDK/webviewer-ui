@@ -4,13 +4,6 @@ import Icon from 'components/Icon';
 import CreatableMultiSelect from 'components/CreatableMultiSelect';
 import { useTranslation } from 'react-i18next';
 
-const redactionOptions = [
-  { value: 'phoneNumbers', label: 'redactionPanel.search.phoneNumbers', icon: 'redact-icons-phone-number', type: 'phone' },
-  { value: 'emails', label: 'redactionPanel.search.emails', icon: 'redact-icons-email', type: 'email' },
-  { value: 'creditCardNumbers', label: 'redactionPanel.search.creditCards', icon: 'redact-icons-credit-card', type: 'creditCard' },
-  // { value: 'images', label: 'redactionPanel.search.images', icon: 'redact-icons-image', type: 'image' }, Not to be part of first release
-];
-
 const getStyles = (isDarkMode) => ({
   groupHeading: (base) => ({
     ...base,
@@ -100,17 +93,17 @@ const MultiValueLabel = ({ data }) => {
 
 const RedactionSearchMultiSelect = (props) => {
   const { t } = useTranslation();
+  const { activeTheme, redactionSearchOptions } = props;
 
   const redactionGroup = [
     {
       label: t('redactionPanel.search.pattern'),
-      options: redactionOptions,
+      options: redactionSearchOptions,
     }
   ];
 
-  const { activeTheme } = props;
-  const isDarkModde = activeTheme === 'dark';
-  const styles = getStyles(isDarkModde);
+  const isDarkMode = activeTheme === 'dark';
+  const styles = getStyles(isDarkMode);
 
   return (
     <CreatableMultiSelect

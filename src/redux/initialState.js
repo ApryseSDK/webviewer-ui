@@ -12,32 +12,13 @@ import { copyMapWithDataProperties } from 'constants/map';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import getHashParameters from 'helpers/getHashParameters';
 import localStorageManager from 'helpers/localStorageManager';
+import { undoButton, redoButton } from 'helpers/commonToolbarElements';
 import defaultFonts from 'constants/defaultFonts';
 import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
+import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
+import { redactionTypeMap } from 'constants/redactionTypes';
 
 const { ToolNames } = window.Core.Tools;
-
-const undoButton = {
-  type: 'actionButton',
-  style: { 'marginLeft': '0px' },
-  dataElement: 'undoButton',
-  title: 'action.undo',
-  img: 'icon-operation-undo',
-  onClick: () => {
-    core.undo();
-  },
-  isNotClickableSelector: state => !state.viewer.canUndo
-};
-const redoButton = {
-  type: 'actionButton',
-  dataElement: 'redoButton',
-  title: 'action.redo',
-  img: 'icon-operation-redo',
-  onClick: () => {
-    core.redo();
-  },
-  isNotClickableSelector: state => !state.viewer.canRedo
-};
 
 export default {
   viewer: {
@@ -364,6 +345,10 @@ export default {
       { type: 'divider' },
       { dataElement: 'pageManipulationControls' },
     ],
+    thumbnailControlMenu: [
+      { dataElement: 'thumbRotateClockwise' },
+      { dataElement: 'thumbDelete' },
+    ],
     toolButtonObjects: {
       AnnotationCreateCountMeasurement: { dataElement: 'countMeasurementToolButton', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
       AnnotationCreateCountMeasurement2: { dataElement: 'countMeasurementToolButton2', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
@@ -582,6 +567,7 @@ export default {
     fonts: defaultFonts,
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
+    dateTimeFormats: defaultDateTimeFormats,
   },
   search: {
     value: '',
@@ -594,9 +580,24 @@ export default {
     clearSearchPanelOnClose: false,
     results: [],
     redactionSearchPatterns: {
-      creditCards: /\b(?:\d[ -]*?){13,16}\b/,
-      phoneNumbers: /\d?(\s?|-?|\+?|\.?)((\(\d{1,4}\))|(\d{1,3})|\s?)(\s?|-?|\.?)((\(\d{1,3}\))|(\d{1,3})|\s?)(\s?|-?|\.?)((\(\d{1,3}\))|(\d{1,3})|\s?)(\s?|-?|\.?)\d{3}(-|\.|\s)\d{4,5}/,
-      emails: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b/,
+      creditCards: {
+        label: 'redactionPanel.search.creditCards',
+        icon: 'redact-icons-credit-card',
+        type: redactionTypeMap['CREDIT_CARD'],
+        regex: /\b(?:\d[ -]*?){13,16}\b/,
+      },
+      phoneNumbers: {
+        label: 'redactionPanel.search.phoneNumbers',
+        icon: 'redact-icons-phone-number',
+        type: redactionTypeMap['PHONE'],
+        regex: /\d?(\s?|-?|\+?|\.?)((\(\d{1,4}\))|(\d{1,3})|\s?)(\s?|-?|\.?)((\(\d{1,3}\))|(\d{1,3})|\s?)(\s?|-?|\.?)((\(\d{1,3}\))|(\d{1,3})|\s?)(\s?|-?|\.?)\d{3}(-|\.|\s)\d{4,5}/,
+      },
+      emails: {
+        label: 'redactionPanel.search.emails',
+        icon: 'redact-icons-email',
+        type: redactionTypeMap['EMAIL'],
+        regex: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b/,
+      },
     }
   },
   document: {
@@ -617,6 +618,7 @@ export default {
     defaultDisabledElements: getHashParameters('disabledElements', ''),
     fullAPI: getHashParameters('pdfnet', false),
     preloadWorker: getHashParameters('preloadWorker', false),
+    enableOptimizedWorkers: getHashParameters('enableOptimizedWorkers', true),
     serverUrl: getHashParameters('server_url', ''),
     serverUrlHeaders: JSON.parse(getHashParameters('serverUrlHeaders', '{}')),
     useSharedWorker: getHashParameters('useSharedWorker', false),

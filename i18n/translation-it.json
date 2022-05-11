@@ -131,7 +131,7 @@
     "textField": "Campo di testo",
     "signatureFormField": "Campo firma",
     "checkBoxFormField": "Campo casella di controllo",
-    "radioButtonFormField": "Campo RadioButton",
+    "radioButtonFormField": "Campo del pulsante di opzione",
     "listBoxFormField": "Campo casella di riepilogo",
     "comboBoxFormField": "Campo casella combinata",
     "link": "Collegamento",

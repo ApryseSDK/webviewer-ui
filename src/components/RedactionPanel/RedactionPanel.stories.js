@@ -5,6 +5,7 @@ import RedactionPanel from './RedactionPanel';
 import RedactionPanelContainerWithProvider from './RedactionPanelContainer'
 import RightPanel from 'components/RightPanel';
 import { RedactionPanelContext } from './RedactionPanelContext';
+import { defaultRedactionTypes, redactionTypeMap } from 'constants/redactionTypes';
 
 const noop = () => { };
 
@@ -28,6 +29,15 @@ export const RedactionContextMock = ({ children, mockContext }) => {
   );
 };
 
+export const mockRedactionTypesDictionary = {
+  email: {
+    label: 'redactionPanel.search.emails',
+    icon: 'redact-icons-email',
+  },
+  ...defaultRedactionTypes,
+};
+
+
 const initialState = {
   viewer: {
     isInDesktopOnlyMode: true,
@@ -43,7 +53,25 @@ const initialState = {
     },
   },
   search: {
-    patterns: {
+    redactionSearchPatterns: {
+      phoneNumbers: {
+        label: 'redactionPanel.search.phoneNumbers',
+        icon: 'redact-icons-phone-number',
+        type: 'phone',
+        regex: /\d?(\s?|-?|\+?|\.?)((\(\d{1,4}\))|(\d{1,3})|\s?)(\s?|-?|\.?)((\(\d{1,3}\))|(\d{1,3})|\s?)(\s?|-?|\.?)((\(\d{1,3}\))|(\d{1,3})|\s?)(\s?|-?|\.?)\d{3}(-|\.|\s)\d{4,5}/,
+      },
+      emails: {
+        label: 'redactionPanel.search.emails',
+        icon: 'redact-icons-email',
+        type: 'email',
+        regex: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b/,
+      },
+      creditCards: {
+        label: 'redactionPanel.search.creditCards',
+        icon: 'redact-icons-credit-card',
+        type: 'creditCard',
+        regex: /\b(?:\d[ -]*?){13,16}\b/,
+      },
     }
   }
 };
@@ -56,7 +84,8 @@ const store = createStore(rootReducer);
 
 const basicProps = {
   currentWidth: 330,
-  redactionAnnotations: []
+  redactionAnnotations: [],
+  redactionTypesDictionary: mockRedactionTypesDictionary,
 }
 
 export const RedactionPanelStoryWrapper = ({ children, mockContext }) => {
@@ -97,7 +126,7 @@ const redactionAnnotations = [
       toString: () => 'rgba(200,100,69,1)'
 
     },
-    getCustomData: () => 'This is a preview of the text that will be redacted by Duncan Idaho of house Atreides',
+    getCustomData: () => 'Redact this text',
   },
   {
     Author: 'Duncan Idaho',
@@ -111,7 +140,7 @@ const redactionAnnotations = [
     StrokeColor: {
       toString: () => 'rgba(255,0,0,1)'
     },
-    getCustomData: () => 'This is a preview of the text that will be redacted by Duncan Idaho of house Atreides',
+    getCustomData: () => '',
   },
   {
     Author: 'Duncan Idaho',
@@ -125,7 +154,23 @@ const redactionAnnotations = [
     StrokeColor: {
       toString: () => 'rgba(0,100,0,1)'
     },
-    getCustomData: () => 'This is a preview of the text that will be redacted by Duncan Idaho of house Atreides',
+    getCustomData: () => '',
+  },
+  {
+    Author: 'Duncan Idaho',
+    type: redactionTypeMap['EMAIL'],
+    Id: 4,
+    PageNumber: 2,
+    DateCreated: '2021-08-19T22:43:04.795Z',
+    IsText: false,
+    getReplies: () => [1, 2, 3],
+    getStatus: () => '',
+    isReply: () => false,
+    StrokeColor: {
+      toString: () => 'rgba(0,100,0,1)'
+    },
+    getCustomData: () => '',
+    getContents: () => 'duncan@dune.ca',
   },
 ];
 

@@ -4,6 +4,11 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_DATE_TIME_FORMATS':
+      return {
+        ...state,
+        dateTimeFormats: payload.dateTimeFormats,
+      };
     case 'SET_FONTS':
       return {
         ...state,
@@ -401,6 +406,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, noteTransformFunction: payload.noteTransformFunction };
     case 'SET_CUSTOM_NOTE_SELECTION_FUNCTION':
       return { ...state, customNoteFunction: payload.customNoteFunction };
+    case 'SET_CUSTOM_APPLY_REDACTIONS_HANDLER':
+      return { ...state, customApplyRedactionsHandler: payload.customApplyRedactionsHandler };
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
     case 'SET_CUSTOM_MODAL': {
@@ -524,6 +531,11 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         pageManipulationOverlay: payload.items,
+      };
+    case 'SET_THUMBNAIL_CONTROL_MENU_ITEMS':
+      return {
+        ...state,
+        thumbnailControlMenu: payload.items,
       };
     case 'SET_WATERMARK_MODAL_OPTIONS':
       return { ...state, watermarkModalOptions: payload.watermarkModalOptions };

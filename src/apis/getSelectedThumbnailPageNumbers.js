@@ -10,4 +10,8 @@ WebViewer(...)
  */
 import selectors from 'selectors';
 
-export default store => () => selectors.getSelectedThumbnailPageIndexes(store.getState()).map(pageIndex => pageIndex + 1);
+export default store => () => {
+  console.warn('UI.getSelectedThumbnailPageNumbers is deprecated since version 8.5. Please use UI.ThumbnailsPanel.getSelectedPageNumbers instead');
+
+  return selectors.getSelectedThumbnailPageIndexes(store.getState()).map(pageIndex => pageIndex + 1);
+};

@@ -1,11 +1,12 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
 
-.PageReplacementModal {
+.PageReplacementModal, .FileModal {
   @extend %modal;
 
   .container {
     @extend %modal-shared-container-style;
+    @extend %modal-shared-container-style-mobile;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -17,54 +18,28 @@
 
     @include tablet {
       width: 625px;
+
       .modal-body-container {
         width: 609px;
       }
     }
+
     .Button {
       height: 100%;
     }
 
     .page-replacement-divider {
       border-top: 1px solid var(--divider);
-      margin: 21px 0px 16px -16px;
-      width: inherit;
-
-      @include mobile {
-      margin: 16px 0px 16px -25px;
-      min-width: 640px;
-      }
-
+      margin: 21px 0px 16px 0px;
+      width: 100%;
     }
 
     @include mobile {
-    box-sizing: border-box;
-
-      width: 100%;
-      position: fixed;
-      left: 0;
-      bottom: 0;
+      box-sizing: border-box;
       padding-top: 24px;
       padding-bottom: 16px;
       padding-left: 24px;
       padding-right: 24px;
-      min-width: 100px;
-      .swipe-indicator {
-        background: var(--divider);
-        border-radius: 2px;
-        height: 4px;
-        width: 38px;
-        position: absolute;
-        top: 12px;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-
-        @include tablet-and-desktop {
-          display: none;
-        }
-      }
 
       .modal-body-container {
         max-height: 350px;
@@ -75,6 +50,10 @@
     &.tabs {
       width: 479px;
       height: 436px;
+
+      @include mobile {
+        height: 450px;
+      }
     }
 
     .header {
@@ -111,6 +90,7 @@
           visibility: hidden
         }
       }
+
       .modal-btn {
         @include button-reset;
         background: var(--primary-button);
@@ -135,7 +115,8 @@
           background: var(--primary-button-hover);
         }
       }
-      .modal-btn.noFile  {
+
+      .modal-btn.noFile {
         opacity: 0.5;
         cursor: not-allowed;
       }
@@ -185,6 +166,7 @@
       height: 28px;
       color: var(--text-color);
       width: 100%;
+
       .tab-options-button {
         @include button-reset;
         text-align: center;

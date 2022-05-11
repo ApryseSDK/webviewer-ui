@@ -61,18 +61,20 @@ const sortStrategies = {
       `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
   createdDate: {
-    getSortedNotes: notes => notes.sort((a, b) => ( a.DateCreated || 0) - (b.DateCreated || 0)),
+    getSortedNotes: notes => notes.sort((a, b) => (a.DateCreated || 0) - (b.DateCreated || 0)),
     shouldRenderSeparator: (prevNote, currNote) => {
       const prevNoteDate = prevNote.DateCreated;
       const currNoteDate = currNote.DateCreated;
       if (prevNoteDate && currNoteDate) {
         const dayFormat = 'MMM D, YYYY';
         return dayjs(prevNoteDate).format(dayFormat) !== dayjs(currNoteDate).format(dayFormat);
-      } else if (!prevNoteDate && !currNoteDate) {
-        return false;
-      } else {
-        return true;
       }
+
+      if (!prevNoteDate && !currNoteDate) {
+        return false;
+      }
+
+      return true;
     },
     getSeparatorContent: (prevNote, currNote) => {
       const createdDate = currNote.DateCreated;
@@ -89,9 +91,9 @@ const sortStrategies = {
           return i18next.t('option.notesPanel.separator.yesterday');
         }
         return createdDateString;
-      } else {
-        return i18next.t('option.notesPanel.separator.unknown');
       }
+
+      return i18next.t('option.notesPanel.separator.unknown');
     },
   },
   modifiedDate: {
@@ -102,11 +104,13 @@ const sortStrategies = {
       if (prevNoteDate && currNoteDate) {
         const dayFormat = 'MMM D, YYYY';
         return dayjs(prevNoteDate).format(dayFormat) !== dayjs(currNoteDate).format(dayFormat);
-      } else if (!prevNoteDate && !currNoteDate) {
-        return false;
-      } else {
-        return true;
       }
+
+      if (!prevNoteDate && !currNoteDate) {
+        return false;
+      }
+
+      return true;
     },
     getSeparatorContent: (prevNote, currNote) => {
       const latestActivityDate = getLatestActivityDate(currNote);
@@ -123,9 +127,9 @@ const sortStrategies = {
           return i18next.t('option.notesPanel.separator.yesterday');
         }
         return latestActivityDay;
-      } else {
-        return i18next.t('option.notesPanel.separator.unknown');
       }
+
+      return i18next.t('option.notesPanel.separator.unknown');
     },
   },
   status: {

@@ -131,7 +131,7 @@
     "textField": "Textfeld",
     "signatureFormField": "Signaturfeld",
     "checkBoxFormField": "Kontrollkästchen Feld",
-    "radioButtonFormField": "RadioButton-Feld",
+    "radioButtonFormField": "Optionsfeld",
     "listBoxFormField": "Listenfeld",
     "comboBoxFormField": "Kombinationsfeld",
     "link": "Verknüpfung",

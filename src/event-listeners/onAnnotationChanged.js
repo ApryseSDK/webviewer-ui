@@ -7,8 +7,7 @@ export default () => (annotations, action, info) => {
     deleteReplies(annotations);
   }
 
-  const selectAnnotationOnCreation =
-    getHashParameters('selectAnnotationOnCreation', false);
+  const selectAnnotationOnCreation = getHashParameters('selectAnnotationOnCreation', false);
   if (selectAnnotationOnCreation) {
     if (action === 'add' && !info.imported) {
       if (annotations.length > 0 && !annotations[0].InReplyTo) {
@@ -16,7 +15,6 @@ export default () => (annotations, action, info) => {
       }
     }
   }
-
 };
 
 const deleteReplies = annotations => {

@@ -133,6 +133,7 @@ import setNotesPanelSortStrategy from './setNotesPanelSortStrategy';
 import setSwipeOrientation from './setSwipeOrientation';
 import setTheme from './setTheme';
 import setToolbarGroup from './setToolbarGroup';
+import createToolbarGroup from './createToolbarGroup';
 import setToolMode from './setToolMode';
 import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
@@ -162,6 +163,7 @@ import getCustomData from './getCustomData';
 import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 import setNoteTransformFunction from './setNoteTransformFunction';
 import setCustomNoteSelectionFunction from './setCustomNoteSelectionFunction';
+import setCustomApplyRedactionsHandler from './setCustomApplyRedactionsHandler';
 import selectThumbnailPages from './selectThumbnailPages';
 import unselectThumbnailPages from './unselectThumbnailPages';
 import setSearchResults from './setSearchResults';
@@ -170,7 +172,8 @@ import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHan
 import overrideSearchExecution from './overrideSearchExecution';
 import reactElements from './reactElements';
 import { addTrustedCertificates, loadTrustList } from './verificationOptions';
-import { enableTextCollapse, disableTextCollapse, enableReplyCollapse ,disableReplyCollapse } from './notesPanel';
+import { enableTextCollapse, disableTextCollapse, enableReplyCollapse, disableReplyCollapse } from './notesPanel';
+import { enableMultiselect, disableMultiselect, selectPages, unselectPages, getSelectedPageNumbers, } from './thumbnailsPanel';
 import toggleReaderMode from './toggleReaderMode';
 import toggleElementVisibility from './toggleElementVisibility';
 import setAnnotationReadState from './setAnnotationReadState';
@@ -187,6 +190,7 @@ import enableDesktopOnlyMode from './enableDesktopOnlyMode';
 import disableDesktopOnlyMode from './disableDesktopOnlyMode';
 import isInDesktopOnlyMode from './isInDesktopOnlyMode';
 import pageManipulationOverlay from './pageManipulationOverlay';
+import thumbnailControlMenu from './thumbnailControlMenu';
 import getWatermarkModalOptions from './getWatermarkModalOptions';
 import enableNoteSubmissionWithEnter from './enableNoteSubmissionWithEnter';
 import willUseEmbeddedPrinting from 'src/apis/willUseEmbeddedPrinting';
@@ -195,6 +199,9 @@ import Fonts from 'src/apis/fonts';
 import TabManagerAPI from './TabManagerAPI';
 import getAvailableLanguages from './getAvailableLanguages';
 import replaceRedactionSearchPattern from './replaceRedactionSearchPattern';
+import addDateTimeFormat from './addDateTimeFormat';
+import addRedactionSearchPattern from './addRedactionSearchPattern';
+import removeRedactionSearchPattern from './removeRedactionSearchPattern';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -251,6 +258,7 @@ export default store => {
     loadDocument: loadDocument(store),
     settingsMenuOverlay: settingsMenuOverlay(store),
     pageManipulationOverlay: pageManipulationOverlay(store),
+    thumbnailControlMenu: thumbnailControlMenu(store),
     openElements: openElements(store),
     print: print(store),
     printInBackground: printInBackground(store),
@@ -287,8 +295,10 @@ export default store => {
     setSwipeOrientation,
     setTheme: setTheme(store),
     setToolbarGroup: setToolbarGroup(store),
+    createToolbarGroup: createToolbarGroup(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setCustomNoteSelectionFunction: setCustomNoteSelectionFunction(store),
+    setCustomApplyRedactionsHandler: setCustomApplyRedactionsHandler(store),
     setToolMode,
     setZoomLevel,
     setZoomList: setZoomList(store),
@@ -307,14 +317,20 @@ export default store => {
     setCustomMeasurementOverlayInfo: setCustomMeasurementOverlayInfo(store),
     setSignatureFonts: setSignatureFonts(store),
     setSelectedTab: setSelectedTab(store),
-    getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
+
     setDisplayedSignaturesFilter: setDisplayedSignaturesFilterFunction(store),
-    selectThumbnailPages: selectThumbnailPages(store),
-    unselectThumbnailPages: unselectThumbnailPages(store),
+
     setAnnotationContentOverlayHandler: setAnnotationContentOverlayHandler(store),
     VerificationOptions: {
       addTrustedCertificates: addTrustedCertificates(store),
       loadTrustList: loadTrustList(store),
+    },
+    ThumbnailsPanel: {
+      selectPages: selectPages(store),
+      unselectPages: unselectPages(store),
+      getSelectedPageNumbers: getSelectedPageNumbers(store),
+      enableMultiselect: enableMultiselect(store),
+      disableMultiselect: disableMultiselect(store),
     },
     NotesPanel: {
       enableTextCollapse: enableTextCollapse(store),
@@ -389,8 +405,11 @@ export default store => {
     TabManager: TabManagerAPI(store),
     getAvailableLanguages,
     replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
+    addDateTimeFormat: addDateTimeFormat(store),
+    addRedactionSearchPattern: addRedactionSearchPattern(store),
+    removeRedactionSearchPattern: removeRedactionSearchPattern(store),
 
-    //deprecated, to be removed in 8.0
+    // deprecated, to be removed in 8.0
     useNativeScroll,
     showErrorMessage: showErrorMessage(store),
     toggleElement: toggleElement(store),
@@ -398,8 +417,11 @@ export default store => {
     setHighContrastMode: setHighContrastMode(store),
     getIsHighContrastMode: getIsHighContrastMode(store),
 
-    //deprecated, to be removed in 9.0
+    // deprecated, to be removed in 9.0
     updateOutlines: updateOutlines(store),
+    selectThumbnailPages: selectThumbnailPages(store),
+    unselectThumbnailPages: unselectThumbnailPages(store),
+    getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
 
     // undocumented
     loadedFromServer: false,

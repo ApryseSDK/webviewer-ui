@@ -47,7 +47,6 @@ export const mergeExternalWebViewerDocument = (viewerID, mergeToPage) => dispatc
     dispatch(actions.openElement('loadingModal'));
     extractedDataPromise.then(docToMerge => {
       dispatch(mergeDocument(docToMerge, mergeToPage, false)).then(({ filename, pages }) => {
-
         fireEvent(Events.DOCUMENT_MERGED, { filename, pages: otherWebViewerIframe.contentWindow.pagesExtracted });
         dispatch(actions.closeElement('loadingModal'));
         resolve({ filename, pages });

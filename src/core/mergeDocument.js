@@ -6,9 +6,9 @@ export default async (documentToMerge, position) => {
   const { documentViewer } = window;
   if (documentViewer.getDocument()) {
     return documentViewer.getDocument().mergeDocument(documentToMerge, position);
-  } else {
-    await documentViewer.loadDocument(documentToMerge);
-    const doc = documentViewer.getDocument();
-    return { filename: doc.getFilename(), pages: [1] };
   }
+
+  await documentViewer.loadDocument(documentToMerge);
+  const doc = documentViewer.getDocument();
+  return { filename: doc.getFilename(), pages: [1] };
 };

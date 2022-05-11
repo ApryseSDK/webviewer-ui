@@ -2,16 +2,24 @@
 @import '../../constants/modal';
 
 $border-radius: 4px;
+$container-margin: 16px;
 
 .text-customstamp {
-  height: 396px;
   padding: 16px;
   margin: 0px 0px;
   display: flex;
   flex-direction: column;
-
   @include mobile {
-    height: 428px;
+    width: 100%;
+    padding: 4px 8px;
+    .scroll-container {
+      width: 100%;
+      max-height: 50vh;
+      padding-bottom: 0;
+      margin-bottom: 0;
+      overflow-y: auto;
+      overflow-x: visible;
+    }
   }
 
   &-input {
@@ -44,111 +52,85 @@ $border-radius: 4px;
 
   &-inner-container {
     position: absolute;
-    height: 100%;
     min-width: 100%;
   }
 
-
-  .canvas-colorpalette-container{
+  .canvas-container{
     border: 1px solid var(--modal-stroke-and-border);
-    border-radius: $border-radius;
-    height: 240px;
     box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--signature-draw-background);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 48px 74px;
+    border-radius: $border-radius;
 
-    .canvas-container {
-      position: relative;
-      overflow: hidden;
-      height: 196px;
-      background-color: var(--signature-draw-background);
-      border-radius: $border-radius;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      padding: 48px 74px;
-      border-radius: $border-radius $border-radius 0 0;
-
-      @include mobile {
-        padding: 58px 0.5px;
-      }
-      .canvas-holder {
-        background-color: transparent;
-
-        .custom-stamp-canvas {
-          box-sizing: border-box;
-          @media (max-width: 430px) {
-            transform: scale(0.8);
-          }
-        }
-      }
+    @include mobile {
+      padding: 12px 0.5px;
     }
-    .colorpalette-container{
+    .custom-stamp-canvas {
       box-sizing: border-box;
-      border-top: 1px solid var(--modal-stroke-and-border);
-      width: 100%;
-      height: 44px;
-
-      .ColorPalette {
-        margin: 8px;
-        grid-template-columns: repeat(3,1fr);
-        width: 100px;
-  
-        :not(:last-child) {
-          margin-right: 8px;
-        }
-
-        .cell-container{
-          width: 28px;
-          height: 28px;
-
-          .cell-outer {
-            .cell{
-              width: 16px;
-              height: 16px;
-            }
-          }
-          .cell-outer.active {
-            width: 28px;
-            height: 28px;
-          }
-        } 
+      @media (max-width: 430px) {
+        transform: scale(0.8);
       }
     }
+  }
 
+  .color-container{
+    margin-top: $container-margin;
+    width: 100%;
+
+    .ColorPalette {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      gap: 4px;
+      @include mobile {
+        padding: 4px;
+      }
+
+      .cell-outer {
+        margin-right: 16px;
+        &.active {
+          margin-left: -4px;
+          margin-right: 10px;
+        }
+      }
+
+      .cell-container {
+        flex: unset;
+        width: auto;
+        height: auto;
+      }
+
+    }
   }
   .stamp-input-container{
+    margin-top: $container-margin;
     padding: 0px;
     height: 52px;
-    margin: 16px 0;
-
-    .stamp-label {
-      font-weight: bold;
-      margin-bottom: 8px;
-      line-height: 16px;
-
-      @include mobile {
-        font-size: 13px;
-      }
-    }
     .text-customstamp-input {
       width: 100%;
       padding: 6px;
     }
   }
 
-  .timestamp-container{
-    padding: 0px;
-    height: 40px;
+  .stamp-sublabel, .stamp-label {
+    font-weight: bold;
+    margin-bottom: 8px;
 
-    .stamp-sublabel {
-      font-weight: bold;
-      margin-bottom: 8px;
+    @include mobile {
+      font-size: 13px;
+      height: 16px;
 
-      @include mobile {
-        font-size: 13px;
-        height: 16px;
-
-      }
     }
+  }
+
+  .timestamp-container{
+    margin-top: $container-margin;
+    padding: 0px;
     .timeStamp-choice{
       height: 16px;
       display: grid;
@@ -157,7 +139,7 @@ $border-radius: 4px;
       grid-gap: 16px;
 
       @media (max-width: 430px) {
-        grid-template-columns: 50% 50%;
+        grid-template-columns: 30% 30% 30%;
         height: 100%;
         font-size: 13px;
 
@@ -180,8 +162,141 @@ $border-radius: 4px;
     }
   }
 
-  #default-time {
-    margin-left: 20px;
+  .date-format-container {
+    margin-top: $container-margin;
+    display: flex;
+    flex-wrap: wrap;
+    .Dropdown__wrapper{
+      width: 100%;
+      .Dropdown {
+        width: 100% !important;
+        text-align: left;
+      }
+
+      .down-arrow {
+        flex: unset;
+      }
+      .Dropdown__items {
+        @include mobile {
+          max-height: 200px;
+        }
+        z-index: 101;
+        bottom: 100%;
+        top: auto;
+        left: 0;
+        right: auto;
+      }
+    }
+
+    .hover-icon {
+      .Icon {
+        width: 18px;
+        height: 18px;
+      }
+
+      margin-left: 2px;
+      position: relative;
+      .date-format-description {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        visibility: hidden;
+        position: absolute;
+        background-color: black;
+        border-radius: 5px;
+        padding: 12px;
+        color: white;
+        width: 120px;
+        z-index: 101;
+        bottom: 100%;
+        top: auto;
+        left: 0;
+        right: auto;
+      }
+
+      &:hover {
+        .Icon {
+          color: var(--blue-6)
+        }
+        .date-format-description {
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  .font-container {
+    margin-top: $container-margin;
+
+    .font-inner-container {
+      display: flex;
+      gap: 12px;
+      @include mobile {
+        gap: 6px;
+      }
+    }
+
+    .stamp-sublabel {
+      font-weight: bold;
+
+      margin-bottom: 8px;
+
+      @include mobile {
+        font-size: 13px;
+        height: 16px;
+
+      }
+    }
+
+    .Dropdown__wrapper{
+      .Dropdown {
+        margin-right: 4px;
+        width: 216px !important;
+        @include mobile {
+          width: 200px!important;
+        }
+        text-align: left;
+      }
+
+      .down-arrow {
+        flex: unset;
+      }
+      .Dropdown__items {
+        @include mobile{
+          bottom: auto;
+          height: 200px;
+        }
+        bottom: 100%;
+        top: auto;
+        left: 0;
+        right: auto;
+      }
+    }
+
+    .Button {
+      background: none;
+      width: 28px;
+      height: 28px;
+      margin: 0;
+
+      .Icon {
+        height: 26px;
+        width: 26px;
+        color: var(--icon-color);
+      }
+
+      &:hover {
+        background: var(--popup-button-hover);
+      }
+
+      &.active {
+        background: var(--popup-button-active);
+
+        .Icon {
+          color: var(--blue-6);
+        }
+      }
+    }
   }
 
   .custom-checkbox {

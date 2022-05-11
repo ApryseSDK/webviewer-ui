@@ -7,6 +7,11 @@ import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 
+export const setDateTimeFormats = dateTimeFormats => ({
+  type: 'SET_DATE_TIME_FORMATS',
+  payload: { dateTimeFormats },
+});
+
 export const setEnableDesktopOnlyMode = enableDesktopOnlyMode => ({
   type: 'SET_ENABLE_DESKTOP_ONLY_MODE',
   payload: { enableDesktopOnlyMode },
@@ -129,7 +134,7 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
 
 export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
-    const toolGroups = state.viewer.headers[_toolbarGroup];
+    const toolGroups = state.viewer.headers[_toolbarGroup].children || state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
     if (toolGroups) {
       const firstTool = Object.values(toolGroups).find(({ toolGroup, dataElement }) => {
@@ -371,12 +376,12 @@ export const setActiveLeftPanel = dataElement => (dispatch, getState) => {
         type: 'CLOSE_ELEMENT',
         payload: { dataElement: state.viewer.activeLeftPanel },
       });
-      fireEvent(Events.VisibilityChanged, {
+      fireEvent(Events.VISIBILITY_CHANGED, {
         element: state.viewer.activeLeftPanel,
         isVisible: false,
       });
       dispatch({ type: 'SET_ACTIVE_LEFT_PANEL', payload: { dataElement } });
-      fireEvent(Events.VisibilityChanged, { element: dataElement, isVisible: true });
+      fireEvent(Events.VISIBILITY_CHANGED, { element: dataElement, isVisible: true });
     }
   } else {
     const panelDataElements = [
@@ -587,4 +592,14 @@ export const setWatermarkModalOptions = watermarkModalOptions => ({
 export const replaceRedactionSearchPattern = (searchPattern, regex) => ({
   type: 'REPLACE_REDACTION_SEARCH_PATTERN',
   payload: { searchPattern, regex }
+});
+
+export const addRedactionSearchPattern = (searchPattern) => ({
+  type: 'ADD_REDACTION_SEARCH_PATTERN',
+  payload: { searchPattern }
+});
+
+export const removeRedactionSearchPattern = (searchPatternType) => ({
+  type: 'REMOVE_REDACTION_SEARCH_PATTERN',
+  payload: { searchPatternType }
 });

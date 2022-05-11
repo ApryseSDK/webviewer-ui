@@ -14,6 +14,7 @@
 
   .redaction-search-results-counter {
     flex: 3 1 auto;
+
     span {
       font-weight: bold;
     }
@@ -30,7 +31,7 @@
     color: var(--secondary-button-text);
     border: none;
     cursor: pointer;
-    
+
     &.disabled {
       opacity: 0.5;
       cursor: not-allowed;
@@ -68,6 +69,10 @@
   background-color: var(--component-background);
   border: 1px solid var(--border);
   margin-bottom: 16px;
+
+  @include tablet {
+    margin-bottom: 40px;
+  }
 
   button {
     @include button-reset;
@@ -117,4 +122,3 @@
     }
   }
 }
-

@@ -1,6 +1,7 @@
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
 import actions from 'actions';
+
 const { ToolNames } = window.Core.Tools;
 
 export default dispatch => crossStampAnnotation => {

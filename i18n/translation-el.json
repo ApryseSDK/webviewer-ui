@@ -131,7 +131,7 @@
     "textField": "Πεδίο κειμένου",
     "signatureFormField": "Πεδίο υπογραφής",
     "checkBoxFormField": "Πεδίο πλαισίου ελέγχου",
-    "radioButtonFormField": "Πεδίο RadioButton",
+    "radioButtonFormField": "Πεδίο κουμπιού επιλογής",
     "listBoxFormField": "Πεδίο πλαισίου λίστας",
     "comboBoxFormField": "Πεδίο Combo Box",
     "link": "Σύνδεσμος",

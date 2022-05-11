@@ -283,6 +283,12 @@ export const setPageManipulationOverlayItems = items => ({
     items,
   },
 });
+export const setThumbnailControlMenuItems = items => ({
+  type: 'SET_THUMBNAIL_CONTROL_MENU_ITEMS',
+  payload: {
+    items,
+  },
+});
 export const setTabManager = TabManager => ({
   type: 'SET_TAB_MANAGER',
   payload: { TabManager },
@@ -429,6 +435,11 @@ export const setCustomNoteSelectionFunction = customNoteFunction => ({
   type: 'SET_CUSTOM_NOTE_SELECTION_FUNCTION',
   payload: { customNoteFunction },
 });
+export const setCustomApplyRedactionsHandler = customApplyRedactionsHandler => ({
+  type: 'SET_CUSTOM_APPLY_REDACTIONS_HANDLER',
+  payload: { customApplyRedactionsHandler },
+});
+
 export const setEnableSnapMode = enable => ({
   type: 'SET_ENABLE_SNAP_MODE',
   payload: { enable },

@@ -5,10 +5,15 @@ import classNames from 'classnames';
 import './NoteTextPreview.scss'
 
 function NoteTextPreview(props) {
-  const text = props.children;
+  /* This replace is to remove the break line that the React Quill component add into the text */
+  const text = props.children.replace(/\n$/, '');
   const {
     panelWidth,
     linesToBreak,
+    renderRichText,
+    richTextStyle,
+    resize,
+    style,
     /* If text being previewed is a comment it gets a darker font color */
     comment = false
   } = props;
@@ -22,6 +27,7 @@ function NoteTextPreview(props) {
   const onClickHandler = (event) => {
     event.stopPropagation();
     setExpand(!expanded)
+    resize && resize();
   };
 
   const textToDisplay = expanded ? text : text.substring(0, charsPerLine * linesToBreak);
@@ -54,8 +60,8 @@ function NoteTextPreview(props) {
   }, [text, previewElementWidth])
 
   return (
-    <div className={noteTextPreviewClass} ref={ref}>
-      {textToDisplay} {showPrompt && <a className="note-text-preview-prompt" onClick={onClickHandler}>{prompt}</a>}
+    <div className={noteTextPreviewClass} ref={ref} style={style}>
+      {renderRichText && richTextStyle ? renderRichText(textToDisplay, richTextStyle, 0) : textToDisplay} {showPrompt && <a className="note-text-preview-prompt" onClick={onClickHandler}>{prompt}</a>}
     </div>
   )
 };

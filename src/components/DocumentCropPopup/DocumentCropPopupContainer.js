@@ -187,7 +187,7 @@ function DocumentCropPopupContainer() {
       );
     } else {
       return (
-        <Draggable cancel={'input'} positionOffset={cropPopupOffset()} bounds={cropPopupBounds()}>
+        <Draggable cancel={'input, button, .collapsible-menu, .ui__choice__label'} positionOffset={cropPopupOffset()} bounds={cropPopupBounds()}>
           <div className="DocumentCropPopupContainer" ref={cropPopupRef}>
             <DocumentCropPopup {...props} />
           </div>

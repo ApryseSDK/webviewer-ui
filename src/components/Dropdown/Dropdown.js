@@ -15,12 +15,24 @@ const propTypes = {
   items: PropTypes.array.isRequired,
   currentSelectionKey: PropTypes.string,
   translationPrefix: PropTypes.string,
+  getTranslationLabel: PropTypes.func,
   dataElement: PropTypes.string,
   disabled: PropTypes.bool,
   isFont: PropTypes.bool,
+  placeholder: PropTypes.string,
 };
 
-function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickItem, dataElement, disabled=false, isFont =false }) {
+function Dropdown({
+  items = [],
+  currentSelectionKey,
+  translationPrefix,
+  getTranslationLabel,
+  onClickItem,
+  dataElement,
+  disabled=false,
+  isFont =false,
+  placeholder = null,
+}) {
   const  { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);
@@ -54,6 +66,15 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
     },
     [onClickItem],
   );
+
+  const getTranslation = (prefix, key) => {
+    if(getTranslationLabel) {
+      return t(getTranslationLabel(key));
+    }
+    
+    return t(`${prefix}.${key}`, key)
+  }
+
   const dropdownItems = useMemo(
     () =>
       items.map(key => (
@@ -66,7 +87,7 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
           tabIndex={isOpen ? undefined : -1} // Just to be safe.
           style={isFont ? { fontFamily: key } : undefined}
         >
-          {t(`${translationPrefix}.${key}`, key)}
+          {getTranslation(translationPrefix, key)}
         </DataElementWrapper>
       )),
     [currentSelectionKey, isOpen, items, onClickDropdownItem, t, translationPrefix],
@@ -91,8 +112,11 @@ function Dropdown({ items = [], currentSelectionKey, translationPrefix, onClickI
         <div className="picked-option">
           {optionIsSelected && (
             <div className="picked-option-text" style={isFont ? { fontFamily: currentSelectionKey } : undefined}>
-              {tReady? t(`${translationPrefix}.${currentSelectionKey}`, currentSelectionKey) : ''}
+              {tReady? getTranslation(translationPrefix, currentSelectionKey) : ''}
             </div>
+          )}
+          {!optionIsSelected && placeholder && (
+            <div className="picked-option-text">{placeholder}</div>
           )}
           <Icon className="down-arrow" glyph="icon-chevron-down" />
         </div>
