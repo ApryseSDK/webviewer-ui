@@ -10,8 +10,7 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
-import core from 'core';
-import hashString16 from 'helpers/hashString16b';
+import getAnnotationReference from 'src/helpers/getAnnotationReference';
 
 import './NoteHeader.scss';
 import Tooltip from '../Tooltip';
@@ -72,14 +71,13 @@ function NoteHeader(props) {
   const pageNumber = annotation.getPageNumber();
 
   // CUSTOM WISEFLOW: get hash of the annotation information
-  const annotationHash = useMemo(() => {
-    const hstring = hashString16(`${annotation.Author} ${annotation.DateCreated} ${annotation.Id}`).toString();
-    return hstring;
-  }, [annotation]);
+  const annotationReference = useMemo(() => {
+    return getAnnotationReference(annotation);
+  }, [annotation, pageNumber]);
 
   const handleCopyAnnotId = e => {
     e.stopPropagation();
-    navigator.clipboard.writeText(`P${pageNumber}-${annotationHash}`);
+    navigator.clipboard.writeText(annotationReference);
     setCopyTooltip(t('action.copied'));
     setTimeout(() => {
       setCopyTooltip(t('action.copyText'));
@@ -105,7 +103,7 @@ function NoteHeader(props) {
             </div>
             <div className="annotId">
               <span>
-                {t('annotation.reference')}: P{pageNumber}-{annotationHash}
+                {t('annotation.reference')}: {annotationReference}
               </span>
               <Tooltip content={copyTooltip}>
                 <div role="button" onClick={handleCopyAnnotId} className={'copy-reference-button'}>
