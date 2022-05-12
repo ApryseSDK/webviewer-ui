@@ -2,10 +2,16 @@
  * CUSTOM WISEFLOW
  */
 
+const annotationHashCache = {};
+
 /** Get hash of the annotation information */
 function getAnnotationHash(annotation) {
+  const annotationHash = annotationHashCache[annotation.Id];
+  if (annotationHash) return annotationHash;
   const annotationString = `${annotation.Author} ${annotation.DateCreated} ${annotation.Id}`;
-  return numbersToLetters(hashString16(annotationString));
+  const newAnnotationHash = numbersToLetters(hashString16(annotationString));
+  annotationHashCache[annotation.Id] = newAnnotationHash;
+  return newAnnotationHash;
 }
 
 /** Get annotation reference */
