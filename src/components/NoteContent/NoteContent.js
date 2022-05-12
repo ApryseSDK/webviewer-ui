@@ -22,6 +22,7 @@ import './NoteContent.scss';
 import NoteHeader from 'components/NoteHeader';
 import NoteTextPreview from 'src/components/NoteTextPreview';
 import isString from 'lodash/isString';
+import getAnnotationReference from 'src/helpers/getAnnotationReference';
 
 dayjs.extend(LocalizedFormat);
 
@@ -74,6 +75,14 @@ const NoteContent = ({
     },
     [searchInput],
   );
+
+  const renderAnnotationReference = useCallback(
+    annotation => {
+      const annotationReference = getAnnotationReference(annotation);
+      return highlightSearchInput(annotationReference, searchInput)
+    },
+    [searchInput, annotation.getPageNumber()],
+  )
 
   const renderContents = useCallback(
     (contents, richTextStyle) => {
@@ -258,6 +267,7 @@ const NoteContent = ({
         isReply={isReply}
         isUnread={isUnread}
         renderAuthorName={renderAuthorName}
+        renderAnnotationReference={renderAnnotationReference}
         isNoteStateDisabled={isNoteStateDisabled}
         isEditing={isEditing}
         noteIndex={noteIndex}

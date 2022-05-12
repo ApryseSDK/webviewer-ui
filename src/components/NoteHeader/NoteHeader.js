@@ -53,6 +53,8 @@ function NoteHeader(props) {
     isEditing,
     noteIndex,
     sortStrategy,
+    // CUSTOM WISEFLOW
+    renderAnnotationReference,
   } = props;
 
   const [t] = useTranslation();
@@ -103,7 +105,7 @@ function NoteHeader(props) {
             </div>
             <div className="annotId">
               <span>
-                {t('annotation.reference')}: {annotationReference}
+                {t('annotation.reference')}: {renderAnnotationReference(annotation)}
               </span>
               <Tooltip content={copyTooltip}>
                 <div role="button" onClick={handleCopyAnnotId} className={'copy-reference-button'}>

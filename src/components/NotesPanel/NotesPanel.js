@@ -22,6 +22,7 @@ import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import { debounce } from 'lodash';
 import './NotesPanel.scss';
+import getAnnotationReference from 'helpers/getAnnotationReference';
 
 const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [
@@ -161,12 +162,16 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     const content = note.getContents();
     const authorName = core.getDisplayAuthor(note['Author']);
     const annotationPreview = note.getCustomData('trn-annot-preview');
+    
+    /** CUSTOM WISEFLOW */
+    const reference = getAnnotationReference(note);
 
     // didn't use regex here because the search input may form an invalid regex, e.g. *
     return (
       content?.toLowerCase().includes(searchInput.toLowerCase()) ||
       authorName?.toLowerCase().includes(searchInput.toLowerCase()) ||
-      annotationPreview?.toLowerCase().includes(searchInput.toLowerCase())
+      annotationPreview?.toLowerCase().includes(searchInput.toLowerCase()) ||
+      reference?.toLowerCase().includes(searchInput.toLowerCase()) // CUSTOM WISEFLOW
     );
   };
 
