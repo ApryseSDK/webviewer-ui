@@ -55,6 +55,7 @@ const createStylePopupTest = (colorMapKey, additionalProps = {}) => {
     style={style}
     onStyleChange={noop}
     onPropertyChange={noop}
+    onSliderChange={noop}
     disableSeparator
     onRichTextStyleChange={noop}
     {...additionalProps}

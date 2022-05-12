@@ -29,6 +29,7 @@ class StylePopup extends React.PureComponent {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
     onPropertyChange: PropTypes.func.isRequired,
+    onSliderChange: PropTypes.func.isRequired,
     onRichTextStyleChange: PropTypes.func,
     isFreeText: PropTypes.bool,
     isMeasure: PropTypes.bool,
@@ -52,7 +53,7 @@ class StylePopup extends React.PureComponent {
     const {
       style: { Opacity, StrokeThickness, FontSize },
       onStyleChange,
-      onPropertyChange,
+      onSliderChange,
       isFreeText,
       isMeasure = false,
       // TODO: Actually disable these elements
@@ -170,7 +171,7 @@ class StylePopup extends React.PureComponent {
     const sliderComponents = Object.keys(sliders).map(key => {
       const props = sliderProps[key];
 
-      return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onPropertyChange}/>;
+      return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onSliderChange}/>;
     });
 
     return (

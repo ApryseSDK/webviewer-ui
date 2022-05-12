@@ -103,7 +103,6 @@ class Slider extends React.PureComponent {
       })
     }
     this.isMouseDown = false;
-
   }
 
   onTouchStart = e => {
@@ -121,7 +120,7 @@ class Slider extends React.PureComponent {
     const { property, onSliderChange, convertRelativeCirclePositionToValue } = this.props;
     const relativeCirclePosition = this.getRelativeCirclePosition(e);
     const value = convertRelativeCirclePositionToValue(relativeCirclePosition);
-    
+
     onSliderChange(property, value);
 
     this.setState({
