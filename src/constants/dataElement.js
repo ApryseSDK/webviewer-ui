@@ -17,7 +17,14 @@ const DataElements = {
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',
   LINK_MODAL: 'linkModal',
-  LANGUAGE_MODAL: 'languageModal'
+  LANGUAGE_MODAL: 'languageModal',
+  FILTER_MODAL: 'filterModal',
+
+  // Filter modal
+  ANNOTATION_USER_FILTER_PANEL_BUTTON: 'annotationUserFilterPanelButton',
+  ANNOTATION_COLOR_FILTER_PANEL_BUTTON: 'annotationColorFilterPanelButton',
+  ANNOTATION_TYPE_FILTER_PANEL_BUTTON: 'annotationTypeFilterPanelButton',
+  ANNOTATION_STATUS_FILTER_PANEL_BUTTON: 'annotationStatusFilterPanelButton'
 };
 
 export default DataElements;

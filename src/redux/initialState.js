@@ -345,6 +345,10 @@ export default {
       { type: 'divider' },
       { dataElement: 'pageManipulationControls' },
     ],
+    thumbnailControlMenu: [
+      { dataElement: 'thumbRotateClockwise' },
+      { dataElement: 'thumbDelete' },
+    ],
     toolButtonObjects: {
       AnnotationCreateCountMeasurement: { dataElement: 'countMeasurementToolButton', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
       AnnotationCreateCountMeasurement2: { dataElement: 'countMeasurementToolButton2', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
@@ -489,6 +493,7 @@ export default {
       pageReplacementModal: 'urlInputPanelButton',
       linkModal: 'URLPanelButton',
       rubberStampTab: 'standardStampPanelButton',
+      filterAnnotModal: DataElements.ANNOTATION_USER_FILTER_PANEL_BUTTON
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
@@ -564,6 +569,13 @@ export default {
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
     dateTimeFormats: defaultDateTimeFormats,
+    annotationFilters: {
+      includeReplies: true,
+      authorFilter: [],
+      colorFilter: [],
+      typeFilter: [],
+      statusFilter: []
+    }
   },
   search: {
     value: '',

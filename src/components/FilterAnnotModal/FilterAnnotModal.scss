@@ -1,5 +1,6 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
+@import '../../constants/tabs';
 
 .FilterAnnotModal {
   @extend %modal;
@@ -7,46 +8,18 @@
 
   .container {
     @extend %modal-shared-container-style;
+    @extend %modal-shared-container-style-mobile;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 4px;
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-    padding: 8px 8px;
     background: var(--component-background);
-
-    @include mobile {
-      width: 100%;
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      min-width: 400px;
-      padding-top: 24px;
-      padding-bottom: 16px;
-      padding-left: 24px;
-      padding-right: 24px;
-      min-width: 100px;
-
-      .swipe-indicator {
-        background: var(--divider);
-        border-radius: 2px;
-        height: 4px;
-        width: 38px;
-        position: absolute;
-        top: 12px;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-
-        @include tablet-and-desktop {
-          display: none;
-        }
-      }
-    }
+    width: 360px;
 
     .message {
       font-size: 14px;
+
       @include mobile {
         font-size: 16px;
       }
@@ -55,50 +28,108 @@
     .filter-modal {
       display: flex;
       flex-direction: column;
+      width: 100%;
 
-      .filter-options {
+      .divider {
+        height: 1px;
+        width: 100%;
+        background: var(--divider);
+      }
+
+      .header {
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
+        margin: 16px;
+        font-size: 16px;
+        font-weight: bold;
+        align-items: center;
+        height: 24px;
 
-        .filter {
-          display: flex;
-          flex-direction: column;
+        .Button {
+          height: 24px;
+        }
+      }
 
-          .heading {
-            font-size: 15px;
-            @include mobile {
-              font-size: 18px;
-            }
+      .body {
+        padding: 16px;
+
+        .tab-list {
+          .tab-options-button {
+            @include button-reset;
           }
+        }
 
-          .buttons {
-            display: grid;
-            padding: 6px 0 6px 0;
-            grid-template-columns: 100px 100px;
-          }
+        @extend %tab-list;
 
-          .colorSelect {
+        .filter-options {
+          height: 200px;
+          width: 100%;
+
+          .tab-panel {
+            height: 100%;
+            width: 100%;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
 
-            .colorCell {
-              width: 15px;
-              height: 15px;
-              border-radius: 10000000px;
-              margin: 4px;
+            .include-replies {
+              display: flex;
+              height: 20px;
+              margin-top: 12px;
+
+              label {
+                color: var(--gray-7);
+              }
             }
-          }
 
-          label {
-            overflow: hidden;
-            text-overflow: ellipsis;
+            .three-column-filter {
+              margin-top: 20px;
+              overflow-y: scroll;
+              display: grid;
+              grid-gap: 5px 16px;
+              grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .color-filters {
+              margin-top: 20px;
+              overflow-y: scroll;
+              display: grid;
+              grid-gap: 16px;
+              grid-template-columns: repeat(5, minmax(0, 1fr));
+            }
+
+            .buttons {
+              display: grid;
+              padding: 6px 0 6px 0;
+              grid-template-columns: 100px 100px;
+            }
+
+            .colorSelect {
+              display: flex;
+              flex-direction: row;
+
+              .colorCell {
+                width: 22px;
+                height: 22px;
+                border-radius: 10000000px;
+                margin-left: 4px;
+              }
+            }
+
+            label {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
           }
         }
       }
 
       .footer {
         display: flex;
+        justify-content: space-between;
         width: 100%;
+        padding: 16px;
+        margin-top: 0px;
 
         .Button {
           display: flex;
@@ -106,13 +137,11 @@
           align-items: center;
           color: var(--primary-button-text);
           padding: 6px 18px;
-          margin-top: 8px;
-          margin-left: 5px;
           width: auto;
           width: fit-content;
           background: var(--primary-button);
           border-radius: 4px;
-          height: 30px;
+          height: 32px;
           cursor: pointer;
 
           &:hover {

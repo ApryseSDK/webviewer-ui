@@ -446,6 +446,8 @@ export const getPageReplacementFileList = state => state.viewer.pageReplacementF
 
 export const getPageManipulationOverlayItems = state => state.viewer.pageManipulationOverlay;
 
+export const getThumbnailControlMenuItems = state => state.viewer.thumbnailControlMenu;
+
 export const shouldShowPresets = state => {
   const response = state.viewer.toolButtonObjects[state.viewer.activeToolName];
   return response?.showPresets ?? true;
@@ -454,3 +456,5 @@ export const shouldShowPresets = state => {
 export const shouldResetAudioPlaybackPosition = state => state.viewer.shouldResetAudioPlaybackPosition;
 
 export const getActiveSoundAnnotation = state => state.viewer.activeSoundAnnotation;
+
+export const getAnnotationFilters = state => state.viewer.annotationFilters;

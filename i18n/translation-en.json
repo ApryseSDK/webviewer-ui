@@ -6,6 +6,7 @@
     "calibrate": "Calibrate",
     "cancel": "Cancel",
     "clear": "Clear",
+    "clearAll": "Clear all",
     "close": "Close",
     "undo": "Undo",
     "redo": "Redo",
@@ -387,12 +388,11 @@
       "pageReplaceInputFromSource": "with page(s)"
     },
     "filterAnnotModal": {
-      "commentBy": "Comment by",
-      "types": "Types",
       "color": "Color",
-      "includeReplies": "Include Replies"
-    },
-    "status": {
+      "includeReplies": "Include replies",
+      "filters": "Filters",
+      "user": "User",
+      "type": "Type",
       "status": "Status"
     },
     "state": {
@@ -803,7 +803,7 @@
       "applyTitle": "Apply crop?",
       "applyMessage": "This action will permanently crop all selected pages selected. It cannot be undone.",
       "cancelTitle": "Cancel crop?",
-      "cancelMessage": "Are you sure you want to cancel cropping all selected pages?" 
+      "cancelMessage": "Are you sure you want to cancel cropping all selected pages?"
     }
   },
   "redactionPanel": {

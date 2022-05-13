@@ -283,6 +283,12 @@ export const setPageManipulationOverlayItems = items => ({
     items,
   },
 });
+export const setThumbnailControlMenuItems = items => ({
+  type: 'SET_THUMBNAIL_CONTROL_MENU_ITEMS',
+  payload: {
+    items,
+  },
+});
 export const setTabManager = TabManager => ({
   type: 'SET_TAB_MANAGER',
   payload: { TabManager },
@@ -477,4 +483,9 @@ export const triggerResetAudioPlaybackPosition = shouldResetAudioPlaybackPositio
 export const setActiveSoundAnnotation = activeSoundAnnotation => ({
   type: 'SET_ACTIVE_SOUND_ANNOTATION',
   payload: { activeSoundAnnotation },
+});
+
+export const setAnnotationFilters = annotationFilters => ({
+  type: 'SET_ANNOTATION_FILTERS',
+  payload: { annotationFilters }
 });

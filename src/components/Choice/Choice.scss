@@ -1,9 +1,40 @@
-@import '../../constants/styles.scss';
-
 .ui__choice__input__icon {
   top: -6px !important;
 }
 
 .ui__icon {
   align-items: baseline !important;
+}
+
+.ui__choice__input--switch {
+  .ui__choice__input__switch {
+    height: 14px !important;
+    border-radius: 24px !important;
+    background-color: #E7EBEE !important;
+    border: none !important;
+
+    &.ui__choice__input__switch--disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    &.ui__choice__input__switch--checked {
+      background-color: #3183C8 !important;
+
+      .ui__choice__input__toggle {
+        left: 12px !important;
+      }
+    }
+
+    .ui__choice__input__toggle {
+      height: 10px !important;
+      width: 10px !important;
+      background-color: #FFFFFF !important;
+      left: 2px !important;
+    }
+  }
+
+  input:disabled {
+    cursor: not-allowed !important;
+  }
 }
