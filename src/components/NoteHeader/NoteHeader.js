@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
-import core from 'core';
+import getAnnotationReference from 'src/helpers/getAnnotationReference';
 
 import './NoteHeader.scss';
 import Tooltip from '../Tooltip';
@@ -53,6 +53,8 @@ function NoteHeader(props) {
     isEditing,
     noteIndex,
     sortStrategy,
+    // CUSTOM WISEFLOW
+    renderAnnotationReference,
   } = props;
 
   const [t] = useTranslation();
@@ -62,7 +64,6 @@ function NoteHeader(props) {
     (notesShowLastUpdatedDate && sortStrategy !== NotesPanelSortStrategy.CREATED_DATE)
       ? getLatestActivityDate(annotation)
       : annotation.DateCreated;
-  const numberOfReplies = annotation.getReplies().length;
   const color = annotation[iconColor]?.toHexString?.();
   const fillColor = getColor(annotation.FillColor);
 
@@ -71,37 +72,14 @@ function NoteHeader(props) {
 
   const pageNumber = annotation.getPageNumber();
 
-  // CUSTOM WISEFLOW: filter by page and sort by Y to get position index + 1
-  const getAnnotationNumber = useCallback(annotationList => {
-    return (
-      annotationList
-        ?.filter(annot => annot.getPageNumber() === annotation.getPageNumber())
-        ?.sort((a, b) => a.getY() - b.getY())
-        ?.findIndex(annot => annot.Id === annotation.Id) + 1
-    );
-  }, []);
-
-  // CUSTOM WISEFLOW: Get all annotations, Using same filter as PDFtron uses for notes panel
-  const annotationList = useMemo(() => {
-    return core
-      .getAnnotationsList()
-      .filter(
-        annot =>
-          annot.Listable &&
-          !annot.isReply() &&
-          !annot.Hidden &&
-          !annot.isGrouped() &&
-          annot.ToolName !== window.Core.Tools.ToolNames.CROP &&
-          !annot.isContentEditPlaceholder(),
-      );
-  }, [core.getAnnotationsList().length]);
-
-  // CUSTOM WISEFLOW: Set annotation number
-  const annotNumber = getAnnotationNumber(annotationList);
+  // CUSTOM WISEFLOW: get hash of the annotation information
+  const annotationReference = useMemo(() => {
+    return getAnnotationReference(annotation);
+  }, [annotation, pageNumber]);
 
   const handleCopyAnnotId = e => {
     e.stopPropagation();
-    navigator.clipboard.writeText(`${pageNumber}-${annotNumber}`);
+    navigator.clipboard.writeText(annotationReference);
     setCopyTooltip(t('action.copied'));
     setTimeout(() => {
       setCopyTooltip(t('action.copyText'));
@@ -127,7 +105,7 @@ function NoteHeader(props) {
             </div>
             <div className="annotId">
               <span>
-                {t('annotation.reference')}: {pageNumber}-{annotNumber}
+                {t('annotation.reference')}: {renderAnnotationReference(annotation)}
               </span>
               <Tooltip content={copyTooltip}>
                 <div role="button" onClick={handleCopyAnnotId} className={'copy-reference-button'}>
