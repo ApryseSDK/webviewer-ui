@@ -6735,9 +6735,9 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-extract-zip@1.6.7, "extract-zip@git+https://github.com/lbittner-pdftron/extract-zip.git":
+extract-zip@1.6.7, "extract-zip@https://github.com/lbittner-pdftron/extract-zip.git":
   version "1.6.7"
-  resolved "git+https://github.com/lbittner-pdftron/extract-zip.git#011ceb901187b90887eac0ee24ef6a8a0cd1b6a9"
+  resolved "https://github.com/lbittner-pdftron/extract-zip.git#011ceb901187b90887eac0ee24ef6a8a0cd1b6a9"
   dependencies:
     concat-stream "1.6.2"
     debug "2.6.9"
