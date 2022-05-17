@@ -41,7 +41,14 @@ const getStore = (num) => {
         }
       },
       customElementOverrides: {},
-      tab: {}
+      tab: {},
+      annotationFilters: {
+        includeReplies: true,
+        authorFilter: [],
+        colorFilter: [],
+        typeFilter: [],
+        statusFilter: []
+      },
     }
   };
 
