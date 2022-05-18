@@ -42,6 +42,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'toolbarGroup-Measure',
         'measurementOverlay',
         'distanceToolGroupButton',
+        'arcMeasurementToolGroupButton',
         'perimeterToolGroupButton',
         'areaToolGroupButton',
         'rectangleAreaToolGroupButton',
@@ -114,7 +115,12 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
       },
     },
     [Feature.Redaction]: {
-      dataElements: ['redactionToolGroupButton', 'redactionPanel', 'redactionPanelToggle', 'pageRedactionToolGroupButton'],
+      dataElements: [
+        'redactionToolGroupButton',
+        'redactionPanel',
+        'redactionPanelToggle',
+        'pageRedactionToolGroupButton',
+      ],
       fn: () => {
         if (enable && !core.isFullPDFEnabled()) {
           console.warn('Full api is not enabled, applying redactions is disabled');
@@ -279,7 +285,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
   }
 
   features.forEach(feature => {
-    const { dataElements = [], fn = () => { } } = map[feature];
+    const { dataElements = [], fn = () => {} } = map[feature];
 
     if (enable) {
       store.dispatch(actions.enableElements(dataElements, priority));

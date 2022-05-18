@@ -99,6 +99,9 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateArcMeasurement2 = new window.Core.Tools.ArcMeasurementCreateTool(docViewer, ToolNames.ARC_MEASUREMENT2);
   toolModeMap.AnnotationCreateArcMeasurement3 = new window.Core.Tools.ArcMeasurementCreateTool(docViewer, ToolNames.ARC_MEASUREMENT3);
   toolModeMap.AnnotationCreateArcMeasurement4 = new window.Core.Tools.ArcMeasurementCreateTool(docViewer, ToolNames.ARC_MEASUREMENT4);
+  toolModeMap.AnnotationCreateArc2 = new window.Core.Tools.ArcCreateTool(docViewer, ToolNames.ARC2);
+  toolModeMap.AnnotationCreateArc3 = new window.Core.Tools.ArcCreateTool(docViewer, ToolNames.ARC3);
+  toolModeMap.AnnotationCreateArc4 = new window.Core.Tools.ArcCreateTool(docViewer, ToolNames.ARC4);
   toolModeMap[ToolNames.REDACTION2] = new window.Core.Tools.RedactionCreateTool(docViewer, ToolNames.REDACTION2);
   toolModeMap[ToolNames.REDACTION3] = new window.Core.Tools.RedactionCreateTool(docViewer, ToolNames.REDACTION3);
   toolModeMap[ToolNames.REDACTION4] = new window.Core.Tools.RedactionCreateTool(docViewer, ToolNames.REDACTION4);

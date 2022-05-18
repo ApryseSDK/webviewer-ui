@@ -385,6 +385,20 @@ const map = {
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.EllipseAnnotation,
   },
+  arc: {
+    icon: 'icon-tool-arc',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: [
+      'AnnotationCreateArc',
+      'AnnotationCreateArc2',
+      'AnnotationCreateArc3',
+      'AnnotationCreateArc4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.ArcAnnotation
+  },
   polyline: {
     icon: 'icon-tool-shape-polyline',
     iconColor: 'StrokeColor',
