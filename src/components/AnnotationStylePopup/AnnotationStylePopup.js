@@ -54,7 +54,6 @@ class AnnotationStylePopup extends React.Component {
 
   handleRichTextStyleChange = (property, value) => {
     const { annotation } = this.props;
-    const curr = annotation.getRichTextStyle();
 
     core.updateAnnotationRichTextStyle(annotation, { [property]: value });
   }

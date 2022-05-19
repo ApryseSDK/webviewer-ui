@@ -6,27 +6,27 @@ import Button from "components/Button";
 
 const TextStylePicker = ({ onPropertyChange, properties, onRichTextStyleChange, isRedaction, fonts }) => {
   // List is not complete
-  const supportedFonts = fonts?.length ? fonts: ["Helvitica", "Times New Roman"];
+  const supportedFonts = fonts?.length ? fonts: ['Helvitica', 'Times New Roman'];
 
   const font = properties?.Font || supportedFonts[0];
   const changeFont = font => {
-    onPropertyChange("Font", font);
+    onPropertyChange('Font', font);
   };
 
   const fontSize = properties?.FontSize || "12pt";
   const changeFontSize = fontSize => {
-    onPropertyChange("FontSize", fontSize);
+    onPropertyChange('FontSize', fontSize);
   };
 
   const [bold, setBold] = useState(properties?.bold || false);
   const toggleBold = () => {
-    onRichTextStyleChange("fontWeight", !bold ? "bold" : "");
+    onRichTextStyleChange('font-weight', !bold ? 'bold' : '');
     setBold(!bold);
   };
 
   const [italic, setItalic] = useState(properties?.italic || false);
   const toggleItalic = () => {
-    onRichTextStyleChange("fontStyle", !italic ? "italic" : "");
+    onRichTextStyleChange('font-style', !italic ? 'italic' : '');
     setItalic(!italic);
   };
 
@@ -35,30 +35,30 @@ const TextStylePicker = ({ onPropertyChange, properties, onRichTextStyleChange, 
   const toggleUnderline = () => {
     const newUnderline = !underline;
     if (newUnderline) {
-      onRichTextStyleChange("underline", true);
+      onRichTextStyleChange('underline', true);
     } else {
-      onRichTextStyleChange("underline", false);
+      onRichTextStyleChange('underline', false);
     }
     setUnderline(newUnderline);
   };
   const toggleStrikeout = () => {
     const newStrikeout = !strikeout;
     if (newStrikeout) {
-      onRichTextStyleChange("lineThrough", true);
+      onRichTextStyleChange('line-through', true);
     } else {
-      onRichTextStyleChange("lineThrough", false);
+      onRichTextStyleChange('line-through', false);
     }
     setStrikeout(newStrikeout);
   };
 
-  const textAlign = properties?.TextAlign || "left";
+  const textAlign = properties?.TextAlign || 'left';
   const changeXAlign = xAlign => {
-    onPropertyChange("TextAlign", xAlign);
+    onPropertyChange('TextAlign', xAlign);
   };
 
-  const textVerticalAlign = properties?.TextVerticalAlign || "top";
+  const textVerticalAlign = properties?.TextVerticalAlign || 'top';
   const changeYAlign = yAlign => {
-    onPropertyChange("TextVerticalAlign", yAlign);
+    onPropertyChange('TextVerticalAlign', yAlign);
   };
 
   const fontSizeProps = fontSize?.match(/([0-9.]+)|([a-z]+)/gi);
