@@ -286,9 +286,10 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
       }
 
       const highlightSearchResult = highlightSearchInput(text, searchInput);
+      const shouldCollapseAnnotationText = !isReply && canCollapseTextPreview;
       // If we have a search result do not use text
       // preview but instead show the entire text
-      if (isString(highlightSearchResult)) {
+      if (isString(highlightSearchResult) && shouldCollapseAnnotationText) {
         return (
           <div className='selected-text-preview'>
             <NoteTextPreview linesToBreak={3}>

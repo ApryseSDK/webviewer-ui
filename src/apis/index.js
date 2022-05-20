@@ -172,7 +172,14 @@ import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHan
 import overrideSearchExecution from './overrideSearchExecution';
 import reactElements from './reactElements';
 import { addTrustedCertificates, loadTrustList } from './verificationOptions';
-import { enableTextCollapse, disableTextCollapse, enableReplyCollapse, disableReplyCollapse } from './notesPanel';
+import {
+  enableTextCollapse,
+  disableTextCollapse,
+  enableReplyCollapse,
+  disableReplyCollapse,
+  disableAutoExpandCommentThread,
+  enableAutoExpandCommentThread,
+} from './notesPanel';
 import { enableMultiselect, disableMultiselect, selectPages, unselectPages, getSelectedPageNumbers, } from './thumbnailsPanel';
 import toggleReaderMode from './toggleReaderMode';
 import toggleElementVisibility from './toggleElementVisibility';
@@ -190,6 +197,7 @@ import enableDesktopOnlyMode from './enableDesktopOnlyMode';
 import disableDesktopOnlyMode from './disableDesktopOnlyMode';
 import isInDesktopOnlyMode from './isInDesktopOnlyMode';
 import pageManipulationOverlay from './pageManipulationOverlay';
+import thumbnailControlMenu from './thumbnailControlMenu';
 import getWatermarkModalOptions from './getWatermarkModalOptions';
 import enableNoteSubmissionWithEnter from './enableNoteSubmissionWithEnter';
 import willUseEmbeddedPrinting from 'src/apis/willUseEmbeddedPrinting';
@@ -257,6 +265,7 @@ export default store => {
     loadDocument: loadDocument(store),
     settingsMenuOverlay: settingsMenuOverlay(store),
     pageManipulationOverlay: pageManipulationOverlay(store),
+    thumbnailControlMenu: thumbnailControlMenu(store),
     openElements: openElements(store),
     print: print(store),
     printInBackground: printInBackground(store),
@@ -335,6 +344,8 @@ export default store => {
       disableTextCollapse: disableTextCollapse(store),
       enableReplyCollapse: enableReplyCollapse(store),
       disableReplyCollapse: disableReplyCollapse(store),
+      disableAutoExpandCommentThread: disableAutoExpandCommentThread(store),
+      enableAutoExpandCommentThread: enableAutoExpandCommentThread(store),
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0

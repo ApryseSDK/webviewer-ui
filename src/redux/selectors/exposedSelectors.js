@@ -177,6 +177,10 @@ export const isNotesPanelRepliesCollapsingEnabled = state => {
   return state.viewer.isNotesPanelRepliesCollapsingEnabled;
 };
 
+export const isCommentThreadExpansionEnabled = state => {
+  return state.viewer.isCommentThreadExpansionEnabled;
+};
+
 export const getActiveToolNamesForActiveToolGroup = state => {
   const { activeToolGroup } = state.viewer;
   const toolButtonObjects = getToolButtonObjects(state);

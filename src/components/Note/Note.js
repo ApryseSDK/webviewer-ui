@@ -39,11 +39,13 @@ const Note = ({
     noteTransformFunction,
     customNoteSelectionFunction,
     unreadAnnotationIdSet,
+    shouldExpandCommentThread,
   ] = useSelector(
     state => [
       selectors.getNoteTransformFunction(state),
       selectors.getCustomNoteSelectionFunction(state),
       selectors.getUnreadAnnotationIdSet(state),
+      selectors.isCommentThreadExpansionEnabled(state),
     ],
     shallowEqual,
   );
@@ -234,7 +236,7 @@ const Note = ({
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
       />
-      {(isSelected || isExpandedFromSearch) && (
+      {(isSelected || isExpandedFromSearch || shouldExpandCommentThread) && (
         <React.Fragment>
           {replies.length > 0 && (
             <div className={repliesClass}>

@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef, useContext, useReducer } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
 import NoteContext from 'components/Note/Context';
 import NoteTextarea from 'components/NoteTextarea';
 import classNames from 'classnames';
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
+import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -78,17 +78,19 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       }, 0);
     }
     if (textareaRef && textareaRef.current) {
-      const textLength = textareaRef.current.value.length;
-      textareaRef.current.setSelectionRange(textLength, textLength);
+      const editor = textareaRef.current.getEditor();
+      const textLength = editor.getText().length;
+      textareaRef.current.editor.setSelection(textLength, textLength);
     }
   }, []);
 
   const postReply = e => {
     // prevent the textarea from blurring out
     e.preventDefault();
-    const replyText = pendingReplyMap[annotation.Id];
+    const editor = textareaRef.current.getEditor();
+    const replyText = editor.getText()
 
-    if (!replyText) {
+    if (!replyText.trim()) {
       return;
     }
 
@@ -103,13 +105,16 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         }));
         core.setNoteContents(annotation, plainTextValue);
       } else {
-        mentionsManager.createMentionReply(annotation, replyText);
+        const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
+        setAnnotationRichTextStyle(editor, replyAnnotation);
       }
     } else {
       if (annotationHasNoContents && isContentEditable) {
         core.setNoteContents(annotation, replyText);
+        setAnnotationRichTextStyle(editor, annotation);
       } else {
-        core.createAnnotationReply(annotation, replyText);
+        const replyAnnotation = core.createAnnotationReply(annotation, replyText);
+        setAnnotationRichTextStyle(editor, replyAnnotation);
       }
     }
 
@@ -130,7 +135,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     setPendingReply(value, annotation.Id);
     onPendingReplyChange();
   };
-  return ifReplyNotAllowed ? null : (
+  return ifReplyNotAllowed || !isSelected ? null : (
     <form onSubmit={postReply} className='reply-area-container'>
       <div
         className={replyAreaClass}

@@ -564,6 +564,11 @@ export const setNotesPanelRepliesCollapsing = enableNotesPanelRepliesCollapsing 
   payload: { enableNotesPanelRepliesCollapsing },
 });
 
+export const setCommentThreadExpansion = enableCommentThreadExpansion => ({
+  type: 'SET_COMMENT_THREAD_EXPANSION',
+  payload: { enableCommentThreadExpansion },
+});
+
 export const enableFadePageNavigationComponent = () => ({
   type: 'SET_FADE_PAGE_NAVIGATION_COMPONENT',
   payload: { fadePageNavigationComponent: true },

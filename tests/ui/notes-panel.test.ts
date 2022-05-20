@@ -1,3 +1,4 @@
+import { Frame } from 'puppeteer';
 import { loadViewerSample } from '../../utils';
 
 it('getSelectedThumbnailPageNumbers should return even if there is only one thumbnail selected', async() => {
@@ -53,3 +54,41 @@ it('black sticky annotation in dark mode should invert colors', async () => {
     customSnapshotIdentifier: 'annotations-in-dark-mode-test',
   });
 });
+
+it('should have the Notes replies expanded after called the API to enable the expansion of the comments thread', async () => {
+  const { iframe, waitForInstance, waitForWVEvent } = await loadViewerSample(
+    'viewing/viewing',
+  );
+  const instance = await waitForInstance();
+  await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
+  await waitForWVEvent('annotationsLoaded');
+
+  await (iframe as Frame).evaluate(async () => {
+    window.instance.UI.NotesPanel.enableAutoExpandCommentThread();
+  });
+
+  await instance('openElements', ['notesPanel']);
+
+  let firstAnnotationReply = await (iframe as Frame).evaluate(async () => {
+    return String(document.querySelectorAll('.Note')[0]
+    .getElementsByClassName('replies')[0]
+    .getElementsByClassName('reply')[0]
+    .getElementsByClassName('preview-comment')[0].innerHTML);
+  });
+
+  expect(firstAnnotationReply).toBe(' Sed sed fermentum diam ');
+
+  await instance('closeElements', ['notesPanel']);
+
+  await (iframe as Frame).evaluate(async () => {
+    window.instance.UI.NotesPanel.disableAutoExpandCommentThread();
+  });
+
+  await instance('openElements', ['notesPanel']);
+
+  firstAnnotationReply = await (iframe as Frame).evaluate(async () => {
+    return String(document.querySelectorAll('.Note')[0].getElementsByClassName('replies')[0]);
+  });
+
+  expect(firstAnnotationReply).toBe('undefined');
+})
