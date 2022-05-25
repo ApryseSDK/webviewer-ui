@@ -205,37 +205,46 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
 
         const signed = await digitalSigField.hasCryptographicSignature();
         if (signed) {
-          const signerCert = await digitalSigField.getSignerCertFromCMS();
-          /**
-           * @note "Issuer" refers to the Certificate Authority that issued the
-           * certificate
-           * "Subject" refers to the organization/person that the Certificate
-           * Auhority issued this certificate to
-           *
-           * It is likely that future UI iterations will leverage Issuer
-           * information, so the code has been commented out for now, but will
-           * be uncommented in future feature implementations
-           */
-          // const retrievedIssuerField = await signerCert.getIssuerField();
-          // const processedIssuerField = await processX501DistinguishedName(retrievedIssuerField) || {};
-          const retrievedSubjectField = await signerCert.getSubjectField();
-          const processedSubjectField = await processX501DistinguishedName(retrievedSubjectField) || {};
-          signer = (
-            processedSubjectField['e_commonName']
-            || await digitalSigField.getSignatureName()
-            || await digitalSigField.getContactInfo()
-          );
-          signTime = await digitalSigField.getSigningTime();
-
-          if (await signTime.isValid()) {
-            signTime = formatPDFNetDate(signTime);
-          } else {
-            signTime = null;
+          const subFilter = await digitalSigField.getSubFilter();
+          if (subFilter === PDFNet.DigitalSignatureField.SubFilterType.e_adbe_pkcs7_detached) {
+            const signerCert = await digitalSigField.getSignerCertFromCMS();
+            /**
+             * @note "Issuer" refers to the Certificate Authority that issued the
+             * certificate
+             * "Subject" refers to the organization/person that the Certificate
+             * Auhority issued this certificate to
+             *
+             * It is likely that future UI iterations will leverage Issuer
+             * information, so the code has been commented out for now, but will
+             * be uncommented in future feature implementations
+             */
+            // const retrievedIssuerField = await signerCert.getIssuerField();
+            // const processedIssuerField = await processX501DistinguishedName(retrievedIssuerField) || {};
+            const retrievedSubjectField = await signerCert.getSubjectField();
+            const processedSubjectField = await processX501DistinguishedName(retrievedSubjectField) || {};
+            signer = processedSubjectField['e_commonName'];
           }
+          // Getter functions cannot be called on Digital Signature fields using
+          // e_ETSI_RFC3161
+          if (subFilter !== PDFNet.DigitalSignatureField.SubFilterType.e_ETSI_RFC3161) {
+            if (!signer) {
+              signer = (
+                await digitalSigField.getSignatureName()
+                || await digitalSigField.getContactInfo()
+              );
+            }
+            signTime = await digitalSigField.getSigningTime();
 
-          contactInfo = await digitalSigField.getContactInfo();
-          location = await digitalSigField.getLocation();
-          reason = await digitalSigField.getReason();
+            if (await signTime.isValid()) {
+              signTime = formatPDFNetDate(signTime);
+            } else {
+              signTime = null;
+            }
+
+            contactInfo = await digitalSigField.getContactInfo();
+            location = await digitalSigField.getLocation();
+            reason = await digitalSigField.getReason();
+          }
 
           documentPermission = await digitalSigField.getDocumentPermissions();
           isCertification = await digitalSigField.isCertification();
