@@ -55,6 +55,79 @@ it('black sticky annotation in dark mode should invert colors', async () => {
   });
 });
 
+it('note panel should use correct icons', async () => {
+  const { iframe, waitForInstance, waitForWVEvent } = await loadViewerSample(
+    'annotation/custom-annotations',
+  );
+
+  const instance = await waitForInstance();
+  await instance('disableElements', ['pageNavOverlay']);
+  await instance('loadDocument', '/test-files/blank.pdf');
+  await waitForWVEvent('annotationsLoaded');
+  await instance('openElements', ['notesPanel']);
+
+  await page.click('#custom-triangle-tool');
+  await page.click('#custom-stamp');
+
+  // annotations don't get the correct ToolName when WV open files or import XFDF
+  // so creating new annotations using tools
+  const pageContainer = await iframe.$('#pageContainer1');
+  const { x, y } = await pageContainer.boundingBox();
+
+  // add stamp
+  await page.mouse.click(x + 200, y + 200);
+
+  // add triangle
+  await iframe.click('[data-element="triangleToolButton"]');
+  await page.mouse.move(x + 200, y + 250);
+  await page.mouse.down();
+  await page.mouse.move(x + 300, y + 250);
+
+  await page.mouse.move(x + 300, y + 300);
+  await page.mouse.up();
+
+  await instance('setToolMode', 'AnnotationCreateRubberStamp');
+
+  await page.mouse.move(x + 350, y + 350);
+  await page.mouse.down();
+  await page.mouse.up();
+
+  await iframe.evaluate(async () => {
+    const annotationManager = window.instance.Core.documentViewer.getAnnotationManager();
+    const stampAnnot = new window.instance.Annotations.StampAnnotation();
+    stampAnnot.PageNumber = 1;
+    stampAnnot.X = 100;
+    stampAnnot.Y = 450;
+    stampAnnot.Width = 275;
+    stampAnnot.Height = 40;
+    const keepAsSVG = false;
+    stampAnnot.setImageData('data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==', keepAsSVG);
+    stampAnnot.Author = annotationManager.getCurrentUser();
+
+    annotationManager.addAnnotation(stampAnnot);
+    annotationManager.redrawAnnotation(stampAnnot);
+    window.instance.Core.documentViewer.getAnnotationManager().deselectAllAnnotations();
+  });
+
+  await page.waitFor(2000);
+  await iframe.click('.cancel-button');
+
+  // hide date time so it doesn't fail constantly
+  await iframe.evaluate(async () => {
+    const nodes = document.querySelectorAll('.date-and-time');
+    for (const node of nodes) {
+      node.style.opacity = 0;
+    }
+  });
+
+  await page.waitFor(2000);
+
+  const app = await iframe.$('.NotesPanel');
+  expect(await app.screenshot()).toMatchImageSnapshot({
+    customSnapshotIdentifier: 'note-panel-icons',
+  });
+});
+
 it('should have the Notes replies expanded after called the API to enable the expansion of the comments thread', async () => {
   const { iframe, waitForInstance, waitForWVEvent } = await loadViewerSample(
     'viewing/viewing',
@@ -91,4 +164,4 @@ it('should have the Notes replies expanded after called the API to enable the ex
   });
 
   expect(firstAnnotationReply).toBe('undefined');
-})
+});

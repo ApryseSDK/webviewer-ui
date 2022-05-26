@@ -427,19 +427,6 @@ const map = {
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.StickyAnnotation,
   },
-  stamp: {
-    icon: 'icon-tool-stamp-line',
-    iconColor: null,
-    currentPalette: null,
-    availablePalettes: [],
-    toolNames: [
-      'AnnotationCreateStamp',
-    ],
-    annotationCheck: annotation => {
-      return annotation instanceof window.Annotations.StampAnnotation &&
-      annotation.ToolName === 'AnnotationCreateRubberStamp';
-    },
-  },
   image: {
     icon: 'icon-tool-image-line',
     iconColor: null,
@@ -450,7 +437,19 @@ const map = {
     ],
     annotationCheck: annotation => {
       return annotation instanceof window.Annotations.StampAnnotation &&
-      annotation.ToolName !== 'AnnotationCreateRubberStamp';
+      annotation.ToolName === 'AnnotationCreateStamp';
+    },
+  },
+  stamp: {
+    icon: 'icon-tool-stamp-line',
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: [
+      'AnnotationCreateStamp',
+    ],
+    annotationCheck: annotation => {
+      return annotation instanceof window.Annotations.StampAnnotation;
     },
   },
   edit: {
