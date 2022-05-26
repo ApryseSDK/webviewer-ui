@@ -74,7 +74,6 @@ class MeasurementOption extends React.Component {
       currScaleTo: props.scale[1][0],
       currUnitTo: props.scale[1][1],
       currPrecision: props.precision,
-      isEditing: false,
       documentType: core.getDocument()?.getType(),
     };
   }
@@ -146,7 +145,7 @@ class MeasurementOption extends React.Component {
     }
 
     const enableSnapping = event.target.checked;
-    const mode = enableSnapping ? window.documentViewer.SnapMode.e_DefaultSnapMode : null;
+    const mode = enableSnapping ? window.documentViewer.SnapMode.e_DefaultSnapMode | window.documentViewer.SnapMode.POINT_ON_LINE : null;
     const measurementTools = getMeasurementTools();
 
     measurementTools.forEach(tool => {
@@ -181,10 +180,6 @@ class MeasurementOption extends React.Component {
     return value;
   };
 
-  toggleEditing = () => {
-    this.setState(state => ({ isEditing: !state.isEditing }));
-  };
-
   renderScaleInput = (type, val) => {
     // There is a bug with Firefox 69 where after onFocus, it calls onBlur right away. Remove after the issue resolved.
     if (isFirefox) {
@@ -198,21 +193,17 @@ class MeasurementOption extends React.Component {
         />
       );
     }
-    if (this.state.isEditing) {
-      return (
-        <input
-          className="ScaleInput"
-          type="number"
-          step="any"
-          value={val}
-          onChange={e => this.onScaleChange(e.target.value, type)}
-          onBlur={this.toggleEditing}
-        />
-      );
-    }
+
     return (
-      <input className="ScaleInput" type="text" value={this.formatValue(val)} onFocus={this.toggleEditing} readOnly />
-    );
+      <input
+        type="number"
+        inputMode="decimal"
+        step="any"
+        className="ScaleInput" 
+        onChange={e => this.onScaleChange(e.target.value, type)}
+        value={this.formatValue(val)}
+      /> 
+    )
   };
 
   render() {
