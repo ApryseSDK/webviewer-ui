@@ -26,6 +26,10 @@ export default {
   }
 };
 
+// Mock some state to show the style popups
+initialState.viewer.openElements.stylePopupTextStyleContainer = true;
+initialState.viewer.openElements.stylePopupColorsContainer = true;
+
 const reducer = combineReducers({
   viewer: viewerReducer(initialState.viewer),
 });
@@ -34,23 +38,22 @@ const store = createStore(reducer);
 const BasicTemplate = (args) => {
   return (
     <ReduxProvider store={store}>
-      <div id='app'>
-        <AnnotationStylePopup {...args} />
-      </div>
+      <AnnotationStylePopup {...args} />
     </ReduxProvider>
   );
 };
 
 // using line annotation as "basic" test because it's has one of the most simple UI for
-const lineAnnot = new window.Core.Annotations.LineAnnotation();
+const lineAnnot = new window.Annotations.LineAnnotation();
+
 export const Basic = BasicTemplate.bind({});
 Basic.args = {
-	annotation: lineAnnot,
-	style: getAnnotationStyles(lineAnnot),
-	closeElement: () => {},
+  annotation: lineAnnot,
+  style: getAnnotationStyles(lineAnnot),
+  closeElement: () => { },
 };
 
-const distanceMeasurementAnnot = new window.Core.Annotations.LineAnnotation();
+const distanceMeasurementAnnot = new window.Annotations.LineAnnotation();
 distanceMeasurementAnnot['Measure'] = {
   'scale': '1 in = 1 in',
   'axis': [
@@ -93,33 +96,38 @@ distanceMeasurementAnnot['Measure'] = {
     },
   ],
 };
+
+const noop = () => {};
 distanceMeasurementAnnot['IT'] = 'LineDimension';
 distanceMeasurementAnnot['DisplayUnits'] = ['in'];
-distanceMeasurementAnnot['Scale'] = [[1, 'in'],[1, 'in']];
+distanceMeasurementAnnot['Scale'] = [[1, 'in'], [1, 'in']];
 distanceMeasurementAnnot['Precision'] = 0.01;
+distanceMeasurementAnnot['ToolName'] = 'AnnotationCreateDistanceMeasurement';
+distanceMeasurementAnnot['setStartStyle'] = noop;
+distanceMeasurementAnnot['setEndStyle'] = noop;
 
 export const DistanceMeasurement = BasicTemplate.bind({});
 DistanceMeasurement.args = {
-	annotation: distanceMeasurementAnnot,
-	style: getAnnotationStyles(distanceMeasurementAnnot),
-	closeElement: () => {},
+  annotation: distanceMeasurementAnnot,
+  style: getAnnotationStyles(distanceMeasurementAnnot),
+  closeElement: () => { },
 };
 
-const freeTextAnnot = new window.Core.Annotations.FreeTextAnnotation();
+const freeTextAnnot = new window.Annotations.FreeTextAnnotation();
 export const FreeText = BasicTemplate.bind({});
 FreeText.args = {
-	annotation: freeTextAnnot,
-	style: getAnnotationStyles(freeTextAnnot),
-	closeElement: () => {},
+  annotation: freeTextAnnot,
+  style: getAnnotationStyles(freeTextAnnot),
+  closeElement: () => { },
 };
 
-const widgetPlaceHolderAnnot = new window.Core.Annotations.RectangleAnnotation();
-widgetPlaceHolderAnnot.setCustomData('trn-form-field-type', 'TextFormField');
-widgetPlaceHolderAnnot
+const widgetPlaceHolderAnnot = new window.Annotations.RectangleAnnotation();
+widgetPlaceHolderAnnot.isFormFieldPlaceholder = () => true;
+widgetPlaceHolderAnnot.getCustomData = () => 'TextFormField';
 
 export const WidgetPlaceHolder = BasicTemplate.bind({});
 WidgetPlaceHolder.args = {
-	annotation: widgetPlaceHolderAnnot,
-	style: getAnnotationStyles(widgetPlaceHolderAnnot),
-	closeElement: () => {},
+  annotation: widgetPlaceHolderAnnot,
+  style: getAnnotationStyles(widgetPlaceHolderAnnot),
+  closeElement: () => { },
 };

@@ -90,6 +90,7 @@ const map = {
       'AnnotationCreateDistanceMeasurement3',
       'AnnotationCreateDistanceMeasurement4',
     ],
+    hasLineEndings: true,
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.LineAnnotation &&
       annotation.IT === 'LineDimension' &&
@@ -106,6 +107,7 @@ const map = {
       'AnnotationCreatePerimeterMeasurement3',
       'AnnotationCreatePerimeterMeasurement4',
     ],
+    hasLineEndings: true,
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolylineAnnotation &&
       annotation.IT === 'PolyLineDimension' &&
@@ -235,6 +237,7 @@ const map = {
       'AnnotationCreateLine3',
       'AnnotationCreateLine4',
     ],
+    hasLineEndings: true,
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.LineAnnotation &&
       annotation.getStartStyle() === 'None' &&
@@ -251,6 +254,7 @@ const map = {
       'AnnotationCreateArrow3',
       'AnnotationCreateArrow4',
     ],
+    hasLineEndings: true,
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.LineAnnotation &&
       (annotation.getStartStyle() !== 'None' ||
@@ -410,6 +414,7 @@ const map = {
       'AnnotationCreatePolyline3',
       'AnnotationCreatePolyline4',
     ],
+    hasLineEndings: true,
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolylineAnnotation,
   },

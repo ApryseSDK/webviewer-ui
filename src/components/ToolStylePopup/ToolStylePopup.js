@@ -18,6 +18,7 @@ import HorizontalDivider from 'components/HorizontalDivider';
 import RubberStampStylePopup from 'components/RubberStampOverlay';
 
 import './ToolStylePopup.scss';
+import getToolStyles from 'helpers/getToolStyles';
 
 class ToolStylePopup extends React.PureComponent {
   static propTypes = {
@@ -124,15 +125,33 @@ class ToolStylePopup extends React.PureComponent {
     setToolStyles(activeToolName, "RichTextStyle", richTextStyle);
   }
 
+  handleLineStyleChange = (section, value) => {
+    const { activeToolName } = this.props;
+    if (section === 'start') {
+      setToolStyles(activeToolName, 'StartLineStyle', value);
+    } else if (section === 'end') {
+      setToolStyles(activeToolName, 'EndLineStyle', value);
+    }
+  };
+
   render() {
     const { activeToolGroup, isDisabled, activeToolName, activeToolStyle, isMobile } = this.props;
     const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     let properties = {};
     const colorMapKey = mapToolNameToKey(activeToolName);
     const isRedaction = activeToolName.includes('AnnotationCreateRedaction');
+    const showLineStyleOptions = getDataWithKey(colorMapKey).hasLineEndings;
 
     if (isDisabled) {
       return null;
+    }
+
+    if (showLineStyleOptions) {
+      const toolStyles = getToolStyles(activeToolName);
+      properties = {
+        StartLineStyle: toolStyles.StartLineStyle,
+        EndLineStyle: toolStyles.EndLineStyle
+      }
     }
 
     if (isFreeText) {
@@ -171,8 +190,10 @@ class ToolStylePopup extends React.PureComponent {
         onPropertyChange={this.handleStyleChange}
         onStyleChange={this.handleStyleChange}
         onRichTextStyleChange={this.handleRichTextStyleChange}
+        onLineStyleChange={this.handleLineStyleChange}
         properties={properties}
         isRedaction={isRedaction}
+        showLineStyleOptions={showLineStyleOptions}
       />
     );
 

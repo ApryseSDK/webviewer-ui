@@ -9,7 +9,7 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
-import { mapAnnotationToKey } from 'constants/map';
+import { getDataWithKey, mapToolNameToKey, mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isToolDefaultStyleUpdateFromAnnotationPopupEnabled } from '../../apis/toolDefaultStyleUpdateFromAnnotationPopup';
@@ -58,6 +58,25 @@ class AnnotationStylePopup extends React.Component {
     core.updateAnnotationRichTextStyle(annotation, { [property]: value });
   }
 
+  handleLineStyleChange = (section, value) => {
+    const { annotation } = this.props;
+
+    let lineStyle = '';
+    if (section === 'start') {
+      annotation.setStartStyle(value);
+      lineStyle = 'StartLineStyle';
+    } else if (section === 'end') {
+      annotation.setEndStyle(value);
+      lineStyle = 'EndLineStyle';
+    }
+
+    if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      setToolStyles(annotation.ToolName, lineStyle, value);
+    }
+
+    core.getAnnotationManager().redrawAnnotation(annotation);
+  };
+
   handleClick = e => {
     // see the comments above handleClick in ToolStylePopup.js
     if (isMobile() && e.target === e.currentTarget) {
@@ -80,9 +99,17 @@ class AnnotationStylePopup extends React.Component {
     const className = getClassName('Popup AnnotationStylePopup', this.props);
     const colorMapKey = mapAnnotationToKey(annotation);
     const isRedaction = annotation instanceof window.Annotations.RedactionAnnotation;
+    const showLineStyleOptions = getDataWithKey(mapToolNameToKey(annotation.ToolName)).hasLineEndings;
 
     if (isDisabled) {
       return null;
+    }
+
+    if (showLineStyleOptions) {
+      properties = {
+        StartLineStyle: annotation.getStartStyle(),
+        EndLineStyle: annotation.getEndStyle(),
+      }
     }
 
     if (isFreeText) {
@@ -133,6 +160,8 @@ class AnnotationStylePopup extends React.Component {
               properties={properties}
               onRichTextStyleChange={this.handleRichTextStyleChange}
               isRedaction={isRedaction}
+              showLineStyleOptions={showLineStyleOptions}
+              onLineStyleChange={this.handleLineStyleChange}
             />
           </div>
         )}

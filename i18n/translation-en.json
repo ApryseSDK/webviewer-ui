@@ -510,6 +510,9 @@
       "odd": "Odd Pages only",
       "even": "Even Pages only",
       "header": "Mark Pages Redaction"
+    },
+    "lineStyleOptions": {
+      "title": "Style"
     }
   },
   "warning": {
