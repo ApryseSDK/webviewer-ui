@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Προσθήκη",
     "apply": "Ισχύουν",
     "applyAll": "Εφαρμόστε όλα",
     "calendar": "Ημερολόγιο",
@@ -209,6 +210,7 @@
     "numResultsFound": "βρέθηκαν αποτελέσματα",
     "notSupported": "Αυτός ο τύπος αρχείου δεν υποστηρίζεται.",
     "passwordRequired": "Απαιτείται κωδικός πρόσβασης",
+    "enterPasswordPlaceholder": "Εισάγετε τον κωδικό πρόσβασης",
     "preparingToPrint": "Προετοιμασία για εκτύπωση...",
     "annotationReplyCount": "{{count}} Απάντηση",
     "annotationReplyCount_plural": "{{count}} Απαντήσεις",
@@ -243,7 +245,8 @@
     "selectFile": "Επιλέξτε αρχείο",
     "selectPageToReplace": "Επιλέξτε τις σελίδες του εγγράφου με τις οποίες θέλετε να αντικαταστήσετε.",
     "embeddedFiles": "Ενσωματωμένα Αρχεία",
-    "pageNum": "Αριθμός σελίδας"
+    "pageNum": "Αριθμός σελίδας",
+    "error": "Λάθος"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "Ολα",
       "current": "Τρέχουσα σελίδα",
       "pages": "Σελίδες προς εκτύπωση",
+      "specifyPages": "Καθορίστε Σελίδες",
       "view": "Τρέχουσα προβολή",
       "pageQuality": "Ποιότητα εκτύπωσης",
       "qualityNormal": "Κανονικός",
       "qualityHigh": "Υψηλός",
       "includeAnnotations": "Συμπεριλάβετε σχολιασμούς",
       "includeComments": "Συμπεριλάβετε σχόλια",
-      "addWatermarkSettings": "Προσθέστε υδατογράφημα"
+      "printSettings": "Ρυθμίσεις εκτύπωσης"
     },
     "printInfo": {
       "author": "Συγγραφέας",
@@ -447,12 +451,15 @@
       "enableSnapping": "Ενεργοποίηση κουμπώματος για εργαλεία μέτρησης"
     },
     "watermark": {
+      "title": "Στάθμη ύδατος",
+      "addWatermark": "Προσθέστε υδατογράφημα",
       "size": "Μέγεθος",
       "location": "Επιλέξτε μια τοποθεσία για να επεξεργαστείτε τα υδατογραφήματα",
       "text": "Κείμενο",
       "style": "Στυλ",
       "resetAllSettings": "Επαναφορά όλων των ρυθμίσεων",
       "font": "Φτιαχνω, κανω",
+      "addNew": "Προσθεσε νεο",
       "locations": {
         "center": "Κέντρο",
         "topLeft": "Πάνω αριστερά",

@@ -37,23 +37,32 @@ window.Core = {
   getHashParameter: () => false,
   SupportedFileFormats: {
     CLIENT: [],
-  }
+  },
+  FontStyles: { BOLD: 'BOLD', ITALIC: 'ITALIC', UNDERLINE: 'UNDERLINE' },
 };
+
+const DEFAULT_PAGE_HEIGHT = 792;
+const DEFAULT_PAGE_WIDTH = 612;
 
 window.documentViewer = {
   doc: {},
   getDocument: () => ({
     getPageInfo: () => ({
-      width: 612,
-      height: 792
+      width: DEFAULT_PAGE_HEIGHT,
+      height: DEFAULT_PAGE_WIDTH
     }),
     getType: () => 'PDF',
+    loadCanvas: noop,
+
   }),
   getPageCount: () => 9,
   getAnnotationManager: () => mockAnnotationManager,
   getAnnotationHistoryManager: () => ({}),
   getRotation: () => 0,
   clearSearchResults: noop,
+  setWatermark: noop,
+  getPageHeight: () => DEFAULT_PAGE_HEIGHT,
+  getPageWidth: () => DEFAULT_PAGE_WIDTH,
 };
 
 // For an example of how these mock classes are used refer to AnnotationStylePopupStories.js
@@ -118,7 +127,33 @@ window.Annotations = {
   SignatureWidgetAnnotation: MockAnnotation
 }
 
-Annotations.Color = (R = 255, G = 0, B = 0) => ({ R, G, B });
+const colorToHexString = (color) => {
+  if (typeof color === 'undefined' || color === null) {
+    return null;
+  }
+  if (color['A'] === 0) {
+    return null;
+  }
+  let r = color['R'].toString(16).toUpperCase();
+  if (r.length < 2) {
+    r = `0${r}`;
+  }
+  let g = color['G'].toString(16).toUpperCase();
+  if (g.length < 2) {
+    g = `0${g}`;
+  }
+  let b = color['B'].toString(16).toUpperCase();
+  if (b.length < 2) {
+    b = `0${b}`;
+  }
+
+  return `#${r}${g}${b}`;
+};
+
+Annotations.Color = (R = 255, G = 0, B = 0) => {
+  const toHexString = () => { return colorToHexString({ R, G, B }); };
+  return { R, G, B, toHexString };
+};
 
 export const decorators = [
   I18nDecorator,

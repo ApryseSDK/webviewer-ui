@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Добавлять",
     "apply": "Применить",
     "applyAll": "Применить все",
     "calendar": "Календарь",
@@ -209,6 +210,7 @@
     "numResultsFound": "найдены результаты",
     "notSupported": "Расширение файла не поддерживается.",
     "passwordRequired": "Пароль необходим",
+    "enterPasswordPlaceholder": "Введите пароль",
     "preparingToPrint": "Документ печатается...",
     "annotationReplyCount": "{{count}} Ответить",
     "annotationReplyCount_plural": "{{count}} Ответы",
@@ -243,7 +245,8 @@
     "selectFile": "Выберите файл",
     "selectPageToReplace": "Выберите страницы в документе, которые вы хотите заменить.",
     "embeddedFiles": "Встроенные файлы",
-    "pageNum": "Номер страницы"
+    "pageNum": "Номер страницы",
+    "error": "Ошибка"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "Все",
       "current": "Текущая страница",
       "pages": "Страницы",
+      "specifyPages": "Укажите страницы",
       "view": "Текущий вид",
       "pageQuality": "Качество печати",
       "qualityNormal": "Нормальный",
       "qualityHigh": "Высокая",
       "includeAnnotations": "Включить аннотации",
       "includeComments": "Приложить комментарии",
-      "addWatermarkSettings": "Добавить настройки водяного знака"
+      "printSettings": "Параметры печати"
     },
     "printInfo": {
       "author": "Автор",
@@ -447,12 +451,15 @@
       "enableSnapping": "Включить привязку для измерительных инструментов"
     },
     "watermark": {
+      "title": "Водяной знак",
+      "addWatermark": "Добавить водяной знак",
       "size": "Размер",
       "location": "Выберите место для редактирования водяных знаков",
       "text": "Текст",
       "style": "Стиль",
       "resetAllSettings": "Сбросить все настройки",
       "font": "шрифт",
+      "addNew": "Добавить новое",
       "locations": {
         "center": "Центр",
         "topLeft": "Верхний левый",

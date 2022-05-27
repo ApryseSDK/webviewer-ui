@@ -16,12 +16,26 @@ $modal-z-index: 100;
   align-items: center;
   background: var(--modal-negative-space);
 
+  .modal-container {
+    .wrapper {
+      .modal-content {
+        padding: 10px;
+      }
+    }
+  }
+
   .footer {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     width: 100%;
     margin-top: 13px;
+
+    &.modal-footer {
+      padding: 16px;
+      margin: 0;
+      border-top: 1px solid var(--divider);
+    }
 
     .modal-button {
       margin: 0;
@@ -55,11 +69,33 @@ $modal-z-index: 100;
         &:hover {
           background: var(--primary-button-hover);
         }
+
+        &.disabled {
+          background: var(--primary-button) !important;
+          opacity: 0.5;
+        }
       }
 
       @include mobile {
         padding: 23px 8px;
       }
+    }
+  }
+
+  .swipe-indicator {
+    background: var(--divider);
+    border-radius: 2px;
+    height: 4px;
+    width: 38px;
+    position: absolute;
+    top: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+
+    @include tablet-and-desktop {
+      display: none;
     }
   }
 }
@@ -77,5 +113,16 @@ $modal-z-index: 100;
     // need to change justify content or else we won't be able to scroll to top
     overflow: auto;
     max-height: 100%;
+  }
+}
+
+%modal-shared-container-style-mobile {
+  @include mobile {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding-top: 4px;
+    min-width: 100px;
   }
 }

@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Thêm vào",
     "apply": "Áp dụng",
     "applyAll": "Áp dụng tất cả",
     "calendar": "Lịch",
@@ -84,6 +85,9 @@
     "redactPages": "Biên tập lại các trang",
     "playAudio": "Phát âm thanh",
     "pauseAudio": "Tạm dừng âm thanh",
+    "selectAll": "Chọn tất cả",
+    "unselect": "Bỏ chọn",
+    "addMark": "Thêm dấu",
     "viewFile": "Xem tài liệu",
     "switchLanguage": "Ngôn ngữ"
   },
@@ -206,6 +210,7 @@
     "numResultsFound": "kết quả tìm thấy",
     "notSupported": "Loại tệp đó không được hỗ trợ.",
     "passwordRequired": "Yêu cầu mật khẩu",
+    "enterPasswordPlaceholder": "Nhập mật khẩu",
     "preparingToPrint": "Chuẩn bị in...",
     "annotationReplyCount": "{{count}} Trả Lời",
     "annotationReplyCount_plural": "{{count}} Trả Lời",
@@ -240,7 +245,8 @@
     "selectFile": "Chọn tệp",
     "selectPageToReplace": "Chọn các trang trong tài liệu bạn muốn thay thế.",
     "embeddedFiles": "Tệp Nhúng",
-    "pageNum": "Số Trang"
+    "pageNum": "Số Trang",
+    "error": "Lỗi"
   },
   "option": {
     "type": {
@@ -336,13 +342,14 @@
       "all": "Tất cả",
       "current": "Trang Hiện Tại",
       "pages": "Trang để in",
+      "specifyPages": "Chỉ định các trang",
       "view": "Chế Độ Xem Hiện Tại",
       "pageQuality": "Chất Lượng In",
       "qualityNormal": "Bình thường",
       "qualityHigh": "Cao",
       "includeAnnotations": "Bao gồm chú thích",
       "includeComments": "Bao gồm bình luận",
-      "addWatermarkSettings": "Thêm Hình Mờ"
+      "printSettings": "Cài đặt in"
     },
     "printInfo": {
       "author": "Tác giả",
@@ -444,12 +451,15 @@
       "enableSnapping": "Bật chụp nhanh cho các công cụ đo lường"
     },
     "watermark": {
+      "title": "Chữ ký ảnh",
+      "addWatermark": "Thêm hình mờ",
       "size": "Kích thước",
       "location": "Chọn vị trí để sửa hình mờ",
       "text": "Văn bản",
       "style": "Kiểu",
       "resetAllSettings": "Đặt Lại Tất Cả Thiết Đặt",
       "font": "Phông chữ",
+      "addNew": "Thêm mới",
       "locations": {
         "center": "Giữa",
         "topLeft": "Trên Cùng Bên Trái",
@@ -778,6 +788,22 @@
       "localCertificateError": "Có một số vấn đề với việc đọc chứng chỉ cục bộ"
     }
   },
+  "cropPopUp": {
+    "title": "Các trang cần cắt",
+    "allPages": "Tất cả",
+    "singlePage": "Trang hiện tại",
+    "cropDimensions": "Kích thước cây trồng",
+    "dimensionInput": {
+      "unitOfMeasurement": "Đơn vị",
+      "autoTrim": "Tự động cắt"
+    },
+    "cropModal": {
+      "applyTitle": "Áp dụng cây trồng?",
+      "applyMessage": "Hành động này sẽ cắt vĩnh viễn tất cả các trang đã chọn đã chọn. Nó không thể được hoàn tác.",
+      "cancelTitle": "Hủy cắt?",
+      "cancelMessage": "Bạn có chắc chắn muốn hủy việc cắt xén tất cả các trang đã chọn không?"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Bắt đầu biên tập lại bằng cách đánh dấu văn bản, vùng, trang hoặc thực hiện tìm kiếm.",
     "redactionSearchPlaceholder": "Bổ sung theo tìm kiếm từ khóa hoặc mẫu",
@@ -786,10 +812,20 @@
     "redactAllMarked": "Biên Tập Tất Cả",
     "redactionItem": {
       "regionRedaction": "Biên tập vùng",
-      "fullPageRedaction": "Biên tập toàn trang"
+      "fullPageRedaction": "Biên tập toàn trang",
+      "image": "Hình ảnh"
     },
     "expand": "Mở rộng",
-    "collapse": "Thu gọn"
+    "collapse": "Thu gọn",
+    "searchResults": "Kết quả tìm kiếm",
+    "search": {
+      "creditCards": "Thẻ tín dụng",
+      "phoneNumbers": "Số điện thoại",
+      "images": "Hình ảnh",
+      "emails": "Email",
+      "pattern": "Mẫu",
+      "start": "Bắt đầu thực hiện tìm kiếm của bạn"
+    }
   },
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"

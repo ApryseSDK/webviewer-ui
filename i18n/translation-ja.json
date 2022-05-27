@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "追加",
     "apply": "適用",
     "applyAll": "すべて適用",
     "calendar": "カレンダー",
@@ -81,9 +82,12 @@
     "select": "選択する",
     "moveToTop": "上に移動",
     "moveToBottom": "下に移動",
+    "redactPages": "ページを編集する",
     "playAudio": "オーディオを再生",
     "pauseAudio": "オーディオの一時停止",
-    "redactPages": "ページを編集する",
+    "selectAll": "すべて選択",
+    "unselect": "選択を解除",
+    "addMark": "マークを追加",
     "viewFile": "ファイルを閲覧する",
     "switchLanguage": "言語"
   },
@@ -206,6 +210,7 @@
     "numResultsFound": "結果が見つかりました",
     "notSupported": "このファイル形式はサポートされていません。",
     "passwordRequired": "パスワードが必要です",
+    "enterPasswordPlaceholder": "パスワードを入力する",
     "preparingToPrint": "印刷の準備をしています...",
     "annotationReplyCount": "{{count}} 返信",
     "annotationReplyCount_plural": "{{count}} 返信",
@@ -240,7 +245,8 @@
     "selectFile": "ファイルを選ぶ",
     "selectPageToReplace": "ドキュメント内の入れ替えたいページを選択します。",
     "embeddedFiles": "埋め込みファイル",
-    "pageNum": "ページ番号"
+    "pageNum": "ページ番号",
+    "error": "エラー"
   },
   "option": {
     "type": {
@@ -336,13 +342,14 @@
       "all": "すべて",
       "current": "現在のページ",
       "pages": "印刷ページ",
+      "specifyPages": "ページを指定",
       "view": "現在のビュー",
       "pageQuality": "印刷品質",
       "qualityNormal": "標準",
       "qualityHigh": "きれい",
       "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
-      "addWatermarkSettings": "透かしを追加"
+      "printSettings": "印刷設定"
     },
     "printInfo": {
       "author": "作成者",
@@ -444,12 +451,15 @@
       "enableSnapping": "測定ツールのスナップを有効にする"
     },
     "watermark": {
+      "title": "透かし",
+      "addWatermark": "透かしを追加",
       "size": "サイズ",
       "location": "透かしを入れる位置を選択してください",
       "text": "テキスト",
       "style": "スタイル",
       "resetAllSettings": "すべての設定をリセット",
       "font": "フォント",
+      "addNew": "新しく追加する",
       "locations": {
         "center": "中央",
         "topLeft": "左上",
@@ -778,6 +788,22 @@
       "localCertificateError": "ローカル証明書の読み取りにいくつかの問題があります"
     }
   },
+  "cropPopUp": {
+    "title": "切り抜くページ",
+    "allPages": "全て",
+    "singlePage": "現在のページ",
+    "cropDimensions": "作物の寸法",
+    "dimensionInput": {
+      "unitOfMeasurement": "単位",
+      "autoTrim": "自動トリム"
+    },
+    "cropModal": {
+      "applyTitle": "作物を適用しますか？",
+      "applyMessage": "このアクションにより、選択したすべての選択したページが永続的にトリミングされます。元に戻すことはできません。",
+      "cancelTitle": "作物をキャンセルしますか？",
+      "cancelMessage": "選択したすべてのページの切り抜きをキャンセルしてもよろしいですか？"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "テキスト、地域、ページにマークを付けるか、検索して、編集を開始します。",
     "redactionSearchPlaceholder": "キーワード検索またはパターンで追加",
@@ -786,10 +812,20 @@
     "redactAllMarked": "すべて編集",
     "redactionItem": {
       "regionRedaction": "地域の編集",
-      "fullPageRedaction": "全ページの編集"
+      "fullPageRedaction": "全ページの編集",
+      "image": "画像"
     },
     "expand": "拡大",
-    "collapse": "崩壊"
+    "collapse": "崩壊",
+    "searchResults": "の検索結果",
+    "search": {
+      "creditCards": "クレジットカード",
+      "phoneNumbers": "電話番号",
+      "images": "画像",
+      "emails": "メール",
+      "pattern": "パターン",
+      "start": "検索を開始します"
+    }
   },
   "languageModal": {
     "selectLanguage": "言語を選択する"

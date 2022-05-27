@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 import actions from 'actions';
 import selectors from 'selectors';
+import Button from 'components/Button';
+import { escapePressListener } from 'helpers/accessibility';
+import ModalWrapper from '../ModalWrapper';
 
 import './ErrorModal.scss';
 
@@ -26,6 +29,9 @@ const ErrorModal = () => {
       dispatch(
         actions.closeElements(['signatureModal', 'printModal', 'loadingModal', 'progressModal', 'passwordModal', 'filterModal'])
       );
+
+      window.addEventListener('keydown', e => escapePressListener(e, closeErrorModal));
+      return () => window.removeEventListener('keydown', escapePressListener);
     }
   }, [dispatch, isOpen]);
 
@@ -63,6 +69,10 @@ const ErrorModal = () => {
     tabsPadding += document.getElementsByClassName("TabsHeader")[0]?.getBoundingClientRect().bottom;
   }
 
+  const closeErrorModal = () => {
+    dispatch(actions.closeElement('errorModal'))
+  }
+
   return isDisabled ? null : (
     <div
       className={classNames({
@@ -74,7 +84,21 @@ const ErrorModal = () => {
       style={isMultiTab ? { height: `calc(100% - ${tabsPadding}px)` } : undefined}
       data-element="errorModal"
     >
-      <div className="container">{shouldTranslate ? t(message) : message}</div>
+      <ModalWrapper isOpen={isOpen} title={'message.error'}
+        closeButtonDataElement={'errorModalCloseButton'} 
+        onCloseClick={closeErrorModal}>
+            <div className="modal-content error-modal-content">
+              <p>{shouldTranslate ? t(message) : message}</p>
+            </div>
+            <div className="modal-footer footer">
+              <Button
+                className="confirm modal-button"
+                dataElement="closeErrorModalButton"
+                label={t('action.ok')}
+                onClick={closeErrorModal}
+              />
+            </div>
+      </ModalWrapper>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Adicionar",
     "apply": "Aplicar",
     "applyAll": "Aplicar todos",
     "calendar": "Calendário",
@@ -209,6 +210,7 @@
     "numResultsFound": "resultados encontrados",
     "notSupported": "Esse tipo de arquivo não é compatível.",
     "passwordRequired": "Senha obrigatória",
+    "enterPasswordPlaceholder": "Digite a senha",
     "preparingToPrint": "Preparando impressão...",
     "annotationReplyCount": "{{count}} resposta",
     "annotationReplyCount_plural": "{{count}} respostas",
@@ -243,7 +245,8 @@
     "selectFile": "Selecione o arquivo",
     "selectPageToReplace": "Selecione as páginas do documento que deseja substituir.",
     "embeddedFiles": "Arquivos incorporados",
-    "pageNum": "Número de página"
+    "pageNum": "Número de página",
+    "error": "Erro"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "Todas",
       "current": "Pagina atual",
       "pages": "Páginas",
+      "specifyPages": "Especificar páginas",
       "view": "Visão atual",
       "pageQuality": "Qualidade de impressão",
       "qualityNormal": "Normal",
       "qualityHigh": "Alto",
       "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
-      "addWatermarkSettings": "Adicionar marca d'água"
+      "printSettings": "Configurações de impressão"
     },
     "printInfo": {
       "author": "Autor",
@@ -447,12 +451,15 @@
       "enableSnapping": "Ativar encaixe para ferramentas de medição"
     },
     "watermark": {
+      "title": "Marca d'água",
+      "addWatermark": "Adicione uma Marca D'água",
       "size": "Tamanho",
       "location": "Escolha um local para editar marcas d'água",
       "text": "Texto",
       "style": "Estilo",
       "resetAllSettings": "Voltar às configurações padrão",
       "font": "fonte",
+      "addNew": "Adicionar novo",
       "locations": {
         "center": "Centro",
         "topLeft": "Cima Esquerda",

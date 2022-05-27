@@ -15,3 +15,9 @@ export function findFocusableIndex(elements, toFind) {
   }
   return index;
 }
+
+export function escapePressListener(event, onEscapeFunction) {
+  if (event.key === 'Escape') {
+    onEscapeFunction(event);
+  }
+}

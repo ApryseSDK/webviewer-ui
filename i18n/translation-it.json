@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Aggiungere",
     "apply": "Applicare",
     "applyAll": "Applicare tutte",
     "calendar": "Calendario",
@@ -209,6 +210,7 @@
     "numResultsFound": "risultati trovati",
     "notSupported": "Quel tipo di file non è supportato.",
     "passwordRequired": "Password richiesta",
+    "enterPasswordPlaceholder": "Inserire la password",
     "preparingToPrint": "Preparazione alla stampa ...",
     "annotationReplyCount": "{{count}} Rispondi",
     "annotationReplyCount_plural": "{{count}} risposte",
@@ -243,7 +245,8 @@
     "selectFile": "Seleziona il file",
     "selectPageToReplace": "Seleziona le pagine del documento con cui desideri sostituire.",
     "embeddedFiles": "File incorporati",
-    "pageNum": "Numero di pagina"
+    "pageNum": "Numero di pagina",
+    "error": "Errore"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "Tutti",
       "current": "Pagina corrente",
       "pages": "pagine",
+      "specifyPages": "Specifica le pagine",
       "view": "Vista corrente",
       "pageQuality": "Qualità di stampa",
       "qualityNormal": "Normale",
       "qualityHigh": "alto",
       "includeAnnotations": "Includi annotazioni",
       "includeComments": "Includi commenti",
-      "addWatermarkSettings": "Aggiungi impostazioni filigrana"
+      "printSettings": "Impostazioni di stampa"
     },
     "printInfo": {
       "author": "Autore",
@@ -447,12 +451,15 @@
       "enableSnapping": "Abilita snap per strumenti di misurazione"
     },
     "watermark": {
+      "title": "Filigrana",
+      "addWatermark": "Aggiungi filigrana",
       "size": "Taglia",
       "location": "Scegli una posizione per modificare le filigrane",
       "text": "Testo",
       "style": "Stile",
       "resetAllSettings": "Resettare tutte le impostazioni",
       "font": "font",
+      "addNew": "Aggiungere nuova",
       "locations": {
         "center": "Centro",
         "topLeft": "In alto a sinistra",

@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Toevoegen",
     "apply": "Toepassen",
     "applyAll": "Alles toepassen",
     "calendar": "Kalender",
@@ -84,6 +85,9 @@
     "redactPages": "Pagina's redigeren",
     "playAudio": "Audio afspelen",
     "pauseAudio": "audio pauze",
+    "selectAll": "Selecteer alles",
+    "unselect": "Deselecteren",
+    "addMark": "Markering toevoegen",
     "viewFile": "Bestand bekijken",
     "switchLanguage": "Taal"
   },
@@ -206,6 +210,7 @@
     "numResultsFound": "gevonden resultaten",
     "notSupported": "Dit bestandstype wordt niet ondersteund.",
     "passwordRequired": "Wachtwoord vereist",
+    "enterPasswordPlaceholder": "Voer wachtwoord in",
     "preparingToPrint": "Printen voorbereiden...",
     "annotationReplyCount": "{{count}} reactie",
     "annotationReplyCount_plural": "{{count}} reacties",
@@ -240,7 +245,8 @@
     "selectFile": "Selecteer bestand",
     "selectPageToReplace": "Selecteer de pagina's in het document die u wilt vervangen.",
     "embeddedFiles": "Ingesloten bestanden",
-    "pageNum": "Paginanummer"
+    "pageNum": "Paginanummer",
+    "error": "Fout"
   },
   "option": {
     "type": {
@@ -336,13 +342,14 @@
       "all": "Alles",
       "current": "Huidige pagina",
       "pages": "Pagina's",
+      "specifyPages": "Specificeer pagina's",
       "view": "Huidige weergave",
       "pageQuality": "Print kwaliteit",
       "qualityNormal": "Normaal",
       "qualityHigh": "Hoog",
       "includeAnnotations": "Voeg annotaties toe",
       "includeComments": "Inclusief commentaar",
-      "addWatermarkSettings": "Watermerkinstellingen toevoegen"
+      "printSettings": "Afdrukinstellingen"
     },
     "printInfo": {
       "author": "Schrijver",
@@ -444,12 +451,15 @@
       "enableSnapping": "Schakel snappen in voor meetinstrumenten"
     },
     "watermark": {
+      "title": "Watermerk",
+      "addWatermark": "Voeg een watermerk toe",
       "size": "Grootte",
       "location": "Kies een locatie om watermerken te bewerken",
       "text": "Tekst",
       "style": "Stijl",
       "resetAllSettings": "Reset alle instellingen",
       "font": "doopvont",
+      "addNew": "Nieuw toevoegen",
       "locations": {
         "center": "Centrum",
         "topLeft": "Linksboven",
@@ -778,6 +788,22 @@
       "localCertificateError": "Er zijn enkele problemen met het lezen van een lokaal certificaat"
     }
   },
+  "cropPopUp": {
+    "title": "Pagina's om bij te snijden",
+    "allPages": "Alle",
+    "singlePage": "Huidige pagina",
+    "cropDimensions": "Afmetingen bijsnijden",
+    "dimensionInput": {
+      "unitOfMeasurement": "Eenheid",
+      "autoTrim": "Automatisch trimmen"
+    },
+    "cropModal": {
+      "applyTitle": "Bijsnijden toepassen?",
+      "applyMessage": "Met deze actie worden alle geselecteerde geselecteerde pagina's permanent bijgesneden. Het kan niet ongedaan gemaakt worden.",
+      "cancelTitle": "Bijsnijden annuleren?",
+      "cancelMessage": "Weet u zeker dat u het bijsnijden van alle geselecteerde pagina's wilt annuleren?"
+    }
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Begin met redigeren door tekst, regio's, pagina's te markeren of een zoekopdracht uit te voeren.",
     "redactionSearchPlaceholder": "Toevoegen op trefwoord zoeken of patronen",
@@ -786,10 +812,20 @@
     "redactAllMarked": "Alles redigeren",
     "redactionItem": {
       "regionRedaction": "Regio redactie",
-      "fullPageRedaction": "Volledige pagina redactie"
+      "fullPageRedaction": "Volledige pagina redactie",
+      "image": "Afbeelding"
     },
     "expand": "Uitbreiden",
-    "collapse": "Instorten"
+    "collapse": "Instorten",
+    "searchResults": "Zoekresultaten",
+    "search": {
+      "creditCards": "Kredietkaart",
+      "phoneNumbers": "Telefoonnummers",
+      "images": "Afbeeldingen",
+      "emails": "E-mails",
+      "pattern": "Patroon",
+      "start": "Begin met zoeken"
+    }
   },
   "languageModal": {
     "selectLanguage": "Selecteer taal"

@@ -30,45 +30,16 @@
 
   .style-container {
     display: flex;
-  }
 
-  .form-container {
-    @extend %modal-shared-container-style;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 400px;
-    border-radius: 4px;
-    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-    padding: 16px;
-    background: var(--component-background);
+    .Button {
+      margin-right: 8px;
 
-    @include mobile {
-      width: 100%;
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      padding-top: 24px;
-      padding-bottom: 16px;
-      padding-left: 24px;
-      padding-right: 24px;
-      min-width: 100px;
+      &:hover {
+        background: var(--popup-button-hover);
+      }
 
-      .swipe-indicator {
-        background: var(--divider);
-        border-radius: 2px;
-        height: 4px;
-        width: 38px;
-        position: absolute;
-        top: 12px;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-
-        @include tablet-and-desktop {
-          display: none;
-        }
+      &.active {
+        background: var(--popup-button-active);
       }
     }
   }
@@ -76,8 +47,10 @@
   .form-content-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    padding: 16px;
+    width: 100%;
 
     & form {
       width: auto;
@@ -90,14 +63,24 @@
   .watermark-settings {
     display: flex;
     flex-direction: column;
+    width: 330px;
+
+    @include mobile {
+      width: 100%;
+    }
 
     .form-field {
       display: flex;
       flex-direction: column;
-      margin: 8px 0;
+      margin: 16px 0 16px 16px;
+
+      @include mobile {
+        margin-left: 0;
+      }
 
       label {
         margin-bottom: 8px;
+        font-weight: 700;
       }
 
       select,
@@ -108,6 +91,10 @@
       &.opacity-slider {
         display: flex;
 
+        .slider-property {
+          font-weight: 700;
+        }
+
         .slider-svg-container {
           margin: 0px; //child component sets it to -5px
           height: 30px;
@@ -117,36 +104,13 @@
           align-items: stretch;
         }
       }
-
-      &.separator {
-        height: 1px;
-        width: 100%;
-        background: var(--divider);
-        margin: 16px 0;
-      }
-
-      .resetSettings {
-        @include button-reset;
-        cursor: pointer;
-        background: none;
-        border: 0;
-        width: 100%;
-        color: var(--secondary-button-text);
-        margin-bottom: 16px;
-        display: flex;
-        font-size: 13px;
-        padding: 6px 18px;
-
-        &:hover {
-          color: var(--secondary-button-hover);
-        }
-      }
     }
 
     .colorSelect {
       width: 18px;
       height: 18px;
       margin: 7px;
+      margin-right: 8px;
       border-radius: 10000000px;
     }
   }
@@ -155,8 +119,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
-    height: 300px;
+    width: 500px;
+    height: 420px;
+    background-color: var(--gray-5);
+    border: 1px solid var(--gray-5);
 
     // highly unlikely someone will be editing watermarking on mobile
     @include mobile {
@@ -165,13 +131,26 @@
 
     canvas {
       border: 1px solid var(--border) !important;
+      width: 325px !important;
+    }
+  }
+
+  .divider {
+    height: 1px;
+    width: 100%;
+    background: var(--divider);
+
+    &.separator {
+      margin-top: 16px;
     }
   }
 
   .button-container {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
     width: 100%;
+    padding: 16px;
 
     .button {
       display: flex;
@@ -198,10 +177,26 @@
       &.cancel {
         color: var(--secondary-button-text);
         background: none;
-  
+
         &:hover {
           color: var(--secondary-button-hover);
         }
+      }
+    }
+
+    .reset-settings {
+      @include button-reset;
+      cursor: pointer;
+      background: none;
+      border: 0;
+      width: 100%;
+      color: var(--secondary-button-text);
+      display: flex;
+      font-size: 13px;
+      padding: 6px 18px;
+
+      &:hover {
+        color: var(--secondary-button-hover);
       }
     }
   }

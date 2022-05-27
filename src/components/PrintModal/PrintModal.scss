@@ -1,66 +1,58 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
 
+@mixin mobileWidth {
+  @include mobile {
+    width: 100%;
+  }
+}
+
 .PrintModal {
   @extend %modal;
 
-  .container {
-    @extend %modal-shared-container-style;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 4px;
-    box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-    padding: 16px;
-    background: var(--component-background);
-
-    @include mobile {
-      width: 100%;
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      padding-top: 24px;
-      padding-bottom: 16px;
-      padding-left: 24px;
-      padding-right: 24px;
-      min-width: 100px;
-
-      .swipe-indicator {
-        background: var(--divider);
-        border-radius: 2px;
-        height: 4px;
-        width: 38px;
-        position: absolute;
-        top: 12px;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-
-        @include tablet-and-desktop {
-          display: none;
-        }
-      }
-    }
+  .modal-container {
+    width: 480px;
 
     .settings {
       display: flex;
       flex-direction: column;
+      width: 100%;
+      padding: 24px;
+
+      .ui__choice {
+        margin: 10px 4px 4px 0;
+      }
     }
 
     .divider {
       height: 1px;
       width: 100%;
       background: var(--divider);
-      margin: 16px 0;
     }
 
-    .col {
-      padding: 8px;
-    }
+    .section {
+      padding-bottom: 16px;
 
-    .settings-form {
-      padding: 8px;
+      &.watermark-section {
+        padding-bottom: 0;
+      }
+
+      .section-label{
+        font-weight: 700;
+      }
+
+      .printQualitySelectLabel {
+        display: grid;
+        padding: 4px 0px;
+
+        .printQualitySelect{
+          width:216px;
+          height:30px;
+          margin-top:5px;
+
+          @include mobileWidth;
+        }
+      }
     }
 
     label {
@@ -77,6 +69,7 @@
       padding-bottom: 6px;
       padding-right: 42px;
       padding-top: 4px;
+      margin-top: 6px;
 
       &:focus {
         outline: none;
@@ -87,16 +80,11 @@
         color: var(--placeholder-text);
       }
     }
-    .printQualitySelect{
-      width:100%;
-      height:30px;
-      margin-top:5px;
-    }
 
     .total {
       display: flex;
       flex-direction: row;
-      padding: 0px 8px;
+      padding-top: 4px;
       color: var(--text-color);
     }
 
@@ -118,6 +106,7 @@
       flex-direction: row;
       justify-content: flex-end;
       width: 100%;
+      padding: 20px;
 
       .button {
         @include button-reset;
@@ -141,13 +130,33 @@
       }
     }
 
+    .specify-pages-choice {
+      margin-bottom: 18px;
+
+      input {
+        width: 195px;
+
+        @include mobileWidth;
+      }
+
+      label {
+        display: grid;
+
+        @include mobileWidth;
+      }
+
+      &.ui__choice--checked {
+        align-items: baseline;
+      }
+    }
+
     .apply-watermark {
       @include button-reset;
       cursor: pointer;
-      margin-top: 16px;
+      margin-top: 10px;
       background: none;
-      border: 0;
-      width: 100%;
+      border: 1px solid var(--secondary-button-text);
+      border-radius: 4px;
       color: var(--secondary-button-text);
       padding: 6px 16px;
       height: 32px;
@@ -159,18 +168,6 @@
       &:hover {
         color: var(--secondary-button-hover);
       }
-    }
-
-    .header-container {
-      display: flex;
-      align-content: center;
-      justify-content: space-between;
-    }
-
-    .header {
-      font-weight: bold;
-      display: flex;
-      align-items: center;
     }
   }
 }

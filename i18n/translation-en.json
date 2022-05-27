@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Add",
     "apply": "Apply",
     "applyAll": "Apply all",
     "calendar": "Calendar",
@@ -210,6 +211,7 @@
     "numResultsFound": "results found",
     "notSupported": "That file type is not supported.",
     "passwordRequired": "Password required",
+    "enterPasswordPlaceholder": "Enter password",
     "preparingToPrint": "Preparing to print...",
     "annotationReplyCount": "{{count}} Reply",
     "annotationReplyCount_plural": "{{count}} Replies",
@@ -244,7 +246,8 @@
     "selectFile": "Select file",
     "selectPageToReplace": "Select the pages in the document you would like to replace with.",
     "embeddedFiles": "Embedded Files",
-    "pageNum": "Page Number"
+    "pageNum": "Page Number",
+    "error": "Error"
   },
   "option": {
     "type": {
@@ -340,13 +343,14 @@
       "all": "All",
       "current": "Current Page",
       "pages": "Pages to print",
+      "specifyPages": "Specify Pages",
       "view": "Current View",
       "pageQuality": "Print Quality",
       "qualityNormal": "Normal",
       "qualityHigh": "High",
       "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
-      "addWatermarkSettings": "Add Watermark"
+      "printSettings": "Print Settings"
     },
     "printInfo": {
       "author": "Author",
@@ -447,12 +451,15 @@
       "enableSnapping": "Enable snapping for measurement tools"
     },
     "watermark": {
+      "title": "Watermark",
+      "addWatermark": "Add Watermark",
       "size": "Size",
       "location": "Choose a location to edit watermarks",
       "text": "Text",
       "style": "Style",
       "resetAllSettings": "Reset All Settings",
       "font": "Font",
+      "addNew": "Add New",
       "locations": {
         "center": "Center",
         "topLeft": "Top Left",
