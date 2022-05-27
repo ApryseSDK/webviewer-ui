@@ -26,7 +26,7 @@ const RedactionItem = (props) => {
   const date = getLatestActivityDate(annotation);
   const formattedDate = date ? dayjs(date).locale(language).format(dateFormat) : t('option.notesPanel.noteContent.noDate');
   const dateAndAuthor = `${author} - ${formattedDate}`;
-  const className = classNames('redaction-item', { selected: isSelected });
+  const className = classNames('redaction-item', { 'redaction-item-selected': isSelected });
   const {
     label,
     icon = 'icon-form-field-text',// Default icon if none provided

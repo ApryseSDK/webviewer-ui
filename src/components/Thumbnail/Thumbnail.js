@@ -3,10 +3,11 @@ import classNames from 'classnames';
 import useDidUpdate from 'hooks/useDidUpdate';
 import core from 'core';
 import ThumbnailControls from 'components/ThumbnailControls';
+import thumbnailSelectionModes from 'constants/thumbnailSelectionModes';
 
 import './Thumbnail.scss';
-import { Choice } from "@pdftron/webviewer-react-toolkit";
-import { workerTypes } from "constants/types";
+import { Choice } from '@pdftron/webviewer-react-toolkit';
+import { workerTypes } from 'constants/types';
 
 // adds a delay in ms so thumbs that are only on the screen briefly are not loaded.
 const THUMBNAIL_LOAD_DELAY = 50;
@@ -18,7 +19,7 @@ const Thumbnail = ({
   shiftKeyThumbnailPivotIndex,
   onFinishLoading,
   onLoad,
-  onRemove = () => { },
+  onRemove = () => {},
   onDragStart,
   onDragOver,
   isDraggable,
@@ -34,8 +35,10 @@ const Thumbnail = ({
   isMobile,
   canLoad,
   onCancel,
-  isThumbnailSelectingPages
+  isThumbnailSelectingPages,
+  thumbnailSelectionMode,
 }) => {
+
   const thumbSize = thumbnailSize ? Number(thumbnailSize) : 150;
 
   const [dimensions, setDimensions] = useState({ width: thumbSize, height: thumbSize });
@@ -153,15 +156,17 @@ const Thumbnail = ({
     } else {
       onCancel(index);
     }
-  }, [canLoad])
+  }, [canLoad]);
 
   const handleClick = e => {
+    const checkboxToggled = e.target.type && e.target.type === 'checkbox';
     if (isThumbnailMultiselectEnabled && !isReaderMode) {
       const multiSelectionKeyPressed = e.ctrlKey || e.metaKey;
       const shiftKeyPressed = e.shiftKey;
       let updatedSelectedPages = [...selectedPageIndexes];
 
       if (shiftKeyPressed) {
+          dispatch(actions.setThumbnailSelectingPages(true));
         // Include current page as part of selection if we just started shift-selecting
         let shiftKeyPivot = shiftKeyThumbnailPivotIndex;
         if (shiftKeyPivot === null) {
@@ -171,40 +176,54 @@ const Thumbnail = ({
         // get the range of the selected index and update selected page
         const currSelectMinIndex = Math.min(shiftKeyPivot, index);
         const currSelectMaxIndex = Math.max(shiftKeyPivot, index);
-        updatedSelectedPages = Array.from({ length: currSelectMaxIndex - currSelectMinIndex + 1 }, (_, i) => i + currSelectMinIndex);
+        updatedSelectedPages = Array.from(
+          { length: currSelectMaxIndex - currSelectMinIndex + 1 },
+          (_, i) => i + currSelectMinIndex,
+        );
       } else if (multiSelectionKeyPressed || isThumbnailSelectingPages) {
-        // Include current page as part of selection if we just started multi-selecting
-        if (selectedPageIndexes.length === 0 && !isThumbnailSelectingPages) {
-          updatedSelectedPages.push(currentPage - 1);
-        } else if (selectedPageIndexes.includes(index)) {
-          updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
-        } else {
-          updatedSelectedPages.push(index);
+        dispatch(actions.setThumbnailSelectingPages(true));
+        // Only select a page if multiSelectionKeyPressed or if checkbox is checked unless in 'thumbnail' mode
+        if (multiSelectionKeyPressed || checkboxToggled || thumbnailSelectionMode === thumbnailSelectionModes['THUMBNAIL']) {
+          // Include current page as part of selection if we just started multi-selecting
+          if (selectedPageIndexes.length === 0 && !isThumbnailSelectingPages) {
+            updatedSelectedPages.push(currentPage - 1);
+          } else if (selectedPageIndexes.includes(index)) {
+            updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+          } else {
+            updatedSelectedPages.push(index);
+          }
         }
       } else {
         updatedSelectedPages = [index];
       }
       // set shiftKeyPivot when press ctr key or single key
-      !isThumbnailSelectingPages && !shiftKeyPressed && dispatch(actions.setShiftKeyThumbnailsPivotIndex(updatedSelectedPages[updatedSelectedPages.length - 1]));
+      !isThumbnailSelectingPages &&
+        !shiftKeyPressed &&
+        dispatch(actions.setShiftKeyThumbnailsPivotIndex(updatedSelectedPages[updatedSelectedPages.length - 1]));
       dispatch(actions.setSelectedPageThumbnails(updatedSelectedPages));
     } else if (isMobile()) {
       dispatch(actions.closeElement('leftPanel'));
     }
+
     // due to the race condition, we need a settimeout here
     // otherwise, sometimes the current page will not be visible in left panel
     setTimeout(() => {
-      core.setCurrentPage(index + 1);
+      // If user clicks on checkbox, it should not automatically jump to that page,
+      // only if the user clicks on thumbnail then go to page and view it, unless in 'thumbnail' mode
+      if (!checkboxToggled || thumbnailSelectionMode === thumbnailSelectionModes['THUMBNAIL']) {
+        core.setCurrentPage(index + 1);
+      }
     }, 0);
   };
 
   const isActive = currentPage === index + 1;
   const pageLabel = pageLabels[index];
-  let checkboxRotateClass = "default";
+  let checkboxRotateClass = 'default';
   const rotation = core.getRotation(index + 1);
   if ((!rotation || rotation === 2) && dimensions.width > dimensions.height) {
-    checkboxRotateClass = "rotated";
+    checkboxRotateClass = 'rotated';
   } else if ((rotation === 1 || rotation === 3) && dimensions.width < dimensions.height) {
-    checkboxRotateClass = "rotated";
+    checkboxRotateClass = 'rotated';
   }
 
   const ratio = Math.min(thumbSize / dimensions.width, thumbSize / dimensions.height);
@@ -216,7 +235,7 @@ const Thumbnail = ({
       className={classNames({
         Thumbnail: true,
         active: isActive,
-        selected: isSelected,
+        selected: isSelected && isThumbnailSelectingPages,
       })}
       onDragOver={e => onDragOver(e, index)}
       id="Thumbnail-container"
@@ -232,11 +251,9 @@ const Thumbnail = ({
         onClick={handleClick}
       >
         <div id={`pageThumb${index}`} className="thumbnail" />
-        {isThumbnailSelectingPages && loaded &&
-        <Choice
-          className={`checkbox ${checkboxRotateClass}`}
-          checked={selectedPageIndexes.includes(index)}
-        />}
+        {isThumbnailSelectingPages && loaded && (
+          <Choice className={`checkbox ${checkboxRotateClass}`} checked={selectedPageIndexes.includes(index)} />
+        )}
       </div>
       <div className="page-label">{pageLabel}</div>
       {!isThumbnailSelectingPages && isActive && shouldShowControls && <ThumbnailControls index={index} />}

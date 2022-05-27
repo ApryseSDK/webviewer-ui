@@ -9,6 +9,11 @@ export default initialState => (state = initialState, action) => {
         ...state,
         dateTimeFormats: payload.dateTimeFormats,
       };
+    case 'SET_THUMBNAIL_SELECTION_MODE':
+      return {
+        ...state,
+        thumbnailSelectionMode: payload.thumbnailSelectionMode,
+      };
     case 'SET_FONTS':
       return {
         ...state,
@@ -37,7 +42,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_THUMBNAIL_PAGE_SELECT':
       return {
         ...state,
-        thumbnailSelectingPages: payload.isSelecting
+        thumbnailSelectingPages: payload.isSelecting,
       };
     case 'SET_HIGH_CONTRAST_MODE':
       return {
@@ -60,7 +65,7 @@ export default initialState => (state = initialState, action) => {
         lastPickedToolForGroup: {
           ...state.lastPickedToolForGroup,
           [payload.group]: payload.toolName,
-        }
+        },
       };
     case 'SET_TOOLBAR_GROUP':
       return {
@@ -98,7 +103,7 @@ export default initialState => (state = initialState, action) => {
         panelWidths: {
           ...state.panelWidths,
           leftPanel: payload.width,
-        }
+        },
       };
     case 'SET_SEARCH_PANEL_WIDTH':
       return {
@@ -106,7 +111,7 @@ export default initialState => (state = initialState, action) => {
         panelWidths: {
           ...state.panelWidths,
           searchPanel: payload.width,
-        }
+        },
       };
     case 'SET_NOTES_PANEL_WIDTH':
       return {
@@ -114,7 +119,7 @@ export default initialState => (state = initialState, action) => {
         panelWidths: {
           ...state.panelWidths,
           notesPanel: payload.width,
-        }
+        },
       };
     case 'SET_REDACTION_PANEL_WIDTH':
       return {
@@ -122,7 +127,7 @@ export default initialState => (state = initialState, action) => {
         panelWidths: {
           ...state.panelWidths,
           redactionPanel: payload.width,
-        }
+        },
       };
     case 'SET_DOCUMENT_CONTAINER_WIDTH':
       return {
@@ -303,13 +308,9 @@ export default initialState => (state = initialState, action) => {
           ...state.toolButtonObjects,
           [toolName]: {
             ...state.toolButtonObjects[toolName],
-            dataElement:
-              buttonName || state.toolButtonObjects[toolName].dataElement,
+            dataElement: buttonName || state.toolButtonObjects[toolName].dataElement,
             title: tooltip || state.toolButtonObjects[toolName].title,
-            group:
-              buttonGroup !== undefined
-                ? buttonGroup
-                : state.toolButtonObjects[toolName].group,
+            group: buttonGroup !== undefined ? buttonGroup : state.toolButtonObjects[toolName].group,
             img: buttonImage || state.toolButtonObjects[toolName].img,
           },
         },
@@ -398,7 +399,10 @@ export default initialState => (state = initialState, action) => {
     case 'SET_SELECTED_TAB':
       return { ...state, tab: { ...state.tab, [payload.id]: payload.dataElement } };
     case 'SET_CUSTOM_ELEMENT_OVERRIDES':
-      return { ...state, customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides } };
+      return {
+        ...state,
+        customElementOverrides: { ...state.customElementOverrides, [payload.dataElement]: payload.overrides },
+      };
     case 'SET_PAGE_REPLACEMENT_FILE_LIST':
       return { ...state, pageReplacementFileList: payload.list };
 
@@ -433,17 +437,17 @@ export default initialState => (state = initialState, action) => {
     case 'SET_SUBMIT_COMMENT_MODE':
       return {
         ...state,
-        enableNoteSubmissionWithEnter: payload.enableNoteSubmissionWithEnter
+        enableNoteSubmissionWithEnter: payload.enableNoteSubmissionWithEnter,
       };
     case 'SET_NOTES_PANEL_TEXT_COLLAPSING':
       return {
         ...state,
-        isNotesPanelTextCollapsingEnabled: payload.enableNotesPanelTextCollapsing
+        isNotesPanelTextCollapsingEnabled: payload.enableNotesPanelTextCollapsing,
       };
     case 'SET_NOTES_PANEL_REPLIES_COLLAPSING':
       return {
         ...state,
-        isNotesPanelRepliesCollapsingEnabled: payload.enableNotesPanelRepliesCollapsing
+        isNotesPanelRepliesCollapsingEnabled: payload.enableNotesPanelRepliesCollapsing,
       };
     case 'SET_COMMENT_THREAD_EXPANSION':
       return {
@@ -458,10 +462,7 @@ export default initialState => (state = initialState, action) => {
        */
       return {
         ...state,
-        certificates: [
-          ...state.certificates,
-          ...payload.certificates,
-        ]
+        certificates: [...state.certificates, ...payload.certificates],
       };
     case 'ADD_TRUST_LIST':
       /**
@@ -472,10 +473,7 @@ export default initialState => (state = initialState, action) => {
        */
       return {
         ...state,
-        trustLists: [
-          ...state.trustLists,
-          payload.trustList,
-        ],
+        trustLists: [...state.trustLists, payload.trustList],
       };
     case 'SET_VERIFICATION_RESULT':
       return { ...state, verificationResult: payload.result };
@@ -495,7 +493,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_FADE_PAGE_NAVIGATION_COMPONENT':
       return {
         ...state,
-        fadePageNavigationComponent: payload.fadePageNavigationComponent
+        fadePageNavigationComponent: payload.fadePageNavigationComponent,
       };
     case 'SET_HIDE_CONTENT_EDIT_WARNING':
       if (localStorageManager.isLocalStorageEnabled()) {
@@ -507,30 +505,30 @@ export default initialState => (state = initialState, action) => {
     case 'SET_CURRENT_CONTENT_BEING_EDITED':
       return {
         ...state,
-        currentContentBeingEdited: payload
+        currentContentBeingEdited: payload,
       };
     case 'UPDATE_CURRENT_CONTENT_BEING_EDITED':
       return {
         ...state,
         currentContentBeingEdited: {
           ...state.currentContentBeingEdited,
-          content: payload.content
-        }
+          content: payload.content,
+        },
       };
     case 'CLEAR_CURRENT_CONTENT_BEING_EDITED':
       return {
         ...state,
-        currentContentBeingEdited: null
+        currentContentBeingEdited: null,
       };
     case 'SET_ENABLE_DESKTOP_ONLY_MODE':
       return {
         ...state,
-        isInDesktopOnlyMode: payload.enableDesktopOnlyMode
+        isInDesktopOnlyMode: payload.enableDesktopOnlyMode,
       };
     case 'PAGE_DELETION_CONFIRMATION_MODAL_POPUP':
       return {
         ...state,
-        pageDeletionConfirmationModalEnabled: payload.pageDeletionConfirmationModalEnabled
+        pageDeletionConfirmationModalEnabled: payload.pageDeletionConfirmationModalEnabled,
       };
     case 'SET_PAGE_MANIPULATION_OVERLAY_ITEMS':
       return {

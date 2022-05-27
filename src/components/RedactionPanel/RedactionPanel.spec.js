@@ -185,7 +185,7 @@ describe('RedactionPanel', () => {
 
     const redactionItems = screen.getAllByRole('listitem');
     // First one is selected
-    expect(redactionItems[0]).toHaveClass('redaction-item selected', { exact: true });
+    expect(redactionItems[0]).toHaveClass('redaction-item redaction-item-selected', { exact: true });
     // Second one is not selected
     expect(redactionItems[1]).toHaveClass('redaction-item', { exact: true });
   });

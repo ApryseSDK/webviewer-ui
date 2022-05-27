@@ -599,6 +599,11 @@ export const replaceRedactionSearchPattern = (searchPattern, regex) => ({
   payload: { searchPattern, regex }
 });
 
+export const setThumbnailSelectionMode = thumbnailSelectionMode => ({
+  type: 'SET_THUMBNAIL_SELECTION_MODE',
+  payload: { thumbnailSelectionMode }
+});
+
 export const addRedactionSearchPattern = (searchPattern) => ({
   type: 'ADD_REDACTION_SEARCH_PATTERN',
   payload: { searchPattern }

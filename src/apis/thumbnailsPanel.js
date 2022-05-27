@@ -1,6 +1,7 @@
 import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
+import thumbnailSelectionModes from 'constants/thumbnailSelectionModes';
 
 /**
  * @namespace UI.ThumbnailsPanel
@@ -72,7 +73,10 @@ const selectPages = store => pageNumbers => {
     console.warn(`The following pages are out of range: ${outOfRangePages.join(', ')}`);
   }
 
-  let pagesToSelect = pageNumbers.filter(pageNumber => pageNumber >= 1 && pageNumber <= pageCount && !selectedPages.includes(pageNumber) && !isNaN(pageNumber));
+  let pagesToSelect = pageNumbers.filter(
+    pageNumber =>
+      pageNumber >= 1 && pageNumber <= pageCount && !selectedPages.includes(pageNumber) && !isNaN(pageNumber),
+  );
 
   pagesToSelect = pagesToSelect.filter(function(page, index, self) {
     return self.indexOf(page) === index;
@@ -106,7 +110,29 @@ WebViewer(...)
     instance.UI.ThumbnailsPanel.getSelectedPageNumbers();
   });
  */
-const getSelectedPageNumbers = store => () => selectors.getSelectedThumbnailPageIndexes(store.getState()).map(pageIndex => pageIndex + 1);
+const getSelectedPageNumbers = store => () =>
+  selectors.getSelectedThumbnailPageIndexes(store.getState()).map(pageIndex => pageIndex + 1);
+
+/**
+ * Sets thumbnail selection mode.
+ * @method UI.ThumbnailsPanel.setThumbnailSelectionMode
+ * @param {string} thumbnailSelectionMode Thumbnail selection mode to set
+ * @param {string} thumbnailSelectionMode.thumbnail Set selection mode to use entire thumbnail to select a page
+ * @param {string} thumbnailSelectionMode.checkbox (default) Set selection mode to use only checkbox to select a page
+ * @example
+WebViewer(...)
+  .then(function(instance) {
+    instance.UI.ThumbnailsPanel.setThumbnailSelectionMode('thumbnail');
+  });
+ */
+
+const setThumbnailSelectionMode = store => thumbnailSelectionMode => {
+  if (Object.values(thumbnailSelectionModes).indexOf(thumbnailSelectionMode) > -1) {
+    store.dispatch(actions.setThumbnailSelectionMode(thumbnailSelectionMode));
+  } else {
+    console.error(`Thumbnail Selection Mode must be one of: "${Object.values(thumbnailSelectionModes).join('", "')}"`);
+  }
+};
 
 export {
   enableMultiselect,
@@ -114,4 +140,5 @@ export {
   selectPages,
   unselectPages,
   getSelectedPageNumbers,
+  setThumbnailSelectionMode,
 };

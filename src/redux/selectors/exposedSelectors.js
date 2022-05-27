@@ -3,6 +3,7 @@ import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/d
 
 // viewer
 export const getDateTimeFormats = state => state.viewer.dateTimeFormats;
+export const getThumbnailSelectionMode = state => state.viewer.thumbnailSelectionMode;
 export const getFonts = state => state.viewer.fonts;
 export const getTabs = state => state.viewer.tabs;
 export const getActiveTab = state => state.viewer.activeTab;

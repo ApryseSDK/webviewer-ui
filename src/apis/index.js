@@ -146,7 +146,7 @@ import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import {
   enableToolDefaultStyleUpdateFromAnnotationPopup,
-  disableToolDefaultStyleUpdateFromAnnotationPopup
+  disableToolDefaultStyleUpdateFromAnnotationPopup,
 } from './toolDefaultStyleUpdateFromAnnotationPopup';
 import unregisterTool from './unregisterTool';
 import updateElement from './updateElement';
@@ -180,7 +180,7 @@ import {
   disableAutoExpandCommentThread,
   enableAutoExpandCommentThread,
 } from './notesPanel';
-import { enableMultiselect, disableMultiselect, selectPages, unselectPages, getSelectedPageNumbers, } from './thumbnailsPanel';
+import { enableMultiselect, disableMultiselect, selectPages, unselectPages, getSelectedPageNumbers, setThumbnailSelectionMode } from './thumbnailsPanel';
 import toggleReaderMode from './toggleReaderMode';
 import toggleElementVisibility from './toggleElementVisibility';
 import setAnnotationReadState from './setAnnotationReadState';
@@ -338,6 +338,7 @@ export default store => {
       getSelectedPageNumbers: getSelectedPageNumbers(store),
       enableMultiselect: enableMultiselect(store),
       disableMultiselect: disableMultiselect(store),
+      setThumbnailSelectionMode: setThumbnailSelectionMode(store),
     },
     NotesPanel: {
       enableTextCollapse: enableTextCollapse(store),
@@ -417,6 +418,7 @@ export default store => {
     addDateTimeFormat: addDateTimeFormat(store),
     addRedactionSearchPattern: addRedactionSearchPattern(store),
     removeRedactionSearchPattern: removeRedactionSearchPattern(store),
+    setThumbnailSelectionMode: setThumbnailSelectionMode(store),
 
     // deprecated, to be removed in 8.0
     useNativeScroll,

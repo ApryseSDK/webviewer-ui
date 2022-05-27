@@ -96,7 +96,7 @@ it('should be able to use API to toggle "multi select" mode', async () => {
   await waitForWVEvents(['annotationsLoaded', 'pageComplete']);
   await instance('openElement', 'thumbnailsPanel');
 
-  await iframe.evaluate(async() => {
+  await iframe.evaluate(async () => {
     window.instance.UI.ThumbnailsPanel.enableMultiselect();
   });
 
@@ -106,5 +106,87 @@ it('should be able to use API to toggle "multi select" mode', async () => {
 
   expect(await thumbnailPanel.screenshot()).toMatchImageSnapshot({
     customSnapshotIdentifier: 'thumbnail-multiSelect-Mode'
+  });
+});
+
+it('should not select a page without checking box in "checkbox" mode', async () => {
+  const { iframe, waitForInstance, waitForWVEvents } = await loadViewerSample('viewing/viewing');
+
+  await waitForInstance();
+  await waitForWVEvents(['annotationsLoaded', 'pageComplete']);
+
+  await iframe.click('[data-element=leftPanelButton]');
+
+  await page.waitFor(2000);
+
+  const thumbnailPanel = await iframe.$('.LeftPanel');
+
+  await iframe.evaluate(async () => {
+    window.instance.UI.ThumbnailsPanel.enableMultiselect();
+  });
+
+  const thumbnails = await iframe.$$('.Thumbnail');
+  await thumbnails[1].click();
+
+  await page.waitFor(2000);
+
+  expect(await thumbnailPanel.screenshot()).toMatchImageSnapshot({
+    customSnapshotIdentifier: 'thumbnail-multiSelect-Mode-unselected'
+  });
+});
+
+it('should select a page when checking box in "checkbox" mode', async () => {
+  const { iframe, waitForInstance, waitForWVEvents } = await loadViewerSample('viewing/viewing');
+
+  await waitForInstance();
+  await waitForWVEvents(['annotationsLoaded', 'pageComplete']);
+
+  await iframe.click('[data-element=leftPanelButton]');
+
+  await page.waitFor(2000);
+
+  const thumbnailPanel = await iframe.$('.LeftPanel');
+
+  await iframe.evaluate(async () => {
+    window.instance.UI.ThumbnailsPanel.enableMultiselect();
+  });
+
+  const checkboxes = await iframe.$$('.checkbox');
+  await checkboxes[1].click();
+
+  await page.waitFor(2000);
+
+  expect(await thumbnailPanel.screenshot()).toMatchImageSnapshot({
+    customSnapshotIdentifier: 'thumbnail-multiSelect-Mode-selected'
+  });
+});
+
+it('should select a page when clicking thumbnail in "thumbnail" mode', async () => {
+  const { iframe, waitForInstance, waitForWVEvents } = await loadViewerSample('viewing/viewing');
+
+  await waitForInstance();
+  await waitForWVEvents(['annotationsLoaded', 'pageComplete']);
+
+  await iframe.click('[data-element=leftPanelButton]');
+
+  await page.waitFor(2000);
+
+  const thumbnailPanel = await iframe.$('.LeftPanel');
+
+  await iframe.evaluate(async () => {
+    window.instance.UI.ThumbnailsPanel.enableMultiselect();
+  });
+
+  await iframe.evaluate(async () => {
+    window.instance.UI.ThumbnailsPanel.setThumbnailSelectionMode('thumbnail');
+  });
+
+  const thumbnails = await iframe.$$('.Thumbnail');
+  await thumbnails[1].click();
+
+  await page.waitFor(2000);
+
+  expect(await thumbnailPanel.screenshot()).toMatchImageSnapshot({
+    customSnapshotIdentifier: 'thumbnail-multiSelect-Mode-thumbnail-mode-selected'
   });
 });
