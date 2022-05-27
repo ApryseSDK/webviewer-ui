@@ -58,6 +58,14 @@ export default store => {
   const measurementsDisabled = !getHashParameters('enableMeasurement', false);
   if (measurementsDisabled) {
     disableFeatures([Feature.Measurement]);
+  } else {
+    dispatch(
+      actions.disableElements(
+        [
+          'cloudyRectangleAreaToolGroupButton',
+        ]
+      )
+    );
   }
 
   const redactionsDisabled = !(
@@ -120,4 +128,9 @@ export default store => {
       PRIORITY_ONE,
     ),
   );
+
+  const enableChangeView = getHashParameters('ChangeView', false);
+  if (!enableChangeView) {
+    disableFeatures([Feature.ChangeView]);
+  }
 };

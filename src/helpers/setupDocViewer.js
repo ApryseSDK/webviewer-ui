@@ -105,6 +105,10 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap[ToolNames.REDACTION2] = new window.Core.Tools.RedactionCreateTool(docViewer, ToolNames.REDACTION2);
   toolModeMap[ToolNames.REDACTION3] = new window.Core.Tools.RedactionCreateTool(docViewer, ToolNames.REDACTION3);
   toolModeMap[ToolNames.REDACTION4] = new window.Core.Tools.RedactionCreateTool(docViewer, ToolNames.REDACTION4);
+  toolModeMap.AnnotationCreateChangeViewTool = new window.Core.Tools.ChangeViewCreateTool(docViewer, ToolNames.CHANGEVIEW);
+  toolModeMap.AnnotationCreateChangeViewTool2 = new window.Core.Tools.ChangeViewCreateTool(docViewer, ToolNames.CHANGEVIEW2);
+  toolModeMap.AnnotationCreateChangeViewTool3 = new window.Core.Tools.ChangeViewCreateTool(docViewer, ToolNames.CHANGEVIEW3);
+  toolModeMap.AnnotationCreateChangeViewTool4 = new window.Core.Tools.ChangeViewCreateTool(docViewer, ToolNames.CHANGEVIEW4);
 };
 
 export default setupDocViewer;

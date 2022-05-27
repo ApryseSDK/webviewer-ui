@@ -432,6 +432,19 @@ const map = {
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.StickyAnnotation,
   },
+  changeView: {
+    icon: 'icon-tool-changeview',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: [
+      'AnnotationCreateChangeViewTool',
+      'AnnotationCreateChangeViewTool2',
+      'AnnotationCreateChangeViewTool3',
+      'AnnotationCreateChangeViewTool4',
+    ],
+    annotationCheck: annotation => annotation instanceof window.Annotations.StampAnnotation && annotation.ViewState,
+  },
   image: {
     icon: 'icon-tool-image-line',
     iconColor: null,

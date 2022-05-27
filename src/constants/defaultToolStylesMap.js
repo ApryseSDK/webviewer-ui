@@ -373,5 +373,17 @@ export default {
   },
   AnnotationCreateRedaction4: {
     StrokeColor: { R: 0, G: 128, B: 0, A: 1 }
-  }
+  },
+  AnnotationCreateChangeViewTool: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateChangeViewTool2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateChangeViewTool3: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateChangeViewTool4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
 };

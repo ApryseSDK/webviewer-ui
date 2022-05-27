@@ -139,7 +139,8 @@
     "link": "Link",
     "other": "Other",
     "3D": "3D",
-    "sound": "Sound"
+    "sound": "Sound",
+    "changeView": "Change View"
   },
   "rubberStamp": {
     "Approved": "Approved",

@@ -348,6 +348,12 @@ export default {
           title: 'annotation.3D',
           showColor: 'never',
         },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'changeViewTools',
+          dataElement: 'changeViewToolGroupButton',
+          title: 'annotation.changeView'
+        },
         { type: 'divider' },
         {
           type: 'customElement',
@@ -838,6 +844,34 @@ export default {
         img: 'icon-form-field-combobox',
         group: 'comboBoxFieldTools',
         showColor: 'always',
+      },
+      AnnotationCreateChangeViewTool: {
+        dataElement: 'changeViewCreateToolButton',
+        title: 'annotation.changeView',
+        img: 'icon-tool-changeview',
+        group: 'changeViewTools',
+        showColor: 'always'
+      },
+      AnnotationCreateChangeViewTool2: {
+        dataElement: 'changeViewCreateToolButton2',
+        title: 'annotation.changeView',
+        img: 'icon-tool-changeview',
+        group: 'changeViewTools',
+        showColor: 'always'
+      },
+      AnnotationCreateChangeViewTool3: {
+        dataElement: 'changeViewCreateToolButton3',
+        title: 'annotation.changeView',
+        img: 'icon-tool-changeview',
+        group: 'changeViewTools',
+        showColor: 'always'
+      },
+      AnnotationCreateChangeViewTool4: {
+        dataElement: 'changeViewCreateToolButton4',
+        title: 'annotation.changeView',
+        img: 'icon-tool-changeview',
+        group: 'changeViewTools',
+        showColor: 'always'
       },
     },
     tab: {
