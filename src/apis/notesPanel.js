@@ -65,9 +65,41 @@ const disableReplyCollapse = store => () => {
   store.dispatch(actions.setNotesPanelRepliesCollapsing(false));
 };
 
+/**
+ * Disables the automatic expansion of all the comments threads in the Notes Panel.
+ *
+ * @method UI.NotesPanel.disableAutoExpandCommentThread
+ *
+ * @example
+ * WebViewer(...).then(async function(instance) {
+ *
+ *   instance.UI.NotesPanel.disableAutoExpandCommentThread()
+ * });
+ */
+const disableAutoExpandCommentThread = store => () => {
+  store.dispatch(actions.setCommentThreadExpansion(false));
+};
+
+/**
+ * Enables the automatic expansion of the comments threads in the Notes Panel.
+ *
+ * @method UI.NotesPanel.enableAutoExpandCommentThread
+ *
+ * @example
+ * WebViewer(...).then(async function(instance) {
+ *
+ *   instance.UI.NotesPanel.enableAutoExpandCommentThread()
+ * });
+ */
+const enableAutoExpandCommentThread = store => () => {
+  store.dispatch(actions.setCommentThreadExpansion(true));
+};
+
 export {
   enableTextCollapse,
   disableTextCollapse,
   enableReplyCollapse,
-  disableReplyCollapse
+  disableReplyCollapse,
+  disableAutoExpandCommentThread,
+  enableAutoExpandCommentThread
 };

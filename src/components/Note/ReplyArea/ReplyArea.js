@@ -135,7 +135,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     setPendingReply(value, annotation.Id);
     onPendingReplyChange();
   };
-  return ifReplyNotAllowed ? null : (
+  return ifReplyNotAllowed || !isSelected ? null : (
     <form onSubmit={postReply} className='reply-area-container'>
       <div
         className={replyAreaClass}

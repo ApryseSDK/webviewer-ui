@@ -445,6 +445,11 @@ export default initialState => (state = initialState, action) => {
         ...state,
         isNotesPanelRepliesCollapsingEnabled: payload.enableNotesPanelRepliesCollapsing
       };
+    case 'SET_COMMENT_THREAD_EXPANSION':
+      return {
+        ...state,
+        isCommentThreadExpansionEnabled: payload.enableCommentThreadExpansion
+      };
     case 'ADD_TRUSTED_CERTIFICATES':
       /**
        * To mimic the behavior of the Core implementation, where certificates

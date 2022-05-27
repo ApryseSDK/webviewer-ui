@@ -171,7 +171,14 @@ import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHan
 import overrideSearchExecution from './overrideSearchExecution';
 import reactElements from './reactElements';
 import { addTrustedCertificates, loadTrustList } from './verificationOptions';
-import { enableTextCollapse, disableTextCollapse, enableReplyCollapse, disableReplyCollapse } from './notesPanel';
+import {
+  enableTextCollapse,
+  disableTextCollapse,
+  enableReplyCollapse,
+  disableReplyCollapse,
+  disableAutoExpandCommentThread,
+  enableAutoExpandCommentThread,
+} from './notesPanel';
 import { enableMultiselect, disableMultiselect, selectPages, unselectPages, getSelectedPageNumbers, } from './thumbnailsPanel';
 import toggleReaderMode from './toggleReaderMode';
 import toggleElementVisibility from './toggleElementVisibility';
@@ -333,6 +340,8 @@ export default store => {
       disableTextCollapse: disableTextCollapse(store),
       enableReplyCollapse: enableReplyCollapse(store),
       disableReplyCollapse: disableReplyCollapse(store),
+      disableAutoExpandCommentThread: disableAutoExpandCommentThread(store),
+      enableAutoExpandCommentThread: enableAutoExpandCommentThread(store),
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
