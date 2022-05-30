@@ -46,6 +46,28 @@ const SUPPORTED_UNITS = {
   'Centimeters (cm)': 'cm',
   'Millimeters (mm)': 'mm',
 }
+
+const CROP_DIMENSIONS = {
+  'Letter': {
+    'yOffset': 0,
+    'height': 11,
+    'xOffset': 0,
+    'width': 8.5,
+  },
+  'Half letter': {
+    'yOffset': 0,
+    'height': 5.5,
+    'xOffset': 0,
+    'width': 8.5,
+  },
+  'Junior legal': {
+    'yOffset': 0,
+    'height': 5,
+    'xOffset': 0,
+    'width': 8,
+  }
+}
+
 const DEFAULT_UNITS = 'Inches (in)';
 const DEFAULT_UNIT_IN_INPUT = '\"';
 
@@ -76,6 +98,7 @@ const testPopup = (
       redrawCropAnnotations={noop}
       isInDesktopOnlyMode={false}
       isMobile={false}
+      presetCropDimensions={CROP_DIMENSIONS}
     />
   </div>
 );

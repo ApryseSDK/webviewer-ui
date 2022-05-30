@@ -7,6 +7,11 @@ import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 
+export const setPresetCropDimensions = presetCropDimensions => ({
+  type: 'SET_PRESET_CROP_DIMENSIONS',
+  payload: { presetCropDimensions }
+});
+
 export const setDateTimeFormats = dateTimeFormats => ({
   type: 'SET_DATE_TIME_FORMATS',
   payload: { dateTimeFormats },

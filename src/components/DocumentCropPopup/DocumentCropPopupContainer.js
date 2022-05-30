@@ -11,10 +11,11 @@ import useMedia from '../../hooks/useMedia';
 
 function DocumentCropPopupContainer() {
   const cropCreateTool = core.getTool(window.Core.Tools.ToolNames['CROP']);
-  const [isOpen, isInDesktopOnlyMode] = useSelector(state => [
+  const [isOpen, isInDesktopOnlyMode, presetCropDimensions] = useSelector(state => [
     selectors.getActiveToolName(state) === window.Core.Tools.ToolNames['CROP'] &&
       selectors.isElementOpen(state, 'documentCropPopup'),
     selectors.isInDesktopOnlyMode(state),
+    selectors.getPresetCropDimensions(state)
   ]);
   const dispatch = useDispatch();
   const [isCropping, setIsCropping] = useState(cropCreateTool.getIsCropping());
@@ -172,7 +173,8 @@ function DocumentCropPopupContainer() {
     getPageHeight,
     getPageWidth,
     redrawCropAnnotations,
-    isInDesktopOnlyMode
+    isInDesktopOnlyMode,
+    presetCropDimensions
   };
 
   const isMobile = useMedia(['(max-width: 640px)'], [true], false);

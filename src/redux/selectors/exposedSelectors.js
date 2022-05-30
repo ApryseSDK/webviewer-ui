@@ -2,6 +2,7 @@ import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 
 // viewer
+export const getPresetCropDimensions = state => state.viewer.presetCropDimensions;
 export const getDateTimeFormats = state => state.viewer.dateTimeFormats;
 export const getThumbnailSelectionMode = state => state.viewer.thumbnailSelectionMode;
 export const getFonts = state => state.viewer.fonts;
