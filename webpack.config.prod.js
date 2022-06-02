@@ -65,7 +65,10 @@ module.exports = {
             ],
           },
         },
-        include: [path.resolve(__dirname, 'src')],
+        include: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules')],
+        exclude: function(modulePath) {
+          return /node_modules/.test(modulePath) && !/node_modules.+react-dnd/.test(modulePath);
+        }
       },
       {
         test: /\.scss$/,
