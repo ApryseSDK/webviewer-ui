@@ -162,16 +162,16 @@ const DocumentCropPopup = ({
 
   useEffect(() => {
     if (cropAnnotation) {
-      const onLayoutChanged = () => {
+      const onPagesUpdated = () => {
         setTop(truncateInput(convertPtToUnits(getCropDimension('top'), unit)));
         setBottom(truncateInput(convertPtToUnits(getCropDimension('bottom'), unit)));
         setLeft(truncateInput(convertPtToUnits(getCropDimension('left'), unit)));
         setRight(truncateInput(convertPtToUnits(getCropDimension('right'), unit)));
       };
-      core.addEventListener('layoutChanged', onLayoutChanged);
+      core.addEventListener('pagesUpdated', onPagesUpdated);
 
       return () => {
-        core.removeEventListener('layoutChanged', onLayoutChanged);
+        core.removeEventListener('pagesUpdated', onPagesUpdated);
       };
     }
   }, []);

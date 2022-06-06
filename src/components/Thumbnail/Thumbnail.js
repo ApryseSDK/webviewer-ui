@@ -112,7 +112,7 @@ const Thumbnail = ({
   };
 
   useEffect(() => {
-    const onLayoutChanged = changes => {
+    const onPagesUpdated = changes => {
       const { contentChanged, moved, added, removed } = changes;
 
       const currentPage = index + 1;
@@ -137,13 +137,13 @@ const Thumbnail = ({
       loadThumbnailAsync();
     };
 
-    core.addEventListener('layoutChanged', onLayoutChanged);
+    core.addEventListener('pagesUpdated', onPagesUpdated);
     core.addEventListener('rotationUpdated', onRotationUpdated);
     if (canLoad) {
       loadThumbnailAsync();
     }
     return () => {
-      core.removeEventListener('layoutChanged', onLayoutChanged);
+      core.removeEventListener('pagesUpdated', onPagesUpdated);
       core.removeEventListener('rotationUpdated', onRotationUpdated);
       clearTimeout(loadTimeout);
       onRemove(index);

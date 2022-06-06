@@ -24,7 +24,7 @@ export default store => {
   const onSignatureAnnotationAdded = eventListeners.onSignatureAnnotationAdded(dispatch);
   const onStickyAnnotationAdded = eventListeners.onStickyAnnotationAdded(store);
   const onFullScreenChange = eventListeners.onFullScreenChange(store);
-  const onLayoutChanged = eventListeners.onLayoutChanged(dispatch);
+  const onPagesUpdated = eventListeners.onPagesUpdated(dispatch);
   const onLocationSelected = eventListeners.onLocationSelected(store);
   const onDotStampAnnotationAdded = eventListeners.onDotStampAnnotationAdded(dispatch);
   const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(dispatch);
@@ -52,7 +52,7 @@ export default store => {
       core.addEventListener('toolModeUpdated', onToolModeUpdated);
       core.addEventListener('zoomUpdated', onZoomUpdated);
       core.addEventListener('pageNumberUpdated', onPageNumberUpdated);
-      core.addEventListener('layoutChanged', onLayoutChanged);
+      core.addEventListener('pagesUpdated', onPagesUpdated);
       core.addEventListener('readOnlyModeChanged', onReadOnlyModeChanged);
       core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.addEventListener('annotationChanged', onAnnotationChanged);
@@ -92,7 +92,7 @@ export default store => {
       core.removeEventListener('toolModeUpdated', onToolModeUpdated);
       core.removeEventListener('zoomUpdated', onZoomUpdated);
       core.removeEventListener('pageNumberUpdated', onPageNumberUpdated);
-      core.removeEventListener('layoutChanged', onLayoutChanged);
+      core.removeEventListener('pagesUpdated', onPagesUpdated);
       core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
       core.removeEventListener('annotationChanged', onAnnotationChanged);
       core.removeEventListener('pageComplete', onPageComplete);
