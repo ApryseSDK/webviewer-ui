@@ -29,8 +29,8 @@
 
     input {
       width: 100%;
-      padding: 6px;
-      height: 16px;
+      padding: 6px 26px 6px 6px;
+      height: 20px;
       border: none;
       background: transparent;
     }
@@ -64,12 +64,12 @@
 
   .options {
     display: flex;
+    flex-wrap: wrap;
     margin-top: 8px;
 
     // toolkit choice component
     > span {
       margin-right: 8px;
-      width: 50%;
       // label of toolkit choice component
       > label {
         white-space: nowrap;
@@ -89,7 +89,7 @@
       width:25px !important;
       margin: 0px;
     }
-    
+
     .buttons {
       display: flex;
       flex-direction: row;
