@@ -1,7 +1,7 @@
 {
   "action": {
     "apply": "적용",
-    "applyAll": "모두 적용",
+    "applyAll": "모두적용",
     "calendar": "캘린더",
     "calibrate": "교정",
     "cancel": "취소",
@@ -14,24 +14,24 @@
     "copy": "복사",
     "delete": "삭제",
     "group": "그룹",
-    "ungroup": "그룹 해제",
+    "ungroup": "그룹해제",
     "download": "다운로드",
     "edit": "편집",
     "extract": "선택페이지 다운로드",
-    "enterFullscreen": "전체 화면",
-    "exitFullscreen": "전체 화면 끝내기",
+    "enterFullscreen": "전체화면",
+    "exitFullscreen": "전체화면 끝내기",
     "fit": "맞추기",
     "fitToPage": "페이지에 맞추기",
     "fitToWidth": "너비에 맞추기",
-    "more": "조금 더",
-    "openFile": "파일 열기",
-    "pagePrev": "이전 페이지",
-    "pageNext": "다음 페이지",
-    "pageSet": "페이지 설정",
+    "more": "더보기",
+    "openFile": "파일열기",
+    "pagePrev": "이전페이지",
+    "pageNext": "다음페이지",
+    "pageSet": "페이지설정",
     "print": "인쇄",
-    "proceed": "진행하다",
+    "proceed": "계속",
     "name": "이름",
-    "rename": "이름 바꾸기",
+    "rename": "이름바꾸기",
     "ok": "확인",
     "rotate": "회전",
     "rotate3D": "3D회전",
@@ -56,8 +56,8 @@
     "darkMode": "다크모드",
     "lightMode": "라이트모드",
     "fileAttachmentDownload": "첨부파일 다운로드",
-    "prevResult": "이전 결과",
-    "nextResult": "다음 결과",
+    "prevResult": "이전결과",
+    "nextResult": "다음결과",
     "prev": "이전",
     "next": "다음",
     "startFormEditing": "양식편집 시작",
@@ -68,13 +68,13 @@
     "viewShortCutKeysFor3D": "3D툴 단축키 보기",
     "markAllRead": "모두 읽은 상태로 표시",
     "insertPage": "페이지 삽입",
-    "insertBlankPageAbove": "위에 빈 페이지 삽입",
-    "insertBlankPageBelow": "아래에 빈 페이지 삽입",
+    "insertBlankPageAbove": "위에 빈페이지 삽입",
+    "insertBlankPageBelow": "아래에 빈페이지 삽입",
     "pageManipulation": "페이지 편집",
     "replace": "바꾸기",
     "showLess": "간단히 보기",
-    "showMore": "더 보기",
-    "chooseFile": "파일 선택",
+    "showMore": "더보기",
+    "chooseFile": "파일선택",
     "selectYourOption": "옵션을 선택하세요",
     "open": "열기",
     "deselectAll": "모두 선택해제",
@@ -83,17 +83,17 @@
     "moveToBottom": "맨 아래로 이동",
     "redactPages": "페이지 수정",
     "playAudio": "오디오 재생",
-    "pauseAudio": "오디오 일시 중지",
-    "selectAll": "모두 선택",
-    "unselect": "선택 취소",
-    "addMark": "마크 추가",
+    "pauseAudio": "오디오 일시중지",
+    "selectAll": "모두선택",
+    "unselect": "선택취소",
+    "addMark": "마크추가",
     "viewFile": "파일보기",
     "switchLanguage": "언어"
   },
   "annotation": {
-    "areaMeasurement": "면적 측정",
+    "areaMeasurement": "면적측정",
     "arc": "호",
-    "arcMeasurement": "아크 측정",
+    "arcMeasurement": "아크측정",
     "arrow": "화살표",
     "callout": "설명선",
     "crop": "잘라내기",
@@ -165,7 +165,7 @@
     "SBRejected": "거절"
   },
   "component": {
-    "attachmentPanel": "첨부 파일",
+    "attachmentPanel": "첨부파일",
     "leftPanel": "패널",
     "toolsHeader": "도구",
     "searchOverlay": "검색",
@@ -196,20 +196,20 @@
     "toolsOverlayNoPresets": "사전 설정 없음",
     "badDocument": "문서를 로드하지 못했습니다. 문서가 손상되었거나 유효하지 않습니다.",
     "customPrintPlaceholder": "예: 3, 4-10",
-    "encryptedAttemptsExceeded": "암호화된 문서를 로드하지 못했습니다. 시도가 너무 많습니다.",
-    "encryptedUserCancelled": "암호화된 문서를 로드하지 못했습니다. 비밀번호 입력이 취소되었습니다.",
-    "enterPassword": "이 문서는 비밀번호로 보호되어 있습니다. 비밀번호를 입력하세요",
-    "incorrectPassword": "비밀번호가 잘못되었습니다. 남은 시도: {{ remainingAttempts }}",
+    "encryptedAttemptsExceeded": "암호화된 문서를 로드하지 못했습니다.",
+    "encryptedUserCancelled": "암호화된 문서를 로드하지 못했습니다.",
+    "enterPassword": "비밀번호를 입력하세요",
+    "incorrectPassword": "비밀번호르 잘못입력하였습니다. 남은 시도: {{ remainingAttempts }}",
     "noAnnotations": "주석에 대한 댓글입니다.",
-    "noAnnotationsReadOnly": "이 문서에는 주석이 없습니다.",
+    "noAnnotationsReadOnly": "주석이 없는 문서입니다.",
     "noAnnotationsFilter": "주석이 생성되면 여기에 필터가 표시됩니다.",
-    "noOutlines": "이 문서에는 개요가 없습니다.",
-    "noAttachments": "이 문서에는 첨부 파일이 없습니다.",
+    "noOutlines": "개요가 없는 문서입니다.",
+    "noAttachments": "첨부파일이 없는 문서입니다.",
     "noResults": "결과를 찾을 수 없습니다.",
-    "numResultsFound": "찾은 결과",
-    "notSupported": "해당 유형의 파일은 지원되지 않습니다.",
-    "passwordRequired": "비밀번호가 필요합니다",
-    "preparingToPrint": "인쇄 준비 중...",
+    "numResultsFound": "찾은결과",
+    "notSupported": "지원하지 않는 유형의 파일입니다.",
+    "passwordRequired": "비밀번호를 입력하세요.",
+    "preparingToPrint": "인쇄준비 중...",
     "annotationReplyCount": "{{count}} 댓글",
     "annotationReplyCount_plural": "{{count}} 답글",
     "printTotalPageCount": "{{count}} 페이지",
@@ -223,24 +223,24 @@
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}} 만 허용됩니다",
     "enterMeasurement": "두 지점 사이에 측정 값을 입력하세요.",
     "errorEnterMeasurement": "입력 한 숫자가 잘못되었습니다. 7.5 또는 7 1/2과 같은 값을 입력 할 수 있습니다.",
-    "linkURLorPage": "링크 URL 또는 페이지",
+    "linkURLorPage": "링크URL 또는 페이지",
     "warning": "경고",
-    "enterContentEditingMode": "텍스트 편집 모드로 들어가려고 합니다.",
-    "existingAnnotationWarning": "기존 주석은 편집 후 텍스트와 일치하지 않을 수 있습니다.",
-    "changesCannotBeUndone": "변경 사항은 취소할 수 없습니다.",
-    "doNotShowAgain": "나를 다시 표시하지 않음",
-    "enterReplacementText": "바꿀 텍스트를 입력하세요",
+    "enterContentEditingMode": "텍스트 편집모드로 전환됩니다.",
+    "existingAnnotationWarning": "기존 주석은 편집 후 일치하지 않을 수 있습니다.",
+    "changesCannotBeUndone": "변경사항은 취소할 수 없습니다.",
+    "doNotShowAgain": "다시 표시하지 않기",
+    "enterReplacementText": "변경할 텍스트를 입력하세요",
     "sortBy": "정렬 기준",
     "emptyCustomStampInput": "스탬프 텍스트는 비워 둘 수 없습니다",
     "unpostedComment": "게시되지 않은 댓글",
     "lockedLayer": "레이어가 잠겨 있습니다.",
     "layerVisibililtyNoChange": "레이어 가시성을 변경할 수 없습니다.",
     "untitled": "제목없음",
-    "selectHowToLoadFile": "문서 로드 방법 선택",
-    "openFileByUrl": "URL로 파일 열기:",
+    "selectHowToLoadFile": "문서로드 방법 선택",
+    "openFileByUrl": "URL로 파일열기:",
     "enterUrlHere": "여기에 URL을 입력하세요.",
-    "openLocalFile": "로컬파일 열기:",
-    "selectFile": "파일 선택",
+        "openLocalFile": "로컬파일 열기:",
+    "selectFile": "파일선택",
     "selectPageToReplace": "문서에서 교체할 페이지를 선택합니다.",
     "embeddedFiles": "포함된 파일",
     "pageNum": "페이지 번호"
@@ -250,10 +250,10 @@
       "caret": "커서",
       "custom": "사용자 지정",
       "ellipse": "타원형",
-      "fileattachment": "파일 첨부",
+      "fileattachment": "파일첨부",
       "freehand": "그리기",
       "callout": "설명선",
-      "freetext": "텍스트 상자",
+      "freetext": "텍스트상자",
       "line": "선",
       "polygon": "다각형",
       "polyline": "꺾은선",
@@ -270,7 +270,7 @@
       "other": "다른"
     },
     "notesOrder": {
-      "dropdownLabel": "정렬 순서 목록",
+      "dropdownLabel": "정렬순서 목록",
       "position": "페이지",
       "time": "작성시간",
       "status": "상태",
@@ -281,7 +281,7 @@
       "modifiedDate": "수정일"
     },
     "toolbarGroup": {
-      "dropdownLabel": "도구 모음 그룹",
+      "dropdownLabel": "도구모음 그룹",
       "toolbarGroup-View": "보기",
       "toolbarGroup-Annotate": "주석",
       "toolbarGroup-Shapes": "도형",
@@ -343,8 +343,8 @@
       "pageQuality": "인쇄 품질",
       "qualityNormal": "일반",
       "qualityHigh": "최상",
-      "includeAnnotations": "주석 포함",
-      "includeComments": "댓글 포함",
+      "includeAnnotations": "주석포함",
+      "includeComments": "댓글포함",
       "addWatermarkSettings": "워터마크 추가"
     },
     "printInfo": {
@@ -353,7 +353,7 @@
       "date": "날짜"
     },
     "redaction": {
-      "markForRedaction": "민감한 정보 표시"
+      "markForRedaction": "민감한 정보표시"
     },
     "searchPanel": {
       "caseSensitive": "대/소문자 구분",
@@ -382,7 +382,7 @@
       "dragAndDrop": "여기에 파일을 드래그 앤 드롭하세요.",
       "or": "또는",
       "chooseFile": "파일 선택",
-      "localFile": "로컬 파일",
+      "localFile": "업로드",
       "pageReplaceInputLabel": "페이지 교체",
       "pageReplaceInputFromSource": "페이지 포함"
     },
@@ -516,7 +516,7 @@
       "secondaryBtn": "페이지 다운로드 및 삭제"
     },
     "redaction": {
-      "applyTile": "수정 적용",
+      "applyTile": "적용",
       "applyMessage": "편집을 위해 선택된 모든 항목을 영구적으로 제거합니다. 제거 후 되돌릴 수 없습니다."
     },
     "selectPage": {
@@ -587,9 +587,9 @@
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "URL을 입력하거나 WebViewer에 로드할 파일을 선택하십시오.",
-    "enterUrl": "파일 URL 입력",
+    "enterUrl": "파일URL 입력",
     "extension": "파일 확장자",
-    "existingFile": "파일이 이미 열려 있습니다.",
+    "existingFile": "열린 파일입니다.",
     "addTab": "탭 추가"
   },
   "datePicker": {
@@ -663,7 +663,7 @@
       "height": "높이",
       "invalidField": {
         "duplicate": "이미 존재하는 양식이름 입니다.",
-        "empty": "양식이름은 비워 둘 수 없습니다."
+        "empty": "양식이름으 입력하세요."
       }
     },
     "apply": "적용",
@@ -694,7 +694,7 @@
     },
     "documentPermission": {
       "noChangesAllowed": "{{editor}}는 이 문서를 변경할 수 없습니다.",
-      "formfillingSigningAllowed": "{{editor}}는 이 문서에 양식 채우기 및 서명을 허용하였습니다. 다른 변경은 허용되지 않습니다.",
+      "formfillingSigningAllowed": "{{editor}}는 이 문서에 양식채우기 및 서명을 허용하였습니다. 다른 변경은 허용되지 않습니다.",
       "annotatingFormfillingSigningAllowed": "{{editor}}는 이 문서에 양식채우기, 서명 및 주석 추가를 허용하였습니다. 다른 변경은 허용되지 않습니다.",
       "unrestricted": "{{editor}}는 이 문서를 편집할 수 있습니다."
     },
@@ -791,7 +791,7 @@
       "autoTrim": "자동 트림"
     },
     "cropModal": {
-      "applyTitle": "작물을 적용하시겠습니까?",
+      "applyTitle": "잘라내기를 적용하시겠습니까?",
       "applyMessage": "이 작업은 선택한 모든 페이지를 영구적으로 자릅니다. 취소할 수 없습니다.",
       "cancelTitle": "자르기를 취소하시겠습니까?",
       "cancelMessage": "선택한 모든 페이지 자르기를 취소하시겠습니까?"
@@ -800,23 +800,23 @@
   "redactionPanel": {
     "noMarkedRedactions": "텍스트, 지역, 페이지를 표시하거나 검색하여 수정을 시작하세요.",
     "redactionSearchPlaceholder": "키워드 검색 또는 패턴으로 추가",
-    "redactionCounter": "수정 표시됨",
-    "clearMarked": "분명한",
+    "redactionCounter": "표시 수정",
+    "clearMarked": "표시 지우기",
     "redactAllMarked": "모두 수정",
     "redactionItem": {
       "regionRedaction": "지역 수정",
-      "fullPageRedaction": "전체 페이지 수정",
-      "image": "영상"
+      "fullPageRedaction": "전체 페이지수정",
+      "image": "이미지"
     },
-    "expand": "확장하다",
+    "expand": "확대",
     "collapse": "무너지다",
-    "searchResults": "검색 결과",
+    "searchResults": "검색결과",
     "search": {
-      "creditCards": "신용 카드",
-      "phoneNumbers": "전화 번호",
+      "creditCards": "신용카드",
+      "phoneNumbers": "전화번호",
       "images": "이미지",
       "emails": "이메일",
-      "pattern": "무늬",
+      "pattern": "패턴",
       "start": "검색 시작"
     }
   },
