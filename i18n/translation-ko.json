@@ -487,7 +487,7 @@
     "customStampModal": {
       "modalName": "스탬프 만들기",
       "stampText": "텍스트 :",
-      "timestampText": "날자 텍스트 :",
+      "timestampText": "날짜 텍스트 :",
       "stampColor": "스탬프 색상 :",
       "Username": "사용자 이름",
       "Date": "날짜",
@@ -642,7 +642,7 @@
       "6": "토"
     },
     "today": "오늘",
-    "invalidDateTime": "잘못된 날짜/시간: 입력한 형식이 일치하여야 합니다"
+    "invalidDateTime": " 입력한 날짜/시간 형식이 일치하지 않습니다."
   },
   "formField": {
     "formFieldPopup": {
