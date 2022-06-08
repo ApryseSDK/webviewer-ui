@@ -770,9 +770,9 @@
       "location": "위치",
       "reason": "원인",
       "signingTime": "서명시간",
-      "noContactInformation": "제공된 연락처정보 없음",
-      "noLocation": "제공된 위치없음",
-      "noReason": "제공된 원인없음",
+      "noContactInformation": "연락처정보가 없습니다.",
+      "noLocation": "위치정보가 없습니다.",
+      "noReason": "원인정보가 없습니다.",
       "noSigningTime": "서명시간이 없습니다."
     },
     "panelMessages": {
