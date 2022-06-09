@@ -968,7 +968,41 @@ export default {
       colorFilter: [],
       typeFilter: [],
       statusFilter: []
-    }
+    },
+    zoomStepFactors: [
+      {
+        step: 7.5,
+        startZoom: 0
+      },
+      {
+        step: 25,
+        startZoom: 80
+      },
+      {
+        step: 50,
+        startZoom: 150
+      },
+      {
+        step: 100,
+        startZoom: 250
+      },
+      {
+        step: 200,
+        startZoom: 400
+      },
+      {
+        step: 400,
+        startZoom: 800
+      },
+      {
+        step: 800,
+        startZoom: 3200
+      },
+      {
+        step: 1600,
+        startZoom: 6400
+      }
+    ]
   },
   search: {
     value: '',

@@ -210,6 +210,8 @@ import setPresetCropDimensions from './setPresetCropDimensions';
 import addDateTimeFormat from './addDateTimeFormat';
 import addRedactionSearchPattern from './addRedactionSearchPattern';
 import removeRedactionSearchPattern from './removeRedactionSearchPattern';
+import getZoomStepFactors from './getZoomStepFactors';
+import setZoomStepFactors from './setZoomStepFactors';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -456,6 +458,8 @@ export default store => {
     isInDesktopOnlyMode: isInDesktopOnlyMode(store),
     disablePageDeletionConfirmationModal: disablePageDeletionConfirmationModal(store),
     enablePageDeletionConfirmationModal: enablePageDeletionConfirmationModal(store),
+    getZoomStepFactors: getZoomStepFactors(store),
+    setZoomStepFactors: setZoomStepFactors(store),
   };
 
   window.instance = {

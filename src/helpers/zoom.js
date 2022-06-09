@@ -1,13 +1,34 @@
 import core from 'core';
-import { stepToZoomFactorRangesMap, getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
+import { getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
 
-function getStep(currentZoomFactor) {
-  const steps = Object.keys(stepToZoomFactorRangesMap);
+function convertZoomStepFactorsToRangesMap(zoomStepFactors) {
+  const rangesMap = {};
+  zoomStepFactors.sort((a, b) => a.startZoom - b.startZoom);
+  for (let i = 0; i < zoomStepFactors.length; i++) {
+    const zoomStepFactor = zoomStepFactors[i];
+    const nextZoomStepFactor = zoomStepFactors[i + 1];
+    rangesMap[`${zoomStepFactor.step / 100}`] =
+      nextZoomStepFactor ?
+        [
+          zoomStepFactor.startZoom / 100,
+          nextZoomStepFactor.startZoom / 100
+        ] :
+        [
+          zoomStepFactor.startZoom / 100,
+          null
+        ];
+  }
+  return rangesMap;
+}
+
+export function getStep(currentZoomFactor) {
+  const zoomStepFactors = window.instance.UI.getZoomStepFactors();
+  const zoomFactorRangesMap = convertZoomStepFactorsToRangesMap(zoomStepFactors);
+  const steps = Object.keys(zoomFactorRangesMap);
   const step = steps.find(step => {
-    const zoomFactorRanges = stepToZoomFactorRangesMap[step];
+    const zoomFactorRanges = zoomFactorRangesMap[step];
     return isCurrentZoomFactorInRange(currentZoomFactor, zoomFactorRanges);
   });
-
   return parseFloat(step);
 }
 

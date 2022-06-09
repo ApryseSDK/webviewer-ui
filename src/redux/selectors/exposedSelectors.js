@@ -356,6 +356,8 @@ export const isThumbnailSelectingPages = state => state.viewer.thumbnailSelectin
 
 export const getWatermarkModalOptions = state => state.viewer.watermarkModalOptions;
 
+export const getZoomStepFactors = state => state.viewer.zoomStepFactors;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 

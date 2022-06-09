@@ -618,3 +618,8 @@ export const removeRedactionSearchPattern = (searchPatternType) => ({
   type: 'REMOVE_REDACTION_SEARCH_PATTERN',
   payload: { searchPatternType }
 });
+
+export const setZoomStepFactors = (zoomStepFactors) => ({
+  type: 'SET_ZOOM_STEP_FACTORS',
+  payload: { zoomStepFactors }
+});

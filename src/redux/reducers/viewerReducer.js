@@ -553,6 +553,8 @@ export default initialState => (state = initialState, action) => {
       return { ...state, activeSoundAnnotation: payload.activeSoundAnnotation };
     case 'SET_ANNOTATION_FILTERS':
       return { ...state, annotationFilters: payload.annotationFilters };
+    case 'SET_ZOOM_STEP_FACTORS': 
+      return { ...state, zoomStepFactors: payload.zoomStepFactors };
     default:
       return state;
   }
