@@ -79,7 +79,8 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     }
     if (textareaRef && textareaRef.current) {
       const editor = textareaRef.current.getEditor();
-      const textLength = editor.getText().length;
+      const lastNewLineCharacterLength = 1
+      const textLength = editor.getLength() - lastNewLineCharacterLength;
       textareaRef.current.editor.setSelection(textLength, textLength);
     }
   }, []);
@@ -88,7 +89,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     // prevent the textarea from blurring out
     e.preventDefault();
     const editor = textareaRef.current.getEditor();
-    const replyText = editor.getText()
+    const replyText = mentionsManager.getFormattedTextFromDeltas(editor.getContents())
 
     if (!replyText.trim()) {
       return;

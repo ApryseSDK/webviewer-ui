@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "追加",
     "apply": "適用",
     "applyAll": "すべて適用",
     "calendar": "カレンダー",
@@ -209,6 +210,7 @@
     "numResultsFound": "結果が見つかりました",
     "notSupported": "このファイル形式はサポートされていません。",
     "passwordRequired": "パスワードが必要です",
+    "enterPasswordPlaceholder": "パスワードを入力する",
     "preparingToPrint": "印刷の準備をしています...",
     "annotationReplyCount": "{{count}} 返信",
     "annotationReplyCount_plural": "{{count}} 返信",
@@ -243,7 +245,8 @@
     "selectFile": "ファイルを選ぶ",
     "selectPageToReplace": "ドキュメント内の入れ替えたいページを選択します。",
     "embeddedFiles": "埋め込みファイル",
-    "pageNum": "ページ番号"
+    "pageNum": "ページ番号",
+    "error": "エラー"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "すべて",
       "current": "現在のページ",
       "pages": "印刷ページ",
+      "specifyPages": "ページを指定",
       "view": "現在のビュー",
       "pageQuality": "印刷品質",
       "qualityNormal": "標準",
       "qualityHigh": "きれい",
       "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
-      "addWatermarkSettings": "透かしを追加"
+      "printSettings": "印刷設定"
     },
     "printInfo": {
       "author": "作成者",
@@ -447,12 +451,15 @@
       "enableSnapping": "測定ツールのスナップを有効にする"
     },
     "watermark": {
+      "title": "透かし",
+      "addWatermark": "透かしを追加",
       "size": "サイズ",
       "location": "透かしを入れる位置を選択してください",
       "text": "テキスト",
       "style": "スタイル",
       "resetAllSettings": "すべての設定をリセット",
       "font": "フォント",
+      "addNew": "新しく追加する",
       "locations": {
         "center": "中央",
         "topLeft": "左上",

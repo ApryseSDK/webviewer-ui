@@ -18,7 +18,7 @@ import onHistoryChanged from './onHistoryChanged';
 import onStickyAnnotationAdded from './onStickyAnnotationAdded';
 import onFullScreenChange from './onFullScreenChange';
 import onUpdateAnnotationPermission from './onUpdateAnnotationPermission';
-import onLayoutChanged from './onLayoutChanged';
+import onPagesUpdated from './onPagesUpdated';
 import onLocationSelected from './onLocationSelected';
 import onDotStampAnnotationAdded from './onDotStampAnnotationAdded';
 import onRubberStampAnnotationAdded from './onRubberStampAnnotationAdded';
@@ -54,7 +54,7 @@ export {
   onStickyAnnotationAdded,
   onFullScreenChange,
   onUpdateAnnotationPermission,
-  onLayoutChanged,
+  onPagesUpdated,
   onLocationSelected,
   onDotStampAnnotationAdded,
   onRubberStampAnnotationAdded,

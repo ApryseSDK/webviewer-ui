@@ -9,6 +9,7 @@ import ColorPalettePicker from 'components/ColorPalettePicker';
 import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
+import LineStyleOptions from 'components/LineStyleOptions';
 import Icon from "components/Icon";
 import TextStylePicker from "components/TextStylePicker";
 import LabelTextEditor from "components/LabelTextEditor";
@@ -29,7 +30,9 @@ class StylePopup extends React.PureComponent {
     style: PropTypes.object.isRequired,
     onStyleChange: PropTypes.func.isRequired,
     onPropertyChange: PropTypes.func.isRequired,
+    onSliderChange: PropTypes.func.isRequired,
     onRichTextStyleChange: PropTypes.func,
+    onLineStyleChange: PropTypes.func,
     isFreeText: PropTypes.bool,
     isMeasure: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
@@ -52,7 +55,7 @@ class StylePopup extends React.PureComponent {
     const {
       style: { Opacity, StrokeThickness, FontSize },
       onStyleChange,
-      onPropertyChange,
+      onSliderChange,
       isFreeText,
       isMeasure = false,
       // TODO: Actually disable these elements
@@ -170,7 +173,7 @@ class StylePopup extends React.PureComponent {
     const sliderComponents = Object.keys(sliders).map(key => {
       const props = sliderProps[key];
 
-      return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onPropertyChange}/>;
+      return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onSliderChange}/>;
     });
 
     return (
@@ -207,6 +210,8 @@ class StylePopup extends React.PureComponent {
       onRichTextStyleChange,
       isRedaction,
       fonts,
+      showLineStyleOptions,
+      onLineStyleChange
     } = this.props;
 
     // We do not have sliders to show up for redaction annots
@@ -343,6 +348,12 @@ class StylePopup extends React.PureComponent {
               onStyleChange={onStyleChange}
             />
           </>
+        )}
+        {showLineStyleOptions && (
+          <LineStyleOptions
+            properties={properties}
+            onLineStyleChange={onLineStyleChange}
+          />
         )}
         {!isStyleOptionDisabled && colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style} />}
       </div>

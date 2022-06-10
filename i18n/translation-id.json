@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Menambahkan",
     "apply": "Berlaku",
     "applyAll": "Terapkan semua",
     "calendar": "Kalender",
@@ -209,6 +210,7 @@
     "numResultsFound": "hasil ditemukan",
     "notSupported": "Tipe file tidak didukung.",
     "passwordRequired": "Kata sandi diperlukan",
+    "enterPasswordPlaceholder": "Masukkan kata kunci",
     "preparingToPrint": "Bersiap untuk mencetak...",
     "annotationReplyCount": "{{hitung}} Balas",
     "annotationReplyCount_plural": "{{hitung}} Balasan",
@@ -243,7 +245,8 @@
     "selectFile": "Pilih file",
     "selectPageToReplace": "Pilih halaman dalam dokumen yang ingin Anda ganti.",
     "embeddedFiles": "File Tertanam",
-    "pageNum": "Nomor halaman"
+    "pageNum": "Nomor halaman",
+    "error": "Kesalahan"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "Semua",
       "current": "Halaman saat ini",
       "pages": "Halaman untuk dicetak",
+      "specifyPages": "Tentukan Halaman",
       "view": "Pandangan saat ini",
       "pageQuality": "Kualitas cetak",
       "qualityNormal": "Normal",
       "qualityHigh": "Tinggi",
       "includeAnnotations": "Sertakan anotasi",
       "includeComments": "Sertakan komentar",
-      "addWatermarkSettings": "Tambahkan Tanda Air"
+      "printSettings": "Pengaturan Cetak"
     },
     "printInfo": {
       "author": "Pengarang",
@@ -447,12 +451,15 @@
       "enableSnapping": "Aktifkan gertakan untuk alat pengukuran"
     },
     "watermark": {
+      "title": "tanda air",
+      "addWatermark": "Tambahkan Tanda Air",
       "size": "Ukuran",
       "location": "Pilih lokasi untuk mengedit tanda air",
       "text": "Teks",
       "style": "Gaya",
       "resetAllSettings": "Atur Ulang Semua Pengaturan",
       "font": "Membuat",
+      "addNew": "Tambah baru",
       "locations": {
         "center": "Tengah",
         "topLeft": "Kiri Atas",

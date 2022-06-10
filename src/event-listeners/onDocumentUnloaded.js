@@ -17,5 +17,6 @@ export default dispatch => () => {
   dispatch(actions.setBookmarks({}));
   dispatch(actions.setTotalPages(0));
   dispatch(actions.setSearchValue(''));
+  dispatch(actions.setZoom(1));
   core.clearSearchResults();
 };

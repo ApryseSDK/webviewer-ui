@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Додати",
     "apply": "Застосувати",
     "applyAll": "Застосувати все",
     "calendar": "Календар",
@@ -209,6 +210,7 @@
     "numResultsFound": "знайдено результати",
     "notSupported": "Цей тип файлу не підтримується.",
     "passwordRequired": "Потрібен пароль",
+    "enterPasswordPlaceholder": "Введіть пароль",
     "preparingToPrint": "Підготовка до друку...",
     "annotationReplyCount": "{{count}} Відповідь",
     "annotationReplyCount_plural": "{{count}} відповідей",
@@ -243,7 +245,8 @@
     "selectFile": "Виберіть файл",
     "selectPageToReplace": "Виберіть сторінки в документі, якими потрібно замінити.",
     "embeddedFiles": "Вбудовані файли",
-    "pageNum": "Номер сторінки"
+    "pageNum": "Номер сторінки",
+    "error": "Помилка"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "всі",
       "current": "Поточна сторінка",
       "pages": "Сторінки для друку",
+      "specifyPages": "Вкажіть сторінки",
       "view": "Поточний вигляд",
       "pageQuality": "Якість друку",
       "qualityNormal": "Нормальний",
       "qualityHigh": "Високий",
       "includeAnnotations": "Включіть анотації",
       "includeComments": "Включіть коментарі",
-      "addWatermarkSettings": "Додати водяний знак"
+      "printSettings": "Налаштування друку"
     },
     "printInfo": {
       "author": "Автор",
@@ -447,12 +451,15 @@
       "enableSnapping": "Увімкнути прив’язку для інструментів вимірювання"
     },
     "watermark": {
+      "title": "Водяний знак",
+      "addWatermark": "Додати водяний знак",
       "size": "Розмір",
       "location": "Виберіть місце для редагування водяних знаків",
       "text": "Текст",
       "style": "Стиль",
       "resetAllSettings": "Скинути всі налаштування",
       "font": "Зробити",
+      "addNew": "Додати новий",
       "locations": {
         "center": "Центр",
         "topLeft": "Зліва вгорі",

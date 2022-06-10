@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Toevoegen",
     "apply": "Toepassen",
     "applyAll": "Alles toepassen",
     "calendar": "Kalender",
@@ -209,6 +210,7 @@
     "numResultsFound": "gevonden resultaten",
     "notSupported": "Dit bestandstype wordt niet ondersteund.",
     "passwordRequired": "Wachtwoord vereist",
+    "enterPasswordPlaceholder": "Voer wachtwoord in",
     "preparingToPrint": "Printen voorbereiden...",
     "annotationReplyCount": "{{count}} reactie",
     "annotationReplyCount_plural": "{{count}} reacties",
@@ -243,7 +245,8 @@
     "selectFile": "Selecteer bestand",
     "selectPageToReplace": "Selecteer de pagina's in het document die u wilt vervangen.",
     "embeddedFiles": "Ingesloten bestanden",
-    "pageNum": "Paginanummer"
+    "pageNum": "Paginanummer",
+    "error": "Fout"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "Alles",
       "current": "Huidige pagina",
       "pages": "Pagina's",
+      "specifyPages": "Specificeer pagina's",
       "view": "Huidige weergave",
       "pageQuality": "Print kwaliteit",
       "qualityNormal": "Normaal",
       "qualityHigh": "Hoog",
       "includeAnnotations": "Voeg annotaties toe",
       "includeComments": "Inclusief commentaar",
-      "addWatermarkSettings": "Watermerkinstellingen toevoegen"
+      "printSettings": "Afdrukinstellingen"
     },
     "printInfo": {
       "author": "Schrijver",
@@ -447,12 +451,15 @@
       "enableSnapping": "Schakel snappen in voor meetinstrumenten"
     },
     "watermark": {
+      "title": "Watermerk",
+      "addWatermark": "Voeg een watermerk toe",
       "size": "Grootte",
       "location": "Kies een locatie om watermerken te bewerken",
       "text": "Tekst",
       "style": "Stijl",
       "resetAllSettings": "Reset alle instellingen",
       "font": "doopvont",
+      "addNew": "Nieuw toevoegen",
       "locations": {
         "center": "Centrum",
         "topLeft": "Linksboven",

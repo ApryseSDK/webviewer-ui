@@ -163,6 +163,22 @@ class MentionsManager {
     }
   }
 
+  getFormattedTextFromDeltas(deltas) {
+    const formattedMentionTextList = [];
+    deltas.forEach(delta => {
+      if (delta.insert) {
+        if (typeof (delta.insert) === 'string') {
+          formattedMentionTextList.push(delta.insert);
+        } else if (delta.insert.mention) {
+          const mention = delta.insert.mention;
+          const formattedMentionText = `${mention.denotationChar}[${mention.value}](${mention.id})`;
+          formattedMentionTextList.push(formattedMentionText);
+        }
+      }
+    });
+    return formattedMentionTextList.join('');
+  }
+
   /**
    * @param {string} str a string to extract mention data from
    * @returns {object} returns an object that contains the following properties

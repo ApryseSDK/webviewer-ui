@@ -130,7 +130,7 @@ describe('RedactionItem', () => {
 
       render(<RedactionItemWithRedux {...regionRedactionItemProps} />);
       const redactionItem = screen.getByRole('listitem');
-      expect(redactionItem).toHaveClass('redaction-item selected');
+      expect(redactionItem).toHaveClass('redaction-item redaction-item-selected');
     });
 
     it('when the redaction item is clicked, it calls the correct handler', () => {

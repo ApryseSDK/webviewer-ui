@@ -119,6 +119,12 @@ const AnnotationPopup = () => {
         if (annotUnderMouse === firstAnnotation) {
           setPopupPositionAndShow();
         }
+
+        // clicking on full page redactions should close the stylePopup if it is already open
+        if (firstAnnotation['redactionType'] === 'fullPage' && isStylePopupOpen){
+          setIsStylePopupOpen(false);
+          dispatch(actions.closeElement('annotationPopup'));
+        }
       }
     };
 
@@ -213,8 +219,8 @@ const AnnotationPopup = () => {
     await tabManager.addTab(await firstAnnotation.getFileData(), {
       extension: window.Core.mimeTypeToExtension[metaData.mimeType],
       filename: metaData.filename,
-      saveCurrent: true,
-      load: true,
+      saveCurrentActiveTabState: true,
+      setActive: true,
     });
   }, [tabManager, firstAnnotation, tabs, isMultiTab]);
 

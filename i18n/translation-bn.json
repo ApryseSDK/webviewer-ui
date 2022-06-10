@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "যোগ করুন",
     "apply": "আবেদন করুন",
     "applyAll": "সব আবেদন",
     "calendar": "ক্যালেন্ডার",
@@ -209,6 +210,7 @@
     "numResultsFound": "ফলাফল পাওয়া গেছে",
     "notSupported": "যে ফাইল টাইপ সমর্থিত নয়.",
     "passwordRequired": "পাসওয়ার্ড প্রয়োজন",
+    "enterPasswordPlaceholder": "পাসওয়ার্ড লিখুন",
     "preparingToPrint": "প্রিন্ট করার জন্য প্রস্তুত হচ্ছে...",
     "annotationReplyCount": "{{count}} উত্তর",
     "annotationReplyCount_plural": "{{count}}টি উত্তর৷",
@@ -243,7 +245,8 @@
     "selectFile": "ফাইল নির্বাচন",
     "selectPageToReplace": "নথিতে যে পৃষ্ঠাগুলি আপনি প্রতিস্থাপন করতে চান তা নির্বাচন করুন৷",
     "embeddedFiles": "এমবেডেড ফাইল",
-    "pageNum": "পৃষ্ঠা সংখ্যা"
+    "pageNum": "পৃষ্ঠা সংখ্যা",
+    "error": "ত্রুটি"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "সব",
       "current": "এই পৃষ্ঠা",
       "pages": "প্রিন্ট করার জন্য পৃষ্ঠা",
+      "specifyPages": "পৃষ্ঠাগুলি নির্দিষ্ট করুন",
       "view": "বর্তমান দৃশ্য",
       "pageQuality": "মুদ্রণ মান",
       "qualityNormal": "স্বাভাবিক",
       "qualityHigh": "উচ্চ",
       "includeAnnotations": "টীকা অন্তর্ভুক্ত করুন",
       "includeComments": "মন্তব্য অন্তর্ভুক্ত করুন",
-      "addWatermarkSettings": "জলছাপ যোগ করুন"
+      "printSettings": "প্রিন্ট সেটিংস"
     },
     "printInfo": {
       "author": "লেখক",
@@ -447,12 +451,15 @@
       "enableSnapping": "পরিমাপের সরঞ্জামগুলির জন্য স্ন্যাপিং সক্ষম করুন৷"
     },
     "watermark": {
+      "title": "জলছাপ",
+      "addWatermark": "জলছাপ যোগ করুন",
       "size": "আকার",
       "location": "ওয়াটারমার্ক সম্পাদনা করতে একটি অবস্থান চয়ন করুন",
       "text": "পাঠ্য",
       "style": "শৈলী",
       "resetAllSettings": "সমস্ত সেটিংস রিসেট করুন",
       "font": "তৈরি করুন",
+      "addNew": "নতুন যোগ করুন",
       "locations": {
         "center": "কেন্দ্র",
         "topLeft": "উপরে বাঁদিকে",

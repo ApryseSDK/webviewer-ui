@@ -7,6 +7,11 @@ import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 
+export const setPresetCropDimensions = presetCropDimensions => ({
+  type: 'SET_PRESET_CROP_DIMENSIONS',
+  payload: { presetCropDimensions }
+});
+
 export const setDateTimeFormats = dateTimeFormats => ({
   type: 'SET_DATE_TIME_FORMATS',
   payload: { dateTimeFormats },
@@ -134,7 +139,7 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
 
 export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
-    const toolGroups = state.viewer.headers[_toolbarGroup];
+    const toolGroups = state.viewer.headers[_toolbarGroup].children || state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
     if (toolGroups) {
       const firstTool = Object.values(toolGroups).find(({ toolGroup, dataElement }) => {
@@ -599,6 +604,11 @@ export const replaceRedactionSearchPattern = (searchPattern, regex) => ({
   payload: { searchPattern, regex }
 });
 
+export const setThumbnailSelectionMode = thumbnailSelectionMode => ({
+  type: 'SET_THUMBNAIL_SELECTION_MODE',
+  payload: { thumbnailSelectionMode }
+});
+
 export const addRedactionSearchPattern = (searchPattern) => ({
   type: 'ADD_REDACTION_SEARCH_PATTERN',
   payload: { searchPattern }
@@ -607,4 +617,9 @@ export const addRedactionSearchPattern = (searchPattern) => ({
 export const removeRedactionSearchPattern = (searchPatternType) => ({
   type: 'REMOVE_REDACTION_SEARCH_PATTERN',
   payload: { searchPatternType }
+});
+
+export const setZoomStepFactors = (zoomStepFactors) => ({
+  type: 'SET_ZOOM_STEP_FACTORS',
+  payload: { zoomStepFactors }
 });

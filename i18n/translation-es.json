@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Agregar",
     "apply": "Aplicar",
     "applyAll": "Aplicar todo",
     "calendar": "Calandrar",
@@ -209,6 +210,7 @@
     "numResultsFound": "resultados encontrados",
     "notSupported": "Ese tipo de archivo no es compatible.",
     "passwordRequired": "Se requiere contraseña",
+    "enterPasswordPlaceholder": "Introducir la contraseña",
     "preparingToPrint": "Preparando para imprimir...",
     "annotationReplyCount": "{{count}} Respuesta",
     "annotationReplyCount_plural": "{{count}} Respuestas",
@@ -243,7 +245,8 @@
     "selectFile": "Seleccione Archivo",
     "selectPageToReplace": "Seleccione las páginas del documento por las que le gustaría reemplazar.",
     "embeddedFiles": "Archivos incrustados",
-    "pageNum": "Número de página"
+    "pageNum": "Número de página",
+    "error": "Error"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "Todo",
       "current": "Página actual",
       "pages": "Páginas",
+      "specifyPages": "Especificar páginas",
       "view": "Vista actual",
       "pageQuality": "Calidad de impresión",
       "qualityNormal": "Normal",
       "qualityHigh": "Alto",
       "includeAnnotations": "Incluir anotaciones",
       "includeComments": "Incluir comentarios",
-      "addWatermarkSettings": "Agregar configuraciones de marca de agua"
+      "printSettings": "Configuración de impresión"
     },
     "printInfo": {
       "author": "Autor",
@@ -447,12 +451,15 @@
       "enableSnapping": "Habilitar el ajuste para herramientas de medición"
     },
     "watermark": {
+      "title": "Filigrana",
+      "addWatermark": "Agregar marca de agua",
       "size": "Talla",
       "location": "Elija una ubicación para editar marcas de agua",
       "text": "Texto",
       "style": "Estilo",
       "resetAllSettings": "Restablecer todos los ajustes",
       "font": "Hacen",
+      "addNew": "Agregar nuevo",
       "locations": {
         "center": "Centrar",
         "topLeft": "Arriba a la izquierda",

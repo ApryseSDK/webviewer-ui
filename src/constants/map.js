@@ -90,6 +90,7 @@ const map = {
       'AnnotationCreateDistanceMeasurement3',
       'AnnotationCreateDistanceMeasurement4',
     ],
+    hasLineEndings: true,
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.LineAnnotation &&
       annotation.IT === 'LineDimension' &&
@@ -106,6 +107,7 @@ const map = {
       'AnnotationCreatePerimeterMeasurement3',
       'AnnotationCreatePerimeterMeasurement4',
     ],
+    hasLineEndings: true,
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolylineAnnotation &&
       annotation.IT === 'PolyLineDimension' &&
@@ -235,6 +237,7 @@ const map = {
       'AnnotationCreateLine3',
       'AnnotationCreateLine4',
     ],
+    hasLineEndings: true,
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.LineAnnotation &&
       annotation.getStartStyle() === 'None' &&
@@ -251,6 +254,7 @@ const map = {
       'AnnotationCreateArrow3',
       'AnnotationCreateArrow4',
     ],
+    hasLineEndings: true,
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.LineAnnotation &&
       (annotation.getStartStyle() !== 'None' ||
@@ -385,6 +389,20 @@ const map = {
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.EllipseAnnotation,
   },
+  arc: {
+    icon: 'icon-tool-arc',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
+    toolNames: [
+      'AnnotationCreateArc',
+      'AnnotationCreateArc2',
+      'AnnotationCreateArc3',
+      'AnnotationCreateArc4',
+    ],
+    annotationCheck: annotation =>
+      annotation instanceof window.Annotations.ArcAnnotation
+  },
   polyline: {
     icon: 'icon-tool-shape-polyline',
     iconColor: 'StrokeColor',
@@ -396,6 +414,7 @@ const map = {
       'AnnotationCreatePolyline3',
       'AnnotationCreatePolyline4',
     ],
+    hasLineEndings: true,
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.PolylineAnnotation,
   },
@@ -413,18 +432,18 @@ const map = {
     annotationCheck: annotation =>
       annotation instanceof window.Annotations.StickyAnnotation,
   },
-  stamp: {
-    icon: 'icon-tool-stamp-line',
-    iconColor: null,
-    currentPalette: null,
-    availablePalettes: [],
+  changeView: {
+    icon: 'icon-tool-changeview',
+    iconColor: 'StrokeColor',
+    currentPalette: 'StrokeColor',
+    availablePalettes: ['StrokeColor'],
     toolNames: [
-      'AnnotationCreateStamp',
+      'AnnotationCreateChangeViewTool',
+      'AnnotationCreateChangeViewTool2',
+      'AnnotationCreateChangeViewTool3',
+      'AnnotationCreateChangeViewTool4',
     ],
-    annotationCheck: annotation => {
-      return annotation instanceof window.Annotations.StampAnnotation &&
-      annotation.ToolName === 'AnnotationCreateRubberStamp';
-    },
+    annotationCheck: annotation => annotation instanceof window.Annotations.StampAnnotation && annotation.ViewState,
   },
   image: {
     icon: 'icon-tool-image-line',
@@ -436,7 +455,19 @@ const map = {
     ],
     annotationCheck: annotation => {
       return annotation instanceof window.Annotations.StampAnnotation &&
-      annotation.ToolName !== 'AnnotationCreateRubberStamp';
+      annotation.ToolName === 'AnnotationCreateStamp';
+    },
+  },
+  stamp: {
+    icon: 'icon-tool-stamp-line',
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: [
+      'AnnotationCreateStamp',
+    ],
+    annotationCheck: annotation => {
+      return annotation instanceof window.Annotations.StampAnnotation;
     },
   },
   edit: {

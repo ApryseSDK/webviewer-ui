@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, queryByText } from '@testing-library/react';
-import { Basic as BasicStory } from "./Dropdown.stories";
+import { Basic as BasicStory } from './Dropdown.stories';
 
 // wrap component with i18n provider, so component can use useTranslation()
 const DropdownStory = withI18n(BasicStory);

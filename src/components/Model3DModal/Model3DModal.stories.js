@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { createStore } from 'redux';
 import { Provider } from "react-redux";
 import Model3DModal from './Model3DModal';
@@ -10,7 +10,7 @@ export default {
 
 export function Basic() {
   const initialState = {
-    viewer:{
+    viewer: {
       disabledElements: {},
       customElementOverrides: {},
     }
@@ -20,8 +20,8 @@ export function Basic() {
     return state;
   }
   const store = createStore(rootReducer);
-  
-  
+
+
   const [url, setURL] = useState('');
   const [file, setFile] = useState({});
   const [error, setError] = useState({ 'fileError': '', 'urlError': '' });
@@ -31,7 +31,7 @@ export function Basic() {
     console.log('closeModal');
   }
 
-  
+
   const props = {
     error,
     setError,
@@ -40,6 +40,7 @@ export function Basic() {
     url,
     setURL,
     closeModal,
+    isOpen: true,
   };
   return (
     <Provider store={store}>

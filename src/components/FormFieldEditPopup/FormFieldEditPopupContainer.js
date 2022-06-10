@@ -400,27 +400,20 @@ function FormFieldEditPopupContainer() {
       style={{ ...position }}
       ref={popupRef}
     >
-      {renderPopUp()}
+      {isOpen && renderPopUp()}
     </DataElementWrapper>
   );
 
-  if (isOpen) {
-    //Note: Draggable and react-dnd don't play nice, and having both is redundant. Maybe in the future we can refactor to only use react-dnd
-    
-    if (!isMobile) {
-      //disable draggable on mobile devices
-      return (
+  if (!isMobile) {
+    //disable draggable on mobile devices
+    return (
       <Draggable
         cancel=".Button, .cell, .sliders-container svg, .creatable-list, .ui__input__input, .form-dimension-input, .ui__choice__input">
         {renderFormFieldEditPopup()}
       </Draggable>);
-    } else {
-      return renderFormFieldEditPopup();
-    }
   } else {
-    return null;
+    return renderFormFieldEditPopup();
   }
-
 }
 
 export default FormFieldEditPopupContainer;

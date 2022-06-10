@@ -7,10 +7,10 @@ export default () => {
   const coreVersion = window.Core.DocumentViewer.prototype.version;
   const coreBuild = window.Core.DocumentViewer.prototype.build;
   const uiVersion = packageConfig.version;
+  const webViewerJSVersion = getHashParameters('webViewerJSVersion', null);
   const wvServer = !!getHashParameters('webviewerServerURL', null);
   const fullAPI = !!getHashParameters('pdfnet', false);
   const disableLogs = getHashParameters('disableLogs', false);
-
   if (disableLogs) {
     return;
   }
@@ -24,10 +24,19 @@ export default () => {
       .split('.')
       .map(version => parseInt(version, 10));
 
+    let webViewerJSMajorVersion = null;
+    let webViewerJSMinorVersion = null;
+    if (webViewerJSVersion) {
+      [webViewerJSMajorVersion, webViewerJSMinorVersion] = webViewerJSVersion
+        .split('.')
+        .map(version => parseInt(version, 10));
+    }
+
     if (console.table) {
       const versions = {
         'UI version': uiVersion,
         'Core version': coreVersion,
+        'webviewer.min.js': webViewerJSVersion,
         'Build': coreBuild,
         'WebViewer Server': wvServer,
         'Full API': fullAPI,
@@ -39,14 +48,66 @@ export default () => {
       );
     }
 
-    if (coreMajorVersion < uiMajorVersion) {
+    // if there's any major version differences, log with console.error
+    // if there's only minor version differences, log with console.warn
+    const webViewerComponents = [
+      {
+        name: 'Core',
+        version: coreVersion,
+        majorVersion: coreMajorVersion,
+        minorVersion: coreMinorVersion
+      },
+      {
+        name: 'UI',
+        version: uiVersion,
+        majorVersion: uiMajorVersion,
+        minorVersion: uiMinorVersion
+      },
+    ];
+
+    if (webViewerJSVersion === null) {
       console.error(
-        `[WebViewer] Version Mismatch: UI requires Core version ${uiVersion} and above.`,
+        'WebViewerJS version not found. Please update webviewer.min.js to the latest version.',
       );
-    } else if (coreMinorVersion < uiMinorVersion) {
-      console.warn(
-        `[WebViewer] Version Mismatch: UI requires Core version ${uiVersion} and above.`,
-      );
+    } else {
+      webViewerComponents.push({
+        name: 'webviewer.min.js',
+        version: webViewerJSVersion,
+        majorVersion: webViewerJSMajorVersion,
+        minorVersion: webViewerJSMinorVersion,
+      });
+    }
+
+    webViewerComponents.sort((a, b) => {
+      let comparison = null;
+      if (a.majorVersion !== b.majorVersion) {
+        comparison = b.majorVersion - a.majorVersion;
+      } else if (a.minorVersion !== b.minorVersion) {
+        comparison = b.minorVersion - a.minorVersion;
+      }
+      return comparison;
+    });
+
+    let warningText = '[WebViewer] Version Mismatch: ';
+    const majorVersionOutdatedComponents = [];
+    const minorVersionOutdatedComponents = [];
+    const latestComponent = webViewerComponents[0];
+
+    webViewerComponents.forEach(component => {
+      if (latestComponent.majorVersion > component.majorVersion) {
+        majorVersionOutdatedComponents.push(component.name);
+      } else if (latestComponent.minorVersion > component.minorVersion) {
+        minorVersionOutdatedComponents.push(component.name);
+      }
+    });
+    if (majorVersionOutdatedComponents.length) {
+      const outdatedComponents =
+        majorVersionOutdatedComponents.concat(minorVersionOutdatedComponents);
+      warningText += `${outdatedComponents.join(' and ')} should be updated to version ${latestComponent.version}`;
+      console.error(warningText);
+    } else if (minorVersionOutdatedComponents.length) {
+      warningText += `${minorVersionOutdatedComponents.join(' and ')} should be updated to version ${latestComponent.version}`;
+      console.warn(warningText);
     }
   }
 };

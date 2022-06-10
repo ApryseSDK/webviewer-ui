@@ -8,7 +8,7 @@ import WatermarkModal from 'components/PrintModal/WatermarkModal';
 import core from 'core';
 import getPageArrayFromString from 'helpers/getPageArrayFromString';
 import getClassName from 'helpers/getClassName';
-import { creatingPages, printPages, cancelPrint } from 'helpers/print';
+import { creatingPages, printPages } from 'helpers/print';
 import LayoutMode from 'constants/layoutMode';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -17,7 +17,7 @@ import { Swipeable } from 'react-swipeable';
 
 import './PrintModal.scss';
 import Choice from '../Choice/Choice';
-import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
+import ModalWrapper from '../ModalWrapper';
 
 
 class PrintModal extends React.PureComponent {
@@ -146,13 +146,6 @@ class PrintModal extends React.PureComponent {
     this.setState({ pagesToPrint });
   };
 
-  onInputChange = () => {
-    if (!this.customPages.current.checked) {
-      this.customPages.current.click();
-      this.onChange();
-    }
-  };
-
   createPagesAndPrint = e => {
     e.preventDefault();
 
@@ -229,14 +222,18 @@ class PrintModal extends React.PureComponent {
     const isPrinting = count >= 0;
     const className = getClassName('Modal PrintModal', this.props);
     const customPagesLabelElement = (
-      <input
-        ref={this.customInput}
-        type="text"
-        placeholder={t('message.customPrintPlaceholder')}
-        aria-label={t('message.customPrintPlaceholder')}
-        onChange={this.onInputChange}
-        disabled={isPrinting}
-      />
+      <>
+      {t('option.print.specifyPages')}
+        <input
+          ref={this.customInput}
+          hidden={!this.customPages.current || (this.customPages.current && !this.customPages.current.checked)}
+          type="text"
+          placeholder={t('message.customPrintPlaceholder')}
+          aria-label={t('message.customPrintPlaceholder')}
+          onChange={this.onChange}
+          disabled={isPrinting}
+        />
+      </>
     );
 
     return (
@@ -253,19 +250,17 @@ class PrintModal extends React.PureComponent {
             modalClosed={this.setWatermarkModalVisibility}
             formSubmitted={this.props.setWatermarkModalOptions}
           />
-          <FocusTrap locked={isOpen && !this.state.isWatermarkModalVisible}>
-            <div
-              className={className}
-              data-element="printModal"
-              onClick={() => {
-                cancelPrint();
-                this.closePrintModal();
-              }}
-            >
-              <div className="container" onClick={e => e.stopPropagation()}>
-                <div className="swipe-indicator" />
-                <div className="settings">
-                  <div className="col">{`${t('option.print.pages')}:`}</div>
+          <div
+            className={className}
+            data-element="printModal"
+          >
+            <ModalWrapper isOpen={isOpen && !this.state.isWatermarkModalVisible} title={'option.print.printSettings'}
+              containerOnClick={e => e.stopPropagation()} onCloseClick={this.closePrintModal}
+              closeButtonDataElement={'printModalCloseButton'}>
+              <div className="swipe-indicator" />
+              <div className="settings">
+                <div className="section">
+                  <div className="section-label">{`${t('option.print.pages')}:`}</div>
                   <form
                     className="settings-form"
                     onChange={this.onChange}
@@ -307,6 +302,7 @@ class PrintModal extends React.PureComponent {
                       ref={this.customPages}
                       id="custom-pages"
                       name="pages"
+                      className="specify-pages-choice"
                       radio
                       label={customPagesLabelElement}
                       disabled={isPrinting}
@@ -342,17 +338,15 @@ class PrintModal extends React.PureComponent {
                       center
                     />
                   </form>
-                  <div>
-                    <div className="col">
-                      <label>
-                        {`${t('option.print.pageQuality')}:`}
-                        <select className="printQualitySelect" onChange={e => this.props.setPrintQuality(Number(e.target.value))} value={this.props.printQuality}>
-                          <option value="2">{`${t('option.print.qualityHigh')}`}</option>
-                          <option value="1">{`${t('option.print.qualityNormal')}`}</option>
-                        </select>
-                      </label>
-                    </div>
-                  </div>
+                </div>
+                <div className="section">
+                  <div className="section-label">{`${t('option.print.pageQuality')}:`}</div>
+                  <label className="printQualitySelectLabel">
+                    <select className="printQualitySelect" onChange={e => this.props.setPrintQuality(Number(e.target.value))} value={this.props.printQuality}>
+                      <option value="2">{`${t('option.print.qualityHigh')}`}</option>
+                      <option value="1">{`${t('option.print.qualityNormal')}`}</option>
+                    </select>
+                  </label>
                   <div className="total">
                     {isPrinting ? (
                       <div>{`${t('message.processing')} ${count}/${
@@ -366,7 +360,10 @@ class PrintModal extends React.PureComponent {
                       </div>
                     )}
                   </div>
-                  {!isApplyWatermarkDisabled && (
+                </div>
+                {!isApplyWatermarkDisabled && (
+                  <div className="section watermark-section">
+                    <div className="section-label">{t('option.watermark.title')}</div>
                     <button
                       data-element="applyWatermark"
                       className="apply-watermark"
@@ -377,24 +374,23 @@ class PrintModal extends React.PureComponent {
                         }
                       }}
                     >
-                      {t('option.print.addWatermarkSettings')}
+                      {t('option.watermark.addNew')}
                     </button>
-                  )}
-                </div>
-
-                <div className="divider"></div>
-                <div className="buttons">
-                  <button
-                    className="button"
-                    onClick={this.createPagesAndPrint}
-                    disabled={count > -1}
-                  >
-                    {t('action.print')}
-                  </button>
-                </div>
+                  </div>
+                )}
               </div>
-            </div>
-          </FocusTrap>
+              <div className="divider"></div>
+              <div className="buttons">
+                <button
+                  className="button"
+                  onClick={this.createPagesAndPrint}
+                  disabled={count > -1}
+                >
+                  {t('action.print')}
+                </button>
+              </div>
+            </ModalWrapper>
+          </div>
         </>
       </Swipeable>
     );

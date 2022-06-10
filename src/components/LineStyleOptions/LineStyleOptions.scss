@@ -1,0 +1,31 @@
+.LineStyleOptions {
+
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: 4px;
+
+  .LayoutTitle {
+    margin-left: 6px;
+  }
+
+  .StyleContainer {
+    margin: 4px 2px 0 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .linestyle-image svg {
+    width: 48px;
+  }
+
+  .linestyle-image.shift-alignment {
+    padding-top: 3px;
+  }
+
+  .renderUpwards {
+    .Dropdown__items {
+      top: -282px;
+    }
+  }
+}

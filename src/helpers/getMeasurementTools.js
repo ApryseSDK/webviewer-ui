@@ -5,6 +5,10 @@ const { MeasurementUnits } = window.Annotations.Annotation;
 const isMeasurementTool = tool => !!(tool && tool.Measure);
 
 const MEASUREMENT_TOOL_NAMES = [
+  ToolNames.ARC_MEASUREMENT,
+  ToolNames.ARC_MEASUREMENT2,
+  ToolNames.ARC_MEASUREMENT3,
+  ToolNames.ARC_MEASUREMENT4,
   ToolNames.DISTANCE_MEASUREMENT,
   ToolNames.DISTANCE_MEASUREMENT2,
   ToolNames.DISTANCE_MEASUREMENT3,

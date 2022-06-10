@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "添加",
     "apply": "套用",
     "applyAll": "全部套用",
     "calendar": "日曆",
@@ -209,6 +210,7 @@
     "numResultsFound": "找到結果",
     "notSupported": "不支援該檔案類型。",
     "passwordRequired": "需要密碼",
+    "enterPasswordPlaceholder": "輸入密碼",
     "preparingToPrint": "正在準備列印...",
     "annotationReplyCount": "{{count}} 回复",
     "annotationReplyCount_plural": "{{count}} 回复",
@@ -243,7 +245,8 @@
     "selectFile": "選擇文件",
     "selectPageToReplace": "選擇文檔中要替換的頁面。",
     "embeddedFiles": "嵌入文件",
-    "pageNum": "頁碼"
+    "pageNum": "頁碼",
+    "error": "錯誤"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "全部",
       "current": "當前頁面",
       "pages": "頁面",
+      "specifyPages": "指定頁面",
       "view": "目前來看",
       "pageQuality": "打印質量",
       "qualityNormal": "正常",
       "qualityHigh": "高",
       "includeAnnotations": "包括註釋",
       "includeComments": "包括評論",
-      "addWatermarkSettings": "添加水印設置"
+      "printSettings": "打印設置"
     },
     "printInfo": {
       "author": "作者",
@@ -447,12 +451,15 @@
       "enableSnapping": "啟用測量工具的捕捉"
     },
     "watermark": {
+      "title": "水印",
+      "addWatermark": "加水印",
       "size": "尺寸",
       "location": "選擇一個位置來編輯水印",
       "text": "文本",
       "style": "樣式",
       "resetAllSettings": "重置所有設置",
       "font": "字形",
+      "addNew": "添新",
       "locations": {
         "center": "中央",
         "topLeft": "左上方",

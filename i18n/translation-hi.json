@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "जोड़ें",
     "apply": "लागू करना",
     "applyAll": "सभी लागू",
     "calendar": "पंचांग",
@@ -209,6 +210,7 @@
     "numResultsFound": "परिणाम मिले",
     "notSupported": "उस फ़ाइल प्रकार का समर्थन नहीं कर रहा है।",
     "passwordRequired": "पासवर्ड आवश्यक",
+    "enterPasswordPlaceholder": "पास वर्ड दर्ज करें",
     "preparingToPrint": "प्रिंट करने की तैयारी की जा रही है...",
     "annotationReplyCount": "{{गिनती}} उत्तर दें",
     "annotationReplyCount_plural": "{{गिनती}} जवाब",
@@ -243,7 +245,8 @@
     "selectFile": "फ़ाइल का चयन करें",
     "selectPageToReplace": "दस्तावेज़ में उन पृष्ठों का चयन करें जिनसे आप बदलना चाहते हैं।",
     "embeddedFiles": "एंबेडेड फ़ाइलें",
-    "pageNum": "पृष्ठ संख्या"
+    "pageNum": "पृष्ठ संख्या",
+    "error": "त्रुटि"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "सभी",
       "current": "वर्तमान पृष्ठ",
       "pages": "प्रिंट करने के लिए पेज",
+      "specifyPages": "पृष्ठ निर्दिष्ट करें",
       "view": "वर्तमान दृश्य",
       "pageQuality": "प्रिंट की गुणवत्ता",
       "qualityNormal": "साधारण",
       "qualityHigh": "उच्च",
       "includeAnnotations": "एनोटेशन शामिल करें",
       "includeComments": "टिप्पणियाँ शामिल करें",
-      "addWatermarkSettings": "वॉटरमार्क जोड़ें"
+      "printSettings": "प्रिंट सेटिंग्स"
     },
     "printInfo": {
       "author": "लेखक",
@@ -447,12 +451,15 @@
       "enableSnapping": "माप उपकरणों के लिए स्नैपिंग सक्षम करें"
     },
     "watermark": {
+      "title": "वाटर-मार्क",
+      "addWatermark": "वॉटरमार्क जोड़िए",
       "size": "आकार",
       "location": "वॉटरमार्क संपादित करने के लिए स्थान चुनें",
       "text": "मूलपाठ",
       "style": "अंदाज",
       "resetAllSettings": "सभी सेटिंग्स को रीसेट",
       "font": "निर्माण",
+      "addNew": "नया जोड़ो",
       "locations": {
         "center": "केंद्र",
         "topLeft": "बाएं से बाएं",

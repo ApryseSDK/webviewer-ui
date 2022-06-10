@@ -66,6 +66,14 @@ const DocumentControls = props => {
     } else {
       setPageString(previousPageString);
     }
+
+    if (selectedPageIndexes.length > 0 && !isThumbnailSelectingPages) {
+      // set a short timeout due to race condition caused by onBlur and 
+      // changing the documentControlsButton based on isThumbnailSelectingPages
+      setTimeout(() => {
+        enableThumbnailSelectingPages();
+      }, 100);
+    }
   };
 
   const pageStringUpdate = e => {
@@ -97,21 +105,21 @@ const DocumentControls = props => {
               type="text"
             />
             <div className={'documentControlsButton'}>
-              {!isThumbnailSelectingPages ?
+              {!isThumbnailSelectingPages ? (
                 <Button
-                  img={"icon-tool-select-pages"}
-                  title={"option.documentControls.selectTooltip"}
+                  img={'icon-tool-select-pages'}
+                  title={'option.documentControls.selectTooltip'}
                   onClick={enableThumbnailSelectingPages}
-                  dataElement={"thumbMultiSelect"}
+                  dataElement={'thumbMultiSelect'}
                 />
-                :
+              ) : (
                 <Button
-                  img={"icon-close"}
-                  title={"option.documentControls.closeTooltip"}
+                  img={'icon-close'}
+                  title={'option.documentControls.closeTooltip'}
                   onClick={disableThumbnailSelectingPages}
-                  dataElement={"thumbCloseMultiSelect"}
+                  dataElement={'thumbCloseMultiSelect'}
                 />
-              }
+              )}
             </div>
           </div>
         </div>

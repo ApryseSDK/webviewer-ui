@@ -9,7 +9,7 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
-import { mapAnnotationToKey } from 'constants/map';
+import { getDataWithKey, mapToolNameToKey, mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isToolDefaultStyleUpdateFromAnnotationPopupEnabled } from '../../apis/toolDefaultStyleUpdateFromAnnotationPopup';
@@ -23,6 +23,14 @@ class AnnotationStylePopup extends React.Component {
     style: PropTypes.object.isRequired,
     closeElement: PropTypes.func.isRequired,
   };
+
+  handleSliderChange = (property, value) => {
+    const { annotation } = this.props;
+    const annotationManager = core.getAnnotationManager();
+
+    annotation[property] = value
+    annotationManager.redrawAnnotation(annotation)
+  }
 
   handlePropertyChange = (property, value) => {
     const { annotation } = this.props;
@@ -46,10 +54,28 @@ class AnnotationStylePopup extends React.Component {
 
   handleRichTextStyleChange = (property, value) => {
     const { annotation } = this.props;
-    const curr = annotation.getRichTextStyle();
 
     core.updateAnnotationRichTextStyle(annotation, { [property]: value });
   }
+
+  handleLineStyleChange = (section, value) => {
+    const { annotation } = this.props;
+
+    let lineStyle = '';
+    if (section === 'start') {
+      annotation.setStartStyle(value);
+      lineStyle = 'StartLineStyle';
+    } else if (section === 'end') {
+      annotation.setEndStyle(value);
+      lineStyle = 'EndLineStyle';
+    }
+
+    if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      setToolStyles(annotation.ToolName, lineStyle, value);
+    }
+
+    core.getAnnotationManager().redrawAnnotation(annotation);
+  };
 
   handleClick = e => {
     // see the comments above handleClick in ToolStylePopup.js
@@ -73,9 +99,17 @@ class AnnotationStylePopup extends React.Component {
     const className = getClassName('Popup AnnotationStylePopup', this.props);
     const colorMapKey = mapAnnotationToKey(annotation);
     const isRedaction = annotation instanceof window.Annotations.RedactionAnnotation;
+    const showLineStyleOptions = getDataWithKey(mapToolNameToKey(annotation.ToolName)).hasLineEndings;
 
     if (isDisabled) {
       return null;
+    }
+
+    if (showLineStyleOptions) {
+      properties = {
+        StartLineStyle: annotation.getStartStyle(),
+        EndLineStyle: annotation.getEndStyle(),
+      }
     }
 
     if (isFreeText) {
@@ -120,11 +154,14 @@ class AnnotationStylePopup extends React.Component {
               isFreeText={isFreeText}
               isMeasure={isMeasure}
               onStyleChange={this.handleStyleChange}
+              onSliderChange={this.handleSliderChange}
               onPropertyChange={this.handlePropertyChange}
               disableSeparator
               properties={properties}
               onRichTextStyleChange={this.handleRichTextStyleChange}
               isRedaction={isRedaction}
+              showLineStyleOptions={showLineStyleOptions}
+              onLineStyleChange={this.handleLineStyleChange}
             />
           </div>
         )}

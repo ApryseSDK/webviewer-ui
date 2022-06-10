@@ -42,7 +42,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'toolbarGroup-Measure',
         'measurementOverlay',
         'distanceToolGroupButton',
-        'arcToolGroupButton',
+        'arcMeasurementToolGroupButton',
         'perimeterToolGroupButton',
         'areaToolGroupButton',
         'rectangleAreaToolGroupButton',
@@ -277,7 +277,12 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
           store.dispatch(actions.setActiveTab(0));
         }
       },
-    }
+    },
+    [Feature.ChangeView]: {
+      dataElements: [
+        'changeViewToolGroupButton',
+      ]
+    },
   };
 
   if (!Array.isArray(features)) {

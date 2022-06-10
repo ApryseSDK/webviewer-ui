@@ -58,4 +58,5 @@ export default {
   NotesPanelVirtualizedList: 'NotesPanelVirtualizedList',
   NotesShowLastUpdatedDate: 'NotesShowLastUpdatedDate',
   MultiTab: 'MultiTab',
+  ChangeView: 'ChangeView'
 };

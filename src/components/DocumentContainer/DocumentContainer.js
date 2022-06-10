@@ -18,6 +18,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import ReaderModeViewer from 'components/ReaderModeViewer';
+import { zoomIn, zoomOut, getStep } from 'helpers/zoom';
 
 import Measure from 'react-measure';
 
@@ -89,7 +90,6 @@ class DocumentContainer extends React.PureComponent {
     this.container.current.addEventListener('wheel', this.onWheel, { passive: false });
     this.updateContainerSize();
     core.addEventListener('documentLoaded', this.showAndFadeNavigationOverlay);
-
   }
 
   componentWillUnmount() {
@@ -175,16 +175,17 @@ class DocumentContainer extends React.PureComponent {
   wheelToZoom = e => {
     const currentZoomFactor = this.props.zoom;
     let newZoomFactor = currentZoomFactor;
-    let multiple;
-
     if (e.deltaY < 0) {
-      multiple = 1.25;
-      newZoomFactor = Math.min(currentZoomFactor * multiple, getMaxZoomLevel());
+      newZoomFactor = Math.min(
+        currentZoomFactor + getStep(currentZoomFactor),
+        getMaxZoomLevel()
+      );
     } else if (e.deltaY > 0) {
-      multiple = 0.8;
-      newZoomFactor = Math.max(currentZoomFactor * multiple, getMinZoomLevel());
+      newZoomFactor = Math.max(
+        currentZoomFactor - getStep(currentZoomFactor),
+        getMinZoomLevel()
+      );
     }
-
     core.zoomToMouse(newZoomFactor);
   }
 

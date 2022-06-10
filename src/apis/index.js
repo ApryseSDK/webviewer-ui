@@ -133,6 +133,7 @@ import setNotesPanelSortStrategy from './setNotesPanelSortStrategy';
 import setSwipeOrientation from './setSwipeOrientation';
 import setTheme from './setTheme';
 import setToolbarGroup from './setToolbarGroup';
+import createToolbarGroup from './createToolbarGroup';
 import setToolMode from './setToolMode';
 import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
@@ -145,7 +146,7 @@ import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import {
   enableToolDefaultStyleUpdateFromAnnotationPopup,
-  disableToolDefaultStyleUpdateFromAnnotationPopup
+  disableToolDefaultStyleUpdateFromAnnotationPopup,
 } from './toolDefaultStyleUpdateFromAnnotationPopup';
 import unregisterTool from './unregisterTool';
 import updateElement from './updateElement';
@@ -179,7 +180,7 @@ import {
   disableAutoExpandCommentThread,
   enableAutoExpandCommentThread,
 } from './notesPanel';
-import { enableMultiselect, disableMultiselect, selectPages, unselectPages, getSelectedPageNumbers, } from './thumbnailsPanel';
+import { enableMultiselect, disableMultiselect, selectPages, unselectPages, getSelectedPageNumbers, setThumbnailSelectionMode } from './thumbnailsPanel';
 import toggleReaderMode from './toggleReaderMode';
 import toggleElementVisibility from './toggleElementVisibility';
 import setAnnotationReadState from './setAnnotationReadState';
@@ -196,6 +197,7 @@ import enableDesktopOnlyMode from './enableDesktopOnlyMode';
 import disableDesktopOnlyMode from './disableDesktopOnlyMode';
 import isInDesktopOnlyMode from './isInDesktopOnlyMode';
 import pageManipulationOverlay from './pageManipulationOverlay';
+import thumbnailControlMenu from './thumbnailControlMenu';
 import getWatermarkModalOptions from './getWatermarkModalOptions';
 import enableNoteSubmissionWithEnter from './enableNoteSubmissionWithEnter';
 import willUseEmbeddedPrinting from 'src/apis/willUseEmbeddedPrinting';
@@ -204,9 +206,12 @@ import Fonts from 'src/apis/fonts';
 import TabManagerAPI from './TabManagerAPI';
 import getAvailableLanguages from './getAvailableLanguages';
 import replaceRedactionSearchPattern from './replaceRedactionSearchPattern';
+import setPresetCropDimensions from './setPresetCropDimensions';
 import addDateTimeFormat from './addDateTimeFormat';
 import addRedactionSearchPattern from './addRedactionSearchPattern';
 import removeRedactionSearchPattern from './removeRedactionSearchPattern';
+import getZoomStepFactors from './getZoomStepFactors';
+import setZoomStepFactors from './setZoomStepFactors';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -263,6 +268,7 @@ export default store => {
     loadDocument: loadDocument(store),
     settingsMenuOverlay: settingsMenuOverlay(store),
     pageManipulationOverlay: pageManipulationOverlay(store),
+    thumbnailControlMenu: thumbnailControlMenu(store),
     openElements: openElements(store),
     print: print(store),
     printInBackground: printInBackground(store),
@@ -299,6 +305,7 @@ export default store => {
     setSwipeOrientation,
     setTheme: setTheme(store),
     setToolbarGroup: setToolbarGroup(store),
+    createToolbarGroup: createToolbarGroup(store),
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setCustomNoteSelectionFunction: setCustomNoteSelectionFunction(store),
     setCustomApplyRedactionsHandler: setCustomApplyRedactionsHandler(store),
@@ -334,6 +341,7 @@ export default store => {
       getSelectedPageNumbers: getSelectedPageNumbers(store),
       enableMultiselect: enableMultiselect(store),
       disableMultiselect: disableMultiselect(store),
+      setThumbnailSelectionMode: setThumbnailSelectionMode(store),
     },
     NotesPanel: {
       enableTextCollapse: enableTextCollapse(store),
@@ -410,9 +418,11 @@ export default store => {
     TabManager: TabManagerAPI(store),
     getAvailableLanguages,
     replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
+    setPresetCropDimensions: setPresetCropDimensions(store),
     addDateTimeFormat: addDateTimeFormat(store),
     addRedactionSearchPattern: addRedactionSearchPattern(store),
     removeRedactionSearchPattern: removeRedactionSearchPattern(store),
+    setThumbnailSelectionMode: setThumbnailSelectionMode(store),
 
     // deprecated, to be removed in 8.0
     useNativeScroll,
@@ -448,6 +458,8 @@ export default store => {
     isInDesktopOnlyMode: isInDesktopOnlyMode(store),
     disablePageDeletionConfirmationModal: disablePageDeletionConfirmationModal(store),
     enablePageDeletionConfirmationModal: enablePageDeletionConfirmationModal(store),
+    getZoomStepFactors: getZoomStepFactors(store),
+    setZoomStepFactors: setZoomStepFactors(store),
   };
 
   window.instance = {

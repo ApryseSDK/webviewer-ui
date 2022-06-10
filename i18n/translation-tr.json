@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Ekle",
     "apply": "Uygulamak",
     "applyAll": "Tümünü uygula",
     "calendar": "Takvim",
@@ -209,6 +210,7 @@
     "numResultsFound": "sonuçlar bulundu",
     "notSupported": "Bu dosya tipi desteklenmiyor.",
     "passwordRequired": "şifre gerekli",
+    "enterPasswordPlaceholder": "Parolanı Gir",
     "preparingToPrint": "Yazdırmaya hazırlanıyor...",
     "annotationReplyCount": "{{count}} Yanıtla",
     "annotationReplyCount_plural": "{{count}} Yanıt",
@@ -243,7 +245,8 @@
     "selectFile": "Dosya Seç",
     "selectPageToReplace": "Belgede değiştirmek istediğiniz sayfaları seçin.",
     "embeddedFiles": "Gömülü Dosyalar",
-    "pageNum": "Sayfa numarası"
+    "pageNum": "Sayfa numarası",
+    "error": "Hata"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "Tüm",
       "current": "Geçerli sayfa",
       "pages": "Yazdırılacak sayfalar",
+      "specifyPages": "Sayfaları Belirtin",
       "view": "Mevcut görünüm",
       "pageQuality": "Baskı kalitesi",
       "qualityNormal": "Normal",
       "qualityHigh": "Yüksek",
       "includeAnnotations": "Ek açıklamaları dahil et",
       "includeComments": "Yorumları dahil et",
-      "addWatermarkSettings": "Filigran ekle"
+      "printSettings": "Yazdırma Ayarları"
     },
     "printInfo": {
       "author": "Yazar",
@@ -447,12 +451,15 @@
       "enableSnapping": "Ölçüm araçları için yakalamayı etkinleştir"
     },
     "watermark": {
+      "title": "Filigran",
+      "addWatermark": "Filigran ekle",
       "size": "Boyut",
       "location": "Filigranları düzenlemek için bir konum seçin",
       "text": "Metin",
       "style": "stil",
       "resetAllSettings": "Bütün ayarları sıfırla",
       "font": "Yapmak",
+      "addNew": "Yeni ekle",
       "locations": {
         "center": "merkez",
         "topLeft": "Sol üst",

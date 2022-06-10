@@ -54,8 +54,8 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
     await tabManager.addTab(source, {
       extension: _extension,
       filename: _filename,
-      load: true,
-      saveCurrent: true,
+      setActive: true,
+      saveCurrentActiveTabState: true,
       useDB: useDb
     });
     closeModal();

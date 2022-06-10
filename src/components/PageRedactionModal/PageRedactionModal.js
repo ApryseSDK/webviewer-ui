@@ -71,7 +71,9 @@ const PageRedactionModal = ({
 
   const canvasContainer = useRef();
   useEffect(() => {
-    renderCanvases(canvasContainer, getSelectedPages());
+    if (isOpen) {
+      renderCanvases(canvasContainer, getSelectedPages());
+    }
   }, [selectionType, isOpen, pages, renderCanvases, getSelectedPages]);
 
   const onSwipe = e => {

@@ -22,10 +22,6 @@ const propTypes = {
   onSubmit: PropTypes.func,
 };
 
-const MentionsTextarea = React.lazy(() =>
-  import(/* webpackChunkName: 'mention' */ 'components/NoteTextarea/MentionsTextarea')
-);
-
 const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   const [userData, canSubmitByEnter] = useSelector(
     state => [
@@ -67,9 +63,14 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     /* For the React Quill editor, the text won't ever be empty, at least a '\n'
      * will be there, so it is necessary to trim the value to check if it is empty
      */
-    const isEmpty = editor && editor.getText().trim() === '';
-    const value = isEmpty ? '' : content.target ? content.target.value : content;
-    props.onChange(value);
+    const isEmpty = editor && editor.getText().trim() === '' && content === '<p><br></p>';
+    let value = '';
+
+    if(!isEmpty) {
+      value = content.target ? content.target.value : content;
+      props.onChange(value);
+    }
+
   };
 
   const textareaProps = {
@@ -80,15 +81,12 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     },
     onChange: handleChange,
     onKeyDown: handleKeyDown,
+    userData: userData,
   };
 
-  return userData?.length ? (
-    <React.Suspense fallback={<div>Loading...</div>}>
-      <MentionsTextarea {...textareaProps} userData={userData} />
-    </React.Suspense>
-  ) : (
+  return (
     <>
-      <CommentTextarea {...textareaProps} />
+      <CommentTextarea {...textareaProps}/>
     </>
   );
 });

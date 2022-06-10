@@ -12,34 +12,14 @@ import { copyMapWithDataProperties } from 'constants/map';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import getHashParameters from 'helpers/getHashParameters';
 import localStorageManager from 'helpers/localStorageManager';
+import { undoButton, redoButton } from 'helpers/commonToolbarElements';
 import defaultFonts from 'constants/defaultFonts';
 import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
+import presetCropDimensions from 'constants/presetCropDimensions';
 import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 
 const { ToolNames } = window.Core.Tools;
-
-const undoButton = {
-  type: 'actionButton',
-  style: { 'marginLeft': '0px' },
-  dataElement: 'undoButton',
-  title: 'action.undo',
-  img: 'icon-operation-undo',
-  onClick: () => {
-    core.undo();
-  },
-  isNotClickableSelector: state => !state.viewer.canUndo
-};
-const redoButton = {
-  type: 'actionButton',
-  dataElement: 'redoButton',
-  title: 'action.redo',
-  img: 'icon-operation-redo',
-  onClick: () => {
-    core.redo();
-  },
-  isNotClickableSelector: state => !state.viewer.canRedo
-};
 
 export default {
   viewer: {
@@ -59,7 +39,7 @@ export default {
       header: true,
       toolsHeader: true,
       [DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER]: true,
-      [DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER]: true
+      [DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER]: true,
     },
     panelWidths: {
       leftPanel: 264,
@@ -81,9 +61,21 @@ export default {
     currentContentBeingEdited: null,
     headers: {
       default: [
-        { type: 'toggleElementButton', img: 'icon-header-sidebar-line', element: 'leftPanel', dataElement: 'leftPanelButton', title: 'component.leftPanel' },
+        {
+          type: 'toggleElementButton',
+          img: 'icon-header-sidebar-line',
+          element: 'leftPanel',
+          dataElement: 'leftPanelButton',
+          title: 'component.leftPanel',
+        },
         { type: 'divider' },
-        { type: 'toggleElementButton', img: 'icon-header-page manipulation-line', element: 'viewControlsOverlay', dataElement: 'viewControlsButton', title: 'component.viewControlsOverlay' },
+        {
+          type: 'toggleElementButton',
+          img: 'icon-header-page manipulation-line',
+          element: 'viewControlsOverlay',
+          dataElement: 'viewControlsButton',
+          title: 'component.viewControlsOverlay',
+        },
         {
           type: 'customElement',
           render: () => <ToggleZoomOverlay />,
@@ -101,7 +93,14 @@ export default {
           render: () => <Ribbons />,
           className: 'custom-ribbons-container',
         },
-        { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel', hidden: ['small-mobile'] },
+        {
+          type: 'toggleElementButton',
+          dataElement: 'searchButton',
+          element: 'searchPanel',
+          img: 'icon-header-search',
+          title: 'component.searchPanel',
+          hidden: ['small-mobile'],
+        },
         {
           type: 'toggleElementButton',
           dataElement: 'toggleNotesButton',
@@ -113,9 +112,16 @@ export default {
             // Trigger with a delay so we ensure the panel is open before we compute correct coordinates of annotation
             setTimeout(() => dispatch(actions.toggleElement('annotationNoteConnectorLine')), 400);
           },
-          hidden: ['small-mobile']
+          hidden: ['small-mobile'],
         },
-        { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay', hidden: ['small-mobile'] },
+        {
+          type: 'toggleElementButton',
+          dataElement: 'menuButton',
+          element: 'menuOverlay',
+          img: 'icon-header-settings-line',
+          title: 'component.menuOverlay',
+          hidden: ['small-mobile'],
+        },
         {
           type: 'actionButton',
           dataElement: 'moreButton',
@@ -129,9 +135,27 @@ export default {
         },
       ],
       'small-mobile-more-buttons': [
-        { type: 'toggleElementButton', dataElement: 'searchButton', element: 'searchPanel', img: 'icon-header-search', title: 'component.searchPanel' },
-        { type: 'toggleElementButton', dataElement: 'toggleNotesButton', element: 'notesPanel', img: 'icon-header-chat-line', title: 'component.notesPanel' },
-        { type: 'toggleElementButton', dataElement: 'menuButton', element: 'menuOverlay', img: 'icon-header-settings-line', title: 'component.menuOverlay' },
+        {
+          type: 'toggleElementButton',
+          dataElement: 'searchButton',
+          element: 'searchPanel',
+          img: 'icon-header-search',
+          title: 'component.searchPanel',
+        },
+        {
+          type: 'toggleElementButton',
+          dataElement: 'toggleNotesButton',
+          element: 'notesPanel',
+          img: 'icon-header-chat-line',
+          title: 'component.notesPanel',
+        },
+        {
+          type: 'toggleElementButton',
+          dataElement: 'menuButton',
+          element: 'menuOverlay',
+          img: 'icon-header-settings-line',
+          title: 'component.menuOverlay',
+        },
         { type: 'spacer' },
         {
           type: 'actionButton',
@@ -147,15 +171,60 @@ export default {
       'toolbarGroup-View': [],
       'toolbarGroup-Annotate': [
         { type: 'spacer' },
-        { type: 'toolGroupButton', toolGroup: 'highlightTools', dataElement: 'highlightToolGroupButton', title: 'annotation.highlight' },
-        { type: 'toolGroupButton', toolGroup: 'underlineTools', dataElement: 'underlineToolGroupButton', title: 'annotation.underline' },
-        { type: 'toolGroupButton', toolGroup: 'strikeoutTools', dataElement: 'strikeoutToolGroupButton', title: 'annotation.strikeout' },
-        { type: 'toolGroupButton', toolGroup: 'squigglyTools', dataElement: 'squigglyToolGroupButton', title: 'annotation.squiggly' },
-        { type: 'toolGroupButton', toolGroup: 'stickyTools', dataElement: 'stickyToolGroupButton', title: 'annotation.stickyNote' },
-        { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'annotation.freetext' },
-        { type: 'toolGroupButton', toolGroup: 'rectangleTools', dataElement: 'shapeToolGroupButton', title: 'annotation.rectangle' },
-        { type: 'toolGroupButton', toolGroup: 'freeHandTools', dataElement: 'freeHandToolGroupButton', title: 'annotation.freehand' },
-        { type: 'toolGroupButton', toolGroup: 'freeHandHighlightTools', dataElement: 'freeHandHighlightToolGroupButton', title: 'annotation.freeHandHighlight' },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'highlightTools',
+          dataElement: 'highlightToolGroupButton',
+          title: 'annotation.highlight',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'underlineTools',
+          dataElement: 'underlineToolGroupButton',
+          title: 'annotation.underline',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'strikeoutTools',
+          dataElement: 'strikeoutToolGroupButton',
+          title: 'annotation.strikeout',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'squigglyTools',
+          dataElement: 'squigglyToolGroupButton',
+          title: 'annotation.squiggly',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'stickyTools',
+          dataElement: 'stickyToolGroupButton',
+          title: 'annotation.stickyNote',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'freeTextTools',
+          dataElement: 'freeTextToolGroupButton',
+          title: 'annotation.freetext',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'rectangleTools',
+          dataElement: 'shapeToolGroupButton',
+          title: 'annotation.rectangle',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'freeHandTools',
+          dataElement: 'freeHandToolGroupButton',
+          title: 'annotation.freehand',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'freeHandHighlightTools',
+          dataElement: 'freeHandHighlightToolGroupButton',
+          title: 'annotation.freeHandHighlight',
+        },
         { type: 'divider' },
         {
           type: 'customElement',
@@ -165,11 +234,11 @@ export default {
         },
         {
           ...undoButton,
-          hideOnClick: true
+          hideOnClick: true,
         },
         {
           ...redoButton,
-          hideOnClick: true
+          hideOnClick: true,
         },
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
@@ -180,6 +249,7 @@ export default {
         { type: 'toolGroupButton', toolGroup: 'freeHandHighlightTools', dataElement: 'freeHandHighlightToolGroupButton', title: 'annotation.freeHandHighlight' },
         { type: 'toolGroupButton', toolGroup: 'rectangleTools', dataElement: 'shapeToolGroupButton', title: 'annotation.rectangle' },
         { type: 'toolGroupButton', toolGroup: 'ellipseTools', dataElement: 'ellipseToolGroupButton', title: 'annotation.ellipse' },
+        { type: 'toolGroupButton', toolGroup: 'arcTools', dataElement: 'arcToolGroupButton', title: 'annotation.arc' },
         { type: 'toolGroupButton', toolGroup: 'polygonTools', dataElement: 'polygonToolGroupButton', title: 'annotation.polygon' },
         { type: 'toolGroupButton', toolGroup: 'cloudTools', dataElement: 'polygonCloudToolGroupButton', title: 'annotation.polygonCloud' },
         { type: 'toolGroupButton', toolGroup: 'lineTools', dataElement: 'lineToolGroupButton', title: 'annotation.line' },
@@ -199,7 +269,12 @@ export default {
       ],
       'toolbarGroup-Redact': [
         { type: 'spacer' },
-        { type: 'toolGroupButton', toolGroup: 'redactionTools', dataElement: 'redactionToolGroupButton', title: 'annotation.redact' },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'redactionTools',
+          dataElement: 'redactionToolGroupButton',
+          title: 'annotation.redact',
+        },
         {
           type: 'actionButton',
           toolGroup: 'pageRedactionTools',
@@ -214,9 +289,15 @@ export default {
           type: 'customElement',
           render: () => <ToolsOverlay />,
           dataElement: 'toolsOverlay',
-          hidden: ['small-mobile', 'mobile']
+          hidden: ['small-mobile', 'mobile'],
         },
-        { type: 'toggleElementButton', img: 'icon-redact-panel', element: DataElements.REDACTION_PANEL, dataElement: DataElements.REDACTION_PANEL_TOGGLE, title: 'component.redactionPanel' },
+        {
+          type: 'toggleElementButton',
+          img: 'icon-redact-panel',
+          element: DataElements.REDACTION_PANEL,
+          dataElement: DataElements.REDACTION_PANEL_TOGGLE,
+          title: 'component.redactionPanel',
+        },
         undoButton,
         redoButton,
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
@@ -224,12 +305,56 @@ export default {
       ],
       'toolbarGroup-Insert': [
         { type: 'spacer' },
-        { type: 'toolGroupButton', toolGroup: 'signatureTools', img: 'icon-tool-signature', dataElement: 'signatureToolGroupButton', title: 'annotation.signature', showColor: 'never' },
-        { type: 'toolGroupButton', toolGroup: 'rubberStampTools', img: 'icon-tool-stamp-line', dataElement: 'rubberStampToolGroupButton', title: 'annotation.rubberStamp' },
-        { type: 'toolGroupButton', toolGroup: 'stampTools', img: 'icon-tool-image-line', dataElement: 'stampToolGroupButton', title: 'annotation.image' },
-        { type: 'toolGroupButton', toolGroup: 'fileAttachmentTools', img: 'ic_fileattachment_24px', dataElement: 'fileAttachmentToolGroupButton', title: 'annotation.fileattachment', showColor: 'never' },
-        { type: 'toolGroupButton', toolGroup: 'calloutTools', dataElement: 'calloutToolGroupButton', title: 'annotation.callout' },
-        { type: 'toolGroupButton', toolGroup: 'model3DTools', img: 'icon-tool-model3d', dataElement: 'threeDToolGroupButton', title: 'annotation.3D', showColor: 'never' },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'signatureTools',
+          img: 'icon-tool-signature',
+          dataElement: 'signatureToolGroupButton',
+          title: 'annotation.signature',
+          showColor: 'never',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'rubberStampTools',
+          img: 'icon-tool-stamp-line',
+          dataElement: 'rubberStampToolGroupButton',
+          title: 'annotation.rubberStamp',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'stampTools',
+          img: 'icon-tool-image-line',
+          dataElement: 'stampToolGroupButton',
+          title: 'annotation.image',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'fileAttachmentTools',
+          img: 'ic_fileattachment_24px',
+          dataElement: 'fileAttachmentToolGroupButton',
+          title: 'annotation.fileattachment',
+          showColor: 'never',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'calloutTools',
+          dataElement: 'calloutToolGroupButton',
+          title: 'annotation.callout',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'model3DTools',
+          img: 'icon-tool-model3d',
+          dataElement: 'threeDToolGroupButton',
+          title: 'annotation.3D',
+          showColor: 'never',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'changeViewTools',
+          dataElement: 'changeViewToolGroupButton',
+          title: 'annotation.changeView'
+        },
         { type: 'divider' },
         {
           type: 'customElement',
@@ -244,8 +369,9 @@ export default {
       ],
       'toolbarGroup-Measure': [
         { type: 'spacer' },
+        // @todo: add "measurement" to data-element names in 9.0. Note: do not rename arcMeasurementTools to arcTools as it is being used elsewhere.
         { type: 'toolGroupButton', toolGroup: 'distanceTools', dataElement: 'distanceToolGroupButton', title: 'annotation.distanceMeasurement' },
-        { type: 'toolGroupButton', toolGroup: 'arcTools', dataElement: 'arcToolGroupButton', title: 'annotation.arcMeasurement' },
+        { type: 'toolGroupButton', toolGroup: 'arcMeasurementTools', dataElement: 'arcMeasurementToolGroupButton', title: 'annotation.arcMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'perimeterTools', dataElement: 'perimeterToolGroupButton', title: 'annotation.perimeterMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'areaTools', dataElement: 'areaToolGroupButton', title: 'annotation.areaMeasurement' },
         { type: 'toolGroupButton', toolGroup: 'ellipseAreaTools', dataElement: 'ellipseAreaToolGroupButton', title: 'annotation.areaMeasurement' },
@@ -266,19 +392,73 @@ export default {
       ],
       'toolbarGroup-Edit': [
         { type: 'spacer' },
-        { type: 'toolGroupButton', toolGroup: 'cropTools', dataElement: 'cropToolGroupButton', title: 'annotation.crop' },
-        { type: 'toolGroupButton', toolGroup: 'contentEditTools', dataElement: 'contentEditButton', title: 'action.edit' },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'cropTools',
+          dataElement: 'cropToolGroupButton',
+          title: 'annotation.crop',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'contentEditTools',
+          dataElement: 'contentEditButton',
+          title: 'action.edit',
+        },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
       'toolbarGroup-FillAndSign': [
         { type: 'spacer' },
-        { type: 'toolGroupButton', toolGroup: 'signatureTools', img: 'icon-tool-signature', dataElement: 'signatureToolGroupButton', title: 'annotation.signature', showColor: 'never' },
-        { type: 'toolGroupButton', toolGroup: 'freeTextTools', dataElement: 'freeTextToolGroupButton', title: 'annotation.freetext' },
-        { type: 'toolGroupButton', toolGroup: 'crossStampTools', img: 'icon-tool-cross-stamp', dataElement: 'crossStampToolButton', title: 'annotation.formFillCross', showColor: 'never' },
-        { type: 'toolGroupButton', toolGroup: 'checkStampTools', img: 'icon-tool-check-stamp', dataElement: 'checkStampToolButton', title: 'annotation.formFillCheckmark', showColor: 'never' },
-        { type: 'toolGroupButton', toolGroup: 'dotStampTools', img: 'icon-tool-dot-stamp', dataElement: 'dotStampToolButton', title: 'annotation.formFillDot', showColor: 'never' },
-        { type: 'toolGroupButton', toolGroup: 'rubberStampTools', img: 'icon-tool-stamp-line', dataElement: 'rubberStampToolGroupButton', title: 'annotation.rubberStamp' },
-        { type: 'toolGroupButton', toolGroup: 'dateFreeTextTools', dataElement: 'dateFreeTextToolButton', title: 'annotation.dateFreeText' },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'signatureTools',
+          img: 'icon-tool-signature',
+          dataElement: 'signatureToolGroupButton',
+          title: 'annotation.signature',
+          showColor: 'never',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'freeTextTools',
+          dataElement: 'freeTextToolGroupButton',
+          title: 'annotation.freetext',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'crossStampTools',
+          img: 'icon-tool-cross-stamp',
+          dataElement: 'crossStampToolButton',
+          title: 'annotation.formFillCross',
+          showColor: 'never',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'checkStampTools',
+          img: 'icon-tool-check-stamp',
+          dataElement: 'checkStampToolButton',
+          title: 'annotation.formFillCheckmark',
+          showColor: 'never',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'dotStampTools',
+          img: 'icon-tool-dot-stamp',
+          dataElement: 'dotStampToolButton',
+          title: 'annotation.formFillDot',
+          showColor: 'never',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'rubberStampTools',
+          img: 'icon-tool-stamp-line',
+          dataElement: 'rubberStampToolGroupButton',
+          title: 'annotation.rubberStamp',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'dateFreeTextTools',
+          dataElement: 'dateFreeTextToolButton',
+          title: 'annotation.dateFreeText',
+        },
         { type: 'divider' },
         {
           type: 'customElement',
@@ -293,12 +473,48 @@ export default {
       ],
       'toolbarGroup-Forms': [
         { type: 'spacer' },
-        { type: 'toolGroupButton', toolGroup: 'formFieldTools', dataElement: 'textFieldToolGroupButton', title: 'annotation.textField', showColor: 'always' },
-        { type: 'toolGroupButton', toolGroup: 'sigFieldTools', dataElement: 'signatureFieldToolGroupButton', title: 'annotation.signatureFormField', showColor: 'always' },
-        { type: 'toolGroupButton', toolGroup: 'checkBoxFieldTools', dataElement: 'checkBoxFieldToolGroupButton', title: 'annotation.checkBoxFormField', showColor: 'never' },
-        { type: 'toolGroupButton', toolGroup: 'radioButtonFieldTools', dataElement: 'radioButtonFieldToolGroupButton', title: 'annotation.radioButtonFormField', showColor: 'never' },
-        { type: 'toolGroupButton', toolGroup: 'listBoxFieldTools', dataElement: 'listBoxFieldToolGroupButton', title: 'annotation.listBoxFormField', showColor: 'always' },
-        { type: 'toolGroupButton', toolGroup: 'comboBoxFieldTools', dataElement: 'comboBoxFieldToolGroupButton', title: 'annotation.comboBoxFormField', showColor: 'always' },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'formFieldTools',
+          dataElement: 'textFieldToolGroupButton',
+          title: 'annotation.textField',
+          showColor: 'always',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'sigFieldTools',
+          dataElement: 'signatureFieldToolGroupButton',
+          title: 'annotation.signatureFormField',
+          showColor: 'always',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'checkBoxFieldTools',
+          dataElement: 'checkBoxFieldToolGroupButton',
+          title: 'annotation.checkBoxFormField',
+          showColor: 'never',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'radioButtonFieldTools',
+          dataElement: 'radioButtonFieldToolGroupButton',
+          title: 'annotation.radioButtonFormField',
+          showColor: 'never',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'listBoxFieldTools',
+          dataElement: 'listBoxFieldToolGroupButton',
+          title: 'annotation.listBoxFormField',
+          showColor: 'always',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'comboBoxFieldTools',
+          dataElement: 'comboBoxFieldToolGroupButton',
+          title: 'annotation.comboBoxFormField',
+          showColor: 'always',
+        },
         { type: 'divider' },
         {
           type: 'customElement',
@@ -309,10 +525,10 @@ export default {
         {
           type: 'customElement',
           dataElement: 'applyFormFieldsButton',
-          render: () => <ApplyFormFieldButton />
+          render: () => <ApplyFormFieldButton />,
         },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
-      ]
+      ],
     },
     annotationPopup: [
       { dataElement: 'viewFileButton' },
@@ -355,7 +571,7 @@ export default {
       { dataElement: 'downloadButton' },
       { dataElement: 'printButton' },
       { dataElement: 'themeChangeButton' },
-      { dataElement: 'languageButton' }
+      { dataElement: 'languageButton' },
     ],
     pageManipulationOverlay: [
       { dataElement: 'pageAdditionalControls' },
@@ -365,6 +581,10 @@ export default {
       { dataElement: 'pageInsertionControls' },
       { type: 'divider' },
       { dataElement: 'pageManipulationControls' },
+    ],
+    thumbnailControlMenu: [
+      { dataElement: 'thumbRotateClockwise' },
+      { dataElement: 'thumbDelete' },
     ],
     toolButtonObjects: {
       AnnotationCreateCountMeasurement: { dataElement: 'countMeasurementToolButton', title: 'annotation.countMeasurement', img: 'ic_check_black_24px', group: 'countTools', showColor: 'always' },
@@ -379,10 +599,10 @@ export default {
       AnnotationCreatePerimeterMeasurement2: { dataElement: 'perimeterMeasurementToolButton2', title: 'annotation.perimeterMeasurement', img: 'icon-tool-measurement-perimeter', group: 'perimeterTools', showColor: 'always' },
       AnnotationCreatePerimeterMeasurement3: { dataElement: 'perimeterMeasurementToolButton3', title: 'annotation.perimeterMeasurement', img: 'icon-tool-measurement-perimeter', group: 'perimeterTools', showColor: 'always' },
       AnnotationCreatePerimeterMeasurement4: { dataElement: 'perimeterMeasurementToolButton4', title: 'annotation.perimeterMeasurement', img: 'icon-tool-measurement-perimeter', group: 'perimeterTools', showColor: 'always' },
-      AnnotationCreateArcMeasurement: { dataElement: 'arcMeasurementToolButton', title: 'annotation.arcMeasurement', img: 'icon-tool-measurement-arc', group: 'arcTools', showColor: 'always' },
-      AnnotationCreateArcMeasurement2: { dataElement: 'arcMeasurementToolButton2', title: 'annotation.arcMeasurement', img: 'icon-tool-measurement-arc', group: 'arcTools', showColor: 'always' },
-      AnnotationCreateArcMeasurement3: { dataElement: 'arcMeasurementToolButton3', title: 'annotation.arcMeasurement', img: 'icon-tool-measurement-arc', group: 'arcTools', showColor: 'always' },
-      AnnotationCreateArcMeasurement4: { dataElement: 'arcMeasurementToolButton4', title: 'annotation.arcMeasurement', img: 'icon-tool-measurement-arc', group: 'arcTools', showColor: 'always' },
+      AnnotationCreateArcMeasurement: { dataElement: 'arcMeasurementToolButton', title: 'annotation.arcMeasurement', img: 'icon-tool-measurement-arc', group: 'arcMeasurementTools', showColor: 'always' },
+      AnnotationCreateArcMeasurement2: { dataElement: 'arcMeasurementToolButton2', title: 'annotation.arcMeasurement', img: 'icon-tool-measurement-arc', group: 'arcMeasurementTools', showColor: 'always' },
+      AnnotationCreateArcMeasurement3: { dataElement: 'arcMeasurementToolButton3', title: 'annotation.arcMeasurement', img: 'icon-tool-measurement-arc', group: 'arcMeasurementTools', showColor: 'always' },
+      AnnotationCreateArcMeasurement4: { dataElement: 'arcMeasurementToolButton4', title: 'annotation.arcMeasurement', img: 'icon-tool-measurement-arc', group: 'arcMeasurementTools', showColor: 'always' },
       AnnotationCreateAreaMeasurement: { dataElement: 'areaMeasurementToolButton', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-area-polygon-line', group: 'areaTools', showColor: 'always' },
       AnnotationCreateAreaMeasurement2: { dataElement: 'areaMeasurementToolButton2', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-area-polygon-line', group: 'areaTools', showColor: 'always' },
       AnnotationCreateAreaMeasurement3: { dataElement: 'areaMeasurementToolButton3', title: 'annotation.areaMeasurement', img: 'icon-tool-measurement-area-polygon-line', group: 'areaTools', showColor: 'always' },
@@ -447,6 +667,10 @@ export default {
       AnnotationCreateEllipse2: { dataElement: 'ellipseToolButton2', title: 'annotation.ellipse', img: 'icon-tool-shape-oval', group: 'ellipseTools', showColor: 'always' },
       AnnotationCreateEllipse3: { dataElement: 'ellipseToolButton3', title: 'annotation.ellipse', img: 'icon-tool-shape-oval', group: 'ellipseTools', showColor: 'always' },
       AnnotationCreateEllipse4: { dataElement: 'ellipseToolButton4', title: 'annotation.ellipse', img: 'icon-tool-shape-oval', group: 'ellipseTools', showColor: 'always' },
+      AnnotationCreateArc: { dataElement: 'arcToolButton', title: 'annotation.arc', img: 'icon-tool-arc', group: 'arcTools', showColor: 'always' },
+      AnnotationCreateArc2: { dataElement: 'arcToolButton2', title: 'annotation.arc', img: 'icon-tool-arc', group: 'arcTools', showColor: 'always' },
+      AnnotationCreateArc3: { dataElement: 'arcToolButton3', title: 'annotation.arc', img: 'icon-tool-arc', group: 'arcTools', showColor: 'always' },
+      AnnotationCreateArc4: { dataElement: 'arcToolButton4', title: 'annotation.arc', img: 'icon-tool-arc', group: 'arcTools', showColor: 'always' },
       AnnotationCreateLine: { dataElement: 'lineToolButton', title: 'annotation.line', img: 'icon-tool-shape-line', group: 'lineTools', showColor: 'always' },
       AnnotationCreateLine2: { dataElement: 'lineToolButton2', title: 'annotation.line', img: 'icon-tool-shape-line', group: 'lineTools', showColor: 'always' },
       AnnotationCreateLine3: { dataElement: 'lineToolButton3', title: 'annotation.line', img: 'icon-tool-shape-line', group: 'lineTools', showColor: 'always' },
@@ -482,40 +706,190 @@ export default {
       AnnotationCreateRedaction3: { dataElement: 'redactionButton3', title: 'option.redaction.markForRedaction', img: 'icon-tool-select-area-redaction', group: 'redactionTools', showColor: 'always' },
       AnnotationCreateRedaction4: { dataElement: 'redactionButton4', title: 'option.redaction.markForRedaction', img: 'icon-tool-select-area-redaction', group: 'redactionTools', showColor: 'always' },
       Pan: { dataElement: 'panToolButton', title: 'tool.pan', img: 'icon-header-pan', showColor: 'never' },
-      AnnotationEdit: { dataElement: 'selectToolButton', title: 'tool.select', img: 'multi select', showColor: 'never' },
+      AnnotationEdit: {
+        dataElement: 'selectToolButton',
+        title: 'tool.select',
+        img: 'multi select',
+        showColor: 'never',
+      },
       TextSelect: { dataElement: 'textSelectButton', img: 'icon - header - select - line', showColor: 'never' },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
-      AnnotationEraserTool: { dataElement: 'eraserToolButton', title: 'annotation.eraser', img: 'icon-operation-eraser', showColor: 'never' },
-      TextFormFieldCreateTool: { dataElement: 'textFieldToolButton', title: 'annotation.textField', img: 'icon-form-field-text', group: 'formFieldTools', showColor: 'always' },
-      TextFormFieldCreateTool2: { dataElement: 'textFieldToolButton2', title: 'annotation.textField', img: 'icon-form-field-text', group: 'formFieldTools', showColor: 'always' },
-      TextFormFieldCreateTool3: { dataElement: 'textFieldToolButton3', title: 'annotation.textField', img: 'icon-form-field-text', group: 'formFieldTools', showColor: 'always' },
-      TextFormFieldCreateTool4: { dataElement: 'textFieldToolButton4', title: 'annotation.textField', img: 'icon-form-field-text', group: 'formFieldTools', showColor: 'always' },
-      SignatureFormFieldCreateTool: { dataElement: 'signatureFieldToolButton', title: 'annotation.signatureFormField', img: 'icon-form-field-signature', group: 'sigFieldTools', showColor: 'always' },
-      SignatureFormFieldCreateTool2: { dataElement: 'signatureFieldToolButton2', title: 'annotation.signatureFormField', img: 'icon-form-field-signature', group: 'sigFieldTools', showColor: 'always' },
-      SignatureFormFieldCreateTool3: { dataElement: 'signatureFieldToolButton3', title: 'annotation.signatureFormField', img: 'icon-form-field-signature', group: 'sigFieldTools', showColor: 'always' },
-      SignatureFormFieldCreateTool4: { dataElement: 'signatureFieldToolButton4', title: 'annotation.signatureFormField', img: 'icon-form-field-signature', group: 'sigFieldTools', showColor: 'always' },
-      CheckBoxFormFieldCreateTool: { dataElement: 'checkBoxFieldCreateToolButton', title: 'annotation.checkBoxFormField', img: 'icon-form-field-checkbox', group: 'checkBoxFieldTools', showColor: 'never' },
-      RadioButtonFormFieldCreateTool: { dataElement: 'radioButtonFieldCreateToolButton', title: 'annotation.radioButtonFormField', img: 'icon-form-field-radiobutton', group: 'radioButtonFieldTools', showColor: 'never' },
-      ListBoxFormFieldCreateTool: { dataElement: 'listBoxFieldCreateToolButton', title: 'annotation.listBoxFormField', img: 'icon-form-field-listbox', group: 'listBoxFieldTools', showColor: 'always' },
-      ListBoxFormFieldCreateTool2: { dataElement: 'listBoxFieldCreateToolButton2', title: 'annotation.listBoxFormField', img: 'icon-form-field-listbox', group: 'listBoxFieldTools', showColor: 'always' },
-      ListBoxFormFieldCreateTool3: { dataElement: 'listBoxFieldCreateToolButton3', title: 'annotation.listBoxFormField', img: 'icon-form-field-listbox', group: 'listBoxFieldTools', showColor: 'always' },
-      ListBoxFormFieldCreateTool4: { dataElement: 'listBoxFieldCreateToolButton4', title: 'annotation.listBoxFormField', img: 'icon-form-field-listbox', group: 'listBoxFieldTools', showColor: 'always' },
-      ComboBoxFormFieldCreateTool: { dataElement: 'comboBoxFieldCreateToolButton', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
-      ComboBoxFormFieldCreateTool2: { dataElement: 'comboBoxFieldCreateToolButton2', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
-      ComboBoxFormFieldCreateTool3: { dataElement: 'comboBoxFieldCreateToolButton3', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
-      ComboBoxFormFieldCreateTool4: { dataElement: 'comboBoxFieldCreateToolButton4', title: 'annotation.comboBoxFormField', img: 'icon-form-field-combobox', group: 'comboBoxFieldTools', showColor: 'always' },
+      AnnotationEraserTool: {
+        dataElement: 'eraserToolButton',
+        title: 'annotation.eraser',
+        img: 'icon-operation-eraser',
+        showColor: 'never',
+      },
+      TextFormFieldCreateTool: {
+        dataElement: 'textFieldToolButton',
+        title: 'annotation.textField',
+        img: 'icon-form-field-text',
+        group: 'formFieldTools',
+        showColor: 'always',
+      },
+      TextFormFieldCreateTool2: {
+        dataElement: 'textFieldToolButton2',
+        title: 'annotation.textField',
+        img: 'icon-form-field-text',
+        group: 'formFieldTools',
+        showColor: 'always',
+      },
+      TextFormFieldCreateTool3: {
+        dataElement: 'textFieldToolButton3',
+        title: 'annotation.textField',
+        img: 'icon-form-field-text',
+        group: 'formFieldTools',
+        showColor: 'always',
+      },
+      TextFormFieldCreateTool4: {
+        dataElement: 'textFieldToolButton4',
+        title: 'annotation.textField',
+        img: 'icon-form-field-text',
+        group: 'formFieldTools',
+        showColor: 'always',
+      },
+      SignatureFormFieldCreateTool: {
+        dataElement: 'signatureFieldToolButton',
+        title: 'annotation.signatureFormField',
+        img: 'icon-form-field-signature',
+        group: 'sigFieldTools',
+        showColor: 'always',
+      },
+      SignatureFormFieldCreateTool2: {
+        dataElement: 'signatureFieldToolButton2',
+        title: 'annotation.signatureFormField',
+        img: 'icon-form-field-signature',
+        group: 'sigFieldTools',
+        showColor: 'always',
+      },
+      SignatureFormFieldCreateTool3: {
+        dataElement: 'signatureFieldToolButton3',
+        title: 'annotation.signatureFormField',
+        img: 'icon-form-field-signature',
+        group: 'sigFieldTools',
+        showColor: 'always',
+      },
+      SignatureFormFieldCreateTool4: {
+        dataElement: 'signatureFieldToolButton4',
+        title: 'annotation.signatureFormField',
+        img: 'icon-form-field-signature',
+        group: 'sigFieldTools',
+        showColor: 'always',
+      },
+      CheckBoxFormFieldCreateTool: {
+        dataElement: 'checkBoxFieldCreateToolButton',
+        title: 'annotation.checkBoxFormField',
+        img: 'icon-form-field-checkbox',
+        group: 'checkBoxFieldTools',
+        showColor: 'never',
+      },
+      RadioButtonFormFieldCreateTool: {
+        dataElement: 'radioButtonFieldCreateToolButton',
+        title: 'annotation.radioButtonFormField',
+        img: 'icon-form-field-radiobutton',
+        group: 'radioButtonFieldTools',
+        showColor: 'never',
+      },
+      ListBoxFormFieldCreateTool: {
+        dataElement: 'listBoxFieldCreateToolButton',
+        title: 'annotation.listBoxFormField',
+        img: 'icon-form-field-listbox',
+        group: 'listBoxFieldTools',
+        showColor: 'always',
+      },
+      ListBoxFormFieldCreateTool2: {
+        dataElement: 'listBoxFieldCreateToolButton2',
+        title: 'annotation.listBoxFormField',
+        img: 'icon-form-field-listbox',
+        group: 'listBoxFieldTools',
+        showColor: 'always',
+      },
+      ListBoxFormFieldCreateTool3: {
+        dataElement: 'listBoxFieldCreateToolButton3',
+        title: 'annotation.listBoxFormField',
+        img: 'icon-form-field-listbox',
+        group: 'listBoxFieldTools',
+        showColor: 'always',
+      },
+      ListBoxFormFieldCreateTool4: {
+        dataElement: 'listBoxFieldCreateToolButton4',
+        title: 'annotation.listBoxFormField',
+        img: 'icon-form-field-listbox',
+        group: 'listBoxFieldTools',
+        showColor: 'always',
+      },
+      ComboBoxFormFieldCreateTool: {
+        dataElement: 'comboBoxFieldCreateToolButton',
+        title: 'annotation.comboBoxFormField',
+        img: 'icon-form-field-combobox',
+        group: 'comboBoxFieldTools',
+        showColor: 'always',
+      },
+      ComboBoxFormFieldCreateTool2: {
+        dataElement: 'comboBoxFieldCreateToolButton2',
+        title: 'annotation.comboBoxFormField',
+        img: 'icon-form-field-combobox',
+        group: 'comboBoxFieldTools',
+        showColor: 'always',
+      },
+      ComboBoxFormFieldCreateTool3: {
+        dataElement: 'comboBoxFieldCreateToolButton3',
+        title: 'annotation.comboBoxFormField',
+        img: 'icon-form-field-combobox',
+        group: 'comboBoxFieldTools',
+        showColor: 'always',
+      },
+      ComboBoxFormFieldCreateTool4: {
+        dataElement: 'comboBoxFieldCreateToolButton4',
+        title: 'annotation.comboBoxFormField',
+        img: 'icon-form-field-combobox',
+        group: 'comboBoxFieldTools',
+        showColor: 'always',
+      },
+      AnnotationCreateChangeViewTool: {
+        dataElement: 'changeViewCreateToolButton',
+        title: 'annotation.changeView',
+        img: 'icon-tool-changeview',
+        group: 'changeViewTools',
+        showColor: 'always'
+      },
+      AnnotationCreateChangeViewTool2: {
+        dataElement: 'changeViewCreateToolButton2',
+        title: 'annotation.changeView',
+        img: 'icon-tool-changeview',
+        group: 'changeViewTools',
+        showColor: 'always'
+      },
+      AnnotationCreateChangeViewTool3: {
+        dataElement: 'changeViewCreateToolButton3',
+        title: 'annotation.changeView',
+        img: 'icon-tool-changeview',
+        group: 'changeViewTools',
+        showColor: 'always'
+      },
+      AnnotationCreateChangeViewTool4: {
+        dataElement: 'changeViewCreateToolButton4',
+        title: 'annotation.changeView',
+        img: 'icon-tool-changeview',
+        group: 'changeViewTools',
+        showColor: 'always'
+      },
     },
     tab: {
       signatureModal: 'inkSignaturePanelButton',
       pageReplacementModal: 'urlInputPanelButton',
       linkModal: 'URLPanelButton',
       rubberStampTab: 'standardStampPanelButton',
+      filterAnnotModal: DataElements.ANNOTATION_USER_FILTER_PANEL_BUTTON
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
-    customColors: localStorageManager.isLocalStorageEnabled() && window.localStorage.getItem('customColors') ? JSON.parse(window.localStorage.getItem('customColors')) : [],
+    customColors:
+      localStorageManager.isLocalStorageEnabled() && window.localStorage.getItem('customColors')
+        ? JSON.parse(window.localStorage.getItem('customColors'))
+        : [],
     activeLeftPanel: 'thumbnailsPanel',
     activeToolGroup: '',
     notePopupId: '',
@@ -585,7 +959,50 @@ export default {
     fonts: defaultFonts,
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
+    presetCropDimensions,
     dateTimeFormats: defaultDateTimeFormats,
+    thumbnailSelectionMode: 'checkbox',
+    annotationFilters: {
+      includeReplies: true,
+      authorFilter: [],
+      colorFilter: [],
+      typeFilter: [],
+      statusFilter: []
+    },
+    zoomStepFactors: [
+      {
+        step: 7.5,
+        startZoom: 0
+      },
+      {
+        step: 25,
+        startZoom: 80
+      },
+      {
+        step: 50,
+        startZoom: 150
+      },
+      {
+        step: 100,
+        startZoom: 250
+      },
+      {
+        step: 200,
+        startZoom: 400
+      },
+      {
+        step: 400,
+        startZoom: 800
+      },
+      {
+        step: 800,
+        startZoom: 3200
+      },
+      {
+        step: 1600,
+        startZoom: 6400
+      }
+    ]
   },
   search: {
     value: '',
@@ -645,6 +1062,5 @@ export default {
     officeWorkerTransportPromise: null,
     disableIndexedDB: getHashParameters('disableIndexedDB', false),
   },
-  featureFlags: {
-  }
+  featureFlags: {},
 };

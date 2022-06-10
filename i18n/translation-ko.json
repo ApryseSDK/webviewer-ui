@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "추가하다",
     "apply": "적용",
     "applyAll": "모두 적용",
     "calendar": "캘린더",
@@ -209,6 +210,7 @@
     "numResultsFound": "찾은 결과",
     "notSupported": "해당 유형의 파일은 지원되지 않습니다.",
     "passwordRequired": "비밀번호가 필요합니다",
+    "enterPasswordPlaceholder": "암호를 입력",
     "preparingToPrint": "인쇄 준비 중...",
     "annotationReplyCount": "{{count}} 댓글",
     "annotationReplyCount_plural": "{{count}} 답글",
@@ -243,7 +245,8 @@
     "selectFile": "파일 선택",
     "selectPageToReplace": "문서에서 교체할 페이지를 선택합니다.",
     "embeddedFiles": "포함된 파일",
-    "pageNum": "페이지 번호"
+    "pageNum": "페이지 번호",
+    "error": "오류"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "모두",
       "current": "현재 페이지",
       "pages": "페이지",
+      "specifyPages": "페이지 지정",
       "view": "현재보기",
       "pageQuality": "인쇄 품질",
       "qualityNormal": "일반",
       "qualityHigh": "최상",
       "includeAnnotations": "주석 포함",
       "includeComments": "댓글 포함",
-      "addWatermarkSettings": "워터마크 추가"
+      "printSettings": "인쇄 설정"
     },
     "printInfo": {
       "author": "저자",
@@ -447,12 +451,15 @@
       "enableSnapping": "스냅 가능"
     },
     "watermark": {
+      "title": "양수표",
+      "addWatermark": "워터 마크를 추가",
       "size": "크기",
       "location": "워터마크의 위치를 선택하세요.",
       "text": "텍스트",
       "style": "스타일",
       "resetAllSettings": "모든 설정 초기화",
       "font": "글꼴",
+      "addNew": "새로운 걸 더하다",
       "locations": {
         "center": "중앙",
         "topLeft": "좌측상단",

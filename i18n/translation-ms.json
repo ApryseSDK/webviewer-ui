@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Tambah",
     "apply": "Mohon",
     "applyAll": "Guna semua",
     "calendar": "Kalendar",
@@ -209,6 +210,7 @@
     "numResultsFound": "keputusan dijumpai",
     "notSupported": "Jenis fail itu tidak disokong.",
     "passwordRequired": "kata laluan diperlukan",
+    "enterPasswordPlaceholder": "Masukkan kata laluan",
     "preparingToPrint": "Bersedia untuk mencetak...",
     "annotationReplyCount": "{{count}} Balas",
     "annotationReplyCount_plural": "{{count}} Balasan",
@@ -243,7 +245,8 @@
     "selectFile": "Pilih fail",
     "selectPageToReplace": "Pilih halaman dalam dokumen yang anda ingin gantikan.",
     "embeddedFiles": "Fail Terbenam",
-    "pageNum": "Mukasurat"
+    "pageNum": "Mukasurat",
+    "error": "ralat"
   },
   "option": {
     "type": {
@@ -339,13 +342,14 @@
       "all": "Semua",
       "current": "Muka surat ini",
       "pages": "Halaman untuk dicetak",
+      "specifyPages": "Tentukan Halaman",
       "view": "Pandangan Semasa",
       "pageQuality": "Kualiti Cetakan",
       "qualityNormal": "Biasalah",
       "qualityHigh": "tinggi",
       "includeAnnotations": "Sertakan anotasi",
       "includeComments": "Sertakan ulasan",
-      "addWatermarkSettings": "Tambah Tera Air"
+      "printSettings": "Tetapan Cetak"
     },
     "printInfo": {
       "author": "Pengarang",
@@ -447,12 +451,15 @@
       "enableSnapping": "Dayakan menjentik untuk alat ukuran"
     },
     "watermark": {
+      "title": "Tera air",
+      "addWatermark": "Tambah Tera Air",
       "size": "Saiz",
       "location": "Pilih lokasi untuk mengedit tera air",
       "text": "Teks",
       "style": "Gaya",
       "resetAllSettings": "Tetapkan Semula Semua Tetapan",
       "font": "buat",
+      "addNew": "Tambah baru",
       "locations": {
         "center": "Pusat",
         "topLeft": "Atas Kiri",

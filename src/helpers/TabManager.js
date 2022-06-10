@@ -64,14 +64,14 @@ export default class TabManager {
     this.store.dispatch(actions.setTabs(tabs));
   }
 
-  async setActiveTab(id, saveCurrent = false) {
+  async setActiveTab(id, saveCurrentActiveTabState = false) {
     this.store.dispatch(actions.openElement('progressModal'));
     this.store.dispatch(setLoadingProgress(0));
     const { tabs, activeTab } = this.store.getState().viewer;
     const currentTab = tabs.find(tab => tab.id === activeTab);
     core.addEventListener('documentUnloaded', () => this.listenForAnnotChanges(), { once: true });
     if (currentTab) {
-      saveCurrent && await currentTab.saveCurrent(this.db);
+      saveCurrentActiveTabState && await currentTab.saveCurrentActiveTabState(this.db);
       core.closeDocument();
     }
     const newTab = tabs.find(tab => tab.id === id);
@@ -115,9 +115,9 @@ export default class TabManager {
   }
 
   async addTab(src, options = {}) {
-    const saveCurrent = options['saveCurrent'] === false ? options['saveCurrent'] : true;
+    const saveCurrentTabState = options['saveCurrentActiveTabState'] === false || options['saveCurrent'] === false;
     const useDB = options['useDB'] === false ? options['useDB'] && this.useDB : this.useDB;
-    const load = options['load'] === false ? options['load'] : true;
+    const loadOption = options['setActive'] === false || options['load'] === false;
     const { tabs } = this.store.getState().viewer;
     const currId = tabs.reduce((highestId, tab) => {
       return tab.id > highestId ? tab.id : highestId;
@@ -137,9 +137,9 @@ export default class TabManager {
       options: tab.options,
       id: tab.id,
     });
-    if (load) {
+    if (!loadOption) {
       this.moveTab(tabs.length - 1, 0);
-      await this.setActiveTab(tab.id, saveCurrent);
+      await this.setActiveTab(tab.id, !saveCurrentTabState);
     }
     this.store.dispatch(actions.setTabs(tabs));
     return tab.id;
@@ -259,7 +259,7 @@ export class Tab {
     }
   }
 
-  async saveCurrent(db) {
+  async saveCurrentActiveTabState(db) {
     this.disabled = true;
     this.savePageData();
     const document = core.getDocument();

@@ -96,10 +96,15 @@ distanceMeasurementAnnot['Measure'] = {
     },
   ],
 };
+
+const noop = () => {};
 distanceMeasurementAnnot['IT'] = 'LineDimension';
 distanceMeasurementAnnot['DisplayUnits'] = ['in'];
 distanceMeasurementAnnot['Scale'] = [[1, 'in'], [1, 'in']];
 distanceMeasurementAnnot['Precision'] = 0.01;
+distanceMeasurementAnnot['ToolName'] = 'AnnotationCreateDistanceMeasurement';
+distanceMeasurementAnnot['setStartStyle'] = noop;
+distanceMeasurementAnnot['setEndStyle'] = noop;
 
 export const DistanceMeasurement = BasicTemplate.bind({});
 DistanceMeasurement.args = {

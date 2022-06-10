@@ -212,7 +212,7 @@ const ThumbnailsPanel = () => {
   }, []);
 
   useEffect(() => {
-    const onLayoutChanged = changes => {
+    const onPagesUpdated = changes => {
       if (!changes) {
         return;
       }
@@ -231,9 +231,9 @@ const ThumbnailsPanel = () => {
       dispatch(actions.setSelectedPageThumbnails(updatedPagesIndexes));
     };
 
-    core.addEventListener('layoutChanged', onLayoutChanged);
+    core.addEventListener('pagesUpdated', onPagesUpdated);
 
-    return () => core.removeEventListener('layoutChanged', onLayoutChanged);
+    return () => core.removeEventListener('pagesUpdated', onPagesUpdated);
   }, [selectedPageIndexes]);
 
   useEffect(() => {

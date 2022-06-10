@@ -9,6 +9,7 @@ import StylePopup from 'components/StylePopup';
 import SignatureStylePopup from 'components/SignatureStylePopup';
 import setToolStyles from 'helpers/setToolStyles';
 import { getOpenedWarningModal, getOpenedColorPicker, getAllOpenedModals } from 'helpers/getElements';
+import getTextDecoration from 'helpers/getTextDecoration';
 import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -17,6 +18,7 @@ import HorizontalDivider from 'components/HorizontalDivider';
 import RubberStampStylePopup from 'components/RubberStampOverlay';
 
 import './ToolStylePopup.scss';
+import getToolStyles from 'helpers/getToolStyles';
 
 class ToolStylePopup extends React.PureComponent {
   static propTypes = {
@@ -101,17 +103,36 @@ class ToolStylePopup extends React.PureComponent {
   handleRichTextStyleChange = (property, value) => {
     const { activeToolName, activeToolStyle } = this.props;
     const tool = core.getTool(activeToolName);
+    let richTextStyle;
+    let activeToolRichTextStyle = activeToolStyle["RichTextStyle"][0];
+
     if (typeof tool.complete === 'function') {
       tool.complete();
     }
-    const richTextStyle = {
+
+    if (property === 'underline' || property === 'line-through') {
+      value = getTextDecoration({[property]: value}, activeToolRichTextStyle);
+      property = 'text-decoration';
+    }
+    
+    richTextStyle = {
       0: {
-        ...activeToolStyle["RichTextStyle"][0],
+        ...activeToolRichTextStyle,
         [property]: value,
       }
     };
+
     setToolStyles(activeToolName, "RichTextStyle", richTextStyle);
   }
+
+  handleLineStyleChange = (section, value) => {
+    const { activeToolName } = this.props;
+    if (section === 'start') {
+      setToolStyles(activeToolName, 'StartLineStyle', value);
+    } else if (section === 'end') {
+      setToolStyles(activeToolName, 'EndLineStyle', value);
+    }
+  };
 
   render() {
     const { activeToolGroup, isDisabled, activeToolName, activeToolStyle, isMobile } = this.props;
@@ -119,9 +140,18 @@ class ToolStylePopup extends React.PureComponent {
     let properties = {};
     const colorMapKey = mapToolNameToKey(activeToolName);
     const isRedaction = activeToolName.includes('AnnotationCreateRedaction');
+    const showLineStyleOptions = getDataWithKey(colorMapKey).hasLineEndings;
 
     if (isDisabled) {
       return null;
+    }
+
+    if (showLineStyleOptions) {
+      const toolStyles = getToolStyles(activeToolName);
+      properties = {
+        StartLineStyle: toolStyles.StartLineStyle,
+        EndLineStyle: toolStyles.EndLineStyle
+      }
     }
 
     if (isFreeText) {
@@ -159,9 +189,12 @@ class ToolStylePopup extends React.PureComponent {
         hideSnapModeCheckbox={isEllipseMeasurementTool || !core.isFullPDFEnabled()}
         onPropertyChange={this.handleStyleChange}
         onStyleChange={this.handleStyleChange}
+        onSliderChange={()=>{}}
         onRichTextStyleChange={this.handleRichTextStyleChange}
+        onLineStyleChange={this.handleLineStyleChange}
         properties={properties}
         isRedaction={isRedaction}
+        showLineStyleOptions={showLineStyleOptions}
       />
     );
 

@@ -14,7 +14,7 @@ const propTypes = {
   maxFontSize: PropTypes.number,
   incrementMap: PropTypes.object,
   // Calls this with current error message string whenever it changes
-  onError:  PropTypes.func,
+  onError: PropTypes.func,
 };
 
 const MIN_FONT_SIZE = 1;
@@ -47,7 +47,7 @@ const FontSizeDropdown = ({
   }, []);
   useOnClickOutside(dropdownDivRef, onClickOutside);
 
-  const [currSize, setCurrSize] = useState(fontSize < maxFontSize ? fontSize : 1);
+  const [currSize, setCurrSize] = useState(fontSize <= maxFontSize ? fontSize : 1);
   const isValidNum = (num, arr = []) =>
     num && arr.indexOf(num) === -1 && num <= maxFontSize && num >= MIN_FONT_SIZE;
   useEffect(() => {

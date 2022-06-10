@@ -27,7 +27,7 @@
   ],
   "rules": {
     "quotes": [
-      0,
+      2,
       "single",
       {
         "allowTemplateLiterals": true

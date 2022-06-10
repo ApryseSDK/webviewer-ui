@@ -4,12 +4,8 @@
 .ErrorModal {
   @extend %modal;
 
-  .container {
-    @extend %modal-shared-container-style;
-    display: flex;
-    align-items: center;
+  .modal-container {
     width: 300px;
-    padding: 20px;
     word-break: break-word;
     white-space: pre-wrap;
   }

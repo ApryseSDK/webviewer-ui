@@ -63,7 +63,6 @@
 
   &.selected {
     $selected-icon-size: 16px;
-    $selected-border-size: 3px;
 
     .container {
       .thumbnail::before {
@@ -74,14 +73,14 @@
         position: absolute;
         z-index: 10;
       }
-    }
 
-    .page-label {
-      color: var(--focus-border) !important;
+      canvas {
+        background: rgba(255, 255, 255, 0.6);
+      }
     }
+  }
 
-    canvas:first-of-type {
-      border: solid var(--focus-border) $selected-border-size !important;
-    }
+  &.active .page-label {
+    color: var(--focus-border) !important;
   }
 }

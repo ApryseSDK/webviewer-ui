@@ -448,7 +448,7 @@ const getPrintRotation = (pageIndex, maintainPageOrientation) => {
     return printRotation;
   }
 
-  return 0;
+  return window.documentViewer.getRotation(pageIndex + 1);
 };
 
 const positionCanvas = (canvas, pageIndex) => {

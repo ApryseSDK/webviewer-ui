@@ -1,5 +1,6 @@
 {
   "action": {
+    "add": "Hinzufügen",
     "apply": "Anwenden",
     "applyAll": "Alles anwenden",
     "calendar": "Kalender",
@@ -53,7 +54,7 @@
     "type": "Schreiben",
     "upload": "Hochladen",
     "link": "Verknüpfung",
-    "darkMode": "Dark Mode",
+    "darkMode": "Dunkler Modus",
     "lightMode": "Heller Modus",
     "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter",
     "prevResult": "Vorheriges Ergebnis",
@@ -113,7 +114,7 @@
     "image": "Bild",
     "line": "Linie",
     "perimeterMeasurement": "Umfangsmessung",
-    "polygon": "Polygon",
+    "polygon": "Vieleck",
     "polygonCloud": "Wolke",
     "polyline": "Linienzug",
     "rectangle": "Rechteck",
@@ -209,6 +210,7 @@
     "numResultsFound": "gefundene Ergebnisse",
     "notSupported": "Dieser Dateityp wird nicht unterstützt.",
     "passwordRequired": "Passwort erforderlich",
+    "enterPasswordPlaceholder": "Passwort eingeben",
     "preparingToPrint": "Druckvorbereitung...",
     "annotationReplyCount": "{{count}} Antwort",
     "annotationReplyCount_plural": "{{count}} Antworten",
@@ -243,7 +245,8 @@
     "selectFile": "Datei auswählen",
     "selectPageToReplace": "Wählen Sie die Seite(n) im Dokument aus, die Sie ersetzen möchten.",
     "embeddedFiles": "Eingebettete Dateien",
-    "pageNum": "Seitennummer"
+    "pageNum": "Seitennummer",
+    "error": "Fehler"
   },
   "option": {
     "type": {
@@ -255,7 +258,7 @@
       "callout": "Callout",
       "freetext": "Freier Text",
       "line": "Leitung",
-      "polygon": "Polygon",
+      "polygon": "Vieleck",
       "polyline": "Polylinie",
       "rectangle": "Rechteck",
       "redact": "Schwärzen",
@@ -339,13 +342,14 @@
       "all": "Alle",
       "current": "Aktuelle Seite",
       "pages": "Seiten",
+      "specifyPages": "Seiten angeben",
       "view": "Momentane Sicht",
       "pageQuality": "Druckqualität",
       "qualityNormal": "Normal",
       "qualityHigh": "Hoch",
       "includeAnnotations": "Fügen Sie Anmerkungen hinzu",
       "includeComments": "Kommentare einfügen",
-      "addWatermarkSettings": "Wasserzeicheneinstellungen hinzufügen"
+      "printSettings": "Druckeinstellungen"
     },
     "printInfo": {
       "author": "Autor",
@@ -447,12 +451,15 @@
       "enableSnapping": "Aktivieren Sie das Einrasten für Messwerkzeuge"
     },
     "watermark": {
+      "title": "Wasserzeichen",
+      "addWatermark": "Wasserzeichen hinzufügen",
       "size": "Größe",
       "location": "Wählen Sie einen Ort zum Bearbeiten von Wasserzeichen",
       "text": "Text",
       "style": "Stil",
       "resetAllSettings": "Alle Einstellungen zurücksetzen",
       "font": "Schriftart",
+      "addNew": "Neue hinzufügen",
       "locations": {
         "center": "Center",
         "topLeft": "Oben links",

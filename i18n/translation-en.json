@@ -1,11 +1,13 @@
 {
   "action": {
+    "add": "Add",
     "apply": "Apply",
     "applyAll": "Apply all",
     "calendar": "Calendar",
     "calibrate": "Calibrate",
     "cancel": "Cancel",
     "clear": "Clear",
+    "clearAll": "Clear all",
     "close": "Close",
     "undo": "Undo",
     "redo": "Redo",
@@ -137,7 +139,8 @@
     "link": "Link",
     "other": "Other",
     "3D": "3D",
-    "sound": "Sound"
+    "sound": "Sound",
+    "changeView": "Change View"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -209,6 +212,7 @@
     "numResultsFound": "results found",
     "notSupported": "That file type is not supported.",
     "passwordRequired": "Password required",
+    "enterPasswordPlaceholder": "Enter password",
     "preparingToPrint": "Preparing to print...",
     "annotationReplyCount": "{{count}} Reply",
     "annotationReplyCount_plural": "{{count}} Replies",
@@ -243,7 +247,8 @@
     "selectFile": "Select file",
     "selectPageToReplace": "Select the pages in the document you would like to replace with.",
     "embeddedFiles": "Embedded Files",
-    "pageNum": "Page Number"
+    "pageNum": "Page Number",
+    "error": "Error"
   },
   "option": {
     "type": {
@@ -339,13 +344,14 @@
       "all": "All",
       "current": "Current Page",
       "pages": "Pages to print",
+      "specifyPages": "Specify Pages",
       "view": "Current View",
       "pageQuality": "Print Quality",
       "qualityNormal": "Normal",
       "qualityHigh": "High",
       "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
-      "addWatermarkSettings": "Add Watermark"
+      "printSettings": "Print Settings"
     },
     "printInfo": {
       "author": "Author",
@@ -387,12 +393,11 @@
       "pageReplaceInputFromSource": "with page(s)"
     },
     "filterAnnotModal": {
-      "commentBy": "Comment by",
-      "types": "Types",
       "color": "Color",
-      "includeReplies": "Include Replies"
-    },
-    "status": {
+      "includeReplies": "Include replies",
+      "filters": "Filters",
+      "user": "User",
+      "type": "Type",
       "status": "Status"
     },
     "state": {
@@ -447,12 +452,15 @@
       "enableSnapping": "Enable snapping for measurement tools"
     },
     "watermark": {
+      "title": "Watermark",
+      "addWatermark": "Add Watermark",
       "size": "Size",
       "location": "Choose a location to edit watermarks",
       "text": "Text",
       "style": "Style",
       "resetAllSettings": "Reset All Settings",
       "font": "Font",
+      "addNew": "Add New",
       "locations": {
         "center": "Center",
         "topLeft": "Top Left",
@@ -510,6 +518,9 @@
       "odd": "Odd Pages only",
       "even": "Even Pages only",
       "header": "Mark Pages Redaction"
+    },
+    "lineStyleOptions": {
+      "title": "Style"
     }
   },
   "warning": {
@@ -803,7 +814,7 @@
       "applyTitle": "Apply crop?",
       "applyMessage": "This action will permanently crop all selected pages selected. It cannot be undone.",
       "cancelTitle": "Cancel crop?",
-      "cancelMessage": "Are you sure you want to cancel cropping all selected pages?" 
+      "cancelMessage": "Are you sure you want to cancel cropping all selected pages?"
     }
   },
   "redactionPanel": {

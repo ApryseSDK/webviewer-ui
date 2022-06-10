@@ -16,12 +16,26 @@ $modal-z-index: 100;
   align-items: center;
   background: var(--modal-negative-space);
 
+  .modal-container {
+    .wrapper {
+      .modal-content {
+        padding: 10px;
+      }
+    }
+  }
+
   .footer {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     width: 100%;
     margin-top: 13px;
+
+    &.modal-footer {
+      padding: 16px;
+      margin: 0;
+      border-top: 1px solid var(--divider);
+    }
 
     .modal-button {
       margin: 0;
@@ -54,6 +68,11 @@ $modal-z-index: 100;
 
         &:hover {
           background: var(--primary-button-hover);
+        }
+
+        &.disabled {
+          background: var(--primary-button) !important;
+          opacity: 0.5;
         }
       }
 

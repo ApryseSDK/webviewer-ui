@@ -205,37 +205,46 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
 
         const signed = await digitalSigField.hasCryptographicSignature();
         if (signed) {
-          const signerCert = await digitalSigField.getSignerCertFromCMS();
-          /**
-           * @note "Issuer" refers to the Certificate Authority that issued the
-           * certificate
-           * "Subject" refers to the organization/person that the Certificate
-           * Auhority issued this certificate to
-           *
-           * It is likely that future UI iterations will leverage Issuer
-           * information, so the code has been commented out for now, but will
-           * be uncommented in future feature implementations
-           */
-          // const retrievedIssuerField = await signerCert.getIssuerField();
-          // const processedIssuerField = await processX501DistinguishedName(retrievedIssuerField) || {};
-          const retrievedSubjectField = await signerCert.getSubjectField();
-          const processedSubjectField = await processX501DistinguishedName(retrievedSubjectField) || {};
-          signer = (
-            processedSubjectField['e_commonName']
-            || await digitalSigField.getSignatureName()
-            || await digitalSigField.getContactInfo()
-          );
-          signTime = await digitalSigField.getSigningTime();
-
-          if (await signTime.isValid()) {
-            signTime = formatPDFNetDate(signTime);
-          } else {
-            signTime = null;
+          const subFilter = await digitalSigField.getSubFilter();
+          if (subFilter === PDFNet.DigitalSignatureField.SubFilterType.e_adbe_pkcs7_detached) {
+            const signerCert = await digitalSigField.getSignerCertFromCMS();
+            /**
+             * @note "Issuer" refers to the Certificate Authority that issued the
+             * certificate
+             * "Subject" refers to the organization/person that the Certificate
+             * Auhority issued this certificate to
+             *
+             * It is likely that future UI iterations will leverage Issuer
+             * information, so the code has been commented out for now, but will
+             * be uncommented in future feature implementations
+             */
+            // const retrievedIssuerField = await signerCert.getIssuerField();
+            // const processedIssuerField = await processX501DistinguishedName(retrievedIssuerField) || {};
+            const retrievedSubjectField = await signerCert.getSubjectField();
+            const processedSubjectField = await processX501DistinguishedName(retrievedSubjectField) || {};
+            signer = processedSubjectField['e_commonName'];
           }
+          // Getter functions cannot be called on Digital Signature fields using
+          // e_ETSI_RFC3161
+          if (subFilter !== PDFNet.DigitalSignatureField.SubFilterType.e_ETSI_RFC3161) {
+            if (!signer) {
+              signer = (
+                await digitalSigField.getSignatureName()
+                || await digitalSigField.getContactInfo()
+              );
+            }
+            signTime = await digitalSigField.getSigningTime();
 
-          contactInfo = await digitalSigField.getContactInfo();
-          location = await digitalSigField.getLocation();
-          reason = await digitalSigField.getReason();
+            if (await signTime.isValid()) {
+              signTime = formatPDFNetDate(signTime);
+            } else {
+              signTime = null;
+            }
+
+            contactInfo = await digitalSigField.getContactInfo();
+            location = await digitalSigField.getLocation();
+            reason = await digitalSigField.getReason();
+          }
 
           documentPermission = await digitalSigField.getDocumentPermissions();
           isCertification = await digitalSigField.isCertification();
@@ -279,12 +288,37 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
             const processedSubjectField = await processX501DistinguishedName(retrievedSubjectField);
             Object.assign(subjectField, processedSubjectField);
             const lastX509Cert = certPath[certPath.length - 1];
-            const notBeforeEpochTime = await lastX509Cert.getNotBeforeEpochTime();
-            const notAfterEpochTime = await lastX509Cert.getNotAfterEpochTime();
-            validAtTimeOfSigning = (
-              notAfterEpochTime >= epochTrustVerificationTime
-              && epochTrustVerificationTime >= notBeforeEpochTime
-            );
+            /**
+             * @todo @colim @rdjericpdftron 2022-05-30
+             * Using the pdftron::PDF::VerificationOptions::LoadTrustList API
+             * in combination with
+             * pdftron::Crypto::X509Certificate::GetNotBeforeEpochTime
+             * or
+             * pdftron::Crypto::X509Certificate::GetNotAfterEpochTime
+             * Results in the following fatal error being thrown:
+             *
+             * calendar_point::to_std_timepoint() does not support years after
+             * 2037 on this system
+             *
+             * @rdjericpdftron Mentions that this should be addressed in a
+             * future release of PDFNet when the Botan library has been patched
+             */
+            try {
+              const notBeforeEpochTime = await lastX509Cert.getNotBeforeEpochTime();
+              const notAfterEpochTime = await lastX509Cert.getNotAfterEpochTime();
+              validAtTimeOfSigning = (
+                notAfterEpochTime >= epochTrustVerificationTime
+                && epochTrustVerificationTime >= notBeforeEpochTime
+              );
+            } catch (dateBugError) {
+              if (dateBugError.includes('calendar_point::to_std_timepoint() does not support years after')) {
+                console.warn(
+                  'The following error is a known issue with Botan, and aims to be addressed in a future release of '
+                  + 'PDFNet. This currently does not impact PDFTron\'s Digital Signature Verification capabilities.'
+                );
+                console.warn(dateBugError);
+              }
+            }
           }
         }
 

@@ -12,7 +12,13 @@ const setReactQuillContent = annotation => {
   for (let i = 0; i < indexes.length; i++) {
     const element = richTextStyle[indexes[i]];
     const attr = getAttributtes(element);
-    const textSlice = text.slice(indexes[i], indexes[i + 1]);
+
+    if (isNaN(indexes[i])) {
+      continue;
+    }
+
+    const lastIndex = isNaN(indexes[i + 1]) ? text.length : indexes[i + 1];
+    const textSlice = text.slice(indexes[i], lastIndex);
 
     ops.push({ insert: textSlice, attributes: attr });
   }

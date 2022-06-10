@@ -2,7 +2,9 @@ import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 
 // viewer
+export const getPresetCropDimensions = state => state.viewer.presetCropDimensions;
 export const getDateTimeFormats = state => state.viewer.dateTimeFormats;
+export const getThumbnailSelectionMode = state => state.viewer.thumbnailSelectionMode;
 export const getFonts = state => state.viewer.fonts;
 export const getTabs = state => state.viewer.tabs;
 export const getActiveTab = state => state.viewer.activeTab;
@@ -93,6 +95,10 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   );
 };
 
+export const getToolbarHeaders = state => {
+  return state.viewer.headers;
+}
+
 const getToolbarGroupDataElements = state => {
   return Object.keys(state.viewer.headers)
     .filter(key => key.includes('toolbarGroup-'));
@@ -101,8 +107,9 @@ const getToolbarGroupDataElements = state => {
 export const getEnabledToolbarGroups = state => {
   const toolbarGroupDataElements = getToolbarGroupDataElements(state);
   return toolbarGroupDataElements.filter(dataElement => {
-    const headerItems = state.viewer.headers[dataElement];
-    const flattenHeaderItems = dataItems => {
+    // The items will come from 'children' if it is a ToolbarGroup created by the API createTool
+    const headerItems = state.viewer.headers[dataElement].children || state.viewer.headers[dataElement];
+    const flattenHeaderItems = (dataItems) => {
       return dataItems.reduce((total, item) => {
         if (item.children) {
           total.push(...flattenHeaderItems(item.children));
@@ -135,7 +142,8 @@ export const getDefaultHeaderItems = state => {
 };
 
 export const getActiveHeaderItems = state => {
-  return state.viewer.headers[state.viewer.activeHeaderGroup];
+  const activeHeaderGroupItems = state.viewer.headers[state.viewer.activeHeaderGroup];
+  return activeHeaderGroupItems.children || activeHeaderGroupItems;
 };
 
 export const getDisabledElementPriority = (state, dataElement) =>
@@ -143,8 +151,13 @@ export const getDisabledElementPriority = (state, dataElement) =>
 
 export const getToolsHeaderItems = state => {
   const toolbarGroup = getCurrentToolbarGroup(state);
-  return state.viewer.headers[toolbarGroup] || [];
+  const toolbarGroupHeaders =  state.viewer.headers[toolbarGroup];
+  return toolbarGroupHeaders && toolbarGroupHeaders.children ? toolbarGroupHeaders.children : toolbarGroupHeaders || [];
 };
+
+export const getToolbarGroupItems = toolbarGroup => state => {
+  return state.viewer.headers[toolbarGroup];
+}
 
 export const getToolButtonObjects = state => {
   return state.viewer.toolButtonObjects;
@@ -343,6 +356,8 @@ export const isThumbnailSelectingPages = state => state.viewer.thumbnailSelectin
 
 export const getWatermarkModalOptions = state => state.viewer.watermarkModalOptions;
 
+export const getZoomStepFactors = state => state.viewer.zoomStepFactors;
+
 // warning message
 export const getWarningMessage = state => state.viewer.warning?.message || '';
 
@@ -439,6 +454,8 @@ export const getPageReplacementFileList = state => state.viewer.pageReplacementF
 
 export const getPageManipulationOverlayItems = state => state.viewer.pageManipulationOverlay;
 
+export const getThumbnailControlMenuItems = state => state.viewer.thumbnailControlMenu;
+
 export const shouldShowPresets = state => {
   const response = state.viewer.toolButtonObjects[state.viewer.activeToolName];
   return response?.showPresets ?? true;
@@ -447,3 +464,5 @@ export const shouldShowPresets = state => {
 export const shouldResetAudioPlaybackPosition = state => state.viewer.shouldResetAudioPlaybackPosition;
 
 export const getActiveSoundAnnotation = state => state.viewer.activeSoundAnnotation;
+
+export const getAnnotationFilters = state => state.viewer.annotationFilters;
