@@ -89,7 +89,9 @@
     "underline": "Onderstrepen",
     "custom": "maatwerk",
     "rubberStamp": "Rubberen stempel",
-    "note": "Notitie"
+    "note": "Notitie",
+    "link": "Koppeling",
+    "other": "Andere"
   },
   "rubberStamp": {
     "Approved": "Goedgekeurd",

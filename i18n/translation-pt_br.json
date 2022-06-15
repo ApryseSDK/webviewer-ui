@@ -89,7 +89,9 @@
     "underline": "Sublinhar",
     "custom": "Personalizado",
     "rubberStamp": "Carimbo de borracha",
-    "note": "Nota"
+    "note": "Nota",
+    "link": "Link",
+    "other": "Outro"
   },
   "rubberStamp": {
     "Approved": "Aprovado",
