@@ -47,6 +47,7 @@ function NoteState(props) {
 
   const togglePopup = e => {
     e.stopPropagation();
+    if (!isOwnedByCurrentUser) return;
     setIsOpen(!isOpen);
   };
 
@@ -54,8 +55,8 @@ function NoteState(props) {
     setIsOpen(false);
   }
 
-  const getShareTypeIcon = shareType => {
-    return <ShareTypeIcon shareType={shareType} />;
+  const getShareTypeIcon = (shareType, ariaLabel) => {
+    return <ShareTypeIcon shareType={shareType} ariaLabel={ariaLabel} />;
   };
 
   function createOnStateOptionButtonClickHandler(state) {
@@ -74,8 +75,11 @@ function NoteState(props) {
   }
 
   const annotationShareType = getAnnotationShareType(annotation) || ShareTypes.NONE;
-  const icon = getShareTypeIcon(annotationShareType);
   const isReply = annotation.isReply();
+  const annotationTooltip = `${t('option.notesOrder.shareType')}: ${t(
+    `option.state.${annotationShareType.toLowerCase()}`,
+  )}`;
+  const icon = getShareTypeIcon(annotationShareType, annotationTooltip);
 
   // Hide sharetype menu if annotation is not selected
   if (!isSelected) {
@@ -90,9 +94,7 @@ function NoteState(props) {
   return (
     <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
       <Tooltip
-        translatedContent={`${t('option.notesOrder.shareType')}: ${t(
-          `option.state.${annotationShareType.toLowerCase()}`,
-        )}`}
+        translatedContent={annotationTooltip}
       >
         <div className={noteStateButtonClassName}>{icon}</div>
       </Tooltip>

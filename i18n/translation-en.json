@@ -323,6 +323,9 @@
       "noteContent": {
         "noName": "(no name)",
         "noDate": "(no date)"
+      },
+      "noteHeader": {
+        "copyReferenceButton": "Copy Reference"
       }
     },
     "pageTransition": {
@@ -403,7 +406,7 @@
       "none": "Private",
       "marked": "Marked",
       "unmarked": "Unmarked",
-      "assessors": "Assessors",
+      "assessors": "Co-assessors",
       "participants": "Participants",
       "all": "All"
     },

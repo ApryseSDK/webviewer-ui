@@ -8,7 +8,7 @@ import './ShareTypeIcon.scss';
 function ShareTypeIcon(props) {
   const shareTypeColor = ShareTypeColors[props.shareType];
   return (
-    <div className="share-type-icon">
+    <div className="share-type-icon" aria-label={props.ariaLabel}>
       <div className="share-type-icon-inner" style={{ backgroundColor: shareTypeColor }} />
     </div>
   );

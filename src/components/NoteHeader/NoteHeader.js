@@ -108,7 +108,7 @@ function NoteHeader(props) {
                 {t('annotation.reference')}: {renderAnnotationReference(annotation)}
               </span>
               <Tooltip content={copyTooltip}>
-                <div role="button" onClick={handleCopyAnnotId} className={'copy-reference-button'}>
+                <div role="button" onClick={handleCopyAnnotId} className={'copy-reference-button'} aria-label={t('option.notesPanel.noteHeader.copyReferenceButton')}>
                   <Icon glyph="icon-header-page-manipulation-page-transition-reader" />
                 </div>
               </Tooltip>

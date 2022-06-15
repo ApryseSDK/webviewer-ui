@@ -17,7 +17,7 @@ export const ShareTypeOrder = {
 // this colors are taken from flow-ui-react secondry light colors
 export const ShareTypeColors = {
   [ShareTypes.ALL]: '#7ec171',
-  [ShareTypes.ASSESSORS]: '#8c71c1',
+  [ShareTypes.ASSESSORS]: '#b49b88',
   [ShareTypes.PARTICIPANTS]: '#719ec1',
   [ShareTypes.NONE]: '#b2b3b3',
 };
