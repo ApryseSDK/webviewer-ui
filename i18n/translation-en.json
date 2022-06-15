@@ -323,6 +323,9 @@
       "noteContent": {
         "noName": "(no name)",
         "noDate": "(no date)"
+      },
+      "noteHeader": {
+        "copyReferenceButton": "Copy Reference"
       }
     },
     "pageTransition": {
