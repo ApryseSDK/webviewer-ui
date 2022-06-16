@@ -1,5 +1,6 @@
 import core from 'core'
 import I18nDecorator from "./I18nDecorator";
+import 'react-quill/dist/quill.snow.css';
 
 import '../src/index.scss';
 import '../src/components/App/App.scss';
@@ -11,10 +12,20 @@ document.getElementById('root').className = 'App';
 
 function noop() { }
 
-core.getTool = () => { }
-core.isFullPDFEnabled = () => { return false; };
-core.addEventListener = () => { };
-core.removeEventListener = () => { };
+const mockTool = {
+  name: 'AnnotationCreateFreeHand',
+  defaults: {
+    StrokeColor: {
+      R: 0,
+      G: 122,
+      B: 59,
+      A: 1,
+      toHexString: () => '#007a3b'
+    },
+    StrokeThickness: 1,
+    Opacity: 1
+  }
+};
 
 const mockAnnotationManager = {
   exportAnnotations: noop,
@@ -27,7 +38,19 @@ const mockAnnotationManager = {
   jumpToAnnotation: noop,
   setAnnotationStyles: noop,
   updateAnnotationRichTextStyle: noop,
-}
+};
+
+const mockFormFieldCreationManager = {
+  isInFormFieldCreationMode: () => false,
+  startFormFieldCreationMode: noop,
+  endFormFieldCreationMode: noop,
+};
+
+core.getTool = () => mockTool;
+core.isFullPDFEnabled = () => { return false; };
+core.addEventListener = () => { };
+core.removeEventListener = () => { };
+core.getFormFieldCreationManager = () => mockFormFieldCreationManager;
 
 window.Core = {
   AnnotationManager: mockAnnotationManager,
@@ -38,6 +61,7 @@ window.Core = {
   SupportedFileFormats: {
     CLIENT: [],
   },
+  isBlendModeSupported: () => true,
   FontStyles: { BOLD: 'BOLD', ITALIC: 'ITALIC', UNDERLINE: 'UNDERLINE' },
 };
 
@@ -60,10 +84,13 @@ window.documentViewer = {
   getAnnotationHistoryManager: () => ({}),
   getRotation: () => 0,
   clearSearchResults: noop,
+  getTool: (toolName) => mockTool,
   setWatermark: noop,
   getPageHeight: () => DEFAULT_PAGE_HEIGHT,
   getPageWidth: () => DEFAULT_PAGE_WIDTH,
 };
+
+
 
 // For an example of how these mock classes are used refer to AnnotationStylePopupStories.js
 // However, it is preferrable to mock your annotation objects directly in your stories. These mocks are largely
