@@ -93,7 +93,7 @@
   "annotation": {
     "areaMeasurement": "면적측정",
     "arc": "호",
-    "arcMeasurement": "아크측정",
+    "arcMeasurement": "호측정",
     "arrow": "화살표",
     "callout": "설명선",
     "crop": "잘라내기",
@@ -196,8 +196,8 @@
     "toolsOverlayNoPresets": "사전설정 없음",
     "badDocument": "문서가 손상되어 불러올수 없습니다.",
     "customPrintPlaceholder": "예: 3, 4-10",
-    "encryptedAttemptsExceeded": "암호화 문서를 불러오지 못햇습니다.",
-    "encryptedUserCancelled": "암호화 문서를 불러오지 못했습니다.",
+    "encryptedAttemptsExceeded": "비밀번호 입력횟수를 초과하여 암호화 문서를 불러오지 못햇습니다.",
+    "encryptedUserCancelled": "비밀번호 입력으 취소하여 암호화 문서를 불러오지 못했습니다.",
     "enterPassword": "비밀번호를 입력하세요",
     "incorrectPassword": "비밀번호를 다시 입력하세요. 남은 시도: {{ remainingAttempts }}",
     "noAnnotations": "주석에 대한 댓글입니다.",
@@ -270,7 +270,7 @@
       "other": "더보기"
     },
     "notesOrder": {
-      "dropdownLabel": "정렬순서",
+      "dropdownLabel": "정렬목록",
       "position": "페이지",
       "time": "작성시간",
       "status": "상태",
