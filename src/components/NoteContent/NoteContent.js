@@ -264,6 +264,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
               isEditing={isEditing}
               textAreaValue={textAreaValue}
               onTextAreaValueChange={onTextChange}
+              pendingText={pendingEditTextMap[annotation.Id]}
             />
           ) : (
             contentsToRender && (
@@ -352,6 +353,7 @@ const ContentArea = ({
   isEditing,
   textAreaValue,
   onTextAreaValueChange,
+  pendingText
 }) => {
   const [
     autoFocusNoteOnAnnotationSelection,
@@ -372,6 +374,14 @@ const ContentArea = ({
       const editor = textareaRef.current.getEditor();
       annotation.editor = editor;
 
+      /**
+       * If there is a pending text we should update the annotation rich text style
+       * with this pending text style.
+       */
+      if (pendingText) {
+        setAnnotationRichTextStyle(editor, annotation);
+      }
+
       setTimeout(() => {
         // need setTimeout because textarea seem to rerender and unfocus
         if (textareaRef && textareaRef.current && autoFocusNoteOnAnnotationSelection) {
@@ -385,8 +395,9 @@ const ContentArea = ({
         }
       }, 0);
 
-    const textLength = editor.getText().length;
-    annotation.editor.setSelection(textLength, textLength);
+      const lastNewLineCharacterLength = 1
+      const textLength = editor.getLength() - lastNewLineCharacterLength;
+      annotation.editor.setSelection(textLength, textLength);
     }
   }, [isNotesPanelOpen]);
 
@@ -395,7 +406,7 @@ const ContentArea = ({
     e.preventDefault();
 
     const editor = textareaRef.current.getEditor();
-    textAreaValue = editor.getText();
+    textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
     setAnnotationRichTextStyle(editor, annotation);
 
     if (isMentionEnabled) {
@@ -468,6 +479,7 @@ ContentArea.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
   textAreaValue: PropTypes.string,
   onTextAreaValueChange: PropTypes.func.isRequired,
+  pendingText: PropTypes.string
 };
 
 const getRichTextSpan = (text, richTextStyle, key) => {
