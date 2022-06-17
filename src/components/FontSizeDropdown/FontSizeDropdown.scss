@@ -86,7 +86,8 @@
       display: flex;
       border-radius: 0px;
       padding-right: 32px;
-      font-size: var(--font-size-medium);
+      font-size: var(--font-size-default);
+      line-height: 28px;
 
       &.active {
         background-color: var(--popup-button-active);
