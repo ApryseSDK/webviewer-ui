@@ -2,3 +2,7 @@
   padding: 6px;
   width: 108px;
 }
+
+.page-number-input::placeholder {
+  color: var(--gray-6);
+}

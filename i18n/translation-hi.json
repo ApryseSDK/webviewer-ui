@@ -7,6 +7,7 @@
     "calibrate": "जांचना",
     "cancel": "रद्द करें",
     "clear": "स्पष्ट",
+    "clearAll": "सभी साफ करें",
     "close": "बंद करना",
     "undo": "पूर्ववत",
     "redo": "तैयार",
@@ -138,7 +139,8 @@
     "link": "संपर्क",
     "other": "अन्य",
     "3D": "3डी",
-    "sound": "ध्वनि"
+    "sound": "ध्वनि",
+    "changeView": "परिवर्तन देखें"
   },
   "rubberStamp": {
     "Approved": "स्वीकृत",
@@ -173,11 +175,14 @@
     "searchPanel": "खोज",
     "menuOverlay": "मेन्यू",
     "notesPanel": "टिप्पणियाँ",
+    "outlinePanel": "खाका",
     "outlinesPanel": "रूपरेखा",
+    "bookmarkPanel": "बुकमार्क",
     "bookmarksPanel": "बुकमार्क",
-    "signaturePanel": "हस्ताक्षर",
     "newBookmark": "नया बुकमार्क",
+    "bookmarkTitle": "बुकमार्क शीर्षक",
     "bookmarkPage": "पृष्ठ",
+    "signaturePanel": "हस्ताक्षर",
     "layersPanel": "परतों",
     "thumbnailsPanel": "थंबनेल",
     "toolsButton": "उपकरण",
@@ -246,6 +251,7 @@
     "selectPageToReplace": "दस्तावेज़ में उन पृष्ठों का चयन करें जिनसे आप बदलना चाहते हैं।",
     "embeddedFiles": "एंबेडेड फ़ाइलें",
     "pageNum": "पृष्ठ संख्या",
+    "viewBookmark": "पेज पर बुकमार्क देखें",
     "error": "त्रुटि"
   },
   "option": {
@@ -312,8 +318,9 @@
       "selectTooltip": "एकाधिक पृष्ठों का चयन करें",
       "closeTooltip": "बहुचयन बंद करें"
     },
-    "outlineControls": {
-      "add": "मद जोड़ें",
+    "bookmarkOutlineControls": {
+      "edit": "संपादन करना",
+      "done": "पूर्ण",
       "reorder": "पुन: व्यवस्थित करें"
     },
     "layout": {
@@ -391,13 +398,12 @@
       "pageReplaceInputFromSource": "पृष्ठ के साथ"
     },
     "filterAnnotModal": {
-      "commentBy": "द्वारा टिप्पणी",
-      "types": "प्रकार",
       "color": "रंग",
-      "includeReplies": "उत्तर शामिल करें"
-    },
-    "status": {
-      "status": "स्थिति"
+      "includeReplies": "उत्तर शामिल करें",
+      "filters": "फिल्टर",
+      "user": "उपयोगकर्ता",
+      "type": "टाइप",
+      "status": "दर्जा"
     },
     "state": {
       "accepted": "स्वीकार किया हुआ",
@@ -495,10 +501,19 @@
       "modalName": "नया स्टाम्प बनाएं",
       "stampText": "स्टाम्प टेक्स्ट",
       "timestampText": "टाइमस्टैम्प टेक्स्ट",
-      "stampColor": "स्टाम्प रंग:",
       "Username": "उपयोगकर्ता नाम",
       "Date": "तारीख",
-      "Time": "समय"
+      "Time": "समय",
+      "fontStyle": "लिपि शैली",
+      "dateFormat": "तारिख का प्रारूप",
+      "month": "महीना",
+      "day": "दिन",
+      "year": "साल",
+      "hour": "घंटा",
+      "minute": "मिनट",
+      "second": "दूसरा",
+      "textColor": "लिखावट का रंग",
+      "backgroundColor": "पीछे का रंग"
     },
     "pageRedactModal": {
       "addMark": "मार्क जोड़ें",
@@ -507,7 +522,11 @@
       "specify": "पृष्ठ निर्दिष्ट करें",
       "odd": "केवल विषम पृष्ठ",
       "even": "केवल सम पृष्ठ",
-      "header": "मार्क पेज रिडक्शन"
+      "header": "मार्क पेज रिडक्शन",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "शैली"
     }
   },
   "warning": {
@@ -813,6 +832,7 @@
     "redactionItem": {
       "regionRedaction": "रीजन रिडक्शन",
       "fullPageRedaction": "पूरा पेज रिडक्शन",
+      "fullVideoFrameRedaction": "वीडियो रिडक्शन",
       "image": "छवि"
     },
     "expand": "विस्तार करना",
@@ -826,6 +846,11 @@
       "pattern": "प्रतिरूप",
       "start": "अपनी खोज शुरू करें"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "गुण",
+    "miscValuesHeader": "सभी",
+    "emptyPanelMessage": "किसी एलीमेंट के गुणों को देखने के लिए उसका चयन करें"
   },
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"

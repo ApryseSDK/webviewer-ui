@@ -175,11 +175,14 @@
     "searchPanel": "Search",
     "menuOverlay": "Menu",
     "notesPanel": "Comments",
+    "outlinePanel": "Outline",
     "outlinesPanel": "Outlines",
+    "bookmarkPanel": "Bookmark",
     "bookmarksPanel": "Bookmarks",
-    "signaturePanel": "Signatures",
     "newBookmark": "New Bookmark",
+    "bookmarkTitle": "Bookmark Title",
     "bookmarkPage": "Page",
+    "signaturePanel": "Signatures",
     "layersPanel": "Layers",
     "thumbnailsPanel": "Thumbnails",
     "toolsButton": "Tools",
@@ -248,6 +251,7 @@
     "selectPageToReplace": "Select the pages in the document you would like to replace with.",
     "embeddedFiles": "Embedded Files",
     "pageNum": "Page Number",
+    "viewBookmark": "View Bookmark on Page",
     "error": "Error"
   },
   "option": {
@@ -314,8 +318,9 @@
       "selectTooltip": "Select multiple pages",
       "closeTooltip": "Close multiselect"
     },
-    "outlineControls": {
-      "add": "Add item",
+    "bookmarkOutlineControls": {
+      "edit": "Edit",
+      "done": "Done",
       "reorder": "Reorder"
     },
     "layout": {
@@ -517,7 +522,8 @@
       "specify": "Specify Pages",
       "odd": "Odd Pages only",
       "even": "Even Pages only",
-      "header": "Mark Pages Redaction"
+      "header": "Mark Pages Redaction",
+      "specifyPlaceholder": "1, 3, 5-10"
     },
     "lineStyleOptions": {
       "title": "Style"
@@ -629,38 +635,9 @@
       "November",
       "December"
     ],
-    "monthsShort": [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec"
-    ],
-    "weekdays": [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ],
-    "weekdaysShort": [
-      "Sun",
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat"
-    ],
+    "monthsShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
+    "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "weekdaysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     "today": "Today",
     "invalidDateTime": "Invalid Date/Time: Input should match format"
   },
@@ -805,7 +782,7 @@
     "title": "Pages to Crop",
     "allPages": "All",
     "singlePage": "Current Page",
-    "cropDimensions":"Crop Dimensions",
+    "cropDimensions": "Crop Dimensions",
     "dimensionInput": {
       "unitOfMeasurement": "Unit",
       "autoTrim": "Auto-trim"
@@ -840,6 +817,11 @@
       "pattern": "Pattern",
       "start": "Start making your search"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Properties",
+    "miscValuesHeader": "All",
+    "emptyPanelMessage": "Select an element to view its properties"
   },
   "languageModal": {
     "selectLanguage": "Select language"

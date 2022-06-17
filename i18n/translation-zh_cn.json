@@ -7,6 +7,7 @@
     "calibrate": "校准",
     "cancel": "取消",
     "clear": "清除",
+    "clearAll": "全部清除",
     "close": "关闭",
     "undo": "撤消",
     "redo": "准备",
@@ -138,7 +139,8 @@
     "link": "链接",
     "other": "其他",
     "3D": "3D",
-    "sound": "声音"
+    "sound": "声音",
+    "changeView": "更改视图"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -173,11 +175,14 @@
     "searchPanel": "搜索",
     "menuOverlay": "菜单",
     "notesPanel": "备注",
+    "outlinePanel": "大纲",
     "outlinesPanel": "大纲",
+    "bookmarkPanel": "书签",
     "bookmarksPanel": "书签",
-    "signaturePanel": "签名",
     "newBookmark": "新书签",
+    "bookmarkTitle": "书签标题",
     "bookmarkPage": "页",
+    "signaturePanel": "签名",
     "layersPanel": "图层",
     "thumbnailsPanel": "缩略图",
     "toolsButton": "工具",
@@ -246,6 +251,7 @@
     "selectPageToReplace": "选择文档中要替换的页面。",
     "embeddedFiles": "嵌入文件",
     "pageNum": "页码",
+    "viewBookmark": "在页面上查看书签",
     "error": "错误"
   },
   "option": {
@@ -312,8 +318,9 @@
       "selectTooltip": "选择多个页面",
       "closeTooltip": "关闭多选"
     },
-    "outlineControls": {
-      "add": "添加项目",
+    "bookmarkOutlineControls": {
+      "edit": "编辑",
+      "done": "完毕",
       "reorder": "重新排序"
     },
     "layout": {
@@ -391,13 +398,12 @@
       "pageReplaceInputFromSource": "有页面"
     },
     "filterAnnotModal": {
-      "commentBy": "评论者",
-      "types": "种类",
       "color": "颜色",
-      "includeReplies": "包括回覆"
-    },
-    "status": {
-      "status": "状态"
+      "includeReplies": "包括回覆",
+      "filters": "过滤器",
+      "user": "用户",
+      "type": "类型",
+      "status": "地位"
     },
     "state": {
       "accepted": "公认",
@@ -495,10 +501,19 @@
       "modalName": "创建新图章",
       "stampText": "印章文字",
       "timestampText": "时间戳记文字",
-      "stampColor": "印章颜色：",
       "Username": "用户名",
       "Date": "日期",
-      "Time": "时间"
+      "Time": "时间",
+      "fontStyle": "字体样式",
+      "dateFormat": "日期格式",
+      "month": "月",
+      "day": "天",
+      "year": "年",
+      "hour": "小时",
+      "minute": "分钟",
+      "second": "第二",
+      "textColor": "文字颜色",
+      "backgroundColor": "背景颜色"
     },
     "pageRedactModal": {
       "addMark": "添加标记",
@@ -507,7 +522,11 @@
       "specify": "指定页面",
       "odd": "仅奇数页",
       "even": "仅偶数页",
-      "header": "标记页面密文"
+      "header": "标记页面密文",
+      "specifyPlaceholder": "1、3、5-10"
+    },
+    "lineStyleOptions": {
+      "title": "风格"
     }
   },
   "warning": {
@@ -813,6 +832,7 @@
     "redactionItem": {
       "regionRedaction": "区域编辑",
       "fullPageRedaction": "整页编辑",
+      "fullVideoFrameRedaction": "视频编辑",
       "image": "图片"
     },
     "expand": "扩张",
@@ -826,6 +846,11 @@
       "pattern": "图案",
       "start": "开始搜索"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "属性",
+    "miscValuesHeader": "全部",
+    "emptyPanelMessage": "选择一个元素来查看它的属性"
   },
   "languageModal": {
     "selectLanguage": "选择语言"

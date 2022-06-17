@@ -7,6 +7,7 @@
     "calibrate": "Μετρώ την διάμετρο",
     "cancel": "Ματαίωση",
     "clear": "Σαφή",
+    "clearAll": "Τα καθαρίζω όλα",
     "close": "Κλείσε",
     "undo": "Ξεκάνω",
     "redo": "Ετοιμος",
@@ -138,7 +139,8 @@
     "link": "Σύνδεσμος",
     "other": "Αλλα",
     "3D": "3D",
-    "sound": "Ήχος"
+    "sound": "Ήχος",
+    "changeView": "Αλλαξε θέα"
   },
   "rubberStamp": {
     "Approved": "Εγκρίθηκε",
@@ -173,11 +175,14 @@
     "searchPanel": "Αναζήτηση",
     "menuOverlay": "Μενού",
     "notesPanel": "Σχόλια",
+    "outlinePanel": "Περίγραμμα",
     "outlinesPanel": "Περιγράμματα",
+    "bookmarkPanel": "Σελιδοδείκτης",
     "bookmarksPanel": "Σελιδοδείκτες",
-    "signaturePanel": "Υπογραφές",
     "newBookmark": "Νέος σελιδοδείκτης",
+    "bookmarkTitle": "Τίτλος σελιδοδείκτη",
     "bookmarkPage": "Σελίδα",
+    "signaturePanel": "Υπογραφές",
     "layersPanel": "Επίπεδα",
     "thumbnailsPanel": "Μικρογραφίες",
     "toolsButton": "Εργαλεία",
@@ -246,6 +251,7 @@
     "selectPageToReplace": "Επιλέξτε τις σελίδες του εγγράφου με τις οποίες θέλετε να αντικαταστήσετε.",
     "embeddedFiles": "Ενσωματωμένα Αρχεία",
     "pageNum": "Αριθμός σελίδας",
+    "viewBookmark": "Προβολή σελιδοδείκτη στη σελίδα",
     "error": "Λάθος"
   },
   "option": {
@@ -312,8 +318,9 @@
       "selectTooltip": "Επιλέξτε πολλές σελίδες",
       "closeTooltip": "Κλείσιμο πολλαπλής επιλογής"
     },
-    "outlineControls": {
-      "add": "Πρόσθεσε είδος",
+    "bookmarkOutlineControls": {
+      "edit": "Επεξεργασία",
+      "done": "Ολοκληρώθηκε",
       "reorder": "Παραγγέλλω πάλι"
     },
     "layout": {
@@ -391,12 +398,11 @@
       "pageReplaceInputFromSource": "με σελίδες"
     },
     "filterAnnotModal": {
-      "commentBy": "Σχόλιο από",
-      "types": "Τύποι",
       "color": "Χρώμα",
-      "includeReplies": "Συμπεριλάβετε απαντήσεις"
-    },
-    "status": {
+      "includeReplies": "Συμπεριλάβετε απαντήσεις",
+      "filters": "Φίλτρα",
+      "user": "Χρήστης",
+      "type": "Τύπος",
       "status": "Κατάσταση"
     },
     "state": {
@@ -495,10 +501,19 @@
       "modalName": "Δημιουργία νέας σφραγίδας",
       "stampText": "Κείμενο σφραγίδας",
       "timestampText": "Κείμενο χρονοσήμανσης",
-      "stampColor": "Χρώμα σφραγίδας:",
       "Username": "Όνομα χρήστη",
       "Date": "Ημερομηνία",
-      "Time": "χρόνος"
+      "Time": "χρόνος",
+      "fontStyle": "στυλ γραμματοσειράς",
+      "dateFormat": "Μορφή ημερομηνίας",
+      "month": "Μήνας",
+      "day": "Ημέρα",
+      "year": "Ετος",
+      "hour": "Ωρα",
+      "minute": "Λεπτό",
+      "second": "Δεύτερος",
+      "textColor": "Χρώμα κειμένου",
+      "backgroundColor": "Χρώμα του φόντου"
     },
     "pageRedactModal": {
       "addMark": "Προσθήκη σήμανσης",
@@ -507,7 +522,11 @@
       "specify": "Καθορίστε Σελίδες",
       "odd": "Μονές σελίδες μόνο",
       "even": "Ιδιες σελιδες μονο",
-      "header": "Επισήμανση Επεξεργασίας Σελίδων"
+      "header": "Επισήμανση Επεξεργασίας Σελίδων",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "Στυλ"
     }
   },
   "warning": {
@@ -813,6 +832,7 @@
     "redactionItem": {
       "regionRedaction": "Διαμόρφωση περιοχής",
       "fullPageRedaction": "Διασκευή πλήρους σελίδας",
+      "fullVideoFrameRedaction": "Επεξεργασία βίντεο",
       "image": "Εικόνα"
     },
     "expand": "Επεκτείνουν",
@@ -826,6 +846,11 @@
       "pattern": "Πρότυπο",
       "start": "Ξεκινήστε να κάνετε την αναζήτησή σας"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Ιδιότητες",
+    "miscValuesHeader": "Όλα",
+    "emptyPanelMessage": "Επιλέξτε ένα στοιχείο για να δείτε τις ιδιότητές του"
   },
   "languageModal": {
     "selectLanguage": "Επιλέξτε γλώσσα"

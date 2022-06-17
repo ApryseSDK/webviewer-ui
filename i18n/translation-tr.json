@@ -7,6 +7,7 @@
     "calibrate": "kalibre et",
     "cancel": "İptal",
     "clear": "Temizlemek",
+    "clearAll": "Hepsini temizle",
     "close": "Kapat",
     "undo": "Geri alma",
     "redo": "Hazır",
@@ -138,7 +139,8 @@
     "link": "Bağlantı",
     "other": "Diğer",
     "3D": "3 boyutlu",
-    "sound": "Ses"
+    "sound": "Ses",
+    "changeView": "Görünümü değiştir"
   },
   "rubberStamp": {
     "Approved": "Onaylı",
@@ -173,11 +175,14 @@
     "searchPanel": "Arama",
     "menuOverlay": "Menü",
     "notesPanel": "Yorumlar",
+    "outlinePanel": "anahat",
     "outlinesPanel": "Anahatlar",
+    "bookmarkPanel": "Yer imi",
     "bookmarksPanel": "Yer imleri",
-    "signaturePanel": "imzalar",
     "newBookmark": "Yeni Yer İşareti",
+    "bookmarkTitle": "Yer İşareti Başlığı",
     "bookmarkPage": "Sayfa",
+    "signaturePanel": "imzalar",
     "layersPanel": "Katmanlar",
     "thumbnailsPanel": "küçük resimler",
     "toolsButton": "Araçlar",
@@ -246,6 +251,7 @@
     "selectPageToReplace": "Belgede değiştirmek istediğiniz sayfaları seçin.",
     "embeddedFiles": "Gömülü Dosyalar",
     "pageNum": "Sayfa numarası",
+    "viewBookmark": "Sayfadaki Yer İşaretini Görüntüle",
     "error": "Hata"
   },
   "option": {
@@ -312,8 +318,9 @@
       "selectTooltip": "Birden çok sayfa seçin",
       "closeTooltip": "Çoklu seçimi kapat"
     },
-    "outlineControls": {
-      "add": "Öğe eklemek",
+    "bookmarkOutlineControls": {
+      "edit": "Düzenlemek",
+      "done": "Tamamlandı",
       "reorder": "yeniden sırala"
     },
     "layout": {
@@ -391,12 +398,11 @@
       "pageReplaceInputFromSource": "sayfa(lar) ile"
     },
     "filterAnnotModal": {
-      "commentBy": "Yorum yapan",
-      "types": "Türler",
       "color": "Renk",
-      "includeReplies": "Yanıtları Dahil Et"
-    },
-    "status": {
+      "includeReplies": "Yanıtları Dahil Et",
+      "filters": "filtreler",
+      "user": "kullanıcı",
+      "type": "Tip",
       "status": "Durum"
     },
     "state": {
@@ -495,10 +501,19 @@
       "modalName": "Yeni Damga Oluştur",
       "stampText": "damga metni",
       "timestampText": "zaman damgası metni",
-      "stampColor": "damga rengi:",
       "Username": "Kullanıcı adı",
       "Date": "Tarih",
-      "Time": "Zaman"
+      "Time": "Zaman",
+      "fontStyle": "yazı stili",
+      "dateFormat": "Tarih formatı",
+      "month": "Ay",
+      "day": "Gün",
+      "year": "Yıl",
+      "hour": "Saat",
+      "minute": "Dakika",
+      "second": "İkinci",
+      "textColor": "Metin rengi",
+      "backgroundColor": "Arka plan rengi"
     },
     "pageRedactModal": {
       "addMark": "İşaret Ekle",
@@ -507,7 +522,11 @@
       "specify": "Sayfaları Belirtin",
       "odd": "Sadece tek sayfalar",
       "even": "Yalnızca Çift Sayfalar",
-      "header": "Sayfa Redaksiyonunu İşaretle"
+      "header": "Sayfa Redaksiyonunu İşaretle",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "stil"
     }
   },
   "warning": {
@@ -813,6 +832,7 @@
     "redactionItem": {
       "regionRedaction": "Bölge redaksiyonu",
       "fullPageRedaction": "Tam sayfa redaksiyonu",
+      "fullVideoFrameRedaction": "Video Redaksiyonu",
       "image": "resim"
     },
     "expand": "Genişletmek",
@@ -826,6 +846,11 @@
       "pattern": "Desen",
       "start": "Aramanızı yapmaya başlayın"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Özellikler",
+    "miscValuesHeader": "Tümü",
+    "emptyPanelMessage": "Özelliklerini görüntülemek için bir öğe seçin"
   },
   "languageModal": {
     "selectLanguage": "Dil Seçin"
