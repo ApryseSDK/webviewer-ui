@@ -4,11 +4,6 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'SET_PRESET_CROP_DIMENSIONS': 
-      return {
-        ...state,
-        presetCropDimensions: payload.presetCropDimensions,
-      };
     case 'SET_DATE_TIME_FORMATS':
       return {
         ...state,

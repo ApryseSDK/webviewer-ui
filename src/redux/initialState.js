@@ -15,7 +15,6 @@ import localStorageManager from 'helpers/localStorageManager';
 import { undoButton, redoButton } from 'helpers/commonToolbarElements';
 import defaultFonts from 'constants/defaultFonts';
 import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
-import presetCropDimensions from 'constants/presetCropDimensions';
 import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 
@@ -959,7 +958,6 @@ export default {
     fonts: defaultFonts,
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
-    presetCropDimensions,
     dateTimeFormats: defaultDateTimeFormats,
     thumbnailSelectionMode: 'checkbox',
     annotationFilters: {

@@ -206,7 +206,6 @@ import Fonts from 'src/apis/fonts';
 import TabManagerAPI from './TabManagerAPI';
 import getAvailableLanguages from './getAvailableLanguages';
 import replaceRedactionSearchPattern from './replaceRedactionSearchPattern';
-import setPresetCropDimensions from './setPresetCropDimensions';
 import addDateTimeFormat from './addDateTimeFormat';
 import addRedactionSearchPattern from './addRedactionSearchPattern';
 import removeRedactionSearchPattern from './removeRedactionSearchPattern';
@@ -418,7 +417,6 @@ export default store => {
     TabManager: TabManagerAPI(store),
     getAvailableLanguages,
     replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
-    setPresetCropDimensions: setPresetCropDimensions(store),
     addDateTimeFormat: addDateTimeFormat(store),
     addRedactionSearchPattern: addRedactionSearchPattern(store),
     removeRedactionSearchPattern: removeRedactionSearchPattern(store),
