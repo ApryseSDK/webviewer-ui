@@ -133,7 +133,7 @@
     "textField": "Text Field",
     "signatureFormField": "Signature Field",
     "checkBoxFormField": "Checkbox Field",
-    "radioButtonFormField": "RadioButton Field",
+    "radioButtonFormField": "Radio Button Field",
     "listBoxFormField": "List Box Field",
     "comboBoxFormField": "Combo Box Field",
     "link": "Link",
@@ -782,10 +782,11 @@
     "title": "Pages to Crop",
     "allPages": "All",
     "singlePage": "Current Page",
-    "cropDimensions": "Crop Dimensions",
+    "multiPage": "Specify Page",
+    "cropDimensions":"Crop Dimensions",
     "dimensionInput": {
       "unitOfMeasurement": "Unit",
-      "autoTrim": "Auto-trim"
+      "autoTrim": "Presets"
     },
     "cropModal": {
       "applyTitle": "Apply crop?",

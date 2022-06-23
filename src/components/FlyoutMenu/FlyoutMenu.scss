@@ -103,4 +103,12 @@
       padding: 0 24px;
     }
   }
+
+  &[data-element="pageManipulationOverlay"] {
+   .Button .Icon {
+      path, rect {
+        fill: var(--icon-color);
+      }
+   } 
+  }
 }

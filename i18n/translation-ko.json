@@ -133,7 +133,7 @@
     "textField": "텍스트상자",
     "signatureFormField": "서명",
     "checkBoxFormField": "체크박스",
-    "radioButtonFormField": "라디오버튼",
+    "radioButtonFormField": "라디오 버튼 필드",
     "listBoxFormField": "목록상자",
     "comboBoxFormField": "콤보박스",
     "link": "링크",
@@ -810,10 +810,11 @@
     "title": "잘라내기",
     "allPages": "모든 페이지",
     "singlePage": "현재 페이지",
+    "multiPage": "페이지 지정",
     "cropDimensions": "크기",
     "dimensionInput": {
       "unitOfMeasurement": "단위",
-      "autoTrim": "“자동"
+      "autoTrim": "자동 트림"
     },
     "cropModal": {
       "applyTitle": "잘라내기를 적용하시겠습니까?",

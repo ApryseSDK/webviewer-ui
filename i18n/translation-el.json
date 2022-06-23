@@ -133,7 +133,7 @@
     "textField": "Πεδίο κειμένου",
     "signatureFormField": "Πεδίο υπογραφής",
     "checkBoxFormField": "Πεδίο πλαισίου ελέγχου",
-    "radioButtonFormField": "Πεδίο κουμπιού επιλογής",
+    "radioButtonFormField": "Πεδίο κουμπιού ραδιοφώνου",
     "listBoxFormField": "Πεδίο πλαισίου λίστας",
     "comboBoxFormField": "Πεδίο Combo Box",
     "link": "Σύνδεσμος",
@@ -811,6 +811,7 @@
     "title": "Σελίδες για περικοπή",
     "allPages": "Ολα",
     "singlePage": "Τρέχουσα σελίδα",
+    "multiPage": "Καθορίστε τη σελίδα",
     "cropDimensions": "Διαστάσεις καλλιέργειας",
     "dimensionInput": {
       "unitOfMeasurement": "Μονάδα",

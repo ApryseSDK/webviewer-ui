@@ -133,7 +133,7 @@
     "textField": "Tekstveld",
     "signatureFormField": "Handtekeningveld",
     "checkBoxFormField": "Selectievakje veld",
-    "radioButtonFormField": "RadioButton-veld",
+    "radioButtonFormField": "Veld voor keuzerondjes",
     "listBoxFormField": "Keuzelijstveld",
     "comboBoxFormField": "Veld met invoervak",
     "link": "Koppeling",
@@ -811,6 +811,7 @@
     "title": "Pagina's om bij te snijden",
     "allPages": "Alle",
     "singlePage": "Huidige pagina",
+    "multiPage": "Specificeer pagina",
     "cropDimensions": "Afmetingen bijsnijden",
     "dimensionInput": {
       "unitOfMeasurement": "Eenheid",

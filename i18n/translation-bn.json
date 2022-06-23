@@ -133,7 +133,7 @@
     "textField": "টেক্সট ক্ষেত্রের",
     "signatureFormField": "স্বাক্ষর ক্ষেত্র",
     "checkBoxFormField": "চেকবক্স ক্ষেত্র",
-    "radioButtonFormField": "রেডিও বাটন ক্ষেত্র",
+    "radioButtonFormField": "রেডিও বোতাম ক্ষেত্র",
     "listBoxFormField": "তালিকা বক্স ক্ষেত্র",
     "comboBoxFormField": "কম্বো বক্স ক্ষেত্র",
     "link": "লিঙ্ক",
@@ -811,6 +811,7 @@
     "title": "ক্রপ করার জন্য পৃষ্ঠা",
     "allPages": "সব",
     "singlePage": "এই পৃষ্ঠা",
+    "multiPage": "পৃষ্ঠা নির্দিষ্ট করুন",
     "cropDimensions": "ফসলের মাত্রা",
     "dimensionInput": {
       "unitOfMeasurement": "ইউনিট",

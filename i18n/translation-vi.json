@@ -133,7 +133,7 @@
     "textField": "Trường Văn Bản",
     "signatureFormField": "Trường Chữ Ký",
     "checkBoxFormField": "Trường Hộp Kiểm",
-    "radioButtonFormField": "Trường RadioButton",
+    "radioButtonFormField": "Trường nút radio",
     "listBoxFormField": "Trường Hộp Danh Sách",
     "comboBoxFormField": "Trường Hộp Kết Hợp",
     "link": "Liên kết",
@@ -811,6 +811,7 @@
     "title": "Các trang cần cắt",
     "allPages": "Tất cả",
     "singlePage": "Trang hiện tại",
+    "multiPage": "Chỉ định trang",
     "cropDimensions": "Kích thước cây trồng",
     "dimensionInput": {
       "unitOfMeasurement": "Đơn vị",

@@ -133,7 +133,7 @@
     "textField": "Текстове поле",
     "signatureFormField": "Поле підпису",
     "checkBoxFormField": "Поле прапорця",
-    "radioButtonFormField": "Поле радіокнопки",
+    "radioButtonFormField": "Поле перемикача",
     "listBoxFormField": "Поле списку",
     "comboBoxFormField": "Поле зі списком",
     "link": "Посилання",
@@ -811,6 +811,7 @@
     "title": "Сторінки для обрізання",
     "allPages": "всі",
     "singlePage": "Поточна сторінка",
+    "multiPage": "Вкажіть сторінку",
     "cropDimensions": "Розміри урожаю",
     "dimensionInput": {
       "unitOfMeasurement": "одиниця",

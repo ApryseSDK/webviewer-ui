@@ -133,7 +133,7 @@
     "textField": "Medan Teks",
     "signatureFormField": "Medan Tandatangan",
     "checkBoxFormField": "Medan Kotak semak",
-    "radioButtonFormField": "Medan RadioButton",
+    "radioButtonFormField": "Medan Butang Radio",
     "listBoxFormField": "Medan Kotak Senarai",
     "comboBoxFormField": "Padang Kotak Kombo",
     "link": "Pautan",
@@ -811,6 +811,7 @@
     "title": "Halaman untuk Pangkas",
     "allPages": "Semua",
     "singlePage": "Muka surat ini",
+    "multiPage": "Nyatakan Halaman",
     "cropDimensions": "Dimensi Tanaman",
     "dimensionInput": {
       "unitOfMeasurement": "Unit",

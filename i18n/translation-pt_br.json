@@ -133,7 +133,7 @@
     "textField": "Campo de texto",
     "signatureFormField": "Campo de Assinatura",
     "checkBoxFormField": "Campo de caixa de seleção",
-    "radioButtonFormField": "Campo de caixa de seleção única",
+    "radioButtonFormField": "Campo do botão de rádio",
     "listBoxFormField": "Campo de lista de seleção",
     "comboBoxFormField": "Campo de caixa de combinação",
     "link": "Link",
@@ -811,6 +811,7 @@
     "title": "Páginas para cortar",
     "allPages": "Todo",
     "singlePage": "Pagina atual",
+    "multiPage": "Especificar página",
     "cropDimensions": "Dimensões de corte",
     "dimensionInput": {
       "unitOfMeasurement": "Unidade",

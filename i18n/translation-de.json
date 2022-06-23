@@ -133,7 +133,7 @@
     "textField": "Textfeld",
     "signatureFormField": "Signaturfeld",
     "checkBoxFormField": "Kontrollkästchen Feld",
-    "radioButtonFormField": "Optionsfeld",
+    "radioButtonFormField": "Radio-Button-Feld",
     "listBoxFormField": "Listenfeld",
     "comboBoxFormField": "Kombinationsfeld",
     "link": "Verknüpfung",
@@ -811,6 +811,7 @@
     "title": "Seiten zum Zuschneiden",
     "allPages": "Alle",
     "singlePage": "Aktuelle Seite",
+    "multiPage": "Seite angeben",
     "cropDimensions": "Crop-Abmessungen",
     "dimensionInput": {
       "unitOfMeasurement": "Einheit",

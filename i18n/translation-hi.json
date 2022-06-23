@@ -133,7 +133,7 @@
     "textField": "पाठ का क्षेत्र",
     "signatureFormField": "सिग्नेचर फील्ड",
     "checkBoxFormField": "चेकबॉक्स फ़ील्ड",
-    "radioButtonFormField": "रेडियोबटन फील्ड",
+    "radioButtonFormField": "रेडियो बटन फील्ड",
     "listBoxFormField": "सूची बॉक्स फ़ील्ड",
     "comboBoxFormField": "कॉम्बो बॉक्स फील्ड",
     "link": "संपर्क",
@@ -811,6 +811,7 @@
     "title": "क्रॉप करने के लिए पेज",
     "allPages": "सभी",
     "singlePage": "वर्तमान पृष्ठ",
+    "multiPage": "पृष्ठ निर्दिष्ट करें",
     "cropDimensions": "फसल आयाम",
     "dimensionInput": {
       "unitOfMeasurement": "इकाई",

@@ -133,7 +133,7 @@
     "textField": "Bidang Teks",
     "signatureFormField": "Bidang Tanda Tangan",
     "checkBoxFormField": "Bidang Kotak Centang",
-    "radioButtonFormField": "Bidang RadioButton",
+    "radioButtonFormField": "Bidang Tombol Radio",
     "listBoxFormField": "Bidang Kotak Daftar",
     "comboBoxFormField": "Bidang Kotak Kombo",
     "link": "Tautan",
@@ -811,6 +811,7 @@
     "title": "Halaman untuk Dipangkas",
     "allPages": "Semua",
     "singlePage": "Halaman saat ini",
+    "multiPage": "Tentukan Halaman",
     "cropDimensions": "Dimensi Tanaman",
     "dimensionInput": {
       "unitOfMeasurement": "Satuan",
