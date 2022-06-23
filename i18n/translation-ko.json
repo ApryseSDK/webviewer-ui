@@ -289,7 +289,7 @@
       "toolbarGroup-Annotate": "주석",
       "toolbarGroup-Shapes": "도형",
       "toolbarGroup-Insert": "삽입",
-      "toolbarGroup-Measure": "단위",
+      "toolbarGroup-Measure": "측정",
       "toolbarGroup-Edit": "편집",
       "toolbarGroup-FillAndSign": "채우기&서명",
       "toolbarGroup-Forms": "양식",
@@ -799,7 +799,7 @@
     "cropDimensions": "크기",
     "dimensionInput": {
       "unitOfMeasurement": "단위",
-      "autoTrim": "자동트림"
+      "autoTrim": "자동재단"
     },
     "cropModal": {
       "applyTitle": "잘라내기를 적용하시겠습니까?",
