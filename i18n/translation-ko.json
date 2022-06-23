@@ -799,7 +799,7 @@
     "cropDimensions": "크기",
     "dimensionInput": {
       "unitOfMeasurement": "단위",
-      "autoTrim": "자동재단"
+      "autoTrim": "자동자르기"
     },
     "cropModal": {
       "applyTitle": "잘라내기를 적용하시겠습니까?",
