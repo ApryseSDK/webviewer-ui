@@ -23,6 +23,8 @@ export default store => {
     'addEventListener',
     'setEventListener',
     'removeEventListener',
+    'setMentionLookupCallback',
+    'getMentionLookupCallback'
   ]);
 };
 

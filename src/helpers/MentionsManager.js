@@ -64,7 +64,7 @@ class MentionsManager {
      */
     this.idMentionDataMap = {};
     this.allowedTrailingCharacters = [' '];
-
+    this.mentionsLookUp = this.defaultMentionsSearchCallback;
     annotManager.addEventListener('annotationChanged', (annotations, action, { imported }) => {
       if (imported || !annotations.length || !this.getUserData().length) {
         return;
@@ -161,6 +161,22 @@ class MentionsManager {
     if (deletedMentions.length) {
       this.trigger('mentionChanged', [deletedMentions, 'delete']);
     }
+  }
+
+  getFormattedTextFromDeltas(deltas) {
+    const formattedMentionTextList = [];
+    deltas.forEach(delta => {
+      if (delta.insert) {
+        if (typeof (delta.insert) === 'string') {
+          formattedMentionTextList.push(delta.insert);
+        } else if (delta.insert.mention) {
+          const mention = delta.insert.mention;
+          const formattedMentionText = `${mention.denotationChar}[${mention.value}](${mention.id})`;
+          formattedMentionTextList.push(formattedMentionText);
+        }
+      }
+    });
+    return formattedMentionTextList.join('');
   }
 
   /**
@@ -433,6 +449,62 @@ WebViewer(...)
 
   removeEventListener(...args) {
     this.off(...args);
+  }
+
+
+  /**
+   * Sets the mention lookup callback function used by quill-mentions to filter the users in the suggestions overlay.
+   * @method UI.MentionsManager#setMentionLookupCallback
+   * @param {function} callback A callback function that returns an array of users that displayed in the suggestions overlay.
+   * @example
+WebViewer(...)
+  .then(function(instance) {
+    instance.mentions.setMentionLookupCallback(async (userData, searchTerm) => {
+      const matches = [];
+      userData.forEach((user) => {
+        if (user.name === 'John Doe') {
+          matches.push(user);
+        }
+      });
+      return matches;
+    });
+  });
+   */
+  setMentionLookupCallback(callback) {
+    this.mentionLookupCallback = callback;
+  }
+
+  /**
+   * Gets the current mention lookup callback function being used by quill-mentions to filter the users in the suggestions overlay.
+   * @method UI.MentionsManager#getMentionLookupCallback
+   * @returns {function} the current function used to filter users in the suggestions overlay
+   */
+  getMentionLookupCallback() {
+    return this.mentionLookupCallback;
+  }
+
+  /**
+   * The default mention lookup callback used to filter users in the suggestions overlay.
+   * @method UI.MentionsManager#defaultMentionLookupCallback
+   */
+  defaultMentionsSearchCallback(userData, searchTerm) {
+    if (searchTerm.length === 0) {
+      return (userData);
+    }
+
+    const matches = [];
+    const searchTermLowerCase = searchTerm.toLowerCase();
+    userData.forEach(function(user) {
+      const userValueIncludesSearchTerm = user.value.toLowerCase().includes(searchTermLowerCase);
+      const userIdIncludesSearchTerm = user.id && user.id.toLowerCase().includes(searchTermLowerCase);
+      const userEmailIncludesSearchTerm = user.email && user.email.toLowerCase().includes(searchTermLowerCase);
+
+      if (userValueIncludesSearchTerm || userIdIncludesSearchTerm || userEmailIncludesSearchTerm) {
+        matches.push(user);
+      }
+    });
+
+    return (matches);
   }
 }
 
