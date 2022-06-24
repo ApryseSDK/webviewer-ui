@@ -45,7 +45,8 @@ StatefulButtonCounter.args = {
       }
     }
   },
-  dataElement: 'countButton'
+  dataElement: 'countButton',
+  mount: () => {},
 };
 
 export const StatefulButtonStates = BasicComponent.bind({});
@@ -68,5 +69,6 @@ StatefulButtonStates.args = {
       title: 'Single Page',
     },
   },
+  mount: () => {},
 };;
 

@@ -23,8 +23,12 @@ const mockTool = {
       toHexString: () => '#007a3b'
     },
     StrokeThickness: 1,
-    Opacity: 1
-  }
+    Opacity: 1,
+  },
+  clearSignatureCanvas: noop,
+  setSignatureCanvas: noop,
+  setSignature: noop,
+  resizeCanvas: noop,
 };
 
 const mockAnnotationManager = {
@@ -38,6 +42,7 @@ const mockAnnotationManager = {
   jumpToAnnotation: noop,
   setAnnotationStyles: noop,
   updateAnnotationRichTextStyle: noop,
+  getCurrentUser: noop,
 };
 
 const mockFormFieldCreationManager = {
@@ -63,6 +68,7 @@ window.Core = {
   },
   isBlendModeSupported: () => true,
   FontStyles: { BOLD: 'BOLD', ITALIC: 'ITALIC', UNDERLINE: 'UNDERLINE' },
+  getCanvasMultiplier: () => 1,
 };
 
 const DEFAULT_PAGE_HEIGHT = 792;

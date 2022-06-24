@@ -9,7 +9,8 @@ import './ImageSignature.scss';
 const propTypes = {
   isModalOpen: PropTypes.bool,
   isTabPanelSelected: PropTypes.bool,
-  createSignature: PropTypes.func.isRequired,
+  disableCreateButton: PropTypes.func,
+  enableCreateButton: PropTypes.func,
 };
 
 const acceptedFileTypes = ['png', 'jpg', 'jpeg'];
@@ -18,7 +19,8 @@ let acceptedFileSize = null;
 const ImageSignature = ({
   isModalOpen,
   isTabPanelSelected,
-  createSignature,
+  disableCreateButton,
+  enableCreateButton,
 }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -33,6 +35,7 @@ const ImageSignature = ({
       setImageSrc(null);
     } else if (isModalOpen && isTabPanelSelected) {
       signatureTool.setSignature(imageSrc, fileSize);
+      imageSrc ? enableCreateButton() : disableCreateButton();
     }
   }, [imageSrc, isTabPanelSelected, isModalOpen]);
 
@@ -85,7 +88,9 @@ const ImageSignature = ({
       if (validType) {
         setErrorMessage('');
         setImageSrc(imageSrc);
+        enableCreateButton();
       } else {
+        disableCreateButton();
         setErrorMessage(
           t('message.imageSignatureAcceptedFileTypes', {
             acceptedFileTypes: acceptedFileTypes.join(', '),
@@ -109,77 +114,68 @@ const ImageSignature = ({
   let containerClass = isMobileDevice ? "image-signature-upload-container mobile" : "image-signature-upload-container";
   containerClass = isDragging ? "image-signature-upload-container dragging" : "image-signature-upload-container";
   return (
-    <React.Fragment>
-      <div className="image-signature">
-        {imageSrc && fileSizeCheck ? (
-          <div className="image-signature-image-container">
-            <img src={imageSrc} />
-          </div>
-        ) : (
-        <>
+    <div className="image-signature">
+      {imageSrc && fileSizeCheck ? (
+        <div className="image-signature-image-container">
+          <img src={imageSrc} />
+        </div>
+      ) : (
+      <>
+        <div 
+          className="image-signature-overlay"
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={handleFileDrop}
+          onDragExit={handleDragExit}
+        />
+        { isDragging &&
           <div 
-            className="image-signature-overlay"
+            className="image-signature-modal-overlay"
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
             onDragOver={handleDragOver}
             onDrop={handleFileDrop}
             onDragExit={handleDragExit}
-          />
-          { isDragging &&
-            <div 
-              className="image-signature-modal-overlay"
-              onDragEnter={handleDragEnter}
-              onDragLeave={handleDragLeave}
-              onDragOver={handleDragOver}
-              onDrop={handleFileDrop}
-              onDragExit={handleDragExit}
-            /> }
-          <div
-            className={containerClass}
-          >
-            {!isMobileDevice && 
-            <div className="image-signature-dnd">
-              {t('option.signatureModal.dragAndDrop')}
-            </div>} 
-            {!isMobileDevice && 
-            <div className="image-signature-separator">
-              {t('option.signatureModal.or')}
-            </div>}
-            {isMobileDevice && 
-            <div className="image-signature-separator">
-              {t('option.signatureModal.selectImage')}
-            </div>}
-            <div className="image-signature-upload">
-              <input
-                ref={fileInputRef}
-                id="upload"
-                type="file"
-                accept={acceptedFileTypes.map(type => `.${type}`).join(',')}
-                onChange={handleFileChange}
-                disabled={!(isModalOpen && isTabPanelSelected)}
-              />
-              <div
-                onClick={() => fileInputRef.current.click()}
-                className="pick-image-button"
-              >
-                {t('option.signatureModal.pickImage')}
-              </div>
+          /> }
+        <div
+          className={containerClass}
+        >
+          {!isMobileDevice &&
+          <div className="image-signature-dnd">
+            {t('option.signatureModal.dragAndDrop')}
+          </div>}
+          {!isMobileDevice &&
+          <div className="image-signature-separator">
+            {t('option.signatureModal.or')}
+          </div>}
+          {isMobileDevice &&
+          <div className="image-signature-separator">
+            {t('option.signatureModal.selectImage')}
+          </div>}
+          <div className="image-signature-upload">
+            <input
+              ref={fileInputRef}
+              id="upload"
+              type="file"
+              accept={acceptedFileTypes.map(type => `.${type}`).join(',')}
+              onChange={handleFileChange}
+              disabled={!(isModalOpen && isTabPanelSelected)}
+            />
+            <div
+              onClick={() => fileInputRef.current.click()}
+              className="pick-image-button"
+            >
+              {t('option.signatureModal.pickImage')}
             </div>
-            {errorMessage && (
-              <div className="image-signature-error">{errorMessage}</div>
-            )}
           </div>
-        </>
-        )}
-      </div>
-      <div
-        className="footer"
-      >
-        <button className="signature-create" onClick={createSignature} disabled={!(isModalOpen && isTabPanelSelected) || imageSrc === null || !fileSizeCheck}>
-          {t('action.create')}
-        </button>
-      </div>
-    </React.Fragment>
+          {errorMessage && (
+            <div className="image-signature-error">{errorMessage}</div>
+          )}
+        </div>
+      </>
+      )}
+    </div>
   );
 };
 

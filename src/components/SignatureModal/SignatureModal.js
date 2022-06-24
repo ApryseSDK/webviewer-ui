@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +23,8 @@ const SignatureModal = () => {
     selectors.getActiveToolName(state),
     selectors.getDisplayedSignatures(state),
   ]);
+
+  const [createButtonDisabled, setCreateButtonDisabled] = useState();
 
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
@@ -76,6 +78,14 @@ const SignatureModal = () => {
     }
   };
 
+  const disableCreateButton = useCallback(() => {
+    setCreateButtonDisabled(true);
+  }, [createButtonDisabled]);
+
+  const enableCreateButton = useCallback(() => {
+    setCreateButtonDisabled(false);
+  }, [createButtonDisabled]);
+
   const modalClass = classNames({
     Modal: true,
     SignatureModal: true,
@@ -83,76 +93,86 @@ const SignatureModal = () => {
     closed: !isOpen,
   });
 
-  return isDisabled ? null : (   
-      <Swipeable
-        onSwipedUp={closeModal}
-        onSwipedDown={closeModal}
-        preventDefaultTouchmoveEvent
-      >
-        <FocusTrap locked={isOpen}>
+  return isDisabled ? null : (
+    <Swipeable
+      onSwipedUp={closeModal}
+      onSwipedDown={closeModal}
+      preventDefaultTouchmoveEvent
+    >
+      <FocusTrap locked={isOpen}>
+        <div
+          className={modalClass}
+          data-element="signatureModal"
+        >
           <div
-            className={modalClass}
-            data-element="signatureModal"
+            className="container"
+            onMouseDown={e => e.stopPropagation()}
           >
-            <div
-              className="container"
-              onMouseDown={e => e.stopPropagation()}
-            >
-              <Tabs id="signatureModal">
-                <div className="header-container">
-                  <div className="header">
-                    <p>{t(`option.signatureModal.modalName`)}</p>
-                    <Button
-                      className="signatureModalCloseButton"
-                      dataElement="signatureModalCloseButton"
-                      title="action.close"
-                      img="ic_close_black_24px"
-                      onClick={closeModal}
-                    /> 
-                  </div>
-                  <div className="tab-list">
-                      <Tab dataElement="inkSignaturePanelButton">
-                        <button className="tab-options-button">
-                          {t('action.draw')}
-                        </button>
-                      </Tab>
-                      <div className="tab-options-divider" />
-                      <Tab dataElement="textSignaturePanelButton">
-                        <button className="tab-options-button">
-                          {t('action.type')}
-                        </button>
-                      </Tab>
-                      <div className="tab-options-divider" />
-                      <Tab dataElement="imageSignaturePanelButton">
-                        <button className="tab-options-button">
-                          {t('action.upload')}
-                        </button>
-                      </Tab>
-                    </div>
-                  </div>
-                <TabPanel dataElement="inkSignaturePanel">
-                  <InkSignature
-                    isModalOpen={isOpen}
-                    createSignature={createSignature}
+            <div className="swipe-indicator" />
+            <Tabs id="signatureModal">
+              <div className="header-container">
+                <div className="header">
+                  <p>{t(`option.signatureModal.modalName`)}</p>
+                  <Button
+                    className="signatureModalCloseButton"
+                    dataElement="signatureModalCloseButton"
+                    title="action.close"
+                    img="ic_close_black_24px"
+                    onClick={closeModal}
                   />
-                </TabPanel>
-                <TabPanel dataElement="textSignaturePanel">
-                  <TextSignature
-                    isModalOpen={isOpen}
-                    createSignature={createSignature}
-                  />
-                </TabPanel>
-                <TabPanel dataElement="imageSignaturePanel">
-                  <ImageSignature
-                    isModalOpen={isOpen}
-                    createSignature={createSignature}
-                  />
-                </TabPanel>
-              </Tabs>
-            </div>
+                </div>
+                <div className="tab-list">
+                  <Tab dataElement="inkSignaturePanelButton">
+                    <button className="tab-options-button">
+                      {t('action.draw')}
+                    </button>
+                  </Tab>
+                  <div className="tab-options-divider" />
+                  <Tab dataElement="textSignaturePanelButton">
+                    <button className="tab-options-button">
+                      {t('action.type')}
+                    </button>
+                  </Tab>
+                  <div className="tab-options-divider" />
+                  <Tab dataElement="imageSignaturePanelButton">
+                    <button className="tab-options-button">
+                      {t('action.upload')}
+                    </button>
+                  </Tab>
+                </div>
+              </div>
+              <TabPanel dataElement="inkSignaturePanel">
+                <InkSignature
+                  isModalOpen={isOpen}
+                  enableCreateButton={enableCreateButton}
+                  disableCreateButton={disableCreateButton}
+                />
+              </TabPanel>
+              <TabPanel dataElement="textSignaturePanel">
+                <TextSignature
+                  isModalOpen={isOpen}
+                  enableCreateButton={enableCreateButton}
+                  disableCreateButton={disableCreateButton}
+                />
+              </TabPanel>
+              <TabPanel dataElement="imageSignaturePanel">
+                <ImageSignature
+                  isModalOpen={isOpen}
+                  enableCreateButton={enableCreateButton}
+                  disableCreateButton={disableCreateButton}
+                />
+              </TabPanel>
+
+              <div className="footer">
+                <button className="signature-create" onClick={createSignature} disabled={!(isOpen) || createButtonDisabled}>
+                  {t('action.create')}
+                </button>
+              </div>
+            </Tabs>
           </div>
-        </FocusTrap>
-      </Swipeable>
+        </div>
+      </FocusTrap>
+    </Swipeable>
   );
 };
 

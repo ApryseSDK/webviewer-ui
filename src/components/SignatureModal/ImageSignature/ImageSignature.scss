@@ -7,6 +7,15 @@
   padding: 16px;
   box-sizing: border-box;
   position: relative;
+
+  @include small-browser-height {
+    height: 192px;
+  }
+
+  @include tiny-browser-height {
+    height: 162px;
+  }
+
   .image-signature-overlay {
     position: fixed;
     width: 100%;
