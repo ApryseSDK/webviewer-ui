@@ -45,29 +45,7 @@ const SUPPORTED_UNITS = {
   'Inches (in)': '"',
   'Centimeters (cm)': 'cm',
   'Millimeters (mm)': 'mm',
-}
-
-const CROP_DIMENSIONS = {
-  'Letter': {
-    'yOffset': 0,
-    'height': 11,
-    'xOffset': 0,
-    'width': 8.5,
-  },
-  'Half letter': {
-    'yOffset': 0,
-    'height': 5.5,
-    'xOffset': 0,
-    'width': 8.5,
-  },
-  'Junior legal': {
-    'yOffset': 0,
-    'height': 5,
-    'xOffset': 0,
-    'width': 8,
-  }
-}
-
+};
 const DEFAULT_UNITS = 'Inches (in)';
 const DEFAULT_UNIT_IN_INPUT = '\"';
 
@@ -92,36 +70,35 @@ const testPopup = (
       setCropRight={1}
       closeDocumentCropPopup={noop()}
       applyCrop={noop()}
-      isCropping={true}
+      isCropping
       getPageHeight={noop()}
       getPageWidth={noop()}
       redrawCropAnnotations={noop}
       isInDesktopOnlyMode={false}
       isMobile={false}
-      presetCropDimensions={CROP_DIMENSIONS}
     />
   </div>
 );
 
 const testDimensions = (
   <div className="DocumentCropPopup">
-      <DimensionsInput
-        top={1}
-        right={1}
-        bottom={1}
-        left={1}
-        unit={DEFAULT_UNITS}
-        autoTrim={DEFAULT_AUTO_TRIM}
-        supportedUnits={SUPPORTED_UNITS}
-        autoTrimOptions={AUTO_TRIM_OPTIONS}
-        onDimensionChange={noop}
-        onUnitChange={noop}
-        autoTrimActive={true}
-        setAutoTrimActive={noop}
-        onAutoTrimChange={noop}
-      />
+    <DimensionsInput
+      top={1}
+      right={1}
+      bottom={1}
+      left={1}
+      unit={DEFAULT_UNITS}
+      autoTrim={DEFAULT_AUTO_TRIM}
+      supportedUnits={SUPPORTED_UNITS}
+      autoTrimOptions={AUTO_TRIM_OPTIONS}
+      onDimensionChange={noop}
+      onUnitChange={noop}
+      autoTrimActive
+      setAutoTrimActive={noop}
+      onAutoTrimChange={noop}
+    />
   </div>
-)
+);
 
 describe('DocumentCropPopup', () => {
   describe('Component', () => {
@@ -179,7 +156,7 @@ describe('Dimensions Input Menu', () => {
     expect(screen.queryAllByRole('spinbutton').length).toEqual(0);
     expect(screen.queryAllByRole('listbox').length).toEqual(0);
     expect(screen.queryAllByRole('checkbox').length).toEqual(0);
-  })
+  });
 
   describe('Crop Dimension Inputs', () => {
     it('Should be autopopulated by Annotation size', () => {
@@ -196,13 +173,13 @@ describe('Dimensions Input Menu', () => {
 
     it('Should open with ' + DEFAULT_UNITS + ' selected and enabled', () => {
       render(testDimensions);
-      const unitDropdown = screen.getByRole('button', {name: 'Unit'});
+      const unitDropdown = screen.getByRole('button', { name: 'Unit' });
       expect(unitDropdown).toBeEnabled();
       expect(unitDropdown).toHaveTextContent(DEFAULT_UNITS);
       const unitsInInput = screen.getAllByText(DEFAULT_UNIT_IN_INPUT);
       expect(unitsInInput.length).toEqual(4);
-    })
-  })
+    });
+  });
 
   it('Should open with Auto-trim disabled but with ' + DEFAULT_AUTO_TRIM + ' selected', () => {
     render(testPopup);
@@ -213,7 +190,7 @@ describe('Dimensions Input Menu', () => {
     expect(autoTrimCheckbox).not.toBeChecked();
     // Dropdown elements create 2 different buttons, one for selected option and 1 for dropdown options.
     // We need to get the initial selected option here.
-    const autoTrimDropdown = screen.getAllByRole('button', {name: DEFAULT_AUTO_TRIM})[0];
+    const autoTrimDropdown = screen.getAllByRole('button', { name: DEFAULT_AUTO_TRIM })[0];
     expect(autoTrimDropdown).toBeDisabled();
-  })
+  });
 });
