@@ -24,10 +24,10 @@ const store = createStore(rootReducer);
 
 const createMockAnnotation = () => {
   return {
-    getPageNumber: function() {
+    getPageNumber() {
       return 1;
     },
-    getRect: function() {
+    getRect() {
       return {
         x1: 1,
         x2: 2,
@@ -37,27 +37,6 @@ const createMockAnnotation = () => {
     },
   };
 };
-
-const mockCropDimensions = {
-  'Letter': {
-    'yOffset': 0,
-    'height': 11,
-    'xOffset': 0,
-    'width': 8.5,
-  },
-  'Half letter': {
-    'yOffset': 0,
-    'height': 5.5,
-    'xOffset': 0,
-    'width': 8.5,
-  },
-  'Junior legal': {
-    'yOffset': 0,
-    'height': 5,
-    'xOffset': 0,
-    'width': 8,
-  }
-}
 
 const noop = () => {};
 
@@ -78,11 +57,6 @@ const popupProps = {
   redrawCropAnnotations: noop,
   isInDesktopOnlyMode: false,
   isMobile: false,
-  getPageCount: () => {9},
-  getCurrentPage: () => {1},
-  selectedPages: [],
-  onSelectedPagesChange: noop,
-  presetCropDimensions: mockCropDimensions
 };
 
 const popup = <DocumentCropPopup {...popupProps} />;
@@ -118,11 +92,11 @@ export function Basic() {
 }
 
 export function Dimensions() {
-  return(
+  return (
     <Provider store={store}>
-    <div className="DocumentCropPopup" style={{maxWidth: '226px'}}>
-      <DimensionsInput {...inputProps} />
-    </div>
-  </Provider>
+      <div className="DocumentCropPopup">
+        <DimensionsInput {...inputProps} />
+      </div>
+    </Provider>
   );
 }

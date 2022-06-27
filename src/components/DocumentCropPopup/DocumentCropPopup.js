@@ -28,7 +28,6 @@ const DocumentCropPopup = ({
   redrawCropAnnotations,
   isInDesktopOnlyMode,
   isMobile,
-  presetCropDimensions
 }) => {
   const { t } = useTranslation();
 
@@ -63,7 +62,26 @@ const DocumentCropPopup = ({
 
   // dimensions used to place auto trim crop annotations.
   // default values are using inches
-  const autoTrimDimensions = presetCropDimensions;
+  const autoTrimDimensions = {
+    'Letter': {
+      'top': 0,
+      'bottom': 11,
+      'left': 0,
+      'right': 8.5,
+    },
+    'Half letter': {
+      'top': 0,
+      'bottom': 5.5,
+      'left': 0,
+      'right': 8.5,
+    },
+    'Junior legal': {
+      'top': 0,
+      'bottom': 5,
+      'left': 0,
+      'right': 8,
+    },
+  };
 
   const [autoTrim, setAutoTrim] = useState(null);
 
@@ -101,7 +119,7 @@ const DocumentCropPopup = ({
       }
     }
     return input;
-  }
+  };
 
   const validateInput = (input, dimension) => {
     if (input < 0) {
@@ -218,15 +236,15 @@ const DocumentCropPopup = ({
 
       const pageRotation = documentViewer.getDocument().getPageRotation(cropAnnotation.getPageNumber());
 
-      const topTrim = autoTrimDimensions[autoTrim]['yOffset'] * unitConversions[supportedUnits[unit]];
+      const topTrim = autoTrimDimensions[autoTrim]['top'] * unitConversions[supportedUnits[unit]];
       const bottomTrim = Math.max(
         0,
-        pageHeight - autoTrimDimensions[autoTrim]['height'] * unitConversions[supportedUnits[unit]],
+        pageHeight - autoTrimDimensions[autoTrim]['bottom'] * unitConversions[supportedUnits[unit]],
       );
-      const leftTrim = autoTrimDimensions[autoTrim]['xOffset'] * unitConversions[supportedUnits[unit]];
+      const leftTrim = autoTrimDimensions[autoTrim]['left'] * unitConversions[supportedUnits[unit]];
       const rightTrim = Math.max(
         0,
-        pageWidth - autoTrimDimensions[autoTrim]['width'] * unitConversions[supportedUnits[unit]],
+        pageWidth - autoTrimDimensions[autoTrim]['right'] * unitConversions[supportedUnits[unit]],
       );
 
       onDimensionChange(topTrim, 'top');
