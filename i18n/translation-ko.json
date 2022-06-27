@@ -544,6 +544,14 @@
       "applyTile": "적용",
       "applyMessage": "편집을 위해 선택된 모든 항목을 영구적으로 제거합니다."
     },
+    "deleteBookmark": {
+      "title": "북마크를 삭제하시겠습니까?",
+      "message": "이 북마크를 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다."
+    },
+    "deleteOutline": {
+      "title": "개요를 삭제하시겠습니까?",
+      "message": "이 개요를 삭제하시겠습니까?\n\n 중첩된 윤곽선이 있는 윤곽선은 전체가 삭제되고 다시 설정하지 않는 한 바꿀 수 없습니다."
+    },
     "selectPage": {
       "selectTitle": "선택된 페이지 없음",
       "selectMessage": "페이지를 선택하고 다시 시도하세요."

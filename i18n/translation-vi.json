@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "Chèn trang trống ở dưới",
     "pageManipulation": "Thao Tác Trang",
     "replace": "Thay thế",
+    "setDestination": "Đích đã được cài",
     "showLess": "hiển thị ít hơn",
     "showMore": "...nhiều hơn",
     "chooseFile": "Chọn một tệp",
@@ -209,6 +210,7 @@
     "noAnnotations": "Bắt đầu tạo chú thích để lưu lại bình luận.",
     "noAnnotationsReadOnly": "Tài liệu này không có chú thích nào.",
     "noAnnotationsFilter": "Bắt đầu tạo chú thích và bộ lọc sẽ xuất hiện ở đây.",
+    "noBookmarks": "Không có dấu trang",
     "noOutlines": "Tài liệu này không có tóm tắt nào.",
     "noAttachments": "Tài liệu này không có tệp đính kèm nào.",
     "noResults": "Không tìm thấy kết quả nào.",
@@ -544,6 +546,14 @@
     "redaction": {
       "applyTile": "Áp Dụng Biên Tập",
       "applyMessage": "Hành động này sẽ gỡ vĩnh viễn tất cả các mục được chọn để biên tập. Không thể hoàn tác hành động này."
+    },
+    "deleteBookmark": {
+      "title": "Xóa Dấu trang?",
+      "message": "Bạn có chắc chắn muốn xóa các dấu trang này không? Bạn không thể hoàn tác hành động này."
+    },
+    "deleteOutline": {
+      "title": "Xóa dàn ý?",
+      "message": "Bạn có chắc chắn muốn xóa những đường viền này không?\n\n Một phác thảo có bất kỳ đường viền lồng nhau nào sẽ dẫn đến việc toàn bộ nội dung sẽ bị xóa và không thể thay thế trừ khi bạn đặt lại chúng."
     },
     "selectPage": {
       "selectTitle": "Không Có Trang nào được Chọn",

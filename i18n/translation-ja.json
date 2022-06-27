@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "下に空白のページを挿入",
     "pageManipulation": "ページ操作",
     "replace": "入れ替え",
+    "setDestination": "行き先を設定する",
     "showLess": "表示を減らす",
     "showMore": "...さらに表示",
     "chooseFile": "ファイルを選択してください",
@@ -209,6 +210,7 @@
     "noAnnotations": "コメントを残すには、注釈を追加してください。",
     "noAnnotationsReadOnly": "このドキュメントには注釈がありません。",
     "noAnnotationsFilter": "注釈を追加すると、フィルターがここに表示されます。",
+    "noBookmarks": "利用可能なブックマークはありません",
     "noOutlines": "このドキュメントには概要がありません。",
     "noAttachments": "このドキュメントには添付ファイルはありません。",
     "noResults": "結果が見つかりませんでした。",
@@ -545,6 +547,14 @@
       "applyTile": "墨消しを適用",
       "applyMessage": "この操作により、墨消しのために選択されたものがすべて完全に削除されます。この変更は元に戻せません。"
     },
+    "deleteBookmark": {
+      "title": "ブックマークを削除しますか？",
+      "message": "これらのブックマークを削除してもよろしいですか？このアクションを元に戻すことはできません。"
+    },
+    "deleteOutline": {
+      "title": "アウトラインを削除しますか？",
+      "message": "これらのアウトラインを削除してもよろしいですか？\n\n アウトラインがネストされているアウトラインでは、すべてが削除され、再度設定しない限り置き換えることはできません。"
+    },
     "selectPage": {
       "selectTitle": "ページが選択されていません",
       "selectMessage": "ページを選択して、もう一度お試しください。"
@@ -811,6 +821,7 @@
     "title": "切り抜くページ",
     "allPages": "全て",
     "singlePage": "現在のページ",
+    "multiPage": "ページを指定",
     "cropDimensions": "作物の寸法",
     "dimensionInput": {
       "unitOfMeasurement": "単位",

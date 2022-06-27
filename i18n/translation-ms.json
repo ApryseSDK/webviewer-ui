@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "Sisipkan halaman kosong di bawah",
     "pageManipulation": "Manipulasi Halaman",
     "replace": "Gantikan",
+    "setDestination": "Tetapkan Destinasi",
     "showLess": "kurang menunjukkan",
     "showMore": "... lagi",
     "chooseFile": "Pilih fail",
@@ -209,6 +210,7 @@
     "noAnnotations": "Mula membuat anotasi untuk meninggalkan ulasan.",
     "noAnnotationsReadOnly": "Dokumen ini tidak mempunyai anotasi.",
     "noAnnotationsFilter": "Mula membuat anotasi dan penapis akan dipaparkan di sini.",
+    "noBookmarks": "Tiada penanda halaman tersedia",
     "noOutlines": "Dokumen ini tidak mempunyai garis besar.",
     "noAttachments": "Dokumen ini tidak mempunyai lampiran.",
     "noResults": "Tiada keputusan dijumpai.",
@@ -544,6 +546,14 @@
     "redaction": {
       "applyTile": "Terapkan Redaksi",
       "applyMessage": "Tindakan ini akan mengalih keluar semua item yang dipilih untuk redaksi secara kekal. Ia tidak boleh dibuat asal."
+    },
+    "deleteBookmark": {
+      "title": "Padamkan Penanda Halaman?",
+      "message": "Adakah anda pasti mahu memadamkan penanda halaman ini? Anda tidak boleh membuat asal tindakan ini."
+    },
+    "deleteOutline": {
+      "title": "Padamkan Garis Besar?",
+      "message": "Adakah anda pasti mahu memadamkan garis besar ini?\n\n Garis besar yang mempunyai sebarang garis besar bersarang akan menyebabkan keseluruhannya dipadamkan dan tidak boleh diganti melainkan anda menetapkannya semula."
     },
     "selectPage": {
       "selectTitle": "Tiada Halaman Dipilih",

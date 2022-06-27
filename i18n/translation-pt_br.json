@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "Inserir página em branco abaixo",
     "pageManipulation": "Manipulação de página",
     "replace": "Substituir",
+    "setDestination": "Definir destino",
     "showLess": "mostre menos",
     "showMore": "...mais",
     "chooseFile": "Escolha um arquivo",
@@ -209,6 +210,7 @@
     "noAnnotations": "Comece a fazer anotações para deixar um comentário.",
     "noAnnotationsReadOnly": "Esse documento não tem anotações.",
     "noAnnotationsFilter": "Comece a fazer anotações e filtros aparecerão aqui.",
+    "noBookmarks": "Nenhum marcador disponível",
     "noOutlines": "Esse documento não tem contorno.",
     "noAttachments": "Este documento não possui anexos.",
     "noResults": "Nenhum resultado encontrado.",
@@ -544,6 +546,14 @@
     "redaction": {
       "applyTile": "Aplicar supressão",
       "applyMessage": "Esta ação suprimirá permanentemente todos os itens selecionados para remoção. Isso não pode ser desfeito."
+    },
+    "deleteBookmark": {
+      "title": "Excluir marcador?",
+      "message": "Tem certeza de que deseja excluir esses favoritos? Você não pode desfazer esta ação."
+    },
+    "deleteOutline": {
+      "title": "Excluir esboço?",
+      "message": "Tem certeza de que deseja excluir esses contornos?\n\n Um contorno que tenha contornos aninhados resultará na exclusão de tudo e não poderá ser substituído, a menos que você os defina novamente."
     },
     "selectPage": {
       "selectTitle": "Nenhuma página selecionada",

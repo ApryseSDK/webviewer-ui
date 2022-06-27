@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "Lege pagina hieronder invoegen",
     "pageManipulation": "Paginamanipulatie",
     "replace": "Vervangen",
+    "setDestination": "Bestemming instellen",
     "showLess": "laat minder zien",
     "showMore": "...meer",
     "chooseFile": "Kies een bestand",
@@ -209,6 +210,7 @@
     "noAnnotations": "Begin met het maken van aantekeningen om een opmerking achter te laten.",
     "noAnnotationsReadOnly": "Dit document heeft geen annotaties.",
     "noAnnotationsFilter": "Begin met het maken van aantekeningen en filters verschijnen hier.",
+    "noBookmarks": "Geen bladwijzers beschikbaar",
     "noOutlines": "Dit document heeft geen hoofdlijnen.",
     "noAttachments": "Dit document heeft geen bijlagen.",
     "noResults": "Geen resultaten.",
@@ -544,6 +546,14 @@
     "redaction": {
       "applyTile": "Redactie toepassen",
       "applyMessage": "Met deze actie worden alle items verwijderd die zijn geselecteerd voor redactie. Het kan niet ongedaan gemaakt worden."
+    },
+    "deleteBookmark": {
+      "title": "Bladwijzer verwijderen?",
+      "message": "Weet u zeker dat u deze bladwijzers wilt verwijderen? U kunt deze actie niet ongedaan maken."
+    },
+    "deleteOutline": {
+      "title": "Overzicht verwijderen?",
+      "message": "Weet u zeker dat u deze contouren wilt verwijderen?\n\n Een omtrek met geneste omtrekken zal ertoe leiden dat het hele ding wordt verwijderd en kan niet worden vervangen, tenzij je ze opnieuw instelt."
     },
     "selectPage": {
       "selectTitle": "Geen pagina's geselecteerd",

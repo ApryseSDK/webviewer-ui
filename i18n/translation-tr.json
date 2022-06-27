@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "Aşağıya boş sayfa ekle",
     "pageManipulation": "Sayfa Manipülasyonu",
     "replace": "Yer değiştirmek",
+    "setDestination": "Hedef belirlemek",
     "showLess": "daha az göster",
     "showMore": "...daha fazla",
     "chooseFile": "Bir dosya seçin",
@@ -209,6 +210,7 @@
     "noAnnotations": "Yorum bırakmak için ek açıklamalar yapmaya başlayın.",
     "noAnnotationsReadOnly": "Bu belgede ek açıklama yok.",
     "noAnnotationsFilter": "Ek açıklamalar yapmaya başlayın ve filtreler burada görünecektir.",
+    "noBookmarks": "Kullanılabilir yer işareti yok",
     "noOutlines": "Bu belgenin taslağı yok.",
     "noAttachments": "Bu belgenin eki yok.",
     "noResults": "Sonuç bulunamadı.",
@@ -545,6 +547,14 @@
       "applyTile": "Redaksiyon Uygula",
       "applyMessage": "Bu eylem, redaksiyon için seçilen tüm öğeleri kalıcı olarak kaldıracaktır. Geri alınamaz."
     },
+    "deleteBookmark": {
+      "title": "Yer İşareti Silinsin mi?",
+      "message": "Bu yer imlerini silmek istediğinizden emin misiniz? Bu işlemi geri alamazsınız."
+    },
+    "deleteOutline": {
+      "title": "Anahat Silinsin mi?",
+      "message": "Bu anahatları silmek istediğinizden emin misiniz?\n\n İç içe geçmiş anahatları olan bir anahat, her şeyin silinmesine neden olur ve siz yeniden ayarlamadığınız sürece değiştirilemez."
+    },
     "selectPage": {
       "selectTitle": "Sayfa Seçilmedi",
       "selectMessage": "Lütfen sayfaları seçin ve tekrar deneyin."
@@ -811,6 +821,7 @@
     "title": "Kırpılacak Sayfalar",
     "allPages": "Tüm",
     "singlePage": "Geçerli sayfa",
+    "multiPage": "Sayfayı Belirtin",
     "cropDimensions": "Kırpma Boyutları",
     "dimensionInput": {
       "unitOfMeasurement": "Birim",

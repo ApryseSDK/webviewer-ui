@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "Leere Seite unten einfügen page",
     "pageManipulation": "Seitenmanipulation",
     "replace": "Ersetzen",
+    "setDestination": "Festgelegtes Ziel",
     "showLess": "zeige weniger",
     "showMore": "...mehr",
     "chooseFile": "Datei auswählen",
@@ -209,6 +210,7 @@
     "noAnnotations": "Keine Kommentare gefunden.",
     "noAnnotationsReadOnly": "Dieses Dokument erlaubt keine Kommentare.",
     "noAnnotationsFilter": "Beginnen Sie hier mit der Erstellung von Anmerkungen und Filtern.",
+    "noBookmarks": "Keine Lesezeichen verfügbar",
     "noOutlines": "Dieses Dokument enthält keine Gliederung.",
     "noAttachments": "Dieses Dokument hat keine Anhänge.",
     "noResults": "Keine Ergebnisse gefunden.",
@@ -544,6 +546,14 @@
     "redaction": {
       "applyTile": "Schwärzung anwenden",
       "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht rückgängig gemacht werden."
+    },
+    "deleteBookmark": {
+      "title": "Lesezeichen löschen?",
+      "message": "Möchten Sie diese Lesezeichen wirklich löschen? Sie können diese Aktion nicht rückgängig machen."
+    },
+    "deleteOutline": {
+      "title": "Gliederung löschen?",
+      "message": "Möchten Sie diese Umrisse wirklich löschen?\n\n Eine Kontur mit verschachtelten Konturen führt dazu, dass das Ganze gelöscht wird und kann nicht ersetzt werden, es sei denn, Sie setzen sie erneut."
     },
     "selectPage": {
       "selectTitle": "Keine Seiten ausgewählt",

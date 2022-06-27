@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "Insert blank page below",
     "pageManipulation": "Page Manipulation",
     "replace": "Replace",
+    "setDestination": "Set Destination",
     "showLess": "show less",
     "showMore": "...more",
     "chooseFile": "Choose a file",
@@ -209,7 +210,8 @@
     "noAnnotations": "Start making annotations to leave a comment.",
     "noAnnotationsReadOnly": "This document has no annotations.",
     "noAnnotationsFilter": "Start making annotations and filters will appear here.",
-    "noOutlines": "This document has no outline.",
+    "noBookmarks": "No bookmarks available",
+    "noOutlines": "No outlines available",
     "noAttachments": "This document has no attachments.",
     "noResults": "No results found.",
     "numResultsFound": "results found",
@@ -544,6 +546,14 @@
     "redaction": {
       "applyTile": "Apply Redaction",
       "applyMessage": "This action will permanently remove all items selected for redaction. It cannot be undone."
+    },
+    "deleteBookmark": {
+      "title": "Delete Bookmark?",
+      "message": "Are you sure you want to delete these bookmarks? You cannot undo this action."
+    },
+    "deleteOutline": {
+      "title": "Delete Outline?",
+      "message": "Are you sure you want to delete these outlines? \n\n An outline that has any nested outlines will result in the whole thing being deleted and cannot be replaced unless you set them again."
     },
     "selectPage": {
       "selectTitle": "No Pages Selected",

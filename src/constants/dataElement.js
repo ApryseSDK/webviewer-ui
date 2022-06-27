@@ -13,6 +13,12 @@ const DataElements = {
   STYLE_POPUP_LABEL_TEXT_CONTAINER: 'stylePopupLabelTextContainer',
   REDACTION_PANEL: 'redactionPanel',
   REDACTION_PANEL_TOGGLE: 'redactionPanelToggle',
+  WV3D_PROPERTIES_PANEL: 'wv3dPropertiesPanel',
+  WV3D_PROPERTIES_PANEL_TOGGLE: 'wv3dPropertiesPanelToggle',
+  OUTLINE_PANEL: 'outlinesPanel',
+  OUTLINE_CONTROLS: 'outlineControls',
+  BOOKMARK_PANEL: 'bookmarksPanel',
+  BOOKMARK_SHORTCUT_OPTION: 'bookmarkShortcutOption',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',
@@ -24,7 +30,7 @@ const DataElements = {
   ANNOTATION_USER_FILTER_PANEL_BUTTON: 'annotationUserFilterPanelButton',
   ANNOTATION_COLOR_FILTER_PANEL_BUTTON: 'annotationColorFilterPanelButton',
   ANNOTATION_TYPE_FILTER_PANEL_BUTTON: 'annotationTypeFilterPanelButton',
-  ANNOTATION_STATUS_FILTER_PANEL_BUTTON: 'annotationStatusFilterPanelButton'
+  ANNOTATION_STATUS_FILTER_PANEL_BUTTON: 'annotationStatusFilterPanelButton',
 };
 
 export default DataElements;

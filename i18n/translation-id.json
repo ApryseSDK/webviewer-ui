@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "Sisipkan halaman kosong di bawah",
     "pageManipulation": "Manipulasi Halaman",
     "replace": "Mengganti",
+    "setDestination": "Tetapkan Tujuan",
     "showLess": "tampilkan lebih sedikit",
     "showMore": "...lagi",
     "chooseFile": "Pilih file",
@@ -209,6 +210,7 @@
     "noAnnotations": "Mulailah membuat anotasi untuk meninggalkan komentar.",
     "noAnnotationsReadOnly": "Dokumen ini tidak memiliki anotasi.",
     "noAnnotationsFilter": "Mulai membuat anotasi dan filter akan muncul di sini.",
+    "noBookmarks": "Tidak ada bookmark yang tersedia",
     "noOutlines": "Dokumen ini tidak memiliki garis besar.",
     "noAttachments": "Dokumen ini tidak memiliki lampiran.",
     "noResults": "Tidak ada hasil yang ditemukan.",
@@ -544,6 +546,14 @@
     "redaction": {
       "applyTile": "Terapkan Redaksi",
       "applyMessage": "Tindakan ini akan menghapus secara permanen semua item yang dipilih untuk diedit. Itu tidak bisa dibatalkan."
+    },
+    "deleteBookmark": {
+      "title": "Hapus Penanda?",
+      "message": "Yakin ingin menghapus bookmark ini? Anda tidak dapat membatalkan tindakan ini."
+    },
+    "deleteOutline": {
+      "title": "Hapus Garis Besar?",
+      "message": "Apakah Anda yakin ingin menghapus garis besar ini?\n\n Garis besar yang memiliki garis besar bersarang akan mengakibatkan semuanya dihapus dan tidak dapat diganti kecuali Anda mengaturnya lagi."
     },
     "selectPage": {
       "selectTitle": "Tidak Ada Halaman yang Dipilih",

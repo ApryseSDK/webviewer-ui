@@ -1,102 +1,175 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import Bookmark from 'components/Bookmark';
-import EditingBookmark from 'components/Bookmark/EditingBookmark';
 import Button from 'components/Button';
+import DataElementWrapper from 'components/DataElementWrapper';
+import DataElements from 'constants/dataElement';
 
 import actions from 'actions';
 import selectors from 'selectors';
 
+import '../../constants/bookmarksOutlinesShared.scss';
 import './BookmarksPanel.scss';
 
-class BookmarksPanel extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAdding: false,
+const BookmarksPanel = () => {
+  const [isDisabled, bookmarks, currentPageIndex, pageLabels] = useSelector(
+    state => [
+      selectors.isElementDisabled(state, DataElements.BOOKMARK_PANEL),
+      selectors.getBookmarks(state),
+      selectors.getCurrentPage(state) - 1,
+      selectors.getPageLabels(state),
+    ],
+    shallowEqual,
+  );
+
+  const [isAddingNewBookmark, setAddingNewBookmark] = useState(false);
+  const [isMultiSelectionMode, setMultiSelectionMode] = useState(false);
+  const [selectingBookmarks, setSelectingBookmarks] = useState([]);
+
+  const [t] = useTranslation();
+  const dispatch = useDispatch();
+
+  const pageIndexes = Object.keys(bookmarks).map(pageIndex => parseInt(pageIndex, 10));
+
+  useEffect(() => {
+    // if bookmark is deleted from the shortcut, should also remove from selectingBookmarks
+    selectingBookmarks.forEach(index => {
+      if (!pageIndexes.includes(index)) {
+        setSelectingBookmarks(selectingBookmarks.filter(bm => bm !== index))
+      }
+    });
+  }, [bookmarks]);
+
+  const onRemoveBookmarks = (pageIndexes) => {
+    const title = t('warning.deleteBookmark.title');
+    const message = t('warning.deleteBookmark.message');
+    const confirmationWarning = {
+      message,
+      title,
+      onConfirm: () => {
+        pageIndexes.forEach(pageIndex => dispatch(actions.removeBookmark(pageIndex)));
+        setSelectingBookmarks([]);
+      },
+      confirmBtnText: t('action.delete'),
     };
+    dispatch(actions.showWarningMessage(confirmationWarning));
   }
 
-  static propTypes = {
-    bookmarks: PropTypes.object,
-    addBookmark: PropTypes.func.isRequired,
-    currentPage: PropTypes.number.isRequired,
-    isDisabled: PropTypes.bool,
-    t: PropTypes.func.isRequired,
-    pageLabels: PropTypes.array.isRequired,
-  };
+  if (isDisabled) {
+    return null;
+  }
 
-  render() {
-    const {
-      isDisabled,
-      bookmarks,
-      addBookmark,
-      currentPage,
-      t,
-      pageLabels
-    } = this.props;
-
-    if (isDisabled) {
-      return null;
-    }
-
-    const pageIndexes = Object.keys(bookmarks).map(pageIndex => parseInt(pageIndex, 10));
-    return (
-      <div className="Panel BookmarksPanel" data-element="bookmarksPanel">
-        {
-          this.state.isAdding ?
-            <EditingBookmark
-              className="adding"
-              label={`${t('component.bookmarkPage')} ${pageLabels[currentPage - 1]}: ${t('component.newBookmark')}`}
-              bookmarkText={''}
-              onSave={newText => {
-                addBookmark(currentPage - 1, newText);
-                this.setState({ isAdding: false });
-              }}
-              onCancel={() => {
-                this.setState({ isAdding: false });
-              }}
-            /> :
-            <div className="bookmarks-panel-header ">
-              <Button
-                dataElement="newBookmarkButton"
-                className="bookmarks-panel-button"
-                label={t('component.newBookmark')}
-                onClick={() => {
-                  this.setState({ isAdding: true });
-                }}
-              />
-            </div>
-        }
-        <div className="bookmarks-panel-row">
-          {pageIndexes.map(pageIndex => (
-            <React.Fragment>
-              <div className="bookmarks-panel-label">
-                {`${t('component.bookmarkPage')} ${pageLabels[pageIndex]}`}
-              </div>
-              <Bookmark text={bookmarks[pageIndex]} pageIndex={pageIndex} />
-            </React.Fragment>
-          ))}
+  return (
+    <div
+      className="Panel BookmarksPanel bookmark-outline-panel"
+      data-element={DataElements.BOOKMARK_PANEL}
+    >
+      <div className="bookmark-outline-panel-header">
+        <div className="header-title">
+          {t('component.bookmarksPanel')}
         </div>
+        {!isMultiSelectionMode &&
+          <Button
+            className="bookmark-outline-control-button header-edit-button"
+            label={t('action.edit')}
+            disabled={isAddingNewBookmark || pageIndexes.length === 0}
+            onClick={() => setMultiSelectionMode(true)}
+          />
+        }
+        {isMultiSelectionMode &&
+          <Button
+            className="bookmark-outline-control-button header-edit-button"
+            label={t('option.bookmarkOutlineControls.done')}
+            disabled={isAddingNewBookmark}
+            onClick={() => {
+              setMultiSelectionMode(false);
+              setSelectingBookmarks([]);
+            }}
+          />
+        }
       </div>
-    );
-  }
+
+      {!isAddingNewBookmark && pageIndexes.length === 0 && (
+        <div className="msg msg-no-bookmark-outline">{t('message.noBookmarks')}</div>
+      )}
+
+      <div className="bookmark-outline-row">
+        {isAddingNewBookmark &&
+          <Bookmark
+            isAdding={true}
+            label={`${t('component.bookmarkPage')} ${pageLabels[currentPageIndex]} - ${t('component.bookmarkTitle')}`}
+            text={bookmarks[currentPageIndex] ?? ""}
+            pageIndex={currentPageIndex}
+            onSave={newText => {
+              dispatch(actions.addBookmark(currentPageIndex, newText));
+              setAddingNewBookmark(false);
+            }}
+            onCancel={() => setAddingNewBookmark(false)}
+          />
+        }
+
+        {pageIndexes.map(pageIndex => (
+          <Bookmark
+            key={pageIndex}
+            isMultiSelectionMode={isMultiSelectionMode}
+            label={`${t('component.bookmarkPage')} ${pageLabels[pageIndex]} - ${t('component.bookmarkTitle')}`}
+            defaultLabel={`${t('component.bookmarkPage')} ${pageLabels[pageIndex]}`}
+            text={bookmarks[pageIndex]}
+            pageIndex={pageIndex}
+            onSave={newText => dispatch(actions.editBookmark(pageIndex, newText))}
+            onRemove={index => onRemoveBookmarks([index])}
+            setSelected={(index, val) => {
+              if (selectingBookmarks.find(bm => bm === index)) {
+                if (!val) {
+                  setSelectingBookmarks(selectingBookmarks.filter(bm => bm !== index));
+                }
+              } else {
+                if (val) {
+                  setSelectingBookmarks([...selectingBookmarks, index]);
+                }
+              }
+            }}
+          />
+        ))}
+      </div>
+
+      <DataElementWrapper
+        className="bookmark-outline-footer"
+        dataElement="addNewBookmarkButtonContainer"
+      >
+        {isMultiSelectionMode &&
+          <>
+            <Button
+              dataElement="newBookmarkButton"
+              className="multi-selection-button"
+              img="icon-menu-add"
+              disabled={selectingBookmarks.length > 0 || !!bookmarks[currentPageIndex]}
+              onClick={() => setAddingNewBookmark(true)}
+            />
+            <Button
+              dataElement="newBookmarkButton"
+              className="multi-selection-button"
+              img="icon-delete-line"
+              disabled={selectingBookmarks.length === 0}
+              onClick={() => onRemoveBookmarks(selectingBookmarks)}
+            />
+          </>
+        }
+        {!isMultiSelectionMode &&
+          <Button
+            dataElement="newBookmarkButton"
+            className="bookmark-outline-control-button add-new-button"
+            img="icon-menu-add"
+            label={`${t('action.add')} ${t('component.bookmarkPanel')}`}
+            disabled={isAddingNewBookmark || !!bookmarks[currentPageIndex]}
+            onClick={() => setAddingNewBookmark(true)}
+          />
+        }
+      </DataElementWrapper>
+    </div>
+  );
 }
 
-const mapStateToProps = state => ({
-  bookmarks: selectors.getBookmarks(state),
-  isDisabled: selectors.isElementDisabled(state, 'bookmarksPanel'),
-  currentPage: selectors.getCurrentPage(state),
-  pageLabels: selectors.getPageLabels(state),
-});
-
-const mapDispatchToProps = {
-  addBookmark: actions.addBookmark,
-  editBookmark: actions.editBookmark,
-  removeBookmark: actions.removeBookmark,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(BookmarksPanel));
+export default BookmarksPanel;

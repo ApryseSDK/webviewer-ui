@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "Insertar una página en blanco debajo",
     "pageManipulation": "Manipulación de página",
     "replace": "Reemplazar",
+    "setDestination": "Marcar el destino",
     "showLess": "Muestra menos",
     "showMore": "...más",
     "chooseFile": "Escoge un archivo",
@@ -209,6 +210,7 @@
     "noAnnotations": "Empiece a hacer anotaciones para dejar un comentario.",
     "noAnnotationsReadOnly": "Este documento no tiene anotaciones.",
     "noAnnotationsFilter": "Empiece a hacer anotaciones y los filtros aparecerán aquí.",
+    "noBookmarks": "No hay marcadores disponibles",
     "noOutlines": "Este documento no tiene esquema.",
     "noAttachments": "Este documento no tiene anexos.",
     "noResults": "No se han encontrado resultados.",
@@ -545,6 +547,14 @@
       "applyTile": "Aplicar redacción",
       "applyMessage": "Esta acción eliminará permanentemente todos los elementos seleccionados para su redacción. No se puede deshacer."
     },
+    "deleteBookmark": {
+      "title": "¿Eliminar marcador?",
+      "message": "¿Está seguro de que desea eliminar estos marcadores? No puede deshacer esta acción."
+    },
+    "deleteOutline": {
+      "title": "¿Eliminar esquema?",
+      "message": "¿Está seguro de que desea eliminar estos contornos?\n\n Un contorno que tenga contornos anidados hará que se elimine todo y no se podrá reemplazar a menos que los configure nuevamente."
+    },
     "selectPage": {
       "selectTitle": "No hay páginas seleccionadas",
       "selectMessage": "Seleccione las páginas y vuelva a intentarlo."
@@ -811,6 +821,7 @@
     "title": "Páginas para recortar",
     "allPages": "Todos",
     "singlePage": "Página actual",
+    "multiPage": "Especificar página",
     "cropDimensions": "Dimensiones de cultivo",
     "dimensionInput": {
       "unitOfMeasurement": "Unidad",

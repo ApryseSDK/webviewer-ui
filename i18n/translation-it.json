@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "Inserisci una pagina vuota qui sotto",
     "pageManipulation": "Manipolazione della pagina",
     "replace": "Sostituire",
+    "setDestination": "Impostare la destinazione",
     "showLess": "mostra meno",
     "showMore": "...Di più",
     "chooseFile": "Scegli un file",
@@ -209,6 +210,7 @@
     "noAnnotations": "Inizia a fare annotazioni per lasciare un commento.",
     "noAnnotationsReadOnly": "Questo documento non ha annotazioni.",
     "noAnnotationsFilter": "Inizia a creare annotazioni e filtri verranno visualizzati qui.",
+    "noBookmarks": "Nessun segnalibro disponibile",
     "noOutlines": "Questo documento non ha contorni.",
     "noAttachments": "Questo documento non ha allegati.",
     "noResults": "Nessun risultato trovato.",
@@ -545,6 +547,14 @@
       "applyTile": "Applica redazione",
       "applyMessage": "Questa azione rimuoverà permanentemente tutti gli elementi selezionati per la redazione. Non può essere annullato."
     },
+    "deleteBookmark": {
+      "title": "Eliminare il segnalibro?",
+      "message": "Sei sicuro di voler eliminare questi segnalibri? Non puoi annullare questa azione."
+    },
+    "deleteOutline": {
+      "title": "Eliminare la struttura?",
+      "message": "Sei sicuro di voler eliminare questi contorni?\n\n Un contorno con contorni nidificati comporterà l'eliminazione dell'intero elemento e non può essere sostituito a meno che non li imposti di nuovo."
+    },
     "selectPage": {
       "selectTitle": "Nessuna pagina selezionata",
       "selectMessage": "Seleziona le pagine e riprova."
@@ -811,6 +821,7 @@
     "title": "Pagine da ritagliare",
     "allPages": "Tutti",
     "singlePage": "Pagina corrente",
+    "multiPage": "Specificare la pagina",
     "cropDimensions": "Dimensioni del raccolto",
     "dimensionInput": {
       "unitOfMeasurement": "Unità",
