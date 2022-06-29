@@ -25,14 +25,18 @@
     justify-content: flex-end;
     color: var(--text-color);
     padding: 6px 2px 6px 6px;
-    background: var(--gray-0);
+    background: var(--component-background);
 
     input {
       width: 100%;
-      padding: 6px 26px 6px 6px;
+      padding-right: 26px;
       height: 20px;
       border: none;
       background: transparent;
+    }
+
+    input::placeholder {
+      color: var(--placeholder-text);
     }
 
     .clearSearch-button {
