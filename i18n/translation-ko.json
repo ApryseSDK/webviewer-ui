@@ -1,6 +1,6 @@
 {
   "action": {
-    "add": "추가하다",
+    "add": "추가",
     "apply": "적용",
     "applyAll": "모두적용",
     "calendar": "캘린더",
@@ -181,12 +181,12 @@
     "bookmarksPanel": "즐겨찾기",
     "newBookmark": "즐겨찾기 추가",
     "bookmarkPage": "즐겨찾기",
-    "bookmarkTitle": "책갈피 제목",
+    "bookmarkTitle": "책갈피 타이틀",
     "signaturePanel": "서명",
     "layersPanel": "레이어",
     "thumbnailsPanel": "미리보기",
     "toolsButton": "도구",
-    "redaction": "민감정보 삭제",
+    "redaction": "수정 삭제",
     "viewControlsOverlay": "컨트롤 보기",
     "calibration": "구경 측정",
     "zoomOverlay": "줌 오버레이",
@@ -435,7 +435,7 @@
     },
     "stylePopup": {
       "textStyle": "텍스트 스타일",
-      "colors": "그림 물감",
+      "colors": "색상",
       "invalidFontSize": "글꼴 크기는 다음보다 작아야 합니다.",
       "labelText": "레이블 텍스트",
       "labelTextPlaceholder": "레이블 텍스트 추가"
@@ -456,15 +456,15 @@
       "enableSnapping": "스냅 가능"
     },
     "watermark": {
-      "title": "양수표",
-      "addWatermark": "워터 마크를 추가",
+      "title": "타이틀",
+      "addWatermark": "워터마크 추가",
       "size": "크기",
       "location": "위치",
       "text": "텍스트",
       "style": "스타일",
       "resetAllSettings": "초기화",
       "font": "글꼴",
-      "addNew": "새로운 걸 더하다",
+      "addNew": "새로 추가하기",
       "locations": {
         "center": "중앙",
         "topLeft": "좌측상단",
@@ -477,8 +477,8 @@
     },
     "thumbnailPanel": {
       "delete": "삭제",
-      "rotateClockwise": "시계 방향으로 회전",
-      "rotateCounterClockwise": "시계 반대방향으로 회전"
+      "rotateClockwise": "오른쪽으로 회전",
+      "rotateCounterClockwise": "왼쪽으로 회전"
     },
     "thumbnailsControlOverlay": {
       "move": "페이지 이동"
@@ -743,7 +743,7 @@
     },
     "signerIdentity": {
       "preamble": "서명자의 신원",
-      "valid": "유효한.",
+      "valid": "유효한",
       "unknown": "알수없음."
     },
     "summaryBox": {
@@ -822,7 +822,7 @@
     "cropDimensions": "크기",
     "dimensionInput": {
       "unitOfMeasurement": "단위",
-      "autoTrim": "자동 트림"
+      "autoTrim": "자동자르기"
     },
     "cropModal": {
       "applyTitle": "잘라내기를 적용하시겠습니까?",
