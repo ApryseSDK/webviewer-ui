@@ -37,13 +37,17 @@ const ToggleZoomOverlay = () => {
       setValue(Math.ceil(core.getZoom() * 100).toString());
     const onZoomUpdated = () =>
       setValue(Math.ceil(core.getZoom() * 100).toString());
+    const onDocumentUnloaded = () => 
+      setValue('100');
 
     core.addEventListener('documentLoaded', onDocumentLoaded);
     core.addEventListener('zoomUpdated', onZoomUpdated);
+    core.addEventListener('documentUnloaded', onDocumentUnloaded);
 
     return () => {
       core.removeEventListener('documentLoaded', onDocumentLoaded);
       core.removeEventListener('zoomUpdated', onZoomUpdated);
+      core.removeEventListener('documentUnloaded', onDocumentUnloaded);
     };
   }, []);
 
@@ -115,7 +119,7 @@ const ToggleZoomOverlay = () => {
             </div>
             <ToggleElementButton
               className="OverlayButton"
-              img="icon-chevron-down"
+              img={`icon-chevron-${isActive ? 'up' : 'down'}`}
               element="zoomOverlay"
               dataElement="zoomOverlay"
               ariaLabel={t('action.zoomControls')}

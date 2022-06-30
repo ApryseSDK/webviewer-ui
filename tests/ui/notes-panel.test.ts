@@ -10,7 +10,7 @@ it('getSelectedThumbnailPageNumbers should return even if there is only one thum
   await iframe.click('[data-element=toggleNotesButton]');
   await page.waitFor(1000);
 
-  await iframe.click('[data-element=notesOrderDropdown] .down-arrow');
+  await iframe.click('[data-element=notesOrderDropdown] .arrow');
   await page.waitFor(500);
 
   await iframe.click('[data-element=dropdown-item-modifiedDate]');
