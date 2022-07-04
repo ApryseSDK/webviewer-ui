@@ -1,5 +1,41 @@
 import { loadViewerSample, Timeouts } from '../../utils';
 
+const thumbnailRenderingTest = async (file: string) => {
+  const { iframe, waitForInstance, waitForWVEvents } = await loadViewerSample('viewing/blank');
+
+  const instance = await waitForInstance();
+  await waitForWVEvents(['annotationsLoaded']);
+  await instance('disableElements', ['pageNavOverlay']);
+
+  await instance('loadDocument', `/test-files/${file}`);
+  await waitForWVEvents(['annotationsLoaded', 'pageComplete']);
+
+  await instance('openElement', 'leftPanel');
+  await page.waitFor(3000);
+
+  const thumbnail = await iframe.$('#pageThumb0 .page-image');
+  expect(await thumbnail.screenshot()).toMatchImageSnapshot({
+    customSnapshotIdentifier: `thumbnail-panel-rendering-thumbnail-${file}`
+  });
+
+  const pageContainer = await iframe.$('#pageContainer1 .hacc');
+  expect(await pageContainer.screenshot()).toMatchImageSnapshot({
+    customSnapshotIdentifier: `thumbnail-panel-rendering-pageContainer-${file}`
+  });
+}
+
+it('should be able to render the PDF thumbnail and document correctly', async () => {
+  await thumbnailRenderingTest('webviewer-demo-optimized.pdf');
+}
+
+it('should be able to render the XOD thumbnail and document correctly', async () => {
+  await thumbnailRenderingTest('webviewer-demo-annotated.xod');
+}
+
+it('should be able to render the jpeg thumbnail and document correctly', async () => {
+  await thumbnailRenderingTest('landscape_1.jpg');
+}
+
 it('getSelectedThumbnailPageNumbers should return even if there is only one thumbnail selected', async () => {
   const { iframe, waitForInstance, waitForWVEvents } = await loadViewerSample('viewing/viewing');
 

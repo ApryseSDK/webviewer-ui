@@ -104,7 +104,6 @@ const Thumbnail = ({
             setLoaded(true);
           },
           source: 'thumbnail',
-          'isInternalRender': true,
         });
         onLoad(index, thumbnailContainer, id);
       }
