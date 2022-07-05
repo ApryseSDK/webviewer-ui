@@ -583,6 +583,7 @@ export default {
     ],
     thumbnailControlMenu: [
       { dataElement: 'thumbRotateClockwise' },
+      { dataElement: 'thumbRotateCounterClockwise' },
       { dataElement: 'thumbDelete' },
     ],
     toolButtonObjects: {
