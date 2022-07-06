@@ -1,4 +1,4 @@
-export default (element, overlay, isTabletAndMobile, isSmallBrowserHeight) => {
+export default (element, overlay, isTabletAndMobile) => {
   const button = document.querySelector(`[data-element=${element}]`);
   let left = 0;
   let right = 'auto';
@@ -25,20 +25,19 @@ export default (element, overlay, isTabletAndMobile, isSmallBrowserHeight) => {
     right = 'auto';
   }
 
-  let maxHeight;
   const verticalGap = isTabletAndMobile ? 14 : 6;
   let top = buttonBottom + verticalGap;
-  if (buttonBottom > window.innerHeight / 2) {
-    top = 0;
-    maxHeight = window.innerHeight;
-  } else if ((buttonBottom + overlayHeight > window.innerHeight) && !isSmallBrowserHeight) {
-    top = window.innerHeight - overlayHeight - verticalGap;
+  if (buttonBottom > 100) {
+    // if the buttons are not on the top of the page, the popup can adjust its position to "pass" them, otherwise the popup should always be below them
+    if (buttonBottom + overlayHeight > window.innerHeight) {
+      const calculatedTop = window.innerHeight - overlayHeight - verticalGap;
+      top = calculatedTop > 0 ? calculatedTop : 0;
+    }
   }
 
   return {
     left: !isNaN(left) ? Math.max(left, 0) : left,
     right,
     top,
-    ...(maxHeight && { maxHeight })
   };
 };
