@@ -2,23 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-
-import WatermarkModal from 'components/PrintModal/WatermarkModal';
-
+import { Swipeable } from 'react-swipeable';
+import actions from 'actions';
+import selectors from 'selectors';
 import core from 'core';
 import getPageArrayFromString from 'helpers/getPageArrayFromString';
 import getClassName from 'helpers/getClassName';
 import { creatingPages, printPages } from 'helpers/print';
 import LayoutMode from 'constants/layoutMode';
-import actions from 'actions';
-import selectors from 'selectors';
-
-import { Swipeable } from 'react-swipeable';
+import WatermarkModal from 'components/PrintModal/WatermarkModal';
+import Choice from 'components/Choice/Choice';
+import ModalWrapper from 'components/ModalWrapper';
 
 import './PrintModal.scss';
-import Choice from '../Choice/Choice';
-import ModalWrapper from '../ModalWrapper';
-
 
 class PrintModal extends React.PureComponent {
   static propTypes = {
@@ -349,15 +345,9 @@ class PrintModal extends React.PureComponent {
                   </label>
                   <div className="total">
                     {isPrinting ? (
-                      <div>{`${t('message.processing')} ${count}/${
-                        pagesToPrint.length
-                      }`}</div>
+                      <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
                     ) : (
-                      <div>
-                        {t('message.printTotalPageCount', {
-                          count: pagesToPrint.length
-                        })}
-                      </div>
+                      <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
                     )}
                   </div>
                 </div>
@@ -384,7 +374,7 @@ class PrintModal extends React.PureComponent {
                 <button
                   className="button"
                   onClick={this.createPagesAndPrint}
-                  disabled={count > -1}
+                  disabled={isPrinting || pagesToPrint.length < 1}
                 >
                   {t('action.print')}
                 </button>
