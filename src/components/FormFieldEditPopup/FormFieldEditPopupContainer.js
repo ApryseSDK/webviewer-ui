@@ -53,6 +53,9 @@ function FormFieldEditPopupContainer() {
   }
 
   useEffect(() => {
+
+    
+
     const onFormFieldCreationModeStarted = () => {
       // Do some cleanup of radio button groups,
       // gets rid of groups that may have been added but never actually placed as fields
@@ -96,6 +99,7 @@ function FormFieldEditPopupContainer() {
   }, [isOpen]);
 
   const onFieldNameChange = useCallback(name => {
+    
     const validatedResponse = formFieldCreationManager.setFieldName(formFieldAnnotation, name);
     setIsValid(validatedResponse.isValid);
     mapValidationResponseToTranslation(validatedResponse);
@@ -104,7 +108,7 @@ function FormFieldEditPopupContainer() {
 
   const mapValidationResponseToTranslation = (validationResponse) => {
     const { errorType } = validationResponse;
-    let translationKey = ''
+    let translationKey = '';
 
     switch (errorType) {
       case 'empty':
@@ -196,8 +200,7 @@ function FormFieldEditPopupContainer() {
   };
 
   const textFields = [
-    fields['NAME'],
-    fields['VALUE'],
+    fields['RADIO_GROUP'],
   ];
 
   const defaultFields = [
@@ -273,19 +276,24 @@ function FormFieldEditPopupContainer() {
     flags['REQUIRED'],
   ];
 
-  const renderTextFormFieldEditPopup = () => (
-    <FormFieldEditPopup
-      fields={textFields}
-      flags={textFieldFlags}
-      closeFormFieldEditPopup={closeFormFieldEditPopup}
-      isValid={isValid}
-      validationMessage={validationMessage}
-      annotation={formFieldAnnotation}
-      redrawAnnotation={redrawAnnotation}
-      getPageHeight={getPageHeight}
-      getPageWidth={getPageWidth}
-    />
-  );
+  const renderTextFormFieldEditPopup = () => {
+    formFieldCreationManager.setFieldFlag(formFieldAnnotation, fieldLabels.READ_ONLY, true);
+    formFieldCreationManager.setFieldFlag(formFieldAnnotation, fieldLabels.MULTI_LINE, true);
+    
+    return (
+      <FormFieldEditPopup
+        fields={textFields}
+        flags={textFieldFlags}
+        closeFormFieldEditPopup={closeFormFieldEditPopup}
+        isValid={isValid}
+        validationMessage={validationMessage}
+        annotation={formFieldAnnotation}
+        redrawAnnotation={redrawAnnotation}
+        getPageHeight={getPageHeight}
+        getPageWidth={getPageWidth}
+      />
+    );
+  };
 
   const renderSignatureFormFieldEditPopup = () => (
     <FormFieldEditPopup
