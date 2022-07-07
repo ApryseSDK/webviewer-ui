@@ -19,6 +19,9 @@ const propTypes = {
 };
 
 const FONT_SIZE = 96;
+const TYPED_SIGNATURE_FONT_SIZE = (FONT_SIZE * 2) / 3;
+const DEFAULT_FONT_FAMILY = 'GreatVibes-Regular';
+const MAX_SIGNATURE_LENGTH = 360;
 
 const useForceUpdate = () => {
   const [, setIt] = useState(false);
@@ -36,7 +39,8 @@ const TextSignature = ({
   const [value, setValue] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDefaultValue, setIsDefaultValue] = useState(true);
-  const [fontColor, setFontColor] = useState("#000000");
+  const [fontColor, setFontColor] = useState('#000000');
+  const [fontSize, setFontSize] = useState(TYPED_SIGNATURE_FONT_SIZE);
   const inputRef = useRef();
   const canvasRef = useRef();
   const textDivsRef = useRef([]);
@@ -147,14 +151,50 @@ const TextSignature = ({
     const value = e.target.value.replace(/^\s+/g, '');
     setSignature();
     setValue(value);
+
+    const newFontSize = scaleFontSize(value, DEFAULT_FONT_FAMILY);
+    setFontSize(newFontSize);
   };
 
   const handleColorInputChange = (property, value) => {
     setFontColor(value)
     // hack for tool styles for signature not being on state
     forceUpdate();
-  }
+  };
 
+  const getSignatureLength = (text, fontSize, fontFamily) => {
+    const font = fontSize + 'px ' + fontFamily;
+    const textSpan = document.createElement('span');
+    textSpan.id = 'textSpan';
+    textSpan.style.display = 'inline-block';
+    textSpan.style.visibility = 'hidden';
+    textSpan.style.font = font;
+
+    document.getElementsByTagName('body')[0].appendChild(textSpan);
+    textSpan.textContent = text;
+
+    const signatureWidth = textSpan.getBoundingClientRect().width;
+    textSpan.remove();
+    return signatureWidth;
+  };
+
+  const scaleFontSize = (text, fontFamily) => {
+    let minFontSize = 0;
+    let maxFontSize = TYPED_SIGNATURE_FONT_SIZE;
+    let currentFontSize;
+
+    while (minFontSize <= maxFontSize) {
+      currentFontSize = Math.floor((minFontSize + maxFontSize) / 2);
+
+      const signatureWidth = getSignatureLength(text, currentFontSize, fontFamily);
+      if (signatureWidth > MAX_SIGNATURE_LENGTH) {
+        maxFontSize = currentFontSize - 1;
+      } else {
+        minFontSize = currentFontSize + 1;
+      }
+    }
+    return currentFontSize;
+  };
 
   return (
     <div className="text-signature">
@@ -167,7 +207,7 @@ const TextSignature = ({
             value={value}
             placeholder="Type Signature"
             onChange={handleInputChange}
-            style={{fontFamily: fonts, fontSize: FONT_SIZE*2/3, color:fontColor}}
+            style={{ fontFamily: fonts, fontSize: fontSize, color: fontColor }}
             disabled={!(isModalOpen && isTabPanelSelected)}
           />
         </label>
