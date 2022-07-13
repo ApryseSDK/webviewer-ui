@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import './CustomStampForums.scss';
 import Choice from 'components/Choice';
 import Dropdown from 'components/Dropdown';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
-// ColorPalletPicker inner import required as we are not using the redux outer container
-import ColorPalettePicker from 'components/ColorPalettePicker/ColorPalettePicker';
+import ColorPalettePicker from 'components/ColorPalettePicker/ColorPalettePicker'; // ColorPalletPicker inner import required as we are not using the redux outer container
 import Events from 'constants/events';
 import PropTypes from 'prop-types';
+
+import './CustomStampForums.scss';
 
 const FALLBACK_DATE_TIME_FORMAT = {
   date: 'MM/DD/YYYY',

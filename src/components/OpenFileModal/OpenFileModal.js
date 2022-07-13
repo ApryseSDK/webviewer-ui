@@ -8,14 +8,16 @@ import { Swipeable } from 'react-swipeable';
 import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
-import FileInputPanel from '../../PageReplacementModal/FileInputPanel';
-import FilePickerPanel from '../../PageReplacementModal/FilePickerPanel';
-import '../../PageReplacementModal/PageReplacementModal.scss';
-import './FileModal.scss';
+import FileInputPanel from 'components/PageReplacementModal/FileInputPanel';
+import FilePickerPanel from 'components/PageReplacementModal/FilePickerPanel';
+
+import '../PageReplacementModal/PageReplacementModal.scss';
+import './OpenFileModal.scss';
 
 const OpenFileModal = ({ isOpen, tabManager }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
   const [src, setSrc] = useState('');
   const [extension, setExtension] = useState('pdf');
   const [filename, setFilename] = useState();
@@ -54,8 +56,8 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
     await tabManager.addTab(source, {
       extension: _extension,
       filename: _filename,
-      load: true,
-      saveCurrent: true,
+      setActive: true,
+      saveCurrentActiveTabState: true,
       useDB: useDb
     });
     closeModal();
@@ -63,7 +65,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
 
   const modalClass = classNames({
     Modal: true,
-    FileModal: true,
+    OpenFileModal: true,
     open: isOpen,
     closed: !isOpen,
   });

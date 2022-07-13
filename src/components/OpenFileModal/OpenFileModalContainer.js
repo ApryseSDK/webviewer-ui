@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
-import OpenFileModal from "components/OpenFileModal/FileModal/OpenFileModal";
+import OpenFileModal from './OpenFileModal';
 
 const OpenFileModalContainer = () => {
   const [isDisabled, isOpen, tabManager] = useSelector(state => [

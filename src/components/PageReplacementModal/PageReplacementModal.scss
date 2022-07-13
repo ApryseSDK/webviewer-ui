@@ -2,7 +2,7 @@
 @import '../../constants/modal';
 @import "../../constants/tabs";
 
-.PageReplacementModal, .FileModal {
+.PageReplacementModal, .OpenFileModal {
   @extend %modal;
 
   .container {

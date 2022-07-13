@@ -1,7 +1,7 @@
 import React from 'react';
 import FilterAnnotModal from './FilterAnnotModal'
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import core from 'core';
 
 export default {

@@ -1,13 +1,13 @@
-@import '../../../constants/styles';
-@import '../../../constants/modal';
+@import '../../constants/styles';
+@import '../../constants/modal';
 
-.FileModal {
+.OpenFileModal {
   .container {
     overflow-y: unset;
     width: 600px;
   }
   .image-signature {
-    height: 240px!important;
+    height: 240px !important;
   }
   .error {
     color: red;

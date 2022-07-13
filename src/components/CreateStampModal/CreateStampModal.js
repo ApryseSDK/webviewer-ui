@@ -6,7 +6,6 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
-// import ActionButton from 'components/ActionButton'; /* Temporarily commented out */
 import CustomStampForums from './CustomStampForums';
 import Button from 'components/Button';
 
@@ -54,7 +53,6 @@ const CustomStampModal = () => {
     };
     dispatch(actions.showWarningMessage(warning));
   };
-
 
   const modalClass = classNames({
     Modal: true,

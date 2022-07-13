@@ -29,6 +29,7 @@ const mockTool = {
   setSignatureCanvas: noop,
   setSignature: noop,
   resizeCanvas: noop,
+  drawCustomStamp: () => 300
 };
 
 const mockAnnotationManager = {
@@ -60,7 +61,11 @@ core.getFormFieldCreationManager = () => mockFormFieldCreationManager;
 window.Core = {
   AnnotationManager: mockAnnotationManager,
   Tools: {
-    ToolNames: {}
+    ToolNames: {},
+    RubberStampCreateTool: {
+      FILL_COLORS: ['#4F9964', '#2A85D0', '#D65656'],
+      TEXT_COLORS: ['#FFFFFF', '#000000']
+    }
   },
   getHashParameter: () => false,
   SupportedFileFormats: {
