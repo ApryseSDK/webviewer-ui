@@ -121,4 +121,8 @@
     // Workaround for Printing in newer version (80+) of Firefox adds extra padding/margin on page
     max-width: none !important;
   }
+
+  iframe {
+    display: none;
+  }
 }
