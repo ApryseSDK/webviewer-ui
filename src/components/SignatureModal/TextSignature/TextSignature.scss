@@ -16,12 +16,21 @@
     border-right: 1px solid var(--modal-stroke-and-border);
     border-left: 1px solid var(--modal-stroke-and-border);
     display: flex;
-    align-items: center;  
+    align-items: center;
+    justify-content: center;
     padding: 16px;
     width: 100%;
     height: 196px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+
+    @include small-browser-height {
+      height: 116px;
+    }
+
+    @include tiny-browser-height {
+      height: 86px;
+    }
   }
   
   &-input {
@@ -32,6 +41,14 @@
     border-bottom: 1px solid var(--modal-stroke-and-border);
     border-radius: 0;
     text-align: center;
+
+    @include small-browser-height {
+      font-size: 48px !important;
+    }
+
+    @include tiny-browser-height {
+      font-size: 34px !important;
+    }
   }
 
   &-input:focus {
@@ -62,12 +79,7 @@
       cursor: pointer;
     }
 
-    // &.active {
-    //   border: 1px solid var(--focus-border);
-    // }
-
     .text-container {
-      // background: green;
       margin: auto;
       padding: 0 20px;
     }

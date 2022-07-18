@@ -24,10 +24,14 @@ const store = createStore(rootReducer);
 
 const createMockAnnotation = () => {
   return {
-    getPageNumber() {
+    x: 100,
+    y: 100,
+    width: 100,
+    height: 100,
+    getPageNumber: function() {
       return 1;
     },
-    getRect() {
+    getRect: function() {
       return {
         x1: 1,
         x2: 2,
@@ -35,8 +39,53 @@ const createMockAnnotation = () => {
         y2: 4,
       };
     },
+    getX: function() {
+      return this.x;
+    },
+    getY: function() {
+      return this.y;
+    },
+    getWidth: function() {
+      return this.width;
+    },
+    getHeight: function() {
+      return this.height;
+    },
+    setX: function(x) {
+      this.x = Number(x);
+    },
+    setY: function(y) {
+      this.y = Number(y);
+    },
+    setWidth: function(w) {
+      this.width = Number(w);
+    },
+    setHeight: function(h) {
+      this.height = Number(h);
+    },
   };
 };
+
+const mockCropDimensions = {
+  'Letter': {
+    'yOffset': 0,
+    'height': 11,
+    'xOffset': 0,
+    'width': 8.5,
+  },
+  'Half letter': {
+    'yOffset': 0,
+    'height': 5.5,
+    'xOffset': 0,
+    'width': 8.5,
+  },
+  'Junior legal': {
+    'yOffset': 0,
+    'height': 5,
+    'xOffset': 0,
+    'width': 8,
+  }
+}
 
 const noop = () => {};
 
@@ -44,28 +93,33 @@ const popupProps = {
   cropAnnotation: createMockAnnotation(),
   cropMode: 'ALL_PAGES',
   onCropModeChange: noop,
-  getCropDimension: noop,
-  setCropTop: '1',
-  setCropBottom: '1',
-  setCropLeft: '1',
-  setCropRight: '1',
   closeDocumentCropPopup: noop,
   applyCrop: noop,
   isCropping: true,
-  getPageHeight: noop,
-  getPageWidth: noop,
+  getPageHeight: function() {
+    return 792;
+  },
+  getPageWidth: function() {
+    return 612;
+  },
+  isPageRotated: function() {
+    return false;
+  },
   redrawCropAnnotations: noop,
   isInDesktopOnlyMode: false,
   isMobile: false,
+  getPageCount: () => {9},
+  getCurrentPage: () => {1},
+  selectedPages: [],
+  onSelectedPagesChange: noop,
+  presetCropDimensions: mockCropDimensions
 };
 
-const popup = <DocumentCropPopup {...popupProps} />;
-
 const inputProps = {
-  top: 1,
-  right: 1,
-  bottom: 1,
-  left: 1,
+  yOffset: 1,
+  width: 1,
+  height: 1,
+  xOffset: 1,
   unit: 'Inches (in)',
   autoTrim: 'Letter',
   supportedUnits: {
@@ -94,7 +148,7 @@ export function Basic() {
 export function Dimensions() {
   return (
     <Provider store={store}>
-      <div className="DocumentCropPopup">
+      <div className="DocumentCropPopup" style={{ maxWidth: '226px' }}>
         <DimensionsInput {...inputProps} />
       </div>
     </Provider>

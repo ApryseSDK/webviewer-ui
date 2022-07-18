@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +23,8 @@ const SignatureModal = () => {
     selectors.getActiveToolName(state),
     selectors.getDisplayedSignatures(state),
   ]);
+
+  const [createButtonDisabled, setCreateButtonDisabled] = useState();
 
   const signatureTool = core.getTool('AnnotationCreateSignature');
 
@@ -75,6 +77,14 @@ const SignatureModal = () => {
       dispatch(actions.closeElement('signatureModal'));
     }
   };
+
+  const disableCreateButton = useCallback(() => {
+    setCreateButtonDisabled(true);
+  }, [createButtonDisabled]);
+
+  const enableCreateButton = useCallback(() => {
+    setCreateButtonDisabled(false);
+  }, [createButtonDisabled]);
 
   const modalClass = classNames({
     Modal: true,
@@ -134,21 +144,30 @@ const SignatureModal = () => {
               <TabPanel dataElement="inkSignaturePanel">
                 <InkSignature
                   isModalOpen={isOpen}
-                  createSignature={createSignature}
+                  enableCreateButton={enableCreateButton}
+                  disableCreateButton={disableCreateButton}
                 />
               </TabPanel>
               <TabPanel dataElement="textSignaturePanel">
                 <TextSignature
                   isModalOpen={isOpen}
-                  createSignature={createSignature}
+                  enableCreateButton={enableCreateButton}
+                  disableCreateButton={disableCreateButton}
                 />
               </TabPanel>
               <TabPanel dataElement="imageSignaturePanel">
                 <ImageSignature
                   isModalOpen={isOpen}
-                  createSignature={createSignature}
+                  enableCreateButton={enableCreateButton}
+                  disableCreateButton={disableCreateButton}
                 />
               </TabPanel>
+
+              <div className="footer">
+                <button className="signature-create" onClick={createSignature} disabled={!(isOpen) || createButtonDisabled}>
+                  {t('action.create')}
+                </button>
+              </div>
             </Tabs>
           </div>
         </div>

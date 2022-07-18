@@ -84,6 +84,7 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const [position, setPosition] = useState(() => ({ left: 0, right: 'auto', top: 'auto' }));
   const isMobile = useMedia(['(max-width: 640px)'], [true], false);
   const isTabletOrMobile = useMedia(['(max-width: 900px)'], [true], false);
+  const isSmallBrowserHeight = useMedia(['(max-height: 500px)'], [true], false);
 
   // When open: close others, position, and listen for resizes to position.
   // Uselayouteffect prevents "jumpy" behaviour from opening in old position and immediately repositioning the flyout
@@ -92,9 +93,11 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
       dispatch(actions.closeElements(allOtherMenus));
 
       const onResize = () => {
-        const overlayPosition = getOverlayPositionBasedOn(trigger, overlayRef, isMobile && isTabletOrMobile);
+        const overlayPosition = getOverlayPositionBasedOn(trigger, overlayRef, isMobile && isTabletOrMobile, isSmallBrowserHeight);
 
-        overlayPosition.maxHeight = window.innerHeight - overlayPosition.top;
+        if (isSmallBrowserHeight) {
+          overlayPosition.maxHeight = window.innerHeight - overlayPosition.top
+        }
 
         setPosition(overlayPosition);
       };
@@ -103,7 +106,7 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
       window.addEventListener('resize', onResize);
       return () => window.removeEventListener('resize', onResize);
     }
-  }, [allOtherMenus, dispatch, isOpen, isTabletOrMobile, trigger, isMobile]);
+  }, [allOtherMenus, dispatch, isOpen, isTabletOrMobile, trigger, isSmallBrowserHeight, isMobile]);
 
   if (isDisabled) {
     return null;

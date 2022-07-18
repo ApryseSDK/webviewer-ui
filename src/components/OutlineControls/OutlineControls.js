@@ -11,10 +11,11 @@ import outlineUtils from 'helpers/OutlineUtils';
 import selectors from 'selectors';
 
 import './OutlineControls.scss';
+import DataElements from 'src/constants/dataElement';
 
-function OutlineControls() {
+const OutlineControls = () => {
   const outlines = useSelector(state => selectors.getOutlines(state));
-  const { selectedOutlinePath, setSelectedOutlinePath, reRenderPanel } = useContext(
+  const { selectedOutlinePath, setSelectedOutlinePath, updateOutlines } = useContext(
     OutlineContext,
   );
   const [canMove, setCanMove] = useState({ up: false, down: false, outward: false, inward: false });
@@ -26,7 +27,7 @@ function OutlineControls() {
       return;
     }
 
-    async function setCanMoveState() {
+    const setCanMoveState = async () => {
       setCanMove(await outlineUtils.getCanMoveState(selectedOutlinePath));
     }
 
@@ -40,34 +41,44 @@ function OutlineControls() {
     }
   }, [outlines, setSelectedOutlinePath]);
 
-  async function moveOutlineUp() {
+  const moveOutlineUp = async () => {
     const nextIndex = await outlineUtils.moveOutlineUp(selectedOutlinePath);
-    reRenderPanel();
+    updateOutlines();
     nextIndexRef.current = nextIndex;
   }
 
-  async function moveOutlineDown() {
+  const moveOutlineDown = async () => {
     const nextIndex = await outlineUtils.moveOutlineDown(selectedOutlinePath);
-    reRenderPanel();
+    updateOutlines();
     nextIndexRef.current = nextIndex;
   }
 
-  async function moveOutlineOutward() {
+  const moveOutlineOutward = async () => {
     const nextIndex = await outlineUtils.moveOutlineOutward(selectedOutlinePath);
-    reRenderPanel();
+    updateOutlines();
     nextIndexRef.current = nextIndex;
   }
 
-  async function moveOutlineInward() {
+  const moveOutlineInward = async () => {
     const nextIndex = await outlineUtils.moveOutlineInward(selectedOutlinePath);
-    reRenderPanel();
+    updateOutlines();
     nextIndexRef.current = nextIndex;
   }
 
   return (
-    <DataElementWrapper className="OutlineControls" dataElement="outlineControls">
-      <span className="reorderText">{t('option.outlineControls.reorder')}</span>
-      <Button img="icon-arrow-up" disabled={!canMove.up} onClick={moveOutlineUp} dataElement="moveOutlineUpButton" />
+    <DataElementWrapper
+      className="OutlineControls"
+      dataElement={DataElements.OUTLINE_CONTROLS}
+    >
+      <span className="reorderText">
+        {t('option.bookmarkOutlineControls.reorder')}
+      </span>
+      <Button
+        img="icon-arrow-up"
+        disabled={!canMove.up}
+        onClick={moveOutlineUp}
+        dataElement="moveOutlineUpButton"
+      />
       <Button
         img="icon-arrow-down"
         disabled={!canMove.down}

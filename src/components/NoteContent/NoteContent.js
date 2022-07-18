@@ -264,6 +264,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
               isEditing={isEditing}
               textAreaValue={textAreaValue}
               onTextAreaValueChange={onTextChange}
+              pendingText={pendingEditTextMap[annotation.Id]}
             />
           ) : (
             contentsToRender && (
@@ -352,6 +353,7 @@ const ContentArea = ({
   isEditing,
   textAreaValue,
   onTextAreaValueChange,
+  pendingText
 }) => {
   const [
     autoFocusNoteOnAnnotationSelection,
@@ -371,6 +373,14 @@ const ContentArea = ({
     if (isNotesPanelOpen && textareaRef.current) {
       const editor = textareaRef.current.getEditor();
       annotation.editor = editor;
+
+      /**
+       * If there is a pending text we should update the annotation rich text style
+       * with this pending text style.
+       */
+      if (pendingText) {
+        setAnnotationRichTextStyle(editor, annotation);
+      }
 
       setTimeout(() => {
         // need setTimeout because textarea seem to rerender and unfocus
@@ -469,6 +479,7 @@ ContentArea.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
   textAreaValue: PropTypes.string,
   onTextAreaValueChange: PropTypes.func.isRequired,
+  pendingText: PropTypes.string
 };
 
 const getRichTextSpan = (text, richTextStyle, key) => {

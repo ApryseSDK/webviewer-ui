@@ -4,6 +4,11 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_PRESET_CROP_DIMENSIONS':
+      return {
+        ...state,
+        presetCropDimensions: payload.presetCropDimensions,
+      };
     case 'SET_DATE_TIME_FORMATS':
       return {
         ...state,
@@ -127,6 +132,14 @@ export default initialState => (state = initialState, action) => {
         panelWidths: {
           ...state.panelWidths,
           redactionPanel: payload.width,
+        },
+      };
+    case 'SET_WV3D_PROPERTIES_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          wv3dPropertiesPanel: payload.width,
         },
       };
     case 'SET_DOCUMENT_CONTAINER_WIDTH':
@@ -414,7 +427,7 @@ export default initialState => (state = initialState, action) => {
       return { ...state, customApplyRedactionsHandler: payload.customApplyRedactionsHandler };
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
-    case 'SET_CUSTOM_MODAL': {
+    case 'ADD_CUSTOM_MODAL': {
       const existingDataElementFiltered = state.customModals.filter(function(modal) {
         return modal.dataElement !== payload.dataElement;
       });
@@ -452,7 +465,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_COMMENT_THREAD_EXPANSION':
       return {
         ...state,
-        isCommentThreadExpansionEnabled: payload.enableCommentThreadExpansion
+        isCommentThreadExpansionEnabled: payload.enableCommentThreadExpansion,
       };
     case 'ADD_TRUSTED_CERTIFICATES':
       /**

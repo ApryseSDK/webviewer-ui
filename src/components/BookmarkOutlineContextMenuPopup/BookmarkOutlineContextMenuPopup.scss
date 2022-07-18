@@ -1,0 +1,29 @@
+.bookmark-outline-context-menu-popup {
+  padding-top: var(--padding-small);
+  padding-bottom: var(--padding-small);
+
+  background-color: var(--component-background);
+  box-shadow: 0px 0px 3px var(--document-box-shadow);
+  border-radius: 4px;
+
+  .option-button {
+    justify-content: flex-start;
+    width: 100%;
+    padding: var(--padding-small) var(--padding-medium);
+    border-radius: 0;
+
+    &:not(:first-child) {
+      margin-top: var(--padding-small);
+    }
+
+    &:hover {
+      background-color: var(--tools-header-background);
+    }
+
+    .Icon {
+      width: 20px;
+      height: auto;
+      margin-right: 10px;
+    }
+  }
+}

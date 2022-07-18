@@ -98,6 +98,8 @@ import rotateCounterClockwise from './rotateCounterClockwise';
 import saveAnnotations from './saveAnnotations';
 import searchText from './searchText';
 import searchTextFull from './searchTextFull';
+import setWv3dPropertiesPanelModelData from './setWv3dPropertiesPanelModelData';
+import setWv3dPropertiesPanelSchema from './setWv3dPropertiesPanelSchema';
 import setActiveHeaderGroup from './setActiveHeaderGroup';
 import setActiveLeftPanel from './setActiveLeftPanel';
 import setAdminUser from './setAdminUser';
@@ -107,7 +109,7 @@ import setColorPalette from './setColorPalette';
 import setPageReplacementModalFileList from './setPageReplacementModalFileList';
 import setHighContrastMode from './setHighContrastMode';
 import setCurrentPageNumber from './setCurrentPageNumber';
-import setCustomModal from './setCustomModal';
+import addCustomModal, { setCustomModal } from './addCustomModal';
 import setCustomNoteFilter from './setCustomNoteFilter';
 import setCustomPanel from './setCustomPanel';
 import exportBookmarks from './exportBookmarks';
@@ -180,7 +182,14 @@ import {
   disableAutoExpandCommentThread,
   enableAutoExpandCommentThread,
 } from './notesPanel';
-import { enableMultiselect, disableMultiselect, selectPages, unselectPages, getSelectedPageNumbers, setThumbnailSelectionMode } from './thumbnailsPanel';
+import {
+  enableMultiselect,
+  disableMultiselect,
+  selectPages,
+  unselectPages,
+  getSelectedPageNumbers,
+  setThumbnailSelectionMode,
+} from './thumbnailsPanel';
 import toggleReaderMode from './toggleReaderMode';
 import toggleElementVisibility from './toggleElementVisibility';
 import setAnnotationReadState from './setAnnotationReadState';
@@ -206,6 +215,7 @@ import Fonts from 'src/apis/fonts';
 import TabManagerAPI from './TabManagerAPI';
 import getAvailableLanguages from './getAvailableLanguages';
 import replaceRedactionSearchPattern from './replaceRedactionSearchPattern';
+import setPresetCropDimensions from './setPresetCropDimensions';
 import addDateTimeFormat from './addDateTimeFormat';
 import addRedactionSearchPattern from './addRedactionSearchPattern';
 import removeRedactionSearchPattern from './removeRedactionSearchPattern';
@@ -241,6 +251,8 @@ export default store => {
     closeElements: closeElements(store),
     contextMenuPopup: contextMenuPopup(store),
     disableElements: disableElements(store),
+    setWv3dPropertiesPanelModelData: setWv3dPropertiesPanelModelData(store),
+    setWv3dPropertiesPanelSchema: setWv3dPropertiesPanelSchema(store),
     disableFeatures: disableFeatures(store),
     disableTools: disableTools(store),
     disableReplyForAnnotations: disableReplyForAnnotations(store),
@@ -280,6 +292,7 @@ export default store => {
     setActiveHeaderGroup: setActiveHeaderGroup(store),
     setActiveLeftPanel: setActiveLeftPanel(store),
     setCustomModal: setCustomModal(store),
+    addCustomModal: addCustomModal(store),
     showOutlineControl: showOutlineControl(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
@@ -417,6 +430,7 @@ export default store => {
     TabManager: TabManagerAPI(store),
     getAvailableLanguages,
     replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
+    setPresetCropDimensions: setPresetCropDimensions(store),
     addDateTimeFormat: addDateTimeFormat(store),
     addRedactionSearchPattern: addRedactionSearchPattern(store),
     removeRedactionSearchPattern: removeRedactionSearchPattern(store),

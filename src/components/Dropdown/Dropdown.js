@@ -22,6 +22,7 @@ const propTypes = {
   disabled: PropTypes.bool,
   isFont: PropTypes.bool,
   placeholder: PropTypes.string,
+  maxHeight: PropTypes.number,
 };
 
 function Dropdown({
@@ -33,11 +34,12 @@ function Dropdown({
   getTranslationLabel,
   onClickItem,
   dataElement,
-  disabled=false,
-  isFont =false,
+  disabled = false,
+  isFont = false,
   placeholder = null,
+  maxHeight,
 }) {
-  const  { t, ready: tReady } = useTranslation();
+  const { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
   const buttonRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -72,29 +74,36 @@ function Dropdown({
   );
 
   const getTranslation = (prefix, key) => {
-    if(getTranslationLabel) {
+    if (getTranslationLabel) {
       return t(getTranslationLabel(key));
     }
-    
-    return t(`${prefix}.${key}`, key)
-  }
+
+    return t(`${prefix}.${key}`, key);
+  };
+
+  const getDropdownStyles = (isFont, key, maxheight) => {
+    if (isFont && key && maxheight) {
+      return { fontFamily: key, lineHeight: `28px` };
+    } else if (isFont && key) {
+      return { fontFamily: key };
+    } else if (maxheight) {
+      return { lineHeight: `28px` };
+    }
+  };
 
   const renderDropdownImages = () =>
     images.map(image => (
-        <DataElementWrapper
-          key={image.key}
-          type="button"
-          dataElement={`dropdown-item-${image.key}`}
-          className={classNames('Dropdown__item', { active: image.key === currentSelectionKey })}
-          tabIndex={isOpen ? undefined : -1} // Just to be safe.
-          onClick={e => onClickDropdownItem(e, image.key)}
-        >
-          <Icon
-            glyph={image.src}
-            className={image.className}
-          />
-        </DataElementWrapper>
-  ));
+      <DataElementWrapper
+        key={image.key}
+        type="button"
+        dataElement={`dropdown-item-${image.key}`}
+        className={classNames('Dropdown__item', { active: image.key === currentSelectionKey })}
+        tabIndex={isOpen ? undefined : -1} // Just to be safe.
+        onClick={e => onClickDropdownItem(e, image.key)}
+      >
+        <Icon glyph={image.src} className={image.className} />
+      </DataElementWrapper>
+    ));
 
   const renderDropdownItems = () =>
     items.map(key => (
@@ -105,62 +114,52 @@ function Dropdown({
         className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
         onClick={e => onClickDropdownItem(e, key)}
         tabIndex={isOpen ? undefined : -1} // Just to be safe.
-        style={isFont ? { fontFamily: key } : undefined}
+        style={getDropdownStyles(isFont, key, maxHeight)}
       >
         {getTranslation(translationPrefix, key)}
       </DataElementWrapper>
-  ));
+    ));
 
   let dropdownItems;
   let optionIsSelected;
   let selectedItem;
 
-  const hasImages = (images && images.length > 0);
+  const hasImages = images && images.length > 0;
   if (hasImages) {
     const imageKeys = images.map(item => item.key);
     const selectedImageIndex = getImageIndexFromKey(images, currentSelectionKey);
 
     optionIsSelected = imageKeys.some(key => key === currentSelectionKey);
     selectedItem = <Icon glyph={images[selectedImageIndex].src} className={images[selectedImageIndex].className} />;
-    dropdownItems = useMemo(
-      renderDropdownImages,
-      [images, currentSelectionKey]
-    );
-
+    dropdownItems = useMemo(renderDropdownImages, [images, currentSelectionKey]);
   } else {
     optionIsSelected = items.some(key => key === currentSelectionKey);
     selectedItem = tReady ? getTranslation(translationPrefix, currentSelectionKey) : '';
 
-    dropdownItems = useMemo(
-      renderDropdownItems,
-      [currentSelectionKey, isOpen, items, onClickDropdownItem, t, translationPrefix]
-    );
+    dropdownItems = useMemo(renderDropdownItems, [
+      currentSelectionKey,
+      isOpen,
+      items,
+      onClickDropdownItem,
+      t,
+      translationPrefix,
+    ]);
   }
 
   const buttonStyle = { width: `${width}px` };
+  const scrollItemsStyle = { maxHeight: `${maxHeight}px` };
 
   return (
-    <DataElementWrapper
-      className="Dropdown__wrapper"
-      dataElement={dataElement}
-    >
-      <button
-        className="Dropdown"
-        style={buttonStyle}
-        onClick={onToggle}
-        ref={buttonRef}
-        disabled={disabled}
-      >
+    <DataElementWrapper className="Dropdown__wrapper" dataElement={dataElement}>
+      <button className="Dropdown" style={buttonStyle} onClick={onToggle} ref={buttonRef} disabled={disabled}>
         <div className="picked-option">
           {optionIsSelected && (
             <div className="picked-option-text" style={isFont ? { fontFamily: currentSelectionKey } : undefined}>
               {selectedItem}
             </div>
           )}
-          {!optionIsSelected && placeholder && (
-            <div className="picked-option-text">{placeholder}</div>
-          )}
-          <Icon className="down-arrow" glyph="icon-chevron-down" />
+          {!optionIsSelected && placeholder && <div className="picked-option-text">{placeholder}</div>}
+          <Icon className="arrow" glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
         </div>
       </button>
       <div
@@ -168,6 +167,7 @@ function Dropdown({
         ref={overlayRef}
         role="listbox"
         aria-label={t(`${translationPrefix}.dropdownLabel`)}
+        style={maxHeight ? scrollItemsStyle : undefined}
       >
         {dropdownItems}
       </div>
@@ -176,19 +176,19 @@ function Dropdown({
 }
 
 const getImageIndexFromKey = (imageArray, key) => {
-  if(!imageArray || imageArray.length === 0) {
+  if (!imageArray || imageArray.length === 0) {
     return -1;
   }
 
   let imageIndex = -1;
   imageArray.forEach((image, index) => {
-    if(image.key === key) {
+    if (image.key === key) {
       imageIndex = index;
     }
   });
 
   return imageIndex;
-}
+};
 
 Dropdown.propTypes = propTypes;
 export default Dropdown;

@@ -7,6 +7,7 @@
     "calibrate": "kalibre et",
     "cancel": "İptal",
     "clear": "Temizlemek",
+    "clearAll": "Hepsini temizle",
     "close": "Kapat",
     "undo": "Geri alma",
     "redo": "Hazır",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "Aşağıya boş sayfa ekle",
     "pageManipulation": "Sayfa Manipülasyonu",
     "replace": "Yer değiştirmek",
+    "setDestination": "Hedef belirlemek",
     "showLess": "daha az göster",
     "showMore": "...daha fazla",
     "chooseFile": "Bir dosya seçin",
@@ -138,7 +140,8 @@
     "link": "Bağlantı",
     "other": "Diğer",
     "3D": "3 boyutlu",
-    "sound": "Ses"
+    "sound": "Ses",
+    "changeView": "Görünümü değiştir"
   },
   "rubberStamp": {
     "Approved": "Onaylı",
@@ -173,11 +176,14 @@
     "searchPanel": "Arama",
     "menuOverlay": "Menü",
     "notesPanel": "Yorumlar",
+    "outlinePanel": "anahat",
     "outlinesPanel": "Anahatlar",
+    "bookmarkPanel": "Yer imi",
     "bookmarksPanel": "Yer imleri",
-    "signaturePanel": "imzalar",
     "newBookmark": "Yeni Yer İşareti",
+    "bookmarkTitle": "Yer İşareti Başlığı",
     "bookmarkPage": "Sayfa",
+    "signaturePanel": "imzalar",
     "layersPanel": "Katmanlar",
     "thumbnailsPanel": "küçük resimler",
     "toolsButton": "Araçlar",
@@ -204,6 +210,7 @@
     "noAnnotations": "Yorum bırakmak için ek açıklamalar yapmaya başlayın.",
     "noAnnotationsReadOnly": "Bu belgede ek açıklama yok.",
     "noAnnotationsFilter": "Ek açıklamalar yapmaya başlayın ve filtreler burada görünecektir.",
+    "noBookmarks": "Kullanılabilir yer işareti yok",
     "noOutlines": "Bu belgenin taslağı yok.",
     "noAttachments": "Bu belgenin eki yok.",
     "noResults": "Sonuç bulunamadı.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "Belgede değiştirmek istediğiniz sayfaları seçin.",
     "embeddedFiles": "Gömülü Dosyalar",
     "pageNum": "Sayfa numarası",
+    "viewBookmark": "Sayfadaki Yer İşaretini Görüntüle",
     "error": "Hata"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "Birden çok sayfa seçin",
       "closeTooltip": "Çoklu seçimi kapat"
     },
-    "outlineControls": {
-      "add": "Öğe eklemek",
+    "bookmarkOutlineControls": {
+      "edit": "Düzenlemek",
+      "done": "Tamamlandı",
       "reorder": "yeniden sırala"
     },
     "layout": {
@@ -391,12 +400,11 @@
       "pageReplaceInputFromSource": "sayfa(lar) ile"
     },
     "filterAnnotModal": {
-      "commentBy": "Yorum yapan",
-      "types": "Türler",
       "color": "Renk",
-      "includeReplies": "Yanıtları Dahil Et"
-    },
-    "status": {
+      "includeReplies": "Yanıtları Dahil Et",
+      "filters": "filtreler",
+      "user": "kullanıcı",
+      "type": "Tip",
       "status": "Durum"
     },
     "state": {
@@ -495,10 +503,19 @@
       "modalName": "Yeni Damga Oluştur",
       "stampText": "damga metni",
       "timestampText": "zaman damgası metni",
-      "stampColor": "damga rengi:",
       "Username": "Kullanıcı adı",
       "Date": "Tarih",
-      "Time": "Zaman"
+      "Time": "Zaman",
+      "fontStyle": "yazı stili",
+      "dateFormat": "Tarih formatı",
+      "month": "Ay",
+      "day": "Gün",
+      "year": "Yıl",
+      "hour": "Saat",
+      "minute": "Dakika",
+      "second": "İkinci",
+      "textColor": "Metin rengi",
+      "backgroundColor": "Arka plan rengi"
     },
     "pageRedactModal": {
       "addMark": "İşaret Ekle",
@@ -507,7 +524,11 @@
       "specify": "Sayfaları Belirtin",
       "odd": "Sadece tek sayfalar",
       "even": "Yalnızca Çift Sayfalar",
-      "header": "Sayfa Redaksiyonunu İşaretle"
+      "header": "Sayfa Redaksiyonunu İşaretle",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "stil"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "Redaksiyon Uygula",
       "applyMessage": "Bu eylem, redaksiyon için seçilen tüm öğeleri kalıcı olarak kaldıracaktır. Geri alınamaz."
+    },
+    "deleteBookmark": {
+      "title": "Yer İşareti Silinsin mi?",
+      "message": "Bu yer imlerini silmek istediğinizden emin misiniz? Bu işlemi geri alamazsınız."
+    },
+    "deleteOutline": {
+      "title": "Anahat Silinsin mi?",
+      "message": "Bu anahatları silmek istediğinizden emin misiniz?\n\n İç içe geçmiş anahatları olan bir anahat, her şeyin silinmesine neden olur ve siz yeniden ayarlamadığınız sürece değiştirilemez."
     },
     "selectPage": {
       "selectTitle": "Sayfa Seçilmedi",
@@ -792,6 +821,7 @@
     "title": "Kırpılacak Sayfalar",
     "allPages": "Tüm",
     "singlePage": "Geçerli sayfa",
+    "multiPage": "Sayfayı Belirtin",
     "cropDimensions": "Kırpma Boyutları",
     "dimensionInput": {
       "unitOfMeasurement": "Birim",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "Bölge redaksiyonu",
       "fullPageRedaction": "Tam sayfa redaksiyonu",
+      "fullVideoFrameRedaction": "Video Redaksiyonu",
       "image": "resim"
     },
     "expand": "Genişletmek",
@@ -826,6 +857,11 @@
       "pattern": "Desen",
       "start": "Aramanızı yapmaya başlayın"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Özellikler",
+    "miscValuesHeader": "Tümü",
+    "emptyPanelMessage": "Özelliklerini görüntülemek için bir öğe seçin"
   },
   "languageModal": {
     "selectLanguage": "Dil Seçin"

@@ -29,8 +29,8 @@ const Portal = ({ children, position }) => {
   return createPortal(children, mount);
 };
 
-function OutlineEditPopup({ outline, trigger, setIsOpen, setIsEditingName }) {
-  const { selectedOutlinePath, setSelectedOutlinePath, reRenderPanel } = useContext(OutlineContext);
+const OutlineEditPopup = ({ outline, trigger, setIsOpen, setIsEditingName }) => {
+  const { selectedOutlinePath, setSelectedOutlinePath, updateOutlines } = useContext(OutlineContext);
   const [t] = useTranslation();
   const containerRef = useRef(null);
   const [position, setPosition] = useState({ left: -100, right: 'auto', top: 'auto' });
@@ -53,15 +53,15 @@ function OutlineEditPopup({ outline, trigger, setIsOpen, setIsEditingName }) {
 
   useOnClickOutside(containerRef, onClickOutside);
 
-  function renameOutline() {
+  const renameOutline = () => {
     setIsEditingName(true);
   }
 
-  async function deleteOutline() {
+  const deleteOutline = async () => {
     const fullIndex = outlineUtils.getPath(outline);
     await outlineUtils.deleteOutline(fullIndex);
 
-    reRenderPanel();
+    updateOutlines();
     if (fullIndex === selectedOutlinePath) {
       setSelectedOutlinePath(null);
     }
@@ -69,7 +69,11 @@ function OutlineEditPopup({ outline, trigger, setIsOpen, setIsEditingName }) {
 
   return (
     <Portal position={position}>
-      <DataElementWrapper ref={containerRef} className="OutlineEditPopup" dataElement="outlineEditPopup">
+      <DataElementWrapper
+        ref={containerRef}
+        className="OutlineEditPopup"
+        dataElement="outlineEditPopup"
+      >
         <ActionButton
           dataElement="renameOutlineButton"
           img="icon-header-annotation-fill"

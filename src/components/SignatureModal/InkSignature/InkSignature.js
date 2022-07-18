@@ -18,14 +18,16 @@ const useForceUpdate = () => {
 const propTypes = {
   isModalOpen: PropTypes.bool,
   _setSaveSignature: PropTypes.func,
-  createSignature: PropTypes.func,
   isTabPanelSelected: PropTypes.bool,
+  disableCreateButton: PropTypes.func,
+  enableCreateButton: PropTypes.func,
 };
 
 const InkSignature = ({
   isModalOpen,
   isTabPanelSelected,
-  createSignature,
+  disableCreateButton,
+  enableCreateButton
 }) => {
   const canvasRef = useRef();
   // the ref holds the path points of the underlying freehand annotation
@@ -59,6 +61,7 @@ const InkSignature = ({
     async function resizeCanvasAsyncCall() {
       if (isModalOpen && isTabPanelSelected) {
         const signatureTool = core.getTool('AnnotationCreateSignature');
+        freeHandPathsRef.current ? enableCreateButton() : disableCreateButton();
         signatureTool.setSignature(freeHandPathsRef.current);
         annotIdRef.current = signatureTool.annot?.Id;
         // use resizeCanvas here mainly for redawing the underlying signature annotation to make it show on the canvas
@@ -83,7 +86,8 @@ const InkSignature = ({
     signatureTool.clearSignatureCanvas();
     freeHandPathsRef.current = null;
     annotIdRef.current = null;
-    setDrawn(false)
+    setDrawn(false);
+    disableCreateButton();
   }, []);
 
   const handleFinishDrawing = async () => {
@@ -95,6 +99,7 @@ const InkSignature = ({
       freeHandPathsRef.current = deepCopy(signatureTool.annot.getPaths());
       annotIdRef.current = signatureTool.annot.Id;
       setDrawn(true);
+      enableCreateButton();
     }
   };
 
@@ -127,49 +132,40 @@ const InkSignature = ({
   const toolStyles = signatureTool.defaults;
 
   return (
-    <React.Fragment>
-      <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
-        {({ measureRef }) => (
-          <div className="ink-signature" ref={measureRef}>
-            <Swipeable
-              onSwiping={({ event }) => event.stopPropagation()} 
-              className="canvas-colorpalette-container"
-            >
-              <div className="ink-signature-canvas-container">
-                <div className="ink-signature-sign-here">
-                  {drawn ? '' : t('message.signHere')}
-                </div>
-                <canvas
-                  className="ink-signature-canvas"
-                  onMouseUp={handleFinishDrawing}
-                  onTouchEnd={handleFinishDrawing}
-                  onMouseLeave={handleFinishDrawing}
-                  ref={canvasRef}
-                />
+    <Measure bounds onResize={({ bounds }) => setDimension(bounds)}>
+      {({ measureRef }) => (
+        <div className="ink-signature" ref={measureRef}>
+          <Swipeable
+            onSwiping={({ event }) => event.stopPropagation()} 
+            className="canvas-colorpalette-container"
+          >
+            <div className="ink-signature-canvas-container">
+              <div className="ink-signature-sign-here">
+                {drawn ? '' : t('message.signHere')}
               </div>
-              <div className="colorpalette-clear-container">
-                <ColorPalette
-                    color={toolStyles['StrokeColor']}
-                    property="StrokeColor"
-                    onStyleChange={(property, value) => handleColorInputChange(property, value)}
-                    overridePalette2={['#000000', '#4E7DE9', '#E44234']}
-                />
-                <button className="signature-clear" onClick={clearCanvas} disabled={!drawn}>
-                  {t('action.clear')}
-                </button>
-              </div>              
-            </Swipeable>
-          </div>
-        )}
-      </Measure>
-      <div
-        className="footer"
-      >
-        <button className="signature-create" onClick={createSignature} disabled={!drawn}>
-          {t('action.create')}
-        </button>
-      </div>
-    </React.Fragment>
+              <canvas
+                className="ink-signature-canvas"
+                onMouseUp={handleFinishDrawing}
+                onTouchEnd={handleFinishDrawing}
+                onMouseLeave={handleFinishDrawing}
+                ref={canvasRef}
+              />
+            </div>
+            <div className="colorpalette-clear-container">
+              <ColorPalette
+                  color={toolStyles['StrokeColor']}
+                  property="StrokeColor"
+                  onStyleChange={(property, value) => handleColorInputChange(property, value)}
+                  overridePalette2={['#000000', '#4E7DE9', '#E44234']}
+              />
+              <button className="signature-clear" onClick={clearCanvas} disabled={!drawn}>
+                {t('action.clear')}
+              </button>
+            </div>              
+          </Swipeable>
+        </div>
+      )}
+    </Measure>
   );
 };
 

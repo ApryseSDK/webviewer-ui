@@ -7,6 +7,7 @@
     "calibrate": "Kalibrasi",
     "cancel": "Batal",
     "clear": "Jelas",
+    "clearAll": "Kosongkan semua",
     "close": "tutup",
     "undo": "Buat asal",
     "redo": "sedia",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "Sisipkan halaman kosong di bawah",
     "pageManipulation": "Manipulasi Halaman",
     "replace": "Gantikan",
+    "setDestination": "Tetapkan Destinasi",
     "showLess": "kurang menunjukkan",
     "showMore": "... lagi",
     "chooseFile": "Pilih fail",
@@ -132,13 +134,14 @@
     "textField": "Medan Teks",
     "signatureFormField": "Medan Tandatangan",
     "checkBoxFormField": "Medan Kotak semak",
-    "radioButtonFormField": "Medan RadioButton",
+    "radioButtonFormField": "Medan Butang Radio",
     "listBoxFormField": "Medan Kotak Senarai",
     "comboBoxFormField": "Padang Kotak Kombo",
     "link": "Pautan",
     "other": "Lain-lain",
     "3D": "3D",
-    "sound": "Bunyi"
+    "sound": "Bunyi",
+    "changeView": "Tukar Pandangan"
   },
   "rubberStamp": {
     "Approved": "Diluluskan",
@@ -173,11 +176,14 @@
     "searchPanel": "Cari",
     "menuOverlay": "Menu",
     "notesPanel": "Komen",
+    "outlinePanel": "Garis besar",
     "outlinesPanel": "Garis besar",
+    "bookmarkPanel": "Penanda buku",
     "bookmarksPanel": "Penanda buku",
-    "signaturePanel": "Tandatangan",
     "newBookmark": "Penanda Halaman Baharu",
+    "bookmarkTitle": "Tajuk Penanda Halaman",
     "bookmarkPage": "Halaman",
+    "signaturePanel": "Tandatangan",
     "layersPanel": "Lapisan",
     "thumbnailsPanel": "Gambar kecil",
     "toolsButton": "Alatan",
@@ -204,6 +210,7 @@
     "noAnnotations": "Mula membuat anotasi untuk meninggalkan ulasan.",
     "noAnnotationsReadOnly": "Dokumen ini tidak mempunyai anotasi.",
     "noAnnotationsFilter": "Mula membuat anotasi dan penapis akan dipaparkan di sini.",
+    "noBookmarks": "Tiada penanda halaman tersedia",
     "noOutlines": "Dokumen ini tidak mempunyai garis besar.",
     "noAttachments": "Dokumen ini tidak mempunyai lampiran.",
     "noResults": "Tiada keputusan dijumpai.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "Pilih halaman dalam dokumen yang anda ingin gantikan.",
     "embeddedFiles": "Fail Terbenam",
     "pageNum": "Mukasurat",
+    "viewBookmark": "Lihat Penanda Halaman pada Halaman",
     "error": "ralat"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "Pilih berbilang halaman",
       "closeTooltip": "Tutup pilihan berbilang"
     },
-    "outlineControls": {
-      "add": "Tambah item",
+    "bookmarkOutlineControls": {
+      "edit": "Sunting",
+      "done": "Selesai",
       "reorder": "Susun semula"
     },
     "layout": {
@@ -391,12 +400,11 @@
       "pageReplaceInputFromSource": "dengan halaman"
     },
     "filterAnnotModal": {
-      "commentBy": "Komen oleh",
-      "types": "Jenis",
       "color": "Warna",
-      "includeReplies": "Sertakan Balasan"
-    },
-    "status": {
+      "includeReplies": "Sertakan Balasan",
+      "filters": "Penapis",
+      "user": "pengguna",
+      "type": "taip",
       "status": "Status"
     },
     "state": {
@@ -495,10 +503,19 @@
       "modalName": "Cipta Setem Baharu",
       "stampText": "Teks setem",
       "timestampText": "Teks cap masa",
-      "stampColor": "Warna setem:",
       "Username": "Nama pengguna",
       "Date": "Tarikh",
-      "Time": "Masa"
+      "Time": "Masa",
+      "fontStyle": "gaya fon",
+      "dateFormat": "Format tarikh",
+      "month": "bulan",
+      "day": "Hari",
+      "year": "tahun",
+      "hour": "Jam",
+      "minute": "minit",
+      "second": "Kedua",
+      "textColor": "Warna teks",
+      "backgroundColor": "Warna latar belakang"
     },
     "pageRedactModal": {
       "addMark": "Tambah Mark",
@@ -507,7 +524,11 @@
       "specify": "Tentukan Halaman",
       "odd": "Muka surat ganjil sahaja",
       "even": "Muka surat genap sahaja",
-      "header": "Tandakan Penyuntingan Halaman"
+      "header": "Tandakan Penyuntingan Halaman",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "Gaya"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "Terapkan Redaksi",
       "applyMessage": "Tindakan ini akan mengalih keluar semua item yang dipilih untuk redaksi secara kekal. Ia tidak boleh dibuat asal."
+    },
+    "deleteBookmark": {
+      "title": "Padamkan Penanda Halaman?",
+      "message": "Adakah anda pasti mahu memadamkan penanda halaman ini? Anda tidak boleh membuat asal tindakan ini."
+    },
+    "deleteOutline": {
+      "title": "Padamkan Garis Besar?",
+      "message": "Adakah anda pasti mahu memadamkan garis besar ini?\n\n Garis besar yang mempunyai sebarang garis besar bersarang akan menyebabkan keseluruhannya dipadamkan dan tidak boleh diganti melainkan anda menetapkannya semula."
     },
     "selectPage": {
       "selectTitle": "Tiada Halaman Dipilih",
@@ -792,6 +821,7 @@
     "title": "Halaman untuk Pangkas",
     "allPages": "Semua",
     "singlePage": "Muka surat ini",
+    "multiPage": "Nyatakan Halaman",
     "cropDimensions": "Dimensi Tanaman",
     "dimensionInput": {
       "unitOfMeasurement": "Unit",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "Penyuntingan wilayah",
       "fullPageRedaction": "Penyuntingan halaman penuh",
+      "fullVideoFrameRedaction": "Penyuntingan Video",
       "image": "Imej"
     },
     "expand": "Kembangkan",
@@ -826,6 +857,11 @@
       "pattern": "Corak",
       "start": "Mula membuat carian anda"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Properties",
+    "miscValuesHeader": "Semua",
+    "emptyPanelMessage": "Pilih elemen untuk melihat sifatnya"
   },
   "languageModal": {
     "selectLanguage": "Pilih Bahasa"

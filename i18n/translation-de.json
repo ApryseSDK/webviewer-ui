@@ -7,6 +7,7 @@
     "calibrate": "Kalibrieren",
     "cancel": "Abbrechen",
     "clear": "Löschen",
+    "clearAll": "Alles löschen",
     "close": "Schliessen",
     "undo": "Rückgängig",
     "redo": "Wiederherstellen",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "Leere Seite unten einfügen page",
     "pageManipulation": "Seitenmanipulation",
     "replace": "Ersetzen",
+    "setDestination": "Festgelegtes Ziel",
     "showLess": "zeige weniger",
     "showMore": "...mehr",
     "chooseFile": "Datei auswählen",
@@ -132,13 +134,14 @@
     "textField": "Textfeld",
     "signatureFormField": "Signaturfeld",
     "checkBoxFormField": "Kontrollkästchen Feld",
-    "radioButtonFormField": "Optionsfeld",
+    "radioButtonFormField": "Radio-Button-Feld",
     "listBoxFormField": "Listenfeld",
     "comboBoxFormField": "Kombinationsfeld",
     "link": "Verknüpfung",
     "other": "Andere",
     "3D": "3D",
-    "sound": "Klang"
+    "sound": "Klang",
+    "changeView": "Ansicht ändern"
   },
   "rubberStamp": {
     "Approved": "Genehmigt",
@@ -173,11 +176,14 @@
     "searchPanel": "Suche",
     "menuOverlay": "Menü",
     "notesPanel": "Notizen",
+    "outlinePanel": "Umriss",
     "outlinesPanel": "Gliederung",
+    "bookmarkPanel": "Lesezeichen",
     "bookmarksPanel": "Lesezeichen",
-    "signaturePanel": "Unterschriften",
     "newBookmark": "Neues Lesezeichen",
+    "bookmarkTitle": "Titel des Lesezeichens",
     "bookmarkPage": "Seite",
+    "signaturePanel": "Unterschriften",
     "layersPanel": "Schichten",
     "thumbnailsPanel": "Miniaturansicht",
     "toolsButton": "Werkzeuge",
@@ -204,6 +210,7 @@
     "noAnnotations": "Keine Kommentare gefunden.",
     "noAnnotationsReadOnly": "Dieses Dokument erlaubt keine Kommentare.",
     "noAnnotationsFilter": "Beginnen Sie hier mit der Erstellung von Anmerkungen und Filtern.",
+    "noBookmarks": "Keine Lesezeichen verfügbar",
     "noOutlines": "Dieses Dokument enthält keine Gliederung.",
     "noAttachments": "Dieses Dokument hat keine Anhänge.",
     "noResults": "Keine Ergebnisse gefunden.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "Wählen Sie die Seite(n) im Dokument aus, die Sie ersetzen möchten.",
     "embeddedFiles": "Eingebettete Dateien",
     "pageNum": "Seitennummer",
+    "viewBookmark": "Lesezeichen auf Seite anzeigen",
     "error": "Fehler"
   },
   "option": {
@@ -312,9 +320,10 @@
       "selectTooltip": "Mehrere Seiten auswählen",
       "closeTooltip": "Mehrfachauswahl schließen"
     },
-    "outlineControls": {
-      "add": "Artikel hinzufügen",
-      "reorder": "Sortieren"
+    "bookmarkOutlineControls": {
+      "edit": "Bearbeiten",
+      "done": "Fertig",
+      "reorder": "Neu anordnen"
     },
     "layout": {
       "cover": "Deckblatt",
@@ -391,12 +400,11 @@
       "pageReplaceInputFromSource": "mit Seite(n)"
     },
     "filterAnnotModal": {
-      "commentBy": "Kommentar von",
-      "types": "Typen",
       "color": "Farbe",
-      "includeReplies": "Antworten einschließen"
-    },
-    "status": {
+      "includeReplies": "Antworten einschließen",
+      "filters": "Filter",
+      "user": "Benutzer",
+      "type": "Typ",
       "status": "Status"
     },
     "state": {
@@ -495,10 +503,19 @@
       "modalName": "Neuen Stempel erstellen",
       "stampText": "Stempeltext",
       "timestampText": "Zeitstempeltext",
-      "stampColor": "Stempelfarbe:",
       "Username": "Nutzername",
       "Date": "Datum",
-      "Time": "Zeit"
+      "Time": "Zeit",
+      "fontStyle": "Schriftstil",
+      "dateFormat": "Datumsformat",
+      "month": "Monat",
+      "day": "Tag",
+      "year": "Jahr",
+      "hour": "Stunde",
+      "minute": "Minute",
+      "second": "Zweite",
+      "textColor": "Textfarbe",
+      "backgroundColor": "Hintergrundfarbe"
     },
     "pageRedactModal": {
       "addMark": "Markus hinzufügen",
@@ -507,7 +524,11 @@
       "specify": "Seiten angeben",
       "odd": "Nur ungerade Seiten",
       "even": "Nur gerade Seiten",
-      "header": "Schwärzung von Seiten markieren"
+      "header": "Schwärzung von Seiten markieren",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "Stil"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "Schwärzung anwenden",
       "applyMessage": "Durch diese Aktion werden alle zur Bearbeitung ausgewählten Elemente dauerhaft entfernt. Es kann nicht rückgängig gemacht werden."
+    },
+    "deleteBookmark": {
+      "title": "Lesezeichen löschen?",
+      "message": "Möchten Sie diese Lesezeichen wirklich löschen? Sie können diese Aktion nicht rückgängig machen."
+    },
+    "deleteOutline": {
+      "title": "Gliederung löschen?",
+      "message": "Möchten Sie diese Umrisse wirklich löschen?\n\n Eine Kontur mit verschachtelten Konturen führt dazu, dass das Ganze gelöscht wird und kann nicht ersetzt werden, es sei denn, Sie setzen sie erneut."
     },
     "selectPage": {
       "selectTitle": "Keine Seiten ausgewählt",
@@ -792,6 +821,7 @@
     "title": "Seiten zum Zuschneiden",
     "allPages": "Alle",
     "singlePage": "Aktuelle Seite",
+    "multiPage": "Seite angeben",
     "cropDimensions": "Crop-Abmessungen",
     "dimensionInput": {
       "unitOfMeasurement": "Einheit",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "Regionsredaktion",
       "fullPageRedaction": "Ganzseitige Redaktion",
+      "fullVideoFrameRedaction": "Video-Redaktion",
       "image": "Bild"
     },
     "expand": "Erweitern",
@@ -826,6 +857,11 @@
       "pattern": "Muster",
       "start": "Starten Sie Ihre Suche"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Eigenschaften",
+    "miscValuesHeader": "Alle",
+    "emptyPanelMessage": "Wählen Sie ein Element aus, um seine Eigenschaften anzuzeigen"
   },
   "languageModal": {
     "selectLanguage": "Sprache auswählen"

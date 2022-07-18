@@ -7,6 +7,7 @@
     "calibrate": "जांचना",
     "cancel": "रद्द करें",
     "clear": "स्पष्ट",
+    "clearAll": "सभी साफ करें",
     "close": "बंद करना",
     "undo": "पूर्ववत",
     "redo": "तैयार",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "नीचे खाली पेज डालें",
     "pageManipulation": "पृष्ठ हेरफेर",
     "replace": "बदलने के",
+    "setDestination": "गंतव्य तय करें",
     "showLess": "कम दिखाएं",
     "showMore": "...अधिक",
     "chooseFile": "एक फ़ाइल चुनें",
@@ -132,13 +134,14 @@
     "textField": "पाठ का क्षेत्र",
     "signatureFormField": "सिग्नेचर फील्ड",
     "checkBoxFormField": "चेकबॉक्स फ़ील्ड",
-    "radioButtonFormField": "रेडियोबटन फील्ड",
+    "radioButtonFormField": "रेडियो बटन फील्ड",
     "listBoxFormField": "सूची बॉक्स फ़ील्ड",
     "comboBoxFormField": "कॉम्बो बॉक्स फील्ड",
     "link": "संपर्क",
     "other": "अन्य",
     "3D": "3डी",
-    "sound": "ध्वनि"
+    "sound": "ध्वनि",
+    "changeView": "परिवर्तन देखें"
   },
   "rubberStamp": {
     "Approved": "स्वीकृत",
@@ -173,11 +176,14 @@
     "searchPanel": "खोज",
     "menuOverlay": "मेन्यू",
     "notesPanel": "टिप्पणियाँ",
+    "outlinePanel": "खाका",
     "outlinesPanel": "रूपरेखा",
+    "bookmarkPanel": "बुकमार्क",
     "bookmarksPanel": "बुकमार्क",
-    "signaturePanel": "हस्ताक्षर",
     "newBookmark": "नया बुकमार्क",
+    "bookmarkTitle": "बुकमार्क शीर्षक",
     "bookmarkPage": "पृष्ठ",
+    "signaturePanel": "हस्ताक्षर",
     "layersPanel": "परतों",
     "thumbnailsPanel": "थंबनेल",
     "toolsButton": "उपकरण",
@@ -204,6 +210,7 @@
     "noAnnotations": "टिप्पणी करने के लिए टिप्पणियां करना प्रारंभ करें।",
     "noAnnotationsReadOnly": "इस दस्तावेज़ में कोई टिप्पणी नहीं है।",
     "noAnnotationsFilter": "एनोटेशन बनाना शुरू करें और फिल्टर यहां दिखाई देंगे।",
+    "noBookmarks": "कोई बुकमार्क उपलब्ध नहीं",
     "noOutlines": "इस दस्तावेज़ की कोई रूपरेखा नहीं है।",
     "noAttachments": "इस दस्तावेज़ में कोई अनुलग्नक नहीं है।",
     "noResults": "कोई परिणाम नहीं मिला।",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "दस्तावेज़ में उन पृष्ठों का चयन करें जिनसे आप बदलना चाहते हैं।",
     "embeddedFiles": "एंबेडेड फ़ाइलें",
     "pageNum": "पृष्ठ संख्या",
+    "viewBookmark": "पेज पर बुकमार्क देखें",
     "error": "त्रुटि"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "एकाधिक पृष्ठों का चयन करें",
       "closeTooltip": "बहुचयन बंद करें"
     },
-    "outlineControls": {
-      "add": "मद जोड़ें",
+    "bookmarkOutlineControls": {
+      "edit": "संपादन करना",
+      "done": "पूर्ण",
       "reorder": "पुन: व्यवस्थित करें"
     },
     "layout": {
@@ -391,13 +400,12 @@
       "pageReplaceInputFromSource": "पृष्ठ के साथ"
     },
     "filterAnnotModal": {
-      "commentBy": "द्वारा टिप्पणी",
-      "types": "प्रकार",
       "color": "रंग",
-      "includeReplies": "उत्तर शामिल करें"
-    },
-    "status": {
-      "status": "स्थिति"
+      "includeReplies": "उत्तर शामिल करें",
+      "filters": "फिल्टर",
+      "user": "उपयोगकर्ता",
+      "type": "टाइप",
+      "status": "दर्जा"
     },
     "state": {
       "accepted": "स्वीकार किया हुआ",
@@ -495,10 +503,19 @@
       "modalName": "नया स्टाम्प बनाएं",
       "stampText": "स्टाम्प टेक्स्ट",
       "timestampText": "टाइमस्टैम्प टेक्स्ट",
-      "stampColor": "स्टाम्प रंग:",
       "Username": "उपयोगकर्ता नाम",
       "Date": "तारीख",
-      "Time": "समय"
+      "Time": "समय",
+      "fontStyle": "लिपि शैली",
+      "dateFormat": "तारिख का प्रारूप",
+      "month": "महीना",
+      "day": "दिन",
+      "year": "साल",
+      "hour": "घंटा",
+      "minute": "मिनट",
+      "second": "दूसरा",
+      "textColor": "लिखावट का रंग",
+      "backgroundColor": "पीछे का रंग"
     },
     "pageRedactModal": {
       "addMark": "मार्क जोड़ें",
@@ -507,7 +524,11 @@
       "specify": "पृष्ठ निर्दिष्ट करें",
       "odd": "केवल विषम पृष्ठ",
       "even": "केवल सम पृष्ठ",
-      "header": "मार्क पेज रिडक्शन"
+      "header": "मार्क पेज रिडक्शन",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "शैली"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "रिडक्शन लागू करें",
       "applyMessage": "यह क्रिया संशोधन के लिए चयनित सभी आइटम स्थायी रूप से हटा देगी। यह पूर्ववत नहीं किया जा सकता।"
+    },
+    "deleteBookmark": {
+      "title": "बुकमार्क हटाएं?",
+      "message": "क्या आप वाकई इन बुकमार्क को हटाना चाहते हैं? आप इस क्रिया को पूर्ववत नहीं कर सकते।"
+    },
+    "deleteOutline": {
+      "title": "रूपरेखा हटाएं?",
+      "message": "क्या आप वाकई इन रूपरेखाओं को हटाना चाहते हैं?\n\n किसी भी नेस्टेड आउटलाइन वाली आउटलाइन के परिणामस्वरूप पूरी चीज़ हटा दी जाएगी और जब तक आप उन्हें फिर से सेट नहीं करते, तब तक उसे बदला नहीं जा सकता।"
     },
     "selectPage": {
       "selectTitle": "कोई पेज नहीं चुना गया",
@@ -792,6 +821,7 @@
     "title": "क्रॉप करने के लिए पेज",
     "allPages": "सभी",
     "singlePage": "वर्तमान पृष्ठ",
+    "multiPage": "पृष्ठ निर्दिष्ट करें",
     "cropDimensions": "फसल आयाम",
     "dimensionInput": {
       "unitOfMeasurement": "इकाई",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "रीजन रिडक्शन",
       "fullPageRedaction": "पूरा पेज रिडक्शन",
+      "fullVideoFrameRedaction": "वीडियो रिडक्शन",
       "image": "छवि"
     },
     "expand": "विस्तार करना",
@@ -826,6 +857,11 @@
       "pattern": "प्रतिरूप",
       "start": "अपनी खोज शुरू करें"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "गुण",
+    "miscValuesHeader": "सभी",
+    "emptyPanelMessage": "किसी एलीमेंट के गुणों को देखने के लिए उसका चयन करें"
   },
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"

@@ -7,6 +7,7 @@
     "calibrate": "校準",
     "cancel": "取消",
     "clear": "清除",
+    "clearAll": "全部清除",
     "close": "關閉",
     "undo": "撤消",
     "redo": "準備",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "在下方插入空白頁",
     "pageManipulation": "頁面操作",
     "replace": "代替",
+    "setDestination": "設置目的地",
     "showLess": "顯示較少",
     "showMore": "...更多的",
     "chooseFile": "選擇一個文件",
@@ -138,7 +140,8 @@
     "link": "鏈接",
     "other": "其他",
     "3D": "3D",
-    "sound": "聲音"
+    "sound": "聲音",
+    "changeView": "更改視圖"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -173,11 +176,14 @@
     "searchPanel": "搜索",
     "menuOverlay": "功能表",
     "notesPanel": "備忘稿",
+    "outlinePanel": "大綱",
     "outlinesPanel": "大綱",
+    "bookmarkPanel": "書籤",
     "bookmarksPanel": "書籤",
-    "signaturePanel": "簽名",
     "newBookmark": "新書籤",
+    "bookmarkTitle": "書籤標題",
     "bookmarkPage": "頁",
+    "signaturePanel": "簽名",
     "layersPanel": "圖層",
     "thumbnailsPanel": "縮圖",
     "toolsButton": "工具",
@@ -204,6 +210,7 @@
     "noAnnotations": "開始製作註釋以發表評論。",
     "noAnnotationsReadOnly": "此文件沒有註釋。",
     "noAnnotationsFilter": "開始製作註釋，過濾器將顯示在此處。",
+    "noBookmarks": "沒有可用的書籤",
     "noOutlines": "此文件沒有大綱。",
     "noAttachments": "本文檔沒有附件。",
     "noResults": "沒有找到結果。",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "選擇文檔中要替換的頁面。",
     "embeddedFiles": "嵌入文件",
     "pageNum": "頁碼",
+    "viewBookmark": "在頁面上查看書籤",
     "error": "錯誤"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "選擇多個頁面",
       "closeTooltip": "關閉多選"
     },
-    "outlineControls": {
-      "add": "添加項目",
+    "bookmarkOutlineControls": {
+      "edit": "編輯",
+      "done": "完畢",
       "reorder": "重新排序"
     },
     "layout": {
@@ -391,13 +400,12 @@
       "pageReplaceInputFromSource": "有頁面"
     },
     "filterAnnotModal": {
-      "commentBy": "評論者",
-      "types": "種類",
       "color": "顏色",
-      "includeReplies": "包括回覆"
-    },
-    "status": {
-      "status": "狀態"
+      "includeReplies": "包括回覆",
+      "filters": "過濾器",
+      "user": "用戶",
+      "type": "類型",
+      "status": "地位"
     },
     "state": {
       "accepted": "公認",
@@ -495,10 +503,19 @@
       "modalName": "創建新圖章",
       "stampText": "印章文字",
       "timestampText": "時間戳記文字",
-      "stampColor": "印章顏色：",
       "Username": "用戶名",
       "Date": "日期",
-      "Time": "時間"
+      "Time": "時間",
+      "fontStyle": "字體樣式",
+      "dateFormat": "日期格式",
+      "month": "月",
+      "day": "天",
+      "year": "年",
+      "hour": "小時",
+      "minute": "分鐘",
+      "second": "第二",
+      "textColor": "文字顏色",
+      "backgroundColor": "背景顏色"
     },
     "pageRedactModal": {
       "addMark": "添加標記",
@@ -507,7 +524,11 @@
       "specify": "指定頁面",
       "odd": "僅奇數頁",
       "even": "僅偶數頁",
-      "header": "標記頁面密文"
+      "header": "標記頁面密文",
+      "specifyPlaceholder": "1、3、5-10"
+    },
+    "lineStyleOptions": {
+      "title": "風格"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "應用編輯",
       "applyMessage": "此操作將永久刪除所有要編輯的項目。無法撤消。"
+    },
+    "deleteBookmark": {
+      "title": "刪除書籤？",
+      "message": "您確定要刪除這些書籤嗎？您無法撤消此操作。"
+    },
+    "deleteOutline": {
+      "title": "刪除大綱？",
+      "message": "您確定要刪除這些大綱嗎？\n\n 具有任何嵌套輪廓的輪廓將導致整個內容被刪除並且無法替換，除非您再次設置它們。"
     },
     "selectPage": {
       "selectTitle": "未選擇頁面",
@@ -792,6 +821,7 @@
     "title": "要裁剪的頁面",
     "allPages": "全部",
     "singlePage": "當前頁面",
+    "multiPage": "指定頁面",
     "cropDimensions": "作物尺寸",
     "dimensionInput": {
       "unitOfMeasurement": "單元",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "區域編輯",
       "fullPageRedaction": "整頁編輯",
+      "fullVideoFrameRedaction": "視頻編輯",
       "image": "圖片"
     },
     "expand": "擴張",
@@ -826,6 +857,11 @@
       "pattern": "圖案",
       "start": "開始搜索"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "屬性",
+    "miscValuesHeader": "全部",
+    "emptyPanelMessage": "選擇一個元素來查看它的屬性"
   },
   "languageModal": {
     "selectLanguage": "選擇語言"

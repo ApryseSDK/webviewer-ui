@@ -7,6 +7,7 @@
     "calibrate": "ক্যালিব্রেট করুন",
     "cancel": "বাতিল করুন",
     "clear": "স্পষ্ট",
+    "clearAll": "সব পরিষ্কার করে দাও",
     "close": "বন্ধ",
     "undo": "পূর্বাবস্থায় ফেরান",
     "redo": "প্রস্তুত",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "নীচে ফাঁকা পৃষ্ঠা ঢোকান",
     "pageManipulation": "পৃষ্ঠা ম্যানিপুলেশন",
     "replace": "প্রতিস্থাপন করুন",
+    "setDestination": "লক্ষ ঠিক করো",
     "showLess": "প্রদর্শন কম",
     "showMore": "...আরো",
     "chooseFile": "একটি ফাইল নির্বাচন করুন",
@@ -132,13 +134,14 @@
     "textField": "টেক্সট ক্ষেত্রের",
     "signatureFormField": "স্বাক্ষর ক্ষেত্র",
     "checkBoxFormField": "চেকবক্স ক্ষেত্র",
-    "radioButtonFormField": "রেডিও বাটন ক্ষেত্র",
+    "radioButtonFormField": "রেডিও বোতাম ক্ষেত্র",
     "listBoxFormField": "তালিকা বক্স ক্ষেত্র",
     "comboBoxFormField": "কম্বো বক্স ক্ষেত্র",
     "link": "লিঙ্ক",
     "other": "অন্যান্য",
     "3D": "3D",
-    "sound": "শব্দ"
+    "sound": "শব্দ",
+    "changeView": "পরিবর্তন দেখুন"
   },
   "rubberStamp": {
     "Approved": "অনুমোদিত",
@@ -173,11 +176,14 @@
     "searchPanel": "অনুসন্ধান করুন",
     "menuOverlay": "তালিকা",
     "notesPanel": "মন্তব্য",
+    "outlinePanel": "রূপরেখা",
     "outlinesPanel": "রূপরেখা",
+    "bookmarkPanel": "বুকমার্ক",
     "bookmarksPanel": "বুকমার্ক",
-    "signaturePanel": "স্বাক্ষর",
     "newBookmark": "নতুন বুকমার্ক",
+    "bookmarkTitle": "বুকমার্ক শিরোনাম",
     "bookmarkPage": "পাতা",
+    "signaturePanel": "স্বাক্ষর",
     "layersPanel": "স্তর",
     "thumbnailsPanel": "থাম্বনেল",
     "toolsButton": "টুলস",
@@ -204,6 +210,7 @@
     "noAnnotations": "একটি মন্তব্য করতে টীকা তৈরি করা শুরু করুন.",
     "noAnnotationsReadOnly": "এই নথিতে কোন টীকা নেই।",
     "noAnnotationsFilter": "টীকা তৈরি করা শুরু করুন এবং ফিল্টারগুলি এখানে উপস্থিত হবে৷",
+    "noBookmarks": "কোন বুকমার্ক উপলব্ধ",
     "noOutlines": "এই নথির কোন রূপরেখা নেই।",
     "noAttachments": "এই নথিতে কোন সংযুক্তি নেই.",
     "noResults": "কোন ফলাফল পাওয়া যায়নি.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "নথিতে যে পৃষ্ঠাগুলি আপনি প্রতিস্থাপন করতে চান তা নির্বাচন করুন৷",
     "embeddedFiles": "এমবেডেড ফাইল",
     "pageNum": "পৃষ্ঠা সংখ্যা",
+    "viewBookmark": "পৃষ্ঠায় বুকমার্ক দেখুন",
     "error": "ত্রুটি"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "একাধিক পৃষ্ঠা নির্বাচন করুন",
       "closeTooltip": "মাল্টিসিলেক্ট বন্ধ করুন"
     },
-    "outlineControls": {
-      "add": "আইটেম যোগ করুন",
+    "bookmarkOutlineControls": {
+      "edit": "সম্পাদনা করুন",
+      "done": "সম্পন্ন",
       "reorder": "পুনরায় সাজান"
     },
     "layout": {
@@ -391,12 +400,11 @@
       "pageReplaceInputFromSource": "পৃষ্ঠা(গুলি) সহ"
     },
     "filterAnnotModal": {
-      "commentBy": "দ্বারা মন্তব্য",
-      "types": "প্রকারভেদ",
       "color": "রঙ",
-      "includeReplies": "উত্তর অন্তর্ভুক্ত করুন"
-    },
-    "status": {
+      "includeReplies": "উত্তর অন্তর্ভুক্ত করুন",
+      "filters": "ফিল্টার",
+      "user": "ব্যবহারকারী",
+      "type": "টাইপ",
       "status": "স্ট্যাটাস"
     },
     "state": {
@@ -495,10 +503,19 @@
       "modalName": "নতুন স্ট্যাম্প তৈরি করুন",
       "stampText": "স্ট্যাম্প পাঠ্য",
       "timestampText": "টাইমস্ট্যাম্প পাঠ্য",
-      "stampColor": "স্ট্যাম্প রঙ:",
       "Username": "ব্যবহারকারীর নাম",
       "Date": "তারিখ",
-      "Time": "সময়"
+      "Time": "সময়",
+      "fontStyle": "ফন্ট-স্টাইল",
+      "dateFormat": "তারিখ বিন্যাস",
+      "month": "মাস",
+      "day": "দিন",
+      "year": "বছর",
+      "hour": "ঘন্টা",
+      "minute": "মিনিট",
+      "second": "দ্বিতীয়",
+      "textColor": "লেখার রঙ",
+      "backgroundColor": "পেছনের রং"
     },
     "pageRedactModal": {
       "addMark": "মার্ক যোগ করুন",
@@ -507,7 +524,11 @@
       "specify": "পৃষ্ঠাগুলি নির্দিষ্ট করুন",
       "odd": "শুধুমাত্র বিজোড় পৃষ্ঠা",
       "even": "এমনকি পেজ শুধুমাত্র",
-      "header": "মার্ক পেজ রিডাকশন"
+      "header": "মার্ক পেজ রিডাকশন",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "শৈলী"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "রিডাকশন প্রয়োগ করুন",
       "applyMessage": "এই ক্রিয়াটি সংশোধনের জন্য নির্বাচিত সমস্ত আইটেম স্থায়ীভাবে মুছে ফেলবে৷ এটি পূর্বাবস্থায় ফেরানো যাবে না।"
+    },
+    "deleteBookmark": {
+      "title": "বুকমার্ক মুছবেন?",
+      "message": "আপনি কি এই বুকমার্কগুলি মুছতে চান? আপনি এই ক্রিয়াটিকে পূর্বাবস্থায় ফেরাতে পারবেন না৷"
+    },
+    "deleteOutline": {
+      "title": "আউটলাইন মুছবেন?",
+      "message": "আপনি কি নিশ্চিত আপনি এই রূপরেখা মুছে দিতে চান?\n\n নেস্টেড আউটলাইন আছে এমন একটি আউটলাইন পুরো জিনিস মুছে ফেলা হবে এবং আপনি সেগুলি আবার সেট না করা পর্যন্ত প্রতিস্থাপন করা যাবে না।"
     },
     "selectPage": {
       "selectTitle": "কোন পৃষ্ঠা নির্বাচন করা হয়নি",
@@ -792,6 +821,7 @@
     "title": "ক্রপ করার জন্য পৃষ্ঠা",
     "allPages": "সব",
     "singlePage": "এই পৃষ্ঠা",
+    "multiPage": "পৃষ্ঠা নির্দিষ্ট করুন",
     "cropDimensions": "ফসলের মাত্রা",
     "dimensionInput": {
       "unitOfMeasurement": "ইউনিট",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "অঞ্চল সংশোধন",
       "fullPageRedaction": "সম্পূর্ণ পৃষ্ঠা সংশোধন",
+      "fullVideoFrameRedaction": "ভিডিও রিডাকশন",
       "image": "ছবি"
     },
     "expand": "বিস্তৃত করা",
@@ -826,6 +857,11 @@
       "pattern": "প্যাটার্ন",
       "start": "আপনার অনুসন্ধান করা শুরু করুন"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Уласцівасці",
+    "miscValuesHeader": "Усе",
+    "emptyPanelMessage": "Выберыце элемент, каб праглядзець яго ўласцівасці"
   },
   "languageModal": {
     "selectLanguage": "ভাষা নির্বাচন কর"

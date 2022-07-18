@@ -7,6 +7,7 @@
     "calibrate": "調整する",
     "cancel": "キャンセル",
     "clear": "クリア",
+    "clearAll": "すべてクリア",
     "close": "閉じる",
     "undo": "元に戻す",
     "redo": "やり直し",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "下に空白のページを挿入",
     "pageManipulation": "ページ操作",
     "replace": "入れ替え",
+    "setDestination": "行き先を設定する",
     "showLess": "表示を減らす",
     "showMore": "...さらに表示",
     "chooseFile": "ファイルを選択してください",
@@ -138,7 +140,8 @@
     "link": "リンク",
     "other": "その他",
     "3D": "3D",
-    "sound": "サウンド"
+    "sound": "サウンド",
+    "changeView": "ビューを変更"
   },
   "rubberStamp": {
     "Approved": "承認済",
@@ -173,11 +176,14 @@
     "searchPanel": "検索",
     "menuOverlay": "メニュー",
     "notesPanel": "コメント",
+    "outlinePanel": "概要",
     "outlinesPanel": "概要",
+    "bookmarkPanel": "ブックマーク",
     "bookmarksPanel": "ブックマーク",
-    "signaturePanel": "署名",
     "newBookmark": "新しいブックマーク",
+    "bookmarkTitle": "ブックマークタイトル",
     "bookmarkPage": "ページ",
+    "signaturePanel": "署名",
     "layersPanel": "レイヤー",
     "thumbnailsPanel": "サムネイル",
     "toolsButton": "ツール",
@@ -204,6 +210,7 @@
     "noAnnotations": "コメントを残すには、注釈を追加してください。",
     "noAnnotationsReadOnly": "このドキュメントには注釈がありません。",
     "noAnnotationsFilter": "注釈を追加すると、フィルターがここに表示されます。",
+    "noBookmarks": "利用可能なブックマークはありません",
     "noOutlines": "このドキュメントには概要がありません。",
     "noAttachments": "このドキュメントには添付ファイルはありません。",
     "noResults": "結果が見つかりませんでした。",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "ドキュメント内の入れ替えたいページを選択します。",
     "embeddedFiles": "埋め込みファイル",
     "pageNum": "ページ番号",
+    "viewBookmark": "ページにブックマークを表示",
     "error": "エラー"
   },
   "option": {
@@ -312,9 +320,10 @@
       "selectTooltip": "複数のページを選択",
       "closeTooltip": "複数選択を閉じる"
     },
-    "outlineControls": {
-      "add": "アイテムを追加",
-      "reorder": "再追加"
+    "bookmarkOutlineControls": {
+      "edit": "編集",
+      "done": "終わり",
+      "reorder": "再注文"
     },
     "layout": {
       "cover": "表紙見開きページ",
@@ -391,13 +400,12 @@
       "pageReplaceInputFromSource": "ページ"
     },
     "filterAnnotModal": {
-      "commentBy": "コメント者",
-      "types": "種類",
       "color": "色",
-      "includeReplies": "返信を含める"
-    },
-    "status": {
-      "status": "ステータス"
+      "includeReplies": "返信を含める",
+      "filters": "フィルタ",
+      "user": "ユーザー",
+      "type": "タイプ",
+      "status": "状態"
     },
     "state": {
       "accepted": "承認",
@@ -495,10 +503,19 @@
       "modalName": "新しいスタンプを作成する",
       "stampText": "スタンプテキスト：",
       "timestampText": "タイムスタンプテキスト：",
-      "stampColor": "スタンプの色：",
       "Username": "ユーザー名",
       "Date": "日付",
-      "Time": "時刻"
+      "Time": "時刻",
+      "fontStyle": "フォントスタイル",
+      "dateFormat": "日付形式",
+      "month": "月",
+      "day": "日",
+      "year": "年",
+      "hour": "時間",
+      "minute": "分",
+      "second": "2番",
+      "textColor": "テキストの色",
+      "backgroundColor": "背景色"
     },
     "pageRedactModal": {
       "addMark": "マークを追加",
@@ -507,7 +524,11 @@
       "specify": "ページを指定",
       "odd": "奇数ページのみ",
       "even": "偶数ページのみ",
-      "header": "ページ編集をマーク"
+      "header": "ページ編集をマーク",
+      "specifyPlaceholder": "1、3、5-10"
+    },
+    "lineStyleOptions": {
+      "title": "スタイル"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "墨消しを適用",
       "applyMessage": "この操作により、墨消しのために選択されたものがすべて完全に削除されます。この変更は元に戻せません。"
+    },
+    "deleteBookmark": {
+      "title": "ブックマークを削除しますか？",
+      "message": "これらのブックマークを削除してもよろしいですか？このアクションを元に戻すことはできません。"
+    },
+    "deleteOutline": {
+      "title": "アウトラインを削除しますか？",
+      "message": "これらのアウトラインを削除してもよろしいですか？\n\n アウトラインがネストされているアウトラインでは、すべてが削除され、再度設定しない限り置き換えることはできません。"
     },
     "selectPage": {
       "selectTitle": "ページが選択されていません",
@@ -792,6 +821,7 @@
     "title": "切り抜くページ",
     "allPages": "全て",
     "singlePage": "現在のページ",
+    "multiPage": "ページを指定",
     "cropDimensions": "作物の寸法",
     "dimensionInput": {
       "unitOfMeasurement": "単位",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "地域の編集",
       "fullPageRedaction": "全ページの編集",
+      "fullVideoFrameRedaction": "ビデオ編集",
       "image": "画像"
     },
     "expand": "拡大",
@@ -826,6 +857,11 @@
       "pattern": "パターン",
       "start": "検索を開始します"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "プロパティ",
+    "miscValuesHeader": "すべて",
+    "emptyPanelMessage": "プロパティを表示する要素を選択してください"
   },
   "languageModal": {
     "selectLanguage": "言語を選択する"

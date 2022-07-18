@@ -5,8 +5,8 @@
 const setReactQuillContent = annotation => {
   const richTextStyle = annotation.getRichTextStyle();
   const indexes = Object.keys(richTextStyle);
-  const text = annotation.getContents();
   const editor = annotation.editor;
+  const text = editor.getText();
   const ops = [];
 
   for (let i = 0; i < indexes.length; i++) {

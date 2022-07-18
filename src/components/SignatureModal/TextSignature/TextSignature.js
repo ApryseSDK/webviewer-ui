@@ -13,8 +13,9 @@ import './TextSignature.scss';
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
-  createSignature: PropTypes.func.isRequired,
   isTabPanelSelected: PropTypes.bool,
+  disableCreateButton: PropTypes.func,
+  enableCreateButton: PropTypes.func,
 };
 
 const FONT_SIZE = 96;
@@ -27,7 +28,8 @@ const useForceUpdate = () => {
 const TextSignature = ({
   isModalOpen,
   isTabPanelSelected,
-  createSignature,
+  disableCreateButton,
+  enableCreateButton
 }) => {
   const fonts = useSelector(state => selectors.getSignatureFonts(state));
   // const [value, setValue] = useState(core.getDisplayAuthor(core.getCurrentUser()));
@@ -108,15 +110,13 @@ const TextSignature = ({
         inputRef.current.select();
       }
     }
-    // else {
-
-    // }
   }, [isTabPanelSelected]);
 
   useEffect(() => {
     const onUpdateAnnotationPermission = () => {
       if (isDefaultValue) {
         setValue(core.getDisplayAuthor(core.getCurrentUser()));
+        enableCreateButton();
       }
     };
 
@@ -134,8 +134,10 @@ const TextSignature = ({
     if (signatureValue.trim()) {
       const base64 = cropImageFromCanvas(canvas)
       signatureTool.setSignature(base64);
+      enableCreateButton();
     } else {
       signatureTool.setSignature(null);
+      disableCreateButton();
     }
   };
 
@@ -155,63 +157,54 @@ const TextSignature = ({
 
 
   return (
-    <React.Fragment>
-      <div className="text-signature">
-        <div className="text-signature-input-container">
-          <label>
-            <input
-              className="text-signature-input"
-              ref={inputRef}
-              type="text"
-              value={value}
-              placeholder="Type Signature"
-              onChange={handleInputChange}
-              style={{fontFamily: fonts, fontSize: FONT_SIZE*2/3, color:fontColor}}
-              disabled={!(isModalOpen && isTabPanelSelected)}
-            />
-          </label>
-        </div>
-        {fonts.map((font, index) => (
-          <div
-            key={font}
-            className={classNames({
-              'text-signature-text': true,
-              active: index === activeIndex,
-            })}
-            style={{ fontFamily: font, fontSize: FONT_SIZE, color:fontColor}}
-            onClick={() => setActiveIndex(index)}
-          >
-            <div
-              className="text-container"
-              ref={el => {
-                textDivsRef.current[index] = el;
-              }}
-            >
-              {value}
-            </div>
-          </div>
-        ))}
-        <canvas ref={canvasRef} />
-        <div className="colorpalette-clear-container">
-          <ColorPalette
-            color={new window.Annotations.Color(fontColor)}
-            property="fontColor"
-            onStyleChange={(property, value) => handleColorInputChange(property, value)}
-            overridePalette2={['#000000', '#4E7DE9', '#E44234']}
+    <div className="text-signature">
+      <div className="text-signature-input-container">
+        <label>
+          <input
+            className="text-signature-input"
+            ref={inputRef}
+            type="text"
+            value={value}
+            placeholder="Type Signature"
+            onChange={handleInputChange}
+            style={{fontFamily: fonts, fontSize: FONT_SIZE*2/3, color:fontColor}}
+            disabled={!(isModalOpen && isTabPanelSelected)}
           />
-          <button className="signature-clear" onClick={() => setValue('')} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
-            {t('action.clear')}
-          </button>
-        </div>
+        </label>
       </div>
-      <div
-        className="footer"
-      >
-        <button className="signature-create" onClick={createSignature} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
-          {t('action.create')}
+      {fonts.map((font, index) => (
+        <div
+          key={font}
+          className={classNames({
+            'text-signature-text': true,
+            active: index === activeIndex,
+          })}
+          style={{ fontFamily: font, fontSize: FONT_SIZE, color:fontColor}}
+          onClick={() => setActiveIndex(index)}
+        >
+          <div
+            className="text-container"
+            ref={el => {
+              textDivsRef.current[index] = el;
+            }}
+          >
+            {value}
+          </div>
+        </div>
+      ))}
+      <canvas ref={canvasRef} />
+      <div className="colorpalette-clear-container">
+        <ColorPalette
+          color={new window.Annotations.Color(fontColor)}
+          property="fontColor"
+          onStyleChange={(property, value) => handleColorInputChange(property, value)}
+          overridePalette2={['#000000', '#4E7DE9', '#E44234']}
+        />
+        <button className="signature-clear" onClick={() => setValue('')} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
+          {t('action.clear')}
         </button>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

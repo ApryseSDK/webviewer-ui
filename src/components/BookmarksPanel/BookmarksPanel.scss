@@ -1,49 +1,15 @@
 @import '../../constants/panel';
 
 .BookmarksPanel {
-  padding: 0px 0px;
+  .bookmark-switch {
+    -webkit-font-smoothing: antialiased;
+    margin-top: var(--padding-medium);
+    margin-left: var(--padding);
+    margin-right: var(--padding);
+    padding-left: 4px;
 
-  .bookmarks-panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0px 16px;
-
-    .bookmarks-panel-container {
-      display: flex;
-      align-items: center;
-    }
-
-    .bookmarks-panel-label {
-      margin-left: 8px;
-    }
-
-    .bookmarks-panel-button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--primary-button-text);
-      padding: 6px 18px;
-      width: auto;
-      width: fit-content;
-      background: var(--primary-button);
-      border-radius: 4px;
-      height: 32px;
-      cursor: pointer;
-  
-      &:hover {
-        background: var(--primary-button-hover);
-      }
-    }
-  }
-
-  .bookmarks-panel-row {
-    margin: 0 8px 16px 16px;
-
-    .bookmarks-panel-label {
-      margin-top: 8px;
-      font-weight: bold;
-      padding-top: 10px;
+    label {
+      font-size: 11px;
     }
   }
 }

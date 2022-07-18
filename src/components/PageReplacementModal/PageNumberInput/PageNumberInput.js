@@ -8,11 +8,12 @@ const propTypes = {
   pageCount: PropTypes.number,
   onSelectedPageNumbersChange: PropTypes.func,
   onBlurHandler: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 const noop = () => {};
 
-function PageNumberInput({ selectedPageNumbers, onSelectedPageNumbersChange, onBlurHandler = noop, pageCount }) {
+function PageNumberInput({ selectedPageNumbers, onSelectedPageNumbersChange, onBlurHandler = noop, pageCount, placeHolder, onError = noop }) {
   // Since we don't have page labels info we just assume page numbers as labels
   const pageLabels = Array.from({ length: pageCount }, (_, i) => (i + 1).toString());
   const [pageString, setPageString] = useState('');
@@ -28,7 +29,7 @@ function PageNumberInput({ selectedPageNumbers, onSelectedPageNumbersChange, onB
     setPageString(e.target.value);
 
     const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount);
+    const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount, onError);
 
     //Send info back to parent component
     onSelectedPageNumbersChange && onSelectedPageNumbersChange(pageNumbersArray);
@@ -55,7 +56,7 @@ function PageNumberInput({ selectedPageNumbers, onSelectedPageNumbersChange, onB
 
   const onBlur = e => {
     const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount);
+    const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount, onError);
     const pageNumbersString = getPageString(pageNumbersArray);
     setPageString(pageNumbersString);
 
@@ -70,6 +71,7 @@ function PageNumberInput({ selectedPageNumbers, onSelectedPageNumbersChange, onB
       onChange={onPagesChange}
       onBlur={onBlur}
       value={pageString}
+      placeholder={placeHolder}
     />
   );
 }

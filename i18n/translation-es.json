@@ -7,6 +7,7 @@
     "calibrate": "Calibrar",
     "cancel": "Cancelar",
     "clear": "Borrar",
+    "clearAll": "Limpiar todo",
     "close": "Cerrar",
     "undo": "Deshacer",
     "redo": "Listo",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "Insertar una página en blanco debajo",
     "pageManipulation": "Manipulación de página",
     "replace": "Reemplazar",
+    "setDestination": "Marcar el destino",
     "showLess": "Muestra menos",
     "showMore": "...más",
     "chooseFile": "Escoge un archivo",
@@ -138,7 +140,8 @@
     "link": "Enlace",
     "other": "Otro",
     "3D": "3D",
-    "sound": "Sonar"
+    "sound": "Sonar",
+    "changeView": "Cambio Vista"
   },
   "rubberStamp": {
     "Approved": "Aprobada",
@@ -173,11 +176,14 @@
     "searchPanel": "Buscar",
     "menuOverlay": "Menú",
     "notesPanel": "Notas",
+    "outlinePanel": "Esquema",
     "outlinesPanel": "Esquemas",
+    "bookmarkPanel": "Marcador",
     "bookmarksPanel": "Marcadores",
-    "signaturePanel": "Firmas",
     "newBookmark": "Nuevo marcador",
+    "bookmarkTitle": "Título del marcador",
     "bookmarkPage": "Página",
+    "signaturePanel": "Firmas",
     "layersPanel": "Capas",
     "thumbnailsPanel": "Miniaturas",
     "toolsButton": "Herramientas",
@@ -204,6 +210,7 @@
     "noAnnotations": "Empiece a hacer anotaciones para dejar un comentario.",
     "noAnnotationsReadOnly": "Este documento no tiene anotaciones.",
     "noAnnotationsFilter": "Empiece a hacer anotaciones y los filtros aparecerán aquí.",
+    "noBookmarks": "No hay marcadores disponibles",
     "noOutlines": "Este documento no tiene esquema.",
     "noAttachments": "Este documento no tiene anexos.",
     "noResults": "No se han encontrado resultados.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "Seleccione las páginas del documento por las que le gustaría reemplazar.",
     "embeddedFiles": "Archivos incrustados",
     "pageNum": "Número de página",
+    "viewBookmark": "Ver marcador en la página",
     "error": "Error"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "Seleccionar varias páginas",
       "closeTooltip": "Cerrar selección múltiple"
     },
-    "outlineControls": {
-      "add": "Añadir artículo",
+    "bookmarkOutlineControls": {
+      "edit": "Editar",
+      "done": "Hecho",
       "reorder": "Reordenar"
     },
     "layout": {
@@ -391,12 +400,11 @@
       "pageReplaceInputFromSource": "con página(s)"
     },
     "filterAnnotModal": {
-      "commentBy": "Comentario de",
-      "types": "Tipos",
       "color": "Color",
-      "includeReplies": "Incluir respuestas"
-    },
-    "status": {
+      "includeReplies": "Incluir respuestas",
+      "filters": "filtros",
+      "user": "Usuario",
+      "type": "Escribe",
       "status": "Estado"
     },
     "state": {
@@ -495,10 +503,19 @@
       "modalName": "Crear nuevo sello",
       "stampText": "Texto de sello",
       "timestampText": "Texto de marca de tiempo",
-      "stampColor": "Color del sello:",
       "Username": "Nombre de usuario",
       "Date": "Fecha",
-      "Time": "Hora"
+      "Time": "Hora",
+      "fontStyle": "Estilo de fuente",
+      "dateFormat": "Formato de fecha",
+      "month": "Mes",
+      "day": "Día",
+      "year": "Año",
+      "hour": "Hora",
+      "minute": "Minuto",
+      "second": "Segundo",
+      "textColor": "Color de texto",
+      "backgroundColor": "Color de fondo"
     },
     "pageRedactModal": {
       "addMark": "Agregar marca",
@@ -507,7 +524,11 @@
       "specify": "Especificar páginas",
       "odd": "Solo páginas impares",
       "even": "Sólo las páginas pares",
-      "header": "Marcar la redacción de páginas"
+      "header": "Marcar la redacción de páginas",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "Estilo"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "Aplicar redacción",
       "applyMessage": "Esta acción eliminará permanentemente todos los elementos seleccionados para su redacción. No se puede deshacer."
+    },
+    "deleteBookmark": {
+      "title": "¿Eliminar marcador?",
+      "message": "¿Está seguro de que desea eliminar estos marcadores? No puede deshacer esta acción."
+    },
+    "deleteOutline": {
+      "title": "¿Eliminar esquema?",
+      "message": "¿Está seguro de que desea eliminar estos contornos?\n\n Un contorno que tenga contornos anidados hará que se elimine todo y no se podrá reemplazar a menos que los configure nuevamente."
     },
     "selectPage": {
       "selectTitle": "No hay páginas seleccionadas",
@@ -792,6 +821,7 @@
     "title": "Páginas para recortar",
     "allPages": "Todos",
     "singlePage": "Página actual",
+    "multiPage": "Especificar página",
     "cropDimensions": "Dimensiones de cultivo",
     "dimensionInput": {
       "unitOfMeasurement": "Unidad",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "Redacción de la región",
       "fullPageRedaction": "Redacción de página completa",
+      "fullVideoFrameRedaction": "Redacción de video",
       "image": "Imagen"
     },
     "expand": "Expandir",
@@ -826,6 +857,11 @@
       "pattern": "Patrón",
       "start": "Empieza a hacer tu búsqueda"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Propiedades",
+    "miscValuesHeader": "Todos",
+    "emptyPanelMessage": "Selecciona un elemento para ver sus propiedades"
   },
   "languageModal": {
     "selectLanguage": "Seleccione el idioma"

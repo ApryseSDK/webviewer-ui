@@ -180,14 +180,8 @@ const FontSizeDropdown = ({
         disabled={isOpen}
         className={error ? "error" : undefined}
       />
-      <div
-        className={classNames("icon-button")}
-        onClick={() => setOpen(true)}
-        ref={iconButtonRef}
-      >
-        <Icon
-          glyph="icon-chevron-down"
-        />
+      <div className={classNames('icon-button')} onClick={() => setOpen(true)} ref={iconButtonRef}>
+        <Icon glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
       </div>
       <div
         className={classNames('Dropdown__items', { 'hidden': !isOpen })}

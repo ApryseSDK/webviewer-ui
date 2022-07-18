@@ -7,6 +7,7 @@
     "calibrate": "Calibrer",
     "cancel": "Annuler",
     "clear": "Effacer",
+    "clearAll": "Tout effacer",
     "close": "Fermer",
     "undo": "Défaire",
     "redo": "Refaire",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "Insérez une page vierge ci-dessous",
     "pageManipulation": "Manipulation des pages",
     "replace": "Remplacer",
+    "setDestination": "Destination choisie",
     "showLess": "Montrer moins",
     "showMore": "...Suite",
     "chooseFile": "Choisissez un fichier",
@@ -138,7 +140,8 @@
     "link": "Lien",
     "other": "Autre",
     "3D": "3D",
-    "sound": "Sonner"
+    "sound": "Sonner",
+    "changeView": "Change de vue"
   },
   "rubberStamp": {
     "Approved": "Approuvée",
@@ -173,11 +176,14 @@
     "searchPanel": "Chercher",
     "menuOverlay": "Menu",
     "notesPanel": "Remarques",
+    "outlinePanel": "Présenter",
     "outlinesPanel": "Contours",
+    "bookmarkPanel": "Signet",
     "bookmarksPanel": "Signets",
-    "signaturePanel": "Signatures",
     "newBookmark": "Nouveau signet",
+    "bookmarkTitle": "Titre du signet",
     "bookmarkPage": "Page",
+    "signaturePanel": "Signatures",
     "layersPanel": "Couches",
     "thumbnailsPanel": "Vignettes",
     "toolsButton": "Outils",
@@ -204,6 +210,7 @@
     "noAnnotations": "Ce document n'a pas d'annotations.",
     "noAnnotationsReadOnly": "Ce document n'a pas d'annotations.",
     "noAnnotationsFilter": "Commencez à créer des annotations et des filtres apparaîtront ici.",
+    "noBookmarks": "Aucun signet disponible",
     "noOutlines": "Ce document n'a pas de plan.",
     "noAttachments": "Ce document n'a pas de pièces jointes.",
     "noResults": "Aucun résultat trouvé.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "Sélectionnez les pages du document que vous souhaitez remplacer.",
     "embeddedFiles": "Fichiers intégrés",
     "pageNum": "Numéro de page",
+    "viewBookmark": "Afficher le signet sur la page",
     "error": "Erreur"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "Sélectionnez plusieurs pages",
       "closeTooltip": "Fermer la sélection multiple"
     },
-    "outlineControls": {
-      "add": "Ajouter un item",
+    "bookmarkOutlineControls": {
+      "edit": "Éditer",
+      "done": "Fait",
       "reorder": "Réorganiser"
     },
     "layout": {
@@ -391,12 +400,11 @@
       "pageReplaceInputFromSource": "avec page(s)"
     },
     "filterAnnotModal": {
-      "commentBy": "Commentaire de",
-      "types": "Les types",
       "color": "Couleur",
-      "includeReplies": "Inclure les réponses"
-    },
-    "status": {
+      "includeReplies": "Inclure les réponses",
+      "filters": "Filtres",
+      "user": "Utilisateur",
+      "type": "Taper",
       "status": "Statut"
     },
     "state": {
@@ -495,10 +503,19 @@
       "modalName": "Créer un nouveau tampon",
       "stampText": "Texte du tampon",
       "timestampText": "Texte d'horodatage",
-      "stampColor": "Couleur du tampon:",
       "Username": "Nom d'utilisateur",
       "Date": "Date",
-      "Time": "heure"
+      "Time": "heure",
+      "fontStyle": "Font style",
+      "dateFormat": "Format de date",
+      "month": "Mois",
+      "day": "Jour",
+      "year": "An",
+      "hour": "Heure",
+      "minute": "Minute",
+      "second": "Deuxième",
+      "textColor": "Couleur du texte",
+      "backgroundColor": "Couleur de l'arrière plan"
     },
     "pageRedactModal": {
       "addMark": "Ajouter une marque",
@@ -507,7 +524,11 @@
       "specify": "Spécifiez les pages",
       "odd": "Pages impaires seulement",
       "even": "Seulement les pages paires",
-      "header": "Marquer la rédaction des pages"
+      "header": "Marquer la rédaction des pages",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "Style"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "Appliquer le caviardage",
       "applyMessage": "Cette action supprimera définitivement tous les éléments sélectionnés pour caviardage. Ceci ne pourra pas être défait."
+    },
+    "deleteBookmark": {
+      "title": "Supprimer le signet ?",
+      "message": "Voulez-vous vraiment supprimer ces favoris ? Vous ne pouvez pas annuler cette action."
+    },
+    "deleteOutline": {
+      "title": "Supprimer le contour ?",
+      "message": "Voulez-vous vraiment supprimer ces contours ?\n\n Un contour qui a des contours imbriqués entraînera la suppression de l'ensemble et ne pourra pas être remplacé à moins que vous ne les définissiez à nouveau."
     },
     "selectPage": {
       "selectTitle": "Aucune page sélectionnée",
@@ -792,6 +821,7 @@
     "title": "Pages à recadrer",
     "allPages": "Tous",
     "singlePage": "Page actuelle",
+    "multiPage": "Spécifier la page",
     "cropDimensions": "Dimensions du recadrage",
     "dimensionInput": {
       "unitOfMeasurement": "Unité",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "Caviardage de région",
       "fullPageRedaction": "Caviardage pleine page",
+      "fullVideoFrameRedaction": "Rédaction vidéo",
       "image": "Image"
     },
     "expand": "Développer",
@@ -826,6 +857,11 @@
       "pattern": "Modèle",
       "start": "Commencez à faire votre recherche"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Propriétés",
+    "miscValuesHeader": "Tous",
+    "emptyPanelMessage": "Sélectionnez un élément pour afficher ses propriétés"
   },
   "languageModal": {
     "selectLanguage": "Choisir la langue"

@@ -9,6 +9,8 @@ export default () => {
     activeElement instanceof window.HTMLInputElement ||
     activeElement instanceof window.HTMLTextAreaElement ||
     activeElement.className.includes('ql-editor') ||
-    isEditingFreetext
+    isEditingFreetext ||
+    (activeElement?.tagName?.toLowerCase() === 'input' && activeElement?.getAttribute('type') === 'text') ||
+    activeElement?.tagName?.toLowerCase() === 'textarea'
   );
 };

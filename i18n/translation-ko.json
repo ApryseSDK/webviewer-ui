@@ -7,6 +7,7 @@
     "calibrate": "교정",
     "cancel": "취소",
     "clear": "지우기",
+    "clearAll": "모두 지우기",
     "close": "닫기",
     "undo": "되돌리기",
     "redo": "다시실행",
@@ -132,13 +133,14 @@
     "textField": "텍스트상자",
     "signatureFormField": "서명",
     "checkBoxFormField": "체크박스",
-    "radioButtonFormField": "라디오버튼",
+    "radioButtonFormField": "라디오 버튼 필드",
     "listBoxFormField": "목록상자",
     "comboBoxFormField": "콤보박스",
     "link": "링크",
     "other": "더보기",
     "3D": "3D",
-    "sound": "소리"
+    "sound": "소리",
+    "changeView": "보기 변경"
   },
   "rubberStamp": {
     "Approved": "승인",
@@ -173,7 +175,9 @@
     "searchPanel": "검색",
     "menuOverlay": "메뉴",
     "notesPanel": "참고",
+    "outlinePanel": "개요",
     "outlinesPanel": "개요",
+    "bookmarkPanel": "서표",
     "bookmarksPanel": "즐겨찾기",
     "newBookmark": "즐겨찾기 추가",
     "bookmarkPage": "즐겨찾기",
@@ -246,6 +250,7 @@
     "selectPageToReplace": "문서에서 교체할 페이지를 선택하세요.",
     "embeddedFiles": "포함된 파일",
     "pageNum": "페이지 번호",
+    "viewBookmark": "페이지에서 책갈피 보기",
     "error": "오류"
   },
   "option": {
@@ -312,9 +317,10 @@
       "selectTooltip": "여러 페이지 선택",
       "closeTooltip": "다중 선택 닫기"
     },
-    "outlineControls": {
-      "add": "추가",
-      "reorder": "정렬"
+    "bookmarkOutlineControls": {
+      "edit": "편집하다",
+      "done": "완료",
+      "reorder": "재 주문"
     },
     "layout": {
       "cover": "커버 보기",
@@ -391,12 +397,11 @@
       "pageReplaceInputFromSource": "페이지 포함"
     },
     "filterAnnotModal": {
-      "commentBy": "작성자로 정렬",
-      "types": "종류",
       "color": "색상",
-      "includeReplies": "댓글포함"
-    },
-    "status": {
+      "includeReplies": "댓글포함",
+      "filters": "필터",
+      "user": "사용자",
+      "type": "유형",
       "status": "상태"
     },
     "state": {
@@ -492,13 +497,22 @@
       "alignBottom": "하단 정렬"
     },
     "customStampModal": {
-      "stampColor": "스탬프 색상 :",
       "modalName": "스탬프 만들기",
       "stampText": "텍스트 :",
       "timestampText": "날짜 텍스트 :",
       "Username": "사용자 이름",
       "Date": "날짜",
-      "Time": "시간"
+      "Time": "시간",
+      "fontStyle": "글꼴 스타일",
+      "dateFormat": "날짜 형식",
+      "month": "월",
+      "day": "낮",
+      "year": "년도",
+      "hour": "시",
+      "minute": "분",
+      "second": "초",
+      "textColor": "텍스트 색상",
+      "backgroundColor": "배경색"
     },
     "pageRedactModal": {
       "addMark": "마크 추가",
@@ -529,6 +543,14 @@
     "redaction": {
       "applyTile": "적용",
       "applyMessage": "편집을 위해 선택된 모든 항목을 영구적으로 제거합니다."
+    },
+    "deleteBookmark": {
+      "title": "북마크를 삭제하시겠습니까?",
+      "message": "이 북마크를 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다."
+    },
+    "deleteOutline": {
+      "title": "개요를 삭제하시겠습니까?",
+      "message": "이 개요를 삭제하시겠습니까?\n\n 중첩된 윤곽선이 있는 윤곽선은 전체가 삭제되고 다시 설정하지 않는 한 바꿀 수 없습니다."
     },
     "selectPage": {
       "selectTitle": "선택된 페이지 없음",
@@ -796,6 +818,7 @@
     "title": "잘라내기",
     "allPages": "모든 페이지",
     "singlePage": "현재 페이지",
+    "multiPage": "페이지 지정",
     "cropDimensions": "크기",
     "dimensionInput": {
       "unitOfMeasurement": "단위",
@@ -830,6 +853,11 @@
       "pattern": "패턴",
       "start": "검색시작"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "속성",
+    "miscValuesHeader": "모두",
+    "emptyPanelMessage": "속성을 보려면 요소를 선택하십시오."
   },
   "languageModal": {
     "selectLanguage": "언어 선택"

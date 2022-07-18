@@ -7,6 +7,7 @@
     "calibrate": "Ijken",
     "cancel": "Annuleren",
     "clear": "Legen",
+    "clearAll": "Wis alles",
     "close": "Sluiten",
     "undo": "Ongedaan maken",
     "redo": "Klaar",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "Lege pagina hieronder invoegen",
     "pageManipulation": "Paginamanipulatie",
     "replace": "Vervangen",
+    "setDestination": "Bestemming instellen",
     "showLess": "laat minder zien",
     "showMore": "...meer",
     "chooseFile": "Kies een bestand",
@@ -132,13 +134,14 @@
     "textField": "Tekstveld",
     "signatureFormField": "Handtekeningveld",
     "checkBoxFormField": "Selectievakje veld",
-    "radioButtonFormField": "RadioButton-veld",
+    "radioButtonFormField": "Veld voor keuzerondjes",
     "listBoxFormField": "Keuzelijstveld",
     "comboBoxFormField": "Veld met invoervak",
     "link": "Koppeling",
     "other": "Andere",
     "3D": "3D",
-    "sound": "Geluid"
+    "sound": "Geluid",
+    "changeView": "Verander perspectief"
   },
   "rubberStamp": {
     "Approved": "Goedgekeurd",
@@ -173,11 +176,14 @@
     "searchPanel": "Zoeken",
     "menuOverlay": "Menu",
     "notesPanel": "Notities",
+    "outlinePanel": "Overzicht",
     "outlinesPanel": "Hoofdlijnen",
+    "bookmarkPanel": "Bladwijzer",
     "bookmarksPanel": "bladwijzers",
-    "signaturePanel": "Handtekeningen",
     "newBookmark": "Nieuwe bladwijzer",
+    "bookmarkTitle": "Titel van bladwijzer",
     "bookmarkPage": "Pagina",
+    "signaturePanel": "Handtekeningen",
     "layersPanel": "Lagen",
     "thumbnailsPanel": "Miniatuurweergave",
     "toolsButton": "Tools",
@@ -204,6 +210,7 @@
     "noAnnotations": "Begin met het maken van aantekeningen om een opmerking achter te laten.",
     "noAnnotationsReadOnly": "Dit document heeft geen annotaties.",
     "noAnnotationsFilter": "Begin met het maken van aantekeningen en filters verschijnen hier.",
+    "noBookmarks": "Geen bladwijzers beschikbaar",
     "noOutlines": "Dit document heeft geen hoofdlijnen.",
     "noAttachments": "Dit document heeft geen bijlagen.",
     "noResults": "Geen resultaten.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "Selecteer de pagina's in het document die u wilt vervangen.",
     "embeddedFiles": "Ingesloten bestanden",
     "pageNum": "Paginanummer",
+    "viewBookmark": "Bekijk bladwijzer op pagina",
     "error": "Fout"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "Selecteer meerdere pagina's",
       "closeTooltip": "Sluit meervoudige selectie"
     },
-    "outlineControls": {
-      "add": "Voeg item toe",
+    "bookmarkOutlineControls": {
+      "edit": "Bewerk",
+      "done": "Gedaan",
       "reorder": "Opnieuw ordenen"
     },
     "layout": {
@@ -391,13 +400,12 @@
       "pageReplaceInputFromSource": "met pagina('s)"
     },
     "filterAnnotModal": {
-      "commentBy": "Reactie door",
-      "types": "Soorten",
       "color": "Kleur",
-      "includeReplies": "Inclusief antwoorden"
-    },
-    "status": {
-      "status": "staat"
+      "includeReplies": "Inclusief antwoorden",
+      "filters": "Filters",
+      "user": "Gebruiker",
+      "type": "Type",
+      "status": "Toestand"
     },
     "state": {
       "accepted": "Geaccepteerd",
@@ -495,10 +503,19 @@
       "modalName": "Nieuwe stempel maken",
       "stampText": "Stempel tekst",
       "timestampText": "Tijdstempel tekst",
-      "stampColor": "Stempelkleur:",
       "Username": "Gebruikersnaam",
       "Date": "Datum",
-      "Time": "Tijd"
+      "Time": "Tijd",
+      "fontStyle": "lettertype",
+      "dateFormat": "Datumnotatie",
+      "month": "Maand",
+      "day": "Dag",
+      "year": "Jaar",
+      "hour": "Uur",
+      "minute": "Minuut",
+      "second": "Seconde",
+      "textColor": "Tekst kleur",
+      "backgroundColor": "Achtergrond kleur"
     },
     "pageRedactModal": {
       "addMark": "Markering toevoegen",
@@ -507,7 +524,11 @@
       "specify": "Specificeer pagina's",
       "odd": "Alleen oneven pagina's",
       "even": "Alleen even pagina's",
-      "header": "Redactie van pagina's markeren"
+      "header": "Redactie van pagina's markeren",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "Stijl"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "Redactie toepassen",
       "applyMessage": "Met deze actie worden alle items verwijderd die zijn geselecteerd voor redactie. Het kan niet ongedaan gemaakt worden."
+    },
+    "deleteBookmark": {
+      "title": "Bladwijzer verwijderen?",
+      "message": "Weet u zeker dat u deze bladwijzers wilt verwijderen? U kunt deze actie niet ongedaan maken."
+    },
+    "deleteOutline": {
+      "title": "Overzicht verwijderen?",
+      "message": "Weet u zeker dat u deze contouren wilt verwijderen?\n\n Een omtrek met geneste omtrekken zal ertoe leiden dat het hele ding wordt verwijderd en kan niet worden vervangen, tenzij je ze opnieuw instelt."
     },
     "selectPage": {
       "selectTitle": "Geen pagina's geselecteerd",
@@ -792,6 +821,7 @@
     "title": "Pagina's om bij te snijden",
     "allPages": "Alle",
     "singlePage": "Huidige pagina",
+    "multiPage": "Specificeer pagina",
     "cropDimensions": "Afmetingen bijsnijden",
     "dimensionInput": {
       "unitOfMeasurement": "Eenheid",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "Regio redactie",
       "fullPageRedaction": "Volledige pagina redactie",
+      "fullVideoFrameRedaction": "Videoredactie",
       "image": "Afbeelding"
     },
     "expand": "Uitbreiden",
@@ -826,6 +857,11 @@
       "pattern": "Patroon",
       "start": "Begin met zoeken"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Eigenschappen",
+    "miscValuesHeader": "Alle",
+    "emptyPanelMessage": "Selecteer een element om de eigenschappen ervan te bekijken"
   },
   "languageModal": {
     "selectLanguage": "Selecteer taal"

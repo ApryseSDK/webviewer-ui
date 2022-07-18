@@ -55,7 +55,7 @@ const Outline = forwardRef(
       selectedOutlinePath,
       setIsAddingNewOutline,
       isAddingNewOutline,
-      reRenderPanel,
+      updateOutlines,
       addNewOutline,
     } = useContext(OutlineContext);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -134,7 +134,7 @@ const Outline = forwardRef(
       }
 
       await outlineUtils.setOutlineName(outlineUtils.getPath(outline), newName);
-      reRenderPanel();
+      updateOutlines();
     }
 
     const isSelected = isOutlineSelected(outline);

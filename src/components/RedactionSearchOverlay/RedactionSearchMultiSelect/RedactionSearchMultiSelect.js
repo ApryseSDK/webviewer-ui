@@ -4,8 +4,8 @@ import Icon from 'components/Icon';
 import CreatableMultiSelect from 'components/CreatableMultiSelect';
 import { useTranslation } from 'react-i18next';
 
-const getStyles = (isDarkMode) => ({
-  groupHeading: (base) => ({
+const getStyles = isDarkMode => ({
+  groupHeading: base => ({
     ...base,
     textTransform: 'none',
     fontSize: '10px',
@@ -14,20 +14,20 @@ const getStyles = (isDarkMode) => ({
     paddingLeft: '8px',
     paddingTop: '10px',
   }),
-  group: (base) => ({
+  group: base => ({
     ...base,
     padding: '0px',
   }),
-  menu: (base) => ({
+  menu: base => ({
     ...base,
-    padding: '0px 0px 0px 0px'
+    padding: '0px 0px 0px 0px',
   }),
-  menuList: (base) => ({
+  menuList: base => ({
     ...base,
     padding: '0px',
     backgroundColor: isDarkMode ? '#000000' : '#FFFFFF',
   }),
-  multiValue: (base) => ({
+  multiValue: base => ({
     ...base,
     backgroundColor: isDarkMode ? '#192530' : '#E7EDF3',
 
@@ -41,35 +41,41 @@ const getStyles = (isDarkMode) => ({
     display: 'flex',
     fontSize: '13px',
     padding: '6px 8px',
-    "&:hover": {
+    '&:hover': {
       backgroundColor: isDarkMode ? '#192530' : '#E7EDF3',
     },
-    backgroundColor: state.isFocused ? isDarkMode ? '#192530' : '#E7EDF3' : 'transparent',
+    backgroundColor: state.isFocused ? (isDarkMode ? '#192530' : '#E7EDF3') : 'transparent',
   }),
-  valueContainer: (base) => ({
+  valueContainer: base => ({
     ...base,
     padding: '1px',
     maxHeight: '70px',
     overflowY: 'scroll',
   }),
-  control: (base) => ({
+  control: base => ({
     ...base,
-    backgroundColor: isDarkMode ? '#000000' : '#FFFFFF',
+    backgroundColor: isDarkMode ? '#21242A' : '#FFFFFF',
     minHeight: '29px',
+    borderColor: isDarkMode ? '#485056' : '#CFD4DA',
+    '&:hover': {
+      borderColor: isDarkMode ? '#485056' : '#CFD4DA',
+    },
   }),
-  placeholder: (base) => ({
+  placeholder: base => ({
     ...base,
     fontSize: '13px',
-    color: '#ADB5BD',
+    color: isDarkMode ? '#868E96' : '#ADB5BD',
+    paddingLeft: '4px',
   }),
-  input: (base) => ({
+  input: base => ({
     ...base,
     fontSize: '13px',
     color: isDarkMode ? '#FFFFFF' : '#485056',
+    paddingLeft: '3px',
   }),
 });
 
-const RedactionOption = (props) => {
+const RedactionOption = props => {
   const { data } = props;
   const { t } = useTranslation();
   return (
@@ -91,7 +97,7 @@ const MultiValueLabel = ({ data }) => {
   );
 };
 
-const RedactionSearchMultiSelect = (props) => {
+const RedactionSearchMultiSelect = props => {
   const { t } = useTranslation();
   const { activeTheme, redactionSearchOptions } = props;
 
@@ -99,7 +105,7 @@ const RedactionSearchMultiSelect = (props) => {
     {
       label: t('redactionPanel.search.pattern'),
       options: redactionSearchOptions,
-    }
+    },
   ];
 
   const isDarkMode = activeTheme === 'dark';
@@ -111,10 +117,10 @@ const RedactionSearchMultiSelect = (props) => {
       styles={styles}
       components={{ Option: RedactionOption, MultiValueLabel, IndicatorsContainer: () => null }}
       placeholder={t('redactionPanel.redactionSearchPlaceholder')}
-      formatCreateLabel={(value) => `${t('component.searchPanel')} ${value}`}
+      formatCreateLabel={value => `${t('component.searchPanel')} ${value}`}
       {...props}
     />
   );
 };
 
-export default RedactionSearchMultiSelect; 
+export default RedactionSearchMultiSelect;

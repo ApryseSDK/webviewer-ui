@@ -48,6 +48,7 @@ import ColorPickerModal from 'components/ColorPickerModal';
 import PageManipulationOverlay from 'components/PageManipulationOverlay';
 import PageRedactionModal from 'components/PageRedactionModal';
 import RedactionPanel from 'components/RedactionPanel';
+import Wv3dPropertiesPanel from 'components/Wv3dPropertiesPanel';
 import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
 import DocumentCropPopup from 'components/DocumentCropPopup';
 import LeftPanelOverlayContainer from 'components/LeftPanelOverlay';
@@ -75,25 +76,26 @@ const App = ({ removeEventHandlers }) => {
   const dispatch = useDispatch();
   let timeoutReturn;
 
-  const [isInDesktopOnlyMode] = useSelector(state => [
-    selectors.isInDesktopOnlyMode(state),
-  ]);
+  const [isInDesktopOnlyMode] = useSelector(state => [selectors.isInDesktopOnlyMode(state)]);
 
   useEffect(() => {
     fireEvent(Events.VIEWER_LOADED);
-    window.parent.postMessage({
-      type: 'viewerLoaded',
-      id: parseInt(getHashParameters('id'), 10)
-    }, '*');
+    window.parent.postMessage(
+      {
+        type: 'viewerLoaded',
+        id: parseInt(getHashParameters('id'), 10),
+      },
+      '*',
+    );
 
     function loadInitialDocument() {
       const doesAutoLoad = getHashParameters('auto_load', true);
       let initialDoc = getHashParameters('d', '');
-      initialDoc = initialDoc ? JSON.parse(initialDoc) : "";
+      initialDoc = initialDoc ? JSON.parse(initialDoc) : '';
       initialDoc = Array.isArray(initialDoc) ? initialDoc : [initialDoc];
       const isMultiDoc = initialDoc.length > 1;
       const startOffline = getHashParameters('startOffline', false);
-      const basePath = getHashParameters('basePath', "");
+      const basePath = getHashParameters('basePath', '');
       window.Core.setBasePath(basePath);
 
       if (isMultiDoc) {
@@ -128,9 +130,7 @@ const App = ({ removeEventHandlers }) => {
     }
 
     function messageHandler(event) {
-      if (event.isTrusted &&
-        typeof event.data === 'object' &&
-        event.data.type === 'viewerLoaded') {
+      if (event.isTrusted && typeof event.data === 'object' && event.data.type === 'viewerLoaded') {
         loadDocumentAndCleanup();
       }
     }
@@ -173,23 +173,20 @@ const App = ({ removeEventHandlers }) => {
         <div className="content">
           <LeftPanel />
           <DocumentContainer />
-          <RightPanel
-            dataElement="searchPanel"
-            onResize={width => dispatch(actions.setSearchPanelWidth(width))}
-          >
+          <RightPanel dataElement="searchPanel" onResize={width => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
           </RightPanel>
-          <RightPanel
-            dataElement="notesPanel"
-            onResize={width => dispatch(actions.setNotesPanelWidth(width))}
-          >
+          <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
             <NotesPanel />
           </RightPanel>
-          <RightPanel
-            dataElement="redactionPanel"
-            onResize={width => dispatch(actions.setRedactionPanelWidth(width))}
-          >
+          <RightPanel dataElement="redactionPanel" onResize={width => dispatch(actions.setRedactionPanelWidth(width))}>
             <RedactionPanel />
+          </RightPanel>
+          <RightPanel
+            dataElement="wv3dPropertiesPanel"
+            onResize={width => dispatch(actions.setWv3dPropertiesPanelWidth(width))}
+          >
+            <Wv3dPropertiesPanel />
           </RightPanel>
         </div>
         <ViewControlsOverlay />

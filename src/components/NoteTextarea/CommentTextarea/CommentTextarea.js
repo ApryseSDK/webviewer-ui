@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
 import 'quill-mention';
+import mentionsManager from 'helpers/MentionsManager';
 
 import './CommentTextarea.scss';
 let globalUserData = [];
-
 // mentionsModule has to be outside the funtion to be able to access it without it being destroyed and recreated
 const mentionModule = { 
   mention : {
@@ -20,24 +20,10 @@ const mentionModule = {
       }
       return (`<div> ${item.value} </div>`)
     },
-    source: function(searchTerm, renderList, mentionChar) {
-      if (searchTerm.length === 0) {
-        renderList(globalUserData, searchTerm);
-      } else {
-        const matches = [];
-        const searchTermLowerCase = searchTerm.toLowerCase();
-        globalUserData.forEach(function(user) {
-          const userValueIncludesSearchTerm = user.value.toLowerCase().includes(searchTermLowerCase);
-          const userIdIncludesSearchTerm = user.id && user.id.toLowerCase().includes(searchTermLowerCase);
-          const userEmailIncludesSearchTerm = user.email && user.email.toLowerCase().includes(searchTermLowerCase);
-          
-          if (userValueIncludesSearchTerm || userIdIncludesSearchTerm || userEmailIncludesSearchTerm) {
-            matches.push(user);
-          }
-        })
-
-        renderList(matches, searchTerm);
-      }
+    source: async function(searchTerm, renderList, mentionChar) {
+      const mentionsSearchFunction = mentionsManager.getMentionLookupCallback();
+      const foundUsers = await mentionsSearchFunction(globalUserData, searchTerm);
+      renderList(foundUsers, searchTerm);
     }
   }
 }

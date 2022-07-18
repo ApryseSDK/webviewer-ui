@@ -239,7 +239,6 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'addNewOutlineButtonContainer',
         'addNewOutlineButton',
         'outlineReorderButtonGroup',
-        'outlineControls',
         'editOutlineButton',
         'outlineEditPopup',
         'renameOutlineButton',

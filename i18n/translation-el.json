@@ -7,6 +7,7 @@
     "calibrate": "Μετρώ την διάμετρο",
     "cancel": "Ματαίωση",
     "clear": "Σαφή",
+    "clearAll": "Τα καθαρίζω όλα",
     "close": "Κλείσε",
     "undo": "Ξεκάνω",
     "redo": "Ετοιμος",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "Εισαγάγετε κενή σελίδα παρακάτω",
     "pageManipulation": "Χειρισμός σελίδας",
     "replace": "Αντικαθιστώ",
+    "setDestination": "Θέτω προορισμό",
     "showLess": "Δείξε λιγότερο",
     "showMore": "...περισσότερο",
     "chooseFile": "Επιλέξτε ένα αρχείο",
@@ -132,13 +134,14 @@
     "textField": "Πεδίο κειμένου",
     "signatureFormField": "Πεδίο υπογραφής",
     "checkBoxFormField": "Πεδίο πλαισίου ελέγχου",
-    "radioButtonFormField": "Πεδίο κουμπιού επιλογής",
+    "radioButtonFormField": "Πεδίο κουμπιού ραδιοφώνου",
     "listBoxFormField": "Πεδίο πλαισίου λίστας",
     "comboBoxFormField": "Πεδίο Combo Box",
     "link": "Σύνδεσμος",
     "other": "Αλλα",
     "3D": "3D",
-    "sound": "Ήχος"
+    "sound": "Ήχος",
+    "changeView": "Αλλαξε θέα"
   },
   "rubberStamp": {
     "Approved": "Εγκρίθηκε",
@@ -173,11 +176,14 @@
     "searchPanel": "Αναζήτηση",
     "menuOverlay": "Μενού",
     "notesPanel": "Σχόλια",
+    "outlinePanel": "Περίγραμμα",
     "outlinesPanel": "Περιγράμματα",
+    "bookmarkPanel": "Σελιδοδείκτης",
     "bookmarksPanel": "Σελιδοδείκτες",
-    "signaturePanel": "Υπογραφές",
     "newBookmark": "Νέος σελιδοδείκτης",
+    "bookmarkTitle": "Τίτλος σελιδοδείκτη",
     "bookmarkPage": "Σελίδα",
+    "signaturePanel": "Υπογραφές",
     "layersPanel": "Επίπεδα",
     "thumbnailsPanel": "Μικρογραφίες",
     "toolsButton": "Εργαλεία",
@@ -204,6 +210,7 @@
     "noAnnotations": "Ξεκινήστε να κάνετε σχολιασμούς για να αφήσετε ένα σχόλιο.",
     "noAnnotationsReadOnly": "Αυτό το έγγραφο δεν έχει σχολιασμούς.",
     "noAnnotationsFilter": "Ξεκινήστε να κάνετε σχολιασμούς και τα φίλτρα θα εμφανιστούν εδώ.",
+    "noBookmarks": "Δεν υπάρχουν διαθέσιμοι σελιδοδείκτες",
     "noOutlines": "Αυτό το έγγραφο δεν έχει περίγραμμα.",
     "noAttachments": "Αυτό το έγγραφο δεν έχει συνημμένα.",
     "noResults": "Δεν βρέθηκαν αποτελέσματα.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "Επιλέξτε τις σελίδες του εγγράφου με τις οποίες θέλετε να αντικαταστήσετε.",
     "embeddedFiles": "Ενσωματωμένα Αρχεία",
     "pageNum": "Αριθμός σελίδας",
+    "viewBookmark": "Προβολή σελιδοδείκτη στη σελίδα",
     "error": "Λάθος"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "Επιλέξτε πολλές σελίδες",
       "closeTooltip": "Κλείσιμο πολλαπλής επιλογής"
     },
-    "outlineControls": {
-      "add": "Πρόσθεσε είδος",
+    "bookmarkOutlineControls": {
+      "edit": "Επεξεργασία",
+      "done": "Ολοκληρώθηκε",
       "reorder": "Παραγγέλλω πάλι"
     },
     "layout": {
@@ -391,12 +400,11 @@
       "pageReplaceInputFromSource": "με σελίδες"
     },
     "filterAnnotModal": {
-      "commentBy": "Σχόλιο από",
-      "types": "Τύποι",
       "color": "Χρώμα",
-      "includeReplies": "Συμπεριλάβετε απαντήσεις"
-    },
-    "status": {
+      "includeReplies": "Συμπεριλάβετε απαντήσεις",
+      "filters": "Φίλτρα",
+      "user": "Χρήστης",
+      "type": "Τύπος",
       "status": "Κατάσταση"
     },
     "state": {
@@ -495,10 +503,19 @@
       "modalName": "Δημιουργία νέας σφραγίδας",
       "stampText": "Κείμενο σφραγίδας",
       "timestampText": "Κείμενο χρονοσήμανσης",
-      "stampColor": "Χρώμα σφραγίδας:",
       "Username": "Όνομα χρήστη",
       "Date": "Ημερομηνία",
-      "Time": "χρόνος"
+      "Time": "χρόνος",
+      "fontStyle": "στυλ γραμματοσειράς",
+      "dateFormat": "Μορφή ημερομηνίας",
+      "month": "Μήνας",
+      "day": "Ημέρα",
+      "year": "Ετος",
+      "hour": "Ωρα",
+      "minute": "Λεπτό",
+      "second": "Δεύτερος",
+      "textColor": "Χρώμα κειμένου",
+      "backgroundColor": "Χρώμα του φόντου"
     },
     "pageRedactModal": {
       "addMark": "Προσθήκη σήμανσης",
@@ -507,7 +524,11 @@
       "specify": "Καθορίστε Σελίδες",
       "odd": "Μονές σελίδες μόνο",
       "even": "Ιδιες σελιδες μονο",
-      "header": "Επισήμανση Επεξεργασίας Σελίδων"
+      "header": "Επισήμανση Επεξεργασίας Σελίδων",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "Στυλ"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "Εφαρμόστε τη διόρθωση",
       "applyMessage": "Αυτή η ενέργεια θα καταργήσει οριστικά όλα τα στοιχεία που έχουν επιλεγεί για επεξεργασία. Δεν μπορεί να αναιρεθεί."
+    },
+    "deleteBookmark": {
+      "title": "Διαγραφή σελιδοδείκτη;",
+      "message": "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτούς τους σελιδοδείκτες; Δεν μπορείτε να αναιρέσετε αυτήν την ενέργεια."
+    },
+    "deleteOutline": {
+      "title": "Διαγραφή περίγραμμα;",
+      "message": "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτά τα περιγράμματα;\n\n Ένα περίγραμμα που έχει ένθετα περιγράμματα θα έχει ως αποτέλεσμα τη διαγραφή του συνόλου και δεν μπορεί να αντικατασταθεί αν δεν τα ρυθμίσετε ξανά."
     },
     "selectPage": {
       "selectTitle": "Δεν επιλέχθηκαν σελίδες",
@@ -792,6 +821,7 @@
     "title": "Σελίδες για περικοπή",
     "allPages": "Ολα",
     "singlePage": "Τρέχουσα σελίδα",
+    "multiPage": "Καθορίστε τη σελίδα",
     "cropDimensions": "Διαστάσεις καλλιέργειας",
     "dimensionInput": {
       "unitOfMeasurement": "Μονάδα",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "Διαμόρφωση περιοχής",
       "fullPageRedaction": "Διασκευή πλήρους σελίδας",
+      "fullVideoFrameRedaction": "Επεξεργασία βίντεο",
       "image": "Εικόνα"
     },
     "expand": "Επεκτείνουν",
@@ -826,6 +857,11 @@
       "pattern": "Πρότυπο",
       "start": "Ξεκινήστε να κάνετε την αναζήτησή σας"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Ιδιότητες",
+    "miscValuesHeader": "Όλα",
+    "emptyPanelMessage": "Επιλέξτε ένα στοιχείο για να δείτε τις ιδιότητές του"
   },
   "languageModal": {
     "selectLanguage": "Επιλέξτε γλώσσα"

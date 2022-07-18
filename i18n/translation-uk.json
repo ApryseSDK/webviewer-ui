@@ -7,6 +7,7 @@
     "calibrate": "Калібрувати",
     "cancel": "Скасувати",
     "clear": "Ясно",
+    "clearAll": "Очистити все",
     "close": "Закрити",
     "undo": "Скасувати",
     "redo": "Готовий",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "Вставте порожню сторінку нижче",
     "pageManipulation": "Маніпулювання сторінками",
     "replace": "Замінити",
+    "setDestination": "Встановити пункт призначення",
     "showLess": "показувати менше",
     "showMore": "...більше",
     "chooseFile": "Виберіть файл",
@@ -132,13 +134,14 @@
     "textField": "Текстове поле",
     "signatureFormField": "Поле підпису",
     "checkBoxFormField": "Поле прапорця",
-    "radioButtonFormField": "Поле радіокнопки",
+    "radioButtonFormField": "Поле перемикача",
     "listBoxFormField": "Поле списку",
     "comboBoxFormField": "Поле зі списком",
     "link": "Посилання",
     "other": "Інший",
     "3D": "3D",
-    "sound": "Звук"
+    "sound": "Звук",
+    "changeView": "Змінити вигляд"
   },
   "rubberStamp": {
     "Approved": "Затверджено",
@@ -173,11 +176,14 @@
     "searchPanel": "Пошук",
     "menuOverlay": "Меню",
     "notesPanel": "Коментарі",
+    "outlinePanel": "Контур",
     "outlinesPanel": "Обриси",
+    "bookmarkPanel": "Закладка",
     "bookmarksPanel": "Закладки",
-    "signaturePanel": "Підписи",
     "newBookmark": "Нова закладка",
+    "bookmarkTitle": "Закладка Назва",
     "bookmarkPage": "Сторінка",
+    "signaturePanel": "Підписи",
     "layersPanel": "Шари",
     "thumbnailsPanel": "Ескізи",
     "toolsButton": "Інструменти",
@@ -204,6 +210,7 @@
     "noAnnotations": "Почніть робити анотації, щоб залишити коментар.",
     "noAnnotationsReadOnly": "Цей документ не має анотацій.",
     "noAnnotationsFilter": "Почніть створювати анотації, і тут з’являться фільтри.",
+    "noBookmarks": "Немає доступних закладок",
     "noOutlines": "Цей документ не має конспекту.",
     "noAttachments": "Цей документ не має вкладень.",
     "noResults": "Нічого не знайдено.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "Виберіть сторінки в документі, якими потрібно замінити.",
     "embeddedFiles": "Вбудовані файли",
     "pageNum": "Номер сторінки",
+    "viewBookmark": "Переглянути закладку на сторінці",
     "error": "Помилка"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "Виберіть кілька сторінок",
       "closeTooltip": "Закрити множинний вибір"
     },
-    "outlineControls": {
-      "add": "Додати елемент",
+    "bookmarkOutlineControls": {
+      "edit": "Редагувати",
+      "done": "Готово",
       "reorder": "Змінити порядок"
     },
     "layout": {
@@ -391,12 +400,11 @@
       "pageReplaceInputFromSource": "зі сторінкою(ами)"
     },
     "filterAnnotModal": {
-      "commentBy": "Коментар від",
-      "types": "Типи",
       "color": "Колір",
-      "includeReplies": "Включити відповіді"
-    },
-    "status": {
+      "includeReplies": "Включити відповіді",
+      "filters": "фільтри",
+      "user": "Користувач",
+      "type": "Тип",
       "status": "Статус"
     },
     "state": {
@@ -495,10 +503,19 @@
       "modalName": "Створити новий штамп",
       "stampText": "Текст штампа",
       "timestampText": "Текст позначки часу",
-      "stampColor": "Колір штампа:",
       "Username": "Ім'я користувача",
       "Date": "Дата",
-      "Time": "Час"
+      "Time": "Час",
+      "fontStyle": "стиль шрифту",
+      "dateFormat": "Формат дати",
+      "month": "Місяць",
+      "day": "День",
+      "year": "Рік",
+      "hour": "годину",
+      "minute": "Хвилина",
+      "second": "Друге",
+      "textColor": "Колір тексту",
+      "backgroundColor": "Колір фону"
     },
     "pageRedactModal": {
       "addMark": "Додайте позначку",
@@ -507,7 +524,11 @@
       "specify": "Вкажіть сторінки",
       "odd": "Тільки непарні сторінки",
       "even": "Лише парні сторінки",
-      "header": "Позначте Редагування сторінок"
+      "header": "Позначте Редагування сторінок",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "Стиль"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "Застосувати Редакцію",
       "applyMessage": "Ця дія назавжди видалить усі елементи, вибрані для редагування. Це не можна скасувати."
+    },
+    "deleteBookmark": {
+      "title": "Видалити закладку?",
+      "message": "Ви впевнені, що хочете видалити ці закладки? Ви не можете скасувати цю дію."
+    },
+    "deleteOutline": {
+      "title": "Видалити Outline?",
+      "message": "Ви впевнені, що хочете видалити ці контури?\n\n Контур, який має будь-які вкладені контури, призведе до того, що все буде видалено, і його не можна буде замінити, якщо ви не встановите їх знову."
     },
     "selectPage": {
       "selectTitle": "Сторінок не вибрано",
@@ -792,6 +821,7 @@
     "title": "Сторінки для обрізання",
     "allPages": "всі",
     "singlePage": "Поточна сторінка",
+    "multiPage": "Вкажіть сторінку",
     "cropDimensions": "Розміри урожаю",
     "dimensionInput": {
       "unitOfMeasurement": "одиниця",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "Регіональна редакція",
       "fullPageRedaction": "Повна редакція сторінки",
+      "fullVideoFrameRedaction": "Редакція відео",
       "image": "Зображення"
     },
     "expand": "Розгорнути",
@@ -826,6 +857,11 @@
       "pattern": "Візерунок",
       "start": "Почніть пошук"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Властивості",
+    "miscValuesHeader": "Усі",
+    "emptyPanelMessage": "Виберіть елемент, щоб переглянути його властивості"
   },
   "languageModal": {
     "selectLanguage": "Оберіть мову"

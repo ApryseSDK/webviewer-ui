@@ -380,6 +380,11 @@ WebViewer(...)
           dispatch(actions.closeElement('redactionPanel'));
         }
 
+        const isWv3dPropertiesPanelOpen = selectors.isElementOpen(getState(), 'wv3dPropertiesPanel');
+        if (isWv3dPropertiesPanelOpen) {
+          dispatch(actions.closeElement('wv3dPropertiesPanel'));
+        }
+
         dispatch(actions.openElement('searchPanel'));
       },
       [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: e => {
@@ -402,7 +407,12 @@ WebViewer(...)
       [concatKeys(Keys.CTRL_P, Keys.COMMAND_P)]: e => {
         e.preventDefault();
 
-        print(dispatch, selectors.isEmbedPrintSupported(getState()), selectors.getSortStrategy(getState()), selectors.getColorMap(getState()));
+        print(
+          dispatch,
+          selectors.isEmbedPrintSupported(getState()),
+          selectors.getSortStrategy(getState()),
+          selectors.getColorMap(getState()),
+        );
       },
       [`${Keys.PAGE_UP}`]: e => {
         e.preventDefault();
@@ -480,7 +490,7 @@ WebViewer(...)
             'rubberStampOverlay',
             'contentEditModal',
             'filterModal',
-          ])
+          ]),
         );
       },
       [`${Keys.P}`]: this.createToolHotkeyHandler(() => {
@@ -520,9 +530,7 @@ WebViewer(...)
         setToolModeAndGroup(store, 'AnnotationCreateFreeText');
       }),
       [`${Keys.S}`]: this.createToolHotkeyHandler(() => {
-        const sigToolButton = document.querySelector(
-          '[data-element="signatureToolButton"] .Button'
-        );
+        const sigToolButton = document.querySelector('[data-element="signatureToolButton"] .Button');
 
         sigToolButton?.click();
       }),
@@ -569,7 +577,8 @@ WebViewer(...)
       const currentToolName = core.getToolMode().name;
 
       // disable changing tool when the signature overlay is opened.
-      const isSignatureModalOpen = currentToolName === window.Core.Tools.ToolNames.SIGNATURE && openElements['signatureModal'];
+      const isSignatureModalOpen =
+        currentToolName === window.Core.Tools.ToolNames.SIGNATURE && openElements['signatureModal'];
 
       if (isFocusingElement() || isSignatureModalOpen) {
         return;

@@ -11,12 +11,10 @@
 
         .ql-editor {
             width: 100%;
-            padding-left: 8px;
+            padding: 4px 6px;
             border: 1px solid var(--border);
             border-radius: 4px;
             color: var(--text-color);
-            padding-top: 4px;
-            padding-bottom: 4px;
             resize: none;
             overflow: hidden;
             box-sizing: border-box;
@@ -27,7 +25,7 @@
             }
 
             &.ql-blank::before {
-                left: 10px;
+                left: 8px;
                 list-style-type: none;
                 font-style: normal;
                 color: var(--placeholder-text);

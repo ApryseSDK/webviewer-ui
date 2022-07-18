@@ -173,7 +173,7 @@ class StylePopup extends React.PureComponent {
     const sliderComponents = Object.keys(sliders).map(key => {
       const props = sliderProps[key];
 
-      return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onSliderChange}/>;
+      return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onSliderChange} />;
     });
 
     return (

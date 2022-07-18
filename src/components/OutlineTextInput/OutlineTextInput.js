@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import './OutlineTextInput.scss';
 
-function OutlineTextInput({ className, defaultValue, onEnter, onEscape, ...rest }) {
+const OutlineTextInput = ({ className, defaultValue, onEnter, onEscape, ...rest }) => {
   const inputRef = useRef();
 
   useEffect(() => {
@@ -11,7 +11,7 @@ function OutlineTextInput({ className, defaultValue, onEnter, onEscape, ...rest 
     inputRef.current.select();
   }, []);
 
-  function handleKeyDown(e) {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter' && onEnter) {
       onEnter(e);
     }

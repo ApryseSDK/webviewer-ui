@@ -113,6 +113,12 @@ $light-gray: #e7ebee;
   }
 }
 
+@mixin tiny-browser-height {
+  @media (max-height: 320px) {
+    @content;
+  }
+}
+
 .hide-in-desktop {
   @include desktop {
     display: none;

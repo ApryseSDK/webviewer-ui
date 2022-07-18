@@ -10,8 +10,8 @@
     @extend %modal-shared-container-style-mobile;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: 480px;
-    height: 436px;
     padding: 0px;
     border-radius: 4px;
     box-shadow: 0px 0px 3px var(--document-box-shadow);
@@ -20,6 +20,15 @@
     @include mobile {
       border-radius: 0;
       height: 440px;
+    }
+
+    @include tiny-browser-height {
+      display: grid;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      grid-template-rows: 100px auto 70px;
+      justify-content: normal;
     }
 
     .header-container {
@@ -64,6 +73,10 @@
 
     @extend %tab-panel;
 
+    .tab-panel {
+      overflow-y: auto;
+    }
+
     .tab-list {
       font-size: 14px; // hack for extra area in the tab list. 13px looks bad.
       margin-top: 12px;
@@ -84,19 +97,34 @@
         margin-right: 8px;
       }
 
-      .cell-container{
+      .cell-container {
         width: 28px;
         height: 28px;
+
+        @include tiny-browser-height {
+          width: 22px;
+          height: 22px;
+        }
 
         .cell-outer {
           .cell{
             width: 16px;
             height: 16px;
+
+            @include tiny-browser-height {
+              width: 14px;
+              height: 14px;
+            }
           }
         }
         .cell-outer.active {
           width: 28px;
           height: 28px;
+
+          @include tiny-browser-height {
+            width: 22px;
+            height: 22px;
+          }
         }
       }
     }

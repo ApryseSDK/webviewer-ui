@@ -7,6 +7,7 @@
     "calibrate": "калибровать",
     "cancel": "Отменить",
     "clear": "Очистить",
+    "clearAll": "Очистить все",
     "close": "Закрыть",
     "undo": "Отменить",
     "redo": "готов",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "Вставьте пустую страницу ниже",
     "pageManipulation": "Манипуляции со страницей",
     "replace": "Заменять",
+    "setDestination": "Установить пункт назначения",
     "showLess": "показывай меньше",
     "showMore": "...более",
     "chooseFile": "Выберите файл",
@@ -138,7 +140,8 @@
     "link": "Ссылка на сайт",
     "other": "Другие",
     "3D": "3D",
-    "sound": "Звук"
+    "sound": "Звук",
+    "changeView": "Сменить вид"
   },
   "rubberStamp": {
     "Approved": "Одобренный",
@@ -173,11 +176,14 @@
     "searchPanel": "Поиск",
     "menuOverlay": "Меню",
     "notesPanel": "Заметки",
+    "outlinePanel": "Контур",
     "outlinesPanel": "Контуры",
+    "bookmarkPanel": "Закладка",
     "bookmarksPanel": "закладки",
-    "signaturePanel": "Подписи",
     "newBookmark": "Новая закладка",
+    "bookmarkTitle": "Название закладки",
     "bookmarkPage": "страница",
+    "signaturePanel": "Подписи",
     "layersPanel": "Слои",
     "thumbnailsPanel": "Эскизы",
     "toolsButton": "Инструменты",
@@ -204,6 +210,7 @@
     "noAnnotations": "Начните делать аннотации, чтобы оставить комментарий.",
     "noAnnotationsReadOnly": "Документ не имеет аннотаций.",
     "noAnnotationsFilter": "Начните делать аннотации и фильтры появятся здесь.",
+    "noBookmarks": "Нет доступных закладок",
     "noOutlines": "Документ не имеет оглавления.",
     "noAttachments": "К этому документу нет приложений.",
     "noResults": "Поиск не вернул результатов.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "Выберите страницы в документе, которые вы хотите заменить.",
     "embeddedFiles": "Встроенные файлы",
     "pageNum": "Номер страницы",
+    "viewBookmark": "Посмотреть закладку на странице",
     "error": "Ошибка"
   },
   "option": {
@@ -312,8 +320,9 @@
       "selectTooltip": "Выбрать несколько страниц",
       "closeTooltip": "Закрыть множественный выбор"
     },
-    "outlineControls": {
-      "add": "Добавить элемент",
+    "bookmarkOutlineControls": {
+      "edit": "Редактировать",
+      "done": "Сделанный",
       "reorder": "Изменение порядка"
     },
     "layout": {
@@ -391,12 +400,11 @@
       "pageReplaceInputFromSource": "со страницей(ами)"
     },
     "filterAnnotModal": {
-      "commentBy": "Комментарий от",
-      "types": "Типы",
       "color": "Цвет",
-      "includeReplies": "Включить ответы"
-    },
-    "status": {
+      "includeReplies": "Включить ответы",
+      "filters": "Фильтры",
+      "user": "Пользователь",
+      "type": "Тип",
       "status": "Статус"
     },
     "state": {
@@ -495,10 +503,19 @@
       "modalName": "Создать новый штамп",
       "stampText": "Штамп текст",
       "timestampText": "Текст метки времени",
-      "stampColor": "Цвет марки:",
       "Username": "имя пользователя",
       "Date": "Дата",
-      "Time": "Время"
+      "Time": "Время",
+      "fontStyle": "стиль шрифта",
+      "dateFormat": "Формат даты",
+      "month": "Месяц",
+      "day": "День",
+      "year": "Год",
+      "hour": "Час",
+      "minute": "Минута",
+      "second": "Второй",
+      "textColor": "Цвет текста",
+      "backgroundColor": "Фоновый цвет"
     },
     "pageRedactModal": {
       "addMark": "Добавить отметку",
@@ -507,7 +524,11 @@
       "specify": "Укажите страницы",
       "odd": "Только нечетные страницы",
       "even": "Только четные страницы",
-      "header": "Пометить страницы как отредактированные"
+      "header": "Пометить страницы как отредактированные",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "Стиль"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "Применить редактирование",
       "applyMessage": "Это действие навсегда удалит все элементы, выбранные для редактирования. Это не может быть отменено."
+    },
+    "deleteBookmark": {
+      "title": "Удалить закладку?",
+      "message": "Вы уверены, что хотите удалить эти закладки? Вы не можете отменить это действие."
+    },
+    "deleteOutline": {
+      "title": "Удалить контур?",
+      "message": "Вы уверены, что хотите удалить эти контуры?\n\n Контур, который имеет какие-либо вложенные контуры, приведет к удалению всего этого и не может быть заменен, если вы не установите их снова."
     },
     "selectPage": {
       "selectTitle": "Страницы не выбраны",
@@ -792,6 +821,7 @@
     "title": "Страницы для обрезки",
     "allPages": "Все",
     "singlePage": "Текущая страница",
+    "multiPage": "Укажите страницу",
     "cropDimensions": "Размеры обрезки",
     "dimensionInput": {
       "unitOfMeasurement": "Единица измерения",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "Редакция региона",
       "fullPageRedaction": "Полная редакция страницы",
+      "fullVideoFrameRedaction": "Видеоредакция",
       "image": "Изображение"
     },
     "expand": "Расширять",
@@ -826,6 +857,11 @@
       "pattern": "Шаблон",
       "start": "Начните поиск"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Свойства",
+    "miscValuesHeader": "Все",
+    "emptyPanelMessage": "Выберите элемент, чтобы просмотреть его свойства"
   },
   "languageModal": {
     "selectLanguage": "Выбрать язык"

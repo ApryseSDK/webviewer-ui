@@ -19,15 +19,17 @@ import DataElements from 'constants/dataElement';
 import actions from 'actions';
 import selectors from 'selectors';
 
+import '../../constants/bookmarksOutlinesShared.scss';
 import './OutlinesPanel.scss';
 
 function OutlinesPanel() {
-  const isDisabled = useSelector(state => selectors.isElementDisabled(state, DataElements.OUTLINES_PANEL));
+  const isDisabled = useSelector(state => selectors.isElementDisabled(state, DataElements.OUTLINE_PANEL));
   const outlines = useSelector(state => selectors.getOutlines(state));
   const outlineControlVisibility = useSelector(state => selectors.isOutlineControlVisible(state));
   const outlineEditingEnabled = useSelector(state => selectors.getIsOutlineEditing(state));
   const [selectedOutlinePath, setSelectedOutlinePath] = useState(null);
   const [isAddingNewOutline, setIsAddingNewOutline] = useState(false);
+  const [isMultiSelectionMode, setMultiSelectionMode] = useState(false);
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const nextPathRef = useRef(null);
@@ -42,7 +44,7 @@ function OutlinesPanel() {
     }
   }, [outlines]);
 
-  async function addNewOutline(e) {
+  const addNewOutline = async (e) => {
     const name = e.target.value;
 
     if (!name) {
@@ -59,39 +61,51 @@ function OutlinesPanel() {
     }
 
     nextPathRef.current = nextPath;
-    reRenderPanel();
+    updateOutlines();
   }
 
-  function reRenderPanel() {
+  const updateOutlines = () => {
     core.getOutlines(outlines => {
       dispatch(actions.setOutlines(outlines));
     });
   }
 
-  function generalMoveOutlineAction(dragOutline, dropOutline, moveDirection) {
+  const generalMoveOutlineAction = (dragOutline, dropOutline, moveDirection) => {
     const dragPath = outlineUtils.getPath(dragOutline);
     const dropPath = outlineUtils.getPath(dropOutline);
     moveDirection.call(outlineUtils, dragPath, dropPath).then(path => {
-      reRenderPanel();
+      updateOutlines();
       nextPathRef.current = path;
     });
     core.goToOutline(dragOutline);
   }
 
-  function moveOutlineAfterTarget(dragOutline, dropOutline) {
+  const moveOutlineAfterTarget = (dragOutline, dropOutline) => {
     generalMoveOutlineAction(dragOutline, dropOutline, outlineUtils.moveOutlineAfterTarget);
   }
 
-  function moveOutlineBeforeTarget(dragOutline, dropOutline) {
+  const moveOutlineBeforeTarget = (dragOutline, dropOutline) => {
     generalMoveOutlineAction(dragOutline, dropOutline, outlineUtils.moveOutlineBeforeTarget);
   }
 
-  function moveOutlineInward(dragOutline, dropOutline) {
+  const moveOutlineInward = (dragOutline, dropOutline) => {
     generalMoveOutlineAction(dragOutline, dropOutline, outlineUtils.moveOutlineInTarget);
   }
 
-  return isDisabled ? null : (
-    <div className="Panel OutlinesPanel" data-element={DataElements.OUTLINES_PANEL}>
+  if (isDisabled) {
+    return null;
+  }
+
+  return (
+    <div
+      className="Panel OutlinesPanel bookmark-outline-panel"
+      data-element={DataElements.OUTLINE_PANEL}
+    >
+      <div className="bookmark-outline-panel-header">
+        <div className="header-title">
+          {t('component.outlinesPanel')}
+        </div>
+      </div>
       <OutlineContext.Provider
         value={{
           setSelectedOutlinePath,
@@ -100,17 +114,14 @@ function OutlinesPanel() {
           isAddingNewOutline,
           isOutlineSelected: outline => outlineUtils.getPath(outline) === selectedOutlinePath,
           addNewOutline,
-          reRenderPanel,
+          updateOutlines,
         }}
       >
         {outlineControlVisibility && <OutlineControls />}
         <DndProvider backend={isMobileDevice ? TouchBackEnd : HTML5Backend}>
-          <div className="Outlines">
+          <div className="Outlines bookmark-outline-row">
             {!isAddingNewOutline && outlines.length === 0 && (
-              <div className="no-outlines">
-                <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
-                <div className="msg">{t('message.noOutlines')}</div>
-              </div>
+              <div className="msg msg-no-bookmark-outline">{t('message.noOutlines')}</div>
             )}
             {outlines.map(outline => (
               <Outline
@@ -133,11 +144,16 @@ function OutlinesPanel() {
             )}
           </div>
         </DndProvider>
-        <DataElementWrapper className="addNewOutlineButtonContainer" dataElement="addNewOutlineButtonContainer">
+        <DataElementWrapper
+          className="bookmark-outline-footer"
+          dataElement="addNewOutlineButtonContainer"
+        >
           <Button
             dataElement="addNewOutlineButton"
+            className="bookmark-outline-control-button add-new-button"
             img="icon-menu-add"
-            label={t('option.outlineControls.add')}
+            disabled={isAddingNewOutline || isMultiSelectionMode}
+            label={`${t('action.add')} ${t('component.outlinePanel')}`}
             onClick={() => setIsAddingNewOutline(true)}
           />
         </DataElementWrapper>

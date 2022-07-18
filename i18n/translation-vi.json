@@ -7,6 +7,7 @@
     "calibrate": "Hiệu chỉnh",
     "cancel": "Hủy",
     "clear": "Xóa",
+    "clearAll": "Quet sạch tât cả",
     "close": "Đóng",
     "undo": "Hoàn tác",
     "redo": "Làm Lại",
@@ -73,6 +74,7 @@
     "insertBlankPageBelow": "Chèn trang trống ở dưới",
     "pageManipulation": "Thao Tác Trang",
     "replace": "Thay thế",
+    "setDestination": "Đích đã được cài",
     "showLess": "hiển thị ít hơn",
     "showMore": "...nhiều hơn",
     "chooseFile": "Chọn một tệp",
@@ -132,13 +134,14 @@
     "textField": "Trường Văn Bản",
     "signatureFormField": "Trường Chữ Ký",
     "checkBoxFormField": "Trường Hộp Kiểm",
-    "radioButtonFormField": "Trường RadioButton",
+    "radioButtonFormField": "Trường nút radio",
     "listBoxFormField": "Trường Hộp Danh Sách",
     "comboBoxFormField": "Trường Hộp Kết Hợp",
     "link": "Liên kết",
     "other": "Khác",
     "3D": "3D",
-    "sound": "Âm thanh"
+    "sound": "Âm thanh",
+    "changeView": "Thay đổi góc nhìn"
   },
   "rubberStamp": {
     "Approved": "Đã chấp thuận",
@@ -173,11 +176,14 @@
     "searchPanel": "Tìm kiếm",
     "menuOverlay": "Menu",
     "notesPanel": "Bình Luận",
+    "outlinePanel": "Đề cương",
     "outlinesPanel": "Tóm tắt",
+    "bookmarkPanel": "Dấu trang",
     "bookmarksPanel": "Đánh dấu",
-    "signaturePanel": "Chữ ký",
     "newBookmark": "Đánh Dấu Mới",
+    "bookmarkTitle": "Tiêu đề Dấu trang",
     "bookmarkPage": "Trang",
+    "signaturePanel": "Chữ ký",
     "layersPanel": "Lớp",
     "thumbnailsPanel": "Hình nhỏ",
     "toolsButton": "Công cụ",
@@ -204,6 +210,7 @@
     "noAnnotations": "Bắt đầu tạo chú thích để lưu lại bình luận.",
     "noAnnotationsReadOnly": "Tài liệu này không có chú thích nào.",
     "noAnnotationsFilter": "Bắt đầu tạo chú thích và bộ lọc sẽ xuất hiện ở đây.",
+    "noBookmarks": "Không có dấu trang",
     "noOutlines": "Tài liệu này không có tóm tắt nào.",
     "noAttachments": "Tài liệu này không có tệp đính kèm nào.",
     "noResults": "Không tìm thấy kết quả nào.",
@@ -246,6 +253,7 @@
     "selectPageToReplace": "Chọn các trang trong tài liệu bạn muốn thay thế.",
     "embeddedFiles": "Tệp Nhúng",
     "pageNum": "Số Trang",
+    "viewBookmark": "Xem dấu trang trên trang",
     "error": "Lỗi"
   },
   "option": {
@@ -312,9 +320,10 @@
       "selectTooltip": "Chọn nhiều trang",
       "closeTooltip": "Đóng đa chọn"
     },
-    "outlineControls": {
-      "add": "Thêm mục",
-      "reorder": "Sắp xếp lại thứ tự"
+    "bookmarkOutlineControls": {
+      "edit": "Chỉnh sửa",
+      "done": "Xong",
+      "reorder": "Sắp xếp lại"
     },
     "layout": {
       "cover": "Trang Mặt Bìa",
@@ -391,12 +400,11 @@
       "pageReplaceInputFromSource": "bằng (các) trang"
     },
     "filterAnnotModal": {
-      "commentBy": "Nhận xét của",
-      "types": "Kiểu",
       "color": "Màu",
-      "includeReplies": "Bao Gồm Trả Lời"
-    },
-    "status": {
+      "includeReplies": "Bao Gồm Trả Lời",
+      "filters": "Bộ lọc",
+      "user": "Người sử dụng",
+      "type": "Loại hình",
       "status": "Trạng thái"
     },
     "state": {
@@ -495,10 +503,19 @@
       "modalName": "Tạo Tem Mới",
       "stampText": "Văn bản tem",
       "timestampText": "Văn bản dấu thời gian",
-      "stampColor": "Màu tem:",
       "Username": "Tên người dùng",
       "Date": "Ngày",
-      "Time": "Thời gian"
+      "Time": "Thời gian",
+      "fontStyle": "kiểu phông chữ",
+      "dateFormat": "Định dạng ngày tháng",
+      "month": "Tháng",
+      "day": "Ngày",
+      "year": "Năm",
+      "hour": "Giờ",
+      "minute": "Phút",
+      "second": "Thứ hai",
+      "textColor": "Văn bản màu",
+      "backgroundColor": "Màu nền"
     },
     "pageRedactModal": {
       "addMark": "Thêm dấu",
@@ -507,7 +524,11 @@
       "specify": "Chỉ định các trang",
       "odd": "Chỉ các trang lẻ",
       "even": "Chỉ trang chẵn",
-      "header": "Đánh dấu trang Redaction"
+      "header": "Đánh dấu trang Redaction",
+      "specifyPlaceholder": "1, 3, 5-10"
+    },
+    "lineStyleOptions": {
+      "title": "Phong cách"
     }
   },
   "warning": {
@@ -525,6 +546,14 @@
     "redaction": {
       "applyTile": "Áp Dụng Biên Tập",
       "applyMessage": "Hành động này sẽ gỡ vĩnh viễn tất cả các mục được chọn để biên tập. Không thể hoàn tác hành động này."
+    },
+    "deleteBookmark": {
+      "title": "Xóa Dấu trang?",
+      "message": "Bạn có chắc chắn muốn xóa các dấu trang này không? Bạn không thể hoàn tác hành động này."
+    },
+    "deleteOutline": {
+      "title": "Xóa dàn ý?",
+      "message": "Bạn có chắc chắn muốn xóa những đường viền này không?\n\n Một phác thảo có bất kỳ đường viền lồng nhau nào sẽ dẫn đến việc toàn bộ nội dung sẽ bị xóa và không thể thay thế trừ khi bạn đặt lại chúng."
     },
     "selectPage": {
       "selectTitle": "Không Có Trang nào được Chọn",
@@ -792,6 +821,7 @@
     "title": "Các trang cần cắt",
     "allPages": "Tất cả",
     "singlePage": "Trang hiện tại",
+    "multiPage": "Chỉ định trang",
     "cropDimensions": "Kích thước cây trồng",
     "dimensionInput": {
       "unitOfMeasurement": "Đơn vị",
@@ -813,6 +843,7 @@
     "redactionItem": {
       "regionRedaction": "Biên tập vùng",
       "fullPageRedaction": "Biên tập toàn trang",
+      "fullVideoFrameRedaction": "Video Redaction",
       "image": "Hình ảnh"
     },
     "expand": "Mở rộng",
@@ -826,6 +857,11 @@
       "pattern": "Mẫu",
       "start": "Bắt đầu thực hiện tìm kiếm của bạn"
     }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Thuộc tính",
+    "miscValuesHeader": "Tất cả",
+    "emptyPanelMessage": "Chọn một phần tử để xem các thuộc tính của nó"
   },
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"
