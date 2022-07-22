@@ -36,14 +36,13 @@ const PasswordModal = () => {
     if (isOpen) {
       dispatch(actions.closeElement('progressModal'));
       passwordInput.current?.focus();
+      window.addEventListener('keydown', e => escapePressListener(e, closeModal));
     } else {
       // when a user enters the correct password or calls core.closeDocument
       // reset state in case user loads another password-protected document
       setPassword('');
       setUserCancelled(false);
     }
-
-    window.addEventListener('keydown', e => escapePressListener(e, closeModal));
     return () => window.removeEventListener('keydown', escapePressListener);
   }, [dispatch, isOpen, passwordInput]);
 
