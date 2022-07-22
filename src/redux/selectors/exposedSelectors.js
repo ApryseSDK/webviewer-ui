@@ -27,62 +27,57 @@ export const getSelectedStamp = state => {
   return selectedStamp;
 };
 export const getSavedSignatures = state => state.viewer.savedSignatures;
-export const getDisplayedSignatures = state => state.viewer.savedSignatures.filter(state.viewer.displayedSignaturesFilterFunction);
+export const getDisplayedSignatures = state =>
+  state.viewer.savedSignatures.filter(state.viewer.displayedSignaturesFilterFunction);
 export const getSelectedDisplayedSignatureIndex = state => state.viewer.selectedDisplayedSignatureIndex;
-export const getSelectedDisplayedSignature = state => getDisplayedSignatures(state)[getSelectedDisplayedSignatureIndex(state)];
+export const getSelectedDisplayedSignature = state =>
+  getDisplayedSignatures(state)[getSelectedDisplayedSignatureIndex(state)];
 export const getDisplayedSignaturesFilterFunction = state => state.viewer.displayedSignaturesFilterFunction;
 
-export const getAutoFocusNoteOnAnnotationSelection = state =>
-  state.viewer.autoFocusNoteOnAnnotationSelection;
-export const getNotesInLeftPanel = state =>
-  state.viewer.notesInLeftPanel;
-export const getLeftPanelWidth = state =>
-  state.viewer.panelWidths.leftPanel;
-export const getSearchPanelWidth = state =>
-  state.viewer.panelWidths.searchPanel;
-export const getNotesPanelWidth = state =>
-  state.viewer.panelWidths.notesPanel;
+export const getAutoFocusNoteOnAnnotationSelection = state => state.viewer.autoFocusNoteOnAnnotationSelection;
+export const getNotesInLeftPanel = state => state.viewer.notesInLeftPanel;
+export const getLeftPanelWidth = state => state.viewer.panelWidths.leftPanel;
+export const getSearchPanelWidth = state => state.viewer.panelWidths.searchPanel;
+export const getNotesPanelWidth = state => state.viewer.panelWidths.notesPanel;
 
-export const getRedactionPanelWidth = state =>
-  state.viewer.panelWidths.redactionPanel;
+export const getRedactionPanelWidth = state => state.viewer.panelWidths.redactionPanel;
+
+export const getWv3dPropertiesPanelWidth = state => state.viewer.panelWidths.wv3dPropertiesPanel;
 
 const RESIZE_BAR_WIDTH = 14; // 14px Need to update this if styling results in a change to width.
-export const getLeftPanelWidthWithReszieBar = state =>
-  state.viewer.panelWidths.leftPanel + RESIZE_BAR_WIDTH;
-export const getSearchPanelWidthWithReszieBar = state =>
-  state.viewer.panelWidths.searchPanel + RESIZE_BAR_WIDTH;
-export const getNotesPanelWidthWithReszieBar = state =>
-  state.viewer.panelWidths.notesPanel + RESIZE_BAR_WIDTH;
+export const getLeftPanelWidthWithReszieBar = state => state.viewer.panelWidths.leftPanel + RESIZE_BAR_WIDTH;
+export const getSearchPanelWidthWithReszieBar = state => state.viewer.panelWidths.searchPanel + RESIZE_BAR_WIDTH;
+export const getNotesPanelWidthWithReszieBar = state => state.viewer.panelWidths.notesPanel + RESIZE_BAR_WIDTH;
 export const getDocumentContentContainerWidthStyle = state => {
   const notesPanelWidth = getNotesPanelWidthWithReszieBar(state);
   const searchPanelWidth = getSearchPanelWidthWithReszieBar(state);
   const leftPanelWidth = getLeftPanelWidthWithReszieBar(state);
   const redactionPanelWidth = getRedactionPanelWidth(state);
+  const wv3dPropertiesPanelWidth = getWv3dPropertiesPanelWidth(state);
   const isLeftPanelOpen = isElementOpen(state, 'leftPanel');
   const isNotesPanelOpen = isElementOpen(state, 'notesPanel');
   const isSearchPanelOpen = isElementOpen(state, 'searchPanel');
   const isRedactionPanelOpen = isElementOpen(state, 'redactionPanel');
+  const isWv3dPropertiesPanelOpen = isElementOpen(state, 'wv3dPropertiesPanel');
 
-  const spaceTakenUpByPanels = 0 +
+  const spaceTakenUpByPanels =
+    0 +
     (isLeftPanelOpen ? leftPanelWidth : 0) +
     (isNotesPanelOpen ? notesPanelWidth : 0) +
     (isSearchPanelOpen ? searchPanelWidth : 0) +
-    (isRedactionPanelOpen ? redactionPanelWidth : 0);
+    (isRedactionPanelOpen ? redactionPanelWidth : 0) +
+    (isWv3dPropertiesPanelOpen ? wv3dPropertiesPanelWidth : 0);
 
   return `calc(100% - ${spaceTakenUpByPanels}px)`;
 };
 
-export const getDocumentContainerWidth = state =>
-  state.viewer.documentContainerWidth;
-export const getDocumentContainerHeight = state =>
-  state.viewer.documentContainerHeight;
+export const getDocumentContainerWidth = state => state.viewer.documentContainerWidth;
+export const getDocumentContainerHeight = state => state.viewer.documentContainerHeight;
 
-export const isElementDisabled = (state, dataElement) =>
-  state.viewer?.disabledElements[dataElement]?.disabled;
+export const isElementDisabled = (state, dataElement) => state.viewer?.disabledElements[dataElement]?.disabled;
 
 export const isElementOpen = (state, dataElement) =>
-  state.viewer?.openElements[dataElement] &&
-  !state.viewer?.disabledElements[dataElement]?.disabled;
+  state.viewer?.openElements[dataElement] && !state.viewer?.disabledElements[dataElement]?.disabled;
 
 export const allButtonsInGroupDisabled = (state, toolGroup) => {
   const toolButtonObjects = getToolButtonObjects(state);
@@ -90,26 +85,27 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
     .filter(({ group }) => group === toolGroup)
     .map(({ dataElement }) => dataElement);
 
-  return dataElements.every(dataElement =>
-    isElementDisabled(state, dataElement),
-  );
+  return dataElements.every(dataElement => isElementDisabled(state, dataElement));
 };
 
 export const getToolbarHeaders = state => {
   return state.viewer.headers;
-}
+};
+
+export const getCustomHeadersAdditionalProperties = state => {
+  return state.viewer.customHeadersAdditionalProperties;
+};
 
 const getToolbarGroupDataElements = state => {
-  return Object.keys(state.viewer.headers)
-    .filter(key => key.includes('toolbarGroup-'));
+  return Object.keys(state.viewer.headers).filter(key => key.includes('toolbarGroup-'));
 };
 
 export const getEnabledToolbarGroups = state => {
   const toolbarGroupDataElements = getToolbarGroupDataElements(state);
   return toolbarGroupDataElements.filter(dataElement => {
     // The items will come from 'children' if it is a ToolbarGroup created by the API createTool
-    const headerItems = state.viewer.headers[dataElement].children || state.viewer.headers[dataElement];
-    const flattenHeaderItems = (dataItems) => {
+    const headerItems = state.viewer.headers[dataElement];
+    const flattenHeaderItems = dataItems => {
       return dataItems.reduce((total, item) => {
         if (item.children) {
           total.push(...flattenHeaderItems(item.children));
@@ -124,40 +120,37 @@ export const getEnabledToolbarGroups = state => {
     const toolGroupButtons = itemsToCheck.filter(({ dataElement }) => {
       return dataElement && dataElement.includes('ToolGroupButton');
     });
-    const isEveryToolGroupButtonDisabled = !dataElement.includes('toolbarGroup-View') && toolGroupButtons.every(({ dataElement: toolGroupDataElement }) => {
-      return isElementDisabled(state, toolGroupDataElement);
-    });
+    const isEveryToolGroupButtonDisabled =
+      !dataElement.includes('toolbarGroup-View') &&
+      toolGroupButtons.every(({ dataElement: toolGroupDataElement }) => {
+        return isElementDisabled(state, toolGroupDataElement);
+      });
     return !isElementDisabled(state, `${dataElement}`) && !isEveryToolGroupButtonDisabled;
   });
 };
 
-export const getCurrentToolbarGroup = state =>
-  state.viewer.toolbarGroup;
+export const getCurrentToolbarGroup = state => state.viewer.toolbarGroup;
 
-export const getActiveTheme = state =>
-  state.viewer.activeTheme;
+export const getActiveTheme = state => state.viewer.activeTheme;
 
 export const getDefaultHeaderItems = state => {
   return state.viewer.headers.default;
 };
 
 export const getActiveHeaderItems = state => {
-  const activeHeaderGroupItems = state.viewer.headers[state.viewer.activeHeaderGroup];
-  return activeHeaderGroupItems.children || activeHeaderGroupItems;
+  return state.viewer.headers[state.viewer.activeHeaderGroup];
 };
 
-export const getDisabledElementPriority = (state, dataElement) =>
-  state.viewer.disabledElements[dataElement]?.priority;
+export const getDisabledElementPriority = (state, dataElement) => state.viewer.disabledElements[dataElement]?.priority;
 
 export const getToolsHeaderItems = state => {
   const toolbarGroup = getCurrentToolbarGroup(state);
-  const toolbarGroupHeaders =  state.viewer.headers[toolbarGroup];
-  return toolbarGroupHeaders && toolbarGroupHeaders.children ? toolbarGroupHeaders.children : toolbarGroupHeaders || [];
+  return state.viewer.headers[toolbarGroup] || [];
 };
 
 export const getToolbarGroupItems = toolbarGroup => state => {
   return state.viewer.headers[toolbarGroup];
-}
+};
 
 export const getToolButtonObjects = state => {
   return state.viewer.toolButtonObjects;
@@ -186,42 +179,31 @@ export const isCommentThreadExpansionEnabled = state => {
 export const getActiveToolNamesForActiveToolGroup = state => {
   const { activeToolGroup } = state.viewer;
   const toolButtonObjects = getToolButtonObjects(state);
-  return Object.keys(toolButtonObjects).filter(
-    toolName => {
-      const toolButtonObject = toolButtonObjects[toolName];
-      const { group, dataElement } = toolButtonObject;
-      return group === activeToolGroup && !isElementDisabled(state, dataElement);
-    },
-  );
+  return Object.keys(toolButtonObjects).filter(toolName => {
+    const toolButtonObject = toolButtonObjects[toolName];
+    const { group, dataElement } = toolButtonObject;
+    return group === activeToolGroup && !isElementDisabled(state, dataElement);
+  });
 };
 
 export const getToolButtonDataElements = (state, toolNames) => {
   const toolButtonObjects = getToolButtonObjects(state);
-  return toolNames
-    .map(toolName => toolButtonObjects[toolName]?.dataElement)
-    .filter(Boolean);
+  return toolNames.map(toolName => toolButtonObjects[toolName]?.dataElement).filter(Boolean);
 };
 
-export const getToolButtonObject = (state, toolName) =>
-  getToolButtonObjects(state)[toolName];
+export const getToolButtonObject = (state, toolName) => getToolButtonObjects(state)[toolName];
 
-export const getToolButtonDataElement = (state, toolName) =>
-  getToolButtonObject(state, toolName)?.dataElement;
+export const getToolButtonDataElement = (state, toolName) => getToolButtonObject(state, toolName)?.dataElement;
 
 export const getToolNamesByGroup = (state, toolGroup) => {
   const toolButtonObjects = getToolButtonObjects(state);
-  return Object.keys(toolButtonObjects).filter(
-    name => toolButtonObjects[name].group === toolGroup,
-  );
+  return Object.keys(toolButtonObjects).filter(name => toolButtonObjects[name].group === toolGroup);
 };
 
 export const getToolNameByDataElement = (state, dataElement) => {
   const toolButtonObjects = getToolButtonObjects(state);
-  return Object.keys(toolButtonObjects).find(
-    name => toolButtonObjects[name].dataElement === dataElement,
-  );
+  return Object.keys(toolButtonObjects).find(name => toolButtonObjects[name].dataElement === dataElement);
 };
-
 
 export const getActiveToolName = state => state.viewer.activeToolName;
 
@@ -281,6 +263,8 @@ export const isEmbedPrintSupported = state => isChrome && !isAndroid && state.vi
 
 export const isOutlineControlVisible = state => state.viewer.outlineControlVisibility;
 
+export const isBookmarkIconShortcutVisible = state => state.viewer.bookmarkIconShortcutVisibility;
+
 export const getColorMap = state => state.viewer.colorMap;
 
 export const getCursorOverlayData = state => state.viewer.cursorOverlay;
@@ -289,11 +273,9 @@ export const getOpenElements = state => state.viewer.openElements;
 
 export const getDisabledElements = state => state.viewer.disabledElements;
 
-export const getCurrentPalette = (state, colorMapKey) =>
-  state.viewer.colorMap[colorMapKey]?.currentPalette;
+export const getCurrentPalette = (state, colorMapKey) => state.viewer.colorMap[colorMapKey]?.currentPalette;
 
-export const getIconColor = (state, colorMapKey) =>
-  state.viewer.colorMap[colorMapKey]?.iconColor;
+export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey]?.iconColor;
 
 export const getCustomNoteFilter = state => state.viewer.customNoteFilter;
 
@@ -317,8 +299,7 @@ export const getSelectedTab = (state, id) => state.viewer.tab[id];
 
 export const getCustomElementOverrides = (state, dataElement = '') => state.viewer.customElementOverrides[dataElement];
 
-export const getPopupItems = (state, popupDataElement) =>
-  state.viewer[popupDataElement] || [];
+export const getPopupItems = (state, popupDataElement) => state.viewer[popupDataElement] || [];
 
 export const getMenuOverlayItems = state => state.viewer.menuOverlay;
 
@@ -365,13 +346,11 @@ export const getWarningTitle = state => state.viewer.warning?.title || '';
 
 export const getWarningConfirmEvent = state => state.viewer.warning?.onConfirm;
 
-export const getWarningConfirmBtnText = state =>
-  state.viewer.warning?.confirmBtnText;
+export const getWarningConfirmBtnText = state => state.viewer.warning?.confirmBtnText;
 
 export const getWarningSecondaryEvent = state => state.viewer.warning?.onSecondary;
 
-export const getWarningSecondaryBtnText = state =>
-  state.viewer.warning?.secondaryBtnText;
+export const getWarningSecondaryBtnText = state => state.viewer.warning?.secondaryBtnText;
 
 export const getWarningCancelEvent = state => state.viewer.warning?.onCancel;
 
@@ -464,5 +443,9 @@ export const shouldShowPresets = state => {
 export const shouldResetAudioPlaybackPosition = state => state.viewer.shouldResetAudioPlaybackPosition;
 
 export const getActiveSoundAnnotation = state => state.viewer.activeSoundAnnotation;
+
+export const getWv3dPropertiesPanelModelData = state => state.wv3dPropertiesPanel.modelData;
+
+export const getWv3dPropertiesPanelSchema = state => state.wv3dPropertiesPanel.schema;
 
 export const getAnnotationFilters = state => state.viewer.annotationFilters;

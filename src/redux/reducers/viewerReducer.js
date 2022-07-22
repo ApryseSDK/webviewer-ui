@@ -4,7 +4,7 @@ export default initialState => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'SET_PRESET_CROP_DIMENSIONS': 
+    case 'SET_PRESET_CROP_DIMENSIONS':
       return {
         ...state,
         presetCropDimensions: payload.presetCropDimensions,
@@ -134,6 +134,14 @@ export default initialState => (state = initialState, action) => {
           redactionPanel: payload.width,
         },
       };
+    case 'SET_WV3D_PROPERTIES_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          wv3dPropertiesPanel: payload.width,
+        },
+      };
     case 'SET_DOCUMENT_CONTAINER_WIDTH':
       return {
         ...state,
@@ -245,6 +253,8 @@ export default initialState => (state = initialState, action) => {
       };
     case 'SET_OUTLINE_CONTROL_VISIBILITY':
       return { ...state, outlineControlVisibility: payload.outlineControlVisibility };
+    case 'SET_BOOKMARK_ICON_SHORTCUT_VISIBILITY':
+      return { ...state, bookmarkIconShortcutVisibility: payload.bookmarkIconShortcutVisibility };
     case 'SET_OUTLINE_EDITING':
       return { ...state, isOutlineEditing: payload.isOutlineEditing };
     case 'SET_NOTE_POPUP_ID':
@@ -273,6 +283,11 @@ export default initialState => (state = initialState, action) => {
       return {
         ...state,
         headers: { ...state.headers, [payload.header]: payload.headerItems },
+      };
+    case 'SET_CUSTOM_HEADERS_ADDITIONAL_PROPERTIES':
+      return {
+        ...state,
+        customHeadersAdditionalProperties: { ...state.headers, [payload.customHeader]: payload.additionalProperties },
       };
     case 'SET_POPUP_ITEMS':
       return {
@@ -419,7 +434,7 @@ export default initialState => (state = initialState, action) => {
       return { ...state, customApplyRedactionsHandler: payload.customApplyRedactionsHandler };
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
-    case 'SET_CUSTOM_MODAL': {
+    case 'ADD_CUSTOM_MODAL': {
       const existingDataElementFiltered = state.customModals.filter(function(modal) {
         return modal.dataElement !== payload.dataElement;
       });
@@ -457,7 +472,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_COMMENT_THREAD_EXPANSION':
       return {
         ...state,
-        isCommentThreadExpansionEnabled: payload.enableCommentThreadExpansion
+        isCommentThreadExpansionEnabled: payload.enableCommentThreadExpansion,
       };
     case 'ADD_TRUSTED_CERTIFICATES':
       /**

@@ -9,7 +9,7 @@ import Events from 'constants/events';
 
 export const setPresetCropDimensions = presetCropDimensions => ({
   type: 'SET_PRESET_CROP_DIMENSIONS',
-  payload: { presetCropDimensions }
+  payload: { presetCropDimensions },
 });
 
 export const setDateTimeFormats = dateTimeFormats => ({
@@ -88,7 +88,6 @@ export const setCustomStamps = t => async dispatch => {
     }),
   );
 
-
   const customStamps = annotations.map(annotation => ({
     annotation,
     imgSrc: annotation['ImageData'],
@@ -103,8 +102,9 @@ export const setCustomStamps = t => async dispatch => {
 export const setReadOnlyRibbons = () => (dispatch, getState) => {
   dispatch(setToolbarGroup('toolbarGroup-View'));
   const state = getState();
-  const toolbarGroupsToDisable = Object.keys(state.viewer.headers)
-    .filter(key => key.includes('toolbarGroup-') && key !== 'toolbarGroup-View');
+  const toolbarGroupsToDisable = Object.keys(state.viewer.headers).filter(
+    key => key.includes('toolbarGroup-') && key !== 'toolbarGroup-View',
+  );
 
   disableElements(toolbarGroupsToDisable, PRIORITY_TWO)(dispatch, getState);
 };
@@ -118,28 +118,24 @@ export const enableRibbons = () => (dispatch, getState) => {
   const isInFormFieldCreationMode = core.getFormFieldCreationManager().isInFormFieldCreationMode();
   const toolbarGroup = isInFormFieldCreationMode ? 'toolbarGroup-Forms' : state.viewer.toolbarGroup;
   dispatch(setToolbarGroup(toolbarGroup || 'toolbarGroup-Annotate'));
-  const toolbarGroupsToEnable = Object.keys(state.viewer.headers)
-    .filter(key => key.includes('toolbarGroup-'));
+  const toolbarGroupsToEnable = Object.keys(state.viewer.headers).filter(key => key.includes('toolbarGroup-'));
 
   enableElements(toolbarGroupsToEnable, PRIORITY_TWO)(dispatch, getState);
 };
 
-const isElementDisabled = (state, dataElement) =>
-  state.viewer.disabledElements[dataElement]?.disabled;
+const isElementDisabled = (state, dataElement) => state.viewer.disabledElements[dataElement]?.disabled;
 
 export const allButtonsInGroupDisabled = (state, toolGroup) => {
   const dataElements = Object.values(state.viewer.toolButtonObjects)
     .filter(({ group }) => group === toolGroup)
     .map(({ dataElement }) => dataElement);
 
-  return dataElements.every(dataElement =>
-    isElementDisabled(state, dataElement),
-  );
+  return dataElements.every(dataElement => isElementDisabled(state, dataElement));
 };
 
 export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
-    const toolGroups = state.viewer.headers[_toolbarGroup].children || state.viewer.headers[_toolbarGroup];
+    const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
     if (toolGroups) {
       const firstTool = Object.values(toolGroups).find(({ toolGroup, dataElement }) => {
@@ -173,9 +169,10 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
   } else {
     dispatch(openElements(['toolsHeader']));
     const state = getState();
-    const lastPickedToolGroup = state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
-    const lastPickedToolName = state.viewer.lastPickedToolForGroup[lastPickedToolGroup]
-      || getFirstToolNameForGroup(state, lastPickedToolGroup);
+    const lastPickedToolGroup =
+      state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
+    const lastPickedToolName =
+      state.viewer.lastPickedToolForGroup[lastPickedToolGroup] || getFirstToolNameForGroup(state, lastPickedToolGroup);
     if (pickTool) {
       dispatch({
         type: 'SET_ACTIVE_TOOL_GROUP',
@@ -238,6 +235,18 @@ export const setRedactionPanelWidth = width => ({
   type: 'SET_REDACTION_PANEL_WIDTH',
   payload: { width },
 });
+export const setWv3dPropertiesPanelWidth = width => ({
+  type: 'SET_WV3D_PROPERTIES_PANEL_WIDTH',
+  payload: { width },
+});
+export const setWv3dPropertiesPanelModelData = modelData => ({
+  type: 'SET_WV3D_PROPERTIES_PANEL_MODEL_DATA',
+  payload: { modelData },
+});
+export const setWv3dPropertiesPanelSchema = schema => ({
+  type: 'SET_WV3D_PROPERTIES_PANEL_SCHEMA',
+  payload: { schema },
+});
 export const setDocumentContainerWidth = width => ({
   type: 'SET_DOCUMENT_CONTAINER_WIDTH',
   payload: { width },
@@ -254,8 +263,7 @@ export const enableAllElements = () => ({
 export const openElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  const isElementDisabled =
-    state.viewer.disabledElements[dataElement]?.disabled;
+  const isElementDisabled = state.viewer.disabledElements[dataElement]?.disabled;
   const isLeftPanelOpen = state.viewer.openElements['leftPanel'];
   const isElementOpen = isDataElementLeftPanel(dataElement, state)
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
@@ -295,8 +303,7 @@ export const openElements = dataElements => dispatch => {
 export const closeElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  const isElementDisabled =
-    state.viewer.disabledElements[dataElement]?.disabled;
+  const isElementDisabled = state.viewer.disabledElements[dataElement]?.disabled;
   const isElementClosed = isDataElementLeftPanel(dataElement, state)
     ? state.viewer.activeLeftPanel !== dataElement
     : !state.viewer.openElements[dataElement];
@@ -305,10 +312,7 @@ export const closeElement = dataElement => (dispatch, getState) => {
     return;
   }
 
-  if (
-    isDataElementLeftPanel(dataElement, state) &&
-    state.viewer.openElements['leftPanel']
-  ) {
+  if (isDataElementLeftPanel(dataElement, state) && state.viewer.openElements['leftPanel']) {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement: 'leftPanel' } });
     fireEvent(Events.VISIBILITY_CHANGED, { element: 'leftPanel', isVisible: false });
   } else {
@@ -336,9 +340,7 @@ export const closeElements = dataElements => dispatch => {
 export const toggleElement = dataElement => (dispatch, getState) => {
   const state = getState();
 
-  if (
-    state.viewer.disabledElements[dataElement]?.disabled
-  ) {
+  if (state.viewer.disabledElements[dataElement]?.disabled) {
     return;
   }
 
@@ -347,12 +349,19 @@ export const toggleElement = dataElement => (dispatch, getState) => {
     if (dataElement === 'searchPanel') {
       dispatch(closeElement('notesPanel'));
       dispatch(closeElement('redactionPanel'));
+      dispatch(closeElement('wv3dPropertiesPanel'));
     } else if (dataElement === 'notesPanel') {
       dispatch(closeElement('searchPanel'));
       dispatch(closeElement('redactionPanel'));
+      dispatch(closeElement('wv3dPropertiesPanel'));
     } else if (dataElement === 'redactionPanel') {
       dispatch(closeElement('searchPanel'));
       dispatch(closeElement('notesPanel'));
+      dispatch(closeElement('wv3dPropertiesPanel'));
+    } else if (dataElement === 'wv3dPropertiesPanel') {
+      dispatch(closeElement('searchPanel'));
+      dispatch(closeElement('notesPanel'));
+      dispatch(closeElement('redactionPanel'));
     }
   }
 
@@ -363,8 +372,8 @@ export const toggleElement = dataElement => (dispatch, getState) => {
   }
 };
 
-export const setCustomModal = modalOptions => ({
-  type: 'SET_CUSTOM_MODAL',
+export const addCustomModal = modalOptions => ({
+  type: 'ADD_CUSTOM_MODAL',
   payload: modalOptions,
 });
 
@@ -409,9 +418,7 @@ export const setNotesPanelSortStrategy = sortStrategy => ({
   payload: { sortStrategy },
 });
 export const setSortNotesBy = sortStrategy => {
-  console.warn(
-    'setSortNotesBy is deprecated, please use setNotesPanelSortStrategy instead',
-  );
+  console.warn('setSortNotesBy is deprecated, please use setNotesPanelSortStrategy instead');
 
   return setNotesPanelSortStrategy(sortStrategy);
 };
@@ -440,10 +447,10 @@ export const setPageLabels = pageLabels => dispatch => {
 export const setSelectedPageThumbnails = (selectedThumbnailPageIndexes = []) => {
   fireEvent(Events.SELECTED_THUMBNAIL_CHANGED, selectedThumbnailPageIndexes);
 
-  return ({
+  return {
     type: 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES',
     payload: { selectedThumbnailPageIndexes },
-  });
+  };
 };
 export const setShiftKeyThumbnailsPivotIndex = (shiftKeyThumbnailPivotIndex = null) => ({
   type: 'SET_SHIFT_KEY_THUMBNAIL_PIVOT_INDEX',
@@ -468,14 +475,10 @@ export const setCustomNoteFilter = filterFunc => ({
 export const setZoomList = zoomList => dispatch => {
   const minZoomLevel = getMinZoomLevel();
   const maxZoomLevel = getMaxZoomLevel();
-  const filteredZoomList = zoomList.filter(
-    zoom => zoom >= minZoomLevel && zoom <= maxZoomLevel,
-  );
+  const filteredZoomList = zoomList.filter(zoom => zoom >= minZoomLevel && zoom <= maxZoomLevel);
 
   if (filteredZoomList.length !== zoomList.length) {
-    const outOfRangeZooms = zoomList.filter(
-      zoom => !filteredZoomList.includes(zoom),
-    );
+    const outOfRangeZooms = zoomList.filter(zoom => !filteredZoomList.includes(zoom));
     console.warn(`
       ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI.
       Valid zoom levels should be in the range of ${minZoomLevel}-${maxZoomLevel}.
@@ -517,10 +520,10 @@ export const setPageReplacementModalFileList = list => ({
 export const setActiveTheme = theme => {
   fireEvent(Events.THEME_CHANGED, theme);
 
-  return ({
+  return {
     type: 'SET_ACTIVE_THEME',
     payload: { theme },
-  });
+  };
 };
 export const setSearchResults = searchResults => ({
   type: 'SET_SEARCH_RESULTS',
@@ -534,12 +537,12 @@ export const setClearSearchOnPanelClose = shouldClear => ({
 
 export const setAnnotationContentOverlayHandler = annotationContentOverlayHandler => ({
   type: 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER',
-  payload: { annotationContentOverlayHandler }
+  payload: { annotationContentOverlayHandler },
 });
 
 export const setAnnotationReadState = ({ isRead, annotationId }) => ({
   type: 'SET_ANNOTATION_READ_STATE',
-  payload: { isRead, annotationId }
+  payload: { isRead, annotationId },
 });
 export const addTrustedCertificates = certificates => ({
   type: 'ADD_TRUSTED_CERTIFICATES',
@@ -586,40 +589,40 @@ export const disableFadePageNavigationComponent = () => ({
 
 export const enablePageDeletionConfirmationModal = () => ({
   type: 'PAGE_DELETION_CONFIRMATION_MODAL_POPUP',
-  payload: { pageDeletionConfirmationModalEnabled: true }
+  payload: { pageDeletionConfirmationModalEnabled: true },
 });
 
 export const disablePageDeletionConfirmationModal = () => ({
   type: 'PAGE_DELETION_CONFIRMATION_MODAL_POPUP',
-  payload: { pageDeletionConfirmationModalEnabled: false }
+  payload: { pageDeletionConfirmationModalEnabled: false },
 });
 
 export const setWatermarkModalOptions = watermarkModalOptions => ({
   type: 'SET_WATERMARK_MODAL_OPTIONS',
-  payload: { watermarkModalOptions }
+  payload: { watermarkModalOptions },
 });
 
 export const replaceRedactionSearchPattern = (searchPattern, regex) => ({
   type: 'REPLACE_REDACTION_SEARCH_PATTERN',
-  payload: { searchPattern, regex }
+  payload: { searchPattern, regex },
 });
 
 export const setThumbnailSelectionMode = thumbnailSelectionMode => ({
   type: 'SET_THUMBNAIL_SELECTION_MODE',
-  payload: { thumbnailSelectionMode }
+  payload: { thumbnailSelectionMode },
 });
 
-export const addRedactionSearchPattern = (searchPattern) => ({
+export const addRedactionSearchPattern = searchPattern => ({
   type: 'ADD_REDACTION_SEARCH_PATTERN',
-  payload: { searchPattern }
+  payload: { searchPattern },
 });
 
-export const removeRedactionSearchPattern = (searchPatternType) => ({
+export const removeRedactionSearchPattern = searchPatternType => ({
   type: 'REMOVE_REDACTION_SEARCH_PATTERN',
-  payload: { searchPatternType }
+  payload: { searchPatternType },
 });
 
-export const setZoomStepFactors = (zoomStepFactors) => ({
+export const setZoomStepFactors = zoomStepFactors => ({
   type: 'SET_ZOOM_STEP_FACTORS',
-  payload: { zoomStepFactors }
+  payload: { zoomStepFactors },
 });

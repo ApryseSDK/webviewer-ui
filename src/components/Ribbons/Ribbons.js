@@ -15,7 +15,7 @@ import "./Ribbons.scss";
 const Ribbons = () => {
   const toolbarGroups = useSelector(selectors.getEnabledToolbarGroups);
   const currentToolbarGroup = useSelector(selectors.getCurrentToolbarGroup);
-  const toolbarHeaders = useSelector(selectors.getToolbarHeaders);
+  const customHeadersAdditionalProperties = useSelector(selectors.getCustomHeadersAdditionalProperties);
   const { t, ready: tReady } = useTranslation();
   const [ribbonsWidth, setRibbonsWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -78,9 +78,9 @@ const Ribbons = () => {
   }
 
   const getToolbarTranslationString = (toolbarGroup) => {
-    const toolbarGroupItems = toolbarHeaders[toolbarGroup];
-    if (toolbarGroupItems && toolbarGroupItems.name) {
-      return toolbarGroupItems.name;
+    const customHeaderProperties = customHeadersAdditionalProperties[toolbarGroup];
+    if (customHeaderProperties && customHeaderProperties.name) {
+      return customHeaderProperties.name;
     }
     return `option.toolbarGroup.${toolbarGroup}`;
   }

@@ -87,10 +87,9 @@
 */
 
 import { undoButton, redoButton } from 'helpers/commonToolbarElements';
+import actions from 'actions';
 
 export default store => toolbarGroup => {
-  const state = store.getState();
-
   if (toolbarGroup.useDefaultElements) {
     toolbarGroup.children = [
       { type: 'spacer' },
@@ -103,5 +102,7 @@ export default store => toolbarGroup => {
     ];
   }
 
-  state.viewer.headers[`toolbarGroup-${toolbarGroup.dataElementSuffix}`] = toolbarGroup;
+  const headerGroup = `toolbarGroup-${toolbarGroup.dataElementSuffix}`;
+  store.dispatch(actions.setHeaderItems(headerGroup, toolbarGroup.children));
+  store.dispatch(actions.setCustomHeadersAdditionalProperties(headerGroup, { name: toolbarGroup.name }));
 };

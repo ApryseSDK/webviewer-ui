@@ -228,6 +228,10 @@ export const setHeaderItems = (header, headerItems) => ({
   type: 'SET_HEADER_ITEMS',
   payload: { header, headerItems },
 });
+export const setCustomHeadersAdditionalProperties = (customHeader, additionalProperties) => ({
+  type: 'SET_CUSTOM_HEADERS_ADDITIONAL_PROPERTIES',
+  payload: { customHeader, additionalProperties },
+});
 export const setPopupItems = (dataElement, items) => ({
   type: 'SET_POPUP_ITEMS',
   payload: {
@@ -352,6 +356,10 @@ export const removeBookmark = pageIndex => (dispatch, getState) => {
   const bookmarks = selectors.getBookmarks(getState());
   fireEvent(Events.USER_BOOKMARKS_CHANGED, bookmarks);
 };
+export const setBookmarkIconShortcutVisibility = bookmarkIconShortcutVisibility => ({
+  type: 'SET_BOOKMARK_ICON_SHORTCUT_VISIBILITY',
+  payload: { bookmarkIconShortcutVisibility },
+});
 export const setLayers = layers => ({
   type: 'SET_LAYERS',
   payload: { layers },
