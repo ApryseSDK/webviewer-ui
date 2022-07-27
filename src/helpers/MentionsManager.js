@@ -64,7 +64,7 @@ class MentionsManager {
      */
     this.idMentionDataMap = {};
     this.allowedTrailingCharacters = [' '];
-    this.mentionsLookUp = this.defaultMentionsSearchCallback;
+    this.mentionLookupCallback = this.defaultMentionsSearchCallback;
     annotManager.addEventListener('annotationChanged', (annotations, action, { imported }) => {
       if (imported || !annotations.length || !this.getUserData().length) {
         return;
