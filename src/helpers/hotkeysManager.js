@@ -1,6 +1,7 @@
 import hotkeys from 'hotkeys-js';
 
 import core from 'core';
+import i18next from 'i18next';
 import { isMac, isMobile } from 'helpers/device';
 import openFilePicker from 'helpers/openFilePicker';
 import copyText from 'helpers/copyText';
@@ -13,6 +14,7 @@ import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import setCurrentPage from 'helpers/setCurrentPage';
 import actions from 'actions';
 import selectors from 'selectors';
+import DataElements from 'src/constants/dataElement';
 
 // prettier-ignore
 const keyMap = {
@@ -89,6 +91,8 @@ const NOOP = () => {};
  * @property {string} COMMAND_0 Fit the document to the screen width in a small screen(< 640px), otherwise fit it to its original size
  * @property {string} CTRL_P Print
  * @property {string} COMMAND_P Print
+ * @property {string} CTRL_B Quickly bookmark a page and open the bookmark panel
+ * @property {string} COMMAND_B Quickly bookmark a page and open the bookmark panel
  * @property {string} PAGE_UP Go to the previous page
  * @property {string} PAGE_DOWN Go to the next page
  * @property {string} UP Go to the previous page in single layout mode (ArrowUp)
@@ -137,6 +141,8 @@ export const Keys = {
   COMMAND_0: 'command+0',
   CTRL_P: 'ctrl+p',
   COMMAND_P: 'command+p',
+  CTRL_B: 'ctrl+b',
+  COMMAND_B: 'command+b',
   ENTER: 'enter',
   PAGE_UP: 'pageup',
   PAGE_DOWN: 'pagedown',
@@ -367,6 +373,20 @@ WebViewer(...)
         e.preventDefault();
         openFilePicker();
       },
+      [`${Keys.CTRL_B}, ${Keys.COMMAND_B}`]: e => {
+        e.preventDefault();
+        if (!selectors.isElementDisabled(getState(), DataElements.BOOKMARK_PANEL)) {
+          dispatch(actions.openElement(DataElements.LEFT_PANEL));
+          dispatch(actions.setActiveLeftPanel(DataElements.BOOKMARK_PANEL));
+
+          const bookmarks = selectors.getBookmarks(getState());
+          const currentPageIndex = core.getCurrentPage() - 1;
+          // only add bookmark if page is not already bookmarked
+          if (!bookmarks[currentPageIndex]) {
+            dispatch(actions.addBookmark(currentPageIndex, i18next.t('message.untitled')));
+          }
+        }
+      },
       [concatKeys(Keys.CTRL_F, Keys.COMMAND_F)]: e => {
         e.preventDefault();
 
@@ -380,7 +400,12 @@ WebViewer(...)
           dispatch(actions.closeElement('redactionPanel'));
         }
 
-        dispatch(actions.openElement('searchPanel'));
+        const isWv3dPropertiesPanelOpen = selectors.isElementOpen(getState(), 'wv3dPropertiesPanel');
+        if (isWv3dPropertiesPanelOpen) {
+          dispatch(actions.closeElement('wv3dPropertiesPanel'));
+        }
+
+        dispatch(actions.toggleElement('searchPanel'));
       },
       [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: e => {
         e.preventDefault();
@@ -402,7 +427,12 @@ WebViewer(...)
       [concatKeys(Keys.CTRL_P, Keys.COMMAND_P)]: e => {
         e.preventDefault();
 
-        print(dispatch, selectors.isEmbedPrintSupported(getState()), selectors.getSortStrategy(getState()), selectors.getColorMap(getState()));
+        print(
+          dispatch,
+          selectors.isEmbedPrintSupported(getState()),
+          selectors.getSortStrategy(getState()),
+          selectors.getColorMap(getState()),
+        );
       },
       [`${Keys.PAGE_UP}`]: e => {
         e.preventDefault();
@@ -480,7 +510,7 @@ WebViewer(...)
             'rubberStampOverlay',
             'contentEditModal',
             'filterModal',
-          ])
+          ]),
         );
       },
       [`${Keys.P}`]: this.createToolHotkeyHandler(() => {
@@ -520,9 +550,7 @@ WebViewer(...)
         setToolModeAndGroup(store, 'AnnotationCreateFreeText');
       }),
       [`${Keys.S}`]: this.createToolHotkeyHandler(() => {
-        const sigToolButton = document.querySelector(
-          '[data-element="signatureToolButton"] .Button'
-        );
+        const sigToolButton = document.querySelector('[data-element="signatureToolButton"] .Button');
 
         sigToolButton?.click();
       }),
@@ -569,7 +597,8 @@ WebViewer(...)
       const currentToolName = core.getToolMode().name;
 
       // disable changing tool when the signature overlay is opened.
-      const isSignatureModalOpen = currentToolName === window.Core.Tools.ToolNames.SIGNATURE && openElements['signatureModal'];
+      const isSignatureModalOpen =
+        currentToolName === window.Core.Tools.ToolNames.SIGNATURE && openElements['signatureModal'];
 
       if (isFocusingElement() || isSignatureModalOpen) {
         return;
