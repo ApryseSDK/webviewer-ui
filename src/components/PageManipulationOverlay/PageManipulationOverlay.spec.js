@@ -19,6 +19,8 @@ const basicProps = {
   ]
 };
 
+jest.mock('core');
+
 describe('PageManipulationOverlay', () => {
   describe('Component', () => {
     it('Story should not throw any errors', () => {

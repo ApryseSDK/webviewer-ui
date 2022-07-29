@@ -1,10 +1,13 @@
-import React from 'react';
+import actions from 'actions';
+import React, { useEffect, useCallback } from 'react';
 import PageInsertionControls from './PageInsertionControls';
 import PageRotationControls from './PageRotationControls';
 import PageManipulationControls from './PageManipulationControls';
 import PageAdditionalControls from "components/PageManipulationOverlay/PageAdditionalControls";
 import CustomPageManipulationOperations from './CustomPageManipulationOperations';
+import core from 'core';
 
+import { useDispatch } from 'react-redux';
 function InitialPageManipulationOverlay({ children, pageNumbers, pageManipulationOverlayItems }) {
 
   const childrenArray = React.Children.toArray(children);
@@ -36,6 +39,17 @@ function InitialPageManipulationOverlay({ children, pageNumbers, pageManipulatio
 
 function PageManipulationOverlay(props) {
   const { pageNumbers, pageManipulationOverlayItems } = props;
+
+  const dispatch = useDispatch();
+
+  const closeOverlay = useCallback(() => dispatch(actions.closeElements(['pageManipulationOverlay'])), [dispatch]);
+
+  useEffect(() => {
+    core.addEventListener('documentLoaded', closeOverlay);
+    return () => {
+      core.removeEventListener('documentLoaded', closeOverlay);
+    };
+  }, []);
 
   return (
     <InitialPageManipulationOverlay pageNumbers={pageNumbers} pageManipulationOverlayItems={pageManipulationOverlayItems}>
