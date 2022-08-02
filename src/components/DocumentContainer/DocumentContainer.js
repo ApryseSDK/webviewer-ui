@@ -24,7 +24,7 @@ import Measure from 'react-measure';
 
 import './DocumentContainer.scss';
 import _ from 'lodash';
-import TabsHeader from "components/TabsHeader";
+import TabsHeader from 'components/TabsHeader';
 
 const PAGE_NAVIGATION_OVERLAY_FADEOUT = 4000;
 
@@ -50,7 +50,8 @@ class DocumentContainer extends React.PureComponent {
     setDocumentContainerHeight: PropTypes.func.isRequired,
     isInDesktopOnlyMode: PropTypes.bool,
     isRedactionPanelOpen: PropTypes.bool,
-  }
+    isWv3dPropertiesPanelOpen: PropTypes.bool,
+  };
 
   constructor(props) {
     super(props);
@@ -60,7 +61,10 @@ class DocumentContainer extends React.PureComponent {
     this.wheelToNavigatePages = _.throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
     this.wheelToZoom = _.throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
     this.handleResize = _.throttle(this.handleResize.bind(this), 200);
-    this.debouncedHidePageNavigationOverlay = _.debounce(this.hidePageNavigationOverlay, PAGE_NAVIGATION_OVERLAY_FADEOUT);
+    this.debouncedHidePageNavigationOverlay = _.debounce(
+      this.hidePageNavigationOverlay,
+      PAGE_NAVIGATION_OVERLAY_FADEOUT,
+    );
     this.state = {
       showNavOverlay: true,
     };
@@ -71,7 +75,6 @@ class DocumentContainer extends React.PureComponent {
       updateContainerWidth(prevProps, this.props, this.container.current);
     }
   }
-
 
   componentDidMount() {
     touchEventManager.initialize(this.document.current, this.container.current);
@@ -105,7 +108,6 @@ class DocumentContainer extends React.PureComponent {
 
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
     core.removeEventListener('documentLoaded', this.showAndFadeNavigationOverlay);
-
   }
 
   preventDefault = e => e.preventDefault();
@@ -117,46 +119,57 @@ class DocumentContainer extends React.PureComponent {
     if (files.length) {
       loadDocument(this.props.dispatch, files[0]);
     }
-  }
+  };
 
   handleWindowResize = () => {
     handleWindowResize(this.props, this.container.current);
-  }
+  };
 
   onWheel = e => {
     const { isMouseWheelZoomEnabled } = this.props;
     if (isMouseWheelZoomEnabled && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
       this.wheelToZoom(e);
-    } else if (!core.isContinuousDisplayMode() && this.props.allowPageNavigation && !this.props.isReaderMode && core.isScrollableDisplayMode()) {
-      this.wheelToNavigatePages(e);
-      this.props.closeElements([
-        'annotationPopup',
-        'textPopup',
-        'annotationNoteConnectorLine',
-      ]);
+    } else if (
+      !core.isContinuousDisplayMode() &&
+      this.props.allowPageNavigation &&
+      !this.props.isReaderMode &&
+      core.isScrollableDisplayMode()
+    ) {
+      const { currentPage, totalPages } = this.props;
+      const { scrollTop, scrollHeight, clientHeight } = this.container.current;
+      const reachedTop = scrollTop === 0;
+      const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
+
+      // depending on the track pad used (see this on MacBooks), deltaY can be between -1 and 1 when doing horizontal scrolling which cause page to change
+      const scrollingUp = e.deltaY < 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX);
+      const scrollingDown = e.deltaY > 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX);
+
+      const shouldGoUp = scrollingUp && reachedTop && currentPage > 1;
+      const shouldGoDown = scrollingDown && reachedBottom && currentPage < totalPages;
+
+      const shouldPreventParentScrolling = (e.deltaY < 0 && currentPage > 1) || (e.deltaY > 0 && currentPage < totalPages);
+
+      if (shouldPreventParentScrolling) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      this.wheelToNavigatePages(e, shouldGoUp, shouldGoDown);
+      this.props.closeElements(['annotationPopup', 'textPopup', 'annotationNoteConnectorLine']);
     }
-  }
+  };
 
-  wheelToNavigatePages = e => {
-    const { currentPage, totalPages } = this.props;
-    const { scrollTop, scrollHeight, clientHeight } = this.container.current;
-    const reachedTop = scrollTop === 0;
-    const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
-
-    // depending on the track pad used (see this on MacBooks), deltaY can be between -1 and 1 when doing horizontal scrolling which cause page to change
-    const scrollingUp = e.deltaY < 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX);
-    const scrollingDown = e.deltaY > 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX);
-
-    if (scrollingUp && reachedTop && currentPage > 1) {
+  wheelToNavigatePages = (e, shouldGoUp, shouldGoDown) => {
+    if (shouldGoUp) {
       this.pageUp();
-    } else if (scrollingDown && reachedBottom && currentPage < totalPages) {
+    } else if (shouldGoDown) {
       this.pageDown();
     }
 
     this.showPageNavigationOverlay();
     this.debouncedHidePageNavigationOverlay();
-  }
+  };
 
   pageUp = () => {
     const { currentPage } = this.props;
@@ -164,13 +177,13 @@ class DocumentContainer extends React.PureComponent {
 
     setCurrentPage(currentPage - getNumberOfPagesToNavigate());
     this.container.current.scrollTop = scrollHeight - clientHeight;
-  }
+  };
 
   pageDown = () => {
     const { currentPage } = this.props;
 
     setCurrentPage(currentPage + getNumberOfPagesToNavigate());
-  }
+  };
 
   wheelToZoom = e => {
     const currentZoomFactor = this.props.zoom;
@@ -187,33 +200,28 @@ class DocumentContainer extends React.PureComponent {
       );
     }
     core.zoomToMouse(newZoomFactor);
-  }
+  };
 
   handleScroll = () => {
-    this.props.closeElements([
-      'annotationPopup',
-      'textPopup',
-      'annotationNoteConnectorLine',
-      'formFieldEditPopup',
-    ]);
+    this.props.closeElements(['annotationPopup', 'textPopup', 'annotationNoteConnectorLine', 'formFieldEditPopup']);
 
     // Show overlay and then hide it, but the hide call is debounced
     this.showPageNavigationOverlay();
     this.debouncedHidePageNavigationOverlay();
-  }
+  };
 
   showAndFadeNavigationOverlay = () => {
     this.showPageNavigationOverlay();
     setTimeout(this.hidePageNavigationOverlay, PAGE_NAVIGATION_OVERLAY_FADEOUT);
-  }
+  };
 
   hidePageNavigationOverlay = () => {
     this.setState({ showNavOverlay: false });
-  }
+  };
 
   showPageNavigationOverlay = () => {
     this.setState({ showNavOverlay: true });
-  }
+  };
 
   pageNavOnMouseEnter = () => {
     this.showPageNavigationOverlay();
@@ -221,18 +229,16 @@ class DocumentContainer extends React.PureComponent {
 
   pageNavOnMouseLeave = () => {
     this.hidePageNavigationOverlay();
-  }
+  };
 
   getClassName = props => {
-    const {
-      isSearchOverlayOpen,
-    } = props;
+    const { isSearchOverlayOpen } = props;
 
     return classNames({
       DocumentContainer: true,
       'search-overlay': isSearchOverlayOpen,
     });
-  }
+  };
 
   handleResize() {
     this.updateContainerSize();
@@ -270,7 +276,6 @@ class DocumentContainer extends React.PureComponent {
     }
   }
 
-
   render() {
     const {
       leftPanelWidth,
@@ -278,16 +283,15 @@ class DocumentContainer extends React.PureComponent {
       isMobile,
       documentContentContainerWidthStyle,
       totalPages,
-      isInDesktopOnlyMode
+      isInDesktopOnlyMode,
     } = this.props;
 
     const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
     const documentClassName = classNames({
       document: true,
-      hidden: this.props.isReaderMode
+      hidden: this.props.isReaderMode,
     });
     const showPageNav = totalPages > 1;
-
 
     return (
       <div
@@ -301,14 +305,9 @@ class DocumentContainer extends React.PureComponent {
         onTransitionEnd={this.onTransitionEnd}
       >
         <TabsHeader />
-        <Measure
-          onResize={this.handleResize}
-        >
+        <Measure onResize={this.handleResize}>
           {({ measureRef }) => (
-            <div
-              className="measurement-container"
-              ref={measureRef}
-            >
+            <div className="measurement-container" ref={measureRef}>
               <div
                 className={documentContainerClassName}
                 ref={this.container}
@@ -317,11 +316,8 @@ class DocumentContainer extends React.PureComponent {
               >
                 {/* tabIndex="-1" to keep document focused when in single page mode */}
                 <div className={documentClassName} ref={this.document} tabIndex="-1" />
-
               </div>
-              {this.props.isReaderMode && (
-                <ReaderModeViewer />
-              )}
+              {this.props.isReaderMode && <ReaderModeViewer />}
               <MeasurementOverlay />
               <div
                 className="footer"
@@ -330,15 +326,15 @@ class DocumentContainer extends React.PureComponent {
                   marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
                 }}
               >
-                {showPageNav &&
+                {showPageNav && (
                   <PageNavOverlay
                     showNavOverlay={this.state.showNavOverlay}
                     onMouseEnter={this.pageNavOnMouseEnter}
                     onMouseLeave={this.pageNavOnMouseLeave}
                   />
-                }
+                )}
 
-                {(isMobile && !isInDesktopOnlyMode) && <ToolsOverlay />}
+                {isMobile && !isInDesktopOnlyMode && <ToolsOverlay />}
               </div>
             </div>
           )}
@@ -366,6 +362,7 @@ const mapStateToProps = state => ({
   isReaderMode: selectors.isReaderMode(state),
   isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state),
   isRedactionPanelOpen: selectors.isElementOpen(state, 'redactionPanel'),
+  isWv3dPropertiesPanelOpen: selectors.isElementOpen(state, 'wv3dPropertiesPanel'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -387,7 +384,5 @@ export default props => {
     false,
   );
 
-  return (
-    <ConnectedDocumentContainer {...props} isMobile={isMobile} />
-  );
+  return <ConnectedDocumentContainer {...props} isMobile={isMobile} />;
 };
