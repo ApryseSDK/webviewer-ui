@@ -136,24 +136,34 @@ class DocumentContainer extends React.PureComponent {
       !this.props.isReaderMode &&
       core.isScrollableDisplayMode()
     ) {
-      this.wheelToNavigatePages(e);
+      const { currentPage, totalPages } = this.props;
+      const { scrollTop, scrollHeight, clientHeight } = this.container.current;
+      const reachedTop = scrollTop === 0;
+      const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
+
+      // depending on the track pad used (see this on MacBooks), deltaY can be between -1 and 1 when doing horizontal scrolling which cause page to change
+      const scrollingUp = e.deltaY < 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX);
+      const scrollingDown = e.deltaY > 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX);
+
+      const shouldGoUp = scrollingUp && reachedTop && currentPage > 1;
+      const shouldGoDown = scrollingDown && reachedBottom && currentPage < totalPages;
+
+      const shouldPreventParentScrolling = (e.deltaY < 0 && currentPage > 1) || (e.deltaY > 0 && currentPage < totalPages);
+
+      if (shouldPreventParentScrolling) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      this.wheelToNavigatePages(e, shouldGoUp, shouldGoDown);
       this.props.closeElements(['annotationPopup', 'textPopup', 'annotationNoteConnectorLine']);
     }
   };
 
-  wheelToNavigatePages = e => {
-    const { currentPage, totalPages } = this.props;
-    const { scrollTop, scrollHeight, clientHeight } = this.container.current;
-    const reachedTop = scrollTop === 0;
-    const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
-
-    // depending on the track pad used (see this on MacBooks), deltaY can be between -1 and 1 when doing horizontal scrolling which cause page to change
-    const scrollingUp = e.deltaY < 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX);
-    const scrollingDown = e.deltaY > 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX);
-
-    if (scrollingUp && reachedTop && currentPage > 1) {
+  wheelToNavigatePages = (e, shouldGoUp, shouldGoDown) => {
+    if (shouldGoUp) {
       this.pageUp();
-    } else if (scrollingDown && reachedBottom && currentPage < totalPages) {
+    } else if (shouldGoDown) {
       this.pageDown();
     }
 
