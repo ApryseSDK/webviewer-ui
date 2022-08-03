@@ -1,62 +1,49 @@
 import React from 'react';
-
-import ToggleElementButton from "components/ToggleElementButton";
-import Button from "components/Button";
 import "../LeftPanelPageTabs/LeftPanelPageTabsContainer.scss";
+import LeftPanelPageTabsMoreSmall from '../LeftPanelPageTabsMoreSmall/LeftPanelPageTabsMoreSmall';
+import LeftPanelPageTabsRotateSmall from '../LeftPanelPageTabsRotateSmall/LeftPanelPageTabsRotateSmall';
+import LeftPanelPageTabsInsertSmall from '../LeftPanelPageTabsInsertSmall/LeftPanelPageTabsInsertSmall';
+import CustomLeftPanelOperations from '../CustomLeftPanelOperations/CustomLeftPanelOperations';
 
-function LeftPanelPageTabsSmall({ onReplace, onExtractPages, onDeletePages }) {
+function InitialLeftPanelPageTabsSmall({ children, pageNumbers, multiPageManipulationControlsItems }) {
+  const childrenArray = React.Children.toArray(children);
+  if (!multiPageManipulationControlsItems) {
+    return childrenArray;
+  }
+  return multiPageManipulationControlsItems.map((item, index) => {
+    const { dataElement, type } = item;
+    let component = childrenArray.find(child => child.props.dataElement === dataElement);
+    const key = dataElement || `${type}-${index}`;
+
+    if (!component) {
+      if (type === 'divider') {
+        component = <div className="divider" />;
+      }
+
+      if (type === 'customPageOperation') {
+        component = <CustomLeftPanelOperations key={dataElement} pageNumbers={pageNumbers} {...item} />;
+      }
+    }
+    return component
+      ? React.cloneElement(component, {
+        key,
+      })
+      : null;
+  });
+}
+
+
+
+function LeftPanelPageTabsSmall(props) {
+
+  const { pageNumbers, multiPageManipulationControlsItemsSmall } = props;
   return (
     <div className={`PageControlContainer root small`}>
-      <div className={"dropdown-menu button-hover"}>
-        <ToggleElementButton
-          title="action.rotate"
-          element="thumbnailsControlRotatePopup"
-          dataElement="thumbnailsControlRotatePopupTrigger"
-          img="icon-header-page-manipulation-page-rotation-clockwise-line"
-        />
-        <div className={"indicator"}/>
-      </div>
-      <div className={"dropdown-menu"}>
-        <ToggleElementButton
-          title="action.insertPage"
-          className={"dropdown-menu"}
-          element="thumbnailsControlInsertPopup"
-          dataElement="thumbnailsControlInsertPopupTrigger"
-          img="icon-header-page-manipulation-insert-above"
-        />
-        <div className={"indicator"}/>
-      </div>
-      <Button
-        className={"button-hover"}
-        dataElement="thumbnailsControlReplace"
-        img="icon-page-replacement"
-        onClick={onReplace}
-        title="action.replace"
-      />
-      <Button
-        className={"button-hover"}
-        dataElement="thumbnailsControlExtract"
-        img="icon-page-manipulation-extract"
-        onClick={onExtractPages}
-        title="action.extract"
-      />
-      <Button
-        className={"button-hover"}
-        dataElement="thumbnailsControlDelete"
-        img="icon-page-manipulation-delete"
-        onClick={onDeletePages}
-        title="action.delete"
-      />
-      <div className={"dropdown-menu button-hover"}>
-        <ToggleElementButton
-          title="action.more"
-          className={"dropdown-menu"}
-          element="thumbnailsControlManipulatePopup"
-          dataElement="thumbnailsControlManipulatePopupTrigger"
-          img="icon-tool-more"
-        />
-        <div className={"indicator"}/>
-      </div>
+      <InitialLeftPanelPageTabsSmall pageNumbers={pageNumbers} multiPageManipulationControlsItems={multiPageManipulationControlsItemsSmall}>
+        <LeftPanelPageTabsRotateSmall dataElement="leftPanelPageTabsRotateSmall" />
+        <LeftPanelPageTabsInsertSmall dataElement="leftPanelPageTabsInsertSmall" />
+        <LeftPanelPageTabsMoreSmall dataElement="leftPanelPageTabsMoreSmall" />
+      </InitialLeftPanelPageTabsSmall>
     </div>
   );
 }

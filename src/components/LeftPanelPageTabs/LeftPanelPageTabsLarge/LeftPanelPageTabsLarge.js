@@ -1,10 +1,10 @@
 import React from 'react';
 
-import LeftPanelPageTabsMore from '../LeftPanelPageTabsMore/LeftPanelPageTabsMore';
 import LeftPanelPageTabsInsert from '../LeftPanelPageTabsInsert/LeftPanelPageTabsInsert';
 import LeftPanelPageTabsRotate from '../LeftPanelPageTabsRotate/LeftPanelPageTabsRotate';
 import LeftPanelPageTabsOperations from '../LeftPanelPageTabsOperations/LeftPanelPageTabsOperations';
 import CustomLeftPanelOperations from '../CustomLeftPanelOperations/CustomLeftPanelOperations';
+import LeftPanelPageTabsMove from '../LeftPanelPageTabsMove/LeftPanelPageTabsMove';
 
 
 
@@ -36,19 +36,19 @@ function InitialLeftPanelPageTabs({ children, pageNumbers, multiPageManipulation
 }
 
 
-function LeftPanelPageTabs(props) {
-  const { pageNumbers, onRotateClockwise, onRotateCounterClockwise, onInsertAbove, onInsertBelow, onReplace, onExtractPages, onDeletePages, multiPageManipulationControlsItems } = props;
+function LeftPanelPageTabsLarge(props) {
+  const { pageNumbers, onRotateClockwise, onRotateCounterClockwise, onInsertAbove, onInsertBelow, onReplace, onExtractPages, onDeletePages, moveToTop, moveToBottom, multiPageManipulationControlsItems } = props;
   return (
     <div className={`PageControlContainer root`}>
       <InitialLeftPanelPageTabs pageNumbers={pageNumbers} multiPageManipulationControlsItems={multiPageManipulationControlsItems} >
         <LeftPanelPageTabsRotate onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise} dataElement="leftPanelPageTabsRotate" />
         <LeftPanelPageTabsInsert onInsertAbove={onInsertAbove} onInsertBelow={onInsertBelow} dataElement="leftPanelPageTabsInsert" />
         <LeftPanelPageTabsOperations onReplace={onReplace} onExtractPages={onExtractPages} onDeletePages={onDeletePages} dataElement="leftPanelPageTabsOperations" />
-        <LeftPanelPageTabsMore dataElement="leftPanelPageTabsMore" />
+        <LeftPanelPageTabsMove moveToTop={moveToTop} moveToBottom={moveToBottom} dataElement="leftPanelPageTabsMove" />
       </InitialLeftPanelPageTabs>
     </div>
   );
 }
 
 
-export default LeftPanelPageTabs;
+export default LeftPanelPageTabsLarge;

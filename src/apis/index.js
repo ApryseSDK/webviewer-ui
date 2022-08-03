@@ -98,6 +98,8 @@ import rotateCounterClockwise from './rotateCounterClockwise';
 import saveAnnotations from './saveAnnotations';
 import searchText from './searchText';
 import searchTextFull from './searchTextFull';
+import setWv3dPropertiesPanelModelData from './setWv3dPropertiesPanelModelData';
+import setWv3dPropertiesPanelSchema from './setWv3dPropertiesPanelSchema';
 import setActiveHeaderGroup from './setActiveHeaderGroup';
 import setActiveLeftPanel from './setActiveLeftPanel';
 import setAdminUser from './setAdminUser';
@@ -107,7 +109,7 @@ import setColorPalette from './setColorPalette';
 import setPageReplacementModalFileList from './setPageReplacementModalFileList';
 import setHighContrastMode from './setHighContrastMode';
 import setCurrentPageNumber from './setCurrentPageNumber';
-import setCustomModal from './setCustomModal';
+import addCustomModal, { setCustomModal } from './addCustomModal';
 import setCustomNoteFilter from './setCustomNoteFilter';
 import setCustomPanel from './setCustomPanel';
 import exportBookmarks from './exportBookmarks';
@@ -180,7 +182,14 @@ import {
   disableAutoExpandCommentThread,
   enableAutoExpandCommentThread,
 } from './notesPanel';
-import { enableMultiselect, disableMultiselect, selectPages, unselectPages, getSelectedPageNumbers, setThumbnailSelectionMode } from './thumbnailsPanel';
+import {
+  enableMultiselect,
+  disableMultiselect,
+  selectPages,
+  unselectPages,
+  getSelectedPageNumbers,
+  setThumbnailSelectionMode,
+} from './thumbnailsPanel';
 import toggleReaderMode from './toggleReaderMode';
 import toggleElementVisibility from './toggleElementVisibility';
 import setAnnotationReadState from './setAnnotationReadState';
@@ -197,6 +206,7 @@ import enableDesktopOnlyMode from './enableDesktopOnlyMode';
 import disableDesktopOnlyMode from './disableDesktopOnlyMode';
 import isInDesktopOnlyMode from './isInDesktopOnlyMode';
 import pageManipulationOverlay from './pageManipulationOverlay';
+import multiPageManipulationControls from './multiPageManipulationControls';
 import thumbnailControlMenu from './thumbnailControlMenu';
 import getWatermarkModalOptions from './getWatermarkModalOptions';
 import enableNoteSubmissionWithEnter from './enableNoteSubmissionWithEnter';
@@ -212,6 +222,8 @@ import addRedactionSearchPattern from './addRedactionSearchPattern';
 import removeRedactionSearchPattern from './removeRedactionSearchPattern';
 import getZoomStepFactors from './getZoomStepFactors';
 import setZoomStepFactors from './setZoomStepFactors';
+import enableBookmarkIconShortcutVisibility from './enableBookmarkIconShortcutVisibility';
+import disableBookmarkIconShortcutVisibility from './disableBookmarkIconShortcutVisibility';
 
 export default store => {
   const CORE_NAMESPACE = 'Core';
@@ -242,6 +254,8 @@ export default store => {
     closeElements: closeElements(store),
     contextMenuPopup: contextMenuPopup(store),
     disableElements: disableElements(store),
+    setWv3dPropertiesPanelModelData: setWv3dPropertiesPanelModelData(store),
+    setWv3dPropertiesPanelSchema: setWv3dPropertiesPanelSchema(store),
     disableFeatures: disableFeatures(store),
     disableTools: disableTools(store),
     disableReplyForAnnotations: disableReplyForAnnotations(store),
@@ -268,6 +282,7 @@ export default store => {
     loadDocument: loadDocument(store),
     settingsMenuOverlay: settingsMenuOverlay(store),
     pageManipulationOverlay: pageManipulationOverlay(store),
+    multiPageManipulationControls: multiPageManipulationControls(store),
     thumbnailControlMenu: thumbnailControlMenu(store),
     openElements: openElements(store),
     print: print(store),
@@ -281,6 +296,7 @@ export default store => {
     setActiveHeaderGroup: setActiveHeaderGroup(store),
     setActiveLeftPanel: setActiveLeftPanel(store),
     setCustomModal: setCustomModal(store),
+    addCustomModal: addCustomModal(store),
     showOutlineControl: showOutlineControl(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
@@ -423,6 +439,8 @@ export default store => {
     addRedactionSearchPattern: addRedactionSearchPattern(store),
     removeRedactionSearchPattern: removeRedactionSearchPattern(store),
     setThumbnailSelectionMode: setThumbnailSelectionMode(store),
+    enableBookmarkIconShortcutVisibility: enableBookmarkIconShortcutVisibility(store),
+    disableBookmarkIconShortcutVisibility: disableBookmarkIconShortcutVisibility(store),
 
     // deprecated, to be removed in 8.0
     useNativeScroll,

@@ -287,6 +287,24 @@ export const setPageManipulationOverlayItems = items => ({
     items,
   },
 });
+export const setMultiPageManipulationControlsItems = items => ({
+  type: 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS',
+  payload: {
+    items,
+  },
+});
+export const setMultiPageManipulationControlsItemsSmall = items => ({
+  type: 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS_SMALL',
+  payload: {
+    items,
+  },
+});
+export const setMultiPageManipulationControlsItemsLarge = items => ({
+  type: 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS_LARGE',
+  payload: {
+    items,
+  },
+});
 export const setThumbnailControlMenuItems = items => ({
   type: 'SET_THUMBNAIL_CONTROL_MENU_ITEMS',
   payload: {

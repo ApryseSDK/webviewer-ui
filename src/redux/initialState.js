@@ -670,6 +670,31 @@ export default {
       { type: 'divider' },
       { dataElement: 'pageManipulationControls' },
     ],
+    multiPageManipulationControls: [
+      { dataElement: 'leftPanelPageTabsRotate' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsInsert' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsOperations' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsMore' },
+    ],
+    multiPageManipulationControlsLarge: [
+      { dataElement: 'leftPanelPageTabsRotate' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsInsert' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsOperations' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsMove' },
+    ],
+    multiPageManipulationControlsSmall: [
+      { dataElement: 'leftPanelPageTabsRotateSmall' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsInsertSmall' },
+      { type: 'divider' },
+      { dataElement: 'leftPanelPageTabsMoreSmall' },
+    ],
     thumbnailControlMenu: [{ dataElement: 'thumbRotateClockwise' }, { dataElement: 'thumbDelete' }],
     toolButtonObjects: {
       AnnotationCreateCountMeasurement: {

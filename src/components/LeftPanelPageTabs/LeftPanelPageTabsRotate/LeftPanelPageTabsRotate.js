@@ -4,7 +4,7 @@ import "../LeftPanelPageTabs/LeftPanelPageTabsContainer.scss";
 
 function LeftPanelPageTabsRotate({ onRotateClockwise, onRotateCounterClockwise }) {
   return (
-    <div className={`PageControlContainer root small`}>
+    <>
       <Button
         className={"button-hover"}
         dataElement="thumbnailsControlRotateCounterClockwise"
@@ -19,7 +19,7 @@ function LeftPanelPageTabsRotate({ onRotateClockwise, onRotateCounterClockwise }
         onClick={onRotateClockwise}
         title="action.rotateClockwise"
       />
-    </div>
+    </>
   );
 }
 

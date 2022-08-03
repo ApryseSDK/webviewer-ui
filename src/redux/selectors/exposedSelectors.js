@@ -433,6 +433,12 @@ export const getPageReplacementFileList = state => state.viewer.pageReplacementF
 
 export const getPageManipulationOverlayItems = state => state.viewer.pageManipulationOverlay;
 
+export const getMultiPageManipulationControlsItems = state => state.viewer.multiPageManipulationControls;
+
+export const getMultiPageManipulationControlsItemsSmall = state => state.viewer.multiPageManipulationControlsSmall;
+
+export const getMultiPageManipulationControlsItemsLarge = state => state.viewer.multiPageManipulationControlsLarge;
+
 export const getThumbnailControlMenuItems = state => state.viewer.thumbnailControlMenu;
 
 export const shouldShowPresets = state => {

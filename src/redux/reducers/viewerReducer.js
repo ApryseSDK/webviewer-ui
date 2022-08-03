@@ -555,6 +555,21 @@ export default initialState => (state = initialState, action) => {
         ...state,
         pageManipulationOverlay: payload.items,
       };
+    case 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS':
+      return {
+        ...state,
+        multiPageManipulationControls: payload.items,
+      };
+    case 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS_SMALL':
+      return {
+        ...state,
+        multiPageManipulationControlsSmall: payload.items,
+      };
+      case 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS_LARGE':
+        return {
+          ...state,
+          multiPageManipulationControlsLarge: payload.items,
+        };  
     case 'SET_THUMBNAIL_CONTROL_MENU_ITEMS':
       return {
         ...state,
