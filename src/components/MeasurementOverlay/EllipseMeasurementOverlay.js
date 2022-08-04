@@ -63,10 +63,17 @@ function EllipseMeasurementOverlay(props) {
     const factor = annotation.Measure.axis[0].factor;
     const radiusInPts = radius / factor;
     const diameterInPts = radiusInPts * 2;
+    const rect = annotation.getRect();
+    let {X1, X2, Y1, Y2} = 0;
+    X1 = rect['x1'];
+    Y1 = rect['y1'];
+    X2 = rect['x1'] + diameterInPts;
+    Y2 = rect['y1'] + diameterInPts;
+    const newRect = {x1:X1, y1:Y1, x2:X2, y2:Y2};
 
     annotation.setHeight(diameterInPts);
     annotation.setWidth(diameterInPts);
-    annotation.adjustRect();
+    annotation.resize(newRect);
     setRadius(radius);
     forceEllipseRedraw();
     finishAnnotation();
@@ -103,8 +110,34 @@ function EllipseMeasurementOverlay(props) {
     const maxDiameterInPts = getMaxDiameterInPts();
 
     if (diameterInPts > maxDiameterInPts) {
-      annotation.setHeight(maxDiameterInPts);
-      annotation.setWidth(maxDiameterInPts);
+      const boundingRect = annotation.getRect();
+      const {x1, x2, y1, y2} = boundingRect;
+      let width = annotation.Width;
+      let height = annotation.Height;
+      const currentPageNumber = core.getCurrentPage();
+      const documentWidth = window.documentViewer.getPageWidth(currentPageNumber);
+      const documentHeight = window.documentViewer.getPageHeight(currentPageNumber);
+
+      if (x2 > documentWidth) {
+        boundingRect['x2'] = documentWidth;
+        width = documentWidth - x1;
+      }
+      if (y2 > documentHeight) {
+        boundingRect['y2'] = documentHeight;
+        height = documentHeight - y1;
+      }
+
+      if (width < documentWidth) {
+        annotation.setWidth(width);
+      } else {
+        annotation.setWidth(documentWidth);
+      }
+      if (height < documentHeight){
+        annotation.setHeight(height);
+      } else {
+        annotation.setHeight(documentHeight);
+      }
+      annotation.resize(boundingRect);
       forceEllipseRedraw();
     }
   }, [annotation, forceEllipseRedraw, getMaxDiameterInPts]);
