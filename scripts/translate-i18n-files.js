@@ -84,7 +84,13 @@ const mapI18nCodeToGoogleTranslationCode = code => {
     id: 'id',
     ms: 'ms',
     tr: 'tr',
-    uk: 'uk'
+    uk: 'uk',
+    cs: 'cs',
+    pl: 'pl',
+    hu: 'hu',
+    th: 'th',
+    ro: 'ro',
+    sv: 'sv'
   };
 
   if (!map[code]) {
