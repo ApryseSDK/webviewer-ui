@@ -11,6 +11,7 @@ import disableTools from 'src/apis/disableTools';
 import setToolMode from 'src/apis/setToolMode';
 import selectors from 'selectors';
 import TabManager from 'helpers/TabManager';
+import DataElements from 'constants/dataElement';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => (features, priority = PRIORITY_TWO) => {
@@ -28,6 +29,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'annotationPopup',
         'linkButton',
         'noteState',
+        DataElements.NOTE_MULTI_SELECT_MODE_BUTTON,
       ],
       fn: () => {
         if (enable) {
@@ -239,7 +241,6 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'addNewOutlineButtonContainer',
         'addNewOutlineButton',
         'outlineReorderButtonGroup',
-        'outlineControls',
         'editOutlineButton',
         'outlineEditPopup',
         'renameOutlineButton',
@@ -289,7 +290,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     features = [features];
   }
 
-  features.forEach(feature => {
+  features.forEach((feature) => {
     const { dataElements = [], fn = () => {} } = map[feature];
 
     if (enable) {

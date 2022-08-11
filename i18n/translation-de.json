@@ -91,7 +91,8 @@
     "unselect": "Auswahl aufheben",
     "addMark": "Markus hinzufügen",
     "viewFile": "Datei ansehen",
-    "switchLanguage": "Sprache"
+    "switchLanguage": "Sprache",
+    "multiReplyAnnotations": "Auf ausgewählte Anmerkungen antworten ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -194,10 +195,15 @@
     "textPopup": "Text Popup",
     "createStampButton": "Neuen Stempel erstellen",
     "filter": "Filter",
+    "multiSelectButton": "Mehrfachauswahl",
     "pageReplaceModalTitle": "Seite Ersetzen",
     "files": "Dateien",
     "editText": "Text bearbeiten",
-    "redactionPanel": "Redaktionsbereich"
+    "redactionPanel": "Redaktionsbereich",
+    "noteGroupSection": {
+      "open": "Alle Anmerkungen anzeigen",
+      "close": "Alle Anmerkungen schließen"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "Keine Voreinstellungen",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Benutzerdefinierte Farbe löschen",
       "deleteMessage": "Ausgewählte benutzerdefinierte Farbe löschen? Sie wird aus Ihrer Farbpalette entfernt."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Anmerkungen löschen?",
+      "message": "Durch das Löschen werden alle Kommentare, Antworten und Gruppierungen entfernt und können nicht rückgängig gemacht werden.\n\n Möchten Sie diese Anmerkungen wirklich löschen?"
     }
   },
   "shortcut": {

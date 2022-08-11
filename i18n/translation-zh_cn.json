@@ -91,7 +91,8 @@
     "unselect": "取消选择",
     "addMark": "添加标记",
     "viewFile": "查看文件",
-    "switchLanguage": "语言"
+    "switchLanguage": "语言",
+    "multiReplyAnnotations": "回复所选注释 ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -194,10 +195,15 @@
     "textPopup": "文字弹出",
     "createStampButton": "创建新图章",
     "filter": "过滤",
+    "multiSelectButton": "多选",
     "pageReplaceModalTitle": "替换页面",
     "files": "文件",
     "editText": "编辑文本",
-    "redactionPanel": "编辑面板"
+    "redactionPanel": "编辑面板",
+    "noteGroupSection": {
+      "open": "查看所有注释",
+      "close": "关闭所有注释"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "无预设",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "删除自定义颜色",
       "deleteMessage": "删除所选的自定义颜色？它将从您的调色板中删除。"
+    },
+    "multiDeleteAnnotation": {
+      "title": "删除注释？",
+      "message": "删除将删除所有评论、回复和分组，并且无法撤消。\n\n 您确定要删除这些注释吗？"
     }
   },
   "shortcut": {

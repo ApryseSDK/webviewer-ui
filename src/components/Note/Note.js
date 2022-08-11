@@ -7,24 +7,31 @@ import { useTranslation } from 'react-i18next';
 import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
 import ReplyArea from 'components/Note/ReplyArea';
+import NoteGroupSection from 'components/Note/NoteGroupSection';
+import Button from 'components/Button';
 
 import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
 import AnnotationNoteConnectorLine from 'components/AnnotationNoteConnectorLine';
 import useDidUpdate from 'hooks/useDidUpdate';
-import Button from 'components/Button';
 
 import './Note.scss';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
+  isMultiSelected: PropTypes.bool,
+  isMultiSelectMode: PropTypes.bool,
+  handleMultiSelect: PropTypes.func,
 };
 
 let currId = 0;
 
 const Note = ({
   annotation,
+  isMultiSelected,
+  isMultiSelectMode,
+  handleMultiSelect,
 }) => {
   const { isSelected, resize, pendingEditTextMap, setPendingEditText, isContentEditable, isDocumentReadOnly, isNotePanelOpen, isExpandedFromSearch } = useContext(NoteContext);
   const containerRef = useRef();
@@ -41,7 +48,7 @@ const Note = ({
     unreadAnnotationIdSet,
     shouldExpandCommentThread,
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.getNoteTransformFunction(state),
       selectors.getCustomNoteSelectionFunction(state),
       selectors.getUnreadAnnotationIdSet(state),
@@ -54,12 +61,12 @@ const Note = ({
     .getReplies()
     .sort((a, b) => a['DateCreated'] - b['DateCreated']);
 
-  replies.filter(r => unreadAnnotationIdSet.has(r.Id)).forEach(r => unreadReplyIdSet.add(r.Id));
+  replies.filter((r) => unreadAnnotationIdSet.has(r.Id)).forEach((r) => unreadReplyIdSet.add(r.Id));
 
   useEffect(() => {
     const annotationChangedListener = (annotations, action) => {
       if (action === 'delete') {
-        annotations.forEach(annot => {
+        annotations.forEach((annot) => {
           if (unreadAnnotationIdSet.has(annot.Id)) {
             dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: annot.Id }));
           }
@@ -88,7 +95,7 @@ const Note = ({
 
   useEffect(() => {
     if (noteTransformFunction) {
-      ids.current.forEach(id => {
+      ids.current.forEach((id) => {
         const child = document.querySelector(`[data-webviewer-custom-element='${id}']`);
         if (child) {
           child.parentNode.removeChild(child);
@@ -108,7 +115,7 @@ const Note = ({
         currId++;
         ids.current.push(id);
         element.setAttribute('data-webviewer-custom-element', id);
-        element.addEventListener('mousedown', e => {
+        element.addEventListener('mousedown', (e) => {
           e.stopPropagation();
         });
 
@@ -118,20 +125,20 @@ const Note = ({
   });
 
   useEffect(() => {
-    //If this is not a new one, rebuild the isEditing map
-    const pendingText = pendingEditTextMap[annotation.Id]
+    // If this is not a new one, rebuild the isEditing map
+    const pendingText = pendingEditTextMap[annotation.Id];
     if (pendingText !== '' && isContentEditable && !isDocumentReadOnly) {
       setIsEditing(true, 0);
     }
-  }, [isDocumentReadOnly, isContentEditable, setIsEditing, annotation]);
+  }, [isDocumentReadOnly, isContentEditable, setIsEditing, annotation, isMultiSelectMode]);
 
   useDidUpdate(() => {
     if (isDocumentReadOnly || !isContentEditable) {
       setIsEditing(false, 0);
     }
-  }, [isDocumentReadOnly, isContentEditable, setIsEditing])
+  }, [isDocumentReadOnly, isContentEditable, setIsEditing]);
 
-  const handleNoteClick = e => {
+  const handleNoteClick = (e) => {
     // stop bubbling up otherwise the note will be closed
     // due to annotation deselection
     e && e.stopPropagation();
@@ -140,15 +147,16 @@ const Note = ({
       dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: annotation.Id }));
     }
 
+    customNoteSelectionFunction && customNoteSelectionFunction(annotation);
     if (!isSelected) {
-      customNoteSelectionFunction && customNoteSelectionFunction(annotation);
       core.deselectAllAnnotations();
-      core.selectAnnotation(annotation);
-      core.jumpToAnnotation(annotation);
 
       // Need this delay to ensure all other event listeners fire before we open the line
       setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
     }
+    core.selectAnnotation(annotation);
+    core.jumpToAnnotation(annotation);
+    dispatch(actions.openElement('annotationPopup'));
   };
 
   const hasUnreadReplies = unreadReplyIdSet.size > 0;
@@ -156,6 +164,7 @@ const Note = ({
   const noteClass = classNames({
     Note: true,
     expanded: isSelected,
+    'is-multi-selected': isMultiSelected,
     unread: unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies,
   });
 
@@ -165,19 +174,27 @@ const Note = ({
   });
 
   useEffect(() => {
-    //Must also restore the isEdit for  any replies, in case someone was editing a
-    //reply when a comment was placed above
-    replies.forEach((reply, index) => {
-      const pendingText = pendingEditTextMap[reply.Id]
-      if ((pendingText !== '' && typeof pendingText !== 'undefined') && isSelected) {
-        setIsEditing(true, 1 + index);
-      }
-    })
-  }, [isSelected]);
+    // Must also restore the isEdit for  any replies, in case someone was editing a
+    // reply when a comment was placed above
+    if (!isMultiSelectMode) {
+      replies.forEach((reply, index) => {
+        const pendingText = pendingEditTextMap[reply.Id];
+        if ((pendingText !== '' && typeof pendingText !== 'undefined') && isSelected) {
+          setIsEditing(true, 1 + index);
+        }
+      });
+    }
+  }, [isSelected, isMultiSelectMode]);
 
-  const showReplyArea = !Object.values(isEditingMap).some(val => val);
+  useEffect(() => {
+    if (isMultiSelectMode) {
+      setIsEditing(false, 0);
+    }
+  }, [isMultiSelectMode]);
 
-  const handleNoteKeydown = e => {
+  const showReplyArea = !Object.values(isEditingMap).some((val) => val);
+
+  const handleNoteKeydown = (e) => {
     // Click if enter or space is pressed and is current target.
     const isNote = e.target === e.currentTarget;
     if (isNote && (e.key === 'Enter' || e.key === ' ')) {
@@ -186,8 +203,8 @@ const Note = ({
     }
   };
 
-  const handleReplyClicked = reply => {
-    //set clicked reply as read
+  const handleReplyClicked = (reply) => {
+    // set clicked reply as read
     if (unreadReplyIdSet.has(reply.Id)) {
       dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: reply.Id }));
       core.getAnnotationManager().selectAnnotation(reply);
@@ -195,17 +212,17 @@ const Note = ({
   };
 
   const markAllRepliesRead = () => {
-    //set all replies to read state if user starts to type in reply textarea
+    // set all replies to read state if user starts to type in reply textarea
     if (unreadReplyIdSet.size > 0) {
-      const repliesSetToRead = replies.filter(r => unreadReplyIdSet.has(r.Id));
+      const repliesSetToRead = replies.filter((r) => unreadReplyIdSet.has(r.Id));
       core.getAnnotationManager().selectAnnotations(repliesSetToRead);
-      repliesSetToRead.forEach(r => dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: r.Id })));
+      repliesSetToRead.forEach((r) => dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: r.Id })));
     }
   };
 
   const setIsEditing = useCallback(
     (isEditing, index) => {
-      setIsEditingMap(map => ({
+      setIsEditingMap((map) => ({
         ...map,
         [index]: isEditing,
       }));
@@ -213,7 +230,10 @@ const Note = ({
     [setIsEditingMap],
   );
 
-  //apply unread reply style to replyArea if the last reply is unread
+  const groupAnnotations = core.getGroupAnnotations(annotation);
+  const isGroup = groupAnnotations.length > 1;
+
+  // apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
   return (
     <div
@@ -235,6 +255,9 @@ const Note = ({
         onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
+        handleMultiSelect={handleMultiSelect}
+        isMultiSelected={isMultiSelected}
+        isMultiSelectMode={isMultiSelectMode}
       />
       {(isSelected || isExpandedFromSearch || shouldExpandCommentThread) && (
         <React.Fragment>
@@ -259,12 +282,20 @@ const Note = ({
                     onTextChange={setPendingEditText}
                     onReplyClicked={handleReplyClicked}
                     isUnread={unreadAnnotationIdSet.has(reply.Id)}
+                    handleMultiSelect={handleMultiSelect}
+                    isMultiSelected={isMultiSelected}
+                    isMultiSelectMode={isMultiSelectMode}
                   />
                 </div>
               ))}
             </div>
           )}
-          {showReplyArea && (
+          {isGroup &&
+            <NoteGroupSection
+              groupAnnotations={groupAnnotations}
+              isMultiSelectMode={isMultiSelectMode}
+            />}
+          {showReplyArea && !isMultiSelectMode && (
             <ReplyArea
               isUnread={lastReplyId && unreadAnnotationIdSet.has(lastReplyId)}
               onPendingReplyChange={markAllRepliesRead}

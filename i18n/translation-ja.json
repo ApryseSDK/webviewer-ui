@@ -91,7 +91,8 @@
     "unselect": "選択を解除",
     "addMark": "マークを追加",
     "viewFile": "ファイルを閲覧する",
-    "switchLanguage": "言語"
+    "switchLanguage": "言語",
+    "multiReplyAnnotations": "選択した注釈に返信 ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -194,10 +195,15 @@
     "textPopup": "テキストポップアップ",
     "createStampButton": "新しいスタンプを作成",
     "filter": "フィルター",
+    "multiSelectButton": "複数選択",
     "pageReplaceModalTitle": "ページを入れ替える",
     "files": "ファイル",
     "editText": "テキストの編集",
-    "redactionPanel": "墨消しパネル"
+    "redactionPanel": "墨消しパネル",
+    "noteGroupSection": {
+      "open": "すべての注釈を表示",
+      "close": "すべての注釈を閉じる"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "プリセットなし",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "カスタムカラーを削除する",
       "deleteMessage": "選択したカスタムカラーを削除しますか？カラーパレットから削除されます。"
+    },
+    "multiDeleteAnnotation": {
+      "title": "注釈を削除しますか？",
+      "message": "削除すると、すべてのコメント、返信、およびグループ化が削除され、元に戻すことはできません。\n\n これらの注釈を削除してもよろしいですか？"
     }
   },
   "shortcut": {

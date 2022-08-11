@@ -91,7 +91,8 @@
     "unselect": "सभी का चयन रद्द",
     "addMark": "मार्क जोड़ें",
     "viewFile": "फ़ाइल देखें",
-    "switchLanguage": "भाषा"
+    "switchLanguage": "भाषा",
+    "multiReplyAnnotations": "चयनित टिप्पणियों का उत्तर दें"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -194,10 +195,15 @@
     "textPopup": "टेक्स्ट पॉपअप",
     "createStampButton": "नया स्टाम्प बनाएं",
     "filter": "फ़िल्टर",
+    "multiSelectButton": "बहु का चयन",
     "pageReplaceModalTitle": "पृष्ठ बदलें",
     "files": "फ़ाइलें",
     "editText": "लिखाई में बदलाव",
-    "redactionPanel": "रिडक्शन पैनल"
+    "redactionPanel": "रिडक्शन पैनल",
+    "noteGroupSection": {
+      "open": "सभी टिप्पणियां देखें",
+      "close": "सभी टिप्पणियां बंद करें"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "कोई प्रीसेट नहीं",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "कस्टम रंग हटाएं",
       "deleteMessage": "चयनित कस्टम रंग हटाएं? इसे आपके रंग पैलेट से हटा दिया जाएगा।"
+    },
+    "multiDeleteAnnotation": {
+      "title": "एनोटेशन हटाएं?",
+      "message": "हटाने से सभी टिप्पणियां, उत्तर और समूहीकरण हट जाएगा और इसे पूर्ववत नहीं किया जा सकता।\n\n क्या आप वाकई इन टिप्पणियों को हटाना चाहते हैं?"
     }
   },
   "shortcut": {

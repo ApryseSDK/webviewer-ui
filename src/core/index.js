@@ -110,6 +110,7 @@ import getWatermark from './getWatermark';
 import groupAnnotations from './groupAnnotations';
 import ungroupAnnotations from './ungroupAnnotations';
 import getNumberOfGroups from './getNumberOfGroups';
+import getGroupAnnotations from './getGroupAnnotations';
 import undo from './undo';
 import redo from './redo';
 import updateAnnotationState from './updateAnnotationState';
@@ -118,6 +119,10 @@ import mergeDocument from './mergeDocument';
 import getFormFieldCreationManager from './getFormFieldCreationManager';
 import syncNamespaces from './syncNamespaces';
 import createDocument from './createDocument';
+import setUserBookmarks from './setUserBookmarks';
+import setBookmarkIconShortcutVisibility from './setBookmarkIconShortcutVisibility';
+import setBookmarkShortcutToggleOnFunction from './setBookmarkShortcutToggleOnFunction';
+import setBookmarkShortcutToggleOffFunction from './setBookmarkShortcutToggleOffFunction';
 
 export default {
   setToolMode,
@@ -233,6 +238,7 @@ export default {
   groupAnnotations,
   ungroupAnnotations,
   getNumberOfGroups,
+  getGroupAnnotations,
   undo,
   redo,
   updateAnnotationState,
@@ -241,4 +247,8 @@ export default {
   getFormFieldCreationManager,
   syncNamespaces,
   createDocument,
+  setUserBookmarks,
+  setBookmarkIconShortcutVisibility,
+  setBookmarkShortcutToggleOnFunction,
+  setBookmarkShortcutToggleOffFunction
 };

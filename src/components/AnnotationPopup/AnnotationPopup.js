@@ -10,6 +10,7 @@ import DatePicker from 'src/components/DatePicker';
 import CustomizablePopup from 'components/CustomizablePopup';
 
 import core from 'core';
+import { getDataWithKey, mapToolNameToKey, mapAnnotationToKey } from 'constants/map';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
@@ -34,7 +35,7 @@ const AnnotationPopup = () => {
     tabManager,
     tabs,
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementDisabled(state, 'annotationPopup'),
       selectors.isElementOpen(state, 'annotationPopup'),
       selectors.isElementDisabled(state, 'notesPanel'),
@@ -64,15 +65,14 @@ const AnnotationPopup = () => {
   const [stylePopupRepositionFlag, setStylePopupRepositionFlag] = useState(false);
 
   // helper function to get all the link annotations that are grouped with the passed in annotation
-  const getGroupedLinkAnnotations = annotation => {
-    const groupedLinks = core.getAnnotationManager().getGroupAnnotations(annotation).filter(groupedAnnotation => {
+  const getGroupedLinkAnnotations = (annotation) => {
+    const groupedLinks = core.getAnnotationManager().getGroupAnnotations(annotation).filter((groupedAnnotation) => {
       return groupedAnnotation instanceof Annotations.Link;
     });
     return groupedLinks;
   };
 
-  useOnClickOutside(popupRef, e => {
-
+  useOnClickOutside(popupRef, (e) => {
     const notesPanel = document.querySelector('[data-element="notesPanel"]');
     const clickedInNotesPanel = notesPanel?.contains(e.target);
     const datePicker = getDatePicker();
@@ -109,7 +109,7 @@ const AnnotationPopup = () => {
       setPopupPositionAndShow();
     }
 
-    const onMouseLeftUp = e => {
+    const onMouseLeftUp = (e) => {
       // clicking on the selected annotation is considered clicking outside of this component
       // so this component will close due to useOnClickOutside
       // this handler is used to make sure that if we click on the selected annotation, this component will show up again
@@ -121,7 +121,7 @@ const AnnotationPopup = () => {
         }
 
         // clicking on full page redactions should close the stylePopup if it is already open
-        if (firstAnnotation['redactionType'] === 'fullPage' && isStylePopupOpen){
+        if (firstAnnotation['redactionType'] === 'fullPage' && isStylePopupOpen) {
           setIsStylePopupOpen(false);
           dispatch(actions.closeElement('annotationPopup'));
         }
@@ -135,7 +135,7 @@ const AnnotationPopup = () => {
       if (action === 'modify') {
         setPopupPositionAndShow();
       }
-      const hasLinkAnnotation = annotations.some(annotation => annotation instanceof Annotations.Link);
+      const hasLinkAnnotation = annotations.some((annotation) => annotation instanceof Annotations.Link);
       if (!hasLinkAnnotation) {
         return;
       }
@@ -178,16 +178,14 @@ const AnnotationPopup = () => {
       if (action === 'selected' && annotations.length && annotations[0].ToolName !== window.Core.Tools.ToolNames.CROP) {
         setFirstAnnotation(annotations[0]);
         setSelectedMultipleAnnotations(annotations.length > 1);
-        setIncludesFormFieldAnnotation(annotations.some(annotation => annotation.isFormFieldPlaceholder()));
+        setIncludesFormFieldAnnotation(annotations.some((annotation) => annotation.isFormFieldPlaceholder()));
         setCanModify(core.canModify(annotations[0]));
         if (isNotesPanelOpen) {
           setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
         }
       } else {
         const actionOnOtherAnnotation = firstAnnotation && annotations && !annotations.includes(firstAnnotation);
-        if (action === 'deselected' && actionOnOtherAnnotation) {
-          return;
-        } else {
+        if (!(action === 'deselected' && actionOnOtherAnnotation)) {
           closeAndReset();
         }
       }
@@ -212,8 +210,9 @@ const AnnotationPopup = () => {
       return console.warn('Can\'t open file in non-multi-tab mode');
     }
     const metaData = firstAnnotation.getFileMetadata();
-    const fileAttachmentTab = tabs.find(tab => tab.options.filename === metaData.filename);
+    const fileAttachmentTab = tabs.find((tab) => tab.options.filename === metaData.filename);
     if (fileAttachmentTab) { // If already opened once
+      // eslint-disable-next-line no-return-await
       return await tabManager.setActiveTab(fileAttachmentTab.id, true);
     }
     await tabManager.addTab(await firstAnnotation.getFileData(), {
@@ -229,12 +228,12 @@ const AnnotationPopup = () => {
     return null;
   }
 
-  const toggleDatePicker = () => setDatePickerOpen(isOpen => !isOpen);
+  const toggleDatePicker = () => setDatePickerOpen((isOpen) => !isOpen);
   const style = getAnnotationStyles(firstAnnotation);
   const hasStyle = Object.keys(style).length > 0;
   const redactionEnabled = core.isAnnotationRedactable(firstAnnotation);
   const selectedAnnotations = core.getSelectedAnnotations();
-  const primaryAnnotation = selectedAnnotations.find(selectedAnnotation => !selectedAnnotation.InReplyTo);
+  const primaryAnnotation = selectedAnnotations.find((selectedAnnotation) => !selectedAnnotation.InReplyTo);
   const numberOfSelectedAnnotations = selectedAnnotations.length;
   const numberOfGroups = core.getNumberOfGroups(selectedAnnotations);
   const canGroup = numberOfGroups > 1;
@@ -248,15 +247,15 @@ const AnnotationPopup = () => {
     if (isDateFreeTextCanEdit) {
       toggleDatePicker();
       return;
-    } else {
-      dispatch(actions.openElement('notesPanel'));
-      dispatch(actions.closeElement('searchPanel'));
-      dispatch(actions.triggerNoteEditing());
     }
+    dispatch(actions.openElement('notesPanel'));
+    dispatch(actions.closeElement('searchPanel'));
+    dispatch(actions.triggerNoteEditing());
+
     dispatch(actions.closeElement('annotationPopup'));
   };
 
-  const handleDateChange = text => {
+  const handleDateChange = (text) => {
     core.getAnnotationManager().setNoteContents(firstAnnotation, text);
     core.getAnnotationManager().updateAnnotation(firstAnnotation);
   };
@@ -268,13 +267,13 @@ const AnnotationPopup = () => {
     </div>);
   };
 
-  const downloadFileAttachment = annot => {
+  const downloadFileAttachment = (annot) => {
     // no need to check that annot is of type file annot as the check is done in the JSX
     // trigger the annotationDoubleClicked event so that it will download the file
     core.getAnnotationManager().trigger('annotationDoubleClicked', annot);
   };
 
-  const handlePlaySound = annotation => {
+  const handlePlaySound = (annotation) => {
     dispatch(actions.setActiveSoundAnnotation(annotation));
     dispatch(actions.triggerResetAudioPlaybackPosition(true));
     dispatch(actions.openElement('audioPlaybackPopup'));
@@ -343,7 +342,7 @@ const AnnotationPopup = () => {
     !(firstAnnotation instanceof Annotations.SoundAnnotation) // TODO(Adam): Update this once SoundAnnotation tool is created.
   );
 
-  const onDatePickerShow = isDatePickerShowed => {
+  const onDatePickerShow = (isDatePickerShowed) => {
     setDatePickerMount(isDatePickerShowed);
   };
 
@@ -352,6 +351,46 @@ const AnnotationPopup = () => {
   const onResize = () => {
     setStylePopupRepositionFlag(!stylePopupRepositionFlag);
   };
+
+  const isFreeText =
+    firstAnnotation instanceof window.Annotations.FreeTextAnnotation &&
+    (firstAnnotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeText ||
+    firstAnnotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeTextCallout);
+  const isRedaction = firstAnnotation instanceof window.Annotations.RedactionAnnotation;
+  const colorMapKey = mapAnnotationToKey(firstAnnotation);
+  const isMeasure = !!firstAnnotation.Measure;
+  const showLineStyleOptions = getDataWithKey(mapToolNameToKey(firstAnnotation.ToolName)).hasLineEndings;
+
+  let properties = {};
+  if (showLineStyleOptions) {
+    properties = {
+      StartLineStyle: firstAnnotation.getStartStyle(),
+      EndLineStyle: firstAnnotation.getEndStyle(),
+    };
+  }
+
+  if (isFreeText) {
+    const richTextStyles = firstAnnotation.getRichTextStyle();
+    properties = {
+      Font: firstAnnotation.Font,
+      FontSize: firstAnnotation.FontSize,
+      TextAlign: firstAnnotation.TextAlign,
+      TextVerticalAlign: firstAnnotation.TextVerticalAlign,
+      bold: richTextStyles?.[0]?.['font-weight'] === 'bold' ?? false,
+      italic: richTextStyles?.[0]?.['font-style'] === 'italic' ?? false,
+      underline: richTextStyles?.[0]?.['text-decoration']?.includes('underline') || richTextStyles?.[0]?.['text-decoration']?.includes('word'),
+      strikeout: richTextStyles?.[0]?.['text-decoration']?.includes('line-through') ?? false,
+    };
+  }
+
+  if (isRedaction) {
+    properties = {
+      OverlayText: firstAnnotation['OverlayText'],
+      Font: firstAnnotation['Font'],
+      FontSize: firstAnnotation['FontSize'],
+      TextAlign: firstAnnotation['TextAlign']
+    };
+  }
 
   const annotationPopup = (
     <div
@@ -368,7 +407,19 @@ const AnnotationPopup = () => {
     >
       {isStylePopupOpen || isDatePickerOpen ? (
         isStylePopupOpen ? (
-          <AnnotationStylePopup annotation={firstAnnotation} style={style} isOpen={isOpen} onResize={onResize} />
+          <AnnotationStylePopup
+            annotations={[firstAnnotation]}
+            style={style}
+            isOpen={isOpen}
+            onResize={onResize}
+            isFreeText={isFreeText}
+            isRedaction={isRedaction}
+            isMeasure={isMeasure}
+            colorMapKey={colorMapKey}
+            showLineStyleOptions={showLineStyleOptions}
+            properties={properties}
+            hideSnapModeCheckbox={(firstAnnotation instanceof window.Annotations.EllipseAnnotation || !core.isFullPDFEnabled())}
+          />
         ) : (
           <DatePicker onClick={handleDateChange} annotation={firstAnnotation} onDatePickerShow={onDatePickerShow} />
         )
@@ -405,6 +456,7 @@ const AnnotationPopup = () => {
                 title="action.edit"
                 img="ic_edit_page_24px"
                 onClick={async () => {
+                  // eslint-disable-next-line no-undef
                   const content = await instance.Core.ContentEdit.getDocumentContent(firstAnnotation);
                   dispatch(actions.setCurrentContentBeingEdited({ content, annotation: firstAnnotation }));
                   dispatch(actions.openElement('contentEditModal'));
@@ -427,7 +479,7 @@ const AnnotationPopup = () => {
               <ActionButton
                 dataElement="annotationGroupButton"
                 title="action.group"
-                img="ic_group_24px"
+                img="group-annotations-icon"
                 onClick={() => core.groupAnnotations(primaryAnnotation, selectedAnnotations)}
               />
             )}
@@ -435,7 +487,7 @@ const AnnotationPopup = () => {
               <ActionButton
                 dataElement="annotationUngroupButton"
                 title="action.ungroup"
-                img="ic_ungroup_24px"
+                img="ungroup-annotations-icon"
                 onClick={() => core.ungroupAnnotations(selectedAnnotations)}
               />
             )}
@@ -481,7 +533,7 @@ const AnnotationPopup = () => {
                   hasAssociatedLink
                     ? () => {
                       const annotManager = core.getAnnotationManager();
-                      selectedAnnotations.forEach(annot => {
+                      selectedAnnotations.forEach((annot) => {
                         const linkAnnotations = getGroupedLinkAnnotations(annot);
                         linkAnnotations.forEach((linkAnnot, index) => {
                           annotManager.ungroupAnnotations([linkAnnot]);

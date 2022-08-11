@@ -6,15 +6,10 @@
   display: flex;
   flex-direction: column;
   width: 220px;
+
   @include mobile {
     width: 100vw;
   }
-  // overflow: auto;
-
-  // @include mobile {
-  //   padding-top: 0px;
-  //   padding-bottom: 0px;
-  // }
 
   .sliders-container {
     padding-left: 6px;

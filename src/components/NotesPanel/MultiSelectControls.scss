@@ -1,0 +1,44 @@
+.notes-panel-container {
+  .buttons-container {
+    display: flex;
+    column-gap: 8px;
+    justify-content: space-between;
+
+    .Button {
+      height: 28px;
+      width: 28px;
+
+      &:hover:enabled {
+        background: var(--view-header-button-hover);
+      }
+
+      &.active {
+        background: var(--view-header-button-active);
+
+        .Icon {
+          color: var(--view-header-icon-active-fill);
+        }
+      }
+    }
+  }
+
+  .multi-select-footer {
+    background: var(--panel-background);
+    display: flex;
+    border-top: 1px solid #CFD4DA;
+    margin-top: auto;
+    height: 72px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    z-index: 100;
+
+    .close-container {
+      margin-top: auto;
+      right: 10px;
+      position: absolute;
+    }
+  }
+}

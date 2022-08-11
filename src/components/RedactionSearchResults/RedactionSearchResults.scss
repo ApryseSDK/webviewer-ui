@@ -70,10 +70,6 @@
   border: 1px solid var(--border);
   margin-bottom: 16px;
 
-  @include tablet {
-    margin-bottom: 40px;
-  }
-
   button {
     @include button-reset;
     height: 28px;

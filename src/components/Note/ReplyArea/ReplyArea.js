@@ -29,7 +29,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     isMentionEnabled,
     isNoteEditingTriggeredByAnnotationPopup,
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.getAutoFocusNoteOnAnnotationSelection(state),
       selectors.isDocumentReadOnly(state),
       selectors.isElementDisabled(state, 'noteReply'),
@@ -79,16 +79,17 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     }
     if (textareaRef && textareaRef.current) {
       const editor = textareaRef.current.getEditor();
-      const textLength = editor.getText().length;
+      const lastNewLineCharacterLength = 1;
+      const textLength = editor.getLength() - lastNewLineCharacterLength;
       textareaRef.current.editor.setSelection(textLength, textLength);
     }
   }, []);
 
-  const postReply = e => {
+  const postReply = (e) => {
     // prevent the textarea from blurring out
     e.preventDefault();
     const editor = textareaRef.current.getEditor();
-    const replyText = editor.getText()
+    const replyText = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
 
     if (!replyText.trim()) {
       return;
@@ -127,28 +128,28 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     isReplyDisabledForAnnotation;
 
   const replyAreaClass = classNames({
-    "reply-area": true,
+    'reply-area': true,
     unread: isUnread,
   });
 
-  const handleNoteTextareaChange = value => {
+  const handleNoteTextareaChange = (value) => {
     setPendingReply(value, annotation.Id);
-    onPendingReplyChange();
+    onPendingReplyChange && onPendingReplyChange();
   };
   return ifReplyNotAllowed || !isSelected ? null : (
-    <form onSubmit={postReply} className='reply-area-container'>
+    <form onSubmit={postReply} className="reply-area-container">
       <div
         className={replyAreaClass}
         // stop bubbling up otherwise the note will be closed
         // due to annotation deselection
-        onMouseDown={e => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
       >
         <NoteTextarea
-          ref={el => {
+          ref={(el) => {
             textareaRef.current = el;
           }}
           value={pendingReplyMap[annotation.Id]}
-          onChange={value => handleNoteTextareaChange(value)}
+          onChange={(value) => handleNoteTextareaChange(value)}
           onSubmit={postReply}
           onBlur={() => setIsFocused(false)}
           onFocus={() => setIsFocused(true)}
@@ -156,12 +157,12 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
           aria-label={`${t('action.reply')}...`}
         />
       </div>
-      <div className='reply-button-container'>
+      <div className="reply-button-container">
         <Button
           img="icon-post-reply"
           className={`reply-button${!pendingReplyMap[annotation.Id] ? ' disabled' : ''}`}
-          onMouseUp={e => postReply(e)} 
-          isSubmitType={true}
+          onMouseUp={(e) => postReply(e)}
+          isSubmitType
         />
       </div>
     </form>

@@ -91,7 +91,8 @@
     "unselect": "Unselect",
     "addMark": "Add Mark",
     "viewFile": "View file",
-    "switchLanguage": "Language"
+    "switchLanguage": "Language",
+    "multiReplyAnnotations": "Reply to selected annotations ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -194,10 +195,15 @@
     "textPopup": "Text Popup",
     "createStampButton": "Create New Stamp",
     "filter": "Filter",
+    "multiSelectButton": "Multi Select",
     "pageReplaceModalTitle": "Replace Page",
     "files": "Files",
     "editText": "Edit Text",
-    "redactionPanel": "Redaction Panel"
+    "redactionPanel": "Redaction Panel",
+    "noteGroupSection": {
+      "open": "View All Annotations",
+      "close": "Close All Annotations"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "No Presets",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Delete custom color",
       "deleteMessage": "Delete the selected custom color? It will be removed from your color palette."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Delete Annotations?",
+      "message": "Deleteing will remove all comments, replies, and grouping and cannot be undone. \n\n Are you sure you want to delete these annotations?"
     }
   },
   "shortcut": {

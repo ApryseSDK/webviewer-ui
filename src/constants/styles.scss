@@ -204,20 +204,23 @@ $light-gray: #e7ebee;
 
   @include tablet-and-desktop {
     height: calc(100% - 37px); // minus the height of the top header;
-    @include tablet {
-      height: calc(100% - 53px); // minus the height of the top header;
-    }
 
     &.tools-header-open {
       height: calc(100% - 76px); // minus the height of both headers;
-
-      @include tablet {
-        height: calc(100% - 104px); // minus the height of both headers;
-      }
     }
 
     &.tools-header-and-header-hidden {
       height: 100%;
+    }
+  }
+
+  @include tablet {
+    height: calc(100% - 53px); // minus the height of the top header;
+  }
+
+  &.tools-header-open {
+    @include tablet {
+      height: calc(100% - 104px); // minus the height of both headers;
     }
   }
 }

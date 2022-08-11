@@ -9,7 +9,6 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
-import { getDataWithKey, mapToolNameToKey, mapAnnotationToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isToolDefaultStyleUpdateFromAnnotationPopupEnabled } from '../../apis/toolDefaultStyleUpdateFromAnnotationPopup';
@@ -19,65 +18,78 @@ import './AnnotationStylePopup.scss';
 class AnnotationStylePopup extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
-    annotation: PropTypes.object.isRequired,
+    annotations: PropTypes.array.isRequired,
     style: PropTypes.object.isRequired,
+    properties: PropTypes.object.isRequired,
+    isRedaction: PropTypes.bool,
+    isFreeText: PropTypes.bool,
     closeElement: PropTypes.func.isRequired,
   };
 
   handleSliderChange = (property, value) => {
-    const { annotation } = this.props;
+    const { annotations } = this.props;
     const annotationManager = core.getAnnotationManager();
 
-    annotation[property] = value
-    annotationManager.redrawAnnotation(annotation)
+    annotations.forEach((annotation) => {
+      annotation[property] = value;
+      annotationManager.redrawAnnotation(annotation);
+    });
   }
 
   handlePropertyChange = (property, value) => {
-    const { annotation } = this.props;
+    const { annotations } = this.props;
 
-    core.setAnnotationStyles(annotation, {
-      [property]: value,
+    annotations.forEach((annotation) => {
+      core.setAnnotationStyles(annotation, {
+        [property]: value,
+      });
     });
   }
 
   handleStyleChange = (property, value) => {
-    const { annotation } = this.props;
+    const { annotations } = this.props;
 
-    core.setAnnotationStyles(annotation, {
-      [property]: value,
+    annotations.forEach((annotation) => {
+      core.setAnnotationStyles(annotation, {
+        [property]: value,
+      });
+
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+        setToolStyles(annotation.ToolName, property, value);
+      }
     });
-
-    if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
-      setToolStyles(annotation.ToolName, property, value);
-    }
   };
 
   handleRichTextStyleChange = (property, value) => {
-    const { annotation } = this.props;
+    const { annotations } = this.props;
 
-    core.updateAnnotationRichTextStyle(annotation, { [property]: value });
+    annotations.forEach((annotation) => {
+      core.updateAnnotationRichTextStyle(annotation, { [property]: value });
+    });
   }
 
   handleLineStyleChange = (section, value) => {
-    const { annotation } = this.props;
+    const { annotations } = this.props;
 
-    let lineStyle = '';
-    if (section === 'start') {
-      annotation.setStartStyle(value);
-      lineStyle = 'StartLineStyle';
-    } else if (section === 'end') {
-      annotation.setEndStyle(value);
-      lineStyle = 'EndLineStyle';
-    }
+    annotations.forEach((annotation) => {
+      let lineStyle = '';
+      if (section === 'start') {
+        annotation.setStartStyle(value);
+        lineStyle = 'StartLineStyle';
+      } else if (section === 'end') {
+        annotation.setEndStyle(value);
+        lineStyle = 'EndLineStyle';
+      }
 
-    if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
-      setToolStyles(annotation.ToolName, lineStyle, value);
-    }
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+        setToolStyles(annotation.ToolName, lineStyle, value);
+      }
 
-    core.getAnnotationManager().redrawAnnotation(annotation);
+      core.getAnnotationManager().redrawAnnotation(annotation);
+    });
   };
 
-  handleClick = e => {
+  handleClick = (e) => {
     // see the comments above handleClick in ToolStylePopup.js
     if (isMobile() && e.target === e.currentTarget) {
       this.props.closeElement('annotationPopup');
@@ -90,49 +102,21 @@ class AnnotationStylePopup extends React.Component {
   }
 
   render() {
-    const { isDisabled, annotation, style } = this.props;
-    const isFreeText =
-      annotation instanceof window.Annotations.FreeTextAnnotation &&
-      annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeText;
-    const isMeasure = !!annotation.Measure;
-    let properties = {};
+    const {
+      isDisabled,
+      style, isRedaction,
+      isFreeText,
+      isMeasure,
+      colorMapKey,
+      showLineStyleOptions,
+      properties,
+      hideSnapModeCheckbox,
+    } = this.props;
+
     const className = getClassName('Popup AnnotationStylePopup', this.props);
-    const colorMapKey = mapAnnotationToKey(annotation);
-    const isRedaction = annotation instanceof window.Annotations.RedactionAnnotation;
-    const showLineStyleOptions = getDataWithKey(mapToolNameToKey(annotation.ToolName)).hasLineEndings;
 
     if (isDisabled) {
       return null;
-    }
-
-    if (showLineStyleOptions) {
-      properties = {
-        StartLineStyle: annotation.getStartStyle(),
-        EndLineStyle: annotation.getEndStyle(),
-      }
-    }
-
-    if (isFreeText) {
-      const richTextStyles = annotation.getRichTextStyle();
-      properties = {
-        Font: annotation.Font,
-        FontSize: annotation.FontSize,
-        TextAlign: annotation.TextAlign,
-        TextVerticalAlign: annotation.TextVerticalAlign,
-        bold: richTextStyles?.[0]['font-weight'] === 'bold' ?? false,
-        italic: richTextStyles?.[0]['font-style'] === 'italic' ?? false,
-        underline: richTextStyles?.[0]['text-decoration']?.includes('underline') || richTextStyles?.[0]['text-decoration']?.includes('word'),
-        strikeout: richTextStyles?.[0]['text-decoration']?.includes('line-through') ?? false,
-      };
-    }
-
-    if (isRedaction) {
-      properties = {
-        OverlayText: annotation['OverlayText'],
-        Font: annotation['Font'],
-        FontSize: annotation['FontSize'],
-        TextAlign: annotation['TextAlign']
-      };
     }
 
     return (
@@ -148,7 +132,7 @@ class AnnotationStylePopup extends React.Component {
           >
             {/* Do not show checkbox for ellipse as snap mode does not exist for it */}
             <StylePopup
-              hideSnapModeCheckbox={(annotation instanceof window.Annotations.EllipseAnnotation || !core.isFullPDFEnabled())}
+              hideSnapModeCheckbox={hideSnapModeCheckbox}
               colorMapKey={colorMapKey}
               style={style}
               isFreeText={isFreeText}
@@ -170,7 +154,7 @@ class AnnotationStylePopup extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isDisabled: selectors.isElementDisabled(state, 'annotationStylePopup'),
 });
 

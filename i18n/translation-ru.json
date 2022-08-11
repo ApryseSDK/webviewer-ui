@@ -91,7 +91,8 @@
     "unselect": "Отменить выбор",
     "addMark": "Добавить отметку",
     "viewFile": "Посмотреть файл",
-    "switchLanguage": "Язык"
+    "switchLanguage": "Язык",
+    "multiReplyAnnotations": "Ответить на выбранные аннотации ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -194,10 +195,15 @@
     "textPopup": "Текстовое всплывающее окно",
     "createStampButton": "Создать новую марку",
     "filter": "Фильтр",
+    "multiSelectButton": "Выбор из нескольких вариантов",
     "pageReplaceModalTitle": "Заменить страницу",
     "files": "Файлы",
     "editText": "Редактировать текст",
-    "redactionPanel": "Панель редактирования"
+    "redactionPanel": "Панель редактирования",
+    "noteGroupSection": {
+      "open": "Просмотреть все аннотации",
+      "close": "Закрыть все аннотации"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "Нет пресетов",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Удалить собственный цвет",
       "deleteMessage": "Удалить выбранный пользовательский цвет? Он будет удален из вашей цветовой палитры."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Удалить аннотации?",
+      "message": "При удалении будут удалены все комментарии, ответы и группировка, и это действие нельзя будет отменить.\n\n Вы уверены, что хотите удалить эти аннотации?"
     }
   },
   "shortcut": {

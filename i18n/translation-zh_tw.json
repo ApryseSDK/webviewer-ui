@@ -91,7 +91,8 @@
     "unselect": "取消選擇",
     "addMark": "添加標記",
     "viewFile": "查看文件",
-    "switchLanguage": "語言"
+    "switchLanguage": "語言",
+    "multiReplyAnnotations": "回复所選註釋 ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -194,10 +195,15 @@
     "textPopup": "文字彈出",
     "createStampButton": "創建新圖章",
     "filter": "過濾",
+    "multiSelectButton": "多選",
     "pageReplaceModalTitle": "替換頁面",
     "files": "文件",
     "editText": "編輯文本",
-    "redactionPanel": "編輯面板"
+    "redactionPanel": "編輯面板",
+    "noteGroupSection": {
+      "open": "查看所有註釋",
+      "close": "關閉所有註釋"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "無預設",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "刪除自定義顏色",
       "deleteMessage": "刪除所選的自定義顏色？它將從您的調色板中刪除。"
+    },
+    "multiDeleteAnnotation": {
+      "title": "刪除註釋？",
+      "message": "刪除將刪除所有評論、回復和分組，並且無法撤消。\n\n 您確定要刪除這些註釋嗎？"
     }
   },
   "shortcut": {

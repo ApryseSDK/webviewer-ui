@@ -91,7 +91,8 @@
     "unselect": "Seçimi kaldır",
     "addMark": "İşaret Ekle",
     "viewFile": "Dosyayı görüntüle",
-    "switchLanguage": "Dilim"
+    "switchLanguage": "Dilim",
+    "multiReplyAnnotations": "Seçili ek açıklamaları yanıtla ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "Alan",
@@ -194,10 +195,15 @@
     "textPopup": "Metin Açılır Penceresi",
     "createStampButton": "Yeni Damga Oluştur",
     "filter": "filtre",
+    "multiSelectButton": "Çoklu seçim",
     "pageReplaceModalTitle": "Sayfayı Değiştir",
     "files": "Dosyalar",
     "editText": "Metni düzenle",
-    "redactionPanel": "Redaksiyon Paneli"
+    "redactionPanel": "Redaksiyon Paneli",
+    "noteGroupSection": {
+      "open": "Tüm Ek Açıklamaları Görüntüle",
+      "close": "Tüm Ek Açıklamaları Kapat"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "Ön Ayar Yok",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Özel rengi sil",
       "deleteMessage": "Seçilen özel renk silinsin mi? Renk paletinizden kaldırılacaktır."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Ek Açıklamalar Silinsin mi?",
+      "message": "Silme işlemi tüm yorumları, yanıtları ve gruplandırmayı kaldırır ve geri alınamaz.\n\n Bu ek açıklamaları silmek istediğinizden emin misiniz?"
     }
   },
   "shortcut": {

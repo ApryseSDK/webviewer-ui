@@ -31,9 +31,33 @@ dayjs.extend(LocalizedFormat);
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
+  isEditing: PropTypes.bool,
+  setIsEditing: PropTypes.func,
+  noteIndex: PropTypes.number,
+  onTextChange: PropTypes.func,
+  isUnread: PropTypes.bool,
+  isNonReplyNoteRead: PropTypes.bool,
+  onReplyClicked: PropTypes.func,
+  isMultiSelected: PropTypes.bool,
+  isMultiSelectMode: PropTypes.bool,
+  handleMultiSelect: PropTypes.func,
+  isGroupMember: PropTypes.bool,
 };
 
-const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextChange, isUnread, isNonReplyNoteRead, onReplyClicked }) => {
+const NoteContent = ({
+  annotation,
+  isEditing,
+  setIsEditing,
+  noteIndex,
+  onTextChange,
+  isUnread,
+  isNonReplyNoteRead,
+  onReplyClicked,
+  isMultiSelected,
+  isMultiSelectMode,
+  handleMultiSelect,
+  isGroupMember,
+}) => {
   const [
     noteDateFormat,
     iconColor,
@@ -44,7 +68,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
     canCollapseReplyPreview,
     activeTheme,
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
       selectors.isElementDisabled(state, 'notePopupState'),
@@ -75,7 +99,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   }, [isEditing]);
 
   const renderAuthorName = useCallback(
-    annotation => {
+    (annotation) => {
       const name = core.getDisplayAuthor(annotation['Author']);
 
       return name ? (
@@ -108,7 +132,6 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
                 start: offset,
                 end: offset + match.getMatchedText().length
               });
-              return;
           }
         }
       });
@@ -126,10 +149,9 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
             <NoteTextPreview linesToBreak={3} comment renderRichText={renderRichText} richTextStyle={richTextStyle} resize={resize} style={fontColor}>
               {contents}
             </NoteTextPreview>
-          )
-        } else {
-          return highlightResult;
+          );
         }
+        return highlightResult;
       }
       const contentToRender = [];
       let strIdx = 0;
@@ -225,26 +247,27 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
   }
 
   const handleNoteContentClicked = () => {
-    if (isReply) {
-      onReplyClicked(annotation);
-    } else if (!isEditing) {
-      //collapse expanded note when top noteContent is clicked if it's not being edited
-      onTopNoteContentClicked();
+    if (!isGroupMember) {
+      if (isReply) {
+        onReplyClicked(annotation);
+      } else if (!isEditing) {
+        // collapse expanded note when top noteContent is clicked if it's not being edited
+        onTopNoteContentClicked();
+      }
     }
   };
 
-  const handleContentsClicked = e => {
+  const handleContentsClicked = (e) => {
     if (window.getSelection()?.toString()) {
       e?.stopPropagation();
-      return;
     }
   };
 
   const noteContentClass = classNames({
     NoteContent: true,
     isReply,
-    unread: isUnread, //The note content itself is unread or it has unread replies
-    clicked: isNonReplyNoteRead, //The top note content is read
+    unread: isUnread, // The note content itself is unread or it has unread replies
+    clicked: isNonReplyNoteRead, // The top note content is read
   });
 
   const content = useMemo(
@@ -292,19 +315,18 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
       // preview but instead show the entire text
       if (isString(highlightSearchResult) && shouldCollapseAnnotationText) {
         return (
-          <div className='selected-text-preview'>
+          <div className="selected-text-preview">
             <NoteTextPreview linesToBreak={3}>
               {`"${highlightSearchResult}"`}
             </NoteTextPreview>
           </div>
-        )
-      } else {
-        return (
-          <div className='selected-text-preview' style={{ paddingRight: '12px' }}>
-            {highlightSearchResult}
-          </div>
         );
       }
+      return (
+        <div className="selected-text-preview" style={{ paddingRight: '12px' }}>
+          {highlightSearchResult}
+        </div>
+      );
     }, [text, searchInput]);
 
   const header = useMemo(
@@ -327,9 +349,13 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
           noteIndex={noteIndex}
           sortStrategy={sortStrategy}
           activeTheme={activeTheme}
+          handleMultiSelect={handleMultiSelect}
+          isMultiSelected={isMultiSelected}
+          isMultiSelectMode={isMultiSelectMode}
+          isGroupMember={isGroupMember}
         />
-      )
-    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy]
+      );
+    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember]
   );
 
   return (
@@ -338,7 +364,7 @@ const NoteContent = ({ annotation, isEditing, setIsEditing, noteIndex, onTextCha
       {textPreview}
       {content}
     </div>
-  )
+  );
 };
 
 NoteContent.propTypes = propTypes;
@@ -359,7 +385,7 @@ const ContentArea = ({
     autoFocusNoteOnAnnotationSelection,
     isMentionEnabled,
     isNotesPanelOpen
-  ] = useSelector(state => [
+  ] = useSelector((state) => [
     selectors.getAutoFocusNoteOnAnnotationSelection(state),
     selectors.getIsMentionEnabled(state),
     selectors.isElementOpen(state, 'notesPanel'),
@@ -386,22 +412,21 @@ const ContentArea = ({
         // need setTimeout because textarea seem to rerender and unfocus
         if (textareaRef && textareaRef.current && autoFocusNoteOnAnnotationSelection) {
           textareaRef.current.focus();
-          
+
           const annotRichTextStyle = annotation.getRichTextStyle();
           if (annotRichTextStyle && isEditing) {
-
             setReactQuillContent(annotation);
           }
         }
       }, 0);
 
-      const lastNewLineCharacterLength = 1
+      const lastNewLineCharacterLength = 1;
       const textLength = editor.getLength() - lastNewLineCharacterLength;
       annotation.editor.setSelection(textLength, textLength);
     }
   }, [isNotesPanelOpen]);
 
-  const setContents = e => {
+  const setContents = (e) => {
     // prevent the textarea from blurring out which will unmount these two buttons
     e.preventDefault();
 
@@ -432,16 +457,16 @@ const ContentArea = ({
     }
   };
 
-  const contentClassName = classNames('edit-content', { 'reply-content': isReply })
+  const contentClassName = classNames('edit-content', { 'reply-content': isReply });
 
   return (
     <div className={contentClassName}>
       <NoteTextarea
-        ref={el => {
+        ref={(el) => {
           textareaRef.current = el;
         }}
         value={textAreaValue}
-        onChange={value => onTextAreaValueChange(value, annotation.Id)}
+        onChange={(value) => onTextAreaValueChange(value, annotation.Id)}
         onSubmit={setContents}
         placeholder={`${t('action.comment')}...`}
         aria-label={`${t('action.comment')}...`}
@@ -449,7 +474,7 @@ const ContentArea = ({
       <div className="edit-buttons">
         <button
           className="cancel-button"
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
             setIsEditing(false, noteIndex);
             // Clear pending text
@@ -461,7 +486,7 @@ const ContentArea = ({
         <button
           className={`save-button${!textAreaValue ? ' disabled' : ''}`}
           disabled={!textAreaValue}
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
             setContents(e);
           }}
@@ -498,7 +523,9 @@ const getRichTextSpan = (text, richTextStyle, key) => {
 };
 
 const renderRichText = (text, richTextStyle, start) => {
-  if (!richTextStyle || !text) return text;
+  if (!richTextStyle || !text) {
+    return text;
+  }
 
   const styles = {};
   const indices = Object.keys(richTextStyle).map(Number).sort((a, b) => a - b);

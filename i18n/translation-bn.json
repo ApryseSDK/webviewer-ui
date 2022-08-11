@@ -91,7 +91,8 @@
     "unselect": "অনির্বাচন করুন",
     "addMark": "মার্ক যোগ করুন",
     "viewFile": "নথি দেখ",
-    "switchLanguage": "ভাষা"
+    "switchLanguage": "ভাষা",
+    "multiReplyAnnotations": "নির্বাচিত টীকাগুলির উত্তর দিন ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -194,10 +195,15 @@
     "textPopup": "পাঠ্য পপআপ",
     "createStampButton": "নতুন স্ট্যাম্প তৈরি করুন",
     "filter": "ছাঁকনি",
+    "multiSelectButton": "মাল্টি সিলেক্ট",
     "pageReplaceModalTitle": "পৃষ্ঠা প্রতিস্থাপন করুন",
     "files": "নথি পত্র",
     "editText": "লেখা সম্পাদনা",
-    "redactionPanel": "রিডাকশন প্যানেল"
+    "redactionPanel": "রিডাকশন প্যানেল",
+    "noteGroupSection": {
+      "open": "সমস্ত টীকা দেখুন",
+      "close": "সমস্ত টীকা বন্ধ করুন"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "কোনো প্রিসেট নেই",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "কাস্টম রঙ মুছুন",
       "deleteMessage": "নির্বাচিত কাস্টম রঙ মুছবেন? এটি আপনার রঙ প্যালেট থেকে সরানো হবে।"
+    },
+    "multiDeleteAnnotation": {
+      "title": "টীকা মুছবেন?",
+      "message": "মুছে ফেললে সমস্ত মন্তব্য, উত্তর এবং গ্রুপিং মুছে যাবে এবং পূর্বাবস্থায় ফেরানো যাবে না।\n\n আপনি কি এই টীকাগুলি মুছে ফেলার বিষয়ে নিশ্চিত?"
     }
   },
   "shortcut": {

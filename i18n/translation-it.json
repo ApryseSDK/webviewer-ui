@@ -91,7 +91,8 @@
     "unselect": "Deseleziona",
     "addMark": "Aggiungi Marco",
     "viewFile": "Vedi il file",
-    "switchLanguage": "Lingua"
+    "switchLanguage": "Lingua",
+    "multiReplyAnnotations": "Rispondi alle annotazioni selezionate ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -194,10 +195,15 @@
     "textPopup": "Popup di testo",
     "createStampButton": "Crea nuovo timbro",
     "filter": "Filtro",
+    "multiSelectButton": "Selezione multipla",
     "pageReplaceModalTitle": "Sostituisci pagina",
     "files": "File",
     "editText": "Modifica il testo",
-    "redactionPanel": "Pannello di redazione"
+    "redactionPanel": "Pannello di redazione",
+    "noteGroupSection": {
+      "open": "Visualizza tutte le annotazioni",
+      "close": "Chiudi tutte le annotazioni"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "Nessun preset",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Elimina colore personalizzato",
       "deleteMessage": "Eliminare il colore personalizzato selezionato? Verrà rimosso dalla tavolozza dei colori."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Eliminare le annotazioni?",
+      "message": "L'eliminazione rimuoverà tutti i commenti, le risposte e i raggruppamenti e non potrà essere annullata.\n\n Sei sicuro di voler eliminare queste annotazioni?"
     }
   },
   "shortcut": {

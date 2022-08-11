@@ -84,10 +84,6 @@
     justify-content: flex-end;
     padding-right: 16px;
 
-    @include tablet {
-      flex: 0 0 85px;
-    }
-
     .redact-all-marked {
       @include button-reset;
       background-color: var(--primary-button);

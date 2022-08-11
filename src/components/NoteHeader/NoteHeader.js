@@ -4,7 +4,7 @@ import NotePopup from 'components/NotePopup';
 import NoteState from 'components/NoteState';
 import Icon from 'components/Icon';
 import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
-import getLatestActivityDate from "helpers/getLatestActivityDate";
+import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import getColor from 'helpers/getColor';
 import { isDarkColorHex } from 'helpers/color';
 import dayjs from 'dayjs';
@@ -12,10 +12,9 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
+import Choice from 'components/Choice';
 
 import './NoteHeader.scss';
-
-
 
 const propTypes = {
   icon: PropTypes.string,
@@ -35,8 +34,11 @@ const propTypes = {
   noteIndex: PropTypes.number,
   sortStrategy: PropTypes.string,
   activeTheme: PropTypes.string,
+  isMultiSelected: PropTypes.bool,
+  isMultiSelectMode: PropTypes.bool,
+  handleMultiSelect: PropTypes.func,
+  isGroupMember: PropTypes.bool,
 };
-
 
 function NoteHeader(props) {
   const {
@@ -56,6 +58,10 @@ function NoteHeader(props) {
     noteIndex,
     sortStrategy,
     activeTheme,
+    isMultiSelected,
+    isMultiSelectMode,
+    handleMultiSelect,
+    isGroupMember,
   } = props;
 
   const [t] = useTranslation();
@@ -70,7 +76,7 @@ function NoteHeader(props) {
   const fillColor = getColor(annotation.FillColor);
 
   const authorAndDateClass = classNames('author-and-date', { isReply });
-  const noteHeaderClass = classNames('NoteHeader', { parent: !isReply })
+  const noteHeaderClass = classNames('NoteHeader', { parent: !isReply && !isGroupMember });
 
   return (
     <div className={noteHeaderClass}>
@@ -85,29 +91,40 @@ function NoteHeader(props) {
       <div className={authorAndDateClass}>
         <div className="author-and-overflow">
           <div className="author-and-time">
-            <div className='author'>
+            <div className="author">
               {renderAuthorName(annotation)}
             </div>
             <div className="date-and-num-replies">
               <div className="date-and-time">
                 {date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate')}
+                {isGroupMember && ` (Page ${annotation.PageNumber})`}
               </div>
               {numberOfReplies > 0 && !isSelected &&
                 <div className="num-replies-container">
-                  <Icon className="num-reply-icon" glyph={"icon-chat-bubble"} />
+                  <Icon className="num-reply-icon" glyph={'icon-chat-bubble'} />
                   <div className="num-replies">{numberOfReplies}</div>
                 </div>}
             </div>
           </div>
           <div className="state-and-overflow">
+            {isMultiSelectMode && !isGroupMember && !isReply &&
+              <Choice
+                id={`note-multi-select-toggle_${annotation.Id}`}
+                checked={isMultiSelected}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleMultiSelect(!isMultiSelected);
+                }}
+              />}
             <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
-            {!isNoteStateDisabled && !isReply &&
+            {!isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && isSelected &&
               <NoteState
                 annotation={annotation}
                 isSelected={isSelected}
               />
             }
-            {!isEditing && isSelected &&
+            {!isEditing && isSelected && !isMultiSelectMode && !isGroupMember &&
               <NotePopup
                 noteIndex={noteIndex}
                 annotation={annotation}
@@ -118,8 +135,8 @@ function NoteHeader(props) {
         </div>
       </div>
     </div>
-  )
-};
+  );
+}
 
 NoteHeader.propTypes = propTypes;
 

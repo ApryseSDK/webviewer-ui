@@ -1,12 +1,13 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import {
-  Basic as BasicStory, 
+  Basic as BasicStory,
   FreeText as FreeTextPopUpStory,
   DistanceMeasurement as DistanceMeasurementStory,
   WidgetPlaceHolder as WidgetPlaceHolderStory
-} from "./AnnotationStylePopup.stories";
+} from './AnnotationStylePopup.stories';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
+import { mapAnnotationToKey } from 'constants/map';
 
 const AnnotationStylePopupStory = withI18n(BasicStory);
 const FreeTextStory = withI18n(FreeTextPopUpStory);
@@ -60,7 +61,7 @@ distanceMeasurementAnnot['Measure'] = {
 };
 distanceMeasurementAnnot['IT'] = 'LineDimension';
 distanceMeasurementAnnot['DisplayUnits'] = ['in'];
-distanceMeasurementAnnot['Scale'] = [[1, 'in'],[1, 'in']];
+distanceMeasurementAnnot['Scale'] = [[1, 'in'], [1, 'in']];
 distanceMeasurementAnnot['Precision'] = 0.01;
 
 const freeTextAnnot = new window.Core.Annotations.FreeTextAnnotation();
@@ -76,63 +77,71 @@ describe('AnnotationStylePopup component', () => {
 
   it('Basic story should not throw any errors', () => {
     expect(() => {
-      render(<AnnotationStylePopupStory 
-        annotation={lineAnnot}
+      render(<AnnotationStylePopupStory
+        annotations={[lineAnnot]}
         style={getAnnotationStyles(lineAnnot)}
-        closeElement={() => {}}
+        properties={{}}
+        colorMapKey={mapAnnotationToKey(lineAnnot)}
       />);
     }).not.toThrow();
   });
-  
+
   it('Distance story should not throw any errors', () => {
     expect(() => {
-      render(<DistanceStory 
-        annotation={lineAnnot}
+      render(<DistanceStory
+        annotations={[distanceMeasurementAnnot]}
         style={getAnnotationStyles(distanceMeasurementAnnot)}
-        closeElement={() => {}}
+        properties={{}}
+        colorMapKey={mapAnnotationToKey(distanceMeasurementAnnot)}
       />);
     }).not.toThrow();
   });
 
   it('Distance story should have extra controls', () => {
-    const { container } = render(<DistanceStory 
-      annotation={distanceMeasurementAnnot}
+    const { container } = render(<DistanceStory
+      annotations={[distanceMeasurementAnnot]}
       style={getAnnotationStyles(distanceMeasurementAnnot)}
-      closeElement={() => {}}
+      properties={{}}
+      colorMapKey={mapAnnotationToKey(distanceMeasurementAnnot)}
     />);
 
-    const measurementControls = container.querySelector(".MeasurementOption");
+    const measurementControls = container.querySelector('.MeasurementOption');
     expect(measurementControls).toBeInTheDocument();
   });
 
   it('FreeText story should not throw any errors', () => {
     expect(() => {
-      render(<FreeTextStory 
-        annotation={freeTextAnnot}
+      render(<FreeTextStory
+        annotations={[freeTextAnnot]}
         style={getAnnotationStyles(freeTextAnnot)}
-        closeElement={() => {}}
+        properties={{}}
+        colorMapKey={mapAnnotationToKey(freeTextAnnot)}
       />);
     }).not.toThrow();
   });
 
   it('FreeText story should have three header options', () => {
-    const { container } = render(<FreeTextStory 
-      annotation={freeTextAnnot}
+    const { container } = render(<FreeTextStory
+      annotations={[freeTextAnnot]}
       style={getAnnotationStyles(freeTextAnnot)}
-      closeElement={() => {}}
+      properties={{}}
+      colorMapKey={mapAnnotationToKey(freeTextAnnot)}
     />);
 
+
     const headersOptions = Array.from(container.querySelectorAll('.palette-options-button'));
-    expect(headersOptions.filter(h => h.textContent === 'Stroke').length).toEqual(1);
-    expect(headersOptions.filter(h => h.textContent === 'Text').length).toEqual(1);
-    expect(headersOptions.filter(h => h.textContent === 'Fill').length).toEqual(1);
+    expect(headersOptions.filter((h) => h.textContent === 'Stroke').length).toEqual(1);
+    expect(headersOptions.filter((h) => h.textContent === 'Text').length).toEqual(1);
+    expect(headersOptions.filter((h) => h.textContent === 'Fill').length).toEqual(1);
   });
 
   it('Widget placeholder story should not render opacity slider', async () => {
-    const { container } = render(<WidgetStory 
-      annotation={widgetPlaceHolderAnnot}
+    const { container } = render(<WidgetStory
+      annotations={[widgetPlaceHolderAnnot]}
       style={getAnnotationStyles(widgetPlaceHolderAnnot)}
-      closeElement={() => {}}
+      closeElement={() => { }}
+      properties={{}}
+      colorMapKey={mapAnnotationToKey(widgetPlaceHolderAnnot)}
     />);
 
     container.querySelectorAll('.palette-options-button')[2].click();

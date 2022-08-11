@@ -1,10 +1,11 @@
 import React from 'react';
 import { createStore, combineReducers } from 'redux';
-import { Provider as ReduxProvider } from "react-redux";
+import { Provider as ReduxProvider } from 'react-redux';
 import AnnotationStylePopup from './AnnotationStylePopup';
 import viewerReducer from 'reducers/viewerReducer';
 import initialState from 'src/redux/initialState';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
+import { mapAnnotationToKey } from 'constants/map';
 
 export default {
   title: 'Components/AnnotationStylePopup',
@@ -48,9 +49,11 @@ const lineAnnot = new window.Annotations.LineAnnotation();
 
 export const Basic = BasicTemplate.bind({});
 Basic.args = {
-  annotation: lineAnnot,
+  annotations: [lineAnnot],
   style: getAnnotationStyles(lineAnnot),
   closeElement: () => { },
+  properties: {},
+  colorMapKey: mapAnnotationToKey(lineAnnot),
 };
 
 const distanceMeasurementAnnot = new window.Annotations.LineAnnotation();
@@ -107,18 +110,39 @@ distanceMeasurementAnnot['setStartStyle'] = noop;
 distanceMeasurementAnnot['setEndStyle'] = noop;
 
 export const DistanceMeasurement = BasicTemplate.bind({});
+const measurementProperties = {
+  StartLineStyle: distanceMeasurementAnnot.getStartStyle(),
+  EndLineStyle: distanceMeasurementAnnot.getEndStyle(),
+};
+
 DistanceMeasurement.args = {
-  annotation: distanceMeasurementAnnot,
+  annotations: [distanceMeasurementAnnot],
   style: getAnnotationStyles(distanceMeasurementAnnot),
-  closeElement: () => { },
+  properties: measurementProperties,
+  colorMapKey: mapAnnotationToKey(distanceMeasurementAnnot),
+  showLineStyleOptions: true,
 };
 
 const freeTextAnnot = new window.Annotations.FreeTextAnnotation();
 export const FreeText = BasicTemplate.bind({});
+const richTextStyles = freeTextAnnot.getRichTextStyle();
+const freeTextProperties = {
+  Font: freeTextAnnot.Font,
+  FontSize: freeTextAnnot.FontSize,
+  TextAlign: freeTextAnnot.TextAlign,
+  TextVerticalAlign: freeTextAnnot.TextVerticalAlign,
+  bold: richTextStyles?.[0]?.['font-weight'] === 'bold' ?? false,
+  italic: richTextStyles?.[0]?.['font-style'] === 'italic' ?? false,
+  underline: richTextStyles?.[0]?.['text-decoration']?.includes('underline') || richTextStyles?.[0]?.['text-decoration']?.includes('word'),
+  strikeout: richTextStyles?.[0]?.['text-decoration']?.includes('line-through') ?? false,
+};
+
 FreeText.args = {
-  annotation: freeTextAnnot,
+  annotations: [freeTextAnnot],
   style: getAnnotationStyles(freeTextAnnot),
-  closeElement: () => { },
+  properties: freeTextProperties,
+  colorMapKey: mapAnnotationToKey(freeTextAnnot),
+  isFreeText: true,
 };
 
 const widgetPlaceHolderAnnot = new window.Annotations.RectangleAnnotation();
@@ -127,7 +151,9 @@ widgetPlaceHolderAnnot.getCustomData = () => 'TextFormField';
 
 export const WidgetPlaceHolder = BasicTemplate.bind({});
 WidgetPlaceHolder.args = {
-  annotation: widgetPlaceHolderAnnot,
+  annotations: [widgetPlaceHolderAnnot],
   style: getAnnotationStyles(widgetPlaceHolderAnnot),
   closeElement: () => { },
+  properties: {},
+  colorMapKey: mapAnnotationToKey(widgetPlaceHolderAnnot),
 };

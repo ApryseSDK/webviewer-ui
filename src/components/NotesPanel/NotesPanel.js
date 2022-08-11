@@ -5,24 +5,21 @@ import { useTranslation } from 'react-i18next';
 
 import VirtualizedList from 'components/NotesPanel/VirtualizedList';
 import NormalList from 'components/NotesPanel/NormalList';
-import Dropdown from 'components/Dropdown';
 import Note from 'components/Note';
 import Icon from 'components/Icon';
 import NoteContext from 'components/Note/Context';
 import ListSeparator from 'components/ListSeparator';
-import Button from 'components/Button';
+import MultiSelectControls from 'components/NotesPanel/MultiSelectControls';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
-import Events from 'constants/events';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import { isIE } from 'helpers/device';
 
 import './NotesPanel.scss';
-
-const SORT_CONTAINER_ELEMENT = 'sortContainer';
+import NotesPanelHeader from '../NotesPanelHeader';
 
 const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [
@@ -35,10 +32,9 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     notesInLeftPanel,
     isDocumentReadOnly,
     enableNotesPanelVirtualizedList,
-    isInDesktopOnlyMode,
-    isSortContainerDisabled
+    isInDesktopOnlyMode
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.getSortStrategy(state),
       selectors.isElementOpen(state, 'notesPanel'),
       selectors.isElementDisabled(state, 'notesPanel'),
@@ -48,15 +44,13 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       selectors.getNotesInLeftPanel(state),
       selectors.isDocumentReadOnly(state),
       selectors.getEnableNotesPanelVirtualizedList(state),
-      selectors.isInDesktopOnlyMode(state),
-      selectors.isElementDisabled(state, SORT_CONTAINER_ELEMENT)
+      selectors.isInDesktopOnlyMode(state)
     ],
     shallowEqual,
   );
   const currentWidth = currentLeftPanelWidth || currentNotesPanelWidth;
 
   const dispatch = useDispatch();
-  const inputRef = useRef(null);
 
   const isMobile = useMedia(
     // Media queries
@@ -67,8 +61,13 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   );
 
   const [notes, setNotes] = useState([]);
+  const [isMultiSelectedMap, setIsMultiSelectedMap] = useState({});
+  const [multiSelectedAnnotations, setMultiSelectedAnnotations] = useState([]);
+  const [isMultiSelectMode, setMultiSelectMode] = useState(false);
+  const [showMultiReply, setShowMultiReply] = useState(false);
+  const [showMultiState, setShowMultiState] = useState(false);
+  const [showMultiStyle, setShowMultiStyle] = useState(false);
 
-  const [filterEnabled, setFilterEnabled] = useState(false);
 
   // the object will be in a shape of { [note.Id]: true }
   // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
@@ -98,23 +97,13 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       setNotes(
         core
           .getAnnotationsList()
-          .filter(annot => annot.Listable && !annot.isReply() && !annot.Hidden && !annot.isGrouped() && annot.ToolName !== window.Core.Tools.ToolNames.CROP && !annot.isContentEditPlaceholder()),
+          .filter((annot) => annot.Listable && !annot.isReply() && !annot.Hidden && !annot.isGrouped() && annot.ToolName !== window.Core.Tools.ToolNames.CROP && !annot.isContentEditPlaceholder()),
       );
     };
-
-    const toggleFilterStyle = (e) => {
-      const { types, authors, colors, statuses } = e.detail;
-      if (types.length > 0 || authors.length > 0 || colors.length > 0 || statuses.length > 0) {
-        setFilterEnabled(true);
-      } else {
-        setFilterEnabled(false);
-      }
-    }
 
     core.addEventListener('annotationChanged', _setNotes);
     core.addEventListener('annotationHidden', _setNotes);
     core.addEventListener('updateAnnotationPermission', _setNotes);
-    window.addEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
 
     _setNotes();
 
@@ -122,38 +111,47 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       core.removeEventListener('annotationChanged', _setNotes);
       core.removeEventListener('annotationHidden', _setNotes);
       core.removeEventListener('updateAnnotationPermission', _setNotes);
-      window.removeEventListener(Events.ANNOTATION_FILTER_CHANGED, toggleFilterStyle);
     };
   }, []);
 
   useEffect(() => {
-    const onAnnotationSelected = () => {
+    const onAnnotationSelected = (annotations, action) => {
       const ids = {};
 
-      core.getSelectedAnnotations().forEach(annot => {
+      core.getSelectedAnnotations().forEach((annot) => {
         ids[annot.Id] = true;
       });
       if (isOpen || notesInLeftPanel) {
         setSelectedNoteIds(ids);
         setScrollToSelectedAnnot(true);
       }
+
+      const selectedAnnotations = core.getSelectedAnnotations();
+      if (action === 'selected' && selectedAnnotations.length > 1) {
+        setMultiSelectMode(true);
+        const _isMultiSelectedMap = { ...isMultiSelectedMap };
+        selectedAnnotations.forEach((selectedAnnot) => {
+          _isMultiSelectedMap[selectedAnnot.Id] = selectedAnnot;
+        });
+        setIsMultiSelectedMap(_isMultiSelectedMap);
+      }
     };
     onAnnotationSelected();
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
     return () => core.removeEventListener('annotationSelected', onAnnotationSelected);
-  }, [isOpen, notesInLeftPanel]);
+  }, [isOpen, notesInLeftPanel, isMultiSelectMode, isMultiSelectedMap]);
 
   let singleSelectedNoteIndex = -1;
 
-  const handleScroll = scrollTop => {
+  const handleScroll = (scrollTop) => {
     if (scrollTop) {
       scrollTopRef.current = scrollTop;
     }
     dispatch(actions.closeElement('annotationNoteConnectorLine'));
   };
 
-  const filterNotesWithSearch = note => {
+  const filterNotesWithSearch = (note) => {
     const content = note.getContents();
     const authorName = core.getDisplayAuthor(note['Author']);
     const annotationPreview = note.getCustomData('trn-annot-preview');
@@ -166,7 +164,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     );
   };
 
-  const filterNote = note => {
+  const filterNote = (note) => {
     let shouldRender = true;
 
     if (customNoteFilter) {
@@ -198,32 +196,20 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     }
   }, [selectedNoteIds]);
 
-  //expand a reply note when search content is match
-  const onlyReplyContainsSearchInput = currNote => {
+  // expand a reply note when search content is match
+  const onlyReplyContainsSearchInput = (currNote) => {
     if (Object.keys(selectedNoteIds).length) {
       return false;
     }
-    return searchInput && notesToRender.filter(note => {
+    return searchInput && notesToRender.filter((note) => {
       return note.getReplies().some(filterNotesWithSearch);
-    }).some(replies => replies.Id === currNote.Id);
+    }).some((replies) => replies.Id === currNote.Id);
   };
-
-  const handleInputChange = e => {
-    _handleInputChange(e.target.value);
-  };
-
-  const _handleInputChange = _.debounce(value => {
-    // this function is used to solve the issue with using synthetic event asynchronously.
-    // https://reactjs.org/docs/events.html#event-pooling
-    core.deselectAllAnnotations();
-
-    setSearchInput(value);
-  }, 500);
 
   const [pendingEditTextMap, setPendingEditTextMap] = useState({});
   const setPendingEditText = useCallback(
     (pendingText, annotationID) => {
-      setPendingEditTextMap(map => ({
+      setPendingEditTextMap((map) => ({
         ...map,
         [annotationID]: pendingText,
       }));
@@ -234,13 +220,25 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [pendingReplyMap, setPendingReplyMap] = useState({});
   const setPendingReply = useCallback(
     (pendingReply, annotationID) => {
-      setPendingReplyMap(map => ({
+      setPendingReplyMap((map) => ({
         ...map,
         [annotationID]: pendingReply,
       }));
     },
     [setPendingReplyMap],
   );
+
+  useEffect(() => {
+    setMultiSelectedAnnotations(Object.values(isMultiSelectedMap));
+  }, [isMultiSelectedMap]);
+
+  const toggleMultiSelectMode = () => {
+    if (isMultiSelectMode) {
+      setMultiSelectMode(false);
+    } else {
+      setMultiSelectMode(true);
+    }
+  };
 
   const renderChild = (
     notes,
@@ -260,10 +258,10 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       listSeparator = <ListSeparator renderContent={() => getSeparatorContent(prevNote, currNote, { pageLabels })} />;
     }
 
-    //Collapse an expanded note when the top non-reply NoteContent is clicked
+    // Collapse an expanded note when the top non-reply NoteContent is clicked
     const handleNoteClicked = () => {
-      if (selectedNoteIds[currNote.Id]) {
-        setSelectedNoteIds(currIds => {
+      if (!isMultiSelectMode && selectedNoteIds[currNote.Id]) {
+        setSelectedNoteIds((currIds) => {
           const clone = { ...currIds };
           delete clone[currNote.Id];
           return clone;
@@ -307,6 +305,25 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
         <NoteContext.Provider value={contextValue}>
           <Note
             annotation={currNote}
+            isMultiSelected={!!isMultiSelectedMap[currNote.Id]}
+            isMultiSelectMode={isMultiSelectMode}
+            handleMultiSelect={(checked) => {
+              if (checked) {
+                const _isMultiSelectedMap = { ...isMultiSelectedMap };
+                const groupAnnots = core.getGroupAnnotations(currNote);
+                groupAnnots.forEach((groupAnnot) => {
+                  _isMultiSelectedMap[groupAnnot.Id] = groupAnnot;
+                });
+                setIsMultiSelectedMap(_isMultiSelectedMap);
+              } else {
+                const _isMultiSelectedMap = { ...isMultiSelectedMap };
+                const groupAnnots = core.getGroupAnnotations(currNote);
+                groupAnnots.forEach((groupAnnot) => {
+                  delete _isMultiSelectedMap[groupAnnot.Id];
+                });
+                setIsMultiSelectedMap(_isMultiSelectedMap);
+              }
+            }}
           />
         </NoteContext.Provider>
       </div>
@@ -331,18 +348,26 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     </div>
   );
 
+  const MultiSelectPlaceHolder = (
+    <div className="multi-select-place-holder" />
+  );
+
+  const MultiReplyPlaceHolder = (
+    <div className="multi-reply-place-holder" />
+  );
+
   // keep track of the index of the single selected note in the sorted and filtered list
   // in order to scroll it into view in this render effect
   const ids = Object.keys(selectedNoteIds);
   if (ids.length === 1) {
-    singleSelectedNoteIndex = notesToRender.findIndex(note => note.Id === ids[0]);
+    singleSelectedNoteIndex = notesToRender.findIndex((note) => note.Id === ids[0]);
   } else if (ids.length) {
     // when selecting annotations that are grouped together, scroll to parent annotation that is in "notesToRender"
     // selectedNoteIds will have every ID in the group, while only the parent is in notesToRender
-    const existingSelectedNotes = notesToRender.filter(note => selectedNoteIds[note.Id]);
+    const existingSelectedNotes = notesToRender.filter((note) => selectedNoteIds[note.Id]);
 
     if (existingSelectedNotes.length) {
-      singleSelectedNoteIndex = notesToRender.findIndex(note => note.Id === existingSelectedNotes[0].Id);
+      singleSelectedNoteIndex = notesToRender.findIndex((note) => note.Id === existingSelectedNotes[0].Id);
     }
   }
 
@@ -350,18 +375,22 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   if ((isInDesktopOnlyMode || !isMobile)) {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
+
   const showNotePanel = !isDisabled && (isOpen || notesInLeftPanel);
   return (!showNotePanel ? null : (
     <div
-      className={classNames({
-        Panel: true,
-        NotesPanel: true
-      })}
-      style={style}
-      data-element="notesPanel"
-      onMouseUp={() => core.deselectAllAnnotations}
+      className="notes-panel-container"
     >
-      {(!isInDesktopOnlyMode && isMobile) && !notesInLeftPanel &&
+      <div
+        className={classNames({
+          Panel: true,
+          NotesPanel: true
+        })}
+        style={style}
+        data-element="notesPanel"
+        onMouseUp={() => core.deselectAllAnnotations}
+      >
+        {(!isInDesktopOnlyMode && isMobile) && !notesInLeftPanel &&
         <div
           className="close-container"
         >
@@ -377,73 +406,56 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
             />
           </div>
         </div>}
-      <React.Fragment>
-        <div className="header">
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder={t('message.searchCommentsPlaceholder')}
-              aria-label={t('message.searchCommentsPlaceholder')}
-              onChange={handleInputChange}
-              ref={inputRef}
-              id="NotesPanel__input"
-            />
-          </div>
-          <div className='comments-counter'>
-            <span className='main-comment'>{t('component.notesPanel')}</span> {`(${notesToRender.length})`}
-          </div>
-          <div className="sort-row">
-            {
-              (isSortContainerDisabled) ? <div className="sort-container"></div> :
-                <div className="sort-container" data-element={SORT_CONTAINER_ELEMENT}>
-                  <div className="label">{`${t('message.sortBy')}:`}</div>
-                  <Dropdown
-                    dataElement="notesOrderDropdown"
-                    disabled={notesToRender.length === 0}
-                    items={Object.keys(getSortStrategies())}
-                    translationPrefix="option.notesOrder"
-                    currentSelectionKey={sortStrategy}
-                    onClickItem={sortStrategy => {
-                      dispatch(actions.setNotesPanelSortStrategy(sortStrategy));
-                    }}
-                  />
-                </div>
-            }
-            <Button
-              dataElement="filterAnnotationButton"
-              className={classNames({
-                filterAnnotationButton: true,
-                active: filterEnabled
-              })}
-              disabled={notes.length === 0}
-              img="icon-comments-filter"
-              onClick={() => dispatch(actions.openElement('filterModal'))}
-              title={t('component.filter')}
-            />
-          </div>
-        </div>
-        {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
-          <NormalList
-            ref={listRef}
+        <React.Fragment>
+          <NotesPanelHeader
             notes={notesToRender}
-            onScroll={handleScroll}
-            initialScrollTop={scrollTopRef.current}
-          >
-            {renderChild}
-          </NormalList>
-        ) : (
-          <VirtualizedList
-            ref={listRef}
-            notes={notesToRender}
-            sortStrategy={sortStrategy}
-            onScroll={handleScroll}
-            initialScrollTop={scrollTopRef.current}
-            selectedIndex={singleSelectedNoteIndex}
-          >
-            {renderChild}
-          </VirtualizedList>
-        )}
-      </React.Fragment>
+            disableFilterAnnotation={notes.length === 0}
+            setSearchInputHandler={setSearchInput}
+            isMultiSelectMode={isMultiSelectMode}
+            toggleMultiSelectMode={toggleMultiSelectMode}
+          />
+          {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
+            <NormalList
+              ref={listRef}
+              notes={notesToRender}
+              onScroll={handleScroll}
+              initialScrollTop={scrollTopRef.current}
+            >
+              {renderChild}
+            </NormalList>
+          ) : (
+            <VirtualizedList
+              ref={listRef}
+              notes={notesToRender}
+              sortStrategy={sortStrategy}
+              onScroll={handleScroll}
+              initialScrollTop={scrollTopRef.current}
+              selectedIndex={singleSelectedNoteIndex}
+            >
+              {renderChild}
+            </VirtualizedList>
+          )}
+          {/* These two placeholders need to exist so that MultiSelectControls can
+          be overlayed with position absolute and extend into the right panel while
+          still being able to not have any notes cut off */}
+          {isMultiSelectMode
+            ? (showMultiReply ? MultiReplyPlaceHolder : MultiSelectPlaceHolder)
+            : null}
+        </React.Fragment>
+      </div>
+      {isMultiSelectMode &&
+        <MultiSelectControls
+          showMultiReply={showMultiReply}
+          setShowMultiReply={setShowMultiReply}
+          showMultiState={showMultiState}
+          setShowMultiState={setShowMultiState}
+          showMultiStyle={showMultiStyle}
+          setShowMultiStyle={setShowMultiStyle}
+          setMultiSelectMode={setMultiSelectMode}
+          isMultiSelectedMap={isMultiSelectedMap}
+          setIsMultiSelectedMap={setIsMultiSelectedMap}
+          multiSelectedAnnotations={multiSelectedAnnotations}
+        />}
     </div>
   ));
 };

@@ -91,7 +91,8 @@
     "unselect": "Скасувати вибір",
     "addMark": "Додайте позначку",
     "viewFile": "Переглянути файл",
-    "switchLanguage": "Мову"
+    "switchLanguage": "Мову",
+    "multiReplyAnnotations": "Відповідь на вибрані анотації ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "Площа",
@@ -194,10 +195,15 @@
     "textPopup": "Текстове спливаюче вікно",
     "createStampButton": "Створити новий штамп",
     "filter": "Фільтр",
+    "multiSelectButton": "Multi Select",
     "pageReplaceModalTitle": "Замінити сторінку",
     "files": "Файли",
     "editText": "Редагувати текст",
-    "redactionPanel": "Панель редагування"
+    "redactionPanel": "Панель редагування",
+    "noteGroupSection": {
+      "open": "Переглянути всі анотації",
+      "close": "Закрити всі анотації"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "Без попередніх налаштувань",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Видалити власний колір",
       "deleteMessage": "Видалити вибраний користувацький колір? Він буде вилучений з вашої колірної палітри."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Видалити анотації?",
+      "message": "Видалення видалить усі коментарі, відповіді та групування, і цю дію неможливо скасувати.\n\n Ви впевнені, що хочете видалити ці анотації?"
     }
   },
   "shortcut": {

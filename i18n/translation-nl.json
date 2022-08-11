@@ -91,7 +91,8 @@
     "unselect": "Deselecteren",
     "addMark": "Markering toevoegen",
     "viewFile": "Bestand bekijken",
-    "switchLanguage": "Taal"
+    "switchLanguage": "Taal",
+    "multiReplyAnnotations": "Reageren op geselecteerde annotaties ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -194,10 +195,15 @@
     "textPopup": "Tekstpop-up",
     "createStampButton": "Maak een nieuwe stempel",
     "filter": "Filter",
+    "multiSelectButton": "Multi-Select",
     "pageReplaceModalTitle": "Pagina vervangen",
     "files": "Bestanden",
     "editText": "Tekst bewerken",
-    "redactionPanel": "Redactiepaneel"
+    "redactionPanel": "Redactiepaneel",
+    "noteGroupSection": {
+      "open": "Bekijk alle annotaties",
+      "close": "Sluit alle annotaties"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "Geen voorinstellingen",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Aangepaste kleur verwijderen",
       "deleteMessage": "De geselecteerde aangepaste kleur verwijderen? Het wordt verwijderd uit uw kleurenpalet."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Annotaties verwijderen?",
+      "message": "Als u verwijdert, worden alle opmerkingen, antwoorden en groeperingen verwijderd en kan dit niet ongedaan worden gemaakt.\n\n Weet je zeker dat je deze annotaties wilt verwijderen?"
     }
   },
   "shortcut": {

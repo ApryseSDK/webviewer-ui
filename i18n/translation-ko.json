@@ -74,6 +74,7 @@
     "insertBlankPageBelow": "아래에 빈페이지 삽입",
     "pageManipulation": "페이지 편집",
     "replace": "바꾸기",
+    "setDestination": "목적지 설정",
     "showLess": "간략히 보기",
     "showMore": "더보기",
     "chooseFile": "파일선택",
@@ -90,7 +91,8 @@
     "unselect": "선택취소",
     "addMark": "마크추가",
     "viewFile": "파일보기",
-    "switchLanguage": "언어"
+    "switchLanguage": "언어",
+    "multiReplyAnnotations": "선택한 주석에 답장({{count}}개)"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -180,8 +182,8 @@
     "bookmarkPanel": "서표",
     "bookmarksPanel": "즐겨찾기",
     "newBookmark": "즐겨찾기 추가",
-    "bookmarkPage": "즐겨찾기",
     "bookmarkTitle": "책갈피 타이틀",
+    "bookmarkPage": "즐겨찾기",
     "signaturePanel": "서명",
     "layersPanel": "레이어",
     "thumbnailsPanel": "미리보기",
@@ -193,10 +195,15 @@
     "textPopup": "텍스트 팝업",
     "createStampButton": "스탬프 생성",
     "filter": "필터",
+    "multiSelectButton": "다중 선택",
     "pageReplaceModalTitle": "페이지 바꾸기",
     "files": "파일",
     "editText": "텍스트 편집",
-    "redactionPanel": "교정 패널"
+    "redactionPanel": "교정 패널",
+    "noteGroupSection": {
+      "open": "모든 주석 보기",
+      "close": "모든 주석 닫기"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "사전설정 없음",
@@ -209,12 +216,14 @@
     "noAnnotations": "주석에 대한 댓글입니다.",
     "noAnnotationsReadOnly": "주석이 없습니다.",
     "noAnnotationsFilter": "주석 필터가 없습니다.",
+    "noBookmarks": "사용 가능한 책갈피가 없습니다.",
     "noOutlines": "개요가 없습니다.",
     "noAttachments": "첨부파일이 없습니다.",
     "noResults": "검색 결과가 없습니다.",
     "numResultsFound": "건의 검색결과를 찾았습니다.",
     "notSupported": "지원하지 않는 유형의 파일입니다.",
     "passwordRequired": "비밀번호를 입력하세요.",
+    "enterPasswordPlaceholder": "암호를 입력",
     "preparingToPrint": "인쇄준비 중...",
     "annotationReplyCount": "{{count}} 댓글",
     "annotationReplyCount_plural": "{{count}} 답글",
@@ -559,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "맞춤색상 삭제",
       "deleteMessage": "선택한 맞춤색상을 제거 하시겠습니까?"
+    },
+    "multiDeleteAnnotation": {
+      "title": "주석을 삭제하시겠습니까?",
+      "message": "삭제하면 모든 댓글, 답글 및 그룹이 제거되며 취소할 수 없습니다.\n\n 이 주석을 삭제하시겠습니까?"
     }
   },
   "shortcut": {
@@ -840,6 +853,7 @@
     "redactionItem": {
       "regionRedaction": "지역 수정",
       "fullPageRedaction": "전체 페이지수정",
+      "fullVideoFrameRedaction": "비디오 편집",
       "image": "이미지"
     },
     "expand": "확대",

@@ -91,7 +91,8 @@
     "unselect": "Bỏ chọn",
     "addMark": "Thêm dấu",
     "viewFile": "Xem tài liệu",
-    "switchLanguage": "Ngôn ngữ"
+    "switchLanguage": "Ngôn ngữ",
+    "multiReplyAnnotations": "Trả lời các chú thích đã chọn ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -194,10 +195,15 @@
     "textPopup": "Bật Lên Văn Bản",
     "createStampButton": "Tạo Tem Mới",
     "filter": "Lọc",
+    "multiSelectButton": "Nhiều lựa chọn",
     "pageReplaceModalTitle": "Thay Thế Trang",
     "files": "Tệp",
     "editText": "Chỉnh Sửa Văn Bản",
-    "redactionPanel": "Bảng Biên Tập"
+    "redactionPanel": "Bảng Biên Tập",
+    "noteGroupSection": {
+      "open": "Xem tất cả các chú thích",
+      "close": "Đóng tất cả các chú thích"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "Không Có Cài Đặt Trước",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Xóa màu tùy chỉnh",
       "deleteMessage": "Xóa màu tùy chỉnh đã chọn? Nó sẽ bị gỡ bỏ khỏi bảng màu của bạn."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Xóa chú thích?",
+      "message": "Thao tác xóa sẽ xóa tất cả nhận xét, câu trả lời và nhóm và không thể hoàn tác.\n\n Bạn có chắc chắn muốn xóa các chú thích này không?"
     }
   },
   "shortcut": {

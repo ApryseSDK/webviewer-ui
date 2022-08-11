@@ -66,6 +66,7 @@
   .row {
     gap: 8px;
     padding-top: 8px;
+    display: flex;
 
     .Button {
       // Important used to prevent popup styles from overriding it

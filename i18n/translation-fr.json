@@ -91,7 +91,8 @@
     "unselect": "Désélectionner",
     "addMark": "Ajouter une marque",
     "viewFile": "Voir la fiche",
-    "switchLanguage": "Langue"
+    "switchLanguage": "Langue",
+    "multiReplyAnnotations": "Répondre aux annotations sélectionnées ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -194,10 +195,15 @@
     "textPopup": "Popup texte",
     "createStampButton": "Créer un nouveau tampon",
     "filter": "Filtre",
+    "multiSelectButton": "Sélection multiple",
     "pageReplaceModalTitle": "Remplacer la page",
     "files": "Des dossiers",
     "editText": "Éditer le texte",
-    "redactionPanel": "Panneau de rédaction"
+    "redactionPanel": "Panneau de rédaction",
+    "noteGroupSection": {
+      "open": "Afficher toutes les annotations",
+      "close": "Fermer toutes les annotations"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "Aucun préréglage",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Supprimer la couleur personnalisée",
       "deleteMessage": "Supprimer la couleur personnalisée sélectionnée? Elle sera supprimée de votre palette de couleurs."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Supprimer les annotations ?",
+      "message": "La suppression supprimera tous les commentaires, réponses et regroupements et ne pourra pas être annulée.\n\n Voulez-vous vraiment supprimer ces annotations ?"
     }
   },
   "shortcut": {

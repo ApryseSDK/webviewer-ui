@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import i18next from "i18next";
+import i18next from 'i18next';
 
 import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
@@ -10,9 +10,9 @@ import Slider from 'components/Slider';
 import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
 import LineStyleOptions from 'components/LineStyleOptions';
-import Icon from "components/Icon";
-import TextStylePicker from "components/TextStylePicker";
-import LabelTextEditor from "components/LabelTextEditor";
+import Icon from 'components/Icon';
+import TextStylePicker from 'components/TextStylePicker';
+import LabelTextEditor from 'components/LabelTextEditor';
 
 import { circleRadius } from 'constants/slider';
 import DataElements from 'constants/dataElement';
@@ -21,7 +21,7 @@ import actions from 'actions';
 import pickBy from 'lodash/pickBy';
 import useMedia from 'hooks/useMedia';
 import classNames from 'classnames';
-import { isMobile } from "helpers/device";
+import { isMobile } from 'helpers/device';
 
 import './StylePopup.scss';
 
@@ -36,7 +36,7 @@ class StylePopup extends React.PureComponent {
     isFreeText: PropTypes.bool,
     isMeasure: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
-    currentPalette: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
+    currentStyleTab: PropTypes.oneOf(['TextColor', 'StrokeColor', 'FillColor']),
     isColorPaletteDisabled: PropTypes.bool,
     isOpacitySliderDisabled: PropTypes.bool,
     isStrokeThicknessSliderDisabled: PropTypes.bool,
@@ -62,7 +62,7 @@ class StylePopup extends React.PureComponent {
       isOpacitySliderDisabled,
       isStrokeThicknessSliderDisabled,
       isFontSizeSliderDisabled,
-      currentPalette,
+      currentStyleTab,
     } = this.props;
     const lineStart = circleRadius;
     const sliderProps = {};
@@ -72,16 +72,16 @@ class StylePopup extends React.PureComponent {
         property: 'Opacity',
         displayProperty: 'opacity',
         value: Opacity,
-        getDisplayValue: Opacity => `${Math.round(Opacity * 100)}%`,
+        getDisplayValue: (Opacity) => `${Math.round(Opacity * 100)}%`,
         dataElement: DataElements.OPACITY_SLIDER,
         getCirclePosition: (lineLength, Opacity) => Opacity * lineLength + lineStart,
-        convertRelativeCirclePositionToValue: circlePosition => circlePosition,
+        convertRelativeCirclePositionToValue: (circlePosition) => circlePosition,
         withInputField: true,
         inputFieldType: 'number',
         min: 0,
         max: 100,
         step: 1,
-        getLocalValue: opacity => parseInt(opacity) / 100,
+        getLocalValue: (opacity) => parseInt(opacity) / 100,
       };
     }
     if (!isStrokeThicknessSliderDisabled) {
@@ -89,42 +89,40 @@ class StylePopup extends React.PureComponent {
         property: 'StrokeThickness',
         displayProperty: 'thickness',
         value: StrokeThickness,
-        getDisplayValue: strokeThickness => {
-          const placeOfDecimal = Math.floor(strokeThickness) !== strokeThickness ? strokeThickness.toString().split(".")[1].length || 0 : 0;
+        getDisplayValue: (strokeThickness) => {
+          const placeOfDecimal = Math.floor(strokeThickness) !== strokeThickness ? strokeThickness.toString().split('.')[1].length || 0 : 0;
           if (StrokeThickness === 0 || StrokeThickness >= 1 && (placeOfDecimal > 2 || placeOfDecimal === 0)) {
             return `${Math.round(strokeThickness)}pt`;
-          } else {
-            return `${parseFloat(strokeThickness).toFixed(2)}pt`
           }
+          return `${parseFloat(strokeThickness).toFixed(2)}pt`;
         },
         dataElement: DataElements.STROKE_THICKNESS_SLIDER,
         getCirclePosition: (lineLength, strokeThickness) => (strokeThickness / 20) * lineLength + lineStart,
-        convertRelativeCirclePositionToValue: circlePosition => {
+        convertRelativeCirclePositionToValue: (circlePosition) => {
           if (circlePosition >= 1 / 20) {
             return circlePosition * 20;
           }
-          else if (circlePosition >= 0.75 / 20 && circlePosition < 1 / 20) {
+          if (circlePosition >= 0.75 / 20 && circlePosition < 1 / 20) {
             return 0.75;
           }
-          else if (circlePosition >= 0.5 / 20 && circlePosition < 0.75 / 20) {
+          if (circlePosition >= 0.5 / 20 && circlePosition < 0.75 / 20) {
             return 0.5;
           }
-          else if (circlePosition >= 0.25 / 20 && circlePosition < 0.5 / 20) {
+          if (circlePosition >= 0.25 / 20 && circlePosition < 0.5 / 20) {
             return 0.25;
           }
-          else if (circlePosition >= 0.08 / 20 && circlePosition < 0.25 / 20) {
+          if (circlePosition >= 0.08 / 20 && circlePosition < 0.25 / 20) {
             return 0.1;
           }
-          else {
-            return isFreeText ? 0 : 0.1;
-          }
+
+          return isFreeText ? 0 : 0.1;
         },
         withInputField: true,
         inputFieldType: 'number',
         min: isFreeText ? 0 : 0.1,
         max: 20,
         step: 1,
-        getLocalValue: strokeThickness => parseFloat(strokeThickness).toFixed(2)
+        getLocalValue: (strokeThickness) => parseFloat(strokeThickness).toFixed(2)
       };
     }
     if (!isFontSizeSliderDisabled) {
@@ -132,22 +130,20 @@ class StylePopup extends React.PureComponent {
         property: 'FontSize',
         displayProperty: 'text',
         value: FontSize,
-        getDisplayValue: FontSize => `${Math.round(parseInt(FontSize, 10))}pt`,
+        getDisplayValue: (FontSize) => `${Math.round(parseInt(FontSize, 10))}pt`,
         dataElement: DataElements.FONT_SIZE_SLIDER,
-        getCirclePosition: (lineLength, FontSize) =>
-          ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
-        convertRelativeCirclePositionToValue: circlePosition =>
-          `${circlePosition * 40 + 5}pt`,
+        getCirclePosition: (lineLength, FontSize) => ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
+        convertRelativeCirclePositionToValue: (circlePosition) => `${circlePosition * 40 + 5}pt`,
       };
     }
 
     // default sliders
     let sliders = { Opacity, StrokeThickness, FontSize };
-    if (currentPalette === 'TextColor') {
+    if (currentStyleTab === 'TextColor') {
       sliders = { Opacity, FontSize };
-    } else if (currentPalette === 'StrokeColor') {
+    } else if (currentStyleTab === 'StrokeColor') {
       sliders = { Opacity, StrokeThickness };
-    } else if (currentPalette === 'FillColor') {
+    } else if (currentStyleTab === 'FillColor') {
       sliders = { Opacity };
     }
 
@@ -168,12 +164,12 @@ class StylePopup extends React.PureComponent {
     }
 
     // we still want to render a slider if the value is 0
-    sliders = pickBy(sliders, slider => slider !== null && slider !== undefined);
+    sliders = pickBy(sliders, (slider) => slider !== null && slider !== undefined);
 
-    const sliderComponents = Object.keys(sliders).map(key => {
+    const sliderComponents = Object.keys(sliders).map((key) => {
       const props = sliderProps[key];
 
-      return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onSliderChange}/>;
+      return <Slider {...props} key={key} onStyleChange={onStyleChange} onSliderChange={onSliderChange} />;
     });
 
     return (
@@ -191,7 +187,7 @@ class StylePopup extends React.PureComponent {
     const {
       toolName,
       isColorPaletteDisabled,
-      currentPalette,
+      currentStyleTab,
       style,
       colorMapKey,
       onStyleChange,
@@ -211,7 +207,7 @@ class StylePopup extends React.PureComponent {
       isRedaction,
       fonts,
       showLineStyleOptions,
-      onLineStyleChange
+      onLineStyleChange,
     } = this.props;
 
     // We do not have sliders to show up for redaction annots
@@ -232,7 +228,7 @@ class StylePopup extends React.PureComponent {
       if (!textMenuItems[dataElement]) {
         openElement(dataElement);
         if (isMobile()) {
-          for (let element in textMenuItems) {
+          for (const element in textMenuItems) {
             if (element !== dataElement) {
               closeElement(element);
             }
@@ -251,18 +247,18 @@ class StylePopup extends React.PureComponent {
       StylePopup: true,
     });
 
-    const showTextStyle = (currentPalette === "TextColor" && (isFreeText || isRedaction));
-    const showColorsMenu = (currentPalette === "TextColor" && (isFreeText || isRedaction));
+    const showTextStyle = (currentStyleTab === 'TextColor' && (isFreeText || isRedaction));
+    const showColorsMenu = (currentStyleTab === 'TextColor' && (isFreeText || isRedaction));
     const showColorPicker = !(showColorsMenu && !isColorsContainerActive);
-    const showLabelText = (currentPalette === "TextColor" && isRedaction);
+    const showLabelText = (currentStyleTab === 'TextColor' && isRedaction);
     const showSliders = isColorPaletteDisabled || showColorPicker;
 
     return (
       <div className={className} data-element="stylePopup">
-        {currentPalette && !isColorPaletteDisabled && (
+        {currentStyleTab && !isColorPaletteDisabled && (
           <>
             <ColorPaletteHeader
-              colorPalette={currentPalette}
+              colorPalette={currentStyleTab}
               colorMapKey={colorMapKey}
               style={style}
               toolName={toolName}
@@ -270,11 +266,11 @@ class StylePopup extends React.PureComponent {
             />
             {showLabelText && !isLabelTextContainerDisabled && (
               <>
-                <div className="collapsible-menu" onClick={openLabelText} onTouchStart={openLabelText} role={"toolbar"}>
+                <div className="collapsible-menu" onClick={openLabelText} onTouchStart={openLabelText} role={'toolbar'}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.labelText')}
                   </div>
-                  <Icon glyph={`icon-chevron-${isLabelTextContainerActive ? "up" : "down"}`} />
+                  <Icon glyph={`icon-chevron-${isLabelTextContainerActive ? 'up' : 'down'}`} />
                 </div>
                 {isLabelTextContainerActive && (
                   <div className="menu-items">
@@ -289,11 +285,11 @@ class StylePopup extends React.PureComponent {
             )}
             {showTextStyle && (
               <>
-                <div className="collapsible-menu" onClick={openTextStyle} onTouchStart={openTextStyle} role={"toolbar"}>
+                <div className="collapsible-menu" onClick={openTextStyle} onTouchStart={openTextStyle} role={'toolbar'}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.textStyle')}
                   </div>
-                  <Icon glyph={`icon-chevron-${isTextStyleContainerActive ? "up" : "down"}`} />
+                  <Icon glyph={`icon-chevron-${isTextStyleContainerActive ? 'up' : 'down'}`} />
                 </div>
                 {isTextStyleContainerActive && (
                   <div className="menu-items">
@@ -311,26 +307,26 @@ class StylePopup extends React.PureComponent {
             )}
             {showColorsMenu && (
               <>
-                <div className="collapsible-menu" onClick={openColors} onTouchStart={openColors} role={"toolbar"}>
+                <div className="collapsible-menu" onClick={openColors} onTouchStart={openColors} role={'toolbar'}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.colors')}
                   </div>
-                  <Icon glyph={`icon-chevron-${isColorsContainerActive ? "up" : "down"}`} />
+                  <Icon glyph={`icon-chevron-${isColorsContainerActive ? 'up' : 'down'}`} />
                 </div>
               </>
             )}
             {showColorPicker && (
               <>
                 <ColorPalette
-                  color={style[currentPalette]}
-                  property={currentPalette}
+                  color={style[currentStyleTab]}
+                  property={currentStyleTab}
                   onStyleChange={onStyleChange}
                   colorMapKey={colorMapKey}
                   useMobileMinMaxWidth
                 />
                 <ColorPalettePicker
-                  color={style[currentPalette]}
-                  property={currentPalette}
+                  color={style[currentStyleTab]}
+                  property={currentStyleTab}
                   onStyleChange={onStyleChange}
                   enableEdit
                 />
@@ -362,7 +358,7 @@ class StylePopup extends React.PureComponent {
 }
 
 const mapStateToProps = (state, { colorMapKey, isFreeText, isRedaction }) => ({
-  currentPalette: selectors.getCurrentPalette(state, colorMapKey),
+  currentStyleTab: selectors.getcurrentStyleTab(state, colorMapKey),
   isStylePopupDisabled: selectors.isElementDisabled(state, DataElements.STYLE_POPUP),
   isColorPaletteDisabled: selectors.isElementDisabled(state, DataElements.COLOR_PALETTE),
   isOpacitySliderDisabled: selectors.isElementDisabled(state, DataElements.OPACITY_SLIDER),
@@ -385,7 +381,7 @@ const ConnectedStylePopup = connect(
   mapDispatchToProps,
 )(StylePopup);
 
-export default props => {
+const connectedComponent = (props) => {
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -398,3 +394,5 @@ export default props => {
     <ConnectedStylePopup {...props} isMobile={isMobile} />
   );
 };
+
+export default connectedComponent;

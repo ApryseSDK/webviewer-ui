@@ -6,6 +6,7 @@
   position: relative;
   flex: 1;
   color: var(--text-color);
+  display: flex;
 
   @include ie11 {
     flex: none;
@@ -59,7 +60,6 @@
     flex: 1;
     min-width: 0;
     position: relative;
-    padding-top: 12px;
   }
 
   .unread-notification {
@@ -74,11 +74,7 @@
   }
 
   .type-icon-container {
-    position: absolute;
-    left: 12px;
-    top: 12px;
-    width: 28px;
-    height: 28px;
+    padding-right: 13px;
   }
 
   .type-icon {
@@ -108,5 +104,6 @@
 }
 
 .parent {
-  padding-left: 52px;
+  padding-left: 12px;
+  padding-top: 12px;
 }

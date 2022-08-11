@@ -91,7 +91,8 @@
     "unselect": "Batalkan pilihan",
     "addMark": "Tambahkan Tandai",
     "viewFile": "Lihat file",
-    "switchLanguage": "Bahasa"
+    "switchLanguage": "Bahasa",
+    "multiReplyAnnotations": "Membalas anotasi yang dipilih ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -194,10 +195,15 @@
     "textPopup": "Munculan Teks",
     "createStampButton": "Buat Stempel Baru",
     "filter": "Saring",
+    "multiSelectButton": "Banyak Pilihan",
     "pageReplaceModalTitle": "Ganti Halaman",
     "files": "File",
     "editText": "Edit Teks",
-    "redactionPanel": "Panel Redaksi"
+    "redactionPanel": "Panel Redaksi",
+    "noteGroupSection": {
+      "open": "Lihat Semua Anotasi",
+      "close": "Tutup Semua Anotasi"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "Tidak Ada Preset",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Hapus warna khusus",
       "deleteMessage": "Hapus warna khusus yang dipilih? Ini akan dihapus dari palet warna Anda."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Hapus Anotasi?",
+      "message": "Menghapus akan menghapus semua komentar, balasan, dan pengelompokan dan tidak dapat diurungkan.\n\n Anda yakin ingin menghapus anotasi ini?"
     }
   },
   "shortcut": {

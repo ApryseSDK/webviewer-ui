@@ -2,9 +2,11 @@
 
 .notes-panel-container {
   z-index: 65;
+
   @include mobile {
     z-index: 95;
   }
+
   display: flex;
   background-color: var(--panel-background);
   display: flex;
@@ -23,237 +25,139 @@
     height: 100vh;
     width: 100vw;
   }
-}
 
-.comments-counter {
-  height: 19px;
-  margin-top: 24px;
-  margin-bottom: 12px;
-  font-size: 16px;
-
-  span {
-    font-weight: bold;
-  }
-}
-
-.NotesPanel {
-  padding-left: 16px;
-  padding-bottom: 0px;
-  display: flex;
-  flex-direction: column;
-  // width: 100%;
-  // width: 293px;
-  padding-right: 8px;
-  // Needed
-  // overflow: hidden; // https://stackoverflow.com/questions/1260122/expand-a-div-to-fill-the-remaining-width
-
-
-  .reply-area-container .reply-button {
-    @include ie11 { // For ie11 only
-      width: 28px;
-    }
-  }
-
-  padding-top: 16px;
-  @include mobile {
-    width: 100vw;
-    min-width: 100vw;
-    padding-top: 0px;
+  .NotesPanel {
+    padding-left: 16px;
+    padding-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 
     .close-container {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      height: 64px;
 
-      width: 100%;
-      padding-right: 12px;
+      @include mobile {
+        height: 64px;
+        padding-right: 12px;
+      }
 
       .close-icon-container {
+        display: flex;
+        align-items: center;
         cursor: pointer;
+
         .close-icon {
           width: 24px;
           height: 24px;
         }
       }
     }
-  }
 
-  .no-annotations {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .msg {
-      @include tablet-and-desktop {
-        line-height: 15px;
-        width: 146px;
-      }
-      text-align: center;
+    .multi-select-place-holder {
+      height: 72px;
     }
 
-    .empty-icon {
-      width: 65px;
-      height: 83px;
 
-      svg {
+
+    .reply-area-container .reply-button {
+      @include ie11 {
+        // For ie11 only
+        width: 28px;
+      }
+    }
+
+
+    padding-top: 16px;
+
+    @include mobile {
+      width: 100vw;
+      min-width: 100vw;
+      padding-top: 0px;
+    }
+
+    .no-annotations {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .msg {
+        @include tablet-and-desktop {
+          line-height: 15px;
+          width: 146px;
+        }
+
+        text-align: center;
+      }
+
+      .empty-icon {
         width: 65px;
         height: 83px;
-      }
-
-      * {
-        fill: var(--gray-5);
-        color: var(--gray-5);
-      }
-    }
-  }
-
-  > .header {
-    padding-right: 18px;
-
-    .sort-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 16px;
-
-      .filterAnnotationButton {
-        height: 28px;
-        width: 28px;
-        cursor: pointer;
-
-        &:hover {
-          background: var(--blue-1)
-        }
-
-        &.active {
-          background: var(--popup-button-active);
-        }
-      }
-
-      .sort-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-end;
-        align-self: flex-end;
-
-        .label {
-          margin-right: 8px;
-        }
-
-        .picked-option {
-          text-align: left;
-        }
-      }
-    }
-
-    .input-container {
-      display: flex;
-      position: relative;
-      flex: 1;
-
-      input {
-        width: 100%;
-        padding-left: 8px;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        color: var(--text-color);
-        padding-bottom: 6px;
-        padding-right: 8px;
-        padding-top: 4px;
-
-        &:focus {
-          outline: none;
-          border: 1px solid var(--focus-border);
-        }
-
-        &::placeholder {
-          color: var(--placeholder-text);
-        }
-      }
-
-      .input-button {
-        cursor: pointer;
-        background: var(--primary-button);
-        border-radius: 4px;
-        height: 100%;
-        width: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        bottom: 0px;
-        right: 0px;
-
-        .Icon {
-          width: 20px;
-          height: 20px;
-        }
 
         svg {
-          color: var(--primary-button-text);
+          width: 65px;
+          height: 83px;
         }
 
-        &:hover {
-          background: var(--primary-button-hover);
+        * {
+          fill: var(--gray-5);
+          color: var(--gray-5);
         }
       }
     }
 
-    .divider {
-      height: 1px;
-      width: 100%;
-      background: var(--divider);
-      margin: 16px 0px;
+
+    .virtualized-notes-container,
+    .normal-notes-container {
+      margin-top: 10px;
+      flex: 1;
+      padding-right: 18px;
     }
-  }
 
-  .virtualized-notes-container,
-  .normal-notes-container {
-    margin-top: 10px;
-    flex: 1;
-    padding-right: 18px;
-  }
 
-  .normal-notes-container {
-    overflow: auto;
-    overflow: overlay;
-  }
-
-  .note-wrapper:first-child {
-    .ListSeparator {
-      margin-top: 0px;
-      word-break: break-word;
+    .normal-notes-container {
+      overflow: auto;
+      overflow: overlay;
     }
-  }
 
-  .no-results {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-right: 18px;
-
-    .msg {
-      @include tablet-and-desktop {
-        line-height: 15px;
-        width: 92px;
+    .note-wrapper:first-child {
+      .ListSeparator {
+        margin-top: 0px;
+        word-break: break-word;
       }
-      text-align: center;
     }
 
-    .empty-icon {
-      width: 65px;
-      height: 83px;
+    .no-results {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-right: 18px;
 
-      svg {
+      .msg {
+        @include tablet-and-desktop {
+          line-height: 15px;
+          width: 92px;
+        }
+
+        text-align: center;
+      }
+
+      .empty-icon {
         width: 65px;
         height: 83px;
-      }
 
-      * {
-        fill: var(--border);
-        color: var(--border);
+        svg {
+          width: 65px;
+          height: 83px;
+        }
+
+        * {
+          fill: var(--border);
+          color: var(--border);
+        }
       }
     }
   }
+
 }

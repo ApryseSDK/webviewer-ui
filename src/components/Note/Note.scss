@@ -19,6 +19,9 @@
   &.expanded {
     box-shadow: 0px 4px 16px var(--note-box-shadow-expanded), 0px 0px 4px 0px var(--note-box-shadow);
   }
+  &.is-multi-selected {
+    box-shadow: 0px 4px 16px rgba(134, 142, 150, 0.24), 0px 0px 4px 0px var(--note-box-shadow);
+  }
   
   .mark-all-read-button {
     background: $pdftron-blue;
@@ -57,4 +60,36 @@
       padding-bottom: 0px;
     }
   }
+
+  .group-section {
+    margin-left: 52px;
+    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+    padding-right: 12px;
+  }
+
+  .text-button {
+    color: var(--secondary-button-text);
+    display: flex;
+    .Icon {
+      color: var(--secondary-button-text);
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  .group-child {
+    &:hover {
+      background: var(--view-header-button-hover);
+    }
+    padding-top: 4px;
+    padding-bottom: 4px;
+    .NoteContent {
+      padding-bottom: 0px;
+    }
+  }
 }
+
+

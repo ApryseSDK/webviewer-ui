@@ -91,7 +91,8 @@
     "unselect": "Nyahpilih",
     "addMark": "Tambah Mark",
     "viewFile": "Lihat fail",
-    "switchLanguage": "Bahasa"
+    "switchLanguage": "Bahasa",
+    "multiReplyAnnotations": "Balas kepada anotasi yang dipilih ({{count}})"
   },
   "annotation": {
     "areaMeasurement": "kawasan",
@@ -194,10 +195,15 @@
     "textPopup": "Teks Pop Timbul",
     "createStampButton": "Cipta Setem Baharu",
     "filter": "Penapis",
+    "multiSelectButton": "Pelbagai Pilihan",
     "pageReplaceModalTitle": "Gantikan Halaman",
     "files": "Fail",
     "editText": "Edit Teks",
-    "redactionPanel": "Panel Redaksi"
+    "redactionPanel": "Panel Redaksi",
+    "noteGroupSection": {
+      "open": "Lihat Semua Anotasi",
+      "close": "Tutup Semua Anotasi"
+    }
   },
   "message": {
     "toolsOverlayNoPresets": "Tiada Pratetap",
@@ -562,6 +568,10 @@
     "colorPicker": {
       "deleteTitle": "Padamkan warna tersuai",
       "deleteMessage": "Padamkan warna tersuai yang dipilih? Ia akan dialih keluar daripada palet warna anda."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Padamkan Anotasi?",
+      "message": "Pemadaman akan mengalih keluar semua ulasan, balasan dan pengumpulan dan tidak boleh dibuat asal.\n\n Adakah anda pasti mahu memadamkan anotasi ini?"
     }
   },
   "shortcut": {
