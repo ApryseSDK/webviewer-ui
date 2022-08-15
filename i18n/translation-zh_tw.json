@@ -6,6 +6,7 @@
     "calendar": "日曆",
     "calibrate": "校準",
     "cancel": "取消",
+    "confirm": "確認",
     "clear": "清除",
     "clearAll": "全部清除",
     "close": "關閉",
@@ -42,6 +43,7 @@
     "save": "儲存",
     "post": "發布",
     "create": "建立",
+    "update": "更新",
     "showMoreResults": "顯示更多結果",
     "sign": "簽署",
     "style": "樣式",
@@ -179,9 +181,11 @@
     "notesPanel": "備忘稿",
     "outlinePanel": "大綱",
     "outlinesPanel": "大綱",
+    "newOutlineTitle": "新大綱標題",
+    "outlineTitle": "大綱標題",
+    "destination": "目的地",
     "bookmarkPanel": "書籤",
     "bookmarksPanel": "書籤",
-    "newBookmark": "新書籤",
     "bookmarkTitle": "書籤標題",
     "bookmarkPage": "頁",
     "signaturePanel": "簽名",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "比例"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "校準",
+        "custom": "風俗",
+        "fractionalUnits": "分數單位",
+        "precision": "精確",
+        "preset": "預設",
+        "paperUnits": "紙張單位",
+        "displayUnits": "顯示單元",
+        "fractionUnitsTooltip": "分數單位僅適用於 in 和 ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "添加新比例",
+        "selectTwoPoints": "選擇已知尺寸的兩個點進行校準",
+        "inputKnowDimension": "輸入已知尺寸和單位進行校準",
+        "multipleScales": "多尺度"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "刪除比例",
+        "scaleIsOn-delete-info": "該量表目前正在使用",
+        "page-delete-info": "頁",
+        "appliedTo-delete-info": "並應用於",
+        "measurement": "測量",
+        "measurements": "測量",
+        "deletionIs": "刪除是",
+        "irreversible": "不可逆轉",
+        "willDeleteMeasurement": "並將刪除相關的測量。",
+        "confirmDelete": "確定要刪除此比例嗎？"
+      }
+    },
     "stylePopup": {
       "textStyle": "文字樣式",
       "colors": "顏色",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "刪除大綱？",
-      "message": "您確定要刪除這些大綱嗎？\n\n 具有任何嵌套輪廓的輪廓將導致整個內容被刪除並且無法替換，除非您再次設置它們。"
+      "message": "您確定要刪除這些大綱嗎？\n\n刪除具有嵌套輪廓的輪廓將導致整個內部結構被刪除，並且如果需要，必須重新創建。"
     },
     "selectPage": {
       "selectTitle": "未選擇頁面",
@@ -854,6 +888,8 @@
       "regionRedaction": "區域編輯",
       "fullPageRedaction": "整頁編輯",
       "fullVideoFrameRedaction": "視頻編輯",
+      "audioRedaction": "音頻編輯",
+      "fullVideoFrameAndAudioRedaction": "視頻和音頻編輯",
       "image": "圖片"
     },
     "expand": "擴張",

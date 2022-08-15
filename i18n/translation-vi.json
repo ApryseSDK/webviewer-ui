@@ -6,6 +6,7 @@
     "calendar": "Lịch",
     "calibrate": "Hiệu chỉnh",
     "cancel": "Hủy",
+    "confirm": "Xác nhận",
     "clear": "Xóa",
     "clearAll": "Quet sạch tât cả",
     "close": "Đóng",
@@ -42,6 +43,7 @@
     "save": "Lưu",
     "post": "Đăng",
     "create": "Tạo",
+    "update": "Cập nhật",
     "showMoreResults": "Hiển thị thêm kết quả",
     "sign": "Ký",
     "style": "Kiểu",
@@ -179,9 +181,11 @@
     "notesPanel": "Bình Luận",
     "outlinePanel": "Đề cương",
     "outlinesPanel": "Tóm tắt",
+    "newOutlineTitle": "Tiêu đề phác thảo mới",
+    "outlineTitle": "Đề cương",
+    "destination": "Điểm đến",
     "bookmarkPanel": "Dấu trang",
     "bookmarksPanel": "Đánh dấu",
-    "newBookmark": "Đánh Dấu Mới",
     "bookmarkTitle": "Tiêu đề Dấu trang",
     "bookmarkPage": "Trang",
     "signaturePanel": "Chữ ký",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Quy mô"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Hiệu chỉnh",
+        "custom": "Tập quán",
+        "fractionalUnits": "Đơn vị phân số",
+        "precision": "Độ chính xác",
+        "preset": "Đặt trước",
+        "paperUnits": "Đơn vị giấy",
+        "displayUnits": "Đơn vị hiển thị",
+        "fractionUnitsTooltip": "Đơn vị phân số chỉ áp dụng cho in và ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Thêm quy mô mới",
+        "selectTwoPoints": "Chọn hai điểm có kích thước đã biết để hiệu chỉnh",
+        "inputKnowDimension": "Nhập kích thước và đơn vị đã biết để hiệu chỉnh",
+        "multipleScales": "Nhiều quy mô"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Xóa quy mô",
+        "scaleIsOn-delete-info": "Quy mô này hiện đang được sử dụng trên",
+        "page-delete-info": "trang",
+        "appliedTo-delete-info": "và áp dụng cho",
+        "measurement": "đo đạc",
+        "measurements": "đo",
+        "deletionIs": "Xóa là",
+        "irreversible": "không thể thay đổi",
+        "willDeleteMeasurement": "và sẽ xóa các phép đo liên quan.",
+        "confirmDelete": "Bạn có chắc chắn muốn xóa thang đo này không?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Kiểu Văn Bản",
       "colors": "Màu",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Xóa dàn ý?",
-      "message": "Bạn có chắc chắn muốn xóa những đường viền này không?\n\n Một phác thảo có bất kỳ đường viền lồng nhau nào sẽ dẫn đến việc toàn bộ nội dung sẽ bị xóa và không thể thay thế trừ khi bạn đặt lại chúng."
+      "message": "Bạn có chắc chắn muốn xóa những đường viền này không?\n\nXóa một đường viền có các đường viền lồng nhau sẽ dẫn đến việc toàn bộ cấu trúc bên trong bị xóa và nếu cần, sẽ phải được tạo lại."
     },
     "selectPage": {
       "selectTitle": "Không Có Trang nào được Chọn",
@@ -854,6 +888,8 @@
       "regionRedaction": "Biên tập vùng",
       "fullPageRedaction": "Biên tập toàn trang",
       "fullVideoFrameRedaction": "Video Redaction",
+      "audioRedaction": "Phản hồi âm thanh",
+      "fullVideoFrameAndAudioRedaction": "Phản ứng lại video và âm thanh",
       "image": "Hình ảnh"
     },
     "expand": "Mở rộng",

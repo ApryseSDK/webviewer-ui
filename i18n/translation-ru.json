@@ -6,6 +6,7 @@
     "calendar": "Календарь",
     "calibrate": "калибровать",
     "cancel": "Отменить",
+    "confirm": "Подтверждать",
     "clear": "Очистить",
     "clearAll": "Очистить все",
     "close": "Закрыть",
@@ -42,6 +43,7 @@
     "save": "Сохранить",
     "post": "Почта",
     "create": "Создать",
+    "update": "Обновлять",
     "showMoreResults": "Показать больше",
     "sign": "Добавить подпись",
     "style": "Стиль",
@@ -179,9 +181,11 @@
     "notesPanel": "Заметки",
     "outlinePanel": "Контур",
     "outlinesPanel": "Контуры",
+    "newOutlineTitle": "Новый заголовок схемы",
+    "outlineTitle": "Схема заголовка",
+    "destination": "Назначения",
     "bookmarkPanel": "Закладка",
     "bookmarksPanel": "закладки",
-    "newBookmark": "Новая закладка",
     "bookmarkTitle": "Название закладки",
     "bookmarkPage": "страница",
     "signaturePanel": "Подписи",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Масштаб"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Калибровка",
+        "custom": "Обычай",
+        "fractionalUnits": "Дробные единицы",
+        "precision": "Точность",
+        "preset": "Предустановка",
+        "paperUnits": "Бумажные блоки",
+        "displayUnits": "Единицы отображения",
+        "fractionUnitsTooltip": "Дробные единицы применяются только к дюймам и футам-дюймам."
+      },
+      "scaleOverlay": {
+        "addNewScale": "Добавить новый масштаб",
+        "selectTwoPoints": "Выберите две точки известного размера для калибровки",
+        "inputKnowDimension": "Введите известные размеры и единицы для калибровки",
+        "multipleScales": "Несколько шкал"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Удалить шкалу",
+        "scaleIsOn-delete-info": "Эта шкала в настоящее время используется в",
+        "page-delete-info": "страница",
+        "appliedTo-delete-info": "и применяется к",
+        "measurement": "измерение",
+        "measurements": "измерения",
+        "deletionIs": "Удаление",
+        "irreversible": "необратимый",
+        "willDeleteMeasurement": "и удалит связанные измерения.",
+        "confirmDelete": "Вы уверены, что хотите удалить эту шкалу?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Текстовый стиль",
       "colors": "Цвета",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Удалить контур?",
-      "message": "Вы уверены, что хотите удалить эти контуры?\n\n Контур, который имеет какие-либо вложенные контуры, приведет к удалению всего этого и не может быть заменен, если вы не установите их снова."
+      "message": "Вы уверены, что хотите удалить эти контуры?\n\nУдаление контура, содержащего вложенные контуры, приведет к удалению всей внутренней структуры и, при необходимости, ее придется создать заново."
     },
     "selectPage": {
       "selectTitle": "Страницы не выбраны",
@@ -854,6 +888,8 @@
       "regionRedaction": "Редакция региона",
       "fullPageRedaction": "Полная редакция страницы",
       "fullVideoFrameRedaction": "Видеоредакция",
+      "audioRedaction": "Аудиоредакция",
+      "fullVideoFrameAndAudioRedaction": "Видео и аудио редакция",
       "image": "Изображение"
     },
     "expand": "Расширять",

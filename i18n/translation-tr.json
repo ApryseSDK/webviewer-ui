@@ -6,6 +6,7 @@
     "calendar": "Takvim",
     "calibrate": "kalibre et",
     "cancel": "İptal",
+    "confirm": "Onaylamak",
     "clear": "Temizlemek",
     "clearAll": "Hepsini temizle",
     "close": "Kapat",
@@ -42,6 +43,7 @@
     "save": "Kayıt etmek",
     "post": "Postalamak",
     "create": "Yaratmak",
+    "update": "Güncelleme",
     "showMoreResults": "Daha fazla sonuç göster",
     "sign": "İmza",
     "style": "stil",
@@ -179,9 +181,11 @@
     "notesPanel": "Yorumlar",
     "outlinePanel": "anahat",
     "outlinesPanel": "Anahatlar",
+    "newOutlineTitle": "Yeni Anahat Başlığı",
+    "outlineTitle": "Anahat Başlığı",
+    "destination": "Hedef",
     "bookmarkPanel": "Yer imi",
     "bookmarksPanel": "Yer imleri",
-    "newBookmark": "Yeni Yer İşareti",
     "bookmarkTitle": "Yer İşareti Başlığı",
     "bookmarkPage": "Sayfa",
     "signaturePanel": "imzalar",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Ölçek"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "kalibre et",
+        "custom": "Gelenek",
+        "fractionalUnits": "Kesirli Birimler",
+        "precision": "Kesinlik",
+        "preset": "ön ayar",
+        "paperUnits": "Kağıt Birimleri",
+        "displayUnits": "Görüntüleme birimleri",
+        "fractionUnitsTooltip": "Kesir birimleri yalnızca içeri ve ft-in için geçerlidir"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Yeni Ölçek Ekle",
+        "selectTwoPoints": "Kalibre etmek için bilinen bir boyutun iki noktasını seçin",
+        "inputKnowDimension": "Bilinen boyutu ve kalibre edilecek birimleri girin",
+        "multipleScales": "Çoklu Ölçekler"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Ölçeği Sil",
+        "scaleIsOn-delete-info": "Bu ölçek şu anda kullanımda",
+        "page-delete-info": "sayfa",
+        "appliedTo-delete-info": "ve uygulanan",
+        "measurement": "ölçüm",
+        "measurements": "ölçümler",
+        "deletionIs": "Silme",
+        "irreversible": "geri döndürülemez",
+        "willDeleteMeasurement": "ve ilişkili ölçümleri siler.",
+        "confirmDelete": "Bu ölçeği silmek istediğinizden emin misiniz?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Yazı stili",
       "colors": "Renkler",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Anahat Silinsin mi?",
-      "message": "Bu anahatları silmek istediğinizden emin misiniz?\n\n İç içe geçmiş anahatları olan bir anahat, her şeyin silinmesine neden olur ve siz yeniden ayarlamadığınız sürece değiştirilemez."
+      "message": "Bu anahatları silmek istediğinizden emin misiniz?\n\nİç içe anahatları olan bir anahattı silmek, tüm iç yapının silinmesine ve gerekirse yeniden oluşturulmasına neden olacaktır."
     },
     "selectPage": {
       "selectTitle": "Sayfa Seçilmedi",
@@ -854,6 +888,8 @@
       "regionRedaction": "Bölge redaksiyonu",
       "fullPageRedaction": "Tam sayfa redaksiyonu",
       "fullVideoFrameRedaction": "Video Redaksiyonu",
+      "audioRedaction": "Ses Düzeltme",
+      "fullVideoFrameAndAudioRedaction": "Video ve Ses Redaksiyonu",
       "image": "resim"
     },
     "expand": "Genişletmek",

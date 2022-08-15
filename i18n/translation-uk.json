@@ -6,6 +6,7 @@
     "calendar": "Календар",
     "calibrate": "Калібрувати",
     "cancel": "Скасувати",
+    "confirm": "Підтвердьте",
     "clear": "Ясно",
     "clearAll": "Очистити все",
     "close": "Закрити",
@@ -42,6 +43,7 @@
     "save": "Зберегти",
     "post": "Пост",
     "create": "Створюйте",
+    "update": "Оновлення",
     "showMoreResults": "Показати більше результатів",
     "sign": "Підписати",
     "style": "Стиль",
@@ -179,9 +181,11 @@
     "notesPanel": "Коментарі",
     "outlinePanel": "Контур",
     "outlinesPanel": "Обриси",
+    "newOutlineTitle": "Нова назва структури",
+    "outlineTitle": "Схема заголовка",
+    "destination": "Пункт призначення",
     "bookmarkPanel": "Закладка",
     "bookmarksPanel": "Закладки",
-    "newBookmark": "Нова закладка",
     "bookmarkTitle": "Закладка Назва",
     "bookmarkPage": "Сторінка",
     "signaturePanel": "Підписи",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Масштаб"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Калібрувати",
+        "custom": "На замовлення",
+        "fractionalUnits": "Дробові одиниці",
+        "precision": "Точність",
+        "preset": "Попередньо встановлені",
+        "paperUnits": "Паперові одиниці",
+        "displayUnits": "Блоки відображення",
+        "fractionUnitsTooltip": "Одиниці частки застосовуються лише до in та ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Додати новий масштаб",
+        "selectTwoPoints": "Виберіть дві точки відомого розміру для калібрування",
+        "inputKnowDimension": "Введіть відомий розмір і одиниці вимірювання для калібрування",
+        "multipleScales": "Кілька шкал"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Видалити масштаб",
+        "scaleIsOn-delete-info": "На даний момент ця шкала використовується",
+        "page-delete-info": "сторінка",
+        "appliedTo-delete-info": "і звернувся до",
+        "measurement": "вимірювання",
+        "measurements": "вимірювання",
+        "deletionIs": "Видалення є",
+        "irreversible": "незворотні",
+        "willDeleteMeasurement": "і видалить пов’язані вимірювання.",
+        "confirmDelete": "Ви впевнені, що хочете видалити цю шкалу?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Стиль тексту",
       "colors": "Кольори",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Видалити Outline?",
-      "message": "Ви впевнені, що хочете видалити ці контури?\n\n Контур, який має будь-які вкладені контури, призведе до того, що все буде видалено, і його не можна буде замінити, якщо ви не встановите їх знову."
+      "message": "Ви впевнені, що хочете видалити ці контури?\n\nВидалення контуру, який має вкладені контури, призведе до видалення всієї внутрішньої структури, і за потреби її доведеться створити заново."
     },
     "selectPage": {
       "selectTitle": "Сторінок не вибрано",
@@ -854,6 +888,8 @@
       "regionRedaction": "Регіональна редакція",
       "fullPageRedaction": "Повна редакція сторінки",
       "fullVideoFrameRedaction": "Редакція відео",
+      "audioRedaction": "Редакція аудіо",
+      "fullVideoFrameAndAudioRedaction": "Редагування відео та аудіо",
       "image": "Зображення"
     },
     "expand": "Розгорнути",

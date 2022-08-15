@@ -6,6 +6,7 @@
     "calendar": "पंचांग",
     "calibrate": "जांचना",
     "cancel": "रद्द करें",
+    "confirm": "पुष्टि करना",
     "clear": "स्पष्ट",
     "clearAll": "सभी साफ करें",
     "close": "बंद करना",
@@ -42,6 +43,7 @@
     "save": "सहेजें",
     "post": "पद",
     "create": "सृजन करना",
+    "update": "अपडेट करना",
     "showMoreResults": "अधिक परिणाम दिखाएं",
     "sign": "संकेत",
     "style": "अंदाज",
@@ -179,9 +181,11 @@
     "notesPanel": "टिप्पणियाँ",
     "outlinePanel": "खाका",
     "outlinesPanel": "रूपरेखा",
+    "newOutlineTitle": "नई रूपरेखा शीर्षक",
+    "outlineTitle": "रूपरेखा शीर्षक",
+    "destination": "मंज़िल",
     "bookmarkPanel": "बुकमार्क",
     "bookmarksPanel": "बुकमार्क",
-    "newBookmark": "नया बुकमार्क",
     "bookmarkTitle": "बुकमार्क शीर्षक",
     "bookmarkPage": "पृष्ठ",
     "signaturePanel": "हस्ताक्षर",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "स्केल"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "जांचना",
+        "custom": "रिवाज़",
+        "fractionalUnits": "भिन्नात्मक इकाइयाँ",
+        "precision": "शुद्धता",
+        "preset": "प्रीसेट",
+        "paperUnits": "कागज इकाइयाँ",
+        "displayUnits": "प्रदर्शन इकाइयां",
+        "fractionUnitsTooltip": "भिन्न इकाइयाँ केवल in और ft-in . पर लागू होती हैं"
+      },
+      "scaleOverlay": {
+        "addNewScale": "नया पैमाना जोड़ें",
+        "selectTwoPoints": "कैलिब्रेट करने के लिए ज्ञात आयाम के दो बिंदुओं का चयन करें",
+        "inputKnowDimension": "इनपुट ज्ञात आयाम और जांच करने के लिए इकाइयाँ",
+        "multipleScales": "एकाधिक तराजू"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "स्केल हटाएं",
+        "scaleIsOn-delete-info": "यह पैमाना वर्तमान में उपयोग में है",
+        "page-delete-info": "पृष्ठ",
+        "appliedTo-delete-info": "और लागू किया",
+        "measurement": "माप",
+        "measurements": "मापन",
+        "deletionIs": "हटाना है",
+        "irreversible": "अचल",
+        "willDeleteMeasurement": "और संबंधित माप हटा देगा।",
+        "confirmDelete": "क्या आप वाकई इस पैमाने को हटाना चाहते हैं?"
+      }
+    },
     "stylePopup": {
       "textStyle": "पाठ शैली",
       "colors": "रंग की",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "रूपरेखा हटाएं?",
-      "message": "क्या आप वाकई इन रूपरेखाओं को हटाना चाहते हैं?\n\n किसी भी नेस्टेड आउटलाइन वाली आउटलाइन के परिणामस्वरूप पूरी चीज़ हटा दी जाएगी और जब तक आप उन्हें फिर से सेट नहीं करते, तब तक उसे बदला नहीं जा सकता।"
+      "message": "क्या आप वाकई इन रूपरेखाओं को हटाना चाहते हैं?\n\nनेस्टेड आउटलाइन वाली आउटलाइन को हटाने के परिणामस्वरूप संपूर्ण आंतरिक संरचना को हटा दिया जाएगा और, यदि आवश्यक हो, तो इसे फिर से बनाना होगा।"
     },
     "selectPage": {
       "selectTitle": "कोई पेज नहीं चुना गया",
@@ -854,6 +888,8 @@
       "regionRedaction": "रीजन रिडक्शन",
       "fullPageRedaction": "पूरा पेज रिडक्शन",
       "fullVideoFrameRedaction": "वीडियो रिडक्शन",
+      "audioRedaction": "ऑडियो रिडक्शन",
+      "fullVideoFrameAndAudioRedaction": "वीडियो और ऑडियो रिडक्शन",
       "image": "छवि"
     },
     "expand": "विस्तार करना",

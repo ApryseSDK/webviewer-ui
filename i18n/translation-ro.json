@@ -178,9 +178,11 @@
     "notesPanel": "Comentarii",
     "outlinePanel": "Contur",
     "outlinesPanel": "Contururi",
+    "newOutlineTitle": "Noul titlu de schiță",
+    "outlineTitle": "Titlul schiță",
+    "destination": "Destinaţie",
     "bookmarkPanel": "Marcaj",
     "bookmarksPanel": "Marcaje",
-    "newBookmark": "Marcaj nou",
     "bookmarkTitle": "Titlu marcaj",
     "bookmarkPage": "Pagină",
     "signaturePanel": "Semnături",
@@ -553,7 +555,7 @@
     },
     "deleteOutline": {
       "title": "Ștergeți schița?",
-      "message": "Sigur doriți să ștergeți aceste contururi?\n\n Un contur care are contururi imbricate va avea ca rezultat ștergerea întregului lucru și nu poate fi înlocuit decât dacă le setați din nou."
+      "message": "Sigur doriți să ștergeți aceste contururi?\n\nȘtergerea unui contur care are contururi imbricate va avea ca rezultat ștergerea întregii structuri interioare și, dacă este necesar, va trebui să fie recreată."
     },
     "selectPage": {
       "selectTitle": "Nu au fost selectate pagini",
@@ -844,6 +846,8 @@
       "regionRedaction": "Redactarea regiunii",
       "fullPageRedaction": "Redactare pe întreaga pagină",
       "fullVideoFrameRedaction": "Redactare video",
+      "audioRedaction": "Redactare audio",
+      "fullVideoFrameAndAudioRedaction": "Redactare video și audio",
       "image": "Imagine"
     },
     "expand": "Extinde",

@@ -6,6 +6,7 @@
     "calendar": "Kalender",
     "calibrate": "Kalibrieren",
     "cancel": "Abbrechen",
+    "confirm": "Bestätigen Sie",
     "clear": "Löschen",
     "clearAll": "Alles löschen",
     "close": "Schliessen",
@@ -42,6 +43,7 @@
     "save": "Speichern",
     "post": "Absenden",
     "create": "Erstellen",
+    "update": "Aktualisieren",
     "showMoreResults": "Mehr Ergebnisse anzeigen",
     "sign": "Unterschrift",
     "style": "Stil",
@@ -179,9 +181,11 @@
     "notesPanel": "Notizen",
     "outlinePanel": "Umriss",
     "outlinesPanel": "Gliederung",
+    "newOutlineTitle": "Neuer Gliederungstitel",
+    "outlineTitle": "Gliederungstitel",
+    "destination": "Ziel",
     "bookmarkPanel": "Lesezeichen",
     "bookmarksPanel": "Lesezeichen",
-    "newBookmark": "Neues Lesezeichen",
     "bookmarkTitle": "Titel des Lesezeichens",
     "bookmarkPage": "Seite",
     "signaturePanel": "Unterschriften",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Maßstab"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Kalibrieren",
+        "custom": "Benutzerdefiniert",
+        "fractionalUnits": "Brucheinheiten",
+        "precision": "Präzision",
+        "preset": "Voreinstellung",
+        "paperUnits": "Papiereinheiten",
+        "displayUnits": "Einheiten anzeigen",
+        "fractionUnitsTooltip": "Brucheinheiten gelten nur für in und ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Neue Waage hinzufügen",
+        "selectTwoPoints": "Wählen Sie zwei Punkte mit bekannter Abmessung zum Kalibrieren aus",
+        "inputKnowDimension": "Geben Sie bekannte Dimensionen und Einheiten zum Kalibrieren ein",
+        "multipleScales": "Mehrere Skalen"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Waage löschen",
+        "scaleIsOn-delete-info": "Diese Waage wird derzeit am verwendet",
+        "page-delete-info": "Seite",
+        "appliedTo-delete-info": "und beantragt",
+        "measurement": "Messung",
+        "measurements": "Messungen",
+        "deletionIs": "Löschung ist",
+        "irreversible": "irreversibel",
+        "willDeleteMeasurement": "und löscht die zugehörigen Messungen.",
+        "confirmDelete": "Möchten Sie diese Skala wirklich löschen?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Textstil",
       "colors": "Farben",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Gliederung löschen?",
-      "message": "Möchten Sie diese Umrisse wirklich löschen?\n\n Eine Kontur mit verschachtelten Konturen führt dazu, dass das Ganze gelöscht wird und kann nicht ersetzt werden, es sei denn, Sie setzen sie erneut."
+      "message": "Möchten Sie diese Umrisse wirklich löschen?\n\nDas Löschen eines Umrisses mit verschachtelten Umrissen führt dazu, dass die gesamte innere Struktur gelöscht wird und ggf. neu erstellt werden muss."
     },
     "selectPage": {
       "selectTitle": "Keine Seiten ausgewählt",
@@ -854,6 +888,8 @@
       "regionRedaction": "Regionsredaktion",
       "fullPageRedaction": "Ganzseitige Redaktion",
       "fullVideoFrameRedaction": "Video-Redaktion",
+      "audioRedaction": "Audio-Redaktion",
+      "fullVideoFrameAndAudioRedaction": "Video- und Audioredaktion",
       "image": "Bild"
     },
     "expand": "Erweitern",

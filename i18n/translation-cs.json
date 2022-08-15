@@ -178,9 +178,11 @@
     "notesPanel": "Komentáře",
     "outlinePanel": "Obrys",
     "outlinesPanel": "Obrysy",
+    "newOutlineTitle": "Nový název osnovy",
+    "outlineTitle": "Název osnovy",
+    "destination": "Destinace",
     "bookmarkPanel": "Záložka do knihy",
     "bookmarksPanel": "Záložky",
-    "newBookmark": "Nová záložka",
     "bookmarkTitle": "Název záložky",
     "bookmarkPage": "Strana",
     "signaturePanel": "Podpisy",
@@ -553,7 +555,7 @@
     },
     "deleteOutline": {
       "title": "Smazat osnovu?",
-      "message": "Opravdu chcete tyto obrysy smazat?\n\n Obrys, který má nějaké vnořené obrysy, bude mít za následek odstranění celé věci a nelze ji nahradit, pokud je znovu nenastavíte."
+      "message": "Opravdu chcete tyto obrysy smazat?\n\nOdstranění obrysu, který má vnořené obrysy, bude mít za následek odstranění celé vnitřní struktury a v případě potřeby bude muset být znovu vytvořen."
     },
     "selectPage": {
       "selectTitle": "Nejsou vybrány žádné stránky",
@@ -844,6 +846,8 @@
       "regionRedaction": "Krajská redakce",
       "fullPageRedaction": "Celostránková redakce",
       "fullVideoFrameRedaction": "Redakce videa",
+      "audioRedaction": "Redakce zvuku",
+      "fullVideoFrameAndAudioRedaction": "Redakce videa a zvuku",
       "image": "obraz"
     },
     "expand": "Rozšířit",

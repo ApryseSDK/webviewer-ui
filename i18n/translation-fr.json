@@ -6,6 +6,7 @@
     "calendar": "Calandre",
     "calibrate": "Calibrer",
     "cancel": "Annuler",
+    "confirm": "Confirmer",
     "clear": "Effacer",
     "clearAll": "Tout effacer",
     "close": "Fermer",
@@ -42,6 +43,7 @@
     "save": "Enregistrer",
     "post": "Publier",
     "create": "Créer",
+    "update": "Mise à jour",
     "showMoreResults": "Afficher plus de résultats",
     "sign": "Signer",
     "style": "Style",
@@ -179,9 +181,11 @@
     "notesPanel": "Remarques",
     "outlinePanel": "Présenter",
     "outlinesPanel": "Contours",
+    "newOutlineTitle": "Nouveau titre de plan",
+    "outlineTitle": "Titre du plan",
+    "destination": "Destination",
     "bookmarkPanel": "Signet",
     "bookmarksPanel": "Signets",
-    "newBookmark": "Nouveau signet",
     "bookmarkTitle": "Titre du signet",
     "bookmarkPage": "Page",
     "signaturePanel": "Signatures",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Échelle"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Étalonner",
+        "custom": "Coutume",
+        "fractionalUnits": "Unités fractionnaires",
+        "precision": "Précision",
+        "preset": "Préréglé",
+        "paperUnits": "Unités papier",
+        "displayUnits": "Unités d'affichage",
+        "fractionUnitsTooltip": "Les unités de fraction ne s'appliquent qu'à in et ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Ajouter une nouvelle échelle",
+        "selectTwoPoints": "Sélectionnez deux points d'une dimension connue à calibrer",
+        "inputKnowDimension": "Entrez la dimension connue et les unités à calibrer",
+        "multipleScales": "Échelles multiples"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Supprimer l'échelle",
+        "scaleIsOn-delete-info": "Cette échelle est actuellement utilisée sur",
+        "page-delete-info": "page",
+        "appliedTo-delete-info": "et appliqué à",
+        "measurement": "la mesure",
+        "measurements": "des mesures",
+        "deletionIs": "La suppression est",
+        "irreversible": "irréversible",
+        "willDeleteMeasurement": "et supprimera les mesures associées.",
+        "confirmDelete": "Voulez-vous vraiment supprimer cette échelle ?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Style de texte",
       "colors": "Couleurs",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Supprimer le contour ?",
-      "message": "Voulez-vous vraiment supprimer ces contours ?\n\n Un contour qui a des contours imbriqués entraînera la suppression de l'ensemble et ne pourra pas être remplacé à moins que vous ne les définissiez à nouveau."
+      "message": "Voulez-vous vraiment supprimer ces contours ?\n\nLa suppression d'un contour qui a des contours imbriqués entraînera la suppression de toute la structure interne et, si nécessaire, devra être recréée."
     },
     "selectPage": {
       "selectTitle": "Aucune page sélectionnée",
@@ -854,6 +888,8 @@
       "regionRedaction": "Caviardage de région",
       "fullPageRedaction": "Caviardage pleine page",
       "fullVideoFrameRedaction": "Rédaction vidéo",
+      "audioRedaction": "Rédaction audio",
+      "fullVideoFrameAndAudioRedaction": "Rédaction vidéo et audio",
       "image": "Image"
     },
     "expand": "Développer",

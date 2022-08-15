@@ -6,6 +6,7 @@
     "calendar": "カレンダー",
     "calibrate": "調整する",
     "cancel": "キャンセル",
+    "confirm": "確認",
     "clear": "クリア",
     "clearAll": "すべてクリア",
     "close": "閉じる",
@@ -42,6 +43,7 @@
     "save": "保存",
     "post": "投稿",
     "create": "作成",
+    "update": "アップデート",
     "showMoreResults": "さらに結果を表示",
     "sign": "署名",
     "style": "スタイル",
@@ -179,9 +181,11 @@
     "notesPanel": "コメント",
     "outlinePanel": "概要",
     "outlinesPanel": "概要",
+    "newOutlineTitle": "新しいアウトラインタイトル",
+    "outlineTitle": "アウトラインタイトル",
+    "destination": "行き先",
     "bookmarkPanel": "ブックマーク",
     "bookmarksPanel": "ブックマーク",
-    "newBookmark": "新しいブックマーク",
     "bookmarkTitle": "ブックマークタイトル",
     "bookmarkPage": "ページ",
     "signaturePanel": "署名",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "縮尺"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "調整する",
+        "custom": "カスタム",
+        "fractionalUnits": "分数単位",
+        "precision": "精度",
+        "preset": "プリセット",
+        "paperUnits": "ペーパーユニット",
+        "displayUnits": "ディスプレイユニット",
+        "fractionUnitsTooltip": "分数単位は、inとft-inにのみ適用されます"
+      },
+      "scaleOverlay": {
+        "addNewScale": "新しいスケールを追加",
+        "selectTwoPoints": "キャリブレーションする既知の寸法の2つのポイントを選択します",
+        "inputKnowDimension": "既知の寸法と単位を入力して校正します",
+        "multipleScales": "複数のスケール"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "スケールを削除",
+        "scaleIsOn-delete-info": "このスケールは現在使用されています",
+        "page-delete-info": "ページ",
+        "appliedTo-delete-info": "に適用されます",
+        "measurement": "計測",
+        "measurements": "測定",
+        "deletionIs": "削除は",
+        "irreversible": "不可逆",
+        "willDeleteMeasurement": "関連する測定値を削除します。",
+        "confirmDelete": "このスケールを削除してもよろしいですか？"
+      }
+    },
     "stylePopup": {
       "textStyle": "テキストスタイル",
       "colors": "色",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "アウトラインを削除しますか？",
-      "message": "これらのアウトラインを削除してもよろしいですか？\n\n アウトラインがネストされているアウトラインでは、すべてが削除され、再度設定しない限り置き換えることはできません。"
+      "message": "これらのアウトラインを削除してもよろしいですか?\n\nネストされたアウトラインを持つアウトラインを削除すると、内部構造全体が削除され、必要に応じて再作成する必要があります。"
     },
     "selectPage": {
       "selectTitle": "ページが選択されていません",
@@ -854,6 +888,8 @@
       "regionRedaction": "地域の編集",
       "fullPageRedaction": "全ページの編集",
       "fullVideoFrameRedaction": "ビデオ編集",
+      "audioRedaction": "音声秘匿化",
+      "fullVideoFrameAndAudioRedaction": "ビデオとオーディオのリダクション",
       "image": "画像"
     },
     "expand": "拡大",

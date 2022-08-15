@@ -178,9 +178,11 @@
     "notesPanel": "Kommentarer",
     "outlinePanel": "Översikt",
     "outlinesPanel": "Konturer",
+    "newOutlineTitle": "Ny dispositionstitel",
+    "outlineTitle": "Översiktstitel",
+    "destination": "Destination",
     "bookmarkPanel": "Bokmärke",
     "bookmarksPanel": "Bokmärken",
-    "newBookmark": "Nytt bokmärke",
     "bookmarkTitle": "Bokmärkets titel",
     "bookmarkPage": "Sida",
     "signaturePanel": "Signaturer",
@@ -553,7 +555,7 @@
     },
     "deleteOutline": {
       "title": "Ta bort Outline?",
-      "message": "Är du säker på att du vill ta bort dessa konturer?\n\n En kontur som har några kapslade konturer kommer att resultera i att det hela tas bort och kan inte ersättas om du inte ställer in dem igen."
+      "message": "Är du säker på att du vill ta bort dessa konturer?\n\nAtt ta bort en kontur som har kapslade konturer kommer att resultera i att hela den inre strukturen tas bort och, om det behövs, måste återskapas."
     },
     "selectPage": {
       "selectTitle": "Inga sidor valda",
@@ -844,6 +846,8 @@
       "regionRedaction": "Regionredigering",
       "fullPageRedaction": "Helsidesredigering",
       "fullVideoFrameRedaction": "Videoredigering",
+      "audioRedaction": "Ljudredigering",
+      "fullVideoFrameAndAudioRedaction": "Video- och ljudredigering",
       "image": "Bild"
     },
     "expand": "Bygga ut",

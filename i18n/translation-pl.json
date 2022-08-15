@@ -178,9 +178,11 @@
     "notesPanel": "Uwagi",
     "outlinePanel": "Zarys",
     "outlinesPanel": "Wytyczne",
+    "newOutlineTitle": "Nowy tytuł konspektu",
+    "outlineTitle": "Tytuł konspektu",
+    "destination": "Miejsce docelowe",
     "bookmarkPanel": "Zakładka",
     "bookmarksPanel": "Zakładki",
-    "newBookmark": "Nowa zakładka",
     "bookmarkTitle": "Tytuł zakładki",
     "bookmarkPage": "Strona",
     "signaturePanel": "Podpisy",
@@ -553,7 +555,7 @@
     },
     "deleteOutline": {
       "title": "Usunąć konspekt?",
-      "message": "Czy na pewno chcesz usunąć te kontury?\n\n Kontur, który ma jakiekolwiek zagnieżdżone kontury, spowoduje usunięcie całej rzeczy i nie będzie można go zastąpić, chyba że ustawisz je ponownie."
+      "message": "Czy na pewno chcesz usunąć te kontury?\n\nUsunięcie konturu, który ma zagnieżdżone kontury, spowoduje usunięcie całej wewnętrznej struktury i, w razie potrzeby, konieczność jej odtworzenia."
     },
     "selectPage": {
       "selectTitle": "Nie wybrano stron",
@@ -844,6 +846,8 @@
       "regionRedaction": "Redakcja regionu",
       "fullPageRedaction": "Redakcja całej strony",
       "fullVideoFrameRedaction": "Redakcja wideo",
+      "audioRedaction": "Redakcja audio",
+      "fullVideoFrameAndAudioRedaction": "Redakcja wideo i audio",
       "image": "Obraz"
     },
     "expand": "Zwiększać",

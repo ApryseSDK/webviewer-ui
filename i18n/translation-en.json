@@ -6,6 +6,7 @@
     "calendar": "Calendar",
     "calibrate": "Calibrate",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "clear": "Clear",
     "clearAll": "Clear all",
     "close": "Close",
@@ -42,6 +43,7 @@
     "save": "Save",
     "post": "Post",
     "create": "Create",
+    "update": "Update",
     "showMoreResults": "Show more results",
     "sign": "Sign",
     "style": "Style",
@@ -179,9 +181,11 @@
     "notesPanel": "Comments",
     "outlinePanel": "Outline",
     "outlinesPanel": "Outlines",
+    "newOutlineTitle": "New Outline Title",
+    "outlineTitle": "Outline Title",
+    "destination": "Destination",
     "bookmarkPanel": "Bookmark",
     "bookmarksPanel": "Bookmarks",
-    "newBookmark": "New Bookmark",
     "bookmarkTitle": "Bookmark Title",
     "bookmarkPage": "Page",
     "signaturePanel": "Signatures",
@@ -442,6 +446,40 @@
     "measurementOption": {
       "scale": "Scale"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Calibrate",
+        "custom": "Custom",
+        "fractionalUnits": "Fractional Units",
+        "precision": "Precision",
+        "preset": "Preset",
+        "paperUnits": "Paper Units",
+        "displayUnits": "Display Units",
+        "fractionUnitsTooltip": "Fraction units only apply to in and ft-in",
+        "incorrectSyntax": "Incorrect syntax"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Add New Scale",
+        "selectTwoPoints": "Select two points of a known dimension to calibrate",
+        "inputKnowDimension": "Input known dimension and units to calibrate",
+        "multipleScales": "Multiple Scales"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Delete Scale",
+        "scaleIsOn-delete-info": "This scale is currently in use on",
+        "page-delete-info": "page",
+        "appliedTo-delete-info": "and applied to",
+        "measurement": "measurement",
+        "measurements": "measurements",
+        "deletionIs": "Deletion is",
+        "irreversible": "irreversible",
+        "willDeleteMeasurement": "and will delete the associated measurements.",
+        "confirmDelete": "Are you sure you want to delete this scale?",
+        "ifChangeScale": "If you change the scale for the selected measurement or tool, scale ",
+        "notUsedWillDelete": " will no longer be used by any measurements or tools and will be deleted. Deletion is irreversible.",
+        "ifToContinue": "Are you sure you'd like to continue?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Text Style",
       "colors": "Colors",
@@ -559,7 +597,7 @@
     },
     "deleteOutline": {
       "title": "Delete Outline?",
-      "message": "Are you sure you want to delete these outlines? \n\n An outline that has any nested outlines will result in the whole thing being deleted and cannot be replaced unless you set them again."
+      "message": "Are you sure you want to delete these outlines?\n\nDeleting an outline that has nested outlines will result in the whole inner structure being deleted and, if needed, will have to be recreated."
     },
     "selectPage": {
       "selectTitle": "No Pages Selected",
@@ -825,6 +863,8 @@
       "regionRedaction": "Region redaction",
       "fullPageRedaction": "Full page redaction",
       "fullVideoFrameRedaction": "Video Redaction",
+      "audioRedaction": "Audio Redaction",
+      "fullVideoFrameAndAudioRedaction": "Video and Audio Redaction",
       "image": "Image"
     },
     "expand": "Expand",

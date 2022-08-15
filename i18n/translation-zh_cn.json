@@ -6,6 +6,7 @@
     "calendar": "日历",
     "calibrate": "校准",
     "cancel": "取消",
+    "confirm": "确认",
     "clear": "清除",
     "clearAll": "全部清除",
     "close": "关闭",
@@ -42,6 +43,7 @@
     "save": "保存",
     "post": "发布",
     "create": "创建",
+    "update": "更新",
     "showMoreResults": "显示更多结果",
     "sign": "签名",
     "style": "样式",
@@ -179,9 +181,11 @@
     "notesPanel": "备注",
     "outlinePanel": "大纲",
     "outlinesPanel": "大纲",
+    "newOutlineTitle": "新大纲标题",
+    "outlineTitle": "大纲标题",
+    "destination": "目的地",
     "bookmarkPanel": "书签",
     "bookmarksPanel": "书签",
-    "newBookmark": "新书签",
     "bookmarkTitle": "书签标题",
     "bookmarkPage": "页",
     "signaturePanel": "签名",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "比例"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "校准",
+        "custom": "风俗",
+        "fractionalUnits": "分数单位",
+        "precision": "精确",
+        "preset": "预设",
+        "paperUnits": "纸张单位",
+        "displayUnits": "显示单元",
+        "fractionUnitsTooltip": "分数单位仅适用于 in 和 ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "添加新比例",
+        "selectTwoPoints": "选择已知尺寸的两个点进行校准",
+        "inputKnowDimension": "输入已知尺寸和单位进行校准",
+        "multipleScales": "多尺度"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "删除比例",
+        "scaleIsOn-delete-info": "该量表目前正在使用",
+        "page-delete-info": "页",
+        "appliedTo-delete-info": "并应用于",
+        "measurement": "测量",
+        "measurements": "测量",
+        "deletionIs": "删除是",
+        "irreversible": "不可逆转",
+        "willDeleteMeasurement": "并将删除相关的测量。",
+        "confirmDelete": "确定要删除此比例吗？"
+      }
+    },
     "stylePopup": {
       "textStyle": "文字样式",
       "colors": "颜色",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "删除大纲？",
-      "message": "您确定要删除这些大纲吗？\n\n 具有任何嵌套轮廓的轮廓将导致整个事物被删除并且无法替换，除非您再次设置它们。"
+      "message": "您确定要删除这些大纲吗？\n\n删除具有嵌套轮廓的轮廓将导致整个内部结构被删除，并且如果需要，必须重新创建。"
     },
     "selectPage": {
       "selectTitle": "未选择页面",
@@ -854,6 +888,8 @@
       "regionRedaction": "区域编辑",
       "fullPageRedaction": "整页编辑",
       "fullVideoFrameRedaction": "视频编辑",
+      "audioRedaction": "音频编辑",
+      "fullVideoFrameAndAudioRedaction": "视频和音频编辑",
       "image": "图片"
     },
     "expand": "扩张",

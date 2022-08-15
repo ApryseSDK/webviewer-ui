@@ -3,6 +3,8 @@ export const redactionTypeMap = {
   TEXT: 'text',
   FULL_PAGE: 'fullPage',
   FULL_VIDEO_FRAME: 'fullVideoFrame',
+  AUDIO_REDACTION: 'audioRedaction',
+  FULL_VIDEO_FRAME_AND_AUDIO: 'fullVideoFrameAndAudio',
   CREDIT_CARD: 'creditCard',
   PHONE: 'phone',
   IMAGE: 'image',
@@ -20,7 +22,15 @@ export const defaultRedactionTypes = {
   },
   [redactionTypeMap['FULL_VIDEO_FRAME']]: {
     icon: 'ic-full-frame-video-redact',
-    name: 'redactionPanel.redactionItem.fullVideoFrameRedaction',
+    label: 'redactionPanel.redactionItem.fullVideoFrameRedaction',
+  },
+  [redactionTypeMap['AUDIO_REDACTION']]: {
+    icon: 'ic-audio-redact',
+    label: 'redactionPanel.redactionItem.audioRedaction',
+  },
+  [redactionTypeMap['FULL_VIDEO_FRAME_AND_AUDIO']]: {
+    icon: 'ic-full-frame-video-and-audio-redact',
+    label: 'redactionPanel.redactionItem.fullVideoFrameAndAudioRedaction',
   },
   [redactionTypeMap['TEXT']]: {
     icon: 'icon-form-field-text',
@@ -31,7 +41,7 @@ export const defaultRedactionTypes = {
   }
 };
 
-export const mapAnnotationToRedactionType = annotation => {
+export const mapAnnotationToRedactionType = (annotation) => {
   const isTextRedaction = annotation.IsText;
   if (isTextRedaction) {
     return redactionTypeMap['TEXT'];

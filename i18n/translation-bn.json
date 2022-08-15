@@ -6,6 +6,7 @@
     "calendar": "ক্যালেন্ডার",
     "calibrate": "ক্যালিব্রেট করুন",
     "cancel": "বাতিল করুন",
+    "confirm": "নিশ্চিত করুন",
     "clear": "স্পষ্ট",
     "clearAll": "সব পরিষ্কার করে দাও",
     "close": "বন্ধ",
@@ -42,6 +43,7 @@
     "save": "সংরক্ষণ",
     "post": "পোস্ট",
     "create": "সৃষ্টি",
+    "update": "হালনাগাদ",
     "showMoreResults": "আরো ফলাফল দেখান",
     "sign": "চিহ্ন",
     "style": "শৈলী",
@@ -179,9 +181,11 @@
     "notesPanel": "মন্তব্য",
     "outlinePanel": "রূপরেখা",
     "outlinesPanel": "রূপরেখা",
+    "newOutlineTitle": "নতুন আউটলাইন শিরোনাম",
+    "outlineTitle": "রূপরেখা শিরোনাম",
+    "destination": "গন্তব্য",
     "bookmarkPanel": "বুকমার্ক",
     "bookmarksPanel": "বুকমার্ক",
-    "newBookmark": "নতুন বুকমার্ক",
     "bookmarkTitle": "বুকমার্ক শিরোনাম",
     "bookmarkPage": "পাতা",
     "signaturePanel": "স্বাক্ষর",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "স্কেল"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "ক্যালিব্রেট করুন",
+        "custom": "কাস্টম",
+        "fractionalUnits": "ভগ্নাংশ ইউনিট",
+        "precision": "যথার্থতা",
+        "preset": "প্রিসেট",
+        "paperUnits": "কাগজের ইউনিট",
+        "displayUnits": "ডিসপ্লে ইউনিট",
+        "fractionUnitsTooltip": "ভগ্নাংশ ইউনিট শুধুমাত্র in এবং ft-in-এ প্রযোজ্য"
+      },
+      "scaleOverlay": {
+        "addNewScale": "নতুন স্কেল যোগ করুন",
+        "selectTwoPoints": "ক্রমাঙ্কন করতে একটি পরিচিত মাত্রার দুটি বিন্দু নির্বাচন করুন",
+        "inputKnowDimension": "ক্যালিব্রেট করার জন্য পরিচিত মাত্রা এবং একক ইনপুট করুন",
+        "multipleScales": "একাধিক স্কেল"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "স্কেল মুছুন",
+        "scaleIsOn-delete-info": "এই স্কেল বর্তমানে ব্যবহার করা হয়",
+        "page-delete-info": "পৃষ্ঠা",
+        "appliedTo-delete-info": "এবং আবেদন",
+        "measurement": "মাপা",
+        "measurements": "পরিমাপ",
+        "deletionIs": "মুছে ফেলা হয়",
+        "irreversible": "অপরিবর্তনীয়",
+        "willDeleteMeasurement": "এবং সংশ্লিষ্ট পরিমাপ মুছে ফেলবে।",
+        "confirmDelete": "আপনি কি এই স্কেল মুছে ফেলার বিষয়ে নিশ্চিত?"
+      }
+    },
     "stylePopup": {
       "textStyle": "পাঠ্য শৈলী",
       "colors": "রং",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "আউটলাইন মুছবেন?",
-      "message": "আপনি কি নিশ্চিত আপনি এই রূপরেখা মুছে দিতে চান?\n\n নেস্টেড আউটলাইন আছে এমন একটি আউটলাইন পুরো জিনিস মুছে ফেলা হবে এবং আপনি সেগুলি আবার সেট না করা পর্যন্ত প্রতিস্থাপন করা যাবে না।"
+      "message": "আপনি কি নিশ্চিত আপনি এই রূপরেখা মুছে দিতে চান?\n\nনেস্টেড আউটলাইন আছে এমন একটি আউটলাইন মুছে ফেলার ফলে পুরো অভ্যন্তরীণ কাঠামো মুছে যাবে এবং প্রয়োজন হলে পুনরায় তৈরি করতে হবে।"
     },
     "selectPage": {
       "selectTitle": "কোন পৃষ্ঠা নির্বাচন করা হয়নি",
@@ -854,6 +888,8 @@
       "regionRedaction": "অঞ্চল সংশোধন",
       "fullPageRedaction": "সম্পূর্ণ পৃষ্ঠা সংশোধন",
       "fullVideoFrameRedaction": "ভিডিও রিডাকশন",
+      "audioRedaction": "অডিও রিডাকশন",
+      "fullVideoFrameAndAudioRedaction": "ভিডিও এবং অডিও রিডাকশন",
       "image": "ছবি"
     },
     "expand": "বিস্তৃত করা",

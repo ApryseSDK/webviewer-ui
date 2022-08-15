@@ -6,6 +6,7 @@
     "calendar": "Calandrar",
     "calibrate": "Calibrar",
     "cancel": "Cancelar",
+    "confirm": "Confirmar",
     "clear": "Borrar",
     "clearAll": "Limpiar todo",
     "close": "Cerrar",
@@ -42,6 +43,7 @@
     "save": "Guardar",
     "post": "Enviar",
     "create": "Crear",
+    "update": "Actualizar",
     "showMoreResults": "Mostrar más resultados",
     "sign": "Firmar",
     "style": "Estilo",
@@ -179,9 +181,11 @@
     "notesPanel": "Notas",
     "outlinePanel": "Esquema",
     "outlinesPanel": "Esquemas",
+    "newOutlineTitle": "Título del nuevo esquema",
+    "outlineTitle": "Título del esquema",
+    "destination": "Destino",
     "bookmarkPanel": "Marcador",
     "bookmarksPanel": "Marcadores",
-    "newBookmark": "Nuevo marcador",
     "bookmarkTitle": "Título del marcador",
     "bookmarkPage": "Página",
     "signaturePanel": "Firmas",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Escala"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Calibrar",
+        "custom": "Costumbre",
+        "fractionalUnits": "unidades fraccionarias",
+        "precision": "Precisión",
+        "preset": "Preestablecido",
+        "paperUnits": "Unidades de papel",
+        "displayUnits": "Unidades de visualización",
+        "fractionUnitsTooltip": "Las unidades de fracción solo se aplican a pulgadas y pies-pulgadas."
+      },
+      "scaleOverlay": {
+        "addNewScale": "Agregar nueva escala",
+        "selectTwoPoints": "Seleccione dos puntos de una dimensión conocida para calibrar",
+        "inputKnowDimension": "Ingrese la dimensión conocida y las unidades para calibrar",
+        "multipleScales": "Escalas Múltiples"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Eliminar escala",
+        "scaleIsOn-delete-info": "Esta escala está actualmente en uso en",
+        "page-delete-info": "página",
+        "appliedTo-delete-info": "y aplicado a",
+        "measurement": "medición",
+        "measurements": "mediciones",
+        "deletionIs": "La eliminación es",
+        "irreversible": "irreversible",
+        "willDeleteMeasurement": "y eliminará las medidas asociadas.",
+        "confirmDelete": "¿Está seguro de que desea eliminar esta escala?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Estilo de texto",
       "colors": "Colores",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "¿Eliminar esquema?",
-      "message": "¿Está seguro de que desea eliminar estos contornos?\n\n Un contorno que tenga contornos anidados hará que se elimine todo y no se podrá reemplazar a menos que los configure nuevamente."
+      "message": "¿Está seguro de que desea eliminar estos contornos?\n\nSi elimina un esquema que tiene contornos anidados, se eliminará toda la estructura interna y, si es necesario, tendrá que volver a crearse."
     },
     "selectPage": {
       "selectTitle": "No hay páginas seleccionadas",
@@ -854,6 +888,8 @@
       "regionRedaction": "Redacción de la región",
       "fullPageRedaction": "Redacción de página completa",
       "fullVideoFrameRedaction": "Redacción de video",
+      "audioRedaction": "Redacción de audio",
+      "fullVideoFrameAndAudioRedaction": "Redacción de video y audio",
       "image": "Imagen"
     },
     "expand": "Expandir",

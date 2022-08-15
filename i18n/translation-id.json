@@ -6,6 +6,7 @@
     "calendar": "Kalender",
     "calibrate": "Menyesuaikan",
     "cancel": "Membatalkan",
+    "confirm": "Mengonfirmasi",
     "clear": "Jernih",
     "clearAll": "Bersihkan semua",
     "close": "Menutup",
@@ -42,6 +43,7 @@
     "save": "Menyimpan",
     "post": "Pos",
     "create": "Membuat",
+    "update": "Memperbarui",
     "showMoreResults": "Tampilkan hasil lainnya",
     "sign": "Tanda",
     "style": "Gaya",
@@ -179,9 +181,11 @@
     "notesPanel": "Komentar",
     "outlinePanel": "Garis besar",
     "outlinesPanel": "Garis besar",
+    "newOutlineTitle": "Judul Garis Besar Baru",
+    "outlineTitle": "Judul Garis Besar",
+    "destination": "Tujuan",
     "bookmarkPanel": "Penanda buku",
     "bookmarksPanel": "Bookmark",
-    "newBookmark": "Penanda Baru",
     "bookmarkTitle": "Judul Bookmark",
     "bookmarkPage": "Halaman",
     "signaturePanel": "Tanda tangan",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Skala"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Menyesuaikan",
+        "custom": "Kebiasaan",
+        "fractionalUnits": "Satuan Pecahan",
+        "precision": "presisi",
+        "preset": "Prasetel",
+        "paperUnits": "Unit Kertas",
+        "displayUnits": "Unit Tampilan",
+        "fractionUnitsTooltip": "Satuan pecahan hanya berlaku untuk in dan ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Tambahkan Skala Baru",
+        "selectTwoPoints": "Pilih dua titik dari dimensi yang diketahui untuk dikalibrasi",
+        "inputKnowDimension": "Masukkan dimensi dan unit yang diketahui untuk dikalibrasi",
+        "multipleScales": "Beberapa Skala"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Hapus Skala",
+        "scaleIsOn-delete-info": "Skala ini sedang digunakan pada",
+        "page-delete-info": "halaman",
+        "appliedTo-delete-info": "dan diterapkan pada",
+        "measurement": "pengukuran",
+        "measurements": "pengukuran",
+        "deletionIs": "Penghapusan adalah",
+        "irreversible": "ireversibel",
+        "willDeleteMeasurement": "dan akan menghapus pengukuran terkait.",
+        "confirmDelete": "Anda yakin ingin menghapus skala ini?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Gaya Teks",
       "colors": "warna",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Hapus Garis Besar?",
-      "message": "Apakah Anda yakin ingin menghapus garis besar ini?\n\n Garis besar yang memiliki garis besar bersarang akan mengakibatkan semuanya dihapus dan tidak dapat diganti kecuali Anda mengaturnya lagi."
+      "message": "Anda yakin ingin menghapus garis besar ini?\n\nMenghapus garis besar yang memiliki garis besar bersarang akan mengakibatkan seluruh struktur bagian dalam dihapus dan, jika perlu, harus dibuat ulang."
     },
     "selectPage": {
       "selectTitle": "Tidak Ada Halaman yang Dipilih",
@@ -854,6 +888,8 @@
       "regionRedaction": "Redaksi wilayah",
       "fullPageRedaction": "Redaksi halaman penuh",
       "fullVideoFrameRedaction": "Redaksi Video",
+      "audioRedaction": "Redaksi Audio",
+      "fullVideoFrameAndAudioRedaction": "Redaksi Video dan Audio",
       "image": "Gambar"
     },
     "expand": "Mengembangkan",

@@ -178,9 +178,11 @@
     "notesPanel": "Hozzászólások",
     "outlinePanel": "Vázlat",
     "outlinesPanel": "Körvonalak",
+    "newOutlineTitle": "Új vázlatcím",
+    "outlineTitle": "Vázlatos cím",
+    "destination": "Rendeltetési hely",
     "bookmarkPanel": "Könyvjelző",
     "bookmarksPanel": "Könyvjelzők",
-    "newBookmark": "Új könyvjelző",
     "bookmarkTitle": "Könyvjelző címe",
     "bookmarkPage": "oldal",
     "signaturePanel": "Aláírások",
@@ -553,7 +555,7 @@
     },
     "deleteOutline": {
       "title": "Törli az Outline-t?",
-      "message": "Biztosan törli ezeket a körvonalakat?\n\n A beágyazott körvonalakat tartalmazó vázlat az egész dolog törlését eredményezi, és csak akkor cserélhető le, ha újra beállítja őket."
+      "message": "Biztosan törli ezeket a körvonalakat?\n\nA beágyazott körvonalakat tartalmazó vázlat törlése a teljes belső struktúra törlését eredményezi, és szükség esetén újra kell létrehozni."
     },
     "selectPage": {
       "selectTitle": "Nincsenek kiválasztott oldalak",
@@ -844,6 +846,8 @@
       "regionRedaction": "Régió szerkesztése",
       "fullPageRedaction": "Teljes oldalas szerkesztés",
       "fullVideoFrameRedaction": "Videó szerkesztése",
+      "audioRedaction": "Hangszerkesztés",
+      "fullVideoFrameAndAudioRedaction": "Videó és hang szerkesztése",
       "image": "Kép"
     },
     "expand": "Kiterjed",

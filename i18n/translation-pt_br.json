@@ -6,6 +6,7 @@
     "calendar": "Calendário",
     "calibrate": "Calibrar",
     "cancel": "Cancelar",
+    "confirm": "confirme",
     "clear": "Limpar",
     "clearAll": "Limpar tudo",
     "close": "Fechar",
@@ -42,6 +43,7 @@
     "save": "Salvar",
     "post": "Postar",
     "create": "Criar",
+    "update": "Atualizar",
     "showMoreResults": "Mostrar mais resultados",
     "sign": "Assinar",
     "style": "Estilo",
@@ -178,11 +180,13 @@
     "menuOverlay": "Menu",
     "notesPanel": "Anotações",
     "outlinePanel": "Contorno",
-    "outlinesPanel": "Esquemas",
+    "outlinesPanel": "Marcadores",
+    "newOutlineTitle": "Novo título do marcador",
+    "outlineTitle": "Título do marcador",
+    "destination": "Destino",
     "bookmarkPanel": "marca páginas",
     "bookmarksPanel": "Favoritos",
-    "newBookmark": "Novo marcador",
-    "bookmarkTitle": "Título do marcador",
+    "bookmarkTitle": "Título do favorito",
     "bookmarkPage": "Página",
     "signaturePanel": "Assinaturas",
     "layersPanel": "Camadas",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Escala"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Calibrar",
+        "custom": "Personalizado",
+        "fractionalUnits": "Unidades fracionárias",
+        "precision": "Precisão",
+        "preset": "Predefinição",
+        "paperUnits": "Unidades de papel",
+        "displayUnits": "Unidades de exibição",
+        "fractionUnitsTooltip": "Unidades de fração aplicam-se apenas a in e ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Adicionar nova escala",
+        "selectTwoPoints": "Selecione dois pontos de uma dimensão conhecida para calibrar",
+        "inputKnowDimension": "Insira dimensões e unidades conhecidas para calibrar",
+        "multipleScales": "Várias escalas"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Excluir escala",
+        "scaleIsOn-delete-info": "Esta escala está atualmente em uso em",
+        "page-delete-info": "página",
+        "appliedTo-delete-info": "e aplicado a",
+        "measurement": "medição",
+        "measurements": "Medidas",
+        "deletionIs": "A exclusão é",
+        "irreversible": "irreversível",
+        "willDeleteMeasurement": "e excluirá as medições associadas.",
+        "confirmDelete": "Tem certeza de que deseja excluir esta escala?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Estilo de Texto",
       "colors": "Cores",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Excluir esboço?",
-      "message": "Tem certeza de que deseja excluir esses contornos?\n\n Um contorno que tenha contornos aninhados resultará na exclusão de tudo e não poderá ser substituído, a menos que você os defina novamente."
+      "message": "Tem certeza de que deseja excluir os marcadores selecionados?\n\nUm marcador que tenha marcadores aninhados resultará na exclusão de toda a estrutura e precisarão ser adicionados novamente caso necessário."
     },
     "selectPage": {
       "selectTitle": "Nenhuma página selecionada",
@@ -854,6 +888,8 @@
       "regionRedaction": "Redação da região",
       "fullPageRedaction": "Redação de página inteira",
       "fullVideoFrameRedaction": "Redação de vídeo",
+      "audioRedaction": "Redação de áudio",
+      "fullVideoFrameAndAudioRedaction": "Redação de vídeo e áudio",
       "image": "Imagem"
     },
     "expand": "Expandir",

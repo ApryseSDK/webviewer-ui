@@ -6,6 +6,7 @@
     "calendar": "Kalendar",
     "calibrate": "Kalibrasi",
     "cancel": "Batal",
+    "confirm": "sahkan",
     "clear": "Jelas",
     "clearAll": "Kosongkan semua",
     "close": "tutup",
@@ -42,6 +43,7 @@
     "save": "Jimat",
     "post": "Pos",
     "create": "Buat",
+    "update": "Kemas kini",
     "showMoreResults": "Tunjukkan lebih banyak hasil",
     "sign": "Tanda",
     "style": "Gaya",
@@ -179,9 +181,11 @@
     "notesPanel": "Komen",
     "outlinePanel": "Garis besar",
     "outlinesPanel": "Garis besar",
+    "newOutlineTitle": "Tajuk Rangka Baharu",
+    "outlineTitle": "Tajuk Rangka",
+    "destination": "Destinasi",
     "bookmarkPanel": "Penanda buku",
     "bookmarksPanel": "Penanda buku",
-    "newBookmark": "Penanda Halaman Baharu",
     "bookmarkTitle": "Tajuk Penanda Halaman",
     "bookmarkPage": "Halaman",
     "signaturePanel": "Tandatangan",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Skala"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Kalibrasi",
+        "custom": "Adat",
+        "fractionalUnits": "Unit Pecahan",
+        "precision": "Ketepatan",
+        "preset": "Pratetap",
+        "paperUnits": "Unit Kertas",
+        "displayUnits": "Unit Paparan",
+        "fractionUnitsTooltip": "Unit pecahan hanya digunakan untuk in dan ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Tambah Skala Baharu",
+        "selectTwoPoints": "Pilih dua titik dimensi yang diketahui untuk ditentukur",
+        "inputKnowDimension": "Masukkan dimensi dan unit yang diketahui untuk ditentukur",
+        "multipleScales": "Berbilang Skala"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Padam Skala",
+        "scaleIsOn-delete-info": "Skala ini sedang digunakan pada",
+        "page-delete-info": "muka surat",
+        "appliedTo-delete-info": "dan digunakan untuk",
+        "measurement": "pengukuran",
+        "measurements": "ukuran",
+        "deletionIs": "Pemadaman adalah",
+        "irreversible": "tak boleh balik",
+        "willDeleteMeasurement": "dan akan memadamkan ukuran yang berkaitan.",
+        "confirmDelete": "Adakah anda pasti mahu memadamkan skala ini?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Gaya Teks",
       "colors": "Warna",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Padamkan Garis Besar?",
-      "message": "Adakah anda pasti mahu memadamkan garis besar ini?\n\n Garis besar yang mempunyai sebarang garis besar bersarang akan menyebabkan keseluruhannya dipadamkan dan tidak boleh diganti melainkan anda menetapkannya semula."
+      "message": "Adakah anda pasti mahu memadamkan garis besar ini?\n\nMemadamkan garis besar yang mempunyai garis besar bersarang akan menyebabkan keseluruhan struktur dalaman dipadamkan dan, jika perlu, perlu dibuat semula."
     },
     "selectPage": {
       "selectTitle": "Tiada Halaman Dipilih",
@@ -854,6 +888,8 @@
       "regionRedaction": "Penyuntingan wilayah",
       "fullPageRedaction": "Penyuntingan halaman penuh",
       "fullVideoFrameRedaction": "Penyuntingan Video",
+      "audioRedaction": "Penyuntingan Audio",
+      "fullVideoFrameAndAudioRedaction": "Penyuntingan Video dan Audio",
       "image": "Imej"
     },
     "expand": "Kembangkan",

@@ -6,6 +6,7 @@
     "calendar": "Calendario",
     "calibrate": "Calibrare",
     "cancel": "Annulla",
+    "confirm": "Confermare",
     "clear": "Chiaro",
     "clearAll": "Cancella tutto",
     "close": "Vicino",
@@ -42,6 +43,7 @@
     "save": "Salva",
     "post": "Inviare",
     "create": "Creare",
+    "update": "Aggiornare",
     "showMoreResults": "Mostra più risultati",
     "sign": "Cartello",
     "style": "Stile",
@@ -179,9 +181,11 @@
     "notesPanel": "Appunti",
     "outlinePanel": "Schema",
     "outlinesPanel": "Lineamenti",
+    "newOutlineTitle": "Titolo del nuovo schema",
+    "outlineTitle": "Titolo del profilo",
+    "destination": "Destinazione",
     "bookmarkPanel": "Segnalibro",
     "bookmarksPanel": "segnalibri",
-    "newBookmark": "Nuovo segnalibro",
     "bookmarkTitle": "Titolo del segnalibro",
     "bookmarkPage": "Pagina",
     "signaturePanel": "firme",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Scala"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Calibrare",
+        "custom": "Costume",
+        "fractionalUnits": "Unità frazionarie",
+        "precision": "Precisione",
+        "preset": "Preimpostato",
+        "paperUnits": "Unità di carta",
+        "displayUnits": "Unità di visualizzazione",
+        "fractionUnitsTooltip": "Le unità di frazione si applicano solo a in e ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Aggiungi nuova scala",
+        "selectTwoPoints": "Selezionare due punti di una dimensione nota da calibrare",
+        "inputKnowDimension": "Immettere la dimensione nota e le unità da calibrare",
+        "multipleScales": "Scale multiple"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Elimina scala",
+        "scaleIsOn-delete-info": "Questa scala è attualmente in uso su",
+        "page-delete-info": "pagina",
+        "appliedTo-delete-info": "e applicato a",
+        "measurement": "misurazione",
+        "measurements": "misurazioni",
+        "deletionIs": "La cancellazione è",
+        "irreversible": "irreversibile",
+        "willDeleteMeasurement": "e cancellerà le misurazioni associate.",
+        "confirmDelete": "Sei sicuro di voler eliminare questa scala?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Stile di testo",
       "colors": "Colori",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Eliminare la struttura?",
-      "message": "Sei sicuro di voler eliminare questi contorni?\n\n Un contorno con contorni nidificati comporterà l'eliminazione dell'intero elemento e non può essere sostituito a meno che non li imposti di nuovo."
+      "message": "Sei sicuro di voler eliminare questi contorni?\n\nL'eliminazione di un contorno che ha contorni nidificati comporterà l'eliminazione dell'intera struttura interna e, se necessario, dovrà essere ricreata."
     },
     "selectPage": {
       "selectTitle": "Nessuna pagina selezionata",
@@ -854,6 +888,8 @@
       "regionRedaction": "Redazione della regione",
       "fullPageRedaction": "Redazione a tutta pagina",
       "fullVideoFrameRedaction": "Redazione video",
+      "audioRedaction": "Redazione audio",
+      "fullVideoFrameAndAudioRedaction": "Redazione video e audio",
       "image": "Immagine"
     },
     "expand": "Espandere",

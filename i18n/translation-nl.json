@@ -6,6 +6,7 @@
     "calendar": "Kalender",
     "calibrate": "Ijken",
     "cancel": "Annuleren",
+    "confirm": "Bevestigen",
     "clear": "Legen",
     "clearAll": "Wis alles",
     "close": "Sluiten",
@@ -42,6 +43,7 @@
     "save": "Bewaren",
     "post": "Plaats",
     "create": "creëren",
+    "update": "Bijwerken",
     "showMoreResults": "Toon meer resultaten",
     "sign": "Ondertekenen",
     "style": "Opmaak",
@@ -179,9 +181,11 @@
     "notesPanel": "Notities",
     "outlinePanel": "Overzicht",
     "outlinesPanel": "Hoofdlijnen",
+    "newOutlineTitle": "Nieuwe overzichtstitel",
+    "outlineTitle": "Overzichtstitel",
+    "destination": "Bestemming",
     "bookmarkPanel": "Bladwijzer",
     "bookmarksPanel": "bladwijzers",
-    "newBookmark": "Nieuwe bladwijzer",
     "bookmarkTitle": "Titel van bladwijzer",
     "bookmarkPage": "Pagina",
     "signaturePanel": "Handtekeningen",
@@ -442,6 +446,36 @@
     "measurementOption": {
       "scale": "Schaal"
     },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Ijken",
+        "custom": "Aangepast",
+        "fractionalUnits": "Fractionele eenheden",
+        "precision": "Precisie",
+        "preset": "Vooraf ingesteld",
+        "paperUnits": "Papieren eenheden",
+        "displayUnits": "Weergave-eenheden",
+        "fractionUnitsTooltip": "Breukeenheden zijn alleen van toepassing op in en ft-in"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Nieuwe schaal toevoegen",
+        "selectTwoPoints": "Selecteer twee punten van een bekende afmeting om te kalibreren",
+        "inputKnowDimension": "Voer bekende afmetingen en eenheden in om te kalibreren",
+        "multipleScales": "Meerdere schalen"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Schaal verwijderen",
+        "scaleIsOn-delete-info": "Deze weegschaal is momenteel in gebruik op",
+        "page-delete-info": "bladzijde",
+        "appliedTo-delete-info": "en toegepast op",
+        "measurement": "meting",
+        "measurements": "maten",
+        "deletionIs": "Verwijderen is",
+        "irreversible": "onomkeerbaar",
+        "willDeleteMeasurement": "en zal de bijbehorende metingen verwijderen.",
+        "confirmDelete": "Weet u zeker dat u deze weegschaal wilt verwijderen?"
+      }
+    },
     "stylePopup": {
       "textStyle": "Tekststijl",
       "colors": "Kleuren",
@@ -559,7 +593,7 @@
     },
     "deleteOutline": {
       "title": "Overzicht verwijderen?",
-      "message": "Weet u zeker dat u deze contouren wilt verwijderen?\n\n Een omtrek met geneste omtrekken zal ertoe leiden dat het hele ding wordt verwijderd en kan niet worden vervangen, tenzij je ze opnieuw instelt."
+      "message": "Weet u zeker dat u deze contouren wilt verwijderen?\n\nAls u een omtrek met geneste omtrekken verwijdert, wordt de hele binnenstructuur verwijderd en moet deze, indien nodig, opnieuw worden gemaakt."
     },
     "selectPage": {
       "selectTitle": "Geen pagina's geselecteerd",
@@ -854,6 +888,8 @@
       "regionRedaction": "Regio redactie",
       "fullPageRedaction": "Volledige pagina redactie",
       "fullVideoFrameRedaction": "Videoredactie",
+      "audioRedaction": "Audioredactie",
+      "fullVideoFrameAndAudioRedaction": "Video- en audioredactie",
       "image": "Afbeelding"
     },
     "expand": "Uitbreiden",
