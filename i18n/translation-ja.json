@@ -844,6 +844,8 @@
       "regionRedaction": "地域の編集",
       "fullPageRedaction": "全ページの編集",
       "fullVideoFrameRedaction": "ビデオ編集",
+      "audioRedaction": "音声秘匿化",
+      "fullVideoFrameAndAudioRedaction": "ビデオとオーディオのリダクション",
       "image": "画像"
     },
     "expand": "拡大",

@@ -844,6 +844,8 @@
       "regionRedaction": "Регіональна редакція",
       "fullPageRedaction": "Повна редакція сторінки",
       "fullVideoFrameRedaction": "Редакція відео",
+      "audioRedaction": "Редакція аудіо",
+      "fullVideoFrameAndAudioRedaction": "Редагування відео та аудіо",
       "image": "Зображення"
     },
     "expand": "Розгорнути",

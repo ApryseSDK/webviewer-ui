@@ -34,6 +34,7 @@ const RedactionItem = (props) => {
   } = annotation;
 
   let redactionPreview;
+
   if (redactionType === redactionTypeMap['TEXT']) {
     redactionPreview = (
       <RedactionTextPreview linesToBreak={2}>
@@ -43,6 +44,8 @@ const RedactionItem = (props) => {
     redactionType === redactionTypeMap['FULL_PAGE'] 
     || redactionType === redactionTypeMap['FULL_VIDEO_FRAME']
     || redactionType === redactionTypeMap['REGION']
+    || redactionType === redactionTypeMap['AUDIO_REDACTION']
+    || redactionType === redactionTypeMap['FULL_VIDEO_FRAME_AND_AUDIO']
   ) {
     redactionPreview = t(label);
   } else {

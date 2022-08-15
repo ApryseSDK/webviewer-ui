@@ -844,6 +844,8 @@
       "regionRedaction": "Редакция региона",
       "fullPageRedaction": "Полная редакция страницы",
       "fullVideoFrameRedaction": "Видеоредакция",
+      "audioRedaction": "Аудиоредакция",
+      "fullVideoFrameAndAudioRedaction": "Видео и аудио редакция",
       "image": "Изображение"
     },
     "expand": "Расширять",

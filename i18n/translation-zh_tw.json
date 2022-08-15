@@ -844,6 +844,8 @@
       "regionRedaction": "區域編輯",
       "fullPageRedaction": "整頁編輯",
       "fullVideoFrameRedaction": "視頻編輯",
+      "audioRedaction": "音頻編輯",
+      "fullVideoFrameAndAudioRedaction": "視頻和音頻編輯",
       "image": "圖片"
     },
     "expand": "擴張",

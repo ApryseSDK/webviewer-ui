@@ -844,6 +844,8 @@
       "regionRedaction": "Biên tập vùng",
       "fullPageRedaction": "Biên tập toàn trang",
       "fullVideoFrameRedaction": "Video Redaction",
+      "audioRedaction": "Phản hồi âm thanh",
+      "fullVideoFrameAndAudioRedaction": "Phản ứng lại video và âm thanh",
       "image": "Hình ảnh"
     },
     "expand": "Mở rộng",

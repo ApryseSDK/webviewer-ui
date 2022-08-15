@@ -844,6 +844,8 @@
       "regionRedaction": "Régió szerkesztése",
       "fullPageRedaction": "Teljes oldalas szerkesztés",
       "fullVideoFrameRedaction": "Videó szerkesztése",
+      "audioRedaction": "Hangszerkesztés",
+      "fullVideoFrameAndAudioRedaction": "Videó és hang szerkesztése",
       "image": "Kép"
     },
     "expand": "Kiterjed",

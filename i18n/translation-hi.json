@@ -844,6 +844,8 @@
       "regionRedaction": "रीजन रिडक्शन",
       "fullPageRedaction": "पूरा पेज रिडक्शन",
       "fullVideoFrameRedaction": "वीडियो रिडक्शन",
+      "audioRedaction": "ऑडियो रिडक्शन",
+      "fullVideoFrameAndAudioRedaction": "वीडियो और ऑडियो रिडक्शन",
       "image": "छवि"
     },
     "expand": "विस्तार करना",

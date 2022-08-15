@@ -844,6 +844,8 @@
       "regionRedaction": "Redactarea regiunii",
       "fullPageRedaction": "Redactare pe întreaga pagină",
       "fullVideoFrameRedaction": "Redactare video",
+      "audioRedaction": "Redactare audio",
+      "fullVideoFrameAndAudioRedaction": "Redactare video și audio",
       "image": "Imagine"
     },
     "expand": "Extinde",

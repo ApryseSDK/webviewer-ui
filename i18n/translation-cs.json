@@ -844,6 +844,8 @@
       "regionRedaction": "Krajská redakce",
       "fullPageRedaction": "Celostránková redakce",
       "fullVideoFrameRedaction": "Redakce videa",
+      "audioRedaction": "Redakce zvuku",
+      "fullVideoFrameAndAudioRedaction": "Redakce videa a zvuku",
       "image": "obraz"
     },
     "expand": "Rozšířit",

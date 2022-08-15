@@ -844,6 +844,8 @@
       "regionRedaction": "অঞ্চল সংশোধন",
       "fullPageRedaction": "সম্পূর্ণ পৃষ্ঠা সংশোধন",
       "fullVideoFrameRedaction": "ভিডিও রিডাকশন",
+      "audioRedaction": "অডিও রিডাকশন",
+      "fullVideoFrameAndAudioRedaction": "ভিডিও এবং অডিও রিডাকশন",
       "image": "ছবি"
     },
     "expand": "বিস্তৃত করা",

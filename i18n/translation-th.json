@@ -844,6 +844,8 @@
       "regionRedaction": "การแก้ไขภูมิภาค",
       "fullPageRedaction": "การแก้ไขแบบเต็มหน้า",
       "fullVideoFrameRedaction": "การตัดต่อวิดีโอ",
+      "audioRedaction": "การแก้ไขเสียง",
+      "fullVideoFrameAndAudioRedaction": "การตัดต่อวิดีโอและเสียง",
       "image": "ภาพ"
     },
     "expand": "ขยาย",

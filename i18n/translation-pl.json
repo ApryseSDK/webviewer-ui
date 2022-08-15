@@ -844,6 +844,8 @@
       "regionRedaction": "Redakcja regionu",
       "fullPageRedaction": "Redakcja całej strony",
       "fullVideoFrameRedaction": "Redakcja wideo",
+      "audioRedaction": "Redakcja audio",
+      "fullVideoFrameAndAudioRedaction": "Redakcja wideo i audio",
       "image": "Obraz"
     },
     "expand": "Zwiększać",

@@ -844,6 +844,8 @@
       "regionRedaction": "Penyuntingan wilayah",
       "fullPageRedaction": "Penyuntingan halaman penuh",
       "fullVideoFrameRedaction": "Penyuntingan Video",
+      "audioRedaction": "Penyuntingan Audio",
+      "fullVideoFrameAndAudioRedaction": "Penyuntingan Video dan Audio",
       "image": "Imej"
     },
     "expand": "Kembangkan",

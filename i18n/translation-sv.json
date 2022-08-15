@@ -844,6 +844,8 @@
       "regionRedaction": "Regionredigering",
       "fullPageRedaction": "Helsidesredigering",
       "fullVideoFrameRedaction": "Videoredigering",
+      "audioRedaction": "Ljudredigering",
+      "fullVideoFrameAndAudioRedaction": "Video- och ljudredigering",
       "image": "Bild"
     },
     "expand": "Bygga ut",

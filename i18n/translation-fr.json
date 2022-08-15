@@ -844,6 +844,8 @@
       "regionRedaction": "Caviardage de région",
       "fullPageRedaction": "Caviardage pleine page",
       "fullVideoFrameRedaction": "Rédaction vidéo",
+      "audioRedaction": "Rédaction audio",
+      "fullVideoFrameAndAudioRedaction": "Rédaction vidéo et audio",
       "image": "Image"
     },
     "expand": "Développer",

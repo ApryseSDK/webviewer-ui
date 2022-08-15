@@ -844,6 +844,8 @@
       "regionRedaction": "Bölge redaksiyonu",
       "fullPageRedaction": "Tam sayfa redaksiyonu",
       "fullVideoFrameRedaction": "Video Redaksiyonu",
+      "audioRedaction": "Ses Düzeltme",
+      "fullVideoFrameAndAudioRedaction": "Video ve Ses Redaksiyonu",
       "image": "resim"
     },
     "expand": "Genişletmek",

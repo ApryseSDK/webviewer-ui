@@ -844,6 +844,8 @@
       "regionRedaction": "区域编辑",
       "fullPageRedaction": "整页编辑",
       "fullVideoFrameRedaction": "视频编辑",
+      "audioRedaction": "音频编辑",
+      "fullVideoFrameAndAudioRedaction": "视频和音频编辑",
       "image": "图片"
     },
     "expand": "扩张",

@@ -844,6 +844,8 @@
       "regionRedaction": "Διαμόρφωση περιοχής",
       "fullPageRedaction": "Διασκευή πλήρους σελίδας",
       "fullVideoFrameRedaction": "Επεξεργασία βίντεο",
+      "audioRedaction": "Audio Redaction",
+      "fullVideoFrameAndAudioRedaction": "Video and Audio Redaction",
       "image": "Εικόνα"
     },
     "expand": "Επεκτείνουν",
