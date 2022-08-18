@@ -1,14 +1,14 @@
 {
   "name": "webviewer-ui",
   "author": "PDFTron Systems Inc.",
-  "version": "8.7.0",
+  "version": "8.9.0",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
     "start": "npx babel-node ./dev-server.js",
     "download-webviewer": "npx @pdftron/webviewer-downloader --core-only --path ./lib",
-    "lint": "eslint ./src/**/*.js",
-    "lint:fix": "eslint --fix ./src/**/*.js",
+    "lint": "eslint ./src --fix --ext .js,.jsx,.ts,.tsx",
+    "lint:ci": "eslint ./src --quiet --ext .js,.jsx,.ts,.tsx",
     "clean": "rimraf build",
     "bundle": "webpack --progress --config ./webpack.config.prod.js",
     "build": "npm run clean && npm run bundle",
