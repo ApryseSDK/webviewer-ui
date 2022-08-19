@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
+import { redactionTypeMap } from 'constants/redactionTypes';
 import core from 'core';
 
 export default function useOnRedactionAnnotationChanged() {
@@ -28,10 +29,18 @@ export default function useOnRedactionAnnotationChanged() {
 
   useEffect(() => {
     const setRedactionAnnotations = () => {
-      const redactionAnnotations = core.getAnnotationsList().filter(annotation => annotation instanceof window.Annotations.RedactionAnnotation);
+      const redactionAnnotations = core.getAnnotationsList().filter((annotation) => annotation instanceof window.Annotations.RedactionAnnotation);
+      const mediaAnnotationTypes = [
+        redactionTypeMap['FULL_VIDEO_FRAME'],
+        redactionTypeMap['FULL_VIDEO_FRAME_AND_AUDIO'],
+        redactionTypeMap['AUDIO_REDACTION'],
+      ];
+
       setRedactionAnnotationsList(redactionAnnotations);
 
-      if (redactionAnnotations.length > 0 && !isMobile) {
+      const nonMediaRedactionAnnotations = redactionAnnotations.filter((annotation) => !mediaAnnotationTypes.includes(annotation.redactionType));
+
+      if (nonMediaRedactionAnnotations.length > 0 && !isMobile) {
         // Initially the state will be undefined, so we cast to boolean and negate it
         const isNotesPanelClosed = !Boolean(isNotesPanelOpen);
         const isSearchPanelClosed = !Boolean(isSearchPanelOpen);
