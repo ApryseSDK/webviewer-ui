@@ -20,7 +20,6 @@ const propTypes = {
   isSelected: PropTypes.bool,
   openOnInitialLoad: PropTypes.bool,
   handleStateChange: PropTypes.func,
-  share: PropTypes.object,
   noteIndex: PropTypes.number,
 };
 
@@ -30,7 +29,6 @@ function NoteState(props) {
     isSelected = false,
     openOnInitialLoad = false,
     handleStateChange,
-    share,
     noteIndex,
     annotationId,
   } = props;

@@ -34,7 +34,6 @@ const NoteContent = ({
   annotation,
   isEditing,
   setIsEditing,
-  share,
   noteIndex,
   onTextChange,
   isUnread,
@@ -262,7 +261,6 @@ const NoteContent = ({
         noteDateFormat={noteDateFormat}
         isSelected={isSelected}
         setIsEditing={setIsEditing}
-        share={share}
         notesShowLastUpdatedDate={notesShowLastUpdatedDate}
         isReply={isReply}
         isUnread={isUnread}
