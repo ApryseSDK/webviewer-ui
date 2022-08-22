@@ -25,7 +25,6 @@ const propTypes = {
   noteDateFormat: PropTypes.string,
   isSelected: PropTypes.bool,
   setIsEditing: PropTypes.func,
-  share: PropTypes.object,
   notesShowLastUpdatedDate: PropTypes.bool,
   isUnread: PropTypes.bool,
   renderAuthorName: PropTypes.func,
@@ -44,7 +43,6 @@ function NoteHeader(props) {
     noteDateFormat,
     isSelected,
     setIsEditing,
-    share,
     notesShowLastUpdatedDate,
     isReply,
     isUnread,
@@ -118,7 +116,7 @@ function NoteHeader(props) {
           <div className="state-and-overflow">
             <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
             {!isNoteStateDisabled && !isReply && (
-              <NoteState annotation={annotation} isSelected={isSelected} share={share} noteIndex={noteIndex} />
+              <NoteState annotation={annotation} isSelected={isSelected} noteIndex={noteIndex} />
             )}
             {!isEditing && isSelected && (
               <NotePopup noteIndex={noteIndex} annotation={annotation} setIsEditing={setIsEditing} isReply={isReply} />

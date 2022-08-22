@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import NoteContext from 'components/Note/Context';
 import NoteContent from 'components/NoteContent';
-import ReplyArea from 'components/Note/ReplyArea';
+// import ReplyArea from 'components/Note/ReplyArea';
 
 import selectors from 'selectors';
 import actions from 'actions';
@@ -39,7 +39,6 @@ const Note = ({ annotation }) => {
   const containerRef = useRef();
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
-  const [share, setShare] = useState({});
   const getAnnotationStatusColor = () => {
     return ShareTypeColors[getAnnotationShareType(annotation)] ?? ShareTypeColors.NONE;
   };
@@ -128,7 +127,7 @@ const Note = ({ annotation }) => {
     if (pendingText !== '' && isContentEditable && !isDocumentReadOnly) {
       setIsEditing(true, 0);
     }
-  }, [isDocumentReadOnly, isContentEditable, setIsEditing, annotation]);
+  }, [isDocumentReadOnly, isContentEditable, setIsEditing, annotation, pendingEditTextMap]);
 
   useDidUpdate(() => {
     if (isDocumentReadOnly || !isContentEditable) {
@@ -178,9 +177,9 @@ const Note = ({ annotation }) => {
         setIsEditing(true, 1 + index);
       }
     });
-  }, [isSelected]);
+  }, [isSelected, pendingEditTextMap, setIsEditing, replies]);
 
-  const showReplyArea = !Object.values(isEditingMap).some(val => val);
+  // const showReplyArea = !Object.values(isEditingMap).some(val => val);
 
   const handleNoteKeydown = e => {
     // Click if enter or space is pressed and is current target.
@@ -191,13 +190,13 @@ const Note = ({ annotation }) => {
     }
   };
 
-  const handleReplyClicked = reply => {
-    //set clicked reply as read
-    if (unreadReplyIdSet.has(reply.Id)) {
-      dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: reply.Id }));
-      core.getAnnotationManager().selectAnnotation(reply);
-    }
-  };
+  // const handleReplyClicked = reply => {
+  //   //set clicked reply as read
+  //   if (unreadReplyIdSet.has(reply.Id)) {
+  //     dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: reply.Id }));
+  //     core.getAnnotationManager().selectAnnotation(reply);
+  //   }
+  // };
 
   const markAllRepliesRead = () => {
     //set all replies to read state if user starts to type in reply textarea
@@ -219,7 +218,7 @@ const Note = ({ annotation }) => {
   );
 
   //apply unread reply style to replyArea if the last reply is unread
-  const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
+  // const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
   return (
     <div
       role="button"
@@ -240,7 +239,6 @@ const Note = ({ annotation }) => {
         isSelected={isSelected}
         setIsEditing={setIsEditing}
         isEditing={isEditingMap[0]}
-        share={share}
         textAreaValue={pendingEditTextMap[annotation.Id]}
         onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
