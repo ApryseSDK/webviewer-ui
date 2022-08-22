@@ -24,7 +24,7 @@ export default () => (annotations, action, info) => {
   // CUSTOM WISEFLOW
   // Add default share type
   const { defaultShareType } = getWiseflowCustomValues();
-  if (defaultShareType && action === 'add' && !info.imported) {
+  if (defaultShareType && action === 'add' && !info.imported && !info.isUndoRedo) {
     annotations = annotations.map(annot => setAnnotationShareType(annot, defaultShareType));
   }
 
