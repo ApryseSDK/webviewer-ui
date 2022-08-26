@@ -78,10 +78,10 @@ const NoteContent = ({
   const renderAnnotationReference = useCallback(
     annotation => {
       const annotationReference = getAnnotationReference(annotation);
-      return highlightSearchInput(annotationReference, searchInput)
+      return highlightSearchInput(annotationReference, searchInput);
     },
     [searchInput, annotation.getPageNumber()],
-  )
+  );
 
   const renderContents = useCallback(
     (contents, richTextStyle) => {
@@ -319,8 +319,15 @@ const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTex
     // on initial mount, focus the last character of the textarea
     if (isNotesPanelOpen && textareaRef.current) {
       setTimeout(() => {
+        const selectedAnnotations = core.getSelectedAnnotations();
         // need setTimeout because textarea seem to rerender and unfocus
-        if (textareaRef && textareaRef.current && autoFocusNoteOnAnnotationSelection) {
+        // Only focus text area if there is only one annotation selected
+        if (
+          selectedAnnotations.length === 1 &&
+          textareaRef &&
+          textareaRef.current &&
+          autoFocusNoteOnAnnotationSelection
+        ) {
           textareaRef.current.focus();
         }
       }, 0);
