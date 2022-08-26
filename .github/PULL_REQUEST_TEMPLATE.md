@@ -1,7 +1,4 @@
 <!-- To help speed up the review process, please fill out the following sections -->
-
-
-
 # What is the purpose of this pull request?
 
 # What has changed?
