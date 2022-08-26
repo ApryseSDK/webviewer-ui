@@ -383,7 +383,7 @@ const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTex
             e.stopPropagation();
             setIsEditing(false, noteIndex);
             // Clear pending text
-            onTextAreaValueChange(undefined, annotation.Id);
+            onTextAreaValueChange('', annotation.Id);
           }}
         >
           {t('action.cancel')}
