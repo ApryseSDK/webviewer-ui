@@ -11,6 +11,7 @@ import disableTools from 'src/apis/disableTools';
 import setToolMode from 'src/apis/setToolMode';
 import selectors from 'selectors';
 import TabManager from 'helpers/TabManager';
+import getHashParameters from './getHashParameters';
 import DataElements from 'constants/dataElement';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
@@ -240,11 +241,10 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'outlineControls',
         'addNewOutlineButtonContainer',
         'addNewOutlineButton',
-        'outlineReorderButtonGroup',
-        'editOutlineButton',
         'outlineEditPopup',
-        'renameOutlineButton',
-        'deleteOutlineButton',
+        'outlineRenameButton',
+        'outlineSetDestinationButton',
+        'outlineDeleteButton',
       ],
       fn: () => {
         store.dispatch(actions.setIsOutlineEditing(enable));
@@ -264,9 +264,19 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
             return;
           }
           const doc = core.getDocument();
-          const docArr = [];
+          let docArr = [];
           if (doc) {
             docArr.push(doc);
+          } else {
+            let initialDoc = getHashParameters('d', '');
+            initialDoc = initialDoc ? JSON.parse(initialDoc) : '';
+            if (initialDoc) {
+              if (Array.isArray(initialDoc)) {
+                docArr = docArr.concat(initialDoc);
+              } else {
+                docArr.push(initialDoc);
+              }
+            }
           }
           const tabManager = new TabManager(docArr, [], store);
           store.dispatch(actions.setMultiTab(true));
@@ -284,6 +294,11 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'changeViewToolGroupButton',
       ]
     },
+    [Feature.ContentEdit]: {
+      dataElements: [
+        'toolbarGroup-EditText',
+      ],
+    },
   };
 
   if (!Array.isArray(features)) {
@@ -291,7 +306,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
   }
 
   features.forEach((feature) => {
-    const { dataElements = [], fn = () => {} } = map[feature];
+    const { dataElements = [], fn = () => { } } = map[feature];
 
     if (enable) {
       store.dispatch(actions.enableElements(dataElements, priority));
