@@ -1,11 +1,13 @@
 <!-- To help speed up the review process, please fill out the following sections -->
+- [ ] Documented PDFtron customisation in [Wiseflow_PDFtron.docs](https://uniwise1.sharepoint.com/:w:/r/sites/uniwise/_layouts/15/doc.aspx?sourcedoc=%7B31449df0-0514-41ef-adc2-aaedfb35d8e1%7D&action=edit&cid=76807666-6e9a-4a89-a296-9b424fbfece6)
+
 # What is the purpose of this pull request?
+Add the PR template used across other UNIwise repos.
 
 # What has changed?
+Added `PULL_REQUEST_TEMPLATE.md` and added checkbox to remind of documenting customisation in docs.
 
 # Notes for your reviewer
-
-- [ ] Documented PDFtron customisation in [Wiseflow_PDFtron.docs](https://uniwise1.sharepoint.com/:w:/r/sites/uniwise/_layouts/15/doc.aspx?sourcedoc=%7B31449df0-0514-41ef-adc2-aaedfb35d8e1%7D&action=edit&cid=76807666-6e9a-4a89-a296-9b424fbfece6)
 
 ## Jira links
 
@@ -13,7 +15,9 @@
 
 ```
 
+
 [Read more about Pull Request best practices here](https://github.com/UNIwise/developer-conventions/blob/master/general/git.md)
+
 
 <!-- Example:
 "Based on user feedback, the animation should be more subtle"
