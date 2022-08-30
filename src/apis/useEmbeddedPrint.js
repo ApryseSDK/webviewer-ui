@@ -13,6 +13,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => useEmbeddedPrint => {
+export default (store) => (useEmbeddedPrint) => {
   store.dispatch(actions.useEmbeddedPrint(useEmbeddedPrint));
 };

@@ -10,7 +10,7 @@ WebViewer(...)
  */
 import TouchEventManager from 'helpers/TouchEventManager';
 
-export default swipeOrientation => {
+export default (swipeOrientation) => {
   if (swipeOrientation === 'both') {
     TouchEventManager.allowVerticalSwipe = true;
     TouchEventManager.allowHorizontalSwipe = true;

@@ -13,20 +13,20 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
-import DataElements from "constants/dataElement";
+import DataElements from 'constants/dataElement';
 
 import './MenuOverlay.scss';
 
 const InitialMenuOverLayItem = ({ dataElement, children }) => {
-  const items = useSelector(state => selectors.getMenuOverlayItems(state, dataElement), shallowEqual);
+  const items = useSelector((state) => selectors.getMenuOverlayItems(state, dataElement), shallowEqual);
 
   const childrenArray = React.Children.toArray(children);
 
   return items.map((item, i) => {
     const { dataElement, type, hidden } = item;
     const key = `${type}-${dataElement || i}`;
-    const mediaQueryClassName = hidden?.map(screen => `hide-in-${screen}`).join(' ');
-    let component = childrenArray.find(child => child.props.dataElement === dataElement);
+    const mediaQueryClassName = hidden?.map((screen) => `hide-in-${screen}`).join(' ');
+    let component = childrenArray.find((child) => child.props.dataElement === dataElement);
 
     if (!component) {
       const props = { ...item, mediaQueryClassName };
@@ -43,8 +43,8 @@ const InitialMenuOverLayItem = ({ dataElement, children }) => {
 
     return component
       ? React.cloneElement(component, {
-          key,
-        })
+        key,
+      })
       : null;
   });
 };

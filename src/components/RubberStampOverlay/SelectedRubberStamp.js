@@ -10,7 +10,7 @@ import core from 'core';
 
 import './SelectedRubberStamp.scss';
 
-const usePrevious = value => {
+const usePrevious = (value) => {
   const ref = useRef();
   useEffect(() => {
     ref.current = value;
@@ -28,7 +28,7 @@ const SelectedRubberStamp = () => {
     activeToolName,
     selectedStamp,
     activeToolGroup,
-  ] = useSelector(state => [
+  ] = useSelector((state) => [
     selectors.getActiveToolName(state),
     selectors.getSelectedStamp(state),
     selectors.getActiveToolGroup(state),
@@ -62,7 +62,7 @@ const SelectedRubberStamp = () => {
   }, []);
 
   const [isToolStyleOpen] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementOpen(state, 'toolStylePopup'),
     ],
   );

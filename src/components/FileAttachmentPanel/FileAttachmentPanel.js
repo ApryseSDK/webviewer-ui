@@ -50,14 +50,13 @@ const FileAttachmentPanel = () => {
       <div className="section">
         {fileAttachments.embeddedFiles.length ? <p className="title">{t('message.embeddedFiles')}</p> : null}
         <ul className="downloadable">
-          {fileAttachments.embeddedFiles.map((file, idx) =>
-            renderAttachment(
-              file.filename,
-              () => {
-                saveAs(file.blob, file.filename);
-              },
-              `embeddedFile_${idx}`,
-            ),
+          {fileAttachments.embeddedFiles.map((file, idx) => renderAttachment(
+            file.filename,
+            () => {
+              saveAs(file.blob, file.filename);
+            },
+            `embeddedFile_${idx}`,
+          ),
           )}
         </ul>
       </div>
@@ -69,16 +68,15 @@ const FileAttachmentPanel = () => {
               {t('message.pageNum')}: {pageNumber}
             </p>
             <ul className="downloadable">
-              {fileAttachmentAnnotsPerPage.map((fileAttachmentAnnot, idx) =>
-                renderAttachment(
-                  fileAttachmentAnnot.filename,
-                  () => {
-                    core.setCurrentPage(fileAttachmentAnnot['PageNumber']);
-                    core.selectAnnotation(fileAttachmentAnnot);
-                    core.getAnnotationManager().trigger('annotationDoubleClicked', fileAttachmentAnnot);
-                  },
-                  `fileAttachmentAnnotation_${idx}`,
-                ),
+              {fileAttachmentAnnotsPerPage.map((fileAttachmentAnnot, idx) => renderAttachment(
+                fileAttachmentAnnot.filename,
+                () => {
+                  core.setCurrentPage(fileAttachmentAnnot['PageNumber']);
+                  core.selectAnnotation(fileAttachmentAnnot);
+                  core.getAnnotationManager().trigger('annotationDoubleClicked', fileAttachmentAnnot);
+                },
+                `fileAttachmentAnnotation_${idx}`,
+              ),
               )}
             </ul>
           </div>

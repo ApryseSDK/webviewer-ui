@@ -16,7 +16,7 @@ const RightPanel = ({ children, dataElement, onResize }) => {
     isDisabled,
     isInDesktopOnlyMode
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.getCurrentToolbarGroup(state),
       selectors.isElementOpen(state, 'header'),
       selectors.isElementOpen(state, 'toolsHeader'),

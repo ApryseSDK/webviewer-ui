@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import RedactionSearchResultGroup from './RedactionSearchResultGroup';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { RedactionContextMock } from '../RedactionPanel/RedactionPanel.stories';
 
@@ -12,7 +12,7 @@ const initialState = {
     customElementOverrides: {},
   }
 };
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState) {
   return state;
 }
 
@@ -29,7 +29,7 @@ const RedactionSearchResultGroupWithRedux = (props) => {
         <RedactionSearchResultGroup {...props} />
       </RedactionContextMock>
     </Provider>
-  )
+  );
 };
 
 export default {
@@ -42,8 +42,8 @@ export default {
 export const mockSearchResults = [
   {
     type: redactionTypeMap['TEXT'],
-    resultStr: "spice",
-    ambientStr: "The spice must flow.",
+    resultStr: 'spice',
+    ambientStr: 'The spice must flow.',
     resultStrStart: 4,
     resultStrEnd: 9,
     index: 0,
@@ -57,19 +57,19 @@ export const mockSearchResults = [
   },
   {
     type: redactionTypeMap['IMAGE'],
-    resultStr: "Image",
+    resultStr: 'Image',
     index: 2,
     icon: 'redact-icons-image',
   },
   {
     type: redactionTypeMap['PHONE'],
-    resultStr: "867-5309",
+    resultStr: '867-5309',
     index: 3,
     icon: 'redact-icons-phone-number',
   },
   {
     type: redactionTypeMap['EMAIL'],
-    resultStr: "paul.atreides@dune.com",
+    resultStr: 'paul.atreides@dune.com',
     index: 4,
     icon: 'redact-icons-email',
   }
@@ -78,7 +78,7 @@ export const mockSearchResults = [
 const basicProps = {
   pageNumber: 1,
   searchResults: mockSearchResults,
-}
+};
 
 
 export function Basic() {
@@ -95,7 +95,8 @@ export function Basic() {
       <RedactionSearchResultGroupWithRedux
         selectedSearchResultIndexes={selectedSearchResultIndexes}
         setSelectedSearchResultIndexes={setSelectedSearchResultIndexes}
-        {...basicProps} />
+        {...basicProps}
+      />
     </div>
   );
 }

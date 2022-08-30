@@ -12,7 +12,7 @@ import selectors from 'selectors';
 
 import './Button.scss';
 
-const NOOP = e => {
+const NOOP = (e) => {
   e?.stopPropagation();
   e?.preventDefault();
 };
@@ -37,9 +37,9 @@ const propTypes = {
   useI18String: PropTypes.bool,
 };
 
-const Button = props => {
+const Button = (props) => {
   const [removeElement, customOverrides = {}] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementDisabled(state, props.dataElement),
       selectors.getCustomElementOverrides(state, props.dataElement),
     ],
@@ -141,7 +141,8 @@ const Button = props => {
       content={title}
       hideShortcut={hideTooltipShortcut || actuallyDisabled}
       forcePosition={forceTooltipPosition}
-      hideOnClick={hideOnClick}>
+      hideOnClick={hideOnClick}
+    >
       {children}
     </Tooltip>
   ) : (

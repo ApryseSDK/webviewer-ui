@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import initialState from 'src/redux/initialState';
 import { createStore, combineReducers } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import viewerReducer from 'src/redux/reducers/viewerReducer';
 
 export default {

@@ -12,7 +12,7 @@ import './InkSignature.scss';
 
 const useForceUpdate = () => {
   const [, setIt] = useState(false);
-  return () => setIt(it => !it);
+  return () => setIt((it) => !it);
 };
 
 const propTypes = {
@@ -112,9 +112,9 @@ const InkSignature = ({
     }
     // hack for tool styles for signature not being on state
     forceUpdate();
-  }
+  };
 
-  const deepCopy = paths => {
+  const deepCopy = (paths) => {
     const pathsCopy = [];
     for (let i = 0; i < paths.length; ++i) {
       for (let j = 0; j < paths[i].length; ++j) {
@@ -136,7 +136,7 @@ const InkSignature = ({
       {({ measureRef }) => (
         <div className="ink-signature" ref={measureRef}>
           <Swipeable
-            onSwiping={({ event }) => event.stopPropagation()} 
+            onSwiping={({ event }) => event.stopPropagation()}
             className="canvas-colorpalette-container"
           >
             <div className="ink-signature-canvas-container">
@@ -153,15 +153,15 @@ const InkSignature = ({
             </div>
             <div className="colorpalette-clear-container">
               <ColorPalette
-                  color={toolStyles['StrokeColor']}
-                  property="StrokeColor"
-                  onStyleChange={(property, value) => handleColorInputChange(property, value)}
-                  overridePalette2={['#000000', '#4E7DE9', '#E44234']}
+                color={toolStyles['StrokeColor']}
+                property="StrokeColor"
+                onStyleChange={(property, value) => handleColorInputChange(property, value)}
+                overridePalette2={['#000000', '#4E7DE9', '#E44234']}
               />
               <button className="signature-clear" onClick={clearCanvas} disabled={!drawn}>
                 {t('action.clear')}
               </button>
-            </div>              
+            </div>
           </Swipeable>
         </div>
       )}

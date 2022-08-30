@@ -14,6 +14,7 @@ export const removeEventListener = (event, eventListener) => {
 
 const getEventToObjectMap = () => {
   const annotManager = window.documentViewer.getAnnotationManager();
+  const contentEditManager = window.documentViewer.getContentEditManager();
   const historyManager = window.documentViewer.getAnnotationHistoryManager();
   const editBoxManager = annotManager.getEditBoxManager();
   const formFieldCreationManager = annotManager.getFormFieldCreationManager();
@@ -58,6 +59,7 @@ const getEventToObjectMap = () => {
     historyChanged: historyManager,
     annotationSelected: annotManager,
     annotationChanged: annotManager,
+    outlineSetDestination: annotManager,
     updateAnnotationPermission: annotManager,
     addReply: annotManager,
     deleteReply: annotManager,
@@ -76,6 +78,9 @@ const getEventToObjectMap = () => {
     editorSelectionChanged: editBoxManager,
     formFieldCreationModeStarted: formFieldCreationManager,
     formFieldCreationModeEnded: formFieldCreationManager,
-    scaleUpdated: measurementManager
+    scaleUpdated: measurementManager,
+    contentEditModeStarted: contentEditManager,
+    contentEditModeEnded: contentEditManager,
+    createAnnotationWithNoScale: measurementManager,
   };
 };

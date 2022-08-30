@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Tambahkan Paragraf",
     "add": "Menambahkan",
     "apply": "Berlaku",
     "applyAll": "Terapkan semua",
@@ -144,7 +145,8 @@
     "other": "Lainnya",
     "3D": "3D",
     "sound": "Suara",
-    "changeView": "Ubah Tampilan"
+    "changeView": "Ubah Tampilan",
+    "newImage": "Gambar baru"
   },
   "rubberStamp": {
     "Approved": "Disetujui",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Memasukkan",
       "toolbarGroup-Measure": "Ukuran",
       "toolbarGroup-Edit": "Sunting",
+      "toolbarGroup-EditText": "Edit Teks",
       "toolbarGroup-FillAndSign": "Isi dan Tandatangani",
       "toolbarGroup-Forms": "Formulir",
       "toolbarGroup-Redact": "Menyusun"
@@ -878,6 +881,10 @@
       "cancelMessage": "Anda yakin ingin membatalkan pemotongan semua halaman yang dipilih?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Gugus kalimat",
+    "text": "Teks"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Mulai menyunting dengan menandai teks, wilayah, halaman, atau melakukan pencarian.",
     "redactionSearchPlaceholder": "Tambahkan dengan pencarian atau pola kata kunci",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Properti",
     "miscValuesHeader": "Semua",
-    "emptyPanelMessage": "Pilih elemen untuk melihat propertinya"
+    "emptyPanelMessage": "Pilih elemen untuk melihat propertinya."
   },
   "languageModal": {
     "selectLanguage": "Pilih bahasa"

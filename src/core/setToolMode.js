@@ -4,6 +4,6 @@
  * @fires toolModeUpdated on DocumentViewer
  * @see https://www.pdftron.com/api/web/Core.DocumentViewer.html#event:toolModeUpdated__anchor
  */
-export default toolName => {
+export default (toolName) => {
   window.documentViewer.setToolMode(window.documentViewer.getTool(toolName));
 };

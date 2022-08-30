@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useStore } from 'react-redux';
 import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
-import DataElementWrapper from "components/DataElementWrapper";
+import DataElementWrapper from 'components/DataElementWrapper';
 import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
 
 function ViewControlsOverlay() {
@@ -17,7 +17,7 @@ function ViewControlsOverlay() {
 
   const totalPages = useSelector(selectors.getTotalPages);
   const displayMode = useSelector(selectors.getDisplayMode);
-  const isDisabled = useSelector(state => selectors.isElementDisabled(state, 'viewControlsOverlay'));
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, 'viewControlsOverlay'));
   const isReaderMode = useSelector(selectors.isReaderMode);
 
   const totalPageThreshold = 1000;
@@ -25,12 +25,12 @@ function ViewControlsOverlay() {
 
   const displayModeManager = window.documentViewer?.getDisplayModeManager();
   if (displayModeManager && displayModeManager.isVirtualDisplayEnabled()) {
-    isPageTransitionEnabled = true
+    isPageTransitionEnabled = true;
   }
   const handleClick = (pageTransition, layout) => {
     const setDisplayMode = () => {
       const displayModeObject = displayModeObjects.find(
-        obj => obj.pageTransition === pageTransition && obj.layout === layout,
+        (obj) => obj.pageTransition === pageTransition && obj.layout === layout,
       );
       core.setDisplayMode(displayModeObject.displayMode);
     };
@@ -46,7 +46,9 @@ function ViewControlsOverlay() {
   };
 
   const handleReaderModeClick = () => {
-    if (isReaderMode) return;
+    if (isReaderMode) {
+      return;
+    }
     enterReaderMode(store);
   };
 
@@ -57,7 +59,7 @@ function ViewControlsOverlay() {
   let pageTransition;
   let layout;
 
-  const displayModeObject = displayModeObjects.find(obj => obj.displayMode === displayMode);
+  const displayModeObject = displayModeObjects.find((obj) => obj.displayMode === displayMode);
   if (displayModeObject) {
     pageTransition = displayModeObject.pageTransition;
     layout = displayModeObject.layout;

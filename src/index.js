@@ -1,5 +1,5 @@
 import 'core-js/stable';
-import "regenerator-runtime/runtime";
+import 'regenerator-runtime/runtime';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -8,8 +8,8 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
 import thunk from 'redux-thunk';
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import core from 'core';
 import actions from 'actions';
@@ -46,9 +46,11 @@ let composeEnhancer = function noopStoreComposeEnhancer(middleware) {
 if (process.env.NODE_ENV === 'development') {
   const isSpamDisabled = localStorage.getItem('spamDisabled') === 'true';
   if (!isSpamDisabled) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
     const { createLogger } = require('redux-logger');
     middleware.push(createLogger({ collapsed: true }));
   }
+  // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
   const { composeWithDevTools } = require('redux-devtools-extension/logOnlyInProduction');
   composeEnhancer = composeWithDevTools({});
 }
@@ -59,6 +61,7 @@ const persistor = persistStore(store);
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.accept('reducers/rootReducer', () => {
+    // eslint-disable-next-line global-require
     const updatedReducer = require('reducers/rootReducer').default;
     store.replaceReducer(updatedReducer);
   });
@@ -97,7 +100,7 @@ if (window.CanvasRenderingContext2D) {
 
   try {
     if (state.advanced.useSharedWorker && window.parent.WebViewer) {
-      var workerTransportPromise = window.parent.WebViewer.workerTransportPromise(window.frameElement);
+      const workerTransportPromise = window.parent.WebViewer.workerTransportPromise(window.frameElement);
       // originally the option was just for the pdf worker transport promise, now it can be an object
       // containing both the pdf and office promises
       if (workerTransportPromise.pdf || workerTransportPromise.office) {
@@ -126,12 +129,12 @@ if (window.CanvasRenderingContext2D) {
 
   const { preloadWorker } = state.advanced;
 
-  function initTransports() {
+  const initTransports = () => {
     const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, ALL } = workerTypes;
     if (preloadWorker.includes(PDF) || preloadWorker === ALL) {
-      getBackendPromise(getHashParameters('pdf', 'auto')).then(pdfType => {
+      getBackendPromise(getHashParameters('pdf', 'auto')).then((pdfType) => {
         window.Core.initPDFWorkerTransports(pdfType, {
-          workerLoadingProgress: percent => {
+          workerLoadingProgress: (percent) => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
         }, window.sampleL);
@@ -139,9 +142,9 @@ if (window.CanvasRenderingContext2D) {
     }
 
     if (preloadWorker.includes(OFFICE) || preloadWorker === ALL) {
-      getBackendPromise(getHashParameters('office', 'auto')).then(officeType => {
+      getBackendPromise(getHashParameters('office', 'auto')).then((officeType) => {
         window.Core.initOfficeWorkerTransports(officeType, {
-          workerLoadingProgress: percent => {
+          workerLoadingProgress: (percent) => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
         }, window.sampleL);
@@ -149,9 +152,9 @@ if (window.CanvasRenderingContext2D) {
     }
 
     if (preloadWorker.includes(LEGACY_OFFICE) || preloadWorker === ALL) {
-      getBackendPromise(getHashParameters('legacyOffice', 'auto')).then(officeType => {
+      getBackendPromise(getHashParameters('legacyOffice', 'auto')).then((officeType) => {
         window.Core.initLegacyOfficeWorkerTransports(officeType, {
-          workerLoadingProgress: percent => {
+          workerLoadingProgress: (percent) => {
             store.dispatch(actions.setLoadingProgress(percent));
           },
         }, window.sampleL);
@@ -161,7 +164,7 @@ if (window.CanvasRenderingContext2D) {
     if (preloadWorker.includes(CONTENT_EDIT) || preloadWorker === ALL) {
       window.Core.ContentEdit.preloadWorker(window.documentViewer);
     }
-  }
+  };
 
   loadCustomCSS(state.advanced.customCSS);
 

@@ -52,9 +52,11 @@ const PageRedactionModal = ({
     const pageNumbers = [];
     if (selectionType === SelectionTypes.CURRENT) {
       return [currentPage];
-    } else if (selectionType === SelectionTypes.SPECIFY) {
+    }
+    if (selectionType === SelectionTypes.SPECIFY) {
       return pages;
-    } else if (selectionType === SelectionTypes.ODD) {
+    }
+    if (selectionType === SelectionTypes.ODD) {
       for (let i = 1; pageLabels.length >= i; i += 2) {
         pageNumbers.push(i);
       }
@@ -76,7 +78,7 @@ const PageRedactionModal = ({
     }
   }, [selectionType, isOpen, pages, renderCanvases, getSelectedPages]);
 
-  const onSwipe = e => {
+  const onSwipe = (e) => {
     const eventTarget = e.event.target;
     const containerHasScroll =
       canvasContainer.current.clientHeight < canvasContainer.current.scrollHeight ||
@@ -91,13 +93,13 @@ const PageRedactionModal = ({
     }
   };
 
-  const onSelectionChange = e => {
+  const onSelectionChange = (e) => {
     if (!e.target.classList.contains('page-number-input')) {
       setSelectionType(e.target.value);
     }
-    e.preventDefault();
   };
-  const onPagesChanged = pages => setPages(pages);
+  const onPagesChanged = (pages) => setPages(pages);
+
 
   return (
     <Swipeable onSwipedUp={onSwipe} onSwipedDown={onSwipe} preventDefaultTouchmoveEvent focus>
@@ -119,7 +121,7 @@ const PageRedactionModal = ({
             </div>
             <div className="body">
               <div className="canvas-container" ref={canvasContainer} />
-              <form className="selection-options" onChange={onSelectionChange} onSubmit={e => e.preventDefault()}>
+              <form className="selection-options" onChange={onSelectionChange} onSubmit={(e) => e.preventDefault()}>
                 <strong>{t('option.pageRedactModal.pageSelection')}</strong>
                 <Choice
                   checked={selectionType === SelectionTypes.CURRENT}

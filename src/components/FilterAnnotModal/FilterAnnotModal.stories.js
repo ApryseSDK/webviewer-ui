@@ -1,5 +1,5 @@
 import React from 'react';
-import FilterAnnotModal from './FilterAnnotModal'
+import FilterAnnotModal from './FilterAnnotModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import core from 'core';
@@ -32,11 +32,11 @@ const getStore = (num) => {
       disabledElements: {},
       colorMap: {
         rectangle: {
-          currentPalette: 'StrokeColor',
+          currentStyleTab: 'StrokeColor',
           iconColor: 'StrokeColor'
         },
         freeText: {
-          currentPalette: 'TextColor',
+          currentStyleTab: 'TextColor',
           iconColor: 'TextColor'
         }
       },

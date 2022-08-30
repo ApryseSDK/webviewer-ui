@@ -43,56 +43,53 @@ const FormFieldEditPopup = ({
     // When we open up the popup the async call to set the right radio group may not be finished
     // we deal with this timing issue by updating state when the prop is refreshed
     if (selectedRadioGroup !== '') {
-      setRadioButtonGroup({ value: selectedRadioGroup, label: selectedRadioGroup })
+      setRadioButtonGroup({ value: selectedRadioGroup, label: selectedRadioGroup });
     } else {
-      setRadioButtonGroup(null)
+      setRadioButtonGroup(null);
     }
-  }, [selectedRadioGroup])
+  }, [selectedRadioGroup]);
 
   function onSelectInputChange(field, input) {
     if (input === null) {
       field.onChange('');
       setRadioButtonGroup(null);
-
     } else {
       field.onChange(input.value);
-      setRadioButtonGroup({ value: input.value, label: input.value })
+      setRadioButtonGroup({ value: input.value, label: input.value });
     }
-  };
+  }
 
   function onWidthChange(width) {
     const validatedWidth = validateWidth(width);
     annotation.setWidth(validatedWidth);
     setWidth(validatedWidth);
     redrawAnnotation(annotation);
-  };
+  }
 
   function onHeightChange(height) {
     const validatedHeight = validateHeight(height);
     annotation.setHeight(validatedHeight);
     setHeight(validatedHeight);
     redrawAnnotation(annotation);
-  };
+  }
 
   function validateWidth(width) {
     const documentWidth = getPageWidth();
     const maxWidth = documentWidth - annotation.X;
     if (width > maxWidth) {
       return maxWidth;
-    } else {
-      return width;
     }
-  };
+    return width;
+  }
 
   function validateHeight(height) {
     const documentHeight = getPageHeight();
     const maxHeight = documentHeight - annotation.Y;
     if (height > maxHeight) {
       return maxHeight;
-    } else {
-      return height;
     }
-  };
+    return height;
+  }
 
   function onCancel() {
     // If width/height changed return to original values
@@ -102,32 +99,33 @@ const FormFieldEditPopup = ({
     }
     redrawAnnotation(annotation);
     closeFormFieldEditPopup();
-  };
+  }
 
   function renderInput(field) {
     if (field.type === 'text') {
       return renderTextInput(field);
-    } else if (field.type === 'select') {
+    }
+    if (field.type === 'select') {
       return renderSelectInput(field);
     }
-  };
+  }
 
   function renderTextInput(field) {
     return (
       <Input
         type="text"
-        onChange={event => field.onChange(event.target.value)}
+        onChange={(event) => field.onChange(event.target.value)}
         value={field.value}
         fillWidth="false"
         messageText={field.required && !isValid ? t(validationMessage) : ''}
         message={field.required && !isValid ? 'warning' : 'default'}
         autoFocus={field.focus}
       />
-    )
-  };
+    );
+  }
 
   function renderSelectInput(field) {
-    const displayRadioGroups = radioButtonGroups.map(group => ({ value: group, label: group }));
+    const displayRadioGroups = radioButtonGroups.map((group) => ({ value: group, label: group }));
     return (
       <>
         <CreatableDropdown
@@ -138,9 +136,9 @@ const FormFieldEditPopup = ({
           isValid={isValid}
           messageText={t(validationMessage)}
         />
-        <div className='radio-group-label'>{t('formField.formFieldPopup.radioGroups')}</div>
-      </>)
-  };
+        <div className="radio-group-label">{t('formField.formFieldPopup.radioGroups')}</div>
+      </>);
+  }
 
   function renderListOptions() {
     return (
@@ -151,13 +149,13 @@ const FormFieldEditPopup = ({
           onOptionsUpdated={onOptionsChange}
         />
       </div>
-    )
-  };
+    );
+  }
 
   return (
     <div className={className}>
       <div className="fields-container">
-        {fields.map(field => (
+        {fields.map((field) => (
           <div className="field-input" key={field.label}>
             <label>
               {t(field.label)}{field.required ? '*' : ''}:
@@ -169,12 +167,13 @@ const FormFieldEditPopup = ({
       {options && renderListOptions()}
       <div className="field-flags-container">
         <span className="field-flags-title">{t('formField.formFieldPopup.flags')}</span>
-        {flags.map(flag => (
+        {flags.map((flag) => (
           <Choice
             key={flag.label}
             checked={flag.isChecked}
-            onChange={event => flag.onChange(event.target.checked)}
-            label={t(flag.label)} />
+            onChange={(event) => flag.onChange(event.target.checked)}
+            label={t(flag.label)}
+          />
         ))}
       </div>
       <DimensionsInput
@@ -207,15 +206,15 @@ const DimensionsInput = ({ width, height, onWidthChange, onHeightChange }) => {
 
   return (
     <div className="form-dimension">
-      <div>{t("formField.formFieldPopup.size")}:</div>
+      <div>{t('formField.formFieldPopup.size')}:</div>
       <div className="form-dimension-input">
         <input
-          id='form-field-width'
+          id="form-field-width"
           type="number"
           min={0}
           value={width}
           onChange={(e) => onWidthChange(e.target.value)}
-        /> {t("formField.formFieldPopup.width")}
+        /> {t('formField.formFieldPopup.width')}
       </div>
       <div className="form-dimension-input">
         <input
@@ -224,7 +223,7 @@ const DimensionsInput = ({ width, height, onWidthChange, onHeightChange }) => {
           min={0}
           value={height}
           onChange={(e) => onHeightChange(e.target.value)}
-        /> {t("formField.formFieldPopup.height")}
+        /> {t('formField.formFieldPopup.height')}
       </div>
     </div>
   );

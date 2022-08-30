@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "অনুচ্ছেদ যোগ করুন",
     "add": "যোগ করুন",
     "apply": "আবেদন করুন",
     "applyAll": "সব আবেদন",
@@ -144,7 +145,8 @@
     "other": "অন্যান্য",
     "3D": "3D",
     "sound": "শব্দ",
-    "changeView": "পরিবর্তন দেখুন"
+    "changeView": "পরিবর্তন দেখুন",
+    "newImage": "নতুন ছবি"
   },
   "rubberStamp": {
     "Approved": "অনুমোদিত",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "ঢোকান",
       "toolbarGroup-Measure": "পরিমাপ করা",
       "toolbarGroup-Edit": "সম্পাদনা করুন",
+      "toolbarGroup-EditText": "লেখা সম্পাদনা",
       "toolbarGroup-FillAndSign": "পূরণ করুন এবং স্বাক্ষর করুন",
       "toolbarGroup-Forms": "ফর্ম",
       "toolbarGroup-Redact": "সংশোধিত"
@@ -878,6 +881,10 @@
       "cancelMessage": "আপনি কি নিশ্চিত যে আপনি সমস্ত নির্বাচিত পৃষ্ঠা ক্রপ করা বাতিল করতে চান?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "অনুচ্ছেদ",
+    "text": "পাঠ্য"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "টেক্সট, অঞ্চল, পৃষ্ঠা চিহ্নিত করে বা একটি অনুসন্ধান করে সংশোধন করা শুরু করুন।",
     "redactionSearchPlaceholder": "কীওয়ার্ড অনুসন্ধান বা নিদর্শন দ্বারা যোগ করুন",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Уласцівасці",
     "miscValuesHeader": "Усе",
-    "emptyPanelMessage": "Выберыце элемент, каб праглядзець яго ўласцівасці"
+    "emptyPanelMessage": "Выберыце элемент, каб праглядзець яго ўласцівасці."
   },
   "languageModal": {
     "selectLanguage": "ভাষা নির্বাচন কর"

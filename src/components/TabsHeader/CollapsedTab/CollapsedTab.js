@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './CollapsedTab.scss';
-import Button from "components/Button";
-import PropTypes from "prop-types";
-import classNames from "classnames";
+import Button from 'components/Button';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 const propTypes = {
   tab: PropTypes.any.isRequired,
@@ -18,16 +18,16 @@ const propTypes = {
 const Tab = ({ tab, setActive, onDragStart, closeTab, id }) => {
   const [disabled, setDisabled] = useState(tab?.disabled);
   const removeExtension = true;
-  const name = removeExtension ? tab.options.filename.split(".")[0] : tab.options.filename;
+  const name = removeExtension ? tab.options.filename.split('.')[0] : tab.options.filename;
 
   useEffect(() => {
     setDisabled(tab?.disabled);
   }, [tab]);
 
   return (
-    <div className={"draggable-collapsed-tab"} onDragStart={onDragStart} draggable id={id}>
+    <div className={'draggable-collapsed-tab'} onDragStart={onDragStart} draggable id={id}>
       <div className={'CollapsedTab'}>
-        <div className={classNames({ "file-text": true, disabled })} onClick={setActive}>
+        <div className={classNames({ 'file-text': true, disabled })} onClick={setActive}>
           <p>{name}</p>
         </div>
         <Button

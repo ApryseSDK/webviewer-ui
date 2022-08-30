@@ -1,8 +1,8 @@
 import React from 'react';
-import FormFieldEditPopup from './FormFieldEditPopup'
+import FormFieldEditPopup from './FormFieldEditPopup';
 import { createStore } from 'redux';
 
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 
 
 export default {
@@ -59,7 +59,7 @@ const flags = [
 const annotation = {
   Width: 100,
   Height: 100,
-}
+};
 
 
 export function Basic() {
@@ -70,11 +70,9 @@ export function Basic() {
   };
   return (
     <Provider store={store}>
-      <div className='FormFieldEditPopupContainer'>
+      <div className="FormFieldEditPopupContainer">
         <FormFieldEditPopup {...props} />
       </div>
     </Provider>
   );
 }
-
-

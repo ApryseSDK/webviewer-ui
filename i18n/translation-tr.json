@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Paragraf Ekle",
     "add": "Ekle",
     "apply": "Uygulamak",
     "applyAll": "Tümünü uygula",
@@ -144,7 +145,8 @@
     "other": "Diğer",
     "3D": "3 boyutlu",
     "sound": "Ses",
-    "changeView": "Görünümü değiştir"
+    "changeView": "Görünümü değiştir",
+    "newImage": "Yeni görüntü"
   },
   "rubberStamp": {
     "Approved": "Onaylı",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Sokmak",
       "toolbarGroup-Measure": "Ölçüm",
       "toolbarGroup-Edit": "Düzenlemek",
+      "toolbarGroup-EditText": "Metni düzenle",
       "toolbarGroup-FillAndSign": "Doldur ve İmzala",
       "toolbarGroup-Forms": "Formlar",
       "toolbarGroup-Redact": "Yazıya dökmek"
@@ -878,6 +881,10 @@
       "cancelMessage": "Seçilen tüm sayfaları kırpmayı iptal etmek istediğinizden emin misiniz?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Paragraf",
+    "text": "Metin"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Metni, bölgeleri, sayfaları işaretleyerek veya arama yaparak redaksiyona başlayın.",
     "redactionSearchPlaceholder": "Anahtar kelime araması veya kalıplara göre ekleyin",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Özellikler",
     "miscValuesHeader": "Tümü",
-    "emptyPanelMessage": "Özelliklerini görüntülemek için bir öğe seçin"
+    "emptyPanelMessage": "Özelliklerini görüntülemek için bir öğe seçin."
   },
   "languageModal": {
     "selectLanguage": "Dil Seçin"

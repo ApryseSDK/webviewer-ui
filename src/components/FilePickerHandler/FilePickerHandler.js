@@ -10,12 +10,12 @@ import './FilePickerHandler.scss';
 
 const FilePickerHandler = () => {
   const isDisabled = useSelector(
-    state => selectors.isElementDisabled(state, 'filePickerHandler'),
+    (state) => selectors.isElementDisabled(state, 'filePickerHandler'),
     shallowEqual,
   );
   const dispatch = useDispatch();
 
-  const openDocument = e => {
+  const openDocument = (e) => {
     const file = e.target.files[0];
     if (file) {
       dispatch(actions.openElement('progressModal'));
@@ -33,7 +33,7 @@ const FilePickerHandler = () => {
         id="file-picker"
         type="file"
         accept={acceptFormats.map(
-          format => `.${format}`,
+          (format) => `.${format}`,
         ).join(', ')}
         onChange={openDocument}
       />

@@ -8,7 +8,7 @@ const setupDocViewer = () => {
   addToolsToDocViewer(docViewer);
 };
 
-const addToolsToDocViewer = docViewer => {
+const addToolsToDocViewer = (docViewer) => {
   const toolModeMap = core.getToolModeMap();
   const { ToolNames } = window.Core.Tools;
 

@@ -13,7 +13,7 @@ const buildSearchOptions = (searchTerms) => {
     return options;
   }
 
-  searchTerms.forEach(searchTerm => {
+  searchTerms.forEach((searchTerm) => {
     const { type } = searchTerm;
     if (type === redactionTypeMap['TEXT']) {
       options.textSearch.push(searchTerm.label);
@@ -23,7 +23,7 @@ const buildSearchOptions = (searchTerms) => {
   });
 
   return options;
-}
+};
 
 const RedactionSearchOverlay = (props) => {
   const {
@@ -35,9 +35,7 @@ const RedactionSearchOverlay = (props) => {
     redactionSearchOptions,
   } = props;
 
-  const handleChange = (
-    updatedSearchTerms,
-  ) => {
+  const handleChange = (updatedSearchTerms) => {
     setSearchTerms(updatedSearchTerms);
     const options = buildSearchOptions(updatedSearchTerms);
     executeRedactionSearch(options);
@@ -48,9 +46,9 @@ const RedactionSearchOverlay = (props) => {
       label: newValue,
       value: newValue,
       type: redactionTypeMap['TEXT']
-    }
-    //Initially search terms are null so we safeguard against this
-    const nonNullSearchTerms = searchTerms ? searchTerms : [];
+    };
+    // Initially search terms are null so we safeguard against this
+    const nonNullSearchTerms = searchTerms || [];
     const updatedSearchTerms = [...nonNullSearchTerms, textTerm];
     setSearchTerms(updatedSearchTerms);
     const options = buildSearchOptions(updatedSearchTerms);
@@ -62,7 +60,7 @@ const RedactionSearchOverlay = (props) => {
       const options = buildSearchOptions(searchTerms);
       executeRedactionSearch(options);
     }
-  }
+  };
   return (
     <DataElementWrapper
       className="RedactionSearchOverlay"
@@ -80,7 +78,7 @@ const RedactionSearchOverlay = (props) => {
 
     </DataElementWrapper>
 
-  )
+  );
 };
 
 export default RedactionSearchOverlay;

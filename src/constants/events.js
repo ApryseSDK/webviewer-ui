@@ -24,6 +24,7 @@
  * @property {string} TAB_DELETED {@link UI#event:tabDeleted UI.Events.tabDeleted}
  * @property {string} TAB_ADDED {@link UI#event:tabAdded UI.Events.tabAdded}
  * @property {string} TAB_MOVED {@link UI#event:tabMoved UI.Events.tabMoved}
+ * @property {string} LANGUAGE_CHANGED {@link UI#event:tabMoved UI.Events.languageChanged}
  * @example
   WebViewer(...).then(function(instance) {
     const UIEvents = instance.UI.Events;
@@ -58,6 +59,7 @@ export default {
   'TAB_DELETED': 'tabDeleted',
   'TAB_ADDED': 'tabAdded',
   'TAB_MOVED': 'tabMoved',
+  'LANGUAGE_CHANGED': 'languageChanged',
 };
 
 /**
@@ -252,4 +254,13 @@ export default {
 * @property {string} options Tab load options
 * @property {number} prevIndex Previous index of tab
 * @property {number} newIndex New index of tab
+*/
+
+/**
+* Triggered when the language changes in WebViewer via [setLanguage]{@link UI#setLanguage UI.setLanguage}
+* @name UI#languageChanged
+* @event
+* @type {object}
+* @property {string} prev The previous language
+* @property {string} next The new language that was just set
 */

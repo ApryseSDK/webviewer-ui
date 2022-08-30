@@ -16,16 +16,16 @@ function PageManipulationControls(props) {
         {t('action.pageManipulation')}
       </DataElementWrapper>
       <DataElementWrapper
-        className='row'
-        dataElement='replacePage'
+        className="row"
+        dataElement="replacePage"
         onClick={replacePages}
       >
         <Button
-          title='action.replace'
-          img='icon-page-replacement'
-          role='option'
+          title="action.replace"
+          img="icon-page-replacement"
+          role="option"
         />
-        <div className='title'>{t('action.replace')}</div>
+        <div className="title">{t('action.replace')}</div>
       </DataElementWrapper>
       <DataElementWrapper
         className="row"
@@ -53,9 +53,6 @@ function PageManipulationControls(props) {
       </DataElementWrapper>
     </>
   );
-
-
-
 }
 
 

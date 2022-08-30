@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Add Paragraph",
     "add": "Add",
     "apply": "Apply",
     "applyAll": "Apply all",
@@ -144,7 +145,8 @@
     "other": "Other",
     "3D": "3D",
     "sound": "Sound",
-    "changeView": "Change View"
+    "changeView": "Change View",
+    "newImage": "New Image"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Insert",
       "toolbarGroup-Measure": "Measure",
       "toolbarGroup-Edit": "Edit",
+      "toolbarGroup-EditText": "Edit Text",
       "toolbarGroup-FillAndSign": "Fill and Sign",
       "toolbarGroup-Forms": "Forms",
       "toolbarGroup-Redact": "Redact"
@@ -853,6 +856,10 @@
       "cancelMessage": "Are you sure you want to cancel cropping all selected pages?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Paragraph",
+    "text": "Text"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Start redacting by marking text, regions, pages or making a search.",
     "redactionSearchPlaceholder": "Add by keyword search or patterns",
@@ -882,7 +889,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Properties",
     "miscValuesHeader": "All",
-    "emptyPanelMessage": "Select an element to view its properties"
+    "emptyPanelMessage": "Select an element to view its properties."
   },
   "languageModal": {
     "selectLanguage": "Select language"

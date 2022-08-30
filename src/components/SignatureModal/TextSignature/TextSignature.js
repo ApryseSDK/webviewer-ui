@@ -25,7 +25,7 @@ const MAX_SIGNATURE_LENGTH = 360;
 
 const useForceUpdate = () => {
   const [, setIt] = useState(false);
-  return () => setIt(it => !it);
+  return () => setIt((it) => !it);
 };
 
 const TextSignature = ({
@@ -34,7 +34,7 @@ const TextSignature = ({
   disableCreateButton,
   enableCreateButton
 }) => {
-  const fonts = useSelector(state => selectors.getSignatureFonts(state));
+  const fonts = useSelector((state) => selectors.getSignatureFonts(state));
   // const [value, setValue] = useState(core.getDisplayAuthor(core.getCurrentUser()));
   const [value, setValue] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
@@ -66,8 +66,8 @@ const TextSignature = ({
       let { width, height } = textDivsRef.current[
         activeIndex
       ].getBoundingClientRect();
-      width = width + textClipPadding;
-      height = height + textClipPadding;
+      width += textClipPadding;
+      height += textClipPadding;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       canvas.width = width * multiplier;
@@ -136,7 +136,7 @@ const TextSignature = ({
 
     const signatureValue = value || '';
     if (signatureValue.trim()) {
-      const base64 = cropImageFromCanvas(canvas)
+      const base64 = cropImageFromCanvas(canvas);
       signatureTool.setSignature(base64);
       enableCreateButton();
     } else {
@@ -145,7 +145,7 @@ const TextSignature = ({
     }
   };
 
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     setIsDefaultValue(false);
     // Use regex instead of 'trimStart' for IE11 compatibility
     const value = e.target.value.replace(/^\s+/g, '');
@@ -157,13 +157,13 @@ const TextSignature = ({
   };
 
   const handleColorInputChange = (property, value) => {
-    setFontColor(value)
+    setFontColor(value);
     // hack for tool styles for signature not being on state
     forceUpdate();
   };
 
   const getSignatureLength = (text, fontSize, fontFamily) => {
-    const font = fontSize + 'px ' + fontFamily;
+    const font = `${fontSize}px ${fontFamily}`;
     const textSpan = document.createElement('span');
     textSpan.id = 'textSpan';
     textSpan.style.display = 'inline-block';
@@ -207,7 +207,7 @@ const TextSignature = ({
             value={value}
             placeholder="Type Signature"
             onChange={handleInputChange}
-            style={{ fontFamily: fonts, fontSize: fontSize, color: fontColor }}
+            style={{ fontFamily: fonts, fontSize, color: fontColor }}
             disabled={!(isModalOpen && isTabPanelSelected)}
           />
         </label>
@@ -219,12 +219,12 @@ const TextSignature = ({
             'text-signature-text': true,
             active: index === activeIndex,
           })}
-          style={{ fontFamily: font, fontSize: FONT_SIZE, color:fontColor}}
+          style={{ fontFamily: font, fontSize: FONT_SIZE, color: fontColor }}
           onClick={() => setActiveIndex(index)}
         >
           <div
             className="text-container"
-            ref={el => {
+            ref={(el) => {
               textDivsRef.current[index] = el;
             }}
           >

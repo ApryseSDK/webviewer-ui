@@ -34,7 +34,7 @@ export default (namespaces, ...otherInstances) => {
     namespaces = window.instance;
   }
   const { PDFNet, Actions, Annotations, Math, Tools } = namespaces;
-  instances.forEach(instance => {
+  instances.forEach((instance) => {
     if (instance && instance !== namespaces) {
       core.syncNamespaces(namespaces);
       if (PDFNet) {

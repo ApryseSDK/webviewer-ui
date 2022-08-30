@@ -11,7 +11,7 @@ import defaultTool from 'constants/defaultTool';
 
 import './SignatureStylePopup.scss';
 
-const SignatureStylePopup = props => {
+const SignatureStylePopup = (props) => {
   const { t } = props;
   const [
     activeToolName,
@@ -22,7 +22,7 @@ const SignatureStylePopup = props => {
     displayedSignaturesFilterFunction,
     isSignatureDeleteButtonDisabled
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.getActiveToolName(state),
       selectors.getSavedSignatures(state),
       selectors.getDisplayedSignatures(state),
@@ -39,7 +39,7 @@ const SignatureStylePopup = props => {
   const setSignature = async (index) => {
     dispatch(actions.setSelectedDisplayedSignatureIndex(index));
     const { annotation } = displayedSignatures[index];
-    signatureTool.setSignature(annotation);
+    await signatureTool.setSignature(annotation);
     core.setToolMode('AnnotationCreateSignature');
     if (signatureTool.hasLocation()) {
       await signatureTool.addSignature();
@@ -73,27 +73,26 @@ const SignatureStylePopup = props => {
         // Need to keep the index infromation from the original signature list
         .map((s, i) => [s, i])
         .filter(([s, i]) => displayedSignaturesFilterFunction(s, i))
-        .map(([{ imgSrc }, savedSignatureIndex], indexOfDisplayedSignature) =>
-          <div
-            key={indexOfDisplayedSignature}
-            className="signature-row"
-          >
-            <SignatureRowContent
-              onClick={() => setSignature(indexOfDisplayedSignature)}
-              imgSrc={imgSrc}
-              isActive={selectedDisplayedSignatureIndex === indexOfDisplayedSignature && activeToolName === 'AnnotationCreateSignature'}
-              altText={`${t('option.toolsOverlay.signatureAltText')} ${indexOfDisplayedSignature + 1}`}
-            />
-            {!isSignatureDeleteButtonDisabled && (
-              <button
-                className="icon"
-                data-element="defaultSignatureDeleteButton"
-                onClick={() => deleteSignature(indexOfDisplayedSignature, savedSignatureIndex)}
-              >
-                <Icon glyph="icon-delete-line" />
-              </button>
-            )}
-          </div>
+        .map(([{ imgSrc }, savedSignatureIndex], indexOfDisplayedSignature) => <div
+          key={indexOfDisplayedSignature}
+          className="signature-row"
+        >
+          <SignatureRowContent
+            onClick={() => setSignature(indexOfDisplayedSignature)}
+            imgSrc={imgSrc}
+            isActive={selectedDisplayedSignatureIndex === indexOfDisplayedSignature && activeToolName === 'AnnotationCreateSignature'}
+            altText={`${t('option.toolsOverlay.signatureAltText')} ${indexOfDisplayedSignature + 1}`}
+          />
+          {!isSignatureDeleteButtonDisabled && (
+            <button
+              className="icon"
+              data-element="defaultSignatureDeleteButton"
+              onClick={() => deleteSignature(indexOfDisplayedSignature, savedSignatureIndex)}
+            >
+              <Icon glyph="icon-delete-line" />
+            </button>
+          )}
+        </div>
         )}
       <SignatureAddBtn
         disabled={savedSignatures.length >= maxSignaturesCount}

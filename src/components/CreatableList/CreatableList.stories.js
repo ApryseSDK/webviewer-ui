@@ -1,10 +1,10 @@
 import React from 'react';
 import CreatableList from './CreatableListContainer';
 import { createStore } from 'redux';
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 
 export default {
   title: 'Components/CreatableList',
@@ -57,8 +57,8 @@ const options = [
 ];
 
 const onOptionsUpdated = (options) => {
-  console.log({ options })
-}
+  console.log({ options });
+};
 
 const props = {
   options,
@@ -69,12 +69,12 @@ export function Basic() {
   // Needs to be in div with id of app or the Tooltip causes an error
   // TODO: Ask Jussi how to fix this in storybook
   return (
-    <div id='app'>
+    <div id="app">
       <Provider store={store}>
-        <DndProvider backend={HTML5Backend} debugMode={true}>
+        <DndProvider backend={HTML5Backend} debugMode>
           <CreatableList {...props} />
         </DndProvider>
       </Provider>
     </div>
-  )
+  );
 }

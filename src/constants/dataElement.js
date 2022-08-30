@@ -18,8 +18,16 @@ const DataElements = {
   LEFT_PANEL: 'leftPanel',
   OUTLINE_PANEL: 'outlinesPanel',
   OUTLINE_CONTROLS: 'outlineControls',
+  OUTLINE_ADD_NEW_BUTTON_CONTAINER: 'addNewOutlineButtonContainer',
+  OUTLINE_ADD_NEW_BUTTON: 'addNewOutlineButton',
+  OUTLINE_MOVE_UP_BUTTON: 'moveOutlineUpButton',
+  OUTLINE_MOVE_DOWN_BUTTON: 'moveOutlineDownButton',
+  OUTLINE_MOVE_OUTWARD_BUTTON: 'moveOutlineOutwardButton',
+  OUTLINE_MOVE_INWARD_BUTTON: 'moveOutlineInwardButton',
   BOOKMARK_PANEL: 'bookmarksPanel',
   BOOKMARK_SHORTCUT_OPTION: 'bookmarkShortcutOption',
+  BOOKMARK_ADD_NEW_BUTTON_CONTAINER: 'addNewBookmarkButtonContainer',
+  BOOKMARK_ADD_NEW_BUTTON: 'addNewBookmarkButton',
   NOTES_PANEL: 'notesPanel',
 
   NotesPanel: {
@@ -35,6 +43,8 @@ const DataElements = {
   LINK_MODAL: 'linkModal',
   LANGUAGE_MODAL: 'languageModal',
   FILTER_MODAL: 'filterModal',
+  CONTENT_EDIT_LINK_MODAL: 'contentEditLinkModal',
+  SCALE_MODAL: 'scaleModal',
 
   // Filter modal
   ANNOTATION_USER_FILTER_PANEL_BUTTON: 'annotationUserFilterPanelButton',

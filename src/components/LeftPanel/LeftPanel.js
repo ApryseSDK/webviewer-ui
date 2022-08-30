@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
@@ -21,7 +22,8 @@ import useMedia from 'hooks/useMedia';
 import { isIE } from 'helpers/device';
 
 import './LeftPanel.scss';
-import LeftPanelPageTabs from "components/LeftPanelPageTabs";
+import LeftPanelPageTabs from 'components/LeftPanelPageTabs';
+import DataElements from 'src/constants/dataElement';
 
 const LeftPanel = () => {
   const isMobile = useMedia(
@@ -51,38 +53,45 @@ const LeftPanel = () => {
     currentWidth,
     notesInLeftPanel,
     isInDesktopOnlyMode,
-    isThumbnailSelectingPages
+    isThumbnailSelectingPages,
+    bookmarks,
+    isBookmarkPanelEnabled,
+    isBookmarkIconShortcutVisible,
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.getCurrentToolbarGroup(state),
       selectors.isElementOpen(state, 'header'),
       selectors.isElementOpen(state, 'toolsHeader'),
-      selectors.isElementOpen(state, 'leftPanel'),
-      selectors.isElementDisabled(state, 'leftPanel'),
+      selectors.isElementOpen(state, DataElements.LEFT_PANEL),
+      selectors.isElementDisabled(state, DataElements.LEFT_PANEL),
       selectors.getActiveLeftPanel(state),
       selectors.getCustomPanels(state),
       selectors.getLeftPanelWidth(state),
       selectors.getNotesInLeftPanel(state),
       selectors.isInDesktopOnlyMode(state),
       selectors.isThumbnailSelectingPages(state),
+      selectors.getBookmarks(state),
+      !selectors.isElementDisabled(state, DataElements.BOOKMARK_PANEL),
+      selectors.isBookmarkIconShortcutVisible(state),
     ],
     shallowEqual,
   );
 
   const minWidth = 264;
   const dispatch = useDispatch();
+  const [t] = useTranslation();
 
-  const onDrop = e => {
+  const onDrop = (e) => {
     // this is mainly for the thumbnail panel, to prevent the broswer from loading a document that dropped in
     e.preventDefault();
   };
 
-  const onDragOver = e => {
+  const onDragOver = (e) => {
     // when dragging over the "LeftPanel", change the cursor to "Move" from "Copy"
     e.preventDefault();
   };
 
-  const getDisplay = panel => (panel === activePanel ? 'flex' : 'none');
+  const getDisplay = (panel) => (panel === activePanel ? 'flex' : 'none');
 
   let style = {};
   if (isInDesktopOnlyMode || !isMobile) {
@@ -90,6 +99,26 @@ const LeftPanel = () => {
   }
 
   const isVisible = !(!isOpen || isDisabled);
+
+  useEffect(() => {
+    if (isBookmarkPanelEnabled) {
+      core.setBookmarkShortcutToggleOnFunction((pageIndex) => {
+        dispatch(actions.addBookmark(pageIndex, t('message.untitled')));
+      });
+      core.setBookmarkShortcutToggleOffFunction((pageIndex) => {
+        dispatch(actions.removeBookmark(pageIndex));
+      });
+      core.setUserBookmarks(Object.keys(bookmarks).map((pageIndex) => parseInt(pageIndex, 10)));
+    }
+  }, [isBookmarkPanelEnabled, bookmarks]);
+
+  useEffect(() => {
+    if (isBookmarkPanelEnabled && isBookmarkIconShortcutVisible) {
+      core.setBookmarkIconShortcutVisibility(true);
+    } else {
+      core.setBookmarkIconShortcutVisibility(false);
+    }
+  }, [isBookmarkPanelEnabled, isBookmarkIconShortcutVisible]);
 
   return (
     <div
@@ -104,7 +133,7 @@ const LeftPanel = () => {
       })}
       onDrop={onDrop}
       onDragOver={onDragOver}
-      data-element="leftPanel"
+      data-element={DataElements.LEFT_PANEL}
     >
       <div
         className="left-panel-container"
@@ -150,11 +179,11 @@ const LeftPanel = () => {
         <ResizeBar
           dataElement="leftPanelResizeBar"
           minWidth={minWidth}
-          onResize={_width => {
+          onResize={(_width) => {
             let maxAllowedWidth = window.innerWidth;
             // there will be a scroll bar in IE, so we don't allow 100% page width
             if (isIE) {
-              maxAllowedWidth = maxAllowedWidth - 30;
+              maxAllowedWidth -= 30;
             }
             dispatch(actions.setLeftPanelWidth(Math.min(_width, maxAllowedWidth)));
           }}

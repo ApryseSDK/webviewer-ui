@@ -15,7 +15,7 @@ class OverlayItem extends React.PureComponent {
   render() {
     const { buttonName, role, selected } = this.props;
     return (
-      <button className={classNames({OverlayItem: true, selected: selected})} onClick={this.props.onClick} aria-label={buttonName} role={role}>
+      <button className={classNames({ OverlayItem: true, selected })} onClick={this.props.onClick} aria-label={buttonName} role={role}>
         <div className="ButtonText">
           { buttonName }
         </div>

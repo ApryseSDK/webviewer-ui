@@ -25,7 +25,7 @@ export function getStep(currentZoomFactor) {
   const zoomStepFactors = window.instance.UI.getZoomStepFactors();
   const zoomFactorRangesMap = convertZoomStepFactorsToRangesMap(zoomStepFactors);
   const steps = Object.keys(zoomFactorRangesMap);
-  const step = steps.find(step => {
+  const step = steps.find((step) => {
     const zoomFactorRanges = zoomFactorRangesMap[step];
     return isCurrentZoomFactorInRange(currentZoomFactor, zoomFactorRanges);
   });

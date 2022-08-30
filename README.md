@@ -35,6 +35,12 @@ npm start
 npm run build
 ```
 
+## Troubleshooting
+
+If you are using NPM version 7 or higher, you may get an error indicating an issue with the dependency tree. There are two possible solutions for this:
+- Downgrade your version of Node to v14, which uses NPM version 6. 
+- When running `npm install` add the flag `--legacy-peer-deps`. You can read more about this flag in this [Stack Overflow post](https://stackoverflow.com/questions/66239691/what-does-npm-install-legacy-peer-deps-do-exactly-when-is-it-recommended-wh).
+
 ## Project structure
 
 ```

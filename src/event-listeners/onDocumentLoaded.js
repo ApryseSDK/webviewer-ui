@@ -14,7 +14,7 @@ import onLayersUpdated from './onLayersUpdated';
 
 let onFirstLoad = true;
 
-export default store => async () => {
+export default (store) => async () => {
   const { dispatch, getState } = store;
 
   dispatch(actions.openElement('pageNavOverlay'));
@@ -47,12 +47,12 @@ export default store => async () => {
     core.getDocumentViewer().disableAnnotations();
   }
 
-  core.getOutlines(outlines => {
+  core.getOutlines((outlines) => {
     dispatch(actions.setOutlines(outlines));
   });
 
   const doc = core.getDocument();
-  doc.addEventListener('bookmarksUpdated', () => core.getOutlines(outlines => dispatch(actions.setOutlines(outlines))));
+  doc.addEventListener('bookmarksUpdated', () => core.getOutlines((outlines) => dispatch(actions.setOutlines(outlines))));
 
   outlineUtils.setDoc(core.getDocument());
 
@@ -62,7 +62,7 @@ export default store => async () => {
       const currentLayers = selectors.getLayers(getState());
       onLayersUpdated(newLayers, currentLayers, dispatch);
     });
-    doc.getLayersArray().then(layers => {
+    doc.getLayersArray().then((layers) => {
       if (layers.length === 0) {
         dispatch(actions.disableElement('layersPanel', PRIORITY_ONE));
         dispatch(actions.disableElement('layersPanelButton', PRIORITY_ONE));
@@ -72,7 +72,7 @@ export default store => async () => {
         if (activeLeftPanel === 'layersPanel') {
           // set the active left panel to another one that's not disabled so that users don't see a blank left panel
           const nextActivePanel = getLeftPanelDataElements(state).find(
-            dataElement => !selectors.isElementDisabled(state, dataElement),
+            (dataElement) => !selectors.isElementDisabled(state, dataElement),
           );
           dispatch(actions.setActiveLeftPanel(nextActivePanel));
         }
@@ -88,9 +88,11 @@ export default store => async () => {
   if (docType === workerTypes.PDF || (docType === workerTypes.WEBVIEWER_SERVER && !doc.isWebViewerServerDocument())) {
     dispatch(actions.enableElement('cropToolGroupButton', PRIORITY_ONE));
     dispatch(actions.enableElement('contentEditButton', PRIORITY_ONE));
+    dispatch(actions.enableElement('addParagraphToolGroupButton', PRIORITY_ONE));
   } else {
     dispatch(actions.disableElement('cropToolGroupButton', PRIORITY_ONE));
     dispatch(actions.disableElement('contentEditButton', PRIORITY_ONE));
+    dispatch(actions.disableElement('addParagraphToolGroupButton', PRIORITY_ONE));
   }
 
   if (core.isFullPDFEnabled()) {
@@ -152,7 +154,7 @@ export default store => async () => {
         store.dispatch,
         selectors.isEmbedPrintSupported(store.getState()),
         selectors.getSortStrategy(store.getState()),
-        selectors.getColorMap(store.getState())
+        selectors.getColorMap(store.getState()),
       );
     });
 

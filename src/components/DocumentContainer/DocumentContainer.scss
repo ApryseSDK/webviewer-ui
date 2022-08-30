@@ -86,4 +86,42 @@
       outline: 1px solid transparent;
     }
   }
+
+  .bookmark-shortcut {
+    z-index: 40;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    right: 25px;
+    cursor: pointer;
+
+    &.filled {
+      color: var(--primary-button);
+
+      svg.filled {
+        display: inline;
+      }
+
+      svg.unfilled {
+        display: none;
+      }
+    }
+
+    &.unfilled {
+      color: var(--placeholder-text);
+
+      &:hover {
+        color: var(--primary-button);
+      }
+
+      svg.filled {
+        display: none;
+      }
+
+      svg.unfilled {
+        display: inline;
+      }
+
+    }
+  }
 }

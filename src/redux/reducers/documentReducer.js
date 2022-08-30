@@ -1,4 +1,4 @@
-export default initialState => (state = initialState, action) => {
+export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -35,7 +35,7 @@ export default initialState => (state = initialState, action) => {
     case 'SET_PRINT_QUALITY':
       return { ...state, printQuality: payload.quality };
     case 'SET_DEFAULT_PRINT_OPTIONS':
-      return {...state, defaultPrintOptions: payload.options };
+      return { ...state, defaultPrintOptions: payload.options };
     case 'SET_LOADING_PROGRESS':
       return { ...state, loadingProgress: payload.progress };
     default:

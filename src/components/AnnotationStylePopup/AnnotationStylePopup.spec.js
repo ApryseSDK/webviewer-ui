@@ -97,18 +97,6 @@ describe('AnnotationStylePopup component', () => {
     }).not.toThrow();
   });
 
-  it('Distance story should have extra controls', () => {
-    const { container } = render(<DistanceStory
-      annotations={[distanceMeasurementAnnot]}
-      style={getAnnotationStyles(distanceMeasurementAnnot)}
-      properties={{}}
-      colorMapKey={mapAnnotationToKey(distanceMeasurementAnnot)}
-    />);
-
-    const measurementControls = container.querySelector('.MeasurementOption');
-    expect(measurementControls).toBeInTheDocument();
-  });
-
   it('FreeText story should not throw any errors', () => {
     expect(() => {
       render(<FreeTextStory

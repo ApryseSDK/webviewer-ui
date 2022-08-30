@@ -5,7 +5,7 @@
  * @fires zoomUpdated on AnnotationManager
  * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:zoomUpdated__anchor
  */
-export default mode => {
+export default (mode) => {
   const displayModeManager = window.documentViewer.getDisplayModeManager();
   const displayMode = (displayModeManager.isVirtualDisplayEnabled())
     ? new window.Core.VirtualDisplayMode(window.documentViewer, mode)

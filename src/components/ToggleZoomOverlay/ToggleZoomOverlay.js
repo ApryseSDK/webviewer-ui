@@ -26,19 +26,16 @@ const ToggleZoomOverlay = () => {
   );
 
   const [isActive] = useSelector(
-    state => [selectors.isElementOpen(state, 'zoomOverlay')],
+    (state) => [selectors.isElementOpen(state, 'zoomOverlay')],
     shallowEqual,
   );
   const dispatch = useDispatch();
   const [value, setValue] = useState('100');
 
   useEffect(() => {
-    const onDocumentLoaded = () =>
-      setValue(Math.ceil(core.getZoom() * 100).toString());
-    const onZoomUpdated = () =>
-      setValue(Math.ceil(core.getZoom() * 100).toString());
-    const onDocumentUnloaded = () => 
-      setValue('100');
+    const onDocumentLoaded = () => setValue(Math.ceil(core.getZoom() * 100).toString());
+    const onZoomUpdated = () => setValue(Math.ceil(core.getZoom() * 100).toString());
+    const onDocumentUnloaded = () => setValue('100');
 
     core.addEventListener('documentLoaded', onDocumentLoaded);
     core.addEventListener('zoomUpdated', onZoomUpdated);
@@ -51,7 +48,7 @@ const ToggleZoomOverlay = () => {
     };
   }, []);
 
-  const onKeyPress = e => {
+  const onKeyPress = (e) => {
     if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
       const zoom = Math.ceil(core.getZoom() * 100).toString();
       if (e.target.value === zoom) {
@@ -68,14 +65,14 @@ const ToggleZoomOverlay = () => {
     }
   };
 
-  const onChange = e => {
+  const onChange = (e) => {
     const re = /^(\d){0,4}$/;
     if (re.test(e.target.value) || e.target.value === '') {
       setValue(e.target.value);
     }
   };
 
-  const onBlur = e => {
+  const onBlur = (e) => {
     const zoom = Math.ceil(core.getZoom() * 100).toString();
     if (e.target.value === zoom) {
       return;
@@ -99,6 +96,12 @@ const ToggleZoomOverlay = () => {
               OverlayContainer: true,
               active: isActive,
             })}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                dispatch(actions.toggleElement('zoomOverlay'));
+              }
+            }}
+            tabIndex={0}
           >
             <div
               className="OverlayText"
@@ -123,6 +126,7 @@ const ToggleZoomOverlay = () => {
               element="zoomOverlay"
               dataElement="zoomOverlay"
               ariaLabel={t('action.zoomControls')}
+              tabIndex={-1}
             />
           </div>
         </div>}

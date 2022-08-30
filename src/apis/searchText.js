@@ -60,7 +60,7 @@ export default function searchText(dispatch) {
     let searchOptions = {};
     if (typeof options === 'string') {
       const modes = options.split(',');
-      modes.forEach(mode => {
+      modes.forEach((mode) => {
         searchOptions[lowerCaseFirstLetter(mode)] = true;
       });
     } else {
@@ -91,7 +91,7 @@ export default function searchText(dispatch) {
         ...searchOptions,
       };
       const searchListeners = getSearchListeners() || [];
-      searchListeners.forEach(listener => {
+      searchListeners.forEach((listener) => {
         try {
           listener(searchValue, optionsForSearchListener, [result]);
         } catch (e) {
@@ -118,4 +118,4 @@ export default function searchText(dispatch) {
 }
 
 
-const lowerCaseFirstLetter = mode => `${mode.charAt(0).toLowerCase()}${mode.slice(1)}`;
+const lowerCaseFirstLetter = (mode) => `${mode.charAt(0).toLowerCase()}${mode.slice(1)}`;

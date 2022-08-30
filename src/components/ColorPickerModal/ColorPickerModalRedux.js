@@ -6,14 +6,14 @@ import ColorPickerModalContainer from './ColorPickerModalContainer';
 
 function ColorPickerModalRedux(props) {
   const dispatch = useDispatch();
-  const [isDisabled, isOpen, color] = useSelector(state => [
+  const [isDisabled, isOpen, color] = useSelector((state) => [
     selectors.isElementDisabled(state, 'ColorPickerModal'),
     selectors.isElementOpen(state, 'ColorPickerModal'),
     selectors.getCustomColor(state),
   ]);
 
   const onColorChange = (selectedColor) => {
-    const convertedColor = new window.Annotations.Color(selectedColor.r, selectedColor.g, selectedColor.b, selectedColor.a)
+    const convertedColor = new window.Annotations.Color(selectedColor.r, selectedColor.g, selectedColor.b, selectedColor.a);
     dispatch(actions.setCustomColor(convertedColor));
   };
 

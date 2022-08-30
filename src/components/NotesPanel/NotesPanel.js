@@ -10,6 +10,8 @@ import Icon from 'components/Icon';
 import NoteContext from 'components/Note/Context';
 import ListSeparator from 'components/ListSeparator';
 import MultiSelectControls from 'components/NotesPanel/MultiSelectControls';
+import NotesPanelHeader from 'components/NotesPanelHeader';
+import CustomElement from 'components/CustomElement';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
@@ -19,7 +21,6 @@ import useMedia from 'hooks/useMedia';
 import { isIE } from 'helpers/device';
 
 import './NotesPanel.scss';
-import NotesPanelHeader from '../NotesPanelHeader';
 
 const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [
@@ -32,7 +33,8 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     notesInLeftPanel,
     isDocumentReadOnly,
     enableNotesPanelVirtualizedList,
-    isInDesktopOnlyMode
+    isInDesktopOnlyMode,
+    customEmptyPanel
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
@@ -44,7 +46,8 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       selectors.getNotesInLeftPanel(state),
       selectors.isDocumentReadOnly(state),
       selectors.getEnableNotesPanelVirtualizedList(state),
-      selectors.isInDesktopOnlyMode(state)
+      selectors.isInDesktopOnlyMode(state),
+      selectors.getNotesPanelCustomEmptyPanel(state)
     ],
     shallowEqual,
   );
@@ -339,12 +342,25 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     </div>
   );
 
+  const NoAnnotationsGlyph = (customEmptyPanel && customEmptyPanel.icon) ? customEmptyPanel.icon : 'illustration - empty state - outlines';
+  const NoAnnotationsMessage = (customEmptyPanel && customEmptyPanel.message) ? customEmptyPanel.message : t('message.noAnnotations');
+  const NoAnnotationsReadOnlyMessage = (customEmptyPanel && customEmptyPanel.readOnlyMessage) ? customEmptyPanel.readOnlyMessage : t('message.noAnnotationsReadOnly');
+  const shouldRenderNoAnnotationsIcon = (customEmptyPanel && !customEmptyPanel.hideIcon) || !customEmptyPanel;
+  const shouldRenderCustomEmptyPanel = (customEmptyPanel && customEmptyPanel.render);
+
   const NoAnnotations = (
     <div className="no-annotations">
-      <div>
-        <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
-      </div>
-      <div className="msg">{isDocumentReadOnly ? t('message.noAnnotationsReadOnly') : t('message.noAnnotations')}</div>
+      {shouldRenderCustomEmptyPanel ?
+        <CustomElement render={customEmptyPanel.render} /> :
+        <>
+          {shouldRenderNoAnnotationsIcon &&
+            <div>
+              <Icon className="empty-icon" glyph={NoAnnotationsGlyph} />
+            </div>
+          }
+          <div className="msg">{isDocumentReadOnly ? NoAnnotationsReadOnlyMessage : NoAnnotationsMessage}</div>
+        </>
+      }
     </div>
   );
 

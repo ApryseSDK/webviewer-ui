@@ -7,7 +7,7 @@ const FileInputPanel = ({ defaultValue, onFileSelect, acceptFormats, extension, 
   const [t] = useTranslation();
   const [value, setValue] = useState(defaultValue || '');
 
-  const onChange = e => {
+  const onChange = (e) => {
     setValue(e.target.value);
     onFileSelect(e.target.value);
   };
@@ -34,7 +34,7 @@ const FileInputPanel = ({ defaultValue, onFileSelect, acceptFormats, extension, 
           <Dropdown
             disabled={!value}
             placeholder={t('tool.select')}
-            onClick={e => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
             items={acceptFormats}
             onClickItem={setExtension}
             currentSelectionKey={extension}

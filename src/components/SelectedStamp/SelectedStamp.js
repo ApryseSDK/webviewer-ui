@@ -18,7 +18,7 @@ const SelectedStamp = ({ tReady, toolName }) => {
       className="stamp-overlay"
     >
       <div className="no-presets">
-        {tReady? t('message.toolsOverlayNoPresets') : ''}
+        {tReady ? t('message.toolsOverlayNoPresets') : ''}
       </div>
     </div>
   );

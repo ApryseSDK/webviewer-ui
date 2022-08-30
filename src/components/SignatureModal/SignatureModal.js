@@ -17,7 +17,7 @@ import { Swipeable } from 'react-swipeable';
 import './SignatureModal.scss';
 
 const SignatureModal = () => {
-  const [isDisabled, isOpen, activeToolName, displayedSignatures] = useSelector(state => [
+  const [isDisabled, isOpen, activeToolName, displayedSignatures] = useSelector((state) => [
     selectors.isElementDisabled(state, 'signatureModal'),
     selectors.isElementOpen(state, 'signatureModal'),
     selectors.getActiveToolName(state),
@@ -106,13 +106,13 @@ const SignatureModal = () => {
         >
           <div
             className="container"
-            onMouseDown={e => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
           >
             <div className="swipe-indicator" />
             <Tabs id="signatureModal">
               <div className="header-container">
                 <div className="header">
-                  <p>{t(`option.signatureModal.modalName`)}</p>
+                  <p>{t('option.signatureModal.modalName')}</p>
                   <Button
                     className="signatureModalCloseButton"
                     dataElement="signatureModalCloseButton"

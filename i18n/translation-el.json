@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Προσθήκη παραγράφου",
     "add": "Προσθήκη",
     "apply": "Ισχύουν",
     "applyAll": "Εφαρμόστε όλα",
@@ -144,7 +145,8 @@
     "other": "Αλλα",
     "3D": "3D",
     "sound": "Ήχος",
-    "changeView": "Αλλαξε θέα"
+    "changeView": "Αλλαξε θέα",
+    "newImage": "Νέα εικόνα"
   },
   "rubberStamp": {
     "Approved": "Εγκρίθηκε",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Εισάγετε",
       "toolbarGroup-Measure": "Μετρούν",
       "toolbarGroup-Edit": "Επεξεργασία",
+      "toolbarGroup-EditText": "Επεξεργασία κειμένου",
       "toolbarGroup-FillAndSign": "Συμπληρώστε και υπογράψτε",
       "toolbarGroup-Forms": "Φόρμες",
       "toolbarGroup-Redact": "Συντάσσω"
@@ -878,6 +881,10 @@
       "cancelMessage": "Είστε βέβαιοι ότι θέλετε να ακυρώσετε την περικοπή όλων των επιλεγμένων σελίδων;"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Παράγραφος",
+    "text": "Κείμενο"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Ξεκινήστε τη σύνταξη επισημαίνοντας κείμενο, περιοχές, σελίδες ή κάνοντας μια αναζήτηση.",
     "redactionSearchPlaceholder": "Προσθήκη κατά αναζήτηση λέξης-κλειδιού ή μοτίβα",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Ιδιότητες",
     "miscValuesHeader": "Όλα",
-    "emptyPanelMessage": "Επιλέξτε ένα στοιχείο για να δείτε τις ιδιότητές του"
+    "emptyPanelMessage": "Επιλέξτε ένα στοιχείο για να δείτε τις ιδιότητές του."
   },
   "languageModal": {
     "selectLanguage": "Επιλέξτε γλώσσα"

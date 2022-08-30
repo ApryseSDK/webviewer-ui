@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "段落を追加",
     "add": "追加",
     "apply": "適用",
     "applyAll": "すべて適用",
@@ -144,7 +145,8 @@
     "other": "その他",
     "3D": "3D",
     "sound": "サウンド",
-    "changeView": "ビューを変更"
+    "changeView": "ビューを変更",
+    "newImage": "新しいイメージ"
   },
   "rubberStamp": {
     "Approved": "承認済",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "挿入",
       "toolbarGroup-Measure": "測定",
       "toolbarGroup-Edit": "編集",
+      "toolbarGroup-EditText": "テキストの編集",
       "toolbarGroup-FillAndSign": "入力と署名",
       "toolbarGroup-Forms": "フォーム",
       "toolbarGroup-Redact": "墨消し"
@@ -878,6 +881,10 @@
       "cancelMessage": "選択したすべてのページの切り抜きをキャンセルしてもよろしいですか？"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "段落",
+    "text": "文章"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "テキスト、地域、ページにマークを付けるか、検索して、編集を開始します。",
     "redactionSearchPlaceholder": "キーワード検索またはパターンで追加",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "プロパティ",
     "miscValuesHeader": "すべて",
-    "emptyPanelMessage": "プロパティを表示する要素を選択してください"
+    "emptyPanelMessage": "プロパティを表示する要素を選択してください."
   },
   "languageModal": {
     "selectLanguage": "言語を選択する"

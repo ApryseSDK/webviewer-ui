@@ -19,7 +19,7 @@ const TabsHeader = () => {
   const [dropTarget, setDropTarget] = useState();
   const [hovering, setHovering] = useState();
   const hoveredTab = useRef();
-  const [isMultiTab, tabManager, width, currTabs, activeTab] = useSelector(state => [
+  const [isMultiTab, tabManager, width, currTabs, activeTab] = useSelector((state) => [
     selectors.getIsMultiTab(state),
     selectors.getTabManager(state),
     selectors.getDocumentContainerWidth(state),
@@ -36,7 +36,7 @@ const TabsHeader = () => {
     hoveredTab.current = div;
   }, []);
 
-  const activeIndex = currTabs?.findIndex(t => t.id === activeTab);
+  const activeIndex = currTabs?.findIndex((t) => t.id === activeTab);
   useEffect(() => {
     if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
       tabManager.moveTab(activeIndex, breakpoint - 1);
@@ -78,7 +78,7 @@ const TabsHeader = () => {
     setHovering(true);
   };
 
-  const onDragOverHoverTab = e => {
+  const onDragOverHoverTab = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (!hovering) {
@@ -86,7 +86,7 @@ const TabsHeader = () => {
     }
   };
 
-  const onDragLeave = e => {
+  const onDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (!document.getElementsByClassName('TabsHeader')[0]?.contains(e.target)) {
@@ -95,7 +95,7 @@ const TabsHeader = () => {
     setHovering(false);
   };
 
-  const onDrop = e => {
+  const onDrop = () => {
     setHovering(false);
     if (!isDragging || dragIndex === dropTarget) {
       return;
@@ -104,7 +104,7 @@ const TabsHeader = () => {
     hoveredTab.current.remove();
   };
 
-  const onDragEnd = e => {
+  const onDragEnd = () => {
     hoveredTab.current.remove();
     setDragging(false);
     setDragIndex(null);
@@ -114,15 +114,15 @@ const TabsHeader = () => {
     if (!isMultiTab) {
       return [null, null];
     }
-    const activeIndex = currTabs?.findIndex(t => t.id === activeTab);
+    const activeIndex = currTabs?.findIndex((t) => t.id === activeTab);
     if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
       tabManager.moveTab(activeIndex, breakpoint - 1);
     }
     const renderedTabs = currTabs.map((tab, index) => {
       if (index < breakpoint) {
         return <Tab
-          onDragStart={e => onDragStart(e, index)}
-          onDragOver={e => onDragOver(e, index, tab.id)}
+          onDragStart={(e) => onDragStart(e, index)}
+          onDragOver={(e) => onDragOver(e, index, tab.id)}
           onDragLeave={onDragLeave}
           setActive={() => setActiveTab(tab.id)}
           key={tab.id}
@@ -132,22 +132,21 @@ const TabsHeader = () => {
           tab={tab}
           isToLeftOfActive={index === activeIndex - 1}
         />;
-      } else {
-        return <CollapsedTab
-          onDragStart={e => onDragStart(e, index)}
-          tab={tab}
-          key={tab.id}
-          id={`tab-${tab.id}`}
-          closeTab={() => deleteTab(tab.id)}
-          setActive={() => setActiveTab(tab.id)}
-        />;
       }
+      return <CollapsedTab
+        onDragStart={(e) => onDragStart(e, index)}
+        tab={tab}
+        key={tab.id}
+        id={`tab-${tab.id}`}
+        closeTab={() => deleteTab(tab.id)}
+        setActive={() => setActiveTab(tab.id)}
+      />;
     });
     return [renderedTabs?.slice(0, breakpoint), renderedTabs?.slice(breakpoint, renderedTabs.length)];
   }, [tabManager, currTabs, breakpoint, setActiveTab, deleteTab, onDragEnd, onDragStart, onDragOver, onDragLeave]);
 
   async function setActiveTab(id) {
-    const tabIndex = currTabs.findIndex(t => t.id === id);
+    const tabIndex = currTabs.findIndex((t) => t.id === id);
     if (tabIndex >= breakpoint) {
       tabManager.moveTab(tabIndex, breakpoint - 1);
     }

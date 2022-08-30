@@ -20,7 +20,7 @@ import selectors from 'selectors';
 
 const dimensions = ['yOffset', 'height', 'xOffset', 'width'];
 
-export default store => (presetName, newPreset) => {
+export default (store) => (presetName, newPreset) => {
   if (!presetName || typeof presetName !== 'string' || presetName.trim().length < 1) {
     return console.error('presetName must be a string of length 1 or more');
   }

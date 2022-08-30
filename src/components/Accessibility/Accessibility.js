@@ -11,11 +11,11 @@ function Accessibility() {
 
   const isAccessibleMode = useSelector(selectors.isAccessibleMode);
 
-  const isNotesPanelOpen = useSelector(state => selectors.isElementOpen(state, 'notesPanel'));
-  const isNotesPanelDisabled = useSelector(state => selectors.isElementDisabled(state, 'notesPanel'));
+  const isNotesPanelOpen = useSelector((state) => selectors.isElementOpen(state, 'notesPanel'));
+  const isNotesPanelDisabled = useSelector((state) => selectors.isElementDisabled(state, 'notesPanel'));
 
-  const isSearchPanelOpen = useSelector(state => selectors.isElementOpen(state, 'searchPanel'));
-  const isSearchPanelDisabled = useSelector(state => selectors.isElementDisabled(state, 'searchPanel'));
+  const isSearchPanelOpen = useSelector((state) => selectors.isElementOpen(state, 'searchPanel'));
+  const isSearchPanelDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchPanel'));
 
   const onFocus = () => setIsVisible(true);
   const onBlur = () => setIsVisible(false);

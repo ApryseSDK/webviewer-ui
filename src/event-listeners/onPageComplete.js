@@ -1,9 +1,9 @@
 import core from 'core';
 
-export default store => pageNumber => {
+export default (store) => (pageNumber) => {
   const state = store.getState();
   if (state.viewer.isAccessibleMode) {
-    core.getDocument().loadPageText(pageNumber, text => {
+    core.getDocument().loadPageText(pageNumber, (text) => {
       const textContainer = document.createElement('div');
       textContainer.tabIndex = 0;
       // TODO: page-num

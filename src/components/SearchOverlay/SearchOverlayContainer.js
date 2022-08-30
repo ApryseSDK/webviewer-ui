@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import SearchOverlay from "./SearchOverlay";
-import { getOverrideSearchExecution } from "helpers/search";
+import SearchOverlay from './SearchOverlay';
+import { getOverrideSearchExecution } from 'helpers/search';
 import searchTextFullFactory from '../../apis/searchTextFull';
-import core from "core";
+import core from 'core';
 
 // exported so that we can test these internal functions
 export function executeSearch(searchValue, options, dispatch) {
@@ -42,7 +42,9 @@ function SearchOverlayContainer(props) {
   const dispatch = useDispatch();
   return (
     <SearchOverlay
-      executeSearch={(searchValue, options = {}) => {executeSearch(searchValue, options, dispatch)}}
+      executeSearch={(searchValue, options = {}) => {
+        executeSearch(searchValue, options, dispatch);
+      }}
       selectNextResult={selectNextResult}
       selectPreviousResult={selectPreviousResult}
       {...props}

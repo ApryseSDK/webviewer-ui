@@ -13,7 +13,7 @@ WebViewer(...)
 import actions from 'actions';
 import { PRIORITY_THREE } from 'constants/actionPriority';
 
-export default store => dataElements => {
+export default (store) => (dataElements) => {
   if (typeof dataElements === 'string') {
     return store.dispatch(actions.enableElement(dataElements, PRIORITY_THREE));
   }

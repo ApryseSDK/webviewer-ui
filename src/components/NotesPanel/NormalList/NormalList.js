@@ -13,10 +13,10 @@ const NormalList = React.forwardRef(
     const listRef = useRef();
 
     useImperativeHandle(forwardedRef, () => ({
-      scrollToPosition: scrollTop => {
+      scrollToPosition: (scrollTop) => {
         listRef.current.scrollTop = scrollTop;
       },
-      scrollToRow: index => {
+      scrollToRow: (index) => {
         const parent = listRef.current;
         const child = parent.children[index];
 
@@ -36,7 +36,7 @@ const NormalList = React.forwardRef(
       listRef.current.scrollTop = initialScrollTop;
     }, [initialScrollTop]);
 
-    const handleScroll = e => {
+    const handleScroll = (e) => {
       onScroll(e.target.scrollTop);
     };
 
@@ -57,6 +57,7 @@ const NormalList = React.forwardRef(
   },
 );
 
+NormalList.displayName = 'NormalList';
 NormalList.propTypes = propTypes;
 
 export default NormalList;

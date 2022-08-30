@@ -1,10 +1,10 @@
-import selectors from "selectors/index";
-import actions from "actions/index";
-import { connect } from "react-redux";
-import React from "react";
-import SearchOverlayContainer from "./SearchOverlayContainer";
+import selectors from 'selectors/index';
+import actions from 'actions/index';
+import { connect } from 'react-redux';
+import React from 'react';
+import SearchOverlayContainer from './SearchOverlayContainer';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isSearchOverlayDisabled: selectors.isElementDisabled(state, 'searchOverlay'),
   searchValue: selectors.getSearchValue(state),
   isCaseSensitive: selectors.isCaseSensitive(state),

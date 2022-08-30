@@ -16,7 +16,7 @@ function useSearch() {
     if (coreSearchResults.length > 0) {
       const activeSearchResult = core.getActiveSearchResult();
       if (activeSearchResult) {
-        const newActiveSearchResultIndex = coreSearchResults.findIndex(searchResult => {
+        const newActiveSearchResultIndex = coreSearchResults.findIndex((searchResult) => {
           return isSearchResultSame(searchResult, activeSearchResult);
         });
         setSearchResults(coreSearchResults);
@@ -35,7 +35,7 @@ function useSearch() {
   React.useEffect(() => {
     function activeSearchResultChanged(newActiveSearchResult) {
       const coreSearchResults = core.getPageSearchResults() || [];
-      const newActiveSearchResultIndex = coreSearchResults.findIndex(searchResult => {
+      const newActiveSearchResultIndex = coreSearchResults.findIndex((searchResult) => {
         return isSearchResultSame(searchResult, newActiveSearchResult);
       });
       setActiveSearchResult(newActiveSearchResult);

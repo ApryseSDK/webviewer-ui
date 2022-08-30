@@ -16,7 +16,7 @@ export default (toolName, property, value) => {
     }
   }
 
-  tools.forEach(tool => {
+  tools.forEach((tool) => {
     tool.setStyles({
       [property]: value,
     });

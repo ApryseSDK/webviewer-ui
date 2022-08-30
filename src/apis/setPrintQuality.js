@@ -11,7 +11,7 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => quality => {
+export default (store) => (quality) => {
   if (quality <= 0) {
     throw Error('Value must be a positive number');
   }

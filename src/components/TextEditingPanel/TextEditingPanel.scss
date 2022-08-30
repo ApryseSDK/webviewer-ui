@@ -1,0 +1,95 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.TextEditingPanel {
+  padding: 16px 16px 0px 16px;
+  display: flex;
+  flex-direction: column;
+
+  .text-editing-panel-section {
+    margin-top: 8px;
+
+    .text-editing-panel-heading {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .text-editing-panel-menu-items {
+      margin-top: 16px;
+      margin-bottom: 16px;
+
+      .text-editing-panel-menu-items-buttons {
+        display: flex;
+      }
+      
+      // align font family dropdown items right
+      .Dropdown__items {
+        right: auto;
+      }
+
+      .FontSizeDropdown .Dropdown__items {
+        right: 0;
+      }
+
+      .Dropdown__items .Dropdown__item {
+        font-size: 13px;
+        font-family: Lato,sans-serif !important;
+      }
+
+      .Dropdown .picked-option .picked-option-text {
+        font-family: Lato,sans-serif !important;
+      }
+
+      .inactive {
+        opacity: 0.5;
+        pointer-Events: none;
+      }
+    }
+
+    .text-editing-panel-color-palette {
+      display: flex;
+
+      .ColorPalette {
+        display: flex;
+      }
+      margin-bottom: 16px;
+    }
+
+    .opacity-slider {
+
+      @include ie11 {
+        align-items: stretch;
+      }
+    }
+  }
+
+
+  @include mobile {
+    width: 100vw;
+    min-width: 100vw;
+    padding-top: 0px;
+
+    .icon-grid .text-horizontal-alignment {
+      float: none;
+    }
+
+    .close-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 64px;
+
+      width: 100%;
+      padding-right: 12px;
+
+      .close-icon-container {
+        cursor: pointer;
+        .close-icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+}
+

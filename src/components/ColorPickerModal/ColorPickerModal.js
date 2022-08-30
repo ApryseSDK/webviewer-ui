@@ -18,28 +18,29 @@ const ColorPickerModal = ({ isDisabled, isOpen, color, closeModal, handleChangeS
 
   useEffect(() => {
     const black = { r: 0, g: 0, b: 0, a: 1 };
-    if (color && color.A !== 0){
+    if (color && color.A !== 0) {
       setSelectedColor({ r: color.R, g: color.G, b: color.B, a: 1 });
     } else {
       setSelectedColor(black);
     }
   }, [color]);
 
-  const handleChangeComplete = newColor => {
+  const handleChangeComplete = (newColor) => {
     setSelectedColor(newColor.rgb);
   };
 
   const handleSave = () => {
     handleChangeSave(selectedColor);
-  }
+  };
 
   return isDisabled ? null : (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
       <div className={modalClass} data-element="ColorPickerModal" onMouseDown={closeModal}>
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
+        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
+          <div className="swipe-indicator" />
           <SketchPicker
             color={selectedColor}
-            disableAlpha={true}
+            disableAlpha
             onChange={handleChangeComplete}
             presetColors={[]}
           />

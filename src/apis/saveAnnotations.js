@@ -1,6 +1,6 @@
 import core from 'core';
 
-export default store => () => new Promise((resolve, reject) => {
+export default (store) => () => new Promise((resolve, reject) => {
   const state = store.getState();
   const { id: docId } = state.document;
   const { serverUrl, serverUrlHeaders } = state.advanced;
@@ -12,7 +12,7 @@ export default store => () => new Promise((resolve, reject) => {
     return;
   }
 
-  core.exportAnnotations(xfdfString => {
+  core.exportAnnotations((xfdfString) => {
     fetch(serverUrl, {
       method: 'POST',
       headers: serverUrlHeaders,
@@ -21,7 +21,7 @@ export default store => () => new Promise((resolve, reject) => {
         data: xfdfString,
       },
       credentials: 'include'
-    }).then(response => {
+    }).then((response) => {
       if (response.ok) {
         resolve();
       } else {

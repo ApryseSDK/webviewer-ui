@@ -11,7 +11,6 @@ import selectors from 'selectors';
 
 import './Header.scss';
 
-
 class ToolsHeader extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
@@ -44,7 +43,7 @@ class ToolsHeader extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isDisabled: selectors.isElementDisabled(state, 'toolsHeader'),
   isOpen: selectors.isElementOpen(state, 'toolsHeader'),
@@ -61,15 +60,9 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(ToolsHeader) ;
+const ConnectedToolsHeader = connect(mapStateToProps, mapDispatchToProps)(ToolsHeader);
 
-const ConnectedToolsHeader = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ToolsHeader);
-
-
-export default props => {
+const connectedComponent = (props) => {
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -86,8 +79,9 @@ export default props => {
     false,
   );
 
-
   return (
     <ConnectedToolsHeader {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
   );
 };
+
+export default connectedComponent;

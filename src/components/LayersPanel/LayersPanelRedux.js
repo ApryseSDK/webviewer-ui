@@ -11,7 +11,7 @@ function LayersPanelRedux(props) {
 
   const [
     layers,
-  ] = useSelector(state => [
+  ] = useSelector((state) => [
     selectors.getLayers(state),
   ]);
 

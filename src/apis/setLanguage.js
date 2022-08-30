@@ -12,10 +12,13 @@ WebViewer(...)
 import i18next from 'i18next';
 import core from 'core';
 import actions from 'actions';
+import selectors from 'selectors';
 import dayjs from 'dayjs';
 import languageRules from 'constants/languageRules';
+import fireEvent from 'helpers/fireEvent';
+import Events from 'constants/events';
 
-export default store => language => {
+export default (store) => (language) => {
   let languageObj = null;
   let languageToImportLocaleFile = language;
 
@@ -30,14 +33,19 @@ export default store => language => {
   }).catch(() => {
     dayjs.locale('en');
   }).finally(() => {
+    const languageEventObject = {
+      prev: selectors.getCurrentLanguage(store.getState()),
+      next: language,
+    };
     store.dispatch(actions.setLanguage(language));
     const promise = i18next.changeLanguage(language);
+    promise.then(() => fireEvent(Events['LANGUAGE_CHANGED'], languageEventObject));
     setDatePickerLocale(promise, language);
   });
 };
 
 const setDatePickerLocale = (i18nextPromise, language) => {
-  i18nextPromise.then(t => {
+  i18nextPromise.then((t) => {
     const { DatePickerWidgetAnnotation } = window.Annotations;
     const obj = t('datePicker', { 'returnObjects': true });
     const options = DatePickerWidgetAnnotation.datePickerOptions;
@@ -47,8 +55,8 @@ const setDatePickerLocale = (i18nextPromise, language) => {
     DatePickerWidgetAnnotation.datePickerOptions = options;
 
     core.getAnnotationsList()
-      .filter(annot => annot instanceof DatePickerWidgetAnnotation)
-      .forEach(widget => {
+      .filter((annot) => annot instanceof DatePickerWidgetAnnotation)
+      .forEach((widget) => {
         widget.refreshDatePicker();
       });
   });

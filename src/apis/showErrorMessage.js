@@ -12,7 +12,7 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => message => {
+export default (store) => (message) => {
   console.warn('Deprecated since version 8.0. Please use displayErrorMessage instead');
   store.dispatch(actions.showErrorMessage(message));
 };

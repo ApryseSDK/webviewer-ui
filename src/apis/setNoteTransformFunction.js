@@ -43,7 +43,7 @@ Webviewer(...)
   .then(instance => {
     instance.UI.dangerouslySetNoteTransformFunction((wrapper, state, createElement) => {
       // Change the title of every note
-      wrapper.querySelector('.author-and-time>span').innerHTML = 'My custom note title';
+      wrapper.querySelector('.author-and-time > .author').innerHTML = 'My custom note title';
 
       // Add a button that alerts the user when clicked
       const button = createElement('button');
@@ -68,6 +68,6 @@ Webviewer(...)
     })
   });
  */
-export default store => noteTransformFunction => {
+export default (store) => (noteTransformFunction) => {
   store.dispatch(actions.setNoteTransformFunction(noteTransformFunction));
 };

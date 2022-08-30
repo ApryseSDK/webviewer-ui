@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 
 import DataElementWrapper from 'components/DataElementWrapper';
 
@@ -10,10 +11,20 @@ import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
 import './BookmarkOutlineContextMenuPopup.scss';
 import Button from '../Button';
 
+const propTypes = {
+  type: PropTypes.oneOf(['bookmark', 'outline']).isRequired,
+  anchorButton: PropTypes.string.isRequired,
+  shouldDisplayDeleteButton: PropTypes.bool,
+  onClosePopup: PropTypes.func.isRequired,
+  onRenameClick: PropTypes.func,
+  onSetDestinationClick: PropTypes.func,
+  onDeleteClick: PropTypes.func,
+};
 
 const BookmarkOutlineContextMenuPopup = ({
   type,
   anchorButton,
+  shouldDisplayDeleteButton,
   onClosePopup,
   onRenameClick,
   onSetDestinationClick,
@@ -26,9 +37,9 @@ const BookmarkOutlineContextMenuPopup = ({
   const Portal = ({ children, position }) => {
     const mount = document.getElementById('outline-edit-popup-portal');
     mount.style.position = 'absolute';
-    mount.style.top = position.top === 'auto' ? position.top : `${position.top}px`
-    mount.style.left = position.left === 'auto' ? position.left : `${position.left}px`
-    mount.style.right = position.right === 'auto' ? position.right : `${position.right}px`
+    mount.style.top = position.top === 'auto' ? position.top : `${position.top}px`;
+    mount.style.left = position.left === 'auto' ? position.left : `${position.left}px`;
+    mount.style.right = position.right === 'auto' ? position.right : `${position.right}px`;
     mount.style.zIndex = 999;
 
     return createPortal(children, mount);
@@ -39,7 +50,7 @@ const BookmarkOutlineContextMenuPopup = ({
     setPosition(position);
   }, [anchorButton]);
 
-  const onClickOutside = useCallback(e => {
+  const onClickOutside = useCallback((e) => {
     if (!containerRef?.current.contains(e.target)) {
       onClosePopup();
     }
@@ -60,29 +71,42 @@ const BookmarkOutlineContextMenuPopup = ({
           img="ic_edit_page_24px"
           label={t('action.rename')}
           ariaLabel={t('action.rename')}
-          onClick={e => onRenameClick(e)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onRenameClick();
+          }}
         />
-        {type === "outline" &&
+        {type === 'outline' &&
           <Button
             className="option-button"
-            dataElement={`${type}RenameButton`}
+            dataElement={`${type}SetDestinationButton`}
             img="icon-thumbtack"
             label={t('action.setDestination')}
             ariaLabel={t('action.setDestination')}
-            onClick={() => onSetDestinationClick(type)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onSetDestinationClick();
+            }}
           />
         }
-        <Button
-          className="option-button"
-          dataElement={`${type}DeleteButton`}
-          img="icon-delete-line"
-          label={t('action.delete')}
-          ariaLabel={t('action.delete')}
-          onClick={e => onDeleteClick(e)}
-        />
+        {shouldDisplayDeleteButton &&
+          <Button
+            className="option-button"
+            dataElement={`${type}DeleteButton`}
+            img="icon-delete-line"
+            label={t('action.delete')}
+            ariaLabel={t('action.delete')}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDeleteClick();
+            }}
+          />
+        }
       </DataElementWrapper>
     </Portal>
   );
-}
+};
+
+BookmarkOutlineContextMenuPopup.propTypes = propTypes;
 
 export default BookmarkOutlineContextMenuPopup;

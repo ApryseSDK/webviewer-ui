@@ -9,7 +9,7 @@ import getClassName from 'helpers/getClassName';
 import DataElementWrapper from 'components/DataElementWrapper';
 
 import './SearchPanel.scss';
-import useSearch from "hooks/useSearch";
+import useSearch from 'hooks/useSearch';
 
 const propTypes = {
   isOpen: PropTypes.bool,

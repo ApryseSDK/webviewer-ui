@@ -9,6 +9,6 @@ WebViewer(...)
     instance.UI.disableDesktopOnlyMode();
   });
  */
-export default store => () => {
+export default (store) => () => {
   store.dispatch(actions.setEnableDesktopOnlyMode(false));
 };

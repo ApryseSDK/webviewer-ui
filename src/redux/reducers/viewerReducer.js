@@ -1,6 +1,6 @@
 import localStorageManager from 'helpers/localStorageManager';
 
-export default initialState => (state = initialState, action) => {
+export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -134,6 +134,14 @@ export default initialState => (state = initialState, action) => {
           redactionPanel: payload.width,
         },
       };
+    case 'SET_TEXT_EDITING_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          textEditingPanel: payload.width,
+        },
+      };
     case 'SET_WV3D_PROPERTIES_PANEL_WIDTH':
       return {
         ...state,
@@ -141,6 +149,11 @@ export default initialState => (state = initialState, action) => {
           ...state.panelWidths,
           wv3dPropertiesPanel: payload.width,
         },
+      };
+    case 'SET_SELECTED_SCALE':
+      return {
+        ...state,
+        selectedScale: payload.selectedScale
       };
     case 'SET_DOCUMENT_CONTAINER_WIDTH':
       return {
@@ -167,7 +180,7 @@ export default initialState => (state = initialState, action) => {
       };
     case 'DISABLE_ELEMENTS': {
       const disabledElements = {};
-      payload.dataElements.forEach(dataElement => {
+      payload.dataElements.forEach((dataElement) => {
         disabledElements[dataElement] = {};
         disabledElements[dataElement].disabled = true;
         disabledElements[dataElement].priority = payload.priority;
@@ -191,7 +204,7 @@ export default initialState => (state = initialState, action) => {
       };
     case 'ENABLE_ELEMENTS': {
       const disabledElements = {};
-      payload.dataElements.forEach(dataElement => {
+      payload.dataElements.forEach((dataElement) => {
         disabledElements[dataElement] = {};
         disabledElements[dataElement].disabled = false;
         disabledElements[dataElement].priority = payload.priority;
@@ -253,10 +266,12 @@ export default initialState => (state = initialState, action) => {
       };
     case 'SET_OUTLINE_CONTROL_VISIBILITY':
       return { ...state, outlineControlVisibility: payload.outlineControlVisibility };
+    case 'SET_AUTO_EXPAND_OUTLINES':
+      return { ...state, autoExpandOutlines: payload.autoExpandOutlines };
     case 'SET_BOOKMARK_ICON_SHORTCUT_VISIBILITY':
       return { ...state, bookmarkIconShortcutVisibility: payload.bookmarkIconShortcutVisibility };
     case 'SET_OUTLINE_EDITING':
-      return { ...state, isOutlineEditing: payload.isOutlineEditing };
+      return { ...state, isOutlineEditingEnabled: payload.isOutlineEditingEnabled };
     case 'SET_NOTE_POPUP_ID':
       return { ...state, notePopupId: payload.id };
     case 'SET_NOTE_EDITING':
@@ -373,7 +388,7 @@ export default initialState => (state = initialState, action) => {
           ...state.colorMap,
           [colorMapKey]: {
             ...state.colorMap[colorMapKey],
-            currentPalette: colorPalette,
+            currentStyleTab: colorPalette,
           },
         },
       };
@@ -535,6 +550,27 @@ export default initialState => (state = initialState, action) => {
           content: payload.content,
         },
       };
+    case 'UPDATE_CALIBRATION_INFO':
+      return {
+        ...state,
+        calibrationInfo: {
+          isCalibration: payload.isCalibration,
+          tempScale: payload.tempScale,
+          previousToolName: payload.previousToolName || state.calibrationInfo.previousToolName,
+          isFractionalUnit: payload.isFractionalUnit,
+          defaultUnit: payload.defaultUnit
+        }
+      };
+    case 'SET_IS_ADDING_NEW_SCALE':
+      return {
+        ...state,
+        isAddingNewScale: payload.isAddingNewScale,
+      };
+    case 'UPDATE_DELETE_SCALE':
+      return {
+        ...state,
+        deleteScale: payload.deleteScale,
+      };
     case 'CLEAR_CURRENT_CONTENT_BEING_EDITED':
       return {
         ...state,
@@ -565,11 +601,11 @@ export default initialState => (state = initialState, action) => {
         ...state,
         multiPageManipulationControlsSmall: payload.items,
       };
-      case 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS_LARGE':
-        return {
-          ...state,
-          multiPageManipulationControlsLarge: payload.items,
-        };  
+    case 'SET_MULTI_PAGE_MANIPULATION_CONTROLS_ITEMS_LARGE':
+      return {
+        ...state,
+        multiPageManipulationControlsLarge: payload.items,
+      };
     case 'SET_THUMBNAIL_CONTROL_MENU_ITEMS':
       return {
         ...state,
@@ -583,8 +619,30 @@ export default initialState => (state = initialState, action) => {
       return { ...state, activeSoundAnnotation: payload.activeSoundAnnotation };
     case 'SET_ANNOTATION_FILTERS':
       return { ...state, annotationFilters: payload.annotationFilters };
-    case 'SET_ZOOM_STEP_FACTORS': 
+    case 'SET_ZOOM_STEP_FACTORS':
       return { ...state, zoomStepFactors: payload.zoomStepFactors };
+    case 'SET_CONTENT_EDITOR':
+      return { ...state, contentEditor: payload.contentEditor };
+    case 'SET_NOTES_PANEL_CUSTOM_HEADER_OPTIONS':
+      return { ...state, notesPanelCustomHeaderOptions: payload.notesPanelCustomHeaderOptions };
+    case 'SET_NOTES_PANEL_CUSTOM_EMPTY_PANEL':
+      return { ...state, notesPanelCustomEmptyPanel: payload.notesPanelCustomEmptyPanel };
+    case 'ADD_MEASUREMENT_SCALE_PRESET': {
+      const updatedState = { ...state };
+      const addIndex = payload.index || updatedState.measurementScalePreset[payload.measurementSystem].length;
+      updatedState.measurementScalePreset[payload.measurementSystem].splice(addIndex, 0, payload.newPreset);
+      return updatedState;
+    }
+    case 'REMOVE_MEASUREMENT_SCALE_PRESET': {
+      const updatedState = { ...state };
+      updatedState.measurementScalePreset[payload.measurementSystem].splice(payload.index, 1);
+      return updatedState;
+    }
+    case 'SET_IS_MULTIPLE_SCALE_MODE':
+      return {
+        ...state,
+        isMultipleScalesMode: payload.isMultipleScalesMode,
+      };
     default:
       return state;
   }

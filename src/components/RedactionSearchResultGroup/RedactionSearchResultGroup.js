@@ -14,20 +14,20 @@ const RedactionSearchResultGroup = (props) => {
   } = props;
 
   const { t } = useTranslation();
-  const groupResultIndexes = searchResults.map(result => result.index);
+  const groupResultIndexes = searchResults.map((result) => result.index);
   const [allItemsChecked, setAllItemsChecked] = useState(false);
 
   useEffect(() => {
     const allResultsSelected = groupResultIndexes.reduce((allSelected, currentIndex) => {
-      return selectedSearchResultIndexes[currentIndex] && allSelected
+      return selectedSearchResultIndexes[currentIndex] && allSelected;
     }, true);
 
     setAllItemsChecked(allResultsSelected);
-  }, [selectedSearchResultIndexes, groupResultIndexes])
+  }, [selectedSearchResultIndexes, groupResultIndexes]);
 
   const checkAllResults = useCallback((event) => {
     const checked = event.target.checked;
-    groupResultIndexes.forEach(resultIndex => {
+    groupResultIndexes.forEach((resultIndex) => {
       selectedSearchResultIndexes[resultIndex] = checked;
     });
     setAllItemsChecked(checked);
@@ -37,7 +37,7 @@ const RedactionSearchResultGroup = (props) => {
   const checkResult = useCallback((event, index) => {
     const checked = event.target.checked;
     selectedSearchResultIndexes[index] = checked;
-    setSelectedSearchResultIndexes({ ...selectedSearchResultIndexes })
+    setSelectedSearchResultIndexes({ ...selectedSearchResultIndexes });
   }, [selectedSearchResultIndexes]);
 
   const header = () => {
@@ -46,9 +46,9 @@ const RedactionSearchResultGroup = (props) => {
         checked={allItemsChecked}
         onChange={checkAllResults}
         label={`${t('option.shared.page')} ${pageNumber}`}
-        className='redaction-search-results-page-number'
+        className="redaction-search-results-page-number"
       />
-    )
+    );
   };
 
   const style = {
@@ -56,7 +56,7 @@ const RedactionSearchResultGroup = (props) => {
     paddingRight: '12px',
     paddingTop: '8px',
     paddingBottom: '4px',
-  }
+  };
 
   return (
     <CollapsiblePanelGroup header={header} role="row" style={style}>
@@ -71,7 +71,7 @@ const RedactionSearchResultGroup = (props) => {
         )}
       </div>
     </CollapsiblePanelGroup>
-  )
+  );
 };
 
 export default RedactionSearchResultGroup;

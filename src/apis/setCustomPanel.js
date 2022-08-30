@@ -39,6 +39,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => customPanel => {
+export default (store) => (customPanel) => {
   store.dispatch(actions.setCustomPanel(customPanel));
 };

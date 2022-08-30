@@ -89,7 +89,7 @@
 import { undoButton, redoButton } from 'helpers/commonToolbarElements';
 import actions from 'actions';
 
-export default store => toolbarGroup => {
+export default (store) => (toolbarGroup) => {
   if (toolbarGroup.useDefaultElements) {
     toolbarGroup.children = [
       { type: 'spacer' },

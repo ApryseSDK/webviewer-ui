@@ -75,7 +75,7 @@ class ReaderModeViewer extends React.PureComponent {
         <div
           className="reader-mode-viewer"
           ref={this.viewer}
-          style={{ height: "100%", width: "100%" }}
+          style={{ height: '100%', width: '100%' }}
         >
         </div>
         {this.state.showStylePopup && (
@@ -96,6 +96,7 @@ class ReaderModeViewer extends React.PureComponent {
   renderDocument = () => {
     import('@pdftron/webviewer-reading-mode').then(({ default: WebViewerReadingMode }) => {
       if (!this.wvReadingMode) {
+        // eslint-disable-next-line no-undef
         this.wvReadingMode = WebViewerReadingMode.initialize(PDFNet);
       } else {
         this.wvReadingMode.unmount();
@@ -120,7 +121,9 @@ class ReaderModeViewer extends React.PureComponent {
   }
 
   setZoom = (zoom) => {
-    if (!this.wvReadingMode) return;
+    if (!this.wvReadingMode) {
+      return;
+    }
     this.wvReadingMode.setZoom(zoom);
     const pageWidth = core.getDocumentViewer().getPageWidth(1);
     const readerModeElement = this.viewer.current.firstChild;
@@ -140,20 +143,27 @@ class ReaderModeViewer extends React.PureComponent {
   }
 
   getAnnotTypeFromToolMode = (toolMode) => {
+    // eslint-disable-next-line no-undef
+    const annotationTypes = WebViewerReadingMode.AnnotationType;
     if (toolMode instanceof window.Core.Tools.TextHighlightCreateTool) {
-      return WebViewerReadingMode.AnnotationType.Highlight;
-    } else if (toolMode instanceof window.Core.Tools.TextUnderlineCreateTool) {
-      return WebViewerReadingMode.AnnotationType.Underline;
-    } else if (toolMode instanceof window.Core.Tools.TextStrikeoutCreateTool) {
-      return WebViewerReadingMode.AnnotationType.Strikeout;
-    } else if (toolMode instanceof window.Core.Tools.TextSquigglyCreateTool) {
-      return WebViewerReadingMode.AnnotationType.Squiggly;
+      return annotationTypes.Highlight;
+    }
+    if (toolMode instanceof window.Core.Tools.TextUnderlineCreateTool) {
+      return annotationTypes.Underline;
+    }
+    if (toolMode instanceof window.Core.Tools.TextStrikeoutCreateTool) {
+      return annotationTypes.Strikeout;
+    }
+    if (toolMode instanceof window.Core.Tools.TextSquigglyCreateTool) {
+      return annotationTypes.Squiggly;
     }
     return undefined;
   }
 
   setAddAnnotConfig = () => {
-    if (!this.wvReadingMode) return;
+    if (!this.wvReadingMode) {
+      return;
+    }
     const toolMode = core.getToolMode();
     const annotType = this.getAnnotTypeFromToolMode(toolMode);
     if (annotType) {
@@ -184,16 +194,21 @@ class ReaderModeViewer extends React.PureComponent {
   }
 
   getColorMapKey(annotType) {
-    if (annotType === WebViewerReadingMode.AnnotationType.Highlight) {
+    // eslint-disable-next-line no-undef
+    const annotationTypes = WebViewerReadingMode.AnnotationType;
+    if (annotType === annotationTypes.Highlight) {
       return 'highlight';
-    } else if (annotType === WebViewerReadingMode.AnnotationType.Underline) {
+    }
+    if (annotType === annotationTypes.Underline) {
       return 'underline';
-    } else if (annotType === WebViewerReadingMode.AnnotationType.Strikeout) {
+    }
+    if (annotType === annotationTypes.Strikeout) {
       return 'strikeout';
-    } else if (annotType === WebViewerReadingMode.AnnotationType.Squiggly) {
+    }
+    if (annotType === annotationTypes.Squiggly) {
       return 'squiggly';
     }
-    return "";
+    return '';
   }
 
   handleColorChange = (property, color) => {
@@ -234,7 +249,7 @@ class ReaderModeViewer extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   containerWidth: selectors.getDocumentContainerWidth(state),
   enableFadePageNavigation: selectors.shouldFadePageNavigationComponent(state)
 });

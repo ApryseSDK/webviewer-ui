@@ -9,7 +9,7 @@ export const undoButton = {
   onClick: () => {
     core.undo();
   },
-  isNotClickableSelector: state => !state.viewer.canUndo
+  isNotClickableSelector: (state) => !state.viewer.canUndo
 };
 
 export const redoButton = {
@@ -20,5 +20,5 @@ export const redoButton = {
   onClick: () => {
     core.redo();
   },
-  isNotClickableSelector: state => !state.viewer.canRedo
+  isNotClickableSelector: (state) => !state.viewer.canRedo
 };

@@ -1,7 +1,7 @@
 import React from 'react';
-import SignatureModalComponent from './SignatureModal'
+import SignatureModalComponent from './SignatureModal';
 import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 
 export default {
   title: 'Components/SignatureModal',
@@ -34,7 +34,7 @@ const store = configureStore({
 
 export const SignatureModal = () => (
   <Provider store={store}>
-    <SignatureModalComponent isOpen={true} />
+    <SignatureModalComponent isOpen />
   </Provider>
 );
 
@@ -56,7 +56,7 @@ const imageTabState = {
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
   },
-}
+};
 
 const imageStore = configureStore({
   reducer: () => imageTabState
@@ -64,6 +64,6 @@ const imageStore = configureStore({
 
 export const SignatureModalImageTab = () => (
   <Provider store={imageStore}>
-    <SignatureModalComponent isOpen={true} />
+    <SignatureModalComponent isOpen />
   </Provider>
 );

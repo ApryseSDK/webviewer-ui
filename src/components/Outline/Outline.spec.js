@@ -14,15 +14,15 @@ describe('Outline', () => {
   it('Clicks on the arrow of a parent outline should expand the child outlines', () => {
     const { container } = render(<BasicOutline />);
 
-    let outlineElements = container.querySelectorAll('.Outline');
+    let outlineElements = container.querySelectorAll('.outline-drag-container');
     expect(outlineElements.length).toBe(1);
 
-    const arrowElements = container.querySelectorAll('.arrow');
-    expect(arrowElements.length).toBe(1);
+    const arrowButtons = container.querySelectorAll('.outline-treeview-toggle .Button');
+    expect(arrowButtons.length).toBe(1);
 
-    fireEvent.click(arrowElements[0]);
+    fireEvent.click(arrowButtons[0]);
 
-    outlineElements = container.querySelectorAll('.Outline');
+    outlineElements = container.querySelectorAll('.outline-drag-container');
     expect(outlineElements.length).toBe(2);
   });
 });

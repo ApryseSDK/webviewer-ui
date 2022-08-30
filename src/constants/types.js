@@ -1,4 +1,5 @@
 export const workerTypes = {
+  IMAGE: 'image',
   PDF: 'pdf',
   OFFICE: 'office',
   LEGACY_OFFICE: 'legacyOffice',

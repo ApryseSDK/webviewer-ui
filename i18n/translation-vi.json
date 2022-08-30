@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Thêm đoạn văn",
     "add": "Thêm vào",
     "apply": "Áp dụng",
     "applyAll": "Áp dụng tất cả",
@@ -144,7 +145,8 @@
     "other": "Khác",
     "3D": "3D",
     "sound": "Âm thanh",
-    "changeView": "Thay đổi góc nhìn"
+    "changeView": "Thay đổi góc nhìn",
+    "newImage": "Hình ảnh mới"
   },
   "rubberStamp": {
     "Approved": "Đã chấp thuận",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Chèn",
       "toolbarGroup-Measure": "Đo",
       "toolbarGroup-Edit": "Chỉnh sửa",
+      "toolbarGroup-EditText": "Chỉnh sửa văn bản",
       "toolbarGroup-FillAndSign": "Điền và Ký",
       "toolbarGroup-Forms": "Biểu mẫu",
       "toolbarGroup-Redact": "Biên tập"
@@ -878,6 +881,10 @@
       "cancelMessage": "Bạn có chắc chắn muốn hủy việc cắt xén tất cả các trang đã chọn không?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Đoạn văn",
+    "text": "Chữ"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Bắt đầu biên tập lại bằng cách đánh dấu văn bản, vùng, trang hoặc thực hiện tìm kiếm.",
     "redactionSearchPlaceholder": "Bổ sung theo tìm kiếm từ khóa hoặc mẫu",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Thuộc tính",
     "miscValuesHeader": "Tất cả",
-    "emptyPanelMessage": "Chọn một phần tử để xem các thuộc tính của nó"
+    "emptyPanelMessage": "Chọn một phần tử để xem các thuộc tính của nó."
   },
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"

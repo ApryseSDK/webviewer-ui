@@ -4,7 +4,7 @@ import actions from 'actions';
 
 const { ToolNames } = window.Core.Tools;
 
-export default dispatch => dotStampAnnotation => {
+export default (dispatch) => (dotStampAnnotation) => {
   core.setToolMode(defaultTool);
   core.getTool(ToolNames.FORM_FILL_DOT).hidePreview();
   dispatch(actions.setActiveToolGroup(''));

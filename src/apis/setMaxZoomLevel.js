@@ -11,4 +11,4 @@ WebViewer(...)
 
 import setMaxZoomLevel from 'helpers/setMaxZoomLevel';
 
-export default store => setMaxZoomLevel(store.dispatch);
+export default (store) => setMaxZoomLevel(store.dispatch);

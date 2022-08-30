@@ -16,6 +16,7 @@ const dataElements = [
   'toolbarGroup-Shapes',
   'toolbarGroup-Insert',
   'toolbarGroup-Edit',
+  'toolbarGroup-EditText',
   'toolbarGroup-FillAndSign',
   'toolbarGroup-Forms',
   'stickyToolGroupButton',
@@ -28,7 +29,7 @@ const dataElements = [
   'eraserToolButton'
 ];
 
-export const enterReaderMode = store => {
+export const enterReaderMode = (store) => {
   const state = store.getState();
   const PDFNet = window.Core.PDFNet;
   PDFNet.initialize().then(() => {
@@ -65,7 +66,7 @@ export const enterReaderMode = store => {
   });
 };
 
-export const exitReaderMode = async store => {
+export const exitReaderMode = async (store) => {
   const PDFNet = window.Core.PDFNet;
 
   // Exit Reader Mode

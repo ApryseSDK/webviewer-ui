@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import core from 'core';
 import './FilePickerPanel.scss';
@@ -17,7 +17,7 @@ const FilePickerPanel = ({ onFileProcessed }) => {
     if (event.key === 'Enter') {
       document.getElementById('file-picker-two').click();
     }
-  }
+  };
 
   const onChange = (e) => {
     const files = e.target.files;
@@ -26,16 +26,16 @@ const FilePickerPanel = ({ onFileProcessed }) => {
     }
   };
 
-  const handleDragEnter = e => {
+  const handleDragEnter = (e) => {
     e.preventDefault();
     setIsDragging(true);
   };
 
-  const handleDragOver = e => {
+  const handleDragOver = (e) => {
     e.preventDefault();
   };
 
-  const handleDragLeave = e => {
+  const handleDragLeave = (e) => {
     e.preventDefault();
 
     if (!e.target.parentNode.contains(e.relatedTarget)) {
@@ -43,7 +43,7 @@ const FilePickerPanel = ({ onFileProcessed }) => {
     }
   };
 
-  const handleDragExit = e => {
+  const handleDragExit = (e) => {
     e.preventDefault();
     setIsDragging(false);
   };
@@ -65,7 +65,8 @@ const FilePickerPanel = ({ onFileProcessed }) => {
   // recursive function with promise for merging files
   // could maybe live in a helper file
   async function mergeDocuments(sourceArray, nextCount = 1, document = null) {
-    return new Promise(async function (resolve, reject) {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve) => {
       if (!document) {
         document = await core.createDocument(sourceArray[0]);
       }
@@ -74,18 +75,18 @@ const FilePickerPanel = ({ onFileProcessed }) => {
       const pages = Array.from({ length: newDocumentPageCount }, (v, k) => k + 1);
       const pageIndexToInsert = document.getPageCount() + 1;
 
-      document.insertPages(newDocument, pages, pageIndexToInsert)
-        .then(result => resolve({
+      document.insertPages(newDocument, pages, pageIndexToInsert).then(() => {
+        resolve({
           next: sourceArray.length - 1 > nextCount,
-          document: document,
-        })
-        );
-    }).then(response => {
+          document,
+        });
+      });
+    }).then((response) => {
       return response.next ?
         mergeDocuments(sourceArray, nextCount + 1, response.document) :
         response.document;
-    }).catch(error => {
-      setErrorMessage(error)
+    }).catch((error) => {
+      setErrorMessage(error);
     });
   }
 
@@ -111,12 +112,13 @@ const FilePickerPanel = ({ onFileProcessed }) => {
               className="md-row modal-btn-file"
               tabIndex="0"
               onKeyDown={onKeyDown}
-              onClick={onClick}>{t('option.pageReplacementModal.chooseFile')}
+              onClick={onClick}
+            >{t('option.pageReplacementModal.chooseFile')}
               <input
                 id="file-picker-two"
                 style={{ display: 'none' }}
                 type="file"
-                accept={acceptFormats.map(format => `.${format}`,).join(', ')}
+                accept={acceptFormats.map((format) => `.${format}`,).join(', ')}
                 onChange={onChange}
               />
             </div>
