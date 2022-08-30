@@ -46,11 +46,9 @@ let composeEnhancer = function noopStoreComposeEnhancer(middleware) {
 if (process.env.NODE_ENV === 'development') {
   const isSpamDisabled = localStorage.getItem('spamDisabled') === 'true';
   if (!isSpamDisabled) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
     const { createLogger } = require('redux-logger');
     middleware.push(createLogger({ collapsed: true }));
   }
-  // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
   const { composeWithDevTools } = require('redux-devtools-extension/logOnlyInProduction');
   composeEnhancer = composeWithDevTools({});
 }
