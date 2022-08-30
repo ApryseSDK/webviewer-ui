@@ -20,7 +20,7 @@ import './RichTextPopup.scss';
 
 const RichTextPopup = () => {
   const [isDisabled, isOpen, isPaletteDisabled, customColors, isInDesktopOnlyMode] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementDisabled(state, 'richTextPopup'),
       selectors.isElementOpen(state, 'richTextPopup'),
       selectors.isElementDisabled(state, 'colorPalette'),
@@ -40,15 +40,14 @@ const RichTextPopup = () => {
   const symbolsAreaHeight = 150; // max height for the math symbols area
 
   useEffect(() => {
-    const handleSelectionChange = range => {
+    const handleSelectionChange = (range) => {
       if (range && editorRef.current) {
         setFormat(getFormat(range));
       }
     };
 
     core.addEventListener('editorSelectionChanged', handleSelectionChange);
-    return () =>
-      core.removeEventListener('editorSelectionChanged', handleSelectionChange);
+    return () => core.removeEventListener('editorSelectionChanged', handleSelectionChange);
   }, []);
 
   useEffect(() => {
@@ -65,31 +64,36 @@ const RichTextPopup = () => {
     };
 
     core.addEventListener('editorTextChanged', handleTextChange);
-    return () =>
-      core.removeEventListener('editorTextChanged', handleTextChange);
+    return () => core.removeEventListener('editorTextChanged', handleTextChange);
   }, []);
 
   useEffect(() => {
     const handleEditorFocus = (editor, annotation) => {
-      if (
-        annotation instanceof window.Annotations.FreeTextAnnotation &&
-        popupRef.current
-      ) {
-        const position = getRichTextPopupPosition(
-          annotation,
-          popupRef,
-        );
+      // Use setTimeout to make sure Free Text annotations have time to resize before opening popup
+      setTimeout(() => {
+        if (
+          annotation instanceof window.Annotations.FreeTextAnnotation &&
+          popupRef.current &&
+          !annotation.getContentEditAnnotationId() &&
+          annotation.ToolName !== window.Core.Tools.ToolNames.ADD_PARAGRAPH
+        ) {
+          const position = getRichTextPopupPosition(
+            annotation,
+            popupRef,
+          );
 
-        setCssPosition(position);
-        // when the editor is focused, we want to reset any previous drag movements so that
-        // the popup will be positioned centered to the editor
-        setDraggablePosition({ x: 0, y: 0 });
+          setCssPosition(position);
+          // when the editor is focused, we want to reset any previous drag movements so that
+          // the popup will be positioned centered to the editor
+          setDraggablePosition({ x: 0, y: 0 });
 
-        editorRef.current = editor;
-        annotationRef.current = annotation;
+          editorRef.current = editor;
+          annotationRef.current = annotation;
 
-        dispatch(actions.openElements(['richTextPopup']));
-      }
+          setFormat(getFormat(editorRef.current?.getSelection()));
+          dispatch(actions.openElements(['richTextPopup']));
+        }
+      }, 0);
     };
 
     core.addEventListener('editorFocus', handleEditorFocus);
@@ -117,7 +121,7 @@ const RichTextPopup = () => {
     }
   }, [symbolsVisible]);
 
-  const getFormat = range => {
+  const getFormat = (range) => {
     if (!range) {
       return {};
     }
@@ -136,7 +140,7 @@ const RichTextPopup = () => {
     return format;
   };
 
-  const handleTextFormatChange = format => () => {
+  const handleTextFormatChange = (format) => () => {
     const { index, length } = editorRef.current.getSelection();
     const currentFormat = editorRef.current.getFormat(index, length);
 
@@ -169,7 +173,7 @@ const RichTextPopup = () => {
     setDraggablePosition({ x, y });
   };
 
-  const insertSymbols = symbol => {
+  const insertSymbols = (symbol) => {
     const { index, length } = editorRef.current.getSelection();
     // if user selected some text, then we want to first delete the selected content
     if (length > 0) {
@@ -191,7 +195,7 @@ const RichTextPopup = () => {
       cancel=".Button, .cell, .mathSymbolsContainer"
       // prevent the blur event from being triggered when clicking on toolbar buttons
       // otherwise we can't style the text since a blur event is triggered before a click event
-      onMouseDown={e => {
+      onMouseDown={(e) => {
         if (e.type !== 'touchstart') {
           e.preventDefault();
         }

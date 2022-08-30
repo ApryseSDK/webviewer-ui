@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Ajouter un paragraphe",
     "add": "Ajouter",
     "apply": "Appliquer",
     "applyAll": "Appliquer tout",
@@ -144,7 +145,8 @@
     "other": "Autre",
     "3D": "3D",
     "sound": "Sonner",
-    "changeView": "Change de vue"
+    "changeView": "Change de vue",
+    "newImage": "Nouvelle image"
   },
   "rubberStamp": {
     "Approved": "Approuvée",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Insérer",
       "toolbarGroup-Measure": "Mesure",
       "toolbarGroup-Edit": "Éditer",
+      "toolbarGroup-EditText": "Éditer le texte",
       "toolbarGroup-FillAndSign": "Remplir et signer",
       "toolbarGroup-Forms": "Formulaire",
       "toolbarGroup-Redact": "Rédiger"
@@ -878,6 +881,10 @@
       "cancelMessage": "Voulez-vous vraiment annuler le recadrage de toutes les pages sélectionnées ?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Paragraphe",
+    "text": "Texte"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Commencez à rédiger en marquant du texte, des régions, des pages ou en effectuant une recherche.",
     "redactionSearchPlaceholder": "Ajouter par recherche par mot-clé ou modèles",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Propriétés",
     "miscValuesHeader": "Tous",
-    "emptyPanelMessage": "Sélectionnez un élément pour afficher ses propriétés"
+    "emptyPanelMessage": "Sélectionnez un élément pour afficher ses propriétés."
   },
   "languageModal": {
     "selectLanguage": "Choisir la langue"

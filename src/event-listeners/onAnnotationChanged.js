@@ -17,8 +17,8 @@ export default () => (annotations, action, info) => {
   }
 };
 
-const deleteReplies = annotations => {
-  annotations.forEach(annotation => {
+const deleteReplies = (annotations) => {
+  annotations.forEach((annotation) => {
     core.deleteAnnotations(annotation.getReplies(), { 'imported': false, 'force': true });
   });
 };

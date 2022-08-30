@@ -3,7 +3,7 @@ import { render, getByText } from '@testing-library/react';
 import NoteHeader from './NoteHeader';
 import * as reactRedux from 'react-redux';
 import { Basic, testProps, } from './NoteHeader.stories';
-import { createStore } from "redux";
+import { createStore } from 'redux';
 
 const BasicNoteHeader = withI18n(Basic);
 const TestNoteHeader = withProviders(NoteHeader);

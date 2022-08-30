@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import getHashParameters from 'helpers/getHashParameters';
 
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
@@ -19,10 +18,8 @@ import selectors from 'selectors';
 import './TextPopup.scss';
 
 const TextPopup = ({ t }) => {
-  const fullAPI = !!getHashParameters('pdfnet', false);
-
   const [isDisabled, isOpen, popupItems] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementDisabled(state, 'textPopup'),
       selectors.isElementOpen(state, 'textPopup'),
       selectors.getPopupItems(state, 'textPopup'),
@@ -114,7 +111,8 @@ const TextPopup = ({ t }) => {
           <ActionButton
             dataElement="textRedactToolButton"
             title="option.redaction.markForRedaction"
-            img="ic_annotation_add_redact_black_24px"
+            fillColor="868E96"
+            img="icon-tool-select-area-redaction"
             onClick={() => createTextAnnotationAndSelect(dispatch, Annotations.RedactionAnnotation)}
             role="option"
           />

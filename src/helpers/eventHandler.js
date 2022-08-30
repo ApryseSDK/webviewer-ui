@@ -4,7 +4,7 @@ import core from 'core';
 
 const { ToolNames } = window.Core.Tools;
 
-export default store => {
+export default (store) => {
   const { dispatch } = store;
   const onBeforeDocumentLoaded = eventListeners.onBeforeDocumentLoaded(dispatch);
   const onCheckStampAnnotationAdded = eventListeners.onCheckStampAnnotationAdded(dispatch);
@@ -38,6 +38,7 @@ export default store => {
   const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch);
   const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch, store);
   const onDigitalSignatureAvailable = eventListeners.onDigitalSignatureAvailable(dispatch);
+  const onImageContentAdded = eventListeners.onImageContentAdded(dispatch);
 
   return {
     addEventHandlers: () => {
@@ -76,6 +77,7 @@ export default store => {
       core.getTool('AnnotationCreateFileAttachment').addEventListener('annotationAdded', onFileAttachmentAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CROSS).addEventListener('annotationAdded', onCrossStampAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CHECKMARK).addEventListener('annotationAdded', onCheckStampAnnotationAdded);
+      core.getTool(ToolNames.ADD_IMAGE_CONTENT).addEventListener('annotationAdded', onImageContentAdded);
       document.addEventListener('fullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
@@ -111,6 +113,7 @@ export default store => {
       core.getTool('AnnotationCreateFileAttachment').removeEventListener('annotationAdded', onFileAttachmentAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CROSS).removeEventListener('annotationAdded', onCrossStampAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CHECKMARK).removeEventListener('annotationAdded', onCheckStampAnnotationAdded);
+      core.getTool(ToolNames.ADD_IMAGE_CONTENT).removeEventListener('annotationAdded', onImageContentAdded);
       hotkeysManager.off();
       document.removeEventListener('fullscreenchange', onFullScreenChange);
       document.removeEventListener('mozfullscreenchange', onFullScreenChange);

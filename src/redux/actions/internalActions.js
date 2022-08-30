@@ -108,6 +108,18 @@ export const setIsMultipleViewerMerging = (isMultipleViewerMerging = false) => (
   type: 'SET_MULTI_VIEWER_MERGING',
   payload: { isMultipleViewerMerging },
 });
+export const updateCalibrationInfo = ({ isCalibration = true, tempScale = '', previousToolName, isFractionalUnit = false, defaultUnit = '' }) => ({
+  type: 'UPDATE_CALIBRATION_INFO',
+  payload: { isCalibration, tempScale, previousToolName, isFractionalUnit, defaultUnit }
+});
+export const setIsAddingNewScale = (isAddingNewScale = false) => ({
+  type: 'SET_IS_ADDING_NEW_SCALE',
+  payload: { isAddingNewScale }
+});
+export const updateDeleteScale = (deleteScale = '') => ({
+  type: 'UPDATE_DELETE_SCALE',
+  payload: { deleteScale }
+});
 export const setEnableNotesPanelVirtualizedList = (enableNotesPanelVirtualizedList = true) => ({
   type: 'SET_ENABLE_NOTE_PANEL_VIRTUALIZED_LIST',
   payload: { enableNotesPanelVirtualizedList },
@@ -175,6 +187,12 @@ export const setActiveToolGroup = (toolGroup) => (dispatch, getState) => {
     payload: { toolGroup, toolbarGroup },
   });
 };
+
+export const setSelectedScale = (selectedScale) => ({
+  type: 'SET_SELECTED_SCALE',
+  payload: { selectedScale }
+});
+
 export const setNotePopupId = (id) => ({
   type: 'SET_NOTE_POPUP_ID',
   payload: { id },
@@ -338,9 +356,13 @@ export const setOutlines = (outlines) => ({
   type: 'SET_OUTLINES',
   payload: { outlines },
 });
-export const setIsOutlineEditing = (isOutlineEditing = true) => ({
+export const setIsOutlineEditing = (isOutlineEditingEnabled = true) => ({
   type: 'SET_OUTLINE_EDITING',
-  payload: { isOutlineEditing },
+  payload: { isOutlineEditingEnabled },
+});
+export const setAutoExpandOutlines = (autoExpandOutlines = false) => ({
+  type: 'SET_AUTO_EXPAND_OUTLINES',
+  payload: { autoExpandOutlines },
 });
 export const setBookmarks = (bookmarks) => ({
   type: 'SET_BOOKMARKS',
@@ -511,4 +533,9 @@ export const setActiveSoundAnnotation = (activeSoundAnnotation) => ({
 export const setAnnotationFilters = (annotationFilters) => ({
   type: 'SET_ANNOTATION_FILTERS',
   payload: { annotationFilters }
+});
+
+export const setContentEditor = (contentEditor) => ({
+  type: 'SET_CONTENT_EDITOR',
+  payload: { contentEditor }
 });

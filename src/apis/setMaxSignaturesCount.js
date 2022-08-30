@@ -11,6 +11,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => maxSignaturesCount => {
+export default (store) => (maxSignaturesCount) => {
   store.dispatch(actions.setMaxSignaturesCount(maxSignaturesCount));
 };

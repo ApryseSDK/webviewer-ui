@@ -72,7 +72,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
 
   const extensionRegExp = /(?:\.([^.?]+))?$/;
 
-  const handleFileChange = async file => {
+  const handleFileChange = async (file) => {
     setError(null);
     if (!file) {
       return;
@@ -91,10 +91,10 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
     await handleAddTab(file, ext, filename, size);
   };
 
-  const handleURLChange = async url => {
+  const handleURLChange = async (url) => {
     setError(null);
     setSrc(url.trim());
-    const filename = url.substring(url.lastIndexOf('/')+1).split('?')[0];
+    const filename = url.substring(url.lastIndexOf('/') + 1).split('?')[0];
     setFilename(filename);
     setExtension(extensionRegExp.exec(filename)[1]);
     setSize(null);
@@ -112,7 +112,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal}>
       <div className={modalClass} data-element="OpenFileModal" onMouseDown={closeModal}>
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
+        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
 
           <Tabs className="page-replacement-tabs" id="pageReplacementModal">
             <div className="header-container">
@@ -143,7 +143,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
             <TabPanel dataElement="urlInputPanel">
               <div className="panel-body">
                 <FileInputPanel
-                  onFileSelect={url => {
+                  onFileSelect={(url) => {
                     handleURLChange(url);
                   }}
                   acceptFormats={acceptFormats}
@@ -156,7 +156,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
             <TabPanel dataElement="filePickerPanel">
               <div className="panel-body">
                 <FilePickerPanel
-                  onFileProcessed={file => handleFileChange(file)}
+                  onFileProcessed={(file) => handleFileChange(file)}
                 />
               </div>
             </TabPanel>

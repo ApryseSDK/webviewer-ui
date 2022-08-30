@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Agregar párrafo",
     "add": "Agregar",
     "apply": "Aplicar",
     "applyAll": "Aplicar todo",
@@ -144,7 +145,8 @@
     "other": "Otro",
     "3D": "3D",
     "sound": "Sonar",
-    "changeView": "Cambio Vista"
+    "changeView": "Cambio Vista",
+    "newImage": "Nueva imagen"
   },
   "rubberStamp": {
     "Approved": "Aprobada",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Insertar",
       "toolbarGroup-Measure": "Medida",
       "toolbarGroup-Edit": "Editar",
+      "toolbarGroup-EditText": "Editar texto",
       "toolbarGroup-FillAndSign": "Llenar y firmar",
       "toolbarGroup-Forms": "Formularios",
       "toolbarGroup-Redact": "Redactar"
@@ -878,6 +881,10 @@
       "cancelMessage": "¿Está seguro de que desea cancelar el recorte de todas las páginas seleccionadas?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Párrafo",
+    "text": "Texto"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Comience a redactar marcando texto, regiones, páginas o realizando una búsqueda.",
     "redactionSearchPlaceholder": "Agregar por búsqueda de palabra clave o patrones",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Propiedades",
     "miscValuesHeader": "Todos",
-    "emptyPanelMessage": "Selecciona un elemento para ver sus propiedades"
+    "emptyPanelMessage": "Selecciona un elemento para ver sus propiedades."
   },
   "languageModal": {
     "selectLanguage": "Seleccione el idioma"

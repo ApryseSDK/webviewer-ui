@@ -10,9 +10,9 @@ const NoteUnpostedCommentIndicatorContainer = (props) => {
   const [hasUnpostedReply, setHasUnpostedReply] = useState(false);
 
   useEffect(() => {
-    setHasUnpostedComment(pendingEditTextMap[annotationId]?.length > 0)
-    setHasUnpostedReply(pendingReplyMap[annotationId]?.length > 0)
-  }, [pendingEditTextMap, pendingReplyMap])
+    setHasUnpostedComment(pendingEditTextMap[annotationId]?.length > 0);
+    setHasUnpostedReply(pendingReplyMap[annotationId]?.length > 0);
+  }, [pendingEditTextMap, pendingReplyMap]);
 
   return (
     hasUnpostedComment || hasUnpostedReply ?

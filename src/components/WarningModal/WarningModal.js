@@ -26,7 +26,7 @@ const WarningModal = () => {
     isDisabled,
     isOpen,
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.getWarningTitle(state) || '',
       selectors.getWarningMessage(state),
       selectors.getWarningConfirmEvent(state),
@@ -57,6 +57,20 @@ const WarningModal = () => {
     };
   }, []);
 
+  const getMessageWithNewLine = () => {
+    if (message.includes?.('\n')) {
+      return message.split('\n').map((str, index) => (
+        <React.Fragment key={index}>
+          {index === 0
+            ? <>{str}</>
+            : <><br />{str}</>
+          }
+        </React.Fragment>
+      ));
+    }
+    return message;
+  };
+
   const cancel = async () => {
     onCancel && await onCancel();
     closeModal();
@@ -77,7 +91,7 @@ const WarningModal = () => {
   return (
     <Swipeable onSwipedUp={cancel} onSwipedDown={cancel} preventDefaultTouchmoveEvent>
       <div className={className} onMouseDown={cancel}>
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
+        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
           <div className="swipe-indicator" />
           <div className="header">
             <div className="header-text">
@@ -91,7 +105,9 @@ const WarningModal = () => {
             />
           </div>
           <div className="divider"/>
-          <div className="body">{message}</div>
+          <div className="body">
+            {getMessageWithNewLine()}
+          </div>
           <div className="divider"/>
           <div className="footer">
             {onSecondary && (

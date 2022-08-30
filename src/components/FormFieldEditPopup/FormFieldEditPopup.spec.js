@@ -58,17 +58,20 @@ const createMockAnnotation = () => {
   return {
     X: 0,
     Y: 0,
-    setWidth: (newWidth) => width = parseInt(newWidth),
-    setHeight: (newHeight) => height = parseInt(newHeight),
+    setWidth: (newWidth) => {
+      width = parseInt(newWidth);
+    },
+    setHeight: (newHeight) => {
+      height = parseInt(newHeight);
+    },
     get Width() {
       return width;
     },
     get Height() {
       return height;
     }
-  }
+  };
 };
-
 
 
 describe('FormFieldEditPopup', () => {
@@ -85,8 +88,8 @@ describe('FormFieldEditPopup', () => {
           fields={inputFields}
           flags={sampleFlags}
           closeFormFieldEditPopup={noop}
-          isOpen={true}
-          isValid={true}
+          isOpen
+          isValid
           annotation={createMockAnnotation()}
           redrawAnnotation={noop}
           getPageHeight={noop}
@@ -102,8 +105,8 @@ describe('FormFieldEditPopup', () => {
           fields={selectField}
           flags={sampleFlags}
           closeFormFieldEditPopup={noop}
-          isOpen={true}
-          isValid={true}
+          isOpen
+          isValid
           annotation={createMockAnnotation()}
           redrawAnnotation={noop}
           getPageHeight={noop}
@@ -120,8 +123,8 @@ describe('FormFieldEditPopup', () => {
           fields={inputFields}
           flags={sampleFlags}
           closeFormFieldEditPopup={noop}
-          isOpen={true}
-          isValid={true}
+          isOpen
+          isValid
           annotation={createMockAnnotation()}
           redrawAnnotation={noop}
           getPageHeight={noop}
@@ -138,8 +141,8 @@ describe('FormFieldEditPopup', () => {
           fields={inputFields}
           flags={sampleFlags}
           closeFormFieldEditPopup={closeFormFieldEditPopup}
-          isOpen={true}
-          isValid={true}
+          isOpen
+          isValid
           annotation={createMockAnnotation()}
           redrawAnnotation={noop}
           getPageHeight={noop}
@@ -158,8 +161,8 @@ describe('FormFieldEditPopup', () => {
           fields={inputFields}
           flags={sampleFlags}
           closeFormFieldEditPopup={noop}
-          isOpen={true}
-          isValid={false} //NOT VALID!!
+          isOpen
+          isValid={false} // NOT VALID!!
           annotation={createMockAnnotation()}
           redrawAnnotation={noop}
           getPageHeight={noop}
@@ -168,7 +171,7 @@ describe('FormFieldEditPopup', () => {
       );
 
       expect(container.querySelector('.ui__input--message-warning')).toBeInTheDocument();
-    })
+    });
 
     it('Should render select with warning message if passed', () => {
       const { container } = render(
@@ -176,7 +179,7 @@ describe('FormFieldEditPopup', () => {
           fields={selectField}
           flags={sampleFlags}
           closeFormFieldEditPopup={noop}
-          isOpen={true}
+          isOpen
           isValid={false} // NOT VALID!!
           annotation={createMockAnnotation()}
           redrawAnnotation={noop}
@@ -186,12 +189,11 @@ describe('FormFieldEditPopup', () => {
           radioButtonGroups={[]}
         />
       );
-      getByText(container, 'Field Name already exists')
+      getByText(container, 'Field Name already exists');
       expect(container.querySelector('.messageText')).toBeInTheDocument();
-    })
+    });
 
     describe('Width and Height inputs', () => {
-
       const getPageHeight = () => (400);
       const getPageWidth = () => (200);
       it('accepts a width that is less than the page width', () => {
@@ -200,8 +202,8 @@ describe('FormFieldEditPopup', () => {
             fields={inputFields}
             flags={sampleFlags}
             closeFormFieldEditPopup={noop}
-            isOpen={true}
-            isValid={true}
+            isOpen
+            isValid
             annotation={createMockAnnotation()}
             redrawAnnotation={noop}
             getPageHeight={getPageHeight}
@@ -211,7 +213,7 @@ describe('FormFieldEditPopup', () => {
         const widthInput = container.querySelector('#form-field-width');
         userEvent.clear(widthInput);
         userEvent.type(widthInput, '66');
-        expect(widthInput).toHaveValue(66)
+        expect(widthInput).toHaveValue(66);
       });
 
       it('if entered width greater than page width, the width is set to page width', () => {
@@ -220,8 +222,8 @@ describe('FormFieldEditPopup', () => {
             fields={inputFields}
             flags={sampleFlags}
             closeFormFieldEditPopup={noop}
-            isOpen={true}
-            isValid={true}
+            isOpen
+            isValid
             annotation={createMockAnnotation()}
             redrawAnnotation={noop}
             getPageHeight={getPageHeight}
@@ -241,8 +243,8 @@ describe('FormFieldEditPopup', () => {
             fields={inputFields}
             flags={sampleFlags}
             closeFormFieldEditPopup={noop}
-            isOpen={true}
-            isValid={true}
+            isOpen
+            isValid
             annotation={createMockAnnotation()}
             redrawAnnotation={noop}
             getPageHeight={getPageHeight}
@@ -252,7 +254,7 @@ describe('FormFieldEditPopup', () => {
         const heightInput = container.querySelector('#form-field-height');
         userEvent.clear(heightInput);
         userEvent.type(heightInput, '200');
-        expect(heightInput).toHaveValue(200)
+        expect(heightInput).toHaveValue(200);
       });
 
       it('if entered height greater than page height, the height is set to page height', () => {
@@ -261,8 +263,8 @@ describe('FormFieldEditPopup', () => {
             fields={inputFields}
             flags={sampleFlags}
             closeFormFieldEditPopup={noop}
-            isOpen={true}
-            isValid={true}
+            isOpen
+            isValid
             annotation={createMockAnnotation()}
             redrawAnnotation={noop}
             getPageHeight={getPageHeight}
@@ -284,8 +286,8 @@ describe('FormFieldEditPopup', () => {
             fields={inputFields}
             flags={sampleFlags}
             closeFormFieldEditPopup={noop}
-            isOpen={true}
-            isValid={true}
+            isOpen
+            isValid
             annotation={dummyAnnotation}
             redrawAnnotation={noop}
             getPageHeight={getPageHeight}
@@ -293,14 +295,14 @@ describe('FormFieldEditPopup', () => {
           />
         );
 
-        //Enter new height, ensure annotation is updated
+        // Enter new height, ensure annotation is updated
         const heightInput = container.querySelector('#form-field-height');
         userEvent.clear(heightInput);
         userEvent.type(heightInput, '150');
-        expect(heightInput).toHaveValue(150)
+        expect(heightInput).toHaveValue(150);
         expect(dummyAnnotation.Height).toEqual(150);
 
-        //Now cancel, so height should revert to original values
+        // Now cancel, so height should revert to original values
         const cancelButton = container.querySelector('.cancel-form-field-button');
         expect(cancelButton).toBeInTheDocument();
         fireEvent.click(cancelButton);
@@ -316,8 +318,8 @@ describe('FormFieldEditPopup', () => {
             fields={inputFields}
             flags={sampleFlags}
             closeFormFieldEditPopup={noop}
-            isOpen={true}
-            isValid={true}
+            isOpen
+            isValid
             annotation={dummyAnnotation}
             redrawAnnotation={noop}
             getPageHeight={getPageHeight}
@@ -332,7 +334,7 @@ describe('FormFieldEditPopup', () => {
         expect(widthInput).toHaveValue(200);
         expect(dummyAnnotation.Width).toEqual(200);
 
-        //Now cancel, so width  should revert to original values
+        // Now cancel, so width  should revert to original values
         const cancelButton = container.querySelector('.cancel-form-field-button');
         expect(cancelButton).toBeInTheDocument();
         fireEvent.click(cancelButton);

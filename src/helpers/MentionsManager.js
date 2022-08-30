@@ -64,7 +64,7 @@ class MentionsManager {
      */
     this.idMentionDataMap = {};
     this.allowedTrailingCharacters = [' '];
-    this.mentionsLookUp = this.defaultMentionsSearchCallback;
+    this.mentionLookupCallback = this.defaultMentionsSearchCallback;
     annotManager.addEventListener('annotationChanged', (annotations, action, { imported }) => {
       if (imported || !annotations.length || !this.getUserData().length) {
         return;
@@ -83,7 +83,7 @@ class MentionsManager {
   handleAnnotationsAdded(annotations) {
     let newMentions = [];
 
-    annotations.forEach(annotation => {
+    annotations.forEach((annotation) => {
       const mentionData = this.extractMentionDataFromAnnot(annotation);
 
       this.idMentionDataMap[annotation.Id] = mentionData;
@@ -100,7 +100,7 @@ class MentionsManager {
     let modifiedMentions = [];
     const deletedMentions = [];
 
-    annotations.forEach(annotation => {
+    annotations.forEach((annotation) => {
       const prevMentionData = this.idMentionDataMap[annotation.Id] || {
         mentions: [],
         contentWithoutMentions: '',
@@ -111,18 +111,16 @@ class MentionsManager {
 
       this.idMentionDataMap[annotation.Id] = currMentionData;
 
-      currMentions.forEach(currMention => {
-        const isNewMention = !prevMentions.find(prevMention =>
-          this.isSameMention(prevMention, currMention)
+      currMentions.forEach((currMention) => {
+        const isNewMention = !prevMentions.find((prevMention) => this.isSameMention(prevMention, currMention)
         );
         if (isNewMention) {
           newMentions.push(currMention);
         }
       });
 
-      prevMentions.forEach(prevMention => {
-        const isDeletedMention = !currMentions.find(currMention =>
-          this.isSameMention(prevMention, currMention)
+      prevMentions.forEach((prevMention) => {
+        const isDeletedMention = !currMentions.find((currMention) => this.isSameMention(prevMention, currMention)
         );
         if (isDeletedMention) {
           deletedMentions.push(prevMention);
@@ -151,7 +149,7 @@ class MentionsManager {
   handleAnnotationsDeleted(annotations) {
     let deletedMentions = [];
 
-    annotations.forEach(annotation => {
+    annotations.forEach((annotation) => {
       if (this.idMentionDataMap[annotation.Id]) {
         deletedMentions = deletedMentions.concat(this.idMentionDataMap[annotation.Id].mentions);
         delete this.idMentionDataMap[annotation.Id];
@@ -165,7 +163,7 @@ class MentionsManager {
 
   getFormattedTextFromDeltas(deltas) {
     const formattedMentionTextList = [];
-    deltas.forEach(delta => {
+    deltas.forEach((delta) => {
       if (delta.insert) {
         if (typeof (delta.insert) === 'string') {
           formattedMentionTextList.push(delta.insert);
@@ -237,7 +235,7 @@ class MentionsManager {
 
     mentionData = JSON.parse(mentionData);
 
-    userData.forEach(user => {
+    userData.forEach((user) => {
       if (mentionData.ids.includes(user.id) && this.isValidMention(contents, user.value)) {
         result.mentions.push({
           ...user,
@@ -313,7 +311,7 @@ WebViewer(...)
   });
    */
   setUserData(userData) {
-    userData = userData.map(user => ({
+    userData = userData.map((user) => ({
       ...user,
       id: user.id || user.email || user.value,
     }));
@@ -396,7 +394,7 @@ WebViewer(...)
     }
 
     if (fn) {
-      this.events[eventName] = this.events[eventName].filter(handler => handler !== fn);
+      this.events[eventName] = this.events[eventName].filter((handler) => handler !== fn);
     } else {
       this.events[eventName] = [];
     }
@@ -432,7 +430,7 @@ WebViewer(...)
       data = data[0];
     }
 
-    this.events[eventName].forEach(fn => {
+    this.events[eventName].forEach((fn) => {
       fn.call(this, ...data);
     });
 

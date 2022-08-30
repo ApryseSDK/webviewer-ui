@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Absatz hinzufügen",
     "add": "Hinzufügen",
     "apply": "Anwenden",
     "applyAll": "Alles anwenden",
@@ -144,7 +145,8 @@
     "other": "Andere",
     "3D": "3D",
     "sound": "Klang",
-    "changeView": "Ansicht ändern"
+    "changeView": "Ansicht ändern",
+    "newImage": "Neues Bild"
   },
   "rubberStamp": {
     "Approved": "Genehmigt",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Einfügen",
       "toolbarGroup-Measure": "Messen",
       "toolbarGroup-Edit": "Bearbeiten",
+      "toolbarGroup-EditText": "Text bearbeiten",
       "toolbarGroup-FillAndSign": "Füllen und unterschreiben",
       "toolbarGroup-Forms": "Formen",
       "toolbarGroup-Redact": "Schwärzen"
@@ -878,6 +881,10 @@
       "cancelMessage": "Möchten Sie das Zuschneiden aller ausgewählten Seiten wirklich abbrechen?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Absatz",
+    "text": "Text"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Beginnen Sie mit dem Schwärzen, indem Sie Text, Regionen, Seiten markieren oder eine Suche durchführen.",
     "redactionSearchPlaceholder": "Hinzufügen nach Schlüsselwortsuche oder Mustern",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Eigenschaften",
     "miscValuesHeader": "Alle",
-    "emptyPanelMessage": "Wählen Sie ein Element aus, um seine Eigenschaften anzuzeigen"
+    "emptyPanelMessage": "Wählen Sie ein Element aus, um seine Eigenschaften anzuzeigen."
   },
   "languageModal": {
     "selectLanguage": "Sprache auswählen"

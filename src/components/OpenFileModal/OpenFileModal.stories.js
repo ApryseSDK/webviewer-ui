@@ -1,5 +1,5 @@
 import React from 'react';
-import OpenFileModal from './OpenFileModal'
+import OpenFileModal from './OpenFileModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 

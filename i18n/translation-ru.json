@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Добавить абзац",
     "add": "Добавлять",
     "apply": "Применить",
     "applyAll": "Применить все",
@@ -144,7 +145,8 @@
     "other": "Другие",
     "3D": "3D",
     "sound": "Звук",
-    "changeView": "Сменить вид"
+    "changeView": "Сменить вид",
+    "newImage": "Новое изображение"
   },
   "rubberStamp": {
     "Approved": "Одобренный",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Вставить",
       "toolbarGroup-Measure": "Мера",
       "toolbarGroup-Edit": "редактировать",
+      "toolbarGroup-EditText": "Редактировать текст",
       "toolbarGroup-FillAndSign": "Заполните и подпишите",
       "toolbarGroup-Forms": "Формы",
       "toolbarGroup-Redact": "Редактировать"
@@ -878,6 +881,10 @@
       "cancelMessage": "Вы уверены, что хотите отменить обрезку всех выбранных страниц?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Параграф",
+    "text": "Текст"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Начните редактирование, пометив текст, области, страницы или выполнив поиск.",
     "redactionSearchPlaceholder": "Добавить по ключевому слову или шаблонам",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Свойства",
     "miscValuesHeader": "Все",
-    "emptyPanelMessage": "Выберите элемент, чтобы просмотреть его свойства"
+    "emptyPanelMessage": "Выберите элемент, чтобы просмотреть его свойства."
   },
   "languageModal": {
     "selectLanguage": "Выбрать язык"

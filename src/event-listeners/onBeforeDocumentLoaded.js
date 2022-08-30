@@ -3,7 +3,7 @@ import actions from 'actions';
 import { isIOS } from 'helpers/device';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
-export default dispatch => () => {
+export default (dispatch) => () => {
   // if we are opening an password-protected pdf,
   // this event will only be trigger after we enter the correct password, so it's safe to close this modal here
   dispatch(actions.closeElement('passwordModal'));

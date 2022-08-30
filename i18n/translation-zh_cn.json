@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "添加段落",
     "add": "添加",
     "apply": "应用",
     "applyAll": "全部申请",
@@ -144,7 +145,8 @@
     "other": "其他",
     "3D": "3D",
     "sound": "声音",
-    "changeView": "更改视图"
+    "changeView": "更改视图",
+    "newImage": "新图片"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "插",
       "toolbarGroup-Measure": "测量",
       "toolbarGroup-Edit": "编辑",
+      "toolbarGroup-EditText": "编辑文本",
       "toolbarGroup-FillAndSign": "填写并签名",
       "toolbarGroup-Forms": "形式",
       "toolbarGroup-Redact": "纂"
@@ -878,6 +881,10 @@
       "cancelMessage": "您确定要取消裁剪所有选定的页面吗？"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "段落",
+    "text": "文本"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "通过标记文本、区域、页面或进行搜索来开始编辑。",
     "redactionSearchPlaceholder": "通过关键字搜索或模式添加",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "属性",
     "miscValuesHeader": "全部",
-    "emptyPanelMessage": "选择一个元素来查看它的属性"
+    "emptyPanelMessage": "选择一个元素来查看它的属性."
   },
   "languageModal": {
     "selectLanguage": "选择语言"

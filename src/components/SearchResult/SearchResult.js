@@ -3,9 +3,9 @@ import { withContentRect } from 'react-measure';
 import PropTypes from 'prop-types';
 
 import './SearchResult.scss';
-import VirtualizedList from "react-virtualized/dist/commonjs/List";
-import CellMeasurer, { CellMeasurerCache } from "react-virtualized/dist/commonjs/CellMeasurer";
-import ListSeparator from "components/ListSeparator";
+import VirtualizedList from 'react-virtualized/dist/commonjs/List';
+import CellMeasurer, { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer';
+import ListSeparator from 'components/ListSeparator';
 
 const SearchResultListSeparatorPropTypes = {
   currentResultIndex: PropTypes.number.isRequired,
@@ -136,7 +136,7 @@ function SearchResult(props) {
     return null;
   }
 
-  if (searchStatus === 'SEARCH_DONE' 
+  if (searchStatus === 'SEARCH_DONE'
     && searchResults.length === 0
     && !isProcessingSearchResults) {
     return (

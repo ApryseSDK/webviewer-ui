@@ -111,7 +111,7 @@ export default function searchTextFull(dispatch) {
             ...options,
           };
           const searchListeners = getSearchListeners() || [];
-          searchListeners.forEach(listener => {
+          searchListeners.forEach((listener) => {
             try {
               listener(searchValue, searchOptions, results);
             } catch (e) {

@@ -55,7 +55,7 @@ WebViewer(...)
 import { addSortStrategy } from 'constants/sortStrategies';
 import actions from 'actions';
 
-export default store => newStrategy => {
+export default (store) => (newStrategy) => {
   if (newStrategy.name) {
     addSortStrategy(newStrategy);
     store.dispatch(actions.setNotesPanelSortStrategy(newStrategy.name));

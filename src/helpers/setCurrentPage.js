@@ -1,6 +1,6 @@
 import core from 'core';
 
-export default nextPageNumber => {
+export default (nextPageNumber) => {
   const totalPageNumber = core.getTotalPages();
   const currPageNumber = core.getCurrentPage();
 

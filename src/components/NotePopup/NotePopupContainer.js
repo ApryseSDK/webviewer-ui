@@ -5,7 +5,6 @@ import Tooltip from 'components/Tooltip';
 import { useTranslation } from 'react-i18next';
 
 
-
 function NotePopupContainer(props) {
   const { annotation, setIsEditing, noteIndex } = props; // eslint-disable-line react/prop-types
 
@@ -20,8 +19,7 @@ function NotePopupContainer(props) {
       setCanModifyContents(core.canModifyContents(annotation));
     }
     core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
-    return () =>
-      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+    return () => core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
   }, [annotation]);
 
   const handleEdit = React.useCallback(function handleEdit() {
@@ -64,4 +62,3 @@ function NotePopupContainer(props) {
 }
 
 export default NotePopupContainer;
-

@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "단락 추가",
     "add": "추가",
     "apply": "적용",
     "applyAll": "모두적용",
@@ -144,7 +145,8 @@
     "other": "더보기",
     "3D": "3D",
     "sound": "소리",
-    "changeView": "보기 변경"
+    "changeView": "보기 변경",
+    "newImage": "새 이미지"
   },
   "rubberStamp": {
     "Approved": "승인",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "삽입",
       "toolbarGroup-Measure": "측정",
       "toolbarGroup-Edit": "편집",
+      "toolbarGroup-EditText": "텍스트 편집",
       "toolbarGroup-FillAndSign": "채우기&서명",
       "toolbarGroup-Forms": "양식",
       "toolbarGroup-Redact": "수정"
@@ -877,6 +880,10 @@
       "cancelTitle": "자르기를 취소하시겠습니까?",
       "cancelMessage": "선택한 모든 페이지 자르기를 취소하시겠습니까?"
     }
+  },
+  "textEditingPanel": {
+    "paragraph": "절",
+    "text": "텍스트"
   },
   "redactionPanel": {
     "noMarkedRedactions": "텍스트, 지역, 페이지를 표시하거나 검색하여 수정을 시작하세요.",

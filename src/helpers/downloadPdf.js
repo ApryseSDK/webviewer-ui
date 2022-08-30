@@ -29,7 +29,7 @@ export default async (dispatch, options = {}) => {
     }
   }
 
-  return annotationsPromise.then(xfdfString => {
+  return annotationsPromise.then((xfdfString) => {
     options.xfdfString = options.xfdfString || xfdfString;
     if (!includeAnnotations) {
       options.includeAnnotations = false;
@@ -71,7 +71,7 @@ export default async (dispatch, options = {}) => {
       fireEvent(Events.FILE_DOWNLOADED);
     } else {
       return doc.getFileData(clonedOptions).then(
-        data => {
+        (data) => {
           const arr = new Uint8Array(data);
           let file;
 
@@ -86,13 +86,13 @@ export default async (dispatch, options = {}) => {
           fireEvent(Events.FINISHED_SAVING_PDF);
           fireEvent(Events.FILE_DOWNLOADED);
         },
-        error => {
+        (error) => {
           dispatch(actions.closeElement('loadingModal'));
           throw new Error(error.message);
         },
       );
     }
-  }).catch(error => {
+  }).catch((error) => {
     console.warn(error);
     dispatch(actions.closeElement('loadingModal'));
   });

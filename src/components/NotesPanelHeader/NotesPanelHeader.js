@@ -9,13 +9,14 @@ import core from 'core';
 
 import Dropdown from 'components/Dropdown';
 import Button from 'components/Button';
-import DataElementWrapper from '../DataElementWrapper';
+import DataElementWrapper from 'components/DataElementWrapper';
+import CustomElement from 'components/CustomElement';
 
 import Events from 'constants/events';
 import { getSortStrategies } from 'constants/sortStrategies';
-import './NotesPanelHeader.scss';
-import CustomElement from '../CustomElement';
 import DataElements from 'src/constants/dataElement';
+
+import './NotesPanelHeader.scss';
 
 const SORT_CONTAINER_ELEMENT = 'sortContainer';
 

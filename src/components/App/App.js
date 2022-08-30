@@ -30,7 +30,6 @@ import WarningModal from 'components/WarningModal';
 import SignatureValidationModal from 'components/SignatureValidationModal';
 import PasswordModal from 'components/PasswordModal';
 import ProgressModal from 'components/ProgressModal';
-import CalibrationModal from 'components/CalibrationModal';
 import LinkModal from 'components/LinkModal';
 import ContentEditModal from 'components/ContentEditModal';
 import FilterAnnotModal from 'components/FilterAnnotModal';
@@ -48,10 +47,14 @@ import ColorPickerModal from 'components/ColorPickerModal';
 import PageManipulationOverlay from 'components/PageManipulationOverlay';
 import PageRedactionModal from 'components/PageRedactionModal';
 import RedactionPanel from 'components/RedactionPanel';
+import TextEditingPanel from 'components/TextEditingPanel';
+import Wv3dPropertiesPanel from 'components/Wv3dPropertiesPanel';
 import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
+import ScaleModal from 'components/ScaleModal';
 import DocumentCropPopup from 'components/DocumentCropPopup';
 import LeftPanelOverlayContainer from 'components/LeftPanelOverlay';
 import LanguageModal from 'components/LanguageModal';
+import ContentEditLinkModal from 'components/ContentEditLinkModal';
 
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
@@ -75,24 +78,29 @@ const App = ({ removeEventHandlers }) => {
   const dispatch = useDispatch();
   let timeoutReturn;
 
-  const [isInDesktopOnlyMode] = useSelector(state => [
-    selectors.isInDesktopOnlyMode(state),
-  ]);
+  const [isInDesktopOnlyMode] = useSelector((state) => [selectors.isInDesktopOnlyMode(state)]);
 
   useEffect(() => {
-    fireEvent(Events.VIEWER_LOADED);
-    window.parent.postMessage({
-      type: 'viewerLoaded',
-      id: parseInt(getHashParameters('id'), 10)
-    }, '*');
+    // To avoid race condition with window.dispatchEvent firing before window.addEventListener
+    setTimeout(() => {
+      fireEvent(Events.VIEWER_LOADED);
+    }, 300);
+    window.parent.postMessage(
+      {
+        type: 'viewerLoaded',
+        id: parseInt(getHashParameters('id'), 10),
+      },
+      '*',
+    );
 
     function loadInitialDocument() {
       const doesAutoLoad = getHashParameters('auto_load', true);
       let initialDoc = getHashParameters('d', '');
-      initialDoc = initialDoc.split(',');
+      initialDoc = initialDoc ? JSON.parse(initialDoc) : '';
+      initialDoc = Array.isArray(initialDoc) ? initialDoc : [initialDoc];
       const isMultiDoc = initialDoc.length > 1;
       const startOffline = getHashParameters('startOffline', false);
-      const basePath = getHashParameters('basePath', "");
+      const basePath = getHashParameters('basePath', '');
       window.Core.setBasePath(basePath);
 
       if (isMultiDoc) {
@@ -127,9 +135,7 @@ const App = ({ removeEventHandlers }) => {
     }
 
     function messageHandler(event) {
-      if (event.isTrusted &&
-        typeof event.data === 'object' &&
-        event.data.type === 'viewerLoaded') {
+      if (event.isTrusted && typeof event.data === 'object' && event.data.type === 'viewerLoaded') {
         loadDocumentAndCleanup();
       }
     }
@@ -172,25 +178,29 @@ const App = ({ removeEventHandlers }) => {
         <div className="content">
           <LeftPanel />
           <DocumentContainer />
-          <RightPanel
-            dataElement="searchPanel"
-            onResize={width => dispatch(actions.setSearchPanelWidth(width))}
-          >
+          <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
           </RightPanel>
-          <RightPanel
-            dataElement="notesPanel"
-            onResize={width => dispatch(actions.setNotesPanelWidth(width))}
-          >
+          <RightPanel dataElement="notesPanel" onResize={(width) => dispatch(actions.setNotesPanelWidth(width))}>
             <NotesPanel />
           </RightPanel>
-          <RightPanel
-            dataElement="redactionPanel"
-            onResize={width => dispatch(actions.setRedactionPanelWidth(width))}
-          >
+          <RightPanel dataElement="redactionPanel" onResize={(width) => dispatch(actions.setRedactionPanelWidth(width))}>
             <RedactionPanel />
           </RightPanel>
+          <RightPanel
+            dataElement="wv3dPropertiesPanel"
+            onResize={(width) => dispatch(actions.setWv3dPropertiesPanelWidth(width))}
+          >
+            <Wv3dPropertiesPanel />
+          </RightPanel>
+          <RightPanel
+            dataElement="textEditingPanel"
+            onResize={(width) => dispatch(actions.setTextEditingPanelWidth(width))}
+          >
+            <TextEditingPanel />
+          </RightPanel>
         </div>
+        <ContentEditLinkModal />
         <ViewControlsOverlay />
         <MenuOverlay />
         <ZoomOverlay />
@@ -204,13 +214,13 @@ const App = ({ removeEventHandlers }) => {
         <ContextMenuPopup />
         <RichTextPopup />
         <SignatureModal />
+        <ScaleModal />
         <PrintModal />
         <LoadingModal />
         <ErrorModal />
         <WarningModal />
         <PasswordModal />
         <ProgressModal />
-        <CalibrationModal />
         <CreateStampModal />
         <PageReplacementModal />
         <LinkModal />

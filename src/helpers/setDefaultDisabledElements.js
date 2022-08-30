@@ -6,7 +6,7 @@ import { PRIORITY_THREE, PRIORITY_TWO, PRIORITY_ONE } from 'constants/actionPrio
 import Feature from 'constants/feature';
 import actions from 'actions';
 
-export default store => {
+export default (store) => {
   const { dispatch, getState } = store;
   const state = getState();
 
@@ -73,6 +73,11 @@ export default store => {
   );
   if (redactionsDisabled) {
     disableFeatures([Feature.Redaction]);
+  }
+
+  const contentEditDisabled = !getHashParameters('enableContentEdit', false);
+  if (contentEditDisabled) {
+    disableFeatures([Feature.ContentEdit]);
   }
 
   const toolBarDisabled = !getHashParameters('toolbar', true);

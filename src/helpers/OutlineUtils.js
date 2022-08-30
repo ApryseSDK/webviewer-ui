@@ -22,8 +22,32 @@ const OutlineUtils = {
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
     return path;
   },
-  async addRootOutline(newName, pageNum) {
-    const newOutline = await this.createOutline(newName, pageNum);
+  async setOutlineDestination(path, pageNum, x, y, zoom) {
+    const target = await this.findPDFNetOutline(path);
+
+    if (!target) {
+      return;
+    }
+
+    const PDFNet = window.PDFNet;
+
+    return PDFNet.runWithCleanup(async () => {
+      const document = await this.doc.getPDFDoc();
+
+      const page = await document.getPage(pageNum);
+      const destination = await PDFNet.Destination.createXYZ(page, x, y, zoom);
+      target.setAction(await PDFNet.Action.createGoto(destination));
+      const bookmarkEventObject = {
+        ...target,
+        bookmark: target,
+        path,
+        action: 'setOutlineDestination'
+      };
+      fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
+    });
+  },
+  async addRootOutline(newName, pageNum, x, y, zoom) {
+    const newOutline = await this.createOutlineXYZ(newName, pageNum, x, y, zoom);
     const doc = await this.doc.getPDFDoc();
 
     await doc.addRootBookmark(newOutline);
@@ -37,7 +61,7 @@ const OutlineUtils = {
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
     return '0';
   },
-  async addNewOutline(newName, path, pageNum) {
+  async addNewOutline(newName, path, pageNum, x, y, zoom) {
     let target;
 
     if (path) {
@@ -50,7 +74,7 @@ const OutlineUtils = {
       return null;
     }
 
-    const newOutline = await this.createOutline(newName, pageNum);
+    const newOutline = await this.createOutlineXYZ(newName, pageNum, x, y, zoom);
     await target.addNext(newOutline);
 
     const addedOutlinePath = await this.findPathInTree(newOutline);
@@ -63,7 +87,7 @@ const OutlineUtils = {
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
     return addedOutlinePath;
   },
-  createOutline(newName, pageNum) {
+  createOutlineXYZ(newName, pageNum, x, y, zoom) {
     const PDFNet = window.PDFNet;
 
     return PDFNet.runWithCleanup(async () => {
@@ -71,7 +95,7 @@ const OutlineUtils = {
       const newOutline = await PDFNet.Bookmark.create(doc, newName);
 
       const page = await doc.getPage(pageNum);
-      const dest = await PDFNet.Destination.createFit(page);
+      const dest = await PDFNet.Destination.createXYZ(page, x, y, zoom);
       newOutline.setAction(await PDFNet.Action.createGoto(dest));
 
       return newOutline;
@@ -79,6 +103,10 @@ const OutlineUtils = {
   },
   async deleteOutline(path) {
     const target = await this.findPDFNetOutline(path);
+
+    if (!target) {
+      return;
+    }
 
     if (target) {
       const bookmarkEventObject = {
@@ -401,7 +429,7 @@ const OutlineUtils = {
 
     return null;
   },
-  findPDFNetOutline(path) {
+  async findPDFNetOutline(path) {
     if (!path) {
       return Promise.resolve(null);
     }
@@ -443,7 +471,7 @@ const OutlineUtils = {
     }
     return false;
   },
-  getPath(outline) {
+  getPathArray(outline) {
     const paths = [];
 
     let curr = outline;
@@ -452,7 +480,13 @@ const OutlineUtils = {
       curr = curr.getParent();
     }
 
-    return paths.reverse().join(this.getSplitter());
+    return paths;
+  },
+  getPath(outline) {
+    return this.getPathArray(outline).reverse().join(this.getSplitter());
+  },
+  getNestedLevel(outline) {
+    return this.getPathArray(outline).length - 1;
   },
   getSplitter() {
     return '-';

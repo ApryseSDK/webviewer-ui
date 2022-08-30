@@ -1,5 +1,4 @@
-export default (primaryAnnotation, annotationsToGroup) =>
-  window.documentViewer.getAnnotationManager().groupAnnotations(
-    primaryAnnotation,
-    annotationsToGroup,
-  );
+export default (primaryAnnotation, annotationsToGroup) => window.documentViewer.getAnnotationManager().groupAnnotations(
+  primaryAnnotation,
+  annotationsToGroup,
+);

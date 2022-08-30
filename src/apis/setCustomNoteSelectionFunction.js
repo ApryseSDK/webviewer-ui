@@ -19,6 +19,6 @@ import actions from 'actions';
   });
  */
 
-export default store => customNoteSelectionFunction => {
+export default (store) => (customNoteSelectionFunction) => {
   store.dispatch(actions.setCustomNoteSelectionFunction(customNoteSelectionFunction));
 };

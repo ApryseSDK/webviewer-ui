@@ -18,6 +18,7 @@ import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
 import presetCropDimensions from 'constants/presetCropDimensions';
 import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
+import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
 
 const { ToolNames } = window.Core.Tools;
 
@@ -35,6 +36,16 @@ export default {
     activeTheme: 'light',
     currentLanguage: 'en',
     disabledElements: {},
+    selectedScale: initialScale,
+    isAddingNewScale: false,
+    calibrationInfo: {
+      isCalibration: false,
+      tempScale: '',
+      previousToolName: '',
+      isFractionalUnit: false,
+      defaultUnit: ''
+    },
+    deleteScale: '',
     openElements: {
       header: true,
       toolsHeader: true,
@@ -46,6 +57,7 @@ export default {
       searchPanel: 293,
       notesPanel: 293,
       redactionPanel: 330,
+      textEditingPanel: 330,
       wv3dPropertiesPanel: 330,
     },
     documentContainerWidth: null,
@@ -58,6 +70,7 @@ export default {
     fadePageNavigationComponent: true,
     pageDeletionConfirmationModalEnabled: true,
     outlineControlVisibility: false,
+    autoExpandOutlines: getHashParameters('autoExpandOutlines', false),
     bookmarkIconShortcutVisibility: false,
     hideContentEditWarning: isContentEditWarningHidden(),
     currentContentBeingEdited: null,
@@ -109,7 +122,7 @@ export default {
           img: 'icon-header-chat-line',
           title: 'component.notesPanel',
           element: 'notesPanel',
-          onClick: dispatch => {
+          onClick: (dispatch) => {
             dispatch(actions.toggleElement('notesPanel'));
             // Trigger with a delay so we ensure the panel is open before we compute correct coordinates of annotation
             setTimeout(() => dispatch(actions.toggleElement('annotationNoteConnectorLine')), 400);
@@ -129,7 +142,7 @@ export default {
           dataElement: 'moreButton',
           title: 'action.more',
           img: 'icon-tools-more',
-          onClick: dispatch => {
+          onClick: (dispatch) => {
             dispatch(actions.setActiveHeaderGroup('small-mobile-more-buttons'));
             core.setToolMode(defaultTool);
           },
@@ -164,7 +177,7 @@ export default {
           dataElement: 'defaultHeaderButton',
           titile: 'action.close',
           img: 'ic_close_black_24px',
-          onClick: dispatch => {
+          onClick: (dispatch) => {
             dispatch(actions.setActiveHeaderGroup('default'));
             core.setToolMode(defaultTool);
           },
@@ -329,7 +342,7 @@ export default {
           title: 'action.redactPages',
           showColor: 'never',
           img: 'icon-tool-page-redact',
-          onClick: dispatch => dispatch(actions.openElement(DataElements.PAGE_REDACT_MODAL)),
+          onClick: (dispatch) => dispatch(actions.openElement(DataElements.PAGE_REDACT_MODAL)),
         },
         { type: 'divider' },
         {
@@ -490,6 +503,22 @@ export default {
           toolGroup: 'contentEditTools',
           dataElement: 'contentEditButton',
           title: 'action.edit',
+        },
+        { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
+      ],
+      'toolbarGroup-EditText': [
+        { type: 'spacer' },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'addParagraphTools',
+          dataElement: 'addParagraphToolGroupButton',
+          title: 'action.addParagraph',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'addImageContentTools',
+          dataElement: 'addImageContentToolGroupButton',
+          title: 'annotation.newImage'
         },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
@@ -1397,6 +1426,13 @@ export default {
         group: 'cloudTools',
         showColor: 'always',
       },
+      [ToolNames.CALIBRATION_MEASUREMENT]: {
+        dataElement: 'calibrationToolButton',
+        title: 'annotation.calibration',
+        img: 'icon-tool-measurement-distance-line',
+        group: 'calibrationTools',
+        showColor: 'never'
+      },
       AnnotationCreateArrow: {
         dataElement: 'arrowToolButton',
         title: 'annotation.arrow',
@@ -1494,6 +1530,20 @@ export default {
         img: 'ic_edit_page_24px',
         showColor: 'never',
         group: 'contentEditTools',
+      },
+      AddParagraphTool: {
+        dataElement: 'addParagraphToolGroupButton',
+        title: 'action.addParagraph',
+        img: 'ic-paragraph',
+        showColor: 'never',
+        group: 'addParagraphTools',
+      },
+      [ToolNames.ADD_IMAGE_CONTENT]: {
+        dataElement: 'addImageContentToolButton',
+        title: 'annotation.newImage',
+        img: 'icon-tool-image-line',
+        showColor: 'never',
+        group: 'addImageContentTools'
       },
       AnnotationCreateRedaction: {
         dataElement: 'redactionButton',
@@ -1692,6 +1742,9 @@ export default {
         group: 'changeViewTools',
         showColor: 'always',
       },
+      [ToolNames.OUTLINE_DESTINATION]: {
+        group: '',
+      },
     },
     tab: {
       signatureModal: 'inkSignaturePanelButton',
@@ -1723,7 +1776,7 @@ export default {
     isThumbnailMerging: true,
     isThumbnailReordering: true,
     isThumbnailMultiselect: true,
-    isOutlineEditing: true,
+    isOutlineEditingEnabled: true,
     enableNotesPanelVirtualizedList: true,
     notesShowLastUpdatedDate: false,
     allowPageNavigation: true,
@@ -1743,7 +1796,7 @@ export default {
     shiftKeyThumbnailPivotIndex: null,
     noteDateFormat: defaultNoteDateFormat,
     printedNoteDateFormat: defaultPrintedNoteDateFormat,
-    colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
+    colorMap: copyMapWithDataProperties('currentStyleTab', 'iconColor'),
     warning: {},
     customNoteFilter: null,
     zoomList: defaultZoomList,
@@ -1752,6 +1805,8 @@ export default {
       from: ['in', 'mm', 'cm', 'pt'],
       to: ['in', 'mm', 'cm', 'pt', 'ft', 'ft-in', 'm', 'yd', 'km', 'mi'],
     },
+    measurementScalePreset: getMeasurementScalePreset(),
+    isMultipleScalesMode: true,
     maxSignaturesCount: 4,
     signatureFonts: ['GreatVibes-Regular'],
     isReplyDisabledFunc: null,
@@ -1821,6 +1876,9 @@ export default {
         startZoom: 6400,
       },
     ],
+    contentEditor: null,
+    notesPanelCustomHeaderOptions: null,
+    notesPanelCustomEmptyPanel: null
   },
   search: {
     value: '',

@@ -33,37 +33,20 @@
 }
 
 .reply-area {
-  display: flex;
   position: relative;
   flex: 1;
   margin: 13px 17px 12px 12px;
-  border: 1px solid var(--border);
   border-radius: 4px;
   align-items: center;
   &.unread {
     background: rgba($color:$pdftron-blue, $alpha: 0.08);
   }
-  &:focus-within{
-    border: 1px solid var(--focus-border);
-  }
 
-  textarea {
-    width: 100%;
-    padding-left: 8px;
-    border: none;
-    color: var(--text-color);
+  .comment-textarea .ql-container .ql-editor.ql-blank {
     padding: 4px 4px 4px 4px;
-    resize: none;
-    overflow: hidden;
-    height: 24px;
-    box-sizing: border-box;
-    &:focus {
-      outline: none;
-      border: none;
-    }
 
-    &::placeholder {
-      color: var(--placeholder-text);
+    &::before {
+      left: 4px;
     }
   }
 }

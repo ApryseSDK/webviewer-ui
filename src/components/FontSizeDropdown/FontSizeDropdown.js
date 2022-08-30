@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import core from 'core';
 import './FontSizeDropdown.scss';
-import Icon from "components/Icon";
+import Icon from 'components/Icon';
 import PropTypes from 'prop-types';
-import classNames from "classnames";
-import DataElementWrapper from "components/DataElementWrapper";
-import useOnClickOutside from "hooks/useOnClickOutside";
-import { useTranslation } from "react-i18next";
+import classNames from 'classnames';
+import DataElementWrapper from 'components/DataElementWrapper';
+import useOnClickOutside from 'hooks/useOnClickOutside';
+import { useTranslation } from 'react-i18next';
 
 const propTypes = {
   fontSize: PropTypes.number,
@@ -30,7 +31,7 @@ const BREAKS_AND_INCREMENT = {
 const FontSizeDropdown = ({
   onFontSizeChange,
   fontSize = 12.0,
-  fontUnit = "pt",
+  fontUnit = 'pt',
   maxFontSize = RENDER_ROWS_UPPER_LIMIT,
   incrementMap = BREAKS_AND_INCREMENT,
   onError = undefined,
@@ -48,11 +49,16 @@ const FontSizeDropdown = ({
   useOnClickOutside(dropdownDivRef, onClickOutside);
 
   const [currSize, setCurrSize] = useState(fontSize <= maxFontSize ? fontSize : 1);
-  const isValidNum = (num, arr = []) =>
-    num && arr.indexOf(num) === -1 && num <= maxFontSize && num >= MIN_FONT_SIZE;
+  const isValidNum = (num, arr = []) => num && arr.indexOf(num) === -1 && num <= maxFontSize && num >= MIN_FONT_SIZE;
+  useEffect(() => {
+    // update the font size indicator in Text Editing Panel
+    if (core.getContentEditManager().isInContentEditMode()) {
+      setCurrSize(fontSize <= maxFontSize ? fontSize : 1);
+    }
+  }, [fontSize]);
   useEffect(() => {
     incrementMap[maxFontSize] = 12;
-    const getNewNumbers = curr => {
+    const getNewNumbers = (curr) => {
       const startArr = [MIN_FONT_SIZE];
       for (let i = 1; i <= maxFontSize; i++) {
         const higherIncrement = getIncrement(startArr[startArr.length - 1]);
@@ -65,10 +71,10 @@ const FontSizeDropdown = ({
       }
       return startArr;
     };
-    const getIncrement = num => {
+    const getIncrement = (num) => {
       let greaterThanLast = false;
       let last;
-      const keys = Object.keys(incrementMap).map(i => parseFloat(i)).sort((a, b) => a - b);
+      const keys = Object.keys(incrementMap).map((i) => parseFloat(i)).sort((a, b) => a - b);
       for (const i of keys) {
         if (num < i && greaterThanLast) {
           return incrementMap[last];
@@ -84,14 +90,14 @@ const FontSizeDropdown = ({
     };
     setSizes(getNewNumbers(Math.floor(currSize)));
   }, []);
-  const sizeChange = e => {
+  const sizeChange = (e) => {
     setFocused(true);
     const newValue = e.target.value;
-    const newSize = typeof newValue === "string" ?
+    const newSize = typeof newValue === 'string' ?
       parseFloat(newValue.replace(/[^\d]+/gi, ''))
       : newValue;
     if (currSize !== newSize) {
-      if (typeof newSize !== "number") {
+      if (typeof newSize !== 'number') {
         return setCurrSize(MIN_FONT_SIZE);
       }
       setCurrSize(newSize);
@@ -113,7 +119,7 @@ const FontSizeDropdown = ({
 
   const [focused, setFocused] = useState(false);
   const focus = () => setFocused(true);
-  const blur = e => {
+  const blur = (e) => {
     if (!e.target.checkValidity() || !currSize) {
       setCurrSize(e.target.validFontSize || MIN_FONT_SIZE);
     }
@@ -150,13 +156,13 @@ const FontSizeDropdown = ({
   );
 
   const dropdownItems = useMemo(
-    () => sizes.map(key => (
+    () => sizes.map((key) => (
       <DataElementWrapper
         key={key}
         type="button"
         dataElement={`dropdown-item-${key}`}
         className={classNames('Dropdown__item', { active: key === Math.floor(currSize) })}
-        onClick={e => onClickDropdownItem(e, key)}
+        onClick={(e) => onClickDropdownItem(e, key)}
         tabIndex={isOpen ? undefined : -1}
       >
         {key + fontUnit}
@@ -172,13 +178,13 @@ const FontSizeDropdown = ({
         max={maxFontSize}
         value={focused ? currSize : `${currSize}pt`}
         onChange={sizeChange}
-        type={focused ? "number" : "string"}
+        type={focused ? 'number' : 'string'}
         onFocus={focus}
         onBlur={blur}
         onSelectCapture={focus}
         ref={inputRef}
         disabled={isOpen}
-        className={error ? "error" : undefined}
+        className={error ? 'error' : undefined}
       />
       <div className={classNames('icon-button')} onClick={() => setOpen(true)} ref={iconButtonRef}>
         <Icon glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />

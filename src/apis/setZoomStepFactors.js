@@ -24,12 +24,12 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => zoomStepFactors => {
+export default (store) => (zoomStepFactors) => {
   if (!zoomStepFactors.length) {
     return console.warn('Invalid Input');
   }
   const newZoomFactorsHasInitialZoomFactor =
-    zoomStepFactors.find(stepFactor => stepFactor.startZoom === 0);
+    zoomStepFactors.find((stepFactor) => stepFactor.startZoom === 0);
   if (!newZoomFactorsHasInitialZoomFactor) {
     return console.warn('zoomStepFactors should have at least one zoomStepFactor object with startZoom equals to 0.');
   }

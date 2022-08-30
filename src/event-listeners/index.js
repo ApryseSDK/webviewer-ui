@@ -31,6 +31,7 @@ import onFormFieldCreationModeStarted from './onFormFieldCreationModeStarted';
 import onFormFieldCreationModeEnded from './onFormFieldCreationModeEnded';
 import onDigitalSignatureAvailable from './onDigitalSignatureAvailable';
 import onLayersUpdated from './onLayersUpdated';
+import onImageContentAdded from './onImageContentAdded';
 
 export {
   onSignatureSaved,
@@ -65,5 +66,6 @@ export {
   onFormFieldCreationModeStarted,
   onFormFieldCreationModeEnded,
   onDigitalSignatureAvailable,
-  onLayersUpdated
+  onLayersUpdated,
+  onImageContentAdded
 };

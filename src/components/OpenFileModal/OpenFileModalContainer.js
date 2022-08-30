@@ -4,7 +4,7 @@ import selectors from 'selectors';
 import OpenFileModal from './OpenFileModal';
 
 const OpenFileModalContainer = () => {
-  const [isDisabled, isOpen, tabManager] = useSelector(state => [
+  const [isDisabled, isOpen, tabManager] = useSelector((state) => [
     selectors.isElementDisabled(state, 'OpenFileModal'),
     selectors.isElementOpen(state, 'OpenFileModal'),
     selectors.getTabManager(state),

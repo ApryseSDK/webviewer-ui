@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Tambah Perenggan",
     "add": "Tambah",
     "apply": "Mohon",
     "applyAll": "Guna semua",
@@ -144,7 +145,8 @@
     "other": "Lain-lain",
     "3D": "3D",
     "sound": "Bunyi",
-    "changeView": "Tukar Pandangan"
+    "changeView": "Tukar Pandangan",
+    "newImage": "Imej Baharu"
   },
   "rubberStamp": {
     "Approved": "Diluluskan",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Sisipkan",
       "toolbarGroup-Measure": "ukur",
       "toolbarGroup-Edit": "Sunting",
+      "toolbarGroup-EditText": "Edit Teks",
       "toolbarGroup-FillAndSign": "Isi dan Tandatangani",
       "toolbarGroup-Forms": "Borang",
       "toolbarGroup-Redact": "sunting"
@@ -878,6 +881,10 @@
       "cancelMessage": "Adakah anda pasti mahu membatalkan pemangkasan semua halaman yang dipilih?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Perenggan",
+    "text": "Teks"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Mula menyunting dengan menandakan teks, kawasan, halaman atau membuat carian.",
     "redactionSearchPlaceholder": "Tambahkan mengikut carian kata kunci atau corak",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Properties",
     "miscValuesHeader": "Semua",
-    "emptyPanelMessage": "Pilih elemen untuk melihat sifatnya"
+    "emptyPanelMessage": "Pilih elemen untuk melihat sifatnya."
   },
   "languageModal": {
     "selectLanguage": "Pilih Bahasa"

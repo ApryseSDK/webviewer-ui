@@ -1,10 +1,10 @@
 import Thumbnail from './Thumbnail';
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-const TestThumbnail = withProviders(Thumbnail);
-import core from 'core';
 
-function noop() { };
+const TestThumbnail = withProviders(Thumbnail);
+
+function noop() { }
 
 jest.mock('core');
 

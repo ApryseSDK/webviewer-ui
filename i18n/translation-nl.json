@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Alinea toevoegen",
     "add": "Toevoegen",
     "apply": "Toepassen",
     "applyAll": "Alles toepassen",
@@ -144,7 +145,8 @@
     "other": "Andere",
     "3D": "3D",
     "sound": "Geluid",
-    "changeView": "Verander perspectief"
+    "changeView": "Verander perspectief",
+    "newImage": "Nieuw beeld"
   },
   "rubberStamp": {
     "Approved": "Goedgekeurd",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Invoegen",
       "toolbarGroup-Measure": "Meten",
       "toolbarGroup-Edit": "Bewerk",
+      "toolbarGroup-EditText": "Tekst bewerken",
       "toolbarGroup-FillAndSign": "Invullen en ondertekenen",
       "toolbarGroup-Forms": "Formulieren",
       "toolbarGroup-Redact": "Redigeren"
@@ -878,6 +881,10 @@
       "cancelMessage": "Weet u zeker dat u het bijsnijden van alle geselecteerde pagina's wilt annuleren?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Paragraaf",
+    "text": "Tekst"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Begin met redigeren door tekst, regio's, pagina's te markeren of een zoekopdracht uit te voeren.",
     "redactionSearchPlaceholder": "Toevoegen op trefwoord zoeken of patronen",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Eigenschappen",
     "miscValuesHeader": "Alle",
-    "emptyPanelMessage": "Selecteer een element om de eigenschappen ervan te bekijken"
+    "emptyPanelMessage": "Selecteer een element om de eigenschappen ervan te bekijken."
   },
   "languageModal": {
     "selectLanguage": "Selecteer taal"

@@ -1,0 +1,64 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.wv3d-properties-panel {
+  padding: 16px 16px 13px 16px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  user-select: all !important;
+
+  .no-selections {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .empty-icon {
+      width: 100px;
+      height: 100px;
+
+      svg {
+        width: 100px;
+        height: 100px;
+      }
+
+      * {
+        fill: var(--gray-5);
+        color: var(--gray-5);
+      }
+    }
+
+    .empty-text {
+      margin-top: 4px;
+      padding-left: 4px;
+      padding-right: 4px;
+      width: 68%;
+      text-align: center;
+    }
+  }
+
+  @include mobile {
+    width: 100vw;
+    min-width: 100vw;
+    padding-top: 0px;
+
+    .close-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 64px;
+
+      width: 100%;
+      padding-right: 12px;
+
+      .close-icon-container {
+        cursor: pointer;
+        .close-icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+}

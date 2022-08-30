@@ -11,7 +11,6 @@ import disableTools from 'src/apis/disableTools';
 import setToolMode from 'src/apis/setToolMode';
 import selectors from 'selectors';
 import TabManager from 'helpers/TabManager';
-import getHashParameters from './getHashParameters';
 import DataElements from 'constants/dataElement';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
@@ -264,19 +263,9 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
             return;
           }
           const doc = core.getDocument();
-          let docArr = [];
+          const docArr = [];
           if (doc) {
             docArr.push(doc);
-          } else {
-            let initialDoc = getHashParameters('d', '');
-            initialDoc = initialDoc ? JSON.parse(initialDoc) : '';
-            if (initialDoc) {
-              if (Array.isArray(initialDoc)) {
-                docArr = docArr.concat(initialDoc);
-              } else {
-                docArr.push(initialDoc);
-              }
-            }
           }
           const tabManager = new TabManager(docArr, [], store);
           store.dispatch(actions.setMultiTab(true));

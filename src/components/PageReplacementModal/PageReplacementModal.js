@@ -43,7 +43,7 @@ const PageReplacementModal = ({
     }
     closeModal();
     setSelectedTabInternal(null);
-    setSource({})
+    setSource({});
   };
 
 
@@ -73,6 +73,7 @@ const PageReplacementModal = ({
   // executed with a Document not a file
   const fileProcessedHandler = async (file) => {
     let document;
+    // eslint-disable-next-line no-undef
     if (file instanceof instance.Core.Document) {
       document = file;
     } else {
@@ -86,7 +87,7 @@ const PageReplacementModal = ({
 
   if (selectedTabInternal === 'urlInputPanelButton' && !isValidUrlRegex.test(srcString)) {
     isSelectBtnDisabled = true;
-  };
+  }
 
   const renderFileSelectedPanel = () => {
     return (
@@ -95,21 +96,21 @@ const PageReplacementModal = ({
         pageIndicesToReplace={selectedThumbnailPageIndexes}
         sourceDocument={selectedDoc}
       />
-    )
+    );
   };
 
   const renderSelectionTabs = () => {
     const isFilePanelEnabled = selectableFiles && selectableFiles.length > 0;
 
     return (
-      <div className="container tabs" onMouseDown={e => e.stopPropagation()}>
+      <div className="container tabs" onMouseDown={(e) => e.stopPropagation()}>
         <div className="swipe-indicator" />
         <div className="header">
-          {t(`component.pageReplaceModalTitle`)}
+          {t('component.pageReplaceModalTitle')}
           <Button
-            img={"icon-close"}
+            img={'icon-close'}
             onClick={closeThisModal}
-            dataElement={"pageReplacementModalClose"}
+            dataElement={'pageReplacementModalClose'}
           />
         </div>
         <Tabs className="page-replacement-tabs" id="pageReplacementModal">
@@ -142,7 +143,8 @@ const PageReplacementModal = ({
                   setSource({ [selectedTabInternal]: selection });
                 }}
                 list={selectableFiles}
-                defaultValue={srcString} />
+                defaultValue={srcString}
+              />
             </div>
           </TabPanel>
           <TabPanel dataElement="urlInputPanel">
@@ -167,7 +169,7 @@ const PageReplacementModal = ({
         <div className="footer">
           <Button
             className={classNames('modal-btn', { noFile: isSelectBtnDisabled })}
-            onClick={() => isSelectBtnDisabled ? null : handleSelection()}
+            onClick={() => (isSelectBtnDisabled ? null : handleSelection())}
             label={t('action.select')}
           />
         </div>

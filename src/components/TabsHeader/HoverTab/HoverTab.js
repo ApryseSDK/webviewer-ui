@@ -1,6 +1,6 @@
 import React from 'react';
 import './HoverTab.scss';
-import Icon from "components/Icon";
+import Icon from 'components/Icon';
 
 const HoverTab = ({ onDragOver, onDragLeave }) => {
   return (

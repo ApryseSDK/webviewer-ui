@@ -42,6 +42,5 @@ describe('PageAdditionalControls', () => {
       fireEvent.click(moveToBottomButton);
       expect(moveToBottom).toBeCalled();
     });
-
   });
 });

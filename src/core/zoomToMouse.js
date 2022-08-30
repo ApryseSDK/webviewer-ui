@@ -5,7 +5,7 @@
  * @fires zoomUpdated on DocumentViewer
  * @see https://www.pdftron.com/api/web/Core.DocumentViewer.html#event:zoomUpdated__anchor
  */
-export default zoomFactor => {
+export default (zoomFactor) => {
   // left panel width when it's not closed
   // it still maintains its width when closed
   const xOffset = document.querySelector('[data-element=leftPanel]:not(.closed)')?.offsetWidth || 0;

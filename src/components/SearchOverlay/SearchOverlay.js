@@ -38,7 +38,7 @@ function SearchOverlay(props) {
   const { searchStatus, isPanelOpen } = props;
 
   const searchTextInputRef = React.useRef();
-  const waitTime = 300;   // Wait time in milliseconds 
+  const waitTime = 300; // Wait time in milliseconds
 
   React.useEffect(() => {
     if (searchTextInputRef.current && isPanelOpen) {
@@ -47,7 +47,7 @@ function SearchOverlay(props) {
   }, [isPanelOpen]);
 
   React.useEffect(() => {
-    if(searchValue && searchValue.length > 0) {
+    if (searchValue && searchValue.length > 0) {
       executeSearch(searchValue, {
         caseSensitive: isCaseSensitive,
         wholeWord: isWholeWord,
@@ -60,7 +60,7 @@ function SearchOverlay(props) {
 
   const debouncedSearch = React.useCallback(
     debounce((searchValue) => {
-      if(searchValue && searchValue.length > 0) {
+      if (searchValue && searchValue.length > 0) {
         executeSearch(searchValue, {
           caseSensitive: isCaseSensitive,
           wholeWord: isWholeWord,
@@ -76,7 +76,7 @@ function SearchOverlay(props) {
   const textInputOnChange = (event) => {
     setSearchValue(event.target.value);
     debouncedSearch(event.target.value);
-  }
+  };
 
   function clearSearchResult() {
     core.clearSearchResults();
@@ -128,7 +128,7 @@ function SearchOverlay(props) {
   }
   const numberOfResultsFound = searchResults ? searchResults.length : 0;
 
-  const showSpinner = (searchStatus === 'SEARCH_DONE' && !isProcessingSearchResults)? (
+  const showSpinner = (searchStatus === 'SEARCH_DONE' && !isProcessingSearchResults) ? (
     <div>
       {numberOfResultsFound} {t('message.numResultsFound')}
     </div>
@@ -151,14 +151,14 @@ function SearchOverlay(props) {
           tabIndex={isPanelOpen ? 0 : -1}
         />
         {(searchValue !== undefined) && searchValue.length > 0 && (
-            <button
-              className="clearSearch-button"
-              onClick={clearSearchResult}
-              aria-label={t('message.searchDocumentPlaceholder')}
-            >
-              <Icon glyph="icon-header-clear-search" />
-            </button>
-          )
+          <button
+            className="clearSearch-button"
+            onClick={clearSearchResult}
+            aria-label={t('message.searchDocumentPlaceholder')}
+          >
+            <Icon glyph="icon-header-clear-search" />
+          </button>
+        )
         }
       </div>
       <div className="options">

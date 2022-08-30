@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Додати абзац",
     "add": "Додати",
     "apply": "Застосувати",
     "applyAll": "Застосувати все",
@@ -144,7 +145,8 @@
     "other": "Інший",
     "3D": "3D",
     "sound": "Звук",
-    "changeView": "Змінити вигляд"
+    "changeView": "Змінити вигляд",
+    "newImage": "Нове зображення"
   },
   "rubberStamp": {
     "Approved": "Затверджено",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "Вставити",
       "toolbarGroup-Measure": "Виміряти",
       "toolbarGroup-Edit": "Редагувати",
+      "toolbarGroup-EditText": "Редагувати текст",
       "toolbarGroup-FillAndSign": "Заповніть і підпишіть",
       "toolbarGroup-Forms": "Форми",
       "toolbarGroup-Redact": "Редагувати"
@@ -878,6 +881,10 @@
       "cancelMessage": "Ви впевнені, що хочете скасувати обрізання всіх вибраних сторінок?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Абзац",
+    "text": "текст"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Почніть редагувати, позначивши текст, регіони, сторінки або здійснивши пошук.",
     "redactionSearchPlaceholder": "Додайте за допомогою пошуку за ключовими словами або шаблонів",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Властивості",
     "miscValuesHeader": "Усі",
-    "emptyPanelMessage": "Виберіть елемент, щоб переглянути його властивості"
+    "emptyPanelMessage": "Виберіть елемент, щоб переглянути його властивості."
   },
   "languageModal": {
     "selectLanguage": "Оберіть мову"

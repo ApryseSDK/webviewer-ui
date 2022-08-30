@@ -7,7 +7,7 @@ import downloadPdf from 'helpers/downloadPdf';
 
 function noop() { }
 
-export default (annotations, onRedactionCompleted = noop) => dispatch => {
+export default (annotations, onRedactionCompleted = noop) => (dispatch) => {
   if (core.isWebViewerServerDocument()) {
     // when are using Webviewer Server, it'll download the redacted document
     return webViewerServerApply(annotations, dispatch);
@@ -15,17 +15,16 @@ export default (annotations, onRedactionCompleted = noop) => dispatch => {
   return webViewerApply(annotations, onRedactionCompleted, dispatch);
 };
 
-const webViewerServerApply = (annotations, dispatch) =>
-  core.applyRedactions(annotations).then(results => {
-    if (results && results.url) {
-      return downloadPdf(dispatch, {
-        filename: 'redacted.pdf',
-        includeAnnotations: true,
-        externalURL: results.url,
-      });
-    }
-    console.warn('WebViewer Server did not return a valid result');
-  });
+const webViewerServerApply = (annotations, dispatch) => core.applyRedactions(annotations).then((results) => {
+  if (results && results.url) {
+    return downloadPdf(dispatch, {
+      filename: 'redacted.pdf',
+      includeAnnotations: true,
+      externalURL: results.url,
+    });
+  }
+  console.warn('WebViewer Server did not return a valid result');
+});
 
 const webViewerApply = (annotations, onRedactionCompleted, dispatch) => {
   const message = i18next.t('warning.redaction.applyMessage');
@@ -41,7 +40,7 @@ const webViewerApply = (annotations, onRedactionCompleted, dispatch) => {
         .then(() => {
           onRedactionCompleted();
         })
-        .catch(err => fireError(err));
+        .catch((err) => fireError(err));
       return Promise.resolve();
     },
   };

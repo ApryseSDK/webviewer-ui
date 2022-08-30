@@ -9,7 +9,7 @@ import Button from 'components/Button';
 import actions from 'actions';
 import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
-import DataElements from "constants/dataElement";
+import DataElements from 'constants/dataElement';
 
 import './LinkModal.scss';
 
@@ -21,7 +21,7 @@ const LinkModal = () => {
     currentPage,
     tabSelected,
     pageLabels,
-  ] = useSelector(state => [
+  ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.LINK_MODAL),
     selectors.isElementOpen(state, DataElements.LINK_MODAL),
     selectors.getTotalPages(state),
@@ -36,7 +36,7 @@ const LinkModal = () => {
   const pageLabelInput = React.createRef();
 
   const [url, setURL] = useState('');
-  const [pageLabel, setPageLabel] = useState("");
+  const [pageLabel, setPageLabel] = useState('');
 
   const closeModal = () => {
     dispatch(actions.closeElement(DataElements.LINK_MODAL));
@@ -59,7 +59,7 @@ const LinkModal = () => {
     return link;
   };
 
-  const createLink = action => {
+  const createLink = (action) => {
     const linksResults = [];
 
     const quads = core.getSelectedTextQuads();
@@ -69,7 +69,7 @@ const LinkModal = () => {
       const selectedText = core.getSelectedText();
       for (const currPageNumber in quads) {
         const currPageLinks = [];
-        quads[currPageNumber].forEach(quad => {
+        quads[currPageNumber].forEach((quad) => {
           currPageLinks.push(
             newLink(
               Math.min(quad.x1, quad.x3),
@@ -91,13 +91,13 @@ const LinkModal = () => {
     }
 
     if (selectedAnnotations) {
-      selectedAnnotations.forEach(annot => {
+      selectedAnnotations.forEach((annot) => {
         const annotManager = core.getAnnotationManager();
         const groupedAnnots = annotManager.getGroupAnnotations(annot);
 
         // ungroup and delete any previously created links
         if (groupedAnnots.length > 1) {
-          const linksToDelete = groupedAnnots.filter(annot => annot instanceof Annotations.Link);
+          const linksToDelete = groupedAnnots.filter((annot) => annot instanceof Annotations.Link);
           if (linksToDelete.length > 0) {
             annotManager.ungroupAnnotations(groupedAnnots);
             core.deleteAnnotations(linksToDelete);
@@ -132,20 +132,20 @@ const LinkModal = () => {
 
     linkAnnotArray.forEach((link, index) => {
       link.addAction('U', action);
-      index === 0 ?  core.addAnnotations([link, highlight]) : core.addAnnotations([link]);
+      index === 0 ? core.addAnnotations([link, highlight]) : core.addAnnotations([link]);
     });
     annotManager.groupAnnotations(highlight, linkAnnotArray);
   };
 
-  const addURLLink = e => {
+  const addURLLink = (e) => {
     e.preventDefault();
 
     const action = new window.Actions.URI({ uri: url });
     const links = createLink(action);
 
-    let pageNumbersToDraw = links.map(link => link.PageNumber);
+    let pageNumbersToDraw = links.map((link) => link.PageNumber);
     pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
-    pageNumbersToDraw.forEach(pageNumberToDraw => {
+    pageNumbersToDraw.forEach((pageNumberToDraw) => {
       core.drawAnnotations(pageNumberToDraw, null, true);
     });
 
@@ -156,7 +156,7 @@ const LinkModal = () => {
     return pageLabels?.includes(pageLabel);
   };
 
-  const addPageLink = e => {
+  const addPageLink = (e) => {
     e.preventDefault();
 
     const Dest = window.Actions.GoTo.Dest;
@@ -166,9 +166,9 @@ const LinkModal = () => {
 
     const links = createLink(action);
 
-    let pageNumbersToDraw = links.map(link => link.PageNumber);
+    let pageNumbersToDraw = links.map((link) => link.PageNumber);
     pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
-    pageNumbersToDraw.forEach(pageNumberToDraw => {
+    pageNumbersToDraw.forEach((pageNumberToDraw) => {
       core.drawAnnotations(pageNumberToDraw, null, true);
     });
 
@@ -187,7 +187,7 @@ const LinkModal = () => {
         }
       }
 
-      setPageLabel(pageLabels.length > 0 ? pageLabels[0] : "1");
+      setPageLabel(pageLabels.length > 0 ? pageLabels[0] : '1');
     }
   }, [totalPages, isOpen]);
 
@@ -224,7 +224,7 @@ const LinkModal = () => {
         data-element={DataElements.LINK_MODAL}
         onMouseDown={closeModal}
       >
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
+        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
           <div className="swipe-indicator" />
           <Tabs id="linkModal">
             <div className="tab-list">
@@ -245,7 +245,7 @@ const LinkModal = () => {
                     className="urlInput"
                     ref={urlInput}
                     value={url}
-                    onChange={e => setURL(e.target.value)}
+                    onChange={(e) => setURL(e.target.value)}
                   />
                   <Button
                     dataElement="linkSubmitButton"
@@ -262,7 +262,7 @@ const LinkModal = () => {
                   <input
                     ref={pageLabelInput}
                     value={pageLabel}
-                    onChange={e => setPageLabel(e.target.value)}
+                    onChange={(e) => setPageLabel(e.target.value)}
                   />
                   <Button
                     dataElement="linkSubmitButton"

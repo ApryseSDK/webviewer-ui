@@ -10,18 +10,16 @@ function PageReplacementModalRedux(props) {
     dispatch(actions.closeElement('pageReplacementModal'));
   };
 
-  const selectableFiles = useSelector(state => selectors.getPageReplacementFileList(state));
+  const selectableFiles = useSelector((state) => selectors.getPageReplacementFileList(state));
 
-  const [isOpen] = useSelector(state => [
+  const [isOpen] = useSelector((state) => [
     selectors.isElementOpen(state, 'pageReplacementModal'),
   ]);
 
-  const selectedThumbnailPageIndexes = useSelector(state =>
-    selectors.getSelectedThumbnailPageIndexes(state)
+  const selectedThumbnailPageIndexes = useSelector((state) => selectors.getSelectedThumbnailPageIndexes(state)
   );
 
-  const selectedTab = useSelector(state =>
-    selectors.getSelectedTab(state, 'pageReplacementModal')
+  const selectedTab = useSelector((state) => selectors.getSelectedTab(state, 'pageReplacementModal')
   );
 
   const newProps = {

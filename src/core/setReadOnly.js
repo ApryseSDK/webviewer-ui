@@ -8,7 +8,7 @@
  * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:readOnlyModeChanged__anchor
  * @see https://www.pdftron.com/api/web/Core.DocumentViewer.html#event:readOnlyModeChanged__anchor
  */
-export default isReadOnly => {
+export default (isReadOnly) => {
   if (isReadOnly) {
     window.documentViewer.getAnnotationManager().enableReadOnlyMode();
     window.documentViewer.enableReadOnlyMode();

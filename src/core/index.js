@@ -57,6 +57,7 @@ import textSearchInit from './textSearchInit';
 import getSearchMode from './getSearchMode';
 import getPageWidth from './getPageWidth';
 import getPageHeight from './getPageHeight';
+import getScales from './getScales';
 import drawAnnotations from './drawAnnotations';
 import getOutlines from './getOutlines';
 import getSelectedAnnotations from './getSelectedAnnotations';
@@ -119,10 +120,15 @@ import mergeDocument from './mergeDocument';
 import getFormFieldCreationManager from './getFormFieldCreationManager';
 import syncNamespaces from './syncNamespaces';
 import createDocument from './createDocument';
+import getContentEditManager from './getContentEditManager';
 import setUserBookmarks from './setUserBookmarks';
 import setBookmarkIconShortcutVisibility from './setBookmarkIconShortcutVisibility';
 import setBookmarkShortcutToggleOnFunction from './setBookmarkShortcutToggleOnFunction';
 import setBookmarkShortcutToggleOffFunction from './setBookmarkShortcutToggleOffFunction';
+import createAndApplyScale from './createAndApplyScale';
+import replaceScales from './replaceScales';
+import deleteScale from './deleteScale';
+import getScalePrecision from './getScalePrecision';
 
 export default {
   setToolMode,
@@ -149,6 +155,7 @@ export default {
   getCurrentPage,
   setCurrentPage,
   getType,
+  getScales,
   isWebViewerServerDocument,
   getSelectedText,
   clearSelection,
@@ -247,8 +254,13 @@ export default {
   getFormFieldCreationManager,
   syncNamespaces,
   createDocument,
+  getContentEditManager,
   setUserBookmarks,
   setBookmarkIconShortcutVisibility,
   setBookmarkShortcutToggleOnFunction,
-  setBookmarkShortcutToggleOffFunction
+  setBookmarkShortcutToggleOffFunction,
+  createAndApplyScale,
+  replaceScales,
+  deleteScale,
+  getScalePrecision
 };

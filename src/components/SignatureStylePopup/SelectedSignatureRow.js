@@ -11,7 +11,7 @@ import './SelectedSignatureRow.scss';
 
 const SelectedSignatureRow = ({ t }) => {
   const [activeToolName, isToolStyleOpen, displayedSignature, displayedSignatures] = useSelector(
-    state => [
+    (state) => [
       selectors.getActiveToolName(state),
       selectors.isElementOpen(state, 'toolStylePopup'),
       selectors.getSelectedDisplayedSignature(state),

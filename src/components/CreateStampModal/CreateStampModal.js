@@ -19,7 +19,7 @@ const CustomStampModal = () => {
   const [t] = useTranslation();
   const store = useStore();
   const [emptyInput, setEmptyInput] = useState(false);
-  const [isOpen, fonts, dateTimeFormats, userName] = useSelector(state => [
+  const [isOpen, fonts, dateTimeFormats, userName] = useSelector((state) => [
     selectors.isElementOpen(state, 'customStampModal'),
     selectors.getFonts(state),
     selectors.getDateTimeFormats(state),
@@ -40,7 +40,7 @@ const CustomStampModal = () => {
     return customColor;
   };
 
-  const openDeleteModal = async onConfirm => {
+  const openDeleteModal = async (onConfirm) => {
     const message = t('warning.colorPicker.deleteMessage');
     const title = t('warning.colorPicker.deleteTitle');
     const confirmBtnText = t('action.ok');
@@ -80,9 +80,9 @@ const CustomStampModal = () => {
         data-element="customStampModal"
       >
         <FocusTrap locked={isOpen}>
-          <div className="container" onMouseDown={e => e.stopPropagation()}>
+          <div className="container" onMouseDown={(e) => e.stopPropagation()}>
             <div className="header">
-              <p>{t(`option.customStampModal.modalName`)}</p>
+              <p>{t('option.customStampModal.modalName')}</p>
               <Button
                 dataElement="customStampModalCloseButton"
                 title="action.close"

@@ -24,6 +24,7 @@ export default {
   INSERT: 'toolbarGroup-Insert',
   MEASURE: 'toolbarGroup-Measure',
   EDIT: 'toolbarGroup-Edit',
+  EDIT_TEXT: 'toolbarGroup-EditText',
   FILL_AND_SIGN: 'toolbarGroup-FillAndSign',
   FORMS: 'toolbarGroup-Forms'
 };

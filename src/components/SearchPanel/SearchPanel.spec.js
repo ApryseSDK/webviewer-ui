@@ -1,6 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { render, fireEvent, createEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import SearchPanelWithOutI18n from './SearchPanel';
 import SearchPanelContainerWithOutI18n from './SearchPanelContainer';
 import useMedia from 'hooks/useMedia';
@@ -34,7 +34,7 @@ jest.mock('components/SearchResult', () => {
 });
 
 function createDisabledStateForDataElement(dataElement) {
-  const state = { viewer: { disabledElements : {} } };
+  const state = { viewer: { disabledElements: {} } };
   state.viewer.disabledElements[dataElement] = { disabled: true };
   return state;
 }
@@ -172,7 +172,6 @@ describe('SearchPanel', () => {
     fireEvent.click(mobileCloseButton);
     expect(closeSearchPanelMock).toHaveBeenCalled();
   });
-
 });
 
 describe('SearchPanelContainer', () => {

@@ -10,7 +10,7 @@ export default (dispatch, src, options = {}) => {
   options = { ...getDefaultOptions(), ...options };
 
   options.docId = options.documentId || null;
-  options.onLoadingProgress = percent => dispatch(actions.setLoadingProgress(percent));
+  options.onLoadingProgress = (percent) => dispatch(actions.setLoadingProgress(percent));
   options.password = transformPasswordOption(options.password, dispatch);
   options.xodOptions = extractXodOptions(options);
   if ('onError' in options) {
@@ -62,7 +62,7 @@ const transformPasswordOption = (password, dispatch) => {
   let passwordChecked = false;
   let attempt = 0;
 
-  return checkPassword => {
+  return (checkPassword) => {
     dispatch(actions.setPasswordAttempts(attempt++));
 
     if (!passwordChecked && typeof password === 'string') {
@@ -81,7 +81,7 @@ const transformPasswordOption = (password, dispatch) => {
   };
 };
 
-const extractXodOptions = options => {
+const extractXodOptions = (options) => {
   const xodOptions = options.xodOptions || {};
 
   if (options.decryptOptions) {

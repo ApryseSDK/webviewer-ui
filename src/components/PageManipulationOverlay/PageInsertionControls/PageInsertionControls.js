@@ -41,7 +41,6 @@ function PageInsertionControls(props) {
       </DataElementWrapper>
     </>
   );
-
 }
 
 export default PageInsertionControls;

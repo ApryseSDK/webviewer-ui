@@ -6,6 +6,7 @@ import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
 import useArrowFocus from '../../hooks/useArrowFocus';
+
 import './Dropdown.scss';
 
 const DEFAULT_WIDTH = 100;
@@ -45,18 +46,26 @@ function Dropdown({
   const [isOpen, setIsOpen] = useState(false);
 
   const onClose = useCallback(() => setIsOpen(false), []);
-  const onToggle = useCallback(() => setIsOpen(prev => !prev), []);
+  const onToggle = useCallback((e) => {
+    e.preventDefault();
+    setIsOpen((prev) => !prev);
+  }, []);
 
   // Close dropdown if WebViewer loses focus (ie, user clicks outside iframe).
   useEffect(() => {
-    window.addEventListener('blur', () => {
+    const onBlur = () => {
       setIsOpen(false);
-    });
+    };
+    window.addEventListener('blur', onBlur);
+
+    return () => {
+      window.removeEventListener('blur', onBlur);
+    };
   }, []);
 
   useArrowFocus(isOpen, onClose, overlayRef);
 
-  const onClickOutside = useCallback(e => {
+  const onClickOutside = useCallback((e) => {
     if (!buttonRef.current.contains(e.target)) {
       setIsOpen(false);
     }
@@ -64,9 +73,10 @@ function Dropdown({
   useOnClickOutside(overlayRef, onClickOutside);
 
   const onClickDropdownItem = useCallback(
-    (e, key) => {
+    (e, key, i) => {
+      e.preventDefault();
       e.stopPropagation();
-      onClickItem(key);
+      onClickItem(key, i);
       setIsOpen(false);
       buttonRef.current.focus();
     },
@@ -83,42 +93,42 @@ function Dropdown({
 
   const getDropdownStyles = (isFont, key, maxheight) => {
     if (isFont && key && maxheight) {
-      return { fontFamily: key, lineHeight: `28px` };
-    } else if (isFont && key) {
+      return { fontFamily: key, lineHeight: '28px' };
+    }
+    if (isFont && key) {
       return { fontFamily: key };
-    } else if (maxheight) {
-      return { lineHeight: `28px` };
+    }
+    if (maxheight) {
+      return { lineHeight: '28px' };
     }
   };
 
-  const renderDropdownImages = () =>
-    images.map(image => (
-      <DataElementWrapper
-        key={image.key}
-        type="button"
-        dataElement={`dropdown-item-${image.key}`}
-        className={classNames('Dropdown__item', { active: image.key === currentSelectionKey })}
-        tabIndex={isOpen ? undefined : -1} // Just to be safe.
-        onClick={e => onClickDropdownItem(e, image.key)}
-      >
-        <Icon glyph={image.src} className={image.className} />
-      </DataElementWrapper>
-    ));
+  const renderDropdownImages = () => images.map((image) => (
+    <DataElementWrapper
+      key={image.key}
+      type="button"
+      dataElement={`dropdown-item-${image.key}`}
+      className={classNames('Dropdown__item', { active: image.key === currentSelectionKey })}
+      tabIndex={isOpen ? undefined : -1} // Just to be safe.
+      onClick={(e) => onClickDropdownItem(e, image.key)}
+    >
+      <Icon glyph={image.src} className={image.className} />
+    </DataElementWrapper>
+  ));
 
-  const renderDropdownItems = () =>
-    items.map(key => (
-      <DataElementWrapper
-        key={key}
-        type="button"
-        dataElement={`dropdown-item-${key}`}
-        className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
-        onClick={e => onClickDropdownItem(e, key)}
-        tabIndex={isOpen ? undefined : -1} // Just to be safe.
-        style={getDropdownStyles(isFont, key, maxHeight)}
-      >
-        {getTranslation(translationPrefix, key)}
-      </DataElementWrapper>
-    ));
+  const renderDropdownItems = () => items.map((key, i) => (
+    <DataElementWrapper
+      key={key}
+      type="button"
+      dataElement={`dropdown-item-${key}`}
+      className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
+      onClick={(e) => onClickDropdownItem(e, key, i)}
+      tabIndex={isOpen ? undefined : -1} // Just to be safe.
+      style={getDropdownStyles(isFont, key, maxHeight)}
+    >
+      {getTranslation(translationPrefix, key)}
+    </DataElementWrapper>
+  ));
 
   let dropdownItems;
   let optionIsSelected;
@@ -126,14 +136,14 @@ function Dropdown({
 
   const hasImages = images && images.length > 0;
   if (hasImages) {
-    const imageKeys = images.map(item => item.key);
+    const imageKeys = images.map((item) => item.key);
     const selectedImageIndex = getImageIndexFromKey(images, currentSelectionKey);
 
-    optionIsSelected = imageKeys.some(key => key === currentSelectionKey);
+    optionIsSelected = imageKeys.some((key) => key === currentSelectionKey);
     selectedItem = <Icon glyph={images[selectedImageIndex].src} className={images[selectedImageIndex].className} />;
     dropdownItems = useMemo(renderDropdownImages, [images, currentSelectionKey]);
   } else {
-    optionIsSelected = items.some(key => key === currentSelectionKey);
+    optionIsSelected = items.some((key) => key === currentSelectionKey);
     selectedItem = tReady ? getTranslation(translationPrefix, currentSelectionKey) : '';
 
     dropdownItems = useMemo(renderDropdownItems, [

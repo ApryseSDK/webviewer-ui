@@ -29,13 +29,13 @@ function getPageString(selectedPageArray, pageLabels) {
   return pagesToPrint.slice(0, -2);
 }
 
-const DocumentControls = props => {
+const DocumentControls = (props) => {
   const { shouldShowControls } = props;
 
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
-  const [selectedPageIndexes, isDisabled, pageLabels, isThumbnailSelectingPages] = useSelector(state => [
+  const [selectedPageIndexes, isDisabled, pageLabels, isThumbnailSelectingPages] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.isElementDisabled(state, 'documentControl'),
     selectors.getPageLabels(state),
@@ -51,10 +51,10 @@ const DocumentControls = props => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
   }, [setPageString, selectedPageIndexes, shouldShowControls, pageLabels]);
 
-  const onBlur = e => {
+  const onBlur = (e) => {
     const selectedPagesString = e.target.value.replace(/ /g, '');
     const pages = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels);
-    const pageIndexes = pages.map(page => page - 1);
+    const pageIndexes = pages.map((page) => page - 1);
 
     if (pages.length || !selectedPagesString) {
       dispatch(actions.setSelectedPageThumbnails(pageIndexes));
@@ -68,7 +68,7 @@ const DocumentControls = props => {
     }
 
     if (selectedPageIndexes.length > 0 && !isThumbnailSelectingPages) {
-      // set a short timeout due to race condition caused by onBlur and 
+      // set a short timeout due to race condition caused by onBlur and
       // changing the documentControlsButton based on isThumbnailSelectingPages
       setTimeout(() => {
         enableThumbnailSelectingPages();
@@ -76,7 +76,7 @@ const DocumentControls = props => {
     }
   };
 
-  const pageStringUpdate = e => {
+  const pageStringUpdate = (e) => {
     setPageString(e.target.value);
   };
 

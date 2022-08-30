@@ -188,7 +188,7 @@ const HotkeysManager = {
     this.store = store;
     this.keyHandlerMap = this.createKeyHandlerMap(store);
     this.prevToolName = null;
-    Object.keys(this.keyHandlerMap).forEach(key => {
+    Object.keys(this.keyHandlerMap).forEach((key) => {
       this.on(key, this.keyHandlerMap[key]);
     });
     this.didInitializeAllKeys = true;
@@ -239,7 +239,7 @@ WebViewer(...)
     function enableHotkey(_key, _handler) {
       // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
       const { keyup = NOOP, keydown = _handler } = _handler;
-      hotkeys(_key, { keyup: true }, e => {
+      hotkeys(_key, { keyup: true }, (e) => {
         if (e.type === 'keyup') {
           keyup(e);
         }
@@ -252,7 +252,7 @@ WebViewer(...)
     if ((!key || !handler) && !this.didInitializeAllKeys) {
       this.keyHandlerMap = this.createKeyHandlerMap(this.store);
       this.prevToolName = null;
-      Object.keys(this.keyHandlerMap).forEach(_key => {
+      Object.keys(this.keyHandlerMap).forEach((_key) => {
         // Check if the "key" has already been inilized
         if (!unbindedHotkeysMap[_key]) {
           enableHotkey(_key, this.keyHandlerMap[_key]);
@@ -335,11 +335,11 @@ WebViewer(...)
     const { dispatch, getState } = store;
 
     return {
-      [`${Keys.CTRL_SHIFT_EQUAL}, ${Keys.COMMAND_SHIFT_EQUAL}`]: e => {
+      [`${Keys.CTRL_SHIFT_EQUAL}, ${Keys.COMMAND_SHIFT_EQUAL}`]: (e) => {
         e.preventDefault();
         core.rotateClockwise();
       },
-      [`${Keys.CTRL_SHIFT_MINUS}, ${Keys.COMMAND_SHIFT_MINUS}`]: e => {
+      [`${Keys.CTRL_SHIFT_MINUS}, ${Keys.COMMAND_SHIFT_MINUS}`]: (e) => {
         e.preventDefault();
         core.rotateCounterClockwise();
       },
@@ -351,29 +351,29 @@ WebViewer(...)
           core.updateCopiedAnnotations();
         }
       },
-      [`${Keys.CTRL_V}, ${Keys.COMMAND_V}`]: e => {
+      [`${Keys.CTRL_V}, ${Keys.COMMAND_V}`]: (e) => {
         if (!isFocusingElement()) {
           e.preventDefault();
           core.pasteCopiedAnnotations();
         }
       },
-      [`${Keys.CTRL_Z}, ${Keys.COMMAND_Z}`]: e => {
+      [`${Keys.CTRL_Z}, ${Keys.COMMAND_Z}`]: (e) => {
         if (!isFocusingElement()) {
           e.preventDefault();
           core.undo();
         }
       },
-      [`${Keys.CTRL_Y}, ${Keys.COMMAND_SHIFT_Z}`]: e => {
+      [`${Keys.CTRL_Y}, ${Keys.COMMAND_SHIFT_Z}`]: (e) => {
         if (!isFocusingElement()) {
           e.preventDefault();
           core.redo();
         }
       },
-      [`${Keys.CTRL_O}, ${Keys.COMMAND_O}`]: e => {
+      [`${Keys.CTRL_O}, ${Keys.COMMAND_O}`]: (e) => {
         e.preventDefault();
         openFilePicker();
       },
-      [`${Keys.CTRL_B}, ${Keys.COMMAND_B}`]: e => {
+      [`${Keys.CTRL_B}, ${Keys.COMMAND_B}`]: (e) => {
         e.preventDefault();
         if (!selectors.isElementDisabled(getState(), DataElements.BOOKMARK_PANEL)) {
           dispatch(actions.openElement(DataElements.LEFT_PANEL));
@@ -387,7 +387,7 @@ WebViewer(...)
           }
         }
       },
-      [concatKeys(Keys.CTRL_F, Keys.COMMAND_F)]: e => {
+      [concatKeys(Keys.CTRL_F, Keys.COMMAND_F)]: (e) => {
         e.preventDefault();
 
         const isNotesPanelOpen = selectors.isElementOpen(getState(), 'notesPanel');
@@ -400,6 +400,11 @@ WebViewer(...)
           dispatch(actions.closeElement('redactionPanel'));
         }
 
+        const isTextEditingPanelOpen = selectors.isElementOpen(getState(), 'textEditingPanel');
+        if (isTextEditingPanelOpen) {
+          dispatch(actions.closeElement('textEditingPanel'));
+        }
+
         const isWv3dPropertiesPanelOpen = selectors.isElementOpen(getState(), 'wv3dPropertiesPanel');
         if (isWv3dPropertiesPanelOpen) {
           dispatch(actions.closeElement('wv3dPropertiesPanel'));
@@ -407,15 +412,15 @@ WebViewer(...)
 
         dispatch(actions.toggleElement('searchPanel'));
       },
-      [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: e => {
+      [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: (e) => {
         e.preventDefault();
         zoomIn();
       },
-      [`${Keys.CTRL_MINUS}, ${Keys.COMMAND_MINUS}`]: e => {
+      [`${Keys.CTRL_MINUS}, ${Keys.COMMAND_MINUS}`]: (e) => {
         e.preventDefault();
         zoomOut();
       },
-      [`${Keys.CTRL_0}, ${Keys.COMMAND_0}`]: e => {
+      [`${Keys.CTRL_0}, ${Keys.COMMAND_0}`]: (e) => {
         e.preventDefault();
 
         if (isMobile) {
@@ -424,7 +429,7 @@ WebViewer(...)
           core.fitToPage();
         }
       },
-      [concatKeys(Keys.CTRL_P, Keys.COMMAND_P)]: e => {
+      [concatKeys(Keys.CTRL_P, Keys.COMMAND_P)]: (e) => {
         e.preventDefault();
 
         print(
@@ -434,12 +439,12 @@ WebViewer(...)
           selectors.getColorMap(getState()),
         );
       },
-      [`${Keys.PAGE_UP}`]: e => {
+      [`${Keys.PAGE_UP}`]: (e) => {
         e.preventDefault();
 
         setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate());
       },
-      [`${Keys.PAGE_DOWN}`]: e => {
+      [`${Keys.PAGE_DOWN}`]: (e) => {
         e.preventDefault();
 
         setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
@@ -478,13 +483,13 @@ WebViewer(...)
         }
       },
       [`${Keys.SPACE}`]: {
-        keyup: this.createToolHotkeyHandler(e => {
+        keyup: this.createToolHotkeyHandler((e) => {
           e.preventDefault();
 
           setToolModeAndGroup(store, this.prevToolName);
           this.prevToolName = null;
         }),
-        keydown: this.createToolHotkeyHandler(e => {
+        keydown: this.createToolHotkeyHandler((e) => {
           e.preventDefault();
 
           if (core.getToolMode().name !== 'Pan') {
@@ -493,7 +498,7 @@ WebViewer(...)
           }
         }),
       },
-      [`${Keys.ESCAPE}`]: e => {
+      [`${Keys.ESCAPE}`]: (e) => {
         e.preventDefault();
         setToolModeAndGroup(store, 'AnnotationEdit', '');
 

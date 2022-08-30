@@ -1,8 +1,8 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import LeftPanelPageTabs from "components/LeftPanelPageTabs/LeftPanelPageTabs/LeftPanelPageTabs";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
+import LeftPanelPageTabs from 'components/LeftPanelPageTabs/LeftPanelPageTabs/LeftPanelPageTabs';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 // create test component with mock redux
 const initialState = {
@@ -45,31 +45,31 @@ describe('LeftPanelPageTabs', () => {
       const handlers = {
         onReplace: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlReplace"
+          dataElement: 'thumbnailsControlReplace'
         },
         onExtractPages: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlExtract"
+          dataElement: 'thumbnailsControlExtract'
         },
         onDeletePages: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlDelete"
+          dataElement: 'thumbnailsControlDelete'
         },
         onRotateCounterClockwise: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlRotateCounterClockwise"
+          dataElement: 'thumbnailsControlRotateCounterClockwise'
         },
         onRotateClockwise: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlRotateClockwise"
+          dataElement: 'thumbnailsControlRotateClockwise'
         },
         onInsertAbove: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlInsertAbove"
+          dataElement: 'thumbnailsControlInsertAbove'
         },
         onInsertBelow: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlInsertBelow"
+          dataElement: 'thumbnailsControlInsertBelow'
         },
       };
       const { container } = render(<LeftPanelPageTabsWithRedux

@@ -11,6 +11,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => dataElement => {
+export default (store) => (dataElement) => {
   store.dispatch(actions.toggleElement(dataElement));
 };

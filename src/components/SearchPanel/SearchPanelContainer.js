@@ -7,9 +7,9 @@ import useMedia from 'hooks/useMedia';
 import SearchPanel from './SearchPanel';
 
 function SearchPanelContainer(props) {
-  const isMobile = useMedia(['(max-width: 640px)'],[true], false);
+  const isMobile = useMedia(['(max-width: 640px)'], [true], false);
 
-  const [isOpen, currentWidth, pageLabels, shouldClearSearchPanelOnClose, isInDesktopOnlyMode, isProcessingSearchResults] = useSelector(state => [
+  const [isOpen, currentWidth, pageLabels, shouldClearSearchPanelOnClose, isInDesktopOnlyMode, isProcessingSearchResults] = useSelector((state) => [
     selectors.isElementOpen(state, 'searchPanel'),
     selectors.getSearchPanelWidth(state),
     selectors.getPageLabels(state),

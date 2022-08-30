@@ -7,9 +7,9 @@ import { isMobile } from 'helpers/device';
 
 import Thumbnail from './Thumbnail';
 
-const ThumbnailRedux = props => {
+const ThumbnailRedux = (props) => {
   const [currentPage, pageLabels, selectedPageIndexes, isThumbnailMultiselectEnabled, isReaderMode, shiftKeyThumbnailPivotIndex, isThumbnailSelectingPages, thumbnailSelectionMode, selectionModes] = useSelector(
-    state => [
+    (state) => [
       selectors.getCurrentPage(state),
       selectors.getPageLabels(state),
       selectors.getSelectedThumbnailPageIndexes(state),

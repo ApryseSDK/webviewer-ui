@@ -32,6 +32,14 @@ export const defaultRedactionTypes = {
     icon: 'ic-full-frame-video-and-audio-redact',
     label: 'redactionPanel.redactionItem.fullVideoFrameAndAudioRedaction',
   },
+  [redactionTypeMap['AUDIO_REDACTION']]: {
+    icon: 'ic-audio-redact',
+    label: 'redactionPanel.redactionItem.audioRedaction',
+  },
+  [redactionTypeMap['FULL_VIDEO_FRAME_AND_AUDIO']]: {
+    icon: 'ic-full-frame-video-and-audio-redact',
+    label: 'redactionPanel.redactionItem.fullVideoFrameAndAudioRedaction',
+  },
   [redactionTypeMap['TEXT']]: {
     icon: 'icon-form-field-text',
   },

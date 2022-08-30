@@ -5,6 +5,7 @@ import viewerReducer from 'reducers/viewerReducer';
 import searchReducer from 'reducers/searchReducer';
 import userReducer from 'reducers/userReducer';
 import documentReducer from 'reducers/documentReducer';
+import wv3dPropertiesPanelReducer from 'src/redux/reducers/wv3dPropertiesPanelReducer';
 
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -23,4 +24,5 @@ export default combineReducers({
   // TODO: refactor in another PR to remove state.advanced. It's not necessary to have this because those states never change.
   advanced: () => initialState.advanced,
   featureFlags: () => initialState.featureFlags,
+  wv3dPropertiesPanel: wv3dPropertiesPanelReducer(initialState.wv3dPropertiesPanel),
 });

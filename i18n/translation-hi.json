@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "पैराग्राफ जोड़ें",
     "add": "जोड़ें",
     "apply": "लागू करना",
     "applyAll": "सभी लागू",
@@ -144,7 +145,8 @@
     "other": "अन्य",
     "3D": "3डी",
     "sound": "ध्वनि",
-    "changeView": "परिवर्तन देखें"
+    "changeView": "परिवर्तन देखें",
+    "newImage": "नया चित्र"
   },
   "rubberStamp": {
     "Approved": "स्वीकृत",
@@ -309,6 +311,7 @@
       "toolbarGroup-Insert": "डालने",
       "toolbarGroup-Measure": "उपाय",
       "toolbarGroup-Edit": "संपादित करें",
+      "toolbarGroup-EditText": "लिखाई में बदलाव",
       "toolbarGroup-FillAndSign": "भरें और हस्ताक्षर करें",
       "toolbarGroup-Forms": "फार्म",
       "toolbarGroup-Redact": "संपादन"
@@ -878,6 +881,10 @@
       "cancelMessage": "क्या आप वाकई सभी चयनित पृष्ठों को क्रॉप करना रद्द करना चाहते हैं?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "अनुच्छेद",
+    "text": "मूलपाठ"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "पाठ, क्षेत्रों, पृष्ठों को चिह्नित करके या खोज करके पुनः अभिनय करना प्रारंभ करें।",
     "redactionSearchPlaceholder": "कीवर्ड खोज या पैटर्न द्वारा जोड़ें",
@@ -907,7 +914,7 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "गुण",
     "miscValuesHeader": "सभी",
-    "emptyPanelMessage": "किसी एलीमेंट के गुणों को देखने के लिए उसका चयन करें"
+    "emptyPanelMessage": "किसी एलीमेंट के गुणों को देखने के लिए उसका चयन करें."
   },
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"

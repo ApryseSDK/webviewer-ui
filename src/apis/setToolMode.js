@@ -11,6 +11,6 @@ WebViewer(...)
 
 import core from 'core';
 
-export default toolName => {
+export default (toolName) => {
   core.setToolMode(toolName);
 };

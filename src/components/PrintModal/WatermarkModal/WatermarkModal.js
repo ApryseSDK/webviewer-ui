@@ -115,7 +115,7 @@ class WatermarkModal extends React.PureComponent {
         {
           locationSettings: this.state.previousLocationSettings,
         },
-        async() => {
+        async () => {
           // Store the pre-existing watermark (if any) before we overwrite it
           this.preExistingWatermark = await core.getWatermark();
           this.addWatermarks();
@@ -143,7 +143,7 @@ class WatermarkModal extends React.PureComponent {
     core.getDocument().loadCanvas({
       pageNumber: this.props.pageIndexToView + 1,
       zoom: desiredZoom,
-      drawComplete: canvas => {
+      drawComplete: (canvas) => {
         const nodes = this.canvasContainerRef.current.childNodes;
         if (nodes && nodes.length > 0) {
           this.canvasContainerRef.current.removeChild(nodes[0]);
@@ -158,7 +158,7 @@ class WatermarkModal extends React.PureComponent {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  constructWatermarkOption = value => {
+  constructWatermarkOption = (value) => {
     const fontStyles = [];
     if (value.isBolded) {
       fontStyles.push(core.getFontStyles().BOLD);
@@ -184,7 +184,7 @@ class WatermarkModal extends React.PureComponent {
   createWatermarks = () => {
     const watermarks = {};
 
-    Object.keys(WATERMARK_LOCATIONS).forEach(key => {
+    Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
       const temp = this.constructWatermarkOption(
         this.state.locationSettings[key],
       );
@@ -223,7 +223,7 @@ class WatermarkModal extends React.PureComponent {
     );
   };
 
-  resetForm = event => {
+  resetForm = (event) => {
     event.preventDefault();
     const locationSettings = this.initializeLocationSettings();
     this.setState(
@@ -250,18 +250,18 @@ class WatermarkModal extends React.PureComponent {
 
   getCirclePosn = (lineLength, opacity) => {
     const lineStart = circleRadius;
-    return opacity * lineLength + lineStart
+    return opacity * lineLength + lineStart;
   };
 
-  setColorPaletteVisibility = visible => {
+  setColorPaletteVisibility = (visible) => {
     this.setState({ isColorPaletteVisible: visible });
   };
 
-  onLocationChanged = key => {
+  onLocationChanged = (key) => {
     const currLocationSettings = {
       ...this.state.locationSettings,
     };
-    Object.keys(currLocationSettings).forEach(locationKey => {
+    Object.keys(currLocationSettings).forEach((locationKey) => {
       let locationSetting = currLocationSettings[locationKey];
       locationSetting = {
         ...locationSetting,
@@ -283,7 +283,7 @@ class WatermarkModal extends React.PureComponent {
   // eslint-disable-next-line class-methods-use-this
   initializeLocationSettings = () => {
     const locationSettings = {};
-    Object.keys(WATERMARK_LOCATIONS).forEach(key => {
+    Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
       // ignore location as it is redundant as we already have location key
       const { ...others } = DEFAULT_VALS;
       const temp = {
@@ -296,16 +296,14 @@ class WatermarkModal extends React.PureComponent {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  getKeyByValue = (object, value) =>
-    Object.keys(object).find(key => object[key] === value);
+  getKeyByValue = (object, value) => Object.keys(object).find((key) => object[key] === value);
 
-  getCurrentSelectedLocation = () =>
-    Object.keys(this.state.locationSettings).find(locationKey => {
-      const locationSetting = this.state.locationSettings[locationKey];
-      return locationSetting.isSelected;
-    });
+  getCurrentSelectedLocation = () => Object.keys(this.state.locationSettings).find((locationKey) => {
+    const locationSetting = this.state.locationSettings[locationKey];
+    return locationSetting.isSelected;
+  });
 
-  onColorChanged = newColor => {
+  onColorChanged = (newColor) => {
     const currLocation = this.getCurrentSelectedLocation();
     const currLocationSetting = this.state.locationSettings[currLocation];
     currLocationSetting[FORM_FIELD_KEYS.color] = new window.Annotations.Color(
@@ -318,7 +316,7 @@ class WatermarkModal extends React.PureComponent {
     };
     if (!currLocationSetting[FORM_FIELD_KEYS.text]) {
       // if text is undefined, persist the changed color to other location settings (customer's request)
-      Object.keys(WATERMARK_LOCATIONS).forEach(location => {
+      Object.keys(WATERMARK_LOCATIONS).forEach((location) => {
         const locationSetting = locationSettings[location];
         if (!locationSetting[FORM_FIELD_KEYS.text]) {
           locationSetting[FORM_FIELD_KEYS.color] = new window.Annotations.Color(
@@ -353,14 +351,17 @@ class WatermarkModal extends React.PureComponent {
       <Swipeable
         onSwipedUp={this.closeModal}
         onSwipedDown={this.closeModal}
-        preventDefaultTouchmoveEvent>
+        preventDefaultTouchmoveEvent
+      >
         <DataElementWrapper
           className={'Modal Watermark'}
           id="watermarkModal"
-          data-element="watermarkModal">
+          data-element="watermarkModal"
+        >
           <ModalWrapper isOpen={this.state.lockFocus} title={'option.watermark.addWatermark'}
-            closeButtonDataElement={'watermarkModalCloseButton'} 
-            onCloseClick={this.closeModal}>
+            closeButtonDataElement={'watermarkModalCloseButton'}
+            onCloseClick={this.closeModal}
+          >
             <div className="swipe-indicator" />
 
             <div className="form-content-container">
@@ -370,16 +371,16 @@ class WatermarkModal extends React.PureComponent {
               ></div>
 
               <div className="watermark-settings">
-                <form id="form" onSubmit={e => e.preventDefault()}>
+                <form id="form" onSubmit={(e) => e.preventDefault()}>
                   <div className="form-field">
-                    <label htmlFor="location">{t(`option.watermark.location`)}</label>
+                    <label htmlFor="location">{t('option.watermark.location')}</label>
                     <select
                       id="location"
-                      onChange={event => {
+                      onChange={(event) => {
                         this.onLocationChanged(event.target.value);
                       }}
                     >
-                      {Object.keys(WATERMARK_LOCATIONS).map(key => (
+                      {Object.keys(WATERMARK_LOCATIONS).map((key) => (
                         <option key={key} value={key}>{t(`option.watermark.locations.${WATERMARK_LOCATIONS[key]}`)}</option>
                       ))}
                     </select>
@@ -387,50 +388,47 @@ class WatermarkModal extends React.PureComponent {
                   </div>
 
                   <div className="form-field">
-                    <label htmlFor="textInput">{t(`option.watermark.text`)}</label>
+                    <label htmlFor="textInput">{t('option.watermark.text')}</label>
                     <input
                       className="text-input"
                       id="textInput"
                       value={formInfo[FORM_FIELD_KEYS.text]}
-                      onChange={event =>
-                        this.handleInputChange(
-                          FORM_FIELD_KEYS.text,
-                          event.target.value,
-                        )
+                      onChange={(event) => this.handleInputChange(
+                        FORM_FIELD_KEYS.text,
+                        event.target.value,
+                      )
                       }
                       type="text"
                     />
                   </div>
                   <div className="form-field">
-                    <label htmlFor="fonts">{t(`option.watermark.font`)}</label>
+                    <label htmlFor="fonts">{t('option.watermark.font')}</label>
                     <select
                       id="fonts"
                       value={formInfo[FORM_FIELD_KEYS.font]}
-                      onChange={event =>
-                        this.handleInputChange(
-                          FORM_FIELD_KEYS.font,
-                          event.target.value,
-                        )
+                      onChange={(event) => this.handleInputChange(
+                        FORM_FIELD_KEYS.font,
+                        event.target.value,
+                      )
                       }
                     >
-                      {FONTS.map(font => (
+                      {FONTS.map((font) => (
                         <option key={font}>{font}</option>
                       ))}
                     </select>
                   </div>
                   <div className="form-field">
-                    <label htmlFor="fontSize">{t(`option.watermark.size`)}</label>
+                    <label htmlFor="fontSize">{t('option.watermark.size')}</label>
                     <select
                       id="fontSize"
                       value={formInfo[FORM_FIELD_KEYS.fontSize]}
-                      onChange={event =>
-                        this.handleInputChange(
-                          FORM_FIELD_KEYS.fontSize,
-                          +event.target.value,
-                        )
+                      onChange={(event) => this.handleInputChange(
+                        FORM_FIELD_KEYS.fontSize,
+                        +event.target.value,
+                      )
                       }
                     >
-                      {FONT_SIZES.map(fontSize => (
+                      {FONT_SIZES.map((fontSize) => (
                         <option key={fontSize}>{fontSize}</option>
                       ))}
                     </select>
@@ -442,20 +440,18 @@ class WatermarkModal extends React.PureComponent {
                       value={formInfo[FORM_FIELD_KEYS.opacity] / 100}
                       getDisplayValue={(opacity) => `${Math.round(opacity * 100)}%`}
                       getCirclePosition={this.getCirclePosn}
-                      convertRelativeCirclePositionToValue={circlePosn =>
-                        circlePosn
+                      convertRelativeCirclePositionToValue={(circlePosn) => circlePosn
                       }
                       onSliderChange={() => {}}
-                      onStyleChange={(property, value) =>
-                        this.handleInputChange(
-                          FORM_FIELD_KEYS.opacity,
-                          Math.round(value * 100),
-                        )
+                      onStyleChange={(property, value) => this.handleInputChange(
+                        FORM_FIELD_KEYS.opacity,
+                        Math.round(value * 100),
+                      )
                       }
                     />
                   </div>
                   <div className="form-field">
-                    <label>{t(`option.watermark.style`)}</label>
+                    <label>{t('option.watermark.style')}</label>
                     <div className="style-container">
                       <Button
                         id="currentColorCell"
@@ -466,10 +462,9 @@ class WatermarkModal extends React.PureComponent {
                             FORM_FIELD_KEYS.color
                           ].toHexString(),
                         }}
-                        onClick={() =>
-                          this.setColorPaletteVisibility(
-                            !this.state.isColorPaletteVisible,
-                          )
+                        onClick={() => this.setColorPaletteVisibility(
+                          !this.state.isColorPaletteVisible,
+                        )
                         }
                       />
                       <div className="style-container">
@@ -477,33 +472,30 @@ class WatermarkModal extends React.PureComponent {
                           dataElement="boldText"
                           img="icon-text-bold"
                           isActive={formInfo[FORM_FIELD_KEYS.isBolded]}
-                          onClick={() =>
-                            this.handleInputChange(
-                              FORM_FIELD_KEYS.isBolded,
-                              !formInfo[FORM_FIELD_KEYS.isBolded],
-                            )
+                          onClick={() => this.handleInputChange(
+                            FORM_FIELD_KEYS.isBolded,
+                            !formInfo[FORM_FIELD_KEYS.isBolded],
+                          )
                           }
                         />
                         <Button
                           dataElement="italicizeText"
                           img="icon-text-italic"
                           isActive={formInfo[FORM_FIELD_KEYS.isItalic]}
-                          onClick={() =>
-                            this.handleInputChange(
-                              FORM_FIELD_KEYS.isItalic,
-                              !formInfo[FORM_FIELD_KEYS.isItalic],
-                            )
+                          onClick={() => this.handleInputChange(
+                            FORM_FIELD_KEYS.isItalic,
+                            !formInfo[FORM_FIELD_KEYS.isItalic],
+                          )
                           }
                         />
                         <Button
                           dataElement="underlineText"
                           img="icon-text-underline"
                           isActive={formInfo[FORM_FIELD_KEYS.isUnderlined]}
-                          onClick={() =>
-                            this.handleInputChange(
-                              FORM_FIELD_KEYS.isUnderlined,
-                              !formInfo[FORM_FIELD_KEYS.isUnderlined],
-                            )
+                          onClick={() => this.handleInputChange(
+                            FORM_FIELD_KEYS.isUnderlined,
+                            !formInfo[FORM_FIELD_KEYS.isUnderlined],
+                          )
                           }
                         />
                       </div>
@@ -525,7 +517,7 @@ class WatermarkModal extends React.PureComponent {
                         />
                       </div>
                     )}
-                    
+
                   </div>
                 </form>
               </div>
@@ -538,14 +530,14 @@ class WatermarkModal extends React.PureComponent {
                 id="reset"
                 onClick={this.resetForm}
               >
-                {t(`option.watermark.resetAllSettings`)}
+                {t('option.watermark.resetAllSettings')}
               </button>
               <button
                 className="ok button"
                 id="submit"
                 onClick={this.onOkPressed}
               >
-                {t(`action.add`)}
+                {t('action.add')}
               </button>
             </div>
           </ModalWrapper>
