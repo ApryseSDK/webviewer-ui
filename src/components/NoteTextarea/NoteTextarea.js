@@ -1,9 +1,7 @@
 import React, { useLayoutEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
-
 import NoteContext from 'components/Note/Context';
-
 import selectors from 'selectors';
 import CommentTextarea from './CommentTextarea/CommentTextarea';
 
@@ -30,7 +28,7 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     ],
     shallowEqual,
   );
-  
+
   const { resize } = useContext(NoteContext);
   const textareaRef = useRef();
   const prevHeightRef = useRef();
@@ -38,7 +36,7 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   useLayoutEffect(() => {
     // when the height of the textarea changes, we also want to call resize
     // to clear the cell measurer cache and update the note height in the virtualized list
-    const boxDOMElement = textareaRef.current?.editor.container.firstElementChild;
+    const boxDOMElement = textareaRef.current?.editor?.container.firstElementChild;
     const boundingBox = boxDOMElement?.getBoundingClientRect() || {};
     if (prevHeightRef.current && prevHeightRef.current !== boundingBox.height) {
       resize();
@@ -69,6 +67,8 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     if(!isEmpty) {
       value = content.target ? content.target.value : content;
       props.onChange(value);
+    } else {
+      props.onChange('');
     }
 
   };
