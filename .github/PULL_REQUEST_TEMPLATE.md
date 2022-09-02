@@ -2,10 +2,8 @@
 - [ ] Documented PDFtron customisation in [Wiseflow_PDFtron.docs](https://uniwise1.sharepoint.com/:w:/r/sites/uniwise/_layouts/15/doc.aspx?sourcedoc=%7B31449df0-0514-41ef-adc2-aaedfb35d8e1%7D&action=edit&cid=76807666-6e9a-4a89-a296-9b424fbfece6)
 
 # What is the purpose of this pull request?
-Add the PR template used across other UNIwise repos.
 
 # What has changed?
-Added `PULL_REQUEST_TEMPLATE.md` and added checkbox to remind of documenting customisation in docs.
 
 # Notes for your reviewer
 
