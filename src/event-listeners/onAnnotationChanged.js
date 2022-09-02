@@ -4,18 +4,17 @@ import getWiseflowCustomValues from 'helpers/getWiseflowCustomValues';
 import fireEvent from 'src/helpers/fireEvent';
 import Events from 'src/constants/events';
 import { setAnnotationShareType } from 'src/helpers/annotationShareType';
-import getAnnotationManager from 'core/getAnnotationManager';
-import ShareTypes from 'src/constants/shareTypes';
 
 export default () => (annotations, action, info) => {
   if (action === 'delete') {
     deleteReplies(annotations);
   }
 
-  const selectAnnotationOnCreation = getHashParameters('selectAnnotationOnCreation', false);
+  const selectAnnotationOnCreation = getHashParameters('selectAnnotationOnCreation', true);
   if (selectAnnotationOnCreation) {
     if (action === 'add' && !info.imported) {
-      if (annotations.length > 0 && !annotations[0].InReplyTo) {
+      const isFreeTextAnnot = annotations[0] instanceof window.Annotations.FreeTextAnnotation;
+      if (annotations.length > 0 && !annotations[0].InReplyTo && !isFreeTextAnnot) {
         core.selectAnnotation(annotations[0]);
       }
     }
