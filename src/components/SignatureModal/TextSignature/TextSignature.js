@@ -4,12 +4,13 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ColorPalette from 'components/ColorPalette';
 import core from 'core';
-import { isIOS } from 'helpers/device';
+import { isIOS, isMobile } from 'helpers/device';
 import cropImageFromCanvas from 'helpers/cropImageFromCanvas';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 
 import './TextSignature.scss';
+import Dropdown from 'src/components/Dropdown';
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
@@ -18,14 +19,13 @@ const propTypes = {
   enableCreateButton: PropTypes.func,
 };
 
-const FONT_SIZE = 96;
+const FONT_SIZE = 72;
 const TYPED_SIGNATURE_FONT_SIZE = (FONT_SIZE * 2) / 3;
-const DEFAULT_FONT_FAMILY = 'GreatVibes-Regular';
-const MAX_SIGNATURE_LENGTH = 360;
+const MAX_SIGNATURE_LENGTH = 350;
 
 const useForceUpdate = () => {
   const [, setIt] = useState(false);
-  return () => setIt(it => !it);
+  return () => setIt((it) => !it);
 };
 
 const TextSignature = ({
@@ -34,7 +34,7 @@ const TextSignature = ({
   disableCreateButton,
   enableCreateButton
 }) => {
-  const fonts = useSelector(state => selectors.getSignatureFonts(state));
+  const fonts = useSelector((state) => selectors.getSignatureFonts(state));
   // const [value, setValue] = useState(core.getDisplayAuthor(core.getCurrentUser()));
   const [value, setValue] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
@@ -45,6 +45,8 @@ const TextSignature = ({
   const canvasRef = useRef();
   const textDivsRef = useRef([]);
   const [t] = useTranslation();
+
+  const [selectedFontFamily, setSelectedFontFamily] = useState(fonts[0]);
 
   const forceUpdate = useForceUpdate();
 
@@ -66,8 +68,8 @@ const TextSignature = ({
       let { width, height } = textDivsRef.current[
         activeIndex
       ].getBoundingClientRect();
-      width = width + textClipPadding;
-      height = height + textClipPadding;
+      width += textClipPadding;
+      height += textClipPadding;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       canvas.width = width * multiplier;
@@ -75,10 +77,11 @@ const TextSignature = ({
     };
 
     const setFont = () => {
+      const fontSize = scaleFontSize(value, selectedFontFamily);
       ctx.fillStyle = fontColor;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = `${FONT_SIZE * multiplier}px ${fonts[activeIndex]}`;
+      ctx.font = `${fontSize * multiplier}px ${selectedFontFamily}`;
     };
     const drawTextSignature = () => {
       const { width, height } = canvas;
@@ -94,7 +97,7 @@ const TextSignature = ({
         setSignature();
       }
     }
-  }, [activeIndex, isTabPanelSelected, value, fonts, fontColor]);
+  }, [activeIndex, isTabPanelSelected, value, fonts, selectedFontFamily, fontColor]);
 
   useEffect(() => {
     setFontColor(fontColor);
@@ -131,39 +134,39 @@ const TextSignature = ({
   }, [isDefaultValue]);
 
   const setSignature = () => {
-    const signatureTool = core.getTool('AnnotationCreateSignature');
+    const signatureToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateSignature');
     const canvas = canvasRef.current;
 
     const signatureValue = value || '';
     if (signatureValue.trim()) {
-      const base64 = cropImageFromCanvas(canvas)
-      signatureTool.setSignature(base64);
+      const base64 = cropImageFromCanvas(canvas);
+      signatureToolArray.forEach((tool) => tool.setSignature(base64));
       enableCreateButton();
     } else {
-      signatureTool.setSignature(null);
+      signatureToolArray.forEach((tool) => tool.setSignature(null));
       disableCreateButton();
     }
   };
 
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     setIsDefaultValue(false);
     // Use regex instead of 'trimStart' for IE11 compatibility
     const value = e.target.value.replace(/^\s+/g, '');
     setSignature();
     setValue(value);
 
-    const newFontSize = scaleFontSize(value, DEFAULT_FONT_FAMILY);
+    const newFontSize = scaleFontSize(value, selectedFontFamily);
     setFontSize(newFontSize);
   };
 
   const handleColorInputChange = (property, value) => {
-    setFontColor(value)
+    setFontColor(value);
     // hack for tool styles for signature not being on state
     forceUpdate();
   };
 
   const getSignatureLength = (text, fontSize, fontFamily) => {
-    const font = fontSize + 'px ' + fontFamily;
+    const font = `${fontSize}px ${fontFamily}`;
     const textSpan = document.createElement('span');
     textSpan.id = 'textSpan';
     textSpan.style.display = 'inline-block';
@@ -196,6 +199,12 @@ const TextSignature = ({
     return currentFontSize;
   };
 
+  const handleDropdownSelectionChange = (font) => {
+    setSelectedFontFamily(font);
+    const newFontSize = scaleFontSize(value, font);
+    setFontSize(newFontSize);
+  };
+
   return (
     <div className="text-signature">
       <div className="text-signature-input-container">
@@ -207,7 +216,7 @@ const TextSignature = ({
             value={value}
             placeholder="Type Signature"
             onChange={handleInputChange}
-            style={{ fontFamily: fonts, fontSize: fontSize, color: fontColor }}
+            style={{ fontFamily: selectedFontFamily || fonts, fontSize, color: fontColor }}
             disabled={!(isModalOpen && isTabPanelSelected)}
           />
         </label>
@@ -219,12 +228,12 @@ const TextSignature = ({
             'text-signature-text': true,
             active: index === activeIndex,
           })}
-          style={{ fontFamily: font, fontSize: FONT_SIZE, color:fontColor}}
+          style={{ fontFamily: font, fontSize: FONT_SIZE, color: fontColor }}
           onClick={() => setActiveIndex(index)}
         >
           <div
             className="text-container"
-            ref={el => {
+            ref={(el) => {
               textDivsRef.current[index] = el;
             }}
           >
@@ -234,13 +243,33 @@ const TextSignature = ({
       ))}
       <canvas ref={canvasRef} />
       <div className="colorpalette-clear-container">
-        <ColorPalette
-          color={new window.Annotations.Color(fontColor)}
-          property="fontColor"
-          onStyleChange={(property, value) => handleColorInputChange(property, value)}
-          overridePalette2={['#000000', '#4E7DE9', '#E44234']}
-        />
-        <button className="signature-clear" onClick={() => setValue('')} disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}>
+        <div className="signature-style-options">
+          <Dropdown
+            items={fonts.map((font) => ({ font, value }))}
+            getCustomItemStyle={(item) => ({ fontFamily: item.font })}
+            getKey={(item) => item.font}
+            getDisplayValue={(item) => {
+              return item.value || item.font;
+            }}
+            onClickItem={handleDropdownSelectionChange}
+            currentSelectionKey={selectedFontFamily || fonts[0]}
+            maxHeight={isMobile() ? 80 : null}
+            dataElement="text-signature-font-dropdown"
+          />
+          <div className="placeholder-dropdown"></div>
+          <div className="divider"></div>
+          <ColorPalette
+            color={new window.Annotations.Color(fontColor)}
+            property="fontColor"
+            onStyleChange={(property, value) => handleColorInputChange(property, value)}
+            overridePalette2={['#000000', '#4E7DE9', '#E44234']}
+          />
+        </div>
+        <button
+          className="signature-clear"
+          onClick={() => setValue('')}
+          disabled={!(isModalOpen && isTabPanelSelected) || value.length === 0}
+        >
           {t('action.clear')}
         </button>
       </div>
