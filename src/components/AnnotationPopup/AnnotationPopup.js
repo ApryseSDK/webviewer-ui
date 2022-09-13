@@ -218,7 +218,7 @@ const AnnotationPopup = () => {
     const onScroll = _.debounce(() => {
       setStylePopupRepositionFlag((flag) => !flag);
     }, 100);
-    const scrollViewElement = window.documentViewer.getScrollViewElement();
+    const scrollViewElement = core.getDocumentViewer().getScrollViewElement();
     scrollViewElement?.addEventListener('scroll', onScroll);
 
     return () => {
@@ -304,6 +304,9 @@ const AnnotationPopup = () => {
     toolNames.CROP,
     toolNames.RADIO_FORM_FIELD,
     toolNames.CHECK_BOX_FIELD,
+    toolNames.VIDEO_REDACTION,
+    toolNames.VIDEO_AND_AUDIO_REDACTION,
+    toolNames.AUDIO_REDACTION,
   ];
 
   const toolsThatCantHaveLinks = [
