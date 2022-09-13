@@ -304,6 +304,9 @@ const AnnotationPopup = () => {
     toolNames.CROP,
     toolNames.RADIO_FORM_FIELD,
     toolNames.CHECK_BOX_FIELD,
+    toolNames.VIDEO_REDACTION,
+    toolNames.VIDEO_AND_AUDIO_REDACTION,
+    toolNames.AUDIO_REDACTION,
   ];
 
   const toolsThatCantHaveLinks = [
