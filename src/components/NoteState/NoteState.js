@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
