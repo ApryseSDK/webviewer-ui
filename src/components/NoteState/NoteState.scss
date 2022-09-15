@@ -6,8 +6,8 @@
   display: flex;
   justify-content: flex-end;
   user-select: none;
-  padding-left: 15px;
-  padding-right: 10px;
+  margin-left: 15px;
+  margin-right: 10px;
 
   @include ie11 { // for IE11 only
     padding-left: 0px;
