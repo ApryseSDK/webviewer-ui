@@ -55,6 +55,7 @@ const Tooltip = forwardRef(({ content = '', translatedContent, children, hideSho
     
     if (hideOnClick) {
       childRef.current?.addEventListener('click', hideTooltip);
+      childRef.current?.addEventListener('keypress', hideTooltip);
     }
 
     const observer = new MutationObserver((mutations) => {
