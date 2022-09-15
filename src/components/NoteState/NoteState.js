@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useOnClickOutside from 'hooks/useOnClickOutside';
+import useOnFocusOutside from 'hooks/useOnFocusOutside';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import Tooltip from '../Tooltip';
@@ -40,6 +41,10 @@ function NoteState(props) {
   const isOwnedByCurrentUser = annotation.Author === core.getCurrentUser();
 
   useOnClickOutside(popupRef, () => {
+    setIsOpen(false);
+  });
+
+  useOnFocusOutside(popupRef, () => {
     setIsOpen(false);
   });
 
@@ -91,13 +96,12 @@ function NoteState(props) {
 
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
   return (
-    <Tooltip translatedContent={annotationTooltip} showOnKeyboardFocus hideOnClick>
+    <Tooltip ref={popupRef} translatedContent={annotationTooltip} showOnKeyboardFocus hideOnClick>
       <DataElementWrapper
         className="NoteState"
         dataElement="noteState"
         onClick={togglePopup}
         type="button"
-        ref={popupRef}
         onKeyDown={e => {
           if (e.key === 'Escape') {
             closeOptionsMenu();
