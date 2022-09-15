@@ -18,7 +18,7 @@ const propTypes = {
   isOpen: PropTypes.bool,
 };
 
-function noop() { }
+function noop() {}
 
 function NotePopup(props) {
   const {
@@ -63,15 +63,21 @@ function NotePopup(props) {
     return null;
   }
 
-  const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger', { active: isOpen })
-  const optionsClass = classNames('options note-popup-options', { 'options-reply': isReply })
+  const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger', { active: isOpen });
+  const optionsClass = classNames('options note-popup-options', { 'options-reply': isReply });
   return (
-    <DataElementWrapper
-      className="NotePopup"
-      dataElement="notePopup"
-      ref={popupRef}
-    >
-      <div className={notePopupButtonClass} onClick={togglePopup}>
+    <DataElementWrapper className="NotePopup" dataElement="notePopup" ref={popupRef}>
+      <div
+        role="button"
+        tabIndex={0}
+        className={notePopupButtonClass}
+        onClick={togglePopup}
+        onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            togglePopup(e);
+          }
+        }}
+      >
         <Icon glyph="icon-tools-more" />
       </div>
       {isOpen && (
