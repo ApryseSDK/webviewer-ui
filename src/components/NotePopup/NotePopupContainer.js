@@ -55,7 +55,7 @@ function NotePopupContainer(props) {
 
   // We wrap the element in a div so the tooltip works properly
   return (
-    <Tooltip content={t('formField.formFieldPopup.options')}>
+    <Tooltip content={t('formField.formFieldPopup.options')} showOnKeyboardFocus hideOnClick>
       <div>
         <NotePopup {...props} {...passProps} />
       </div>
