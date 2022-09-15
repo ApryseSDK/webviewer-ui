@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useOnClickOutside from 'hooks/useOnClickOutside';
+import useOnFocusOutside from 'hooks/useOnFocusOutside';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -36,6 +37,10 @@ function NotePopup(props) {
   const popupRef = React.useRef();
 
   useOnClickOutside(popupRef, () => {
+    closePopup();
+  });
+
+  useOnFocusOutside(popupRef, () => {
     closePopup();
   });
 
