@@ -13,10 +13,11 @@ const propTypes = {
   translatedContent: PropTypes.string,
   hideShortcut: PropTypes.bool,
   forcePosition: PropTypes.string,
-  hideOnClick: PropTypes.bool
+  hideOnClick: PropTypes.bool,
+  showOnKeyboardFocus: PropTypes.bool,
 };
 
-const Tooltip = forwardRef(({ content = '', translatedContent, children, hideShortcut, forcePosition, hideOnClick }, ref) => {
+const Tooltip = forwardRef(({ content = '', translatedContent, children, hideShortcut, forcePosition, hideOnClick, showOnKeyboardFocus }, ref) => {
   const timeoutRef = useRef(null);
   const childRef = useRef(null);
   useImperativeHandle(ref, () => childRef.current);
@@ -47,6 +48,11 @@ const Tooltip = forwardRef(({ content = '', translatedContent, children, hideSho
 
     childRef.current?.addEventListener('mouseenter', showToolTip);
     childRef.current?.addEventListener('mouseleave', hideTooltip);
+    if (showOnKeyboardFocus) {
+      childRef.current?.addEventListener('focus', showToolTip);
+      childRef.current?.addEventListener('blur', hideTooltip);
+    }
+    
     if (hideOnClick) {
       childRef.current?.addEventListener('click', hideTooltip);
     }
@@ -66,6 +72,10 @@ const Tooltip = forwardRef(({ content = '', translatedContent, children, hideSho
       observer.disconnect();
       childRef.current?.removeEventListener('mouseenter', showToolTip);
       childRef.current?.removeEventListener('mouseleave', hideTooltip);
+      if (showOnKeyboardFocus) {
+        childRef.current?.removeEventListener('focus', showToolTip);
+        childRef.current?.removeEventListener('blur', hideTooltip);
+      }
     };
   }, [childRef, hideOnClick]);
 
