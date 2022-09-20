@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useOnClickOutside from 'hooks/useOnClickOutside';
+import useOnFocusOutside from 'hooks/useOnFocusOutside';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import Tooltip from '../Tooltip';
@@ -43,13 +44,17 @@ function NoteState(props) {
     setIsOpen(false);
   });
 
+  useOnFocusOutside(popupRef, () => {
+    setIsOpen(false);
+  });
+
   const togglePopup = e => {
     e.stopPropagation();
     if (!isOwnedByCurrentUser) return;
     setIsOpen(!isOpen);
   };
 
-  function onStateOptionsButtonClick() {
+  function closeOptionsMenu() {
     setIsOpen(false);
   }
 
@@ -65,6 +70,7 @@ function NoteState(props) {
       if (handleStateChange) {
         handleStateChange(state);
       }
+      closeOptionsMenu();
     };
   }
 
@@ -90,57 +96,73 @@ function NoteState(props) {
 
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
   return (
-    <DataElementWrapper className="NoteState" dataElement="noteState" onClick={togglePopup} ref={popupRef}>
-      <Tooltip
-        translatedContent={annotationTooltip}
+    <Tooltip ref={popupRef} translatedContent={annotationTooltip} showOnKeyboardFocus hideOnClick>
+      <DataElementWrapper
+        className="NoteState"
+        dataElement="noteState"
+        onClick={togglePopup}
+        type="button"
+        onKeyDown={e => {
+          if (e.key === 'Escape') {
+            closeOptionsMenu();
+          }
+        }}
       >
         <div className={noteStateButtonClassName}>{icon}</div>
-      </Tooltip>
-      {isOpen && (
-        <button
-          className={`note-state-options ${isOwnedByCurrentUser ? 'enabled' : 'disabled'}`}
-          onClick={onStateOptionsButtonClick}
-        >
-          <DataElementWrapper dataElement="notePopupState">
-            <DataElementWrapper
-              dataElement="notePopupState-assessor"
-              className={`note-state-option${annotationShareType === ShareTypes.ASSESSORS ? ' selected' : ''}`}
-              onClick={createOnStateOptionButtonClickHandler(ShareTypes.ASSESSORS)}
-            >
-              {getShareTypeIcon(ShareTypes.ASSESSORS)}
-              {t('option.state.assessors')}
-            </DataElementWrapper>
+        {isOpen && (
+          <div
+            className={`note-state-options ${isOwnedByCurrentUser ? 'enabled' : 'disabled'}`}
+            onKeyDown={e => {
+              if (e.key === 'Escape') {
+                closeOptionsMenu();
+              }
+            }}
+          >
+            <DataElementWrapper dataElement="notePopupState">
+              <DataElementWrapper
+                tabbable
+                dataElement="notePopupState-assessor"
+                className={`note-state-option${annotationShareType === ShareTypes.ASSESSORS ? ' selected' : ''}`}
+                onClick={createOnStateOptionButtonClickHandler(ShareTypes.ASSESSORS)}
+              >
+                {getShareTypeIcon(ShareTypes.ASSESSORS)}
+                {t('option.state.assessors')}
+              </DataElementWrapper>
 
-            <DataElementWrapper
-              dataElement="notePopupStateParticipants"
-              className={`note-state-option${annotationShareType === ShareTypes.PARTICIPANTS ? ' selected' : ''}`}
-              onClick={createOnStateOptionButtonClickHandler(ShareTypes.PARTICIPANTS)}
-            >
-              {getShareTypeIcon(ShareTypes.PARTICIPANTS)}
-              {t('option.state.participants')}
-            </DataElementWrapper>
+              <DataElementWrapper
+                tabbable
+                dataElement="notePopupStateParticipants"
+                className={`note-state-option${annotationShareType === ShareTypes.PARTICIPANTS ? ' selected' : ''}`}
+                onClick={createOnStateOptionButtonClickHandler(ShareTypes.PARTICIPANTS)}
+              >
+                {getShareTypeIcon(ShareTypes.PARTICIPANTS)}
+                {t('option.state.participants')}
+              </DataElementWrapper>
 
-            <DataElementWrapper
-              dataElement="notePopupStateAll"
-              className={`note-state-option${annotationShareType === ShareTypes.ALL ? ' selected' : ''}`}
-              onClick={createOnStateOptionButtonClickHandler(ShareTypes.ALL)}
-            >
-              {getShareTypeIcon(ShareTypes.ALL)}
-              {t('option.state.all')}
-            </DataElementWrapper>
+              <DataElementWrapper
+                tabbable
+                dataElement="notePopupStateAll"
+                className={`note-state-option${annotationShareType === ShareTypes.ALL ? ' selected' : ''}`}
+                onClick={createOnStateOptionButtonClickHandler(ShareTypes.ALL)}
+              >
+                {getShareTypeIcon(ShareTypes.ALL)}
+                {t('option.state.all')}
+              </DataElementWrapper>
 
-            <DataElementWrapper
-              dataElement="notePopupStateAssessors"
-              className={`note-state-option${annotationShareType === ShareTypes.NONE ? ' selected' : ''}`}
-              onClick={createOnStateOptionButtonClickHandler(ShareTypes.NONE)}
-            >
-              {getShareTypeIcon(ShareTypes.NONE)}
-              {t('option.state.none')}
+              <DataElementWrapper
+                tabbable
+                dataElement="notePopupStateAssessors"
+                className={`note-state-option${annotationShareType === ShareTypes.NONE ? ' selected' : ''}`}
+                onClick={createOnStateOptionButtonClickHandler(ShareTypes.NONE)}
+              >
+                {getShareTypeIcon(ShareTypes.NONE)}
+                {t('option.state.none')}
+              </DataElementWrapper>
             </DataElementWrapper>
-          </DataElementWrapper>
-        </button>
-      )}
-    </DataElementWrapper>
+          </div>
+        )}
+      </DataElementWrapper>
+    </Tooltip>
   );
 }
 

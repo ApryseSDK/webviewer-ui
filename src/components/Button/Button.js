@@ -141,7 +141,9 @@ const Button = props => {
       content={title}
       hideShortcut={hideTooltipShortcut || actuallyDisabled}
       forcePosition={forceTooltipPosition}
-      hideOnClick={hideOnClick}>
+      hideOnClick={hideOnClick}
+      showOnKeyboardFocus
+    >
       {children}
     </Tooltip>
   ) : (

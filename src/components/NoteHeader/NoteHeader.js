@@ -56,7 +56,6 @@ function NoteHeader(props) {
   } = props;
 
   const [t] = useTranslation();
-  const [copyTooltip, setCopyTooltip] = useState(t('action.copyText'));
   const date =
     sortStrategy === NotesPanelSortStrategy.MODIFIED_DATE ||
     (notesShowLastUpdatedDate && sortStrategy !== NotesPanelSortStrategy.CREATED_DATE)
@@ -75,12 +74,16 @@ function NoteHeader(props) {
     return getAnnotationReference(annotation);
   }, [annotation, pageNumber]);
 
+  const [copied, setCopied] = useState(false);
+
+  const copyTooltipText = `${t('option.notesPanel.noteHeader.copyReferenceButton')} ${annotationReference}`;
+
   const handleCopyAnnotId = e => {
     e.stopPropagation();
     navigator.clipboard.writeText(annotationReference);
-    setCopyTooltip(t('action.copied'));
+    setCopied(true);
     setTimeout(() => {
-      setCopyTooltip(t('action.copyText'));
+      setCopied(false);
     }, 3000);
   };
 
@@ -105,10 +108,10 @@ function NoteHeader(props) {
               <span>
                 {t('annotation.reference')}: {renderAnnotationReference(annotation)}
               </span>
-              <Tooltip content={copyTooltip}>
-                <div role="button" onClick={handleCopyAnnotId} className={'copy-reference-button'} aria-label={t('option.notesPanel.noteHeader.copyReferenceButton')}>
+              <Tooltip content={copied ? t('action.copied') : copyTooltipText} showOnKeyboardFocus>
+                <button onClick={handleCopyAnnotId} className={'copy-reference-button'} aria-label={copyTooltipText}>
                   <Icon glyph="icon-header-page-manipulation-page-transition-reader" />
-                </div>
+                </button>
               </Tooltip>
             </div>
           </div>
