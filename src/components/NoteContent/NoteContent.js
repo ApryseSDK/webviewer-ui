@@ -353,9 +353,9 @@ const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTex
           ids,
         }),
       );
-      core.setNoteContents(annotation, plainTextValue);
+      core.setNoteContents(annotation, plainTextValue ?? '');
     } else {
-      core.setNoteContents(annotation, textAreaValue);
+      core.setNoteContents(annotation, textAreaValue ?? '');
     }
 
     if (annotation instanceof window.Annotations.FreeTextAnnotation) {
@@ -370,7 +370,6 @@ const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTex
   };
 
   const contentClassName = classNames('edit-content', { 'reply-content': isReply });
-
   return (
     <div className={contentClassName}>
       <NoteTextarea
@@ -384,20 +383,21 @@ const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTex
         aria-label={`${t('action.comment')}...`}
       />
       <div className="edit-buttons">
+        {annotation.getContents() !== undefined && (
+          <button
+            className="cancel-button"
+            onClick={e => {
+              e.stopPropagation();
+              setIsEditing(false, noteIndex);
+              // Clear pending text
+              onTextAreaValueChange(undefined, annotation.Id);
+            }}
+          >
+            {t('action.cancel')}
+          </button>
+        )}
         <button
-          className="cancel-button"
-          onClick={e => {
-            e.stopPropagation();
-            setIsEditing(false, noteIndex);
-            // Clear pending text
-            onTextAreaValueChange('', annotation.Id);
-          }}
-        >
-          {t('action.cancel')}
-        </button>
-        <button
-          className={`save-button${!textAreaValue ? ' disabled' : ''}`}
-          disabled={!textAreaValue}
+          className={`save-button`}
           onClick={e => {
             e.stopPropagation();
             setContents(e);
