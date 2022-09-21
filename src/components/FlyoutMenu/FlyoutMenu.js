@@ -18,6 +18,8 @@ const MENUS = [
   'searchOverlay',
   'signatureOverlay',
   'zoomOverlay',
+  'zoomOverlay1',
+  'zoomOverlay2',
   'redactionOverlay',
   'toolStylePopup',
   'pageManipulationOverlay',
@@ -32,6 +34,8 @@ const TRIGGERS = [
   'menuButton',
   'viewControlsButton',
   'zoomOverlayButton',
+  'zoomOverlayButton1',
+  'zoomOverlayButton2',
   'pageManipulationOverlayButton',
   'thumbnailsControlRotatePopupTrigger',
   'thumbnailsControlInsertPopupTrigger',
@@ -56,12 +60,12 @@ const propTypes = {
 function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const dispatch = useDispatch();
 
-  const allOtherMenus = useMemo(() => MENUS.filter(m => m !== menu), [menu]);
+  const allOtherMenus = useMemo(() => MENUS.filter((m) => m !== menu), [menu]);
 
-  const isDisabled = useSelector(state => selectors.isElementDisabled(state, menu));
-  const isOpen = useSelector(state => selectors.isElementOpen(state, menu));
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, menu));
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, menu));
 
-  const isInDesktopOnlyMode = useSelector(state => selectors.isInDesktopOnlyMode(state));
+  const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state));
 
   const closeMenu = useCallback(() => {
     dispatch(actions.closeElements([menu]));
@@ -72,7 +76,7 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   useArrowFocus(!isDisabled && isOpen, closeMenu, overlayRef);
 
   const onClickOutside = useCallback(
-    e => {
+    (e) => {
       const menuButton = document.querySelector(`[data-element="${trigger}"]`);
       const clickedMenuButton = menuButton?.contains(e.target);
       if (!clickedMenuButton) {

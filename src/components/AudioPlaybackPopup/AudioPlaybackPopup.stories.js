@@ -15,7 +15,7 @@ const initialState = {
     openElements: { audioPlaybackPopup: true },
     customElementOverrides: {}
   }
-}
+};
 
 function rootReducer(state = initialState, action) {
   return state;
@@ -32,18 +32,17 @@ function createMockSoundAnnotation() {
 }
 
 export const Basic = () => {
-
   return (
     <Provider store={store}>
-        <div className='AudioPlaybackPopup'>
-          <AudioPlaybackPopup 
-            autoplay={false}
-            annotation={createMockSoundAnnotation()}
-            handleAudioPlaybackError={() => console.log('handleAudioPlaybackError')}
-            handleAudioInitializeError={() => console.log('handleAudioInitializeError')}
-            handleCloseAudioPlaybackPopup={() => console.log('handleCloseAudioPlaybackPopup')}
-          />
-        </div>
+      <div className="AudioPlaybackPopup">
+        <AudioPlaybackPopup
+          autoplay={false}
+          annotation={createMockSoundAnnotation()}
+          handleAudioPlaybackError={() => console.log('handleAudioPlaybackError')}
+          handleAudioInitializeError={() => console.log('handleAudioInitializeError')}
+          handleCloseAudioPlaybackPopup={() => console.log('handleCloseAudioPlaybackPopup')}
+        />
+      </div>
     </Provider>
   );
-}
+};

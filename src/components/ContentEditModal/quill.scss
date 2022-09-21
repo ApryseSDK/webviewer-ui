@@ -27,7 +27,7 @@
   margin: 0;
   padding: 0;
 }
-.ql-editor {
+.ql-container .ql-editor {
   box-sizing: border-box;
   line-height: 1.42;
   height: 100%;
@@ -39,6 +39,7 @@
   text-align: left;
   white-space: pre-wrap;
   word-wrap: break-word;
+  user-select: text;
 }
 .ContentEditModal .ql-editor {
   min-height: 100px;

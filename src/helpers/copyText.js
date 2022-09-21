@@ -1,6 +1,6 @@
 import core from 'core';
 
-export default () => {
+export default (activeDocumentViewerKey) => {
   // The copyText function should works for 2 cases:
   // 1. User copies from the side panel (window.getSelection())
   // 2. User copies text from the document (core.getSelectedText())
@@ -13,10 +13,10 @@ export default () => {
 
   if (window.clipboardData) {
     // this is for IE
-    window.clipboardData.setData('Text', core.getSelectedText());
+    window.clipboardData.setData('Text', core.getSelectedText(activeDocumentViewerKey));
   } else {
     const textarea = document.getElementById('copy-textarea');
-    textarea.value = core.getSelectedText();
+    textarea.value = core.getSelectedText(activeDocumentViewerKey);
     textarea.select();
     textarea.setSelectionRange(0, 99999); // this is necessary for iOS
     try {

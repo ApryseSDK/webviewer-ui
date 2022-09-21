@@ -3,7 +3,7 @@ import { render, fireEvent, getByText } from '@testing-library/react';
 import PageInsertionControls from './PageInsertionControls';
 
 const TestPageInsertionControls = withProviders(PageInsertionControls);
-function noop() { };
+function noop() { }
 
 describe('PageInsertionControls', () => {
   describe('Component', () => {
@@ -11,7 +11,7 @@ describe('PageInsertionControls', () => {
       const { container } = render(<TestPageInsertionControls
         insertAbove={noop}
         insertBlow={noop}
-      />)
+      />);
 
       expect(container.querySelectorAll('.Button')).toHaveLength(2);
       expect(container.querySelectorAll('.type')).toHaveLength(1);
@@ -22,7 +22,7 @@ describe('PageInsertionControls', () => {
       const { container } = render(<TestPageInsertionControls
         insertAbove={insertAbove}
         insertBlow={noop}
-      />)
+      />);
 
       const insertAboveButton = container.querySelector('.Button[aria-label="Insert blank page above"]');
       expect(insertAboveButton).toBeInTheDocument();
@@ -35,13 +35,12 @@ describe('PageInsertionControls', () => {
       const { container } = render(<TestPageInsertionControls
         insertAbove={noop}
         insertBelow={insertBelow}
-      />)
+      />);
 
       const insertBelowButton = container.querySelector('.Button[aria-label="Insert blank page below"]');
       expect(insertBelowButton).toBeInTheDocument();
       fireEvent.click(insertBelowButton);
       expect(insertBelow).toBeCalled();
     });
-
-  })
-})
+  });
+});

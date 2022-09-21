@@ -22,6 +22,6 @@ import actions from 'actions';
   });
  */
 
-export default store => customApplyRedactionsHandler => {
+export default (store) => (customApplyRedactionsHandler) => {
   store.dispatch(actions.setCustomApplyRedactionsHandler(customApplyRedactionsHandler));
 };

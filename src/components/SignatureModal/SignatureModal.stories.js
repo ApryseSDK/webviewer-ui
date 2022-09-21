@@ -1,11 +1,11 @@
 import React from 'react';
-import SignatureModalComponent from './SignatureModal'
+import SignatureModalComponent from './SignatureModal';
 import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 
 export default {
   title: 'Components/SignatureModal',
-  component: SignatureModal,
+  component: SignatureModalComponent,
 };
 
 const initialState = {
@@ -22,7 +22,7 @@ const initialState = {
       signatureModal: 'inkSignaturePanelButton',
     },
     activeToolName: 'AnnotationCreateSignature',
-    signatureFonts: ['GreatVibes-Regular'],
+    signatureFonts: ['Satisfy', 'Nothing You Could Do', 'La Belle Aurore', 'Whisper'],
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
   },
@@ -32,9 +32,59 @@ const store = configureStore({
   reducer: () => initialState
 });
 
-export const SignatureModal = () => (
+export const InkSignaturePanel = () => (
   <Provider store={store}>
-    <SignatureModalComponent isOpen={true} />
+    <SignatureModalComponent isOpen />
+  </Provider>
+);
+
+const inkSignatureWithInitialsStore = configureStore({
+  reducer: () => ({
+    viewer: {
+      ...initialState.viewer,
+      isInitialsModeEnabled: true,
+    }
+  })
+});
+
+export const InkSignaturePanelWithInitials = () => (
+  <Provider store={inkSignatureWithInitialsStore}>
+    <SignatureModalComponent isOpen />
+  </Provider>
+);
+
+const drawSignatureStore = configureStore({
+  reducer: () => ({
+    viewer: {
+      ...initialState.viewer,
+      tab: {
+        signatureModal: 'textSignaturePanelButton',
+      }
+    }
+  })
+});
+
+export const TextSignaturePanel = () => (
+  <Provider store={drawSignatureStore}>
+    <SignatureModalComponent isOpen />
+  </Provider>
+);
+
+const drawSignatureStoreWithInitials = configureStore({
+  reducer: () => ({
+    viewer: {
+      ...initialState.viewer,
+      isInitialsModeEnabled: true,
+      tab: {
+        signatureModal: 'textSignaturePanelButton',
+      }
+    }
+  })
+});
+
+export const TextSignaturePanelWithInitials = () => (
+  <Provider store={drawSignatureStoreWithInitials}>
+    <SignatureModalComponent isOpen />
   </Provider>
 );
 
@@ -52,18 +102,33 @@ const imageTabState = {
       signatureModal: 'imageSignaturePanelButton',
     },
     activeToolName: 'AnnotationCreateSignature',
-    signatureFonts: ['GreatVibes-Regular'],
+    signatureFonts: ['Satisfy', 'Nothing You Could Do', 'La Belle Aurore', 'Whisper'],
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
   },
-}
+};
 
 const imageStore = configureStore({
   reducer: () => imageTabState
 });
 
-export const SignatureModalImageTab = () => (
+export const UploadSignatureTab = () => (
   <Provider store={imageStore}>
-    <SignatureModalComponent isOpen={true} />
+    <SignatureModalComponent isOpen />
+  </Provider>
+);
+
+const imageStoreWithInitials = configureStore({
+  reducer: () => ({
+    viewer: {
+      ...imageTabState.viewer,
+      isInitialsModeEnabled: true,
+    }
+  })
+});
+
+export const UploadSignatureTabWithInitials = () => (
+  <Provider store={imageStoreWithInitials}>
+    <SignatureModalComponent isOpen />
   </Provider>
 );

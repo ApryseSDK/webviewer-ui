@@ -7,7 +7,6 @@ import thumbnailSelectionModes from 'constants/thumbnailSelectionModes';
 
 import './Thumbnail.scss';
 import { Choice } from '@pdftron/webviewer-react-toolkit';
-import { workerTypes } from 'constants/types';
 
 // adds a delay in ms so thumbs that are only on the screen briefly are not loaded.
 const THUMBNAIL_LOAD_DELAY = 50;
@@ -37,8 +36,8 @@ const Thumbnail = ({
   onCancel,
   isThumbnailSelectingPages,
   thumbnailSelectionMode,
+  activeDocumentViewerKey,
 }) => {
-
   const thumbSize = thumbnailSize ? Number(thumbnailSize) : 150;
 
   const [dimensions, setDimensions] = useState({ width: thumbSize, height: thumbSize });
@@ -54,7 +53,7 @@ const Thumbnail = ({
       const pageNum = index + 1;
       const viewerRotation = core.getRotation(pageNum);
 
-      const doc = core.getDocument();
+      const doc = core.getDocument(activeDocumentViewerKey);
       // Possible race condition can happen where we try to render a thumbnail for a page that has
       // been deleted. Prevent that by checking if pageInfo exists
 
@@ -63,7 +62,7 @@ const Thumbnail = ({
           pageNumber: pageNum,
           width: thumbSize,
           height: thumbSize,
-          drawComplete: async thumb => {
+          drawComplete: async (thumb) => {
             const thumbnailContainer = document.getElementById(`pageThumb${index}`);
             if (thumbnailContainer) {
               const childElement = thumbnailContainer.querySelector('.page-image');
@@ -103,7 +102,7 @@ const Thumbnail = ({
             onFinishLoading(index);
             setLoaded(true);
           },
-          source: 'thumbnail',
+          allowUseOfOptimizedThumbnail: true,
         });
         onLoad(index, thumbnailContainer, id);
       }
@@ -111,14 +110,14 @@ const Thumbnail = ({
   };
 
   useEffect(() => {
-    const onPagesUpdated = changes => {
+    const onPagesUpdated = (changes) => {
       const { contentChanged, moved, added, removed } = changes;
 
       const currentPage = index + 1;
 
       const isPageAdded = added.includes(currentPage);
-      const didPageChange = contentChanged.some(changedPage => currentPage === changedPage);
-      const didPageMove = Object.keys(moved).some(movedPage => currentPage === parseInt(movedPage));
+      const didPageChange = contentChanged.some((changedPage) => currentPage === changedPage);
+      const didPageMove = Object.keys(moved).some((movedPage) => currentPage === parseInt(movedPage));
       const isPageRemoved = removed.includes(currentPage);
       const newPageCount = core.getTotalPages();
 
@@ -152,12 +151,13 @@ const Thumbnail = ({
   useDidUpdate(() => {
     if (canLoad) {
       loadThumbnailAsync();
+      updateAnnotations(index);
     } else {
       onCancel(index);
     }
-  }, [canLoad]);
+  }, [canLoad, activeDocumentViewerKey]);
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     const checkboxToggled = e.target.type && e.target.type === 'checkbox';
     if (isThumbnailMultiselectEnabled && !isReaderMode) {
       const multiSelectionKeyPressed = e.ctrlKey || e.metaKey;
@@ -165,7 +165,7 @@ const Thumbnail = ({
       let updatedSelectedPages = [...selectedPageIndexes];
 
       if (shiftKeyPressed) {
-          dispatch(actions.setThumbnailSelectingPages(true));
+        dispatch(actions.setThumbnailSelectingPages(true));
         // Include current page as part of selection if we just started shift-selecting
         let shiftKeyPivot = shiftKeyThumbnailPivotIndex;
         if (shiftKeyPivot === null) {
@@ -187,7 +187,7 @@ const Thumbnail = ({
           if (selectedPageIndexes.length === 0 && !isThumbnailSelectingPages) {
             updatedSelectedPages.push(currentPage - 1);
           } else if (selectedPageIndexes.includes(index)) {
-            updatedSelectedPages = selectedPageIndexes.filter(pageIndex => index !== pageIndex);
+            updatedSelectedPages = selectedPageIndexes.filter((pageIndex) => index !== pageIndex);
           } else {
             updatedSelectedPages.push(index);
           }
@@ -225,10 +225,6 @@ const Thumbnail = ({
     checkboxRotateClass = 'rotated';
   }
 
-  const ratio = Math.min(thumbSize / dimensions.width, thumbSize / dimensions.height);
-
-  const rotateDimDiv = core.getDocument()?.type === workerTypes.XOD;
-
   return (
     <div
       className={classNames({
@@ -236,7 +232,7 @@ const Thumbnail = ({
         active: isActive,
         selected: isSelected && isThumbnailSelectingPages,
       })}
-      onDragOver={e => onDragOver(e, index)}
+      onDragOver={(e) => onDragOver(e, index)}
       id="Thumbnail-container"
     >
       <div
@@ -245,7 +241,7 @@ const Thumbnail = ({
           width: thumbSize,
           height: thumbSize,
         }}
-        onDragStart={e => onDragStart(e, index)}
+        onDragStart={(e) => onDragStart(e, index)}
         draggable={isDraggable}
         onClick={handleClick}
       >

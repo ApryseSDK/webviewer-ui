@@ -9,8 +9,8 @@ import { getAnnotationPosition } from '../../helpers/getPopupPosition';
 import './AnnotationNoteConnectorLine.scss';
 
 const LineConnectorPortal = ({ children }) => {
-  const mount = document.getElementById("line-connector-root");
-  const el = document.createElement("div");
+  const mount = document.getElementById('line-connector-root');
+  const el = document.createElement('div');
   el.setAttribute('data-element', 'annotationNoteConnectorLine');
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const LineConnectorPortal = ({ children }) => {
 
 const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
   const [notePanelWidth, lineIsOpen, notePanelIsOpen, isLineDisabled, documentContainerWidth, documentContainerHeight] = useSelector(
-    state => [
+    (state) => [
       selectors.getNotesPanelWidth(state),
       selectors.isElementOpen(state, 'annotationNoteConnectorLine'),
       selectors.isElementOpen(state, 'notesPanel'),
@@ -36,12 +36,12 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
 
   const dispatch = useDispatch();
 
-  //Right Horizontal Line
+  // Right Horizontal Line
   const [rightHorizontalLineWidth, setRightHorizontalLineWidth] = useState(0);
   const [rightHorizontalLineTop, setRightHorizontalLineTop] = useState(0);
   const [rightHorizontalLineRight, setRightHorizontalLineRight] = useState(0);
 
-  //Left Horizontal Line
+  // Left Horizontal Line
   const [leftHorizontalLineWidth, setLeftHorizontalLineWidth] = useState(0);
   const [leftHorizontalLineTop, setLeftHorizontalLineTop] = useState(0);
   const [leftHorizontalLineRight, setLeftHorizontalLineRight] = useState(0);
@@ -75,15 +75,14 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
     setLeftHorizontalLineTop(annotationTopLeft.y + (annotHeightInPixels / 2) - scrollTop);
 
     const onPageNumberUpdated = () => {
-      dispatch(actions.closeElement('annotationNoteConnectorLine'))
-    }
+      dispatch(actions.closeElement('annotationNoteConnectorLine'));
+    };
 
     core.addEventListener('pageNumberUpdated', onPageNumberUpdated);
 
     return () => {
       core.removeEventListener('pageNumberUpdated', onPageNumberUpdated);
     };
-
   }, [noteContainerRef, notePanelWidth, annotationBottomRight, annotationTopLeft, documentContainerWidth, documentContainerHeight, dispatch]);
 
   if (lineIsOpen && notePanelIsOpen && !isLineDisabled) {
@@ -100,9 +99,8 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
           <div className="arrowHead" />
         </div>
       </LineConnectorPortal>);
-  } else {
-    return null;
   }
+  return null;
 };
 
 export default AnnotationNoteConnectorLine;

@@ -2,7 +2,7 @@ import core from 'core';
 import actions from 'actions';
 import { isAndroid } from 'helpers/device';
 
-export default dispatch => fitMode => {
+export default (dispatch) => (fitMode) => {
   const docViewer = core.getDocumentViewer();
 
   if (fitMode === docViewer.FitMode.Zoom) {

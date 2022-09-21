@@ -1,16 +1,16 @@
-import React, { useEffect, useRef } from "react";
-import classNames from "classnames";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
-import actions from "actions";
-import selectors from "selectors";
+import React, { useEffect, useRef } from 'react';
+import classNames from 'classnames';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import actions from 'actions';
+import selectors from 'selectors';
 
-import "./ProgressModal.scss";
+import './ProgressModal.scss';
 
 const ProgressModal = () => {
   const [isDisabled, isOpen, loadingProgress] = useSelector(
-    state => [
-      selectors.isElementDisabled(state, "progressModal"),
-      selectors.isElementOpen(state, "progressModal"),
+    (state) => [
+      selectors.isElementDisabled(state, 'progressModal'),
+      selectors.isElementOpen(state, 'progressModal'),
       selectors.getLoadingProgress(state),
     ],
     shallowEqual,
@@ -22,11 +22,11 @@ const ProgressModal = () => {
     if (isOpen) {
       dispatch(
         actions.closeElements([
-          "signatureModal",
-          "printModal",
-          "errorModal",
-          "loadingModal",
-          "passwordModal",
+          'signatureModal',
+          'printModal',
+          'errorModal',
+          'loadingModal',
+          'passwordModal',
         ]),
       );
     }

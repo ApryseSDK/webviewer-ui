@@ -53,7 +53,7 @@ class ColorPalette extends React.PureComponent {
     ];
   }
 
-  setColor = bg => {
+  setColor = (bg) => {
     const { property, onStyleChange } = this.props;
     if (!bg) {
       onStyleChange(property, new window.Annotations.Color(0, 0, 0, 0));
@@ -82,9 +82,9 @@ class ColorPalette extends React.PureComponent {
 
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
 
-    let palette = overridePalette2 ||  overridePalette?.[colorMapKey] || overridePalette?.global || this.palette;
+    let palette = overridePalette2 || overridePalette?.[colorMapKey] || overridePalette?.global || this.palette;
     if (!allowTransparent) {
-      palette = palette.filter(p => p?.toLowerCase() !== 'transparency');
+      palette = palette.filter((p) => p?.toLowerCase() !== 'transparency');
     }
 
     const transparentIcon = (
@@ -108,41 +108,41 @@ class ColorPalette extends React.PureComponent {
         })}
         style={style}
       >
-        {palette.map(bg => bg?.toLowerCase()).map((bg, i) => (
-          !bg 
-          ? <div key={i} className="dummy-cell" /> 
-          : <button
-            key={i}
-            className="cell-container"
-            onClick={() => {
-              this.setColor(bg === 'transparency' ? null : bg);
-            }}
-            aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
-          >
-            <div
-              className={classNames({
-                'cell-outer': true,
-                active: color?.toHexString?.()?.toLowerCase() === bg || (!color?.toHexString?.() && bg === 'transparency'),
-              })}
+        {palette.map((bg) => bg?.toLowerCase()).map((bg, i) => (
+          !bg
+            ? <div key={i} className="dummy-cell" />
+            : <button
+              key={i}
+              className="cell-container"
+              onClick={() => {
+                this.setColor(bg === 'transparency' ? null : bg);
+              }}
+              aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
             >
               <div
                 className={classNames({
-                  cell: true,
-                  border: bg === '#ffffff' || bg === 'transparency',
+                  'cell-outer': true,
+                  active: color?.toHexString?.()?.toLowerCase() === bg || (!color?.toHexString?.() && bg === 'transparency'),
                 })}
-                style={{ backgroundColor: bg }}
               >
-                { bg === 'transparency' && transparentIcon}
+                <div
+                  className={classNames({
+                    cell: true,
+                    border: bg === '#ffffff' || bg === 'transparency',
+                  })}
+                  style={{ backgroundColor: bg }}
+                >
+                  {bg === 'transparency' && transparentIcon}
+                </div>
               </div>
-            </div>
-          </button>
+            </button>
         ))}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   overridePalette: selectors.getCustomElementOverrides(state, dataElement),
   isDisabled: selectors.isElementDisabled(state, 'colorPalette'),
 });

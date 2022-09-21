@@ -17,24 +17,39 @@ const DataElements = {
   WV3D_PROPERTIES_PANEL_TOGGLE: 'wv3dPropertiesPanelToggle',
   LEFT_PANEL: 'leftPanel',
   OUTLINE_PANEL: 'outlinesPanel',
+  OUTLINE_MULTI_SELECT: 'outlineMultiSelect',
   OUTLINE_CONTROLS: 'outlineControls',
+  OUTLINE_ADD_NEW_BUTTON_CONTAINER: 'addNewOutlineButtonContainer',
+  OUTLINE_ADD_NEW_BUTTON: 'addNewOutlineButton',
+  OUTLINE_MOVE_UP_BUTTON: 'moveOutlineUpButton',
+  OUTLINE_MOVE_DOWN_BUTTON: 'moveOutlineDownButton',
+  OUTLINE_MOVE_OUTWARD_BUTTON: 'moveOutlineOutwardButton',
+  OUTLINE_MOVE_INWARD_BUTTON: 'moveOutlineInwardButton',
   BOOKMARK_PANEL: 'bookmarksPanel',
+  BOOKMARK_MULTI_SELECT: 'bookmarkMultiSelect',
   BOOKMARK_SHORTCUT_OPTION: 'bookmarkShortcutOption',
+  BOOKMARK_ADD_NEW_BUTTON_CONTAINER: 'addNewBookmarkButtonContainer',
+  BOOKMARK_ADD_NEW_BUTTON: 'addNewBookmarkButton',
   NOTES_PANEL: 'notesPanel',
+  FORM_FIELD_INDICATOR_CONTAINER: 'formFieldIndicatorContainer',
 
   NotesPanel: {
     DefaultHeader: {
       INPUT_CONTAINER: 'notesPanelHeader-inputContainer',
       COMMENTS_COUNTER: 'notesPanelHeader-commentsCounter',
       SORT_ROW: 'notesPanelHeader-sortRow'
-    }
+    },
+    ADD_REPLY_ATTACHMENT_BUTTON: 'addReplyAttachmentButton'
   },
+  MULTITABS_EMPTY_PAGE: 'multiTabsEmptyPage',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',
   LINK_MODAL: 'linkModal',
   LANGUAGE_MODAL: 'languageModal',
   FILTER_MODAL: 'filterModal',
+  CONTENT_EDIT_LINK_MODAL: 'contentEditLinkModal',
+  SCALE_MODAL: 'scaleModal',
 
   // Filter modal
   ANNOTATION_USER_FILTER_PANEL_BUTTON: 'annotationUserFilterPanelButton',
@@ -50,6 +65,15 @@ const DataElements = {
   NOTE_MULTI_GROUP_BUTTON: 'multiGroupButton',
   NOTE_MULTI_UNGROUP_BUTTON: 'multiUngroupButton',
   NOTE_MULTI_DELETE_BUTTON: 'multiDeleteButton',
+
+  // Saved Signatures overlay
+  SAVED_SIGNATURES_PANEL_BUTTON: 'savedFullSignaturePanelButton',
+  SAVED_INTIALS_PANEL_BUTTON: 'savedInitialsPanelButton',
+  SAVED_FULL_SIGNATURES_PANEL: 'savedFullSignaturePanel',
+  SAVED_INITIALS_PANEL: 'savedInitialsPanel',
+  // MultiViewer Mode (MultiViewer)
+  MULTI_VIEWER_SAVE_DOCUMENT_BUTTON: 'multiViewerSaveDocumentButton',
 };
+
 
 export default DataElements;

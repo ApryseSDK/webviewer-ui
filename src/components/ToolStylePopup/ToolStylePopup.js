@@ -19,6 +19,7 @@ import RubberStampStylePopup from 'components/RubberStampOverlay';
 import './ToolStylePopup.scss';
 import getToolStyles from 'helpers/getToolStyles';
 
+const NOOP = () => { };
 class ToolStylePopup extends React.PureComponent {
   static propTypes = {
     activeToolName: PropTypes.string,
@@ -40,6 +41,12 @@ class ToolStylePopup extends React.PureComponent {
       top: 0,
     };
   }
+
+  // This fixes a console warning
+  // If we close the element here, it causes a race condition between
+  // the element toggling itself open/close
+  handleClickOutside = NOOP;
+
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
       this.props.closeElements([
@@ -148,7 +155,7 @@ class ToolStylePopup extends React.PureComponent {
         hideSnapModeCheckbox={isEllipseMeasurementTool || !core.isFullPDFEnabled()}
         onPropertyChange={this.handleStyleChange}
         onStyleChange={this.handleStyleChange}
-        onSliderChange={() => {}}
+        onSliderChange={() => { }}
         onRichTextStyleChange={this.handleRichTextStyleChange}
         onLineStyleChange={this.handleLineStyleChange}
         properties={properties}
@@ -160,14 +167,14 @@ class ToolStylePopup extends React.PureComponent {
     if (activeToolGroup === 'signatureTools') {
       Component = (
         <React.Fragment>
-          <HorizontalDivider/>
-          <SignatureStylePopup/>
+          <HorizontalDivider />
+          <SignatureStylePopup />
         </React.Fragment>
       );
     } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
         <React.Fragment>
-          <HorizontalDivider/>
+          <HorizontalDivider />
           <RubberStampStylePopup />
         </React.Fragment>
       );
@@ -240,7 +247,7 @@ const connectedComponent = (props) => {
   );
 
   return (
-    <ConnectedToolStylePopup {...props} isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop}/>
+    <ConnectedToolStylePopup {...props} isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop} />
   );
 };
 

@@ -15,7 +15,7 @@ WebViewer(...)
     });
   });
  */
-export default store => (toolName, properties) => {
+export default (store) => (toolName, properties) => {
   store.dispatch({
     type: 'UPDATE_TOOL',
     payload: { toolName, properties },

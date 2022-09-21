@@ -9,7 +9,7 @@ function StyleOption(props) {
   const styleOptions = ['solid', 'cloudy'];
   const [t] = useTranslation();
 
-  const onChange = value => {
+  const onChange = (value) => {
     props.onStyleChange('Style', value);
   };
 
@@ -22,9 +22,9 @@ function StyleOption(props) {
             id="styleOptions"
             className="styles-input"
             value={style}
-            onChange={e => onChange(e.target.value)}
+            onChange={(e) => onChange(e.target.value)}
           >
-            {styleOptions.map(option => (
+            {styleOptions.map((option) => (
               <option key={option} value={option}>
                 {t(`option.styleOption.${option}`)}
               </option>

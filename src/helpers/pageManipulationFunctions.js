@@ -34,7 +34,7 @@ const canRotateLoadedDocument = () => {
 const rotatePages = (pageNumbers, counterClockwise) => {
   if (canRotateLoadedDocument()) {
     const rotation = counterClockwise ? window.Core.PageRotation.E_270 : window.Core.PageRotation.E_90;
-    pageNumbers.forEach(index => {
+    pageNumbers.forEach((index) => {
       core.rotatePages([index], rotation);
     });
   } else {
@@ -46,23 +46,24 @@ const rotatePages = (pageNumbers, counterClockwise) => {
   }
 };
 
-const rotateClockwise = pageNumbers => {
+const rotateClockwise = (pageNumbers) => {
   rotatePages(pageNumbers, false);
 };
 
-const rotateCounterClockwise = pageNumbers => {
+const rotateCounterClockwise = (pageNumbers) => {
   rotatePages(pageNumbers, true);
 };
 
-const insertAbove = pageNumbers => {
+const insertAbove = (pageNumbers) => {
   core.insertBlankPages(pageNumbers, core.getPageWidth(pageNumbers[0]), core.getPageHeight(pageNumbers[0]));
 };
 
-const insertBelow = pageNumbers => {
-  core.insertBlankPages(pageNumbers.map(i => i + 1), core.getPageWidth(pageNumbers[0]), core.getPageHeight(pageNumbers[0]));
+const insertBelow = (pageNumbers) => {
+  core.insertBlankPages(pageNumbers.map((i) => i + 1), core.getPageWidth(pageNumbers[0]), core.getPageHeight(pageNumbers[0]));
 };
 
-const replace = dispatch => {
+const replace = (dispatch) => {
+  dispatch(actions.closeElement('pageManipulationOverlay'));
   dispatch(actions.openElement('pageReplacementModal'));
 };
 
@@ -76,13 +77,12 @@ const extractPages = (pageNumbers, dispatch) => {
     message,
     title,
     confirmBtnText,
-    onConfirm: () =>
-      extractPagesWithAnnotations(pageNumbers).then(file => {
-        saveAs(file, 'extractedDocument.pdf');
-      }),
+    onConfirm: () => extractPagesWithAnnotations(pageNumbers).then((file) => {
+      saveAs(file, 'extractedDocument.pdf');
+    }),
     secondaryBtnText,
     onSecondary: () => {
-      extractPagesWithAnnotations(pageNumbers).then(file => {
+      extractPagesWithAnnotations(pageNumbers).then((file) => {
         saveAs(file, 'extractedDocument.pdf');
         core.removePages(pageNumbers).then(() => {
           dispatch(actions.setSelectedPageThumbnails([]));
@@ -104,10 +104,9 @@ const deletePages = (pageNumbers, dispatch, isModalEnabled = true) => {
       message,
       title,
       confirmBtnText,
-      onConfirm: () =>
-        core.removePages(pageNumbers).then(() => {
-          dispatch(actions.setSelectedPageThumbnails([]));
-        }),
+      onConfirm: () => core.removePages(pageNumbers).then(() => {
+        dispatch(actions.setSelectedPageThumbnails([]));
+      }),
     };
 
     if (core.getDocumentViewer().getPageCount() === pageNumbers.length) {
@@ -129,11 +128,11 @@ const deletePages = (pageNumbers, dispatch, isModalEnabled = true) => {
   }
 };
 
-const movePagesToBottom = pageNumbers => {
+const movePagesToBottom = (pageNumbers) => {
   core.movePages(pageNumbers, core.getTotalPages() + 1);
 };
 
-const movePagesToTop = pageNumbers => {
+const movePagesToTop = (pageNumbers) => {
   core.movePages(pageNumbers, 0);
 };
 

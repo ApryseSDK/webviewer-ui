@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-
 import SearchResult from 'components/SearchResult';
 import SearchOverlay from 'components/SearchOverlay';
 import Icon from 'components/Icon';
 import getClassName from 'helpers/getClassName';
 import DataElementWrapper from 'components/DataElementWrapper';
+import { addSearchListener, removeSearchListener } from 'helpers/search';
 
 import './SearchPanel.scss';
-import useSearch from "hooks/useSearch";
+import useSearch from 'hooks/useSearch';
 
 const propTypes = {
   isOpen: PropTypes.bool,
@@ -31,6 +31,7 @@ function SearchPanel(props) {
     pageLabels,
     closeSearchPanel = noop,
     setActiveResult = noop,
+    setNextResultValue = noop,
     isMobile = false,
     isInDesktopOnlyMode,
     isProcessingSearchResults
@@ -50,7 +51,27 @@ function SearchPanel(props) {
     if (!isInDesktopOnlyMode && isMobile) {
       closeSearchPanel();
     }
+
+    setNextResultValue(result);
   }, [closeSearchPanel, isMobile]);
+
+  const [isSearchInProgress, setIsSearchInProgress] = React.useState(false);
+
+  const searchEventListener = () => {
+    setIsSearchInProgress(false);
+  };
+
+  React.useEffect(() => {
+    // componentDidMount
+    addSearchListener(searchEventListener);
+  }, []);
+
+  React.useEffect(() => {
+    // componentWillUnmount
+    return () => {
+      removeSearchListener(searchEventListener);
+    };
+  }, []);
 
   const className = getClassName('Panel SearchPanel', { isOpen });
   const style = !isInDesktopOnlyMode && isMobile ? {} : { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
@@ -81,6 +102,8 @@ function SearchPanel(props) {
         searchResults={searchResults}
         activeResultIndex={activeSearchResultIndex}
         isPanelOpen={isOpen}
+        isSearchInProgress={isSearchInProgress}
+        setIsSearchInProgress={setIsSearchInProgress}
       />
       <SearchResult
         t={t}
@@ -90,6 +113,7 @@ function SearchPanel(props) {
         onClickResult={onClickResult}
         pageLabels={pageLabels}
         isProcessingSearchResults={isProcessingSearchResults}
+        isSearchInProgress={isSearchInProgress}
       />
     </DataElementWrapper>
   );

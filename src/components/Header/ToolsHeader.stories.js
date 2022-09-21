@@ -2,7 +2,7 @@ import React from 'react';
 import ToolsHeaderComponent from './ToolsHeader';
 import initialState from 'src/redux/initialState';
 import { createStore, combineReducers } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import viewerReducer from 'src/redux/reducers/viewerReducer';
 
 export default {
@@ -24,7 +24,7 @@ const BasicComponent = ({ props, store }) => {
 
 
 export const ToolsHeaderNoPreset = () => {
-  return (<BasicComponent store={store} />)
+  return (<BasicComponent store={store} />);
 };
 
 const mockInitialViewerState = {
@@ -41,5 +41,5 @@ const storeWithToolSelected = createStore(reducer);
 
 
 export const ToolsHeaderToolActive = () => {
-  return (<BasicComponent store={storeWithToolSelected} />)
+  return (<BasicComponent store={storeWithToolSelected} />);
 };

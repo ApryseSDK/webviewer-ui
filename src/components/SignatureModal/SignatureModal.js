@@ -15,18 +15,20 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
 import './SignatureModal.scss';
+import SignatureModes from 'constants/signatureModes';
 
 const SignatureModal = () => {
-  const [isDisabled, isOpen, activeToolName, displayedSignatures] = useSelector(state => [
+  const [isDisabled, isOpen, activeToolName, signatureMode, activeDocumentViewerKey, isInitialsModeEnabled] = useSelector((state) => [
     selectors.isElementDisabled(state, 'signatureModal'),
     selectors.isElementOpen(state, 'signatureModal'),
     selectors.getActiveToolName(state),
-    selectors.getDisplayedSignatures(state),
+    selectors.getSignatureMode(state),
+    selectors.getActiveDocumentViewerKey(state),
+    selectors.getIsInitialsModeEnabled(state),
   ]);
 
+  const signatureToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateSignature');
   const [createButtonDisabled, setCreateButtonDisabled] = useState();
-
-  const signatureTool = core.getTool('AnnotationCreateSignature');
 
   // Hack to close modal if hotkey to open other tool is used.
   useEffect(() => {
@@ -57,24 +59,71 @@ const SignatureModal = () => {
   }, [dispatch, isOpen]);
 
   const closeModal = () => {
-    signatureTool.clearLocation();
-    signatureTool.setSignature(null);
+    for (const signatureTool of signatureToolArray) {
+      signatureTool.clearLocation();
+      signatureTool.setSignature(null);
+    }
     dispatch(actions.closeElement('signatureModal'));
   };
 
-  const createSignature = async () => {
-    if (!(await signatureTool.isEmptySignature())) {
-      signatureTool.saveSignatures(signatureTool.annot);
+  const createSignatures = async () => {
+    createFullSignature();
 
-      dispatch(actions.setSelectedDisplayedSignatureIndex(displayedSignatures.length));
+    if (isInitialsModeEnabled) {
+      createInitials();
+    }
+  };
+
+  const createFullSignature = async () => {
+    signatureToolArray[0].saveSignatures(signatureToolArray[0].signatureAnnotations[SignatureModes.FULL_SIGNATURE]);
+    for (let i = 1; i < signatureToolArray.length; i++) {
+      await signatureToolArray[i].setSignature(signatureToolArray[0].signatureAnnotations[SignatureModes.FULL_SIGNATURE]);
+      signatureToolArray[i].signatureAnnotations[SignatureModes.FULL_SIGNATURE] = signatureToolArray[0].signatureAnnotations[SignatureModes.FULL_SIGNATURE];
+    }
+
+    const signatureTool = signatureToolArray[activeDocumentViewerKey - 1];
+
+    if (!(await signatureTool.isEmptySignature())) {
       core.setToolMode('AnnotationCreateSignature');
 
-      if (signatureTool.hasLocation()) {
-        await signatureTool.addSignature();
-      } else {
-        await signatureTool.showPreview();
+      if (signatureMode === SignatureModes.FULL_SIGNATURE) {
+        if (signatureTool.hasLocation()) {
+          await signatureTool.addSignature();
+        } else {
+          for (const signatureTool of signatureToolArray) {
+            await signatureTool.showPreview();
+          }
+        }
+
+        dispatch(actions.closeElement('signatureModal'));
       }
+    }
+  };
+
+  const createInitials = async () => {
+    signatureToolArray[0].saveInitials(signatureToolArray[0].signatureAnnotations[SignatureModes.INITIALS]);
+    for (let i = 1; i < signatureToolArray.length; i++) {
+      await signatureToolArray[i].saveInitials(signatureToolArray[0].signatureAnnotations[SignatureModes.INITIALS]);
+      signatureToolArray[i].signatureAnnotations[SignatureModes.INITIALS] = signatureToolArray[0].signatureAnnotations[SignatureModes.INITIALS];
+    }
+
+    const signatureTool = signatureToolArray[activeDocumentViewerKey - 1];
+    if (!(await signatureTool.isEmptyInitialsSignature())) {
+      core.setToolMode('AnnotationCreateSignature');
+
+      if (signatureMode === SignatureModes.INITIALS) {
+        if (signatureTool.hasLocation()) {
+          await signatureTool.addInitials();
+        } else {
+          for (const signatureTool of signatureToolArray) {
+            await signatureTool.showInitialsPreview();
+          }
+        }
+      }
+
       dispatch(actions.closeElement('signatureModal'));
+      // back to the default mode
+      dispatch(actions.setSignatureMode(SignatureModes.FULL_SIGNATURE));
     }
   };
 
@@ -105,14 +154,14 @@ const SignatureModal = () => {
           data-element="signatureModal"
         >
           <div
-            className="container"
-            onMouseDown={e => e.stopPropagation()}
+            className={classNames('container', { 'include-initials': isInitialsModeEnabled })}
+            onMouseDown={(e) => e.stopPropagation()}
           >
             <div className="swipe-indicator" />
             <Tabs id="signatureModal">
               <div className="header-container">
                 <div className="header">
-                  <p>{t(`option.signatureModal.modalName`)}</p>
+                  <p>{t('option.signatureModal.modalName')}</p>
                   <Button
                     className="signatureModalCloseButton"
                     dataElement="signatureModalCloseButton"
@@ -146,6 +195,7 @@ const SignatureModal = () => {
                   isModalOpen={isOpen}
                   enableCreateButton={enableCreateButton}
                   disableCreateButton={disableCreateButton}
+                  isInitialsModeEnabled={isInitialsModeEnabled}
                 />
               </TabPanel>
               <TabPanel dataElement="textSignaturePanel">
@@ -153,6 +203,7 @@ const SignatureModal = () => {
                   isModalOpen={isOpen}
                   enableCreateButton={enableCreateButton}
                   disableCreateButton={disableCreateButton}
+                  isInitialsModeEnabled={isInitialsModeEnabled}
                 />
               </TabPanel>
               <TabPanel dataElement="imageSignaturePanel">
@@ -160,11 +211,12 @@ const SignatureModal = () => {
                   isModalOpen={isOpen}
                   enableCreateButton={enableCreateButton}
                   disableCreateButton={disableCreateButton}
+                  isInitialsModeEnabled={isInitialsModeEnabled}
                 />
               </TabPanel>
 
               <div className="footer">
-                <button className="signature-create" onClick={createSignature} disabled={!(isOpen) || createButtonDisabled}>
+                <button className="signature-create" onClick={createSignatures} disabled={!(isOpen) || createButtonDisabled}>
                   {t('action.create')}
                 </button>
               </div>

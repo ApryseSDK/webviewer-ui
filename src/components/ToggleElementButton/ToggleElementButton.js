@@ -44,7 +44,7 @@ const ConnectedToggleElementButton = connect(
   mapDispatchToProps,
 )(ToggleElementButton);
 
-export default props => {
+const connectedComponent = (props) => {
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -57,3 +57,5 @@ export default props => {
     <ConnectedToggleElementButton {...props} isMobile={isMobile} />
   );
 };
+
+export default connectedComponent;

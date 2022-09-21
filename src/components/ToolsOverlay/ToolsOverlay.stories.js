@@ -1,6 +1,6 @@
 import React from 'react';
 import { combineReducers, createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import viewerReducer from 'src/redux/reducers/viewerReducer';
 import initialState from 'src/redux/initialState';
 import ToolsOverlayComponent from './ToolsOverlay';
@@ -17,7 +17,7 @@ const mockInitialViewerState = {
   activeToolGroup: 'freeHandTools',
   activeToolName: 'AnnotationCreateFreeHand',
 
-}
+};
 
 const reducer = combineReducers({
   viewer: viewerReducer(mockInitialViewerState)

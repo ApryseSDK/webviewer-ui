@@ -108,7 +108,7 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
       ) {
         const fileReader = new FileReader();
         const arrayBufferPromise = new Promise((resolve, reject) => {
-          fileReader.addEventListener('load', async e => {
+          fileReader.addEventListener('load', async (e) => {
             resolve(new Uint8Array(e.target.result));
           });
           fileReader.addEventListener('error', () => {
@@ -257,7 +257,7 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
         const permissionStatus = await result.getPermissionsStatus();
         const digestAlgorithm = await result.getDigestAlgorithm();
         const disallowedChanges = await Promise.all(
-          (await result.getDisallowedChanges()).map(async change => ({
+          (await result.getDisallowedChanges()).map(async (change) => ({
             objnum: await change.getObjNum(),
             type: await change.getTypeAsString(),
           }))
@@ -288,12 +288,37 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
             const processedSubjectField = await processX501DistinguishedName(retrievedSubjectField);
             Object.assign(subjectField, processedSubjectField);
             const lastX509Cert = certPath[certPath.length - 1];
-            const notBeforeEpochTime = await lastX509Cert.getNotBeforeEpochTime();
-            const notAfterEpochTime = await lastX509Cert.getNotAfterEpochTime();
-            validAtTimeOfSigning = (
-              notAfterEpochTime >= epochTrustVerificationTime
-              && epochTrustVerificationTime >= notBeforeEpochTime
-            );
+            /**
+             * @todo @colim @rdjericpdftron 2022-05-30
+             * Using the pdftron::PDF::VerificationOptions::LoadTrustList API
+             * in combination with
+             * pdftron::Crypto::X509Certificate::GetNotBeforeEpochTime
+             * or
+             * pdftron::Crypto::X509Certificate::GetNotAfterEpochTime
+             * Results in the following fatal error being thrown:
+             *
+             * calendar_point::to_std_timepoint() does not support years after
+             * 2037 on this system
+             *
+             * @rdjericpdftron Mentions that this should be addressed in a
+             * future release of PDFNet when the Botan library has been patched
+             */
+            try {
+              const notBeforeEpochTime = await lastX509Cert.getNotBeforeEpochTime();
+              const notAfterEpochTime = await lastX509Cert.getNotAfterEpochTime();
+              validAtTimeOfSigning = (
+                notAfterEpochTime >= epochTrustVerificationTime
+                && epochTrustVerificationTime >= notBeforeEpochTime
+              );
+            } catch (dateBugError) {
+              if (dateBugError.includes('calendar_point::to_std_timepoint() does not support years after')) {
+                console.warn(
+                  'The following error is a known issue with Botan, and aims to be addressed in a future release of '
+                  + 'PDFNet. This currently does not impact PDFTron\'s Digital Signature Verification capabilities.'
+                );
+                console.warn(dateBugError);
+              }
+            }
           }
         }
 
@@ -368,7 +393,7 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
  * @returns {string} Human readable formatted date and time
  * @ignore
  */
-const formatPDFNetDate = date => {
+const formatPDFNetDate = (date) => {
   const { year, month, day, hour, minute, second } = date;
 
   return `${year}-${month}-${day}, ${hour}:${minute}:${second}`;
@@ -381,7 +406,7 @@ const formatPDFNetDate = date => {
  * @returns {Date} The converted epoch time
  * @ignore
  */
-const formatDate = epochTime => {
+const formatDate = (epochTime) => {
   const date = new Date(0);
   // Values greater than 59 are converted into their parent values
   // (i.e. seconds -> minutes -> hours -> day etc.)
@@ -413,7 +438,7 @@ const formatDate = epochTime => {
  * they map to
  * @ignore
  */
-const processX501DistinguishedName = async x501DistinguishedNameObject => {
+const processX501DistinguishedName = async (x501DistinguishedNameObject) => {
   const processedObject = {};
   const allAttributeAndValues = await x501DistinguishedNameObject.getAllAttributesAndValues();
   for (const x501AttributeTypeAndValue of allAttributeAndValues) {
@@ -446,7 +471,7 @@ const processX501DistinguishedName = async x501DistinguishedNameObject => {
  * @returns {string} The human readable enum that the array represents
  * @ignore
  */
-const translateObjectIdentifierBotanOID = objectIdentifierOIDenum => {
+const translateObjectIdentifierBotanOID = (objectIdentifierOIDenum) => {
   const botanArrayToEnum = {
     '[2,5,4,3]': 'e_commonName',
     '[2,5,4,4]': 'e_surname',

@@ -11,7 +11,7 @@ WebViewer(...)
   });
  */
 
-export default store => () => {
+export default (store) => () => {
   console.warn('Deprecated since version 8.0. Please use isHighContrastModeEnabled Instead');
   return selectors.getIsHighContrastMode(store.getState());
 };

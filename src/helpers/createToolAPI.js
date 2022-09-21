@@ -23,7 +23,7 @@ export default (enable, store) => (
   );
 
   // for the tool names in the map, enable/disable other related buttons
-  Object.keys(map).forEach(toolName => {
+  Object.keys(map).forEach((toolName) => {
     if (toolNameArray.indexOf(toolName) !== -1) {
       dataElements.push(map[toolName]);
     }
@@ -35,13 +35,13 @@ export default (enable, store) => (
   }
 
   if (enable) {
-    toolNameArray.forEach(toolName => {
+    toolNameArray.forEach((toolName) => {
       hotkeys.on(toolName);
     });
 
     store.dispatch(actions.enableElements(dataElements, PRIORITY_TWO));
   } else {
-    toolNameArray.forEach(toolName => {
+    toolNameArray.forEach((toolName) => {
       hotkeys.off(toolName);
     });
 

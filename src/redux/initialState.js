@@ -18,23 +18,53 @@ import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
 import presetCropDimensions from 'constants/presetCropDimensions';
 import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
+import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
+import SignatureModes from 'constants/signatureModes';
 
 const { ToolNames } = window.Core.Tools;
 
 export default {
   viewer: {
+    isInitialsModeEnabled: false,
+    isMultiViewerMode: false,
+    syncViewer: null,
+    isCompareStarted: false,
+    isComparisonOverlayEnabled: true,
+    activeDocumentViewerKey: 1,
+    zoomLevels: {
+      1: 1,
+      2: 1,
+    },
+    canUndo: {
+      1: false,
+      2: false,
+    },
+    canRedo: {
+      1: false,
+      2: false,
+    },
     TabManager: null,
     tabs: [],
-    activeTab: 0, // ID of active Tab (multi-tab)
+    activeTab: 0,
     isMultiTab: false,
     thumbnailSelectingPages: false,
     isInDesktopOnlyMode: false,
-    canUndo: false,
-    canRedo: false,
     toolbarGroup: 'toolbarGroup-Annotate',
     activeTheme: 'light',
     currentLanguage: 'en',
-    disabledElements: {},
+    disabledElements: {
+      [DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON]: { disabled: true, priority: 2 },
+    },
+    selectedScale: initialScale,
+    isAddingNewScale: false,
+    calibrationInfo: {
+      isCalibration: false,
+      tempScale: '',
+      previousToolName: '',
+      isFractionalUnit: false,
+      defaultUnit: ''
+    },
+    deleteScale: '',
     openElements: {
       header: true,
       toolsHeader: true,
@@ -46,7 +76,9 @@ export default {
       searchPanel: 293,
       notesPanel: 293,
       redactionPanel: 330,
+      textEditingPanel: 330,
       wv3dPropertiesPanel: 330,
+      comparePanel: 330,
     },
     documentContainerWidth: null,
     documentContainerHeight: null,
@@ -58,6 +90,8 @@ export default {
     fadePageNavigationComponent: true,
     pageDeletionConfirmationModalEnabled: true,
     outlineControlVisibility: false,
+    autoExpandOutlines: getHashParameters('autoExpandOutlines', false),
+    isAnnotationNumberingEnabled: getHashParameters('enableAnnotationNumbering', false),
     bookmarkIconShortcutVisibility: false,
     hideContentEditWarning: isContentEditWarningHidden(),
     currentContentBeingEdited: null,
@@ -109,7 +143,7 @@ export default {
           img: 'icon-header-chat-line',
           title: 'component.notesPanel',
           element: 'notesPanel',
-          onClick: dispatch => {
+          onClick: (dispatch) => {
             dispatch(actions.toggleElement('notesPanel'));
             // Trigger with a delay so we ensure the panel is open before we compute correct coordinates of annotation
             setTimeout(() => dispatch(actions.toggleElement('annotationNoteConnectorLine')), 400);
@@ -129,7 +163,7 @@ export default {
           dataElement: 'moreButton',
           title: 'action.more',
           img: 'icon-tools-more',
-          onClick: dispatch => {
+          onClick: (dispatch) => {
             dispatch(actions.setActiveHeaderGroup('small-mobile-more-buttons'));
             core.setToolMode(defaultTool);
           },
@@ -164,7 +198,7 @@ export default {
           dataElement: 'defaultHeaderButton',
           titile: 'action.close',
           img: 'ic_close_black_24px',
-          onClick: dispatch => {
+          onClick: (dispatch) => {
             dispatch(actions.setActiveHeaderGroup('default'));
             core.setToolMode(defaultTool);
           },
@@ -208,6 +242,18 @@ export default {
           toolGroup: 'freeTextTools',
           dataElement: 'freeTextToolGroupButton',
           title: 'annotation.freetext',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'markInsertTextTools',
+          dataElement: 'markInsertTextGroupButton',
+          title: 'annotation.markInsertText',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'markReplaceTextTools',
+          dataElement: 'markReplaceTextGroupButton',
+          title: 'annotation.markReplaceText',
         },
         {
           type: 'toolGroupButton',
@@ -329,7 +375,7 @@ export default {
           title: 'action.redactPages',
           showColor: 'never',
           img: 'icon-tool-page-redact',
-          onClick: dispatch => dispatch(actions.openElement(DataElements.PAGE_REDACT_MODAL)),
+          onClick: (dispatch) => dispatch(actions.openElement(DataElements.PAGE_REDACT_MODAL)),
         },
         { type: 'divider' },
         {
@@ -493,6 +539,22 @@ export default {
         },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
+      'toolbarGroup-EditText': [
+        { type: 'spacer' },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'addParagraphTools',
+          dataElement: 'addParagraphToolGroupButton',
+          title: 'action.addParagraph',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'addImageContentTools',
+          dataElement: 'addImageContentToolGroupButton',
+          title: 'annotation.newImage'
+        },
+        { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
+      ],
       'toolbarGroup-FillAndSign': [
         { type: 'spacer' },
         {
@@ -652,6 +714,8 @@ export default {
       { dataElement: 'freeHandToolButton' },
       { dataElement: 'freeHandHighlightToolButton' },
       { dataElement: 'freeTextToolButton' },
+      { dataElement: 'markInsertTextToolButton' },
+      { dataElement: 'markReplaceTextToolButton' },
     ],
     menuOverlay: [
       { dataElement: 'filePickerButton' },
@@ -1145,6 +1209,62 @@ export default {
         group: 'dateFreeTextTools',
         showColor: 'always',
       },
+      AnnotationCreateMarkInsertText: {
+        dataElement: 'markInsertTextToolButton',
+        title: 'annotation.markInsertText',
+        img: 'ic-insert text',
+        group: 'markInsertTextTools',
+        showColor: 'always',
+      },
+      AnnotationCreateMarkInsertText2: {
+        dataElement: 'markInsertTextToolButton2',
+        title: 'annotation.markInsertText',
+        img: 'ic-insert text',
+        group: 'markInsertTextTools',
+        showColor: 'always',
+      },
+      AnnotationCreateMarkInsertText3: {
+        dataElement: 'markInsertTextToolButton3',
+        title: 'annotation.markInsertText',
+        img: 'ic-insert text',
+        group: 'markInsertTextTools',
+        showColor: 'always',
+      },
+      AnnotationCreateMarkInsertText4: {
+        dataElement: 'markInsertTextToolButton4',
+        title: 'annotation.markInsertText',
+        img: 'ic-insert text',
+        group: 'markInsertTextTools',
+        showColor: 'always',
+      },
+      AnnotationCreateMarkReplaceText: {
+        dataElement: 'markReplaceToolButton',
+        title: 'annotation.markReplaceText',
+        img: 'ic-replace text',
+        group: 'markReplaceTextTools',
+        showColor: 'always',
+      },
+      AnnotationCreateMarkReplaceText2: {
+        dataElement: 'markReplaceToolButton2',
+        title: 'annotation.markReplaceText',
+        img: 'ic-replace text',
+        group: 'markReplaceTextTools',
+        showColor: 'always',
+      },
+      AnnotationCreateMarkReplaceText3: {
+        dataElement: 'markReplaceToolButton3',
+        title: 'annotation.markReplaceText',
+        img: 'ic-replace text',
+        group: 'markReplaceTextTools',
+        showColor: 'always',
+      },
+      AnnotationCreateMarkReplaceText4: {
+        dataElement: 'markReplaceToolButton4',
+        title: 'annotation.markReplaceText',
+        img: 'ic-replace text',
+        group: 'markReplaceTextTools',
+        showColor: 'always',
+      },
       AnnotationCreateCallout: {
         dataElement: 'calloutToolButton',
         title: 'annotation.callout',
@@ -1397,6 +1517,13 @@ export default {
         group: 'cloudTools',
         showColor: 'always',
       },
+      [ToolNames.CALIBRATION_MEASUREMENT]: {
+        dataElement: 'calibrationToolButton',
+        title: 'annotation.calibration',
+        img: 'icon-tool-measurement-distance-line',
+        group: 'calibrationTools',
+        showColor: 'never'
+      },
       AnnotationCreateArrow: {
         dataElement: 'arrowToolButton',
         title: 'annotation.arrow',
@@ -1494,6 +1621,20 @@ export default {
         img: 'ic_edit_page_24px',
         showColor: 'never',
         group: 'contentEditTools',
+      },
+      AddParagraphTool: {
+        dataElement: 'addParagraphToolGroupButton',
+        title: 'action.addParagraph',
+        img: 'ic-paragraph',
+        showColor: 'never',
+        group: 'addParagraphTools',
+      },
+      [ToolNames.ADD_IMAGE_CONTENT]: {
+        dataElement: 'addImageContentToolButton',
+        title: 'annotation.newImage',
+        img: 'icon-tool-image-line',
+        showColor: 'never',
+        group: 'addImageContentTools'
       },
       AnnotationCreateRedaction: {
         dataElement: 'redactionButton',
@@ -1692,6 +1833,9 @@ export default {
         group: 'changeViewTools',
         showColor: 'always',
       },
+      [ToolNames.OUTLINE_DESTINATION]: {
+        group: '',
+      },
     },
     tab: {
       signatureModal: 'inkSignaturePanelButton',
@@ -1699,6 +1843,8 @@ export default {
       linkModal: 'URLPanelButton',
       rubberStampTab: 'standardStampPanelButton',
       filterAnnotModal: DataElements.ANNOTATION_USER_FILTER_PANEL_BUTTON,
+      savedSignatures: DataElements.SAVED_SIGNATURES_PANEL_BUTTON,
+      openFileModal: 'urlInputPanelButton',
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
@@ -1713,7 +1859,6 @@ export default {
     notePopupId: '',
     isNoteEditing: false,
     fitMode: '',
-    zoom: 1,
     rotation: 0,
     displayMode: 'Single',
     currentPage: 1,
@@ -1723,7 +1868,7 @@ export default {
     isThumbnailMerging: true,
     isThumbnailReordering: true,
     isThumbnailMultiselect: true,
-    isOutlineEditing: true,
+    isOutlineEditingEnabled: true,
     enableNotesPanelVirtualizedList: true,
     notesShowLastUpdatedDate: false,
     allowPageNavigation: true,
@@ -1743,7 +1888,7 @@ export default {
     shiftKeyThumbnailPivotIndex: null,
     noteDateFormat: defaultNoteDateFormat,
     printedNoteDateFormat: defaultPrintedNoteDateFormat,
-    colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
+    colorMap: copyMapWithDataProperties('currentStyleTab', 'iconColor'),
     warning: {},
     customNoteFilter: null,
     zoomList: defaultZoomList,
@@ -1752,8 +1897,10 @@ export default {
       from: ['in', 'mm', 'cm', 'pt'],
       to: ['in', 'mm', 'cm', 'pt', 'ft', 'ft-in', 'm', 'yd', 'km', 'mi'],
     },
+    measurementScalePreset: getMeasurementScalePreset(),
+    isMultipleScalesMode: true,
     maxSignaturesCount: 4,
-    signatureFonts: ['GreatVibes-Regular'],
+    signatureFonts: ['Satisfy', 'Nothing You Could Do', 'La Belle Aurore', 'Whisper'],
     isReplyDisabledFunc: null,
     userData: [],
     customMeasurementOverlay: [],
@@ -1761,10 +1908,12 @@ export default {
     standardStamps: [],
     customStamps: [],
     selectedStampIndex: 0,
+    signatureMode: SignatureModes.FULL_SIGNATURE,
     savedSignatures: [],
-    displayedSavedSignatures: [],
+    savedInitials: [],
     displayedSignaturesFilterFunction: () => true,
     selectedDisplayedSignatureIndex: 0,
+    selectedDisplayedInitialsIndex: 0,
     annotationContentOverlayHandler: null,
     isSnapModeEnabled: false,
     isReaderMode: false,
@@ -1821,9 +1970,15 @@ export default {
         startZoom: 6400,
       },
     ],
+    contentEditor: null,
+    notesPanelCustomHeaderOptions: null,
+    notesPanelCustomEmptyPanel: null,
+    replyAttachmentPreviewEnabled: true
   },
   search: {
     value: '',
+    replaceValue: '',
+    nextResult: null,
     isCaseSensitive: false,
     isWholeWord: false,
     isWildcard: false,
@@ -1854,7 +2009,10 @@ export default {
     },
   },
   document: {
-    totalPages: 0,
+    totalPages: {
+      1: 0,
+      2: 0,
+    },
     outlines: [],
     bookmarks: {},
     layers: [],
@@ -1879,8 +2037,11 @@ export default {
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null,
     disableIndexedDB: getHashParameters('disableIndexedDB', false),
+    disableMultiViewerComparison: (getHashParameters('disableMultiViewerComparison', false) || !getHashParameters('pdfnet', false)),
   },
-  featureFlags: {},
+  featureFlags: {
+    multiViewer: true,
+  },
   wv3dPropertiesPanel: {
     modelData: [],
     schema: {

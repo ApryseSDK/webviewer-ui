@@ -4,10 +4,8 @@ import NotePopup from './NotePopup';
 import Tooltip from 'components/Tooltip';
 import { useTranslation } from 'react-i18next';
 
-
-
 function NotePopupContainer(props) {
-  const { annotation, setIsEditing, noteIndex } = props; // eslint-disable-line react/prop-types
+  const { annotation, setIsEditing, noteIndex } = props;
 
   const [canModify, setCanModify] = React.useState(core.canModify(annotation));
   const [canModifyContents, setCanModifyContents] = React.useState(core.canModifyContents(annotation));
@@ -20,11 +18,10 @@ function NotePopupContainer(props) {
       setCanModifyContents(core.canModifyContents(annotation));
     }
     core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
-    return () =>
-      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+    return () => core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
   }, [annotation]);
 
-  const handleEdit = React.useCallback(function handleEdit() {
+  const handleEdit = React.useCallback(() => {
     const isFreeText = annotation instanceof window.Annotations.FreeTextAnnotation;
     if (isFreeText && core.getAnnotationManager().isFreeTextEditingEnabled()) {
       core.getAnnotationManager().trigger('annotationDoubleClicked', annotation);
@@ -33,7 +30,7 @@ function NotePopupContainer(props) {
     }
   }, [annotation, setIsEditing, noteIndex]);
 
-  const handleDelete = React.useCallback(function handleDelete() {
+  const handleDelete = React.useCallback(() => {
     core.deleteAnnotations([annotation, ...annotation.getGroupedChildren()]);
   }, [annotation]);
 
@@ -64,4 +61,3 @@ function NotePopupContainer(props) {
 }
 
 export default NotePopupContainer;
-

@@ -297,8 +297,25 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     [Feature.ContentEdit]: {
       dataElements: [
         'toolbarGroup-EditText',
+        'contentEditButton',
+        'searchAndReplace',
       ],
     },
+    [Feature.MultiViewerMode]: {
+      fn: () => {
+        store.dispatch(actions.setIsMultiViewerMode(enable));
+      }
+    },
+
+    [Feature.Initials]: {
+      dataElements: [
+        'signatureOptionsDropdown',
+        'savedSignatureAndInitialsTabs',
+      ],
+      fn: () => {
+        store.dispatch(actions.setInitialsMode(enable));
+      }
+    }
   };
 
   if (!Array.isArray(features)) {

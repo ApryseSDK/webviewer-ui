@@ -9,7 +9,7 @@ const startLineStyles = [
   { className: 'linestyle-image shift-alignment', key: 'ClosedArrow', src: 'icon-linestyle-start-arrow-closed' },
   { className: 'linestyle-image shift-alignment', key: 'OpenArrow', src: 'icon-linestyle-start-arrow-open' },
   { className: 'linestyle-image shift-alignment', key: 'ROpenArrow', src: 'icon-linestyle-start-arrow-open-reverse' },
-  { className: 'linestyle-image shift-alignment', key: 'RClosedArrow',  src: 'icon-linestyle-start-arrow-closed-reverse' },
+  { className: 'linestyle-image shift-alignment', key: 'RClosedArrow', src: 'icon-linestyle-start-arrow-closed-reverse' },
   { className: 'linestyle-image shift-alignment', key: 'Butt', src: 'icon-linestyle-start-butt' },
   { className: 'linestyle-image shift-alignment', key: 'Circle', src: 'icon-linestyle-start-circle' },
   { className: 'linestyle-image shift-alignment', key: 'Diamond', src: 'icon-linestyle-start-diamond' },
@@ -31,15 +31,16 @@ const endLineStyles = [
 ];
 
 function LineStyleOptions({ properties, onLineStyleChange }) {
-
-  const [ t ] = useTranslation();
-  const [ selectedStartLineStyle, setSelectedStartLineStyle ] = useState(properties.StartLineStyle);
-  const [ selectedEndLineStyle, setSelectedEndLineStyle ] = useState(properties.EndLineStyle);
-  const [ isMouseInLowerHalfOfWindow, setIsMouseInLowerHalfOfWindow] = useState(false);
+  const [t] = useTranslation();
+  const [selectedStartLineStyle, setSelectedStartLineStyle] = useState(properties.StartLineStyle);
+  const [selectedEndLineStyle, setSelectedEndLineStyle] = useState(properties.EndLineStyle);
+  const [isMouseInLowerHalfOfWindow, setIsMouseInLowerHalfOfWindow] = useState(false);
 
   useEffect(() => {
     window.addEventListener('click', handleMouseClick);
-    return (() => { window.addEventListener('click', handleMouseClick); });
+    return () => {
+      window.removeEventListener('click', handleMouseClick);
+    };
   }, []);
 
   function onClickStartLineStyle(key) {
@@ -53,7 +54,7 @@ function LineStyleOptions({ properties, onLineStyleChange }) {
   }
 
   function handleMouseClick(event) {
-    if(event.clientY > window.innerHeight / 2) {
+    if (event.clientY > window.innerHeight / 2) {
       setIsMouseInLowerHalfOfWindow(true);
     } else {
       setIsMouseInLowerHalfOfWindow(false);
@@ -61,7 +62,7 @@ function LineStyleOptions({ properties, onLineStyleChange }) {
   }
 
   const lineEndingDropdownWidth = 85;
-  const dropdownContainerClass = 'StyleContainer ' + (isMouseInLowerHalfOfWindow ? 'renderUpwards' : '');
+  const dropdownContainerClass = `StyleContainer ${isMouseInLowerHalfOfWindow ? 'renderUpwards' : ''}`;
 
   return (
     <div className="LineStyleOptions">
@@ -87,4 +88,4 @@ function LineStyleOptions({ properties, onLineStyleChange }) {
   );
 }
 
-export default LineStyleOptions
+export default LineStyleOptions;

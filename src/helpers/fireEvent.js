@@ -14,6 +14,6 @@ const fireEvent = (eventName, data) => {
 };
 
 export default fireEvent;
-export const fireError = message => {
+export const fireError = (message) => {
   fireEvent(Events.LOAD_ERROR, message);
 };

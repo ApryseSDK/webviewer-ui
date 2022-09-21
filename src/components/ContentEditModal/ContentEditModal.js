@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Swipeable } from 'react-swipeable';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
@@ -16,7 +16,7 @@ import './quill.scss';
 import './ContentEditModal.scss';
 
 function ContentEditModal() {
-  const [isDisabled, isOpen, isContentEditWarningHidden, currentContentBeingEdited] = useSelector(state => [
+  const [isDisabled, isOpen, isContentEditWarningHidden, currentContentBeingEdited] = useSelector((state) => [
     selectors.isElementDisabled(state, 'contentEditModal'),
     selectors.isElementOpen(state, 'contentEditModal'),
     selectors.isContentEditWarningHidden(state),
@@ -25,7 +25,6 @@ function ContentEditModal() {
 
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const store = useStore();
 
   const [hideWarning, setHideWarning] = useState(true);
   const [showWarning, setShowWarning] = useState(false);
@@ -35,38 +34,42 @@ function ContentEditModal() {
 
     if (showWarning) {
       // this means warning was cancelled
-      core.setToolMode(window.Core.Tools.ToolNames.EDIT);
+      setTimeout(() => {
+        // create a delay in order to avoid race condition between deleting boxes and creating boxes
+        core.getDocumentViewer().getContentEditManager().endContentEditMode();
+        dispatch(actions.setToolbarGroup('toolbarGroup-View'));
+      }, 500);
     }
   };
 
   useEffect(() => {
     const handleToolModeChange = (newTool, oldTool) => {
-      if (newTool instanceof Core.Tools.ContentEditTool) {
+      if (newTool instanceof Core.Tools.ContentEditTool) { // eslint-disable-line no-undef
         setTimeout(() => {
           setShowWarning(!isContentEditWarningHidden);
           dispatch(actions.openElement('contentEditModal'));
         }, 500);
-      } else if (oldTool instanceof Core.Tools.ContentEditTool) {
+      } else if (oldTool instanceof Core.Tools.ContentEditTool) { // eslint-disable-line no-undef
         dispatch(actions.clearCurrentContentBeingEdited());
       }
     };
 
-    const handleDoubleClickContentBox = async (annotation) => {
-      if (annotation.isContentEditPlaceholder() && annotation.getContentEditType() === window.Core.ContentEdit.Types.TEXT) {
-        const content = await instance.Core.ContentEdit.getDocumentContent(annotation);
+    const handleContentEditModeStart = () => {
+      setShowWarning(!isContentEditWarningHidden);
+      dispatch(actions.openElement('contentEditModal'));
+    };
 
-        dispatch(actions.setCurrentContentBeingEdited({ content, annotation }));
-
-        dispatch(actions.openElement('contentEditModal'));
-      }
+    const handleContentEditModeEnd = () => {
+      dispatch(actions.clearCurrentContentBeingEdited());
     };
 
     core.addEventListener('toolModeUpdated', handleToolModeChange);
-    core.addEventListener('annotationDoubleClicked', handleDoubleClickContentBox);
-
+    core.addEventListener('contentEditModeStarted', handleContentEditModeStart);
+    core.addEventListener('contentEditModeEnded', handleContentEditModeEnd);
     return () => {
       core.removeEventListener('toolModeUpdated', handleToolModeChange);
-      core.removeEventListener('annotationDoubleClicked', handleDoubleClickContentBox);
+      core.removeEventListener('contentEditModeStarted', handleContentEditModeStart);
+      core.removeEventListener('contentEditModeEnded', handleContentEditModeEnd);
     };
   }, [isContentEditWarningHidden]);
 
@@ -79,10 +82,11 @@ function ContentEditModal() {
   // save the edit changes
   const saveTextEditResults = () => {
     dispatch(actions.closeElement('contentEditModal'));
+    // eslint-disable-next-line no-undef
     instance.Core.ContentEdit.updateDocumentContent(currentContentBeingEdited.annotation, currentContentBeingEdited.content);
   };
 
-  const richTextEditorChangeHandler = value => {
+  const richTextEditorChangeHandler = (value) => {
     dispatch(actions.updateCurrentContentBeingEdited(value));
   };
 
@@ -101,7 +105,7 @@ function ContentEditModal() {
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
       <FocusTrap locked={isOpen}>
         <div className={modalClass} data-element="contentEditModal" onMouseDown={closeModal}>
-          <div className="container" onMouseDown={e => e.stopPropagation()}>
+          <div className="container" onMouseDown={(e) => e.stopPropagation()}>
             <div className="swipe-indicator" />
             <div className="header-container">
               <div className="header">
@@ -125,7 +129,7 @@ function ContentEditModal() {
                 <Choice
                   type="checkbox"
                   checked={hideWarning}
-                  label={t(`message.doNotShowAgain`)}
+                  label={t('message.doNotShowAgain')}
                   onChange={() => {
                     setHideWarning(!hideWarning);
                   }}
@@ -143,7 +147,7 @@ function ContentEditModal() {
 
             <div className="editing-controls footer-container">
               {showWarning ? (
-                <button className="button text-edit-proceed-button" onClick={() => closeWarningModal()}>
+                <button className="button text-edit-proceed-button" onClick={closeWarningModal}>
                   {t('action.proceed')}
                 </button>
               ) : (

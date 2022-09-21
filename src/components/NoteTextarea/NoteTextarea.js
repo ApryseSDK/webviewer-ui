@@ -22,7 +22,7 @@ const propTypes = {
 
 const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   const [userData, canSubmitByEnter] = useSelector(
-    state => [
+    (state) => [
       selectors.getUserData(state),
       selectors.isNoteSubmissionWithEnterEnabled(state),
     ],
@@ -47,7 +47,7 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     // eslint-disable-next-line
   }, [props.value, resize]);
 
-  const handleKeyDown = e => {
+  const handleKeyDown = (e) => {
     const enterKey = 13;
     const isSubmittingByEnter = canSubmitByEnter && e.which === enterKey;
     const isSubmittingByCtrlEnter = (e.metaKey || e.ctrlKey) && e.which === enterKey;
@@ -64,24 +64,23 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     const isEmpty = editor && editor.getText().trim() === '' && content === '<p><br></p>';
     let value = '';
 
-    if(!isEmpty) {
+    if (!isEmpty) {
       value = content.target ? content.target.value : content;
       props.onChange(value);
     } else {
-      props.onChange(undefined);
+      props.onChange('');
     }
-
   };
 
   const textareaProps = {
     ...props,
-    ref: el => {
+    ref: (el) => {
       textareaRef.current = el;
       forwardedRef(el);
     },
     onChange: handleChange,
     onKeyDown: handleKeyDown,
-    userData: userData,
+    userData,
   };
 
   return (
@@ -91,6 +90,7 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   );
 });
 
+NoteTextarea.displayName = 'NoteTextarea';
 NoteTextarea.propTypes = propTypes;
 
 export default NoteTextarea;

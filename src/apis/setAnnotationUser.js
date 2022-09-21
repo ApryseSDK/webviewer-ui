@@ -1,5 +1,5 @@
 import core from 'core';
 
-export default userName => {
+export default (userName) => {
   core.setCurrentUser(userName);
 };

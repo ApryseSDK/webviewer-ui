@@ -1,7 +1,7 @@
 import core from 'core';
 import { workerTypes } from 'constants/types';
 
-export default store => {
+export default (store) => {
   const state = store.getState();
   let { serverUrl } = state.advanced;
   const { serverUrlHeaders } = state.advanced;
@@ -38,14 +38,14 @@ export default store => {
       headers: serverUrlHeaders,
       credentials: 'include'
     })
-      .then(response => {
+      .then((response) => {
         if (response.ok) {
           return response.text();
         }
 
         return Promise.reject(response);
       })
-      .then(data => {
+      .then((data) => {
         if (data !== null && data !== undefined) {
           window.instance.UI.loadedFromServer = true;
           callback(data);
@@ -54,7 +54,7 @@ export default store => {
           callback(originalData);
         }
       })
-      .catch(e => {
+      .catch((e) => {
         window.instance.UI.serverFailed = true;
         console.warn(
           `Error ${e.status}: Annotations could not be loaded from the server.`,
@@ -70,9 +70,10 @@ export default store => {
     },
   );
   core.addEventListener('documentLoaded', function() {
-    if (window.documentViewer.getDocument().getType() === workerTypes.OFFICE) {
+    const documentViewer = core.getDocumentViewer();
+    if (documentViewer.getDocument().getType() === workerTypes.OFFICE) {
       getAnnotsFromServer(null, function(data) {
-        window.documentViewer.getAnnotationManager().importAnnotations(data);
+        documentViewer.getAnnotationManager().importAnnotations(data);
       });
     }
   });

@@ -13,4 +13,4 @@ WebViewer(...)
 
 import extractPagesWithAnnotations from '../helpers/extractPagesWithAnnotations';
 
-export default pageNumbersToExtract => extractPagesWithAnnotations(pageNumbersToExtract);
+export default (pageNumbersToExtract) => extractPagesWithAnnotations(pageNumbersToExtract);

@@ -35,6 +35,6 @@
 
 import actions from 'actions';
 
-export default store => isReplyDisabledFunc => {
+export default (store) => (isReplyDisabledFunc) => {
   store.dispatch(actions.disableReplyForAnnotations(isReplyDisabledFunc));
 };

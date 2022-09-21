@@ -12,6 +12,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => () => {
+export default (store) => () => {
   return store.dispatch(actions.enableFadePageNavigationComponent());
 };

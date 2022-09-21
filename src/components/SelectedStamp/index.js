@@ -1,1 +1,1 @@
-export { default as SelectedStamp } from './SelectedStamp'; 
+export { default as SelectedStamp } from './SelectedStamp';

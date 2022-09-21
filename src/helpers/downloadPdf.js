@@ -6,9 +6,10 @@ import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import actions from 'actions';
 
-export default async (dispatch, options = {}) => {
+export default async (dispatch, options = {}, documentViewerKey = 1) => {
+  let doc = core.getDocument(documentViewerKey);
   const {
-    filename = core.getDocument()?.getFilename() || 'document',
+    filename = doc?.getFilename() || 'document',
     includeAnnotations = true,
     externalURL,
     useDisplayAuthor = false,
@@ -25,11 +26,11 @@ export default async (dispatch, options = {}) => {
     if (options.documentToBeDownloaded) {
       annotationsPromise = Promise.resolve((await options.documentToBeDownloaded.extractXFDF()).xfdfString);
     } else {
-      annotationsPromise = core.exportAnnotations({ useDisplayAuthor });
+      annotationsPromise = core.exportAnnotations({ useDisplayAuthor }, documentViewerKey);
     }
   }
 
-  return annotationsPromise.then(xfdfString => {
+  return annotationsPromise.then((xfdfString) => {
     options.xfdfString = options.xfdfString || xfdfString;
     if (!includeAnnotations) {
       options.includeAnnotations = false;
@@ -43,10 +44,9 @@ export default async (dispatch, options = {}) => {
     };
 
     const downloadName =
-      (core.getDocument()?.getType() === 'video' || core.getDocument()?.getType() === 'audio')
+      (doc?.getType() === 'video' || doc?.getType() === 'audio')
         ? filename
         : getDownloadFilename(filename, '.pdf');
-    let doc = core.getDocument();
 
     // Cloning the options object to be able to delete the customDocument property if needed.
     // doc.getFileData(options) will throw an error if this customDocument property is passed in
@@ -71,7 +71,7 @@ export default async (dispatch, options = {}) => {
       fireEvent(Events.FILE_DOWNLOADED);
     } else {
       return doc.getFileData(clonedOptions).then(
-        data => {
+        (data) => {
           const arr = new Uint8Array(data);
           let file;
 
@@ -86,13 +86,13 @@ export default async (dispatch, options = {}) => {
           fireEvent(Events.FINISHED_SAVING_PDF);
           fireEvent(Events.FILE_DOWNLOADED);
         },
-        error => {
+        (error) => {
           dispatch(actions.closeElement('loadingModal'));
           throw new Error(error.message);
         },
       );
     }
-  }).catch(error => {
+  }).catch((error) => {
     console.warn(error);
     dispatch(actions.closeElement('loadingModal'));
   });

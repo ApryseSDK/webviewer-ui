@@ -1,10 +1,11 @@
 @import '../../constants/styles';
 @import '../../constants/overlay';
+@import '../../constants/tabs.scss';
 
 .add-btn {
   border-radius: 4px;
-  border: 1px solid var(--icon-color);
-  color: var(--text-color);
+  border: 1px solid var(--primary-button);
+  color: var(--ribbon-active-color);
   cursor: pointer;
 
   display: flex;
@@ -33,6 +34,7 @@
   @include mobile {
     justify-content: center;
   }
+
   .icon {
     @include button-reset;
     display: flex;
@@ -55,6 +57,19 @@
   max-height: 300px;
   overflow-y: scroll;
 
+  @extend %tab-panel;
+
+  .tab-list {
+    font-size: 14px; // hack for extra area in the tab list. 13px looks bad.
+    margin: 0px 0px 12px 0px;
+
+    .tab-options-button {
+      @include button-reset;
+    }
+  }
+
+  @extend %tab-list;
+
   @include mobile {
     width: auto;
     padding: 0;
@@ -72,6 +87,8 @@
 
   .add-btn {
     margin-bottom: 8px;
+    width: 100%;
+    margin-right: 0px;
 
     @include mobile {
       margin: 0;
@@ -79,5 +96,3 @@
     }
   }
 }
-
-

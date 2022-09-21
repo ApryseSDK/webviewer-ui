@@ -13,7 +13,7 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => dataElements => {
+export default (store) => (dataElements) => {
   const dataElementArray = castStringToArray(dataElements);
   store.dispatch(actions.closeElements(dataElementArray));
 };

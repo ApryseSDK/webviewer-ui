@@ -34,7 +34,7 @@
 import actions from 'actions';
 import selectors from 'selectors';
 
-export default store => Object.create(MultiPageManipulationControls).initialize(store);
+export default (store) => Object.create(MultiPageManipulationControls).initialize(store);
 
 const MultiPageManipulationControls = {
   initialize(store) {
@@ -186,7 +186,7 @@ WebViewer(...)
       index = -1;
     } else {
       const state = this.store.getState();
-      index = selectors.getMultiPageManipulationControlsItems(state).findIndex(obj => obj.dataElement === dataElement);
+      index = selectors.getMultiPageManipulationControlsItems(state).findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;
@@ -198,7 +198,7 @@ WebViewer(...)
       index = -1;
     } else {
       const state = this.store.getState();
-      index = selectors.getMultiPageManipulationControlsItemsSmall(state).findIndex(obj => obj.dataElement === dataElement);
+      index = selectors.getMultiPageManipulationControlsItemsSmall(state).findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;
@@ -210,7 +210,7 @@ WebViewer(...)
       index = -1;
     } else {
       const state = this.store.getState();
-      index = selectors.getMultiPageManipulationControlsItemsLarge(state).findIndex(obj => obj.dataElement === dataElement);
+      index = selectors.getMultiPageManipulationControlsItemsLarge(state).findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;

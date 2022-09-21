@@ -1,4 +1,6 @@
+import core from 'core';
+
 /**
  * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getCurrentPage__anchor
  */
-export default () => window.documentViewer.getCurrentPage();
+export default (documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getCurrentPage();

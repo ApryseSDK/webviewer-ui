@@ -13,7 +13,7 @@ WebViewer(...)
   });
  */
 
-export default store => useHighContrastMode => {
+export default (store) => (useHighContrastMode) => {
   console.warn('\'useHighContrastMode\' is deprecated since version 8.0. Use enableHighContrastMode or disableHighContrastMode Instead');
   store.dispatch(actions.setHighContrastMode(useHighContrastMode));
 };

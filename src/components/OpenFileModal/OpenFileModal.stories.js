@@ -1,5 +1,5 @@
 import React from 'react';
-import OpenFileModal from './OpenFileModal'
+import OpenFileModal from './OpenFileModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -12,7 +12,7 @@ const initialState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
-    tab: { pageReplacementModal: 'urlInputPanelButton' }
+    tab: { openFileModal: 'urlInputPanelButton' }
   }
 };
 

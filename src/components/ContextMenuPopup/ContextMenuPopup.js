@@ -14,7 +14,7 @@ import './ContextMenuPopup.scss';
 
 const ContextMenuPopup = () => {
   const [isOpen, isDisabled, popupItems] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementOpen(state, 'contextMenuPopup'),
       selectors.isElementDisabled(state, 'contextMenuPopup'),
       selectors.getPopupItems(state, 'contextMenuPopup'),
@@ -38,15 +38,15 @@ const ContextMenuPopup = () => {
   }, [dispatch, isOpen]);
 
   useEffect(() => {
-    const onContextMenu = e => {
+    const onContextMenu = (e) => {
       const { tagName } = e.target;
       const clickedOnInput = tagName === 'INPUT';
       const clickedOnTextarea = tagName === 'TEXTAREA';
-      const clickedOnFreeTextarea = (
+      const clickedOnFreeTextarea = !!((
         e.target.className === 'ql-editor'
         || e.target.parentNode.className === 'ql-editor'
         || e.target.parentNode.parentNode.className === 'ql-editor'
-      ) ? true : false;
+      ));
 
       const clickedOnDocumentContainer = document
         .querySelector('.DocumentContainer')
@@ -121,8 +121,7 @@ const ContextMenuPopup = () => {
           dataElement="highlightToolButton"
           title="annotation.highlight"
           img="icon-tool-highlight"
-          onClick={() =>
-            setToolModeAndGroup(store, 'AnnotationCreateTextHighlight')
+          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateTextHighlight')
           }
         />
         <ActionButton
@@ -142,6 +141,18 @@ const ContextMenuPopup = () => {
           title="annotation.freetext"
           img="icon-tool-text-free-text"
           onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeText')}
+        />
+        <ActionButton
+          dataElement="markInsertTextToolButton"
+          title="annotation.markInsertText"
+          img="ic-insert text"
+          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateMarkInsertText')}
+        />
+        <ActionButton
+          dataElement="markReplaceTextToolButton"
+          title="annotation.markReplacetext"
+          img="ic-replace text"
+          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateMarkReplaceText')}
         />
       </CustomizablePopup>
     </div>

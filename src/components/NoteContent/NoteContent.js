@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -6,26 +6,29 @@ import Autolinker from 'autolinker';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import isString from 'lodash/isString';
 
 import NoteTextarea from 'components/NoteTextarea';
 import NoteContext from 'components/Note/Context';
+import NoteHeader from 'components/NoteHeader';
+import NoteTextPreview from 'components/NoteTextPreview';
+import ReplyAttachmentList from 'components/ReplyAttachmentList';
 
-import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
 import setReactQuillContent from 'helpers/setReactQuillContent';
+import { isDarkColorHex } from 'helpers/color';
+import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
+
+import core from 'core';
 import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
 import Theme from 'constants/theme';
-import { isDarkColorHex } from 'helpers/color';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
 
 import './NoteContent.scss';
-import NoteHeader from 'components/NoteHeader';
-import NoteTextPreview from 'src/components/NoteTextPreview';
-import isString from 'lodash/isString';
 
 dayjs.extend(LocalizedFormat);
 
@@ -34,7 +37,6 @@ const propTypes = {
   isEditing: PropTypes.bool,
   setIsEditing: PropTypes.func,
   noteIndex: PropTypes.number,
-  onTextChange: PropTypes.func,
   isUnread: PropTypes.bool,
   isNonReplyNoteRead: PropTypes.bool,
   onReplyClicked: PropTypes.func,
@@ -49,7 +51,6 @@ const NoteContent = ({
   isEditing,
   setIsEditing,
   noteIndex,
-  onTextChange,
   isUnread,
   isNonReplyNoteRead,
   onReplyClicked,
@@ -81,14 +82,44 @@ const NoteContent = ({
     shallowEqual,
   );
 
-  const { isSelected, searchInput, resize, pendingEditTextMap, onTopNoteContentClicked, sortStrategy } = useContext(
-    NoteContext,
-  );
+  const {
+    isSelected,
+    searchInput,
+    resize,
+    pendingEditTextMap,
+    onTopNoteContentClicked,
+    sortStrategy,
+    showAnnotationNumbering,
+    setPendingEditText
+  } = useContext(NoteContext);
 
   const dispatch = useDispatch();
+  const [t] = useTranslation();
+
   const isReply = annotation.isReply();
 
-  const [t] = useTranslation();
+  const [attachments, setAttachments] = useState([]);
+
+  useEffect(() => {
+    setAttachments(annotation.getAttachments());
+  }, [annotation]);
+
+  useEffect(() => {
+    const annotationChangedListener = (annotations, action) => {
+      if (action === 'modify') {
+        annotations.forEach((annot) => {
+          if (annot.Id === annotation.Id) {
+            setAttachments(annot.getAttachments());
+          }
+        });
+      }
+    };
+    core.addEventListener('annotationChanged', annotationChangedListener);
+
+    return () => {
+      core.removeEventListener('annotationChanged', annotationChangedListener);
+    };
+  }, [annotation]);
 
   useDidUpdate(() => {
     if (!isEditing) {
@@ -278,28 +309,33 @@ const NoteContent = ({
       }
 
       return (
-        <React.Fragment>
-          {isEditing && isSelected ? (
+        <>
+          {(isEditing && isSelected) ? (
             <ContentArea
               annotation={annotation}
               noteIndex={noteIndex}
               setIsEditing={setIsEditing}
-              isEditing={isEditing}
               textAreaValue={textAreaValue}
-              onTextAreaValueChange={onTextChange}
+              onTextAreaValueChange={setPendingEditText}
               pendingText={pendingEditTextMap[annotation.Id]}
             />
           ) : (
             contentsToRender && (
               <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked}>
+                {isReply && (attachments.length > 0) && (
+                  <ReplyAttachmentList
+                    files={attachments}
+                    isEditing={false}
+                  />
+                )}
                 {renderContents(contentsToRender, richTextStyle, contentStyle)}
               </div>
             )
           )}
-        </React.Fragment>
+        </>
       );
     },
-    [annotation, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, onTextChange]
+    [annotation, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, setPendingEditText, attachments]
   );
 
   const text = annotation.getCustomData('trn-annot-preview');
@@ -353,6 +389,7 @@ const NoteContent = ({
           isMultiSelected={isMultiSelected}
           isMultiSelectMode={isMultiSelectMode}
           isGroupMember={isGroupMember}
+          showAnnotationNumbering={showAnnotationNumbering}
         />
       );
     }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember]
@@ -376,7 +413,6 @@ const ContentArea = ({
   annotation,
   noteIndex,
   setIsEditing,
-  isEditing,
   textAreaValue,
   onTextAreaValueChange,
   pendingText
@@ -393,6 +429,13 @@ const ContentArea = ({
   const [t] = useTranslation();
   const textareaRef = useRef();
   const isReply = annotation.isReply();
+  const {
+    setCurAnnotId,
+    pendingAttachmentMap,
+    deleteAttachment,
+    clearAttachments,
+    addAttachments
+  } = useContext(NoteContext);
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
@@ -414,7 +457,7 @@ const ContentArea = ({
           textareaRef.current.focus();
 
           const annotRichTextStyle = annotation.getRichTextStyle();
-          if (annotRichTextStyle && isEditing) {
+          if (annotRichTextStyle) {
             setReactQuillContent(annotation);
           }
         }
@@ -425,6 +468,14 @@ const ContentArea = ({
       annotation.editor.setSelection(textLength, textLength);
     }
   }, [isNotesPanelOpen]);
+
+  useEffect(() => {
+    if (isReply && pendingAttachments.length === 0) {
+      // Load attachments
+      const attachments = annotation.getAttachments();
+      addAttachments(annotation.Id, attachments);
+    }
+  }, []);
 
   const setContents = (e) => {
     // prevent the textarea from blurring out which will unmount these two buttons
@@ -446,6 +497,8 @@ const ContentArea = ({
       core.setNoteContents(annotation, textAreaValue);
     }
 
+    setAnnotationAttachments(annotation, pendingAttachmentMap[annotation.Id]);
+
     if (annotation instanceof window.Annotations.FreeTextAnnotation) {
       core.drawAnnotationsFromList([annotation]);
     }
@@ -455,12 +508,29 @@ const ContentArea = ({
     if (textAreaValue !== '') {
       onTextAreaValueChange(undefined, annotation.Id);
     }
+    clearAttachments(annotation.Id);
+  };
+
+  const onBlur = () => {
+    setCurAnnotId(undefined);
+  };
+
+  const onFocus = () => {
+    setCurAnnotId(annotation.Id);
   };
 
   const contentClassName = classNames('edit-content', { 'reply-content': isReply });
+  const pendingAttachments = pendingAttachmentMap[annotation.Id] || [];
 
   return (
     <div className={contentClassName}>
+      {isReply && pendingAttachments.length > 0 && (
+        <ReplyAttachmentList
+          files={pendingAttachments}
+          isEditing={true}
+          fileDeleted={(file) => deleteAttachment(annotation.Id, file)}
+        />
+      )}
       <NoteTextarea
         ref={(el) => {
           textareaRef.current = el;
@@ -468,8 +538,9 @@ const ContentArea = ({
         value={textAreaValue}
         onChange={(value) => onTextAreaValueChange(value, annotation.Id)}
         onSubmit={setContents}
-        placeholder={`${t('action.comment')}...`}
-        aria-label={`${t('action.comment')}...`}
+        isReply={isReply}
+        onBlur={onBlur}
+        onFocus={onFocus}
       />
       <div className="edit-buttons">
         <button
@@ -479,6 +550,7 @@ const ContentArea = ({
             setIsEditing(false, noteIndex);
             // Clear pending text
             onTextAreaValueChange(undefined, annotation.Id);
+            clearAttachments(annotation.Id);
           }}
         >
           {t('action.cancel')}

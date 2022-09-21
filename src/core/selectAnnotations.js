@@ -1,8 +1,10 @@
+import core from 'core';
+
 /**
  * https://www.pdftron.com/api/web/Core.AnnotationManager.html#selectAnnotations__anchor
  * @fires annotationSelected on AnnotationManager
  * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:annotationSelected__anchor
  */
-export default annotations => {
-  window.documentViewer.getAnnotationManager().selectAnnotations(annotations);
+export default (annotations, documentViewerKey = 1) => {
+  core.getDocumentViewer(documentViewerKey).getAnnotationManager().selectAnnotations(annotations);
 };

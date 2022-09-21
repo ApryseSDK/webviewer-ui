@@ -1,3 +1,5 @@
+import core from 'core';
+
 /**
  * https://www.pdftron.com/api/web/Core.AnnotationManager.html#deleteAnnotations__anchor
  * @fires annotationSelected on AnnotationManager
@@ -8,6 +10,6 @@
  * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:annotationChanged__anchor
  * @fires notify on DocumentViewer if requires delete notification
  */
-export default (...args) => {
-  window.documentViewer.getAnnotationManager().deleteAnnotations(...args);
+export default (annotation, options = undefined, documentViewerKey = 1) => {
+  core.getDocumentViewer(documentViewerKey).getAnnotationManager().deleteAnnotations(annotation, options);
 };
