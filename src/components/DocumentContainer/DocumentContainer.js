@@ -148,7 +148,7 @@ class DocumentContainer extends React.PureComponent {
       const shouldGoUp = scrollingUp && reachedTop && currentPage > 1;
       const shouldGoDown = scrollingDown && reachedBottom && currentPage < totalPages;
 
-      const shouldPreventParentScrolling = (e.deltaY < 0 && currentPage > 1) || (e.deltaY > 0 && currentPage < totalPages);
+      const shouldPreventParentScrolling = (scrollHeight === clientHeight) && ((e.deltaY < 0 && currentPage > 1) || (e.deltaY > 0 && currentPage < totalPages));
 
       if (shouldPreventParentScrolling) {
         e.preventDefault();
