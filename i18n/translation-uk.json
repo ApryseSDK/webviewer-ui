@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Додати абзац",
     "add": "Додати",
     "apply": "Застосувати",
     "applyAll": "Застосувати все",
@@ -94,7 +95,9 @@
     "addMark": "Додайте позначку",
     "viewFile": "Переглянути файл",
     "switchLanguage": "Мову",
-    "multiReplyAnnotations": "Відповідь на вибрані анотації ({{count}})"
+    "multiReplyAnnotations": "Відповідь на вибрані анотації ({{count}})",
+    "comparePages": "Порівняти сторінки",
+    "startComparison": "Почати порівняння"
   },
   "annotation": {
     "areaMeasurement": "Площа",
@@ -115,6 +118,8 @@
     "freehand": "Вільна рука",
     "freeHandHighlight": "Підсвічування вільної руки",
     "freetext": "Безкоштовний текст",
+    "markInsertText": "Вставити текст",
+    "markReplaceText": "Замінити текст",
     "highlight": "Виділіть",
     "image": "Зображення",
     "line": "Лінія",
@@ -144,7 +149,8 @@
     "other": "Інший",
     "3D": "3D",
     "sound": "Звук",
-    "changeView": "Змінити вигляд"
+    "changeView": "Змінити вигляд",
+    "newImage": "Нове зображення"
   },
   "rubberStamp": {
     "Approved": "Затверджено",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "Переглянути всі анотації",
       "close": "Закрити всі анотації"
-    }
+    },
+    "comparePanel": "Панель порівняння"
   },
   "message": {
     "toolsOverlayNoPresets": "Без попередніх налаштувань",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "Існуючі анотації можуть не збігатися з текстом після його редагування.",
     "changesCannotBeUndone": "Будь-які внесені зміни не можна скасувати.",
     "doNotShowAgain": "Не показуйте мені цього більше",
+    "doNotAskAgain": "Не запитуй знову",
     "enterReplacementText": "Введіть текст, який потрібно замінити",
     "sortBy": "Сортувати",
     "emptyCustomStampInput": "Текст штампа не може бути порожнім",
@@ -288,7 +296,8 @@
       "underline": "Підкресли",
       "squiggly": "Хвиляста",
       "3D": "3D",
-      "other": "Інший"
+      "other": "Інший",
+      "initials": "Ініціали"
     },
     "notesOrder": {
       "dropdownLabel": "Список порядку сортування",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "Вставити",
       "toolbarGroup-Measure": "Виміряти",
       "toolbarGroup-Edit": "Редагувати",
+      "toolbarGroup-EditText": "Редагувати текст",
       "toolbarGroup-FillAndSign": "Заповніть і підпишіть",
       "toolbarGroup-Forms": "Форми",
       "toolbarGroup-Redact": "Редагувати"
@@ -326,7 +336,6 @@
       "pageTransition": "Перехід сторінки"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Виберіть кілька сторінок",
       "closeTooltip": "Закрити множинний вибір"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Чутливий до регістру",
       "wholeWordOnly": "Ціле слово",
-      "wildcard": "Підстановка"
+      "wildcard": "Підстановка",
+      "replace": "Замінити",
+      "replaceAll": "Замінити все",
+      "replaceText": "Замінити текст",
+      "confirmMessageReplaceAll": "Ви впевнені, що хочете замінити весь текст?",
+      "confirmMessageReplaceOne": "Ви впевнені, що хочете замінити цей текст?",
+      "moreOptions": "Більше варіантів",
+      "lessOptions": "Менше варіантів",
+      "confirm": "Підтвердьте"
     },
     "toolsOverlay": {
       "currentStamp": "Актуальна марка",
@@ -392,14 +409,20 @@
       "addStamp": "Додати новий штамп"
     },
     "signatureOverlay": {
-      "addSignature": "Додати новий підпис"
+      "addSignature": "Додати новий підпис",
+      "addSignatureOrInitials": "Підпис/Ініціали"
     },
     "signatureModal": {
       "modalName": "Створити новий підпис",
       "dragAndDrop": "Перетягніть сюди своє зображення",
       "or": "Або",
       "pickImage": "Виберіть підпис",
-      "selectImage": "Виберіть тут своє зображення"
+      "selectImage": "Виберіть тут своє зображення",
+      "typeSignature": "Тип Підпис*",
+      "typeInitial": "Введіть ініціали*",
+      "drawSignature": "Намалювати підпис*",
+      "drawInitial": "Намалювати ініціали*",
+      "pickInitialsFile": "Виберіть Ініціали"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Перетягніть свій файл сюди",
@@ -455,7 +478,8 @@
         "preset": "Попередньо встановлені",
         "paperUnits": "Паперові одиниці",
         "displayUnits": "Блоки відображення",
-        "fractionUnitsTooltip": "Одиниці частки застосовуються лише до in та ft-in"
+        "fractionUnitsTooltip": "Одиниці частки застосовуються лише до in та ft-in",
+        "incorrectSyntax": "Неправильний синтаксис"
       },
       "scaleOverlay": {
         "addNewScale": "Додати новий масштаб",
@@ -473,7 +497,10 @@
         "deletionIs": "Видалення є",
         "irreversible": "незворотні",
         "willDeleteMeasurement": "і видалить пов’язані вимірювання.",
-        "confirmDelete": "Ви впевнені, що хочете видалити цю шкалу?"
+        "confirmDelete": "Ви впевнені, що хочете видалити цю шкалу?",
+        "ifChangeScale": "Якщо ви змінюєте масштаб для вибраного вимірювання або інструменту, масштабуйте",
+        "notUsedWillDelete": " більше не використовуватимуться для вимірювань чи інструментів і будуть видалені. Видалення незворотне.",
+        "ifToContinue": "Ви впевнені, що бажаєте продовжити?"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "Вкажіть сторінки",
       "odd": "Тільки непарні сторінки",
       "even": "Лише парні сторінки",
-      "header": "Позначте Редагування сторінок",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Позначте Редагування сторінок"
     },
     "lineStyleOptions": {
       "title": "Стиль"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "Видалити анотації?",
       "message": "Видалення видалить усі коментарі, відповіді та групування, і цю дію неможливо скасувати.\n\n Ви впевнені, що хочете видалити ці анотації?"
+    },
+    "closeFile": {
+      "title": "Закрити без завантаження?",
+      "message": "У цей документ внесено зміни. Ви впевнені, що бажаєте закрити його, не завантажуючи свою роботу? Ви не можете скасувати цю дію.",
+      "rejectDownloadButton": "Закрити без завантаження"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "Параметри",
       "radioGroups": "Перемикач з однаковою назвою поля належатиме до тієї ж групи.",
       "nameRequired": "Ім’я поля обов’язкове",
+      "fieldIndicator": "Індикатори полів",
+      "documentFieldIndicator": "Індикатори полів документа",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Вставте текст тут",
+        "CheckBoxFormField": "Перевірте",
+        "RadioButtonFormField": "Заповнити",
+        "ListBoxFormField": "Виберіть",
+        "ComboBoxFormField": "Виберіть",
+        "SignatureFormField": {
+          "fullSignature": "Підпишіть тут",
+          "initialsSignature": "Ініціал тут"
+        }
+      },
       "size": "Розмір",
       "width": "Ширина",
       "height": "Висота",
@@ -878,6 +922,10 @@
       "cancelMessage": "Ви впевнені, що хочете скасувати обрізання всіх вибраних сторінок?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Абзац",
+    "text": "текст"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Почніть редагувати, позначивши текст, регіони, сторінки або здійснивши пошук.",
     "redactionSearchPlaceholder": "Додайте за допомогою пошуку за ключовими словами або шаблонів",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Властивості",
     "miscValuesHeader": "Усі",
-    "emptyPanelMessage": "Виберіть елемент, щоб переглянути його властивості"
+    "emptyPanelMessage": "Виберіть елемент, щоб переглянути його властивості."
   },
   "languageModal": {
     "selectLanguage": "Оберіть мову"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Перетягніть свій файл сюди, щоб порівняти",
+    "or": "Або",
+    "browse": "Огляд файлів",
+    "startSync": "Запустіть синхронізацію",
+    "stopSync": "Зупинити синхронізацію",
+    "closeDocument": "Закрити документ",
+    "save": "Зберегти документ",
+    "comparePanel": {
+      "Find": "Знайти в документі",
+      "changesList": "Список змін",
+      "change": "Зміна",
+      "old": "Старий",
+      "new": "новий",
+      "page": "Сторінка"
+    }
   }
 }

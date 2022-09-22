@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "添加段落",
     "add": "添加",
     "apply": "套用",
     "applyAll": "全部套用",
@@ -94,7 +95,9 @@
     "addMark": "添加標記",
     "viewFile": "查看文件",
     "switchLanguage": "語言",
-    "multiReplyAnnotations": "回复所選註釋 ({{count}})"
+    "multiReplyAnnotations": "回复所選註釋 ({{count}})",
+    "comparePages": "比較頁面",
+    "startComparison": "開始比較"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -115,6 +118,8 @@
     "freehand": "手繪",
     "freeHandHighlight": "自由手精選",
     "freetext": "任意文字",
+    "markInsertText": "插入文本",
+    "markReplaceText": "替換文本",
     "highlight": "強調顯示",
     "image": "圖像",
     "line": "線條",
@@ -144,7 +149,8 @@
     "other": "其他",
     "3D": "3D",
     "sound": "聲音",
-    "changeView": "更改視圖"
+    "changeView": "更改視圖",
+    "newImage": "新圖片"
   },
   "rubberStamp": {
     "Approved": "已批准",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "查看所有註釋",
       "close": "關閉所有註釋"
-    }
+    },
+    "comparePanel": "比較面板"
   },
   "message": {
     "toolsOverlayNoPresets": "無預設",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "現有註釋在編輯後可能與文本不匹配。",
     "changesCannotBeUndone": "所做的任何更改都無法撤消。",
     "doNotShowAgain": "別再給我看這個了",
+    "doNotAskAgain": "不要再問了",
     "enterReplacementText": "輸入要替換的文本",
     "sortBy": "排序方式",
     "emptyCustomStampInput": "印章文字不能為空",
@@ -288,7 +296,8 @@
       "underline": "強調",
       "squiggly": "彎彎曲曲的",
       "3D": "3D",
-      "other": "其他"
+      "other": "其他",
+      "initials": "縮寫"
     },
     "notesOrder": {
       "dropdownLabel": "排序訂單清單",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "插",
       "toolbarGroup-Measure": "測量",
       "toolbarGroup-Edit": "編輯",
+      "toolbarGroup-EditText": "編輯文本",
       "toolbarGroup-FillAndSign": "填寫並簽名",
       "toolbarGroup-Forms": "形式",
       "toolbarGroup-Redact": "纂"
@@ -326,7 +336,6 @@
       "pageTransition": "頁面切換"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "選擇多個頁面",
       "closeTooltip": "關閉多選"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "區分大小寫",
       "wholeWordOnly": "全字相符",
-      "wildcard": "通配符"
+      "wildcard": "通配符",
+      "replace": "代替",
+      "replaceAll": "全部替換",
+      "replaceText": "替換文本",
+      "confirmMessageReplaceAll": "您確定要替換所有文本嗎？",
+      "confirmMessageReplaceOne": "您確定要替換此文本嗎？",
+      "moreOptions": "更多選擇",
+      "lessOptions": "更少的選擇",
+      "confirm": "確認"
     },
     "toolsOverlay": {
       "currentStamp": "目前的郵票",
@@ -392,14 +409,20 @@
       "addStamp": "添加新郵票"
     },
     "signatureOverlay": {
-      "addSignature": "新增簽名"
+      "addSignature": "新增簽名",
+      "addSignatureOrInitials": "簽名/姓名縮寫"
     },
     "signatureModal": {
       "modalName": "創建新簽名",
       "dragAndDrop": "將圖片拖放到此處",
       "or": "要么",
       "pickImage": "選擇簽名圖像",
-      "selectImage": "在此處選擇您的圖片"
+      "selectImage": "在此處選擇您的圖片",
+      "typeSignature": "類型簽名*",
+      "typeInitial": "類型首字母*",
+      "drawSignature": "繪製簽名*",
+      "drawInitial": "畫首字母*",
+      "pickInitialsFile": "選擇縮寫"
     },
     "pageReplacementModal": {
       "dragAndDrop": "將您的文件拖放到此處",
@@ -455,7 +478,8 @@
         "preset": "預設",
         "paperUnits": "紙張單位",
         "displayUnits": "顯示單元",
-        "fractionUnitsTooltip": "分數單位僅適用於 in 和 ft-in"
+        "fractionUnitsTooltip": "分數單位僅適用於 in 和 ft-in",
+        "incorrectSyntax": "語法不正確"
       },
       "scaleOverlay": {
         "addNewScale": "添加新比例",
@@ -473,7 +497,10 @@
         "deletionIs": "刪除是",
         "irreversible": "不可逆轉",
         "willDeleteMeasurement": "並將刪除相關的測量。",
-        "confirmDelete": "確定要刪除此比例嗎？"
+        "confirmDelete": "確定要刪除此比例嗎？",
+        "ifChangeScale": "如果您更改所選測量或工具的比例，請按比例",
+        "notUsedWillDelete": " 將不再被任何測量或工具使用，並將被刪除。刪除是不可逆的。",
+        "ifToContinue": "您確定要繼續嗎？"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "指定頁面",
       "odd": "僅奇數頁",
       "even": "僅偶數頁",
-      "header": "標記頁面密文",
-      "specifyPlaceholder": "1、3、5-10"
+      "header": "標記頁面密文"
     },
     "lineStyleOptions": {
       "title": "風格"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "刪除註釋？",
       "message": "刪除將刪除所有評論、回復和分組，並且無法撤消。\n\n 您確定要刪除這些註釋嗎？"
+    },
+    "closeFile": {
+      "title": "不下載就關閉？",
+      "message": "此文檔有更改，您確定要關閉它而不下載您的工作嗎？您無法撤消此操作。",
+      "rejectDownloadButton": "關閉而不下載"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "選項",
       "radioGroups": "具有相同字段名稱的單選按鈕將屬於同一分組。",
       "nameRequired": "字段名稱為必填項",
+      "fieldIndicator": "現場指標",
+      "documentFieldIndicator": "文檔字段指示符",
+      "indicatorPlaceHolders": {
+        "TextFormField": "在此處插入文本",
+        "CheckBoxFormField": "查看",
+        "RadioButtonFormField": "充滿",
+        "ListBoxFormField": "選擇",
+        "ComboBoxFormField": "選擇",
+        "SignatureFormField": {
+          "fullSignature": "在這裡簽名",
+          "initialsSignature": "初始在這裡"
+        }
+      },
       "size": "尺寸",
       "width": "寬度",
       "height": "高度",
@@ -878,6 +922,10 @@
       "cancelMessage": "您確定要取消裁剪所有選定的頁面嗎？"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "段落",
+    "text": "文本"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "通過標記文本、區域、頁面或進行搜索來開始編輯。",
     "redactionSearchPlaceholder": "通過關鍵字搜索或模式添加",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "屬性",
     "miscValuesHeader": "全部",
-    "emptyPanelMessage": "選擇一個元素來查看它的屬性"
+    "emptyPanelMessage": "選擇一個元素來查看它的屬性."
   },
   "languageModal": {
     "selectLanguage": "選擇語言"
+  },
+  "multiViewer": {
+    "dragAndDrop": "將您的文件拖放到此處進行比較",
+    "or": "或者",
+    "browse": "瀏覽文件",
+    "startSync": "開始同步",
+    "stopSync": "停止同步",
+    "closeDocument": "關閉文檔",
+    "save": "保存文檔",
+    "comparePanel": {
+      "Find": "在文檔中查找",
+      "changesList": "變更清單",
+      "change": "改變",
+      "old": "老的",
+      "new": "新的",
+      "page": "頁"
+    }
   }
 }

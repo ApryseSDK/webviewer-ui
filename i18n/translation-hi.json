@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "पैराग्राफ जोड़ें",
     "add": "जोड़ें",
     "apply": "लागू करना",
     "applyAll": "सभी लागू",
@@ -94,7 +95,9 @@
     "addMark": "मार्क जोड़ें",
     "viewFile": "फ़ाइल देखें",
     "switchLanguage": "भाषा",
-    "multiReplyAnnotations": "चयनित टिप्पणियों का उत्तर दें"
+    "multiReplyAnnotations": "चयनित टिप्पणियों का उत्तर दें",
+    "comparePages": "पृष्ठों की तुलना करें",
+    "startComparison": "तुलना शुरू करें"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -115,6 +118,8 @@
     "freehand": "मुक्त हाथ",
     "freeHandHighlight": "फ्री हैंड हाइलाइट",
     "freetext": "फ्री टेक्स्ट",
+    "markInsertText": "टेक्स्ट डालें",
+    "markReplaceText": "टेक्स्ट बदलें",
     "highlight": "हाइलाइट",
     "image": "छवि",
     "line": "रेखा",
@@ -144,7 +149,8 @@
     "other": "अन्य",
     "3D": "3डी",
     "sound": "ध्वनि",
-    "changeView": "परिवर्तन देखें"
+    "changeView": "परिवर्तन देखें",
+    "newImage": "नया चित्र"
   },
   "rubberStamp": {
     "Approved": "स्वीकृत",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "सभी टिप्पणियां देखें",
       "close": "सभी टिप्पणियां बंद करें"
-    }
+    },
+    "comparePanel": "पैनल की तुलना करें"
   },
   "message": {
     "toolsOverlayNoPresets": "कोई प्रीसेट नहीं",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "संपादित किए जाने के बाद मौजूदा एनोटेशन टेक्स्ट से मेल नहीं खा सकते हैं।",
     "changesCannotBeUndone": "किए गए किसी भी परिवर्तन को पूर्ववत नहीं किया जा सकता है।",
     "doNotShowAgain": "मुझे फिर से न दिखाएं",
+    "doNotAskAgain": "फिर से न पूछें",
     "enterReplacementText": "वह टेक्स्ट दर्ज करें जिसे आप बदलना चाहते हैं",
     "sortBy": "तरह",
     "emptyCustomStampInput": "स्टाम्प टेक्स्ट खाली नहीं हो सकता",
@@ -288,7 +296,8 @@
       "underline": "रेखांकन",
       "squiggly": "टेढ़ा-मेढ़ा",
       "3D": "3डी",
-      "other": "अन्य"
+      "other": "अन्य",
+      "initials": "आद्याक्षर"
     },
     "notesOrder": {
       "dropdownLabel": "क्रमबद्ध क्रम सूची",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "डालने",
       "toolbarGroup-Measure": "उपाय",
       "toolbarGroup-Edit": "संपादित करें",
+      "toolbarGroup-EditText": "लिखाई में बदलाव",
       "toolbarGroup-FillAndSign": "भरें और हस्ताक्षर करें",
       "toolbarGroup-Forms": "फार्म",
       "toolbarGroup-Redact": "संपादन"
@@ -326,7 +336,6 @@
       "pageTransition": "पृष्ठ संक्रमण"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "एकाधिक पृष्ठों का चयन करें",
       "closeTooltip": "बहुचयन बंद करें"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "अक्षर संवेदनशील",
       "wholeWordOnly": "पूरा शब्द",
-      "wildcard": "वाइल्डकार्ड"
+      "wildcard": "वाइल्डकार्ड",
+      "replace": "बदलने के",
+      "replaceAll": "सबको बदली करें",
+      "replaceText": "टेक्स्ट बदलें",
+      "confirmMessageReplaceAll": "क्या आप वाकई सभी टेक्स्ट को बदलना चाहते हैं?",
+      "confirmMessageReplaceOne": "क्या आप वाकई इस टेक्स्ट को बदलना चाहते हैं?",
+      "moreOptions": "अधिक विकल्प",
+      "lessOptions": "कम विकल्प",
+      "confirm": "पुष्टि करें"
     },
     "toolsOverlay": {
       "currentStamp": "वर्तमान टिकट",
@@ -392,14 +409,20 @@
       "addStamp": "नया स्टाम्प जोड़ें"
     },
     "signatureOverlay": {
-      "addSignature": "नया हस्ताक्षर जोड़ें"
+      "addSignature": "नया हस्ताक्षर जोड़ें",
+      "addSignatureOrInitials": "हस्ताक्षर / आद्याक्षर"
     },
     "signatureModal": {
       "modalName": "नया हस्ताक्षर बनाएं",
       "dragAndDrop": "अपनी छवि को यहां खींचें और छोड़ें",
       "or": "या",
       "pickImage": "एक हस्ताक्षर चुनें",
-      "selectImage": "यहां अपनी छवि चुनें"
+      "selectImage": "यहां अपनी छवि चुनें",
+      "typeSignature": "हस्ताक्षर टाइप करें*",
+      "typeInitial": "प्रारंभिक टाइप करें*",
+      "drawSignature": "हस्ताक्षर बनाएं*",
+      "drawInitial": "आद्याक्षर ड्रा करें*",
+      "pickInitialsFile": "आद्याक्षर चुनें"
     },
     "pageReplacementModal": {
       "dragAndDrop": "अपनी फ़ाइल को यहां खींचें और छोड़ें",
@@ -455,7 +478,8 @@
         "preset": "प्रीसेट",
         "paperUnits": "कागज इकाइयाँ",
         "displayUnits": "प्रदर्शन इकाइयां",
-        "fractionUnitsTooltip": "भिन्न इकाइयाँ केवल in और ft-in . पर लागू होती हैं"
+        "fractionUnitsTooltip": "भिन्न इकाइयाँ केवल in और ft-in . पर लागू होती हैं",
+        "incorrectSyntax": "गलत वाक्य रचना"
       },
       "scaleOverlay": {
         "addNewScale": "नया पैमाना जोड़ें",
@@ -473,7 +497,10 @@
         "deletionIs": "हटाना है",
         "irreversible": "अचल",
         "willDeleteMeasurement": "और संबंधित माप हटा देगा।",
-        "confirmDelete": "क्या आप वाकई इस पैमाने को हटाना चाहते हैं?"
+        "confirmDelete": "क्या आप वाकई इस पैमाने को हटाना चाहते हैं?",
+        "ifChangeScale": "यदि आप चयनित माप या उपकरण के लिए पैमाना बदलते हैं, तो पैमाना",
+        "notUsedWillDelete": " अब किसी भी माप या उपकरण द्वारा उपयोग नहीं किया जाएगा और हटा दिया जाएगा। हटाना अपरिवर्तनीय है।",
+        "ifToContinue": "क्या आप वाकई जारी रखना चाहते हैं?"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "पृष्ठ निर्दिष्ट करें",
       "odd": "केवल विषम पृष्ठ",
       "even": "केवल सम पृष्ठ",
-      "header": "मार्क पेज रिडक्शन",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "मार्क पेज रिडक्शन"
     },
     "lineStyleOptions": {
       "title": "शैली"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "एनोटेशन हटाएं?",
       "message": "हटाने से सभी टिप्पणियां, उत्तर और समूहीकरण हट जाएगा और इसे पूर्ववत नहीं किया जा सकता।\n\n क्या आप वाकई इन टिप्पणियों को हटाना चाहते हैं?"
+    },
+    "closeFile": {
+      "title": "डाउनलोड किए बिना बंद करें?",
+      "message": "इस दस्तावेज़ में परिवर्तन किए गए हैं, क्या आप वाकई अपना काम डाउनलोड किए बिना इसे बंद करना चाहते हैं? आप इस क्रिया को पूर्ववत नहीं कर सकते।",
+      "rejectDownloadButton": "डाउनलोड के बिना बंद करें"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "विकल्प",
       "radioGroups": "समान फ़ील्ड नाम वाले रेडियो बटन उसी समूह में होंगे।",
       "nameRequired": "फ़ील्ड नाम आवश्यक है",
+      "fieldIndicator": "फील्ड संकेतक",
+      "documentFieldIndicator": "दस्तावेज़ फ़ील्ड संकेतक",
+      "indicatorPlaceHolders": {
+        "TextFormField": "यहां टेक्स्ट डालें",
+        "CheckBoxFormField": "जांच",
+        "RadioButtonFormField": "भरना",
+        "ListBoxFormField": "चुनना",
+        "ComboBoxFormField": "चुनना",
+        "SignatureFormField": {
+          "fullSignature": "यहां हस्ताक्षर करें",
+          "initialsSignature": "प्रारंभ यहां"
+        }
+      },
       "size": "आकार",
       "width": "चौड़ाई",
       "height": "ऊंचाई",
@@ -878,6 +922,10 @@
       "cancelMessage": "क्या आप वाकई सभी चयनित पृष्ठों को क्रॉप करना रद्द करना चाहते हैं?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "अनुच्छेद",
+    "text": "मूलपाठ"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "पाठ, क्षेत्रों, पृष्ठों को चिह्नित करके या खोज करके पुनः अभिनय करना प्रारंभ करें।",
     "redactionSearchPlaceholder": "कीवर्ड खोज या पैटर्न द्वारा जोड़ें",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "गुण",
     "miscValuesHeader": "सभी",
-    "emptyPanelMessage": "किसी एलीमेंट के गुणों को देखने के लिए उसका चयन करें"
+    "emptyPanelMessage": "किसी एलीमेंट के गुणों को देखने के लिए उसका चयन करें."
   },
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"
+  },
+  "multiViewer": {
+    "dragAndDrop": "तुलना करने के लिए अपनी फ़ाइल को यहां खींचें और छोड़ें",
+    "or": "या",
+    "browse": "फ़ाइलों को ब्राउज़ करें",
+    "startSync": "सिंक शुरू करें",
+    "stopSync": "सिंक बंद करो",
+    "closeDocument": "दस्तावेज़ बंद करें",
+    "save": "दस्तावेज़ सहेजें",
+    "comparePanel": {
+      "Find": "दस्तावेज़ में खोजें",
+      "changesList": "परिवर्तन सूची",
+      "change": "परिवर्तन",
+      "old": "पुराना",
+      "new": "नया",
+      "page": "पृष्ठ"
+    }
   }
 }

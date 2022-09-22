@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Добавить абзац",
     "add": "Добавлять",
     "apply": "Применить",
     "applyAll": "Применить все",
@@ -94,7 +95,9 @@
     "addMark": "Добавить отметку",
     "viewFile": "Посмотреть файл",
     "switchLanguage": "Язык",
-    "multiReplyAnnotations": "Ответить на выбранные аннотации ({{count}})"
+    "multiReplyAnnotations": "Ответить на выбранные аннотации ({{count}})",
+    "comparePages": "Сравните страницы",
+    "startComparison": "Начать сравнение"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -115,6 +118,8 @@
     "freehand": "От руки",
     "freeHandHighlight": "Ручное выделение",
     "freetext": "Текст",
+    "markInsertText": "Вставить текст",
+    "markReplaceText": "Заменить текст",
     "highlight": "Выделить",
     "image": "Изображение",
     "line": "Линия",
@@ -144,7 +149,8 @@
     "other": "Другие",
     "3D": "3D",
     "sound": "Звук",
-    "changeView": "Сменить вид"
+    "changeView": "Сменить вид",
+    "newImage": "Новое изображение"
   },
   "rubberStamp": {
     "Approved": "Одобренный",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "Просмотреть все аннотации",
       "close": "Закрыть все аннотации"
-    }
+    },
+    "comparePanel": "Панель сравнения"
   },
   "message": {
     "toolsOverlayNoPresets": "Нет пресетов",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "Существующие аннотации могут не совпадать с текстом после его редактирования.",
     "changesCannotBeUndone": "Любые внесенные изменения не могут быть отменены.",
     "doNotShowAgain": "Не показывай мне это больше",
+    "doNotAskAgain": "Не спрашивай снова",
     "enterReplacementText": "Введите текст, который вы хотите заменить",
     "sortBy": "Сортировать по",
     "emptyCustomStampInput": "Текст штампа не может быть пустым",
@@ -288,7 +296,8 @@
       "underline": "Подчеркивание",
       "squiggly": "Волнистый",
       "3D": "3D",
-      "other": "Другой"
+      "other": "Другой",
+      "initials": "Инициалы"
     },
     "notesOrder": {
       "dropdownLabel": "Список порядка сортировки",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "Вставить",
       "toolbarGroup-Measure": "Мера",
       "toolbarGroup-Edit": "редактировать",
+      "toolbarGroup-EditText": "Редактировать текст",
       "toolbarGroup-FillAndSign": "Заполните и подпишите",
       "toolbarGroup-Forms": "Формы",
       "toolbarGroup-Redact": "Редактировать"
@@ -326,7 +336,6 @@
       "pageTransition": "Переход страниц"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Выбрать несколько страниц",
       "closeTooltip": "Закрыть множественный выбор"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "С учетом регистра",
       "wholeWordOnly": "Всё слово",
-      "wildcard": "Поиск по шаблону"
+      "wildcard": "Поиск по шаблону",
+      "replace": "Заменять",
+      "replaceAll": "Заменить все",
+      "replaceText": "Заменить текст",
+      "confirmMessageReplaceAll": "Вы уверены, что хотите заменить весь текст?",
+      "confirmMessageReplaceOne": "Вы уверены, что хотите заменить этот текст?",
+      "moreOptions": "Больше опций",
+      "lessOptions": "Меньше вариантов",
+      "confirm": "Подтверждать"
     },
     "toolsOverlay": {
       "currentStamp": "Текущая печать",
@@ -392,14 +409,20 @@
       "addStamp": "Добавить новый штамп"
     },
     "signatureOverlay": {
-      "addSignature": "Добавить подпись"
+      "addSignature": "Добавить подпись",
+      "addSignatureOrInitials": "Подпись/Инициалы"
     },
     "signatureModal": {
       "modalName": "Создать новую подпись",
       "dragAndDrop": "Перетащите изображение сюда",
       "or": "Или",
       "pickImage": "Выберите Подпись Изображение",
-      "selectImage": "Выберите здесь свое изображение"
+      "selectImage": "Выберите здесь свое изображение",
+      "typeSignature": "Тип Подпись*",
+      "typeInitial": "Введите инициалы*",
+      "drawSignature": "Нарисовать подпись*",
+      "drawInitial": "Нарисовать инициалы*",
+      "pickInitialsFile": "Выберите инициалы"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Перетащите файл сюда",
@@ -455,7 +478,8 @@
         "preset": "Предустановка",
         "paperUnits": "Бумажные блоки",
         "displayUnits": "Единицы отображения",
-        "fractionUnitsTooltip": "Дробные единицы применяются только к дюймам и футам-дюймам."
+        "fractionUnitsTooltip": "Дробные единицы применяются только к дюймам и футам-дюймам.",
+        "incorrectSyntax": "Неправильный синтаксис"
       },
       "scaleOverlay": {
         "addNewScale": "Добавить новый масштаб",
@@ -473,7 +497,10 @@
         "deletionIs": "Удаление",
         "irreversible": "необратимый",
         "willDeleteMeasurement": "и удалит связанные измерения.",
-        "confirmDelete": "Вы уверены, что хотите удалить эту шкалу?"
+        "confirmDelete": "Вы уверены, что хотите удалить эту шкалу?",
+        "ifChangeScale": "Если вы измените масштаб для выбранного измерения или инструмента, масштаб",
+        "notUsedWillDelete": " больше не будут использоваться никакими измерениями или инструментами и будут удалены. Удаление необратимо.",
+        "ifToContinue": "Вы уверены, что хотите продолжить?"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "Укажите страницы",
       "odd": "Только нечетные страницы",
       "even": "Только четные страницы",
-      "header": "Пометить страницы как отредактированные",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Пометить страницы как отредактированные"
     },
     "lineStyleOptions": {
       "title": "Стиль"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "Удалить аннотации?",
       "message": "При удалении будут удалены все комментарии, ответы и группировка, и это действие нельзя будет отменить.\n\n Вы уверены, что хотите удалить эти аннотации?"
+    },
+    "closeFile": {
+      "title": "Закрыть без скачивания?",
+      "message": "В этот документ внесены изменения. Вы уверены, что хотите закрыть его, не загружая свою работу? Это действие нельзя отменить.",
+      "rejectDownloadButton": "Закрыть без скачивания"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "Параметры",
       "radioGroups": "Радиокнопки с одинаковым именем поля будут входить в одну группу.",
       "nameRequired": "Требуется название поля",
+      "fieldIndicator": "Полевые индикаторы",
+      "documentFieldIndicator": "Индикаторы полей документа",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Вставьте текст сюда",
+        "CheckBoxFormField": "Проверять",
+        "RadioButtonFormField": "Наполнять",
+        "ListBoxFormField": "Выбирать",
+        "ComboBoxFormField": "Выбирать",
+        "SignatureFormField": {
+          "fullSignature": "Подпишите здесь",
+          "initialsSignature": "Инициал здесь"
+        }
+      },
       "size": "Размер",
       "width": "Ширина",
       "height": "Высота",
@@ -878,6 +922,10 @@
       "cancelMessage": "Вы уверены, что хотите отменить обрезку всех выбранных страниц?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Параграф",
+    "text": "Текст"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Начните редактирование, пометив текст, области, страницы или выполнив поиск.",
     "redactionSearchPlaceholder": "Добавить по ключевому слову или шаблонам",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Свойства",
     "miscValuesHeader": "Все",
-    "emptyPanelMessage": "Выберите элемент, чтобы просмотреть его свойства"
+    "emptyPanelMessage": "Выберите элемент, чтобы просмотреть его свойства."
   },
   "languageModal": {
     "selectLanguage": "Выбрать язык"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Перетащите файл сюда, чтобы сравнить",
+    "or": "Или же",
+    "browse": "Просмотр файлов",
+    "startSync": "Начать синхронизацию",
+    "stopSync": "Остановить синхронизацию",
+    "closeDocument": "Закрыть документ",
+    "save": "Сохранить документ",
+    "comparePanel": {
+      "Find": "Найти в документе",
+      "changesList": "Список изменений",
+      "change": "Изменять",
+      "old": "Старый",
+      "new": "Новый",
+      "page": "Страница"
+    }
   }
 }

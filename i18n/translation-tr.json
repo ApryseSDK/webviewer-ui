@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Paragraf Ekle",
     "add": "Ekle",
     "apply": "Uygulamak",
     "applyAll": "Tümünü uygula",
@@ -94,7 +95,9 @@
     "addMark": "İşaret Ekle",
     "viewFile": "Dosyayı görüntüle",
     "switchLanguage": "Dilim",
-    "multiReplyAnnotations": "Seçili ek açıklamaları yanıtla ({{count}})"
+    "multiReplyAnnotations": "Seçili ek açıklamaları yanıtla ({{count}})",
+    "comparePages": "Sayfaları karşılaştır",
+    "startComparison": "Karşılaştırmayı Başlat"
   },
   "annotation": {
     "areaMeasurement": "Alan",
@@ -115,6 +118,8 @@
     "freehand": "Serbest El",
     "freeHandHighlight": "Serbest El Vurgusu",
     "freetext": "Ücretsiz Metin",
+    "markInsertText": "Metin Ekle",
+    "markReplaceText": "Metni Değiştir",
     "highlight": "Vurgulamak",
     "image": "resim",
     "line": "Astar",
@@ -144,7 +149,8 @@
     "other": "Diğer",
     "3D": "3 boyutlu",
     "sound": "Ses",
-    "changeView": "Görünümü değiştir"
+    "changeView": "Görünümü değiştir",
+    "newImage": "Yeni görüntü"
   },
   "rubberStamp": {
     "Approved": "Onaylı",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "Tüm Ek Açıklamaları Görüntüle",
       "close": "Tüm Ek Açıklamaları Kapat"
-    }
+    },
+    "comparePanel": "Karşılaştır Paneli"
   },
   "message": {
     "toolsOverlayNoPresets": "Ön Ayar Yok",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "Mevcut ek açıklamalar, düzenlendikten sonra metinle eşleşmeyebilir.",
     "changesCannotBeUndone": "Yapılan herhangi bir değişiklik geri alınamaz.",
     "doNotShowAgain": "Bunu bir daha bana gösterme",
+    "doNotAskAgain": "Tekrar sorma",
     "enterReplacementText": "Değiştirmek istediğiniz metni girin",
     "sortBy": "Çeşit",
     "emptyCustomStampInput": "Damga metni boş olamaz",
@@ -288,7 +296,8 @@
       "underline": "Altını çizmek",
       "squiggly": "dalgalı",
       "3D": "3 boyutlu",
-      "other": "Diğer"
+      "other": "Diğer",
+      "initials": "baş harfler"
     },
     "notesOrder": {
       "dropdownLabel": "Sıralama Listesi",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "Sokmak",
       "toolbarGroup-Measure": "Ölçüm",
       "toolbarGroup-Edit": "Düzenlemek",
+      "toolbarGroup-EditText": "Metni düzenle",
       "toolbarGroup-FillAndSign": "Doldur ve İmzala",
       "toolbarGroup-Forms": "Formlar",
       "toolbarGroup-Redact": "Yazıya dökmek"
@@ -326,7 +336,6 @@
       "pageTransition": "Sayfa Geçişi"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Birden çok sayfa seçin",
       "closeTooltip": "Çoklu seçimi kapat"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Harfe duyarlı",
       "wholeWordOnly": "Tüm dünya",
-      "wildcard": "joker karakter"
+      "wildcard": "joker karakter",
+      "replace": "Yer değiştirmek",
+      "replaceAll": "Hepsini değiştir",
+      "replaceText": "Metni Değiştir",
+      "confirmMessageReplaceAll": "Tüm metni değiştirmek istediğinizden emin misiniz?",
+      "confirmMessageReplaceOne": "Bu metni değiştirmek istediğinizden emin misiniz?",
+      "moreOptions": "Daha fazla seçenek",
+      "lessOptions": "Daha az seçenek",
+      "confirm": "Onaylamak"
     },
     "toolsOverlay": {
       "currentStamp": "Geçerli Damga",
@@ -392,14 +409,20 @@
       "addStamp": "Yeni Damga Ekle"
     },
     "signatureOverlay": {
-      "addSignature": "Yeni İmza Ekle"
+      "addSignature": "Yeni İmza Ekle",
+      "addSignatureOrInitials": "İmza/Baş Harfler"
     },
     "signatureModal": {
       "modalName": "Yeni İmza Oluştur",
       "dragAndDrop": "Resminizi buraya sürükleyip bırakın",
       "or": "Veya",
       "pickImage": "Bir imza seçin",
-      "selectImage": "Resminizi buradan seçin"
+      "selectImage": "Resminizi buradan seçin",
+      "typeSignature": "Tip İmza*",
+      "typeInitial": "Baş Harfleri yazın*",
+      "drawSignature": "İmza Çek*",
+      "drawInitial": "Baş Harflerini Çiz*",
+      "pickInitialsFile": "Baş Harfleri Seçin"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Dosyanızı buraya sürükleyip bırakın",
@@ -455,7 +478,8 @@
         "preset": "ön ayar",
         "paperUnits": "Kağıt Birimleri",
         "displayUnits": "Görüntüleme birimleri",
-        "fractionUnitsTooltip": "Kesir birimleri yalnızca içeri ve ft-in için geçerlidir"
+        "fractionUnitsTooltip": "Kesir birimleri yalnızca içeri ve ft-in için geçerlidir",
+        "incorrectSyntax": "Yanlış sözdizimi"
       },
       "scaleOverlay": {
         "addNewScale": "Yeni Ölçek Ekle",
@@ -473,7 +497,10 @@
         "deletionIs": "Silme",
         "irreversible": "geri döndürülemez",
         "willDeleteMeasurement": "ve ilişkili ölçümleri siler.",
-        "confirmDelete": "Bu ölçeği silmek istediğinizden emin misiniz?"
+        "confirmDelete": "Bu ölçeği silmek istediğinizden emin misiniz?",
+        "ifChangeScale": "Seçilen ölçüm veya araç için ölçeği değiştirirseniz, ölçek",
+        "notUsedWillDelete": " artık herhangi bir ölçüm veya araç tarafından kullanılmayacak ve silinecektir. Silme işlemi geri döndürülemez.",
+        "ifToContinue": "Devam etmek istediğinizden emin misiniz?"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "Sayfaları Belirtin",
       "odd": "Sadece tek sayfalar",
       "even": "Yalnızca Çift Sayfalar",
-      "header": "Sayfa Redaksiyonunu İşaretle",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Sayfa Redaksiyonunu İşaretle"
     },
     "lineStyleOptions": {
       "title": "stil"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "Ek Açıklamalar Silinsin mi?",
       "message": "Silme işlemi tüm yorumları, yanıtları ve gruplandırmayı kaldırır ve geri alınamaz.\n\n Bu ek açıklamaları silmek istediğinizden emin misiniz?"
+    },
+    "closeFile": {
+      "title": "İndirmeden kapatılsın mı?",
+      "message": "Bu belgede yapılan değişiklikler var, çalışmanızı indirmeden kapatmak istediğinizden emin misiniz? Bu işlemi geri alamazsınız.",
+      "rejectDownloadButton": "İndirmeden kapat"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "Seçenekler",
       "radioGroups": "Aynı Alan Adına sahip radyo düğmeleri aynı gruplamaya ait olacaktır.",
       "nameRequired": "Alan adı gerekli",
+      "fieldIndicator": "Alan Göstergeleri",
+      "documentFieldIndicator": "Belge Alanı Göstergeleri",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Buraya Metin Ekle",
+        "CheckBoxFormField": "Kontrol",
+        "RadioButtonFormField": "Doldurmak",
+        "ListBoxFormField": "Seçme",
+        "ComboBoxFormField": "Seçme",
+        "SignatureFormField": {
+          "fullSignature": "Burayı imzalayın",
+          "initialsSignature": "İlk Burada"
+        }
+      },
       "size": "Boyut",
       "width": "Genişlik",
       "height": "Yükseklik",
@@ -878,6 +922,10 @@
       "cancelMessage": "Seçilen tüm sayfaları kırpmayı iptal etmek istediğinizden emin misiniz?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Paragraf",
+    "text": "Metin"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Metni, bölgeleri, sayfaları işaretleyerek veya arama yaparak redaksiyona başlayın.",
     "redactionSearchPlaceholder": "Anahtar kelime araması veya kalıplara göre ekleyin",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Özellikler",
     "miscValuesHeader": "Tümü",
-    "emptyPanelMessage": "Özelliklerini görüntülemek için bir öğe seçin"
+    "emptyPanelMessage": "Özelliklerini görüntülemek için bir öğe seçin."
   },
   "languageModal": {
     "selectLanguage": "Dil Seçin"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Karşılaştırmak için dosyanızı buraya sürükleyip bırakın",
+    "or": "Veya",
+    "browse": "Dosyalara Gözat",
+    "startSync": "Senkronizasyonu Başlat",
+    "stopSync": "Senkronizasyonu Durdur",
+    "closeDocument": "Belgeyi Kapat",
+    "save": "Belgeyi Kaydet",
+    "comparePanel": {
+      "Find": "Belgede bul",
+      "changesList": "Değişiklik Listesi",
+      "change": "Değiştirmek",
+      "old": "Eskimiş",
+      "new": "Yeni",
+      "page": "Sayfa"
+    }
   }
 }

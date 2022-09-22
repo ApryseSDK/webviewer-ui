@@ -1,11 +1,13 @@
 {
   "action": {
+    "addParagraph": "เพิ่มย่อหน้า",
     "add": "เพิ่ม",
     "apply": "นำมาใช้",
     "applyAll": "สมัครทั้งหมด",
     "calendar": "ปฏิทิน",
     "calibrate": "ปรับเทียบ",
     "cancel": "ยกเลิก",
+    "confirm": "ยืนยัน",
     "clear": "ชัดเจน",
     "clearAll": "ลบทั้งหมด",
     "close": "ปิด I",
@@ -42,6 +44,7 @@
     "save": "บันทึก",
     "post": "โพสต์",
     "create": "สร้าง",
+    "update": "อัปเดต",
     "showMoreResults": "แสดงผลลัพธ์เพิ่มเติม",
     "sign": "เข้าสู่ระบบ",
     "style": "สไตล์",
@@ -91,7 +94,10 @@
     "unselect": "ยกเลิกการเลือก",
     "addMark": "เพิ่มเครื่องหมาย",
     "viewFile": "ไฟล์มุมมอง",
-    "switchLanguage": "ภาษา"
+    "switchLanguage": "ภาษา",
+    "multiReplyAnnotations": "ตอบกลับคำอธิบายประกอบที่เลือก ({{จำนวน}})",
+    "comparePages": "เปรียบเทียบหน้า",
+    "startComparison": "เริ่มการเปรียบเทียบ"
   },
   "annotation": {
     "areaMeasurement": "พื้นที่",
@@ -112,6 +118,8 @@
     "freehand": "มือเปล่า",
     "freeHandHighlight": "ไฮไลท์มือฟรี",
     "freetext": "ข้อความฟรี",
+    "markInsertText": "แทรกข้อความ",
+    "markReplaceText": "แทนที่ข้อความ",
     "highlight": "ไฮไลท์",
     "image": "ภาพ",
     "line": "เส้น",
@@ -141,7 +149,8 @@
     "other": "อื่น",
     "3D": "3D",
     "sound": "เสียง",
-    "changeView": "เปลี่ยนมุมมอง"
+    "changeView": "เปลี่ยนมุมมอง",
+    "newImage": "ภาพใหม่"
   },
   "rubberStamp": {
     "Approved": "ที่ได้รับการอนุมัติ",
@@ -196,10 +205,16 @@
     "textPopup": "ป๊อปอัปข้อความ",
     "createStampButton": "สร้างแสตมป์ใหม่",
     "filter": "กรอง",
+    "multiSelectButton": "เลือกหลายรายการ",
     "pageReplaceModalTitle": "แทนที่หน้า",
     "files": "ไฟล์",
     "editText": "แก้ไขข้อความ",
-    "redactionPanel": "แผง Redaction"
+    "redactionPanel": "แผง Redaction",
+    "noteGroupSection": {
+      "open": "ดูคำอธิบายประกอบทั้งหมด",
+      "close": "ปิดคำอธิบายประกอบทั้งหมด"
+    },
+    "comparePanel": "เปรียบเทียบแผง"
   },
   "message": {
     "toolsOverlayNoPresets": "ไม่มีสถานีที่ตั้งไว้",
@@ -240,6 +255,7 @@
     "existingAnnotationWarning": "คำอธิบายประกอบที่มีอยู่อาจไม่ตรงกับข้อความหลังจากแก้ไขแล้ว",
     "changesCannotBeUndone": "การเปลี่ยนแปลงที่ทำขึ้นไม่สามารถยกเลิกได้",
     "doNotShowAgain": "อย่าแสดงให้ฉันเห็นอีก",
+    "doNotAskAgain": "อย่าถามอีก",
     "enterReplacementText": "ป้อนข้อความที่คุณต้องการแทนที่",
     "sortBy": "เรียงลำดับ",
     "emptyCustomStampInput": "ข้อความประทับตราต้องไม่เว้นว่างไว้",
@@ -280,7 +296,8 @@
       "underline": "ขีดเส้นใต้",
       "squiggly": "ไก่เขี่ย",
       "3D": "3D",
-      "other": "อื่น"
+      "other": "อื่น",
+      "initials": "ชื่อย่อ"
     },
     "notesOrder": {
       "dropdownLabel": "เรียงลำดับรายการ",
@@ -301,6 +318,7 @@
       "toolbarGroup-Insert": "แทรก",
       "toolbarGroup-Measure": "วัด",
       "toolbarGroup-Edit": "แก้ไข",
+      "toolbarGroup-EditText": "แก้ไขข้อความ",
       "toolbarGroup-FillAndSign": "กรอกและลงชื่อ",
       "toolbarGroup-Forms": "แบบฟอร์ม",
       "toolbarGroup-Redact": "Redact"
@@ -318,7 +336,6 @@
       "pageTransition": "การเปลี่ยนหน้า"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "เลือกหลายหน้า",
       "closeTooltip": "ปิดการเลือกหลายรายการ"
     },
@@ -373,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "กรณีที่สำคัญ",
       "wholeWordOnly": "ทั้งคำ",
-      "wildcard": "ไวลด์การ์ด"
+      "wildcard": "ไวลด์การ์ด",
+      "replace": "แทนที่",
+      "replaceAll": "แทนที่ทั้งหมด",
+      "replaceText": "แทนที่ข้อความ",
+      "confirmMessageReplaceAll": "คุณแน่ใจหรือไม่ว่าต้องการแทนที่ข้อความทั้งหมด",
+      "confirmMessageReplaceOne": "คุณแน่ใจหรือไม่ว่าต้องการแทนที่ข้อความนี้",
+      "moreOptions": "ตัวเลือกเพิ่มเติม",
+      "lessOptions": "ตัวเลือกน้อย",
+      "confirm": "ยืนยัน"
     },
     "toolsOverlay": {
       "currentStamp": "แสตมป์ปัจจุบัน",
@@ -384,14 +409,20 @@
       "addStamp": "เพิ่มแสตมป์ใหม่"
     },
     "signatureOverlay": {
-      "addSignature": "เพิ่มลายเซ็นใหม่"
+      "addSignature": "เพิ่มลายเซ็นใหม่",
+      "addSignatureOrInitials": "ลายเซ็น/ชื่อย่อ"
     },
     "signatureModal": {
       "modalName": "สร้างลายเซ็นใหม่",
       "dragAndDrop": "ลากและวางรูปภาพของคุณที่นี่",
       "or": "หรือ",
       "pickImage": "เลือกลายเซ็น",
-      "selectImage": "เลือกรูปภาพของคุณที่นี่"
+      "selectImage": "เลือกรูปภาพของคุณที่นี่",
+      "typeSignature": "พิมพ์ ลายเซ็น*",
+      "typeInitial": "พิมพ์ชื่อย่อ*",
+      "drawSignature": "วาดลายเซ็น*",
+      "drawInitial": "วาดชื่อย่อ*",
+      "pickInitialsFile": "เลือกชื่อย่อ"
     },
     "pageReplacementModal": {
       "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่",
@@ -437,6 +468,40 @@
     },
     "measurementOption": {
       "scale": "มาตราส่วน"
+    },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "ปรับเทียบ",
+        "custom": "กำหนดเอง",
+        "fractionalUnits": "หน่วยเศษส่วน",
+        "precision": "ความแม่นยำ",
+        "preset": "ที่ตั้งไว้ล่วงหน้า",
+        "paperUnits": "หน่วยกระดาษ",
+        "displayUnits": "หน่วยแสดงผล",
+        "fractionUnitsTooltip": "หน่วยเศษส่วนใช้กับ in และ ft-in . เท่านั้น",
+        "incorrectSyntax": "ไวยากรณ์ไม่ถูกต้อง"
+      },
+      "scaleOverlay": {
+        "addNewScale": "เพิ่มมาตราส่วนใหม่",
+        "selectTwoPoints": "เลือกจุดสองจุดของมิติที่รู้จักเพื่อสอบเทียบ",
+        "inputKnowDimension": "ป้อนข้อมูลมิติและหน่วยที่ทราบเพื่อสอบเทียบ",
+        "multipleScales": "เครื่องชั่งหลายเครื่อง"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "ลบมาตราส่วน",
+        "scaleIsOn-delete-info": "สเกลนี้กำลังใช้งานอยู่บน",
+        "page-delete-info": "หน้าหนังสือ",
+        "appliedTo-delete-info": "และนำไปใช้กับ",
+        "measurement": "การวัด",
+        "measurements": "การวัด",
+        "deletionIs": "การลบคือ",
+        "irreversible": "กลับไม่ได้",
+        "willDeleteMeasurement": "และจะลบการวัดที่เกี่ยวข้อง",
+        "confirmDelete": "คุณแน่ใจหรือไม่ว่าต้องการลบมาตราส่วนนี้",
+        "ifChangeScale": "หากคุณเปลี่ยนมาตราส่วนสำหรับการวัดหรือเครื่องมือที่เลือก มาตราส่วน",
+        "notUsedWillDelete": " จะไม่ถูกใช้โดยการวัดหรือเครื่องมือใดๆ อีกต่อไป และจะถูกลบ การลบจะย้อนกลับไม่ได้",
+        "ifToContinue": "คุณแน่ใจหรือไม่ว่าต้องการดำเนินการต่อ"
+      }
     },
     "stylePopup": {
       "textStyle": "สไตล์ข้อความ",
@@ -526,8 +591,7 @@
       "specify": "ระบุหน้า",
       "odd": "หน้าคี่เท่านั้น",
       "even": "แม้แต่เพจเท่านั้น",
-      "header": "ทำเครื่องหมายหน้า Redaction",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "ทำเครื่องหมายหน้า Redaction"
     },
     "lineStyleOptions": {
       "title": "สไตล์"
@@ -564,6 +628,15 @@
     "colorPicker": {
       "deleteTitle": "ลบสีที่กำหนดเอง",
       "deleteMessage": "ลบสีที่กำหนดเองที่เลือก? จะถูกลบออกจากจานสีของคุณ"
+    },
+    "multiDeleteAnnotation": {
+      "title": "ลบคำอธิบายประกอบ?",
+      "message": "การลบจะลบความคิดเห็น การตอบกลับ และการจัดกลุ่มทั้งหมดออก และไม่สามารถยกเลิกได้\n\n คุณแน่ใจหรือไม่ว่าต้องการลบคำอธิบายประกอบเหล่านี้"
+    },
+    "closeFile": {
+      "title": "ปิดโดยไม่ต้องดาวน์โหลด?",
+      "message": "เอกสารนี้มีการเปลี่ยนแปลง คุณแน่ใจหรือไม่ว่าต้องการปิดโดยไม่ดาวน์โหลดงานของคุณ คุณไม่สามารถยกเลิกการดำเนินการนี้ได้",
+      "rejectDownloadButton": "ปิดโดยไม่ต้องดาวน์โหลด"
     }
   },
   "shortcut": {
@@ -696,6 +769,19 @@
       "options": "ตัวเลือก",
       "radioGroups": "ปุ่มตัวเลือกที่มีชื่อฟิลด์เดียวกันจะอยู่ในกลุ่มเดียวกัน",
       "nameRequired": "ต้องระบุชื่อช่อง",
+      "fieldIndicator": "ตัวชี้วัดภาคสนาม",
+      "documentFieldIndicator": "ตัวบ่งชี้ฟิลด์เอกสาร",
+      "indicatorPlaceHolders": {
+        "TextFormField": "ใส่ข้อความที่นี่",
+        "CheckBoxFormField": "ตรวจสอบ",
+        "RadioButtonFormField": "เติม",
+        "ListBoxFormField": "เลือก",
+        "ComboBoxFormField": "เลือก",
+        "SignatureFormField": {
+          "fullSignature": "ลงชื่อที่นี่",
+          "initialsSignature": "เริ่มต้นที่นี่"
+        }
+      },
       "size": "ขนาด",
       "width": "ความกว้าง",
       "height": "ส่วนสูง",
@@ -836,6 +922,10 @@
       "cancelMessage": "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการครอบตัดหน้าที่เลือกทั้งหมด"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "ย่อหน้า",
+    "text": "ข้อความ"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "เริ่มแก้ไขด้วยการทำเครื่องหมายข้อความ ภูมิภาค หน้า หรือทำการค้นหา",
     "redactionSearchPlaceholder": "เพิ่มด้วยการค้นหาคำสำคัญหรือรูปแบบ",
@@ -869,5 +959,22 @@
   },
   "languageModal": {
     "selectLanguage": "เลือกภาษา"
+  },
+  "multiViewer": {
+    "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่เพื่อเปรียบเทียบ",
+    "or": "หรือ",
+    "browse": "เรียกดูไฟล์",
+    "startSync": "เริ่มการซิงค์",
+    "stopSync": "หยุดการซิงค์",
+    "closeDocument": "ปิดเอกสาร",
+    "save": "บันทึกเอกสาร",
+    "comparePanel": {
+      "Find": "ค้นหาในเอกสาร",
+      "changesList": "รายการเปลี่ยนแปลง",
+      "change": "เปลี่ยน",
+      "old": "เก่า",
+      "new": "ใหม่",
+      "page": "หน้าหนังสือ"
+    }
   }
 }

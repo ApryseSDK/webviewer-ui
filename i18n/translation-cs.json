@@ -1,11 +1,13 @@
 {
   "action": {
+    "addParagraph": "Přidat odstavec",
     "add": "Přidat",
     "apply": "Aplikovat",
     "applyAll": "Použít vše",
     "calendar": "Kalendář",
     "calibrate": "Kalibrovat",
     "cancel": "zrušení",
+    "confirm": "Potvrdit",
     "clear": "Průhledná",
     "clearAll": "Vymazat vše",
     "close": "Zavřít",
@@ -42,6 +44,7 @@
     "save": "Uložit",
     "post": "Pošta",
     "create": "Vytvořit",
+    "update": "Aktualizace",
     "showMoreResults": "Zobrazit více výsledků",
     "sign": "Podepsat",
     "style": "Styl",
@@ -91,7 +94,10 @@
     "unselect": "Zrušte výběr",
     "addMark": "Přidat Marka",
     "viewFile": "Prohlédnout soubor",
-    "switchLanguage": "Jazyk"
+    "switchLanguage": "Jazyk",
+    "multiReplyAnnotations": "Odpovědět na vybrané poznámky ({{count}})",
+    "comparePages": "Porovnejte stránky",
+    "startComparison": "Spusťte porovnávání"
   },
   "annotation": {
     "areaMeasurement": "Plocha",
@@ -112,6 +118,8 @@
     "freehand": "Volná ruka",
     "freeHandHighlight": "Zvýraznění volné ruky",
     "freetext": "Volný text",
+    "markInsertText": "Vložit text",
+    "markReplaceText": "Nahradit text",
     "highlight": "Zvýraznit",
     "image": "obraz",
     "line": "Čára",
@@ -141,7 +149,8 @@
     "other": "jiný",
     "3D": "3D",
     "sound": "Zvuk",
-    "changeView": "Změnit zobrazení"
+    "changeView": "Změnit zobrazení",
+    "newImage": "Nový vzhled"
   },
   "rubberStamp": {
     "Approved": "Schválený",
@@ -196,10 +205,16 @@
     "textPopup": "Textové vyskakovací okno",
     "createStampButton": "Vytvořit nové razítko",
     "filter": "Filtr",
+    "multiSelectButton": "Více násobný výběr",
     "pageReplaceModalTitle": "Nahradit stránku",
     "files": "Soubory",
     "editText": "Upravit text",
-    "redactionPanel": "Redakční panel"
+    "redactionPanel": "Redakční panel",
+    "noteGroupSection": {
+      "open": "Zobrazit všechny anotace",
+      "close": "Zavřít všechny anotace"
+    },
+    "comparePanel": "Panel porovnání"
   },
   "message": {
     "toolsOverlayNoPresets": "Žádné předvolby",
@@ -240,6 +255,7 @@
     "existingAnnotationWarning": "Stávající anotace se po úpravě nemusí shodovat s textem.",
     "changesCannotBeUndone": "Jakékoli provedené změny nelze vrátit zpět.",
     "doNotShowAgain": "už mi to znovu neukazuj",
+    "doNotAskAgain": "Neptej se znovu",
     "enterReplacementText": "Zadejte text, který chcete nahradit",
     "sortBy": "Seřadit",
     "emptyCustomStampInput": "Text razítka nemůže být prázdný",
@@ -280,7 +296,8 @@
       "underline": "Zdůraznit",
       "squiggly": "Zkrouceně",
       "3D": "3D",
-      "other": "jiný"
+      "other": "jiný",
+      "initials": "Iniciály"
     },
     "notesOrder": {
       "dropdownLabel": "Seznam pořadí řazení",
@@ -301,6 +318,7 @@
       "toolbarGroup-Insert": "Vložit",
       "toolbarGroup-Measure": "Opatření",
       "toolbarGroup-Edit": "Upravit",
+      "toolbarGroup-EditText": "Upravit text",
       "toolbarGroup-FillAndSign": "Vyplňte a podepište",
       "toolbarGroup-Forms": "formuláře",
       "toolbarGroup-Redact": "Redigovat"
@@ -318,7 +336,6 @@
       "pageTransition": "Přechod stránky"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Vyberte více stránek",
       "closeTooltip": "Zavřete vícenásobný výběr"
     },
@@ -373,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Citlivý na velká písmena",
       "wholeWordOnly": "Celý svět",
-      "wildcard": "Divoká karta"
+      "wildcard": "Divoká karta",
+      "replace": "Nahradit",
+      "replaceAll": "Vyměnit vše",
+      "replaceText": "Nahradit text",
+      "confirmMessageReplaceAll": "Opravdu chcete nahradit veškerý text?",
+      "confirmMessageReplaceOne": "Opravdu chcete tento text nahradit?",
+      "moreOptions": "Více možností",
+      "lessOptions": "Méně možností",
+      "confirm": "Potvrdit"
     },
     "toolsOverlay": {
       "currentStamp": "Aktuální razítko",
@@ -384,14 +409,20 @@
       "addStamp": "Přidat nové razítko"
     },
     "signatureOverlay": {
-      "addSignature": "Přidat nový podpis"
+      "addSignature": "Přidat nový podpis",
+      "addSignatureOrInitials": "Podpis/Iniciály"
     },
     "signatureModal": {
       "modalName": "Vytvořit nový podpis",
       "dragAndDrop": "Sem přetáhněte obrázek",
       "or": "Nebo",
       "pickImage": "Vyberte podpis",
-      "selectImage": "Zde vyberte svůj obrázek"
+      "selectImage": "Zde vyberte svůj obrázek",
+      "typeSignature": "Typ podpis*",
+      "typeInitial": "Iniciály typu*",
+      "drawSignature": "Nakreslit podpis*",
+      "drawInitial": "Kreslit iniciály*",
+      "pickInitialsFile": "Vyberte Iniciály"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Přetáhněte soubor sem",
@@ -437,6 +468,40 @@
     },
     "measurementOption": {
       "scale": "Měřítko"
+    },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Kalibrovat",
+        "custom": "Zvyk",
+        "fractionalUnits": "Zlomkové jednotky",
+        "precision": "Přesnost",
+        "preset": "Přednastavení",
+        "paperUnits": "Papírové jednotky",
+        "displayUnits": "Zobrazovací jednotky",
+        "fractionUnitsTooltip": "Jednotky zlomků platí pouze pro in a ft-in",
+        "incorrectSyntax": "Nesprávná syntaxe"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Přidat nové měřítko",
+        "selectTwoPoints": "Vyberte dva body známé kóty, které chcete kalibrovat",
+        "inputKnowDimension": "Zadejte známý rozměr a jednotky pro kalibraci",
+        "multipleScales": "Vícenásobná měřítka"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Smazat měřítko",
+        "scaleIsOn-delete-info": "Tato váha se v současné době používá na",
+        "page-delete-info": "strana",
+        "appliedTo-delete-info": "a aplikováno na",
+        "measurement": "měření",
+        "measurements": "Měření",
+        "deletionIs": "Smazání je",
+        "irreversible": "nevratné",
+        "willDeleteMeasurement": "a vymaže související měření.",
+        "confirmDelete": "Opravdu chcete tuto stupnici smazat?",
+        "ifChangeScale": "Pokud změníte měřítko pro vybrané měření nebo nástroj, upravte měřítko",
+        "notUsedWillDelete": " již nebudou používány žádnými měřeními ani nástroji a budou smazány. Smazání je nevratné.",
+        "ifToContinue": "Opravdu chcete pokračovat?"
+      }
     },
     "stylePopup": {
       "textStyle": "Styl textu",
@@ -526,8 +591,7 @@
       "specify": "Zadejte stránky",
       "odd": "Pouze liché stránky",
       "even": "Pouze liché stránky",
-      "header": "Označit úpravu stránek",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Označit úpravu stránek"
     },
     "lineStyleOptions": {
       "title": "Styl"
@@ -564,6 +628,15 @@
     "colorPicker": {
       "deleteTitle": "Smazat vlastní barvu",
       "deleteMessage": "Smazat vybranou vlastní barvu? Bude odstraněn z vaší palety barev."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Smazat poznámky?",
+      "message": "Smazáním se odstraní všechny komentáře, odpovědi a seskupení a nelze jej vrátit zpět.\n\n Opravdu chcete tyto poznámky smazat?"
+    },
+    "closeFile": {
+      "title": "Zavřít bez stahování?",
+      "message": "V tomto dokumentu byly provedeny změny. Opravdu jej chcete zavřít bez stahování vaší práce? Tuto akci nelze vrátit zpět.",
+      "rejectDownloadButton": "Zavřít bez stahování"
     }
   },
   "shortcut": {
@@ -696,6 +769,19 @@
       "options": "Možnosti",
       "radioGroups": "Přepínací tlačítka se stejným názvem pole budou patřit do stejného seskupení.",
       "nameRequired": "Název pole je povinný",
+      "fieldIndicator": "Polní indikátory",
+      "documentFieldIndicator": "Indikátory pole dokumentu",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Sem vložte text",
+        "CheckBoxFormField": "Šek",
+        "RadioButtonFormField": "Vyplnit",
+        "ListBoxFormField": "Vybrat",
+        "ComboBoxFormField": "Vybrat",
+        "SignatureFormField": {
+          "fullSignature": "Zde se podepište",
+          "initialsSignature": "Počáteční zde"
+        }
+      },
       "size": "Velikost",
       "width": "Šířka",
       "height": "Výška",
@@ -836,6 +922,10 @@
       "cancelMessage": "Opravdu chcete zrušit oříznutí všech vybraných stránek?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Odstavec",
+    "text": "Text"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Začněte redigovat označením textu, regionů, stránek nebo hledáním.",
     "redactionSearchPlaceholder": "Přidejte podle vyhledávání klíčových slov nebo vzorů",
@@ -869,5 +959,22 @@
   },
   "languageModal": {
     "selectLanguage": "Zvolte jazyk"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Přetáhněte sem soubor pro porovnání",
+    "or": "Nebo",
+    "browse": "Procházet soubory",
+    "startSync": "Spusťte synchronizaci",
+    "stopSync": "Zastavit synchronizaci",
+    "closeDocument": "Zavřít dokument",
+    "save": "Uložit dokument",
+    "comparePanel": {
+      "Find": "Najít v dokumentu",
+      "changesList": "Seznam změn",
+      "change": "Změna",
+      "old": "Starý",
+      "new": "Nový",
+      "page": "Strana"
+    }
   }
 }

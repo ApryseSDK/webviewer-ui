@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Thêm đoạn văn",
     "add": "Thêm vào",
     "apply": "Áp dụng",
     "applyAll": "Áp dụng tất cả",
@@ -94,7 +95,9 @@
     "addMark": "Thêm dấu",
     "viewFile": "Xem tài liệu",
     "switchLanguage": "Ngôn ngữ",
-    "multiReplyAnnotations": "Trả lời các chú thích đã chọn ({{count}})"
+    "multiReplyAnnotations": "Trả lời các chú thích đã chọn ({{count}})",
+    "comparePages": "So sánh các trang",
+    "startComparison": "Bắt đầu so sánh"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -115,6 +118,8 @@
     "freehand": "Free Hand",
     "freeHandHighlight": "Điểm Nhấn Free Hand",
     "freetext": "Văn Bản Tự Do",
+    "markInsertText": "Chèn văn bản",
+    "markReplaceText": "Thay thế Văn bản",
     "highlight": "Nổi bật",
     "image": "Ảnh",
     "line": "Đường kẻ",
@@ -144,7 +149,8 @@
     "other": "Khác",
     "3D": "3D",
     "sound": "Âm thanh",
-    "changeView": "Thay đổi góc nhìn"
+    "changeView": "Thay đổi góc nhìn",
+    "newImage": "Hình ảnh mới"
   },
   "rubberStamp": {
     "Approved": "Đã chấp thuận",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "Xem tất cả các chú thích",
       "close": "Đóng tất cả các chú thích"
-    }
+    },
+    "comparePanel": "So sánh bảng điều khiển"
   },
   "message": {
     "toolsOverlayNoPresets": "Không Có Cài Đặt Trước",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "Chú thích hiện có có thể không khớp với văn bản sau khi đã được chỉnh sửa.",
     "changesCannotBeUndone": "Bất kỳ thay đổi nào được thực hiện không thể được hoàn tác.",
     "doNotShowAgain": "Không hiển thị lại điều này cho tôi",
+    "doNotAskAgain": "Đừng hỏi nữa",
     "enterReplacementText": "Nhập văn bản bạn muốn thay thế",
     "sortBy": "Sắp xếp",
     "emptyCustomStampInput": "Văn bản tem không thể trống",
@@ -288,7 +296,8 @@
       "underline": "Gạch chân",
       "squiggly": "Nguệch ngoạc",
       "3D": "3D",
-      "other": "Khác"
+      "other": "Khác",
+      "initials": "Tên viết tắt"
     },
     "notesOrder": {
       "dropdownLabel": "Sắp Xếp Danh Sách Lệnh",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "Chèn",
       "toolbarGroup-Measure": "Đo",
       "toolbarGroup-Edit": "Chỉnh sửa",
+      "toolbarGroup-EditText": "Chỉnh sửa văn bản",
       "toolbarGroup-FillAndSign": "Điền và Ký",
       "toolbarGroup-Forms": "Biểu mẫu",
       "toolbarGroup-Redact": "Biên tập"
@@ -326,7 +336,6 @@
       "pageTransition": "Chuyển Tiếp Trang"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Chọn nhiều trang",
       "closeTooltip": "Đóng đa chọn"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Nhạy cảm viết hoa",
       "wholeWordOnly": "Toàn bộ từ",
-      "wildcard": "Wildcard"
+      "wildcard": "Wildcard",
+      "replace": "Thay thế",
+      "replaceAll": "Thay thế tất cả",
+      "replaceText": "Thay thế văn bản",
+      "confirmMessageReplaceAll": "Bạn có chắc chắn muốn thay thế tất cả văn bản không?",
+      "confirmMessageReplaceOne": "Bạn có chắc chắn muốn thay thế văn bản này không?",
+      "moreOptions": "Lựa chọn khác",
+      "lessOptions": "Ít tùy chọn hơn",
+      "confirm": "Xác nhận"
     },
     "toolsOverlay": {
       "currentStamp": "Tem Hiện Tại",
@@ -392,14 +409,20 @@
       "addStamp": "Thêm Tem Mới"
     },
     "signatureOverlay": {
-      "addSignature": "Thêm Chữ Ký Mới"
+      "addSignature": "Thêm Chữ Ký Mới",
+      "addSignatureOrInitials": "Chữ ký / Tên viết tắt"
     },
     "signatureModal": {
       "modalName": "Tạo Chữ Ký Mới",
       "dragAndDrop": "Kéo & Thả hình ảnh của bạn tại đây",
       "or": "Hoặc",
       "pickImage": "Chọn một chữ ký",
-      "selectImage": "Chọn hình ảnh của bạn tại đây"
+      "selectImage": "Chọn hình ảnh của bạn tại đây",
+      "typeSignature": "Nhập Chữ ký *",
+      "typeInitial": "Nhập tên viết tắt *",
+      "drawSignature": "Vẽ Chữ ký *",
+      "drawInitial": "Rút tên viết tắt *",
+      "pickInitialsFile": "Chọn tên viết tắt"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Kéo & Thả tệp của bạn tại đây",
@@ -455,7 +478,8 @@
         "preset": "Đặt trước",
         "paperUnits": "Đơn vị giấy",
         "displayUnits": "Đơn vị hiển thị",
-        "fractionUnitsTooltip": "Đơn vị phân số chỉ áp dụng cho in và ft-in"
+        "fractionUnitsTooltip": "Đơn vị phân số chỉ áp dụng cho in và ft-in",
+        "incorrectSyntax": "Cú pháp không chính xác"
       },
       "scaleOverlay": {
         "addNewScale": "Thêm quy mô mới",
@@ -473,7 +497,10 @@
         "deletionIs": "Xóa là",
         "irreversible": "không thể thay đổi",
         "willDeleteMeasurement": "và sẽ xóa các phép đo liên quan.",
-        "confirmDelete": "Bạn có chắc chắn muốn xóa thang đo này không?"
+        "confirmDelete": "Bạn có chắc chắn muốn xóa thang đo này không?",
+        "ifChangeScale": "Nếu bạn thay đổi thang đo cho phép đo hoặc công cụ đã chọn, hãy chia tỷ lệ",
+        "notUsedWillDelete": " sẽ không còn được sử dụng bởi bất kỳ phép đo hoặc công cụ nào nữa và sẽ bị xóa. Việc xóa là không thể hoàn tác.",
+        "ifToContinue": "Bạn có chắc chắn muốn tiếp tục không?"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "Chỉ định các trang",
       "odd": "Chỉ các trang lẻ",
       "even": "Chỉ trang chẵn",
-      "header": "Đánh dấu trang Redaction",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Đánh dấu trang Redaction"
     },
     "lineStyleOptions": {
       "title": "Phong cách"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "Xóa chú thích?",
       "message": "Thao tác xóa sẽ xóa tất cả nhận xét, câu trả lời và nhóm và không thể hoàn tác.\n\n Bạn có chắc chắn muốn xóa các chú thích này không?"
+    },
+    "closeFile": {
+      "title": "Đóng mà không tải xuống?",
+      "message": "Có những thay đổi được thực hiện đối với tài liệu này, bạn có chắc chắn muốn đóng nó mà không tải xuống công việc của mình không? Bạn không thể hoàn tác hành động này.",
+      "rejectDownloadButton": "Đóng mà không cần tải xuống"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "Tùy Chọn",
       "radioGroups": "Các nút radio có cùng Tên Trường sẽ thuộc cùng một nhóm.",
       "nameRequired": "Tên trường là bắt buộc",
+      "fieldIndicator": "Chỉ báo trường",
+      "documentFieldIndicator": "Chỉ báo trường tài liệu",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Chèn văn bản tại đây",
+        "CheckBoxFormField": "Kiểm tra",
+        "RadioButtonFormField": "Lấp đầy",
+        "ListBoxFormField": "Lựa chọn",
+        "ComboBoxFormField": "Lựa chọn",
+        "SignatureFormField": {
+          "fullSignature": "Ký vào đây",
+          "initialsSignature": "Ban đầu tại đây"
+        }
+      },
       "size": "Kích thước",
       "width": "Chiều rộng",
       "height": "Chiều cao",
@@ -878,6 +922,10 @@
       "cancelMessage": "Bạn có chắc chắn muốn hủy việc cắt xén tất cả các trang đã chọn không?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Đoạn văn",
+    "text": "Chữ"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Bắt đầu biên tập lại bằng cách đánh dấu văn bản, vùng, trang hoặc thực hiện tìm kiếm.",
     "redactionSearchPlaceholder": "Bổ sung theo tìm kiếm từ khóa hoặc mẫu",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Thuộc tính",
     "miscValuesHeader": "Tất cả",
-    "emptyPanelMessage": "Chọn một phần tử để xem các thuộc tính của nó"
+    "emptyPanelMessage": "Chọn một phần tử để xem các thuộc tính của nó."
   },
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Kéo và thả tệp của bạn vào đây để so sánh",
+    "or": "Hoặc",
+    "browse": "Duyệt qua tệp",
+    "startSync": "Bắt đầu đồng bộ hóa",
+    "stopSync": "Dừng đồng bộ hóa",
+    "closeDocument": "Đóng tài liệu",
+    "save": "Lưu tài liệu",
+    "comparePanel": {
+      "Find": "Tìm trong tài liệu",
+      "changesList": "Danh sách thay đổi",
+      "change": "Biến đổi",
+      "old": "Cũ",
+      "new": "Mới",
+      "page": "Trang"
+    }
   }
 }

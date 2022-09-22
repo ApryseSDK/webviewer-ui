@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Adicionar parágrafo",
     "add": "Adicionar",
     "apply": "Aplicar",
     "applyAll": "Aplicar todos",
@@ -94,7 +95,9 @@
     "addMark": "Adicionar marca",
     "viewFile": "Visualizar arquivo",
     "switchLanguage": "Linguagem",
-    "multiReplyAnnotations": "Responder às anotações selecionadas ({{count}})"
+    "multiReplyAnnotations": "Responder às anotações selecionadas ({{count}})",
+    "comparePages": "Comparar páginas",
+    "startComparison": "Iniciar comparação"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -115,6 +118,8 @@
     "freehand": "Desenho livre",
     "freeHandHighlight": "Destaque de mão livre",
     "freetext": "Texto livre",
+    "markInsertText": "Inserir texto",
+    "markReplaceText": "Substituir texto",
     "highlight": "Destacar",
     "image": "Imagem",
     "line": "Linha",
@@ -144,7 +149,8 @@
     "other": "Outro",
     "3D": "3D",
     "sound": "Som",
-    "changeView": "Alterar visualização"
+    "changeView": "Alterar visualização",
+    "newImage": "Nova imagem"
   },
   "rubberStamp": {
     "Approved": "Aprovado",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "Ver todas as anotações",
       "close": "Fechar todas as anotações"
-    }
+    },
+    "comparePanel": "Painel de comparação"
   },
   "message": {
     "toolsOverlayNoPresets": "Sem predefinições",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "As anotações existentes podem não corresponder ao texto após sua edição.",
     "changesCannotBeUndone": "Quaisquer alterações feitas não podem ser desfeitas.",
     "doNotShowAgain": "não me mostre isso novamente",
+    "doNotAskAgain": "Não pergunte novamente",
     "enterReplacementText": "Digite o texto que deseja substituir",
     "sortBy": "Ordenar por",
     "emptyCustomStampInput": "O texto do carimbo não pode estar vazio",
@@ -288,7 +296,8 @@
       "underline": "Sublinhado",
       "squiggly": "Squiggly",
       "3D": "3D",
-      "other": "De outros"
+      "other": "De outros",
+      "initials": "Iniciais"
     },
     "notesOrder": {
       "dropdownLabel": "Classificar lista de pedidos",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "Inserir",
       "toolbarGroup-Measure": "Medir",
       "toolbarGroup-Edit": "Editar",
+      "toolbarGroup-EditText": "Editar texto",
       "toolbarGroup-FillAndSign": "Preencher e assinar",
       "toolbarGroup-Forms": "Formulários",
       "toolbarGroup-Redact": "Redigir"
@@ -326,7 +336,6 @@
       "pageTransition": "Transição de página"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Selecione várias páginas",
       "closeTooltip": "Fechar seleção múltipla"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Diferenciar maiúsculas e minúsculas",
       "wholeWordOnly": "Palavra inteira",
-      "wildcard": "Curinga"
+      "wildcard": "Curinga",
+      "replace": "Substituir",
+      "replaceAll": "Substitua tudo",
+      "replaceText": "Substituir texto",
+      "confirmMessageReplaceAll": "Tem certeza de que deseja substituir todo o texto?",
+      "confirmMessageReplaceOne": "Tem certeza de que deseja substituir este texto?",
+      "moreOptions": "Mais opções",
+      "lessOptions": "Menos opções",
+      "confirm": "confirme"
     },
     "toolsOverlay": {
       "currentStamp": "Carimbo Atual",
@@ -392,14 +409,20 @@
       "addStamp": "Adicionar novo carimbo"
     },
     "signatureOverlay": {
-      "addSignature": "Adicionar assinatura"
+      "addSignature": "Adicionar assinatura",
+      "addSignatureOrInitials": "Assinatura/Iniciais"
     },
     "signatureModal": {
       "modalName": "Criar nova assinatura",
       "dragAndDrop": "Arraste e solte sua imagem aqui",
       "or": "Ou",
       "pickImage": "Escolher imagem da assinatura",
-      "selectImage": "Selecione sua imagem aqui"
+      "selectImage": "Selecione sua imagem aqui",
+      "typeSignature": "Tipo de Assinatura*",
+      "typeInitial": "Digite as iniciais*",
+      "drawSignature": "Desenhar Assinatura*",
+      "drawInitial": "Desenhe iniciais*",
+      "pickInitialsFile": "Escolha as iniciais"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Arraste e solte seu arquivo aqui",
@@ -455,7 +478,8 @@
         "preset": "Predefinição",
         "paperUnits": "Unidades de papel",
         "displayUnits": "Unidades de exibição",
-        "fractionUnitsTooltip": "Unidades de fração aplicam-se apenas a in e ft-in"
+        "fractionUnitsTooltip": "Unidades de fração aplicam-se apenas a in e ft-in",
+        "incorrectSyntax": "Sintaxe incorreta"
       },
       "scaleOverlay": {
         "addNewScale": "Adicionar nova escala",
@@ -473,7 +497,10 @@
         "deletionIs": "A exclusão é",
         "irreversible": "irreversível",
         "willDeleteMeasurement": "e excluirá as medições associadas.",
-        "confirmDelete": "Tem certeza de que deseja excluir esta escala?"
+        "confirmDelete": "Tem certeza de que deseja excluir esta escala?",
+        "ifChangeScale": "Se você alterar a escala da medida ou ferramenta selecionada, a escala",
+        "notUsedWillDelete": " não será mais usado por nenhuma medida ou ferramenta e será excluído. A exclusão é irreversível.",
+        "ifToContinue": "Tem certeza de que deseja continuar?"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "Especificar páginas",
       "odd": "Somente páginas ímpares",
       "even": "Apenas páginas pares",
-      "header": "Marcar Redação de Páginas",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Marcar Redação de Páginas"
     },
     "lineStyleOptions": {
       "title": "Estilo"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "Excluir anotações?",
       "message": "A exclusão removerá todos os comentários, respostas e agrupamentos e não poderá ser desfeita.\n\n Tem certeza de que deseja excluir essas anotações?"
+    },
+    "closeFile": {
+      "title": "Fechar sem baixar?",
+      "message": "Foram feitas alterações neste documento. Tem certeza de que deseja fechá-lo sem baixar seu trabalho? Você não pode desfazer esta ação.",
+      "rejectDownloadButton": "Fechar sem baixar"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "Opções",
       "radioGroups": "Os botões de opção com o mesmo nome de campo pertencerão ao mesmo agrupamento.",
       "nameRequired": "O nome do campo é obrigatório",
+      "fieldIndicator": "Indicadores de campo",
+      "documentFieldIndicator": "Indicadores de campo do documento",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Inserir texto aqui",
+        "CheckBoxFormField": "Verificar",
+        "RadioButtonFormField": "Encher",
+        "ListBoxFormField": "Selecionar",
+        "ComboBoxFormField": "Selecionar",
+        "SignatureFormField": {
+          "fullSignature": "Assine aqui",
+          "initialsSignature": "Inicial aqui"
+        }
+      },
       "size": "Tamanho",
       "width": "Largura",
       "height": "Altura",
@@ -878,6 +922,10 @@
       "cancelMessage": "Tem certeza de que deseja cancelar o corte de todas as páginas selecionadas?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Parágrafo",
+    "text": "Texto"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Comece a redigir marcando texto, regiões, páginas ou fazendo uma pesquisa.",
     "redactionSearchPlaceholder": "Adicionar por pesquisa de palavras-chave ou padrões",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Propriedades",
     "miscValuesHeader": "Todos",
-    "emptyPanelMessage": "Selecione um elemento para ver suas propriedades"
+    "emptyPanelMessage": "Selecione um elemento para ver suas propriedades."
   },
   "languageModal": {
     "selectLanguage": "Selecione o idioma"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Arraste e solte seu arquivo aqui para comparar",
+    "or": "Ou",
+    "browse": "Procurar arquivos",
+    "startSync": "Iniciar sincronização",
+    "stopSync": "Parar sincronização",
+    "closeDocument": "Fechar documento",
+    "save": "Salvar documento",
+    "comparePanel": {
+      "Find": "Localizar no documento",
+      "changesList": "Lista de alterações",
+      "change": "Mudar",
+      "old": "Velho",
+      "new": "Novo",
+      "page": "Página"
+    }
   }
 }

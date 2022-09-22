@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Tambahkan Paragraf",
     "add": "Menambahkan",
     "apply": "Berlaku",
     "applyAll": "Terapkan semua",
@@ -94,7 +95,9 @@
     "addMark": "Tambahkan Tandai",
     "viewFile": "Lihat file",
     "switchLanguage": "Bahasa",
-    "multiReplyAnnotations": "Membalas anotasi yang dipilih ({{count}})"
+    "multiReplyAnnotations": "Membalas anotasi yang dipilih ({{count}})",
+    "comparePages": "Bandingkan halaman",
+    "startComparison": "Mulai Perbandingan"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -115,6 +118,8 @@
     "freehand": "Tangan Bebas",
     "freeHandHighlight": "Sorotan Tangan Gratis",
     "freetext": "Teks Gratis",
+    "markInsertText": "Sisipkan Teks",
+    "markReplaceText": "Ganti Teks",
     "highlight": "Menyorot",
     "image": "Gambar",
     "line": "Garis",
@@ -144,7 +149,8 @@
     "other": "Lainnya",
     "3D": "3D",
     "sound": "Suara",
-    "changeView": "Ubah Tampilan"
+    "changeView": "Ubah Tampilan",
+    "newImage": "Gambar baru"
   },
   "rubberStamp": {
     "Approved": "Disetujui",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "Lihat Semua Anotasi",
       "close": "Tutup Semua Anotasi"
-    }
+    },
+    "comparePanel": "Bandingkan Panel"
   },
   "message": {
     "toolsOverlayNoPresets": "Tidak Ada Preset",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "Anotasi yang ada mungkin tidak cocok dengan teks setelah diedit.",
     "changesCannotBeUndone": "Setiap perubahan yang dibuat tidak dapat dibatalkan.",
     "doNotShowAgain": "Jangan tunjukkan ini lagi",
+    "doNotAskAgain": "Jangan tanya lagi",
     "enterReplacementText": "Masukkan teks yang ingin Anda ganti",
     "sortBy": "Menyortir",
     "emptyCustomStampInput": "Teks stempel tidak boleh kosong",
@@ -288,7 +296,8 @@
       "underline": "Menggarisbawahi",
       "squiggly": "berlekuk-lekuk",
       "3D": "3D",
-      "other": "Lainnya"
+      "other": "Lainnya",
+      "initials": "Inisial"
     },
     "notesOrder": {
       "dropdownLabel": "Urutkan Daftar Pesanan",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "Memasukkan",
       "toolbarGroup-Measure": "Ukuran",
       "toolbarGroup-Edit": "Sunting",
+      "toolbarGroup-EditText": "Edit Teks",
       "toolbarGroup-FillAndSign": "Isi dan Tandatangani",
       "toolbarGroup-Forms": "Formulir",
       "toolbarGroup-Redact": "Menyusun"
@@ -326,7 +336,6 @@
       "pageTransition": "Transisi Halaman"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Pilih beberapa halaman",
       "closeTooltip": "Tutup multipilih"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Hal - hal sensitif",
       "wholeWordOnly": "Seluruh kata",
-      "wildcard": "Wildcard"
+      "wildcard": "Wildcard",
+      "replace": "Mengganti",
+      "replaceAll": "Menggantikan semua",
+      "replaceText": "Ganti Teks",
+      "confirmMessageReplaceAll": "Anda yakin ingin mengganti semua teks?",
+      "confirmMessageReplaceOne": "Anda yakin ingin mengganti teks ini?",
+      "moreOptions": "Lebih banyak pilihan",
+      "lessOptions": "Lebih sedikit pilihan",
+      "confirm": "Mengonfirmasi"
     },
     "toolsOverlay": {
       "currentStamp": "Stempel saat ini",
@@ -392,14 +409,20 @@
       "addStamp": "Tambahkan Stempel Baru"
     },
     "signatureOverlay": {
-      "addSignature": "Tambahkan Tanda Tangan Baru"
+      "addSignature": "Tambahkan Tanda Tangan Baru",
+      "addSignatureOrInitials": "Tanda tangan/Inisial"
     },
     "signatureModal": {
       "modalName": "Buat Tanda Tangan Baru",
       "dragAndDrop": "Seret & Jatuhkan gambar Anda di sini",
       "or": "Atau",
       "pickImage": "Pilih tanda tangan",
-      "selectImage": "Pilih gambar Anda di sini"
+      "selectImage": "Pilih gambar Anda di sini",
+      "typeSignature": "Ketik Tanda Tangan*",
+      "typeInitial": "Ketik Inisial*",
+      "drawSignature": "Gambar Tanda Tangan*",
+      "drawInitial": "Gambar Inisial*",
+      "pickInitialsFile": "Pilih Inisial"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Seret & Jatuhkan file Anda di sini",
@@ -455,7 +478,8 @@
         "preset": "Prasetel",
         "paperUnits": "Unit Kertas",
         "displayUnits": "Unit Tampilan",
-        "fractionUnitsTooltip": "Satuan pecahan hanya berlaku untuk in dan ft-in"
+        "fractionUnitsTooltip": "Satuan pecahan hanya berlaku untuk in dan ft-in",
+        "incorrectSyntax": "Sintaks salah"
       },
       "scaleOverlay": {
         "addNewScale": "Tambahkan Skala Baru",
@@ -473,7 +497,10 @@
         "deletionIs": "Penghapusan adalah",
         "irreversible": "ireversibel",
         "willDeleteMeasurement": "dan akan menghapus pengukuran terkait.",
-        "confirmDelete": "Anda yakin ingin menghapus skala ini?"
+        "confirmDelete": "Anda yakin ingin menghapus skala ini?",
+        "ifChangeScale": "Jika Anda mengubah skala untuk pengukuran atau alat yang dipilih, skala",
+        "notUsedWillDelete": " tidak akan lagi digunakan oleh pengukuran atau alat apa pun dan akan dihapus. Penghapusan tidak dapat diubah.",
+        "ifToContinue": "Anda yakin ingin melanjutkan?"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "Tentukan Halaman",
       "odd": "Halaman ganjil saja",
       "even": "Hanya halaman yang genap",
-      "header": "Tandai Redaksi Halaman",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Tandai Redaksi Halaman"
     },
     "lineStyleOptions": {
       "title": "Gaya"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "Hapus Anotasi?",
       "message": "Menghapus akan menghapus semua komentar, balasan, dan pengelompokan dan tidak dapat diurungkan.\n\n Anda yakin ingin menghapus anotasi ini?"
+    },
+    "closeFile": {
+      "title": "Tutup tanpa mengunduh?",
+      "message": "Ada perubahan yang dibuat pada dokumen ini, apakah Anda yakin ingin menutupnya tanpa mengunduh pekerjaan Anda? Anda tidak dapat mengurungkan tindakan ini.",
+      "rejectDownloadButton": "Tutup tanpa unduh"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "Pilihan",
       "radioGroups": "Tombol radio dengan Nama Bidang yang sama akan termasuk dalam pengelompokan yang sama.",
       "nameRequired": "Nama bidang wajib diisi",
+      "fieldIndicator": "Indikator Lapangan",
+      "documentFieldIndicator": "Indikator Bidang Dokumen",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Sisipkan Teks Di Sini",
+        "CheckBoxFormField": "Memeriksa",
+        "RadioButtonFormField": "Mengisi",
+        "ListBoxFormField": "Pilih",
+        "ComboBoxFormField": "Pilih",
+        "SignatureFormField": {
+          "fullSignature": "Masuk Disini",
+          "initialsSignature": "Inisial Disini"
+        }
+      },
       "size": "Ukuran",
       "width": "Lebar",
       "height": "Tinggi",
@@ -878,6 +922,10 @@
       "cancelMessage": "Anda yakin ingin membatalkan pemotongan semua halaman yang dipilih?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Gugus kalimat",
+    "text": "Teks"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Mulai menyunting dengan menandai teks, wilayah, halaman, atau melakukan pencarian.",
     "redactionSearchPlaceholder": "Tambahkan dengan pencarian atau pola kata kunci",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Properti",
     "miscValuesHeader": "Semua",
-    "emptyPanelMessage": "Pilih elemen untuk melihat propertinya"
+    "emptyPanelMessage": "Pilih elemen untuk melihat propertinya."
   },
   "languageModal": {
     "selectLanguage": "Pilih bahasa"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Seret dan Jatuhkan file Anda di sini untuk membandingkan",
+    "or": "Atau",
+    "browse": "Mencari berkas",
+    "startSync": "Mulai Sinkronkan",
+    "stopSync": "Hentikan Sinkronisasi",
+    "closeDocument": "Tutup Dokumen",
+    "save": "Simpan Dokumen",
+    "comparePanel": {
+      "Find": "Temukan di dokumen",
+      "changesList": "Daftar Perubahan",
+      "change": "Mengubah",
+      "old": "Tua",
+      "new": "Baru",
+      "page": "Halaman"
+    }
   }
 }

@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "段落を追加",
     "add": "追加",
     "apply": "適用",
     "applyAll": "すべて適用",
@@ -94,7 +95,9 @@
     "addMark": "マークを追加",
     "viewFile": "ファイルを閲覧する",
     "switchLanguage": "言語",
-    "multiReplyAnnotations": "選択した注釈に返信 ({{count}})"
+    "multiReplyAnnotations": "選択した注釈に返信 ({{count}})",
+    "comparePages": "ページを比較する",
+    "startComparison": "比較を開始"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -115,6 +118,8 @@
     "freehand": "フリーハンド",
     "freeHandHighlight": "フリーハンドハイライト",
     "freetext": "フリーテキスト",
+    "markInsertText": "テキストを挿入",
+    "markReplaceText": "テキストを置換",
     "highlight": "ハイライト",
     "image": "画像",
     "line": "直線",
@@ -144,7 +149,8 @@
     "other": "その他",
     "3D": "3D",
     "sound": "サウンド",
-    "changeView": "ビューを変更"
+    "changeView": "ビューを変更",
+    "newImage": "新しいイメージ"
   },
   "rubberStamp": {
     "Approved": "承認済",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "すべての注釈を表示",
       "close": "すべての注釈を閉じる"
-    }
+    },
+    "comparePanel": "比較パネル"
   },
   "message": {
     "toolsOverlayNoPresets": "プリセットなし",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "編集内容が既存の注釈と一致しない場合があります。",
     "changesCannotBeUndone": "行った変更は元に戻せません。",
     "doNotShowAgain": "次回以降は表示しない",
+    "doNotAskAgain": "二度と質問しないで",
     "enterReplacementText": "置き換えるテキストを入力してください",
     "sortBy": "並び替え",
     "emptyCustomStampInput": "スタンプテキストを空にすることはできません",
@@ -288,7 +296,8 @@
       "underline": "下線",
       "squiggly": "波線",
       "3D": "3D",
-      "other": "その他"
+      "other": "その他",
+      "initials": "イニシャル"
     },
     "notesOrder": {
       "dropdownLabel": "ソート順リスト",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "挿入",
       "toolbarGroup-Measure": "測定",
       "toolbarGroup-Edit": "編集",
+      "toolbarGroup-EditText": "テキストの編集",
       "toolbarGroup-FillAndSign": "入力と署名",
       "toolbarGroup-Forms": "フォーム",
       "toolbarGroup-Redact": "墨消し"
@@ -326,7 +336,6 @@
       "pageTransition": "ページ移動"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "複数のページを選択",
       "closeTooltip": "複数選択を閉じる"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "大文字と小文字を区別",
       "wholeWordOnly": "単語全体",
-      "wildcard": "ワイルドカード"
+      "wildcard": "ワイルドカード",
+      "replace": "交換",
+      "replaceAll": "すべて置換",
+      "replaceText": "テキストを置き換える",
+      "confirmMessageReplaceAll": "すべてのテキストを置き換えてもよろしいですか？",
+      "confirmMessageReplaceOne": "このテキストを置き換えてもよろしいですか？",
+      "moreOptions": "より多くのオプション",
+      "lessOptions": "オプションが少ない",
+      "confirm": "確認"
     },
     "toolsOverlay": {
       "currentStamp": "現在のスタンプ",
@@ -392,14 +409,20 @@
       "addStamp": "新しいスタンプを追加"
     },
     "signatureOverlay": {
-      "addSignature": "新しい署名を追加"
+      "addSignature": "新しい署名を追加",
+      "addSignatureOrInitials": "署名/イニシャル"
     },
     "signatureModal": {
       "modalName": "新しい署名を作成する",
       "dragAndDrop": "ここに画像をドラッグ＆ドロップ",
       "or": "または",
       "pickImage": "署名画像を選択",
-      "selectImage": "ここで画像を選択してください"
+      "selectImage": "ここで画像を選択してください",
+      "typeSignature": "タイプ署名*",
+      "typeInitial": "タイプ イニシャル*",
+      "drawSignature": "署名を描く*",
+      "drawInitial": "イニシャルを描く*",
+      "pickInitialsFile": "イニシャルを選択"
     },
     "pageReplacementModal": {
       "dragAndDrop": "ここにファイルをドラッグ＆ドロップ",
@@ -455,7 +478,8 @@
         "preset": "プリセット",
         "paperUnits": "ペーパーユニット",
         "displayUnits": "ディスプレイユニット",
-        "fractionUnitsTooltip": "分数単位は、inとft-inにのみ適用されます"
+        "fractionUnitsTooltip": "分数単位は、inとft-inにのみ適用されます",
+        "incorrectSyntax": "構文が正しくありません"
       },
       "scaleOverlay": {
         "addNewScale": "新しいスケールを追加",
@@ -473,7 +497,10 @@
         "deletionIs": "削除は",
         "irreversible": "不可逆",
         "willDeleteMeasurement": "関連する測定値を削除します。",
-        "confirmDelete": "このスケールを削除してもよろしいですか？"
+        "confirmDelete": "このスケールを削除してもよろしいですか？",
+        "ifChangeScale": "選択した測定またはツールのスケールを変更すると、スケール",
+        "notUsedWillDelete": " 測定やツールで使用されなくなり、削除されます。削除は元に戻せません。",
+        "ifToContinue": "続行してもよろしいですか？"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "ページを指定",
       "odd": "奇数ページのみ",
       "even": "偶数ページのみ",
-      "header": "ページ編集をマーク",
-      "specifyPlaceholder": "1、3、5-10"
+      "header": "ページ編集をマーク"
     },
     "lineStyleOptions": {
       "title": "スタイル"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "注釈を削除しますか？",
       "message": "削除すると、すべてのコメント、返信、およびグループ化が削除され、元に戻すことはできません。\n\n これらの注釈を削除してもよろしいですか？"
+    },
+    "closeFile": {
+      "title": "ダウンロードせずに閉じますか？",
+      "message": "このドキュメントに変更が加えられましたが、作業内容をダウンロードせずに閉じてもよろしいですか？このアクションを元に戻すことはできません。",
+      "rejectDownloadButton": "ダウンロードせずに閉じる"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "オプション",
       "radioGroups": "同じフィールド名のラジオボタンは同じグループに属します。",
       "nameRequired": "フィールド名は必須です",
+      "fieldIndicator": "フィールドインジケーター",
+      "documentFieldIndicator": "ドキュメント フィールド インジケータ",
+      "indicatorPlaceHolders": {
+        "TextFormField": "ここにテキストを挿入",
+        "CheckBoxFormField": "小切手",
+        "RadioButtonFormField": "塗りつぶし",
+        "ListBoxFormField": "選択する",
+        "ComboBoxFormField": "選択する",
+        "SignatureFormField": {
+          "fullSignature": "こちらにサインして下さい",
+          "initialsSignature": "イニシャルはこちら"
+        }
+      },
       "size": "サイズ",
       "width": "幅",
       "height": "高さ",
@@ -878,6 +922,10 @@
       "cancelMessage": "選択したすべてのページの切り抜きをキャンセルしてもよろしいですか？"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "段落",
+    "text": "文章"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "テキスト、地域、ページにマークを付けるか、検索して、編集を開始します。",
     "redactionSearchPlaceholder": "キーワード検索またはパターンで追加",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "プロパティ",
     "miscValuesHeader": "すべて",
-    "emptyPanelMessage": "プロパティを表示する要素を選択してください"
+    "emptyPanelMessage": "プロパティを表示する要素を選択してください."
   },
   "languageModal": {
     "selectLanguage": "言語を選択する"
+  },
+  "multiViewer": {
+    "dragAndDrop": "ここにファイルをドラッグ アンド ドロップして比較します",
+    "or": "または",
+    "browse": "ブラウズファイル",
+    "startSync": "同期を開始",
+    "stopSync": "同期を停止",
+    "closeDocument": "ドキュメントを閉じる",
+    "save": "ドキュメントを保存",
+    "comparePanel": {
+      "Find": "ドキュメント内を検索",
+      "changesList": "変更点一覧",
+      "change": "変化する",
+      "old": "年",
+      "new": "新しい",
+      "page": "ページ"
+    }
   }
 }

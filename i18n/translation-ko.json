@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "단락 추가",
     "add": "추가",
     "apply": "적용",
     "applyAll": "모두적용",
@@ -94,7 +95,9 @@
     "addMark": "마크추가",
     "viewFile": "파일보기",
     "switchLanguage": "언어",
-    "multiReplyAnnotations": "선택한 주석에 답장({{count}}개)"
+    "multiReplyAnnotations": "선택한 주석에 답장({{count}}개)",
+    "comparePages": "페이지 비교",
+    "startComparison": "비교 시작"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -115,6 +118,8 @@
     "freehand": "그리기",
     "freeHandHighlight": "하이라이트 그리기",
     "freetext": "텍스트상자",
+    "markInsertText": "텍스트 삽입",
+    "markReplaceText": "텍스트 바꾸기",
     "highlight": "하이라이트",
     "image": "이미지",
     "line": "선",
@@ -144,7 +149,8 @@
     "other": "더보기",
     "3D": "3D",
     "sound": "소리",
-    "changeView": "보기 변경"
+    "changeView": "보기 변경",
+    "newImage": "새 이미지"
   },
   "rubberStamp": {
     "Approved": "승인",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "모든 주석 보기",
       "close": "모든 주석 닫기"
-    }
+    },
+    "comparePanel": "비교 패널"
   },
   "message": {
     "toolsOverlayNoPresets": "사전설정 없음",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "편집 후 기존 주석과 일치하지 않을 수 있습니다.",
     "changesCannotBeUndone": "변경사항은 취소할 수 없습니다.",
     "doNotShowAgain": "다시 표시하지 않기",
+    "doNotAskAgain": "다시 묻지마",
     "enterReplacementText": "변경할 텍스트를 입력하세요",
     "sortBy": "정렬기준",
     "emptyCustomStampInput": "텍스트르 입력하세요.",
@@ -288,7 +296,8 @@
       "underline": "밑줄",
       "squiggly": "물결선",
       "3D": "3D",
-      "other": "더보기"
+      "other": "더보기",
+      "initials": "머리 글자"
     },
     "notesOrder": {
       "dropdownLabel": "정렬목록",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "삽입",
       "toolbarGroup-Measure": "측정",
       "toolbarGroup-Edit": "편집",
+      "toolbarGroup-EditText": "텍스트 편집",
       "toolbarGroup-FillAndSign": "채우기&서명",
       "toolbarGroup-Forms": "양식",
       "toolbarGroup-Redact": "수정"
@@ -326,7 +336,6 @@
       "pageTransition": "페이지 전환"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "여러 페이지 선택",
       "closeTooltip": "다중 선택 닫기"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "대/소문자 구분",
       "wholeWordOnly": "전체단어로 검색",
-      "wildcard": "와일드 카드"
+      "wildcard": "와일드 카드",
+      "replace": "바꾸다",
+      "replaceAll": "모두 다 바꿔",
+      "replaceText": "텍스트 바꾸기",
+      "confirmMessageReplaceAll": "모든 텍스트를 바꾸시겠습니까?",
+      "confirmMessageReplaceOne": "이 텍스트를 바꾸시겠습니까?",
+      "moreOptions": "추가 옵션",
+      "lessOptions": "더 적은 옵션",
+      "confirm": "확인하다"
     },
     "toolsOverlay": {
       "currentStamp": "현재 스탬프",
@@ -392,14 +409,20 @@
       "addStamp": "스탬프 추가"
     },
     "signatureOverlay": {
-      "addSignature": "서명 추가"
+      "addSignature": "서명 추가",
+      "addSignatureOrInitials": "서명/이니셜"
     },
     "signatureModal": {
       "modalName": "서명 만들기",
       "dragAndDrop": "여기에 드래그앤드롭 하세요.",
       "or": "또는",
       "pickImage": "서명 이미지 선택",
-      "selectImage": "업로드"
+      "selectImage": "업로드",
+      "typeSignature": "유형 서명*",
+      "typeInitial": "유형 이니셜*",
+      "drawSignature": "서명 그리기*",
+      "drawInitial": "이니셜 그리기*",
+      "pickInitialsFile": "이니셜 선택"
     },
     "pageReplacementModal": {
       "dragAndDrop": "여기에 드래그앤드롭 하세요.",
@@ -455,7 +478,8 @@
         "preset": "프리셋",
         "paperUnits": "종이 단위",
         "displayUnits": "디스플레이 단위",
-        "fractionUnitsTooltip": "분수 단위는 in 및 ft-in에만 적용됩니다."
+        "fractionUnitsTooltip": "분수 단위는 in 및 ft-in에만 적용됩니다.",
+        "incorrectSyntax": "잘못된 구문"
       },
       "scaleOverlay": {
         "addNewScale": "새 스케일 추가",
@@ -473,7 +497,10 @@
         "deletionIs": "삭제",
         "irreversible": "뒤집을 수 없는",
         "willDeleteMeasurement": "관련 측정을 삭제합니다.",
-        "confirmDelete": "이 척도를 삭제하시겠습니까?"
+        "confirmDelete": "이 척도를 삭제하시겠습니까?",
+        "ifChangeScale": "선택한 측정 또는 도구의 눈금을 변경하면 눈금이",
+        "notUsedWillDelete": " 더 이상 측정이나 도구에서 사용되지 않으며 삭제됩니다. 삭제는 되돌릴 수 없습니다.",
+        "ifToContinue": "계속하시겠습니까?"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "페이지 지정",
       "odd": "홀수 페이지",
       "even": "짝수 페이지",
-      "header": "마크 페이지 수정",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "마크 페이지 수정"
     },
     "lineStyleOptions": {
       "title": "스타일"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "주석을 삭제하시겠습니까?",
       "message": "삭제하면 모든 댓글, 답글 및 그룹이 제거되며 취소할 수 없습니다.\n\n 이 주석을 삭제하시겠습니까?"
+    },
+    "closeFile": {
+      "title": "다운로드하지 않고 종료하시겠습니까?",
+      "message": "이 문서에 변경 사항이 있습니다. 작업을 다운로드하지 않고 닫으시겠습니까? 이 작업은 취소할 수 없습니다.",
+      "rejectDownloadButton": "다운로드하지 않고 닫기"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "양식목록",
       "radioGroups": "동일한 양식이름을 가진 라디오버튼은 동일한 그룹에 속합니다.",
       "nameRequired": "양식이름을 입력하세요.",
+      "fieldIndicator": "필드 표시기",
+      "documentFieldIndicator": "문서 필드 표시기",
+      "indicatorPlaceHolders": {
+        "TextFormField": "여기에 텍스트 삽입",
+        "CheckBoxFormField": "확인하다",
+        "RadioButtonFormField": "채우다",
+        "ListBoxFormField": "고르다",
+        "ComboBoxFormField": "고르다",
+        "SignatureFormField": {
+          "fullSignature": "여기에 서명",
+          "initialsSignature": "여기에 이니셜"
+        }
+      },
       "size": "크기",
       "width": "너비",
       "height": "높이",
@@ -878,6 +922,10 @@
       "cancelMessage": "선택한 모든 페이지 자르기를 취소하시겠습니까?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "절",
+    "text": "텍스트"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "텍스트, 지역, 페이지를 표시하거나 검색하여 수정을 시작하세요.",
     "redactionSearchPlaceholder": "키워드 검색 또는 패턴으로 추가",
@@ -911,5 +959,22 @@
   },
   "languageModal": {
     "selectLanguage": "언어 선택"
+  },
+  "multiViewer": {
+    "dragAndDrop": "비교하려면 여기에 파일을 끌어다 놓습니다.",
+    "or": "또는",
+    "browse": "파일 찾아보기",
+    "startSync": "동기화 시작",
+    "stopSync": "동기화 중지",
+    "closeDocument": "문서 닫기",
+    "save": "문서 저장",
+    "comparePanel": {
+      "Find": "문서에서 찾기",
+      "changesList": "변경 목록",
+      "change": "변화",
+      "old": "오래된",
+      "new": "새로운",
+      "page": "페이지"
+    }
   }
 }

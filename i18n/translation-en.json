@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Add Paragraph",
     "add": "Add",
     "apply": "Apply",
     "applyAll": "Apply all",
@@ -94,7 +95,9 @@
     "addMark": "Add Mark",
     "viewFile": "View file",
     "switchLanguage": "Language",
-    "multiReplyAnnotations": "Reply to selected annotations ({{count}})"
+    "multiReplyAnnotations": "Reply to selected annotations ({{count}})",
+    "comparePages": "Compare pages",
+    "startComparison": "Start Comparison"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -115,6 +118,8 @@
     "freehand": "Free Hand",
     "freeHandHighlight": "Free Hand Highlight",
     "freetext": "Free Text",
+    "markInsertText": "Insert Text",
+    "markReplaceText": "Replace Text",
     "highlight": "Highlight",
     "image": "Image",
     "line": "Line",
@@ -144,7 +149,8 @@
     "other": "Other",
     "3D": "3D",
     "sound": "Sound",
-    "changeView": "Change View"
+    "changeView": "Change View",
+    "newImage": "New Image"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "View All Annotations",
       "close": "Close All Annotations"
-    }
+    },
+    "comparePanel": "Compare Panel"
   },
   "message": {
     "toolsOverlayNoPresets": "No Presets",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "Existing annotations may not match up with the text after it has been edited.",
     "changesCannotBeUndone": "Any changes made cannot be undone.",
     "doNotShowAgain": "Do not show me this again",
+    "doNotAskAgain": "Do not ask again",
     "enterReplacementText": "Enter the text you want to replace",
     "sortBy": "Sort",
     "emptyCustomStampInput": "Stamp text cannot be empty",
@@ -288,7 +296,8 @@
       "underline": "Underline",
       "squiggly": "Squiggly",
       "3D": "3D",
-      "other": "Other"
+      "other": "Other",
+      "initials": "Initials"
     },
     "notesOrder": {
       "dropdownLabel": "Sort Order List",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "Insert",
       "toolbarGroup-Measure": "Measure",
       "toolbarGroup-Edit": "Edit",
+      "toolbarGroup-EditText": "Edit Text",
       "toolbarGroup-FillAndSign": "Fill and Sign",
       "toolbarGroup-Forms": "Forms",
       "toolbarGroup-Redact": "Redact"
@@ -326,7 +336,6 @@
       "pageTransition": "Page Transition"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Select multiple pages",
       "closeTooltip": "Close multiselect"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Case sensitive",
       "wholeWordOnly": "Whole word",
-      "wildcard": "Wildcard"
+      "wildcard": "Wildcard",
+      "replace": "Replace",
+      "replaceAll": "Replace All",
+      "replaceText": "Replace Text",
+      "confirmMessageReplaceAll": "Are you sure you want to replace all text?",
+      "confirmMessageReplaceOne": "Are you sure you want to replace this text?",
+      "moreOptions": "More options",
+      "lessOptions": "Less options",
+      "confirm": "Confirm"
     },
     "toolsOverlay": {
       "currentStamp": "Current Stamp",
@@ -392,14 +409,20 @@
       "addStamp": "Add New Stamp"
     },
     "signatureOverlay": {
-      "addSignature": "Add New Signature"
+      "addSignature": "Signature",
+      "addSignatureOrInitials": "Signature/Initials"
     },
     "signatureModal": {
       "modalName": "Create New Signature",
       "dragAndDrop": "Drag & Drop your image here",
       "or": "Or",
       "pickImage": "Choose a signature",
-      "selectImage": "Select your image here"
+      "selectImage": "Select your image here",
+      "typeSignature": "Type Signature*",
+      "typeInitial": "Type Initials*",
+      "drawSignature": "Draw Signature*",
+      "drawInitial": "Draw Initials*",
+      "pickInitialsFile": "Choose Initials"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Drag & Drop your file here",
@@ -568,8 +591,7 @@
       "specify": "Specify Pages",
       "odd": "Odd Pages only",
       "even": "Even Pages only",
-      "header": "Mark Pages Redaction",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Mark Pages Redaction"
     },
     "lineStyleOptions": {
       "title": "Style"
@@ -610,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "Delete Annotations?",
       "message": "Deleteing will remove all comments, replies, and grouping and cannot be undone. \n\n Are you sure you want to delete these annotations?"
+    },
+    "closeFile": {
+      "title": "Close without downloading?",
+      "message": "There are changes made to this document, are you sure you want to close it without downloading your work? You can't undo this action.",
+      "rejectDownloadButton": "Close without download"
     }
   },
   "shortcut": {
@@ -693,9 +720,38 @@
       "November",
       "December"
     ],
-    "monthsShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
-    "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    "weekdaysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "monthsShort": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "weekdays": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "weekdaysShort": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "today": "Today",
     "invalidDateTime": "Invalid Date/Time: Input should match format"
   },
@@ -713,6 +769,19 @@
       "options": "Options",
       "radioGroups": "Radio buttons with the same Field Name will belong in the same grouping.",
       "nameRequired": "Field name is required",
+      "fieldIndicator": "Field Indicators",
+      "documentFieldIndicator": "Document Field Indicators",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Insert Text Here",
+        "CheckBoxFormField": "Check",
+        "RadioButtonFormField": "Fill",
+        "ListBoxFormField": "Select",
+        "ComboBoxFormField": "Select",
+        "SignatureFormField": {
+          "fullSignature": "Sign Here",
+          "initialsSignature": "Initial Here"
+        }
+      },
       "size": "Size",
       "width": "Width",
       "height": "Height",
@@ -841,17 +910,21 @@
     "allPages": "All",
     "singlePage": "Current Page",
     "multiPage": "Specify Page",
-    "cropDimensions":"Crop Dimensions",
+    "cropDimensions": "Crop Dimensions",
     "dimensionInput": {
       "unitOfMeasurement": "Unit",
       "autoTrim": "Presets"
     },
     "cropModal": {
       "applyTitle": "Apply crop?",
-      "applyMessage": "This action will permanently crop all selected pages selected. It cannot be undone.",
+      "applyMessage": "This action will permanently crop all selected pages. It cannot be undone.",
       "cancelTitle": "Cancel crop?",
       "cancelMessage": "Are you sure you want to cancel cropping all selected pages?"
     }
+  },
+  "textEditingPanel": {
+    "paragraph": "Paragraph",
+    "text": "Text"
   },
   "redactionPanel": {
     "noMarkedRedactions": "Start redacting by marking text, regions, pages or making a search.",
@@ -882,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Properties",
     "miscValuesHeader": "All",
-    "emptyPanelMessage": "Select an element to view its properties"
+    "emptyPanelMessage": "Select an element to view its properties."
   },
   "languageModal": {
     "selectLanguage": "Select language"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Drag and Drop your file here to compare",
+    "or": "Or",
+    "browse": "Browse Files",
+    "startSync": "Start Sync",
+    "stopSync": "Stop Sync",
+    "closeDocument": "Close Document",
+    "save": "Save Document",
+    "comparePanel": {
+      "Find": "Find in document",
+      "changesList": "Changes List",
+      "change": "Change",
+      "old": "Old",
+      "new": "New",
+      "page": "Page"
+    }
   }
 }

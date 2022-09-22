@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Absatz hinzufügen",
     "add": "Hinzufügen",
     "apply": "Anwenden",
     "applyAll": "Alles anwenden",
@@ -94,7 +95,9 @@
     "addMark": "Markus hinzufügen",
     "viewFile": "Datei ansehen",
     "switchLanguage": "Sprache",
-    "multiReplyAnnotations": "Auf ausgewählte Anmerkungen antworten ({{count}})"
+    "multiReplyAnnotations": "Auf ausgewählte Anmerkungen antworten ({{count}})",
+    "comparePages": "Seiten vergleichen",
+    "startComparison": "Vergleich starten"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -115,6 +118,8 @@
     "freehand": "Freihandzeichnen",
     "freeHandHighlight": "Freihand-Highlight",
     "freetext": "Freier Text",
+    "markInsertText": "Texte einfügen",
+    "markReplaceText": "Texte ersetzen",
     "highlight": "Hervorheben",
     "image": "Bild",
     "line": "Linie",
@@ -144,7 +149,8 @@
     "other": "Andere",
     "3D": "3D",
     "sound": "Klang",
-    "changeView": "Ansicht ändern"
+    "changeView": "Ansicht ändern",
+    "newImage": "Neues Bild"
   },
   "rubberStamp": {
     "Approved": "Genehmigt",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "Alle Anmerkungen anzeigen",
       "close": "Alle Anmerkungen schließen"
-    }
+    },
+    "comparePanel": "Panel vergleichen"
   },
   "message": {
     "toolsOverlayNoPresets": "Keine Voreinstellungen",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "Vorhandene Anmerkungen stimmen möglicherweise nicht mit dem Text überein, nachdem dieser bearbeitet wurde.",
     "changesCannotBeUndone": "Vorgenommene Änderungen können nicht rückgängig gemacht werden.",
     "doNotShowAgain": "Zeig mir das nicht noch einmal",
+    "doNotAskAgain": "Frag nicht nochmal",
     "enterReplacementText": "Geben Sie den Text ein, den Sie ersetzen möchten",
     "sortBy": "Sortiere nach",
     "emptyCustomStampInput": "Stempeltext darf nicht leer sein",
@@ -288,7 +296,8 @@
       "underline": "Unterstreichen",
       "squiggly": "Gewellte Linie",
       "3D": "3D",
-      "other": "Sonstige"
+      "other": "Sonstige",
+      "initials": "Initialen"
     },
     "notesOrder": {
       "dropdownLabel": "Sortierreihenfolge Liste",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "Einfügen",
       "toolbarGroup-Measure": "Messen",
       "toolbarGroup-Edit": "Bearbeiten",
+      "toolbarGroup-EditText": "Text bearbeiten",
       "toolbarGroup-FillAndSign": "Füllen und unterschreiben",
       "toolbarGroup-Forms": "Formen",
       "toolbarGroup-Redact": "Schwärzen"
@@ -326,7 +336,6 @@
       "pageTransition": "Seitenübergang"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Mehrere Seiten auswählen",
       "closeTooltip": "Mehrfachauswahl schließen"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Groß-/Kleinschreibung beachten",
       "wholeWordOnly": "Ganzes Wort",
-      "wildcard": "Platzhalter"
+      "wildcard": "Platzhalter",
+      "replace": "Ersetzen",
+      "replaceAll": "Alles ersetzen",
+      "replaceText": "Texte ersetzen",
+      "confirmMessageReplaceAll": "Möchten Sie wirklich den gesamten Text ersetzen?",
+      "confirmMessageReplaceOne": "Möchten Sie diesen Text wirklich ersetzen?",
+      "moreOptions": "Mehr Optionen",
+      "lessOptions": "Weniger Optionen",
+      "confirm": "Bestätigen"
     },
     "toolsOverlay": {
       "currentStamp": "Aktueller Stempel",
@@ -392,14 +409,20 @@
       "addStamp": "Neuen Stempel hinzufügen"
     },
     "signatureOverlay": {
-      "addSignature": "Eine Unterschrift hinzufügen"
+      "addSignature": "Eine Unterschrift hinzufügen",
+      "addSignatureOrInitials": "Unterschrift/Initialen"
     },
     "signatureModal": {
       "modalName": "Neue Signatur erstellen",
       "dragAndDrop": "Ziehen Sie Ihr Bild per Drag & Drop hierher",
       "or": "Oder",
       "pickImage": "Wählen Sie das Signaturbild",
-      "selectImage": "Wählen Sie hier Ihr Bild aus"
+      "selectImage": "Wählen Sie hier Ihr Bild aus",
+      "typeSignature": "Typ Unterschrift*",
+      "typeInitial": "Typ Initialen*",
+      "drawSignature": "Unterschrift zeichnen*",
+      "drawInitial": "Initialen zeichnen*",
+      "pickInitialsFile": "Wählen Sie Initialen"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",
@@ -455,7 +478,8 @@
         "preset": "Voreinstellung",
         "paperUnits": "Papiereinheiten",
         "displayUnits": "Einheiten anzeigen",
-        "fractionUnitsTooltip": "Brucheinheiten gelten nur für in und ft-in"
+        "fractionUnitsTooltip": "Brucheinheiten gelten nur für in und ft-in",
+        "incorrectSyntax": "Falsche Syntax"
       },
       "scaleOverlay": {
         "addNewScale": "Neue Waage hinzufügen",
@@ -473,7 +497,10 @@
         "deletionIs": "Löschung ist",
         "irreversible": "irreversibel",
         "willDeleteMeasurement": "und löscht die zugehörigen Messungen.",
-        "confirmDelete": "Möchten Sie diese Skala wirklich löschen?"
+        "confirmDelete": "Möchten Sie diese Skala wirklich löschen?",
+        "ifChangeScale": "Wenn Sie den Maßstab für die ausgewählte Messung oder das ausgewählte Werkzeug ändern, skalieren Sie",
+        "notUsedWillDelete": " werden von keinen Messungen oder Werkzeugen mehr verwendet und gelöscht. Die Löschung ist irreversibel.",
+        "ifToContinue": "Möchten Sie wirklich fortfahren?"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "Seiten angeben",
       "odd": "Nur ungerade Seiten",
       "even": "Nur gerade Seiten",
-      "header": "Schwärzung von Seiten markieren",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Schwärzung von Seiten markieren"
     },
     "lineStyleOptions": {
       "title": "Stil"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "Anmerkungen löschen?",
       "message": "Durch das Löschen werden alle Kommentare, Antworten und Gruppierungen entfernt und können nicht rückgängig gemacht werden.\n\n Möchten Sie diese Anmerkungen wirklich löschen?"
+    },
+    "closeFile": {
+      "title": "Ohne Download schließen?",
+      "message": "An diesem Dokument wurden Änderungen vorgenommen. Möchten Sie es wirklich schließen, ohne Ihre Arbeit herunterzuladen? Sie können diese Aktion nicht rückgängig machen.",
+      "rejectDownloadButton": "Ohne Download schließen"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "Optionen",
       "radioGroups": "Optionsfelder mit demselben Feldnamen gehören zur selben Gruppierung.",
       "nameRequired": "Feldname ist erforderlich",
+      "fieldIndicator": "Feldindikatoren",
+      "documentFieldIndicator": "Dokumentfeldindikatoren",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Text hier einfügen",
+        "CheckBoxFormField": "Prüfen",
+        "RadioButtonFormField": "Füllen",
+        "ListBoxFormField": "Auswählen",
+        "ComboBoxFormField": "Auswählen",
+        "SignatureFormField": {
+          "fullSignature": "Hier unterschreiben",
+          "initialsSignature": "Initiale hier"
+        }
+      },
       "size": "Größe",
       "width": "Breite",
       "height": "Höhe",
@@ -878,6 +922,10 @@
       "cancelMessage": "Möchten Sie das Zuschneiden aller ausgewählten Seiten wirklich abbrechen?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Absatz",
+    "text": "Text"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Beginnen Sie mit dem Schwärzen, indem Sie Text, Regionen, Seiten markieren oder eine Suche durchführen.",
     "redactionSearchPlaceholder": "Hinzufügen nach Schlüsselwortsuche oder Mustern",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Eigenschaften",
     "miscValuesHeader": "Alle",
-    "emptyPanelMessage": "Wählen Sie ein Element aus, um seine Eigenschaften anzuzeigen"
+    "emptyPanelMessage": "Wählen Sie ein Element aus, um seine Eigenschaften anzuzeigen."
   },
   "languageModal": {
     "selectLanguage": "Sprache auswählen"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Ziehen Sie Ihre Datei hierher, um sie zu vergleichen",
+    "or": "Oder",
+    "browse": "Dateien durchsuchen",
+    "startSync": "Starten Sie die Synchronisierung",
+    "stopSync": "Stoppen Sie die Synchronisierung",
+    "closeDocument": "Dokument schließen",
+    "save": "Dokument speichern",
+    "comparePanel": {
+      "Find": "Im Dokument finden",
+      "changesList": "Änderungsliste",
+      "change": "Veränderung",
+      "old": "Alt",
+      "new": "Neu",
+      "page": "Buchseite"
+    }
   }
 }

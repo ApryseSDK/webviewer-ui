@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "Alinea toevoegen",
     "add": "Toevoegen",
     "apply": "Toepassen",
     "applyAll": "Alles toepassen",
@@ -94,7 +95,9 @@
     "addMark": "Markering toevoegen",
     "viewFile": "Bestand bekijken",
     "switchLanguage": "Taal",
-    "multiReplyAnnotations": "Reageren op geselecteerde annotaties ({{count}})"
+    "multiReplyAnnotations": "Reageren op geselecteerde annotaties ({{count}})",
+    "comparePages": "Vergelijk pagina's",
+    "startComparison": "Vergelijking starten"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -115,6 +118,8 @@
     "freehand": "Vrije hand",
     "freeHandHighlight": "Markering uit de vrije hand",
     "freetext": "Tekst plaatsen",
+    "markInsertText": "Tekst invoegen",
+    "markReplaceText": "Tekst vervangen",
     "highlight": "Arceren",
     "image": "Afbeelding",
     "line": "Lijn",
@@ -144,7 +149,8 @@
     "other": "Andere",
     "3D": "3D",
     "sound": "Geluid",
-    "changeView": "Verander perspectief"
+    "changeView": "Verander perspectief",
+    "newImage": "Nieuw beeld"
   },
   "rubberStamp": {
     "Approved": "Goedgekeurd",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "Bekijk alle annotaties",
       "close": "Sluit alle annotaties"
-    }
+    },
+    "comparePanel": "Vergelijk Paneel"
   },
   "message": {
     "toolsOverlayNoPresets": "Geen voorinstellingen",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "Bestaande annotaties komen mogelijk niet overeen met de tekst nadat deze is bewerkt.",
     "changesCannotBeUndone": "Aangebrachte wijzigingen kunnen niet ongedaan worden gemaakt.",
     "doNotShowAgain": "laat mij dit niet meer zien",
+    "doNotAskAgain": "Niet nogmaals vragen",
     "enterReplacementText": "Voer de tekst in die u wilt vervangen",
     "sortBy": "Sorteer op",
     "emptyCustomStampInput": "Stempel tekst mag niet leeg zijn",
@@ -288,7 +296,8 @@
       "underline": "Onderstrepen",
       "squiggly": "kronkelig",
       "3D": "3D",
-      "other": "Ander"
+      "other": "Ander",
+      "initials": "initialen"
     },
     "notesOrder": {
       "dropdownLabel": "Sorteer Bestellijst",
@@ -309,6 +318,7 @@
       "toolbarGroup-Insert": "Invoegen",
       "toolbarGroup-Measure": "Meten",
       "toolbarGroup-Edit": "Bewerk",
+      "toolbarGroup-EditText": "Tekst bewerken",
       "toolbarGroup-FillAndSign": "Invullen en ondertekenen",
       "toolbarGroup-Forms": "Formulieren",
       "toolbarGroup-Redact": "Redigeren"
@@ -326,7 +336,6 @@
       "pageTransition": "Pagina overgang"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Selecteer meerdere pagina's",
       "closeTooltip": "Sluit meervoudige selectie"
     },
@@ -381,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Hoofdlettergevoelig",
       "wholeWordOnly": "Hele woorden",
-      "wildcard": "wildcard"
+      "wildcard": "wildcard",
+      "replace": "Vervangen",
+      "replaceAll": "Vervang alles",
+      "replaceText": "Tekst vervangen",
+      "confirmMessageReplaceAll": "Weet u zeker dat u alle tekst wilt vervangen?",
+      "confirmMessageReplaceOne": "Weet je zeker dat je deze tekst wilt vervangen?",
+      "moreOptions": "Meer opties",
+      "lessOptions": "Minder opties",
+      "confirm": "Bevestigen"
     },
     "toolsOverlay": {
       "currentStamp": "Huidige Stempel",
@@ -392,14 +409,20 @@
       "addStamp": "Nieuwe stempel toevoegen"
     },
     "signatureOverlay": {
-      "addSignature": "Voeg een handtekening toe"
+      "addSignature": "Voeg een handtekening toe",
+      "addSignatureOrInitials": "Handtekening/initialen"
     },
     "signatureModal": {
       "modalName": "Nieuwe handtekening maken",
       "dragAndDrop": "Sleep je afbeelding hiernaartoe",
       "or": "Of",
       "pickImage": "Kies handtekening afbeelding",
-      "selectImage": "Selecteer hier uw afbeelding"
+      "selectImage": "Selecteer hier uw afbeelding",
+      "typeSignature": "Typ Handtekening*",
+      "typeInitial": "Typ initialen*",
+      "drawSignature": "Handtekening tekenen*",
+      "drawInitial": "Initialen tekenen*",
+      "pickInitialsFile": "Kies initialen"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Sleep en zet uw bestand hier neer",
@@ -455,7 +478,8 @@
         "preset": "Vooraf ingesteld",
         "paperUnits": "Papieren eenheden",
         "displayUnits": "Weergave-eenheden",
-        "fractionUnitsTooltip": "Breukeenheden zijn alleen van toepassing op in en ft-in"
+        "fractionUnitsTooltip": "Breukeenheden zijn alleen van toepassing op in en ft-in",
+        "incorrectSyntax": "Onjuiste syntaxis"
       },
       "scaleOverlay": {
         "addNewScale": "Nieuwe schaal toevoegen",
@@ -473,7 +497,10 @@
         "deletionIs": "Verwijderen is",
         "irreversible": "onomkeerbaar",
         "willDeleteMeasurement": "en zal de bijbehorende metingen verwijderen.",
-        "confirmDelete": "Weet u zeker dat u deze weegschaal wilt verwijderen?"
+        "confirmDelete": "Weet u zeker dat u deze weegschaal wilt verwijderen?",
+        "ifChangeScale": "Als u de schaal voor de geselecteerde meting of tool wijzigt, schaalt u",
+        "notUsedWillDelete": " wordt niet langer gebruikt door metingen of gereedschappen en wordt verwijderd. Verwijdering is onomkeerbaar.",
+        "ifToContinue": "Weet je zeker dat je wilt doorgaan?"
       }
     },
     "stylePopup": {
@@ -564,8 +591,7 @@
       "specify": "Specificeer pagina's",
       "odd": "Alleen oneven pagina's",
       "even": "Alleen even pagina's",
-      "header": "Redactie van pagina's markeren",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Redactie van pagina's markeren"
     },
     "lineStyleOptions": {
       "title": "Stijl"
@@ -606,6 +632,11 @@
     "multiDeleteAnnotation": {
       "title": "Annotaties verwijderen?",
       "message": "Als u verwijdert, worden alle opmerkingen, antwoorden en groeperingen verwijderd en kan dit niet ongedaan worden gemaakt.\n\n Weet je zeker dat je deze annotaties wilt verwijderen?"
+    },
+    "closeFile": {
+      "title": "Sluiten zonder te downloaden?",
+      "message": "Er zijn wijzigingen aangebracht in dit document. Weet u zeker dat u het wilt sluiten zonder uw werk te downloaden? Je kunt deze actie niet ongedaan maken.",
+      "rejectDownloadButton": "Sluiten zonder downloaden"
     }
   },
   "shortcut": {
@@ -738,6 +769,19 @@
       "options": "Opties",
       "radioGroups": "Keuzerondjes met dezelfde veldnaam horen in dezelfde groep.",
       "nameRequired": "Veldnaam is verplicht",
+      "fieldIndicator": "Veldindicatoren",
+      "documentFieldIndicator": "Indicatoren documentvelden",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Tekst hier invoegen",
+        "CheckBoxFormField": "Controleren",
+        "RadioButtonFormField": "Vullen",
+        "ListBoxFormField": "Selecteer",
+        "ComboBoxFormField": "Selecteer",
+        "SignatureFormField": {
+          "fullSignature": "Hier tekenen",
+          "initialsSignature": "Eerste hier"
+        }
+      },
       "size": "Grootte",
       "width": "Breedte",
       "height": "Hoogte",
@@ -878,6 +922,10 @@
       "cancelMessage": "Weet u zeker dat u het bijsnijden van alle geselecteerde pagina's wilt annuleren?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Paragraaf",
+    "text": "Tekst"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Begin met redigeren door tekst, regio's, pagina's te markeren of een zoekopdracht uit te voeren.",
     "redactionSearchPlaceholder": "Toevoegen op trefwoord zoeken of patronen",
@@ -907,9 +955,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Eigenschappen",
     "miscValuesHeader": "Alle",
-    "emptyPanelMessage": "Selecteer een element om de eigenschappen ervan te bekijken"
+    "emptyPanelMessage": "Selecteer een element om de eigenschappen ervan te bekijken."
   },
   "languageModal": {
     "selectLanguage": "Selecteer taal"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Sleep uw bestand hierheen om te vergelijken",
+    "or": "Of",
+    "browse": "Bestanden doorbladeren",
+    "startSync": "Synchronisatie starten",
+    "stopSync": "Synchronisatie stoppen",
+    "closeDocument": "Document sluiten",
+    "save": "Document opslaan",
+    "comparePanel": {
+      "Find": "Zoek in document",
+      "changesList": "Lijst met wijzigingen",
+      "change": "Wijziging",
+      "old": "Oud",
+      "new": "Nieuw",
+      "page": "Bladzijde"
+    }
   }
 }

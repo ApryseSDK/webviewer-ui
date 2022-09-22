@@ -1,11 +1,13 @@
 {
   "action": {
+    "addParagraph": "Bekezdés hozzáadása",
     "add": "Hozzáadás",
     "apply": "Alkalmaz",
     "applyAll": "Alkalmazza az összeset",
     "calendar": "Naptár",
     "calibrate": "Kalibrálni",
     "cancel": "Megszünteti",
+    "confirm": "megerősít",
     "clear": "Egyértelmű",
     "clearAll": "Mindent kitöröl",
     "close": "Bezárás",
@@ -42,6 +44,7 @@
     "save": "Megment",
     "post": "Hozzászólás",
     "create": "Teremt",
+    "update": "Frissítés",
     "showMoreResults": "További találatok megjelenítése",
     "sign": "Jel",
     "style": "Stílus",
@@ -91,7 +94,10 @@
     "unselect": "Törölje a kijelölést",
     "addMark": "Jelölés hozzáadása",
     "viewFile": "Fájl megtekintése",
-    "switchLanguage": "Nyelv"
+    "switchLanguage": "Nyelv",
+    "multiReplyAnnotations": "Válasz a kiválasztott megjegyzésekre ({{count}})",
+    "comparePages": "Oldalak összehasonlítása",
+    "startComparison": "Indítsa el az összehasonlítást"
   },
   "annotation": {
     "areaMeasurement": "Terület",
@@ -112,6 +118,8 @@
     "freehand": "Szabad kéz",
     "freeHandHighlight": "Szabadkézi kiemelés",
     "freetext": "Szabad szöveg",
+    "markInsertText": "Szöveg beszúrása",
+    "markReplaceText": "Szöveg cseréje",
     "highlight": "Kiemel",
     "image": "Kép",
     "line": "Vonal",
@@ -141,7 +149,8 @@
     "other": "Egyéb",
     "3D": "3D",
     "sound": "Hang",
-    "changeView": "Válts nézőpontot"
+    "changeView": "Válts nézőpontot",
+    "newImage": "Új kép"
   },
   "rubberStamp": {
     "Approved": "Jóváhagyott",
@@ -196,10 +205,16 @@
     "textPopup": "Szöveg felugró ablak",
     "createStampButton": "Új bélyegző létrehozása",
     "filter": "Szűrő",
+    "multiSelectButton": "Többszörös választás",
     "pageReplaceModalTitle": "Oldal cseréje",
     "files": "Fájlok",
     "editText": "Szöveg szerkesztése",
-    "redactionPanel": "Szerkesztési panel"
+    "redactionPanel": "Szerkesztési panel",
+    "noteGroupSection": {
+      "open": "Az összes megjegyzés megtekintése",
+      "close": "Zárja be az összes megjegyzést"
+    },
+    "comparePanel": "Panel összehasonlítása"
   },
   "message": {
     "toolsOverlayNoPresets": "Nincs előbeállítás",
@@ -240,6 +255,7 @@
     "existingAnnotationWarning": "Előfordulhat, hogy a meglévő megjegyzések nem egyeznek a szöveggel a szerkesztés után.",
     "changesCannotBeUndone": "A végrehajtott változtatások nem vonhatók vissza.",
     "doNotShowAgain": "Ne mutasd ezt még egyszer",
+    "doNotAskAgain": "Ne kérdezd meg többször",
     "enterReplacementText": "Írja be a cserélni kívánt szöveget",
     "sortBy": "Fajta",
     "emptyCustomStampInput": "A bélyegző szövege nem lehet üres",
@@ -280,7 +296,8 @@
       "underline": "Aláhúzás",
       "squiggly": "kacskaringós",
       "3D": "3D",
-      "other": "Egyéb"
+      "other": "Egyéb",
+      "initials": "Monogram"
     },
     "notesOrder": {
       "dropdownLabel": "Rendezési lista",
@@ -301,6 +318,7 @@
       "toolbarGroup-Insert": "Beszúrás",
       "toolbarGroup-Measure": "Intézkedés",
       "toolbarGroup-Edit": "Szerkesztés",
+      "toolbarGroup-EditText": "Szöveg szerkesztése",
       "toolbarGroup-FillAndSign": "Töltse ki és írja alá",
       "toolbarGroup-Forms": "Űrlapok",
       "toolbarGroup-Redact": "Szerkeszt"
@@ -318,7 +336,6 @@
       "pageTransition": "Oldalátmenet"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Válasszon több oldalt",
       "closeTooltip": "Több kijelölés bezárása"
     },
@@ -373,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Kis-nagybetű érzékeny",
       "wholeWordOnly": "Egész világ",
-      "wildcard": "Helyettesítő karakter"
+      "wildcard": "Helyettesítő karakter",
+      "replace": "Cserélje ki",
+      "replaceAll": "Cserélje ki az összeset",
+      "replaceText": "Szöveg cseréje",
+      "confirmMessageReplaceAll": "Biztos benne, hogy le akarja cserélni az összes szöveget?",
+      "confirmMessageReplaceOne": "Biztosan le szeretné cserélni ezt a szöveget?",
+      "moreOptions": "Több lehetőség",
+      "lessOptions": "Kevesebb lehetőség",
+      "confirm": "megerősít"
     },
     "toolsOverlay": {
       "currentStamp": "Aktuális bélyegző",
@@ -384,14 +409,20 @@
       "addStamp": "Új bélyegző hozzáadása"
     },
     "signatureOverlay": {
-      "addSignature": "Új aláírás hozzáadása"
+      "addSignature": "Új aláírás hozzáadása",
+      "addSignatureOrInitials": "Aláírás/kezdeményezők"
     },
     "signatureModal": {
       "modalName": "Új aláírás létrehozása",
       "dragAndDrop": "Húzza ide a képet",
       "or": "Vagy",
       "pickImage": "Válasszon egy aláírást",
-      "selectImage": "Válassza ki a képét itt"
+      "selectImage": "Válassza ki a képét itt",
+      "typeSignature": "Írja be az aláírást*",
+      "typeInitial": "Írja be a kezdőbetűket*",
+      "drawSignature": "Aláírás rajzolása*",
+      "drawInitial": "Rajz kezdőbetűi*",
+      "pickInitialsFile": "Válassza a Kezdőbetűket"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Drag & Drop ide a fájlt",
@@ -437,6 +468,40 @@
     },
     "measurementOption": {
       "scale": "Skála"
+    },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Kalibrálni",
+        "custom": "Egyedi",
+        "fractionalUnits": "Törtegységek",
+        "precision": "Pontosság",
+        "preset": "Előre beállított",
+        "paperUnits": "Papíregységek",
+        "displayUnits": "Kijelző egységek",
+        "fractionUnitsTooltip": "A tört mértékegységek csak az in és ft-in értékekre vonatkoznak",
+        "incorrectSyntax": "Helytelen szintaxis"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Új skála hozzáadása",
+        "selectTwoPoints": "Jelöljön ki két ismert méretű pontot a kalibráláshoz",
+        "inputKnowDimension": "Adja meg az ismert méretet és mértékegységeket a kalibráláshoz",
+        "multipleScales": "Több mérleg"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Skála törlése",
+        "scaleIsOn-delete-info": "Ez a mérleg jelenleg használatban van",
+        "page-delete-info": "oldalon",
+        "appliedTo-delete-info": "és alkalmazták",
+        "measurement": "mérés",
+        "measurements": "mérések",
+        "deletionIs": "A törlés az",
+        "irreversible": "visszafordíthatatlan",
+        "willDeleteMeasurement": "és törli a kapcsolódó méréseket.",
+        "confirmDelete": "Biztosan törli ezt a skálát?",
+        "ifChangeScale": "Ha módosítja a skálát a kiválasztott méréshez vagy szerszámhoz, skálázza",
+        "notUsedWillDelete": " a továbbiakban semmilyen mérés vagy eszköz nem fogja használni, és törlésre kerül. A törlés visszafordíthatatlan.",
+        "ifToContinue": "Biztos, hogy folytatni szeretnéd?"
+      }
     },
     "stylePopup": {
       "textStyle": "Szöveg stílusa",
@@ -526,8 +591,7 @@
       "specify": "Adja meg az oldalakat",
       "odd": "Páratlan oldal csak",
       "even": "Páros oldalon csak",
-      "header": "Jelölje meg az oldalak szerkesztését",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Jelölje meg az oldalak szerkesztését"
     },
     "lineStyleOptions": {
       "title": "Stílus"
@@ -564,6 +628,15 @@
     "colorPicker": {
       "deleteTitle": "Egyéni szín törlése",
       "deleteMessage": "Törli a kiválasztott egyéni színt? El lesz távolítva a színpalettáról."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Törli a megjegyzéseket?",
+      "message": "A törléssel eltávolítja az összes megjegyzést, választ és csoportosítást, és a művelet nem vonható vissza.\n\n Biztosan törli ezeket a kommentárokat?"
+    },
+    "closeFile": {
+      "title": "Letöltés nélkül bezárja?",
+      "message": "Módosítások történtek ezen a dokumentumon. Biztosan be szeretné zárni a munka letöltése nélkül? Ez a művelet nem vonható vissza.",
+      "rejectDownloadButton": "Letöltés nélkül zárja be"
     }
   },
   "shortcut": {
@@ -696,6 +769,19 @@
       "options": "Lehetőségek",
       "radioGroups": "Az azonos mezőnévvel rendelkező választógombok ugyanabba a csoportba fognak tartozni.",
       "nameRequired": "A mezőnév megadása kötelező",
+      "fieldIndicator": "Mezőjelzők",
+      "documentFieldIndicator": "Dokumentummező-jelzők",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Szöveg beszúrása ide",
+        "CheckBoxFormField": "Jelölje be",
+        "RadioButtonFormField": "Tölt",
+        "ListBoxFormField": "Válassza ki",
+        "ComboBoxFormField": "Válassza ki",
+        "SignatureFormField": {
+          "fullSignature": "Itt írd alá",
+          "initialsSignature": "Kezdeti itt"
+        }
+      },
       "size": "Méret",
       "width": "Szélesség",
       "height": "Magasság",
@@ -836,6 +922,10 @@
       "cancelMessage": "Biztosan megszakítja az összes kiválasztott oldal levágását?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Bekezdés",
+    "text": "Szöveg"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Kezdje el a szerkesztést szöveg, régiók, oldalak megjelölésével vagy kereséssel.",
     "redactionSearchPlaceholder": "Hozzáadás kulcsszavas kereséssel vagy mintákkal",
@@ -869,5 +959,22 @@
   },
   "languageModal": {
     "selectLanguage": "Válasszon nyelvet"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Húzza ide a fájlt az összehasonlításhoz",
+    "or": "Vagy",
+    "browse": "Tallózás a fájlok között",
+    "startSync": "Indítsa el a Szinkronizálást",
+    "stopSync": "Szinkronizálás leállítása",
+    "closeDocument": "Zárja be a dokumentumot",
+    "save": "Dokumentum mentése",
+    "comparePanel": {
+      "Find": "Keresse meg a dokumentumban",
+      "changesList": "Változások listája",
+      "change": "változás",
+      "old": "Régi",
+      "new": "Új",
+      "page": "oldal"
+    }
   }
 }

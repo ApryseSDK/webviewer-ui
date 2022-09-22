@@ -1,11 +1,13 @@
 {
   "action": {
+    "addParagraph": "Adăugați un paragraf",
     "add": "Adăuga",
     "apply": "aplica",
     "applyAll": "Aplica tot",
     "calendar": "Calendar",
     "calibrate": "Calibra",
     "cancel": "Anulare",
+    "confirm": "A confirma",
     "clear": "clar",
     "clearAll": "Curata tot",
     "close": "Închide",
@@ -42,6 +44,7 @@
     "save": "Salvați",
     "post": "Post",
     "create": "Crea",
+    "update": "Actualizați",
     "showMoreResults": "Afișați mai multe rezultate",
     "sign": "Semn",
     "style": "Stil",
@@ -91,7 +94,10 @@
     "unselect": "Deselectați",
     "addMark": "Adăugați Mark",
     "viewFile": "Vezi fișierul",
-    "switchLanguage": "Limba"
+    "switchLanguage": "Limba",
+    "multiReplyAnnotations": "Răspundeți la adnotările selectate ({{count}})",
+    "comparePages": "Comparați paginile",
+    "startComparison": "Începeți comparația"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -112,6 +118,8 @@
     "freehand": "Mână liberă",
     "freeHandHighlight": "Evidențierea mâinilor libere",
     "freetext": "Text gratuit",
+    "markInsertText": "Inserați text",
+    "markReplaceText": "Înlocuiește textul",
     "highlight": "A scoate in evidenta",
     "image": "Imagine",
     "line": "Linia",
@@ -141,7 +149,8 @@
     "other": "Alte",
     "3D": "3D",
     "sound": "Sunet",
-    "changeView": "Schimbă privirea"
+    "changeView": "Schimbă privirea",
+    "newImage": "Imagine noua"
   },
   "rubberStamp": {
     "Approved": "Aprobat",
@@ -196,10 +205,16 @@
     "textPopup": "Popup text",
     "createStampButton": "Creați o ștampilă nouă",
     "filter": "Filtru",
+    "multiSelectButton": "Selectare multipla",
     "pageReplaceModalTitle": "Înlocuiește pagina",
     "files": "Fișiere",
     "editText": "Editează textul",
-    "redactionPanel": "Panoul de redactare"
+    "redactionPanel": "Panoul de redactare",
+    "noteGroupSection": {
+      "open": "Vedeți toate adnotările",
+      "close": "Închideți toate adnotările"
+    },
+    "comparePanel": "Panoul de comparare"
   },
   "message": {
     "toolsOverlayNoPresets": "Fără presetări",
@@ -240,6 +255,7 @@
     "existingAnnotationWarning": "Este posibil ca adnotările existente să nu se potrivească cu textul după ce acesta a fost editat.",
     "changesCannotBeUndone": "Orice modificare efectuată nu poate fi anulată.",
     "doNotShowAgain": "Nu-mi mai arăta asta",
+    "doNotAskAgain": "Nu cere din nou",
     "enterReplacementText": "Introduceți textul pe care doriți să îl înlocuiți",
     "sortBy": "Fel",
     "emptyCustomStampInput": "Textul ștampilei nu poate fi gol",
@@ -280,7 +296,8 @@
       "underline": "Subliniați",
       "squiggly": "Squiggly",
       "3D": "3D",
-      "other": "Alte"
+      "other": "Alte",
+      "initials": "Inițiale"
     },
     "notesOrder": {
       "dropdownLabel": "Listă de ordine de sortare",
@@ -301,6 +318,7 @@
       "toolbarGroup-Insert": "Introduce",
       "toolbarGroup-Measure": "Măsura",
       "toolbarGroup-Edit": "Editați | ×",
+      "toolbarGroup-EditText": "Editează textul",
       "toolbarGroup-FillAndSign": "Completați și semnați",
       "toolbarGroup-Forms": "Forme",
       "toolbarGroup-Redact": "Redacta"
@@ -318,7 +336,6 @@
       "pageTransition": "Tranziție de pagină"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "Selectați mai multe pagini",
       "closeTooltip": "Închideți selecția multiplă"
     },
@@ -373,7 +390,15 @@
     "searchPanel": {
       "caseSensitive": "Caz sensibil",
       "wholeWordOnly": "Intregul cuvant",
-      "wildcard": "Wildcard"
+      "wildcard": "Wildcard",
+      "replace": "A inlocui",
+      "replaceAll": "Înlocuiește-le pe toate",
+      "replaceText": "Înlocuiește textul",
+      "confirmMessageReplaceAll": "Sigur doriți să înlocuiți tot textul?",
+      "confirmMessageReplaceOne": "Sigur doriți să înlocuiți acest text?",
+      "moreOptions": "Mai multe opțiuni",
+      "lessOptions": "Mai puține opțiuni",
+      "confirm": "A confirma"
     },
     "toolsOverlay": {
       "currentStamp": "Ştampila curentă",
@@ -384,14 +409,20 @@
       "addStamp": "Adăugați o ștampilă nouă"
     },
     "signatureOverlay": {
-      "addSignature": "Adăugați o semnătură nouă"
+      "addSignature": "Adăugați o semnătură nouă",
+      "addSignatureOrInitials": "Semnătura/inițiale"
     },
     "signatureModal": {
       "modalName": "Creați o semnătură nouă",
       "dragAndDrop": "Trageți și plasați imaginea dvs. aici",
       "or": "Sau",
       "pickImage": "Alegeți o semnătură",
-      "selectImage": "Selectează-ți imaginea aici"
+      "selectImage": "Selectează-ți imaginea aici",
+      "typeSignature": "Tip Semnătura*",
+      "typeInitial": "Inițiale tip*",
+      "drawSignature": "Semnătura extragerii*",
+      "drawInitial": "Desenați inițiale*",
+      "pickInitialsFile": "Alegeți Inițiale"
     },
     "pageReplacementModal": {
       "dragAndDrop": "Trageți și plasați fișierul aici",
@@ -437,6 +468,40 @@
     },
     "measurementOption": {
       "scale": "Scară"
+    },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Calibra",
+        "custom": "Personalizat",
+        "fractionalUnits": "Unități fracționale",
+        "precision": "Precizie",
+        "preset": "Presetat",
+        "paperUnits": "Unitati de hartie",
+        "displayUnits": "Unități de afișare",
+        "fractionUnitsTooltip": "Unitățile de fracție se aplică numai pentru in și ft-in",
+        "incorrectSyntax": "Sintaxă incorectă"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Adăugați o scară nouă",
+        "selectTwoPoints": "Selectați două puncte de o dimensiune cunoscută pentru a calibra",
+        "inputKnowDimension": "Introduceți dimensiunea cunoscută și unitățile de calibrat",
+        "multipleScales": "Scale multiple"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Ștergeți scara",
+        "scaleIsOn-delete-info": "Această scară este în prezent utilizată pe",
+        "page-delete-info": "pagină",
+        "appliedTo-delete-info": "și aplicat la",
+        "measurement": "măsurare",
+        "measurements": "măsurători",
+        "deletionIs": "Ștergerea este",
+        "irreversible": "ireversibil",
+        "willDeleteMeasurement": "și va șterge măsurătorile asociate.",
+        "confirmDelete": "Sigur doriți să ștergeți această scală?",
+        "ifChangeScale": "Dacă schimbați scara pentru măsurarea sau instrumentul selectat, scalați",
+        "notUsedWillDelete": " nu vor mai fi folosite de nicio măsurătoare sau instrumente și vor fi șterse. Ștergerea este ireversibilă.",
+        "ifToContinue": "Sunteți sigur că doriți să continuați?"
+      }
     },
     "stylePopup": {
       "textStyle": "Stil text",
@@ -526,8 +591,7 @@
       "specify": "Specificați Pagini",
       "odd": "Numai pagini impare",
       "even": "Doar paginile pare",
-      "header": "Marcați redactarea paginilor",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "Marcați redactarea paginilor"
     },
     "lineStyleOptions": {
       "title": "Stil"
@@ -564,6 +628,15 @@
     "colorPicker": {
       "deleteTitle": "Ștergeți culoarea personalizată",
       "deleteMessage": "Ștergeți culoarea personalizată selectată? Acesta va fi eliminat din paleta dvs. de culori."
+    },
+    "multiDeleteAnnotation": {
+      "title": "Ștergeți adnotările?",
+      "message": "Ștergerea va elimina toate comentariile, răspunsurile și gruparea și nu poate fi anulată.\n\n Sigur doriți să ștergeți aceste adnotări?"
+    },
+    "closeFile": {
+      "title": "Închideți fără descărcare?",
+      "message": "Au fost aduse modificări acestui document, sunteți sigur că doriți să-l închideți fără să vă descărcați lucrarea? Nu puteți anula această acțiune.",
+      "rejectDownloadButton": "Închideți fără descărcare"
     }
   },
   "shortcut": {
@@ -696,6 +769,19 @@
       "options": "Opțiuni",
       "radioGroups": "Butoanele radio cu același nume de câmp vor aparține aceleiași grupări.",
       "nameRequired": "Numele câmpului este obligatoriu",
+      "fieldIndicator": "Indicatori de câmp",
+      "documentFieldIndicator": "Indicatori de câmp de document",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Inserați text aici",
+        "CheckBoxFormField": "Verifica",
+        "RadioButtonFormField": "Completati",
+        "ListBoxFormField": "Selectați",
+        "ComboBoxFormField": "Selectați",
+        "SignatureFormField": {
+          "fullSignature": "Înregistrează aici",
+          "initialsSignature": "Initiala Aici"
+        }
+      },
       "size": "mărimea",
       "width": "Lăţime",
       "height": "Înălţime",
@@ -836,6 +922,10 @@
       "cancelMessage": "Sigur doriți să anulați decuparea tuturor paginilor selectate?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "Paragraf",
+    "text": "Text"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "Începeți să redactați prin marcarea textului, regiunilor, paginilor sau efectuând o căutare.",
     "redactionSearchPlaceholder": "Adăugați prin căutare de cuvinte cheie sau modele",
@@ -869,5 +959,22 @@
   },
   "languageModal": {
     "selectLanguage": "Selecteaza limba"
+  },
+  "multiViewer": {
+    "dragAndDrop": "Trageți și plasați fișierul aici pentru a compara",
+    "or": "Sau",
+    "browse": "Cauta fisiere",
+    "startSync": "Porniți sincronizarea",
+    "stopSync": "Opriți sincronizarea",
+    "closeDocument": "Închideți documentul",
+    "save": "Salvați documentul",
+    "comparePanel": {
+      "Find": "Găsiți în document",
+      "changesList": "Listă de modificări",
+      "change": "Schimbare",
+      "old": "Vechi",
+      "new": "Nou",
+      "page": "Pagină"
+    }
   }
 }
