@@ -1,7 +1,8 @@
 import { loadViewerSample, Timeouts, WebViewerInstance } from '../../playwright-utils';
 import { expect, test, Frame, Page } from '@playwright/test';
 
-test.describe('Comment panel', () => {
+test.describe.skip('Comment panel', () => {
+  // TODO:reenable this. This will disable to reduce runtime and not exceed circleCI limit
   let iframe: Frame;
   let instance: WebViewerInstance;
 
@@ -431,7 +432,7 @@ test.describe('Comment panel', () => {
         </annots>
       </xfdf>>`);
       // blurring so we don't have a blinking text cursor causing screenshot test to fail
-      (document.querySelector('.reply-area-container > div.reply-area > .comment-textarea .ql-editor') as HTMLElement).blur();
+      (document.querySelector('.reply-area-container div.reply-area > .comment-textarea .ql-editor') as HTMLElement).blur();
     });
 
     await page.waitForTimeout(1000);
