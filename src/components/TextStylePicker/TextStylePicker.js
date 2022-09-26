@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
 import './TextStylePicker.scss';
-import Dropdown from "components/Dropdown";
-import FontSizeDropdown from "components/FontSizeDropdown";
-import Button from "components/Button";
+import Dropdown from 'components/Dropdown';
+import FontSizeDropdown from 'components/FontSizeDropdown';
+import Button from 'components/Button';
 
-const TextStylePicker = ({ onPropertyChange, properties, onRichTextStyleChange, isRedaction, fonts }) => {
+const TextStylePicker = ({
+  onPropertyChange,
+  properties,
+  onRichTextStyleChange,
+  isRedaction,
+  isContentEditing,
+  fonts,
+}) => {
   // List is not complete
-  const supportedFonts = fonts?.length ? fonts: ['Helvitica', 'Times New Roman'];
+  const supportedFonts = fonts?.length ? fonts : ['Helvetica', 'Times New Roman'];
 
   const font = properties?.Font || supportedFonts[0];
-  const changeFont = font => {
+  const changeFont = (font) => {
     onPropertyChange('Font', font);
   };
 
-  const fontSize = properties?.FontSize || "12pt";
-  const changeFontSize = fontSize => {
+  const fontSize = properties?.FontSize || '12pt';
+  const changeFontSize = (fontSize) => {
     onPropertyChange('FontSize', fontSize);
   };
 
@@ -52,12 +59,12 @@ const TextStylePicker = ({ onPropertyChange, properties, onRichTextStyleChange, 
   };
 
   const textAlign = properties?.TextAlign || 'left';
-  const changeXAlign = xAlign => {
+  const changeXAlign = (xAlign) => {
     onPropertyChange('TextAlign', xAlign);
   };
 
   const textVerticalAlign = properties?.TextVerticalAlign || 'top';
-  const changeYAlign = yAlign => {
+  const changeYAlign = (yAlign) => {
     onPropertyChange('TextVerticalAlign', yAlign);
   };
 
@@ -72,20 +79,21 @@ const TextStylePicker = ({ onPropertyChange, properties, onRichTextStyleChange, 
           items={supportedFonts}
           onClickItem={changeFont}
           currentSelectionKey={font}
-          isFont
+          getCustomItemStyle={(item) => ({ fontFamily: item })}
+          maxHeight={200}
+          placeholder={isContentEditing ? 'Font' : undefined}
         />
         <FontSizeDropdown
-          fontSize={fontSizeProps && parseFloat(fontSizeProps[0]) || 12}
-          fontUnit={fontSizeProps && fontSizeProps[1] || "pt"}
+          fontSize={(fontSizeProps && parseFloat(fontSizeProps[0])) || 12}
+          fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
           onFontSizeChange={changeFontSize}
           onError={setError}
+          applyOnlyOnBlur={isContentEditing}
         />
-        {error && <div className="error-text">
-          {error}
-        </div>}
+        {error && <div className="error-text">{error}</div>}
       </div>
       <div className="icon-grid">
-        {!isRedaction &&
+        {!isRedaction && !isContentEditing && (
           <div className="row rich-text-format">
             <Button
               dataElement="freeTextBoldButton"
@@ -116,62 +124,62 @@ const TextStylePicker = ({ onPropertyChange, properties, onRichTextStyleChange, 
               isActive={strikeout}
             />
           </div>
-        }
+        )}
         <div className={`row text-horizontal-alignment ${isRedaction ? 'isRedaction' : ''}`}>
           <Button
             dataElement="freeTextAlignLeftButton"
-            onClick={() => changeXAlign("left")}
+            onClick={() => changeXAlign('left')}
             img="icon-menu-align-left"
             title="option.richText.alignLeft"
-            isActive={textAlign === "left"}
+            isActive={!isContentEditing && textAlign === 'left'}
           />
           <Button
             dataElement="freeTextAlignCenterButton"
-            onClick={() => changeXAlign("center")}
+            onClick={() => changeXAlign('center')}
             img="icon-menu-align-centre"
             title="option.richText.alignCenter"
-            isActive={textAlign === "center"}
+            isActive={!isContentEditing && textAlign === 'center'}
           />
           <Button
             dataElement="freeTextAlignRightButton"
-            onClick={() => changeXAlign("right")}
+            onClick={() => changeXAlign('right')}
             img="icon-menu-align-right"
             title="option.richText.alignRight"
-            isActive={textAlign === "right"}
+            isActive={!isContentEditing && textAlign === 'right'}
           />
-          {/*TODO: Implement justify button below*/}
-          {!isRedaction &&
+          {/* TODO: Implement justify button below */}
+          {!isRedaction && !isContentEditing && (
             <Button
               dataElement="freeTextJustifyCenterButton"
-              onClick={() => changeXAlign("justify")}
+              onClick={() => changeXAlign('justify')}
               img="icon-text-justify-center"
               title="option.richText.justifyCenter"
-              isActive={textAlign === "justify"}
+              isActive={textAlign === 'justify'}
             />
-          }
+          )}
         </div>
-        {!isRedaction &&
+        {!isRedaction && !isContentEditing && (
           <div className="row text-vertical-alignment">
             <Button
-              onClick={() => changeYAlign("top")}
+              onClick={() => changeYAlign('top')}
               img="icon-arrow-to-top"
               title="option.richText.alignTop"
-              isActive={textVerticalAlign === "top"}
+              isActive={textVerticalAlign === 'top'}
             />
             <Button
-              onClick={() => changeYAlign("center")}
+              onClick={() => changeYAlign('center')}
               img="icon-arrow-to-middle"
               title="option.richText.alignMiddle"
-              isActive={textVerticalAlign === "center"}
+              isActive={textVerticalAlign === 'center'}
             />
             <Button
-              onClick={() => changeYAlign("bottom")}
+              onClick={() => changeYAlign('bottom')}
               img="icon-arrow-to-bottom"
               title="option.richText.alignBottom"
-              isActive={textVerticalAlign === "bottom"}
+              isActive={textVerticalAlign === 'bottom'}
             />
           </div>
-        }
+        )}
       </div>
     </>
   );
