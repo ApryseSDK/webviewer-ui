@@ -50,14 +50,6 @@ const Ribbons = () => {
     }
   };
 
-  const toggleFormFieldIndicators = (toolGroup) => {
-    if (toolGroup === 'toolbarGroup-Forms' || toolGroup === 'toolbarGroup-FillAndSign') {
-      dispatch(actions.openElement('formFieldIndicatorContainer'));
-    } else {
-      dispatch(actions.closeElement('formFieldIndicatorContainer'));
-    }
-  };
-
   const toggleContentEditMode = (toolGroup) => {
     const contentEditManager = core.getContentEditManager();
     if (toolGroup === 'toolbarGroup-EditText') {
@@ -80,7 +72,6 @@ const Ribbons = () => {
     if (currentToolbarGroup === 'toolbarGroup-Forms' || currentToolbarGroup === 'toolbarGroup-EditText') {
       setToolbarGroup('toolbarGroup-Annotate', shouldPickTool('toolbarGroup-Annotate'));
     }
-    toggleFormFieldIndicators(currentToolbarGroup);
   }, []);
 
   useEffect(() => {
@@ -158,7 +149,6 @@ const Ribbons = () => {
                     })}
                     onClick={() => {
                       toggleFormFieldCreationMode(toolbarGroup);
-                      toggleFormFieldIndicators(toolbarGroup);
                       toggleContentEditMode(toolbarGroup);
                       setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
                     }}

@@ -70,6 +70,7 @@ export default {
       toolsHeader: true,
       [DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER]: true,
       [DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER]: true,
+      [DataElements.FORM_FIELD_INDICATOR_CONTAINER]: true
     },
     panelWidths: {
       leftPanel: 264,

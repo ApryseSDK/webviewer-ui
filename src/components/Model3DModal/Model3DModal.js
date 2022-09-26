@@ -94,7 +94,7 @@ const Model3DModal = ({
     closeModal();
     core.setToolMode('Pan');
     // eslint-disable-next-line no-undef
-    const viewer = documentViewer.getViewerElement();
+    const viewer = core.getViewerElement();
     viewer.style.cursor = 'crosshair';
     core.addEventListener('click', draw3DAnnotation);
   };

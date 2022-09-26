@@ -24,6 +24,7 @@ import useDidUpdate from 'hooks/useDidUpdate';
 import Button from 'components/Button';
 import Dropdown from 'components/Dropdown';
 import Tooltip from 'components/Tooltip';
+import DataElementWrapper from 'components/DataElementWrapper';
 
 import './ScaleModal.scss';
 
@@ -318,14 +319,15 @@ const ScaleModal = () => {
               </div>
             </div>
             <div className="footer">
-              <button
+              <DataElementWrapper
+                type={'button'}
                 onClick={onUpdate}
                 className="scale-update"
-                data-element="updateScale"
+                dataElement="updateScale"
                 disabled={isAddingNewScale || !isCurrentScaleValid || !hasScaleChanged}
               >
                 {t('action.update')}
-              </button>
+              </DataElementWrapper>
               <button
                 onClick={onCreate}
                 className="scale-create"
