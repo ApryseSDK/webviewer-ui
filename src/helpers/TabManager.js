@@ -5,8 +5,11 @@ import { setLoadingProgress } from 'actions/internalActions';
 import actions from 'actions';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
+import downloadPdf from 'helpers/downloadPdf';
 import Events from 'constants/events';
 import { isString } from 'lodash';
+import selectors from 'selectors';
+import DataElements from 'constants/dataElement';
 
 export function prepareMultiTab(initialDoc, store) {
   const extensions = getHashParameters('extension', null)?.split(',');
@@ -35,8 +38,27 @@ export default class TabManager {
 
   constructor(docArr, extensionArr, store) {
     this.store = store;
-    const { tabs } = this.store.getState().viewer;
-    this.useDB = !this.store.getState().advanced.disableIndexedDB;
+    const state = this.store.getState();
+    this.useDB = !state.advanced.disableIndexedDB;
+    const { tabs, isMultiTab } = state.viewer;
+
+    if (this.useDB) {
+      const req = indexedDB.open('WebViewer Files', 1);
+      req.onerror = TabManager.indexedDBNotSupported;
+      req.onsuccess = async () => {
+        this.db = req.result;
+        this.db.onerror = TabManager.throwError;
+      };
+      req.onupgradeneeded = (e) => {
+        e.target.result.createObjectStore('files');
+      };
+    }
+
+    // if already in multi-tab mode and already save created the TabManager do not recreate TabManager
+    if (isMultiTab && selectors.getTabManager(state)) {
+      return;
+    }
+
     docArr.forEach((doc, index) => {
       const extension = extensionArr && isString(doc) ? extensionArr[extensionArr.length > 1 ? index : 0] : undefined;
       let filename = `Document ${tabs.length + 1}`;
@@ -50,31 +72,35 @@ export default class TabManager {
         extension,
       }, this.useDB));
     });
-    if (this.useDB) {
-      const req = indexedDB.open('WebViewer Files', 1);
-      req.onerror = TabManager.indexedDBNotSupported;
-      req.onsuccess = async () => {
-        this.db = req.result;
-        this.db.onerror = TabManager.throwError;
-      };
-      req.onupgradeneeded = function(e) {
-        e.target.result.createObjectStore('files');
-      };
-    }
+
     this.store.dispatch(actions.setTabs(tabs));
+    this.prepareTabEventListeners();
   }
 
-  async setActiveTab(id, saveCurrent = false) {
+  prepareTabEventListeners() {
+    const documentViewer = core.getDocumentViewer(1);
+
+    // To control if the document was downloaded or not after any document changes
+    documentViewer.addEventListener('finishedRendering', () => {
+      this.listenForAnnotChanges();
+      this.listenToDocumentDownloaded(documentViewer);
+    }, { once: true });
+  }
+
+  async setActiveTab(id, saveCurrentActiveTabState = false) {
     this.store.dispatch(actions.openElement('progressModal'));
     this.store.dispatch(setLoadingProgress(0));
-    const { tabs, activeTab } = this.store.getState().viewer;
-    const currentTab = tabs.find(tab => tab.id === activeTab);
-    core.addEventListener('documentUnloaded', () => this.listenForAnnotChanges(), { once: true });
+
+    const state = this.store.getState();
+    const { tabs, activeTab } = state.viewer;
+    const currentTab = tabs.find((tab) => tab.id === activeTab);
+    const isEmptyPageOpen = selectors.isElementOpen(state, DataElements.MULTITABS_EMPTY_PAGE);
+    this.prepareTabEventListeners();
     if (currentTab) {
-      saveCurrent && await currentTab.saveCurrent(this.db);
+      saveCurrentActiveTabState && await currentTab.saveCurrentActiveTabState(this.db);
       core.closeDocument();
     }
-    const newTab = tabs.find(tab => tab.id === id);
+    const newTab = tabs.find((tab) => tab.id === id);
     if (!newTab) {
       return console.error(`Tab id not found: ${id}`);
     }
@@ -82,8 +108,9 @@ export default class TabManager {
       currentTab: currentTab ? {
         src: currentTab.src,
         options: currentTab.options,
-        annotationsChanged: currentTab.changes.annotations,
         id: currentTab.id,
+        annotationsChanged: currentTab.changes.annotations,
+        hasUnsavedChanges: currentTab.changes.hasUnsavedChanges
       } : null,
       nextTab: {
         src: newTab.src,
@@ -91,33 +118,80 @@ export default class TabManager {
         id: newTab.id,
       },
     });
-    this.listenForAnnotChanges();
     this.store.dispatch(actions.setActiveTab(id));
-    await newTab.load(this.store.dispatch, this.db);
+    isEmptyPageOpen && this.store.dispatch(actions.closeElement(DataElements.MULTITABS_EMPTY_PAGE));
+    await newTab.load(this.store.dispatch, this.db, this.getViewerState(state));
+  }
+
+  getViewerState = (state) => {
+    const currentViewerState = {};
+    const viewerState = state.viewer;
+
+    currentViewerState.documentContainerWidth = viewerState.documentContainerWidth;
+    currentViewerState.documentContainerHeight = viewerState.documentContainerHeight;
+    currentViewerState.isNotesPanelOpen = selectors.isElementOpen(state, 'notesPanel');
+    currentViewerState.isLeftPanelOpen = selectors.isElementOpen(state, 'leftPanel');
+    currentViewerState.isSearchPanelOpen = selectors.isElementOpen(state, 'searchPanel');
+    currentViewerState.activeToolName = viewerState.activeToolName;
+
+    return currentViewerState;
+  }
+
+  showDeleteWarning = (tabToDelete) => {
+    const title = 'warning.closeFile.title';
+    const message = 'warning.closeFile.message';
+    const confirmationWarning = {
+      message,
+      title,
+      onConfirm: () => {
+        downloadPdf(this.store.dispatch).then(() => {
+          tabToDelete.changes.hasUnsavedChanges = false;
+          this.deleteTab(tabToDelete.id);
+        });
+      },
+      onSecondary: () => {
+        tabToDelete.changes.hasUnsavedChanges = false;
+        this.deleteTab(tabToDelete.id);
+      },
+      confirmBtnText: 'action.download',
+      secondaryBtnText: 'warning.closeFile.rejectDownloadButton',
+      secondaryBtnClass: 'secondary-btn-custom',
+      showAskAgainCheckbox: true
+    };
+    this.store.dispatch(actions.showWarningMessage(confirmationWarning));
   }
 
   deleteTab(id) {
-    const { tabs, activeTab } = this.store.getState().viewer;
-    const [deletedTab] = tabs.splice(tabs.findIndex(tab => tab.id === id), 1);
-    deletedTab.delete(this.db);
-    fireEvent(Events['TAB_DELETED'], {
-      src: deletedTab.src,
-      options: deletedTab.options,
-      id: deletedTab.id,
-    });
-    if (id === activeTab && tabs.length) {
-      this.setActiveTab(tabs[0].id);
-    } else if (!tabs.length) {
-      core.closeDocument();
-      this.store.dispatch(actions.setActiveTab(null));
+    const state = this.store.getState();
+    const { tabs, activeTab } = state.viewer;
+    const tabToDelete = tabs.find((tab) => tab.id === id);
+    const shouldShowWarning = selectors.getShowDeleteTabWarning(state) && tabToDelete.changes.hasUnsavedChanges;
+
+    if (shouldShowWarning) {
+      this.showDeleteWarning(tabToDelete);
+    } else {
+      const [deletedTab] = tabs.splice(tabs.findIndex((tab) => tab.id === id), 1);
+      deletedTab.delete(this.db);
+      fireEvent(Events['TAB_DELETED'], {
+        src: deletedTab.src,
+        options: deletedTab.options,
+        id: deletedTab.id,
+      });
+      if (id === activeTab && tabs.length) {
+        this.setActiveTab(tabs[0].id);
+      } else if (!tabs.length) {
+        core.closeDocument();
+        this.store.dispatch(actions.setActiveTab(null));
+        this.store.dispatch(actions.openElement(DataElements.MULTITABS_EMPTY_PAGE));
+      }
+      this.store.dispatch(actions.setTabs(tabs));
     }
-    this.store.dispatch(actions.setTabs(tabs));
   }
 
   async addTab(src, options = {}) {
-    const saveCurrent = options['saveCurrent'] === false ? options['saveCurrent'] : true;
+    const saveCurrentTabState = options['saveCurrentActiveTabState'] || options['saveCurrent'];
     const useDB = options['useDB'] === false ? options['useDB'] && this.useDB : this.useDB;
-    const load = options['load'] === false ? options['load'] : true;
+    const shouldLoadTab = options['setActive'] || options['load'];
     const { tabs } = this.store.getState().viewer;
     const currId = tabs.reduce((highestId, tab) => {
       return tab.id > highestId ? tab.id : highestId;
@@ -128,6 +202,8 @@ export default class TabManager {
         options['filename'] = src.substring(src.lastIndexOf('/') + 1);
       } else if (src instanceof window.Core.Document && src.getFilename && src.getFilename()) {
         options['filename'] = src.getFilename();
+      } else if (src instanceof File) {
+        options['filename'] = src['name'];
       }
     }
     const tab = new Tab(currId + 1, src, options, useDB);
@@ -137,9 +213,8 @@ export default class TabManager {
       options: tab.options,
       id: tab.id,
     });
-    if (load) {
-      this.moveTab(tabs.length - 1, 0);
-      await this.setActiveTab(tab.id, saveCurrent);
+    if (shouldLoadTab) {
+      await this.setActiveTab(tab.id, saveCurrentTabState);
     }
     this.store.dispatch(actions.setTabs(tabs));
     return tab.id;
@@ -160,20 +235,45 @@ export default class TabManager {
   }
 
   listenForAnnotChanges() {
-    const onAnnotChange = () => {
+    const onAnnotChange = (_, __, info) => {
+      if (info.imported) {
+        return;
+      }
       const { tabs, activeTab } = this.store.getState().viewer;
-      const tab = tabs.find(t => t.id === activeTab);
+      const tab = tabs.find((t) => t.id === activeTab);
       tab.changes.annotations = true;
+      tab.changes.hasUnsavedChanges = true;
     };
-    const addAnnotListener = () => {
-      core.addEventListener('annotationChanged', onAnnotChange, { once: true });
-    };
-    core.addEventListener('annotationsLoaded', addAnnotListener, { once: true });
+
+    core.addEventListener('annotationChanged', onAnnotChange);
 
     const removeListeners = () => {
       core.removeEventListener('annotationChanged', onAnnotChange);
-      core.removeEventListener('annotationsLoaded', addAnnotListener);
     };
+    core.addEventListener('documentUnloaded', removeListeners, { once: true });
+  }
+
+
+  listenToDocumentDownloaded = async (documentViewer) => {
+    const { tabs, activeTab } = this.store.getState().viewer;
+    const currentTab = tabs.find((tab) => tab.id === activeTab);
+
+    const onFileDownloaded = () => {
+      currentTab.changes.hasUnsavedChanges = false;
+    };
+
+    const setDocumentChanged = () => {
+      currentTab.changes.hasUnsavedChanges = true;
+    };
+
+    window.instance.UI.addEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
+    documentViewer.addEventListener('pagesUpdated', setDocumentChanged);
+
+    const removeListeners = () => {
+      window.instance.UI.removeEventListener(Events.FILE_DOWNLOADED);
+      documentViewer.removeEventListener('pagesUpdated', setDocumentChanged);
+    };
+
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
   }
 
@@ -218,6 +318,7 @@ export class Tab {
   };
   changes = {
     annotations: false,
+    hasUnsavedChanges: false
   };
 
   id;
@@ -240,9 +341,9 @@ export class Tab {
     await this.writeToDB(db, await file.arrayBuffer());
   }
 
-  async load(dispatch, db) {
+  async load(dispatch, db, viewerState) {
     core.addEventListener('documentUnloaded', async () => {
-      this.restorePageDataOnLoad();
+      this.restorePageDataOnLoad(viewerState, dispatch);
       this.saveData.annotInDB ? await this.restoreAnnotDataFromDBOnLoad(db) : this.restoreAnnotDataOnLoad();
     }, { once: true });
     if (this.useDB && this.saveData.docInDB) {
@@ -259,7 +360,7 @@ export class Tab {
     }
   }
 
-  async saveCurrent(db) {
+  async saveCurrentActiveTabState(db) {
     this.disabled = true;
     this.savePageData();
     const document = core.getDocument();
@@ -285,16 +386,16 @@ export class Tab {
 
   async saveAnnotData() {
     this.saveData.annotInDB = false;
-    const annotList = core.getAnnotationsList();
-    if (annotList.length > 0) {
-      this.saveData.annots = await core.exportAnnotations({ annotList });
+    const annotData = await core.exportAnnotations({ options: { fields: true, widgets: true, links: true } });
+    if (annotData) {
+      this.saveData.annots = annotData;
     }
   }
 
   async saveAnnotDataInDB(db) {
-    const annotList = core.getAnnotationsList();
-    if (annotList.length > 0) {
-      const annots = await core.exportAnnotations({ annotList });
+    const annotData = await core.exportAnnotations({ options: { fields: true, widgets: true, links: true } });
+    if (annotData) {
+      const annots = annotData;
       const tx = db.transaction('files', 'readwrite');
       const store = tx.objectStore('files');
       store.put(annots, `${this.id}-annots`);
@@ -312,7 +413,7 @@ export class Tab {
     this.saveData.zoom = Math.floor(core.getZoom() * precision) / precision;
   }
 
-  restorePageDataOnLoad() {
+  restorePageDataOnLoad(viewerState, dispatch) {
     const docContainer = document.getElementsByClassName('DocumentContainer')[0];
 
     const updateScroll = async () => {
@@ -320,22 +421,23 @@ export class Tab {
       docContainer.scrollTop = this.saveData.scrollTop;
       docContainer.scrollLeft = this.saveData.scrollLeft;
     };
-    const updateZoom = async () => {
+
+    viewerState.isNotesPanelOpen && dispatch(actions.openElement('notesPanel'));
+    viewerState.isLeftPanelOpen && dispatch(actions.openElement('leftPanel'));
+    viewerState.isSearchPanelOpen && dispatch(actions.openElement('searchPanel'));
+    viewerState.activeToolName && core.setToolMode(viewerState.activeToolName);
+
+    const updateViewer = async () => {
       await core.getDocument().getDocumentCompletePromise();
-      core.zoomTo(this.saveData.zoom);
+      this.saveData.zoom && await core.zoomTo(this.saveData.zoom);
+      this.saveData.page && await core.setCurrentPage(this.saveData.page);
     };
-    const updatePage = async () => {
-      await core.getDocument().getDocumentCompletePromise();
-      core.setCurrentPage(this.saveData.page);
-    };
+
+    core.addEventListener('documentLoaded', updateViewer, { once: true });
 
     this.saveData.scrollTop && core.addEventListener('finishedRendering', updateScroll, { once: true });
-    this.saveData.zoom && core.addEventListener('documentLoaded', updateZoom, { once: true });
-    this.saveData.page && core.addEventListener('documentLoaded', updatePage, { once: true });
-
     const removeListeners = () => {
-      core.removeEventListener('documentLoaded', updatePage);
-      core.removeEventListener('documentLoaded', updateZoom);
+      core.removeEventListener('documentLoaded', updateViewer);
       core.removeEventListener('finishedRendering', updateScroll);
     };
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
