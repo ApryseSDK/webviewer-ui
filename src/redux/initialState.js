@@ -2040,9 +2040,7 @@ export default {
     disableIndexedDB: getHashParameters('disableIndexedDB', false),
     disableMultiViewerComparison: (getHashParameters('disableMultiViewerComparison', false) || !getHashParameters('pdfnet', false)),
   },
-  featureFlags: {
-    multiViewer: true,
-  },
+  featureFlags: {},
   wv3dPropertiesPanel: {
     modelData: [],
     schema: {

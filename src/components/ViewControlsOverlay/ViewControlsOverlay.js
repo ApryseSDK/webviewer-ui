@@ -11,18 +11,18 @@ import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
 import actions from 'actions';
+import { isIE11 } from 'helpers/device';
 
 function ViewControlsOverlay() {
   const [t] = useTranslation();
   const store = useStore();
 
-  const [totalPages, displayMode, isDisabled, isReaderMode, isMultiViewerMode, featureFlags] = useSelector((state) => [
+  const [totalPages, displayMode, isDisabled, isReaderMode, isMultiViewerMode] = useSelector((state) => [
     selectors.getTotalPages(state),
     selectors.getDisplayMode(state),
     selectors.isElementDisabled(state, 'viewControlsOverlay'),
     selectors.isReaderMode(state),
     selectors.isMultiViewerMode(state),
-    selectors.getFeatureFlags(state),
   ]);
 
   const totalPageThreshold = 1000;
@@ -209,7 +209,7 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('option.layout.cover')}</div>
           </DataElementWrapper>
-          {featureFlags.multiViewer && <DataElementWrapper
+          {!isIE11 && <DataElementWrapper
             className={classNames({ row: true, active: isMultiViewerMode })}
             onClick={toggleCompareMode}
             dataElement="toggleCompareModeButton"

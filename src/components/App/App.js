@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import core from 'core';
 import actions from 'actions';
-
+import { isIE11 } from 'helpers/device';
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
 import ToolsHeader from 'components/Header/ToolsHeader';
@@ -189,7 +189,7 @@ const App = ({ removeEventHandlers }) => {
         <div className="content">
           <LeftPanel />
           {!isMultiViewerMode && <DocumentContainer />}
-          <MultiViewer/>
+          {!isIE11 && <MultiViewer/>}
           <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
           </RightPanel>
