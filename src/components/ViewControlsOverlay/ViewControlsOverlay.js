@@ -8,29 +8,39 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useStore } from 'react-redux';
 import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
-import DataElementWrapper from "components/DataElementWrapper";
+import DataElementWrapper from 'components/DataElementWrapper';
 import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
+import actions from 'actions';
+import { isIE11 } from 'helpers/device';
 
 function ViewControlsOverlay() {
   const [t] = useTranslation();
   const store = useStore();
 
-  const totalPages = useSelector(selectors.getTotalPages);
-  const displayMode = useSelector(selectors.getDisplayMode);
-  const isDisabled = useSelector(state => selectors.isElementDisabled(state, 'viewControlsOverlay'));
-  const isReaderMode = useSelector(selectors.isReaderMode);
+  const [totalPages, displayMode, isDisabled, isReaderMode, isMultiViewerMode] = useSelector((state) => [
+    selectors.getTotalPages(state),
+    selectors.getDisplayMode(state),
+    selectors.isElementDisabled(state, 'viewControlsOverlay'),
+    selectors.isReaderMode(state),
+    selectors.isMultiViewerMode(state),
+  ]);
 
   const totalPageThreshold = 1000;
   let isPageTransitionEnabled = totalPages < totalPageThreshold;
 
-  const displayModeManager = window.documentViewer?.getDisplayModeManager();
+  const documentViewer = core.getDocumentViewer();
+  const displayModeManager = documentViewer?.getDisplayModeManager();
   if (displayModeManager && displayModeManager.isVirtualDisplayEnabled()) {
-    isPageTransitionEnabled = true
+    isPageTransitionEnabled = true;
   }
+  const toggleCompareMode = () => {
+    store.dispatch(actions.setIsMultiViewerMode(!isMultiViewerMode));
+  };
+
   const handleClick = (pageTransition, layout) => {
     const setDisplayMode = () => {
       const displayModeObject = displayModeObjects.find(
-        obj => obj.pageTransition === pageTransition && obj.layout === layout,
+        (obj) => obj.pageTransition === pageTransition && obj.layout === layout,
       );
       core.setDisplayMode(displayModeObject.displayMode);
     };
@@ -46,7 +56,9 @@ function ViewControlsOverlay() {
   };
 
   const handleReaderModeClick = () => {
-    if (isReaderMode) return;
+    if (isReaderMode) {
+      return;
+    }
     enterReaderMode(store);
   };
 
@@ -57,13 +69,13 @@ function ViewControlsOverlay() {
   let pageTransition;
   let layout;
 
-  const displayModeObject = displayModeObjects.find(obj => obj.displayMode === displayMode);
+  const displayModeObject = displayModeObjects.find((obj) => obj.displayMode === displayMode);
   if (displayModeObject) {
     pageTransition = displayModeObject.pageTransition;
     layout = displayModeObject.layout;
   }
 
-  const showReaderButton = core.isFullPDFEnabled() && window.documentViewer?.getDocument()?.getType() === 'pdf';
+  const showReaderButton = core.isFullPDFEnabled() && core.getDocument()?.getType() === 'pdf';
 
   return (
     <FlyoutMenu menu="viewControlsOverlay" trigger="viewControlsButton" onClose={undefined} ariaLabel={t('component.viewControlsOverlay')}>
@@ -132,7 +144,7 @@ function ViewControlsOverlay() {
           >
             {t('action.rotate')}
           </DataElementWrapper>
-          <DataElementWrapper className="row" onClick={core.rotateClockwise} dataElement="rotateClockwiseButton">
+          <DataElementWrapper className="row" onClick={() => core.rotateClockwise()} dataElement="rotateClockwiseButton">
             <ActionButton
               title="action.rotateClockwise"
               img="icon-header-page-manipulation-page-rotation-clockwise-line"
@@ -140,7 +152,7 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('action.rotateClockwise')}</div>
           </DataElementWrapper>
-          <DataElementWrapper className="row" onClick={core.rotateCounterClockwise} dataElement="rotateCounterClockwiseButton">
+          <DataElementWrapper className="row" onClick={() => core.rotateCounterClockwise()} dataElement="rotateCounterClockwiseButton">
             <ActionButton
               title="action.rotateCounterClockwise"
               img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
@@ -197,6 +209,19 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('option.layout.cover')}</div>
           </DataElementWrapper>
+          {!isIE11 && <DataElementWrapper
+            className={classNames({ row: true, active: isMultiViewerMode })}
+            onClick={toggleCompareMode}
+            dataElement="toggleCompareModeButton"
+          >
+            <Button
+              title="action.comparePages"
+              img="icon-header-compare"
+              isActive={isMultiViewerMode}
+              role="option"
+            />
+            <div className="title">{t('action.comparePages')}</div>
+          </DataElementWrapper>}
         </>
       )}
     </FlyoutMenu>
