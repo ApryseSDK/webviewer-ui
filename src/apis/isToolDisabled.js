@@ -12,7 +12,7 @@ WebViewer(...)
 
 import selectors from 'selectors';
 
-export default store => toolName => {
+export default (store) => (toolName) => {
   const state = store.getState();
   const dataElement = selectors.getToolButtonDataElement(state, toolName);
 

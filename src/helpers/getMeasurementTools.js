@@ -2,7 +2,7 @@ import core from 'core';
 
 const { ToolNames } = window.Tools;
 const { MeasurementUnits } = window.Annotations.Annotation;
-const isMeasurementTool = tool => !!(tool && tool.Measure);
+const isMeasurementTool = (tool) => !!(tool && tool.Measure);
 
 const MEASUREMENT_TOOL_NAMES = [
   ToolNames.ARC_MEASUREMENT,
@@ -40,18 +40,17 @@ const imperialConverter = {
   'in': MeasurementUnits.DOUBLE_PRIME_IN,
 };
 
-const getToolNamesByTheSamePreset = toolName =>
-  MEASUREMENT_TOOL_NAMES.filter(name => {
-    if (isNaN(Number(toolName[toolName.length - 1]))) {
-      return isNaN(Number(name[name.length - 1]));
-    }
-    return toolName[toolName.length - 1] === name[name.length - 1];
-  });
+const getToolNamesByTheSamePreset = (toolName) => MEASUREMENT_TOOL_NAMES.filter((name) => {
+  if (isNaN(Number(toolName[toolName.length - 1]))) {
+    return isNaN(Number(name[name.length - 1]));
+  }
+  return toolName[toolName.length - 1] === name[name.length - 1];
+});
 
 export default () => {
   const tools = [];
   const toolModeMap = core.getToolModeMap();
-  Object.values(toolModeMap).forEach(tool => {
+  Object.values(toolModeMap).forEach((tool) => {
     if (isMeasurementTool(tool)) {
       tools.push(tool);
     }

@@ -29,7 +29,7 @@ describe('LineStyleOptions', () => {
         />
       );
 
-      const dropdowns = container.querySelectorAll(`button.Dropdown`);
+      const dropdowns = container.querySelectorAll('button.Dropdown');
       expect(dropdowns.length).toBe(2);
     });
 

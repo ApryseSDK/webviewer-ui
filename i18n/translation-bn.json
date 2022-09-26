@@ -1,5 +1,6 @@
 {
   "action": {
+    "addParagraph": "অনুচ্ছেদ যোগ করুন",
     "add": "যোগ করুন",
     "apply": "আবেদন করুন",
     "applyAll": "সব আবেদন",
@@ -94,7 +95,9 @@
     "addMark": "মার্ক যোগ করুন",
     "viewFile": "নথি দেখ",
     "switchLanguage": "ভাষা",
-    "multiReplyAnnotations": "নির্বাচিত টীকাগুলির উত্তর দিন ({{count}})"
+    "multiReplyAnnotations": "নির্বাচিত টীকাগুলির উত্তর দিন ({{count}})",
+    "comparePages": "পৃষ্ঠাগুলির তুলনা করুন",
+    "startComparison": "তুলনা শুরু করুন"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -115,6 +118,8 @@
     "freehand": "ফ্রি হ্যান্ড",
     "freeHandHighlight": "ফ্রি হ্যান্ড হাইলাইট",
     "freetext": "বিনামূল্যে টেক্সট",
+    "markInsertText": "টেক্সট ঢোকান",
+    "markReplaceText": "পাঠ্য প্রতিস্থাপন করুন",
     "highlight": "লক্ষণীয় করা",
     "image": "ছবি",
     "line": "লাইন",
@@ -144,7 +149,8 @@
     "other": "অন্যান্য",
     "3D": "3D",
     "sound": "শব্দ",
-    "changeView": "পরিবর্তন দেখুন"
+    "changeView": "পরিবর্তন দেখুন",
+    "newImage": "নতুন ছবি"
   },
   "rubberStamp": {
     "Approved": "অনুমোদিত",
@@ -207,7 +213,8 @@
     "noteGroupSection": {
       "open": "সমস্ত টীকা দেখুন",
       "close": "সমস্ত টীকা বন্ধ করুন"
-    }
+    },
+    "comparePanel": "প্যানেল তুলনা করুন"
   },
   "message": {
     "toolsOverlayNoPresets": "কোনো প্রিসেট নেই",
@@ -248,6 +255,7 @@
     "existingAnnotationWarning": "বিদ্যমান টীকাগুলি সম্পাদনা করার পরে পাঠ্যের সাথে নাও মিলতে পারে।",
     "changesCannotBeUndone": "করা কোনো পরিবর্তন পূর্বাবস্থায় ফেরানো যাবে না.",
     "doNotShowAgain": "পরবর্তীতে এটি আর আমাকে দেখাবেন না",
+    "doNotAskAgain": "আবার জিঙ্গাসা করবে না",
     "enterReplacementText": "আপনি যে পাঠ্যটি প্রতিস্থাপন করতে চান তা লিখুন",
     "sortBy": "সাজান",
     "emptyCustomStampInput": "স্ট্যাম্প টেক্সট খালি হতে পারে না",
@@ -309,6 +317,7 @@
       "toolbarGroup-Insert": "ঢোকান",
       "toolbarGroup-Measure": "পরিমাপ করা",
       "toolbarGroup-Edit": "সম্পাদনা করুন",
+      "toolbarGroup-EditText": "লেখা সম্পাদনা",
       "toolbarGroup-FillAndSign": "পূরণ করুন এবং স্বাক্ষর করুন",
       "toolbarGroup-Forms": "ফর্ম",
       "toolbarGroup-Redact": "সংশোধিত"
@@ -326,7 +335,6 @@
       "pageTransition": "পৃষ্ঠা স্থানান্তর"
     },
     "documentControls": {
-      "placeholder": "1, 3, 5-10",
       "selectTooltip": "একাধিক পৃষ্ঠা নির্বাচন করুন",
       "closeTooltip": "মাল্টিসিলেক্ট বন্ধ করুন"
     },
@@ -381,7 +389,15 @@
     "searchPanel": {
       "caseSensitive": "কেস সংবেদনশীল",
       "wholeWordOnly": "সমগ্র শব্দ",
-      "wildcard": "ওয়াইল্ডকার্ড"
+      "wildcard": "ওয়াইল্ডকার্ড",
+      "replace": "প্রতিস্থাপন করুন",
+      "replaceAll": "সমস্ত প্রতিস্থাপন",
+      "replaceText": "পাঠ্য প্রতিস্থাপন করুন",
+      "confirmMessageReplaceAll": "আপনি কি নিশ্চিত যে আপনি সমস্ত পাঠ্য প্রতিস্থাপন করতে চান?",
+      "confirmMessageReplaceOne": "আপনি কি এই পাঠ্যটি প্রতিস্থাপন করার বিষয়ে নিশ্চিত?",
+      "moreOptions": "আরও বিকল্প",
+      "lessOptions": "কম বিকল্প",
+      "confirm": "নিশ্চিত করুন"
     },
     "toolsOverlay": {
       "currentStamp": "বর্তমান স্ট্যাম্প",
@@ -455,7 +471,8 @@
         "preset": "প্রিসেট",
         "paperUnits": "কাগজের ইউনিট",
         "displayUnits": "ডিসপ্লে ইউনিট",
-        "fractionUnitsTooltip": "ভগ্নাংশ ইউনিট শুধুমাত্র in এবং ft-in-এ প্রযোজ্য"
+        "fractionUnitsTooltip": "ভগ্নাংশ ইউনিট শুধুমাত্র in এবং ft-in-এ প্রযোজ্য",
+        "incorrectSyntax": "ভুল সিনট্যাক্স"
       },
       "scaleOverlay": {
         "addNewScale": "নতুন স্কেল যোগ করুন",
@@ -473,7 +490,10 @@
         "deletionIs": "মুছে ফেলা হয়",
         "irreversible": "অপরিবর্তনীয়",
         "willDeleteMeasurement": "এবং সংশ্লিষ্ট পরিমাপ মুছে ফেলবে।",
-        "confirmDelete": "আপনি কি এই স্কেল মুছে ফেলার বিষয়ে নিশ্চিত?"
+        "confirmDelete": "আপনি কি এই স্কেল মুছে ফেলার বিষয়ে নিশ্চিত?",
+        "ifChangeScale": "আপনি নির্বাচিত পরিমাপ বা টুলের জন্য স্কেল পরিবর্তন করলে, স্কেল করুন",
+        "notUsedWillDelete": " কোন পরিমাপ বা সরঞ্জাম দ্বারা আর ব্যবহার করা হবে না এবং মুছে ফেলা হবে. মুছে ফেলা অপরিবর্তনীয়।",
+        "ifToContinue": "আপনি কি চালিয়ে যাওয়ার বিষয়ে নিশ্চিত?"
       }
     },
     "stylePopup": {
@@ -564,8 +584,7 @@
       "specify": "পৃষ্ঠাগুলি নির্দিষ্ট করুন",
       "odd": "শুধুমাত্র বিজোড় পৃষ্ঠা",
       "even": "এমনকি পেজ শুধুমাত্র",
-      "header": "মার্ক পেজ রিডাকশন",
-      "specifyPlaceholder": "1, 3, 5-10"
+      "header": "মার্ক পেজ রিডাকশন"
     },
     "lineStyleOptions": {
       "title": "শৈলী"
@@ -606,6 +625,11 @@
     "multiDeleteAnnotation": {
       "title": "টীকা মুছবেন?",
       "message": "মুছে ফেললে সমস্ত মন্তব্য, উত্তর এবং গ্রুপিং মুছে যাবে এবং পূর্বাবস্থায় ফেরানো যাবে না।\n\n আপনি কি এই টীকাগুলি মুছে ফেলার বিষয়ে নিশ্চিত?"
+    },
+    "closeFile": {
+      "title": "ডাউনলোড না করেই বন্ধ করবেন?",
+      "message": "এই নথিতে কিছু পরিবর্তন করা হয়েছে, আপনি কি আপনার কাজ ডাউনলোড না করেই এটি বন্ধ করতে চান? আপনি এই ক্রিয়াটিকে পূর্বাবস্থায় ফেরাতে পারবেন না৷",
+      "rejectDownloadButton": "ডাউনলোড ছাড়াই বন্ধ করুন"
     }
   },
   "shortcut": {
@@ -878,6 +902,10 @@
       "cancelMessage": "আপনি কি নিশ্চিত যে আপনি সমস্ত নির্বাচিত পৃষ্ঠা ক্রপ করা বাতিল করতে চান?"
     }
   },
+  "textEditingPanel": {
+    "paragraph": "অনুচ্ছেদ",
+    "text": "পাঠ্য"
+  },
   "redactionPanel": {
     "noMarkedRedactions": "টেক্সট, অঞ্চল, পৃষ্ঠা চিহ্নিত করে বা একটি অনুসন্ধান করে সংশোধন করা শুরু করুন।",
     "redactionSearchPlaceholder": "কীওয়ার্ড অনুসন্ধান বা নিদর্শন দ্বারা যোগ করুন",
@@ -907,9 +935,26 @@
   "wv3dPropertiesPanel": {
     "propertiesHeader": "Уласцівасці",
     "miscValuesHeader": "Усе",
-    "emptyPanelMessage": "Выберыце элемент, каб праглядзець яго ўласцівасці"
+    "emptyPanelMessage": "Выберыце элемент, каб праглядзець яго ўласцівасці."
   },
   "languageModal": {
     "selectLanguage": "ভাষা নির্বাচন কর"
+  },
+  "multiViewer": {
+    "dragAndDrop": "তুলনা করতে আপনার ফাইলটি এখানে টেনে আনুন",
+    "or": "বা",
+    "browse": "ফাইল ব্রাউজ",
+    "startSync": "সিঙ্ক শুরু করুন",
+    "stopSync": "সিঙ্ক বন্ধ করুন",
+    "closeDocument": "নথি বন্ধ করুন",
+    "save": "নথি সংরক্ষণ করুন",
+    "comparePanel": {
+      "Find": "নথিতে খুঁজুন",
+      "changesList": "পরিবর্তনের তালিকা",
+      "change": "পরিবর্তন",
+      "old": "পুরাতন",
+      "new": "নতুন",
+      "page": "পাতা"
+    }
   }
 }

@@ -12,14 +12,14 @@ WebViewer(...)
 import selectors from 'selectors';
 import actions from 'actions';
 
-export default store => pageNumbers => {
+export default (store) => (pageNumbers) => {
   console.warn('UI.unselectThumbnailPages is deprecated since version 8.5. Please use UI.ThumbnailsPanel.unselectPages instead');
   const selectedIndex = selectors.getSelectedThumbnailPageIndexes(store.getState());
 
   if (!pageNumbers || !Array.isArray(pageNumbers)) {
-    console.warn(`Invalid input, 'unselectThumbnailPages' expect an array of numbers`);
+    console.warn('Invalid input, \'unselectThumbnailPages\' expect an array of numbers');
     return;
   }
 
-  store.dispatch(actions.setSelectedPageThumbnails(selectedIndex.filter(i => !pageNumbers.includes(i + 1))));
+  store.dispatch(actions.setSelectedPageThumbnails(selectedIndex.filter((i) => !pageNumbers.includes(i + 1))));
 };

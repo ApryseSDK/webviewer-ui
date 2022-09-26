@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
-import CreatableListItem from './CreatableListItem'
+import CreatableListItem from './CreatableListItem';
 
 import './CreatableList.scss';
 
@@ -18,14 +18,14 @@ const CreatableListContainer = ({
       id: index,
       displayValue: option.displayValue,
       value: option.value,
-    }
+    };
   });
   const [items, setItems] = useState(draggableItems);
   const [nextId, setNextId] = useState(draggableItems.length);
 
 
   useEffect(() => {
-    const sanitizedOptions = items.map(item => ({ value: item.value, displayValue: item.displayValue }));
+    const sanitizedOptions = items.map((item) => ({ value: item.value, displayValue: item.displayValue }));
     onOptionsUpdated(sanitizedOptions);
   }, [items, onOptionsUpdated]);
 
@@ -35,21 +35,20 @@ const CreatableListContainer = ({
     setItems([...items, { id, value: '', displayValue: '' }]);
   }, [nextId, items]);
 
-  const handleDeleteItem = id => () => {
-    const updatedItems = items.filter(item => {
+  const handleDeleteItem = (id) => () => {
+    const updatedItems = items.filter((item) => {
       return id !== item.id;
     });
 
     setItems(updatedItems);
   };
 
-  const handleItemValueChange = id => value => {
-    const updatedItems = items.map(item => {
+  const handleItemValueChange = (id) => (value) => {
+    const updatedItems = items.map((item) => {
       if (item.id !== id) {
         return item;
-      } else {
-        return { ...item, value: value, displayValue: value };
       }
+      return { ...item, value, displayValue: value };
     });
 
     setItems(updatedItems);
@@ -99,9 +98,10 @@ const CreatableListContainer = ({
         className="add-item-button"
         label={t('action.addOption')}
         img="icon-plus-sign"
-        onClick={onAddItem} />
+        onClick={onAddItem}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default CreatableListContainer;

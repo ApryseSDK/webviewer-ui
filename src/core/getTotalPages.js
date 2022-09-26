@@ -1,4 +1,6 @@
+import core from 'core';
+
 /**
  * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getPageCount__anchor
  */
-export default () => window.documentViewer.getPageCount();
+export default (documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getPageCount();

@@ -4,10 +4,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 8px 0px 12px 0px;
-  border-top: 1.5px solid var(--border);
-  border-bottom: 1.5px solid var(--border);
-  padding: 4px 0px;
+  margin-left: var(--padding);
+  margin-right: var(--padding);
+  border-bottom: 1px solid var(--border);
+  padding-top: 4px;
+  padding-bottom: 4px;
   color: var(--faded-text);
 
   .Button {

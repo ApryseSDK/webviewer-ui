@@ -24,6 +24,8 @@
  * @property {string} NotesPanelVirtualizedList Ability to use a virtualized list in the note panel. Will limit the number of notes rendered on the DOM
  * @property {string} NotesShowLastUpdatedDate Show last updated date in notes panel instead of created date
  * @property {string} MultiTab toggle feature to open multiple documents in the same viewer instance
+ * @property {string} MultiViewerMode toggle feature to activate 2 viewers in Compare Mode.
+ * @property {string} Initials toggle feature to activate initials signing mode in the Signature Modal
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -58,5 +60,8 @@ export default {
   NotesPanelVirtualizedList: 'NotesPanelVirtualizedList',
   NotesShowLastUpdatedDate: 'NotesShowLastUpdatedDate',
   MultiTab: 'MultiTab',
-  ChangeView: 'ChangeView'
+  ChangeView: 'ChangeView',
+  ContentEdit: 'ContentEdit',
+  MultiViewerMode: 'MultiViewerMode',
+  Initials: 'Initials',
 };

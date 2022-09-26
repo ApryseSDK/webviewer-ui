@@ -15,7 +15,7 @@ const RedactionItemContainer = (props) => {
     language,
     customNoteSelectionFunction,
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.getNoteDateFormat(state),
       selectors.getCurrentLanguage(state),
       selectors.getCustomNoteSelectionFunction(state),
@@ -36,7 +36,7 @@ const RedactionItemContainer = (props) => {
   }, [annotation]);
 
   const onRedactionItemDelete = useCallback(() => {
-    core.deleteAnnotations([annotation])
+    core.deleteAnnotations([annotation]);
   }, [annotation]);
 
   return (

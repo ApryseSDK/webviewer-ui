@@ -1,9 +1,9 @@
 import core from 'core';
 
-export default store => pageNumber => {
+export default (store, documentViewerKey) => (pageNumber) => {
   const state = store.getState();
   if (state.viewer.isAccessibleMode) {
-    core.getDocument().loadPageText(pageNumber, text => {
+    core.getDocument(documentViewerKey).loadPageText(pageNumber, (text) => {
       const textContainer = document.createElement('div');
       textContainer.tabIndex = 0;
       // TODO: page-num
@@ -13,7 +13,7 @@ export default store => pageNumber => {
       textContainer.id = id;
       // remove duplicate / pre-existing divs first before appending again
       // TODO: page-num
-      const pageContainerElement = document.getElementById(`pageContainer${pageNumber}`);
+      const pageContainerElement = core.getViewerElement(documentViewerKey).querySelector(`#pageContainer${pageNumber}`);
       const existingTextContainer = pageContainerElement.querySelector(`#${id}`);
       if (existingTextContainer) {
         pageContainerElement.removeChild(existingTextContainer);

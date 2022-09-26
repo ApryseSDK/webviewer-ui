@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import FilePickerPanel from './FilePickerPanel';
 
 const TestFilePickerPanel = withProviders(FilePickerPanel);
-function noop() { };
+function noop() { }
 
 describe('FilePickerPanel', () => {
   describe('Component', () => {
@@ -11,8 +11,8 @@ describe('FilePickerPanel', () => {
       render(<TestFilePickerPanel
         defaultValue={''}
         onFileSelect={noop}
-      />)
+      />);
       screen.getByText('Choose a file');
-    })
+    });
   });
 });

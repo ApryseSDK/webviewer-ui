@@ -98,7 +98,7 @@ WebViewer(...)
       const state = this.store.getState();
       index = selectors
         .getPopupItems(state, this.popupDataElement)
-        .findIndex(obj => obj.dataElement === dataElement);
+        .findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;

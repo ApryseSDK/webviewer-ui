@@ -8,9 +8,9 @@ import './SelectedStamp.scss';
 const SelectedStamp = ({ tReady, toolName }) => {
   const [t] = useTranslation();
   useEffect(() => {
-    const selectedStamp = core.getTool(toolName);
+    const selectedStampArray = core.getToolsFromAllDocumentViewers(toolName);
     core.setToolMode(toolName);
-    selectedStamp.showPreview();
+    selectedStampArray.forEach((selectedStamp) => selectedStamp.showPreview());
   }, [toolName]);
 
   return (
@@ -18,7 +18,7 @@ const SelectedStamp = ({ tReady, toolName }) => {
       className="stamp-overlay"
     >
       <div className="no-presets">
-        {tReady? t('message.toolsOverlayNoPresets') : ''}
+        {tReady ? t('message.toolsOverlayNoPresets') : ''}
       </div>
     </div>
   );

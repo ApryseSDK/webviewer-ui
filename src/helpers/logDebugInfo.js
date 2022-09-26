@@ -19,17 +19,17 @@ export default () => {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
     const [coreMajorVersion, coreMinorVersion] = coreVersion
       .split('.')
-      .map(version => parseInt(version, 10));
+      .map((version) => parseInt(version, 10));
     const [uiMajorVersion, uiMinorVersion] = uiVersion
       .split('.')
-      .map(version => parseInt(version, 10));
+      .map((version) => parseInt(version, 10));
 
     let webViewerJSMajorVersion = null;
     let webViewerJSMinorVersion = null;
     if (webViewerJSVersion) {
       [webViewerJSMajorVersion, webViewerJSMinorVersion] = webViewerJSVersion
         .split('.')
-        .map(version => parseInt(version, 10));
+        .map((version) => parseInt(version, 10));
     }
 
     if (console.table) {
@@ -93,7 +93,7 @@ export default () => {
     const minorVersionOutdatedComponents = [];
     const latestComponent = webViewerComponents[0];
 
-    webViewerComponents.forEach(component => {
+    webViewerComponents.forEach((component) => {
       if (latestComponent.majorVersion > component.majorVersion) {
         majorVersionOutdatedComponents.push(component.name);
       } else if (latestComponent.minorVersion > component.minorVersion) {

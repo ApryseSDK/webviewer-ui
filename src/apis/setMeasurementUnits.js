@@ -13,7 +13,7 @@ WebViewer(...)
   });
  */
 
-export default store => ({ from, to }) => {
+export default (store) => ({ from, to }) => {
   const { measurementUnits } = store.getState().viewer;
 
   if (!from) {

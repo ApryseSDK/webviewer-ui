@@ -7,15 +7,22 @@ import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
 import core from 'core';
-
 import Measure from 'react-measure';
-
-import "./Ribbons.scss";
+import './Ribbons.scss';
+import { DISABLED_TOOL_GROUPS } from 'constants/multiViewerDisabledTools';
 
 const Ribbons = () => {
-  const toolbarGroups = useSelector(selectors.getEnabledToolbarGroups);
-  const currentToolbarGroup = useSelector(selectors.getCurrentToolbarGroup);
-  const customHeadersAdditionalProperties = useSelector(selectors.getCustomHeadersAdditionalProperties);
+  const [
+    toolbarGroups,
+    currentToolbarGroup,
+    isMultiViewerMode,
+    customHeadersAdditionalProperties,
+  ] = useSelector((state) => [
+    selectors.getEnabledToolbarGroups(state),
+    selectors.getCurrentToolbarGroup(state),
+    selectors.isMultiViewerMode(state),
+    selectors.getCustomHeadersAdditionalProperties(state),
+  ]);
   const { t, ready: tReady } = useTranslation();
   const [ribbonsWidth, setRibbonsWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -26,13 +33,13 @@ const Ribbons = () => {
 
   const setToolbarGroup = useCallback((group, pickTool) => {
     dispatch(actions.setToolbarGroup(group, pickTool));
-  }, [dispatch])
+  }, [dispatch]);
 
   // don't pick tool for the edit group because the first button in the group is the form editing button,
   // which is an action button that does not have an active background
-  const shouldPickTool = toolbarGroup => toolbarGroup !== 'toolbarGroup-Edit';
+  const shouldPickTool = (toolbarGroup) => toolbarGroup !== 'toolbarGroup-Edit' && toolbarGroup !== 'toolbarGroup-EditText';
 
-  const toggleFormFieldCreationMode = toolGroup => {
+  const toggleFormFieldCreationMode = (toolGroup) => {
     const formFieldCreationManager = core.getFormFieldCreationManager();
     if (toolGroup === 'toolbarGroup-Forms') {
       if (!formFieldCreationManager.isInFormFieldCreationMode()) {
@@ -43,14 +50,29 @@ const Ribbons = () => {
     }
   };
 
+  const toggleContentEditMode = (toolGroup) => {
+    const contentEditManager = core.getContentEditManager();
+    if (toolGroup === 'toolbarGroup-EditText') {
+      if (!contentEditManager.isInContentEditMode()) {
+        contentEditManager.startContentEditMode();
+      }
+    } else if (contentEditManager.isInContentEditMode()) {
+      contentEditManager.endContentEditMode();
+    }
+  };
+
   useEffect(() => {
     // When we initialize the Viewer we don't want to start off in the Forms tab as
     // this may confuse users, since in Forms creation mode regular annotations are hidden.
     // If for some reason we are in this mode on init, we default to switching to the Annotate tab
-    if (currentToolbarGroup === 'toolbarGroup-Forms') {
+
+    // We also don't want to start off in Edit Text mode since users could
+    // accidentially change something in their document irreversibly and may be confused by
+    // the appearance of the content edit warning without changing anything
+    if (currentToolbarGroup === 'toolbarGroup-Forms' || currentToolbarGroup === 'toolbarGroup-EditText') {
       setToolbarGroup('toolbarGroup-Annotate', shouldPickTool('toolbarGroup-Annotate'));
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (ribbonsRef?.current && containerRef?.current) {
@@ -63,7 +85,7 @@ const Ribbons = () => {
       // otherwise keep it next to the buttons on the left
       const spaceForRibbons = Math.max(spaceLeftOfContainer, spaceForLeftHalfOfRibbons);
 
-      ribbonsRef.current.style.left = spaceForRibbons + 'px';
+      ribbonsRef.current.style.left = `${spaceForRibbons}px`;
 
       if (ribbonsWidth < containerWidth) {
         setHasEnoughCenteredSpace(true);
@@ -83,7 +105,10 @@ const Ribbons = () => {
       return customHeaderProperties.name;
     }
     return `option.toolbarGroup.${toolbarGroup}`;
-  }
+  };
+
+  const filteredToolBarGroup = isMultiViewerMode ?
+    toolbarGroups.filter((group) => !DISABLED_TOOL_GROUPS.includes(group)) : toolbarGroups;
 
   return (
     <Measure
@@ -114,7 +139,7 @@ const Ribbons = () => {
                   'is-hidden': !hasEnoughCenteredSpace,
                 })}
               >
-                {toolbarGroups.map(toolbarGroup => (
+                {filteredToolBarGroup.map((toolbarGroup) => (
                   <button
                     key={toolbarGroup}
                     data-element={`${toolbarGroup}`}
@@ -124,6 +149,7 @@ const Ribbons = () => {
                     })}
                     onClick={() => {
                       toggleFormFieldCreationMode(toolbarGroup);
+                      toggleContentEditMode(toolbarGroup);
                       setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
                     }}
                   >
@@ -142,11 +168,12 @@ const Ribbons = () => {
           >
             <Dropdown
               dataElement="ribbonsDropdown"
-              items={toolbarGroups}
+              items={filteredToolBarGroup}
               getTranslationLabel={getToolbarTranslationString}
               currentSelectionKey={currentToolbarGroup}
-              onClickItem={toolbarGroup => {
+              onClickItem={(toolbarGroup) => {
                 toggleFormFieldCreationMode(toolbarGroup);
+                toggleContentEditMode(toolbarGroup);
                 setToolbarGroup(toolbarGroup, shouldPickTool(toolbarGroup));
               }}
             />

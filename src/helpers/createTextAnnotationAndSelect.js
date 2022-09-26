@@ -13,11 +13,11 @@ export default (dispatch, annotationConstructor) => {
 };
 
 
-const createTextAnnotation = annotationConstructor => {
+const createTextAnnotation = (annotationConstructor) => {
   const annotations = [];
   const quads = core.getSelectedTextQuads();
 
-  Object.keys(quads).forEach(pageNumber => {
+  Object.keys(quads).forEach((pageNumber) => {
     pageNumber = parseInt(pageNumber, 10);
     const annotation = createAnnotation(annotationConstructor, pageNumber, quads);
 
@@ -49,18 +49,18 @@ const createAnnotation = (annotationConstructor, pageNumber, quads) => {
   return annotation;
 };
 
-const setAnnotationStyle = annotation => {
+const setAnnotationStyle = (annotation) => {
   const toolName = mapAnnotationToToolName(annotation);
 
   if (toolName) {
     const newStyles = getToolStyles(toolName);
-    Object.keys(newStyles).forEach(property => {
+    Object.keys(newStyles).forEach((property) => {
       annotation[property] = newStyles[property];
     });
   }
 };
 
-const setRedactionStyle = annotation => {
+const setRedactionStyle = (annotation) => {
   const { AnnotationCreateRedaction: { defaults: style = {} } } = core.getToolModeMap();
 
   if (style) {

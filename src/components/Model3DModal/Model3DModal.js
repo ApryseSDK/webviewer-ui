@@ -28,7 +28,7 @@ const Model3DModal = ({
   const urlInputRadio = React.createRef();
   const fileInputRadio = React.createRef();
 
-  const draw3DAnnotation = e => {
+  const draw3DAnnotation = (e) => {
     const defaultW = 300;
     const defaultH = 300;
 
@@ -36,30 +36,25 @@ const Model3DModal = ({
     model3DAnnotation.set3DData(base64);
     if (typeOfInput === 'url') {
       model3DAnnotation.set3DData(url, 'url');
-    } else if (typeOfInput === 'file') {
     }
-    //reset x and y position with current zoom level
-    const zoom = window.documentViewer.getZoomLevel();
+    // reset x and y position with current zoom level
+    const zoom = core.getZoom();
     model3DAnnotation.X = e.layerX / zoom;
     model3DAnnotation.Y = e.layerY / zoom;
     model3DAnnotation.Width = defaultW;
     model3DAnnotation.Height = defaultH;
     model3DAnnotation.Author = core.getCurrentUser();
-    model3DAnnotation.setPageNumber(window.documentViewer.getCurrentPage());
+    model3DAnnotation.setPageNumber(core.getCurrentPage());
     core.addAnnotations([model3DAnnotation]);
-    // const options = {
-    //   pageNumber: model3DAnnotation.PageNumber,
-    //   majorRedraw: true,
-    // };
     core.drawAnnotationsFromList([model3DAnnotation]);
     core.removeEventListener('click', draw3DAnnotation);
   };
 
-  const getExtension = fileName => {
+  const getExtension = (fileName) => {
     return fileName.split('.').pop();
   };
 
-  const drawModel3DHandler = async e => {
+  const drawModel3DHandler = async (e) => {
     e.preventDefault();
 
     if (typeOfInput === 'url') {
@@ -67,28 +62,28 @@ const Model3DModal = ({
       if (getExtension(url) !== 'glb') {
         setError({ ...error, ...{ 'urlError': t('Model3D.formatError') } });
         return;
-      } else {
-        const base64StrGenerator = async url => {
-          // build base64 string from the given file url
-          const urlToBase64Str = url => {
-            return new Promise(function(resolve) {
-              const xhr = new XMLHttpRequest();
-              xhr.onload = async function() {
-                const reader = new FileReader();
-                reader.onloadend = function() {
-                  resolve(reader.result);
-                };
-                await reader.readAsDataURL(xhr.response);
-              };
-              xhr.open('GET', url);
-              xhr.responseType = 'blob';
-              xhr.send();
-            });
-          };
-          return await urlToBase64Str(url);
-        };
-        setBase64(await base64StrGenerator(url));
       }
+      const base64StrGenerator = async (url) => {
+        // build base64 string from the given file url
+        const urlToBase64Str = (url) => {
+          return new Promise(function(resolve) {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = async function() {
+              const reader = new FileReader();
+              reader.onloadend = function() {
+                resolve(reader.result);
+              };
+              await reader.readAsDataURL(xhr.response);
+            };
+            xhr.open('GET', url);
+            xhr.responseType = 'blob';
+            xhr.send();
+          });
+        };
+        // eslint-disable-next-line no-return-await
+        return await urlToBase64Str(url);
+      };
+      setBase64(await base64StrGenerator(url));
     } else if (typeOfInput === 'file') {
       if (getExtension(file.name) !== 'glb') {
         setError({ ...error, ...{ 'urlError': t('Model3D.formatError') } });
@@ -98,7 +93,8 @@ const Model3DModal = ({
 
     closeModal();
     core.setToolMode('Pan');
-    const viewer = documentViewer.getViewerElement();
+    // eslint-disable-next-line no-undef
+    const viewer = core.getViewerElement();
     viewer.style.cursor = 'crosshair';
     core.addEventListener('click', draw3DAnnotation);
   };
@@ -110,24 +106,23 @@ const Model3DModal = ({
     closed: !isOpen,
   });
 
-  const handleFileChange = async event => {
+  const handleFileChange = async (event) => {
     setTypeOfInput('file');
     const file = event.target.files[0];
     setFile(file);
-    const fileToBase64 = file =>
-      new Promise(() => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          return setBase64(reader.result);
-        };
-      });
+    const fileToBase64 = (file) => new Promise(() => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        return setBase64(reader.result);
+      };
+    });
     await fileToBase64(file);
     setError({});
     setURL('');
   };
 
-  const handleURLChange = url => {
+  const handleURLChange = (url) => {
     setTypeOfInput('url');
     setURL(url.trim());
     setError('');
@@ -140,7 +135,7 @@ const Model3DModal = ({
       type="url"
       ref={urlInput}
       value={url}
-      onChange={e => handleURLChange(e.target.value)}
+      onChange={(e) => handleURLChange(e.target.value)}
       onFocus={() => urlInputRadio.current.click()}
       placeholder={t('Model3D.enterurl')}
     />
@@ -159,7 +154,8 @@ const Model3DModal = ({
   return isDisabled ? null : (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
       <div className={modalClass} data-element="Model3DModal" onMouseDown={closeModal}>
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
+        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
+          <div className="swipe-indicator" />
           <form onSubmit={drawModel3DHandler}>
             <div className="col">{t('Model3D.enterurlOrLocalFile')}</div>
             <Choice

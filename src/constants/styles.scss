@@ -194,11 +194,22 @@ $light-gray: #e7ebee;
   &.tools-header-open {
     height: calc(100% - 80px);
   }
+  
+  &.multi-tab-active {
+    height: calc(100% - 120px);
+
+    @include tablet {
+      height: calc(100% - 140px); // minus the height of both headers and of the tabs;
+    }
+  }
 
   @include desktop {
     height: calc(100% - 40px);
     &.tools-header-open {
       height: calc(100% - 74px); // minus the height of both headers;
+    }
+    &.multi-tab-active {
+      height: calc(100% - 120px); // minus the height of both headers and of the tabs;
     }
   }
 
@@ -209,8 +220,16 @@ $light-gray: #e7ebee;
       height: calc(100% - 76px); // minus the height of both headers;
     }
 
+    &.multi-tab-active {
+      height: calc(100% - 115px); // minus the height of both headers and of the tabs;
+    }
+
     &.tools-header-and-header-hidden {
       height: 100%;
+
+      &.multi-tab-active {
+        height: calc(100% - 140px); // minus the height of both headers and of the tabs;
+      }
     }
   }
 

@@ -43,7 +43,7 @@ const FormFieldPlaceHolderOverlay = ({ annotation, overlayPosition, overlayRef }
         {formFieldPlaceHolderName}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default FormFieldPlaceHolderOverlay;

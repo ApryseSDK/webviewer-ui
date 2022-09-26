@@ -17,6 +17,11 @@
     box-shadow: 0px 0px 3px var(--document-box-shadow);
     background: var(--component-background);
 
+    &.include-initials {
+      width: 664px;
+    }
+
+
     @include mobile {
       border-radius: 0;
       height: 440px;
@@ -36,7 +41,7 @@
       padding: 20px 16px 16px 16px;
     }
 
-    .header{
+    .header {
       margin: 0;
       display: flex;
       align-items: center;
@@ -55,10 +60,12 @@
         position: static;
         height: 32px;
         width: 32px;
+
         &:hover {
           background: var(--view-header-button-hover);
           border-radius: 4px;
         }
+
         &.selected {
           background: var(--view-header-button-active);
           cursor: default;
@@ -88,42 +95,48 @@
 
     @extend %tab-list;
 
-    .ColorPalette {
-      margin: 8px;
-      grid-template-columns: repeat(3,1fr);
-      width: 100px;
+    .signature-style-options {
+      width: 90%;
+      display: flex;
 
-      :not(:last-child) {
-        margin-right: 8px;
-      }
+      .ColorPalette {
+        margin: 8px;
+        grid-template-columns: repeat(3, 1fr);
+        width: 100px;
 
-      .cell-container {
-        width: 28px;
-        height: 28px;
-
-        @include tiny-browser-height {
-          width: 22px;
-          height: 22px;
+        :not(:last-child) {
+          margin-right: 8px;
         }
 
-        .cell-outer {
-          .cell{
-            width: 16px;
-            height: 16px;
-
-            @include tiny-browser-height {
-              width: 14px;
-              height: 14px;
-            }
-          }
-        }
-        .cell-outer.active {
+        .cell-container {
           width: 28px;
           height: 28px;
 
           @include tiny-browser-height {
             width: 22px;
             height: 22px;
+          }
+
+          .cell-outer {
+            .cell {
+              width: 16px;
+              height: 16px;
+
+              @include tiny-browser-height {
+                width: 14px;
+                height: 14px;
+              }
+            }
+          }
+
+          .cell-outer.active {
+            width: 28px;
+            height: 28px;
+
+            @include tiny-browser-height {
+              width: 22px;
+              height: 22px;
+            }
           }
         }
       }
@@ -140,7 +153,7 @@
       border: none;
       height: 28px;
       width: 63px;
-      margin: 8px;
+      margin: auto 8px;
       font-size: 13px;
 
       &:enabled:hover {
@@ -188,5 +201,163 @@
         }
       }
     }
+  }
+
+  .colorpalette-clear-container {
+    display: flex;
+    height: 44px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+
+    .signature-style-options {
+      width: 90%;
+      display: flex;
+
+      .divider {
+        display: inline-block;
+        border-left: 1px solid var(--modal-stroke-and-border);
+        margin: auto 8px auto 16px;
+        height: 16px;
+      }
+
+      .placeholder-dropdown {
+        width: 160px;
+        height: 31px;
+        margin: auto 0;
+      }
+
+
+      .Dropdown__wrapper {
+        width: 160px;
+        height: 31px;
+        margin: auto 0;
+        position: absolute;
+        margin-top: 6px;
+
+        .Dropdown {
+          width: 100% !important;
+          height: 100%;
+          text-align: left;
+        }
+
+        .picked-option-text {
+          margin-right: -18px;
+          padding-left: 2px;
+          font-size: 15px;
+        }
+
+        .arrow {
+          flex: unset;
+        }
+
+        .Dropdown__items {
+
+          bottom: auto;
+          top: 100%;
+          width: 100%;
+          left: 0;
+          right: auto;
+
+        }
+
+        .Dropdown__items button:nth-child(n) {
+          font-size: 15px;
+        }
+
+        .Dropdown__items button:nth-child(2) {
+          font-size: 13px;
+        }
+
+        .Dropdown__items button:nth-child(4) {
+          font-size: 18px;
+        }
+
+        .Dropdown__item {
+          display: block;
+          padding-right: 16px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .footer-signature-clear {
+    @include button-reset;
+    color: var(--secondary-button-text);
+    display: flex;
+    flex: 0 0 0;
+    align-items: baseline;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    height: 28px;
+    width: 63px;
+    font-size: 13px;
+
+    &:enabled:hover {
+      color: var(--secondary-button-hover);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  .signature-input {
+    background: var(--signature-draw-background);
+    border: 1px solid var(--modal-stroke-and-border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    width: 100%;
+    height: 200px;
+    border-radius: 4px;
+
+    &.full-signature {
+      flex: 1.5 0 0;
+    }
+
+    &.initials {
+      flex: 1 0 0;
+    }
+
+    @include small-browser-height {
+      height: 116px;
+    }
+
+    @include tiny-browser-height {
+      height: 86px;
+    }
+
+    &.image {
+      height: 244px;
+    }
+
+    &-footer {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+
+    .signature-prompt {
+      font-size: 10px;
+      color: var(--faded-text);
+      flex: 3 0 0;
+      text-align: center;
+    }
+  }
+
+  .signature-and-initials-container {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
   }
 }

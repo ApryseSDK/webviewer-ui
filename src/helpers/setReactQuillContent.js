@@ -2,7 +2,7 @@
  * Transforming RichText Style object into the Object acceptable by React Quill component.
  */
 
-const setReactQuillContent = annotation => {
+const setReactQuillContent = (annotation) => {
   const richTextStyle = annotation.getRichTextStyle();
   const indexes = Object.keys(richTextStyle);
   const editor = annotation.editor;
@@ -27,7 +27,7 @@ const setReactQuillContent = annotation => {
   editor.setSelection(text.length, 0);
 };
 
-const getAttributtes = element => {
+const getAttributtes = (element) => {
   const attr = {};
   if (element['font-weight']) {
     attr['bold'] = true;

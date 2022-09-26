@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider as ReduxProvider } from "react-redux";
+import { Provider as ReduxProvider } from 'react-redux';
 import Dropdown from './Dropdown';
 
 export default {

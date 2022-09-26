@@ -7,4 +7,4 @@ export default WidgetInfo;
 export {
   renderPermissionStatus,
   renderVerificationStatus,
-}
+};

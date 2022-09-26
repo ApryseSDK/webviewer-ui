@@ -15,7 +15,7 @@ function AudioPlaybackPopupContainer() {
     isOpen,
     shouldResetAudioPlaybackPosition,
     activeSoundAnnotation
-  ] = useSelector(state => [
+  ] = useSelector((state) => [
     selectors.isElementOpen(state, 'audioPlaybackPopup'),
     selectors.shouldResetAudioPlaybackPosition(state),
     selectors.getActiveSoundAnnotation(state)
@@ -33,8 +33,8 @@ function AudioPlaybackPopupContainer() {
 
   useEffect(() => {
     function onSoundAnnotationDeleted(annotations, action) {
-      if(action === 'delete') {
-        const shouldClosePopup = annotations.some(annotation => {
+      if (action === 'delete') {
+        const shouldClosePopup = annotations.some((annotation) => {
           return (
             !activeSoundAnnotation ||
             (
@@ -44,7 +44,7 @@ function AudioPlaybackPopupContainer() {
           );
         });
 
-        if(shouldClosePopup) {
+        if (shouldClosePopup) {
           closeAudioPlaybackPopup();
         }
       }
@@ -57,7 +57,7 @@ function AudioPlaybackPopupContainer() {
   }, [activeSoundAnnotation]);
 
   function resetAudioPlaybackPosition() {
-    if(shouldResetAudioPlaybackPosition && draggableRef.current) {
+    if (shouldResetAudioPlaybackPosition && draggableRef.current) {
       dispatch(actions.triggerResetAudioPlaybackPosition(false));
       draggableRef.current.state.x = 0;
       draggableRef.current.state.y = 0;
@@ -69,7 +69,7 @@ function AudioPlaybackPopupContainer() {
   }
 
   function handleAudioPlaybackError(error) {
-    if(error.toString().includes('no supported source')) {
+    if (error.toString().includes('no supported source')) {
       console.error('Error playing annotation audio. The audio type is not supported in this browser.');
     } else {
       console.error('Error playing annotation audio.');
@@ -92,20 +92,21 @@ function AudioPlaybackPopupContainer() {
       })}
     >
       <AudioPlaybackPopup
-        autoplay={true}
+        autoplay
         annotation={activeSoundAnnotation}
         handleAudioPlaybackError={handleAudioPlaybackError}
         handleAudioInitializeError={handleAudioInitializeError}
-        handleCloseAudioPlaybackPopup={closeAudioPlaybackPopup}>
+        handleCloseAudioPlaybackPopup={closeAudioPlaybackPopup}
+      >
       </AudioPlaybackPopup>
     </DataElementWrapper>
   );
 
-  if(!isOpen) {
+  if (!isOpen) {
     return null;
   }
 
-  if(isMobile) {
+  if (isMobile) {
     return renderAudioPlaybackPopup();
   }
 

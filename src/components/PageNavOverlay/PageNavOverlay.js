@@ -1,18 +1,18 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
-import core from "core";
+import core from 'core';
 import classNames from 'classnames';
-import selectors from "selectors";
-import { isIOS } from "helpers/device";
+import selectors from 'selectors';
+import { isIOS } from 'helpers/device';
 import useMedia from 'hooks/useMedia';
 
 import DataElementWrapper from 'components/DataElementWrapper';
 import Button from 'components/Button';
 
-import "./PageNavOverlay.scss";
+import './PageNavOverlay.scss';
 
 class PageNavOverlay extends React.PureComponent {
   static propTypes = {
@@ -64,19 +64,19 @@ class PageNavOverlay extends React.PureComponent {
     }
   };
 
-  onChange = e => {
-    if (!this.props.pageLabels?.some(p => p.startsWith(e.target.value))) {
+  onChange = (e) => {
+    if (!this.props.pageLabels?.some((p) => p.startsWith(e.target.value))) {
       return;
     }
 
     this.setState({ input: e.target.value });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
 
     const { input } = this.state;
-    const isValidInput = input === "" || this.props.pageLabels.includes(input);
+    const isValidInput = input === '' || this.props.pageLabels.includes(input);
 
     if (isValidInput) {
       const pageToGo = this.props.pageLabels.indexOf(input) + 1;
@@ -97,17 +97,19 @@ class PageNavOverlay extends React.PureComponent {
   }
 
   goToPrevPage = () => {
-    if (window.documentViewer.getCurrentPage() - 1 > 0) {
-      window.documentViewer.setCurrentPage(
-        Math.max(window.documentViewer.getCurrentPage() - 1, 1),
+    const documentViewer = core.getDocumentViewer();
+    if (documentViewer.getCurrentPage() - 1 > 0) {
+      documentViewer.setCurrentPage(
+        Math.max(documentViewer.getCurrentPage() - 1, 1),
       );
     }
   }
 
   goToNextPage = () => {
-    if (window.documentViewer.getCurrentPage() + 1 <= window.documentViewer.getPageCount()) {
-      window.documentViewer.setCurrentPage(
-        Math.min(window.documentViewer.getCurrentPage() + 1, window.documentViewer.getPageCount())
+    const documentViewer = core.getDocumentViewer();
+    if (documentViewer.getCurrentPage() + 1 <= documentViewer.getPageCount()) {
+      documentViewer.setCurrentPage(
+        Math.min(documentViewer.getCurrentPage() + 1, documentViewer.getPageCount())
       );
     }
   }
@@ -123,9 +125,10 @@ class PageNavOverlay extends React.PureComponent {
       enableFadePageNavigation
     } = this.props;
 
+    const documentViewer = core.getDocumentViewer();
     const inputWidth = this.state.input ? (this.state.input.length) * (isMobile ? 10 : 8) : 0;
-    const isFirstPage = window.documentViewer.getCurrentPage() === 1;
-    const isLastPage = window.documentViewer.getCurrentPage() === window.documentViewer.getPageCount();
+    const isFirstPage = documentViewer.getCurrentPage() === 1;
+    const isLastPage = documentViewer.getCurrentPage() === documentViewer.getPageCount();
 
     return (
       <DataElementWrapper
@@ -134,7 +137,7 @@ class PageNavOverlay extends React.PureComponent {
           PageNavOverlay: true,
           FadeOut: enableFadePageNavigation && !this.props.showNavOverlay && !this.state.isFocused
         })}
-        dataElement={dataElement || "pageNavOverlay"}
+        dataElement={dataElement || 'pageNavOverlay'}
         onMouseEnter={this.props.onMouseEnter}
         onMouseLeave={this.props.onMouseLeave}
       >
@@ -180,7 +183,7 @@ class PageNavOverlay extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   currentPage: selectors.getCurrentPage(state),
   totalPages: selectors.getTotalPages(state),
   pageLabels: selectors.getPageLabels(state),
@@ -190,7 +193,7 @@ const mapStateToProps = state => ({
 
 const ConnectedPageNavOverlay = connect(mapStateToProps)(withTranslation()(PageNavOverlay));
 
-export default props => {
+const connectedComponent = (props) => {
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -203,3 +206,5 @@ export default props => {
     <ConnectedPageNavOverlay {...props} isMobile={isMobile} />
   );
 };
+
+export default connectedComponent;

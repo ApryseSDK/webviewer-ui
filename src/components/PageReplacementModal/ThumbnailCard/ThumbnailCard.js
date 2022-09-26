@@ -8,14 +8,14 @@ const ThumbnailCard = ({ onChange, checked, index, thumbnail }) => {
   if (thumbnail) {
     let src;
     if (thumbnail.currentSrc) {
-      src = thumbnail.currentSrc
+      src = thumbnail.currentSrc;
     } else if (thumbnail.url) {
       src = thumbnail.url;
     } else if (thumbnail.toDataURL) {
       src = thumbnail.toDataURL();
     }
 
-    img = <img className="thumb-card-img" alt="img_name" src={src} />
+    img = <img className="thumb-card-img" alt="img_name" src={src} />;
   }
 
   return (
@@ -23,7 +23,7 @@ const ThumbnailCard = ({ onChange, checked, index, thumbnail }) => {
       <Choice
         id={`custom-checkbox-${index}`}
         className="thumb-card-ck"
-        name={'thumb' + index}
+        name={`thumb${index}`}
         checked={checked}
       />
       <div className="thumb-card-body">

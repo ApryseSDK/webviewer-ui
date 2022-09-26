@@ -41,16 +41,18 @@ class RubberStampOverlay extends React.Component {
 
   constructor(props) {
     super(props);
-    this.stampTool = core.getTool(TOOL_NAME);
+    this.stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
   }
 
   async setRubberStamp(annotation, index) {
     core.setToolMode(TOOL_NAME);
     this.props.closeElement("toolStylePopup");
-    const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
-    await this.stampTool.setRubberStamp(annotation, text);
-    this.stampTool.showPreview();
-    this.props.setSelectedStampIndex(index);
+    for (let tool of this.stampToolArray) {
+      const text = this.props.t(`rubberStamp.${annotation['Icon']}`);
+      await tool.setRubberStamp(annotation, text);
+      tool.showPreview();
+      this.props.setSelectedStampIndex(index);
+    }
   }
 
   openCustomSampModal = () => {
@@ -59,9 +61,11 @@ class RubberStampOverlay extends React.Component {
   }
 
   deleteCustomStamp = index => {
-    const stamps = this.stampTool.getCustomStamps();
-    stamps.splice(index, 1);
-    this.stampTool.setCustomStamps(stamps);
+    for (let tool of this.stampToolArray) {
+      const stamps = tool.getCustomStamps();
+      stamps.splice(index, 1);
+      tool.setCustomStamps(stamps);
+    }
   }
 
   render() {

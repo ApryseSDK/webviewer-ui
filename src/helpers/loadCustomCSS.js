@@ -1,4 +1,4 @@
-export default CSSFile => {
+export default (CSSFile) => {
   if (CSSFile) {
     const link = document.createElement('link');
 

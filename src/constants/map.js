@@ -1,5 +1,60 @@
 import i18next from 'i18next';
 
+export const annotationMapKeys = {
+  SIGNATURE: 'signature',
+  FREE_HAND: 'freeHand',
+  FREE_HAND_HIGHLIGHT: 'freeHandHighlight',
+  FREE_TEXT: 'freeText',
+  MARK_INSERT_TEXT: 'markInsertText',
+  MARK_REPLACE_TEXT: 'markReplaceText',
+  DATE_FREE_TEXT: 'dateFreeText',
+  DISTANCE_MEASUREMENT: 'distanceMeasurement',
+  PERIMETER_MEASUREMENT: 'perimeterMeasurement',
+  ARC_MEASUREMENT: 'arcMeasurement',
+  RECTANGULAR_AREA_MEASUREMENT: 'rectangularAreaMeasurement',
+  CLOUDY_RECTANGULAR_AREA_MEASUREMENT: 'cloudyRectangularAreaMeasurement',
+  AREA_MEASUREMENT: 'areaMeasurement',
+  ELLIPSE_MEASUREMENT: 'ellipseMeasurement',
+  COUNT_MEASUREMENT: 'countMeasurement',
+  CALLOUT: 'callout',
+  LINE: 'line',
+  ARROW: 'arrow',
+  POLYGON: 'polygon',
+  CLOUD: 'cloud',
+  HIGHLIGHT: 'highlight',
+  UNDERLINE: 'underline',
+  SQUIGGLY: 'squiggly',
+  STRIKEOUT: 'strikeout',
+  REDACTION: 'redaction',
+  RECTANGLE: 'rectangle',
+  ELLIPSE: 'ellipse',
+  POLYLINE: 'polyline',
+  STICKY_NOTE: 'stickyNote',
+  STAMP: 'stamp',
+  IMAGE: 'image',
+  EDIT: 'edit',
+  PAN: 'pan',
+  CONTENT_EDIT_TOOL: 'ContentEditTool',
+  ADD_IMAGE_CONTENT: 'AddImageContentTool',
+  ADD_PARAGRAPH_TOOL: 'AddParagraphTool',
+  TEXT_SELECT: 'textSelect',
+  MARQUEE_ZOOM_TOOL: 'marqueeZoomTool',
+  MULTI_STYLE: 'MultiStyle',
+  ERASER: 'eraser',
+  CROP_PAGE: 'cropPage',
+  FILE_ATTACHMENT: 'fileattachment',
+  SOUND: 'sound',
+  THREE_D_ANNOTATION: 'threeDAnnotation',
+  TEXT_FIELD: 'textField',
+  SIGNATURE_FORM_FIELD: 'signatureFormField',
+  CHECK_BOX_FORM_FIELD: 'checkBoxFormField',
+  RADIO_BUTTON_FORM_FIELD: 'radioButtonFormField',
+  LIST_BOX_FORM_FIELD: 'listBoxFormField',
+  COMBO_BOX_FORM_FIELD: 'comboBoxFormField',
+  ARC: 'arc',
+  CHANGE_VIEW: 'changeView'
+};
+
 /**
  * this is the map we used to get information about annotations and tools
  * for example, we can look for map.freeHand.currentStyleTab to get the current color palette for freeHandAnnotation and freeHandTool
@@ -9,7 +64,7 @@ import i18next from 'i18next';
  * @ignore
  */
 const map = {
-  signature: {
+  [annotationMapKeys.SIGNATURE]: {
     icon: 'icon-tool-signature',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -19,7 +74,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeHandAnnotation &&
       annotation.Subject === i18next.t('annotation.signature'),
   },
-  freeHand: {
+  [annotationMapKeys.FREE_HAND]: {
     icon: 'icon-tool-pen-line',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -33,7 +88,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeHandAnnotation,
   },
-  freeHandHighlight: {
+  [annotationMapKeys.FREE_HAND_HIGHLIGHT]: {
     icon: 'icon-tool-pen-highlight',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -47,7 +102,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeHandAnnotation,
   },
-  freeText: {
+  [annotationMapKeys.FREE_TEXT]: {
     icon: 'icon-tool-text-free-text',
     iconColor: 'TextColor',
     validStyleTabs: ['TextColor', 'StrokeColor', 'FillColor'],
@@ -63,7 +118,35 @@ const map = {
       annotation.getIntent() ===
       window.Annotations.FreeTextAnnotation.Intent.FreeText,
   },
-  dateFreeText: {
+  [annotationMapKeys.MARK_INSERT_TEXT]: {
+    icon: 'ic-insert text',
+    iconColor: 'StrokeColor',
+    validStyleTabs: ['StrokeColor'],
+    currentStyleTab: 'StrokeColor',
+    styleTabs: ['StrokeColor'],
+    toolNames: [
+      'AnnotationCreateMarkInsertText',
+      'AnnotationCreateMarkInsertText2',
+      'AnnotationCreateMarkInsertText3',
+      'AnnotationCreateMarkInsertText4',
+    ],
+    annotationCheck: (annotation) => annotation instanceof window.Annotations.CaretAnnotation
+  },
+  [annotationMapKeys.MARK_REPLACE_TEXT]: {
+    icon: 'ic-replace text',
+    iconColor: 'StrokeColor',
+    validStyleTabs: ['StrokeColor'],
+    currentStyleTab: 'StrokeColor',
+    styleTabs: ['StrokeColor'],
+    toolNames: [
+      'AnnotationCreateMarkReplaceText',
+      'AnnotationCreateMarkReplaceText2',
+      'AnnotationCreateMarkReplaceText3',
+      'AnnotationCreateMarkReplaceText4',
+    ],
+    annotationCheck: (annotation) => annotation instanceof window.Annotations.CaretAnnotation
+  },
+  [annotationMapKeys.DATE_FREE_TEXT]: {
     icon: 'icon-tool-fill-and-sign-calendar',
     iconColor: 'TextColor',
     validStyleTabs: ['TextColor', 'StrokeColor', 'FillColor'],
@@ -79,8 +162,8 @@ const map = {
       annotation.getIntent() ===
         window.Annotations.FreeTextAnnotation.Intent.FreeText,
   },
-  distanceMeasurement: {
-    icon: 'ic_annotation_distance_black_24px',
+  [annotationMapKeys.DISTANCE_MEASUREMENT]: {
+    icon: 'icon-tool-measurement-distance-line',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
     currentStyleTab: 'StrokeColor',
@@ -96,7 +179,7 @@ const map = {
       annotation.IT === 'LineDimension' &&
       annotation.Measure,
   },
-  perimeterMeasurement: {
+  [annotationMapKeys.PERIMETER_MEASUREMENT]: {
     icon: 'ic_annotation_perimeter_black_24px',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -113,7 +196,7 @@ const map = {
       annotation.IT === 'PolyLineDimension' &&
       annotation.Measure,
   },
-  arcMeasurement: {
+  [annotationMapKeys.ARC_MEASUREMENT]: {
     icon: 'icon-tool-measurement-arc',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -129,7 +212,7 @@ const map = {
       annotation.IT === 'ArcDimension' &&
       annotation.Measure,
   },
-  rectangularAreaMeasurement: {
+  [annotationMapKeys.RECTANGULAR_AREA_MEASUREMENT]: {
     icon: 'ic_annotation_rectangular_area_black_24px',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor', 'FillColor'],
@@ -146,7 +229,7 @@ const map = {
       annotation.Measure &&
       annotation.isRectangularPolygon(),
   },
-  cloudyRectangularAreaMeasurement: {
+  [annotationMapKeys.CLOUDY_RECTANGULAR_AREA_MEASUREMENT]: {
     icon: 'ic_annotation_cloudy_rectangular_area_black_24px',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor', 'FillColor'],
@@ -163,7 +246,7 @@ const map = {
       annotation.Measure &&
       annotation.isRectangularPolygon(),
   },
-  areaMeasurement: {
+  [annotationMapKeys.AREA_MEASUREMENT]: {
     icon: 'ic_annotation_area_black_24px',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor', 'FillColor'],
@@ -179,7 +262,7 @@ const map = {
       annotation.IT === 'PolygonDimension' &&
       annotation.Measure,
   },
-  ellipseMeasurement: {
+  [annotationMapKeys.ELLIPSE_MEASUREMENT]: {
     icon: 'ic_annotation_ellipse_area_black',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor', 'FillColor'],
@@ -195,7 +278,7 @@ const map = {
       annotation.IT === 'EllipseDimension' &&
       annotation.Measure,
   },
-  countMeasurement: {
+  [annotationMapKeys.COUNT_MEASUREMENT]: {
     icon: 'ic_check_black_24px',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -210,7 +293,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Annotations.StickyAnnotation &&
       annotation.getCustomData('trn-is-count')
   },
-  callout: {
+  [annotationMapKeys.CALLOUT]: {
     icon: 'icon-tool-callout-line',
     iconColor: 'StrokeColor',
     validStyleTabs: ['TextColor', 'StrokeColor', 'FillColor'],
@@ -226,7 +309,7 @@ const map = {
       annotation.getIntent() ===
       window.Annotations.FreeTextAnnotation.Intent.FreeTextCallout,
   },
-  line: {
+  [annotationMapKeys.LINE]: {
     icon: 'icon-tool-shape-line',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -243,7 +326,7 @@ const map = {
       annotation.getStartStyle() === 'None' &&
       annotation.getEndStyle() === 'None',
   },
-  arrow: {
+  [annotationMapKeys.ARROW]: {
     icon: 'icon-tool-shape-arrow',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -260,7 +343,7 @@ const map = {
       (annotation.getStartStyle() !== 'None' ||
         annotation.getEndStyle() !== 'None'),
   },
-  polygon: {
+  [annotationMapKeys.POLYGON]: {
     icon: 'icon-tool-shape-polygon',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor', 'FillColor'],
@@ -275,7 +358,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Annotations.PolygonAnnotation &&
       annotation.Style !== 'cloudy',
   },
-  cloud: {
+  [annotationMapKeys.CLOUD]: {
     icon: 'icon-tool-shape-cloud',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor', 'FillColor'],
@@ -290,7 +373,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Annotations.PolygonAnnotation &&
       annotation.Style === 'cloudy',
   },
-  highlight: {
+  [annotationMapKeys.HIGHLIGHT]: {
     icon: 'icon-tool-text-manipulation-highlight',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -304,7 +387,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.TextHighlightAnnotation,
   },
-  underline: {
+  [annotationMapKeys.UNDERLINE]: {
     icon: 'icon-tool-text-manipulation-underline',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -318,7 +401,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.TextUnderlineAnnotation,
   },
-  squiggly: {
+  [annotationMapKeys.SQUIGGLY]: {
     icon: 'icon-tool-text-manipulation-squiggly',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -332,7 +415,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.TextSquigglyAnnotation,
   },
-  strikeout: {
+  [annotationMapKeys.STRIKEOUT]: {
     icon: 'icon-tool-text-manipulation-strikethrough',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -346,7 +429,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.TextStrikeoutAnnotation,
   },
-  redaction: {
+  [annotationMapKeys.REDACTION]: {
     icon: 'icon-tool-select-area-redaction',
     iconColor: 'StrokeColor',
     validStyleTabs: ['TextColor', 'StrokeColor', 'FillColor'],
@@ -360,7 +443,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.RedactionAnnotation,
   },
-  rectangle: {
+  [annotationMapKeys.RECTANGLE]: {
     icon: 'icon-tool-shape-rectangle',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor', 'FillColor'],
@@ -375,7 +458,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === '',
   },
-  ellipse: {
+  [annotationMapKeys.ELLIPSE]: {
     icon: 'icon-tool-shape-oval',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor', 'FillColor'],
@@ -389,7 +472,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.EllipseAnnotation,
   },
-  arc: {
+  [annotationMapKeys.ARC]: {
     icon: 'icon-tool-arc',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -403,7 +486,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.ArcAnnotation
   },
-  polyline: {
+  [annotationMapKeys.POLYLINE]: {
     icon: 'icon-tool-shape-polyline',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -418,7 +501,7 @@ const map = {
     hasLineEndings: true,
     annotationCheck: (annotation) => annotation instanceof window.Annotations.PolylineAnnotation,
   },
-  stickyNote: {
+  [annotationMapKeys.STICKY_NOTE]: {
     icon: 'icon-tool-comment-line',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -432,7 +515,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.StickyAnnotation,
   },
-  changeView: {
+  [annotationMapKeys.CHANGE_VIEW]: {
     icon: 'icon-tool-changeview',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -446,7 +529,7 @@ const map = {
     ],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.StampAnnotation && annotation.ViewState,
   },
-  image: {
+  [annotationMapKeys.IMAGE]: {
     icon: 'icon-tool-image-line',
     iconColor: null,
     validStyleTabs: [],
@@ -460,7 +543,7 @@ const map = {
       annotation.ToolName === 'AnnotationCreateStamp';
     },
   },
-  stamp: {
+  [annotationMapKeys.STAMP]: {
     icon: 'icon-tool-stamp-line',
     iconColor: null,
     validStyleTabs: [],
@@ -473,7 +556,7 @@ const map = {
       return annotation instanceof window.Annotations.StampAnnotation;
     },
   },
-  edit: {
+  [annotationMapKeys.EDIT]: {
     icon: 'ic_select_black_24px',
     iconColor: null,
     validStyleTabs: [],
@@ -482,7 +565,7 @@ const map = {
     toolNames: ['AnnotationEdit'],
     annotationCheck: null,
   },
-  pan: {
+  [annotationMapKeys.PAN]: {
     icon: 'ic_pan_black_24px',
     iconColor: null,
     validStyleTabs: [],
@@ -491,7 +574,7 @@ const map = {
     toolNames: ['Pan'],
     annotationCheck: null,
   },
-  ContentEditTool: {
+  [annotationMapKeys.CONTENT_EDIT_TOOL]: {
     icon: 'ic_edit_page_24px',
     iconColor: null,
     validStyleTabs: [],
@@ -500,7 +583,24 @@ const map = {
     toolNames: ['ContentEditTool'],
     annotationCheck: null,
   },
-  textSelect: {
+  [annotationMapKeys.ADD_PARAGRAPH]: {
+    icon: 'ic-paragraph',
+    iconColor: null,
+    validStyleTabs: [],
+    currentStyleTab: null,
+    styleTabs: [],
+    toolNames: ['AddParagraphTool'],
+    annotationCheck: null,
+  },
+  [annotationMapKeys.ADD_IMAGE_CONTENT]: {
+    icon: 'icon-tool-image-line',
+    iconColor: null,
+    currentPalette: null,
+    availablePalettes: [],
+    toolNames: ['AddImageContentTool'],
+    annotationCheck: null,
+  },
+  [annotationMapKeys.TEXT_SELECT]: {
     icon: 'textselect_cursor',
     iconColor: null,
     validStyleTabs: [],
@@ -509,7 +609,7 @@ const map = {
     toolNames: ['TextSelect'],
     annotationCheck: null,
   },
-  marqueeZoomTool: {
+  [annotationMapKeys.MARQUEE_ZOOM_TOOL]: {
     icon: null,
     iconColor: null,
     validStyleTabs: [],
@@ -518,7 +618,7 @@ const map = {
     toolNames: ['MarqueeZoomTool'],
     annotationCheck: null,
   },
-  MultiStyle: {
+  [annotationMapKeys.MULTI_STYLE]: {
     icon: '',
     iconColor: null,
     validStyleTabs: ['TextColor', 'StrokeColor', 'FillColor'],
@@ -527,7 +627,7 @@ const map = {
     toolNames: [],
     annotationCheck: null,
   },
-  eraser: {
+  [annotationMapKeys.ERASER]: {
     icon: 'ic_annotation_eraser_black_24px',
     iconColor: null,
     validStyleTabs: [],
@@ -536,7 +636,7 @@ const map = {
     toolNames: ['AnnotationEraserTool'],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeHandAnnotation,
   },
-  cropPage: {
+  [annotationMapKeys.CROP_PAGE]: {
     icon: 'ic_crop_black_24px',
     iconColor: null,
     validStyleTabs: [],
@@ -545,7 +645,7 @@ const map = {
     toolNames: ['CropPage'],
     annotationCheck: null,
   },
-  fileattachment: {
+  [annotationMapKeys.FILE_ATTACHMENT]: {
     icon: 'ic_fileattachment_24px',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -554,7 +654,7 @@ const map = {
     toolNames: ['AnnotationCreateFileAttachment'],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.FileAttachmentAnnotation,
   },
-  sound: {
+  [annotationMapKeys.SOUND]: {
     icon: 'ic_sound_24px',
     iconColor: 'FillColor',
     validStyleTabs: ['FillColor', 'StrokeColor'],
@@ -563,7 +663,7 @@ const map = {
     toolNames: [],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.SoundAnnotation,
   },
-  threeDAnnotation: {
+  [annotationMapKeys.THREE_D_ANNOTATION]: {
     icon: 'icon-tool-model3d',
     iconColor: null,
     validStyleTabs: [],
@@ -572,7 +672,7 @@ const map = {
     toolNames: ['AnnotationCreateThreeD'],
     annotationCheck: (annotation) => annotation instanceof window.Annotations.Model3DAnnotation,
   },
-  textField: {
+  [annotationMapKeys.TEXT_FIELD]: {
     icon: 'icon-form-field-text',
     iconColor: 'TextColor',
     validStyleTabs: ['TextColor', 'StrokeColor', 'FillColor'],
@@ -587,7 +687,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'TextFormField'
   },
-  signatureFormField: {
+  [annotationMapKeys.SIGNATURE_FORM_FIELD]: {
     icon: 'icon-form-field-signature',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -602,7 +702,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'SignatureFormField'
   },
-  checkBoxFormField: {
+  [annotationMapKeys.CHECK_BOX_FORM_FIELD]: {
     icon: 'icon-form-field-checkbox',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -612,7 +712,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'CheckBoxFormField'
   },
-  radioButtonFormField: {
+  [annotationMapKeys.RADIO_BUTTON_FORM_FIELD]: {
     icon: 'icon-form-field-radiobutton',
     iconColor: 'StrokeColor',
     validStyleTabs: ['StrokeColor'],
@@ -622,7 +722,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'RadioButtonFormField'
   },
-  listBoxFormField: {
+  [annotationMapKeys.LIST_BOX_FORM_FIELD]: {
     icon: 'icon-form-field-listbox',
     iconColor: 'StrokeColor',
     validStyleTabs: ['TextColor', 'StrokeColor', 'FillColor'],
@@ -637,7 +737,7 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'ListBoxFormField'
   },
-  comboBoxFormField: {
+  [annotationMapKeys.COMBO_BOX_FORM_FIELD]: {
     icon: 'icon-form-field-combobox',
     iconColor: 'StrokeColor',
     validStyleTabs: ['TextColor', 'StrokeColor', 'FillColor'],
@@ -769,6 +869,7 @@ export const updateAnnotationStylePopupTabs = (annotationKey, newAnnotationStyle
  * @property {string} EDIT The key represents the edit annotation
  * @property {string} PAN The key represents the pan annotation
  * @property {string} CONTENT_EDIT_TOOL The key represents the content edit tool annotation
+ * @property {string} ADD_PARAGRAPH_TOOL The key represents the add paragraph tool annotation
  * @property {string} TEXT_SELECT The key represents the text select annotation
  * @property {string} MARQUEE_ZOOM_TOOL The key represents the marquee zoom tool annotation
  * @property {string} ERASER The key represents the eraser annotation
@@ -818,6 +919,7 @@ export const AnnotationKeys = {
   EDIT: 'edit',
   PAN: 'pan',
   CONTENT_EDIT_TOOL: 'contentEditTool',
+  ADD_PARAGRAPH_TOOL: 'addParagraphTool',
   TEXT_SELECT: 'textSelect',
   MARQUEE_ZOOM_TOOL: 'marqueeZoomTool',
   ERASER: 'eraser',

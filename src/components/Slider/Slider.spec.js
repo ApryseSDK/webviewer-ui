@@ -35,7 +35,7 @@ const mockProps = {
   property: mockProperty,
   value: '10.186089078706528',
   displayProperty: 'text',
-  getDisplayValue: jest.fn(a => a),
+  getDisplayValue: jest.fn((a) => a),
   dataElement: 'fontSizeSlider',
   getCirclePosition: jest.fn().mockReturnValue(1),
   convertRelativeCirclePositionToValue: jest.fn().mockReturnValue(1),
@@ -67,7 +67,7 @@ const mockPropsOpacity = {
   property: mockPropertyOpacity,
   value: 52,
   displayProperty: 'opacity',
-  getDisplayValue: opacity => `${Math.round(opacity)}%`,
+  getDisplayValue: (opacity) => `${Math.round(opacity)}%`,
   dataElement: 'opacitySlider',
   getCirclePosition: jest.fn(),
   convertRelativeCirclePositionToValue: jest.fn().mockReturnValue(52),
@@ -83,8 +83,8 @@ const mockPropsOpacity = {
 
 describe('Slider', () => {
   it('should not be able to render without any props', () => {
-    //Mock the console.error so we don't dump a wall of red text
-    //to the console even though the test pass as it can be misleading.
+    // Mock the console.error so we don't dump a wall of red text
+    // to the console even though the test pass as it can be misleading.
     jest.spyOn(console, 'error');
     console.error.mockImplementation(() => { });
 
@@ -186,13 +186,13 @@ describe('Slider', () => {
       expect(container.querySelector('.slider-input-field').value).toBe('2.07');
       editableInput.blur();
       expect(container.querySelector('.slider-input-field').value).toBe('2px');
-    })
+    });
 
     it('changes to value from getDisplayValue on input blur', () => {
       container.querySelector('.slider-input-field').focus();
       container.querySelector('.slider-input-field').blur();
       expect(container.querySelector('.slider-input-field').value).toBe('2px');
-    })
+    });
 
     it('shows value from getDisplayValue when mouse down on slider', () => {
       expect(container.querySelector('.slider-input-field').value).toBe('2px');
@@ -236,13 +236,13 @@ describe('Slider', () => {
       expect(container.querySelector('.slider-input-field').value).toBe('53.57');
       editableInput.blur();
       expect(container.querySelector('.slider-input-field').value).toBe('52%');
-    })
+    });
 
     it('changes to value from getDisplayValue on input blur', () => {
       container.querySelector('.slider-input-field').focus();
       container.querySelector('.slider-input-field').blur();
       expect(container.querySelector('.slider-input-field').value).toBe('52%');
-    })
+    });
 
     it('shows value from getDisplayValue when mouse down on slider', () => {
       expect(container.querySelector('.slider-input-field').value).toBe('52%');

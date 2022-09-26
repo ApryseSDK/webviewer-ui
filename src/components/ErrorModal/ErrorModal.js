@@ -13,7 +13,7 @@ import './ErrorModal.scss';
 
 const ErrorModal = () => {
   const [message, isDisabled, isOpen, isMultiTab] = useSelector(
-    state => [
+    (state) => [
       selectors.getErrorMessage(state),
       selectors.isElementDisabled(state, 'errorModal'),
       selectors.isElementOpen(state, 'errorModal'),
@@ -30,13 +30,13 @@ const ErrorModal = () => {
         actions.closeElements(['signatureModal', 'printModal', 'loadingModal', 'progressModal', 'passwordModal', 'filterModal'])
       );
 
-      window.addEventListener('keydown', e => escapePressListener(e, closeErrorModal));
+      window.addEventListener('keydown', (e) => escapePressListener(e, closeErrorModal));
       return () => window.removeEventListener('keydown', escapePressListener);
     }
   }, [dispatch, isOpen]);
 
   useEffect(() => {
-    const onError = error => {
+    const onError = (error) => {
       error = error.detail?.message || error.detail || error.message;
 
       let errorMessage;
@@ -66,12 +66,12 @@ const ErrorModal = () => {
   let tabsPadding = 0;
   if (isMultiTab) {
     // Add tabsheader padding
-    tabsPadding += document.getElementsByClassName("TabsHeader")[0]?.getBoundingClientRect().bottom;
+    tabsPadding += document.getElementsByClassName('TabsHeader')[0]?.getBoundingClientRect().bottom;
   }
 
   const closeErrorModal = () => {
-    dispatch(actions.closeElement('errorModal'))
-  }
+    dispatch(actions.closeElement('errorModal'));
+  };
 
   return isDisabled ? null : (
     <div
@@ -85,19 +85,20 @@ const ErrorModal = () => {
       data-element="errorModal"
     >
       <ModalWrapper isOpen={isOpen} title={'message.error'}
-        closeButtonDataElement={'errorModalCloseButton'} 
-        onCloseClick={closeErrorModal}>
-            <div className="modal-content error-modal-content">
-              <p>{shouldTranslate ? t(message) : message}</p>
-            </div>
-            <div className="modal-footer footer">
-              <Button
-                className="confirm modal-button"
-                dataElement="closeErrorModalButton"
-                label={t('action.ok')}
-                onClick={closeErrorModal}
-              />
-            </div>
+        closeButtonDataElement={'errorModalCloseButton'}
+        onCloseClick={closeErrorModal}
+      >
+        <div className="modal-content error-modal-content">
+          <p>{shouldTranslate ? t(message) : message}</p>
+        </div>
+        <div className="modal-footer footer">
+          <Button
+            className="confirm modal-button"
+            dataElement="closeErrorModalButton"
+            label={t('action.ok')}
+            onClick={closeErrorModal}
+          />
+        </div>
       </ModalWrapper>
     </div>
   );

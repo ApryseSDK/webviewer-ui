@@ -3,9 +3,9 @@ import { withContentRect } from 'react-measure';
 import PropTypes from 'prop-types';
 
 import './SearchResult.scss';
-import VirtualizedList from "react-virtualized/dist/commonjs/List";
-import CellMeasurer, { CellMeasurerCache } from "react-virtualized/dist/commonjs/CellMeasurer";
-import ListSeparator from "components/ListSeparator";
+import VirtualizedList from 'react-virtualized/dist/commonjs/List';
+import CellMeasurer, { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer';
+import ListSeparator from 'components/ListSeparator';
 
 const SearchResultListSeparatorPropTypes = {
   currentResultIndex: PropTypes.number.isRequired,
@@ -81,14 +81,22 @@ const SearchResultPropTypes = {
 };
 
 function SearchResult(props) {
-  const { height, searchStatus, searchResults, activeResultIndex, t, onClickResult, pageLabels, isProcessingSearchResults } = props;
+  const { height, searchStatus, searchResults, activeResultIndex, t, onClickResult, pageLabels, isProcessingSearchResults, isSearchInProgress } = props;
   const cellMeasureCache = React.useMemo(() => {
     return new CellMeasurerCache({ defaultHeight: 50, fixedWidth: true });
   }, []);
   const listRef = React.useRef(null);
+  const [listSize, setListSize] = React.useState(0);
 
   if (searchResults.length === 0) {
     // clear measure cache, when doing a new search
+    cellMeasureCache.clearAll();
+  }
+
+  if (searchResults.length && searchResults.length !== listSize) {
+    // If the search list is mutated in the backend, we
+    // need to clear cache and recalculate heights
+    setListSize(searchResults.length);
     cellMeasureCache.clearAll();
   }
 
@@ -136,9 +144,12 @@ function SearchResult(props) {
     return null;
   }
 
-  if (searchStatus === 'SEARCH_DONE' 
+  if (searchStatus === 'SEARCH_DONE'
     && searchResults.length === 0
     && !isProcessingSearchResults) {
+    if (isSearchInProgress) {
+      return null;
+    }
     return (
       <div className="info">{t('message.noResults')}</div>
     );
@@ -155,6 +166,7 @@ function SearchResult(props) {
       rowHeight={cellMeasureCache.rowHeight}
       rowRenderer={rowRenderer}
       ref={listRef}
+      scrollToIndex={activeResultIndex - 1}
     />
   );
 }

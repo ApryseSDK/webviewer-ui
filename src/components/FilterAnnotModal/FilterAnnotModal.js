@@ -11,7 +11,7 @@ import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
 import { mapAnnotationToKey } from 'constants/map';
-import DataElements from "constants/dataElement";
+import DataElements from 'constants/dataElement';
 import { rgbaToHex, hexToRgba } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import Choice from 'components/Choice';
@@ -23,7 +23,7 @@ import './FilterAnnotModal.scss';
 const TABS_ID = 'filterAnnotModal';
 
 const FilterAnnotModal = () => {
-  const [isDisabled, isOpen, colorMap, selectedTab, annotationFilters] = useSelector(state => [
+  const [isDisabled, isOpen, colorMap, selectedTab, annotationFilters] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.FILTER_MODAL),
     selectors.isElementOpen(state, DataElements.FILTER_MODAL),
     selectors.getColorMap(state),
@@ -53,7 +53,7 @@ const FilterAnnotModal = () => {
   };
 
   const similarColorExist = (currColors, newColor) => {
-    const colorObject = currColors.map(c => Object.assign({
+    const colorObject = currColors.map((c) => Object.assign({
       R: parseInt(`${c[1]}${c[2]}`, 16),
       G: parseInt(`${c[3]}${c[4]}`, 16),
       B: parseInt(`${c[5]}${c[6]}`, 16)
@@ -61,7 +61,7 @@ const FilterAnnotModal = () => {
 
     const threshold = 10;
     const similarColors = colorObject
-      .filter(c => Math.abs(newColor.R - c.R) < threshold
+      .filter((c) => Math.abs(newColor.R - c.R) < threshold
         && Math.abs(newColor.G - c.G) < threshold
         && Math.abs(newColor.B - c.B) < threshold);
 
@@ -70,7 +70,7 @@ const FilterAnnotModal = () => {
 
   const filterApply = () => {
     dispatch(
-      actions.setCustomNoteFilter(annot => {
+      actions.setCustomNoteFilter((annot) => {
         let type = true;
         let author = true;
         let color = true;
@@ -113,10 +113,10 @@ const FilterAnnotModal = () => {
     );
     dispatch(actions.setAnnotationFilters({
       includeReplies: checkRepliesForAuthorFilter,
-      authorFilter: authorFilter,
-      colorFilter: colorFilter,
+      authorFilter,
+      colorFilter,
       typeFilter: typesFilter,
-      statusFilter: statusFilter
+      statusFilter
     }));
     fireEvent(
       Events.ANNOTATION_FILTER_CHANGED,
@@ -152,7 +152,7 @@ const FilterAnnotModal = () => {
     const annotTypesToBeAdded = new Set();
     const annotColorsToBeAdded = new Set();
     const annotStatusesToBeAdded = new Set();
-    annots.forEach(annot => {
+    annots.forEach((annot) => {
       const displayAuthor = core.getDisplayAuthor(annot['Author']);
       if (displayAuthor && displayAuthor !== '') {
         authorsToBeAdded.add(displayAuthor);
@@ -221,7 +221,7 @@ const FilterAnnotModal = () => {
             isSwitch
             label={t('option.filterAnnotModal.includeReplies')}
             checked={checkRepliesForAuthorFilter}
-            onChange={e => setCheckRepliesForAuthorFilter(e.target.checked)}
+            onChange={(e) => setCheckRepliesForAuthorFilter(e.target.checked)}
             id="filter-annot-modal-include-replies"
           />
         </div>
@@ -234,11 +234,11 @@ const FilterAnnotModal = () => {
                 label={val}
                 checked={authorFilter.includes(val)}
                 id={val}
-                onChange={e => {
+                onChange={(e) => {
                   if (authorFilter.indexOf(e.target.getAttribute('id')) === -1) {
                     setAuthorFilter([...authorFilter, e.target.getAttribute('id')]);
                   } else {
-                    setAuthorFilter(authorFilter.filter(author => author !== e.target.getAttribute('id')));
+                    setAuthorFilter(authorFilter.filter((author) => author !== e.target.getAttribute('id')));
                   }
                 }}
               />
@@ -262,11 +262,11 @@ const FilterAnnotModal = () => {
                 label={t(`annotation.${val}`)}
                 checked={typesFilter.includes(val)}
                 id={val}
-                onChange={e => {
+                onChange={(e) => {
                   if (typesFilter.indexOf(e.target.getAttribute('id')) === -1) {
                     setTypesFilter([...typesFilter, e.target.getAttribute('id')]);
                   } else {
-                    setTypesFilter(typesFilter.filter(type => type !== e.target.getAttribute('id')));
+                    setTypesFilter(typesFilter.filter((type) => type !== e.target.getAttribute('id')));
                   }
                 }}
               />
@@ -286,11 +286,11 @@ const FilterAnnotModal = () => {
                 type="checkbox"
                 checked={colorFilter.includes(val)}
                 id={val}
-                onChange={e => {
+                onChange={(e) => {
                   if (colorFilter.indexOf(e.target.getAttribute('id')) === -1) {
                     setColorFilter([...colorFilter, e.target.getAttribute('id')]);
                   } else {
-                    setColorFilter(colorFilter.filter(color => color !== e.target.getAttribute('id')));
+                    setColorFilter(colorFilter.filter((color) => color !== e.target.getAttribute('id')));
                   }
                 }}
               />
@@ -318,11 +318,11 @@ const FilterAnnotModal = () => {
               checked={statusFilter.includes(val)}
               label={t(`option.state.${val.toLocaleLowerCase()}`)}
               id={val}
-              onChange={e => {
+              onChange={(e) => {
                 if (statusFilter.indexOf(e.target.getAttribute('id')) === -1) {
                   setStatusFilter([...statusFilter, e.target.getAttribute('id')]);
                 } else {
-                  setStatusFilter(statusFilter.filter(status => status !== e.target.getAttribute('id')));
+                  setStatusFilter(statusFilter.filter((status) => status !== e.target.getAttribute('id')));
                 }
               }}
             />
@@ -342,7 +342,7 @@ const FilterAnnotModal = () => {
   return isDisabled ? null : (
     <div className={modalClass} data-element={DataElements.FILTER_MODAL} onMouseDown={closeModal}>
       <FocusTrap locked={isOpen} focusLastOnUnlock>
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
+        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
           {core.getAnnotationsList().length > 0 ? (
             <div className="filter-modal">
               <Swipeable onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
@@ -413,11 +413,11 @@ const FilterAnnotModal = () => {
               </div>
             </div>
           ) : (
-              <div>
-                <div className="swipe-indicator" />
-                <div className="message">{t('message.noAnnotationsFilter')}</div>
-              </div>
-            )}
+            <div>
+              <div className="swipe-indicator" />
+              <div className="message">{t('message.noAnnotationsFilter')}</div>
+            </div>
+          )}
         </div>
       </FocusTrap>
     </div>

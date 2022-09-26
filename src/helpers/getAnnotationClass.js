@@ -1,4 +1,4 @@
-export const getAnnotationClass = annotation => {
+export const getAnnotationClass = (annotation) => {
   if (annotation instanceof Annotations.CaretAnnotation) {
     return 'caret';
   }

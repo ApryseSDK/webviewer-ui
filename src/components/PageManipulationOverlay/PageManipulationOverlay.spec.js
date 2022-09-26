@@ -51,7 +51,7 @@ describe('PageManipulationOverlay', () => {
     });
 
     it('I can remove page operation sections by modifying the pageManipulationOverlayItems props', () => {
-      //Remove the rotation controls
+      // Remove the rotation controls
       const testProps = {
         pageNumbers: [],
         pageManipulationOverlayItems: [
@@ -67,7 +67,7 @@ describe('PageManipulationOverlay', () => {
     });
 
     it('I can customize the page manipulation overlay with custom operations', () => {
-      //Add my custom section with two operations
+      // Add my custom section with two operations
       const customOperationProps = {
         pageNumbers: [],
         pageManipulationOverlayItems: [
@@ -79,7 +79,7 @@ describe('PageManipulationOverlay', () => {
               {
                 title: 'Alert me',
                 img: '/path-to-image',
-                onClick: pageNumbers => {
+                onClick: (pageNumbers) => {
                   alert(`Selected thumbnail pages: ${pageNumbers}`);
                 },
                 dataElement: 'customPageOperationButton',
@@ -87,7 +87,7 @@ describe('PageManipulationOverlay', () => {
               {
                 title: 'Alert me again',
                 img: '/path-to-image',
-                onClick: pageNumbers => {
+                onClick: (pageNumbers) => {
                   alert(`Selected thumbnail pages: ${pageNumbers}`);
                 },
                 dataElement: 'customPageOperationButtonTwo',
@@ -106,7 +106,7 @@ describe('PageManipulationOverlay', () => {
     });
 
     it('When I add a custom page operation, my handler gets called with an array of thumbnail pages that are selected', () => {
-      //Add my custom section with one operation
+      // Add my custom section with one operation
       const myOnClickHandler = jest.fn();
       const pages = [1, 2];
       const customOperationProps = {
@@ -132,7 +132,7 @@ describe('PageManipulationOverlay', () => {
         <TestPageManipulationOverlay {...customOperationProps} />
       );
 
-      //Click the button
+      // Click the button
       const customOperationButton = container.querySelectorAll('div[data-element="customPageOperationButton"]')[0];
       fireEvent.click(customOperationButton);
       expect(myOnClickHandler).toBeCalledWith(pages);

@@ -111,8 +111,7 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
             }}
             value={pendingReply}
             onChange={(value) => handleNoteTextareaChange(value)}
-            placeholder={`${t('action.reply')}...`}
-            aria-label={`${t('action.reply')}...`}
+            isReply
           />
         </div>
         <div className='reply-button-container'>

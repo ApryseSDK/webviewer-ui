@@ -1,10 +1,12 @@
+import core from 'core';
+
 /**
  * https://www.pdftron.com/api/web/Core.AnnotationManager.html#enableRedaction__anchor
  */
-export default enable => {
+export default (enable) => {
   if (enable) {
-    window.documentViewer.getAnnotationManager().enableRedaction();
+    core.getDocumentViewers().forEach((documentViewer) => documentViewer.getAnnotationManager().enableRedaction());
   } else {
-    window.documentViewer.getAnnotationManager().disableRedaction();
+    core.getDocumentViewers().forEach((documentViewer) => documentViewer.getAnnotationManager().disableRedaction());
   }
 };

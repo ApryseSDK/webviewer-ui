@@ -1,4 +1,6 @@
+import core from 'core';
+
 /**
  * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getAnnotationManager__anchor
  */
-export default () => window.documentViewer.getAnnotationManager();
+export default (documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getAnnotationManager();

@@ -90,27 +90,18 @@ const propTypes = {
 };
 
 const WidgetInfo = ({ name, collapsible, field }) => {
-  const verificationResult = useSelector(state => selectors.getVerificationResult(state, name));
+  const verificationResult = useSelector((state) => selectors.getVerificationResult(state, name));
   const [isExpanded, setIsExpanded] = useState(true);
   const [locatorRect, setLocatorRect] = useState(null);
-  const [
-    signatureDetailsExpanded,
-    setSignatureDetailsExpanded,
-  ] = useState(false);
+  const [signatureDetailsExpanded, setSignatureDetailsExpanded] = useState(false);
   const { VerificationResult, VerificationOptions } = window.PDFNet;
   const { TimeMode } = VerificationOptions;
-  const {
-    TrustStatus,
-    DigestStatus,
-    ModificationPermissionsStatus,
-    DocumentStatus,
-  } = VerificationResult;
+  const { ModificationPermissionsStatus } = VerificationResult;
   const [translate] = useTranslation();
 
   const {
     signed,
     signTime,
-    id,
     verificationStatus,
     permissionStatus,
     disallowedChanges,
@@ -127,7 +118,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
 
   const dispatch = useDispatch();
 
-  const handleArrowClick = e => {
+  const handleArrowClick = (e) => {
     e.stopPropagation();
     setIsExpanded(!isExpanded);
   };
@@ -140,7 +131,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
    * @param {Annotations.Forms.Field} field The field pertaining
    * to the text element clicked in the Signature Panel
    */
-  const jumpToWidget = field => {
+  const jumpToWidget = (field) => {
     if (!field.widgets.length) {
       return;
     }
@@ -171,7 +162,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
    * @param {Event} event The event that is passed from an onClick or onKeyPress
    * interaction
    */
-  const titleInteraction = event => {
+  const titleInteraction = (event) => {
     handleArrowClick(event);
     jumpToWidget(field);
   };

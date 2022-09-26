@@ -1,3 +1,5 @@
+import core from 'core';
+
 /**
  * https://www.pdftron.com/api/web/Core.AnnotationManager.html#pasteCopiedAnnotations__anchor
  * @fires annotationChanged on AnnotationManager
@@ -8,6 +10,6 @@
  * it will be fired with deselect action if you selected any annotations before paste
  * it will be fired with select action after the annotation is pasted
  */
-export default () => {
-  window.documentViewer.getAnnotationManager().pasteCopiedAnnotations();
+export default (documentViewerKey = 1) => {
+  core.getDocumentViewer(documentViewerKey).getAnnotationManager().pasteCopiedAnnotations();
 };

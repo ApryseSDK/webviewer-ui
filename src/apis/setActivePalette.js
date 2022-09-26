@@ -15,13 +15,13 @@ WebViewer(...)
   });
  */
 
-export default store => (toolName, colorPalette) => {
-  const availablePalettes = getDataWithKey(mapToolNameToKey(toolName)).availablePalettes;
+export default (store) => (toolName, colorPalette) => {
+  const styleTabs = getDataWithKey(mapToolNameToKey(toolName)).styleTabs;
   const property = mapPaletteToAnnotationColorProperty[colorPalette];
 
-  if (availablePalettes.includes(property)) {
+  if (styleTabs.includes(property)) {
     store.dispatch(actions.setActivePalette(mapToolNameToKey(toolName), property));
   } else {
-    console.warn(`${toolName} does not have ${colorPalette} color, available colors are: ${availablePalettes.map(palette => mapAnnotationColorPropertyToPalette[palette]).join(', ')} `);
+    console.warn(`${toolName} does not have the ${colorPalette} color. The available colors are: ${styleTabs.map((palette) => mapAnnotationColorPropertyToPalette[palette]).join(', ')} `);
   }
 };

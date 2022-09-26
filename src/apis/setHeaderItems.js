@@ -68,13 +68,13 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => callback => {
+export default (store) => (callback) => {
   const state = store.getState();
   const headerGroups = Object.keys(state.viewer.headers);
   const header = Object.create(Header).initialize(state.viewer, headerGroups);
 
   callback(header);
-  headerGroups.forEach(headerGroup => {
+  headerGroups.forEach((headerGroup) => {
     store.dispatch(actions.setHeaderItems(headerGroup, [...header.headers[headerGroup]]));
   });
 };
@@ -112,7 +112,7 @@ const Header = {
     if (this.index !== -1) {
       // get(dataElement) has been called before so we need to reset this
       const item = this.headers[this.headerGroup][this.index];
-      Object.keys(item).forEach(key => {
+      Object.keys(item).forEach((key) => {
         delete this[key];
       });
     }
@@ -123,7 +123,7 @@ const Header = {
       console.warn(`${dataElement} does not exist in ${this.headerGroup} header`);
     } else {
       const item = this.headers[this.headerGroup][this.index];
-      Object.keys(item).forEach(key => {
+      Object.keys(item).forEach((key) => {
         this[key] = item[key];
       });
     }
@@ -211,7 +211,7 @@ const Header = {
         index = this.index;
       }
     } else if (Array.isArray(arg)) {
-      arg.forEach(arg => {
+      arg.forEach((arg) => {
         if (typeof arg === 'number' || typeof arg === 'string') {
           this.delete(arg);
         }
@@ -291,7 +291,7 @@ const Header = {
     this.index = this._getIndexOfElement(dataElement);
   },
   _getIndexOfElement(dataElement) {
-    return this.headers[this.headerGroup].findIndex(item => {
+    return this.headers[this.headerGroup].findIndex((item) => {
       let dataElementOfItem;
 
       if (item.type === 'toolButton') {
