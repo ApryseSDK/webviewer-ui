@@ -9,17 +9,24 @@ import selectors from 'selectors';
 import './FilePickerHandler.scss';
 
 const FilePickerHandler = () => {
-  const isDisabled = useSelector(
-    state => selectors.isElementDisabled(state, 'filePickerHandler'),
+  const [isDisabled, isMultiTab, TabManager] = useSelector(
+    (state) => [
+      selectors.isElementDisabled(state, 'filePickerHandler'),
+      selectors.getIsMultiTab(state),
+      selectors.getTabManager(state),
+    ],
     shallowEqual,
   );
   const dispatch = useDispatch();
 
-  const openDocument = e => {
+  const openDocument = (e) => {
     const file = e.target.files[0];
     if (file) {
       dispatch(actions.openElement('progressModal'));
       dispatch(actions.closeElement('menuOverlay'));
+      if (isMultiTab) {
+        return TabManager.addTab(file, { saveCurrentActiveTabState: true, load: true });
+      }
       loadDocument(dispatch, file);
     }
   };
@@ -33,7 +40,7 @@ const FilePickerHandler = () => {
         id="file-picker"
         type="file"
         accept={acceptFormats.map(
-          format => `.${format}`,
+          (format) => `.${format}`,
         ).join(', ')}
         onChange={openDocument}
       />
