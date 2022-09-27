@@ -88,6 +88,7 @@ const TextStylePicker = ({
           fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
           onFontSizeChange={changeFontSize}
           onError={setError}
+          applyOnlyOnBlur={isContentEditing}
         />
         {error && <div className="error-text">{error}</div>}
       </div>

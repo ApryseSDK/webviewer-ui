@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import core from 'core';
-import './FontSizeDropdown.scss';
 import Icon from 'components/Icon';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -8,14 +7,16 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
 
+import './FontSizeDropdown.scss';
+
 const propTypes = {
   fontSize: PropTypes.number,
   fontUnit: PropTypes.string, // Ex: 'pt'
   onFontSizeChange: PropTypes.func.isRequired,
   maxFontSize: PropTypes.number,
   incrementMap: PropTypes.object,
-  // Calls this with current error message string whenever it changes
-  onError: PropTypes.func,
+  onError: PropTypes.func, // Calls this with current error message string whenever it changes
+  applyOnlyOnBlur: PropTypes.bool // If true, apply the font size change only when the element loses focus
 };
 
 const MIN_FONT_SIZE = 1;
@@ -35,6 +36,7 @@ const FontSizeDropdown = ({
   maxFontSize = RENDER_ROWS_UPPER_LIMIT,
   incrementMap = BREAKS_AND_INCREMENT,
   onError = undefined,
+  applyOnlyOnBlur = false
 }) => {
   const { t } = useTranslation();
   const inputRef = useRef();
@@ -113,7 +115,7 @@ const FontSizeDropdown = ({
       }
       setError(false);
       onError && onError('');
-      onFontSizeChange(`${newSize}${fontUnit}`);
+      !applyOnlyOnBlur && onFontSizeChange(`${newSize}${fontUnit}`);
     }
   };
 
@@ -126,6 +128,7 @@ const FontSizeDropdown = ({
     setFocused(false);
     onError && onError(null);
     onError && setError(false);
+    applyOnlyOnBlur && onFontSizeChange(`${currSize}${fontUnit}`);
   };
 
   const [isOpen, setOpen] = useState(false);
