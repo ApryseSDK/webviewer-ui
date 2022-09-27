@@ -1,8 +1,7 @@
 import { loadViewerSample, Timeouts } from '../../playwright-utils';
 import { expect, test } from '@playwright/test';
 
-test.describe.skip('Thumbnails Panel', () => {
-  // TODO:reenable this. This will disable to reduce runtime and not exceed circleCI limit
+test.describe('Thumbnails Panel', () => {
   const thumbnailRenderingTest = async (page, file: string) => {
     const { iframe, waitForInstance, waitForWVEvents } = await loadViewerSample(page, 'viewing/blank');
 

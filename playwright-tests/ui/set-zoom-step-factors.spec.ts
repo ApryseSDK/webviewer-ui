@@ -1,8 +1,7 @@
 import { loadViewerSample, loadConsoleSample } from '../../playwright-utils';
 import { test, expect } from '@playwright/test';
 
-test.describe.skip('SetZoomStepFactors', () => {
-    // TODO:reenable this. This will disable to reduce runtime and not exceed circleCI limit
+test.describe('SetZoomStepFactors', () => {
     test('should print error when there is zoomStepFactors is an empty array', async ({ page, browserName }) => {
         test.skip(browserName === 'firefox', 'TODO: investigate why this test fails on firefox');
         const waitForTimeout = {

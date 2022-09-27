@@ -1,8 +1,7 @@
 import { loadViewerSample, Timeouts, WebViewerInstance } from '../../playwright-utils';
 import { expect, test, Frame, Page } from '@playwright/test';
 
-test.describe.skip('Comment panel', () => {
-  // TODO:reenable this. This will disable to reduce runtime and not exceed circleCI limit
+test.describe('Comment panel', () => {
   let iframe: Frame;
   let instance: WebViewerInstance;
 

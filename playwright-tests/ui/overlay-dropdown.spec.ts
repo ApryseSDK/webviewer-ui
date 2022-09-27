@@ -47,8 +47,7 @@ test.describe('Overlay Dropdown', () => {
     }
   });
 
-  test.skip('should close overlays when document unloads', async ({ page }) => {
-    // TODO:reenable this. This will disable to reduce runtime and not exceed circleCI limit
+  test('should close overlays when document unloads', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
 
     const overlays = [

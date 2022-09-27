@@ -1,9 +1,7 @@
 import { loadViewerSample, Timeouts, WebViewerInstance } from '../../playwright-utils';
 import { expect, test, Frame } from '@playwright/test';
 
-test.describe.skip('Tests for outline bookmarks', () => {
-  // TODO:reenable this. This will disable to reduce runtime and not exceed circleCI limit
-
+test.describe('Tests for outline bookmarks', () => {
   let instance: WebViewerInstance;
   let iframe: Frame;
 

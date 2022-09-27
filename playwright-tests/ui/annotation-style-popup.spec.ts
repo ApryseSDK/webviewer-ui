@@ -2,8 +2,7 @@ import { loadViewerSample } from '../../playwright-utils';
 import { expect, test } from '@playwright/test';
 import { drawLine } from '../common/line';
 
-test.describe.skip('Style popup', () => {
-  // TODO:reenable this. This will disable to reduce runtime and not exceed circleCI limit
+test.describe('Style popup', () => {
   test('style popup should render correctly for different annotations', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
     const { iframe, waitForInstance, getAnnotationsCount } = await loadViewerSample(page, 'viewing/blank');
