@@ -11,7 +11,7 @@
   >.Button, >.toggle-element-button {
     margin: 0 6px;
     @include mobile {
-      margin: 0 6px;
+      margin: 0 5px;
     }
     @include tablet {
       margin: 0 10px;

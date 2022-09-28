@@ -100,18 +100,32 @@ export default {
       default: [
         {
           type: 'toggleElementButton',
+          dataElement: 'menuButton',
+          element: 'menuOverlay',
+          img: 'ic-hamburger-menu',
+          title: 'component.menuOverlay',
+        },
+        {
+          type: 'divider',
+          hidden: ['small-mobile'],
+        },
+        {
+          type: 'toggleElementButton',
           img: 'icon-header-sidebar-line',
           element: 'leftPanel',
           dataElement: 'leftPanelButton',
           title: 'component.leftPanel',
         },
-        { type: 'divider' },
         {
           type: 'toggleElementButton',
           img: 'icon-header-page manipulation-line',
           element: 'viewControlsOverlay',
           dataElement: 'viewControlsButton',
           title: 'component.viewControlsOverlay',
+        },
+        {
+          type: 'divider',
+          hidden: ['small-mobile'],
         },
         {
           type: 'customElement',
@@ -152,14 +166,6 @@ export default {
           hidden: ['small-mobile'],
         },
         {
-          type: 'toggleElementButton',
-          dataElement: 'menuButton',
-          element: 'menuOverlay',
-          img: 'icon-header-settings-line',
-          title: 'component.menuOverlay',
-          hidden: ['small-mobile'],
-        },
-        {
           type: 'actionButton',
           dataElement: 'moreButton',
           title: 'action.more',
@@ -185,13 +191,6 @@ export default {
           element: 'notesPanel',
           img: 'icon-header-chat-line',
           title: 'component.notesPanel',
-        },
-        {
-          type: 'toggleElementButton',
-          dataElement: 'menuButton',
-          element: 'menuOverlay',
-          img: 'icon-header-settings-line',
-          title: 'component.menuOverlay',
         },
         { type: 'spacer' },
         {
