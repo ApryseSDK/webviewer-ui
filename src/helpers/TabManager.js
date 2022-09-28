@@ -364,7 +364,7 @@ export class Tab {
     this.disabled = true;
     this.savePageData();
     const document = core.getDocument();
-    if (this.useDB && document?.type === workerTypes.PDF && document.arePagesAltered()) {
+    if (this.useDB && (document?.type === workerTypes.PDF && document.arePagesAltered() || this.src instanceof window.Core.Document)) {
       await this.saveFileData(db, document);
     } else if (this.useDB) {
       this.changes.annotations && await this.saveAnnotDataInDB(db);

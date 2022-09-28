@@ -76,4 +76,29 @@ test.describe('Multi-tab Feature', () => {
       });
     });
   });
+
+  test.skip('should enable multi-tab feature, be able to add a tab and come back to first tab with everything working', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    const instance = await waitForInstance();
+    await page.waitForTimeout(5000);
+    
+    await iframe.evaluate(() => {
+      return instance.UI.enableFeatures(['MultiTab']);
+    });
+
+    await iframe.evaluate(async () => {
+      window.instance.UI.TabManager.addTab('https://pdftron.s3.amazonaws.com/downloads/pl/form1.pdf', { setActive: true, saveCurrentActiveTabState: true });
+    });
+
+    await page.waitForTimeout(5000);
+    const firstTab = await iframe.$('#tab-0');
+    await firstTab?.click();
+    await page.waitForTimeout(5000);
+
+    await instance('openElements', ['thumbnailsPanel']);
+    await page.waitForTimeout(20000);
+
+    const app = await iframe.$('.App');
+    expect(await app.screenshot()).toMatchSnapshot(['first-tab-thumbnails', 'first-tab-thumbnails.png']);
+  });
 });
