@@ -1,7 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import actions from 'actions';
+import selectors from 'selectors';
+import useMedia from 'hooks/useMedia';
 import { connect } from 'react-redux';
+import Measure from 'react-measure';
+import _ from 'lodash';
 
 import core from 'core';
 import { isIE, isIE11 } from 'helpers/device';
@@ -10,21 +15,16 @@ import loadDocument from 'helpers/loadDocument';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import touchEventManager from 'helpers/TouchEventManager';
 import setCurrentPage from 'helpers/setCurrentPage';
+import { getStep } from 'helpers/zoom';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import MeasurementOverlay from 'components/MeasurementOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
-import actions from 'actions';
-import selectors from 'selectors';
-import useMedia from 'hooks/useMedia';
 import ReaderModeViewer from 'components/ReaderModeViewer';
-import { zoomIn, zoomOut, getStep } from 'helpers/zoom';
-
-import Measure from 'react-measure';
+import ScaleOverlayContainer from 'components/ScaleOverlay/ScaleOverlayContainer';
 
 import './DocumentContainer.scss';
-import _ from 'lodash';
-import TabsHeader from 'components/TabsHeader';
+import DataElements from 'src/constants/dataElement';
 
 const PAGE_NAVIGATION_OVERLAY_FADEOUT = 4000;
 
@@ -50,6 +50,7 @@ class DocumentContainer extends React.PureComponent {
     setDocumentContainerHeight: PropTypes.func.isRequired,
     isInDesktopOnlyMode: PropTypes.bool,
     isRedactionPanelOpen: PropTypes.bool,
+    isTextEditingPanelOpen: PropTypes.bool,
     isWv3dPropertiesPanelOpen: PropTypes.bool,
   };
 
@@ -80,6 +81,7 @@ class DocumentContainer extends React.PureComponent {
     touchEventManager.initialize(this.document.current, this.container.current);
     core.setScrollViewElement(this.container.current);
     core.setViewerElement(this.document.current);
+    this.props.closeElements([DataElements.MULTITABS_EMPTY_PAGE]);
 
     if (isIE) {
       window.addEventListener('resize', this.handleWindowResize);
@@ -108,11 +110,12 @@ class DocumentContainer extends React.PureComponent {
 
     this.container.current.removeEventListener('wheel', this.onWheel, { passive: false });
     core.removeEventListener('documentLoaded', this.showAndFadeNavigationOverlay);
+    this.props.closeElements([DataElements.MULTITABS_EMPTY_PAGE]);
   }
 
-  preventDefault = e => e.preventDefault();
+  preventDefault = (e) => e.preventDefault();
 
-  onDrop = e => {
+  onDrop = (e) => {
     e.preventDefault();
 
     const { files } = e.dataTransfer;
@@ -125,7 +128,7 @@ class DocumentContainer extends React.PureComponent {
     handleWindowResize(this.props, this.container.current);
   };
 
-  onWheel = e => {
+  onWheel = (e) => {
     const { isMouseWheelZoomEnabled } = this.props;
     if (isMouseWheelZoomEnabled && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
@@ -148,7 +151,7 @@ class DocumentContainer extends React.PureComponent {
       const shouldGoUp = scrollingUp && reachedTop && currentPage > 1;
       const shouldGoDown = scrollingDown && reachedBottom && currentPage < totalPages;
 
-      const shouldPreventParentScrolling = (e.deltaY < 0 && currentPage > 1) || (e.deltaY > 0 && currentPage < totalPages);
+      const shouldPreventParentScrolling = (scrollHeight === clientHeight) && ((e.deltaY < 0 && currentPage > 1) || (e.deltaY > 0 && currentPage < totalPages));
 
       if (shouldPreventParentScrolling) {
         e.preventDefault();
@@ -185,7 +188,7 @@ class DocumentContainer extends React.PureComponent {
     setCurrentPage(currentPage + getNumberOfPagesToNavigate());
   };
 
-  wheelToZoom = e => {
+  wheelToZoom = (e) => {
     const currentZoomFactor = this.props.zoom;
     let newZoomFactor = currentZoomFactor;
     if (e.deltaY < 0) {
@@ -231,7 +234,7 @@ class DocumentContainer extends React.PureComponent {
     this.hidePageNavigationOverlay();
   };
 
-  getClassName = props => {
+  getClassName = (props) => {
     const { isSearchOverlayOpen } = props;
 
     return classNames({
@@ -280,10 +283,11 @@ class DocumentContainer extends React.PureComponent {
     const {
       leftPanelWidth,
       isLeftPanelOpen,
+      isMultiTabEmptyPageOpen,
       isMobile,
       documentContentContainerWidthStyle,
       totalPages,
-      isInDesktopOnlyMode,
+      isInDesktopOnlyMode
     } = this.props;
 
     const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
@@ -301,10 +305,12 @@ class DocumentContainer extends React.PureComponent {
           // Using transform makes a clunky animation because the panels are using transform already.
           marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
         }}
-        className="document-content-container"
+        className={classNames({
+          'document-content-container': true,
+          'closed': isMultiTabEmptyPageOpen
+        })}
         onTransitionEnd={this.onTransitionEnd}
       >
-        <TabsHeader />
         <Measure onResize={this.handleResize}>
           {({ measureRef }) => (
             <div className="measurement-container" ref={measureRef}>
@@ -318,6 +324,7 @@ class DocumentContainer extends React.PureComponent {
                 <div className={documentClassName} ref={this.document} tabIndex="-1" />
               </div>
               {this.props.isReaderMode && <ReaderModeViewer />}
+              <ScaleOverlayContainer />
               <MeasurementOverlay />
               <div
                 className="footer"
@@ -345,11 +352,12 @@ class DocumentContainer extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   documentContentContainerWidthStyle: selectors.getDocumentContentContainerWidthStyle(state),
-  leftPanelWidth: selectors.getLeftPanelWidthWithReszieBar(state),
+  leftPanelWidth: selectors.getLeftPanelWidthWithResizeBar(state),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
+  isMultiTabEmptyPageOpen: selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0,
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
   doesDocumentAutoLoad: selectors.doesDocumentAutoLoad(state),
   zoom: selectors.getZoom(state),
@@ -362,20 +370,21 @@ const mapStateToProps = state => ({
   isReaderMode: selectors.isReaderMode(state),
   isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state),
   isRedactionPanelOpen: selectors.isElementOpen(state, 'redactionPanel'),
+  isTextEditingPanelOpen: selectors.isElementOpen(state, 'textEditingPanel'),
   isWv3dPropertiesPanelOpen: selectors.isElementOpen(state, 'wv3dPropertiesPanel'),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   dispatch,
-  openElement: dataElement => dispatch(actions.openElement(dataElement)),
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
-  setDocumentContainerWidth: width => dispatch(actions.setDocumentContainerWidth(width)),
-  setDocumentContainerHeight: height => dispatch(actions.setDocumentContainerHeight(height)),
+  openElement: (dataElement) => dispatch(actions.openElement(dataElement)),
+  closeElements: (dataElements) => dispatch(actions.closeElements(dataElements)),
+  setDocumentContainerWidth: (width) => dispatch(actions.setDocumentContainerWidth(width)),
+  setDocumentContainerHeight: (height) => dispatch(actions.setDocumentContainerHeight(height)),
 });
 
 const ConnectedDocumentContainer = connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
 
-export default props => {
+const connectedComponent = (props) => {
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -386,3 +395,5 @@ export default props => {
 
   return <ConnectedDocumentContainer {...props} isMobile={isMobile} />;
 };
+
+export default connectedComponent;

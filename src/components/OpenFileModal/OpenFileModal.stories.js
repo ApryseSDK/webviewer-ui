@@ -1,7 +1,7 @@
 import React from 'react';
-import OpenFileModal from './OpenFileModal'
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import OpenFileModal from './OpenFileModal';
 
 export default {
   title: 'Components/OpenFileModal',
@@ -11,8 +11,11 @@ export default {
 const initialState = {
   viewer: {
     disabledElements: {},
+    openElements: {
+      OpenFileModal: true
+    },
     customElementOverrides: {},
-    tab: { pageReplacementModal: 'urlInputPanelButton' }
+    tab: { openFileModal: 'urlInputPanelButton' }
   }
 };
 
@@ -24,13 +27,9 @@ const store = createStore(rootReducer);
 store.dispatch = () => {};
 
 export function Basic() {
-  const props = {
-    isOpen: true
-  };
-
   return (
     <Provider store={store}>
-      <OpenFileModal {...props} />
+      <OpenFileModal />
     </Provider>
   );
 }

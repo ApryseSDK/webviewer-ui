@@ -1,8 +1,47 @@
 import { loadViewerSample } from '../../playwright-utils';
 import { expect, test } from '@playwright/test';
 import { drawRectangle } from '../common/rectangle';
+import { FileChooser } from 'playwright';
+import path from 'path';
 
 test.describe('Multi-tab Feature', () => {
+  test('should enable the multi-tab feature with no loaded documents', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-multi-tab-empty');
+    await waitForInstance();
+    await page.waitForTimeout(5000);
+    const app = await iframe.$('.App');
+
+    expect(await app.screenshot()).toMatchSnapshot(['multi-tab-empty', 'multi-tab-empty.png']);
+  });
+
+  test('should close open file modal after adding a tab', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-multi-tab-empty');
+    const instance = await waitForInstance();
+    await page.waitForTimeout(5000);
+
+    page.on('filechooser', async (fileChooser: FileChooser) => {
+      await fileChooser.setFiles([path.join(__dirname, '../../../../e2e-test/test-files/blank.pdf')]);
+    });
+
+    const addButton = await iframe.$('.TabsHeader .add-button .Button');
+    await addButton.click();
+
+    await page.waitForTimeout(2000);
+
+    const fileTabButton = await iframe.$('[data-element=filePickerPanelButton]');
+    await fileTabButton.click();
+
+    await page.waitForTimeout(1000);
+
+    const chooseFileButton = await iframe.$('.OpenFileModal .modal-btn-file');
+    await chooseFileButton.click();
+
+    await page.waitForTimeout(3000);
+
+    const isElementOpen = await instance('isElementOpen', 'openFileModal');
+    expect(isElementOpen).toBe(false);
+  });
+
   test('should enable the multi-tab feature and load both initialDoc option and the added tabs', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-multi-tab');
     await waitForInstance();

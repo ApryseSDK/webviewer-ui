@@ -1,3 +1,3 @@
-import OpenFileModalContainer from './OpenFileModalContainer';
+import OpenFileModal from './OpenFileModal';
 
-export default OpenFileModalContainer;
+export default OpenFileModal;

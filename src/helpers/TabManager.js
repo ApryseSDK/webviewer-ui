@@ -182,7 +182,6 @@ export default class TabManager {
       } else if (!tabs.length) {
         core.closeDocument();
         this.store.dispatch(actions.setActiveTab(null));
-        this.store.dispatch(actions.openElement(DataElements.MULTITABS_EMPTY_PAGE));
       }
       this.store.dispatch(actions.setTabs(tabs));
     }
@@ -252,7 +251,6 @@ export default class TabManager {
     };
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
   }
-
 
   listenToDocumentDownloaded = async (documentViewer) => {
     const { tabs, activeTab } = this.store.getState().viewer;

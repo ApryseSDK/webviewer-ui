@@ -8,8 +8,9 @@ import Tab from 'components/TabsHeader/Tab/Tab';
 import Button from 'components/Button';
 import HoverTab from 'components/TabsHeader/HoverTab/HoverTab';
 import FlyoutMenu from 'components/FlyoutMenu/FlyoutMenu';
-import OpenFileModal from 'components/OpenFileModal';
 import CollapsedTab from 'components/TabsHeader/CollapsedTab/CollapsedTab';
+import classNames from 'classnames';
+import useWindowDimensions from 'helpers/useWindowsDimensions';
 
 
 const TabsHeader = () => {
@@ -19,24 +20,25 @@ const TabsHeader = () => {
   const [dropTarget, setDropTarget] = useState();
   const [hovering, setHovering] = useState();
   const hoveredTab = useRef();
-  const [isMultiTab, tabManager, width, currTabs, activeTab] = useSelector(state => [
+  const [isMultiTab, tabManager, currTabs, activeTab, isEmptyPageOpen] = useSelector((state) => [
     selectors.getIsMultiTab(state),
     selectors.getTabManager(state),
-    selectors.getDocumentContainerWidth(state),
     selectors.getTabs(state),
     selectors.getActiveTab(state),
+    selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0
   ]);
-
-  const breakpoint = Math.floor(width / 180); // Divided by max-width of tab
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     const div = document.createElement('div');
     div.id = '0';
-    ReactDOM.render(<HoverTab onDragOver={onDragOverHoverTab} onDragLeave={onDragLeave}/>, div);
+    ReactDOM.render(<HoverTab onDragOver={onDragOverHoverTab} onDragLeave={onDragLeave} />, div);
     hoveredTab.current = div;
   }, []);
 
-  const activeIndex = currTabs?.findIndex(t => t.id === activeTab);
+  const breakpoint = Math.floor((width - 80) / 180); // Browser width minus a space for the add button, divided by max-width of tab
+  const activeIndex = currTabs?.findIndex((t) => t.id === activeTab);
+
   useEffect(() => {
     if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
       tabManager.moveTab(activeIndex, breakpoint - 1);
@@ -78,7 +80,7 @@ const TabsHeader = () => {
     setHovering(true);
   };
 
-  const onDragOverHoverTab = e => {
+  const onDragOverHoverTab = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (!hovering) {
@@ -86,7 +88,7 @@ const TabsHeader = () => {
     }
   };
 
-  const onDragLeave = e => {
+  const onDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (!document.getElementsByClassName('TabsHeader')[0]?.contains(e.target)) {
@@ -95,7 +97,7 @@ const TabsHeader = () => {
     setHovering(false);
   };
 
-  const onDrop = e => {
+  const onDrop = () => {
     setHovering(false);
     if (!isDragging || dragIndex === dropTarget) {
       return;
@@ -104,7 +106,7 @@ const TabsHeader = () => {
     hoveredTab.current.remove();
   };
 
-  const onDragEnd = e => {
+  const onDragEnd = () => {
     hoveredTab.current.remove();
     setDragging(false);
     setDragIndex(null);
@@ -114,15 +116,15 @@ const TabsHeader = () => {
     if (!isMultiTab) {
       return [null, null];
     }
-    const activeIndex = currTabs?.findIndex(t => t.id === activeTab);
+    const activeIndex = currTabs?.findIndex((t) => t.id === activeTab);
     if (activeIndex >= breakpoint && breakpoint > 0 && tabManager) {
       tabManager.moveTab(activeIndex, breakpoint - 1);
     }
     const renderedTabs = currTabs.map((tab, index) => {
       if (index < breakpoint) {
         return <Tab
-          onDragStart={e => onDragStart(e, index)}
-          onDragOver={e => onDragOver(e, index, tab.id)}
+          onDragStart={(e) => onDragStart(e, index)}
+          onDragOver={(e) => onDragOver(e, index, tab.id)}
           onDragLeave={onDragLeave}
           setActive={() => setActiveTab(tab.id)}
           key={tab.id}
@@ -132,22 +134,21 @@ const TabsHeader = () => {
           tab={tab}
           isToLeftOfActive={index === activeIndex - 1}
         />;
-      } else {
-        return <CollapsedTab
-          onDragStart={e => onDragStart(e, index)}
-          tab={tab}
-          key={tab.id}
-          id={`tab-${tab.id}`}
-          closeTab={() => deleteTab(tab.id)}
-          setActive={() => setActiveTab(tab.id)}
-        />;
       }
+      return <CollapsedTab
+        onDragStart={(e) => onDragStart(e, index)}
+        tab={tab}
+        key={tab.id}
+        id={`tab-${tab.id}`}
+        closeTab={() => deleteTab(tab.id)}
+        setActive={() => setActiveTab(tab.id)}
+      />;
     });
     return [renderedTabs?.slice(0, breakpoint), renderedTabs?.slice(breakpoint, renderedTabs.length)];
   }, [tabManager, currTabs, breakpoint, setActiveTab, deleteTab, onDragEnd, onDragStart, onDragOver, onDragLeave]);
 
   async function setActiveTab(id) {
-    const tabIndex = currTabs.findIndex(t => t.id === id);
+    const tabIndex = currTabs.findIndex((t) => t.id === id);
     if (tabIndex >= breakpoint) {
       tabManager.moveTab(tabIndex, breakpoint - 1);
     }
@@ -166,7 +167,10 @@ const TabsHeader = () => {
   return (
     <div className="TabsHeader" onDrop={onDrop} onDragEnd={onDragEnd}>
       {tabs}
-      <div className="add-button">
+      <div className={classNames({
+        'add-button': true,
+        'add-button-with-label': isEmptyPageOpen
+      })}>
         {additionalTabs?.length > 0 && <div
           className={'dropdown-menu tab-dropdown-button'}
           onClick={() => dispatch(actions.toggleElement('tabMenu'))}
@@ -178,6 +182,7 @@ const TabsHeader = () => {
           title="action.openFile"
           img="icon-menu-add"
           onClick={openFile}
+          label={isEmptyPageOpen ? 'action.openFile' : ''}
         />
         {additionalTabs?.length > 0 && <FlyoutMenu
           menu="tabMenu"
@@ -187,7 +192,6 @@ const TabsHeader = () => {
           {additionalTabs}
         </FlyoutMenu>}
       </div>
-      <OpenFileModal />
     </div>
   );
 };

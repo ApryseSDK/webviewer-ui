@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import actions from 'actions';
+import { connect } from 'react-redux';
 import TabManager from 'helpers/TabManager';
 import classNames from 'classnames';
 import getHashParameters from 'helpers/getHashParameters';
@@ -10,13 +9,18 @@ import { useTranslation } from 'react-i18next';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import FileInputPanel from 'components/PageReplacementModal/FileInputPanel';
 import FilePickerPanel from 'components/PageReplacementModal/FilePickerPanel';
+import selectors from 'selectors';
+import actions from 'actions';
 
 import '../PageReplacementModal/PageReplacementModal.scss';
 import './OpenFileModal.scss';
 
-const OpenFileModal = ({ isOpen, tabManager }) => {
+const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
+  if (isDisabled) {
+    return null;
+  }
+
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const [src, setSrc] = useState('');
   const [extension, setExtension] = useState('pdf');
@@ -25,7 +29,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
   const [error, setError] = useState({ 'fileError': '', 'urlError': '', 'extensionError': '' });
 
   const closeModal = () => {
-    dispatch(actions.closeElement('OpenFileModal'));
+    closeElements(['OpenFileModal']);
     setSrc('');
     setError({ 'fileError': '', 'urlError': '' });
     setFilename(null);
@@ -35,7 +39,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
 
   useEffect(() => {
     if (isOpen) {
-      dispatch(actions.closeElements(['printModal', 'loadingModal', 'progressModal', 'errorModal', 'Model3DModal']));
+      closeElements(['printModal', 'loadingModal', 'progressModal', 'errorModal', 'Model3DModal']);
     } else {
       setSrc('');
       setError({ 'fileError': '', 'urlError': '' });
@@ -43,7 +47,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
       setExtension(null);
       setSize(null);
     }
-  }, [dispatch, isOpen]);
+  }, [isOpen]);
 
   const handleAddTab = async (source, _extension, _filename, _size) => {
     if (!source) {
@@ -72,29 +76,30 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
 
   const extensionRegExp = /(?:\.([^.?]+))?$/;
 
-  const handleFileChange = async file => {
+  const handleFileChange = async (file) => {
     setError(null);
     if (!file) {
       return;
     }
     if (file instanceof window.Core.Document) {
       await handleAddTab(file, file.type, file.filename);
+    } else {
+      const ext = window.Core.mimeTypeToExtension[file.type] || extensionRegExp.exec(file.name)[1] || null;
+      const filename = file.name;
+      const size = file.size;
+      const src = URL.createObjectURL(file);
+      setSrc(src);
+      setFilename(filename);
+      setExtension(ext);
+      setSize(size);
+      await handleAddTab(file, ext, filename, size);
     }
-    const ext = window.Core.mimeTypeToExtension[file.type] || extensionRegExp.exec(file.name)[1] || null;
-    const filename = file.name;
-    const size = file.size;
-    const src = URL.createObjectURL(file);
-    setSrc(src);
-    setFilename(filename);
-    setExtension(ext);
-    setSize(size);
-    await handleAddTab(file, ext, filename, size);
   };
 
-  const handleURLChange = async url => {
+  const handleURLChange = async (url) => {
     setError(null);
     setSrc(url.trim());
-    const filename = url.substring(url.lastIndexOf('/')+1).split('?')[0];
+    const filename = url.substring(url.lastIndexOf('/') + 1).split('?')[0];
     setFilename(filename);
     setExtension(extensionRegExp.exec(filename)[1]);
     setSize(null);
@@ -112,9 +117,8 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal}>
       <div className={modalClass} data-element="OpenFileModal" onMouseDown={closeModal}>
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
-
-          <Tabs className="page-replacement-tabs" id="pageReplacementModal">
+        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
+          <Tabs className="open-file-modal-tabs" id="openFileModal">
             <div className="header-container">
               <div className="header">
                 <p>{t('OpenFile.enterUrlOrChooseFile')}</p>
@@ -143,7 +147,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
             <TabPanel dataElement="urlInputPanel">
               <div className="panel-body">
                 <FileInputPanel
-                  onFileSelect={url => {
+                  onFileSelect={(url) => {
                     handleURLChange(url);
                   }}
                   acceptFormats={acceptFormats}
@@ -156,7 +160,7 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
             <TabPanel dataElement="filePickerPanel">
               <div className="panel-body">
                 <FilePickerPanel
-                  onFileProcessed={file => handleFileChange(file)}
+                  onFileProcessed={(file) => handleFileChange(file)}
                 />
               </div>
             </TabPanel>
@@ -174,11 +178,23 @@ const OpenFileModal = ({ isOpen, tabManager }) => {
               onClick={() => handleAddTab(src, extension, filename, size)}
             />
           </div>
-
         </div>
       </div>
     </Swipeable>
   );
 };
 
-export default OpenFileModal;
+const mapStateToProps = (state) => ({
+  isDisabled: selectors.isElementDisabled(state, 'OpenFileModal'),
+  isOpen: selectors.isElementOpen(state, 'OpenFileModal'),
+  tabManager: selectors.getTabManager(state),
+});
+
+const mapDispatchToProps = {
+  closeElements: actions.closeElements,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OpenFileModal);
