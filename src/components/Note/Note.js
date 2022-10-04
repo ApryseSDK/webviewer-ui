@@ -33,7 +33,7 @@ const Note = ({
   isMultiSelectMode,
   handleMultiSelect,
 }) => {
-  const { isSelected, resize, pendingEditTextMap, setPendingEditText, isContentEditable, isDocumentReadOnly, isNotePanelOpen, isExpandedFromSearch } = useContext(NoteContext);
+  const { isSelected, resize, pendingEditTextMap, isContentEditable, isDocumentReadOnly, isNotePanelOpen, isExpandedFromSearch } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
@@ -95,8 +95,9 @@ const Note = ({
 
   useEffect(() => {
     if (noteTransformFunction) {
+      const notesPanelElement = document.getElementsByClassName('NotesPanel')[0];
       ids.current.forEach((id) => {
-        const child = document.querySelector(`[data-webviewer-custom-element='${id}']`);
+        const child = notesPanelElement.querySelector(`[data-webviewer-custom-element=${id}]`);
         if (child) {
           child.parentNode.removeChild(child);
         }
@@ -232,9 +233,15 @@ const Note = ({
 
   const groupAnnotations = core.getGroupAnnotations(annotation);
   const isGroup = groupAnnotations.length > 1;
-
+  let isCaretAnnotation = false;
+  isCaretAnnotation = groupAnnotations.some((annotation) => annotation instanceof window.Core.Annotations.CaretAnnotation);
+  if (isCaretAnnotation) {
+    isMultiSelectMode = false;
+    isMultiSelected = false;
+  }
   // apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
+
   return (
     <div
       role="button"
@@ -248,11 +255,8 @@ const Note = ({
       <NoteContent
         noteIndex={0}
         annotation={annotation}
-        isSelected={isSelected}
         setIsEditing={setIsEditing}
         isEditing={isEditingMap[0]}
-        textAreaValue={pendingEditTextMap[annotation.Id]}
-        onTextChange={setPendingEditText}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
         handleMultiSelect={handleMultiSelect}
@@ -260,7 +264,7 @@ const Note = ({
         isMultiSelectMode={isMultiSelectMode}
       />
       {(isSelected || isExpandedFromSearch || shouldExpandCommentThread) && (
-        <React.Fragment>
+        <>
           {replies.length > 0 && (
             <div className={repliesClass}>
               {hasUnreadReplies && (
@@ -279,7 +283,6 @@ const Note = ({
                     annotation={reply}
                     setIsEditing={setIsEditing}
                     isEditing={isEditingMap[i + 1]}
-                    onTextChange={setPendingEditText}
                     onReplyClicked={handleReplyClicked}
                     isUnread={unreadAnnotationIdSet.has(reply.Id)}
                     handleMultiSelect={handleMultiSelect}
@@ -302,7 +305,7 @@ const Note = ({
               annotation={annotation}
             />
           )}
-        </React.Fragment>
+        </>
       )}
       {isSelected && <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef} />}
     </div>
