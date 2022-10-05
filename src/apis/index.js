@@ -8,6 +8,7 @@ import ToolbarGroup from 'constants/toolbar';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import RedactionSearchPatterns from 'constants/redactionSearchPatterns';
+import { languageEnum } from 'constants/languages';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
@@ -56,6 +57,7 @@ import extractPagesWithAnnotations from './extractPagesWithAnnotations';
 import focusNote from './focusNote';
 import getAnnotationUser from './getAnnotationUser';
 import getBBAnnotManager from './getBBAnnotManager';
+import getCurrentLanguage from './getCurrentLanguage';
 import getCurrentPageNumber from './getCurrentPageNumber';
 import getFitMode from './getFitMode';
 import getLayoutMode from './getLayoutMode';
@@ -148,7 +150,7 @@ import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import {
   enableToolDefaultStyleUpdateFromAnnotationPopup,
-  disableToolDefaultStyleUpdateFromAnnotationPopup,
+  disableToolDefaultStyleUpdateFromAnnotationPopup
 } from './toolDefaultStyleUpdateFromAnnotationPopup';
 import unregisterTool from './unregisterTool';
 import updateElement from './updateElement';
@@ -181,6 +183,10 @@ import {
   disableReplyCollapse,
   disableAutoExpandCommentThread,
   enableAutoExpandCommentThread,
+  setCustomHeader,
+  setCustomEmptyPanel,
+  enableAttachmentPreview,
+  disableAttachmentPreview
 } from './notesPanel';
 import {
   enableMultiselect,
@@ -220,12 +226,30 @@ import setPresetCropDimensions from './setPresetCropDimensions';
 import addDateTimeFormat from './addDateTimeFormat';
 import addRedactionSearchPattern from './addRedactionSearchPattern';
 import removeRedactionSearchPattern from './removeRedactionSearchPattern';
+import getAnnotationStylePopupTabs from './getAnnotationStylePopupTabs';
+import setAnnotationStylePopupTabs from './setAnnotationStylePopupTabs';
+import { AnnotationKeys, AnnotationStylePopupTabs } from '../constants/map';
 import getZoomStepFactors from './getZoomStepFactors';
 import setZoomStepFactors from './setZoomStepFactors';
 import enableBookmarkIconShortcutVisibility from './enableBookmarkIconShortcutVisibility';
 import disableBookmarkIconShortcutVisibility from './disableBookmarkIconShortcutVisibility';
+import showFormFieldIndicators from './showFormFieldIndicators';
+import hideFormFieldIndicators from './hideFormFieldIndicators';
+import signSignatureWidget from './signSignatureWidget';
+import core from 'core';
+import { setDefaultOptions } from './outlinesPanel';
+import {
+  getMeasurementScalePreset,
+  addMeasurementScalePreset,
+  removeMeasurementScalePreset,
+  enableMultipleScalesMode,
+  disableMultipleScalesMode,
+  isMultipleScalesModeEnabled,
+} from './measurementScale';
+import getLocalizedText from './getLocalizedText';
+import { enableMultiViewerSync, disableMultiViewerSync, isMultiViewerSyncing } from './multiViewerSync';
 
-export default store => {
+export default (store) => {
   const CORE_NAMESPACE = 'Core';
   const UI_NAMESPACE = 'UI';
   const objForWebViewerCore = {
@@ -243,6 +267,7 @@ export default store => {
     LayoutMode,
     Feature,
     Events,
+    Languages: languageEnum,
     ToolbarGroup,
     NotesPanelSortStrategy,
     Theme,
@@ -291,7 +316,7 @@ export default store => {
     registerTool: registerTool(store),
     removeSearchListener,
     searchText: searchText(store.dispatch),
-    searchTextFull: searchTextFull(store.dispatch),
+    searchTextFull: searchTextFull(store),
     overrideSearchExecution,
     setActiveHeaderGroup: setActiveHeaderGroup(store),
     setActiveLeftPanel: setActiveLeftPanel(store),
@@ -366,6 +391,13 @@ export default store => {
       disableReplyCollapse: disableReplyCollapse(store),
       disableAutoExpandCommentThread: disableAutoExpandCommentThread(store),
       enableAutoExpandCommentThread: enableAutoExpandCommentThread(store),
+      setCustomHeader: setCustomHeader(store),
+      setCustomEmptyPanel: setCustomEmptyPanel(store),
+      enableAttachmentPreview: enableAttachmentPreview(store),
+      disableAttachmentPreview: disableAttachmentPreview(store),
+    },
+    OutlinesPanel: {
+      setDefaultOptions: setDefaultOptions(store),
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
@@ -398,6 +430,8 @@ export default store => {
     enableNativeScrolling,
     getAnnotationUser,
     getCurrentPageNumber: getCurrentPageNumber(store),
+    getCurrentLanguage: getCurrentLanguage(store),
+    getLocalizedText,
     getPageCount: getPageCount(store),
     getShowSideWindow: getShowSideWindow(store),
     getSideWindowVisibility: getSideWindowVisibility(store),
@@ -441,6 +475,18 @@ export default store => {
     setThumbnailSelectionMode: setThumbnailSelectionMode(store),
     enableBookmarkIconShortcutVisibility: enableBookmarkIconShortcutVisibility(store),
     disableBookmarkIconShortcutVisibility: disableBookmarkIconShortcutVisibility(store),
+    showFormFieldIndicators: showFormFieldIndicators(store),
+    hideFormFieldIndicators: hideFormFieldIndicators(store),
+    signSignatureWidget,
+    getMeasurementScalePreset: getMeasurementScalePreset(store),
+    addMeasurementScalePreset: addMeasurementScalePreset(store),
+    removeMeasurementScalePreset: removeMeasurementScalePreset(store),
+    enableMultipleScalesMode: enableMultipleScalesMode(store),
+    disableMultipleScalesMode: disableMultipleScalesMode(store),
+    isMultipleScalesModeEnabled: isMultipleScalesModeEnabled(store),
+    enableMultiViewerSync: enableMultiViewerSync(store),
+    disableMultiViewerSync: disableMultiViewerSync(store),
+    isMultiViewerSyncing: isMultiViewerSyncing(store),
 
     // deprecated, to be removed in 8.0
     useNativeScroll,
@@ -476,9 +522,14 @@ export default store => {
     isInDesktopOnlyMode: isInDesktopOnlyMode(store),
     disablePageDeletionConfirmationModal: disablePageDeletionConfirmationModal(store),
     enablePageDeletionConfirmationModal: enablePageDeletionConfirmationModal(store),
+    getAnnotationStylePopupTabs,
+    setAnnotationStylePopupTabs: setAnnotationStylePopupTabs(store),
+    AnnotationKeys,
+    AnnotationStylePopupTabs,
     getZoomStepFactors: getZoomStepFactors(store),
     setZoomStepFactors: setZoomStepFactors(store),
   };
+  const documentViewer = core.getDocumentViewer(1);
 
   window.instance = {
     // keys needed for webviewer.js
@@ -487,15 +538,16 @@ export default store => {
     [CORE_NAMESPACE]: {
       ...objForWebViewerCore,
       ...window.Core,
-      documentViewer: window.documentViewer,
-      annotationManager: window.documentViewer.getAnnotationManager(),
+      documentViewer,
+      annotationManager: documentViewer.getAnnotationManager(),
+      getDocumentViewers: () => core.getDocumentViewers(),
     },
     [UI_NAMESPACE]: objForWebViewerUI,
 
     // keep them here for backwards compatibililty. should remove them in 9.0
     ...objForWebViewerCore,
     ...objForWebViewerUI,
-    docViewer: window.documentViewer,
-    annotManager: window.documentViewer.getAnnotationManager(),
+    docViewer: documentViewer,
+    annotManager: documentViewer.getAnnotationManager(),
   };
 };
