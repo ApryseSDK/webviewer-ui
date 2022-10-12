@@ -18,6 +18,8 @@ const MENUS = [
   'searchOverlay',
   'signatureOverlay',
   'zoomOverlay',
+  'zoomOverlay1',
+  'zoomOverlay2',
   'redactionOverlay',
   'toolStylePopup',
   'pageManipulationOverlay',
@@ -32,6 +34,8 @@ const TRIGGERS = [
   'menuButton',
   'viewControlsButton',
   'zoomOverlayButton',
+  'zoomOverlayButton1',
+  'zoomOverlayButton2',
   'pageManipulationOverlayButton',
   'thumbnailsControlRotatePopupTrigger',
   'thumbnailsControlInsertPopupTrigger',
@@ -56,12 +60,13 @@ const propTypes = {
 function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const dispatch = useDispatch();
 
-  const allOtherMenus = useMemo(() => MENUS.filter(m => m !== menu), [menu]);
+  const allOtherMenus = useMemo(() => MENUS.filter((m) => m !== menu), [menu]);
 
-  const isDisabled = useSelector(state => selectors.isElementDisabled(state, menu));
-  const isOpen = useSelector(state => selectors.isElementOpen(state, menu));
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, menu));
+  const isOpen = useSelector((state) => selectors.isElementOpen(state, menu));
 
-  const isInDesktopOnlyMode = useSelector(state => selectors.isInDesktopOnlyMode(state));
+  const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state));
+  const pageManipulationOverlayAlternativePosition = useSelector((state) => selectors.getPageManipulationOverlayAlternativePosition(state));
 
   const closeMenu = useCallback(() => {
     dispatch(actions.closeElements([menu]));
@@ -72,7 +77,7 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   useArrowFocus(!isDisabled && isOpen, closeMenu, overlayRef);
 
   const onClickOutside = useCallback(
-    e => {
+    (e) => {
       const menuButton = document.querySelector(`[data-element="${trigger}"]`);
       const clickedMenuButton = menuButton?.contains(e.target);
       if (!clickedMenuButton) {
@@ -87,6 +92,27 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const isMobile = useMedia(['(max-width: 640px)'], [true], false);
   const isTabletOrMobile = useMedia(['(max-width: 900px)'], [true], false);
 
+  const getAlternativePosition = () => {
+    const alternativePosition = pageManipulationOverlayAlternativePosition;
+    const verticalGap = isMobile && isTabletOrMobile ? 14 : 6;
+    const clickTop = alternativePosition.top;
+    let top = clickTop + verticalGap;
+    if (clickTop > 100) {
+      const flyoutMenuHeight = overlayRef.current.clientHeight;
+      /**
+       * if the right-click click was not on the top of the page, we should check if the popup will fit on the
+       * the viewport and, if not, can adjust its position to "pass" the click position, otherwise the popup should always be below them
+       */
+      if (clickTop + flyoutMenuHeight > window.innerHeight) {
+        const calculatedTop = window.innerHeight - flyoutMenuHeight - verticalGap;
+        top = calculatedTop > 0 ? calculatedTop : 0;
+        alternativePosition.top = top;
+      }
+    }
+
+    return alternativePosition;
+  };
+
   // When open: close others, position, and listen for resizes to position.
   // Uselayouteffect prevents "jumpy" behaviour from opening in old position and immediately repositioning the flyout
   useLayoutEffect(() => {
@@ -94,11 +120,15 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
       dispatch(actions.closeElements(allOtherMenus));
 
       const onResize = () => {
-        const overlayPosition = getOverlayPositionBasedOn(trigger, overlayRef, isMobile && isTabletOrMobile);
+        let overlayAlternativePosition;
 
-        overlayPosition.maxHeight = window.innerHeight - overlayPosition.top;
-
-        setPosition(overlayPosition);
+        if (trigger === 'pageManipulationOverlayButton' && pageManipulationOverlayAlternativePosition) {
+          overlayAlternativePosition = getAlternativePosition();
+        } else {
+          overlayAlternativePosition = getOverlayPositionBasedOn(trigger, overlayRef, isMobile && isTabletOrMobile);
+          overlayAlternativePosition.maxHeight = window.innerHeight - overlayAlternativePosition.top;
+        }
+        setPosition(overlayAlternativePosition);
       };
       onResize();
 

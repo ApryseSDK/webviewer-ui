@@ -25,6 +25,7 @@ const { ToolNames } = window.Core.Tools;
 
 export default {
   viewer: {
+    initalsOffset: 0,
     isInitialsModeEnabled: false,
     isMultiViewerMode: false,
     syncViewer: null,
@@ -54,6 +55,7 @@ export default {
     currentLanguage: 'en',
     disabledElements: {
       [DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON]: { disabled: true, priority: 2 },
+      [DataElements.SAVED_SIGNATURES_TAB]: { disabled: true, priorty: 2 },
     },
     selectedScale: initialScale,
     isAddingNewScale: false,
@@ -96,6 +98,8 @@ export default {
     bookmarkIconShortcutVisibility: false,
     hideContentEditWarning: isContentEditWarningHidden(),
     currentContentBeingEdited: null,
+    pageManipulationOverlayAlternativePosition: null,
+    pageManipulationOverlayOpenByRightClick: true,
     headers: {
       default: [
         {
@@ -1611,7 +1615,7 @@ export default {
         group: 'contentEditTools',
       },
       AddParagraphTool: {
-        dataElement: 'addParagraphToolGroupButton',
+        dataElement: 'addParagraphToolButton',
         title: 'action.addParagraph',
         img: 'ic-paragraph',
         showColor: 'never',
@@ -1961,7 +1965,8 @@ export default {
     contentEditor: null,
     notesPanelCustomHeaderOptions: null,
     notesPanelCustomEmptyPanel: null,
-    replyAttachmentPreviewEnabled: true
+    replyAttachmentPreviewEnabled: true,
+    savedSignatureTabEnabled: false,
   },
   search: {
     value: '',

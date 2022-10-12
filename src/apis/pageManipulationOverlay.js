@@ -18,7 +18,7 @@
 import actions from 'actions';
 import selectors from 'selectors';
 
-export default store => Object.create(PageManipulationOverlayAPI).initialize(store);
+export default (store) => Object.create(PageManipulationOverlayAPI).initialize(store);
 
 const PageManipulationOverlayAPI = {
   initialize(store) {
@@ -189,9 +189,33 @@ WebViewer(...)
       index = -1;
     } else {
       const state = this.store.getState();
-      index = selectors.getPageManipulationOverlayItems(state).findIndex(obj => obj.dataElement === dataElement);
+      index = selectors.getPageManipulationOverlayItems(state).findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;
   },
+  /**
+   * Disables the Page Manipulation Overlay opening through right-click.
+   * @method UI.PageManipulationOverlay#disableOpeningByRightClick
+   * @example
+WebViewer(...)
+  .then(function(instance) {
+    instance.UI.pageManipulationOverlay.disableOpeningByRightClick();
+  });
+   */
+  disableOpeningByRightClick() {
+    this.store.dispatch(actions.setPageManipulationOverlayOpenByRightClick(false));
+  },
+  /**
+   * Enables the Page Manipulation Overlay opening through right-click.
+   * @method UI.PageManipulationOverlay#enableOpeningByRightClick
+   * @example
+WebViewer(...)
+  .then(function(instance) {
+    instance.UI.pageManipulationOverlay.enableOpeningByRightClick();
+  });
+   */
+  enableOpeningByRightClick() {
+    this.store.dispatch(actions.setPageManipulationOverlayOpenByRightClick(true));
+  }
 };

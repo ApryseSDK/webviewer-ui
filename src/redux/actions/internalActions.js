@@ -108,6 +108,18 @@ export const setIsMultipleViewerMerging = (isMultipleViewerMerging = false) => (
   type: 'SET_MULTI_VIEWER_MERGING',
   payload: { isMultipleViewerMerging },
 });
+export const updateCalibrationInfo = ({ isCalibration = true, tempScale = '', previousToolName, isFractionalUnit = false, defaultUnit = '' }) => ({
+  type: 'UPDATE_CALIBRATION_INFO',
+  payload: { isCalibration, tempScale, previousToolName, isFractionalUnit, defaultUnit }
+});
+export const setIsAddingNewScale = (isAddingNewScale = false) => ({
+  type: 'SET_IS_ADDING_NEW_SCALE',
+  payload: { isAddingNewScale }
+});
+export const updateDeleteScale = (deleteScale = '') => ({
+  type: 'UPDATE_DELETE_SCALE',
+  payload: { deleteScale }
+});
 export const setEnableNotesPanelVirtualizedList = (enableNotesPanelVirtualizedList = true) => ({
   type: 'SET_ENABLE_NOTE_PANEL_VIRTUALIZED_LIST',
   payload: { enableNotesPanelVirtualizedList },
@@ -175,6 +187,12 @@ export const setActiveToolGroup = (toolGroup) => (dispatch, getState) => {
     payload: { toolGroup, toolbarGroup },
   });
 };
+
+export const setSelectedScale = (selectedScale) => ({
+  type: 'SET_SELECTED_SCALE',
+  payload: { selectedScale }
+});
+
 export const setNotePopupId = (id) => ({
   type: 'SET_NOTE_POPUP_ID',
   payload: { id },
@@ -191,7 +209,7 @@ export const setFitMode = (fitMode) => ({
   type: 'SET_FIT_MODE',
   payload: { fitMode },
 });
-export const setZoom = (zoom) => ({ type: 'SET_ZOOM', payload: { zoom } });
+export const setZoom = (zoom, documentViewerKey = 1) => ({ type: 'SET_ZOOM', payload: { zoom, documentViewerKey } });
 export const setRotation = (rotation) => ({
   type: 'SET_ROTATION',
   payload: { rotation },
@@ -302,6 +320,14 @@ export const setMultiPageManipulationControlsItemsLarge = (items) => ({
     items,
   },
 });
+export const setPageManipulationOverlayAlternativePosition = (position) => ({
+  type: 'SET_PAGE_MANIPULATION_OVERLAY_ALTERNATIVE_POSITION',
+  payload: { position },
+});
+export const setPageManipulationOverlayOpenByRightClick = (value) => ({
+  type: 'SET_PAGE_MANIPULATION_OVERLAY_OPEN_BY_RIGHT_CLICK',
+  payload: value,
+});
 export const setThumbnailControlMenuItems = (items) => ({
   type: 'SET_THUMBNAIL_CONTROL_MENU_ITEMS',
   payload: {
@@ -328,19 +354,55 @@ export const setFonts = (fonts = []) => ({
   type: 'SET_FONTS',
   payload: { fonts },
 });
+export const setIsMultiViewerMode = (isMultiViewerMode) => ({
+  type: 'SET_IS_MULTI_VIEWER_MODE',
+  payload: { isMultiViewerMode },
+});
+export const setActiveDocumentViewerKey = (activeDocumentViewerKey) => ({
+  type: 'SET_ACTIVE_DOCUMENT_VIEWER_KEY',
+  payload: { activeDocumentViewerKey },
+});
+export const setIsComparisonOverlayEnabled = (isComparisonOverlayEnabled) => ({
+  type: 'SET_COMPARISON_OVERLAY_ENABLED',
+  payload: { isComparisonOverlayEnabled },
+});
+export const setIsCompareStarted = (isCompareStarted) => ({
+  type: 'SET_IS_COMPARE_STARTED',
+  payload: { isCompareStarted },
+});
+export const setSyncViewer = (syncViewer) => ({
+  type: 'SET_SYNC_VIEWERS',
+  payload: { syncViewer },
+});
+export const setSavedSignaturesTabEnabled = (enabled = true) => ({
+  type: 'SET_SAVED_SIGNATURES_TAB_ENABLED',
+  payload: { enabled }
+});
+export const setInitialsOffset = (initalsOffset) => ({
+  type: 'SET_INITIALS_OFFSET',
+  payload: { initalsOffset },
+});
 
 // document
-export const setTotalPages = (totalPages) => ({
+export const setTotalPages = (totalPages, documentViewerKey = 1) => ({
   type: 'SET_TOTAL_PAGES',
-  payload: { totalPages },
+  payload: { totalPages, documentViewerKey },
 });
 export const setOutlines = (outlines) => ({
   type: 'SET_OUTLINES',
   payload: { outlines },
 });
-export const setIsOutlineEditing = (isOutlineEditing = true) => ({
+export const setIsOutlineEditing = (isOutlineEditingEnabled = true) => ({
   type: 'SET_OUTLINE_EDITING',
-  payload: { isOutlineEditing },
+  payload: { isOutlineEditingEnabled },
+});
+export const setAutoExpandOutlines = (autoExpandOutlines = false) => ({
+  type: 'SET_AUTO_EXPAND_OUTLINES',
+  payload: { autoExpandOutlines },
+});
+export const setAnnotationNumbering = (isAnnotationNumberingEnabled = false) => ({
+  type: 'SET_ANNOTATION_NUMBERING',
+  payload: { isAnnotationNumberingEnabled },
 });
 export const setBookmarks = (bookmarks) => ({
   type: 'SET_BOOKMARKS',
@@ -435,6 +497,14 @@ export const setSearchValue = (value) => ({
   type: 'SET_SEARCH_VALUE',
   payload: { value },
 });
+export const setReplaceValue = (replaceText) => ({
+  type: 'SET_REPLACE_VALUE',
+  payload: { replaceText },
+});
+export const setNextResultValue = (nextResult, nextResultIndex) => ({
+  type: 'SET_NEXT_RESULT',
+  payload: { nextResult, nextResultIndex },
+});
 export const setCaseSensitive = (isCaseSensitive) => ({
   type: 'SET_CASE_SENSITIVE',
   payload: { isCaseSensitive },
@@ -511,4 +581,14 @@ export const setActiveSoundAnnotation = (activeSoundAnnotation) => ({
 export const setAnnotationFilters = (annotationFilters) => ({
   type: 'SET_ANNOTATION_FILTERS',
   payload: { annotationFilters }
+});
+
+export const setContentEditor = (contentEditor) => ({
+  type: 'SET_CONTENT_EDITOR',
+  payload: { contentEditor }
+});
+
+export const setInitialsMode = (isEnabled) => ({
+  type: 'SET_INITIALS_MODE',
+  payload: { isEnabled }
 });

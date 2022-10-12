@@ -4,7 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { List } from 'react-virtualized';
 import Measure from 'react-measure';
 import classNames from 'classnames';
-import { isIE11 } from "helpers/device";
+import { isIE11 } from 'helpers/device';
 
 import Thumbnail from 'components/Thumbnail';
 import DocumentControls from 'components/DocumentControls';
@@ -40,8 +40,11 @@ const ThumbnailsPanel = () => {
     isThumbnailControlDisabled,
     isThumbnailSliderDisabled,
     isReaderMode,
+    totalPagesFromSecondaryDocumentViewer,
+    activeDocumentViewerKey,
+    isRightClickEnabled
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementDisabled(state, 'thumbnailsPanel'),
       selectors.getTotalPages(state),
@@ -53,6 +56,9 @@ const ThumbnailsPanel = () => {
       selectors.isElementDisabled(state, 'thumbnailControl'),
       selectors.isElementDisabled(state, 'thumbnailsSizeSlider'),
       selectors.isReaderMode(state),
+      selectors.getTotalPages(state, 2),
+      selectors.getActiveDocumentViewerKey(state),
+      selectors.openingPageManipulationOverlayByRightClickEnabled(state)
     ],
     shallowEqual,
   );
@@ -73,6 +79,7 @@ const ThumbnailsPanel = () => {
   const [thumbnailSize, setThumbnailSize] = useState(150);
   const [lastTimeTriggered, setLastTimeTriggered] = useState(0);
   const [globalIndex, setGlobalIndex] = useState(0);
+  const pageCount = activeDocumentViewerKey === 2 ? totalPagesFromSecondaryDocumentViewer : totalPages;
 
   const dispatch = useDispatch();
 
@@ -103,7 +110,7 @@ const ThumbnailsPanel = () => {
     };
   };
 
-  const updateAnnotations = pageIndex => {
+  const updateAnnotations = (pageIndex) => {
     const thumbContainer = thumbs.current && thumbs.current[pageIndex] && thumbs.current[pageIndex].element;
     if (!thumbContainer) {
       return;
@@ -173,7 +180,7 @@ const ThumbnailsPanel = () => {
       setCanLoad(false);
     };
 
-    const onFinishedRendering = needsMoreRendering => {
+    const onFinishedRendering = (needsMoreRendering) => {
       if (!needsMoreRendering) {
         setCanLoad(true);
       }
@@ -212,19 +219,18 @@ const ThumbnailsPanel = () => {
   }, []);
 
   useEffect(() => {
-    const onPagesUpdated = changes => {
+    const onPagesUpdated = (changes) => {
       if (!changes) {
         return;
       }
       let updatedPagesIndexes = Array.from(selectedPageIndexes);
 
       if (changes.removed) {
-        updatedPagesIndexes = updatedPagesIndexes.filter(pageIndex => changes.removed.indexOf(pageIndex + 1) === -1);
+        updatedPagesIndexes = updatedPagesIndexes.filter((pageIndex) => changes.removed.indexOf(pageIndex + 1) === -1);
       }
 
       if (changes.moved) {
-        updatedPagesIndexes = updatedPagesIndexes.map(pageIndex =>
-          changes.moved[pageIndex + 1] ? changes.moved[pageIndex + 1] - 1 : pageIndex,
+        updatedPagesIndexes = updatedPagesIndexes.map((pageIndex) => (changes.moved[pageIndex + 1] ? changes.moved[pageIndex + 1] - 1 : pageIndex),
         );
       }
 
@@ -238,10 +244,10 @@ const ThumbnailsPanel = () => {
 
   useEffect(() => {
     listRef.current?.scrollToRow(Math.floor((currentPage - 1) / numberOfColumns));
-    const onAnnotationChanged = annots => {
+    const onAnnotationChanged = (annots) => {
       const indices = [];
 
-      annots.forEach(annot => {
+      annots.forEach((annot) => {
         const pageIndex = annot.PageNumber - 1;
         if (!annot.Listable || indices.indexOf(pageIndex) > -1) {
           return;
@@ -252,7 +258,7 @@ const ThumbnailsPanel = () => {
       });
     };
 
-    const onPageNumberUpdated = pageNumber => {
+    const onPageNumberUpdated = (pageNumber) => {
       const pageIndex = pageNumber - 1;
       listRef.current?.scrollToRow(Math.floor(pageIndex / numberOfColumns));
     };
@@ -283,7 +289,7 @@ const ThumbnailsPanel = () => {
 
   const scrollToRowHelper = (index, change, time) => {
     const now = new Date().getTime();
-    if (index < totalPages - 1 && index > 0 && now - lastTimeTriggered >= time) {
+    if (index < pageCount - 1 && index > 0 && now - lastTimeTriggered >= time) {
       listRef.current?.scrollToRow(Math.floor((index + change) / numberOfColumns));
       setLastTimeTriggered(now);
       return index + change;
@@ -328,8 +334,8 @@ const ThumbnailsPanel = () => {
   const onDragStart = (e, index) => {
     setGlobalIndex(index);
     setIsDragging(true);
-    const draggingSelectedPage = selectedPageIndexes.some(i => i === index);
-    const pagesToMove = draggingSelectedPage ? selectedPageIndexes.map(index => index + 1) : [index + 1];
+    const draggingSelectedPage = selectedPageIndexes.some((i) => i === index);
+    const pagesToMove = draggingSelectedPage ? selectedPageIndexes.map((index) => index + 1) : [index + 1];
     fireEvent(Events.THUMBNAIL_DRAGGED);
     // need to set 'text' to empty for drag to work in FireFox and mobile
     e.dataTransfer.setData('text', '');
@@ -353,7 +359,7 @@ const ThumbnailsPanel = () => {
     core.setCurrentPage(index + 1);
   };
 
-  const onDrop = e => {
+  const onDrop = (e) => {
     e.preventDefault();
     const { files } = e.dataTransfer;
     const insertTo = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
@@ -370,16 +376,16 @@ const ThumbnailsPanel = () => {
       if (externalPageWebViewerFrameId && window.frameElement.id !== externalPageWebViewerFrameId) {
         dispatch(mergeExternalWebViewerDocument(externalPageWebViewerFrameId, insertTo));
       } else if (files.length) {
-        Array.from(files).forEach(file => {
+        Array.from(files).forEach((file) => {
           dispatch(mergeDocument(file, insertTo));
         });
       }
     } else if (isThumbnailReorderingEnabled && !mergingDocument) {
       if (draggingOverPageIndex !== null) {
         const targetPageNumber = isDraggingToPreviousPage ? draggingOverPageIndex + 1 : draggingOverPageIndex + 2;
-        const draggingSelectedPage = selectedPageIndexes.some(i => i === currentPageIndex);
-        const pageNumbersToMove = draggingSelectedPage ? selectedPageIndexes.map(i => i + 1) : [currentPage];
-        afterMovePageNumber.current = targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
+        const draggingSelectedPage = selectedPageIndexes.some((i) => i === currentPageIndex);
+        const pageNumbersToMove = draggingSelectedPage ? selectedPageIndexes.map((i) => i + 1) : [currentPage];
+        afterMovePageNumber.current = targetPageNumber - pageNumbersToMove.filter((p) => p < targetPageNumber).length;
         core.movePages(pageNumbersToMove, targetPageNumber);
         const updatedPagesNumbers = [];
         for (let offset = 0; offset < pageNumbersToMove.length; offset++) {
@@ -406,18 +412,18 @@ const ThumbnailsPanel = () => {
     }
   };
 
-  const removeFromPendingThumbs = pageIndex => {
+  const removeFromPendingThumbs = (pageIndex) => {
     const index = getPendingThumbIndex(pageIndex);
     if (index !== -1) {
       pendingThumbs.current.splice(index, 1);
     }
   };
 
-  const thumbIsLoaded = pageIndex => thumbs.current[pageIndex]?.loaded;
+  const thumbIsLoaded = (pageIndex) => thumbs.current[pageIndex]?.loaded;
 
-  const thumbIsPending = pageIndex => getPendingThumbIndex(pageIndex) !== -1;
+  const thumbIsPending = (pageIndex) => getPendingThumbIndex(pageIndex) !== -1;
 
-  const onCancel = pageIndex => {
+  const onCancel = (pageIndex) => {
     const index = getPendingThumbIndex(pageIndex);
     if (index !== -1) {
       core.cancelLoadThumbnail(pendingThumbs.current[index].id);
@@ -425,14 +431,21 @@ const ThumbnailsPanel = () => {
     }
   };
 
-  const getPendingThumbIndex = pageIndex =>
-    pendingThumbs.current.findIndex(thumbStatus => thumbStatus.pageIndex === pageIndex);
+  const onRightClick = (event, pageIndex) => {
+    event.preventDefault();
+    core.setCurrentPage(pageIndex + 1);
+    dispatch(actions.setPageManipulationOverlayAlternativePosition({ left: event.pageX, right: 'auto', top: event.pageY }));
+    dispatch(actions.setSelectedPageThumbnails([pageIndex]));
+    dispatch(actions.openElements(['pageManipulationOverlay']));
+  };
 
-  const onRemove = pageIndex => {
+  const getPendingThumbIndex = (pageIndex) => pendingThumbs.current.findIndex((thumbStatus) => thumbStatus.pageIndex === pageIndex);
+
+  const onRemove = (pageIndex) => {
     onCancel(pageIndex);
     const canvases = thumbs.current[pageIndex]?.element?.querySelectorAll('canvas');
     if (canvases?.length) {
-      canvases.forEach(c => {
+      canvases.forEach((c) => {
         c.height = 0;
         c.width = 0;
       });
@@ -458,10 +471,10 @@ const ThumbnailsPanel = () => {
           const allowDragAndDrop = allowPageOperationsUI && (isThumbnailMergingEnabled || isThumbnailReorderingEnabled);
           const showPlaceHolder = allowDragAndDrop && draggingOverPageIndex === thumbIndex;
 
-          return thumbIndex < totalPages ? (
+          return thumbIndex < pageCount ? (
             <React.Fragment key={thumbIndex}>
               {(numberOfColumns > 1 || thumbIndex === 0) && showPlaceHolder && isDraggingToPreviousPage && <div key={`placeholder1-${thumbIndex}`} className="thumbnailPlaceholder" />}
-              <div key={thumbIndex} role="cell" onDragEnd={onDragEnd} className="cellThumbContainer">
+              <div key={thumbIndex} role="cell" onDragEnd={onDragEnd} className="cellThumbContainer" onContextMenu={(e) => isRightClickEnabled && onRightClick(e, thumbIndex)}>
                 <Thumbnail
                   isDraggable={allowDragAndDrop}
                   isSelected={selectedPageIndexes.includes(thumbIndex)}
@@ -522,7 +535,7 @@ const ThumbnailsPanel = () => {
           min={ZOOM_RANGE_MIN}
           max={ZOOM_RANGE_MAX}
           value={thumbnailSize}
-          onChange={e => {
+          onChange={(e) => {
             setThumbnailSize(Number(e.target.value));
             updateNumberOfColumns();
           }}
@@ -548,7 +561,7 @@ const ThumbnailsPanel = () => {
           <div className="Panel ThumbnailsPanel" id="virtualized-thumbnails-container" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
             <div className="virtualized-thumbnails-container">
               {isDragging ?
-                <div className="thumbnailAutoScollArea" onDragOver={scrollUp} style={thumbnailAutoScrollAreaStyle}></div> : ""
+                <div className="thumbnailAutoScollArea" onDragOver={scrollUp} style={thumbnailAutoScrollAreaStyle}></div> : ''
               }
               <List
                 ref={listRef}
@@ -557,7 +570,7 @@ const ThumbnailsPanel = () => {
                 rowHeight={thumbnailHeight}
                 // Round it to a whole number because React-Virtualized list library doesn't round it for us and throws errors when rendering non whole number rows
                 // use ceiling rather than floor so that an extra row can be created in case the items can't be evenly distributed between rows
-                rowCount={Math.ceil(totalPages / numberOfColumns)}
+                rowCount={Math.ceil(pageCount / numberOfColumns)}
                 rowRenderer={renderThumbnails}
                 overscanRowCount={3}
                 className={'thumbnailsList'}
@@ -566,7 +579,7 @@ const ThumbnailsPanel = () => {
                 scrollToIndex={Math.floor((currentPage - 1) / numberOfColumns)}
               />
               {isDragging ?
-                <div className="thumbnailAutoScollArea" onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ""
+                <div className="thumbnailAutoScollArea" onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ''
               }
             </div>
           </div>
