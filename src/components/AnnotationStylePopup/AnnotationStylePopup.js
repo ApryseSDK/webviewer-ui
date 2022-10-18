@@ -43,6 +43,9 @@ class AnnotationStylePopup extends React.Component {
       core.setAnnotationStyles(annotation, {
         [property]: value,
       });
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+        setToolStyles(annotation.ToolName, property, value);
+      }
     });
   }
 
