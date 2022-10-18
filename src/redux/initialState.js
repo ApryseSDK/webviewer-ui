@@ -16,6 +16,7 @@ import { undoButton, redoButton } from 'helpers/commonToolbarElements';
 import defaultFonts from 'constants/defaultFonts';
 import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
 import presetCropDimensions from 'constants/presetCropDimensions';
+import presetNewPageDimensions from 'constants/presetNewPageDimensions';
 import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
@@ -64,7 +65,7 @@ export default {
       tempScale: '',
       previousToolName: '',
       isFractionalUnit: false,
-      defaultUnit: ''
+      defaultUnit: '',
     },
     deleteScale: '',
     openElements: {
@@ -72,7 +73,7 @@ export default {
       toolsHeader: true,
       [DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER]: true,
       [DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER]: true,
-      [DataElements.FORM_FIELD_INDICATOR_CONTAINER]: true
+      [DataElements.FORM_FIELD_INDICATOR_CONTAINER]: true,
     },
     panelWidths: {
       leftPanel: 264,
@@ -543,12 +544,25 @@ export default {
           type: 'toolGroupButton',
           toolGroup: 'addImageContentTools',
           dataElement: 'addImageContentToolGroupButton',
-          title: 'annotation.newImage'
+          title: 'annotation.newImage',
         },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
       'toolbarGroup-FillAndSign': [
         { type: 'spacer' },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'rubberStampTools',
+          img: 'icon-tool-stamp-line',
+          dataElement: 'rubberStampToolGroupButton',
+          title: 'annotation.rubberStamp',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'freeTextTools',
+          dataElement: 'freeTextToolGroupButton',
+          title: 'annotation.freetext',
+        },
         {
           type: 'toolGroupButton',
           toolGroup: 'signatureTools',
@@ -557,12 +571,7 @@ export default {
           title: 'annotation.signature',
           showColor: 'never',
         },
-        {
-          type: 'toolGroupButton',
-          toolGroup: 'freeTextTools',
-          dataElement: 'freeTextToolGroupButton',
-          title: 'annotation.freetext',
-        },
+
         {
           type: 'toolGroupButton',
           toolGroup: 'crossStampTools',
@@ -589,13 +598,6 @@ export default {
         },
         {
           type: 'toolGroupButton',
-          toolGroup: 'rubberStampTools',
-          img: 'icon-tool-stamp-line',
-          dataElement: 'rubberStampToolGroupButton',
-          title: 'annotation.rubberStamp',
-        },
-        {
-          type: 'toolGroupButton',
           toolGroup: 'dateFreeTextTools',
           dataElement: 'dateFreeTextToolButton',
           title: 'annotation.dateFreeText',
@@ -616,18 +618,19 @@ export default {
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
-          toolGroup: 'formFieldTools',
-          dataElement: 'textFieldToolGroupButton',
-          title: 'annotation.textField',
-          showColor: 'always',
-        },
-        {
-          type: 'toolGroupButton',
           toolGroup: 'sigFieldTools',
           dataElement: 'signatureFieldToolGroupButton',
           title: 'annotation.signatureFormField',
           showColor: 'always',
         },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'formFieldTools',
+          dataElement: 'textFieldToolGroupButton',
+          title: 'annotation.textField',
+          showColor: 'always',
+        },
+
         {
           type: 'toolGroupButton',
           toolGroup: 'checkBoxFieldTools',
@@ -713,6 +716,7 @@ export default {
       { dataElement: 'filePickerButton' },
       { dataElement: 'fullscreenButton' },
       { dataElement: 'downloadButton' },
+      { dataElement: 'saveAsButton' },
       { dataElement: 'printButton' },
       { dataElement: 'themeChangeButton' },
       { dataElement: 'languageButton' },
@@ -1514,7 +1518,7 @@ export default {
         title: 'annotation.calibration',
         img: 'icon-tool-measurement-distance-line',
         group: 'calibrationTools',
-        showColor: 'never'
+        showColor: 'never',
       },
       AnnotationCreateArrow: {
         dataElement: 'arrowToolButton',
@@ -1626,7 +1630,7 @@ export default {
         title: 'annotation.newImage',
         img: 'icon-tool-image-line',
         showColor: 'never',
-        group: 'addImageContentTools'
+        group: 'addImageContentTools',
       },
       AnnotationCreateRedaction: {
         dataElement: 'redactionButton',
@@ -1835,8 +1839,11 @@ export default {
       linkModal: 'URLPanelButton',
       rubberStampTab: 'standardStampPanelButton',
       filterAnnotModal: DataElements.ANNOTATION_USER_FILTER_PANEL_BUTTON,
+      settingsModal: DataElements.SETTINGS_GENERAL_BUTTON,
       savedSignatures: DataElements.SAVED_SIGNATURES_PANEL_BUTTON,
       openFileModal: 'urlInputPanelButton',
+      // TODO: uncomment when InsertPageModal is added
+      // insertPageModal: 'insertBlankPagePanelButton'
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
@@ -1919,6 +1926,7 @@ export default {
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
     presetCropDimensions,
+    presetNewPageDimensions,
     dateTimeFormats: defaultDateTimeFormats,
     thumbnailSelectionMode: 'checkbox',
     annotationFilters: {
@@ -2030,7 +2038,8 @@ export default {
     pdfWorkerTransportPromise: null,
     officeWorkerTransportPromise: null,
     disableIndexedDB: getHashParameters('disableIndexedDB', false),
-    disableMultiViewerComparison: (getHashParameters('disableMultiViewerComparison', false) || !getHashParameters('pdfnet', false)),
+    disableMultiViewerComparison:
+      getHashParameters('disableMultiViewerComparison', false) || !getHashParameters('pdfnet', false),
   },
   featureFlags: {},
   wv3dPropertiesPanel: {

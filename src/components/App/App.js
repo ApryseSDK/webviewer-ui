@@ -59,17 +59,18 @@ import ContentEditLinkModal from 'components/ContentEditLinkModal';
 import MultiTabEmptyPage from 'components/MultiTabEmptyPage';
 import OpenFileModal from 'components/OpenFileModal';
 import MultiViewer from 'components/MultiViewer';
-
+import SettingsModal from 'components/SettingsModal';
+// TODO: uncomment when InsertPageModal is added
+// import InsertPageModal from 'components/InsertPageModal';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
 import { prepareMultiTab } from 'helpers/TabManager';
-
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
-
 import './App.scss';
 import ComparePanel from 'components/MultiViewer/ComparePanel';
+import SaveModal from 'components/SaveModal';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -132,6 +133,7 @@ const App = ({ removeEventHandlers }) => {
             filename: getHashParameters('filename', null),
             externalPath: getHashParameters('p', ''),
             documentId: getHashParameters('did', null),
+            showInvalidBookmarks: getHashParameters('showInvalidBookmarks', null),
           };
 
           loadDocument(dispatch, initialDoc, options);
@@ -252,6 +254,10 @@ const App = ({ removeEventHandlers }) => {
         <LanguageModal />
         <FormFieldIndicatorContainer />
         <OpenFileModal />
+        <SettingsModal />
+        <SaveModal />
+        {/* TODO: uncomment when InsertPageModal is added */}
+        {/* <InsertPageModal /> */}
       </div>
 
       <PrintHandler />

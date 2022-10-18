@@ -22,8 +22,8 @@
     "download": "Download",
     "edit": "Edit",
     "extract": "Extract",
-    "enterFullscreen": "Full screen",
-    "exitFullscreen": "Exit full screen",
+    "enterFullscreen": "Enter Full Screen",
+    "exitFullscreen": "Exit Full Screen",
     "fit": "Fit",
     "fitToPage": "Fit to page",
     "fitToWidth": "Fit to width",
@@ -58,8 +58,6 @@
     "type": "Type",
     "upload": "Upload",
     "link": "Link",
-    "darkMode": "Dark mode",
-    "lightMode": "Light mode",
     "fileAttachmentDownload": "Download attached file",
     "prevResult": "Previous result",
     "nextResult": "Next result",
@@ -94,7 +92,6 @@
     "unselect": "Unselect",
     "addMark": "Add Mark",
     "viewFile": "View file",
-    "switchLanguage": "Language",
     "multiReplyAnnotations": "Reply to selected annotations ({{count}})",
     "comparePages": "Compare pages",
     "startComparison": "Start Comparison"
@@ -297,7 +294,8 @@
       "squiggly": "Squiggly",
       "3D": "3D",
       "other": "Other",
-      "initials": "Initials"
+      "initials": "Initials",
+      "saved": "Saved"
     },
     "notesOrder": {
       "dropdownLabel": "Sort Order List",
@@ -422,7 +420,8 @@
       "typeInitial": "Type Initials*",
       "drawSignature": "Draw Signature*",
       "drawInitial": "Draw Initials*",
-      "pickInitialsFile": "Choose Initials"
+      "pickInitialsFile": "Choose Initials",
+      "noSignatures": "There are currently no saved signatures."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Drag & Drop your file here",
@@ -595,6 +594,16 @@
     },
     "lineStyleOptions": {
       "title": "Style"
+    },
+    "settings": {
+      "settings": "Settings",
+      "general": "General",
+      "keyboardShortcut": "Keyboard Shortcut",
+      "advancedSetting": "Advanced Setting",
+      "language": "Language",
+      "theme": "Theme",
+      "darkMode": "Dark mode",
+      "lightMode": "Light mode"
     }
   },
   "warning": {
@@ -960,6 +969,40 @@
   "languageModal": {
     "selectLanguage": "Select language"
   },
+  "insertPageModal": {
+    "title": "Add New Page",
+    "tabs": {
+      "blank": "Blank",
+      "upload": "Upload"
+    },
+    "pagePlacements": {
+      "header": "Page Placement",
+      "above": "Above Page",
+      "below": "Below Page"
+    },
+    "pageLocations": {
+      "header": "Page Location",
+      "specify": "Specify Page",
+      "amount": "Amount Of Pages",
+      "total": "Total",
+      "pages": "Pages"
+    },
+    "pageDimensions": {
+      "header": "Page Dimensions",
+      "subHeader": "Presets",
+      "presets": {
+        "letter": "Letter",
+        "halfLetter": "Half letter",
+        "juniorLegal": "Junior legal",
+        "custom": "Custom"
+      }
+    },
+    "browse": "Browse Files",
+    "fileSelected": {
+      "title": "Select Pages to Add"
+    },
+    "button": "Add Page(s)"
+  },
   "multiViewer": {
     "dragAndDrop": "Drag and Drop your file here to compare",
     "or": "Or",
@@ -976,5 +1019,26 @@
       "new": "New",
       "page": "Page"
     }
+  },
+  "saveModal": {
+    "close": "Close",
+    "saveAs": "Save As",
+    "general": "General",
+    "fileName": "File Name",
+    "fileType": "File Type",
+    "fileLocation": "File Location",
+    "browse": "Browse",
+    "pageRange": "Page Range",
+    "all": "All",
+    "currentView": "Current View",
+    "currentPage": "Current Page",
+    "specifyPage": "Specify Page",
+    "properties": "Properties",
+    "includeAnnotation": "Include Annotations",
+    "includeComments": "Include Comments",
+    "watermark": "Watermark",
+    "addWatermark": "Add Watermark",
+    "save": "Save File",
+    "pageError": "Invalid page. Valid page ranges are between  1 - "
   }
 }

@@ -1,35 +1,204 @@
 import { saveAs } from 'file-saver';
-
 import core from 'core';
 import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import actions from 'actions';
+import { creatingPages } from 'helpers/print';
+import selectors from 'selectors';
+import html2canvas from 'html2canvas';
 
-export default async (dispatch, options = {}) => {
+
+export default async (dispatch, options = {}, documentViewerKey = 1) => {
+  let doc = core.getDocument(documentViewerKey);
   const {
-    filename = core.getDocument()?.getFilename() || 'document',
+    filename = doc?.getFilename() || 'document',
     includeAnnotations = true,
     externalURL,
     useDisplayAuthor = false,
+    pages,
+    includeComments = false,
+    store, // Must be defined if includeComments is true
+    // --
   } = options;
 
   if (!options.downloadType) {
     options.downloadType = 'pdf';
   }
+  const downloadAsImage = options.downloadType === 'jpg';
 
   dispatch(actions.openElement('loadingModal'));
 
+  if (downloadAsImage) {
+    const state = store.getState();
+    const [
+      sortStrategy,
+      dateFormat,
+      language,
+      printQuality,
+      colorMap,
+    ] = [
+      selectors.getSortStrategy(state),
+      selectors.getPrintedNoteDateFormat(state),
+      selectors.getCurrentLanguage(state),
+      selectors.getPrintQuality(state),
+      selectors.getColorMap(state),
+    ];
+    const id = 'download-handler-css';
+    if (!document.getElementById(id)) {
+      const style = window.document.createElement('style');
+      style.id = id;
+      style.textContent = `
+        img {
+          display: block !important;
+          max-width: 100%;
+          max-height: 100%;
+          height: 100%;
+          width: 100%;
+          object-fit: contain;
+          page-break-after: always;
+          padding: 0;
+          margin: 0;
+        }
+  
+        .page__container {
+          box-sizing: border-box;
+          display: flex !important;
+          flex-direction: column;
+          padding: 10px;
+          min-height: 100%;
+          min-width: 100%;
+          font-size: 10px;
+        }
+  
+        .page__container .page__header {
+          display: block !important;
+          align-self: flex-start;
+          font-size: 2rem;
+          margin-bottom: 2rem;
+          padding-bottom: 0.6rem;
+          border-bottom: 0.1rem solid black;
+        }
+  
+        .page__container .note {
+          display: flex !important;
+          flex-direction: column;
+          padding: 0.6rem;
+          border: 0.1rem lightgray solid;
+          border-radius: 0.4rem;
+          margin-bottom: 0.5rem;
+        }
+  
+        .page__container .note .note__info {
+          display: block !important;
+          font-size: 1.3rem;
+          margin-bottom: 0.1rem;
+        }
+  
+        .page__container .note .note__info--with-icon {
+          display: flex !important;
+        }
+  
+        .page__container .note .note__info--with-icon .note__icon {
+          display: block !important;
+          width: 1.65rem;
+          height: 1.65rem;
+          margin-top: -0.1rem;
+          margin-right: 0.2rem;
+        }
+  
+        .page__container .note .note__info--with-icon .note__icon path:not([fill=none]) {
+          display: block !important;
+          fill: currentColor;
+        }
+  
+        .page__container .note .note__root .note__content {
+          display: block !important;
+          margin-left: 0.3rem;
+        }
+  
+        .page__container .note .note__root {
+          display: block !important;
+        }
+  
+        .page__container .note .note__info--with-icon .note__icon svg {
+          display: block !important;
+        }
+  
+        .page__container .note .note__reply {
+          display: block !important;
+          margin: 0.5rem 0 0 2rem;
+        }
+  
+        .page__container .note .note__content {
+          display: block !important;
+          font-size: 1.2rem;
+          margin-top: 0.1rem;
+        }
+      `;
+      window.document.head.prepend(style);
+    }
+    const createdPages = creatingPages(
+      pages,
+      includeComments,
+      includeAnnotations,
+      true,
+      printQuality,
+      sortStrategy,
+      colorMap,
+      dateFormat,
+      undefined,
+      false,
+      language,
+      true,
+    );
+    for (let page of createdPages) {
+      page = await page;
+      let dataURL;
+      if (page instanceof HTMLElement) {
+        document.body.appendChild(page);
+        const canvas = await html2canvas(page, {
+          backgroundColor: null,
+          scale: 1,
+          logging: false,
+        });
+        dataURL = canvas.toDataURL();
+        document.body.removeChild(page);
+      } else {
+        dataURL = page;
+      }
+      const link = document.createElement('a');
+      link.href = dataURL;
+      link.download = `${filename}.png`;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    dispatch(actions.closeElement('loadingModal'));
+    fireEvent(Events.FINISHED_SAVING_PDF);
+    fireEvent(Events.FILE_DOWNLOADED);
+    return;
+  }
+
+  const convertToPDF = options.downloadType === 'pdf' && doc.getType() === 'office';
+  if (convertToPDF) {
+    const fileData = await doc.getFileData({ includeAnnotations, downloadType: 'pdf' });
+    doc = await core.createDocument(fileData, { extension: 'pdf' });
+  }
+
   let annotationsPromise = Promise.resolve();
-  if (includeAnnotations && !options.xfdfString) {
-    if (options.documentToBeDownloaded) {
-      annotationsPromise = Promise.resolve((await options.documentToBeDownloaded.extractXFDF()).xfdfString);
+  if (includeAnnotations && !options.xfdfString && !downloadAsImage) {
+    if (convertToPDF) {
+      annotationsPromise = doc.extractXFDF().then(({ xfdfString }) => new Promise((res) => res(xfdfString)));
+    } else if (options.documentToBeDownloaded) {
+      annotationsPromise = Promise.resolve((await options.documentToBeDownloaded.extractXFDF(pages)).xfdfString);
     } else {
-      annotationsPromise = core.exportAnnotations({ useDisplayAuthor });
+      annotationsPromise = core.exportAnnotations({ useDisplayAuthor }, documentViewerKey);
     }
   }
 
-  return annotationsPromise.then(xfdfString => {
+  return annotationsPromise.then(async (xfdfString) => {
     options.xfdfString = options.xfdfString || xfdfString;
     if (!includeAnnotations) {
       options.includeAnnotations = false;
@@ -43,10 +212,9 @@ export default async (dispatch, options = {}) => {
     };
 
     const downloadName =
-      (core.getDocument()?.getType() === 'video' || core.getDocument()?.getType() === 'audio')
+      (doc?.getType() === 'video' || doc?.getType() === 'audio')
         ? filename
         : getDownloadFilename(filename, '.pdf');
-    let doc = core.getDocument();
 
     // Cloning the options object to be able to delete the customDocument property if needed.
     // doc.getFileData(options) will throw an error if this customDocument property is passed in
@@ -54,6 +222,36 @@ export default async (dispatch, options = {}) => {
     if (clonedOptions.documentToBeDownloaded) {
       doc = clonedOptions.documentToBeDownloaded;
       delete clonedOptions.documentToBeDownloaded;
+    }
+    if (clonedOptions.store) {
+      delete clonedOptions.store;
+    }
+
+    const downloadDataAsFile = (data) => {
+      const arr = new Uint8Array(data);
+      let file;
+
+      if (isIE) {
+        file = new Blob([arr], { type: 'application/pdf' });
+      } else {
+        file = new File([arr], downloadName, { type: 'application/pdf' });
+      }
+
+      saveAs(file, downloadName);
+      dispatch(actions.closeElement('loadingModal'));
+      fireEvent(Events.FINISHED_SAVING_PDF);
+      fireEvent(Events.FILE_DOWNLOADED);
+    };
+    const handleError = (error) => {
+      dispatch(actions.closeElement('loadingModal'));
+      throw new Error(error.message);
+    };
+
+    const signatureWidgets = core.getAnnotationsList().filter((a) => a instanceof window.Annotations.SignatureWidgetAnnotation);
+    const signedStatues = await Promise.all(signatureWidgets.map((a) => a.isSignedDigitally()));
+    const isSignedDigitally = signedStatues.includes(true);
+    if (isSignedDigitally) {
+      clonedOptions.flags |= window.Core.SaveOptions.INCREMENTAL;
     }
 
     if (externalURL) {
@@ -69,30 +267,12 @@ export default async (dispatch, options = {}) => {
       dispatch(actions.closeElement('loadingModal'));
       fireEvent(Events.FINISHED_SAVING_PDF);
       fireEvent(Events.FILE_DOWNLOADED);
+    } else if (pages && pages.length < doc.getPageCount()) {
+      return doc.extractPages(pages, options.xfdfString).then(downloadDataAsFile, handleError);
     } else {
-      return doc.getFileData(clonedOptions).then(
-        data => {
-          const arr = new Uint8Array(data);
-          let file;
-
-          if (isIE) {
-            file = new Blob([arr], { type: 'application/pdf' });
-          } else {
-            file = new File([arr], downloadName, { type: 'application/pdf' });
-          }
-
-          saveAs(file, downloadName);
-          dispatch(actions.closeElement('loadingModal'));
-          fireEvent(Events.FINISHED_SAVING_PDF);
-          fireEvent(Events.FILE_DOWNLOADED);
-        },
-        error => {
-          dispatch(actions.closeElement('loadingModal'));
-          throw new Error(error.message);
-        },
-      );
+      return doc.getFileData(clonedOptions).then(downloadDataAsFile, handleError);
     }
-  }).catch(error => {
+  }).catch((error) => {
     console.warn(error);
     dispatch(actions.closeElement('loadingModal'));
   });
