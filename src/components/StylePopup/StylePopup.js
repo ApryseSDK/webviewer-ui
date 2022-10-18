@@ -7,21 +7,24 @@ import ColorPaletteHeader from 'components/ColorPaletteHeader';
 import ColorPalette from 'components/ColorPalette';
 import ColorPalettePicker from 'components/ColorPalettePicker';
 import Slider from 'components/Slider';
-import MeasurementOption from 'components/MeasurementOption';
 import StyleOption from 'components/StyleOption';
-import LineStyleOptions from 'components/LineStyleOptions';
 import Icon from 'components/Icon';
 import TextStylePicker from 'components/TextStylePicker';
 import LabelTextEditor from 'components/LabelTextEditor';
+import LineStyleOptions from 'components/LineStyleOptions';
+import Choice from 'components/Choice/Choice';
 
 import { circleRadius } from 'constants/slider';
 import DataElements from 'constants/dataElement';
+import { workerTypes } from 'constants/types';
 import selectors from 'selectors';
 import actions from 'actions';
 import pickBy from 'lodash/pickBy';
 import useMedia from 'hooks/useMedia';
 import classNames from 'classnames';
 import { isMobile } from 'helpers/device';
+import getMeasurementTools from 'helpers/getMeasurementTools';
+import core from 'core';
 
 import './StylePopup.scss';
 
@@ -46,9 +49,52 @@ class StylePopup extends React.PureComponent {
     hideSnapModeCheckbox: PropTypes.bool,
     closeElement: PropTypes.func,
     openElement: PropTypes.func,
+    onSnapModeChange: PropTypes.func,
     properties: PropTypes.object,
     isRedaction: PropTypes.bool,
     fonts: PropTypes.array,
+    isSnapModeEnabled: PropTypes.bool
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      document: core.getDocument(),
+      documentType: core.getDocument()?.getType()
+    };
+  }
+
+  componentDidMount() {
+    core.addEventListener('documentLoaded', this.onDocumentLoaded);
+  }
+
+  componentWillUnmount() {
+    core.removeEventListener('documentLoaded', this.onDocumentLoaded);
+  }
+
+  onDocumentLoaded = () => {
+    this.setState({
+      document: core.getDocument(),
+      documentType: core.getDocument().getType()
+    });
+  };
+
+  onSnappingChange = (event) => {
+    if (!core.isFullPDFEnabled()) {
+      return;
+    }
+
+    const enableSnapping = event.target.checked;
+    const mode = enableSnapping ? core.getDocumentViewer().SnapMode.e_DefaultSnapMode | core.getDocumentViewer().SnapMode.POINT_ON_LINE : null;
+    const measurementTools = getMeasurementTools();
+
+    measurementTools.forEach((tool) => {
+      tool.setSnapMode?.(mode);
+    });
+    if (this.props.onSnapModeChange) {
+      this.props.onSnapModeChange(enableSnapping);
+    }
   };
 
   renderSliders = () => {
@@ -114,7 +160,6 @@ class StylePopup extends React.PureComponent {
           if (circlePosition >= 0.08 / 20 && circlePosition < 0.25 / 20) {
             return 0.1;
           }
-
           return isFreeText ? 0 : 0.1;
         },
         withInputField: true,
@@ -155,7 +200,7 @@ class StylePopup extends React.PureComponent {
       delete sliders.Opacity;
     }
 
-    if (isStrokeThicknessSliderDisabled) {
+    if (isStrokeThicknessSliderDisabled || this.props.colorMapKey === 'markInsertText' || this.props.colorMapKey === 'markReplaceText') {
       delete sliders.StrokeThickness;
     }
 
@@ -208,6 +253,7 @@ class StylePopup extends React.PureComponent {
       fonts,
       showLineStyleOptions,
       onLineStyleChange,
+      isSnapModeEnabled
     } = this.props;
 
     // We do not have sliders to show up for redaction annots
@@ -252,6 +298,19 @@ class StylePopup extends React.PureComponent {
     const showColorPicker = !(showColorsMenu && !isColorsContainerActive);
     const showLabelText = (currentStyleTab === 'TextColor' && isRedaction);
     const showSliders = isColorPaletteDisabled || showColorPicker;
+
+    const wasDocumentSwappedToClientSide = (
+      this.state.documentType === workerTypes.WEBVIEWER_SERVER &&
+      !this.state.document.isWebViewerServerDocument()
+    );
+    const isEligibleDocumentForSnapping = this.state.documentType === workerTypes.PDF || wasDocumentSwappedToClientSide;
+
+    const showMeasurementSnappingOption = (
+      Scale &&
+      Precision &&
+      isEligibleDocumentForSnapping &&
+      !hideSnapModeCheckbox
+    );
 
     return (
       <div className={className} data-element="stylePopup">
@@ -335,15 +394,17 @@ class StylePopup extends React.PureComponent {
           </>
         )}
         {showSliders && this.renderSliders()}
-        {Scale && Precision && (
-          <>
-            <MeasurementOption
-              scale={Scale}
-              precision={Precision}
-              hideSnapModeCheckbox={hideSnapModeCheckbox}
-              onStyleChange={onStyleChange}
+        {showMeasurementSnappingOption && (
+          <div className="snapping-option">
+            <Choice
+              dataElement="measurementSnappingOption"
+              id="measurement-snapping"
+              type="checkbox"
+              label={i18next.t('option.shared.enableSnapping')}
+              checked={isSnapModeEnabled}
+              onChange={this.onSnappingChange}
             />
-          </>
+          </div>
         )}
         {showLineStyleOptions && (
           <LineStyleOptions
@@ -351,7 +412,7 @@ class StylePopup extends React.PureComponent {
             onLineStyleChange={onLineStyleChange}
           />
         )}
-        {!isStyleOptionDisabled && colorMapKey === 'rectangle' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style} />}
+        {!isStyleOptionDisabled && colorMapKey === 'rectangle' && currentStyleTab !== 'FillColor' && <StyleOption onStyleChange={onStyleChange} borderStyle={Style} />}
       </div>
     );
   }
@@ -370,11 +431,13 @@ const mapStateToProps = (state, { colorMapKey, isFreeText, isRedaction }) => ({
   isLabelTextContainerActive: selectors.isElementOpen(state, DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER),
   isLabelTextContainerDisabled: selectors.isElementDisabled(state, DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER),
   fonts: selectors.getFonts(state),
+  isSnapModeEnabled: selectors.isSnapModeEnabled(state)
 });
 
 const mapDispatchToProps = {
   closeElement: actions.closeElement,
   openElement: actions.openElement,
+  onSnapModeChange: actions.setEnableSnapMode
 };
 const ConnectedStylePopup = connect(
   mapStateToProps,
