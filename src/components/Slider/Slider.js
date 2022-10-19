@@ -152,7 +152,7 @@ class Slider extends React.PureComponent {
   }
 
   onInputChange = (e) => {
-    const { getLocalValue, property, onSliderChange, max, inputFieldType } = this.props;
+    const { getLocalValue, property, onStyleChange, onSliderChange, max, inputFieldType } = this.props;
 
     if (inputFieldType === 'number' && (e.target.value || e.target.value === 0)) {
       if (e.target.value > max) {
@@ -161,6 +161,7 @@ class Slider extends React.PureComponent {
       const value = e.target.value;
       const localValue = getLocalValue ? getLocalValue(value) : value;
       onSliderChange(property, localValue);
+      onStyleChange(property, localValue);
       this.setState({
         localValue
       });
