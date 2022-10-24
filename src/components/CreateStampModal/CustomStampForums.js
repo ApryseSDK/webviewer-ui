@@ -223,7 +223,7 @@ const CustomStampForums = ({
   };
 
   const [backgroundColors, setBackgroundColors] = useState(window.Core.Tools.RubberStampCreateTool['FILL_COLORS']);
-  const [backgroundColor, setBackgroundColor] = useState(window.Core.Tools.RubberStampCreateTool['FILL_COLORS'][0]);
+  const [backgroundColor, setBackgroundColor] = useState(state.color || window.Core.Tools.RubberStampCreateTool['FILL_COLORS'][0]);
   const [backgroundColorToBeDeleted, setBackgroundColorToBeDeleted] = useState(null);
 
   const [textColors, setTextColors] = useState(window.Core.Tools.RubberStampCreateTool['TEXT_COLORS']);
