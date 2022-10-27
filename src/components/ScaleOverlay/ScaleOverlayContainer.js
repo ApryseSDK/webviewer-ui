@@ -193,6 +193,7 @@ const ScaleOverlayContainer = () => {
       bounds={containerBounds()}
       onDrag={syncDraggablePosition}
       onStop={syncDraggablePosition}
+      cancel={'.scale-overlay-selector'}
     >
       <div
         className={classNames({

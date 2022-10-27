@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import Icon from 'components/Icon';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import actions from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -107,13 +107,25 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
     title = renderScale(selectedScale);
   }
 
+  // TODO: This is a bandaid solution to fix a Safari bug. This dropdown should be refactored to use a react-select component
+  // instead of hiding and displaying based on focus pseudoclasses,
+  // otherwise it is hard to debug as the open/close logic is in a CSS stylesheet and not super evident
+  const [isDropDownOpen, setOpenDropDown] = useState(false);
+  const toggleDropdown = () => {
+    setOpenDropDown(!isDropDownOpen);
+  };
+
   return (
-    <div className="scale-overlay-selector" data-element="scaleSelector">
+    <div className="scale-overlay-selector"
+      data-element="scaleSelector"
+      tabIndex={0}
+      onClick={toggleDropdown}
+      onBlur={() => setOpenDropDown(false)}>
       <button className="scale-overlay-selection" data-element="scaleSelectorTitle">
         {title}
         <Icon className="scale-overlay-arrow" glyph="icon-chevron-down" />
       </button>
-      <ul>
+      <ul className={classNames('scale-overlay-list', { 'visible': isDropDownOpen })} >
         <li>
           <div>{title}</div>
           <Icon className="scale-overlay-arrow" glyph="icon-chevron-up" />
