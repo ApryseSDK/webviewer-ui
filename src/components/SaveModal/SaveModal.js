@@ -158,7 +158,7 @@ const SaveModal = () => {
                   checked={pageRange === PAGE_RANGES.SPECIFY}
                   radio
                   name='page-range-option'
-                  label={t('saveModal.specifyPage')}
+                  label={t('option.print.specifyPages')}
                   value={PAGE_RANGES.SPECIFY}
                 />
 
