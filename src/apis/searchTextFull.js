@@ -52,7 +52,7 @@ function buildSearchModeFlag(options = {}) {
 
 export default function searchTextFull(store) {
   return function searchTextFull(searchValue, options) {
-    const dispatch = store.dispatch;
+    const dispatch = store?.dispatch;
     if (dispatch) {
       // dispatch is only set when doing search through API (instance.searchText())
       // When triggering search through UI, then redux updates are already handled inside component
@@ -61,7 +61,7 @@ export default function searchTextFull(store) {
     }
 
     const searchMode = buildSearchModeFlag(options);
-    let doneCallback = () => {};
+    let doneCallback = () => { };
 
     let hasActiveResultBeenSet = false;
     let throttleResults = [];
@@ -105,7 +105,7 @@ export default function searchTextFull(store) {
             // override values with those user gave
             ...options,
           };
-          const nextResultIndex = store.getState().search?.nextResultIndex;
+          const nextResultIndex = store?.getState().search?.nextResultIndex;
 
           const result = results[nextResultIndex];
           if (result) {
@@ -129,7 +129,7 @@ export default function searchTextFull(store) {
       }
     }
 
-    function onDocumentEnd() {}
+    function onDocumentEnd() { }
 
     function handleSearchError(error) {
       dispatch(actions.setProcessingSearchResults(false));
