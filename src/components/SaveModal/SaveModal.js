@@ -23,6 +23,11 @@ const PAGE_RANGES = {
   CURRENT_VIEW: 'currentView',
   SPECIFY: 'specify'
 };
+const FILE_TYPES = {
+  OFFICE: { label: 'OFFICE (*.pptx,*.docx,*.xlsx)', extension: 'office' },
+  PDF: { label: 'PDF (*.pdf)', extension: 'pdf', },
+  IMAGE: { label: 'PNG (*.png)', extension: 'png', },
+};
 
 const SaveModal = () => {
   const store = useStore();
@@ -33,10 +38,7 @@ const SaveModal = () => {
     selectors.getActiveDocumentViewerKey(state),
   ]);
 
-  const initalFileTypes = [
-    { label: 'PDF (*.pdf)', extension: 'pdf', },
-    { label: 'JPG (*.jpg)', extension: 'jpg', }
-  ];
+  const initalFileTypes = [FILE_TYPES.PDF, FILE_TYPES.IMAGE];
   const [fileTypes, setFileTypes] = useState(initalFileTypes);
   const [filename, setFilename] = useState('');
   const [filetype, setFiletype] = useState(fileTypes[0]);
@@ -57,7 +59,7 @@ const SaveModal = () => {
         setFilename(filename);
         const type = document.getType();
         if (type === workerTypes.OFFICE) {
-          setFileTypes([...initalFileTypes, { label: 'OFFICE (*.pptx,*.docx,*.xlsx)', extension: 'office' }]);
+          setFileTypes([...initalFileTypes, FILE_TYPES.OFFICE]);
         } else if (fileTypes.length === 3) {
           setFileTypes(initalFileTypes);
         }
@@ -71,18 +73,32 @@ const SaveModal = () => {
   const closeModal = () => dispatch(actions.closeElement(DataElements.SAVE_MODAL));
   const preventDefault = (e) => e.preventDefault();
   const onFilenameChange = (e) => setFilename(e?.target?.value);
-  const onFiletypeChange = (e) => setFiletype(fileTypes.find((i) => i.label === e));
+  const onFiletypeChange = (e) => {
+    setFiletype(fileTypes.find((i) => i.label === e));
+    if (e === FILE_TYPES.OFFICE.label) {
+      setPageRange(PAGE_RANGES.ALL);
+    }
+  };
   const onPageRangeChange = (e) => {
     if (e.target.classList.contains('page-number-input')) {
       return;
     }
     setPageRange(e.target.value);
-    clearError();
+    if (errorText) {
+      setHasTyped(false);
+      clearError();
+    }
   };
   const onIncludeAnnotationsChanged = () => setIncludeAnnotations(!includeAnnotations);
   // const onIncludeCommentsChanged = () => setIncludeComments(!includeComments);
   const clearError = () => setErrorText('');
   const onError = () => setErrorText(t('saveModal.pageError') + pageCount);
+  const onSpecifiedPagesChanged = () => {
+    if (!hasTyped) {
+      setHasTyped(true);
+    }
+    clearError();
+  };
   const onSave = () => {
     let pages;
     if (pageRange === PAGE_RANGES.SPECIFY) {
@@ -92,7 +108,7 @@ const SaveModal = () => {
     } else if (pageRange === PAGE_RANGES.CURRENT_VIEW) {
       pages = [core.getCurrentPage(activeDocumentViewerKey)];
     } else {
-      pages = range(1, core.getTotalPages(activeDocumentViewerKey), 1);
+      pages = range(1, core.getTotalPages(activeDocumentViewerKey) + 1, 1);
     }
 
     downloadPdf(dispatch, {
@@ -105,7 +121,8 @@ const SaveModal = () => {
     }, activeDocumentViewerKey);
   };
 
-  const saveDisabled = (errorText || !specifiedPages?.length) && pageRange === PAGE_RANGES.SPECIFY;
+  const [hasTyped, setHasTyped] = useState(false);
+  const saveDisabled = (errorText || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY;
 
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
@@ -168,7 +185,7 @@ const SaveModal = () => {
                       selectedPageNumbers={specifiedPages}
                       pageCount={pageCount}
                       onBlurHandler={setSpecifiedPages}
-                      onSelectedPageNumbersChange={clearError}
+                      onSelectedPageNumbersChange={onSpecifiedPagesChanged}
                       placeHolder={pageNumberPlaceholder}
                       onError={onError}
                     />

@@ -19,13 +19,12 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     pages,
     includeComments = false,
     store, // Must be defined if includeComments is true
-    // --
   } = options;
 
   if (!options.downloadType) {
     options.downloadType = 'pdf';
   }
-  const downloadAsImage = options.downloadType === 'jpg';
+  const downloadAsImage = options.downloadType === 'png';
 
   dispatch(actions.openElement('loadingModal'));
 
@@ -181,17 +180,15 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     return;
   }
 
+  let annotationsPromise = Promise.resolve();
   const convertToPDF = options.downloadType === 'pdf' && doc.getType() === 'office';
   if (convertToPDF) {
-    const fileData = await doc.getFileData({ includeAnnotations, downloadType: 'pdf' });
+    const xfdfString = await core.getAnnotationManager(documentViewerKey).exportAnnotations({ fields: true, widgets: true, links: true });
+    const fileData = await doc.getFileData({ xfdfString, includeAnnotations, downloadType: 'pdf' });
     doc = await core.createDocument(fileData, { extension: 'pdf' });
-  }
-
-  let annotationsPromise = Promise.resolve();
-  if (includeAnnotations && !options.xfdfString && !downloadAsImage) {
-    if (convertToPDF) {
-      annotationsPromise = doc.extractXFDF().then(({ xfdfString }) => new Promise((res) => res(xfdfString)));
-    } else if (options.documentToBeDownloaded) {
+    annotationsPromise = Promise.resolve(xfdfString);
+  } else if (includeAnnotations && !options.xfdfString && !downloadAsImage) {
+    if (options.documentToBeDownloaded) {
       annotationsPromise = Promise.resolve((await options.documentToBeDownloaded.extractXFDF(pages)).xfdfString);
     } else {
       annotationsPromise = core.exportAnnotations({ useDisplayAuthor }, documentViewerKey);
@@ -212,7 +209,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     };
 
     const downloadName =
-      (doc?.getType() === 'video' || doc?.getType() === 'audio')
+      (doc?.getType() === 'video' || doc?.getType() === 'audio' || doc?.getType() === 'office')
         ? filename
         : getDownloadFilename(filename, '.pdf');
 
@@ -230,11 +227,16 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     const downloadDataAsFile = (data) => {
       const arr = new Uint8Array(data);
       let file;
-
+      let downloadType = 'application/pdf';
+      if (options.downloadType === 'office') {
+        const extensionToMimetype = reverseObject(window.Core.mimeTypeToExtension);
+        const array = doc.getFilename().split('.');
+        downloadType = extensionToMimetype[array[array.length - 1]];
+      }
       if (isIE) {
-        file = new Blob([arr], { type: 'application/pdf' });
+        file = new Blob([arr], { type: downloadType });
       } else {
-        file = new File([arr], downloadName, { type: 'application/pdf' });
+        file = new File([arr], downloadName, { type: downloadType });
       }
 
       saveAs(file, downloadName);
@@ -277,3 +279,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     dispatch(actions.closeElement('loadingModal'));
   });
 };
+
+function reverseObject(obj) {
+  return Object.assign({}, ...(Object.entries(obj).map(([key, value]) => ({ [value]: key }))));
+}
