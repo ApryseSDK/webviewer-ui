@@ -50,8 +50,9 @@ function buildSearchModeFlag(options = {}) {
   return searchMode;
 }
 
-export default function searchTextFull(dispatch) {
+export default function searchTextFull(store) {
   return function searchTextFull(searchValue, options) {
+    const dispatch = store?.dispatch;
     if (dispatch) {
       // dispatch is only set when doing search through API (instance.searchText())
       // When triggering search through UI, then redux updates are already handled inside component
@@ -60,7 +61,7 @@ export default function searchTextFull(dispatch) {
     }
 
     const searchMode = buildSearchModeFlag(options);
-    let doneCallback = () => {};
+    let doneCallback = () => { };
 
     let hasActiveResultBeenSet = false;
     let throttleResults = [];
@@ -71,9 +72,6 @@ export default function searchTextFull(dispatch) {
       if (!resultTimeout) {
         if (!isStillProcessingResults) {
           isStillProcessingResults = true;
-          if (dispatch) {
-            dispatch(actions.setProcessingSearchResults(true));
-          }
         }
 
         resultTimeout = setTimeout(() => {
@@ -86,7 +84,7 @@ export default function searchTextFull(dispatch) {
 
       if (!hasActiveResultBeenSet) {
         // when full search is done, we make first found result to be the active result
-        core.setActiveSearchResult(result);
+
         hasActiveResultBeenSet = true;
       }
     }
@@ -95,9 +93,6 @@ export default function searchTextFull(dispatch) {
       // execute search listeners when search is complete, thus hooking functionality search in progress event.
       if (isSearching === false) {
         doneCallback = () => {
-          if (dispatch) {
-            dispatch(actions.setProcessingSearchResults(false));
-          }
           const results = core.getPageSearchResults();
           const searchOptions = {
             // default values
@@ -110,8 +105,14 @@ export default function searchTextFull(dispatch) {
             // override values with those user gave
             ...options,
           };
+          const nextResultIndex = store?.getState().search?.nextResultIndex;
+
+          const result = results[nextResultIndex];
+          if (result) {
+            core.setActiveSearchResult(result);
+          }
           const searchListeners = getSearchListeners() || [];
-          searchListeners.forEach(listener => {
+          searchListeners.forEach((listener) => {
             try {
               listener(searchValue, searchOptions, results);
             } catch (e) {
@@ -128,7 +129,7 @@ export default function searchTextFull(dispatch) {
       }
     }
 
-    function onDocumentEnd() {}
+    function onDocumentEnd() { }
 
     function handleSearchError(error) {
       dispatch(actions.setProcessingSearchResults(false));
