@@ -69,14 +69,13 @@ input, textarea, select {
 .App {
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: fixed;
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
   background-color: var(--document-background-color);
   -webkit-font-smoothing: antialiased;
-  overflow: hidden;
 
   >.content {
     display: flex;
