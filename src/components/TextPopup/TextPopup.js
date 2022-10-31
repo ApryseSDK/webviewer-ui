@@ -72,7 +72,13 @@ const TextPopup = ({ t }) => {
       <FocusTrap locked={isOpen}>
         <div className="container">
           <CustomizablePopup dataElement="textPopup">
-            <ActionButton dataElement="copyTextButton" title="action.copy" img="ic_copy_black_24px" onClick={() => copyText()} role="option" />
+            <ActionButton
+              dataElement="copyTextButton"
+              title="action.copy"
+              img="ic_copy_black_24px"
+              onClick={() => copyText()}
+              role="option"
+            />
             <ActionButton
               dataElement="textHighlightToolButton"
               title="annotation.highlight"
