@@ -21,6 +21,7 @@ export default (activeDocumentViewerKey = 1) => {
     textarea.value = core.getSelectedText(activeDocumentViewerKey);
     textarea.select();
     textarea.setSelectionRange(0, 99999); // this is necessary for iOS
+    textarea.focus();
     try {
       document.execCommand('copy');
       textarea.blur();
