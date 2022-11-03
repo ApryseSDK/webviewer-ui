@@ -211,7 +211,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     const array = doc.getFilename().split('.');
     const extension = `.${array[array.length - 1]}`;
     const downloadName =
-      (doc?.getType() === 'video' || doc?.getType() === 'audio' || doc?.getType() === 'office')
+      (doc?.getType().includes('video') || doc?.getType() === 'audio' || doc?.getType() === 'office')
         ? getDownloadFilename(filename, extension)
         : getDownloadFilename(filename, '.pdf');
 
@@ -239,7 +239,6 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       } else {
         file = new File([arr], downloadName, { type: downloadType });
       }
-
       saveAs(file, downloadName);
       dispatch(actions.closeElement('loadingModal'));
       fireEvent(Events.FINISHED_SAVING_PDF);
