@@ -72,7 +72,7 @@ export default (store, documentViewerKey) => async () => {
           const state = getState();
           const activeLeftPanel = selectors.getActiveLeftPanel(state);
           if (activeLeftPanel === 'layersPanel') {
-          // set the active left panel to another one that's not disabled so that users don't see a blank left panel
+            // set the active left panel to another one that's not disabled so that users don't see a blank left panel
             const nextActivePanel = getLeftPanelDataElements(state).find(
               (dataElement) => !selectors.isElementDisabled(state, dataElement),
             );
@@ -91,6 +91,9 @@ export default (store, documentViewerKey) => async () => {
       dispatch(actions.enableElement('cropToolGroupButton', PRIORITY_ONE));
       dispatch(actions.enableElement('contentEditButton', PRIORITY_ONE));
       dispatch(actions.enableElement('addParagraphToolGroupButton', PRIORITY_ONE));
+    } else if (docType === workerTypes.IMAGE) {
+      dispatch(actions.disableElement('contentEditButton', PRIORITY_ONE));
+      dispatch(actions.disableElement('addParagraphToolGroupButton', PRIORITY_ONE));
     } else {
       dispatch(actions.disableElement('cropToolGroupButton', PRIORITY_ONE));
       dispatch(actions.disableElement('contentEditButton', PRIORITY_ONE));
