@@ -264,7 +264,7 @@
 
       .scale-update {
         height: 32px;
-        width: 72px;
+        min-width: 72px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -297,7 +297,7 @@
         border-radius: 4px;
         padding: 0 8px;
         height: 32px;
-        width: 72px;
+        min-width: 72px;
         display: flex;
         align-items: center;
         justify-content: center;
