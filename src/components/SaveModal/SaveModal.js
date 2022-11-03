@@ -52,22 +52,25 @@ const SaveModal = () => {
   const [errorText, setErrorText] = useState('');
 
   useEffect(() => {
-    const updateFile = () => {
+    const updateFile = async () => {
       const document = core.getDocument(activeDocumentViewerKey);
       if (document) {
-        setPageCount(core.getTotalPages(activeDocumentViewerKey));
         const filename = document.getFilename();
         const newFilename = filename.substring(0, filename.lastIndexOf('.')) || filename;
         setFilename(newFilename);
         const type = document.getType();
-        const array = filename.split('.');
-        const extension = `.${array[array.length - 1]}`;
-        if (type === workerTypes.OFFICE && !CORRUPTED_OFFICE_EXTENSIONS.includes(extension)) {
-          setFileTypes([...initalFileTypes, FILE_TYPES.OFFICE]);
+        if (type === workerTypes.OFFICE) {
+          const array = filename.split('.');
+          const extension = `.${array[array.length - 1]}`;
+          if (!CORRUPTED_OFFICE_EXTENSIONS.includes(extension)) {
+            setFileTypes([...initalFileTypes, FILE_TYPES.OFFICE]);
+          }
+          await document.getDocumentCompletePromise();
         } else {
           setFileTypes(initalFileTypes);
           setFiletype(FILE_TYPES.PDF);
         }
+        setPageCount(core.getTotalPages(activeDocumentViewerKey));
       }
     };
     updateFile();
