@@ -28,6 +28,8 @@ const FILE_TYPES = {
   PDF: { label: 'PDF (*.pdf)', extension: 'pdf', },
   IMAGE: { label: 'PNG (*.png)', extension: 'png', },
 };
+// These legacy office extensions return corrupted file data from the workers if downloaded as OFFICE
+const CORRUPTED_OFFICE_EXTENSIONS = ['.ppt', '.xls'];
 
 const SaveModal = () => {
   const store = useStore();
@@ -50,19 +52,25 @@ const SaveModal = () => {
   const [errorText, setErrorText] = useState('');
 
   useEffect(() => {
-    const updateFile = () => {
+    const updateFile = async () => {
       const document = core.getDocument(activeDocumentViewerKey);
       if (document) {
-        setPageCount(core.getTotalPages(activeDocumentViewerKey));
-        let filename = document.getFilename();
-        filename = filename.substring(0, filename.lastIndexOf('.')) || filename;
-        setFilename(filename);
+        const filename = document.getFilename();
+        const newFilename = filename.substring(0, filename.lastIndexOf('.')) || filename;
+        setFilename(newFilename);
         const type = document.getType();
         if (type === workerTypes.OFFICE) {
-          setFileTypes([...initalFileTypes, FILE_TYPES.OFFICE]);
-        } else if (fileTypes.length === 3) {
+          const array = filename.split('.');
+          const extension = `.${array[array.length - 1]}`;
+          if (!CORRUPTED_OFFICE_EXTENSIONS.includes(extension)) {
+            setFileTypes([...initalFileTypes, FILE_TYPES.OFFICE]);
+          }
+          await document.getDocumentCompletePromise();
+        } else {
           setFileTypes(initalFileTypes);
+          setFiletype(FILE_TYPES.PDF);
         }
+        setPageCount(core.getTotalPages(activeDocumentViewerKey));
       }
     };
     updateFile();
