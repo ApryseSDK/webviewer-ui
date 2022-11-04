@@ -10,6 +10,8 @@ import Icon from 'components/Icon';
 import NoteContext from 'components/Note/Context';
 import ListSeparator from 'components/ListSeparator';
 import MultiSelectControls from 'components/NotesPanel/MultiSelectControls';
+import CustomElement from 'components/CustomElement';
+import NotesPanelHeader from 'components/NotesPanelHeader';
 
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
@@ -17,9 +19,9 @@ import actions from 'actions';
 import selectors from 'selectors';
 import useMedia from 'hooks/useMedia';
 import { isIE } from 'helpers/device';
+import ReplyAttachmentPicker from './ReplyAttachmentPicker';
 
 import './NotesPanel.scss';
-import NotesPanelHeader from '../NotesPanelHeader';
 
 const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [
@@ -31,8 +33,10 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     currentNotesPanelWidth,
     notesInLeftPanel,
     isDocumentReadOnly,
+    showAnnotationNumbering,
     enableNotesPanelVirtualizedList,
-    isInDesktopOnlyMode
+    isInDesktopOnlyMode,
+    customEmptyPanel
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
@@ -43,8 +47,10 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       selectors.getNotesPanelWidth(state),
       selectors.getNotesInLeftPanel(state),
       selectors.isDocumentReadOnly(state),
+      selectors.isAnnotationNumberingEnabled(state),
       selectors.getEnableNotesPanelVirtualizedList(state),
-      selectors.isInDesktopOnlyMode(state)
+      selectors.isInDesktopOnlyMode(state),
+      selectors.getNotesPanelCustomEmptyPanel(state)
     ],
     shallowEqual,
   );
@@ -68,6 +74,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const [showMultiState, setShowMultiState] = useState(false);
   const [showMultiStyle, setShowMultiStyle] = useState(false);
 
+  const [curAnnotId, setCurAnnotId] = useState(undefined);
 
   // the object will be in a shape of { [note.Id]: true }
   // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
@@ -90,6 +97,18 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     };
     core.addEventListener('documentUnloaded', onDocumentUnloaded);
     return () => core.removeEventListener('documentUnloaded', onDocumentUnloaded);
+  }, []);
+
+  useEffect(() => {
+    const onAnnotationNumberingUpdated = (isEnabled) => {
+      dispatch(actions.setAnnotationNumbering(isEnabled));
+    };
+
+    core.addEventListener('annotationNumberingUpdated', onAnnotationNumberingUpdated);
+
+    return () => {
+      core.removeEventListener('annotationNumberingUpdated', onAnnotationNumberingUpdated);
+    };
   }, []);
 
   useEffect(() => {
@@ -228,6 +247,33 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     [setPendingReplyMap],
   );
 
+  const [pendingAttachmentMap, setPendingAttachmentMap] = useState({});
+  const addAttachments = (annotationID, attachments) => {
+    setPendingAttachmentMap((map) => ({
+      ...map,
+      [annotationID]: [...(map[annotationID] || []), ...attachments]
+    }));
+  };
+  const clearAttachments = (annotationID) => {
+    setPendingAttachmentMap((map) => ({
+      ...map,
+      [annotationID]: []
+    }));
+  };
+  const deleteAttachment = (annotationID, attachment) => {
+    const attachmentList = pendingAttachmentMap[annotationID];
+    if (attachmentList?.length > 0) {
+      const index = attachmentList.indexOf(attachment);
+      if (index > -1) {
+        attachmentList.splice(index, 1);
+        setPendingAttachmentMap((map) => ({
+          ...map,
+          [annotationID]: [...attachmentList]
+        }));
+      }
+    }
+  };
+
   useEffect(() => {
     setMultiSelectedAnnotations(Object.values(isMultiSelectedMap));
   }, [isMultiSelectedMap]);
@@ -286,6 +332,12 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       isExpandedFromSearch: onlyReplyContainsSearchInput(currNote),
       scrollToSelectedAnnot,
       sortStrategy,
+      showAnnotationNumbering,
+      setCurAnnotId,
+      pendingAttachmentMap,
+      clearAttachments,
+      deleteAttachment,
+      addAttachments
     };
 
     if (index === singleSelectedNoteIndex) {
@@ -339,12 +391,25 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     </div>
   );
 
+  const NoAnnotationsGlyph = (customEmptyPanel && customEmptyPanel.icon) ? customEmptyPanel.icon : 'illustration - empty state - outlines';
+  const NoAnnotationsMessage = (customEmptyPanel && customEmptyPanel.message) ? customEmptyPanel.message : t('message.noAnnotations');
+  const NoAnnotationsReadOnlyMessage = (customEmptyPanel && customEmptyPanel.readOnlyMessage) ? customEmptyPanel.readOnlyMessage : t('message.noAnnotationsReadOnly');
+  const shouldRenderNoAnnotationsIcon = (customEmptyPanel && !customEmptyPanel.hideIcon) || !customEmptyPanel;
+  const shouldRenderCustomEmptyPanel = (customEmptyPanel && customEmptyPanel.render);
+
   const NoAnnotations = (
     <div className="no-annotations">
-      <div>
-        <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
-      </div>
-      <div className="msg">{isDocumentReadOnly ? t('message.noAnnotationsReadOnly') : t('message.noAnnotations')}</div>
+      {shouldRenderCustomEmptyPanel ?
+        <CustomElement render={customEmptyPanel.render} /> :
+        <>
+          {shouldRenderNoAnnotationsIcon &&
+            <div>
+              <Icon className="empty-icon" glyph={NoAnnotationsGlyph} />
+            </div>
+          }
+          <div className="msg">{isDocumentReadOnly ? NoAnnotationsReadOnlyMessage : NoAnnotationsMessage}</div>
+        </>
+      }
     </div>
   );
 
@@ -455,7 +520,12 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
           isMultiSelectedMap={isMultiSelectedMap}
           setIsMultiSelectedMap={setIsMultiSelectedMap}
           multiSelectedAnnotations={multiSelectedAnnotations}
-        />}
+        />
+      }
+      <ReplyAttachmentPicker
+        annotationId={curAnnotId}
+        addAttachments={addAttachments}
+      />
     </div>
   ));
 };

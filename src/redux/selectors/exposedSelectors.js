@@ -11,6 +11,7 @@ export const getIsComparisonOverlayEnabled = (state) => state.viewer.isCompariso
 export const getActiveDocumentViewerKey = (state) => state.viewer.activeDocumentViewerKey;
 export const isMultiViewerMode = (state) => state.viewer.isMultiViewerMode;
 export const getPresetCropDimensions = (state) => state.viewer.presetCropDimensions;
+export const getPresetNewPageDimensions = (state) => state.viewer.presetNewPageDimensions;
 export const getDateTimeFormats = (state) => state.viewer.dateTimeFormats;
 export const getThumbnailSelectionMode = (state) => state.viewer.thumbnailSelectionMode;
 export const getFonts = (state) => state.viewer.fonts;
@@ -453,6 +454,10 @@ export const getCustomNoteSelectionFunction = (state) => state.viewer.customNote
 
 export const getCustomApplyRedactionsHandler = (state) => state.viewer.customApplyRedactionsHandler;
 
+export const getCustomMultiViewerSyncHandler = (state) => state.viewer.customMultiViewerSyncHandler;
+
+export const getCustomMultiViewerAcceptedFileFormats = (state) => state.viewer.customMultiViewerAcceptedFileFormats;
+
 export const isSnapModeEnabled = (state) => state.viewer.isSnapModeEnabled;
 
 export const getUnreadAnnotationIdSet = (state) => state.viewer.unreadAnnotationIdSet;
@@ -509,3 +514,5 @@ export const getNotesPanelCustomHeaderOptions = (state) => state.viewer.notesPan
 export const getNotesPanelCustomEmptyPanel = (state) => state.viewer.notesPanelCustomEmptyPanel;
 
 export const isReplyAttachmentPreviewEnabled = (state) => state.viewer.replyAttachmentPreviewEnabled;
+
+export const getReplyAttachmentHandler = (state) => state.viewer.replyAttachmentHandler;

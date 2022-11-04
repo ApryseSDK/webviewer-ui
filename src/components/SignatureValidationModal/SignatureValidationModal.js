@@ -20,7 +20,7 @@ const SignatureValidationModal = () => {
   const [translate] = useTranslation();
 
   const [isOpen, verificationResult] = useSelector(
-    state => {
+    (state) => {
       const { validationModalWidgetName } = state.viewer;
       return [
         selectors.isElementOpen(state, 'signatureValidationModal'),
@@ -163,13 +163,6 @@ const SignatureValidationModal = () => {
    * PDFNet.DigitalSignatureField.getDocumentPermissions
    */
   const renderDocumentPermission = () => {
-    const {
-      e_no_changes_allowed,
-      e_formfilling_signing_allowed,
-      e_annotating_formfilling_signing_allowed,
-      e_unrestricted,
-    } = DigitalSignatureField.DocumentPermissions;
-
     if (!documentPermission) {
       return;
     }
@@ -178,16 +171,16 @@ const SignatureValidationModal = () => {
     const editor = isCertification ? 'certifier' : 'signer';
 
     switch (documentPermission) {
-      case e_no_changes_allowed:
+      case DigitalSignatureField.DocumentPermissions.e_no_changes_allowed:
         content += translate('digitalSignatureModal.documentPermission.noChangesAllowed', { editor });
         break;
-      case e_formfilling_signing_allowed:
+      case DigitalSignatureField.DocumentPermissions.e_formfilling_signing_allowed:
         content += translate('digitalSignatureModal.documentPermission.formfillingSigningAllowed', { editor });
         break;
-      case e_annotating_formfilling_signing_allowed:
+      case DigitalSignatureField.DocumentPermissions.e_annotating_formfilling_signing_allowed:
         content += translate('digitalSignatureModal.documentPermission.annotatingFormfillingSigningAllowed', { editor });
         break;
-      case e_unrestricted:
+      case DigitalSignatureField.DocumentPermissions.e_unrestricted:
         content += translate('digitalSignatureModal.documentPermission.unrestricted', { editor });
         break;
     }
@@ -210,12 +203,6 @@ const SignatureValidationModal = () => {
    * appropriate message is rendered
    */
   const renderTrustVerification = () => {
-    const {
-      e_current,
-      e_signing,
-      e_timestamp,
-    } = TimeMode;
-
     if (!trustVerificationResultString) {
       return (
         <p>{translate('digitalSignatureModal.trustVerification.none')}</p>
@@ -224,19 +211,19 @@ const SignatureValidationModal = () => {
 
     let content = '';
     switch (timeOfTrustVerificationEnum) {
-      case (e_current):
+      case (TimeMode.e_current):
         content += translate(
           'digitalSignatureModal.trustVerification.current',
           { trustVerificationTime }
         );
         break;
-      case (e_signing):
+      case (TimeMode.e_signing):
         content += translate(
           'digitalSignatureModal.trustVerification.signing',
           { trustVerificationTime }
         );
         break;
-      case (e_timestamp):
+      case (TimeMode.e_timestamp):
         content += translate(
           'digitalSignatureModal.trustVerification.timestamp',
           { trustVerificationTime }
@@ -253,34 +240,25 @@ const SignatureValidationModal = () => {
    * PDFNet.verificationResult.getDigestAlgorithm
    */
   const renderDigestAlgorithm = () => {
-    const {
-      e_SHA1,
-      e_SHA256,
-      e_SHA384,
-      e_SHA512,
-      e_RIPEMD160,
-      e_unknown_digest_algorithm,
-    } = DigestAlgorithm.Type;
-
     let content = translate('digitalSignatureModal.digestAlgorithm.preamble');
 
     switch (digestAlgorithm) {
-      case e_SHA1:
-        content += `SHA1.`;
+      case DigestAlgorithm.Type.e_SHA1:
+        content += 'SHA1.';
         break;
-      case e_SHA256:
-        content += `SHA256.`;
+      case DigestAlgorithm.Type.e_SHA256:
+        content += 'SHA256.';
         break;
-      case e_SHA384:
+      case DigestAlgorithm.Type.e_SHA384:
         content += 'SHA384.';
         break;
-      case e_SHA512:
+      case DigestAlgorithm.Type.e_SHA512:
         content += 'SHA512.';
         break;
-      case e_RIPEMD160:
+      case DigestAlgorithm.Type.e_RIPEMD160:
         content += 'RIPEMD160.';
         break;
-      case e_unknown_digest_algorithm:
+      case DigestAlgorithm.Type.e_unknown_digest_algorithm:
         content = translate('digitalSignatureModal.digestAlgorithm.unknown');
         break;
     }

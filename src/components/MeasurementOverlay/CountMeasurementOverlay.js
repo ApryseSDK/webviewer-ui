@@ -16,7 +16,7 @@ function CountMeasurementOverlay(props) {
   const { t } = props;
   const annotationList = core.getAnnotationsList();
 
-  const measurementAnnotationsList = annotationList.filter(annotation => {
+  const measurementAnnotationsList = annotationList.filter((annotation) => {
     return annotation.getCustomData('trn-is-count');
   });
   const annotationCount = measurementAnnotationsList.length;

@@ -297,7 +297,39 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     [Feature.ContentEdit]: {
       dataElements: [
         'toolbarGroup-EditText',
+        'addParagraphToolGroupButton',
+        'addImageContentToolGroupButton',
+        'contentEditButton',
+        'searchAndReplace',
       ],
+    },
+    [Feature.MultiViewerMode]: {
+      fn: () => {
+        store.dispatch(actions.setIsMultiViewerMode(enable));
+      }
+    },
+    [Feature.Initials]: {
+      dataElements: [
+        'signatureOptionsDropdown',
+        'savedSignatureAndInitialsTabs',
+      ],
+      fn: () => {
+        const state = store.getState();
+        const signatures = selectors.getDisplayedSignatures(state);
+        if (signatures?.length > 0) {
+          store.dispatch(actions.setInitialsOffset(signatures.length));
+        }
+        store.dispatch(actions.setInitialsMode(enable));
+      }
+    },
+    [Feature.SavedSignaturesTab]: {
+      dataElements: [DataElements.SAVED_SIGNATURES_TAB],
+      fn: () => {
+        store.dispatch(actions.setSavedSignaturesTabEnabled(enable));
+        if (!enable) {
+          store.dispatch(actions.setSelectedTab('signatureModal', 'inkSignaturePanelButton'));
+        }
+      }
     },
   };
 

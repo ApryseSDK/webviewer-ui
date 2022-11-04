@@ -3,13 +3,13 @@ let maxZoom = 99.99;
 
 export const getMinZoomLevel = () => minZoom;
 
-export const setMinZoomLevel = zoom => {
+export const setMinZoomLevel = (zoom) => {
   minZoom = zoom;
 };
 
 export const getMaxZoomLevel = () => maxZoom;
 
-export const setMaxZoomLevel = zoom => {
+export const setMaxZoomLevel = (zoom) => {
   maxZoom = zoom;
 };
 

@@ -48,10 +48,10 @@ export async function getFileAttachments() {
   }
   const fileAttachmentAnnotations = core
     .getAnnotationsList()
-    .filter(annot => annot instanceof Annotations.FileAttachmentAnnotation);
+    .filter((annot) => annot instanceof Annotations.FileAttachmentAnnotation);
 
   // re-order fileAttachment annotations by page number
-  fileAttachmentAnnotations.forEach(annot => {
+  fileAttachmentAnnotations.forEach((annot) => {
     if (!attachments.fileAttachmentAnnotations[annot.PageNumber]) {
       attachments.fileAttachmentAnnotations[annot.PageNumber] = [];
     }

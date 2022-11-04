@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import {
   deletePages,
@@ -12,17 +12,17 @@ import {
   rotateCounterClockwise,
   movePagesToBottom,
   movePagesToTop
-} from "helpers/pageManipulationFunctions";
-import LeftPanelPageTabsSmall from "src/components/LeftPanelPageTabs/LeftPanelPageTabsSmall/LeftPanelPageTabsSmall";
-import LeftPanelPageTabs from "components/LeftPanelPageTabs/LeftPanelPageTabs/LeftPanelPageTabs";
-import { workerTypes } from "constants/types";
-import core from "src/core";
-import LeftPanelPageTabsRotate from "components/LeftPanelPageTabs/LeftPanelPageTabsRotate/LeftPanelPageTabsRotate";
+} from 'helpers/pageManipulationFunctions';
+import LeftPanelPageTabsSmall from 'src/components/LeftPanelPageTabs/LeftPanelPageTabsSmall/LeftPanelPageTabsSmall';
+import LeftPanelPageTabs from 'components/LeftPanelPageTabs/LeftPanelPageTabs/LeftPanelPageTabs';
+import { workerTypes } from 'constants/types';
+import core from 'src/core';
+import LeftPanelPageTabsRotate from 'components/LeftPanelPageTabs/LeftPanelPageTabsRotate/LeftPanelPageTabsRotate';
 import LeftPanelPageTabsLarge from './LeftPanelPageTabsLarge/LeftPanelPageTabsLarge';
 
 function LeftPanelPageTabsContainer() {
   const dispatch = useDispatch();
-  const [selectedPageIndexes, leftPanelWidth, deleteModalEnabled, multiPageManipulationControlsItems, multiPageManipulationControlsSmall, multiPageManipulationControlsLarge] = useSelector(state => [
+  const [selectedPageIndexes, leftPanelWidth, deleteModalEnabled, multiPageManipulationControlsItems, multiPageManipulationControlsSmall, multiPageManipulationControlsLarge] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.getLeftPanelWidth(state),
     selectors.pageDeletionConfirmationModalEnabled(state),
@@ -31,7 +31,7 @@ function LeftPanelPageTabsContainer() {
     selectors.getMultiPageManipulationControlsItemsLarge(state)
   ]);
 
-  const pageNumbers = selectedPageIndexes.map(index => index + 1);
+  const pageNumbers = selectedPageIndexes.map((index) => index + 1);
 
   const onReplace = () => !noPagesSelectedWarning(pageNumbers, dispatch) && replace(dispatch);
   const onExtractPages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && extractPages(pageNumbers, dispatch);

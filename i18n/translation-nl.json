@@ -58,8 +58,6 @@
     "type": "Type",
     "upload": "Uploaden",
     "link": "Koppeling",
-    "darkMode": "Donkere modus",
-    "lightMode": "Lichte modus",
     "fileAttachmentDownload": "Download bijgevoegd bestand",
     "prevResult": "Vorig resultaat",
     "nextResult": "Volgend resultaat",
@@ -94,7 +92,6 @@
     "unselect": "Deselecteren",
     "addMark": "Markering toevoegen",
     "viewFile": "Bestand bekijken",
-    "switchLanguage": "Taal",
     "multiReplyAnnotations": "Reageren op geselecteerde annotaties ({{count}})",
     "comparePages": "Vergelijk pagina's",
     "startComparison": "Vergelijking starten"
@@ -297,7 +294,8 @@
       "squiggly": "kronkelig",
       "3D": "3D",
       "other": "Ander",
-      "initials": "initialen"
+      "initials": "initialen",
+      "saved": "Opgeslagen"
     },
     "notesOrder": {
       "dropdownLabel": "Sorteer Bestellijst",
@@ -422,7 +420,8 @@
       "typeInitial": "Typ initialen*",
       "drawSignature": "Handtekening tekenen*",
       "drawInitial": "Initialen tekenen*",
-      "pickInitialsFile": "Kies initialen"
+      "pickInitialsFile": "Kies initialen",
+      "noSignatures": "Er zijn momenteel geen opgeslagen handtekeningen."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Sleep en zet uw bestand hier neer",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Stijl"
+    },
+    "settings": {
+      "settings": "Instellingen",
+      "general": "Algemeen",
+      "keyboardShortcut": "Toetsenbord sneltoets",
+      "advancedSetting": "Geavanceerde instelling",
+      "language": "Taal",
+      "theme": "Thema",
+      "darkMode": "Donkere modus",
+      "lightMode": "Lichtmodus",
+      "viewing": "Bekijken",
+      "disableFadePageNavigationComponent": "Fade Pagina-navigatiecomponent uitschakelen",
+      "disableFadePageNavigationComponentDesc": "Houd de paginanavigatiecomponent altijd op het scherm. Het standaardgedrag is om het te vervagen na een bepaalde periode van inactiviteit.",
+      "disableNativeScrolling": "Native scrollen uitschakelen",
+      "disableNativeScrollingDesc": "Schakel het systeemeigen scrollgedrag van mobiele apparaten uit als dit eerder was ingeschakeld. Houd er rekening mee dat het oorspronkelijke scrollgedrag van mobiele apparaten standaard is uitgeschakeld.",
+      "annotations": "annotaties",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Standaardstijl-update van tool uitschakelen vanuit annotatiepop-up",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Schakelt het synchroniseren van updates van de annotatiestijl uit met de bijbehorende tool die de annotatie heeft gemaakt. Dus als de stijl van een annotatie wordt gewijzigd, worden de standaardstijlen van de tool niet bijgewerkt.",
+      "notesPanel": "Notitiepaneel",
+      "disableNoteSubmissionWithEnter": "Schakel het verzenden van notities uit met Enter",
+      "disableNoteSubmissionWithEnterDesc": "Schakel de mogelijkheid om notities in te dienen uit door alleen op Enter te drukken als dit eerder was ingeschakeld. Hiermee wordt het indienen van notities teruggezet naar de standaardwaarde, namelijk Ctrl/Cmd + Enter.",
+      "disableAutoExpandCommentThread": "Discussiethread automatisch uitvouwen uitschakelen",
+      "disableAutoExpandCommentThreadDesc": "Schakelt de automatische uitbreiding van alle opmerkingenthreads in het deelvenster Notities uit.",
+      "disableReplyCollapse": "Beantwoorden samenvouwen uitschakelen",
+      "disableReplyCollapseDesc": "Schakelt het samenvouwen van de antwoorden in het deelvenster Notities uit.",
+      "disableTextCollapse": "Tekst samenvouwen uitschakelen",
+      "disableTextCollapseDesc": "Schakelt het samenvouwen van de tekst van de annotatie in het deelvenster Notities uit.",
+      "search": "Zoeken",
+      "disableClearSearchOnPanelClose": "Uitschakelen Wissen Zoeken op paneel Sluiten",
+      "disableClearSearchOnPanelCloseDesc": "Schakel het wissen van zoekresultaten uit wanneer de gebruiker het zoekvenster sluit. Indien uitgeschakeld, worden zoekresultaten bewaard, zelfs als de gebruiker het zoekvenster sluit en opnieuw opent. Let op: mobiele apparaten wissen nooit zoekresultaten, zelfs niet als deze instelling is ingeschakeld. Dit komt omdat het paneel moet worden gesloten om de zoekresultaten in het document te bekijken.",
+      "pageManipulation": "Paginamanipulatie",
+      "disablePageDeletionConfirmationModal": "Modaal voor verwijderen van pagina uitschakelen",
+      "disablePageDeletionConfirmationModalDesc": "Schakel de bevestigingsmodaliteit uit bij het verwijderen van een pagina uit de miniatuurweergave",
+      "disableMultiselect": "Multiselect uitschakelen",
+      "disableMultiselectDesc": "Schakel multi-select uit in het linkerminiatuurpaneel"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Selecteer taal"
   },
+  "insertPageModal": {
+    "title": "Nieuwe pagina toevoegen",
+    "tabs": {
+      "blank": "Blanco",
+      "upload": "Uploaden"
+    },
+    "pagePlacements": {
+      "header": "Paginaplaatsing",
+      "above": "Boven pagina",
+      "below": "Onder pagina"
+    },
+    "pageLocations": {
+      "header": "Paginalocatie",
+      "specify": "Specificeer pagina",
+      "amount": "Aantal pagina's",
+      "total": "Totaal",
+      "pages": "Pagina's"
+    },
+    "pageDimensions": {
+      "header": "Pagina-afmetingen",
+      "subHeader": "Voorinstellingen",
+      "presets": {
+        "letter": "Brief",
+        "halfLetter": "halve letter",
+        "juniorLegal": "Junior juridisch",
+        "custom": "Aangepast"
+      }
+    },
+    "browse": "Bestanden doorbladeren",
+    "fileSelected": {
+      "title": "Selecteer pagina's om toe te voegen"
+    },
+    "button": "Pagina('s) toevoegen"
+  },
   "multiViewer": {
     "dragAndDrop": "Sleep uw bestand hierheen om te vergelijken",
     "or": "Of",
@@ -976,5 +1044,26 @@
       "new": "Nieuw",
       "page": "Bladzijde"
     }
+  },
+  "saveModal": {
+    "close": "Dichtbij",
+    "saveAs": "Opslaan als",
+    "general": "Algemeen",
+    "fileName": "Bestandsnaam",
+    "fileType": "Bestandstype",
+    "fileLocation": "Bestandslocatie",
+    "browse": "Bladeren",
+    "pageRange": "Paginabereik",
+    "all": "Allemaal",
+    "currentView": "Huidige weergave",
+    "currentPage": "Huidige pagina",
+    "specifyPage": "Specificeer pagina",
+    "properties": "Eigendommen",
+    "includeAnnotation": "Voeg annotaties toe",
+    "includeComments": "Opmerkingen opnemen",
+    "watermark": "Watermerk",
+    "addWatermark": "Voeg een watermerk toe",
+    "save": "Sla bestand op",
+    "pageError": "Ongeldige pagina. Geldige paginabereiken liggen tussen 1 -"
   }
 }

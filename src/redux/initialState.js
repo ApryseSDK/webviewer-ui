@@ -288,9 +288,9 @@ export default {
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
-          toolGroup: 'freeHandTools',
-          dataElement: 'freeHandToolGroupButton',
-          title: 'annotation.freehand',
+          toolGroup: 'rectangleTools',
+          dataElement: 'shapeToolGroupButton',
+          title: 'annotation.rectangle',
         },
         {
           type: 'toolGroupButton',
@@ -300,28 +300,9 @@ export default {
         },
         {
           type: 'toolGroupButton',
-          toolGroup: 'rectangleTools',
-          dataElement: 'shapeToolGroupButton',
-          title: 'annotation.rectangle',
-        },
-        {
-          type: 'toolGroupButton',
-          toolGroup: 'ellipseTools',
-          dataElement: 'ellipseToolGroupButton',
-          title: 'annotation.ellipse',
-        },
-        { type: 'toolGroupButton', toolGroup: 'arcTools', dataElement: 'arcToolGroupButton', title: 'annotation.arc' },
-        {
-          type: 'toolGroupButton',
-          toolGroup: 'polygonTools',
-          dataElement: 'polygonToolGroupButton',
-          title: 'annotation.polygon',
-        },
-        {
-          type: 'toolGroupButton',
-          toolGroup: 'cloudTools',
-          dataElement: 'polygonCloudToolGroupButton',
-          title: 'annotation.polygonCloud',
+          toolGroup: 'freeHandTools',
+          dataElement: 'freeHandToolGroupButton',
+          title: 'annotation.freehand',
         },
         {
           type: 'toolGroupButton',
@@ -335,12 +316,38 @@ export default {
           dataElement: 'polyLineToolGroupButton',
           title: 'annotation.polyline',
         },
+
         {
           type: 'toolGroupButton',
           toolGroup: 'arrowTools',
           dataElement: 'arrowToolGroupButton',
           title: 'annotation.arrow',
         },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'arcTools',
+          dataElement: 'arcToolGroupButton',
+          title: 'annotation.arc',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'ellipseTools',
+          dataElement: 'ellipseToolGroupButton',
+          title: 'annotation.ellipse',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'polygonTools',
+          dataElement: 'polygonToolGroupButton',
+          title: 'annotation.polygon',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'cloudTools',
+          dataElement: 'polygonCloudToolGroupButton',
+          title: 'annotation.polygonCloud',
+        },
+
         { type: 'divider' },
         {
           type: 'customElement',
@@ -393,18 +400,18 @@ export default {
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
+          toolGroup: 'rubberStampTools',
+          img: 'icon-tool-stamp-line',
+          dataElement: 'rubberStampToolGroupButton',
+          title: 'annotation.rubberStamp',
+        },
+        {
+          type: 'toolGroupButton',
           toolGroup: 'signatureTools',
           img: 'icon-tool-signature',
           dataElement: 'signatureToolGroupButton',
           title: 'annotation.signature',
           showColor: 'never',
-        },
-        {
-          type: 'toolGroupButton',
-          toolGroup: 'rubberStampTools',
-          img: 'icon-tool-stamp-line',
-          dataElement: 'rubberStampToolGroupButton',
-          title: 'annotation.rubberStamp',
         },
         {
           type: 'toolGroupButton',
@@ -1975,6 +1982,7 @@ export default {
     notesPanelCustomEmptyPanel: null,
     replyAttachmentPreviewEnabled: true,
     savedSignatureTabEnabled: false,
+    replyAttachmentHandler: null
   },
   search: {
     value: '',

@@ -1,7 +1,7 @@
 {
   "name": "webviewer-ui",
   "author": "PDFTron Systems Inc.",
-  "version": "8.9.0",
+  "version": "8.10.0",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {

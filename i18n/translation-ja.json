@@ -58,8 +58,6 @@
     "type": "タイピング",
     "upload": "アップロード",
     "link": "リンク",
-    "darkMode": "ダークモード",
-    "lightMode": "ライトモード",
     "fileAttachmentDownload": "添付ファイルをダウンロード",
     "prevResult": "前の結果",
     "nextResult": "次の結果",
@@ -94,7 +92,6 @@
     "unselect": "選択を解除",
     "addMark": "マークを追加",
     "viewFile": "ファイルを閲覧する",
-    "switchLanguage": "言語",
     "multiReplyAnnotations": "選択した注釈に返信 ({{count}})",
     "comparePages": "ページを比較する",
     "startComparison": "比較を開始"
@@ -297,7 +294,8 @@
       "squiggly": "波線",
       "3D": "3D",
       "other": "その他",
-      "initials": "イニシャル"
+      "initials": "イニシャル",
+      "saved": "保存しました"
     },
     "notesOrder": {
       "dropdownLabel": "ソート順リスト",
@@ -422,7 +420,8 @@
       "typeInitial": "タイプ イニシャル*",
       "drawSignature": "署名を描く*",
       "drawInitial": "イニシャルを描く*",
-      "pickInitialsFile": "イニシャルを選択"
+      "pickInitialsFile": "イニシャルを選択",
+      "noSignatures": "現在、保存されている署名はありません。"
     },
     "pageReplacementModal": {
       "dragAndDrop": "ここにファイルをドラッグ＆ドロップ",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "スタイル"
+    },
+    "settings": {
+      "settings": "設定",
+      "general": "全般的",
+      "keyboardShortcut": "キーボード ショートカット",
+      "advancedSetting": "詳細設定",
+      "language": "言語",
+      "theme": "テーマ",
+      "darkMode": "ダークモード",
+      "lightMode": "ライトモード",
+      "viewing": "閲覧中",
+      "disableFadePageNavigationComponent": "フェード ページ ナビゲーション コンポーネントを無効にする",
+      "disableFadePageNavigationComponentDesc": "ページ ナビゲーション コンポーネントを常に画面に表示します。デフォルトの動作は、非アクティブ状態が一定時間続くとフェードすることです。",
+      "disableNativeScrolling": "ネイティブ スクロールを無効にする",
+      "disableNativeScrollingDesc": "ネイティブのモバイル デバイスのスクロール動作が以前に有効になっている場合は無効にします。デフォルトでは、ネイティブのモバイル デバイスのスクロール動作はオフになっていることに注意してください。",
+      "annotations": "注釈",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "注釈ポップアップからのツールの既定のスタイルの更新を無効にする",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "注釈を作成した関連ツールへの注釈スタイルの更新の同期を無効にします。そのため、注釈のスタイルが変更された場合、ツールのデフォルト スタイルは更新されません。",
+      "notesPanel": "ノートパネル",
+      "disableNoteSubmissionWithEnter": "Enter によるメモの送信を無効にする",
+      "disableNoteSubmissionWithEnterDesc": "以前に有効になっていた場合は、Enter キーを押すだけでメモを送信する機能を無効にします。これにより、メモの送信がデフォルトの Ctrl/Cmd + Enter に戻ります。",
+      "disableAutoExpandCommentThread": "コメント スレッドの自動展開を無効にする",
+      "disableAutoExpandCommentThreadDesc": "ノート パネルのすべてのコメント スレッドの自動展開を無効にします。",
+      "disableReplyCollapse": "返信の折りたたみを無効にする",
+      "disableReplyCollapseDesc": "ノート パネルでの返信の折りたたみを無効にします。",
+      "disableTextCollapse": "テキストの折りたたみを無効にする",
+      "disableTextCollapseDesc": "ノート パネルでの注釈のテキストの折りたたみを無効にします。",
+      "search": "探す",
+      "disableClearSearchOnPanelClose": "パネルを閉じるときに検索をクリアしない",
+      "disableClearSearchOnPanelCloseDesc": "ユーザーが検索パネルを閉じたときの検索結果のクリアを無効にします。無効にすると、ユーザーが検索パネルを閉じて再度開いても検索結果が保持されます。この設定が有効になっていても、モバイル デバイスでは検索結果がクリアされないことに注意してください。これは、ドキュメントの検索結果を表示するには、パネルを閉じる必要があるためです。",
+      "pageManipulation": "ページ操作",
+      "disablePageDeletionConfirmationModal": "ページ削除確認モーダルを無効にする",
+      "disablePageDeletionConfirmationModalDesc": "サムネイル ビューからページを削除するときの確認モーダルを無効にする",
+      "disableMultiselect": "複数選択を無効にする",
+      "disableMultiselectDesc": "左側のサムネイル パネルで複数選択を無効にする"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "言語を選択する"
   },
+  "insertPageModal": {
+    "title": "新しいページを追加",
+    "tabs": {
+      "blank": "空欄",
+      "upload": "アップロード"
+    },
+    "pagePlacements": {
+      "header": "ページの配置",
+      "above": "ページの上",
+      "below": "ページの下"
+    },
+    "pageLocations": {
+      "header": "ページの場所",
+      "specify": "ページ指定",
+      "amount": "ページ数",
+      "total": "合計",
+      "pages": "ページ"
+    },
+    "pageDimensions": {
+      "header": "ページの寸法",
+      "subHeader": "プリセット",
+      "presets": {
+        "letter": "手紙",
+        "halfLetter": "ハーフレター",
+        "juniorLegal": "ジュニアリーガル",
+        "custom": "カスタム"
+      }
+    },
+    "browse": "ブラウズファイル",
+    "fileSelected": {
+      "title": "追加するページを選択"
+    },
+    "button": "ページを追加"
+  },
   "multiViewer": {
     "dragAndDrop": "ここにファイルをドラッグ アンド ドロップして比較します",
     "or": "または",
@@ -976,5 +1044,26 @@
       "new": "新しい",
       "page": "ページ"
     }
+  },
+  "saveModal": {
+    "close": "近い",
+    "saveAs": "名前を付けて保存",
+    "general": "全般的",
+    "fileName": "ファイル名",
+    "fileType": "ファイルの種類",
+    "fileLocation": "ファイルの場所",
+    "browse": "ブラウズ",
+    "pageRange": "ページ範囲",
+    "all": "全て",
+    "currentView": "現在のビュー",
+    "currentPage": "現在のページ",
+    "specifyPage": "ページ指定",
+    "properties": "プロパティ",
+    "includeAnnotation": "注釈を含める",
+    "includeComments": "コメントを含める",
+    "watermark": "透かし",
+    "addWatermark": "透かしを追加",
+    "save": "ファイルを保存",
+    "pageError": "ページが無効です。有効なページ範囲は 1 ～"
   }
 }

@@ -58,8 +58,6 @@
     "type": "Tip",
     "upload": "Yüklemek",
     "link": "Bağlantı",
-    "darkMode": "karanlık mod",
-    "lightMode": "Işık modu",
     "fileAttachmentDownload": "Ekli dosyayı indirin",
     "prevResult": "Önceki sonuç",
     "nextResult": "Sonraki sonuç",
@@ -94,7 +92,6 @@
     "unselect": "Seçimi kaldır",
     "addMark": "İşaret Ekle",
     "viewFile": "Dosyayı görüntüle",
-    "switchLanguage": "Dilim",
     "multiReplyAnnotations": "Seçili ek açıklamaları yanıtla ({{count}})",
     "comparePages": "Sayfaları karşılaştır",
     "startComparison": "Karşılaştırmayı Başlat"
@@ -297,7 +294,8 @@
       "squiggly": "dalgalı",
       "3D": "3 boyutlu",
       "other": "Diğer",
-      "initials": "baş harfler"
+      "initials": "baş harfler",
+      "saved": "kaydedildi"
     },
     "notesOrder": {
       "dropdownLabel": "Sıralama Listesi",
@@ -422,7 +420,8 @@
       "typeInitial": "Baş Harfleri yazın*",
       "drawSignature": "İmza Çek*",
       "drawInitial": "Baş Harflerini Çiz*",
-      "pickInitialsFile": "Baş Harfleri Seçin"
+      "pickInitialsFile": "Baş Harfleri Seçin",
+      "noSignatures": "Şu anda kayıtlı imza yok."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Dosyanızı buraya sürükleyip bırakın",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "stil"
+    },
+    "settings": {
+      "settings": "Ayarlar",
+      "general": "Genel",
+      "keyboardShortcut": "Klavye kısayolu",
+      "advancedSetting": "Gelişmiş Ayarlar",
+      "language": "Dil",
+      "theme": "Tema",
+      "darkMode": "Karanlık mod",
+      "lightMode": "Işık modu",
+      "viewing": "görüntüleme",
+      "disableFadePageNavigationComponent": "Soldurma Sayfa Gezinme Bileşenini Devre Dışı Bırak",
+      "disableFadePageNavigationComponentDesc": "Sayfa Gezinme Bileşenini her zaman ekranda tutun. Varsayılan davranış, belirli bir hareketsizlik süresinden sonra onu soldurmaktır.",
+      "disableNativeScrolling": "Yerel Kaydırmayı Devre Dışı Bırak",
+      "disableNativeScrollingDesc": "Daha önce etkinleştirildiyse yerel mobil cihaz kaydırma davranışını devre dışı bırakın. Yerel mobil cihaz kaydırma davranışının varsayılan olarak kapalı olduğunu unutmayın.",
+      "annotations": "Ek açıklamalar",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Açıklama Açılır Penceresinden Araç Varsayılan Stil Güncellemesini Devre Dışı Bırak",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Detaylandırma stili güncellemelerinin, detaylandırmayı oluşturan ilişkili araca eşitlenmesini devre dışı bırakır. Bu nedenle, bir detaylandırmanın stili değiştirilirse, araç varsayılan stilleri güncellenmeyecektir.",
+      "notesPanel": "Notlar Paneli",
+      "disableNoteSubmissionWithEnter": "Enter ile Not Göndermeyi Devre Dışı Bırak",
+      "disableNoteSubmissionWithEnterDesc": "Daha önce etkinleştirilmişse, yalnızca Enter tuşuna basarak not gönderme özelliğini devre dışı bırakın. Bu, not gönderimini Ctrl/Cmd + Enter olan varsayılana döndürür.",
+      "disableAutoExpandCommentThread": "Yorum Konusunu Otomatik Genişletmeyi Devre Dışı Bırak",
+      "disableAutoExpandCommentThreadDesc": "Notlar Panelindeki tüm yorum dizilerinin otomatik olarak genişletilmesini devre dışı bırakır.",
+      "disableReplyCollapse": "Yanıtı Daraltmayı Devre Dışı Bırak",
+      "disableReplyCollapseDesc": "Notlar Panelinde yanıtların daraltılmasını devre dışı bırakır.",
+      "disableTextCollapse": "Metin Daraltmasını Devre Dışı Bırak",
+      "disableTextCollapseDesc": "Notlar Panelinde ek açıklama metninin daraltılmasını devre dışı bırakır.",
+      "search": "Arama",
+      "disableClearSearchOnPanelClose": "Panel Kapatmada Aramayı Temizle'yi devre dışı bırakın",
+      "disableClearSearchOnPanelCloseDesc": "Kullanıcı arama panelini kapattığında arama sonuçlarını temizlemeyi devre dışı bırakın. Devre dışı bırakıldığında, kullanıcı arama panelini kapatıp yeniden açsa bile arama sonuçları korunur. Bu ayar etkinleştirilse bile mobil cihazların arama sonuçlarını asla temizlemediğini unutmayın. Bunun nedeni, belgedeki arama sonuçlarını görüntülemek için panelin kapatılması gerekmesidir.",
+      "pageManipulation": "Sayfa Manipülasyonu",
+      "disablePageDeletionConfirmationModal": "Sayfa Silme Onayı Kalıcılığını Devre Dışı Bırak",
+      "disablePageDeletionConfirmationModalDesc": "Küçük resim görünümünden bir sayfayı silerken onay modunu devre dışı bırakın",
+      "disableMultiselect": "Çoklu Seçimi Devre Dışı Bırak",
+      "disableMultiselectDesc": "Sol küçük resim panelinde çoklu seçimi devre dışı bırakın"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Dil Seçin"
   },
+  "insertPageModal": {
+    "title": "Yeni Sayfa Ekle",
+    "tabs": {
+      "blank": "Boşluk",
+      "upload": "Yüklemek"
+    },
+    "pagePlacements": {
+      "header": "Sayfa Yerleşimi",
+      "above": "Sayfanın Üstü",
+      "below": "Sayfanın Altında"
+    },
+    "pageLocations": {
+      "header": "Sayfa Konumu",
+      "specify": "Sayfayı Belirtin",
+      "amount": "Sayfa Sayısı",
+      "total": "Toplam",
+      "pages": "Sayfalar"
+    },
+    "pageDimensions": {
+      "header": "Sayfa Boyutları",
+      "subHeader": "Ön ayarlar",
+      "presets": {
+        "letter": "Mektup",
+        "halfLetter": "yarım harf",
+        "juniorLegal": "küçük yasal",
+        "custom": "Gelenek"
+      }
+    },
+    "browse": "Dosyalara Gözat",
+    "fileSelected": {
+      "title": "Eklenecek Sayfaları Seçin"
+    },
+    "button": "Sayfa Ekle"
+  },
   "multiViewer": {
     "dragAndDrop": "Karşılaştırmak için dosyanızı buraya sürükleyip bırakın",
     "or": "Veya",
@@ -976,5 +1044,26 @@
       "new": "Yeni",
       "page": "Sayfa"
     }
+  },
+  "saveModal": {
+    "close": "Kapat",
+    "saveAs": "Farklı kaydet",
+    "general": "Genel",
+    "fileName": "Dosya adı",
+    "fileType": "Dosya tipi",
+    "fileLocation": "Dosya konumu",
+    "browse": "Araştır",
+    "pageRange": "Sayfa aralığı",
+    "all": "Herşey",
+    "currentView": "Mevcut görünüm",
+    "currentPage": "Geçerli sayfa",
+    "specifyPage": "Sayfayı Belirtin",
+    "properties": "Özellikleri",
+    "includeAnnotation": "Ek Açıklamaları Dahil Et",
+    "includeComments": "Yorumları Dahil Et",
+    "watermark": "Filigran",
+    "addWatermark": "Filigran ekle",
+    "save": "Dosyayı kaydet",
+    "pageError": "Geçersiz sayfa. Geçerli sayfa aralıkları 1 -"
   }
 }

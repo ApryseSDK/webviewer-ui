@@ -9,4 +9,4 @@ export const DropLocation = {
   INITIAL: 'initial',
 };
 
-export const BUFFER_ROOM = 2;
+export const BUFFER_ROOM = 5;

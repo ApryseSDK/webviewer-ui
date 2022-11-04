@@ -9,4 +9,8 @@
   @include mobile {
     display: none !important;
   }
+
+  .container {
+    display: contents;
+  }
 }

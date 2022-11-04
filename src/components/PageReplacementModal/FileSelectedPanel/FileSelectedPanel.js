@@ -18,7 +18,7 @@ const FileSelectedPanel = React.forwardRef((
   }, ref) => {
   const [t] = useTranslation();
 
-  const [currentDocSelectedPageNumbers, setCurrentDocSelectedPageNumbers] = useState(pageIndicesToReplace.map(index => index + 1));
+  const [currentDocSelectedPageNumbers, setCurrentDocSelectedPageNumbers] = useState(pageIndicesToReplace.map((index) => index + 1));
   const [selectedThumbnails, setSelectedThumbnails] = useState({});
   const [thumbnails, setThumbnails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -35,7 +35,7 @@ const FileSelectedPanel = React.forwardRef((
 
       const thumbnailPromises = [];
       for (let i = 1; i <= pageCount; i++) {
-        const thumbnailPromise = new Promise(resolve => {
+        const thumbnailPromise = new Promise((resolve) => {
           sourceDocument.loadThumbnail(i, (result) => {
             let thumbnail;
             // If we get an embedded thumbnail we set the currentSrc prop
@@ -54,32 +54,32 @@ const FileSelectedPanel = React.forwardRef((
             thumbnails.push(thumbnail);
             setCompletedPagesCount(i);
             resolve();
-          })
+          });
         });
         thumbnailPromises.push(thumbnailPromise);
       }
 
-      await Promise.all(thumbnailPromises)
+      await Promise.all(thumbnailPromises);
       const sortedThumbnails = thumbnails.sort((a, b) => a.pageNumber - b.pageNumber);
-      setThumbnails(sortedThumbnails)
+      setThumbnails(sortedThumbnails);
       setIsLoading(false);
-    };
+    }
 
     function getTruncatedName(documentName) {
       let truncatedName;
       if (documentName.length > 25) {
-        truncatedName = `"${documentName.slice(0, 10)}...${documentName.slice(documentName.length - 10)}"`
+        truncatedName = `"${documentName.slice(0, 10)}...${documentName.slice(documentName.length - 10)}"`;
       } else {
-        truncatedName = `"${documentName}"`
+        truncatedName = `"${documentName}"`;
       }
 
       return truncatedName;
-    };
+    }
 
     if (sourceDocument) {
       generateThumbnails();
       setSourceDocumentName(getTruncatedName(sourceDocument.getFilename()));
-      setCurrentDocumentName(getTruncatedName(documentInViewer.getFilename()))
+      setCurrentDocumentName(getTruncatedName(documentInViewer.getFilename()));
     }
   }, [sourceDocument]);
 
@@ -98,7 +98,7 @@ const FileSelectedPanel = React.forwardRef((
 
     for (const pageNumber in selectedThumbnails) {
       if (selectedThumbnails[pageNumber]) {
-        selectedPageNumbers.push(parseInt(pageNumber))
+        selectedPageNumbers.push(parseInt(pageNumber));
       }
     }
     return selectedPageNumbers;
@@ -125,13 +125,12 @@ const FileSelectedPanel = React.forwardRef((
             index={index}
             thumbnail={thumbnail}
           />
-        )
-      })
-    } else {
-      const pageCount = sourceDocument ? sourceDocument.getPageCount() : 0;
-      const processText = `${completedPages}/${pageCount}`;
-      return (<div>{t('message.processing')} {processText}</div>)
+        );
+      });
     }
+    const pageCount = sourceDocument ? sourceDocument.getPageCount() : 0;
+    const processText = `${completedPages}/${pageCount}`;
+    return (<div>{t('message.processing')} {processText}</div>);
   };
 
   const isReplaceButtonDisabled = () => {
@@ -141,7 +140,7 @@ const FileSelectedPanel = React.forwardRef((
       }
     }
     return true;
-  }
+  };
 
   const onSourceDocumentNumberInputChange = (selectedPageNumbers) => {
     const selectedPagesMap = selectedPageNumbers.reduce((map, pageNumber) => ({ ...map, [pageNumber]: true }), {});
@@ -152,14 +151,14 @@ const FileSelectedPanel = React.forwardRef((
   const loadedDocumentPageCount = documentInViewer.getPageCount();
 
   return (
-    <div className="container" onMouseDown={e => e.stopPropagation()} ref={ref}>
+    <div className="container" onMouseDown={(e) => e.stopPropagation()} ref={ref}>
       <div className="swipe-indicator" />
       <div className="header">
-        {t(`component.pageReplaceModalTitle`)}
+        {t('component.pageReplaceModalTitle')}
         <Button
-          img={"icon-close"}
+          img={'icon-close'}
           onClick={() => closeThisModal()}
-          dataElement={"pageReplacementModalClose"}
+          dataElement={'pageReplacementModalClose'}
         />
       </div>
       <div className="page-replacement-divider" />
@@ -179,13 +178,13 @@ const FileSelectedPanel = React.forwardRef((
           />
           <div className="replace-page-input"><span className="page-replace-doc-name">{sourceDocumentName}</span></div>
         </div>
-        <div className={classNames("modal-body-container", { isLoading })}>
+        <div className={classNames('modal-body-container', { isLoading })}>
           {renderContent()}
         </div>
       </div>
       <div className="page-replacement-divider" />
-      <div className={classNames("footer", { isFileSelected: !isLoading })}>
-        <button className={classNames("deselect-thumbnails", { disabled: isLoading })} onClick={deselectAllThumbnails} disabled={isLoading}>
+      <div className={classNames('footer', { isFileSelected: !isLoading })}>
+        <button className={classNames('deselect-thumbnails', { disabled: isLoading })} onClick={deselectAllThumbnails} disabled={isLoading}>
           {t('action.deselectAll')}
         </button>
         <Button
@@ -198,5 +197,7 @@ const FileSelectedPanel = React.forwardRef((
     </div >
   );
 });
+
+FileSelectedPanel.displayName = 'FileSelectedPanel';
 
 export default FileSelectedPanel;

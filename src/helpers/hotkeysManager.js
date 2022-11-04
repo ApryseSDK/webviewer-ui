@@ -188,7 +188,7 @@ const HotkeysManager = {
     this.store = store;
     this.keyHandlerMap = this.createKeyHandlerMap(store);
     this.prevToolName = null;
-    Object.keys(this.keyHandlerMap).forEach(key => {
+    Object.keys(this.keyHandlerMap).forEach((key) => {
       this.on(key, this.keyHandlerMap[key]);
     });
     this.didInitializeAllKeys = true;
@@ -239,7 +239,7 @@ WebViewer(...)
     function enableHotkey(_key, _handler) {
       // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
       const { keyup = NOOP, keydown = _handler } = _handler;
-      hotkeys(_key, { keyup: true }, e => {
+      hotkeys(_key, { keyup: true }, (e) => {
         if (e.type === 'keyup') {
           keyup(e);
         }
@@ -252,7 +252,7 @@ WebViewer(...)
     if ((!key || !handler) && !this.didInitializeAllKeys) {
       this.keyHandlerMap = this.createKeyHandlerMap(this.store);
       this.prevToolName = null;
-      Object.keys(this.keyHandlerMap).forEach(_key => {
+      Object.keys(this.keyHandlerMap).forEach((_key) => {
         // Check if the "key" has already been inilized
         if (!unbindedHotkeysMap[_key]) {
           enableHotkey(_key, this.keyHandlerMap[_key]);
@@ -335,45 +335,52 @@ WebViewer(...)
     const { dispatch, getState } = store;
 
     return {
-      [`${Keys.CTRL_SHIFT_EQUAL}, ${Keys.COMMAND_SHIFT_EQUAL}`]: e => {
+      [`${Keys.CTRL_SHIFT_EQUAL}, ${Keys.COMMAND_SHIFT_EQUAL}`]: (e) => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         e.preventDefault();
-        core.rotateClockwise();
+        core.rotateClockwise(activeDocumentViewerKey);
       },
-      [`${Keys.CTRL_SHIFT_MINUS}, ${Keys.COMMAND_SHIFT_MINUS}`]: e => {
+      [`${Keys.CTRL_SHIFT_MINUS}, ${Keys.COMMAND_SHIFT_MINUS}`]: (e) => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         e.preventDefault();
-        core.rotateCounterClockwise();
+        core.rotateCounterClockwise(activeDocumentViewerKey);
       },
       [`${Keys.CTRL_C}, ${Keys.COMMAND_C}`]: () => {
-        if (core.getSelectedText()) {
-          copyText();
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
+        if (core.getSelectedText(activeDocumentViewerKey)) {
+          copyText(activeDocumentViewerKey);
           dispatch(actions.closeElement('textPopup'));
-        } else if (core.getSelectedAnnotations().length) {
-          core.updateCopiedAnnotations();
+        } else if (core.getSelectedAnnotations(activeDocumentViewerKey).length) {
+          core.updateCopiedAnnotations(activeDocumentViewerKey);
         }
       },
-      [`${Keys.CTRL_V}, ${Keys.COMMAND_V}`]: e => {
+      [`${Keys.CTRL_V}, ${Keys.COMMAND_V}`]: (e) => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         if (!isFocusingElement()) {
           e.preventDefault();
-          core.pasteCopiedAnnotations();
+          core.pasteCopiedAnnotations(activeDocumentViewerKey);
         }
       },
-      [`${Keys.CTRL_Z}, ${Keys.COMMAND_Z}`]: e => {
+      [`${Keys.CTRL_Z}, ${Keys.COMMAND_Z}`]: (e) => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         if (!isFocusingElement()) {
           e.preventDefault();
-          core.undo();
+          core.undo(activeDocumentViewerKey);
         }
       },
-      [`${Keys.CTRL_Y}, ${Keys.COMMAND_SHIFT_Z}`]: e => {
+      [`${Keys.CTRL_Y}, ${Keys.COMMAND_SHIFT_Z}`]: (e) => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         if (!isFocusingElement()) {
           e.preventDefault();
-          core.redo();
+          core.redo(activeDocumentViewerKey);
         }
       },
-      [`${Keys.CTRL_O}, ${Keys.COMMAND_O}`]: e => {
+      [`${Keys.CTRL_O}, ${Keys.COMMAND_O}`]: (e) => {
         e.preventDefault();
         openFilePicker();
       },
-      [`${Keys.CTRL_B}, ${Keys.COMMAND_B}`]: e => {
+      // TODO Compare: Intergrate panels with compare
+      [`${Keys.CTRL_B}, ${Keys.COMMAND_B}`]: (e) => {
         e.preventDefault();
         if (!selectors.isElementDisabled(getState(), DataElements.BOOKMARK_PANEL)) {
           dispatch(actions.openElement(DataElements.LEFT_PANEL));
@@ -387,7 +394,7 @@ WebViewer(...)
           }
         }
       },
-      [concatKeys(Keys.CTRL_F, Keys.COMMAND_F)]: e => {
+      [concatKeys(Keys.CTRL_F, Keys.COMMAND_F)]: (e) => {
         e.preventDefault();
 
         const isNotesPanelOpen = selectors.isElementOpen(getState(), 'notesPanel');
@@ -400,6 +407,11 @@ WebViewer(...)
           dispatch(actions.closeElement('redactionPanel'));
         }
 
+        const isTextEditingPanelOpen = selectors.isElementOpen(getState(), 'textEditingPanel');
+        if (isTextEditingPanelOpen) {
+          dispatch(actions.closeElement('textEditingPanel'));
+        }
+
         const isWv3dPropertiesPanelOpen = selectors.isElementOpen(getState(), 'wv3dPropertiesPanel');
         if (isWv3dPropertiesPanelOpen) {
           dispatch(actions.closeElement('wv3dPropertiesPanel'));
@@ -407,24 +419,30 @@ WebViewer(...)
 
         dispatch(actions.toggleElement('searchPanel'));
       },
-      [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: e => {
+      [`${Keys.CTRL_EQUAL}, ${Keys.COMMAND_EQUAL}`]: (e) => {
         e.preventDefault();
-        zoomIn();
+        const state = getState();
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
+        const isMultiViewerMode = selectors.isMultiViewerMode(state);
+        zoomIn(isMultiViewerMode, activeDocumentViewerKey);
       },
-      [`${Keys.CTRL_MINUS}, ${Keys.COMMAND_MINUS}`]: e => {
+      [`${Keys.CTRL_MINUS}, ${Keys.COMMAND_MINUS}`]: (e) => {
         e.preventDefault();
-        zoomOut();
+        const state = getState();
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
+        const isMultiViewerMode = selectors.isMultiViewerMode(state);
+        zoomOut(isMultiViewerMode, activeDocumentViewerKey);
       },
-      [`${Keys.CTRL_0}, ${Keys.COMMAND_0}`]: e => {
+      [`${Keys.CTRL_0}, ${Keys.COMMAND_0}`]: (e) => {
         e.preventDefault();
-
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         if (isMobile) {
-          core.fitToWidth();
+          core.fitToWidth(activeDocumentViewerKey);
         } else {
-          core.fitToPage();
+          core.fitToPage(activeDocumentViewerKey);
         }
       },
-      [concatKeys(Keys.CTRL_P, Keys.COMMAND_P)]: e => {
+      [concatKeys(Keys.CTRL_P, Keys.COMMAND_P)]: (e) => {
         e.preventDefault();
 
         print(
@@ -434,29 +452,32 @@ WebViewer(...)
           selectors.getColorMap(getState()),
         );
       },
-      [`${Keys.PAGE_UP}`]: e => {
+      [`${Keys.PAGE_UP}`]: (e) => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         e.preventDefault();
 
-        setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate());
+        setCurrentPage(core.getCurrentPage() - getNumberOfPagesToNavigate(), activeDocumentViewerKey);
       },
-      [`${Keys.PAGE_DOWN}`]: e => {
+      [`${Keys.PAGE_DOWN}`]: (e) => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         e.preventDefault();
 
-        setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
+        setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate(), activeDocumentViewerKey);
       },
       [`${Keys.UP}`]: () => {
-        if (isFocusingElement() || core.isContinuousDisplayMode()) {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
+        if (isFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
           return;
         }
 
         // do not call preventDefault else it will prevent scrolling
-        const scrollViewElement = core.getScrollViewElement();
+        const scrollViewElement = core.getScrollViewElement(activeDocumentViewerKey);
         const { scrollHeight, clientHeight } = scrollViewElement;
         const reachedTop = scrollViewElement.scrollTop === 0;
 
         if (reachedTop) {
-          const currentPage = core.getCurrentPage();
-          setCurrentPage(currentPage - getNumberOfPagesToNavigate());
+          const currentPage = core.getCurrentPage(activeDocumentViewerKey);
+          setCurrentPage(currentPage - getNumberOfPagesToNavigate(), activeDocumentViewerKey);
 
           // set the scrollbar to be at the bottom of the page only if the previous page is bigger than 1
           if (currentPage > 1) {
@@ -465,26 +486,27 @@ WebViewer(...)
         }
       },
       [`${Keys.DOWN}`]: () => {
-        if (isFocusingElement() || core.isContinuousDisplayMode()) {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
+        if (isFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
           return;
         }
 
         // do not call preventDefault else it will prevent scrolling
-        const scrollViewElement = core.getScrollViewElement();
+        const scrollViewElement = core.getScrollViewElement(activeDocumentViewerKey);
         const { scrollTop, clientHeight, scrollHeight } = scrollViewElement;
         const reachedBottom = Math.abs(scrollTop + clientHeight - scrollHeight) <= 1;
         if (reachedBottom) {
-          setCurrentPage(core.getCurrentPage() + getNumberOfPagesToNavigate());
+          setCurrentPage(core.getCurrentPage(activeDocumentViewerKey) + getNumberOfPagesToNavigate());
         }
       },
       [`${Keys.SPACE}`]: {
-        keyup: this.createToolHotkeyHandler(e => {
+        keyup: this.createToolHotkeyHandler((e) => {
           e.preventDefault();
 
           setToolModeAndGroup(store, this.prevToolName);
           this.prevToolName = null;
         }),
-        keydown: this.createToolHotkeyHandler(e => {
+        keydown: this.createToolHotkeyHandler((e) => {
           e.preventDefault();
 
           if (core.getToolMode().name !== 'Pan') {
@@ -493,7 +515,7 @@ WebViewer(...)
           }
         }),
       },
-      [`${Keys.ESCAPE}`]: e => {
+      [`${Keys.ESCAPE}`]: (e) => {
         e.preventDefault();
         setToolModeAndGroup(store, 'AnnotationEdit', '');
 

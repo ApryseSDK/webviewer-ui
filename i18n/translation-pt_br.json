@@ -58,8 +58,6 @@
     "type": "Tipo",
     "upload": "Enviar documento",
     "link": "Link",
-    "darkMode": "Modo escuro",
-    "lightMode": "Modo claro",
     "fileAttachmentDownload": "Baixar arquivo anexado",
     "prevResult": "Resultado anterior",
     "nextResult": "Próximo resultado",
@@ -94,7 +92,6 @@
     "unselect": "Desmarcar",
     "addMark": "Adicionar marca",
     "viewFile": "Visualizar arquivo",
-    "switchLanguage": "Linguagem",
     "multiReplyAnnotations": "Responder às anotações selecionadas ({{count}})",
     "comparePages": "Comparar páginas",
     "startComparison": "Iniciar comparação"
@@ -297,7 +294,8 @@
       "squiggly": "Squiggly",
       "3D": "3D",
       "other": "De outros",
-      "initials": "Iniciais"
+      "initials": "Iniciais",
+      "saved": "Salvou"
     },
     "notesOrder": {
       "dropdownLabel": "Classificar lista de pedidos",
@@ -422,7 +420,8 @@
       "typeInitial": "Digite as iniciais*",
       "drawSignature": "Desenhar Assinatura*",
       "drawInitial": "Desenhe iniciais*",
-      "pickInitialsFile": "Escolha as iniciais"
+      "pickInitialsFile": "Escolha as iniciais",
+      "noSignatures": "No momento, não há assinaturas salvas."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Arraste e solte seu arquivo aqui",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Estilo"
+    },
+    "settings": {
+      "settings": "Definições",
+      "general": "Em geral",
+      "keyboardShortcut": "Atalho de teclado",
+      "advancedSetting": "Configuração avançada",
+      "language": "Linguagem",
+      "theme": "Tema",
+      "darkMode": "Modo escuro",
+      "lightMode": "Modo de luz",
+      "viewing": "Visualizando",
+      "disableFadePageNavigationComponent": "Desativar o componente de navegação da página Fade",
+      "disableFadePageNavigationComponentDesc": "Sempre mantenha o componente de navegação de página na tela. O comportamento padrão é esmaecê-lo após certo período de inatividade.",
+      "disableNativeScrolling": "Desativar rolagem nativa",
+      "disableNativeScrollingDesc": "Desative o comportamento de rolagem do dispositivo móvel nativo se ele tiver sido ativado anteriormente. Observe que o comportamento de rolagem do dispositivo móvel nativo está desativado por padrão.",
+      "annotations": "Anotações",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Desativar a atualização de estilo padrão da ferramenta do pop-up de anotação",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Desativa a sincronização de atualizações de estilo de anotação para a ferramenta associada que criou a anotação. Portanto, se o estilo de uma anotação for alterado, os estilos padrão da ferramenta não serão atualizados.",
+      "notesPanel": "Painel de notas",
+      "disableNoteSubmissionWithEnter": "Desabilitar o envio de notas com Enter",
+      "disableNoteSubmissionWithEnterDesc": "Desative a capacidade de enviar notas pressionando Enter apenas se tiver sido ativado anteriormente. Isso reverterá o envio de notas para o padrão, que é Ctrl/Cmd + Enter.",
+      "disableAutoExpandCommentThread": "Desativar tópico de comentários de expansão automática",
+      "disableAutoExpandCommentThreadDesc": "Desativa a expansão automática de todos os tópicos de comentários no Painel de Notas.",
+      "disableReplyCollapse": "Desativar Recolhimento de Resposta",
+      "disableReplyCollapseDesc": "Desativa o recolhimento das respostas no Painel de Notas.",
+      "disableTextCollapse": "Desativar recolhimento de texto",
+      "disableTextCollapseDesc": "Desativa o recolhimento do texto da anotação no Painel de Notas.",
+      "search": "Procurar",
+      "disableClearSearchOnPanelClose": "Desabilitar Limpar Pesquisa no Painel Fechar",
+      "disableClearSearchOnPanelCloseDesc": "Desative a limpeza dos resultados da pesquisa quando o usuário fechar o painel de pesquisa. Quando desativado, os resultados da pesquisa são mantidos mesmo se o usuário fechar e reabrir o painel de pesquisa. Observe que os dispositivos móveis nunca limpam os resultados da pesquisa, mesmo que essa configuração esteja ativada. Isso ocorre porque o painel precisa ser fechado para visualizar os resultados da pesquisa no documento.",
+      "pageManipulation": "Manipulação de página",
+      "disablePageDeletionConfirmationModal": "Desativar modal de confirmação de exclusão de página",
+      "disablePageDeletionConfirmationModalDesc": "Desative o modal de confirmação ao excluir uma página da visualização em miniatura",
+      "disableMultiselect": "Desativar seleção múltipla",
+      "disableMultiselectDesc": "Desative a seleção múltipla no painel de miniaturas esquerdo"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Selecione o idioma"
   },
+  "insertPageModal": {
+    "title": "Adicionar nova página",
+    "tabs": {
+      "blank": "Em branco",
+      "upload": "Envio"
+    },
+    "pagePlacements": {
+      "header": "Posicionamento da página",
+      "above": "Acima da página",
+      "below": "Abaixo da página"
+    },
+    "pageLocations": {
+      "header": "Localização da página",
+      "specify": "Especificar página",
+      "amount": "Quantidade de páginas",
+      "total": "Total",
+      "pages": "Páginas"
+    },
+    "pageDimensions": {
+      "header": "Dimensões da página",
+      "subHeader": "Predefinições",
+      "presets": {
+        "letter": "Carta",
+        "halfLetter": "Meia letra",
+        "juniorLegal": "Jurídico Júnior",
+        "custom": "Personalizado"
+      }
+    },
+    "browse": "Procurar arquivos",
+    "fileSelected": {
+      "title": "Selecione as páginas a serem adicionadas"
+    },
+    "button": "Adicionar página(s)"
+  },
   "multiViewer": {
     "dragAndDrop": "Arraste e solte seu arquivo aqui para comparar",
     "or": "Ou",
@@ -976,5 +1044,26 @@
       "new": "Novo",
       "page": "Página"
     }
+  },
+  "saveModal": {
+    "close": "Perto",
+    "saveAs": "Salvar como",
+    "general": "Em geral",
+    "fileName": "Nome do arquivo",
+    "fileType": "Tipo de arquivo",
+    "fileLocation": "Localização de arquivo",
+    "browse": "Navegar",
+    "pageRange": "Intervalo de páginas",
+    "all": "Tudo",
+    "currentView": "Visão atual",
+    "currentPage": "Pagina atual",
+    "specifyPage": "Especificar página",
+    "properties": "Propriedades",
+    "includeAnnotation": "Incluir anotações",
+    "includeComments": "Incluir comentários",
+    "watermark": "Marca d'água",
+    "addWatermark": "Adicione uma Marca D'água",
+    "save": "Salvar Arquivo",
+    "pageError": "Página inválida. Os intervalos de páginas válidos estão entre 1 -"
   }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, useStore, shallowEqual } from 'react-redux';
+import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
@@ -14,7 +15,7 @@ import './ContextMenuPopup.scss';
 
 const ContextMenuPopup = () => {
   const [isOpen, isDisabled, popupItems] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementOpen(state, 'contextMenuPopup'),
       selectors.isElementDisabled(state, 'contextMenuPopup'),
       selectors.getPopupItems(state, 'contextMenuPopup'),
@@ -38,15 +39,15 @@ const ContextMenuPopup = () => {
   }, [dispatch, isOpen]);
 
   useEffect(() => {
-    const onContextMenu = e => {
+    const onContextMenu = (e) => {
       const { tagName } = e.target;
       const clickedOnInput = tagName === 'INPUT';
       const clickedOnTextarea = tagName === 'TEXTAREA';
-      const clickedOnFreeTextarea = (
+      const clickedOnFreeTextarea = !!((
         e.target.className === 'ql-editor'
         || e.target.parentNode.className === 'ql-editor'
         || e.target.parentNode.parentNode.className === 'ql-editor'
-      ) ? true : false;
+      ));
 
       const clickedOnDocumentContainer = document
         .querySelector('.DocumentContainer')
@@ -104,46 +105,61 @@ const ContextMenuPopup = () => {
       style={{ ...position }}
       onClick={() => dispatch(actions.closeElement('contextMenuPopup'))}
     >
-      <CustomizablePopup dataElement="contextMenuPopup">
-        <ActionButton
-          dataElement="panToolButton"
-          title="tool.pan"
-          img="icon-header-pan"
-          onClick={() => setToolModeAndGroup(store, 'Pan')}
-        />
-        <ActionButton
-          dataElement="stickyToolButton"
-          title="annotation.stickyNote"
-          img="icon-tool-comment-line"
-          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateSticky')}
-        />
-        <ActionButton
-          dataElement="highlightToolButton"
-          title="annotation.highlight"
-          img="icon-tool-highlight"
-          onClick={() =>
-            setToolModeAndGroup(store, 'AnnotationCreateTextHighlight')
-          }
-        />
-        <ActionButton
-          dataElement="freeHandToolButton"
-          title="annotation.freehand"
-          img="icon-tool-pen-line"
-          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHand')}
-        />
-        <ActionButton
-          dataElement="freeHandHighlightToolButton"
-          title="annotation.freeHandHighlight"
-          img="icon-tool-pen-highlight"
-          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHandHighlight')}
-        />
-        <ActionButton
-          dataElement="freeTextToolButton"
-          title="annotation.freetext"
-          img="icon-tool-text-free-text"
-          onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeText')}
-        />
-      </CustomizablePopup>
+      <FocusTrap locked={isOpen}>
+        <div className="container">
+          <CustomizablePopup dataElement="contextMenuPopup">
+            <ActionButton
+              dataElement="panToolButton"
+              title="tool.pan"
+              img="icon-header-pan"
+              onClick={() => setToolModeAndGroup(store, 'Pan')}
+            />
+            <ActionButton
+              dataElement="stickyToolButton"
+              title="annotation.stickyNote"
+              img="icon-tool-comment-line"
+              onClick={() => setToolModeAndGroup(store, 'AnnotationCreateSticky')}
+            />
+            <ActionButton
+              dataElement="highlightToolButton"
+              title="annotation.highlight"
+              img="icon-tool-highlight"
+              onClick={() => setToolModeAndGroup(store, 'AnnotationCreateTextHighlight')
+              }
+            />
+            <ActionButton
+              dataElement="freeHandToolButton"
+              title="annotation.freehand"
+              img="icon-tool-pen-line"
+              onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHand')}
+            />
+            <ActionButton
+              dataElement="freeHandHighlightToolButton"
+              title="annotation.freeHandHighlight"
+              img="icon-tool-pen-highlight"
+              onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeHandHighlight')}
+            />
+            <ActionButton
+              dataElement="freeTextToolButton"
+              title="annotation.freetext"
+              img="icon-tool-text-free-text"
+              onClick={() => setToolModeAndGroup(store, 'AnnotationCreateFreeText')}
+            />
+            <ActionButton
+              dataElement="markInsertTextToolButton"
+              title="annotation.markInsertText"
+              img="ic-insert text"
+              onClick={() => setToolModeAndGroup(store, 'AnnotationCreateMarkInsertText')}
+            />
+            <ActionButton
+              dataElement="markReplaceTextToolButton"
+              title="annotation.markReplacetext"
+              img="ic-replace text"
+              onClick={() => setToolModeAndGroup(store, 'AnnotationCreateMarkReplaceText')}
+            />
+          </CustomizablePopup>
+        </div>
+      </FocusTrap>
     </div>
   );
 };

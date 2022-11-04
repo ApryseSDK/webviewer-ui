@@ -16,6 +16,7 @@ import onFileAttachmentAnnotationAdded from './onFileAttachmentAnnotationAdded';
 import onAnnotationChanged from './onAnnotationChanged';
 import onHistoryChanged from './onHistoryChanged';
 import onStickyAnnotationAdded from './onStickyAnnotationAdded';
+import onCaretAnnotationAdded from './onCaretAnnotationAdded';
 import onFullScreenChange from './onFullScreenChange';
 import onUpdateAnnotationPermission from './onUpdateAnnotationPermission';
 import onPagesUpdated from './onPagesUpdated';
@@ -31,6 +32,9 @@ import onFormFieldCreationModeStarted from './onFormFieldCreationModeStarted';
 import onFormFieldCreationModeEnded from './onFormFieldCreationModeEnded';
 import onDigitalSignatureAvailable from './onDigitalSignatureAvailable';
 import onLayersUpdated from './onLayersUpdated';
+import onImageContentAdded from './onImageContentAdded';
+import onInitialSaved from './onInitialSaved';
+import onInitialDeleted from './onInitialDeleted';
 
 export {
   onSignatureSaved,
@@ -52,6 +56,7 @@ export {
   onAnnotationChanged,
   onHistoryChanged,
   onStickyAnnotationAdded,
+  onCaretAnnotationAdded,
   onFullScreenChange,
   onUpdateAnnotationPermission,
   onPagesUpdated,
@@ -65,5 +70,8 @@ export {
   onFormFieldCreationModeStarted,
   onFormFieldCreationModeEnded,
   onDigitalSignatureAvailable,
-  onLayersUpdated
+  onLayersUpdated,
+  onImageContentAdded,
+  onInitialSaved,
+  onInitialDeleted,
 };

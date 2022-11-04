@@ -1,0 +1,42 @@
+@import '../../constants/styles';
+
+.MultiViewer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+  width: 100%;
+  height: 100%;
+
+  &.hidden {
+    display: none;
+  }
+
+  .resize-bar {
+    height: 100%;
+  }
+
+  .CompareContainer {
+    height: 100%;
+    border: 2px solid var(--document-background-color);
+    box-sizing: border-box;
+    &.active {
+      border: 2px solid var(--blue-5);
+    }
+
+    .borderLineBottom {
+      visibility: hidden;
+      height: 2px;
+      background-color: var(--blue-5);
+      position: absolute;
+      bottom: 0;
+      z-index: 41;
+
+      &.active {
+        visibility: visible;
+      }
+    }
+
+  }
+}

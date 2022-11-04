@@ -1,0 +1,81 @@
+@import "../../constants/styles";
+@import "../../constants/modal";
+
+.SettingsModal {
+  @extend %modal;
+
+  .container {
+    @extend %modal-shared-container-style;
+    @extend %modal-shared-container-style-mobile;
+
+    display: flex;
+    flex-direction: column;
+    width: 888px;
+    height: 445px;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: bold;
+      align-items: center;
+    }
+
+    .body {
+      height: 100%;
+      display: flex;
+      overflow-y: hidden;
+
+      .settings-left-panel {
+        width: 168px;
+        background-color: var(--panel-background);
+        flex-shrink: 0;
+
+        .settings-tabs {
+          .settings-tab {
+            height: 32px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            color: var(--gray-8);
+            cursor: pointer;
+
+            &:hover {
+              background-color: var(--blue-1);
+            }
+
+            &.selected {
+              background-color: var(--blue-2) !important;
+              border-right: 1px var(--blue-5) solid;
+              color: var(--blue-6);
+              cursor: default;
+            }
+          }
+        }
+
+      }
+
+      .settings-content {
+        padding: 16px;
+        overflow-y: scroll;
+
+        .setting-section {
+          margin-bottom: 16px;
+
+          .setting-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+          }
+        }
+      }
+    }
+
+    .divider {
+      height: 1px;
+      width: 100%;
+      background: var(--divider);
+    }
+  }
+}

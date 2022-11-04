@@ -8,6 +8,7 @@ import core from 'core';
 import StylePopup from 'components/StylePopup';
 import SignatureStylePopup from 'components/SignatureStylePopup';
 import setToolStyles from 'helpers/setToolStyles';
+import { getOpenedWarningModal, getOpenedColorPicker, getAllOpenedModals } from 'helpers/getElements';
 import getTextDecoration from 'helpers/getTextDecoration';
 import { mapToolNameToKey, getDataWithKey } from 'constants/map';
 import actions from 'actions';
@@ -40,6 +41,34 @@ class ToolStylePopup extends React.PureComponent {
       top: 0,
     };
   }
+
+  handleClickOutside = (e) => {
+    // can have multiple toolsOverlays because of mobile mode
+    const toolsOverlays = Array.from(document.querySelectorAll(
+      '[data-element="toolsOverlay"]',
+    ));
+    const pageNavOverlays = Array.from(document.querySelectorAll(
+      '[data-element="pageNavOverlay"]',
+    ));
+    const warningModal = getOpenedWarningModal();
+    const colorPicker = getOpenedColorPicker();
+    const openedModal = Array.from(getAllOpenedModals());
+
+    const clickedOnToolsOverlay = toolsOverlays.some((toolsOverlay) => {
+      return toolsOverlay?.contains(e.target);
+    });
+    const clickedOnPageNavOverlay = pageNavOverlays.some((pageNavOverlay) => {
+      return pageNavOverlay?.contains(e.target);
+    });
+    const clickedOnCreateStampModal = openedModal.some((pageModal) => {
+      return pageModal.classList.contains('CustomStampModal');
+    });
+
+    if (!clickedOnToolsOverlay && !clickedOnPageNavOverlay && !clickedOnCreateStampModal && !warningModal && !colorPicker) {
+      this.props.closeElement('toolStylePopup');
+    }
+  };
+
   componentDidUpdate(prevProps) {
     if (!prevProps.isOpen && this.props.isOpen && !this.props.isDisabled) {
       this.props.closeElements([
@@ -91,12 +120,14 @@ class ToolStylePopup extends React.PureComponent {
       setToolStyles(activeToolName, 'StartLineStyle', value);
     } else if (section === 'end') {
       setToolStyles(activeToolName, 'EndLineStyle', value);
+    } else if (section === 'middle') {
+      setToolStyles(activeToolName, 'StrokeStyle', value);
     }
   };
 
   render() {
     const { activeToolGroup, isDisabled, activeToolName, activeToolStyle } = this.props;
-    const isFreeText = activeToolName.includes('AnnotationCreateFreeText') || activeToolName.includes('AnnotationCreateCallout');
+    const isFreeText = activeToolName.includes('AnnotationCreateFreeText');
     let properties = {};
     const colorMapKey = mapToolNameToKey(activeToolName);
     const isRedaction = activeToolName.includes('AnnotationCreateRedaction');
@@ -110,7 +141,8 @@ class ToolStylePopup extends React.PureComponent {
       const toolStyles = getToolStyles(activeToolName);
       properties = {
         StartLineStyle: toolStyles.StartLineStyle,
-        EndLineStyle: toolStyles.EndLineStyle
+        EndLineStyle: toolStyles.EndLineStyle,
+        StrokeStyle: toolStyles.StrokeStyle,
       };
     }
 
@@ -148,7 +180,7 @@ class ToolStylePopup extends React.PureComponent {
         hideSnapModeCheckbox={isEllipseMeasurementTool || !core.isFullPDFEnabled()}
         onPropertyChange={this.handleStyleChange}
         onStyleChange={this.handleStyleChange}
-        onSliderChange={() => {}}
+        onSliderChange={() => { }}
         onRichTextStyleChange={this.handleRichTextStyleChange}
         onLineStyleChange={this.handleLineStyleChange}
         properties={properties}
@@ -160,14 +192,14 @@ class ToolStylePopup extends React.PureComponent {
     if (activeToolGroup === 'signatureTools') {
       Component = (
         <React.Fragment>
-          <HorizontalDivider/>
-          <SignatureStylePopup/>
+          <HorizontalDivider />
+          <SignatureStylePopup />
         </React.Fragment>
       );
     } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
         <React.Fragment>
-          <HorizontalDivider/>
+          <HorizontalDivider />
           <RubberStampStylePopup />
         </React.Fragment>
       );
@@ -240,7 +272,7 @@ const connectedComponent = (props) => {
   );
 
   return (
-    <ConnectedToolStylePopup {...props} isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop}/>
+    <ConnectedToolStylePopup {...props} isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop} />
   );
 };
 

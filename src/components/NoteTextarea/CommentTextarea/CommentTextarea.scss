@@ -2,52 +2,70 @@
 @import '../../../constants/note';
 
 .comment-textarea {
-    .ql-toolbar {
-        display: none;
+  position: relative;
+
+  .ql-toolbar {
+    display: none;
+  }
+
+  .ql-container {
+    border: none;
+
+    .ql-editor {
+      width: 100%;
+      padding: 4px 28px 4px 6px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-color);
+      resize: none;
+      overflow: hidden;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border: 1px solid var(--focus-border);
+      }
+
+      &.ql-blank::before {
+        left: 8px;
+        list-style-type: none;
+        font-style: normal;
+        color: var(--placeholder-text);
+      }
+
+      p {
+        margin: 0;
+        word-break: break-all;
+      }
+
+      ul>li::before {
+        content: none !important;
+      }
     }
 
-    .ql-container {
-        border: none;
-
-        .ql-editor {
-            width: 100%;
-            padding: 4px 6px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            color: var(--text-color);
-            resize: none;
-            overflow: hidden;
-            box-sizing: border-box;
-      
-            &:focus {
-              outline: none;
-              border: 1px solid var(--focus-border);
-            }
-
-            &.ql-blank::before {
-                left: 8px;
-                list-style-type: none;
-                font-style: normal;
-                color: var(--placeholder-text);
-            }
-
-            p {
-                margin: 0;
-                word-break: break-all;
-            }
-
-            ul > li::before {
-              content: none !important;
-            }
-        }
-
-        &.ql-snow {
-            border: none;
-        }
+    &.ql-snow {
+      border: none;
     }
+  }
+
+  .add-attachment {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 24px;
+    height: 24px;
+
+    &:hover {
+      background-color: var(--blue-1);
+    }
+
+    .Icon {
+      padding: 3px;
+    }
+  }
 }
 
-.ql-editor ul > li::before { 
+.ql-editor ul>li::before {
   content: none !important;
 }
 
@@ -63,7 +81,7 @@
     border-radius: 4px;
 
     &__list {
-      width: 170px; 
+      width: 170px;
       font-size: 14px;
       margin-top: 0px;
       padding-left: 0px !important;

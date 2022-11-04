@@ -23,6 +23,7 @@ class AnnotationStylePopup extends React.Component {
     properties: PropTypes.object.isRequired,
     isRedaction: PropTypes.bool,
     isFreeText: PropTypes.bool,
+    isEllipse: PropTypes.bool,
     closeElement: PropTypes.func.isRequired,
   };
 
@@ -43,6 +44,9 @@ class AnnotationStylePopup extends React.Component {
       core.setAnnotationStyles(annotation, {
         [property]: value,
       });
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+        setToolStyles(annotation.ToolName, property, value);
+      }
     });
   }
 
@@ -79,6 +83,12 @@ class AnnotationStylePopup extends React.Component {
       } else if (section === 'end') {
         annotation.setEndStyle(value);
         lineStyle = 'EndLineStyle';
+      } else if (section === 'middle') {
+        const dashes = value.split(',');
+        const style = dashes.shift();
+        annotation['Style'] = style;
+        annotation['Dashes'] = dashes;
+        lineStyle = 'StrokeStyle';
       }
 
       if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
@@ -90,7 +100,6 @@ class AnnotationStylePopup extends React.Component {
   };
 
   handleClick = (e) => {
-    // see the comments above handleClick in ToolStylePopup.js
     if (isMobile() && e.target === e.currentTarget) {
       this.props.closeElement('annotationPopup');
     }
@@ -106,6 +115,7 @@ class AnnotationStylePopup extends React.Component {
       isDisabled,
       style, isRedaction,
       isFreeText,
+      isEllipse,
       isMeasure,
       colorMapKey,
       showLineStyleOptions,
@@ -136,6 +146,7 @@ class AnnotationStylePopup extends React.Component {
               colorMapKey={colorMapKey}
               style={style}
               isFreeText={isFreeText}
+              isEllipse={isEllipse}
               isMeasure={isMeasure}
               onStyleChange={this.handleStyleChange}
               onSliderChange={this.handleSliderChange}

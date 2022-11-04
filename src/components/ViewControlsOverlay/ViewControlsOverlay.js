@@ -12,17 +12,26 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
 import actions from 'actions';
 import { isIE11 } from 'helpers/device';
+import toggleFullscreen from 'helpers/toggleFullscreen';
 
 function ViewControlsOverlay() {
   const [t] = useTranslation();
   const store = useStore();
 
-  const [totalPages, displayMode, isDisabled, isReaderMode, isMultiViewerMode] = useSelector((state) => [
+  const [
+    totalPages,
+    displayMode,
+    isDisabled,
+    isReaderMode,
+    isMultiViewerMode,
+    isFullScreen
+  ] = useSelector((state) => [
     selectors.getTotalPages(state),
     selectors.getDisplayMode(state),
     selectors.isElementDisabled(state, 'viewControlsOverlay'),
     selectors.isReaderMode(state),
     selectors.isMultiViewerMode(state),
+    selectors.isFullScreen(state)
   ]);
 
   const totalPageThreshold = 1000;
@@ -209,21 +218,38 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('option.layout.cover')}</div>
           </DataElementWrapper>
-          {!isIE11 && <DataElementWrapper
-            className={classNames({ row: true, active: isMultiViewerMode })}
-            onClick={toggleCompareMode}
-            dataElement="toggleCompareModeButton"
-          >
-            <Button
-              title="action.comparePages"
-              img="icon-header-compare"
-              isActive={isMultiViewerMode}
-              role="option"
-            />
-            <div className="title">{t('action.comparePages')}</div>
-          </DataElementWrapper>}
+          {!isIE11 && (
+            <DataElementWrapper
+              className={classNames({ row: true, active: isMultiViewerMode })}
+              onClick={toggleCompareMode}
+              dataElement="toggleCompareModeButton"
+            >
+              <Button
+                title="action.comparePages"
+                img="icon-header-compare"
+                isActive={isMultiViewerMode}
+                role="option"
+              />
+              <div className="title">{t('action.comparePages')}</div>
+            </DataElementWrapper>
+          )}
         </>
       )}
+      <DataElementWrapper
+        dataElement="viewControlsDivider3"
+        className="divider"
+      />
+      <DataElementWrapper
+        className="row"
+        onClick={toggleFullscreen}
+        dataElement="fullScreenButton"
+      >
+        <Button
+          img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+          role="option"
+        />
+        <div className="title">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+      </DataElementWrapper>
     </FlyoutMenu>
   );
 }

@@ -67,7 +67,7 @@ export default class TabManager {
       } else if (doc instanceof window.Core.Document && doc.getFilename && doc.getFilename()) {
         filename = doc.getFilename();
       }
-      tabs.push(new Tab(tabs.length, doc, {
+      tabs.push(new Tab(tabs.length, doc, this, {
         filename,
         extension,
       }, this.useDB));
@@ -205,7 +205,7 @@ export default class TabManager {
         options['filename'] = src['name'];
       }
     }
-    const tab = new Tab(currId + 1, src, options, useDB);
+    const tab = new Tab(currId + 1, src, this, options, useDB);
     tabs.push(tab);
     fireEvent(Events['TAB_ADDED'], {
       src: tab.src,
@@ -242,12 +242,22 @@ export default class TabManager {
       const tab = tabs.find((t) => t.id === activeTab);
       tab.changes.annotations = true;
       tab.changes.hasUnsavedChanges = true;
+      removeListeners();
+    };
+    const onFieldChange = () => {
+      const { tabs, activeTab } = this.store.getState().viewer;
+      const tab = tabs.find((t) => t.id === activeTab);
+      tab.changes.annotations = true;
+      tab.changes.hasUnsavedChanges = true;
+      removeListeners();
     };
 
-    core.addEventListener('annotationChanged', onAnnotChange);
+    core.addEventListener('annotationChanged', onAnnotChange, { once: true });
+    core.addEventListener('fieldChanged', onFieldChange, { once: true });
 
     const removeListeners = () => {
       core.removeEventListener('annotationChanged', onAnnotChange);
+      core.removeEventListener('fieldChanged', onFieldChange);
     };
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
   }
@@ -323,12 +333,14 @@ export class Tab {
   src;
   options;
   useDB;
+  tabManager;
 
-  constructor(id, src, options = {}, useDB = true) {
+  constructor(id, src, tabManager, options = {}, useDB = true) {
     this.id = id;
     this.src = src;
     this.options = options;
     this.useDB = useDB;
+    this.tabManager = tabManager;
   }
 
   async preLoad(db) {
@@ -340,9 +352,11 @@ export class Tab {
   }
 
   async load(dispatch, db, viewerState) {
+    const annotsChanged = (this.saveData.annotInDB || this.saveData.annots);
+    this.options.loadAnnotations = !annotsChanged;
     core.addEventListener('documentUnloaded', async () => {
       this.restorePageDataOnLoad(viewerState, dispatch);
-      this.saveData.annotInDB ? await this.restoreAnnotDataFromDBOnLoad(db) : this.restoreAnnotDataOnLoad();
+      annotsChanged && await this.restoreAnnotDataOnLoad(db);
     }, { once: true });
     if (this.useDB && this.saveData.docInDB) {
       const tx = db.transaction('files', 'readonly');
@@ -364,10 +378,12 @@ export class Tab {
     const document = core.getDocument();
     if (this.useDB && (document?.type === workerTypes.PDF && document.arePagesAltered() || this.src instanceof window.Core.Document)) {
       await this.saveFileData(db, document);
-    } else if (this.useDB) {
-      this.changes.annotations && await this.saveAnnotDataInDB(db);
-    } else {
-      this.changes.annotations && await this.saveAnnotData();
+    } else if (this.changes.annotations) {
+      if (this.useDB) {
+        await this.saveAnnotDataInDB(db);
+      } else {
+        await this.saveAnnotData();
+      }
     }
     this.disabled = false;
   }
@@ -441,42 +457,35 @@ export class Tab {
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
   }
 
-  restoreAnnotDataOnLoad() {
-    const updateAnnotations = async () => {
-      await core.getDocument().getDocumentCompletePromise();
-      await core.getAnnotationManager().importAnnotations(this.saveData.annots);
-      core.removeEventListener('annotationsLoaded', updateAnnotations);
-    };
-    this.saveData.annots && core.addEventListener('annotationsLoaded', updateAnnotations);
+  async updateAnnotations(db) {
+    const state = this.tabManager.store.getState();
+    const activeTabId = selectors.getActiveTab(state);
+    if (activeTabId !== this.id) {
+      return selectors.getTabs(state).find((tab) => tab.id === activeTabId).updateAnnotations(db);
+    }
 
-    const removeListeners = () => {
-      core.removeEventListener('annotationsLoaded', updateAnnotations);
-    };
-    core.addEventListener('documentUnloaded', removeListeners, { once: true });
-  }
-
-  async restoreAnnotDataFromDBOnLoad(db) {
     if (this.saveData.annotInDB) {
       const tx = db.transaction('files', 'readwrite');
       const store = tx.objectStore('files');
-      let annots;
       const annotReq = store.get(`${this.id}-annots`);
-      annotReq.onsuccess = () => {
-        annots = annotReq.result;
+      annotReq.onsuccess = async () => {
+        await core.getDocument().getDocumentCompletePromise();
+        await core.getAnnotationManager().importAnnotations(annotReq.result);
       };
       await tx.commit();
-      const updateAnnotations = async () => {
-        await core.getDocument().getDocumentCompletePromise();
-        await core.getAnnotationManager().importAnnotations(annots);
-        core.removeEventListener('annotationsLoaded', updateAnnotations);
-      };
-      core.addEventListener('annotationsLoaded', updateAnnotations);
-
-      const removeListeners = () => {
-        core.removeEventListener('annotationsLoaded', updateAnnotations);
-      };
-      core.addEventListener('documentUnloaded', removeListeners, { once: true });
+    } else if (this.saveData.annots) {
+      await core.getDocument().getDocumentCompletePromise();
+      await core.getAnnotationManager().importAnnotations(this.saveData.annots);
     }
+  }
+
+  async restoreAnnotDataOnLoad(db) {
+    const updateAnnotations = () => this.updateAnnotations(db);
+    const removeListeners = () => {
+      core.removeEventListener('documentLoaded', updateAnnotations);
+    };
+    core.addEventListener('documentLoaded', updateAnnotations, { once: true });
+    core.addEventListener('documentUnloaded', removeListeners, { once: true });
   }
 
   async writeToDB(db, arrBuff) {

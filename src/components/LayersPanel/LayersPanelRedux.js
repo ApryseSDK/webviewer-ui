@@ -11,7 +11,7 @@ function LayersPanelRedux(props) {
 
   const [
     layers,
-  ] = useSelector(state => [
+  ] = useSelector((state) => [
     selectors.getLayers(state),
   ]);
 
@@ -20,11 +20,12 @@ function LayersPanelRedux(props) {
   }
 
   useEffect(() => {
+    const documentViewer = core.getDocumentViewer();
     const doc = core.getDocument();
     if (doc) {
       doc.setLayersArray(layers);
-      window.documentViewer.refreshAll();
-      window.documentViewer.updateView();
+      documentViewer.refreshAll();
+      documentViewer.updateView();
     }
   }, [layers]);
 

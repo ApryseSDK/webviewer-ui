@@ -2,9 +2,9 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 import { render, fireEvent } from '@testing-library/react';
 import core from 'core';
-import NotePopupWithOutI18n from "./NotePopup";
-import NotePopupContainerWithOutI18n from "./NotePopupContainer";
-import { Basic, DifferentStates } from "./NotePopup.stories";
+import NotePopupWithOutI18n from './NotePopup';
+import NotePopupContainerWithOutI18n from './NotePopupContainer';
+import { Basic, DifferentStates } from './NotePopup.stories';
 
 const NotePopup = withI18n(NotePopupWithOutI18n);
 const NotePopupContainer = withI18n(NotePopupContainerWithOutI18n);
@@ -76,7 +76,7 @@ describe('NotePopup', () => {
     const dataElement = 'notePopupDelete';
     const state = createDisabledStateForDataElement(dataElement);
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockImplementation(function (selector) {
+    useSelectorMock.mockImplementation(function(selector) {
       return selector(state);
     });
     const { container } = render(
@@ -111,7 +111,7 @@ describe('NotePopup', () => {
     const dataElement = 'notePopupEdit';
     const state = createDisabledStateForDataElement(dataElement);
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockImplementation(function (selector) {
+    useSelectorMock.mockImplementation(function(selector) {
       return selector(state);
     });
     const { container } = render(
@@ -178,7 +178,6 @@ describe('NotePopup', () => {
 });
 
 describe('NotePopupContainer', () => {
-
   beforeEach(() => {
     jest.resetAllMocks();
   });

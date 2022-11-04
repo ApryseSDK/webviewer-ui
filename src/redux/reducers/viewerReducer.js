@@ -52,6 +52,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         presetCropDimensions: payload.presetCropDimensions,
       };
+    case 'SET_PRESET_NEW_PAGE_DIMENSIONS':
+      return {
+        ...state,
+        presetNewPageDimensions: payload.presetNewPageDimensions,
+      };
     case 'SET_DATE_TIME_FORMATS':
       return {
         ...state,
@@ -518,6 +523,10 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, customApplyRedactionsHandler: payload.customApplyRedactionsHandler };
     case 'SET_ANNOTATION_CONTENT_OVERLAY_HANDLER':
       return { ...state, annotationContentOverlayHandler: payload.annotationContentOverlayHandler };
+    case 'SET_CUSTOM_MULTI_VIEWER_SYNC_HANDLER':
+      return { ...state, customMultiViewerSyncHandler: payload.customMultiViewerSyncHandler };
+    case 'SET_CUSTOM_MULTI_VIEWER_ACCEPTED_FILE_FORMATS':
+      return { ...state, customMultiViewerAcceptedFileFormats: payload.customMultiViewerAcceptedFileFormats };
     case 'ADD_CUSTOM_MODAL': {
       const existingDataElementFiltered = state.customModals.filter(function(modal) {
         return modal.dataElement !== payload.dataElement;
@@ -734,6 +743,8 @@ export default (initialState) => (state = initialState, action) => {
       };
     case 'SET_REPLY_ATTACHMENT_PREVIEW':
       return { ...state, replyAttachmentPreviewEnabled: payload.replyAttachmentPreviewEnabled };
+    case 'SET_REPLY_ATTACHMENT_HANDLER':
+      return { ...state, replyAttachmentHandler: payload.replyAttachmentHandler };
     default:
       return state;
   }

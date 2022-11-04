@@ -12,7 +12,7 @@ const mapStateToProps = (state, { isNotClickableSelector, className }) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => {
+  onClick: ownProps.shouldPassActiveDocumentViewerKeyToOnClickHandler ? ownProps.onClick : () => {
     ownProps.onClick(dispatch);
   },
 });

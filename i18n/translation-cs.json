@@ -58,8 +58,6 @@
     "type": "Typ",
     "upload": "nahrát",
     "link": "Odkaz",
-    "darkMode": "Tmavý režim",
-    "lightMode": "Světelný režim",
     "fileAttachmentDownload": "Stáhnout přiložený soubor",
     "prevResult": "Předchozí výsledek",
     "nextResult": "Další výsledek",
@@ -94,7 +92,6 @@
     "unselect": "Zrušte výběr",
     "addMark": "Přidat Marka",
     "viewFile": "Prohlédnout soubor",
-    "switchLanguage": "Jazyk",
     "multiReplyAnnotations": "Odpovědět na vybrané poznámky ({{count}})",
     "comparePages": "Porovnejte stránky",
     "startComparison": "Spusťte porovnávání"
@@ -297,7 +294,8 @@
       "squiggly": "Zkrouceně",
       "3D": "3D",
       "other": "jiný",
-      "initials": "Iniciály"
+      "initials": "Iniciály",
+      "saved": "Uložené"
     },
     "notesOrder": {
       "dropdownLabel": "Seznam pořadí řazení",
@@ -422,7 +420,8 @@
       "typeInitial": "Iniciály typu*",
       "drawSignature": "Nakreslit podpis*",
       "drawInitial": "Kreslit iniciály*",
-      "pickInitialsFile": "Vyberte Iniciály"
+      "pickInitialsFile": "Vyberte Iniciály",
+      "noSignatures": "Momentálně nejsou žádné uložené podpisy."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Přetáhněte soubor sem",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Styl"
+    },
+    "settings": {
+      "settings": "Nastavení",
+      "general": "Všeobecné",
+      "keyboardShortcut": "Klávesová zkratka",
+      "advancedSetting": "Pokročilé nastavení",
+      "language": "Jazyk",
+      "theme": "Téma",
+      "darkMode": "Tmavý režim",
+      "lightMode": "Světelný režim",
+      "viewing": "Prohlížení",
+      "disableFadePageNavigationComponent": "Zakažte komponentu navigace na stránce Fade",
+      "disableFadePageNavigationComponentDesc": "Vždy mějte komponentu Navigace na obrazovce na obrazovce. Výchozí chování je vyblednout po určité době nečinnosti.",
+      "disableNativeScrolling": "Zakázat nativní posouvání",
+      "disableNativeScrollingDesc": "Zakažte nativní chování posouvání mobilního zařízení, pokud bylo dříve povoleno. Všimněte si, že nativní chování posouvání mobilních zařízení je ve výchozím nastavení vypnuto.",
+      "annotations": "Anotace",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Zakázat aktualizaci výchozího stylu nástroje z vyskakovacího okna anotace",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Zakáže synchronizaci aktualizací stylu anotací s přidruženým nástrojem, který anotaci vytvořil. Pokud se tedy změní styl anotace, výchozí styly nástroje nebudou aktualizovány.",
+      "notesPanel": "Panel poznámek",
+      "disableNoteSubmissionWithEnter": "Zakázat odesílání poznámek pomocí Enter",
+      "disableNoteSubmissionWithEnterDesc": "Zakažte možnost odesílat poznámky stisknutím klávesy Enter pouze v případě, že byla dříve povolena. Tím se vrátí odeslání poznámky na výchozí hodnotu, což je Ctrl/Cmd + Enter.",
+      "disableAutoExpandCommentThread": "Zakázat automatické rozbalení vlákna komentáře",
+      "disableAutoExpandCommentThreadDesc": "Zakáže automatické rozbalování všech vláken komentářů v panelu Poznámky.",
+      "disableReplyCollapse": "Zakázat sbalení odpovědi",
+      "disableReplyCollapseDesc": "Zakáže sbalování odpovědí v panelu Poznámky.",
+      "disableTextCollapse": "Zakázat sbalení textu",
+      "disableTextCollapseDesc": "Zakáže sbalení textu anotace v panelu Poznámky.",
+      "search": "Vyhledávání",
+      "disableClearSearchOnPanelClose": "Zakázat Vymazat hledání na panelu Zavřít",
+      "disableClearSearchOnPanelCloseDesc": "Zakázat mazání výsledků vyhledávání, když uživatel zavře vyhledávací panel. Když je tato možnost zakázána, výsledky vyhledávání se uchovávají, i když uživatel zavře a znovu otevře vyhledávací panel. Upozorňujeme, že mobilní zařízení nikdy nevymažou výsledky vyhledávání, i když je toto nastavení povoleno. Je to proto, že pro zobrazení výsledků hledání v dokumentu je třeba panel zavřít.",
+      "pageManipulation": "Manipulace se stránkou",
+      "disablePageDeletionConfirmationModal": "Zakázat modální potvrzení smazání stránky",
+      "disablePageDeletionConfirmationModalDesc": "Při odstraňování stránky ze zobrazení miniatur deaktivujte potvrzovací modal",
+      "disableMultiselect": "Zakázat vícenásobný výběr",
+      "disableMultiselectDesc": "V levém panelu miniatur deaktivujte vícenásobný výběr"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Zvolte jazyk"
   },
+  "insertPageModal": {
+    "title": "Přidat novou stránku",
+    "tabs": {
+      "blank": "Prázdný",
+      "upload": "nahrát"
+    },
+    "pagePlacements": {
+      "header": "Umístění stránky",
+      "above": "Nad stránkou",
+      "below": "Níže na stránce"
+    },
+    "pageLocations": {
+      "header": "Umístění stránky",
+      "specify": "Zadejte stránku",
+      "amount": "Počet stránek",
+      "total": "Celkový",
+      "pages": "Stránky"
+    },
+    "pageDimensions": {
+      "header": "Rozměry stránky",
+      "subHeader": "Předvolby",
+      "presets": {
+        "letter": "Dopis",
+        "halfLetter": "Půl dopisu",
+        "juniorLegal": "Junior legal",
+        "custom": "Zvyk"
+      }
+    },
+    "browse": "Procházet soubory",
+    "fileSelected": {
+      "title": "Vyberte Stránky k přidání"
+    },
+    "button": "Přidat stránky"
+  },
   "multiViewer": {
     "dragAndDrop": "Přetáhněte sem soubor pro porovnání",
     "or": "Nebo",
@@ -976,5 +1044,26 @@
       "new": "Nový",
       "page": "Strana"
     }
+  },
+  "saveModal": {
+    "close": "Zavřít",
+    "saveAs": "Uložit jako",
+    "general": "Všeobecné",
+    "fileName": "Název souboru",
+    "fileType": "Typ souboru",
+    "fileLocation": "Umístění souboru",
+    "browse": "Procházet",
+    "pageRange": "Stránkový rozsah",
+    "all": "Všechno",
+    "currentView": "Aktuální pohled",
+    "currentPage": "Aktuální stránka",
+    "specifyPage": "Zadejte stránku",
+    "properties": "Vlastnosti",
+    "includeAnnotation": "Zahrnout poznámky",
+    "includeComments": "Zahrnout komentáře",
+    "watermark": "Vodoznak",
+    "addWatermark": "Přidat vodoznak",
+    "save": "Uložení souboru",
+    "pageError": "Neplatná stránka. Platné rozsahy stránek jsou mezi 1 -"
   }
 }

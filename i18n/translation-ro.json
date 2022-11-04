@@ -58,8 +58,6 @@
     "type": "Tip",
     "upload": "Încărcați",
     "link": "Legătură",
-    "darkMode": "Modul întunecat",
-    "lightMode": "Modul de lumină",
     "fileAttachmentDownload": "Descărcați fișierul atașat",
     "prevResult": "Rezultatul anterior",
     "nextResult": "Următorul rezultat",
@@ -94,7 +92,6 @@
     "unselect": "Deselectați",
     "addMark": "Adăugați Mark",
     "viewFile": "Vezi fișierul",
-    "switchLanguage": "Limba",
     "multiReplyAnnotations": "Răspundeți la adnotările selectate ({{count}})",
     "comparePages": "Comparați paginile",
     "startComparison": "Începeți comparația"
@@ -297,7 +294,8 @@
       "squiggly": "Squiggly",
       "3D": "3D",
       "other": "Alte",
-      "initials": "Inițiale"
+      "initials": "Inițiale",
+      "saved": "Salvat"
     },
     "notesOrder": {
       "dropdownLabel": "Listă de ordine de sortare",
@@ -422,7 +420,8 @@
       "typeInitial": "Inițiale tip*",
       "drawSignature": "Semnătura extragerii*",
       "drawInitial": "Desenați inițiale*",
-      "pickInitialsFile": "Alegeți Inițiale"
+      "pickInitialsFile": "Alegeți Inițiale",
+      "noSignatures": "În prezent, nu există semnături salvate."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Trageți și plasați fișierul aici",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Stil"
+    },
+    "settings": {
+      "settings": "Setări",
+      "general": "General",
+      "keyboardShortcut": "Comanda rapidă de la tastatură",
+      "advancedSetting": "Setări avansate",
+      "language": "Limba",
+      "theme": "Temă",
+      "darkMode": "Modul întunecat",
+      "lightMode": "Modul de lumină",
+      "viewing": "Vizionare",
+      "disableFadePageNavigationComponent": "Dezactivați Componenta de navigare a paginii Fade",
+      "disableFadePageNavigationComponentDesc": "Păstrați întotdeauna Componenta de navigare a paginii pe ecran. Comportamentul implicit este de a-l estompa după o anumită perioadă de inactivitate.",
+      "disableNativeScrolling": "Dezactivați derularea nativă",
+      "disableNativeScrollingDesc": "Dezactivați comportamentul nativ de defilare a dispozitivului mobil dacă acesta a fost activat anterior. Rețineți că comportamentul nativ de defilare a dispozitivului mobil este dezactivat în mod implicit.",
+      "annotations": "Adnotări",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Dezactivați actualizarea stilului implicit al instrumentului din popup-ul de adnotare",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Dezactivează sincronizarea actualizărilor stilului de adnotare cu instrumentul asociat care a creat adnotarea. Deci, dacă stilul unei adnotări este schimbat, stilurile implicite ale instrumentului nu vor fi actualizate.",
+      "notesPanel": "Panoul de note",
+      "disableNoteSubmissionWithEnter": "Dezactivați trimiterea notiței cu Enter",
+      "disableNoteSubmissionWithEnterDesc": "Dezactivați capacitatea de a trimite note apăsând pe Enter numai dacă a fost activată anterior. Acest lucru va reveni la valoarea prestabilită, care este Ctrl/Cmd + Enter.",
+      "disableAutoExpandCommentThread": "Dezactivați extinderea automată a firului de comentarii",
+      "disableAutoExpandCommentThreadDesc": "Dezactivează extinderea automată a tuturor firelor de comentarii din panoul de note.",
+      "disableReplyCollapse": "Dezactivați Restrângerea răspunsului",
+      "disableReplyCollapseDesc": "Dezactivează restrângerea răspunsurilor în panoul de note.",
+      "disableTextCollapse": "Dezactivați restrângerea textului",
+      "disableTextCollapseDesc": "Dezactivează restrângerea textului adnotării în panoul de note.",
+      "search": "Căutare",
+      "disableClearSearchOnPanelClose": "Dezactivați Căutarea Ștergere pe panoul Închidere",
+      "disableClearSearchOnPanelCloseDesc": "Dezactivați ștergerea rezultatelor căutării atunci când utilizatorul închide panoul de căutare. Când este dezactivată, rezultatele căutării sunt păstrate chiar dacă utilizatorul închide și redeschide panoul de căutare. Rețineți că dispozitivele mobile nu șterg niciodată rezultatele căutării, chiar dacă această setare este activată. Acest lucru se datorează faptului că panoul trebuie să fie închis pentru a vedea rezultatele căutării pe document.",
+      "pageManipulation": "Manipularea paginii",
+      "disablePageDeletionConfirmationModal": "Dezactivați modal de confirmare a ștergerii paginii",
+      "disablePageDeletionConfirmationModalDesc": "Dezactivați modalul de confirmare când ștergeți o pagină din vizualizarea miniatură",
+      "disableMultiselect": "Dezactivați selecția multiplă",
+      "disableMultiselectDesc": "Dezactivați selecția multiplă în panoul de miniaturi din stânga"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Selecteaza limba"
   },
+  "insertPageModal": {
+    "title": "Adăugați o pagină nouă",
+    "tabs": {
+      "blank": "Gol",
+      "upload": "Încărcați"
+    },
+    "pagePlacements": {
+      "header": "Plasarea paginii",
+      "above": "Deasupra paginii",
+      "below": "Sub pagina"
+    },
+    "pageLocations": {
+      "header": "Locația paginii",
+      "specify": "Specificați pagina",
+      "amount": "Cantitatea de pagini",
+      "total": "Total",
+      "pages": "Pagini"
+    },
+    "pageDimensions": {
+      "header": "Dimensiunile paginii",
+      "subHeader": "Presetări",
+      "presets": {
+        "letter": "Scrisoare",
+        "halfLetter": "Jumătate de scrisoare",
+        "juniorLegal": "Junior legal",
+        "custom": "Personalizat"
+      }
+    },
+    "browse": "Cauta fisiere",
+    "fileSelected": {
+      "title": "Selectați Pagini de adăugat"
+    },
+    "button": "Adăugați pagini"
+  },
   "multiViewer": {
     "dragAndDrop": "Trageți și plasați fișierul aici pentru a compara",
     "or": "Sau",
@@ -976,5 +1044,26 @@
       "new": "Nou",
       "page": "Pagină"
     }
+  },
+  "saveModal": {
+    "close": "Închide",
+    "saveAs": "Salvează ca",
+    "general": "General",
+    "fileName": "Nume de fișier",
+    "fileType": "Tip fișier",
+    "fileLocation": "Locația fișierului",
+    "browse": "Naviga",
+    "pageRange": "Interval de pagini",
+    "all": "Toate",
+    "currentView": "Vedere actuala",
+    "currentPage": "Pagina curenta",
+    "specifyPage": "Specificați pagina",
+    "properties": "Proprietăți",
+    "includeAnnotation": "Includeți adnotări",
+    "includeComments": "Includeți comentarii",
+    "watermark": "Filigran",
+    "addWatermark": "Adăugați filigran",
+    "save": "Salvează fișierul",
+    "pageError": "Pagina nevalidă. Intervalele de pagini valide sunt cuprinse între 1 -"
   }
 }

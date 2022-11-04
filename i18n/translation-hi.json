@@ -58,8 +58,6 @@
     "type": "प्रकार",
     "upload": "डालना",
     "link": "संपर्क",
-    "darkMode": "डार्क मोड",
-    "lightMode": "लाइट मोड",
     "fileAttachmentDownload": "संलग्न फ़ाइल डाउनलोड करें",
     "prevResult": "पिछला परिणाम",
     "nextResult": "अगला परिणाम",
@@ -94,7 +92,6 @@
     "unselect": "सभी का चयन रद्द",
     "addMark": "मार्क जोड़ें",
     "viewFile": "फ़ाइल देखें",
-    "switchLanguage": "भाषा",
     "multiReplyAnnotations": "चयनित टिप्पणियों का उत्तर दें",
     "comparePages": "पृष्ठों की तुलना करें",
     "startComparison": "तुलना शुरू करें"
@@ -297,7 +294,8 @@
       "squiggly": "टेढ़ा-मेढ़ा",
       "3D": "3डी",
       "other": "अन्य",
-      "initials": "आद्याक्षर"
+      "initials": "आद्याक्षर",
+      "saved": "बचाया"
     },
     "notesOrder": {
       "dropdownLabel": "क्रमबद्ध क्रम सूची",
@@ -422,7 +420,8 @@
       "typeInitial": "प्रारंभिक टाइप करें*",
       "drawSignature": "हस्ताक्षर बनाएं*",
       "drawInitial": "आद्याक्षर ड्रा करें*",
-      "pickInitialsFile": "आद्याक्षर चुनें"
+      "pickInitialsFile": "आद्याक्षर चुनें",
+      "noSignatures": "वर्तमान में कोई सहेजे गए हस्ताक्षर नहीं हैं।"
     },
     "pageReplacementModal": {
       "dragAndDrop": "अपनी फ़ाइल को यहां खींचें और छोड़ें",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "शैली"
+    },
+    "settings": {
+      "settings": "समायोजन",
+      "general": "सामान्य",
+      "keyboardShortcut": "कुंजीपटल संक्षिप्त रीति",
+      "advancedSetting": "उन्नत व्यवस्था",
+      "language": "भाषा",
+      "theme": "थीम",
+      "darkMode": "डार्क मोड",
+      "lightMode": "लाइट मोड",
+      "viewing": "देखना",
+      "disableFadePageNavigationComponent": "फीका पृष्ठ नेविगेशन घटक अक्षम करें",
+      "disableFadePageNavigationComponentDesc": "पेज नेविगेशन कंपोनेंट को हमेशा स्क्रीन पर रखें। निष्क्रियता की निश्चित अवधि के बाद इसे फीका करना डिफ़ॉल्ट व्यवहार है।",
+      "disableNativeScrolling": "मूल स्क्रॉलिंग अक्षम करें",
+      "disableNativeScrollingDesc": "मूल मोबाइल डिवाइस स्क्रॉलिंग व्यवहार को अक्षम करें यदि इसे पहले सक्षम किया गया था। ध्यान दें कि स्थानीय मोबाइल डिवाइस स्क्रॉलिंग व्यवहार डिफ़ॉल्ट रूप से बंद होता है।",
+      "annotations": "एनोटेशन",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "एनोटेशन पॉपअप से टूल डिफॉल्ट स्टाइल अपडेट अक्षम करें",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "एनोटेशन बनाने वाले संबंधित टूल में एनोटेशन स्टाइल अपडेट के सिंकिंग को अक्षम करता है। इसलिए यदि किसी एनोटेशन की शैली बदल दी जाती है तो टूल डिफ़ॉल्ट शैलियों को अपडेट नहीं किया जाएगा।",
+      "notesPanel": "नोट्स पैनल",
+      "disableNoteSubmissionWithEnter": "एंटर के साथ नोट सबमिशन अक्षम करें",
+      "disableNoteSubmissionWithEnterDesc": "केवल एंटर दबाकर नोट्स सबमिट करने की क्षमता को अक्षम करें यदि इसे पहले सक्षम किया गया था। यह नोट सबमिशन को डिफ़ॉल्ट पर वापस कर देगा जो कि Ctrl/Cmd + Enter है।",
+      "disableAutoExpandCommentThread": "ऑटो विस्तार टिप्पणी थ्रेड अक्षम करें",
+      "disableAutoExpandCommentThreadDesc": "नोट्स पैनल में सभी टिप्पणी थ्रेड्स के स्वचालित विस्तार को अक्षम करता है।",
+      "disableReplyCollapse": "उत्तर अक्षम करें संक्षिप्त करें",
+      "disableReplyCollapseDesc": "नोट्स पैनल में उत्तरों के संक्षिप्त होने को अक्षम करता है।",
+      "disableTextCollapse": "टेक्स्ट संक्षिप्त करें अक्षम करें",
+      "disableTextCollapseDesc": "नोट्स पैनल में एनोटेशन के टेक्स्ट को छोटा करना अक्षम करता है।",
+      "search": "खोज",
+      "disableClearSearchOnPanelClose": "पैनल बंद पर स्पष्ट खोज अक्षम करें",
+      "disableClearSearchOnPanelCloseDesc": "जब उपयोगकर्ता खोज पैनल बंद करता है, तो खोज परिणामों को साफ़ करना अक्षम करें। अक्षम होने पर, खोज परिणाम तब भी सहेजे जाते हैं, जब उपयोगकर्ता खोज पैनल को बंद कर देता है और फिर से खोल देता है। ध्यान दें, मोबाइल उपकरण कभी भी खोज परिणामों को साफ़ नहीं करते हैं, भले ही यह सेटिंग सक्षम हो। ऐसा इसलिए है क्योंकि दस्तावेज़ पर खोज परिणाम देखने के लिए पैनल को बंद करने की आवश्यकता है।",
+      "pageManipulation": "पृष्ठ हेरफेर",
+      "disablePageDeletionConfirmationModal": "पृष्ठ हटाना पुष्टिकरण मोडल अक्षम करें",
+      "disablePageDeletionConfirmationModalDesc": "थंबनेल दृश्य से किसी पृष्ठ को हटाते समय पुष्टिकरण मोडल अक्षम करें",
+      "disableMultiselect": "बहुचयन अक्षम करें",
+      "disableMultiselectDesc": "बाएं थंबनेल पैनल में बहु-चयन अक्षम करें"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"
   },
+  "insertPageModal": {
+    "title": "नया पेज जोड़ें",
+    "tabs": {
+      "blank": "खाली",
+      "upload": "डालना"
+    },
+    "pagePlacements": {
+      "header": "पेज प्लेसमेंट",
+      "above": "पेज के ऊपर",
+      "below": "पेज के नीचे"
+    },
+    "pageLocations": {
+      "header": "पृष्ठ स्थान",
+      "specify": "पृष्ठ निर्दिष्ट करें",
+      "amount": "पृष्ठों की मात्रा",
+      "total": "कुल",
+      "pages": "पृष्ठों"
+    },
+    "pageDimensions": {
+      "header": "पृष्ठ आयाम",
+      "subHeader": "प्रीसेट",
+      "presets": {
+        "letter": "पत्र",
+        "halfLetter": "आधा अक्षर",
+        "juniorLegal": "जूनियर कानूनी",
+        "custom": "रीति"
+      }
+    },
+    "browse": "फ़ाइलों को ब्राउज़ करें",
+    "fileSelected": {
+      "title": "जोड़ने के लिए पेज चुनें"
+    },
+    "button": "पृष्ठ जोड़ें"
+  },
   "multiViewer": {
     "dragAndDrop": "तुलना करने के लिए अपनी फ़ाइल को यहां खींचें और छोड़ें",
     "or": "या",
@@ -976,5 +1044,26 @@
       "new": "नया",
       "page": "पृष्ठ"
     }
+  },
+  "saveModal": {
+    "close": "बंद करना",
+    "saveAs": "के रूप रक्षित करें",
+    "general": "सामान्य",
+    "fileName": "फ़ाइल का नाम",
+    "fileType": "फाइल का प्रकार",
+    "fileLocation": "फाइल का पता",
+    "browse": "ब्राउज़",
+    "pageRange": "पेज सीमा",
+    "all": "सभी",
+    "currentView": "वर्तमान दृश्य",
+    "currentPage": "वर्तमान पृष्ठ",
+    "specifyPage": "पृष्ठ निर्दिष्ट करें",
+    "properties": "गुण",
+    "includeAnnotation": "एनोटेशन शामिल करें",
+    "includeComments": "टिप्पणियाँ शामिल करें",
+    "watermark": "वाटर-मार्क",
+    "addWatermark": "वॉटरमार्क जोड़िए",
+    "save": "फाइल सुरक्षित करें",
+    "pageError": "अमान्य पृष्ठ। मान्य पृष्ठ श्रेणियां 1 के बीच हैं -"
   }
 }

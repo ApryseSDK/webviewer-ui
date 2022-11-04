@@ -168,6 +168,8 @@ import setCustomMeasurementOverlayInfo from './setCustomMeasurementOverlayInfo';
 import setNoteTransformFunction from './setNoteTransformFunction';
 import setCustomNoteSelectionFunction from './setCustomNoteSelectionFunction';
 import setCustomApplyRedactionsHandler from './setCustomApplyRedactionsHandler';
+import setCustomMultiViewerSyncHandler from './setCustomMultiViewerSyncHandler';
+import setCustomMultiViewerAcceptedFileFormats from './setCustomMultiViewerAcceptedFileFormats';
 import selectThumbnailPages from './selectThumbnailPages';
 import unselectThumbnailPages from './unselectThumbnailPages';
 import setSearchResults from './setSearchResults';
@@ -186,7 +188,8 @@ import {
   setCustomHeader,
   setCustomEmptyPanel,
   enableAttachmentPreview,
-  disableAttachmentPreview
+  disableAttachmentPreview,
+  setAttachmentHandler
 } from './notesPanel';
 import {
   enableMultiselect,
@@ -223,6 +226,7 @@ import TabManagerAPI from './TabManagerAPI';
 import getAvailableLanguages from './getAvailableLanguages';
 import replaceRedactionSearchPattern from './replaceRedactionSearchPattern';
 import setPresetCropDimensions from './setPresetCropDimensions';
+import setPresetNewPageDimensions from './setPresetNewPageDimensions';
 import addDateTimeFormat from './addDateTimeFormat';
 import addRedactionSearchPattern from './addRedactionSearchPattern';
 import removeRedactionSearchPattern from './removeRedactionSearchPattern';
@@ -247,6 +251,7 @@ import {
   isMultipleScalesModeEnabled,
 } from './measurementScale';
 import getLocalizedText from './getLocalizedText';
+import getDocumentViewer from './getDocumentViewer';
 import { enableMultiViewerSync, disableMultiViewerSync, isMultiViewerSyncing } from './multiViewerSync';
 
 export default (store) => {
@@ -350,6 +355,8 @@ export default (store) => {
     dangerouslySetNoteTransformFunction: setNoteTransformFunction(store),
     setCustomNoteSelectionFunction: setCustomNoteSelectionFunction(store),
     setCustomApplyRedactionsHandler: setCustomApplyRedactionsHandler(store),
+    setCustomMultiViewerSyncHandler: setCustomMultiViewerSyncHandler(store),
+    setCustomMultiViewerAcceptedFileFormats: setCustomMultiViewerAcceptedFileFormats(store),
     setToolMode,
     setZoomLevel,
     setZoomList: setZoomList(store),
@@ -395,6 +402,7 @@ export default (store) => {
       setCustomEmptyPanel: setCustomEmptyPanel(store),
       enableAttachmentPreview: enableAttachmentPreview(store),
       disableAttachmentPreview: disableAttachmentPreview(store),
+      setAttachmentHandler: setAttachmentHandler(store)
     },
     OutlinesPanel: {
       setDefaultOptions: setDefaultOptions(store),
@@ -469,6 +477,7 @@ export default (store) => {
     getAvailableLanguages,
     replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
     setPresetCropDimensions: setPresetCropDimensions(store),
+    setPresetNewPageDimensions: setPresetNewPageDimensions(store),
     addDateTimeFormat: addDateTimeFormat(store),
     addRedactionSearchPattern: addRedactionSearchPattern(store),
     removeRedactionSearchPattern: removeRedactionSearchPattern(store),
@@ -528,6 +537,7 @@ export default (store) => {
     AnnotationStylePopupTabs,
     getZoomStepFactors: getZoomStepFactors(store),
     setZoomStepFactors: setZoomStepFactors(store),
+    getDocumentViewer,
   };
   const documentViewer = core.getDocumentViewer(1);
 

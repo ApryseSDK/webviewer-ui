@@ -58,8 +58,6 @@
     "type": "Kiểu",
     "upload": "Tải lên",
     "link": "Liên kết",
-    "darkMode": "Chế độ tối",
-    "lightMode": "Chế độ sáng",
     "fileAttachmentDownload": "Tải xuống tệp đính kèm",
     "prevResult": "Kết quả trước",
     "nextResult": "Kết quả tiếp theo",
@@ -94,7 +92,6 @@
     "unselect": "Bỏ chọn",
     "addMark": "Thêm dấu",
     "viewFile": "Xem tài liệu",
-    "switchLanguage": "Ngôn ngữ",
     "multiReplyAnnotations": "Trả lời các chú thích đã chọn ({{count}})",
     "comparePages": "So sánh các trang",
     "startComparison": "Bắt đầu so sánh"
@@ -297,7 +294,8 @@
       "squiggly": "Nguệch ngoạc",
       "3D": "3D",
       "other": "Khác",
-      "initials": "Tên viết tắt"
+      "initials": "Tên viết tắt",
+      "saved": "Đã lưu"
     },
     "notesOrder": {
       "dropdownLabel": "Sắp Xếp Danh Sách Lệnh",
@@ -422,7 +420,8 @@
       "typeInitial": "Nhập tên viết tắt *",
       "drawSignature": "Vẽ Chữ ký *",
       "drawInitial": "Rút tên viết tắt *",
-      "pickInitialsFile": "Chọn tên viết tắt"
+      "pickInitialsFile": "Chọn tên viết tắt",
+      "noSignatures": "Hiện tại không có chữ ký nào được lưu."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Kéo & Thả tệp của bạn tại đây",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Phong cách"
+    },
+    "settings": {
+      "settings": "Cài đặt",
+      "general": "Chung",
+      "keyboardShortcut": "Phim tăt",
+      "advancedSetting": "Cài đặt nâng cao",
+      "language": "Ngôn ngữ",
+      "theme": "Chủ đề",
+      "darkMode": "Chế độ tối",
+      "lightMode": "Chế độ sáng",
+      "viewing": "Đang xem",
+      "disableFadePageNavigationComponent": "Tắt thành phần điều hướng trang làm mờ",
+      "disableFadePageNavigationComponentDesc": "Luôn giữ Thành phần Điều hướng Trang trên màn hình. Hành vi mặc định là làm mờ dần nó sau một thời gian không hoạt động nhất định.",
+      "disableNativeScrolling": "Tắt tính năng cuộn gốc",
+      "disableNativeScrollingDesc": "Tắt hành vi cuộn thiết bị di động gốc nếu nó đã được bật trước đó. Lưu ý rằng hành vi cuộn trên thiết bị di động gốc bị tắt theo mặc định.",
+      "annotations": "Chú thích",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Tắt cập nhật kiểu mặc định của công cụ từ cửa sổ bật lên chú thích",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Tắt đồng bộ hóa các cập nhật kiểu chú thích với công cụ được liên kết đã tạo chú thích. Vì vậy, nếu kiểu của chú thích bị thay đổi, kiểu mặc định của công cụ sẽ không được cập nhật.",
+      "notesPanel": "Bảng ghi chú",
+      "disableNoteSubmissionWithEnter": "Tắt tính năng gửi ghi chú bằng phím Enter",
+      "disableNoteSubmissionWithEnterDesc": "Vô hiệu hóa khả năng gửi ghi chú bằng cách chỉ nhấn Enter nếu nó đã được bật trước đó. Thao tác này sẽ hoàn nguyên việc gửi ghi chú về mặc định là Ctrl / Cmd + Enter.",
+      "disableAutoExpandCommentThread": "Tắt tự động mở rộng chuỗi nhận xét",
+      "disableAutoExpandCommentThreadDesc": "Tắt tính năng mở rộng tự động của tất cả các chuỗi nhận xét trong Bảng ghi chú.",
+      "disableReplyCollapse": "Tắt thu gọn trả lời",
+      "disableReplyCollapseDesc": "Tắt tính năng thu gọn các câu trả lời trong Bảng ghi chú.",
+      "disableTextCollapse": "Tắt tính năng thu gọn văn bản",
+      "disableTextCollapseDesc": "Tắt tính năng thu gọn văn bản của chú thích trong Bảng ghi chú.",
+      "search": "Tìm kiếm",
+      "disableClearSearchOnPanelClose": "Vô hiệu hóa Xóa tìm kiếm trên bảng điều khiển Đóng",
+      "disableClearSearchOnPanelCloseDesc": "Tắt xóa kết quả tìm kiếm khi người dùng đóng bảng tìm kiếm. Khi bị tắt, kết quả tìm kiếm vẫn được giữ lại ngay cả khi người dùng đóng và mở lại bảng tìm kiếm. Lưu ý, thiết bị di động không bao giờ xóa kết quả tìm kiếm ngay cả khi cài đặt này được bật. Điều này là do bảng điều khiển cần được đóng lại để xem kết quả tìm kiếm trên tài liệu.",
+      "pageManipulation": "Thao tác trang",
+      "disablePageDeletionConfirmationModal": "Tắt phương thức xác nhận xóa trang",
+      "disablePageDeletionConfirmationModalDesc": "Tắt phương thức xác nhận khi xóa trang khỏi chế độ xem hình thu nhỏ",
+      "disableMultiselect": "Tắt nhiều lựa chọn",
+      "disableMultiselectDesc": "Tắt nhiều lựa chọn trong bảng hình thu nhỏ bên trái"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"
   },
+  "insertPageModal": {
+    "title": "Thêm trang mới",
+    "tabs": {
+      "blank": "Trống",
+      "upload": "Tải lên"
+    },
+    "pagePlacements": {
+      "header": "Vị trí trang",
+      "above": "Trang trên",
+      "below": "Dưới trang"
+    },
+    "pageLocations": {
+      "header": "Vị trí trang",
+      "specify": "Chỉ định Trang",
+      "amount": "Số lượng trang",
+      "total": "Tổng cộng",
+      "pages": "Các trang"
+    },
+    "pageDimensions": {
+      "header": "Kích thước trang",
+      "subHeader": "Cài đặt trước",
+      "presets": {
+        "letter": "Bức thư",
+        "halfLetter": "Nửa chữ cái",
+        "juniorLegal": "Pháp lý cơ sở",
+        "custom": "Phong tục"
+      }
+    },
+    "browse": "Duyệt qua tệp",
+    "fileSelected": {
+      "title": "Chọn các trang để thêm"
+    },
+    "button": "Thêm (các) Trang"
+  },
   "multiViewer": {
     "dragAndDrop": "Kéo và thả tệp của bạn vào đây để so sánh",
     "or": "Hoặc",
@@ -976,5 +1044,26 @@
       "new": "Mới",
       "page": "Trang"
     }
+  },
+  "saveModal": {
+    "close": "Đóng",
+    "saveAs": "Lưu thành",
+    "general": "Chung",
+    "fileName": "Tên tệp",
+    "fileType": "Loại tệp",
+    "fileLocation": "Vị trí tập tin",
+    "browse": "Duyệt qua",
+    "pageRange": "Phạm vi trang",
+    "all": "Tất cả các",
+    "currentView": "Chế độ xem hiện tại",
+    "currentPage": "Trang hiện tại",
+    "specifyPage": "Chỉ định Trang",
+    "properties": "Đặc tính",
+    "includeAnnotation": "Bao gồm chú thích",
+    "includeComments": "Bao gồm các bình luận",
+    "watermark": "Chữ ký ảnh",
+    "addWatermark": "Thêm hình mờ",
+    "save": "Lưu tập tin",
+    "pageError": "Trang không hợp lệ. Phạm vi trang hợp lệ là từ 1 -"
   }
 }

@@ -24,7 +24,7 @@ function multiSearch(store) {
     const searchArray = [...textSearch];
 
     // Now we can map type to regex
-    Object.keys(searchTerms).forEach(searchType => {
+    Object.keys(searchTerms).forEach((searchType) => {
       const searchRegex = searchOptionsMap[searchType];
       if (searchRegex) {
         searchArray.push(searchRegex.source);

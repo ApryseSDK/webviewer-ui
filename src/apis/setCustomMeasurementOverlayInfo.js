@@ -25,6 +25,6 @@ WebViewer(...)
   });
  */
 
-export default store => customOverlayInfo => {
+export default (store) => (customOverlayInfo) => {
   store.dispatch(action.setCustomMeasurementOverlay(customOverlayInfo));
 };

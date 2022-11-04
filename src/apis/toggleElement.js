@@ -12,7 +12,7 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => dataElement => {
+export default (store) => (dataElement) => {
   console.warn('Deprecated since version 8.0. Please use toggleElementVisibility instead');
   store.dispatch(actions.toggleElement(dataElement));
 };

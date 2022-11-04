@@ -58,8 +58,6 @@
     "type": "Тип",
     "upload": "Загрузить",
     "link": "Ссылка на сайт",
-    "darkMode": "Темный режим",
-    "lightMode": "Легкий режим",
     "fileAttachmentDownload": "Скачать прикрепленный файл",
     "prevResult": "Предыдущий результат",
     "nextResult": "Следующий результат",
@@ -94,7 +92,6 @@
     "unselect": "Отменить выбор",
     "addMark": "Добавить отметку",
     "viewFile": "Посмотреть файл",
-    "switchLanguage": "Язык",
     "multiReplyAnnotations": "Ответить на выбранные аннотации ({{count}})",
     "comparePages": "Сравните страницы",
     "startComparison": "Начать сравнение"
@@ -297,7 +294,8 @@
       "squiggly": "Волнистый",
       "3D": "3D",
       "other": "Другой",
-      "initials": "Инициалы"
+      "initials": "Инициалы",
+      "saved": "Сохранено"
     },
     "notesOrder": {
       "dropdownLabel": "Список порядка сортировки",
@@ -422,7 +420,8 @@
       "typeInitial": "Введите инициалы*",
       "drawSignature": "Нарисовать подпись*",
       "drawInitial": "Нарисовать инициалы*",
-      "pickInitialsFile": "Выберите инициалы"
+      "pickInitialsFile": "Выберите инициалы",
+      "noSignatures": "В настоящее время нет сохраненных подписей."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Перетащите файл сюда",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Стиль"
+    },
+    "settings": {
+      "settings": "Настройки",
+      "general": "Общий",
+      "keyboardShortcut": "Сочетание клавиш",
+      "advancedSetting": "Расширенные настройки",
+      "language": "Язык",
+      "theme": "Тема",
+      "darkMode": "Темный режим",
+      "lightMode": "Легкий режим",
+      "viewing": "Viewing",
+      "disableFadePageNavigationComponent": "Отключить компонент навигации Fade Page",
+      "disableFadePageNavigationComponentDesc": "Всегда держите компонент навигации по страницам на экране. Поведение по умолчанию — исчезать после определенного периода бездействия.",
+      "disableNativeScrolling": "Отключить встроенную прокрутку",
+      "disableNativeScrollingDesc": "Отключите собственное поведение прокрутки мобильного устройства, если оно было ранее включено. Обратите внимание, что встроенное поведение прокрутки мобильного устройства по умолчанию отключено.",
+      "annotations": "Аннотации",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Отключить обновление стиля инструмента по умолчанию из всплывающего окна аннотации",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Отключает синхронизацию обновлений стиля аннотации с соответствующим инструментом, создавшим аннотацию. Таким образом, если стиль аннотации изменен, стили инструмента по умолчанию не будут обновлены.",
+      "notesPanel": "Панель заметок",
+      "disableNoteSubmissionWithEnter": "Отключить отправку заметок с помощью Enter",
+      "disableNoteSubmissionWithEnterDesc": "Отключите возможность отправлять заметки, нажав клавишу Enter, если она была ранее включена. Это вернет отправку заметки к значению по умолчанию, то есть Ctrl/Cmd + Enter.",
+      "disableAutoExpandCommentThread": "Отключить автоматическое расширение ветки комментариев",
+      "disableAutoExpandCommentThreadDesc": "Отключает автоматическое расширение всех веток комментариев на панели заметок.",
+      "disableReplyCollapse": "Отключить свертывание ответа",
+      "disableReplyCollapseDesc": "Отключает свертывание ответов на панели заметок.",
+      "disableTextCollapse": "Отключить свертывание текста",
+      "disableTextCollapseDesc": "Отключает свертывание текста аннотации на панели заметок.",
+      "search": "Поиск",
+      "disableClearSearchOnPanelClose": "Отключить четкий поиск при закрытии панели",
+      "disableClearSearchOnPanelCloseDesc": "Отключить очистку результатов поиска, когда пользователь закрывает панель поиска. Когда отключено, результаты поиска сохраняются, даже если пользователь закрывает и снова открывает панель поиска. Обратите внимание, что мобильные устройства никогда не удаляют результаты поиска, даже если этот параметр включен. Это связано с тем, что панель необходимо закрыть для просмотра результатов поиска в документе.",
+      "pageManipulation": "Манипуляции со страницей",
+      "disablePageDeletionConfirmationModal": "Отключить модальное подтверждение удаления страницы",
+      "disablePageDeletionConfirmationModalDesc": "Отключить модальное подтверждение при удалении страницы из представления миниатюр",
+      "disableMultiselect": "Отключить множественный выбор",
+      "disableMultiselectDesc": "Отключить множественный выбор на левой панели эскизов"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Выбрать язык"
   },
+  "insertPageModal": {
+    "title": "Добавить новую страницу",
+    "tabs": {
+      "blank": "Пустой",
+      "upload": "Загрузить"
+    },
+    "pagePlacements": {
+      "header": "Размещение страницы",
+      "above": "Страница выше",
+      "below": "Ниже страницы"
+    },
+    "pageLocations": {
+      "header": "Местоположение страницы",
+      "specify": "Укажите страницу",
+      "amount": "Количество страниц",
+      "total": "Общий",
+      "pages": "Страницы"
+    },
+    "pageDimensions": {
+      "header": "Размеры страницы",
+      "subHeader": "Пресеты",
+      "presets": {
+        "letter": "Письмо",
+        "halfLetter": "Половина письма",
+        "juniorLegal": "Младший юрист",
+        "custom": "Обычай"
+      }
+    },
+    "browse": "Просмотр файлов",
+    "fileSelected": {
+      "title": "Выберите страницы для добавления"
+    },
+    "button": "Добавить страницу(ы)"
+  },
   "multiViewer": {
     "dragAndDrop": "Перетащите файл сюда, чтобы сравнить",
     "or": "Или же",
@@ -976,5 +1044,26 @@
       "new": "Новый",
       "page": "Страница"
     }
+  },
+  "saveModal": {
+    "close": "Закрывать",
+    "saveAs": "Сохранить как",
+    "general": "Общий",
+    "fileName": "Имя файла",
+    "fileType": "Тип файла",
+    "fileLocation": "Местоположение файла",
+    "browse": "Просматривать",
+    "pageRange": "Диапазон страниц",
+    "all": "Все",
+    "currentView": "Текущий вид",
+    "currentPage": "Текущая страница",
+    "specifyPage": "Укажите страницу",
+    "properties": "Характеристики",
+    "includeAnnotation": "Включить аннотации",
+    "includeComments": "Включить комментарии",
+    "watermark": "Водяной знак",
+    "addWatermark": "Добавить водяной знак",
+    "save": "Сохранить файл",
+    "pageError": "Недопустимая страница. Допустимые диапазоны страниц: от 1 до"
   }
 }

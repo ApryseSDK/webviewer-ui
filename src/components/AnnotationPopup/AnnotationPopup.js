@@ -3,6 +3,7 @@ import Draggable from 'react-draggable';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 
 import ActionButton from 'components/ActionButton';
 import AnnotationStylePopup from 'components/AnnotationStylePopup';
@@ -34,6 +35,8 @@ const AnnotationPopup = () => {
     isAnnotationStylePopupDisabled,
     popupItems,
     isNotesPanelOpen,
+    isLinkModalOpen,
+    isRichTextPopupOpen,
     isMultiTab,
     tabManager,
     tabs,
@@ -45,6 +48,8 @@ const AnnotationPopup = () => {
       selectors.isElementDisabled(state, 'annotationStylePopup'),
       selectors.getPopupItems(state, 'annotationPopup'),
       selectors.isElementOpen(state, 'notesPanel'),
+      selectors.isElementOpen(state, 'linkModal'),
+      selectors.isElementOpen(state, 'richTextPopup'),
       selectors.getIsMultiTab(state),
       selectors.getTabManager(state),
       selectors.getTabs(state),
@@ -375,6 +380,9 @@ const AnnotationPopup = () => {
     setStylePopupRepositionFlag(!stylePopupRepositionFlag);
   };
 
+  const isRectangle = firstAnnotation instanceof window.Annotations.RectangleAnnotation;
+  const isEllipse = firstAnnotation instanceof window.Annotations.EllipseAnnotation;
+  const isPolygon = firstAnnotation instanceof window.Annotations.PolygonAnnotation;
   const isFreeText =
     firstAnnotation instanceof window.Annotations.FreeTextAnnotation &&
     (firstAnnotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeText ||
@@ -383,12 +391,27 @@ const AnnotationPopup = () => {
   const colorMapKey = mapAnnotationToKey(firstAnnotation);
   const isMeasure = !!firstAnnotation.Measure;
   const showLineStyleOptions = getDataWithKey(mapToolNameToKey(firstAnnotation.ToolName)).hasLineEndings;
+  let StrokeStyle = 'solid';
 
+  try {
+    StrokeStyle = (firstAnnotation['Style'] === 'dash')
+      ? `${firstAnnotation['Style']},${firstAnnotation['Dashes']}`
+      : firstAnnotation['Style'];
+  } catch (err) {
+    console.error(err);
+  }
   let properties = {};
   if (showLineStyleOptions) {
     properties = {
       StartLineStyle: firstAnnotation.getStartStyle(),
       EndLineStyle: firstAnnotation.getEndStyle(),
+      StrokeStyle,
+    };
+  }
+
+  if (isRectangle || isEllipse || isPolygon) {
+    properties = {
+      StrokeStyle,
     };
   }
 
@@ -403,6 +426,7 @@ const AnnotationPopup = () => {
       italic: richTextStyles?.[0]?.['font-style'] === 'italic' ?? false,
       underline: richTextStyles?.[0]?.['text-decoration']?.includes('underline') || richTextStyles?.[0]?.['text-decoration']?.includes('word'),
       strikeout: richTextStyles?.[0]?.['text-decoration']?.includes('line-through') ?? false,
+      StrokeStyle,
     };
   }
 
@@ -425,6 +449,7 @@ const AnnotationPopup = () => {
             isOpen={isOpen}
             onResize={onResize}
             isFreeText={isFreeText}
+            isEllipse={isEllipse}
             isRedaction={isRedaction}
             isMeasure={isMeasure}
             colorMapKey={colorMapKey}
@@ -443,158 +468,162 @@ const AnnotationPopup = () => {
         return <ShortCutKeysFor3DComponent />;
       default:
         return (
-          <CustomizablePopup dataElement="annotationPopup">
-            {showViewFileButton && (
-              <ActionButton
-                dataElement="viewFileButton"
-                img="icon-view"
-                title="action.viewFile"
-                onClick={onViewFile}
-              />
-            )}
-            {showCommentButton && (
-              <ActionButton
-                dataElement="annotationCommentButton"
-                title="action.comment"
-                img="icon-header-chat-line"
-                onClick={commentOnAnnotation}
-              />
-            )}
-            {showEditStyleButton && (
-              <ActionButton
-                dataElement="annotationStyleEditButton"
-                title="action.style"
-                img="icon-menu-style-line"
-                onClick={() => setIsStylePopupOpen(true)}
-              />
-            )}
-            {firstAnnotation.isContentEditPlaceholder() && firstAnnotation.getContentEditType() === window.Core.ContentEdit.Types.TEXT && (
-              <ActionButton
-                dataElement="annotationContentEditButton"
-                title="action.edit"
-                img="ic_edit_page_24px"
-                onClick={async () => {
-                  // TODO: remove this from the state and nuke the modal
-                  if (isMobile()) {
-                    const content = await window.Core.ContentEdit.getDocumentContent(firstAnnotation);
-                    dispatch(actions.setCurrentContentBeingEdited({ content, annotation: firstAnnotation }));
-                    dispatch(actions.openElement('contentEditModal'));
-                  } else {
-                    core.getAnnotationManager().trigger('annotationDoubleClicked', firstAnnotation);
-                  }
-                  dispatch(actions.closeElement('annotationPopup'));
-                }}
-              />
-            )}
-            {showRedactionButton && (
-              <ActionButton
-                dataElement="annotationRedactButton"
-                title="action.apply"
-                img="ic_check_black_24px"
-                onClick={() => {
-                  dispatch(applyRedactions(firstAnnotation));
-                  dispatch(actions.closeElement('annotationPopup'));
-                }}
-              />
-            )}
-            {showGroupButton && (
-              <ActionButton
-                dataElement="annotationGroupButton"
-                title="action.group"
-                img="group-annotations-icon"
-                onClick={() => core.groupAnnotations(primaryAnnotation, selectedAnnotations)}
-              />
-            )}
-            {canUngroup && (
-              <ActionButton
-                dataElement="annotationUngroupButton"
-                title="action.ungroup"
-                img="ungroup-annotations-icon"
-                onClick={() => core.ungroupAnnotations(selectedAnnotations)}
-              />
-            )}
-            {includesFormFieldAnnotation && (
-              <ActionButton
-                title="action.formFieldEdit"
-                img="icon-edit-form-field"
-                onClick={() => {
-                  dispatch(actions.closeElement('annotationPopup'));
-                  dispatch(actions.openElement('formFieldEditPopup'));
-                }}
-                dataElement="formFieldEditButton"
-              />
-            )
-            }
-            {canModify && (
-              <ActionButton
-                dataElement="annotationDeleteButton"
-                title="action.delete"
-                img="icon-delete-line"
-                onClick={() => {
-                  core.deleteAnnotations(core.getSelectedAnnotations());
-                  dispatch(actions.closeElement('annotationPopup'));
-                }}
-              />
-            )}
-            {showLinkButton && (
-              <ActionButton
-                title="tool.Link"
-                img={hasAssociatedLink ? 'icon-tool-unlink' : 'icon-tool-link'}
-                onClick={
-                  hasAssociatedLink
-                    ? () => {
-                      const annotManager = core.getAnnotationManager();
-                      selectedAnnotations.forEach((annot) => {
-                        const linkAnnotations = getGroupedLinkAnnotations(annot);
-                        linkAnnotations.forEach((linkAnnot, index) => {
-                          annotManager.ungroupAnnotations([linkAnnot]);
-                          if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0 && index === 0) {
-                            annotManager.deleteAnnotations([annot, linkAnnot], null, true);
-                          } else {
-                            annotManager.deleteAnnotation(linkAnnot, null, true);
-                          }
-                        });
-                      });
+          <FocusTrap locked={isOpen && !isRichTextPopupOpen && !isNotesPanelOpen && !isLinkModalOpen && !isFreeText}>
+            <div className="container">
+              <CustomizablePopup dataElement="annotationPopup">
+                {showViewFileButton && (
+                  <ActionButton
+                    dataElement="viewFileButton"
+                    img="icon-view"
+                    title="action.viewFile"
+                    onClick={onViewFile}
+                  />
+                )}
+                {showCommentButton && (
+                  <ActionButton
+                    dataElement="annotationCommentButton"
+                    title="action.comment"
+                    img="icon-header-chat-line"
+                    onClick={commentOnAnnotation}
+                  />
+                )}
+                {showEditStyleButton && (
+                  <ActionButton
+                    dataElement="annotationStyleEditButton"
+                    title="action.style"
+                    img="icon-menu-style-line"
+                    onClick={() => setIsStylePopupOpen(true)}
+                  />
+                )}
+                {firstAnnotation.isContentEditPlaceholder() && firstAnnotation.getContentEditType() === window.Core.ContentEdit.Types.TEXT && (
+                  <ActionButton
+                    dataElement="annotationContentEditButton"
+                    title="action.edit"
+                    img="ic_edit_page_24px"
+                    onClick={async () => {
+                      // TODO: remove this from the state and nuke the modal
+                      if (isMobile()) {
+                        const content = await window.Core.ContentEdit.getDocumentContent(firstAnnotation);
+                        dispatch(actions.setCurrentContentBeingEdited({ content, annotation: firstAnnotation }));
+                        dispatch(actions.openElement('contentEditModal'));
+                      } else {
+                        core.getAnnotationManager().trigger('annotationDoubleClicked', firstAnnotation);
+                      }
                       dispatch(actions.closeElement('annotationPopup'));
-                    }
-                    : () => dispatch(actions.openElement('linkModal'))
+                    }}
+                  />
+                )}
+                {showRedactionButton && (
+                  <ActionButton
+                    dataElement="annotationRedactButton"
+                    title="action.apply"
+                    img="ic_check_black_24px"
+                    onClick={() => {
+                      dispatch(applyRedactions(firstAnnotation));
+                      dispatch(actions.closeElement('annotationPopup'));
+                    }}
+                  />
+                )}
+                {showGroupButton && (
+                  <ActionButton
+                    dataElement="annotationGroupButton"
+                    title="action.group"
+                    img="group-annotations-icon"
+                    onClick={() => core.groupAnnotations(primaryAnnotation, selectedAnnotations)}
+                  />
+                )}
+                {canUngroup && (
+                  <ActionButton
+                    dataElement="annotationUngroupButton"
+                    title="action.ungroup"
+                    img="ungroup-annotations-icon"
+                    onClick={() => core.ungroupAnnotations(selectedAnnotations)}
+                  />
+                )}
+                {includesFormFieldAnnotation && (
+                  <ActionButton
+                    title="action.formFieldEdit"
+                    img="icon-edit-form-field"
+                    onClick={() => {
+                      dispatch(actions.closeElement('annotationPopup'));
+                      dispatch(actions.openElement('formFieldEditPopup'));
+                    }}
+                    dataElement="formFieldEditButton"
+                  />
+                )
                 }
-                dataElement="linkButton"
-              />
-            )}
-            {showFileDownloadButton &&
-              (
-                <ActionButton
-                  title="action.fileAttachmentDownload"
-                  img="icon-download"
-                  onClick={() => downloadFileAttachment(firstAnnotation)}
-                  dataElement="fileAttachmentDownload"
-                />
-              )
-            }
-            {
-              show3DShortCutButton &&
-              (
-                <ActionButton
-                  title="action.viewShortCutKeysFor3D"
-                  img="icon-keyboard"
-                  onClick={() => setShortCutKeysFor3DVisible(true)}
-                  dataElement="shortCutKeysFor3D"
-                />
-              )
-            }
-            {
-              shouldShowAudioPlayButton &&
-              (
-                <ActionButton
-                  title="action.playAudio"
-                  img="ic_play_24px"
-                  onClick={() => handlePlaySound(firstAnnotation)}
-                  dataElement="playSoundButton"
-                />
-              )
-            }
-          </CustomizablePopup>
+                {canModify && (
+                  <ActionButton
+                    dataElement="annotationDeleteButton"
+                    title="action.delete"
+                    img="icon-delete-line"
+                    onClick={() => {
+                      core.deleteAnnotations(core.getSelectedAnnotations());
+                      dispatch(actions.closeElement('annotationPopup'));
+                    }}
+                  />
+                )}
+                {showLinkButton && (
+                  <ActionButton
+                    title="tool.Link"
+                    img={hasAssociatedLink ? 'icon-tool-unlink' : 'icon-tool-link'}
+                    onClick={
+                      hasAssociatedLink
+                        ? () => {
+                          const annotManager = core.getAnnotationManager();
+                          selectedAnnotations.forEach((annot) => {
+                            const linkAnnotations = getGroupedLinkAnnotations(annot);
+                            linkAnnotations.forEach((linkAnnot, index) => {
+                              annotManager.ungroupAnnotations([linkAnnot]);
+                              if (annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0 && index === 0) {
+                                annotManager.deleteAnnotations([annot, linkAnnot], null, true);
+                              } else {
+                                annotManager.deleteAnnotation(linkAnnot, null, true);
+                              }
+                            });
+                          });
+                          dispatch(actions.closeElement('annotationPopup'));
+                        }
+                        : () => dispatch(actions.openElement('linkModal'))
+                    }
+                    dataElement="linkButton"
+                  />
+                )}
+                {showFileDownloadButton &&
+                  (
+                    <ActionButton
+                      title="action.fileAttachmentDownload"
+                      img="icon-download"
+                      onClick={() => downloadFileAttachment(firstAnnotation)}
+                      dataElement="fileAttachmentDownload"
+                    />
+                  )
+                }
+                {
+                  show3DShortCutButton &&
+                  (
+                    <ActionButton
+                      title="action.viewShortCutKeysFor3D"
+                      img="icon-keyboard"
+                      onClick={() => setShortCutKeysFor3DVisible(true)}
+                      dataElement="shortCutKeysFor3D"
+                    />
+                  )
+                }
+                {
+                  shouldShowAudioPlayButton &&
+                  (
+                    <ActionButton
+                      title="action.playAudio"
+                      img="ic_play_24px"
+                      onClick={() => handlePlaySound(firstAnnotation)}
+                      dataElement="playSoundButton"
+                    />
+                  )
+                }
+              </CustomizablePopup>
+            </div>
+          </FocusTrap>
         );
     }
   };

@@ -12,6 +12,11 @@ export const setPresetCropDimensions = (presetCropDimensions) => ({
   payload: { presetCropDimensions },
 });
 
+export const setPresetNewPageDimensions = (presetNewPageDimensions) => ({
+  type: 'SET_PRESET_NEW_PAGE_DIMENSIONS',
+  payload: { presetNewPageDimensions },
+});
+
 export const setDateTimeFormats = (dateTimeFormats) => ({
   type: 'SET_DATE_TIME_FORMATS',
   payload: { dateTimeFormats },
@@ -685,4 +690,9 @@ export const setIsMultipleScalesMode = (isMultipleScalesMode) => ({
 export const setReplyAttachmentPreviewEnabled = (replyAttachmentPreviewEnabled) => ({
   type: 'SET_REPLY_ATTACHMENT_PREVIEW',
   payload: { replyAttachmentPreviewEnabled }
+});
+
+export const setReplyAttachmentHandler = (replyAttachmentHandler) => ({
+  type: 'SET_REPLY_ATTACHMENT_HANDLER',
+  payload: { replyAttachmentHandler }
 });

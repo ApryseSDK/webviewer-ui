@@ -13,4 +13,4 @@ WebViewer(...)
 import createFeatureAPI from 'helpers/createFeatureAPI';
 
 const enable = false;
-export default store => createFeatureAPI(enable, store);
+export default (store) => createFeatureAPI(enable, store);

@@ -1,12 +1,14 @@
 import React from 'react';
 import core from 'core';
-import isSearchResultSame from 'helpers/isSearchResultSame';
+import { useDispatch } from 'react-redux';
+import actions from 'actions/index';
 
 function useSearch() {
   const [searchResults, setSearchResults] = React.useState([]);
   const [activeSearchResult, setActiveSearchResult] = React.useState();
-  const [activeSearchResultIndex, setActiveSearchResultIndex] = React.useState(-1);
+  const [activeSearchResultIndex, setActiveSearchResultIndex] = React.useState(0);
   const [searchStatus, setSearchStatus] = React.useState('SEARCH_NOT_INITIATED');
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     // First time useSearch is mounted we check if core has results
@@ -16,8 +18,8 @@ function useSearch() {
     if (coreSearchResults.length > 0) {
       const activeSearchResult = core.getActiveSearchResult();
       if (activeSearchResult) {
-        const newActiveSearchResultIndex = coreSearchResults.findIndex(searchResult => {
-          return isSearchResultSame(searchResult, activeSearchResult);
+        const newActiveSearchResultIndex = coreSearchResults.findIndex((searchResult) => {
+          return core.isSearchResultEqual(searchResult, activeSearchResult);
         });
         setSearchResults(coreSearchResults);
         if (newActiveSearchResultIndex >= 0) {
@@ -35,11 +37,13 @@ function useSearch() {
   React.useEffect(() => {
     function activeSearchResultChanged(newActiveSearchResult) {
       const coreSearchResults = core.getPageSearchResults() || [];
-      const newActiveSearchResultIndex = coreSearchResults.findIndex(searchResult => {
-        return isSearchResultSame(searchResult, newActiveSearchResult);
+      const newActiveSearchResultIndex = coreSearchResults.findIndex((searchResult) => {
+        return core.isSearchResultEqual(searchResult, newActiveSearchResult);
       });
-      setActiveSearchResult(newActiveSearchResult);
-      setActiveSearchResultIndex(newActiveSearchResultIndex);
+      if (newActiveSearchResultIndex >= 0) {
+        setActiveSearchResult(newActiveSearchResult);
+        setActiveSearchResultIndex(newActiveSearchResultIndex);
+      }
     }
 
     function searchResultsChanged(newSearchResults = []) {
@@ -57,6 +61,19 @@ function useSearch() {
       } else if (isSearching) {
         setSearchStatus('SEARCH_IN_PROGRESS');
       } else {
+        const defualtActiveSearchResult = core.getActiveSearchResult();
+
+        if (defualtActiveSearchResult) {
+          setActiveSearchResult(defualtActiveSearchResult);
+          // In core default active search result is the first result
+          const coreSearchResults = core.getPageSearchResults() || [];
+          const newActiveSearchResultIndex = coreSearchResults.findIndex((searchResult) => {
+            return core.isSearchResultEqual(searchResult, defualtActiveSearchResult);
+          });
+          setActiveSearchResultIndex(newActiveSearchResultIndex);
+          dispatch(actions.setNextResultValue(defualtActiveSearchResult));
+        }
+
         setSearchStatus('SEARCH_DONE');
       }
     }
@@ -68,7 +85,7 @@ function useSearch() {
       core.removeEventListener('searchResultsChanged', searchResultsChanged);
       core.removeEventListener('searchInProgress', searchInProgressEventHandler);
     };
-  }, [setActiveSearchResult, setActiveSearchResultIndex, setSearchStatus]);
+  }, [setActiveSearchResult, setActiveSearchResultIndex, setSearchStatus, dispatch]);
 
   return {
     searchStatus,

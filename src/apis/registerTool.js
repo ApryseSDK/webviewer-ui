@@ -34,7 +34,7 @@ import { register, copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
 import { setDefaultToolStyle } from 'src/helpers/setDefaultToolStyles';
 
-export default store => (tool, annotationConstructor, customAnnotationCheckFunc) => {
+export default (store) => (tool, annotationConstructor, customAnnotationCheckFunc) => {
   registerToolInToolModeMap(tool);
   registerToolInRedux(store, tool);
   register(tool, annotationConstructor, customAnnotationCheckFunc);
@@ -53,6 +53,6 @@ const registerToolInToolModeMap = ({ toolObject, toolName }) => {
   toolModeMap[toolName].name = toolName;
 };
 
-const updateColorMapInRedux = store => {
-  store.dispatch(actions.setColorMap(copyMapWithDataProperties('iconColor', 'currentPalette')));
+const updateColorMapInRedux = (store) => {
+  store.dispatch(actions.setColorMap(copyMapWithDataProperties('iconColor', 'currentStyleTab')));
 };

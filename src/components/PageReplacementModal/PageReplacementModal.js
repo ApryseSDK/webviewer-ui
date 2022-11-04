@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import core from 'core';
 import { useTranslation } from 'react-i18next';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
-import './PageReplacementModal.scss';
 import FileListPanel from './FileListPanel';
 import FileInputPanel from './FileInputPanel';
 import FilePickerPanel from './FilePickerPanel';
@@ -11,6 +10,8 @@ import { Swipeable } from 'react-swipeable';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
 import FileSelectedPanel from './FileSelectedPanel';
+
+import './PageReplacementModal.scss';
 
 const isValidUrlRegex = new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/, 'm');
 const options = { loadAsPDF: true, l: window.sampleL /* license key here */ };

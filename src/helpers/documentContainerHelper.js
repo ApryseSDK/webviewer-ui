@@ -39,7 +39,7 @@ export const updateContainerWidth = (prevProps, props, container) => {
   }
 };
 
-const getWidthAfterTransition = container => {
+const getWidthAfterTransition = (container) => {
   const oldTransition = container.style.transition;
   container.style.transition = 'none';
   const containerWidth = parseInt(window.getComputedStyle(container).width, 10);

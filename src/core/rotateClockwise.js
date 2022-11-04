@@ -1,3 +1,5 @@
+import core from 'core';
+
 /**
  * https://www.pdftron.com/api/web/Core.DocumentViewer.html#rotateClockwise__anchor
  * @fires fitModeUpdated on DocumentViewer
@@ -5,6 +7,6 @@
  * @fires zoomUpdated on DocumentViewer
  * @see https://www.pdftron.com/api/web/Core.DocumentViewer.html#event:zoomUpdated__anchor
  */
-export default () => {
-  window.documentViewer.rotateClockwise();
+export default (documentViewerKey = 1) => {
+  core.getDocumentViewer(documentViewerKey).rotateClockwise();
 };

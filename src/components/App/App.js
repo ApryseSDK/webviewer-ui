@@ -7,6 +7,7 @@ import selectors from 'selectors';
 import core from 'core';
 import actions from 'actions';
 import { isIE11 } from 'helpers/device';
+
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
 import ToolsHeader from 'components/Header/ToolsHeader';
@@ -39,7 +40,7 @@ import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
 import CreateStampModal from 'components/CreateStampModal';
-import PageReplacementModal from 'src/components/PageReplacementModal';
+import PageReplacementModal from 'components/PageReplacementModal';
 import CustomModal from 'components/CustomModal';
 import Model3DModal from 'components/Model3DModal';
 import FormFieldEditPopup from 'components/FormFieldEditPopup';
@@ -53,24 +54,26 @@ import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
 import ScaleModal from 'components/ScaleModal';
 import DocumentCropPopup from 'components/DocumentCropPopup';
 import LeftPanelOverlayContainer from 'components/LeftPanelOverlay';
-import LanguageModal from 'components/LanguageModal';
-import FormFieldIndicatorContainer from 'src/components/FormFieldIndicator';
+import FormFieldIndicatorContainer from 'components/FormFieldIndicator';
 import ContentEditLinkModal from 'components/ContentEditLinkModal';
 import MultiTabEmptyPage from 'components/MultiTabEmptyPage';
 import OpenFileModal from 'components/OpenFileModal';
 import MultiViewer from 'components/MultiViewer';
 import SettingsModal from 'components/SettingsModal';
+import ComparePanel from 'components/MultiViewer/ComparePanel';
+import SaveModal from 'components/SaveModal';
+
 // TODO: uncomment when InsertPageModal is added
 // import InsertPageModal from 'components/InsertPageModal';
+
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
 import { prepareMultiTab } from 'helpers/TabManager';
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
+
 import './App.scss';
-import ComparePanel from 'components/MultiViewer/ComparePanel';
-import SaveModal from 'components/SaveModal';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -251,7 +254,6 @@ const App = ({ removeEventHandlers }) => {
         <AudioPlaybackPopup />
         <DocumentCropPopup />
         {core.isFullPDFEnabled() && <SignatureValidationModal />}
-        <LanguageModal />
         <FormFieldIndicatorContainer />
         <OpenFileModal />
         <SettingsModal />

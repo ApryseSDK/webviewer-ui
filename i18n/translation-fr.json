@@ -58,8 +58,6 @@
     "type": "Type",
     "upload": "Télécharger",
     "link": "Lier",
-    "darkMode": "Mode sombre",
-    "lightMode": "Mode clair",
     "fileAttachmentDownload": "Télécharger le fichier joint",
     "prevResult": "Résultat précédent",
     "nextResult": "Résultat suivant",
@@ -94,7 +92,6 @@
     "unselect": "Désélectionner",
     "addMark": "Ajouter une marque",
     "viewFile": "Voir la fiche",
-    "switchLanguage": "Langue",
     "multiReplyAnnotations": "Répondre aux annotations sélectionnées ({{count}})",
     "comparePages": "Comparer les pages",
     "startComparison": "Commencer la comparaison"
@@ -297,7 +294,8 @@
       "squiggly": "Onduler",
       "3D": "3D",
       "other": "Autre",
-      "initials": "Initiales"
+      "initials": "Initiales",
+      "saved": "Enregistré"
     },
     "notesOrder": {
       "dropdownLabel": "Liste des ordres de tri",
@@ -422,7 +420,8 @@
       "typeInitial": "Taper les initiales*",
       "drawSignature": "Tirage au sort Signature*",
       "drawInitial": "Dessiner des initiales*",
-      "pickInitialsFile": "Choisissez les initiales"
+      "pickInitialsFile": "Choisissez les initiales",
+      "noSignatures": "Il n'y a actuellement aucune signature enregistrée."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Glissez & Déposez votre fichier ici",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Style"
+    },
+    "settings": {
+      "settings": "Réglages",
+      "general": "Général",
+      "keyboardShortcut": "Raccourci clavier",
+      "advancedSetting": "Paramètre avancé",
+      "language": "Langue",
+      "theme": "Thème",
+      "darkMode": "Mode sombre",
+      "lightMode": "Mode lumière",
+      "viewing": "Affichage",
+      "disableFadePageNavigationComponent": "Désactiver le composant de navigation de page de fondu",
+      "disableFadePageNavigationComponentDesc": "Gardez toujours le composant de navigation de page à l'écran. Le comportement par défaut est de le faire disparaître après une certaine période d'inactivité.",
+      "disableNativeScrolling": "Désactiver le défilement natif",
+      "disableNativeScrollingDesc": "Désactivez le comportement de défilement natif des appareils mobiles s'il avait déjà été activé. Notez que le comportement de défilement natif des appareils mobiles est désactivé par défaut.",
+      "annotations": "Remarques",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Désactiver la mise à jour du style par défaut de l'outil à partir de la fenêtre contextuelle d'annotation",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Désactive la synchronisation des mises à jour de style d'annotation avec l'outil associé qui a créé l'annotation. Ainsi, si le style d'une annotation est modifié, les styles par défaut de l'outil ne seront pas mis à jour.",
+      "notesPanel": "Panneau de commentaires",
+      "disableNoteSubmissionWithEnter": "Désactiver la soumission de notes avec Entrée",
+      "disableNoteSubmissionWithEnterDesc": "Désactivez la possibilité de soumettre des notes en appuyant uniquement sur Entrée si elle avait déjà été activée. Cela rétablira la soumission de note à la valeur par défaut qui est Ctrl/Cmd + Entrée.",
+      "disableAutoExpandCommentThread": "Désactiver le fil de commentaires à développement automatique",
+      "disableAutoExpandCommentThreadDesc": "Désactive l'expansion automatique de tous les fils de commentaires dans le panneau Notes.",
+      "disableReplyCollapse": "Désactiver la réduction de la réponse",
+      "disableReplyCollapseDesc": "Désactive la réduction des réponses dans le panneau Notes.",
+      "disableTextCollapse": "Désactiver la réduction du texte",
+      "disableTextCollapseDesc": "Désactive la réduction du texte de l'annotation dans le panneau Notes.",
+      "search": "Chercher",
+      "disableClearSearchOnPanelClose": "Désactiver Effacer la recherche sur le panneau Fermer",
+      "disableClearSearchOnPanelCloseDesc": "Désactivez l'effacement des résultats de recherche lorsque l'utilisateur ferme le panneau de recherche. Lorsqu'il est désactivé, les résultats de la recherche sont conservés même si l'utilisateur ferme et rouvre le panneau de recherche. Notez que les appareils mobiles n'effacent jamais les résultats de recherche, même si ce paramètre est activé. En effet, le panneau doit être fermé pour afficher les résultats de la recherche sur le document.",
+      "pageManipulation": "Manipulation de pages",
+      "disablePageDeletionConfirmationModal": "Désactiver la modalité de confirmation de suppression de page",
+      "disablePageDeletionConfirmationModalDesc": "Désactiver le modal de confirmation lors de la suppression d'une page de la vue des vignettes",
+      "disableMultiselect": "Désactiver la sélection multiple",
+      "disableMultiselectDesc": "Désactiver la sélection multiple dans le panneau des vignettes de gauche"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Choisir la langue"
   },
+  "insertPageModal": {
+    "title": "Ajouter une nouvelle page",
+    "tabs": {
+      "blank": "Blanc",
+      "upload": "Télécharger"
+    },
+    "pagePlacements": {
+      "header": "Positionnement des pages",
+      "above": "Au-dessus de la page",
+      "below": "Sous la page"
+    },
+    "pageLocations": {
+      "header": "Emplacement de la page",
+      "specify": "Spécifier la page",
+      "amount": "Nombre de pages",
+      "total": "Total",
+      "pages": "pages"
+    },
+    "pageDimensions": {
+      "header": "Dimensions des pages",
+      "subHeader": "Préconfigurations",
+      "presets": {
+        "letter": "Lettre",
+        "halfLetter": "Demi-lettre",
+        "juniorLegal": "Juriste junior",
+        "custom": "Personnalisé"
+      }
+    },
+    "browse": "Parcourir les fichiers",
+    "fileSelected": {
+      "title": "Sélectionnez les pages à ajouter"
+    },
+    "button": "Ajouter des pages"
+  },
   "multiViewer": {
     "dragAndDrop": "Faites glisser et déposez votre fichier ici pour comparer",
     "or": "Ou",
@@ -976,5 +1044,26 @@
       "new": "Nouveau",
       "page": "Page"
     }
+  },
+  "saveModal": {
+    "close": "proche",
+    "saveAs": "Enregistrer sous",
+    "general": "Général",
+    "fileName": "Nom de fichier",
+    "fileType": "Type de fichier",
+    "fileLocation": "Emplacement du fichier",
+    "browse": "Parcourir",
+    "pageRange": "Intervalle de pages",
+    "all": "Tout",
+    "currentView": "Vue actuelle",
+    "currentPage": "Page actuelle",
+    "specifyPage": "Spécifier la page",
+    "properties": "Propriétés",
+    "includeAnnotation": "Inclure les annotations",
+    "includeComments": "Inclure les commentaires",
+    "watermark": "Filigrane",
+    "addWatermark": "Ajouter un filigrane",
+    "save": "Enregistrer le fichier",
+    "pageError": "Page invalide. Les plages de pages valides sont comprises entre 1 et"
   }
 }

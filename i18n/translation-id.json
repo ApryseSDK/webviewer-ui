@@ -58,8 +58,6 @@
     "type": "Jenis",
     "upload": "Mengunggah",
     "link": "Tautan",
-    "darkMode": "Mode gelap",
-    "lightMode": "Mode cahaya",
     "fileAttachmentDownload": "Unduh file terlampir",
     "prevResult": "Hasil sebelumnya",
     "nextResult": "Hasil selanjutnya",
@@ -94,7 +92,6 @@
     "unselect": "Batalkan pilihan",
     "addMark": "Tambahkan Tandai",
     "viewFile": "Lihat file",
-    "switchLanguage": "Bahasa",
     "multiReplyAnnotations": "Membalas anotasi yang dipilih ({{count}})",
     "comparePages": "Bandingkan halaman",
     "startComparison": "Mulai Perbandingan"
@@ -297,7 +294,8 @@
       "squiggly": "berlekuk-lekuk",
       "3D": "3D",
       "other": "Lainnya",
-      "initials": "Inisial"
+      "initials": "Inisial",
+      "saved": "Diselamatkan"
     },
     "notesOrder": {
       "dropdownLabel": "Urutkan Daftar Pesanan",
@@ -422,7 +420,8 @@
       "typeInitial": "Ketik Inisial*",
       "drawSignature": "Gambar Tanda Tangan*",
       "drawInitial": "Gambar Inisial*",
-      "pickInitialsFile": "Pilih Inisial"
+      "pickInitialsFile": "Pilih Inisial",
+      "noSignatures": "Saat ini tidak ada tanda tangan yang disimpan."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Seret & Jatuhkan file Anda di sini",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Gaya"
+    },
+    "settings": {
+      "settings": "Pengaturan",
+      "general": "Umum",
+      "keyboardShortcut": "Pintasan Keyboard",
+      "advancedSetting": "Pengaturan Lanjut",
+      "language": "Bahasa",
+      "theme": "Tema",
+      "darkMode": "Mode gelap",
+      "lightMode": "Mode cahaya",
+      "viewing": "Melihat",
+      "disableFadePageNavigationComponent": "Nonaktifkan Komponen Navigasi Halaman Pudar",
+      "disableFadePageNavigationComponentDesc": "Selalu simpan Komponen Navigasi Halaman di layar. Perilaku default adalah memudarnya setelah periode tidak aktif tertentu.",
+      "disableNativeScrolling": "Nonaktifkan Pengguliran Asli",
+      "disableNativeScrollingDesc": "Nonaktifkan perilaku pengguliran perangkat seluler asli jika sebelumnya telah diaktifkan. Perhatikan bahwa perilaku pengguliran perangkat seluler asli dinonaktifkan secara default.",
+      "annotations": "Anotasi",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Nonaktifkan Pembaruan Gaya Default Alat Dari Popup Anotasi",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Menonaktifkan sinkronisasi pembaruan gaya anotasi ke alat terkait yang membuat anotasi. Jadi, jika gaya anotasi diubah, gaya default alat tidak akan diperbarui.",
+      "notesPanel": "Panel Catatan",
+      "disableNoteSubmissionWithEnter": "Nonaktifkan Pengiriman Catatan Dengan Enter",
+      "disableNoteSubmissionWithEnterDesc": "Nonaktifkan kemampuan untuk mengirimkan catatan dengan hanya menekan Enter jika sebelumnya telah diaktifkan. Ini akan mengembalikan pengiriman catatan ke default yaitu Ctrl/Cmd + Enter.",
+      "disableAutoExpandCommentThread": "Nonaktifkan Otomatis Perluas Utas Komentar",
+      "disableAutoExpandCommentThreadDesc": "Menonaktifkan perluasan otomatis semua utas komentar di Panel Catatan.",
+      "disableReplyCollapse": "Nonaktifkan Balasan Ciutkan",
+      "disableReplyCollapseDesc": "Menonaktifkan penciutan balasan di Panel Catatan.",
+      "disableTextCollapse": "Nonaktifkan Ciutkan Teks",
+      "disableTextCollapseDesc": "Menonaktifkan penciutan teks anotasi di Panel Catatan.",
+      "search": "Mencari",
+      "disableClearSearchOnPanelClose": "Nonaktifkan Hapus Pencarian Pada Tutup Panel",
+      "disableClearSearchOnPanelCloseDesc": "Nonaktifkan menghapus hasil pencarian saat pengguna menutup panel pencarian. Saat dinonaktifkan, hasil pencarian disimpan meskipun pengguna menutup dan membuka kembali panel pencarian. Perhatikan, perangkat seluler tidak pernah menghapus hasil penelusuran meskipun setelan ini diaktifkan. Ini karena panel perlu ditutup untuk melihat hasil pencarian pada dokumen.",
+      "pageManipulation": "Manipulasi Halaman",
+      "disablePageDeletionConfirmationModal": "Nonaktifkan Modal Konfirmasi Penghapusan Halaman",
+      "disablePageDeletionConfirmationModalDesc": "Nonaktifkan modal konfirmasi saat menghapus halaman dari tampilan thumbnail",
+      "disableMultiselect": "Nonaktifkan Multipilih",
+      "disableMultiselectDesc": "Nonaktifkan multi pilih di panel gambar mini kiri"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Pilih bahasa"
   },
+  "insertPageModal": {
+    "title": "Tambahkan Halaman Baru",
+    "tabs": {
+      "blank": "Kosong",
+      "upload": "Mengunggah"
+    },
+    "pagePlacements": {
+      "header": "Penempatan Halaman",
+      "above": "Di Atas Halaman",
+      "below": "Di Bawah Halaman"
+    },
+    "pageLocations": {
+      "header": "Lokasi Halaman",
+      "specify": "Tentukan Halaman",
+      "amount": "Jumlah Halaman",
+      "total": "Total",
+      "pages": "halaman"
+    },
+    "pageDimensions": {
+      "header": "Dimensi Halaman",
+      "subHeader": "Preset",
+      "presets": {
+        "letter": "Surat",
+        "halfLetter": "Setengah huruf",
+        "juniorLegal": "Hukum junior",
+        "custom": "Kebiasaan"
+      }
+    },
+    "browse": "Mencari berkas",
+    "fileSelected": {
+      "title": "Pilih Halaman untuk Ditambah"
+    },
+    "button": "Tambahkan Halaman"
+  },
   "multiViewer": {
     "dragAndDrop": "Seret dan Jatuhkan file Anda di sini untuk membandingkan",
     "or": "Atau",
@@ -976,5 +1044,26 @@
       "new": "Baru",
       "page": "Halaman"
     }
+  },
+  "saveModal": {
+    "close": "Menutup",
+    "saveAs": "Simpan Sebagai",
+    "general": "Umum",
+    "fileName": "Nama file",
+    "fileType": "Jenis File",
+    "fileLocation": "Lokasi file",
+    "browse": "Jelajahi",
+    "pageRange": "Rentang Halaman",
+    "all": "Semua",
+    "currentView": "Pandangan saat ini",
+    "currentPage": "Halaman saat ini",
+    "specifyPage": "Tentukan Halaman",
+    "properties": "Properti",
+    "includeAnnotation": "Sertakan Anotasi",
+    "includeComments": "Sertakan Komentar",
+    "watermark": "Tanda air",
+    "addWatermark": "Tambahkan Tanda Air",
+    "save": "Menyimpan file",
+    "pageError": "Halaman tidak valid. Rentang halaman yang valid adalah antara 1 -"
   }
 }

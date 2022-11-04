@@ -1,208 +1,227 @@
 .bookmark-outline-panel {
   display: flex;
+  padding-left: var(--padding);
+  padding-right: var(--padding-small);
+}
 
-  .bookmark-outline-control-button {
-    width: auto;
+.bookmark-outline-control-button {
+  width: auto;
+
+  span {
+    color: inherit;
+  }
+
+  &,
+  &[disabled],
+  &.disabled {
+    color: var(--secondary-button-text);
+  }
+
+  &[disabled],
+  &.disabled {
+    opacity: 0.5;
 
     span {
       color: inherit;
     }
+  }
 
-    &,
-    &[disabled],
-    &.disabled {
-      color: var(--secondary-button-text);
+  &:not([disabled]),
+  &:not(.disabled) {
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: var(--secondary-button-hover);
     }
+  }
+}
 
-    &[disabled],
-    &.disabled {
-      opacity: 0.5;
+.bookmark-outline-panel-header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--padding-tiny);
+  border-bottom: 1px solid var(--border);
 
-      span {
-        color: inherit;
+  .header-title {
+    font-size: 16px;
+  }
+}
+
+.bookmark-outline-row {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.msg-no-bookmark-outline {
+  color: var(--placeholder-text);
+  text-align: center;
+}
+
+.bookmark-outline-single-container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  border-radius: 4px;
+
+  &.default {
+    padding: var(--padding-small) var(--padding-tiny);
+    border: 1px solid transparent;
+
+    &.hover,
+    &:hover {
+      cursor: pointer;
+
+      .bookmark-outline-more-button {
+        display: flex;
       }
     }
 
     &:hover {
-      background-color: var(--view-header-button-hover);
+      background-color: var(--outline-selected);
     }
 
-    &:active,
-    &:focus {
-      background-color: var(--view-header-button-active);
-    }
-  }
-
-  .bookmark-outline-panel-header {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: var(--padding);
-    margin-right: var(--padding);
-    padding-bottom: var(--padding-tiny);
-    border-bottom: 1px solid var(--border);
-
-    .header-title {
-      font-size: 16px;
-    }
-
-    .header-edit-button {
-      padding: var(--padding-tiny) var(--padding-medium);
-    }
-  }
-
-  .bookmark-outline-row {
-    flex-grow: 1;
-    overflow-y: auto;
-  }
-
-  .msg-no-bookmark-outline {
-    color: var(--placeholder-text);
-    text-align: center;
-    margin-top: var(--padding);
-  }
-
-  .bookmark-outline-single-container {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: flex-start;
-    margin-top: var(--padding-medium);
-    border-radius: 4px;
-
-    &.default {
-      margin-left: var(--padding);
-      margin-right: var(--padding);
-      padding: var(--padding-small) var(--padding-tiny);
-
-      &.hover,
-      &:hover {
-        background-color: var(--outline-selected);
-        cursor: pointer;
-
-        .bookmark-outline-more-button {
-          opacity: 1;
-          visibility: visible;
-        }
-      }
-    }
-
-    &.adding,
-    &.editing {
-      background-color: var(--faded-component-background);
-      padding: var(--padding-medium) 20px;
-    }
-
-    .bookmark-outline-checkbox {
-      flex-grow: 0;
-      flex-shrink: 0;
-      margin-top: 1px;
-      margin-bottom: 0;
-      margin-right: var(--padding-small);
+    &.hover,
+    &.selected {
+      background-color: var(--popup-button-active);
     }
 
     .bookmark-outline-label-row {
-      flex-grow: 1;
-      flex-shrink: 1;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-      position: relative;
+      overflow: hidden;
+    }
+  }
+
+  &.editing {
+    background-color: var(--faded-component-background);
+    padding: var(--padding-medium) 20px;
+  }
+
+
+  &.preview {
+    display: inline-flex;
+    margin-top: 0;
+    padding: var(--padding-small);
+    background-color: var(--component-background);
+    box-shadow: 0px 0px 3px var(--note-box-shadow);
+  }
+
+  .bookmark-outline-checkbox {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-top: 1px;
+    margin-bottom: 0;
+    margin-right: var(--padding-small);
+  }
+
+  .bookmark-outline-label-row {
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bookmark-outline-label {
+    font-weight: 600;
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-bottom: var(--padding-small);
+  }
+
+  .bookmark-outline-text,
+  .bookmark-outline-input {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: calc(100% - 18px); // more-button width + margin-left = 18px
+  }
+
+  .bookmark-text-input {
+    margin-left: var(--padding-large);
+  }
+
+  .bookmark-outline-input {
+    color: var(--text-color);
+    width: calc(100% - var(--padding-large));
+    padding: var(--padding-small);
+    border: 1px solid var(--border);
+
+    &:focus {
+      border-color: var(--outline-color);
     }
 
-    .bookmark-outline-label {
-      font-weight: 600;
-      flex-grow: 1;
-      flex-shrink: 1;
+    &::placeholder {
+      color: var(--placeholder-text);
+    }
+  }
+
+  .bookmark-outline-more-button {
+    display: none;
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: auto;
+    height: auto;
+    margin-left: var(--padding-tiny);
+
+    .Icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .bookmark-outline-editing-controls {
+    flex-basis: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: var(--padding-medium);
+  }
+
+  .bookmark-outline-cancel-button,
+  .bookmark-outline-save-button {
+    width: auto;
+    padding: 6px var(--padding);
+  }
+
+  .bookmark-outline-cancel-button {
+    color: var(--secondary-button-text);
+
+    &:hover {
+      color: var(--secondary-button-hover);
+    }
+  }
+
+  .bookmark-outline-save-button {
+    color: var(--primary-button-text);
+    background-color: var(--primary-button);
+    margin-left: var(--padding-tiny);
+    border-radius: 4px;
+
+    &:hover {
+      background-color: var(--primary-button-hover);
     }
 
-    .bookmark-outline-text,
-    .bookmark-outline-input {
-      flex-basis: 100%;
-      margin-top: var(--padding-small);
-      margin-left: var(--padding-large);
-    }
-
-    .bookmark-outline-input {
-      color: var(--text-color);
-      width: calc(100% - var(--padding-large));
-      padding: var(--padding-small);
-      border: 1px solid var(--border);
-
-      &:focus {
-        border-color: var(--outline-color);
-      }
-
-      &::placeholder {
-        color: var(--placeholder-text);
-      }
-    }
-
-    .bookmark-outline-more-button {
-      flex-grow: 0;
-      flex-shrink: 0;
-      opacity: 0;
-      visibility: hidden;
-      width: auto;
-      height: auto;
-
-      .Icon {
-        width: 14px;
-        height: auto;
-      }
-    }
-
-    .bookmark-outline-editing-controls {
-      flex-basis: 100%;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin-top: var(--padding-medium);
-    }
-
-    .bookmark-outline-cancel-button,
-    .bookmark-outline-save-button {
-      width: auto;
-      padding: 6px var(--padding);
-    }
-
-    .bookmark-outline-cancel-button {
-      color: var(--secondary-button-text);
-      margin-right: var(--padding-tiny);
-
-      &:hover {
-        color: var(--secondary-button-hover);
-      }
-    }
-
-    .bookmark-outline-save-button {
-      color: var(--primary-button-text);
-      background-color: var(--primary-button);
-      border-radius: 4px;
-
-      &:hover {
-        background-color: var(--primary-button-hover);
-      }
-
-      &:disabled,
-      &.disabled {
-        background-color: var(--primary-button) !important;
-        opacity: .5;
-      }
+    &:disabled,
+    &.disabled {
+      background-color: var(--primary-button) !important;
+      opacity: .5;
     }
   }
 }
 
 .bookmark-outline-footer {
   border-top: 1.5px solid var(--border);
-  padding: 14px 0px 16px 0px;
+  padding-top: var(--padding-medium);
+  padding-bottom: var(--padding-medium);
   display: flex;
   justify-content: center;
   align-items: center;
 
   .add-new-button {
-    padding: var(--padding-small) var(--padding);
-
     .Icon {
       width: 14px;
       height: 14px;

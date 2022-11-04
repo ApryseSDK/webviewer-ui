@@ -8,7 +8,7 @@ describe('useOnFormFieldAnnotationAddedOrSelected hook', () => {
   it('adds event listeners to Annotation Changed', () => {
     core.addEventListener = jest.fn();
 
-    const { result } = renderHook(function () {
+    const { result } = renderHook(function() {
       return useOnFormFieldAnnotationAddedOrSelected();
     });
 
@@ -20,7 +20,7 @@ describe('useOnFormFieldAnnotationAddedOrSelected hook', () => {
   it('adds event listeners to Annotation Selected', () => {
     core.addEventListener = jest.fn();
 
-    const { result } = renderHook(function () {
+    const { result } = renderHook(function() {
       return useOnFormFieldAnnotationAddedOrSelected();
     });
 
@@ -32,7 +32,7 @@ describe('useOnFormFieldAnnotationAddedOrSelected hook', () => {
   it('removes event listeners to Annotation Changed when component is unmounted', () => {
     core.removeEventListener = jest.fn();
 
-    const { result, unmount } = renderHook(function () {
+    const { result, unmount } = renderHook(function() {
       return useOnFormFieldAnnotationAddedOrSelected();
     });
 
@@ -45,7 +45,7 @@ describe('useOnFormFieldAnnotationAddedOrSelected hook', () => {
   it('removes event listeners to Annotation Selected when component is unmounted', () => {
     core.removeEventListener = jest.fn();
 
-    const { result, unmount } = renderHook(function () {
+    const { result, unmount } = renderHook(function() {
       return useOnFormFieldAnnotationAddedOrSelected();
     });
 
@@ -54,5 +54,4 @@ describe('useOnFormFieldAnnotationAddedOrSelected hook', () => {
 
     expect(core.removeEventListener).toBeCalledWith('annotationSelected', expect.any(Function));
   });
-
-})
+});

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import ButtonComponent from './Button';
 
 const noop = () => { };
@@ -13,7 +13,7 @@ const initialState = {
 };
 function rootReducer(state = initialState, action) {
   return state;
-};
+}
 
 const store = createStore(rootReducer);
 
@@ -40,4 +40,3 @@ Button.args = {
   strokeColor: '#E44234',
   dataElement: 'test',
 };
-

@@ -1,7 +1,7 @@
 import React from 'react';
 import PageInsertionControls from './PageInsertionControls';
-import { insertAbove, insertBelow, noPagesSelectedWarning } from "helpers/pageManipulationFunctions";
-import { useDispatch } from "react-redux";
+import { insertAbove, insertBelow, noPagesSelectedWarning } from 'helpers/pageManipulationFunctions';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import actions from 'actions';
 import { isMobile } from 'helpers/device';
@@ -21,7 +21,7 @@ function PageInsertionControlsContainer(props) {
     } else {
       insertAbove(pageNumbers);
     }
-    isMobile() && dispatch(actions.closeElement("pageManipulationOverlay"));
+    isMobile() && dispatch(actions.closeElement('pageManipulationOverlay'));
   };
   const onInsertBelow = () => {
     if (warn) {
@@ -29,7 +29,7 @@ function PageInsertionControlsContainer(props) {
     } else {
       insertBelow(pageNumbers);
     }
-    isMobile() && dispatch(actions.closeElement("pageManipulationOverlay"));
+    isMobile() && dispatch(actions.closeElement('pageManipulationOverlay'));
   };
   return (
     <PageInsertionControls

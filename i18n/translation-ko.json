@@ -58,8 +58,6 @@
     "type": "입력",
     "upload": "업로드",
     "link": "링크",
-    "darkMode": "다크모드",
-    "lightMode": "라이트모드",
     "fileAttachmentDownload": "다운로드",
     "prevResult": "이전결과",
     "nextResult": "다음결과",
@@ -94,7 +92,6 @@
     "unselect": "선택취소",
     "addMark": "마크추가",
     "viewFile": "파일보기",
-    "switchLanguage": "언어",
     "multiReplyAnnotations": "선택한 주석에 답장({{count}}개)",
     "comparePages": "페이지 비교",
     "startComparison": "비교 시작"
@@ -297,7 +294,8 @@
       "squiggly": "물결선",
       "3D": "3D",
       "other": "더보기",
-      "initials": "머리 글자"
+      "initials": "머리 글자",
+      "saved": "저장됨"
     },
     "notesOrder": {
       "dropdownLabel": "정렬목록",
@@ -422,7 +420,8 @@
       "typeInitial": "유형 이니셜*",
       "drawSignature": "서명 그리기*",
       "drawInitial": "이니셜 그리기*",
-      "pickInitialsFile": "이니셜 선택"
+      "pickInitialsFile": "이니셜 선택",
+      "noSignatures": "현재 저장된 서명이 없습니다."
     },
     "pageReplacementModal": {
       "dragAndDrop": "여기에 드래그앤드롭 하세요.",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "스타일"
+    },
+    "settings": {
+      "settings": "설정",
+      "general": "일반적인",
+      "keyboardShortcut": "키보드 단축키",
+      "advancedSetting": "고급 설정",
+      "language": "언어",
+      "theme": "주제",
+      "darkMode": "다크 모드",
+      "lightMode": "라이트 모드",
+      "viewing": "보기",
+      "disableFadePageNavigationComponent": "페이드 페이지 탐색 구성 요소 비활성화",
+      "disableFadePageNavigationComponentDesc": "항상 페이지 탐색 구성 요소를 화면에 유지하십시오. 기본 동작은 일정 시간 동안 사용하지 않으면 페이드하는 것입니다.",
+      "disableNativeScrolling": "기본 스크롤 비활성화",
+      "disableNativeScrollingDesc": "이전에 활성화한 경우 기본 모바일 장치 스크롤 동작을 비활성화합니다. 기본 모바일 장치 스크롤 동작은 기본적으로 꺼져 있습니다.",
+      "annotations": "주석",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "주석 팝업에서 도구 기본 스타일 업데이트 비활성화",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "주석을 생성한 관련 도구에 대한 주석 스타일 업데이트의 동기화를 비활성화합니다. 따라서 주석의 스타일이 변경되면 도구 기본 스타일은 업데이트되지 않습니다.",
+      "notesPanel": "노트 패널",
+      "disableNoteSubmissionWithEnter": "Enter 키를 사용하여 메모 제출 비활성화",
+      "disableNoteSubmissionWithEnterDesc": "이전에 활성화된 경우에만 Enter 키를 눌러 메모 제출 기능을 비활성화합니다. 이렇게 하면 메모 제출이 Ctrl/Cmd + Enter의 기본값으로 되돌아갑니다.",
+      "disableAutoExpandCommentThread": "자동 확장 댓글 스레드 비활성화",
+      "disableAutoExpandCommentThreadDesc": "노트 패널에서 모든 댓글 스레드의 자동 확장을 비활성화합니다.",
+      "disableReplyCollapse": "답장 축소 비활성화",
+      "disableReplyCollapseDesc": "메모 패널에서 회신 축소를 비활성화합니다.",
+      "disableTextCollapse": "텍스트 축소 비활성화",
+      "disableTextCollapseDesc": "노트 패널에서 주석 텍스트 축소를 비활성화합니다.",
+      "search": "검색",
+      "disableClearSearchOnPanelClose": "패널 닫기에서 검색 지우기 비활성화",
+      "disableClearSearchOnPanelCloseDesc": "사용자가 검색 패널을 닫을 때 검색 결과 지우기를 비활성화합니다. 비활성화하면 사용자가 검색 패널을 닫았다가 다시 열어도 검색 결과가 유지됩니다. 이 설정이 활성화된 경우에도 모바일 장치는 검색 결과를 지우지 않습니다. 문서의 검색 결과를 보려면 패널을 닫아야 하기 때문입니다.",
+      "pageManipulation": "페이지 조작",
+      "disablePageDeletionConfirmationModal": "페이지 삭제 확인 모달 비활성화",
+      "disablePageDeletionConfirmationModalDesc": "썸네일 보기에서 페이지를 삭제할 때 확인 모달 비활성화",
+      "disableMultiselect": "다중 선택 비활성화",
+      "disableMultiselectDesc": "왼쪽 축소판 패널에서 다중 선택 비활성화"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "언어 선택"
   },
+  "insertPageModal": {
+    "title": "새 페이지 추가",
+    "tabs": {
+      "blank": "공백",
+      "upload": "업로드"
+    },
+    "pagePlacements": {
+      "header": "페이지 배치",
+      "above": "페이지 위",
+      "below": "페이지 아래"
+    },
+    "pageLocations": {
+      "header": "페이지 위치",
+      "specify": "페이지 지정",
+      "amount": "페이지 수",
+      "total": "총",
+      "pages": "페이지"
+    },
+    "pageDimensions": {
+      "header": "페이지 크기",
+      "subHeader": "사전 설정",
+      "presets": {
+        "letter": "편지",
+        "halfLetter": "반자",
+        "juniorLegal": "주니어 법률",
+        "custom": "관습"
+      }
+    },
+    "browse": "파일 찾아보기",
+    "fileSelected": {
+      "title": "추가할 페이지 선택"
+    },
+    "button": "페이지 추가"
+  },
   "multiViewer": {
     "dragAndDrop": "비교하려면 여기에 파일을 끌어다 놓습니다.",
     "or": "또는",
@@ -976,5 +1044,26 @@
       "new": "새로운",
       "page": "페이지"
     }
+  },
+  "saveModal": {
+    "close": "닫다",
+    "saveAs": "다른 이름으로 저장",
+    "general": "일반적인",
+    "fileName": "파일 이름",
+    "fileType": "파일 형식",
+    "fileLocation": "파일 위치",
+    "browse": "검색",
+    "pageRange": "페이지 범위",
+    "all": "모두",
+    "currentView": "현재 보기",
+    "currentPage": "현재 페이지",
+    "specifyPage": "페이지 지정",
+    "properties": "속성",
+    "includeAnnotation": "주석 포함",
+    "includeComments": "설명 포함",
+    "watermark": "양수표",
+    "addWatermark": "워터 마크를 추가",
+    "save": "파일을 저장",
+    "pageError": "잘못된 페이지입니다. 유효한 페이지 범위는 1 -"
   }
 }

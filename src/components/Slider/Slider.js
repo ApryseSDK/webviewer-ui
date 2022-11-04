@@ -38,9 +38,9 @@ class Slider extends React.PureComponent {
     this.inputRef = React.createRef();
     this.lineLength = 0;
     this.state = {
-        localValue: props.value,
-        isEiditingInputField: false,
-    }
+      localValue: props.value,
+      isEiditingInputField: false,
+    };
   }
 
   componentDidMount() {
@@ -54,11 +54,12 @@ class Slider extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (prevProps.value !== this.props.value) {
-      this.setState({ localValue: this.props.value })
+      this.setState({ localValue: this.props.value });
     }
   }
-  
+
   // Fix for slider having the wrong size
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillUpdate() {
     this.setLineLength();
   }
@@ -80,7 +81,7 @@ class Slider extends React.PureComponent {
     this.lineLength = 0.94 * this.sliderSvg.current.getBoundingClientRect().width - 2 * getCircleRadius(this.props.isMobile);
   }
 
-  onMouseDown = e => {
+  onMouseDown = (e) => {
     e.preventDefault();
     this.isMouseDown = true;
     this.onMove(e.nativeEvent);
@@ -95,21 +96,21 @@ class Slider extends React.PureComponent {
     const { property, onStyleChange, convertRelativeCirclePositionToValue } = this.props;
     const relativeCirclePosition = this.getRelativeCirclePosition(e);
     const value = convertRelativeCirclePositionToValue(relativeCirclePosition);
-    
+
     onStyleChange(property, value);
     if (this.props.withInputField) {
       this.setState({
         isEiditingInputField: false
-      })
+      });
     }
     this.isMouseDown = false;
   }
 
-  onTouchStart = e => {
+  onTouchStart = (e) => {
     this.onMove(e);
   }
 
-  onMove = e => {
+  onMove = (e) => {
     const isUsingMouse = !e.touches;
     if (isUsingMouse && !this.isMouseDown) {
       return;
@@ -125,10 +126,10 @@ class Slider extends React.PureComponent {
 
     this.setState({
       localValue: value
-    })
+    });
   }
 
-  getRelativeCirclePosition = e => {
+  getRelativeCirclePosition = (e) => {
     const isUsingMouse = !e.touches;
     const lineStart = getCircleRadius(this.props.isMobile);
     const lineEnd = lineStart + this.lineLength;
@@ -150,8 +151,8 @@ class Slider extends React.PureComponent {
     return (circlePosition - lineStart) / this.lineLength;
   }
 
-  onInputChange = e => {
-    const { getLocalValue, property, onSliderChange, max, inputFieldType} = this.props;
+  onInputChange = (e) => {
+    const { getLocalValue, property, onStyleChange, onSliderChange, max, inputFieldType } = this.props;
 
     if (inputFieldType === 'number' && (e.target.value || e.target.value === 0)) {
       if (e.target.value > max) {
@@ -160,6 +161,7 @@ class Slider extends React.PureComponent {
       const value = e.target.value;
       const localValue = getLocalValue ? getLocalValue(value) : value;
       onSliderChange(property, localValue);
+      onStyleChange(property, localValue);
       this.setState({
         localValue
       });
@@ -174,7 +176,7 @@ class Slider extends React.PureComponent {
 
   onInputBlur = (isEiditingInputField) => {
     const { min, getLocalValue } = this.props;
-    if((this.inputRef.current.value !==0 && !this.inputRef.current.value) || this.inputRef.current.value < min) {
+    if ((this.inputRef.current.value !== 0 && !this.inputRef.current.value) || this.inputRef.current.value < min) {
       this.inputRef.current.value = min;
       const localValue = getLocalValue ? getLocalValue(min) : min;
       this.setState({ localValue });
@@ -187,8 +189,8 @@ class Slider extends React.PureComponent {
   };
 
   getInputElement = () => {
-    const { inputFieldType, min, max, step, getDisplayValue } = this.props
-    const displayValue = getDisplayValue(this.state.localValue)
+    const { inputFieldType, min, max, step, getDisplayValue } = this.props;
+    const displayValue = getDisplayValue(this.state.localValue);
     if (this.state.isEiditingInputField && inputFieldType === 'number') {
       return (
         <div className="slider-input-wrapper">
@@ -199,15 +201,15 @@ class Slider extends React.PureComponent {
             onChange={this.onInputChange}
             onKeyDown={this.onInputKeyDown}
             className="slider-input-field"
-            onBlur={()=>this.onInputBlur(false)}
-            // The prop min={} can not be used here, otherwise its impossible to delete everything completely inside input box, which was complained by PM. 
+            onBlur={() => this.onInputBlur(false)}
+            // The prop min={} can not be used here, otherwise its impossible to delete everything completely inside input box, which was complained by PM.
             max={max}
             min={min}
             step={step}
             ref={this.inputRef}
           />
         </div>
-      )
+      );
     }
 
     return (
@@ -218,16 +220,16 @@ class Slider extends React.PureComponent {
         value={getDisplayValue(this.state.localValue)}
         onFocus={this.onInputFocus}
       />
-    )
+    );
   }
 
   renderSlider = () => {
     const { dataElement, displayProperty, getCirclePosition, t, withInputField, getDisplayValue } = this.props;
     const circleCenter = getCirclePosition(this.lineLength, this.state.localValue);
-    
+
     return (
       <div className="slider" data-element={dataElement}>
-        <div className="slider-property" onMouseDown={(e)=>e.preventDefault()}>
+        <div className="slider-property" onMouseDown={(e) => e.preventDefault()}>
           {t(`option.slider.${displayProperty}`)}
         </div>
         <div className="slider-element-container">
@@ -260,7 +262,7 @@ class Slider extends React.PureComponent {
 const ConnectedSlider = withTranslation(null, { wait: false })(Slider);
 
 
-export default props => {
+const connectedComponent = (props) => {
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -273,3 +275,5 @@ export default props => {
     <ConnectedSlider {...props} isMobile={isMobile} />
   );
 };
+
+export default connectedComponent;

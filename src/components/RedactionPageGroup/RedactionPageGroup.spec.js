@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RedactionPageGroup from './RedactionPageGroup';
-import { Basic } from './RedactionPageGroup.stories'
+import { Basic } from './RedactionPageGroup.stories';
 import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
 import { redactionTypeMap } from 'constants/redactionTypes';
 
@@ -31,19 +31,21 @@ const RedactionPageGroupWithRedux = withProviders(RedactionPageGroup);
 const RedactionPageGroupWithContext = (props) => {
   const context = {
     selectedRedactionItemId: '1',
-    setSelectedRedactionItemId: (id) => { console.log({ id }) },
+    setSelectedRedactionItemId: (id) => {
+      console.log({ id });
+    },
   };
   return (
     <RedactionPanelContext.Provider value={context}>
       <RedactionPageGroupWithRedux {...props} />
     </RedactionPanelContext.Provider>
-  )
-}
+  );
+};
 
 describe('RedactionPageGroup', () => {
   it('renders text redaction item correctly', () => {
     expect(() => {
-      render(<Basic />)
+      render(<Basic />);
     }).not.toThrow();
   });
 
@@ -86,5 +88,5 @@ describe('RedactionPageGroup', () => {
 
     renderedRedactionItems = screen.getAllByRole('listitem');
     expect(renderedRedactionItems.length).toEqual(redactionItems.length);
-  })
+  });
 });

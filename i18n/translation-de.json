@@ -58,8 +58,6 @@
     "type": "Schreiben",
     "upload": "Hochladen",
     "link": "Verknüpfung",
-    "darkMode": "Dunkler Modus",
-    "lightMode": "Heller Modus",
     "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter",
     "prevResult": "Vorheriges Ergebnis",
     "nextResult": "Nächstes Ergebnis",
@@ -94,7 +92,6 @@
     "unselect": "Auswahl aufheben",
     "addMark": "Markus hinzufügen",
     "viewFile": "Datei ansehen",
-    "switchLanguage": "Sprache",
     "multiReplyAnnotations": "Auf ausgewählte Anmerkungen antworten ({{count}})",
     "comparePages": "Seiten vergleichen",
     "startComparison": "Vergleich starten"
@@ -297,7 +294,8 @@
       "squiggly": "Gewellte Linie",
       "3D": "3D",
       "other": "Sonstige",
-      "initials": "Initialen"
+      "initials": "Initialen",
+      "saved": "Gerettet"
     },
     "notesOrder": {
       "dropdownLabel": "Sortierreihenfolge Liste",
@@ -422,7 +420,8 @@
       "typeInitial": "Typ Initialen*",
       "drawSignature": "Unterschrift zeichnen*",
       "drawInitial": "Initialen zeichnen*",
-      "pickInitialsFile": "Wählen Sie Initialen"
+      "pickInitialsFile": "Wählen Sie Initialen",
+      "noSignatures": "Es sind derzeit keine gespeicherten Unterschriften vorhanden."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Stil"
+    },
+    "settings": {
+      "settings": "Einstellungen",
+      "general": "Allgemein",
+      "keyboardShortcut": "Tastaturkürzel",
+      "advancedSetting": "Erweiterte Einstellung",
+      "language": "Sprache",
+      "theme": "Thema",
+      "darkMode": "Dunkler Modus",
+      "lightMode": "Lichtmodus",
+      "viewing": "Anzeigen",
+      "disableFadePageNavigationComponent": "Deaktivieren Sie die Seitennavigationskomponente ausblenden",
+      "disableFadePageNavigationComponentDesc": "Lassen Sie die Seitennavigationskomponente immer auf dem Bildschirm. Das Standardverhalten besteht darin, es nach einer bestimmten Zeit der Inaktivität auszublenden.",
+      "disableNativeScrolling": "Natives Scrollen deaktivieren",
+      "disableNativeScrollingDesc": "Deaktivieren Sie das native Scrollverhalten mobiler Geräte, wenn es zuvor aktiviert wurde. Beachten Sie, dass das native Scrollverhalten mobiler Geräte standardmäßig deaktiviert ist.",
+      "annotations": "Anmerkungen",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Deaktivieren Sie die Aktualisierung des Werkzeug-Standardstils aus dem Anmerkungs-Popup",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Deaktiviert die Synchronisierung von Anmerkungsstilaktualisierungen mit dem zugeordneten Werkzeug, das die Anmerkung erstellt hat. Wenn also der Stil einer Anmerkung geändert wird, werden die Standardstile des Werkzeugs nicht aktualisiert.",
+      "notesPanel": "Notizenbereich",
+      "disableNoteSubmissionWithEnter": "Deaktivieren Sie das Senden von Notizen mit der Eingabetaste",
+      "disableNoteSubmissionWithEnterDesc": "Deaktivieren Sie die Möglichkeit, Notizen zu senden, indem Sie nur die Eingabetaste drücken, wenn sie zuvor aktiviert war. Dadurch wird das Senden von Notizen auf die Standardeinstellung zurückgesetzt, die Strg/Befehl + Eingabetaste ist.",
+      "disableAutoExpandCommentThread": "Kommentar-Thread automatisch erweitern deaktivieren",
+      "disableAutoExpandCommentThreadDesc": "Deaktiviert die automatische Erweiterung aller Kommentar-Threads im Notizenbereich.",
+      "disableReplyCollapse": "Reply Collapse deaktivieren",
+      "disableReplyCollapseDesc": "Deaktiviert das Reduzieren der Antworten im Notizenbereich.",
+      "disableTextCollapse": "Deaktivieren Sie die Textreduzierung",
+      "disableTextCollapseDesc": "Deaktiviert das Reduzieren des Anmerkungstexts im Notizenbereich.",
+      "search": "Suche",
+      "disableClearSearchOnPanelClose": "Deaktivieren Sie die Suche beim Schließen des Fensters löschen",
+      "disableClearSearchOnPanelCloseDesc": "Deaktivieren Sie das Löschen von Suchergebnissen, wenn der Benutzer das Suchfeld schließt. Bei Deaktivierung werden die Suchergebnisse beibehalten, auch wenn der Benutzer das Suchfeld schließt und erneut öffnet. Beachten Sie, dass Mobilgeräte niemals Suchergebnisse löschen, selbst wenn diese Einstellung aktiviert ist. Dies liegt daran, dass der Bereich geschlossen werden muss, um die Suchergebnisse für das Dokument anzuzeigen.",
+      "pageManipulation": "Seitenmanipulation",
+      "disablePageDeletionConfirmationModal": "Deaktivieren Sie das Modal zur Bestätigung der Seitenlöschung",
+      "disablePageDeletionConfirmationModalDesc": "Deaktivieren Sie das Bestätigungsmodal beim Löschen einer Seite aus der Miniaturansicht",
+      "disableMultiselect": "Mehrfachauswahl deaktivieren",
+      "disableMultiselectDesc": "Deaktivieren Sie die Mehrfachauswahl im linken Miniaturbildbereich"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Sprache auswählen"
   },
+  "insertPageModal": {
+    "title": "Neue Seite hinzufügen",
+    "tabs": {
+      "blank": "Leer",
+      "upload": "Hochladen"
+    },
+    "pagePlacements": {
+      "header": "Seitenplatzierung",
+      "above": "Oben Seite",
+      "below": "Unten Seite"
+    },
+    "pageLocations": {
+      "header": "Seitenposition",
+      "specify": "Seite angeben",
+      "amount": "Anzahl der Seiten",
+      "total": "Gesamt",
+      "pages": "Seiten"
+    },
+    "pageDimensions": {
+      "header": "Seitenabmessungen",
+      "subHeader": "Voreinstellungen",
+      "presets": {
+        "letter": "Brief",
+        "halfLetter": "Halber Buchstabe",
+        "juniorLegal": "Junior legal",
+        "custom": "Brauch"
+      }
+    },
+    "browse": "Dateien durchsuchen",
+    "fileSelected": {
+      "title": "Wählen Sie Seiten zum Hinzufügen aus"
+    },
+    "button": "Seite(n) hinzufügen"
+  },
   "multiViewer": {
     "dragAndDrop": "Ziehen Sie Ihre Datei hierher, um sie zu vergleichen",
     "or": "Oder",
@@ -976,5 +1044,26 @@
       "new": "Neu",
       "page": "Buchseite"
     }
+  },
+  "saveModal": {
+    "close": "Nah dran",
+    "saveAs": "Speichern als",
+    "general": "Allgemein",
+    "fileName": "Dateiname",
+    "fileType": "Dateityp",
+    "fileLocation": "Speicherort",
+    "browse": "Durchsuche",
+    "pageRange": "SeitenReichweite",
+    "all": "Alle",
+    "currentView": "Momentane Sicht",
+    "currentPage": "Aktuelle Seite",
+    "specifyPage": "Seite angeben",
+    "properties": "Eigenschaften",
+    "includeAnnotation": "Anmerkungen einschließen",
+    "includeComments": "Kommentare einschließen",
+    "watermark": "Wasserzeichen",
+    "addWatermark": "Wasserzeichen hinzufügen",
+    "save": "Datei speichern",
+    "pageError": "Ungültige Seite. Gültige Seitenbereiche liegen zwischen 1 -"
   }
 }

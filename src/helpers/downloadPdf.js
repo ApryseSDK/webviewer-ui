@@ -59,7 +59,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           padding: 0;
           margin: 0;
         }
-  
+
         .page__container {
           box-sizing: border-box;
           display: flex !important;
@@ -69,7 +69,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           min-width: 100%;
           font-size: 10px;
         }
-  
+
         .page__container .page__header {
           display: block !important;
           align-self: flex-start;
@@ -78,7 +78,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           padding-bottom: 0.6rem;
           border-bottom: 0.1rem solid black;
         }
-  
+
         .page__container .note {
           display: flex !important;
           flex-direction: column;
@@ -87,17 +87,17 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           border-radius: 0.4rem;
           margin-bottom: 0.5rem;
         }
-  
+
         .page__container .note .note__info {
           display: block !important;
           font-size: 1.3rem;
           margin-bottom: 0.1rem;
         }
-  
+
         .page__container .note .note__info--with-icon {
           display: flex !important;
         }
-  
+
         .page__container .note .note__info--with-icon .note__icon {
           display: block !important;
           width: 1.65rem;
@@ -105,30 +105,30 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           margin-top: -0.1rem;
           margin-right: 0.2rem;
         }
-  
+
         .page__container .note .note__info--with-icon .note__icon path:not([fill=none]) {
           display: block !important;
           fill: currentColor;
         }
-  
+
         .page__container .note .note__root .note__content {
           display: block !important;
           margin-left: 0.3rem;
         }
-  
+
         .page__container .note .note__root {
           display: block !important;
         }
-  
+
         .page__container .note .note__info--with-icon .note__icon svg {
           display: block !important;
         }
-  
+
         .page__container .note .note__reply {
           display: block !important;
           margin: 0.5rem 0 0 2rem;
         }
-  
+
         .page__container .note .note__content {
           display: block !important;
           font-size: 1.2rem;
@@ -209,7 +209,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     };
 
     const downloadName =
-      (doc?.getType() === 'video' || doc?.getType() === 'audio' || doc?.getType() === 'office')
+      (doc?.getType().includes('video') || doc?.getType() === 'audio' || doc?.getType() === 'office')
         ? filename
         : getDownloadFilename(filename, '.pdf');
 
@@ -238,7 +238,6 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       } else {
         file = new File([arr], downloadName, { type: downloadType });
       }
-
       saveAs(file, downloadName);
       dispatch(actions.closeElement('loadingModal'));
       fireEvent(Events.FINISHED_SAVING_PDF);

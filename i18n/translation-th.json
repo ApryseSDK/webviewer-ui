@@ -58,8 +58,6 @@
     "type": "พิมพ์",
     "upload": "ที่อัพโหลด",
     "link": "ลิงค์",
-    "darkMode": "โหมดมืด",
-    "lightMode": "โหมดแสง",
     "fileAttachmentDownload": "ดาวน์โหลดไฟล์แนบ",
     "prevResult": "ผลลัพธ์ก่อนหน้า",
     "nextResult": "ผลลัพธ์ถัดไป",
@@ -94,7 +92,6 @@
     "unselect": "ยกเลิกการเลือก",
     "addMark": "เพิ่มเครื่องหมาย",
     "viewFile": "ไฟล์มุมมอง",
-    "switchLanguage": "ภาษา",
     "multiReplyAnnotations": "ตอบกลับคำอธิบายประกอบที่เลือก ({{จำนวน}})",
     "comparePages": "เปรียบเทียบหน้า",
     "startComparison": "เริ่มการเปรียบเทียบ"
@@ -297,7 +294,8 @@
       "squiggly": "ไก่เขี่ย",
       "3D": "3D",
       "other": "อื่น",
-      "initials": "ชื่อย่อ"
+      "initials": "ชื่อย่อ",
+      "saved": "บันทึกแล้ว"
     },
     "notesOrder": {
       "dropdownLabel": "เรียงลำดับรายการ",
@@ -422,7 +420,8 @@
       "typeInitial": "พิมพ์ชื่อย่อ*",
       "drawSignature": "วาดลายเซ็น*",
       "drawInitial": "วาดชื่อย่อ*",
-      "pickInitialsFile": "เลือกชื่อย่อ"
+      "pickInitialsFile": "เลือกชื่อย่อ",
+      "noSignatures": "ขณะนี้ไม่มีลายเซ็นที่บันทึกไว้"
     },
     "pageReplacementModal": {
       "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "สไตล์"
+    },
+    "settings": {
+      "settings": "การตั้งค่า",
+      "general": "ทั่วไป",
+      "keyboardShortcut": "แป้นพิมพ์ลัด",
+      "advancedSetting": "การตั้งค่าขั้นสูง",
+      "language": "ภาษา",
+      "theme": "ธีม",
+      "darkMode": "โหมดมืด",
+      "lightMode": "โหมดแสง",
+      "viewing": "กำลังดู",
+      "disableFadePageNavigationComponent": "ปิดใช้งานส่วนประกอบการนำทางหน้าเฟด",
+      "disableFadePageNavigationComponentDesc": "เก็บส่วนประกอบการนำทางของเพจไว้บนหน้าจอเสมอ พฤติกรรมเริ่มต้นคือการจางหายไปหลังจากไม่มีการใช้งานในช่วงระยะเวลาหนึ่ง",
+      "disableNativeScrolling": "ปิดการใช้งาน Native Scrolling",
+      "disableNativeScrollingDesc": "ปิดใช้งานลักษณะการเลื่อนของอุปกรณ์มือถือดั้งเดิมหากเปิดใช้งานไว้ก่อนหน้านี้ โปรดทราบว่าลักษณะการเลื่อนของอุปกรณ์เคลื่อนที่ดั้งเดิมจะปิดอยู่โดยค่าเริ่มต้น",
+      "annotations": "คำอธิบายประกอบ",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "ปิดใช้งานการอัปเดตสไตล์เริ่มต้นของเครื่องมือจากป๊อปอัปคำอธิบายประกอบ",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "ปิดใช้งานการซิงค์การอัปเดตรูปแบบคำอธิบายประกอบกับเครื่องมือที่เกี่ยวข้องซึ่งสร้างคำอธิบายประกอบ ดังนั้น หากรูปแบบคำอธิบายประกอบมีการเปลี่ยนแปลง รูปแบบเริ่มต้นของเครื่องมือจะไม่ได้รับการอัปเดต",
+      "notesPanel": "แผงบันทึกย่อ",
+      "disableNoteSubmissionWithEnter": "ปิดใช้งานการส่งโน้ตด้วย Enter",
+      "disableNoteSubmissionWithEnterDesc": "ปิดใช้งานความสามารถในการส่งบันทึกย่อโดยกด Enter หากเคยเปิดใช้งานไว้ก่อนหน้านี้เท่านั้น การดำเนินการนี้จะเปลี่ยนการส่งโน้ตกลับเป็นค่าเริ่มต้นซึ่งก็คือ Ctrl/Cmd + Enter",
+      "disableAutoExpandCommentThread": "ปิดการใช้งานอัตโนมัติขยายความคิดเห็นเธรด",
+      "disableAutoExpandCommentThreadDesc": "ปิดใช้งานการขยายอัตโนมัติของเธรดความคิดเห็นทั้งหมดในแผงบันทึกย่อ",
+      "disableReplyCollapse": "ปิดใช้งานการตอบกลับ ยุบ",
+      "disableReplyCollapseDesc": "ปิดใช้งานการยุบคำตอบในแผงบันทึกย่อ",
+      "disableTextCollapse": "ปิดใช้งานการยุบข้อความ",
+      "disableTextCollapseDesc": "ปิดใช้งานการยุบข้อความของคำอธิบายประกอบในแผงบันทึกย่อ",
+      "search": "ค้นหา",
+      "disableClearSearchOnPanelClose": "ปิดการใช้งานล้างการค้นหาบนแผง ปิด",
+      "disableClearSearchOnPanelCloseDesc": "ปิดใช้งานการล้างผลการค้นหาเมื่อผู้ใช้ปิดแผงการค้นหา เมื่อปิดใช้งาน ผลการค้นหาจะถูกเก็บไว้แม้ว่าผู้ใช้จะปิดและเปิดแผงการค้นหาอีกครั้ง โปรดทราบว่าอุปกรณ์เคลื่อนที่จะไม่ล้างผลการค้นหาแม้ว่าจะเปิดใช้การตั้งค่านี้อยู่ก็ตาม เนื่องจากต้องปิดแผงเพื่อดูผลการค้นหาในเอกสาร",
+      "pageManipulation": "การจัดการหน้า",
+      "disablePageDeletionConfirmationModal": "ปิดใช้งานโมดอลการยืนยันการลบหน้า",
+      "disablePageDeletionConfirmationModalDesc": "ปิดใช้งานโมดอลการยืนยันเมื่อลบหน้าจากมุมมองภาพขนาดย่อ",
+      "disableMultiselect": "ปิดใช้งานการเลือกหลายรายการ",
+      "disableMultiselectDesc": "ปิดใช้งานการเลือกหลายรายการในแผงภาพขนาดย่อด้านซ้าย"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "เลือกภาษา"
   },
+  "insertPageModal": {
+    "title": "เพิ่มหน้าใหม่",
+    "tabs": {
+      "blank": "ว่างเปล่า",
+      "upload": "ที่อัพโหลด"
+    },
+    "pagePlacements": {
+      "header": "ตำแหน่งหน้า",
+      "above": "เหนือหน้า",
+      "below": "หน้าล่าง"
+    },
+    "pageLocations": {
+      "header": "ที่ตั้งเพจ",
+      "specify": "ระบุหน้า",
+      "amount": "จำนวนหน้า",
+      "total": "ทั้งหมด",
+      "pages": "หน้า"
+    },
+    "pageDimensions": {
+      "header": "ขนาดหน้า",
+      "subHeader": "ที่ตั้งไว้ล่วงหน้า",
+      "presets": {
+        "letter": "จดหมาย",
+        "halfLetter": "อักษรครึ่งตัว",
+        "juniorLegal": "นิติศาสตร์จูเนียร์",
+        "custom": "กำหนดเอง"
+      }
+    },
+    "browse": "เรียกดูไฟล์",
+    "fileSelected": {
+      "title": "เลือกหน้าที่จะเพิ่ม"
+    },
+    "button": "เพิ่มหน้า"
+  },
   "multiViewer": {
     "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่เพื่อเปรียบเทียบ",
     "or": "หรือ",
@@ -976,5 +1044,26 @@
       "new": "ใหม่",
       "page": "หน้าหนังสือ"
     }
+  },
+  "saveModal": {
+    "close": "ปิด I",
+    "saveAs": "บันทึกเป็น",
+    "general": "ทั่วไป",
+    "fileName": "ชื่อไฟล์",
+    "fileType": "ประเภทไฟล์",
+    "fileLocation": "ตำแหน่งไฟล์",
+    "browse": "เรียกดู",
+    "pageRange": "ช่วงหน้า",
+    "all": "ทั้งหมด",
+    "currentView": "มุมมองปัจจุบัน",
+    "currentPage": "หน้าปัจจุบัน",
+    "specifyPage": "ระบุหน้า",
+    "properties": "คุณสมบัติ",
+    "includeAnnotation": "รวมคำอธิบายประกอบ",
+    "includeComments": "รวมความคิดเห็น",
+    "watermark": "ลายน้ำ",
+    "addWatermark": "ใส่ลายน้ำ",
+    "save": "บันทึกไฟล์",
+    "pageError": "หน้าไม่ถูกต้อง ช่วงหน้าที่ถูกต้องอยู่ระหว่าง 1 -"
   }
 }

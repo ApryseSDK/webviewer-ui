@@ -58,8 +58,6 @@
     "type": "টাইপ",
     "upload": "আপলোড করুন",
     "link": "লিঙ্ক",
-    "darkMode": "ডার্ক মোড",
-    "lightMode": "হালকা মোড",
     "fileAttachmentDownload": "সংযুক্ত ফাইল ডাউনলোড করুন",
     "prevResult": "পূর্ববর্তী ফলাফল",
     "nextResult": "পরবর্তী ফলাফল",
@@ -94,7 +92,6 @@
     "unselect": "অনির্বাচন করুন",
     "addMark": "মার্ক যোগ করুন",
     "viewFile": "নথি দেখ",
-    "switchLanguage": "ভাষা",
     "multiReplyAnnotations": "নির্বাচিত টীকাগুলির উত্তর দিন ({{count}})",
     "comparePages": "পৃষ্ঠাগুলির তুলনা করুন",
     "startComparison": "তুলনা শুরু করুন"
@@ -297,7 +294,8 @@
       "squiggly": "স্কুইগ্লি",
       "3D": "3D",
       "other": "অন্যান্য",
-      "initials": "আদ্যক্ষর"
+      "initials": "আদ্যক্ষর",
+      "saved": "সংরক্ষিত"
     },
     "notesOrder": {
       "dropdownLabel": "বাছাই অর্ডার তালিকা",
@@ -422,7 +420,8 @@
       "typeInitial": "টাইপ ইনিশিয়াল*",
       "drawSignature": "স্বাক্ষর আঁক*",
       "drawInitial": "আঁকুন আদ্যক্ষর*",
-      "pickInitialsFile": "আদ্যক্ষর নির্বাচন করুন"
+      "pickInitialsFile": "আদ্যক্ষর নির্বাচন করুন",
+      "noSignatures": "বর্তমানে কোনো সংরক্ষিত স্বাক্ষর নেই।"
     },
     "pageReplacementModal": {
       "dragAndDrop": "এখানে আপনার ফাইল টানুন এবং ড্রপ করুন",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "শৈলী"
+    },
+    "settings": {
+      "settings": "সেটিংস",
+      "general": "সাধারণ",
+      "keyboardShortcut": "কীবোর্ড শর্টকাট",
+      "advancedSetting": "অগ্রগামী ব্যবস্থা",
+      "language": "ভাষা",
+      "theme": "থিম",
+      "darkMode": "ডার্ক মোড",
+      "lightMode": "হালকা মোড",
+      "viewing": "দেখা হচ্ছে",
+      "disableFadePageNavigationComponent": "ফেইড পেজ নেভিগেশন কম্পোনেন্ট অক্ষম করুন",
+      "disableFadePageNavigationComponentDesc": "পৃষ্ঠা নেভিগেশন কম্পোনেন্ট সবসময় স্ক্রিনে রাখুন। ডিফল্ট আচরণ হল নির্দিষ্ট সময়ের নিষ্ক্রিয়তার পরে এটিকে বিবর্ণ করা।",
+      "disableNativeScrolling": "নেটিভ স্ক্রোলিং অক্ষম করুন",
+      "disableNativeScrollingDesc": "নেটিভ মোবাইল ডিভাইস স্ক্রোলিং আচরণ অক্ষম করুন যদি এটি পূর্বে সক্ষম করা থাকে। মনে রাখবেন যে নেটিভ মোবাইল ডিভাইস স্ক্রোলিং আচরণ ডিফল্টরূপে বন্ধ থাকে।",
+      "annotations": "টীকা",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "টীকা পপআপ থেকে টুল ডিফল্ট শৈলী আপডেট অক্ষম করুন",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "অ্যানোটেশন তৈরি করা সংশ্লিষ্ট টুলে টীকা শৈলী আপডেটের সিঙ্ক করা অক্ষম করে। তাই যদি একটি টীকা এর শৈলী পরিবর্তন করা হয় টুল ডিফল্ট শৈলী আপডেট করা হবে না.",
+      "notesPanel": "নোট প্যানেল",
+      "disableNoteSubmissionWithEnter": "এন্টার দিয়ে নোট জমা বন্ধ করুন",
+      "disableNoteSubmissionWithEnterDesc": "নোট জমা দেওয়ার ক্ষমতা অক্ষম করুন শুধুমাত্র Enter টিপে যদি এটি পূর্বে সক্ষম করা থাকে। এটি নোট জমাকে ডিফল্টে ফিরিয়ে দেবে যা Ctrl/Cmd + Enter।",
+      "disableAutoExpandCommentThread": "স্বয়ংক্রিয়ভাবে প্রসারিত মন্তব্য থ্রেড অক্ষম করুন",
+      "disableAutoExpandCommentThreadDesc": "নোট প্যানেলে সমস্ত মন্তব্য থ্রেডের স্বয়ংক্রিয় প্রসারণ অক্ষম করে৷",
+      "disableReplyCollapse": "উত্তর সঙ্কুচিত অক্ষম করুন",
+      "disableReplyCollapseDesc": "নোট প্যানেলে উত্তরগুলি ভেঙে পড়া অক্ষম করে৷",
+      "disableTextCollapse": "পাঠ্য সংকোচন অক্ষম করুন",
+      "disableTextCollapseDesc": "নোট প্যানেলে টীকাটির পাঠ্যের ধ্বস নিষ্ক্রিয় করে৷",
+      "search": "অনুসন্ধান করুন",
+      "disableClearSearchOnPanelClose": "প্যানেল বন্ধে সাফ অনুসন্ধান অক্ষম করুন",
+      "disableClearSearchOnPanelCloseDesc": "ব্যবহারকারী সার্চ প্যানেল বন্ধ করলে সার্চ ফলাফল সাফ করা অক্ষম করুন। অক্ষম করা হলে, ব্যবহারকারী সার্চ প্যানেল বন্ধ করে আবার খুললেও সার্চের ফলাফল রাখা হয়। দ্রষ্টব্য, এই সেটিং সক্ষম করা থাকলেও মোবাইল ডিভাইস কখনই সার্চের ফলাফল সাফ করে না। কারণ ডকুমেন্টে অনুসন্ধানের ফলাফল দেখতে প্যানেলটি বন্ধ করতে হবে।",
+      "pageManipulation": "পৃষ্ঠা ম্যানিপুলেশন",
+      "disablePageDeletionConfirmationModal": "পৃষ্ঠা মুছে ফেলা নিশ্চিতকরণ মডেল অক্ষম করুন",
+      "disablePageDeletionConfirmationModalDesc": "থাম্বনেইল ভিউ থেকে একটি পৃষ্ঠা মুছে ফেলার সময় নিশ্চিতকরণ মডেল অক্ষম করুন",
+      "disableMultiselect": "মাল্টিসিলেক্ট অক্ষম করুন",
+      "disableMultiselectDesc": "বাম থাম্বনেল প্যানেলে একাধিক নির্বাচন অক্ষম করুন"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "ভাষা নির্বাচন কর"
   },
+  "insertPageModal": {
+    "title": "নতুন পৃষ্ঠা যোগ করুন",
+    "tabs": {
+      "blank": "খালি",
+      "upload": "আপলোড করুন"
+    },
+    "pagePlacements": {
+      "header": "পৃষ্ঠা বসানো",
+      "above": "উপরের পাতা",
+      "below": "পৃষ্ঠার নীচে"
+    },
+    "pageLocations": {
+      "header": "পৃষ্ঠা অবস্থান",
+      "specify": "পৃষ্ঠা নির্দিষ্ট করুন",
+      "amount": "পৃষ্ঠার পরিমাণ",
+      "total": "মোট",
+      "pages": "পাতা"
+    },
+    "pageDimensions": {
+      "header": "পৃষ্ঠার মাত্রা",
+      "subHeader": "প্রিসেট",
+      "presets": {
+        "letter": "চিঠি",
+        "halfLetter": "অর্ধেক চিঠি",
+        "juniorLegal": "জুনিয়র আইনী",
+        "custom": "কাস্টম"
+      }
+    },
+    "browse": "ফাইল ব্রাউজ",
+    "fileSelected": {
+      "title": "যোগ করার জন্য পৃষ্ঠা নির্বাচন করুন"
+    },
+    "button": "পৃষ্ঠা(গুলি) যোগ করুন"
+  },
   "multiViewer": {
     "dragAndDrop": "তুলনা করতে আপনার ফাইলটি এখানে টেনে আনুন",
     "or": "বা",
@@ -976,5 +1044,26 @@
       "new": "নতুন",
       "page": "পাতা"
     }
+  },
+  "saveModal": {
+    "close": "বন্ধ",
+    "saveAs": "সংরক্ষণ করুন",
+    "general": "সাধারণ",
+    "fileName": "ফাইলের নাম",
+    "fileType": "ফাইলের ধরন",
+    "fileLocation": "ফাইলের অবস্থান",
+    "browse": "ব্রাউজ করুন",
+    "pageRange": "পৃষ্ঠা ব্যাপ্তি",
+    "all": "সব",
+    "currentView": "বর্তমান দৃশ্য",
+    "currentPage": "এই পৃষ্ঠা",
+    "specifyPage": "পৃষ্ঠা নির্দিষ্ট করুন",
+    "properties": "বৈশিষ্ট্য",
+    "includeAnnotation": "টীকা অন্তর্ভুক্ত করুন",
+    "includeComments": "মন্তব্য অন্তর্ভুক্ত করুন",
+    "watermark": "জলছাপ",
+    "addWatermark": "জলছাপ যোগ করুন",
+    "save": "ফাইল সংরক্ষণ",
+    "pageError": "অবৈধ পৃষ্ঠা। বৈধ পৃষ্ঠা পরিসীমা 1-এর মধ্যে"
   }
 }

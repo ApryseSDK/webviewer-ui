@@ -10,11 +10,12 @@
   display: flex;
   align-items: flex-end;
   width: 100%;
-  z-index: 70;
-
+  z-index: 71;
   height: 40px;
+
   @include tablet-and-mobile {
     height: 52px;
+
     &.closed {
       height: 0px;
     }
@@ -33,7 +34,7 @@
   width: 100%;
   height: 36px;
   background: var(--view-header-background);
-  z-index: 71;
+  z-index: 72;
 
   &:not(.Tools) {
     .Button {
@@ -43,6 +44,7 @@
 
       &.active {
         background: var(--view-header-button-active);
+
         .Icon {
           color: var(--view-header-icon-active-fill);
         }

@@ -1,4 +1,6 @@
+import core from 'core';
+
 /**
  * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getRotation__anchor
  */
-export default pageNumber => window.documentViewer.getRotation(pageNumber);
+export default (pageNumber, documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getRotation(pageNumber);

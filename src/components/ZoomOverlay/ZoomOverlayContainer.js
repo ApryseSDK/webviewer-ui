@@ -7,9 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import FlyoutMenu from 'components/FlyoutMenu/FlyoutMenu';
 
-function ZoomOverlayContainer(props) {
+function ZoomOverlayContainer() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
+  const [activeDocumentViewerKey] = useSelector((state) => [
+    selectors.getActiveDocumentViewerKey(state),
+  ]);
 
   function onClickZoomLevelOption(zoomLevel) {
     zoomTo(zoomLevel);
@@ -27,9 +30,9 @@ function ZoomOverlayContainer(props) {
         currentZoomLevel={useSelector(selectors.getZoom)}
         isReaderMode={useSelector(selectors.isReaderMode)}
         isMarqueeZoomActive={useSelector(selectors.getActiveToolName) === 'MarqueeZoomTool'}
-        isMarqueeToolButtonDisabled={useSelector(state => selectors.isElementDisabled(state, 'marqueeToolButton'))}
-        fitToWidth={fitToWidth}
-        fitToPage={fitToPage}
+        isMarqueeToolButtonDisabled={useSelector((state) => selectors.isElementDisabled(state, 'marqueeToolButton'))}
+        fitToWidth={() => fitToWidth(activeDocumentViewerKey)}
+        fitToPage={() => fitToPage(activeDocumentViewerKey)}
         onClickZoomLevelOption={onClickZoomLevelOption}
         onClickMarqueeZoom={onClickMarqueeZoom}
       />

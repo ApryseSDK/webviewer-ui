@@ -533,6 +533,16 @@ export const setCustomApplyRedactionsHandler = (customApplyRedactionsHandler) =>
   payload: { customApplyRedactionsHandler },
 });
 
+export const setCustomMultiViewerSyncHandler = (customMultiViewerSyncHandler) => ({
+  type: 'SET_CUSTOM_MULTI_VIEWER_SYNC_HANDLER',
+  payload: { customMultiViewerSyncHandler },
+});
+
+export const setCustomMultiViewerAcceptedFileFormats = (customMultiViewerAcceptedFileFormats) => ({
+  type: 'SET_CUSTOM_MULTI_VIEWER_ACCEPTED_FILE_FORMATS',
+  payload: { customMultiViewerAcceptedFileFormats },
+});
+
 export const setEnableSnapMode = (enable) => ({
   type: 'SET_ENABLE_SNAP_MODE',
   payload: { enable },

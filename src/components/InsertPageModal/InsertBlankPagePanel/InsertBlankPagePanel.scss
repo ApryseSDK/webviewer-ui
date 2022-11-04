@@ -1,0 +1,149 @@
+@import '../../../constants/styles';
+
+.insert-blank-page-panel {
+  width: 100%;
+
+  .subheader {
+    font-size: 13px;
+    font-weight: 700;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .panel-container {
+
+    .section {
+      display: flex;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      gap: 16px;
+
+      .input-container {
+        display: flex;
+        flex-direction: column;
+
+        p {
+          margin: 0;
+          padding-bottom: 8px;
+          font-size: 13px;
+        }
+
+        .page-number-input {
+          width: 100%;
+        }
+        
+        .customSelector {
+          margin-left: 0;
+          height: 28px;
+          margin-right: 16px;
+      
+          .customSelector__selectedItem {
+            width: 50%;
+          }
+      
+          ul {
+            width: 50%;
+
+            @include mobile {
+              top: auto;
+              bottom: calc(100% - 32px);
+            }
+          }
+
+          & li:first-child {
+            color: var(--faded-text);
+            font-size: 13px;
+
+            @include mobile {
+              font-size: 16px;
+              display: none;
+            }
+          }
+        }
+      
+        select {
+          height: 28px;
+          width: 100%;
+        }
+
+        .input-sub-text {
+          margin-top: 8px;
+          padding-bottom: 0;
+          color: var(--faded-text);
+        }
+      }
+    }
+
+    .section > * {
+      flex: 1;
+    }
+  }
+}
+.increment-number-input {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+
+  display: flex;
+
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button {  
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .ui__input {
+    border: 0;
+
+    .ui__input__input {
+      width: 100%;
+      height: 100%;
+      padding: 6px;
+      line-height: normal;
+    }
+  }
+
+  .ui__input--message-default.ui__input--focused {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .increment-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 3px;
+
+    .increment-arrow-button {
+      border: 0;
+      border-radius: 2px;
+      height: 10px;
+      width: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @include mobile {
+        height: 12px;
+        width: 20px;
+
+        .Icon {
+          top: -6px;
+        }
+      }
+
+      .Icon {
+        position: relative;
+        top: -4px;
+        height: 10px;
+      }
+
+      &:active {
+        box-shadow: 0 0 1px 0 var(--document-box-shadow);
+      }
+    }
+  }
+
+  &:focus-within {
+    border: 1px solid var(--focus-border);
+}
+}

@@ -116,7 +116,7 @@ const CustomStampForums = ({
     });
   };
 
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     const value = e.target.value || '';
     setStampText(value);
     setEmptyInput(!value);
@@ -152,21 +152,21 @@ const CustomStampForums = ({
     updateCanvas(stampTextInputValue, txt);
   };
 
-  const handleFontChange = font => {
+  const handleFontChange = (font) => {
     updateCanvas(stampTextInputValue, timestampFormat, {
       ...state,
       font,
     });
   };
 
-  const onDateFormatChange = newFormat => {
+  const onDateFormatChange = (newFormat) => {
     setDateTime(newFormat);
     const txt = updateTimestampLabel(usernameCheckbox, (dateCheckbox || timeCheckbox), newFormat);
     setTimestampFormat(txt);
     updateCanvas(stampTextInputValue, txt);
   };
 
-  const handleRichTextStyleChange = style => {
+  const handleRichTextStyleChange = (style) => {
     updateCanvas(stampTextInputValue, timestampFormat, {
       ...state,
       [style]: !state[style],
@@ -180,7 +180,7 @@ const CustomStampForums = ({
 
   const stampInputLabel = t('option.customStampModal.stampText');
 
-  const getHexColor = givenColor => {
+  const getHexColor = (givenColor) => {
     if (givenColor && givenColor.A) {
       return givenColor.toHexString().toLowerCase();
     }
@@ -189,7 +189,7 @@ const CustomStampForums = ({
   const openPicker = (addNew, type) => {
     const isText = type === 'text';
     openColorPicker();
-    const handleVisiblityChanged = e => {
+    const handleVisiblityChanged = (e) => {
       const { element, isVisible } = e.detail;
       if (element === 'ColorPickerModal' && !isVisible) {
         const color = getCustomColorAndRemove();
@@ -210,12 +210,12 @@ const CustomStampForums = ({
     };
     window.instance.UI.addEventListener(Events.VISIBILITY_CHANGED, handleVisiblityChanged);
   };
-  const deleteColor = type => {
+  const deleteColor = (type) => {
     const isText = type === 'text';
     openDeleteModal(() => {
       const newColors = isText ?
-        textColors.filter(color => color !== textColorToBeDeleted) :
-        backgroundColors.filter(color => color !== backgroundColorToBeDeleted);
+        textColors.filter((color) => color !== textColorToBeDeleted) :
+        backgroundColors.filter((color) => color !== backgroundColorToBeDeleted);
       isText ? setTextColors(newColors) : setBackgroundColors(newColors);
       isText ? setTextColorToBeDeleted(null) : setBackgroundColorToBeDeleted(null);
       window.Core.Tools.RubberStampCreateTool[isText ? 'TEXT_COLORS' : 'FILL_COLORS'] = newColors;
@@ -223,15 +223,15 @@ const CustomStampForums = ({
   };
 
   const [backgroundColors, setBackgroundColors] = useState(window.Core.Tools.RubberStampCreateTool['FILL_COLORS']);
-  const [backgroundColor, setBackgroundColor] = useState(window.Core.Tools.RubberStampCreateTool['FILL_COLORS'][0]);
+  const [backgroundColor, setBackgroundColor] = useState(state.color || window.Core.Tools.RubberStampCreateTool['FILL_COLORS'][0]);
   const [backgroundColorToBeDeleted, setBackgroundColorToBeDeleted] = useState(null);
 
   const [textColors, setTextColors] = useState(window.Core.Tools.RubberStampCreateTool['TEXT_COLORS']);
   const [textColor, setTextColor] = useState(window.Core.Tools.RubberStampCreateTool['TEXT_COLORS'][0]);
   const [textColorToBeDeleted, setTextColorToBeDeleted] = useState(null);
 
-  const openColorPickerText = addNew => openPicker(addNew, 'text');
-  const handleTextColorChange = newColor => {
+  const openColorPickerText = (addNew) => openPicker(addNew, 'text');
+  const handleTextColorChange = (newColor) => {
     setTextColor(newColor);
     state = {
       ...state,
@@ -241,8 +241,8 @@ const CustomStampForums = ({
   };
   const handleTextColorDelete = () => deleteColor('text');
 
-  const openColorPickerBackground = addNew => openPicker(addNew, 'fill');
-  const handleBackgroundColorChange = newColor => {
+  const openColorPickerBackground = (addNew) => openPicker(addNew, 'fill');
+  const handleBackgroundColorChange = (newColor) => {
     setBackgroundColor(newColor);
     state = {
       ...state,
@@ -252,10 +252,10 @@ const CustomStampForums = ({
   };
   const handleBackgroundColorDelete = () => deleteColor('fill');
 
-  const formatsList = dateTimeFormats ? dateTimeFormats : [FALLBACK_DATE_TIME_FORMAT];
+  const formatsList = dateTimeFormats || [FALLBACK_DATE_TIME_FORMAT];
   const dateTimeDropdownItems = Array.from(new Set(
-    formatsList.map(format => dateTimeFormatToString(format, dateCheckbox, timeCheckbox))
-  )).filter(format => format !== '');
+    formatsList.map((format) => dateTimeFormatToString(format, dateCheckbox, timeCheckbox))
+  )).filter((format) => format !== '');
 
   return (
     <div className="text-customstamp">
@@ -292,7 +292,7 @@ const CustomStampForums = ({
               items={fonts}
               onClickItem={handleFontChange}
               currentSelectionKey={state.font || fonts[0]}
-              isFont
+              getCustomItemStyle={(item) => ({ fontFamily: item })}
             />
             <Button
               dataElement="stampTextBoldButton"

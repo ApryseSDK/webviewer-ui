@@ -58,8 +58,6 @@
     "type": "Rodzaj",
     "upload": "Wgrywać",
     "link": "Połączyć",
-    "darkMode": "Tryb ciemny",
-    "lightMode": "Tryb światła",
     "fileAttachmentDownload": "Pobierz załączony plik",
     "prevResult": "Poprzedni wynik",
     "nextResult": "Następny wynik",
@@ -94,7 +92,6 @@
     "unselect": "Odznacz",
     "addMark": "Dodaj znak",
     "viewFile": "Zobaczyć plik",
-    "switchLanguage": "Język",
     "multiReplyAnnotations": "Odpowiedz na wybrane adnotacje ({{count}})",
     "comparePages": "Porównaj strony",
     "startComparison": "Rozpocznij porównanie"
@@ -297,7 +294,8 @@
       "squiggly": "Squiggly",
       "3D": "3D",
       "other": "Inny",
-      "initials": "Inicjały"
+      "initials": "Inicjały",
+      "saved": "Zapisane"
     },
     "notesOrder": {
       "dropdownLabel": "Sortuj listę kolejności",
@@ -422,7 +420,8 @@
       "typeInitial": "Wpisz inicjały*",
       "drawSignature": "Narysuj podpis*",
       "drawInitial": "Narysuj inicjały*",
-      "pickInitialsFile": "Wybierz inicjały"
+      "pickInitialsFile": "Wybierz inicjały",
+      "noSignatures": "Obecnie nie ma zapisanych podpisów."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Przeciągnij i upuść plik tutaj",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Styl"
+    },
+    "settings": {
+      "settings": "Ustawienia",
+      "general": "Ogólny",
+      "keyboardShortcut": "Skrót klawiszowy",
+      "advancedSetting": "Ustawienia zaawansowane",
+      "language": "Język",
+      "theme": "Motyw",
+      "darkMode": "Tryb ciemny",
+      "lightMode": "Tryb światła",
+      "viewing": "Przeglądanie",
+      "disableFadePageNavigationComponent": "Wyłącz komponent nawigacji po zanikaniu stron",
+      "disableFadePageNavigationComponentDesc": "Zawsze utrzymuj komponent nawigacji strony na ekranie. Domyślnym zachowaniem jest zanikanie go po pewnym okresie bezczynności.",
+      "disableNativeScrolling": "Wyłącz przewijanie natywne",
+      "disableNativeScrollingDesc": "Wyłącz natywne zachowanie przewijania na urządzeniu mobilnym, jeśli zostało wcześniej włączone. Pamiętaj, że natywne przewijanie na urządzeniach mobilnych jest domyślnie wyłączone.",
+      "annotations": "Adnotacje",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Wyłącz aktualizację domyślnego stylu narzędzia z wyskakującego okienka adnotacji",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Wyłącza synchronizację aktualizacji stylu adnotacji z powiązanym narzędziem, które utworzyło adnotację. Jeśli więc styl adnotacji zostanie zmieniony, domyślne style narzędzia nie zostaną zaktualizowane.",
+      "notesPanel": "Panel notatek",
+      "disableNoteSubmissionWithEnter": "Wyłącz przesyłanie notatek za pomocą Enter",
+      "disableNoteSubmissionWithEnterDesc": "Wyłącz możliwość przesyłania notatek, naciskając tylko klawisz Enter, jeśli był wcześniej włączony. Spowoduje to przywrócenie ustawień domyślnych przesyłania notatek, czyli Ctrl/Cmd + Enter.",
+      "disableAutoExpandCommentThread": "Wyłącz automatyczne rozwijanie wątku komentarzy",
+      "disableAutoExpandCommentThreadDesc": "Wyłącza automatyczne rozwijanie wszystkich wątków komentarzy w panelu Notatki.",
+      "disableReplyCollapse": "Wyłącz odpowiedź Zwiń",
+      "disableReplyCollapseDesc": "Wyłącza zwijanie odpowiedzi w panelu Notatki.",
+      "disableTextCollapse": "Wyłącz zwijanie tekstu",
+      "disableTextCollapseDesc": "Wyłącza zwijanie tekstu adnotacji w panelu Notatki.",
+      "search": "Szukaj",
+      "disableClearSearchOnPanelClose": "Wyłącz Wyczyść wyszukiwanie po zamknięciu panelu",
+      "disableClearSearchOnPanelCloseDesc": "Wyłącz usuwanie wyników wyszukiwania, gdy użytkownik zamyka panel wyszukiwania. Po wyłączeniu wyniki wyszukiwania są zachowywane, nawet jeśli użytkownik zamknie i ponownie otworzy panel wyszukiwania. Pamiętaj, że urządzenia mobilne nigdy nie usuwają wyników wyszukiwania, nawet jeśli to ustawienie jest włączone. Dzieje się tak, ponieważ panel musi być zamknięty, aby wyświetlić wyniki wyszukiwania w dokumencie.",
+      "pageManipulation": "Manipulacja stronami",
+      "disablePageDeletionConfirmationModal": "Wyłącz tryb potwierdzenia usunięcia strony",
+      "disablePageDeletionConfirmationModalDesc": "Wyłącz tryb potwierdzenia podczas usuwania strony z widoku miniatur",
+      "disableMultiselect": "Wyłącz wybór wielokrotny",
+      "disableMultiselectDesc": "Wyłącz wybór wielokrotny w lewym panelu miniatur"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Wybierz język"
   },
+  "insertPageModal": {
+    "title": "Dodaj nową stronę",
+    "tabs": {
+      "blank": "Pusty",
+      "upload": "Wgrywać"
+    },
+    "pagePlacements": {
+      "header": "Umieszczenie strony",
+      "above": "Nad stroną",
+      "below": "Poniżej strony"
+    },
+    "pageLocations": {
+      "header": "Lokalizacja strony",
+      "specify": "Określ stronę",
+      "amount": "Ilość stron",
+      "total": "Całkowity",
+      "pages": "Strony"
+    },
+    "pageDimensions": {
+      "header": "Wymiary strony",
+      "subHeader": "Presety",
+      "presets": {
+        "letter": "List",
+        "halfLetter": "Pół litery",
+        "juniorLegal": "Młodszy prawnik",
+        "custom": "Zwyczaj"
+      }
+    },
+    "browse": "Przeglądaj pliki",
+    "fileSelected": {
+      "title": "Wybierz strony do dodania"
+    },
+    "button": "Dodaj strony"
+  },
   "multiViewer": {
     "dragAndDrop": "Przeciągnij i upuść plik tutaj, aby porównać",
     "or": "Lub",
@@ -976,5 +1044,26 @@
       "new": "Nowy",
       "page": "Strona"
     }
+  },
+  "saveModal": {
+    "close": "Blisko",
+    "saveAs": "Zapisz jako",
+    "general": "Ogólny",
+    "fileName": "Nazwa pliku",
+    "fileType": "Typ pliku",
+    "fileLocation": "Lokalizacja pliku",
+    "browse": "Przeglądaj",
+    "pageRange": "Zakres stron",
+    "all": "Wszystko",
+    "currentView": "Aktualny widok",
+    "currentPage": "Bieżąca strona",
+    "specifyPage": "Określ stronę",
+    "properties": "Nieruchomości",
+    "includeAnnotation": "Dołącz adnotacje",
+    "includeComments": "Dołącz komentarze",
+    "watermark": "znak wodny",
+    "addWatermark": "Dodaj znak wodny",
+    "save": "Zapisz plik",
+    "pageError": "Nieprawidłowa strona. Prawidłowe zakresy stron mieszczą się w przedziale od 1 do"
   }
 }

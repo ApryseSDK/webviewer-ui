@@ -1,6 +1,8 @@
+import core from 'core';
+
 /**
  * https://www.pdftron.com/api/web/Core.DocumentViewer.html#setPagesUpdatedInternalAnnotationsTransform__anchor
  */
-export default callback => {
-  window.documentViewer.setPagesUpdatedInternalAnnotationsTransform(callback);
+export default (callback, documentViewerKey = 1) => {
+  core.getDocumentViewer(documentViewerKey).setPagesUpdatedInternalAnnotationsTransform(callback);
 };

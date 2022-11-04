@@ -22,11 +22,11 @@ const propTypes = {
 };
 
 const Input = React.forwardRef((props, ref) => {
-  const isDisabled = useSelector(state => selectors.isElementDisabled(state, props.dataElement));
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, props.dataElement));
 
   const inputProps = omit(props, ['dataElement', 'label']);
 
-  const labelClassName = `Input ${props.disabled ? 'disabled': ''}`;
+  const labelClassName = `Input ${props.disabled ? 'disabled' : ''}`;
 
   return isDisabled ? null : (
     <React.Fragment>
@@ -55,6 +55,7 @@ const omit = (obj, keysToOmit) => {
   }, {});
 };
 
+Input.displayName = 'Input';
 Input.propTypes = propTypes;
 
 export default Input;

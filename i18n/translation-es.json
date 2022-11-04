@@ -58,8 +58,6 @@
     "type": "Tipo",
     "upload": "Subir",
     "link": "Enlace",
-    "darkMode": "Modo oscuro",
-    "lightMode": "Modo de luz",
     "fileAttachmentDownload": "Descargar archivo adjunto",
     "prevResult": "Resultado anterior",
     "nextResult": "Siguiente resultado",
@@ -94,7 +92,6 @@
     "unselect": "Deseleccionar",
     "addMark": "Agregar marca",
     "viewFile": "Ver archivo",
-    "switchLanguage": "Idioma",
     "multiReplyAnnotations": "Responder a las anotaciones seleccionadas ({{count}})",
     "comparePages": "Comparar páginas",
     "startComparison": "Iniciar comparación"
@@ -297,7 +294,8 @@
       "squiggly": "Serpenteante",
       "3D": "3D",
       "other": "Otro",
-      "initials": "Iniciales"
+      "initials": "Iniciales",
+      "saved": "Salvado"
     },
     "notesOrder": {
       "dropdownLabel": "Lista de orden de clasificación",
@@ -422,7 +420,8 @@
       "typeInitial": "Tipo Iniciales*",
       "drawSignature": "Dibujar Firma*",
       "drawInitial": "Dibujar iniciales*",
-      "pickInitialsFile": "Elija Iniciales"
+      "pickInitialsFile": "Elija Iniciales",
+      "noSignatures": "Actualmente no hay firmas guardadas."
     },
     "pageReplacementModal": {
       "dragAndDrop": "Arrastra y suelta tu archivo aquí",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "Estilo"
+    },
+    "settings": {
+      "settings": "Ajustes",
+      "general": "General",
+      "keyboardShortcut": "Atajo de teclado",
+      "advancedSetting": "Configuración avanzada",
+      "language": "Idioma",
+      "theme": "Tema",
+      "darkMode": "modo oscuro",
+      "lightMode": "Modo de luz",
+      "viewing": "Visita",
+      "disableFadePageNavigationComponent": "Deshabilitar el componente de navegación de página de atenuación",
+      "disableFadePageNavigationComponentDesc": "Mantenga siempre el componente de navegación de página en la pantalla. El comportamiento predeterminado es atenuarlo después de cierto período de inactividad.",
+      "disableNativeScrolling": "Deshabilitar el desplazamiento nativo",
+      "disableNativeScrollingDesc": "Deshabilite el comportamiento de desplazamiento del dispositivo móvil nativo si se había habilitado previamente. Tenga en cuenta que el comportamiento de desplazamiento del dispositivo móvil nativo está desactivado de forma predeterminada.",
+      "annotations": "Anotaciones",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Deshabilitar la actualización del estilo predeterminado de la herramienta desde la ventana emergente de anotación",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Deshabilita la sincronización de actualizaciones de estilo de anotación con la herramienta asociada que creó la anotación. Por lo tanto, si se cambia el estilo de una anotación, los estilos predeterminados de la herramienta no se actualizarán.",
+      "notesPanel": "Panel de notas",
+      "disableNoteSubmissionWithEnter": "Deshabilitar el envío de notas con Enter",
+      "disableNoteSubmissionWithEnterDesc": "Deshabilite la capacidad de enviar notas presionando solo Enter si se había habilitado previamente. Esto revertirá el envío de la nota al valor predeterminado, que es Ctrl/Cmd + Enter.",
+      "disableAutoExpandCommentThread": "Desactivar cadena de comentarios de expansión automática",
+      "disableAutoExpandCommentThreadDesc": "Deshabilita la expansión automática de todos los hilos de comentarios en el Panel de Notas.",
+      "disableReplyCollapse": "Deshabilitar Responder Contraer",
+      "disableReplyCollapseDesc": "Deshabilita el colapso de las respuestas en el Panel de Notas.",
+      "disableTextCollapse": "Deshabilitar el colapso de texto",
+      "disableTextCollapseDesc": "Deshabilita el colapso del texto de la anotación en el Panel de notas.",
+      "search": "Búsqueda",
+      "disableClearSearchOnPanelClose": "Desactivar Borrar búsqueda en panel Cerrar",
+      "disableClearSearchOnPanelCloseDesc": "Deshabilite la limpieza de los resultados de búsqueda cuando el usuario cierre el panel de búsqueda. Cuando está deshabilitado, los resultados de la búsqueda se conservan incluso si el usuario cierra y vuelve a abrir el panel de búsqueda. Tenga en cuenta que los dispositivos móviles nunca borran los resultados de búsqueda, incluso si esta configuración está habilitada. Esto se debe a que es necesario cerrar el panel para ver los resultados de la búsqueda en el documento.",
+      "pageManipulation": "Manipulación de página",
+      "disablePageDeletionConfirmationModal": "Deshabilitar modo de confirmación de eliminación de página",
+      "disablePageDeletionConfirmationModalDesc": "Deshabilite el modal de confirmación al eliminar una página de la vista en miniatura",
+      "disableMultiselect": "Deshabilitar selección múltiple",
+      "disableMultiselectDesc": "Deshabilite la selección múltiple en el panel de miniaturas izquierdo"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "Seleccione el idioma"
   },
+  "insertPageModal": {
+    "title": "Agregar nueva página",
+    "tabs": {
+      "blank": "Vacío",
+      "upload": "Subir"
+    },
+    "pagePlacements": {
+      "header": "Ubicación de la página",
+      "above": "Página anterior",
+      "below": "Debajo de la página"
+    },
+    "pageLocations": {
+      "header": "Ubicación de la página",
+      "specify": "Especificar página",
+      "amount": "Cantidad de páginas",
+      "total": "Total",
+      "pages": "Paginas"
+    },
+    "pageDimensions": {
+      "header": "Dimensiones de la página",
+      "subHeader": "Preajustes",
+      "presets": {
+        "letter": "Carta",
+        "halfLetter": "media letra",
+        "juniorLegal": "Júnior legal",
+        "custom": "Disfraz"
+      }
+    },
+    "browse": "Búsqueda de archivos",
+    "fileSelected": {
+      "title": "Seleccionar páginas para agregar"
+    },
+    "button": "Añadir página(s)"
+  },
   "multiViewer": {
     "dragAndDrop": "Arrastra y suelta tu archivo aquí para comparar",
     "or": "O",
@@ -976,5 +1044,26 @@
       "new": "Nuevo",
       "page": "Página"
     }
+  },
+  "saveModal": {
+    "close": "Cerca",
+    "saveAs": "Guardar como",
+    "general": "General",
+    "fileName": "Nombre del archivo",
+    "fileType": "Tipo de archivo",
+    "fileLocation": "Ubicación del archivo",
+    "browse": "Navegar",
+    "pageRange": "Rango de páginas",
+    "all": "Todos",
+    "currentView": "Vista actual",
+    "currentPage": "Página actual",
+    "specifyPage": "Especificar página",
+    "properties": "Propiedades",
+    "includeAnnotation": "Incluir anotaciones",
+    "includeComments": "Incluir comentarios",
+    "watermark": "Filigrana",
+    "addWatermark": "Agregar marca de agua",
+    "save": "Guardar el archivo",
+    "pageError": "Página no válida. Los intervalos de páginas válidos están entre 1 y"
   }
 }

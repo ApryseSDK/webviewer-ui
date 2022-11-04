@@ -9,8 +9,10 @@ jest.mock('core');
 
 // To test a hook with a redux dependency we need to provide a wrapper for it to run.
 // The wrapper must also have a redux provider
+// eslint-disable-next-line react/prop-types
 const MockComponent = ({ children }) => (<div>{children}</div>);
-const wrapper = withProviders(MockComponent)
+// eslint-disable-next-line no-undef
+const wrapper = withProviders(MockComponent);
 
 describe('useOnRedactionAnnotationChanged hook', () => {
   it('adds event listeners to Annotation Changed', () => {
@@ -40,7 +42,7 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     let onAnnotationChangedHandler;
     core.addEventListener = (annotationManagerEvent, handler) => {
       onAnnotationChangedHandler = handler;
-    }
+    };
     const mockRedactionAnnotation = new window.Annotations.RedactionAnnotation();
     const mockRedactionAnnotations = [
       mockRedactionAnnotation,
@@ -69,7 +71,7 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     let onAnnotationChangedHandler;
     core.addEventListener = (annotationManagerEvent, handler) => {
       onAnnotationChangedHandler = handler;
-    }
+    };
 
     const mockRedactionAnnotation = new window.Annotations.RedactionAnnotation();
     const mockRedactionAnnotationTwo = new window.Annotations.RedactionAnnotation();
@@ -104,7 +106,7 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     let onAnnotationChangedHandler;
     core.addEventListener = (annotationManagerEvent, handler) => {
       onAnnotationChangedHandler = handler;
-    }
+    };
 
     const mockRedactionAnnotation = new window.Annotations.RedactionAnnotation();
     const mockRedactionAnnotations = [

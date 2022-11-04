@@ -52,7 +52,9 @@ Basic.args = {
   annotations: [lineAnnot],
   style: getAnnotationStyles(lineAnnot),
   closeElement: () => { },
-  properties: {},
+  properties: {
+    StrokeStyle: 'solid'
+  },
   colorMapKey: mapAnnotationToKey(lineAnnot),
 };
 
@@ -113,6 +115,7 @@ export const DistanceMeasurement = BasicTemplate.bind({});
 const measurementProperties = {
   StartLineStyle: distanceMeasurementAnnot.getStartStyle(),
   EndLineStyle: distanceMeasurementAnnot.getEndStyle(),
+  StrokeStyle: 'solid'
 };
 
 DistanceMeasurement.args = {
@@ -135,6 +138,7 @@ const freeTextProperties = {
   italic: richTextStyles?.[0]?.['font-style'] === 'italic' ?? false,
   underline: richTextStyles?.[0]?.['text-decoration']?.includes('underline') || richTextStyles?.[0]?.['text-decoration']?.includes('word'),
   strikeout: richTextStyles?.[0]?.['text-decoration']?.includes('line-through') ?? false,
+  StrokeStyle: 'solid',
 };
 
 FreeText.args = {
@@ -154,6 +158,8 @@ WidgetPlaceHolder.args = {
   annotations: [widgetPlaceHolderAnnot],
   style: getAnnotationStyles(widgetPlaceHolderAnnot),
   closeElement: () => { },
-  properties: {},
+  properties: {
+    StrokeStyle: 'solid'
+  },
   colorMapKey: mapAnnotationToKey(widgetPlaceHolderAnnot),
 };

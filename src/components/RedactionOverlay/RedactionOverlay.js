@@ -59,7 +59,7 @@ class RedactionOverlay extends React.PureComponent {
     }
   }
 
-  handleClickOutside = e => {
+  handleClickOutside = (e) => {
     const toolStylePopup = document.querySelector(
       '[data-element="toolStylePopup"]',
     );
@@ -85,7 +85,7 @@ class RedactionOverlay extends React.PureComponent {
 
   render() {
     const { left, right } = this.state;
-    const { isDisabled, isOpen } = this.props;
+    const { isDisabled } = this.props;
 
     if (isDisabled) {
       return null;
@@ -123,18 +123,17 @@ class RedactionOverlay extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isDisabled: selectors.isElementDisabled(state, 'redactionOverlay'),
   isOpen: selectors.isElementOpen(state, 'redactionOverlay'),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   dispatch,
-  setActiveToolGroup: toolGroup =>
-    dispatch(actions.setActiveToolGroup(toolGroup)),
+  setActiveToolGroup: (toolGroup) => dispatch(actions.setActiveToolGroup(toolGroup)),
   applyRedactions: () => dispatch(applyRedactions()),
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
-  openElements: dataElements => dispatch(actions.openElements(dataElements)),
+  closeElements: (dataElements) => dispatch(actions.closeElements(dataElements)),
+  openElements: (dataElements) => dispatch(actions.openElements(dataElements)),
 });
 
 export default connect(

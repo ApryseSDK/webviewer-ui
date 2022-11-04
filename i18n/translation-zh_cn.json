@@ -58,8 +58,6 @@
     "type": "类型",
     "upload": "上载",
     "link": "链接",
-    "darkMode": "暗模式",
-    "lightMode": "灯光模式",
     "fileAttachmentDownload": "下载附件",
     "prevResult": "先前的结果",
     "nextResult": "下一个结果",
@@ -94,7 +92,6 @@
     "unselect": "取消选择",
     "addMark": "添加标记",
     "viewFile": "查看文件",
-    "switchLanguage": "语言",
     "multiReplyAnnotations": "回复所选注释 ({{count}})",
     "comparePages": "比较页面",
     "startComparison": "开始比较"
@@ -297,7 +294,8 @@
       "squiggly": "弯弯曲曲的",
       "3D": "3D",
       "other": "其他",
-      "initials": "缩写"
+      "initials": "缩写",
+      "saved": "已保存"
     },
     "notesOrder": {
       "dropdownLabel": "排序订单清单",
@@ -422,7 +420,8 @@
       "typeInitial": "类型首字母*",
       "drawSignature": "绘制签名*",
       "drawInitial": "画首字母*",
-      "pickInitialsFile": "选择缩写"
+      "pickInitialsFile": "选择缩写",
+      "noSignatures": "当前没有保存的签名。"
     },
     "pageReplacementModal": {
       "dragAndDrop": "将您的文件拖放到此处",
@@ -595,6 +594,41 @@
     },
     "lineStyleOptions": {
       "title": "风格"
+    },
+    "settings": {
+      "settings": "设置",
+      "general": "一般的",
+      "keyboardShortcut": "键盘快捷键",
+      "advancedSetting": "高级设置",
+      "language": "语",
+      "theme": "主题",
+      "darkMode": "黑暗模式",
+      "lightMode": "灯光模式",
+      "viewing": "查看",
+      "disableFadePageNavigationComponent": "禁用淡入淡出页面导航组件",
+      "disableFadePageNavigationComponentDesc": "始终保持页面导航组件在屏幕上。默认行为是在一段时间不活动后将其淡化。",
+      "disableNativeScrolling": "禁用本机滚动",
+      "disableNativeScrollingDesc": "如果之前已启用，则禁用本机移动设备滚动行为。请注意，本机移动设备滚动行为默认情况下是关闭的。",
+      "annotations": "注释",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "从注释弹出窗口禁用工具默认样式更新",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "禁用将注释样式更新同步到创建注释的关联工具。因此，如果注释的样式发生更改，工具默认样式将不会更新。",
+      "notesPanel": "笔记面板",
+      "disableNoteSubmissionWithEnter": "使用 Enter 禁用注释提交",
+      "disableNoteSubmissionWithEnterDesc": "如果之前已启用，则仅按 Enter 即可禁用提交注释的功能。这会将笔记提交恢复为默认值，即 Ctrl/Cmd + Enter。",
+      "disableAutoExpandCommentThread": "禁用自动展开评论线程",
+      "disableAutoExpandCommentThreadDesc": "禁用注释面板中所有评论线程的自动扩展。",
+      "disableReplyCollapse": "禁用回复折叠",
+      "disableReplyCollapseDesc": "禁止折叠备注面板中的回复。",
+      "disableTextCollapse": "禁用文本折叠",
+      "disableTextCollapseDesc": "禁用注释面板中注释文本的折叠。",
+      "search": "搜索",
+      "disableClearSearchOnPanelClose": "在面板关闭时禁用清除搜索",
+      "disableClearSearchOnPanelCloseDesc": "当用户关闭搜索面板时禁用清除搜索结果。禁用时，即使用户关闭并重新打开搜索面板，搜索结果也会保留。请注意，即使启用此设置，移动设备也不会清除搜索结果。这是因为需要关闭面板才能查看文档上的搜索结果。",
+      "pageManipulation": "页面操作",
+      "disablePageDeletionConfirmationModal": "禁用页面删除确认模式",
+      "disablePageDeletionConfirmationModalDesc": "从缩略图视图中删除页面时禁用确认模式",
+      "disableMultiselect": "禁用多选",
+      "disableMultiselectDesc": "在左侧缩略图面板中禁用多选"
     }
   },
   "warning": {
@@ -960,6 +994,40 @@
   "languageModal": {
     "selectLanguage": "选择语言"
   },
+  "insertPageModal": {
+    "title": "添加新页面",
+    "tabs": {
+      "blank": "空白的",
+      "upload": "上传"
+    },
+    "pagePlacements": {
+      "header": "页面放置",
+      "above": "上页",
+      "below": "下页"
+    },
+    "pageLocations": {
+      "header": "页面位置",
+      "specify": "指定页面",
+      "amount": "页数",
+      "total": "全部的",
+      "pages": "页面"
+    },
+    "pageDimensions": {
+      "header": "页面尺寸",
+      "subHeader": "预设",
+      "presets": {
+        "letter": "信",
+        "halfLetter": "半个字母",
+        "juniorLegal": "初级法律",
+        "custom": "风俗"
+      }
+    },
+    "browse": "浏览文件",
+    "fileSelected": {
+      "title": "选择要添加的页面"
+    },
+    "button": "添加页面"
+  },
   "multiViewer": {
     "dragAndDrop": "将您的文件拖放到此处进行比较",
     "or": "或者",
@@ -976,5 +1044,26 @@
       "new": "新的",
       "page": "页"
     }
+  },
+  "saveModal": {
+    "close": "关",
+    "saveAs": "另存为",
+    "general": "一般的",
+    "fileName": "文件名",
+    "fileType": "文件类型",
+    "fileLocation": "文件位置",
+    "browse": "浏览",
+    "pageRange": "页面范围",
+    "all": "全部",
+    "currentView": "目前看来",
+    "currentPage": "当前页面",
+    "specifyPage": "指定页面",
+    "properties": "特性",
+    "includeAnnotation": "包括注释",
+    "includeComments": "包括评论",
+    "watermark": "水印",
+    "addWatermark": "加水印",
+    "save": "保存存档",
+    "pageError": "无效页面。有效页面范围介于 1 -"
   }
 }

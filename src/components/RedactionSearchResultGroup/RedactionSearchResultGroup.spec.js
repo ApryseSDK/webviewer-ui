@@ -12,7 +12,7 @@ const customRenderWithContext = (component, providerProps = {}) => {
     <RedactionPanelContext.Provider value={providerProps}>
       {component}
     </RedactionPanelContext.Provider>,
-  )
+  );
 };
 
 jest.mock('core', () => ({
@@ -30,7 +30,7 @@ describe('RedactionSearchResultGroup', () => {
   describe('storybook components', () => {
     it('renders storybook component correctly', () => {
       expect(() => {
-        render(<Basic />)
+        render(<Basic />);
       }).not.toThrow();
     });
   });
@@ -51,7 +51,7 @@ describe('RedactionSearchResultGroup', () => {
         searchResults: mockSearchResults,
         selectedSearchResultIndexes,
         setSelectedSearchResultIndexes,
-      }
+      };
       customRenderWithContext(<RedactionSearchResultGroupWithRedux {...props} />);
       const redactionSearchResults = screen.getAllByRole('listitem');
       expect(redactionSearchResults.length).toEqual(mockSearchResults.length);
@@ -74,7 +74,7 @@ describe('RedactionSearchResultGroup', () => {
         searchResults: mockSearchResults,
         selectedSearchResultIndexes,
         setSelectedSearchResultIndexes,
-      }
+      };
       customRenderWithContext(<RedactionSearchResultGroupWithRedux {...props} />);
       const checkBox = screen.getByLabelText('Page 1');
       expect(checkBox).toBeChecked();
@@ -96,7 +96,7 @@ describe('RedactionSearchResultGroup', () => {
         searchResults: mockSearchResults,
         selectedSearchResultIndexes,
         setSelectedSearchResultIndexes,
-      }
+      };
       customRenderWithContext(<RedactionSearchResultGroupWithRedux {...props} />);
       const checkBox = screen.getByLabelText('Page 1');
       expect(checkBox).not.toBeChecked();
@@ -117,7 +117,7 @@ describe('RedactionSearchResultGroup', () => {
         searchResults: mockSearchResults,
         selectedSearchResultIndexes,
         setSelectedSearchResultIndexes,
-      }
+      };
       customRenderWithContext(<RedactionSearchResultGroupWithRedux {...props} />);
       const resultCheckBoxes = screen.getAllByRole('checkbox');
       // Expect 6 checkboxes, one for the top level "select all in the page"
@@ -135,7 +135,7 @@ describe('RedactionSearchResultGroup', () => {
         4: false,
       });
 
-      //Select last result
+      // Select last result
       userEvent.click(resultCheckBoxes[5]);
       expect(setSelectedSearchResultIndexes).toBeCalledWith({
         0: true,
@@ -145,5 +145,5 @@ describe('RedactionSearchResultGroup', () => {
         4: true,
       });
     });
-  })
+  });
 });

@@ -13,19 +13,19 @@ export default (dispatch, annotationConstructor) => {
 };
 
 
-const createTextAnnotation = annotationConstructor => {
+const createTextAnnotation = (annotationConstructor, activeDocumentViewerKey = 1) => {
   const annotations = [];
   const quads = core.getSelectedTextQuads();
 
-  Object.keys(quads).forEach(pageNumber => {
+  Object.keys(quads).forEach((pageNumber) => {
     pageNumber = parseInt(pageNumber, 10);
     const annotation = createAnnotation(annotationConstructor, pageNumber, quads);
 
     if (window.Core.Tools.TextAnnotationCreateTool.AUTO_SET_TEXT && !(annotation instanceof window.Annotations.RedactionAnnotation)) {
-      annotation.setContents(core.getSelectedText(pageNumber));
+      annotation.setContents(core.getSelectedText(activeDocumentViewerKey));
     }
 
-    annotation.setCustomData('trn-annot-preview', core.getSelectedText(pageNumber));
+    annotation.setCustomData('trn-annot-preview', core.getSelectedText(activeDocumentViewerKey));
 
     if (annotation instanceof window.Annotations.RedactionAnnotation) {
       setRedactionStyle(annotation);
@@ -49,18 +49,18 @@ const createAnnotation = (annotationConstructor, pageNumber, quads) => {
   return annotation;
 };
 
-const setAnnotationStyle = annotation => {
+const setAnnotationStyle = (annotation) => {
   const toolName = mapAnnotationToToolName(annotation);
 
   if (toolName) {
     const newStyles = getToolStyles(toolName);
-    Object.keys(newStyles).forEach(property => {
+    Object.keys(newStyles).forEach((property) => {
       annotation[property] = newStyles[property];
     });
   }
 };
 
-const setRedactionStyle = annotation => {
+const setRedactionStyle = (annotation) => {
   const { AnnotationCreateRedaction: { defaults: style = {} } } = core.getToolModeMap();
 
   if (style) {
