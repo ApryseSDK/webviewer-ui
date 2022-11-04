@@ -18,6 +18,7 @@ import Button from 'components/Button';
 import './Note.scss';
 import { getAnnotationShareType } from 'src/helpers/annotationShareType';
 import { ShareTypeColors } from 'src/constants/shareTypes';
+import getWiseflowCustomValues from 'helpers/getWiseflowCustomValues';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -39,9 +40,13 @@ const Note = ({ annotation }) => {
   const containerRef = useRef();
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
+
   const getAnnotationStatusColor = () => {
     return ShareTypeColors[getAnnotationShareType(annotation)] ?? ShareTypeColors.NONE;
   };
+
+  const showShareType = getWiseflowCustomValues().showShareType;
+
   const ids = useRef([]);
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -227,10 +232,14 @@ const Note = ({ annotation }) => {
       onClick={handleNoteClick}
       onKeyDown={handleNoteKeydown}
       id={`note_${annotation.Id}`}
-      style={{
-        borderBottom: `4px solid ${getAnnotationStatusColor()}`,
-        borderTop: `4px solid ${getAnnotationStatusColor()}`,
-      }}
+      style={
+        showShareType
+          ? {
+              borderBottom: `4px solid ${getAnnotationStatusColor()}`,
+              borderTop: `4px solid ${getAnnotationStatusColor()}`,
+            }
+          : undefined
+      }
     >
       <NoteContent
         noteIndex={0}

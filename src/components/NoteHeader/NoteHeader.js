@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, memo } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import NotePopup from 'components/NotePopup';
 import NoteState from 'components/NoteState';
@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import getAnnotationReference from 'src/helpers/getAnnotationReference';
+import getWiseflowCustomValues from 'helpers/getWiseflowCustomValues';
 
 import './NoteHeader.scss';
 import Tooltip from '../Tooltip';
@@ -26,12 +27,14 @@ const propTypes = {
   isSelected: PropTypes.bool,
   setIsEditing: PropTypes.func,
   notesShowLastUpdatedDate: PropTypes.bool,
+  isReply: PropTypes.bool,
   isUnread: PropTypes.bool,
   renderAuthorName: PropTypes.func,
   isNoteStateDisabled: PropTypes.bool,
   isEditing: PropTypes.bool,
   noteIndex: PropTypes.number,
   sortStrategy: PropTypes.string,
+  renderAnnotationReference: PropTypes.func,
 };
 
 function NoteHeader(props) {
@@ -63,6 +66,8 @@ function NoteHeader(props) {
       : annotation.DateCreated;
   const color = annotation[iconColor]?.toHexString?.();
   const fillColor = getColor(annotation.FillColor);
+
+  const showShareType = getWiseflowCustomValues().showShareType;
 
   const authorAndDateClass = classNames('author-and-date', { isReply });
   const noteHeaderClass = classNames('NoteHeader', { parent: !isReply });
@@ -118,7 +123,7 @@ function NoteHeader(props) {
 
           <div className="state-and-overflow">
             <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
-            {!isNoteStateDisabled && !isReply && (
+            {!isNoteStateDisabled && showShareType && !isReply && (
               <NoteState annotation={annotation} isSelected={isSelected} noteIndex={noteIndex} />
             )}
             {!isEditing && isSelected && (
