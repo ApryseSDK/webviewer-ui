@@ -81,7 +81,7 @@ export default {
       notesPanel: 293,
       redactionPanel: 330,
       textEditingPanel: 330,
-      wv3dPropertiesPanel: 330,
+      wv3dPropertiesPanel: 307,
       comparePanel: 330,
     },
     documentContainerWidth: null,
@@ -288,9 +288,9 @@ export default {
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
-          toolGroup: 'freeHandTools',
-          dataElement: 'freeHandToolGroupButton',
-          title: 'annotation.freehand',
+          toolGroup: 'rectangleTools',
+          dataElement: 'shapeToolGroupButton',
+          title: 'annotation.rectangle',
         },
         {
           type: 'toolGroupButton',
@@ -300,28 +300,9 @@ export default {
         },
         {
           type: 'toolGroupButton',
-          toolGroup: 'rectangleTools',
-          dataElement: 'shapeToolGroupButton',
-          title: 'annotation.rectangle',
-        },
-        {
-          type: 'toolGroupButton',
-          toolGroup: 'ellipseTools',
-          dataElement: 'ellipseToolGroupButton',
-          title: 'annotation.ellipse',
-        },
-        { type: 'toolGroupButton', toolGroup: 'arcTools', dataElement: 'arcToolGroupButton', title: 'annotation.arc' },
-        {
-          type: 'toolGroupButton',
-          toolGroup: 'polygonTools',
-          dataElement: 'polygonToolGroupButton',
-          title: 'annotation.polygon',
-        },
-        {
-          type: 'toolGroupButton',
-          toolGroup: 'cloudTools',
-          dataElement: 'polygonCloudToolGroupButton',
-          title: 'annotation.polygonCloud',
+          toolGroup: 'freeHandTools',
+          dataElement: 'freeHandToolGroupButton',
+          title: 'annotation.freehand',
         },
         {
           type: 'toolGroupButton',
@@ -335,12 +316,38 @@ export default {
           dataElement: 'polyLineToolGroupButton',
           title: 'annotation.polyline',
         },
+
         {
           type: 'toolGroupButton',
           toolGroup: 'arrowTools',
           dataElement: 'arrowToolGroupButton',
           title: 'annotation.arrow',
         },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'arcTools',
+          dataElement: 'arcToolGroupButton',
+          title: 'annotation.arc',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'ellipseTools',
+          dataElement: 'ellipseToolGroupButton',
+          title: 'annotation.ellipse',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'polygonTools',
+          dataElement: 'polygonToolGroupButton',
+          title: 'annotation.polygon',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'cloudTools',
+          dataElement: 'polygonCloudToolGroupButton',
+          title: 'annotation.polygonCloud',
+        },
+
         { type: 'divider' },
         {
           type: 'customElement',
@@ -393,18 +400,18 @@ export default {
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
+          toolGroup: 'rubberStampTools',
+          img: 'icon-tool-stamp-line',
+          dataElement: 'rubberStampToolGroupButton',
+          title: 'annotation.rubberStamp',
+        },
+        {
+          type: 'toolGroupButton',
           toolGroup: 'signatureTools',
           img: 'icon-tool-signature',
           dataElement: 'signatureToolGroupButton',
           title: 'annotation.signature',
           showColor: 'never',
-        },
-        {
-          type: 'toolGroupButton',
-          toolGroup: 'rubberStampTools',
-          img: 'icon-tool-stamp-line',
-          dataElement: 'rubberStampToolGroupButton',
-          title: 'annotation.rubberStamp',
         },
         {
           type: 'toolGroupButton',
@@ -726,14 +733,10 @@ export default {
       { type: 'divider' },
       { dataElement: 'pageRotationControls' },
       { type: 'divider' },
-      { dataElement: 'pageInsertionControls' },
-      { type: 'divider' },
       { dataElement: 'pageManipulationControls' },
     ],
     multiPageManipulationControls: [
       { dataElement: 'leftPanelPageTabsRotate' },
-      { type: 'divider' },
-      { dataElement: 'leftPanelPageTabsInsert' },
       { type: 'divider' },
       { dataElement: 'leftPanelPageTabsOperations' },
       { type: 'divider' },
@@ -742,16 +745,12 @@ export default {
     multiPageManipulationControlsLarge: [
       { dataElement: 'leftPanelPageTabsRotate' },
       { type: 'divider' },
-      { dataElement: 'leftPanelPageTabsInsert' },
-      { type: 'divider' },
       { dataElement: 'leftPanelPageTabsOperations' },
       { type: 'divider' },
       { dataElement: 'leftPanelPageTabsMove' },
     ],
     multiPageManipulationControlsSmall: [
       { dataElement: 'leftPanelPageTabsRotateSmall' },
-      { type: 'divider' },
-      { dataElement: 'leftPanelPageTabsInsertSmall' },
       { type: 'divider' },
       { dataElement: 'leftPanelPageTabsMoreSmall' },
     ],
@@ -1842,8 +1841,7 @@ export default {
       settingsModal: DataElements.SETTINGS_GENERAL_BUTTON,
       savedSignatures: DataElements.SAVED_SIGNATURES_PANEL_BUTTON,
       openFileModal: 'urlInputPanelButton',
-      // TODO: uncomment when InsertPageModal is added
-      // insertPageModal: 'insertBlankPagePanelButton'
+      insertPageModal: 'insertBlankPagePanelButton'
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
@@ -1975,6 +1973,8 @@ export default {
     notesPanelCustomEmptyPanel: null,
     replyAttachmentPreviewEnabled: true,
     savedSignatureTabEnabled: false,
+    replyAttachmentHandler: null,
+    customSettings: []
   },
   search: {
     value: '',
