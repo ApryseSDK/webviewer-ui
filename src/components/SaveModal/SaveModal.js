@@ -131,6 +131,7 @@ const SaveModal = () => {
 
   const [hasTyped, setHasTyped] = useState(false);
   const saveDisabled = (errorText || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY;
+  const optionsDisabled = filetype.extension === 'office';
 
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
@@ -155,68 +156,70 @@ const SaveModal = () => {
                   currentSelectionKey={filetype.label}
                 />
               </div>
-              <div className='title'>{t('saveModal.pageRange')}</div>
-              <form className='radio-container' onChange={onPageRangeChange} onSubmit={preventDefault}>
-                <Choice
-                  checked={pageRange === PAGE_RANGES.ALL}
-                  radio
-                  name='page-range-option'
-                  label={t('saveModal.all')}
-                  value={PAGE_RANGES.ALL}
-                />
-                <Choice
-                  checked={pageRange === PAGE_RANGES.CURRENT_PAGE}
-                  radio
-                  name='page-range-option'
-                  label={t('saveModal.currentPage')}
-                  value={PAGE_RANGES.CURRENT_PAGE}
-                />
-                {/* Temporarily commented out */}
-                {/* <Choice */}
-                {/*  checked={pageRange === PAGE_RANGES.CURRENT_VIEW} */}
-                {/*  radio */}
-                {/*  name='page-range-option' */}
-                {/*  label={t('saveModal.currentView')} */}
-                {/*  value={PAGE_RANGES.CURRENT_VIEW} */}
-                {/* /> */}
-                <Choice
-                  checked={pageRange === PAGE_RANGES.SPECIFY}
-                  radio
-                  name='page-range-option'
-                  label={t('option.print.specifyPages')}
-                  value={PAGE_RANGES.SPECIFY}
-                />
+              {!optionsDisabled && (<>
+                <div className='title'>{t('saveModal.pageRange')}</div>
+                <form className='radio-container' onChange={onPageRangeChange} onSubmit={preventDefault}>
+                  <Choice
+                    checked={pageRange === PAGE_RANGES.ALL}
+                    radio
+                    name='page-range-option'
+                    label={t('saveModal.all')}
+                    value={PAGE_RANGES.ALL}
+                  />
+                  <Choice
+                    checked={pageRange === PAGE_RANGES.CURRENT_PAGE}
+                    radio
+                    name='page-range-option'
+                    label={t('saveModal.currentPage')}
+                    value={PAGE_RANGES.CURRENT_PAGE}
+                  />
+                  {/* Temporarily commented out */}
+                  {/* <Choice */}
+                  {/*  checked={pageRange === PAGE_RANGES.CURRENT_VIEW} */}
+                  {/*  radio */}
+                  {/*  name='page-range-option' */}
+                  {/*  label={t('saveModal.currentView')} */}
+                  {/*  value={PAGE_RANGES.CURRENT_VIEW} */}
+                  {/* /> */}
+                  <Choice
+                    checked={pageRange === PAGE_RANGES.SPECIFY}
+                    radio
+                    name='page-range-option'
+                    label={t('saveModal.specifyPage')}
+                    value={PAGE_RANGES.SPECIFY}
+                  />
 
-                {pageRange === PAGE_RANGES.SPECIFY && (
-                  <div className={classNames('page-number-input-container', { error: !!errorText })}>
-                    <PageNumberInput
-                      selectedPageNumbers={specifiedPages}
-                      pageCount={pageCount}
-                      onBlurHandler={setSpecifiedPages}
-                      onSelectedPageNumbersChange={onSpecifiedPagesChanged}
-                      placeHolder={pageNumberPlaceholder}
-                      onError={onError}
-                    />
-                    {errorText && <div className="error-text">{errorText}</div>}
-                  </div>
-                )}
-              </form>
-              <div className='title'>{t('saveModal.properties')}</div>
-              <div className='checkbox-container'>
-                <Choice
-                  checked={includeAnnotations}
-                  name='include-annotation-option'
-                  label={t('saveModal.includeAnnotation')}
-                  onChange={onIncludeAnnotationsChanged}
-                />
-                {/* <Choice */}
-                {/*  checked={includeComments} */}
-                {/*  name='include-comment-option' */}
-                {/*  label={t('saveModal.includeComments')} */}
-                {/*  onChange={onIncludeCommentsChanged} */}
-                {/* /> */}
-              </div>
-
+                  {pageRange === PAGE_RANGES.SPECIFY && (
+                    <div className={classNames('page-number-input-container', { error: !!errorText })}>
+                      <PageNumberInput
+                        selectedPageNumbers={specifiedPages}
+                        pageCount={pageCount}
+                        onBlurHandler={setSpecifiedPages}
+                        onSelectedPageNumbersChange={onSpecifiedPagesChanged}
+                        placeHolder={pageNumberPlaceholder}
+                        onError={onError}
+                      />
+                      {errorText && <div className="error-text">{errorText}</div>}
+                    </div>
+                  )}
+                </form>
+                <div className='title'>{t('saveModal.properties')}</div>
+                <div className='checkbox-container'>
+                  <Choice
+                    checked={includeAnnotations}
+                    name='include-annotation-option'
+                    label={t('saveModal.includeAnnotation')}
+                    onChange={onIncludeAnnotationsChanged}
+                  />
+                  {/* Temporarily commented out */}
+                  {/* <Choice */}
+                  {/*  checked={includeComments} */}
+                  {/*  name='include-comment-option' */}
+                  {/*  label={t('saveModal.includeComments')} */}
+                  {/*  onChange={onIncludeCommentsChanged} */}
+                  {/* /> */}
+                </div>
+              </>)}
             </div>
             <div className='footer'>
               <button disabled={saveDisabled} onClick={onSave}>{t('saveModal.save')}</button>
