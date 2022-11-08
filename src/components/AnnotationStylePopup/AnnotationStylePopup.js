@@ -23,13 +23,24 @@ class AnnotationStylePopup extends React.Component {
     properties: PropTypes.object.isRequired,
     isRedaction: PropTypes.bool,
     isFreeText: PropTypes.bool,
+    isEllipse: PropTypes.bool,
     closeElement: PropTypes.func.isRequired,
   };
+
+  adjustFreeTextBoundingBox = (annotation) => {
+    if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+      const doc = core.getDocument();
+      const pageNumber = annotation['PageNumber'];
+      const pageInfo = doc.getPageInfo(pageNumber);
+      const pageMatrix = doc.getPageMatrix(pageNumber);
+      const pageRotation = doc.getPageRotation(pageNumber);
+      annotation.fitText(pageInfo, pageMatrix, pageRotation);
+    }
+  }
 
   handleSliderChange = (property, value) => {
     const { annotations } = this.props;
     const annotationManager = core.getAnnotationManager();
-
     annotations.forEach((annotation) => {
       annotation[property] = value;
       annotationManager.redrawAnnotation(annotation);
@@ -43,6 +54,10 @@ class AnnotationStylePopup extends React.Component {
       core.setAnnotationStyles(annotation, {
         [property]: value,
       });
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+        setToolStyles(annotation.ToolName, property, value);
+      }
+      this.adjustFreeTextBoundingBox(annotation);
     });
   }
 
@@ -79,6 +94,12 @@ class AnnotationStylePopup extends React.Component {
       } else if (section === 'end') {
         annotation.setEndStyle(value);
         lineStyle = 'EndLineStyle';
+      } else if (section === 'middle') {
+        const dashes = value.split(',');
+        const style = dashes.shift();
+        annotation['Style'] = style;
+        annotation['Dashes'] = dashes;
+        lineStyle = 'StrokeStyle';
       }
 
       if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
@@ -90,7 +111,6 @@ class AnnotationStylePopup extends React.Component {
   };
 
   handleClick = (e) => {
-    // see the comments above handleClick in ToolStylePopup.js
     if (isMobile() && e.target === e.currentTarget) {
       this.props.closeElement('annotationPopup');
     }
@@ -106,6 +126,7 @@ class AnnotationStylePopup extends React.Component {
       isDisabled,
       style, isRedaction,
       isFreeText,
+      isEllipse,
       isMeasure,
       colorMapKey,
       showLineStyleOptions,
@@ -136,6 +157,7 @@ class AnnotationStylePopup extends React.Component {
               colorMapKey={colorMapKey}
               style={style}
               isFreeText={isFreeText}
+              isEllipse={isEllipse}
               isMeasure={isMeasure}
               onStyleChange={this.handleStyleChange}
               onSliderChange={this.handleSliderChange}
