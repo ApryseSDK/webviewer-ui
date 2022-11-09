@@ -108,6 +108,8 @@ class AnnotationStylePopup extends React.Component {
 
       core.getAnnotationManager().redrawAnnotation(annotation);
     });
+
+    core.getAnnotationManager().trigger('annotationChanged', [annotations, 'modify', {}]);
   };
 
   handleClick = (e) => {
