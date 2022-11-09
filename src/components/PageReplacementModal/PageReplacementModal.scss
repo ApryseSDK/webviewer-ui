@@ -2,7 +2,8 @@
 @import '../../constants/modal';
 @import "../../constants/tabs";
 
-.PageReplacementModal, .OpenFileModal {
+.PageReplacementModal,
+.OpenFileModal {
   @extend %modal;
 
   .container {
@@ -15,7 +16,7 @@
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
     padding: 20px 16px 16px 16px;
     background: var(--component-background);
-    width: 888px;
+    width: 950px;
 
     @include tablet {
       width: 625px;
@@ -24,7 +25,8 @@
         width: 609px;
       }
     }
-    .header{
+
+    .header {
       margin-bottom: 6px;
     }
 
@@ -35,8 +37,8 @@
 
     .page-replacement-divider {
       border-top: 1px solid var(--divider);
-      margin: 18px 0px 16px 0px;
-      width: 100%;
+      margin: 18px -16px 16px -16px;
+      width: inherit;
     }
 
     @include mobile {
@@ -134,16 +136,22 @@
 
       .modal-body-container {
         height: 350px;
-        width: 856px;
+        width: 100%;
         padding: 16px 0px 16px 16px;
         border-radius: 4px;
         overflow: auto;
         background-color: var(--gray-2);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
 
         &.isLoading {
-          display: flex;
           justify-content: center;
           align-items: center;
+        }
+
+        @include mobile {
+          padding: 12px 0px 12px 12px;
         }
       }
     }
@@ -156,6 +164,11 @@
       position: relative;
       border-radius: 4px;
       background: var(--faded-component-background);
+
+      &.upload {
+        background: transparent;
+      }
+
     }
 
     .tab-list {

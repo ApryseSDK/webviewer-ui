@@ -7,14 +7,15 @@ function noop() { }
 
 describe('PageManipulationControls', () => {
   describe('Component', () => {
-    it('Should render component correctly with 3 buttons and one type element for header', () => {
+    it('Should render component correctly with 4 buttons and one type element for header', () => {
       const { container } = render(<TestPageManipulationControls
         deletePages={noop}
         extractPages={noop}
+        insertPages={noop}
         replacePages={noop}
       />);
 
-      expect(container.querySelectorAll('.Button')).toHaveLength(3);
+      expect(container.querySelectorAll('.Button')).toHaveLength(4);
       expect(container.querySelectorAll('.type')).toHaveLength(1);
     });
 
@@ -23,6 +24,7 @@ describe('PageManipulationControls', () => {
       const { container } = render(<TestPageManipulationControls
         deletePages={deletePages}
         extractPages={noop}
+        insertPages={noop}
         replacePages={noop}
       />);
 
@@ -37,6 +39,7 @@ describe('PageManipulationControls', () => {
       const { container } = render(<TestPageManipulationControls
         deletePages={noop}
         extractPages={extractPages}
+        insertPages={noop}
         replacePages={noop}
       />);
 
@@ -51,6 +54,7 @@ describe('PageManipulationControls', () => {
       const { container } = render(<TestPageManipulationControls
         deletePages={noop}
         extractPages={noop}
+        insertPages={noop}
         replacePages={replacePages}
       />);
 
@@ -58,6 +62,21 @@ describe('PageManipulationControls', () => {
       expect(replacePagesButton).toBeInTheDocument();
       fireEvent.click(replacePagesButton);
       expect(replacePages).toBeCalled();
+    });
+
+    it('Should call insertPages handler when the insert pages button is clicked', () => {
+      const insertPages = jest.fn();
+      const { container } = render(<TestPageManipulationControls
+        deletePages={noop}
+        extractPages={noop}
+        insertPages={insertPages}
+        replacePages={noop}
+      />);
+
+      const insertPagesButton = container.querySelector('.Button[aria-label="Insert"]');
+      expect(insertPagesButton).toBeInTheDocument();
+      fireEvent.click(insertPagesButton);
+      expect(insertPages).toBeCalled();
     });
   });
 });

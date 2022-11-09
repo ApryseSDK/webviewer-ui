@@ -1,9 +1,24 @@
-.image-signature {
-  width: 450px;
-  height: 220px;
+.file-picker-page-replacement {
+  width: 100%;
+  height: 100%;
   position: relative;
   border-radius: 4px;
-  background: var(--faded-component-background);
+
+  .file-picker-upload-container {
+    position: relative;
+    border: 1px dashed var(--modal-stroke-and-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    &.dragging {
+      background: var(--image-signature-drop-background);
+      border: 1px dashed var(--image-signature-drop-border);
+    }
+  }
 }
 
 .FilePickerPanel {
@@ -14,9 +29,13 @@
   width: 100%;
   height: 100%;
   position: absolute;
+
   .label-separator {
     margin: 10px;
   }
+
+  color: var(--faded-text);
+
   .modal-btn-file {
     border-radius: 4px;
     border: 1px solid var(--primary-button);
@@ -27,4 +46,15 @@
     padding-left: 20px;
     cursor: pointer;
   }
+
+  .Icon {
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 15px;
+
+    svg {
+      height: 45px;
+    }
+  }
+
 }

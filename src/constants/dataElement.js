@@ -86,6 +86,12 @@ const DataElements = {
   SAVED_INITIALS_PANEL: 'savedInitialsPanel',
   // MultiViewer Mode (MultiViewer)
   MULTI_VIEWER_SAVE_DOCUMENT_BUTTON: 'multiViewerSaveDocumentButton',
+
+  // Insert Page Modal tabs
+  INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',
+  INSERT_FROM_FILE_TAB: 'insertUploadedPagePanelButton',
+  INSERT_BLANK_PAGE_PANEL: 'insertBlankPagePanel',
+  INSERT_FROM_FILE_PANEL: 'insertUploadedPagePanel',
 };
 
 

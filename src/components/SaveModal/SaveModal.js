@@ -140,7 +140,7 @@ const SaveModal = () => {
           <div className='container'>
             <div className='header'>
               <div className='header-text' >{t('saveModal.saveAs')}</div>
-              <Button className='close-button' onClick={closeModal} img='ic_close_black_24px' title={t('saveModal.close')}/>
+              <Button className='close-button' onClick={closeModal} img='ic_close_black_24px' title='action.close' />
             </div>
             <div className='modal-body'>
               <div className='title'>{t('saveModal.general')}</div>

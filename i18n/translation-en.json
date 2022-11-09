@@ -78,6 +78,7 @@
     "showLess": "show less",
     "showMore": "...more",
     "chooseFile": "Choose a file",
+    "browse": "Browse Files",
     "selectYourOption": "Select your option",
     "open": "Open",
     "deselectAll": "Deselect All",
@@ -93,7 +94,8 @@
     "viewFile": "View file",
     "multiReplyAnnotations": "Reply to selected annotations ({{count}})",
     "comparePages": "Compare pages",
-    "startComparison": "Start Comparison"
+    "startComparison": "Start Comparison",
+    "back": "Back"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -269,7 +271,8 @@
     "pageNum": "Page Number",
     "viewBookmark": "View Bookmark on Page",
     "error": "Error",
-    "errorPageNumber": "Invalid page number. Limit is "
+    "errorPageNumber": "Invalid page number. Limit is ",
+    "errorLoadingDocument": "There was a problem reading this document and some pages may not be displayed. This indicates the document may be corrupted. The total page count is {{totalPageCount}} and the number pages being displayed is {{displayedPageCount}}."
   },
   "option": {
     "type": {
@@ -425,6 +428,7 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Drag & Drop your file here",
+      "selectFile": "Select your file here",
       "or": "Or",
       "chooseFile": "Choose a file",
       "localFile": "Local File",
@@ -1009,6 +1013,7 @@
     "pageLocations": {
       "header": "Page Location",
       "specify": "Specify Page",
+      "specifyLocation": "Specify Page Location",
       "amount": "Number Of Pages",
       "total": "Total",
       "pages": "Pages"
@@ -1028,7 +1033,13 @@
     "fileSelected": {
       "title": "Select Pages to Add"
     },
-    "button": "Add Page(s)"
+    "button": "Add Page(s)",
+    "selectPages": "Select Pages to Add",
+    "page": "Page",
+    "warning": {
+      "title": "Exit insert new page?",
+      "message": "Exiting will cancel all of the selections you have made so far. Are you sure you still want to exit?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Drag and Drop your file here to compare",

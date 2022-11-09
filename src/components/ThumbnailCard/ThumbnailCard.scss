@@ -1,0 +1,60 @@
+@import '../../constants/styles.scss';
+
+.thumb-card {
+  box-sizing: border-box;
+  width: 133px;
+  height: fit-content;
+  background: #F8F9FA;
+  border-radius: 6px;
+  padding: 0px 24px 2px 24px;
+  position: relative;
+  cursor: pointer;
+
+  @include tablet {
+    width: 142px;
+  }
+
+  @include mobile {
+    width: 97px;
+    padding: 0px 12px 2px 12px;
+
+  }
+
+  @include small-mobile {
+    width: 97px;
+    padding: 0px 12px 2px 12px;
+  }
+
+  &:hover {
+    background: var(--tools-overlay-button-hover);
+  }
+}
+
+.thumb-body {
+  display: flex;
+  align-items: flex-start;
+}
+
+.thumb-image {
+  padding-top: 12px;
+  padding-right: 5px;
+  text-align: center;
+}
+
+.thumb-card-img {
+  width: 83px;
+
+  @include mobile {
+    width: 68px;
+  }
+
+  @include small-mobile {
+    width: 68px;
+  }
+}
+
+.thumb-card-title {
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 10px;
+}
