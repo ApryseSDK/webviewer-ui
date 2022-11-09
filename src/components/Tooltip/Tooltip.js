@@ -53,8 +53,12 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
     if (hideOnClick) {
       childRef.current?.addEventListener('click', hideTooltip);
     }
-    childRef.current?.addEventListener('focus', showToolTip);
-    childRef.current?.addEventListener('blur', hideTooltip);
+    // only enable focus event for non popup buttons
+    if (childRef.current['ariaLabel'] !== 'action.close' && content !== 'action.close' &&
+      !childRef.current.parentElement.parentElement.className.includes('TextPopup')) {
+      childRef.current?.addEventListener('focus', showToolTip);
+      childRef.current?.addEventListener('blur', hideTooltip);
+    }
 
     const observer = new MutationObserver((mutations) => {
       // hide tooltip when button get disabled, disable buttons don't have "mouseleave" events
