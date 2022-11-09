@@ -32,6 +32,10 @@ const DataElements = {
   BOOKMARK_ADD_NEW_BUTTON: 'addNewBookmarkButton',
   NOTES_PANEL: 'notesPanel',
   FORM_FIELD_INDICATOR_CONTAINER: 'formFieldIndicatorContainer',
+  WATERMARK_PANEL: 'watermarkPanel',
+  WATERMARK_PANEL_TOGGLE: 'watermarkPanelToggle',
+  WATERMARK_PANEL_IMAGE_TAB: 'watermarkPanelImageTab',
+  WATERMARK_PANEL_TEXT_TAB: 'watermarkPanelTextTab',
 
   NotesPanel: {
     DefaultHeader: {

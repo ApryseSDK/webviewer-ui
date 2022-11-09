@@ -32,6 +32,14 @@ export default (initialState) => (state = initialState, action) => {
           comparePanel: payload.width,
         }
       };
+    case 'SET_WATERMARK_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          watermarkPanel: payload.width,
+        }
+      };
     case 'SET_COMPARISON_OVERLAY_ENABLED':
       return {
         ...state,

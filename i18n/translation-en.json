@@ -212,7 +212,8 @@
       "open": "View All Annotations",
       "close": "Close All Annotations"
     },
-    "comparePanel": "Compare Panel"
+    "comparePanel": "Compare Panel",
+    "watermarkPanel": "Watermark Panel"
   },
   "message": {
     "toolsOverlayNoPresets": "No Presets",
@@ -995,6 +996,13 @@
     "propertiesHeader": "Properties",
     "miscValuesHeader": "All",
     "emptyPanelMessage": "Select an element to view its properties."
+  },
+  "watermarkPanel": {
+    "textWatermark": "Text Watermark",
+    "uploadImage": "Upload Image",
+    "browse": "Browse",
+    "watermarkOptions": "Watermark Options",
+    "watermarks": "Watermarks"
   },
   "languageModal": {
     "selectLanguage": "Select language"

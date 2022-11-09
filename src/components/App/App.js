@@ -62,6 +62,7 @@ import MultiViewer from 'components/MultiViewer';
 import SettingsModal from 'components/SettingsModal';
 import ComparePanel from 'components/MultiViewer/ComparePanel';
 import SaveModal from 'components/SaveModal';
+import WatermarkPanel from 'components/WatermarkPanel';
 import InsertPageModal from 'components/InsertPageModal';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
@@ -200,6 +201,9 @@ const App = ({ removeEventHandlers }) => {
           </RightPanel>
           <RightPanel dataElement="redactionPanel" onResize={(width) => dispatch(actions.setRedactionPanelWidth(width))}>
             <RedactionPanel />
+          </RightPanel>
+          <RightPanel dataElement="watermarkPanel" onResize={(width) => dispatch(actions.setWatermarkPanelWidth(width))}>
+            <WatermarkPanel />
           </RightPanel>
           <RightPanel
             dataElement="wv3dPropertiesPanel"

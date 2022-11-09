@@ -71,8 +71,7 @@
     "viewShortCutKeysFor3D": "Tastenkombinationen für 3D anzeigen",
     "markAllRead": "Als Gelesen markieren",
     "insertPage": "Seite einfügen",
-    "insertBlankPageAbove": "Leere Seite oben einfügen",
-    "insertBlankPageBelow": "Leere Seite unten einfügen page",
+    "insert": "Einfügung",
     "pageManipulation": "Seitenmanipulation",
     "replace": "Ersetzen",
     "setDestination": "Festgelegtes Ziel",
@@ -211,7 +210,8 @@
       "open": "Alle Anmerkungen anzeigen",
       "close": "Alle Anmerkungen schließen"
     },
-    "comparePanel": "Panel vergleichen"
+    "comparePanel": "Panel vergleichen",
+    "watermarkPanel": "Wasserzeichen-Panel"
   },
   "message": {
     "toolsOverlayNoPresets": "Keine Voreinstellungen",
@@ -269,7 +269,9 @@
     "embeddedFiles": "Eingebettete Dateien",
     "pageNum": "Seitennummer",
     "viewBookmark": "Lesezeichen auf Seite anzeigen",
-    "error": "Fehler"
+    "error": "Fehler",
+    "errorPageNumber": "Ungültige Seitenzahl. Grenze ist",
+    "errorLoadingDocument": "Beim Lesen dieses Dokuments ist ein Problem aufgetreten, und einige Seiten werden möglicherweise nicht angezeigt. Dies weist darauf hin, dass das Dokument möglicherweise beschädigt ist. Die Gesamtseitenzahl ist {{totalPageCount}} und die Anzahl der angezeigten Seiten ist {{displayedPageCount}}."
   },
   "option": {
     "type": {
@@ -991,6 +993,13 @@
     "miscValuesHeader": "Alle",
     "emptyPanelMessage": "Wählen Sie ein Element aus, um seine Eigenschaften anzuzeigen."
   },
+  "watermarkPanel": {
+    "textWatermark": "Textwasserzeichen",
+    "uploadImage": "Bild hochladen",
+    "browse": "Durchsuche",
+    "watermarkOptions": "Wasserzeichenoptionen",
+    "watermarks": "Wasserzeichen"
+  },
   "languageModal": {
     "selectLanguage": "Sprache auswählen"
   },
@@ -1020,7 +1029,8 @@
         "halfLetter": "Halber Buchstabe",
         "juniorLegal": "Junior legal",
         "custom": "Brauch"
-      }
+      },
+      "units": "Einheiten"
     },
     "browse": "Dateien durchsuchen",
     "fileSelected": {

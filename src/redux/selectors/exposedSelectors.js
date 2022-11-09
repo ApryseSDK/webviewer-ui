@@ -61,6 +61,8 @@ export const getComparePanelWidth = (state) => state.viewer.panelWidths.compareP
 
 export const getTextEditingPanelWidth = (state) => state.viewer.panelWidths.textEditingPanel;
 
+export const getWatermarkPanelWidth = (state) => state.viewer.panelWidths.watermarkPanel;
+
 const RESIZE_BAR_WIDTH = 14; // 14px Need to update this if styling results in a change to width.
 export const getLeftPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.leftPanel + RESIZE_BAR_WIDTH;
 export const getSearchPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.searchPanel + RESIZE_BAR_WIDTH;
@@ -70,10 +72,12 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const notesPanelWidth = getNotesPanelWidthWithResizeBar(state);
   const searchPanelWidth = getSearchPanelWidthWithResizeBar(state);
   const leftPanelWidth = getLeftPanelWidthWithResizeBar(state);
-  const redactionPanelWidth = getRedactionPanelWidth(state);
+  const watermarkPanelWidth = getWatermarkPanelWidth(state);
   const textEditingPanelWidth = getTextEditingPanelWidth(state);
   const wv3dPropertiesPanelWidth = getWv3dPropertiesPanelWidth(state);
   const comparePanelWidth = getComparePanelWidthWithResizeBar(state);
+  const redactionPanelWidth = getRedactionPanelWidth(state);
+
   const isLeftPanelOpen = isElementOpen(state, 'leftPanel');
   const isNotesPanelOpen = isElementOpen(state, 'notesPanel');
   const isSearchPanelOpen = isElementOpen(state, 'searchPanel');
@@ -81,6 +85,7 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const isTextEditingPanelOpen = isElementOpen(state, 'textEditingPanel');
   const isWv3dPropertiesPanelOpen = isElementOpen(state, 'wv3dPropertiesPanel');
   const isComparePanelOpen = isElementOpen(state, 'comparePanel');
+  const isWatermarkPanelOpen = isElementOpen(state, 'watermarkPanel');
 
   const spaceTakenUpByPanels =
     0 +
@@ -90,7 +95,8 @@ export const getDocumentContentContainerWidthStyle = (state) => {
     (isRedactionPanelOpen ? redactionPanelWidth : 0) +
     (isTextEditingPanelOpen ? textEditingPanelWidth : 0) +
     (isWv3dPropertiesPanelOpen ? wv3dPropertiesPanelWidth : 0) +
-    (isComparePanelOpen ? comparePanelWidth : 0);
+    (isComparePanelOpen ? comparePanelWidth : 0) +
+    (isWatermarkPanelOpen ? watermarkPanelWidth : 0);
 
   return `calc(100% - ${spaceTakenUpByPanels}px)`;
 };

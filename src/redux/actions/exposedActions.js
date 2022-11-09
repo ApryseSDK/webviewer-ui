@@ -263,6 +263,10 @@ export const setTextEditingPanelWidth = (width) => ({
   type: 'SET_TEXT_EDITING_PANEL_WIDTH',
   payload: { width },
 });
+export const setWatermarkPanelWidth = (width) => ({
+  type: 'SET_WATERMARK_PANEL_WIDTH',
+  payload: { width },
+});
 export const setWv3dPropertiesPanelWidth = (width) => ({
   type: 'SET_WV3D_PROPERTIES_PANEL_WIDTH',
   payload: { width },
@@ -372,7 +376,7 @@ export const closeElements = (dataElements) => (dispatch) => {
   }
 };
 
-const rightPanelList = ['searchPanel', 'notesPanel', 'comparePanel', 'redactionPanel', 'wv3dPropertiesPanel', 'textEditingPanel'];
+const rightPanelList = ['searchPanel', 'notesPanel', 'comparePanel', 'redactionPanel', 'wv3dPropertiesPanel', 'textEditingPanel', 'watermarkPanel'];
 export const toggleElement = (dataElement) => (dispatch, getState) => {
   const state = getState();
 
