@@ -1931,6 +1931,7 @@ export default {
     fonts: defaultFonts,
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
+    shouldShowApplyCropWarning: true,
     presetCropDimensions,
     presetNewPageDimensions,
     dateTimeFormats: defaultDateTimeFormats,
@@ -2049,7 +2050,9 @@ export default {
     disableMultiViewerComparison:
       getHashParameters('disableMultiViewerComparison', false) || !getHashParameters('pdfnet', false),
   },
-  featureFlags: {},
+  featureFlags: {
+    headerV2: false,
+  },
   wv3dPropertiesPanel: {
     modelData: [],
     schema: {

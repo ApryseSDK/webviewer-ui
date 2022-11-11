@@ -10,7 +10,6 @@ import { isIE11 } from 'helpers/device';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
-import ToolsHeader from 'components/Header/ToolsHeader';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
@@ -188,7 +187,6 @@ const App = ({ removeEventHandlers }) => {
         <Accessibility />
 
         <Header />
-        <ToolsHeader />
         <div className="content">
           <LeftPanel />
           {!isMultiViewerMode && <DocumentContainer />}
