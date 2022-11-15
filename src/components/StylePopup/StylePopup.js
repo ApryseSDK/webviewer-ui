@@ -113,7 +113,6 @@ class StylePopup extends React.PureComponent {
     } = this.props;
     const lineStart = circleRadius;
     const sliderProps = {};
-
     if (!isOpacitySliderDisabled) {
       sliderProps.Opacity = {
         property: 'Opacity',

@@ -3,6 +3,31 @@ import { expect, test } from '@playwright/test';
 import { drawLine } from '../common/line';
 
 test.describe('Style popup', () => {
+  async function addNewAnnotation(iframe) {
+    await iframe.evaluate(() => {
+      const annotationManager = window.instance.Core.annotationManager;
+      const rectangleAnnotation = new window.instance.Core.Annotations.RectangleAnnotation({
+        PageNumber: 1,
+        X: 50,
+        Y: 100,
+        Width: 150,
+        Height: 100,
+      });
+      annotationManager.addAnnotation(rectangleAnnotation);
+      annotationManager.redrawAnnotation(rectangleAnnotation);
+      return;
+    });
+  }
+
+  async function selectNewAnnotation(iframe) {
+    await iframe?.evaluate(() => {
+      const annotationManager = window.instance.Core.annotationManager;
+      annotationManager.deselectAllAnnotations();
+      const annotations = annotationManager.getAnnotationsList();
+      annotationManager.selectAnnotation(annotations[0]);
+    });
+  }
+
   test('style popup should render correctly for different annotations', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
     const { iframe, waitForInstance, getAnnotationsCount } = await loadViewerSample(page, 'viewing/blank');
@@ -102,5 +127,61 @@ test.describe('Style popup', () => {
     await iframe.waitForSelector('[data-element=annotationPopup]');
     await iframe.click('[data-element=annotationStyleEditButton]');
     await iframe.waitForSelector('[data-element=fontSizeSlider]');
+  });
+
+  test("Opacity slider input should be 0% if a user enter a negative value", async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
+    const instance = await waitForInstance();
+    await page.waitForTimeout(5000);
+    await addNewAnnotation(iframe);
+
+    await page.waitForTimeout(5000);
+    await selectNewAnnotation(iframe);
+    await iframe.waitForSelector('[data-element=annotationPopup]');
+    await iframe.click('[data-element="annotationStyleEditButton"]');
+    await iframe.waitForSelector('[data-element=opacitySlider]');
+    const opacityInput = await iframe.$('[data-element="opacitySlider"] > .slider-element-container > input');
+    await opacityInput?.focus();
+    await iframe.waitForSelector('[data-element=opacitySlider]');
+    const realInput = await iframe.$('[data-element="opacitySlider"] > .slider-element-container > .slider-input-wrapper > input');
+    await realInput.fill('-15', {
+      force: true
+    });
+    await page.waitForTimeout(3000);
+    const strokeThicknessInput = await iframe.$('[data-element="strokeThicknessSlider"] > .slider-element-container > input');
+    await strokeThicknessInput?.focus();
+    await iframe.waitForSelector('[data-element=opacitySlider]');
+    const changedOpacityInput = await iframe.$('[data-element="opacitySlider"] > .slider-element-container > input');
+    await iframe.waitForSelector('[data-element=opacitySlider]');
+    await page.waitForTimeout(3000);
+    expect(await changedOpacityInput.evaluate(input => input.value)).toBe("0%");
+  });
+
+  test("StrokThickness slider input should be 0.10pt if a user enter a negative value", async({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
+    const instance = await waitForInstance();
+    await page.waitForTimeout(5000);
+    await addNewAnnotation(iframe);
+
+    await page.waitForTimeout(5000);
+    await selectNewAnnotation(iframe);
+    await iframe.waitForSelector('[data-element=annotationPopup]');
+    await iframe.click('[data-element="annotationStyleEditButton"]');
+    await iframe.waitForSelector('[data-element=strokeThicknessSlider]');
+    const strokeThicknessInput = await iframe.$('[data-element="strokeThicknessSlider"] > .slider-element-container > input');
+    await strokeThicknessInput?.focus();
+    await iframe.waitForSelector('[data-element=strokeThicknessSlider]');
+    const realInput = await iframe.$('[data-element="strokeThicknessSlider"] > .slider-element-container > .slider-input-wrapper > input');
+    await realInput.fill('-15', {
+      force: true
+    });
+    await page.waitForTimeout(3000);
+    const opacitySliderInput = await iframe.$('[data-element="opacitySlider"] > .slider-element-container > input');
+    await opacitySliderInput?.focus();
+    await iframe.waitForSelector('[data-element=strokeThicknessSlider]');
+    const changedStrokeThicknessInput = await iframe.$('[data-element="strokeThicknessSlider"] > .slider-element-container > input');
+    await iframe.waitForSelector('[data-element=strokeThicknessSlider]');
+    await page.waitForTimeout(3000);
+    expect(await changedStrokeThicknessInput.evaluate(input => input.value)).toBe("0.10pt");
   });
 });

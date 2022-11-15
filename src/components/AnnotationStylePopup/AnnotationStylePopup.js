@@ -30,7 +30,6 @@ class AnnotationStylePopup extends React.Component {
   handleSliderChange = (property, value) => {
     const { annotations } = this.props;
     const annotationManager = core.getAnnotationManager();
-
     annotations.forEach((annotation) => {
       annotation[property] = value;
       annotationManager.redrawAnnotation(annotation);
@@ -97,6 +96,8 @@ class AnnotationStylePopup extends React.Component {
 
       core.getAnnotationManager().redrawAnnotation(annotation);
     });
+
+    core.getAnnotationManager().trigger('annotationChanged', [annotations, 'modify', {}]);
   };
 
   handleClick = (e) => {
