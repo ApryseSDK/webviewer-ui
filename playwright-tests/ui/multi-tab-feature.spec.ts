@@ -116,17 +116,16 @@ test.describe('Multi-tab Feature', () => {
     });
   });
 
-  test.skip('should enable multi-tab feature, be able to add a tab and come back to first tab with everything working', async ({ page }) => {
+  test('should enable multi-tab feature, be able to add a tab and come back to first tab with everything working', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
     const instance = await waitForInstance();
-    await page.waitForTimeout(5000);
     
     await iframe.evaluate(() => {
       return instance.UI.enableFeatures(['MultiTab']);
     });
 
     await iframe.evaluate(async () => {
-      window.instance.UI.TabManager.addTab('https://pdftron.s3.amazonaws.com/downloads/pl/form1.pdf', { setActive: true, saveCurrentActiveTabState: true });
+      window.instance.UI.TabManager.addTab('https://pdftron.s3.amazonaws.com/downloads/pl/form1.pdf', { setActive: true });
     });
 
     await page.waitForTimeout(5000);
@@ -135,9 +134,47 @@ test.describe('Multi-tab Feature', () => {
     await page.waitForTimeout(5000);
 
     await instance('openElements', ['thumbnailsPanel']);
-    await page.waitForTimeout(20000);
+    await page.waitForTimeout(10000);
 
     const app = await iframe.$('.App');
     expect(await app.screenshot()).toMatchSnapshot(['first-tab-thumbnails', 'first-tab-thumbnails.png']);
+  });
+
+  test('should be able to delete annotations when returning to tab', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-multi-tab');
+    await waitForInstance();
+    await page.waitForTimeout(5000);
+
+    await iframe.evaluate(async () => {
+      window.instance.UI.TabManager.setActiveTab(2);
+    });
+
+    await page.waitForTimeout(2000);
+
+    await iframe.evaluate(async () => {
+      const annotationManager = window.instance.Core.annotationManager;
+      annotationManager.deleteAnnotations(annotationManager.getAnnotationsList().filter(a => a.PageNumber === 1));
+    });
+
+    await page.waitForTimeout(2000);
+
+    await iframe.evaluate(async () => {
+      window.instance.UI.TabManager.setActiveTab(0, true);
+    });
+
+    await page.waitForTimeout(2000);
+
+    await iframe.evaluate(async () => {
+      window.instance.UI.TabManager.setActiveTab(2, true);
+    });
+
+    await page.waitForTimeout(2000);
+
+    const annotOnPageOneCount = await iframe.evaluate(async () => {
+      const annotationManager = window.instance.Core.annotationManager;
+      return annotationManager.getAnnotationsList().filter(a => a.PageNumber === 1).length;
+    });
+
+    expect(annotOnPageOneCount).toEqual(0);
   });
 });

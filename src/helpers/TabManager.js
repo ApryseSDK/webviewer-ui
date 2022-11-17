@@ -252,7 +252,7 @@ export default class TabManager {
       removeListeners();
     };
 
-    core.addEventListener('annotationChanged', onAnnotChange, { once: true });
+    core.addEventListener('annotationChanged', onAnnotChange);
     core.addEventListener('fieldChanged', onFieldChange, { once: true });
 
     const removeListeners = () => {
