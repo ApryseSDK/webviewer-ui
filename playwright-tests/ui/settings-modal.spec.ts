@@ -70,4 +70,39 @@ test.describe('Settings modal', () => {
       expect(await getIsChecked()).toBe(!isChecked);
     }
   });
+
+  test('Keyboard Shortcut tab', async ({ page }) => {
+    const { iframe } = await loadViewerSample(page, 'viewing/blank');
+    await page.waitForTimeout(5000);
+
+    await iframe.click('[data-element="menuButton"]');
+    await iframe.click('[data-element="settingsButton"]');
+    await page.waitForTimeout(1000);
+    await iframe.click('[data-element="settingsKeyboardButton"]');
+    await page.waitForTimeout(1000);
+
+    const shortcutItems = await iframe.$$('.settings-content .shortcut-table-item');
+    expect(shortcutItems.length).toBe(36);
+
+    await (await shortcutItems[0].$('button')).click();
+    await page.waitForTimeout(1000);
+
+    const editKeyboardShortcutModal = await iframe.$('.EditKeyboardShortcutModal .container');
+
+    // Change shortcut to ctrl+m
+    await page.keyboard.down('Control');
+    await page.keyboard.down('KeyM');
+    await page.keyboard.up('Control');
+    await page.keyboard.up('KeyM');
+    await page.waitForTimeout(1000);
+
+    expect(await editKeyboardShortcutModal.screenshot()).toMatchSnapshot(['settings-modal', 'editKeyboardShortcutModal.png']);
+
+    // Apply the new shortcut
+    await (await editKeyboardShortcutModal.$('.footer button')).click();
+    await page.waitForTimeout(1000);
+
+    const spans = await shortcutItems[0].$$('.shortcut-table-item-command span');
+    expect((await Promise.all(spans.map(span => span.textContent()))).join('')).toBe('CTRL+M');
+  });
 });

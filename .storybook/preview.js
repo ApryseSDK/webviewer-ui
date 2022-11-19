@@ -29,7 +29,12 @@ const mockTool = {
   setSignatureCanvas: noop,
   setSignature: noop,
   resizeCanvas: noop,
-  drawCustomStamp: () => 300
+  drawCustomStamp: () => 300,
+  clearOutlineDestination: noop,
+  setInitialsCanvas: noop,
+  setInitials: noop,
+  clearInitialsCanvas: noop,
+  setStyles: noop,
 };
 
 const mockAnnotationManager = {
@@ -44,6 +49,10 @@ const mockAnnotationManager = {
   setAnnotationStyles: noop,
   updateAnnotationRichTextStyle: noop,
   getCurrentUser: noop,
+  getSelectedAnnotations: () => [],
+  getAnnotationsList: () => [],
+  addEventListener: noop,
+  removeEventListener: noop,
 };
 
 const mockFormFieldCreationManager = {
@@ -52,13 +61,47 @@ const mockFormFieldCreationManager = {
   endFormFieldCreationMode: noop,
 };
 
+const mockDocumentViewer = {
+  doc: {},
+  getDocument: () => ({
+    getPageInfo: () => ({
+      width: DEFAULT_PAGE_HEIGHT,
+      height: DEFAULT_PAGE_WIDTH
+    }),
+    getType: () => 'PDF',
+    loadCanvas: noop,
+    getBookmarks: () => new Promise((res, rej) => res),
+  }),
+  getPageCount: () => 9,
+  getAnnotationManager: () => mockAnnotationManager,
+  getRotation: () => 0,
+  clearSearchResults: noop,
+  getTool: (toolName) => mockTool,
+  setWatermark: noop,
+  getPageHeight: () => DEFAULT_PAGE_HEIGHT,
+  getPageWidth: () => DEFAULT_PAGE_WIDTH,
+  setCurrentPage: (page) => { },
+  setBookmarkIconShortcutVisibility: noop,
+  displayBookmark: noop,
+  addEventListener: noop,
+  removeEventListener: noop,
+  getAnnotationHistoryManager: noop,
+  getMeasurementManager: noop,
+  getToolModeMap: () => ({})
+};
+
 core.getTool = () => mockTool;
+core.setToolMode = noop;
 core.isFullPDFEnabled = () => { return false; };
 core.addEventListener = () => { };
 core.removeEventListener = () => { };
 core.getFormFieldCreationManager = () => mockFormFieldCreationManager;
+core.getDocumentViewer = () => mockDocumentViewer;
+core.getDocumentViewers = () => [mockDocumentViewer];
+core.getDisplayAuthor = (author) => author ? author : 'Duncan Idaho'
 
 window.Core = {
+  documentViewer: mockDocumentViewer,
   AnnotationManager: mockAnnotationManager,
   Tools: {
     ToolNames: {},
@@ -74,6 +117,21 @@ window.Core = {
   isBlendModeSupported: () => true,
   FontStyles: { BOLD: 'BOLD', ITALIC: 'ITALIC', UNDERLINE: 'UNDERLINE' },
   getCanvasMultiplier: () => 1,
+  Scale: () => {
+    return {
+      pageScale: {
+        value: 1,
+        unit: 'in'
+      },
+      worldScale: {
+        value: 1,
+        unit: 'in'
+      },
+      toString: () => '1 in = 1 in',
+      getScaleRatioAsArray: () => [[1, 'in'], [1, 'in']],
+      isValid: () => true
+    }
+  }
 };
 
 const DEFAULT_PAGE_HEIGHT = 792;
@@ -88,7 +146,7 @@ window.documentViewer = {
     }),
     getType: () => 'PDF',
     loadCanvas: noop,
-
+    getBookmarks: () => new Promise((res, rej) => res),
   }),
   getPageCount: () => 9,
   getAnnotationManager: () => mockAnnotationManager,
@@ -99,6 +157,9 @@ window.documentViewer = {
   setWatermark: noop,
   getPageHeight: () => DEFAULT_PAGE_HEIGHT,
   getPageWidth: () => DEFAULT_PAGE_WIDTH,
+  setCurrentPage: (page) => { },
+  setBookmarkIconShortcutVisibility: noop,
+  displayBookmark: noop,
 };
 
 
@@ -116,6 +177,7 @@ class MockLineAnnotation {
   getStartStyle = () => 'None';
   getEndStyle = () => 'None';
   getIntent = () => null;
+  getLineLength = () => 10;
   Opacity = 1;
   StrokeThickness = 1;
 };
@@ -127,6 +189,7 @@ class MockFreeTextAnnotation {
   getIntent = () => 'FreeText';
   getRichTextStyle = () => null;
   isFormFieldPlaceholder = () => false;
+  setLineStyle = () => {};
 };
 
 class MockRectangleAnnotation {
@@ -134,7 +197,13 @@ class MockRectangleAnnotation {
 }
 
 window.Tools = {
-  ToolNames: {}
+  ToolNames: {},
+  SignatureCreateTool: {
+    SignatureTypes: {
+      FULL_SIGNATURE: 'fullSignature',
+      INITIALS: 'initialsSignature'
+    }
+  }
 };
 window.Annotations = {
   Annotation: {
@@ -188,9 +257,32 @@ const colorToHexString = (color) => {
   return `#${r}${g}${b}`;
 };
 
+const hexToRgb = (hex) => {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+};
+
 Annotations.Color = (R = 255, G = 0, B = 0) => {
+  if (R[0] === '#') {
+    const { r, g, b } = hexToRgb(R);
+    return {
+      R: r,
+      G: g,
+      B: b,
+      A: 1,
+      toHexString: () => R
+    };
+  }
+
+  if (R instanceof Object) {
+    return R;
+  }
   const toHexString = () => { return colorToHexString({ R, G, B }); };
-  return { R, G, B, toHexString };
+  return { R, G, B, A: 1, toHexString };
 };
 
 export const decorators = [

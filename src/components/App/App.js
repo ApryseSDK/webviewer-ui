@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import core from 'core';
 import actions from 'actions';
-import { isIE11 } from 'helpers/device';
+import { isIE11, isIEEdgeLegacy } from 'helpers/device';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
@@ -63,6 +63,7 @@ import ComparePanel from 'components/MultiViewer/ComparePanel';
 import SaveModal from 'components/SaveModal';
 import WatermarkPanel from 'components/WatermarkPanel';
 import InsertPageModal from 'components/InsertPageModal';
+
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
@@ -190,7 +191,7 @@ const App = ({ removeEventHandlers }) => {
         <div className="content">
           <LeftPanel />
           {!isMultiViewerMode && <DocumentContainer />}
-          {!isIE11 && <MultiViewer />}
+          {(!isIE11 && !isIEEdgeLegacy) && <MultiViewer />}
           <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
           </RightPanel>
@@ -220,19 +221,24 @@ const App = ({ removeEventHandlers }) => {
             <ComparePanel />
           </RightPanel>}
         </div>
-        <ContentEditLinkModal />
         <ViewControlsOverlay />
         <MenuOverlay />
         <ZoomOverlay />
         <AnnotationContentOverlay />
         <PageManipulationOverlay />
         <LeftPanelOverlayContainer />
+        <FormFieldIndicatorContainer />
 
         <AnnotationPopup />
         <FormFieldEditPopup />
         <TextPopup />
         <ContextMenuPopup />
         <RichTextPopup />
+        <AudioPlaybackPopup />
+        <DocumentCropPopup />
+
+        {/* Modals */}
+        <ContentEditLinkModal />
         <SignatureModal />
         <ScaleModal />
         <PrintModal />
@@ -250,10 +256,7 @@ const App = ({ removeEventHandlers }) => {
         <Model3DModal />
         <ColorPickerModal />
         <PageRedactionModal />
-        <AudioPlaybackPopup />
-        <DocumentCropPopup />
         {core.isFullPDFEnabled() && <SignatureValidationModal />}
-        <FormFieldIndicatorContainer />
         <OpenFileModal />
         <SettingsModal />
         <SaveModal />
