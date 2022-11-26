@@ -3,15 +3,15 @@ import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import Header from './Header';
 import ToolsHeader from './ToolsHeader';
-import HeaderV2 from './HeaderV2/HeaderV2';
+import CustomHeader from './CustomHeader/CustomHeader';
 
 
 function HeaderContainer() {
   const featureFlags = useSelector((state) => selectors.getFeatureFlags(state));
-  const { headerV2 } = featureFlags;
+  const { modularHeader } = featureFlags;
 
-  if (headerV2) {
-    return <HeaderV2 />;
+  if (modularHeader) {
+    return <CustomHeader />;
   }
   return (
     <>

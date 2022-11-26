@@ -2052,7 +2052,7 @@ export default {
       getHashParameters('disableMultiViewerComparison', false) || !getHashParameters('pdfnet', false),
   },
   featureFlags: {
-    headerV2: false,
+    modularHeader: false,
   },
   wv3dPropertiesPanel: {
     modelData: [],

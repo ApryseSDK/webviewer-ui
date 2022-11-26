@@ -244,6 +244,7 @@ import hideFormFieldIndicators from './hideFormFieldIndicators';
 import signSignatureWidget from './signSignatureWidget';
 import core from 'core';
 import { setDefaultOptions } from './outlinesPanel';
+import CustomButton from '../components/Button/CustomButton';
 import {
   getMeasurementScalePreset,
   addMeasurementScalePreset,
@@ -411,6 +412,9 @@ export default (store) => {
     },
     OutlinesPanel: {
       setDefaultOptions: setDefaultOptions(store),
+    },
+    Components: {
+      CustomButton
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
