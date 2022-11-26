@@ -225,6 +225,8 @@ import Fonts from 'src/apis/fonts';
 import TabManagerAPI from './TabManagerAPI';
 import getAvailableLanguages from './getAvailableLanguages';
 import replaceRedactionSearchPattern from './replaceRedactionSearchPattern';
+import disableApplyCropWarningModal from './disableApplyCropWarningModal';
+import enableApplyCropWarningModal from './enableApplyCropWarningModal';
 import setPresetCropDimensions from './setPresetCropDimensions';
 import setPresetNewPageDimensions from './setPresetNewPageDimensions';
 import addDateTimeFormat from './addDateTimeFormat';
@@ -254,6 +256,7 @@ import getLocalizedText from './getLocalizedText';
 import getDocumentViewer from './getDocumentViewer';
 import { enableMultiViewerSync, disableMultiViewerSync, isMultiViewerSyncing } from './multiViewerSync';
 import { setCustomSettings } from './customSettings';
+import addPanel from './addPanel';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -328,6 +331,7 @@ export default (store) => {
     setActiveLeftPanel: setActiveLeftPanel(store),
     setCustomModal: setCustomModal(store),
     addCustomModal: addCustomModal(store),
+    addPanel: addPanel(store),
     showOutlineControl: showOutlineControl(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
@@ -477,6 +481,8 @@ export default (store) => {
     TabManager: TabManagerAPI(store),
     getAvailableLanguages,
     replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
+    disableApplyCropWarningModal: disableApplyCropWarningModal(store),
+    enableApplyCropWarningModal: enableApplyCropWarningModal(store),
     setPresetCropDimensions: setPresetCropDimensions(store),
     setPresetNewPageDimensions: setPresetNewPageDimensions(store),
     addDateTimeFormat: addDateTimeFormat(store),

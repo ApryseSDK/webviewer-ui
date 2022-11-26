@@ -22,6 +22,7 @@ import PageNavOverlay from 'components/PageNavOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import ReaderModeViewer from 'components/ReaderModeViewer';
 import ScaleOverlayContainer from 'components/ScaleOverlay/ScaleOverlayContainer';
+import { panelMinWidth } from 'constants/panel';
 
 import './DocumentContainer.scss';
 import DataElements from 'src/constants/dataElement';
@@ -283,6 +284,7 @@ class DocumentContainer extends React.PureComponent {
     const {
       leftPanelWidth,
       isLeftPanelOpen,
+      isFlxPanelOpen,
       isMultiTabEmptyPageOpen,
       isMobile,
       documentContentContainerWidthStyle,
@@ -297,13 +299,17 @@ class DocumentContainer extends React.PureComponent {
     });
     const showPageNav = totalPages > 1;
 
+    const marginLeft =
+      0 +
+      (isLeftPanelOpen ? leftPanelWidth : 0) +
+      (isFlxPanelOpen ? panelMinWidth : 0);
     return (
       <div
         style={{
           width: documentContentContainerWidthStyle,
           // we animate with margin-left. For some reason it looks nicer than transform.
           // Using transform makes a clunky animation because the panels are using transform already.
-          marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
+          marginLeft: `${marginLeft}px`,
         }}
         className={classNames({
           'document-content-container': true,
@@ -356,6 +362,7 @@ const mapStateToProps = (state) => ({
   documentContentContainerWidthStyle: selectors.getDocumentContentContainerWidthStyle(state),
   leftPanelWidth: selectors.getLeftPanelWidthWithResizeBar(state),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
+  isFlxPanelOpen: selectors.isCustomFlxPanelOpen(state),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isMultiTabEmptyPageOpen: selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0,
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),

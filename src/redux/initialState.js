@@ -1887,6 +1887,7 @@ export default {
     isReadOnly: getHashParameters('readonly', false),
     customModals: [],
     customPanels: [],
+    customFlxPanels: [],
     useEmbeddedPrint: false,
     pageLabels: [],
     selectedThumbnailPageIndexes: [],

@@ -1,5 +1,6 @@
 import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
+import { panelMinWidth } from 'constants/panel';
 
 // viewer
 export const getInitialsOffset = (state) => state.viewer.initalsOffset;
@@ -10,6 +11,13 @@ export const isComparisonDisabled = (state) => state.advanced.disableMultiViewer
 export const getIsComparisonOverlayEnabled = (state) => state.viewer.isComparisonOverlayEnabled;
 export const getActiveDocumentViewerKey = (state) => state.viewer.activeDocumentViewerKey;
 export const isMultiViewerMode = (state) => state.viewer.isMultiViewerMode;
+export const getCustomFlxPanels = (state, location) => {
+  if (location) {
+    return state.viewer.customFlxPanels.filter((item) => item.location === location);
+  }
+  return state.viewer.customFlxPanels;
+};
+export const shouldShowApplyCropWarning = (state) => state.viewer.shouldShowApplyCropWarning;
 export const getPresetCropDimensions = (state) => state.viewer.presetCropDimensions;
 export const getPresetNewPageDimensions = (state) => state.viewer.presetNewPageDimensions;
 export const getDateTimeFormats = (state) => state.viewer.dateTimeFormats;
@@ -87,6 +95,8 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const isComparePanelOpen = isElementOpen(state, 'comparePanel');
   const isWatermarkPanelOpen = isElementOpen(state, 'watermarkPanel');
 
+  const isFlxPanelOpen = isCustomFlxPanelOpen(state);
+
   const spaceTakenUpByPanels =
     0 +
     (isLeftPanelOpen ? leftPanelWidth : 0) +
@@ -96,9 +106,17 @@ export const getDocumentContentContainerWidthStyle = (state) => {
     (isTextEditingPanelOpen ? textEditingPanelWidth : 0) +
     (isWv3dPropertiesPanelOpen ? wv3dPropertiesPanelWidth : 0) +
     (isComparePanelOpen ? comparePanelWidth : 0) +
-    (isWatermarkPanelOpen ? watermarkPanelWidth : 0);
+    (isWatermarkPanelOpen ? watermarkPanelWidth : 0) +
+    (isFlxPanelOpen ? panelMinWidth : 0);
 
   return `calc(100% - ${spaceTakenUpByPanels}px)`;
+};
+
+export const isCustomFlxPanelOpen = (state) => {
+  const customFlxPanels = state.viewer.customFlxPanels;
+  return customFlxPanels
+    .map((item) => item.dataElement)
+    .some((elName) => isElementOpen(state, elName) === true);
 };
 
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
@@ -479,6 +497,8 @@ export const getCurrentContentBeingEdited = (state) => state.viewer.currentConte
 export const getFeatureFlags = (state) => state.featureFlags;
 
 export const isInDesktopOnlyMode = (state) => state.viewer.isInDesktopOnlyMode;
+
+export const getPanelWidth = (state, dataElement) => state.viewer.panelWidths[dataElement];
 
 export const pageDeletionConfirmationModalEnabled = (state) => state.viewer.pageDeletionConfirmationModalEnabled;
 

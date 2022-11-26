@@ -13,3 +13,7 @@ export function getAllOpenedModals() {
 export function getDatePicker() {
   return document.querySelector('[data-element="datePickerContainer"]');
 }
+
+export function getAllPanels(location) {
+  return document.querySelectorAll(`.flx-Panel.${location}`);
+}

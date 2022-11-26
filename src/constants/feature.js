@@ -70,4 +70,5 @@ export default {
   SavedSignaturesTab: 'SavedSignaturesTab',
   WatermarkPanel: 'WatermarkPanel',
   WatermarkPanelImageTab: 'WatermarkPanelImageTab',
+  Panel: 'Panel',
 };

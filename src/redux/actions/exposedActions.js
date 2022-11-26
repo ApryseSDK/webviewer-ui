@@ -6,6 +6,18 @@ import { disableElements, enableElements } from 'actions/internalActions';
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
+import { getAllPanels } from 'helpers/getElements';
+import { getCustomFlxPanels } from 'selectors/exposedSelectors';
+
+export const disableApplyCropWarningModal = () => ({
+  type: 'SHOW_APPLY_CROP_WARNING',
+  payload: { shouldShowApplyCropWarning: false },
+});
+
+export const enableApplyCropWarningModal = () => ({
+  type: 'SHOW_APPLY_CROP_WARNING',
+  payload: { shouldShowApplyCropWarning: true },
+});
 
 export const setPresetCropDimensions = (presetCropDimensions) => ({
   type: 'SET_PRESET_CROP_DIMENSIONS',
@@ -301,6 +313,13 @@ export const openElement = (dataElement) => (dispatch, getState) => {
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
     : state.viewer.openElements[dataElement];
 
+  const isFlxPanel = state.viewer.customFlxPanels.find((item) => dataElement === item.dataElement);
+  if (isFlxPanel) {
+    const keys = ['leftPanel'];
+    getAllPanels(isFlxPanel.location).forEach((item) => keys.push(item.dataset.element));
+    dispatch(closeElements(keys));
+  }
+
   if (isElementDisabled || isElementOpen) {
     return;
   }
@@ -320,6 +339,12 @@ export const openElement = (dataElement) => (dispatch, getState) => {
         element: state.viewer.activeLeftPanel,
         isVisible: true,
       });
+    }
+
+    if (dataElement === 'leftPanel') {
+      const panels = getCustomFlxPanels(state, 'left');
+      const keys = panels.map((item) => item.dataElement);
+      dispatch(closeElements(keys));
     }
   }
 };
@@ -464,6 +489,12 @@ export const setCustomPanel = (newPanel) => ({
   type: 'SET_CUSTOM_PANEL',
   payload: { newPanel },
 });
+
+export const addPanel = (newPanel) => ({
+  type: 'ADD_PANEL',
+  payload: { newPanel },
+});
+
 export const setPageLabels = (pageLabels) => (dispatch) => {
   if (pageLabels.length !== core.getTotalPages()) {
     console.warn('Number of page labels do not match with the total pages.');

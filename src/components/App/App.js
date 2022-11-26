@@ -70,8 +70,11 @@ import fireEvent from 'helpers/fireEvent';
 import { prepareMultiTab } from 'helpers/TabManager';
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
+import CustomElement from 'components/CustomElement';
 
 import './App.scss';
+import Panel from 'components/Panel';
+
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -85,9 +88,10 @@ const App = ({ removeEventHandlers }) => {
   const dispatch = useDispatch();
   let timeoutReturn;
 
-  const [isInDesktopOnlyMode, isMultiViewerMode] = useSelector((state) => [
+  const [isInDesktopOnlyMode, isMultiViewerMode, customFlxPanels] = useSelector((state) => [
     selectors.isInDesktopOnlyMode(state),
     selectors.isMultiViewerMode(state),
+    selectors.getCustomFlxPanels(state),
   ]);
 
   useEffect(() => {
@@ -182,6 +186,18 @@ const App = ({ removeEventHandlers }) => {
     tabletBreakpoint.addListener(onBreakpoint);
   }, []);
 
+  const panels = customFlxPanels.map((panel, index) => {
+    return (<Panel key={index} dataElement={panel.dataElement} location={panel.location}>
+      <CustomElement
+        key={panel.dataElement || index}
+        className={`Panel ${panel.dataElement}`}
+        display={panel.dataElement}
+        dataElement={panel.dataElement}
+        render={panel.render}
+      />
+    </Panel>);
+  });
+
   return (
     <React.Fragment>
       <div className={classNames({ 'App': true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
@@ -190,6 +206,7 @@ const App = ({ removeEventHandlers }) => {
         <Header />
         <div className="content">
           <LeftPanel />
+          {panels}
           {!isMultiViewerMode && <DocumentContainer />}
           {(!isIE11 && !isIEEdgeLegacy) && <MultiViewer />}
           <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>

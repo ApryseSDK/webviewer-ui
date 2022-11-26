@@ -55,6 +55,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         isMultiViewerMode: payload.isMultiViewerMode,
       };
+    case 'SHOW_APPLY_CROP_WARNING':
+      return {
+        ...state,
+        shouldShowApplyCropWarning: payload.shouldShowApplyCropWarning,
+      };
     case 'SET_PRESET_CROP_DIMENSIONS':
       return {
         ...state,
@@ -451,6 +456,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         customPanels: [...state.customPanels, payload.newPanel],
+      };
+    case 'ADD_PANEL':
+      return {
+        ...state,
+        customFlxPanels: [...state.customFlxPanels, payload.newPanel],
       };
     case 'USE_EMBEDDED_PRINT':
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
