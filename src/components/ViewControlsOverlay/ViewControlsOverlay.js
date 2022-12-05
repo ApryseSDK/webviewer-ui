@@ -12,17 +12,28 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
 import actions from 'actions';
 import { isIE11 } from 'helpers/device';
+import toggleFullscreen from 'helpers/toggleFullscreen';
 
 function ViewControlsOverlay() {
   const [t] = useTranslation();
   const store = useStore();
 
-  const [totalPages, displayMode, isDisabled, isReaderMode, isMultiViewerMode] = useSelector((state) => [
+  const [
+    totalPages,
+    displayMode,
+    isDisabled,
+    isReaderMode,
+    isMultiViewerMode,
+    isFullScreen,
+    activeDocumentViewerKey,
+  ] = useSelector((state) => [
     selectors.getTotalPages(state),
     selectors.getDisplayMode(state),
     selectors.isElementDisabled(state, 'viewControlsOverlay'),
     selectors.isReaderMode(state),
     selectors.isMultiViewerMode(state),
+    selectors.isFullScreen(state),
+    selectors.getActiveDocumentViewerKey(state),
   ]);
 
   const totalPageThreshold = 1000;
@@ -144,7 +155,7 @@ function ViewControlsOverlay() {
           >
             {t('action.rotate')}
           </DataElementWrapper>
-          <DataElementWrapper className="row" onClick={() => core.rotateClockwise()} dataElement="rotateClockwiseButton">
+          <DataElementWrapper className="row" onClick={() => core.rotateClockwise(activeDocumentViewerKey)} dataElement="rotateClockwiseButton">
             <ActionButton
               title="action.rotateClockwise"
               img="icon-header-page-manipulation-page-rotation-clockwise-line"
@@ -152,7 +163,7 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('action.rotateClockwise')}</div>
           </DataElementWrapper>
-          <DataElementWrapper className="row" onClick={() => core.rotateCounterClockwise()} dataElement="rotateCounterClockwiseButton">
+          <DataElementWrapper className="row" onClick={() => core.rotateCounterClockwise(activeDocumentViewerKey)} dataElement="rotateCounterClockwiseButton">
             <ActionButton
               title="action.rotateCounterClockwise"
               img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
@@ -209,21 +220,38 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('option.layout.cover')}</div>
           </DataElementWrapper>
-          {!isIE11 && <DataElementWrapper
-            className={classNames({ row: true, active: isMultiViewerMode })}
-            onClick={toggleCompareMode}
-            dataElement="toggleCompareModeButton"
-          >
-            <Button
-              title="action.comparePages"
-              img="icon-header-compare"
-              isActive={isMultiViewerMode}
-              role="option"
-            />
-            <div className="title">{t('action.comparePages')}</div>
-          </DataElementWrapper>}
+          {!isIE11 && (
+            <DataElementWrapper
+              className={classNames({ row: true, active: isMultiViewerMode })}
+              onClick={toggleCompareMode}
+              dataElement="toggleCompareModeButton"
+            >
+              <Button
+                title="action.comparePages"
+                img="icon-header-compare"
+                isActive={isMultiViewerMode}
+                role="option"
+              />
+              <div className="title">{t('action.comparePages')}</div>
+            </DataElementWrapper>
+          )}
         </>
       )}
+      <DataElementWrapper
+        dataElement="viewControlsDivider3"
+        className="divider"
+      />
+      <DataElementWrapper
+        className="row"
+        onClick={toggleFullscreen}
+        dataElement="fullScreenButton"
+      >
+        <Button
+          img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+          role="option"
+        />
+        <div className="title">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+      </DataElementWrapper>
     </FlyoutMenu>
   );
 }
