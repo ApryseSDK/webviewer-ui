@@ -3,6 +3,7 @@ import selectors from 'selectors';
 
 export default (dispatch, store) => () => {
   dispatch(actions.setCustomElementOverrides('downloadButton', { disabled: false }));
+  dispatch(actions.setCustomElementOverrides('saveAsButton', { disabled: false }));
   dispatch(actions.setCustomElementOverrides('printButton', { disabled: false }));
   dispatch(actions.setCustomElementOverrides('filePickerButton', { disabled: false }));
 
