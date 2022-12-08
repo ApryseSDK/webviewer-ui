@@ -106,15 +106,16 @@ function MenuOverlay() {
             onClick={downloadDocument}
           />
         )}
-        <ActionButton
-          dataElement="saveAsButton"
-          className="row"
-          img="icon-save"
-          label={t('saveModal.saveAs')}
-          ariaLabel={t('saveModal.saveAs')}
-          role="option"
-          onClick={openSaveModal}
-        />
+        {documentType !== workerTypes.XOD && (
+          <ActionButton
+            dataElement="saveAsButton"
+            className="row"
+            img="icon-save"
+            label={t('saveModal.saveAs')}
+            ariaLabel={t('saveModal.saveAs')}
+            role="option"
+            onClick={openSaveModal}
+          />)}
         <ActionButton
           dataElement="printButton"
           className="row"
