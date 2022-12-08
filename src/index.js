@@ -94,6 +94,10 @@ if (window.CanvasRenderingContext2D) {
     window.Core.disableLogs(true);
   }
 
+  if (getHashParameters('disableObjectURLBlobs', false)) {
+    window.Core.disableObjectURLBlobs(getHashParameters('disableObjectURLBlobs', false));
+  }
+
   window._disableStreaming = getHashParameters('disableStreaming', false);
   window.Core.setWorkerPath('../core');
   window.Core.setResourcesPath('../core/assets');
