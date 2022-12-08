@@ -1,5 +1,5 @@
 import React from 'react';
-import Item from '../../Item/Item';
+import Item from 'components/ModularComponents/Item/Item';
 import '../Button.scss';
 import PropTypes from 'prop-types';
 import Tooltip from 'src/components/Tooltip';

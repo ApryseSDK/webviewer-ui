@@ -1,0 +1,15 @@
+.ModularHeader {
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 36px;
+  background: var(--gray-6);
+  z-index: 72;
+
+  &.left {
+    height: 100%;
+    width: 41px;
+  }
+}

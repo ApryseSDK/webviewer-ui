@@ -242,9 +242,13 @@ import disableBookmarkIconShortcutVisibility from './disableBookmarkIconShortcut
 import showFormFieldIndicators from './showFormFieldIndicators';
 import hideFormFieldIndicators from './hideFormFieldIndicators';
 import signSignatureWidget from './signSignatureWidget';
+import addModularHeaders from './addModularHeaders';
+import getModularHeader from './getModularHeader';
+import getModularHeaderList from './getModularHeaderList';
 import core from 'core';
 import { setDefaultOptions } from './outlinesPanel';
-import CustomButton from '../components/Button/CustomButton';
+import ModularHeader from 'components/ModularComponents/ModularHeader';
+import CustomButton from 'components/Button/CustomButton';
 import {
   getMeasurementScalePreset,
   addMeasurementScalePreset,
@@ -258,6 +262,7 @@ import getDocumentViewer from './getDocumentViewer';
 import { enableMultiViewerSync, disableMultiViewerSync, isMultiViewerSyncing } from './multiViewerSync';
 import { setCustomSettings } from './customSettings';
 import addPanel from './addPanel';
+import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -413,8 +418,13 @@ export default (store) => {
     OutlinesPanel: {
       setDefaultOptions: setDefaultOptions(store),
     },
+    addModularHeaders: addModularHeaders(store),
+    getModularHeader: getModularHeader(store),
+    getModularHeaderList: getModularHeaderList(store),
     Components: {
-      CustomButton
+      ModularHeader,
+      CustomButton,
+      ToggleElementButton,
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
@@ -475,8 +485,8 @@ export default (store) => {
     setSortNotesBy: setSortNotesBy(store),
     getCustomData,
     toggleReaderMode: toggleReaderMode(store),
-    enableToolDefaultStyleUpdateFromAnnotationPopup,
-    disableToolDefaultStyleUpdateFromAnnotationPopup,
+    enableToolDefaultStyleUpdateFromAnnotationPopup: enableToolDefaultStyleUpdateFromAnnotationPopup(store),
+    disableToolDefaultStyleUpdateFromAnnotationPopup: disableToolDefaultStyleUpdateFromAnnotationPopup(store),
     addEventListener,
     removeEventListener,
     syncNamespaces,
