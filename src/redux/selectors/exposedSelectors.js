@@ -1,6 +1,10 @@
 import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
-import { panelMinWidth } from 'constants/panel';
+import { panelMinWidth, RESIZE_BAR_WIDTH } from 'constants/panel';
+import styles from '../../constants/styles.scss';
+
+const LEFT_HEADER_WIDTH = parseInt(styles.LEFT_HEADER_WIDTH);
+const RIGHT_HEADER_WIDTH = parseInt(styles.RIGHT_HEADER_WIDTH);
 
 // viewer
 export const getInitialsOffset = (state) => state.viewer.initalsOffset;
@@ -71,7 +75,6 @@ export const getTextEditingPanelWidth = (state) => state.viewer.panelWidths.text
 
 export const getWatermarkPanelWidth = (state) => state.viewer.panelWidths.watermarkPanel;
 
-const RESIZE_BAR_WIDTH = 14; // 14px Need to update this if styling results in a change to width.
 export const getLeftPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.leftPanel + RESIZE_BAR_WIDTH;
 export const getSearchPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.searchPanel + RESIZE_BAR_WIDTH;
 export const getNotesPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.notesPanel + RESIZE_BAR_WIDTH;
@@ -109,7 +112,11 @@ export const getDocumentContentContainerWidthStyle = (state) => {
     (isWatermarkPanelOpen ? watermarkPanelWidth : 0) +
     (isFlxPanelOpen ? panelMinWidth : 0);
 
-  return `calc(100% - ${spaceTakenUpByPanels}px)`;
+  const leftHeader = getModularHeaderList(state)?.find((header) => header.props.placement === 'left');
+  const rightHeader = getModularHeaderList(state)?.find((header) => header.props.placement === 'right');
+  const spaceTakenUpByHeaders = (leftHeader ? LEFT_HEADER_WIDTH : 0) + (rightHeader ? RIGHT_HEADER_WIDTH : 0);
+
+  return `calc(100% - ${spaceTakenUpByPanels + spaceTakenUpByHeaders}px)`;
 };
 
 export const isCustomFlxPanelOpen = (state) => {
@@ -187,6 +194,12 @@ export const getActiveTheme = (state) => state.viewer.activeTheme;
 
 export const getDefaultHeaderItems = (state) => {
   return state.viewer.headers.default;
+};
+
+export const getModularHeaderList = (state) => state.viewer.modularHeaders;
+
+export const getModularHeader = (state, dataElement) => {
+  return state.viewer.modularHeaders.filter((header) => header.props['data-element'] === dataElement);
 };
 
 export const getActiveHeaderItems = (state) => {
@@ -544,3 +557,7 @@ export const isReplyAttachmentPreviewEnabled = (state) => state.viewer.replyAtta
 export const getReplyAttachmentHandler = (state) => state.viewer.replyAttachmentHandler;
 
 export const getCustomSettings = (state) => state.viewer.customSettings;
+
+export const isToolDefaultStyleUpdateFromAnnotationPopupEnabled = (state) => state.viewer.toolDefaultStyleUpdateFromAnnotationPopupEnabled;
+
+export const getShortcutKeyMap = (state) => state.viewer.shortcutKeyMap;

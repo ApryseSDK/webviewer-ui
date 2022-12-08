@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import core from 'core';
 import actions from 'actions';
-import { isIE11, isIEEdgeLegacy } from 'helpers/device';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
@@ -63,18 +62,23 @@ import ComparePanel from 'components/MultiViewer/ComparePanel';
 import SaveModal from 'components/SaveModal';
 import WatermarkPanel from 'components/WatermarkPanel';
 import InsertPageModal from 'components/InsertPageModal';
+import CustomElement from 'components/CustomElement';
+import Panel from 'components/Panel';
+import LeftHeader from 'components/LeftHeader';
+import RightHeader from 'components/RightHeader';
 
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
 import { prepareMultiTab } from 'helpers/TabManager';
+import hotkeysManager from 'helpers/hotkeysManager';
+import { isIE11, isIEEdgeLegacy } from 'helpers/device';
+import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
-import CustomElement from 'components/CustomElement';
+import setLanguage from 'src/apis/setLanguage';
 
 import './App.scss';
-import Panel from 'components/Panel';
-
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -186,16 +190,25 @@ const App = ({ removeEventHandlers }) => {
     tabletBreakpoint.addListener(onBreakpoint);
   }, []);
 
+  // These need to be done here to wait for the persisted values loaded in redux
+  useEffect(() => {
+    setLanguage(store)(store.getState().viewer.currentLanguage);
+    hotkeysManager.initialize(store);
+    setDefaultDisabledElements(store);
+  }, []);
+
   const panels = customFlxPanels.map((panel, index) => {
-    return (<Panel key={index} dataElement={panel.dataElement} location={panel.location}>
-      <CustomElement
-        key={panel.dataElement || index}
-        className={`Panel ${panel.dataElement}`}
-        display={panel.dataElement}
-        dataElement={panel.dataElement}
-        render={panel.render}
-      />
-    </Panel>);
+    return (
+      <Panel key={index} dataElement={panel.dataElement} location={panel.location}>
+        <CustomElement
+          key={panel.dataElement || index}
+          className={`Panel ${panel.dataElement}`}
+          display={panel.dataElement}
+          dataElement={panel.dataElement}
+          render={panel.render}
+        />
+      </Panel>
+    );
   });
 
   return (
@@ -205,10 +218,12 @@ const App = ({ removeEventHandlers }) => {
 
         <Header />
         <div className="content">
+          <LeftHeader />
           <LeftPanel />
           {panels}
           {!isMultiViewerMode && <DocumentContainer />}
           {(!isIE11 && !isIEEdgeLegacy) && <MultiViewer />}
+          <RightHeader />
           <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
           </RightPanel>
