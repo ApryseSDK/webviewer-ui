@@ -78,6 +78,7 @@
     "showLess": "显示较少",
     "showMore": "...更多的",
     "chooseFile": "选择一个文件",
+    "browse": "浏览文件",
     "selectYourOption": "选择您的选项",
     "open": "打开",
     "deselectAll": "取消全选",
@@ -93,7 +94,8 @@
     "viewFile": "查看文件",
     "multiReplyAnnotations": "回复所选注释 ({{count}})",
     "comparePages": "比较页面",
-    "startComparison": "开始比较"
+    "startComparison": "开始比较",
+    "back": "后退"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -427,11 +429,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "将您的文件拖放到此处",
+      "selectFile": "在此处选择您的文件",
       "or": "或者",
+      "yourFiles": "您的文件",
       "chooseFile": "选择一个文件",
       "localFile": "本地文件",
       "pageReplaceInputLabel": "替换页面",
-      "pageReplaceInputFromSource": "有页面"
+      "pageReplaceInputFromSource": "有页面",
+      "warning": {
+        "title": "退出替换页面？",
+        "message": "退出将取消您迄今为止所做的所有选择。你确定你还想退出吗？"
+      }
     },
     "filterAnnotModal": {
       "color": "颜色",
@@ -599,13 +607,13 @@
     },
     "settings": {
       "settings": "设置",
-      "general": "一般的",
+      "general": "通用",
       "keyboardShortcut": "键盘快捷键",
       "advancedSetting": "高级设置",
-      "language": "语",
+      "language": "语言",
       "theme": "主题",
-      "darkMode": "黑暗模式",
-      "lightMode": "灯光模式",
+      "darkMode": "深色模式",
+      "lightMode": "浅色模式",
       "viewing": "查看",
       "disableFadePageNavigationComponent": "禁用淡入淡出页面导航组件",
       "disableFadePageNavigationComponentDesc": "始终保持页面导航组件在屏幕上。默认行为是在一段时间不活动后将其淡化。",
@@ -1017,6 +1025,7 @@
     "pageLocations": {
       "header": "页面位置",
       "specify": "指定页面",
+      "specifyLocation": "指定页面位置",
       "amount": "页数",
       "total": "全部的",
       "pages": "页面"
@@ -1036,7 +1045,13 @@
     "fileSelected": {
       "title": "选择要添加的页面"
     },
-    "button": "添加页面"
+    "button": "添加页面",
+    "selectPages": "选择要添加的页面",
+    "page": "页",
+    "warning": {
+      "title": "退出插入新页面？",
+      "message": "退出将取消您迄今为止所做的所有选择。你确定你还想退出吗？"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "将您的文件拖放到此处进行比较",

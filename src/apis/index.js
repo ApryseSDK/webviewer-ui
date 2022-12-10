@@ -243,6 +243,7 @@ import showFormFieldIndicators from './showFormFieldIndicators';
 import hideFormFieldIndicators from './hideFormFieldIndicators';
 import signSignatureWidget from './signSignatureWidget';
 import addModularHeaders from './addModularHeaders';
+import addHeaderItems from './addHeaderItems';
 import getModularHeader from './getModularHeader';
 import getModularHeaderList from './getModularHeaderList';
 import core from 'core';
@@ -260,7 +261,7 @@ import {
 import getLocalizedText from './getLocalizedText';
 import getDocumentViewer from './getDocumentViewer';
 import { enableMultiViewerSync, disableMultiViewerSync, isMultiViewerSyncing } from './multiViewerSync';
-import { setCustomSettings } from './customSettings';
+import { setCustomSettings, exportUserSettings, importUserSettings } from './userSettings';
 import addPanel from './addPanel';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 
@@ -419,6 +420,7 @@ export default (store) => {
       setDefaultOptions: setDefaultOptions(store),
     },
     addModularHeaders: addModularHeaders(store),
+    addHeaderItems: addHeaderItems(store),
     getModularHeader: getModularHeader(store),
     getModularHeaderList: getModularHeaderList(store),
     Components: {
@@ -518,6 +520,8 @@ export default (store) => {
     disableMultiViewerSync: disableMultiViewerSync(store),
     isMultiViewerSyncing: isMultiViewerSyncing(store),
     setCustomSettings: setCustomSettings(store),
+    exportUserSettings: exportUserSettings(store),
+    importUserSettings: importUserSettings(store),
 
     // deprecated, to be removed in 8.0
     useNativeScroll,
