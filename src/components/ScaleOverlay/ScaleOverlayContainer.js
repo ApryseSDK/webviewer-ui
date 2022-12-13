@@ -34,7 +34,8 @@ const DEFAULT_DISTANCE = 10;
 const ScaleOverlayContainer = () => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
-
+  const dataElement = 'scaleOverlayContainer';
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
   const [isOpen, setOpen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -186,23 +187,25 @@ const ScaleOverlayContainer = () => {
     openScaleModal();
     dispatch(actions.setIsAddingNewScale(true));
   }, []);
-
+  if (isDisabled) {
+    return null;
+  }
   return (
     <Draggable
       position={position}
       bounds={containerBounds()}
       onDrag={syncDraggablePosition}
       onStop={syncDraggablePosition}
-      cancel={'.scale-overlay-selector'}
+      cancel={'.scale-overlay-selector, .add-new-scale'}
     >
       <div
         className={classNames({
           Overlay: true,
           ScaleOverlay: true,
-          open: false,
+          open: isOpen,
           closed: !isOpen,
         })}
-        data-element="scaleOverlayContainer"
+        data-element={dataElement}
         style={style}
         ref={containerRef}
       >
