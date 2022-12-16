@@ -10,12 +10,17 @@ import i18next from 'i18next';
 import thunk from 'redux-thunk';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import rootReducer from 'reducers/rootReducer';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import core from 'core';
 import actions from 'actions';
 import App from 'components/App';
 import { workerTypes } from 'constants/types';
 import defaultTool from 'constants/defaultTool';
+import defineWebViewerInstanceUIAPIs from 'src/apis';
+
 import getBackendPromise from 'helpers/getBackendPromise';
 import loadCustomCSS from 'helpers/loadCustomCSS';
 import loadScript, { loadConfig } from 'helpers/loadScript';
@@ -26,16 +31,12 @@ import setAutoSwitch from 'helpers/setAutoSwitch';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
-import rootReducer from 'reducers/rootReducer';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
 import getHashParameters from 'helpers/getHashParameters';
-import defineWebViewerInstanceUIAPIs from 'src/apis';
+import hotkeysManager from 'helpers/hotkeysManager';
+import { addDocumentViewer } from 'helpers/documentViewerHelper';
+import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
 
 import './index.scss';
-import hotkeysManager from './helpers/hotkeysManager';
-import { addDocumentViewer } from 'helpers/documentViewerHelper';
-import setEnableAnnotationNumbering from './helpers/setEnableAnnotationNumbering';
 
 const middleware = [thunk];
 
@@ -92,6 +93,10 @@ if (window.CanvasRenderingContext2D) {
 
   if (getHashParameters('disableLogs', false)) {
     window.Core.disableLogs(true);
+  }
+
+  if (getHashParameters('disableObjectURLBlobs', false)) {
+    window.Core.disableObjectURLBlobs(getHashParameters('disableObjectURLBlobs', false));
   }
 
   window._disableStreaming = getHashParameters('disableStreaming', false);
