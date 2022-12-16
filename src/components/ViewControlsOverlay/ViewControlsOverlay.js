@@ -24,14 +24,16 @@ function ViewControlsOverlay() {
     isDisabled,
     isReaderMode,
     isMultiViewerMode,
-    isFullScreen
+    isFullScreen,
+    activeDocumentViewerKey,
   ] = useSelector((state) => [
     selectors.getTotalPages(state),
     selectors.getDisplayMode(state),
     selectors.isElementDisabled(state, 'viewControlsOverlay'),
     selectors.isReaderMode(state),
     selectors.isMultiViewerMode(state),
-    selectors.isFullScreen(state)
+    selectors.isFullScreen(state),
+    selectors.getActiveDocumentViewerKey(state),
   ]);
 
   const totalPageThreshold = 1000;
@@ -153,7 +155,7 @@ function ViewControlsOverlay() {
           >
             {t('action.rotate')}
           </DataElementWrapper>
-          <DataElementWrapper className="row" onClick={() => core.rotateClockwise()} dataElement="rotateClockwiseButton">
+          <DataElementWrapper className="row" onClick={() => core.rotateClockwise(activeDocumentViewerKey)} dataElement="rotateClockwiseButton">
             <ActionButton
               title="action.rotateClockwise"
               img="icon-header-page-manipulation-page-rotation-clockwise-line"
@@ -161,7 +163,7 @@ function ViewControlsOverlay() {
             />
             <div className="title">{t('action.rotateClockwise')}</div>
           </DataElementWrapper>
-          <DataElementWrapper className="row" onClick={() => core.rotateCounterClockwise()} dataElement="rotateCounterClockwiseButton">
+          <DataElementWrapper className="row" onClick={() => core.rotateCounterClockwise(activeDocumentViewerKey)} dataElement="rotateCounterClockwiseButton">
             <ActionButton
               title="action.rotateCounterClockwise"
               img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
