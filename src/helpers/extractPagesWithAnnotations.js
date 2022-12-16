@@ -19,7 +19,7 @@ export default async (pageNumbersToExtract) => {
       pageNumbersToExtract.forEach((page) => pageMap.set(page, true));
 
       const annotList = annotManager.getAnnotationsList().filter((annot) => pageMap.has(annot.PageNumber));
-      annotManager.exportAnnotations({ annotList }).then((xfdfString) => {
+      annotManager.exportAnnotations({ annotList, widgets: true, links: true, fields: true }).then((xfdfString) => {
         doc.extractPages(pageNumbersToExtract, xfdfString).then((data) => {
           const arr = new Uint8Array(data);
           const fileName = `${doc.getFilename()}.pdf` || 'extractedDocument.pdf';
