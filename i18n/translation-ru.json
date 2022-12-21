@@ -78,6 +78,7 @@
     "showLess": "показывай меньше",
     "showMore": "...более",
     "chooseFile": "Выберите файл",
+    "browse": "Просмотр файлов",
     "selectYourOption": "Выберите свой вариант",
     "open": "Открыть",
     "deselectAll": "Убрать выделение со всего",
@@ -93,7 +94,9 @@
     "viewFile": "Посмотреть файл",
     "multiReplyAnnotations": "Ответить на выбранные аннотации ({{count}})",
     "comparePages": "Сравните страницы",
-    "startComparison": "Начать сравнение"
+    "startComparison": "Начать сравнение",
+    "back": "Назад",
+    "clearSignature": "Очистить подпись"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -427,11 +430,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Перетащите файл сюда",
+      "selectFile": "Выберите файл здесь",
       "or": "Или",
+      "yourFiles": "Ваши файлы",
       "chooseFile": "Выберите файл",
       "localFile": "Локальный файл",
       "pageReplaceInputLabel": "Заменить страницу(ы)",
-      "pageReplaceInputFromSource": "со страницей(ами)"
+      "pageReplaceInputFromSource": "со страницей(ами)",
+      "warning": {
+        "title": "Выйти заменить страницу?",
+        "message": "Выход отменит все сделанные вами выборы. Вы уверены, что все еще хотите выйти?"
+      }
     },
     "filterAnnotModal": {
       "color": "Цвет",
@@ -600,12 +609,11 @@
     "settings": {
       "settings": "Настройки",
       "general": "Общий",
-      "keyboardShortcut": "Сочетание клавиш",
-      "advancedSetting": "Расширенные настройки",
       "language": "Язык",
       "theme": "Тема",
       "darkMode": "Темный режим",
       "lightMode": "Легкий режим",
+      "advancedSetting": "Расширенные настройки",
       "viewing": "Viewing",
       "disableFadePageNavigationComponent": "Отключить компонент навигации Fade Page",
       "disableFadePageNavigationComponentDesc": "Всегда держите компонент навигации по страницам на экране. Поведение по умолчанию — исчезать после определенного периода бездействия.",
@@ -630,7 +638,52 @@
       "disablePageDeletionConfirmationModal": "Отключить модальное подтверждение удаления страницы",
       "disablePageDeletionConfirmationModalDesc": "Отключить модальное подтверждение при удалении страницы из представления миниатюр",
       "disableMultiselect": "Отключить множественный выбор",
-      "disableMultiselectDesc": "Отключить множественный выбор на левой панели эскизов"
+      "disableMultiselectDesc": "Отключить множественный выбор на левой панели эскизов",
+      "miscellaneous": "Разнообразный",
+      "keyboardShortcut": "Сочетание клавиш",
+      "command": "Команда",
+      "description": "Описание",
+      "action": "Действие",
+      "rotateDocumentClockwise": "Поверните документ по часовой стрелке",
+      "rotateDocumentCounterclockwise": "Поверните документ против часовой стрелки",
+      "copyText": "Копировать выделенный текст или аннотации",
+      "pasteText": "Вставка текста или аннотаций",
+      "undoChange": "Отменить изменение аннотации",
+      "redoChange": "Повторить изменение аннотации",
+      "openFile": "Откройте средство выбора файлов",
+      "openSearch": "Откройте оверлей поиска",
+      "zoomIn": "Увеличить",
+      "zoomOut": "Уменьшить",
+      "fitScreenWidth": "Подгоните документ под ширину экрана на маленьком экране (< 640 пикселей), в противном случае подгоните его под исходный размер.",
+      "print": "Распечатать",
+      "bookmarkOpenPanel": "Быстро добавить страницу в закладки и открыть панель закладок",
+      "goToPreviousPage": "Перейти на предыдущую страницу",
+      "goToNextPage": "Перейти на следующую страницу",
+      "goToPreviousPageArrowUp": "Перейти на предыдущую страницу в режиме одиночной раскладки (Стрелка вверх)",
+      "goToNextPageArrowDown": "Перейти на следующую страницу в режиме одиночного макета (Стрелка вниз)",
+      "holdSwitchPan": "Удерживайте, чтобы переключиться в режим панорамирования, и отпустите, чтобы вернуться к предыдущему инструменту.",
+      "selectAnnotationEdit": "Выберите инструмент редактирования аннотаций.",
+      "selectPan": "Выберите инструмент панорамирования",
+      "selectCreateArrowTool": "Выберите инструмент AnnotationCreateArrow.",
+      "selectCreateCalloutTool": "Выберите инструмент AnnotationCreateCallout.",
+      "selectEraserTool": "Выберите инструмент «Ластик аннотаций».",
+      "selectCreateFreeHandTool": "Выберите инструмент AnnotationCreateFreeHand.",
+      "selectCreateStampTool": "Выберите инструмент AnnotationCreateStamp.",
+      "selectCreateLineTool": "Выберите инструмент AnnotationCreateLine.",
+      "selectCreateStickyTool": "Выберите инструмент AnnotationCreateSticky.",
+      "selectCreateEllipseTool": "Выберите инструмент AnnotationCreateEllipse.",
+      "selectCreateRectangleTool": "Выберите инструмент AnnotationCreateRectangle.",
+      "selectCreateRubberStampTool": "Выберите инструмент AnnotationCreateRubberStamp.",
+      "selectCreateFreeTextTool": "Выберите инструмент AnnotationCreateFreeText.",
+      "openSignatureModal": "Откройте модальное окно подписи или оверлей",
+      "selectCreateTextSquigglyTool": "Выберите инструмент AnnotationCreateTextSquiggly.",
+      "selectCreateTextHighlightTool": "Выберите инструмент AnnotationCreateTextHighlight.",
+      "selectCreateTextStrikeoutTool": "Выберите инструмент AnnotationCreateTextStrikeout.",
+      "selectCreateTextUnderlineTool": "Выберите инструмент AnnotationCreateTextUnderline.",
+      "editKeyboardShorcut": "Изменить сочетание клавиш",
+      "setShorcut": "Установить ярлык",
+      "pressKeyToSet": "Нажмите клавишу или клавиши, чтобы установить новый ярлык.",
+      "shortcutAlreadyExists": "Комбинация клавиш выше уже существует."
     }
   },
   "warning": {
@@ -882,13 +935,16 @@
     "certifier": "удостоверять",
     "certified": "проверенный",
     "Certified": "Проверенный",
+    "Certification": "Сертификация",
     "signer": "подписать",
     "signed": "подписанный",
     "Signed": "Подписано",
+    "Signature": "Подпись",
     "by": "по",
     "on": "на",
     "disallowedChange": "Запрещенное изменение: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Поле неподписанной подписи: {{fieldName}}",
+    "signatureProperties": "Свойства подписи",
     "trustVerification": {
       "current": "Использованное время проверки было текущим.",
       "signing": "Время подтверждения - по часам на компьютере подписавшего.",
@@ -939,6 +995,10 @@
       "noSignatureFields": "В этом документе нет полей для подписи",
       "certificateDownloadError": "Ошибка при попытке скачать доверенный сертификат",
       "localCertificateError": "Есть некоторые проблемы с чтением локального сертификата"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} действителен.",
+      "failed": "{{verificationType}} не удалось."
     }
   },
   "cropPopUp": {
@@ -1017,6 +1077,7 @@
     "pageLocations": {
       "header": "Местоположение страницы",
       "specify": "Укажите страницу",
+      "specifyLocation": "Укажите местоположение страницы",
       "amount": "Количество страниц",
       "total": "Общий",
       "pages": "Страницы"
@@ -1036,7 +1097,13 @@
     "fileSelected": {
       "title": "Выберите страницы для добавления"
     },
-    "button": "Добавить страницу(ы)"
+    "button": "Добавить страницу(ы)",
+    "selectPages": "Выберите страницы для добавления",
+    "page": "Страница",
+    "warning": {
+      "title": "Выйти вставить новую страницу?",
+      "message": "Выход отменит все сделанные вами выборы. Вы уверены, что все еще хотите выйти?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Перетащите файл сюда, чтобы сравнить",

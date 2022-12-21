@@ -78,6 +78,7 @@
     "showLess": "zeige weniger",
     "showMore": "...mehr",
     "chooseFile": "Datei auswählen",
+    "browse": "Dateien durchsuchen",
     "selectYourOption": "Option wählen",
     "open": "Öffnen",
     "deselectAll": "Auswahl aufheben",
@@ -93,7 +94,9 @@
     "viewFile": "Datei ansehen",
     "multiReplyAnnotations": "Auf ausgewählte Anmerkungen antworten ({{count}})",
     "comparePages": "Seiten vergleichen",
-    "startComparison": "Vergleich starten"
+    "startComparison": "Vergleich starten",
+    "back": "Der Rücken",
+    "clearSignature": "Klare Unterschrift"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -427,11 +430,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",
+      "selectFile": "Wählen Sie hier Ihre Datei aus",
       "or": "Oder",
+      "yourFiles": "Ihre Dateien",
       "chooseFile": "Wähle eine Datei aus",
       "localFile": "Lokale Datei",
       "pageReplaceInputLabel": "Seite(n) ersetzen",
-      "pageReplaceInputFromSource": "mit Seite(n)"
+      "pageReplaceInputFromSource": "mit Seite(n)",
+      "warning": {
+        "title": "Seite ersetzen beenden?",
+        "message": "Beim Beenden werden alle bisher getroffenen Auswahlen aufgehoben. Sind Sie sicher, dass Sie immer noch beenden möchten?"
+      }
     },
     "filterAnnotModal": {
       "color": "Farbe",
@@ -600,12 +609,11 @@
     "settings": {
       "settings": "Einstellungen",
       "general": "Allgemein",
-      "keyboardShortcut": "Tastaturkürzel",
-      "advancedSetting": "Erweiterte Einstellung",
       "language": "Sprache",
       "theme": "Thema",
       "darkMode": "Dunkler Modus",
       "lightMode": "Lichtmodus",
+      "advancedSetting": "Erweiterte Einstellung",
       "viewing": "Anzeigen",
       "disableFadePageNavigationComponent": "Deaktivieren Sie die Seitennavigationskomponente ausblenden",
       "disableFadePageNavigationComponentDesc": "Lassen Sie die Seitennavigationskomponente immer auf dem Bildschirm. Das Standardverhalten besteht darin, es nach einer bestimmten Zeit der Inaktivität auszublenden.",
@@ -630,7 +638,52 @@
       "disablePageDeletionConfirmationModal": "Deaktivieren Sie das Modal zur Bestätigung der Seitenlöschung",
       "disablePageDeletionConfirmationModalDesc": "Deaktivieren Sie das Bestätigungsmodal beim Löschen einer Seite aus der Miniaturansicht",
       "disableMultiselect": "Mehrfachauswahl deaktivieren",
-      "disableMultiselectDesc": "Deaktivieren Sie die Mehrfachauswahl im linken Miniaturbildbereich"
+      "disableMultiselectDesc": "Deaktivieren Sie die Mehrfachauswahl im linken Miniaturbildbereich",
+      "miscellaneous": "Sonstig",
+      "keyboardShortcut": "Tastaturkürzel",
+      "command": "Befehl",
+      "description": "Beschreibung",
+      "action": "Aktion",
+      "rotateDocumentClockwise": "Drehen Sie das Dokument im Uhrzeigersinn",
+      "rotateDocumentCounterclockwise": "Drehen Sie das Dokument gegen den Uhrzeigersinn",
+      "copyText": "Ausgewählten Text oder Anmerkungen kopieren",
+      "pasteText": "Fügen Sie Text oder Anmerkungen ein",
+      "undoChange": "Machen Sie eine Anmerkungsänderung rückgängig",
+      "redoChange": "Wiederholen Sie eine Anmerkungsänderung",
+      "openFile": "Öffnen Sie die Dateiauswahl",
+      "openSearch": "Öffnen Sie das Such-Overlay",
+      "zoomIn": "Hineinzoomen",
+      "zoomOut": "Rauszoomen",
+      "fitScreenWidth": "Passen Sie das Dokument bei einem kleinen Bildschirm (< 640px) an die Bildschirmbreite an, andernfalls passen Sie es an die Originalgröße an",
+      "print": "Drucken",
+      "bookmarkOpenPanel": "Setzen Sie schnell ein Lesezeichen für eine Seite und öffnen Sie das Lesezeichenfenster",
+      "goToPreviousPage": "Gehen Sie zur vorherigen Seite",
+      "goToNextPage": "Gehen Sie zur nächsten Seite",
+      "goToPreviousPageArrowUp": "Zur vorherigen Seite im Einzellayoutmodus gehen (Pfeil nach oben)",
+      "goToNextPageArrowDown": "Zur nächsten Seite im Einzellayoutmodus gehen (Pfeil nach unten)",
+      "holdSwitchPan": "Halten Sie die Taste gedrückt, um in den Schwenkmodus zu wechseln, und lassen Sie sie los, um zum vorherigen Werkzeug zurückzukehren",
+      "selectAnnotationEdit": "Wählen Sie das Werkzeug AnnotationEdit aus",
+      "selectPan": "Wählen Sie das Schwenkwerkzeug aus",
+      "selectCreateArrowTool": "Wählen Sie das Werkzeug AnnotationCreateArrow aus",
+      "selectCreateCalloutTool": "Wählen Sie das Werkzeug AnnotationCreateCallout aus",
+      "selectEraserTool": "Wählen Sie das Werkzeug AnnotationEraser aus",
+      "selectCreateFreeHandTool": "Wählen Sie das Werkzeug AnnotationCreateFreeHand aus",
+      "selectCreateStampTool": "Wählen Sie das Werkzeug AnnotationCreateStamp aus",
+      "selectCreateLineTool": "Wählen Sie das Werkzeug AnnotationCreateLine aus",
+      "selectCreateStickyTool": "Wählen Sie das Werkzeug AnnotationCreateSticky aus",
+      "selectCreateEllipseTool": "Wählen Sie das Werkzeug AnnotationCreateEllipse aus",
+      "selectCreateRectangleTool": "Wählen Sie das Werkzeug AnnotationCreateRectangle aus",
+      "selectCreateRubberStampTool": "Wählen Sie das Werkzeug AnnotationCreateRubberStamp aus",
+      "selectCreateFreeTextTool": "Wählen Sie das Werkzeug AnnotationCreateFreeText aus",
+      "openSignatureModal": "Öffnen Sie das Signatur-Modal oder das Overlay",
+      "selectCreateTextSquigglyTool": "Wählen Sie das Werkzeug AnnotationCreateTextSquiggly aus",
+      "selectCreateTextHighlightTool": "Wählen Sie das Werkzeug AnnotationCreateTextHighlight aus",
+      "selectCreateTextStrikeoutTool": "Wählen Sie das Werkzeug AnnotationCreateTextStrikeout aus",
+      "selectCreateTextUnderlineTool": "Wählen Sie das Werkzeug AnnotationCreateTextUnderline aus",
+      "editKeyboardShorcut": "Tastaturkürzel bearbeiten",
+      "setShorcut": "Verknüpfung festlegen",
+      "pressKeyToSet": "Drücken Sie die Taste oder , um eine neue Verknüpfung festzulegen.",
+      "shortcutAlreadyExists": "Die obige Tastenkombination existiert bereits."
     }
   },
   "warning": {
@@ -882,13 +935,16 @@
     "certifier": "bestätigen",
     "certified": "zertifiziert",
     "Certified": "Zertifiziert",
+    "Certification": "Zertifizierung",
     "signer": "Unterzeichner",
     "signed": "unterzeichnet",
     "Signed": "Unterzeichnet",
+    "Signature": "Unterschrift",
     "by": "durch",
     "on": "auf",
     "disallowedChange": "Unzulässige Änderung: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Unsigniertes Signaturfeld: {{fieldName}}",
+    "signatureProperties": "Signatureigenschaften",
     "trustVerification": {
       "current": "Die verwendete Überprüfungszeit war die aktuelle Zeit",
       "signing": "Die Überprüfungszeit beginnt mit der Uhr auf dem Computer des Unterzeichners",
@@ -939,6 +995,10 @@
       "noSignatureFields": "Dieses Dokument enthält keine Signaturfelder",
       "certificateDownloadError": "Beim Versuch, ein vertrauenswürdiges Zertifikat herunterzuladen, ist ein Fehler aufgetreten",
       "localCertificateError": "Es gibt einige Probleme beim Lesen eines lokalen Zertifikats"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} ist gültig.",
+      "failed": "{{verificationType}} fehlgeschlagen."
     }
   },
   "cropPopUp": {
@@ -1017,6 +1077,7 @@
     "pageLocations": {
       "header": "Seitenposition",
       "specify": "Seite angeben",
+      "specifyLocation": "Geben Sie die Seitenposition an",
       "amount": "Anzahl der Seiten",
       "total": "Gesamt",
       "pages": "Seiten"
@@ -1036,7 +1097,13 @@
     "fileSelected": {
       "title": "Wählen Sie Seiten zum Hinzufügen aus"
     },
-    "button": "Seite(n) hinzufügen"
+    "button": "Seite(n) hinzufügen",
+    "selectPages": "Wählen Sie Seiten zum Hinzufügen aus",
+    "page": "Buchseite",
+    "warning": {
+      "title": "Beenden Neue Seite einfügen?",
+      "message": "Beim Beenden werden alle bisher getroffenen Auswahlen aufgehoben. Sind Sie sicher, dass Sie immer noch beenden möchten?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Ziehen Sie Ihre Datei hierher, um sie zu vergleichen",

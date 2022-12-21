@@ -78,6 +78,7 @@
     "showLess": "hiển thị ít hơn",
     "showMore": "...nhiều hơn",
     "chooseFile": "Chọn một tệp",
+    "browse": "Duyệt qua tệp",
     "selectYourOption": "Chọn tùy chọn của bạn",
     "open": "Mở",
     "deselectAll": "Bỏ Chọn Tất Cả",
@@ -93,7 +94,9 @@
     "viewFile": "Xem tài liệu",
     "multiReplyAnnotations": "Trả lời các chú thích đã chọn ({{count}})",
     "comparePages": "So sánh các trang",
-    "startComparison": "Bắt đầu so sánh"
+    "startComparison": "Bắt đầu so sánh",
+    "back": "Mặt sau",
+    "clearSignature": "Xóa chữ ký"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -427,11 +430,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Kéo & Thả tệp của bạn tại đây",
+      "selectFile": "Chọn tệp của bạn ở đây",
       "or": "Hoặc",
+      "yourFiles": "Tệp của bạn",
       "chooseFile": "Chọn một tệp",
       "localFile": "Tệp Cục Bộ",
       "pageReplaceInputLabel": "Thay Thế (các) Trang",
-      "pageReplaceInputFromSource": "bằng (các) trang"
+      "pageReplaceInputFromSource": "bằng (các) trang",
+      "warning": {
+        "title": "Thoát khỏi trang thay thế?",
+        "message": "Thoát sẽ hủy tất cả các lựa chọn bạn đã thực hiện cho đến nay. Bạn có chắc chắn vẫn muốn thoát không?"
+      }
     },
     "filterAnnotModal": {
       "color": "Màu",
@@ -600,12 +609,11 @@
     "settings": {
       "settings": "Cài đặt",
       "general": "Chung",
-      "keyboardShortcut": "Phim tăt",
-      "advancedSetting": "Cài đặt nâng cao",
       "language": "Ngôn ngữ",
       "theme": "Chủ đề",
       "darkMode": "Chế độ tối",
       "lightMode": "Chế độ sáng",
+      "advancedSetting": "Cài đặt nâng cao",
       "viewing": "Đang xem",
       "disableFadePageNavigationComponent": "Tắt thành phần điều hướng trang làm mờ",
       "disableFadePageNavigationComponentDesc": "Luôn giữ Thành phần Điều hướng Trang trên màn hình. Hành vi mặc định là làm mờ dần nó sau một thời gian không hoạt động nhất định.",
@@ -630,7 +638,52 @@
       "disablePageDeletionConfirmationModal": "Tắt phương thức xác nhận xóa trang",
       "disablePageDeletionConfirmationModalDesc": "Tắt phương thức xác nhận khi xóa trang khỏi chế độ xem hình thu nhỏ",
       "disableMultiselect": "Tắt nhiều lựa chọn",
-      "disableMultiselectDesc": "Tắt nhiều lựa chọn trong bảng hình thu nhỏ bên trái"
+      "disableMultiselectDesc": "Tắt nhiều lựa chọn trong bảng hình thu nhỏ bên trái",
+      "miscellaneous": "Điều khoản khác",
+      "keyboardShortcut": "Phim tăt",
+      "command": "Yêu cầu",
+      "description": "Sự mô tả",
+      "action": "Hoạt động",
+      "rotateDocumentClockwise": "Xoay tài liệu theo chiều kim đồng hồ",
+      "rotateDocumentCounterclockwise": "Xoay tài liệu ngược chiều kim đồng hồ",
+      "copyText": "Sao chép văn bản hoặc chú thích đã chọn",
+      "pasteText": "Dán văn bản hoặc chú thích",
+      "undoChange": "Hoàn tác thay đổi chú thích",
+      "redoChange": "Làm lại thay đổi chú thích",
+      "openFile": "Mở bộ chọn tệp",
+      "openSearch": "Mở lớp phủ tìm kiếm",
+      "zoomIn": "Phóng to",
+      "zoomOut": "Thu nhỏ",
+      "fitScreenWidth": "Vừa tài liệu với chiều rộng màn hình trong một màn hình nhỏ (< 640px), nếu không thì vừa với kích thước ban đầu",
+      "print": "In",
+      "bookmarkOpenPanel": "Nhanh chóng đánh dấu một trang và mở bảng đánh dấu trang",
+      "goToPreviousPage": "Tới trang trước",
+      "goToNextPage": "Đến trang tiếp theo",
+      "goToPreviousPageArrowUp": "Chuyển đến trang trước ở chế độ bố cục đơn (ArrowUp)",
+      "goToNextPageArrowDown": "Chuyển đến trang tiếp theo ở chế độ bố cục đơn (ArrowDown)",
+      "holdSwitchPan": "Giữ để chuyển sang chế độ Pan và thả ra để quay lại công cụ trước đó",
+      "selectAnnotationEdit": "Chọn công cụ AnnotationEdit",
+      "selectPan": "Chọn công cụ Pan",
+      "selectCreateArrowTool": "Chọn công cụ AnnotationCreateArrow",
+      "selectCreateCalloutTool": "Chọn công cụ AnnotationCreateCallout",
+      "selectEraserTool": "Chọn công cụ AnnotationEraser",
+      "selectCreateFreeHandTool": "Chọn công cụ AnnotationCreateFreeHand",
+      "selectCreateStampTool": "Chọn công cụ AnnotationCreateStamp",
+      "selectCreateLineTool": "Chọn công cụ AnnotationCreateLine",
+      "selectCreateStickyTool": "Chọn công cụ AnnotationCreateSticky",
+      "selectCreateEllipseTool": "Chọn công cụ AnnotationCreateEllipse",
+      "selectCreateRectangleTool": "Chọn công cụ AnnotationCreateRectangle",
+      "selectCreateRubberStampTool": "Chọn công cụ AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "Chọn công cụ AnnotationCreateFreeText",
+      "openSignatureModal": "Mở phương thức chữ ký hoặc lớp phủ",
+      "selectCreateTextSquigglyTool": "Chọn công cụ AnnotationCreateTextSquiggly",
+      "selectCreateTextHighlightTool": "Chọn công cụ AnnotationCreateTextHighlight",
+      "selectCreateTextStrikeoutTool": "Chọn công cụ AnnotationCreateTextStrikeout",
+      "selectCreateTextUnderlineTool": "Chọn công cụ AnnotationCreateTextUnderline",
+      "editKeyboardShorcut": "Chỉnh sửa phím tắt",
+      "setShorcut": "Đặt phím tắt",
+      "pressKeyToSet": "Nhấn phím hoặc các phím để thiết lập phím tắt mới.",
+      "shortcutAlreadyExists": "Phím tắt ở trên đã tồn tại."
     }
   },
   "warning": {
@@ -882,13 +935,16 @@
     "certifier": "người chứng nhận",
     "certified": "đã chứng nhận",
     "Certified": "Đã chứng nhận",
+    "Certification": "chứng nhận",
     "signer": "người ký",
     "signed": "đã ký",
     "Signed": "Đã ký",
+    "Signature": "Chữ ký",
     "by": "bởi",
     "on": "vào",
     "disallowedChange": "Thay Đổi Không Được Phép: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Trường chữ ký chưa ký: {{fieldName}}",
+    "signatureProperties": "Thuộc tính chữ ký",
     "trustVerification": {
       "current": "Thời gian xác minh được sử dụng là thời gian hiện tại",
       "signing": "Thời gian xác minh là từ đồng hồ trên máy tính của người ký",
@@ -939,6 +995,10 @@
       "noSignatureFields": "Tài liệu này không có trường chữ ký nào",
       "certificateDownloadError": "Đã gặp phải lỗi khi cố gắng tải xuống chứng chỉ uy tín",
       "localCertificateError": "Có một số vấn đề với việc đọc chứng chỉ cục bộ"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} hợp lệ.",
+      "failed": "{{verificationType}} không thành công."
     }
   },
   "cropPopUp": {
@@ -1017,6 +1077,7 @@
     "pageLocations": {
       "header": "Vị trí trang",
       "specify": "Chỉ định Trang",
+      "specifyLocation": "Chỉ định vị trí trang",
       "amount": "Số lượng trang",
       "total": "Tổng cộng",
       "pages": "Các trang"
@@ -1036,7 +1097,13 @@
     "fileSelected": {
       "title": "Chọn các trang để thêm"
     },
-    "button": "Thêm (các) Trang"
+    "button": "Thêm (các) Trang",
+    "selectPages": "Chọn các trang để thêm",
+    "page": "Trang",
+    "warning": {
+      "title": "Thoát chèn trang mới?",
+      "message": "Thoát sẽ hủy tất cả các lựa chọn bạn đã thực hiện cho đến nay. Bạn có chắc chắn vẫn muốn thoát không?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Kéo và thả tệp của bạn vào đây để so sánh",

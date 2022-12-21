@@ -78,6 +78,7 @@
     "showLess": "Pokaż mniej",
     "showMore": "...jeszcze",
     "chooseFile": "Wybierz plik",
+    "browse": "Przeglądaj pliki",
     "selectYourOption": "Wybierz swoją opcję",
     "open": "otwarty",
     "deselectAll": "Odznacz wszystkie",
@@ -93,7 +94,9 @@
     "viewFile": "Zobaczyć plik",
     "multiReplyAnnotations": "Odpowiedz na wybrane adnotacje ({{count}})",
     "comparePages": "Porównaj strony",
-    "startComparison": "Rozpocznij porównanie"
+    "startComparison": "Rozpocznij porównanie",
+    "back": "Z powrotem",
+    "clearSignature": "Wyraźny podpis"
   },
   "annotation": {
     "areaMeasurement": "Powierzchnia",
@@ -427,11 +430,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Przeciągnij i upuść plik tutaj",
+      "selectFile": "Wybierz swój plik tutaj",
       "or": "Lub",
+      "yourFiles": "Twoje pliki",
       "chooseFile": "Wybierz plik",
       "localFile": "Plik lokalny",
       "pageReplaceInputLabel": "Zastąp strony",
-      "pageReplaceInputFromSource": "ze stronami"
+      "pageReplaceInputFromSource": "ze stronami",
+      "warning": {
+        "title": "Wyjść z zamiany strony?",
+        "message": "Wyjście anuluje wszystkie dotychczasowe wybory. Czy na pewno nadal chcesz wyjść?"
+      }
     },
     "filterAnnotModal": {
       "color": "Kolor",
@@ -600,12 +609,11 @@
     "settings": {
       "settings": "Ustawienia",
       "general": "Ogólny",
-      "keyboardShortcut": "Skrót klawiszowy",
-      "advancedSetting": "Ustawienia zaawansowane",
       "language": "Język",
       "theme": "Motyw",
       "darkMode": "Tryb ciemny",
       "lightMode": "Tryb światła",
+      "advancedSetting": "Ustawienia zaawansowane",
       "viewing": "Przeglądanie",
       "disableFadePageNavigationComponent": "Wyłącz komponent nawigacji po zanikaniu stron",
       "disableFadePageNavigationComponentDesc": "Zawsze utrzymuj komponent nawigacji strony na ekranie. Domyślnym zachowaniem jest zanikanie go po pewnym okresie bezczynności.",
@@ -630,7 +638,52 @@
       "disablePageDeletionConfirmationModal": "Wyłącz tryb potwierdzenia usunięcia strony",
       "disablePageDeletionConfirmationModalDesc": "Wyłącz tryb potwierdzenia podczas usuwania strony z widoku miniatur",
       "disableMultiselect": "Wyłącz wybór wielokrotny",
-      "disableMultiselectDesc": "Wyłącz wybór wielokrotny w lewym panelu miniatur"
+      "disableMultiselectDesc": "Wyłącz wybór wielokrotny w lewym panelu miniatur",
+      "miscellaneous": "Różnorodny",
+      "keyboardShortcut": "Skrót klawiszowy",
+      "command": "Komenda",
+      "description": "Opis",
+      "action": "Akcja",
+      "rotateDocumentClockwise": "Obróć dokument zgodnie z ruchem wskazówek zegara",
+      "rotateDocumentCounterclockwise": "Obróć dokument w kierunku przeciwnym do ruchu wskazówek zegara",
+      "copyText": "Skopiuj wybrany tekst lub adnotacje",
+      "pasteText": "Wklej tekst lub adnotacje",
+      "undoChange": "Cofnij zmianę adnotacji",
+      "redoChange": "Ponów zmianę adnotacji",
+      "openFile": "Otwórz selektor plików",
+      "openSearch": "Otwórz nakładkę wyszukiwania",
+      "zoomIn": "Zbliżenie",
+      "zoomOut": "Pomniejsz",
+      "fitScreenWidth": "Dopasuj dokument do szerokości ekranu na małym ekranie (< 640px), w przeciwnym razie dopasuj go do oryginalnego rozmiaru",
+      "print": "Wydrukować",
+      "bookmarkOpenPanel": "Szybko dodaj stronę do zakładek i otwórz panel zakładek",
+      "goToPreviousPage": "Przejdź do poprzedniej strony",
+      "goToNextPage": "Przejdź do następnej strony",
+      "goToPreviousPageArrowUp": "Przejdź do poprzedniej strony w trybie pojedynczego układu (strzałka w górę)",
+      "goToNextPageArrowDown": "Przejdź do następnej strony w trybie pojedynczego układu (strzałka w dół)",
+      "holdSwitchPan": "Przytrzymaj, aby przejść do trybu Pan i zwolnij, aby powrócić do poprzedniego narzędzia",
+      "selectAnnotationEdit": "Wybierz narzędzie Edycja adnotacji",
+      "selectPan": "Wybierz narzędzie Panorama",
+      "selectCreateArrowTool": "Wybierz narzędzie AnnotationCreateArrow",
+      "selectCreateCalloutTool": "Wybierz narzędzie AnnotationCreateCallout",
+      "selectEraserTool": "Wybierz narzędzie AnnotationEraser",
+      "selectCreateFreeHandTool": "Wybierz narzędzie AnnotationCreateFreeHand",
+      "selectCreateStampTool": "Wybierz narzędzie AnnotationCreateStamp",
+      "selectCreateLineTool": "Wybierz narzędzie AnnotationCreateLine",
+      "selectCreateStickyTool": "Wybierz narzędzie AnnotationCreateSticky",
+      "selectCreateEllipseTool": "Wybierz narzędzie AnnotationCreateEllipse",
+      "selectCreateRectangleTool": "Wybierz narzędzie AnnotationCreateRectangle",
+      "selectCreateRubberStampTool": "Wybierz narzędzie AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "Wybierz narzędzie AnnotationCreateFreeText",
+      "openSignatureModal": "Otwórz modal podpisu lub nakładkę",
+      "selectCreateTextSquigglyTool": "Wybierz narzędzie AnnotationCreateTextSquiggly",
+      "selectCreateTextHighlightTool": "Wybierz narzędzie AnnotationCreateTextHighlight",
+      "selectCreateTextStrikeoutTool": "Wybierz narzędzie AnnotationCreateTextStrikeout",
+      "selectCreateTextUnderlineTool": "Wybierz narzędzie AnnotationCreateTextUnderline",
+      "editKeyboardShorcut": "Edytuj skrót klawiaturowy",
+      "setShorcut": "Ustaw skrót",
+      "pressKeyToSet": "Naciśnij klawisz lub klawisze, aby ustawić nowy skrót.",
+      "shortcutAlreadyExists": "Powyższy skrót klawiaturowy już istnieje."
     }
   },
   "warning": {
@@ -882,13 +935,16 @@
     "certifier": "poświadczać",
     "certified": "atestowany",
     "Certified": "Atestowany",
+    "Certification": "Orzecznictwo",
     "signer": "sygnatariusz",
     "signed": "podpisany",
     "Signed": "Podpisano",
+    "Signature": "Podpis",
     "by": "za pomocą",
     "on": "na ",
     "disallowedChange": "Niedozwolona zmiana: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Niepodpisane pole podpisu: {{fieldName}}",
+    "signatureProperties": "Właściwości podpisu",
     "trustVerification": {
       "current": "Użyty czas weryfikacji był aktualnym czasem",
       "signing": "Czas weryfikacji pochodzi z zegara na komputerze podpisującego",
@@ -939,6 +995,10 @@
       "noSignatureFields": "Ten dokument nie zawiera pól podpisu",
       "certificateDownloadError": "Wystąpił błąd podczas próby pobrania zaufanego certyfikatu",
       "localCertificateError": "Są pewne problemy z odczytaniem lokalnego certyfikatu"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} jest ważny.",
+      "failed": "{{verificationType}} nie powiodło się."
     }
   },
   "cropPopUp": {
@@ -1017,6 +1077,7 @@
     "pageLocations": {
       "header": "Lokalizacja strony",
       "specify": "Określ stronę",
+      "specifyLocation": "Określ lokalizację strony",
       "amount": "Ilość stron",
       "total": "Całkowity",
       "pages": "Strony"
@@ -1036,7 +1097,13 @@
     "fileSelected": {
       "title": "Wybierz strony do dodania"
     },
-    "button": "Dodaj strony"
+    "button": "Dodaj strony",
+    "selectPages": "Wybierz strony do dodania",
+    "page": "Strona",
+    "warning": {
+      "title": "Zakończyć wstawić nową stronę?",
+      "message": "Wyjście anuluje wszystkie dotychczasowe wybory. Czy na pewno nadal chcesz wyjść?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Przeciągnij i upuść plik tutaj, aby porównać",

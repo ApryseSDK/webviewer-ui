@@ -78,6 +78,7 @@
     "showLess": "kurang menunjukkan",
     "showMore": "... lagi",
     "chooseFile": "Pilih fail",
+    "browse": "Semak imbas Fail",
     "selectYourOption": "Pilih pilihan anda",
     "open": "Buka",
     "deselectAll": "Nyahpilih Semua",
@@ -93,7 +94,9 @@
     "viewFile": "Lihat fail",
     "multiReplyAnnotations": "Balas kepada anotasi yang dipilih ({{count}})",
     "comparePages": "Bandingkan halaman",
-    "startComparison": "Mulakan Perbandingan"
+    "startComparison": "Mulakan Perbandingan",
+    "back": "belakang",
+    "clearSignature": "Tandatangan yang jelas"
   },
   "annotation": {
     "areaMeasurement": "kawasan",
@@ -427,11 +430,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Seret & Lepaskan fail anda di sini",
+      "selectFile": "Pilih fail anda di sini",
       "or": "Ataupun",
+      "yourFiles": "Fail Anda",
       "chooseFile": "Pilih fail",
       "localFile": "Fail Tempatan",
       "pageReplaceInputLabel": "Gantikan Halaman",
-      "pageReplaceInputFromSource": "dengan halaman"
+      "pageReplaceInputFromSource": "dengan halaman",
+      "warning": {
+        "title": "Keluar dari halaman ganti?",
+        "message": "Keluar akan membatalkan semua pilihan yang telah anda buat setakat ini. Adakah anda pasti anda masih mahu keluar?"
+      }
     },
     "filterAnnotModal": {
       "color": "Warna",
@@ -600,12 +609,11 @@
     "settings": {
       "settings": "tetapan",
       "general": "Umum",
-      "keyboardShortcut": "Pintasan papan kekunci",
-      "advancedSetting": "Tetapan Lanjutan",
       "language": "Bahasa",
       "theme": "Tema",
       "darkMode": "Mod gelap",
       "lightMode": "Mod cahaya",
+      "advancedSetting": "Tetapan Lanjutan",
       "viewing": "Melihat",
       "disableFadePageNavigationComponent": "Lumpuhkan Komponen Navigasi Halaman Pudar",
       "disableFadePageNavigationComponentDesc": "Sentiasa pastikan Komponen Navigasi Halaman pada skrin. Tingkah laku lalai adalah untuk memudarkannya selepas tempoh tertentu tidak aktif.",
@@ -630,7 +638,52 @@
       "disablePageDeletionConfirmationModal": "Lumpuhkan Modal Pengesahan Pemadaman Halaman",
       "disablePageDeletionConfirmationModalDesc": "Lumpuhkan modal pengesahan apabila memadam halaman daripada paparan lakaran kecil",
       "disableMultiselect": "Lumpuhkan Multiselect",
-      "disableMultiselectDesc": "Lumpuhkan berbilang pilihan dalam panel lakaran kecil kiri"
+      "disableMultiselectDesc": "Lumpuhkan berbilang pilihan dalam panel lakaran kecil kiri",
+      "miscellaneous": "Macam-macam",
+      "keyboardShortcut": "Pintasan papan kekunci",
+      "command": "Perintah",
+      "description": "Penerangan",
+      "action": "Tindakan",
+      "rotateDocumentClockwise": "Putar dokumen mengikut arah jam",
+      "rotateDocumentCounterclockwise": "Putar dokumen mengikut lawan jam",
+      "copyText": "Salin teks atau anotasi yang dipilih",
+      "pasteText": "Tampal teks atau anotasi",
+      "undoChange": "Buat asal perubahan anotasi",
+      "redoChange": "Buat semula perubahan anotasi",
+      "openFile": "Buka pemilih fail",
+      "openSearch": "Buka tindanan carian",
+      "zoomIn": "Mengezum masuk",
+      "zoomOut": "Zum keluar",
+      "fitScreenWidth": "Muatkan dokumen dengan lebar skrin dalam skrin kecil (< 640px), jika tidak muatkannya dengan saiz asalnya",
+      "print": "Cetak",
+      "bookmarkOpenPanel": "Tandai halaman dengan cepat dan buka panel penanda halaman",
+      "goToPreviousPage": "Pergi ke halaman sebelumnya",
+      "goToNextPage": "Pergi ke halaman seterusnya",
+      "goToPreviousPageArrowUp": "Pergi ke halaman sebelumnya dalam mod susun atur tunggal (ArrowUp)",
+      "goToNextPageArrowDown": "Pergi ke halaman seterusnya dalam mod susun atur tunggal (ArrowDown)",
+      "holdSwitchPan": "Tahan untuk beralih ke mod Pan dan lepaskan untuk kembali ke alat sebelumnya",
+      "selectAnnotationEdit": "Pilih alat AnnotationEdit",
+      "selectPan": "Pilih alat Pan",
+      "selectCreateArrowTool": "Pilih alat AnnotationCreateArrow",
+      "selectCreateCalloutTool": "Pilih alat AnnotationCreateCallout",
+      "selectEraserTool": "Pilih alat AnnotationEraser",
+      "selectCreateFreeHandTool": "Pilih alat AnnotationCreateFreeHand",
+      "selectCreateStampTool": "Pilih alat AnnotationCreateStamp",
+      "selectCreateLineTool": "Pilih alat AnnotationCreateLine",
+      "selectCreateStickyTool": "Pilih alat AnnotationCreateSticky",
+      "selectCreateEllipseTool": "Pilih alat AnnotationCreateEllipse",
+      "selectCreateRectangleTool": "Pilih alat AnnotationCreateRectangle",
+      "selectCreateRubberStampTool": "Pilih alat AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "Pilih alat AnnotationCreateFreeText",
+      "openSignatureModal": "Buka modal tandatangan atau tindanan",
+      "selectCreateTextSquigglyTool": "Pilih alat AnnotationCreateTextSquiggly",
+      "selectCreateTextHighlightTool": "Pilih alat AnnotationCreateTextHighlight",
+      "selectCreateTextStrikeoutTool": "Pilih alat AnnotationCreateTextStrikeout",
+      "selectCreateTextUnderlineTool": "Pilih alat AnnotationCreateTextUnderline",
+      "editKeyboardShorcut": "Edit Pintasan Papan Kekunci",
+      "setShorcut": "Tetapkan Shortcut",
+      "pressKeyToSet": "Tekan kekunci atau kekunci untuk menetapkan pintasan baharu.",
+      "shortcutAlreadyExists": "Pintasan papan kekunci di atas sudah wujud."
     }
   },
   "warning": {
@@ -882,13 +935,16 @@
     "certifier": "memperakui",
     "certified": "disahkan",
     "Certified": "Disahkan",
+    "Certification": "Pensijilan",
     "signer": "tanda",
     "signed": "ditandatangani",
     "Signed": "Ditandatangani",
+    "Signature": "Tandatangan",
     "by": "oleh",
     "on": "pada",
     "disallowedChange": "Perubahan Tidak Dibenarkan: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Medan tandatangan yang tidak ditandatangani: {{fieldName}}",
+    "signatureProperties": "Sifat Tandatangan",
     "trustVerification": {
       "current": "Masa pengesahan yang digunakan ialah masa semasa",
       "signing": "Masa pengesahan adalah dari jam pada komputer penandatangan",
@@ -939,6 +995,10 @@
       "noSignatureFields": "Dokumen ini tidak mempunyai medan tandatangan",
       "certificateDownloadError": "Ralat ditemui semasa cuba memuat turun sijil yang dipercayai",
       "localCertificateError": "Terdapat beberapa isu dengan membaca sijil tempatan"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} adalah sah.",
+      "failed": "{{verificationType}} gagal."
     }
   },
   "cropPopUp": {
@@ -1017,6 +1077,7 @@
     "pageLocations": {
       "header": "Lokasi Halaman",
       "specify": "Nyatakan Halaman",
+      "specifyLocation": "Tentukan Lokasi Halaman",
       "amount": "Jumlah Halaman",
       "total": "Jumlah",
       "pages": "muka surat"
@@ -1036,7 +1097,13 @@
     "fileSelected": {
       "title": "Pilih Halaman untuk Ditambah"
     },
-    "button": "Tambah Halaman"
+    "button": "Tambah Halaman",
+    "selectPages": "Pilih Halaman untuk Ditambah",
+    "page": "Halaman",
+    "warning": {
+      "title": "Keluar dari sisipan halaman baharu?",
+      "message": "Keluar akan membatalkan semua pilihan yang telah anda buat setakat ini. Adakah anda pasti anda masih mahu keluar?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Seret dan Lepaskan fail anda di sini untuk membandingkan",

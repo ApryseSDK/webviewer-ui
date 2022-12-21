@@ -78,6 +78,7 @@
     "showLess": "कम दिखाएं",
     "showMore": "...अधिक",
     "chooseFile": "एक फ़ाइल चुनें",
+    "browse": "फ़ाइलों को ब्राउज़ करें",
     "selectYourOption": "अपना विकल्प चुनें",
     "open": "खुला हुआ",
     "deselectAll": "सबको अचयनित करो",
@@ -93,7 +94,9 @@
     "viewFile": "फ़ाइल देखें",
     "multiReplyAnnotations": "चयनित टिप्पणियों का उत्तर दें",
     "comparePages": "पृष्ठों की तुलना करें",
-    "startComparison": "तुलना शुरू करें"
+    "startComparison": "तुलना शुरू करें",
+    "back": "पीछे",
+    "clearSignature": "स्पष्ट हस्ताक्षर"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -427,11 +430,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "अपनी फ़ाइल को यहां खींचें और छोड़ें",
+      "selectFile": "यहां अपनी फाइल चुनें",
       "or": "या",
+      "yourFiles": "आपकी फ़ाइलें",
       "chooseFile": "एक फ़ाइल चुनें",
       "localFile": "स्थानीय फ़ाइल",
       "pageReplaceInputLabel": "पृष्ठ बदलें",
-      "pageReplaceInputFromSource": "पृष्ठ के साथ"
+      "pageReplaceInputFromSource": "पृष्ठ के साथ",
+      "warning": {
+        "title": "बदलें पृष्ठ से बाहर निकलें?",
+        "message": "बाहर निकलने से आपके द्वारा अब तक किए गए सभी चयन रद्द हो जाएंगे। क्या आप वाकई अभी भी बाहर निकलना चाहते हैं?"
+      }
     },
     "filterAnnotModal": {
       "color": "रंग",
@@ -600,12 +609,11 @@
     "settings": {
       "settings": "समायोजन",
       "general": "सामान्य",
-      "keyboardShortcut": "कुंजीपटल संक्षिप्त रीति",
-      "advancedSetting": "उन्नत व्यवस्था",
       "language": "भाषा",
       "theme": "थीम",
       "darkMode": "डार्क मोड",
       "lightMode": "लाइट मोड",
+      "advancedSetting": "उन्नत व्यवस्था",
       "viewing": "देखना",
       "disableFadePageNavigationComponent": "फीका पृष्ठ नेविगेशन घटक अक्षम करें",
       "disableFadePageNavigationComponentDesc": "पेज नेविगेशन कंपोनेंट को हमेशा स्क्रीन पर रखें। निष्क्रियता की निश्चित अवधि के बाद इसे फीका करना डिफ़ॉल्ट व्यवहार है।",
@@ -630,7 +638,52 @@
       "disablePageDeletionConfirmationModal": "पृष्ठ हटाना पुष्टिकरण मोडल अक्षम करें",
       "disablePageDeletionConfirmationModalDesc": "थंबनेल दृश्य से किसी पृष्ठ को हटाते समय पुष्टिकरण मोडल अक्षम करें",
       "disableMultiselect": "बहुचयन अक्षम करें",
-      "disableMultiselectDesc": "बाएं थंबनेल पैनल में बहु-चयन अक्षम करें"
+      "disableMultiselectDesc": "बाएं थंबनेल पैनल में बहु-चयन अक्षम करें",
+      "miscellaneous": "विविध",
+      "keyboardShortcut": "कुंजीपटल संक्षिप्त रीति",
+      "command": "आज्ञा",
+      "description": "विवरण",
+      "action": "गतिविधि",
+      "rotateDocumentClockwise": "दस्तावेज़ को दक्षिणावर्त घुमाएँ",
+      "rotateDocumentCounterclockwise": "दस्तावेज़ को वामावर्त घुमाएँ",
+      "copyText": "चयनित टेक्स्ट या एनोटेशन कॉपी करें",
+      "pasteText": "टेक्स्ट या एनोटेशन पेस्ट करें",
+      "undoChange": "एनोटेशन परिवर्तन पूर्ववत करें",
+      "redoChange": "एनोटेशन परिवर्तन फिर से करें",
+      "openFile": "फ़ाइल पिकर खोलें",
+      "openSearch": "खोज ओवरले खोलें",
+      "zoomIn": "ज़ूम इन",
+      "zoomOut": "ज़ूम आउट",
+      "fitScreenWidth": "छोटे स्क्रीन में दस्तावेज़ को स्क्रीन की चौड़ाई में फ़िट करें (< 640px), अन्यथा इसे उसके मूल आकार में फ़िट करें",
+      "print": "छाप",
+      "bookmarkOpenPanel": "जल्दी से एक पेज बुकमार्क करें और बुकमार्क पैनल खोलें",
+      "goToPreviousPage": "पिछले पृष्ठ पर जाएँ",
+      "goToNextPage": "अगले पृष्ठ पर जाएँ",
+      "goToPreviousPageArrowUp": "सिंगल लेआउट मोड में पिछले पेज पर जाएं (एरोअप)",
+      "goToNextPageArrowDown": "सिंगल लेआउट मोड में अगले पेज पर जाएं (एरोडाउन)",
+      "holdSwitchPan": "पैन मोड में स्विच करने के लिए होल्ड करें और पिछले टूल पर वापस जाने के लिए रिलीज़ करें",
+      "selectAnnotationEdit": "एनोटेशन एडिट टूल का चयन करें",
+      "selectPan": "पैन टूल का चयन करें",
+      "selectCreateArrowTool": "एनोटेशनक्रिएटएरो टूल का चयन करें",
+      "selectCreateCalloutTool": "AnnotationCreateCallout टूल चुनें",
+      "selectEraserTool": "एनोटेशन इरेज़र टूल का चयन करें",
+      "selectCreateFreeHandTool": "एनोटेशन क्रिएट फ्रीहैंड टूल का चयन करें",
+      "selectCreateStampTool": "AnnotationCreateStamp टूल का चयन करें",
+      "selectCreateLineTool": "एनोटेशनक्रिएटलाइन टूल का चयन करें",
+      "selectCreateStickyTool": "एनोटेशन क्रिएट स्टिकी टूल का चयन करें",
+      "selectCreateEllipseTool": "AnnotationCreateEllipse टूल चुनें",
+      "selectCreateRectangleTool": "AnnotationCreateRectangle टूल चुनें",
+      "selectCreateRubberStampTool": "AnnotationCreateRubberStamp टूल चुनें",
+      "selectCreateFreeTextTool": "एनोटेशनक्रिएटफ्रीटेक्स्ट टूल का चयन करें",
+      "openSignatureModal": "सिग्नेचर मोडल या ओवरले खोलें",
+      "selectCreateTextSquigglyTool": "AnnotationCreateTextSquiggly टूल का चयन करें",
+      "selectCreateTextHighlightTool": "AnnotationCreateTextHighlight टूल चुनें",
+      "selectCreateTextStrikeoutTool": "AnnotationCreateTextStrikeout टूल चुनें",
+      "selectCreateTextUnderlineTool": "AnnotationCreateTextUnderline टूल चुनें",
+      "editKeyboardShorcut": "कीबोर्ड शॉर्टकट संपादित करें",
+      "setShorcut": "शॉर्टकट सेट करें",
+      "pressKeyToSet": "नया शॉर्टकट सेट करने के लिए कुंजी या कुंजियां दबाएं।",
+      "shortcutAlreadyExists": "ऊपर दिया गया कीबोर्ड शॉर्टकट पहले से मौजूद है।"
     }
   },
   "warning": {
@@ -882,13 +935,16 @@
     "certifier": "प्रमाणित",
     "certified": "प्रमाणित",
     "Certified": "प्रमाणित",
+    "Certification": "प्रमाणीकरण",
     "signer": "संकेत",
     "signed": "पर हस्ताक्षर किए",
     "Signed": "पर हस्ताक्षर किए",
+    "Signature": "हस्ताक्षर",
     "by": "द्वारा",
     "on": "पर",
     "disallowedChange": "अस्वीकृत परिवर्तन: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "अहस्ताक्षरित हस्ताक्षर फ़ील्ड: {{fieldName}}",
+    "signatureProperties": "हस्ताक्षर गुण",
     "trustVerification": {
       "current": "उपयोग किया गया सत्यापन समय वर्तमान समय था",
       "signing": "सत्यापन समय हस्ताक्षरकर्ता के कंप्यूटर पर घड़ी से है",
@@ -939,6 +995,10 @@
       "noSignatureFields": "इस दस्तावेज़ में कोई हस्ताक्षर फ़ील्ड नहीं है",
       "certificateDownloadError": "विश्वसनीय प्रमाणपत्र डाउनलोड करने का प्रयास करते समय त्रुटि आई",
       "localCertificateError": "स्थानीय प्रमाणपत्र पढ़ने में कुछ समस्याएं हैं"
+    },
+    "verificationStatus": {
+      "valid": "{{सत्यापन प्रकार}} मान्य है।",
+      "failed": "{{सत्यापन प्रकार}} विफल रहा।"
     }
   },
   "cropPopUp": {
@@ -1017,6 +1077,7 @@
     "pageLocations": {
       "header": "पृष्ठ स्थान",
       "specify": "पृष्ठ निर्दिष्ट करें",
+      "specifyLocation": "पृष्ठ स्थान निर्दिष्ट करें",
       "amount": "पृष्ठों की मात्रा",
       "total": "कुल",
       "pages": "पृष्ठों"
@@ -1036,7 +1097,13 @@
     "fileSelected": {
       "title": "जोड़ने के लिए पेज चुनें"
     },
-    "button": "पृष्ठ जोड़ें"
+    "button": "पृष्ठ जोड़ें",
+    "selectPages": "जोड़ने के लिए पेज चुनें",
+    "page": "पृष्ठ",
+    "warning": {
+      "title": "नया पृष्ठ सम्मिलित करें से बाहर निकलें?",
+      "message": "बाहर निकलने से आपके द्वारा अब तक किए गए सभी चयन रद्द हो जाएंगे। क्या आप वाकई अभी भी बाहर निकलना चाहते हैं?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "तुलना करने के लिए अपनी फ़ाइल को यहां खींचें और छोड़ें",
