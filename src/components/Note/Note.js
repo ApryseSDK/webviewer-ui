@@ -241,16 +241,17 @@ const Note = ({
   }
   // apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
-
+ 
   return (
     <div
       role="button"
       tabIndex={0}
       ref={containerRef}
-      className={noteClass}
+      className={`${noteClass} ${annotation.getStatus() ==='Completed' ? 'completed' :null}`}
       onClick={handleNoteClick}
       onKeyDown={handleNoteKeydown}
       id={`note_${annotation.Id}`}
+      
     >
       <NoteContent
         noteIndex={0}
@@ -263,6 +264,7 @@ const Note = ({
         isMultiSelected={isMultiSelected}
         isMultiSelectMode={isMultiSelectMode}
       />
+      {/* REPLY HERE */}
       {(isSelected || isExpandedFromSearch || shouldExpandCommentThread) && (
         <>
           {replies.length > 0 && (

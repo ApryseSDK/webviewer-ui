@@ -37,31 +37,24 @@ function NoteState(props) {
   };
 
   const annotationState = annotation.getStatus();
-  const icon = `icon-annotation-status-${annotationState === '' ? 'none' : annotationState.toLowerCase()}`;
-  const noteStateButtonClassName = classNames('overflow', { active: isOpen });
+  const icon = `icon-annotation-status-${annotationState === 'Completed' ? 'resolved' : 'opened'}`;
+
+  const createOnStateOptionButtonClickHandler = (state) => {
+    return () => {
+      handleStateChange(state);
+    };
+  };
 
   return (
-    <DataElementWrapper
-      className="NoteState"
-      dataElement="noteState"
-      onClick={togglePopup}
-      ref={popupRef}
-    >
-      <Tooltip content={t('option.notesOrder.status')}>
-        <div className={noteStateButtonClassName}>
-          <Icon glyph={icon} />
-        </div>
-      </Tooltip>
-      {isOpen && (
-        <NoteStatePopup
-          triggerElementName="noteState"
-          handleStateChange={handleStateChange}
-          onClose={() => {
-            setIsOpen(false);
-          }}
-        />
-      )}
-    </DataElementWrapper>
+    <DataElementWrapper dataElement="notePopupState">
+         <DataElementWrapper
+           dataElement="notePopupStateCompleted"
+           className="note-state-option"
+           onClick={createOnStateOptionButtonClickHandler('Completed')}
+         >
+           <Icon glyph={icon} />
+         </DataElementWrapper>
+       </DataElementWrapper>
   );
 }
 

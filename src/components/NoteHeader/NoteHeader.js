@@ -89,7 +89,7 @@ function NoteHeader(props) {
           {isUnread &&
             <div className="unread-notification"></div>
           }
-          <Icon className="type-icon" glyph={icon} color={color} fillColor={fillColor} />
+          <img className='profile-pic' width={40} height={40} src="https://media.istockphoto.com/id/1344252964/photo/dedicated-female-student-of-asian-ethnicity-having-online-class-via-laptop-from-the-modern.jpg?s=612x612&w=is&k=20&c=1NSFK64xDMMnElYGz8EDX0YM5pPZCZ7EK6CYypley5U=" />
         </div>
       }
       <div className={authorAndDateClass}>
