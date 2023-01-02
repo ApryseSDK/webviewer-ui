@@ -5,9 +5,7 @@ import NoteState from 'components/NoteState';
 import Icon from 'components/Icon';
 import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
-import getColor from 'helpers/getColor';
 import { isDarkColorHex } from 'helpers/color';
-import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
@@ -15,6 +13,14 @@ import Theme from 'constants/theme';
 import Choice from 'components/Choice';
 import Avatar from 'react-avatar';
 import './NoteHeader.scss';
+import TimeAgo from 'javascript-time-ago'
+import ReactTimeAgo from 'react-time-ago'
+import en from 'javascript-time-ago/locale/en.json'
+import ru from 'javascript-time-ago/locale/ru.json'
+
+TimeAgo.addDefaultLocale(en)
+TimeAgo.addLocale(ru)
+
 
 const propTypes = {
   icon: PropTypes.string,
@@ -75,7 +81,6 @@ function NoteHeader(props) {
     color = '#FFFFFF';
   }
 
-  const fillColor = getColor(annotation.FillColor);
   const annotationAssociatedNumber = annotation.getAssociatedNumber();
   const annotationDisplayedAssociatedNumber = `#${annotationAssociatedNumber} - `;
 
@@ -107,7 +112,7 @@ function NoteHeader(props) {
             </div>
             <div className="date-and-num-replies">
               <div className="date-and-time">
-                {date ? dayjs(date).locale(language).format(noteDateFormat) : t('option.notesPanel.noteContent.noDate')}
+               <ReactTimeAgo date={date} locale="en-US"/>
                 {isGroupMember && ` (Page ${annotation.PageNumber})`}
               </div>
               {numberOfReplies > 0 && !isSelected &&

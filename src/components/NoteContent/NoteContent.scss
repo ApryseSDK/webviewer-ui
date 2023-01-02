@@ -1,6 +1,12 @@
 @import '../../constants/styles';
 @import '../../constants/note';
 
+
+.disabled-comment{
+  pointer-events:none;
+  cursor:not-allowed;
+}
+
 .NoteContent {
   position: relative;
   display: flex;

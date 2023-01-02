@@ -58,6 +58,7 @@ const NoteContent = ({
   isMultiSelectMode,
   handleMultiSelect,
   isGroupMember,
+  completedState,
 }) => {
   const [
     noteDateFormat,
@@ -310,7 +311,9 @@ const NoteContent = ({
 
       return (
         <>
-          {(isEditing && isSelected) ? (
+          {(isEditing && isSelected) ? 
+            completedState ?
+            <div className='disabled-comment'>
             <ContentArea
               annotation={annotation}
               noteIndex={noteIndex}
@@ -319,7 +322,18 @@ const NoteContent = ({
               onTextAreaValueChange={setPendingEditText}
               pendingText={pendingEditTextMap[annotation.Id]}
             />
-          ) : (
+            </div> 
+            :
+            <ContentArea
+              annotation={annotation}
+              noteIndex={noteIndex}
+              setIsEditing={setIsEditing}
+              textAreaValue={textAreaValue}
+              onTextAreaValueChange={setPendingEditText}
+              pendingText={pendingEditTextMap[annotation.Id]}
+            />
+          
+           : (
             contentsToRender && (
               <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked}>
                 {isReply && (attachments.length > 0) && (
@@ -541,6 +555,7 @@ const ContentArea = ({
         isReply={isReply}
         onBlur={onBlur}
         onFocus={onFocus}
+        disabled
       />
       <div className="edit-buttons">
         <button
