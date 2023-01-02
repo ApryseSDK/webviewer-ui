@@ -18,7 +18,7 @@ function NoteState(props) {
   const annotationState = annotation.getStatus();
   const icon = `icon-annotation-status-${annotationState === 'Completed' ? 'resolved' : 'opened'}`;
 
-  const createOnStateOptionButtonClickHandler = (state) => {
+  const createOnStateOptionButtonClickHandler   = (state) => {
     return () => {
       handleStateChange(state);
     };

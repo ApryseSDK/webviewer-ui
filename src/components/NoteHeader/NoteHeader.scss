@@ -25,7 +25,7 @@
 
   .author-and-time {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     word-break: break-word;
   }
 
@@ -90,7 +90,6 @@
 
   .date-and-time {
     color: #757575;
-    margin-left: 6px;
     font-size: 12px;
     line-height: 19px;
     @include mobile {

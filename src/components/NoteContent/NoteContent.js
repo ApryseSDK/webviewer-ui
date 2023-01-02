@@ -29,6 +29,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './NoteContent.scss';
+import Icon from '../Icon';
 
 dayjs.extend(LocalizedFormat);
 
@@ -568,7 +569,7 @@ const ContentArea = ({
             clearAttachments(annotation.Id);
           }}
         >
-          {t('action.cancel')}
+          <Icon glyph="icon-close-btn"/>
         </button>
         <button
           className={`save-button${!textAreaValue ? ' disabled' : ''}`}
@@ -578,7 +579,7 @@ const ContentArea = ({
             setContents(e);
           }}
         >
-          {t('action.save')}
+         <Icon glyph="icon-submit"/>
         </button>
       </div>
     </div>

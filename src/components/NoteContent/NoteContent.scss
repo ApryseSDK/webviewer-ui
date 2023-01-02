@@ -110,15 +110,15 @@
         @include button-reset;
         cursor: pointer;
         flex-shrink: 0;
-        background: var(--primary-button);
+        // background: var(--primary-button);
         border-radius: 4px;
         height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
-        color: var(--primary-button-text);
-        padding: 0 13px;
+        // color: var(--primary-button-text);
+        // padding: 0 13px;
 
         &:hover {
           background: var(--primary-button-hover);

@@ -117,7 +117,8 @@ function NotesPanelHeader({
         <div
           className="buttons-container"
         >
-          <Button
+          {/* REMOVED  */}
+          {/* <Button
             dataElement={DataElements.NOTE_MULTI_SELECT_MODE_BUTTON}
             className={classNames({
               active: isMultiSelectMode,
@@ -128,8 +129,8 @@ function NotesPanelHeader({
               toggleMultiSelectMode();
             }}
             title={t('component.multiSelectButton')}
-          />
-          <Button
+          /> */}
+          {/* <Button
             dataElement="filterAnnotationButton"
             className={classNames({
               filterAnnotationButton: true,
@@ -139,7 +140,7 @@ function NotesPanelHeader({
             img="icon-comments-filter"
             onClick={() => dispatch(actions.openElement('filterModal'))}
             title={t('component.filter')}
-          />
+          /> */}
         </div>
       </DataElementWrapper>
     </DataElementWrapper>

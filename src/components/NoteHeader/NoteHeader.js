@@ -133,7 +133,7 @@ function NoteHeader(props) {
                   handleMultiSelect(!isMultiSelected);
                 }}
               />}
-            <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
+            {/* <NoteUnpostedCommentIndicator annotationId={annotation.Id} /> */}
             {!isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && isSelected &&
               <NoteState
                 annotation={annotation}
