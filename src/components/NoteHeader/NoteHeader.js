@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import Choice from 'components/Choice';
-
+import Avatar from 'react-avatar';
 import './NoteHeader.scss';
 
 const propTypes = {
@@ -89,8 +89,12 @@ function NoteHeader(props) {
           {isUnread &&
             <div className="unread-notification"></div>
           }
-          <img className='profile-pic' width={40} height={40} src="https://media.istockphoto.com/id/1344252964/photo/dedicated-female-student-of-asian-ethnicity-having-online-class-via-laptop-from-the-modern.jpg?s=612x612&w=is&k=20&c=1NSFK64xDMMnElYGz8EDX0YM5pPZCZ7EK6CYypley5U=" />
-        </div>
+            {annotation.getColor !== "" ?
+              <Avatar name={annotation.Author} size="40" className="'profile-pic"/>
+            :
+          <img className='profile-pic' width={40} height={40} src={annotation.getColor} />
+        }
+          </div>
       }
       <div className={authorAndDateClass}>
         <div className="author-and-overflow">

@@ -32,7 +32,7 @@ workflows:
       #       - store_artifacts:
       #           path: ./test/cypress/snapshots
       #     start: npm start
-      #     wait-on: 'http://localhost:3000/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
+      #     wait-on: 'http://localhost:3002/#d=https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf&a=1'
       #     command: npm run cy:run
       #     executor: with-chrome
       #     no-workspace: true

@@ -66,7 +66,7 @@ class Icon extends React.PureComponent {
     };
 
     if (!disabled) {
-      style.color = (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color;
+      style.color = color;
       if (fillColor) {
         svgElement = svgElement.replace('fill="none"', `fill="#${fillColor}"`);
       }
@@ -74,7 +74,6 @@ class Icon extends React.PureComponent {
         svgElement = svgElement.replace('fill="stroke"', `fill="#${strokeColor}"`);
       }
     }
-
     return (
       <div
         ref={this.icon}
