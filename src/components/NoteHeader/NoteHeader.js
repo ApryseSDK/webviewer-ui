@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import NotePopup from 'components/NotePopup';
 import NoteState from 'components/NoteState';
 import Icon from 'components/Icon';
-import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import { isDarkColorHex } from 'helpers/color';
 import classNames from 'classnames';
@@ -93,10 +92,10 @@ function NoteHeader(props) {
           {isUnread &&
             <div className="unread-notification"></div>
           }
-            {annotation.Color !== "" ?
+            {annotation.getCustomData('profile') !== "" ?
               <Avatar name={annotation.Author} size="40" className="profile-pic"/>
             :
-          <img className='profile-pic' width={40} height={40} src={annotation.Color} />
+          <img className='profile-pic' width={40} height={40} src={annotation.getCustomData('profile')} />
         }
           </div>
       }
