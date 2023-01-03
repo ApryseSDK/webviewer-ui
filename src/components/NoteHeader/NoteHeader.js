@@ -94,7 +94,7 @@ function NoteHeader(props) {
             <div className="unread-notification"></div>
           }
             {annotation.Color !== "" ?
-              <Avatar name={annotation.Author} size="40" className="'profile-pic"/>
+              <Avatar name={annotation.Author} size="40" className="profile-pic"/>
             :
           <img className='profile-pic' width={40} height={40} src={annotation.Color} />
         }
