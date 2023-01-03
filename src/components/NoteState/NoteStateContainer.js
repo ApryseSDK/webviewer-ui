@@ -15,7 +15,7 @@ function NoteStateContainer(props) {
 
   const handleStateChange = React.useCallback(function handleStateChangeCallback(newValue) {
     const stateAnnotation = createStateAnnotation(annotation, newValue);
-    annotation.addReply(stateAnnotation);
+    // annotation.addReply(stateAnnotation);
     const annotationManager = core.getAnnotationManager();
     annotationManager.addAnnotation(stateAnnotation);
     annotationManager.trigger('addReply', [stateAnnotation, annotation, annotationManager.getRootAnnotation(annotation)]);

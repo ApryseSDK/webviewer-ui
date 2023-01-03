@@ -24,12 +24,19 @@ function NoteState(props) {
     };
   };
 
+  const getStatusFromAnnotation = (state) =>{
+      if(state==='Completed'){
+        return 'Accepted';
+      }
+      return 'Completed';
+  }
+
   return (
     <DataElementWrapper dataElement="notePopupState">
          <DataElementWrapper
            dataElement="notePopupStateCompleted"
            className="note-state-option"
-           onClick={createOnStateOptionButtonClickHandler('Completed')}
+           onClick={createOnStateOptionButtonClickHandler(getStatusFromAnnotation(annotation.getStatus()))}
          >
            <Icon class glyph={icon} />
          </DataElementWrapper>
