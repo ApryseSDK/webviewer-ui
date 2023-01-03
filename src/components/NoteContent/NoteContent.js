@@ -569,7 +569,7 @@ const ContentArea = ({
             clearAttachments(annotation.Id);
           }}
         >
-          <Icon glyph="icon-close-btn"/>
+          <Icon glyph="icon-annotation-close"/>
         </button>
         <button
           className={`save-button${!textAreaValue ? ' disabled' : ''}`}
@@ -579,7 +579,7 @@ const ContentArea = ({
             setContents(e);
           }}
         >
-         <Icon glyph="icon-submit"/>
+         <Icon glyph="icon-annotation-status-check"/>
         </button>
       </div>
     </div>

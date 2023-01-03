@@ -86,7 +86,6 @@ function NoteHeader(props) {
 
   const authorAndDateClass = classNames('author-and-date', { isReply });
   const noteHeaderClass = classNames('NoteHeader', { parent: !isReply && !isGroupMember });
-
   return (
     <div className={noteHeaderClass}>
       {!isReply &&
@@ -94,10 +93,10 @@ function NoteHeader(props) {
           {isUnread &&
             <div className="unread-notification"></div>
           }
-            {annotation.getColor !== "" ?
+            {annotation.Color !== "" ?
               <Avatar name={annotation.Author} size="40" className="'profile-pic"/>
             :
-          <img className='profile-pic' width={40} height={40} src={annotation.getColor} />
+          <img className='profile-pic' width={40} height={40} src={annotation.Color} />
         }
           </div>
       }

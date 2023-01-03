@@ -419,6 +419,7 @@ export const getLoadingProgress = (state) => state.document.loadingProgress;
 
 // user
 export const getUserName = (state) => state.user.name;
+export const getProfilePicture = (state) => state.user.profilePicture;
 
 // advanced
 export const getServerUrl = (state) => state.advanced.serverUrl;
