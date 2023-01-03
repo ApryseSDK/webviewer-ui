@@ -138,7 +138,6 @@ const LeftPanel = () => {
       onDragOver={onDragOver}
       data-element={DataElements.LEFT_PANEL}
     >
-         <NotesPanel />
       <div
         className="left-panel-container"
         style={style}
