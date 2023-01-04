@@ -29,6 +29,7 @@
  * @property {string} SavedSignaturesTab toggle feature to enable the saved signatures tab in the Signature Modal and use it to sign elements.
  * @property {string} WatermarkPanel toggle feature to enable the watermark panel
  * @property {string} WatermarkPanelImageTab toggle feature to enable the image tab in watermark panel
+ * @property {string} ContentEdit toggle feature to enable content editing in a pdf document
  * @example
 WebViewer(...)
   .then(function(instance) {
