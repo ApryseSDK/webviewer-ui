@@ -16,7 +16,7 @@ function NoteState(props) {
   } = props;
 
   const annotationState = annotation.getStatus();
-  const icon = `icon-annotation-status-${annotationState === 'Completed' ? 'completed' : 'check'}`;
+  const icon = `icon-annotation-status-${annotationState === 'Completed' ? 'green' : 'accepted'}`;
 
   const createOnStateOptionButtonClickHandler   = (state) => {
     return () => {
@@ -38,7 +38,7 @@ function NoteState(props) {
            className="note-state-option"
            onClick={createOnStateOptionButtonClickHandler(getStatusFromAnnotation(annotation.getStatus()))}
          >
-           <Icon class glyph={icon} />
+           <Icon backgroundNoneIcon={true} class glyph={icon} />
          </DataElementWrapper>
        </DataElementWrapper>
   );

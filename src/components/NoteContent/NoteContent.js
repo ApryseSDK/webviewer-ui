@@ -560,6 +560,16 @@ const ContentArea = ({
       />
       <div className="edit-buttons">
         <button
+          className={`save-button${!textAreaValue ? ' disabled' : ''}`}
+          disabled={!textAreaValue}
+          onClick={(e) => {
+            e.stopPropagation();
+            setContents(e);
+          }}
+        >
+         <Icon backgroundNoneIcon={true} glyph="icon-button-submit"/>
+        </button>
+        <button
           className="cancel-button"
           onClick={(e) => {
             e.stopPropagation();
@@ -569,17 +579,7 @@ const ContentArea = ({
             clearAttachments(annotation.Id);
           }}
         >
-          <Icon glyph="icon-annotation-close"/>
-        </button>
-        <button
-          className={`save-button${!textAreaValue ? ' disabled' : ''}`}
-          disabled={!textAreaValue}
-          onClick={(e) => {
-            e.stopPropagation();
-            setContents(e);
-          }}
-        >
-         <Icon glyph="icon-annotation-status-check"/>
+          <Icon backgroundNoneIcon={true} glyph="icon-button-close"/>
         </button>
       </div>
     </div>

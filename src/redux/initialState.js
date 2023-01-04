@@ -2032,7 +2032,7 @@ export default {
   user: {
     name: getHashParameters('user', 'Guest'),
     isAdmin: getHashParameters('admin', false),
-    profilePicture : getHashParameters('profilePicture', false),
+    profilePicture : getHashParameters('profilePicture', ''),
   },
   advanced: {
     customCSS: getHashParameters('css', null),

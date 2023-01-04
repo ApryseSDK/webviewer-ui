@@ -45,3 +45,50 @@
     fill: none;
   }
 }
+
+
+.backgroundNoneIcon {
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  color:#ffffff;
+
+  // color for svgs
+  path:not([fill*='#']),
+  circle:not([fill*='#']),
+  rect:not([fill*='#']),
+  polygon:not([fill*='#']) {
+    fill: currentColor;
+  }
+
+  &:not(.disabled) {
+    path[fill='default'] {
+      fill: var(--icon-color);
+    }
+  }
+
+  &.disabled {
+    fill: var(--disabled-icon);
+    path {
+      fill: var(--disabled-icon);
+    }
+  }
+
+  path[fill='none'],
+  rect[fill='none'],
+  circle[fill='none'],
+  polygon[fill='none'] {
+    fill: none;
+  }
+
+  path[fill='fill'],
+  rect[fill='fill'],
+  circle[fill='fill'],
+  polygon[fill='fill'] {
+    fill: none;
+  }
+
+  path[fill='stroke'] {
+    fill: none;
+  }
+}

@@ -11,7 +11,8 @@ class Icon extends React.PureComponent {
     glyph: PropTypes.string.isRequired,
     fillColor: PropTypes.string,
     strokeColor: PropTypes.string,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    backgroundNoneIcon:PropTypes.bool,
   }
 
   constructor() {
@@ -78,9 +79,10 @@ class Icon extends React.PureComponent {
       <div
         ref={this.icon}
         className={classNames({
-          Icon: true,
+          Icon: this.props.backgroundNoneIcon ? false :true,
+          backgroundNoneIcon:this.props.backgroundNoneIcon,
           [className]: true,
-          [fillColor]: true,
+          [fillColor]: false,
           disabled,
         })}
         style={style}
