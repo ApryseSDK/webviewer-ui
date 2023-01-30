@@ -39,6 +39,10 @@
       height: 100%;
       width: 100%;
       object-fit: contain;
+    }
+
+    /* fix bug in the latest chrome version(108) which print the extra blank page */
+    .img:not(:last-child) {
       page-break-after: always;
     }
 
@@ -107,6 +111,11 @@
     #print-handler {
       height: 100%;
     }
+  }
+
+  .PrintHandler:has(img:only-child) {
+    /* fix bug in the latest chrome version(108) which print the extra blank page */
+    height: 99%;
   }
 
   #app {
