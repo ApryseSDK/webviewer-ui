@@ -30,7 +30,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onLocationSelected = eventListeners.onLocationSelected(store, documentViewerKey);
   const onDotStampAnnotationAdded = eventListeners.onDotStampAnnotationAdded(dispatch, documentViewerKey);
   const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(documentViewerKey);
-  const onReadOnlyModeChanged = eventListeners.onReadOnlyModeChanged(store);
+  const onReadOnlyModeChanged = eventListeners.onReadOnlyModeChanged(dispatch, store);
   const onPageComplete = eventListeners.onPageComplete(store, documentViewerKey);
   const onFileAttachmentAnnotationAdded = eventListeners.onFileAttachmentAnnotationAdded();
   const onFileAttachmentDataAvailable = eventListeners.onFileAttachmentDataAvailable();

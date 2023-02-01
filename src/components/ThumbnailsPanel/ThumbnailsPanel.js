@@ -40,6 +40,7 @@ const ThumbnailsPanel = () => {
     isThumbnailControlDisabled,
     isThumbnailSliderDisabled,
     isReaderMode,
+    isDocumentReadOnly,
     totalPagesFromSecondaryDocumentViewer,
     activeDocumentViewerKey,
     isRightClickEnabled
@@ -56,6 +57,7 @@ const ThumbnailsPanel = () => {
       selectors.isElementDisabled(state, 'thumbnailControl'),
       selectors.isElementDisabled(state, 'thumbnailsSizeSlider'),
       selectors.isReaderMode(state),
+      selectors.isDocumentReadOnly(state),
       selectors.getTotalPages(state, 2),
       selectors.getActiveDocumentViewerKey(state),
       selectors.openingPageManipulationOverlayByRightClickEnabled(state)
@@ -275,8 +277,11 @@ const ThumbnailsPanel = () => {
   }, [thumbnailSize, numberOfColumns]);
 
   useEffect(() => {
-    dispatch(actions.setSelectedPageThumbnails([]));
-  }, [isReaderMode]);
+    if (isReaderMode || isDocumentReadOnly) {
+      dispatch(actions.setSelectedPageThumbnails([]));
+      dispatch(actions.setThumbnailSelectingPages(false));
+    }
+  }, [isReaderMode, isDocumentReadOnly]);
 
   // if disabled or is not open return
   if (isDisabled || !isOpen) {
@@ -434,8 +439,13 @@ const ThumbnailsPanel = () => {
   const onRightClick = (event, pageIndex) => {
     event.preventDefault();
     core.setCurrentPage(pageIndex + 1);
-    dispatch(actions.setPageManipulationOverlayAlternativePosition({ left: event.pageX, right: 'auto', top: event.pageY }));
     dispatch(actions.setSelectedPageThumbnails([pageIndex]));
+
+    if (isReaderMode || isDocumentReadOnly) {
+      return;
+    }
+
+    dispatch(actions.setPageManipulationOverlayAlternativePosition({ left: event.pageX, right: 'auto', top: event.pageY }));
     dispatch(actions.openElements(['pageManipulationOverlay']));
   };
 
@@ -462,7 +472,7 @@ const ThumbnailsPanel = () => {
       columnsOfThumbnails: numberOfColumns > 1,
       row: true,
     });
-    const allowPageOperationsUI = !isReaderMode;
+    const allowPageOperationsUI = !(isReaderMode || isDocumentReadOnly);
 
     return (
       <div role="row" aria-label="row" className={className} key={key} style={style}>
@@ -510,7 +520,7 @@ const ThumbnailsPanel = () => {
   };
 
   const thumbnailHeight = isThumbnailControlDisabled ? Number(thumbnailSize) + 50 : Number(thumbnailSize) + 80;
-  const shouldShowControls = !isReaderMode;
+  const shouldShowControls = !(isReaderMode || isDocumentReadOnly);
   const thumbnailAutoScrollAreaStyle = {
     'height': `${hoverAreaHeight}px`,
   };

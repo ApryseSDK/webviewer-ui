@@ -1,10 +1,10 @@
 import Thumbnail from './Thumbnail';
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-const TestThumbnail = withProviders(Thumbnail);
-import core from 'core';
 
-function noop() { };
+const TestThumbnail = withProviders(Thumbnail);
+
+function noop() { }
 
 jest.mock('core');
 
@@ -49,7 +49,7 @@ describe('Thumbnail', () => {
           isMobile={false}
           shiftKeyThumbnailPivotIndex={null}
           isThumbnailMultiselectEnabled
-          isReaderMode={false}
+          isReaderModeOrReadOnly={false}
           selectedPageIndexes={[]}
           actions={actions}
           index={pressedIndex}
@@ -71,7 +71,7 @@ describe('Thumbnail', () => {
           isMobile={false}
           shiftKeyThumbnailPivotIndex={null}
           isThumbnailMultiselectEnabled
-          isReaderMode={false}
+          isReaderModeOrReadOnly={false}
           selectedPageIndexes={[]}
           actions={actions}
           index={2}
@@ -93,7 +93,7 @@ describe('Thumbnail', () => {
           isMobile={false}
           isThumbnailMultiselectEnabled
           shiftKeyThumbnailPivotIndex={null}
-          isReaderMode={false}
+          isReaderModeOrReadOnly={false}
           selectedPageIndexes={[]}
           actions={actions}
           index={2}
@@ -114,7 +114,7 @@ describe('Thumbnail', () => {
           isMobile={false}
           shiftKeyThumbnailPivotIndex={1}
           isThumbnailMultiselectEnabled
-          isReaderMode={false}
+          isReaderModeOrReadOnly={false}
           selectedPageIndexes={[1]}
           actions={actions}
           index={3}
@@ -135,7 +135,7 @@ describe('Thumbnail', () => {
           isMobile={false}
           shiftKeyThumbnailPivotIndex={2}
           isThumbnailMultiselectEnabled
-          isReaderMode={false}
+          isReaderModeOrReadOnly={false}
           selectedPageIndexes={[2, 3]}
           actions={actions}
           index={0}
@@ -156,7 +156,7 @@ describe('Thumbnail', () => {
           isMobile={false}
           shiftKeyThumbnailPivotIndex={2}
           isThumbnailMultiselectEnabled
-          isReaderMode={false}
+          isReaderModeOrReadOnly={false}
           selectedPageIndexes={[2, 1, 0]}
           actions={actions}
           index={1}
