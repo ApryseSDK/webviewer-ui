@@ -24,6 +24,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 
 import './AnnotationPopup.scss';
+import DataElements from 'constants/dataElement';
 
 const { ToolNames } = window.Tools;
 
@@ -40,6 +41,9 @@ const AnnotationPopup = () => {
     isMultiTab,
     tabManager,
     tabs,
+    notesInLeftPanel,
+    leftPanelOpen,
+    activeLeftPanel,
   ] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, 'annotationPopup'),
@@ -53,6 +57,9 @@ const AnnotationPopup = () => {
       selectors.getIsMultiTab(state),
       selectors.getTabManager(state),
       selectors.getTabs(state),
+      selectors.getNotesInLeftPanel(state),
+      selectors.isElementOpen(state, DataElements.LEFT_PANEL),
+      selectors.getActiveLeftPanel(state),
     ],
     shallowEqual,
   );
@@ -439,6 +446,8 @@ const AnnotationPopup = () => {
     };
   }
 
+  const isNotesPanelOpenOrActive = isNotesPanelOpen || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel');
+
   const renderPopup = () => {
     switch (true) {
       case isStylePopupOpen:
@@ -468,7 +477,8 @@ const AnnotationPopup = () => {
         return <ShortCutKeysFor3DComponent />;
       default:
         return (
-          <FocusTrap locked={isOpen && !isRichTextPopupOpen && !isNotesPanelOpen && !isLinkModalOpen && !isFreeText}>
+          <FocusTrap
+            locked={isOpen && !isRichTextPopupOpen && !isNotesPanelOpenOrActive && !isLinkModalOpen && !isFreeText}>
             <div className="container">
               <CustomizablePopup dataElement="annotationPopup">
                 {showViewFileButton && (
