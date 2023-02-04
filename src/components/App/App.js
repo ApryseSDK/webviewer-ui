@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import core from 'core';
 import actions from 'actions';
-import { isIE11 } from 'helpers/device';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
@@ -190,19 +189,20 @@ const App = ({ removeEventHandlers }) => {
         <Accessibility />
 
         <Header />
-        <ToolsHeader />
+        <ToolsHeader/>
         <div className="content">
-          <LeftPanel />
-          {!isMultiViewerMode && <DocumentContainer />}
-          {!isIE11 && <MultiViewer/>}
+          <LeftPanel/>
+          {!isMultiViewerMode && <DocumentContainer/>}
+          {window?.ResizeObserver && <MultiViewer/>}
           <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
-            <SearchPanel />
+            <SearchPanel/>
           </RightPanel>
           <RightPanel dataElement="notesPanel" onResize={(width) => dispatch(actions.setNotesPanelWidth(width))}>
-            <NotesPanel />
+            <NotesPanel/>
           </RightPanel>
-          <RightPanel dataElement="redactionPanel" onResize={(width) => dispatch(actions.setRedactionPanelWidth(width))}>
-            <RedactionPanel />
+          <RightPanel dataElement="redactionPanel"
+            onResize={(width) => dispatch(actions.setRedactionPanelWidth(width))}>
+            <RedactionPanel/>
           </RightPanel>
           <RightPanel
             dataElement="wv3dPropertiesPanel"
