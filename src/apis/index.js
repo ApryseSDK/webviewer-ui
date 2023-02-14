@@ -10,6 +10,7 @@ import Theme from 'constants/theme';
 import RedactionSearchPatterns from 'constants/redactionSearchPatterns';
 import { languageEnum } from 'constants/languages';
 import addSearchListener from './addSearchListener';
+import setSaveAsHandler from './setSaveAsHandler';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
 import closeDocument from './closeDocument';
@@ -278,6 +279,7 @@ export default (store) => {
     Theme,
     RedactionSearchPatterns,
     addSearchListener,
+    setSaveAsHandler,
     addSortStrategy: addSortStrategy(store),
     annotationPopup: annotationPopup(store),
     closeDocument: closeDocument(store),

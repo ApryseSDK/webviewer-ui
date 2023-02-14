@@ -1,4 +1,5 @@
 import { saveAs } from 'file-saver';
+import { getSaveAsHandler } from 'helpers/saveAs';
 import core from 'core';
 import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
@@ -238,7 +239,12 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       } else {
         file = new File([arr], downloadName, { type: downloadType });
       }
-      saveAs(file, downloadName);
+      if (getSaveAsHandler() !== null) {
+        var handler = getSaveAsHandler();
+        handler(file, downloadName);
+      } else {
+        saveAs(file, downloadName);
+      }
       dispatch(actions.closeElement('loadingModal'));
       fireEvent(Events.FINISHED_SAVING_PDF);
       fireEvent(Events.FILE_DOWNLOADED);
