@@ -23,7 +23,8 @@ import { isIE } from 'helpers/device';
 
 import './LeftPanel.scss';
 import LeftPanelPageTabs from 'components/LeftPanelPageTabs';
-import DataElements from 'src/constants/dataElement';
+import DataElements from 'constants/dataElement';
+import { getElementHeightBasedOnHorizontalHeaders } from 'helpers/headers';
 
 const LeftPanel = () => {
   const isMobile = useMedia(
@@ -57,7 +58,8 @@ const LeftPanel = () => {
     bookmarks,
     isBookmarkPanelEnabled,
     isBookmarkIconShortcutVisible,
-    isMultiTabActive
+    isMultiTabActive,
+    featureFlags,
   ] = useSelector(
     (state) => [
       selectors.getCurrentToolbarGroup(state),
@@ -74,7 +76,8 @@ const LeftPanel = () => {
       selectors.getBookmarks(state),
       !selectors.isElementDisabled(state, DataElements.BOOKMARK_PANEL),
       selectors.isBookmarkIconShortcutVisible(state),
-      selectors.getIsMultiTab(state)
+      selectors.getIsMultiTab(state),
+      selectors.getFeatureFlags(state),
     ],
     shallowEqual,
   );
@@ -122,14 +125,26 @@ const LeftPanel = () => {
     }
   }, [isBookmarkPanelEnabled, isBookmarkIconShortcutVisible]);
 
+  // TODO: For whoever is refactoring the LeftPanel to make it generic, review if this is the best approach
+  // Once we move to the new UI we can remove the legacy stuff
+  const legacyToolsHeaderOpen = isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View';
+  const legacyAllHeadersHidden = !isHeaderOpen && !legacyToolsHeaderOpen;
+
+  const { modularHeader } = featureFlags;
+  const wrapperStyle = {};
+  // Calculating its height according to the existing horizontal modular headers
+  if (modularHeader) {
+    wrapperStyle['height'] = getElementHeightBasedOnHorizontalHeaders();
+  }
+
   return (
     <div
       className={classNames({
         Panel: true,
         LeftPanel: true,
         'closed': !isVisible,
-        'tools-header-open': isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View',
-        'tools-header-and-header-hidden': !isHeaderOpen && !isToolsHeaderOpen,
+        'tools-header-open': legacyToolsHeaderOpen,
+        'tools-header-and-header-hidden': legacyAllHeadersHidden,
         'thumbnail-panel-active': activePanel === 'thumbnailsPanel',
         'outlines-panel-active': activePanel === 'outlinesPanel',
         'multi-tab-active': isMultiTabActive
@@ -137,6 +152,7 @@ const LeftPanel = () => {
       onDrop={onDrop}
       onDragOver={onDragOver}
       data-element={DataElements.LEFT_PANEL}
+      style={wrapperStyle}
     >
       <div
         className="left-panel-container"
@@ -161,7 +177,7 @@ const LeftPanel = () => {
         <div className="left-panel-header">
           {isThumbnailSelectingPages ? <LeftPanelPageTabs /> : <LeftPanelTabs />}
         </div>
-        {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel/>}
+        {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel />}
         {activePanel === 'outlinesPanel' && <OutlinesPanel />}
         {activePanel === 'bookmarksPanel' && <BookmarksPanel />}
         {activePanel === 'layersPanel' && <LayersPanel />}

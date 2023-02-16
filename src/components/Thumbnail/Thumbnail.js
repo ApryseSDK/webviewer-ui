@@ -28,7 +28,7 @@ const Thumbnail = ({
   pageLabels = [],
   selectedPageIndexes,
   isThumbnailMultiselectEnabled,
-  isReaderMode,
+  isReaderModeOrReadOnly,
   dispatch,
   actions,
   isMobile,
@@ -159,7 +159,7 @@ const Thumbnail = ({
 
   const handleClick = (e) => {
     const checkboxToggled = e.target.type && e.target.type === 'checkbox';
-    if (isThumbnailMultiselectEnabled && !isReaderMode) {
+    if (isThumbnailMultiselectEnabled && !isReaderModeOrReadOnly) {
       const multiSelectionKeyPressed = e.ctrlKey || e.metaKey;
       const shiftKeyPressed = e.shiftKey;
       let updatedSelectedPages = [...selectedPageIndexes];

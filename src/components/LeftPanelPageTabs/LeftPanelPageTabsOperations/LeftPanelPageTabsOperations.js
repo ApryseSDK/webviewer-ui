@@ -2,9 +2,16 @@ import React from 'react';
 import Button from 'components/Button';
 import '../LeftPanelPageTabs/LeftPanelPageTabsContainer.scss';
 
-function LeftPanelPageTabsOperations({ onReplace, onExtractPages, onDeletePages }) {
+function LeftPanelPageTabsOperations({ onInsert, onReplace, onExtractPages, onDeletePages }) {
   return (
     <>
+      <Button
+        className={'button-hover'}
+        dataElement="thumbnailsControlInsert"
+        img="icon-page-insertion-insert"
+        onClick={onInsert}
+        title="action.insert"
+      />
       <Button
         className={'button-hover'}
         dataElement="thumbnailsControlReplace"

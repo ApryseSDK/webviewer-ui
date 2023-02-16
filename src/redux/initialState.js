@@ -21,6 +21,7 @@ import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
 import SignatureModes from 'constants/signatureModes';
+import { ShortcutKeys } from 'helpers/hotkeysManager';
 
 const { ToolNames } = window.Core.Tools;
 
@@ -81,8 +82,9 @@ export default {
       notesPanel: 293,
       redactionPanel: 330,
       textEditingPanel: 330,
-      wv3dPropertiesPanel: 330,
+      wv3dPropertiesPanel: 307,
       comparePanel: 330,
+      watermarkPanel: 330,
     },
     documentContainerWidth: null,
     documentContainerHeight: null,
@@ -537,6 +539,13 @@ export default {
           dataElement: 'contentEditButton',
           title: 'action.edit',
         },
+        {
+          type: 'toggleElementButton',
+          img: 'icon-watermark-panel',
+          element: DataElements.WATERMARK_PANEL,
+          dataElement: DataElements.WATERMARK_PANEL_TOGGLE,
+          title: 'component.watermarkPanel',
+        },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
       'toolbarGroup-EditText': [
@@ -690,6 +699,7 @@ export default {
       { dataElement: 'annotationRedactButton' },
       { dataElement: 'annotationCropButton' },
       { dataElement: 'annotationContentEditButton' },
+      { dataElement: 'annotationClearSignatureButton' },
       { dataElement: 'annotationGroupButton' },
       { dataElement: 'annotationUngroupButton' },
       { dataElement: 'formFieldEditButton' },
@@ -733,14 +743,10 @@ export default {
       { type: 'divider' },
       { dataElement: 'pageRotationControls' },
       { type: 'divider' },
-      { dataElement: 'pageInsertionControls' },
-      { type: 'divider' },
       { dataElement: 'pageManipulationControls' },
     ],
     multiPageManipulationControls: [
       { dataElement: 'leftPanelPageTabsRotate' },
-      { type: 'divider' },
-      { dataElement: 'leftPanelPageTabsInsert' },
       { type: 'divider' },
       { dataElement: 'leftPanelPageTabsOperations' },
       { type: 'divider' },
@@ -749,16 +755,12 @@ export default {
     multiPageManipulationControlsLarge: [
       { dataElement: 'leftPanelPageTabsRotate' },
       { type: 'divider' },
-      { dataElement: 'leftPanelPageTabsInsert' },
-      { type: 'divider' },
       { dataElement: 'leftPanelPageTabsOperations' },
       { type: 'divider' },
       { dataElement: 'leftPanelPageTabsMove' },
     ],
     multiPageManipulationControlsSmall: [
       { dataElement: 'leftPanelPageTabsRotateSmall' },
-      { type: 'divider' },
-      { dataElement: 'leftPanelPageTabsInsertSmall' },
       { type: 'divider' },
       { dataElement: 'leftPanelPageTabsMoreSmall' },
     ],
@@ -1849,8 +1851,7 @@ export default {
       settingsModal: DataElements.SETTINGS_GENERAL_BUTTON,
       savedSignatures: DataElements.SAVED_SIGNATURES_PANEL_BUTTON,
       openFileModal: 'urlInputPanelButton',
-      // TODO: uncomment when InsertPageModal is added
-      // insertPageModal: 'insertBlankPagePanelButton'
+      insertPageModal: 'insertBlankPagePanelButton'
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
@@ -1888,6 +1889,7 @@ export default {
     isReadOnly: getHashParameters('readonly', false),
     customModals: [],
     customPanels: [],
+    customFlxPanels: [],
     useEmbeddedPrint: false,
     pageLabels: [],
     selectedThumbnailPageIndexes: [],
@@ -1932,6 +1934,7 @@ export default {
     fonts: defaultFonts,
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
+    shouldShowApplyCropWarning: true,
     presetCropDimensions,
     presetNewPageDimensions,
     dateTimeFormats: defaultDateTimeFormats,
@@ -1982,7 +1985,19 @@ export default {
     notesPanelCustomEmptyPanel: null,
     replyAttachmentPreviewEnabled: true,
     savedSignatureTabEnabled: false,
-    replyAttachmentHandler: null
+    replyAttachmentHandler: null,
+    customSettings: [],
+    modularHeaders: [],
+    modularHeadersHeight: {
+      topHeaders: 40,
+      bottomHeaders: 40
+    },
+    modularHeadersWidth: {
+      rightHeader: 0,
+      leftHeader: 0
+    },
+    toolDefaultStyleUpdateFromAnnotationPopupEnabled: true,
+    shortcutKeyMap: { ...ShortcutKeys }
   },
   search: {
     value: '',
@@ -2049,7 +2064,9 @@ export default {
     disableMultiViewerComparison:
       getHashParameters('disableMultiViewerComparison', false) || !getHashParameters('pdfnet', false),
   },
-  featureFlags: {},
+  featureFlags: {
+    modularHeader: false,
+  },
   wv3dPropertiesPanel: {
     modelData: [],
     schema: {

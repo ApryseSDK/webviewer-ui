@@ -30,7 +30,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onLocationSelected = eventListeners.onLocationSelected(store, documentViewerKey);
   const onDotStampAnnotationAdded = eventListeners.onDotStampAnnotationAdded(dispatch, documentViewerKey);
   const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(documentViewerKey);
-  const onReadOnlyModeChanged = eventListeners.onReadOnlyModeChanged(store);
+  const onReadOnlyModeChanged = eventListeners.onReadOnlyModeChanged(dispatch, store);
   const onPageComplete = eventListeners.onPageComplete(store, documentViewerKey);
   const onFileAttachmentAnnotationAdded = eventListeners.onFileAttachmentAnnotationAdded();
   const onFileAttachmentDataAvailable = eventListeners.onFileAttachmentDataAvailable();
@@ -43,6 +43,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onImageContentAdded = eventListeners.onImageContentAdded(dispatch);
   const onInitialSaved = eventListeners.onInitialSaved(dispatch, store);
   const onInitialDeleted = eventListeners.onInitialDeleted(dispatch, store);
+  const onContentEditModeStarted = eventListeners.onContentEditModeStarted(dispatch);
+  const onContentEditModeEnded = eventListeners.onContentEditModeEnded(dispatch);
 
   return {
     addEventHandlers: () => {
@@ -50,6 +52,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('readOnlyModeChanged', onReadOnlyModeChanged, undefined, documentViewerKey);
         core.addEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded);
         core.addEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted);
+        core.addEventListener('contentEditModeStarted', onContentEditModeStarted);
+        core.addEventListener('contentEditModeEnded', onContentEditModeEnded);
         core.addEventListener('toolUpdated', onToolUpdated, undefined, documentViewerKey);
         core.addEventListener('toolModeUpdated', onToolModeUpdated, undefined, documentViewerKey);
         document.addEventListener('fullscreenchange', onFullScreenChange);
@@ -104,6 +108,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
       if (documentViewerKey === 1) {
         core.removeEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted, documentViewerKey);
         core.removeEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded, documentViewerKey);
+        core.removeEventListener('contentEditModeStarted', onContentEditModeStarted);
+        core.removeEventListener('contentEditModeEnded', onContentEditModeEnded);
         core.removeEventListener('toolUpdated', onToolUpdated, documentViewerKey);
         core.removeEventListener('toolModeUpdated', onToolModeUpdated, documentViewerKey);
         document.removeEventListener('fullscreenchange', onFullScreenChange);

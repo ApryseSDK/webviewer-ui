@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import Icon from 'components/Icon';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import actions from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import core from 'core';
+import useOnClickOutside from 'hooks/useOnClickOutside';
 
 const propTypes = {
   scales: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -112,56 +113,66 @@ const ScaleSelector = ({ scales = [], selectedScales = [], onScaleSelected, onAd
   // otherwise it is hard to debug as the open/close logic is in a CSS stylesheet and not super evident
   const [isDropDownOpen, setOpenDropDown] = useState(false);
   const toggleDropdown = () => {
-    setOpenDropDown(!isDropDownOpen);
+    setOpenDropDown((prevValue) => !prevValue);
   };
 
+  const selectorRef = useRef(null);
+
+  useOnClickOutside(selectorRef, () => {
+    setOpenDropDown(false);
+  });
+
   return (
-    <div className="scale-overlay-selector"
+    <div
+      className="scale-overlay-selector"
       data-element="scaleSelector"
       tabIndex={0}
       onClick={toggleDropdown}
-      onBlur={() => setOpenDropDown(false)}>
+      ref={selectorRef}
+    >
       <button className="scale-overlay-selection" data-element="scaleSelectorTitle">
         {title}
         <Icon className="scale-overlay-arrow" glyph="icon-chevron-down" />
       </button>
-      <ul className={classNames('scale-overlay-list', { 'visible': isDropDownOpen })} >
-        <li>
-          <div>{title}</div>
-          <Icon className="scale-overlay-arrow" glyph="icon-chevron-up" />
-        </li>
-        {scales.map((value) => (
-          <li key={value.toString()}>
-            <button
-              className="delete"
-              onMouseDown={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                openScaleDeletionModal(value.toString());
-              }}
-              disabled={scales.length <= 1}
-            >
-              <Icon glyph="icon-delete-line" />
-            </button>
-            <button
-              className={classNames({
-                options: true,
-                'option-selected': selectedScales.includes(value.toString()),
-              })}
-              onMouseDown={() => onScaleSelected(selectedScales, value.toString())}
-            >
-              {renderScale(value)}
-            </button>
-          </li>
-        ))}
-        {isMultipleScalesMode && (
+      {isDropDownOpen && (
+        <ul className={classNames('scale-overlay-list')} >
           <li>
-            <button onMouseDown={onAddingNewScale} className="add-new-scale">
-              {t('option.measurement.scaleOverlay.addNewScale')}
-            </button>
+            <div>{title}</div>
+            <Icon className="scale-overlay-arrow" glyph="icon-chevron-up" />
           </li>
-        )}
-      </ul>
+          {scales.map((value) => (
+            <li key={value.toString()}>
+              <button
+                className="delete"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  openScaleDeletionModal(value.toString());
+                }}
+                disabled={scales.length <= 1}
+              >
+                <Icon glyph="icon-delete-line" />
+              </button>
+              <button
+                className={classNames({
+                  options: true,
+                  'option-selected': selectedScales.includes(value.toString()),
+                })}
+                onMouseDown={() => onScaleSelected(selectedScales, value.toString())}
+              >
+                {renderScale(value)}
+              </button>
+            </li>
+          ))}
+          {isMultipleScalesMode && (
+            <li>
+              <button onMouseDown={onAddingNewScale} className="add-new-scale">
+                {t('option.measurement.scaleOverlay.addNewScale')}
+              </button>
+            </li>
+          )}
+        </ul>
+      )}
     </div>
   );
 };

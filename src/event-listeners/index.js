@@ -35,6 +35,8 @@ import onLayersUpdated from './onLayersUpdated';
 import onImageContentAdded from './onImageContentAdded';
 import onInitialSaved from './onInitialSaved';
 import onInitialDeleted from './onInitialDeleted';
+import onContentEditModeStarted from './onContentEditModeStarted';
+import onContentEditModeEnded from './onContentEditModeEnded';
 
 export {
   onSignatureSaved,
@@ -74,4 +76,6 @@ export {
   onImageContentAdded,
   onInitialSaved,
   onInitialDeleted,
+  onContentEditModeStarted,
+  onContentEditModeEnded,
 };

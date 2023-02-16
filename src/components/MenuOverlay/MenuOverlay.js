@@ -69,7 +69,7 @@ function MenuOverlay() {
 
   const handlePrintButtonClick = () => {
     closeMenuOverlay();
-    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap);
+    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled() });
   };
 
   const downloadDocument = () => {

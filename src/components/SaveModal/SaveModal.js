@@ -47,7 +47,7 @@ const SaveModal = () => {
   const [pageRange, setPageRange] = useState(PAGE_RANGES.ALL);
   const [specifiedPages, setSpecifiedPages] = useState();
   const [includeAnnotations, setIncludeAnnotations] = useState(true);
-  // const [includeComments, setIncludeComments] = useState(false);
+  const [includeComments, setIncludeComments] = useState(false);
   const [pageCount, setPageCount] = useState(1);
   const [errorText, setErrorText] = useState('');
 
@@ -98,7 +98,7 @@ const SaveModal = () => {
     }
   };
   const onIncludeAnnotationsChanged = () => setIncludeAnnotations(!includeAnnotations);
-  // const onIncludeCommentsChanged = () => setIncludeComments(!includeComments);
+  const onIncludeCommentsChanged = () => setIncludeComments(!includeComments);
   const clearError = () => setErrorText('');
   const onError = () => setErrorText(t('saveModal.pageError') + pageCount);
   const onSpecifiedPagesChanged = () => {
@@ -121,7 +121,7 @@ const SaveModal = () => {
 
     downloadPdf(dispatch, {
       includeAnnotations,
-      // includeComments,
+      includeComments,
       filename: filename || 'untitled',
       downloadType: filetype.extension,
       pages,
@@ -140,7 +140,7 @@ const SaveModal = () => {
           <div className='container'>
             <div className='header'>
               <div className='header-text' >{t('saveModal.saveAs')}</div>
-              <Button className='close-button' onClick={closeModal} img='ic_close_black_24px' title={t('saveModal.close')}/>
+              <Button className='close-button' onClick={closeModal} img='ic_close_black_24px' title='action.close' />
             </div>
             <div className='modal-body'>
               <div className='title'>{t('saveModal.general')}</div>
@@ -211,13 +211,12 @@ const SaveModal = () => {
                     label={t('saveModal.includeAnnotation')}
                     onChange={onIncludeAnnotationsChanged}
                   />
-                  {/* Temporarily commented out */}
-                  {/* <Choice */}
-                  {/*  checked={includeComments} */}
-                  {/*  name='include-comment-option' */}
-                  {/*  label={t('saveModal.includeComments')} */}
-                  {/*  onChange={onIncludeCommentsChanged} */}
-                  {/* /> */}
+                  <Choice
+                    checked={includeComments}
+                    name='include-comment-option'
+                    label={t('saveModal.includeComments')}
+                    onChange={onIncludeCommentsChanged}
+                  />
                 </div>
               </>)}
             </div>

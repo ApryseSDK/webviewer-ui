@@ -71,14 +71,14 @@
     "viewShortCutKeysFor3D": "Lihat Tombol Pintasan",
     "markAllRead": "tandai semua telah dibaca",
     "insertPage": "Penyisipan Halaman",
-    "insertBlankPageAbove": "Sisipkan halaman kosong di atas",
-    "insertBlankPageBelow": "Sisipkan halaman kosong di bawah",
+    "insert": "Memasukkan",
     "pageManipulation": "Manipulasi Halaman",
     "replace": "Mengganti",
     "setDestination": "Tetapkan Tujuan",
     "showLess": "tampilkan lebih sedikit",
     "showMore": "...lagi",
     "chooseFile": "Pilih file",
+    "browse": "Mencari berkas",
     "selectYourOption": "Pilih opsi Anda",
     "open": "Membuka",
     "deselectAll": "Batalkan Pilihan Semua",
@@ -94,7 +94,9 @@
     "viewFile": "Lihat file",
     "multiReplyAnnotations": "Membalas anotasi yang dipilih ({{count}})",
     "comparePages": "Bandingkan halaman",
-    "startComparison": "Mulai Perbandingan"
+    "startComparison": "Mulai Perbandingan",
+    "back": "Kembali",
+    "clearSignature": "Tanda tangan yang jelas"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -211,7 +213,8 @@
       "open": "Lihat Semua Anotasi",
       "close": "Tutup Semua Anotasi"
     },
-    "comparePanel": "Bandingkan Panel"
+    "comparePanel": "Bandingkan Panel",
+    "watermarkPanel": "Panel Tanda Air"
   },
   "message": {
     "toolsOverlayNoPresets": "Tidak Ada Preset",
@@ -269,7 +272,9 @@
     "embeddedFiles": "File Tertanam",
     "pageNum": "Nomor halaman",
     "viewBookmark": "Lihat Bookmark di Halaman",
-    "error": "Kesalahan"
+    "error": "Kesalahan",
+    "errorPageNumber": "Nomor halaman tidak valid. Batasnya adalah",
+    "errorLoadingDocument": "Ada masalah saat membaca dokumen ini dan beberapa halaman mungkin tidak ditampilkan. Ini menunjukkan dokumen mungkin rusak. Jumlah halaman total adalah {{totalPageCount}} dan jumlah halaman yang ditampilkan adalah {{displayedPageCount}}."
   },
   "option": {
     "type": {
@@ -375,7 +380,8 @@
       "qualityHigh": "Tinggi",
       "includeAnnotations": "Sertakan anotasi",
       "includeComments": "Sertakan komentar",
-      "printSettings": "Pengaturan Cetak"
+      "printSettings": "Pengaturan Cetak",
+      "printGrayscale": "Cetak Skala abu-abu"
     },
     "printInfo": {
       "author": "Pengarang",
@@ -425,11 +431,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Seret & Jatuhkan file Anda di sini",
+      "selectFile": "Pilih file Anda di sini",
       "or": "Atau",
+      "yourFiles": "File Anda",
       "chooseFile": "Pilih file",
       "localFile": "File Lokal",
       "pageReplaceInputLabel": "Ganti Halaman",
-      "pageReplaceInputFromSource": "dengan halaman"
+      "pageReplaceInputFromSource": "dengan halaman",
+      "warning": {
+        "title": "Keluar dari halaman ganti?",
+        "message": "Keluar akan membatalkan semua pilihan yang telah Anda buat sejauh ini. Apakah Anda yakin masih ingin keluar?"
+      }
     },
     "filterAnnotModal": {
       "color": "Warna",
@@ -598,12 +610,11 @@
     "settings": {
       "settings": "Pengaturan",
       "general": "Umum",
-      "keyboardShortcut": "Pintasan Keyboard",
-      "advancedSetting": "Pengaturan Lanjut",
       "language": "Bahasa",
       "theme": "Tema",
       "darkMode": "Mode gelap",
       "lightMode": "Mode cahaya",
+      "advancedSetting": "Pengaturan Lanjut",
       "viewing": "Melihat",
       "disableFadePageNavigationComponent": "Nonaktifkan Komponen Navigasi Halaman Pudar",
       "disableFadePageNavigationComponentDesc": "Selalu simpan Komponen Navigasi Halaman di layar. Perilaku default adalah memudarnya setelah periode tidak aktif tertentu.",
@@ -628,7 +639,52 @@
       "disablePageDeletionConfirmationModal": "Nonaktifkan Modal Konfirmasi Penghapusan Halaman",
       "disablePageDeletionConfirmationModalDesc": "Nonaktifkan modal konfirmasi saat menghapus halaman dari tampilan thumbnail",
       "disableMultiselect": "Nonaktifkan Multipilih",
-      "disableMultiselectDesc": "Nonaktifkan multi pilih di panel gambar mini kiri"
+      "disableMultiselectDesc": "Nonaktifkan multi pilih di panel gambar mini kiri",
+      "miscellaneous": "Aneka ragam",
+      "keyboardShortcut": "Pintasan Keyboard",
+      "command": "Memerintah",
+      "description": "Keterangan",
+      "action": "Tindakan",
+      "rotateDocumentClockwise": "Putar dokumen searah jarum jam",
+      "rotateDocumentCounterclockwise": "Putar dokumen berlawanan arah jarum jam",
+      "copyText": "Salin teks atau anotasi yang dipilih",
+      "pasteText": "Tempel teks atau anotasi",
+      "undoChange": "Urungkan perubahan anotasi",
+      "redoChange": "Ulangi perubahan anotasi",
+      "openFile": "Buka pemilih file",
+      "openSearch": "Buka hamparan pencarian",
+      "zoomIn": "Perbesar",
+      "zoomOut": "Perkecil",
+      "fitScreenWidth": "Sesuaikan dokumen dengan lebar layar di layar kecil (<640px), jika tidak sesuaikan dengan ukuran aslinya",
+      "print": "Mencetak",
+      "bookmarkOpenPanel": "Tandai halaman dengan cepat dan buka panel bookmark",
+      "goToPreviousPage": "Pergi ke halaman sebelumnya",
+      "goToNextPage": "Pergi ke halaman berikutnya",
+      "goToPreviousPageArrowUp": "Buka halaman sebelumnya dalam mode tata letak tunggal (ArrowUp)",
+      "goToNextPageArrowDown": "Buka halaman berikutnya dalam mode tata letak tunggal (Panah Bawah)",
+      "holdSwitchPan": "Tahan untuk beralih ke mode Pan dan lepaskan untuk kembali ke alat sebelumnya",
+      "selectAnnotationEdit": "Pilih alat AnnotationEdit",
+      "selectPan": "Pilih alat Pan",
+      "selectCreateArrowTool": "Pilih alat AnnotationCreateArrow",
+      "selectCreateCalloutTool": "Pilih alat AnnotationCreateCallout",
+      "selectEraserTool": "Pilih alat AnnotationEraser",
+      "selectCreateFreeHandTool": "Pilih alat AnnotationCreateFreeHand",
+      "selectCreateStampTool": "Pilih alat AnnotationCreateStamp",
+      "selectCreateLineTool": "Pilih alat AnnotationCreateLine",
+      "selectCreateStickyTool": "Pilih alat AnnotationCreateSticky",
+      "selectCreateEllipseTool": "Pilih alat AnnotationCreateEllipse",
+      "selectCreateRectangleTool": "Pilih alat AnnotationCreateRectangle",
+      "selectCreateRubberStampTool": "Pilih alat AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "Pilih alat AnnotationCreateFreeText",
+      "openSignatureModal": "Buka modal tanda tangan atau overlay",
+      "selectCreateTextSquigglyTool": "Pilih alat AnnotationCreateTextSquiggly",
+      "selectCreateTextHighlightTool": "Pilih alat AnnotationCreateTextHighlight",
+      "selectCreateTextStrikeoutTool": "Pilih alat AnnotationCreateTextStrikeout",
+      "selectCreateTextUnderlineTool": "Pilih alat AnnotationCreateTextUnderline",
+      "editKeyboardShorcut": "Edit Pintasan Keyboard",
+      "setShorcut": "Setel Pintasan",
+      "pressKeyToSet": "Tekan tombol atau tombol untuk mengatur pintasan baru.",
+      "shortcutAlreadyExists": "Pintasan keyboard di atas sudah ada."
     }
   },
   "warning": {
@@ -880,13 +936,16 @@
     "certifier": "menyatakan",
     "certified": "bersertifikat",
     "Certified": "bersertifikat",
+    "Certification": "Sertifikasi",
     "signer": "tanda",
     "signed": "tertanda",
     "Signed": "Tertanda",
+    "Signature": "Tanda tangan",
     "by": "oleh",
     "on": "di",
     "disallowedChange": "Perubahan yang Tidak Diizinkan: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Bidang tanda tangan yang tidak ditandatangani: {{fieldName}}",
+    "signatureProperties": "Properti Tanda Tangan",
     "trustVerification": {
       "current": "Waktu verifikasi yang digunakan adalah waktu saat ini",
       "signing": "Waktu verifikasi adalah dari jam di komputer penanda tangan",
@@ -937,6 +996,10 @@
       "noSignatureFields": "Dokumen ini tidak memiliki bidang tanda tangan",
       "certificateDownloadError": "Terjadi kesalahan saat mencoba mengunduh sertifikat tepercaya",
       "localCertificateError": "Ada beberapa masalah dengan membaca sertifikat lokal"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} valid.",
+      "failed": "{{verificationType}} gagal."
     }
   },
   "cropPopUp": {
@@ -991,6 +1054,13 @@
     "miscValuesHeader": "Semua",
     "emptyPanelMessage": "Pilih elemen untuk melihat propertinya."
   },
+  "watermarkPanel": {
+    "textWatermark": "Tanda Air Teks",
+    "uploadImage": "Unggah Gambar",
+    "browse": "Jelajahi",
+    "watermarkOptions": "Opsi Tanda Air",
+    "watermarks": "Tanda air"
+  },
   "languageModal": {
     "selectLanguage": "Pilih bahasa"
   },
@@ -1008,6 +1078,7 @@
     "pageLocations": {
       "header": "Lokasi Halaman",
       "specify": "Tentukan Halaman",
+      "specifyLocation": "Tentukan Lokasi Halaman",
       "amount": "Jumlah Halaman",
       "total": "Total",
       "pages": "halaman"
@@ -1020,13 +1091,20 @@
         "halfLetter": "Setengah huruf",
         "juniorLegal": "Hukum junior",
         "custom": "Kebiasaan"
-      }
+      },
+      "units": "Satuan"
     },
     "browse": "Mencari berkas",
     "fileSelected": {
       "title": "Pilih Halaman untuk Ditambah"
     },
-    "button": "Tambahkan Halaman"
+    "button": "Tambahkan Halaman",
+    "selectPages": "Pilih Halaman untuk Ditambah",
+    "page": "Halaman",
+    "warning": {
+      "title": "Keluar, sisipkan halaman baru?",
+      "message": "Keluar akan membatalkan semua pilihan yang telah Anda buat sejauh ini. Apakah Anda yakin masih ingin keluar?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Seret dan Jatuhkan file Anda di sini untuk membandingkan",
@@ -1042,7 +1120,11 @@
       "change": "Mengubah",
       "old": "Tua",
       "new": "Baru",
-      "page": "Halaman"
+      "page": "Halaman",
+      "textContent": "Konten Teks",
+      "delete": "menghapus",
+      "insert": "menyisipkan",
+      "edit": "sunting"
     }
   },
   "saveModal": {

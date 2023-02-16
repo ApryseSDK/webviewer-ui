@@ -6,14 +6,17 @@
     overflow-y: unset;
     width: 600px;
   }
+
   .image-signature {
     height: 240px !important;
     width: 100%;
   }
+
   .error {
     color: red;
     margin: 5px;
   }
+
   .extension-dropdown {
     padding: 0 16px;
     display: flex;
@@ -26,6 +29,7 @@
       font-weight: 700;
       order: 1;
     }
+
     .Dropdown__wrapper {
       order: 2;
       width: 100%;

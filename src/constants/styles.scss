@@ -9,6 +9,14 @@ $right-panel-width: 293px;
 $left-panel-width: 219px;
 $left-panel-width: var(--left-panel-width);
 $left-panel-header-margin-left: 16px;
+$left-header-width: 41px;
+$right-header-width: 41px;
+
+// Export so they can be used in JS file and we have a single source of truth
+:export {
+  LEFT_HEADER_WIDTH: $left-header-width;
+  RIGHT_HEADER_WIDTH: $right-header-width;
+}
 
 // Font
 $font-family: sans-serif;
@@ -102,7 +110,9 @@ $light-gray: #e7ebee;
 }
 
 @mixin ie11 {
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+
+  @media all and (-ms-high-contrast: none),
+  (-ms-high-contrast: active) {
     @content;
   }
 }
@@ -191,10 +201,11 @@ $light-gray: #e7ebee;
 @mixin panel-height-fix {
 
   height: calc(100% - 40px);
+
   &.tools-header-open {
     height: calc(100% - 80px);
   }
-  
+
   &.multi-tab-active {
     height: calc(100% - 120px);
 
@@ -205,9 +216,11 @@ $light-gray: #e7ebee;
 
   @include desktop {
     height: calc(100% - 40px);
+
     &.tools-header-open {
       height: calc(100% - 74px); // minus the height of both headers;
     }
+
     &.multi-tab-active {
       height: calc(100% - 120px); // minus the height of both headers and of the tabs;
     }

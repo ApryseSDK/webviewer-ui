@@ -29,20 +29,19 @@ describe('PageManipulationOverlay', () => {
       }).not.toThrow();
     });
 
-    it('Renders as a default 9 rows for each of the operations currently supported in the overlay', () => {
+    it('Renders as a default 8 rows for each of the operations currently supported in the overlay', () => {
       /**
        * - Rotate Clockwise
        * - Rotate CounterClockwise
-       * - Insert page above
-       * - Insert page below
-       * - Replace Page// NOT SUPPORTED RIGHT NOW
+       * - Insert
+       * - Replace Page
        * - Extract page
        * - Delete Page
        * - Move Page to top
        * - Move Page to bottom
        */
 
-      const supportedOperations = 9;
+      const supportedOperations = 8;
 
       const { container } = render(
         <TestPageManipulationOverlay {...basicProps} />
@@ -55,7 +54,7 @@ describe('PageManipulationOverlay', () => {
       const testProps = {
         pageNumbers: [],
         pageManipulationOverlayItems: [
-          { dataElement: 'pageInsertionControls' },
+          { dataElement: 'pageRotationControls' },
           { type: 'divider' },
           { dataElement: 'pageManipulationControls' },
         ]
@@ -63,7 +62,8 @@ describe('PageManipulationOverlay', () => {
       const { container } = render(
         <TestPageManipulationOverlay {...testProps} />
       );
-      expect(container.querySelectorAll('.row')).toHaveLength(5);
+      // Two rows for rotate left/rigt, and four rows for page manipulation operations available by default
+      expect(container.querySelectorAll('.row')).toHaveLength(6);
     });
 
     it('I can customize the page manipulation overlay with custom operations', () => {

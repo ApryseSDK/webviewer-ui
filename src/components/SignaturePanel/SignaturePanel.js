@@ -25,10 +25,16 @@ const SignaturePanel = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const [certificateErrorMessage, setCertificateErrorMessage] = useState('');
   const [document, setDocument] = useState(core.getDocument());
-  const [isDisabled, certificate, trustLists] = useSelector((state) => [
+  const [
+    isDisabled,
+    certificate,
+    trustLists,
+    currentLanguage
+  ] = useSelector((state) => [
     selectors.isElementDisabled(state, 'signaturePanel'),
     selectors.getCertificates(state),
     selectors.getTrustLists(state),
+    selectors.getCurrentLanguage(state)
   ]);
   const [translate] = useTranslation();
 
@@ -58,7 +64,7 @@ const SignaturePanel = () => {
     // document
     if (document) {
       setShowSpinner(true);
-      setVerificationResult(certificate, trustLists, dispatch)
+      setVerificationResult(document, certificate, trustLists, currentLanguage, dispatch)
         .then(async (verificationResult) => {
           // We need to wait for the annotationsLoaded event, otherwise the
           // Field will not exist in the document
@@ -78,7 +84,7 @@ const SignaturePanel = () => {
     } else {
       setShowSpinner(true);
     }
-  }, [certificate, document, dispatch]);
+  }, [certificate, document, dispatch, currentLanguage]);
 
   if (isDisabled) {
     return null;
@@ -92,10 +98,8 @@ const SignaturePanel = () => {
   const renderLoadingOrErrors = () => {
     let result;
     if (showSpinner) {
-      result = <Spinner/>;
-    } else if (
-      certificateErrorMessage === 'Error reading the local certificate'
-    ) {
+      result = <Spinner />;
+    } else if (certificateErrorMessage === 'Error reading the local certificate') {
       result = translate('digitalSignatureVerification.panelMessages.localCertificateError');
     } else if (certificateErrorMessage === 'Download Failed') {
       result = translate('digitalSignatureVerification.panelMessages.certificateDownloadError');

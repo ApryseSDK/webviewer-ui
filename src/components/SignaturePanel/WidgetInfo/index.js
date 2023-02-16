@@ -1,10 +1,6 @@
-import WidgetInfo, {
-  renderPermissionStatus,
-  renderVerificationStatus,
-} from './WidgetInfo';
+import WidgetInfo, { renderPermissionStatus } from './WidgetInfo';
 
 export default WidgetInfo;
 export {
-  renderPermissionStatus,
-  renderVerificationStatus,
+  renderPermissionStatus
 };

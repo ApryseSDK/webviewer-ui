@@ -13,6 +13,10 @@ WebViewer(...)
   });
  */
 export default async (signatureWidget, signature) => {
+  if (signatureWidget['fieldFlags'].get('ReadOnly')) {
+    throw new Error('Cannot sign READ ONLY signature widget');
+  }
+
   const annotationManager = core.getAnnotationManager();
   const signatureTool = core.getTool('AnnotationCreateSignature');
 

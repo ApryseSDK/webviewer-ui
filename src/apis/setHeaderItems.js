@@ -220,10 +220,12 @@ const Header = {
       console.warn('Argument must be empty, a number, a string or an array');
     }
 
-    if (index) {
+    if (index !== undefined && index !== -1) {
       this.headers[this.headerGroup].splice(index, 1);
       this._resetIndex();
     }
+
+    return this;
   },
   /**
    * Removes the first button in the header.

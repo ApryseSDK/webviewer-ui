@@ -11,10 +11,11 @@ import useMedia from '../../hooks/useMedia';
 
 function DocumentCropPopupContainer() {
   const cropCreateTool = core.getTool(window.Core.Tools.ToolNames['CROP']);
-  const [isOpen, isInDesktopOnlyMode, presetCropDimensions] = useSelector((state) => [
+  const [isOpen, isInDesktopOnlyMode, shouldShowApplyCropWarning, presetCropDimensions] = useSelector((state) => [
     selectors.getActiveToolName(state) === window.Core.Tools.ToolNames['CROP'] &&
       selectors.isElementOpen(state, 'documentCropPopup'),
     selectors.isInDesktopOnlyMode(state),
+    selectors.shouldShowApplyCropWarning(state),
     selectors.getPresetCropDimensions(state),
   ]);
   const dispatch = useDispatch();
@@ -39,8 +40,16 @@ function DocumentCropPopupContainer() {
         reenableHeader();
       }
     };
+
+    const handleCropModeChange = (newMode) => {
+      setCropMode(newMode);
+    };
+
+    cropCreateTool.addEventListener('cropModeChanged', handleCropModeChange);
     core.addEventListener('toolModeUpdated', handleToolModeChange);
+
     return () => {
+      cropCreateTool.removeEventListener('cropModeChanged', handleCropModeChange);
       core.removeEventListener('toolModeUpdated', handleToolModeChange);
     };
   });
@@ -230,6 +239,7 @@ function DocumentCropPopupContainer() {
     getCurrentPage,
     selectedPages,
     onSelectedPagesChange,
+    shouldShowApplyCropWarning,
     presetCropDimensions,
   };
 

@@ -131,8 +131,9 @@ const RichTextPopup = () => {
     if (typeof format.color === 'string') {
       format.color = new window.Annotations.Color(format.color);
     } else if (Array.isArray(format.color)) {
-      // the selection contains multiple color, so we set the current color to null
-      format.color = null;
+      // the selection contains multiple color, so we set the current color to the last selected color
+      const lastSelectedColor = new window.Annotations.Color(format.color[format.color.length - 1]);
+      format.color = lastSelectedColor;
     } else if (!format.color) {
       format.color = annotationRef.current.TextColor;
     }

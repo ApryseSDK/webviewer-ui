@@ -1,6 +1,6 @@
 /**
- * An  instance of PageManipulationsOverlay that can be used to edit the items included in the overlay
- * @name UI.pageManipulationsOverlay
+ * An  instance of PageManipulationOverlay that can be used to edit the items included in the overlay
+ * @name UI.pageManipulationOverlay
  * @implements {UI.PageManipulationOverlay}
  * @type {UI.PageManipulationOverlay}
  * @example
@@ -47,7 +47,7 @@ const PageManipulationOverlayAPI = {
    * of operations.
    * @method UI.PageManipulationOverlay#add
    * @param {Array.<UI.PageManipulationOverlay.PageManipulationSection>} PageManipulationSection Array of sections to be added, each with its individual operations. See example below.
-   * @param {('pageRotationControls' | 'pageInsertionControls' | 'pageManipulationControls')} [dataElementToInsertAfter] An optional string that determines where in the overlay the new section will be added. If not included, the new page manipulation section will be added at the top.
+   * @param {('pageRotationControls' | 'pageManipulationControls')} [dataElementToInsertAfter] An optional string that determines where in the overlay the new section will be added. If not included, the new page manipulation section will be added at the top.
    * You can call {@link UI.PageManipulationOverlay#getItems getItems} to get existing items and their dataElements.
    * @returns {UI.PageManipulationOverlay} The instance itself
    * @example

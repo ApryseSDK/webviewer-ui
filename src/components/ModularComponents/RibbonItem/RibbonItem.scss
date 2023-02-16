@@ -1,0 +1,25 @@
+.RibbonItem {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  margin: 0 22px;
+  cursor: pointer;
+  color: var(--faded-text);
+  white-space: nowrap;
+
+  .Button {
+    width: 100%;
+    column-gap: 8px;
+    color: var(--faded-text);
+    &:hover {
+      background-color: transparent;
+    }
+    &.active {
+      color: var(--ribbon-active-color);
+      background-color: transparent;
+      .Icon {
+        color: var(--ribbon-active-color);
+      }
+    }
+  }
+}

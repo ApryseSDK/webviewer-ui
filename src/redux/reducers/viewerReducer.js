@@ -32,6 +32,14 @@ export default (initialState) => (state = initialState, action) => {
           comparePanel: payload.width,
         }
       };
+    case 'SET_WATERMARK_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          watermarkPanel: payload.width,
+        }
+      };
     case 'SET_COMPARISON_OVERLAY_ENABLED':
       return {
         ...state,
@@ -46,6 +54,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isMultiViewerMode: payload.isMultiViewerMode,
+      };
+    case 'SHOW_APPLY_CROP_WARNING':
+      return {
+        ...state,
+        shouldShowApplyCropWarning: payload.shouldShowApplyCropWarning,
       };
     case 'SET_PRESET_CROP_DIMENSIONS':
       return {
@@ -374,7 +387,7 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_CUSTOM_HEADERS_ADDITIONAL_PROPERTIES':
       return {
         ...state,
-        customHeadersAdditionalProperties: { ...state.headers, [payload.customHeader]: payload.additionalProperties },
+        customHeadersAdditionalProperties: { ...state.customHeadersAdditionalProperties, [payload.customHeader]: payload.additionalProperties },
       };
     case 'SET_POPUP_ITEMS':
       return {
@@ -443,6 +456,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         customPanels: [...state.customPanels, payload.newPanel],
+      };
+    case 'ADD_PANEL':
+      return {
+        ...state,
+        customFlxPanels: [...state.customFlxPanels, payload.newPanel],
       };
     case 'USE_EMBEDDED_PRINT':
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
@@ -536,6 +554,40 @@ export default (initialState) => (state = initialState, action) => {
         customModals: [...existingDataElementFiltered, payload],
       };
     }
+    case 'ADD_MODULAR_HEADERS':
+      return { ...state, modularHeaders: state.modularHeaders.concat(payload) };
+    case 'SET_MODULAR_HEADERS':
+      return { ...state, modularHeaders: payload };
+    case 'UPDATE_MODULAR_HEADERS': {
+      const { dataElement, property, value } = payload;
+      const updatedModularHeaders = state.modularHeaders.map((header) => {
+        if (header.options.dataElement === dataElement) {
+          return {
+            ...header,
+            options: {
+              ...header.options,
+              [property]: value,
+            }
+          };
+        }
+        return header;
+      });
+      return { ...state, modularHeaders: updatedModularHeaders };
+    }
+    case 'SET_RIGHT_HEADER_WIDTH':
+      return { ...state,
+        modularHeadersWidth: {
+          ...state.modularHeadersWidth,
+          rightHeader: payload,
+        }
+      };
+    case 'SET_LEFT_HEADER_WIDTH':
+      return { ...state,
+        modularHeadersWidth: {
+          ...state.modularHeadersWidth,
+          leftHeader: payload,
+        }
+      };
     case 'SET_MOUSE_WHEEL_ZOOM':
       return { ...state, enableMouseWheelZoom: payload.enableMouseWheelZoom };
     case 'SET_ENABLE_SNAP_MODE':
@@ -745,6 +797,12 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, replyAttachmentPreviewEnabled: payload.replyAttachmentPreviewEnabled };
     case 'SET_REPLY_ATTACHMENT_HANDLER':
       return { ...state, replyAttachmentHandler: payload.replyAttachmentHandler };
+    case 'SET_CUSTOM_SETTINGS':
+      return { ...state, customSettings: payload };
+    case 'SET_TOOL_DEFAULT_STYLE_UPDATE_FROM_ANNOTATION_POPUP_ENABLED':
+      return { ...state, toolDefaultStyleUpdateFromAnnotationPopupEnabled: payload };
+    case 'SET_SHORTCUT_KEY_MAP':
+      return { ...state, shortcutKeyMap: payload };
     default:
       return state;
   }

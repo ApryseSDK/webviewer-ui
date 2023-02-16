@@ -6,6 +6,18 @@ import { disableElements, enableElements } from 'actions/internalActions';
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
+import { getAllPanels } from 'helpers/getElements';
+import { getCustomFlxPanels } from 'selectors/exposedSelectors';
+
+export const disableApplyCropWarningModal = () => ({
+  type: 'SHOW_APPLY_CROP_WARNING',
+  payload: { shouldShowApplyCropWarning: false },
+});
+
+export const enableApplyCropWarningModal = () => ({
+  type: 'SHOW_APPLY_CROP_WARNING',
+  payload: { shouldShowApplyCropWarning: true },
+});
 
 export const setPresetCropDimensions = (presetCropDimensions) => ({
   type: 'SET_PRESET_CROP_DIMENSIONS',
@@ -263,6 +275,10 @@ export const setTextEditingPanelWidth = (width) => ({
   type: 'SET_TEXT_EDITING_PANEL_WIDTH',
   payload: { width },
 });
+export const setWatermarkPanelWidth = (width) => ({
+  type: 'SET_WATERMARK_PANEL_WIDTH',
+  payload: { width },
+});
 export const setWv3dPropertiesPanelWidth = (width) => ({
   type: 'SET_WV3D_PROPERTIES_PANEL_WIDTH',
   payload: { width },
@@ -284,6 +300,19 @@ export const setDocumentContainerHeight = (height) => ({
   payload: { height },
 });
 
+export const setGapBetweenHeaderItems = (dataElement, gap) => updateHeaderProperty(dataElement, 'gap', gap);
+
+export const setHeaderAlignment = (dataElement, alignment) => updateHeaderProperty(dataElement, 'alignment', alignment);
+
+const updateHeaderProperty = (dataElement, property, value) => ({
+  type: 'UPDATE_MODULAR_HEADERS',
+  payload: {
+    dataElement,
+    property,
+    value,
+  }
+});
+
 export const enableAllElements = () => ({
   type: 'ENABLE_ALL_ELEMENTS',
   payload: {},
@@ -301,6 +330,13 @@ export const openElement = (dataElement) => (dispatch, getState) => {
     return;
   }
 
+  const isFlxPanel = state.viewer.customFlxPanels.find((item) => dataElement === item.dataElement);
+  if (isFlxPanel) {
+    const keys = ['leftPanel'];
+    getAllPanels(isFlxPanel.location).forEach((item) => keys.push(item.dataset.element));
+    dispatch(closeElements(keys));
+  }
+
   if (isDataElementLeftPanel(dataElement, state)) {
     if (!isLeftPanelOpen) {
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
@@ -316,6 +352,12 @@ export const openElement = (dataElement) => (dispatch, getState) => {
         element: state.viewer.activeLeftPanel,
         isVisible: true,
       });
+    }
+
+    if (dataElement === 'leftPanel') {
+      const panels = getCustomFlxPanels(state, 'left');
+      const keys = panels.map((item) => item.dataElement);
+      dispatch(closeElements(keys));
     }
   }
 };
@@ -372,7 +414,7 @@ export const closeElements = (dataElements) => (dispatch) => {
   }
 };
 
-const rightPanelList = ['searchPanel', 'notesPanel', 'comparePanel', 'redactionPanel', 'wv3dPropertiesPanel', 'textEditingPanel'];
+const rightPanelList = ['searchPanel', 'notesPanel', 'comparePanel', 'redactionPanel', 'wv3dPropertiesPanel', 'textEditingPanel', 'watermarkPanel'];
 export const toggleElement = (dataElement) => (dispatch, getState) => {
   const state = getState();
 
@@ -402,7 +444,22 @@ export const addCustomModal = (modalOptions) => ({
   type: 'ADD_CUSTOM_MODAL',
   payload: modalOptions,
 });
-
+export const addModularHeaders = (headersList) => ({
+  type: 'ADD_MODULAR_HEADERS',
+  payload: headersList
+});
+export const updateModularHeaders = (modularHeaders) => ({
+  type: 'SET_MODULAR_HEADERS',
+  payload: modularHeaders
+});
+export const setRightHeaderWidth = (width) => ({
+  type: 'SET_RIGHT_HEADER_WIDTH',
+  payload: width
+});
+export const setLeftHeaderWidth = (width) => ({
+  type: 'SET_LEFT_HEADER_WIDTH',
+  payload: width
+});
 export const setActiveHeaderGroup = (headerGroup) => ({
   type: 'SET_ACTIVE_HEADER_GROUP',
   payload: { headerGroup },
@@ -460,6 +517,12 @@ export const setCustomPanel = (newPanel) => ({
   type: 'SET_CUSTOM_PANEL',
   payload: { newPanel },
 });
+
+export const addPanel = (newPanel) => ({
+  type: 'ADD_PANEL',
+  payload: { newPanel },
+});
+
 export const setPageLabels = (pageLabels) => (dispatch) => {
   if (pageLabels.length !== core.getTotalPages()) {
     console.warn('Number of page labels do not match with the total pages.');
@@ -695,4 +758,14 @@ export const setReplyAttachmentPreviewEnabled = (replyAttachmentPreviewEnabled) 
 export const setReplyAttachmentHandler = (replyAttachmentHandler) => ({
   type: 'SET_REPLY_ATTACHMENT_HANDLER',
   payload: { replyAttachmentHandler }
+});
+
+export const setCustomSettings = (customSettings) => ({
+  type: 'SET_CUSTOM_SETTINGS',
+  payload: customSettings
+});
+
+export const setToolDefaultStyleUpdateFromAnnotationPopupEnabled = (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) => ({
+  type: 'SET_TOOL_DEFAULT_STYLE_UPDATE_FROM_ANNOTATION_POPUP_ENABLED',
+  payload: isToolDefaultStyleUpdateFromAnnotationPopupEnabled
 });

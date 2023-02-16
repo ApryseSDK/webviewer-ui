@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Input } from '@pdftron/webviewer-react-toolkit';
 import Icon from 'components/Icon';
+import classNames from 'classnames';
 
-const IncrementNumberInput = ({ min, onChange, value, fillWidth }) => {
+const IncrementNumberInput = ({ className, min, onChange, value, fillWidth }) => {
   const [number, setNumber] = useState(value);
 
   const incrementNumber = () => {
@@ -21,7 +22,10 @@ const IncrementNumberInput = ({ min, onChange, value, fillWidth }) => {
   };
 
   return (
-    <div className="increment-number-input">
+    <div className={classNames({
+      incrementNumberInput: true,
+      [className]: !!className,
+    })}>
       <Input type="number" min={min} onChange={handleChange} value={number} fillWidth={fillWidth} />
       <div className="increment-buttons">
         <button className="increment-arrow-button" onClick={incrementNumber}>

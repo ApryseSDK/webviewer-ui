@@ -6,6 +6,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 import Icon from 'components/Icon';
 import SignatureModes from 'constants/signatureModes';
+
 import './SignatureStylePopup.scss';
 
 const SignatureAddBtn = ({ t, disabled }) => {
@@ -31,7 +32,7 @@ const SignatureAddBtn = ({ t, disabled }) => {
       onClick={openSignatureModal}
     >
       <Icon className="signature-button-icon" glyph={disabled ? 'icon-signature-plus-disabled' : 'icon-signature-plus-sign'} />
-      {buttonText}
+      <div className="btn-text" title={buttonText}>{buttonText}</div>
     </button>
   );
 };

@@ -6,11 +6,9 @@ import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import core from 'core';
 import actions from 'actions';
-import { isIE11 } from 'helpers/device';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
-import ToolsHeader from 'components/Header/ToolsHeader';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
@@ -62,16 +60,25 @@ import MultiViewer from 'components/MultiViewer';
 import SettingsModal from 'components/SettingsModal';
 import ComparePanel from 'components/MultiViewer/ComparePanel';
 import SaveModal from 'components/SaveModal';
-
-// TODO: uncomment when InsertPageModal is added
-// import InsertPageModal from 'components/InsertPageModal';
-
+import WatermarkPanel from 'components/WatermarkPanel';
+import InsertPageModal from 'components/InsertPageModal';
+import CustomElement from 'components/CustomElement';
+import Panel from 'components/Panel';
+import LeftHeader from 'components/LeftHeader';
+import RightHeader from 'components/RightHeader';
+import BottomHeader from 'components/BottomHeader';
+import TopHeader from 'components/TopHeader';
+import GenericOutlinesPanel from 'components/GenericOutlinesPanel';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
 import { prepareMultiTab } from 'helpers/TabManager';
+import hotkeysManager from 'helpers/hotkeysManager';
+import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
+import setLanguage from 'src/apis/setLanguage';
+import { panelNames } from 'constants/panel';
 
 import './App.scss';
 
@@ -87,9 +94,10 @@ const App = ({ removeEventHandlers }) => {
   const dispatch = useDispatch();
   let timeoutReturn;
 
-  const [isInDesktopOnlyMode, isMultiViewerMode] = useSelector((state) => [
+  const [isInDesktopOnlyMode, isMultiViewerMode, customFlxPanels] = useSelector((state) => [
     selectors.isInDesktopOnlyMode(state),
     selectors.isMultiViewerMode(state),
+    selectors.getCustomFlxPanels(state),
   ]);
 
   useEffect(() => {
@@ -184,17 +192,46 @@ const App = ({ removeEventHandlers }) => {
     tabletBreakpoint.addListener(onBreakpoint);
   }, []);
 
+  // These need to be done here to wait for the persisted values loaded in redux
+  useEffect(() => {
+    setLanguage(store)(store.getState().viewer.currentLanguage);
+    hotkeysManager.initialize(store);
+    setDefaultDisabledElements(store);
+  }, []);
+
+  const panels = customFlxPanels.map((panel, index) => {
+    return (
+      panel.render && (
+        <Panel key={index} dataElement={panel.dataElement} location={panel.location}>
+          {Object.values(panelNames).includes(panel.render) ? (
+            panel.render === panelNames.OUTLINE && <GenericOutlinesPanel />
+          ) : (
+            <CustomElement
+              key={panel.dataElement || index}
+              className={`Panel ${panel.dataElement}`}
+              display={panel.dataElement}
+              dataElement={panel.dataElement}
+              render={panel.render}
+            />
+          )}
+        </Panel>
+      )
+    );
+  });
+
   return (
     <React.Fragment>
       <div className={classNames({ 'App': true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
         <Accessibility />
-
         <Header />
-        <ToolsHeader />
+        <TopHeader />
         <div className="content">
+          <LeftHeader />
           <LeftPanel />
-          {!isMultiViewerMode && <DocumentContainer />}
-          {!isIE11 && <MultiViewer/>}
+          {panels}
+          {!isMultiViewerMode && <DocumentContainer/>}
+          {window?.ResizeObserver && <MultiViewer/>}
+          <RightHeader/>
           <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
           </RightPanel>
@@ -203,6 +240,9 @@ const App = ({ removeEventHandlers }) => {
           </RightPanel>
           <RightPanel dataElement="redactionPanel" onResize={(width) => dispatch(actions.setRedactionPanelWidth(width))}>
             <RedactionPanel />
+          </RightPanel>
+          <RightPanel dataElement="watermarkPanel" onResize={(width) => dispatch(actions.setWatermarkPanelWidth(width))}>
+            <WatermarkPanel />
           </RightPanel>
           <RightPanel
             dataElement="wv3dPropertiesPanel"
@@ -220,20 +260,26 @@ const App = ({ removeEventHandlers }) => {
           {isMultiViewerMode && <RightPanel dataElement="comparePanel" onResize={(width) => dispatch(actions.setComparePanelWidth(width))}>
             <ComparePanel />
           </RightPanel>}
+          <BottomHeader />
         </div>
-        <ContentEditLinkModal />
         <ViewControlsOverlay />
         <MenuOverlay />
         <ZoomOverlay />
         <AnnotationContentOverlay />
         <PageManipulationOverlay />
         <LeftPanelOverlayContainer />
+        <FormFieldIndicatorContainer />
 
         <AnnotationPopup />
         <FormFieldEditPopup />
         <TextPopup />
         <ContextMenuPopup />
         <RichTextPopup />
+        <AudioPlaybackPopup />
+        <DocumentCropPopup />
+
+        {/* Modals */}
+        <ContentEditLinkModal />
         <SignatureModal />
         <ScaleModal />
         <PrintModal />
@@ -251,15 +297,11 @@ const App = ({ removeEventHandlers }) => {
         <Model3DModal />
         <ColorPickerModal />
         <PageRedactionModal />
-        <AudioPlaybackPopup />
-        <DocumentCropPopup />
         {core.isFullPDFEnabled() && <SignatureValidationModal />}
-        <FormFieldIndicatorContainer />
         <OpenFileModal />
         <SettingsModal />
         <SaveModal />
-        {/* TODO: uncomment when InsertPageModal is added */}
-        {/* <InsertPageModal /> */}
+        <InsertPageModal />
       </div>
 
       <PrintHandler />

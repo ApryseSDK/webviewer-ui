@@ -23,6 +23,13 @@
     width: 90vw;
     margin: 0;
   }
+
+  &.signature-row-content .btn-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 130px;
+  }
 }
 
 .signature-row {

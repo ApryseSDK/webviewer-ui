@@ -96,13 +96,12 @@ export default class TabManager {
     const currentTab = tabs.find((tab) => tab.id === activeTab);
     const isEmptyPageOpen = selectors.isElementOpen(state, DataElements.MULTITABS_EMPTY_PAGE);
     this.prepareTabEventListeners();
-    if (currentTab) {
-      saveCurrentActiveTabState && await currentTab.saveCurrentActiveTabState(this.db);
-      core.closeDocument();
-    }
     const newTab = tabs.find((tab) => tab.id === id);
     if (!newTab) {
       return console.error(`Tab id not found: ${id}`);
+    }
+    if (currentTab) {
+      await core.getDocumentViewer().getAnnotationsLoadedPromise();
     }
     fireEvent(Events['BEFORE_TAB_CHANGED'], {
       currentTab: currentTab ? {
@@ -118,9 +117,18 @@ export default class TabManager {
         id: newTab.id,
       },
     });
-    this.store.dispatch(actions.setActiveTab(id));
-    isEmptyPageOpen && this.store.dispatch(actions.closeElement(DataElements.MULTITABS_EMPTY_PAGE));
-    await newTab.load(this.store.dispatch, this.db, this.getViewerState(state));
+    // Need this timeout because window.dispatchEvent is synchronous
+    // This will cause the document to be closed if the customer exports an XFDF or runs another async call here
+    // Allow a timeout of 100ms for async calls to finish before closing the document.
+    setTimeout(async () => {
+      if (currentTab) {
+        saveCurrentActiveTabState && await currentTab.saveCurrentActiveTabState(this.db);
+        core.closeDocument();
+      }
+      this.store.dispatch(actions.setActiveTab(id));
+      isEmptyPageOpen && this.store.dispatch(actions.closeElement(DataElements.MULTITABS_EMPTY_PAGE));
+      await newTab.load(this.store.dispatch, this.db, this.getViewerState(state));
+    }, 100);
   }
 
   getViewerState = (state) => {

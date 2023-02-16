@@ -352,7 +352,7 @@ const FilterAnnotModal = () => {
                   <Button
                     img="icon-close"
                     onClick={closeModal}
-                    title="action.cancel"
+                    title="action.close"
                   />
                 </div>
               </Swipeable>

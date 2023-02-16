@@ -71,14 +71,14 @@
     "viewShortCutKeysFor3D": "Zobrazit klávesové zkratky",
     "markAllRead": "označit vše jako přečtené",
     "insertPage": "Vkládání stránky",
-    "insertBlankPageAbove": "Nahoře vložte prázdnou stránku",
-    "insertBlankPageBelow": "Níže vložte prázdnou stránku",
+    "insert": "Vložit",
     "pageManipulation": "Manipulace se stránkou",
     "replace": "Nahradit",
     "setDestination": "Nastav destinaci",
     "showLess": "Ukaž méně",
     "showMore": "...více",
     "chooseFile": "Vyberte soubor",
+    "browse": "Procházet soubory",
     "selectYourOption": "Vyberte svou možnost",
     "open": "OTEVŘENO",
     "deselectAll": "Odznačit vše",
@@ -94,7 +94,9 @@
     "viewFile": "Prohlédnout soubor",
     "multiReplyAnnotations": "Odpovědět na vybrané poznámky ({{count}})",
     "comparePages": "Porovnejte stránky",
-    "startComparison": "Spusťte porovnávání"
+    "startComparison": "Spusťte porovnávání",
+    "back": "Zadní",
+    "clearSignature": "Jasný podpis"
   },
   "annotation": {
     "areaMeasurement": "Plocha",
@@ -211,7 +213,8 @@
       "open": "Zobrazit všechny anotace",
       "close": "Zavřít všechny anotace"
     },
-    "comparePanel": "Panel porovnání"
+    "comparePanel": "Panel porovnání",
+    "watermarkPanel": "Panel vodoznaku"
   },
   "message": {
     "toolsOverlayNoPresets": "Žádné předvolby",
@@ -269,7 +272,9 @@
     "embeddedFiles": "Vložené soubory",
     "pageNum": "Číslo stránky",
     "viewBookmark": "Zobrazit záložku na stránce",
-    "error": "Chyba"
+    "error": "Chyba",
+    "errorPageNumber": "Neplatné číslo stránky. Limit je",
+    "errorLoadingDocument": "Při čtení tohoto dokumentu došlo k problému a některé stránky se nemusí zobrazit. To znamená, že dokument může být poškozen. Celkový počet stránek je {{totalPageCount}} a počet zobrazených stránek je {{displayedPageCount}}."
   },
   "option": {
     "type": {
@@ -375,7 +380,8 @@
       "qualityHigh": "Vysoký",
       "includeAnnotations": "Zahrnout anotace",
       "includeComments": "Zahrnout komentáře",
-      "printSettings": "Nastavení tisku"
+      "printSettings": "Nastavení tisku",
+      "printGrayscale": "Tisk ve stupních šedi"
     },
     "printInfo": {
       "author": "Autor",
@@ -425,11 +431,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Přetáhněte soubor sem",
+      "selectFile": "Zde vyberte svůj soubor",
       "or": "Nebo",
+      "yourFiles": "Vaše soubory",
       "chooseFile": "Vyberte soubor",
       "localFile": "Místní soubor",
       "pageReplaceInputLabel": "Nahradit stránky",
-      "pageReplaceInputFromSource": "se stránkami"
+      "pageReplaceInputFromSource": "se stránkami",
+      "warning": {
+        "title": "Ukončit nahrazení stránky?",
+        "message": "Ukončením zrušíte všechny dosud provedené výběry. Opravdu chcete stále ukončit?"
+      }
     },
     "filterAnnotModal": {
       "color": "Barva",
@@ -598,12 +610,11 @@
     "settings": {
       "settings": "Nastavení",
       "general": "Všeobecné",
-      "keyboardShortcut": "Klávesová zkratka",
-      "advancedSetting": "Pokročilé nastavení",
       "language": "Jazyk",
       "theme": "Téma",
       "darkMode": "Tmavý režim",
       "lightMode": "Světelný režim",
+      "advancedSetting": "Pokročilé nastavení",
       "viewing": "Prohlížení",
       "disableFadePageNavigationComponent": "Zakažte komponentu navigace na stránce Fade",
       "disableFadePageNavigationComponentDesc": "Vždy mějte komponentu Navigace na obrazovce na obrazovce. Výchozí chování je vyblednout po určité době nečinnosti.",
@@ -628,7 +639,52 @@
       "disablePageDeletionConfirmationModal": "Zakázat modální potvrzení smazání stránky",
       "disablePageDeletionConfirmationModalDesc": "Při odstraňování stránky ze zobrazení miniatur deaktivujte potvrzovací modal",
       "disableMultiselect": "Zakázat vícenásobný výběr",
-      "disableMultiselectDesc": "V levém panelu miniatur deaktivujte vícenásobný výběr"
+      "disableMultiselectDesc": "V levém panelu miniatur deaktivujte vícenásobný výběr",
+      "miscellaneous": "Smíšený",
+      "keyboardShortcut": "Klávesová zkratka",
+      "command": "Příkaz",
+      "description": "Popis",
+      "action": "Akce",
+      "rotateDocumentClockwise": "Otočte dokument ve směru hodinových ručiček",
+      "rotateDocumentCounterclockwise": "Otočte dokument proti směru hodinových ručiček",
+      "copyText": "Zkopírujte vybraný text nebo anotace",
+      "pasteText": "Vložte text nebo anotace",
+      "undoChange": "Vrátit zpět změnu anotace",
+      "redoChange": "Znovu proveďte změnu anotace",
+      "openFile": "Otevřete nástroj pro výběr souboru",
+      "openSearch": "Otevřete překryvnou vrstvu vyhledávání",
+      "zoomIn": "Přiblížit",
+      "zoomOut": "Oddálit",
+      "fitScreenWidth": "Přizpůsobte dokument šířce obrazovky na malé obrazovce (< 640 pixelů), jinak jej přizpůsobte původní velikosti",
+      "print": "Tisk",
+      "bookmarkOpenPanel": "Rychle přidejte stránku do záložek a otevřete panel záložek",
+      "goToPreviousPage": "Přejděte na předchozí stránku",
+      "goToNextPage": "Přejděte na další stránku",
+      "goToPreviousPageArrowUp": "Přejít na předchozí stránku v režimu jednoho rozvržení (ArrowUp)",
+      "goToNextPageArrowDown": "Přejít na další stránku v režimu jednoho rozvržení (ArrowDown)",
+      "holdSwitchPan": "Podržením přepnete do režimu Pan a uvolněním se vrátíte k předchozímu nástroji",
+      "selectAnnotationEdit": "Vyberte nástroj AnnotationEdit",
+      "selectPan": "Vyberte nástroj Pan",
+      "selectCreateArrowTool": "Vyberte nástroj AnnotationCreateArrow",
+      "selectCreateCalloutTool": "Vyberte nástroj AnnotationCreateCallout",
+      "selectEraserTool": "Vyberte nástroj AnnotationEraser",
+      "selectCreateFreeHandTool": "Vyberte nástroj AnnotationCreateFreeHand",
+      "selectCreateStampTool": "Vyberte nástroj AnnotationCreateStamp",
+      "selectCreateLineTool": "Vyberte nástroj AnnotationCreateLine",
+      "selectCreateStickyTool": "Vyberte nástroj AnnotationCreateSticky",
+      "selectCreateEllipseTool": "Vyberte nástroj AnnotationCreateEllipse",
+      "selectCreateRectangleTool": "Vyberte nástroj AnnotationCreateRectangle",
+      "selectCreateRubberStampTool": "Vyberte nástroj AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "Vyberte nástroj AnnotationCreateFreeText",
+      "openSignatureModal": "Otevřete modální podpis nebo překryvnou vrstvu",
+      "selectCreateTextSquigglyTool": "Vyberte nástroj AnnotationCreateTextSquiggly",
+      "selectCreateTextHighlightTool": "Vyberte nástroj AnnotationCreateTextHighlight",
+      "selectCreateTextStrikeoutTool": "Vyberte nástroj AnnotationCreateTextStrikeout",
+      "selectCreateTextUnderlineTool": "Vyberte nástroj AnnotationCreateTextUnderline",
+      "editKeyboardShorcut": "Upravit klávesovou zkratku",
+      "setShorcut": "Nastavte zástupce",
+      "pressKeyToSet": "Stiskněte klávesu nebo pro nastavení nové zkratky.",
+      "shortcutAlreadyExists": "Výše uvedená klávesová zkratka již existuje."
     }
   },
   "warning": {
@@ -880,13 +936,16 @@
     "certifier": "certifikovat",
     "certified": "certifikovaný",
     "Certified": "Certifikováno",
+    "Certification": "Osvědčení",
     "signer": "signatář",
     "signed": "podepsaný",
     "Signed": "Podepsaný",
+    "Signature": "Podpis",
     "by": "podle",
     "on": "na",
     "disallowedChange": "Nepovolená změna: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Nepodepsané pole podpisu: {{fieldName}}",
+    "signatureProperties": "Vlastnosti podpisu",
     "trustVerification": {
       "current": "Použitý čas ověření byl aktuální čas",
       "signing": "Čas ověření je od hodin na počítači podepisujícího",
@@ -937,6 +996,10 @@
       "noSignatureFields": "Tento dokument neobsahuje žádná pole pro podpis",
       "certificateDownloadError": "Při pokusu o stažení důvěryhodného certifikátu došlo k chybě",
       "localCertificateError": "Existují určité problémy se čtením místního certifikátu"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} je platné.",
+      "failed": "{{verificationType}} se nezdařilo."
     }
   },
   "cropPopUp": {
@@ -991,6 +1054,13 @@
     "miscValuesHeader": "Všechno",
     "emptyPanelMessage": "Vyberte prvek pro zobrazení jeho vlastností"
   },
+  "watermarkPanel": {
+    "textWatermark": "Textový vodoznak",
+    "uploadImage": "Nahrát obrázek",
+    "browse": "Procházet",
+    "watermarkOptions": "Možnosti vodoznaku",
+    "watermarks": "Vodoznaky"
+  },
   "languageModal": {
     "selectLanguage": "Zvolte jazyk"
   },
@@ -1008,6 +1078,7 @@
     "pageLocations": {
       "header": "Umístění stránky",
       "specify": "Zadejte stránku",
+      "specifyLocation": "Zadejte umístění stránky",
       "amount": "Počet stránek",
       "total": "Celkový",
       "pages": "Stránky"
@@ -1020,13 +1091,20 @@
         "halfLetter": "Půl dopisu",
         "juniorLegal": "Junior legal",
         "custom": "Zvyk"
-      }
+      },
+      "units": "Jednotky"
     },
     "browse": "Procházet soubory",
     "fileSelected": {
       "title": "Vyberte Stránky k přidání"
     },
-    "button": "Přidat stránky"
+    "button": "Přidat stránky",
+    "selectPages": "Vyberte Stránky k přidání",
+    "page": "Strana",
+    "warning": {
+      "title": "Ukončit vložit novou stránku?",
+      "message": "Ukončením zrušíte všechny dosud provedené výběry. Opravdu chcete stále ukončit?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Přetáhněte sem soubor pro porovnání",
@@ -1042,7 +1120,11 @@
       "change": "Změna",
       "old": "Starý",
       "new": "Nový",
-      "page": "Strana"
+      "page": "Strana",
+      "textContent": "Textový obsah",
+      "delete": "vymazat",
+      "insert": "vložit",
+      "edit": "Upravit"
     }
   },
   "saveModal": {

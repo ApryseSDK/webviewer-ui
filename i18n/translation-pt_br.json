@@ -71,14 +71,14 @@
     "viewShortCutKeysFor3D": "Exibir teclas de atalho",
     "markAllRead": "Marcar todas como lidas",
     "insertPage": "Inserção de Página",
-    "insertBlankPageAbove": "Inserir página em branco acima",
-    "insertBlankPageBelow": "Inserir página em branco abaixo",
+    "insert": "Inserir",
     "pageManipulation": "Manipulação de página",
     "replace": "Substituir",
     "setDestination": "Definir destino",
     "showLess": "mostre menos",
     "showMore": "...mais",
     "chooseFile": "Escolha um arquivo",
+    "browse": "Procurar arquivos",
     "selectYourOption": "Selecione sua opção",
     "open": "Aberto",
     "deselectAll": "Desmarcar todos",
@@ -94,7 +94,9 @@
     "viewFile": "Visualizar arquivo",
     "multiReplyAnnotations": "Responder às anotações selecionadas ({{count}})",
     "comparePages": "Comparar páginas",
-    "startComparison": "Iniciar comparação"
+    "startComparison": "Iniciar comparação",
+    "back": "De volta",
+    "clearSignature": "Assinatura clara"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -211,7 +213,8 @@
       "open": "Ver todas as anotações",
       "close": "Fechar todas as anotações"
     },
-    "comparePanel": "Painel de comparação"
+    "comparePanel": "Painel de comparação",
+    "watermarkPanel": "Painel de marca d'água"
   },
   "message": {
     "toolsOverlayNoPresets": "Sem predefinições",
@@ -269,7 +272,9 @@
     "embeddedFiles": "Arquivos incorporados",
     "pageNum": "Número de página",
     "viewBookmark": "Ver marcador na página",
-    "error": "Erro"
+    "error": "Erro",
+    "errorPageNumber": "Número de página inválido. Limite é",
+    "errorLoadingDocument": "Ocorreu um problema ao ler este documento e algumas páginas podem não ser exibidas. Isso indica que o documento pode estar corrompido. A contagem total de páginas é {{totalPageCount}} e o número de páginas exibidas é {{displayedPageCount}}."
   },
   "option": {
     "type": {
@@ -375,7 +380,8 @@
       "qualityHigh": "Alto",
       "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
-      "printSettings": "Configurações de impressão"
+      "printSettings": "Configurações de impressão",
+      "printGrayscale": "Imprimir escala de cinza"
     },
     "printInfo": {
       "author": "Autor",
@@ -425,11 +431,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Arraste e solte seu arquivo aqui",
+      "selectFile": "Selecione seu arquivo aqui",
       "or": "Ou",
+      "yourFiles": "Seus arquivos",
       "chooseFile": "Escolha um arquivo",
       "localFile": "Arquivo local",
       "pageReplaceInputLabel": "Substituir página(s)",
-      "pageReplaceInputFromSource": "com página(s)"
+      "pageReplaceInputFromSource": "com página(s)",
+      "warning": {
+        "title": "Sair da página de substituição?",
+        "message": "Sair cancelará todas as seleções feitas até agora. Tem certeza de que ainda deseja sair?"
+      }
     },
     "filterAnnotModal": {
       "color": "Cor",
@@ -598,12 +610,11 @@
     "settings": {
       "settings": "Definições",
       "general": "Em geral",
-      "keyboardShortcut": "Atalho de teclado",
-      "advancedSetting": "Configuração avançada",
       "language": "Linguagem",
       "theme": "Tema",
       "darkMode": "Modo escuro",
       "lightMode": "Modo de luz",
+      "advancedSetting": "Configuração avançada",
       "viewing": "Visualizando",
       "disableFadePageNavigationComponent": "Desativar o componente de navegação da página Fade",
       "disableFadePageNavigationComponentDesc": "Sempre mantenha o componente de navegação de página na tela. O comportamento padrão é esmaecê-lo após certo período de inatividade.",
@@ -628,7 +639,52 @@
       "disablePageDeletionConfirmationModal": "Desativar modal de confirmação de exclusão de página",
       "disablePageDeletionConfirmationModalDesc": "Desative o modal de confirmação ao excluir uma página da visualização em miniatura",
       "disableMultiselect": "Desativar seleção múltipla",
-      "disableMultiselectDesc": "Desative a seleção múltipla no painel de miniaturas esquerdo"
+      "disableMultiselectDesc": "Desative a seleção múltipla no painel de miniaturas esquerdo",
+      "miscellaneous": "Diversos",
+      "keyboardShortcut": "Atalho de teclado",
+      "command": "Comando",
+      "description": "Descrição",
+      "action": "Ação",
+      "rotateDocumentClockwise": "Girar o documento no sentido horário",
+      "rotateDocumentCounterclockwise": "Gire o documento no sentido anti-horário",
+      "copyText": "Copiar texto ou anotações selecionadas",
+      "pasteText": "Colar texto ou anotações",
+      "undoChange": "Desfazer uma alteração de anotação",
+      "redoChange": "Refazer uma alteração de anotação",
+      "openFile": "Abra o seletor de arquivos",
+      "openSearch": "Abra a sobreposição de pesquisa",
+      "zoomIn": "Mais Zoom",
+      "zoomOut": "Reduzir o zoom",
+      "fitScreenWidth": "Ajustar o documento à largura da tela em uma tela pequena (< 640px), caso contrário, ajustá-lo ao tamanho original",
+      "print": "Imprimir",
+      "bookmarkOpenPanel": "Marque rapidamente uma página e abra o painel de favoritos",
+      "goToPreviousPage": "Ir para a página anterior",
+      "goToNextPage": "Vá para a página seguinte",
+      "goToPreviousPageArrowUp": "Ir para a página anterior no modo de layout único (ArrowUp)",
+      "goToNextPageArrowDown": "Vá para a próxima página no modo de layout único (ArrowDown)",
+      "holdSwitchPan": "Segure para alternar para o modo Pan e solte para retornar à ferramenta anterior",
+      "selectAnnotationEdit": "Selecione a ferramenta AnnotationEdit",
+      "selectPan": "Selecione a ferramenta Panorâmica",
+      "selectCreateArrowTool": "Selecione a ferramenta AnnotationCreateArrow",
+      "selectCreateCalloutTool": "Selecione a ferramenta AnnotationCreateCallout",
+      "selectEraserTool": "Selecione a ferramenta AnnotationEraser",
+      "selectCreateFreeHandTool": "Selecione a ferramenta AnnotationCreateFreeHand",
+      "selectCreateStampTool": "Selecione a ferramenta AnnotationCreateStamp",
+      "selectCreateLineTool": "Selecione a ferramenta AnnotationCreateLine",
+      "selectCreateStickyTool": "Selecione a ferramenta AnnotationCreateSticky",
+      "selectCreateEllipseTool": "Selecione a ferramenta AnnotationCreateEllipse",
+      "selectCreateRectangleTool": "Selecione a ferramenta AnnotationCreateRectangle",
+      "selectCreateRubberStampTool": "Selecione a ferramenta AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "Selecione a ferramenta AnnotationCreateFreeText",
+      "openSignatureModal": "Abra o modal de assinatura ou a sobreposição",
+      "selectCreateTextSquigglyTool": "Selecione a ferramenta AnnotationCreateTextSquiggly",
+      "selectCreateTextHighlightTool": "Selecione a ferramenta AnnotationCreateTextHighlight",
+      "selectCreateTextStrikeoutTool": "Selecione a ferramenta AnnotationCreateTextStrikeout",
+      "selectCreateTextUnderlineTool": "Selecione a ferramenta AnnotationCreateTextUnderline",
+      "editKeyboardShorcut": "Editar atalho de teclado",
+      "setShorcut": "Definir atalho",
+      "pressKeyToSet": "Pressione a tecla ou as teclas para definir um novo atalho.",
+      "shortcutAlreadyExists": "O atalho de teclado acima já existe."
     }
   },
   "warning": {
@@ -880,13 +936,16 @@
     "certifier": "certificar",
     "certified": "certificado",
     "Certified": "Certificado",
+    "Certification": "Certificação",
     "signer": "placa",
     "signed": "assinado",
     "Signed": "Assinado",
+    "Signature": "Assinatura",
     "by": "de",
     "on": "em",
     "disallowedChange": "Alteração não permitida: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Campo de assinatura não assinado: {{fieldName}}",
+    "signatureProperties": "Propriedades da assinatura",
     "trustVerification": {
       "current": "A hora de verificação usada foi a hora atual",
       "signing": "O tempo de verificação é a partir do relógio no computador do signatário",
@@ -937,6 +996,10 @@
       "noSignatureFields": "Este documento não possui campos de assinatura",
       "certificateDownloadError": "Erro encontrado ao tentar baixar um certificado confiável",
       "localCertificateError": "Existem alguns problemas com a leitura de um certificado local"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} é válido.",
+      "failed": "{{verificationType}} falhou."
     }
   },
   "cropPopUp": {
@@ -991,6 +1054,13 @@
     "miscValuesHeader": "Todos",
     "emptyPanelMessage": "Selecione um elemento para ver suas propriedades."
   },
+  "watermarkPanel": {
+    "textWatermark": "Marca d'água de texto",
+    "uploadImage": "Enviar Imagem",
+    "browse": "Navegar",
+    "watermarkOptions": "Opções de marca d'água",
+    "watermarks": "Marcas d'água"
+  },
   "languageModal": {
     "selectLanguage": "Selecione o idioma"
   },
@@ -1008,6 +1078,7 @@
     "pageLocations": {
       "header": "Localização da página",
       "specify": "Especificar página",
+      "specifyLocation": "Especifique o local da página",
       "amount": "Quantidade de páginas",
       "total": "Total",
       "pages": "Páginas"
@@ -1020,13 +1091,20 @@
         "halfLetter": "Meia letra",
         "juniorLegal": "Jurídico Júnior",
         "custom": "Personalizado"
-      }
+      },
+      "units": "Unidades"
     },
     "browse": "Procurar arquivos",
     "fileSelected": {
       "title": "Selecione as páginas a serem adicionadas"
     },
-    "button": "Adicionar página(s)"
+    "button": "Adicionar página(s)",
+    "selectPages": "Selecione as páginas a serem adicionadas",
+    "page": "Página",
+    "warning": {
+      "title": "Sair inserir nova página?",
+      "message": "Sair cancelará todas as seleções feitas até agora. Tem certeza de que ainda deseja sair?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Arraste e solte seu arquivo aqui para comparar",
@@ -1042,7 +1120,11 @@
       "change": "Mudar",
       "old": "Velho",
       "new": "Novo",
-      "page": "Página"
+      "page": "Página",
+      "textContent": "conteúdo de texto",
+      "delete": "excluir",
+      "insert": "inserir",
+      "edit": "editar"
     }
   },
   "saveModal": {

@@ -14,6 +14,7 @@ export default (dispatch, documentViewerKey) => () => {
       'redactionPanel',
       'textEditingPanel',
       'wv3dPropertiesPanel',
+      'watermarkPanel',
       ...overlays,
     ]),
   );

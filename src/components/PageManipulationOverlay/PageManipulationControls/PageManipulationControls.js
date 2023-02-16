@@ -5,7 +5,7 @@ import Button from 'components/Button';
 
 function PageManipulationControls(props) {
   const { t } = useTranslation();
-  const { deletePages, extractPages, replacePages } = props;
+  const { deletePages, extractPages, insertPages, replacePages } = props;
 
   return (
     <>
@@ -14,6 +14,18 @@ function PageManipulationControls(props) {
         className="type"
       >
         {t('action.pageManipulation')}
+      </DataElementWrapper>
+      <DataElementWrapper
+        className="row"
+        dataElement="insertPage"
+        onClick={insertPages}
+      >
+        <Button
+          title="action.insert"
+          img="icon-page-insertion-insert"
+          role="option"
+        />
+        <div className="title">{t('action.insert')}</div>
       </DataElementWrapper>
       <DataElementWrapper
         className="row"

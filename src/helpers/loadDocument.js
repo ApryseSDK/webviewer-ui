@@ -16,8 +16,8 @@ export default (dispatch, src, options = {}, documentViewerKey = 1) => {
   if ('onError' in options) {
     const userDefinedOnErrorCallback = options.onError;
     options.onError = function(error) {
-      userDefinedOnErrorCallback(error);
       fireError(error);
+      userDefinedOnErrorCallback(error);
     };
   } else {
     options.onError = fireError;
@@ -44,8 +44,9 @@ const getDefaultOptions = () => ({
   singleServerMode: getHashParameters('singleServerMode', false),
   forceClientSideInit: getHashParameters('forceClientSideInit', false),
   disableWebsockets: getHashParameters('disableWebsockets', false),
-  cacheKey: JSON.parse(getHashParameters('cacheKey', null)),
+  cacheKey: getHashParameters('cacheKey', null),
   officeOptions: JSON.parse(getHashParameters('officeOptions', null)),
+  rasterizerOptions: JSON.parse(getHashParameters('rasterizerOptions', null)),
   streaming: getHashParameters('streaming', null),
   useDownloader: getHashParameters('useDownloader', true),
   backendType: getHashParameters('pdf', null),

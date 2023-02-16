@@ -30,7 +30,8 @@ const DocumentCropPopup = ({
   getCurrentPage,
   selectedPages,
   onSelectedPagesChange,
-  presetCropDimensions
+  shouldShowApplyCropWarning,
+  presetCropDimensions,
 }) => {
   const { t } = useTranslation();
 
@@ -52,8 +53,7 @@ const DocumentCropPopup = ({
 
   const handlePageNumberError = (pageNumber) => {
     if (pageNumber) {
-      // eslint-disable-next-line no-undef
-      setPageNumberError(`Invalid page number. Limit is ${documentViewer.getPageCount()}`);
+      setPageNumberError(`${t('message.errorPageNumber')} ${loadedDocumentPageCount}`);
     }
   };
 
@@ -293,14 +293,10 @@ const DocumentCropPopup = ({
   const handleButtonPressed = (button) => {
     switch (button) {
       case 'apply':
-        openCropConfirmationWarning();
+        shouldShowApplyCropWarning ? openCropConfirmationWarning() : applyCrop();
         break;
       case 'cancel':
-        if (isCropping) {
-          openCropCancellationWarning();
-        } else {
-          closeDocumentCropPopup();
-        }
+        isCropping ? openCropCancellationWarning() : closeDocumentCropPopup();
         break;
     }
   };
@@ -461,11 +457,7 @@ const DocumentCropPopup = ({
         <div className="divider" />
       </div>
       <div className="buttons">
-        <button
-          className="cancel-button"
-          data-element="cropCancelButton"
-          onClick={() => handleButtonPressed('cancel')}
-        >
+        <button className="cancel-button" data-element="cropCancelButton" onClick={() => handleButtonPressed('cancel')}>
           {t('action.cancel')}
         </button>
         <button

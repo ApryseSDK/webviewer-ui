@@ -6,9 +6,11 @@ import classNames from 'classnames';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
+import DataElementWrapper from 'components/DataElementWrapper';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import { Swipeable } from 'react-swipeable';
 import GeneralTab from './GeneralTab';
+import KeyboardShortcutTab from './KeyboardShortcutTab';
 import AdvancedTab from './AdvancedTab';
 
 import './SettingsModal.scss';
@@ -30,6 +32,7 @@ const SettingsModal = () => {
 
   const tabs = [
     [DataElements.SETTINGS_GENERAL_BUTTON, t('option.settings.general')],
+    [DataElements.SETTINGS_KEYBOARD_BUTTON, t('option.settings.keyboardShortcut')],
     [DataElements.SETTINGS_ADVANCED_BUTTON, t('option.settings.advancedSetting')]
   ];
 
@@ -71,14 +74,14 @@ const SettingsModal = () => {
                       selected: tab[0] === selectedTab
                     });
                     return (
-                      <div
+                      <DataElementWrapper
                         className={className}
-                        data-element={tab[0]}
+                        dataElement={tab[0]}
                         onClick={() => handleTabClicked(tab[0])}
                         key={tab[0]}
                       >
                         {tab[1]}
-                      </div>
+                      </DataElementWrapper>
                     );
                   })}
                 </div>
@@ -86,6 +89,9 @@ const SettingsModal = () => {
               <div className="settings-content">
                 {selectedTab === DataElements.SETTINGS_GENERAL_BUTTON && (
                   <GeneralTab />
+                )}
+                {selectedTab === DataElements.SETTINGS_KEYBOARD_BUTTON && (
+                  <KeyboardShortcutTab />
                 )}
                 {selectedTab === DataElements.SETTINGS_ADVANCED_BUTTON && (
                   <AdvancedTab />

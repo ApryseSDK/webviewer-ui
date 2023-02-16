@@ -4,6 +4,8 @@ import core from 'core';
 import './FilePickerPanel.scss';
 import Icon from 'components/Icon';
 import { v4 as uuidv4 } from 'uuid';
+import classNames from 'classnames';
+import { isMobile } from 'helpers/device';
 
 const FilePickerPanel = ({ onFileProcessed, shouldShowIcon, fileInputId = uuidv4() }) => {
   const [t] = useTranslation();
@@ -92,11 +94,33 @@ const FilePickerPanel = ({ onFileProcessed, shouldShowIcon, fileInputId = uuidv4
     });
   }
 
+  const renderPrompt = () => {
+    if (isMobile()) {
+      return (
+        <div className="image-signature-separator">
+          {t('option.pageReplacementModal.selectFile')}
+        </div>
+      );
+    }
+    return (
+      <>
+        <div className="image-signature-dnd">
+          {t('option.pageReplacementModal.dragAndDrop')}
+        </div>
+        <div className="image-signature-separator">
+          {t('option.pageReplacementModal.or')}
+        </div>
+      </>
+    );
+  };
+
+  const uploadContainerClass = classNames('file-picker-upload-container', { dragging: isDragging });
+
   return (
     <React.Fragment>
       <div className="file-picker-page-replacement">
         <div
-          className="image-signature-upload-container"
+          className={uploadContainerClass}
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
@@ -105,18 +129,13 @@ const FilePickerPanel = ({ onFileProcessed, shouldShowIcon, fileInputId = uuidv4
         >
           <div className="FilePickerPanel">
             {shouldShowIcon && <Icon glyph="icon-open-folder" />}
-            <div className="md-row">
-              {t('option.pageReplacementModal.dragAndDrop')}
-            </div>
-            <div className="md-row label-separator">
-              {t('option.pageReplacementModal.or')}
-            </div>
+            {renderPrompt()}
             <div
               className="md-row modal-btn-file"
               tabIndex="0"
               onKeyDown={onKeyDown}
               onClick={onClick}
-            >{t('option.pageReplacementModal.chooseFile')}
+            >{t('action.browse')}
               <input
                 id={fileInputId}
                 style={{ display: 'none' }}

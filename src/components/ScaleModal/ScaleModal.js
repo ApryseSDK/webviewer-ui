@@ -127,6 +127,7 @@ const ScaleModal = () => {
   useEffect(() => {
     if (isOpen && tempScale) {
       // Triggered when calibration is applied
+      setCustomScale(new Scale(tempScale));
       dispatch(actions.updateCalibrationInfo({ isCalibration: false }));
       setIsFractionalPrecision(isFractionalUnit);
     }

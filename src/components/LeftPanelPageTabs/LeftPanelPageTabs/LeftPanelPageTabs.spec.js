@@ -34,8 +34,7 @@ describe('LeftPanelPageTabs', () => {
         onDeletePages={noop}
         onRotateCounterClockwise={noop}
         onRotateClockwise={noop}
-        onInsertAbove={noop}
-        onInsertBelow={noop}
+        onInsert={noop}
       />);
 
       expect(container.querySelectorAll('.Button')).toHaveLength(8);
@@ -63,13 +62,9 @@ describe('LeftPanelPageTabs', () => {
           fn: jest.fn(),
           dataElement: 'thumbnailsControlRotateClockwise'
         },
-        onInsertAbove: {
+        onInsert: {
           fn: jest.fn(),
-          dataElement: 'thumbnailsControlInsertAbove'
-        },
-        onInsertBelow: {
-          fn: jest.fn(),
-          dataElement: 'thumbnailsControlInsertBelow'
+          dataElement: 'thumbnailsControlInsert'
         },
       };
       const { container } = render(<LeftPanelPageTabsWithRedux
@@ -78,8 +73,7 @@ describe('LeftPanelPageTabs', () => {
         onDeletePages={handlers.onDeletePages.fn}
         onRotateCounterClockwise={handlers.onRotateCounterClockwise.fn}
         onRotateClockwise={handlers.onRotateClockwise.fn}
-        onInsertAbove={handlers.onInsertAbove.fn}
-        onInsertBelow={handlers.onInsertBelow.fn}
+        onInsert={handlers.onInsert.fn}
       />);
 
       for (const action in handlers) {

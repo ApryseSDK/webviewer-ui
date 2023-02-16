@@ -602,3 +602,8 @@ export const setInitialsMode = (isEnabled) => ({
   type: 'SET_INITIALS_MODE',
   payload: { isEnabled }
 });
+
+export const setShortcutKeyMap = (shortcutKeyMap) => ({
+  type: 'SET_SHORTCUT_KEY_MAP',
+  payload: shortcutKeyMap
+});

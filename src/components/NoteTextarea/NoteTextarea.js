@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useContext } from 'react';
+import React, { useLayoutEffect, useRef, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 import NoteContext from 'components/Note/Context';
@@ -32,6 +32,7 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   const { resize } = useContext(NoteContext);
   const textareaRef = useRef();
   const prevHeightRef = useRef();
+  const [pasting, setPasting] = useState(false);
 
   useLayoutEffect(() => {
     // when the height of the textarea changes, we also want to call resize
@@ -46,6 +47,16 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     // we need value to be in the dependency array because the height will only change when value changes
     // eslint-disable-next-line
   }, [props.value, resize]);
+
+  useEffect(() => {
+    const handlePasting = () => {
+      setPasting(true);
+    };
+    window.addEventListener('paste', handlePasting);
+    return () => {
+      window.removeEventListener('paste', handlePasting);
+    };
+  }, []);
 
   const handleKeyDown = (e) => {
     const enterKey = 13;
@@ -66,10 +77,9 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
 
     if (!isEmpty) {
       value = content.target ? content.target.value : content;
-      props.onChange(value);
-    } else {
-      props.onChange('');
     }
+    props.onChange(value);
+    setPasting(false);
   };
 
   const textareaProps = {
@@ -78,7 +88,7 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
       textareaRef.current = el;
       forwardedRef(el);
     },
-    onChange: handleChange,
+    onChange: pasting ? handleChange : _.debounce(handleChange, 100),
     onKeyDown: handleKeyDown,
     userData,
   };

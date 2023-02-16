@@ -47,7 +47,7 @@ const MultiPageManipulationControls = {
    * of operations.
    * @method UI.MultiPageManipulationControls#add
    * @param {Array.<UI.MultiPageManipulationControls.PageManipulationSection>} pageManipulationSections Array of sections to be added, each with its individual operations. See example below.
-   * @param {('leftPanelPageTabsRotate' | 'leftPanelPageTabsInsert' | 'leftPanelPageTabsOperations' | 'leftPanelPageTabsMore')} [dataElementToInsertAfter] An optional string that determines where in the overlay the new section will be added. If not included, the new page manipulation section will be added to the left.
+   * @param {('leftPanelPageTabsRotate' | 'leftPanelPageTabsOperations' | 'leftPanelPageTabsMore')} [dataElementToInsertAfter] An optional string that determines where in the overlay the new section will be added. If not included, the new page manipulation section will be added to the left.
    * You can call {@link UI.MultiPageManipulationControls#getItems getItems} to get existing items and their dataElements.
    * @returns {UI.MultiPageManipulationControls} The instance itself
    * @example

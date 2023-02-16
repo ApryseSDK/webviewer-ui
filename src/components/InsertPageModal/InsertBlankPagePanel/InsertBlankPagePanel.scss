@@ -3,6 +3,12 @@
 .insert-blank-page-panel {
   width: 100%;
 
+  .dimension-input-container {
+    min-width: 100%;
+    margin: 0;
+    height: 32px;
+  }
+
   .subheader {
     font-size: 13px;
     font-weight: 700;
@@ -30,23 +36,30 @@
 
         .page-number-input {
           width: 100%;
+          height: 32px;
+          margin: 0;
         }
         
         .customSelector {
           margin-left: 0;
           height: 28px;
-          margin-right: 16px;
       
           .customSelector__selectedItem {
-            width: 50%;
+            width: 100%;
+            border-radius: 4px;
+          }
+
+          .Icon {
+            width: 13px;
+            height: 13px;
           }
       
           ul {
-            width: 50%;
+            width: 100%;
 
             @include mobile {
               top: auto;
-              bottom: calc(100% - 32px);
+              bottom: calc(100% + 4px);
             }
           }
 
@@ -55,9 +68,13 @@
             font-size: 13px;
 
             @include mobile {
-              font-size: 16px;
               display: none;
             }
+          }
+
+          li .optionSelected {
+            color: var(--text-color);
+            background: var(--popup-button-active);
           }
         }
       
@@ -66,10 +83,43 @@
           width: 100%;
         }
 
+        .Dropdown {
+          height: 32px;
+          min-width: 150px;
+          width: 100% !important;
+  
+          .arrow {
+            flex: 0 1 auto;
+          }
+  
+          .picked-option .picked-option-text {
+            width: 150px;
+            text-align: left;
+          }
+        }
+  
+        .Dropdown__items {
+          top: -52px;
+          z-index: 80;
+          width: 100%;
+        }
+  
         .input-sub-text {
           margin-top: 8px;
           padding-bottom: 0;
           color: var(--faded-text);
+        }
+
+        .page-number-error {
+          margin-top: 8px;
+          font-size: 13px;
+          color: var(--color-message-error);
+        }
+      }
+
+      @include mobile {
+        .ui__choice__label, input, button {
+          font-size: 13px;
         }
       }
     }
@@ -79,11 +129,11 @@
     }
   }
 }
-.increment-number-input {
+.incrementNumberInput {
   border: 1px solid var(--border);
   border-radius: 4px;
-
   display: flex;
+  height: 32px;
 
   input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button {  
@@ -91,14 +141,20 @@
     margin: 0;
   }
 
+  input[type=number] {
+    -moz-appearance:textfield;
+  }
+
   .ui__input {
     border: 0;
+    height: 100%;
 
     .ui__input__input {
       width: 100%;
       height: 100%;
       padding: 6px;
       line-height: normal;
+      
     }
   }
 
@@ -108,10 +164,15 @@
   }
 
   .increment-buttons {
+    @include mobile {
+      display: none;
+    }
+
     display: flex;
     flex-direction: column;
     gap: 2px;
-    padding: 3px;
+    justify-content: center;
+    padding: 2px;
 
     .increment-arrow-button {
       border: 0;
@@ -121,20 +182,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
-      @include mobile {
-        height: 12px;
-        width: 20px;
-
-        .Icon {
-          top: -6px;
-        }
-      }
+      line-height: 10px;
+      padding: 0;
 
       .Icon {
-        position: relative;
-        top: -4px;
         height: 10px;
+        width: 10px;
       }
 
       &:active {
@@ -145,5 +198,5 @@
 
   &:focus-within {
     border: 1px solid var(--focus-border);
-}
+  }
 }

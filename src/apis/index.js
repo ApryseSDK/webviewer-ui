@@ -9,6 +9,7 @@ import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import RedactionSearchPatterns from 'constants/redactionSearchPatterns';
 import { languageEnum } from 'constants/languages';
+import { panelNames } from 'constants/panel';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
@@ -225,6 +226,8 @@ import Fonts from 'src/apis/fonts';
 import TabManagerAPI from './TabManagerAPI';
 import getAvailableLanguages from './getAvailableLanguages';
 import replaceRedactionSearchPattern from './replaceRedactionSearchPattern';
+import disableApplyCropWarningModal from './disableApplyCropWarningModal';
+import enableApplyCropWarningModal from './enableApplyCropWarningModal';
 import setPresetCropDimensions from './setPresetCropDimensions';
 import setPresetNewPageDimensions from './setPresetNewPageDimensions';
 import addDateTimeFormat from './addDateTimeFormat';
@@ -240,8 +243,18 @@ import disableBookmarkIconShortcutVisibility from './disableBookmarkIconShortcut
 import showFormFieldIndicators from './showFormFieldIndicators';
 import hideFormFieldIndicators from './hideFormFieldIndicators';
 import signSignatureWidget from './signSignatureWidget';
+import addModularHeaders from './addModularHeaders';
+import getModularHeader from './getModularHeader';
+import getModularHeaderList from './getModularHeaderList';
 import core from 'core';
 import { setDefaultOptions } from './outlinesPanel';
+import Item from './ModularComponents/item';
+import GroupedItems from './groupedItems';
+import ModularHeader from './ModularComponents/modularHeader';
+import CustomButton from './ModularComponents/customButton';
+import RibbonItem from './ModularComponents/ribbonItem';
+import ToggleElementButton from './ModularComponents/toggleElementButton';
+
 import {
   getMeasurementScalePreset,
   addMeasurementScalePreset,
@@ -253,6 +266,10 @@ import {
 import getLocalizedText from './getLocalizedText';
 import getDocumentViewer from './getDocumentViewer';
 import { enableMultiViewerSync, disableMultiViewerSync, isMultiViewerSyncing } from './multiViewerSync';
+import { setCustomSettings, exportUserSettings, importUserSettings } from './userSettings';
+import addPanel from './addPanel';
+import setGrayscaleDarknessFactor from './setGrayscaleDarknessFactor';
+import { ALIGNMENT } from 'constants/customizationVariables';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -277,6 +294,7 @@ export default (store) => {
     NotesPanelSortStrategy,
     Theme,
     RedactionSearchPatterns,
+    Alignment: ALIGNMENT,
     addSearchListener,
     addSortStrategy: addSortStrategy(store),
     annotationPopup: annotationPopup(store),
@@ -327,6 +345,7 @@ export default (store) => {
     setActiveLeftPanel: setActiveLeftPanel(store),
     setCustomModal: setCustomModal(store),
     addCustomModal: addCustomModal(store),
+    addPanel: addPanel(store),
     showOutlineControl: showOutlineControl(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
     setCustomPanel: setCustomPanel(store),
@@ -383,6 +402,7 @@ export default (store) => {
       addTrustedCertificates: addTrustedCertificates(store),
       loadTrustList: loadTrustList(store),
     },
+    Panels: panelNames,
     ThumbnailsPanel: {
       selectPages: selectPages(store),
       unselectPages: unselectPages(store),
@@ -406,6 +426,21 @@ export default (store) => {
     },
     OutlinesPanel: {
       setDefaultOptions: setDefaultOptions(store),
+    },
+    addModularHeaders: addModularHeaders(store),
+    getModularHeader: getModularHeader(store),
+    getModularHeaderList: getModularHeaderList(store),
+    Components: {
+      Item,
+      GroupedItems: GroupedItems(store),
+      ModularHeader: ModularHeader(store),
+      TopHeader: ModularHeader(store),
+      BottomHeader: ModularHeader(store),
+      LeftHeader: ModularHeader(store),
+      RightHeader: ModularHeader(store),
+      CustomButton,
+      ToggleElementButton,
+      RibbonItem,
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
@@ -466,8 +501,8 @@ export default (store) => {
     setSortNotesBy: setSortNotesBy(store),
     getCustomData,
     toggleReaderMode: toggleReaderMode(store),
-    enableToolDefaultStyleUpdateFromAnnotationPopup,
-    disableToolDefaultStyleUpdateFromAnnotationPopup,
+    enableToolDefaultStyleUpdateFromAnnotationPopup: enableToolDefaultStyleUpdateFromAnnotationPopup(store),
+    disableToolDefaultStyleUpdateFromAnnotationPopup: disableToolDefaultStyleUpdateFromAnnotationPopup(store),
     addEventListener,
     removeEventListener,
     syncNamespaces,
@@ -476,6 +511,8 @@ export default (store) => {
     TabManager: TabManagerAPI(store),
     getAvailableLanguages,
     replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
+    disableApplyCropWarningModal: disableApplyCropWarningModal(store),
+    enableApplyCropWarningModal: enableApplyCropWarningModal(store),
     setPresetCropDimensions: setPresetCropDimensions(store),
     setPresetNewPageDimensions: setPresetNewPageDimensions(store),
     addDateTimeFormat: addDateTimeFormat(store),
@@ -496,6 +533,10 @@ export default (store) => {
     enableMultiViewerSync: enableMultiViewerSync(store),
     disableMultiViewerSync: disableMultiViewerSync(store),
     isMultiViewerSyncing: isMultiViewerSyncing(store),
+    setCustomSettings: setCustomSettings(store),
+    exportUserSettings: exportUserSettings(store),
+    importUserSettings: importUserSettings(store),
+    setGrayscaleDarknessFactor,
 
     // deprecated, to be removed in 8.0
     useNativeScroll,

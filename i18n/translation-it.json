@@ -71,14 +71,14 @@
     "viewShortCutKeysFor3D": "Visualizza i tasti di scelta rapida",
     "markAllRead": "segna tutto come letto",
     "insertPage": "Inserimento pagina",
-    "insertBlankPageAbove": "Inserisci una pagina vuota sopra",
-    "insertBlankPageBelow": "Inserisci una pagina vuota qui sotto",
+    "insert": "Inserire",
     "pageManipulation": "Manipolazione della pagina",
     "replace": "Sostituire",
     "setDestination": "Impostare la destinazione",
     "showLess": "mostra meno",
     "showMore": "...Di più",
     "chooseFile": "Scegli un file",
+    "browse": "Sfoglia i file",
     "selectYourOption": "Seleziona la tua opzione",
     "open": "Aprire",
     "deselectAll": "Deselezionare tutto",
@@ -94,7 +94,9 @@
     "viewFile": "Vedi il file",
     "multiReplyAnnotations": "Rispondi alle annotazioni selezionate ({{count}})",
     "comparePages": "Confronta le pagine",
-    "startComparison": "Inizia il confronto"
+    "startComparison": "Inizia il confronto",
+    "back": "Di ritorno",
+    "clearSignature": "Firma chiara"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -211,7 +213,8 @@
       "open": "Visualizza tutte le annotazioni",
       "close": "Chiudi tutte le annotazioni"
     },
-    "comparePanel": "Confronta pannello"
+    "comparePanel": "Confronta pannello",
+    "watermarkPanel": "Pannello filigrana"
   },
   "message": {
     "toolsOverlayNoPresets": "Nessun preset",
@@ -269,7 +272,9 @@
     "embeddedFiles": "File incorporati",
     "pageNum": "Numero di pagina",
     "viewBookmark": "Visualizza segnalibro sulla pagina",
-    "error": "Errore"
+    "error": "Errore",
+    "errorPageNumber": "Numero di pagina non valido. Il limite è",
+    "errorLoadingDocument": "Si è verificato un problema durante la lettura di questo documento e alcune pagine potrebbero non essere visualizzate. Ciò indica che il documento potrebbe essere danneggiato. Il conteggio totale delle pagine è {{totalPageCount}} e il numero di pagine visualizzate è {{displayedPageCount}}."
   },
   "option": {
     "type": {
@@ -375,7 +380,8 @@
       "qualityHigh": "alto",
       "includeAnnotations": "Includi annotazioni",
       "includeComments": "Includi commenti",
-      "printSettings": "Impostazioni di stampa"
+      "printSettings": "Impostazioni di stampa",
+      "printGrayscale": "Stampa scala di grigi"
     },
     "printInfo": {
       "author": "Autore",
@@ -425,11 +431,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Trascina e rilascia il tuo file qui",
+      "selectFile": "Seleziona qui il tuo file",
       "or": "O",
+      "yourFiles": "I tuoi file",
       "chooseFile": "Scegli un file",
       "localFile": "File locale",
       "pageReplaceInputLabel": "Sostituisci pagina/e",
-      "pageReplaceInputFromSource": "con pagina/e"
+      "pageReplaceInputFromSource": "con pagina/e",
+      "warning": {
+        "title": "Uscire dalla pagina di sostituzione?",
+        "message": "L'uscita annullerà tutte le selezioni effettuate fino a quel momento. Sei sicuro di voler ancora uscire?"
+      }
     },
     "filterAnnotModal": {
       "color": "Colore",
@@ -598,12 +610,11 @@
     "settings": {
       "settings": "Impostazioni",
       "general": "Generale",
-      "keyboardShortcut": "Scorciatoia da tastiera",
-      "advancedSetting": "Impostazioni avanzate",
       "language": "Lingua",
       "theme": "Tema",
       "darkMode": "Modalità scura",
       "lightMode": "Modalità luce",
+      "advancedSetting": "Impostazioni avanzate",
       "viewing": "Visualizzazione",
       "disableFadePageNavigationComponent": "Disabilita il componente di navigazione della pagina di dissolvenza",
       "disableFadePageNavigationComponentDesc": "Tieni sempre sullo schermo il componente di navigazione della pagina. Il comportamento predefinito è svanire dopo un certo periodo di inattività.",
@@ -628,7 +639,52 @@
       "disablePageDeletionConfirmationModal": "Disabilita la conferma dell'eliminazione della pagina modale",
       "disablePageDeletionConfirmationModalDesc": "Disabilita la modalità di conferma quando elimini una pagina dalla visualizzazione miniature",
       "disableMultiselect": "Disabilita la selezione multipla",
-      "disableMultiselectDesc": "Disabilita la selezione multipla nel pannello delle miniature a sinistra"
+      "disableMultiselectDesc": "Disabilita la selezione multipla nel pannello delle miniature a sinistra",
+      "miscellaneous": "Varie",
+      "keyboardShortcut": "Scorciatoia da tastiera",
+      "command": "Comando",
+      "description": "Descrizione",
+      "action": "Azione",
+      "rotateDocumentClockwise": "Ruota il documento in senso orario",
+      "rotateDocumentCounterclockwise": "Ruotare il documento in senso antiorario",
+      "copyText": "Copia il testo o le annotazioni selezionati",
+      "pasteText": "Incolla testo o annotazioni",
+      "undoChange": "Annulla la modifica di un'annotazione",
+      "redoChange": "Ripristina una modifica all'annotazione",
+      "openFile": "Apri il selettore di file",
+      "openSearch": "Apri l'overlay di ricerca",
+      "zoomIn": "Ingrandire",
+      "zoomOut": "Riduci lo zoom",
+      "fitScreenWidth": "Adatta il documento alla larghezza dello schermo in uno schermo piccolo (<640px), altrimenti adattalo alla sua dimensione originale",
+      "print": "Stampa",
+      "bookmarkOpenPanel": "Aggiungi rapidamente una pagina ai segnalibri e apri il pannello dei segnalibri",
+      "goToPreviousPage": "Vai alla pagina precedente",
+      "goToNextPage": "Vai alla pagina successiva",
+      "goToPreviousPageArrowUp": "Vai alla pagina precedente in modalità layout singolo (freccia su)",
+      "goToNextPageArrowDown": "Vai alla pagina successiva in modalità layout singolo (freccia giù)",
+      "holdSwitchPan": "Tieni premuto per passare alla modalità Panoramica e rilascia per tornare allo strumento precedente",
+      "selectAnnotationEdit": "Selezionare lo strumento AnnotationEdit",
+      "selectPan": "Seleziona lo strumento Panoramica",
+      "selectCreateArrowTool": "Selezionare lo strumento AnnotationCreateArrow",
+      "selectCreateCalloutTool": "Selezionare lo strumento AnnotationCreateCallout",
+      "selectEraserTool": "Selezionare lo strumento AnnotationEraser",
+      "selectCreateFreeHandTool": "Selezionare lo strumento AnnotationCreateFreeHand",
+      "selectCreateStampTool": "Selezionare lo strumento AnnotationCreateStamp",
+      "selectCreateLineTool": "Selezionare lo strumento AnnotationCreateLine",
+      "selectCreateStickyTool": "Selezionare lo strumento AnnotationCreateSticky",
+      "selectCreateEllipseTool": "Selezionare lo strumento AnnotationCreateEllipse",
+      "selectCreateRectangleTool": "Selezionare lo strumento AnnotationCreateRectangle",
+      "selectCreateRubberStampTool": "Selezionare lo strumento AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "Selezionare lo strumento AnnotationCreateFreeText",
+      "openSignatureModal": "Apri il modale della firma o l'overlay",
+      "selectCreateTextSquigglyTool": "Selezionare lo strumento AnnotationCreateTextSquiggly",
+      "selectCreateTextHighlightTool": "Selezionare lo strumento AnnotationCreateTextHighlight",
+      "selectCreateTextStrikeoutTool": "Selezionare lo strumento AnnotationCreateTextStrikeout",
+      "selectCreateTextUnderlineTool": "Selezionare lo strumento AnnotationCreateTextUnderline",
+      "editKeyboardShorcut": "Modifica scorciatoia da tastiera",
+      "setShorcut": "Imposta scorciatoia",
+      "pressKeyToSet": "Premere il tasto o i tasti per impostare una nuova scorciatoia.",
+      "shortcutAlreadyExists": "La scorciatoia da tastiera sopra esiste già."
     }
   },
   "warning": {
@@ -880,13 +936,16 @@
     "certifier": "certificare",
     "certified": "certificato",
     "Certified": "Certificato",
+    "Certification": "Certificazione",
     "signer": "cartello",
     "signed": "firmato",
     "Signed": "Firmato",
+    "Signature": "Firma",
     "by": "di",
     "on": "sopra",
     "disallowedChange": "Modifica non consentita: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Campo firma non firmato: {{fieldName}}",
+    "signatureProperties": "Proprietà della firma",
     "trustVerification": {
       "current": "L'ora di verifica utilizzata era l'ora corrente",
       "signing": "L'ora della verifica è dall'orologio sul computer del firmatario",
@@ -937,6 +996,10 @@
       "noSignatureFields": "Questo documento non ha campi per la firma",
       "certificateDownloadError": "Si è verificato un errore durante il tentativo di scaricare un certificato attendibile",
       "localCertificateError": "Ci sono alcuni problemi con la lettura di un certificato locale"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} è valido.",
+      "failed": "{{verificationType}} non riuscito."
     }
   },
   "cropPopUp": {
@@ -991,6 +1054,13 @@
     "miscValuesHeader": "Tutti",
     "emptyPanelMessage": "Seleziona un elemento per visualizzarne le proprietà."
   },
+  "watermarkPanel": {
+    "textWatermark": "Filigrana di testo",
+    "uploadImage": "Carica immagine",
+    "browse": "Navigare",
+    "watermarkOptions": "Opzioni filigrana",
+    "watermarks": "Filigrane"
+  },
   "languageModal": {
     "selectLanguage": "Seleziona la lingua"
   },
@@ -1008,6 +1078,7 @@
     "pageLocations": {
       "header": "Posizione della pagina",
       "specify": "Specificare la pagina",
+      "specifyLocation": "Specificare la posizione della pagina",
       "amount": "Quantità di pagine",
       "total": "Totale",
       "pages": "Pagine"
@@ -1020,13 +1091,20 @@
         "halfLetter": "Mezza lettera",
         "juniorLegal": "Junior legale",
         "custom": "Costume"
-      }
+      },
+      "units": "Unità"
     },
     "browse": "Sfoglia i file",
     "fileSelected": {
       "title": "Seleziona Pagine da aggiungere"
     },
-    "button": "Aggiungi pagina/e"
+    "button": "Aggiungi pagina/e",
+    "selectPages": "Seleziona Pagine da aggiungere",
+    "page": "Pagina",
+    "warning": {
+      "title": "Esci inserisci una nuova pagina?",
+      "message": "L'uscita annullerà tutte le selezioni effettuate fino a quel momento. Sei sicuro di voler ancora uscire?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Trascina e rilascia qui il tuo file per confrontarlo",
@@ -1042,7 +1120,11 @@
       "change": "Modificare",
       "old": "Vecchio",
       "new": "Nuovo",
-      "page": "Pagina"
+      "page": "Pagina",
+      "textContent": "Contenuto testuale",
+      "delete": "Elimina",
+      "insert": "inserire",
+      "edit": "modificare"
     }
   },
   "saveModal": {

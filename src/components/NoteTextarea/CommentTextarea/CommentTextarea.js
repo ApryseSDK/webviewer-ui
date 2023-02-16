@@ -44,7 +44,7 @@ const CommentTextarea = React.forwardRef(
       onBlur,
       onFocus,
       userData,
-      isReply
+      isReply,
     },
     ref
   ) => {
@@ -63,9 +63,24 @@ const CommentTextarea = React.forwardRef(
       e.stopPropagation();
     };
 
+    const onScroll = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    // Convert text with newline ("\n") to <p>...</p> format so
+    // that editor handles multiline text correctly
+    if (value) {
+      const contentArray = value.split('\n');
+      if (contentArray.length && contentArray[contentArray.length - 1] === '') {
+        contentArray.pop();
+        value = contentArray.map((item) => `<p>${item || '<br>'}</p>`).join('');
+      }
+    }
+
     // onBlur and onFocus have to be outside in the div because of quill bug
     return (
-      <div className='comment-textarea' onBlur={onBlur} onFocus={onFocus} onClick={onClick}>
+      <div className='comment-textarea' onBlur={onBlur} onFocus={onFocus} onClick={onClick} onScroll={onScroll}>
         <ReactQuill
           className='comment-textarea ql-container ql-editor'
           style={{ overflowY: 'visible' }}
@@ -81,7 +96,7 @@ const CommentTextarea = React.forwardRef(
         {isReply && !isAddReplyAttachmentDisabled &&
           <Button
             className='add-attachment'
-            data-element={DataElements.NotesPanel.ADD_REPLY_ATTACHMENT_BUTTON}
+            dataElement={DataElements.NotesPanel.ADD_REPLY_ATTACHMENT_BUTTON}
             img='ic_fileattachment_24px'
             onClick={addAttachment}
           />

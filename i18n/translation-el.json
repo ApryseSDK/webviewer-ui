@@ -71,14 +71,14 @@
     "viewShortCutKeysFor3D": "Προβολή πλήκτρων συντόμευσης",
     "markAllRead": "Επισήμανση όλων ως αναγνωσμένων",
     "insertPage": "Εισαγωγή σελίδας",
-    "insertBlankPageAbove": "Εισαγάγετε κενή σελίδα παραπάνω",
-    "insertBlankPageBelow": "Εισαγάγετε κενή σελίδα παρακάτω",
+    "insert": "Εισάγετε",
     "pageManipulation": "Χειρισμός σελίδας",
     "replace": "Αντικαθιστώ",
     "setDestination": "Θέτω προορισμό",
     "showLess": "Δείξε λιγότερο",
     "showMore": "...περισσότερο",
     "chooseFile": "Επιλέξτε ένα αρχείο",
+    "browse": "ΕΞΕΡΕΥΝΗΣΗ ΑΡΧΕΙΩΝ",
     "selectYourOption": "Επιλέξτε την επιλογή σας",
     "open": "Ανοιξε",
     "deselectAll": "Αποεπιλογή όλων",
@@ -94,7 +94,9 @@
     "viewFile": "Προβολή αρχείου",
     "multiReplyAnnotations": "Απάντηση σε επιλεγμένους σχολιασμούς ({{count}})",
     "comparePages": "Συγκρίνετε σελίδες",
-    "startComparison": "Έναρξη σύγκρισης"
+    "startComparison": "Έναρξη σύγκρισης",
+    "back": "Πίσω",
+    "clearSignature": "Καθαρή υπογραφή"
   },
   "annotation": {
     "areaMeasurement": "Περιοχή",
@@ -211,7 +213,8 @@
       "open": "Προβολή όλων των σχολιασμών",
       "close": "Κλείστε όλους τους σχολιασμούς"
     },
-    "comparePanel": "Πίνακας σύγκρισης"
+    "comparePanel": "Πίνακας σύγκρισης",
+    "watermarkPanel": "Πίνακας υδατογραφήματος"
   },
   "message": {
     "toolsOverlayNoPresets": "Χωρίς προεπιλογές",
@@ -269,7 +272,9 @@
     "embeddedFiles": "Ενσωματωμένα Αρχεία",
     "pageNum": "Αριθμός σελίδας",
     "viewBookmark": "Προβολή σελιδοδείκτη στη σελίδα",
-    "error": "Λάθος"
+    "error": "Λάθος",
+    "errorPageNumber": "Μη έγκυρος αριθμός σελίδας. Όριο είναι",
+    "errorLoadingDocument": "Παρουσιάστηκε πρόβλημα κατά την ανάγνωση αυτού του εγγράφου και ορισμένες σελίδες ενδέχεται να μην εμφανίζονται. Αυτό υποδηλώνει ότι το έγγραφο μπορεί να είναι κατεστραμμένο. Ο συνολικός αριθμός σελίδων είναι {{totalPageCount}} και ο αριθμός σελίδων που εμφανίζονται είναι {{displayedPageCount}}."
   },
   "option": {
     "type": {
@@ -375,7 +380,8 @@
       "qualityHigh": "Υψηλός",
       "includeAnnotations": "Συμπεριλάβετε σχολιασμούς",
       "includeComments": "Συμπεριλάβετε σχόλια",
-      "printSettings": "Ρυθμίσεις εκτύπωσης"
+      "printSettings": "Ρυθμίσεις εκτύπωσης",
+      "printGrayscale": "Εκτύπωση κλίμακας του γκρι"
     },
     "printInfo": {
       "author": "Συγγραφέας",
@@ -425,11 +431,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Σύρετε και αποθέστε το αρχείο σας εδώ",
+      "selectFile": "Επιλέξτε το αρχείο σας εδώ",
       "or": "Ή",
+      "yourFiles": "Τα αρχεία σας",
       "chooseFile": "Επιλέξτε ένα αρχείο",
       "localFile": "Τοπικό αρχείο",
       "pageReplaceInputLabel": "Αντικατάσταση σελίδων",
-      "pageReplaceInputFromSource": "με σελίδες"
+      "pageReplaceInputFromSource": "με σελίδες",
+      "warning": {
+        "title": "Έξοδος από τη σελίδα αντικατάστασης;",
+        "message": "Η έξοδος θα ακυρώσει όλες τις επιλογές που έχετε κάνει μέχρι τώρα. Είστε βέβαιοι ότι θέλετε ακόμα να βγείτε;"
+      }
     },
     "filterAnnotModal": {
       "color": "Χρώμα",
@@ -598,12 +610,11 @@
     "settings": {
       "settings": "Ρυθμίσεις",
       "general": "Γενικός",
-      "keyboardShortcut": "Συντόμευση πληκτρολογίου",
-      "advancedSetting": "Προχωρημένη ρύθμιση",
       "language": "Γλώσσα",
       "theme": "Θέμα",
       "darkMode": "Σκοτεινή λειτουργία",
       "lightMode": "Λειτουργία φωτός",
+      "advancedSetting": "Προχωρημένη ρύθμιση",
       "viewing": "Προβολή",
       "disableFadePageNavigationComponent": "Απενεργοποιήστε το στοιχείο πλοήγησης Fade Page",
       "disableFadePageNavigationComponentDesc": "Διατηρείτε πάντα το στοιχείο πλοήγησης σελίδας στην οθόνη. Η προεπιλεγμένη συμπεριφορά είναι να εξαφανιστεί μετά από ορισμένη περίοδο αδράνειας.",
@@ -628,7 +639,52 @@
       "disablePageDeletionConfirmationModal": "Απενεργοποιήστε το Modal επιβεβαίωσης διαγραφής σελίδας",
       "disablePageDeletionConfirmationModalDesc": "Απενεργοποιήστε τον τρόπο επιβεβαίωσης όταν διαγράφετε μια σελίδα από την προβολή μικρογραφιών",
       "disableMultiselect": "Απενεργοποιήστε την πολλαπλή επιλογή",
-      "disableMultiselectDesc": "Απενεργοποιήστε την πολλαπλή επιλογή στον αριστερό πίνακα μικρογραφιών"
+      "disableMultiselectDesc": "Απενεργοποιήστε την πολλαπλή επιλογή στον αριστερό πίνακα μικρογραφιών",
+      "miscellaneous": "Διάφορα",
+      "keyboardShortcut": "Συντόμευση πληκτρολογίου",
+      "command": "Εντολή",
+      "description": "Περιγραφή",
+      "action": "Δράση",
+      "rotateDocumentClockwise": "Περιστρέψτε το έγγραφο δεξιόστροφα",
+      "rotateDocumentCounterclockwise": "Περιστρέψτε το έγγραφο αριστερόστροφα",
+      "copyText": "Αντιγράψτε επιλεγμένο κείμενο ή σχολιασμούς",
+      "pasteText": "Επικόλληση κειμένου ή σχολιασμών",
+      "undoChange": "Αναίρεση αλλαγής σχολιασμού",
+      "redoChange": "Επαναλάβετε μια αλλαγή σχολιασμού",
+      "openFile": "Ανοίξτε το εργαλείο επιλογής αρχείων",
+      "openSearch": "Ανοίξτε την επικάλυψη αναζήτησης",
+      "zoomIn": "Μεγέθυνση",
+      "zoomOut": "Σμίκρυνση",
+      "fitScreenWidth": "Τοποθετήστε το έγγραφο στο πλάτος της οθόνης σε μια μικρή οθόνη (< 640 px), διαφορετικά προσαρμόστε το στο αρχικό του μέγεθος",
+      "print": "Τυπώνω",
+      "bookmarkOpenPanel": "Προσθέστε γρήγορα σελιδοδείκτη σε μια σελίδα και ανοίξτε τον πίνακα σελιδοδεικτών",
+      "goToPreviousPage": "Μεταβείτε στην προηγούμενη σελίδα",
+      "goToNextPage": "Μεταβείτε στην επόμενη σελίδα",
+      "goToPreviousPageArrowUp": "Μετάβαση στην προηγούμενη σελίδα σε λειτουργία μονής διάταξης (ArrowUp)",
+      "goToNextPageArrowDown": "Μετάβαση στην επόμενη σελίδα σε λειτουργία μονής διάταξης (ArrowDown)",
+      "holdSwitchPan": "Κρατήστε πατημένο για να μεταβείτε στη λειτουργία Pan και αφήστε το για να επιστρέψετε στο προηγούμενο εργαλείο",
+      "selectAnnotationEdit": "Επιλέξτε το εργαλείο AnnotationEdit",
+      "selectPan": "Επιλέξτε το εργαλείο Pan",
+      "selectCreateArrowTool": "Επιλέξτε το εργαλείο AnnotationCreateArrow",
+      "selectCreateCalloutTool": "Επιλέξτε το εργαλείο AnnotationCreateCallout",
+      "selectEraserTool": "Επιλέξτε το εργαλείο AnnotationEraser",
+      "selectCreateFreeHandTool": "Επιλέξτε το εργαλείο AnnotationCreateFreeHand",
+      "selectCreateStampTool": "Επιλέξτε το εργαλείο AnnotationCreateStamp",
+      "selectCreateLineTool": "Επιλέξτε το εργαλείο AnnotationCreateLine",
+      "selectCreateStickyTool": "Επιλέξτε το εργαλείο AnnotationCreateSticky",
+      "selectCreateEllipseTool": "Επιλέξτε το εργαλείο AnnotationCreateEllipse",
+      "selectCreateRectangleTool": "Επιλέξτε το εργαλείο AnnotationCreateRectangle",
+      "selectCreateRubberStampTool": "Επιλέξτε το εργαλείο AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "Επιλέξτε το εργαλείο AnnotationCreateFreeText",
+      "openSignatureModal": "Ανοίξτε το modal υπογραφής ή την επικάλυψη",
+      "selectCreateTextSquigglyTool": "Επιλέξτε το εργαλείο AnnotationCreateTextSquiggly",
+      "selectCreateTextHighlightTool": "Επιλέξτε το εργαλείο AnnotationCreateTextHighlight",
+      "selectCreateTextStrikeoutTool": "Επιλέξτε το εργαλείο AnnotationCreateTextStrikeout",
+      "selectCreateTextUnderlineTool": "Επιλέξτε το εργαλείο AnnotationCreateTextUnderline",
+      "editKeyboardShorcut": "Επεξεργασία συντόμευσης πληκτρολογίου",
+      "setShorcut": "Ορισμός συντόμευσης",
+      "pressKeyToSet": "Πατήστε το πλήκτρο ή τα πλήκτρα για να ορίσετε νέα συντόμευση.",
+      "shortcutAlreadyExists": "Η παραπάνω συντόμευση πληκτρολογίου υπάρχει ήδη."
     }
   },
   "warning": {
@@ -880,13 +936,16 @@
     "certifier": "πιστοποιώ",
     "certified": "πιστοποιημένο",
     "Certified": "Πιστοποιημένο",
+    "Certification": "Πιστοποίηση",
     "signer": "σημάδι",
     "signed": "υπογεγραμμένος",
     "Signed": "Υπογεγραμμένο",
+    "Signature": "Υπογραφή",
     "by": "με",
     "on": "επί",
     "disallowedChange": "Μη επιτρεπόμενη αλλαγή: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Ανυπόγραφο πεδίο υπογραφής: {{fieldName}}",
+    "signatureProperties": "Ιδιότητες υπογραφής",
     "trustVerification": {
       "current": "Ο χρόνος επαλήθευσης που χρησιμοποιήθηκε ήταν η τρέχουσα ώρα",
       "signing": "Ο χρόνος επαλήθευσης είναι από το ρολόι στον υπολογιστή του υπογράφοντος",
@@ -937,6 +996,10 @@
       "noSignatureFields": "Αυτό το έγγραφο δεν έχει πεδία υπογραφής",
       "certificateDownloadError": "Παρουσιάστηκε σφάλμα κατά την προσπάθεια λήψης ενός αξιόπιστου πιστοποιητικού",
       "localCertificateError": "Υπάρχουν ορισμένα ζητήματα με την ανάγνωση ενός τοπικού πιστοποιητικού"
+    },
+    "verificationStatus": {
+      "valid": "Το {{verificationType}} είναι έγκυρο.",
+      "failed": "Το {{verificationType}} απέτυχε."
     }
   },
   "cropPopUp": {
@@ -991,6 +1054,13 @@
     "miscValuesHeader": "Όλα",
     "emptyPanelMessage": "Επιλέξτε ένα στοιχείο για να δείτε τις ιδιότητές του."
   },
+  "watermarkPanel": {
+    "textWatermark": "Υδατογράφημα κειμένου",
+    "uploadImage": "Μεταφόρτωση εικόνας",
+    "browse": "Ξεφυλλίζω",
+    "watermarkOptions": "Επιλογές υδατογραφήματος",
+    "watermarks": "Υδατογράφημα"
+  },
   "languageModal": {
     "selectLanguage": "Επιλέξτε γλώσσα"
   },
@@ -1008,6 +1078,7 @@
     "pageLocations": {
       "header": "Τοποθεσία σελίδας",
       "specify": "Καθορίστε τη σελίδα",
+      "specifyLocation": "Καθορίστε τη θέση της σελίδας",
       "amount": "Ποσότητα Σελίδων",
       "total": "Σύνολο",
       "pages": "Σελίδες"
@@ -1020,13 +1091,20 @@
         "halfLetter": "Μισό γράμμα",
         "juniorLegal": "Junior νομικός",
         "custom": "Εθιμο"
-      }
+      },
+      "units": "Μονάδες"
     },
     "browse": "ΕΞΕΡΕΥΝΗΣΗ ΑΡΧΕΙΩΝ",
     "fileSelected": {
       "title": "Επιλέξτε Σελίδες για προσθήκη"
     },
-    "button": "Προσθήκη σελίδων"
+    "button": "Προσθήκη σελίδων",
+    "selectPages": "Επιλέξτε Σελίδες για προσθήκη",
+    "page": "Σελίδα",
+    "warning": {
+      "title": "Έξοδος εισαγωγής νέας σελίδας;",
+      "message": "Η έξοδος θα ακυρώσει όλες τις επιλογές που έχετε κάνει μέχρι τώρα. Είστε βέβαιοι ότι θέλετε ακόμα να βγείτε;"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Σύρετε και αποθέστε το αρχείο σας εδώ για σύγκριση",
@@ -1042,7 +1120,11 @@
       "change": "Αλλαγή",
       "old": "Παλαιός",
       "new": "Νέος",
-      "page": "Σελίδα"
+      "page": "Σελίδα",
+      "textContent": "Περιεχόμενο κειμένου",
+      "delete": "διαγράφω",
+      "insert": "εισάγετε",
+      "edit": "επεξεργασία"
     }
   },
   "saveModal": {

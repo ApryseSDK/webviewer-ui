@@ -1,0 +1,9 @@
+@import '../../constants/styles.scss';
+
+.LeftHeader {
+  transition: transform .3s ease-in-out;
+  position: relative;
+  height: 100%;
+  width: $left-header-width;
+  min-width: fit-content;
+}

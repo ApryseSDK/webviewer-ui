@@ -1,8 +1,7 @@
 import core from 'core';
-import hotkeys from 'src/apis/hotkeys';
 import localStorageManager from 'helpers/localStorageManager';
 import touchEventManager from 'helpers/TouchEventManager';
-import hotkeysManager, { concatKeys, Keys } from 'helpers/hotkeysManager';
+import hotkeysManager, { Shortcuts } from 'helpers/hotkeysManager';
 import Feature from 'constants/feature';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import actions from 'actions';
@@ -81,13 +80,12 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     [Feature.FilePicker]: {
       dataElements: ['filePickerHandler', 'filePickerButton'],
       fn: () => {
-        const keys = concatKeys(Keys.CTRL_O, Keys.COMMAND_O);
         if (enable) {
-          hotkeys.on(keys);
+          hotkeysManager.enableShortcut(Shortcuts.OPEN_FILE);
         } else {
-          hotkeys.off(keys);
+          hotkeysManager.disableShortcut(Shortcuts.OPEN_FILE);
         }
-      },
+      }
     },
     [Feature.LocalStorage]: {
       fn: () => {
@@ -109,13 +107,12 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     [Feature.Print]: {
       dataElements: ['printButton', 'printModal'],
       fn: () => {
-        const keys = concatKeys(Keys.CTRL_P, Keys.COMMAND_P);
         if (enable) {
-          hotkeys.on(keys);
+          hotkeysManager.enableShortcut(Shortcuts.PRINT);
         } else {
-          hotkeys.off(keys);
+          hotkeysManager.disableShortcut(Shortcuts.PRINT);
         }
-      },
+      }
     },
     [Feature.Redaction]: {
       dataElements: [
@@ -154,13 +151,12 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     [Feature.Copy]: {
       dataElements: ['copyTextButton'],
       fn: () => {
-        const keys = concatKeys(Keys.CTRL_C, Keys.COMMAND_C);
         if (enable) {
-          hotkeys.on(keys);
+          hotkeysManager.enableShortcut(Shortcuts.COPY);
         } else {
-          hotkeys.off(keys);
+          hotkeysManager.disableShortcut(Shortcuts.COPY);
         }
-      },
+      }
     },
     [Feature.MultipleViewerMerging]: {
       fn: () => {
@@ -189,33 +185,26 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.PageNavigation]: {
       fn: () => {
-        const {
-          up: arrowUpHandler,
-          down: arrowDownHandler,
-          pageup,
-          pagedown,
-        } = hotkeysManager.keyHandlerMap;
-
         if (enable) {
-          hotkeysManager.on('up', arrowUpHandler);
-          hotkeysManager.on('down', arrowDownHandler);
-          hotkeysManager.on('pageup', pageup);
-          hotkeysManager.on('pagedown', pagedown);
+          hotkeysManager.enableShortcut(Shortcuts.UP);
+          hotkeysManager.enableShortcut(Shortcuts.DOWN);
+          hotkeysManager.enableShortcut(Shortcuts.PREVIOUS_PAGE);
+          hotkeysManager.enableShortcut(Shortcuts.NEXT_PAGE);
         } else {
           // TODO: doing this will also remove handlers that users registered to 'up' and 'down' and we need to address this issue.
           // it doesn't seem like we can fix the issue now by doing hotkeysManager.off('down', arrowDownHandler) because hotkeysManager.on will create a new function reference
           // , register that new function to the hotkey and we don't have a reference to that function.
           // to fix this issue we may need to breaking the instance.hotkeys.on API.
-          hotkeysManager.off('up');
-          hotkeysManager.off('down');
-          hotkeysManager.off('pageup');
-          hotkeysManager.off('pagedown');
+          hotkeysManager.disableShortcut(Shortcuts.UP);
+          hotkeysManager.disableShortcut(Shortcuts.DOWN);
+          hotkeysManager.disableShortcut(Shortcuts.PREVIOUS_PAGE);
+          hotkeysManager.disableShortcut(Shortcuts.NEXT_PAGE);
           core.setDisplayMode('Single');
         }
 
         touchEventManager.allowSwipe = enable;
         store.dispatch(actions.setAllowPageNavigation(enable));
-      },
+      }
     },
     [Feature.MouseWheelZoom]: {
       fn: () => {
@@ -225,13 +214,12 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     [Feature.Search]: {
       dataElements: ['searchButton'],
       fn: () => {
-        const keys = concatKeys(Keys.CTRL_F, Keys.COMMAND_F);
         if (enable) {
-          hotkeys.on(keys);
+          hotkeysManager.enableShortcut(Shortcuts.SEARCH);
         } else {
-          hotkeys.off(keys);
+          hotkeysManager.disableShortcut(Shortcuts.SEARCH);
         }
-      },
+      }
     },
     [Feature.MathSymbols]: {
       dataElements: ['mathSymbolsButton', 'richTextPopup'],
@@ -331,6 +319,28 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         }
       }
     },
+    [Feature.Panel]: {
+      fn: () => {
+        const state = store.getState();
+        const keys = state.viewer.customFlxPanels.map((item) => item.dataElement);
+        if (enable) {
+          store.dispatch(actions.enableElements(keys, priority));
+        } else {
+          store.dispatch(actions.disableElements(keys, priority));
+        }
+      }
+    },
+    [Feature.WatermarkPanel]: {
+      dataElements: [
+        DataElements.WATERMARK_PANEL,
+        DataElements.WATERMARK_PANEL_TOGGLE,
+      ],
+    },
+    [Feature.WatermarkPanelImageTab]: {
+      dataElements: [
+        DataElements.WATERMARK_PANEL_IMAGE_TAB,
+      ],
+    }
   };
 
   if (!Array.isArray(features)) {

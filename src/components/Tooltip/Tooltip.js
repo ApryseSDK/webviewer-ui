@@ -53,7 +53,9 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
     if (hideOnClick) {
       childRef.current?.addEventListener('click', hideTooltip);
     }
-    if (childRef.current['ariaLabel'] !== 'action.close') {
+    // only enable focus event for non popup buttons
+    if (childRef.current['ariaLabel'] !== 'action.close' && content !== 'action.close' &&
+      !childRef.current.parentElement.parentElement.className.includes('TextPopup')) {
       childRef.current?.addEventListener('focus', showToolTip);
       childRef.current?.addEventListener('blur', hideTooltip);
     }
@@ -124,9 +126,9 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
 
         return (
           newTop > 0
-            && newTop + tooltipRect.height < window.innerHeight
-            && newLeft > 0
-            && newLeft + tooltipRect.width < window.innerWidth
+          && newTop + tooltipRect.height < window.innerHeight
+          && newLeft > 0
+          && newLeft + tooltipRect.width < window.innerWidth
         );
       }) || 'bottom';
       const { top: tooltipTop, left: tooltipLeft } = locationTopLeftMap[

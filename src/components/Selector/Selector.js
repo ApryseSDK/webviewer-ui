@@ -5,6 +5,7 @@ import Icon from 'components/Icon';
 import './Selector.scss';
 
 const propTypes = {
+  className: PropTypes.string,
   items: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedItem: PropTypes.string,
   onItemSelected: PropTypes.func.isRequired,
@@ -12,9 +13,12 @@ const propTypes = {
   selectedItemStyle: PropTypes.object,
 };
 
-const Selector = ({ items = [], selectedItem = '', onItemSelected, placeHolder, selectedItemStyle }) => {
+const Selector = ({ className, items = [], selectedItem = '', onItemSelected, placeHolder, selectedItemStyle }) => {
   return (
-    <div className="customSelector">
+    <div className={classNames({
+      customSelector: true,
+      [className]: !!className,
+    })}>
       <button className="customSelector__selectedItem" style={selectedItemStyle}>
         {!selectedItem && placeHolder ? placeHolder : selectedItem}
         <Icon className="down-arrow" glyph={'icon-chevron-down'} />

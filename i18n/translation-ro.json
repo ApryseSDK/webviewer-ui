@@ -71,14 +71,14 @@
     "viewShortCutKeysFor3D": "Vizualizați tastele de comenzi rapide",
     "markAllRead": "Marcheaza totul ca fiind citit",
     "insertPage": "Inserarea paginii",
-    "insertBlankPageAbove": "Introduceți o pagină goală deasupra",
-    "insertBlankPageBelow": "Introduceți o pagină goală mai jos",
+    "insert": "Introduce",
     "pageManipulation": "Manipularea paginii",
     "replace": "A inlocui",
     "setDestination": "Seteaza destinatia",
     "showLess": "arata mai putin",
     "showMore": "...Mai mult",
     "chooseFile": "Alegeți un fișier",
+    "browse": "Cauta fisiere",
     "selectYourOption": "Selectați opțiunea dvs",
     "open": "Deschis",
     "deselectAll": "Deselectați Toate",
@@ -94,7 +94,9 @@
     "viewFile": "Vezi fișierul",
     "multiReplyAnnotations": "Răspundeți la adnotările selectate ({{count}})",
     "comparePages": "Comparați paginile",
-    "startComparison": "Începeți comparația"
+    "startComparison": "Începeți comparația",
+    "back": "Înapoi",
+    "clearSignature": "Semnătură clară"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -211,7 +213,8 @@
       "open": "Vedeți toate adnotările",
       "close": "Închideți toate adnotările"
     },
-    "comparePanel": "Panoul de comparare"
+    "comparePanel": "Panoul de comparare",
+    "watermarkPanel": "Panoul filigran"
   },
   "message": {
     "toolsOverlayNoPresets": "Fără presetări",
@@ -269,7 +272,9 @@
     "embeddedFiles": "Fișiere încorporate",
     "pageNum": "Numărul paginii",
     "viewBookmark": "Vizualizați marcajul pe pagină",
-    "error": "Eroare"
+    "error": "Eroare",
+    "errorPageNumber": "Număr de pagină nevalid. Limita este",
+    "errorLoadingDocument": "A apărut o problemă la citirea acestui document și este posibil ca unele pagini să nu fie afișate. Acest lucru indică faptul că documentul poate fi corupt. Numărul total de pagini este {{totalPageCount}}, iar numărul de pagini afișate este {{displayedPageCount}}."
   },
   "option": {
     "type": {
@@ -375,7 +380,8 @@
       "qualityHigh": "Înalt",
       "includeAnnotations": "Includeți adnotări",
       "includeComments": "Includeți comentarii",
-      "printSettings": "Setări de imprimare"
+      "printSettings": "Setări de imprimare",
+      "printGrayscale": "Imprimare în tonuri de gri"
     },
     "printInfo": {
       "author": "Autor",
@@ -425,11 +431,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "Trageți și plasați fișierul aici",
+      "selectFile": "Selectați fișierul dvs. aici",
       "or": "Sau",
+      "yourFiles": "Fișierele dvs",
       "chooseFile": "Alegeți un fișier",
       "localFile": "Fișier local",
       "pageReplaceInputLabel": "Înlocuiți paginile",
-      "pageReplaceInputFromSource": "cu pagina(e)"
+      "pageReplaceInputFromSource": "cu pagina(e)",
+      "warning": {
+        "title": "Ieși din pagina de înlocuire?",
+        "message": "Ieșirea va anula toate selecțiile pe care le-ați făcut până acum. Ești sigur că vrei totuși să ieși?"
+      }
     },
     "filterAnnotModal": {
       "color": "Culoare",
@@ -598,12 +610,11 @@
     "settings": {
       "settings": "Setări",
       "general": "General",
-      "keyboardShortcut": "Comanda rapidă de la tastatură",
-      "advancedSetting": "Setări avansate",
       "language": "Limba",
       "theme": "Temă",
       "darkMode": "Modul întunecat",
       "lightMode": "Modul de lumină",
+      "advancedSetting": "Setări avansate",
       "viewing": "Vizionare",
       "disableFadePageNavigationComponent": "Dezactivați Componenta de navigare a paginii Fade",
       "disableFadePageNavigationComponentDesc": "Păstrați întotdeauna Componenta de navigare a paginii pe ecran. Comportamentul implicit este de a-l estompa după o anumită perioadă de inactivitate.",
@@ -628,7 +639,52 @@
       "disablePageDeletionConfirmationModal": "Dezactivați modal de confirmare a ștergerii paginii",
       "disablePageDeletionConfirmationModalDesc": "Dezactivați modalul de confirmare când ștergeți o pagină din vizualizarea miniatură",
       "disableMultiselect": "Dezactivați selecția multiplă",
-      "disableMultiselectDesc": "Dezactivați selecția multiplă în panoul de miniaturi din stânga"
+      "disableMultiselectDesc": "Dezactivați selecția multiplă în panoul de miniaturi din stânga",
+      "miscellaneous": "Diverse",
+      "keyboardShortcut": "Comanda rapidă de la tastatură",
+      "command": "Comanda",
+      "description": "Descriere",
+      "action": "Acțiune",
+      "rotateDocumentClockwise": "Rotiți documentul în sensul acelor de ceasornic",
+      "rotateDocumentCounterclockwise": "Rotiți documentul în sens invers acelor de ceasornic",
+      "copyText": "Copiați textul sau adnotările selectate",
+      "pasteText": "Lipiți text sau adnotări",
+      "undoChange": "Anulați o modificare de adnotare",
+      "redoChange": "Refaceți o modificare de adnotare",
+      "openFile": "Deschideți selectorul de fișiere",
+      "openSearch": "Deschideți suprapunerea de căutare",
+      "zoomIn": "A mari",
+      "zoomOut": "A micsora",
+      "fitScreenWidth": "Potriviți documentul la lățimea ecranului într-un ecran mic (< 640 px), altfel potriviți-l la dimensiunea inițială",
+      "print": "Imprimare",
+      "bookmarkOpenPanel": "Marcați rapid o pagină și deschideți panoul de marcaje",
+      "goToPreviousPage": "Accesați pagina anterioară",
+      "goToNextPage": "Accesați pagina următoare",
+      "goToPreviousPageArrowUp": "Accesați pagina anterioară în modul aspect unic (ArrowUp)",
+      "goToNextPageArrowDown": "Accesați pagina următoare în modul de aspect unic (Săgeată în jos)",
+      "holdSwitchPan": "Țineți apăsat pentru a comuta în modul Pan și eliberați pentru a reveni la instrumentul anterior",
+      "selectAnnotationEdit": "Selectați instrumentul AnnotationEdit",
+      "selectPan": "Selectați instrumentul Pan",
+      "selectCreateArrowTool": "Selectați instrumentul AnnotationCreateArrow",
+      "selectCreateCalloutTool": "Selectați instrumentul AnnotationCreateCallout",
+      "selectEraserTool": "Selectați instrumentul Annotation Eraser",
+      "selectCreateFreeHandTool": "Selectați instrumentul AnnotationCreateFreeHand",
+      "selectCreateStampTool": "Selectați instrumentul AnnotationCreateStamp",
+      "selectCreateLineTool": "Selectați instrumentul AnnotationCreateLine",
+      "selectCreateStickyTool": "Selectați instrumentul AnnotationCreateSticky",
+      "selectCreateEllipseTool": "Selectați instrumentul AnnotationCreateEllipse",
+      "selectCreateRectangleTool": "Selectați instrumentul AnnotationCreateRectangle",
+      "selectCreateRubberStampTool": "Selectați instrumentul AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "Selectați instrumentul AnnotationCreateFreeText",
+      "openSignatureModal": "Deschideți modalul de semnătură sau suprapunerea",
+      "selectCreateTextSquigglyTool": "Selectați instrumentul AnnotationCreateTextSquiggly",
+      "selectCreateTextHighlightTool": "Selectați instrumentul AnnotationCreateTextHighlight",
+      "selectCreateTextStrikeoutTool": "Selectați instrumentul AnnotationCreateTextStrikeout",
+      "selectCreateTextUnderlineTool": "Selectați instrumentul AnnotationCreateTextUnderline",
+      "editKeyboardShorcut": "Editați comanda rapidă de la tastatură",
+      "setShorcut": "Setează Shortcut",
+      "pressKeyToSet": "Apăsați tasta sau tastele pentru a seta o nouă comandă rapidă.",
+      "shortcutAlreadyExists": "Comanda rapidă de la tastatură de mai sus există deja."
     }
   },
   "warning": {
@@ -880,13 +936,16 @@
     "certifier": "certifica",
     "certified": "certificat",
     "Certified": "Certificat",
+    "Certification": "Certificare",
     "signer": "semnatar",
     "signed": "semnat",
     "Signed": "Semnat",
+    "Signature": "Semnătură",
     "by": "de",
     "on": "pe",
     "disallowedChange": "Modificare nepermisă: {{tip}}, objnum: {{objnum}}",
     "unsignedSignatureField": "Câmp de semnătură nesemnat: {{fieldName}}",
+    "signatureProperties": "Proprietăți semnături",
     "trustVerification": {
       "current": "Ora de verificare utilizată a fost ora curentă",
       "signing": "Ora de verificare este de la ceasul de pe computerul semnatarului",
@@ -937,6 +996,10 @@
       "noSignatureFields": "Acest document nu are câmpuri de semnătură",
       "certificateDownloadError": "A apărut o eroare la încercarea de a descărca un certificat de încredere",
       "localCertificateError": "Există unele probleme cu citirea unui certificat local"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} este valid.",
+      "failed": "{{verificationType}} a eșuat."
     }
   },
   "cropPopUp": {
@@ -991,6 +1054,13 @@
     "miscValuesHeader": "Toate",
     "emptyPanelMessage": "Selectați un element pentru a-i vedea proprietățile"
   },
+  "watermarkPanel": {
+    "textWatermark": "Filigran text",
+    "uploadImage": "Incarca imaginea",
+    "browse": "Naviga",
+    "watermarkOptions": "Opțiuni filigran",
+    "watermarks": "Filigrane"
+  },
   "languageModal": {
     "selectLanguage": "Selecteaza limba"
   },
@@ -1008,6 +1078,7 @@
     "pageLocations": {
       "header": "Locația paginii",
       "specify": "Specificați pagina",
+      "specifyLocation": "Specificați locația paginii",
       "amount": "Cantitatea de pagini",
       "total": "Total",
       "pages": "Pagini"
@@ -1020,13 +1091,20 @@
         "halfLetter": "Jumătate de scrisoare",
         "juniorLegal": "Junior legal",
         "custom": "Personalizat"
-      }
+      },
+      "units": "Unități"
     },
     "browse": "Cauta fisiere",
     "fileSelected": {
       "title": "Selectați Pagini de adăugat"
     },
-    "button": "Adăugați pagini"
+    "button": "Adăugați pagini",
+    "selectPages": "Selectați Pagini de adăugat",
+    "page": "Pagină",
+    "warning": {
+      "title": "Ieși din inserarea unei pagini noi?",
+      "message": "Ieșirea va anula toate selecțiile pe care le-ați făcut până acum. Ești sigur că vrei totuși să ieși?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "Trageți și plasați fișierul aici pentru a compara",
@@ -1042,7 +1120,11 @@
       "change": "Schimbare",
       "old": "Vechi",
       "new": "Nou",
-      "page": "Pagină"
+      "page": "Pagină",
+      "textContent": "Conținut text",
+      "delete": "șterge",
+      "insert": "introduce",
+      "edit": "Editați | ×"
     }
   },
   "saveModal": {

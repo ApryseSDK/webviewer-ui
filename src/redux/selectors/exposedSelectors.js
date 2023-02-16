@@ -1,5 +1,7 @@
 import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
+import { panelMinWidth, RESIZE_BAR_WIDTH } from 'constants/panel';
+import { PLACEMENT } from 'constants/customizationVariables';
 
 // viewer
 export const getInitialsOffset = (state) => state.viewer.initalsOffset;
@@ -10,6 +12,13 @@ export const isComparisonDisabled = (state) => state.advanced.disableMultiViewer
 export const getIsComparisonOverlayEnabled = (state) => state.viewer.isComparisonOverlayEnabled;
 export const getActiveDocumentViewerKey = (state) => state.viewer.activeDocumentViewerKey;
 export const isMultiViewerMode = (state) => state.viewer.isMultiViewerMode;
+export const getCustomFlxPanels = (state, location) => {
+  if (location) {
+    return state.viewer.customFlxPanels.filter((item) => item.location === location);
+  }
+  return state.viewer.customFlxPanels;
+};
+export const shouldShowApplyCropWarning = (state) => state.viewer.shouldShowApplyCropWarning;
 export const getPresetCropDimensions = (state) => state.viewer.presetCropDimensions;
 export const getPresetNewPageDimensions = (state) => state.viewer.presetNewPageDimensions;
 export const getDateTimeFormats = (state) => state.viewer.dateTimeFormats;
@@ -61,7 +70,8 @@ export const getComparePanelWidth = (state) => state.viewer.panelWidths.compareP
 
 export const getTextEditingPanelWidth = (state) => state.viewer.panelWidths.textEditingPanel;
 
-const RESIZE_BAR_WIDTH = 14; // 14px Need to update this if styling results in a change to width.
+export const getWatermarkPanelWidth = (state) => state.viewer.panelWidths.watermarkPanel;
+
 export const getLeftPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.leftPanel + RESIZE_BAR_WIDTH;
 export const getSearchPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.searchPanel + RESIZE_BAR_WIDTH;
 export const getNotesPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.notesPanel + RESIZE_BAR_WIDTH;
@@ -70,10 +80,12 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const notesPanelWidth = getNotesPanelWidthWithResizeBar(state);
   const searchPanelWidth = getSearchPanelWidthWithResizeBar(state);
   const leftPanelWidth = getLeftPanelWidthWithResizeBar(state);
-  const redactionPanelWidth = getRedactionPanelWidth(state);
+  const watermarkPanelWidth = getWatermarkPanelWidth(state);
   const textEditingPanelWidth = getTextEditingPanelWidth(state);
   const wv3dPropertiesPanelWidth = getWv3dPropertiesPanelWidth(state);
   const comparePanelWidth = getComparePanelWidthWithResizeBar(state);
+  const redactionPanelWidth = getRedactionPanelWidth(state);
+
   const isLeftPanelOpen = isElementOpen(state, 'leftPanel');
   const isNotesPanelOpen = isElementOpen(state, 'notesPanel');
   const isSearchPanelOpen = isElementOpen(state, 'searchPanel');
@@ -81,6 +93,9 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const isTextEditingPanelOpen = isElementOpen(state, 'textEditingPanel');
   const isWv3dPropertiesPanelOpen = isElementOpen(state, 'wv3dPropertiesPanel');
   const isComparePanelOpen = isElementOpen(state, 'comparePanel');
+  const isWatermarkPanelOpen = isElementOpen(state, 'watermarkPanel');
+
+  const isFlxPanelOpen = isCustomFlxPanelOpen(state);
 
   const spaceTakenUpByPanels =
     0 +
@@ -90,9 +105,21 @@ export const getDocumentContentContainerWidthStyle = (state) => {
     (isRedactionPanelOpen ? redactionPanelWidth : 0) +
     (isTextEditingPanelOpen ? textEditingPanelWidth : 0) +
     (isWv3dPropertiesPanelOpen ? wv3dPropertiesPanelWidth : 0) +
-    (isComparePanelOpen ? comparePanelWidth : 0);
+    (isComparePanelOpen ? comparePanelWidth : 0) +
+    (isWatermarkPanelOpen ? watermarkPanelWidth : 0) +
+    (isFlxPanelOpen ? panelMinWidth : 0);
 
-  return `calc(100% - ${spaceTakenUpByPanels}px)`;
+  const leftHeader = getModularHeaderList(state)?.find((header) => header.options.placement === PLACEMENT.LEFT);
+  const rightHeader = getModularHeaderList(state)?.find((header) => header.options.placement === PLACEMENT.RIGHT);
+  const spaceTakenUpByHeaders = (leftHeader ? getLeftHeaderWidth(state) : 0) + (rightHeader ? getRightHeaderWidth(state) : 0);
+  return `calc(100% - ${spaceTakenUpByPanels + spaceTakenUpByHeaders}px)`;
+};
+
+export const isCustomFlxPanelOpen = (state) => {
+  const customFlxPanels = state.viewer.customFlxPanels;
+  return customFlxPanels
+    .map((item) => item.dataElement)
+    .some((elName) => isElementOpen(state, elName) === true);
 };
 
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
@@ -164,6 +191,20 @@ export const getActiveTheme = (state) => state.viewer.activeTheme;
 export const getDefaultHeaderItems = (state) => {
   return state.viewer.headers.default;
 };
+
+export const getModularHeaderList = (state) => state.viewer.modularHeaders;
+
+export const getModularHeader = (state, dataElement) => {
+  return state.viewer.modularHeaders.find((header) => header.options.dataElement === dataElement);
+};
+
+export const getTopHeadersHeight = (state) => state.viewer.modularHeadersHeight.topHeaders;
+
+export const getBottomHeadersHeight = (state) => state.viewer.modularHeadersHeight.bottomHeaders;
+
+export const getRightHeaderWidth = (state) => state.viewer.modularHeadersWidth.rightHeader;
+
+export const getLeftHeaderWidth = (state) => state.viewer.modularHeadersWidth.leftHeader;
 
 export const getActiveHeaderItems = (state) => {
   return state.viewer.headers[state.viewer.activeHeaderGroup];
@@ -474,6 +515,8 @@ export const getFeatureFlags = (state) => state.featureFlags;
 
 export const isInDesktopOnlyMode = (state) => state.viewer.isInDesktopOnlyMode;
 
+export const getPanelWidth = (state, dataElement) => state.viewer.panelWidths[dataElement];
+
 export const pageDeletionConfirmationModalEnabled = (state) => state.viewer.pageDeletionConfirmationModalEnabled;
 
 export const getPageReplacementFileList = (state) => state.viewer.pageReplacementFileList;
@@ -516,3 +559,9 @@ export const getNotesPanelCustomEmptyPanel = (state) => state.viewer.notesPanelC
 export const isReplyAttachmentPreviewEnabled = (state) => state.viewer.replyAttachmentPreviewEnabled;
 
 export const getReplyAttachmentHandler = (state) => state.viewer.replyAttachmentHandler;
+
+export const getCustomSettings = (state) => state.viewer.customSettings;
+
+export const isToolDefaultStyleUpdateFromAnnotationPopupEnabled = (state) => state.viewer.toolDefaultStyleUpdateFromAnnotationPopupEnabled;
+
+export const getShortcutKeyMap = (state) => state.viewer.shortcutKeyMap;

@@ -1,7 +1,7 @@
 {
   "name": "webviewer-ui",
   "author": "PDFTron Systems Inc.",
-  "version": "8.10.0",
+  "version": "8.12.0",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
@@ -21,12 +21,14 @@
   "dependencies": {
     "@pdftron/webviewer-react-toolkit": "^0.7.1",
     "autolinker": "^3.11.1",
+    "blob-stream": "^0.1.3",
+    "canvas2pdf": "git+https://github.com/PDFTron/canvas2pdf.git",
     "classnames": "^2.2.6",
     "css-vars-ponyfill": "^2.3.2",
     "dayjs": "^1.8.19",
     "fast-deep-equal": "^3.1.3",
     "file-saver": "git+https://github.com/ZhijieZhang/FileSaver.js.git",
-    "hotkeys-js": "^3.7.3",
+    "hotkeys-js": "^3.10.0",
     "html2canvas": "git+https://github.com/PDFTron/html2canvas.git#pdftron-alpha10",
     "i18next": "^19.0.3",
     "i18next-http-backend": "^1.0.16",

@@ -200,7 +200,8 @@ const AnnotationPopup = () => {
         setFirstAnnotation(annotations[0]);
         setSelectedMultipleAnnotations(annotations.length > 1);
         setIncludesFormFieldAnnotation(annotations.some((annotation) => annotation.isFormFieldPlaceholder()));
-        setCanModify(core.canModify(annotations[0]));
+        const isSignedByAppearance = annotations[0] instanceof Annotations.SignatureWidgetAnnotation && annotations[0].isSignedByAppearance();
+        setCanModify(core.canModify(annotations[0]) && !isSignedByAppearance);
         if (isNotesPanelOpen) {
           setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
         }
@@ -334,13 +335,16 @@ const AnnotationPopup = () => {
     toolNames.STICKY4,
   ];
 
+  const isAppearanceSignature = firstAnnotation instanceof Annotations.SignatureWidgetAnnotation && firstAnnotation.isSignedByAppearance();
+
   const showCommentButton =
     !isNotesPanelDisabled &&
     !multipleAnnotationsSelected &&
     firstAnnotation.ToolName !== toolNames.CROP &&
     !includesFormFieldAnnotation &&
     !firstAnnotation.isContentEditPlaceholder() &&
-    !firstAnnotation.isUncommittedContentEditPlaceholder();
+    !firstAnnotation.isUncommittedContentEditPlaceholder() &&
+    !isAppearanceSignature;
 
   const showEditStyleButton =
     canModify &&
@@ -349,7 +353,8 @@ const AnnotationPopup = () => {
     (!multipleAnnotationsSelected || canUngroup) &&
     !toolsWithNoStyling.includes(firstAnnotation.ToolName) && !(firstAnnotation instanceof Annotations.Model3DAnnotation) &&
     !firstAnnotation.isContentEditPlaceholder() &&
-    !firstAnnotation.isUncommittedContentEditPlaceholder();
+    !firstAnnotation.isUncommittedContentEditPlaceholder() &&
+    !isAppearanceSignature;
 
   const showRedactionButton = redactionEnabled && !multipleAnnotationsSelected && !includesFormFieldAnnotation;
 
@@ -374,7 +379,8 @@ const AnnotationPopup = () => {
     !includesFormFieldAnnotation &&
     !firstAnnotation.isContentEditPlaceholder() &&
     !(firstAnnotation instanceof Annotations.SoundAnnotation) && // TODO(Adam): Update this once SoundAnnotation tool is created.
-    !firstAnnotation.isUncommittedContentEditPlaceholder()
+    !firstAnnotation.isUncommittedContentEditPlaceholder() &&
+    !isAppearanceSignature
   );
 
   const onDatePickerShow = (isDatePickerShowed) => {
@@ -519,6 +525,17 @@ const AnnotationPopup = () => {
                       } else {
                         core.getAnnotationManager().trigger('annotationDoubleClicked', firstAnnotation);
                       }
+                      dispatch(actions.closeElement('annotationPopup'));
+                    }}
+                  />
+                )}
+                {isAppearanceSignature && (
+                  <ActionButton
+                    dataElement="annotationClearSignatureButton"
+                    title="action.clearSignature"
+                    img="icon-delete-line"
+                    onClick={() => {
+                      firstAnnotation.clearSignature(core.getAnnotationManager());
                       dispatch(actions.closeElement('annotationPopup'));
                     }}
                   />

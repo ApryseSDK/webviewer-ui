@@ -11,21 +11,32 @@ import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
-import { isToolDefaultStyleUpdateFromAnnotationPopupEnabled } from '../../apis/toolDefaultStyleUpdateFromAnnotationPopup';
 
 import './AnnotationStylePopup.scss';
 
 class AnnotationStylePopup extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
+    isToolDefaultStyleUpdateFromAnnotationPopupEnabled: PropTypes.bool,
     annotations: PropTypes.array.isRequired,
     style: PropTypes.object.isRequired,
     properties: PropTypes.object.isRequired,
     isRedaction: PropTypes.bool,
     isFreeText: PropTypes.bool,
     isEllipse: PropTypes.bool,
-    closeElement: PropTypes.func.isRequired,
+    closeElement: PropTypes.func.isRequired
   };
+
+  adjustFreeTextBoundingBox = (annotation) => {
+    if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+      const doc = core.getDocument();
+      const pageNumber = annotation['PageNumber'];
+      const pageInfo = doc.getPageInfo(pageNumber);
+      const pageMatrix = doc.getPageMatrix(pageNumber);
+      const pageRotation = doc.getPageRotation(pageNumber);
+      annotation.fitText(pageInfo, pageMatrix, pageRotation);
+    }
+  }
 
   handleSliderChange = (property, value) => {
     const { annotations } = this.props;
@@ -37,27 +48,28 @@ class AnnotationStylePopup extends React.Component {
   }
 
   handlePropertyChange = (property, value) => {
-    const { annotations } = this.props;
+    const { annotations, isToolDefaultStyleUpdateFromAnnotationPopupEnabled } = this.props;
 
     annotations.forEach((annotation) => {
       core.setAnnotationStyles(annotation, {
         [property]: value,
       });
-      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, property, value);
       }
+      this.adjustFreeTextBoundingBox(annotation);
     });
   }
 
   handleStyleChange = (property, value) => {
-    const { annotations } = this.props;
+    const { annotations, isToolDefaultStyleUpdateFromAnnotationPopupEnabled } = this.props;
 
     annotations.forEach((annotation) => {
       core.setAnnotationStyles(annotation, {
         [property]: value,
       });
 
-      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, property, value);
       }
     });
@@ -72,7 +84,7 @@ class AnnotationStylePopup extends React.Component {
   }
 
   handleLineStyleChange = (section, value) => {
-    const { annotations } = this.props;
+    const { annotations, isToolDefaultStyleUpdateFromAnnotationPopupEnabled } = this.props;
 
     annotations.forEach((annotation) => {
       let lineStyle = '';
@@ -90,7 +102,7 @@ class AnnotationStylePopup extends React.Component {
         lineStyle = 'StrokeStyle';
       }
 
-      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, lineStyle, value);
       }
 
@@ -168,6 +180,7 @@ class AnnotationStylePopup extends React.Component {
 
 const mapStateToProps = (state) => ({
   isDisabled: selectors.isElementDisabled(state, 'annotationStylePopup'),
+  isToolDefaultStyleUpdateFromAnnotationPopupEnabled: selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled(state)
 });
 
 const mapDispatchToProps = {

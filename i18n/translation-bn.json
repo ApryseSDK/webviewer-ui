@@ -71,14 +71,14 @@
     "viewShortCutKeysFor3D": "শর্টকাট কী দেখুন",
     "markAllRead": "সবগুলো পঠিত বলে সনাক্ত কর",
     "insertPage": "পৃষ্ঠা সন্নিবেশ",
-    "insertBlankPageAbove": "উপরে ফাঁকা পৃষ্ঠা ঢোকান",
-    "insertBlankPageBelow": "নীচে ফাঁকা পৃষ্ঠা ঢোকান",
+    "insert": "ঢোকান",
     "pageManipulation": "পৃষ্ঠা ম্যানিপুলেশন",
     "replace": "প্রতিস্থাপন করুন",
     "setDestination": "লক্ষ ঠিক করো",
     "showLess": "প্রদর্শন কম",
     "showMore": "...আরো",
     "chooseFile": "একটি ফাইল নির্বাচন করুন",
+    "browse": "ফাইল ব্রাউজ",
     "selectYourOption": "আপনার বিকল্প নির্বাচন করুন",
     "open": "খোলা",
     "deselectAll": "সব গুলো অনির্বাচিত কর",
@@ -94,7 +94,9 @@
     "viewFile": "নথি দেখ",
     "multiReplyAnnotations": "নির্বাচিত টীকাগুলির উত্তর দিন ({{count}})",
     "comparePages": "পৃষ্ঠাগুলির তুলনা করুন",
-    "startComparison": "তুলনা শুরু করুন"
+    "startComparison": "তুলনা শুরু করুন",
+    "back": "পেছনে",
+    "clearSignature": "সাফ স্বাক্ষর"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -211,7 +213,8 @@
       "open": "সমস্ত টীকা দেখুন",
       "close": "সমস্ত টীকা বন্ধ করুন"
     },
-    "comparePanel": "প্যানেল তুলনা করুন"
+    "comparePanel": "প্যানেল তুলনা করুন",
+    "watermarkPanel": "ওয়াটারমার্ক প্যানেল"
   },
   "message": {
     "toolsOverlayNoPresets": "কোনো প্রিসেট নেই",
@@ -269,7 +272,9 @@
     "embeddedFiles": "এমবেডেড ফাইল",
     "pageNum": "পৃষ্ঠা সংখ্যা",
     "viewBookmark": "পৃষ্ঠায় বুকমার্ক দেখুন",
-    "error": "ত্রুটি"
+    "error": "ত্রুটি",
+    "errorPageNumber": "অবৈধ পৃষ্ঠা নম্বর। সীমা হল",
+    "errorLoadingDocument": "এই নথিটি পড়তে একটি সমস্যা হয়েছে এবং কিছু পৃষ্ঠাগুলি প্রদর্শিত নাও হতে পারে৷ এটি নির্দেশ করে যে নথিটি নষ্ট হতে পারে। মোট পৃষ্ঠা সংখ্যা হল {{totalPageCount}} এবং প্রদর্শিত পৃষ্ঠাগুলির সংখ্যা হল {{displayedPageCount}}৷"
   },
   "option": {
     "type": {
@@ -375,7 +380,8 @@
       "qualityHigh": "উচ্চ",
       "includeAnnotations": "টীকা অন্তর্ভুক্ত করুন",
       "includeComments": "মন্তব্য অন্তর্ভুক্ত করুন",
-      "printSettings": "প্রিন্ট সেটিংস"
+      "printSettings": "প্রিন্ট সেটিংস",
+      "printGrayscale": "গ্রেস্কেল প্রিন্ট করুন"
     },
     "printInfo": {
       "author": "লেখক",
@@ -425,11 +431,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "এখানে আপনার ফাইল টানুন এবং ড্রপ করুন",
+      "selectFile": "এখানে আপনার ফাইল নির্বাচন করুন",
       "or": "বা",
+      "yourFiles": "আপনার ফাইল",
       "chooseFile": "একটি ফাইল নির্বাচন করুন",
       "localFile": "স্থানীয় ফাইল",
       "pageReplaceInputLabel": "পৃষ্ঠা(গুলি) প্রতিস্থাপন করুন",
-      "pageReplaceInputFromSource": "পৃষ্ঠা(গুলি) সহ"
+      "pageReplaceInputFromSource": "পৃষ্ঠা(গুলি) সহ",
+      "warning": {
+        "title": "প্রতিস্থাপন পৃষ্ঠা থেকে প্রস্থান করবেন?",
+        "message": "প্রস্থান করা আপনার এখন পর্যন্ত করা সমস্ত নির্বাচন বাতিল করবে। আপনি কি এখনও প্রস্থান করতে চান?"
+      }
     },
     "filterAnnotModal": {
       "color": "রঙ",
@@ -598,12 +610,11 @@
     "settings": {
       "settings": "সেটিংস",
       "general": "সাধারণ",
-      "keyboardShortcut": "কীবোর্ড শর্টকাট",
-      "advancedSetting": "অগ্রগামী ব্যবস্থা",
       "language": "ভাষা",
       "theme": "থিম",
       "darkMode": "ডার্ক মোড",
       "lightMode": "হালকা মোড",
+      "advancedSetting": "অগ্রগামী ব্যবস্থা",
       "viewing": "দেখা হচ্ছে",
       "disableFadePageNavigationComponent": "ফেইড পেজ নেভিগেশন কম্পোনেন্ট অক্ষম করুন",
       "disableFadePageNavigationComponentDesc": "পৃষ্ঠা নেভিগেশন কম্পোনেন্ট সবসময় স্ক্রিনে রাখুন। ডিফল্ট আচরণ হল নির্দিষ্ট সময়ের নিষ্ক্রিয়তার পরে এটিকে বিবর্ণ করা।",
@@ -628,7 +639,52 @@
       "disablePageDeletionConfirmationModal": "পৃষ্ঠা মুছে ফেলা নিশ্চিতকরণ মডেল অক্ষম করুন",
       "disablePageDeletionConfirmationModalDesc": "থাম্বনেইল ভিউ থেকে একটি পৃষ্ঠা মুছে ফেলার সময় নিশ্চিতকরণ মডেল অক্ষম করুন",
       "disableMultiselect": "মাল্টিসিলেক্ট অক্ষম করুন",
-      "disableMultiselectDesc": "বাম থাম্বনেল প্যানেলে একাধিক নির্বাচন অক্ষম করুন"
+      "disableMultiselectDesc": "বাম থাম্বনেল প্যানেলে একাধিক নির্বাচন অক্ষম করুন",
+      "miscellaneous": "বিবিধ",
+      "keyboardShortcut": "কীবোর্ড শর্টকাট",
+      "command": "আদেশ",
+      "description": "বর্ণনা",
+      "action": "কর্ম",
+      "rotateDocumentClockwise": "নথিটি ঘড়ির কাঁটার দিকে ঘোরান",
+      "rotateDocumentCounterclockwise": "নথিটিকে ঘড়ির কাঁটার বিপরীত দিকে ঘোরান",
+      "copyText": "নির্বাচিত পাঠ্য বা টীকা কপি করুন",
+      "pasteText": "পাঠ্য বা টীকা আটকান",
+      "undoChange": "একটি টীকা পরিবর্তন পূর্বাবস্থায় ফেরান৷",
+      "redoChange": "একটি টীকা পরিবর্তন পুনরায় করুন",
+      "openFile": "ফাইল পিকার খুলুন",
+      "openSearch": "অনুসন্ধান ওভারলে খুলুন",
+      "zoomIn": "প্রসারিত করো",
+      "zoomOut": "ছোট করা",
+      "fitScreenWidth": "একটি ছোট স্ক্রিনে (< 640px) পর্দার প্রস্থে ডকুমেন্টটি ফিট করুন, অন্যথায় এটি তার আসল আকারে ফিট করুন",
+      "print": "ছাপা",
+      "bookmarkOpenPanel": "দ্রুত একটি পৃষ্ঠা বুকমার্ক করুন এবং বুকমার্ক প্যানেল খুলুন",
+      "goToPreviousPage": "আগের পৃষ্ঠায় যান",
+      "goToNextPage": "পরবর্তী পৃষ্ঠায় যান",
+      "goToPreviousPageArrowUp": "একক লেআউট মোডে পূর্ববর্তী পৃষ্ঠায় যান (ArrowUp)",
+      "goToNextPageArrowDown": "একক লেআউট মোডে পরবর্তী পৃষ্ঠায় যান (ArrowDown)",
+      "holdSwitchPan": "প্যান মোডে স্যুইচ করতে ধরে রাখুন এবং আগের টুলে ফিরে যেতে ছেড়ে দিন",
+      "selectAnnotationEdit": "টীকা সম্পাদনা টুল নির্বাচন করুন",
+      "selectPan": "প্যান টুল নির্বাচন করুন",
+      "selectCreateArrowTool": "AnnotationCreateArrow টুলটি নির্বাচন করুন",
+      "selectCreateCalloutTool": "AnnotationCreateCallout টুলটি নির্বাচন করুন",
+      "selectEraserTool": "AnnotationEraser টুলটি নির্বাচন করুন",
+      "selectCreateFreeHandTool": "AnnotationCreateFreeHand টুলটি নির্বাচন করুন",
+      "selectCreateStampTool": "AnnotationCreateStamp টুলটি নির্বাচন করুন",
+      "selectCreateLineTool": "AnnotationCreateLine টুলটি নির্বাচন করুন",
+      "selectCreateStickyTool": "AnnotationCreateSticky টুলটি নির্বাচন করুন",
+      "selectCreateEllipseTool": "AnnotationCreateEllipse টুলটি নির্বাচন করুন",
+      "selectCreateRectangleTool": "AnnotationCreateRectangle টুলটি নির্বাচন করুন",
+      "selectCreateRubberStampTool": "AnnotationCreateRubberStamp টুলটি নির্বাচন করুন",
+      "selectCreateFreeTextTool": "AnnotationCreateFreeText টুলটি নির্বাচন করুন",
+      "openSignatureModal": "স্বাক্ষর মডেল বা ওভারলে খুলুন",
+      "selectCreateTextSquigglyTool": "AnnotationCreateTextSquiggly টুলটি নির্বাচন করুন",
+      "selectCreateTextHighlightTool": "AnnotationCreateTextHighlight টুলটি নির্বাচন করুন",
+      "selectCreateTextStrikeoutTool": "AnnotationCreateTextStrikeout টুলটি নির্বাচন করুন",
+      "selectCreateTextUnderlineTool": "AnnotationCreateTextUnderline টুলটি নির্বাচন করুন",
+      "editKeyboardShorcut": "কীবোর্ড শর্টকাট সম্পাদনা করুন",
+      "setShorcut": "শর্টকাট সেট করুন",
+      "pressKeyToSet": "নতুন শর্টকাট সেট করতে কী বা কী টিপুন।",
+      "shortcutAlreadyExists": "উপরের কীবোর্ড শর্টকাট ইতিমধ্যেই বিদ্যমান।"
     }
   },
   "warning": {
@@ -880,13 +936,16 @@
     "certifier": "প্রত্যয়িত",
     "certified": "প্রত্যয়িত",
     "Certified": "প্রত্যয়িত",
+    "Certification": "সার্টিফিকেশন",
     "signer": "চিহ্ন",
     "signed": "স্বাক্ষরিত",
     "Signed": "স্বাক্ষরিত",
+    "Signature": "স্বাক্ষর",
     "by": "দ্বারা",
     "on": "চালু",
     "disallowedChange": "অননুমোদিত পরিবর্তন: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "স্বাক্ষরবিহীন স্বাক্ষর ক্ষেত্র: {{fieldName}}",
+    "signatureProperties": "স্বাক্ষর বৈশিষ্ট্য",
     "trustVerification": {
       "current": "ব্যবহার করা যাচাইকরণের সময় ছিল বর্তমান সময়",
       "signing": "যাচাইয়ের সময় স্বাক্ষরকারীর কম্পিউটারের ঘড়ি থেকে",
@@ -937,6 +996,10 @@
       "noSignatureFields": "এই নথিতে কোন স্বাক্ষর ক্ষেত্র নেই",
       "certificateDownloadError": "একটি বিশ্বস্ত শংসাপত্র ডাউনলোড করার চেষ্টা করার সময় ত্রুটির সম্মুখীন হয়েছে৷",
       "localCertificateError": "একটি স্থানীয় শংসাপত্র পড়ার সাথে কিছু সমস্যা আছে"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} বৈধ৷",
+      "failed": "{{verificationType}} ব্যর্থ হয়েছে৷"
     }
   },
   "cropPopUp": {
@@ -991,6 +1054,13 @@
     "miscValuesHeader": "Усе",
     "emptyPanelMessage": "Выберыце элемент, каб праглядзець яго ўласцівасці."
   },
+  "watermarkPanel": {
+    "textWatermark": "টেক্সট ওয়াটারমার্ক",
+    "uploadImage": "চিত্র আপলোড",
+    "browse": "ব্রাউজ করুন",
+    "watermarkOptions": "ওয়াটারমার্ক বিকল্প",
+    "watermarks": "জলছাপ"
+  },
   "languageModal": {
     "selectLanguage": "ভাষা নির্বাচন কর"
   },
@@ -1008,6 +1078,7 @@
     "pageLocations": {
       "header": "পৃষ্ঠা অবস্থান",
       "specify": "পৃষ্ঠা নির্দিষ্ট করুন",
+      "specifyLocation": "পৃষ্ঠার অবস্থান নির্দিষ্ট করুন",
       "amount": "পৃষ্ঠার পরিমাণ",
       "total": "মোট",
       "pages": "পাতা"
@@ -1020,13 +1091,20 @@
         "halfLetter": "অর্ধেক চিঠি",
         "juniorLegal": "জুনিয়র আইনী",
         "custom": "কাস্টম"
-      }
+      },
+      "units": "ইউনিট"
     },
     "browse": "ফাইল ব্রাউজ",
     "fileSelected": {
       "title": "যোগ করার জন্য পৃষ্ঠা নির্বাচন করুন"
     },
-    "button": "পৃষ্ঠা(গুলি) যোগ করুন"
+    "button": "পৃষ্ঠা(গুলি) যোগ করুন",
+    "selectPages": "যোগ করার জন্য পৃষ্ঠা নির্বাচন করুন",
+    "page": "পাতা",
+    "warning": {
+      "title": "নতুন পৃষ্ঠা সন্নিবেশ থেকে প্রস্থান করবেন?",
+      "message": "প্রস্থান করা আপনার এখন পর্যন্ত করা সমস্ত নির্বাচন বাতিল করবে। আপনি কি এখনও প্রস্থান করতে চান?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "তুলনা করতে আপনার ফাইলটি এখানে টেনে আনুন",
@@ -1042,7 +1120,11 @@
       "change": "পরিবর্তন",
       "old": "পুরাতন",
       "new": "নতুন",
-      "page": "পাতা"
+      "page": "পাতা",
+      "textContent": "পাঠ্য বিষয়বস্তু",
+      "delete": "মুছে ফেলা",
+      "insert": "সন্নিবেশ",
+      "edit": "সম্পাদনা"
     }
   },
   "saveModal": {

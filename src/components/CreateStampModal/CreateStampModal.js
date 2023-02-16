@@ -12,9 +12,10 @@ import Button from 'components/Button';
 import './CreateStampModal.scss';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
+const fillColors = window.Core.Tools.RubberStampCreateTool['FILL_COLORS'];
 
 const CustomStampModal = () => {
-  const [state, setState] = useState({ font: 'Helvetica', bold: true });
+  const [state, setState] = useState({ font: 'Helvetica', bold: true, color: fillColors[0] });
   const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
   const [t] = useTranslation();
   const store = useStore();

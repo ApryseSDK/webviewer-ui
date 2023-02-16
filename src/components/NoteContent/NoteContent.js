@@ -453,6 +453,15 @@ const ContentArea = ({
 
       setTimeout(() => {
         // need setTimeout because textarea seem to rerender and unfocus
+        if (isMentionEnabled) {
+          textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
+          const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
+
+          if (ids.length) {
+            editor.setText(plainTextValue);
+          }
+        }
+
         if (textareaRef && textareaRef.current && autoFocusNoteOnAnnotationSelection) {
           textareaRef.current.focus();
 

@@ -1,10 +1,5 @@
-import React, {
-  useState,
-} from 'react';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -62,26 +57,6 @@ export const renderPermissionStatus = ({
   return <p>{content}</p>;
 };
 
-export const renderVerificationStatus = ({
-  isCertification,
-  verificationStatus,
-}) => {
-  const verificationType = isCertification
-    ? 'Certification'
-    : 'Signature';
-  return (
-    <div className="title">
-      <p>
-        {
-          verificationStatus
-            ? `${verificationType} is valid.`
-            : `${verificationType} verification failed.`
-        }
-      </p>
-    </div>
-  );
-};
-
 const propTypes = {
   name: PropTypes.string.isRequired,
   collapsible: PropTypes.bool.isRequired,
@@ -105,7 +80,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
     verificationStatus,
     permissionStatus,
     disallowedChanges,
-    trustVerificationResultString,
+    trustVerificationResultBoolean,
     timeOfTrustVerificationEnum,
     trustVerificationTime,
     badgeIcon,
@@ -201,15 +176,15 @@ const WidgetInfo = ({ name, collapsible, field }) => {
 
   const renderVerificationStatus = () => {
     const verificationType = isCertification
-      ? 'Certification'
-      : 'Signature';
+      ? translate('digitalSignatureVerification.Certification')
+      : translate('digitalSignatureVerification.Signature');
     return (
       <div className="title">
         <p>
           {
             verificationStatus
-              ? `${verificationType} is valid.`
-              : `${verificationType} verification failed.`
+              ? translate('digitalSignatureVerification.verificationStatus.valid', { verificationType })
+              : translate('digitalSignatureVerification.verificationStatus.failed', { verificationType })
           }
         </p>
       </div>
@@ -290,12 +265,14 @@ const WidgetInfo = ({ name, collapsible, field }) => {
           `Unexpected pdftron::PDF::VerificationOptions::TimeMode: ${timeOfTrustVerificationEnum}`
         );
     }
-    return trustVerificationResultString ? (
+    return (
       <div className="trust-verification-result">
         <p>
           {
             translate(
-              'digitalSignatureVerification.trustVerification.verifiedTrust'
+              trustVerificationResultBoolean
+                ? 'digitalSignatureVerification.trustVerification.verifiedTrust'
+                : 'digitalSignatureVerification.trustVerification.noTrustVerification'
             )
           }
         </p>
@@ -325,14 +302,6 @@ const WidgetInfo = ({ name, collapsible, field }) => {
         <p>{trustVerificationTime}</p>
         <p>{verificationTimeMessage}</p>
       </div>
-    ) : (
-      <p>
-        {
-          translate(
-            'digitalSignatureVerification.trustVerification.noTrustVerification'
-          )
-        }
-      </p>
     );
   };
 
@@ -454,7 +423,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
         tabIndex={0}
         className="link"
       >
-        <p className="bold underline">Signature Properties</p>
+        <p className="bold underline">{translate('digitalSignatureVerification.signatureProperties')}</p>
       </div>
     );
   };

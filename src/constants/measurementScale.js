@@ -62,7 +62,6 @@ export const precisionFractions = {
 export const numberRegex = /^\d*(\.\d*)?$/;
 export const fractionRegex = /^\d*(\s\d\/\d*)$/;
 export const pureFractionRegex = /^(\d\/\d*)*$/;
-export const scaleRegex = /(\d+(?:.\d+)?\s\w+)\W+(\d+(?:.\d+)?\s\w+)/;
 export const floatRegex = /^(\d+)?(\.)?(\d+)?$/;
 export const inFractionalRegex = /^((\d+) )?((\d+)\/)?(\d+)"$/;
 export const ftInFractionalRegex = /^((\d+)'-)?((\d+) )?((\d+)\/)?(\d+)"$/;

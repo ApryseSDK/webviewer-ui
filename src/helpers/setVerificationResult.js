@@ -1,4 +1,3 @@
-import core from 'core';
 import actions from 'actions';
 
 /**
@@ -46,13 +45,10 @@ import actions from 'actions';
  * Invalid.
  * @ignore
  */
-export default async (certificates, trustLists, dispatch) => {
-  const doc = core.getDocument();
-  if (doc) {
-    const verificationResult = await getVerificationResult(doc, certificates, trustLists);
-    dispatch(actions.setVerificationResult(verificationResult));
-    return verificationResult;
-  }
+export default async (doc, certificates, trustLists, currentLanguage, dispatch) => {
+  const verificationResult = await getVerificationResult(doc, certificates, trustLists, currentLanguage);
+  dispatch(actions.setVerificationResult(verificationResult));
+  return verificationResult;
 };
 
 /**
@@ -67,11 +63,12 @@ export default async (certificates, trustLists, dispatch) => {
  * @param {
  *   Array<Blob | ArrayBuffer | Int8Array | Uint8Array | Uint8ClampedArray>
  * } trustLists The Trust Lists to load for verification.
+ * @param {string} currentLanguage Current UI language
  * @returns {object} An object mapping the field name of each signature widget
  * to their verification results
  * @ignore
  */
-const getVerificationResult = async (doc, certificates, trustLists) => {
+const getVerificationResult = async (doc, certificates, trustLists, currentLanguage) => {
   const { PDFNet } = window;
   const { VerificationResult } = PDFNet;
   const {
@@ -265,18 +262,20 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
         const validSignerIdentity = trustStatus === TrustStatus.e_trust_verified;
 
         let trustVerificationResultString;
+        let trustVerificationResultBoolean;
         let timeOfTrustVerificationEnum;
         let trustVerificationTime;
         const hasTrustVerificationResult = await result.hasTrustVerificationResult();
         if (hasTrustVerificationResult) {
           const trustVerificationResult = await result.getTrustVerificationResult();
 
+          trustVerificationResultBoolean = await trustVerificationResult.wasSuccessful();
           trustVerificationResultString = await trustVerificationResult.getResultString();
           timeOfTrustVerificationEnum = await trustVerificationResult.getTimeOfTrustVerificationEnum();
 
           const epochTrustVerificationTime = await trustVerificationResult.getTimeOfTrustVerification();
           if (epochTrustVerificationTime) {
-            trustVerificationTime = formatDate(epochTrustVerificationTime);
+            trustVerificationTime = formatDate(epochTrustVerificationTime, currentLanguage);
           }
           const certPath = await trustVerificationResult.getCertPath();
           if (certPath.length) {
@@ -356,6 +355,7 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
           trustStatus,
           permissionStatus,
           disallowedChanges,
+          trustVerificationResultBoolean,
           trustVerificationResultString,
           timeOfTrustVerificationEnum,
           trustVerificationTime,
@@ -373,10 +373,7 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
           validAtTimeOfSigning,
         };
       } catch (e) {
-        /**
-         * @todo Add proper error handling when an error occurs?
-         */
-        // console.log(e);
+        console.error(e);
       }
     }
   });
@@ -395,24 +392,25 @@ const getVerificationResult = async (doc, certificates, trustLists) => {
  */
 const formatPDFNetDate = (date) => {
   const { year, month, day, hour, minute, second } = date;
+  const d = new Date(year, month, day, hour, minute, second);
 
-  return `${year}-${month}-${day}, ${hour}:${minute}:${second}`;
+  return d.toLocaleString();
 };
 
 /**
- * Converts an epoch time input to an instance of Javascript's Date class
+ * Converts an epoch time input to date in string
  *
- * @param {Number} epochTime The epoch time to be converted
- * @returns {Date} The converted epoch time
+ * @param {number} epochTime The epoch time to be converted
+ * @returns {string} The converted epoch time
  * @ignore
  */
-const formatDate = (epochTime) => {
+const formatDate = (epochTime, currentLanguage) => {
   const date = new Date(0);
   // Values greater than 59 are converted into their parent values
   // (i.e. seconds -> minutes -> hours -> day etc.)
   date.setUTCSeconds(epochTime);
 
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString(currentLanguage.replace('_', '-'), {
     year: 'numeric',
     month: 'long',
     weekday: 'long',

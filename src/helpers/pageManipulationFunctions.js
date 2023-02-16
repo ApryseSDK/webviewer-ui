@@ -54,12 +54,12 @@ const rotateCounterClockwise = (pageNumbers) => {
   rotatePages(pageNumbers, true);
 };
 
-const insertAbove = (pageNumbers) => {
-  core.insertBlankPages(pageNumbers, core.getPageWidth(pageNumbers[0]), core.getPageHeight(pageNumbers[0]));
+const insertAbove = (pageNumbers, width, height) => {
+  core.insertBlankPages(pageNumbers, width, height);
 };
 
-const insertBelow = (pageNumbers) => {
-  core.insertBlankPages(pageNumbers.map((i) => i + 1), core.getPageWidth(pageNumbers[0]), core.getPageHeight(pageNumbers[0]));
+const insertBelow = (pageNumbers, width, height) => {
+  core.insertBlankPages(pageNumbers.map((i) => i + 1), width, height);
 };
 
 const replace = (dispatch) => {
@@ -156,6 +156,38 @@ const noPagesSelectedWarning = (pageNumbers, dispatch) => {
   return false;
 };
 
+const exitPageInsertionWarning = (closeModal, dispatch) => {
+  const title = i18next.t('insertPageModal.warning.title');
+  const message = i18next.t('insertPageModal.warning.message');
+  const confirmBtnText = i18next.t('action.ok');
+
+  const warning = {
+    message,
+    title,
+    confirmBtnText,
+    onConfirm: closeModal,
+    keepOpen: ['leftPanel'],
+  };
+
+  dispatch(actions.showWarningMessage(warning));
+};
+
+const exitPageReplacementWarning = (closeModal, dispatch) => {
+  const title = i18next.t('option.pageReplacementModal.warning.title');
+  const message = i18next.t('option.pageReplacementModal.warning.message');
+  const confirmBtnText = i18next.t('action.ok');
+
+  const warning = {
+    message,
+    title,
+    confirmBtnText,
+    onConfirm: closeModal,
+    keepOpen: ['leftPanel'],
+  };
+
+  dispatch(actions.showWarningMessage(warning));
+};
+
 const redactPages = (pageNumbers, redactionStyles) => {
   core.applyRedactions(createPageRedactions(pageNumbers, redactionStyles));
 };
@@ -181,7 +213,7 @@ const createPageRedactions = (pageNumbers, redactionStyles) => {
   return annots;
 };
 
-const replacePages = async (sourceDoc, pagesToRemove, pagesToReplaceIntoDocument) => {
+const replacePages = async (sourceDocument, pagesToRemove, pagesToReplaceIntoDocument) => {
   const documentLoadedInViewer = core.getDocument();
   const pageCountOfLoadedDocument = documentLoadedInViewer.getPageCount();
   const pagesToRemoveFromOriginal = pagesToRemove.sort((a, b) => a - b);
@@ -189,14 +221,19 @@ const replacePages = async (sourceDoc, pagesToRemove, pagesToReplaceIntoDocument
   // If document to replace into has only one page, or we are replacing all pages
   // then we can insert pages at the end, and then remove the pages to avoid an error of removing all pages
   if (pageCountOfLoadedDocument === 1 || pagesToRemoveFromOriginal.length === pageCountOfLoadedDocument) {
-    await documentLoadedInViewer.insertPages(sourceDoc, pagesToReplaceIntoDocument);
+    await documentLoadedInViewer.insertPages(sourceDocument, pagesToReplaceIntoDocument);
     await documentLoadedInViewer.removePages(pagesToRemoveFromOriginal);
   } else {
     // If document to replace into has > 1 page we need insert the new pages at the spot of the first removed page
     // pagesToRemoveFromOriginal is sorted in ascending order. Interleaving pages would be complex.
     await documentLoadedInViewer.removePages(pagesToRemoveFromOriginal);
-    await documentLoadedInViewer.insertPages(sourceDoc, pagesToReplaceIntoDocument, pagesToRemoveFromOriginal[0]);
+    await documentLoadedInViewer.insertPages(sourceDocument, pagesToReplaceIntoDocument, pagesToRemoveFromOriginal[0]);
   }
+};
+
+const insertPages = async (sourceDocument, pagesToInsert, insertBeforeThisPage = null) => {
+  const documentLoadedInViewer = core.getDocument();
+  await documentLoadedInViewer.insertPages(sourceDocument, pagesToInsert, insertBeforeThisPage);
 };
 
 export {
@@ -213,4 +250,7 @@ export {
   redactPages,
   createPageRedactions,
   replacePages,
+  insertPages,
+  exitPageInsertionWarning,
+  exitPageReplacementWarning
 };

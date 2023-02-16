@@ -71,14 +71,14 @@
     "viewShortCutKeysFor3D": "查看快捷鍵",
     "markAllRead": "將所有內容標記為已讀",
     "insertPage": "頁面插入",
-    "insertBlankPageAbove": "在上方插入空白頁",
-    "insertBlankPageBelow": "在下方插入空白頁",
+    "insert": "插入",
     "pageManipulation": "頁面操作",
     "replace": "代替",
     "setDestination": "設置目的地",
     "showLess": "顯示較少",
     "showMore": "...更多的",
     "chooseFile": "選擇一個文件",
+    "browse": "瀏覽文件",
     "selectYourOption": "選擇您的選項",
     "open": "打開",
     "deselectAll": "取消全選",
@@ -94,7 +94,9 @@
     "viewFile": "查看文件",
     "multiReplyAnnotations": "回复所選註釋 ({{count}})",
     "comparePages": "比較頁面",
-    "startComparison": "開始比較"
+    "startComparison": "開始比較",
+    "back": "後退",
+    "clearSignature": "清晰的簽名"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -211,7 +213,8 @@
       "open": "查看所有註釋",
       "close": "關閉所有註釋"
     },
-    "comparePanel": "比較面板"
+    "comparePanel": "比較面板",
+    "watermarkPanel": "水印面板"
   },
   "message": {
     "toolsOverlayNoPresets": "無預設",
@@ -269,7 +272,9 @@
     "embeddedFiles": "嵌入文件",
     "pageNum": "頁碼",
     "viewBookmark": "在頁面上查看書籤",
-    "error": "錯誤"
+    "error": "錯誤",
+    "errorPageNumber": "頁碼無效。限制是",
+    "errorLoadingDocument": "閱讀本文檔時出現問題，某些頁面可能無法顯示。這表明文檔可能已損壞。總頁數為 {{totalPageCount}}，顯示的頁數為 {{displayedPageCount}}。"
   },
   "option": {
     "type": {
@@ -375,7 +380,8 @@
       "qualityHigh": "高",
       "includeAnnotations": "包括註釋",
       "includeComments": "包括評論",
-      "printSettings": "打印設置"
+      "printSettings": "打印設置",
+      "printGrayscale": "打印灰度"
     },
     "printInfo": {
       "author": "作者",
@@ -425,11 +431,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "將您的文件拖放到此處",
+      "selectFile": "在此處選擇您的文件",
       "or": "或者",
+      "yourFiles": "您的文件",
       "chooseFile": "選擇一個文件",
       "localFile": "本地文件",
       "pageReplaceInputLabel": "替換頁面",
-      "pageReplaceInputFromSource": "有頁面"
+      "pageReplaceInputFromSource": "有頁面",
+      "warning": {
+        "title": "退出替換頁面？",
+        "message": "退出將取消您迄今為止所做的所有選擇。你確定你還想退出嗎？"
+      }
     },
     "filterAnnotModal": {
       "color": "顏色",
@@ -598,12 +610,11 @@
     "settings": {
       "settings": "設置",
       "general": "一般的",
-      "keyboardShortcut": "鍵盤快捷鍵",
-      "advancedSetting": "高級設置",
       "language": "語",
       "theme": "主題",
       "darkMode": "黑暗模式",
       "lightMode": "燈光模式",
+      "advancedSetting": "高級設置",
       "viewing": "查看",
       "disableFadePageNavigationComponent": "禁用淡入淡出頁面導航組件",
       "disableFadePageNavigationComponentDesc": "始終保持頁面導航組件在屏幕上。默認行為是在一段時間不活動後將其淡化。",
@@ -628,7 +639,52 @@
       "disablePageDeletionConfirmationModal": "禁用頁面刪除確認模式",
       "disablePageDeletionConfirmationModalDesc": "從縮略圖視圖中刪除頁面時禁用確認模式",
       "disableMultiselect": "禁用多選",
-      "disableMultiselectDesc": "在左側縮略圖面板中禁用多選"
+      "disableMultiselectDesc": "在左側縮略圖面板中禁用多選",
+      "miscellaneous": "各種各樣的",
+      "keyboardShortcut": "鍵盤快捷鍵",
+      "command": "命令",
+      "description": "描述",
+      "action": "行動",
+      "rotateDocumentClockwise": "順時針旋轉文檔",
+      "rotateDocumentCounterclockwise": "逆時針旋轉文檔",
+      "copyText": "複製選定的文本或註釋",
+      "pasteText": "粘貼文本或註釋",
+      "undoChange": "撤消註釋更改",
+      "redoChange": "重做註釋更改",
+      "openFile": "打開文件選擇器",
+      "openSearch": "打開搜索疊加層",
+      "zoomIn": "放大",
+      "zoomOut": "縮小",
+      "fitScreenWidth": "在小屏幕（< 640px）中將文檔調整為屏幕寬度，否則將其調整為原始大小",
+      "print": "打印",
+      "bookmarkOpenPanel": "快速為頁面添加書籤並打開書籤面板",
+      "goToPreviousPage": "轉到上一頁",
+      "goToNextPage": "轉到下一頁",
+      "goToPreviousPageArrowUp": "以單一佈局模式轉到上一頁（ArrowUp）",
+      "goToNextPageArrowDown": "以單一佈局模式轉到下一頁（ArrowDown）",
+      "holdSwitchPan": "按住切換到平移模式並鬆開返回上一個工具",
+      "selectAnnotationEdit": "選擇註釋編輯工具",
+      "selectPan": "選擇平移工具",
+      "selectCreateArrowTool": "選擇 AnnotationCreateArrow 工具",
+      "selectCreateCalloutTool": "選擇 AnnotationCreateCallout 工具",
+      "selectEraserTool": "選擇 AnnotationEraser 工具",
+      "selectCreateFreeHandTool": "選擇 AnnotationCreateFreeHand 工具",
+      "selectCreateStampTool": "選擇 AnnotationCreateStamp 工具",
+      "selectCreateLineTool": "選擇 AnnotationCreateLine 工具",
+      "selectCreateStickyTool": "選擇 AnnotationCreateSticky 工具",
+      "selectCreateEllipseTool": "選擇 AnnotationCreateEllipse 工具",
+      "selectCreateRectangleTool": "選擇 AnnotationCreateRectangle 工具",
+      "selectCreateRubberStampTool": "選擇 AnnotationCreateRubberStamp 工具",
+      "selectCreateFreeTextTool": "選擇 AnnotationCreateFreeText 工具",
+      "openSignatureModal": "打開簽名模式或覆蓋",
+      "selectCreateTextSquigglyTool": "選擇 AnnotationCreateTextSquiggly 工具",
+      "selectCreateTextHighlightTool": "選擇 AnnotationCreateTextHighlight 工具",
+      "selectCreateTextStrikeoutTool": "選擇 AnnotationCreateTextStrikeout 工具",
+      "selectCreateTextUnderlineTool": "選擇 AnnotationCreateTextUnderline 工具",
+      "editKeyboardShorcut": "編輯快捷鍵",
+      "setShorcut": "設置快捷方式",
+      "pressKeyToSet": "按 鍵或 鍵設置新的快捷方式。",
+      "shortcutAlreadyExists": "上面的鍵盤快捷鍵已經存在。"
     }
   },
   "warning": {
@@ -880,13 +936,16 @@
     "certifier": "證明",
     "certified": "認證的",
     "Certified": "已認證",
+    "Certification": "認證",
     "signer": "標誌",
     "signed": "簽",
     "Signed": "簽",
+    "Signature": "簽名",
     "by": "通過",
     "on": "上",
     "disallowedChange": "不允許更改：{{type}}，objnum：{{objnum}}",
     "unsignedSignatureField": "未簽名的簽名字段：{{fieldName}}",
+    "signatureProperties": "簽名屬性",
     "trustVerification": {
       "current": "驗證時間為當前時間",
       "signing": "驗證時間是來自簽名者計算機上的時鐘",
@@ -937,6 +996,10 @@
       "noSignatureFields": "該文檔沒有簽名字段",
       "certificateDownloadError": "嘗試下載受信任的證書時遇到錯誤",
       "localCertificateError": "讀取本地證書存在一些問題"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} 有效。",
+      "failed": "{{verificationType}} 失敗。"
     }
   },
   "cropPopUp": {
@@ -991,6 +1054,13 @@
     "miscValuesHeader": "全部",
     "emptyPanelMessage": "選擇一個元素來查看它的屬性."
   },
+  "watermarkPanel": {
+    "textWatermark": "文字水印",
+    "uploadImage": "上傳圖片",
+    "browse": "瀏覽",
+    "watermarkOptions": "水印選項",
+    "watermarks": "水印"
+  },
   "languageModal": {
     "selectLanguage": "選擇語言"
   },
@@ -1008,6 +1078,7 @@
     "pageLocations": {
       "header": "頁面位置",
       "specify": "指定頁面",
+      "specifyLocation": "指定頁面位置",
       "amount": "頁數",
       "total": "全部的",
       "pages": "頁面"
@@ -1020,13 +1091,20 @@
         "halfLetter": "半個字母",
         "juniorLegal": "初級法律",
         "custom": "風俗"
-      }
+      },
+      "units": "單位"
     },
     "browse": "瀏覽文件",
     "fileSelected": {
       "title": "選擇要添加的頁面"
     },
-    "button": "添加頁面"
+    "button": "添加頁面",
+    "selectPages": "選擇要添加的頁面",
+    "page": "頁",
+    "warning": {
+      "title": "退出插入新頁面？",
+      "message": "退出將取消您迄今為止所做的所有選擇。你確定你還想退出嗎？"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "將您的文件拖放到此處進行比較",
@@ -1042,7 +1120,11 @@
       "change": "改變",
       "old": "老的",
       "new": "新的",
-      "page": "頁"
+      "page": "頁",
+      "textContent": "文字內容",
+      "delete": "刪除",
+      "insert": "插入",
+      "edit": "編輯"
     }
   },
   "saveModal": {

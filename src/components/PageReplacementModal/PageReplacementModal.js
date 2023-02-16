@@ -10,6 +10,8 @@ import { Swipeable } from 'react-swipeable';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
 import FileSelectedPanel from './FileSelectedPanel';
+import { exitPageReplacementWarning } from 'helpers/pageManipulationFunctions';
+import { useDispatch } from 'react-redux';
 
 import './PageReplacementModal.scss';
 
@@ -31,6 +33,8 @@ const PageReplacementModal = ({
 
   const fileInputId = 'pageReplacementFileInputId';
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (isOpen && selectedTabInternal !== selectedTab) {
       setSelectedTabInternal(selectedTab);
@@ -48,6 +52,8 @@ const PageReplacementModal = ({
     setSelectedTabInternal(null);
     setSource({});
   };
+
+  const closeModalWarning = () => exitPageReplacementWarning(closeThisModal, dispatch);
 
   const modalClass = classNames({
     Modal: true,
@@ -91,12 +97,19 @@ const PageReplacementModal = ({
     isSelectBtnDisabled = true;
   }
 
+  const clearDocument = () => {
+    setSelectedDoc(null);
+    setIsFileSelected(false);
+  };
+
   const renderFileSelectedPanel = () => {
     return (
       <FileSelectedPanel
         closeThisModal={closeThisModal}
+        clearLoadedFile={clearDocument}
         pageIndicesToReplace={selectedThumbnailPageIndexes}
         sourceDocument={selectedDoc}
+        closeModalWarning={closeModalWarning}
       />
     );
   };
@@ -107,35 +120,40 @@ const PageReplacementModal = ({
     return (
       <div className="container tabs" onMouseDown={(e) => e.stopPropagation()}>
         <div className="swipe-indicator" />
-        <div className="header">
-          {t('component.pageReplaceModalTitle')}
-          <Button
-            img={'icon-close'}
-            onClick={closeThisModal}
-            dataElement={'pageReplacementModalClose'}
-          />
-        </div>
         <Tabs className="page-replacement-tabs" id="pageReplacementModal">
-          <div className="tab-list">
-            {isFilePanelEnabled &&
-              <Tab dataElement="customFileListPanelButton">
+          <div className="header-container">
+            <div className="header">
+              {t('component.pageReplaceModalTitle')}
+              <Button
+                img={'icon-close'}
+                onClick={closeThisModal}
+                dataElement={'pageReplacementModalClose'}
+                aria-label="Cancel"
+              />
+            </div>
+            <div className="tab-list">
+              {isFilePanelEnabled &&
+                <>
+                  <Tab dataElement="customFileListPanelButton">
+                    <button className="tab-options-button">
+                      {t('option.pageReplacementModal.yourFiles')}
+                    </button>
+                  </Tab>
+                  <div className="tab-options-divider" />
+                </>
+              }
+              <Tab dataElement="urlInputPanelButton">
                 <button className="tab-options-button">
-                  {t('component.files')}
+                  {t('link.url')}
                 </button>
               </Tab>
-            }
-            <div className="tab-options-divider" />
-            <Tab dataElement="urlInputPanelButton">
-              <button className="tab-options-button">
-                {t('link.url')}
-              </button>
-            </Tab>
-            <div className="tab-options-divider" />
-            <Tab dataElement="filePickerPanelButton">
-              <button className="tab-options-button">
-                {t('option.pageReplacementModal.localFile')}
-              </button>
-            </Tab>
+              <div className="tab-options-divider" />
+              <Tab dataElement="filePickerPanelButton">
+                <button className="tab-options-button">
+                  {t('option.pageReplacementModal.localFile')}
+                </button>
+              </Tab>
+            </div>
           </div>
           <div className="page-replacement-divider" />
           <TabPanel dataElement="customFileListPanel">
@@ -160,7 +178,7 @@ const PageReplacementModal = ({
             </div>
           </TabPanel>
           <TabPanel dataElement="filePickerPanel">
-            <div className="panel-body">
+            <div className="panel-body upload">
               <FilePickerPanel
                 fileInputId={fileInputId}
                 onFileProcessed={(file) => fileProcessedHandler(file)}
@@ -174,6 +192,7 @@ const PageReplacementModal = ({
             className={classNames('modal-btn', { noFile: isSelectBtnDisabled })}
             onClick={() => (isSelectBtnDisabled ? null : handleSelection())}
             label={t('action.select')}
+            disabled={isSelectBtnDisabled}
           />
         </div>
       </div>
@@ -189,7 +208,7 @@ const PageReplacementModal = ({
       <div
         className={modalClass}
         data-element="pageReplacementModal"
-        onMouseDown={closeThisModal}
+        onMouseDown={isFileSelected ? closeModalWarning : closeThisModal}
         id="pageReplacementModal"
       >
         <FocusTrap locked={isOpen}>

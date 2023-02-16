@@ -3,8 +3,22 @@
   height: 100%;
   position: relative;
   border-radius: 4px;
-  background: var(--faded-component-background);
-  padding: 16px;
+
+  .file-picker-upload-container {
+    position: relative;
+    border: 1px dashed var(--modal-stroke-and-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    &.dragging {
+      background: var(--image-signature-drop-background);
+      border: 1px dashed var(--image-signature-drop-border);
+    }
+  }
 }
 
 .FilePickerPanel {
@@ -19,6 +33,8 @@
   .label-separator {
     margin: 10px;
   }
+
+  color: var(--faded-text);
 
   .modal-btn-file {
     border-radius: 4px;

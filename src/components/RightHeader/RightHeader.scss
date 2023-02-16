@@ -1,0 +1,8 @@
+@import '../../constants/styles';
+
+.RightHeader {
+  height: 100%;
+  width: $right-header-width;
+  min-width: fit-content;
+  padding: 2px;
+}

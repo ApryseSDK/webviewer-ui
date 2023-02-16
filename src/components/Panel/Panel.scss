@@ -1,0 +1,85 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.flx-Panel {
+  z-index: 65;
+  background-color: var(--panel-background);
+  display: flex;
+  position: fixed;
+  overflow: hidden;
+  transition: transform .3s ease-in-out;
+  max-width: calc(100% - 16px);
+
+  @include mobile {
+    max-width: 100%;
+  }
+
+  @include panel-height-fix;
+
+  @include tablet {
+    border-right: 1px solid var(--side-panel-border);
+  }
+
+  @include mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 95;
+  }
+
+  .flx-Panel-container {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+
+    @include mobile {
+      padding-top: 0px;
+      width: 100vw;
+      min-width: 100vw;
+
+      .close-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: 64px;
+        width: 100%;
+        padding-right: 5px;
+        top: 0;
+
+        .close-icon-container {
+          cursor: pointer;
+          .close-icon {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+    }
+  }
+
+  &.right {
+    right: 0;
+    border-left: 1px solid var(--side-panel-border);
+  }
+
+  &.left {
+    left: 0;
+    border-right: 1px solid var(--side-panel-border);
+  }
+
+  &.right.closed {
+    transform: translateX(100%);
+    left: auto;
+  }
+
+  &.left.closed {
+    transform: translateX(-100%);
+  }
+}
+
+.flx-Panel .ThumbnailsPanel,
+.flx-Panel .documentControlsContainer {
+  margin: 0 16px;
+}

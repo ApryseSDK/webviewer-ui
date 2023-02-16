@@ -18,6 +18,8 @@ const initialState = {
     tab: {
       insertPageModal: 'insertBlankPagePanelButton'
     },
+    selectedThumbnailPageIndexes: [0, 1],
+    currentPage: 1,
     getPageCount: () => 9,
     presetNewPageDimensions: {
       'Letter': {
@@ -31,8 +33,8 @@ const initialState = {
       'Junior legal': {
         'height': 5,
         'width': 8,
-      }
-    }
+      },
+    },
   },
 };
 
@@ -42,7 +44,7 @@ const store = configureStore({
 
 export const InsertBlankPagePanel = () => (
   <Provider store={store}>
-    <InsertPageModalComponent isOpen />
+    <InsertPageModalComponent isOpen loadedDocumentPageCount={9} />
   </Provider>
 );
 

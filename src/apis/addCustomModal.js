@@ -63,11 +63,9 @@ import actions from 'actions';
  * @param {object} options.body JSON object with title, className, style and children parameter
  * @param {object} options.footer JSON object with title, className, style and children parameter
  */
-function addCustomModal(store) {
-  return function(customModal) {
-    store.dispatch(actions.addCustomModal(customModal));
-  };
-}
+const addCustomModal = (store) => (customModal) => {
+  store.dispatch(actions.addCustomModal(customModal));
+};
 
 /**
  * @deprecated since version 8.5. Use [addCustomModal]{@link UI.addCustomModal} instead
@@ -78,15 +76,15 @@ function addCustomModal(store) {
  * @param {boolean} [options.disableEscapeKeyDown=false] Disable closing modal when user hit escape from keyboard
  * @param {UI.renderCustomModal} options.render Function rendering custom model contents
  */
-function setCustomModal(store) {
+const setCustomModal = (store) => (customModal) => {
   console.warn('\'setCustomModal\' deprecated since version 8.5. Please use UI.addCustomModal instead');
-  return addCustomModal(store);
-}
+  addCustomModal(store)(customModal);
+};
 
 /**
  * Callback that gets passed to `options.render` in {@link UI.addCustomModal addCustomModal}.
  * @callback UI.renderCustomModal
- * @returns {(HTMLElement|string)} Modal element. If string is returned, it will be displayed as is inside the modal
+ * @returns {(HTMLElement|string)} Modal element. If string is returned, it will be displayed as is inside the modal. Accepts React components as the return value as well.
  */
 
 export {

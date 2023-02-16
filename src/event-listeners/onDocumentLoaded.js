@@ -11,6 +11,7 @@ import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
 
 import onLayersUpdated from './onLayersUpdated';
+import i18next from 'i18next';
 
 let onFirstLoad = true;
 
@@ -72,7 +73,7 @@ export default (store, documentViewerKey) => async () => {
           const state = getState();
           const activeLeftPanel = selectors.getActiveLeftPanel(state);
           if (activeLeftPanel === 'layersPanel') {
-          // set the active left panel to another one that's not disabled so that users don't see a blank left panel
+            // set the active left panel to another one that's not disabled so that users don't see a blank left panel
             const nextActivePanel = getLeftPanelDataElements(state).find(
               (dataElement) => !selectors.isElementDisabled(state, dataElement),
             );
@@ -91,6 +92,9 @@ export default (store, documentViewerKey) => async () => {
       dispatch(actions.enableElement('cropToolGroupButton', PRIORITY_ONE));
       dispatch(actions.enableElement('contentEditButton', PRIORITY_ONE));
       dispatch(actions.enableElement('addParagraphToolGroupButton', PRIORITY_ONE));
+    } else if (docType === workerTypes.IMAGE) {
+      dispatch(actions.disableElement('contentEditButton', PRIORITY_ONE));
+      dispatch(actions.disableElement('addParagraphToolGroupButton', PRIORITY_ONE));
     } else {
       dispatch(actions.disableElement('cropToolGroupButton', PRIORITY_ONE));
       dispatch(actions.disableElement('contentEditButton', PRIORITY_ONE));
@@ -123,10 +127,16 @@ export default (store, documentViewerKey) => async () => {
         const main = async () => {
           try {
             checkIfDocumentClosed();
-            const pageCount = await pdfDoc.getPageCount();
+            const totalPageCount = await pdfDoc.getPageCount();
+            const displayedPageCount = core.getTotalPages();
             const pageLabels = [];
+            if (totalPageCount !== displayedPageCount) {
+              const errorLoadingDocument = i18next.t('message.errorLoadingDocument', { totalPageCount, displayedPageCount });
+              store.dispatch(actions.showErrorMessage(errorLoadingDocument));
+              throw new Error(`pdfDoc.getPageCount() returns ${totalPageCount} and this does not match with documentViewer.getPageCount() which returns ${displayedPageCount}.`);
+            }
 
-            for (let i = 1; i <= pageCount; i++) {
+            for (let i = 1; i <= totalPageCount; i++) {
               checkIfDocumentClosed();
               const pageLabel = await pdfDoc.getPageLabel(i);
               checkIfDocumentClosed();

@@ -98,14 +98,14 @@ class RubberStampOverlay extends React.Component {
             <div className="header tab-header">
               <div className="tab-list">
                 <Tab dataElement="standardStampPanelButton">
-                  <button className="tab-options-button">
-                    {this.props.t(`tool.Standard`)}
+                  <button className="tab-options-button" title={this.props.t('tool.Standard')}>
+                    {this.props.t('tool.Standard')}
                   </button>
               </Tab>
               <div className="tab-options-divider" />
                 <Tab dataElement="customStampPanelButton">
-                  <button className="tab-options-button">
-                    {this.props.t(`tool.Custom`)}
+                  <button className="tab-options-button" title={this.props.t('tool.Custom')}>
+                    {this.props.t('tool.Custom')}
                   </button>
                 </Tab>
               </div>

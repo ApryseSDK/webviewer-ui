@@ -1,11 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
+import actions from 'actions';
 import {
   deletePages,
   extractPages,
-  insertAbove,
-  insertBelow,
   noPagesSelectedWarning,
   replace,
   rotateClockwise,
@@ -28,18 +27,22 @@ function LeftPanelPageTabsContainer() {
     selectors.pageDeletionConfirmationModalEnabled(state),
     selectors.getMultiPageManipulationControlsItems(state),
     selectors.getMultiPageManipulationControlsItemsSmall(state),
-    selectors.getMultiPageManipulationControlsItemsLarge(state)
+    selectors.getMultiPageManipulationControlsItemsLarge(state),
   ]);
 
   const pageNumbers = selectedPageIndexes.map((index) => index + 1);
+
+  const openInsertPageModal = () => {
+    dispatch(actions.closeElement('pageManipulationOverlay'));
+    dispatch(actions.openElement('insertPageModal'));
+  };
 
   const onReplace = () => !noPagesSelectedWarning(pageNumbers, dispatch) && replace(dispatch);
   const onExtractPages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && extractPages(pageNumbers, dispatch);
   const onDeletePages = () => !noPagesSelectedWarning(pageNumbers, dispatch) && deletePages(pageNumbers, dispatch, deleteModalEnabled);
   const onRotateClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateClockwise(pageNumbers);
   const onRotateCounterClockwise = () => !noPagesSelectedWarning(pageNumbers, dispatch) && rotateCounterClockwise(pageNumbers);
-  const onInsertAbove = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertAbove(pageNumbers);
-  const onInsertBelow = () => !noPagesSelectedWarning(pageNumbers, dispatch) && insertBelow(pageNumbers);
+  const onInsert = () => !noPagesSelectedWarning(pageNumbers, dispatch) && openInsertPageModal();
   const moveToTop = () => !noPagesSelectedWarning(pageNumbers, dispatch) && movePagesToTop(pageNumbers);
   const moveToBottom = () => !noPagesSelectedWarning(pageNumbers, dispatch) && movePagesToBottom(pageNumbers);
 
@@ -65,8 +68,7 @@ function LeftPanelPageTabsContainer() {
       onDeletePages={onDeletePages}
       onRotateCounterClockwise={onRotateCounterClockwise}
       onRotateClockwise={onRotateClockwise}
-      onInsertAbove={onInsertAbove}
-      onInsertBelow={onInsertBelow}
+      onInsert={onInsert}
       pageNumbers={pageNumbers}
       multiPageManipulationControlsItemsSmall={multiPageManipulationControlsSmall}
     />;
@@ -79,8 +81,7 @@ function LeftPanelPageTabsContainer() {
       onDeletePages={onDeletePages}
       onRotateCounterClockwise={onRotateCounterClockwise}
       onRotateClockwise={onRotateClockwise}
-      onInsertAbove={onInsertAbove}
-      onInsertBelow={onInsertBelow}
+      onInsert={onInsert}
       moveToTop={moveToTop}
       moveToBottom={moveToBottom}
       pageNumbers={pageNumbers}
@@ -96,8 +97,7 @@ function LeftPanelPageTabsContainer() {
       onDeletePages={onDeletePages}
       onRotateCounterClockwise={onRotateCounterClockwise}
       onRotateClockwise={onRotateClockwise}
-      onInsertAbove={onInsertAbove}
-      onInsertBelow={onInsertBelow}
+      onInsert={onInsert}
       pageNumbers={pageNumbers}
       multiPageManipulationControlsItems={multiPageManipulationControlsItems}
     />

@@ -28,11 +28,9 @@ import setupLoadAnnotationsFromServer from 'helpers/setupLoadAnnotationsFromServ
 import eventHandler from 'helpers/eventHandler';
 import setupI18n from 'helpers/setupI18n';
 import setAutoSwitch from 'helpers/setAutoSwitch';
-import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
 import getHashParameters from 'helpers/getHashParameters';
-import hotkeysManager from 'helpers/hotkeysManager';
 import { addDocumentViewer } from 'helpers/documentViewerHelper';
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
 
@@ -139,7 +137,6 @@ if (window.CanvasRenderingContext2D) {
   logDebugInfo();
   const documentViewer = addDocumentViewer(1);
   defineWebViewerInstanceUIAPIs(store);
-  hotkeysManager.initialize(store);
 
   setupI18n(state);
   setEnableAnnotationNumbering(state);
@@ -218,7 +215,6 @@ if (window.CanvasRenderingContext2D) {
   });
 
   addEventHandlers();
-  setDefaultDisabledElements(store);
 }
 
 window.addEventListener('hashchange', () => {

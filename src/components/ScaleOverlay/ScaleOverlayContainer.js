@@ -30,11 +30,12 @@ const DEFAULT_CONTAINER_TOP_OFFSET = 85;
 const DEFAULT_CONTAINER_RIGHT_OFFSET = 35;
 const DEFAULT_WIDTH_RATIO = 0.666;
 const DEFAULT_DISTANCE = 10;
+const dataElement = 'scaleOverlayContainer';
 
 const ScaleOverlayContainer = () => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
-
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
   const [isOpen, setOpen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -175,7 +176,6 @@ const ScaleOverlayContainer = () => {
   }, []);
 
   const onApplyCalibration = useCallback((previousToolName, tempScale, isFractionalUnit) => {
-    setSelectedScale(new Scale(tempScale));
     dispatch(actions.updateCalibrationInfo({ isCalibration: false, tempScale, isFractionalUnit }));
     dispatch(actions.openElements([DataElements.SCALE_MODAL]));
     core.setToolMode(previousToolName);
@@ -187,22 +187,22 @@ const ScaleOverlayContainer = () => {
     dispatch(actions.setIsAddingNewScale(true));
   }, []);
 
-  return (
+  return !isDisabled && (
     <Draggable
       position={position}
       bounds={containerBounds()}
       onDrag={syncDraggablePosition}
       onStop={syncDraggablePosition}
-      cancel={'.scale-overlay-selector'}
+      cancel={'.scale-overlay-selector, .add-new-scale'}
     >
       <div
         className={classNames({
           Overlay: true,
           ScaleOverlay: true,
-          open: false,
+          open: isOpen,
           closed: !isOpen,
         })}
-        data-element="scaleOverlayContainer"
+        data-element={dataElement}
         style={style}
         ref={containerRef}
       >

@@ -5,11 +5,6 @@ import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import touchEventManager from 'helpers/TouchEventManager';
 import Choice from 'components/Choice';
-import {
-  isToolDefaultStyleUpdateFromAnnotationPopupEnabled,
-  enableToolDefaultStyleUpdateFromAnnotationPopup,
-  disableToolDefaultStyleUpdateFromAnnotationPopup
-} from '../../apis/toolDefaultStyleUpdateFromAnnotationPopup';
 
 import './AdvancedTab.scss';
 
@@ -24,7 +19,9 @@ const AdvancedTab = () => {
     isNotesPanelTextCollapsingEnabled,
     shouldClearSearchPanelOnClose,
     pageDeletionConfirmationModalEnabled,
-    isThumbnailSelectingPages
+    isThumbnailSelectingPages,
+    customSettings,
+    isToolDefaultStyleUpdateFromAnnotationPopupEnabled
   ] = useSelector((state) => [
     selectors.shouldFadePageNavigationComponent(state),
     selectors.isNoteSubmissionWithEnterEnabled(state),
@@ -33,7 +30,9 @@ const AdvancedTab = () => {
     selectors.isNotesPanelTextCollapsingEnabled(state),
     selectors.shouldClearSearchPanelOnClose(state),
     selectors.pageDeletionConfirmationModalEnabled(state),
-    selectors.isThumbnailSelectingPages(state)
+    selectors.isThumbnailSelectingPages(state),
+    selectors.getCustomSettings(state),
+    selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled(state)
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -56,7 +55,6 @@ const AdvancedTab = () => {
       !touchEventManager.useNativeScroll,
       (enable) => {
         touchEventManager.useNativeScroll = !enable;
-        forceUpdate();
       }
     )
   ];
@@ -65,11 +63,8 @@ const AdvancedTab = () => {
     createItem(
       t('option.settings.disableToolDefaultStyleUpdateFromAnnotationPopup'),
       t('option.settings.disableToolDefaultStyleUpdateFromAnnotationPopupDesc'),
-      !isToolDefaultStyleUpdateFromAnnotationPopupEnabled(),
-      (enable) => {
-        enable ? disableToolDefaultStyleUpdateFromAnnotationPopup() : enableToolDefaultStyleUpdateFromAnnotationPopup();
-        forceUpdate();
-      }
+      !isToolDefaultStyleUpdateFromAnnotationPopupEnabled,
+      (enable) => dispatch(actions.setToolDefaultStyleUpdateFromAnnotationPopupEnabled(!enable))
     )
   ];
 
@@ -131,12 +126,13 @@ const AdvancedTab = () => {
     [t('option.settings.annotations'), annotationsItems],
     [t('option.settings.notesPanel'), notesPanelItems],
     [t('option.settings.search'), searchItems],
-    [t('option.settings.pageManipulation'), pageManipulationItems]
+    [t('option.settings.pageManipulation'), pageManipulationItems],
+    [t('option.settings.miscellaneous'), customSettings]
   ];
 
   return (
     <>
-      {sections.map((section) => (
+      {sections.map((section) => ((section[1].length < 1) ? null : (
         <div className="setting-section" key={section[0]}>
           <div className="setting-label">{section[0]}</div>
           {section[1].map((item) => (
@@ -147,13 +143,16 @@ const AdvancedTab = () => {
               </div>
               <Choice
                 isSwitch
-                checked={item.isChecked}
-                onChange={(e) => item.onToggled(e.target.checked)}
+                checked={(typeof item.isChecked === 'function') ? item.isChecked() : item.isChecked}
+                onChange={(e) => {
+                  item.onToggled(e.target.checked);
+                  forceUpdate();
+                }}
               />
             </div>
           ))}
         </div>
-      ))}
+      )))}
     </>
   );
 };

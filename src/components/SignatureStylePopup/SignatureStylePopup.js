@@ -10,10 +10,10 @@ import actions from 'actions';
 import defaultTool from 'constants/defaultTool';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import DataElements from 'constants/dataElement';
-
-import './SignatureStylePopup.scss';
 import DataElementWrapper from 'components/DataElementWrapper';
 import SignatureModes from 'constants/signatureModes';
+
+import './SignatureStylePopup.scss';
 
 const SavedSignatures = (props) => {
   const {

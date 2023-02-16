@@ -71,23 +71,27 @@
 
 .mention {
   &__element {
-    width: 100%;
+    width: 170px;
     z-index: 9001 !important;
-  }
 
-  &__suggestions {
+    max-height: 200px;
+    // include default overflow-y for browsers that don't support 'overlay' (ie. Firefox)
+    overflow-y: auto;
+    overflow-y: overlay;
+    overflow-x: hidden;
     background-color: var(--component-background);
     border: 1px solid var(--border);
     border-radius: 4px;
+  }
 
+  &__suggestions {
     &__list {
-      width: 170px;
+      width: 100%;
       font-size: 14px;
       margin-top: 0px;
       padding-left: 0px !important;
       list-style: none;
       word-wrap: break-word;
-      border: 1px solid var(--border);
       border-radius: 4px;
     }
 

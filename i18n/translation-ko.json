@@ -71,14 +71,14 @@
     "viewShortCutKeysFor3D": "3D 단축키 보기",
     "markAllRead": "모두 읽은상태로 표시",
     "insertPage": "페이지 삽입",
-    "insertBlankPageAbove": "위에 빈페이지 삽입",
-    "insertBlankPageBelow": "아래에 빈페이지 삽입",
+    "insert": "끼워 넣다",
     "pageManipulation": "페이지 편집",
     "replace": "바꾸기",
     "setDestination": "목적지 설정",
     "showLess": "간략히 보기",
     "showMore": "더보기",
     "chooseFile": "파일선택",
+    "browse": "파일 찾아보기",
     "selectYourOption": "옵션을 선택하세요",
     "open": "열기",
     "deselectAll": "모두 선택해제",
@@ -94,7 +94,9 @@
     "viewFile": "파일보기",
     "multiReplyAnnotations": "선택한 주석에 답장({{count}}개)",
     "comparePages": "페이지 비교",
-    "startComparison": "비교 시작"
+    "startComparison": "비교 시작",
+    "back": "뒤",
+    "clearSignature": "명확한 서명"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -211,7 +213,8 @@
       "open": "모든 주석 보기",
       "close": "모든 주석 닫기"
     },
-    "comparePanel": "비교 패널"
+    "comparePanel": "비교 패널",
+    "watermarkPanel": "워터마크 패널"
   },
   "message": {
     "toolsOverlayNoPresets": "사전설정 없음",
@@ -269,7 +272,9 @@
     "embeddedFiles": "포함된 파일",
     "pageNum": "페이지 번호",
     "viewBookmark": "페이지에서 책갈피 보기",
-    "error": "오류"
+    "error": "오류",
+    "errorPageNumber": "잘못된 페이지 번호입니다. 한도",
+    "errorLoadingDocument": "이 문서를 읽는 동안 문제가 발생했으며 일부 페이지가 표시되지 않을 수 있습니다. 이는 문서가 손상되었을 수 있음을 나타냅니다. 총 페이지 수는 {{totalPageCount}}이고 표시되는 페이지 수는 {{displayedPageCount}}입니다."
   },
   "option": {
     "type": {
@@ -375,7 +380,8 @@
       "qualityHigh": "최상",
       "includeAnnotations": "주석포함",
       "includeComments": "댓글포함",
-      "printSettings": "인쇄 설정"
+      "printSettings": "인쇄 설정",
+      "printGrayscale": "인쇄 그레이스케일"
     },
     "printInfo": {
       "author": "저자",
@@ -425,11 +431,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "여기에 드래그앤드롭 하세요.",
+      "selectFile": "여기에서 파일 선택",
       "or": "또는",
+      "yourFiles": "내 파일",
       "chooseFile": "파일 선택",
       "localFile": "업로드",
       "pageReplaceInputLabel": "페이지 교체",
-      "pageReplaceInputFromSource": "페이지 포함"
+      "pageReplaceInputFromSource": "페이지 포함",
+      "warning": {
+        "title": "교체 페이지를 종료하시겠습니까?",
+        "message": "종료하면 지금까지 선택한 모든 항목이 취소됩니다. 여전히 종료하시겠습니까?"
+      }
     },
     "filterAnnotModal": {
       "color": "색상",
@@ -598,12 +610,11 @@
     "settings": {
       "settings": "설정",
       "general": "일반적인",
-      "keyboardShortcut": "키보드 단축키",
-      "advancedSetting": "고급 설정",
       "language": "언어",
       "theme": "주제",
       "darkMode": "다크 모드",
       "lightMode": "라이트 모드",
+      "advancedSetting": "고급 설정",
       "viewing": "보기",
       "disableFadePageNavigationComponent": "페이드 페이지 탐색 구성 요소 비활성화",
       "disableFadePageNavigationComponentDesc": "항상 페이지 탐색 구성 요소를 화면에 유지하십시오. 기본 동작은 일정 시간 동안 사용하지 않으면 페이드하는 것입니다.",
@@ -628,7 +639,52 @@
       "disablePageDeletionConfirmationModal": "페이지 삭제 확인 모달 비활성화",
       "disablePageDeletionConfirmationModalDesc": "썸네일 보기에서 페이지를 삭제할 때 확인 모달 비활성화",
       "disableMultiselect": "다중 선택 비활성화",
-      "disableMultiselectDesc": "왼쪽 축소판 패널에서 다중 선택 비활성화"
+      "disableMultiselectDesc": "왼쪽 축소판 패널에서 다중 선택 비활성화",
+      "miscellaneous": "여러 가지 잡다한",
+      "keyboardShortcut": "키보드 단축키",
+      "command": "명령",
+      "description": "설명",
+      "action": "동작",
+      "rotateDocumentClockwise": "문서를 시계 방향으로 회전",
+      "rotateDocumentCounterclockwise": "문서를 시계 반대 방향으로 회전",
+      "copyText": "선택한 텍스트 또는 주석 복사",
+      "pasteText": "텍스트 또는 주석 붙여넣기",
+      "undoChange": "주석 변경 취소",
+      "redoChange": "주석 변경 다시 실행",
+      "openFile": "파일 선택기 열기",
+      "openSearch": "검색 오버레이 열기",
+      "zoomIn": "확대",
+      "zoomOut": "축소",
+      "fitScreenWidth": "작은 화면(< 640px)에서 문서를 화면 너비에 맞춥니다. 그렇지 않으면 원본 크기에 맞춥니다.",
+      "print": "인쇄",
+      "bookmarkOpenPanel": "페이지를 빠르게 북마크하고 북마크 패널 열기",
+      "goToPreviousPage": "이전 페이지로 이동",
+      "goToNextPage": "다음 페이지로 이동",
+      "goToPreviousPageArrowUp": "단일 레이아웃 모드에서 이전 페이지로 이동(위쪽 화살표)",
+      "goToNextPageArrowDown": "단일 레이아웃 모드에서 다음 페이지로 이동(아래 화살표)",
+      "holdSwitchPan": "길게 눌러 팬 모드로 전환하고 손을 떼면 이전 도구로 돌아갑니다.",
+      "selectAnnotationEdit": "AnnotationEdit 도구를 선택합니다.",
+      "selectPan": "팬 도구 선택",
+      "selectCreateArrowTool": "AnnotationCreateArrow 도구를 선택합니다.",
+      "selectCreateCalloutTool": "AnnotationCreateCallout 도구를 선택합니다.",
+      "selectEraserTool": "AnnotationEraser 도구를 선택합니다.",
+      "selectCreateFreeHandTool": "AnnotationCreateFreeHand 도구를 선택합니다.",
+      "selectCreateStampTool": "AnnotationCreateStamp 도구를 선택합니다.",
+      "selectCreateLineTool": "AnnotationCreateLine 도구를 선택합니다.",
+      "selectCreateStickyTool": "AnnotationCreateSticky 도구를 선택합니다.",
+      "selectCreateEllipseTool": "AnnotationCreateEllipse 도구를 선택합니다.",
+      "selectCreateRectangleTool": "AnnotationCreateRectangle 도구를 선택합니다.",
+      "selectCreateRubberStampTool": "AnnotationCreateRubberStamp 도구를 선택합니다.",
+      "selectCreateFreeTextTool": "AnnotationCreateFreeText 도구를 선택합니다.",
+      "openSignatureModal": "서명 모달 또는 오버레이 열기",
+      "selectCreateTextSquigglyTool": "AnnotationCreateTextSquiggly 도구를 선택합니다.",
+      "selectCreateTextHighlightTool": "AnnotationCreateTextHighlight 도구를 선택합니다.",
+      "selectCreateTextStrikeoutTool": "AnnotationCreateTextStrikeout 도구를 선택합니다.",
+      "selectCreateTextUnderlineTool": "AnnotationCreateTextUnderline 도구를 선택합니다.",
+      "editKeyboardShorcut": "키보드 단축키 편집",
+      "setShorcut": "바로 가기 설정",
+      "pressKeyToSet": "새 바로 가기를 설정하려면 키 또는 키를 누르십시오.",
+      "shortcutAlreadyExists": "위의 키보드 단축키가 이미 존재합니다."
     }
   },
   "warning": {
@@ -880,13 +936,16 @@
     "certifier": "증명자",
     "certified": "인증",
     "Certified": "인증됨",
+    "Certification": "인증",
     "signer": "서명자",
     "signed": "서명",
     "Signed": "서명됨",
+    "Signature": "서명",
     "by": "으로",
     "on": "의 위에",
     "disallowedChange": "허용되지 않는 변경 : {{type}}, objnum : {{objnum}}",
     "unsignedSignatureField": "서명되지 않은 서명필드: {{fieldName}}",
+    "signatureProperties": "서명 속성",
     "trustVerification": {
       "current": "사용된 확인시간은 현재시간입니다.",
       "signing": "확인시간은 서명자의 컴퓨터시계에 있습니다.",
@@ -937,6 +996,10 @@
       "noSignatureFields": "서명 필드가 없습니다.",
       "certificateDownloadError": "인증서 다운로드 오류",
       "localCertificateError": "로컬인증서 오류"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}}이(가) 유효합니다.",
+      "failed": "{{verificationType}} 실패."
     }
   },
   "cropPopUp": {
@@ -991,6 +1054,13 @@
     "miscValuesHeader": "모두",
     "emptyPanelMessage": "속성을 보려면 요소를 선택하십시오."
   },
+  "watermarkPanel": {
+    "textWatermark": "텍스트 워터마크",
+    "uploadImage": "이미지 업로드",
+    "browse": "검색",
+    "watermarkOptions": "워터마크 옵션",
+    "watermarks": "워터마크"
+  },
   "languageModal": {
     "selectLanguage": "언어 선택"
   },
@@ -1008,6 +1078,7 @@
     "pageLocations": {
       "header": "페이지 위치",
       "specify": "페이지 지정",
+      "specifyLocation": "페이지 위치 지정",
       "amount": "페이지 수",
       "total": "총",
       "pages": "페이지"
@@ -1020,13 +1091,20 @@
         "halfLetter": "반자",
         "juniorLegal": "주니어 법률",
         "custom": "관습"
-      }
+      },
+      "units": "단위"
     },
     "browse": "파일 찾아보기",
     "fileSelected": {
       "title": "추가할 페이지 선택"
     },
-    "button": "페이지 추가"
+    "button": "페이지 추가",
+    "selectPages": "추가할 페이지 선택",
+    "page": "페이지",
+    "warning": {
+      "title": "새 페이지 삽입을 종료하시겠습니까?",
+      "message": "종료하면 지금까지 선택한 모든 항목이 취소됩니다. 여전히 종료하시겠습니까?"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "비교하려면 여기에 파일을 끌어다 놓습니다.",
@@ -1042,7 +1120,11 @@
       "change": "변화",
       "old": "오래된",
       "new": "새로운",
-      "page": "페이지"
+      "page": "페이지",
+      "textContent": "텍스트 콘텐츠",
+      "delete": "삭제",
+      "insert": "끼워 넣다",
+      "edit": "편집하다"
     }
   },
   "saveModal": {

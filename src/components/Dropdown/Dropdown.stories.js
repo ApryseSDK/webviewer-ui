@@ -57,3 +57,78 @@ export function ImageDropdown() {
     </ReduxProvider>
   );
 }
+
+export function DropdownWithInput() {
+  const translationPrefix = 'option.notesOrder';
+  const items = ['Position', 'Time', 'Status', 'Author', 'Type'];
+  const [currentSelectionKey, setCurrentSelectionKey] = React.useState(items[0]);
+  function onClickItem(key) {
+    setCurrentSelectionKey(key);
+  }
+  return (
+    <ReduxProvider store={createStore((state = {}) => state)}>
+      <div style={{ width: 100 }}>
+        <Dropdown
+          onClickItem={onClickItem}
+          items={items}
+          translationPrefix={translationPrefix}
+          currentSelectionKey={currentSelectionKey}
+          hasInput={true}
+        />
+      </div>
+    </ReduxProvider>
+  );
+}
+
+export function DropdownWithCustomDisplay() {
+  const translationPrefix = 'option.notesOrder';
+  const items = ['Position', 'Time', 'Status', 'Author', 'Type'];
+  const [currentSelectionKey, setCurrentSelectionKey] = React.useState(items[0]);
+  function onClickItem(key) {
+    setCurrentSelectionKey(key);
+  }
+  return (
+    <ReduxProvider store={createStore((state = {}) => state)}>
+      <div style={{ width: 100 }}>
+        <Dropdown
+          onClickItem={onClickItem}
+          items={items}
+          translationPrefix={translationPrefix}
+          currentSelectionKey={currentSelectionKey}
+          displayButton={(isOpen) => (
+            <button>
+              Test display
+            </button>
+          )}
+        />
+      </div>
+    </ReduxProvider>
+  );
+}
+
+export function DropdownWithCustomDisplayAndDisabled() {
+  const translationPrefix = 'option.notesOrder';
+  const items = ['Position', 'Time', 'Status', 'Author', 'Type'];
+  const [currentSelectionKey, setCurrentSelectionKey] = React.useState(items[0]);
+  function onClickItem(key) {
+    setCurrentSelectionKey(key);
+  }
+  return (
+    <ReduxProvider store={createStore((state = {}) => state)}>
+      <div style={{ width: 100 }}>
+        <Dropdown
+          onClickItem={onClickItem}
+          items={items}
+          translationPrefix={translationPrefix}
+          currentSelectionKey={currentSelectionKey}
+          disabled
+          displayButton={() => (
+            <button disabled>
+              Test display
+            </button>
+          )}
+        />
+      </div>
+    </ReduxProvider>
+  );
+}

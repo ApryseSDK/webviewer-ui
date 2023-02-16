@@ -19,6 +19,20 @@ function PageManipulationControlsContainer(props) {
     selectors.pageDeletionConfirmationModalEnabled(state),
   ]);
 
+  const openInsertPageModal = () => {
+    dispatch(actions.closeElement('pageManipulationOverlay'));
+    dispatch(actions.openElement('insertPageModal'));
+  };
+
+  const onInsert = () => {
+    if (warn) {
+      !noPagesSelectedWarning(pageNumbers, dispatch) && openInsertPageModal();
+    } else {
+      openInsertPageModal();
+    }
+    isMobile() && dispatch(actions.closeElement('pageManipulationOverlay'));
+  };
+
   const onReplace = () => {
     if (warn) {
       !noPagesSelectedWarning(pageNumbers, dispatch) && replace(dispatch);
@@ -46,6 +60,7 @@ function PageManipulationControlsContainer(props) {
 
   return (
     <PageManipulationControls
+      insertPages={onInsert}
       deletePages={onDelete}
       extractPages={onExtract}
       replacePages={onReplace}

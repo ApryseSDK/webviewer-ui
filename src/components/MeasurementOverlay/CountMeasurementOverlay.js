@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
 import core from 'core';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 
 CountMeasurementOverlay.propTypes = {
-  annotation: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired,
+  annotation: PropTypes.object.isRequired
 };
 
 function CountMeasurementOverlay(props) {
   const annotationKey = mapAnnotationToKey(props.annotation);
   const { icon } = getDataWithKey(annotationKey);
-  const { t } = props;
+  const { t } = useTranslation();
   const annotationList = core.getAnnotationsList();
 
   const measurementAnnotationsList = annotationList.filter((annotation) => {
@@ -34,4 +33,4 @@ function CountMeasurementOverlay(props) {
   );
 }
 
-export default withTranslation()(CountMeasurementOverlay);
+export default CountMeasurementOverlay;

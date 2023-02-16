@@ -1,3 +1,3 @@
-import InsertUploadedPagePanel from './InsertUploadedPagePanel';
+import InsertUploadedPagePanel from './InsertUploadedPagePanelContainer';
 
 export default InsertUploadedPagePanel;

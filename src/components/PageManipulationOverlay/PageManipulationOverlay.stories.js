@@ -28,8 +28,6 @@ const testProps = {
     { type: 'divider' },
     { dataElement: 'pageRotationControls' },
     { type: 'divider' },
-    { dataElement: 'pageInsertionControls' },
-    { type: 'divider' },
     { dataElement: 'pageManipulationControls' },
   ]
 };

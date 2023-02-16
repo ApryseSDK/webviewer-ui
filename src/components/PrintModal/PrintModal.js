@@ -67,6 +67,7 @@ const PrintModal = () => {
   const [includeAnnotations, setIncludeAnnotations] = useState(true);
   const [includeComments, setIncludeComments] = useState(false);
   const [maintainPageOrientation, setMaintainPageOrientation] = useState(false);
+  const [isGrayscale, setIsGrayscale] = useState(false);
 
   useEffect(() => {
     if (defaultPrintOptions) {
@@ -196,6 +197,8 @@ const PrintModal = () => {
       undefined,
       currentView.current?.checked,
       language,
+      false,
+      isGrayscale
     );
     createPages.forEach(async (pagePromise) => {
       await pagePromise;
@@ -313,6 +316,16 @@ const PrintModal = () => {
                     disabled={isPrinting}
                     onChange={() => setIncludeAnnotations((prevState) => !prevState)}
                     checked={includeAnnotations}
+                    center
+                  />
+                  <Choice
+                    dataElement="grayscalePrintOption"
+                    id="print-grayscale"
+                    name="grayscale"
+                    label={t('option.print.printGrayscale')}
+                    disabled={isPrinting}
+                    onChange={() => setIsGrayscale((prevState) => !prevState)}
+                    checked={isGrayscale}
                     center
                   />
                 </form>

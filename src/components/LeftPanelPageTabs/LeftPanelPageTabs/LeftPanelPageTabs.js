@@ -36,13 +36,13 @@ function InitialLeftPanelPageTabs({ children, pageNumbers, multiPageManipulation
 
 
 function LeftPanelPageTabs(props) {
-  const { pageNumbers, onRotateClockwise, onRotateCounterClockwise, onInsertAbove, onInsertBelow, onReplace, onExtractPages, onDeletePages, multiPageManipulationControlsItems } = props;
+  const { pageNumbers, onRotateClockwise, onRotateCounterClockwise, onInsert, onReplace, onExtractPages, onDeletePages, multiPageManipulationControlsItems } = props;
   return (
     <div className={'PageControlContainer root'}>
       <InitialLeftPanelPageTabs pageNumbers={pageNumbers} multiPageManipulationControlsItems={multiPageManipulationControlsItems} >
         <LeftPanelPageTabsRotate onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise} dataElement="leftPanelPageTabsRotate" />
-        <LeftPanelPageTabsInsert onInsertAbove={onInsertAbove} onInsertBelow={onInsertBelow} dataElement="leftPanelPageTabsInsert" />
-        <LeftPanelPageTabsOperations onReplace={onReplace} onExtractPages={onExtractPages} onDeletePages={onDeletePages} dataElement="leftPanelPageTabsOperations" />
+        <LeftPanelPageTabsInsert onInsert={onInsert} dataElement="leftPanelPageTabsInsert" />
+        <LeftPanelPageTabsOperations onInsert={onInsert} onReplace={onReplace} onExtractPages={onExtractPages} onDeletePages={onDeletePages} dataElement="leftPanelPageTabsOperations" />
         <LeftPanelPageTabsMore dataElement="leftPanelPageTabsMore" />
       </InitialLeftPanelPageTabs>
     </div>

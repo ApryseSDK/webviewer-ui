@@ -34,7 +34,6 @@
 
     .add-new-scale {
       margin-left: 1.3rem;
-      width: 7.32rem;
       height: 2rem;
       background-color: transparent;
       color: #3183c8;
@@ -62,18 +61,15 @@
         min-width: 9rem;
         position: relative;
         background-color: transparent;
-        border: solid 1px;
-        border-color: #cfd4da;
+        border: solid 1px var(--border);
+        border-radius: 0.3rem;
         line-height: 2rem;
-        padding: 0px;
-        padding-left: 0.5rem;
+        padding: 0 32px 0 .5rem;
         color: #485056;
         font-weight: normal;
         font-size: 0.8rem;
         text-align: left;
-        border-radius: 0.3rem;
         text-overflow: ellipsis;
-        padding-right: 32px;
         white-space: nowrap;
       }
 
@@ -197,7 +193,7 @@
         margin-right: 1px;
       }
 
-      .scale-overlay-list.visible {
+      .scale-overlay-list {
         display: block;
         pointer-events: all;
         transform: translateY(0px);
@@ -207,7 +203,7 @@
 
   .scale-overlay-content {
     width: 192px;
-    height: 32px;
+    min-height: 32px;
     font-weight: 400;
     font-size: 13px;
     line-height: 16px;

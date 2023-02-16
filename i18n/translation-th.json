@@ -71,14 +71,14 @@
     "viewShortCutKeysFor3D": "ดูปุ่มลัด",
     "markAllRead": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว",
     "insertPage": "การแทรกหน้า",
-    "insertBlankPageAbove": "แทรกหน้าว่างด้านบน",
-    "insertBlankPageBelow": "แทรกหน้าว่างด้านล่าง",
+    "insert": "แทรก",
     "pageManipulation": "การจัดการหน้า",
     "replace": "แทนที่",
     "setDestination": "กำหนดปลายทาง",
     "showLess": "แสดงน้อยลง",
     "showMore": "...มากกว่า",
     "chooseFile": "เลือกไฟล์",
+    "browse": "เรียกดูไฟล์",
     "selectYourOption": "เลือกตัวเลือกของคุณ",
     "open": "เปิด",
     "deselectAll": "ยกเลิกการเลือกทั้งหมด",
@@ -94,7 +94,9 @@
     "viewFile": "ไฟล์มุมมอง",
     "multiReplyAnnotations": "ตอบกลับคำอธิบายประกอบที่เลือก ({{จำนวน}})",
     "comparePages": "เปรียบเทียบหน้า",
-    "startComparison": "เริ่มการเปรียบเทียบ"
+    "startComparison": "เริ่มการเปรียบเทียบ",
+    "back": "กลับ",
+    "clearSignature": "ลายเซ็นที่ชัดเจน"
   },
   "annotation": {
     "areaMeasurement": "พื้นที่",
@@ -211,7 +213,8 @@
       "open": "ดูคำอธิบายประกอบทั้งหมด",
       "close": "ปิดคำอธิบายประกอบทั้งหมด"
     },
-    "comparePanel": "เปรียบเทียบแผง"
+    "comparePanel": "เปรียบเทียบแผง",
+    "watermarkPanel": "แผงลายน้ำ"
   },
   "message": {
     "toolsOverlayNoPresets": "ไม่มีสถานีที่ตั้งไว้",
@@ -269,7 +272,9 @@
     "embeddedFiles": "ไฟล์ที่ฝังตัว",
     "pageNum": "เลขหน้า",
     "viewBookmark": "ดูบุ๊กมาร์กบนเพจ",
-    "error": "ข้อผิดพลาด"
+    "error": "ข้อผิดพลาด",
+    "errorPageNumber": "หมายเลขหน้าไม่ถูกต้อง ขีดจำกัดคือ",
+    "errorLoadingDocument": "เกิดปัญหาในการอ่านเอกสารนี้และบางหน้าอาจไม่แสดง นี่แสดงว่าเอกสารอาจเสียหาย จำนวนหน้าทั้งหมดคือ {{totalPageCount}} และจำนวนหน้าที่แสดงคือ {{displayedPageCount}}"
   },
   "option": {
     "type": {
@@ -375,7 +380,8 @@
       "qualityHigh": "สูง",
       "includeAnnotations": "รวมคำอธิบายประกอบ",
       "includeComments": "รวมความคิดเห็น",
-      "printSettings": "การตั้งค่าการพิมพ์"
+      "printSettings": "การตั้งค่าการพิมพ์",
+      "printGrayscale": "พิมพ์โทนสีเทา"
     },
     "printInfo": {
       "author": "ผู้เขียน",
@@ -425,11 +431,17 @@
     },
     "pageReplacementModal": {
       "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่",
+      "selectFile": "เลือกไฟล์ของคุณที่นี่",
       "or": "หรือ",
+      "yourFiles": "ไฟล์ของคุณ",
       "chooseFile": "เลือกไฟล์",
       "localFile": "ไฟล์ในเครื่อง",
       "pageReplaceInputLabel": "แทนที่หน้า",
-      "pageReplaceInputFromSource": "กับเพจ"
+      "pageReplaceInputFromSource": "กับเพจ",
+      "warning": {
+        "title": "ออกจากหน้าแทนที่?",
+        "message": "การออกจะเป็นการยกเลิกการเลือกทั้งหมดที่คุณได้ทำไปแล้ว คุณแน่ใจหรือว่ายังต้องการออก"
+      }
     },
     "filterAnnotModal": {
       "color": "สี",
@@ -598,12 +610,11 @@
     "settings": {
       "settings": "การตั้งค่า",
       "general": "ทั่วไป",
-      "keyboardShortcut": "แป้นพิมพ์ลัด",
-      "advancedSetting": "การตั้งค่าขั้นสูง",
       "language": "ภาษา",
       "theme": "ธีม",
       "darkMode": "โหมดมืด",
       "lightMode": "โหมดแสง",
+      "advancedSetting": "การตั้งค่าขั้นสูง",
       "viewing": "กำลังดู",
       "disableFadePageNavigationComponent": "ปิดใช้งานส่วนประกอบการนำทางหน้าเฟด",
       "disableFadePageNavigationComponentDesc": "เก็บส่วนประกอบการนำทางของเพจไว้บนหน้าจอเสมอ พฤติกรรมเริ่มต้นคือการจางหายไปหลังจากไม่มีการใช้งานในช่วงระยะเวลาหนึ่ง",
@@ -628,7 +639,52 @@
       "disablePageDeletionConfirmationModal": "ปิดใช้งานโมดอลการยืนยันการลบหน้า",
       "disablePageDeletionConfirmationModalDesc": "ปิดใช้งานโมดอลการยืนยันเมื่อลบหน้าจากมุมมองภาพขนาดย่อ",
       "disableMultiselect": "ปิดใช้งานการเลือกหลายรายการ",
-      "disableMultiselectDesc": "ปิดใช้งานการเลือกหลายรายการในแผงภาพขนาดย่อด้านซ้าย"
+      "disableMultiselectDesc": "ปิดใช้งานการเลือกหลายรายการในแผงภาพขนาดย่อด้านซ้าย",
+      "miscellaneous": "เบ็ดเตล็ด",
+      "keyboardShortcut": "แป้นพิมพ์ลัด",
+      "command": "สั่งการ",
+      "description": "คำอธิบาย",
+      "action": "การกระทำ",
+      "rotateDocumentClockwise": "หมุนเอกสารตามเข็มนาฬิกา",
+      "rotateDocumentCounterclockwise": "หมุนเอกสารทวนเข็มนาฬิกา",
+      "copyText": "คัดลอกข้อความหรือคำอธิบายประกอบที่เลือก",
+      "pasteText": "วางข้อความหรือคำอธิบายประกอบ",
+      "undoChange": "เลิกทำการเปลี่ยนแปลงคำอธิบายประกอบ",
+      "redoChange": "ทำซ้ำการเปลี่ยนแปลงคำอธิบายประกอบ",
+      "openFile": "เปิดตัวเลือกไฟล์",
+      "openSearch": "เปิดการซ้อนทับการค้นหา",
+      "zoomIn": "ขยายเข้า",
+      "zoomOut": "ซูมออก",
+      "fitScreenWidth": "ปรับเอกสารให้พอดีกับความกว้างของหน้าจอในหน้าจอขนาดเล็ก (< 640px) มิฉะนั้น ให้พอดีกับขนาดดั้งเดิม",
+      "print": "พิมพ์",
+      "bookmarkOpenPanel": "บุ๊กมาร์กหน้าอย่างรวดเร็วและเปิดแผงบุ๊กมาร์ก",
+      "goToPreviousPage": "ไปที่หน้าก่อนหน้า",
+      "goToNextPage": "ไปที่หน้าถัดไป",
+      "goToPreviousPageArrowUp": "ไปที่หน้าก่อนหน้าในโหมดเค้าโครงเดียว (ลูกศรขึ้น)",
+      "goToNextPageArrowDown": "ไปที่หน้าถัดไปในโหมดเค้าโครงเดียว (ลูกศรลง)",
+      "holdSwitchPan": "กดค้างไว้เพื่อเปลี่ยนเป็นโหมดแพนและปล่อยเพื่อกลับไปที่เครื่องมือก่อนหน้า",
+      "selectAnnotationEdit": "เลือกเครื่องมือ AnnotationEdit",
+      "selectPan": "เลือกเครื่องมือแพน",
+      "selectCreateArrowTool": "เลือกเครื่องมือ AnnotationCreateArrow",
+      "selectCreateCalloutTool": "เลือกเครื่องมือ AnnotationCreateCallout",
+      "selectEraserTool": "เลือกเครื่องมือ AnnotationEraser",
+      "selectCreateFreeHandTool": "เลือกเครื่องมือ AnnotationCreateFreeHand",
+      "selectCreateStampTool": "เลือกเครื่องมือ AnnotationCreateStamp",
+      "selectCreateLineTool": "เลือกเครื่องมือ AnnotationCreateLine",
+      "selectCreateStickyTool": "เลือกเครื่องมือ AnnotationCreateSticky",
+      "selectCreateEllipseTool": "เลือกเครื่องมือ AnnotationCreateEllipse",
+      "selectCreateRectangleTool": "เลือกเครื่องมือ AnnotationCreateRectangle",
+      "selectCreateRubberStampTool": "เลือกเครื่องมือ AnnotationCreateRubberStamp",
+      "selectCreateFreeTextTool": "เลือกเครื่องมือ AnnotationCreateFreeText",
+      "openSignatureModal": "เปิดโมดอลลายเซ็นหรือโอเวอร์เลย์",
+      "selectCreateTextSquigglyTool": "เลือกเครื่องมือ AnnotationCreateTextSquiggly",
+      "selectCreateTextHighlightTool": "เลือกเครื่องมือ AnnotationCreateTextHighlight",
+      "selectCreateTextStrikeoutTool": "เลือกเครื่องมือ AnnotationCreateTextStrikeout",
+      "selectCreateTextUnderlineTool": "เลือกเครื่องมือ AnnotationCreateTextUnderline",
+      "editKeyboardShorcut": "แก้ไขแป้นพิมพ์ลัด",
+      "setShorcut": "ตั้งค่าทางลัด",
+      "pressKeyToSet": "กดปุ่มหรือปุ่มเพื่อตั้งค่าทางลัดใหม่",
+      "shortcutAlreadyExists": "แป้นพิมพ์ลัดด้านบนมีอยู่แล้ว"
     }
   },
   "warning": {
@@ -880,13 +936,16 @@
     "certifier": "รับรอง",
     "certified": "ได้รับการรับรอง",
     "Certified": "ได้รับการรับรอง",
+    "Certification": "การรับรอง",
     "signer": "ผู้ลงนาม",
     "signed": "ลงนาม",
     "Signed": "ลงชื่อ",
+    "Signature": "ลายเซ็น",
     "by": "โดย",
     "on": "บน",
     "disallowedChange": "การเปลี่ยนแปลงที่ไม่อนุญาต: {{type}}, objnum: {{objnum}}",
     "unsignedSignatureField": "ฟิลด์ลายเซ็นที่ไม่ได้ลงนาม: {{fieldName}}",
+    "signatureProperties": "คุณสมบัติลายเซ็น",
     "trustVerification": {
       "current": "เวลาที่ใช้ตรวจสอบคือเวลาปัจจุบัน",
       "signing": "เวลายืนยันมาจากนาฬิกาบนคอมพิวเตอร์ของผู้ลงนาม",
@@ -937,6 +996,10 @@
       "noSignatureFields": "เอกสารนี้ไม่มีช่องลายเซ็น",
       "certificateDownloadError": "พบข้อผิดพลาดขณะพยายามดาวน์โหลดใบรับรองที่เชื่อถือได้",
       "localCertificateError": "มีปัญหาบางอย่างเกี่ยวกับการอ่านใบรับรองท้องถิ่น"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} ถูกต้อง",
+      "failed": "{{verificationType}} ล้มเหลว"
     }
   },
   "cropPopUp": {
@@ -991,6 +1054,13 @@
     "miscValuesHeader": "ทั้งหมด",
     "emptyPanelMessage": "เลือกองค์ประกอบเพื่อดูคุณสมบัติของมัน"
   },
+  "watermarkPanel": {
+    "textWatermark": "ลายน้ำข้อความ",
+    "uploadImage": "อัพโหลดภาพ",
+    "browse": "เรียกดู",
+    "watermarkOptions": "ตัวเลือกลายน้ำ",
+    "watermarks": "ลายน้ำ"
+  },
   "languageModal": {
     "selectLanguage": "เลือกภาษา"
   },
@@ -1008,6 +1078,7 @@
     "pageLocations": {
       "header": "ที่ตั้งเพจ",
       "specify": "ระบุหน้า",
+      "specifyLocation": "ระบุตำแหน่งหน้า",
       "amount": "จำนวนหน้า",
       "total": "ทั้งหมด",
       "pages": "หน้า"
@@ -1020,13 +1091,20 @@
         "halfLetter": "อักษรครึ่งตัว",
         "juniorLegal": "นิติศาสตร์จูเนียร์",
         "custom": "กำหนดเอง"
-      }
+      },
+      "units": "หน่วย"
     },
     "browse": "เรียกดูไฟล์",
     "fileSelected": {
       "title": "เลือกหน้าที่จะเพิ่ม"
     },
-    "button": "เพิ่มหน้า"
+    "button": "เพิ่มหน้า",
+    "selectPages": "เลือกหน้าที่จะเพิ่ม",
+    "page": "หน้าหนังสือ",
+    "warning": {
+      "title": "ออก แทรกหน้าใหม่?",
+      "message": "การออกจะเป็นการยกเลิกการเลือกทั้งหมดที่คุณได้ทำไปแล้ว คุณแน่ใจหรือว่ายังต้องการออก"
+    }
   },
   "multiViewer": {
     "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่เพื่อเปรียบเทียบ",
@@ -1042,7 +1120,11 @@
       "change": "เปลี่ยน",
       "old": "เก่า",
       "new": "ใหม่",
-      "page": "หน้าหนังสือ"
+      "page": "หน้าหนังสือ",
+      "textContent": "เนื้อหาข้อความ",
+      "delete": "ลบ",
+      "insert": "แทรก",
+      "edit": "แก้ไข"
     }
   },
   "saveModal": {

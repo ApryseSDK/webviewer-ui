@@ -2,16 +2,15 @@ import React from 'react';
 import classNames from 'classnames';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-
 import core from 'core';
 import { mapAnnotationToKey, mapToolNameToKey } from 'constants/map';
 import actions from 'actions';
 import selectors from 'selectors';
-import './MeasurementOverlay.scss';
 import CustomMeasurementOverlay from './CustomMeasurementOverlay';
 import CountMeasurementOverlay from './CountMeasurementOverlay';
+
+import './MeasurementOverlay.scss';
 
 class MeasurementOverlay extends React.PureComponent {
   static propTypes = {
@@ -20,12 +19,12 @@ class MeasurementOverlay extends React.PureComponent {
     openElement: PropTypes.func.isRequired,
     closeElement: PropTypes.func.isRequired,
     activeToolName: PropTypes.string.isRequired,
-    t: PropTypes.func.isRequired,
     customMeasurementOverlay: PropTypes.array,
   };
 
   constructor(props) {
     super(props);
+
     this.state = {
       annotation: null,
       transparentBackground: false,
@@ -175,7 +174,7 @@ class MeasurementOverlay extends React.PureComponent {
     });
   };
 
-  renderOverlay = (annotation, t, key) => {
+  renderOverlay = (annotation, key) => {
     if (this.shouldShowCustomOverlay(annotation)) {
       return (
         <CustomMeasurementOverlay
@@ -186,12 +185,12 @@ class MeasurementOverlay extends React.PureComponent {
       );
     }
     if (key === 'countMeasurement') {
-      return <CountMeasurementOverlay annotation={annotation} t={t} />;
+      return <CountMeasurementOverlay annotation={annotation} />;
     }
   }
   render() {
     const { annotation, position, transparentBackground } = this.state;
-    const { isDisabled, t, isOpen } = this.props;
+    const { isDisabled, isOpen } = this.props;
     const key = mapAnnotationToKey(annotation);
 
     if (isDisabled || !annotation) {
@@ -216,7 +215,7 @@ class MeasurementOverlay extends React.PureComponent {
           ref={this.overlayRef}
           data-element="measurementOverlay"
         >
-          {this.renderOverlay(annotation, t, key)}
+          {this.renderOverlay(annotation, key)}
         </div>
       </Draggable>
     );
@@ -235,4 +234,4 @@ const mapDispatchToProps = {
   closeElement: actions.closeElement,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(MeasurementOverlay));
+export default connect(mapStateToProps, mapDispatchToProps)(MeasurementOverlay);

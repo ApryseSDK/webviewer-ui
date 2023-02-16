@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
@@ -17,6 +17,8 @@ function isDOMNode(element) {
   }
 }
 
+const isReactElement = (element) => React.isValidElement(element);
+
 const CustomModalItemPropTypes = {
   dataElement: PropTypes.string.isRequired,
   isOpen: PropTypes.bool,
@@ -29,6 +31,7 @@ const CustomModalItemPropTypes = {
 
 function CustomModalItem(props) {
   const { dataElement, isOpen, element, render, close, disableBackdropClick, disableEscapeKeyDown } = props;
+  const [usedElement, setUsedElement] = useState(element);
   const modalRef = React.useRef();
 
   React.useLayoutEffect(function renderCustomModal() {
@@ -38,7 +41,10 @@ function CustomModalItem(props) {
       if (typeof el === 'string') {
         el = document.createTextNode(el);
       }
-      if (isDOMNode(el)) {
+      // Only support React components through the render function
+      if (isReactElement(el)) {
+        setUsedElement(el);
+      } else if (isDOMNode(el)) {
         while (modalRef.current.firstChild) {
           modalRef.current.removeChild(modalRef.current.lastChild);
         }
@@ -87,7 +93,7 @@ function CustomModalItem(props) {
       onClick={onClickOutsideModal}
     >
       {/* This element is not interactive. Reason to have onclick is to prevent propagation */}
-      <div ref={modalRef} className="CustomModal-container" onClick={(e) => e.stopPropagation()}>{element}</div>
+      <div ref={modalRef} className="CustomModal-container" onClick={(e) => e.stopPropagation()}>{usedElement}</div>
     </div>
   );
 }

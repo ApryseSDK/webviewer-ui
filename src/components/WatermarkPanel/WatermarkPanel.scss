@@ -1,0 +1,96 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.WatermarkPanel {
+  padding: 16px 16px 0px 16px;
+  display: flex;
+  flex-direction: column;
+
+  .watermark-panel-header {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  @include mobile {
+    width: 100vw;
+    min-width: 100vw;
+    padding-top: 0px;
+
+    .close-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 64px;
+
+      width: 100%;
+      padding-right: 12px;
+
+      .close-icon-container {
+        cursor: pointer;
+
+        .close-icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+
+  .watermark-panel-tabs {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+
+    .watermark-panel-tab {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 13px;
+      border: 1px solid #D0D4D9;
+      width: 50%;
+      text-align: center;
+      padding: 7px 0px;
+      cursor: pointer;
+
+      &.active {
+        background-color: var(--blue-2);
+      }
+
+      &:first-child {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+
+      &:last-child {
+        border-left: none;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+    }
+  }
+
+  .watermark-panel-sub-header {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    margin-top: 16px;
+  }
+
+  .add-watermark-button {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--blue-5);
+    border: 1px solid var(--blue-5);
+    border-radius: 4px;
+    background: white;
+    width: 75px;
+    margin-top: 12px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+  .hidden {
+    display: none;
+  }
+}

@@ -1,3 +1,3 @@
-import InsertPageModal from './InsertPageModal';
+import InsertPageModal from './InsertPageModalContainer';
 
 export default InsertPageModal;

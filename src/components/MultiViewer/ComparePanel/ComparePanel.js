@@ -11,6 +11,7 @@ import ChangeListItem from 'components/MultiViewer/ComparePanel/ChangeListItem';
 import core from 'core';
 import { throttle } from 'lodash';
 
+const specialChar = /([!@#$%^&*()+=\[\]\\';,./{}|":<>?~_-])/gm;
 
 const ComparePanel = () => {
   const { t } = useTranslation();
@@ -33,6 +34,7 @@ const ComparePanel = () => {
       setFilteredListData(changeListData.current);
       return;
     }
+    searchValue = searchValue.replace(specialChar, '\\$&');
     const keys = Object.keys(changeListData.current);
     const newData = {};
     for (const key of keys) {
@@ -73,7 +75,7 @@ const ComparePanel = () => {
     const changeListItems = filteredListData[pageNum];
     return <React.Fragment key={pageNum}>
       <div className="page-number">{t('multiViewer.comparePanel.page')} {pageNum}</div>
-      {changeListItems.map(((props, index) => <ChangeListItem key={index} {...props} />))}
+      {changeListItems.map(((props) => <ChangeListItem key={`${props.new.Id}-${props.old.Id}`} {...props} />))}
     </React.Fragment>;
   };
 

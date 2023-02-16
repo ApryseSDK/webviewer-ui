@@ -12,7 +12,7 @@ describe('FilePickerPanel', () => {
         defaultValue={''}
         onFileSelect={noop}
       />);
-      screen.getByText('Choose a file');
+      screen.getByText('Browse Files');
     });
   });
 });

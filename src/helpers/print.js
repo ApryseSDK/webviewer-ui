@@ -13,6 +13,11 @@ import core from 'core';
 let pendingCanvases = [];
 let PRINT_QUALITY = 1;
 let colorMap;
+let grayscaleDarknessFactor = 1;
+
+export const setGrayscaleDarknessFactor = (factor) => {
+  grayscaleDarknessFactor = factor;
+};
 
 dayjs.extend(LocalizedFormat);
 
@@ -26,7 +31,8 @@ export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, color
     printWithoutModal = false,
     language,
     isPrintCurrentView,
-    printedNoteDateFormat: dateFormat
+    printedNoteDateFormat: dateFormat,
+    isGrayscale = false,
   } = options;
   let { pagesToPrint } = options;
 
@@ -37,7 +43,7 @@ export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, color
   const documentType = core.getDocument().getType();
   const bbURLPromise = core.getPrintablePDF();
 
-  if (bbURLPromise) {
+  if (!isGrayscale && bbURLPromise) {
     const printPage = window.open('', '_blank');
     printPage.document.write(i18n.t('message.preparingToPrint'));
     bbURLPromise.then((result) => {
@@ -71,6 +77,8 @@ export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, color
       onProgress,
       isPrintCurrentView,
       language,
+      false,
+      isGrayscale,
     );
     Promise.all(createPages)
       .then((pages) => {
@@ -109,14 +117,14 @@ const printPdf = () => core.exportAnnotations().then((xfdfString) => {
     });
 });
 
-export const creatingPages = (pagesToPrint, includeComments, includeAnnotations, maintainPageOrientation, printQuality, sortStrategy, clrMap, dateFormat, onProgress, isPrintCurrentView, language, createCanvases = false) => {
+export const creatingPages = (pagesToPrint, includeComments, includeAnnotations, maintainPageOrientation, printQuality, sortStrategy, clrMap, dateFormat, onProgress, isPrintCurrentView, language, createCanvases = false, isGrayscale = false) => {
   const createdPages = [];
   pendingCanvases = [];
   PRINT_QUALITY = printQuality;
   colorMap = clrMap;
 
   pagesToPrint.forEach((pageNumber) => {
-    createdPages.push(creatingImage(pageNumber, includeAnnotations, maintainPageOrientation, isPrintCurrentView, createCanvases));
+    createdPages.push(creatingImage(pageNumber, includeAnnotations, maintainPageOrientation, isPrintCurrentView, createCanvases, isGrayscale));
 
     if (onProgress) {
       createdPages[createdPages.length - 1].then((htmlElement) => {
@@ -326,7 +334,7 @@ export const getPrintableAnnotationNotes = (pageNumber) => core
         annotation.Printable,
   );
 
-const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, isPrintCurrentView, createCanvases = false) => new Promise((resolve) => {
+const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, isPrintCurrentView, createCanvases = false, isGrayscale = false) => new Promise((resolve) => {
   const pageIndex = pageNumber - 1;
   let zoom = 1;
   let renderRect;
@@ -340,7 +348,7 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
       const annotatationsToPrint = core.getAnnotationsList().filter((annotation) => {
         return annotation.PageNumber === pageNumber && !(annotation instanceof window.Annotations.WidgetAnnotation);
       });
-        // store the previous Printable value so that we can set it back later
+      // store the previous Printable value so that we can set it back later
       printableAnnotInfo = annotatationsToPrint.map((annotation) => ({
         annotation, printable: annotation.Printable
       }));
@@ -350,16 +358,28 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
       });
     }
 
-    if (core.getDocumentViewer().isGrayscaleModeEnabled()) {
+    if (isGrayscale && grayscaleDarknessFactor >= 1) {
       const ctx = canvas.getContext('2d');
       ctx.globalCompositeOperation = 'color';
       ctx.fillStyle = 'white';
       ctx.globalAlpha = 1;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = 'source-over';
+    } else if (isGrayscale) {
+      const ctx = canvas.getContext('2d');
+      ctx.globalCompositeOperation = 'source-over';
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const { data } = imageData;
+      for (let i = 0; i < data.length; i += 4) {
+        if (data[i] === 255 && data[i + 1] === 255 && data[i + 2] === 255) {
+          continue;
+        }
+        data[i] = data[i + 1] = data[i + 2] = ((data[i] + data[i + 1] + data[i + 2]) / 3) * grayscaleDarknessFactor;
+      }
+      ctx.putImageData(imageData, 0, 0);
     }
 
-    await drawAnnotationsOnCanvas(canvas, pageNumber);
+    await drawAnnotationsOnCanvas(canvas, pageNumber, isGrayscale);
 
     printableAnnotInfo.forEach((info) => {
       info.annotation.Printable = info.printable;
@@ -400,6 +420,15 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
 
     zoom = core.getZoom();
     renderRect = { x1, y1, x2, y2 };
+  } else {
+    // cap the size that we render the page at when printing
+    const pageInfo = core.getDocument().getPageInfo(pageNumber);
+    const pageSize = Math.sqrt(pageInfo.width * pageInfo.height);
+    const pageSizeTarget = 2500;
+
+    if (pageSize > pageSizeTarget) {
+      zoom = pageSizeTarget / pageSize;
+    }
   }
 
   const id = core.getDocument().loadCanvas({
@@ -495,8 +524,8 @@ const positionCanvas = (canvas, pageIndex) => {
   }
 };
 
-const drawAnnotationsOnCanvas = (canvas, pageNumber) => {
-  if (core.getDocumentViewer().isGrayscaleAnnotationsModeEnabled()) {
+const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
+  if (isGrayscale) {
     const ctx = canvas.getContext('2d');
     ctx.filter = 'grayscale(1)';
   }

@@ -16,12 +16,17 @@ import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
 import touchEventManager from 'helpers/TouchEventManager';
 import setCurrentPage from 'helpers/setCurrentPage';
 import { getStep } from 'helpers/zoom';
+import {
+  formatHeightStyle
+} from 'helpers/headers';
 import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import MeasurementOverlay from 'components/MeasurementOverlay';
 import PageNavOverlay from 'components/PageNavOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import ReaderModeViewer from 'components/ReaderModeViewer';
 import ScaleOverlayContainer from 'components/ScaleOverlay/ScaleOverlayContainer';
+import { panelMinWidth } from 'constants/panel';
+import { PLACEMENT } from 'constants/customizationVariables';
 
 import './DocumentContainer.scss';
 import DataElements from 'src/constants/dataElement';
@@ -52,6 +57,9 @@ class DocumentContainer extends React.PureComponent {
     isRedactionPanelOpen: PropTypes.bool,
     isTextEditingPanelOpen: PropTypes.bool,
     isWv3dPropertiesPanelOpen: PropTypes.bool,
+    featureFlags: PropTypes.object,
+    modularHeaders: PropTypes.array,
+    bottomHeaderHeight: PropTypes.number
   };
 
   constructor(props) {
@@ -283,13 +291,28 @@ class DocumentContainer extends React.PureComponent {
     const {
       leftPanelWidth,
       isLeftPanelOpen,
+      isFlxPanelOpen,
       isMultiTabEmptyPageOpen,
       isMobile,
       documentContentContainerWidthStyle,
       totalPages,
-      isInDesktopOnlyMode
+      isInDesktopOnlyMode,
+      featureFlags,
+      modularHeaders,
+      bottomHeaderHeight
     } = this.props;
 
+    const marginLeft =
+      0 +
+      (isLeftPanelOpen ? leftPanelWidth : 0) +
+      (isFlxPanelOpen ? panelMinWidth : 0);
+
+    const style = {
+      width: documentContentContainerWidthStyle,
+      // we animate with margin-left. For some reason it looks nicer than transform.
+      // Using transform makes a clunky animation because the panels are using transform already.
+      marginLeft: `${marginLeft}px`,
+    };
     const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
     const documentClassName = classNames({
       document: true,
@@ -297,14 +320,17 @@ class DocumentContainer extends React.PureComponent {
     });
     const showPageNav = totalPages > 1;
 
+    const { modularHeader } = featureFlags;
+    let bottomHeadersHeight = 0;
+    // Calculating its height according to the existing horizontal modular headers
+    if (modularHeader) {
+      const bottomHeaders = modularHeaders.filter((header) => [PLACEMENT.BOTTOM].includes(header.options.placement));
+      bottomHeadersHeight = bottomHeaderHeight * bottomHeaders.length;
+      style['height'] = formatHeightStyle(bottomHeadersHeight);
+    }
     return (
       <div
-        style={{
-          width: documentContentContainerWidthStyle,
-          // we animate with margin-left. For some reason it looks nicer than transform.
-          // Using transform makes a clunky animation because the panels are using transform already.
-          marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
-        }}
+        style={style}
         className={classNames({
           'document-content-container': true,
           'closed': isMultiTabEmptyPageOpen
@@ -331,6 +357,7 @@ class DocumentContainer extends React.PureComponent {
                 style={{
                   width: documentContentContainerWidthStyle,
                   marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
+                  bottom: `${bottomHeadersHeight}px`,
                 }}
               >
                 {showPageNav && (
@@ -356,6 +383,7 @@ const mapStateToProps = (state) => ({
   documentContentContainerWidthStyle: selectors.getDocumentContentContainerWidthStyle(state),
   leftPanelWidth: selectors.getLeftPanelWidthWithResizeBar(state),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
+  isFlxPanelOpen: selectors.isCustomFlxPanelOpen(state),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isMultiTabEmptyPageOpen: selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0,
   isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
@@ -372,6 +400,9 @@ const mapStateToProps = (state) => ({
   isRedactionPanelOpen: selectors.isElementOpen(state, 'redactionPanel'),
   isTextEditingPanelOpen: selectors.isElementOpen(state, 'textEditingPanel'),
   isWv3dPropertiesPanelOpen: selectors.isElementOpen(state, 'wv3dPropertiesPanel'),
+  featureFlags: selectors.getFeatureFlags(state),
+  modularHeaders: selectors.getModularHeaderList(state),
+  bottomHeaderHeight: selectors.getBottomHeadersHeight(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

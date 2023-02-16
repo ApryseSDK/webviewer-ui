@@ -1,0 +1,71 @@
+@import "../../constants/styles";
+@import "../../constants/modal";
+
+.EditKeyboardShortcutModal.Modal {
+  @extend %modal;
+
+  .container {
+    @extend %modal-shared-container-style;
+    @extend %modal-shared-container-style-mobile;
+
+    display: flex;
+    flex-direction: column;
+    width: 480px;
+    height: 320px;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: bold;
+      align-items: center;
+    }
+
+    .body {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      position: relative;
+
+      .press-key-note {
+        font-weight: bold;
+      }
+
+      .keyboard-shortcut {
+        margin-top: 16px;
+        height: 100%;
+        color: #868E96;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span:not(:last-child) {
+          margin-right: 8px;
+        }
+      }
+
+      .conflict-warning {
+        position: absolute;
+        bottom: 50px;
+        font-size: 10px;
+        color: #CF0101;
+        width: calc(100% - 32px);
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    .divider {
+      height: 1px;
+      width: 100%;
+      background: var(--divider);
+    }
+
+    .footer {
+      padding: 16px;
+      margin-top: 0px;
+    }
+  }
+}

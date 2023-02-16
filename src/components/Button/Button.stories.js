@@ -3,8 +3,6 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import ButtonComponent from './Button';
 
-const noop = () => { };
-
 const initialState = {
   viewer: {
     disabledElements: {},

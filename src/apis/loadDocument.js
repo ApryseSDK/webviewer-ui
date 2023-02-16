@@ -30,6 +30,7 @@ export default (store) => (src, options) => {
  * @property {boolean} [withCredentials] Whether or not cross-site requests should be made using credentials.
  * @property {string} [cacheKey] A key that will be used for caching the document on WebViewer Server.
  * @property {object} [officeOptions] An object that contains the options for an Office document.
+ * @property {object} [rasterizerOptions] An object that contains the rasterizer options for WebViewer Server.
  * @property {Core.TemplateData} [officeOptions.templateValues] If set, will perform template replacement with the data specified by this parameter
  * @property {boolean} [officeOptions.doTemplatePrep] If set, it will interpret the office document as a template document and compile all of the template tags in the document
  * @property {boolean} [officeOptions.disableBrowserFontSubstitution] By default, office viewing takes a lightweight approach to font substitution, allowing the browser to select fonts when they are not embedded in the document itself.

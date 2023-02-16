@@ -102,11 +102,17 @@ const OutlinesPanel = () => {
       });
     };
 
+    const onDocumentLoaded = () => {
+      setActiveOutlinePath(null);
+    };
+
     core.addEventListener('outlineSetDestination', onSetDestination);
     window.addEventListener('outlineBookmarksChanged', onOutlinesBookmarksChanged);
+    core.addEventListener('documentLoaded', onDocumentLoaded);
     return () => {
       core.removeEventListener('outlineSetDestination', onSetDestination);
       window.removeEventListener('outlineBookmarksChanged', onOutlinesBookmarksChanged);
+      core.removeEventListener('documentLoaded', onDocumentLoaded);
     };
   }, []);
 

@@ -55,67 +55,65 @@ function buildSearchModeFlag(options = {}) {
   return searchMode;
 }
 
-export default function searchText(dispatch) {
-  return function searchText(searchValue, options) {
-    let searchOptions = {};
-    if (typeof options === 'string') {
-      const modes = options.split(',');
-      modes.forEach((mode) => {
-        searchOptions[lowerCaseFirstLetter(mode)] = true;
-      });
-    } else {
-      searchOptions = { ...options };
-    }
+export default (dispatch) => (searchValue, options) => {
+  let searchOptions = {};
+  if (typeof options === 'string') {
+    const modes = options.split(',');
+    modes.forEach((mode) => {
+      searchOptions[lowerCaseFirstLetter(mode)] = true;
+    });
+  } else {
+    searchOptions = { ...options };
+  }
 
-    const searchMode = buildSearchModeFlag(searchOptions);
+  const searchMode = buildSearchModeFlag(searchOptions);
 
-    if (dispatch) {
-      // dispatch is only set when doing search through API (instance.searchText())
-      // When triggering search through UI, then redux updates are already handled inside component
-      dispatch(actions.openElement('searchPanel'));
-      dispatch(actions.searchText(searchValue, searchOptions));
-    }
+  if (dispatch) {
+    // dispatch is only set when doing search through API (instance.searchText())
+    // When triggering search through UI, then redux updates are already handled inside component
+    dispatch(actions.openElement('searchPanel'));
+    dispatch(actions.searchText(searchValue, searchOptions));
+  }
 
-    function onResult(result) {
-      core.displaySearchResult(result);
-      core.setActiveSearchResult(result);
-      const optionsForSearchListener = {
-        // default values
-        caseSensitive: false,
-        wholeWord: false,
-        wildcard: false,
-        regex: false,
-        searchUp: false,
-        ambientString: false,
-        // override values with those user gave
-        ...searchOptions,
-      };
-      const searchListeners = getSearchListeners() || [];
-      searchListeners.forEach((listener) => {
-        try {
-          listener(searchValue, optionsForSearchListener, [result]);
-        } catch (e) {
-          console.error(e);
-        }
-      });
-    }
-
-    function onDocumentEnd() {
-      core.getDocumentViewer().trigger('endOfDocumentResult', true);
-    }
-    function handleSearchError(error) {
-      console.error(error);
-    }
-    const textSearchInitOptions = {
-      'fullSearch': false,
-      onResult,
-      onDocumentEnd,
-      'onError': handleSearchError,
+  function onResult(result) {
+    core.displaySearchResult(result);
+    core.setActiveSearchResult(result);
+    const optionsForSearchListener = {
+      // default values
+      caseSensitive: false,
+      wholeWord: false,
+      wildcard: false,
+      regex: false,
+      searchUp: false,
+      ambientString: false,
+      // override values with those user gave
+      ...searchOptions,
     };
+    const searchListeners = getSearchListeners() || [];
+    searchListeners.forEach((listener) => {
+      try {
+        listener(searchValue, optionsForSearchListener, [result]);
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  }
 
-    core.textSearchInit(searchValue, searchMode, textSearchInitOptions);
+  function onDocumentEnd() {
+    core.getDocumentViewer().trigger('endOfDocumentResult', true);
+  }
+  function handleSearchError(error) {
+    console.error(error);
+  }
+  const textSearchInitOptions = {
+    'fullSearch': false,
+    onResult,
+    onDocumentEnd,
+    'onError': handleSearchError,
   };
-}
+
+  core.textSearchInit(searchValue, searchMode, textSearchInitOptions);
+};
 
 
 const lowerCaseFirstLetter = (mode) => `${mode.charAt(0).toLowerCase()}${mode.slice(1)}`;

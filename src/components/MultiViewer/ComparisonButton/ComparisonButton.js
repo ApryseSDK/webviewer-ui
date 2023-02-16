@@ -79,7 +79,7 @@ const ComparisonButton = () => {
           old: annotation,
           oldText: annotation?.Author,
           oldCount: annotation?.Author?.length,
-          type: `Text Content - ${type}`,
+          type: `${t('multiViewer.comparePanel.textContent')} - ${t(`multiViewer.comparePanel.${type}`)}`,
         });
       }
       dispatch(actions.closeElement('loadingModal'));

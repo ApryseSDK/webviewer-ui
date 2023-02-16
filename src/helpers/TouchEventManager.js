@@ -26,7 +26,15 @@ const TouchEventManager = {
     this.enableTouchScrollLock = true;
     this.startingScrollLeft = null;
     this.startingScrollTop = null;
-    this.useNativeScroll = false;
+    this._useNativeScroll = false;
+    try {
+      const val = localStorage.getItem('useNativeScroll');
+      if (val) {
+        this._useNativeScroll = JSON.parse(val);
+      }
+    } catch (err) {
+      console.warn(`localStorage could not be accessed. ${err.message}`);
+    }
     this.touch = {
       clientX: 0,
       clientY: 0,
@@ -238,9 +246,12 @@ const TouchEventManager = {
         break;
       }
       case touchType.SWIPE: {
+        const docViewer = core.getDocumentViewer();
+        const isStylusModeDisabled = !docViewer.isStylusModeEnabled();
+        const isUsingAnnotationToolsAndStylusIsDisabled = this.isUsingAnnotationTools() && isStylusModeDisabled;
         if (
           !this.allowSwipe ||
-          this.isUsingAnnotationTools() ||
+          isUsingAnnotationToolsAndStylusIsDisabled ||
           core.getSelectedText().length ||
           core.getSelectedAnnotations().length
         ) {
@@ -416,6 +427,17 @@ const TouchEventManager = {
 
     return getDataWithKey(mapToolNameToKey(tool.name)).annotationCheck;
   },
+  get useNativeScroll() {
+    return this._useNativeScroll;
+  },
+  set useNativeScroll(val) {
+    this._useNativeScroll = val;
+    try {
+      localStorage.setItem('useNativeScroll', JSON.stringify(this._useNativeScroll));
+    } catch (err) {
+      console.warn(`localStorage could not be accessed. ${err.message}`);
+    }
+  }
 };
 
 export default Object.create(TouchEventManager);

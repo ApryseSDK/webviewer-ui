@@ -38,10 +38,12 @@ describe('FileSelectedPanel', () => {
       });
     });
 
-    it('Renders StoryBook component with file processing screen with no errors', () => {
-      expect(() => {
-        render(<ProcessingFile />);
-      }).not.toThrow();
+    it('Renders StoryBook component with file processing screen with no errors', async () => {
+      await waitFor(() => {
+        expect(() => {
+          render(<ProcessingFile />);
+        }).not.toThrow();
+      });
     });
   });
 
@@ -54,11 +56,13 @@ describe('FileSelectedPanel', () => {
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
+          clearLoadedFile={noop}
           pageIndicesToReplace={[]}
           sourceDocument={mockSourceDocument}
           replacePagesHandler={noop}
           documentInViewer={mockLoadedDocument}
-        />
+          closeModalWarning={noop}
+        />,
       );
 
       // Since the thumbnails render asynchronously, we use find, since it returns a promise
@@ -66,7 +70,6 @@ describe('FileSelectedPanel', () => {
       const checkboxes = await screen.findAllByRole('checkbox');
       expect(checkboxes).toHaveLength(pageCountSourceDocument);
     });
-
 
     it('when thumbnails are finished loading switch from a "Processing..." message to the thumbnails screen', async () => {
       const pageCountSourceDocument = 10;
@@ -76,17 +79,43 @@ describe('FileSelectedPanel', () => {
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
+          clearLoadedFile={noop}
           pageIndicesToReplace={[]}
           sourceDocument={mockSourceDocument}
           replacePagesHandler={noop}
           documentInViewer={mockLoadedDocument}
-        />
+          closeModalWarning={noop}
+        />,
       );
 
       // This tests two things
       // 1) That we finish loading our thumbnails and render them
       // 2) That we update our component state correctly and remove the Processing message
       await waitForElementToBeRemoved(() => screen.getByText(/Processing.../i));
+    });
+
+    it('selects all pages by default when the file is finished loading', async () => {
+      const pageCountSourceDocument = 10;
+      const pageCountLoadedDocument = 5;
+      const { mockLoadedDocument, mockSourceDocument } = getMockLoadedAndSourceDocument({ pageCountLoadedDocument, pageCountSourceDocument });
+
+      render(
+        <FileSelectedPanelWithRedux
+          closeThisModal={noop}
+          clearLoadedFile={noop}
+          pageIndicesToReplace={[]}
+          sourceDocument={mockSourceDocument}
+          replacePagesHandler={noop}
+          documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
+        />
+      );
+
+      // Source doc input is the second element of the array
+      const sourceDocInput = screen.getAllByRole('textbox')[1];
+      // We need to run waitFor once. This ensures all the promises in flight
+      // that render the thumbnails are resolved before we start asserting
+      await waitFor(() => expect(sourceDocInput).toHaveValue('1-10'));
     });
 
     it('when I select several thumbnails, it updates the input box of pages selected from source document', async () => {
@@ -97,10 +126,12 @@ describe('FileSelectedPanel', () => {
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
+          clearLoadedFile={noop}
           pageIndicesToReplace={[]}
           sourceDocument={mockSourceDocument}
           replacePagesHandler={noop}
           documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
         />
       );
 
@@ -108,7 +139,10 @@ describe('FileSelectedPanel', () => {
       const sourceDocInput = screen.getAllByRole('textbox')[1];
       // We need to run waitFor once. This ensures all the promises in flight
       // that render the thumbnails are resolved before we start asserting
-      await waitFor(() => expect(sourceDocInput).toHaveValue(''));
+      await waitFor(() => expect(sourceDocInput).toHaveValue('1-10'));
+
+      // Now deselect all pages
+      userEvent.click(screen.getByText(/Deselect All/i));
 
       const thumbnails = screen.getAllByRole('checkbox');
       expect(thumbnails).toHaveLength(pageCountSourceDocument);
@@ -136,10 +170,12 @@ describe('FileSelectedPanel', () => {
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
+          clearLoadedFile={noop}
           pageIndicesToReplace={selectedPageIndicesToReplace}
           sourceDocument={mockSourceDocument}
           replacePagesHandler={noop}
           documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
         />
       );
 
@@ -159,12 +195,17 @@ describe('FileSelectedPanel', () => {
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
+          clearLoadedFile={noop}
           pageIndicesToReplace={selectedPageIndicesToReplace}
           sourceDocument={mockSourceDocument}
           replacePagesHandler={replaceHandler}
           documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
         />
       );
+
+      // Deselect all pages
+      userEvent.click(await screen.findByText(/Deselect All/i));
 
       // Select a couple of thumbnails first
       // the difference between get* and find* is that find returns a promise
@@ -193,16 +234,21 @@ describe('FileSelectedPanel', () => {
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
+          clearLoadedFile={noop}
           pageIndicesToReplace={[]}
           sourceDocument={mockSourceDocument}
           replacePagesHandler={noop}
           documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
         />
       );
 
       const sourceDocInput = screen.getAllByRole('textbox')[1];
       // Make sure nothing is selected in the sourceDocument input
-      await waitFor(() => expect(sourceDocInput).toHaveValue(''));
+      await waitFor(() => expect(sourceDocInput).toHaveValue('1-4'));
+
+      // Now deselect all pages
+      userEvent.click(screen.getByText(/Deselect All/i));
 
       const thumbnails = screen.getAllByRole('checkbox');
       expect(thumbnails).toHaveLength(pageCountSourceDocument);
@@ -237,10 +283,12 @@ describe('FileSelectedPanel', () => {
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
+          clearLoadedFile={noop}
           pageIndicesToReplace={[]}
           sourceDocument={mockSourceDocument}
           replacePagesHandler={noop}
           documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
         />
       );
 
@@ -254,15 +302,50 @@ describe('FileSelectedPanel', () => {
     it('The replace button is disabled if no thumbnails are selected', async () => {
       const pageCountSourceDocument = 10;
       const pageCountLoadedDocument = 5;
-      const { mockLoadedDocument, mockSourceDocument } = getMockLoadedAndSourceDocument({ pageCountLoadedDocument, pageCountSourceDocument });
+      const { mockLoadedDocument, mockSourceDocument } = getMockLoadedAndSourceDocument({
+        pageCountLoadedDocument,
+        pageCountSourceDocument,
+      });
 
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
+          clearLoadedFile={noop}
+          pageIndicesToReplace={[1]}
+          sourceDocument={mockSourceDocument}
+          replacePagesHandler={noop}
+          documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
+        />
+      );
+
+      const checkboxes = await screen.findAllByRole('checkbox');
+      expect(checkboxes).toHaveLength(pageCountSourceDocument);
+
+      // Deselect all pages
+      userEvent.click(screen.getByText(/Deselect All/i));
+
+      const replaceButton = screen.getByRole('button', { name: /Replace/i });
+      expect(replaceButton).toBeDisabled();
+    });
+
+    it('The replace button is disabled if no pages to replace are selected', async () => {
+      const pageCountSourceDocument = 10;
+      const pageCountLoadedDocument = 5;
+      const { mockLoadedDocument, mockSourceDocument } = getMockLoadedAndSourceDocument({
+        pageCountLoadedDocument,
+        pageCountSourceDocument,
+      });
+
+      render(
+        <FileSelectedPanelWithRedux
+          closeThisModal={noop}
+          clearLoadedFile={noop}
           pageIndicesToReplace={[]}
           sourceDocument={mockSourceDocument}
           replacePagesHandler={noop}
           documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
         />
       );
 
@@ -273,18 +356,23 @@ describe('FileSelectedPanel', () => {
       expect(replaceButton).toBeDisabled();
     });
 
-    it('The replace button is not disabled if at least one thumbnail is selected', async () => {
+    it('The replace button is not disabled if at least one thumbnail is selected and there are pages selected to replace', async () => {
       const pageCountSourceDocument = 10;
       const pageCountLoadedDocument = 5;
-      const { mockLoadedDocument, mockSourceDocument } = getMockLoadedAndSourceDocument({ pageCountLoadedDocument, pageCountSourceDocument });
+      const { mockLoadedDocument, mockSourceDocument } = getMockLoadedAndSourceDocument({
+        pageCountLoadedDocument,
+        pageCountSourceDocument,
+      });
 
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
-          pageIndicesToReplace={[]}
+          clearLoadedFile={noop}
+          pageIndicesToReplace={[1]}
           sourceDocument={mockSourceDocument}
           replacePagesHandler={noop}
           documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
         />
       );
 
@@ -301,10 +389,12 @@ describe('FileSelectedPanel', () => {
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
+          clearLoadedFile={noop}
           pageIndicesToReplace={[]}
           // sourceDocument={} //Simulate a perpetual loading state by not passing this prop
           replacePagesHandler={noop}
           documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
         />
       );
 
@@ -319,15 +409,62 @@ describe('FileSelectedPanel', () => {
       render(
         <FileSelectedPanelWithRedux
           closeThisModal={noop}
+          clearLoadedFile={noop}
           pageIndicesToReplace={[]}
           sourceDocument={mockSourceDocument}
           replacePagesHandler={noop}
           documentInViewer={mockLoadedDocument}
+          closeModalWarning={noop}
         />
       );
 
       const deselectAllButton = await screen.findByRole('button', { name: /Deselect All/i });
       expect(deselectAllButton).not.toBeDisabled();
+    });
+
+    it('check all handlers are correctly called', async () => {
+      const pageCountSourceDocument = 10;
+      const pageCountLoadedDocument = 5;
+      const { mockLoadedDocument, mockSourceDocument } = getMockLoadedAndSourceDocument({ pageCountLoadedDocument, pageCountSourceDocument });
+
+      const closeModalMock = jest.fn();
+      const clearLoadedFileMock = jest.fn();
+      const replacePagesMock = jest.fn();
+      const closeModalWarningMock = jest.fn();
+
+      const props = {
+        closeThisModal: closeModalMock,
+        clearLoadedFile: clearLoadedFileMock,
+        pageIndicesToReplace: [1],
+        sourceDocument: mockSourceDocument,
+        replacePagesHandler: replacePagesMock,
+        documentInViewer: mockLoadedDocument,
+        closeModalWarning: closeModalWarningMock,
+      };
+
+      render(<FileSelectedPanelWithRedux {...props} />);
+
+      const buttons = await screen.findAllByRole('button');
+      // There are four buttons on this modal
+      // Back, Close, Deselect, Add Pages
+      expect(buttons.length).toBe(4);
+
+      const backButton = screen.getByLabelText('Back');
+      userEvent.click(backButton);
+      expect(clearLoadedFileMock).toBeCalled();
+
+      // Close button shows a warning
+      const closeButton = document.getElementsByClassName('closeButton')[0];
+      userEvent.click(closeButton);
+      expect(closeModalWarningMock).toBeCalled();
+
+      // Select a checkbox and press Add Page
+      const checkboxes = await screen.findAllByRole('checkbox');
+      userEvent.click(checkboxes[0]);
+      const replaceButton = screen.getByRole('button', { name: 'Replace' });
+      userEvent.click(replaceButton);
+      expect(replacePagesMock).toBeCalled();
+      expect(closeModalMock).toBeCalled();
     });
   });
 });
