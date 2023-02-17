@@ -1,0 +1,21 @@
+.TopHeader {
+  width: 100%;
+  transition: min-height .3s ease-in-out;
+
+  &.start {
+    background: var(--gray-0);
+  }
+
+  &.end {
+    background: var(--gray-1);
+  }
+}
+
+.TopHeader.closed {
+  padding: 0;
+  min-height: 0;
+}
+
+.TopHeader:nth-child(1) {
+  z-index: 73;
+}

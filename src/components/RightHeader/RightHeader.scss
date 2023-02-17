@@ -1,1 +1,14 @@
-.RightHeader {}
+@import '../../constants/styles';
+
+.RightHeader {
+  height: 100%;
+  width: $right-header-width;
+  min-width: fit-content;
+  padding: 2px;
+  transition: transform .3s ease-in-out;
+  z-index: 63;
+}
+
+.RightHeader.closed {
+  transform: translateX(100%);
+}

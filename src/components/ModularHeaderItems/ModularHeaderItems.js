@@ -6,7 +6,7 @@ import InnerItem from '../ModularComponents/InnerItem';
 import { PLACEMENT } from 'constants/customizationVariables';
 
 const ModularHeaderItems = (props) => {
-  const { placement, gap, items, alignment } = props;
+  const { placement, gap, items, alignment, className } = props;
   const [itemsGap, setItemsGap] = useState(gap);
   const [activeGroupedItems] = useSelector((state) => [
     selectors.getCurrentGroupedItems(state),
@@ -39,7 +39,7 @@ const ModularHeaderItems = (props) => {
   });
 
   return (
-    <div className="ModularHeaderItems"
+    <div className={`ModularHeaderItems ${className}`}
       style={{
         gap: `${itemsGap}px`,
         flexDirection: headerDirection,

@@ -109,8 +109,9 @@ export const getDocumentContentContainerWidthStyle = (state) => {
     (isWatermarkPanelOpen ? watermarkPanelWidth : 0) +
     (isFlxPanelOpen ? panelMinWidth : 0);
 
-  const leftHeader = getModularHeaderList(state)?.find((header) => header.options.placement === PLACEMENT.LEFT);
-  const rightHeader = getModularHeaderList(state)?.find((header) => header.options.placement === PLACEMENT.RIGHT);
+  // Do not count left/right header with empty items
+  const leftHeader = getModularHeaderList(state)?.find((header) => header.options.placement === PLACEMENT.LEFT && header.options.items?.length);
+  const rightHeader = getModularHeaderList(state)?.find((header) => header.options.placement === PLACEMENT.RIGHT && header.options.items?.length);
   const spaceTakenUpByHeaders = (leftHeader ? getLeftHeaderWidth(state) : 0) + (rightHeader ? getRightHeaderWidth(state) : 0);
   return `calc(100% - ${spaceTakenUpByPanels + spaceTakenUpByHeaders}px)`;
 };

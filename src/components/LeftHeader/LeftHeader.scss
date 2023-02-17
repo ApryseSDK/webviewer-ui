@@ -1,0 +1,15 @@
+@import '../../constants/styles.scss';
+
+.LeftHeader {
+  transition: transform .3s ease-in-out;
+  height: 100%;
+  width: $left-header-width;
+  min-width: fit-content;
+
+}
+
+.LeftHeader.closed {
+  transform: translateX(-100%)!important;;
+  position: fixed;
+  left: 0;
+}

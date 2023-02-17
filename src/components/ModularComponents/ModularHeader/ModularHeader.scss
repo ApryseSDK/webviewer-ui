@@ -4,19 +4,9 @@
   box-sizing: content-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: $top-bar-height;
-  background: var(--gray-6);
+  align-items: baseline;
+  min-height: $top-bar-height;
+  padding: 2px;
+  background: var(--gray-1);
   z-index: 72;
-
-  &.left {
-    height: 100%;
-    width: $left-header-width;
-  }
-
-  &.right {
-    height: 100%;
-    width: $right-header-width;
-  }
 }
