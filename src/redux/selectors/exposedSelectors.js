@@ -1,10 +1,7 @@
 import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import { panelMinWidth, RESIZE_BAR_WIDTH } from 'constants/panel';
-import styles from '../../constants/styles.scss';
-
-const LEFT_HEADER_WIDTH = parseInt(styles.LEFT_HEADER_WIDTH);
-const RIGHT_HEADER_WIDTH = parseInt(styles.RIGHT_HEADER_WIDTH);
+import { PLACEMENT } from 'constants/customizationVariables';
 
 // viewer
 export const getInitialsOffset = (state) => state.viewer.initalsOffset;
@@ -112,10 +109,9 @@ export const getDocumentContentContainerWidthStyle = (state) => {
     (isWatermarkPanelOpen ? watermarkPanelWidth : 0) +
     (isFlxPanelOpen ? panelMinWidth : 0);
 
-  const leftHeader = getModularHeaderList(state)?.find((header) => header.props.placement === 'left');
-  const rightHeader = getModularHeaderList(state)?.find((header) => header.props.placement === 'right');
-  const spaceTakenUpByHeaders = (leftHeader ? LEFT_HEADER_WIDTH : 0) + (rightHeader ? RIGHT_HEADER_WIDTH : 0);
-
+  const leftHeader = getModularHeaderList(state)?.find((header) => header.options.placement === PLACEMENT.LEFT);
+  const rightHeader = getModularHeaderList(state)?.find((header) => header.options.placement === PLACEMENT.RIGHT);
+  const spaceTakenUpByHeaders = (leftHeader ? getLeftHeaderWidth(state) : 0) + (rightHeader ? getRightHeaderWidth(state) : 0);
   return `calc(100% - ${spaceTakenUpByPanels + spaceTakenUpByHeaders}px)`;
 };
 
@@ -190,6 +186,8 @@ export const getEnabledToolbarGroups = (state) => {
 
 export const getCurrentToolbarGroup = (state) => state.viewer.toolbarGroup;
 
+export const getCurrentGroupedItems = (state) => state.viewer.activeGroupedItems;
+
 export const getActiveTheme = (state) => state.viewer.activeTheme;
 
 export const getDefaultHeaderItems = (state) => {
@@ -199,8 +197,16 @@ export const getDefaultHeaderItems = (state) => {
 export const getModularHeaderList = (state) => state.viewer.modularHeaders;
 
 export const getModularHeader = (state, dataElement) => {
-  return state.viewer.modularHeaders.filter((header) => header.props['data-element'] === dataElement);
+  return state.viewer.modularHeaders.find((header) => header.options.dataElement === dataElement);
 };
+
+export const getTopHeadersHeight = (state) => state.viewer.modularHeadersHeight.topHeaders;
+
+export const getBottomHeadersHeight = (state) => state.viewer.modularHeadersHeight.bottomHeaders;
+
+export const getRightHeaderWidth = (state) => state.viewer.modularHeadersWidth.rightHeader;
+
+export const getLeftHeaderWidth = (state) => state.viewer.modularHeadersWidth.leftHeader;
 
 export const getActiveHeaderItems = (state) => {
   return state.viewer.headers[state.viewer.activeHeaderGroup];

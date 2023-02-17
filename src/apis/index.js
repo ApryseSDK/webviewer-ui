@@ -9,6 +9,7 @@ import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import RedactionSearchPatterns from 'constants/redactionSearchPatterns';
 import { languageEnum } from 'constants/languages';
+import { panelNames } from 'constants/panel';
 import addSearchListener from './addSearchListener';
 import addSortStrategy from './addSortStrategy';
 import annotationPopup from './annotationPopup';
@@ -243,13 +244,18 @@ import showFormFieldIndicators from './showFormFieldIndicators';
 import hideFormFieldIndicators from './hideFormFieldIndicators';
 import signSignatureWidget from './signSignatureWidget';
 import addModularHeaders from './addModularHeaders';
-import addHeaderItems from './addHeaderItems';
 import getModularHeader from './getModularHeader';
 import getModularHeaderList from './getModularHeaderList';
 import core from 'core';
 import { setDefaultOptions } from './outlinesPanel';
-import ModularHeader from 'components/ModularComponents/ModularHeader';
-import CustomButton from 'components/Button/CustomButton';
+import Item from './ModularComponents/item';
+import GroupedItems from './ModularComponents/groupedItems';
+import ModularHeader from './ModularComponents/modularHeader';
+import CustomButton from './ModularComponents/customButton';
+import RibbonItem from './ModularComponents/ribbonItem';
+import RibbonGroup from './ModularComponents/ribbonGroup';
+import ToggleElementButton from './ModularComponents/toggleElementButton';
+
 import {
   getMeasurementScalePreset,
   addMeasurementScalePreset,
@@ -263,7 +269,8 @@ import getDocumentViewer from './getDocumentViewer';
 import { enableMultiViewerSync, disableMultiViewerSync, isMultiViewerSyncing } from './multiViewerSync';
 import { setCustomSettings, exportUserSettings, importUserSettings } from './userSettings';
 import addPanel from './addPanel';
-import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
+import setGrayscaleDarknessFactor from './setGrayscaleDarknessFactor';
+import { ALIGNMENT } from 'constants/customizationVariables';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -288,6 +295,7 @@ export default (store) => {
     NotesPanelSortStrategy,
     Theme,
     RedactionSearchPatterns,
+    Alignment: ALIGNMENT,
     addSearchListener,
     addSortStrategy: addSortStrategy(store),
     annotationPopup: annotationPopup(store),
@@ -395,6 +403,7 @@ export default (store) => {
       addTrustedCertificates: addTrustedCertificates(store),
       loadTrustList: loadTrustList(store),
     },
+    Panels: panelNames,
     ThumbnailsPanel: {
       selectPages: selectPages(store),
       unselectPages: unselectPages(store),
@@ -420,13 +429,20 @@ export default (store) => {
       setDefaultOptions: setDefaultOptions(store),
     },
     addModularHeaders: addModularHeaders(store),
-    addHeaderItems: addHeaderItems(store),
     getModularHeader: getModularHeader(store),
     getModularHeaderList: getModularHeaderList(store),
     Components: {
-      ModularHeader,
+      Item,
+      GroupedItems: GroupedItems(store),
+      ModularHeader: ModularHeader(store),
+      TopHeader: ModularHeader(store),
+      BottomHeader: ModularHeader(store),
+      LeftHeader: ModularHeader(store),
+      RightHeader: ModularHeader(store),
       CustomButton,
       ToggleElementButton,
+      RibbonItem,
+      RibbonGroup,
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
@@ -522,6 +538,7 @@ export default (store) => {
     setCustomSettings: setCustomSettings(store),
     exportUserSettings: exportUserSettings(store),
     importUserSettings: importUserSettings(store),
+    setGrayscaleDarknessFactor,
 
     // deprecated, to be removed in 8.0
     useNativeScroll,

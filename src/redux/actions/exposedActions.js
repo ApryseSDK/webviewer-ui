@@ -150,6 +150,13 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   return dataElements.every((dataElement) => isElementDisabled(state, dataElement));
 };
 
+export const setCurrentGroupedItem = (groupedItems) => (dispatch) => {
+  dispatch({
+    type: 'SET_CURRENT_GROUPED_ITEMS',
+    payload: { groupedItems },
+  });
+};
+
 export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
@@ -300,6 +307,19 @@ export const setDocumentContainerHeight = (height) => ({
   payload: { height },
 });
 
+export const setGapBetweenHeaderItems = (dataElement, gap) => updateHeaderProperty(dataElement, 'gap', gap);
+
+export const setHeaderAlignment = (dataElement, alignment) => updateHeaderProperty(dataElement, 'alignment', alignment);
+
+const updateHeaderProperty = (dataElement, property, value) => ({
+  type: 'UPDATE_MODULAR_HEADERS',
+  payload: {
+    dataElement,
+    property,
+    value,
+  }
+});
+
 export const enableAllElements = () => ({
   type: 'ENABLE_ALL_ELEMENTS',
   payload: {},
@@ -313,15 +333,15 @@ export const openElement = (dataElement) => (dispatch, getState) => {
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
     : state.viewer.openElements[dataElement];
 
+  if (isElementDisabled || isElementOpen) {
+    return;
+  }
+
   const isFlxPanel = state.viewer.customFlxPanels.find((item) => dataElement === item.dataElement);
   if (isFlxPanel) {
     const keys = ['leftPanel'];
     getAllPanels(isFlxPanel.location).forEach((item) => keys.push(item.dataset.element));
     dispatch(closeElements(keys));
-  }
-
-  if (isElementDisabled || isElementOpen) {
-    return;
   }
 
   if (isDataElementLeftPanel(dataElement, state)) {
@@ -431,7 +451,22 @@ export const addCustomModal = (modalOptions) => ({
   type: 'ADD_CUSTOM_MODAL',
   payload: modalOptions,
 });
-
+export const addModularHeaders = (headersList) => ({
+  type: 'ADD_MODULAR_HEADERS',
+  payload: headersList
+});
+export const updateModularHeaders = (modularHeaders) => ({
+  type: 'SET_MODULAR_HEADERS',
+  payload: modularHeaders
+});
+export const setRightHeaderWidth = (width) => ({
+  type: 'SET_RIGHT_HEADER_WIDTH',
+  payload: width
+});
+export const setLeftHeaderWidth = (width) => ({
+  type: 'SET_LEFT_HEADER_WIDTH',
+  payload: width
+});
 export const setActiveHeaderGroup = (headerGroup) => ({
   type: 'SET_ACTIVE_HEADER_GROUP',
   payload: { headerGroup },
@@ -735,4 +770,9 @@ export const setReplyAttachmentHandler = (replyAttachmentHandler) => ({
 export const setCustomSettings = (customSettings) => ({
   type: 'SET_CUSTOM_SETTINGS',
   payload: customSettings
+});
+
+export const setToolDefaultStyleUpdateFromAnnotationPopupEnabled = (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) => ({
+  type: 'SET_TOOL_DEFAULT_STYLE_UPDATE_FROM_ANNOTATION_POPUP_ENABLED',
+  payload: isToolDefaultStyleUpdateFromAnnotationPopupEnabled
 });
