@@ -6,7 +6,6 @@ import { Basic as BasicStory } from './Dropdown.stories';
 const DropdownStory = withI18n(BasicStory);
 
 describe('Dropdown component', () => {
-
   it('Should select item correctly', () => {
     const { container } = render(<DropdownStory />);
 
@@ -23,7 +22,7 @@ describe('Dropdown component', () => {
     // click to open dropdown menu
     const dropdown = container.querySelector('.Dropdown');
     expect(dropdown).toBeInTheDocument();
-    fireEvent.click(dropdown);
+    fireEvent.mouseDown(dropdown);
 
     // make sure dropdown menu is open
     dropdownItems = container.querySelector('.Dropdown__items');
@@ -31,7 +30,7 @@ describe('Dropdown component', () => {
     expect(dropdownItems).not.toHaveClass('hide');
 
     // click Status button and make sure active element is changed to Status
-    const statusButton = queryByText(dropdownItems,'Status');
+    const statusButton = queryByText(dropdownItems, 'Status');
     fireEvent.click(statusButton);
     activeButton = container.querySelector('.active');
     expect(activeButton).toHaveTextContent('Status');
