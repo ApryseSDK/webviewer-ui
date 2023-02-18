@@ -255,6 +255,7 @@ import CustomButton from './ModularComponents/customButton';
 import RibbonItem from './ModularComponents/ribbonItem';
 import RibbonGroup from './ModularComponents/ribbonGroup';
 import ToggleElementButton from './ModularComponents/toggleElementButton';
+import ToolGroupButton from './ModularComponents/toolGroupButton';
 
 import {
   getMeasurementScalePreset,
@@ -443,6 +444,7 @@ export default (store) => {
       ToggleElementButton,
       RibbonItem,
       RibbonGroup,
+      ToolGroupButton,
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0

@@ -1,0 +1,24 @@
+.ToolGroupButton {
+  padding: 0;
+  white-space: nowrap;
+  height: auto;
+
+  .Button {
+    width: 100%;
+    padding: 8px;
+    column-gap: 8px;
+    row-gap: 4px;
+    color: var(--faded-text);
+    &:hover {
+      background: var(--popup-button-hover);
+    }
+    &.active {
+      background: var(--popup-button-active);
+      color: var(--view-header-icon-active-fill);
+      cursor: default;
+      .Icon {
+        color: var(--view-header-icon-active-fill);
+      }
+    }
+  }
+}
