@@ -69,7 +69,7 @@ function MenuOverlay() {
 
   const handlePrintButtonClick = () => {
     closeMenuOverlay();
-    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap);
+    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled() });
   };
 
   const downloadDocument = () => {
@@ -95,7 +95,7 @@ function MenuOverlay() {
           role="option"
           onClick={openFilePicker}
         />
-        {documentType !== workerTypes.XOD && (
+        {documentType !== workerTypes.XOD && documentType !== workerTypes.OFFICE_EDITOR && (
           <ActionButton
             dataElement="downloadButton"
             className="row"

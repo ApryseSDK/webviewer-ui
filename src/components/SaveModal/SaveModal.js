@@ -27,6 +27,7 @@ const FILE_TYPES = {
   OFFICE: { label: 'OFFICE (*.pptx,*.docx,*.xlsx)', extension: 'office' },
   PDF: { label: 'PDF (*.pdf)', extension: 'pdf', },
   IMAGE: { label: 'PNG (*.png)', extension: 'png', },
+  OFFICE_EDITOR: { label: 'Word Document(*.docx)', extension: 'docx', },
 };
 // These legacy office extensions return corrupted file data from the workers if downloaded as OFFICE
 const CORRUPTED_OFFICE_EXTENSIONS = ['.ppt', '.xls'];
@@ -47,9 +48,10 @@ const SaveModal = () => {
   const [pageRange, setPageRange] = useState(PAGE_RANGES.ALL);
   const [specifiedPages, setSpecifiedPages] = useState();
   const [includeAnnotations, setIncludeAnnotations] = useState(true);
-  // const [includeComments, setIncludeComments] = useState(false);
+  const [includeComments, setIncludeComments] = useState(false);
   const [pageCount, setPageCount] = useState(1);
   const [errorText, setErrorText] = useState('');
+  const [documentType, setDocumentType] = useState('');
 
   useEffect(() => {
     const updateFile = async () => {
@@ -59,6 +61,7 @@ const SaveModal = () => {
         const newFilename = filename.substring(0, filename.lastIndexOf('.')) || filename;
         setFilename(newFilename);
         const type = document.getType();
+        setDocumentType(type);
         if (type === workerTypes.OFFICE) {
           const array = filename.split('.');
           const extension = `.${array[array.length - 1]}`;
@@ -66,6 +69,9 @@ const SaveModal = () => {
             setFileTypes([...initalFileTypes, FILE_TYPES.OFFICE]);
           }
           await document.getDocumentCompletePromise();
+        } else if (type === workerTypes.OFFICE_EDITOR) {
+          setFileTypes([FILE_TYPES.OFFICE_EDITOR]);
+          setFiletype(FILE_TYPES.OFFICE_EDITOR);
         } else {
           setFileTypes(initalFileTypes);
           setFiletype(FILE_TYPES.PDF);
@@ -77,6 +83,12 @@ const SaveModal = () => {
     core.addEventListener('documentLoaded', updateFile, undefined, activeDocumentViewerKey);
     return () => core.removeEventListener('documentLoaded', updateFile, activeDocumentViewerKey);
   }, [activeDocumentViewerKey]);
+
+  useEffect(() => {
+    if (documentType === workerTypes.OFFICE_EDITOR) {
+      setFilename(core.getDocument().getFilename());
+    }
+  }, [isOpen, documentType]);
 
   const closeModal = () => dispatch(actions.closeElement(DataElements.SAVE_MODAL));
   const preventDefault = (e) => e.preventDefault();
@@ -98,7 +110,7 @@ const SaveModal = () => {
     }
   };
   const onIncludeAnnotationsChanged = () => setIncludeAnnotations(!includeAnnotations);
-  // const onIncludeCommentsChanged = () => setIncludeComments(!includeComments);
+  const onIncludeCommentsChanged = () => setIncludeComments(!includeComments);
   const clearError = () => setErrorText('');
   const onError = () => setErrorText(t('saveModal.pageError') + pageCount);
   const onSpecifiedPagesChanged = () => {
@@ -121,7 +133,7 @@ const SaveModal = () => {
 
     downloadPdf(dispatch, {
       includeAnnotations,
-      // includeComments,
+      includeComments,
       filename: filename || 'untitled',
       downloadType: filetype.extension,
       pages,
@@ -131,7 +143,7 @@ const SaveModal = () => {
 
   const [hasTyped, setHasTyped] = useState(false);
   const saveDisabled = (errorText || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY;
-  const optionsDisabled = filetype.extension === 'office';
+  const optionsDisabled = filetype.extension === 'office' || documentType === workerTypes.OFFICE_EDITOR;
 
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
@@ -146,7 +158,7 @@ const SaveModal = () => {
               <div className='title'>{t('saveModal.general')}</div>
               <div className='input-container'>
                 <div className='label'>{t('saveModal.fileName')}</div>
-                <input type='text' placeholder={t('saveModal.fileName')} defaultValue={filename} onChange={onFilenameChange} />
+                <input type='text' placeholder={t('saveModal.fileName')} value={filename} onChange={onFilenameChange} />
               </div>
               <div className='input-container'>
                 <div className='label'>{t('saveModal.fileType')}</div>
@@ -211,12 +223,12 @@ const SaveModal = () => {
                     label={t('saveModal.includeAnnotation')}
                     onChange={onIncludeAnnotationsChanged}
                   />
-                  {/* <Choice */}
-                  {/*  checked={includeComments} */}
-                  {/*  name='include-comment-option' */}
-                  {/*  label={t('saveModal.includeComments')} */}
-                  {/*  onChange={onIncludeCommentsChanged} */}
-                  {/* /> */}
+                  <Choice
+                    checked={includeComments}
+                    name='include-comment-option'
+                    label={t('saveModal.includeComments')}
+                    onChange={onIncludeCommentsChanged}
+                  />
                 </div>
               </>)}
             </div>
