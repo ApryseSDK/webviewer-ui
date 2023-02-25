@@ -153,7 +153,7 @@ const ContextMenuPopup = () => {
             />
             <ActionButton
               dataElement="markReplaceTextToolButton"
-              title="annotation.markReplacetext"
+              title="annotation.markReplaceText"
               img="ic-replace text"
               onClick={() => setToolModeAndGroup(store, 'AnnotationCreateMarkReplaceText')}
             />
