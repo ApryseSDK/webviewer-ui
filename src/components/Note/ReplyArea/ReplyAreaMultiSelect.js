@@ -54,6 +54,7 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
           core.setNoteContents(annotation, plainTextValue);
         } else {
           const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
+          core.addAnnotations([replyAnnotation]);
           setAnnotationRichTextStyle(editor, replyAnnotation);
         }
       } else {
@@ -111,8 +112,7 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
             }}
             value={pendingReply}
             onChange={(value) => handleNoteTextareaChange(value)}
-            placeholder={`${t('action.reply')}...`}
-            aria-label={`${t('action.reply')}...`}
+            isReply
           />
         </div>
         <div className='reply-button-container'>

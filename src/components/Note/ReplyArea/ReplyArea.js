@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import NoteContext from 'components/Note/Context';
 import NoteTextarea from 'components/NoteTextarea';
+import ReplyAttachmentList from 'components/ReplyAttachmentList';
+import Button from 'components/Button';
 import classNames from 'classnames';
 import core from 'core';
 import mentionsManager from 'helpers/MentionsManager';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
+import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
-import Button from 'src/components/Button';
+import { isMobile } from 'src/helpers/device';
+import DataElements from 'src/constants/dataElement';
 
 import './ReplyArea.scss';
 
@@ -28,6 +31,8 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     isReplyDisabledForAnnotation,
     isMentionEnabled,
     isNoteEditingTriggeredByAnnotationPopup,
+    isInlineCommentDisabled,
+    isInlineCommentOpen,
   ] = useSelector(
     (state) => [
       selectors.getAutoFocusNoteOnAnnotationSelection(state),
@@ -36,14 +41,28 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       selectors.getIsReplyDisabled(state)?.(annotation),
       selectors.getIsMentionEnabled(state),
       selectors.getIsNoteEditing(state),
+      selectors.isElementDisabled(state, DataElements.INLINE_COMMENT_POPUP),
+      selectors.isElementOpen(state, DataElements.INLINE_COMMENT_POPUP),
     ],
     shallowEqual
   );
-  const { isContentEditable, isSelected, pendingReplyMap, setPendingReply, isExpandedFromSearch, scrollToSelectedAnnot } = useContext(NoteContext);
+  const {
+    isContentEditable,
+    isSelected,
+    pendingReplyMap,
+    setPendingReply,
+    isExpandedFromSearch,
+    scrollToSelectedAnnot,
+    setCurAnnotId,
+    pendingAttachmentMap,
+    clearAttachments,
+    deleteAttachment
+  } = useContext(NoteContext);
   const [isFocused, setIsFocused] = useState(false);
-  const [t] = useTranslation();
   const dispatch = useDispatch();
   const textareaRef = useRef();
+
+  const shouldNotFocusOnInput = !isInlineCommentDisabled && isInlineCommentOpen && isMobile();
 
   useDidUpdate(() => {
     if (!isFocused) {
@@ -52,6 +71,10 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   }, [isFocused]);
 
   useEffect(() => {
+    if (shouldNotFocusOnInput) {
+      return;
+    }
+
     if (
       isNoteEditingTriggeredByAnnotationPopup &&
       isSelected &&
@@ -62,7 +85,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     ) {
       textareaRef.current.focus();
     }
-  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected]);
+  }, [isContentEditable, isNoteEditingTriggeredByAnnotationPopup, isSelected, shouldNotFocusOnInput]);
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
@@ -78,6 +101,10 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       }, 0);
     }
     if (textareaRef && textareaRef.current) {
+      if (shouldNotFocusOnInput) {
+        return;
+      }
+
       const editor = textareaRef.current.getEditor();
       const lastNewLineCharacterLength = 1;
       const textLength = editor.getLength() - lastNewLineCharacterLength;
@@ -85,9 +112,11 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     }
   }, []);
 
-  const postReply = (e) => {
+  const postReply = async (e) => {
     // prevent the textarea from blurring out
     e.preventDefault();
+    e.stopPropagation();
+
     const editor = textareaRef.current.getEditor();
     const replyText = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
 
@@ -95,7 +124,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       return;
     }
 
-    const annotationHasNoContents = annotation.getContents() === '' || annotation.getContents() === undefined;
+    const annotationHasNoContents = !annotation.getContents();
     if (isMentionEnabled) {
       if (annotationHasNoContents && isContentEditable) {
         const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(replyText);
@@ -108,6 +137,8 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       } else {
         const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
         setAnnotationRichTextStyle(editor, replyAnnotation);
+        await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
+        core.addAnnotations([replyAnnotation]);
       }
     } else {
       if (annotationHasNoContents && isContentEditable) {
@@ -116,10 +147,13 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       } else {
         const replyAnnotation = core.createAnnotationReply(annotation, replyText);
         setAnnotationRichTextStyle(editor, replyAnnotation);
+        await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
+        core.getAnnotationManager().trigger('annotationChanged', [[replyAnnotation], 'modify', {}]);
       }
     }
 
     setPendingReply('', annotation.Id);
+    clearAttachments(annotation.Id);
   };
 
   const ifReplyNotAllowed =
@@ -132,38 +166,64 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     unread: isUnread,
   });
 
+  const replyButtonClass = classNames({
+    'reply-button': true,
+    disabled: !pendingReplyMap[annotation.Id]
+  });
+
   const handleNoteTextareaChange = (value) => {
     setPendingReply(value, annotation.Id);
     onPendingReplyChange && onPendingReplyChange();
   };
-  return ifReplyNotAllowed || !isSelected ? null : (
+
+  const onBlur = () => {
+    setIsFocused(false);
+    setCurAnnotId(undefined);
+  };
+
+  const onFocus = () => {
+    setIsFocused(true);
+    setCurAnnotId(annotation.Id);
+  };
+
+  const pendingAttachments = pendingAttachmentMap[annotation.Id] || [];
+
+  return (ifReplyNotAllowed || !isSelected) ? null : (
     <form onSubmit={postReply} className="reply-area-container">
-      <div
-        className={replyAreaClass}
-        // stop bubbling up otherwise the note will be closed
-        // due to annotation deselection
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <NoteTextarea
-          ref={(el) => {
-            textareaRef.current = el;
-          }}
-          value={pendingReplyMap[annotation.Id]}
-          onChange={(value) => handleNoteTextareaChange(value)}
-          onSubmit={postReply}
-          onBlur={() => setIsFocused(false)}
-          onFocus={() => setIsFocused(true)}
-          placeholder={`${t('action.reply')}...`}
-          aria-label={`${t('action.reply')}...`}
+      {pendingAttachments.length > 0 && (
+        <ReplyAttachmentList
+          files={pendingAttachments}
+          isEditing={true}
+          fileDeleted={(file) => deleteAttachment(annotation.Id, file)}
         />
-      </div>
-      <div className="reply-button-container">
-        <Button
-          img="icon-post-reply"
-          className={`reply-button${!pendingReplyMap[annotation.Id] ? ' disabled' : ''}`}
-          onMouseUp={(e) => postReply(e)}
-          isSubmitType
-        />
+      )}
+      <div className="reply-area-with-button">
+        <div
+          className={replyAreaClass}
+          // stop bubbling up otherwise the note will be closed
+          // due to annotation deselection
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          <NoteTextarea
+            ref={(el) => {
+              textareaRef.current = el;
+            }}
+            value={pendingReplyMap[annotation.Id]}
+            onChange={(value) => handleNoteTextareaChange(value)}
+            onSubmit={postReply}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            isReply
+          />
+        </div>
+        <div className="reply-button-container">
+          <Button
+            img="icon-post-reply"
+            className={replyButtonClass}
+            onClick={postReply}
+            isSubmitType
+          />
+        </div>
       </div>
     </form>
   );
