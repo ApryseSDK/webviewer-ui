@@ -80,7 +80,7 @@ const extractPages = (pageNumbers, dispatch) => {
     confirmBtnText,
     onConfirm: () => extractPagesWithAnnotations(pageNumbers).then((file) => {
       if (getSaveAsHandler() !== null) {
-        var handler = getSaveAsHandler();
+        const handler = getSaveAsHandler();
         handler(file, 'extractedDocument.pdf');
       } else {
         saveAs(file, 'extractedDocument.pdf');
@@ -90,7 +90,7 @@ const extractPages = (pageNumbers, dispatch) => {
     onSecondary: () => {
       extractPagesWithAnnotations(pageNumbers).then((file) => {
         if (getSaveAsHandler() !== null) {
-          var handler = getSaveAsHandler();
+          const handler = getSaveAsHandler();
           handler(file, 'extractedDocument.pdf');
         } else {
           saveAs(file, 'extractedDocument.pdf');

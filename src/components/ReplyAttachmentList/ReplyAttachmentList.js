@@ -69,7 +69,7 @@ const ReplyAttachmentList = ({ files, isEditing, fileDeleted }) => {
 
     const fileData = file.url ? file.url : await decompressFileContent(file);
     if (getSaveAsHandler() !== null) {
-      var handler = getSaveAsHandler();
+      const handler = getSaveAsHandler();
       handler(fileData, file.name);
     } else {
       saveAs(fileData, file.name);

@@ -240,7 +240,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
         file = new File([arr], downloadName, { type: downloadType });
       }
       if (getSaveAsHandler() !== null) {
-        var handler = getSaveAsHandler();
+        const handler = getSaveAsHandler();
         handler(file, downloadName);
       } else {
         saveAs(file, downloadName);

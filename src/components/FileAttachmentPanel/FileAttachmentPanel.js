@@ -55,7 +55,7 @@ const FileAttachmentPanel = () => {
             file.filename,
             () => {
               if (getSaveAsHandler() !== null) {
-                var handler = getSaveAsHandler();
+                const handler = getSaveAsHandler();
                 handler(file.blob, file.filename);
               } else {
                 saveAs(file.blob, file.filename);
