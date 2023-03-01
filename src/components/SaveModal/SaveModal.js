@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -119,7 +123,7 @@ const SaveModal = () => {
     }
     clearError();
   };
-  const onSave = () => {
+  const onSave = useCallback(() => {
     let pages;
     if (pageRange === PAGE_RANGES.SPECIFY) {
       pages = specifiedPages?.length ? specifiedPages : [core.getCurrentPage(activeDocumentViewerKey)];
@@ -139,7 +143,10 @@ const SaveModal = () => {
       pages,
       store,
     }, activeDocumentViewerKey);
-  };
+    if (documentType === workerTypes.OFFICE_EDITOR) {
+      closeModal();
+    }
+  }, [documentType]);
 
   const [hasTyped, setHasTyped] = useState(false);
   const saveDisabled = (errorText || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY;
