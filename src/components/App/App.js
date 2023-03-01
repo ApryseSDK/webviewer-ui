@@ -87,7 +87,7 @@ const App = ({ removeEventHandlers }) => {
   const dispatch = useDispatch();
   let timeoutReturn;
 
-  const [isInDesktopOnlyMode, isMultiViewerMode] = useSelector((state) => [
+  const [isInDesktopOnlyMode, isMultiViewerMode] = useSelector(state => [
     selectors.isInDesktopOnlyMode(state),
     selectors.isMultiViewerMode(state),
   ]);
@@ -191,35 +191,37 @@ const App = ({ removeEventHandlers }) => {
 
         <Header />
         <ToolsHeader />
+        {!isMultiViewerMode && <DocumentContainer />}
+        {!isIE11 && <MultiViewer />}
         <div className="content">
           <LeftPanel />
-          {!isMultiViewerMode && <DocumentContainer />}
-          {!isIE11 && <MultiViewer/>}
-          <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
+          <RightPanel dataElement="searchPanel" onResize={width => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
           </RightPanel>
-          <RightPanel dataElement="notesPanel" onResize={(width) => dispatch(actions.setNotesPanelWidth(width))}>
+          <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
             <NotesPanel />
           </RightPanel>
-          <RightPanel dataElement="redactionPanel" onResize={(width) => dispatch(actions.setRedactionPanelWidth(width))}>
+          <RightPanel dataElement="redactionPanel" onResize={width => dispatch(actions.setRedactionPanelWidth(width))}>
             <RedactionPanel />
           </RightPanel>
           <RightPanel
             dataElement="wv3dPropertiesPanel"
-            onResize={(width) => dispatch(actions.setWv3dPropertiesPanelWidth(width))}
+            onResize={width => dispatch(actions.setWv3dPropertiesPanelWidth(width))}
           >
             <Wv3dPropertiesPanel />
           </RightPanel>
           <MultiTabEmptyPage />
           <RightPanel
             dataElement="textEditingPanel"
-            onResize={(width) => dispatch(actions.setTextEditingPanelWidth(width))}
+            onResize={width => dispatch(actions.setTextEditingPanelWidth(width))}
           >
             <TextEditingPanel />
           </RightPanel>
-          {isMultiViewerMode && <RightPanel dataElement="comparePanel" onResize={(width) => dispatch(actions.setComparePanelWidth(width))}>
-            <ComparePanel />
-          </RightPanel>}
+          {isMultiViewerMode && (
+            <RightPanel dataElement="comparePanel" onResize={width => dispatch(actions.setComparePanelWidth(width))}>
+              <ComparePanel />
+            </RightPanel>
+          )}
         </div>
         <ContentEditLinkModal />
         <ViewControlsOverlay />

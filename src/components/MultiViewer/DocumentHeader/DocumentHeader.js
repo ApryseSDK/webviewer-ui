@@ -20,15 +20,13 @@ const propTypes = {
 };
 
 // Todo Compare: Make stories for this component
-const DocumentHeader = ({
-  documentViewerKey,
-  docLoaded,
-  isSyncing,
-}) => {
+const DocumentHeader = ({ documentViewerKey, docLoaded, isSyncing }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [filename, setFileName] = useState('Untitled');
-  const [saveButtonDisabled] = useSelector((state) => [selectors.isElementDisabled(state, DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON)]);
+  const [saveButtonDisabled] = useSelector(state => [
+    selectors.isElementDisabled(state, DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON),
+  ]);
 
   useEffect(() => {
     const stopSyncing = () => dispatch(actions.setSyncViewer(null));
@@ -53,15 +51,63 @@ const DocumentHeader = ({
     <div
       className={classNames('DocumentHeader', { hidden: !docLoaded })}
       id={`header${documentViewerKey}`}
+      style={{ background: '#DFDFDF' }}
     >
-      <ToggleZoomOverlay documentViewerKey={documentViewerKey} />
-      <div className="file-name">{filename}</div>
+      {/* <ToggleZoomOverlay documentViewerKey={documentViewerKey} /> */}
+      <Button
+        img="icon-sync"
+        onClick={onClickSync}
+        isActive={isSyncing}
+        title={t(`multiViewer.${isSyncing ? 'stop' : 'start'}Sync`)}
+        style={{ marginLeft: 24, marginRight: 16, color: '#333333' }}
+      />
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        {documentViewerKey === 1 ? (
+          <p
+            style={{
+              fontSize: 14,
+              fontWeight: 500,
+              background: '#F1F9F4',
+              borderRadius: 12,
+              padding: '4px 12px',
+              color: '#000000',
+            }}
+          >
+            Current File
+          </p>
+        ) : (
+          <p
+            style={{
+              fontSize: 14,
+              fontWeight: 500,
+              background: '#EBF1FF',
+              borderRadius: 12,
+              padding: '4px 12px',
+              color: '#000000',
+            }}
+          >
+            Reference File
+          </p>
+        )}
+        <div className="file-name">{filename}</div>
+      </div>
       <div className="control-buttons">
-        {!saveButtonDisabled &&
-          <Button img="icon-save" onClick={onSaveDocument} dataElement={DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON} title={t('multiViewer.save')} />
-        }
-        <Button img="icon-sync" onClick={onClickSync} isActive={isSyncing} title={t(`multiViewer.${isSyncing ? 'stop' : 'start'}Sync`)} />
-        <Button img="icon-close" onClick={closeDocument} title={t('multiViewer.closeDocument')} />
+        {!saveButtonDisabled && (
+          <Button
+            img="icon-save"
+            onClick={onSaveDocument}
+            dataElement={DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON}
+            title={t('multiViewer.save')}
+          />
+        )}
+        {documentViewerKey === 2 && (
+          <Button
+            img="icon-close"
+            onClick={closeDocument}
+            title={t('multiViewer.closeDocument')}
+            style={{ marginRight: 24, alignSelf: 'flex-end' }}
+          />
+        )}
       </div>
     </div>
   );

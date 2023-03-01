@@ -11,11 +11,10 @@ import ChangeListItem from 'components/MultiViewer/ComparePanel/ChangeListItem';
 import core from 'core';
 import { throttle } from 'lodash';
 
-
 const ComparePanel = () => {
   const { t } = useTranslation();
   const isMobile = useMedia(['(max-width: 640px)'], [true], false);
-  const [isOpen, currentWidth, isInDesktopOnlyMode] = useSelector((state) => [
+  const [isOpen, currentWidth, isInDesktopOnlyMode] = useSelector(state => [
     selectors.isElementOpen(state, 'comparePanel'),
     selectors.getComparePanelWidth(state),
     selectors.isInDesktopOnlyMode(state),
@@ -25,31 +24,40 @@ const ComparePanel = () => {
   const changeListData = useRef([]);
   const [totalChanges, setTotalChanges] = useState(0);
   const [filteredListData, setFilteredListData] = useState([]);
-  const filterfuncRef = useRef(throttle((searchValue) => {
-    if (!changeListData.current) {
-      return [];
-    }
-    if (!searchValue) {
-      setFilteredListData(changeListData.current);
-      return;
-    }
-    const keys = Object.keys(changeListData.current);
-    const newData = {};
-    for (const key of keys) {
-      for (const item of changeListData.current[key]) {
-        if (item.oldText?.toLowerCase().match(searchValue.toLowerCase()) || item.newText?.toLowerCase().match(searchValue.toLowerCase())) {
-          if (!newData[key]) {
-            newData[key] = [];
-          }
-          newData[key].push(item);
+  const filterfuncRef = useRef(
+    throttle(
+      searchValue => {
+        if (!changeListData.current) {
+          return [];
         }
-      }
-    }
-    setFilteredListData(newData);
-  }, 100, { leading: true }));
+        if (!searchValue) {
+          setFilteredListData(changeListData.current);
+          return;
+        }
+        const keys = Object.keys(changeListData.current);
+        const newData = {};
+        for (const key of keys) {
+          for (const item of changeListData.current[key]) {
+            if (
+              item.oldText?.toLowerCase().match(searchValue.toLowerCase()) ||
+              item.newText?.toLowerCase().match(searchValue.toLowerCase())
+            ) {
+              if (!newData[key]) {
+                newData[key] = [];
+              }
+              newData[key].push(item);
+            }
+          }
+        }
+        setFilteredListData(newData);
+      },
+      100,
+      { leading: true },
+    ),
+  );
 
   useEffect(() => {
-    const updatePanelItems = (e) => {
+    const updatePanelItems = e => {
       const { annotMap, diffCount } = e.detail;
       setTotalChanges(diffCount);
       changeListData.current = annotMap;
@@ -69,24 +77,31 @@ const ComparePanel = () => {
     };
   }, []);
 
-  const renderPageItem = (pageNum) => {
+  const renderPageItem = pageNum => {
     const changeListItems = filteredListData[pageNum];
-    return <React.Fragment key={pageNum}>
-      <div className="page-number">{t('multiViewer.comparePanel.page')} {pageNum}</div>
-      {changeListItems.map(((props, index) => <ChangeListItem key={index} {...props} />))}
-    </React.Fragment>;
+    return (
+      <React.Fragment key={pageNum}>
+        <div className="page-number">
+          {t('multiViewer.comparePanel.page')} {pageNum}
+        </div>
+        {changeListItems.map((props, index) => (
+          <ChangeListItem key={index} {...props} />
+        ))}
+      </React.Fragment>
+    );
   };
 
-  const onSearchInputChange = (e) => {
+  const onSearchInputChange = e => {
     const newValue = e.target.value;
     setSearchValue(newValue);
     filterfuncRef.current(newValue);
   };
 
-
   return (
-    <DataElementWrapper className={classNames('Panel', 'ComparePanel', { 'open': isOpen, })}
-      dataElement="comparePanel" style={style}
+    <DataElementWrapper
+      className={classNames('Panel', 'ComparePanel', { 'open': isOpen })}
+      dataElement="comparePanel"
+      style={style}
     >
       <div className="input-container">
         <input
@@ -101,10 +116,11 @@ const ComparePanel = () => {
         />
       </div>
       <div className="changeListContainer">
-        <div className="changeListTitle">{t('multiViewer.comparePanel.changesList')} <span>({totalChanges})</span>
+        <div className="changeListTitle">
+          {t('multiViewer.comparePanel.changesList')} <span>({totalChanges})</span>
         </div>
         <div className="changeList">
-          {totalChanges && filteredListData && Object.keys(filteredListData).map((key) => renderPageItem(key))}
+          {totalChanges && filteredListData && Object.keys(filteredListData).map(key => renderPageItem(key))}
         </div>
       </div>
     </DataElementWrapper>

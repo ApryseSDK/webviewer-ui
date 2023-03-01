@@ -2,12 +2,12 @@
 
 .DocumentHeader {
   width: 100%;
-  height: fit-content;
+  height: 48px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 0;
+  background: #dfdfdf;
 
   &.hidden {
     visibility: hidden;
@@ -21,7 +21,7 @@
       background-color: var(--popup-button-hover);
     }
 
-    &.active{
+    &.active {
       background-color: var(--view-header-button-active);
       .Icon {
         color: var(--view-header-icon-active-fill);
@@ -36,6 +36,9 @@
   .file-name {
     font-family: var(--font-family);
     font-size: var(--font-size-medium);
+    align-self: center;
+    margin-left: 17px;
+    color: #333333;
   }
 
   .control-buttons {

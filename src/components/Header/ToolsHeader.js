@@ -17,11 +17,18 @@ class ToolsHeader extends React.PureComponent {
     isOpen: PropTypes.bool,
     activeHeaderItems: PropTypes.array.isRequired,
     isToolGroupReorderingEnabled: PropTypes.bool,
-    isInDesktopOnlyMode: PropTypes.bool
-  }
+    isInDesktopOnlyMode: PropTypes.bool,
+  };
 
   render() {
-    const { isDisabled, activeHeaderItems, isOpen, currentToolbarGroup, isToolGroupReorderingEnabled, isInDesktopOnlyMode } = this.props;
+    const {
+      isDisabled,
+      activeHeaderItems,
+      isOpen,
+      currentToolbarGroup,
+      isToolGroupReorderingEnabled,
+      isInDesktopOnlyMode,
+    } = this.props;
 
     const isVisible = !isDisabled && isOpen && currentToolbarGroup !== 'toolbarGroup-View';
 
@@ -33,17 +40,19 @@ class ToolsHeader extends React.PureComponent {
         })}
         data-element="toolsHeader"
       >
-        <div
-          className="Header Tools"
-        >
-          <HeaderItems items={activeHeaderItems} isToolGroupReorderingEnabled={isToolGroupReorderingEnabled} isInDesktopOnlyMode={isInDesktopOnlyMode} />
+        <div className="Header Tools">
+          <HeaderItems
+            items={activeHeaderItems}
+            isToolGroupReorderingEnabled={isToolGroupReorderingEnabled}
+            isInDesktopOnlyMode={isInDesktopOnlyMode}
+          />
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isDisabled: selectors.isElementDisabled(state, 'toolsHeader'),
   isOpen: selectors.isElementOpen(state, 'toolsHeader'),
@@ -53,7 +62,7 @@ const mapStateToProps = (state) => ({
   isSignatureOverlayOpen: selectors.isElementOpen(state, 'signatureOverlay'),
   isSignatureOverlayDisabled: selectors.isElementDisabled(state, 'signatureOverlay'),
   isToolGroupReorderingEnabled: selectors.isToolGroupReorderingEnabled(state),
-  isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state)
+  isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state),
 });
 
 const mapDispatchToProps = {
@@ -62,7 +71,7 @@ const mapDispatchToProps = {
 
 const ConnectedToolsHeader = connect(mapStateToProps, mapDispatchToProps)(ToolsHeader);
 
-const connectedComponent = (props) => {
+const connectedComponent = props => {
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -79,9 +88,7 @@ const connectedComponent = (props) => {
     false,
   );
 
-  return (
-    <ConnectedToolsHeader {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
-  );
+  return <ConnectedToolsHeader {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />;
 };
 
 export default connectedComponent;
