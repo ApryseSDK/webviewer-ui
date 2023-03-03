@@ -45,6 +45,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onInitialDeleted = eventListeners.onInitialDeleted(dispatch, store);
   const onContentEditModeStarted = eventListeners.onContentEditModeStarted(dispatch);
   const onContentEditModeEnded = eventListeners.onContentEditModeEnded(dispatch);
+  const onContentBoxEditStarted = eventListeners.onContentBoxEditStarted(dispatch, hotkeysManager);
+  const onContentBoxEditEnded = eventListeners.onContentBoxEditEnded(hotkeysManager);
 
   return {
     addEventHandlers: () => {
@@ -54,6 +56,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted);
         core.addEventListener('contentEditModeStarted', onContentEditModeStarted);
         core.addEventListener('contentEditModeEnded', onContentEditModeEnded);
+        core.addEventListener('contentBoxEditStarted', onContentBoxEditStarted);
+        core.addEventListener('contentBoxEditEnded', onContentBoxEditEnded);
         core.addEventListener('toolUpdated', onToolUpdated, undefined, documentViewerKey);
         core.addEventListener('toolModeUpdated', onToolModeUpdated, undefined, documentViewerKey);
         document.addEventListener('fullscreenchange', onFullScreenChange);
@@ -110,6 +114,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.removeEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded, documentViewerKey);
         core.removeEventListener('contentEditModeStarted', onContentEditModeStarted);
         core.removeEventListener('contentEditModeEnded', onContentEditModeEnded);
+        core.removeEventListener('contentBoxEditStarted', onContentBoxEditStarted);
+        core.removeEventListener('contentBoxEditEnded', onContentBoxEditEnded);
         core.removeEventListener('toolUpdated', onToolUpdated, documentViewerKey);
         core.removeEventListener('toolModeUpdated', onToolModeUpdated, documentViewerKey);
         document.removeEventListener('fullscreenchange', onFullScreenChange);

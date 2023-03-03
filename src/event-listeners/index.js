@@ -37,6 +37,8 @@ import onInitialSaved from './onInitialSaved';
 import onInitialDeleted from './onInitialDeleted';
 import onContentEditModeStarted from './onContentEditModeStarted';
 import onContentEditModeEnded from './onContentEditModeEnded';
+import onContentBoxEditEnded from './onContentBoxEditEnded';
+import onContentBoxEditStarted from './onContentBoxEditStarted';
 
 export {
   onSignatureSaved,
@@ -78,4 +80,6 @@ export {
   onInitialDeleted,
   onContentEditModeStarted,
   onContentEditModeEnded,
+  onContentBoxEditStarted,
+  onContentBoxEditEnded,
 };
