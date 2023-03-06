@@ -1,7 +1,6 @@
 import React, {
   useEffect,
   useState,
-  useCallback,
 } from 'react';
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import selectors from 'selectors';
@@ -123,7 +122,7 @@ const SaveModal = () => {
     }
     clearError();
   };
-  const onSave = useCallback(() => {
+  const onSave = () => {
     let pages;
     if (pageRange === PAGE_RANGES.SPECIFY) {
       pages = specifiedPages?.length ? specifiedPages : [core.getCurrentPage(activeDocumentViewerKey)];
@@ -146,7 +145,7 @@ const SaveModal = () => {
     if (documentType === workerTypes.OFFICE_EDITOR) {
       closeModal();
     }
-  }, [documentType]);
+  };
 
   const [hasTyped, setHasTyped] = useState(false);
   const saveDisabled = (errorText || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY;
