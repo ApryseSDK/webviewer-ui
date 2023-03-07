@@ -382,6 +382,53 @@ export const setInitialsOffset = (initalsOffset) => ({
   type: 'SET_INITIALS_OFFSET',
   payload: { initalsOffset },
 });
+export const setFlyoutPosition = (newPosition) => ({
+  type: 'SET_FLYOUT_POSITION',
+  payload: { newPosition },
+});
+export const addFlyout = (newFlyout) => (dispatch, getState) => {
+  const flyoutMap = selectors.getFlyoutMap(getState());
+  while (flyoutMap[newFlyout.dataElement]) {
+    const oldDataElement = newFlyout.dataElement;
+    if (newFlyout.dataElement.match(/[0-9]$/)) {
+      const number = parseInt(newFlyout.dataElement.match(/\d+$/)[0], 10);
+      newFlyout.dataElement = newFlyout.dataElement.replace(/\d+$/, `${number + 1}`);
+    } else {
+      newFlyout.dataElement = `${newFlyout.dataElement}2`;
+    }
+    console.warn(`Flyout with dataElement ${oldDataElement} already exists. Renaming to ${newFlyout.dataElement}`);
+  }
+  dispatch({
+    type: 'ADD_FLYOUT',
+    payload: { dataElement: newFlyout.dataElement, flyout: newFlyout },
+  });
+};
+export const removeFlyout = (dataElement) => ({
+  type: 'REMOVE_FLYOUT',
+  payload: { dataElement },
+});
+export const setActiveFlyout = (dataElement) => (dispatch, getState) => {
+  const flyoutMap = selectors.getFlyoutMap(getState());
+  if (dataElement && !flyoutMap[dataElement]) {
+    console.warn(`Flyout with dataElement ${dataElement} does not exist.`);
+    return;
+  }
+  dispatch({
+    type: 'SET_ACTIVE_FLYOUT',
+    payload: { dataElement },
+  });
+};
+export const updateFlyout = (dataElement, newFlyout) => (dispatch, getState) => {
+  const flyoutMap = selectors.getFlyoutMap(getState());
+  if (!flyoutMap[dataElement]) {
+    console.warn(`Flyout with dataElement ${dataElement} does not exist, adding new flyout`);
+    return addFlyout(newFlyout);
+  }
+  dispatch({
+    type: 'UPDATE_FLYOUT',
+    payload: { dataElement, flyout: newFlyout },
+  });
+};
 
 // document
 export const setTotalPages = (totalPages, documentViewerKey = 1) => ({
@@ -533,6 +580,16 @@ export const setCustomApplyRedactionsHandler = (customApplyRedactionsHandler) =>
   payload: { customApplyRedactionsHandler },
 });
 
+export const setCustomMultiViewerSyncHandler = (customMultiViewerSyncHandler) => ({
+  type: 'SET_CUSTOM_MULTI_VIEWER_SYNC_HANDLER',
+  payload: { customMultiViewerSyncHandler },
+});
+
+export const setCustomMultiViewerAcceptedFileFormats = (customMultiViewerAcceptedFileFormats) => ({
+  type: 'SET_CUSTOM_MULTI_VIEWER_ACCEPTED_FILE_FORMATS',
+  payload: { customMultiViewerAcceptedFileFormats },
+});
+
 export const setEnableSnapMode = (enable) => ({
   type: 'SET_ENABLE_SNAP_MODE',
   payload: { enable },
@@ -591,4 +648,9 @@ export const setContentEditor = (contentEditor) => ({
 export const setInitialsMode = (isEnabled) => ({
   type: 'SET_INITIALS_MODE',
   payload: { isEnabled }
+});
+
+export const setShortcutKeyMap = (shortcutKeyMap) => ({
+  type: 'SET_SHORTCUT_KEY_MAP',
+  payload: shortcutKeyMap
 });

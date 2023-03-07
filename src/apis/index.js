@@ -63,7 +63,6 @@ import getCurrentPageNumber from './getCurrentPageNumber';
 import getFitMode from './getFitMode';
 import getLayoutMode from './getLayoutMode';
 import getPageCount from './getPageCount';
-import getSelectedThumbnailPageNumbers from './getSelectedThumbnailPageNumbers';
 import getSelectors from './getSelectors';
 import getShowSideWindow from './getShowSideWindow';
 import getSideWindowVisibility from './getSideWindowVisibility';
@@ -71,7 +70,6 @@ import getToolMode from './getToolMode';
 import getZoomLevel from './getZoomLevel';
 import getMaxZoomLevel from './getMaxZoomLevel';
 import getMinZoomLevel from './getMinZoomLevel';
-import getIsHighContrastMode from './getIsHighContrastMode';
 import goToFirstPage from './goToFirstPage';
 import goToLastPage from './goToLastPage';
 import goToNextPage from './goToNextPage';
@@ -82,7 +80,6 @@ import isAdminUser from './isAdminUser';
 import isElementDisabled from './isElementDisabled';
 import isElementOpen from './isElementOpen';
 import isHighContrastModeEnabled from './isHighContrastModeEnabled';
-import isMobileDevice from './isMobileDevice';
 import isReadOnly from './isReadOnly';
 import isToolDisabled from './isToolDisabled';
 import isFullscreen from './isFullscreen';
@@ -110,10 +107,10 @@ import setAnnotationUser from './setAnnotationUser';
 import setActivePalette from './setActivePalette';
 import setColorPalette from './setColorPalette';
 import setPageReplacementModalFileList from './setPageReplacementModalFileList';
-import setHighContrastMode from './setHighContrastMode';
 import setCurrentPageNumber from './setCurrentPageNumber';
-import addCustomModal, { setCustomModal } from './addCustomModal';
+import addCustomModal from './addCustomModal';
 import setCustomNoteFilter from './setCustomNoteFilter';
+import setInlineCommmentFilter from './setInlineCommmentFilter';
 import setCustomPanel from './setCustomPanel';
 import exportBookmarks from './exportBookmarks';
 import importBookmarks from './importBookmarks';
@@ -133,7 +130,6 @@ import setPrintQuality from './setPrintQuality';
 import setDefaultPrintOptions from './setDefaultPrintOptions';
 import setSelectedTab from './setSelectedTab';
 import setSideWindowVisibility from './setSideWindowVisibility';
-import setSortNotesBy from './setSortNotesBy';
 import setNotesPanelSortStrategy from './setNotesPanelSortStrategy';
 import setSwipeOrientation from './setSwipeOrientation';
 import setTheme from './setTheme';
@@ -142,12 +138,10 @@ import createToolbarGroup from './createToolbarGroup';
 import setToolMode from './setToolMode';
 import setZoomLevel from './setZoomLevel';
 import setZoomList from './setZoomList';
-import showErrorMessage from './showErrorMessage';
 import showOutlineControl from './showOutlineControl';
 import showWarningMessage from './showWarningMessage';
 import syncNamespaces from './syncNamespaces';
 import textPopup from './textPopup';
-import toggleElement from './toggleElement';
 import toggleFullScreen from './toggleFullScreen';
 import {
   enableToolDefaultStyleUpdateFromAnnotationPopup,
@@ -155,10 +149,8 @@ import {
 } from './toolDefaultStyleUpdateFromAnnotationPopup';
 import unregisterTool from './unregisterTool';
 import updateElement from './updateElement';
-import updateOutlines from './updateOutlines';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
-import useNativeScroll from './useNativeScroll';
 import setDisplayedSignaturesFilterFunction from './setDisplayedSignaturesFilterFunction';
 import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
@@ -171,8 +163,6 @@ import setCustomNoteSelectionFunction from './setCustomNoteSelectionFunction';
 import setCustomApplyRedactionsHandler from './setCustomApplyRedactionsHandler';
 import setCustomMultiViewerSyncHandler from './setCustomMultiViewerSyncHandler';
 import setCustomMultiViewerAcceptedFileFormats from './setCustomMultiViewerAcceptedFileFormats';
-import selectThumbnailPages from './selectThumbnailPages';
-import unselectThumbnailPages from './unselectThumbnailPages';
 import setSearchResults from './setSearchResults';
 import setActiveResult from './setActiveResult';
 import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
@@ -246,6 +236,9 @@ import signSignatureWidget from './signSignatureWidget';
 import addModularHeaders from './addModularHeaders';
 import getModularHeader from './getModularHeader';
 import getModularHeaderList from './getModularHeaderList';
+import setGroupedItemsGap from './setGroupedItemsGap';
+import setGroupedItemsAlignment from './setGroupedItemsAlignment';
+import setGroupedItemsGrow from './setGroupedItemsGrow';
 import core from 'core';
 import { setDefaultOptions } from './outlinesPanel';
 import Item from './ModularComponents/item';
@@ -256,6 +249,7 @@ import RibbonItem from './ModularComponents/ribbonItem';
 import RibbonGroup from './ModularComponents/ribbonGroup';
 import ToggleElementButton from './ModularComponents/toggleElementButton';
 import ToolGroupButton from './ModularComponents/toolGroupButton';
+import Flyout from './ModularComponents/flyout';
 
 import {
   getMeasurementScalePreset,
@@ -272,6 +266,7 @@ import { setCustomSettings, exportUserSettings, importUserSettings } from './use
 import addPanel from './addPanel';
 import setGrayscaleDarknessFactor from './setGrayscaleDarknessFactor';
 import { ALIGNMENT } from 'constants/customizationVariables';
+import FlyoutsAPI from './FlyoutsAPI';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -345,11 +340,11 @@ export default (store) => {
     overrideSearchExecution,
     setActiveHeaderGroup: setActiveHeaderGroup(store),
     setActiveLeftPanel: setActiveLeftPanel(store),
-    setCustomModal: setCustomModal(store),
     addCustomModal: addCustomModal(store),
     addPanel: addPanel(store),
     showOutlineControl: showOutlineControl(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
+    setInlineCommmentFilter: setInlineCommmentFilter(store),
     setCustomPanel: setCustomPanel(store),
     exportBookmarks: exportBookmarks(store),
     extractPagesWithAnnotations,
@@ -432,6 +427,10 @@ export default (store) => {
     addModularHeaders: addModularHeaders(store),
     getModularHeader: getModularHeader(store),
     getModularHeaderList: getModularHeaderList(store),
+    Flyouts: FlyoutsAPI(store),
+    setGroupedItemsGap: setGroupedItemsGap(store),
+    setGroupedItemsAlignment: setGroupedItemsAlignment(store),
+    setGroupedItemsGrow: setGroupedItemsGrow(store),
     Components: {
       Item,
       GroupedItems: GroupedItems(store),
@@ -445,6 +444,7 @@ export default (store) => {
       RibbonItem,
       RibbonGroup,
       ToolGroupButton,
+      Flyout: Flyout(store),
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
@@ -493,7 +493,6 @@ export default (store) => {
     goToNextPage: goToNextPage(store),
     goToPrevPage: goToPrevPage(store),
     isAdminUser,
-    isMobileDevice,
     isReadOnly,
     openElement: openElement(store),
     rotateClockwise,
@@ -502,7 +501,6 @@ export default (store) => {
     setAdminUser,
     setAnnotationUser,
     setCurrentPageNumber,
-    setSortNotesBy: setSortNotesBy(store),
     getCustomData,
     toggleReaderMode: toggleReaderMode(store),
     enableToolDefaultStyleUpdateFromAnnotationPopup: enableToolDefaultStyleUpdateFromAnnotationPopup(store),
@@ -541,20 +539,7 @@ export default (store) => {
     exportUserSettings: exportUserSettings(store),
     importUserSettings: importUserSettings(store),
     setGrayscaleDarknessFactor,
-
-    // deprecated, to be removed in 8.0
-    useNativeScroll,
-    showErrorMessage: showErrorMessage(store),
-    toggleElement: toggleElement(store),
     setSideWindowVisibility: setSideWindowVisibility(store),
-    setHighContrastMode: setHighContrastMode(store),
-    getIsHighContrastMode: getIsHighContrastMode(store),
-
-    // deprecated, to be removed in 9.0
-    updateOutlines: updateOutlines(store),
-    selectThumbnailPages: selectThumbnailPages(store),
-    unselectThumbnailPages: unselectThumbnailPages(store),
-    getSelectedThumbnailPageNumbers: getSelectedThumbnailPageNumbers(store),
 
     // undocumented
     loadedFromServer: false,

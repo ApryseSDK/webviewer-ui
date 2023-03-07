@@ -17,7 +17,7 @@ const ALIGNMENT = {
   END: 'end',
   SPACE_BETWEEN: 'space-between',
   SPACE_AROUND: 'space-around',
-  SPACE_EVENE: 'space-evenly',
+  SPACE_EVENLY: 'space-evenly',
 };
 
 const ITEM_TYPE = {
@@ -28,6 +28,7 @@ const ITEM_TYPE = {
   TOGGLE_BUTTON: 'toggleButton',
   RIBBON_GROUP: 'ribbonGroup',
   TOOL_GROUP_BUTTON: 'toolGroupButton',
+  FLYOUT: 'flyout',
 };
 
 export {

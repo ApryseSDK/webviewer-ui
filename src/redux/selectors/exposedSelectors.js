@@ -4,6 +4,9 @@ import { panelMinWidth, RESIZE_BAR_WIDTH } from 'constants/panel';
 import { PLACEMENT } from 'constants/customizationVariables';
 
 // viewer
+export const getActiveFlyout = (state) => state.viewer.activeFlyout;
+export const getFlyoutPosition = (state) => state.viewer.flyoutPosition;
+export const getFlyoutMap = (state) => state.viewer.flyoutMap;
 export const getInitialsOffset = (state) => state.viewer.initalsOffset;
 export const isSavedSignaturesTabEnabled = (state) => state.viewer.savedSignatureTabEnabled;
 export const getSyncViewer = (state) => state.viewer.syncViewer;
@@ -110,9 +113,12 @@ export const getDocumentContentContainerWidthStyle = (state) => {
     (isFlxPanelOpen ? panelMinWidth : 0);
 
   // Do not count left/right header with empty items
-  const leftHeader = getModularHeaderList(state)?.find((header) => header.options.placement === PLACEMENT.LEFT && header.options.items?.length);
-  const rightHeader = getModularHeaderList(state)?.find((header) => header.options.placement === PLACEMENT.RIGHT && header.options.items?.length);
-  const spaceTakenUpByHeaders = (leftHeader ? getLeftHeaderWidth(state) : 0) + (rightHeader ? getRightHeaderWidth(state) : 0);
+  const activeGroupedItems = getCurrentGroupedItems(state);
+  const leftHeader = getLeftHeader(state);
+  const isLeftHeaderActive = leftHeader?.items.map((item) => item.dataElement).some((item) => activeGroupedItems.includes(item));
+  const rightHeader = getRightHeader(state);
+  const isRightHeaderActive = rightHeader?.items.map((item) => item.dataElement).some((item) => activeGroupedItems.includes(item));
+  const spaceTakenUpByHeaders = (isLeftHeaderActive ? getLeftHeaderWidth(state) : 0) + (isRightHeaderActive ? getRightHeaderWidth(state) : 0);
   return `calc(100% - ${spaceTakenUpByPanels + spaceTakenUpByHeaders}px)`;
 };
 
@@ -198,12 +204,49 @@ export const getDefaultHeaderItems = (state) => {
 export const getModularHeaderList = (state) => state.viewer.modularHeaders;
 
 export const getModularHeader = (state, dataElement) => {
-  return state.viewer.modularHeaders.find((header) => header.options.dataElement === dataElement);
+  return state.viewer.modularHeaders.find((header) => header.dataElement === dataElement);
 };
 
-export const getTopHeadersHeight = (state) => state.viewer.modularHeadersHeight.topHeaders;
+export const getBottomHeaders = (state) => {
+  return state.viewer.modularHeaders.filter((header) => header.placement === PLACEMENT.BOTTOM);
+};
 
-export const getBottomHeadersHeight = (state) => state.viewer.modularHeadersHeight.bottomHeaders;
+export const getBottomHeadersHeight = (state) => {
+  const bottomHeaders = getBottomHeaders(state);
+  return bottomHeaders.length * state.viewer.modularHeadersHeight.bottomHeaders;
+};
+
+export const getTopHeaders = (state) => {
+  return state.viewer.modularHeaders.filter((header) => header.placement === PLACEMENT.TOP);
+};
+
+export const getRightHeader = (state) => {
+  return state.viewer.modularHeaders.find((header) => header.placement === PLACEMENT.RIGHT);
+};
+
+export const getLeftHeader = (state) => {
+  return state.viewer.modularHeaders.find((header) => header.placement === PLACEMENT.LEFT);
+};
+
+export const getTopHeadersHeight = (state) => {
+  const topHeaders = getTopHeaders(state);
+  // Dont inclued hidden ones. Refactor this.
+  const topHeadersQuantity = topHeaders.reduce((accumulator, currentHeader, index) => {
+    if (index === 0) {
+      return 1;
+    }
+    const { autoHide } = currentHeader;
+    if (autoHide && !autoHide) {
+      return accumulator + 1;
+    }
+    if (currentHeader.items && !currentHeader.items.length) {
+      return accumulator;
+    }
+    return accumulator + 1;
+  }, 1);
+  return topHeadersQuantity * state.viewer.modularHeadersHeight.topHeaders;
+};
+
 
 export const getRightHeaderWidth = (state) => state.viewer.modularHeadersWidth.rightHeader;
 
@@ -355,6 +398,8 @@ export const getcurrentStyleTab = (state, colorMapKey) => state.viewer.colorMap[
 export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorMapKey]?.iconColor;
 
 export const getCustomNoteFilter = (state) => state.viewer.customNoteFilter;
+
+export const getInlineCommmentFilter = (state) => state.viewer.inlineCommmentFilter;
 
 export const getIsReplyDisabled = (state) => state.viewer.isReplyDisabledFunc;
 
@@ -515,6 +560,8 @@ export const isContentEditWarningHidden = (state) => state.viewer.hideContentEdi
 export const getCurrentContentBeingEdited = (state) => state.viewer.currentContentBeingEdited;
 
 export const getFeatureFlags = (state) => state.featureFlags;
+
+export const isRightClickAnnotationPopupEnabled = (state) => state.viewer.enableRightClickAnnotationPopup;
 
 export const isInDesktopOnlyMode = (state) => state.viewer.isInDesktopOnlyMode;
 

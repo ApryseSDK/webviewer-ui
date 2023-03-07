@@ -4,6 +4,38 @@ export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'UPDATE_FLYOUT':
+      return {
+        ...state,
+        flyoutMap: {
+          [payload.dataElement]: payload.flyout
+        }
+      };
+    case 'SET_ACTIVE_FLYOUT':
+      return {
+        ...state,
+        activeFlyout: payload.dataElement,
+      };
+    case 'REMOVE_FLYOUT':
+      const flyoutMap = state.flyoutMap;
+      delete flyoutMap[payload.dataElement];
+      return {
+        ...state,
+        flyoutMap,
+      };
+    case 'ADD_FLYOUT':
+      return {
+        ...state,
+        flyoutMap: {
+          ...state.flyoutMap,
+          [payload.dataElement]: payload.flyout
+        }
+      };
+    case 'SET_FLYOUT_POSITION':
+      return {
+        ...state,
+        flyoutPosition: payload.newPosition,
+      };
     case 'SET_INITIALS_OFFSET':
       return {
         ...state,
@@ -515,6 +547,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, errorMessage: payload.message };
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
+    case 'SET_INLINE_COMMMENT_FILTER':
+      return { ...state, inlineCommmentFilter: payload.inlineCommmentFilter };
     case 'SET_ZOOM_LIST':
       return { ...state, zoomList: payload.zoomList };
     case 'SET_MEASUREMENT_UNITS': {
@@ -566,13 +600,10 @@ export default (initialState) => (state = initialState, action) => {
     case 'UPDATE_MODULAR_HEADERS': {
       const { dataElement, property, value } = payload;
       const updatedModularHeaders = state.modularHeaders.map((header) => {
-        if (header.options.dataElement === dataElement) {
+        if (header.dataElement === dataElement) {
           return {
             ...header,
-            options: {
-              ...header.options,
-              [property]: value,
-            }
+            [property]: value,
           };
         }
         return header;
@@ -804,6 +835,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, replyAttachmentHandler: payload.replyAttachmentHandler };
     case 'SET_CUSTOM_SETTINGS':
       return { ...state, customSettings: payload };
+    case 'SET_ENABLE_RIGHT_CLICK_ANNOTATION_POPUP':
+      return { ...state, enableRightClickAnnotationPopup: payload.isEnabled };
     case 'SET_TOOL_DEFAULT_STYLE_UPDATE_FROM_ANNOTATION_POPUP_ENABLED':
       return { ...state, toolDefaultStyleUpdateFromAnnotationPopupEnabled: payload };
     case 'SET_SHORTCUT_KEY_MAP':

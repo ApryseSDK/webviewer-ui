@@ -21,6 +21,8 @@ import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
 import SignatureModes from 'constants/signatureModes';
+import { ShortcutKeys } from 'helpers/hotkeysManager';
+import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
 
 const { ToolNames } = window.Core.Tools;
 
@@ -690,6 +692,7 @@ export default {
       ],
     },
     customHeadersAdditionalProperties: {},
+    enableRightClickAnnotationPopup: false,
     annotationPopup: [
       { dataElement: 'viewFileButton' },
       { dataElement: 'annotationCommentButton' },
@@ -698,6 +701,7 @@ export default {
       { dataElement: 'annotationRedactButton' },
       { dataElement: 'annotationCropButton' },
       { dataElement: 'annotationContentEditButton' },
+      { dataElement: 'annotationClearSignatureButton' },
       { dataElement: 'annotationGroupButton' },
       { dataElement: 'annotationUngroupButton' },
       { dataElement: 'formFieldEditButton' },
@@ -1897,6 +1901,10 @@ export default {
     colorMap: copyMapWithDataProperties('currentStyleTab', 'iconColor'),
     warning: {},
     customNoteFilter: null,
+    inlineCommmentFilter: (annot) => {
+      const isAnnotationInstanceOf = defaultToolsWithInlineComment.some((annotationInstance) => annot instanceof annotationInstance);
+      return isAnnotationInstanceOf;
+    },
     zoomList: defaultZoomList,
     isAccessibleMode: getHashParameters('accessibleMode', false),
     measurementUnits: {
@@ -1984,7 +1992,22 @@ export default {
     replyAttachmentPreviewEnabled: true,
     savedSignatureTabEnabled: false,
     replyAttachmentHandler: null,
-    customSettings: []
+    customSettings: [],
+    modularHeaders: [],
+    activeGroupedItems: [],
+    modularHeadersHeight: {
+      topHeaders: 40,
+      bottomHeaders: 40
+    },
+    modularHeadersWidth: {
+      rightHeader: 0,
+      leftHeader: 0
+    },
+    toolDefaultStyleUpdateFromAnnotationPopupEnabled: true,
+    shortcutKeyMap: { ...ShortcutKeys },
+    flyoutMap: {},
+    flyoutPosition: { x: 0, y: 0 },
+    activeFlyout: null,
   },
   search: {
     value: '',

@@ -1,69 +1,67 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import selectors from 'selectors';
+import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import PropTypes from 'prop-types';
 import './ToggleElementButton.scss';
-import Item from 'components/ModularComponents/Item';
-import { connect } from 'react-redux';
-import Tooltip from 'components/Tooltip';
-import Icon from 'components/Icon';
-import classNames from 'classnames';
+import Button from 'components/Button';
+import { WIDTH_PLUS_PADDING } from 'constants/flyoutConstants';
 
-class ToggleElementButton extends Item {
-  static propTypes = {
-    icon: PropTypes.string,
-    toggleElement: PropTypes.string,
-    disabled: PropTypes.bool,
-  }
+const ToggleElementButton = (props) => {
+  const buttonRef = useRef();
+  const { dataElement, title, disabled, img, label, toggleElement } = props;
+  const [isActive, flyoutMap] = useSelector((state) => [
+    selectors.isElementOpen(state, toggleElement),
+    selectors.getFlyoutMap(state),
+  ]);
 
-  constructor(props) {
-    super(props);
-    this.onClick = this.onClick.bind(this);
-  }
+  const dispatch = useDispatch();
 
-  onClick() {
-    const { toggleElement, isActive, closeElement, openElement } = this.props;
-    if (isActive) {
-      closeElement(toggleElement);
-    } else {
-      openElement(toggleElement);
+  const onClick = () => {
+    if (flyoutMap[toggleElement]) {
+      const appRect = document.getElementById('app').getBoundingClientRect();
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+      let x = buttonRect.x - appRect.x;
+      let y = buttonRect.y - appRect.y;
+      const parentHeader = buttonRef.current.closest('.ModularHeader');
+      if (parentHeader && parentHeader.classList.contains('LeftHeader')) {
+        x += buttonRect.width;
+      } else if (parentHeader && parentHeader.classList.contains('RightHeader')) {
+        x -= WIDTH_PLUS_PADDING;
+      } else if (parentHeader && parentHeader.classList.contains('TopHeader')) {
+        y += buttonRect.height;
+      } else if (parentHeader && parentHeader.classList.contains('BottomHeader')) {
+        y -= buttonRect.height;
+      }
+      dispatch(actions.setFlyoutPosition({ x, y }));
     }
-  }
+    if (isActive) {
+      dispatch(actions.closeElement(toggleElement));
+    } else {
+      dispatch(actions.openElement(toggleElement));
+    }
+  };
 
-  render() {
-    const { isActive, icon, title, dataElement, disabled } = this.props;
-    const isDataUrl = icon && icon.indexOf('data:') === 0;
-    const displayIcon = isDataUrl ? <img src={icon} /> : <Icon glyph={icon}/>;
-    return (
-      <div className='ToggleElementButton' data-element={dataElement}>
-        <Tooltip content={title}>
-          <button disabled={disabled} className={classNames('Button', { isActive })}
-            onClick={this.onClick} type='button'>
-            {displayIcon}
-          </button>
-        </Tooltip>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="ToggleElementButton" data-element={dataElement} ref={buttonRef}>
+      <Button
+        isActive={isActive}
+        dataElement={dataElement}
+        img={img}
+        label={label}
+        title={title}
+        onClick={onClick}
+        disabled={disabled}
+      >
+      </Button>
+    </div>
+  );
+};
 
 ToggleElementButton.propTypes = {
-  ...ToggleElementButton.prototype.propTypes,
   isActive: PropTypes.bool,
   closeElement: PropTypes.func,
   openElement: PropTypes.func,
 };
 
-const mapStateToProps = (state, props) => ({
-  isActive: selectors.isElementOpen(state, props.toggleElement),
-});
-
-const mapDispatchToProps = {
-  closeElement: actions.closeElement,
-  openElement: actions.openElement,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ToggleElementButton);
+export default ToggleElementButton;

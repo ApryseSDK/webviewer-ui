@@ -1,12 +1,13 @@
 import core from 'core';
 import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
+import { getAllPanels } from 'helpers/getElements';
+import { indexOfHeaderItem } from 'helpers/headers';
 import { getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
-import { disableElements, enableElements } from 'actions/internalActions';
+import { disableElements, enableElements, setActiveFlyout } from 'actions/internalActions';
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
-import { getAllPanels } from 'helpers/getElements';
 import { getCustomFlxPanels } from 'selectors/exposedSelectors';
 
 export const disableApplyCropWarningModal = () => ({
@@ -320,6 +321,40 @@ const updateHeaderProperty = (dataElement, property, value) => ({
   }
 });
 
+export const setGroupedItemsProperty = (propertyName, propertyValue, groupedItemsDataElement, headerDataElement) => (dispatch, getState) => {
+  const state = getState();
+  const headers = state.viewer.modularHeaders;
+  const updatedHeaders = headers.map((header) => {
+    // Will change only if there is no specific header for setting the property
+    // or if the specific header is the current one of the loop
+    if (!headerDataElement || header['dataElement'] === headerDataElement) {
+      if (groupedItemsDataElement) {
+        const itemIndex = indexOfHeaderItem(header, groupedItemsDataElement);
+        if (itemIndex > -1) {
+          header.items[itemIndex][propertyName] = propertyValue;
+          const updatedItems = [...header.items];
+          header.items = updatedItems;
+        }
+      } else {
+        const updatedItems = header.items.map((item) => {
+          if (item[propertyName]) {
+            item[propertyName] = propertyValue;
+          }
+          return { ...item };
+        });
+
+        header.items = updatedItems;
+      }
+    }
+    return { ...header };
+  });
+
+  dispatch({
+    type: 'SET_MODULAR_HEADERS',
+    payload: updatedHeaders
+  });
+};
+
 export const enableAllElements = () => ({
   type: 'ENABLE_ALL_ELEMENTS',
   payload: {},
@@ -332,6 +367,11 @@ export const openElement = (dataElement) => (dispatch, getState) => {
   const isElementOpen = isDataElementLeftPanel(dataElement, state)
     ? isLeftPanelOpen && state.viewer.activeLeftPanel === dataElement
     : state.viewer.openElements[dataElement];
+  const isFlyoutElement = state.viewer.flyoutMap?.[dataElement];
+
+  if (isFlyoutElement) {
+    dispatch(setActiveFlyout(dataElement));
+  }
 
   if (isElementDisabled || isElementOpen) {
     return;
@@ -507,11 +547,7 @@ export const setNotesPanelSortStrategy = (sortStrategy) => ({
   type: 'SET_NOTES_PANEL_SORT_STRATEGY',
   payload: { sortStrategy },
 });
-export const setSortNotesBy = (sortStrategy) => {
-  console.warn('setSortNotesBy is deprecated, please use setNotesPanelSortStrategy instead');
 
-  return setNotesPanelSortStrategy(sortStrategy);
-};
 export const setNoteDateFormat = (noteDateFormat) => ({
   type: 'SET_NOTE_DATE_FORMAT',
   payload: { noteDateFormat },
@@ -572,6 +608,10 @@ export const setCustomNoteFilter = (filterFunc) => ({
   type: 'SET_CUSTOM_NOTE_FILTER',
   payload: { customNoteFilter: filterFunc },
 });
+export const setInlineCommmentFilter = (filterFunc) => ({
+  type: 'SET_INLINE_COMMMENT_FILTER',
+  payload: { inlineCommmentFilter: filterFunc },
+});
 export const setZoomList = (zoomList) => (dispatch) => {
   const minZoomLevel = getMinZoomLevel();
   const maxZoomLevel = getMaxZoomLevel();
@@ -583,7 +623,7 @@ export const setZoomList = (zoomList) => (dispatch) => {
       ${outOfRangeZooms.join(', ')} are not allowed zoom levels in the UI.
       Valid zoom levels should be in the range of ${minZoomLevel}-${maxZoomLevel}.
       You can use setMinZoomLevel or setMaxZoomLevel APIs to change the range.
-      See https://www.pdftron.com/documentation/web/guides/ui/apis for more information.
+      See https://docs.apryse.com/api/web/UI.html for more information.
     `);
   }
 
@@ -770,6 +810,11 @@ export const setReplyAttachmentHandler = (replyAttachmentHandler) => ({
 export const setCustomSettings = (customSettings) => ({
   type: 'SET_CUSTOM_SETTINGS',
   payload: customSettings
+});
+
+export const setEnableRightClickAnnotationPopup = (isEnabled) => ({
+  type: 'SET_ENABLE_RIGHT_CLICK_ANNOTATION_POPUP',
+  payload: { isEnabled }
 });
 
 export const setToolDefaultStyleUpdateFromAnnotationPopupEnabled = (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) => ({

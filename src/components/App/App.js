@@ -20,6 +20,7 @@ import RightPanel from 'components/RightPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
 import TextPopup from 'components/TextPopup';
 import ContextMenuPopup from 'components/ContextMenuPopup';
+import InlineCommentingPopup from '../InlineCommentingPopup';
 import RichTextPopup from 'components/RichTextPopup';
 import SignatureModal from 'components/SignatureModal';
 import PrintModal from 'components/PrintModal';
@@ -66,19 +67,22 @@ import CustomElement from 'components/CustomElement';
 import Panel from 'components/Panel';
 import LeftHeader from 'components/LeftHeader';
 import RightHeader from 'components/RightHeader';
-
+import BottomHeader from 'components/BottomHeader';
+import TopHeader from 'components/TopHeader';
+import GenericOutlinesPanel from 'components/GenericOutlinesPanel';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
 import { prepareMultiTab } from 'helpers/TabManager';
 import hotkeysManager from 'helpers/hotkeysManager';
-import { isIE11, isIEEdgeLegacy } from 'helpers/device';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
 import setLanguage from 'src/apis/setLanguage';
+import { panelNames } from 'constants/panel';
 
 import './App.scss';
+import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -199,31 +203,38 @@ const App = ({ removeEventHandlers }) => {
 
   const panels = customFlxPanels.map((panel, index) => {
     return (
-      <Panel key={index} dataElement={panel.dataElement} location={panel.location}>
-        <CustomElement
-          key={panel.dataElement || index}
-          className={`Panel ${panel.dataElement}`}
-          display={panel.dataElement}
-          dataElement={panel.dataElement}
-          render={panel.render}
-        />
-      </Panel>
+      panel.render && (
+        <Panel key={index} dataElement={panel.dataElement} location={panel.location}>
+          {Object.values(panelNames).includes(panel.render) ? (
+            panel.render === panelNames.OUTLINE && <GenericOutlinesPanel />
+          ) : (
+            <CustomElement
+              key={panel.dataElement || index}
+              className={`Panel ${panel.dataElement}`}
+              display={panel.dataElement}
+              dataElement={panel.dataElement}
+              render={panel.render}
+            />
+          )}
+        </Panel>
+      )
     );
   });
 
   return (
     <React.Fragment>
       <div className={classNames({ 'App': true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
-        <Accessibility />
-
+        <FlyoutContainer/>
+        <Accessibility/>
         <Header />
+        <TopHeader />
         <div className="content">
           <LeftHeader />
           <LeftPanel />
           {panels}
-          {!isMultiViewerMode && <DocumentContainer />}
-          {(!isIE11 && !isIEEdgeLegacy) && <MultiViewer />}
-          <RightHeader />
+          {!isMultiViewerMode && <DocumentContainer/>}
+          {window?.ResizeObserver && <MultiViewer/>}
+          <RightHeader/>
           <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
           </RightPanel>
@@ -252,6 +263,7 @@ const App = ({ removeEventHandlers }) => {
           {isMultiViewerMode && <RightPanel dataElement="comparePanel" onResize={(width) => dispatch(actions.setComparePanelWidth(width))}>
             <ComparePanel />
           </RightPanel>}
+          <BottomHeader />
         </div>
         <ViewControlsOverlay />
         <MenuOverlay />
@@ -265,6 +277,7 @@ const App = ({ removeEventHandlers }) => {
         <FormFieldEditPopup />
         <TextPopup />
         <ContextMenuPopup />
+        <InlineCommentingPopup />
         <RichTextPopup />
         <AudioPlaybackPopup />
         <DocumentCropPopup />
