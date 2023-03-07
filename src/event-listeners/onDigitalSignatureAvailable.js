@@ -3,7 +3,7 @@ export default () => async (/* widget */) => {
     return;
   }
 
-  await window.PDFNet.initialize(undefined, window.Core.BackendTypes.WASM);
+  await window.Core.PDFNet.initialize(undefined, window.Core.BackendTypes.WASM);
 
   // const pdfDoc = await window.documentViewer.getDocument().getPDFDoc();
   // const fieldName = widget.getField().name;

@@ -279,7 +279,7 @@ export default (store) => {
     CoreControls: window.Core,
     PartRetrievers: window.Core.PartRetrievers,
     Actions: window.Actions,
-    PDFNet: window.PDFNet,
+    PDFNet: window.Core.PDFNet,
   };
   const objForWebViewerUI = {
     FitMode,

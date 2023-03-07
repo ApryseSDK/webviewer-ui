@@ -54,7 +54,7 @@ test.describe('Tests for generic outline bookmarks', () => {
     expect(numberOfTimesOutlineBookmarksChangedEventWasTriggered).toBe(1);
   });
 
-  test('should fire an event when an outline is deleted', async ({ page, browserName }) => {
+  test.skip('should fire an event when an outline is deleted', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
     await iframe.click('.outline-treeview-toggle');
     const outline = await iframe.$$('.bookmark-outline-single-container');

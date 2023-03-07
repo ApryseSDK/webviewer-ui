@@ -69,7 +69,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [locatorRect, setLocatorRect] = useState(null);
   const [signatureDetailsExpanded, setSignatureDetailsExpanded] = useState(false);
-  const { VerificationResult, VerificationOptions } = window.PDFNet;
+  const { VerificationResult, VerificationOptions } = window.Core.PDFNet;
   const { TimeMode } = VerificationOptions;
   const { ModificationPermissionsStatus } = VerificationResult;
   const [translate] = useTranslation();
