@@ -19,6 +19,8 @@ import DataElements from 'src/constants/dataElement';
 export const Shortcuts = {
   ROTATE_CLOCKWISE: 'rotateClockwise',
   ROTATE_COUNTER_CLOCKWISE: 'rotateCounterClockwise',
+  NUMPAD_ROTATE_CLOCKWISE: 'numpadRotateClockwise',
+  NUMPAD_ROTATE_COUNTER_CLOCKWISE: 'numpadRotateCounterClockwise',
   COPY: 'copy',
   PASTE: 'paste',
   UNDO: 'undo',
@@ -27,6 +29,8 @@ export const Shortcuts = {
   SEARCH: 'search',
   ZOOM_IN: 'zoomIn',
   ZOOM_OUT: 'zoomOut',
+  NUMPAD_ZOOM_IN: 'numpadZoomIn',
+  NUMPAD_ZOOM_OUT: 'numpadZoomOut',
   FIT_SCREEN_WIDTH: 'fitScreenWidth',
   PRINT: 'print',
   BOOKMARK: 'bookmark',
@@ -59,11 +63,15 @@ export const Shortcuts = {
 const keyMap = {
   [Shortcuts.ROTATE_CLOCKWISE]: 'Control+Shift+=',
   [Shortcuts.ROTATE_COUNTER_CLOCKWISE]: 'Control+Shift+-',
+  [Shortcuts.NUMPAD_ROTATE_CLOCKWISE]: 'Control+Shift+Num_Add',
+  [Shortcuts.NUMPAD_ROTATE_COUNTER_CLOCKWISE]: 'Control+Shift+Num_Subract',
   [Shortcuts.COPY]: 'Control+C',
   [Shortcuts.UNDO]: 'Control+Z',
   [Shortcuts.REDO]: 'Control+Shift+Z',
   [Shortcuts.ZOOM_IN]: 'Control+=',
   [Shortcuts.ZOOM_OUT]: 'Control+-',
+  [Shortcuts.NUMPAD_ZOOM_IN]: 'Control+Num_Add',
+  [Shortcuts.NUMPAD_ZOOM_OUT]: 'Control+Num_Subract',
   [Shortcuts.SELECT]: 'Escape',
   [Shortcuts.PAN]: 'P',
   [Shortcuts.ARROW]: 'A',
@@ -161,6 +169,10 @@ export const Keys = {
   COMMAND_SHIFT_EQUAL: 'command+shift+=',
   CTRL_SHIFT_MINUS: 'ctrl+shift+-',
   COMMAND_SHIFT_MINUS: 'command+shift+-',
+  CTRL_SHIFT_NUM_ADD: 'ctrl+shift+num_add',
+  COMMAND_SHIFT_NUM_ADD: 'command+shift+num_add',
+  CTRL_SHIFT_NUM_SUBTRACT: 'ctrl+shift+num_subtract',
+  COMMAND_SHIFT_NUM_SUBTRACT: 'command+shift+num_subtract',
   CTRL_C: 'ctrl+c',
   COMMAND_C: 'command+c',
   CTRL_V: 'ctrl+v',
@@ -177,6 +189,10 @@ export const Keys = {
   COMMAND_EQUAL: 'command+=',
   CTRL_MINUS: 'ctrl+-',
   COMMAND_MINUS: 'command+-',
+  CTRL_NUM_ADD: 'ctrl+num_add',
+  COMMAND_NUM_ADD: 'command+num_add',
+  CTRL_NUM_SUBTRACT: 'ctrl+num_subtract',
+  COMMAND_NUM_SUBTRACT: 'command+num_subtract',
   CTRL_0: 'ctrl+0',
   COMMAND_0: 'command+0',
   CTRL_P: 'ctrl+p',
@@ -217,9 +233,12 @@ function splitKey(key) {
   return key.split(', ');
 }
 
+// Defalut keys for shortcut
 export const ShortcutKeys = {
   [Shortcuts.ROTATE_CLOCKWISE]: concatKeys(Keys.CTRL_SHIFT_EQUAL, Keys.COMMAND_SHIFT_EQUAL),
   [Shortcuts.ROTATE_COUNTER_CLOCKWISE]: concatKeys(Keys.CTRL_SHIFT_MINUS, Keys.COMMAND_SHIFT_MINUS),
+  [Shortcuts.NUMPAD_ROTATE_CLOCKWISE]: concatKeys(Keys.CTRL_SHIFT_NUM_ADD, Keys.COMMAND_SHIFT_NUM_ADD),
+  [Shortcuts.NUMPAD_ROTATE_COUNTER_CLOCKWISE]: concatKeys(Keys.CTRL_SHIFT_NUM_SUBTRACT, Keys.COMMAND_SHIFT_NUM_SUBTRACT),
   [Shortcuts.COPY]: concatKeys(Keys.CTRL_C, Keys.COMMAND_C),
   [Shortcuts.PASTE]: concatKeys(Keys.CTRL_V, Keys.COMMAND_V),
   [Shortcuts.UNDO]: concatKeys(Keys.CTRL_Z, Keys.COMMAND_Z),
@@ -228,6 +247,8 @@ export const ShortcutKeys = {
   [Shortcuts.SEARCH]: concatKeys(Keys.CTRL_F, Keys.COMMAND_F),
   [Shortcuts.ZOOM_IN]: concatKeys(Keys.CTRL_EQUAL, Keys.COMMAND_EQUAL),
   [Shortcuts.ZOOM_OUT]: concatKeys(Keys.CTRL_MINUS, Keys.COMMAND_MINUS),
+  [Shortcuts.NUMPAD_ZOOM_IN]: concatKeys(Keys.CTRL_NUM_ADD, Keys.COMMAND_NUM_ADD),
+  [Shortcuts.NUMPAD_ZOOM_OUT]: concatKeys(Keys.CTRL_NUM_SUBTRACT, Keys.COMMAND_NUM_SUBTRACT),
   [Shortcuts.FIT_SCREEN_WIDTH]: concatKeys(Keys.CTRL_0, Keys.COMMAND_0),
   [Shortcuts.PRINT]: concatKeys(Keys.CTRL_P, Keys.COMMAND_P),
   [Shortcuts.BOOKMARK]: concatKeys(Keys.CTRL_B, Keys.COMMAND_B),
@@ -292,13 +313,13 @@ const HotkeysManager = {
     // still allow hotkeys when focusing a textarea or an input
     hotkeys.filter = () => true;
     this.store = store;
-    this.keyHandlerMap = this.createKeyHandlerMap(store);
+    this.keyHandlerMap = this.createKeyHandlerMap();
     this.prevToolName = null;
-    Object.keys(this.keyHandlerMap).forEach((key) => {
-      this.on(key, this.keyHandlerMap[key]);
+    const shortcutKeyMap = this.getShortcutKeyMap();
+    Object.keys(shortcutKeyMap).forEach((shortcut) => {
+      this.on(shortcutKeyMap[shortcut], this.keyHandlerMap[ShortcutKeys[shortcut]]);
     });
     this.didInitializeAllKeys = true;
-    this.shortcutKeyMap = { ...ShortcutKeys };
     hotkeys.setScope(defaultHotkeysScope);
   },
   /**
@@ -358,7 +379,7 @@ WebViewer(...)
     }
 
     if ((!key || !handler) && !this.didInitializeAllKeys) {
-      this.keyHandlerMap = this.createKeyHandlerMap(this.store);
+      this.keyHandlerMap = this.createKeyHandlerMap();
       this.prevToolName = null;
       Object.keys(this.keyHandlerMap).forEach((_key) => {
         // Check if the "key" has already been inilized
@@ -437,7 +458,8 @@ WebViewer(...)
     }
     return true;
   },
-  createKeyHandlerMap(store) {
+  createKeyHandlerMap() {
+    const store = this.store;
     const { dispatch, getState } = store;
 
     return {
@@ -447,6 +469,16 @@ WebViewer(...)
         core.rotateClockwise(activeDocumentViewerKey);
       },
       [ShortcutKeys[Shortcuts.ROTATE_COUNTER_CLOCKWISE]]: (e) => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
+        e.preventDefault();
+        core.rotateCounterClockwise(activeDocumentViewerKey);
+      },
+      [ShortcutKeys[Shortcuts.NUMPAD_ROTATE_CLOCKWISE]]: (e) => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
+        e.preventDefault();
+        core.rotateClockwise(activeDocumentViewerKey);
+      },
+      [ShortcutKeys[Shortcuts.NUMPAD_ROTATE_COUNTER_CLOCKWISE]]: (e) => {
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
         e.preventDefault();
         core.rotateCounterClockwise(activeDocumentViewerKey);
@@ -523,6 +555,20 @@ WebViewer(...)
         zoomIn(isMultiViewerMode, activeDocumentViewerKey);
       },
       [ShortcutKeys[Shortcuts.ZOOM_OUT]]: (e) => {
+        e.preventDefault();
+        const state = getState();
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
+        const isMultiViewerMode = selectors.isMultiViewerMode(state);
+        zoomOut(isMultiViewerMode, activeDocumentViewerKey);
+      },
+      [ShortcutKeys[Shortcuts.NUMPAD_ZOOM_IN]]: (e) => {
+        e.preventDefault();
+        const state = getState();
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
+        const isMultiViewerMode = selectors.isMultiViewerMode(state);
+        zoomIn(isMultiViewerMode, activeDocumentViewerKey);
+      },
+      [ShortcutKeys[Shortcuts.NUMPAD_ZOOM_OUT]]: (e) => {
         e.preventDefault();
         const state = getState();
         const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(state);
@@ -740,18 +786,33 @@ WebViewer(...)
       handler(...args);
     };
   },
-  setShortcutKey(shortcut, key) {
-    this.off(this.shortcutKeyMap[shortcut]);
-    this.on(key, this.keyHandlerMap[ShortcutKeys[shortcut]]);
-    this.shortcutKeyMap[shortcut] = key;
+  getShortcutKeyMap() {
+    const { getState } = this.store;
+    return selectors.getShortcutKeyMap(getState());
   },
-  hasConflict(command) {
-    for (const key of Object.values(this.shortcutKeyMap)) {
+  setShortcutKey(shortcut, key) {
+    const { dispatch } = this.store;
+    const shortcutKeyMap = { ...this.getShortcutKeyMap() };
+    this.off(shortcutKeyMap[shortcut]);
+    this.on(key, this.keyHandlerMap[ShortcutKeys[shortcut]]);
+    shortcutKeyMap[shortcut] = key;
+    dispatch(actions.setShortcutKeyMap(shortcutKeyMap));
+  },
+  hasConflict(shortcut, command) {
+    const shortcutKeyMap = this.getShortcutKeyMap();
+    const existingKeys = Object.keys(shortcutKeyMap).filter((item) => item !== shortcut).map((item) => shortcutKeyMap[item]);
+    for (const key of existingKeys) {
       if (key === command || splitKey(key).includes(command)) {
         return true;
       }
     }
     return false;
+  },
+  enableShortcut(shortcut) {
+    this.setShortcutKey(shortcut, this.getShortcutKeyMap()[shortcut]);
+  },
+  disableShortcut(shortcut) {
+    this.off(this.getShortcutKeyMap()[shortcut]);
   }
 };
 
