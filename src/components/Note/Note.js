@@ -257,7 +257,7 @@ const Note = ({
       <NoteContent
         noteIndex={0}
         annotation={annotation}
-        setIsEditing={false}
+        setIsEditing={setIsEditing}
         isEditing={isEditingMap[0]}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
