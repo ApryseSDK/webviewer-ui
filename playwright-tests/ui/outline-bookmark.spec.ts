@@ -21,7 +21,7 @@ test.describe('Tests for outline bookmarks', () => {
     });
 
     await instance('openElements', ['outlinesPanel']);
-    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION * 3);
   });
 
   test('should fire an event when an outline is renamed', async ({ page, browserName }) => {
@@ -133,9 +133,37 @@ test.describe('Tests for outline bookmarks', () => {
       };
 
       fireEvent('outlineBookmarksChanged', bookmarkEventObject);
-    })
+    });
 
     outlinesPanel = await iframe.$('[data-element=outlinesPanel]');
     expect(await outlinesPanel.screenshot()).toMatchSnapshot(['outlines-panel', 'rerendered.png']);
+  });
+
+  test('should be able to render more complex bookmarks', async ({ page }) => {
+    // should be able to render children and url bookmark
+    // we currently don't support "action" bookmark (bookmark that perform an action but not assoicated to a page)
+    // so "action" bookmarks don't get rendered currently
+
+    await instance('loadDocument', '/test-files/bookmarkSample.pdf');
+    await page.waitForTimeout(5000);
+
+    await instance('openElements', ['outlinesPanel']);
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    const outlinesPanel = await iframe.$('[data-element=outlinesPanel]');
+    expect(await outlinesPanel.screenshot()).toMatchSnapshot(['outlines-panel', 'more-complex.png']);
+  });
+
+  test('should be able to render not supported bookmarks', async ({ page }) => {
+    // should be able to render bookmarks that we don't support (we don't support a lot of actions)
+
+    await instance('loadDocument', '/test-files/bookmarkSample.pdf', { showInvalidBookmarks: true });
+    await page.waitForTimeout(5000);
+
+    await instance('openElements', ['outlinesPanel']);
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    const outlinesPanel = await iframe.$('[data-element=outlinesPanel]');
+    expect(await outlinesPanel.screenshot()).toMatchSnapshot(['outlines-panel', 'not-supported-outline.png']);
   });
 });
