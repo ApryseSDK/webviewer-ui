@@ -1,7 +1,7 @@
 {
   "name": "webviewer-ui",
-  "author": "PDFTron Systems Inc.",
-  "version": "8.12.0",
+  "author": "Apryse Software Inc.",
+  "version": "10.0.0",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "jest:watch": "jest --watch"
   },
   "dependencies": {
-    "@pdftron/webviewer-react-toolkit": "^0.7.1",
+    "@pdftron/webviewer-react-toolkit": "^0.7.11",
     "autolinker": "^3.11.1",
     "blob-stream": "^0.1.3",
     "canvas2pdf": "git+https://github.com/PDFTron/canvas2pdf.git",
