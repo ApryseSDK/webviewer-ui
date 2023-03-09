@@ -50,7 +50,7 @@ class MentionsManager {
      *   'eb15d11a-ef1b-6d03-adba-e0eb64bbf6d2': {
      *     mentions: [
      *       {
-     *         email: 'cahang@pdftron.com',
+     *         email: 'cahang@apryse.com',
      *         value: 'Edmiz',
      *         type: 'user',
      *         id: 'aidsfuha-32123123',
@@ -192,10 +192,10 @@ class MentionsManager {
     let plainTextValue = str;
 
     // iterate through the matches, extract ids and build the plainTextValue
-    // after the iteration finishes, if the incoming string is Hello! @[Zhijie Zhang](zzhang@pdftron.com), then we should have:
+    // after the iteration finishes, if the incoming string is Hello! @[Zhijie Zhang](zzhang@apryse.com), then we should have:
     // {
     //   plainTextValue: Hello! Zhijie Zhang,
-    //   ids: ['zzhang@pdftron.com'],
+    //   ids: ['zzhang@apryse.com'],
     // }
     // eslint-disable-next-line no-cond-assign
     while ((match = markupRegex.exec(str)) !== null) {

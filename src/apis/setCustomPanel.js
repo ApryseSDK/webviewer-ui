@@ -16,7 +16,7 @@ WebViewer(...)
       tab:{
         dataElement: 'customPanelTab',
         title: 'customPanelTab',
-        img: 'https://www.pdftron.com/favicon-32x32.png',
+        img: '/favicon-32x32.png',
       },
       panel: {
         dataElement: 'customPanel',
@@ -39,6 +39,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => customPanel => {
+export default (store) => (customPanel) => {
   store.dispatch(actions.setCustomPanel(customPanel));
 };

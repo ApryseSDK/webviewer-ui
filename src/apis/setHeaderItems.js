@@ -1,5 +1,5 @@
 /**
- * Customize header. Refer to <a href='https://www.pdftron.com/documentation/web/guides/customizing-header' target='_blank'>Customizing header</a> for details.
+ * Customize header. Refer to <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/' target='_blank'>Customizing header</a> for details.
  * @method UI.setHeaderItems
  * @param {UI.headerCallback} headerCallback Callback function to perform different operations on the header.
  * @example
@@ -35,12 +35,12 @@ WebViewer(...)
         type: 'customElement',
         render: function() {
           var logo = document.createElement('img');
-          logo.src = 'https://www.pdftron.com/downloads/logo.svg';
+          logo.src = '/logo.svg';
           logo.style.width = '200px';
           logo.style.marginLeft = '10px';
           logo.style.cursor = 'pointer';
           logo.onclick = function() {
-            window.open('https://www.pdftron.com', '_blank');
+            window.open('https://www.apryse.com', '_blank');
           }
           return logo;
         }
@@ -68,13 +68,13 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => callback => {
+export default (store) => (callback) => {
   const state = store.getState();
   const headerGroups = Object.keys(state.viewer.headers);
   const header = Object.create(Header).initialize(state.viewer, headerGroups);
 
   callback(header);
-  headerGroups.forEach(headerGroup => {
+  headerGroups.forEach((headerGroup) => {
     store.dispatch(actions.setHeaderItems(headerGroup, [...header.headers[headerGroup]]));
   });
 };
@@ -112,7 +112,7 @@ const Header = {
     if (this.index !== -1) {
       // get(dataElement) has been called before so we need to reset this
       const item = this.headers[this.headerGroup][this.index];
-      Object.keys(item).forEach(key => {
+      Object.keys(item).forEach((key) => {
         delete this[key];
       });
     }
@@ -123,7 +123,7 @@ const Header = {
       console.warn(`${dataElement} does not exist in ${this.headerGroup} header`);
     } else {
       const item = this.headers[this.headerGroup][this.index];
-      Object.keys(item).forEach(key => {
+      Object.keys(item).forEach((key) => {
         this[key] = item[key];
       });
     }
@@ -159,7 +159,7 @@ const Header = {
   /**
    * Insert a button before the selected button from {@link UI.Header#get get}.
    * @method UI.Header#insertBefore
-   * @param {object} obj A header object. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
+   * @param {object} obj A header object. See <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#header-items' target='_blank'>Header items</a> for details.
    * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   insertBefore(newItem) {
@@ -174,7 +174,7 @@ const Header = {
   /**
    * Insert a button after the selected button from {@link UI.Header#get get}.
    * @method UI.Header#insertAfter
-   * @param {object} obj A header object. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
+   * @param {object} obj A header object. See <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#header-items' target='_blank'>Header items</a> for details.
    * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   insertAfter(newItem) {
@@ -211,7 +211,7 @@ const Header = {
         index = this.index;
       }
     } else if (Array.isArray(arg)) {
-      arg.forEach(arg => {
+      arg.forEach((arg) => {
         if (typeof arg === 'number' || typeof arg === 'string') {
           this.delete(arg);
         }
@@ -220,10 +220,12 @@ const Header = {
       console.warn('Argument must be empty, a number, a string or an array');
     }
 
-    if (index) {
+    if (index !== undefined && index !== -1) {
       this.headers[this.headerGroup].splice(index, 1);
       this._resetIndex();
     }
+
+    return this;
   },
   /**
    * Removes the first button in the header.
@@ -238,7 +240,7 @@ const Header = {
   /**
    * Adds a button (or buttons) to the beginning of the header.
    * @method UI.Header#unshift
-   * @param {object|Array.<object>} obj Either one or array of header objects. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
+   * @param {object|Array.<object>} obj Either one or array of header objects. See <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#header-items' target='_blank'>Header items</a> for details.
    * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   unshift(...newItem) {
@@ -249,7 +251,7 @@ const Header = {
   /**
    * Adds a button (or buttons) to the end of the header.
    * @method UI.Header#push
-   * @param {object|Array.<object>} obj Either one or array of header objects. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>Header items</a> for details.
+   * @param {object|Array.<object>} obj Either one or array of header objects. See <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#header-items' target='_blank'>Header items</a> for details.
    * @returns {UI.Header} Header object for chaining. You can call {@link UI.Header#get get}, {@link UI.Header#getItems getItems}, {@link UI.Header#shift shift}, {@link UI.Header#unshift unshift}, {@link UI.Header#push push}, {@link UI.Header#pop pop} and {@link UI.Header#update update}.
    */
   push(...newItem) {
@@ -291,7 +293,7 @@ const Header = {
     this.index = this._getIndexOfElement(dataElement);
   },
   _getIndexOfElement(dataElement) {
-    return this.headers[this.headerGroup].findIndex(item => {
+    return this.headers[this.headerGroup].findIndex((item) => {
       let dataElementOfItem;
 
       if (item.type === 'toolButton') {

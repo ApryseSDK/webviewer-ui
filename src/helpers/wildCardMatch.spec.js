@@ -1,6 +1,6 @@
 import wildCardMatch from './wildCardMatch';
 
-const wildCards = ['google.com', 'pdftron.com', 'amazon*.com', '*baidu.cn', 'ali*baba.cn', 'apple.*', '*l.com'];
+const wildCards = ['google.com', 'apryse.com', 'amazon*.com', '*baidu.cn', 'ali*baba.cn', 'apple.*', '*l.com'];
 const sildCardStar = ['*'];
 
 describe('wild card match function', () => {
