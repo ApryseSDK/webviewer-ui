@@ -1914,7 +1914,7 @@ export default {
     measurementScalePreset: getMeasurementScalePreset(),
     isMultipleScalesMode: true,
     maxSignaturesCount: 4,
-    signatureFonts: ['Satisfy', 'Nothing You Could Do', 'La Belle Aurore', 'Whisper'],
+    signatureFonts: ['Satisfy', 'Nothing-You-Could-Do', 'La-Belle-Aurore', 'Whisper'],
     isReplyDisabledFunc: null,
     userData: [],
     customMeasurementOverlay: [],
