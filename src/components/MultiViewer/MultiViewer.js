@@ -407,7 +407,7 @@ const MultiViewer = () => {
         >
           {!doc1Loaded && <DropArea documentViewerKey={1} />}
           <DocumentHeader documentViewerKey={1} docLoaded={doc1Loaded} isSyncing={isSyncing}/>
-          <DocumentContainer container={container} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={1} onReady={onReady} />
+          <DocumentContainer container={container} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={1} onReady={onReady} docLoaded={doc1Loaded}/>
           <div className={'custom-container-1'} style={{ width: '100%' }}/>
           <div style={{ width }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 1 })} />
         </div>
@@ -429,7 +429,7 @@ const MultiViewer = () => {
         >
           {!doc2Loaded && <DropArea documentViewerKey={2} />}
           <DocumentHeader documentViewerKey={2} docLoaded={doc2Loaded} isSyncing={isSyncing} />
-          <DocumentContainer container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} onReady={onReady}/>
+          <DocumentContainer container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} onReady={onReady} docLoaded={doc2Loaded}/>
           <div className={'custom-container-2'} style={{ width: '100%' }}/>
           <div style={{ width: width2 }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 2 })} />
         </div>

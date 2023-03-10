@@ -26,6 +26,7 @@ const DocumentContainer = ({
   activeDocumentViewerKey,
   container,
   onReady,
+  docLoaded,
 }) => {
   const documentViewer = core.getDocumentViewer(documentViewerKey);
   const dispatch = useDispatch();
@@ -118,11 +119,12 @@ const DocumentContainer = ({
     const pagesToNavigate = getNumberOfPagesToNavigate();
     _setCurrentPage(currentPage + pagesToNavigate, documentViewerKey);
   };
-
+  const style = (!docLoaded) ? { position: 'relative' } : {};
   return (
     <div className={classNames('DocumentContainer', {
       active: activeDocumentViewerKey === documentViewerKey,
     })} ref={container} id={`DocumentContainer${documentViewerKey}`}
+    style={style}
     >
       <div className={'document'} ref={document} id={`Document${documentViewerKey}`} />
     </div>
