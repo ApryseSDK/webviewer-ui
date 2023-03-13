@@ -45,6 +45,7 @@ const propTypes = {
   isMultiSelectMode: PropTypes.bool,
   handleMultiSelect: PropTypes.func,
   isGroupMember: PropTypes.bool,
+  completedState: PropTypes.bool,
 };
 
 const NoteContent = ({
@@ -71,7 +72,7 @@ const NoteContent = ({
     canCollapseReplyPreview,
     activeTheme,
   ] = useSelector(
-    (state) => [
+    state => [
       selectors.getNoteDateFormat(state),
       selectors.getIconColor(state, mapAnnotationToKey(annotation)),
       selectors.isElementDisabled(state, 'notePopupState'),
@@ -92,7 +93,7 @@ const NoteContent = ({
     onTopNoteContentClicked,
     sortStrategy,
     showAnnotationNumbering,
-    setPendingEditText
+    setPendingEditText,
   } = useContext(NoteContext);
 
   const dispatch = useDispatch();
@@ -109,7 +110,7 @@ const NoteContent = ({
   useEffect(() => {
     const annotationChangedListener = (annotations, action) => {
       if (action === 'modify') {
-        annotations.forEach((annot) => {
+        annotations.forEach(annot => {
           if (annot.Id === annotation.Id) {
             setAttachments(annot.getAttachments());
           }
@@ -132,14 +133,10 @@ const NoteContent = ({
   }, [isEditing]);
 
   const renderAuthorName = useCallback(
-    (annotation) => {
+    annotation => {
       const name = core.getDisplayAuthor(annotation['Author']);
 
-      return name ? (
-        highlightSearchInput(name, searchInput)
-      ) : (
-        t('option.notesPanel.noteContent.noName')
-      );
+      return name ? highlightSearchInput(name, searchInput) : t('option.notesPanel.noteContent.noName');
     },
     [searchInput],
   );
@@ -163,10 +160,10 @@ const NoteContent = ({
                 href,
                 text: anchorText,
                 start: offset,
-                end: offset + match.getMatchedText().length
+                end: offset + match.getMatchedText().length,
               });
           }
-        }
+        },
       });
       if (!autolinkerContent.length) {
         const highlightResult = highlightSearchInput(contents, searchInput, richTextStyle);
@@ -179,7 +176,14 @@ const NoteContent = ({
          */
         if (!searchInput && (shouldCollapseAnnotationText || shouldCollapseReply)) {
           return (
-            <NoteTextPreview linesToBreak={3} comment renderRichText={renderRichText} richTextStyle={richTextStyle} resize={resize} style={fontColor}>
+            <NoteTextPreview
+              linesToBreak={3}
+              comment
+              renderRichText={renderRichText}
+              richTextStyle={richTextStyle}
+              resize={resize}
+              style={fontColor}
+            >
               {contents}
             </NoteTextPreview>
           );
@@ -196,50 +200,24 @@ const NoteContent = ({
         if (strIdx < start) {
           contentToRender.push(
             <span key={`span_${forIdx}`}>
-              {
-                highlightSearchInput(
-                  contents,
-                  searchInput,
-                  richTextStyle,
-                  strIdx,
-                  start
-                )
-              }
-            </span>
+              {highlightSearchInput(contents, searchInput, richTextStyle, strIdx, start)}
+            </span>,
           );
         }
         contentToRender.push(
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            key={`a_${forIdx}`}
-          >
-            {
-              highlightSearchInput(
-                contents,
-                searchInput,
-                richTextStyle,
-                start,
-                end
-              )
-            }
-          </a>
+          <a href={href} target="_blank" rel="noopener noreferrer" key={`a_${forIdx}`}>
+            {highlightSearchInput(contents, searchInput, richTextStyle, start, end)}
+          </a>,
         );
         strIdx = end;
       });
       // Ensure any content after the last link is accounted for
       if (strIdx < contents.length - 1) {
-        contentToRender.push(highlightSearchInput(
-          contents,
-          searchInput,
-          richTextStyle,
-          strIdx
-        ));
+        contentToRender.push(highlightSearchInput(contents, searchInput, richTextStyle, strIdx));
       }
       return contentToRender;
     },
-    [searchInput]
+    [searchInput],
   );
 
   const icon = getDataWithKey(mapAnnotationToKey(annotation)).icon;
@@ -261,7 +239,7 @@ const NoteContent = ({
 
     if (richTextStyle) {
       const sections = Object.keys(richTextStyle);
-      sections.forEach((a) => {
+      sections.forEach(a => {
         if (richTextStyle[a]['color'] && isDarkColorHex(richTextStyle[a]['color'])) {
           richTextStyle[a]['color'] = '#FFFFFF';
         }
@@ -290,7 +268,7 @@ const NoteContent = ({
     }
   };
 
-  const handleContentsClicked = (e) => {
+  const handleContentsClicked = e => {
     if (window.getSelection()?.toString()) {
       e?.stopPropagation();
     }
@@ -303,18 +281,27 @@ const NoteContent = ({
     clicked: isNonReplyNoteRead, // The top note content is read
   });
 
-  const content = useMemo(
-    () => {
-      const contentStyle = {};
-      if (textColor) {
-        contentStyle.color = textColor.toHexString();
-      }
+  const content = useMemo(() => {
+    const contentStyle = {};
+    if (textColor) {
+      contentStyle.color = textColor.toHexString();
+    }
 
-      return (
-        <>
-          {(isEditing && isSelected) ? 
-            completedState ?
-            <div className='disabled-comment'>
+    return (
+      <>
+        {isEditing && isSelected ? (
+          completedState ? (
+            <div className="disabled-comment">
+              <ContentArea
+                annotation={annotation}
+                noteIndex={noteIndex}
+                setIsEditing={setIsEditing}
+                textAreaValue={textAreaValue}
+                onTextAreaValueChange={setPendingEditText}
+                pendingText={pendingEditTextMap[annotation.Id]}
+              />
+            </div>
+          ) : (
             <ContentArea
               annotation={annotation}
               noteIndex={noteIndex}
@@ -323,92 +310,104 @@ const NoteContent = ({
               onTextAreaValueChange={setPendingEditText}
               pendingText={pendingEditTextMap[annotation.Id]}
             />
-            </div> 
-            :
-            <ContentArea
-              annotation={annotation}
-              noteIndex={noteIndex}
-              setIsEditing={setIsEditing}
-              textAreaValue={textAreaValue}
-              onTextAreaValueChange={setPendingEditText}
-              pendingText={pendingEditTextMap[annotation.Id]}
-            />
-          
-           : (
-            contentsToRender && (
-              <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked}>
-                {isReply && (attachments.length > 0) && (
-                  <ReplyAttachmentList
-                    files={attachments}
-                    isEditing={false}
-                  />
-                )}
-                {renderContents(contentsToRender, richTextStyle, contentStyle)}
-              </div>
-            )
-          )}
-        </>
-      );
-    },
-    [annotation, isSelected, isEditing, setIsEditing, contents, renderContents, textAreaValue, setPendingEditText, attachments]
-  );
+          )
+        ) : (
+          contentsToRender && (
+            <div className={classNames('container', { 'reply-content': isReply })} onClick={handleContentsClicked}>
+              {isReply && attachments.length > 0 && <ReplyAttachmentList files={attachments} isEditing={false} />}
+              {renderContents(contentsToRender, richTextStyle, contentStyle)}
+            </div>
+          )
+        )}
+      </>
+    );
+  }, [
+    annotation,
+    isSelected,
+    isEditing,
+    setIsEditing,
+    contents,
+    renderContents,
+    textAreaValue,
+    setPendingEditText,
+    attachments,
+  ]);
 
   const text = annotation.getCustomData('trn-annot-preview');
-  const textPreview = useMemo(
-    () => {
-      if (text === '') {
-        return null;
-      }
+  const textPreview = useMemo(() => {
+    if (text === '') {
+      return null;
+    }
 
-      const highlightSearchResult = highlightSearchInput(text, searchInput);
-      const shouldCollapseAnnotationText = !isReply && canCollapseTextPreview;
-      // If we have a search result do not use text
-      // preview but instead show the entire text
-      if (isString(highlightSearchResult) && shouldCollapseAnnotationText) {
-        return (
-          <div className="selected-text-preview">
-            <NoteTextPreview linesToBreak={3}>
-              {`"${highlightSearchResult}"`}
-            </NoteTextPreview>
-          </div>
-        );
-      }
+    const highlightSearchResult = highlightSearchInput(text, searchInput);
+    const shouldCollapseAnnotationText = !isReply && canCollapseTextPreview;
+    // If we have a search result do not use text
+    // preview but instead show the entire text
+    if (isString(highlightSearchResult) && shouldCollapseAnnotationText) {
       return (
-        <div className="selected-text-preview" style={{ paddingRight: '12px' }}>
-          {highlightSearchResult}
+        <div className="selected-text-preview">
+          <NoteTextPreview linesToBreak={3}>{`"${highlightSearchResult}"`}</NoteTextPreview>
         </div>
       );
-    }, [text, searchInput]);
+    }
+    return (
+      <div className="selected-text-preview" style={{ paddingRight: '12px' }}>
+        {highlightSearchResult}
+      </div>
+    );
+  }, [text, searchInput]);
 
-  const header = useMemo(
-    () => {
-      return (
-        <NoteHeader
-          icon={icon}
-          iconColor={iconColor}
-          annotation={annotation}
-          language={language}
-          noteDateFormat={noteDateFormat}
-          isSelected={isSelected}
-          setIsEditing={setIsEditing}
-          notesShowLastUpdatedDate={notesShowLastUpdatedDate}
-          isReply={isReply}
-          isUnread={isUnread}
-          renderAuthorName={renderAuthorName}
-          isNoteStateDisabled={isNoteStateDisabled}
-          isEditing={isEditing}
-          noteIndex={noteIndex}
-          sortStrategy={sortStrategy}
-          activeTheme={activeTheme}
-          handleMultiSelect={handleMultiSelect}
-          isMultiSelected={isMultiSelected}
-          isMultiSelectMode={isMultiSelectMode}
-          isGroupMember={isGroupMember}
-          showAnnotationNumbering={showAnnotationNumbering}
-        />
-      );
-    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember]
-  );
+  const header = useMemo(() => {
+    return (
+      <NoteHeader
+        icon={icon}
+        iconColor={iconColor}
+        annotation={annotation}
+        language={language}
+        noteDateFormat={noteDateFormat}
+        isSelected={isSelected}
+        setIsEditing={setIsEditing}
+        notesShowLastUpdatedDate={notesShowLastUpdatedDate}
+        isReply={isReply}
+        isUnread={isUnread}
+        renderAuthorName={renderAuthorName}
+        isNoteStateDisabled={isNoteStateDisabled}
+        isEditing={isEditing}
+        noteIndex={noteIndex}
+        sortStrategy={sortStrategy}
+        activeTheme={activeTheme}
+        handleMultiSelect={handleMultiSelect}
+        isMultiSelected={isMultiSelected}
+        isMultiSelectMode={isMultiSelectMode}
+        isGroupMember={isGroupMember}
+        showAnnotationNumbering={showAnnotationNumbering}
+        completedState={completedState}
+        textAreaValue={textAreaValue}
+      />
+    );
+  }, [
+    icon,
+    iconColor,
+    annotation,
+    language,
+    noteDateFormat,
+    isSelected,
+    setIsEditing,
+    notesShowLastUpdatedDate,
+    isReply,
+    isUnread,
+    renderAuthorName,
+    core.getDisplayAuthor(annotation['Author']),
+    isNoteStateDisabled,
+    isEditing,
+    noteIndex,
+    getLatestActivityDate(annotation),
+    sortStrategy,
+    handleMultiSelect,
+    isMultiSelected,
+    isMultiSelectMode,
+    isGroupMember,
+  ]);
 
   return (
     <div className={noteContentClass} onClick={handleNoteContentClicked}>
@@ -424,19 +423,8 @@ NoteContent.propTypes = propTypes;
 export default NoteContent;
 
 // a component that contains the content textarea, the save button and the cancel button
-const ContentArea = ({
-  annotation,
-  noteIndex,
-  setIsEditing,
-  textAreaValue,
-  onTextAreaValueChange,
-  pendingText
-}) => {
-  const [
-    autoFocusNoteOnAnnotationSelection,
-    isMentionEnabled,
-    isNotesPanelOpen
-  ] = useSelector((state) => [
+const ContentArea = ({ annotation, noteIndex, setIsEditing, textAreaValue, onTextAreaValueChange, pendingText }) => {
+  const [autoFocusNoteOnAnnotationSelection, isMentionEnabled, isNotesPanelOpen] = useSelector(state => [
     selectors.getAutoFocusNoteOnAnnotationSelection(state),
     selectors.getIsMentionEnabled(state),
     selectors.isElementOpen(state, 'notesPanel'),
@@ -444,13 +432,8 @@ const ContentArea = ({
   const [t] = useTranslation();
   const textareaRef = useRef();
   const isReply = annotation.isReply();
-  const {
-    setCurAnnotId,
-    pendingAttachmentMap,
-    deleteAttachment,
-    clearAttachments,
-    addAttachments
-  } = useContext(NoteContext);
+  const { setCurAnnotId, pendingAttachmentMap, deleteAttachment, clearAttachments, addAttachments } =
+    useContext(NoteContext);
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
@@ -492,7 +475,7 @@ const ContentArea = ({
     }
   }, []);
 
-  const setContents = (e) => {
+  const setContents = e => {
     // prevent the textarea from blurring out which will unmount these two buttons
     e.preventDefault();
 
@@ -503,10 +486,13 @@ const ContentArea = ({
     if (isMentionEnabled) {
       const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
 
-      annotation.setCustomData('trn-mention', JSON.stringify({
-        contents: textAreaValue,
-        ids,
-      }));
+      annotation.setCustomData(
+        'trn-mention',
+        JSON.stringify({
+          contents: textAreaValue,
+          ids,
+        }),
+      );
       core.setNoteContents(annotation, plainTextValue);
     } else {
       core.setNoteContents(annotation, textAreaValue);
@@ -543,15 +529,15 @@ const ContentArea = ({
         <ReplyAttachmentList
           files={pendingAttachments}
           isEditing={true}
-          fileDeleted={(file) => deleteAttachment(annotation.Id, file)}
+          fileDeleted={file => deleteAttachment(annotation.Id, file)}
         />
       )}
       <NoteTextarea
-        ref={(el) => {
+        ref={el => {
           textareaRef.current = el;
         }}
         value={textAreaValue}
-        onChange={(value) => onTextAreaValueChange(value, annotation.Id)}
+        onChange={value => onTextAreaValueChange(value, annotation.Id)}
         onSubmit={setContents}
         isReply={isReply}
         onBlur={onBlur}
@@ -561,17 +547,19 @@ const ContentArea = ({
       <div className="edit-buttons">
         <button
           className={`save-button${!textAreaValue ? ' disabled' : ''}`}
+          title="Send Comment"
           disabled={!textAreaValue}
-          onClick={(e) => {
+          onClick={e => {
             e.stopPropagation();
             setContents(e);
           }}
         >
-         <Icon backgroundNoneIcon={true} glyph="icon-button-submit"/>
+          <Icon backgroundNoneIcon={true} glyph="icon-post-reply" />
         </button>
         <button
           className="cancel-button"
-          onClick={(e) => {
+          title="Cancel Comment"
+          onClick={e => {
             e.stopPropagation();
             setIsEditing(false, noteIndex);
             // Clear pending text
@@ -579,7 +567,7 @@ const ContentArea = ({
             clearAttachments(annotation.Id);
           }}
         >
-          <Icon backgroundNoneIcon={true} glyph="icon-button-close"/>
+          <Icon backgroundNoneIcon={true} glyph="icon-button-close" />
         </button>
       </div>
     </div>
@@ -592,7 +580,7 @@ ContentArea.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
   textAreaValue: PropTypes.string,
   onTextAreaValueChange: PropTypes.func.isRequired,
-  pendingText: PropTypes.string
+  pendingText: PropTypes.string,
 };
 
 const getRichTextSpan = (text, richTextStyle, key) => {
@@ -600,13 +588,15 @@ const getRichTextSpan = (text, richTextStyle, key) => {
     fontWeight: richTextStyle['font-weight'],
     fontStyle: richTextStyle['font-style'],
     textDecoration: richTextStyle['text-decoration'],
-    color: richTextStyle['color']
+    color: richTextStyle['color'],
   };
   if (style.textDecoration) {
     style.textDecoration = style.textDecoration.replace('word', 'underline');
   }
   return (
-    <span style={style} key={key}>{text}</span>
+    <span style={style} key={key}>
+      {text}
+    </span>
   );
 };
 
@@ -616,7 +606,9 @@ const renderRichText = (text, richTextStyle, start) => {
   }
 
   const styles = {};
-  const indices = Object.keys(richTextStyle).map(Number).sort((a, b) => a - b);
+  const indices = Object.keys(richTextStyle)
+    .map(Number)
+    .sort((a, b) => a - b);
   for (let i = 0; i < indices.length; i++) {
     let index = indices[i] - start;
     index = Math.min(Math.max(index, 0), text.length);
@@ -627,13 +619,17 @@ const renderRichText = (text, richTextStyle, start) => {
   }
 
   const contentToRender = [];
-  const styleIndices = Object.keys(styles).map(Number).sort((a, b) => a - b);
+  const styleIndices = Object.keys(styles)
+    .map(Number)
+    .sort((a, b) => a - b);
   for (let i = 1; i < styleIndices.length; i++) {
-    contentToRender.push(getRichTextSpan(
-      text.slice(styleIndices[i - 1], styleIndices[i]),
-      styles[styleIndices[i - 1]],
-      `richtext_span_${i}`
-    ));
+    contentToRender.push(
+      getRichTextSpan(
+        text.slice(styleIndices[i - 1], styleIndices[i]),
+        styles[styleIndices[i - 1]],
+        `richtext_span_${i}`,
+      ),
+    );
   }
 
   return contentToRender;
@@ -671,25 +667,26 @@ const highlightSearchInput = (fullText, searchInput, richTextStyle, start = 0, e
     }
     contentToRender.push(
       <span className="highlight" key={`highlight_span_${idx}`}>
-        {
-          renderRichText(
-            text.substring(position, position + loweredSearchInput.length),
-            richTextStyle,
-            start + position)
-        }
-      </span>
+        {renderRichText(
+          text.substring(position, position + loweredSearchInput.length),
+          richTextStyle,
+          start + position,
+        )}
+      </span>,
     );
     if (
       // Ensure that we do not try to make an out-of-bounds access
-      position + loweredSearchInput.length < loweredText.length
+      position + loweredSearchInput.length < loweredText.length &&
       // Ensure that this is the end of the allFoundPositions array
-      && position + loweredSearchInput.length !== allFoundPositions[idx + 1]
+      position + loweredSearchInput.length !== allFoundPositions[idx + 1]
     ) {
-      contentToRender.push(renderRichText(
-        text.substring(position + loweredSearchInput.length, allFoundPositions[idx + 1]),
-        richTextStyle,
-        start + position + loweredSearchInput.length
-      ));
+      contentToRender.push(
+        renderRichText(
+          text.substring(position + loweredSearchInput.length, allFoundPositions[idx + 1]),
+          richTextStyle,
+          start + position + loweredSearchInput.length,
+        ),
+      );
     }
   });
   return contentToRender;

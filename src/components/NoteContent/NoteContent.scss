@@ -1,10 +1,9 @@
 @import '../../constants/styles';
 @import '../../constants/note';
 
-
-.disabled-comment{
-  pointer-events:none;
-  cursor:not-allowed;
+.disabled-comment {
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .NoteContent {
@@ -22,7 +21,7 @@
 
   &.unread {
     &.isReply {
-      background: rgba($color:$pdftron-blue, $alpha: 0.08);
+      background: rgba($color: $pdftron-blue, $alpha: 0.08);
     }
 
     &.clicked {
@@ -126,7 +125,8 @@
         }
 
         &.disabled {
-          background: var(--gray-6);
+          // background: var(--gray-6);
+          opacity: 0.6;
           border-color: var(--gray-6);
           cursor: not-allowed;
         }
@@ -168,7 +168,6 @@
       color: #333333;
     }
   }
-
 
   .highlight {
     background: #fffc95;

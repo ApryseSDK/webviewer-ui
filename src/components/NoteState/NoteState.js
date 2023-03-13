@@ -7,40 +7,38 @@ import './NoteState.scss';
 const propTypes = {
   annotation: PropTypes.object.isRequired,
   openOnInitialLoad: PropTypes.bool,
-  handleStateChange: PropTypes.func
+  handleStateChange: PropTypes.func,
 };
 function NoteState(props) {
-  const {
-    annotation,
-    handleStateChange = () => {},
-  } = props;
+  const { annotation, handleStateChange = () => {} } = props;
 
   const annotationState = annotation.getStatus();
   const icon = `icon-annotation-status-${annotationState === 'Completed' ? 'green' : 'accepted'}`;
 
-  const createOnStateOptionButtonClickHandler   = (state) => {
+  const createOnStateOptionButtonClickHandler = state => {
     return () => {
       handleStateChange(state);
     };
   };
 
-  const getStatusFromAnnotation = (state) =>{
-      if(state==='Completed'){
-        return 'Accepted';
-      }
-      return 'Completed';
-  }
+  const getStatusFromAnnotation = state => {
+    if (state === 'Completed') {
+      return 'Accepted';
+    }
+    return 'Completed';
+  };
 
   return (
     <DataElementWrapper dataElement="notePopupState">
-         <DataElementWrapper
-           dataElement="notePopupStateCompleted"
-           className="note-state-option"
-           onClick={createOnStateOptionButtonClickHandler(getStatusFromAnnotation(annotation.getStatus()))}
-         >
-           <Icon backgroundNoneIcon={true} class glyph={icon} />
-         </DataElementWrapper>
-       </DataElementWrapper>
+      <DataElementWrapper
+        title="Mark as Completed"
+        dataElement="notePopupStateCompleted"
+        className="note-state-option"
+        onClick={createOnStateOptionButtonClickHandler(getStatusFromAnnotation(annotation.getStatus()))}
+      >
+        <Icon backgroundNoneIcon={true} class glyph={icon} />
+      </DataElementWrapper>
+    </DataElementWrapper>
   );
 }
 
