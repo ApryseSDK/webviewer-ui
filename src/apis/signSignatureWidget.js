@@ -22,15 +22,11 @@ export default async (signatureWidget, signature) => {
 
   const handleSignatureReady = (currentSignature) => {
     signatureWidget.sign(currentSignature);
-    signatureTool.removeEventListener('signatureReady.sign', null, {
-      allowGlobalRemove: true,
-    });
+    signatureTool.removeEventListener('signatureReady.sign', null);
   };
 
   signatureTool
-    .removeEventListener('signatureReady.sign', null, {
-      allowGlobalRemove: true,
-    })
+    .removeEventListener('signatureReady.sign')
     .addEventListener('signatureReady.sign', handleSignatureReady);
 
   if (signatureWidget && !signatureWidget.getAssociatedSignatureAnnotation()) {

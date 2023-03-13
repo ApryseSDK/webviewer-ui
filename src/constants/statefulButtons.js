@@ -4,12 +4,12 @@ import actions from 'actions';
 export default {
   signatureToolButton: {
     initialState: 'newSignature',
-    mount: update => {
+    mount: (update) => {
       const signatureTool = core.getTool('AnnotationCreateSignature');
       signatureTool.addEventListener('saveDefault.sigTool', () => {
         update('defaultSignature');
       });
-      signatureTool.addEventListener('noDefaultSignatures', () => {
+      signatureTool.addEventListener('noDefaultSignatures.sigTool', () => {
         update('newSignature');
       });
     },
@@ -20,8 +20,8 @@ export default {
     },
     unmount: () => {
       const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.removeEventListener('saveDefault.sigTool', null, { allowGlobalRemove: true });
-      signatureTool.removeEventListener('noDefaultSignatures', null, { allowGlobalRemove: true });
+      signatureTool.removeEventListener('saveDefault.sigTool', null);
+      signatureTool.removeEventListener('noDefaultSignatures.sigTool', null);
     },
     states: {
       newSignature: {
@@ -32,8 +32,7 @@ export default {
         title: 'annotation.signature',
         // we also consider if signatureOverlay is open in this state because there can be a case where all the default signatures are deleted
         // when signatureOverlay is open and this button's state will become "newSignature"
-        isActive: ({ openElements }) =>
-          openElements.signatureModal || openElements.signatureOverlay,
+        isActive: ({ openElements }) => openElements.signatureModal || openElements.signatureOverlay,
       },
       defaultSignature: {
         img: 'ic_annotation_signature_black_24px',
