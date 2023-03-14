@@ -44,14 +44,26 @@ function SearchOverlay(props) {
   const [isReplaceAllBtnDisabled, setReplaceAllBtnDisabled] = React.useState(true);
   const [isMoreOptionsOpen, setMoreOptionOpen] = React.useState(true);
   const [showReplaceSpinner, setShowReplaceSpinner] = React.useState(false);
-
+  const [isReplacementRegexValid, setReplacementRegexValid] = React.useState(true);
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
   const searchTextInputRef = React.useRef();
   const waitTime = 300; // Wait time in milliseconds
 
   React.useEffect(() => {
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const replacementRegex = new RegExp('(?<!<\/?[^>]*|&[^;]*)');
+    } catch (error) {
+      setReplacementRegexValid(false);
+    }
+  }, []);
+
+  React.useEffect(() => {
     if (searchTextInputRef.current && isPanelOpen) {
       searchTextInputRef.current.focus();
+    }
+    if (!isSearchAndReplaceDisabled && isPanelOpen) {
+      console.warn('Search and Replace is not supported in this browser');
     }
   }, [isPanelOpen]);
 
@@ -283,7 +295,7 @@ function SearchOverlay(props) {
         }
       </div>
       {
-        (isSearchAndReplaceDisabled) ? null :
+        (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
           (isMoreOptionsOpen)
             ? <div className="extra-options">
               <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.lessOptions')} <Icon glyph="icon-chevron-up"/></button>
@@ -297,7 +309,7 @@ function SearchOverlay(props) {
           <div>
             {searchOptionsComponents}
             {
-              (isSearchAndReplaceDisabled) ? null :
+              (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
                 <div data-element="searchAndReplace" className='replace-options'>
                   <p>{t('option.searchPanel.replace')}</p>
                   <div className='input-container'>
