@@ -7,15 +7,16 @@ import useMedia from 'hooks/useMedia';
 import SearchPanel from './SearchPanel';
 
 function SearchPanelContainer(props) {
-  const isMobile = useMedia(['(max-width: 640px)'],[true], false);
+  const isMobile = useMedia(['(max-width: 640px)'], [true], false);
 
-  const [isOpen, currentWidth, pageLabels, shouldClearSearchPanelOnClose, isInDesktopOnlyMode, isProcessingSearchResults] = useSelector(state => [
+  const [isOpen, currentWidth, pageLabels, shouldClearSearchPanelOnClose, isInDesktopOnlyMode, isProcessingSearchResults, activeDocumentViewerKey] = useSelector((state) => [
     selectors.isElementOpen(state, 'searchPanel'),
     selectors.getSearchPanelWidth(state),
     selectors.getPageLabels(state),
     selectors.shouldClearSearchPanelOnClose(state),
     selectors.isInDesktopOnlyMode(state),
     selectors.isProcessingSearchResults(state),
+    selectors.getActiveDocumentViewerKey(state),
   ], shallowEqual);
 
   const dispatch = useDispatch();
@@ -27,8 +28,15 @@ function SearchPanelContainer(props) {
     dispatch(actions.setSearchValue(''));
   }, [dispatch]);
 
-  const setActiveResult = React.useCallback(function setActiveResult(result) {
-    core.setActiveSearchResult(result);
+  const setNextResultValue = React.useCallback(function setNextResultValue(searchResults) {
+    dispatch(actions.setNextResultValue(searchResults));
+  }, [dispatch]);
+
+  const setActiveResult = React.useCallback(function setActiveResult(result, activeDocumentViewerKey) {
+    if (activeDocumentViewerKey) {
+      const activeDocumentviewer = core.getDocumentViewer(activeDocumentViewerKey);
+      return activeDocumentviewer.setActiveSearchResult(result);
+    }
   }, []);
 
   /*
@@ -79,9 +87,11 @@ function SearchPanelContainer(props) {
     pageLabels,
     closeSearchPanel,
     setActiveResult,
+    setNextResultValue,
     isMobile,
     isInDesktopOnlyMode,
-    isProcessingSearchResults
+    isProcessingSearchResults,
+    activeDocumentViewerKey,
   };
 
   return (

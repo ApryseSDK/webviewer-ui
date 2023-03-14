@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-
 import SearchResult from 'components/SearchResult';
 import SearchOverlay from 'components/SearchOverlay';
 import Icon from 'components/Icon';
 import getClassName from 'helpers/getClassName';
 import DataElementWrapper from 'components/DataElementWrapper';
+import { addSearchListener, removeSearchListener } from 'helpers/search';
 
 import './SearchPanel.scss';
-import useSearch from "hooks/useSearch";
+import useSearch from 'hooks/useSearch';
 
 const propTypes = {
   isOpen: PropTypes.bool,
@@ -19,7 +19,8 @@ const propTypes = {
   closeSearchPanel: PropTypes.func,
   setActiveResult: PropTypes.func,
   isInDesktopOnlyMode: PropTypes.bool,
-  isProcessingSearchResults: PropTypes.bool
+  isProcessingSearchResults: PropTypes.bool,
+  activeDocumentViewerKey: PropTypes.number
 };
 
 function noop() { }
@@ -31,13 +32,15 @@ function SearchPanel(props) {
     pageLabels,
     closeSearchPanel = noop,
     setActiveResult = noop,
+    setNextResultValue = noop,
     isMobile = false,
     isInDesktopOnlyMode,
-    isProcessingSearchResults
+    isProcessingSearchResults,
+    activeDocumentViewerKey
   } = props;
 
   const { t } = useTranslation();
-  const { searchStatus, searchResults, activeSearchResultIndex, setSearchStatus } = useSearch();
+  const { searchStatus, searchResults, activeSearchResultIndex, setSearchStatus } = useSearch(activeDocumentViewerKey);
 
   const onCloseButtonClick = React.useCallback(function onCloseButtonClick() {
     if (closeSearchPanel) {
@@ -45,12 +48,32 @@ function SearchPanel(props) {
     }
   }, [closeSearchPanel]);
 
-  const onClickResult = React.useCallback(function onClickResult(resultIndex, result) {
-    setActiveResult(result);
+  const onClickResult = React.useCallback(function onClickResult(resultIndex, result, activeDocumentViewerKey) {
+    setActiveResult(result, activeDocumentViewerKey);
     if (!isInDesktopOnlyMode && isMobile) {
       closeSearchPanel();
     }
+
+    setNextResultValue(result);
   }, [closeSearchPanel, isMobile]);
+
+  const [isSearchInProgress, setIsSearchInProgress] = React.useState(false);
+
+  const searchEventListener = () => {
+    setIsSearchInProgress(false);
+  };
+
+  React.useEffect(() => {
+    // componentDidMount
+    addSearchListener(searchEventListener);
+  }, []);
+
+  React.useEffect(() => {
+    // componentWillUnmount
+    return () => {
+      removeSearchListener(searchEventListener);
+    };
+  }, []);
 
   const className = getClassName('Panel SearchPanel', { isOpen });
   const style = !isInDesktopOnlyMode && isMobile ? {} : { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
@@ -81,6 +104,9 @@ function SearchPanel(props) {
         searchResults={searchResults}
         activeResultIndex={activeSearchResultIndex}
         isPanelOpen={isOpen}
+        isSearchInProgress={isSearchInProgress}
+        setIsSearchInProgress={setIsSearchInProgress}
+        activeDocumentViewerKey={activeDocumentViewerKey}
       />
       <SearchResult
         t={t}
@@ -90,6 +116,8 @@ function SearchPanel(props) {
         onClickResult={onClickResult}
         pageLabels={pageLabels}
         isProcessingSearchResults={isProcessingSearchResults}
+        isSearchInProgress={isSearchInProgress}
+        activeDocumentViewerKey={activeDocumentViewerKey}
       />
     </DataElementWrapper>
   );

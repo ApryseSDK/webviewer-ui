@@ -24,7 +24,20 @@ jest.mock('core', () => ({
   addEventListener: noop,
   getSearchMode: () => ({
     SearchMode: {}
+  }),
+  getDocumentViewer: () => ({
+    clearSearchResults: noop,
+    textSearchInit: noop,
+    addEventListener: noop,
+    getSearchMode: () => ({
+      SearchMode: {}
+    }),
   })
+}));
+
+jest.mock('selectors', () => ({
+  getActiveDocumentViewerKey: () => '1',
+  getRedactionSearchPatterns: () => ([])
 }));
 
 describe('multiSearch', () => {

@@ -1,23 +1,29 @@
 import React from 'react';
 import core from 'core';
-import isSearchResultSame from 'helpers/isSearchResultSame';
+import { useDispatch } from 'react-redux';
+import actions from 'actions/index';
 
-function useSearch() {
+function useSearch(activeDocumentViewerKey) {
   const [searchResults, setSearchResults] = React.useState([]);
   const [activeSearchResult, setActiveSearchResult] = React.useState();
-  const [activeSearchResultIndex, setActiveSearchResultIndex] = React.useState(-1);
+  const [activeSearchResultIndex, setActiveSearchResultIndex] = React.useState(0);
   const [searchStatus, setSearchStatus] = React.useState('SEARCH_NOT_INITIATED');
+  const dispatch = useDispatch();
+  const documentViewers = core.getDocumentViewers();
+  const documentViewersCount = documentViewers.length;
+
 
   React.useEffect(() => {
     // First time useSearch is mounted we check if core has results
     // and if it has, we make sure those are set. This will make sure if external search is done
     // that the result will reflect on the UI those set in core
-    const coreSearchResults = core.getPageSearchResults() || [];
+    const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
+    const coreSearchResults = activeDocumentViewer.getPageSearchResults() || [];
     if (coreSearchResults.length > 0) {
       const activeSearchResult = core.getActiveSearchResult();
       if (activeSearchResult) {
-        const newActiveSearchResultIndex = coreSearchResults.findIndex(searchResult => {
-          return isSearchResultSame(searchResult, activeSearchResult);
+        const newActiveSearchResultIndex = coreSearchResults.findIndex((searchResult) => {
+          return core.isSearchResultEqual(searchResult, activeSearchResult);
         });
         setSearchResults(coreSearchResults);
         if (newActiveSearchResultIndex >= 0) {
@@ -33,13 +39,16 @@ function useSearch() {
   }, []);
 
   React.useEffect(() => {
+    const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
     function activeSearchResultChanged(newActiveSearchResult) {
-      const coreSearchResults = core.getPageSearchResults() || [];
-      const newActiveSearchResultIndex = coreSearchResults.findIndex(searchResult => {
-        return isSearchResultSame(searchResult, newActiveSearchResult);
+      const coreSearchResults = activeDocumentViewer.getPageSearchResults() || [];
+      const newActiveSearchResultIndex = coreSearchResults.findIndex((searchResult) => {
+        return core.isSearchResultEqual(searchResult, newActiveSearchResult);
       });
-      setActiveSearchResult(newActiveSearchResult);
-      setActiveSearchResultIndex(newActiveSearchResultIndex);
+      if (newActiveSearchResultIndex >= 0) {
+        setActiveSearchResult(newActiveSearchResult);
+        setActiveSearchResultIndex(newActiveSearchResultIndex);
+      }
     }
 
     function searchResultsChanged(newSearchResults = []) {
@@ -57,18 +66,38 @@ function useSearch() {
       } else if (isSearching) {
         setSearchStatus('SEARCH_IN_PROGRESS');
       } else {
+        const defaultActiveSearchResult = activeDocumentViewer.getActiveSearchResult();
+
+        if (defaultActiveSearchResult) {
+          setActiveSearchResult(defaultActiveSearchResult);
+          // In core default active search result is the first result
+          const coreSearchResults = activeDocumentViewer.getPageSearchResults() || [];
+          const newActiveSearchResultIndex = coreSearchResults.findIndex((searchResult) => {
+            return core.isSearchResultEqual(searchResult, defaultActiveSearchResult);
+          });
+          setActiveSearchResultIndex(newActiveSearchResultIndex);
+          dispatch(actions.setNextResultValue(defaultActiveSearchResult));
+        }
+
         setSearchStatus('SEARCH_DONE');
       }
     }
-    core.addEventListener('activeSearchResultChanged', activeSearchResultChanged);
-    core.addEventListener('searchResultsChanged', searchResultsChanged);
-    core.addEventListener('searchInProgress', searchInProgressEventHandler);
+    const documentViewers = core.getDocumentViewers();
+
+    documentViewers.forEach((documentViewer) => {
+      documentViewer.addEventListener('activeSearchResultChanged', activeSearchResultChanged);
+      documentViewer.addEventListener('searchResultsChanged', searchResultsChanged);
+      documentViewer.addEventListener('searchInProgress', searchInProgressEventHandler);
+    });
     return function useSearchEffectCleanup() {
-      core.removeEventListener('activeSearchResultChanged', activeSearchResultChanged);
-      core.removeEventListener('searchResultsChanged', searchResultsChanged);
-      core.removeEventListener('searchInProgress', searchInProgressEventHandler);
+      documentViewers.forEach((documentViewer) => {
+        documentViewer.addEventListener('activeSearchResultChanged', activeSearchResultChanged);
+        documentViewer.addEventListener('searchResultsChanged', searchResultsChanged);
+        documentViewer.addEventListener('searchInProgress', searchInProgressEventHandler);
+      });
     };
-  }, [setActiveSearchResult, setActiveSearchResultIndex, setSearchStatus]);
+  }, [setActiveSearchResult, setActiveSearchResultIndex, setSearchStatus, dispatch, documentViewersCount, activeDocumentViewerKey]);
+
 
   return {
     searchStatus,

@@ -24,6 +24,7 @@ WebViewer(...)
 import actions from 'actions';
 import core from 'core';
 import { getSearchListeners } from 'helpers/search';
+import selectors from 'selectors';
 
 const onResultThrottleTimeout = 100;
 
@@ -53,6 +54,7 @@ function buildSearchModeFlag(options = {}) {
 
 export default (store) => (searchValue, options) => {
   const dispatch = store?.dispatch;
+  const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(store?.getState());
   if (dispatch) {
     // dispatch is only set when doing search through API (instance.searchText())
     // When triggering search through UI, then redux updates are already handled inside component
@@ -69,14 +71,14 @@ export default (store) => (searchValue, options) => {
 
   function onResult(result) {
     throttleResults.push(result);
-
     if (!resultTimeout) {
       if (!isStillProcessingResults) {
         isStillProcessingResults = true;
       }
+      const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
 
       resultTimeout = setTimeout(() => {
-        core.displayAdditionalSearchResults(throttleResults);
+        activeDocumentViewer.displayAdditionalSearchResults(throttleResults);
         throttleResults = [];
         resultTimeout = null;
         doneCallback();
@@ -85,7 +87,7 @@ export default (store) => (searchValue, options) => {
 
     if (!hasActiveResultBeenSet) {
       // when full search is done, we make first found result to be the active result
-
+      activeDocumentViewer.setActiveSearchResult(result);
       hasActiveResultBeenSet = true;
     }
   }
@@ -94,7 +96,8 @@ export default (store) => (searchValue, options) => {
     // execute search listeners when search is complete, thus hooking functionality search in progress event.
     if (isSearching === false) {
       doneCallback = () => {
-        const results = core.getPageSearchResults();
+        const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
+        const results = activeDocumentViewer.getPageSearchResults();
         const searchOptions = {
           // default values
           caseSensitive: false,
@@ -110,7 +113,8 @@ export default (store) => (searchValue, options) => {
 
         const result = results[nextResultIndex];
         if (result) {
-          core.setActiveSearchResult(result);
+          // when full search is done, we make first found result to be the active result
+          activeDocumentViewer.setActiveSearchResult(result);
         }
         const searchListeners = getSearchListeners() || [];
         searchListeners.forEach((listener) => {
@@ -126,7 +130,7 @@ export default (store) => (searchValue, options) => {
       if (!resultTimeout) {
         doneCallback();
       }
-      core.removeEventListener('searchInProgress', searchInProgressCallback);
+      activeDocumentViewer.removeEventListener('searchInProgress', searchInProgressCallback);
     }
   }
 
@@ -143,7 +147,9 @@ export default (store) => (searchValue, options) => {
     'onError': handleSearchError,
   };
 
-  core.clearSearchResults();
-  core.textSearchInit(searchValue, searchMode, textSearchInitOptions);
-  core.addEventListener('searchInProgress', searchInProgressCallback);
+  const activeDocumentViewer = core.getDocumentViewer(activeDocumentViewerKey);
+
+  activeDocumentViewer.clearSearchResults();
+  activeDocumentViewer.textSearchInit(searchValue, searchMode, textSearchInitOptions);
+  activeDocumentViewer.addEventListener('searchInProgress', searchInProgressCallback);
 };
