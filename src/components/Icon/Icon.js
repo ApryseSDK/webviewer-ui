@@ -55,6 +55,7 @@ class Icon extends React.PureComponent {
     let svgElement;
 
     try {
+      // eslint-disable-next-line global-require,import/no-dynamic-require
       svgElement = this.isInlineSvg() ? glyph : require(`../../../assets/icons/${this.props.glyph}.svg`);
     } catch {
       svgElement = undefined;
@@ -84,6 +85,7 @@ class Icon extends React.PureComponent {
           disabled,
         })}
         style={style}
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: svgElement }}
       />
     );
