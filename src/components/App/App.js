@@ -9,6 +9,7 @@ import actions from 'actions';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
+import OfficeEditorToolsHeader from 'components/Header/OfficeEditorToolsHeader';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
@@ -80,6 +81,7 @@ import Events from 'constants/events';
 import overlays from 'constants/overlays';
 import setLanguage from 'src/apis/setLanguage';
 import { panelNames } from 'constants/panel';
+import { isOfficeEditorMode } from 'helpers/officeEditor';
 
 import './App.scss';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
@@ -115,10 +117,19 @@ const App = ({ removeEventHandlers }) => {
       '*',
     );
 
-    function loadInitialDocument() {
+    async function loadInitialDocument() {
+      let initialDoc = getHashParameters('d', '');
+      const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
+      if (!initialDoc && isOfficeEditingEnabled) {
+        loadDocument(dispatch, (await core.getEmptyWordDocument()).default, {
+          filename: 'Untitled.docx',
+        });
+
+        return;
+      }
+
       const state = store.getState();
       const doesAutoLoad = getHashParameters('auto_load', true);
-      let initialDoc = getHashParameters('d', '');
       initialDoc = initialDoc ? JSON.parse(initialDoc) : '';
       initialDoc = Array.isArray(initialDoc) ? initialDoc : [initialDoc];
       const isMultiTabAlreadyEnabled = state.viewer.isMultiTab;
@@ -227,6 +238,7 @@ const App = ({ removeEventHandlers }) => {
         <FlyoutContainer/>
         <Accessibility/>
         <Header />
+        {isOfficeEditorMode() && <OfficeEditorToolsHeader/>}
         <TopHeader />
         <div className="content">
           <LeftHeader />
