@@ -12,6 +12,7 @@ import selectors from 'selectors';
 import TabManager from 'helpers/TabManager';
 import getHashParameters from './getHashParameters';
 import DataElements from 'constants/dataElement';
+import { isOfficeEditorMode } from 'helpers/officeEditor';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => (features, priority = PRIORITY_TWO) => {
@@ -65,6 +66,10 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'toolsOverlay',
       ],
       fn: () => {
+        if (isOfficeEditorMode()) {
+          console.warn('Office Editor doesn\'t support annotations');
+          return;
+        }
         if (enable) {
           core.showAnnotations(core.getAnnotationsList());
           enableTools(store)();
@@ -98,11 +103,40 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.NotesPanel]: {
       dataElements: [
-        'annotationCommentButton',
         'notesPanelButton',
         'notesPanel',
         'toggleNotesButton',
       ],
+    },
+    [Feature.InlineComment]: {
+      dataElements: [
+        DataElements.INLINE_COMMENT_POPUP,
+        DataElements.INLINE_COMMENT_POPUP_EXPAND_BUTTON,
+        DataElements.INLINE_COMMENT_POPUP_CLOSE_BUTTON,
+      ],
+      fn: () => {
+        if (enable) {
+          store.dispatch(actions.setEnableRightClickAnnotationPopup(true));
+        }
+      },
+    },
+    [Feature.RightClickAnnotationPopup]: {
+      dataElements: [
+        // no elements: enabling this will open the popup on right click
+        // disabling this will open the popup on left click
+      ],
+      fn: () => {
+        if (enable) {
+          store.dispatch(actions.setEnableRightClickAnnotationPopup(true));
+        } else {
+          store.dispatch(actions.disableElements([
+            DataElements.INLINE_COMMENT_POPUP,
+            DataElements.INLINE_COMMENT_POPUP_EXPAND_BUTTON,
+            DataElements.INLINE_COMMENT_POPUP_CLOSE_BUTTON,
+          ], PRIORITY_TWO));
+          store.dispatch(actions.setEnableRightClickAnnotationPopup(false));
+        }
+      },
     },
     [Feature.Print]: {
       dataElements: ['printButton', 'printModal'],
@@ -245,6 +279,10 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.MultiTab]: {
       fn: () => {
+        if (isOfficeEditorMode()) {
+          return;
+        }
+
         if (enable) {
           const state = store.getState();
           // if already in multi-tab mode do not recreate TabManager
