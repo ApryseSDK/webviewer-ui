@@ -249,12 +249,14 @@ const ImageSignature = ({
           onChange={handleInitialsFileChange}
           disabled={!(isModalOpen && isTabPanelSelected)}
         />
+        
         <div
           onClick={() => initialsInputRef.current.click()}
           className="pick-image-button"
         >
           {t('option.signatureModal.pickInitialsFile')}
         </div>
+
       </div>
       {initialsErrorMessage && (
         <div className="image-signature-error">{initialsErrorMessage}</div>

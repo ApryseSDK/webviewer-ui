@@ -86,18 +86,20 @@
 
     .pick-image-button {
       font-weight: bold;
-      height: 24px;
+      height: 28px;
       border-radius: 4px;
-      border: 1px solid var(--primary-button);
-      color: var(--primary-button);
+      // border: 1px solid var(--primary-button);
+      color: white;
+      background-color: #333333;
       display: flex;
       align-items: center;
       padding: 0 11px;
       cursor: pointer;
 
       &:hover {
-        border: 1px solid var(--primary-button-hover);
-        color: var(--primary-button-hover);
+        // border: 1px solid var(--primary-button-hover);
+        // color: var(--primary-button-hover);
+        background-color: #70C78E;
       }
     }
   }

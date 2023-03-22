@@ -11,9 +11,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 480px;
+    width: 700px;
     padding: 0px;
-    border-radius: 4px;
+    border-radius: 14px;
     box-shadow: 0px 0px 3px var(--document-box-shadow);
     background: var(--component-background);
 
@@ -38,7 +38,7 @@
 
     .header-container {
       box-shadow: inset 0px -1px 0px var(--modal-stroke-and-border);
-      padding: 20px 16px 16px 16px;
+      padding: 20px 16px 0px 16px;
     }
 
     .header {
@@ -49,11 +49,12 @@
       height: 24px;
 
       p {
+        color: #747474;
         font-size: 16px;
         font-weight: 700;
         width: 89.286%;
         margin: 0;
-        margin-right: 16px;
+        flex: 1;
       }
 
       .signatureModalCloseButton {
@@ -87,6 +88,7 @@
     .tab-list {
       font-size: 14px; // hack for extra area in the tab list. 13px looks bad.
       margin-top: 12px;
+      margin-bottom: 1px;
 
       .tab-options-button {
         @include button-reset;
@@ -96,6 +98,7 @@
     @extend %tab-list;
 
     .signature-style-options {
+      align-items: center;
       width: 90%;
       display: flex;
 
@@ -176,8 +179,8 @@
 
       .signature-create {
         @include button-reset;
-        background: var(--primary-button);
-        border-radius: 4px;
+        background: #333333;
+        border-radius: 6px;
         padding: 0 8px;
         height: 32px;
         width: 72px;
@@ -185,7 +188,7 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        color: var(--primary-button-text);
+        color: #ffffff;
         cursor: pointer;
 
         @include mobile {
@@ -193,7 +196,7 @@
         }
 
         &:enabled:hover {
-          background: var(--primary-button-hover);
+          background: #70c78e;
         }
 
         &:disabled {
@@ -212,6 +215,7 @@
     border-bottom-right-radius: 4px;
 
     .signature-style-options {
+      align-items: center;
       width: 90%;
       display: flex;
 
@@ -232,12 +236,12 @@
       .Dropdown__wrapper {
         width: 160px;
         height: 31px;
-        margin: auto 0;
+        // margin: auto 0;
         position: absolute;
-        margin-top: 6px;
+        // margin-top: 6px;
 
         .Dropdown {
-          width: 100% !important;
+          width: 110px !important;
           height: 100%;
           text-align: left;
         }
@@ -291,7 +295,7 @@
     color: var(--secondary-button-text);
     display: flex;
     flex: 0 0 0;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: center;
     cursor: pointer;
     border: none;
@@ -309,9 +313,10 @@
   }
 
   .signature-input {
-    background: var(--signature-draw-background);
-    border: 1px solid var(--modal-stroke-and-border);
-    display: flex;
+    display: inline-block;
+    background: #f7f7f7;
+    border: 1px solid #A5A5A5;
+    // display: flex;
     flex-direction: column;
     gap: 8px;
     align-items: center;
@@ -319,7 +324,7 @@
     padding: 8px;
     width: 100%;
     height: 200px;
-    border-radius: 4px;
+    border-radius: 10px;
 
     &.full-signature {
       flex: 1.5 0 0;
@@ -338,13 +343,18 @@
     }
 
     &.image {
-      height: 244px;
+      height: 200px;
+      background-color: #EBF1FF;
+      background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='7' ry='7' stroke='%233A70FFFF' stroke-width='2' stroke-dasharray='4%2c 8' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+      border-radius: 7px;
+      border:0px;
     }
 
     &-footer {
       display: flex;
       flex-direction: row;
       width: 100%;
+      align-items:flex-end;
     }
 
     .signature-prompt {
@@ -356,8 +366,27 @@
   }
 
   .signature-and-initials-container {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
+    white-space: nowrap;
+    // display: flex;
+    // flex-direction: row;
+    // gap: 8px;
   }
+
+  .dropClass {
+    // margin-right: 7px;
+    background-color: white;
+    border-radius: 20px;
+  }
+
+  .dropClass .Dropdown {
+    width: 110px !important;
+    height: 24px;
+    border-radius: 20px;
+    border-color: #A5A5A5;
+  }
+
+  .dropClass .Dropdown .picked-option {
+    justify-content: space-around !important;
+  }
+
 }

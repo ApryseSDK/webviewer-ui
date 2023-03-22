@@ -4,37 +4,56 @@
     height: 28px;
     display: flex;
     border-radius: 4px;
-    border: 1px solid var(--border);
+    // border: 1px solid var(--border);
     color: var(--text-color);
 
     .tab-options-button {
+      border-bottom: 2px solid #ffffff !important;
+      padding: 0px 20px !important;
       text-align: center;
       vertical-align: middle;
       line-height: 24px;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-      flex: 1;
+      display: flex;
+      // flex: 1;
       border-radius: 0px;
       cursor: pointer;
 
       &:first-child {
-        border-bottom-left-radius: 4px;
-        border-top-left-radius: 4px;
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
       }
 
       &:last-child {
-        border-bottom-right-radius: 4px;
-        border-top-right-radius: 4px;
+        border-bottom-right-radius: 0px;
+        border-top-right-radius: 0px;
       }
 
       &:hover {
-        background: var(--popup-button-hover);
+        // background: var(--popup-button-hover);
+        color: #7D69FF;
+        border-bottom: 2px solid #7D69FF !important;
+        .tabs_icon{
+         color: #7D69FF;
+        }
       }
 
       &.selected {
-        background: var(--popup-button-active);
+        // background: var(--popup-button-active);
+        color: #7D69FF;
+        border-bottom: 2px solid #7D69FF !important;
         cursor: default;
+        .tabs_icon{
+          color: #7D69FF;
+        }
+      }
+      .tabs_icon{
+        height: 10px;
+        width: 20px;
+        margin-top: 2px;
+        margin-right: 6px;
       }
     }
 

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ColorPalette from 'components/ColorPalette';
+import DropdownColor from 'components/DropdownColor';
 import Dropdown from 'components/Dropdown';
 import core from 'core';
 import { isIOS, isMobile } from 'helpers/device';
@@ -298,8 +299,48 @@ const TextSignature = ({
   return (
     <div className="text-signature">
       <div className="signature-and-initials-container">
+
+
+
+
+
+
+
+        <div style={{
+          position: 'relative',
+          float: 'right',
+          zIndex: '20',
+          marginRight: '10px',
+          marginTop: '10px',
+        }}>
+
+          <div className="signature-style-options">
+            <Dropdown
+              items={fonts.map((font) => ({ font, value: `${fullSignature} ${isInitialsModeEnabled ? initials : ''}` }))}
+              getCustomItemStyle={(item) => ({ fontFamily: item.font })}
+              getKey={(item) => item.font}
+              getDisplayValue={(item) => {
+                return item.value || item.font;
+              }}
+              onClickItem={handleDropdownSelectionChange}
+              currentSelectionKey={selectedFontFamily || fonts[0]}
+              maxHeight={isMobile() ? 80 : null}
+              dataElement="text-signature-font-dropdown"
+              className="dropClass"
+            />
+            <div className="placeholder-dropdown"></div>
+
+            <DropdownColor
+              color={fontColor}
+              property="fontColor"
+              onStyleChange={(property, value) => handleColorInputChange(property, value)}
+              overridePalette2={['#000000', '#4E7DE9', '#E44234']}
+            />
+          </div>
+        </div>
+
         <div className="signature-input full-signature">
-          <label>
+          <label style={{display: 'flex'}}>
             <input
               className="text-signature-input"
               ref={inputRef}
@@ -351,30 +392,7 @@ const TextSignature = ({
       {renderHiddenSignatureElements()}
       <canvas ref={fullSignatureHiddenCanvasRef} />
       <canvas ref={initialsHiddenCanvasRef} />
-      <div className="colorpalette-clear-container">
-        <div className="signature-style-options">
-          <Dropdown
-            items={fonts.map((font) => ({ font, value: `${fullSignature} ${isInitialsModeEnabled ? initials : ''}` }))}
-            getCustomItemStyle={(item) => ({ fontFamily: item.font })}
-            getKey={(item) => item.font}
-            getDisplayValue={(item) => {
-              return item.value || item.font;
-            }}
-            onClickItem={handleDropdownSelectionChange}
-            currentSelectionKey={selectedFontFamily || fonts[0]}
-            maxHeight={isMobile() ? 80 : null}
-            dataElement="text-signature-font-dropdown"
-          />
-          <div className="placeholder-dropdown"></div>
-          <div className="divider"></div>
-          <ColorPalette
-            color={fontColor}
-            property="fontColor"
-            onStyleChange={(property, value) => handleColorInputChange(property, value)}
-            overridePalette2={['#000000', '#4E7DE9', '#E44234']}
-          />
-        </div>
-      </div>
+      {/* <div className="colorpalette-clear-container"></div> */}
     </div>
   );
 };

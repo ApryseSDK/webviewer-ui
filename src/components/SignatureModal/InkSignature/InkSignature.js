@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import setToolStyles from 'helpers/setToolStyles';
 import { Swipeable } from 'react-swipeable';
 import ColorPalette from 'components/ColorPalette';
+import DropdownColor from 'components/DropdownColor';
 import Dropdown from 'components/Dropdown';
 import SignatureModes from 'constants/signatureModes';
 import core from 'core';
@@ -206,6 +207,31 @@ const InkSignature = ({
             className="canvas-colorpalette-container"
           >
             <div className='signature-and-initials-container'>
+              <div style={{
+                position: 'relative',
+                float: 'right',
+                zIndex: '20',
+                marginRight:'10px',
+                marginTop:'10px',
+              }}>
+
+                <div className="signature-style-options">
+                  <Dropdown
+                    disabled={true}
+                    placeholder={'Text Styles'}
+                    className="dropClass"
+                  />
+                  <div className="placeholder-dropdown"></div>
+
+                  <DropdownColor
+                    color={toolStyles['StrokeColor']}
+                    property="StrokeColor"
+                    onStyleChange={(property, value) => handleColorInputChange(property, value)}
+                    overridePalette2={['#000000', '#4E7DE9', '#E44234']}
+                  />
+                </div>
+
+              </div>
               <div className='signature-input full-signature'>
                 <canvas
                   className="ink-signature-canvas"
@@ -241,22 +267,7 @@ const InkSignature = ({
                 </div>
               </div>
             </div>
-            <div className="colorpalette-clear-container">
-              <div className="signature-style-options">
-                <Dropdown
-                  disabled={true}
-                  placeholder={'Text Styles'}
-                />
-                <div className="placeholder-dropdown"></div>
-                <div className="divider"></div>
-                <ColorPalette
-                  color={toolStyles['StrokeColor']}
-                  property="StrokeColor"
-                  onStyleChange={(property, value) => handleColorInputChange(property, value)}
-                  overridePalette2={['#000000', '#4E7DE9', '#E44234']}
-                />
-              </div>
-            </div>
+            {/* <div className="colorpalette-clear-container"></div> */}
           </Swipeable>
         </div>
       )}
