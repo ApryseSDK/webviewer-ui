@@ -16,6 +16,9 @@
     "comment": "Komen",
     "reply": "Tambah balasan",
     "copy": "Salinan",
+    "cut": "potong",
+    "paste": "tampal",
+    "pasteWithoutFormatting": "Tampal tanpa memformat",
     "delete": "Padam",
     "group": "Kumpulan",
     "ungroup": "Nyahkumpulan",
@@ -78,6 +81,7 @@
     "showLess": "kurang menunjukkan",
     "showMore": "... lagi",
     "chooseFile": "Pilih fail",
+    "changeDate": "Tukar tarikh",
     "browse": "Semak imbas Fail",
     "selectYourOption": "Pilih pilihan anda",
     "open": "Buka",
@@ -85,6 +89,7 @@
     "select": "Pilih",
     "moveToTop": "Bergerak ke atas",
     "moveToBottom": "Bergerak ke bawah",
+    "backToMenu": "Kembali ke Menu",
     "redactPages": "Sunting halaman",
     "playAudio": "Mainkan audio",
     "pauseAudio": "jeda audio",
@@ -96,7 +101,8 @@
     "comparePages": "Bandingkan halaman",
     "startComparison": "Mulakan Perbandingan",
     "back": "belakang",
-    "clearSignature": "Tandatangan yang jelas"
+    "clearSignature": "Tandatangan yang jelas",
+    "newDocument": "Dokumen Baharu"
   },
   "annotation": {
     "areaMeasurement": "kawasan",
@@ -380,7 +386,8 @@
       "qualityHigh": "tinggi",
       "includeAnnotations": "Sertakan anotasi",
       "includeComments": "Sertakan ulasan",
-      "printSettings": "Tetapan Cetak"
+      "printSettings": "Tetapan Cetak",
+      "printGrayscale": "Cetak Skala Kelabu"
     },
     "printInfo": {
       "author": "Pengarang",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Pilih Bahasa"
   },
+  "officeEditor": {
+    "bold": "berani",
+    "italic": "Italic",
+    "underline": "Garis bawah",
+    "textColor": "Warna teks",
+    "leftAlign": "Jajar ke kiri",
+    "centerAlign": "Jajaran tengah",
+    "rightAlign": "Jajar ke kanan",
+    "justify": "Mewajarkan",
+    "lineSpacing": "Jarak baris & perenggan",
+    "bulletList": "Senarai berbulet",
+    "numberList": "Senarai bernombor",
+    "insertLink": "Sisipkan pautan",
+    "insertImage": "Sisipkan imej",
+    "notAvailableInDemoMode": "Tidak tersedia dalam mod demo",
+    "notSupportedOnMobile": "Penyuntingan pejabat tidak disokong pada peranti mudah alih."
+  },
   "insertPageModal": {
     "title": "Tambah Halaman Baharu",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Ubah",
       "old": "Tua",
       "new": "Baru",
-      "page": "Halaman"
+      "page": "Halaman",
+      "textContent": "Kandungan Teks",
+      "delete": "padam",
+      "insert": "masukkan",
+      "edit": "edit"
     }
   },
   "saveModal": {

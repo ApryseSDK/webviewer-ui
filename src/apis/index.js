@@ -273,12 +273,9 @@ export default (store) => {
   const UI_NAMESPACE = 'UI';
   const objForWebViewerCore = {
     Tools: window.Core.Tools,
-    Annotations: window.Annotations,
-    // keep CoreControls for backwards compabililty
-    // remove this in 9.0
-    CoreControls: window.Core,
+    Annotations: window.Core.Annotations,
     PartRetrievers: window.Core.PartRetrievers,
-    Actions: window.Actions,
+    Actions: window.Core.Actions,
     PDFNet: window.Core.PDFNet,
   };
   const objForWebViewerUI = {
@@ -583,11 +580,5 @@ export default (store) => {
       getDocumentViewers: () => core.getDocumentViewers(),
     },
     [UI_NAMESPACE]: objForWebViewerUI,
-
-    // keep them here for backwards compatibililty. should remove them in 9.0
-    ...objForWebViewerCore,
-    ...objForWebViewerUI,
-    docViewer: documentViewer,
-    annotManager: documentViewer.getAnnotationManager(),
   };
 };

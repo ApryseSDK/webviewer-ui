@@ -15,6 +15,7 @@ import actions from 'actions';
 import core from 'core';
 import AnnotationNoteConnectorLine from 'components/AnnotationNoteConnectorLine';
 import useDidUpdate from 'hooks/useDidUpdate';
+import DataElements from 'src/constants/dataElement';
 
 import './Note.scss';
 
@@ -22,6 +23,7 @@ const propTypes = {
   annotation: PropTypes.object.isRequired,
   isMultiSelected: PropTypes.bool,
   isMultiSelectMode: PropTypes.bool,
+  isInNotesPanel: PropTypes.bool,
   handleMultiSelect: PropTypes.func,
 };
 
@@ -31,6 +33,7 @@ const Note = ({
   annotation,
   isMultiSelected,
   isMultiSelectMode,
+  isInNotesPanel,
   handleMultiSelect,
 }) => {
   const { isSelected, resize, pendingEditTextMap, isContentEditable, isDocumentReadOnly, isNotePanelOpen, isExpandedFromSearch } = useContext(NoteContext);
@@ -153,11 +156,13 @@ const Note = ({
       core.deselectAllAnnotations();
 
       // Need this delay to ensure all other event listeners fire before we open the line
-      setTimeout(() => dispatch(actions.openElement('annotationNoteConnectorLine')), 300);
+      setTimeout(() => dispatch(actions.openElement(DataElements.ANNOTATION_NOTE_CONNECTOR_LINE)), 300);
     }
-    core.selectAnnotation(annotation);
-    core.jumpToAnnotation(annotation);
-    dispatch(actions.openElement('annotationPopup'));
+    if (isInNotesPanel) {
+      core.selectAnnotation(annotation);
+      core.jumpToAnnotation(annotation);
+      dispatch(actions.openElement(DataElements.ANNOTATION_POPUP));
+    }
   };
 
   const hasUnreadReplies = unreadReplyIdSet.size > 0;
@@ -307,7 +312,7 @@ const Note = ({
           )}
         </>
       )}
-      {isSelected && <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef} />}
+      {isSelected && isInNotesPanel && <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef} />}
     </div>
   );
 };

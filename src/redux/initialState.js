@@ -14,12 +14,14 @@ import getHashParameters from 'helpers/getHashParameters';
 import localStorageManager from 'helpers/localStorageManager';
 import { undoButton, redoButton } from 'helpers/commonToolbarElements';
 import defaultFonts from 'constants/defaultFonts';
+import webFonts from 'constants/webFonts';
 import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
 import presetCropDimensions from 'constants/presetCropDimensions';
 import presetNewPageDimensions from 'constants/presetNewPageDimensions';
 import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
+import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
 import SignatureModes from 'constants/signatureModes';
 import { ShortcutKeys } from 'helpers/hotkeysManager';
 import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
@@ -73,6 +75,7 @@ export default {
     openElements: {
       header: true,
       toolsHeader: true,
+      [DataElements.OFFICE_EDITOR_TOOLS_HEADER]: false,
       [DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER]: true,
       [DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER]: true,
       [DataElements.FORM_FIELD_INDICATOR_CONTAINER]: true,
@@ -732,6 +735,7 @@ export default {
       { dataElement: 'markReplaceTextToolButton' },
     ],
     menuOverlay: [
+      { dataElement: 'newDocumentButton' },
       { dataElement: 'filePickerButton' },
       { dataElement: 'fullscreenButton' },
       { dataElement: 'downloadButton' },
@@ -1937,7 +1941,7 @@ export default {
     validationModalWidgetName: '',
     verificationResult: {},
     watermarkModalOptions: null,
-    fonts: defaultFonts,
+    fonts: [...defaultFonts, ...webFonts],
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
     shouldShowApplyCropWarning: true,
@@ -2088,5 +2092,11 @@ export default {
       removeEmptyGroups: false,
       createRawValueGroup: true,
     },
+  },
+  officeEditor: {
+    cursorProperties: {},
+    selectionProperties: {},
+    availableFontFaces,
+    cssFontValues,
   },
 };

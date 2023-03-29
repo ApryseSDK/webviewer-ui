@@ -16,6 +16,9 @@
     "comment": "মন্তব্য করুন",
     "reply": "উত্তর যোগ করুন",
     "copy": "কপি",
+    "cut": "কাটা",
+    "paste": "পেস্ট করুন",
+    "pasteWithoutFormatting": "বিন্যাস ছাড়া পেস্ট করুন",
     "delete": "মুছে ফেলা",
     "group": "গ্রুপ",
     "ungroup": "আনগ্রুপ করুন",
@@ -78,6 +81,7 @@
     "showLess": "প্রদর্শন কম",
     "showMore": "...আরো",
     "chooseFile": "একটি ফাইল নির্বাচন করুন",
+    "changeDate": "তারিখ পরিবর্তন",
     "browse": "ফাইল ব্রাউজ",
     "selectYourOption": "আপনার বিকল্প নির্বাচন করুন",
     "open": "খোলা",
@@ -85,6 +89,7 @@
     "select": "নির্বাচন করুন",
     "moveToTop": "উপরে সরান",
     "moveToBottom": "নীচে সরান",
+    "backToMenu": "মেনুতে ফিরে যান",
     "redactPages": "পৃষ্ঠাগুলি সংশোধন করুন",
     "playAudio": "অডিও চালান",
     "pauseAudio": "অডিও বিরতি",
@@ -96,7 +101,8 @@
     "comparePages": "পৃষ্ঠাগুলির তুলনা করুন",
     "startComparison": "তুলনা শুরু করুন",
     "back": "পেছনে",
-    "clearSignature": "সাফ স্বাক্ষর"
+    "clearSignature": "সাফ স্বাক্ষর",
+    "newDocument": "নতুন নথি"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -380,7 +386,8 @@
       "qualityHigh": "উচ্চ",
       "includeAnnotations": "টীকা অন্তর্ভুক্ত করুন",
       "includeComments": "মন্তব্য অন্তর্ভুক্ত করুন",
-      "printSettings": "প্রিন্ট সেটিংস"
+      "printSettings": "প্রিন্ট সেটিংস",
+      "printGrayscale": "গ্রেস্কেল প্রিন্ট করুন"
     },
     "printInfo": {
       "author": "লেখক",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "ভাষা নির্বাচন কর"
   },
+  "officeEditor": {
+    "bold": "সাহসী",
+    "italic": "তির্যক",
+    "underline": "আন্ডারলাইন করুন",
+    "textColor": "লেখার রঙ",
+    "leftAlign": "বাম সারিবদ্ধ",
+    "centerAlign": "কেন্দ্র সারিবদ্ধ",
+    "rightAlign": "ডান সারিবদ্ধ",
+    "justify": "ন্যায্যতা",
+    "lineSpacing": "লাইন এবং অনুচ্ছেদের ব্যবধান",
+    "bulletList": "বুলেটযুক্ত তালিকা",
+    "numberList": "সংখ্যাযুক্ত তালিকা",
+    "insertLink": "লিঙ্ক ঢোকান",
+    "insertImage": "ছবি ঢোকান",
+    "notAvailableInDemoMode": "ডেমো মোডে উপলব্ধ নয়",
+    "notSupportedOnMobile": "অফিস সম্পাদনা মোবাইল ডিভাইসে সমর্থিত নয়।"
+  },
   "insertPageModal": {
     "title": "নতুন পৃষ্ঠা যোগ করুন",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "পরিবর্তন",
       "old": "পুরাতন",
       "new": "নতুন",
-      "page": "পাতা"
+      "page": "পাতা",
+      "textContent": "পাঠ্য বিষয়বস্তু",
+      "delete": "মুছে ফেলা",
+      "insert": "সন্নিবেশ",
+      "edit": "সম্পাদনা"
     }
   },
   "saveModal": {

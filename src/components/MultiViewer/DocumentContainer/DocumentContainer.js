@@ -90,7 +90,7 @@ const DocumentContainer = ({
     }
     const yOffset = window.document.getElementById(`header${documentViewerKey}`).getBoundingClientRect().bottom;
     const xOffset = e.clientX - window.document.getElementById(`container${documentViewerKey}`).getBoundingClientRect().left;
-    documentViewer.zoomToMouse(newZoomFactor, xOffset, yOffset);
+    documentViewer.zoomToMouse(newZoomFactor, xOffset, yOffset, e);
   }, 30, { trailing: false });
   const wheelToNavigatePages = (e) => {
     const currentPage = core.getCurrentPage(documentViewerKey);

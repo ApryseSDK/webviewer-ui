@@ -16,6 +16,9 @@
     "comment": "Opmerking",
     "reply": "Antwoorden",
     "copy": "Kopieer",
+    "cut": "Snee",
+    "paste": "Plakken",
+    "pasteWithoutFormatting": "Plakken zonder opmaak",
     "delete": "Verwijder",
     "group": "Groep",
     "ungroup": "Ungroup",
@@ -78,6 +81,7 @@
     "showLess": "laat minder zien",
     "showMore": "...meer",
     "chooseFile": "Kies een bestand",
+    "changeDate": "Verander de datum",
     "browse": "Bestanden doorbladeren",
     "selectYourOption": "Selecteer uw optie",
     "open": "Open",
@@ -85,6 +89,7 @@
     "select": "Selecteer",
     "moveToTop": "Ga naar boven",
     "moveToBottom": "Naar beneden verplaatsen",
+    "backToMenu": "Terug naar menu",
     "redactPages": "Pagina's redigeren",
     "playAudio": "Audio afspelen",
     "pauseAudio": "audio pauze",
@@ -96,7 +101,8 @@
     "comparePages": "Vergelijk pagina's",
     "startComparison": "Vergelijking starten",
     "back": "Rug",
-    "clearSignature": "Duidelijke handtekening"
+    "clearSignature": "Duidelijke handtekening",
+    "newDocument": "Nieuw document"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -380,7 +386,8 @@
       "qualityHigh": "Hoog",
       "includeAnnotations": "Voeg annotaties toe",
       "includeComments": "Inclusief commentaar",
-      "printSettings": "Afdrukinstellingen"
+      "printSettings": "Afdrukinstellingen",
+      "printGrayscale": "Grijstinten afdrukken"
     },
     "printInfo": {
       "author": "Schrijver",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Selecteer taal"
   },
+  "officeEditor": {
+    "bold": "Vetgedrukt",
+    "italic": "Cursief",
+    "underline": "Onderstrepen",
+    "textColor": "Tekst kleur",
+    "leftAlign": "Links uitlijnen",
+    "centerAlign": "Midden uitlijnen",
+    "rightAlign": "Rechts uitlijnen",
+    "justify": "Verantwoorden",
+    "lineSpacing": "Regel- en alinea-afstand",
+    "bulletList": "Lijst met opsommingstekens",
+    "numberList": "Genummerde lijst",
+    "insertLink": "Koppeling invoegen",
+    "insertImage": "Voeg afbeelding in",
+    "notAvailableInDemoMode": "Niet beschikbaar in demo-modus",
+    "notSupportedOnMobile": "Office-bewerking wordt niet ondersteund op mobiele apparaten."
+  },
   "insertPageModal": {
     "title": "Nieuwe pagina toevoegen",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Wijziging",
       "old": "Oud",
       "new": "Nieuw",
-      "page": "Bladzijde"
+      "page": "Bladzijde",
+      "textContent": "Tekstinhoud",
+      "delete": "verwijderen",
+      "insert": "invoegen",
+      "edit": "Bewerk"
     }
   },
   "saveModal": {

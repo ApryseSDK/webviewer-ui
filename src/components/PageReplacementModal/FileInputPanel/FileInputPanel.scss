@@ -4,6 +4,8 @@
   justify-content: center;
   height: 100%;
   flex-direction: column;
+  background-color: var(--document-background-color);
+  border-radius: 4px;
 
   .url-input-header {
     font-size: 13px;

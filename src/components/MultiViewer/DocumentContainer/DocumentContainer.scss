@@ -1,0 +1,57 @@
+@import '../../../constants/styles';
+
+.DocumentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  user-select: none;
+
+  @include ie11 {
+    margin-left: 0!important;
+    width: 100%!important
+  }
+
+  .document {
+    overflow-x: visible;
+    overflow-y: visible;
+    margin: auto; // vertical centering when content is smaller than document container
+    // can't use 'justify-content: center;' due to losing access to content when overflowing
+    // see: https://stackoverflow.com/questions/33454533/cant-scroll-to-top-of-flex-item-that-is-overflowing-container
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &.hidden {
+      display: none;
+    }
+
+    .pageSection {
+      &[id*=pageSectionb] {
+        box-shadow: none;
+      }
+
+      .pageContainer {
+        background-color: $document-bg-color;
+        position: relative;
+        box-shadow: $md-shadow1;
+
+        span.link {
+          cursor: pointer;
+        }
+      }
+    }
+
+    textarea.freetext {
+      position: absolute;
+      z-index: 20;
+      border: 0;
+      padding: 0;
+      box-sizing: border-box;
+      resize: none;
+      outline: 1px solid transparent;
+    }
+  }
+}

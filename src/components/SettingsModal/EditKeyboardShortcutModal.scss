@@ -27,6 +27,7 @@
       display: flex;
       flex-direction: column;
       padding: 16px;
+      position: relative;
 
       .press-key-note {
         font-weight: bold;
@@ -43,6 +44,16 @@
         span:not(:last-child) {
           margin-right: 8px;
         }
+      }
+
+      .conflict-warning {
+        position: absolute;
+        bottom: 50px;
+        font-size: 10px;
+        color: #CF0101;
+        width: calc(100% - 32px);
+        display: flex;
+        justify-content: center;
       }
     }
 

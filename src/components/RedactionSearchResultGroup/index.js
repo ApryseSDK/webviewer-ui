@@ -1,3 +1,3 @@
-import RedactionSearchResultGroup from "./RedactionSearchResultGroup";
+import RedactionSearchResultGroup from './RedactionSearchResultGroup';
 
 export default RedactionSearchResultGroup;

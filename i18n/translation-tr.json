@@ -16,6 +16,9 @@
     "comment": "Yorum",
     "reply": "Cevap ekle",
     "copy": "kopyala",
+    "cut": "Kesmek",
+    "paste": "Yapıştırmak",
+    "pasteWithoutFormatting": "biçimlendirmeden yapıştır",
     "delete": "Silmek",
     "group": "Grup",
     "ungroup": "Grubu çöz",
@@ -78,6 +81,7 @@
     "showLess": "daha az göster",
     "showMore": "...daha fazla",
     "chooseFile": "Bir dosya seçin",
+    "changeDate": "Tarihi değiştir",
     "browse": "Dosyalara Gözat",
     "selectYourOption": "Seçeneğinizi seçin",
     "open": "Açık",
@@ -85,6 +89,7 @@
     "select": "Seçme",
     "moveToTop": "En üste taşı",
     "moveToBottom": "Aşağıya taşı",
+    "backToMenu": "Menüye dön",
     "redactPages": "Sayfaları yeniden düzenleyin",
     "playAudio": "ses çal",
     "pauseAudio": "ses duraklatma",
@@ -96,7 +101,8 @@
     "comparePages": "Sayfaları karşılaştır",
     "startComparison": "Karşılaştırmayı Başlat",
     "back": "Geri",
-    "clearSignature": "İmzayı temizle"
+    "clearSignature": "İmzayı temizle",
+    "newDocument": "Yeni belge"
   },
   "annotation": {
     "areaMeasurement": "Alan",
@@ -380,7 +386,8 @@
       "qualityHigh": "Yüksek",
       "includeAnnotations": "Ek açıklamaları dahil et",
       "includeComments": "Yorumları dahil et",
-      "printSettings": "Yazdırma Ayarları"
+      "printSettings": "Yazdırma Ayarları",
+      "printGrayscale": "Gri Tonlamalı Yazdır"
     },
     "printInfo": {
       "author": "Yazar",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Dil Seçin"
   },
+  "officeEditor": {
+    "bold": "Gözü pek",
+    "italic": "İtalik",
+    "underline": "Altını çizmek",
+    "textColor": "metin rengi",
+    "leftAlign": "Sola hizala",
+    "centerAlign": "Ortaya hizala",
+    "rightAlign": "sağa hizala",
+    "justify": "Savunmak",
+    "lineSpacing": "Satır ve paragraf aralığı",
+    "bulletList": "Maddeli liste",
+    "numberList": "Numaralı liste",
+    "insertLink": "Bağlantı ekle",
+    "insertImage": "Resim ekle",
+    "notAvailableInDemoMode": "Demo modunda kullanılamaz",
+    "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez."
+  },
   "insertPageModal": {
     "title": "Yeni Sayfa Ekle",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Değiştirmek",
       "old": "Eskimiş",
       "new": "Yeni",
-      "page": "Sayfa"
+      "page": "Sayfa",
+      "textContent": "Metin içeriği",
+      "delete": "silmek",
+      "insert": "sokmak",
+      "edit": "Düzenle"
     }
   },
   "saveModal": {

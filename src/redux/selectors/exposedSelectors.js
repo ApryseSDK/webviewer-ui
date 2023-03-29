@@ -598,6 +598,14 @@ export const getWv3dPropertiesPanelModelData = (state) => state.wv3dPropertiesPa
 
 export const getWv3dPropertiesPanelSchema = (state) => state.wv3dPropertiesPanel.schema;
 
+export const getOfficeEditorCursorProperties = (state) => state.officeEditor.cursorProperties;
+
+export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.selectionProperties;
+
+export const getAvailableFontFaces = (state) => state.officeEditor.availableFontFaces;
+
+export const getCSSFontValues = (state) => state.officeEditor.cssFontValues;
+
 export const getContentEditor = (state) => state.viewer.contentEditor;
 
 export const getAnnotationFilters = (state) => state.viewer.annotationFilters;

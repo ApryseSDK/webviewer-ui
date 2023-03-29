@@ -16,6 +16,9 @@
     "comment": "코멘트",
     "reply": "댓글",
     "copy": "복사",
+    "cut": "자르다",
+    "paste": "반죽",
+    "pasteWithoutFormatting": "서식 없이 붙여넣기",
     "delete": "삭제",
     "group": "그룹",
     "ungroup": "그룹해제",
@@ -78,6 +81,7 @@
     "showLess": "간략히 보기",
     "showMore": "더보기",
     "chooseFile": "파일선택",
+    "changeDate": "날짜 변경",
     "browse": "파일 찾아보기",
     "selectYourOption": "옵션을 선택하세요",
     "open": "열기",
@@ -85,6 +89,7 @@
     "select": "선택",
     "moveToTop": "맨 위로 이동",
     "moveToBottom": "맨 아래로 이동",
+    "backToMenu": "메뉴로 돌아가기",
     "redactPages": "페이지 수정",
     "playAudio": "재생",
     "pauseAudio": "일시중지",
@@ -96,7 +101,8 @@
     "comparePages": "페이지 비교",
     "startComparison": "비교 시작",
     "back": "뒤",
-    "clearSignature": "명확한 서명"
+    "clearSignature": "명확한 서명",
+    "newDocument": "새 문서"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -380,7 +386,8 @@
       "qualityHigh": "최상",
       "includeAnnotations": "주석포함",
       "includeComments": "댓글포함",
-      "printSettings": "인쇄 설정"
+      "printSettings": "인쇄 설정",
+      "printGrayscale": "인쇄 그레이스케일"
     },
     "printInfo": {
       "author": "저자",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "언어 선택"
   },
+  "officeEditor": {
+    "bold": "용감한",
+    "italic": "이탤릭체",
+    "underline": "밑줄",
+    "textColor": "텍스트 색상",
+    "leftAlign": "왼쪽 정렬",
+    "centerAlign": "중앙 정렬",
+    "rightAlign": "오른쪽 정렬",
+    "justify": "신이 옳다고 하다",
+    "lineSpacing": "줄 및 단락 간격",
+    "bulletList": "글머리 기호 목록",
+    "numberList": "번호 매기기 목록",
+    "insertLink": "링크 삽입",
+    "insertImage": "이미지 삽입",
+    "notAvailableInDemoMode": "데모 모드에서는 사용할 수 없습니다.",
+    "notSupportedOnMobile": "Office 편집은 모바일 장치에서 지원되지 않습니다."
+  },
   "insertPageModal": {
     "title": "새 페이지 추가",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "변화",
       "old": "오래된",
       "new": "새로운",
-      "page": "페이지"
+      "page": "페이지",
+      "textContent": "텍스트 콘텐츠",
+      "delete": "삭제",
+      "insert": "끼워 넣다",
+      "edit": "편집하다"
     }
   },
   "saveModal": {

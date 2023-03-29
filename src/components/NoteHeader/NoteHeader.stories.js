@@ -1,16 +1,15 @@
 import React from 'react';
-import NoteHeader from './NoteHeader'
+import NoteHeader from './NoteHeader';
 import NoteContext from '../Note/Context';
 
 import { createStore } from 'redux';
 
-import { Provider } from "react-redux";
-
+import { Provider } from 'react-redux';
 
 export default {
   title: 'Components/Note/NoteHeader',
   component: NoteHeader,
-  includeStories: ['Basic'],
+  includeStories: ['Basic', 'BasicWithAnnotationNumbering'],
   excludeStories: ['testProps'],
 };
 
@@ -29,6 +28,7 @@ const store = createStore(rootReducer);
 const context = {
   pendingEditTextMap: {},
   pendingReplyMap: {},
+  pendingAttachmentMap: {}
 };
 
 const mockAnnotation = {
@@ -37,21 +37,22 @@ const mockAnnotation = {
   getReplies: () => [1, 2, 3],
   getStatus: () => '',
   isReply: () => false,
+  getAssociatedNumber: () => 1,
   StrokeColor: {
-    "R": 255,
-    "G": 205,
-    "B": 69,
-    "A": 1,
+    'R': 255,
+    'G': 205,
+    'B': 69,
+    'A': 1,
     toHexString: () => '#E44234'
   },
   FillColor: {
-    "R": 255,
-    "G": 205,
-    "B": 69,
-    "A": 1,
+    'R': 255,
+    'G': 205,
+    'B': 69,
+    'A': 1,
     toHexString: () => '#E44234'
   }
-}
+};
 
 export const testProps = {
   icon: 'icon-tool-shape-rectangle',
@@ -67,7 +68,6 @@ export const testProps = {
 };
 
 export function Basic() {
-
   return (
     <Provider store={store}>
       <NoteContext.Provider value={context}>
@@ -77,4 +77,17 @@ export function Basic() {
   );
 }
 
+export const testPropsWithAnnotationNumbering = {
+  ...testProps,
+  showAnnotationNumbering: true,
+};
 
+export function BasicWithAnnotationNumbering() {
+  return (
+    <Provider store={store}>
+      <NoteContext.Provider value={context}>
+        <NoteHeader {...testPropsWithAnnotationNumbering} />
+      </NoteContext.Provider>
+    </Provider>
+  );
+}

@@ -1,3 +1,4 @@
+/* eslint-disable no-unsanitized/property */
 import i18n from 'i18next';
 
 import actions from 'actions';
@@ -45,6 +46,7 @@ export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, color
 
   if (!isGrayscale && bbURLPromise) {
     const printPage = window.open('', '_blank');
+    // eslint-disable-next-line no-unsanitized/method
     printPage.document.write(i18n.t('message.preparingToPrint'));
     bbURLPromise.then((result) => {
       printPage.location.href = result.url;
@@ -315,8 +317,33 @@ export const printPages = (pages) => {
       }
     }
 
-    window.print();
+    printDocument();
   }
+};
+
+const printDocument = () => {
+  const doc = core.getDocument();
+  const tempTitle = window.parent.document.title;
+
+  if (!doc) {
+    return;
+  }
+
+  const fileName = doc.getFilename();
+  const fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
+
+  const onBeforePrint = () => {
+    window.parent.document.title = fileNameWithoutExtension;
+  };
+
+  const onAfterPrint = () => {
+    window.parent.document.title = tempTitle;
+  };
+
+  window.addEventListener('beforeprint', onBeforePrint, { once: true });
+  window.addEventListener('afterprint', onAfterPrint, { once: true });
+
+  window.print();
 };
 
 export const cancelPrint = () => {
@@ -328,10 +355,10 @@ export const getPrintableAnnotationNotes = (pageNumber) => core
   .getAnnotationsList()
   .filter(
     (annotation) => annotation.Listable &&
-        annotation.PageNumber === pageNumber &&
-        !annotation.isReply() &&
-        !annotation.isGrouped() &&
-        annotation.Printable,
+      annotation.PageNumber === pageNumber &&
+      !annotation.isReply() &&
+      !annotation.isGrouped() &&
+      annotation.Printable,
   );
 
 const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, isPrintCurrentView, createCanvases = false, isGrayscale = false) => new Promise((resolve) => {
@@ -346,7 +373,7 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
     if (!includeAnnotations) {
       // according to Adobe, even if we exclude annotations, it will still draw widget annotations
       const annotatationsToPrint = core.getAnnotationsList().filter((annotation) => {
-        return annotation.PageNumber === pageNumber && !(annotation instanceof window.Annotations.WidgetAnnotation);
+        return annotation.PageNumber === pageNumber && !(annotation instanceof window.Core.Annotations.WidgetAnnotation);
       });
       // store the previous Printable value so that we can set it back later
       printableAnnotInfo = annotatationsToPrint.map((annotation) => ({
@@ -532,7 +559,7 @@ const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
 
   const widgetAnnotations = core
     .getAnnotationsList()
-    .filter((annotation) => annotation.PageNumber === pageNumber && annotation instanceof window.Annotations.WidgetAnnotation);
+    .filter((annotation) => annotation.PageNumber === pageNumber && annotation instanceof window.Core.Annotations.WidgetAnnotation);
   // just draw markup annotations
   if (widgetAnnotations.length === 0) {
     return core.drawAnnotations(pageNumber, canvas);

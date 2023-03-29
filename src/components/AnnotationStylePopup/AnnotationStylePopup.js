@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Measure from 'react-measure';
+import { withTranslation } from 'react-i18next';
 
 import StylePopup from 'components/StylePopup';
 
@@ -11,13 +12,15 @@ import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
-import { isToolDefaultStyleUpdateFromAnnotationPopupEnabled } from '../../apis/toolDefaultStyleUpdateFromAnnotationPopup';
+import DataElements from 'src/constants/dataElement';
 
 import './AnnotationStylePopup.scss';
+import ActionButton from '../ActionButton';
 
 class AnnotationStylePopup extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
+    isToolDefaultStyleUpdateFromAnnotationPopupEnabled: PropTypes.bool,
     annotations: PropTypes.array.isRequired,
     style: PropTypes.object.isRequired,
     properties: PropTypes.object.isRequired,
@@ -25,10 +28,12 @@ class AnnotationStylePopup extends React.Component {
     isFreeText: PropTypes.bool,
     isEllipse: PropTypes.bool,
     closeElement: PropTypes.func.isRequired,
+    hasBackToMenu: PropTypes.bool,
+    onBackToMenu: PropTypes.func,
   };
 
   adjustFreeTextBoundingBox = (annotation) => {
-    if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+    if (annotation instanceof window.Core.Annotations.FreeTextAnnotation) {
       const doc = core.getDocument();
       const pageNumber = annotation['PageNumber'];
       const pageInfo = doc.getPageInfo(pageNumber);
@@ -48,13 +53,13 @@ class AnnotationStylePopup extends React.Component {
   }
 
   handlePropertyChange = (property, value) => {
-    const { annotations } = this.props;
+    const { annotations, isToolDefaultStyleUpdateFromAnnotationPopupEnabled } = this.props;
 
     annotations.forEach((annotation) => {
       core.setAnnotationStyles(annotation, {
         [property]: value,
       });
-      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, property, value);
       }
       this.adjustFreeTextBoundingBox(annotation);
@@ -62,14 +67,14 @@ class AnnotationStylePopup extends React.Component {
   }
 
   handleStyleChange = (property, value) => {
-    const { annotations } = this.props;
+    const { annotations, isToolDefaultStyleUpdateFromAnnotationPopupEnabled } = this.props;
 
     annotations.forEach((annotation) => {
       core.setAnnotationStyles(annotation, {
         [property]: value,
       });
 
-      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, property, value);
       }
     });
@@ -84,7 +89,7 @@ class AnnotationStylePopup extends React.Component {
   }
 
   handleLineStyleChange = (section, value) => {
-    const { annotations } = this.props;
+    const { annotations, isToolDefaultStyleUpdateFromAnnotationPopupEnabled } = this.props;
 
     annotations.forEach((annotation) => {
       let lineStyle = '';
@@ -102,7 +107,7 @@ class AnnotationStylePopup extends React.Component {
         lineStyle = 'StrokeStyle';
       }
 
-      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, lineStyle, value);
       }
 
@@ -149,10 +154,24 @@ class AnnotationStylePopup extends React.Component {
         {({ measureRef }) => (
           <div
             className={className}
-            data-element="annotationStylePopup"
+            data-element={DataElements.ANNOTATION_STYLE_POPUP}
             onClick={this.handleClick}
             ref={measureRef}
           >
+            {this.props.hasBackToMenu &&
+              <div
+                className="back-to-menu-container"
+                data-element={DataElements.ANNOTATION_STYLE_POPUP_BACK_BUTTON_CONTAINER}
+              >
+                <ActionButton
+                  className="back-to-menu-button"
+                  dataElement={DataElements.ANNOTATION_STYLE_POPUP_BACK_BUTTON}
+                  label="action.backToMenu"
+                  img="icon-chevron-left"
+                  onClick={this.props.onBackToMenu}
+                />
+              </div>
+            }
             {/* Do not show checkbox for ellipse as snap mode does not exist for it */}
             <StylePopup
               hideSnapModeCheckbox={hideSnapModeCheckbox}
@@ -180,6 +199,7 @@ class AnnotationStylePopup extends React.Component {
 
 const mapStateToProps = (state) => ({
   isDisabled: selectors.isElementDisabled(state, 'annotationStylePopup'),
+  isToolDefaultStyleUpdateFromAnnotationPopupEnabled: selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled(state)
 });
 
 const mapDispatchToProps = {
@@ -189,4 +209,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AnnotationStylePopup);
+)(withTranslation()(AnnotationStylePopup));

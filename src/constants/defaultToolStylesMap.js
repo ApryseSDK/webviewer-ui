@@ -230,6 +230,30 @@ export default {
   AnnotationCreateFreeText4: {
     TextColor: { R: 0, G: 122, B: 59, A: 1 },
   },
+  AnnotationCreateMarkInsertText: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateMarkInsertText2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateMarkInsertText3: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateMarkInsertText4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
+  AnnotationCreateMarkReplaceText: {
+    StrokeColor: { R: 228, G: 66, B: 52, A: 1 },
+  },
+  AnnotationCreateMarkReplaceText2: {
+    StrokeColor: { R: 78, G: 125, B: 233, A: 1 },
+  },
+  AnnotationCreateMarkReplaceText3: {
+    StrokeColor: { R: 0, G: 0, B: 0, A: 1 },
+  },
+  AnnotationCreateMarkReplaceText4: {
+    StrokeColor: { R: 0, G: 122, B: 59, A: 1 },
+  },
   AnnotationCreateDateFreeText: {
     TextColor: { R: 228, G: 66, B: 52, A: 1 },
   },

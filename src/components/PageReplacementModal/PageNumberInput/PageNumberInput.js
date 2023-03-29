@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import getPageArrayFromString from 'helpers/getPageArrayFromString';
+
 import './PageNumberInput.scss';
 
 const propTypes = {
@@ -13,37 +14,29 @@ const propTypes = {
 
 const noop = () => {};
 
-function PageNumberInput({
-  selectedPageNumbers,
-  onSelectedPageNumbersChange,
-  onBlurHandler = noop,
-  pageCount,
-  placeholder,
-}) {
+function PageNumberInput({ selectedPageNumbers, onSelectedPageNumbersChange, onBlurHandler = noop, pageCount, placeHolder, onError = noop }) {
   // Since we don't have page labels info we just assume page numbers as labels
   const pageLabels = Array.from({ length: pageCount }, (_, i) => (i + 1).toString());
   const [pageString, setPageString] = useState('');
 
   useEffect(() => {
-    //Whenever we receive a selectedPageNumbers prop, massage it into the nice format
+    // Whenever we receive a selectedPageNumbers prop, massage it into the nice format
     if (selectedPageNumbers) {
       setPageString(getPageString(selectedPageNumbers));
     }
   }, [selectedPageNumbers]);
 
-  const onPagesChange = e => {
+  const onPagesChange = (e) => {
     setPageString(e.target.value);
 
     const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pageNumbersArray = !selectedPagesString
-      ? []
-      : getPageArrayFromString(selectedPagesString, pageLabels, pageCount);
+    const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount, onError);
 
-    //Send info back to parent component
+    // Send info back to parent component
     onSelectedPageNumbersChange && onSelectedPageNumbersChange(pageNumbersArray);
   };
 
-  const getPageString = selectedPageArray => {
+  const getPageString = (selectedPageArray) => {
     let pagesToPrint = '';
     const sortedPages = selectedPageArray.sort((a, b) => a - b);
     let prevIndex = null;
@@ -62,15 +55,13 @@ function PageNumberInput({
     return pagesToPrint.slice(0, -2);
   };
 
-  const onBlur = e => {
+  const onBlur = (e) => {
     const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pageNumbersArray = !selectedPagesString
-      ? []
-      : getPageArrayFromString(selectedPagesString, pageLabels, pageCount);
+    const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount, onError);
     const pageNumbersString = getPageString(pageNumbersArray);
     setPageString(pageNumbersString);
 
-    //Send info back to parent component
+    // Send info back to parent component
     onBlurHandler && onBlurHandler(pageNumbersArray);
   };
 
@@ -81,7 +72,7 @@ function PageNumberInput({
       onChange={onPagesChange}
       onBlur={onBlur}
       value={pageString}
-      placeholder={placeholder}
+      placeholder={placeHolder}
     />
   );
 }

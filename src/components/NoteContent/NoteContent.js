@@ -256,7 +256,7 @@ const NoteContent = ({
 
   if (activeTheme === Theme.DARK) {
     if (textColor && isDarkColorHex(textColor.toHexString())) {
-      textColor = new window.Annotations.Color(255, 255, 255, 1);
+      textColor = new window.Core.Annotations.Color(255, 255, 255, 1);
     }
 
     if (richTextStyle) {
@@ -525,11 +525,11 @@ const ContentArea = ({
 
     await setAnnotationAttachments(annotation, pendingAttachmentMap[annotation.Id]);
 
-    const source = (annotation instanceof window.Annotations.FreeTextAnnotation)
+    const source = (annotation instanceof window.Core.Annotations.FreeTextAnnotation)
       ? 'textChanged' : 'noteChanged';
     core.getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', { 'source': source }]);
 
-    if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+    if (annotation instanceof window.Core.Annotations.FreeTextAnnotation) {
       core.drawAnnotationsFromList([annotation]);
     }
 

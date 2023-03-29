@@ -9,7 +9,7 @@ import selectors from 'selectors';
 const TabsContext = React.createContext();
 
 // eslint-disable-next-line arrow-body-style
-export const Tabs = React.memo(props => {
+export const Tabs = React.memo((props) => {
   return (
     <TabsContext.Provider value={props.id}>
       {props.children}
@@ -17,6 +17,7 @@ export const Tabs = React.memo(props => {
   );
 });
 
+Tabs.displayName = 'Tabs';
 Tabs.propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
@@ -24,7 +25,7 @@ Tabs.propTypes = {
 
 export const Tab = ({ children, dataElement }) => {
   const id = useContext(TabsContext);
-  const [isDisabled, isSelected] = useSelector(state => [
+  const [isDisabled, isSelected] = useSelector((state) => [
     selectors.isElementDisabled(state, dataElement),
     selectors.getSelectedTab(state, id) === dataElement,
   ], shallowEqual);
@@ -65,7 +66,7 @@ Tab.propTypes = {
 };
 
 export const TabHeader = ({ dataElement, children }) => {
-  const [isDisabled] = useSelector(state => [
+  const [isDisabled] = useSelector((state) => [
     selectors.isElementDisabled(state, dataElement),
   ]);
 
@@ -77,10 +78,9 @@ TabHeader.propTypes = {
   dataElement: PropTypes.string.isRequired,
 };
 
-
 export const TabPanel = ({ children, dataElement }) => {
   const id = useContext(TabsContext);
-  const [isDisabled, isSelected] = useSelector(state => [
+  const [isDisabled, isSelected] = useSelector((state) => [
     selectors.isElementDisabled(state, dataElement),
     selectors.getSelectedTab(state, id).includes(dataElement),
   ], shallowEqual);

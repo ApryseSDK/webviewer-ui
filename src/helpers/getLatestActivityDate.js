@@ -1,4 +1,4 @@
-export default annotation => {
+export default (annotation) => {
   const latestReplyActivityDate = annotation
     .getReplies()
     .reduce((acc, reply) => {

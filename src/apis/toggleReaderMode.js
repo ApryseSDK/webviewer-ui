@@ -15,7 +15,7 @@ import selectors from 'selectors';
 
 let previousDisplayMode;
 
-export default store => () => {
+export default (store) => () => {
   const isInReaderMode = selectors.isReaderMode(store.getState());
   if (isInReaderMode) {
     exitReaderMode(store);

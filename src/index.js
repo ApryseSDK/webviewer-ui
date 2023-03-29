@@ -195,7 +195,7 @@ if (window.CanvasRenderingContext2D) {
 
     if (getHashParameters('enableViewStateAnnotations', false)) {
       const tool = documentViewer.getTool(window.Core.Tools.ToolNames.STICKY);
-      tool?.setSaveViewState(true);
+      tool?.enableViewStateSaving();
     }
 
     setupLoadAnnotationsFromServer(store);

@@ -16,6 +16,9 @@
     "comment": "ความคิดเห็น",
     "reply": "เพิ่มคำตอบ",
     "copy": "สำเนา",
+    "cut": "ตัด",
+    "paste": "แปะ",
+    "pasteWithoutFormatting": "วางโดยไม่ต้องจัดรูปแบบ",
     "delete": "ลบ",
     "group": "กลุ่ม",
     "ungroup": "เลิกจัดกลุ่ม",
@@ -78,6 +81,7 @@
     "showLess": "แสดงน้อยลง",
     "showMore": "...มากกว่า",
     "chooseFile": "เลือกไฟล์",
+    "changeDate": "เปลี่ยนวันที่",
     "browse": "เรียกดูไฟล์",
     "selectYourOption": "เลือกตัวเลือกของคุณ",
     "open": "เปิด",
@@ -85,6 +89,7 @@
     "select": "เลือก",
     "moveToTop": "ย้ายไปด้านบน",
     "moveToBottom": "ย้ายไปด้านล่าง",
+    "backToMenu": "กลับไปที่เมนู",
     "redactPages": "แก้ไขหน้า",
     "playAudio": "เล่นเสียง",
     "pauseAudio": "หยุดเสียงชั่วคราว",
@@ -96,7 +101,8 @@
     "comparePages": "เปรียบเทียบหน้า",
     "startComparison": "เริ่มการเปรียบเทียบ",
     "back": "กลับ",
-    "clearSignature": "ลายเซ็นที่ชัดเจน"
+    "clearSignature": "ลายเซ็นที่ชัดเจน",
+    "newDocument": "เอกสารใหม่"
   },
   "annotation": {
     "areaMeasurement": "พื้นที่",
@@ -380,7 +386,8 @@
       "qualityHigh": "สูง",
       "includeAnnotations": "รวมคำอธิบายประกอบ",
       "includeComments": "รวมความคิดเห็น",
-      "printSettings": "การตั้งค่าการพิมพ์"
+      "printSettings": "การตั้งค่าการพิมพ์",
+      "printGrayscale": "พิมพ์โทนสีเทา"
     },
     "printInfo": {
       "author": "ผู้เขียน",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "เลือกภาษา"
   },
+  "officeEditor": {
+    "bold": "ตัวหนา",
+    "italic": "ตัวเอียง",
+    "underline": "ขีดเส้นใต้",
+    "textColor": "สีข้อความ",
+    "leftAlign": "จัดชิดซ้าย",
+    "centerAlign": "จัดกึ่งกลาง",
+    "rightAlign": "จัดชิดขวา",
+    "justify": "ปรับ",
+    "lineSpacing": "ระยะห่างระหว่างบรรทัดและย่อหน้า",
+    "bulletList": "รายการสัญลักษณ์แสดงหัวข้อย่อย",
+    "numberList": "รายการหมายเลข",
+    "insertLink": "ใส่ลิงค์",
+    "insertImage": "แทรกรูปภาพ",
+    "notAvailableInDemoMode": "ไม่พร้อมใช้งานในโหมดสาธิต",
+    "notSupportedOnMobile": "อุปกรณ์พกพาไม่รองรับการแก้ไข Office"
+  },
   "insertPageModal": {
     "title": "เพิ่มหน้าใหม่",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "เปลี่ยน",
       "old": "เก่า",
       "new": "ใหม่",
-      "page": "หน้าหนังสือ"
+      "page": "หน้าหนังสือ",
+      "textContent": "เนื้อหาข้อความ",
+      "delete": "ลบ",
+      "insert": "แทรก",
+      "edit": "แก้ไข"
     }
   },
   "saveModal": {

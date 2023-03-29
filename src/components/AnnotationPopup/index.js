@@ -1,3 +1,3 @@
-import AnnotationPopup from './AnnotationPopup';
+import AnnotationPopupContainer from './AnnotationPopupContainer';
 
-export default AnnotationPopup;
+export default AnnotationPopupContainer;

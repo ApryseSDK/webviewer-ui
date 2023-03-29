@@ -53,6 +53,9 @@ class DocumentContainer extends React.PureComponent {
     isRedactionPanelOpen: PropTypes.bool,
     isTextEditingPanelOpen: PropTypes.bool,
     isWv3dPropertiesPanelOpen: PropTypes.bool,
+    featureFlags: PropTypes.object,
+    bottomHeaderHeight: PropTypes.number,
+    activeDocumentViewerKey: PropTypes.number
   };
 
   constructor(props) {
@@ -160,7 +163,7 @@ class DocumentContainer extends React.PureComponent {
       }
 
       this.wheelToNavigatePages(e, shouldGoUp, shouldGoDown);
-      this.props.closeElements(['annotationPopup', 'textPopup', 'annotationNoteConnectorLine']);
+      this.props.closeElements(['annotationPopup', 'textPopup', 'annotationNoteConnectorLine', 'inlineCommentPopup']);
     }
   };
 
@@ -190,7 +193,7 @@ class DocumentContainer extends React.PureComponent {
   };
 
   wheelToZoom = (e) => {
-    const currentZoomFactor = this.props.zoom;
+    const { zoom: currentZoomFactor, activeDocumentViewerKey } = this.props;
     let newZoomFactor = currentZoomFactor;
     if (e.deltaY < 0) {
       newZoomFactor = Math.min(
@@ -203,11 +206,11 @@ class DocumentContainer extends React.PureComponent {
         getMinZoomLevel()
       );
     }
-    core.zoomToMouse(newZoomFactor);
+    core.zoomToMouse(newZoomFactor, activeDocumentViewerKey, e);
   };
 
   handleScroll = () => {
-    this.props.closeElements(['annotationPopup', 'textPopup', 'annotationNoteConnectorLine', 'formFieldEditPopup']);
+    this.props.closeElements(['annotationPopup', 'textPopup', 'inlineCommentPopup', 'annotationNoteConnectorLine', 'formFieldEditPopup']);
 
     // Show overlay and then hide it, but the hide call is debounced
     this.showPageNavigationOverlay();
@@ -289,9 +292,22 @@ class DocumentContainer extends React.PureComponent {
       isMobile,
       documentContentContainerWidthStyle,
       totalPages,
-      isInDesktopOnlyMode
+      isInDesktopOnlyMode,
+      featureFlags,
+      bottomHeaderHeight
     } = this.props;
 
+    const marginLeft =
+      0 +
+      (isLeftPanelOpen ? leftPanelWidth : 0) +
+      (isFlxPanelOpen ? panelMinWidth : 0);
+
+    const style = {
+      width: documentContentContainerWidthStyle,
+      // we animate with margin-left. For some reason it looks nicer than transform.
+      // Using transform makes a clunky animation because the panels are using transform already.
+      marginLeft: `${marginLeft}px`,
+    };
     const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
     const documentClassName = classNames({
       document: true,
@@ -299,18 +315,15 @@ class DocumentContainer extends React.PureComponent {
     });
     const showPageNav = totalPages > 1;
 
-    const marginLeft =
-      0 +
-      (isLeftPanelOpen ? leftPanelWidth : 0) +
-      (isFlxPanelOpen ? panelMinWidth : 0);
+    const { modularHeader } = featureFlags;
+    const bottomHeadersHeight = 0;
+    // Calculating its height according to the existing horizontal modular headers
+    if (modularHeader) {
+      style['height'] = `calc(100% - ${bottomHeaderHeight}px)`;
+    }
     return (
       <div
-        style={{
-          width: documentContentContainerWidthStyle,
-          // we animate with margin-left. For some reason it looks nicer than transform.
-          // Using transform makes a clunky animation because the panels are using transform already.
-          marginLeft: `${marginLeft}px`,
-        }}
+        style={style}
         className={classNames({
           'document-content-container': true,
           'closed': isMultiTabEmptyPageOpen
@@ -337,6 +350,7 @@ class DocumentContainer extends React.PureComponent {
                 style={{
                   width: documentContentContainerWidthStyle,
                   marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
+                  bottom: `${bottomHeadersHeight}px`,
                 }}
               >
                 {showPageNav && (
@@ -379,6 +393,9 @@ const mapStateToProps = (state) => ({
   isRedactionPanelOpen: selectors.isElementOpen(state, 'redactionPanel'),
   isTextEditingPanelOpen: selectors.isElementOpen(state, 'textEditingPanel'),
   isWv3dPropertiesPanelOpen: selectors.isElementOpen(state, 'wv3dPropertiesPanel'),
+  featureFlags: selectors.getFeatureFlags(state),
+  bottomHeaderHeight: selectors.getBottomHeadersHeight(state),
+  activeDocumentViewerKey: selectors.getActiveDocumentViewerKey(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

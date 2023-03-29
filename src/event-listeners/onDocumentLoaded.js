@@ -9,9 +9,11 @@ import { PRIORITY_ONE, PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 import { print } from 'helpers/print';
 import outlineUtils from 'helpers/OutlineUtils';
-
+import setZoomLevel from 'src/apis/setZoomLevel';
 import onLayersUpdated from './onLayersUpdated';
 import i18next from 'i18next';
+import hotkeys from 'hotkeys-js';
+import { defaultHotkeysScope } from 'helpers/hotkeysManager';
 
 let onFirstLoad = true;
 
@@ -48,7 +50,11 @@ export default (store, documentViewerKey) => async () => {
   }
 
   if (getHashParameters('a', false)) {
-    core.getDocumentViewers().forEach((documentViewer) => documentViewer.enableAnnotations());
+    core.getDocumentViewers().forEach((documentViewer) => {
+      if (!documentViewer.getDocument() || documentViewer.getDocument().getType() !== workerTypes.OFFICE_EDITOR) {
+        documentViewer.enableAnnotations();
+      }
+    });
   } else {
     core.getDocumentViewers().forEach((documentViewer) => documentViewer.disableAnnotations());
   }
@@ -104,6 +110,26 @@ export default (store, documentViewerKey) => async () => {
       dispatch(actions.disableElement('cropToolGroupButton', PRIORITY_ONE));
       dispatch(actions.disableElement('contentEditButton', PRIORITY_ONE));
       dispatch(actions.disableElement('addParagraphToolGroupButton', PRIORITY_ONE));
+    }
+
+    if (docType === workerTypes.OFFICE_EDITOR) {
+      dispatch(actions.setReadOnly(true));
+      dispatch(actions.enableElement('officeEditorToolsHeader', PRIORITY_ONE));
+      setZoomLevel(1);
+      dispatch(actions.disableElements(
+        ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton'],
+        PRIORITY_ONE, // To allow customers to still disable these elements
+      ));
+      dispatch(actions.openElement('officeEditorToolsHeader'));
+      core.setToolMode('TextSelect');
+      hotkeys.setScope('office-editor');
+    } else {
+      dispatch(actions.setReadOnly(false));
+      dispatch(actions.enableElements(
+        ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton'],
+        PRIORITY_ONE, // To allow customers to still disable these elements
+      ));
+      hotkeys.setScope(defaultHotkeysScope);
     }
 
     if (core.isFullPDFEnabled()) {

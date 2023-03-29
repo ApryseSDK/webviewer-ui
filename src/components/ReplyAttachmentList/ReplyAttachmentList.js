@@ -15,7 +15,7 @@ const ImagePreview = ({ file }) => {
   useEffect(() => {
     if (file instanceof File) {
       setSrc(URL.createObjectURL(file));
-    } else {
+    } else if (!file.url) {
       decompressFileContent(file).then((blob) => {
         setSrc(URL.createObjectURL(blob));
       });
@@ -35,12 +35,20 @@ const ReplyAttachmentList = ({ files, isEditing, fileDeleted }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    let fileData = file;
-    if (!(file instanceof File)) {
+    if (!tabManager) {
+      return console.warn('Can\'t open attachment in non-multi-tab mode');
+    }
+
+    let fileData;
+    if (file instanceof File) {
+      fileData = file;
+    } else if (file.url) {
+      fileData = file.url;
+    } else {
       fileData = await decompressFileContent(file);
     }
 
-    tabManager?.addTab(fileData, {
+    fileData && tabManager.addTab(fileData, {
       filename: file.name,
       setActive: true,
       saveCurrentActiveTabState: true
@@ -58,7 +66,7 @@ const ReplyAttachmentList = ({ files, isEditing, fileDeleted }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const fileData = await decompressFileContent(file);
+    const fileData = file.url ? file.url : await decompressFileContent(file);
     saveAs(fileData, file.name);
   };
 

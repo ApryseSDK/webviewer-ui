@@ -16,6 +16,9 @@
     "comment": "Megjegyzés",
     "reply": "Válasz hozzáadása",
     "copy": "Másolat",
+    "cut": "Vágott",
+    "paste": "Paszta",
+    "pasteWithoutFormatting": "Beillesztés formázás nélkül",
     "delete": "Töröl",
     "group": "Csoport",
     "ungroup": "Csoportbontás feloldása",
@@ -78,6 +81,7 @@
     "showLess": "mutass kevesebbet",
     "showMore": "...több",
     "chooseFile": "Válasszon egy fájlt",
+    "changeDate": "Dátum módosítása",
     "browse": "Tallózás a fájlok között",
     "selectYourOption": "Válassza ki az opciót",
     "open": "Nyisd ki",
@@ -85,6 +89,7 @@
     "select": "Válassza ki",
     "moveToTop": "Ugrás a tetejére",
     "moveToBottom": "Mozgás lefelé",
+    "backToMenu": "Vissza a menübe",
     "redactPages": "Oldalak szerkesztése",
     "playAudio": "Hang lejátszása",
     "pauseAudio": "Hang szüneteltetése",
@@ -96,7 +101,8 @@
     "comparePages": "Oldalak összehasonlítása",
     "startComparison": "Indítsa el az összehasonlítást",
     "back": "Vissza",
-    "clearSignature": "Világos aláírás"
+    "clearSignature": "Világos aláírás",
+    "newDocument": "Új dokumentum"
   },
   "annotation": {
     "areaMeasurement": "Terület",
@@ -380,7 +386,8 @@
       "qualityHigh": "Magas",
       "includeAnnotations": "Adjon meg megjegyzéseket",
       "includeComments": "Tartalmazza a megjegyzéseket",
-      "printSettings": "Nyomtatási beállítások"
+      "printSettings": "Nyomtatási beállítások",
+      "printGrayscale": "Nyomtatás Szürkeárnyalatos"
     },
     "printInfo": {
       "author": "Szerző",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Válasszon nyelvet"
   },
+  "officeEditor": {
+    "bold": "Bátor",
+    "italic": "Dőlt",
+    "underline": "Aláhúzás",
+    "textColor": "Szöveg szín",
+    "leftAlign": "Balra igazítás",
+    "centerAlign": "Középre igazítás",
+    "rightAlign": "Jobbra igazítás",
+    "justify": "Indokolja meg",
+    "lineSpacing": "Sor- és bekezdésköz",
+    "bulletList": "Felsorolásos lista",
+    "numberList": "Számozott lista",
+    "insertLink": "Link beszúrása",
+    "insertImage": "Kép beszúrása",
+    "notAvailableInDemoMode": "Demo módban nem elérhető",
+    "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön."
+  },
   "insertPageModal": {
     "title": "Új oldal hozzáadása",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "változás",
       "old": "Régi",
       "new": "Új",
-      "page": "oldal"
+      "page": "oldal",
+      "textContent": "Szövegtartalom",
+      "delete": "töröl",
+      "insert": "betét",
+      "edit": "szerkeszteni"
     }
   },
   "saveModal": {

@@ -17,6 +17,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => redactionSearchPattern => {
+export default (store) => (redactionSearchPattern) => {
   store.dispatch(actions.removeRedactionSearchPattern(redactionSearchPattern));
 };

@@ -16,6 +16,9 @@
     "comment": "Comment",
     "reply": "Add reply",
     "copy": "Copy",
+    "cut": "Cut",
+    "paste": "Paste",
+    "pasteWithoutFormatting": "Paste without formatting",
     "delete": "Delete",
     "group": "Group",
     "ungroup": "Ungroup",
@@ -78,6 +81,7 @@
     "showLess": "show less",
     "showMore": "...more",
     "chooseFile": "Choose a file",
+    "changeDate": "Change Date",
     "browse": "Browse Files",
     "selectYourOption": "Select your option",
     "open": "Open",
@@ -85,6 +89,7 @@
     "select": "Select",
     "moveToTop": "Move to top",
     "moveToBottom": "Move to bottom",
+    "backToMenu": "Back to Menu",
     "redactPages": "Redact pages",
     "playAudio": "Play audio",
     "pauseAudio": "Pause audio",
@@ -96,7 +101,8 @@
     "comparePages": "Compare pages",
     "startComparison": "Start Comparison",
     "back": "Back",
-    "clearSignature": "Clear signature"
+    "clearSignature": "Clear signature",
+    "newDocument": "New Document"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -380,7 +386,8 @@
       "qualityHigh": "High",
       "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
-      "printSettings": "Print Settings"
+      "printSettings": "Print Settings",
+      "printGrayscale": "Print Grayscale"
     },
     "printInfo": {
       "author": "Author",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Select language"
   },
+  "officeEditor": {
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "textColor": "Text color",
+    "leftAlign": "Left align",
+    "centerAlign": "Center align",
+    "rightAlign": "Right align",
+    "justify": "Justify",
+    "lineSpacing": "Line & paragraph spacing",
+    "bulletList": "Bulleted list",
+    "numberList": "Numbered list",
+    "insertLink": "Insert link",
+    "insertImage": "Insert image",
+    "notAvailableInDemoMode": "Not available in demo mode",
+    "notSupportedOnMobile": "Office editing is not supported on mobile devices."
+  },
   "insertPageModal": {
     "title": "Add New Page",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Change",
       "old": "Old",
       "new": "New",
-      "page": "Page"
+      "page": "Page",
+			"textContent": "Text Content",
+			"delete": "delete",
+			"insert": "insert",
+			"edit": "edit"
     }
   },
   "saveModal": {

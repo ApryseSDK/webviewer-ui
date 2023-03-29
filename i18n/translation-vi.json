@@ -16,6 +16,9 @@
     "comment": "Bình Luận",
     "reply": "Thêm trả lời",
     "copy": "Sao chép",
+    "cut": "Cắt",
+    "paste": "Dán",
+    "pasteWithoutFormatting": "Dán mà không cần định dạng",
     "delete": "Xóa",
     "group": "Nhóm",
     "ungroup": "Bỏ gộp nhóm",
@@ -78,6 +81,7 @@
     "showLess": "hiển thị ít hơn",
     "showMore": "...nhiều hơn",
     "chooseFile": "Chọn một tệp",
+    "changeDate": "Thay đổi ngày",
     "browse": "Duyệt qua tệp",
     "selectYourOption": "Chọn tùy chọn của bạn",
     "open": "Mở",
@@ -85,6 +89,7 @@
     "select": "Chọn",
     "moveToTop": "Di chuyển lên trên cùng",
     "moveToBottom": "Di chuyển xuống dưới cùng",
+    "backToMenu": "Quay lại Menu",
     "redactPages": "Biên tập lại các trang",
     "playAudio": "Phát âm thanh",
     "pauseAudio": "Tạm dừng âm thanh",
@@ -96,7 +101,8 @@
     "comparePages": "So sánh các trang",
     "startComparison": "Bắt đầu so sánh",
     "back": "Mặt sau",
-    "clearSignature": "Xóa chữ ký"
+    "clearSignature": "Xóa chữ ký",
+    "newDocument": "Tài liệu mới"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -380,7 +386,8 @@
       "qualityHigh": "Cao",
       "includeAnnotations": "Bao gồm chú thích",
       "includeComments": "Bao gồm bình luận",
-      "printSettings": "Cài đặt in"
+      "printSettings": "Cài đặt in",
+      "printGrayscale": "In thang độ xám"
     },
     "printInfo": {
       "author": "Tác giả",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"
   },
+  "officeEditor": {
+    "bold": "In đậm",
+    "italic": "chữ nghiêng",
+    "underline": "gạch dưới",
+    "textColor": "Văn bản màu",
+    "leftAlign": "Căn trái",
+    "centerAlign": "Căn giữa",
+    "rightAlign": "Căn phải",
+    "justify": "biện minh",
+    "lineSpacing": "Giãn cách dòng & đoạn",
+    "bulletList": "danh sách gạch đầu dòng",
+    "numberList": "danh sách được đánh số",
+    "insertLink": "Chèn đường dẫn",
+    "insertImage": "Chèn hình ảnh",
+    "notAvailableInDemoMode": "Không có sẵn trong chế độ demo",
+    "notSupportedOnMobile": "Chỉnh sửa văn phòng không được hỗ trợ trên thiết bị di động."
+  },
   "insertPageModal": {
     "title": "Thêm trang mới",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Biến đổi",
       "old": "Cũ",
       "new": "Mới",
-      "page": "Trang"
+      "page": "Trang",
+      "textContent": "Nội dung văn bản",
+      "delete": "xóa bỏ",
+      "insert": "chèn",
+      "edit": "chỉnh sửa"
     }
   },
   "saveModal": {

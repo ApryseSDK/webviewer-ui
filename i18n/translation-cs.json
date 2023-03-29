@@ -16,6 +16,9 @@
     "comment": "Komentář",
     "reply": "Přidat odpověď",
     "copy": "kopírovat",
+    "cut": "Střih",
+    "paste": "Vložit",
+    "pasteWithoutFormatting": "Vložit bez formátování",
     "delete": "Vymazat",
     "group": "Skupina",
     "ungroup": "Zrušit seskupení",
@@ -78,6 +81,7 @@
     "showLess": "Ukaž méně",
     "showMore": "...více",
     "chooseFile": "Vyberte soubor",
+    "changeDate": "Změnit datum",
     "browse": "Procházet soubory",
     "selectYourOption": "Vyberte svou možnost",
     "open": "OTEVŘENO",
@@ -85,6 +89,7 @@
     "select": "Vybrat",
     "moveToTop": "Přesunout nahoru",
     "moveToBottom": "Přesunout dolů",
+    "backToMenu": "Zpět do menu",
     "redactPages": "Upravit stránky",
     "playAudio": "Přehrát zvuk",
     "pauseAudio": "Pozastavit zvuk",
@@ -96,7 +101,8 @@
     "comparePages": "Porovnejte stránky",
     "startComparison": "Spusťte porovnávání",
     "back": "Zadní",
-    "clearSignature": "Jasný podpis"
+    "clearSignature": "Jasný podpis",
+    "newDocument": "Nový dokument"
   },
   "annotation": {
     "areaMeasurement": "Plocha",
@@ -380,7 +386,8 @@
       "qualityHigh": "Vysoký",
       "includeAnnotations": "Zahrnout anotace",
       "includeComments": "Zahrnout komentáře",
-      "printSettings": "Nastavení tisku"
+      "printSettings": "Nastavení tisku",
+      "printGrayscale": "Tisk ve stupních šedi"
     },
     "printInfo": {
       "author": "Autor",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Zvolte jazyk"
   },
+  "officeEditor": {
+    "bold": "tučně",
+    "italic": "kurzíva",
+    "underline": "Zdůraznit",
+    "textColor": "Barva textu",
+    "leftAlign": "Zarovnat doleva",
+    "centerAlign": "Zarovnání na střed",
+    "rightAlign": "Zarovnat vpravo",
+    "justify": "Zdůvodněte",
+    "lineSpacing": "Řádkování a řádkování",
+    "bulletList": "Seznam s odrážkami",
+    "numberList": "Číslovaný seznam",
+    "insertLink": "Vložit odkaz",
+    "insertImage": "Vložit obrázek",
+    "notAvailableInDemoMode": "Není k dispozici v demo režimu",
+    "notSupportedOnMobile": "Úpravy Office nejsou podporovány na mobilních zařízeních."
+  },
   "insertPageModal": {
     "title": "Přidat novou stránku",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Změna",
       "old": "Starý",
       "new": "Nový",
-      "page": "Strana"
+      "page": "Strana",
+      "textContent": "Textový obsah",
+      "delete": "vymazat",
+      "insert": "vložit",
+      "edit": "Upravit"
     }
   },
   "saveModal": {

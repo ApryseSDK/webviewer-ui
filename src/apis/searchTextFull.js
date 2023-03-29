@@ -24,6 +24,7 @@ WebViewer(...)
 import actions from 'actions';
 import core from 'core';
 import { getSearchListeners } from 'helpers/search';
+import { workerTypes } from 'constants/types';
 import selectors from 'selectors';
 
 const onResultThrottleTimeout = 100;
@@ -54,7 +55,8 @@ function buildSearchModeFlag(options = {}) {
 
 export default (store) => (searchValue, options) => {
   const dispatch = store?.dispatch;
-  const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(store?.getState());
+  // Store is optional. Default activeDocumentViewerKey is 1
+  const activeDocumentViewerKey = store ? selectors.getActiveDocumentViewerKey(store.getState()) : 1;
   if (dispatch) {
     // dispatch is only set when doing search through API (instance.searchText())
     // When triggering search through UI, then redux updates are already handled inside component
@@ -85,7 +87,7 @@ export default (store) => (searchValue, options) => {
       }, onResultThrottleTimeout);
     }
 
-    if (!hasActiveResultBeenSet) {
+    if (!hasActiveResultBeenSet && core.getDocument()?.getType() !== workerTypes.OFFICE_EDITOR) {
       // when full search is done, we make first found result to be the active result
       activeDocumentViewer.setActiveSearchResult(result);
       hasActiveResultBeenSet = true;

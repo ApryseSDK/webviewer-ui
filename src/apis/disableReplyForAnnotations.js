@@ -9,7 +9,7 @@
 
     // disable reply for Freehand annotations
     instance.UI.disableReplyForAnnotations((annotation) => {
-      return annotation instanceof instance.Annotations.FreeHandAnnotation;
+      return annotation instanceof instance.Core.Annotations.FreeHandAnnotation;
     });
 
     // disable reply for annotations authored by Guest
@@ -35,6 +35,6 @@
 
 import actions from 'actions';
 
-export default store => isReplyDisabledFunc => {
+export default (store) => (isReplyDisabledFunc) => {
   store.dispatch(actions.disableReplyForAnnotations(isReplyDisabledFunc));
 };

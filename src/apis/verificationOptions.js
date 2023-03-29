@@ -37,7 +37,7 @@ import actions from 'actions';
  *   ])
  * });
  */
-const addTrustedCertificates = store => certificates => {
+const addTrustedCertificates = (store) => (certificates) => {
   store.dispatch(actions.addTrustedCertificates(certificates));
 };
 
@@ -63,7 +63,7 @@ const addTrustedCertificates = store => certificates => {
  *   instance.UI.VerificationOptions.loadTrustList(trustListAsArrayBuffer);
  * });
  */
-const loadTrustList = store => trustList => {
+const loadTrustList = (store) => (trustList) => {
   store.dispatch(actions.addTrustList(trustList));
 };
 
