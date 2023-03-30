@@ -170,7 +170,8 @@ const TabsHeader = () => {
       <div className={classNames({
         'add-button': true,
         'add-button-with-label': isEmptyPageOpen
-      })}>
+      })}
+      >
         {additionalTabs?.length > 0 && <div
           className={'dropdown-menu tab-dropdown-button'}
           onClick={() => dispatch(actions.toggleElement('tabMenu'))}

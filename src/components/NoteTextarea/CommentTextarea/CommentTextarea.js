@@ -105,9 +105,9 @@ const CommentTextarea = React.forwardRef(
 
     // onBlur and onFocus have to be outside in the div because of quill bug
     return (
-      <div className='comment-textarea' onBlur={onBlur} onFocus={onFocus} onClick={onClick} onScroll={onScroll}>
+      <div className="comment-textarea" onBlur={onBlur} onFocus={onFocus} onClick={onClick} onScroll={onScroll}>
         <ReactQuill
-          className='comment-textarea ql-container ql-editor'
+          className="comment-textarea ql-container ql-editor"
           style={{ overflowY: 'visible' }}
           ref={ref}
           modules={userData && userData.length > 0 ? mentionModule : {}}
@@ -121,9 +121,9 @@ const CommentTextarea = React.forwardRef(
         />
         {isReply && !isAddReplyAttachmentDisabled &&
           <Button
-            className='add-attachment'
+            className="add-attachment"
             dataElement={DataElements.NotesPanel.ADD_REPLY_ATTACHMENT_BUTTON}
-            img='ic_fileattachment_24px'
+            img="ic_fileattachment_24px"
             onClick={addAttachment}
           />
         }

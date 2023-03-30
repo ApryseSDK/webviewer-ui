@@ -9,20 +9,19 @@ export default {
   component: ColorPickerOverlay,
 };
 
-initialState.viewer.openElements.colorPickerOverlay = true;
-
 const store = configureStore({ reducer: () => initialState });
 
 const BasicComponent = ({ children }) => {
   return (
     <Provider store={store}>
-      <div data-element='textColorButton' />
+      <div data-element="textColorButton" />
       {children}
     </Provider>
   );
 };
 
 export function Basic() {
+  store.getState().viewer.openElements.colorPickerOverlay = true;
   return (
     <BasicComponent>
       <ColorPickerOverlay onStyleChange={() => {}} portalElementId={'root'} />

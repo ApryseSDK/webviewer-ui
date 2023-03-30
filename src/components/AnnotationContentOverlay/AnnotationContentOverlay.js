@@ -75,7 +75,7 @@ const AnnotationContentOverlay = () => {
         const ungroupedAnnots = groupedAnnots.filter((annot) => !annot.isGrouped());
         annotation = ungroupedAnnots.length > 0 ? ungroupedAnnots[0] : annotation;
 
-        if (isUsingCustomHandler || !(annotation instanceof Annotations.FreeTextAnnotation)) {
+        if (isUsingCustomHandler || !(annotation instanceof window.Core.Annotations.FreeTextAnnotation)) {
           setAnnotation(annotation);
           if (overlayRef.current) {
             const { left, top } = fitWindowSize(e, e.clientX + gap, e.clientY + gap);

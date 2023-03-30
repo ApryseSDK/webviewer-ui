@@ -12,7 +12,7 @@ import { Swipeable } from 'react-swipeable';
 
 import core from 'core';
 
-import { insertAbove, insertBelow } from '../../helpers/pageManipulationFunctions';
+import { insertAbove, insertBelow, exitPageInsertionWarning } from '../../helpers/pageManipulationFunctions';
 import InsertBlankPagePanel from './InsertBlankPagePanel';
 import InsertUploadedPagePanel from './InsertUploadedPagePanel';
 
@@ -46,6 +46,10 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
 
   const closeModal = () => {
     dispatch(actions.closeElement(DataElements.INSERT_PAGE_MODAL));
+  };
+
+  const showCloseModalWarning = () => {
+    exitPageInsertionWarning(closeModal, dispatch);
   };
 
   const apply = () => {
@@ -137,10 +141,11 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
             <InsertBlankPagePanel {...insertBlankPageProps} />
           </TabPanel>
           <TabPanel dataElement={DataElements.INSERT_FROM_FILE_PANEL}>
-            <div className='panel-body'>
+            <div className="panel-body">
               <FilePickerPanel
                 fileInputId={fileInputId}
-                onFileProcessed={(file) => fileProcessedHandler(file)} />
+                onFileProcessed={(file) => fileProcessedHandler(file)}
+              />
             </div>
           </TabPanel>
         </Tabs>
@@ -150,7 +155,8 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
             className="insertPageModalConfirmButton"
             label="insertPageModal.button"
             onClick={apply}
-            disabled={insertPageWidth <= 0 || insertPageHeight <= 0 || isUploadPagePanelActive || insertNewPageIndexes.length === 0} />
+            disabled={insertPageWidth <= 0 || insertPageHeight <= 0 || isUploadPagePanelActive || insertNewPageIndexes.length === 0}
+          />
         </div>
       </div>
     );
@@ -158,8 +164,8 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
 
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <div className={modalClass} data-element={DataElements.INSERT_PAGE_MODAL} onMouseDown={closeModal}>
-        <FocusTrap locked={true}>
+      <div className={modalClass} data-element={DataElements.INSERT_PAGE_MODAL} onMouseDown={selectedDoc ? showCloseModalWarning : closeModal}>
+        <FocusTrap locked>
           {selectedDoc ? renderFileSelectedPanel() : renderSelectionTabs()}
         </FocusTrap>
       </div>

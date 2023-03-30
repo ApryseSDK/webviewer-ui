@@ -23,11 +23,11 @@ WebViewer(...)
   });
  */
 
-export default store => list => {
+export default (store) => (list) => {
   if (Array.isArray(list)) {
     if (!list.every(isValidObject)) {
       return console.warn(
-        `An array is passed to setPageReplacementModalFileList is invalid`
+        'An array is passed to setPageReplacementModalFileList is invalid'
       );
     }
   }
@@ -35,7 +35,7 @@ export default store => list => {
   store.dispatch(actions.setPageReplacementModalFileList(list));
 };
 
-const isValidObject = item => {
+const isValidObject = (item) => {
   return Object.prototype.hasOwnProperty.call(item, 'id')
     || Object.prototype.hasOwnProperty.call(item, 'filename')
     || Object.prototype.hasOwnProperty.call(item, 'onSelect')

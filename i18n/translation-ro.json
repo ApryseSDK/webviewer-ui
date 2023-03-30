@@ -16,6 +16,9 @@
     "comment": "cometariu",
     "reply": "Adăugați răspuns",
     "copy": "Copie",
+    "cut": "A tăia",
+    "paste": "Pastă",
+    "pasteWithoutFormatting": "Lipiți fără formatare",
     "delete": "Șterge",
     "group": "grup",
     "ungroup": "Degrupați",
@@ -78,6 +81,7 @@
     "showLess": "arata mai putin",
     "showMore": "...Mai mult",
     "chooseFile": "Alegeți un fișier",
+    "changeDate": "Schimba data",
     "browse": "Cauta fisiere",
     "selectYourOption": "Selectați opțiunea dvs",
     "open": "Deschis",
@@ -85,6 +89,7 @@
     "select": "Selectați",
     "moveToTop": "Mutați sus",
     "moveToBottom": "Mutați în jos",
+    "backToMenu": "Inapoi la meniu",
     "redactPages": "Redact pagini",
     "playAudio": "Redați audio",
     "pauseAudio": "Întrerupeți sunetul",
@@ -96,7 +101,8 @@
     "comparePages": "Comparați paginile",
     "startComparison": "Începeți comparația",
     "back": "Înapoi",
-    "clearSignature": "Semnătură clară"
+    "clearSignature": "Semnătură clară",
+    "newDocument": "Document nou"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -380,7 +386,8 @@
       "qualityHigh": "Înalt",
       "includeAnnotations": "Includeți adnotări",
       "includeComments": "Includeți comentarii",
-      "printSettings": "Setări de imprimare"
+      "printSettings": "Setări de imprimare",
+      "printGrayscale": "Imprimare în tonuri de gri"
     },
     "printInfo": {
       "author": "Autor",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Selecteaza limba"
   },
+  "officeEditor": {
+    "bold": "Îndrăzneţ",
+    "italic": "Cursiv",
+    "underline": "Subliniați",
+    "textColor": "Culoarea textului",
+    "leftAlign": "Aliniere la stânga",
+    "centerAlign": "Alinierea la centru",
+    "rightAlign": "Aliniați la dreapta",
+    "justify": "Justifica",
+    "lineSpacing": "Spațiere între rânduri și paragrafe",
+    "bulletList": "Listă cu puncte",
+    "numberList": "Lista numerotata",
+    "insertLink": "Introduceți linkul",
+    "insertImage": "Inserați imaginea",
+    "notAvailableInDemoMode": "Nu este disponibil în modul demonstrativ",
+    "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile."
+  },
   "insertPageModal": {
     "title": "Adăugați o pagină nouă",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Schimbare",
       "old": "Vechi",
       "new": "Nou",
-      "page": "Pagină"
+      "page": "Pagină",
+      "textContent": "Conținut text",
+      "delete": "șterge",
+      "insert": "introduce",
+      "edit": "Editați | ×"
     }
   },
   "saveModal": {

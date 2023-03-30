@@ -16,6 +16,9 @@
     "comment": "Откомментировать",
     "reply": "Ответить",
     "copy": "Скопировать",
+    "cut": "Резать",
+    "paste": "Вставить",
+    "pasteWithoutFormatting": "Вставить без форматирования",
     "delete": "Удалить",
     "group": "группа",
     "ungroup": "Ungroup",
@@ -78,6 +81,7 @@
     "showLess": "показывай меньше",
     "showMore": "...более",
     "chooseFile": "Выберите файл",
+    "changeDate": "Дата изменения",
     "browse": "Просмотр файлов",
     "selectYourOption": "Выберите свой вариант",
     "open": "Открыть",
@@ -85,6 +89,7 @@
     "select": "Выбирать",
     "moveToTop": "Наверх",
     "moveToBottom": "Вниз",
+    "backToMenu": "Назад к меню",
     "redactPages": "Редактировать страницы",
     "playAudio": "Воспроизвести аудио",
     "pauseAudio": "аудио пауза",
@@ -96,7 +101,8 @@
     "comparePages": "Сравните страницы",
     "startComparison": "Начать сравнение",
     "back": "Назад",
-    "clearSignature": "Очистить подпись"
+    "clearSignature": "Очистить подпись",
+    "newDocument": "Новый документ"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -380,7 +386,8 @@
       "qualityHigh": "Высокая",
       "includeAnnotations": "Включить аннотации",
       "includeComments": "Приложить комментарии",
-      "printSettings": "Параметры печати"
+      "printSettings": "Параметры печати",
+      "printGrayscale": "Печать оттенков серого"
     },
     "printInfo": {
       "author": "Автор",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Выбрать язык"
   },
+  "officeEditor": {
+    "bold": "Смелый",
+    "italic": "Курсив",
+    "underline": "Подчеркнуть",
+    "textColor": "Цвет текста",
+    "leftAlign": "Выровнять по левому краю",
+    "centerAlign": "Выровнять по центру",
+    "rightAlign": "Выровнять по правому краю",
+    "justify": "Оправдывать",
+    "lineSpacing": "Расстояние между строками и абзацами",
+    "bulletList": "Маркированный список",
+    "numberList": "Нумерованный список",
+    "insertLink": "Вставить ссылку",
+    "insertImage": "Вставить изображение",
+    "notAvailableInDemoMode": "Недоступно в демонстрационном режиме",
+    "notSupportedOnMobile": "Редактирование Office не поддерживается на мобильных устройствах."
+  },
   "insertPageModal": {
     "title": "Добавить новую страницу",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Изменять",
       "old": "Старый",
       "new": "Новый",
-      "page": "Страница"
+      "page": "Страница",
+      "textContent": "Текстовое содержимое",
+      "delete": "удалять",
+      "insert": "вставлять",
+      "edit": "редактировать"
     }
   },
   "saveModal": {

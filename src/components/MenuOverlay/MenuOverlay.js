@@ -5,6 +5,7 @@ import { workerTypes } from 'constants/types';
 import core from 'core';
 import downloadPdf from 'helpers/downloadPdf';
 import openFilePicker from 'helpers/openFilePicker';
+import toggleFullscreen from 'helpers/toggleFullscreen';
 import { print } from 'helpers/print';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +13,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import DataElements from 'constants/dataElement';
+import loadDocument from 'helpers/loadDocument';
 
 import './MenuOverlay.scss';
 
@@ -52,15 +54,21 @@ function MenuOverlay() {
   const [t] = useTranslation();
 
   const [documentType, setDocumentType] = useState(null);
+  const [isSaveAsDisabled, setSaveAsDisabled] = useState(false);
 
   const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
   const colorMap = useSelector(selectors.getColorMap);
   const sortStrategy = useSelector(selectors.getSortStrategy);
+  const isFullScreen = useSelector((state) => selectors.isFullScreen(state));
 
   const closeMenuOverlay = useCallback(() => dispatch(actions.closeElements(['menuOverlay'])), [dispatch]);
 
   useEffect(() => {
-    const onDocumentLoaded = () => setDocumentType(core.getDocument().getType());
+    const onDocumentLoaded = () => {
+      const type = core.getDocument().getType();
+      setDocumentType(type);
+      setSaveAsDisabled(type === workerTypes.OFFICE_EDITOR && !core.getOfficeEditor().isLicenseValid());
+    };
     core.addEventListener('documentLoaded', onDocumentLoaded);
     return () => {
       core.removeEventListener('documentLoaded', onDocumentLoaded);
@@ -76,16 +84,41 @@ function MenuOverlay() {
     downloadPdf(dispatch);
   };
 
-  const openSaveModal = () => dispatch(actions.openElement('saveModal'));
+  const openSaveModal = useCallback(() => {
+    closeMenuOverlay();
+    if (isSaveAsDisabled) {
+      dispatch(actions.showErrorMessage(t('officeEditor.notAvailableInDemoMode')));
+    } else {
+      dispatch(actions.openElement('saveModal'));
+    }
+  }, [isSaveAsDisabled]);
 
   const handleSettingsButtonClick = () => {
     closeMenuOverlay();
     dispatch(actions.openElement(DataElements.SETTINGS_MODAL));
   };
 
+  const handleNewDocumentClick = async () => {
+    closeMenuOverlay();
+    loadDocument(dispatch, (await core.getEmptyWordDocument()).default, {
+      filename: 'Untitled.docx',
+    });
+  };
+
   return (
     <FlyoutMenu menu="menuOverlay" trigger="menuButton" onClose={undefined} ariaLabel={t('component.menuOverlay')}>
       <InitialMenuOverLayItem>
+        {documentType === workerTypes.OFFICE_EDITOR && (
+          <ActionButton
+            dataElement="newDocumentButton"
+            className="row"
+            img="icon-plus-sign"
+            label={t('action.newDocument')}
+            ariaLabel={t('action.newDocument')}
+            role="option"
+            onClick={handleNewDocumentClick}
+          />
+        )}
         <ActionButton
           dataElement="filePickerButton"
           className="row"
@@ -106,6 +139,17 @@ function MenuOverlay() {
             onClick={downloadDocument}
           />
         )}
+        {documentType === workerTypes.OFFICE_EDITOR && (
+          <ActionButton
+            dataElement="fullscreenButton"
+            className="row"
+            img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+            label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
+            ariaLabel={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
+            role="option"
+            onClick={toggleFullscreen}
+          />
+        )}
         {documentType !== workerTypes.XOD && (
           <ActionButton
             dataElement="saveAsButton"
@@ -115,7 +159,8 @@ function MenuOverlay() {
             ariaLabel={t('saveModal.saveAs')}
             role="option"
             onClick={openSaveModal}
-          />)}
+          />
+        )}
         <ActionButton
           dataElement="printButton"
           className="row"

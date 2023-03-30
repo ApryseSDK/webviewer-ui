@@ -47,7 +47,7 @@ const MultiTabEmptyPage = (props) => {
         <div className="empty-page-body">
           <FilePickerPanel
             onFileProcessed={(file) => addNewTab(file)}
-            shouldShowIcon={true}
+            shouldShowIcon
           />
         </div>
       )}

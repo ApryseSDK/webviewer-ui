@@ -2,13 +2,18 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
-import './NoteTextPreview.scss'
+import './NoteTextPreview.scss';
 
 function NoteTextPreview(props) {
-  const text = props.children;
+  /* This replace is to remove the break line that the React Quill component add into the text */
+  const text = props.children.replace(/\n$/, '');
   const {
     panelWidth,
     linesToBreak,
+    renderRichText,
+    richTextStyle,
+    resize,
+    style,
     /* If text being previewed is a comment it gets a darker font color */
     comment = false
   } = props;
@@ -21,19 +26,20 @@ function NoteTextPreview(props) {
 
   const onClickHandler = (event) => {
     event.stopPropagation();
-    setExpand(!expanded)
+    setExpand(!expanded);
+    resize && resize();
   };
 
   const textToDisplay = expanded ? text : text.substring(0, charsPerLine * linesToBreak);
   const prompt = expanded ? t('action.showLess') : t('action.showMore');
-  const noteTextPreviewClass = classNames('note-text-preview', { 'preview-comment': comment })
+  const noteTextPreviewClass = classNames('note-text-preview', { 'preview-comment': comment });
 
   useEffect(() => {
     const textNodeWidth = ref.current.clientWidth;
-    setPreviewWidth(textNodeWidth)
+    setPreviewWidth(textNodeWidth);
   }, [panelWidth]);
 
-  //useLayoutEffect to avoid a flicker before we get the final text prop
+  // useLayoutEffect to avoid a flicker before we get the final text prop
   useLayoutEffect(() => {
     function getTextWidth(text) {
       const canvas = document.createElement('canvas');
@@ -50,14 +56,13 @@ function NoteTextPreview(props) {
 
     const totalLines = textWidth / previewElementWidth;
     setShowPrompt(totalLines > linesToBreak);
-
-  }, [text, previewElementWidth])
+  }, [text, previewElementWidth]);
 
   return (
-    <div className={noteTextPreviewClass} ref={ref}>
-      {textToDisplay} {showPrompt && <a className="note-text-preview-prompt" onClick={onClickHandler}>{prompt}</a>}
+    <div className={noteTextPreviewClass} ref={ref} style={style}>
+      {renderRichText && richTextStyle ? renderRichText(textToDisplay, richTextStyle, 0) : textToDisplay} {showPrompt && <a className="note-text-preview-prompt" onClick={onClickHandler}>{prompt}</a>}
     </div>
-  )
-};
+  );
+}
 
 export default NoteTextPreview;

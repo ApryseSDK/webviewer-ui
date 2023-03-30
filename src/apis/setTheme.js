@@ -23,7 +23,7 @@ WebViewer(...)
   });
  */
 
-export default store => {
+export default (store) => {
   let previousActiveTheme = Theme.LIGHT; // default
   let previousIsHighContrastMode = false; // default
 
@@ -38,7 +38,7 @@ export default store => {
       updateColors(activeTheme, isHighContrastMode);
     }
   });
-  return theme => {
+  return (theme) => {
     const values = Object.values(Theme);
     if (values.indexOf(theme) < 0) {
       throw new Error(`${theme} is not one of: ${values.join(',')}}`);
@@ -50,7 +50,7 @@ export default store => {
 const setVariables = (themeVarString = '') => {
   const root = document.documentElement;
   const themeVariables = parse(themeVarString, {});
-  Object.keys(themeVariables).forEach(key => {
+  Object.keys(themeVariables).forEach((key) => {
     const themeVariable = themeVariables[key];
     root.style.setProperty(`--${key}`, themeVariable);
   });

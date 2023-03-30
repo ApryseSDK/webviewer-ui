@@ -150,7 +150,7 @@ const mapDispatchToProps = {
 
 const ConnectedToolGroupButton = connect(mapStateToProps, mapDispatchToProps)(ToolGroupButton);
 
-export default props => {
+const connectedComponent = (props) => {
   const isTabletAndMobile = useMedia(
     // Media queries
     ['(max-width: 900px)'],
@@ -163,3 +163,5 @@ export default props => {
     <ConnectedToolGroupButton {...props} isTabletAndMobile={isTabletAndMobile} />
   );
 };
+
+export default connectedComponent;

@@ -1,18 +1,17 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { mockSearchResults } from './RedactionSearchPanel.stories';
-import RedactionSearchPanel from './RedactionSearchPanel';
-import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
-import {
+import { mockSearchResults,
   StartSearch,
   SearchInProgress,
   SearchInProgressWithIncomingResults,
   SearchCompleteWithResults,
   SearchCompleteNoResults
 } from './RedactionSearchPanel.stories';
+import RedactionSearchPanel from './RedactionSearchPanel';
+import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
 import userEvent from '@testing-library/user-event';
 
-function noop() { };
+function noop() { }
 
 const RedactionSearchPanelWithRedux = withProviders(RedactionSearchPanel);
 
@@ -21,7 +20,7 @@ const customRenderWithContext = (component, providerProps = {}) => {
     <RedactionPanelContext.Provider value={providerProps}>
       {component}
     </RedactionPanelContext.Provider>,
-  )
+  );
 };
 
 jest.mock('core', () => ({
@@ -32,31 +31,31 @@ describe('RedactionSearchPanel', () => {
   describe('storybook components', () => {
     it('renders StartSearch story without errors', () => {
       expect(() => {
-        render(<StartSearch />)
+        render(<StartSearch />);
       }).not.toThrow();
     });
 
     it('renders SearchInProgress story without errors', () => {
       expect(() => {
-        render(<SearchInProgress />)
+        render(<SearchInProgress />);
       }).not.toThrow();
     });
 
     it('renders SearchInProgressWithIncomingResults story without errors', () => {
       expect(() => {
-        render(<SearchInProgressWithIncomingResults />)
+        render(<SearchInProgressWithIncomingResults />);
       }).not.toThrow();
     });
 
     it('renders SearchCompleteWithResults story without errors', () => {
       expect(() => {
-        render(<SearchCompleteWithResults />)
+        render(<SearchCompleteWithResults />);
       }).not.toThrow();
     });
 
     it('renders SearchCompleteNoResults story without errors', () => {
       expect(() => {
-        render(<SearchCompleteNoResults />)
+        render(<SearchCompleteNoResults />);
       }).not.toThrow();
     });
   });
@@ -83,7 +82,7 @@ describe('RedactionSearchPanel', () => {
       screen.getByText(/Page 1/);
       screen.getByText(/Page 2/);
 
-      //Renders the correct total number of results message
+      // Renders the correct total number of results message
       screen.getByText((_, node) => node.textContent === `Search results (${mockSearchResults.length})`);
     });
 
@@ -104,7 +103,7 @@ describe('RedactionSearchPanel', () => {
       customRenderWithContext(<RedactionSearchPanelWithRedux {...props} />, providerProps);
       const redactionSearchResultsCheckboxes = screen.getAllByRole('checkbox');
 
-      redactionSearchResultsCheckboxes.forEach(checkbox => {
+      redactionSearchResultsCheckboxes.forEach((checkbox) => {
         expect(checkbox).not.toBeChecked();
       });
 
@@ -112,7 +111,7 @@ describe('RedactionSearchPanel', () => {
       const selectAllButton = screen.getByText('Select all');
       userEvent.click(selectAllButton);
 
-      redactionSearchResultsCheckboxes.forEach(checkbox => {
+      redactionSearchResultsCheckboxes.forEach((checkbox) => {
         expect(checkbox).toBeChecked();
       });
 
@@ -120,7 +119,7 @@ describe('RedactionSearchPanel', () => {
       const unselectAllButton = screen.getByText('Unselect');
       userEvent.click(unselectAllButton);
 
-      redactionSearchResultsCheckboxes.forEach(checkbox => {
+      redactionSearchResultsCheckboxes.forEach((checkbox) => {
         expect(checkbox).not.toBeChecked();
       });
     });
@@ -166,5 +165,5 @@ describe('RedactionSearchPanel', () => {
       // Page 1 checkbox should be deselected
       expect(pageOneCheckbox).not.toBeChecked();
     });
-  })
+  });
 });

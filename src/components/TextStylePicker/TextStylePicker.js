@@ -3,6 +3,7 @@ import './TextStylePicker.scss';
 import Dropdown from 'components/Dropdown';
 import FontSizeDropdown from 'components/FontSizeDropdown';
 import Button from 'components/Button';
+import PropTypes from 'prop-types';
 
 const TextStylePicker = ({
   onPropertyChange,
@@ -183,6 +184,10 @@ const TextStylePicker = ({
       </div>
     </>
   );
+};
+
+TextStylePicker.propTypes = {
+  onPropertyChange: PropTypes.func.isRequired,
 };
 
 export default TextStylePicker;

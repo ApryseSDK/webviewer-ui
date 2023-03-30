@@ -5,7 +5,6 @@
  * @property {string} DOCUMENT_LOADED {@link UI#event:documentLoaded UI.Events.documentLoaded}
  * @property {string} DOCUMENT_MERGED {@link UI#event:documentMerged UI.Events.documentMerged}
  * @property {string} FILE_DOWNLOADED {@link UI#event:fileDownloaded UI.Events.fileDownloaded}
- * @property {string} FINISHED_SAVING_PDF {@link UI#event:finishedSavingPDF UI.Events.finishedSavingPDF}
  * @property {string} LOAD_ERROR {@link UI#event:loaderror UI.Events.loaderror}
  * @property {string} DRAG_OUTLINE {@link UI#event:dragOutline UI.Events.dragOutline}
  * @property {string} DROP_OUTLINE {@link UI#event:dragOutline UI.Events.dragOutline}
@@ -41,7 +40,6 @@ export default {
   'DOCUMENT_LOADED': 'documentLoaded',
   'DOCUMENT_MERGED': 'documentMerged',
   'FILE_DOWNLOADED': 'fileDownloaded',
-  'FINISHED_SAVING_PDF': 'finishedSavingPDF',
   'LOAD_ERROR': 'loaderror',
   'DRAG_OUTLINE': 'dragOutline',
   'DROP_OUTLINE': 'dropOutline',
@@ -91,12 +89,6 @@ export default {
 * @property {string} filename File name
 * @property {number[]} pages Page numbers
 */
-
-/**
- * @name UI#finishedSavingPDF
- * @event
- * @deprecated Since version 8.3. Use [fileDownloaded]{@link UI#event:fileDownloaded UI.Events.fileDownloaded} instead
- */
 
 /**
 * Triggered when the file has finished downloading.

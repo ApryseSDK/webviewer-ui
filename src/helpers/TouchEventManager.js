@@ -295,7 +295,7 @@ const TouchEventManager = {
       }
       case touchType.DOUBLE_TAP: {
         const annotationUnderMouse = core.getAnnotationByMouseEvent(e);
-        const isFreeTextUnderMouse = annotationUnderMouse && annotationUnderMouse instanceof Annotations.FreeTextAnnotation;
+        const isFreeTextUnderMouse = annotationUnderMouse && annotationUnderMouse instanceof window.Core.Annotations.FreeTextAnnotation;
 
         if (this.isUsingAnnotationTools()) {
           const tool = core.getToolMode();

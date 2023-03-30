@@ -172,6 +172,22 @@ const exitPageInsertionWarning = (closeModal, dispatch) => {
   dispatch(actions.showWarningMessage(warning));
 };
 
+const exitPageReplacementWarning = (closeModal, dispatch) => {
+  const title = i18next.t('option.pageReplacementModal.warning.title');
+  const message = i18next.t('option.pageReplacementModal.warning.message');
+  const confirmBtnText = i18next.t('action.ok');
+
+  const warning = {
+    message,
+    title,
+    confirmBtnText,
+    onConfirm: closeModal,
+    keepOpen: ['leftPanel'],
+  };
+
+  dispatch(actions.showWarningMessage(warning));
+};
+
 const redactPages = (pageNumbers, redactionStyles) => {
   core.applyRedactions(createPageRedactions(pageNumbers, redactionStyles));
 };
@@ -181,9 +197,9 @@ const createPageRedactions = (pageNumbers, redactionStyles) => {
   for (const page of pageNumbers) {
     const pageInfo = core.getPageInfo(page);
     if (pageInfo) {
-      const redaction = new Annotations.RedactionAnnotation({
+      const redaction = new window.Core.Annotations.RedactionAnnotation({
         PageNumber: page,
-        Rect: new Annotations.Rect(0, 0, pageInfo.width, pageInfo.height),
+        Rect: new window.Core.Annotations.Rect(0, 0, pageInfo.width, pageInfo.height),
         ...redactionStyles
       });
       redaction.type = redactionTypeMap['FULL_PAGE'];
@@ -236,4 +252,5 @@ export {
   replacePages,
   insertPages,
   exitPageInsertionWarning,
+  exitPageReplacementWarning
 };

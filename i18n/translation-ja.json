@@ -16,6 +16,9 @@
     "comment": "コメント",
     "reply": "返信する",
     "copy": "コピー",
+    "cut": "切る",
+    "paste": "ペースト",
+    "pasteWithoutFormatting": "書式なしで貼り付け",
     "delete": "削除",
     "group": "グループ化",
     "ungroup": "グループ解除",
@@ -78,6 +81,7 @@
     "showLess": "表示を減らす",
     "showMore": "...さらに表示",
     "chooseFile": "ファイルを選択してください",
+    "changeDate": "変更日",
     "browse": "ブラウズファイル",
     "selectYourOption": "オプションを選択してください",
     "open": "開ける",
@@ -85,6 +89,7 @@
     "select": "選択する",
     "moveToTop": "上に移動",
     "moveToBottom": "下に移動",
+    "backToMenu": "メニューに戻る",
     "redactPages": "ページを編集する",
     "playAudio": "オーディオを再生",
     "pauseAudio": "オーディオの一時停止",
@@ -96,7 +101,8 @@
     "comparePages": "ページを比較する",
     "startComparison": "比較を開始",
     "back": "戻る",
-    "clearSignature": "明確な署名"
+    "clearSignature": "明確な署名",
+    "newDocument": "新しいドキュメント"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -380,7 +386,8 @@
       "qualityHigh": "きれい",
       "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
-      "printSettings": "印刷設定"
+      "printSettings": "印刷設定",
+      "printGrayscale": "グレースケール印刷"
     },
     "printInfo": {
       "author": "作成者",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "言語を選択する"
   },
+  "officeEditor": {
+    "bold": "大胆な",
+    "italic": "イタリック",
+    "underline": "下線",
+    "textColor": "テキストの色",
+    "leftAlign": "左揃え",
+    "centerAlign": "中央揃え",
+    "rightAlign": "右揃え",
+    "justify": "正当化する",
+    "lineSpacing": "行と段落の間隔",
+    "bulletList": "箇条書きリスト",
+    "numberList": "番号付きリスト",
+    "insertLink": "リンクを挿入",
+    "insertImage": "画像を挿入",
+    "notAvailableInDemoMode": "デモモードでは利用できません",
+    "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。"
+  },
   "insertPageModal": {
     "title": "新しいページを追加",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "変化する",
       "old": "年",
       "new": "新しい",
-      "page": "ページ"
+      "page": "ページ",
+      "textContent": "テキストの内容",
+      "delete": "消去",
+      "insert": "入れる",
+      "edit": "編集"
     }
   },
   "saveModal": {

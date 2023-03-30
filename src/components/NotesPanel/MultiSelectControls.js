@@ -141,7 +141,8 @@ const MultiSelectControls = ({
     return (
       <NoteContext.Provider value={{
         resize: () => {},
-      }}>
+      }}
+      >
         <ReplyAreaMultiSelect
           annotations={getParentAnnotations(multiSelectedAnnotations)}
           onSubmit={() => setShowMultiReply(false)}

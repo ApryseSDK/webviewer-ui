@@ -1,7 +1,7 @@
 import React from 'react';
 import RedactionPageGroup from './RedactionPageGroup';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
 import { redactionTypeMap, defaultRedactionTypes } from 'constants/redactionTypes';
 
@@ -15,7 +15,7 @@ const initialState = {
     },
   }
 };
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState) {
   return state;
 }
 
@@ -24,7 +24,9 @@ const store = createStore(rootReducer);
 const RedactionPageGroupWithRedux = (props) => {
   const context = {
     selectedRedactionItemId: '1',
-    setSelectedRedactionItemId: (id) => { console.log({ id }) },
+    setSelectedRedactionItemId: (id) => {
+      console.log({ id });
+    },
   };
   return (
     <Provider store={store}>
@@ -32,7 +34,7 @@ const RedactionPageGroupWithRedux = (props) => {
         <RedactionPageGroup {...props} />
       </RedactionPanelContext.Provider>
     </Provider>
-  )
+  );
 };
 
 export default {
@@ -54,7 +56,7 @@ const mockRedactionTextAnnotation = {
   getCustomData: () => 'Redact this text',
   redactionType: redactionTypeMap['TEXT'],
   icon: defaultRedactionTypes[redactionTypeMap['TEXT']].icon,
-}
+};
 
 const mockRegionTextAnnotation = {
   Author: 'Duncan Idaho',
@@ -71,7 +73,7 @@ const mockRegionTextAnnotation = {
   redactionType: redactionTypeMap['REGION'],
   icon: defaultRedactionTypes[redactionTypeMap['REGION']].icon,
   label: defaultRedactionTypes[redactionTypeMap['REGION']].label,
-}
+};
 
 const redactionItems = [
   mockRedactionTextAnnotation,
@@ -81,7 +83,7 @@ const redactionItems = [
 const basicProps = {
   pageNumber: 1,
   redactionItems,
-}
+};
 
 
 export function Basic() {

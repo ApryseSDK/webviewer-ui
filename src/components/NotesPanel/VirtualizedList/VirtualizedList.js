@@ -22,10 +22,10 @@ const VirtualizedList = React.forwardRef(
     let prevWindowHeight = window.innerHeight;
 
     useImperativeHandle(forwardedRef, () => ({
-      scrollToPosition: scrollTop => {
+      scrollToPosition: (scrollTop) => {
         listRef.current.scrollToPosition(scrollTop);
       },
-      scrollToRow: index => {
+      scrollToRow: (index) => {
         listRef.current.scrollToRow(index);
       },
     }));
@@ -38,7 +38,7 @@ const VirtualizedList = React.forwardRef(
       cache.clearAll();
       listRef?.current?.measureAllRows();
 
-      if(selectedIndex !== -1) {
+      if (selectedIndex !== -1) {
         listRef.current?.scrollToRow(selectedIndex);
       }
     }, [selectedIndex]);
@@ -47,7 +47,6 @@ const VirtualizedList = React.forwardRef(
       cache.clearAll();
       listRef?.current?.measureAllRows();
       listRef?.current?.forceUpdateGrid();
-
     }, [notes.length, sortStrategy]);
 
     useEffect(() => {
@@ -68,7 +67,7 @@ const VirtualizedList = React.forwardRef(
       };
     });
 
-    const _resize = index => {
+    const _resize = (index) => {
       cache.clear(index);
       listRef.current?.recomputeRowHeights(index);
     };
@@ -90,13 +89,13 @@ const VirtualizedList = React.forwardRef(
           parent={parent}
           rowIndex={index}
         >
-        {({ measure }) => (    
-          <div style={{ ...style, paddingRight: '12px' }}>
-            {children(notes, index, () => {
-              _resize(index);
-              measure();
-            })}
-          </div>)}
+          {({ measure }) => (
+            <div style={{ ...style, paddingRight: '12px' }}>
+              {children(notes, index, () => {
+                _resize(index);
+                measure();
+              })}
+            </div>)}
         </CellMeasurer>
       );
     };
@@ -109,7 +108,8 @@ const VirtualizedList = React.forwardRef(
           height: bounds.height + offset * 2,
         });
         setOffset(0);
-      }}>
+      }}
+      >
         {({ measureRef }) => (
           <div ref={measureRef} className="virtualized-notes-container">
             <List
@@ -131,6 +131,7 @@ const VirtualizedList = React.forwardRef(
   },
 );
 
+VirtualizedList.displayName = 'VirtualizedList';
 VirtualizedList.propTypes = propTypes;
 
 export default VirtualizedList;

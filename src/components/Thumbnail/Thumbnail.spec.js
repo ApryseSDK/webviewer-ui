@@ -143,7 +143,7 @@ describe('Thumbnail', () => {
         />);
       const tcontainer = container.querySelector('.container');
       fireEvent.click(tcontainer, { shiftKey: true });
-      expect(actions.setSelectedPageThumbnails).toBeCalledWith([0, 1, 2]);
+      expect(actions.setSelectedPageThumbnails).toBeCalledWith([2, 3, 0, 1]);
     });
     it('Should select page3 and page2 when already selected page 3, page 2 and page 1', () => {
       const actions = {
@@ -164,7 +164,7 @@ describe('Thumbnail', () => {
         />);
       const tcontainer = container.querySelector('.container');
       fireEvent.click(tcontainer, { shiftKey: true });
-      expect(actions.setSelectedPageThumbnails).toBeCalledWith([1, 2]);
+      expect(actions.setSelectedPageThumbnails).toBeCalledWith([2, 1, 0]);
     });
   });
 });

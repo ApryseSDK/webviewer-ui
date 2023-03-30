@@ -52,7 +52,7 @@ const ColorPickerOverlay = ({
 
   return createPortal(
     <DataElementWrapper
-      data-element='colorPickerOverlay'
+      data-element="colorPickerOverlay"
       className={classNames({
         ColorPickerOverlay: true,
         Popup: true,
@@ -64,13 +64,12 @@ const ColorPickerOverlay = ({
     >
       <ColorPalette
         color={color}
-        property={'TextColor'} // arbitrary property name. this property isn't used in this file
+        property="TextColor"
         onStyleChange={onStyleChange}
         useMobileMinMaxWidth
       />
       <ColorPalettePicker
         color={color}
-        property={'TextColor'} // arbitrary property name. this property isn't used in this file
         onStyleChange={onStyleChange}
         enableEdit
       />

@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 import core from 'core';
 import { useTranslation } from 'react-i18next';
 import debounce from 'lodash.debounce';
+import throttle from 'lodash/throttle';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
+import { workerTypes } from 'constants/types';
 
 import Icon from 'components/Icon';
 import Choice from '../Choice/Choice';
@@ -46,10 +52,10 @@ function SearchOverlay(props) {
   const [showReplaceSpinner, setShowReplaceSpinner] = React.useState(false);
   const [isReplacementRegexValid, setReplacementRegexValid] = React.useState(true);
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
-  const searchTextInputRef = React.useRef();
+  const searchTextInputRef = useRef();
   const waitTime = 300; // Wait time in milliseconds
 
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       // eslint-disable-next-line no-unused-vars
       const replacementRegex = new RegExp('(?<!<\/?[^>]*|&[^;]*)');
@@ -58,7 +64,7 @@ function SearchOverlay(props) {
     }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchTextInputRef.current && isPanelOpen) {
       searchTextInputRef.current.focus();
     }
@@ -67,7 +73,7 @@ function SearchOverlay(props) {
     }
   }, [isPanelOpen]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchValue && searchValue.length > 0) {
       executeSearch(searchValue, {
         caseSensitive: isCaseSensitive,
@@ -79,21 +85,47 @@ function SearchOverlay(props) {
     }
   }, [isCaseSensitive, isWholeWord, isWildcard, activeDocumentViewerKey]);
 
-  const debouncedSearch = React.useCallback(
-    debounce((searchValue) => {
-      if (searchValue && searchValue.length > 0) {
-        setIsSearchInProgress(true);
-        executeSearch(searchValue, {
-          caseSensitive: isCaseSensitive,
-          wholeWord: isWholeWord,
-          wildcard: isWildcard,
-        });
-      } else {
-        clearSearchResult();
+  const search = async (searchValue) => {
+    if (searchValue && searchValue.length > 0) {
+      setIsSearchInProgress(true);
+      setSearchStatus('SEARCH_IN_PROGRESS');
+
+      if (core.getDocument()?.getType() === workerTypes.OFFICE_EDITOR) {
+        await core.getDocument().getOfficeEditor().updateSearchData();
       }
-    }, waitTime),
+      executeSearch(searchValue, {
+        caseSensitive: isCaseSensitive,
+        wholeWord: isWholeWord,
+        wildcard: isWildcard,
+      });
+    } else {
+      clearSearchResult();
+    }
+  };
+
+  const debouncedSearch = useCallback(
+    debounce(search, waitTime),
     [isCaseSensitive, isWholeWord, isWildcard]
   );
+
+  const throttleSearch = useCallback(
+    throttle(search, waitTime),
+    [isCaseSensitive, isWholeWord, isWildcard]
+  );
+
+  useEffect(() => {
+    const onOfficeDocumentEdited = () => {
+      if (searchValue && searchValue.length > 0) {
+        throttleSearch(searchValue);
+      }
+    };
+
+    core.getDocument()?.addEventListener('officeDocumentEdited', onOfficeDocumentEdited);
+
+    return () => {
+      core.getDocument()?.removeEventListener('officeDocumentEdited', onOfficeDocumentEdited);
+    };
+  }, [searchValue]);
 
   const textInputOnChange = (event) => {
     setSearchValue(event.target.value);
@@ -122,28 +154,28 @@ function SearchOverlay(props) {
     setReplaceAllBtnDisabled(true);
   }
 
-  const caseSensitiveSearchOptionOnChange = React.useCallback(
+  const caseSensitiveSearchOptionOnChange = useCallback(
     function caseSensitiveSearchOptionOnChangeCallback(event) {
       const isChecked = event.target.checked;
       setCaseSensitive(isChecked);
     }, [],
   );
 
-  const wholeWordSearchOptionOnChange = React.useCallback(
+  const wholeWordSearchOptionOnChange = useCallback(
     function wholeWordSearchOptionOnChangeCallback(event) {
       const isChecked = event.target.checked;
       setWholeWord(isChecked);
     }, [],
   );
 
-  const wildcardOptionOnChange = React.useCallback(
+  const wildcardOptionOnChange = useCallback(
     function wildcardOptionOnChangeCallback(event) {
       const isChecked = event.target.checked;
       setWildcard(isChecked);
     }, [],
   );
 
-  const nextButtonOnClick = React.useCallback(
+  const nextButtonOnClick = useCallback(
     function nextButtonOnClickCallback() {
       if (selectNextResult) {
         selectNextResult(searchResults, activeResultIndex);
@@ -152,7 +184,7 @@ function SearchOverlay(props) {
     [selectNextResult, searchResults, activeResultIndex],
   );
 
-  const previousButtonOnClick = React.useCallback(
+  const previousButtonOnClick = useCallback(
     function previousButtonOnClickCallback() {
       if (selectPreviousResult) {
         selectPreviousResult(searchResults, activeResultIndex);
@@ -161,7 +193,7 @@ function SearchOverlay(props) {
     [selectPreviousResult, searchResults, activeResultIndex],
   );
 
-  const searchAndReplaceAll = React.useCallback(
+  const searchAndReplaceAll = useCallback(
     async function searchAndReplaceAllCallback() {
       if (isReplaceAllBtnDisabled && nextResultValue) {
         return;
@@ -182,7 +214,7 @@ function SearchOverlay(props) {
     setMoreOptionOpen(!isMoreOptionsOpen);
   };
 
-  const searchAndReplaceOne = React.useCallback(
+  const searchAndReplaceOne = useCallback(
     async function searchAndReplaceOneCallback() {
       if (isReplaceBtnDisabled && nextResultValue) {
         return;
@@ -298,10 +330,10 @@ function SearchOverlay(props) {
         (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
           (isMoreOptionsOpen)
             ? <div className="extra-options">
-              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.lessOptions')} <Icon glyph="icon-chevron-up"/></button>
+              <button className="Button" onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.lessOptions')} <Icon glyph="icon-chevron-up"/></button>
             </div>
             : <div className="extra-options">
-              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.moreOptions')} <Icon glyph="icon-chevron-down"/></button>
+              <button className="Button" onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.moreOptions')} <Icon glyph="icon-chevron-down"/></button>
             </div>
       }
       {
@@ -310,20 +342,22 @@ function SearchOverlay(props) {
             {searchOptionsComponents}
             {
               (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
-                <div data-element="searchAndReplace" className='replace-options'>
+                <div data-element="searchAndReplace" className="replace-options">
                   <p>{t('option.searchPanel.replace')}</p>
-                  <div className='input-container'>
+                  <div className="input-container">
                     <input type={'text'}
                       onChange={replaceTextInputOnChange}
                       value={replaceValue}
                     />
                   </div>
-                  <div className='replace-buttons'>
+                  <div className="replace-buttons">
                     { (showReplaceSpinner) ? <Spinner width={25} height={25} /> : null }
-                    <button className='Button btn-replace-all' disabled={isReplaceAllBtnDisabled}
-                      onClick={replaceAllConfirmationWarning}>{t('option.searchPanel.replaceAll')}</button>
-                    <button className='Button btn-replace' disabled={isReplaceBtnDisabled || !nextResultValue || !core.getActiveSearchResult()}
-                      onClick={replaceOneConfirmationWarning}>{t('option.searchPanel.replace')}</button>
+                    <button className="Button btn-replace-all" disabled={isReplaceAllBtnDisabled}
+                      onClick={replaceAllConfirmationWarning}
+                    >{t('option.searchPanel.replaceAll')}</button>
+                    <button className="Button btn-replace" disabled={isReplaceBtnDisabled || !nextResultValue || !core.getActiveSearchResult()}
+                      onClick={replaceOneConfirmationWarning}
+                    >{t('option.searchPanel.replace')}</button>
                   </div>
                 </div>
             }

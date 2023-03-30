@@ -1,29 +1,31 @@
 import React from 'react';
-import Item from 'components/ModularComponents/Item/Item';
 import '../Button.scss';
+import './CustomButton.scss';
 import PropTypes from 'prop-types';
-import Tooltip from 'src/components/Tooltip';
+import Button from 'components/Button';
 
-class CustomButton extends Item {
-  static propTypes = {
-    icon: PropTypes.any,
-    onClick: PropTypes.func
-  };
+const CustomButton = (props) => {
+  const { title, dataElement, label, img, onClick, disabled } = props;
+  return (
+    <Button
+      className="CustomButton Button"
+      img={img}
+      label={label}
+      title={title}
+      data-element={dataElement}
+      onClick={onClick}
+      disabled={disabled}
+    ></Button>
+  );
+};
 
-  render() {
-    return (
-      <Tooltip content={this.props.title}>
-        <button
-          className="CustomButton Button"
-          data-element={this.props.dataElement}
-          onClick={this.props.onClick}
-          disabled={this.props.disabled}
-        >
-          {this.props.icon}
-        </button>
-      </Tooltip>
-    );
-  }
-}
+CustomButton.propTypes = {
+  dataElement: PropTypes.string,
+  title: PropTypes.string,
+  label: PropTypes.string,
+  img: PropTypes.string,
+  onClick: PropTypes.func,
+  disabled: PropTypes.bool,
+};
 
 export default CustomButton;

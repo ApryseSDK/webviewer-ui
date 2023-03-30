@@ -16,6 +16,9 @@
     "comment": "Σχόλιο",
     "reply": "Προσθήκη απάντησης",
     "copy": "αντίγραφο",
+    "cut": "Τομή",
+    "paste": "Επικόλληση",
+    "pasteWithoutFormatting": "Επικόλληση χωρίς μορφοποίηση",
     "delete": "Διαγράφω",
     "group": "Ομάδα",
     "ungroup": "Κατάργηση ομαδοποίησης",
@@ -78,6 +81,7 @@
     "showLess": "Δείξε λιγότερο",
     "showMore": "...περισσότερο",
     "chooseFile": "Επιλέξτε ένα αρχείο",
+    "changeDate": "Αλλαγή ημερομηνίας",
     "browse": "ΕΞΕΡΕΥΝΗΣΗ ΑΡΧΕΙΩΝ",
     "selectYourOption": "Επιλέξτε την επιλογή σας",
     "open": "Ανοιξε",
@@ -85,6 +89,7 @@
     "select": "Επιλέγω",
     "moveToTop": "Μετακίνηση στην κορυφή",
     "moveToBottom": "Μετακίνηση προς τα κάτω",
+    "backToMenu": "Πίσω στο μενού",
     "redactPages": "Διορθώστε σελίδες",
     "playAudio": "Αναπαραγωγή ήχου",
     "pauseAudio": "παύση ήχου",
@@ -96,7 +101,8 @@
     "comparePages": "Συγκρίνετε σελίδες",
     "startComparison": "Έναρξη σύγκρισης",
     "back": "Πίσω",
-    "clearSignature": "Καθαρή υπογραφή"
+    "clearSignature": "Καθαρή υπογραφή",
+    "newDocument": "Νέο Έγγραφο"
   },
   "annotation": {
     "areaMeasurement": "Περιοχή",
@@ -380,7 +386,8 @@
       "qualityHigh": "Υψηλός",
       "includeAnnotations": "Συμπεριλάβετε σχολιασμούς",
       "includeComments": "Συμπεριλάβετε σχόλια",
-      "printSettings": "Ρυθμίσεις εκτύπωσης"
+      "printSettings": "Ρυθμίσεις εκτύπωσης",
+      "printGrayscale": "Εκτύπωση κλίμακας του γκρι"
     },
     "printInfo": {
       "author": "Συγγραφέας",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Επιλέξτε γλώσσα"
   },
+  "officeEditor": {
+    "bold": "Τολμηρός",
+    "italic": "Πλάγια γραφή",
+    "underline": "Υπογραμμίζω",
+    "textColor": "Χρώμα κειμένου",
+    "leftAlign": "Αριστερά στοίχιση",
+    "centerAlign": "Στοίχιση στο κέντρο",
+    "rightAlign": "Δεξιά στοίχιση",
+    "justify": "Δικαιολογώ",
+    "lineSpacing": "Διάστιχο γραμμών και παραγράφων",
+    "bulletList": "Λίστα με κουκκίδες",
+    "numberList": "Αριθμημένη λίστα",
+    "insertLink": "Εισαγωγή συνδέσμου",
+    "insertImage": "Εισαγωγή εικόνας",
+    "notAvailableInDemoMode": "Δεν είναι διαθέσιμο σε λειτουργία επίδειξης",
+    "notSupportedOnMobile": "Η επεξεργασία του Office δεν υποστηρίζεται σε κινητές συσκευές."
+  },
   "insertPageModal": {
     "title": "Προσθήκη νέας σελίδας",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Αλλαγή",
       "old": "Παλαιός",
       "new": "Νέος",
-      "page": "Σελίδα"
+      "page": "Σελίδα",
+      "textContent": "Περιεχόμενο κειμένου",
+      "delete": "διαγράφω",
+      "insert": "εισάγετε",
+      "edit": "επεξεργασία"
     }
   },
   "saveModal": {

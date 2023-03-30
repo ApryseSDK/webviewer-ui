@@ -3,18 +3,17 @@ import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import './TopHeader.scss';
 import ModularHeader from 'components/ModularComponents/ModularHeader';
-import { getTopHeaders } from 'helpers/headers';
 
 const TopHeaderContainer = () => {
   const [
     featureFlags,
+    topHeaders,
   ] = useSelector(
     (state) => [
       selectors.getFeatureFlags(state),
+      selectors.getTopHeaders(state)
     ]);
   const { modularHeader } = featureFlags;
-
-  const topHeaders = getTopHeaders();
   // Only two headers can be added to the top
   if (topHeaders.length > 2) {
     console.warn(`Top headers only support two headers but ${topHeaders.length} were added. Only the first two will be rendered.`);
@@ -26,8 +25,7 @@ const TopHeaderContainer = () => {
       return sortedHeaders;
     }
 
-    const { options } = header;
-    const { position } = options;
+    const { position } = header;
     if (position === 'start') {
       sortedHeaders.unshift(header);
     } else {
@@ -38,10 +36,10 @@ const TopHeaderContainer = () => {
 
   if (modularHeader && sortedTopHeaders.length) {
     return sortedTopHeaders.map((header, index) => {
-      const { options } = header;
-      const autohide = index === 0 ? false : options.autohide;
+      const { dataElement } = header;
+      const autohide = index === 0 ? false : header.autohide;
       return (
-        <ModularHeader {...options} key={options.dataElement} autohide={autohide} />
+        <ModularHeader {...header} key={dataElement} autohide={autohide} />
       );
     });
   }

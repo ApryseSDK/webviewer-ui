@@ -1,7 +1,7 @@
 import React from 'react';
-import PageReplacementModal from './PageReplacementModal'
+import PageReplacementModal from './PageReplacementModal';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 
 export default {
   title: 'Components/PageReplacementModal',
@@ -19,7 +19,7 @@ const initialState = {
   }
 };
 
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState) {
   return state;
 }
 
@@ -37,7 +37,7 @@ export function ReplaceURL() {
 
   return (
     <Provider store={store}>
-      <PageReplacementModal  {...props} />
+      <PageReplacementModal {...props} />
     </Provider>
   );
 }
@@ -53,7 +53,7 @@ const initialStateTwo = {
   }
 };
 
-function rootReducerTwo(state = initialStateTwo, action) {
+function rootReducerTwo(state = initialStateTwo) {
   return state;
 }
 const storeTwo = createStore(rootReducerTwo);
@@ -68,7 +68,7 @@ export function ReplaceUpload() {
   };
   return (
     <Provider store={storeTwo}>
-      <PageReplacementModal  {...props} />
+      <PageReplacementModal {...props} />
     </Provider>
   );
 }
@@ -84,7 +84,7 @@ const initialStateThree = {
   }
 };
 
-function rootReducerThree(state = initialStateThree, action) {
+function rootReducerThree(state = initialStateThree) {
   return state;
 }
 const storeThree = createStore(rootReducerThree);
@@ -110,7 +110,7 @@ export function ReplaceCustomFile() {
   return (
     <Provider store={storeThree}>
       <div style={{ 'box-sizing': 'border-box' }}>
-        <PageReplacementModal  {...props} />
+        <PageReplacementModal {...props} />
       </div>
     </Provider>
   );

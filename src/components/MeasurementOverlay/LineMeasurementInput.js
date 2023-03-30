@@ -1,37 +1,51 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import { useTranslation } from 'react-i18next';
 import core from 'core';
 import { isMobileDevice } from 'helpers/device';
 import selectors from 'selectors';
-import useOnClickOutside from 'src/hooks/useOnClickOutside';
-import getFormattedUnit from 'src/helpers/getFormattedUnit';
+import getAngleInRadians from 'helpers/getAngleInRadians';
 
+const unitMap = {
+  'in\"': 'in',
+  'ft\'': 'ft'
+};
 
-function LineMeasurementInput(props) {
-  const { t, annotation, isOpen } = props;
-  const isReadOnly = useSelector(state => selectors.isDocumentReadOnly(state));
-  const factor = annotation.Measure.axis[0].factor;
-  const unit = getFormattedUnit(annotation.DisplayUnits[annotation.DisplayUnits.length - 1]);
-  const [length, setLength] = useState((annotation.getLineLength() * factor).toFixed(2));
-  const [showQuotMark, setShowQuotMark] = useState(true);
-  const inputRef = useRef();
+LineMeasurementInput.propTypes = {
+  annotation: PropTypes.object,
+  isOpen: PropTypes.bool.isRequired,
+  selectedTool: PropTypes.object,
+};
 
-  useOnClickOutside(inputRef, () => setShowQuotMark(true));
+const Scale = window.Core.Scale;
+
+function LineMeasurementInput({ annotation, isOpen, selectedTool }) {
+  const [t] = useTranslation();
+  const isReadOnly = useSelector((state) => selectors.isDocumentReadOnly(state));
+  const factor = annotation?.Measure.axis[0].factor;
+  const unit = annotation?.DisplayUnits[0] || selectedTool?.Measure?.unit;
+  const [length, setLength] = useState((annotation?.getLineLength() * factor || 0).toFixed(2));
+  const [toggleDistanceInput, setDistanceInputToggle] = useState(false);
+  const [toggleAngleInput, setAngleToggle] = useState(false);
 
   useEffect(() => {
+    if (!annotation) {
+      setAngle(computeAngle());
+      return;
+    }
     const onAnnotationChanged = () => {
       setLength((annotation.getLineLength() * factor).toFixed(2));
       setAngle(computeAngle());
     };
     core.addEventListener('mouseMove', onAnnotationChanged);
+
     return () => {
       core.removeEventListener('mouseMove', onAnnotationChanged);
     };
-  }, [annotation, computeAngle, factor]);
+  }, [annotation, computeAngle, factor, selectedTool]);
 
-  const onInputChanged = event => {
+  const onInputChanged = (event) => {
     setLength(event.target.value);
     validateLineLength(event);
     finishAnnotation();
@@ -52,8 +66,15 @@ function LineMeasurementInput(props) {
     annotationManager.deselectAnnotation(annotation);
   };
 
-  const validateLineLength = event => {
-    const length = Math.abs(event.target.value);
+  const validateLineLength = (event) => {
+    if (!annotation) {
+      return;
+    }
+    let length = Math.abs(event.target.value);
+    if (length < annotation.Precision) {
+      length = annotation.Precision;
+      setLength(length);
+    }
     const factor = annotation.Measure.axis[0].factor;
     const lengthInPts = length / factor;
     ensureLineIsWithinBounds(lengthInPts);
@@ -63,13 +84,52 @@ function LineMeasurementInput(props) {
     return Math.abs(value1 - value2) < 0.1;
   };
 
-  const ensureLineIsWithinBounds = useCallback(lengthInPts => {
-    if (!isApproximatelyEqual(annotation.getLineLength(), lengthInPts)) {
-      const maxLengthInPts = getMaxLineLengthInPts();
-      annotation.setLineLength(Math.min(maxLengthInPts, lengthInPts));
-      forceLineRedraw();
+  const ensureLineIsWithinBounds = useCallback(
+    (lengthInPts) => {
+      if (!isApproximatelyEqual(annotation.getLineLength(), lengthInPts)) {
+        const maxLengthInPts = getMaxLineLengthInPts();
+        annotation.setLineLength(Math.min(maxLengthInPts, lengthInPts));
+        forceLineRedraw();
+      }
+    },
+    [annotation, forceLineRedraw, getMaxLineLengthInPts],
+  );
+
+  const getAnnotationUnit = (annotation) => {
+    let annotUnit;
+    if (annotation?.DisplayUnits?.length) {
+      if (annotation.DisplayUnits.length === 2 && annotation.DisplayUnits[0] === "ft'" && annotation.DisplayUnits[1] === 'in"') {
+        annotUnit = 'in';
+      } else {
+        annotUnit = annotation.DisplayUnits[0];
+      }
     }
-  }, [annotation, forceLineRedraw, getMaxLineLengthInPts]);
+    return unitMap[annotUnit] || annotUnit || unitMap[unit] || unit;
+  };
+
+  const renderDeltas = () => {
+    const angle = (annotation && getAngleInRadians(annotation.Start, annotation.End)) || 0;
+    const unit = getAnnotationUnit(annotation);
+    const deltaX = Scale.getFormattedValue(annotation && Math.abs(length * Math.cos(angle)), unit, annotation?.Precision);
+    const deltaY = Scale.getFormattedValue(annotation && Math.abs(length * Math.sin(angle)), unit, annotation?.Precision);
+
+    return (
+      <>
+        <div className="measurement__detail-item">
+          <div className="measurement_list">X:</div>
+          <div>
+            {deltaX}
+          </div>
+        </div>
+        <div className="measurement__detail-item">
+          <div className="measurement_list">Y:</div>
+          <div>
+            {deltaY}
+          </div>
+        </div>
+      </>
+    );
+  };
 
   const forceLineRedraw = useCallback(() => {
     const annotationManager = core.getAnnotationManager();
@@ -79,8 +139,8 @@ function LineMeasurementInput(props) {
 
   const getMaxLineLengthInPts = useCallback(() => {
     const currentPageNumber = core.getCurrentPage();
-    const documentWidth = window.documentViewer.getPageWidth(currentPageNumber);
-    const documentHeight = window.documentViewer.getPageHeight(currentPageNumber);
+    const documentWidth = core.getPageWidth(currentPageNumber);
+    const documentHeight = core.getPageHeight(currentPageNumber);
     const angleInDegrees = annotation.getAngle() * (180 / Math.PI).toFixed(2);
     const startPoint = annotation.getStartPoint();
     const startX = startPoint.x;
@@ -106,7 +166,7 @@ function LineMeasurementInput(props) {
     return Math.min(maxLenX, maxLenY);
   }, [annotation]);
 
-  const setLineAngle = event => {
+  const setLineAngle = (event) => {
     const angle = event.target.value;
     const angleInRadians = angle * (Math.PI / 180) * -1;
     const lengthInPts = annotation.getLineLength();
@@ -118,13 +178,16 @@ function LineMeasurementInput(props) {
     forceLineRedraw();
   };
 
-  const onAngleChange = event => {
+  const onAngleChange = (event) => {
     setAngle(event.target.value);
     setLineAngle(event);
     finishAnnotation();
   };
 
   const computeAngle = useCallback(() => {
+    if (!annotation) {
+      return 0;
+    }
     let angleInRadians = annotation.getAngle();
     // Multiply by -1 to achieve 0-360 degrees counterclockwise
     angleInRadians *= -1;
@@ -134,7 +197,6 @@ function LineMeasurementInput(props) {
 
   const [angle, setAngle] = useState(computeAngle());
 
-
   useEffect(() => {
     if (!isOpen) {
       ensureLineIsWithinBounds(annotation.getLineLength());
@@ -142,65 +204,78 @@ function LineMeasurementInput(props) {
   }, [annotation, ensureLineIsWithinBounds, isOpen]);
 
   return (
-    <div>
-      <div className="measurement__value">
-        {t('option.measurementOverlay.distance')}: {' '}
-        {showQuotMark && annotation.DisplayUnits.length > 1 ? (
-          <div onClick={() => setShowQuotMark(false)} className="distance-show" >{annotation.getContents()}</div>
+    <>
+      <div className="measurement__detail-item">
+        <div className="measurement_list">
+          {t('option.measurementOverlay.distance')}:
+        </div>
+        {(!annotation || !toggleDistanceInput) ? (
+          <div onClick={() => setDistanceInputToggle(true)} className="distance-show">
+            {annotation?.getContents() || 0}
+          </div>
         ) : (
           <>
             <input
-              className="lineMeasurementInput"
+              className="scale-input"
               type="number"
               min="0"
               disabled={isReadOnly}
               value={length}
-              ref={inputRef}
               autoFocus={!isMobileDevice}
-              onChange={event => {
+              onChange={(event) => {
                 onInputChanged(event);
                 selectAnnotation();
               }}
-              onBlur={event => validateLineLength(event)}
-              onKeyDown={event => {
+              onBlur={(event) => {
+                validateLineLength(event);
+                setDistanceInputToggle(false);
+              }}
+              onKeyDown={(event) => {
                 if (event.key === 'Enter') {
                   onInputChanged(event);
                   deselectAnnotation();
                 }
               }}
-            /> {unit}
+            />
+            {unit}
           </>
         )}
       </div>
-      <div className="angle_input">
-        {t('option.measurementOverlay.angle')}: {' '}
-        <input
-          className="lineMeasurementInput"
-          type="number"
-          min="0"
-          max="360"
-          disabled={isReadOnly}
-          value={angle}
-          onChange={event => {
-            onAngleChange(event);
-            selectAnnotation();
-          }}
-          onKeyDown={event => {
-            if (event.key === 'Enter') {
-              onAngleChange(event);
-              deselectAnnotation();
-            }
-          }}
-        /> &deg;
+      <div className="measurement__detail-item">
+        <div className="measurement_list">{t('option.measurementOverlay.angle')}:</div>
+        {(!annotation || !toggleAngleInput) ? (
+          <div onClick={() => setAngleToggle(true)} className="distance-show">
+            {angle}&deg;
+          </div>
+        ) : (
+          <>
+            <input
+              className="scale-input"
+              type="number"
+              min="0"
+              max="360"
+              disabled={isReadOnly}
+              value={angle}
+              autoFocus={!isMobileDevice}
+              onChange={(event) => {
+                onAngleChange(event);
+                selectAnnotation();
+              }}
+              onBlur={() => setAngleToggle(false)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  onAngleChange(event);
+                  deselectAnnotation();
+                }
+              }}
+            />
+            &deg;
+          </>
+        )}
       </div>
-    </div>
+      {renderDeltas()}
+    </>
   );
 }
-
-LineMeasurementInput.propTypes = {
-  annotation: PropTypes.object.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired,
-};
 
 export default LineMeasurementInput;

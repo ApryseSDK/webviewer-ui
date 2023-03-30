@@ -11,7 +11,7 @@ import './PrintHandler.scss';
 
 const PrintHandler = () => {
   const [isDisabled, isEmbedPrintSupported] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementDisabled(state, 'printHandler'),
       selectors.isEmbedPrintSupported(state),
     ],

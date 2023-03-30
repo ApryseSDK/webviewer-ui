@@ -11,6 +11,6 @@ WebViewer(...)
   });
  */
 
-export default store => () => {
+export default (store) => () => {
   store.dispatch(actions.setNoteSubmissionEnabledWithEnter(false));
 };

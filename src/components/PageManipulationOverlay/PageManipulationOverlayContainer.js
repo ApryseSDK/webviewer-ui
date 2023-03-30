@@ -5,12 +5,11 @@ import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import selectors from 'selectors';
 
 function PageManipulationOverlayContainer() {
-
   const [
     selectedPageIndexes,
     currentPage,
     pageManipulationOverlayItems,
-  ] = useSelector(state => [
+  ] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.getCurrentPage(state),
     selectors.getPageManipulationOverlayItems(state),
@@ -18,7 +17,7 @@ function PageManipulationOverlayContainer() {
 
 
   // If we start drilling this prop, maybe create a context
-  const pageNumbers = selectedPageIndexes.length > 0 ? selectedPageIndexes.map(i => i + 1) : [currentPage];
+  const pageNumbers = selectedPageIndexes.length > 0 ? selectedPageIndexes.map((i) => i + 1) : [currentPage];
 
   return (
     <FlyoutMenu menu="pageManipulationOverlay" trigger="pageManipulationOverlayButton" onClose={undefined}>

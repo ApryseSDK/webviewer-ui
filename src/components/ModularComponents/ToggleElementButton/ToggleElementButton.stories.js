@@ -18,6 +18,7 @@ const initialState = {
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
     customFlxPanels: [],
+    lastPickedToolGroup: '',
   },
 };
 const initialStateActive = {
@@ -43,6 +44,8 @@ const store = configureStore({
 
 export const ToggleElementButtonComponent = () => (
   <Provider store={store}>
-    <ToggleElementButton icon='icon-header-search' toggleElement='signatureModal' dataElement='toggleButton' />
+    <div style={{ width: '32px' }}>
+      <ToggleElementButton img="icon-header-search" toggleElement="signatureModal" dataElement="toggleButton" />
+    </div>
   </Provider>
 );

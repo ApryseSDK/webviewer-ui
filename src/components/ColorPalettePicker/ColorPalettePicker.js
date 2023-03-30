@@ -42,33 +42,32 @@ const ColorPalettePicker = ({
           <span>{t('annotation.custom')}</span>
         </div>}
         <div className="colorPickerColors ColorPalette">
-          {customColors.map((bg, i) =>
-            (
-              <button
-                key={bg}
-                className="cell-container"
-                onClick={() => handleColorOnClick(bg)}
-                aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
+          {customColors.map((bg, i) => (
+            <button
+              key={bg}
+              className="cell-container"
+              onClick={() => handleColorOnClick(bg)}
+              aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
+            >
+              <div
+                className={classNames({
+                  'cell-outer': true,
+                  active: colorsAreHex ? color?.toLowerCase() === bg.toLowerCase() :
+                      color?.toHexString?.()?.toLowerCase() === bg.toLowerCase(),
+                })}
               >
                 <div
                   className={classNames({
-                    'cell-outer': true,
-                    active: colorsAreHex ? color?.toLowerCase() === bg.toLowerCase() :
-                      color?.toHexString?.()?.toLowerCase() === bg.toLowerCase(),
+                    cell: true,
+                    border: bg.toLowerCase() === '#ffffff' || bg === 'transparency',
                   })}
+                  style={{ backgroundColor: bg }}
                 >
-                  <div
-                    className={classNames({
-                      cell: true,
-                      border: bg.toLowerCase() === '#ffffff' || bg === 'transparency',
-                    })}
-                    style={{ backgroundColor: bg }}
-                  >
-                    {bg === 'transparency' && transparentIcon}
-                  </div>
+                  {bg === 'transparency' && undefined}
                 </div>
-              </button>
-            ),
+              </div>
+            </button>
+          ),
           )}
           {enableEdit && (
             <button className="cell-container">
@@ -83,7 +82,7 @@ const ColorPalettePicker = ({
             <button
               className="cell-container"
               id="removeCustomColor"
-              disabled={colorToBeDeleted ? false : true}
+              disabled={!colorToBeDeleted}
               onClick={openDeleteModal}
             >
               <div className="cell-outer">

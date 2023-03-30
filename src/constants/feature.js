@@ -8,6 +8,8 @@
  * @property {string} FilePicker Ctrl/Cmd + O hotkey and a open file button that can be clicked to load local files.
  * @property {string} LocalStorage Store and retrieve tool styles from window.localStorage.
  * @property {string} NotesPanel A panel that displays information of listable annotations.
+ * @property {string} InlineComment A popup that allows to directly comment on the annotation when an annotation is selected.
+ * @property {string} RightClickAnnotationPopup Ability to open the annotation menu popup on right click.
  * @property {string} Print Ctrl/Cmd + P hotkey and a print button that can be clicked to print the current document.
  * @property {string} Redaction Redaction tools that can redact text or areas. Need fullAPI to be on to use this feature.
  * @property {string} TextSelection Ability to select text in a document.
@@ -47,6 +49,8 @@ export default {
   FilePicker: 'FilePicker',
   LocalStorage: 'LocalStorage',
   NotesPanel: 'NotesPanel',
+  InlineComment: 'InlineComment',
+  RightClickAnnotationPopup: 'RightClickAnnotationPopup',
   Print: 'Print',
   Redaction: 'Redaction',
   TextSelection: 'TextSelection',

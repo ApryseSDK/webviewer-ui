@@ -16,6 +16,9 @@
     "comment": "Kommentar",
     "reply": "Antwort",
     "copy": "Kopieren",
+    "cut": "Schneiden",
+    "paste": "Paste",
+    "pasteWithoutFormatting": "Ohne Formatierung einfügen",
     "delete": "Löschen",
     "group": "Gruppe erstellen",
     "ungroup": "Gruppe aufheben",
@@ -78,6 +81,7 @@
     "showLess": "zeige weniger",
     "showMore": "...mehr",
     "chooseFile": "Datei auswählen",
+    "changeDate": "Datum ändern",
     "browse": "Dateien durchsuchen",
     "selectYourOption": "Option wählen",
     "open": "Öffnen",
@@ -85,6 +89,7 @@
     "select": "Auswählen",
     "moveToTop": "Nach oben verschieben",
     "moveToBottom": "Nach unten gehen",
+    "backToMenu": "Zurück zum Menü",
     "redactPages": "Seiten schwärzen",
     "playAudio": "Audio abspielen",
     "pauseAudio": "Audiopause",
@@ -96,7 +101,8 @@
     "comparePages": "Seiten vergleichen",
     "startComparison": "Vergleich starten",
     "back": "Der Rücken",
-    "clearSignature": "Klare Unterschrift"
+    "clearSignature": "Klare Unterschrift",
+    "newDocument": "Neues Dokument"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -380,7 +386,8 @@
       "qualityHigh": "Hoch",
       "includeAnnotations": "Fügen Sie Anmerkungen hinzu",
       "includeComments": "Kommentare einfügen",
-      "printSettings": "Druckeinstellungen"
+      "printSettings": "Druckeinstellungen",
+      "printGrayscale": "Graustufen drucken"
     },
     "printInfo": {
       "author": "Autor",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Sprache auswählen"
   },
+  "officeEditor": {
+    "bold": "Deutlich",
+    "italic": "Kursiv",
+    "underline": "Unterstreichen",
+    "textColor": "Textfarbe",
+    "leftAlign": "Links ausrichten",
+    "centerAlign": "Zentrieren",
+    "rightAlign": "Rechts ausrichten",
+    "justify": "Rechtfertigen",
+    "lineSpacing": "Zeilen- und Absatzabstand",
+    "bulletList": "Liste mit Aufzählungszeichen",
+    "numberList": "Nummerierte Liste",
+    "insertLink": "Verknüpfung einfügen",
+    "insertImage": "Bild einfügen",
+    "notAvailableInDemoMode": "Im Demomodus nicht verfügbar",
+    "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt."
+  },
   "insertPageModal": {
     "title": "Neue Seite hinzufügen",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Veränderung",
       "old": "Alt",
       "new": "Neu",
-      "page": "Buchseite"
+      "page": "Buchseite",
+      "textContent": "Textinhalt",
+      "delete": "löschen",
+      "insert": "Einfügung",
+      "edit": "bearbeiten"
     }
   },
   "saveModal": {

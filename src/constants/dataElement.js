@@ -1,5 +1,16 @@
 // TODO - Add more here
 const DataElements = {
+  CONTEXT_MENU_POPUP: 'contextMenuPopup',
+  ANNOTATION_POPUP: 'annotationPopup',
+  ANNOTATION_NOTE_CONNECTOR_LINE: 'annotationNoteConnectorLine',
+  ANNOTATION_STYLE_POPUP: 'annotationStylePopup',
+  ANNOTATION_STYLE_POPUP_BACK_BUTTON: 'annotationStylePopupBackButton',
+  ANNOTATION_STYLE_POPUP_BACK_BUTTON_CONTAINER: 'annotationStylePopupBackButtonContainer',
+  TEXT_POPUP: 'textPopup',
+  INLINE_COMMENT_POPUP: 'inlineCommentPopup',
+  INLINE_COMMENT_POPUP_EXPAND_BUTTON: 'inlineCommentPopupExpandButton',
+  INLINE_COMMENT_POPUP_CLOSE_BUTTON: 'inlineCommentPopupCloseButton',
+
   COLOR_PALETTE: 'colorPalette',
   OPACITY_SLIDER: 'opacitySlider',
   STROKE_THICKNESS_SLIDER: 'strokeThicknessSlider',
@@ -32,10 +43,14 @@ const DataElements = {
   BOOKMARK_ADD_NEW_BUTTON: 'addNewBookmarkButton',
   NOTES_PANEL: 'notesPanel',
   FORM_FIELD_INDICATOR_CONTAINER: 'formFieldIndicatorContainer',
+  FORM_FIELD_EDIT_POPUP: 'formFieldEditPopup',
   WATERMARK_PANEL: 'watermarkPanel',
   WATERMARK_PANEL_TOGGLE: 'watermarkPanelToggle',
   WATERMARK_PANEL_IMAGE_TAB: 'watermarkPanelImageTab',
   WATERMARK_PANEL_TEXT_TAB: 'watermarkPanelTextTab',
+  SEARCH_PANEL: 'searchPanel',
+  TEXT_EDITING_PANEL: 'textEditingPanel',
+  COMPARE_PANEL: 'comparePanel',
 
   NotesPanel: {
     DefaultHeader: {
@@ -91,6 +106,8 @@ const DataElements = {
   // MultiViewer Mode (MultiViewer)
   MULTI_VIEWER_SAVE_DOCUMENT_BUTTON: 'multiViewerSaveDocumentButton',
 
+  // Office Editor
+  OFFICE_EDITOR_TOOLS_HEADER: 'officeEditorToolsHeader',
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',
   INSERT_FROM_FILE_TAB: 'insertUploadedPagePanelButton',

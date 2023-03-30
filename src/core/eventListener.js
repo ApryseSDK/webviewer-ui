@@ -8,6 +8,9 @@ export const addEventListener = (event, eventListener, options = null, documentV
 };
 
 export const removeEventListener = (event, eventListener, documentViewerKey = 1) => {
+  if (!core.getDocumentViewer(documentViewerKey)) {
+    return;
+  }
   const eventToObjectMap = getEventToObjectMap(documentViewerKey);
   const object = eventToObjectMap[event];
 
@@ -24,6 +27,9 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
   const measurementManager = documentViewer.getMeasurementManager();
 
   return {
+    cursorPropertiesUpdated: documentViewer,
+    selectionPropertiesUpdated: documentViewer,
+    officeDocumentEdited: documentViewer,
     signatureSaved: documentViewer,
     signatureDeleted: documentViewer,
     annotationsLoaded: documentViewer,

@@ -48,9 +48,9 @@ const MultiStylePopup = ({
   });
   const freeTextAnnotation = annotations.find((annotation) => {
     return (
-      annotation instanceof window.Annotations.FreeTextAnnotation &&
-      (annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeText ||
-      annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeTextCallout)
+      annotation instanceof window.Core.Annotations.FreeTextAnnotation &&
+      (annotation.getIntent() === window.Core.Annotations.FreeTextAnnotation.Intent.FreeText ||
+      annotation.getIntent() === window.Core.Annotations.FreeTextAnnotation.Intent.FreeTextCallout)
     );
   });
   let properties = {};
@@ -101,7 +101,7 @@ const MultiStylePopup = ({
       position={position}
     >
       <div
-        className='multi-style-container'
+        className="multi-style-container"
         ref={popupRef}
       >
         <AnnotationStylePopup

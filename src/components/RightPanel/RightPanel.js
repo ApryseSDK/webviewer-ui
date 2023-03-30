@@ -12,23 +12,29 @@ const RightPanel = ({ children, dataElement, onResize }) => {
     currentToolbarGroup,
     isHeaderOpen,
     isToolsHeaderOpen,
+    isOfficeEditorToolsHeaderOpen,
     isOpen,
     isDisabled,
     isInDesktopOnlyMode,
     isMultiTabActive,
+    topHeaders,
     featureFlags = {},
-    headerList = [],
+    topHeadersHeight,
+    bottomHeadersHeight,
   ] = useSelector(
     (state) => [
       selectors.getCurrentToolbarGroup(state),
       selectors.isElementOpen(state, 'header'),
       selectors.isElementOpen(state, 'toolsHeader'),
+      selectors.isElementOpen(state, 'officeEditorToolsHeader'),
       selectors.isElementOpen(state, dataElement),
       selectors.isElementDisabled(state, dataElement),
       selectors.isInDesktopOnlyMode(state),
       selectors.getIsMultiTab(state),
+      selectors.getTopHeaders(state),
       selectors.getFeatureFlags(state),
-      selectors.getModularHeaderList(state),
+      selectors.getTopHeadersHeight(state),
+      selectors.getBottomHeadersHeight(state),
     ],
     shallowEqual,
   );
@@ -44,20 +50,26 @@ const RightPanel = ({ children, dataElement, onResize }) => {
 
   // TODO: For whoever is refactoring the RightPanel to make it generic, review if this is the best approach
   // Once we move to the new modular UI we can remove the legacy stuff
-  const topHeaders = headerList.filter((header) => header.props.placement === 'top');
   const legacyToolsHeaderOpen = isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View';
   const legacyAllHeadersHidden = !isHeaderOpen && !legacyToolsHeaderOpen;
   const { modularHeader } = featureFlags;
+  const style = {};
+  // Calculating its height according to the existing horizontal modular headers
+  if (modularHeader) {
+    const horizontalHeadersHeight = topHeadersHeight + bottomHeadersHeight;
+    style['height'] = `calc(100% - ${horizontalHeadersHeight}px)`;
+  }
 
   return (
     <div
       className={classNames({
         'right-panel': true,
         'closed': !isVisible,
-        'tools-header-open': modularHeader ? topHeaders.length === 2 : legacyToolsHeaderOpen,
+        'tools-header-open': (modularHeader ? topHeaders.length === 2 : legacyToolsHeaderOpen) || isOfficeEditorToolsHeaderOpen,
         'tools-header-and-header-hidden': modularHeader ? topHeaders.length === 0 : legacyAllHeadersHidden,
         'multi-tab-active': isMultiTabActive
       })}
+      style={style}
     >
       {(isInDesktopOnlyMode || !isTabletAndMobile) &&
         <ResizeBar

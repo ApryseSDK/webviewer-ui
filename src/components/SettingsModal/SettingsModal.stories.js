@@ -3,7 +3,7 @@ import SettingsModal from './SettingsModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import DataElements from 'constants/dataElement';
-import hotkeysManager from 'helpers/hotkeysManager';
+import hotkeysManager, { ShortcutKeys } from 'helpers/hotkeysManager';
 
 export default {
   title: 'Components/SettingsModal',
@@ -30,7 +30,8 @@ const getStore = (num) => {
             isHighContrastMode = enable;
           }
         }
-      ]
+      ],
+      shortcutKeyMap: { ...ShortcutKeys }
     },
     search: {
       clearSearchPanelOnClose: false

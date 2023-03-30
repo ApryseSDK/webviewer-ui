@@ -175,10 +175,10 @@ const Thumbnail = ({
         // get the range of the selected index and update selected page
         const currSelectMinIndex = Math.min(shiftKeyPivot, index);
         const currSelectMaxIndex = Math.max(shiftKeyPivot, index);
-        updatedSelectedPages = Array.from(
+        updatedSelectedPages = [...new Set([...updatedSelectedPages, ...Array.from(
           { length: currSelectMaxIndex - currSelectMinIndex + 1 },
           (_, i) => i + currSelectMinIndex,
-        );
+        )])];
       } else if (multiSelectionKeyPressed || isThumbnailSelectingPages) {
         dispatch(actions.setThumbnailSelectingPages(true));
         // Only select a page if multiSelectionKeyPressed or if checkbox is checked unless in 'thumbnail' mode
@@ -190,15 +190,14 @@ const Thumbnail = ({
             updatedSelectedPages = selectedPageIndexes.filter((pageIndex) => index !== pageIndex);
           } else {
             updatedSelectedPages.push(index);
+            dispatch(actions.setShiftKeyThumbnailsPivotIndex(index));
           }
         }
       } else {
         updatedSelectedPages = [index];
       }
       // set shiftKeyPivot when press ctr key or single key
-      !isThumbnailSelectingPages &&
-        !shiftKeyPressed &&
-        dispatch(actions.setShiftKeyThumbnailsPivotIndex(updatedSelectedPages[updatedSelectedPages.length - 1]));
+      !isThumbnailSelectingPages && !shiftKeyPressed && dispatch(actions.setShiftKeyThumbnailsPivotIndex(updatedSelectedPages[updatedSelectedPages.length - 1]));
       dispatch(actions.setSelectedPageThumbnails(updatedSelectedPages));
     } else if (isMobile()) {
       dispatch(actions.closeElement('leftPanel'));

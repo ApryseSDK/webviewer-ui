@@ -21,7 +21,7 @@ WebViewer(...)
 
 import selectors from 'selectors';
 
-export default store => arg => {
+export default (store) => (arg) => {
   let fonts;
 
   if (typeof arg === 'string') {

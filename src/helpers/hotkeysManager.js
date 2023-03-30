@@ -735,28 +735,28 @@ WebViewer(...)
       }),
       [ShortcutKeys[Shortcuts.SQUIGGLY]]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
-          createTextAnnotationAndSelect(dispatch, window.Annotations.TextSquigglyAnnotation);
+          createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextSquigglyAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextSquiggly');
         }
       }),
       [ShortcutKeys[Shortcuts.HIGHLIGHT]]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
-          createTextAnnotationAndSelect(dispatch, window.Annotations.TextHighlightAnnotation);
+          createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextHighlightAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextHighlight');
         }
       }),
       [ShortcutKeys[Shortcuts.STRIKEOUT]]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
-          createTextAnnotationAndSelect(dispatch, window.Annotations.TextStrikeoutAnnotation);
+          createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextStrikeout');
         }
       }),
       [ShortcutKeys[Shortcuts.UNDERLINE]]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
-          createTextAnnotationAndSelect(dispatch, window.Annotations.TextUnderlineAnnotation);
+          createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextUnderlineAnnotation);
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextUnderline');
         }

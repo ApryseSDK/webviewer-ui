@@ -8,8 +8,8 @@ import { ITEM_TYPE } from 'constants/customizationVariables';
 import ToggleElementButton from '../ToggleElementButton';
 
 const InnerItem = (props) => {
-  const { type, dataElement, headerDirection } = props;
-  const key = `${type}-${dataElement}`;
+  const { type, dataElement, headerDirection, headerPlacement } = props;
+  const key = `${type}-${dataElement}-${headerPlacement}`;
 
   switch (type) {
     case ITEM_TYPE.BUTTON:

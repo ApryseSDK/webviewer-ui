@@ -29,8 +29,8 @@ describe('LineStyleOptions', () => {
         />
       );
 
-      const dropdowns = container.querySelectorAll(`button.Dropdown`);
-      expect(dropdowns.length).toBe(2);
+      const dropdowns = container.querySelectorAll('button.Dropdown');
+      expect(dropdowns.length).toBe(3);
     });
 
     it('when a new choice is selected the callback should be invoked', () => {

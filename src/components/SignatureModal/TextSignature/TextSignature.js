@@ -107,7 +107,7 @@ const TextSignature = ({
   const [fullSignature, setFullSiganture] = useState('');
   const [initials, setInitials] = useState('');
   const [isDefaultValue, setIsDefaultValue] = useState(true);
-  const [fontColor, setFontColor] = useState(new window.Annotations.Color(DEFAULT_FONT_COLOR));
+  const [fontColor, setFontColor] = useState(new window.Core.Annotations.Color(DEFAULT_FONT_COLOR));
   const [fontSize, setFontSize] = useState(TYPED_SIGNATURE_FONT_SIZE);
   const inputRef = useRef();
   const fullSignatureHiddenCanvasRef = useRef();
@@ -311,7 +311,7 @@ const TextSignature = ({
             />
           </label>
           <div className="signature-input-footer">
-            <div className='signature-prompt'>
+            <div className="signature-prompt">
               {t('option.signatureModal.typeSignature')}
             </div>
             <button
@@ -338,7 +338,7 @@ const TextSignature = ({
             />
           </label>
           <div className="signature-input-footer">
-            <div className='signature-prompt'>
+            <div className="signature-prompt">
               {t('option.signatureModal.typeInitial')}
             </div>
             <button

@@ -9,13 +9,14 @@ import core from 'core';
 
 import Dropdown from 'components/Dropdown';
 import Button from 'components/Button';
-import DataElementWrapper from '../DataElementWrapper';
+import DataElementWrapper from 'components/DataElementWrapper';
+import CustomElement from 'components/CustomElement';
 
 import Events from 'constants/events';
 import { getSortStrategies } from 'constants/sortStrategies';
-import './NotesPanelHeader.scss';
-import CustomElement from '../CustomElement';
 import DataElements from 'src/constants/dataElement';
+
+import './NotesPanelHeader.scss';
 
 const SORT_CONTAINER_ELEMENT = 'sortContainer';
 
@@ -89,11 +90,13 @@ function NotesPanelHeader({
   const originalHeaderElement = (
     <DataElementWrapper
       className="header"
-      dataElement="notesPanelHeader">
+      dataElement="notesPanelHeader"
+    >
 
       <DataElementWrapper
         className="input-container"
-        dataElement={`${DataElements.NotesPanel.DefaultHeader.INPUT_CONTAINER}`}>
+        dataElement={`${DataElements.NotesPanel.DefaultHeader.INPUT_CONTAINER}`}
+      >
         <input
           type="text"
           placeholder={t('message.searchCommentsPlaceholder')}
@@ -105,13 +108,15 @@ function NotesPanelHeader({
 
       <DataElementWrapper
         className="comments-counter"
-        dataElement={`${DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}`}>
-        <span className='main-comment'>{t('component.notesPanel')}</span> {`(${notes.length})`}
+        dataElement={`${DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}`}
+      >
+        <span className="main-comment">{t('component.notesPanel')}</span> {`(${notes.length})`}
       </DataElementWrapper>
 
       <DataElementWrapper
         className="sort-row"
-        dataElement={`${DataElements.NotesPanel.DefaultHeader.SORT_ROW}`}>
+        dataElement={`${DataElements.NotesPanel.DefaultHeader.SORT_ROW}`}
+      >
         {(isSortContainerDisabled) ? <div className="sort-container"></div> : sortContainer}
         <div
           className="buttons-container"

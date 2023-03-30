@@ -82,7 +82,7 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
   };
 
   return (
-    <div className='reply-area-multi-container'>
+    <div className="reply-area-multi-container">
       <div
         className="reply-area-multi-header"
       >
@@ -115,11 +115,11 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
             isReply
           />
         </div>
-        <div className='reply-button-container'>
+        <div className="reply-button-container">
           <Button
             img="icon-post-reply"
             className={'reply-button'}
-            isSubmitType={true}
+            isSubmitType
           />
         </div>
       </form>

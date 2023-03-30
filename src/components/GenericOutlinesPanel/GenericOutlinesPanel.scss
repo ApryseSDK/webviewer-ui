@@ -1,0 +1,20 @@
+@import '../../constants/panel';
+
+.GenericOutlinesPanel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .bookmark-outline-single-container {
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+
+  .bookmark-outline-row {
+    padding-top: 6px;
+  }
+
+  .msg-no-bookmark-outline {
+    margin-top: 6px;
+  }
+}

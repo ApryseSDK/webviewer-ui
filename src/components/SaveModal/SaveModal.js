@@ -30,7 +30,7 @@ const FILE_TYPES = {
   OFFICE: { label: 'OFFICE (*.pptx,*.docx,*.xlsx)', extension: 'office' },
   PDF: { label: 'PDF (*.pdf)', extension: 'pdf', },
   IMAGE: { label: 'PNG (*.png)', extension: 'png', },
-  OFFICE_EDITOR: { label: 'Word Document(*.docx)', extension: 'docx', },
+  OFFICE_EDITOR: { label: 'Word Document (*.docx)', extension: 'office', },
 };
 // These legacy office extensions return corrupted file data from the workers if downloaded as OFFICE
 const CORRUPTED_OFFICE_EXTENSIONS = ['.ppt', '.xls'];
@@ -60,6 +60,8 @@ const SaveModal = () => {
     const updateFile = async () => {
       const document = core.getDocument(activeDocumentViewerKey);
       if (document) {
+        setFiletype(FILE_TYPES.PDF);
+        setFileTypes(initalFileTypes);
         const filename = document.getFilename();
         const newFilename = filename.substring(0, filename.lastIndexOf('.')) || filename;
         setFilename(newFilename);
@@ -75,9 +77,6 @@ const SaveModal = () => {
         } else if (type === workerTypes.OFFICE_EDITOR) {
           setFileTypes([FILE_TYPES.OFFICE_EDITOR]);
           setFiletype(FILE_TYPES.OFFICE_EDITOR);
-        } else {
-          setFileTypes(initalFileTypes);
-          setFiletype(FILE_TYPES.PDF);
         }
         setPageCount(core.getTotalPages(activeDocumentViewerKey));
       }
@@ -155,19 +154,19 @@ const SaveModal = () => {
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
       <FocusTrap locked={isOpen}>
         <div className={classNames('SaveModal', { open: isOpen, closed: !isOpen })} data-element={DataElements.SAVE_MODAL}>
-          <div className='container'>
-            <div className='header'>
-              <div className='header-text' >{t('saveModal.saveAs')}</div>
-              <Button className='close-button' onClick={closeModal} img='ic_close_black_24px' title='action.close' />
+          <div className="container">
+            <div className="header">
+              <div className="header-text" >{t('saveModal.saveAs')}</div>
+              <Button className="close-button" onClick={closeModal} img="ic_close_black_24px" title="action.close" />
             </div>
-            <div className='modal-body'>
-              <div className='title'>{t('saveModal.general')}</div>
-              <div className='input-container'>
-                <div className='label'>{t('saveModal.fileName')}</div>
-                <input type='text' placeholder={t('saveModal.fileName')} value={filename} onChange={onFilenameChange} />
+            <div className="modal-body">
+              <div className="title">{t('saveModal.general')}</div>
+              <div className="input-container">
+                <div className="label">{t('saveModal.fileName')}</div>
+                <input type="text" placeholder={t('saveModal.fileName')} value={filename} onChange={onFilenameChange} />
               </div>
-              <div className='input-container'>
-                <div className='label'>{t('saveModal.fileType')}</div>
+              <div className="input-container">
+                <div className="label">{t('saveModal.fileType')}</div>
                 <Dropdown
                   items={fileTypes.map((i) => i.label)}
                   onClickItem={onFiletypeChange}
@@ -175,19 +174,19 @@ const SaveModal = () => {
                 />
               </div>
               {!optionsDisabled && (<>
-                <div className='title'>{t('saveModal.pageRange')}</div>
-                <form className='radio-container' onChange={onPageRangeChange} onSubmit={preventDefault}>
+                <div className="title">{t('saveModal.pageRange')}</div>
+                <form className="radio-container" onChange={onPageRangeChange} onSubmit={preventDefault}>
                   <Choice
                     checked={pageRange === PAGE_RANGES.ALL}
                     radio
-                    name='page-range-option'
+                    name="page-range-option"
                     label={t('saveModal.all')}
                     value={PAGE_RANGES.ALL}
                   />
                   <Choice
                     checked={pageRange === PAGE_RANGES.CURRENT_PAGE}
                     radio
-                    name='page-range-option'
+                    name="page-range-option"
                     label={t('saveModal.currentPage')}
                     value={PAGE_RANGES.CURRENT_PAGE}
                   />
@@ -202,7 +201,7 @@ const SaveModal = () => {
                   <Choice
                     checked={pageRange === PAGE_RANGES.SPECIFY}
                     radio
-                    name='page-range-option'
+                    name="page-range-option"
                     label={t('saveModal.specifyPage')}
                     value={PAGE_RANGES.SPECIFY}
                   />
@@ -221,24 +220,24 @@ const SaveModal = () => {
                     </div>
                   )}
                 </form>
-                <div className='title'>{t('saveModal.properties')}</div>
-                <div className='checkbox-container'>
+                <div className="title">{t('saveModal.properties')}</div>
+                <div className="checkbox-container">
                   <Choice
                     checked={includeAnnotations}
-                    name='include-annotation-option'
+                    name="include-annotation-option"
                     label={t('saveModal.includeAnnotation')}
                     onChange={onIncludeAnnotationsChanged}
                   />
                   <Choice
                     checked={includeComments}
-                    name='include-comment-option'
+                    name="include-comment-option"
                     label={t('saveModal.includeComments')}
                     onChange={onIncludeCommentsChanged}
                   />
                 </div>
               </>)}
             </div>
-            <div className='footer'>
+            <div className="footer">
               <button disabled={saveDisabled} onClick={onSave}>{t('saveModal.save')}</button>
             </div>
           </div>

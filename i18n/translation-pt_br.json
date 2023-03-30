@@ -16,6 +16,9 @@
     "comment": "Novo comentário",
     "reply": "Responder",
     "copy": "Copiar",
+    "cut": "Corte",
+    "paste": "Colar",
+    "pasteWithoutFormatting": "colar sem formatar",
     "delete": "Apagar",
     "group": "Grupo",
     "ungroup": "Desagrupar",
@@ -78,6 +81,7 @@
     "showLess": "mostre menos",
     "showMore": "...mais",
     "chooseFile": "Escolha um arquivo",
+    "changeDate": "Alterar data",
     "browse": "Procurar arquivos",
     "selectYourOption": "Selecione sua opção",
     "open": "Aberto",
@@ -85,6 +89,7 @@
     "select": "Selecione",
     "moveToTop": "Mover para o topo",
     "moveToBottom": "Mover para o fundo",
+    "backToMenu": "Voltar ao menu",
     "redactPages": "Redigir páginas",
     "playAudio": "Reproduzir áudio",
     "pauseAudio": "pausa de áudio",
@@ -96,7 +101,8 @@
     "comparePages": "Comparar páginas",
     "startComparison": "Iniciar comparação",
     "back": "De volta",
-    "clearSignature": "Assinatura clara"
+    "clearSignature": "Assinatura clara",
+    "newDocument": "Novo Documento"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -380,7 +386,8 @@
       "qualityHigh": "Alto",
       "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
-      "printSettings": "Configurações de impressão"
+      "printSettings": "Configurações de impressão",
+      "printGrayscale": "Imprimir escala de cinza"
     },
     "printInfo": {
       "author": "Autor",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Selecione o idioma"
   },
+  "officeEditor": {
+    "bold": "Audacioso",
+    "italic": "itálico",
+    "underline": "Sublinhado",
+    "textColor": "Cor do texto",
+    "leftAlign": "alinhar à esquerda",
+    "centerAlign": "Alinhar ao centro",
+    "rightAlign": "alinhar à direita",
+    "justify": "Justificar",
+    "lineSpacing": "Espaçamento entre linhas e parágrafos",
+    "bulletList": "Lista com marcadores",
+    "numberList": "lista numerada",
+    "insertLink": "Inserir link",
+    "insertImage": "Inserir Imagem",
+    "notAvailableInDemoMode": "Não disponível no modo de demonstração",
+    "notSupportedOnMobile": "A edição do Office não é suportada em dispositivos móveis."
+  },
   "insertPageModal": {
     "title": "Adicionar nova página",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Mudar",
       "old": "Velho",
       "new": "Novo",
-      "page": "Página"
+      "page": "Página",
+      "textContent": "conteúdo de texto",
+      "delete": "excluir",
+      "insert": "inserir",
+      "edit": "editar"
     }
   },
   "saveModal": {

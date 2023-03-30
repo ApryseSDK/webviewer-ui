@@ -21,7 +21,7 @@ const getMockRedactionAnnotation = () => (
   }
 );
 
-function noop() { };
+function noop() { }
 
 const RedactionItemWithRedux = withProviders(RedactionItem);
 
@@ -30,19 +30,19 @@ describe('RedactionItem', () => {
   describe('storybook components', () => {
     it('renders text redaction item correctly', () => {
       expect(() => {
-        render(<TextRedactionItem />)
+        render(<TextRedactionItem />);
       }).not.toThrow();
     });
 
     it('renders region redaction item correctly', () => {
       expect(() => {
-        render(<RegionRedactionItem />)
+        render(<RegionRedactionItem />);
       }).not.toThrow();
     });
 
     it('renders full page redaction item correctly', () => {
       expect(() => {
-        render(<FullPageRedactionItem />)
+        render(<FullPageRedactionItem />);
       }).not.toThrow();
     });
   });
@@ -54,7 +54,7 @@ describe('RedactionItem', () => {
 
     it('when it is a text redaction, it renders a text preview', async () => {
       // Handy helper to mock the ref that is used by the text preview component
-      setMockRefElement({ clientWidth: 150 })
+      setMockRefElement({ clientWidth: 150 });
       const mockRedactionAnnotation = getMockRedactionAnnotation();
       mockRedactionAnnotation.redactionType = redactionTypeMap['TEXT'];
       mockRedactionAnnotation.icon = 'icon-form-field-text';
@@ -68,7 +68,7 @@ describe('RedactionItem', () => {
       };
 
       render(<RedactionItemWithRedux {...textRedactionItemProps} />);
-      screen.getByText('This is a preview of the text that will be redacted by Duncan Idaho')
+      screen.getByText('This is a preview of the text that will be redacted by Duncan Idaho');
     });
 
     it('when it is a region redaction, it renders the correct message', () => {
@@ -87,7 +87,7 @@ describe('RedactionItem', () => {
       };
 
       render(<RedactionItemWithRedux {...regionRedactionItemProps} />);
-      screen.getByText('Region redaction')
+      screen.getByText('Region redaction');
     });
 
     it('when it is a full page redaction, it renders the correct message', () => {
@@ -176,5 +176,5 @@ describe('RedactionItem', () => {
       userEvent.click(deleteButton);
       expect(mockOnRedactionItemDelete).toHaveBeenCalled();
     });
-  })
-})
+  });
+});

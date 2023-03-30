@@ -11,8 +11,14 @@ import selectors from 'selectors';
   })
  */
 
+/**
+ * @typedef {Object} UI.addTabOptions
+ * @property {UI.loadDocumentOptions} [loadDocumentOptions] The document loading options
+ * @property {boolean} [setActive] Whether to set the new tab as active immediately after adding it (default: true)
+ * @property {boolean} [saveCurrentActiveTabState] Whether to save the current tab annotations, scroll position, and zoom level before adding the new tab (only used when setActive=true) (default: true)
+ */
 
-export default store => Object.create(TabManagerAPI).initialize(store);
+export default (store) => Object.create(TabManagerAPI).initialize(store);
 
 const TabManagerAPI = {
   initialize(store) {
@@ -22,22 +28,22 @@ const TabManagerAPI = {
   /**
    * Set the currently open tab in the UI
    * @method UI.TabManager.setActiveTab
-   * @param tabId {number} The tab id to set as the current tab
-   * @param [saveCurrent] {boolean} Whether to save the current tab state before switching to the new tab (default: true)
+   * @param {number} tabId The tab id to set as the current tab
+   * @param {boolean} [saveCurrentActiveTabState] Whether to save the current tab annotations, scroll position, and zoom level before switching to the new tab (default: true)
    * @returns {Promise<void>} Resolves when the tab is loaded
    * @example
    * WebViewer(...).then(function(instance) {
    *   instance.UI.TabManager.setActiveTab(0, false); // Set to tab id 0 discarding current tab state
    * });
    */
-  async setActiveTab(tabId, saveCurrent = true) {
+  async setActiveTab(tabId, saveCurrentActiveTabState = true) {
     const tabManager = selectors.getTabManager(this.store.getState());
-    await tabManager.setActiveTab(tabId, saveCurrent);
+    await tabManager.setActiveTab(tabId, saveCurrentActiveTabState);
   },
   /**
    * Delete a tab by id in the UI
    * @method UI.TabManager.deleteTab
-   * @param tabId {number} The tab id to be deleted from the tab header
+   * @param {number} tabId The tab id to be deleted from the tab header
    * @returns {void}
    * @example
    * WebViewer(...).then(function(instance) {
@@ -52,13 +58,11 @@ const TabManagerAPI = {
    * Add a new tab to the UI
    * @method UI.TabManager.addTab
    * @param {(string|File|Blob|Core.Document|Core.PDFNet.PDFDoc)} src The source of the tab to be added (e.g. a URL, a blob, ArrayBuffer, or a File)
-   * @param {UI.loadDocumentOptions} [options] The options for the tab to be added
-   * @param {boolean} [options.load] Whether to load the tab immediately after adding it (default: true)
-   * @param {boolean} [options.saveCurrent] Whether to save the current tab state before adding the new tab (only used when load=true) (default: true)
+   * @param {UI.addTabOptions} [options] The options for the tab to be added
    * @returns {Promise<number>} Resolves to the tab id of the newly added tab
    * @example
    * WebViewer(...).then(function(instance) {
-   *   instance.UI.TabManager.addTab('http://www.example.com/pdf', {extension: "pdf", load: true, saveCurrent: true}); // Add a new tab with the URL http://www.example.com
+   *   instance.UI.TabManager.addTab('http://www.example.com/pdf', {extension: "pdf", setActive: true, saveCurrentActiveTabState: true}); // Add a new tab with the URL http://www.example.com
    * });
    */
   async addTab(src, options) {
@@ -74,7 +78,7 @@ const TabManagerAPI = {
     const state = this.store.getState();
     const activeTab = selectors.getActiveTab(state);
     const tabs = selectors.getTabs(state);
-    const currentTab = tabs.find(tab => tab.id === activeTab);
+    const currentTab = tabs.find((tab) => tab.id === activeTab);
     return {
       id: currentTab.id,
       options: currentTab.options,
@@ -88,7 +92,7 @@ const TabManagerAPI = {
    */
   getAllTabs() {
     const tabManager = selectors.getTabManager(this.store.getState());
-    return tabManager.map(tab => ({
+    return tabManager.map((tab) => ({
       id: tab.id,
       options: tab.options,
       src: tab.src,

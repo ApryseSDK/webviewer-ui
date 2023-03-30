@@ -78,7 +78,7 @@ const NoteGroupSection = ({
                 key={groupAnnotation.Id}
                 annotation={groupAnnotation}
                 isUnread={false}
-                isGroupMember={true}
+                isGroupMember
                 isMultiSelectMode={isMultiSelectMode}
               />
             </div>

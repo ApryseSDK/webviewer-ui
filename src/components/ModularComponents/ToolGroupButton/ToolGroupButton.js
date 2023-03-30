@@ -37,7 +37,7 @@ const ToolGroupButton = (props) => {
   };
 
   return (
-    <div className='ToolGroupButton'>
+    <div className="ToolGroupButton">
       <Button
         isActive={isActive}
         dataElement={dataElement}

@@ -299,6 +299,19 @@ export const setWv3dPropertiesPanelSchema = (schema) => ({
   type: 'SET_WV3D_PROPERTIES_PANEL_SCHEMA',
   payload: { schema },
 });
+export const setOfficeEditorCursorProperties = (cursorProperties) => ({
+  type: 'SET_OFFICE_EDITOR_CURSOR_PROPERTIES',
+  payload: { cursorProperties },
+});
+export const setOfficeEditorSelectionProperties = (selectionProperties) => ({
+  type: 'SET_OFFICE_EDITOR_SELECTION_PROPERTIES',
+  payload: { selectionProperties },
+});
+export const addOfficeEditorAvailableFontFace = (fontFace) => ({
+  type: 'ADD_OFFICE_EDITOR_AVAILABLE_FONT_FACE',
+  payload: { fontFace },
+});
+
 export const setDocumentContainerWidth = (width) => ({
   type: 'SET_DOCUMENT_CONTAINER_WIDTH',
   payload: { width },

@@ -1,3 +1,3 @@
 import MathSymbolsPicker from './MathSymbolsPicker';
 
-export default MathSymbolsPicker; 
+export default MathSymbolsPicker;

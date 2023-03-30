@@ -16,6 +16,9 @@
     "comment": "Komentar",
     "reply": "Tambahkan balasan",
     "copy": "Salinan",
+    "cut": "Memotong",
+    "paste": "Tempel",
+    "pasteWithoutFormatting": "Tempel tanpa memformat",
     "delete": "Menghapus",
     "group": "Kelompok",
     "ungroup": "Pisahkan grup",
@@ -78,6 +81,7 @@
     "showLess": "tampilkan lebih sedikit",
     "showMore": "...lagi",
     "chooseFile": "Pilih file",
+    "changeDate": "Ganti tanggal",
     "browse": "Mencari berkas",
     "selectYourOption": "Pilih opsi Anda",
     "open": "Membuka",
@@ -85,6 +89,7 @@
     "select": "Pilih",
     "moveToTop": "Pindah ke atas",
     "moveToBottom": "Pindah ke bawah",
+    "backToMenu": "Kembali ke menu",
     "redactPages": "Redaksi halaman",
     "playAudio": "Putar audio",
     "pauseAudio": "jeda audio",
@@ -96,7 +101,8 @@
     "comparePages": "Bandingkan halaman",
     "startComparison": "Mulai Perbandingan",
     "back": "Kembali",
-    "clearSignature": "Tanda tangan yang jelas"
+    "clearSignature": "Tanda tangan yang jelas",
+    "newDocument": "Dokumen Baru"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -380,7 +386,8 @@
       "qualityHigh": "Tinggi",
       "includeAnnotations": "Sertakan anotasi",
       "includeComments": "Sertakan komentar",
-      "printSettings": "Pengaturan Cetak"
+      "printSettings": "Pengaturan Cetak",
+      "printGrayscale": "Cetak Skala abu-abu"
     },
     "printInfo": {
       "author": "Pengarang",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Pilih bahasa"
   },
+  "officeEditor": {
+    "bold": "Berani",
+    "italic": "Miring",
+    "underline": "Menggarisbawahi",
+    "textColor": "Warna teks",
+    "leftAlign": "Rata kiri",
+    "centerAlign": "Rata tengah",
+    "rightAlign": "Rata kanan",
+    "justify": "Membenarkan",
+    "lineSpacing": "Penspasian baris & paragraf",
+    "bulletList": "Daftar berpoin",
+    "numberList": "Daftar bernomor",
+    "insertLink": "Sisipkan tautan",
+    "insertImage": "Sisipkan gambar",
+    "notAvailableInDemoMode": "Tidak tersedia dalam mode demo",
+    "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler."
+  },
   "insertPageModal": {
     "title": "Tambahkan Halaman Baru",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Mengubah",
       "old": "Tua",
       "new": "Baru",
-      "page": "Halaman"
+      "page": "Halaman",
+      "textContent": "Konten Teks",
+      "delete": "menghapus",
+      "insert": "menyisipkan",
+      "edit": "sunting"
     }
   },
   "saveModal": {

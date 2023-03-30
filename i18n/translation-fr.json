@@ -16,6 +16,9 @@
     "comment": "Commenter",
     "reply": "Répondre",
     "copy": "Copier",
+    "cut": "Couper",
+    "paste": "Pâte",
+    "pasteWithoutFormatting": "Coller sans formater",
     "delete": "Supprimer",
     "group": "Grouper",
     "ungroup": "Dissocier",
@@ -78,6 +81,7 @@
     "showLess": "Montrer moins",
     "showMore": "...Suite",
     "chooseFile": "Choisissez un fichier",
+    "changeDate": "Date de modification",
     "browse": "Parcourir les fichiers",
     "selectYourOption": "Sélectionnez votre option",
     "open": "Ouvert",
@@ -85,6 +89,7 @@
     "select": "Sélectionner",
     "moveToTop": "Déplacer vers le haut",
     "moveToBottom": "Déplacer vers le bas",
+    "backToMenu": "Retour au menu",
     "redactPages": "Masquer les pages",
     "playAudio": "Lecture audio",
     "pauseAudio": "Pause audio",
@@ -96,7 +101,8 @@
     "comparePages": "Comparer les pages",
     "startComparison": "Commencer la comparaison",
     "back": "Retour",
-    "clearSignature": "Signature claire"
+    "clearSignature": "Signature claire",
+    "newDocument": "Nouveau document"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -135,7 +141,7 @@
     "stickyNote": "Note collante",
     "strikeout": "Rayer",
     "underline": "Soulignement",
-    "custom": "personnalisation",
+    "custom": "Personnalisation",
     "rubberStamp": "Estampille",
     "note": "Remarque",
     "textField": "Champ de texte",
@@ -380,7 +386,8 @@
       "qualityHigh": "Haute",
       "includeAnnotations": "Inclure les annotations",
       "includeComments": "Inclure les commentaires",
-      "printSettings": "Paramètres d'impression"
+      "printSettings": "Paramètres d'impression",
+      "printGrayscale": "Imprimer en niveaux de gris"
     },
     "printInfo": {
       "author": "Auteur",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "Choisir la langue"
   },
+  "officeEditor": {
+    "bold": "Gras",
+    "italic": "Italique",
+    "underline": "Souligner",
+    "textColor": "Couleur du texte",
+    "leftAlign": "Alignement à gauche",
+    "centerAlign": "Aligner au centre",
+    "rightAlign": "Alignement à droite",
+    "justify": "Justifier",
+    "lineSpacing": "Espacement des lignes et des paragraphes",
+    "bulletList": "Liste à puces",
+    "numberList": "Liste numérotée",
+    "insertLink": "Insérer un lien",
+    "insertImage": "Insérer une image",
+    "notAvailableInDemoMode": "Non disponible en mode démo",
+    "notSupportedOnMobile": "L'édition Office n'est pas prise en charge sur les appareils mobiles."
+  },
   "insertPageModal": {
     "title": "Ajouter une nouvelle page",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "Changer",
       "old": "Agé de",
       "new": "Nouveau",
-      "page": "Page"
+      "page": "Page",
+      "textContent": "Contenu du texte",
+      "delete": "effacer",
+      "insert": "insérer",
+      "edit": "Éditer"
     }
   },
   "saveModal": {

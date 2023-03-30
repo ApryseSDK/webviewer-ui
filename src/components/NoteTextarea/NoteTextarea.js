@@ -21,15 +21,22 @@ const propTypes = {
 };
 
 const NoteTextarea = React.forwardRef((props, forwardedRef) => {
-  const [userData, canSubmitByEnter] = useSelector(
+  const [
+    userData,
+    canSubmitByEnter,
+    autoFocusNoteOnAnnotationSelection,
+    isNoteEditing,
+  ] = useSelector(
     (state) => [
       selectors.getUserData(state),
       selectors.isNoteSubmissionWithEnterEnabled(state),
+      selectors.getAutoFocusNoteOnAnnotationSelection(state),
+      selectors.getIsNoteEditing(state),
     ],
     shallowEqual,
   );
 
-  const { resize } = useContext(NoteContext);
+  const { resize, isContentEditable, isSelected, } = useContext(NoteContext);
   const textareaRef = useRef();
   const prevHeightRef = useRef();
   const [pasting, setPasting] = useState(false);
@@ -42,7 +49,6 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     if (prevHeightRef.current && prevHeightRef.current !== boundingBox.height) {
       resize();
     }
-
     prevHeightRef.current = boundingBox.height;
     // we need value to be in the dependency array because the height will only change when value changes
     // eslint-disable-next-line
@@ -57,6 +63,19 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
       window.removeEventListener('paste', handlePasting);
     };
   }, []);
+
+  useEffect(() => {
+    if (
+      isNoteEditing &&
+      isSelected &&
+      isContentEditable &&
+      autoFocusNoteOnAnnotationSelection &&
+      textareaRef &&
+      textareaRef.current
+    ) {
+      textareaRef.current.focus();
+    }
+  });
 
   const handleKeyDown = (e) => {
     const enterKey = 13;

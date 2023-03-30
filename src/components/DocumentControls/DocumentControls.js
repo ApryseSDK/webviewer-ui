@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-
 import Button from 'components/Button';
-import './DocumentControls.scss';
 import getPageArrayFromString from 'helpers/getPageArrayFromString';
-
 import selectors from 'selectors';
 import actions from 'actions';
+import pageNumberPlaceholder from 'constants/pageNumberPlaceholder';
+import core from 'src/core';
+
+import './DocumentControls.scss';
 
 function getPageString(selectedPageArray, pageLabels) {
   let pagesToPrint = '';
@@ -29,13 +29,10 @@ function getPageString(selectedPageArray, pageLabels) {
   return pagesToPrint.slice(0, -2);
 }
 
-const DocumentControls = props => {
-  const { shouldShowControls } = props;
-
-  const [t] = useTranslation();
+const DocumentControls = ({ shouldShowControls }) => {
   const dispatch = useDispatch();
 
-  const [selectedPageIndexes, isDisabled, pageLabels, isThumbnailSelectingPages] = useSelector(state => [
+  const [selectedPageIndexes, isDisabled, pageLabels, isThumbnailSelectingPages] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.isElementDisabled(state, 'documentControl'),
     selectors.getPageLabels(state),
@@ -51,10 +48,10 @@ const DocumentControls = props => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
   }, [setPageString, selectedPageIndexes, shouldShowControls, pageLabels]);
 
-  const onBlur = e => {
+  const onBlur = (e) => {
     const selectedPagesString = e.target.value.replace(/ /g, '');
     const pages = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels);
-    const pageIndexes = pages.map(page => page - 1);
+    const pageIndexes = pages.map((page) => page - 1);
 
     if (pages.length || !selectedPagesString) {
       dispatch(actions.setSelectedPageThumbnails(pageIndexes));
@@ -68,7 +65,7 @@ const DocumentControls = props => {
     }
 
     if (selectedPageIndexes.length > 0 && !isThumbnailSelectingPages) {
-      // set a short timeout due to race condition caused by onBlur and 
+      // set a short timeout due to race condition caused by onBlur and
       // changing the documentControlsButton based on isThumbnailSelectingPages
       setTimeout(() => {
         enableThumbnailSelectingPages();
@@ -76,12 +73,12 @@ const DocumentControls = props => {
     }
   };
 
-  const pageStringUpdate = e => {
+  const pageStringUpdate = (e) => {
     setPageString(e.target.value);
   };
 
   const disableThumbnailSelectingPages = () => {
-    dispatch(actions.setSelectedPageThumbnails([]));
+    dispatch(actions.setSelectedPageThumbnails([core.getCurrentPage() - 1]));
     dispatch(actions.setThumbnailSelectingPages(false));
   };
 
@@ -99,8 +96,8 @@ const DocumentControls = props => {
               onBlur={onBlur}
               onChange={pageStringUpdate}
               value={pageString}
-              placeholder={t('option.documentControls.placeholder')}
-              aria-label={t('option.documentControls.placeholder')}
+              placeholder={pageNumberPlaceholder}
+              aria-label={pageNumberPlaceholder}
               className="pagesInput"
               type="text"
             />

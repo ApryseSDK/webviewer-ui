@@ -20,7 +20,7 @@ const ThumbnailCard = ({ onChange, checked, index, thumbnail }) => {
 
   return (
     <div className="thumb-card" onClick={onChange}>
-      <div className='thumb-body'>
+      <div className="thumb-body">
         <div className="thumb-image">
           {img}
         </div>

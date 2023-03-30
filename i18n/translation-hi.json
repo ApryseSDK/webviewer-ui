@@ -16,6 +16,9 @@
     "comment": "टिप्पणी",
     "reply": "उत्तर जोड़ें",
     "copy": "प्रतिलिपि",
+    "cut": "काटना",
+    "paste": "पेस्ट करें",
+    "pasteWithoutFormatting": "बिना फॉर्मेट किए पेस्ट करें",
     "delete": "हटाएं",
     "group": "समूह",
     "ungroup": "असमूहीकृत",
@@ -78,6 +81,7 @@
     "showLess": "कम दिखाएं",
     "showMore": "...अधिक",
     "chooseFile": "एक फ़ाइल चुनें",
+    "changeDate": "बदलाव दिनांक",
     "browse": "फ़ाइलों को ब्राउज़ करें",
     "selectYourOption": "अपना विकल्प चुनें",
     "open": "खुला हुआ",
@@ -85,6 +89,7 @@
     "select": "चुनते हैं",
     "moveToTop": "शीर्ष पर जाएं",
     "moveToBottom": "नीचे ले जाएँ",
+    "backToMenu": "मैन्यू में वापस",
     "redactPages": "पृष्ठ सुधारें",
     "playAudio": "ऑडियो चलाएं",
     "pauseAudio": "ऑडियो विराम",
@@ -96,7 +101,8 @@
     "comparePages": "पृष्ठों की तुलना करें",
     "startComparison": "तुलना शुरू करें",
     "back": "पीछे",
-    "clearSignature": "स्पष्ट हस्ताक्षर"
+    "clearSignature": "स्पष्ट हस्ताक्षर",
+    "newDocument": "नया दस्तावेज़"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -380,7 +386,8 @@
       "qualityHigh": "उच्च",
       "includeAnnotations": "एनोटेशन शामिल करें",
       "includeComments": "टिप्पणियाँ शामिल करें",
-      "printSettings": "प्रिंट सेटिंग्स"
+      "printSettings": "प्रिंट सेटिंग्स",
+      "printGrayscale": "ग्रेस्केल प्रिंट करें"
     },
     "printInfo": {
       "author": "लेखक",
@@ -1063,6 +1070,23 @@
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"
   },
+  "officeEditor": {
+    "bold": "निडर",
+    "italic": "तिरछा",
+    "underline": "रेखांकन",
+    "textColor": "पाठ का रंग",
+    "leftAlign": "बाएं संरेखित करें",
+    "centerAlign": "केंद्र संरेखित करें",
+    "rightAlign": "सही संरेखित करें",
+    "justify": "न्यायोचित ठहराना",
+    "lineSpacing": "लाइन और पैराग्राफ स्पेसिंग",
+    "bulletList": "बुलेटेड सूची",
+    "numberList": "क्रमांकित सूची",
+    "insertLink": "लिंक डालें",
+    "insertImage": "चित्र डालें",
+    "notAvailableInDemoMode": "डेमो मोड में उपलब्ध नहीं है",
+    "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।"
+  },
   "insertPageModal": {
     "title": "नया पेज जोड़ें",
     "tabs": {
@@ -1119,7 +1143,11 @@
       "change": "परिवर्तन",
       "old": "पुराना",
       "new": "नया",
-      "page": "पृष्ठ"
+      "page": "पृष्ठ",
+      "textContent": "टेक्स्ट सामग्री",
+      "delete": "मिटाना",
+      "insert": "डालना",
+      "edit": "संपादन करना"
     }
   },
   "saveModal": {

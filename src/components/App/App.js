@@ -82,6 +82,7 @@ import overlays from 'constants/overlays';
 import setLanguage from 'src/apis/setLanguage';
 import { panelNames } from 'constants/panel';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
+import { isMobileDevice } from 'src/helpers/device';
 
 import './App.scss';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
@@ -103,6 +104,15 @@ const App = ({ removeEventHandlers }) => {
     selectors.isMultiViewerMode(state),
     selectors.getCustomFlxPanels(state),
   ]);
+
+  useEffect(() => {
+    const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
+    if (isOfficeEditingEnabled && isMobileDevice) {
+      dispatch(actions.showWarningMessage({
+        message: 'officeEditor.notSupportedOnMobile',
+      }));
+    }
+  }, []);
 
   useEffect(() => {
     // To avoid race condition with window.dispatchEvent firing before window.addEventListener

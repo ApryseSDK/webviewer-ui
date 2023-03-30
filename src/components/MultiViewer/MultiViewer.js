@@ -18,6 +18,7 @@ import { addDocumentViewer, syncDocumentViewers, removeDocumentViewer } from 'he
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import { DISABLED_TOOLS_KEYWORDS, DISABLED_TOOL_GROUPS } from 'constants/multiViewerDisabledTools';
+import { getIsScrolledByClickingChangeItem, setIsScrolledByClickingChangeItem } from '../../helpers/multiViewerScrollerSetting';
 
 const MIN_WIDTH = 350;
 
@@ -256,12 +257,21 @@ const MultiViewer = () => {
     return core.getDocumentViewers().length < 2 || !core.getDocument(1) || !core.getDocument(2) ||
     !selectors.isMultiViewerMode(state) || !selectors.getSyncViewer(state);
   };
+
   const createOnScrollHandler = (documentViewerKey) => (e) => {
     if (shouldSkipSyncEvent()) {
       return;
     }
-    const otherViewerNumber = documentViewerKey === 1 ? 2 : 1;
     const { scrollTop, scrollLeft } = e.target;
+    if (getIsScrolledByClickingChangeItem()) {
+      syncState.current[`scrollTop${documentViewerKey}`] = scrollTop;
+      syncState.current[`scrollLeft${documentViewerKey}`] = scrollLeft;
+      if (documentViewerKey === 2) {
+        setIsScrolledByClickingChangeItem(false);
+      }
+      return;
+    }
+    const otherViewerNumber = documentViewerKey === 1 ? 2 : 1;
     if (syncState.current.currentScrollContainer !== otherViewerNumber) {
       const diffTop = scrollTop - syncState.current[`scrollTop${documentViewerKey}`];
       const diffLeft = scrollLeft - syncState.current[`scrollLeft${documentViewerKey}`];
