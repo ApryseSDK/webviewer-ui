@@ -70,6 +70,7 @@
     "@hot-loader/react-dom": "^16.11.0",
     "@pdftron/webviewer-downloader": "^1.4.2",
     "@pdftron/webviewer-reading-mode": "1.0.6",
+    "@reduxjs/toolkit": "^1.8.1",
     "@storybook/addon-actions": "^6.1.11",
     "@storybook/addon-essentials": "^6.1.11",
     "@storybook/addon-links": "^6.1.11",
@@ -92,6 +93,7 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.0",
+    "eslint-plugin-no-unsanitized": "^4.0.2",
     "eslint-plugin-react-hooks": "^2.3.0",
     "express": "^4.17.1",
     "file-loader": "^5.0.2",
@@ -120,7 +122,6 @@
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10",
     "webpack-dev-middleware": "^3.7.2",
-    "webpack-hot-middleware": "^2.25.0",
-    "@reduxjs/toolkit": "^1.8.1"
+    "webpack-hot-middleware": "^2.25.0"
   }
 }
