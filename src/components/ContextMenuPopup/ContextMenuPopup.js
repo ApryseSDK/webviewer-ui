@@ -185,7 +185,7 @@ const ContextMenuPopup = ({
           ) : (
             <CustomizablePopup
               dataElement={DataElements.CONTEXT_MENU_POPUP}
-              childrenClassName='main-menu-button'
+              childrenClassName="main-menu-button"
             >
               <ActionButton
                 className="main-menu-button"

@@ -30,7 +30,7 @@ const initialStateActive = (toolbarGroup) => {
   return ({
     viewer: {
       ...initialState.viewer,
-      toolbarGroup: toolbarGroup
+      toolbarGroup
     }
   });
 };

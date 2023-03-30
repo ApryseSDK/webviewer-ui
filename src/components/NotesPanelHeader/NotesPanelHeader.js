@@ -90,11 +90,13 @@ function NotesPanelHeader({
   const originalHeaderElement = (
     <DataElementWrapper
       className="header"
-      dataElement="notesPanelHeader">
+      dataElement="notesPanelHeader"
+    >
 
       <DataElementWrapper
         className="input-container"
-        dataElement={`${DataElements.NotesPanel.DefaultHeader.INPUT_CONTAINER}`}>
+        dataElement={`${DataElements.NotesPanel.DefaultHeader.INPUT_CONTAINER}`}
+      >
         <input
           type="text"
           placeholder={t('message.searchCommentsPlaceholder')}
@@ -106,13 +108,15 @@ function NotesPanelHeader({
 
       <DataElementWrapper
         className="comments-counter"
-        dataElement={`${DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}`}>
-        <span className='main-comment'>{t('component.notesPanel')}</span> {`(${notes.length})`}
+        dataElement={`${DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}`}
+      >
+        <span className="main-comment">{t('component.notesPanel')}</span> {`(${notes.length})`}
       </DataElementWrapper>
 
       <DataElementWrapper
         className="sort-row"
-        dataElement={`${DataElements.NotesPanel.DefaultHeader.SORT_ROW}`}>
+        dataElement={`${DataElements.NotesPanel.DefaultHeader.SORT_ROW}`}
+      >
         {(isSortContainerDisabled) ? <div className="sort-container"></div> : sortContainer}
         <div
           className="buttons-container"

@@ -88,9 +88,9 @@ const TextStyles = ({ cursorProperties, isBold, isItalic, isUnderline }) => {
           // focus so that after clicking you can still input text
           core.getViewerElement().focus();
         }}
-        dataElement='office-editor-bold'
-        title='officeEditor.bold'
-        img='icon-text-bold'
+        dataElement="office-editor-bold"
+        title="officeEditor.bold"
+        img="icon-text-bold"
       />
       <ActionButton
         isActive={isItalic}
@@ -103,9 +103,9 @@ const TextStyles = ({ cursorProperties, isBold, isItalic, isUnderline }) => {
           // focus so that after clicking you can still input text
           core.getViewerElement().focus();
         }}
-        dataElement='office-editor-italic'
-        title='officeEditor.italic'
-        img='icon-text-italic'
+        dataElement="office-editor-italic"
+        title="officeEditor.italic"
+        img="icon-text-italic"
       />
       <ActionButton
         isActive={isUnderline}
@@ -120,9 +120,9 @@ const TextStyles = ({ cursorProperties, isBold, isItalic, isUnderline }) => {
           // focus so that after clicking you can still input text
           core.getViewerElement().focus();
         }}
-        dataElement='office-editor-underline'
-        title='officeEditor.underline'
-        img='icon-text-underline'
+        dataElement="office-editor-underline"
+        title="officeEditor.underline"
+        img="icon-text-underline"
       />
     </>
   );
@@ -133,9 +133,9 @@ const JustificationOptions = ({ justification }) => {
     <>
       <ActionButton
         isActive={justification === JUSTIFICATION_OPTIONS.Left}
-        dataElement='office-editor-left-align'
-        title='officeEditor.leftAlign'
-        img='icon-menu-left-align'
+        dataElement="office-editor-left-align"
+        title="officeEditor.leftAlign"
+        img="icon-menu-left-align"
         onClick={() => {
           core.getOfficeEditor().updateParagraphStyle({
             justification: 'left'
@@ -151,9 +151,9 @@ const JustificationOptions = ({ justification }) => {
       />
       <ActionButton
         isActive={justification === JUSTIFICATION_OPTIONS.Center}
-        dataElement='office-editor-center-align'
-        title='officeEditor.centerAlign'
-        img='icon-menu-centre-align'
+        dataElement="office-editor-center-align"
+        title="officeEditor.centerAlign"
+        img="icon-menu-centre-align"
         onClick={() => {
           core.getOfficeEditor().updateParagraphStyle({
             justification: 'center'
@@ -169,9 +169,9 @@ const JustificationOptions = ({ justification }) => {
       />
       <ActionButton
         isActive={justification === JUSTIFICATION_OPTIONS.Right}
-        dataElement='office-editor-right-align'
-        title='officeEditor.rightAlign'
-        img='icon-menu-right-align'
+        dataElement="office-editor-right-align"
+        title="officeEditor.rightAlign"
+        img="icon-menu-right-align"
         onClick={() => {
           core.getOfficeEditor().updateParagraphStyle({
             justification: 'right'
@@ -187,9 +187,9 @@ const JustificationOptions = ({ justification }) => {
       />
       <ActionButton
         isActive={justification === JUSTIFICATION_OPTIONS.Both}
-        dataElement='office-editor-justify'
-        title='officeEditor.justify'
-        img='icon-menu-both-align'
+        dataElement="office-editor-justify"
+        title="officeEditor.justify"
+        img="icon-menu-both-align"
         onClick={() => {
           core.getOfficeEditor().updateParagraphStyle({
             justification: 'both'
@@ -212,9 +212,9 @@ const ListOptions = ({ listType }) => {
     <>
       <ActionButton
         isActive={listType === LIST_OPTIONS.Unordered}
-        dataElement='office-editor-bullet-list'
-        title='officeEditor.bulletList'
-        img='icon-office-editor-bullet-list'
+        dataElement="office-editor-bullet-list"
+        title="officeEditor.bulletList"
+        img="icon-office-editor-bullet-list"
         onClick={() => {
           core.getOfficeEditor().toggleListSelection(LIST_OPTIONS.Unordered);
 
@@ -224,9 +224,9 @@ const ListOptions = ({ listType }) => {
       />
       <ActionButton
         isActive={listType === LIST_OPTIONS.Ordered}
-        dataElement='office-editor-number-list'
-        title='officeEditor.numberList'
-        img='icon-office-number-list'
+        dataElement="office-editor-number-list"
+        title="officeEditor.numberList"
+        img="icon-office-number-list"
         onClick={() => {
           core.getOfficeEditor().toggleListSelection(LIST_OPTIONS.Ordered);
 
@@ -395,7 +395,7 @@ const OfficeEditorToolsHeader = () => {
   return isOpen && (
     <DataElementWrapper
       dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER}
-      className='HeaderToolsContainer'
+      className="HeaderToolsContainer"
     >
       <Measure
         bounds
@@ -406,7 +406,7 @@ const OfficeEditorToolsHeader = () => {
       >
         {({ measureRef }) => (
           <div
-            className='Header Tools OfficeEditorTools'
+            className="Header Tools OfficeEditorTools"
             ref={measureRef}
           >
             <Measure
@@ -532,10 +532,10 @@ const OfficeEditorToolsHeader = () => {
                   )}
                   <div className="divider" />
                   <ToggleElementButton
-                    dataElement='textColorButton'
-                    title='officeEditor.textColor'
-                    img='icon-office-editor-circle'
-                    element='colorPickerOverlay'
+                    dataElement="textColorButton"
+                    title="officeEditor.textColor"
+                    img="icon-office-editor-circle"
+                    element="colorPickerOverlay"
                     color={wvFontColor.toString()}
                     iconClassName={useColorIconBorder ? 'icon-border' : ''}
                   />
@@ -584,8 +584,8 @@ const OfficeEditorToolsHeader = () => {
                     dataElement="office-editor-line-spacing"
                     displayButton={(isOpen) => (
                       <ActionButton
-                        title='officeEditor.lineSpacing'
-                        img='icon-office-editor-line-spacing'
+                        title="officeEditor.lineSpacing"
+                        img="icon-office-editor-line-spacing"
                         isActive={isOpen}
                         onClick={() => { }}
                       />
@@ -604,9 +604,9 @@ const OfficeEditorToolsHeader = () => {
                         <ActionButton
                           className="tool-group-button"
                           isActive={showMoreTools}
-                          dataElement='office-editor-more-tools'
-                          title='action.more'
-                          img='icon-tools-more-vertical'
+                          dataElement="office-editor-more-tools"
+                          title="action.more"
+                          img="icon-tools-more-vertical"
                           onClick={() => setShowMoreTools(!showMoreTools)}
                         />
                         {showMoreTools && (

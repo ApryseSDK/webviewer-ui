@@ -227,7 +227,7 @@ const Outline = forwardRef(
               style={{ marginLeft: outlineUtils.getNestedLevel(outline) * 12 }}
             ></div>
             <OutlineContent
-              isAdding={true}
+              isAdding
               text={''}
               onCancel={() => setAddingNewOutline(false)}
             />

@@ -18,7 +18,8 @@ const Selector = ({ className, items = [], selectedItem = '', onItemSelected, pl
     <div className={classNames({
       customSelector: true,
       [className]: !!className,
-    })}>
+    })}
+    >
       <button className="customSelector__selectedItem" style={selectedItemStyle}>
         {!selectedItem && placeHolder ? placeHolder : selectedItem}
         <Icon className="down-arrow" glyph={'icon-chevron-down'} />

@@ -8,7 +8,7 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         value: searchValue,
-        replaceValue: replaceValue,
+        replaceValue,
         nextResult: null,
         nextResultIndex: null,
         isCaseSensitive: caseSensitive || false,

@@ -48,7 +48,7 @@ const store = configureStore({
 
 export const SavedFullSignaturesTab = () => (
   <Provider store={store}>
-    <div className='ToolStylePopup' style={{ width: '220px' }}>
+    <div className="ToolStylePopup" style={{ width: '220px' }}>
       <SignatureStylePopup />
     </div>
   </Provider>
@@ -67,7 +67,7 @@ const savedInitialsStore = configureStore({
 
 export const SavedInitialsTab = () => (
   <Provider store={savedInitialsStore}>
-    <div className='ToolStylePopup' style={{ width: '220px' }}>
+    <div className="ToolStylePopup" style={{ width: '220px' }}>
       <SignatureStylePopup />
     </div>
   </Provider>

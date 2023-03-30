@@ -51,7 +51,7 @@ const TextEditingPanel = ({
                 onPropertyChange={handlePropertyChange}
                 onRichTextStyleChange={handleRichTextStyleChange}
                 properties={textEditProperties}
-                isContentEditing={true}
+                isContentEditing
               />
             </div>
           </div>

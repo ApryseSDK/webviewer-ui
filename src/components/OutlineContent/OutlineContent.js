@@ -222,7 +222,7 @@ const OutlineContent = ({
             <Button
               className="bookmark-outline-save-button"
               label={t('action.add')}
-              isSubmitType={true}
+              isSubmitType
               onClick={onAddOutline}
             />
           }
@@ -230,7 +230,7 @@ const OutlineContent = ({
             <Button
               className="bookmark-outline-save-button"
               label={t('action.save')}
-              isSubmitType={true}
+              isSubmitType
               disabled={isRenameButtonDisabled()}
               onClick={onRenameOutline}
             />
@@ -239,7 +239,7 @@ const OutlineContent = ({
             <Button
               className="bookmark-outline-save-button"
               label={t('action.save')}
-              isSubmitType={true}
+              isSubmitType
               onClick={() => {
                 setOutlineChangingDest(false);
                 updateOutlineDest(outlinePath);

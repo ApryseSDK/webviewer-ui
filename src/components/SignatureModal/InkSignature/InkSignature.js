@@ -205,8 +205,8 @@ const InkSignature = ({
             onSwiping={({ event }) => event.stopPropagation()}
             className="canvas-colorpalette-container"
           >
-            <div className='signature-and-initials-container'>
-              <div className='signature-input full-signature'>
+            <div className="signature-and-initials-container">
+              <div className="signature-input full-signature">
                 <canvas
                   className="ink-signature-canvas"
                   onMouseUp={handleFinishDrawingFullSignature}
@@ -223,7 +223,7 @@ const InkSignature = ({
                   </button>
                 </div>
               </div>
-              <div className='signature-input initials' style={initialsContainerStyle}>
+              <div className="signature-input initials" style={initialsContainerStyle}>
                 <canvas
                   className="ink-signature-canvas"
                   onMouseUp={handleFinishDrawingInitials}
@@ -244,7 +244,7 @@ const InkSignature = ({
             <div className="colorpalette-clear-container">
               <div className="signature-style-options">
                 <Dropdown
-                  disabled={true}
+                  disabled
                   placeholder={'Text Styles'}
                 />
                 <div className="placeholder-dropdown"></div>

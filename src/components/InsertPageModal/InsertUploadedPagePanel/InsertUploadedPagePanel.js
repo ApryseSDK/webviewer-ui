@@ -98,7 +98,7 @@ const InsertUploadedPagePanel = React.forwardRef(({
     <div className="insert-uploaded-page-panel" onMouseDown={(e) => e.stopPropagation()} ref={ref}>
       <div className="swipe-indicator" />
       <div className="header">
-        <div className='left-header'>
+        <div className="left-header">
           <Button
             img={'icon-arrow-back'}
             onClick={clearLoadedFile}
@@ -112,22 +112,23 @@ const InsertUploadedPagePanel = React.forwardRef(({
       </div>
       <div className="modal-body">
         <div className="insert-blank-page-controls">
-          <div className='insert-page-location-options'>
-            <span className='insert-page-titles '>{t('insertPageModal.pagePlacements.header')}</span>
-            <div className='insert-page-options'>
-              <Choice label={t('insertPageModal.pagePlacements.above')} radio name='insertPagePosition' checked={insertAbove} onChange={onInsertChoiceChange} />
-              <Choice label={t('insertPageModal.pagePlacements.below')} radio name='insertPagePosition' checked={!insertAbove} onChange={onInsertChoiceChange} />
+          <div className="insert-page-location-options">
+            <span className="insert-page-titles ">{t('insertPageModal.pagePlacements.header')}</span>
+            <div className="insert-page-options">
+              <Choice label={t('insertPageModal.pagePlacements.above')} radio name="insertPagePosition" checked={insertAbove} onChange={onInsertChoiceChange} />
+              <Choice label={t('insertPageModal.pagePlacements.below')} radio name="insertPagePosition" checked={!insertAbove} onChange={onInsertChoiceChange} />
             </div>
           </div>
-          <div className='insert-page-location'>
-            <span className='insert-page-titles '>{t('insertPageModal.pageLocations.specifyLocation')}</span>
-            <div className='insert-page-input'>
+          <div className="insert-page-location">
+            <span className="insert-page-titles ">{t('insertPageModal.pageLocations.specifyLocation')}</span>
+            <div className="insert-page-input">
               {t('insertPageModal.page')}:
               <PageNumberInput
                 selectedPageNumbers={pageNumberToInsertAt}
                 onBlurHandler={pageInputBlurHandler}
                 pageCount={loadedDocumentPageCount}
-                onError={handlePageNumberError} />
+                onError={handlePageNumberError}
+              />
               {pageNumberError && <div className="page-number-error">{pageNumberError}</div>}
             </div>
           </div>
@@ -138,7 +139,8 @@ const InsertUploadedPagePanel = React.forwardRef(({
             document={sourceDocument}
             onThumbnailSelected={onThumbnailSelected}
             selectedThumbnails={selectedThumbnails}
-            onfileLoadedHandler={setIsLoading} />
+            onfileLoadedHandler={setIsLoading}
+          />
         </div>
       </div>
       <div className={classNames('insert-page-footer', { isFileSelected: !isLoading })}>

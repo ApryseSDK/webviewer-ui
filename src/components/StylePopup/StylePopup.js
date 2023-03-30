@@ -421,7 +421,8 @@ class StylePopup extends React.PureComponent {
             borderStyle={Style}
             properties={properties}
             isEllipse={isEllipse}
-            onLineStyleChange={onLineStyleChange}/>}
+            onLineStyleChange={onLineStyleChange}
+          />}
       </div>
     );
   }

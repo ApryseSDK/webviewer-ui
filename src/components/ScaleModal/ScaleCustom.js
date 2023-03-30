@@ -258,7 +258,7 @@ function ScaleCustom({ scale, onScaleChange, precision }) {
           <div className="input-wrapper">
             <input
               type={(isFractionalPrecision || scale[1][1] === 'ft-in') ? 'text' : 'number'}
-              min='0'
+              min="0"
               className={worldValueClass}
               value={worldValueDisplay}
               data-element="customDisplayScaleValue"

@@ -33,7 +33,8 @@ const GroupedItems = (props) => {
           flexDirection: headerDirection,
           justifyContent: alignment,
           flexGrow: grow
-        }}>
+        }}
+      >
         {
           validItems.map((item) => {
             const itemProps = item.props || item;

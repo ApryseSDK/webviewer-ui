@@ -39,8 +39,8 @@ export const Basic = () => {
   };
 
   return (
-    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-      <div className='left-panel-container' style={{ minWidth: '330px' }}>
+    <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
+      <div className="left-panel-container" style={{ minWidth: '330px' }}>
         <Provider store={configureStore({ reducer: () => initialState })}>
           <BookmarksPanel />
         </Provider>
@@ -75,8 +75,8 @@ export const NoBookmarks = () => {
   };
 
   return (
-    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
-      <div className='left-panel-container' style={{ minWidth: '330px' }}>
+    <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
+      <div className="left-panel-container" style={{ minWidth: '330px' }}>
         <Provider store={configureStore({ reducer: () => initialState })}>
           <BookmarksPanel />
         </Provider>

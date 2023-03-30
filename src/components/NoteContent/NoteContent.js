@@ -527,7 +527,7 @@ const ContentArea = ({
 
     const source = (annotation instanceof window.Core.Annotations.FreeTextAnnotation)
       ? 'textChanged' : 'noteChanged';
-    core.getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', { 'source': source }]);
+    core.getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', { source }]);
 
     if (annotation instanceof window.Core.Annotations.FreeTextAnnotation) {
       core.drawAnnotationsFromList([annotation]);
@@ -557,7 +557,7 @@ const ContentArea = ({
       {isReply && pendingAttachments.length > 0 && (
         <ReplyAttachmentList
           files={pendingAttachments}
-          isEditing={true}
+          isEditing
           fileDeleted={(file) => deleteAttachment(annotation.Id, file)}
         />
       )}

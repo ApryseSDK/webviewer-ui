@@ -52,7 +52,7 @@ const ColorPickerOverlay = ({
 
   return createPortal(
     <DataElementWrapper
-      data-element='colorPickerOverlay'
+      data-element="colorPickerOverlay"
       className={classNames({
         ColorPickerOverlay: true,
         Popup: true,
@@ -64,7 +64,7 @@ const ColorPickerOverlay = ({
     >
       <ColorPalette
         color={color}
-        property='TextColor'
+        property="TextColor"
         onStyleChange={onStyleChange}
         useMobileMinMaxWidth
       />

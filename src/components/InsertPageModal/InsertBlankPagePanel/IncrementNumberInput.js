@@ -25,7 +25,8 @@ const IncrementNumberInput = ({ className, min, onChange, value, fillWidth }) =>
     <div className={classNames({
       incrementNumberInput: true,
       [className]: !!className,
-    })}>
+    })}
+    >
       <Input type="number" min={min} onChange={handleChange} value={number} fillWidth={fillWidth} />
       <div className="increment-buttons">
         <button className="increment-arrow-button" onClick={incrementNumber}>

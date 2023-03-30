@@ -168,7 +168,7 @@ const InsertBlankPagePanel = ({
           <div className="input-container">
             <p>{t('insertPageModal.pageDimensions.subHeader')}</p>
             <Selector
-              className='presetSelector'
+              className="presetSelector"
               selectedItem={selectedPageDimensions}
               onItemSelected={handlePageDimensionsChanged}
               items={[...presetPageDimensions, CUSTOM_PAGE_DIMENSIONS]}
@@ -177,7 +177,7 @@ const InsertBlankPagePanel = ({
           <div className="input-container" style={{ visibility: openCustomDimensions ? 'visible' : 'hidden' }}>
             <p>{t('insertPageModal.pageDimensions.units')}</p>
             <Selector
-              className='unitSelector'
+              className="unitSelector"
               selectedItem={units}
               onItemSelected={handleUnitsChanged}
               items={Object.keys(supportedUnits)}
@@ -187,11 +187,11 @@ const InsertBlankPagePanel = ({
         <div className="section" style={{ display: openCustomDimensions ? 'flex' : 'none' }}>
           <div className="input-container">
             <p>{t('formField.formFieldPopup.width')}</p>
-            <DimensionInput className='customWidthInput' initialValue={customWidth} onChange={handleBlankPageWidthChange} unit={supportedUnits[units]} />
+            <DimensionInput className="customWidthInput" initialValue={customWidth} onChange={handleBlankPageWidthChange} unit={supportedUnits[units]} />
           </div>
           <div className="input-container">
             <p>{t('formField.formFieldPopup.height')}</p>
-            <DimensionInput className='customHeightInput' initialValue={customHeight} onChange={handleBlankPageHeightChange} unit={supportedUnits[units]} />
+            <DimensionInput className="customHeightInput" initialValue={customHeight} onChange={handleBlankPageHeightChange} unit={supportedUnits[units]} />
           </div>
         </div>
       </div>

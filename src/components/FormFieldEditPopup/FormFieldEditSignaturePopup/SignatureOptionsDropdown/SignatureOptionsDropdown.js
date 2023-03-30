@@ -68,8 +68,8 @@ const SignatureOptionsDropdown = (props) => {
 
   return (
     <DataElementWrapper
-      className='signature-options-container'
-      dataElement='signatureOptionsDropdown'
+      className="signature-options-container"
+      dataElement="signatureOptionsDropdown"
     >
       <label>
         {t('formField.type')}:
@@ -81,7 +81,8 @@ const SignatureOptionsDropdown = (props) => {
         options={signatureOptions}
         isSearchable={false}
         isClearable={false}
-        components={{ IndicatorsContainer: CustomArrowIndicator }} />
+        components={{ IndicatorsContainer: CustomArrowIndicator }}
+      />
     </DataElementWrapper>
   );
 };
