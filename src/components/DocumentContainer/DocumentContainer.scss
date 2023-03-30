@@ -1,6 +1,9 @@
 @import '../../constants/styles';
 
 .document-content-container {
+  background-size: 25px 25px;
+  background-image: linear-gradient(to right, #e7e7e7 1px, transparent 1px), linear-gradient(to bottom, #e7e7e7 1px, transparent 1px);
+  background-color: #fafafa;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,14 +52,14 @@
   user-select: none;
 
   @include ie11 {
-    margin-left: 0!important;
-    width: 100%!important
+    margin-left: 0 !important;
+    width: 100% !important
   }
 
   .document {
     margin: auto; // vertical centering when content is smaller than document container
-                  // can't use 'justify-content: center;' due to losing access to content when overflowing
-                  // see: https://stackoverflow.com/questions/33454533/cant-scroll-to-top-of-flex-item-that-is-overflowing-container
+    // can't use 'justify-content: center;' due to losing access to content when overflowing
+    // see: https://stackoverflow.com/questions/33454533/cant-scroll-to-top-of-flex-item-that-is-overflowing-container
     outline: none;
     -webkit-tap-highlight-color: transparent;
 

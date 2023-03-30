@@ -189,19 +189,20 @@ const App = ({ removeEventHandlers }) => {
       <div className={classNames({ 'App': true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
         <Accessibility />
 
-        <Header />
-        <ToolsHeader />
-        {!isMultiViewerMode && <DocumentContainer />}
-        {!isIE11 && <MultiViewer />}
+        {/* <Header/>
+        <ToolsHeader/> */}
+  
         <div className="content">
           <LeftPanel />
-          <RightPanel dataElement="searchPanel" onResize={width => dispatch(actions.setSearchPanelWidth(width))}>
+          {!isMultiViewerMode && <DocumentContainer />}
+        {!isIE11 && <MultiViewer />}
+          {/* <RightPanel dataElement="searchPanel" onResize={width => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
-          </RightPanel>
-          <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
+          </RightPanel> */}
+          {/* <RightPanel dataElement="notesPanel" onResize={width => dispatch(actions.setNotesPanelWidth(width))}>
             <NotesPanel />
-          </RightPanel>
-          <RightPanel dataElement="redactionPanel" onResize={width => dispatch(actions.setRedactionPanelWidth(width))}>
+          </RightPanel> */}
+          {/* <RightPanel dataElement="redactionPanel" onResize={width => dispatch(actions.setRedactionPanelWidth(width))}>
             <RedactionPanel />
           </RightPanel>
           <RightPanel
@@ -221,15 +222,15 @@ const App = ({ removeEventHandlers }) => {
             <RightPanel dataElement="comparePanel" onResize={width => dispatch(actions.setComparePanelWidth(width))}>
               <ComparePanel />
             </RightPanel>
-          )}
+          )} */}
         </div>
-        <ContentEditLinkModal />
+        {/* <ContentEditLinkModal />
         <ViewControlsOverlay />
         <MenuOverlay />
         <ZoomOverlay />
         <AnnotationContentOverlay />
         <PageManipulationOverlay />
-        <LeftPanelOverlayContainer />
+        <LeftPanelOverlayContainer /> */}
 
         <AnnotationPopup />
         <FormFieldEditPopup />
