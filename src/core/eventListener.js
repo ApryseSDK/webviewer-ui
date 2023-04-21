@@ -1,4 +1,5 @@
 import core from 'core';
+import Events from 'constants/events';
 
 export const addEventListener = (event, eventListener, options = null, documentViewerKey = 1) => {
   const eventToObjectMap = getEventToObjectMap(documentViewerKey);
@@ -67,6 +68,7 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     pageNumberUpdated: documentViewer,
     pagesUpdated: documentViewer,
     'fitModeUpdated.fitbutton': documentViewer,
+    [Events.COMPARE_ANNOTATIONS_LOADED]: documentViewer,
     historyChanged: historyManager,
     annotationSelected: annotManager,
     annotationChanged: annotManager,

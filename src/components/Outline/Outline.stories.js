@@ -102,8 +102,8 @@ const outline = createOutline({
 export const Basic = () => {
   return (
     <ReduxProvider store={createStore(reducer)}>
-      <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-        <div className="left-panel-container" style={{ minWidth: '330px' }}>
+      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+        <div className='left-panel-container' style={{ minWidth: '330px' }}>
           <OutlineContext.Provider
             value={{
               setActiveOutlinePath: NOOP,

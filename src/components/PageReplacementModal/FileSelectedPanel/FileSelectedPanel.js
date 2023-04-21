@@ -153,7 +153,7 @@ const FileSelectedPanel = React.forwardRef((
       <div className="swipe-indicator" />
       <div className="header-container">
         <div className="header">
-          <div className="left-header">
+          <div className='left-header'>
             <Button
               img={'icon-arrow-back'}
               onClick={clearLoadedFile}

@@ -101,7 +101,7 @@ const MultiStylePopup = ({
       position={position}
     >
       <div
-        className="multi-style-container"
+        className='multi-style-container'
         ref={popupRef}
       >
         <AnnotationStylePopup

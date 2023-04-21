@@ -85,6 +85,17 @@ function SearchOverlay(props) {
     }
   }, [isCaseSensitive, isWholeWord, isWildcard, activeDocumentViewerKey]);
 
+  useEffect(() => {
+    core.addEventListener('pagesUpdated', onPagesUpdated);
+    return () => {
+      core.removeEventListener('pagesUpdated', onPagesUpdated);
+    };
+  });
+
+  const onPagesUpdated = () => {
+    search(searchValue);
+  };
+
   const search = async (searchValue) => {
     if (searchValue && searchValue.length > 0) {
       setIsSearchInProgress(true);
@@ -330,10 +341,10 @@ function SearchOverlay(props) {
         (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
           (isMoreOptionsOpen)
             ? <div className="extra-options">
-              <button className="Button" onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.lessOptions')} <Icon glyph="icon-chevron-up"/></button>
+              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.lessOptions')} <Icon glyph="icon-chevron-up"/></button>
             </div>
             : <div className="extra-options">
-              <button className="Button" onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.moreOptions')} <Icon glyph="icon-chevron-down"/></button>
+              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.moreOptions')} <Icon glyph="icon-chevron-down"/></button>
             </div>
       }
       {
@@ -342,22 +353,20 @@ function SearchOverlay(props) {
             {searchOptionsComponents}
             {
               (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
-                <div data-element="searchAndReplace" className="replace-options">
+                <div data-element="searchAndReplace" className='replace-options'>
                   <p>{t('option.searchPanel.replace')}</p>
-                  <div className="input-container">
+                  <div className='input-container'>
                     <input type={'text'}
                       onChange={replaceTextInputOnChange}
                       value={replaceValue}
                     />
                   </div>
-                  <div className="replace-buttons">
+                  <div className='replace-buttons'>
                     { (showReplaceSpinner) ? <Spinner width={25} height={25} /> : null }
-                    <button className="Button btn-replace-all" disabled={isReplaceAllBtnDisabled}
-                      onClick={replaceAllConfirmationWarning}
-                    >{t('option.searchPanel.replaceAll')}</button>
-                    <button className="Button btn-replace" disabled={isReplaceBtnDisabled || !nextResultValue || !core.getActiveSearchResult()}
-                      onClick={replaceOneConfirmationWarning}
-                    >{t('option.searchPanel.replace')}</button>
+                    <button className='Button btn-replace-all' disabled={isReplaceAllBtnDisabled}
+                      onClick={replaceAllConfirmationWarning}>{t('option.searchPanel.replaceAll')}</button>
+                    <button className='Button btn-replace' disabled={isReplaceBtnDisabled || !nextResultValue || !core.getActiveSearchResult()}
+                      onClick={replaceOneConfirmationWarning}>{t('option.searchPanel.replace')}</button>
                   </div>
                 </div>
             }

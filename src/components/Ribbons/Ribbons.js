@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import DataElementWrapper from 'components/DataElementWrapper';
 import core from 'core';
 import Measure from 'react-measure';
-import { DISABLED_TOOL_GROUPS } from 'constants/multiViewerDisabledTools';
+import { DISABLED_TOOL_GROUPS } from 'constants/multiViewerContants';
 import { workerTypes } from 'src/constants/types';
 
 import './Ribbons.scss';

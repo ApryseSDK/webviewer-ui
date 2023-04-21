@@ -311,7 +311,7 @@ const TextSignature = ({
             />
           </label>
           <div className="signature-input-footer">
-            <div className="signature-prompt">
+            <div className='signature-prompt'>
               {t('option.signatureModal.typeSignature')}
             </div>
             <button
@@ -338,7 +338,7 @@ const TextSignature = ({
             />
           </label>
           <div className="signature-input-footer">
-            <div className="signature-prompt">
+            <div className='signature-prompt'>
               {t('option.signatureModal.typeInitial')}
             </div>
             <button

@@ -33,8 +33,7 @@ const ModularHeaderItems = (props) => {
         gap: `${itemsGap}px`,
         flexDirection: headerDirection,
         justifyContent: alignment,
-      }}
-    >
+      }}>
       {headerItems}
     </div>
   );

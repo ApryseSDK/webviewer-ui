@@ -201,7 +201,7 @@ const CalibrationPopup = ({ annotation }) => {
           ref={inputRef}
           type={valueInputType}
           value={valueDisplay}
-          min="0"
+          min='0'
           onChange={onValueInputChange}
           onBlur={onValueInputBlur}
           placeholder={isFractionalUnit ? hintValues[unitTo] : (unitTo === 'ft-in' ? hintValues['ft-in decimal'] : '')}

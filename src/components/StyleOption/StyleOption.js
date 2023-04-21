@@ -29,7 +29,7 @@ function StyleOption(props) {
         <label className="styles-title" htmlFor="styleOptions">{t('option.styleOption.style')}</label>
         <Dropdown
           dataElement="borderStylePicker"
-          images={(isEllipse) ? defaultStrokeStyles : withCloudyStyle}
+          images={ (isEllipse) ? defaultStrokeStyles : withCloudyStyle }
           width={lineEndingDropdownWidth}
           onClickItem={onClickMiddleLineStyle}
           currentSelectionKey={selectedMiddleLineStyle}

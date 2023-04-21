@@ -14,7 +14,7 @@ const store = configureStore({ reducer: () => initialState });
 const BasicComponent = ({ children }) => {
   return (
     <Provider store={store}>
-      <div data-element="textColorButton" />
+      <div data-element='textColorButton' />
       {children}
     </Provider>
   );

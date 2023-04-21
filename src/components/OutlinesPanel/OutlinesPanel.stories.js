@@ -40,8 +40,8 @@ export const Editable = () => {
   };
 
   return (
-    <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-      <div className="left-panel-container" style={{ minWidth: '330px' }}>
+    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+      <div className='left-panel-container' style={{ minWidth: '330px' }}>
         <Provider store={createStore(reducer)}>
           <OutlinesPanel />
         </Provider>
@@ -77,8 +77,8 @@ export const NonEditable = () => {
   };
 
   return (
-    <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-      <div className="left-panel-container" style={{ minWidth: '330px' }}>
+    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+      <div className='left-panel-container' style={{ minWidth: '330px' }}>
         <Provider store={createStore(reducer)}>
           <OutlinesPanel />
         </Provider>
@@ -115,8 +115,8 @@ export const Expanded = () => {
   };
 
   return (
-    <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-      <div className="left-panel-container" style={{ minWidth: '330px' }}>
+    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+      <div className='left-panel-container' style={{ minWidth: '330px' }}>
         <Provider store={createStore(reducer)}>
           <OutlinesPanel />
         </Provider>
@@ -152,8 +152,8 @@ export const NoOutlines = () => {
   };
 
   return (
-    <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-      <div className="left-panel-container" style={{ minWidth: '330px' }}>
+    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+      <div className='left-panel-container' style={{ minWidth: '330px' }}>
         <Provider store={createStore(reducer)}>
           <OutlinesPanel />
         </Provider>

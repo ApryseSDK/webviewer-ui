@@ -250,7 +250,7 @@ const AnnotationPopup = ({
             <div className="container">
               <CustomizablePopup
                 dataElement={DataElements.ANNOTATION_POPUP}
-                childrenClassName="main-menu-button"
+                childrenClassName='main-menu-button'
               >
                 {showViewFileButton && (
                   <ActionButton

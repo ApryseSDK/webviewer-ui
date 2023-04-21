@@ -7,7 +7,7 @@ import core from 'core';
 import selectors from 'selectors/index';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
-import { setIsScrolledByClickingChangeItem } from '../../../../helpers/multiViewerScrollerSetting';
+import { setIsScrolledByClickingChangeItem } from 'helpers/multiViewerHelper';
 
 const propTypes = {
   oldText: PropTypes.string,

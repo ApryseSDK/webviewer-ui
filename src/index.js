@@ -45,9 +45,11 @@ let composeEnhancer = function noopStoreComposeEnhancer(middleware) {
 if (process.env.NODE_ENV === 'development') {
   const isSpamDisabled = localStorage.getItem('spamDisabled') === 'true';
   if (!isSpamDisabled) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
     const { createLogger } = require('redux-logger');
     middleware.push(createLogger({ collapsed: true }));
   }
+  // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
   const { composeWithDevTools } = require('redux-devtools-extension/logOnlyInProduction');
   composeEnhancer = composeWithDevTools({});
 }
@@ -144,9 +146,33 @@ if (window.CanvasRenderingContext2D) {
 
   const { addEventHandlers, removeEventHandlers } = eventHandler(store);
 
+  const getWorkersToLoad = (preloadWorker) => {
+    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR, ALL } = workerTypes;
+    if (preloadWorker === ALL) {
+      return [PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR];
+    }
+    const workersToLoad = [];
+
+    const shouldLoadOfficeWorker = Array.isArray(preloadWorker) && preloadWorker.includes(OFFICE)
+    || typeof preloadWorker === 'string' && preloadWorker.match(/(office[,|\s]|office$)/g);
+    if (shouldLoadOfficeWorker) {
+      workersToLoad.push(OFFICE);
+    }
+
+    [PDF, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR].forEach((workerType) => {
+      if (preloadWorker.includes(workerType)) {
+        workersToLoad.push(workerType);
+      }
+    });
+
+    return workersToLoad;
+  };
+
   const initTransports = () => {
-    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, ALL } = workerTypes;
-    if (preloadWorker.includes(PDF) || preloadWorker === ALL) {
+    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR } = workerTypes;
+    const workersToLoad = getWorkersToLoad(preloadWorker);
+
+    if (workersToLoad.includes(PDF)) {
       getBackendPromise(getHashParameters('pdf', 'auto')).then((pdfType) => {
         window.Core.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: (percent) => {
@@ -156,7 +182,7 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker.includes(OFFICE) || preloadWorker === ALL) {
+    if (workersToLoad.includes(OFFICE)) {
       getBackendPromise(getHashParameters('office', 'auto')).then((officeType) => {
         window.Core.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: (percent) => {
@@ -166,7 +192,15 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker.includes(LEGACY_OFFICE) || preloadWorker === ALL) {
+    if (workersToLoad.includes(OFFICE_EDITOR)) {
+      window.Core.initOfficeEditorWorkerTransports({
+        workerLoadingProgress: (percent) => {
+          store.dispatch(actions.setLoadingProgress(percent));
+        },
+      }, window.sampleL);
+    }
+
+    if (workersToLoad.includes(LEGACY_OFFICE)) {
       getBackendPromise(getHashParameters('legacyOffice', 'auto')).then((officeType) => {
         window.Core.initLegacyOfficeWorkerTransports(officeType, {
           workerLoadingProgress: (percent) => {
@@ -176,7 +210,7 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker.includes(CONTENT_EDIT) || preloadWorker === ALL) {
+    if (workersToLoad.includes(CONTENT_EDIT)) {
       window.Core.ContentEdit.preloadWorker(documentViewer.getContentEditManager());
     }
   };
