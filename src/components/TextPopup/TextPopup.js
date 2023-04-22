@@ -114,7 +114,7 @@ const TextPopup = ({ t }) => {
         <div className="container">
           <CustomizablePopup
             dataElement={DataElements.TEXT_POPUP}
-            childrenClassName="main-menu-button"
+            childrenClassName='main-menu-button'
           >
             <ActionButton
               className="main-menu-button"

@@ -28,9 +28,9 @@ const reducer = () => {
 export const Basic = () => {
   return (
     <ReduxProvider store={createStore(reducer)}>
-      <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-        <div className="left-panel-container" style={{ minWidth: '330px' }}>
-          <div className="bookmark-outline-single-container default">
+      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+        <div className='left-panel-container' style={{ minWidth: '330px' }}>
+          <div className='bookmark-outline-single-container default'>
             <OutlineContext.Provider
               value={{
                 setEditingOutlines: NOOP,
@@ -43,8 +43,8 @@ export const Basic = () => {
               }}
             >
               <OutlineContent
-                outlinePath="0"
-                text="A test outline"
+                outlinePath='0'
+                text='A test outline'
                 // isAdding={true}
                 setIsHovered={NOOP}
               />
@@ -59,9 +59,9 @@ export const Basic = () => {
 export const Adding = () => {
   return (
     <ReduxProvider store={createStore(reducer)}>
-      <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-        <div className="left-panel-container" style={{ minWidth: '330px' }}>
-          <div className="bookmark-outline-single-container editing">
+      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+        <div className='left-panel-container' style={{ minWidth: '330px' }}>
+          <div className='bookmark-outline-single-container editing'>
             <OutlineContext.Provider
               value={{
                 currentDestPage: 1,
@@ -76,9 +76,9 @@ export const Adding = () => {
               }}
             >
               <OutlineContent
-                outlinePath="0"
-                text=""
-                isAdding
+                outlinePath='0'
+                text=''
+                isAdding={true}
                 setIsHovered={NOOP}
                 isOutlineRenaming={false}
                 onCancel={NOOP}
@@ -94,9 +94,9 @@ export const Adding = () => {
 export const Renaming = () => {
   return (
     <ReduxProvider store={createStore(reducer)}>
-      <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-        <div className="left-panel-container" style={{ minWidth: '330px' }}>
-          <div className="bookmark-outline-single-container editing">
+      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+        <div className='left-panel-container' style={{ minWidth: '330px' }}>
+          <div className='bookmark-outline-single-container editing'>
             <OutlineContext.Provider
               value={{
                 setEditingOutlines: NOOP,
@@ -109,10 +109,10 @@ export const Renaming = () => {
               }}
             >
               <OutlineContent
-                outlinePath="0"
-                text="A test outline"
+                outlinePath='0'
+                text='A test outline'
                 setIsHovered={NOOP}
-                isOutlineRenaming
+                isOutlineRenaming={true}
                 onCancel={NOOP}
               />
             </OutlineContext.Provider>
@@ -126,9 +126,9 @@ export const Renaming = () => {
 export const ChangingDestination = () => {
   return (
     <ReduxProvider store={createStore(reducer)}>
-      <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-        <div className="left-panel-container" style={{ minWidth: '330px' }}>
-          <div className="bookmark-outline-single-container editing">
+      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+        <div className='left-panel-container' style={{ minWidth: '330px' }}>
+          <div className='bookmark-outline-single-container editing'>
             <OutlineContext.Provider
               value={{
                 setEditingOutlines: NOOP,
@@ -143,10 +143,10 @@ export const ChangingDestination = () => {
               }}
             >
               <OutlineContent
-                outlinePath="0"
-                text="A test outline"
+                outlinePath='0'
+                text='A test outline'
                 setIsHovered={NOOP}
-                isOutlineChangingDest
+                isOutlineChangingDest={true}
                 onCancel={NOOP}
               />
             </OutlineContext.Provider>

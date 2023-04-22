@@ -73,7 +73,7 @@ export function DropdownWithInput() {
           items={items}
           translationPrefix={translationPrefix}
           currentSelectionKey={currentSelectionKey}
-          hasInput
+          hasInput={true}
         />
       </div>
     </ReduxProvider>

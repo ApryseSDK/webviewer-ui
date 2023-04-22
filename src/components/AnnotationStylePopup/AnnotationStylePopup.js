@@ -33,7 +33,8 @@ class AnnotationStylePopup extends React.Component {
   };
 
   adjustFreeTextBoundingBox = (annotation) => {
-    if (annotation instanceof window.Core.Annotations.FreeTextAnnotation) {
+    const { FreeTextAnnotation } = window.Core.Annotations;
+    if (annotation instanceof FreeTextAnnotation && annotation.getAutoSizeType() !== FreeTextAnnotation.AutoSizeTypes.NONE) {
       const doc = core.getDocument();
       const pageNumber = annotation['PageNumber'];
       const pageInfo = doc.getPageInfo(pageNumber);
@@ -62,7 +63,9 @@ class AnnotationStylePopup extends React.Component {
       if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, property, value);
       }
-      this.adjustFreeTextBoundingBox(annotation);
+      if (property === 'FontSize' || property === 'Font') {
+        this.adjustFreeTextBoundingBox(annotation);
+      }
     });
   }
 

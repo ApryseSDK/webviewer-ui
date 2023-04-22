@@ -193,7 +193,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       {pendingAttachments.length > 0 && (
         <ReplyAttachmentList
           files={pendingAttachments}
-          isEditing
+          isEditing={true}
           fileDeleted={(file) => deleteAttachment(annotation.Id, file)}
         />
       )}

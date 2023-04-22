@@ -25,6 +25,7 @@ import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
 import SignatureModes from 'constants/signatureModes';
 import { ShortcutKeys } from 'helpers/hotkeysManager';
 import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
+import { SYNC_MODES } from 'constants/multiViewerContants';
 
 const { ToolNames } = window.Core.Tools;
 
@@ -33,6 +34,7 @@ export default {
     initalsOffset: 0,
     isInitialsModeEnabled: false,
     isMultiViewerMode: false,
+    multiViewerSyncScrollMode: SYNC_MODES.SKIP_UNMATCHED,
     syncViewer: null,
     isCompareStarted: false,
     isComparisonOverlayEnabled: true,

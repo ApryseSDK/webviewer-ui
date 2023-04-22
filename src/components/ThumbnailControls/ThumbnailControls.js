@@ -33,7 +33,13 @@ const ThumbnailControls = ({ index }) => {
     selectors.getThumbnailControlMenuItems(state),
   ], shallowEqual);
 
-  const pageNumbers = selectedIndexes.length > 0 ? selectedIndexes.map((i) => i + 1) : [index + 1];
+  let pageNumbers = selectedIndexes.length > 0 ? selectedIndexes.map((i) => i + 1) : [index + 1];
+
+  const isCurrentPageInTheSelection = pageNumbers.includes(currentPage);
+
+  if (!isCurrentPageInTheSelection) {
+    pageNumbers = [currentPage];
+  }
 
   const document = core.getDocument();
   const documentType = document?.type;

@@ -74,7 +74,7 @@ const Panel = (props) => {
       })}
       data-element={props.dataElement}
     >
-      <div className="flx-Panel-container" style={style}>
+      <div className='flx-Panel-container' style={style}>
         {!isInDesktopOnlyMode && isMobile &&
           <div
             className="close-container"

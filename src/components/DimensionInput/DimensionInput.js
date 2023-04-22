@@ -37,8 +37,7 @@ const DimensionInput = ({ className, label, initialValue, onChange, unit, maxLen
     <div className={classNames({
       dimensionInput: true,
       [className]: !!className,
-    })}
-    >
+    })}>
       <label className="dimension-input-label">
         {label}
         <div className="dimension-input-container">

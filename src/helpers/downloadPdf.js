@@ -78,6 +78,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
         }
 
         .page__container {
+          margin: 10px;
           box-sizing: border-box;
           display: flex !important;
           flex-direction: column;
@@ -88,6 +89,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
         }
 
         .page__container .page__header {
+          margin-top: 2rem;
           display: block !important;
           align-self: flex-start;
           font-size: 2rem;
@@ -168,6 +170,22 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       language,
       true,
     );
+    const addWhiteBackground = (dataURL) => {
+      const pagePrintCanvas = document.createElement('canvas');
+      const pagePrintContext = pagePrintCanvas.getContext('2d');
+      return new Promise((res) => {
+        const printImg = new Image();
+        printImg.src = dataURL;
+        printImg.onload = () => {
+          pagePrintCanvas.width = printImg.width;
+          pagePrintCanvas.height = printImg.height;
+          pagePrintContext.fillStyle = '#FFFFFF';
+          pagePrintContext.fillRect(0, 0, pagePrintCanvas.width, pagePrintCanvas.height);
+          pagePrintContext.drawImage(printImg, 0, 0);
+          res(pagePrintCanvas.toDataURL());
+        };
+      });
+    };
     const html2canvas = (await import('html2canvas')).default;
     for (let page of createdPages) {
       page = await page;
@@ -179,10 +197,14 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           scale: 1,
           logging: false,
         });
-        dataURL = canvas.toDataURL();
+        dataURL = await addWhiteBackground(canvas.toDataURL());
         document.body.removeChild(page);
       } else {
-        dataURL = page;
+        if (doc?.getType() === workerTypes.OFFICE || doc?.getType() === workerTypes.LEGACY_OFFICE || doc?.getType() === workerTypes.OFFICE_EDITOR) {
+          dataURL = await addWhiteBackground(page);
+        } else {
+          dataURL = page;
+        }
       }
       const link = document.createElement('a');
       link.href = dataURL;
@@ -271,6 +293,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
             const colorProperty = colorMap[key] && colorMap[key].iconColor;
             const color = annotation[colorProperty || 'StrokeColor'].toString();
             const iconKey = getDataWithKey(key).icon;
+            // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require,import/no-dynamic-require
             const icon = require(`../../assets/icons/${iconKey}.svg`);
             const blob = new Blob([icon], { type: 'image/svg+xml;charset=utf-8' });
             const url = URL.createObjectURL(blob);

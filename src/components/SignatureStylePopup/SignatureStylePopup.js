@@ -153,8 +153,7 @@ const SignatureStylePopup = (props) => {
       <Tabs id="savedSignatures">
         <DataElementWrapper
           dataElement="savedSignatureAndInitialsTabs"
-          className="tab-list"
-        >
+          className="tab-list">
           <Tab dataElement={DataElements.SAVED_SIGNATURES_PANEL_BUTTON}>
             <button className="tab-options-button">
               {t('option.type.signature')}
@@ -174,8 +173,7 @@ const SignatureStylePopup = (props) => {
             deleteHandler={(index) => deleteSignatureAndInitials(index)}
             currentlySelectedIndex={selectedDisplayedSignatureIndex}
             isDeleteDisabled={isSignatureDeleteButtonDisabled}
-            activeToolName={activeToolName}
-          />
+            activeToolName={activeToolName} />
         </TabPanel>
         <TabPanel dataElement={DataElements.SAVED_INITIALS_PANEL}>
           <SavedSignatures
@@ -184,8 +182,7 @@ const SignatureStylePopup = (props) => {
             deleteHandler={(index) => deleteSignatureAndInitials(index)}
             currentlySelectedIndex={selectedDisplayedInitialsIndex}
             isDeleteDisabled={isSignatureDeleteButtonDisabled}
-            activeToolName={activeToolName}
-          />
+            activeToolName={activeToolName} />
         </TabPanel>
       </Tabs>
       <SignatureAddBtn

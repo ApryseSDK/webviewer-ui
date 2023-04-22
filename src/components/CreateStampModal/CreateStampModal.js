@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
@@ -27,6 +27,13 @@ const CustomStampModal = () => {
     selectors.getUserName(state),
   ]);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isOpen) {
+      core.deselectAllAnnotations();
+    }
+  }, [isOpen]);
+
   const closeModal = () => {
     dispatch(actions.closeElement('customStampModal'));
   };

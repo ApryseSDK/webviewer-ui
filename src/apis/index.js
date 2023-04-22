@@ -250,6 +250,7 @@ import RibbonGroup from './ModularComponents/ribbonGroup';
 import ToggleElementButton from './ModularComponents/toggleElementButton';
 import ToolGroupButton from './ModularComponents/toolGroupButton';
 import Flyout from './ModularComponents/flyout';
+import setMultiViewerSyncScrollingMode from './setMultiViewerSyncScrollingMode';
 
 import {
   getMeasurementScalePreset,
@@ -537,6 +538,7 @@ export default (store) => {
     importUserSettings: importUserSettings(store),
     setGrayscaleDarknessFactor,
     setSideWindowVisibility: setSideWindowVisibility(store),
+    setMultiViewerSyncScrollingMode: setMultiViewerSyncScrollingMode(store),
 
     // undocumented
     loadedFromServer: false,

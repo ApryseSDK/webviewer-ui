@@ -40,13 +40,13 @@ const initialState = {
 
 export const Basic = () => {
   return (
-    <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-      <div className="left-panel-container" style={{ minWidth: '330px' }}>
+    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+      <div className='left-panel-container' style={{ minWidth: '330px' }}>
         <Provider store={configureStore({ reducer: () => initialState })}>
           <Bookmark
-            text="Double click to rename me"
-            label="Page 1 - Bookmark Title"
-            defaultLabel="Page 1"
+            text='Double click to rename me'
+            label='Page 1 - Bookmark Title'
+            defaultLabel='Page 1'
             pageIndex={0}
             isAdding={false}
             isMultiSelectionMode={false}
@@ -63,15 +63,15 @@ export const Basic = () => {
 
 export const Adding = () => {
   return (
-    <div className="Panel LeftPanel" style={{ width: '330px', minWidth: '330px' }}>
-      <div className="left-panel-container" style={{ minWidth: '330px' }}>
+    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+      <div className='left-panel-container' style={{ minWidth: '330px' }}>
         <Provider store={configureStore({ reducer: () => initialState })}>
           <Bookmark
-            text="A bookmark"
-            label="Page 1 - Bookmark Title"
-            defaultLabel="Page 1"
+            text='A bookmark'
+            label='Page 1 - Bookmark Title'
+            defaultLabel='Page 1'
             pageIndex={0}
-            isAdding
+            isAdding={true}
             isMultiSelectionMode={false}
             setSelected={NOOP}
             onSave={NOOP}

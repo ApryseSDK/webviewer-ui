@@ -65,7 +65,8 @@ export const WatermarkPanelContainer = () => {
       style={style}
     >
       {(!isInDesktopOnlyMode && isMobile) && renderMobileCloseButton()}
-      <WatermarkPanel />
+      <WatermarkPanel
+      />
     </DataElementWrapper>
   );
 };

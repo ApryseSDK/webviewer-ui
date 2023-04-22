@@ -164,7 +164,7 @@ const Bookmark = ({
               <BookmarkOutlineContextMenuPopup
                 type={'bookmark'}
                 anchorButton={`bookmark-more-button-${pageIndex}`}
-                shouldDisplayDeleteButton
+                shouldDisplayDeleteButton={true}
                 onClosePopup={() => setContextMenuOpen(false)}
                 onRenameClick={() => {
                   setContextMenuOpen(false);

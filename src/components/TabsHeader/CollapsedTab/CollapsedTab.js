@@ -31,8 +31,7 @@ const Tab = ({ tab, setActive, onDragStart, closeTab, id }) => {
       draggable
       id={id}
       onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
+      onMouseLeave={() => setIsHovering(false)}>
       <div className={'CollapsedTab'}>
         <div className={classNames({ 'file-text': true, disabled })} onClick={setActive}>
           <p>{name}</p>

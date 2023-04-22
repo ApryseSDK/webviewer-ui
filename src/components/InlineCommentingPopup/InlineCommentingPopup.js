@@ -75,14 +75,14 @@ const InlineCommentingPopup = ({
         }}
       >
         {isMobile && (
-          <div className="inline-comment-header">
+          <div className='inline-comment-header'>
             <Button
               img={isExpanded ? 'icon-chevron-down' : 'icon-chevron-up'}
               className="expand-arrow"
               dataElement={DataElements.INLINE_COMMENT_POPUP_EXPAND_BUTTON}
               onClick={() => setExpanded(!isExpanded)}
             />
-            <span className="inline-comment-header-title">{t('action.comment')}</span>
+            <span className='inline-comment-header-title'>{t('action.comment')}</span>
             <Button
               img={'icon-close'}
               dataElement={DataElements.INLINE_COMMENT_POPUP_CLOSE_BUTTON}

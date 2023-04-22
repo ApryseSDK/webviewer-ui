@@ -841,6 +841,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, toolDefaultStyleUpdateFromAnnotationPopupEnabled: payload };
     case 'SET_SHORTCUT_KEY_MAP':
       return { ...state, shortcutKeyMap: payload };
+    case 'SET_MULTI_VIEWER_SYNC_SCROLLING_MODE':
+      return { ...state, multiViewerSyncScrollMode: payload };
     default:
       return state;
   }

@@ -4,7 +4,6 @@ import getActualZoomLevel from './getActualZoomLevel';
 
 export default (dispatch) => (zoomLevel) => {
   const maxZoom = getActualZoomLevel(zoomLevel);
-
   if (maxZoom) {
     const minZoom = zoomFactors.getMinZoomLevel();
     const zoomList = defaultZoomList.filter((zoom) => zoom <= maxZoom && zoom >= minZoom);

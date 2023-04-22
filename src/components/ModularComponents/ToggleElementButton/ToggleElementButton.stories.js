@@ -45,7 +45,7 @@ const store = configureStore({
 export const ToggleElementButtonComponent = () => (
   <Provider store={store}>
     <div style={{ width: '32px' }}>
-      <ToggleElementButton img="icon-header-search" toggleElement="signatureModal" dataElement="toggleButton" />
+      <ToggleElementButton img='icon-header-search' toggleElement='signatureModal' dataElement='toggleButton' />
     </div>
   </Provider>
 );

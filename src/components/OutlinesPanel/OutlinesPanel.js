@@ -321,7 +321,7 @@ const OutlinesPanel = () => {
             {isAddingNewOutline && activeOutlinePath === null && (
               <DataElementWrapper className="bookmark-outline-single-container editing">
                 <OutlineContent
-                  isAdding
+                  isAdding={true}
                   text={''}
                   onCancel={() => setAddingNewOutline(false)}
                 />

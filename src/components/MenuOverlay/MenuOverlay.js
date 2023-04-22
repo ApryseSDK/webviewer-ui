@@ -102,6 +102,7 @@ function MenuOverlay() {
     closeMenuOverlay();
     loadDocument(dispatch, (await core.getEmptyWordDocument()).default, {
       filename: 'Untitled.docx',
+      enableOfficeEditing: true
     });
   };
 

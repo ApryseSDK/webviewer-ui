@@ -82,7 +82,7 @@ const PropertiesElement = (props) => {
       <GeneralValuesSection entities={defaultItems} />
       <GroupsContainer groups={groupsItems} groupOrder={groupOrder} />
       {createRawValueGroup ? (
-        <Group data-element="Group" name={t('wv3dPropertiesPanel.miscValuesHeader')} data={element} open />
+        <Group data-element="Group" name={t('wv3dPropertiesPanel.miscValuesHeader')} data={element} open={true} />
       ) : null}
     </section>
   );
