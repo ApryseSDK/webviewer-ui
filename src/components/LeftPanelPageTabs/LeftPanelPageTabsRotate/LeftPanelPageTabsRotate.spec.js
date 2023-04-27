@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import LeftPanelPageTabsRotate from "components/LeftPanelPageTabs/LeftPanelPageTabsRotate/LeftPanelPageTabsRotate";
-import withMockRedux from "../../../../jest/withMockRedux";
+import LeftPanelPageTabsRotate from 'components/LeftPanelPageTabs/LeftPanelPageTabsRotate/LeftPanelPageTabsRotate';
+import withMockRedux from '../../../../jest/withMockRedux';
 
 const LeftPanelPageTabsRotateRedux = withMockRedux(LeftPanelPageTabsRotate);
 
@@ -22,11 +22,11 @@ describe('LeftPanelPageTabsRotate', () => {
       const handlers = {
         onRotateCounterClockwise: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlRotateCounterClockwise"
+          dataElement: 'thumbnailsControlRotateCounterClockwise'
         },
         onRotateClockwise: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlRotateClockwise"
+          dataElement: 'thumbnailsControlRotateClockwise'
         },
       };
       const { container } = render(<LeftPanelPageTabsRotateRedux

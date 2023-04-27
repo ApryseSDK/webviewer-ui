@@ -9,6 +9,7 @@ import DataElements from 'constants/dataElement';
 import selectors from 'selectors';
 
 import './CommentTextarea.scss';
+import getRootNode from 'helpers/getRootNode';
 
 let globalUserData = [];
 
@@ -80,7 +81,7 @@ const CommentTextarea = React.forwardRef(
     globalUserData = userData;
 
     const addAttachment = () => {
-      document.getElementById('reply-attachment-picker')?.click();
+      getRootNode().querySelector('#reply-attachment-picker')?.click();
     };
 
     const onClick = (e) => {

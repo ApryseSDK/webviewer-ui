@@ -1,5 +1,5 @@
+import { ITEM_TYPE } from 'src/constants/customizationVariables';
 import Item from './item';
-import { ITEM_TYPE } from 'constants/customizationVariables';
 
 class RibbonItem extends Item {
   constructor(props) {
@@ -10,6 +10,7 @@ class RibbonItem extends Item {
     this.label = label;
     this.img = img;
     this.toolbarGroup = toolbarGroup;
+    this.type = ITEM_TYPE.RIBBON_ITEM;
 
     this.groupedItems = [];
     if (Array.isArray(groupedItems)) {

@@ -10,6 +10,7 @@ import Events from 'constants/events';
 import { isString } from 'lodash';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
+import getRootNode, { getInstanceNode } from 'helpers/getRootNode';
 
 export function prepareMultiTab(initialDoc, store) {
   const extensions = getHashParameters('extension', null)?.split(',');
@@ -28,7 +29,10 @@ export function prepareMultiTab(initialDoc, store) {
   const tabManager = new TabManager(initialDoc, extensions, store);
   store.dispatch(actions.setTabManager(tabManager));
   tabManager.listenForAnnotChanges();
-  fireEvent('onTabManagerReady', { tabManager });
+  // Fix for event not firing on some devices
+  setTimeout(() => {
+    fireEvent(Events.TAB_MANAGER_READY);
+  }, 300);
 }
 
 export default class TabManager {
@@ -87,7 +91,7 @@ export default class TabManager {
     }, { once: true });
   }
 
-  async setActiveTab(id, saveCurrentActiveTabState = false) {
+  async setActiveTab(id, saveCurrentActiveTabState = true) {
     this.store.dispatch(actions.openElement('progressModal'));
     this.store.dispatch(setLoadingProgress(0));
 
@@ -96,13 +100,12 @@ export default class TabManager {
     const currentTab = tabs.find((tab) => tab.id === activeTab);
     const isEmptyPageOpen = selectors.isElementOpen(state, DataElements.MULTITABS_EMPTY_PAGE);
     this.prepareTabEventListeners();
-    if (currentTab) {
-      saveCurrentActiveTabState && await currentTab.saveCurrentActiveTabState(this.db);
-      core.closeDocument();
-    }
     const newTab = tabs.find((tab) => tab.id === id);
     if (!newTab) {
       return console.error(`Tab id not found: ${id}`);
+    }
+    if (currentTab) {
+      await core.getDocumentViewer().getAnnotationsLoadedPromise();
     }
     fireEvent(Events['BEFORE_TAB_CHANGED'], {
       currentTab: currentTab ? {
@@ -118,9 +121,18 @@ export default class TabManager {
         id: newTab.id,
       },
     });
-    this.store.dispatch(actions.setActiveTab(id));
-    isEmptyPageOpen && this.store.dispatch(actions.closeElement(DataElements.MULTITABS_EMPTY_PAGE));
-    await newTab.load(this.store.dispatch, this.db, this.getViewerState(state));
+    // Need this timeout because window.dispatchEvent is synchronous
+    // This will cause the document to be closed if the customer exports an XFDF or runs another async call here
+    // Allow a timeout of 400ms for async calls to finish before closing the document.
+    setTimeout(async () => {
+      if (currentTab) {
+        saveCurrentActiveTabState && await currentTab.saveCurrentActiveTabState(this.db);
+        core.closeDocument();
+      }
+      this.store.dispatch(actions.setActiveTab(id));
+      isEmptyPageOpen && this.store.dispatch(actions.closeElement(DataElements.MULTITABS_EMPTY_PAGE));
+      await newTab.load(this.store.dispatch, this.db, this.getViewerState(state));
+    }, 400);
   }
 
   getViewerState = (state) => {
@@ -270,16 +282,18 @@ export default class TabManager {
       currentTab.changes.hasUnsavedChanges = false;
     };
 
-    const setDocumentChanged = () => {
-      currentTab.changes.hasUnsavedChanges = true;
+    const onPagesUpdated = (info) => {
+      if (info.source !== 'refresh') {
+        currentTab.changes.hasUnsavedChanges = true;
+      }
     };
 
-    window.instance.UI.addEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
-    documentViewer.addEventListener('pagesUpdated', setDocumentChanged);
+    getInstanceNode().addEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
+    documentViewer.addEventListener('pagesUpdated', onPagesUpdated);
 
     const removeListeners = () => {
-      window.instance.UI.removeEventListener(Events.FILE_DOWNLOADED);
-      documentViewer.removeEventListener('pagesUpdated', setDocumentChanged);
+      getInstanceNode().removeEventListener(Events.FILE_DOWNLOADED, onFileDownloaded);
+      documentViewer.removeEventListener('pagesUpdated', onPagesUpdated);
     };
 
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
@@ -419,7 +433,7 @@ export class Tab {
   }
 
   savePageData() {
-    const docContainer = document.getElementsByClassName('DocumentContainer')[0];
+    const docContainer = getRootNode().getElementsByClassName('DocumentContainer')[0];
     this.saveData.scrollTop = docContainer.scrollTop;
     this.saveData.scrollLeft = docContainer.scrollLeft;
     this.saveData.page = core.getCurrentPage();
@@ -428,7 +442,7 @@ export class Tab {
   }
 
   restorePageDataOnLoad(viewerState, dispatch) {
-    const docContainer = document.getElementsByClassName('DocumentContainer')[0];
+    const docContainer = getRootNode().getElementsByClassName('DocumentContainer')[0];
 
     const updateScroll = async () => {
       await core.getDocument().getDocumentCompletePromise();

@@ -344,6 +344,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         openElements: { ...state.openElements, [payload.dataElement]: false },
       };
+    case 'SET_IS_ELEMENT_HIDDEN':
+      return {
+        ...state,
+        hiddenElements: { ...state.hiddenElements, [payload.dataElement]: payload.isHidden }
+      };
     case 'ENABLE_TOOL_GROUP_REORDERING':
       return { ...state, enableToolGroupReordering: payload.enableToolGroupReordering };
     case 'SET_ACTIVE_HEADER_GROUP':
@@ -402,6 +407,8 @@ export default (initialState) => (state = initialState, action) => {
           [payload.documentViewerKey]: payload.zoom,
         }
       };
+    case 'SET_TIMEZONE':
+      return { ...state, timezone: payload.timezone };
     case 'SET_ROTATION':
       return { ...state, rotation: payload.rotation };
     case 'SET_DISPLAY_MODE':
@@ -841,6 +848,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, toolDefaultStyleUpdateFromAnnotationPopupEnabled: payload };
     case 'SET_SHORTCUT_KEY_MAP':
       return { ...state, shortcutKeyMap: payload };
+    case 'SET_MULTI_VIEWER_SYNC_SCROLLING_MODE':
+      return { ...state, multiViewerSyncScrollMode: payload };
     default:
       return state;
   }

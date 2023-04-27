@@ -16,10 +16,9 @@ const createMockSoundAnnotation = () => {
       blob: new Blob([RAW_AUDIO_RECORDED_PIANO])
     }
   };
-}
+};
 
 describe('AudioPlaybackPopup', () => {
-
   beforeEach(() => {
     // JSDOM does not support the WebAudio specification. https://github.com/jsdom/jsdom/issues/2900
     // We need to mock a few classes and functions from the WebAudio API.
@@ -30,7 +29,9 @@ describe('AudioPlaybackPopup', () => {
 
     class MockAudioContext {
       constructor() {}
-      createMediaElementSource(mockArg) { return new MockMediaElementAudioSourceNode(); }
+      createMediaElementSource(mockArg) {
+        return new MockMediaElementAudioSourceNode();
+      }
       close() {}
     }
 
@@ -109,7 +110,7 @@ describe('AudioPlaybackPopup', () => {
           annotation={null}
           handleAudioPlaybackError={noop}
           handleAudioInitializeError={handleAudioInitializeError}
-          handleCloseAudioPlaybackPopup={noop} 
+          handleCloseAudioPlaybackPopup={noop}
         />
       );
 

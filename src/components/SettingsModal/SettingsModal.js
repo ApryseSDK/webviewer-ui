@@ -20,11 +20,11 @@ const TABS_ID = 'settingsModal';
 const SettingsModal = () => {
   const [
     isDisabled,
-    isOpen,
+    isHidden,
     selectedTab
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.SETTINGS_MODAL),
-    selectors.isElementOpen(state, DataElements.SETTINGS_MODAL),
+    selectors.isElementHidden(state, DataElements.SETTINGS_MODAL),
     selectors.getSelectedTab(state, TABS_ID)
   ]);
   const [t] = useTranslation();
@@ -37,8 +37,8 @@ const SettingsModal = () => {
   ];
 
   const className = classNames('Modal', 'SettingsModal', {
-    open: isOpen,
-    closed: !isOpen
+    open: !isHidden,
+    closed: isHidden
   });
 
   const closeModal = () => {
@@ -53,7 +53,7 @@ const SettingsModal = () => {
 
   return isDisabled ? null : (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <FocusTrap locked={isOpen}>
+      <FocusTrap locked={!isHidden}>
         <div className={className} data-element={DataElements.SettingsModal} onClick={closeModal}>
           <div className="container" onClick={(e) => e.stopPropagation()}>
             <div className="swipe-indicator" />

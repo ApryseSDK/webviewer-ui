@@ -22,5 +22,25 @@
       margin-left: 2px;
       margin-top: 7px;
     }
+
+
+
+    [data-element="borderStylePicker"] {
+      width: 80px;
+      margin-left: 2px;
+      margin-top: 7px;
+      .Dropdown {
+        width: 80px!important;
+        .picked-option-text svg {
+          width: 48px;
+        }
+      }
+      .Dropdown__items {
+        width: 80px;
+        svg {
+          width: 65px
+        }
+      }
+    }
   }
 }

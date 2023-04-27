@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import { useTranslation } from 'react-i18next';
+import selectors from 'selectors';
 import Button from 'components/Button';
 import DataElements from 'constants/dataElement';
-import hotkeysManager, { Shortcuts } from 'helpers/hotkeysManager';
+import { Shortcuts } from 'helpers/hotkeysManager';
 import { isMac } from 'helpers/device';
 import EditKeyboardShortcutModal from './EditKeyboardShortcutModal';
 
@@ -53,6 +54,8 @@ const KeyboardShortcutTab = () => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
+  const shortcutKeyMap = useSelector(selectors.getShortcutKeyMap);
+
   const [currentShortcut, setCurrentShortcut] = useState(undefined);
 
   const getCommandStrings = (command) => {
@@ -65,13 +68,13 @@ const KeyboardShortcutTab = () => {
   };
 
   const editShortcut = (shortcut) => {
-    dispatch(actions.closeElement(DataElements.SETTINGS_MODAL));
+    dispatch(actions.setIsElementHidden(DataElements.SETTINGS_MODAL, true));
     setCurrentShortcut(shortcut);
   };
 
   const finishEditing = () => {
     setCurrentShortcut(undefined);
-    dispatch(actions.openElement(DataElements.SETTINGS_MODAL));
+    dispatch(actions.setIsElementHidden(DataElements.SETTINGS_MODAL, false));
   };
 
   return (
@@ -85,7 +88,7 @@ const KeyboardShortcutTab = () => {
         {keyboardShortcuts.map((item) => (
           <div key={item[0]} className="shortcut-table-item">
             <div className="shortcut-table-item-command">
-              {getCommandStrings(hotkeysManager.shortcutKeyMap[item[0]]).map((str, i) => (
+              {getCommandStrings(shortcutKeyMap[item[0]]).map((str, i) => (
                 <span key={i}>{str}</span>
               ))}
             </div>

@@ -14,8 +14,11 @@ import zoomFactors from 'constants/zoomFactors';
 import './ToggleZoomOverlay.scss';
 import { useTranslation } from 'react-i18next';
 
-const ToggleZoomOverlay = () => {
+const ToggleZoomOverlay = ({ documentViewerKey = undefined }) => {
   const [t] = useTranslation();
+
+  const elementName = documentViewerKey ? `zoomOverlay${documentViewerKey}` : 'zoomOverlay';
+  const buttonName = documentViewerKey ? `zoomOverlayButton${documentViewerKey}` : 'zoomOverlay';
 
   const isMobile = useMedia(
     // Media queries
@@ -25,35 +28,34 @@ const ToggleZoomOverlay = () => {
     false,
   );
 
-  const [isActive] = useSelector(
-    state => [selectors.isElementOpen(state, 'zoomOverlay')],
-    shallowEqual,
+  const [isActive, isMultiViewerMode] = useSelector((state) => [
+    selectors.isElementOpen(state, elementName),
+    selectors.isMultiViewerMode(state),
+  ],
+  shallowEqual,
   );
   const dispatch = useDispatch();
   const [value, setValue] = useState('100');
 
   useEffect(() => {
-    const onDocumentLoaded = () =>
-      setValue(Math.ceil(core.getZoom() * 100).toString());
-    const onZoomUpdated = () =>
-      setValue(Math.ceil(core.getZoom() * 100).toString());
-    const onDocumentUnloaded = () => 
-      setValue('100');
+    const onDocumentLoaded = () => setValue(Math.ceil(core.getZoom(documentViewerKey) * 100).toString());
+    const onZoomUpdated = () => setValue(Math.ceil(core.getZoom(documentViewerKey) * 100).toString());
+    const onDocumentUnloaded = () => setValue('100');
 
-    core.addEventListener('documentLoaded', onDocumentLoaded);
-    core.addEventListener('zoomUpdated', onZoomUpdated);
-    core.addEventListener('documentUnloaded', onDocumentUnloaded);
+    core.addEventListener('documentLoaded', onDocumentLoaded, undefined, documentViewerKey);
+    core.addEventListener('zoomUpdated', onZoomUpdated, undefined, documentViewerKey);
+    core.addEventListener('documentUnloaded', onDocumentUnloaded, undefined, documentViewerKey);
 
     return () => {
-      core.removeEventListener('documentLoaded', onDocumentLoaded);
-      core.removeEventListener('zoomUpdated', onZoomUpdated);
-      core.removeEventListener('documentUnloaded', onDocumentUnloaded);
+      core.removeEventListener('documentLoaded', onDocumentLoaded, documentViewerKey);
+      core.removeEventListener('zoomUpdated', onZoomUpdated, documentViewerKey);
+      core.removeEventListener('documentUnloaded', onDocumentUnloaded, documentViewerKey);
     };
   }, []);
 
-  const onKeyPress = e => {
+  const onKeyPress = (e) => {
     if (e.nativeEvent.key === 'Enter' || e.nativeEvent.keyCode === 13) {
-      const zoom = Math.ceil(core.getZoom() * 100).toString();
+      const zoom = Math.ceil(core.getZoom(documentViewerKey) * 100).toString();
       if (e.target.value === zoom) {
         return;
       }
@@ -63,20 +65,20 @@ const ToggleZoomOverlay = () => {
         let zoomValue = (e.target.value) / 100;
         zoomValue = Math.max(zoomValue, zoomFactors.getMinZoomLevel());
         zoomValue = Math.min(zoomValue, zoomFactors.getMaxZoomLevel());
-        zoomTo(zoomValue);
+        zoomTo(zoomValue, isMultiViewerMode, documentViewerKey);
       }
     }
   };
 
-  const onChange = e => {
+  const onChange = (e) => {
     const re = /^(\d){0,4}$/;
     if (re.test(e.target.value) || e.target.value === '') {
       setValue(e.target.value);
     }
   };
 
-  const onBlur = e => {
-    const zoom = Math.ceil(core.getZoom() * 100).toString();
+  const onBlur = (e) => {
+    const zoom = Math.ceil(core.getZoom(documentViewerKey) * 100).toString();
     if (e.target.value === zoom) {
       return;
     }
@@ -84,7 +86,7 @@ const ToggleZoomOverlay = () => {
       setValue(zoom);
     } else {
       setValue(Number(e.target.value).toString());
-      zoomTo(e.target.value / 100);
+      zoomTo(e.target.value / 100, documentViewerKey);
     }
   };
 
@@ -99,10 +101,16 @@ const ToggleZoomOverlay = () => {
               OverlayContainer: true,
               active: isActive,
             })}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                dispatch(actions.toggleElement('zoomOverlay'));
+              }
+            }}
+            tabIndex={0}
           >
             <div
               className="OverlayText"
-              onClick={() => dispatch(actions.toggleElement('zoomOverlay'))}
+              onClick={() => dispatch(actions.toggleElement(elementName))}
             >
               <input
                 type="text"
@@ -120,21 +128,22 @@ const ToggleZoomOverlay = () => {
             <ToggleElementButton
               className="OverlayButton"
               img={`icon-chevron-${isActive ? 'up' : 'down'}`}
-              element="zoomOverlay"
-              dataElement="zoomOverlay"
+              element={elementName}
+              dataElement={buttonName}
               ariaLabel={t('action.zoomControls')}
+              tabIndex={-1}
             />
           </div>
         </div>}
       <ActionButton
         img="icon-header-zoom-out-line"
-        onClick={zoomOut}
+        onClick={() => zoomOut(isMultiViewerMode, documentViewerKey)}
         title="action.zoomOut"
         dataElement="zoomOutButton"
       />
       <ActionButton
         img="icon-header-zoom-in-line"
-        onClick={zoomIn}
+        onClick={() => zoomIn(isMultiViewerMode, documentViewerKey)}
         title="action.zoomIn"
         dataElement="zoomInButton"
       />

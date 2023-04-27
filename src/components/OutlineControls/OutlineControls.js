@@ -11,12 +11,15 @@ import outlineUtils from 'helpers/OutlineUtils';
 import selectors from 'selectors';
 
 import './OutlineControls.scss';
+import DataElements from 'src/constants/dataElement';
 
-function OutlineControls() {
-  const outlines = useSelector(state => selectors.getOutlines(state));
-  const { selectedOutlinePath, setSelectedOutlinePath, reRenderPanel } = useContext(
-    OutlineContext,
-  );
+const OutlineControls = () => {
+  const outlines = useSelector((state) => selectors.getOutlines(state));
+  const {
+    activeOutlinePath,
+    setActiveOutlinePath,
+    updateOutlines
+  } = useContext(OutlineContext);
   const [canMove, setCanMove] = useState({ up: false, down: false, outward: false, inward: false });
   const nextIndexRef = useRef(null);
   const [t] = useTranslation();
@@ -26,68 +29,78 @@ function OutlineControls() {
       return;
     }
 
-    async function setCanMoveState() {
-      setCanMove(await outlineUtils.getCanMoveState(selectedOutlinePath));
-    }
+    const setCanMoveState = async () => {
+      setCanMove(await outlineUtils.getCanMoveState(activeOutlinePath));
+    };
 
     setCanMoveState();
-  }, [selectedOutlinePath]);
+  }, [activeOutlinePath]);
 
   useEffect(() => {
     if (nextIndexRef.current !== null) {
-      setSelectedOutlinePath(nextIndexRef.current);
+      setActiveOutlinePath(nextIndexRef.current);
       nextIndexRef.current = null;
     }
-  }, [outlines, setSelectedOutlinePath]);
+  }, [outlines, setActiveOutlinePath]);
 
-  async function moveOutlineUp() {
-    const nextIndex = await outlineUtils.moveOutlineUp(selectedOutlinePath);
-    reRenderPanel();
+  const moveOutlineUp = async () => {
+    const nextIndex = await outlineUtils.moveOutlineUp(activeOutlinePath);
+    updateOutlines();
     nextIndexRef.current = nextIndex;
-  }
+  };
 
-  async function moveOutlineDown() {
-    const nextIndex = await outlineUtils.moveOutlineDown(selectedOutlinePath);
-    reRenderPanel();
+  const moveOutlineDown = async () => {
+    const nextIndex = await outlineUtils.moveOutlineDown(activeOutlinePath);
+    updateOutlines();
     nextIndexRef.current = nextIndex;
-  }
+  };
 
-  async function moveOutlineOutward() {
-    const nextIndex = await outlineUtils.moveOutlineOutward(selectedOutlinePath);
-    reRenderPanel();
+  const moveOutlineOutward = async () => {
+    const nextIndex = await outlineUtils.moveOutlineOutward(activeOutlinePath);
+    updateOutlines();
     nextIndexRef.current = nextIndex;
-  }
+  };
 
-  async function moveOutlineInward() {
-    const nextIndex = await outlineUtils.moveOutlineInward(selectedOutlinePath);
-    reRenderPanel();
+  const moveOutlineInward = async () => {
+    const nextIndex = await outlineUtils.moveOutlineInward(activeOutlinePath);
+    updateOutlines();
     nextIndexRef.current = nextIndex;
-  }
+  };
 
   return (
-    <DataElementWrapper className="OutlineControls" dataElement="outlineControls">
-      <span className="reorderText">{t('option.outlineControls.reorder')}</span>
-      <Button img="icon-arrow-up" disabled={!canMove.up} onClick={moveOutlineUp} dataElement="moveOutlineUpButton" />
+    <DataElementWrapper
+      className="OutlineControls"
+      dataElement={DataElements.OUTLINE_CONTROLS}
+    >
+      <span className="reorderText">
+        {t('option.bookmarkOutlineControls.reorder')}
+      </span>
+      <Button
+        img="icon-arrow-up"
+        disabled={!canMove.up}
+        onClick={moveOutlineUp}
+        dataElement={DataElements.OUTLINE_MOVE_UP_BUTTON}
+      />
       <Button
         img="icon-arrow-down"
         disabled={!canMove.down}
         onClick={moveOutlineDown}
-        dataElement="moveOutlineDownButton"
+        dataElement={DataElements.OUTLINE_MOVE_DOWN_BUTTON}
       />
       <Button
         img="icon-arrow-left"
         disabled={!canMove.outward}
         onClick={moveOutlineOutward}
-        dataElement="moveOutlineOutwardButton"
+        dataElement={DataElements.OUTLINE_MOVE_OUTWARD_BUTTON}
       />
       <Button
         img="icon-arrow-right"
         disabled={!canMove.inward}
         onClick={moveOutlineInward}
-        dataElement="moveOutlineInwardButton"
+        dataElement={DataElements.OUTLINE_MOVE_INWARD_BUTTON}
       />
     </DataElementWrapper>
   );
-}
+};
 
 export default OutlineControls;

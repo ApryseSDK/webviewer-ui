@@ -1,5 +1,5 @@
 export const svgHeight = 21;
-export const getCircleRadius = isMobile => {
+export const getCircleRadius = (isMobile) => {
   if (isMobile) {
     return 8;
   }

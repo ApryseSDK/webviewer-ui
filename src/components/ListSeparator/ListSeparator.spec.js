@@ -4,7 +4,6 @@ import ListSeparator from './ListSeparator';
 import { Basic as ListSeparatorStory } from './ListSeparator.stories';
 
 describe('ListSeparator component', () => {
-
   it('Should render without any props', () => {
     expect(() => {
       render(<ListSeparator />);
@@ -29,5 +28,4 @@ describe('ListSeparator component', () => {
     // verify that list separator content is the same as renderContent() returns
     expect(listSeparator.innerHTML).toEqual(testContent);
   });
-
 });

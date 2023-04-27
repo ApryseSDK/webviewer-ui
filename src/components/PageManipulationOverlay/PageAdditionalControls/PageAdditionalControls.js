@@ -43,7 +43,6 @@ function PageAdditionalControls(props) {
       </DataElementWrapper>
     </>
   );
-
 }
 
 export default PageAdditionalControls;

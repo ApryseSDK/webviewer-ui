@@ -12,7 +12,7 @@ WebViewer(...)
         title: "Radius Measurement", //Title for overlay
         label: "Radius", // Label to be shown for the value
         // Validate is a function to validate the annotation is valid for the current custom overlay
-        validate: annotation => annotation instanceof instance.Annotations.EllipseAnnotation,
+        validate: annotation => annotation instanceof instance.Core.Annotations.EllipseAnnotation,
         // The value to be shown in the custom overlay
         value: annotation => annotation.Width / 2,
         // onChange will be called whenever the value in the overlay changes from user input
@@ -25,6 +25,6 @@ WebViewer(...)
   });
  */
 
-export default store => customOverlayInfo => {
+export default (store) => (customOverlayInfo) => {
   store.dispatch(action.setCustomMeasurementOverlay(customOverlayInfo));
 };

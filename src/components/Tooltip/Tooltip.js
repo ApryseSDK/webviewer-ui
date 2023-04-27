@@ -9,6 +9,7 @@ import selectors from 'selectors';
 import { isMac, isWindows, isIOS, isAndroid } from 'helpers/device';
 
 import './Tooltip.scss';
+import getRootNode from 'helpers/getRootNode';
 
 const propTypes = {
   children: PropTypes.element.isRequired,
@@ -196,7 +197,7 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
               )}
             </div>
           </div>,
-          document.getElementById('app'),
+          getRootNode().querySelector('#app'),
         )}
     </React.Fragment>
   );

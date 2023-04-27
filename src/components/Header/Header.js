@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import HeaderItems from 'components/HeaderItems';
+import TabsHeader from 'components/TabsHeader';
 
 import selectors from 'selectors';
 import classNames from 'classnames';
@@ -30,6 +31,7 @@ class Header extends React.PureComponent {
 
     return (
       <React.Fragment>
+        <TabsHeader />
         <div
           className={classNames({
             Header: true,
@@ -45,7 +47,7 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isMultiTab: selectors.getIsMultiTab(state),
   currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),

@@ -1,0 +1,22 @@
+.setting-item {
+  border: 1px var(--border) solid;
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  &:not(:last-child) {
+    border-bottom: 0px
+  }
+
+  .setting-item-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 18px;
+
+    .setting-item-label {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+  }
+}

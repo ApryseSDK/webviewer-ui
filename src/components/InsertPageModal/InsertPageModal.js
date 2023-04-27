@@ -12,12 +12,13 @@ import { Swipeable } from 'react-swipeable';
 
 import core from 'core';
 
-import { insertAbove, insertBelow } from '../../helpers/pageManipulationFunctions';
+import { insertAbove, insertBelow, exitPageInsertionWarning } from '../../helpers/pageManipulationFunctions';
 import InsertBlankPagePanel from './InsertBlankPagePanel';
 import InsertUploadedPagePanel from './InsertUploadedPagePanel';
 
-import './InsertPageModal.scss';
 import FilePickerPanel from '../PageReplacementModal/FilePickerPanel';
+
+import './InsertPageModal.scss';
 
 const options = { loadAsPDF: true, l: window.sampleL /* license key here */ };
 
@@ -46,6 +47,10 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
 
   const closeModal = () => {
     dispatch(actions.closeElement(DataElements.INSERT_PAGE_MODAL));
+  };
+
+  const showCloseModalWarning = () => {
+    exitPageInsertionWarning(closeModal, dispatch);
   };
 
   const apply = () => {
@@ -158,7 +163,7 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
 
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <div className={modalClass} data-element={DataElements.INSERT_PAGE_MODAL} onMouseDown={closeModal}>
+      <div className={modalClass} data-element={DataElements.INSERT_PAGE_MODAL} onMouseDown={selectedDoc ? showCloseModalWarning : closeModal}>
         <FocusTrap locked={true}>
           {selectedDoc ? renderFileSelectedPanel() : renderSelectionTabs()}
         </FocusTrap>

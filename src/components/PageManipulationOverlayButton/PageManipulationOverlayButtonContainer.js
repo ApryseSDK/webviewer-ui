@@ -8,18 +8,19 @@ function PageManipulationOverlayButtonContainer(props) {
   const { className, pageIndex } = props;
 
   const dispatch = useDispatch();
-  const selectedPageIndexes = useSelector(state => selectors.getSelectedThumbnailPageIndexes(state));
+  const selectedPageIndexes = useSelector((state) => selectors.getSelectedThumbnailPageIndexes(state));
 
   const onClickPageManipulationOverlayButton = () => {
     if (selectedPageIndexes.indexOf(pageIndex) === -1) {
       dispatch(actions.setSelectedPageThumbnails([pageIndex]));
     }
-  }
+  };
 
   return (
     <div
       className={className}
-      onClick={onClickPageManipulationOverlayButton}>
+      onClick={onClickPageManipulationOverlayButton}
+    >
       <ToggleElementButton
         dataElement="pageManipulationOverlayButton"
         element="pageManipulationOverlay"
@@ -27,6 +28,6 @@ function PageManipulationOverlayButtonContainer(props) {
       />
     </div>
   );
-};
+}
 
 export default PageManipulationOverlayButtonContainer;

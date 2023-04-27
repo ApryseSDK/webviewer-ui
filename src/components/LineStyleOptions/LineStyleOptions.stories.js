@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider as ReduxProvider } from "react-redux";
+import { Provider as ReduxProvider } from 'react-redux';
 import LineStyleOptions from './LineStyleOptions';
 
 export default {
@@ -8,11 +8,12 @@ export default {
   component: LineStyleOptions,
 };
 
-function noop () {}
+function noop() {}
 
 export function Basic() {
   const properties = {
     StartLineStyle: 'OpenArrow',
+    StrokeStyle: 'solid',
     EndLineStyle: 'OpenArrow',
   };
 

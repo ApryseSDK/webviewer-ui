@@ -1,0 +1,59 @@
+@import '../../../constants/styles';
+
+.ZoomContainerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--toggle-zoom-overlay-background);
+  border-radius: 4px;
+  height: 28px;
+  margin: 2px;
+
+  .ZoomContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 68px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--view-header-button-hover);
+    }
+
+    &.active {
+      background-color: var(--view-header-button-active);
+    }
+
+    .ToggleElementButton {
+      width: 32px;
+      height: 32px;
+
+      .Icon {
+        color: var(--view-header-icon-active-fill);
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    .ZoomText {
+      border-radius: 4px;
+      align-items: center;
+
+      input {
+        resize: none;
+        border: none;
+        background-color: transparent;
+        font-weight: 700;
+        min-width: 28px;
+        text-align: right;
+      }
+    }
+  }
+
+  // Avoids the child button chevron from overlapping the zoom text
+  .Button.active,
+  .Button:hover,
+  .Button.zoomButton {
+    background: none !important;
+  }
+}

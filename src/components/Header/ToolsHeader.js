@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from 'actions';
 import classNames from 'classnames';
-
 import HeaderItems from 'components/HeaderItems';
 import useMedia from 'hooks/useMedia';
 
 import selectors from 'selectors';
 
 import './Header.scss';
-
 
 class ToolsHeader extends React.PureComponent {
   static propTypes = {
@@ -23,7 +21,6 @@ class ToolsHeader extends React.PureComponent {
 
   render() {
     const { isDisabled, activeHeaderItems, isOpen, currentToolbarGroup, isToolGroupReorderingEnabled, isInDesktopOnlyMode } = this.props;
-
     const isVisible = !isDisabled && isOpen && currentToolbarGroup !== 'toolbarGroup-View';
 
     return (
@@ -44,7 +41,7 @@ class ToolsHeader extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isDisabled: selectors.isElementDisabled(state, 'toolsHeader'),
   isOpen: selectors.isElementOpen(state, 'toolsHeader'),
@@ -61,15 +58,9 @@ const mapDispatchToProps = {
   setActiveToolGroup: actions.setActiveToolGroup,
 };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(ToolsHeader) ;
+const ConnectedToolsHeader = connect(mapStateToProps, mapDispatchToProps)(ToolsHeader);
 
-const ConnectedToolsHeader = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ToolsHeader);
-
-
-export default props => {
+const connectedComponent = (props) => {
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -86,8 +77,9 @@ export default props => {
     false,
   );
 
-
   return (
     <ConnectedToolsHeader {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} />
   );
 };
+
+export default connectedComponent;

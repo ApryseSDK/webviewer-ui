@@ -16,10 +16,6 @@ import '../PageReplacementModal/PageReplacementModal.scss';
 import './OpenFileModal.scss';
 
 const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
-  if (isDisabled) {
-    return null;
-  }
-
   const { t } = useTranslation();
 
   const [src, setSrc] = useState('');
@@ -114,7 +110,7 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
     return uniqueArr;
   }, []);
 
-  return (
+  return !isDisabled && (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal}>
       <div className={modalClass} data-element="OpenFileModal" onMouseDown={closeModal}>
         <div className="container" onMouseDown={(e) => e.stopPropagation()}>

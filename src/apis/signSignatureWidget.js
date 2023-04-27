@@ -22,7 +22,7 @@ export default async (signatureWidget, signature) => {
 
   const handleSignatureReady = (currentSignature) => {
     signatureWidget.sign(currentSignature);
-    signatureTool.removeEventListener('signatureReady.sign', null);
+    signatureTool.removeEventListener('signatureReady.sign');
   };
 
   signatureTool

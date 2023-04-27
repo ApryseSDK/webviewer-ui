@@ -1,68 +1,68 @@
-export const getAnnotationClass = annotation => {
-  if (annotation instanceof Annotations.CaretAnnotation) {
+export const getAnnotationClass = (annotation) => {
+  if (annotation instanceof window.Core.Annotations.CaretAnnotation) {
     return 'caret';
   }
-  if (annotation instanceof Annotations.CustomAnnotation) {
+  if (annotation instanceof window.Core.Annotations.CustomAnnotation) {
     return 'custom';
   }
-  if (annotation instanceof Annotations.EllipseAnnotation) {
+  if (annotation instanceof window.Core.Annotations.EllipseAnnotation) {
     return 'ellipse';
   }
-  if (annotation instanceof Annotations.FileAttachmentAnnotation) {
+  if (annotation instanceof window.Core.Annotations.FileAttachmentAnnotation) {
     return 'fileattachment';
   }
-  if (annotation instanceof Annotations.FreeHandAnnotation) {
+  if (annotation instanceof window.Core.Annotations.FreeHandAnnotation) {
     return 'freehand';
   }
   if (
-    annotation instanceof Annotations.FreeTextAnnotation &&
-    annotation.getIntent() === window.Annotations.FreeTextAnnotation.Intent.FreeTextCallout
+    annotation instanceof window.Core.Annotations.FreeTextAnnotation &&
+    annotation.getIntent() === window.Core.Annotations.FreeTextAnnotation.Intent.FreeTextCallout
   ) {
     return 'callout';
   }
-  if (annotation instanceof Annotations.FreeTextAnnotation) {
+  if (annotation instanceof window.Core.Annotations.FreeTextAnnotation) {
     return 'freetext';
   }
-  if (annotation instanceof Annotations.LineAnnotation) {
+  if (annotation instanceof window.Core.Annotations.LineAnnotation) {
     return 'line';
   }
-  if (annotation instanceof Annotations.Link) {
+  if (annotation instanceof window.Core.Annotations.Link) {
     return 'other';
   }
-  if (annotation instanceof Annotations.PolygonAnnotation) {
+  if (annotation instanceof window.Core.Annotations.PolygonAnnotation) {
     return 'polygon';
   }
-  if (annotation instanceof Annotations.PolylineAnnotation) {
+  if (annotation instanceof window.Core.Annotations.PolylineAnnotation) {
     return 'polyline';
   }
-  if (annotation instanceof Annotations.RectangleAnnotation) {
+  if (annotation instanceof window.Core.Annotations.RectangleAnnotation) {
     return 'rectangle';
   }
-  if (annotation instanceof Annotations.RedactionAnnotation) {
+  if (annotation instanceof window.Core.Annotations.RedactionAnnotation) {
     return 'redact';
   }
-  if (annotation instanceof Annotations.SignatureWidgetAnnotation) {
+  if (annotation instanceof window.Core.Annotations.SignatureWidgetAnnotation) {
     return 'signature';
   }
-  if (annotation instanceof Annotations.StampAnnotation) {
+  if (annotation instanceof window.Core.Annotations.StampAnnotation) {
     return 'stamp';
   }
-  if (annotation instanceof Annotations.StickyAnnotation) {
+  if (annotation instanceof window.Core.Annotations.StickyAnnotation) {
     return 'stickyNote';
   }
-  if (annotation instanceof Annotations.TextHighlightAnnotation) {
+  if (annotation instanceof window.Core.Annotations.TextHighlightAnnotation) {
     return 'highlight';
   }
-  if (annotation instanceof Annotations.TextStrikeoutAnnotation) {
+  if (annotation instanceof window.Core.Annotations.TextStrikeoutAnnotation) {
     return 'strikeout';
   }
-  if (annotation instanceof Annotations.TextUnderlineAnnotation) {
+  if (annotation instanceof window.Core.Annotations.TextUnderlineAnnotation) {
     return 'underline';
   }
-  if (annotation instanceof Annotations.TextSquigglyAnnotation) {
+  if (annotation instanceof window.Core.Annotations.TextSquigglyAnnotation) {
     return 'squiggly';
   }
-  if (annotation instanceof Annotations.Model3DAnnotation) {
+  if (annotation instanceof window.Core.Annotations.Model3DAnnotation) {
     return '3D';
   }
 

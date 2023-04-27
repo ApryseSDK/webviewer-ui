@@ -4,9 +4,9 @@ import actions from 'actions';
 
 const { ToolNames } = window.Core.Tools;
 
-export default dispatch => checkStampAnnotation => {
+export default (dispatch, documentViewerKey) => (checkStampAnnotation) => {
   core.setToolMode(defaultTool);
-  core.getTool(ToolNames.FORM_FILL_CHECKMARK).hidePreview();
+  core.getToolsFromAllDocumentViewers(ToolNames.FORM_FILL_CHECKMARK).forEach((tool) => tool.hidePreview());
   dispatch(actions.setActiveToolGroup(''));
-  core.selectAnnotation(checkStampAnnotation);
+  core.selectAnnotation(checkStampAnnotation, documentViewerKey);
 };

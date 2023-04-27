@@ -1,0 +1,59 @@
+@import '../../constants/modal';
+@import '../../constants/popup';
+
+@media print {
+  #form-field-indicator-wrapper {
+    opacity: 0;
+  }
+} 
+
+#form-field-indicator-wrapper {
+  position: relative;
+  z-index: min($modal-z-index, $popup-z-index) - 10;
+}
+
+.formFieldIndicator {
+  background-color: var(--color-blue-gray-5);
+  color: var(--color-gray-1);
+  width: 98px;
+  min-height: 32px;
+  font-size: 13px;
+  position: fixed;
+  padding: 4px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .formFieldIndicator-text {
+    margin: 0;
+    position: absolute;
+    padding: 0 8px;
+  }
+}
+
+.formFieldIndicator::before {
+  content: '';
+  display: block;
+  position: absolute;
+  right: -20px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 20px solid var(--color-blue-gray-5);
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+}
+
+.formFieldIndicator.rightSidePage::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -20px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-right: 20px solid var(--color-blue-gray-5);
+  border-left: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+}

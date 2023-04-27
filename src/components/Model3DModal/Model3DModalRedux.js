@@ -14,21 +14,10 @@ function Model3DModalRedux(props) {
   const urlInput = React.createRef();
 
 
-
-  const [isDisabled, isOpen] = useSelector(state => [
+  const [isDisabled, isOpen] = useSelector((state) => [
     selectors.isElementDisabled(state, 'Model3DModal'),
     selectors.isElementOpen(state, 'Model3DModal'),
   ]);
-
-  const onColorChange = selectedColor => {
-    const convertedColor = new window.Annotations.Color(
-      selectedColor.r,
-      selectedColor.g,
-      selectedColor.b,
-      selectedColor.a,
-    );
-    dispatch(actions.setCustomColor(convertedColor));
-  };
 
   const close3DModal = () => {
     dispatch(actions.closeElement('Model3DModal'));

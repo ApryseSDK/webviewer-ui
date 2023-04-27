@@ -18,6 +18,7 @@ import Events from 'constants/events';
 import fireEvent from 'helpers/fireEvent';
 
 import './ThumbnailsPanel.scss';
+import getRootNode from 'helpers/getRootNode';
 
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 
@@ -319,7 +320,7 @@ const ThumbnailsPanel = () => {
     }
 
     setDraggingOverPageIndex(index);
-    const virtualizedThumbnailContainerElement = document.getElementById('virtualized-thumbnails-container');
+    const virtualizedThumbnailContainerElement = getRootNode().querySelector('#virtualized-thumbnails-container');
     const { y, bottom } = virtualizedThumbnailContainerElement.getBoundingClientRect();
 
     if (e.pageY < y + hoverAreaHeight * 4) {

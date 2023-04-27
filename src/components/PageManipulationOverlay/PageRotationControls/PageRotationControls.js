@@ -4,12 +4,9 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import Button from 'components/Button';
 
 
-
 function PageRotationControls(props) {
   const { t } = useTranslation();
   const { rotateClockwise, rotateCounterClockwise } = props;
-
-  
 
 
   return (

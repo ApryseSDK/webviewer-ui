@@ -7,6 +7,7 @@ import thumbnailSelectionModes from 'constants/thumbnailSelectionModes';
 
 import './Thumbnail.scss';
 import { Choice } from '@pdftron/webviewer-react-toolkit';
+import getRootNode from 'helpers/getRootNode';
 
 // adds a delay in ms so thumbs that are only on the screen briefly are not loaded.
 const THUMBNAIL_LOAD_DELAY = 50;
@@ -48,7 +49,7 @@ const Thumbnail = ({
 
   const loadThumbnailAsync = () => {
     loadTimeout = setTimeout(() => {
-      const thumbnailContainer = document.getElementById(`pageThumb${index}`);
+      const thumbnailContainer = getRootNode().querySelector(`#pageThumb${index}`);
 
       const pageNum = index + 1;
       const viewerRotation = core.getRotation(pageNum);
@@ -63,7 +64,7 @@ const Thumbnail = ({
           width: thumbSize,
           height: thumbSize,
           drawComplete: async (thumb) => {
-            const thumbnailContainer = document.getElementById(`pageThumb${index}`);
+            const thumbnailContainer = getRootNode().querySelector(`#pageThumb${index}`);
             if (thumbnailContainer) {
               const childElement = thumbnailContainer.querySelector('.page-image');
               if (childElement) {
@@ -175,10 +176,10 @@ const Thumbnail = ({
         // get the range of the selected index and update selected page
         const currSelectMinIndex = Math.min(shiftKeyPivot, index);
         const currSelectMaxIndex = Math.max(shiftKeyPivot, index);
-        updatedSelectedPages = Array.from(
+        updatedSelectedPages = [...new Set([...updatedSelectedPages, ...Array.from(
           { length: currSelectMaxIndex - currSelectMinIndex + 1 },
           (_, i) => i + currSelectMinIndex,
-        );
+        )])];
       } else if (multiSelectionKeyPressed || isThumbnailSelectingPages) {
         dispatch(actions.setThumbnailSelectingPages(true));
         // Only select a page if multiSelectionKeyPressed or if checkbox is checked unless in 'thumbnail' mode
@@ -190,15 +191,14 @@ const Thumbnail = ({
             updatedSelectedPages = selectedPageIndexes.filter((pageIndex) => index !== pageIndex);
           } else {
             updatedSelectedPages.push(index);
+            dispatch(actions.setShiftKeyThumbnailsPivotIndex(index));
           }
         }
       } else {
         updatedSelectedPages = [index];
       }
       // set shiftKeyPivot when press ctr key or single key
-      !isThumbnailSelectingPages &&
-        !shiftKeyPressed &&
-        dispatch(actions.setShiftKeyThumbnailsPivotIndex(updatedSelectedPages[updatedSelectedPages.length - 1]));
+      !isThumbnailSelectingPages && !shiftKeyPressed && dispatch(actions.setShiftKeyThumbnailsPivotIndex(updatedSelectedPages[updatedSelectedPages.length - 1]));
       dispatch(actions.setSelectedPageThumbnails(updatedSelectedPages));
     } else if (isMobile()) {
       dispatch(actions.closeElement('leftPanel'));

@@ -1,26 +1,116 @@
 @import '../../../constants/modal.scss';
 
-.replace-page-input-container {
-  margin-bottom: 15px;
-  display: flex;
-  align-items: baseline;
+.fileSelectedPanel {
+  &.container {
+    width: 791px;
 
-  :first-child {
-    padding-left: 0px;
+    @include tablet {
+      width: 494px;
+
+      .page-number-input {
+        width: 92px;
+      }
+    }
   }
 
-  @include mobile {
-    flex-direction: column;
+  .header {
+    .left-header {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .Button {
+      justify-content: center;
+
+      &:hover {
+        background: var(--view-header-button-hover);
+        border-radius: 4px;
+      }
+    }
   }
-}
 
-.replace-page-input {
-  padding-left: 8px;
-  padding-right: 8px;
-}
+  .page-number-error {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--color-message-error);
+    width: 100px;
+  }
 
-.page-replace-doc-name {
-  font-weight: bold;
+  .page-replacement-text {
+    padding-right: 8px;
+  }
+
+  .modal-body {
+    padding: 16px;
+
+    .thumb-card {
+      @include tablet {
+        width: 132px;
+      }
+
+      @include mobile {
+        width: 101px;
+      }
+
+      @include small-mobile {
+        width: 101px;
+      }
+    }
+
+    .modal-body-container {
+      &.isLoading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      @include mobile {
+        padding: 12px 0px 12px 12px;
+      }
+    }
+  }
+
+  .replace-page-input-container {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: baseline;
+  
+    :first-child {
+      padding-left: 0px;
+    }
+
+    @include tablet {
+      justify-content: space-between;
+      :first-child {
+        padding-right: 8px;
+        padding-left: 0;
+      }
+    }
+  
+    @include mobile {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  
+  .replace-page-input {
+    padding-left: 8px;
+    padding-right: 8px;
+
+    @include tablet {
+      padding-right: 0;
+      padding-left: 4px;
+
+      .page-replace-doc-name {
+        word-break: break-all;
+      }
+    }
+  }
+  
+  .page-replace-doc-name {
+    font-weight: bold;
+  }
 }
 
  

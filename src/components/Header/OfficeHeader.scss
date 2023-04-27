@@ -1,0 +1,51 @@
+@import '../../constants/styles';
+
+.Header.OfficeEditorTools {
+  padding: 0 8px;
+  align-items: center;
+  flex-direction: row;
+
+  .HeaderItems {
+    width: auto;
+
+    .Dropdown {
+      &.small-dropdown {
+        width: 80px !important;
+      }
+
+      &.large-dropdown {
+        width: 160px !important;
+      }
+
+      margin-left: 8px;
+
+      .picked-option {
+        text-align: left;
+      }
+    }
+
+    .line-spacing-dropdown {
+      .Dropdown__items {
+        top: 40px;
+      }
+    }
+
+    .action-button-wrapper {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      .more-tools {
+        position: absolute;
+        top: 46px;
+        right: 6px;
+        width: auto;
+        padding: 0;
+      }
+    }
+  }
+
+  .Button .Icon svg {
+    vertical-align: middle;
+  }
+}

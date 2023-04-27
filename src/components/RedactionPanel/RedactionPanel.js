@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import Icon from 'components/Icon'
+import Icon from 'components/Icon';
 import { Virtuoso } from 'react-virtuoso';
 import { RedactionPanelContext } from './RedactionPanelContext';
 import { mapAnnotationToRedactionType } from 'constants/redactionTypes';
 
-import './RedactionPanel.scss'
+import './RedactionPanel.scss';
 import RedactionPageGroup from '../RedactionPageGroup';
 
 const RedactionPanel = (props) => {
@@ -26,7 +26,7 @@ const RedactionPanel = (props) => {
 
   useEffect(() => {
     const redactionPageMap = {};
-    redactionAnnotations.forEach(annotation => {
+    redactionAnnotations.forEach((annotation) => {
       const redactionType = mapAnnotationToRedactionType(annotation);
       const { label, icon } = redactionTypesDictionary[redactionType];
       annotation.label = label;
@@ -41,15 +41,14 @@ const RedactionPanel = (props) => {
       }
     });
 
-    setRedactionPageMap(redactionPageMap)
+    setRedactionPageMap(redactionPageMap);
     setRedactionPageNumbers(Object.keys(redactionPageMap));
-
   }, [redactionAnnotations]);
 
   const renderRedactionPageGroups = () => {
     // Needed for the tests to actually render a list of results
     // Not needed for the actual app; if we set it it kills performance when there are a lot of annotations
-    const testModeProps = isTestMode ? { initialItemCount: redactionPageNumbers.length } : {}
+    const testModeProps = isTestMode ? { initialItemCount: redactionPageNumbers.length } : {};
     return (
       <div className="redaction-group-container" role="list">
         <Virtuoso
@@ -60,7 +59,7 @@ const RedactionPanel = (props) => {
                 key={index}
                 pageNumber={pageNumber}
                 redactionItems={redactionPageMap[pageNumber]}
-              />)
+              />);
           }}
           {...testModeProps}
         />
@@ -91,14 +90,16 @@ const RedactionPanel = (props) => {
           disabled={redactionAnnotations.length === 0}
           className={clearAllButtonClassName}
           onClick={deleteAllRedactionAnnotations}
-          aria-label={t('redactionPanel.clearMarked')}>
+          aria-label={t('redactionPanel.clearMarked')}
+        >
           {t('redactionPanel.clearMarked')}
         </button>
         <button
           disabled={redactionAnnotations.length === 0}
           className={redactAllButtonClassName}
           onClick={applyAllRedactions}
-          aria-label={t('redactionPanel.redactAllMarked')}>
+          aria-label={t('redactionPanel.redactAllMarked')}
+        >
           {t('redactionPanel.redactAllMarked')}
         </button>
       </div>

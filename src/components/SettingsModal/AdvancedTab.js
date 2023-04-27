@@ -5,11 +5,6 @@ import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import touchEventManager from 'helpers/TouchEventManager';
 import Choice from 'components/Choice';
-import {
-  isToolDefaultStyleUpdateFromAnnotationPopupEnabled,
-  enableToolDefaultStyleUpdateFromAnnotationPopup,
-  disableToolDefaultStyleUpdateFromAnnotationPopup
-} from '../../apis/toolDefaultStyleUpdateFromAnnotationPopup';
 
 import './AdvancedTab.scss';
 
@@ -25,7 +20,8 @@ const AdvancedTab = () => {
     shouldClearSearchPanelOnClose,
     pageDeletionConfirmationModalEnabled,
     isThumbnailSelectingPages,
-    customSettings
+    customSettings,
+    isToolDefaultStyleUpdateFromAnnotationPopupEnabled
   ] = useSelector((state) => [
     selectors.shouldFadePageNavigationComponent(state),
     selectors.isNoteSubmissionWithEnterEnabled(state),
@@ -35,7 +31,8 @@ const AdvancedTab = () => {
     selectors.shouldClearSearchPanelOnClose(state),
     selectors.pageDeletionConfirmationModalEnabled(state),
     selectors.isThumbnailSelectingPages(state),
-    selectors.getCustomSettings(state)
+    selectors.getCustomSettings(state),
+    selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled(state)
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -66,10 +63,8 @@ const AdvancedTab = () => {
     createItem(
       t('option.settings.disableToolDefaultStyleUpdateFromAnnotationPopup'),
       t('option.settings.disableToolDefaultStyleUpdateFromAnnotationPopupDesc'),
-      !isToolDefaultStyleUpdateFromAnnotationPopupEnabled(),
-      (enable) => {
-        enable ? disableToolDefaultStyleUpdateFromAnnotationPopup() : enableToolDefaultStyleUpdateFromAnnotationPopup();
-      }
+      !isToolDefaultStyleUpdateFromAnnotationPopupEnabled,
+      (enable) => dispatch(actions.setToolDefaultStyleUpdateFromAnnotationPopupEnabled(!enable))
     )
   ];
 
