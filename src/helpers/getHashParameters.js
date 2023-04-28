@@ -1,4 +1,4 @@
-import { getInstanceNode } from 'helpers/getRootNode';
+import getRootNode from 'helpers/getRootNode';
 
 const paramCorrections = {
   'd': 'initialDoc',
@@ -21,7 +21,7 @@ const paramsToStringify = ['initialDoc'];
 
 export default process.env.WEBCOMPONENT ? (param, defaultValue = false) => {
   const correctedParam = paramCorrections[param] ? paramCorrections[param] : param;
-  const val = getInstanceNode().getAttribute(correctedParam);
+  const val = getRootNode().host.getAttribute(correctedParam);
   // Need to stringify because the Core function returns a string as well
   if (val && paramsToStringify.includes(correctedParam)) {
     return JSON.stringify(val);

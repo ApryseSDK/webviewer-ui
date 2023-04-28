@@ -7,14 +7,12 @@ import userReducer from 'reducers/userReducer';
 import documentReducer from 'reducers/documentReducer';
 import wv3dPropertiesPanelReducer from 'src/redux/reducers/wv3dPropertiesPanelReducer';
 import officeEditorReducer from 'src/redux/reducers/officeEditorReducer';
-import { getInstanceID } from 'helpers/getRootNode';
+
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-const instanceId = getInstanceID();
-
 const viewerPersistConfig = {
-  key: `viewer-${instanceId}`,
+  key: 'viewer',
   storage,
   whitelist: [
     'toolbarGroup',
@@ -35,7 +33,7 @@ const viewerPersistConfig = {
 };
 
 const searchPersistConfig = {
-  key: `search-${instanceId}`,
+  key: 'search',
   storage,
   whitelist: ['clearSearchPanelOnClose']
 };

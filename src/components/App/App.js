@@ -67,7 +67,7 @@ import fireEvent from 'helpers/fireEvent';
 import { prepareMultiTab } from 'helpers/TabManager';
 import hotkeysManager from 'helpers/hotkeysManager';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
-import { getInstanceNode } from 'helpers/getRootNode';
+import getRootNode from 'helpers/getRootNode';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import { isMobileDevice } from 'helpers/device';
 
@@ -113,7 +113,7 @@ const App = ({ removeEventHandlers }) => {
       fireEvent(Events.VIEWER_LOADED);
     }, 300);
     process.env.WEBCOMPONENT ?
-      fireEvent('ready', undefined, getInstanceNode()) :
+      fireEvent('ready', undefined, getRootNode().host) :
       window.parent.postMessage(
         {
           type: 'viewerLoaded',

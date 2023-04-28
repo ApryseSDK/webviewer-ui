@@ -21,11 +21,6 @@ const getRootNode = () => {
   console.error('Cannot find root node');
 };
 
-export const getInstanceID = () => {
-  const host = getRootNode().host;
-  return host ? host.getAttribute('id') : 'default';
-};
-
 export const getInstanceNode = () => {
   if (!process.env.WEBCOMPONENT) {
     return window;

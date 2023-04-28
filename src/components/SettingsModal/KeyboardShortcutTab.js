@@ -8,7 +8,6 @@ import DataElements from 'constants/dataElement';
 import { Shortcuts } from 'helpers/hotkeysManager';
 import { isMac } from 'helpers/device';
 import EditKeyboardShortcutModal from './EditKeyboardShortcutModal';
-import { SearchWrapper } from './SearchWrapper';
 
 import './KeyboardShortcutTab.scss';
 
@@ -86,27 +85,22 @@ const KeyboardShortcutTab = () => {
         <div className="shortcut-table-header-action">{t('option.settings.action')}</div>
       </div>
       <div className="shortcut-table-content">
-        {keyboardShortcuts.map(([command, description]) => (
-          <SearchWrapper
-            key={command}
-            keywords={[t(description)]}
-          >
-            <div className="shortcut-table-item">
-              <div className="shortcut-table-item-command">
-                {getCommandStrings(shortcutKeyMap[command]).map((str, i) => (
-                  <span key={i}>{str}</span>
-                ))}
-              </div>
-              <div className="shortcut-table-item-description">
-                {t(description)}
-              </div>
-              <Button
-                img="icon-edit-form-field"
-                title={t('action.edit')}
-                onClick={() => editShortcut(command)}
-              />
+        {keyboardShortcuts.map((item) => (
+          <div key={item[0]} className="shortcut-table-item">
+            <div className="shortcut-table-item-command">
+              {getCommandStrings(shortcutKeyMap[item[0]]).map((str, i) => (
+                <span key={i}>{str}</span>
+              ))}
             </div>
-          </SearchWrapper>
+            <div className="shortcut-table-item-description">
+              {t(item[1])}
+            </div>
+            <Button
+              img="icon-edit-form-field"
+              title={t('action.edit')}
+              onClick={() => editShortcut(item[0])}
+            />
+          </div>
         ))}
       </div>
       {currentShortcut && (

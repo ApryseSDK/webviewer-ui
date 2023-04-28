@@ -26,10 +26,8 @@ import SignatureModes from 'constants/signatureModes';
 import { ShortcutKeys } from 'helpers/hotkeysManager';
 import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
 import { SYNC_MODES } from 'constants/multiViewerContants';
-import { getInstanceID } from 'helpers/getRootNode';
 
 const { ToolNames } = window.Core.Tools;
-const instanceId = getInstanceID();
 
 export default {
   viewer: {
@@ -1875,8 +1873,8 @@ export default {
     activeToolName: 'AnnotationEdit',
     activeToolStyles: {},
     customColors:
-      localStorageManager.isLocalStorageEnabled() && window.localStorage.getItem(`${instanceId}-customColors`)
-        ? JSON.parse(window.localStorage.getItem(`${instanceId}-customColors`))
+      localStorageManager.isLocalStorageEnabled() && window.localStorage.getItem('customColors')
+        ? JSON.parse(window.localStorage.getItem('customColors'))
         : [],
     activeLeftPanel: 'thumbnailsPanel',
     activeToolGroup: '',

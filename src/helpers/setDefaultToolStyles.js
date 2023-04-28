@@ -1,15 +1,13 @@
 import core from 'core';
 import defaultToolStylesMap from 'constants/defaultToolStylesMap';
 import localStorageManager from 'helpers/localStorageManager';
-import { getInstanceID } from 'helpers/getRootNode';
 
 const setDefaultToolStyle = (toolName, documentViewer = undefined) => {
   let toolStyles = null;
   const toolModeMap = documentViewer ? documentViewer.getToolModeMap() : core.getToolModeMap();
 
   try {
-    const instanceId = getInstanceID();
-    toolStyles = localStorage.getItem(`${instanceId}-toolData-${toolName}`);
+    toolStyles = localStorage.getItem(`toolData-${toolName}`);
   } catch (ex) {
     console.warn('Disabling "localStorage" because it could not be accessed.');
     localStorageManager.disableLocalStorage();

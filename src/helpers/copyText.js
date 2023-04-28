@@ -6,7 +6,7 @@ export default (activeDocumentViewerKey = 1) => {
   // 1. User copies from the side panel (window.getSelection())
   // 2. User copies text from the document (core.getSelectedText())
   // We manually to clear the value of #copy-textarea, and this will reset window.getSelection().toString() to ""
-  getRootNode().querySelector('#copy-textarea').value = '';
+  document.querySelector('#copy-textarea').value = '';
   if (window.getSelection()?.toString()) {
     // if we are selecting some text in the UI (i.e. text in note panel) just let it do the normal behaviour
     return;

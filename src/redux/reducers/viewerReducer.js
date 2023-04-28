@@ -1,5 +1,4 @@
 import localStorageManager from 'helpers/localStorageManager';
-import { getInstanceID } from 'helpers/getRootNode';
 
 export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
@@ -362,8 +361,7 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, customColor: payload.customColor };
     case 'SET_CUSTOM_COLORS':
       if (localStorageManager.isLocalStorageEnabled()) {
-        const instanceId = getInstanceID();
-        window.localStorage.setItem(`${instanceId}-customColors`, JSON.stringify(payload.customColors));
+        window.localStorage.setItem('customColors', JSON.stringify(payload.customColors));
       } else {
         console.error('localStorage is disabled, customColors cannot be restored');
       }
@@ -707,8 +705,7 @@ export default (initialState) => (state = initialState, action) => {
       };
     case 'SET_HIDE_CONTENT_EDIT_WARNING':
       if (localStorageManager.isLocalStorageEnabled()) {
-        const instanceId = getInstanceID();
-        window.localStorage.setItem(`${instanceId}-hideContentEditWarning`, JSON.stringify(payload.hideWarning));
+        window.localStorage.setItem('hideContentEditWarning', JSON.stringify(payload.hideWarning));
       } else {
         console.error('localStorage is disabled, hideContentEditWarning cannot be restored');
       }

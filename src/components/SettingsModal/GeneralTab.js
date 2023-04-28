@@ -12,7 +12,6 @@ import Dropdown from 'components/Dropdown';
 import Icon from 'components/Icon';
 import Choice from 'components/Choice';
 import DataElementWrapper from 'components/DataElementWrapper';
-import { SearchWrapper } from './SearchWrapper';
 
 import './GeneralTab.scss';
 
@@ -42,66 +41,58 @@ const GeneralTab = () => {
 
   return (
     <>
-      <SearchWrapper
-        keywords={[t('option.settings.language')]}
+      <DataElementWrapper
+        className="setting-section"
+        dataElement={DataElements.SETTINGS_LANGUAGE_SECTION}
       >
+        <div className="setting-label">{t('option.settings.language')}</div>
+        <Dropdown
+          dataElement="languageDropdown"
+          items={Languages}
+          currentSelectionKey={currentLanguage}
+          getKey={(item) => item[0]}
+          getDisplayValue={(item) => item[1]}
+          onClickItem={changeLanguage}
+          maxHeight={200}
+          width={336}
+          getCustomItemStyle={() => ({ textAlign: 'left', width: '326px' })}
+          className="language-dropdown"
+        />
+      </DataElementWrapper>
+      {!isIE && (
         <DataElementWrapper
           className="setting-section"
-          dataElement={DataElements.SETTINGS_LANGUAGE_SECTION}
+          dataElement={DataElements.SETTINGS_THEME_SECTION}
         >
-          <div className="setting-label">{t('option.settings.language')}</div>
-          <Dropdown
-            dataElement={DataElements.SETTINGS_LANGUAGE_DROPDOWN}
-            items={Languages}
-            currentSelectionKey={currentLanguage}
-            getKey={(item) => item[0]}
-            getDisplayValue={(item) => item[1]}
-            onClickItem={changeLanguage}
-            maxHeight={200}
-            width={336}
-            getCustomItemStyle={() => ({ textAlign: 'left', width: '326px' })}
-            className="language-dropdown"
-          />
-        </DataElementWrapper>
-      </SearchWrapper>
-      <SearchWrapper
-        keywords={[t('option.settings.theme'), t('option.settings.lightMode'), t('option.settings.darkMode')]}
-      >
-        {!isIE && (
-          <DataElementWrapper
-            className="setting-section"
-            dataElement={DataElements.SETTINGS_THEME_SECTION}
-          >
-            <div className="setting-label">{t('option.settings.theme')}</div>
-            <div className="theme-options">
-              <div className={`theme-option ${isLightMode ? 'active-theme' : ''}`}>
-                <Icon glyph="icon-light-mode-option" className="light-mode-icon" />
-                <div className="theme-choice">
-                  <Choice
-                    radio
-                    checked={isLightMode}
-                    onChange={() => setTheme(Theme.LIGHT)}
-                    label={t('option.settings.lightMode')}
-                    name="theme_choice"
-                  />
-                </div>
-              </div>
-              <div className={`theme-option ${!isLightMode ? 'active-theme' : ''}`}>
-                <Icon glyph="icon-dark-mode-option" className="dark-mode-icon" />
-                <div className="theme-choice">
-                  <Choice
-                    radio
-                    checked={!isLightMode}
-                    onChange={() => setTheme(Theme.DARK)}
-                    label={t('option.settings.darkMode')}
-                    name="theme_choice"
-                  />
-                </div>
+          <div className="setting-label">{t('option.settings.theme')}</div>
+          <div className="theme-options">
+            <div className={`theme-option ${isLightMode ? 'active-theme' : ''}`}>
+              <Icon glyph="icon-light-mode-option" className="light-mode-icon" />
+              <div className="theme-choice">
+                <Choice
+                  radio
+                  checked={isLightMode}
+                  onChange={() => setTheme(Theme.LIGHT)}
+                  label={t('option.settings.lightMode')}
+                  name="theme_choice"
+                />
               </div>
             </div>
-          </DataElementWrapper>
-        )}
-      </SearchWrapper>
+            <div className={`theme-option ${!isLightMode ? 'active-theme' : ''}`}>
+              <Icon glyph="icon-dark-mode-option" className="dark-mode-icon" />
+              <div className="theme-choice">
+                <Choice
+                  radio
+                  checked={!isLightMode}
+                  onChange={() => setTheme(Theme.DARK)}
+                  label={t('option.settings.darkMode')}
+                  name="theme_choice"
+                />
+              </div>
+            </div>
+          </div>
+        </DataElementWrapper>
+      )}
     </>
   );
 };

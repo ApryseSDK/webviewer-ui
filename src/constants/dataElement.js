@@ -94,7 +94,6 @@ const DataElements = {
   SETTINGS_KEYBOARD_BUTTON: 'settingsKeyboardButton',
   SETTINGS_ADVANCED_BUTTON: 'settingsAdvancedButton',
   SETTINGS_LANGUAGE_SECTION: 'settingsLanguageSection',
-  SETTINGS_LANGUAGE_DROPDOWN: 'settingsLanguageDropdown',
   SETTINGS_THEME_SECTION: 'settingsThemeSection',
 
   // Signature Modal

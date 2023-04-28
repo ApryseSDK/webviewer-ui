@@ -15,7 +15,6 @@ import setCurrentPage from 'helpers/setCurrentPage';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'src/constants/dataElement';
-import getRootNode from 'helpers/getRootNode';
 
 export const Shortcuts = {
   ROTATE_CLOCKWISE: 'rotateClockwise',
@@ -484,16 +483,13 @@ WebViewer(...)
         e.preventDefault();
         core.rotateCounterClockwise(activeDocumentViewerKey);
       },
-      [ShortcutKeys[Shortcuts.COPY]]: (e) => {
-        const isFromCurrentViewer = e.currentTarget.activeElement.shadowRoot === getRootNode();
-        if (isFromCurrentViewer || !process.env.WEBCOMPONENT) {
-          const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
-          if (core.getSelectedText(activeDocumentViewerKey)) {
-            copyText(activeDocumentViewerKey);
-            dispatch(actions.closeElement('textPopup'));
-          } else if (core.getSelectedAnnotations(activeDocumentViewerKey).length) {
-            core.updateCopiedAnnotations(activeDocumentViewerKey);
-          }
+      [ShortcutKeys[Shortcuts.COPY]]: () => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
+        if (core.getSelectedText(activeDocumentViewerKey)) {
+          copyText(activeDocumentViewerKey);
+          dispatch(actions.closeElement('textPopup'));
+        } else if (core.getSelectedAnnotations(activeDocumentViewerKey).length) {
+          core.updateCopiedAnnotations(activeDocumentViewerKey);
         }
       },
       [ShortcutKeys[Shortcuts.PASTE]]: (e) => {
