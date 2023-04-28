@@ -2,11 +2,19 @@
   "parser": "@babel/eslint-parser",
   "parserOptions": {
     "requireConfigFile": false,
-   "babelOptions": {
-     "presets": ["@babel/preset-react"]
-   }
+    "babelOptions": {
+      "presets": [
+        "@babel/preset-react"
+      ]
+    }
   },
-  "plugins": ["babel", "react", "react-hooks", "import", "cypress"],
+  "plugins": [
+    "babel",
+    "react",
+    "react-hooks",
+    "import",
+    "cypress"
+  ],
   "env": {
     "browser": true,
     "node": true,
@@ -20,84 +28,194 @@
     "Tools": false
   },
   "extends": [
-    "plugin:jsx-a11y/recommended",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:cypress/recommended"
+    "plugin:no-unsanitized/DOM"
   ],
   "rules": {
+    "radix": "off",
+    "array-callback-return": "error",
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "curly": [
+      "error",
+      "all"
+    ],
+    "brace-style": [
+      "error",
+      "1tbs"
+    ],
+    "space-before-blocks": "error",
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "keyword-spacing": [
+      "error",
+      {
+        "before": true,
+        "after": true
+      }
+    ],
+    "no-undef": "error",
+    "no-trailing-spaces": "error",
+    "semi": "error",
+    "arrow-parens": [
+      "error",
+      "always"
+    ],
+    "camelcase": "error",
+    "arrow-body-style": "off",
+    "array-bracket-spacing": "error",
     "quotes": [
-      0,
+      "error",
       "single",
       {
-        "allowTemplateLiterals": true
+        "avoidEscape": true
       }
     ],
-    "curly": 2,
-    "strict": [2, "never"],
-    "semi": [2, "always"],
-    "no-redeclare": [
-      2,
-      {
-        "builtinGlobals": true
-      }
-    ],
-    "brace-style": 2,
-    "no-alert": 0,
-    "no-console": [
-      2,
-      {
-        "allow": ["warn", "error"]
-      }
-    ],
-    "object-shorthand": [2, "always"],
-    "arrow-parens": [2, "as-needed"],
-    "no-useless-escape": 0,
-    "eqeqeq": 2,
-    "jsx-quotes": 2,
+    "prefer-template": "error",
+    "no-tabs": "error",
+    "import/no-duplicates": "error",
+    "no-unused-vars": "error",
+    "no-unused-expressions": "off",
+    "no-useless-rename": "off",
+    "no-await-in-loop": "off",
+    "no-lonely-if": "off",
+    "guard-for-in": "off",
+    "function-paren-newline": "off",
     "indent": [
-      2,
+      "error",
       2,
       {
-        "MemberExpression": 1,
-        "ArrayExpression": 1,
-        "ImportDeclaration": 1,
-        "SwitchCase": 1,
-        "FunctionExpression": {
-          "body": 1
-        },
-        "ignoredNodes": ["TemplateLiteral"]
+        "SwitchCase": 1
       }
     ],
-    "keyword-spacing": 2,
-    "space-before-blocks": 2,
-    "arrow-spacing": 2,
-    "object-curly-spacing": [2, "always"],
-    "react/jsx-closing-bracket-location": 2,
-    "react/jsx-curly-spacing": 2,
-    "react/jsx-boolean-value": 2,
-    "react/prop-types": 2,
-    "react-hooks/rules-of-hooks": 2,
-    "react-hooks/exhaustive-deps": 1,
-    "react/sort-comp": 0,
-    "react/no-find-dom-node": 0,
-    "react/display-name": 0,
-    "import/no-unresolved": 0,
-    "import/extensions": 0,
-    "import/no-extraneous-dependencies": 0,
-    "import/no-dynamic-require": 0,
-    "@pdftron/webviewer/no-string-events": 0,
-
-    // these are inherited from git WebViewer's eslint confirguration
-    "no-use-before-define": 0,
-    "implicit-arrow-linebreak": 0,
-    "operator-linebreak": 0,
-    "function-paren-newline": 0,
-    "object-curly-newline": 0,
-    "no-nested-ternary": 0,
-    "no-unexpected-multiline": 0,
-    "no-unused-expressions": 0
+    "no-case-declarations": "off",
+    "no-restricted-syntax": "off",
+    "no-new": "off",
+    "symbol-description": "off",
+    "comma-dangle": "off",
+    "no-empty": [
+      2,
+      {
+        "allowEmptyCatch": true
+      }
+    ],
+    "lines-between-class-members": "off",
+    "no-fallthrough": "off",
+    "func-names": "off",
+    "operator-linebreak": "off",
+    "no-var": 2,
+    "quote-props": "off",
+    "prefer-arrow-callback": "off", // would like to remove this rule https://eslint.org/docs/rules/prefer-arrow-callback#require-using-arrow-functions-for-callbacks-prefer-arrow-callback
+    "dot-notation": "off",
+    "class-methods-use-this": "off",
+    "object-curly-newline": "off",
+    "vars-on-top": "off",
+    "prefer-destructuring": "off",
+    "eol-last": "off",
+    "max-len": "off",
+    "prefer-rest-params": "off", // would like to remove this rule https://eslint.org/docs/rules/prefer-rest-params#suggest-using-the-rest-parameters-instead-of-arguments-prefer-rest-params
+    "no-underscore-dangle": "off",
+    "object-shorthand": "off", // would like to remove this rule https://eslint.org/docs/rules/object-shorthand#require-object-literal-shorthand-syntax-object-shorthand
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
+    "consistent-return": "off",
+    "new-cap": "off",
+    "linebreak-style": "off",
+    "no-throw-literal": "off",
+    "no-script-url": "off",
+    "no-restricted-globals": "off", // would like to remove this rule https://eslint.org/docs/rules/no-restricted-globals#disallow-specific-global-variables-no-restricted-globals
+    "no-multi-assign": "off", // would like to remove this rule https://eslint.org/docs/rules/no-multi-assign#disallow-use-of-chained-assignment-expressions-no-multi-assign
+    "no-bitwise": "off",
+    "no-prototype-builtins": "off",
+    "no-nested-ternary": "off",
+    "prefer-promise-reject-errors": "off",
+    "prefer-spread": "off", // would like to remove this rule https://eslint.org/docs/rules/prefer-spread#suggest-using-spread-syntax-instead-of-apply-prefer-spread
+    "no-mixed-operators": "off",
+    "no-cond-assign": "off",
+    "no-extend-native": "off", // would be nice to remove, not critical https://eslint.org/docs/rules/no-extend-native#disallow-extending-of-native-objects-no-extend-native
+    "no-restricted-properties": "off",
+    "no-proto": "off", // would like to remove this rule https://eslint.org/docs/rules/no-proto#disallow-use-of-__proto__-no-proto
+    "no-continue": "off",
+    "default-case": "off",
+    "no-shadow": "off", // would like to eventually remove this but its super hard right now https://eslint.org/docs/rules/no-shadow#disallow-variable-declarations-from-shadowing-variables-declared-in-the-outer-scope-no-shadow
+    "no-useless-escape": "off",
+    "wrap-iife": "off",
+    "import/no-cycle": "off",
+    "import/order": "off",
+    "import/named": "off",
+    "import/no-named-as-default": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/no-unresolved": "off",
+    "import/no-webpack-loader-syntax": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "ts": "never"
+      }
+    ],
+    "@pdftron/webviewer/no-string-events": "off",
+    "react/prop-types": "off",
+    "react/no-danger": "error"
   },
+  "overrides": [
+    {
+      "files": "**/*.ts",
+      "rules": {
+        "no-useless-constructor": "off"
+      }
+    },
+    {
+      "files": "**/*.stories.js",
+      "rules": {
+        "no-console": "off",
+        "react/prop-types": "off",
+        "no-alert": "off",
+        "no-unused-vars": "off",
+        "no-useless-constructor": "off"
+      }
+    },
+    {
+      "files": "**/*.spec.js",
+      "rules": {
+        "no-console": "off",
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-alert": "off",
+        "no-useless-constructor": "off"
+      }
+    },
+    {
+      "files": "**/*.test.js",
+      "rules": {
+        "no-console": "off",
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-alert": "off",
+        "no-useless-constructor": "off"
+      }
+    }
+  ],
   "settings": {
     "react": {
       "version": "detect"
