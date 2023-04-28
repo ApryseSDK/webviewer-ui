@@ -29,7 +29,8 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:no-unsanitized/DOM"
   ],
   "rules": {
     "radix": "off",
@@ -173,7 +174,7 @@
         "ts": "never"
       }
     ],
-    "@typescript-eslint/no-useless-constructor": "error",
+    "@typescript-eslint/no-useless-constructor": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-this-alias": "off",
     "@typescript-eslint/no-empty-function": "off",
