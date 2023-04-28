@@ -1,15 +1,15 @@
 import core from 'core';
 
-const setupDocViewer = () => {
-  const docViewer = core.getDocumentViewer();
+const setupDocViewer = (documentViewer = undefined) => {
+  const docViewer = documentViewer || core.getDocumentViewer();
 
   // at 100% zoom level, adjust this whenever zoom/fitmode is updated
   docViewer.DEFAULT_MARGIN = 10;
   addToolsToDocViewer(docViewer);
 };
 
-const addToolsToDocViewer = docViewer => {
-  const toolModeMap = core.getToolModeMap();
+const addToolsToDocViewer = (docViewer) => {
+  const toolModeMap = docViewer.getToolModeMap();
   const { ToolNames } = window.Core.Tools;
 
   toolModeMap.AnnotationCreateTextHighlight2 = new window.Core.Tools.TextHighlightCreateTool(docViewer, ToolNames.HIGHLIGHT2);
@@ -24,6 +24,12 @@ const addToolsToDocViewer = docViewer => {
   toolModeMap.AnnotationCreateFreeText2 = new window.Core.Tools.FreeTextCreateTool(docViewer, ToolNames.FREETEXT2);
   toolModeMap.AnnotationCreateFreeText3 = new window.Core.Tools.FreeTextCreateTool(docViewer, ToolNames.FREETEXT3);
   toolModeMap.AnnotationCreateFreeText4 = new window.Core.Tools.FreeTextCreateTool(docViewer, ToolNames.FREETEXT4);
+  toolModeMap.AnnotationCreateMarkInsertText2 = new window.Core.Tools.MarkInsertTextCreateTool(docViewer, ToolNames.MARK_INSERT_TEXT2);
+  toolModeMap.AnnotationCreateMarkInsertText3 = new window.Core.Tools.MarkInsertTextCreateTool(docViewer, ToolNames.MARK_INSERT_TEXT3);
+  toolModeMap.AnnotationCreateMarkInsertText4 = new window.Core.Tools.MarkInsertTextCreateTool(docViewer, ToolNames.MARK_INSERT_TEXT4);
+  toolModeMap.AnnotationCreateMarkReplaceText2 = new window.Core.Tools.MarkReplaceTextCreateTool(docViewer, ToolNames.MARK_REPLACE_TEXT2);
+  toolModeMap.AnnotationCreateMarkReplaceText3 = new window.Core.Tools.MarkReplaceTextCreateTool(docViewer, ToolNames.MARK_REPLACE_TEXT3);
+  toolModeMap.AnnotationCreateMarkReplaceText4 = new window.Core.Tools.MarkReplaceTextCreateTool(docViewer, ToolNames.MARK_REPLACE_TEXT4);
   toolModeMap.AnnotationCreateDateFreeText2 = new window.Core.Tools.DateFreeTextCreateTool(docViewer, ToolNames.DATEFREETEXT2);
   toolModeMap.AnnotationCreateDateFreeText3 = new window.Core.Tools.DateFreeTextCreateTool(docViewer, ToolNames.DATEFREETEXT3);
   toolModeMap.AnnotationCreateDateFreeText4 = new window.Core.Tools.DateFreeTextCreateTool(docViewer, ToolNames.DATEFREETEXT4);

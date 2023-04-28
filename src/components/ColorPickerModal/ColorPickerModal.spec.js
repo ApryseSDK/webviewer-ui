@@ -30,7 +30,7 @@ describe('ColorPickerModal', () => {
   });
 
   it('The Color Picker Modal should not render when disabled', () => {
-    const { container } = render(<TestColorPickerModal isDisabled={true} />);
+    const { container } = render(<TestColorPickerModal isDisabled />);
     // Verify that ColorPickerModal class is not in the document
     expect(container.querySelector('.ColorPickerModal')).not.toBeInTheDocument();
   });

@@ -38,6 +38,7 @@ const propTypes = {
   isMultiSelectMode: PropTypes.bool,
   handleMultiSelect: PropTypes.func,
   isGroupMember: PropTypes.bool,
+  showAnnotationNumbering: PropTypes.bool,
 };
 
 function NoteHeader(props) {
@@ -62,10 +63,21 @@ function NoteHeader(props) {
     isMultiSelectMode,
     handleMultiSelect,
     isGroupMember,
+    showAnnotationNumbering,
+    timezone,
   } = props;
 
   const [t] = useTranslation();
-  const date = (sortStrategy === NotesPanelSortStrategy.MODIFIED_DATE || (notesShowLastUpdatedDate && sortStrategy !== NotesPanelSortStrategy.CREATED_DATE)) ? getLatestActivityDate(annotation) : annotation.DateCreated;
+
+  let date;
+  const dateCreated = (sortStrategy === NotesPanelSortStrategy.MODIFIED_DATE || (notesShowLastUpdatedDate && sortStrategy !== NotesPanelSortStrategy.CREATED_DATE)) ? getLatestActivityDate(annotation) : annotation.DateCreated;
+  if (timezone) {
+    const datetimeStr = dateCreated.toLocaleString('en-US', { timeZone: timezone });
+    date = new Date(datetimeStr);
+  } else {
+    date = dateCreated;
+  }
+
   const numberOfReplies = annotation.getReplies().length;
   let color = annotation[iconColor]?.toHexString?.();
 
@@ -74,6 +86,8 @@ function NoteHeader(props) {
   }
 
   const fillColor = getColor(annotation.FillColor);
+  const annotationAssociatedNumber = annotation.getAssociatedNumber();
+  const annotationDisplayedAssociatedNumber = `#${annotationAssociatedNumber} - `;
 
   const authorAndDateClass = classNames('author-and-date', { isReply });
   const noteHeaderClass = classNames('NoteHeader', { parent: !isReply && !isGroupMember });
@@ -92,6 +106,9 @@ function NoteHeader(props) {
         <div className="author-and-overflow">
           <div className="author-and-time">
             <div className="author">
+              {showAnnotationNumbering && annotationAssociatedNumber !== undefined &&
+                <span className="annotation-number">{annotationDisplayedAssociatedNumber}</span>
+              }
               {renderAuthorName(annotation)}
             </div>
             <div className="date-and-num-replies">

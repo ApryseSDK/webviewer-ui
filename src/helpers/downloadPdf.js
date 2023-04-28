@@ -10,6 +10,8 @@ import blobStream from 'blob-stream';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import { range } from 'lodash';
+import getRootNode from 'helpers/getRootNode';
+import { workerTypes } from 'constants/types';
 
 
 export default async (dispatch, options = {}, documentViewerKey = 1) => {
@@ -19,11 +21,20 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     includeAnnotations = true,
     externalURL,
     useDisplayAuthor = false,
-    includeComments = false,
     store, // Must be defined if includeComments is true
   } = options;
   let pages = options.pages;
+  let includeComments = !!options.includeComments;
   const downloadAllPages = !pages || pages.length === doc.getPageCount();
+
+  // We currently don't convert to pdf, png, etc. for office editor.
+  // Until we can do that we force the download type to be 'office'.
+  // Office editor can't include comments either so we force that to false.
+  const isOfficeEditor = doc?.getType() === workerTypes.OFFICE_EDITOR;
+  if (isOfficeEditor) {
+    options.downloadType = 'office';
+    includeComments = false;
+  }
 
   if (!options.downloadType) {
     options.downloadType = 'pdf';
@@ -51,7 +62,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       selectors.getColorMap(state),
     ];
     const id = 'download-handler-css';
-    if (!document.getElementById(id)) {
+    if (!getRootNode().querySelector(`#${id}`)) {
       const style = window.document.createElement('style');
       style.id = id;
       style.textContent = `
@@ -66,8 +77,9 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           padding: 0;
           margin: 0;
         }
-  
+
         .page__container {
+          margin: 10px;
           box-sizing: border-box;
           display: flex !important;
           flex-direction: column;
@@ -76,8 +88,9 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           min-width: 100%;
           font-size: 10px;
         }
-  
+
         .page__container .page__header {
+          margin-top: 2rem;
           display: block !important;
           align-self: flex-start;
           font-size: 2rem;
@@ -85,7 +98,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           padding-bottom: 0.6rem;
           border-bottom: 0.1rem solid black;
         }
-  
+
         .page__container .note {
           display: flex !important;
           flex-direction: column;
@@ -94,17 +107,17 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           border-radius: 0.4rem;
           margin-bottom: 0.5rem;
         }
-  
+
         .page__container .note .note__info {
           display: block !important;
           font-size: 1.3rem;
           margin-bottom: 0.1rem;
         }
-  
+
         .page__container .note .note__info--with-icon {
           display: flex !important;
         }
-  
+
         .page__container .note .note__info--with-icon .note__icon {
           display: block !important;
           width: 1.65rem;
@@ -112,30 +125,30 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           margin-top: -0.1rem;
           margin-right: 0.2rem;
         }
-  
+
         .page__container .note .note__info--with-icon .note__icon path:not([fill=none]) {
           display: block !important;
           fill: currentColor;
         }
-  
+
         .page__container .note .note__root .note__content {
           display: block !important;
           margin-left: 0.3rem;
         }
-  
+
         .page__container .note .note__root {
           display: block !important;
         }
-  
+
         .page__container .note .note__info--with-icon .note__icon svg {
           display: block !important;
         }
-  
+
         .page__container .note .note__reply {
           display: block !important;
           margin: 0.5rem 0 0 2rem;
         }
-  
+
         .page__container .note .note__content {
           display: block !important;
           font-size: 1.2rem;
@@ -158,6 +171,22 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       language,
       true,
     );
+    const addWhiteBackground = (dataURL) => {
+      const pagePrintCanvas = document.createElement('canvas');
+      const pagePrintContext = pagePrintCanvas.getContext('2d');
+      return new Promise((res) => {
+        const printImg = new Image();
+        printImg.src = dataURL;
+        printImg.onload = () => {
+          pagePrintCanvas.width = printImg.width;
+          pagePrintCanvas.height = printImg.height;
+          pagePrintContext.fillStyle = '#FFFFFF';
+          pagePrintContext.fillRect(0, 0, pagePrintCanvas.width, pagePrintCanvas.height);
+          pagePrintContext.drawImage(printImg, 0, 0);
+          res(pagePrintCanvas.toDataURL());
+        };
+      });
+    };
     const html2canvas = (await import('html2canvas')).default;
     for (let page of createdPages) {
       page = await page;
@@ -169,10 +198,14 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
           scale: 1,
           logging: false,
         });
-        dataURL = canvas.toDataURL();
+        dataURL = await addWhiteBackground(canvas.toDataURL());
         document.body.removeChild(page);
       } else {
-        dataURL = page;
+        if (doc?.getType() === workerTypes.OFFICE || doc?.getType() === workerTypes.LEGACY_OFFICE || doc?.getType() === workerTypes.OFFICE_EDITOR) {
+          dataURL = await addWhiteBackground(page);
+        } else {
+          dataURL = page;
+        }
       }
       const link = document.createElement('a');
       link.href = dataURL;
@@ -183,13 +216,12 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       document.body.removeChild(link);
     }
     dispatch(actions.closeElement('loadingModal'));
-    fireEvent(Events.FINISHED_SAVING_PDF);
     fireEvent(Events.FILE_DOWNLOADED);
     return;
   }
 
   let annotationsPromise = Promise.resolve();
-  const convertToPDF = options.downloadType === 'pdf' && doc.getType() === 'office';
+  const convertToPDF = options.downloadType === 'pdf' && doc.getType() === workerTypes.OFFICE;
   if (convertToPDF || includeComments) {
     const xfdfString = await core.exportAnnotations({ fields: true, widgets: true, links: true }, documentViewerKey);
     const fileData = await doc.getFileData({ xfdfString, includeAnnotations, downloadType: 'pdf' });
@@ -458,10 +490,15 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     };
 
     const array = doc.getFilename().split('.');
-    const extension = `.${array[array.length - 1]}`;
+    const extension = `${array[array.length - 1]}`;
+    const isNotPDF =
+      doc?.getType().includes('video')
+      || doc?.getType() === 'audio'
+      || doc?.getType() === workerTypes.OFFICE
+      || isOfficeEditor;
     const downloadName =
-      (doc?.getType().includes('video') || doc?.getType() === 'audio' || doc?.getType() === 'office')
-        ? getDownloadFilename(filename, extension)
+      isNotPDF
+        ? getDownloadFilename(filename, `.${extension}`)
         : getDownloadFilename(filename, '.pdf');
 
     // Cloning the options object to be able to delete the customDocument property if needed.
@@ -491,7 +528,6 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       saveAs(file, downloadName);
 
       dispatch(actions.closeElement('loadingModal'));
-      fireEvent(Events.FINISHED_SAVING_PDF);
       fireEvent(Events.FILE_DOWNLOADED);
       if (includeComments || convertToPDF) {
         doc.unloadResources();
@@ -502,7 +538,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       throw new Error(error.message);
     };
 
-    const signatureWidgets = core.getAnnotationsList().filter((a) => a instanceof window.Annotations.SignatureWidgetAnnotation);
+    const signatureWidgets = core.getAnnotationsList().filter((a) => a instanceof window.Core.Annotations.SignatureWidgetAnnotation);
     const signedStatues = await Promise.all(signatureWidgets.map((a) => a.isSignedDigitally()));
     const isSignedDigitally = signedStatues.includes(true);
     if (isSignedDigitally) {
@@ -511,7 +547,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
 
     if (externalURL) {
       const downloadIframe =
-        document.getElementById('download-iframe') ||
+        getRootNode().querySelector('#download-iframe') ||
         document.createElement('iframe');
       downloadIframe.width = 0;
       downloadIframe.height = 0;
@@ -520,7 +556,6 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       document.body.appendChild(downloadIframe);
       downloadIframe.src = externalURL;
       dispatch(actions.closeElement('loadingModal'));
-      fireEvent(Events.FINISHED_SAVING_PDF);
       fireEvent(Events.FILE_DOWNLOADED);
     } else if (pages && !downloadAllPages) {
       return doc.extractPages(pages, options.xfdfString).then(downloadDataAsFile, handleError);

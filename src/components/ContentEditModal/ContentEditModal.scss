@@ -7,6 +7,7 @@
 
   .container {
     @extend %modal-shared-container-style;
+    @extend %modal-shared-container-style-mobile;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,7 +17,7 @@
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
     background: var(--component-background);
     overflow: visible;
-    
+
     .header-container {
       box-shadow: inset 0 -1px 0 var(--modal-stroke-and-border);
       padding: 20px 16px 16px;
@@ -87,36 +88,6 @@
         color: var(--secondary-button-hover);
       }
     }
-
-    @include mobile {
-      width: 100%;
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      padding-top: 24px;
-      padding-bottom: 16px;
-      padding-left: 24px;
-      padding-right: 24px;
-      min-width: 100px;
-
-      .swipe-indicator {
-        background: var(--divider);
-        border-radius: 2px;
-        height: 4px;
-        width: 38px;
-        position: absolute;
-        top: 12px;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-
-        @include tablet-and-desktop {
-          display: none;
-        }
-      }
-    }
-
 
     select {
       margin-top: 8px;

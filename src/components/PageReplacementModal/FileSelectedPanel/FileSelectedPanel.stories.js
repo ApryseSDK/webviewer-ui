@@ -1,8 +1,7 @@
 import React from 'react';
-import FileSelectedPanel from './FileSelectedPanel'
+import FileSelectedPanel from './FileSelectedPanel';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
-import core from 'core';
+import { Provider } from 'react-redux';
 
 export default {
   title: 'Components/PageReplacementModal/FileSelectedPanel',
@@ -18,7 +17,7 @@ const initialState = {
   }
 };
 
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState) {
   return state;
 }
 
@@ -27,7 +26,7 @@ const store = createStore(rootReducer);
 const mockDocument = {
   getPageCount: () => 10,
   getFilename: () => 'helloDarknessMyOldFriend.pdf',
-  loadThumbnail: (pageNumber, callback) => (Promise.resolve(callback({ pageNumber, currentSrc: 'https://placekitten.com/g/200/300' }))),
+  loadThumbnail: (pageNumber, callback) => (Promise.resolve(callback({ pageNumber, currentSrc: 'https://placekitten.com/200/300?image=11' }))),
 };
 
 const props = {
@@ -36,28 +35,6 @@ const props = {
   replacePagesHandler: noop,
   documentInViewer: mockDocument,
 };
-
-
-// This story runs the component with an actual document instance
-export const FileSelected = (args, { loaded: { sourceDocument } }) => {
-  return (
-    <Provider store={store}>
-      <div className="Modal PageReplacementModal open">
-        <FileSelectedPanel
-          {...props}
-          sourceDocument={sourceDocument}
-        />
-      </div>
-    </Provider>
-  )
-};
-
-// Loaders is how you run async/await in StoryBook
-FileSelected.loaders = [
-  async () => ({
-    sourceDocument: await core.createDocument('https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf'),
-  }),
-];
 
 export const ProcessingFile = () => (
   <Provider store={store}>
@@ -70,7 +47,7 @@ export const ProcessingFile = () => (
 );
 
 // This story is solely for the purposes of a unit test
-export const StoryForTest = () => {
+export const FileSelected = () => {
   return (
     <Provider store={store}>
       <div className="Modal PageReplacementModal open">
@@ -80,5 +57,5 @@ export const StoryForTest = () => {
         />
       </div>
     </Provider>
-  )
+  );
 };

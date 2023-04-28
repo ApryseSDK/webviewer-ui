@@ -19,9 +19,9 @@ const propTypes = {
   children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-const CustomizablePopup = ({ dataElement, children }) => {
+const CustomizablePopup = ({ dataElement, children, childrenClassName }) => {
   const items = useSelector(
-    state => selectors.getPopupItems(state, dataElement),
+    (state) => selectors.getPopupItems(state, dataElement),
     shallowEqual,
   );
 
@@ -29,7 +29,7 @@ const CustomizablePopup = ({ dataElement, children }) => {
 
   if (process.env.NODE_ENV !== 'production') {
     // give a error message in the console if a child's dataElement in the childrenArray isn't in the redux state
-    childrenArray.forEach(child => {
+    childrenArray.forEach((child) => {
       const found = items.some(
         ({ dataElement }) => dataElement === child.props.dataElement,
       );
@@ -56,15 +56,15 @@ const CustomizablePopup = ({ dataElement, children }) => {
     const { dataElement, type, hidden } = item;
     const key = `${type}-${dataElement || i}`;
     const mediaQueryClassName = hidden
-      ?.map(screen => `hide-in-${screen}`)
+      ?.map((screen) => `hide-in-${screen}`)
       .join(' ');
     let component = childrenArray.find(
-      child => child.props.dataElement === dataElement,
+      (child) => child.props.dataElement === dataElement,
     );
 
     // duplicate code in HeaderItems.js, must clean up after 6.0
     if (!component) {
-      const props = { ...item, mediaQueryClassName };
+      const props = { ...item, mediaQueryClassName, className: childrenClassName };
 
       if (type === 'toolButton') {
         component = <ToolButton {...props} />;

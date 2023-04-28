@@ -1,6 +1,3 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
@@ -33,8 +30,10 @@ import logDebugInfo from 'helpers/logDebugInfo';
 import getHashParameters from 'helpers/getHashParameters';
 import { addDocumentViewer } from 'helpers/documentViewerHelper';
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
+import retargetEvents from 'react-shadow-dom-retarget-events';
 
 import './index.scss';
+import getRootNode from 'helpers/getRootNode';
 
 const middleware = [thunk];
 
@@ -98,8 +97,15 @@ if (window.CanvasRenderingContext2D) {
   }
 
   window._disableStreaming = getHashParameters('disableStreaming', false);
-  window.Core.setWorkerPath('../core');
-  window.Core.setResourcesPath('../core/assets');
+  // TODO: Figure out how to set a relative path for the web component
+  // Relative path will actually work in dev for iframe too, but breaks in prod/samples where we actually set a path
+  if (process.env.WEBCOMPONENT) {
+    window.Core.setWorkerPath('/core');
+    window.Core.setResourcesPath('/core/assets');
+  } else {
+    window.Core.setWorkerPath('../core');
+    window.Core.setResourcesPath('../core/assets');
+  }
 
   try {
     if (state.advanced.useSharedWorker && window.parent.WebViewer) {
@@ -136,6 +142,11 @@ if (window.CanvasRenderingContext2D) {
 
   logDebugInfo();
   const documentViewer = addDocumentViewer(1);
+
+  if (getHashParameters('hideDetachedReplies', false)) {
+    documentViewer.getAnnotationManager().hideDetachedReplies();
+  }
+
   defineWebViewerInstanceUIAPIs(store);
 
   setupI18n(state);
@@ -146,9 +157,33 @@ if (window.CanvasRenderingContext2D) {
 
   const { addEventHandlers, removeEventHandlers } = eventHandler(store);
 
+  const getWorkersToLoad = (preloadWorker) => {
+    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR, ALL } = workerTypes;
+    if (preloadWorker === ALL) {
+      return [PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR];
+    }
+    const workersToLoad = [];
+
+    const shouldLoadOfficeWorker = Array.isArray(preloadWorker) && preloadWorker.includes(OFFICE)
+    || typeof preloadWorker === 'string' && preloadWorker.match(/(office[,|\s]|office$)/g);
+    if (shouldLoadOfficeWorker) {
+      workersToLoad.push(OFFICE);
+    }
+
+    [PDF, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR].forEach((workerType) => {
+      if (preloadWorker.includes(workerType)) {
+        workersToLoad.push(workerType);
+      }
+    });
+
+    return workersToLoad;
+  };
+
   const initTransports = () => {
-    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, ALL } = workerTypes;
-    if (preloadWorker.includes(PDF) || preloadWorker === ALL) {
+    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR } = workerTypes;
+    const workersToLoad = getWorkersToLoad(preloadWorker);
+
+    if (workersToLoad.includes(PDF)) {
       getBackendPromise(getHashParameters('pdf', 'auto')).then((pdfType) => {
         window.Core.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: (percent) => {
@@ -158,7 +193,7 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker.includes(OFFICE) || preloadWorker === ALL) {
+    if (workersToLoad.includes(OFFICE)) {
       getBackendPromise(getHashParameters('office', 'auto')).then((officeType) => {
         window.Core.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: (percent) => {
@@ -168,7 +203,15 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker.includes(LEGACY_OFFICE) || preloadWorker === ALL) {
+    if (workersToLoad.includes(OFFICE_EDITOR)) {
+      window.Core.initOfficeEditorWorkerTransports({
+        workerLoadingProgress: (percent) => {
+          store.dispatch(actions.setLoadingProgress(percent));
+        },
+      }, window.sampleL);
+    }
+
+    if (workersToLoad.includes(LEGACY_OFFICE)) {
       getBackendPromise(getHashParameters('legacyOffice', 'auto')).then((officeType) => {
         window.Core.initLegacyOfficeWorkerTransports(officeType, {
           workerLoadingProgress: (percent) => {
@@ -178,7 +221,7 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker.includes(CONTENT_EDIT) || preloadWorker === ALL) {
+    if (workersToLoad.includes(CONTENT_EDIT)) {
       window.Core.ContentEdit.preloadWorker(documentViewer.getContentEditManager());
     }
   };
@@ -195,7 +238,7 @@ if (window.CanvasRenderingContext2D) {
 
     if (getHashParameters('enableViewStateAnnotations', false)) {
       const tool = documentViewer.getTool(window.Core.Tools.ToolNames.STICKY);
-      tool?.setSaveViewState(true);
+      tool?.enableViewStateSaving();
     }
 
     setupLoadAnnotationsFromServer(store);
@@ -205,17 +248,18 @@ if (window.CanvasRenderingContext2D) {
         <PersistGate loading={null} persistor={persistor}>
           <I18nextProvider i18n={i18next}>
             <DndProvider backend={HTML5Backend}>
-              <App removeEventHandlers={removeEventHandlers} />
+              <App removeEventHandlers={removeEventHandlers}/>
             </DndProvider>
           </I18nextProvider>
         </PersistGate>
       </Provider>,
-      document.getElementById('app'),
+      getRootNode().getElementById('app'),
     );
+    process.env.WEBCOMPONENT && retargetEvents(getRootNode());
   });
-
   addEventHandlers();
 }
+
 
 window.addEventListener('hashchange', () => {
   window.location.reload();

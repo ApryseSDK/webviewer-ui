@@ -16,7 +16,7 @@ const RibbonItem = (props) => {
 
   useEffect(() => {
     if (currentToolbarGroup === toolbarGroup) {
-      const activeGroups = groupedItems.map((item) => item?.props?.dataElement);
+      const activeGroups = groupedItems.map((item) => item?.dataElement);
       dispatch(actions.setCurrentGroupedItem(activeGroups));
     }
   }, []);
@@ -26,7 +26,7 @@ const RibbonItem = (props) => {
   const onClick = () => {
     if (!isActive) {
       dispatch(actions.setToolbarGroup(toolbarGroup));
-      const activeGroups = groupedItems.map((item) => item?.props?.dataElement);
+      const activeGroups = groupedItems.map((item) => item?.dataElement);
       dispatch(actions.setCurrentGroupedItem(activeGroups));
     }
   };

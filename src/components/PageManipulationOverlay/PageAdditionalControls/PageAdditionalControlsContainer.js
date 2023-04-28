@@ -1,7 +1,7 @@
 import React from 'react';
 import PageAdditionalControls from './PageAdditionalControls';
-import { movePagesToBottom, movePagesToTop, noPagesSelectedWarning } from "helpers/pageManipulationFunctions";
-import { useDispatch } from "react-redux";
+import { movePagesToBottom, movePagesToTop, noPagesSelectedWarning } from 'helpers/pageManipulationFunctions';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import actions from 'actions';
 import { isMobile } from 'helpers/device';
@@ -21,7 +21,7 @@ function PageAdditionalControlsContainer(props) {
     } else {
       movePagesToTop(pageNumbers);
     }
-    isMobile() && dispatch(actions.closeElement("pageManipulationOverlay"));
+    isMobile() && dispatch(actions.closeElement('pageManipulationOverlay'));
   };
   const moveToBottom = () => {
     if (warn) {
@@ -29,7 +29,7 @@ function PageAdditionalControlsContainer(props) {
     } else {
       movePagesToBottom(pageNumbers);
     }
-    isMobile() && dispatch(actions.closeElement("pageManipulationOverlay"));
+    isMobile() && dispatch(actions.closeElement('pageManipulationOverlay'));
   };
   return (
     <PageAdditionalControls

@@ -13,6 +13,7 @@ import ModalWrapper from 'components/ModalWrapper';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useDidUpdate from 'hooks/useDidUpdate';
+import DataElements from 'constants/dataElement';
 
 import './PrintModal.scss';
 
@@ -30,11 +31,12 @@ const PrintModal = () => {
     layoutMode,
     printedNoteDateFormat,
     language,
-    watermarkModalOptions
+    watermarkModalOptions,
+    timezone
   ] = useSelector(
-    state => [
-      selectors.isElementDisabled(state, 'printModal'),
-      selectors.isElementOpen(state, 'printModal'),
+    (state) => [
+      selectors.isElementDisabled(state, DataElements.PRINT_MODAL),
+      selectors.isElementOpen(state, DataElements.PRINT_MODAL),
       selectors.isElementDisabled(state, 'applyWatermark'),
       selectors.getCurrentPage(state),
       selectors.getPrintQuality(state),
@@ -45,7 +47,8 @@ const PrintModal = () => {
       selectors.getDisplayMode(state),
       selectors.getPrintedNoteDateFormat(state),
       selectors.getCurrentLanguage(state),
-      selectors.getWatermarkModalOptions(state)
+      selectors.getWatermarkModalOptions(state),
+      selectors.getTimezone(state)
     ],
     shallowEqual
   );
@@ -66,17 +69,38 @@ const PrintModal = () => {
   const [existingWatermarks, setExistingWatermarks] = useState(null);
   const [includeAnnotations, setIncludeAnnotations] = useState(true);
   const [includeComments, setIncludeComments] = useState(false);
-  const [allowDefaultPrintOptions, setAllowDefaultPrintOptions] = useState(true);
   const [maintainPageOrientation, setMaintainPageOrientation] = useState(false);
+  const [isGrayscale, setIsGrayscale] = useState(false);
 
   useEffect(() => {
-    if (allowDefaultPrintOptions && defaultPrintOptions) {
+    if (defaultPrintOptions) {
       setIncludeAnnotations(defaultPrintOptions.includeAnnotations ?? includeAnnotations);
       setIncludeComments(defaultPrintOptions.includeComments ?? includeComments);
       setMaintainPageOrientation(defaultPrintOptions.maintainPageOrientation ?? maintainPageOrientation);
-      setAllowDefaultPrintOptions(false);
     }
-  }, [allowDefaultPrintOptions, defaultPrintOptions]);
+  }, [defaultPrintOptions]);
+
+  useEffect(() => {
+    const adjustHeightIfSinglePage = () => {
+      const print = document.getElementById('print-handler');
+
+      if (!print) {
+        return;
+      }
+
+      if (print.children.length === 1) {
+        print.parentElement.setAttribute('style', 'height: 99%;');
+      } else {
+        print.parentElement.setAttribute('style', 'height: 100%;');
+      }
+    };
+
+    window.addEventListener('beforeprint', adjustHeightIfSinglePage);
+
+    return () => {
+      window.removeEventListener('beforeprint', adjustHeightIfSinglePage);
+    };
+  }, []);
 
   const isPrinting = count >= 0;
   const className = getClassName('Modal PrintModal', { isOpen });
@@ -104,7 +128,7 @@ const PrintModal = () => {
         'progressModal',
         'errorModal'
       ]));
-      core.getWatermark().then(watermark => {
+      core.getWatermark().then((watermark) => {
         setAllowWatermarkModal(
           watermark === undefined ||
           watermark === null ||
@@ -171,7 +195,7 @@ const PrintModal = () => {
     setPagesToPrint(pagesToPrint);
   };
 
-  const createPagesAndPrint = e => {
+  const createPagesAndPrint = (e) => {
     e.preventDefault();
 
     if (pagesToPrint.length < 1) {
@@ -198,17 +222,20 @@ const PrintModal = () => {
       undefined,
       currentView.current?.checked,
       language,
+      false,
+      isGrayscale,
+      timezone
     );
-    createPages.forEach(async pagePromise => {
+    createPages.forEach(async (pagePromise) => {
       await pagePromise;
       setCount(count < pagesToPrint.length && (count !== -1 ? count + 1 : count));
     });
     Promise.all(createPages)
-      .then(pages => {
+      .then((pages) => {
         printPages(pages);
         closePrintModal();
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         setCount(-1);
       });
@@ -219,7 +246,7 @@ const PrintModal = () => {
     dispatch(actions.closeElement('printModal'));
   };
 
-  const setWatermarkModalVisibility = visible => {
+  const setWatermarkModalVisibility = (visible) => {
     setIsWatermarkModalVisible(visible);
   };
 
@@ -235,15 +262,16 @@ const PrintModal = () => {
           // pageIndex starts at index 0 and getCurrPage number starts at index 1
           pageIndexToView={currentPage - 1}
           modalClosed={setWatermarkModalVisibility}
-          formSubmitted={value => dispatch(actions.setWatermarkModalOptions(value))}
+          formSubmitted={(value) => dispatch(actions.setWatermarkModalOptions(value))}
         />
         <div
           className={className}
           data-element="printModal"
         >
           <ModalWrapper isOpen={isOpen && !isWatermarkModalVisible} title={'option.print.printSettings'}
-            containerOnClick={e => e.stopPropagation()} onCloseClick={closePrintModal}
-            closeButtonDataElement={'printModalCloseButton'}>
+            containerOnClick={(e) => e.stopPropagation()} onCloseClick={closePrintModal}
+            closeButtonDataElement={'printModalCloseButton'}
+          >
             <div className="swipe-indicator" />
             <div className="settings">
               <div className="section">
@@ -301,7 +329,7 @@ const PrintModal = () => {
                     id="include-comments"
                     name="comments"
                     label={t('option.print.includeComments')}
-                    onChange={() => setIncludeComments(prevState => !prevState)}
+                    onChange={() => setIncludeComments((prevState) => !prevState)}
                     disabled={isPrinting}
                     checked={includeComments}
                     center
@@ -312,8 +340,18 @@ const PrintModal = () => {
                     name="annotations"
                     label={t('option.print.includeAnnotations')}
                     disabled={isPrinting}
-                    onChange={() => setIncludeAnnotations(prevState => !prevState)}
+                    onChange={() => setIncludeAnnotations((prevState) => !prevState)}
                     checked={includeAnnotations}
+                    center
+                  />
+                  <Choice
+                    dataElement="grayscalePrintOption"
+                    id="print-grayscale"
+                    name="grayscale"
+                    label={t('option.print.printGrayscale')}
+                    disabled={isPrinting}
+                    onChange={() => setIsGrayscale((prevState) => !prevState)}
+                    checked={isGrayscale}
                     center
                   />
                 </form>
@@ -323,7 +361,7 @@ const PrintModal = () => {
                 <label className="printQualitySelectLabel">
                   <select
                     className="printQualitySelect"
-                    onChange={e => dispatch(actions.setPrintQuality(Number(e.target.value)))}
+                    onChange={(e) => dispatch(actions.setPrintQuality(Number(e.target.value)))}
                     value={printQuality}
                   >
                     <option value="2">{`${t('option.print.qualityHigh')}`}</option>
@@ -334,8 +372,8 @@ const PrintModal = () => {
                   {isPrinting ? (
                     <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
                   ) : (
-                      <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
-                    )}
+                    <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
+                  )}
                 </div>
               </div>
               {!isApplyWatermarkDisabled && (

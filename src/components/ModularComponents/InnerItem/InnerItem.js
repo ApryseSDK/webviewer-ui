@@ -1,15 +1,16 @@
 import React from 'react';
+import { ITEM_TYPE } from 'constants/customizationVariables';
 import CustomButton from 'components/Button/CustomButton';
 import GroupedItems from '../GroupedItems/GroupedItems';
 import Divider from '../Divider';
 import RibbonGroup from '../RibbonGroup';
 import ToolGroupButton from '../ToolGroupButton';
-import { ITEM_TYPE } from 'constants/customizationVariables';
 import ToggleElementButton from '../ToggleElementButton';
+import ZoomControls from '../ZoomControls';
 
 const InnerItem = (props) => {
-  const { type, dataElement, headerDirection } = props;
-  const key = `${type}-${dataElement}`;
+  const { type, dataElement, headerDirection, headerPlacement } = props;
+  const key = `${type}-${dataElement}-${headerPlacement}`;
 
   switch (type) {
     case ITEM_TYPE.BUTTON:
@@ -26,6 +27,8 @@ const InnerItem = (props) => {
       return <RibbonGroup key={key} {...props} />;
     case ITEM_TYPE.TOOL_GROUP_BUTTON:
       return <ToolGroupButton key={key} {...props} />;
+    case ITEM_TYPE.ZOOM:
+      return <ZoomControls {...props} />;
     default:
       console.warn(`${type} is not a valid item type.`);
       return null;

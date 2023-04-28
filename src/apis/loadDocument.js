@@ -43,6 +43,7 @@ export default (store) => (src, options) => {
  * @property {number} [officeOptions.formatOptions.excelDefaultCellBorderWidth] Cell border width for table cells that would normally be drawn with no border. In units of points. Can be used to achieve a similar effect to the "show gridlines" display option within Microsoft Excel.
  * @property {number} [officeOptions.formatOptions.excelMaxAllowedCellCount] An exception will be thrown if the number of cells in an Excel document is above the value. Used for early termination of resource intensive documents. Setting this value to 250000 will allow the vast majority of Excel documents to convert without issue, while keeping RAM usage to a reasonable level. By default there is no limit to the number of allowed cells.
  * @property {string} [officeOptions.formatOptions.locale] Sets the value for Locale in the options object ISO 639-1 code of the current system locale. For example: 'en-US', 'ar-SA', 'de-DE', etc.
+ * @property {boolean} [enableOfficeEditing] If true, will load docx files with editing capabilities.
  * @property {string} [password] A string that will be used to as the password to load a password protected document.
  * @property {function} [onError] - A callback function that will be called when error occurs in the process of loading a document. The function signature is `function(e) {}`
  * @property {object} [xodOptions] - An object that contains the options for a XOD document.

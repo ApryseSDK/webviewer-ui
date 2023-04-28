@@ -91,11 +91,14 @@ export const enableElements = (dataElements, priority) => (
     payload: { dataElements: filteredDataElements, priority },
   });
 };
+export const setIsElementHidden = (dataElement, isHidden) => ({
+  type: 'SET_IS_ELEMENT_HIDDEN',
+  payload: { dataElement, isHidden }
+});
 export const setThumbnailMerging = (useThumbnailMerging = true) => ({
   type: 'SET_THUMBNAIL_MERGING',
   payload: { useThumbnailMerging },
 });
-
 export const setThumbnailReordering = (useThumbnailReordering = true) => ({
   type: 'SET_THUMBNAIL_REORDERING',
   payload: { useThumbnailReordering },

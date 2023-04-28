@@ -1,4 +1,4 @@
-const updateChildrenDisabledState = parentLayer => {
+const updateChildrenDisabledState = (parentLayer) => {
   const newParentLayer = { ...parentLayer };
   newParentLayer.children && newParentLayer.children.forEach((childLayer, i) => {
     let newChildLayer = { ...childLayer };
@@ -11,7 +11,7 @@ const updateChildrenDisabledState = parentLayer => {
   return newParentLayer;
 };
 
-const updateChildrenVisibilityState = parentLayer => {
+const updateChildrenVisibilityState = (parentLayer) => {
   const newParentLayer = { ...parentLayer };
   newParentLayer.children && newParentLayer.children.forEach((childLayer, i) => {
     let newChildLayer = { ...childLayer };

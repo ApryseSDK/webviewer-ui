@@ -76,6 +76,19 @@ $modal-z-index: 100;
         }
       }
 
+      &.secondary-btn-custom {
+        border-radius: 4px;
+        border: 1px solid var(--primary-button);
+        color: var(--primary-button);
+        padding: 2px 20px 4px;
+        cursor: pointer;
+        background-color: white;
+
+        &:hover {
+          color: var(--secondary-button-hover);
+        }
+      }
+
       @include mobile {
         padding: 23px 8px;
       }
@@ -101,7 +114,6 @@ $modal-z-index: 100;
 }
 
 %modal-shared-container-style {
-  border-radius: 4px;
   border-radius: 4px;
   box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
   background: var(--component-background);

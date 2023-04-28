@@ -13,7 +13,7 @@ module.exports = {
     path: path.resolve(__dirname, 'src'),
     filename: 'webviewer-ui.min.js',
     chunkFilename: 'chunks/[name].chunk.js',
-    publicPath: '/',
+    publicPath: '/ui/',
   },
   plugins: [new webpack.HotModuleReplacementPlugin()],
   module: {
@@ -23,12 +23,16 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
+            ignore: [
+              /\/core-js/,
+            ],
+            sourceType: "unambiguous",
             presets: [
               '@babel/preset-react',
               [
                 '@babel/preset-env',
                 {
-                  useBuiltIns: 'entry',
+                  useBuiltIns: 'usage',
                   corejs: 3,
                 },
               ],
@@ -49,13 +53,43 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
+          {
+            loader: 'style-loader',
+            options: {
+              insert: function(styleTag) {
+                const webComponents = document.getElementsByTagName('apryse-webviewer');
+                if (webComponents.length > 0) {
+                  const clonedStyleTags = [];
+                  for (let i = 0; i < webComponents.length; i++) {
+                    const webComponent = webComponents[i];
+                    if (i === 0) {
+                      webComponent.shadowRoot.appendChild(styleTag);
+                      styleTag.onload = function() {
+                        if (clonedStyleTags.length > 0) {
+                          clonedStyleTags.forEach((styleNode) => {
+                            // eslint-disable-next-line no-unsanitized/property
+                            styleNode.innerHTML = styleTag.innerHTML;
+                          });
+                        }
+                      };
+                    } else {
+                      const styleNode = styleTag.cloneNode(true);
+                      webComponent.shadowRoot.appendChild(styleNode);
+                      clonedStyleTags.push(styleNode);
+                    }
+                  }
+                } else {
+                  document.head.appendChild(styleTag);
+                }
+              },
+            },
+          },
           'css-loader',
           {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
-              plugins: loader => [
+              plugins: (loader) => [
                 require('postcss-import')({ root: loader.resourcePath }),
                 require('postcss-preset-env')(),
                 require('cssnano')(),

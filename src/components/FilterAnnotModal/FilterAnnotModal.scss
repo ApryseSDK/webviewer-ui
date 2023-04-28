@@ -124,6 +124,31 @@
         }
       }
 
+      .settings-body {
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        font-size: var(--font-size-default);
+        gap: 12px;
+
+        .settings-header {
+          font-weight: var(--font-weight-bold);
+        }
+
+        .settings {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          .setting {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+          }
+        }
+
+      }
+
       .footer {
         display: flex;
         justify-content: space-between;

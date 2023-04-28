@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateStampModal from './CreateStampModal'
+import CreateStampModal from './CreateStampModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import defaultFonts from 'constants/defaultFonts';

@@ -9,7 +9,7 @@ import { RedactionPanelContext, RedactionPanelProvider } from './RedactionPanelC
 import useOnRedactionAnnotationChanged from '../../hooks/useOnRedactionAnnotationChanged';
 import useMedia from 'hooks/useMedia';
 import DataElementWrapper from '../DataElementWrapper';
-import Icon from 'components/Icon'
+import Icon from 'components/Icon';
 import RedactionSearchPanel from 'components/RedactionSearchPanel';
 import { defaultRedactionTypes } from 'constants/redactionTypes';
 
@@ -22,7 +22,7 @@ export const RedactionPanelContainer = () => {
     customApplyRedactionsHandler,
     redactionSearchPatterns,
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementOpen(state, 'redactionPanel'),
       selectors.isElementDisabled(state, 'redactionPanel'),
       selectors.getRedactionPanelWidth(state),
@@ -49,7 +49,7 @@ export const RedactionPanelContainer = () => {
         icon
       };
       return map;
-    }, {})
+    }, {});
 
     return { ...storedRedactionTypes, ...defaultRedactionTypes };
   }, [redactionSearchPatterns]);
@@ -97,24 +97,24 @@ export const RedactionPanelContainer = () => {
 
   if (isDisabled || !isOpen) {
     return null;
-  } else {
-    return (
-      <DataElementWrapper
-        dataElement="redactionPanel"
-        className="Panel RedactionPanel"
-        style={style}
-      >
-        {(!isInDesktopOnlyMode && isMobile) && renderMobileCloseButton()}
-        <RedactionSearchPanel />
-        {!isRedactionSearchActive &&
+  }
+  return (
+    <DataElementWrapper
+      dataElement="redactionPanel"
+      className="Panel RedactionPanel"
+      style={style}
+    >
+      {(!isInDesktopOnlyMode && isMobile) && renderMobileCloseButton()}
+      <RedactionSearchPanel />
+      {!isRedactionSearchActive &&
           <RedactionPanel
             redactionAnnotations={redactionAnnotationsList}
             redactionTypesDictionary={redactionTypesDictionary}
             applyAllRedactions={applyAllRedactions}
-            deleteAllRedactionAnnotations={deleteAllRedactionAnnotations} />}
-      </DataElementWrapper>
-    );
-  }
+            deleteAllRedactionAnnotations={deleteAllRedactionAnnotations}
+          />}
+    </DataElementWrapper>
+  );
 };
 
 const RedactionPanelContainerWithProvider = () => {
@@ -122,7 +122,7 @@ const RedactionPanelContainerWithProvider = () => {
     <RedactionPanelProvider>
       <RedactionPanelContainer />
     </RedactionPanelProvider>
-  )
-}
+  );
+};
 
 export default RedactionPanelContainerWithProvider;

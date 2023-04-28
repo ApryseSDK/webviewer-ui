@@ -17,7 +17,7 @@
 import actions from 'actions';
 import selectors from 'selectors';
 
-export default store => Object.create(ThumbnailControlMenuAPI).initialize(store);
+export default (store) => Object.create(ThumbnailControlMenuAPI).initialize(store);
 
 const ThumbnailControlMenuAPI = {
   initialize(store) {
@@ -128,7 +128,7 @@ const ThumbnailControlMenuAPI = {
       index = -1;
     } else {
       const state = this.store.getState();
-      index = selectors.getThumbnailControlMenuItems(state).findIndex(obj => obj.dataElement === dataElement);
+      index = selectors.getThumbnailControlMenuItems(state).findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;

@@ -17,31 +17,31 @@ describe('RedactionSearchResult', () => {
   describe('storybook components', () => {
     it('renders text result story correctly', () => {
       expect(() => {
-        render(<Text />)
+        render(<Text />);
       }).not.toThrow();
     });
 
     it('renders credit card result story correctly', () => {
       expect(() => {
-        render(<CreditCard />)
+        render(<CreditCard />);
       }).not.toThrow();
     });
 
     it('renders image result story correctly', () => {
       expect(() => {
-        render(<Image />)
+        render(<Image />);
       }).not.toThrow();
     });
 
     it('renders phone number result story correctly', () => {
       expect(() => {
-        render(<PhoneNumber />)
+        render(<PhoneNumber />);
       }).not.toThrow();
     });
 
     it('renders email result story correctly', () => {
       expect(() => {
-        render(<Email />)
+        render(<Email />);
       }).not.toThrow();
     });
   });
@@ -50,11 +50,11 @@ describe('RedactionSearchResult', () => {
     it('when the result is of type text, it renders the correct item with the correct className', () => {
       const props = {
         type: redactionTypeMap['TEXT'],
-        resultStr: "spice",
-        ambientStr: "The spice must flow.",
+        resultStr: 'spice',
+        ambientStr: 'The spice must flow.',
         resultStrStart: 4,
         resultStrEnd: 9,
-      }
+      };
 
       render(<RedactionSearchResult {...props} />);
       const searchResult = screen.getByText(props.resultStr);
@@ -65,7 +65,7 @@ describe('RedactionSearchResult', () => {
       const props = {
         type: redactionTypeMap['CREDIT_CARD'],
         resultStr: '4242 4242 4242 4242'
-      }
+      };
 
       render(<RedactionSearchResult {...props} />);
       const searchResult = screen.getByText(props.resultStr);
@@ -75,8 +75,8 @@ describe('RedactionSearchResult', () => {
     it('when the result is of type phone number, it renders the correct item', () => {
       const props = {
         type: redactionTypeMap['PHONE'],
-        resultStr: "867-5309"
-      }
+        resultStr: '867-5309'
+      };
 
       render(<RedactionSearchResult {...props} />);
       const searchResult = screen.getByText(props.resultStr);
@@ -86,8 +86,8 @@ describe('RedactionSearchResult', () => {
     it('when the result is of type email, it renders the correct item', () => {
       const props = {
         type: redactionTypeMap['EMAIL'],
-        resultStr: "paul.atreides@dune.com"
-      }
+        resultStr: 'paul.atreides@dune.com'
+      };
 
       render(<RedactionSearchResult {...props} />);
       const searchResult = screen.getByText(props.resultStr);
@@ -97,9 +97,9 @@ describe('RedactionSearchResult', () => {
     it('when a user clicks on the result item it calls the correct handler', () => {
       const props = {
         type: redactionTypeMap['EMAIL'],
-        resultStr: "paul.atreides@dune.com",
+        resultStr: 'paul.atreides@dune.com',
         onClickResult: jest.fn()
-      }
+      };
 
       render(<RedactionSearchResult {...props} />);
       const searchResult = screen.getByText(props.resultStr);
@@ -110,14 +110,14 @@ describe('RedactionSearchResult', () => {
     it('when a user ticks the box it calls the right handler', () => {
       const props = {
         type: redactionTypeMap['EMAIL'],
-        resultStr: "paul.atreides@dune.com",
+        resultStr: 'paul.atreides@dune.com',
         onChange: jest.fn(),
-      }
+      };
 
       render(<RedactionSearchResult {...props} />);
       const checkBox = screen.getByRole('checkbox');
       userEvent.click(checkBox);
       expect(props.onChange).toBeCalledTimes(1);
     });
-  })
-})
+  });
+});

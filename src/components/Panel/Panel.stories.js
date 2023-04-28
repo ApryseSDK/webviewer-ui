@@ -42,6 +42,7 @@ export function Basic() {
 
 export function PanelOnRightSide() {
   initialState.viewer.panelCustomEmptyPanel = undefined;
+  initialState.viewer.openElements.panel2 = true;
   const store = configureStore({ reducer: () => initialState });
   return (
     <Provider store={store}>

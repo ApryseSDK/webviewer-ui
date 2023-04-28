@@ -8,7 +8,7 @@ import Events from 'constants/events';
 import './ResizeBar.scss';
 
 const ResizeBar = ({ onResize, minWidth, leftDirection, dataElement }) => {
-  const isDisabled = useSelector(state => selectors.isElementDisabled(state, dataElement));
+  const isDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
   const isMouseDownRef = useRef(false);
 
   useEffect(() => {

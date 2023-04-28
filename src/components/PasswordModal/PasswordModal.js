@@ -2,24 +2,25 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
 import Button from 'components/Button';
 import actions from 'actions';
 import selectors from 'selectors';
-
-import './PasswordModal.scss';
 import ModalWrapper from '../ModalWrapper';
 import { escapePressListener } from 'helpers/accessibility';
+import getRootNode from 'helpers/getRootNode';
+import DataElements from 'constants/dataElement';
+
+import './PasswordModal.scss';
 
 let checkPassword = () => {};
-export const setCheckPasswordFunction = fn => {
+export const setCheckPasswordFunction = (fn) => {
   checkPassword = fn;
 };
 
 const PasswordModal = () => {
   const [isOpen, attempt, isMultiTab] = useSelector(
-    state => [
-      selectors.isElementOpen(state, 'passwordModal'),
+    (state) => [
+      selectors.isElementOpen(state, DataElements.PASSWORD_MODAL),
       selectors.getPasswordAttempts(state),
       selectors.getIsMultiTab(state)
     ],
@@ -36,7 +37,7 @@ const PasswordModal = () => {
     if (isOpen) {
       dispatch(actions.closeElement('progressModal'));
       passwordInput.current?.focus();
-      window.addEventListener('keydown', e => escapePressListener(e, closeModal));
+      window.addEventListener('keydown', (e) => escapePressListener(e, closeModal));
     } else {
       // when a user enters the correct password or calls core.closeDocument
       // reset state in case user loads another password-protected document
@@ -46,39 +47,40 @@ const PasswordModal = () => {
     return () => window.removeEventListener('keydown', escapePressListener);
   }, [dispatch, isOpen, passwordInput]);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     checkPassword(password);
   };
 
   const closeModal = (event) => {
-    if(event.key === 'Escape') {
+    if (event.key === 'Escape') {
       setUserCancelled(true);
     } else {
-      dispatch(actions.closeElement('passwordModal'));
+      dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
     }
-  }
+  };
 
   const getErrorModal = (errorMessage) => {
     return (
       <ModalWrapper isOpen={isOpen} title={'message.error'}
-        closeButtonDataElement={'errorModalCloseButton'} 
-        onCloseClick={closeModal}>
-          <div className="modal-content error-modal-content">
-            <p>{t(errorMessage)}</p>
-          </div>
-          <div className="modal-footer footer">
-            <Button
-              className="confirm modal-button"
-              dataElement="passwordSubmitButton"
-              label={t('action.ok')}
-              onClick={closeModal}
-            />
-          </div>
-        </ModalWrapper>
-     );
-  }
+        closeButtonDataElement={'errorModalCloseButton'}
+        onCloseClick={closeModal}
+      >
+        <div className="modal-content error-modal-content">
+          <p>{t(errorMessage)}</p>
+        </div>
+        <div className="modal-footer footer">
+          <Button
+            className="confirm modal-button"
+            dataElement="passwordSubmitButton"
+            label={t('action.ok')}
+            onClick={closeModal}
+          />
+        </div>
+      </ModalWrapper>
+    );
+  };
 
   const renderContent = () => {
     const userExceedsMaxAttempts = attempt === maxAttempts;
@@ -92,7 +94,7 @@ const PasswordModal = () => {
     return renderEnterPasswordContent();
   };
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (e.which === 13) {
       handleSubmit(e);
     }
@@ -103,10 +105,11 @@ const PasswordModal = () => {
 
     return (
       <ModalWrapper isOpen={isOpen} title={'message.passwordRequired'}
-        closeButtonDataElement={'errorModalCloseButton'} 
+        closeButtonDataElement={'errorModalCloseButton'}
         onCloseClick={() => {
           setUserCancelled(true);
-        }}>
+        }}
+      >
         <form onSubmit={handleSubmit}>
           <div>{t('message.enterPassword')}</div>
           <input
@@ -116,7 +119,7 @@ const PasswordModal = () => {
             autoComplete="current-password"
             value={password}
             onKeyDown={onKeyDown}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             aria-label={t('message.passwordRequired')}
             placeholder={t('message.enterPasswordPlaceholder')}
           />
@@ -145,7 +148,7 @@ const PasswordModal = () => {
   let tabsPadding = 0;
   if (isMultiTab) {
     // Add tabsheader padding
-    tabsPadding += document.getElementsByClassName("TabsHeader")[0]?.getBoundingClientRect().bottom;
+    tabsPadding += getRootNode().getElementsByClassName('TabsHeader')[0]?.getBoundingClientRect().bottom;
   }
 
   return (
@@ -156,7 +159,7 @@ const PasswordModal = () => {
         open: isOpen,
         closed: !isOpen,
       })}
-      data-element="passwordModal"
+      data-element={DataElements.PASSWORD_MODAL}
       style={isMultiTab ? { height: `calc(100% - ${tabsPadding}px)` } : undefined}
     >
       {renderContent()}

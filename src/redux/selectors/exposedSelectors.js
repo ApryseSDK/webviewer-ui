@@ -112,12 +112,12 @@ export const getDocumentContentContainerWidthStyle = (state) => {
     (isWatermarkPanelOpen ? watermarkPanelWidth : 0) +
     (isFlxPanelOpen ? panelMinWidth : 0);
 
-  // Do not count left/right header with empty items
-  const activeGroupedItems = getCurrentGroupedItems(state);
+  // Do not count headers without items
+  const activeHeaders = getActiveHeaders(state);
   const leftHeader = getLeftHeader(state);
-  const isLeftHeaderActive = leftHeader?.items.map((item) => item.dataElement).some((item) => activeGroupedItems.includes(item));
+  const isLeftHeaderActive = activeHeaders?.some((header) => header.dataElement === leftHeader?.dataElement);
   const rightHeader = getRightHeader(state);
-  const isRightHeaderActive = rightHeader?.items.map((item) => item.dataElement).some((item) => activeGroupedItems.includes(item));
+  const isRightHeaderActive = activeHeaders?.some((header) => header.dataElement === rightHeader?.dataElement);
   const spaceTakenUpByHeaders = (isLeftHeaderActive ? getLeftHeaderWidth(state) : 0) + (isRightHeaderActive ? getRightHeaderWidth(state) : 0);
   return `calc(100% - ${spaceTakenUpByPanels + spaceTakenUpByHeaders}px)`;
 };
@@ -140,6 +140,8 @@ export const getDocumentContainerHeight = (state) => state.viewer.documentContai
 export const isElementDisabled = (state, dataElement) => state.viewer?.disabledElements[dataElement]?.disabled;
 
 export const isElementOpen = (state, dataElement) => state.viewer?.openElements[dataElement] && !state.viewer?.disabledElements[dataElement]?.disabled;
+
+export const isElementHidden = (state, dataElement) => state.viewer?.hiddenElements[dataElement];
 
 export const allButtonsInGroupDisabled = (state, toolGroup) => {
   const toolButtonObjects = getToolButtonObjects(state);
@@ -195,7 +197,21 @@ export const getCurrentToolbarGroup = (state) => state.viewer.toolbarGroup;
 
 export const getCurrentGroupedItems = (state) => state.viewer.activeGroupedItems;
 
+export const getActiveHeaders = (state) => {
+  return state.viewer.modularHeaders?.filter((header) => {
+    return header.items?.length && header.items.filter((item) => {
+      const itemProps = item.props || item;
+      if (itemProps.type === 'groupedItems' && state.viewer.activeGroupedItems) {
+        return state.viewer.activeGroupedItems.includes(itemProps.dataElement);
+      }
+      return true;
+    });
+  });
+};
+
 export const getActiveTheme = (state) => state.viewer.activeTheme;
+
+export const getTimezone = (state) => state.viewer.timezone;
 
 export const getDefaultHeaderItems = (state) => {
   return state.viewer.headers.default;
@@ -598,6 +614,14 @@ export const getWv3dPropertiesPanelModelData = (state) => state.wv3dPropertiesPa
 
 export const getWv3dPropertiesPanelSchema = (state) => state.wv3dPropertiesPanel.schema;
 
+export const getOfficeEditorCursorProperties = (state) => state.officeEditor.cursorProperties;
+
+export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.selectionProperties;
+
+export const getAvailableFontFaces = (state) => state.officeEditor.availableFontFaces;
+
+export const getCSSFontValues = (state) => state.officeEditor.cssFontValues;
+
 export const getContentEditor = (state) => state.viewer.contentEditor;
 
 export const getAnnotationFilters = (state) => state.viewer.annotationFilters;
@@ -615,3 +639,5 @@ export const getCustomSettings = (state) => state.viewer.customSettings;
 export const isToolDefaultStyleUpdateFromAnnotationPopupEnabled = (state) => state.viewer.toolDefaultStyleUpdateFromAnnotationPopupEnabled;
 
 export const getShortcutKeyMap = (state) => state.viewer.shortcutKeyMap;
+
+export const getMultiViewerSyncScrollMode = (state) => state.viewer.multiViewerSyncScrollMode;

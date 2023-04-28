@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import core from 'core';
-import './FilePickerPanel.scss';
 import Icon from 'components/Icon';
 import { v4 as uuidv4 } from 'uuid';
 import classNames from 'classnames';
 import { isMobile } from 'helpers/device';
+import getRootNode from 'helpers/getRootNode';
+
+import './FilePickerPanel.scss';
 
 const FilePickerPanel = ({ onFileProcessed, shouldShowIcon, fileInputId = uuidv4() }) => {
   const [t] = useTranslation();
@@ -14,12 +16,12 @@ const FilePickerPanel = ({ onFileProcessed, shouldShowIcon, fileInputId = uuidv4
   const acceptFormats = window.Core.SupportedFileFormats.CLIENT;
 
   const onClick = () => {
-    document.getElementById(fileInputId).click();
+    getRootNode().querySelector(`[id=${fileInputId}]`).click();
   };
 
   const onKeyDown = (event) => {
     if (event.key === 'Enter') {
-      document.getElementById(fileInputId).click();
+      getRootNode().querySelector(`[id=${fileInputId}]`).click();
     }
   };
 

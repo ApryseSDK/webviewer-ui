@@ -15,7 +15,7 @@ WebViewer(...)
     })
   });
  */
-export default store => (dataElement, overrides) => {
+export default (store) => (dataElement, overrides) => {
   switch (dataElement) {
     // for backwards compatibility
     case 'colorPalette':
@@ -28,7 +28,7 @@ export default store => (dataElement, overrides) => {
   }
 };
 
-const validateButtonOverrides = overrides => {
+const validateButtonOverrides = (overrides) => {
   if (overrides !== null && typeof overrides !== 'object') {
     return console.warn(
       'The second argument needs to be an object to update a button',

@@ -19,10 +19,13 @@ const FormFieldIndicator = ({ annotation }) => {
 
   const setIndicatorYPosition = (annotation) => {
     const { scrollTop } = core.getScrollViewElement();
-    const { bottomRight: annotationBottomRight, topLeft: annotationTopLeft } = getAnnotationPosition(annotation);
-    const annotHeightInPixels = annotationBottomRight.y - annotationTopLeft.y;
-
-    return annotationTopLeft.y + annotHeightInPixels / 2 - INDICATOR_HEIGHT / 2 - scrollTop;
+    try {
+      const { bottomRight: annotationBottomRight, topLeft: annotationTopLeft } = getAnnotationPosition(annotation);
+      const annotHeightInPixels = annotationBottomRight.y - annotationTopLeft.y;
+      return annotationTopLeft.y + annotHeightInPixels / 2 - INDICATOR_HEIGHT / 2 - scrollTop;
+    } catch (e) {
+      return 0;
+    }
   };
 
   const moveIndicatorToRightSide = (offset) => {
@@ -38,7 +41,13 @@ const FormFieldIndicator = ({ annotation }) => {
   useEffect(() => {
     const documentViewer = core.getDocumentViewer();
     const displayMode = documentViewer.getDisplayModeManager().getDisplayMode();
-    const visiblePages = displayMode.getVisiblePages();
+    let visiblePages;
+    try {
+      visiblePages = displayMode.getVisiblePages();
+    } catch (e) {
+      visiblePages = [];
+    }
+
     const { scrollLeft } = core.getScrollViewElement();
 
     const leftPosition =

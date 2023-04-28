@@ -1,5 +1,6 @@
-export default (primaryAnnotation, annotationsToGroup) =>
-  window.documentViewer.getAnnotationManager().groupAnnotations(
-    primaryAnnotation,
-    annotationsToGroup,
-  );
+import core from 'core';
+
+export default (primaryAnnotation, annotationsToGroup, documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getAnnotationManager().groupAnnotations(
+  primaryAnnotation,
+  annotationsToGroup,
+);

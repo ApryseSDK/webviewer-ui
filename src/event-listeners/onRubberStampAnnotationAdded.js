@@ -1,8 +1,8 @@
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
 
-export default () => rubberStampAnnotation => {
+export default (documentViewerKey) => (rubberStampAnnotation) => {
   core.setToolMode(defaultTool);
-  core.getTool('AnnotationCreateRubberStamp').hidePreview();
-  core.selectAnnotation(rubberStampAnnotation);
+  core.getToolsFromAllDocumentViewers('AnnotationCreateRubberStamp').forEach((tool) => tool.hidePreview());
+  core.selectAnnotation(rubberStampAnnotation, documentViewerKey);
 };

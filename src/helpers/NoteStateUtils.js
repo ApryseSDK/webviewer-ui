@@ -8,7 +8,7 @@ function createStateAnnotation(annotation, state) {
   // A proper fix should be done once https://trello.com/c/zWlkygNb/1023-consider-adding-a-setlocalizationhandler-to-corecontrols is implemented
   // at that time, we could use the translation handler(t) internally in updateAnnotationState before setting the contents, and use that function instead in this component
 
-  const stateAnnotation = new Annotations.StickyAnnotation();
+  const stateAnnotation = new window.Core.Annotations.StickyAnnotation();
 
   stateAnnotation['InReplyTo'] = annotation['Id'];
   stateAnnotation['X'] = annotation['X'];

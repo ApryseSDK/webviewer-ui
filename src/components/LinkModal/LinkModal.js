@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,8 @@ import Button from 'components/Button';
 import actions from 'actions';
 import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
-import DataElements from "constants/dataElement";
+import useOnRightClick from 'src/hooks/useOnRightClick';
+import DataElements from 'constants/dataElement';
 
 import './LinkModal.scss';
 
@@ -21,13 +22,15 @@ const LinkModal = () => {
     currentPage,
     tabSelected,
     pageLabels,
-  ] = useSelector(state => [
+    isRightClickAnnotationPopupEnabled,
+  ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.LINK_MODAL),
     selectors.isElementOpen(state, DataElements.LINK_MODAL),
     selectors.getTotalPages(state),
     selectors.getCurrentPage(state),
     selectors.getSelectedTab(state, DataElements.LINK_MODAL),
     selectors.getPageLabels(state),
+    selectors.isRightClickAnnotationPopupEnabled(state),
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -36,18 +39,34 @@ const LinkModal = () => {
   const pageLabelInput = React.createRef();
 
   const [url, setURL] = useState('');
-  const [pageLabel, setPageLabel] = useState("");
+  const [pageLabel, setPageLabel] = useState('');
+  const [rightClickedAnnotation, setRightClickedAnnotation] = useState(null);
+  const isRightClickedAnnotationSelected = core.isAnnotationSelected(rightClickedAnnotation);
+  const selectedAnnotations = core.getSelectedAnnotations();
+  const annotManager = core.getAnnotationManager();
+
+  useOnRightClick(
+    useCallback((e) => {
+      const annotUnderMouse = core.getAnnotationByMouseEvent(e);
+      if (annotUnderMouse && annotUnderMouse.ToolName !== window.Core.Tools.ToolNames.CROP) {
+        if (annotUnderMouse !== rightClickedAnnotation) {
+          setRightClickedAnnotation(annotUnderMouse);
+        }
+      }
+    }, [rightClickedAnnotation])
+  );
 
   const closeModal = () => {
     dispatch(actions.closeElement(DataElements.LINK_MODAL));
     setURL('');
     core.setToolMode(defaultTool);
+    setRightClickedAnnotation(null);
   };
 
   const newLink = (x, y, width, height, linkPageNumber = currentPage) => {
-    const link = new Annotations.Link();
+    const link = new window.Core.Annotations.Link();
     link.PageNumber = linkPageNumber;
-    link.StrokeColor = new Annotations.Color(0, 165, 228);
+    link.StrokeColor = new window.Core.Annotations.Color(0, 165, 228);
     link.StrokeStyle = 'underline';
     link.StrokeThickness = 2;
     link.Author = core.getCurrentUser();
@@ -59,17 +78,17 @@ const LinkModal = () => {
     return link;
   };
 
-  const createLink = action => {
+  const createLink = (action) => {
     const linksResults = [];
 
     const quads = core.getSelectedTextQuads();
-    const selectedAnnotations = core.getSelectedAnnotations();
 
+    // If annotation popup is on right click, this won't clear selected text if there's any, adding links will add links for both right-clicked annotation and selected text
     if (quads) {
       const selectedText = core.getSelectedText();
       for (const currPageNumber in quads) {
         const currPageLinks = [];
-        quads[currPageNumber].forEach(quad => {
+        quads[currPageNumber].forEach((quad) => {
           currPageLinks.push(
             newLink(
               Math.min(quad.x1, quad.x3),
@@ -90,27 +109,29 @@ const LinkModal = () => {
       }
     }
 
-    if (selectedAnnotations) {
-      selectedAnnotations.forEach(annot => {
-        const annotManager = core.getAnnotationManager();
-        const groupedAnnots = annotManager.getGroupAnnotations(annot);
+    const annotationsToAddLink = (!isRightClickAnnotationPopupEnabled || isRightClickedAnnotationSelected) ? selectedAnnotations : [rightClickedAnnotation];
 
-        // ungroup and delete any previously created links
-        if (groupedAnnots.length > 1) {
-          const linksToDelete = groupedAnnots.filter(annot => annot instanceof Annotations.Link);
-          if (linksToDelete.length > 0) {
-            annotManager.ungroupAnnotations(groupedAnnots);
-            core.deleteAnnotations(linksToDelete);
-          }
+    annotationsToAddLink.forEach((annot) => {
+      if (!annot) {
+        return;
+      }
+      const groupedAnnots = annotManager.getGroupAnnotations(annot);
+      // ungroup and delete any previously created links
+      if (groupedAnnots.length > 1) {
+        const linksToDelete = groupedAnnots.filter((annot) => annot instanceof window.Core.Annotations.Link);
+        if (linksToDelete.length > 0) {
+          annotManager.ungroupAnnotations(groupedAnnots);
+          core.deleteAnnotations(linksToDelete);
         }
+      }
 
-        const link = newLink(annot.X, annot.Y, annot.Width, annot.Height);
-        link.addAction('U', action);
-        core.addAnnotations([link]);
-        linksResults.push(link);
-        annotManager.groupAnnotations(annot, [link]);
-      });
-    }
+      // if multi-select an annotation with no link option with an annotation with link option and right click on the latter, link button will show up and will add links for all annotations
+      const link = newLink(annot.X, annot.Y, annot.Width, annot.Height);
+      link.addAction('U', action);
+      core.addAnnotations([link]);
+      linksResults.push(link);
+      annotManager.groupAnnotations(annot, [link]);
+    });
 
     return linksResults;
   };
@@ -118,13 +139,13 @@ const LinkModal = () => {
   const createHighlightAnnot = async (linkAnnotArray, quads, text, action) => {
     const annotManager = core.getAnnotationManager();
     const linkAnnot = linkAnnotArray[0];
-    const highlight = new Annotations.TextHighlightAnnotation();
+    const highlight = new window.Core.Annotations.TextHighlightAnnotation();
     highlight.PageNumber = linkAnnot.PageNumber;
     highlight.X = linkAnnot.X;
     highlight.Y = linkAnnot.Y;
     highlight.Width = linkAnnot.Width;
     highlight.Height = linkAnnot.Height;
-    highlight.StrokeColor = new Annotations.Color(0, 0, 0, 0);
+    highlight.StrokeColor = new window.Core.Annotations.Color(0, 0, 0, 0);
     highlight.Opacity = 0;
     highlight.Quads = quads;
     highlight.Author = core.getCurrentUser();
@@ -132,20 +153,20 @@ const LinkModal = () => {
 
     linkAnnotArray.forEach((link, index) => {
       link.addAction('U', action);
-      index === 0 ?  core.addAnnotations([link, highlight]) : core.addAnnotations([link]);
+      index === 0 ? core.addAnnotations([link, highlight]) : core.addAnnotations([link]);
     });
     annotManager.groupAnnotations(highlight, linkAnnotArray);
   };
 
-  const addURLLink = e => {
+  const addURLLink = (e) => {
     e.preventDefault();
 
-    const action = new window.Actions.URI({ uri: url });
+    const action = new window.Core.Actions.URI({ uri: url });
     const links = createLink(action);
 
-    let pageNumbersToDraw = links.map(link => link.PageNumber);
+    let pageNumbersToDraw = links.map((link) => link.PageNumber);
     pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
-    pageNumbersToDraw.forEach(pageNumberToDraw => {
+    pageNumbersToDraw.forEach((pageNumberToDraw) => {
       core.drawAnnotations(pageNumberToDraw, null, true);
     });
 
@@ -156,19 +177,19 @@ const LinkModal = () => {
     return pageLabels?.includes(pageLabel);
   };
 
-  const addPageLink = e => {
+  const addPageLink = (e) => {
     e.preventDefault();
 
-    const Dest = window.Actions.GoTo.Dest;
+    const Dest = window.Core.Actions.GoTo.Dest;
 
     const options = { dest: new Dest({ page: pageLabels.indexOf(pageLabel) + 1 }) };
-    const action = new window.Actions.GoTo(options);
+    const action = new window.Core.Actions.GoTo(options);
 
     const links = createLink(action);
 
-    let pageNumbersToDraw = links.map(link => link.PageNumber);
+    let pageNumbersToDraw = links.map((link) => link.PageNumber);
     pageNumbersToDraw = [...new Set(pageNumbersToDraw)];
-    pageNumbersToDraw.forEach(pageNumberToDraw => {
+    pageNumbersToDraw.forEach((pageNumberToDraw) => {
       core.drawAnnotations(pageNumberToDraw, null, true);
     });
 
@@ -187,7 +208,7 @@ const LinkModal = () => {
         }
       }
 
-      setPageLabel(pageLabels.length > 0 ? pageLabels[0] : "1");
+      setPageLabel(pageLabels.length > 0 ? pageLabels[0] : '1');
     }
   }, [totalPages, isOpen]);
 
@@ -224,7 +245,7 @@ const LinkModal = () => {
         data-element={DataElements.LINK_MODAL}
         onMouseDown={closeModal}
       >
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
+        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
           <div className="swipe-indicator" />
           <Tabs id="linkModal">
             <div className="tab-list">
@@ -245,7 +266,7 @@ const LinkModal = () => {
                     className="urlInput"
                     ref={urlInput}
                     value={url}
-                    onChange={e => setURL(e.target.value)}
+                    onChange={(e) => setURL(e.target.value)}
                   />
                   <Button
                     dataElement="linkSubmitButton"
@@ -262,7 +283,7 @@ const LinkModal = () => {
                   <input
                     ref={pageLabelInput}
                     value={pageLabel}
-                    onChange={e => setPageLabel(e.target.value)}
+                    onChange={(e) => setPageLabel(e.target.value)}
                   />
                   <Button
                     dataElement="linkSubmitButton"
