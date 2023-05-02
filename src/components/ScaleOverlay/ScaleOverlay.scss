@@ -34,7 +34,7 @@
 
     .add-new-scale {
       margin-left: 1.3rem;
-      height: 2rem;
+      min-height: 2rem;
       background-color: transparent;
       color: #3183c8;
       font-weight: normal;
@@ -113,7 +113,7 @@
         font-size: 0.8rem;
         padding-left: 0.5rem;
         padding-right: 32px;
-        white-space: nowrap;
+        max-width: 100%;
 
         :hover {
           cursor: pointer;
@@ -171,7 +171,7 @@
 
       & li .add-new-scale {
         margin-left: 0px;
-
+        width: 100%;
         :hover {
           cursor: pointer;
         }

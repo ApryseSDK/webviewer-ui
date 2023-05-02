@@ -22,7 +22,7 @@ const initialState = {
       signatureModal: 'inkSignaturePanelButton',
     },
     activeToolName: 'AnnotationCreateSignature',
-    signatureFonts: ['Satisfy', 'Nothing You Could Do', 'La Belle Aurore', 'Whisper'],
+    signatureFonts: ['Satisfy', 'Nothing-You-Could-Do', 'La-Belle-Aurore', 'Whisper'],
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
   },
@@ -102,7 +102,7 @@ const imageTabState = {
       signatureModal: 'imageSignaturePanelButton',
     },
     activeToolName: 'AnnotationCreateSignature',
-    signatureFonts: ['Satisfy', 'Nothing You Could Do', 'La Belle Aurore', 'Whisper'],
+    signatureFonts: ['Satisfy', 'Nothing-You-Could-Do', 'La-Belle-Aurore', 'Whisper'],
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
   },
@@ -153,7 +153,7 @@ const mockSavedInitials = [
 const savedTabsState = {
   viewer: {
     customPanels: [],
-    signatureFonts: ['Satisfy', 'Nothing You Could Do', 'La Belle Aurore', 'Whisper'],
+    signatureFonts: ['Satisfy', 'Nothing-You-Could-Do', 'La-Belle-Aurore', 'Whisper'],
     openElements: {
       signatureModal: true
     },

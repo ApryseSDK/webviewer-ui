@@ -486,7 +486,7 @@ const ContentArea = ({
     }
   }, []);
 
-  const setContents = (e) => {
+  const setContents = async (e) => {
     // prevent the textarea from blurring out which will unmount these two buttons
     e.preventDefault();
 
@@ -501,12 +501,16 @@ const ContentArea = ({
         contents: textAreaValue,
         ids,
       }));
-      core.setNoteContents(annotation, plainTextValue);
+      annotation.setContents(plainTextValue);
     } else {
-      core.setNoteContents(annotation, textAreaValue);
+      annotation.setContents(textAreaValue);
     }
 
-    setAnnotationAttachments(annotation, pendingAttachmentMap[annotation.Id]);
+    await setAnnotationAttachments(annotation, pendingAttachmentMap[annotation.Id]);
+
+    const source = (annotation instanceof window.Annotations.FreeTextAnnotation)
+      ? 'textChanged' : 'noteChanged';
+    core.getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', { 'source': source }]);
 
     if (annotation instanceof window.Annotations.FreeTextAnnotation) {
       core.drawAnnotationsFromList([annotation]);
