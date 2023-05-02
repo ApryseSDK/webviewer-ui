@@ -96,7 +96,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     }
   }, []);
 
-  const postReply = (e) => {
+  const postReply = async (e) => {
     // prevent the textarea from blurring out
     e.preventDefault();
     e.stopPropagation();
@@ -121,7 +121,8 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       } else {
         const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
         setAnnotationRichTextStyle(editor, replyAnnotation);
-        setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
+        await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
+        core.addAnnotations([replyAnnotation]);
       }
     } else {
       if (annotationHasNoContents && isContentEditable) {
@@ -130,7 +131,8 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       } else {
         const replyAnnotation = core.createAnnotationReply(annotation, replyText);
         setAnnotationRichTextStyle(editor, replyAnnotation);
-        setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
+        await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
+        core.getAnnotationManager().trigger('annotationChanged', [[replyAnnotation], 'modify', {}]);
       }
     }
 

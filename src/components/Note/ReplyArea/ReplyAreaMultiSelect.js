@@ -54,6 +54,7 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
           core.setNoteContents(annotation, plainTextValue);
         } else {
           const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
+          core.addAnnotations([replyAnnotation]);
           setAnnotationRichTextStyle(editor, replyAnnotation);
         }
       } else {

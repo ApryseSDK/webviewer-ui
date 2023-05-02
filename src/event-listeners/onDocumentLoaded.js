@@ -17,6 +17,11 @@ let onFirstLoad = true;
 
 export default (store, documentViewerKey) => async () => {
   const { dispatch, getState } = store;
+  const docViewer = core.getDocumentViewer(documentViewerKey);
+  const documentCompletePromise = docViewer.getDocument()?.getDocumentCompletePromise();
+  documentCompletePromise?.then(() => {
+    dispatch(actions.closeElement('passwordModal'));
+  });
 
   dispatch(actions.openElement('pageNavOverlay'));
   dispatch(actions.setLoadingProgress(1));

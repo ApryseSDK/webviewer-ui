@@ -286,9 +286,6 @@ class MentionsManager {
     }));
 
     annotation.addReply(replyAnnot);
-
-    core.addAnnotations([replyAnnot]);
-
     return replyAnnot;
   }
 

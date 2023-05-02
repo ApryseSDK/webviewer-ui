@@ -1,5 +1,3 @@
-import core from 'core';
-
 const icons = {
   pdf: 'ic-file-pdf',
   image: 'ic-file-img',
@@ -18,7 +16,6 @@ export async function decompressFileContent(file) {
 
 export async function setAnnotationAttachments(annotation, files = []) {
   await annotation.setAttachments(files);
-  core.getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', {}]);
 }
 
 export function isImage(file) {
