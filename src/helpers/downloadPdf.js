@@ -294,7 +294,6 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
             const colorProperty = colorMap[key] && colorMap[key].iconColor;
             const color = annotation[colorProperty || 'StrokeColor'].toString();
             const iconKey = getDataWithKey(key).icon;
-            // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require,import/no-dynamic-require
             const icon = require(`../../assets/icons/${iconKey}.svg`);
             const blob = new Blob([icon], { type: 'image/svg+xml;charset=utf-8' });
             const url = URL.createObjectURL(blob);

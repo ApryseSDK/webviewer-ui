@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export default {
   pt_br: {
     i18next: 'pt-BR',
