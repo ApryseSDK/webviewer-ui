@@ -17,6 +17,7 @@ import core from 'core';
 import selectors from 'selectors';
 
 import './MultiSelectControls.scss';
+import NoteShareTypeMultiControl from '../NoteShareType/NoteShareTypeMultiControl';
 
 const propTypes = {
   showMultiReply: PropTypes.bool.isRequired,
@@ -126,35 +127,35 @@ const MultiSelectControls = ({
   const canUngroup = !canGroup && (modifiableMultiSelectAnnotations.length > 2 ||
     (modifiableMultiSelectAnnotations.length > 0 && core.getGroupAnnotations(modifiableMultiSelectAnnotations[0], activeDocumentViewerKey).length > 1));
 
-  const handleStateChange = useCallback((newValue) => {
-    getParentAnnotations(multiSelectedAnnotations, activeDocumentViewerKey).forEach((annot) => {
-      const stateAnnotation = createStateAnnotation(annot, newValue, activeDocumentViewerKey);
-      annot.addReply(stateAnnotation);
-      const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
-      annotationManager.addAnnotation(stateAnnotation);
-      annotationManager.trigger('addReply', [stateAnnotation, annot, annotationManager.getRootAnnotation(annot)]);
-    });
-    setShowMultiState(false);
-  }, [multiSelectedAnnotations, activeDocumentViewerKey]);
+  // const handleStateChange = useCallback((newValue) => {
+  //   getParentAnnotations(multiSelectedAnnotations, activeDocumentViewerKey).forEach((annot) => {
+  //     const stateAnnotation = createStateAnnotation(annot, newValue, activeDocumentViewerKey);
+  //     annot.addReply(stateAnnotation);
+  //     const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
+  //     annotationManager.addAnnotation(stateAnnotation);
+  //     annotationManager.trigger('addReply', [stateAnnotation, annot, annotationManager.getRootAnnotation(annot)]);
+  //   });
+  //   setShowMultiState(false);
+  // }, [multiSelectedAnnotations, activeDocumentViewerKey]);
 
-  if (showMultiReply) {
-    return (
-      <NoteContext.Provider value={{
-        resize: () => {},
-      }}>
-        <ReplyAreaMultiSelect
-          annotations={getParentAnnotations(multiSelectedAnnotations, activeDocumentViewerKey)}
-          onSubmit={() => setShowMultiReply(false)}
-          onClose={() => setShowMultiReply(false)}
-        />
-      </NoteContext.Provider>
-    );
-  }
+  // if (showMultiReply) {
+  //   return (
+  //     <NoteContext.Provider value={{
+  //       resize: () => {},
+  //     }}>
+  //       <ReplyAreaMultiSelect
+  //         annotations={getParentAnnotations(multiSelectedAnnotations, activeDocumentViewerKey)}
+  //         onSubmit={() => setShowMultiReply(false)}
+  //         onClose={() => setShowMultiReply(false)}
+  //       />
+  //     </NoteContext.Provider>
+  //   );
+  // }
 
   return (
     <div className="multi-select-footer">
       <div className="buttons-container">
-        <Button
+        {/* <Button
           dataElement={DataElements.NOTE_MULTI_REPLY_BUTTON}
           disabled={isDocumentReadOnly || multiSelectedAnnotations.length === 0}
           img="icon-header-chat-line"
@@ -173,7 +174,7 @@ const MultiSelectControls = ({
         <NoteStateFlyout
           isMultiSelectMode={true}
           handleStateChange={handleStateChange}
-        />
+        />*/}
         <Button
           dataElement={DataElements.NOTE_MULTI_STYLE_BUTTON}
           img="icon-menu-style-line"

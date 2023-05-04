@@ -15,6 +15,7 @@
     "undo": "Undo",
     "redo": "Redo",
     "comment": "Comment",
+    "openNotePanel": "Open annotation panel",
     "reply": "Add reply",
     "copy": "Copy",
     "cut": "Cut",
@@ -61,6 +62,7 @@
     "showMoreResults": "Show more results",
     "sign": "Sign",
     "style": "Style",
+    "shareType": "Set share type",
     "submit": "Submit",
     "zoom": "Zoom",
     "zoomIn": "Zoom in",
@@ -133,7 +135,9 @@
     "copySelectedColor": "Copy Selected Color",
     "showMoreColors": "Show More Colors",
     "showLessColors": "Show Less Colors",
-    "fromCustomColorPicker": "from Custom Color Picker"
+    "fromCustomColorPicker": "from Custom Color Picker",
+    "copyText": "Click to copy",
+    "copied": "Copied!"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -143,7 +147,7 @@
     "callout": "Callout",
     "crop": "Crop Page",
     "caret": "Caret",
-    "dateFreeText": "Calendar",
+    "dateFreeText": "Date",
     "formFillCheckmark": "Tick",
     "formFillCross": "Cross",
     "distanceMeasurement": "Distance",
@@ -190,7 +194,8 @@
     "sound": "Sound",
     "changeView": "Change View",
     "newImage": "New Image",
-    "defaultCustomStampTitle": "Custom Stamp"
+    "defaultCustomStampTitle": "Custom Stamp",
+    "reference": "Reference"
   },
   "rubberStamp": {
     "Approved": "Approved",
@@ -223,9 +228,9 @@
     "toolsHeader": "Tools",
     "searchOverlay": "Search",
     "searchPanel": "Search",
-    "menuOverlay": "Menu",
-    "notesPanel": "Comments",
     "outlinePanel": "Outline",
+    "menuOverlay": "More options",
+    "notesPanel": "Annotations",
     "outlinesPanel": "Outlines",
     "newOutlineTitle": "New Outline Title",
     "outlineTitle": "Outline Title",
@@ -286,7 +291,7 @@
     "printTotalPageCount_plural": "Total: {{count}} pages",
     "processing": "Processing...",
     "searching": "Searching...",
-    "searchCommentsPlaceholder": "Search comments",
+    "searchCommentsPlaceholder": "Search annotations",
     "searchDocumentPlaceholder": "Search document",
     "searchSuggestionsPlaceholder": "Search suggestions",
     "signHere": "Sign here",
@@ -355,12 +360,14 @@
       "dropdownLabel": "Sort Order List",
       "position": "Position",
       "time": "Time",
-      "status": "Status",
+      "status": "Share Type",
       "author": "Author",
       "type": "Type",
       "color": "Color",
       "createdDate": "Created Date",
-      "modifiedDate": "Modified Date"
+      "modifiedDate": "Modified Date",
+      "shareType": "Share type",
+      "coAssessor": "Co-assessor"
     },
     "toolbarGroup": {
       "dropdownLabel": "Toolbar Groups",
@@ -419,7 +426,10 @@
         "noName": "(no name)",
         "noDate": "(no date)"
       },
-      "toggleMultiSelect": "Toggle Multi Select for Annotation"
+      "toggleMultiSelect": "Toggle Multi Select for Annotation",
+      "noteHeader": {
+        "copyReferenceButton": "Copy Reference"
+      }
     },
     "pageTransition": {
       "continuous": "Continuous Page",
@@ -507,9 +517,9 @@
       "filters": "Filters",
       "user": "User",
       "type": "Type",
-      "status": "Status",
-      "filterSettings": "Filter Settings",
-      "filterDocument": "Filter document and comments panel"
+      "shareType": "Share type",
+      "coAssessor": "Co-assessor",
+      "author": "Author"
     },
     "state": {
       "accepted": "Accepted",
@@ -518,9 +528,12 @@
       "cancelled": "Cancelled",
       "set": "Set status:",
       "setBy": "set by",
-      "none": "None",
+      "none": "Private",
       "marked": "Marked",
-      "unmarked": "Unmarked"
+      "unmarked": "Unmarked",
+      "assessors": "Co-assessors",
+      "participants": "Participants",
+      "all": "All"
     },
     "measurementOverlay": {
       "scale": "Scale Ratio",
@@ -823,30 +836,30 @@
     }
   },
   "shortcut": {
-    "arrow": "(A)",
-    "callout": "(C)",
+    "arrow": "(Shift + A)",
+    "callout": "(Shift + C)",
     "copy": "(Ctrl C)",
     "delete": "(Del)",
-    "ellipse": "(O)",
-    "eraser": "(E)",
-    "freehand": "(F)",
-    "freetext": "(T)",
-    "highlight": "(H)",
-    "line": "(L)",
-    "pan": "(P)",
-    "rectangle": "(R)",
+    "ellipse": "(Shift + O)",
+    "eraser": "(Shift + E)",
+    "freehand": "(Shift + F)",
+    "freetext": "(Shift + T)",
+    "highlight": "(Shift + H)",
+    "line": "(Shift + L)",
+    "pan": "(Shift + P)",
+    "rectangle": "(Shift + R)",
     "rotateClockwise": "(Ctrl Shift +)",
     "rotateCounterClockwise": "(Ctrl Shift -)",
     "select": "(Esc)",
-    "signature": "(S)",
-    "squiggly": "(G)",
+    "signature": "(Shift + S)",
+    "squiggly": "(Shift + G)",
     "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
-    "stickyNote": "(N)",
-    "strikeout": "(K)",
-    "underline": "(U)",
+    "stickyNote": "(Shift + N)",
+    "strikeout": "(Shift + K)",
+    "underline": "(Shift + U)",
     "zoomIn": "(Ctrl +)",
     "zoomOut": "(Ctrl -)",
     "richText": {

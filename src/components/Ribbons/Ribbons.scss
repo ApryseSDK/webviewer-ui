@@ -43,6 +43,7 @@
 
         &.active {
           color: var(--ribbon-active-color);
+          font-weight: bold;
         }
 
         @include ie11 {

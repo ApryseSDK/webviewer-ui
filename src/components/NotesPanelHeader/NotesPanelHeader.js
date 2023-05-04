@@ -75,8 +75,8 @@ function NotesPanelHeader({
     }
 
     const toggleFilterStyle = (e) => {
-      const { types, authors, colors, statuses } = e.detail;
-      if (types.length > 0 || authors.length > 0 || colors.length > 0 || statuses.length > 0) {
+      const { types, authors, colors, shareTypes } = e.detail;
+      if (types.length > 0 || authors.length > 0 || colors.length > 0 || shareTypes.length > 0) {
         setFilterEnabled(true);
       } else {
         setFilterEnabled(false);

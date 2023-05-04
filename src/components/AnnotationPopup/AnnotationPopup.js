@@ -171,7 +171,8 @@ const AnnotationPopup = ({
   const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(false);
 
   const commentButtonLabel = isDateFreeTextCanEdit ? 'action.changeDate' : 'action.comment';
-  const commentButtonImg = isDateFreeTextCanEdit ? 'icon-tool-fill-and-sign-calendar' : 'icon-header-chat-line';
+  const commentButtonImg = 'circle-right-solid';
+
   const show3DShortCutButton = !isInReadOnlyMode && focusedAnnotation instanceof window.Core.Annotations.Model3DAnnotation && !isMobile;
   const isRectangle = focusedAnnotation instanceof window.Core.Annotations.RectangleAnnotation;
   const isEllipse = focusedAnnotation instanceof window.Core.Annotations.EllipseAnnotation;
@@ -405,7 +406,7 @@ const AnnotationPopup = ({
                     onClick={onOpenCalibration}
                   />
                 )}
-                {showLinkButton && (
+                {/* {showLinkButton && (
                   <ActionButton
                     className="main-menu-button"
                     dataElement="linkButton"
@@ -414,7 +415,7 @@ const AnnotationPopup = ({
                     img={hasAssociatedLink ? 'icon-tool-unlink' : 'icon-tool-link'}
                     onClick={linkAnnotationToURL}
                   />
-                )}
+                )} */}
                 {showFileDownloadButton && (
                   <ActionButton
                     className="main-menu-button"

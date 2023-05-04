@@ -1,9 +1,14 @@
 {
-  "name": "webviewer-ui",
+  "name": "@uniwise/webviewer-ui",
   "author": "Apryse Software Inc.",
   "version": "10.12.0",
   "description": "WebViewer UI built in React",
-  "main": "src/index.js",
+  "files": [
+    "./build"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "start": "npx babel-node ./dev-server.js",
     "download-webviewer": "npx @pdftron/webviewer-downloader --core-only --path ./lib",
@@ -29,6 +34,7 @@
     "dayjs": "^1.8.19",
     "dompurify": "^3.0.2",
     "file-saver": "git+https://github.com/ZhijieZhang/FileSaver.js.git",
+    "gh-pages": "^5.0.0",
     "hotkeys-js": "^3.10.0",
     "html2canvas": "git+https://github.com/PDFTron/html2canvas.git#pdftron-alpha10",
     "i18next": "^19.0.3",

@@ -7,6 +7,8 @@ import { rgbaToHex } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import { COMMON_COLORS } from './commonColors';
+import { getAnnotationShareType } from 'helpers/annotationShareType';
+import { ShareTypeOrder } from './shareTypes';
 
 function getDocumentCenter(pageNumber) {
   let result;
@@ -145,26 +147,24 @@ const sortStrategies = {
       return i18next.t('option.notesPanel.separator.unknown');
     },
   },
-  status: {
-    getSortedNotes: (notes) => notes.sort((a, b) => {
-      const statusA =
-          a.getStatus() === ''
-            ? i18next.t('option.state.none').toUpperCase()
-            : i18next.t(`option.state.${a.getStatus().toLowerCase()}`).toUpperCase();
-      const statusB =
-          b.getStatus() === ''
-            ? i18next.t('option.state.none').toUpperCase()
-            : i18next.t(`option.state.${b.getStatus().toLowerCase()}`).toUpperCase();
-      return statusA < statusB ? -1 : statusA > statusB ? 1 : 0;
-    }),
-    shouldRenderSeparator: (prevNote, currNote) => prevNote.getStatus() !== currNote.getStatus(),
+  shareType: {
+    getSortedNotes: notes =>
+      notes.sort((a, b) => {
+        const shareTypeA = getAnnotationShareType(a);
+        const shareTypeB = getAnnotationShareType(b);
+        return ShareTypeOrder[shareTypeA] - ShareTypeOrder[shareTypeB];
+      }),
+    shouldRenderSeparator: (prevNote, currNote) => {
+      if (prevNote === null) return true;
+      const prevShareType = getAnnotationShareType(prevNote);
+      const currShareType = getAnnotationShareType(currNote);
+      return prevShareType !== currShareType;
+    },
     getSeparatorContent: (prevNote, currNote) => {
-      return currNote.getStatus() === ''
-        ? i18next.t('option.state.none')
-        : i18next.t(`option.state.${currNote.getStatus().toLowerCase()}`);
+      return i18next.t(`option.state.${getAnnotationShareType(currNote).toLowerCase()}`);
     },
   },
-  author: {
+  coAssessor: {
     getSortedNotes: (notes) => notes.sort((a, b) => {
       const authorA = core.getDisplayAuthor(a['Author'])?.toUpperCase();
       const authorB = core.getDisplayAuthor(b['Author'])?.toUpperCase();
@@ -234,10 +234,10 @@ export const addSortStrategy = (newStrategy) => {
  * @property {string} POSITION Sort notes by position.
  * @property {string} CREATED_DATE Sort notes by creation date.
  * @property {string} MODIFIED_DATE Sort notes by last modification date.
- * @property {string} STATUS Sort notes by status.
  * @property {string} AUTHOR Sort notes by the author.
  * @property {string} TYPE Sort notes by type.
  * @property {string} COLOR Sort notes by color.
+ * @property {string} SHARE_TYPE CUSTOM WISEFLOW Sort notes by share type.
  *
  * @example
 WebViewer(...)
@@ -250,8 +250,9 @@ export const NotesPanelSortStrategy = {
   POSITION: 'position',
   CREATED_DATE: 'createdDate',
   MODIFIED_DATE: 'modifiedDate',
-  STATUS: 'status',
   AUTHOR: 'author',
   TYPE: 'type',
-  COLOR: 'color'
+  COLOR: 'color',
+  // CUSTOM WISEFLOW: own sort strategy
+  SHARE_TYPE: 'shareType',
 };

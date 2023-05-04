@@ -33,6 +33,30 @@
     }
   }
 
+  .copy-reference-button {
+    all: unset;
+    transition: background-color 0.25s ease;
+    width: 15px;
+    height: 15px;
+    margin-left: 0.3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.2875rem;
+    &:hover {
+      background-color: var(--popup-button-active);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px black;
+    }
+    .Icon {
+      width: 13px;
+      height: 13px;
+    }
+  }
+
   .author-and-date {
     flex: 1;
     min-width: 0;
@@ -61,7 +85,8 @@
         .date-and-num-replies {
           display: flex;
 
-          .date-and-time {
+          .date-and-time,
+          .annotId {
             font-size: 10px;
 
             @include mobile {
@@ -69,6 +94,13 @@
             }
 
             color: var(--faded-text);
+          }
+          
+          .annotId {
+            display: flex;
+            svg {
+              height: 12    px;
+            }
           }
 
           .num-replies-container {
@@ -132,7 +164,12 @@
       }
     }
   }
-
+  .annotId {
+    display: flex;
+    svg {
+      height: 12    px;
+    }
+  }
   .author-name {
     font-weight: bold;
   }

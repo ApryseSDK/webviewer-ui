@@ -63,6 +63,14 @@
     width: calc(100% - 16px);
   }
 
+  & > .divider:first-child {
+    display: none;
+  }
+
+  & > .divider:last-child {
+    display: none;
+  }
+
   // Same as .row
   .dividerSmall {
     height: 1px;

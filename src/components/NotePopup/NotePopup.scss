@@ -46,6 +46,14 @@
     top: 40px;
     width: max-content;
 
+    &.bottom {
+      top: calc(100% + 2px);
+    }
+
+    &.top {
+      bottom: calc(100% + 2px);
+    }
+
     .note-popup-option {
       @include button-reset;
       align-items: flex-start;

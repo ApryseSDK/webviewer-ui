@@ -108,6 +108,15 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     userData,
   };
 
+  useEffect(() => {
+    if (textareaRef.current === null) {
+      return;
+    }
+    const keyboard = textareaRef.current.getEditor().getModule('keyboard');
+    // 'hotkeys' have been renamed to 'bindings'
+    delete keyboard.bindings[9];
+  }, [textareaRef]);
+
   return (
     <>
       <CommentTextarea {...textareaProps}/>

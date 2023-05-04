@@ -24,7 +24,10 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import { isIE } from 'helpers/device';
 import ReplyAttachmentPicker from './ReplyAttachmentPicker';
 
+import fireEvent from 'helpers/fireEvent';
+import { debounce } from 'lodash';
 import './NotesPanel.scss';
+import getAnnotationReference from 'helpers/getAnnotationReference';
 
 const NotesPanel = ({
   currentLeftPanelWidth,
@@ -79,7 +82,7 @@ const NotesPanel = ({
   // this will result in losing the scroll position and we will use this ref to recover
   const scrollTopRef = useRef(0);
   const VIRTUALIZATION_THRESHOLD = enableNotesPanelVirtualizedList ? (isIE ? 25 : 100) : Infinity;
-
+    
   useEffect(() => {
     const onAnnotationNumberingUpdated = (isEnabled) => {
       dispatch(actions.setAnnotationNumbering(isEnabled));
@@ -113,11 +116,15 @@ const NotesPanel = ({
     const authorName = core.getDisplayAuthor(note['Author']);
     const annotationPreview = note.getCustomData('trn-annot-preview');
 
+    /** CUSTOM WISEFLOW */
+    const reference = getAnnotationReference(note);
+
     // didn't use regex here because the search input may form an invalid regex, e.g. *
     return (
       content?.toLowerCase().includes(searchInput.toLowerCase()) ||
       authorName?.toLowerCase().includes(searchInput.toLowerCase()) ||
-      annotationPreview?.toLowerCase().includes(searchInput.toLowerCase())
+      annotationPreview?.toLowerCase().includes(searchInput.toLowerCase()) ||
+      reference?.toLowerCase().includes(searchInput.toLowerCase()) // CUSTOM WISEFLOW
     );
   };
 
@@ -176,6 +183,27 @@ const NotesPanel = ({
     [setPendingEditTextMap],
   );
 
+  // CUSTOM WISEFLOW unpostedAnnotationChanged event
+
+  // debounced callback to fire unpostedAnnotationsChanged event
+  const onUnpostedAnnotationChanged = useCallback(
+    debounce((pendingEditTextMap) => {
+      const unpostedAnnotationsCount = Object.values(pendingEditTextMap).reduce((count, pendingText) => {
+        if (pendingText !== undefined) {
+          return count + 1;
+        }
+        return count;
+      }, 0);
+      fireEvent('unpostedAnnotationsChanged', { pendingEditTextMap, unpostedAnnotationsCount });
+    }, 200),
+    [],
+  );
+
+  // Throw event on changed to pendingEditTextMap
+  useEffect(() => onUnpostedAnnotationChanged(pendingEditTextMap), [pendingEditTextMap]);
+
+  // CUSTOM WISEFLOW end
+
   const [pendingReplyMap, setPendingReplyMap] = useState({});
   const setPendingReply = useCallback(
     (pendingReply, annotationID) => {
@@ -233,7 +261,7 @@ const NotesPanel = ({
     // this function needs to be called by a Note component whenever its height changes
     // to clear the cache(used by react-virtualized) and recompute the height so that each note
     // can have the correct position
-    resize = () => { },
+    resize = () => {},
   ) => {
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];

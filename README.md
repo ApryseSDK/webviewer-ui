@@ -1,3 +1,25 @@
+
+# Uniwise
+
+This is a forked repo of the PDFtron webviewer ui with changes that customise the functionality to fit our [Marking tool](https://github.com/UNIwise/assessment-frontend) functionality.
+
+## Deploying
+Create a release with the correct semantic versioning. This will publish a new NPM package to `@uniwise/webviewer-ui` with the `.github/workflows/deploy.yaml` workflow.
+
+## Installing
+Install package the package and copy static files to the publicly served folder for a react application
+
+```sh 
+yarn add @uniwise/webviewer-ui
+cp -r node_modules/@uniwise/webviewer-ui public/static/pdftron/ui
+```
+
+## Developing
+To help with merging, we keep track of changes from PR's in [Wiseflow_PDFtron.docs](https://uniwise1.sharepoint.com/:w:/r/sites/uniwise/_layouts/15/doc.aspx?sourcedoc=%7B31449df0-0514-41ef-adc2-aaedfb35d8e1%7D&action=edit&cid=76807666-6e9a-4a89-a296-9b424fbfece6)
+
+## Translations
+We have set up a webhook for POEditor to automatically check for updates to the `i18n/translation-en.json` on the `10.0-wf` branch. When changes are pushed to this branch with changes to the english translation file, changes are automatically updated in POEditor.
+
 # WebViewer UI 
 
 WebViewer UI sits on top of [WebViewer](https://apryse.com/products/webviewer), a powerful JavaScript-based PDF Library that's part of the [Apryse PDF SDK](https://www.apryse.com). Built in React, WebViewer UI provides a slick out-of-the-box responsive UI that interacts with the core library to view, annotate and manipulate PDFs that can be embedded into any web project.

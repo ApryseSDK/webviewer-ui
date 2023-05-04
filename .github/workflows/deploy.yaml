@@ -1,0 +1,35 @@
+name: Deploy to @uniwise/webviewer-ui npm package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: https://npm.pkg.github.com/
+          always-auth: true
+          scope: '@uniwise'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+        
+      - name: Version
+        run: yarn version --new-version "${GITHUB_REF:11}" --no-git-tag-version
+
+      - name: Publish
+        run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
