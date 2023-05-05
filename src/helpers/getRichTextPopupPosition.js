@@ -1,11 +1,12 @@
 import { calcPopupLeft, calcPopupTop } from 'helpers/getPopupPosition';
 import core from 'core';
+import getRootNode from 'helpers/getRootNode';
 
 export default (annotation, popup) => {
   if (!popup || !popup.current) {
     return;
   }
-  const editorContainer = document.querySelector(
+  const editorContainer = getRootNode().querySelector(
     `#pageWidgetContainer${annotation.PageNumber} [id="freetext-editor-${annotation.Id}"]`
   );
   const scrollContainer = core.getScrollViewElement();
