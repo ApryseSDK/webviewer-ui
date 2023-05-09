@@ -727,6 +727,10 @@
       "title": "Chiudere senza scaricare?",
       "message": "Sono state apportate modifiche a questo documento, sei sicuro di volerlo chiudere senza scaricare il tuo lavoro? Non puoi annullare questa azione.",
       "rejectDownloadButton": "Chiudi senza scaricare"
+    },
+    "connectToURL": {
+      "title": "Avviso di sicurezza",
+      "message": "Questo documento sta tentando di connettersi a:\n\n{{-uri}}.\n\n Se ritieni attendibile questo documento, fai clic su Conferma per aprirlo."
     }
   },
   "shortcut": {

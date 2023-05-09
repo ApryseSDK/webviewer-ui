@@ -24,6 +24,11 @@
     }
   }
 
+  &.connect-to-url-modal {
+    overflow: hidden;
+    word-break: break-all;
+  }
+
   .header {
     position: relative;
     width: 100%;

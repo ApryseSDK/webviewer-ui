@@ -727,6 +727,10 @@
       "title": "Sluiten zonder te downloaden?",
       "message": "Er zijn wijzigingen aangebracht in dit document. Weet u zeker dat u het wilt sluiten zonder uw werk te downloaden? Je kunt deze actie niet ongedaan maken.",
       "rejectDownloadButton": "Sluiten zonder downloaden"
+    },
+    "connectToURL": {
+      "title": "Veiligheidswaarschuwing",
+      "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}.\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
     }
   },
   "shortcut": {

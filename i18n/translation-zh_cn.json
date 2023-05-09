@@ -727,6 +727,10 @@
       "title": "不下载就关闭？",
       "message": "此文档有更改，您确定要关闭它而不下载您的工作吗？您无法撤消此操作。",
       "rejectDownloadButton": "关闭而不下载"
+    },
+    "connectToURL": {
+      "title": "安全警告",
+      "message": "此文档正在尝试连接到：\n\n{{- uri}}。\n\n 如果您信任此文档，请单击“确认”将其打开。"
     }
   },
   "shortcut": {

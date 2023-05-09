@@ -727,6 +727,10 @@
       "title": "Tutup tanpa mengunduh?",
       "message": "Ada perubahan yang dibuat pada dokumen ini, apakah Anda yakin ingin menutupnya tanpa mengunduh pekerjaan Anda? Anda tidak dapat mengurungkan tindakan ini.",
       "rejectDownloadButton": "Tutup tanpa unduh"
+    },
+    "connectToURL": {
+      "title": "Peringatan keamanan",
+      "message": "Dokumen ini mencoba terhubung ke:\n\n{{- uri}}.\n\n Jika Anda mempercayai dokumen ini, klik Konfirmasi untuk membukanya."
     }
   },
   "shortcut": {

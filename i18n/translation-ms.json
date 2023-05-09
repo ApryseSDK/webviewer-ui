@@ -727,6 +727,10 @@
       "title": "Tutup tanpa memuat turun?",
       "message": "Terdapat perubahan yang dibuat pada dokumen ini, adakah anda pasti mahu menutupnya tanpa memuat turun kerja anda? Anda tidak boleh membuat asal tindakan ini.",
       "rejectDownloadButton": "Tutup tanpa muat turun"
+    },
+    "connectToURL": {
+      "title": "Amaran keselamatan",
+      "message": "Dokumen ini cuba disambungkan ke:\n\n{{- uri}}.\n\n Jika anda mempercayai dokumen ini, klik Sahkan untuk membukanya."
     }
   },
   "shortcut": {

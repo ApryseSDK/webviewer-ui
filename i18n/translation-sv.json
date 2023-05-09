@@ -727,6 +727,10 @@
       "title": "Stäng utan att ladda ner?",
       "message": "Det har gjorts ändringar i det här dokumentet, är du säker på att du vill stänga det utan att ladda ner ditt arbete? Du kan inte ångra den här åtgärden.",
       "rejectDownloadButton": "Stäng utan nedladdning"
+    },
+    "connectToURL": {
+      "title": "Säkerhetsvarning",
+      "message": "Det här dokumentet försöker ansluta till:\n\n{{- uri}}.\n\n Om du litar på det här dokumentet klickar du på Bekräfta för att öppna det."
     }
   },
   "shortcut": {

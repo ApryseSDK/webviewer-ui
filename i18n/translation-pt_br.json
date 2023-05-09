@@ -727,6 +727,10 @@
       "title": "Fechar sem baixar?",
       "message": "Foram feitas alterações neste documento. Tem certeza de que deseja fechá-lo sem baixar seu trabalho? Você não pode desfazer esta ação.",
       "rejectDownloadButton": "Fechar sem baixar"
+    },
+    "connectToURL": {
+      "title": "Aviso de segurança",
+      "message": "Este documento está tentando se conectar a:\n\n{{- uri}}.\n\n Se você confia neste documento, clique em Confirmar para abri-lo."
     }
   },
   "shortcut": {

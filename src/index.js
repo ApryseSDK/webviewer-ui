@@ -35,6 +35,7 @@ import { addDocumentViewer } from 'helpers/documentViewerHelper';
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
 
 import './index.scss';
+import openURI from './helpers/openURI';
 
 const middleware = [thunk];
 
@@ -136,6 +137,26 @@ if (window.CanvasRenderingContext2D) {
 
   logDebugInfo();
   const documentViewer = addDocumentViewer(1);
+
+  documentViewer.setOpenURIHandler((uri, isOpenInNewWindow) => {
+    store.dispatch(actions.showWarningMessage({
+      title: 'warning.connectToURL.title',
+      message: 'warning.connectToURL.message',
+      onConfirm: () => Promise.resolve(),
+      onSecondary: () => {
+        openURI(uri, isOpenInNewWindow);
+        return Promise.resolve();
+      },
+      confirmBtnText: 'action.cancel',
+      secondaryBtnText: 'action.confirm',
+      secondaryBtnClass: 'secondary-btn-custom',
+      templateStrings: {
+        uri,
+      },
+      modalClass: 'connect-to-url-modal'
+    }));
+  });
+
   defineWebViewerInstanceUIAPIs(store);
 
   setupI18n(state);

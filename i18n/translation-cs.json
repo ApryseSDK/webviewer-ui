@@ -727,6 +727,10 @@
       "title": "Zavřít bez stahování?",
       "message": "V tomto dokumentu byly provedeny změny. Opravdu jej chcete zavřít bez stahování vaší práce? Tuto akci nelze vrátit zpět.",
       "rejectDownloadButton": "Zavřít bez stahování"
+    },
+    "connectToURL": {
+      "title": "Bezpečnostní varování",
+      "message": "Tento dokument se pokouší připojit k:\n\n{{- uri}}.\n\n Pokud tomuto dokumentu důvěřujete, otevřete jej kliknutím na Potvrdit."
     }
   },
   "shortcut": {

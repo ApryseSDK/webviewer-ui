@@ -436,6 +436,10 @@ export const getShowDeleteTabWarning = (state) => state.viewer.warning?.showDele
 
 export const isAccessibleMode = (state) => state.viewer.isAccessibleMode;
 
+export const getWarningTemplateStrings = (state) => state.viewer.warning?.templateStrings || {};
+
+export const getWarningModalClass = (state) => state.viewer.warning?.modalClass || '';
+
 // error message
 export const getErrorMessage = (state) => state.viewer.errorMessage || '';
 

@@ -727,6 +727,10 @@
       "title": "İndirmeden kapatılsın mı?",
       "message": "Bu belgede yapılan değişiklikler var, çalışmanızı indirmeden kapatmak istediğinizden emin misiniz? Bu işlemi geri alamazsınız.",
       "rejectDownloadButton": "İndirmeden kapat"
+    },
+    "connectToURL": {
+      "title": "Güvenlik uyarısı",
+      "message": "Bu belge şuraya bağlanmaya çalışıyor:\n\n{{- uri}}.\n\n Bu belgeye güveniyorsanız açmak için Onayla'yı tıklayın."
     }
   },
   "shortcut": {

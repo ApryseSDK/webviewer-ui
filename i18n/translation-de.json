@@ -727,6 +727,10 @@
       "title": "Ohne Download schließen?",
       "message": "An diesem Dokument wurden Änderungen vorgenommen. Möchten Sie es wirklich schließen, ohne Ihre Arbeit herunterzuladen? Sie können diese Aktion nicht rückgängig machen.",
       "rejectDownloadButton": "Ohne Download schließen"
+    },
+    "connectToURL": {
+      "title": "Sicherheitswarnung",
+      "message": "Dieses Dokument versucht, eine Verbindung herzustellen zu:\n\n{{-uri}}.\n\n Wenn Sie diesem Dokument vertrauen, klicken Sie auf Bestätigen, um es zu öffnen."
     }
   },
   "shortcut": {

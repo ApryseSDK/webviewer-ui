@@ -727,6 +727,10 @@
       "title": "Închideți fără descărcare?",
       "message": "Au fost aduse modificări acestui document, sunteți sigur că doriți să-l închideți fără să vă descărcați lucrarea? Nu puteți anula această acțiune.",
       "rejectDownloadButton": "Închideți fără descărcare"
+    },
+    "connectToURL": {
+      "title": "Avertizare de securitate",
+      "message": "Acest document încearcă să se conecteze la:\n\n{{- uri}}.\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a-l deschide."
     }
   },
   "shortcut": {

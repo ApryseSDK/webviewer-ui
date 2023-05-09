@@ -31,6 +31,8 @@ const WarningModal = () => {
     isDisabled,
     isOpen,
     showAskAgainCheckbox,
+    templateStrings,
+    warningModalClass,
   ] = useSelector(
     (state) => [
       selectors.getWarningTitle(state) || '',
@@ -44,6 +46,8 @@ const WarningModal = () => {
       selectors.isElementDisabled(state, 'warningModal'),
       selectors.isElementOpen(state, 'warningModal'),
       selectors.getShowAskAgainCheckbox(state),
+      selectors.getWarningTemplateStrings(state) || {},
+      selectors.getWarningModalClass(state) || '',
     ],
     shallowEqual,
   );
@@ -55,8 +59,8 @@ const WarningModal = () => {
     return null;
   }
 
-  const className = getClassName('Modal WarningModal', { isOpen });
-  const label = i18next.t(confirmBtnText) || i18next.t('action.ok');
+  const className = getClassName(`Modal WarningModal ${warningModalClass}`, { isOpen });
+  const label = i18next.t(confirmBtnText, templateStrings) || i18next.t('action.ok');
 
   useEffect(() => {
     core.addEventListener('documentUnloaded', cancel);
@@ -68,7 +72,7 @@ const WarningModal = () => {
 
   const getMessageWithNewLine = () => {
     const messageIsAValidStringKey = typeof message === 'string' && i18next.exists(message);
-    const translatedMessage = messageIsAValidStringKey ? i18next.t(message) : message;
+    const translatedMessage = messageIsAValidStringKey ? i18next.t(message, templateStrings) : message;
     if (translatedMessage.includes?.('\n')) {
       return translatedMessage.split('\n').map((str, index) => (
         <React.Fragment key={index}>
@@ -111,7 +115,7 @@ const WarningModal = () => {
           <div className="swipe-indicator" />
           <div className="header">
             <div className="header-text">
-              {i18next.t(title)}
+              {i18next.t(title, templateStrings)}
             </div>
             <Button
               img="icon-close"
@@ -147,7 +151,7 @@ const WarningModal = () => {
                   [secondaryBtnClass]: secondaryBtnClass,
                 })}
                 dataElement="WarningModalClearButton"
-                label={i18next.t(secondaryBtnText)}
+                label={i18next.t(secondaryBtnText, templateStrings)}
                 onClick={secondary}
               />
             )}

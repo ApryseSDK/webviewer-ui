@@ -727,6 +727,10 @@
       "title": "Đóng mà không tải xuống?",
       "message": "Có những thay đổi được thực hiện đối với tài liệu này, bạn có chắc chắn muốn đóng nó mà không tải xuống công việc của mình không? Bạn không thể hoàn tác hành động này.",
       "rejectDownloadButton": "Đóng mà không cần tải xuống"
+    },
+    "connectToURL": {
+      "title": "Cảnh báo an ninh",
+      "message": "Tài liệu này đang cố kết nối với:\n\n{{-uri}}.\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
     }
   },
   "shortcut": {

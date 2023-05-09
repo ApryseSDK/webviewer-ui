@@ -727,6 +727,10 @@
       "title": "Letöltés nélkül bezárja?",
       "message": "Módosítások történtek ezen a dokumentumon. Biztosan be szeretné zárni a munka letöltése nélkül? Ez a művelet nem vonható vissza.",
       "rejectDownloadButton": "Letöltés nélkül zárja be"
+    },
+    "connectToURL": {
+      "title": "Biztonsági figyelmeztetés",
+      "message": "Ez a dokumentum a következőhöz próbál csatlakozni:\n\n{{- uri}}.\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra a megnyitásához."
     }
   },
   "shortcut": {
