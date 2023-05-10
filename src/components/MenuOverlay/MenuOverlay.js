@@ -5,6 +5,7 @@ import { workerTypes } from 'constants/types';
 import core from 'core';
 import downloadPdf from 'helpers/downloadPdf';
 import openFilePicker from 'helpers/openFilePicker';
+import toggleFullscreen from 'helpers/toggleFullscreen';
 import { print } from 'helpers/print';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +13,8 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import DataElements from 'constants/dataElement';
+import loadDocument from 'helpers/loadDocument';
+import { isOfficeEditorMode } from 'helpers/officeEditor';
 
 import './MenuOverlay.scss';
 
@@ -52,15 +55,22 @@ function MenuOverlay() {
   const [t] = useTranslation();
 
   const [documentType, setDocumentType] = useState(null);
+  const [isSaveAsDisabled, setSaveAsDisabled] = useState(false);
 
   const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
   const colorMap = useSelector(selectors.getColorMap);
   const sortStrategy = useSelector(selectors.getSortStrategy);
+  const isFullScreen = useSelector((state) => selectors.isFullScreen(state));
+  const timezone = useSelector((state) => selectors.getTimezone(state));
 
   const closeMenuOverlay = useCallback(() => dispatch(actions.closeElements(['menuOverlay'])), [dispatch]);
 
   useEffect(() => {
-    const onDocumentLoaded = () => setDocumentType(core.getDocument().getType());
+    const onDocumentLoaded = () => {
+      const type = core.getDocument().getType();
+      setDocumentType(type);
+      setSaveAsDisabled(isOfficeEditorMode() && !core.getOfficeEditor().isLicenseValid());
+    };
     core.addEventListener('documentLoaded', onDocumentLoaded);
     return () => {
       core.removeEventListener('documentLoaded', onDocumentLoaded);
@@ -69,23 +79,49 @@ function MenuOverlay() {
 
   const handlePrintButtonClick = () => {
     closeMenuOverlay();
-    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled() });
+    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled(), timezone });
   };
 
   const downloadDocument = () => {
     downloadPdf(dispatch);
   };
 
-  const openSaveModal = () => dispatch(actions.openElement('saveModal'));
+  const openSaveModal = useCallback(() => {
+    closeMenuOverlay();
+    if (isSaveAsDisabled) {
+      dispatch(actions.showErrorMessage(t('officeEditor.notAvailableInDemoMode')));
+    } else {
+      dispatch(actions.openElement('saveModal'));
+    }
+  }, [isSaveAsDisabled]);
 
   const handleSettingsButtonClick = () => {
     closeMenuOverlay();
     dispatch(actions.openElement(DataElements.SETTINGS_MODAL));
   };
 
+  const handleNewDocumentClick = async () => {
+    closeMenuOverlay();
+    loadDocument(dispatch, (await core.getEmptyWordDocument()).default, {
+      filename: 'Untitled.docx',
+      enableOfficeEditing: true
+    });
+  };
+
   return (
     <FlyoutMenu menu="menuOverlay" trigger="menuButton" onClose={undefined} ariaLabel={t('component.menuOverlay')}>
       <InitialMenuOverLayItem>
+        {isOfficeEditorMode() && (
+          <ActionButton
+            dataElement="newDocumentButton"
+            className="row"
+            img="icon-plus-sign"
+            label={t('action.newDocument')}
+            ariaLabel={t('action.newDocument')}
+            role="option"
+            onClick={handleNewDocumentClick}
+          />
+        )}
         <ActionButton
           dataElement="filePickerButton"
           className="row"
@@ -95,7 +131,7 @@ function MenuOverlay() {
           role="option"
           onClick={openFilePicker}
         />
-        {documentType !== workerTypes.XOD && documentType !== workerTypes.OFFICE_EDITOR && (
+        {documentType !== workerTypes.XOD && !isOfficeEditorMode() && (
           <ActionButton
             dataElement="downloadButton"
             className="row"
@@ -104,6 +140,17 @@ function MenuOverlay() {
             ariaLabel={t('action.download')}
             role="option"
             onClick={downloadDocument}
+          />
+        )}
+        {isOfficeEditorMode() && (
+          <ActionButton
+            dataElement="fullscreenButton"
+            className="row"
+            img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+            label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
+            ariaLabel={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
+            role="option"
+            onClick={toggleFullscreen}
           />
         )}
         {documentType !== workerTypes.XOD && (
@@ -115,7 +162,8 @@ function MenuOverlay() {
             ariaLabel={t('saveModal.saveAs')}
             role="option"
             onClick={openSaveModal}
-          />)}
+          />
+        )}
         <ActionButton
           dataElement="printButton"
           className="row"

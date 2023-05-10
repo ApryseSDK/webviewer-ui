@@ -16,8 +16,8 @@ import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 import { isMobile as isMobileCSS, isIE, isMobileDevice, isFirefox } from 'helpers/device';
+import { isOfficeEditorMode } from 'helpers/officeEditor';
 import DataElements from 'src/constants/dataElement';
-import { workerTypes } from 'constants/types';
 
 import './ContextMenuPopup.scss';
 import getRootNode from 'helpers/getRootNode';
@@ -116,8 +116,6 @@ const ContextMenuPopup = ({
     }
   }, [clickPosition]);
 
-  const isOfficeEditor = core.getDocument()?.getType() === workerTypes.OFFICE_EDITOR;
-
   if (isDisabled) {
     return null;
   }
@@ -127,9 +125,9 @@ const ContextMenuPopup = ({
       className={classNames('Popup', 'ContextMenuPopup', {
         open: isOpen,
         closed: !isOpen,
-        isOfficeEditor,
-        'is-vertical': isRightClickAnnotationPopupEnabled && !isOfficeEditor,
-        'is-horizontal': !isRightClickAnnotationPopupEnabled && !isOfficeEditor,
+        isOfficeEditor: isOfficeEditorMode(),
+        'is-vertical': isRightClickAnnotationPopupEnabled && !isOfficeEditorMode(),
+        'is-horizontal': !isRightClickAnnotationPopupEnabled && !isOfficeEditorMode(),
       })}
       ref={popupRef}
       data-element={DataElements.CONTEXT_MENU_POPUP}
@@ -138,7 +136,7 @@ const ContextMenuPopup = ({
     >
       <FocusTrap locked={isOpen}>
         <div className="container">
-          {isOfficeEditor ? (
+          {isOfficeEditorMode() ? (
             <>
               <OfficeActionItem
                 title="action.cut"

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useCallback, useRef, } from 'react';
 import PropTypes from 'prop-types';
 import core from 'core';
 import { useTranslation } from 'react-i18next';
 import debounce from 'lodash.debounce';
+import throttle from 'lodash/throttle';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -10,6 +11,8 @@ import selectors from 'selectors';
 import Icon from 'components/Icon';
 import Choice from '../Choice/Choice';
 import Spinner from '../Spinner';
+import { getInstanceNode } from 'helpers/getRootNode';
+import { isOfficeEditorMode } from 'helpers/officeEditor';
 import './SearchOverlay.scss';
 
 const propTypes = {
@@ -46,10 +49,10 @@ function SearchOverlay(props) {
   const [showReplaceSpinner, setShowReplaceSpinner] = React.useState(false);
   const [isReplacementRegexValid, setReplacementRegexValid] = React.useState(true);
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
-  const searchTextInputRef = React.useRef();
+  const searchTextInputRef = useRef();
   const waitTime = 300; // Wait time in milliseconds
 
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       // eslint-disable-next-line no-unused-vars
       const replacementRegex = new RegExp('(?<!<\/?[^>]*|&[^;]*)');
@@ -58,7 +61,7 @@ function SearchOverlay(props) {
     }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchTextInputRef.current && isPanelOpen) {
       searchTextInputRef.current.focus();
     }
@@ -67,7 +70,7 @@ function SearchOverlay(props) {
     }
   }, [isPanelOpen]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchValue && searchValue.length > 0) {
       executeSearch(searchValue, {
         caseSensitive: isCaseSensitive,
@@ -79,21 +82,58 @@ function SearchOverlay(props) {
     }
   }, [isCaseSensitive, isWholeWord, isWildcard, activeDocumentViewerKey]);
 
-  const debouncedSearch = React.useCallback(
-    debounce((searchValue) => {
-      if (searchValue && searchValue.length > 0) {
-        setIsSearchInProgress(true);
-        executeSearch(searchValue, {
-          caseSensitive: isCaseSensitive,
-          wholeWord: isWholeWord,
-          wildcard: isWildcard,
-        });
-      } else {
-        clearSearchResult();
+  useEffect(() => {
+    core.addEventListener('pagesUpdated', onPagesUpdated);
+    return () => {
+      core.removeEventListener('pagesUpdated', onPagesUpdated);
+    };
+  });
+
+  const onPagesUpdated = () => {
+    search(searchValue);
+  };
+
+  const search = async (searchValue) => {
+    if (searchValue && searchValue.length > 0) {
+      setIsSearchInProgress(true);
+      setSearchStatus('SEARCH_IN_PROGRESS');
+
+      if (isOfficeEditorMode()) {
+        await core.getDocument().getOfficeEditor().updateSearchData();
       }
-    }, waitTime),
+      executeSearch(searchValue, {
+        caseSensitive: isCaseSensitive,
+        wholeWord: isWholeWord,
+        wildcard: isWildcard,
+      });
+    } else {
+      clearSearchResult();
+    }
+  };
+
+  const debouncedSearch = useCallback(
+    debounce(search, waitTime),
     [isCaseSensitive, isWholeWord, isWildcard]
   );
+
+  const throttleSearch = useCallback(
+    throttle(search, waitTime),
+    [isCaseSensitive, isWholeWord, isWildcard]
+  );
+
+  useEffect(() => {
+    const onOfficeDocumentEdited = () => {
+      if (searchValue && searchValue.length > 0) {
+        throttleSearch(searchValue);
+      }
+    };
+
+    core.getDocument()?.addEventListener('officeDocumentEdited', onOfficeDocumentEdited);
+
+    return () => {
+      core.getDocument()?.removeEventListener('officeDocumentEdited', onOfficeDocumentEdited);
+    };
+  }, [searchValue]);
 
   const textInputOnChange = (event) => {
     setSearchValue(event.target.value);
@@ -122,28 +162,28 @@ function SearchOverlay(props) {
     setReplaceAllBtnDisabled(true);
   }
 
-  const caseSensitiveSearchOptionOnChange = React.useCallback(
+  const caseSensitiveSearchOptionOnChange = useCallback(
     function caseSensitiveSearchOptionOnChangeCallback(event) {
       const isChecked = event.target.checked;
       setCaseSensitive(isChecked);
     }, [],
   );
 
-  const wholeWordSearchOptionOnChange = React.useCallback(
+  const wholeWordSearchOptionOnChange = useCallback(
     function wholeWordSearchOptionOnChangeCallback(event) {
       const isChecked = event.target.checked;
       setWholeWord(isChecked);
     }, [],
   );
 
-  const wildcardOptionOnChange = React.useCallback(
+  const wildcardOptionOnChange = useCallback(
     function wildcardOptionOnChangeCallback(event) {
       const isChecked = event.target.checked;
       setWildcard(isChecked);
     }, [],
   );
 
-  const nextButtonOnClick = React.useCallback(
+  const nextButtonOnClick = useCallback(
     function nextButtonOnClickCallback() {
       if (selectNextResult) {
         selectNextResult(searchResults, activeResultIndex);
@@ -152,7 +192,7 @@ function SearchOverlay(props) {
     [selectNextResult, searchResults, activeResultIndex],
   );
 
-  const previousButtonOnClick = React.useCallback(
+  const previousButtonOnClick = useCallback(
     function previousButtonOnClickCallback() {
       if (selectPreviousResult) {
         selectPreviousResult(searchResults, activeResultIndex);
@@ -161,14 +201,14 @@ function SearchOverlay(props) {
     [selectPreviousResult, searchResults, activeResultIndex],
   );
 
-  const searchAndReplaceAll = React.useCallback(
+  const searchAndReplaceAll = useCallback(
     async function searchAndReplaceAllCallback() {
       if (isReplaceAllBtnDisabled && nextResultValue) {
         return;
       }
       setShowReplaceSpinner(true);
-      await window.instance.Core.ContentEdit.searchAndReplaceText({
-        documentViewer: window.instance.Core.documentViewer,
+      await getInstanceNode().instance.Core.ContentEdit.searchAndReplaceText({
+        documentViewer: getInstanceNode().instance.Core.documentViewer,
         searchResults: core.getPageSearchResults(),
         replaceWith: replaceValue,
       });
@@ -182,15 +222,15 @@ function SearchOverlay(props) {
     setMoreOptionOpen(!isMoreOptionsOpen);
   };
 
-  const searchAndReplaceOne = React.useCallback(
+  const searchAndReplaceOne = useCallback(
     async function searchAndReplaceOneCallback() {
       if (isReplaceBtnDisabled && nextResultValue) {
         return;
       }
       setShowReplaceSpinner(true);
 
-      await window.instance.Core.ContentEdit.searchAndReplaceText({
-        documentViewer: window.instance.Core.documentViewer,
+      await getInstanceNode().instance.Core.ContentEdit.searchAndReplaceText({
+        documentViewer: getInstanceNode().instance.Core.documentViewer,
         replaceWith: replaceValue,
         searchResults: [core.getActiveSearchResult()],
       });
