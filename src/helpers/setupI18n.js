@@ -1,11 +1,10 @@
 import i18next from 'i18next';
 import HttpApi from 'i18next-http-backend';
 import languageRules from '../constants/languageRules';
-import { availableLanguages } from '../apis/getAvailableLanguages';
+import getAvailableLanguages from '../apis/getAvailableLanguages';
 
 // https://github.com/isaachinman/next-i18next/issues/562
-i18next.languages = availableLanguages;
-
+i18next.languages = getAvailableLanguages();
 // this is required for Cordova https://github.com/i18next/i18next-http-backend/issues/23#issuecomment-718929822
 const requestWithXmlHttpRequest = (options, url, payload, callback) => {
   try {
@@ -38,7 +37,7 @@ const requestWithXmlHttpRequest = (options, url, payload, callback) => {
   }
 };
 
-export default state => {
+export default (state) => {
   const options = {
     fallbackLng: 'en',
     react: {
@@ -46,31 +45,32 @@ export default state => {
     },
   };
   const callback = (err, t) => {
-    window.Annotations.Utilities.setAnnotationSubjectHandler(type =>
-      t(`annotation.${type}`),
+    window.Core.Annotations.Utilities.setAnnotationSubjectHandler((type) => t(`annotation.${type}`),
     );
 
-    window.Core.Tools.SignatureCreateTool.setTextHandler(() =>
-      t('message.signHere'),
+    window.Core.Tools.SignatureCreateTool.setTextHandler(() => t('message.signHere'),
     );
 
-    window.Core.Tools.FreeTextCreateTool.setTextHandler(() =>
-      t('message.insertTextHere'),
+    window.Core.Tools.SignatureCreateTool.setInitialsTextHandler(() => t('option.type.initials'),
     );
 
-    window.Core.Tools.CalloutCreateTool.setTextHandler(() =>
-      t('message.insertTextHere'),
+    window.Core.Tools.FreeTextCreateTool.setTextHandler(() => t('message.insertTextHere'),
+    );
+
+    window.Core.Tools.CalloutCreateTool.setTextHandler(() => t('message.insertTextHere'),
     );
   };
 
   if (state.advanced.disableI18n) {
     i18next.init(options, callback);
   } else {
+    // eslint-disable-next-line no-undef, camelcase
+    const i18nURL = `${window.isApryseWebViewerWebComponent ? __webpack_public_path__ : './'}i18n/{{ns}}-{{lng}}.json`;
     i18next.use(HttpApi).init(
       {
         ...options,
         backend: {
-          loadPath: './i18n/{{ns}}-{{lng}}.json',
+          loadPath: i18nURL,
           request: requestWithXmlHttpRequest,
         },
       },
@@ -80,7 +80,7 @@ export default state => {
 
   // set custom rules. since i18next doesn't support (i.e 'zh-ch', 'zh-tw', or 'pt-br')
   // have to look inside the i18n source code "getRule" function to see what rule we can copy
-  Object.keys(languageRules).forEach(lang => {
+  Object.keys(languageRules).forEach((lang) => {
     if (languageRules[lang].i18next) {
       const rule = i18next.services.pluralResolver.getRule(languageRules[lang].i18next);
       i18next.services.pluralResolver.addRule(lang, rule);

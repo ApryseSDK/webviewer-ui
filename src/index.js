@@ -1,6 +1,3 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
@@ -33,8 +30,19 @@ import logDebugInfo from 'helpers/logDebugInfo';
 import getHashParameters from 'helpers/getHashParameters';
 import { addDocumentViewer } from 'helpers/documentViewerHelper';
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
+import retargetEvents from 'react-shadow-dom-retarget-events';
 
 import './index.scss';
+import getRootNode from 'helpers/getRootNode';
+import openURI from './helpers/openURI';
+
+if (window.isApryseWebViewerWebComponent) {
+  if (window.webViewerPath.lastIndexOf('/') !== window.webViewerPath.length - 1) {
+    window.webViewerPath += '/';
+  }
+  // eslint-disable-next-line no-undef, camelcase
+  __webpack_public_path__ = `${window.webViewerPath}ui/`;
+}
 
 const middleware = [thunk];
 
@@ -86,8 +94,13 @@ if (window.CanvasRenderingContext2D) {
 
   if (state.advanced.fullAPI) {
     window.Core.enableFullPDF();
-    fullAPIReady = loadScript('../core/pdf/PDFNet.js');
+    if (process.env.WEBCOMPONENT) {
+      fullAPIReady = loadScript('/lib/core/pdf/PDFNet.js');
+    } else {
+      fullAPIReady = loadScript('../core/pdf/PDFNet.js');
+    }
   }
+
 
   if (getHashParameters('disableLogs', false)) {
     window.Core.disableLogs(true);
@@ -98,11 +111,19 @@ if (window.CanvasRenderingContext2D) {
   }
 
   window._disableStreaming = getHashParameters('disableStreaming', false);
-  window.Core.setWorkerPath('../core');
-  window.Core.setResourcesPath('../core/assets');
+  if (window.isApryseWebViewerWebComponent) {
+    window.Core.setWorkerPath(`${window.webViewerPath}core`);
+    window.Core.setResourcesPath(`${window.webViewerPath}core/assets`);
+    loadScript(`${window.webViewerPath}core/pdf/PDFNetLean.js`);
+  } else {
+    window.Core.setWorkerPath('../core');
+    window.Core.setResourcesPath('../core/assets');
+    loadScript('../core/pdf/PDFNetLean.js');
+  }
 
   try {
-    if (state.advanced.useSharedWorker && window.parent.WebViewer) {
+    const isUsingSharedWorker = state.advanced.useSharedWorker === 'true';
+    if (isUsingSharedWorker && window.parent.WebViewer) {
       const workerTransportPromise = window.parent.WebViewer.workerTransportPromise(window.frameElement);
       // originally the option was just for the pdf worker transport promise, now it can be an object
       // containing both the pdf and office promises
@@ -136,6 +157,30 @@ if (window.CanvasRenderingContext2D) {
 
   logDebugInfo();
   const documentViewer = addDocumentViewer(1);
+
+  documentViewer.setOpenURIHandler((uri, isOpenInNewWindow) => {
+    store.dispatch(actions.showWarningMessage({
+      title: 'warning.connectToURL.title',
+      message: 'warning.connectToURL.message',
+      onConfirm: () => Promise.resolve(),
+      onSecondary: () => {
+        openURI(uri, isOpenInNewWindow);
+        return Promise.resolve();
+      },
+      confirmBtnText: 'action.cancel',
+      secondaryBtnText: 'action.confirm',
+      secondaryBtnClass: 'secondary-btn-custom',
+      templateStrings: {
+        uri,
+      },
+      modalClass: 'connect-to-url-modal'
+    }));
+  });
+
+  if (getHashParameters('hideDetachedReplies', false)) {
+    documentViewer.getAnnotationManager().hideDetachedReplies();
+  }
+
   defineWebViewerInstanceUIAPIs(store);
 
   setupI18n(state);
@@ -146,9 +191,33 @@ if (window.CanvasRenderingContext2D) {
 
   const { addEventHandlers, removeEventHandlers } = eventHandler(store);
 
+  const getWorkersToLoad = (preloadWorker) => {
+    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR, ALL } = workerTypes;
+    if (preloadWorker === ALL) {
+      return [PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR];
+    }
+    const workersToLoad = [];
+
+    const shouldLoadOfficeWorker = Array.isArray(preloadWorker) && preloadWorker.includes(OFFICE)
+      || typeof preloadWorker === 'string' && preloadWorker.match(/(office[,|\s]|office$)/g);
+    if (shouldLoadOfficeWorker) {
+      workersToLoad.push(OFFICE);
+    }
+
+    [PDF, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR].forEach((workerType) => {
+      if (preloadWorker.includes(workerType)) {
+        workersToLoad.push(workerType);
+      }
+    });
+
+    return workersToLoad;
+  };
+
   const initTransports = () => {
-    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, ALL } = workerTypes;
-    if (preloadWorker.includes(PDF) || preloadWorker === ALL) {
+    const { PDF, OFFICE, LEGACY_OFFICE, CONTENT_EDIT, OFFICE_EDITOR } = workerTypes;
+    const workersToLoad = getWorkersToLoad(preloadWorker);
+
+    if (workersToLoad.includes(PDF)) {
       getBackendPromise(getHashParameters('pdf', 'auto')).then((pdfType) => {
         window.Core.initPDFWorkerTransports(pdfType, {
           workerLoadingProgress: (percent) => {
@@ -158,7 +227,7 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker.includes(OFFICE) || preloadWorker === ALL) {
+    if (workersToLoad.includes(OFFICE)) {
       getBackendPromise(getHashParameters('office', 'auto')).then((officeType) => {
         window.Core.initOfficeWorkerTransports(officeType, {
           workerLoadingProgress: (percent) => {
@@ -168,7 +237,15 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker.includes(LEGACY_OFFICE) || preloadWorker === ALL) {
+    if (workersToLoad.includes(OFFICE_EDITOR)) {
+      window.Core.initOfficeEditorWorkerTransports({
+        workerLoadingProgress: (percent) => {
+          store.dispatch(actions.setLoadingProgress(percent));
+        },
+      }, window.sampleL);
+    }
+
+    if (workersToLoad.includes(LEGACY_OFFICE)) {
       getBackendPromise(getHashParameters('legacyOffice', 'auto')).then((officeType) => {
         window.Core.initLegacyOfficeWorkerTransports(officeType, {
           workerLoadingProgress: (percent) => {
@@ -178,7 +255,7 @@ if (window.CanvasRenderingContext2D) {
       });
     }
 
-    if (preloadWorker.includes(CONTENT_EDIT) || preloadWorker === ALL) {
+    if (workersToLoad.includes(CONTENT_EDIT)) {
       window.Core.ContentEdit.preloadWorker(documentViewer.getContentEditManager());
     }
   };
@@ -195,7 +272,7 @@ if (window.CanvasRenderingContext2D) {
 
     if (getHashParameters('enableViewStateAnnotations', false)) {
       const tool = documentViewer.getTool(window.Core.Tools.ToolNames.STICKY);
-      tool?.setSaveViewState(true);
+      tool?.enableViewStateSaving();
     }
 
     setupLoadAnnotationsFromServer(store);
@@ -210,12 +287,13 @@ if (window.CanvasRenderingContext2D) {
           </I18nextProvider>
         </PersistGate>
       </Provider>,
-      document.getElementById('app'),
+      getRootNode().getElementById('app'),
     );
+    window.isApryseWebViewerWebComponent && retargetEvents(getRootNode());
   });
-
   addEventHandlers();
 }
+
 
 window.addEventListener('hashchange', () => {
   window.location.reload();

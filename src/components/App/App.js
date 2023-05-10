@@ -110,7 +110,7 @@ const App = ({ removeEventHandlers }) => {
     setTimeout(() => {
       fireEvent(Events.VIEWER_LOADED);
     }, 300);
-    process.env.WEBCOMPONENT ?
+    window.isApryseWebViewerWebComponent ?
       fireEvent('ready', undefined, getInstanceNode()) :
       window.parent.postMessage(
         {
