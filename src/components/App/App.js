@@ -19,51 +19,24 @@ import NotesPanel from 'components/NotesPanel';
 import SearchPanel from 'components/SearchPanel';
 import RightPanel from 'components/RightPanel';
 import AnnotationPopup from 'components/AnnotationPopup';
-import TextPopup from 'components/TextPopup';
-import ContextMenuPopup from 'components/ContextMenuPopup';
 import InlineCommentingPopup from '../InlineCommentingPopup';
-import RichTextPopup from 'components/RichTextPopup';
-import SignatureModal from 'components/SignatureModal';
-import PrintModal from 'components/PrintModal';
-import LoadingModal from 'components/LoadingModal';
-import ErrorModal from 'components/ErrorModal';
-import WarningModal from 'components/WarningModal';
-import SignatureValidationModal from 'components/SignatureValidationModal';
-import PasswordModal from 'components/PasswordModal';
-import ProgressModal from 'components/ProgressModal';
-import LinkModal from 'components/LinkModal';
-import ContentEditModal from 'components/ContentEditModal';
-import FilterAnnotModal from 'components/FilterAnnotModal';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
 import ZoomOverlay from 'components/ZoomOverlay';
-import CreateStampModal from 'components/CreateStampModal';
-import PageReplacementModal from 'components/PageReplacementModal';
-import CustomModal from 'components/CustomModal';
-import Model3DModal from 'components/Model3DModal';
-import FormFieldEditPopup from 'components/FormFieldEditPopup';
-import ColorPickerModal from 'components/ColorPickerModal';
 import PageManipulationOverlay from 'components/PageManipulationOverlay';
-import PageRedactionModal from 'components/PageRedactionModal';
 import RedactionPanel from 'components/RedactionPanel';
 import TextEditingPanel from 'components/TextEditingPanel';
 import Wv3dPropertiesPanel from 'components/Wv3dPropertiesPanel';
 import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
-import ScaleModal from 'components/ScaleModal';
 import DocumentCropPopup from 'components/DocumentCropPopup';
 import LeftPanelOverlayContainer from 'components/LeftPanelOverlay';
 import FormFieldIndicatorContainer from 'components/FormFieldIndicator';
-import ContentEditLinkModal from 'components/ContentEditLinkModal';
 import MultiTabEmptyPage from 'components/MultiTabEmptyPage';
-import OpenFileModal from 'components/OpenFileModal';
 import MultiViewer from 'components/MultiViewer';
-import SettingsModal from 'components/SettingsModal';
 import ComparePanel from 'components/MultiViewer/ComparePanel';
-import SaveModal from 'components/SaveModal';
 import WatermarkPanel from 'components/WatermarkPanel';
-import InsertPageModal from 'components/InsertPageModal';
 import CustomElement from 'components/CustomElement';
 import Panel from 'components/Panel';
 import LeftHeader from 'components/LeftHeader';
@@ -71,20 +44,33 @@ import RightHeader from 'components/RightHeader';
 import BottomHeader from 'components/BottomHeader';
 import TopHeader from 'components/TopHeader';
 import GenericOutlinesPanel from 'components/GenericOutlinesPanel';
+import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
+import ZoomFlyoutMenu from 'components/ModularComponents/ZoomFlyoutMenu';
+import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
+
+import useOnTextSelected from 'hooks/useOnTextSelected';
+import useOnContextMenuOpen from 'src/hooks/useOnContextMenuOpen';
+import useOnFormFieldAnnotationAddedOrSelected from 'hooks/useOnFormFieldAnnotationAddedOrSelected';
+import useOnFreeTextEdit from 'hooks/useOnFreeTextEdit';
+
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
 import { prepareMultiTab } from 'helpers/TabManager';
 import hotkeysManager from 'helpers/hotkeysManager';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
+import { getInstanceNode } from 'helpers/getRootNode';
+import { isOfficeEditorMode } from 'helpers/officeEditor';
+import { isMobileDevice } from 'helpers/device';
+
 import Events from 'constants/events';
 import overlays from 'constants/overlays';
-import setLanguage from 'src/apis/setLanguage';
 import { panelNames } from 'constants/panel';
-import { isOfficeEditorMode } from 'helpers/officeEditor';
+import DataElements from 'constants/dataElement';
+
+import setLanguage from 'src/apis/setLanguage';
 
 import './App.scss';
-import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -98,24 +84,41 @@ const App = ({ removeEventHandlers }) => {
   const dispatch = useDispatch();
   let timeoutReturn;
 
-  const [isInDesktopOnlyMode, isMultiViewerMode, customFlxPanels] = useSelector((state) => [
+  const [
+    isInDesktopOnlyMode,
+    isMultiViewerMode,
+    customFlxPanels,
+    customModals,
+  ] = useSelector((state) => [
     selectors.isInDesktopOnlyMode(state),
     selectors.isMultiViewerMode(state),
     selectors.getCustomFlxPanels(state),
+    selectors.getCustomModals(state),
   ]);
+
+  useEffect(() => {
+    const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
+    if (isOfficeEditingEnabled && isMobileDevice) {
+      dispatch(actions.showWarningMessage({
+        message: 'officeEditor.notSupportedOnMobile',
+      }));
+    }
+  }, []);
 
   useEffect(() => {
     // To avoid race condition with window.dispatchEvent firing before window.addEventListener
     setTimeout(() => {
       fireEvent(Events.VIEWER_LOADED);
     }, 300);
-    window.parent.postMessage(
-      {
-        type: 'viewerLoaded',
-        id: parseInt(getHashParameters('id'), 10),
-      },
-      '*',
-    );
+    process.env.WEBCOMPONENT ?
+      fireEvent('ready', undefined, getInstanceNode()) :
+      window.parent.postMessage(
+        {
+          type: 'viewerLoaded',
+          id: parseInt(getHashParameters('id'), 10),
+        },
+        '*',
+      );
 
     async function loadInitialDocument() {
       let initialDoc = getHashParameters('d', '');
@@ -212,6 +215,62 @@ const App = ({ removeEventHandlers }) => {
     setDefaultDisabledElements(store);
   }, []);
 
+  useEffect(() => {
+    const onError = (error) => {
+      error = error.detail?.message || error.detail || error.message;
+
+      let errorMessage;
+
+      if (typeof error === 'string') {
+        errorMessage = error;
+
+        // provide a more specific error message
+        if (errorMessage.includes('File does not exist')) {
+          errorMessage = 'message.notSupported';
+        }
+      } else if (error?.type === 'InvalidPDF') {
+        errorMessage = 'message.badDocument';
+      }
+
+      if (errorMessage) {
+        dispatch(actions.showErrorMessage(errorMessage));
+      }
+    };
+
+    window.addEventListener('loaderror', onError);
+    return () => window.removeEventListener('loaderror', onError);
+  }, []);
+
+
+  useEffect(() => {
+    const handleToolModeChange = (newTool, oldTool) => {
+      if (newTool instanceof window.Core.Tools.ContentEditTool) {
+        setTimeout(() => {
+          dispatch(actions.openElement(DataElements.CONTENT_EDIT_MODAL));
+        }, 500);
+      } else if (oldTool instanceof window.Core.Tools.ContentEditTool) {
+        dispatch(actions.clearCurrentContentBeingEdited());
+      }
+    };
+
+    const handleContentEditModeStart = () => {
+      dispatch(actions.openElement(DataElements.CONTENT_EDIT_MODAL));
+    };
+
+    const handleContentEditModeEnd = () => {
+      dispatch(actions.clearCurrentContentBeingEdited());
+    };
+
+    core.addEventListener('toolModeUpdated', handleToolModeChange);
+    core.addEventListener('contentEditModeStarted', handleContentEditModeStart);
+    core.addEventListener('contentEditModeEnded', handleContentEditModeEnd);
+    return () => {
+      core.removeEventListener('toolModeUpdated', handleToolModeChange);
+      core.removeEventListener('contentEditModeStarted', handleContentEditModeStart);
+      core.removeEventListener('contentEditModeEnded', handleContentEditModeEnd);
+    };
+  }, []);
+
   const panels = customFlxPanels.map((panel, index) => {
     return (
       panel.render && (
@@ -233,20 +292,21 @@ const App = ({ removeEventHandlers }) => {
   });
 
   return (
-    <React.Fragment>
+    <>
       <div className={classNames({ 'App': true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
-        <FlyoutContainer/>
-        <Accessibility/>
+        <FlyoutContainer />
+        <ZoomFlyoutMenu />
+        <Accessibility />
         <Header />
-        {isOfficeEditorMode() && <OfficeEditorToolsHeader/>}
+        {isOfficeEditorMode() && <OfficeEditorToolsHeader />}
         <TopHeader />
         <div className="content">
           <LeftHeader />
           <LeftPanel />
           {panels}
-          {!isMultiViewerMode && <DocumentContainer/>}
-          {window?.ResizeObserver && <MultiViewer/>}
-          <RightHeader/>
+          {!isMultiViewerMode && <DocumentContainer />}
+          {window?.ResizeObserver && <MultiViewer />}
+          <RightHeader />
           <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
             <SearchPanel />
           </RightPanel>
@@ -259,22 +319,18 @@ const App = ({ removeEventHandlers }) => {
           <RightPanel dataElement="watermarkPanel" onResize={(width) => dispatch(actions.setWatermarkPanelWidth(width))}>
             <WatermarkPanel />
           </RightPanel>
-          <RightPanel
-            dataElement="wv3dPropertiesPanel"
-            onResize={(width) => dispatch(actions.setWv3dPropertiesPanelWidth(width))}
-          >
+          <RightPanel dataElement="wv3dPropertiesPanel" onResize={(width) => dispatch(actions.setWv3dPropertiesPanelWidth(width))}>
             <Wv3dPropertiesPanel />
           </RightPanel>
           <MultiTabEmptyPage />
-          <RightPanel
-            dataElement="textEditingPanel"
-            onResize={(width) => dispatch(actions.setTextEditingPanelWidth(width))}
-          >
+          <RightPanel dataElement="textEditingPanel" onResize={(width) => dispatch(actions.setTextEditingPanelWidth(width))}>
             <TextEditingPanel />
           </RightPanel>
-          {isMultiViewerMode && <RightPanel dataElement="comparePanel" onResize={(width) => dispatch(actions.setComparePanelWidth(width))}>
-            <ComparePanel />
-          </RightPanel>}
+          {isMultiViewerMode && (
+            <RightPanel dataElement="comparePanel" onResize={(width) => dispatch(actions.setComparePanelWidth(width))}>
+              <ComparePanel />
+            </RightPanel>
+          )}
           <BottomHeader />
         </div>
         <ViewControlsOverlay />
@@ -284,47 +340,63 @@ const App = ({ removeEventHandlers }) => {
         <PageManipulationOverlay />
         <LeftPanelOverlayContainer />
         <FormFieldIndicatorContainer />
-
-        <AnnotationPopup />
-        <FormFieldEditPopup />
-        <TextPopup />
-        <ContextMenuPopup />
-        <InlineCommentingPopup />
-        <RichTextPopup />
+        {/* Popups */}
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.TextPopup}
+          dataElement={DataElements.TEXT_POPUP}
+          hook={useOnTextSelected}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.ContextMenuPopup}
+          dataElement={DataElements.CONTEXT_MENU_POPUP}
+          hook={useOnContextMenuOpen}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.FormFieldEditPopup}
+          dataElement={DataElements.FORM_FIELD_EDIT_POPUP}
+          hook={useOnFormFieldAnnotationAddedOrSelected}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.RichTextPopup}
+          dataElement={DataElements.RICH_TEXT_POPUP}
+          hook={useOnFreeTextEdit}
+        />
         <AudioPlaybackPopup />
         <DocumentCropPopup />
-
+        <InlineCommentingPopup />
+        <AnnotationPopup />
         {/* Modals */}
-        <ContentEditLinkModal />
-        <SignatureModal />
-        <ScaleModal />
-        <PrintModal />
-        <LoadingModal />
-        <ErrorModal />
-        <WarningModal />
-        <PasswordModal />
-        <ProgressModal />
-        <CreateStampModal />
-        <PageReplacementModal />
-        <LinkModal />
-        <ContentEditModal />
-        <FilterAnnotModal />
-        <CustomModal />
-        <Model3DModal />
-        <ColorPickerModal />
-        <PageRedactionModal />
-        {core.isFullPDFEnabled() && <SignatureValidationModal />}
-        <OpenFileModal />
-        <SettingsModal />
-        <SaveModal />
-        <InsertPageModal />
+        <LazyLoadWrapper Component={LazyLoadComponents.ContentEditLinkModal} dataElement={DataElements.CONTENT_EDIT_LINK_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.SignatureModal} dataElement={DataElements.SIGNATURE_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.ScaleModal} dataElement={DataElements.SCALE_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.PrintModal} dataElement={DataElements.PRINT_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.ErrorModal} dataElement={DataElements.ERROR_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.PasswordModal} dataElement={DataElements.PASSWORD_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.CreateStampModal} dataElement={DataElements.CUSTOM_STAMP_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.PageReplacementModal} dataElement={DataElements.PAGE_REPLACEMENT_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.LinkModal} dataElement={DataElements.LINK_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.FilterAnnotModal} dataElement={DataElements.FILTER_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.PageRedactionModal} dataElement={DataElements.PAGE_REDACT_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.CalibrationModal} dataElement={DataElements.CALIBRATION_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.SettingsModal} dataElement={DataElements.SETTINGS_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.SaveModal} dataElement={DataElements.SAVE_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.InsertPageModal} dataElement={DataElements.INSERT_PAGE_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.LoadingModal} dataElement={DataElements.LOADING_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.ProgressModal} dataElement={DataElements.PROGRESS_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.WarningModal} dataElement={DataElements.WARNING_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.ContentEditModal} dataElement={DataElements.CONTENT_EDIT_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.Model3DModal} dataElement={DataElements.MODEL3D_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.ColorPickerModal} dataElement={DataElements.COLOR_PICKER_MODAL} />
+        <LazyLoadWrapper Component={LazyLoadComponents.OpenFileModal} dataElement={DataElements.OPEN_FILE_MODAL} />
+        {customModals.length > 0 && <LazyLoadWrapper Component={LazyLoadComponents.CustomModal} dataElement={DataElements.CUSTOM_MODAL} />}
+        {core.isFullPDFEnabled() && <LazyLoadWrapper Component={LazyLoadComponents.SignatureValidationModal} dataElement={DataElements.SIGNATURE_VALIDATION_MODAL} />}
       </div>
 
       <PrintHandler />
       <FilePickerHandler />
       <CopyTextHandler />
       <FontHandler />
-    </React.Fragment>
+    </>
   );
 };
 
