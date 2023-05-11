@@ -16,13 +16,14 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         activeFlyout: payload.dataElement,
       };
-    case 'REMOVE_FLYOUT':
+    case 'REMOVE_FLYOUT': {
       const flyoutMap = state.flyoutMap;
       delete flyoutMap[payload.dataElement];
       return {
         ...state,
         flyoutMap,
       };
+    }
     case 'ADD_FLYOUT':
       return {
         ...state,
@@ -687,7 +688,7 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, verificationResult: payload.result };
     case 'SET_DISPLAYED_SIGNATURES_FILTER_FUNCTION':
       return { ...state, displayedSignaturesFilterFunction: payload.filterFunction };
-    case 'SET_ANNOTATION_READ_STATE':
+    case 'SET_ANNOTATION_READ_STATE': {
       const { unreadAnnotationIdSet } = state;
       const { annotationId, isRead } = payload;
       if (isRead) {
@@ -696,6 +697,7 @@ export default (initialState) => (state = initialState, action) => {
         unreadAnnotationIdSet.add(annotationId);
       }
       return { ...state, unreadAnnotationIdSet: new Set(unreadAnnotationIdSet) };
+    }
     case 'SET_LANGUAGE':
       return { ...state, currentLanguage: payload.language };
     case 'SET_FADE_PAGE_NAVIGATION_COMPONENT':
