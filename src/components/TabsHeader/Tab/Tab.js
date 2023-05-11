@@ -35,12 +35,14 @@ const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, c
         <div className={classNames({ 'file-text': true, disabled })} onClick={setActive}>
           <p>{name}</p>
         </div>
-        <Button
-          img="icon-close"
-          title="action.close"
-          onClick={closeTab}
-        />
-        {!isActive && !isToLeftOfActive && <div className="divider"/>}
+        <div className={'close-button-wrapper'}>
+          <Button
+            img="icon-close"
+            title="action.close"
+            onClick={closeTab}
+          />
+          {!isActive && !isToLeftOfActive && <div className="divider"/>}
+        </div>
       </div>
     </div>
   );

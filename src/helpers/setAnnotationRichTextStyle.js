@@ -2,7 +2,7 @@ const setAnnotationRichTextStyle = (editor, annotation) => {
   const richTextStyle = {};
   const ops = editor.getContents().ops;
   let breakpoint = 0;
-  ops.forEach(item => {
+  ops.forEach((item) => {
     const attributes = item.attributes;
     const insert = item.insert;
     const cssStyle = {};

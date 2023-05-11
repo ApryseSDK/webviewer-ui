@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import ActionButtonComponent from './ActionButton';
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 };
 function rootReducer(state = initialState, action) {
   return state;
-};
+}
 
 const store = createStore(rootReducer);
 
@@ -36,7 +36,7 @@ ActionButton.args = {
   fillColor: '#E44234',
   strokeColor: '#E44234',
   dataElement: 'test',
-  onClick: () => { alert('Action Triggered') },
+  onClick: () => {
+    alert('Action Triggered');
+  },
 };
-
-

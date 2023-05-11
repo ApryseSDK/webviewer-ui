@@ -12,7 +12,7 @@ import actions from 'actions';
     instance.UI.setAnnotationReadState({ isRead: true, annotationId: 'test-annotation-id' });
   });
  */
-export default store => ({ isRead, annotationId }) => {
+export default (store) => ({ isRead, annotationId }) => {
   if (typeof annotationId !== 'string') {
     console.warn('Invalid annotation ID');
     return;

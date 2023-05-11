@@ -6,7 +6,7 @@ import core from 'core';
 import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
 
 function CustomMeasurementOverlay(props) {
-  const renderAppropriateOverlay = type => {
+  const renderAppropriateOverlay = (type) => {
     const annotationType = mapAnnotationToKey(props.annotation);
     switch (annotationType) {
       case 'ellipse':
@@ -64,7 +64,7 @@ function CustomEllipseMeasurementOverlay(props) {
         {t('option.shared.precision')}: {precision}
       </div>
       <div className="measurement__value">
-        {props.label}: <input className="lineMeasurementInput" type="number" min="0" value={computeRadius()} onChange={event => props.onChange(event, props.annotation)}/> {unit}
+        {props.label}: <input className="lineMeasurementInput" type="number" min="0" value={computeRadius()} onChange={(event) => props.onChange(event, props.annotation)}/> {unit}
       </div>
     </>
   );

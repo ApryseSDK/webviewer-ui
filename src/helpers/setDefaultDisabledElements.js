@@ -136,6 +136,7 @@ export default (store) => {
     ),
   );
 
+  disableFeatures([Feature.InlineComment]);
   disableFeatures([Feature.WatermarkPanel]);
   disableFeatures([Feature.WatermarkPanelImageTab]);
 

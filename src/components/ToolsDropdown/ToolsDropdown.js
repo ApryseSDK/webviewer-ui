@@ -9,7 +9,7 @@ const ToolsDropdown = ({ isActive, isDisabled, onClick, style }) => {
   return (
     <button
       className={classNames({
-        "tools-dropdown-container": true,
+        'tools-dropdown-container': true,
         active: isActive,
         disabled: isDisabled,
       })}

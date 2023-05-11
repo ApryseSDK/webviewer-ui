@@ -5,11 +5,11 @@ import RedactionSearchResults from 'components/RedactionSearchResults';
 
 const RedactionSearchPanel = (props) => {
   const [searchTerms, setSearchTerms] = useState([]);
-  const { isRedactionSearchActive, setIsRedactionSearchActive } = useContext(RedactionPanelContext)
+  const { isRedactionSearchActive, setIsRedactionSearchActive } = useContext(RedactionPanelContext);
   const onCancelSearch = () => {
     setSearchTerms([]);
     clearRedactionSearchResults();
-    setIsRedactionSearchActive(false)
+    setIsRedactionSearchActive(false);
   };
 
   const {

@@ -1,47 +1,108 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
-
-import Icon from 'components/Icon';
-
 import core from 'core';
-import selectors from 'selectors';
-import { mapAnnotationToKey, getDataWithKey } from '../../constants/map';
+import getNumberOfDecimalPlaces from 'helpers/getNumberOfDecimalPlaces';
 import { isMobileDevice } from 'src/helpers/device';
+import { precisionFractions } from 'constants/measurementScale';
+import PropTypes from 'prop-types';
+import selectors from 'selectors';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect, useCallback } from 'react';
 import getFormattedUnit from 'src/helpers/getFormattedUnit';
 
-function EllipseMeasurementOverlay(props) {
-  const { t, annotation, isOpen } = props;
-  const isReadOnly = useSelector(state => selectors.isDocumentReadOnly(state));
-  const annotationKey = mapAnnotationToKey(annotation);
-  const { icon } = getDataWithKey(annotationKey);
-  const scale = annotation.Scale;
-  const precision = annotation.Precision;
-  const unit = getFormattedUnit(annotation.Scale[1][1]);
-  const renderScaleRatio = () => `${scale[0][0]} ${scale[0][1]} = ${scale[1][0]} ${unit}`;
+const propTypes = {
+  annotation: (props, propName, componentName) => {
+    if (!props.annotation && !props.selectedTool) {
+      return new Error(`One of props 'annotation' or 'selectedTool' was not specified in '${componentName}'.`);
+    }
+    if (props.annotation) {
+      PropTypes.checkPropTypes(
+        {
+          annotation: PropTypes.shape({
+            Precision: PropTypes.number,
+            DisplayUnits: PropTypes.arrayOf(PropTypes.string),
+            getContents: PropTypes.func,
+          }),
+        },
+        { annotation: props.annotation },
+        'prop',
+        'EllipseMeasurementOverlay',
+      );
+    }
+    return null;
+  },
+  selectedTool: (props, propName, componentName) => {
+    if (!props.annotation && !props.selectedTool) {
+      return new Error(`One of props 'annotation' or 'selectedTool' was not specified in '${componentName}'.`);
+    }
+    if (props.selectedTool) {
+      PropTypes.checkPropTypes(
+        {
+          selectedTool: PropTypes.shape({
+            defaults: PropTypes.shape({
+              Precision: PropTypes.number,
+            }),
+            Measure: PropTypes.shape({
+              unit: PropTypes.string,
+            }),
+          }),
+        },
+        { selectedTool: props.selectedTool },
+        'prop',
+        'EllipseMeasurementOverlay',
+      );
+    }
+    return null;
+  },
+  isOpen: PropTypes.bool.isRequired,
+};
+
+function EllipseMeasurementOverlay({ annotation, isOpen, selectedTool }) {
+  const { t } = useTranslation();
+
+  const isReadOnly = useSelector((state) => selectors.isDocumentReadOnly(state));
+  const data = {
+    precision: !annotation ? selectedTool?.defaults?.Precision : annotation.Precision,
+    unit: getFormattedUnit((annotation?.Scale || selectedTool?.defaults?.Scale)[1][1]),
+    area: annotation?.getContents() || 0,
+  };
+
+  const refreshRadius = () => {
+    setRadius(computeRadius());
+  };
 
   useEffect(() => {
-    const onAnnotationChanged = () => {
-      setRadius(computeRadius());
-    };
-    core.addEventListener('mouseMove', onAnnotationChanged);
+    refreshRadius();
+    core.addEventListener('mouseMove', refreshRadius);
+
     return () => {
-      core.removeEventListener('mouseMove', onAnnotationChanged);
+      core.removeEventListener('mouseMove', refreshRadius);
     };
-  });
+  }, [annotation]);
+
+  useEffect(() => {
+    const onAnnotationDeselected = (annotations, action) => {
+      if (action === 'deselected') {
+        const annotation = annotations[0];
+        ensureDiameterIsWithinBounds(annotation.getWidth(), annotation);
+      }
+    };
+
+    core.addEventListener('annotationSelected', onAnnotationDeselected);
+
+    return () => {
+      core.removeEventListener('annotationSelected', onAnnotationDeselected);
+    };
+  }, []);
 
   const computeRadius = () => {
-    const decimalPlaces = getNumberOfDecimalPlaces(annotation);
+    if (!annotation) {
+      return 0;
+    }
+    const decimalPlaces = annotation && getNumberOfDecimalPlaces(annotation.Precision) || 0;
     const factor = annotation.Measure.axis[0].factor;
     const radiusInPts = (annotation.Width / 2).toFixed(decimalPlaces);
     return (radiusInPts * factor).toFixed(decimalPlaces);
   };
-
-  const getNumberOfDecimalPlaces = annotation =>
-    (annotation.Precision === 1
-      ? 0
-      : annotation.Precision.toString().split('.')[1].length);
 
   const finishAnnotation = () => {
     const tool = core.getTool('AnnotationCreateEllipseMeasurement');
@@ -58,37 +119,37 @@ function EllipseMeasurementOverlay(props) {
     annotationManager.deselectAnnotation(annotation);
   };
 
-  const onChangeRadiusLength = event => {
+  const onChangeRadiusLength = (event) => {
     const radius = Math.abs(event.target.value);
     const factor = annotation.Measure.axis[0].factor;
     const radiusInPts = radius / factor;
     const diameterInPts = radiusInPts * 2;
     const rect = annotation.getRect();
-    let {X1, X2, Y1, Y2} = 0;
+    let { X1, X2, Y1, Y2 } = 0;
     X1 = rect['x1'];
     Y1 = rect['y1'];
     X2 = rect['x1'] + diameterInPts;
     Y2 = rect['y1'] + diameterInPts;
-    const newRect = {x1:X1, y1:Y1, x2:X2, y2:Y2};
+    const newRect = { x1: X1, y1: Y1, x2: X2, y2: Y2 };
 
     annotation.setHeight(diameterInPts);
     annotation.setWidth(diameterInPts);
     annotation.resize(newRect);
     setRadius(radius);
-    forceEllipseRedraw();
+    forceEllipseRedraw(annotation);
     finishAnnotation();
   };
 
-  const forceEllipseRedraw = useCallback(() => {
+  const forceEllipseRedraw = (annotation) => {
     const annotationManager = core.getAnnotationManager();
     annotationManager.redrawAnnotation(annotation);
     annotationManager.trigger('annotationChanged', [[annotation], 'modify', []]);
-  }, [annotation]);
+  };
 
-  const getMaxDiameterInPts = useCallback(() => {
+  const getMaxDiameterInPts = useCallback((annotation) => {
     const currentPageNumber = core.getCurrentPage();
-    const documentWidth = window.documentViewer.getPageWidth(currentPageNumber);
-    const documentHeight = window.documentViewer.getPageHeight(currentPageNumber);
+    const documentWidth = core.getPageWidth(currentPageNumber);
+    const documentHeight = core.getPageHeight(currentPageNumber);
     const startX = annotation['X'];
     const startY = annotation['Y'];
 
@@ -96,27 +157,28 @@ function EllipseMeasurementOverlay(props) {
     const maxY = documentHeight - startY;
 
     return Math.min(maxX, maxY);
-  }, [annotation]);
+  });
 
-  const validateDiameter = event => {
+  const validateDiameter = (event) => {
     const radius = Math.abs(event.target.value);
     const factor = annotation.Measure.axis[0].factor;
     const radiusInPts = radius / factor;
     const diameterInPts = radiusInPts * 2;
-    ensureDiameterIsWithinBounds(diameterInPts);
+    ensureDiameterIsWithinBounds(diameterInPts, annotation);
+    refreshRadius();
   };
 
-  const ensureDiameterIsWithinBounds = useCallback(diameterInPts => {
-    const maxDiameterInPts = getMaxDiameterInPts();
+  const ensureDiameterIsWithinBounds = useCallback((diameterInPts, annotation) => {
+    const maxDiameterInPts = getMaxDiameterInPts(annotation);
 
     if (diameterInPts > maxDiameterInPts) {
       const boundingRect = annotation.getRect();
-      const {x1, x2, y1, y2} = boundingRect;
+      const { x1, x2, y1, y2 } = boundingRect;
       let width = annotation.Width;
       let height = annotation.Height;
       const currentPageNumber = core.getCurrentPage();
-      const documentWidth = window.documentViewer.getPageWidth(currentPageNumber);
-      const documentHeight = window.documentViewer.getPageHeight(currentPageNumber);
+      const documentWidth = core.getPageWidth(currentPageNumber);
+      const documentHeight = core.getPageHeight(currentPageNumber);
 
       if (x2 > documentWidth) {
         boundingRect['x2'] = documentWidth;
@@ -132,70 +194,67 @@ function EllipseMeasurementOverlay(props) {
       } else {
         annotation.setWidth(documentWidth);
       }
-      if (height < documentHeight){
+      if (height < documentHeight) {
         annotation.setHeight(height);
       } else {
         annotation.setHeight(documentHeight);
       }
       annotation.resize(boundingRect);
-      forceEllipseRedraw();
+      forceEllipseRedraw(annotation);
     }
-  }, [annotation, forceEllipseRedraw, getMaxDiameterInPts]);
-
+  }, [getMaxDiameterInPts]);
 
   useEffect(() => {
     if (!isOpen) {
-      ensureDiameterIsWithinBounds(annotation.getWidth());
+      ensureDiameterIsWithinBounds(annotation.getWidth(), annotation);
     }
   }, [annotation, ensureDiameterIsWithinBounds, isOpen]);
 
   const [radius, setRadius] = useState(computeRadius());
 
   return (
-    <>
-      <div className="measurement__title">
-        {icon && <Icon className="measurement__icon" glyph={icon}/>}
-        {t('option.measurementOverlay.areaMeasurement')}
+    <div className="measurement__detail-container">
+      <div className="measurement__detail-item">
+        <div className="measurement_list">{t('option.shared.precision')}:</div>
+        {precisionFractions[data.precision] || data.precision}
       </div>
-      <div className="measurement__scale">
-        {t('option.measurementOverlay.scale')}: {renderScaleRatio()}
+      <div className="measurement__detail-item">
+        <div className="measurement_list">{t('option.measurementOverlay.area')}:</div>
+        <div className="distance-show">{data.area}</div>
       </div>
-      <div className="measurement__precision">
-        {t('option.shared.precision')}: {precision}
+      <div className="measurement__detail-item">
+        <div className="measurement_list">{t('option.measurementOverlay.radius')}:</div>
+        {annotation ? (
+          <>
+            <input
+              autoFocus={!isMobileDevice}
+              className="scale-input"
+              type="number"
+              min="0"
+              disabled={isReadOnly}
+              value={radius}
+              onChange={(event) => {
+                onChangeRadiusLength(event);
+                selectAnnotation();
+              }}
+              onBlur={(event) => validateDiameter(event)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  onChangeRadiusLength(event);
+                  deselectAnnot();
+                }
+              }}
+            />
+            {data.unit}
+          </>
+        ) : (
+          <div>0</div>
+        )}
       </div>
-      <div className="measurement__value">
-        {t('option.measurementOverlay.area')}: {annotation.getContents()}
-      </div>
-      <div className="measurement__value">
-        {t('option.measurementOverlay.radius')}:
-        <input
-          autoFocus={!isMobileDevice}
-          className="lineMeasurementInput"
-          type="number"
-          min="0"
-          disabled={isReadOnly}
-          value={radius}
-          onChange={event => {
-            onChangeRadiusLength(event);
-            selectAnnotation();
-          }}
-          onBlur={event => validateDiameter(event)}
-          onKeyDown={event => {
-            if (event.key === 'Enter') {
-              onChangeRadiusLength(event);
-              deselectAnnot();
-            }
-          }}
-        /> {unit}
-      </div>
-    </>
+    </div>
   );
 }
 
-EllipseMeasurementOverlay.propTypes = {
-  annotation: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-};
+EllipseMeasurementOverlay.propTypes = propTypes;
 
-export default withTranslation()(EllipseMeasurementOverlay);
+export default EllipseMeasurementOverlay;

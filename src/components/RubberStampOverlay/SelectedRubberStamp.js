@@ -10,7 +10,7 @@ import core from 'core';
 
 import './SelectedRubberStamp.scss';
 
-const usePrevious = value => {
+const usePrevious = (value) => {
   const ref = useRef();
   useEffect(() => {
     ref.current = value;
@@ -28,7 +28,7 @@ const SelectedRubberStamp = () => {
     activeToolName,
     selectedStamp,
     activeToolGroup,
-  ] = useSelector(state => [
+  ] = useSelector((state) => [
     selectors.getActiveToolName(state),
     selectors.getSelectedStamp(state),
     selectors.getActiveToolGroup(state),
@@ -48,21 +48,21 @@ const SelectedRubberStamp = () => {
     }
   });
 
-  const rubberStampTool = core.getTool('AnnotationCreateRubberStamp');
+  const rubberStampToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateRubberStamp');
   const onStampsAdded = () => {
     dispatch(actions.setStandardStamps(t));
     dispatch(actions.setCustomStamps(t));
   };
 
   useEffect(() => {
-    rubberStampTool.addEventListener('stampsUpdated', onStampsAdded);
+    rubberStampToolArray[0].addEventListener('stampsUpdated', onStampsAdded);
     return () => {
-      rubberStampTool.removeEventListener('stampsUpdated', onStampsAdded);
+      rubberStampToolArray[0].removeEventListener('stampsUpdated', onStampsAdded);
     };
   }, []);
 
   const [isToolStyleOpen] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementOpen(state, 'toolStylePopup'),
     ],
   );
@@ -71,8 +71,10 @@ const SelectedRubberStamp = () => {
     async function preselectRubberStamp() {
       core.setToolMode('AnnotationCreateRubberStamp');
       const text = t(`rubberStamp.${selectedStamp.annotation['Icon']}`);
-      await rubberStampTool.setRubberStamp(selectedStamp.annotation, text);
-      rubberStampTool.showPreview();
+      for (const rubberStampTool of rubberStampToolArray) {
+        await rubberStampTool.setRubberStamp(selectedStamp.annotation, text);
+        rubberStampTool.showPreview();
+      }
     }
 
     if (!isOpen && activeToolGroup === 'rubberStampTools' && selectedStamp) {
@@ -96,8 +98,10 @@ const SelectedRubberStamp = () => {
             onClick={async () => {
               core.setToolMode('AnnotationCreateRubberStamp');
               const text = t(`rubberStamp.${selectedStamp.annotation['Icon']}`);
-              await rubberStampTool.setRubberStamp(selectedStamp.annotation, text);
-              rubberStampTool.showPreview();
+              for (const rubberStampTool of rubberStampToolArray) {
+                await rubberStampTool.setRubberStamp(selectedStamp.annotation, text);
+                rubberStampTool.showPreview();
+              }
             }}
             isActive={activeToolName === 'AnnotationCreateRubberStamp'}
             altText={t('option.toolsOverlay.currentStamp')}

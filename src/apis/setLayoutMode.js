@@ -18,6 +18,6 @@ WebViewer(...)
 
 import core from 'core';
 
-export default mode => {
+export default (mode) => {
   core.setDisplayMode(mode);
 };

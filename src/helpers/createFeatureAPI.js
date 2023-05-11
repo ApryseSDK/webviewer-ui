@@ -13,6 +13,8 @@ import TabManager from 'helpers/TabManager';
 import getHashParameters from './getHashParameters';
 import DataElements from 'constants/dataElement';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
+import fireEvent from 'helpers/fireEvent';
+import Events from 'constants/events';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => (features, priority = PRIORITY_TWO) => {
@@ -307,6 +309,10 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
           const tabManager = new TabManager(docArr, [], store);
           store.dispatch(actions.setMultiTab(true));
           store.dispatch(actions.setTabManager(tabManager));
+          // Fix for event not firing on some devices
+          setTimeout(() => {
+            fireEvent(Events.TAB_MANAGER_READY);
+          }, 300);
         } else {
           store.dispatch(actions.setMultiTab(false));
           store.dispatch(actions.setTabManager(null));
@@ -378,7 +384,10 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
       dataElements: [
         DataElements.WATERMARK_PANEL_IMAGE_TAB,
       ],
-    }
+    },
+    [Feature.LegacyRichTextPopup]: {
+      dataElements: [DataElements.LEGACY_RICH_TEXT_POPUP],
+    },
   };
 
   if (!Array.isArray(features)) {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { createStore } from "redux";
-import { Provider } from "react-redux";
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import DataElementWrapper from './DataElementWrapper';
 

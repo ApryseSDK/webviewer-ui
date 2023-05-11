@@ -1,14 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Icon from 'components/Icon';
-import Dropdown from 'components/Dropdown';
-import { Choice } from '@pdftron/webviewer-react-toolkit';
+import React from 'react';
+import Selector from 'components/Selector';
 import { useTranslation } from 'react-i18next';
+import { isIE11 } from 'helpers/device';
 
 const DimensionsInput = ({
-  top,
-  right,
-  bottom,
-  left,
+  yOffset,
+  height,
+  xOffset,
+  width,
   unit,
   autoTrim,
   supportedUnits,
@@ -19,19 +18,20 @@ const DimensionsInput = ({
   setAutoTrimActive,
   onAutoTrimChange,
 }) => {
-
-  /**
-   * Resizes number input boxes so that units of measurement can be shown next to them as if they are also in the same box
-   * @param {*} input the input to be displayed
-   * @returns {number} the length of the input to resize the box to
-   */
-  const resizeInput = input => {
+  // Resizes number input boxes so that units of measurement can be shown next to them as if they are also in the same box
+  const resizeInput = (input) => {
     let maxLength = 5;
     let length = input.toString().length;
+    let decimalSize = 0.3;
+    if (isIE11) {
+      const IE_ADJUSTMENT = 1.25;
+      length *= IE_ADJUSTMENT;
+      maxLength *= IE_ADJUSTMENT;
+      decimalSize *= IE_ADJUSTMENT;
+    }
     if (input.toString().includes('.')) {
-      const DECIMAL_SIZE = 0.3;
       if (length > maxLength) {
-        return maxLength + DECIMAL_SIZE;
+        return maxLength + decimalSize;
       }
     }
     if (length > maxLength) {
@@ -40,147 +40,125 @@ const DimensionsInput = ({
     return length;
   };
 
-  /**
-   * Toggles auto-trim on/off and defaults back to the first option if none was selected previously.
-   */
-  const toggleAutoTrim = () => {
-    setAutoTrimActive(!autoTrimActive);
-    if (!autoTrim) {
-      onAutoTrimChange(autoTrimOptions[0]);
-    }
-  };
-
-  useEffect(() => {
-    if (autoTrimActive) {
-      onAutoTrimChange(autoTrim);
-    }
-  }, [autoTrimActive]);
-
   const { t } = useTranslation();
 
   return (
     <div className="crop-dimensions">
       <div className="crop-dimensions-input-container">
         <label className="crop-dimensions-input">
-          <Icon glyph="ic_align_top" />
+          <span className="dimensions-settings-title">W</span>
           <div className="input-field-container">
             <input
-              name="top"
-              data-testid="top-input"
+              name="width"
+              data-testid="width-input"
               type="number"
               min="0"
               className="dimension-input-field"
-              style={{ width: resizeInput(top) + 'ch' }}
-              onChange={e => {
+              style={{ width: `${resizeInput(width)}ch` }}
+              onChange={(e) => {
                 onDimensionChange(e.target.value, e.target.name);
                 setAutoTrimActive(false);
               }}
-              onKeyUp={e => {
+              onKeyUp={(e) => {
                 onDimensionChange(e.target.value, e.target.name);
                 setAutoTrimActive(false);
               }}
-              value={top}
+              value={width}
             />
-            <span className="dimension-input-unit">{top > 0 && supportedUnits[unit]}</span>
+            <span className="dimension-input-unit">{width > 0 && supportedUnits[unit]}</span>
           </div>
         </label>
         <label className="crop-dimensions-input">
-          <Icon glyph="ic_align_right" />
+          <span className="dimensions-settings-title">H</span>
           <div className="input-field-container">
             <input
-              name="right"
-              data-testid="right-input"
+              name="height"
+              data-testid="height-input"
               type="number"
               min="0"
               className="dimension-input-field"
-              style={{ width: resizeInput(right) + 'ch' }}
-              onChange={e => {
+              style={{ width: `${resizeInput(height)}ch` }}
+              onChange={(e) => {
                 onDimensionChange(e.target.value, e.target.name);
                 setAutoTrimActive(false);
               }}
-              onKeyUp={e => {
+              onKeyUp={(e) => {
                 onDimensionChange(e.target.value, e.target.name);
                 setAutoTrimActive(false);
               }}
-              value={right}
+              value={height}
             />
-            <span className="dimension-input-unit">{right > 0 && supportedUnits[unit]}</span>
+            <span className="dimension-input-unit">{height > 0 && supportedUnits[unit]}</span>
           </div>
         </label>
         <label className="crop-dimensions-input">
-          <Icon glyph="ic_align_bottom" />
+          <span className="dimensions-settings-title">X</span>
           <div className="input-field-container">
             <input
-              name="bottom"
-              data-testid="bottom-input"
+              name="xOffset"
+              data-testid="xOffset-input"
               type="number"
               min="0"
               className="dimension-input-field"
-              style={{ width: resizeInput(bottom) + 'ch' }}
-              onChange={e => {
+              style={{ width: `${resizeInput(xOffset)}ch` }}
+              onChange={(e) => {
                 onDimensionChange(e.target.value, e.target.name);
                 setAutoTrimActive(false);
               }}
-              onKeyUp={e => {
+              onKeyUp={(e) => {
                 onDimensionChange(e.target.value, e.target.name);
                 setAutoTrimActive(false);
               }}
-              value={bottom}
+              value={xOffset}
             />
-            <span className="dimension-input-unit">{bottom > 0 && supportedUnits[unit]}</span>
+            <span className="dimension-input-unit">{xOffset > 0 && supportedUnits[unit]}</span>
           </div>
         </label>
         <label className="crop-dimensions-input">
-          <Icon glyph="ic_align_left" />
+          <span className="dimensions-settings-title">Y</span>
           <div className="input-field-container">
             <input
-              name="left"
-              data-testid="left-input"
+              name="yOffset"
+              data-testid="yOffset-input"
               type="number"
               min="0"
               className="dimension-input-field"
-              style={{ width: resizeInput(left) + 'ch' }}
-              onChange={e => {
+              style={{ width: `${resizeInput(yOffset)}ch` }}
+              onChange={(e) => {
                 onDimensionChange(e.target.value, e.target.name);
                 setAutoTrimActive(false);
               }}
-              onKeyUp={e => {
+              onKeyUp={(e) => {
                 onDimensionChange(e.target.value, e.target.name);
                 setAutoTrimActive(false);
               }}
-              value={left}
+              value={yOffset}
             />
-            <span className="dimension-input-unit">{left > 0 && supportedUnits[unit]}</span>
+            <span className="dimension-input-unit">{yOffset > 0 && supportedUnits[unit]}</span>
           </div>
         </label>
       </div>
       <div className="crop-dimensions-settings">
-        <label>
-          <div className="dimensions-settings-title-container">
-            <Icon glyph="ic-calibrate" />
-            <span className="dimensions-settings-title">{t('cropPopUp.dimensionInput.unitOfMeasurement')}</span>
-          </div>
-          <div className="custom-select unit-selector">
-            <Dropdown items={Object.keys(supportedUnits)} onClickItem={onUnitChange} currentSelectionKey={unit} />
-          </div>
-        </label>
+        <div className="dimensions-settings-title-container">
+          <span className="dimensions-settings-title">{t('cropPopUp.dimensionInput.unitOfMeasurement')}</span>
+        </div>
+        <div className="custom-select unit-selector">
+          <Selector items={Object.keys(supportedUnits)} selectedItem={unit} onItemSelected={onUnitChange} />
+        </div>
       </div>
       <div className="crop-dimensions-settings">
-        <label>
-          <Choice
-            label={t('cropPopUp.dimensionInput.autoTrim') + ':'}
-            onChange={toggleAutoTrim}
-            checked={autoTrimActive}
-          ></Choice>
-          <div className="custom-select auto-trim-selector">
-            <Dropdown
-              disabled={!autoTrimActive}
-              items={autoTrimOptions}
-              onClickItem={onAutoTrimChange}
-              currentSelectionKey={autoTrim ? autoTrim : autoTrimOptions[0]}
-            />
-          </div>
-        </label>
+        <div className="dimensions-settings-title-container">
+          <span className="dimensions-settings-title">{t('cropPopUp.dimensionInput.autoTrim')}</span>
+        </div>
+        <div className="custom-select auto-trim-selector">
+          <Selector
+            items={autoTrimOptions}
+            selectedItem={autoTrim && autoTrimActive ? autoTrim : ''}
+            onItemSelected={onAutoTrimChange}
+            placeHolder={autoTrim || autoTrimOptions[0]}
+            selectedItemStyle={{ color: autoTrimActive ? 'var(--text-color)' : 'var(--gray-6)' }}
+          />
+        </div>
       </div>
     </div>
   );

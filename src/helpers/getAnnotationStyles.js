@@ -7,7 +7,7 @@ import core from 'core';
  * @param annotation is an annotation created by a tool
  * @return current style of that object.
  */
-export default annotation => {
+export default (annotation) => {
   const styleProperty = [
     'FillColor',
     'StrokeColor',
@@ -21,7 +21,7 @@ export default annotation => {
   ];
   const style = {};
 
-  styleProperty.forEach(property => {
+  styleProperty.forEach((property) => {
     const value = annotation[property];
 
     if (value !== null && value !== undefined) {

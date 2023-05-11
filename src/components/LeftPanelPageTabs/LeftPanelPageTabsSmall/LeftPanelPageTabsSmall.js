@@ -1,5 +1,5 @@
 import React from 'react';
-import "../LeftPanelPageTabs/LeftPanelPageTabsContainer.scss";
+import '../LeftPanelPageTabs/LeftPanelPageTabsContainer.scss';
 import LeftPanelPageTabsMoreSmall from '../LeftPanelPageTabsMoreSmall/LeftPanelPageTabsMoreSmall';
 import LeftPanelPageTabsRotateSmall from '../LeftPanelPageTabsRotateSmall/LeftPanelPageTabsRotateSmall';
 import LeftPanelPageTabsInsertSmall from '../LeftPanelPageTabsInsertSmall/LeftPanelPageTabsInsertSmall';
@@ -12,7 +12,7 @@ function InitialLeftPanelPageTabsSmall({ children, pageNumbers, multiPageManipul
   }
   return multiPageManipulationControlsItems.map((item, index) => {
     const { dataElement, type } = item;
-    let component = childrenArray.find(child => child.props.dataElement === dataElement);
+    let component = childrenArray.find((child) => child.props.dataElement === dataElement);
     const key = dataElement || `${type}-${index}`;
 
     if (!component) {
@@ -33,12 +33,10 @@ function InitialLeftPanelPageTabsSmall({ children, pageNumbers, multiPageManipul
 }
 
 
-
 function LeftPanelPageTabsSmall(props) {
-
   const { pageNumbers, multiPageManipulationControlsItemsSmall } = props;
   return (
-    <div className={`PageControlContainer root small`}>
+    <div className={'PageControlContainer root small'}>
       <InitialLeftPanelPageTabsSmall pageNumbers={pageNumbers} multiPageManipulationControlsItems={multiPageManipulationControlsItemsSmall}>
         <LeftPanelPageTabsRotateSmall dataElement="leftPanelPageTabsRotateSmall" />
         <LeftPanelPageTabsInsertSmall dataElement="leftPanelPageTabsInsertSmall" />

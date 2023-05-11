@@ -94,7 +94,7 @@ class ToolsOverlay extends React.PureComponent {
   setOverlayPosition = () => {
     const { activeToolGroup, activeHeaderItems } = this.props;
     const element = activeHeaderItems.find(
-      item => item.toolGroup === activeToolGroup,
+      (item) => item.toolGroup === activeToolGroup,
     );
 
     if (element) {
@@ -118,7 +118,6 @@ class ToolsOverlay extends React.PureComponent {
       toolNames,
       activeToolGroup,
       isToolStyleOpen,
-      isDesktop,
       isMobile,
       isInDesktopOnlyMode,
       showPresets,
@@ -135,7 +134,10 @@ class ToolsOverlay extends React.PureComponent {
       'fileAttachmentTools',
       'radioButtonFieldTools',
       'checkBoxFieldTools',
-      'contentEditTools'
+      'contentEditTools',
+      'addParagraphTools',
+      'calibrationTools',
+      'addImageContentTools'
     ];
     const noPresets = !activeToolGroup || toolsWithNoStylingPresets.includes(activeToolGroup);
     let Component = (
@@ -203,8 +205,8 @@ class ToolsOverlay extends React.PureComponent {
         >
           <div
             className={classNames({
-              "tools-container": true,
-              "is-styling-open": isToolStyleOpen
+              'tools-container': true,
+              'is-styling-open': isToolStyleOpen
             })}
           >
             {Component}
@@ -231,7 +233,7 @@ class ToolsOverlay extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isDisabled: selectors.isElementDisabled(state, 'toolsOverlay'),
   isOpen: selectors.isElementOpen(state, 'toolsOverlay'),
   isToolStyleOpen: selectors.isElementOpen(state, 'toolStylePopup'),
@@ -252,7 +254,7 @@ const mapDispatchToProps = {
 
 const ConnectedToolsOverlay = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(ToolsOverlay));
 
-export default props => {
+const connectedComponent = (props) => {
   const isMobile = useMedia(
     // Media queries
     ['(max-width: 640px)'],
@@ -281,3 +283,5 @@ export default props => {
     <ConnectedToolsOverlay {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} isDesktop={isDesktop} />
   );
 };
+
+export default connectedComponent;

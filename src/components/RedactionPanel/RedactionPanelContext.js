@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import isSearchResultSame from "helpers/isSearchResultSame";
 import core from 'core';
 
 
@@ -13,7 +12,7 @@ const RedactionPanelProvider = ({ children }) => {
   useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
       if (action === 'selected') {
-        const redactionAnnotations = annotations.filter(annotation => annotation.Subject === 'Redact');
+        const redactionAnnotations = annotations.filter((annotation) => annotation.Subject === 'Redact');
         // If multiple ones selected, we only use the first one
         const selectedAnnotationId = redactionAnnotations.length > 0 ? redactionAnnotations[0].Id : null;
         setSelectedRedactionItemId(selectedAnnotationId);
@@ -23,12 +22,15 @@ const RedactionPanelProvider = ({ children }) => {
     };
 
     const activeSearchResultChanged = (newActiveSearchResult) => {
+      if (!newActiveSearchResult) {
+        return;
+      }
       const coreSearchResults = core.getPageSearchResults() || [];
-      const newActiveSearchResultIndex = coreSearchResults.findIndex(searchResult => {
-        return isSearchResultSame(searchResult, newActiveSearchResult);
+      const newActiveSearchResultIndex = coreSearchResults.findIndex((searchResult) => {
+        return core.isSearchResultEqual(searchResult, newActiveSearchResult);
       });
       setActiveSearchResultIndex(newActiveSearchResultIndex);
-    }
+    };
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
     core.addEventListener('activeSearchResultChanged', activeSearchResultChanged);
@@ -51,4 +53,3 @@ const RedactionPanelProvider = ({ children }) => {
 };
 
 export { RedactionPanelProvider, RedactionPanelContext };
-

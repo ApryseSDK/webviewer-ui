@@ -1,6 +1,6 @@
 export default (dataElement, state) => getLeftPanelDataElements(state).includes(dataElement);
 
-export const getLeftPanelDataElements = state => {
+export const getLeftPanelDataElements = (state) => {
   const defaultLeftPanels = [
     'thumbnailsPanel',
     'outlinesPanel',

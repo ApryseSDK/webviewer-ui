@@ -21,7 +21,7 @@ class LeftPanelTabs extends React.Component {
     setActiveLeftPanel: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   };
-  isActive = panel => this.props.activePanel === panel;
+  isActive = (panel) => this.props.activePanel === panel;
 
   render() {
     const {
@@ -94,25 +94,24 @@ class LeftPanelTabs extends React.Component {
             onClick={() => setActiveLeftPanel('notesPanel')}
             title="component.notesPanel"
           />}
-        {customPanels.map(({ panel, tab }, index) =>
-          <React.Fragment key={index}>
-            <Button
-              key={tab.dataElement || index}
-              isActive={this.isActive(panel.dataElement)}
-              dataElement={tab.dataElement}
-              img={tab.img}
-              onClick={() => setActiveLeftPanel(panel.dataElement)}
-              title={tab.title}
-            />
-            {index < customPanels.length - 1 && <div className="divider" />}
-          </React.Fragment>,
+        {customPanels.map(({ panel, tab }, index) => <React.Fragment key={index}>
+          <Button
+            key={tab.dataElement || index}
+            isActive={this.isActive(panel.dataElement)}
+            dataElement={tab.dataElement}
+            img={tab.img}
+            onClick={() => setActiveLeftPanel(panel.dataElement)}
+            title={tab.title}
+          />
+          {index < customPanels.length - 1 && <div className="divider" />}
+        </React.Fragment>,
         )}
       </Element>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
   activePanel: selectors.getActiveLeftPanel(state),
   customPanels: selectors.getCustomPanels(state),

@@ -63,7 +63,7 @@
     height: 1px;
     width: 100%;
     background: var(--divider);
-    margin: 16px 0px;
+    margin: 10px 0px;
   }
 
   .options {
@@ -81,6 +81,81 @@
     }
   }
 
+  .replace-options {
+    .replace-buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      padding-top: 10px;
+      .spinner {
+        margin: 0;
+        position: absolute;
+        left: 30px;
+      }
+      .btn-replace {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--blue-5);
+        border: 1px solid var(--blue-5);
+        color: var(--gray-0);
+        padding: 6px 18px;
+        width: auto;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        border-radius: 4px;
+        height: 28px;
+        cursor: pointer;
+
+        &:disabled {
+          opacity: 0.5;
+        }
+      }
+
+      .btn-replace-all {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--blue-5);
+        padding: 6px 18px;
+        width: auto;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        height: 28px;
+        cursor: pointer;
+        margin-right: 5px;
+
+        &:disabled {
+          opacity: 0.5;
+        }
+      }
+    }
+
+  }
+
+  .extra-options {
+    margin-top: 5px;
+    button.Button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--blue-5);
+      width: auto;
+      cursor: pointer;
+      margin-right: 5px;
+      font-weight: 500;
+      height: 25px;
+
+      .Icon {
+        color: var(--blue-5);
+        width: 14px;
+        margin-top: 10px;
+        margin-left: 6px;
+      }
+    }
+  }
   .footer {
     display: flex;
     align-items: center;

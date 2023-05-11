@@ -1,0 +1,15 @@
+.group-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  user-select: all !important;
+}
+
+.dropdown.active {
+  visibility: visible;
+}
+
+.dropdown.inactive {
+  visibility: hidden;
+  display: none;
+}

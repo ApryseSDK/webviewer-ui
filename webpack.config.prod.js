@@ -45,12 +45,16 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
+            ignore: [
+              /\/core-js/,
+            ],
+            sourceType: "unambiguous",
             presets: [
               '@babel/preset-react',
               [
                 '@babel/preset-env',
                 {
-                  useBuiltIns: 'entry',
+                  useBuiltIns: 'usage',
                   corejs: 3,
                 },
               ],

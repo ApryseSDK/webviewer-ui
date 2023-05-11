@@ -5,7 +5,6 @@ import React, {
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
-import './SaveModal.scss';
 import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
@@ -20,6 +19,8 @@ import downloadPdf from 'helpers/downloadPdf';
 import { workerTypes } from 'constants/types';
 import { range } from 'lodash';
 
+import './SaveModal.scss';
+
 const PAGE_RANGES = {
   ALL: 'all',
   CURRENT_PAGE: 'currentPage',
@@ -30,7 +31,7 @@ const FILE_TYPES = {
   OFFICE: { label: 'OFFICE (*.pptx,*.docx,*.xlsx)', extension: 'office' },
   PDF: { label: 'PDF (*.pdf)', extension: 'pdf', },
   IMAGE: { label: 'PNG (*.png)', extension: 'png', },
-  OFFICE_EDITOR: { label: 'Word Document(*.docx)', extension: 'docx', },
+  OFFICE_EDITOR: { label: 'Word Document (*.docx)', extension: 'office', },
 };
 // These legacy office extensions return corrupted file data from the workers if downloaded as OFFICE
 const CORRUPTED_OFFICE_EXTENSIONS = ['.ppt', '.xls'];
@@ -60,6 +61,8 @@ const SaveModal = () => {
     const updateFile = async () => {
       const document = core.getDocument(activeDocumentViewerKey);
       if (document) {
+        setFiletype(FILE_TYPES.PDF);
+        setFileTypes(initalFileTypes);
         const filename = document.getFilename();
         const newFilename = filename.substring(0, filename.lastIndexOf('.')) || filename;
         setFilename(newFilename);
@@ -75,9 +78,6 @@ const SaveModal = () => {
         } else if (type === workerTypes.OFFICE_EDITOR) {
           setFileTypes([FILE_TYPES.OFFICE_EDITOR]);
           setFiletype(FILE_TYPES.OFFICE_EDITOR);
-        } else {
-          setFileTypes(initalFileTypes);
-          setFiletype(FILE_TYPES.PDF);
         }
         setPageCount(core.getTotalPages(activeDocumentViewerKey));
       }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import LeftPanelPageTabsSmall from "src/components/LeftPanelPageTabs/LeftPanelPageTabsSmall/LeftPanelPageTabsSmall";
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import LeftPanelPageTabsSmall from 'src/components/LeftPanelPageTabs/LeftPanelPageTabsSmall/LeftPanelPageTabsSmall';
 
 // create test component with mock redux
 const initialState = {
@@ -16,7 +16,7 @@ function rootReducer(state = initialState, action) { // eslint-disable-line no-u
   return state;
 }
 const store = createStore(rootReducer);
-const LeftPanelPageTabsSmallRedux = function (props) {
+const LeftPanelPageTabsSmallRedux = function(props) {
   return (
     <Provider store={store}>
       <LeftPanelPageTabsSmall {...props} />

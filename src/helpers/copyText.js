@@ -1,4 +1,5 @@
 import core from 'core';
+import getRootNode from 'helpers/getRootNode';
 
 export default (activeDocumentViewerKey = 1) => {
   // The copyText function should works for 2 cases:
@@ -17,7 +18,7 @@ export default (activeDocumentViewerKey = 1) => {
   } else if (navigator?.clipboard?.writeText) {
     navigator.clipboard.writeText(core.getSelectedText(activeDocumentViewerKey));
   } else {
-    const textarea = document.getElementById('copy-textarea');
+    const textarea = getRootNode().querySelector('#copy-textarea');
     textarea.value = core.getSelectedText(activeDocumentViewerKey);
     textarea.select();
     textarea.setSelectionRange(0, 99999); // this is necessary for iOS
