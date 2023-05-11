@@ -52,6 +52,7 @@ import useOnTextSelected from 'hooks/useOnTextSelected';
 import useOnContextMenuOpen from 'src/hooks/useOnContextMenuOpen';
 import useOnFormFieldAnnotationAddedOrSelected from 'hooks/useOnFormFieldAnnotationAddedOrSelected';
 import useOnFreeTextEdit from 'hooks/useOnFreeTextEdit';
+import useOnMeasurementToolOrAnnotationSelected from 'hooks/useOnMeasurementToolOrAnnotationSelected';
 
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
@@ -71,6 +72,7 @@ import DataElements from 'constants/dataElement';
 import setLanguage from 'src/apis/setLanguage';
 
 import './App.scss';
+
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -366,9 +368,13 @@ const App = ({ removeEventHandlers }) => {
         <InlineCommentingPopup />
         <AnnotationPopup />
         {/* Modals */}
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.ScaleModal}
+          dataElement={DataElements.SCALE_MODAL}
+          hook={useOnMeasurementToolOrAnnotationSelected}
+        />
         <LazyLoadWrapper Component={LazyLoadComponents.ContentEditLinkModal} dataElement={DataElements.CONTENT_EDIT_LINK_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.SignatureModal} dataElement={DataElements.SIGNATURE_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.ScaleModal} dataElement={DataElements.SCALE_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.PrintModal} dataElement={DataElements.PRINT_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.ErrorModal} dataElement={DataElements.ERROR_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.PasswordModal} dataElement={DataElements.PASSWORD_MODAL} />

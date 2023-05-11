@@ -1,5 +1,8 @@
 import { lazy } from 'react';
 
+// Overlays
+const ScaleOverlayContainer = lazy(() => import('components/ScaleOverlay/ScaleOverlayContainer'));
+
 // Popups
 const AnnotationPopup = lazy(() => import('components/AnnotationPopup'));
 const FormFieldEditPopup = lazy(() => import('components/FormFieldEditPopup'));
@@ -9,6 +12,7 @@ const InlineCommentingPopup = lazy(() => import('components/InlineCommentingPopu
 const RichTextPopup = lazy(() => import('components/RichTextPopup'));
 const AudioPlaybackPopup = lazy(() => import('components/AudioPlaybackPopup'));
 const DocumentCropPopup = lazy(() => import('components/DocumentCropPopup'));
+const MeasurementOverlay = lazy(() => import('components/MeasurementOverlay'));
 
 // Modals
 const ContentEditModal = lazy(() => import('components/ContentEditModal'));
@@ -45,6 +49,8 @@ const LazyLoadComponents = {
   RichTextPopup,
   AudioPlaybackPopup,
   DocumentCropPopup,
+  MeasurementOverlay,
+  ScaleOverlayContainer,
   ContentEditModal,
   ContentEditLinkModal,
   SignatureModal,

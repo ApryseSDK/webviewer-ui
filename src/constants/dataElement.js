@@ -60,6 +60,10 @@ const DataElements = {
   },
   MULTITABS_EMPTY_PAGE: 'multiTabsEmptyPage',
 
+  // Overlays
+  SCALE_OVERLAY_CONTAINER: 'scaleOverlayContainer',
+  MEASUREMENT_OVERLAY: 'measurmentOverlay',
+
   // Popups
   ANNOTATION_POPUP: 'annotationPopup',
   FORM_FIELD_EDIT_POPUP: 'formFieldEditPopup',
