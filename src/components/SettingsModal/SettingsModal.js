@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
@@ -12,6 +12,7 @@ import { Swipeable } from 'react-swipeable';
 import GeneralTab from './GeneralTab';
 import KeyboardShortcutTab from './KeyboardShortcutTab';
 import AdvancedTab from './AdvancedTab';
+import { SearchContext } from './SearchWrapper';
 
 import './SettingsModal.scss';
 
@@ -20,15 +21,16 @@ const TABS_ID = 'settingsModal';
 const SettingsModal = () => {
   const [
     isDisabled,
-    isOpen,
+    isHidden,
     selectedTab
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.SETTINGS_MODAL),
-    selectors.isElementOpen(state, DataElements.SETTINGS_MODAL),
+    selectors.isElementHidden(state, DataElements.SETTINGS_MODAL),
     selectors.getSelectedTab(state, TABS_ID)
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState('');
 
   const tabs = [
     [DataElements.SETTINGS_GENERAL_BUTTON, t('option.settings.general')],
@@ -37,8 +39,8 @@ const SettingsModal = () => {
   ];
 
   const className = classNames('Modal', 'SettingsModal', {
-    open: isOpen,
-    closed: !isOpen
+    open: !isHidden,
+    closed: isHidden
   });
 
   const closeModal = () => {
@@ -52,41 +54,50 @@ const SettingsModal = () => {
   };
 
   return isDisabled ? null : (
-    <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <FocusTrap locked={isOpen}>
+    <SearchContext.Provider value={searchTerm}>
+      <FocusTrap locked={!isHidden}>
         <div className={className} data-element={DataElements.SettingsModal} onClick={closeModal}>
           <div className="container" onClick={(e) => e.stopPropagation()}>
-            <div className="swipe-indicator" />
-            <div className="header">
-              <div>{t('option.settings.settings')}</div>
-              <Button
-                img="icon-close"
-                onClick={closeModal}
-                title="action.close"
-              />
-            </div>
+            <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
+              <div className="swipe-indicator" />
+              <div className="header">
+                <div className="title">
+                  <div>{t('option.settings.settings')}</div>
+                  <Button
+                    img="icon-close"
+                    onClick={closeModal}
+                    title="action.close"
+                  />
+                </div>
+                <input
+                  placeholder={t('option.settings.searchSettings')}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            </Swipeable>
             <div className="divider"></div>
             <div className="body">
-              <div className="settings-left-panel">
+              <div className="settings-tabs-container">
                 <div className="settings-tabs">
-                  {tabs.map((tab) => {
+                  {tabs.map(([tab, title]) => {
                     const className = classNames('settings-tab', {
-                      selected: tab[0] === selectedTab
+                      selected: tab === selectedTab
                     });
                     return (
                       <DataElementWrapper
                         className={className}
-                        dataElement={tab[0]}
-                        onClick={() => handleTabClicked(tab[0])}
-                        key={tab[0]}
+                        dataElement={tab}
+                        onClick={() => handleTabClicked(tab)}
+                        key={tab}
                       >
-                        {tab[1]}
+                        {title}
                       </DataElementWrapper>
                     );
                   })}
                 </div>
               </div>
-              <div className="settings-content">
+              <div className={classNames('settings-content', { KeyboardShortcutTab: selectedTab === DataElements.SETTINGS_KEYBOARD_BUTTON })}>
                 {selectedTab === DataElements.SETTINGS_GENERAL_BUTTON && (
                   <GeneralTab />
                 )}
@@ -101,7 +112,7 @@ const SettingsModal = () => {
           </div>
         </div>
       </FocusTrap>
-    </Swipeable>
+    </SearchContext.Provider>
   );
 };
 

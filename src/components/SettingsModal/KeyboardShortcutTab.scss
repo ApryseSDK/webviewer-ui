@@ -1,3 +1,5 @@
+@import "../../constants/styles";
+
 .shortcut-table-header {
   border: 1px var(--border) solid;
   border-bottom: 0px;
@@ -8,6 +10,10 @@
 
   .shortcut-table-header-command {
     width: 220px;
+
+    @include mobile {
+      width: 180px;
+    }
   }
 
   .shortcut-table-header-action {
@@ -46,6 +52,16 @@
       right: 0px;
       height: 20px;
       width: 20px;
+    }
+
+    @include mobile {
+      .shortcut-table-item-command {
+        width: 180px;
+      }
+
+      .shortcut-table-item-description {
+        width: 340px;
+      }
     }
   }
 }

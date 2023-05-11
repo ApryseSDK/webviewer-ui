@@ -15,19 +15,35 @@
 
     .header {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       padding: 16px;
       font-size: 16px;
       font-weight: bold;
       align-items: center;
+
+      .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 32px;
+        margin-bottom: 8px;
+      }
+
+      input {
+        width: 100%;
+        height: 32px;
+        padding: 8px;
+      }
     }
 
     .body {
       height: 100%;
       display: flex;
+      flex-direction: row;
       overflow-y: hidden;
 
-      .settings-left-panel {
+      .settings-tabs-container {
         width: 168px;
         background-color: var(--panel-background);
         flex-shrink: 0;
@@ -48,7 +64,7 @@
 
             &.selected {
               background-color: var(--blue-2) !important;
-              border-right: 1px var(--blue-5) solid;
+              border-right: 2px var(--blue-5) solid;
               color: var(--blue-6);
               cursor: default;
             }
@@ -76,6 +92,46 @@
       height: 1px;
       width: 100%;
       background: var(--divider);
+    }
+
+    @include mobile {
+      height: 100%;
+
+      .body {
+        flex-direction: column;
+
+        .settings-tabs-container {
+          width: 100%;
+          position: fixed;
+
+          .settings-tabs {
+            display: flex;
+
+            .settings-tab {
+              flex: 1;
+              height: 32px;
+              margin-top: 0px;
+              justify-content: center;
+              white-space: nowrap;
+              min-width: 0;
+
+              &.selected {
+                border-right: 0px;
+                border-bottom: 2px var(--blue-5) solid;
+              }
+            }
+          }
+        }
+
+        .settings-content {
+          margin-top: 32px;
+
+          &.KeyboardShortcutTab {
+            overflow-x: scroll;
+            width: 640px;
+          }
+        }
+      }
     }
   }
 }
