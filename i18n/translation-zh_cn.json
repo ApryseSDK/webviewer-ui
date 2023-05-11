@@ -16,6 +16,9 @@
     "comment": "注释",
     "reply": "回复",
     "copy": "复制",
+    "cut": "切",
+    "paste": "粘贴",
+    "pasteWithoutFormatting": "不带格式粘贴",
     "delete": "删除",
     "group": "组",
     "ungroup": "取消组合",
@@ -78,6 +81,7 @@
     "showLess": "显示较少",
     "showMore": "...更多的",
     "chooseFile": "选择一个文件",
+    "changeDate": "改变日期",
     "browse": "浏览文件",
     "selectYourOption": "选择您的选项",
     "open": "打开",
@@ -85,6 +89,7 @@
     "select": "选择",
     "moveToTop": "移到顶部",
     "moveToBottom": "移到底部",
+    "backToMenu": "返回菜单",
     "redactPages": "编辑页面",
     "playAudio": "播放音频",
     "pauseAudio": "音频暂停",
@@ -96,7 +101,8 @@
     "comparePages": "比较页面",
     "startComparison": "开始比较",
     "back": "后退",
-    "clearSignature": "清晰的签名"
+    "clearSignature": "清晰的签名",
+    "newDocument": "新建文件"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -251,6 +257,7 @@
     "errorEnterMeasurement": "您输入的数字无效，您可以输入7.5或7 1/2之类的值",
     "linkURLorPage": "链接网址或页面",
     "warning": "警告",
+    "svgMalicious": "出于安全原因忽略了 SVG 脚本",
     "enterContentEditingMode": "您即将进入文本编辑模式。",
     "existingAnnotationWarning": "现有注释在编辑后可能与文本不匹配。",
     "changesCannotBeUndone": "所做的任何更改都无法撤消。",
@@ -380,7 +387,8 @@
       "qualityHigh": "高",
       "includeAnnotations": "包括注释",
       "includeComments": "包括评论",
-      "printSettings": "打印设置"
+      "printSettings": "打印设置",
+      "printGrayscale": "打印灰度"
     },
     "printInfo": {
       "author": "作者",
@@ -448,7 +456,9 @@
       "filters": "过滤器",
       "user": "用户",
       "type": "类型",
-      "status": "地位"
+      "status": "地位",
+      "filterSettings": "过滤器设置",
+      "filterDocument": "过滤文档和评论面板"
     },
     "state": {
       "accepted": "公认",
@@ -608,6 +618,7 @@
     },
     "settings": {
       "settings": "设置",
+      "searchSettings": "搜索设置",
       "general": "通用",
       "language": "语言",
       "theme": "主题",
@@ -726,6 +737,10 @@
       "title": "不下载就关闭？",
       "message": "此文档有更改，您确定要关闭它而不下载您的工作吗？您无法撤消此操作。",
       "rejectDownloadButton": "关闭而不下载"
+    },
+    "connectToURL": {
+      "title": "安全警告",
+      "message": "此文档正在尝试连接到：\n\n{{- uri}}。\n\n 如果您信任此文档，请单击“确认”将其打开。"
     }
   },
   "shortcut": {
@@ -1063,6 +1078,23 @@
   "languageModal": {
     "selectLanguage": "选择语言"
   },
+  "officeEditor": {
+    "bold": "大胆的",
+    "italic": "斜体",
+    "underline": "强调",
+    "textColor": "文字颜色",
+    "leftAlign": "左对齐",
+    "centerAlign": "居中对齐",
+    "rightAlign": "右对齐",
+    "justify": "证明合法",
+    "lineSpacing": "行间距和段落间距",
+    "bulletList": "项目符号列表",
+    "numberList": "编号列表",
+    "insertLink": "插入链接",
+    "insertImage": "插入图片",
+    "notAvailableInDemoMode": "在演示模式下不可用",
+    "notSupportedOnMobile": "移动设备不支持 Office 编辑。"
+  },
   "insertPageModal": {
     "title": "添加新页面",
     "tabs": {
@@ -1119,7 +1151,11 @@
       "change": "改变",
       "old": "老的",
       "new": "新的",
-      "page": "页"
+      "page": "页",
+      "textContent": "文字内容",
+      "delete": "删除",
+      "insert": "插入",
+      "edit": "编辑"
     }
   },
   "saveModal": {

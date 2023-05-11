@@ -16,6 +16,9 @@
     "comment": "Comment",
     "reply": "Add reply",
     "copy": "Copy",
+    "cut": "Cut",
+    "paste": "Paste",
+    "pasteWithoutFormatting": "Paste without formatting",
     "delete": "Delete",
     "group": "Group",
     "ungroup": "Ungroup",
@@ -78,6 +81,7 @@
     "showLess": "show less",
     "showMore": "...more",
     "chooseFile": "Choose a file",
+    "changeDate": "Change Date",
     "browse": "Browse Files",
     "selectYourOption": "Select your option",
     "open": "Open",
@@ -85,6 +89,7 @@
     "select": "Select",
     "moveToTop": "Move to top",
     "moveToBottom": "Move to bottom",
+    "backToMenu": "Back to Menu",
     "redactPages": "Redact pages",
     "playAudio": "Play audio",
     "pauseAudio": "Pause audio",
@@ -96,7 +101,8 @@
     "comparePages": "Compare pages",
     "startComparison": "Start Comparison",
     "back": "Back",
-    "clearSignature": "Clear signature"
+    "clearSignature": "Clear signature",
+    "newDocument": "New Document"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -251,6 +257,7 @@
     "errorEnterMeasurement": "The number you have entered is invalid, you can enter values like 7.5 or 7 1/2",
     "linkURLorPage": "Link URL or a Page",
     "warning": "Warning",
+    "svgMalicious": "SVG script ignored for security",
     "enterContentEditingMode": "You are about to enter content editing mode.",
     "existingAnnotationWarning": "Existing annotations may not match up with the text after it has been edited.",
     "changesCannotBeUndone": "Any changes made cannot be undone.",
@@ -380,7 +387,8 @@
       "qualityHigh": "High",
       "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
-      "printSettings": "Print Settings"
+      "printSettings": "Print Settings",
+      "printGrayscale": "Print Grayscale"
     },
     "printInfo": {
       "author": "Author",
@@ -448,7 +456,9 @@
       "filters": "Filters",
       "user": "User",
       "type": "Type",
-      "status": "Status"
+      "status": "Status",
+      "filterSettings": "Filter Settings",
+      "filterDocument": "Filter document and comments panel"
     },
     "state": {
       "accepted": "Accepted",
@@ -608,6 +618,7 @@
     },
     "settings": {
       "settings": "Settings",
+      "searchSettings": "Search Settings",
       "general": "General",
       "language": "Language",
       "theme": "Theme",
@@ -726,6 +737,10 @@
       "title": "Close without downloading?",
       "message": "There are changes made to this document, are you sure you want to close it without downloading your work? You can't undo this action.",
       "rejectDownloadButton": "Close without download"
+    },
+    "connectToURL": {
+      "title": "Security Warning",
+      "message": "This document is trying to connect to: \n\n{{- uri}}.\n\n If you trust this document, click Confirm to open it."
     }
   },
   "shortcut": {
@@ -1063,6 +1078,23 @@
   "languageModal": {
     "selectLanguage": "Select language"
   },
+  "officeEditor": {
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "textColor": "Text color",
+    "leftAlign": "Left align",
+    "centerAlign": "Center align",
+    "rightAlign": "Right align",
+    "justify": "Justify",
+    "lineSpacing": "Line & paragraph spacing",
+    "bulletList": "Bulleted list",
+    "numberList": "Numbered list",
+    "insertLink": "Insert link",
+    "insertImage": "Insert image",
+    "notAvailableInDemoMode": "Not available in demo mode",
+    "notSupportedOnMobile": "Office editing is not supported on mobile devices."
+  },
   "insertPageModal": {
     "title": "Add New Page",
     "tabs": {
@@ -1119,7 +1151,11 @@
       "change": "Change",
       "old": "Old",
       "new": "New",
-      "page": "Page"
+      "page": "Page",
+			"textContent": "Text Content",
+			"delete": "delete",
+			"insert": "insert",
+			"edit": "edit"
     }
   },
   "saveModal": {

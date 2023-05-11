@@ -16,6 +16,9 @@
     "comment": "মন্তব্য করুন",
     "reply": "উত্তর যোগ করুন",
     "copy": "কপি",
+    "cut": "কাটা",
+    "paste": "পেস্ট করুন",
+    "pasteWithoutFormatting": "বিন্যাস ছাড়া পেস্ট করুন",
     "delete": "মুছে ফেলা",
     "group": "গ্রুপ",
     "ungroup": "আনগ্রুপ করুন",
@@ -78,6 +81,7 @@
     "showLess": "প্রদর্শন কম",
     "showMore": "...আরো",
     "chooseFile": "একটি ফাইল নির্বাচন করুন",
+    "changeDate": "তারিখ পরিবর্তন",
     "browse": "ফাইল ব্রাউজ",
     "selectYourOption": "আপনার বিকল্প নির্বাচন করুন",
     "open": "খোলা",
@@ -85,6 +89,7 @@
     "select": "নির্বাচন করুন",
     "moveToTop": "উপরে সরান",
     "moveToBottom": "নীচে সরান",
+    "backToMenu": "মেনুতে ফিরে যান",
     "redactPages": "পৃষ্ঠাগুলি সংশোধন করুন",
     "playAudio": "অডিও চালান",
     "pauseAudio": "অডিও বিরতি",
@@ -96,7 +101,8 @@
     "comparePages": "পৃষ্ঠাগুলির তুলনা করুন",
     "startComparison": "তুলনা শুরু করুন",
     "back": "পেছনে",
-    "clearSignature": "সাফ স্বাক্ষর"
+    "clearSignature": "সাফ স্বাক্ষর",
+    "newDocument": "নতুন নথি"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -251,6 +257,7 @@
     "errorEnterMeasurement": "আপনি যে নম্বরটি লিখেছেন সেটি অবৈধ, আপনি 7.5 বা 7 1/2 এর মতো মান লিখতে পারেন",
     "linkURLorPage": "লিঙ্ক URL বা একটি পৃষ্ঠা",
     "warning": "সতর্কতা",
+    "svgMalicious": "নিরাপত্তার জন্য SVG স্ক্রিপ্ট উপেক্ষা করা হয়েছে",
     "enterContentEditingMode": "আপনি বিষয়বস্তু সম্পাদনা মোডে প্রবেশ করতে চলেছেন৷",
     "existingAnnotationWarning": "বিদ্যমান টীকাগুলি সম্পাদনা করার পরে পাঠ্যের সাথে নাও মিলতে পারে।",
     "changesCannotBeUndone": "করা কোনো পরিবর্তন পূর্বাবস্থায় ফেরানো যাবে না.",
@@ -380,7 +387,8 @@
       "qualityHigh": "উচ্চ",
       "includeAnnotations": "টীকা অন্তর্ভুক্ত করুন",
       "includeComments": "মন্তব্য অন্তর্ভুক্ত করুন",
-      "printSettings": "প্রিন্ট সেটিংস"
+      "printSettings": "প্রিন্ট সেটিংস",
+      "printGrayscale": "গ্রেস্কেল প্রিন্ট করুন"
     },
     "printInfo": {
       "author": "লেখক",
@@ -448,7 +456,9 @@
       "filters": "ফিল্টার",
       "user": "ব্যবহারকারী",
       "type": "টাইপ",
-      "status": "স্ট্যাটাস"
+      "status": "স্ট্যাটাস",
+      "filterSettings": "ফিল্টার সেটিংস",
+      "filterDocument": "নথি এবং মন্তব্য প্যানেল ফিল্টার করুন"
     },
     "state": {
       "accepted": "গৃহীত",
@@ -608,6 +618,7 @@
     },
     "settings": {
       "settings": "সেটিংস",
+      "searchSettings": "অনুসন্ধান সেটিংস",
       "general": "সাধারণ",
       "language": "ভাষা",
       "theme": "থিম",
@@ -726,6 +737,10 @@
       "title": "ডাউনলোড না করেই বন্ধ করবেন?",
       "message": "এই নথিতে কিছু পরিবর্তন করা হয়েছে, আপনি কি আপনার কাজ ডাউনলোড না করেই এটি বন্ধ করতে চান? আপনি এই ক্রিয়াটিকে পূর্বাবস্থায় ফেরাতে পারবেন না৷",
       "rejectDownloadButton": "ডাউনলোড ছাড়াই বন্ধ করুন"
+    },
+    "connectToURL": {
+      "title": "নিরাপত্তা সতর্কতা",
+      "message": "এই নথিতে সংযোগ করার চেষ্টা করছে:\n\n{{- উরি}}।\n\n আপনি যদি এই নথিতে বিশ্বাস করেন তবে এটি খুলতে নিশ্চিত করুন ক্লিক করুন৷"
     }
   },
   "shortcut": {
@@ -1063,6 +1078,23 @@
   "languageModal": {
     "selectLanguage": "ভাষা নির্বাচন কর"
   },
+  "officeEditor": {
+    "bold": "সাহসী",
+    "italic": "তির্যক",
+    "underline": "আন্ডারলাইন করুন",
+    "textColor": "লেখার রঙ",
+    "leftAlign": "বাম সারিবদ্ধ",
+    "centerAlign": "কেন্দ্র সারিবদ্ধ",
+    "rightAlign": "ডান সারিবদ্ধ",
+    "justify": "ন্যায্যতা",
+    "lineSpacing": "লাইন এবং অনুচ্ছেদের ব্যবধান",
+    "bulletList": "বুলেটযুক্ত তালিকা",
+    "numberList": "সংখ্যাযুক্ত তালিকা",
+    "insertLink": "লিঙ্ক ঢোকান",
+    "insertImage": "ছবি ঢোকান",
+    "notAvailableInDemoMode": "ডেমো মোডে উপলব্ধ নয়",
+    "notSupportedOnMobile": "অফিস সম্পাদনা মোবাইল ডিভাইসে সমর্থিত নয়।"
+  },
   "insertPageModal": {
     "title": "নতুন পৃষ্ঠা যোগ করুন",
     "tabs": {
@@ -1119,7 +1151,11 @@
       "change": "পরিবর্তন",
       "old": "পুরাতন",
       "new": "নতুন",
-      "page": "পাতা"
+      "page": "পাতা",
+      "textContent": "পাঠ্য বিষয়বস্তু",
+      "delete": "মুছে ফেলা",
+      "insert": "সন্নিবেশ",
+      "edit": "সম্পাদনা"
     }
   },
   "saveModal": {

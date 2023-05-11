@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import { saveAs } from 'file-saver';
@@ -6,23 +8,48 @@ import Button from 'components/Button';
 import Icon from 'components/Icon';
 import Tooltip from 'components/Tooltip';
 import { getAttachmentIcon, isImage, decompressFileContent } from 'helpers/ReplyAttachmentManager';
+import { isSVG, sanitizeSVG } from 'helpers/sanitizeSVG';
 
 import './ReplyAttachmentList.scss';
 
 const ImagePreview = ({ file }) => {
+  const [t] = useTranslation();
+
   const [src, setSrc] = useState();
+  const [isDirtySVG, setIsDirtySvg] = useState(false);
 
   useEffect(() => {
-    if (file instanceof File) {
-      setSrc(URL.createObjectURL(file));
-    } else {
-      decompressFileContent(file).then((blob) => {
-        setSrc(URL.createObjectURL(blob));
-      });
-    }
+    const processImagePreview = async () => {
+      setIsDirtySvg(false);
+      let fileToSanitize = file;
+
+      const isImageFromPDF = !(file instanceof File) && !file.url;
+      if (isImageFromPDF) {
+        fileToSanitize = await decompressFileContent(file);
+      }
+
+      if (file instanceof File || isImageFromPDF) {
+        if (isSVG(file)) {
+          const { svg, isDirty } = await sanitizeSVG(fileToSanitize);
+          setSrc(URL.createObjectURL(svg));
+          setIsDirtySvg(isDirty);
+        } else {
+          setSrc(URL.createObjectURL(fileToSanitize));
+        }
+      }
+    };
+    processImagePreview();
   }, [file]);
 
-  return <img src={src} />;
+  return (
+    <div className={classNames({
+      'reply-attachment-preview': true,
+      'dirty': isDirtySVG,
+    })}>
+      <img src={src} />
+      {isDirtySVG && <span className="reply-attachment-preview-message">{t('message.svgMalicious')}</span>}
+    </div>
+  );
 };
 
 const ReplyAttachmentList = ({ files, isEditing, fileDeleted }) => {
@@ -35,12 +62,20 @@ const ReplyAttachmentList = ({ files, isEditing, fileDeleted }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    let fileData = file;
-    if (!(file instanceof File)) {
+    if (!tabManager) {
+      return console.warn('Can\'t open attachment in non-multi-tab mode');
+    }
+
+    let fileData;
+    if (file instanceof File) {
+      fileData = file;
+    } else if (file.url) {
+      fileData = file.url;
+    } else {
       fileData = await decompressFileContent(file);
     }
 
-    tabManager?.addTab(fileData, {
+    fileData && tabManager.addTab(fileData, {
       filename: file.name,
       setActive: true,
       saveCurrentActiveTabState: true
@@ -58,7 +93,7 @@ const ReplyAttachmentList = ({ files, isEditing, fileDeleted }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const fileData = await decompressFileContent(file);
+    const fileData = file.url ? file.url : await decompressFileContent(file);
     saveAs(fileData, file.name);
   };
 
@@ -71,9 +106,7 @@ const ReplyAttachmentList = ({ files, isEditing, fileDeleted }) => {
           onClick={(e) => onClick(e, file)}
         >
           {previewEnabled && isImage(file) && (
-            <div className="reply-attachment-preview">
-              <ImagePreview file={file} />
-            </div>
+            <ImagePreview file={file} />
           )}
           <div className="reply-attachment-info">
             <Icon

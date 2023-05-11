@@ -16,6 +16,9 @@
     "comment": "Kommentar",
     "reply": "Lägg till svar",
     "copy": "Kopiera",
+    "cut": "Skära",
+    "paste": "Klistra",
+    "pasteWithoutFormatting": "Klistra in utan att formatera",
     "delete": "Radera",
     "group": "Grupp",
     "ungroup": "Dela upp gruppen",
@@ -78,6 +81,7 @@
     "showLess": "visa mindre",
     "showMore": "...Mer",
     "chooseFile": "Välj en fil",
+    "changeDate": "Byt datum",
     "browse": "Bläddra bland filer",
     "selectYourOption": "Välj ditt alternativ",
     "open": "Öppna",
@@ -85,6 +89,7 @@
     "select": "Välj",
     "moveToTop": "Flytta till toppen",
     "moveToBottom": "Flytta till botten",
+    "backToMenu": "Tillbaka till menyn",
     "redactPages": "Redigera sidor",
     "playAudio": "Spela upp ljud",
     "pauseAudio": "Pausa ljud",
@@ -96,7 +101,8 @@
     "comparePages": "Jämför sidor",
     "startComparison": "Starta jämförelse",
     "back": "Tillbaka",
-    "clearSignature": "Tydlig signatur"
+    "clearSignature": "Tydlig signatur",
+    "newDocument": "Nytt dokument"
   },
   "annotation": {
     "areaMeasurement": "Område",
@@ -251,6 +257,7 @@
     "errorEnterMeasurement": "Numret du har angett är ogiltigt, du kan ange värden som 7,5 eller 7 1/2",
     "linkURLorPage": "Länka URL eller en sida",
     "warning": "Varning",
+    "svgMalicious": "SVG-skript ignoreras för säkerhets skull",
     "enterContentEditingMode": "Du är på väg att gå in i innehållsredigeringsläge.",
     "existingAnnotationWarning": "Befintliga kommentarer kanske inte matchar texten efter att den har redigerats.",
     "changesCannotBeUndone": "Eventuella ändringar kan inte ångras.",
@@ -380,7 +387,8 @@
       "qualityHigh": "Hög",
       "includeAnnotations": "Inkludera kommentarer",
       "includeComments": "Inkludera kommentarer",
-      "printSettings": "Utskriftsinställningar"
+      "printSettings": "Utskriftsinställningar",
+      "printGrayscale": "Skriv ut gråskala"
     },
     "printInfo": {
       "author": "Författare",
@@ -448,7 +456,9 @@
       "filters": "Filter",
       "user": "Användare",
       "type": "Typ",
-      "status": "Status"
+      "status": "Status",
+      "filterSettings": "Filterinställningar",
+      "filterDocument": "Filtrera dokument och kommentarspanel"
     },
     "state": {
       "accepted": "Accepterad",
@@ -608,6 +618,7 @@
     },
     "settings": {
       "settings": "inställningar",
+      "searchSettings": "Sökinställningar",
       "general": "Allmän",
       "language": "Språk",
       "theme": "Tema",
@@ -726,6 +737,10 @@
       "title": "Stäng utan att ladda ner?",
       "message": "Det har gjorts ändringar i det här dokumentet, är du säker på att du vill stänga det utan att ladda ner ditt arbete? Du kan inte ångra den här åtgärden.",
       "rejectDownloadButton": "Stäng utan nedladdning"
+    },
+    "connectToURL": {
+      "title": "Säkerhetsvarning",
+      "message": "Det här dokumentet försöker ansluta till:\n\n{{- uri}}.\n\n Om du litar på det här dokumentet klickar du på Bekräfta för att öppna det."
     }
   },
   "shortcut": {
@@ -1063,6 +1078,23 @@
   "languageModal": {
     "selectLanguage": "Välj språk"
   },
+  "officeEditor": {
+    "bold": "Djärv",
+    "italic": "Kursiv",
+    "underline": "Understrykning",
+    "textColor": "Text färg",
+    "leftAlign": "Vänsterjustera",
+    "centerAlign": "Centrera",
+    "rightAlign": "Högerjustera",
+    "justify": "Rättfärdiga",
+    "lineSpacing": "Rad- och styckeavstånd",
+    "bulletList": "Punktlista",
+    "numberList": "Numrerad lista",
+    "insertLink": "Infoga länk",
+    "insertImage": "Infoga bild",
+    "notAvailableInDemoMode": "Ej tillgängligt i demoläge",
+    "notSupportedOnMobile": "Office-redigering stöds inte på mobila enheter."
+  },
   "insertPageModal": {
     "title": "Lägg till ny sida",
     "tabs": {
@@ -1119,7 +1151,11 @@
       "change": "Förändra",
       "old": "Gammal",
       "new": "Ny",
-      "page": "Sida"
+      "page": "Sida",
+      "textContent": "Textinnehåll",
+      "delete": "radera",
+      "insert": "Föra in",
+      "edit": "redigera"
     }
   },
   "saveModal": {
