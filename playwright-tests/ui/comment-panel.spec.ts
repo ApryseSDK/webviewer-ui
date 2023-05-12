@@ -17,18 +17,18 @@ test.describe('Comment panel', () => {
       });
       let annotation;
       if (isFreeTextAnnot) {
-        annotation = new Annotations.FreeTextAnnotation();
+        annotation = new Core.Annotations.FreeTextAnnotation();
         annotation.PageNumber = 1;
         // these values need to be set before setPadding and setContent can be called
         annotation.X = 100;
         annotation.Y = 150;
         annotation.Width = 200;
         annotation.Height = 50;
-        annotation.setPadding(new Annotations.Rect(0, 0, 0, 0));
+        annotation.setPadding(new Core.Annotations.Rect(0, 0, 0, 0));
         annotation.setContents(noteContent);
         annotation.setRichTextStyle(richTextStyle);
       } else {
-        annotation = new Annotations.RectangleAnnotation();
+        annotation = new Core.Annotations.RectangleAnnotation();
         annotation.PageNumber = 1;
         annotation.X = 100;
         annotation.Y = 150;
@@ -264,7 +264,7 @@ test.describe('Comment panel', () => {
     });
 
     await iframe.evaluate(async () => {
-      window.instance.Core.annotationManager.setIsAdminUser(false);
+      window.instance.Core.annotationManager.demoteUserFromAdmin();
       const promise = new Promise((resolve) => {
         window.instance.Core.annotationManager.addEventListener('updateAnnotationPermission', () => {
           resolve();
@@ -294,7 +294,7 @@ test.describe('Comment panel', () => {
     await instance('openElement', 'notesPanel');
     await iframe.evaluate(async () => {
       const annotationManager = window.instance.Core.annotationManager;
-      annotationManager.setIsAdminUser(true);
+      annotationManager.promoteUserToAdmin();
 
       const annotations = annotationManager.getAnnotationsList().filter((annotation) => annotation.PageNumber === 5);
 
@@ -323,7 +323,7 @@ test.describe('Comment panel', () => {
         const annotationManager = window.instance.Core.annotationManager;
         annotationManager.deselectAllAnnotations();
 
-        const freetextAnnotations = annotationManager.getAnnotationsList().filter((annotations) => annotations instanceof window.Annotations.FreeTextAnnotation);
+        const freetextAnnotations = annotationManager.getAnnotationsList().filter((annotations) => annotations instanceof window.Core.Annotations.FreeTextAnnotation);
         annotationManager.selectAnnotation(freetextAnnotations[index]);
 
         return freetextAnnotations[index].Id;
@@ -785,7 +785,7 @@ test.describe('Comment panel', () => {
   test('should use correct icon for annotation comments', async ({ page }) => {
     await iframe.evaluate(async () => {
       const { annotationManager, Annotations } = window.instance.Core;
-      const stampAnnotation = new Annotations.StampAnnotation();
+      const stampAnnotation = new Core.Annotations.StampAnnotation();
       stampAnnotation.PageNumber = 1;
       stampAnnotation.X = 100;
       stampAnnotation.Y = 250;
@@ -889,5 +889,98 @@ test.describe('Comment panel', () => {
       return window.instance.UI.mentions.getUserData();
     }, userData);
     expect(users).toStrictEqual(userData);
+  });
+
+  test('should edit a note with mentions active and show the mentions correctly', async ({ page }) => {
+    await iframe.evaluate(async () => {
+      const userData = [
+        {
+          value: 'John Doe',
+          id: 'johndoe@gmail.com',
+          email: 'johndoe@gmail.com'
+        },
+      ];
+      window.instance.UI.mentions.setUserData(userData);
+    });
+
+    await instance('setToolMode', 'AnnotationCreateSticky');
+    const pageContainer = await iframe.$('#pageContainer1');
+    const { x, y } = await pageContainer.boundingBox();
+    await page.mouse.click(x + 100, y + 20);
+
+    await page.waitForTimeout(2000);
+
+    await instance('enableNoteSubmissionWithEnter');
+    await page.keyboard.type('@John');
+    await page.waitForTimeout(1000);
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(1000);
+    await iframe.click('.note-popup-toggle-trigger');
+    await page.waitForTimeout(1000);
+    const editButton = await iframe.$('.NotePopup .note-popup-options > .note-popup-option');
+    await editButton?.click();
+    await page.waitForTimeout(1000);
+
+    const commentTextareaText = await iframe.$('.comment-textarea .ql-container .ql-editor p');
+    expect(await commentTextareaText?.textContent()).toBe('@John Doe');
+  });
+
+  test('should be able to edit note when delete content in freetext annotation', async ({ page }) => {
+    await instance('setToolMode', 'AnnotationCreateFreeText');
+
+    const pageContainer = await iframe.$('#pageContainer1');
+    const { x, y } = await pageContainer.boundingBox();
+    const point = { x: 50, y: 50 };
+
+    // create free text annotation
+    await page.mouse.click(x + point.x, y + point.y);
+    // delete content of free text annotation
+    await page.keyboard.press('Backspace');
+    // open notes panel
+    await iframe.click('[data-element=toggleNotesButton]');
+    // close notes panel
+    await instance('closeElements', ['notesPanel']);
+    await page.waitForTimeout(1000);
+    // edit free text
+    await page.mouse.click(x + point.x + 10, y + point.y + 10, { clickCount: 2 });
+    await page.waitForTimeout(500);
+    await page.keyboard.type('test');
+    // deselect free text
+    await page.mouse.click(x + point.x + 200, y + point.y + 200, { clickCount: 2 });
+    // get content of free text
+    const content = await iframe.evaluate(() => {
+      const { annotationManager } = window.instance.Core;
+      const annotation = annotationManager.getAnnotationsList()[0];
+      return annotation.getContents();
+    });
+    expect(content).toBe('test');
+  });
+
+  test('should be able add comments properly when the comment input is out of screen', async ({ page }) => {
+    await instance('loadDocument', '/test-files/webviewer-demo-many-annots.pdf');
+    await page.waitForTimeout(5000);
+    await instance('openElement', 'notesPanel');
+
+    const lastAnnotationId = await iframe.evaluate(async () => {
+      const annotationManager = window.instance.Core.annotationManager;
+      annotationManager.deselectAllAnnotations();
+      const annotsListLength = annotationManager.getAnnotationsList().length;
+      const lastAnnotation = annotationManager.getAnnotationsList()[annotsListLength - 1];
+      return lastAnnotation.Id;
+    },);
+
+    await page.waitForTimeout(500);
+    const lastNoteContainer = await iframe.$(`#note_${lastAnnotationId}`);
+    expect(await lastNoteContainer?.evaluate((node) => node.innerHTML)).toBeTruthy();
+    await lastNoteContainer?.click();
+    await page.waitForTimeout(500);
+    await page.keyboard.type('Test comment');
+    await page.keyboard.down('Enter');
+    await page.keyboard.type('Should add this text on a new line');
+
+    // Checking if two lines was added because when the input was out of screen,
+    // there was a bug that the text was added on the same line
+    const commentTextareaText = await iframe.$(`#note_${lastAnnotationId} .comment-textarea .ql-container .ql-editor`);
+    expect(await commentTextareaText?.innerHTML()).toBe('<p>Test comment</p><p>Should add this text on a new line</p>');
   });
 });

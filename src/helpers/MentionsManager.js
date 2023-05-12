@@ -161,6 +161,13 @@ class MentionsManager {
     }
   }
 
+  doesDeltaContainMention(deltas) {
+    const containsMention = deltas.some((delta) => {
+      return delta.insert?.mention;
+    });
+    return containsMention;
+  }
+
   getFormattedTextFromDeltas(deltas) {
     const formattedMentionTextList = [];
     deltas.forEach((delta) => {
@@ -273,7 +280,7 @@ class MentionsManager {
   createMentionReply(annotation, value) {
     const { plainTextValue, ids } = this.extractMentionDataFromStr(value);
 
-    const replyAnnot = new Annotations.StickyAnnotation();
+    const replyAnnot = new window.Core.Annotations.StickyAnnotation();
     replyAnnot['InReplyTo'] = annotation['Id'];
     replyAnnot['X'] = annotation['X'];
     replyAnnot['Y'] = annotation['Y'];
