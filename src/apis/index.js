@@ -102,6 +102,7 @@ import setWv3dPropertiesPanelModelData from './setWv3dPropertiesPanelModelData';
 import setWv3dPropertiesPanelSchema from './setWv3dPropertiesPanelSchema';
 import setActiveHeaderGroup from './setActiveHeaderGroup';
 import setActiveLeftPanel from './setActiveLeftPanel';
+import setTimezone from './setTimezone';
 import setAdminUser from './setAdminUser';
 import setAnnotationUser from './setAnnotationUser';
 import setActivePalette from './setActivePalette';
@@ -249,7 +250,9 @@ import RibbonItem from './ModularComponents/ribbonItem';
 import RibbonGroup from './ModularComponents/ribbonGroup';
 import ToggleElementButton from './ModularComponents/toggleElementButton';
 import ToolGroupButton from './ModularComponents/toolGroupButton';
+import Zoom from './ModularComponents/zoom';
 import Flyout from './ModularComponents/flyout';
+import setMultiViewerSyncScrollingMode from './setMultiViewerSyncScrollingMode';
 
 import {
   getMeasurementScalePreset,
@@ -267,18 +270,16 @@ import addPanel from './addPanel';
 import setGrayscaleDarknessFactor from './setGrayscaleDarknessFactor';
 import { ALIGNMENT } from 'constants/customizationVariables';
 import FlyoutsAPI from './FlyoutsAPI';
+import { getInstanceNode } from 'helpers/getRootNode';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
   const UI_NAMESPACE = 'UI';
   const objForWebViewerCore = {
     Tools: window.Core.Tools,
-    Annotations: window.Annotations,
-    // keep CoreControls for backwards compabililty
-    // remove this in 9.0
-    CoreControls: window.Core,
+    Annotations: window.Core.Annotations,
     PartRetrievers: window.Core.PartRetrievers,
-    Actions: window.Actions,
+    Actions: window.Core.Actions,
     PDFNet: window.Core.PDFNet,
   };
   const objForWebViewerUI = {
@@ -340,6 +341,7 @@ export default (store) => {
     overrideSearchExecution,
     setActiveHeaderGroup: setActiveHeaderGroup(store),
     setActiveLeftPanel: setActiveLeftPanel(store),
+    setTimezone: setTimezone(store),
     addCustomModal: addCustomModal(store),
     addPanel: addPanel(store),
     showOutlineControl: showOutlineControl(store),
@@ -444,6 +446,7 @@ export default (store) => {
       RibbonItem,
       RibbonGroup,
       ToolGroupButton,
+      Zoom,
       Flyout: Flyout(store),
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
@@ -540,6 +543,7 @@ export default (store) => {
     importUserSettings: importUserSettings(store),
     setGrayscaleDarknessFactor,
     setSideWindowVisibility: setSideWindowVisibility(store),
+    setMultiViewerSyncScrollingMode: setMultiViewerSyncScrollingMode(store),
 
     // undocumented
     loadedFromServer: false,
@@ -571,7 +575,7 @@ export default (store) => {
   };
   const documentViewer = core.getDocumentViewer(1);
 
-  window.instance = {
+  getInstanceNode().instance = {
     // keys needed for webviewer.js
     CORE_NAMESPACE_KEY: CORE_NAMESPACE,
     UI_NAMESPACE_KEY: UI_NAMESPACE,
@@ -583,11 +587,5 @@ export default (store) => {
       getDocumentViewers: () => core.getDocumentViewers(),
     },
     [UI_NAMESPACE]: objForWebViewerUI,
-
-    // keep them here for backwards compatibililty. should remove them in 9.0
-    ...objForWebViewerCore,
-    ...objForWebViewerUI,
-    docViewer: documentViewer,
-    annotManager: documentViewer.getAnnotationManager(),
   };
 };

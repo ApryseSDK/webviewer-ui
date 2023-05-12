@@ -30,11 +30,11 @@ const DEFAULT_CONTAINER_TOP_OFFSET = 85;
 const DEFAULT_CONTAINER_RIGHT_OFFSET = 35;
 const DEFAULT_WIDTH_RATIO = 0.666;
 const DEFAULT_DISTANCE = 10;
+const dataElement = 'scaleOverlayContainer';
 
 const ScaleOverlayContainer = () => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
-  const dataElement = 'scaleOverlayContainer';
   const isDisabled = useSelector((state) => selectors.isElementDisabled(state, dataElement));
   const [isOpen, setOpen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -172,13 +172,12 @@ const ScaleOverlayContainer = () => {
   const onCancelCalibrationMode = useCallback((previousToolName) => {
     core.setToolMode(previousToolName);
     updateIsCalibration(false);
-    dispatch(actions.openElements([DataElements.SCALE_MODAL]));
+    dispatch(actions.setIsElementHidden(DataElements.SCALE_MODAL, false));
   }, []);
 
   const onApplyCalibration = useCallback((previousToolName, tempScale, isFractionalUnit) => {
-    setSelectedScale(new Scale(tempScale));
     dispatch(actions.updateCalibrationInfo({ isCalibration: false, tempScale, isFractionalUnit }));
-    dispatch(actions.openElements([DataElements.SCALE_MODAL]));
+    dispatch(actions.setIsElementHidden(DataElements.SCALE_MODAL, false));
     core.setToolMode(previousToolName);
     core.deleteAnnotations([annotations[0]]);
   }, [annotations]);
@@ -187,10 +186,8 @@ const ScaleOverlayContainer = () => {
     openScaleModal();
     dispatch(actions.setIsAddingNewScale(true));
   }, []);
-  if (isDisabled) {
-    return null;
-  }
-  return (
+
+  return !isDisabled && (
     <Draggable
       position={position}
       bounds={containerBounds()}

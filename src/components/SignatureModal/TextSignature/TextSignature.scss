@@ -5,34 +5,11 @@
   width: 100%;
   height: 100%;
   padding: 16px;
-  
+
   canvas {
     display: none;
   }
 
-  &-input-container{
-    background: var(--signature-draw-background);
-    border-top: 1px solid var(--modal-stroke-and-border);
-    border-right: 1px solid var(--modal-stroke-and-border);
-    border-left: 1px solid var(--modal-stroke-and-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    width: 100%;
-    height: 196px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-
-    @include small-browser-height {
-      height: 116px;
-    }
-
-    @include tiny-browser-height {
-      height: 86px;
-    }
-  }
-  
   &-input {
     outline: none;
     width: 100%;
@@ -41,9 +18,12 @@
     border-bottom: 1px solid var(--modal-stroke-and-border);
     border-radius: 0;
     text-align: center;
+    height: 85px;
 
     @include small-browser-height {
-      font-size: 48px !important;
+      font-size: 42px !important;
+      height: 50px;
+
     }
 
     @include tiny-browser-height {
@@ -72,9 +52,9 @@
     margin-top: 10px;
     overflow-y: auto;
     flex-grow: 1;
-    visibility:hidden;
+    visibility: hidden;
     position: fixed;
-    
+
     &:hover {
       cursor: pointer;
     }
@@ -85,20 +65,8 @@
     }
   }
 
-  .colorpalette-clear-container{
-    display: flex;
-    height: 44px;
-    justify-content: space-between;
-    box-sizing: border-box;
-    border: 1px solid var(--modal-stroke-and-border);
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-  }
-
-
   label {
-    margin-left: auto;
-    margin-right: auto;
-    width:100%;
+    margin-top: 60px;
+    width: 100%;
   }
 }

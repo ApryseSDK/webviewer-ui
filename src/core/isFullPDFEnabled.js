@@ -1,4 +1,4 @@
 /**
- * https://www.pdftron.com/api/web/Core.isFullPDFEnabled.html#isFullPDFEnabled__anchor
+ * https://docs.apryse.com/api/web/Core.html#.isFullPDFEnabled
  */
 export default () => window.Core.isFullPDFEnabled();

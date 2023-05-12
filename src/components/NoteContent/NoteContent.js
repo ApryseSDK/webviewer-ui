@@ -70,6 +70,7 @@ const NoteContent = ({
     canCollapseTextPreview,
     canCollapseReplyPreview,
     activeTheme,
+    timezone,
   ] = useSelector(
     (state) => [
       selectors.getNoteDateFormat(state),
@@ -80,6 +81,7 @@ const NoteContent = ({
       selectors.isNotesPanelTextCollapsingEnabled(state),
       selectors.isNotesPanelRepliesCollapsingEnabled(state),
       selectors.getActiveTheme(state),
+      selectors.getTimezone(state),
     ],
     shallowEqual,
   );
@@ -256,7 +258,7 @@ const NoteContent = ({
 
   if (activeTheme === Theme.DARK) {
     if (textColor && isDarkColorHex(textColor.toHexString())) {
-      textColor = new window.Annotations.Color(255, 255, 255, 1);
+      textColor = new window.Core.Annotations.Color(255, 255, 255, 1);
     }
 
     if (richTextStyle) {
@@ -392,9 +394,10 @@ const NoteContent = ({
           isMultiSelectMode={isMultiSelectMode}
           isGroupMember={isGroupMember}
           showAnnotationNumbering={showAnnotationNumbering}
+          timezone={timezone}
         />
       );
-    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember]
+    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember, timezone]
   );
 
   return (
@@ -449,6 +452,9 @@ const ContentArea = ({
     // on initial mount, focus the last character of the textarea
     if ((isNotesPanelOpen || isInlineCommentOpen) && textareaRef.current) {
       const editor = textareaRef.current.getEditor();
+      !isReply && editor.setText('');
+      const container = annotation.editor?.getContainerElement?.();
+      container?.parentNode.removeChild(container);
       annotation.editor = editor;
 
       /**
@@ -525,11 +531,11 @@ const ContentArea = ({
 
     await setAnnotationAttachments(annotation, pendingAttachmentMap[annotation.Id]);
 
-    const source = (annotation instanceof window.Annotations.FreeTextAnnotation)
+    const source = (annotation instanceof window.Core.Annotations.FreeTextAnnotation)
       ? 'textChanged' : 'noteChanged';
     core.getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', { 'source': source }]);
 
-    if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+    if (annotation instanceof window.Core.Annotations.FreeTextAnnotation) {
       core.drawAnnotationsFromList([annotation]);
     }
 

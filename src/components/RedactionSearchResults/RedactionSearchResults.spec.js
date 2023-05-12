@@ -7,14 +7,14 @@ import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
 
 const RedactionSearchResultsWithRedux = withProviders(RedactionSearchResults);
 
-function noop() { };
+function noop() { }
 
 const customRenderWithContext = (component, providerProps = {}) => {
   return render(
     <RedactionPanelContext.Provider value={providerProps}>
       {component}
     </RedactionPanelContext.Provider>,
-  )
+  );
 };
 
 describe('RedactionSearchResults component', () => {
@@ -58,5 +58,5 @@ describe('RedactionSearchResults component', () => {
 
     userEvent.click(redactButton);
     expect(props.redactSelectedResults).toHaveBeenCalledWith([mockSearchResults[0], mockSearchResults[1]]);
-  })
+  });
 });

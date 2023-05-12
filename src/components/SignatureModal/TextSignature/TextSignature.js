@@ -11,6 +11,7 @@ import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 
 import './TextSignature.scss';
+import getRootNode from 'helpers/getRootNode';
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
@@ -44,7 +45,7 @@ const getSignatureLength = (text, fontSize, fontFamily) => {
   textSpan.style.visibility = 'hidden';
   textSpan.style.font = font;
 
-  document.getElementsByTagName('body')[0].appendChild(textSpan);
+  getRootNode().getElementsByTagName('body')[0].appendChild(textSpan);
   textSpan.textContent = text;
 
   const signatureWidth = textSpan.getBoundingClientRect().width;
@@ -107,7 +108,7 @@ const TextSignature = ({
   const [fullSignature, setFullSiganture] = useState('');
   const [initials, setInitials] = useState('');
   const [isDefaultValue, setIsDefaultValue] = useState(true);
-  const [fontColor, setFontColor] = useState(new window.Annotations.Color(DEFAULT_FONT_COLOR));
+  const [fontColor, setFontColor] = useState(new window.Core.Annotations.Color(DEFAULT_FONT_COLOR));
   const [fontSize, setFontSize] = useState(TYPED_SIGNATURE_FONT_SIZE);
   const inputRef = useRef();
   const fullSignatureHiddenCanvasRef = useRef();

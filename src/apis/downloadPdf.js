@@ -49,14 +49,15 @@ import downloadPdf from 'helpers/downloadPdf';
 import { workerTypes } from 'constants/types';
 import core from 'core';
 
-export default store => async (options = { includeAnnotations: true }) => {
+export default (store) => async (options = { includeAnnotations: true }) => {
   const documentType = core.getDocument()?.getType();
-  const { PDF, WEBVIEWER_SERVER, OFFICE, IMAGE } = workerTypes;
+  const { PDF, WEBVIEWER_SERVER, OFFICE, OFFICE_EDITOR, IMAGE } = workerTypes;
 
   if (
     documentType !== PDF &&
     documentType !== IMAGE &&
     documentType !== OFFICE &&
+    documentType !== OFFICE_EDITOR &&
     documentType !== WEBVIEWER_SERVER
   ) {
     console.warn('Document type is not PDF. Cannot be downloaded.');

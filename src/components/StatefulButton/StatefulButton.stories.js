@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import StatefulButtonComponent from './StatefulButton';
 
 const initialState = {
@@ -10,9 +10,9 @@ const initialState = {
     openElements: [],
   }
 };
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState) {
   return state;
-};
+}
 
 const store = createStore(rootReducer);
 
@@ -36,7 +36,7 @@ StatefulButtonCounter.args = {
   states: {
     Count: {
       number: 1,
-      getContent: activeState => {
+      getContent: (activeState) => {
         return activeState.number;
       },
       onClick: (update, activeState) => {
@@ -55,14 +55,14 @@ StatefulButtonStates.args = {
   initialState: 'SinglePage',
   states: {
     SinglePage: {
-      img: `icon-header-page-manipulation-page-layout-single-page-line`,
+      img: 'icon-header-page-manipulation-page-layout-single-page-line',
       onClick: (update) => {
         update('DoublePage');
       },
       title: 'Single Page',
     },
     DoublePage: {
-      img: `icon-header-page-manipulation-page-layout-double-page-line`,
+      img: 'icon-header-page-manipulation-page-layout-double-page-line',
       onClick: (update) => {
         update('SinglePage');
       },
@@ -70,5 +70,4 @@ StatefulButtonStates.args = {
     },
   },
   mount: () => {},
-};;
-
+};

@@ -71,7 +71,7 @@ const map = {
     currentStyleTab: 'StrokeColor',
     styleTabs: ['StrokeColor'],
     toolNames: ['AnnotationCreateSignature'],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeHandAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.FreeHandAnnotation &&
       annotation.Subject === i18next.t('annotation.signature'),
   },
   [annotationMapKeys.FREE_HAND]: {
@@ -86,7 +86,7 @@ const map = {
       'AnnotationCreateFreeHand3',
       'AnnotationCreateFreeHand4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeHandAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.FreeHandAnnotation,
   },
   [annotationMapKeys.FREE_HAND_HIGHLIGHT]: {
     icon: 'icon-tool-pen-highlight',
@@ -100,7 +100,7 @@ const map = {
       'AnnotationCreateFreeHandHighlight3',
       'AnnotationCreateFreeHandHighlight4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeHandAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.FreeHandAnnotation,
   },
   [annotationMapKeys.FREE_TEXT]: {
     icon: 'icon-tool-text-free-text',
@@ -114,9 +114,9 @@ const map = {
       'AnnotationCreateFreeText3',
       'AnnotationCreateFreeText4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeTextAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===
-      window.Annotations.FreeTextAnnotation.Intent.FreeText,
+      window.Core.Annotations.FreeTextAnnotation.Intent.FreeText,
   },
   [annotationMapKeys.MARK_INSERT_TEXT]: {
     icon: 'ic-insert text',
@@ -130,7 +130,7 @@ const map = {
       'AnnotationCreateMarkInsertText3',
       'AnnotationCreateMarkInsertText4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.CaretAnnotation
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.CaretAnnotation
   },
   [annotationMapKeys.MARK_REPLACE_TEXT]: {
     icon: 'ic-replace text',
@@ -144,7 +144,7 @@ const map = {
       'AnnotationCreateMarkReplaceText3',
       'AnnotationCreateMarkReplaceText4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.CaretAnnotation
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.CaretAnnotation
   },
   [annotationMapKeys.DATE_FREE_TEXT]: {
     icon: 'icon-tool-fill-and-sign-calendar',
@@ -158,9 +158,9 @@ const map = {
       'AnnotationCreateDateFreeText3',
       'AnnotationCreateDateFreeText4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeTextAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===
-        window.Annotations.FreeTextAnnotation.Intent.FreeText,
+        window.Core.Annotations.FreeTextAnnotation.Intent.FreeText,
   },
   [annotationMapKeys.DISTANCE_MEASUREMENT]: {
     icon: 'icon-tool-measurement-distance-line',
@@ -175,7 +175,7 @@ const map = {
       'AnnotationCreateDistanceMeasurement4',
     ],
     hasLineEndings: true,
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.LineAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.LineAnnotation &&
       annotation.IT === 'LineDimension' &&
       annotation.Measure,
   },
@@ -192,7 +192,7 @@ const map = {
       'AnnotationCreatePerimeterMeasurement4',
     ],
     hasLineEndings: true,
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.PolylineAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.PolylineAnnotation &&
       annotation.IT === 'PolyLineDimension' &&
       annotation.Measure,
   },
@@ -208,7 +208,7 @@ const map = {
       'AnnotationCreateArcMeasurement3',
       'AnnotationCreateArcMeasurement4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.ArcAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.ArcAnnotation &&
       annotation.IT === 'ArcDimension' &&
       annotation.Measure,
   },
@@ -224,7 +224,7 @@ const map = {
       'AnnotationCreateRectangularAreaMeasurement3',
       'AnnotationCreateRectangularAreaMeasurement4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.PolygonAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.PolygonAnnotation &&
       annotation.IT === 'PolygonDimension' &&
       annotation.Measure &&
       annotation.isRectangularPolygon(),
@@ -241,7 +241,7 @@ const map = {
       'AnnotationCreateCloudyRectangularAreaMeasurement3',
       'AnnotationCreateCloudyRectangularAreaMeasurement4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.PolygonAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.PolygonAnnotation &&
       annotation.IT === 'PolygonDimension' &&
       annotation.Measure &&
       annotation.isRectangularPolygon(),
@@ -258,7 +258,7 @@ const map = {
       'AnnotationCreateAreaMeasurement3',
       'AnnotationCreateAreaMeasurement4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.PolygonAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.PolygonAnnotation &&
       annotation.IT === 'PolygonDimension' &&
       annotation.Measure,
   },
@@ -274,7 +274,7 @@ const map = {
       'AnnotationCreateEllipseMeasurement3',
       'AnnotationCreateEllipseMeasurement4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.EllipseAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.EllipseAnnotation &&
       annotation.IT === 'EllipseDimension' &&
       annotation.Measure,
   },
@@ -290,7 +290,7 @@ const map = {
       'AnnotationCreateCountMeasurement3',
       'AnnotationCreateCountMeasurement4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.StickyAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.StickyAnnotation &&
       annotation.getCustomData('trn-is-count')
   },
   [annotationMapKeys.CALLOUT]: {
@@ -305,9 +305,9 @@ const map = {
       'AnnotationCreateCallout3',
       'AnnotationCreateCallout4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeTextAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.FreeTextAnnotation &&
       annotation.getIntent() ===
-      window.Annotations.FreeTextAnnotation.Intent.FreeTextCallout,
+      window.Core.Annotations.FreeTextAnnotation.Intent.FreeTextCallout,
   },
   [annotationMapKeys.LINE]: {
     icon: 'icon-tool-shape-line',
@@ -322,7 +322,7 @@ const map = {
       'AnnotationCreateLine4',
     ],
     hasLineEndings: true,
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.LineAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.LineAnnotation &&
     annotation.IT !== 'LineArrow',
   },
   [annotationMapKeys.ARROW]: {
@@ -338,7 +338,7 @@ const map = {
       'AnnotationCreateArrow4',
     ],
     hasLineEndings: true,
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.LineAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.LineAnnotation &&
     annotation.IT === 'LineArrow',
   },
   [annotationMapKeys.POLYGON]: {
@@ -353,7 +353,7 @@ const map = {
       'AnnotationCreatePolygon3',
       'AnnotationCreatePolygon4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.PolygonAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.PolygonAnnotation &&
       annotation.Style !== 'cloudy',
   },
   [annotationMapKeys.CLOUD]: {
@@ -368,7 +368,7 @@ const map = {
       'AnnotationCreatePolygonCloud3',
       'AnnotationCreatePolygonCloud4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.PolygonAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.PolygonAnnotation &&
       annotation.Style === 'cloudy',
   },
   [annotationMapKeys.HIGHLIGHT]: {
@@ -383,7 +383,7 @@ const map = {
       'AnnotationCreateTextHighlight3',
       'AnnotationCreateTextHighlight4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.TextHighlightAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextHighlightAnnotation,
   },
   [annotationMapKeys.UNDERLINE]: {
     icon: 'icon-tool-text-manipulation-underline',
@@ -397,7 +397,7 @@ const map = {
       'AnnotationCreateTextUnderline3',
       'AnnotationCreateTextUnderline4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.TextUnderlineAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextUnderlineAnnotation,
   },
   [annotationMapKeys.SQUIGGLY]: {
     icon: 'icon-tool-text-manipulation-squiggly',
@@ -411,7 +411,7 @@ const map = {
       'AnnotationCreateTextSquiggly3',
       'AnnotationCreateTextSquiggly4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.TextSquigglyAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextSquigglyAnnotation,
   },
   [annotationMapKeys.STRIKEOUT]: {
     icon: 'icon-tool-text-manipulation-strikethrough',
@@ -425,7 +425,7 @@ const map = {
       'AnnotationCreateTextStrikeout3',
       'AnnotationCreateTextStrikeout4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.TextStrikeoutAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextStrikeoutAnnotation,
   },
   [annotationMapKeys.REDACTION]: {
     icon: 'icon-tool-select-area-redaction',
@@ -439,7 +439,7 @@ const map = {
       'AnnotationCreateRedaction3',
       'AnnotationCreateRedaction4'
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.RedactionAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RedactionAnnotation,
   },
   [annotationMapKeys.RECTANGLE]: {
     icon: 'icon-tool-shape-rectangle',
@@ -453,7 +453,7 @@ const map = {
       'AnnotationCreateRectangle3',
       'AnnotationCreateRectangle4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === '',
   },
   [annotationMapKeys.ELLIPSE]: {
@@ -468,7 +468,7 @@ const map = {
       'AnnotationCreateEllipse3',
       'AnnotationCreateEllipse4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.EllipseAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.EllipseAnnotation,
   },
   [annotationMapKeys.ARC]: {
     icon: 'icon-tool-arc',
@@ -482,7 +482,7 @@ const map = {
       'AnnotationCreateArc3',
       'AnnotationCreateArc4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.ArcAnnotation
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.ArcAnnotation
   },
   [annotationMapKeys.POLYLINE]: {
     icon: 'icon-tool-shape-polyline',
@@ -497,7 +497,7 @@ const map = {
       'AnnotationCreatePolyline4',
     ],
     hasLineEndings: true,
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.PolylineAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.PolylineAnnotation,
   },
   [annotationMapKeys.STICKY_NOTE]: {
     icon: 'icon-tool-comment-line',
@@ -511,7 +511,7 @@ const map = {
       'AnnotationCreateSticky3',
       'AnnotationCreateSticky4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.StickyAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.StickyAnnotation,
   },
   [annotationMapKeys.CHANGE_VIEW]: {
     icon: 'icon-tool-changeview',
@@ -525,7 +525,7 @@ const map = {
       'AnnotationCreateChangeViewTool3',
       'AnnotationCreateChangeViewTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.StampAnnotation && annotation.ViewState,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.StampAnnotation && annotation.ViewState,
   },
   [annotationMapKeys.IMAGE]: {
     icon: 'icon-tool-image-line',
@@ -537,7 +537,7 @@ const map = {
       'AnnotationCreateRubberStamp',
     ],
     annotationCheck: (annotation) => {
-      return annotation instanceof window.Annotations.StampAnnotation &&
+      return annotation instanceof window.Core.Annotations.StampAnnotation &&
       annotation.ToolName === 'AnnotationCreateStamp';
     },
   },
@@ -551,7 +551,7 @@ const map = {
       'AnnotationCreateStamp',
     ],
     annotationCheck: (annotation) => {
-      return annotation instanceof window.Annotations.StampAnnotation;
+      return annotation instanceof window.Core.Annotations.StampAnnotation;
     },
   },
   [annotationMapKeys.EDIT]: {
@@ -632,7 +632,7 @@ const map = {
     currentStyleTab: null,
     styleTabs: [],
     toolNames: ['AnnotationEraserTool'],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.FreeHandAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.FreeHandAnnotation,
   },
   [annotationMapKeys.CROP_PAGE]: {
     icon: 'ic_crop_black_24px',
@@ -650,7 +650,7 @@ const map = {
     currentStyleTab: 'StrokeColor',
     styleTabs: ['StrokeColor'],
     toolNames: ['AnnotationCreateFileAttachment'],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.FileAttachmentAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.FileAttachmentAnnotation,
   },
   [annotationMapKeys.SOUND]: {
     icon: 'ic_sound_24px',
@@ -659,7 +659,7 @@ const map = {
     currentStyleTab: 'FillColor',
     styleTabs: ['FillColor', 'StrokeColor'],
     toolNames: [],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.SoundAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.SoundAnnotation,
   },
   [annotationMapKeys.THREE_D_ANNOTATION]: {
     icon: 'icon-tool-model3d',
@@ -668,7 +668,7 @@ const map = {
     currentStyleTab: null,
     styleTabs: [],
     toolNames: ['AnnotationCreateThreeD'],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.Model3DAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.Model3DAnnotation,
   },
   [annotationMapKeys.TEXT_FIELD]: {
     icon: 'icon-form-field-text',
@@ -682,7 +682,7 @@ const map = {
       'TextFormFieldCreateTool3',
       'TextFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'TextFormField'
   },
   [annotationMapKeys.SIGNATURE_FORM_FIELD]: {
@@ -697,7 +697,7 @@ const map = {
       'SignatureFormFieldCreateTool3',
       'SignatureFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'SignatureFormField'
   },
   [annotationMapKeys.CHECK_BOX_FORM_FIELD]: {
@@ -707,7 +707,7 @@ const map = {
     currentStyleTab: 'StrokeColor',
     styleTabs: ['StrokeColor'],
     toolNames: ['CheckBoxFormFieldCreateTool'],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'CheckBoxFormField'
   },
   [annotationMapKeys.RADIO_BUTTON_FORM_FIELD]: {
@@ -717,7 +717,7 @@ const map = {
     currentStyleTab: 'StrokeColor',
     styleTabs: ['StrokeColor'],
     toolNames: ['RadioButtonFormFieldCreateTool'],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'RadioButtonFormField'
   },
   [annotationMapKeys.LIST_BOX_FORM_FIELD]: {
@@ -732,7 +732,7 @@ const map = {
       'ListBoxFormFieldCreateTool3',
       'ListBoxFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'ListBoxFormField'
   },
   [annotationMapKeys.COMBO_BOX_FORM_FIELD]: {
@@ -747,7 +747,7 @@ const map = {
       'ComboBoxFormFieldCreateTool3',
       'ComboBoxFormFieldCreateTool4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Annotations.RectangleAnnotation &&
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'ComboBoxFormField'
   },
 };

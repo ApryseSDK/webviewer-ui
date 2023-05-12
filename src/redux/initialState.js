@@ -14,15 +14,18 @@ import getHashParameters from 'helpers/getHashParameters';
 import localStorageManager from 'helpers/localStorageManager';
 import { undoButton, redoButton } from 'helpers/commonToolbarElements';
 import defaultFonts from 'constants/defaultFonts';
+import webFonts from 'constants/webFonts';
 import isContentEditWarningHidden from 'helpers/isContentEditWarningHidden';
 import presetCropDimensions from 'constants/presetCropDimensions';
 import presetNewPageDimensions from 'constants/presetNewPageDimensions';
 import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
+import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
 import SignatureModes from 'constants/signatureModes';
 import { ShortcutKeys } from 'helpers/hotkeysManager';
 import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
+import { SYNC_MODES } from 'constants/multiViewerContants';
 
 const { ToolNames } = window.Core.Tools;
 
@@ -31,6 +34,7 @@ export default {
     initalsOffset: 0,
     isInitialsModeEnabled: false,
     isMultiViewerMode: false,
+    multiViewerSyncScrollMode: SYNC_MODES.SKIP_UNMATCHED,
     syncViewer: null,
     isCompareStarted: false,
     isComparisonOverlayEnabled: true,
@@ -59,6 +63,8 @@ export default {
     disabledElements: {
       [DataElements.MULTI_VIEWER_SAVE_DOCUMENT_BUTTON]: { disabled: true, priority: 2 },
       [DataElements.SAVED_SIGNATURES_TAB]: { disabled: true, priorty: 2 },
+      [DataElements.CALIBRATION_POPUP_BUTTON]: { disabled: true, priorty: 2 },
+      [DataElements.LEGACY_RICH_TEXT_POPUP]: { disabled: true, priority: 2 },
     },
     selectedScale: initialScale,
     isAddingNewScale: false,
@@ -77,6 +83,7 @@ export default {
       [DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER]: true,
       [DataElements.FORM_FIELD_INDICATOR_CONTAINER]: true,
     },
+    hiddenElements: {},
     panelWidths: {
       leftPanel: 264,
       searchPanel: 293,
@@ -647,7 +654,12 @@ export default {
           title: 'annotation.textField',
           showColor: 'always',
         },
-
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'freeTextTools',
+          dataElement: 'freeTextToolGroupButton',
+          title: 'annotation.freetext',
+        },
         {
           type: 'toolGroupButton',
           toolGroup: 'checkBoxFieldTools',
@@ -705,7 +717,7 @@ export default {
       { dataElement: 'annotationGroupButton' },
       { dataElement: 'annotationUngroupButton' },
       { dataElement: 'formFieldEditButton' },
-      { dataElement: 'calibrateButton' },
+      { dataElement: DataElements.CALIBRATION_POPUP_BUTTON },
       { dataElement: 'linkButton' },
       { dataElement: 'fileAttachmentDownload' },
       { dataElement: 'annotationDeleteButton' },
@@ -732,6 +744,7 @@ export default {
       { dataElement: 'markReplaceTextToolButton' },
     ],
     menuOverlay: [
+      { dataElement: 'newDocumentButton' },
       { dataElement: 'filePickerButton' },
       { dataElement: 'fullscreenButton' },
       { dataElement: 'downloadButton' },
@@ -1937,7 +1950,7 @@ export default {
     validationModalWidgetName: '',
     verificationResult: {},
     watermarkModalOptions: null,
-    fonts: defaultFonts,
+    fonts: [...defaultFonts, ...webFonts],
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
     shouldShowApplyCropWarning: true,
@@ -2088,5 +2101,11 @@ export default {
       removeEmptyGroups: false,
       createRawValueGroup: true,
     },
+  },
+  officeEditor: {
+    cursorProperties: {},
+    selectionProperties: {},
+    availableFontFaces,
+    cssFontValues,
   },
 };

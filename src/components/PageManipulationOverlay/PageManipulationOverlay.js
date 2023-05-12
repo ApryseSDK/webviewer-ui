@@ -1,6 +1,5 @@
 import actions from 'actions';
 import React, { useEffect, useCallback } from 'react';
-import PageInsertionControls from './PageInsertionControls';
 import PageRotationControls from './PageRotationControls';
 import PageManipulationControls from './PageManipulationControls';
 import PageAdditionalControls from 'components/PageManipulationOverlay/PageAdditionalControls';
@@ -57,7 +56,6 @@ function PageManipulationOverlay(props) {
     <InitialPageManipulationOverlay pageNumbers={pageNumbers} pageManipulationOverlayItems={pageManipulationOverlayItems}>
       <PageAdditionalControls pageNumbers={pageNumbers} dataElement="pageAdditionalControls" />
       <PageRotationControls pageNumbers={pageNumbers} dataElement="pageRotationControls" />
-      <PageInsertionControls dataElement="pageInsertionControls" pageNumbers={pageNumbers} />
       <PageManipulationControls pageNumbers={pageNumbers} dataElement="pageManipulationControls" />
     </InitialPageManipulationOverlay>
   );

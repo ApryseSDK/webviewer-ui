@@ -46,6 +46,34 @@ $popup-z-index: 70;
       }
     }
   }
+
+  &.is-vertical {
+    .Button.main-menu-button {
+      width: 100%;
+      border-radius: 0;
+      justify-content: flex-start;
+      padding-left: var(--padding-small);
+      padding-right: var(--padding-small);
+      margin: 0 0 var(--padding-tiny) 0;
+
+      &:first-child {
+        margin-top: var(--padding-tiny);
+      }
+
+      @include mobile {
+        width: 100%;
+        height: 32px;
+      }
+
+      .Icon {
+        margin-right: 10px;
+      }
+
+      span {
+        white-space: nowrap;
+      }
+    }
+  }
 }
 
 %popup-landscape {

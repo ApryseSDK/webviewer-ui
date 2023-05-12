@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import Model3DModal from './Model3DModal';
 
 export default {

@@ -4,6 +4,7 @@ import selectors from 'selectors';
 import './Accessibility.scss';
 import classNames from 'classnames';
 import actions from 'actions';
+import getRootNode from 'helpers/getRootNode';
 
 function Accessibility() {
   const dispatch = useDispatch();
@@ -11,22 +12,22 @@ function Accessibility() {
 
   const isAccessibleMode = useSelector(selectors.isAccessibleMode);
 
-  const isNotesPanelOpen = useSelector(state => selectors.isElementOpen(state, 'notesPanel'));
-  const isNotesPanelDisabled = useSelector(state => selectors.isElementDisabled(state, 'notesPanel'));
+  const isNotesPanelOpen = useSelector((state) => selectors.isElementOpen(state, 'notesPanel'));
+  const isNotesPanelDisabled = useSelector((state) => selectors.isElementDisabled(state, 'notesPanel'));
 
-  const isSearchPanelOpen = useSelector(state => selectors.isElementOpen(state, 'searchPanel'));
-  const isSearchPanelDisabled = useSelector(state => selectors.isElementDisabled(state, 'searchPanel'));
+  const isSearchPanelOpen = useSelector((state) => selectors.isElementOpen(state, 'searchPanel'));
+  const isSearchPanelDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchPanel'));
 
   const onFocus = () => setIsVisible(true);
   const onBlur = () => setIsVisible(false);
 
   const onSkipToDocument = () => {
-    document.getElementById('pageText1').focus();
+    getRootNode().querySelector('#pageText1').focus();
   };
 
   const onSkipToSearch = () => {
     if (isSearchPanelOpen) {
-      const searchEl = document.getElementById('SearchPanel__input');
+      const searchEl = getRootNode().querySelector('#SearchPanel__input');
       searchEl && searchEl.focus();
     } else {
       dispatch(actions.openElement('searchPanel'));
@@ -35,7 +36,7 @@ function Accessibility() {
 
   const onSkipToNotes = () => {
     if (isNotesPanelOpen) {
-      const noteEl = document.getElementById('NotesPanel__input');
+      const noteEl = getRootNode().querySelector('#NotesPanel__input');
       noteEl && noteEl.focus();
     } else {
       dispatch(actions.openElement('notesPanel'));

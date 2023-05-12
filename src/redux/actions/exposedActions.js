@@ -299,6 +299,19 @@ export const setWv3dPropertiesPanelSchema = (schema) => ({
   type: 'SET_WV3D_PROPERTIES_PANEL_SCHEMA',
   payload: { schema },
 });
+export const setOfficeEditorCursorProperties = (cursorProperties) => ({
+  type: 'SET_OFFICE_EDITOR_CURSOR_PROPERTIES',
+  payload: { cursorProperties },
+});
+export const setOfficeEditorSelectionProperties = (selectionProperties) => ({
+  type: 'SET_OFFICE_EDITOR_SELECTION_PROPERTIES',
+  payload: { selectionProperties },
+});
+export const addOfficeEditorAvailableFontFace = (fontFace) => ({
+  type: 'ADD_OFFICE_EDITOR_AVAILABLE_FONT_FACE',
+  payload: { fontFace },
+});
+
 export const setDocumentContainerWidth = (width) => ({
   type: 'SET_DOCUMENT_CONTAINER_WIDTH',
   payload: { width },
@@ -421,6 +434,7 @@ export const closeElement = (dataElement) => (dispatch, getState) => {
   const state = getState();
 
   const isElementDisabled = state.viewer.disabledElements[dataElement]?.disabled;
+  const isFlyoutElement = state.viewer.flyoutMap?.[dataElement];
   const isElementClosed = isDataElementLeftPanel(dataElement, state)
     ? state.viewer.activeLeftPanel !== dataElement
     : !state.viewer.openElements[dataElement];
@@ -436,6 +450,12 @@ export const closeElement = (dataElement) => (dispatch, getState) => {
     dispatch({ type: 'CLOSE_ELEMENT', payload: { dataElement } });
     fireEvent(Events.VISIBILITY_CHANGED, { element: dataElement, isVisible: false });
 
+    if (isFlyoutElement) {
+      dispatch({
+        type: 'SET_ACTIVE_FLYOUT',
+        payload: { dataElement: null }
+      });
+    }
     if (dataElement === 'pageManipulationOverlay') {
       dispatch({
         type: 'SET_PAGE_MANIPULATION_OVERLAY_ALTERNATIVE_POSITION',
@@ -543,6 +563,11 @@ export const setActiveLeftPanel = (dataElement) => (dispatch, getState) => {
     );
   }
 };
+
+export const setTimezone = (timezone) => ({
+  type: 'SET_TIMEZONE',
+  payload: { timezone },
+});
 export const setNotesPanelSortStrategy = (sortStrategy) => ({
   type: 'SET_NOTES_PANEL_SORT_STRATEGY',
   payload: { sortStrategy },
@@ -820,4 +845,9 @@ export const setEnableRightClickAnnotationPopup = (isEnabled) => ({
 export const setToolDefaultStyleUpdateFromAnnotationPopupEnabled = (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) => ({
   type: 'SET_TOOL_DEFAULT_STYLE_UPDATE_FROM_ANNOTATION_POPUP_ENABLED',
   payload: isToolDefaultStyleUpdateFromAnnotationPopupEnabled
+});
+
+export const setMultiViewerSyncScrollingMode = (multiViewerComparedSyncScrollingMode) => ({
+  type: 'SET_MULTI_VIEWER_SYNC_SCROLLING_MODE',
+  payload: multiViewerComparedSyncScrollingMode
 });

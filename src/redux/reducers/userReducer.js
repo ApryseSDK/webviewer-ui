@@ -1,4 +1,4 @@
-export default initialState => (state = initialState, action) => {
+export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {

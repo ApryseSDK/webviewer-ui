@@ -1,7 +1,7 @@
 import React from 'react';
-import PrintModalComponent from './PrintModal'
+import PrintModalComponent from './PrintModal';
 import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import { copyMapWithDataProperties } from 'constants/map';
 
 export default {
@@ -13,12 +13,13 @@ const initialState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
+    customPanels: [],
     openElements: {
       printModal: true,
     },
     pageLabels: [],
     sortStrategy: 'position',
-    colorMap: copyMapWithDataProperties('currentPalette', 'iconColor'),
+    colorMap: copyMapWithDataProperties('currentStyleTab', 'iconColor'),
     displayMode: 'Single',
     currentPage: 1
   },

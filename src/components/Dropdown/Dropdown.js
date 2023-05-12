@@ -40,8 +40,8 @@ function Dropdown({
   onClickItem,
   dataElement,
   disabled = false,
-  getCustomItemStyle = () => ({}),
   applyCustomStyleToButton = true,
+  getCustomItemStyle = () => ({}),
   placeholder = null,
   maxHeight,
   getKey = (item) => item,
@@ -90,6 +90,12 @@ function Dropdown({
       window.removeEventListener('blur', onBlur);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setInputVal('');
+    }
+  }, [isOpen]);
 
   useArrowFocus(isOpen, onClose, overlayRef);
 
@@ -227,13 +233,21 @@ function Dropdown({
 
       const onKeyDown = (e) => {
         if (e.key === 'Enter' && isOpen && inputRef.current) {
-          let newValue = inputRef.current.value;
+          const newValue = inputRef.current.value;
+          let itemToClick = newValue;
 
           if (!customDataValidator(newValue)) {
-            newValue = value;
+            itemToClick = value;
           }
 
-          onClickItem(newValue, -1);
+          if (items.length > 0) {
+            const result = items.find((item) => getTranslatedDisplayValue(item).toLowerCase() === newValue.toLowerCase());
+            if (result) {
+              itemToClick = result;
+            }
+          }
+
+          onClickItem(itemToClick, -1);
           inputRef?.current?.blur();
           setIsOpen(false);
         }
@@ -242,7 +256,6 @@ function Dropdown({
       return (
         <input
           className="Dropdown__input"
-          placeholder={value}
           onBlur={onBlur}
           onChange={onInputChange}
           ref={inputRef}

@@ -1,5 +1,5 @@
 import React from 'react';
-import FilterAnnotModal from './FilterAnnotModal'
+import FilterAnnotModal from './FilterAnnotModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import core from 'core';
@@ -9,16 +9,16 @@ export default {
   component: FilterAnnotModal
 };
 
-const rectAnnot = new window.Annotations.RectangleAnnotation();
+const rectAnnot = new window.Core.Annotations.RectangleAnnotation();
 rectAnnot.Author = 'Guest_1';
 rectAnnot.getStatus = () => null;
 rectAnnot.getCustomData = () => '';
-rectAnnot.StrokeColor = new window.Annotations.Color(255, 0, 0);
+rectAnnot.StrokeColor = new window.Core.Annotations.Color(255, 0, 0);
 
-const freeTextAnnot = new window.Annotations.FreeTextAnnotation();
+const freeTextAnnot = new window.Core.Annotations.FreeTextAnnotation();
 freeTextAnnot.Author = 'Guest_2';
 freeTextAnnot.getStatus = () => null;
-freeTextAnnot.TextColor = new window.Annotations.Color(0, 255, 0);
+freeTextAnnot.TextColor = new window.Core.Annotations.Color(0, 255, 0);
 
 core.getAnnotationsList = () => [
   rectAnnot,
@@ -32,11 +32,11 @@ const getStore = (num) => {
       disabledElements: {},
       colorMap: {
         rectangle: {
-          currentPalette: 'StrokeColor',
+          currentStyleTab: 'StrokeColor',
           iconColor: 'StrokeColor'
         },
         freeText: {
-          currentPalette: 'TextColor',
+          currentStyleTab: 'TextColor',
           iconColor: 'TextColor'
         }
       },

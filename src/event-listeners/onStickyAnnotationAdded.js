@@ -2,11 +2,13 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import defaultTool from 'constants/defaultTool';
+import DataElements from 'src/constants/dataElement';
 
-export default ({ dispatch, getState }) => annotation => {
+export default ({ dispatch, getState }) => (annotation) => {
   const state = getState();
-  const isNotesPanelDisabled = selectors.isElementDisabled(state, 'notesPanel');
-  const isNotesPanelOpen = selectors.isElementOpen(state, 'notesPanel');
+  const isNotesPanelDisabled = selectors.isElementDisabled(state, DataElements.NOTES_PANEL);
+  const isNotesPanelOpen = selectors.isElementOpen(state, DataElements.NOTES_PANEL);
+  const isInlineCommentDisabled = selectors.isElementDisabled(state, DataElements.INLINE_COMMENT_POPUP);
 
   if (isNotesPanelDisabled) {
     return;
@@ -15,11 +17,17 @@ export default ({ dispatch, getState }) => annotation => {
   core.setToolMode(defaultTool);
   dispatch(actions.setActiveToolGroup(''));
   dispatch(actions.closeElement('searchPanel'));
-  dispatch(actions.closeElement('redactionPanel'));
-  dispatch(actions.openElement('notesPanel'));
-  // wait for the notes panel to be fully opened before focusing
-  setTimeout(() => {
+  dispatch(actions.closeElement(DataElements.REDACTION_PANEL));
+  dispatch(actions.closeElement('textEditingPanel'));
+  if (!isInlineCommentDisabled || isNotesPanelOpen) {
     core.selectAnnotation(annotation);
     dispatch(actions.triggerNoteEditing());
-  }, isNotesPanelOpen ? 0 : 400);
+  } else {
+    dispatch(actions.openElement(DataElements.NOTES_PANEL));
+    // wait for the notes panel to be fully opened before focusing
+    setTimeout(() => {
+      core.selectAnnotation(annotation);
+      dispatch(actions.triggerNoteEditing());
+    }, 400);
+  }
 };

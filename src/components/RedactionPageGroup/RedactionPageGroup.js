@@ -3,7 +3,8 @@ import RedactionItem from './RedactionItem';
 import CollapsiblePanelGroup from 'components/CollapsiblePanelGroup';
 import { useTranslation } from 'react-i18next';
 
-import './RedactionPageGroup.scss'
+import './RedactionPageGroup.scss';
+
 const RedactionPageGroup = (props) => {
   const {
     pageNumber,
@@ -23,9 +24,10 @@ const RedactionPageGroup = (props) => {
   return (
     <CollapsiblePanelGroup
       className="redaction-page-group"
-      header={header}>
+      header={header}
+    >
       <div role="list" className="redaction-items">
-        {redactionItems.map(redactionItem => (
+        {redactionItems.map((redactionItem) => (
           <RedactionItem
             annotation={redactionItem}
             key={`${redactionItem.Id}-${pageNumber}`}
@@ -33,7 +35,7 @@ const RedactionPageGroup = (props) => {
         ))}
       </div>
     </CollapsiblePanelGroup>
-  )
+  );
 };
 
 export default RedactionPageGroup;

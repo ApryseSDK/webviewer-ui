@@ -1,4 +1,5 @@
 import core from 'core';
+import Events from 'constants/events';
 
 export const addEventListener = (event, eventListener, options = null, documentViewerKey = 1) => {
   const eventToObjectMap = getEventToObjectMap(documentViewerKey);
@@ -8,6 +9,9 @@ export const addEventListener = (event, eventListener, options = null, documentV
 };
 
 export const removeEventListener = (event, eventListener, documentViewerKey = 1) => {
+  if (!core.getDocumentViewer(documentViewerKey)) {
+    return;
+  }
   const eventToObjectMap = getEventToObjectMap(documentViewerKey);
   const object = eventToObjectMap[event];
 
@@ -24,6 +28,9 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
   const measurementManager = documentViewer.getMeasurementManager();
 
   return {
+    cursorPropertiesUpdated: documentViewer,
+    selectionPropertiesUpdated: documentViewer,
+    officeDocumentEdited: documentViewer,
     signatureSaved: documentViewer,
     signatureDeleted: documentViewer,
     annotationsLoaded: documentViewer,
@@ -61,6 +68,7 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     pageNumberUpdated: documentViewer,
     pagesUpdated: documentViewer,
     'fitModeUpdated.fitbutton': documentViewer,
+    [Events.COMPARE_ANNOTATIONS_LOADED]: documentViewer,
     historyChanged: historyManager,
     annotationSelected: annotManager,
     annotationChanged: annotManager,

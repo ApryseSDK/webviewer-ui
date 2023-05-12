@@ -1,12 +1,14 @@
-import selectors from "selectors/index";
-import actions from "actions/index";
-import { connect } from "react-redux";
-import React from "react";
-import SearchOverlayContainer from "./SearchOverlayContainer";
+import selectors from 'selectors/index';
+import actions from 'actions/index';
+import { connect } from 'react-redux';
+import React from 'react';
+import SearchOverlayContainer from './SearchOverlayContainer';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isSearchOverlayDisabled: selectors.isElementDisabled(state, 'searchOverlay'),
   searchValue: selectors.getSearchValue(state),
+  replaceValue: selectors.getReplaceValue(state),
+  nextResultValue: selectors.getNextResultValue(state),
   isCaseSensitive: selectors.isCaseSensitive(state),
   isWholeWord: selectors.isWholeWord(state),
   isWildcard: selectors.isWildcard(state),
@@ -16,6 +18,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   closeElements: actions.closeElements,
   setSearchValue: actions.setSearchValue,
+  setReplaceValue: actions.setReplaceValue,
   setCaseSensitive: actions.setCaseSensitive,
   setWholeWord: actions.setWholeWord,
   setWildcard: actions.setWildcard,

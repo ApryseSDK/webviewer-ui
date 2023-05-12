@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import FileListPanel from './FileListPanel';
 
 const TestFileListPanel = withProviders(FileListPanel);
-function noop() { };
+function noop() { }
 
 describe('FileListPanel', () => {
   describe('Component', () => {
@@ -16,7 +16,7 @@ describe('FileListPanel', () => {
           { id: '23', filename: 'foobar.pdf', thumbnail: 'https://localhost/files/placeholder.png' },
           { id: '24', filename: 'foobar.pdf', thumbnail: 'https://localhost/files/placeholder.png' },
         ]}
-      />)
+      />);
       expect(screen.getAllByRole('listitem')).toHaveLength(2);
     });
 
@@ -31,7 +31,7 @@ describe('FileListPanel', () => {
         defaultValue={''}
         onFileSelect={mockOnFileSelect}
         list={fileList}
-      />)
+      />);
 
       const fileItem = screen.getByText('Dune.pdf');
       userEvent.click(fileItem);

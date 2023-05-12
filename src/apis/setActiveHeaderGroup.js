@@ -11,6 +11,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => headerGroup => {
+export default (store) => (headerGroup) => {
   store.dispatch(actions.setActiveHeaderGroup(headerGroup));
 };

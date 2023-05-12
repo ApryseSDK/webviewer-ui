@@ -10,17 +10,24 @@ import core from 'core';
 import './SelectedSignatureRow.scss';
 
 const SelectedSignatureRow = ({ t }) => {
-  const [activeToolName, isToolStyleOpen, displayedSignature, displayedSignatures] = useSelector(
-    state => [
+  const [activeToolName, isToolStyleOpen, displayedSignature, displayedSignatures, savedInitials] = useSelector(
+    (state) => [
       selectors.getActiveToolName(state),
       selectors.isElementOpen(state, 'toolStylePopup'),
       selectors.getSelectedDisplayedSignature(state),
       selectors.getDisplayedSignatures(state),
+      selectors.getSavedInitials(state),
     ],
   );
   const dispatch = useDispatch();
 
-  const signatureTool = core.getTool('AnnotationCreateSignature');
+  const onDropDownClick = () => {
+    if (displayedSignatures.length > 0 || savedInitials.length > 0) {
+      dispatch(actions.toggleElement('toolStylePopup'));
+    }
+  };
+
+  const signatureToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateSignature');
   return (
     <div
       className="selected-signature-row"
@@ -29,12 +36,14 @@ const SelectedSignatureRow = ({ t }) => {
         <SignatureRowContent
           imgSrc={displayedSignature.imgSrc}
           onClick={async () => {
-            await signatureTool.setSignature(displayedSignature.annotation);
             core.setToolMode('AnnotationCreateSignature');
-            if (signatureTool.hasLocation()) {
-              await signatureTool.addSignature();
-            } else {
-              await signatureTool.showPreview();
+            for (const signatureTool of signatureToolArray) {
+              await signatureTool.setSignature(displayedSignature.annotation);
+              if (signatureTool.hasLocation()) {
+                await signatureTool.addSignature();
+              } else {
+                await signatureTool.showPreview();
+              }
             }
           }}
           isActive={activeToolName === 'AnnotationCreateSignature'}
@@ -42,9 +51,9 @@ const SelectedSignatureRow = ({ t }) => {
         /> :
         <SignatureAddBtn />}
       <ToolsDropdown
-        onClick={() => displayedSignatures.length > 0 && dispatch(actions.toggleElement('toolStylePopup'))}
+        onClick={onDropDownClick}
         isActive={isToolStyleOpen}
-        isDisabled={displayedSignatures.length === 0}
+        isDisabled={displayedSignatures.length === 0 && savedInitials.length === 0}
       />
     </div>
   );

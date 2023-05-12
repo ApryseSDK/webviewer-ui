@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 
 /**
  * Creates DOM element to be used as React root.
+ * @ignore
  * @returns {HTMLElement}
  */
 function createRootElement(id) {
@@ -12,6 +13,7 @@ function createRootElement(id) {
 
 /**
  * Appends element as last child of body.
+ * @ignore
  * @param {HTMLElement} rootElem
  */
 function addRootElement(rootElem) {
@@ -26,6 +28,7 @@ function addRootElement(rootElem) {
  * Automatically handles creating and tearing-down the root elements (no SRR
  * makes this trivial), so there is no need to ensure the parent target already
  * exists.
+ * @ignore
  * @example
  * const target = usePortal(id, [id]);
  * return createPortal(children, target);

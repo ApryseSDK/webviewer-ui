@@ -1,8 +1,6 @@
 @import '../../../constants/styles';
 @import '../../../constants/note';
 
-
-
 .multi-reply-place-holder {
   height: 100px;
 }
@@ -80,25 +78,29 @@
       cursor: not-allowed;
     }
   }
-}
 
-.reply-area {
-  position: relative;
-  flex: 1;
-  margin: 13px 17px 12px 16px;
-  border-radius: 4px;
-  align-items: center;
-  background: var(--component-background);
+  .reply-area {
+    position: relative;
+    flex: 1;
+    margin: 13px 17px 12px 16px;
+    border-radius: 4px;
+    align-items: center;
+    background: var(--component-background);
 
-  &.unread {
-    background: rgba($color: $pdftron-blue, $alpha: 0.08);
+    &.unread {
+      background: rgba($color: $pdftron-blue, $alpha: 0.08);
+    }
+
+    .comment-textarea .ql-container .ql-editor.ql-blank {
+      padding: 4px 4px 4px 4px;
+
+      &::before {
+        left: 4px;
+      }
+    }
   }
 
-  .comment-textarea .ql-container .ql-editor.ql-blank {
-    padding: 4px 4px 4px 4px;
-
-    &::before {
-      left: 4px;
-    }
+  .add-attachment {
+    display: none;
   }
 }

@@ -1,15 +1,24 @@
+import core from 'core';
+import { workerTypes } from 'constants/types';
+
 let minZoom = 0.05;
 let maxZoom = 99.99;
+const MAX_OFFICE_EDITOR_ZOOM = 2;
 
 export const getMinZoomLevel = () => minZoom;
 
-export const setMinZoomLevel = zoom => {
+export const setMinZoomLevel = (zoom) => {
   minZoom = zoom;
 };
 
-export const getMaxZoomLevel = () => maxZoom;
+export const getMaxZoomLevel = () => {
+  if (core.getDocument()?.getType() === workerTypes.OFFICE_EDITOR) {
+    return MAX_OFFICE_EDITOR_ZOOM;
+  }
+  return maxZoom;
+};
 
-export const setMaxZoomLevel = zoom => {
+export const setMaxZoomLevel = (zoom) => {
   maxZoom = zoom;
 };
 
@@ -30,5 +39,5 @@ export default {
   setMinZoomLevel,
   setMaxZoomLevel,
   getMinZoomLevel,
-  getMaxZoomLevel
+  getMaxZoomLevel,
 };

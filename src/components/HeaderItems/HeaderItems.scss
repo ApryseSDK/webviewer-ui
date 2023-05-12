@@ -8,10 +8,18 @@
   position: relative;
   padding: 0 4px;
 
+  // Temporary hack for when two dividers are next to each other. This
+  // never looks right so we hide one of them. In office editor, left panel
+  // is hidden so we get two dividers side by side. This hack can be removed
+  // once left panel is enabled in the future.
+  .divider:first-of-type + .divider {
+    display: none;
+  }
+
   >.Button, >.toggle-element-button {
     margin: 0 6px;
     @include mobile {
-      margin: 0 6px;
+      margin: 0 5px;
     }
     @include tablet {
       margin: 0 10px;
