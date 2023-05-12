@@ -1,3 +1,4 @@
+/* eslint-disable no-unsanitized/property */
 import i18n from 'i18next';
 
 import actions from 'actions';
@@ -8,6 +9,7 @@ import { workerTypes } from 'constants/types';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import { isSafari, isChromeOniOS, isFirefoxOniOS } from 'helpers/device';
+import DataElements from 'src/constants/dataElement';
 import core from 'core';
 
 let pendingCanvases = [];
@@ -33,6 +35,7 @@ export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, color
     isPrintCurrentView,
     printedNoteDateFormat: dateFormat,
     isGrayscale = false,
+    timezone
   } = options;
   let { pagesToPrint } = options;
 
@@ -45,14 +48,15 @@ export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, color
 
   if (!isGrayscale && bbURLPromise) {
     const printPage = window.open('', '_blank');
+    // eslint-disable-next-line no-unsanitized/method
     printPage.document.write(i18n.t('message.preparingToPrint'));
     bbURLPromise.then((result) => {
       printPage.location.href = result.url;
     });
   } else if (isEmbedPrintSupported && documentType === workerTypes.PDF) {
-    dispatch(actions.openElement('loadingModal'));
+    dispatch(actions.openElement(DataElements.LOADING_MODAL));
     printPdf().then(() => {
-      dispatch(actions.closeElement('loadingModal'));
+      dispatch(actions.closeElement(DataElements.LOADING_MODAL));
     });
   } else if (includeAnnotations || includeComments || printWithoutModal) {
     if (!pagesToPrint) {
@@ -79,6 +83,7 @@ export const print = async (dispatch, isEmbedPrintSupported, sortStrategy, color
       language,
       false,
       isGrayscale,
+      timezone,
     );
     Promise.all(createPages)
       .then((pages) => {
@@ -117,7 +122,7 @@ const printPdf = () => core.exportAnnotations().then((xfdfString) => {
     });
 });
 
-export const creatingPages = (pagesToPrint, includeComments, includeAnnotations, maintainPageOrientation, printQuality, sortStrategy, clrMap, dateFormat, onProgress, isPrintCurrentView, language, createCanvases = false, isGrayscale = false) => {
+export const creatingPages = (pagesToPrint, includeComments, includeAnnotations, maintainPageOrientation, printQuality, sortStrategy, clrMap, dateFormat, onProgress, isPrintCurrentView, language, createCanvases = false, isGrayscale = false, timezone) => {
   const createdPages = [];
   pendingCanvases = [];
   PRINT_QUALITY = printQuality;
@@ -136,7 +141,7 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnotations,
     if (includeComments && printableAnnotationNotes) {
       const sortedNotes = getSortStrategies()[sortStrategy].getSortedNotes(printableAnnotationNotes);
       if (sortedNotes.length) {
-        createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat, language));
+        createdPages.push(creatingNotesPage(sortedNotes, pageNumber, dateFormat, language, timezone));
       }
       if (onProgress) {
         createdPages[createdPages.length - 1].then((htmlElement) => {
@@ -315,8 +320,33 @@ export const printPages = (pages) => {
       }
     }
 
-    window.print();
+    printDocument();
   }
+};
+
+const printDocument = () => {
+  const doc = core.getDocument();
+  const tempTitle = window.parent.document.title;
+
+  if (!doc) {
+    return;
+  }
+
+  const fileName = doc.getFilename();
+  const fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
+
+  const onBeforePrint = () => {
+    window.parent.document.title = fileNameWithoutExtension;
+  };
+
+  const onAfterPrint = () => {
+    window.parent.document.title = tempTitle;
+  };
+
+  window.addEventListener('beforeprint', onBeforePrint, { once: true });
+  window.addEventListener('afterprint', onAfterPrint, { once: true });
+
+  window.print();
 };
 
 export const cancelPrint = () => {
@@ -328,10 +358,10 @@ export const getPrintableAnnotationNotes = (pageNumber) => core
   .getAnnotationsList()
   .filter(
     (annotation) => annotation.Listable &&
-        annotation.PageNumber === pageNumber &&
-        !annotation.isReply() &&
-        !annotation.isGrouped() &&
-        annotation.Printable,
+      annotation.PageNumber === pageNumber &&
+      !annotation.isReply() &&
+      !annotation.isGrouped() &&
+      annotation.Printable,
   );
 
 const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, isPrintCurrentView, createCanvases = false, isGrayscale = false) => new Promise((resolve) => {
@@ -346,7 +376,7 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
     if (!includeAnnotations) {
       // according to Adobe, even if we exclude annotations, it will still draw widget annotations
       const annotatationsToPrint = core.getAnnotationsList().filter((annotation) => {
-        return annotation.PageNumber === pageNumber && !(annotation instanceof window.Annotations.WidgetAnnotation);
+        return annotation.PageNumber === pageNumber && !(annotation instanceof window.Core.Annotations.WidgetAnnotation);
       });
       // store the previous Printable value so that we can set it back later
       printableAnnotInfo = annotatationsToPrint.map((annotation) => ({
@@ -360,6 +390,8 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
 
     if (isGrayscale && grayscaleDarknessFactor >= 1) {
       const ctx = canvas.getContext('2d');
+      // Reset underlying transforms. This seems only for DWG (WVS) but could happen elsewhere.
+      ctx.resetTransform();
       ctx.globalCompositeOperation = 'color';
       ctx.fillStyle = 'white';
       ctx.globalAlpha = 1;
@@ -443,7 +475,7 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
   pendingCanvases.push(id);
 });
 
-export const creatingNotesPage = (annotations, pageNumber, dateFormat, language) => new Promise((resolve) => {
+export const creatingNotesPage = (annotations, pageNumber, dateFormat, language, timezone) => new Promise((resolve) => {
   const container = document.createElement('div');
   container.className = 'page__container';
 
@@ -453,7 +485,7 @@ export const creatingNotesPage = (annotations, pageNumber, dateFormat, language)
 
   container.appendChild(header);
   annotations.forEach((annotation) => {
-    const note = getNote(annotation, dateFormat, language);
+    const note = getNote(annotation, dateFormat, language, timezone);
 
     container.appendChild(note);
   });
@@ -532,7 +564,7 @@ const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
 
   const widgetAnnotations = core
     .getAnnotationsList()
-    .filter((annotation) => annotation.PageNumber === pageNumber && annotation instanceof window.Annotations.WidgetAnnotation);
+    .filter((annotation) => annotation.PageNumber === pageNumber && annotation instanceof window.Core.Annotations.WidgetAnnotation);
   // just draw markup annotations
   if (widgetAnnotations.length === 0) {
     return core.drawAnnotations(pageNumber, canvas);
@@ -562,7 +594,7 @@ const getDocumentRotation = (pageIndex) => {
   return (completeRotation - viewerRotation + 4) % 4;
 };
 
-const getNote = (annotation, dateFormat, language) => {
+const getNote = (annotation, dateFormat, language, timezone) => {
   const note = document.createElement('div');
   note.className = 'note';
 
@@ -575,7 +607,7 @@ const getNote = (annotation, dateFormat, language) => {
   const noteIcon = getNoteIcon(annotation);
 
   noteRootInfo.appendChild(noteIcon);
-  noteRootInfo.appendChild(getNoteInfo(annotation, dateFormat, language));
+  noteRootInfo.appendChild(getNoteInfo(annotation, dateFormat, language, timezone));
   noteRoot.appendChild(noteRootInfo);
   noteRoot.appendChild(getNoteContent(annotation));
 
@@ -583,7 +615,7 @@ const getNote = (annotation, dateFormat, language) => {
   annotation.getReplies().forEach((reply) => {
     const noteReply = document.createElement('div');
     noteReply.className = 'note__reply';
-    noteReply.appendChild(getNoteInfo(reply, dateFormat, language));
+    noteReply.appendChild(getNoteInfo(reply, dateFormat, language, timezone));
     noteReply.appendChild(getNoteContent(reply));
 
     note.appendChild(noteReply);
@@ -622,12 +654,19 @@ const getNoteIcon = (annotation) => {
   return noteIcon;
 };
 
-const getNoteInfo = (annotation, dateFormat, language) => {
+const getNoteInfo = (annotation, dateFormat, language, timezone) => {
+  let dateCreated;
+  if (timezone) {
+    const datetimeStr = annotation.DateCreated.toLocaleString('en-US', { timeZone: timezone });
+    dateCreated = new Date(datetimeStr);
+  } else {
+    dateCreated = annotation.DateCreated;
+  }
   const info = document.createElement('div');
-  let date = dayjs(annotation.DateCreated).format(dateFormat);
+  let date = dayjs(dateCreated).format(dateFormat);
 
   if (language) {
-    date = dayjs(annotation.DateCreated).locale(language).format(dateFormat);
+    date = dayjs(dateCreated).locale(language).format(dateFormat);
   }
 
   info.className = 'note__info';
