@@ -13,7 +13,7 @@ module.exports = {
     path: path.resolve(__dirname, 'src'),
     filename: 'webviewer-ui.min.js',
     chunkFilename: 'chunks/[name].chunk.js',
-    publicPath: '/ui/',
+    publicPath: '/',
   },
   plugins: [new webpack.HotModuleReplacementPlugin()],
   module: {
@@ -26,7 +26,7 @@ module.exports = {
             ignore: [
               /\/core-js/,
             ],
-            sourceType: "unambiguous",
+            sourceType: 'unambiguous',
             presets: [
               '@babel/preset-react',
               [
