@@ -33,22 +33,22 @@ let isStillProcessingResults = false;
 
 function buildSearchModeFlag(options = {}) {
   const SearchMode = core.getSearchMode();
-  let searchMode = SearchMode.PAGE_STOP | SearchMode.HIGHLIGHT;
+  const searchMode = [SearchMode.PAGE_STOP, SearchMode.HIGHLIGHT];
 
   if (options.caseSensitive) {
-    searchMode |= SearchMode.CASE_SENSITIVE;
+    searchMode.push(SearchMode.CASE_SENSITIVE);
   }
   if (options.wholeWord) {
-    searchMode |= SearchMode.WHOLE_WORD;
+    searchMode.push(SearchMode.WHOLE_WORD);
   }
   if (options.wildcard) {
-    searchMode |= SearchMode.WILD_CARD;
+    searchMode.push(SearchMode.WILD_CARD);
   }
   if (options.regex) {
-    searchMode |= SearchMode.REGEX;
+    searchMode.push(SearchMode.REGEX);
   }
 
-  searchMode |= SearchMode.AMBIENT_STRING;
+  searchMode.push(SearchMode.AMBIENT_STRING);
 
   return searchMode;
 }
