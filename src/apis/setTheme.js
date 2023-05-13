@@ -7,7 +7,6 @@ import lightModeString from '!!raw-loader!../constants/light.scss';
 import highContastLightModeString from '!!raw-loader!../constants/highContrastLight.scss';
 import darkModeString from '!!raw-loader!../constants/dark.scss';
 import highContrastDarkModeString from '!!raw-loader!../constants/highContrastDark.scss';
-import cssVars from 'css-vars-ponyfill';
 import Theme from '../constants/theme';
 
 /**
@@ -27,7 +26,6 @@ export default (store) => {
   let previousActiveTheme = Theme.LIGHT; // default
   let previousIsHighContrastMode = false; // default
 
-  cssVars({});
   store.subscribe(() => {
     const activeTheme = selectors.getActiveTheme(store.getState());
     const isHighContrastMode = selectors.getIsHighContrastMode(store.getState());
@@ -62,9 +60,4 @@ const updateColors = (activeTheme, isHighContrastMode) => {
   } else if (activeTheme === Theme.DARK) {
     setVariables(isHighContrastMode ? highContrastDarkModeString : darkModeString);
   }
-  cssVars({
-    // onlyLegacy: false,
-    // preserveVars: true,
-    // shadowDOM: true,
-  });
 };

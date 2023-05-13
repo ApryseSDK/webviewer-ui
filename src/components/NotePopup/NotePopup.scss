@@ -46,8 +46,9 @@
     background: var(--component-background);
     top: 40px;
 
-    .note-popup-option{
+    .note-popup-option {
       @include button-reset;
+      align-items: flex-start;
     }
 
     &.options-reply {
