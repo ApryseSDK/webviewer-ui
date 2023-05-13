@@ -13,12 +13,13 @@ import setZoomLevel from 'src/apis/setZoomLevel';
 import onLayersUpdated from './onLayersUpdated';
 import i18next from 'i18next';
 import hotkeys from 'hotkeys-js';
-import { defaultHotkeysScope } from 'helpers/hotkeysManager';
+import hotkeysManager, { ShortcutKeys, Shortcuts, defaultHotkeysScope } from 'helpers/hotkeysManager';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
 
 let onFirstLoad = true;
+const officeEditorScope = 'office-editor';
 
 export default (store, documentViewerKey) => async () => {
   const { dispatch, getState } = store;
@@ -125,7 +126,14 @@ export default (store, documentViewerKey) => async () => {
       ));
       dispatch(actions.openElement('officeEditorToolsHeader'));
       core.setToolMode('TextSelect');
-      hotkeys.setScope('office-editor');
+      hotkeys.unbind('*', officeEditorScope);
+      hotkeys.setScope(officeEditorScope);
+      const searchShortcutKeys = ShortcutKeys[Shortcuts.SEARCH];
+      hotkeys(
+        searchShortcutKeys,
+        officeEditorScope,
+        hotkeysManager.keyHandlerMap[searchShortcutKeys],
+      );
     } else {
       dispatch(actions.setReadOnly(false));
       dispatch(actions.enableElements(

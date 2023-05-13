@@ -58,6 +58,26 @@ const SaveModal = () => {
   const [errorText, setErrorText] = useState('');
 
   useEffect(() => {
+    const keydownListener = (e) => {
+      if (e.key === 'Enter') {
+        onSave();
+      }
+    };
+
+    !saveDisabled && window.addEventListener('keydown', keydownListener);
+    return () => window.removeEventListener('keydown', keydownListener);
+  }, [
+    activeDocumentViewerKey,
+    saveDisabled,
+    includeAnnotations,
+    specifiedPages,
+    includeComments,
+    pageRange,
+    filename,
+    filetype,
+  ]);
+
+  useEffect(() => {
     const updateFile = async () => {
       const document = core.getDocument(activeDocumentViewerKey);
       if (document) {
