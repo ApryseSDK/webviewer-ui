@@ -294,12 +294,12 @@ const MultiViewer = () => {
         const mainPage = visiblePages[0];
         if (matchedPages[documentViewerKey][mainPage]) {
           const { otherSidePages, thisSidePages } = matchedPages[documentViewerKey][mainPage];
-          const mainPageBoundingRect = documentViewer.getViewerElement().querySelector(`#pageContainer${thisSidePages[0]}`).getBoundingClientRect();
+          const mainPageBoundingRect = documentViewer.getViewerElement().querySelector(`#pageContainer${thisSidePages[0]}`)?.getBoundingClientRect();
           const otherSidePageBoundingRect = otherDocumentViewer.getViewerElement()
-            .querySelector(`#pageContainer${otherSidePages[0]}`).getBoundingClientRect();
+            .querySelector(`#pageContainer${otherSidePages[0]}`)?.getBoundingClientRect();
           const scrollRatio = otherSidePages.length / thisSidePages.length;
-          const heightRatio = otherSidePageBoundingRect.height / mainPageBoundingRect.height;
-          const currentDiffTop = otherSidePageBoundingRect.top - mainPageBoundingRect.top;
+          const heightRatio = otherSidePageBoundingRect && mainPageBoundingRect ? otherSidePageBoundingRect.height / mainPageBoundingRect.height : 1;
+          const currentDiffTop = otherSidePageBoundingRect && mainPageBoundingRect ? otherSidePageBoundingRect.top - mainPageBoundingRect.top : diffTop;
           const adjustedDiffTop = (scrollRatio !== 1 ? diffTop : currentDiffTop) * scrollRatio * heightRatio;
           otherContainer.scrollTop += adjustedDiffTop;
         }
