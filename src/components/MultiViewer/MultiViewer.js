@@ -17,7 +17,11 @@ import ComparisonButton from 'components/MultiViewer/ComparisonButton';
 import { addDocumentViewer, syncDocumentViewers, removeDocumentViewer } from 'helpers/documentViewerHelper';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
-import { DISABLED_TOOLS_KEYWORDS, DISABLED_TOOL_GROUPS } from 'constants/multiViewerDisabledTools';
+import { DISABLED_TOOLS_KEYWORDS, DISABLED_TOOL_GROUPS, SYNC_MODES } from 'constants/multiViewerContants';
+import multiViewerHelper, {
+  getIsScrolledByClickingChangeItem,
+  setIsScrolledByClickingChangeItem
+} from 'helpers/multiViewerHelper';
 
 const MIN_WIDTH = 350;
 
@@ -84,6 +88,7 @@ const MultiViewer = () => {
     activeToolName,
     customMultiViewerSyncHandler,
     syncViewer,
+    multiViewerSyncScrollMode,
   ] = useSelector((state) => [
     selectors.isMultiViewerMode(state),
     selectors.isComparisonDisabled(state),
@@ -98,6 +103,7 @@ const MultiViewer = () => {
     selectors.getActiveToolName(state),
     selectors.getCustomMultiViewerSyncHandler(state),
     selectors.getSyncViewer(state),
+    selectors.getMultiViewerSyncScrollMode(state),
   ]);
 
   useEffect(() => {
@@ -208,11 +214,13 @@ const MultiViewer = () => {
     const unLoaded1 = () => {
       stopSyncing();
       setDoc1Loaded(false);
+      multiViewerHelper.matchedPages = null;
       core.deleteAnnotations(core.getSemanticDiffAnnotations(2), { force: true }, 2);
     };
     const unLoaded2 = () => {
       stopSyncing();
       setDoc2Loaded(false);
+      multiViewerHelper.matchedPages = null;
       core.deleteAnnotations(core.getSemanticDiffAnnotations(1), { force: true }, 1);
     };
     if (!isMultiViewerMode) {
@@ -256,41 +264,69 @@ const MultiViewer = () => {
     return core.getDocumentViewers().length < 2 || !core.getDocument(1) || !core.getDocument(2) ||
     !selectors.isMultiViewerMode(state) || !selectors.getSyncViewer(state);
   };
+
   const createOnScrollHandler = (documentViewerKey) => (e) => {
     if (shouldSkipSyncEvent()) {
       return;
     }
-    const otherViewerNumber = documentViewerKey === 1 ? 2 : 1;
     const { scrollTop, scrollLeft } = e.target;
+    if (getIsScrolledByClickingChangeItem()) {
+      syncState.current[`scrollTop${documentViewerKey}`] = scrollTop;
+      syncState.current[`scrollLeft${documentViewerKey}`] = scrollLeft;
+      if (documentViewerKey === 2) {
+        setIsScrolledByClickingChangeItem(false);
+      }
+      return;
+    }
+    const otherViewerNumber = documentViewerKey === 1 ? 2 : 1;
     if (syncState.current.currentScrollContainer !== otherViewerNumber) {
+      syncState.current.currentScrollContainer = documentViewerKey;
       const diffTop = scrollTop - syncState.current[`scrollTop${documentViewerKey}`];
       const diffLeft = scrollLeft - syncState.current[`scrollLeft${documentViewerKey}`];
-      const otherContainer = otherViewerNumber === 1 ? container : container2;
-      const topOverflow = otherContainer.current.scrollTop + diffTop;
-      const bottomOverflow = otherContainer.current.scrollHeight - otherContainer.current.scrollTop - diffTop - otherContainer.current.clientHeight;
-      if (topOverflow < 0) {
-        syncState.current[`topOverflow${otherViewerNumber}`] += topOverflow;
-        otherContainer.current.scrollTop += diffTop;
-      } else if (bottomOverflow < 0) {
-        syncState.current[`topOverflow${otherViewerNumber}`] -= bottomOverflow;
-        otherContainer.current.scrollTop += diffTop;
+      const otherContainer = otherViewerNumber === 1 ? container.current : container2.current;
+      const topOverflow = otherContainer.scrollTop + diffTop;
+      const bottomOverflow = otherContainer.scrollHeight - otherContainer.scrollTop - diffTop - otherContainer.clientHeight;
+      if (multiViewerSyncScrollMode === SYNC_MODES.SKIP_UNMATCHED && multiViewerHelper.matchedPages) {
+        const { matchedPages } = multiViewerHelper;
+        const documentViewer = core.getDocumentViewer(documentViewerKey);
+        const otherDocumentViewer = core.getDocumentViewer(otherViewerNumber);
+        const visiblePages = documentViewer.getDisplayModeManager().getDisplayMode().getVisiblePages();
+        const mainPage = visiblePages[0];
+        if (matchedPages[documentViewerKey][mainPage]) {
+          const { otherSidePages, thisSidePages } = matchedPages[documentViewerKey][mainPage];
+          const mainPageBoundingRect = documentViewer.getViewerElement().querySelector(`#pageContainer${thisSidePages[0]}`)?.getBoundingClientRect();
+          const otherSidePageBoundingRect = otherDocumentViewer.getViewerElement()
+            .querySelector(`#pageContainer${otherSidePages[0]}`)?.getBoundingClientRect();
+          const scrollRatio = otherSidePages.length / thisSidePages.length;
+          const heightRatio = otherSidePageBoundingRect && mainPageBoundingRect ? otherSidePageBoundingRect.height / mainPageBoundingRect.height : 1;
+          const currentDiffTop = otherSidePageBoundingRect && mainPageBoundingRect ? otherSidePageBoundingRect.top - mainPageBoundingRect.top : diffTop;
+          const adjustedDiffTop = (scrollRatio !== 1 ? diffTop : currentDiffTop) * scrollRatio * heightRatio;
+          otherContainer.scrollTop += adjustedDiffTop;
+        }
       } else {
-        const isTopOverflowPositive = syncState.current[`topOverflow${otherViewerNumber}`] > 0;
-        const isDiffTopPositive = diffTop > 0;
-        const isZero = diffTop === 0 || syncState.current[`topOverflow${otherViewerNumber}`] === 0;
-        if (isDiffTopPositive !== isTopOverflowPositive && !isZero) {
-          syncState.current[`topOverflow${otherViewerNumber}`] += diffTop;
-          if (syncState.current[`topOverflow${otherViewerNumber}`] > 0 !== isTopOverflowPositive) {
-            otherContainer.current.scrollTop += syncState.current[`topOverflow${otherViewerNumber}`];
-            syncState.current[`topOverflow${otherViewerNumber}`] = 0;
-          }
+        if (topOverflow < 0) {
+          syncState.current[`topOverflow${otherViewerNumber}`] += topOverflow;
+          otherContainer.scrollTop += diffTop;
+        } else if (bottomOverflow < 0) {
+          syncState.current[`topOverflow${otherViewerNumber}`] -= bottomOverflow;
+          otherContainer.scrollTop += diffTop;
         } else {
-          otherContainer.current.scrollTop += diffTop - syncState.current[`topOverflow${documentViewerKey}`];
-          syncState.current[`topOverflow${documentViewerKey}`] = 0;
-          otherContainer.current.scrollLeft += diffLeft;
+          const isTopOverflowPositive = syncState.current[`topOverflow${otherViewerNumber}`] > 0;
+          const isDiffTopPositive = diffTop > 0;
+          const isZero = diffTop === 0 || syncState.current[`topOverflow${otherViewerNumber}`] === 0;
+          if (isDiffTopPositive !== isTopOverflowPositive && !isZero) {
+            syncState.current[`topOverflow${otherViewerNumber}`] += diffTop;
+            if (syncState.current[`topOverflow${otherViewerNumber}`] > 0 !== isTopOverflowPositive) {
+              otherContainer.scrollTop += syncState.current[`topOverflow${otherViewerNumber}`];
+              syncState.current[`topOverflow${otherViewerNumber}`] = 0;
+            }
+          } else {
+            otherContainer.scrollTop += diffTop - syncState.current[`topOverflow${documentViewerKey}`];
+            syncState.current[`topOverflow${documentViewerKey}`] = 0;
+            otherContainer.scrollLeft += diffLeft;
+          }
         }
       }
-      syncState.current.currentScrollContainer = documentViewerKey;
     } else {
       syncState.current.currentScrollContainer = null;
     }
@@ -325,7 +361,6 @@ const MultiViewer = () => {
     }
     syncState.current[`page${documentViewerKey}`] = nextPage;
   };
-
   const startSyncing = (primaryDocumentViewerKey) => {
     setIsSyncing(true);
     const zoomLevel = core.getZoom(primaryDocumentViewerKey);
@@ -349,6 +384,12 @@ const MultiViewer = () => {
         removeHandlerFunctions.current.push(() => core.removeEventListener('pageNumberUpdated', onPageUpdatedHandler, documentViewerKey));
       }
     }
+
+    if (multiViewerSyncScrollMode === SYNC_MODES.SKIP_UNMATCHED) {
+      container.current.scrollTop = 0;
+      container2.current.scrollTop = 0;
+    }
+
     syncState.current = {
       scrollTop1: container.current.scrollTop,
       scrollLeft1: container.current.scrollLeft,
@@ -358,7 +399,6 @@ const MultiViewer = () => {
       topOverflow2: 0,
       page1: core.getCurrentPage(1),
       page2: core.getCurrentPage(2),
-      currentScrollContainer: null,
     };
 
     if (customMultiViewerSyncHandler) {
