@@ -1,4 +1,5 @@
 import localStorageManager from 'helpers/localStorageManager';
+import { getInstanceID } from 'helpers/getRootNode';
 
 export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
@@ -344,6 +345,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         openElements: { ...state.openElements, [payload.dataElement]: false },
       };
+    case 'SET_IS_ELEMENT_HIDDEN':
+      return {
+        ...state,
+        hiddenElements: { ...state.hiddenElements, [payload.dataElement]: payload.isHidden }
+      };
     case 'ENABLE_TOOL_GROUP_REORDERING':
       return { ...state, enableToolGroupReordering: payload.enableToolGroupReordering };
     case 'SET_ACTIVE_HEADER_GROUP':
@@ -356,7 +362,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, customColor: payload.customColor };
     case 'SET_CUSTOM_COLORS':
       if (localStorageManager.isLocalStorageEnabled()) {
-        window.localStorage.setItem('customColors', JSON.stringify(payload.customColors));
+        const instanceId = getInstanceID();
+        window.localStorage.setItem(`${instanceId}-customColors`, JSON.stringify(payload.customColors));
       } else {
         console.error('localStorage is disabled, customColors cannot be restored');
       }
@@ -402,6 +409,8 @@ export default (initialState) => (state = initialState, action) => {
           [payload.documentViewerKey]: payload.zoom,
         }
       };
+    case 'SET_TIMEZONE':
+      return { ...state, timezone: payload.timezone };
     case 'SET_ROTATION':
       return { ...state, rotation: payload.rotation };
     case 'SET_DISPLAY_MODE':
@@ -698,7 +707,8 @@ export default (initialState) => (state = initialState, action) => {
       };
     case 'SET_HIDE_CONTENT_EDIT_WARNING':
       if (localStorageManager.isLocalStorageEnabled()) {
-        window.localStorage.setItem('hideContentEditWarning', JSON.stringify(payload.hideWarning));
+        const instanceId = getInstanceID();
+        window.localStorage.setItem(`${instanceId}-hideContentEditWarning`, JSON.stringify(payload.hideWarning));
       } else {
         console.error('localStorage is disabled, hideContentEditWarning cannot be restored');
       }
@@ -799,6 +809,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, zoomStepFactors: payload.zoomStepFactors };
     case 'SET_CONTENT_EDITOR':
       return { ...state, contentEditor: payload.contentEditor };
+    case 'SET_CONTENTBOX_EDITOR':
+      return { ...state, contentBoxEditor: payload.contentBoxEditor };
     case 'SET_NOTES_PANEL_CUSTOM_HEADER_OPTIONS':
       return { ...state, notesPanelCustomHeaderOptions: payload.notesPanelCustomHeaderOptions };
     case 'SET_NOTES_PANEL_CUSTOM_EMPTY_PANEL':
@@ -818,6 +830,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isMultipleScalesMode: payload.isMultipleScalesMode,
+      };
+    case 'SET_NOTES_PANEL_MULTI_SELECT':
+      return {
+        ...state,
+        isNotesPanelMultiSelectEnabled: payload.isNotesPanelMultiSelectEnabled,
       };
     case 'SET_SIGNATURE_MODE':
       return {
@@ -841,6 +858,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, toolDefaultStyleUpdateFromAnnotationPopupEnabled: payload };
     case 'SET_SHORTCUT_KEY_MAP':
       return { ...state, shortcutKeyMap: payload };
+    case 'SET_MULTI_VIEWER_SYNC_SCROLLING_MODE':
+      return { ...state, multiViewerSyncScrollMode: payload };
     default:
       return state;
   }
