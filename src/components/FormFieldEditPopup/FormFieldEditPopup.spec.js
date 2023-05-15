@@ -1,5 +1,5 @@
-import React from 'react';
-import { render, fireEvent, getByText, getByDisplayValue } from '@testing-library/react';
+import React, { useState } from 'react';
+import { render, fireEvent, getByText, getByDisplayValue, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FormFieldEditPopup from './FormFieldEditPopup';
 import { Basic } from './FormFieldEditPopup.stories';
@@ -399,6 +399,50 @@ describe('FormFieldEditPopup', () => {
       );
       const indicatorText = getByDisplayValue(container, INDICATOR_TEXT);
       expect(indicatorText).toBeInTheDocument();
+    });
+
+    it('if I click cancel and the field name is empty, it deletes the form field placeholder', () => {
+      const dummyAnnotation = createMockAnnotation();
+      const mockDeleteAnnotation = jest.fn();
+
+      const mockInputFieldWithEmtpyName = [
+        {
+          label: 'formField.formFieldPopup.fieldName',
+          onChange: noop,
+          value: '', // This means the name is empty/blank
+          required: true,
+          type: 'text',
+          message: 'formField.formFieldPopup.nameRequired',
+        },
+        {
+          label: 'formField.formFieldPopup.fieldValue',
+          onChange: noop,
+          value: 'fieldValue',
+          type: 'text',
+        },
+      ];
+
+      render(
+        <TestFormFieldEditPopup
+          fields={mockInputFieldWithEmtpyName}
+          flags={sampleFlags}
+          closeFormFieldEditPopup={noop}
+          isOpen
+          isValid={false}
+          annotation={dummyAnnotation}
+          redrawAnnotation={noop}
+          getPageHeight={noop}
+          getPageWidth={noop}
+          indicator={indicator}
+          deleteAnnotation={mockDeleteAnnotation}
+        />,
+      );
+
+      const cancelButton = screen.getByText('Cancel');
+      expect(cancelButton).toBeInTheDocument();
+      fireEvent.click(cancelButton);
+
+      expect(mockDeleteAnnotation).toHaveBeenCalled();
     });
   });
 });

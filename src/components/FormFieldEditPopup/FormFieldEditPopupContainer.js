@@ -12,7 +12,8 @@ import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import useOnFormFieldAnnotationAddedOrSelected from '../../hooks/useOnFormFieldAnnotationAddedOrSelected';
 import DataElementWrapper from '../DataElementWrapper';
 import useMedia from '../../hooks/useMedia';
-import DataElements from 'src/constants/dataElement';
+import DataElements from 'constants/dataElement';
+import { PRIORITY_THREE } from 'constants/actionPriority';
 import './FormFieldEditPopup.scss';
 
 function FormFieldEditPopupContainer() {
@@ -37,10 +38,13 @@ function FormFieldEditPopupContainer() {
   const dispatch = useDispatch();
 
   useOnClickOutside(popupRef, () => {
-    closeAndReset();
+    if (fieldName.trim() !== '') {
+      closeAndReset();
+    }
   });
 
   function closeAndReset() {
+    dispatch(actions.enableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
     dispatch(actions.closeElement(DataElements.FORM_FIELD_EDIT_POPUP));
     setFieldName('');
     setFieldValue('');
@@ -53,11 +57,16 @@ function FormFieldEditPopupContainer() {
     setIndicatorText('');
   }
 
-  const formFieldAnnotation = useOnFormFieldAnnotationAddedOrSelected(openFormFieldPopup);
+  const formFieldAnnotation = useOnFormFieldAnnotationAddedOrSelected(openFormFieldPopup, closeAndReset);
 
   function openFormFieldPopup() {
+    dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
     dispatch(actions.openElement(DataElements.FORM_FIELD_EDIT_POPUP));
   }
+
+  const deleteFormFieldPlaceholder = useCallback((annotation) => {
+    core.deleteAnnotations([annotation]);
+  }, []);
 
   useEffect(() => {
     const onFormFieldCreationModeStarted = () => {
@@ -85,7 +94,7 @@ function FormFieldEditPopupContainer() {
       }
     };
 
-    if (isOpen) {
+    if (isOpen && formFieldAnnotation) {
       setPopupPosition();
       setFieldName(formFieldCreationManager.getFieldName(formFieldAnnotation));
       setFieldValue(formFieldCreationManager.getFieldValue(formFieldAnnotation));
@@ -96,9 +105,15 @@ function FormFieldEditPopupContainer() {
       const dedupedRadioGroups = [...(new Set([...radioButtonGroups, ...formFieldCreationManager.getRadioButtonGroups()]))];
       setRadioButtonGroups(dedupedRadioGroups);
       // Field name is required, so if this is an empty string
-      // the field is not valid and should not be converted to a real field
-      setIsValid(!!formFieldCreationManager.getFieldName(formFieldAnnotation));
-      setValidationMessage('');
+      // the field is not valid and the user should be warned
+      // As a failsafe the FormFieldCreationManager will create a unique field name if this is left blank
+      const isFieldNameValid = !!formFieldCreationManager.getFieldName(formFieldAnnotation);
+      setIsValid(isFieldNameValid);
+      let validationMessage = '';
+      if (!isFieldNameValid) {
+        validationMessage = 'formField.formFieldPopup.invalidField.empty';
+      }
+      setValidationMessage(validationMessage);
       setShowIndicator(formFieldCreationManager.getShowIndicator(formFieldAnnotation));
       setIndicatorText(formFieldCreationManager.getIndicatorText(formFieldAnnotation));
     }
@@ -321,6 +336,7 @@ function FormFieldEditPopupContainer() {
       getPageHeight={getPageHeight}
       getPageWidth={getPageWidth}
       indicator={indicator}
+      deleteAnnotation={deleteFormFieldPlaceholder}
     />
   );
 
@@ -338,6 +354,7 @@ function FormFieldEditPopupContainer() {
       onSignatureOptionChange={onSignatureOptionChange}
       getSignatureOptionHandler={getSignatureOption}
       indicator={indicator}
+      deleteAnnotation={deleteFormFieldPlaceholder}
     />
   );
 
@@ -353,6 +370,7 @@ function FormFieldEditPopupContainer() {
       getPageHeight={getPageHeight}
       getPageWidth={getPageWidth}
       indicator={indicator}
+      deleteAnnotation={deleteFormFieldPlaceholder}
     />
   );
 
@@ -370,6 +388,7 @@ function FormFieldEditPopupContainer() {
       getPageHeight={getPageHeight}
       getPageWidth={getPageWidth}
       indicator={indicator}
+      deleteAnnotation={deleteFormFieldPlaceholder}
     />
   );
 
@@ -390,6 +409,7 @@ function FormFieldEditPopupContainer() {
         getPageHeight={getPageHeight}
         getPageWidth={getPageWidth}
         indicator={indicator}
+        deleteAnnotation={deleteFormFieldPlaceholder}
       />
     );
   };
@@ -411,12 +431,13 @@ function FormFieldEditPopupContainer() {
         getPageHeight={getPageHeight}
         getPageWidth={getPageWidth}
         indicator={indicator}
+        deleteAnnotation={deleteFormFieldPlaceholder}
       />
     );
   };
 
   const renderPopUp = () => {
-    const intent = formFieldAnnotation.getFormFieldPlaceholderType();
+    const intent = formFieldAnnotation?.getFormFieldPlaceholderType();
     if (intent === 'TextFormField') {
       return renderTextFormFieldEditPopup();
     }
@@ -435,6 +456,7 @@ function FormFieldEditPopupContainer() {
     if (intent === 'ComboBoxFormField') {
       return renderComboBoxFormFieldEditPopup();
     }
+    return null;
   };
 
   const renderFormFieldEditPopup = () => (

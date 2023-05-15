@@ -37,8 +37,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onSignatureSaved = eventListeners.onSignatureSaved(dispatch, store);
   const onSignatureDeleted = eventListeners.onSignatureDeleted(dispatch, store);
   const onHistoryChanged = eventListeners.onHistoryChanged(dispatch, documentViewerKey);
-  const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch);
-  const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch, store);
+  const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch, hotkeysManager);
+  const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch, store, hotkeysManager);
   const onDigitalSignatureAvailable = eventListeners.onDigitalSignatureAvailable(dispatch, documentViewerKey);
   const onImageContentAdded = eventListeners.onImageContentAdded(dispatch);
   const onInitialSaved = eventListeners.onInitialSaved(dispatch, store);
