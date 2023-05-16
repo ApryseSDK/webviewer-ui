@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 import 'quill-mention';
 import mentionsManager from 'helpers/MentionsManager';
 import Button from 'components/Button';
@@ -11,6 +11,46 @@ import selectors from 'selectors';
 import './CommentTextarea.scss';
 
 let globalUserData = [];
+
+// These are the formats that will be accepted by quill
+// removed images and videos
+const formats = [
+  'background',
+  'bold',
+  'color',
+  'font',
+  'code',
+  'italic',
+  'link',
+  'size',
+  'strike',
+  'script',
+  'underline',
+  'blockquote',
+  'header',
+  'indent',
+  'list',
+  'align',
+  'direction',
+  'code-block',
+  'formula',
+  'mention',
+];
+
+// We override the default keyboard module to disable the list autofill feature
+const Keyboard = Quill.import('modules/keyboard');
+
+class CustomKeyboard extends Keyboard {
+  static DEFAULTS = {
+    ...Keyboard.DEFAULTS,
+    bindings: {
+      ...Keyboard.DEFAULTS.bindings,
+      'list autofill': undefined,
+    }
+  }
+}
+
+Quill.register('modules/keyboard', CustomKeyboard, true);
 
 // mentionsModule has to be outside the funtion to be able to access it without it being destroyed and recreated
 const mentionModule = {
@@ -92,6 +132,7 @@ const CommentTextarea = React.forwardRef(
           aria-label={`${isReply ? t('action.reply') : t('action.comment')}...`}
           onChange={onChange}
           onKeyDown={onKeyDown}
+          formats={formats}
         />
         {isReply && !isAddReplyAttachmentDisabled &&
           <Button
