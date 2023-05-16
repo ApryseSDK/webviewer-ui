@@ -106,6 +106,12 @@ const ContextMenuPopup = ({
         left = containerBox.right - width - horizontalGap;
       }
 
+      // Fixes the issue where viewer has space on
+      // left side in WebComponent mode
+      if (window.isApryseWebViewerWebComponent) {
+        left -= containerBox.left;
+      }
+
       if (top < containerBox.top) {
         top = containerBox.top + verticalGap;
       }

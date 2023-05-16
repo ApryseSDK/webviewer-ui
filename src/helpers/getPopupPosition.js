@@ -1,4 +1,5 @@
 import core from 'core';
+import getRootNode from 'helpers/getRootNode';
 
 // gap between the annotation selection box and the popup element
 const gap = 17;
@@ -18,10 +19,19 @@ export const getTextPopupPositionBasedOn = (allQuads, popup) => {
     getPopupDimensions(popup)
   );
 
+  // Fixes the issue where viewer has space on
+  // left side in WebComponent mode
+  if (window.isApryseWebViewerWebComponent) {
+    const documentContainer = getRootNode().querySelector('.DocumentContainer');
+    const containerBox = documentContainer.getBoundingClientRect();
+    const updatedLeft = left - containerBox.left;
+    return { left: updatedLeft, top };
+  }
+
   return { left, top };
 };
 
-export const getAnnotationPosition = annotation => {
+export const getAnnotationPosition = (annotation) => {
   const { left, top, right, bottom } = getAnnotationPageCoordinates(annotation);
 
   const pageNumber = annotation.getPageNumber();
@@ -29,10 +39,10 @@ export const getAnnotationPosition = annotation => {
   const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber);
 
   if (annotation['NoZoom']) {
-    const isNote = annotation instanceof window.Annotations.StickyAnnotation;
+    const isNote = annotation instanceof window.Core.Annotations.StickyAnnotation;
     const rect = annotation.getRect();
-    const width = isNote ? window.Annotations.StickyAnnotation['SIZE'] : rect.getWidth();
-    const height = isNote ? window.Annotations.StickyAnnotation['SIZE'] : rect.getHeight();
+    const width = isNote ? window.Core.Annotations.StickyAnnotation['SIZE'] : rect.getWidth();
+    const height = isNote ? window.Core.Annotations.StickyAnnotation['SIZE'] : rect.getHeight();
     const rotation = core.getCompleteRotation(annotation.PageNumber);
     if (rotation === 0) {
       bottomRight.x = topLeft.x + width;
@@ -62,12 +72,12 @@ export const getAnnotationPosition = annotation => {
   return { topLeft, bottomRight };
 };
 
-const getAnnotationPageCoordinates = annotation => {
+const getAnnotationPageCoordinates = (annotation) => {
   const rect = annotation.getRect();
   let { x1: left, y1: top, x2: right, y2: bottom } = rect;
 
-  const isNote = annotation instanceof window.Annotations.StickyAnnotation;
-  const noteAdjustment = window.Annotations.StickyAnnotation['SIZE'];
+  const isNote = annotation instanceof window.Core.Annotations.StickyAnnotation;
+  const noteAdjustment = window.Core.Annotations.StickyAnnotation['SIZE'];
 
   const rotation = core.getCompleteRotation(annotation.PageNumber);
   if (rotation === 1) {
@@ -96,7 +106,7 @@ const getAnnotationPageCoordinates = annotation => {
   return { left, top, right, bottom };
 };
 
-const getSelectedTextPosition = allQuads => {
+const getSelectedTextPosition = (allQuads) => {
   const { startPageNumber, endPageNumber } = getSelectedTextPageNumber(allQuads);
   const { left, right, top, bottom } = getSelectedTextPageCoordinates(
     allQuads,
@@ -116,8 +126,8 @@ const getSelectedTextPosition = allQuads => {
   return { topLeft, bottomRight };
 };
 
-const getSelectedTextPageNumber = allQuads => {
-  const pageNumbers = Object.keys(allQuads).map(pageNumber => Number(pageNumber));
+const getSelectedTextPageNumber = (allQuads) => {
+  const pageNumbers = Object.keys(allQuads).map((pageNumber) => Number(pageNumber));
   // Object.keys returns keys in arbitrary order so use Math.min/max instead of index to access array
   const startPageNumber = Math.min(...pageNumbers);
   const endPageNumber = Math.max(...pageNumbers);
@@ -141,8 +151,8 @@ const getSelectedTextPageCoordinates = (allQuads, startPageNumber, endPageNumber
     let left;
     let right;
 
-    Object.keys(allQuads).forEach(pageNumber => {
-      allQuads[pageNumber].forEach(quad => {
+    Object.keys(allQuads).forEach((pageNumber) => {
+      allQuads[pageNumber].forEach((quad) => {
         const { x1: quadLeft, x2: quadRight } = quad;
 
         if (!left || quadLeft < left) {
@@ -169,7 +179,7 @@ const convertPageCoordinatesToWindowCoordinates = (x, y, pageNumber) => {
   return displayMode.pageToWindow({ x, y }, pageNumber);
 };
 
-const getPopupDimensions = popup => {
+const getPopupDimensions = (popup) => {
   const { width, height } = popup.current.getBoundingClientRect();
 
   return { width, height };
