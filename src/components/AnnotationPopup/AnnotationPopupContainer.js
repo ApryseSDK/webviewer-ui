@@ -15,6 +15,7 @@ import useOnRightClick from 'hooks/useOnRightClick';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
+import { PRIORITY_THREE } from 'constants/actionPriority';
 
 import './AnnotationPopup.scss';
 
@@ -463,10 +464,15 @@ const AnnotationPopupContainer = () => {
   };
 
   /* FORM FIELD */
-  const showFormFieldButton = includesFormFieldAnnotation;
+  const formFieldCreationManager = core.getFormFieldCreationManager();
+  const isInFormFieldCreationMode = formFieldCreationManager.isInFormFieldCreationMode();
+  const showFormFieldButton = includesFormFieldAnnotation && isInFormFieldCreationMode;
 
   const onOpenFormField = () => {
     closeAndReset();
+    // We disable it while the form field popup is open to prevent having both open
+    // at the same time. We re-enable it when the form field popup is closed.
+    dispatch(actions.disableElement(DataElements.ANNOTATION_POPUP, PRIORITY_THREE));
     dispatch(actions.openElement(DataElements.FORM_FIELD_EDIT_POPUP));
   };
 

@@ -57,7 +57,7 @@ const annotation = {
   Width: 100,
   Height: 100,
   getCustomData: () => { },
-  getFormFieldPlaceHolderType: () => { },
+  getFormFieldPlaceholderType: () => { },
 };
 
 const indicator = {

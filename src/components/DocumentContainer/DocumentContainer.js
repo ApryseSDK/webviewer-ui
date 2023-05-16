@@ -210,7 +210,7 @@ class DocumentContainer extends React.PureComponent {
   };
 
   handleScroll = () => {
-    this.props.closeElements(['annotationPopup', 'textPopup', 'inlineCommentPopup', 'annotationNoteConnectorLine', 'formFieldEditPopup']);
+    this.props.closeElements(['annotationPopup', 'textPopup', 'inlineCommentPopup', 'annotationNoteConnectorLine']);
 
     // Show overlay and then hide it, but the hide call is debounced
     this.showPageNavigationOverlay();
