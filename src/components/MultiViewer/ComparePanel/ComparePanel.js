@@ -109,8 +109,10 @@ const ComparePanel = () => {
               }
             }
           } while (added);
-          annotationMatches1.push(side1Annotations);
-          annotationMatches2.push(side2Annotations);
+          if (side1Annotations.length && side2Annotations.length) {
+            annotationMatches1.push(side1Annotations);
+            annotationMatches2.push(side2Annotations);
+          }
         }
 
         const matchedPages = { 1: {}, 2: {} };
@@ -134,11 +136,18 @@ const ComparePanel = () => {
         }
         multiViewerHelper.matchedPages = matchedPages;
       }
+      const matchedIds = [];
       for (const index in doc1Annotations) {
         const annotation = doc1Annotations[index];
         const type = annotation.getCustomData('TextDiffType');
         const id = annotation.getCustomData('TextDiffID');
         const otherAnnotations = doc2Annotations.filter((annotation) => annotation?.getCustomData('TextDiffID') === id);
+        if (!otherAnnotations.length) {
+          continue;
+        }
+        if (!matchedIds.includes(id)) {
+          matchedIds.push(id);
+        }
         if (!annotMap[annotation.PageNumber]) {
           annotMap[annotation.PageNumber] = [];
         }
@@ -167,6 +176,30 @@ const ComparePanel = () => {
             });
           }
         }
+      }
+      const unmatchedAnnotations1 = doc1Annotations.filter((annotation) => !matchedIds.includes(annotation.getCustomData('TextDiffID')));
+      const unmatchedAnnotations2 = doc2Annotations.filter((annotation) => !matchedIds.includes(annotation.getCustomData('TextDiffID')));
+      for (const annotation of unmatchedAnnotations1) {
+        if (!annotMap[annotation.PageNumber]) {
+          annotMap[annotation.PageNumber] = [];
+        }
+        annotMap[annotation.PageNumber].push({
+          old: annotation,
+          oldText: annotation?.Author,
+          oldCount: annotation?.Author?.length,
+          type: `${t('multiViewer.comparePanel.textContent')} - ${t(`multiViewer.comparePanel.${annotation.getCustomData('TextDiffType')}`)}`,
+        });
+      }
+      for (const annotation of unmatchedAnnotations2) {
+        if (!annotMap[annotation.PageNumber]) {
+          annotMap[annotation.PageNumber] = [];
+        }
+        annotMap[annotation.PageNumber].push({
+          new: annotation,
+          newText: annotation?.Author,
+          newCount: annotation?.Author?.length,
+          type: `${t('multiViewer.comparePanel.textContent')} - ${t(`multiViewer.comparePanel.${annotation.getCustomData('TextDiffType')}`)}`,
+        });
       }
       for (const pageNumber of Object.keys(annotMap)) {
         annotMap[pageNumber] = annotMap[pageNumber].sort((a, b) => {
@@ -209,7 +242,8 @@ const ComparePanel = () => {
     const changeListItems = filteredListData[pageNum];
     return <React.Fragment key={pageNum}>
       <div className="page-number">{t('multiViewer.comparePanel.page')} {pageNum}</div>
-      {changeListItems.map(((props) => <ChangeListItem key={`${props.new.Id}-${props.old.Id}`} {...props} />))}
+      {changeListItems.map(((props) => <ChangeListItem
+        key={`${props.new?.Id ?? 'null'}-${props.old?.Id ?? 'null'}`} {...props} />))}
     </React.Fragment>;
   };
 

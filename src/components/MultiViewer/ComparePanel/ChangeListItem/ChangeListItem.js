@@ -28,13 +28,13 @@ const ChangeListItem = (props) => {
 
   const onClickItem = useCallback(() => {
     setIsScrolledByClickingChangeItem(true);
+    if (props.old && props.new && props.old.getPageNumber() !== props.new.getPageNumber()) {
+      dispatch(actions.setSyncViewer(null));
+    }
     for (const annotation of [props.old, props.new]) {
       const viewerNumber = annotation === props.old ? 1 : 2;
       if (!annotation) {
         continue;
-      }
-      if (props.old.getPageNumber() !== props.new.getPageNumber()) {
-        dispatch(actions.setSyncViewer(null));
       }
       core.getDocumentViewer(viewerNumber).getAnnotationManager().deselectAllAnnotations();
       core.jumpToAnnotation(annotation, viewerNumber);

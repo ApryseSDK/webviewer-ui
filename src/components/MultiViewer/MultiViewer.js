@@ -302,6 +302,13 @@ const MultiViewer = () => {
           const currentDiffTop = otherSidePageBoundingRect && mainPageBoundingRect ? otherSidePageBoundingRect.top - mainPageBoundingRect.top : diffTop;
           const adjustedDiffTop = (scrollRatio !== 1 ? diffTop : currentDiffTop) * scrollRatio * heightRatio;
           otherContainer.scrollTop += adjustedDiffTop;
+        } else {
+          const visiblePageOtherSide = otherDocumentViewer.getDisplayModeManager().getDisplayMode().getVisiblePages();
+          const otherMainPage = visiblePageOtherSide[0];
+          const secondaryPage = visiblePageOtherSide[1];
+          if (!matchedPages[otherViewerNumber][otherMainPage] || (secondaryPage && !matchedPages[otherViewerNumber][secondaryPage])) {
+            otherContainer.scrollTop += diffTop;
+          }
         }
       } else {
         if (topOverflow < 0) {
