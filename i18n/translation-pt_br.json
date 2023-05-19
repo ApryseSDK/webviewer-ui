@@ -16,6 +16,9 @@
     "comment": "Novo comentário",
     "reply": "Responder",
     "copy": "Copiar",
+    "cut": "Corte",
+    "paste": "Colar",
+    "pasteWithoutFormatting": "colar sem formatar",
     "delete": "Apagar",
     "group": "Grupo",
     "ungroup": "Desagrupar",
@@ -78,6 +81,7 @@
     "showLess": "mostre menos",
     "showMore": "...mais",
     "chooseFile": "Escolha um arquivo",
+    "changeDate": "Alterar data",
     "browse": "Procurar arquivos",
     "selectYourOption": "Selecione sua opção",
     "open": "Aberto",
@@ -85,6 +89,7 @@
     "select": "Selecione",
     "moveToTop": "Mover para o topo",
     "moveToBottom": "Mover para o fundo",
+    "backToMenu": "Voltar ao menu",
     "redactPages": "Redigir páginas",
     "playAudio": "Reproduzir áudio",
     "pauseAudio": "pausa de áudio",
@@ -96,7 +101,8 @@
     "comparePages": "Comparar páginas",
     "startComparison": "Iniciar comparação",
     "back": "De volta",
-    "clearSignature": "Assinatura clara"
+    "clearSignature": "Assinatura clara",
+    "newDocument": "Novo Documento"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -251,6 +257,7 @@
     "errorEnterMeasurement": "O número inserido é inválido, você pode inserir valores como 7,5 ou 7 1/2",
     "linkURLorPage": "URL do link ou uma página",
     "warning": "Aviso",
+    "svgMalicious": "Script SVG ignorado por segurança",
     "enterContentEditingMode": "Você está prestes a entrar no modo de edição de texto.",
     "existingAnnotationWarning": "As anotações existentes podem não corresponder ao texto após sua edição.",
     "changesCannotBeUndone": "Quaisquer alterações feitas não podem ser desfeitas.",
@@ -380,7 +387,8 @@
       "qualityHigh": "Alto",
       "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
-      "printSettings": "Configurações de impressão"
+      "printSettings": "Configurações de impressão",
+      "printGrayscale": "Imprimir escala de cinza"
     },
     "printInfo": {
       "author": "Autor",
@@ -448,7 +456,9 @@
       "filters": "Filtros",
       "user": "Do utilizador",
       "type": "Modelo",
-      "status": "Status"
+      "status": "Status",
+      "filterSettings": "Configurações de filtro",
+      "filterDocument": "Filtrar documento e painel de comentários"
     },
     "state": {
       "accepted": "Aceito",
@@ -558,7 +568,8 @@
     "thumbnailPanel": {
       "delete": "Excluir",
       "rotateClockwise": "Sentido horário",
-      "rotateCounterClockwise": "Sentido anti-horário"
+      "rotateCounterClockwise": "Sentido anti-horário",
+      "moreOptions": "Mais opções"
     },
     "thumbnailsControlOverlay": {
       "move": "Mover páginas"
@@ -608,6 +619,7 @@
     },
     "settings": {
       "settings": "Definições",
+      "searchSettings": "Configurações de pesquisa",
       "general": "Em geral",
       "language": "Linguagem",
       "theme": "Tema",
@@ -726,6 +738,10 @@
       "title": "Fechar sem baixar?",
       "message": "Foram feitas alterações neste documento. Tem certeza de que deseja fechá-lo sem baixar seu trabalho? Você não pode desfazer esta ação.",
       "rejectDownloadButton": "Fechar sem baixar"
+    },
+    "connectToURL": {
+      "title": "Aviso de segurança",
+      "message": "Este documento está tentando se conectar a:\n\n{{- uri}}.\n\n Se você confia neste documento, clique em Confirmar para abri-lo."
     }
   },
   "shortcut": {
@@ -1063,6 +1079,23 @@
   "languageModal": {
     "selectLanguage": "Selecione o idioma"
   },
+  "officeEditor": {
+    "bold": "Audacioso",
+    "italic": "itálico",
+    "underline": "Sublinhado",
+    "textColor": "Cor do texto",
+    "leftAlign": "alinhar à esquerda",
+    "centerAlign": "Alinhar ao centro",
+    "rightAlign": "alinhar à direita",
+    "justify": "Justificar",
+    "lineSpacing": "Espaçamento entre linhas e parágrafos",
+    "bulletList": "Lista com marcadores",
+    "numberList": "lista numerada",
+    "insertLink": "Inserir link",
+    "insertImage": "Inserir Imagem",
+    "notAvailableInDemoMode": "Não disponível no modo de demonstração",
+    "notSupportedOnMobile": "A edição do Office não é suportada em dispositivos móveis."
+  },
   "insertPageModal": {
     "title": "Adicionar nova página",
     "tabs": {
@@ -1119,7 +1152,11 @@
       "change": "Mudar",
       "old": "Velho",
       "new": "Novo",
-      "page": "Página"
+      "page": "Página",
+      "textContent": "conteúdo de texto",
+      "delete": "excluir",
+      "insert": "inserir",
+      "edit": "editar"
     }
   },
   "saveModal": {

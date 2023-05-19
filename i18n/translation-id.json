@@ -16,6 +16,9 @@
     "comment": "Komentar",
     "reply": "Tambahkan balasan",
     "copy": "Salinan",
+    "cut": "Memotong",
+    "paste": "Tempel",
+    "pasteWithoutFormatting": "Tempel tanpa memformat",
     "delete": "Menghapus",
     "group": "Kelompok",
     "ungroup": "Pisahkan grup",
@@ -78,6 +81,7 @@
     "showLess": "tampilkan lebih sedikit",
     "showMore": "...lagi",
     "chooseFile": "Pilih file",
+    "changeDate": "Ganti tanggal",
     "browse": "Mencari berkas",
     "selectYourOption": "Pilih opsi Anda",
     "open": "Membuka",
@@ -85,6 +89,7 @@
     "select": "Pilih",
     "moveToTop": "Pindah ke atas",
     "moveToBottom": "Pindah ke bawah",
+    "backToMenu": "Kembali ke menu",
     "redactPages": "Redaksi halaman",
     "playAudio": "Putar audio",
     "pauseAudio": "jeda audio",
@@ -96,7 +101,8 @@
     "comparePages": "Bandingkan halaman",
     "startComparison": "Mulai Perbandingan",
     "back": "Kembali",
-    "clearSignature": "Tanda tangan yang jelas"
+    "clearSignature": "Tanda tangan yang jelas",
+    "newDocument": "Dokumen Baru"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -251,6 +257,7 @@
     "errorEnterMeasurement": "Nomor yang Anda masukkan tidak valid, Anda dapat memasukkan nilai seperti 7,5 atau 7 1/2",
     "linkURLorPage": "Tautan URL atau Halaman",
     "warning": "Peringatan",
+    "svgMalicious": "Skrip SVG diabaikan demi keamanan",
     "enterContentEditingMode": "Anda akan memasuki mode pengeditan konten.",
     "existingAnnotationWarning": "Anotasi yang ada mungkin tidak cocok dengan teks setelah diedit.",
     "changesCannotBeUndone": "Setiap perubahan yang dibuat tidak dapat dibatalkan.",
@@ -380,7 +387,8 @@
       "qualityHigh": "Tinggi",
       "includeAnnotations": "Sertakan anotasi",
       "includeComments": "Sertakan komentar",
-      "printSettings": "Pengaturan Cetak"
+      "printSettings": "Pengaturan Cetak",
+      "printGrayscale": "Cetak Skala abu-abu"
     },
     "printInfo": {
       "author": "Pengarang",
@@ -448,7 +456,9 @@
       "filters": "Filter",
       "user": "Pengguna",
       "type": "Jenis",
-      "status": "Status"
+      "status": "Status",
+      "filterSettings": "Pengaturan Filter",
+      "filterDocument": "Filter dokumen dan panel komentar"
     },
     "state": {
       "accepted": "Diterima",
@@ -558,7 +568,8 @@
     "thumbnailPanel": {
       "delete": "Menghapus",
       "rotateClockwise": "Searah jarum jam",
-      "rotateCounterClockwise": "Berlawanan arah jarum jam"
+      "rotateCounterClockwise": "Berlawanan arah jarum jam",
+      "moreOptions": "Lebih banyak pilihan"
     },
     "thumbnailsControlOverlay": {
       "move": "Pindahkan halaman"
@@ -608,6 +619,7 @@
     },
     "settings": {
       "settings": "Pengaturan",
+      "searchSettings": "Pengaturan pencarian",
       "general": "Umum",
       "language": "Bahasa",
       "theme": "Tema",
@@ -726,6 +738,10 @@
       "title": "Tutup tanpa mengunduh?",
       "message": "Ada perubahan yang dibuat pada dokumen ini, apakah Anda yakin ingin menutupnya tanpa mengunduh pekerjaan Anda? Anda tidak dapat mengurungkan tindakan ini.",
       "rejectDownloadButton": "Tutup tanpa unduh"
+    },
+    "connectToURL": {
+      "title": "Peringatan keamanan",
+      "message": "Dokumen ini mencoba terhubung ke:\n\n{{- uri}}.\n\n Jika Anda mempercayai dokumen ini, klik Konfirmasi untuk membukanya."
     }
   },
   "shortcut": {
@@ -1063,6 +1079,23 @@
   "languageModal": {
     "selectLanguage": "Pilih bahasa"
   },
+  "officeEditor": {
+    "bold": "Berani",
+    "italic": "Miring",
+    "underline": "Menggarisbawahi",
+    "textColor": "Warna teks",
+    "leftAlign": "Rata kiri",
+    "centerAlign": "Rata tengah",
+    "rightAlign": "Rata kanan",
+    "justify": "Membenarkan",
+    "lineSpacing": "Penspasian baris & paragraf",
+    "bulletList": "Daftar berpoin",
+    "numberList": "Daftar bernomor",
+    "insertLink": "Sisipkan tautan",
+    "insertImage": "Sisipkan gambar",
+    "notAvailableInDemoMode": "Tidak tersedia dalam mode demo",
+    "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler."
+  },
   "insertPageModal": {
     "title": "Tambahkan Halaman Baru",
     "tabs": {
@@ -1119,7 +1152,11 @@
       "change": "Mengubah",
       "old": "Tua",
       "new": "Baru",
-      "page": "Halaman"
+      "page": "Halaman",
+      "textContent": "Konten Teks",
+      "delete": "menghapus",
+      "insert": "menyisipkan",
+      "edit": "sunting"
     }
   },
   "saveModal": {

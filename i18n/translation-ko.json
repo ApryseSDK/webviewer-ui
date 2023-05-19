@@ -16,6 +16,9 @@
     "comment": "코멘트",
     "reply": "댓글",
     "copy": "복사",
+    "cut": "자르다",
+    "paste": "반죽",
+    "pasteWithoutFormatting": "서식 없이 붙여넣기",
     "delete": "삭제",
     "group": "그룹",
     "ungroup": "그룹해제",
@@ -78,6 +81,7 @@
     "showLess": "간략히 보기",
     "showMore": "더보기",
     "chooseFile": "파일선택",
+    "changeDate": "날짜 변경",
     "browse": "파일 찾아보기",
     "selectYourOption": "옵션을 선택하세요",
     "open": "열기",
@@ -85,6 +89,7 @@
     "select": "선택",
     "moveToTop": "맨 위로 이동",
     "moveToBottom": "맨 아래로 이동",
+    "backToMenu": "메뉴로 돌아가기",
     "redactPages": "페이지 수정",
     "playAudio": "재생",
     "pauseAudio": "일시중지",
@@ -96,7 +101,8 @@
     "comparePages": "페이지 비교",
     "startComparison": "비교 시작",
     "back": "뒤",
-    "clearSignature": "명확한 서명"
+    "clearSignature": "명확한 서명",
+    "newDocument": "새 문서"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -251,6 +257,7 @@
     "errorEnterMeasurement": "잘못된 형식의 숫자를 입력하였습니다. 7.5 또는 7 1/2과 같은 값을 입력하세요.",
     "linkURLorPage": "링크URL 또는 페이지",
     "warning": "경고",
+    "svgMalicious": "보안을 위해 SVG 스크립트 무시됨",
     "enterContentEditingMode": "텍스트 편집모드로 전환합니다.",
     "existingAnnotationWarning": "편집 후 기존 주석과 일치하지 않을 수 있습니다.",
     "changesCannotBeUndone": "변경사항은 취소할 수 없습니다.",
@@ -380,7 +387,8 @@
       "qualityHigh": "최상",
       "includeAnnotations": "주석포함",
       "includeComments": "댓글포함",
-      "printSettings": "인쇄 설정"
+      "printSettings": "인쇄 설정",
+      "printGrayscale": "인쇄 그레이스케일"
     },
     "printInfo": {
       "author": "저자",
@@ -448,7 +456,9 @@
       "filters": "필터",
       "user": "사용자",
       "type": "유형",
-      "status": "상태"
+      "status": "상태",
+      "filterSettings": "필터 설정",
+      "filterDocument": "문서 및 댓글 패널 필터링"
     },
     "state": {
       "accepted": "승인",
@@ -558,7 +568,8 @@
     "thumbnailPanel": {
       "delete": "삭제",
       "rotateClockwise": "오른쪽으로 회전",
-      "rotateCounterClockwise": "왼쪽으로 회전"
+      "rotateCounterClockwise": "왼쪽으로 회전",
+      "moreOptions": "추가 옵션"
     },
     "thumbnailsControlOverlay": {
       "move": "페이지 이동"
@@ -608,6 +619,7 @@
     },
     "settings": {
       "settings": "설정",
+      "searchSettings": "검색 설정",
       "general": "일반적인",
       "language": "언어",
       "theme": "주제",
@@ -726,6 +738,10 @@
       "title": "다운로드하지 않고 종료하시겠습니까?",
       "message": "이 문서에 변경 사항이 있습니다. 작업을 다운로드하지 않고 닫으시겠습니까? 이 작업은 취소할 수 없습니다.",
       "rejectDownloadButton": "다운로드하지 않고 닫기"
+    },
+    "connectToURL": {
+      "title": "보안 경고",
+      "message": "이 문서는 다음에 연결하려고 합니다.\n\n{{- 우리}}.\n\n 이 문서를 신뢰하는 경우 확인을 클릭하여 엽니다."
     }
   },
   "shortcut": {
@@ -1063,6 +1079,23 @@
   "languageModal": {
     "selectLanguage": "언어 선택"
   },
+  "officeEditor": {
+    "bold": "용감한",
+    "italic": "이탤릭체",
+    "underline": "밑줄",
+    "textColor": "텍스트 색상",
+    "leftAlign": "왼쪽 정렬",
+    "centerAlign": "중앙 정렬",
+    "rightAlign": "오른쪽 정렬",
+    "justify": "신이 옳다고 하다",
+    "lineSpacing": "줄 및 단락 간격",
+    "bulletList": "글머리 기호 목록",
+    "numberList": "번호 매기기 목록",
+    "insertLink": "링크 삽입",
+    "insertImage": "이미지 삽입",
+    "notAvailableInDemoMode": "데모 모드에서는 사용할 수 없습니다.",
+    "notSupportedOnMobile": "Office 편집은 모바일 장치에서 지원되지 않습니다."
+  },
   "insertPageModal": {
     "title": "새 페이지 추가",
     "tabs": {
@@ -1119,7 +1152,11 @@
       "change": "변화",
       "old": "오래된",
       "new": "새로운",
-      "page": "페이지"
+      "page": "페이지",
+      "textContent": "텍스트 콘텐츠",
+      "delete": "삭제",
+      "insert": "끼워 넣다",
+      "edit": "편집하다"
     }
   },
   "saveModal": {

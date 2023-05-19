@@ -16,6 +16,9 @@
     "comment": "टिप्पणी",
     "reply": "उत्तर जोड़ें",
     "copy": "प्रतिलिपि",
+    "cut": "काटना",
+    "paste": "पेस्ट करें",
+    "pasteWithoutFormatting": "बिना फॉर्मेट किए पेस्ट करें",
     "delete": "हटाएं",
     "group": "समूह",
     "ungroup": "असमूहीकृत",
@@ -78,6 +81,7 @@
     "showLess": "कम दिखाएं",
     "showMore": "...अधिक",
     "chooseFile": "एक फ़ाइल चुनें",
+    "changeDate": "बदलाव दिनांक",
     "browse": "फ़ाइलों को ब्राउज़ करें",
     "selectYourOption": "अपना विकल्प चुनें",
     "open": "खुला हुआ",
@@ -85,6 +89,7 @@
     "select": "चुनते हैं",
     "moveToTop": "शीर्ष पर जाएं",
     "moveToBottom": "नीचे ले जाएँ",
+    "backToMenu": "मैन्यू में वापस",
     "redactPages": "पृष्ठ सुधारें",
     "playAudio": "ऑडियो चलाएं",
     "pauseAudio": "ऑडियो विराम",
@@ -96,7 +101,8 @@
     "comparePages": "पृष्ठों की तुलना करें",
     "startComparison": "तुलना शुरू करें",
     "back": "पीछे",
-    "clearSignature": "स्पष्ट हस्ताक्षर"
+    "clearSignature": "स्पष्ट हस्ताक्षर",
+    "newDocument": "नया दस्तावेज़"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -251,6 +257,7 @@
     "errorEnterMeasurement": "आपके द्वारा दर्ज किया गया नंबर अमान्य है, आप 7.5 या 7 1/2 . जैसे मान दर्ज कर सकते हैं",
     "linkURLorPage": "लिंक यूआरएल या पेज",
     "warning": "चेतावनी",
+    "svgMalicious": "सुरक्षा के लिए SVG स्क्रिप्ट को नज़रअंदाज़ किया गया",
     "enterContentEditingMode": "आप सामग्री संपादन मोड में प्रवेश करने वाले हैं।",
     "existingAnnotationWarning": "संपादित किए जाने के बाद मौजूदा एनोटेशन टेक्स्ट से मेल नहीं खा सकते हैं।",
     "changesCannotBeUndone": "किए गए किसी भी परिवर्तन को पूर्ववत नहीं किया जा सकता है।",
@@ -380,7 +387,8 @@
       "qualityHigh": "उच्च",
       "includeAnnotations": "एनोटेशन शामिल करें",
       "includeComments": "टिप्पणियाँ शामिल करें",
-      "printSettings": "प्रिंट सेटिंग्स"
+      "printSettings": "प्रिंट सेटिंग्स",
+      "printGrayscale": "ग्रेस्केल प्रिंट करें"
     },
     "printInfo": {
       "author": "लेखक",
@@ -448,7 +456,9 @@
       "filters": "फिल्टर",
       "user": "उपयोगकर्ता",
       "type": "टाइप",
-      "status": "दर्जा"
+      "status": "दर्जा",
+      "filterSettings": "फ़िल्टर सेटिंग्स",
+      "filterDocument": "दस्तावेज़ और टिप्पणी पैनल फ़िल्टर करें"
     },
     "state": {
       "accepted": "स्वीकार किया हुआ",
@@ -558,7 +568,8 @@
     "thumbnailPanel": {
       "delete": "हटाएं",
       "rotateClockwise": "दक्षिणावर्त",
-      "rotateCounterClockwise": "वामावर्त"
+      "rotateCounterClockwise": "वामावर्त",
+      "moreOptions": "अधिक विकल्प"
     },
     "thumbnailsControlOverlay": {
       "move": "पन्ने ले जाएँ"
@@ -608,6 +619,7 @@
     },
     "settings": {
       "settings": "समायोजन",
+      "searchSettings": "खोज सेंटिंग",
       "general": "सामान्य",
       "language": "भाषा",
       "theme": "थीम",
@@ -726,6 +738,10 @@
       "title": "डाउनलोड किए बिना बंद करें?",
       "message": "इस दस्तावेज़ में परिवर्तन किए गए हैं, क्या आप वाकई अपना काम डाउनलोड किए बिना इसे बंद करना चाहते हैं? आप इस क्रिया को पूर्ववत नहीं कर सकते।",
       "rejectDownloadButton": "डाउनलोड के बिना बंद करें"
+    },
+    "connectToURL": {
+      "title": "सुरक्षा चेतावनी",
+      "message": "यह दस्तावेज़ इससे कनेक्ट करने का प्रयास कर रहा है:\n\n{{- उरी}}।\n\n यदि आप इस दस्तावेज़ पर भरोसा करते हैं, तो इसे खोलने के लिए पुष्टि करें पर क्लिक करें।"
     }
   },
   "shortcut": {
@@ -1063,6 +1079,23 @@
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"
   },
+  "officeEditor": {
+    "bold": "निडर",
+    "italic": "तिरछा",
+    "underline": "रेखांकन",
+    "textColor": "पाठ का रंग",
+    "leftAlign": "बाएं संरेखित करें",
+    "centerAlign": "केंद्र संरेखित करें",
+    "rightAlign": "सही संरेखित करें",
+    "justify": "न्यायोचित ठहराना",
+    "lineSpacing": "लाइन और पैराग्राफ स्पेसिंग",
+    "bulletList": "बुलेटेड सूची",
+    "numberList": "क्रमांकित सूची",
+    "insertLink": "लिंक डालें",
+    "insertImage": "चित्र डालें",
+    "notAvailableInDemoMode": "डेमो मोड में उपलब्ध नहीं है",
+    "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।"
+  },
   "insertPageModal": {
     "title": "नया पेज जोड़ें",
     "tabs": {
@@ -1119,7 +1152,11 @@
       "change": "परिवर्तन",
       "old": "पुराना",
       "new": "नया",
-      "page": "पृष्ठ"
+      "page": "पृष्ठ",
+      "textContent": "टेक्स्ट सामग्री",
+      "delete": "मिटाना",
+      "insert": "डालना",
+      "edit": "संपादन करना"
     }
   },
   "saveModal": {

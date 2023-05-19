@@ -16,6 +16,9 @@
     "comment": "Megjegyzés",
     "reply": "Válasz hozzáadása",
     "copy": "Másolat",
+    "cut": "Vágott",
+    "paste": "Paszta",
+    "pasteWithoutFormatting": "Beillesztés formázás nélkül",
     "delete": "Töröl",
     "group": "Csoport",
     "ungroup": "Csoportbontás feloldása",
@@ -78,6 +81,7 @@
     "showLess": "mutass kevesebbet",
     "showMore": "...több",
     "chooseFile": "Válasszon egy fájlt",
+    "changeDate": "Dátum módosítása",
     "browse": "Tallózás a fájlok között",
     "selectYourOption": "Válassza ki az opciót",
     "open": "Nyisd ki",
@@ -85,6 +89,7 @@
     "select": "Válassza ki",
     "moveToTop": "Ugrás a tetejére",
     "moveToBottom": "Mozgás lefelé",
+    "backToMenu": "Vissza a menübe",
     "redactPages": "Oldalak szerkesztése",
     "playAudio": "Hang lejátszása",
     "pauseAudio": "Hang szüneteltetése",
@@ -96,7 +101,8 @@
     "comparePages": "Oldalak összehasonlítása",
     "startComparison": "Indítsa el az összehasonlítást",
     "back": "Vissza",
-    "clearSignature": "Világos aláírás"
+    "clearSignature": "Világos aláírás",
+    "newDocument": "Új dokumentum"
   },
   "annotation": {
     "areaMeasurement": "Terület",
@@ -251,6 +257,7 @@
     "errorEnterMeasurement": "A megadott szám érvénytelen, olyan értékeket adhat meg, mint 7,5 vagy 7 1/2",
     "linkURLorPage": "Link URL vagy oldal",
     "warning": "Figyelem",
+    "svgMalicious": "Az SVG-szkriptet a biztonság érdekében figyelmen kívül hagyták",
     "enterContentEditingMode": "A tartalomszerkesztő módba lép.",
     "existingAnnotationWarning": "Előfordulhat, hogy a meglévő megjegyzések nem egyeznek a szöveggel a szerkesztés után.",
     "changesCannotBeUndone": "A végrehajtott változtatások nem vonhatók vissza.",
@@ -380,7 +387,8 @@
       "qualityHigh": "Magas",
       "includeAnnotations": "Adjon meg megjegyzéseket",
       "includeComments": "Tartalmazza a megjegyzéseket",
-      "printSettings": "Nyomtatási beállítások"
+      "printSettings": "Nyomtatási beállítások",
+      "printGrayscale": "Nyomtatás Szürkeárnyalatos"
     },
     "printInfo": {
       "author": "Szerző",
@@ -448,7 +456,9 @@
       "filters": "Szűrők",
       "user": "Felhasználó",
       "type": "típus",
-      "status": "Állapot"
+      "status": "Állapot",
+      "filterSettings": "Szűrőbeállítások",
+      "filterDocument": "Dokumentum és megjegyzés panel szűrése"
     },
     "state": {
       "accepted": "Elfogadott",
@@ -558,7 +568,8 @@
     "thumbnailPanel": {
       "delete": "Töröl",
       "rotateClockwise": "Óramutató járásával megegyező",
-      "rotateCounterClockwise": "Óramutató járásával ellentétes irányban"
+      "rotateCounterClockwise": "Óramutató járásával ellentétes irányban",
+      "moreOptions": "Több lehetőség"
     },
     "thumbnailsControlOverlay": {
       "move": "Oldalak mozgatása"
@@ -608,6 +619,7 @@
     },
     "settings": {
       "settings": "Beállítások",
+      "searchSettings": "Keresési beállítások",
       "general": "Tábornok",
       "language": "Nyelv",
       "theme": "Téma",
@@ -726,6 +738,10 @@
       "title": "Letöltés nélkül bezárja?",
       "message": "Módosítások történtek ezen a dokumentumon. Biztosan be szeretné zárni a munka letöltése nélkül? Ez a művelet nem vonható vissza.",
       "rejectDownloadButton": "Letöltés nélkül zárja be"
+    },
+    "connectToURL": {
+      "title": "Biztonsági figyelmeztetés",
+      "message": "Ez a dokumentum a következőhöz próbál csatlakozni:\n\n{{- uri}}.\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra a megnyitásához."
     }
   },
   "shortcut": {
@@ -1063,6 +1079,23 @@
   "languageModal": {
     "selectLanguage": "Válasszon nyelvet"
   },
+  "officeEditor": {
+    "bold": "Bátor",
+    "italic": "Dőlt",
+    "underline": "Aláhúzás",
+    "textColor": "Szöveg szín",
+    "leftAlign": "Balra igazítás",
+    "centerAlign": "Középre igazítás",
+    "rightAlign": "Jobbra igazítás",
+    "justify": "Indokolja meg",
+    "lineSpacing": "Sor- és bekezdésköz",
+    "bulletList": "Felsorolásos lista",
+    "numberList": "Számozott lista",
+    "insertLink": "Link beszúrása",
+    "insertImage": "Kép beszúrása",
+    "notAvailableInDemoMode": "Demo módban nem elérhető",
+    "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön."
+  },
   "insertPageModal": {
     "title": "Új oldal hozzáadása",
     "tabs": {
@@ -1119,7 +1152,11 @@
       "change": "változás",
       "old": "Régi",
       "new": "Új",
-      "page": "oldal"
+      "page": "oldal",
+      "textContent": "Szövegtartalom",
+      "delete": "töröl",
+      "insert": "betét",
+      "edit": "szerkeszteni"
     }
   },
   "saveModal": {

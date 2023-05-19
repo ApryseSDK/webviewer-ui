@@ -16,6 +16,9 @@
     "comment": "Commenter",
     "reply": "Répondre",
     "copy": "Copier",
+    "cut": "Couper",
+    "paste": "Pâte",
+    "pasteWithoutFormatting": "Coller sans formater",
     "delete": "Supprimer",
     "group": "Grouper",
     "ungroup": "Dissocier",
@@ -78,6 +81,7 @@
     "showLess": "Montrer moins",
     "showMore": "...Suite",
     "chooseFile": "Choisissez un fichier",
+    "changeDate": "Date de modification",
     "browse": "Parcourir les fichiers",
     "selectYourOption": "Sélectionnez votre option",
     "open": "Ouvert",
@@ -85,6 +89,7 @@
     "select": "Sélectionner",
     "moveToTop": "Déplacer vers le haut",
     "moveToBottom": "Déplacer vers le bas",
+    "backToMenu": "Retour au menu",
     "redactPages": "Masquer les pages",
     "playAudio": "Lecture audio",
     "pauseAudio": "Pause audio",
@@ -96,7 +101,8 @@
     "comparePages": "Comparer les pages",
     "startComparison": "Commencer la comparaison",
     "back": "Retour",
-    "clearSignature": "Signature claire"
+    "clearSignature": "Signature claire",
+    "newDocument": "Nouveau document"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -135,7 +141,7 @@
     "stickyNote": "Note collante",
     "strikeout": "Rayer",
     "underline": "Soulignement",
-    "custom": "personnalisation",
+    "custom": "Personnalisation",
     "rubberStamp": "Estampille",
     "note": "Remarque",
     "textField": "Champ de texte",
@@ -184,8 +190,8 @@
     "searchPanel": "Chercher",
     "menuOverlay": "Menu",
     "notesPanel": "Remarques",
-    "outlinePanel": "Élément",
-    "outlinesPanel": "Plan",
+    "outlinePanel": "Présenter",
+    "outlinesPanel": "Contours",
     "newOutlineTitle": "Nouveau titre de plan",
     "outlineTitle": "Titre du plan",
     "destination": "Destination",
@@ -251,6 +257,7 @@
     "errorEnterMeasurement": "Le nombre que vous avez entré est invalide, vous pouvez entrer des valeurs comme 7,5 ou 7 1/2",
     "linkURLorPage": "Lien URL ou une page",
     "warning": "Avertissement",
+    "svgMalicious": "Script SVG ignoré pour des raisons de sécurité",
     "enterContentEditingMode": "Vous êtes sur le point d'entrer en mode d'édition de texte.",
     "existingAnnotationWarning": "Les annotations existantes peuvent ne pas correspondre au texte une fois qu'il a été modifié.",
     "changesCannotBeUndone": "Toute modification apportée ne peut être annulée.",
@@ -373,14 +380,15 @@
       "all": "Toutes",
       "current": "Page actuelle",
       "pages": "Pages",
-      "specifyPages": "Spécifier les pages",
+      "specifyPages": "Spécifiez les pages",
       "view": "Vue actuelle",
       "pageQuality": "Qualité d'impression",
       "qualityNormal": "Ordinaire",
       "qualityHigh": "Haute",
       "includeAnnotations": "Inclure les annotations",
       "includeComments": "Inclure les commentaires",
-      "printSettings": "Paramètres d'impression"
+      "printSettings": "Paramètres d'impression",
+      "printGrayscale": "Imprimer en niveaux de gris"
     },
     "printInfo": {
       "author": "Auteur",
@@ -448,7 +456,9 @@
       "filters": "Filtres",
       "user": "Utilisateur",
       "type": "Taper",
-      "status": "Statut"
+      "status": "Statut",
+      "filterSettings": "Paramètres de filtre",
+      "filterDocument": "Filtrer le document et le panneau de commentaires"
     },
     "state": {
       "accepted": "Accepté",
@@ -459,7 +469,7 @@
       "setBy": "attribué par",
       "none": "Aucun",
       "marked": "Marqué",
-      "unmarked": "Non marqué"
+      "unmarked": "Mon marqué"
     },
     "measurementOverlay": {
       "scale": "Échelle",
@@ -558,7 +568,8 @@
     "thumbnailPanel": {
       "delete": "Supprimer",
       "rotateClockwise": "Rotation horaire",
-      "rotateCounterClockwise": "Rotation antihoraire"
+      "rotateCounterClockwise": "Rotation antihoraire",
+      "moreOptions": "Plus d'options"
     },
     "thumbnailsControlOverlay": {
       "move": "Déplacer des pages"
@@ -583,14 +594,14 @@
       "Username": "Nom d'utilisateur",
       "Date": "Date",
       "Time": "heure",
-      "fontStyle": "Police",
+      "fontStyle": "Font style",
       "dateFormat": "Format de date",
       "month": "Mois",
       "day": "Jour",
       "year": "An",
       "hour": "Heure",
       "minute": "Minute",
-      "second": "Seconde",
+      "second": "Deuxième",
       "textColor": "Couleur du texte",
       "backgroundColor": "Couleur de l'arrière plan"
     },
@@ -598,7 +609,7 @@
       "addMark": "Ajouter une marque",
       "pageSelection": "Sélection de pages",
       "current": "Page actuelle",
-      "specify": "Spécifier les pages",
+      "specify": "Spécifiez les pages",
       "odd": "Pages impaires seulement",
       "even": "Seulement les pages paires",
       "header": "Marquer la rédaction des pages"
@@ -608,6 +619,7 @@
     },
     "settings": {
       "settings": "Réglages",
+      "searchSettings": "Paramètres de recherche",
       "general": "Général",
       "language": "Langue",
       "theme": "Thème",
@@ -712,7 +724,7 @@
     },
     "selectPage": {
       "selectTitle": "Aucune page sélectionnée",
-      "selectMessage": "Veuillez sélectionner des pages et réessayez."
+      "selectMessage": "Veuillez sélectionner des pages et réessayer."
     },
     "colorPicker": {
       "deleteTitle": "Supprimer la couleur personnalisée",
@@ -726,6 +738,10 @@
       "title": "Fermer sans télécharger?",
       "message": "Des modifications ont été apportées à ce document, êtes-vous sûr de vouloir le fermer sans télécharger votre travail ? Vous ne pouvez pas annuler cette action.",
       "rejectDownloadButton": "Fermer sans téléchargement"
+    },
+    "connectToURL": {
+      "title": "Avertissement de sécurité",
+      "message": "Ce document tente de se connecter à :\n\n{{-uri}}.\n\n Si vous faites confiance à ce document, cliquez sur Confirmer pour l'ouvrir."
     }
   },
   "shortcut": {
@@ -846,15 +862,15 @@
   },
   "formField": {
     "formFieldPopup": {
-      "fieldName": "Nom de champ",
+      "fieldName": "Nom de domaine",
       "fieldValue": "Valeur par défaut",
-      "readOnly": "Lecture seule",
+      "readOnly": "Lecture seulement",
       "multiSelect": "Sélection multiple",
       "required": "Obligatoire",
       "multiLine": "Multiligne",
       "apply": "Appliquer",
       "cancel": "Annuler",
-      "flags": "Caractéristiques",
+      "flags": "Drapeaux de terrain",
       "options": "Options",
       "radioGroups": "Les boutons radio avec le même nom de champ appartiendront au même groupement.",
       "nameRequired": "Le nom du champ est obligatoire",
@@ -992,7 +1008,7 @@
       "noSigningTime": "Aucune heure de signature trouvée"
     },
     "panelMessages": {
-      "noSignatureFields": "Ce document n'a pas de champ de signature",
+      "noSignatureFields": "Ce document n'a pas de champs de signature",
       "certificateDownloadError": "Erreur rencontrée lors de la tentative de téléchargement d'un certificat de confiance",
       "localCertificateError": "Il y a quelques problèmes avec la lecture d'un certificat local"
     },
@@ -1012,8 +1028,8 @@
       "autoTrim": "Trim automatique"
     },
     "cropModal": {
-      "applyTitle": "Appliquer le recadrage ?",
-      "applyMessage": "Cette action recadrera de manière permanente toutes les pages sélectionnées. Cette action ne pourra pas être annulée.",
+      "applyTitle": "Appliquer la culture ?",
+      "applyMessage": "Cette action recadrera de manière permanente toutes les pages sélectionnées sélectionnées. Ça ne peut pas être défait.",
       "cancelTitle": "Annuler le recadrage ?",
       "cancelMessage": "Voulez-vous vraiment annuler le recadrage de toutes les pages sélectionnées ?"
     }
@@ -1062,6 +1078,23 @@
   },
   "languageModal": {
     "selectLanguage": "Choisir la langue"
+  },
+  "officeEditor": {
+    "bold": "Gras",
+    "italic": "Italique",
+    "underline": "Souligner",
+    "textColor": "Couleur du texte",
+    "leftAlign": "Alignement à gauche",
+    "centerAlign": "Aligner au centre",
+    "rightAlign": "Alignement à droite",
+    "justify": "Justifier",
+    "lineSpacing": "Espacement des lignes et des paragraphes",
+    "bulletList": "Liste à puces",
+    "numberList": "Liste numérotée",
+    "insertLink": "Insérer un lien",
+    "insertImage": "Insérer une image",
+    "notAvailableInDemoMode": "Non disponible en mode démo",
+    "notSupportedOnMobile": "L'édition Office n'est pas prise en charge sur les appareils mobiles."
   },
   "insertPageModal": {
     "title": "Ajouter une nouvelle page",
@@ -1119,7 +1152,11 @@
       "change": "Changer",
       "old": "Agé de",
       "new": "Nouveau",
-      "page": "Page"
+      "page": "Page",
+      "textContent": "Contenu du texte",
+      "delete": "effacer",
+      "insert": "insérer",
+      "edit": "Éditer"
     }
   },
   "saveModal": {
