@@ -190,8 +190,8 @@
     "searchPanel": "Chercher",
     "menuOverlay": "Menu",
     "notesPanel": "Remarques",
-    "outlinePanel": "Présenter",
-    "outlinesPanel": "Contours",
+    "outlinePanel": "Élément",
+    "outlinesPanel": "Plan",
     "newOutlineTitle": "Nouveau titre de plan",
     "outlineTitle": "Titre du plan",
     "destination": "Destination",
@@ -380,7 +380,7 @@
       "all": "Toutes",
       "current": "Page actuelle",
       "pages": "Pages",
-      "specifyPages": "Spécifiez les pages",
+      "specifyPages": "Spécifier les pages",
       "view": "Vue actuelle",
       "pageQuality": "Qualité d'impression",
       "qualityNormal": "Ordinaire",
@@ -469,7 +469,7 @@
       "setBy": "attribué par",
       "none": "Aucun",
       "marked": "Marqué",
-      "unmarked": "Mon marqué"
+      "unmarked": "Non marqué"
     },
     "measurementOverlay": {
       "scale": "Échelle",
@@ -593,14 +593,14 @@
       "Username": "Nom d'utilisateur",
       "Date": "Date",
       "Time": "heure",
-      "fontStyle": "Font style",
+      "fontStyle": "Police",
       "dateFormat": "Format de date",
       "month": "Mois",
       "day": "Jour",
       "year": "An",
       "hour": "Heure",
       "minute": "Minute",
-      "second": "Deuxième",
+      "second": "Seconde",
       "textColor": "Couleur du texte",
       "backgroundColor": "Couleur de l'arrière plan"
     },
@@ -608,7 +608,7 @@
       "addMark": "Ajouter une marque",
       "pageSelection": "Sélection de pages",
       "current": "Page actuelle",
-      "specify": "Spécifiez les pages",
+      "specify": "Spécifier les pages",
       "odd": "Pages impaires seulement",
       "even": "Seulement les pages paires",
       "header": "Marquer la rédaction des pages"
@@ -723,7 +723,7 @@
     },
     "selectPage": {
       "selectTitle": "Aucune page sélectionnée",
-      "selectMessage": "Veuillez sélectionner des pages et réessayer."
+      "selectMessage": "Veuillez sélectionner des pages et réessayez."
     },
     "colorPicker": {
       "deleteTitle": "Supprimer la couleur personnalisée",
@@ -861,15 +861,15 @@
   },
   "formField": {
     "formFieldPopup": {
-      "fieldName": "Nom de domaine",
+      "fieldName": "Nom de champ",
       "fieldValue": "Valeur par défaut",
-      "readOnly": "Lecture seulement",
+      "readOnly": "Lecture seule",
       "multiSelect": "Sélection multiple",
       "required": "Obligatoire",
       "multiLine": "Multiligne",
       "apply": "Appliquer",
       "cancel": "Annuler",
-      "flags": "Drapeaux de terrain",
+      "flags": "Caractéristiques",
       "options": "Options",
       "radioGroups": "Les boutons radio avec le même nom de champ appartiendront au même groupement.",
       "nameRequired": "Le nom du champ est obligatoire",
@@ -1007,7 +1007,7 @@
       "noSigningTime": "Aucune heure de signature trouvée"
     },
     "panelMessages": {
-      "noSignatureFields": "Ce document n'a pas de champs de signature",
+      "noSignatureFields": "Ce document n'a pas de champ de signature",
       "certificateDownloadError": "Erreur rencontrée lors de la tentative de téléchargement d'un certificat de confiance",
       "localCertificateError": "Il y a quelques problèmes avec la lecture d'un certificat local"
     },
@@ -1027,8 +1027,8 @@
       "autoTrim": "Trim automatique"
     },
     "cropModal": {
-      "applyTitle": "Appliquer la culture ?",
-      "applyMessage": "Cette action recadrera de manière permanente toutes les pages sélectionnées sélectionnées. Ça ne peut pas être défait.",
+      "applyTitle": "Appliquer le recadrage ?",
+      "applyMessage": "Cette action recadrera de manière permanente toutes les pages sélectionnées. Cette action ne pourra pas être annulée.",
       "cancelTitle": "Annuler le recadrage ?",
       "cancelMessage": "Voulez-vous vraiment annuler le recadrage de toutes les pages sélectionnées ?"
     }
