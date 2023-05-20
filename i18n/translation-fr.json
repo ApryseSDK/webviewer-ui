@@ -857,7 +857,7 @@
       "6": "sam."
     },
     "today": "Aujourd'hui",
-    "invalidDateTime": "Date/heure non valide : l'entrée doit correspondre au format"
+    "invalidDateTime": "Date/heure non valide : l'entrée doit correspondre au format"
   },
   "formField": {
     "formFieldPopup": {
@@ -958,7 +958,7 @@
     "by": "par",
     "on": "le",
     "disallowedChange": "Modification interdite: {{type}}, objnum: {{objnum}}",
-    "unsignedSignatureField": "Champ de signature non signé : {{fieldName}}",
+    "unsignedSignatureField": "Champ de signature non signé : {{fieldName}}",
     "signatureProperties": "Propriétés des signatures",
     "trustVerification": {
       "current": "L'heure de vérification utilisée était l'heure courante",
@@ -1027,10 +1027,10 @@
       "autoTrim": "Trim automatique"
     },
     "cropModal": {
-      "applyTitle": "Appliquer le recadrage ?",
+      "applyTitle": "Appliquer le recadrage ?",
       "applyMessage": "Cette action recadrera de manière permanente toutes les pages sélectionnées. Cette action ne pourra pas être annulée.",
-      "cancelTitle": "Annuler le recadrage ?",
-      "cancelMessage": "Voulez-vous vraiment annuler le recadrage de toutes les pages sélectionnées ?"
+      "cancelTitle": "Annuler le recadrage?",
+      "cancelMessage": "Voulez-vous vraiment annuler le recadrage de toutes les pages sélectionnées?"
     }
   },
   "textEditingPanel": {
