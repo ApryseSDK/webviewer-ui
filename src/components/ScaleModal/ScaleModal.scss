@@ -12,7 +12,6 @@
     padding: 0px;
     border-radius: 4px;
     box-shadow: 0px 0px 3px var(--document-box-shadow);
-    background: var(--component-background);
     overflow: visible;
 
     @include mobile {
@@ -268,7 +267,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        // position: relative;
         color: var(--blue-5);
         background-color: transparent;
         border: 1px solid var(--blue-5);

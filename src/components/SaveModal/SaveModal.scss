@@ -3,9 +3,8 @@
 @import "../../constants/tabs";
 
 .SaveModal {
-  display: flex;
-  flex-direction: column;
   @extend %modal;
+  flex-direction: column;
 
   .container {
     overflow: visible;
@@ -17,16 +16,13 @@
     height: auto;
     width: 480px;
     padding: 0px;
-    border-radius: 4px;
     box-shadow: 0px 0px 3px var(--document-box-shadow);
-    background: var(--component-background);
 
     .header {
       border-bottom: 1px solid var(--gray-5);
       padding: 16px;
       height: 64px;
       width: 100%;
-      background-color: var(--gray-0);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -41,6 +37,7 @@
         height: 32px;
       }
     }
+
     .modal-body {
       padding: 16px;
       display: flex;
@@ -135,14 +132,17 @@
       button {
         border: none;
         border-radius: 4px;
-        background-color: var(--blue-5);
+        background: var(--primary-button);
         width: 82px;
         height: 32px;
-        color: var(--gray-0);
-        font-weight: 0;
+        color: var(--primary-button-text);
 
         &:disabled {
           opacity: 0.5;
+        }
+
+        &:hover {
+          background: var(--primary-button-hover);
         }
       }
     }

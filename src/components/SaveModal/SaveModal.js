@@ -18,7 +18,7 @@ import pageNumberPlaceholder from 'constants/pageNumberPlaceholder';
 import downloadPdf from 'helpers/downloadPdf';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import { workerTypes } from 'constants/types';
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import './SaveModal.scss';
 
@@ -258,7 +258,7 @@ const SaveModal = () => {
               </>)}
             </div>
             <div className='footer'>
-              <button disabled={saveDisabled} onClick={onSave}>{t('saveModal.save')}</button>
+              <Button disabled={saveDisabled} onClick={onSave} label={t('saveModal.save')} />
             </div>
           </div>
         </div>
