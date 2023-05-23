@@ -18,6 +18,7 @@ import selectors from 'selectors';
 import core from 'core';
 
 import defaultTool from 'constants/defaultTool';
+import DataElements from 'constants/dataElement';
 
 import './RedactionOverlay.scss';
 
@@ -43,10 +44,10 @@ class RedactionOverlay extends React.PureComponent {
     if (!prevProps.isOpen && this.props.isOpen) {
       const { closeElements, setActiveToolGroup } = this.props;
       closeElements([
-        'menuOverlay',
-        'toolsOverlay',
-        'viewControlsOverlay',
-        'toolStylePopup',
+        DataElements.MENU_OVERLAY,
+        DataElements.TOOLS_OVERLAY,
+        DataElements.VIEW_CONTROLS_OVERLAY,
+        DataElements.TOOL_STYLE_POPUP,
       ]);
 
       core.setToolMode('AnnotationCreateRedaction');
@@ -59,7 +60,7 @@ class RedactionOverlay extends React.PureComponent {
     }
   }
 
-  handleClickOutside = e => {
+  handleClickOutside = (e) => {
     const toolStylePopup = document.querySelector(
       '[data-element="toolStylePopup"]',
     );
@@ -68,24 +69,24 @@ class RedactionOverlay extends React.PureComponent {
     const clickedHeader = header?.contains(e.target);
 
     if (isDesktop() && !clickedToolStylePopup && !clickedHeader) {
-      this.props.closeElements(['redactionOverlay']);
+      this.props.closeElements([DataElements.REDACTION_OVERLAY]);
     }
   };
 
   handleApplyButtonClick = () => {
     const { closeElements, applyRedactions } = this.props;
-    closeElements(['redactionOverlay']);
+    closeElements([DataElements.REDACTION_OVERLAY]);
     applyRedactions();
   };
 
   handleCloseClick = () => {
     core.setToolMode(defaultTool);
-    this.props.closeElements(['toolStylePopup', 'redactionOverlay']);
+    this.props.closeElements([DataElements.TOOL_STYLE_POPUP, DataElements.REDACTION_OVERLAY]);
   };
 
   render() {
     const { left, right } = this.state;
-    const { isDisabled, isOpen } = this.props;
+    const { isDisabled } = this.props;
 
     if (isDisabled) {
       return null;
@@ -102,7 +103,7 @@ class RedactionOverlay extends React.PureComponent {
         className={className}
         ref={this.overlay}
         style={{ left, right }}
-        data-element="redactionOverlay"
+        data-element={DataElements.REDACTION_OVERLAY}
       >
         <ToolButton toolName="AnnotationCreateRedaction" />
         <ActionButton
@@ -123,18 +124,17 @@ class RedactionOverlay extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'redactionOverlay'),
-  isOpen: selectors.isElementOpen(state, 'redactionOverlay'),
+const mapStateToProps = (state) => ({
+  isDisabled: selectors.isElementDisabled(state, DataElements.REDACTION_OVERLAY),
+  isOpen: selectors.isElementOpen(state, DataElements.REDACTION_OVERLAY),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   dispatch,
-  setActiveToolGroup: toolGroup =>
-    dispatch(actions.setActiveToolGroup(toolGroup)),
+  setActiveToolGroup: (toolGroup) => dispatch(actions.setActiveToolGroup(toolGroup)),
   applyRedactions: () => dispatch(applyRedactions()),
-  closeElements: dataElements => dispatch(actions.closeElements(dataElements)),
-  openElements: dataElements => dispatch(actions.openElements(dataElements)),
+  closeElements: (dataElements) => dispatch(actions.closeElements(dataElements)),
+  openElements: (dataElements) => dispatch(actions.openElements(dataElements)),
 });
 
 export default connect(

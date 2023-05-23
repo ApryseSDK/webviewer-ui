@@ -3,11 +3,11 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import actions from 'actions';
 import selectors from 'selectors';
-import useMedia from 'hooks/useMedia';
+import { isMobileSize } from 'helpers/getDeviceSize';
 import { connect } from 'react-redux';
 import Measure from 'react-measure';
-import _ from 'lodash';
-
+import throttle from 'lodash/throttle';
+import debounce from 'lodash/debounce';
 import core from 'core';
 import { isIE, isIE11 } from 'helpers/device';
 import { updateContainerWidth, getClassNameInIE, handleWindowResize } from 'helpers/documentContainerHelper';
@@ -56,7 +56,7 @@ class DocumentContainer extends React.PureComponent {
     isWv3dPropertiesPanelOpen: PropTypes.bool,
     featureFlags: PropTypes.object,
     bottomHeaderHeight: PropTypes.number,
-    activeDocumentViewerKey: PropTypes.number
+    activeDocumentViewerKey: PropTypes.number,
   };
 
   constructor(props) {
@@ -64,10 +64,10 @@ class DocumentContainer extends React.PureComponent {
 
     this.document = React.createRef();
     this.container = React.createRef();
-    this.wheelToNavigatePages = _.throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
-    this.wheelToZoom = _.throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
-    this.handleResize = _.throttle(this.handleResize.bind(this), 200);
-    this.debouncedHidePageNavigationOverlay = _.debounce(
+    this.wheelToNavigatePages = throttle(this.wheelToNavigatePages.bind(this), 300, { trailing: false });
+    this.wheelToZoom = throttle(this.wheelToZoom.bind(this), 30, { trailing: false });
+    this.handleResize = throttle(this.handleResize.bind(this), 200);
+    this.debouncedHidePageNavigationOverlay = debounce(
       this.hidePageNavigationOverlay,
       PAGE_NAVIGATION_OVERLAY_FADEOUT,
     );
@@ -156,7 +156,9 @@ class DocumentContainer extends React.PureComponent {
       const shouldGoUp = scrollingUp && reachedTop && currentPage > 1;
       const shouldGoDown = scrollingDown && reachedBottom && currentPage < totalPages;
 
-      const shouldPreventParentScrolling = (scrollHeight === clientHeight) && ((e.deltaY < 0 && currentPage > 1) || (e.deltaY > 0 && currentPage < totalPages));
+      const shouldPreventParentScrolling =
+        scrollHeight === clientHeight &&
+        ((e.deltaY < 0 && currentPage > 1) || (e.deltaY > 0 && currentPage < totalPages));
 
       if (shouldPreventParentScrolling) {
         e.preventDefault();
@@ -197,21 +199,15 @@ class DocumentContainer extends React.PureComponent {
     const { zoom: currentZoomFactor, activeDocumentViewerKey } = this.props;
     let newZoomFactor = currentZoomFactor;
     if (e.deltaY < 0) {
-      newZoomFactor = Math.min(
-        currentZoomFactor + getStep(currentZoomFactor),
-        getMaxZoomLevel()
-      );
+      newZoomFactor = Math.min(currentZoomFactor + getStep(currentZoomFactor), getMaxZoomLevel());
     } else if (e.deltaY > 0) {
-      newZoomFactor = Math.max(
-        currentZoomFactor - getStep(currentZoomFactor),
-        getMinZoomLevel()
-      );
+      newZoomFactor = Math.max(currentZoomFactor - getStep(currentZoomFactor), getMinZoomLevel());
     }
     core.zoomToMouse(newZoomFactor, activeDocumentViewerKey, e);
   };
 
   handleScroll = () => {
-    this.props.closeElements(['annotationPopup', 'textPopup', 'inlineCommentPopup', 'annotationNoteConnectorLine', 'formFieldEditPopup']);
+    this.props.closeElements(['annotationPopup', 'textPopup', 'inlineCommentPopup', 'annotationNoteConnectorLine']);
 
     // Show overlay and then hide it, but the hide call is debounced
     this.showPageNavigationOverlay();
@@ -295,13 +291,10 @@ class DocumentContainer extends React.PureComponent {
       totalPages,
       isInDesktopOnlyMode,
       featureFlags,
-      bottomHeaderHeight
+      bottomHeaderHeight,
     } = this.props;
 
-    const marginLeft =
-      0 +
-      (isLeftPanelOpen ? leftPanelWidth : 0) +
-      (isFlxPanelOpen ? panelMinWidth : 0);
+    const marginLeft = 0 + (isLeftPanelOpen ? leftPanelWidth : 0) + (isFlxPanelOpen ? panelMinWidth : 0);
 
     const style = {
       width: documentContentContainerWidthStyle,
@@ -327,7 +320,7 @@ class DocumentContainer extends React.PureComponent {
         style={style}
         className={classNames({
           'document-content-container': true,
-          'closed': isMultiTabEmptyPageOpen
+          'closed': isMultiTabEmptyPageOpen,
         })}
         onTransitionEnd={this.onTransitionEnd}
       >
@@ -388,7 +381,7 @@ const mapStateToProps = (state) => ({
   isFlxPanelOpen: selectors.isCustomFlxPanelOpen(state),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isMultiTabEmptyPageOpen: selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0,
-  isSearchOverlayOpen: selectors.isElementOpen(state, 'searchOverlay'),
+  isSearchOverlayOpen: selectors.isElementOpen(state, DataElements.SEARCH_OVERLAY),
   doesDocumentAutoLoad: selectors.doesDocumentAutoLoad(state),
   zoom: selectors.getZoom(state),
   currentPage: selectors.getCurrentPage(state),
@@ -418,13 +411,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ConnectedDocumentContainer = connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
 
 const connectedComponent = (props) => {
-  const isMobile = useMedia(
-    // Media queries
-    ['(max-width: 640px)'],
-    [true],
-    // Default value
-    false,
-  );
+  const isMobile = isMobileSize();
 
   return <ConnectedDocumentContainer {...props} isMobile={isMobile} />;
 };

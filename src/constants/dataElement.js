@@ -62,7 +62,16 @@ const DataElements = {
 
   // Overlays
   SCALE_OVERLAY_CONTAINER: 'scaleOverlayContainer',
-  MEASUREMENT_OVERLAY: 'measurmentOverlay',
+  MEASUREMENT_OVERLAY: 'measurementOverlay',
+  VIEW_CONTROLS_OVERLAY: 'viewControlsOverlay',
+  SEARCH_OVERLAY: 'searchOverlay',
+  MENU_OVERLAY: 'menuOverlay',
+  ZOOM_OVERLAY: 'zoomOverlay',
+  TOOLS_OVERLAY: 'toolsOverlay',
+  TOOL_STYLE_POPUP: 'toolStylePopup',
+  STAMP_OVERLAY: 'stampOverlay',
+  SIGNATURE_OVERLAY: 'signatureOverlay',
+  REDACTION_OVERLAY: 'redactionOverlay',
 
   // Popups
   ANNOTATION_POPUP: 'annotationPopup',

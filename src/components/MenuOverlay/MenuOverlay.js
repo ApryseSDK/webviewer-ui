@@ -63,7 +63,7 @@ function MenuOverlay() {
   const isFullScreen = useSelector((state) => selectors.isFullScreen(state));
   const timezone = useSelector((state) => selectors.getTimezone(state));
 
-  const closeMenuOverlay = useCallback(() => dispatch(actions.closeElements(['menuOverlay'])), [dispatch]);
+  const closeMenuOverlay = useCallback(() => dispatch(actions.closeElements([DataElements.MENU_OVERLAY])), [dispatch]);
 
   useEffect(() => {
     const onDocumentLoaded = () => {
@@ -135,7 +135,7 @@ function MenuOverlay() {
           <ActionButton
             dataElement="downloadButton"
             className="row"
-            img="icon-header-download"
+            img="icon-download"
             label={t('action.download')}
             ariaLabel={t('action.download')}
             role="option"

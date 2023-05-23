@@ -5,6 +5,7 @@ import getHashParameters from 'helpers/getHashParameters';
 import loadDocument from 'helpers/loadDocument';
 import actions from 'actions';
 import selectors from 'selectors';
+import DataElements from 'constants/dataElement';
 
 import './FilePickerHandler.scss';
 
@@ -22,8 +23,8 @@ const FilePickerHandler = () => {
   const openDocument = (e) => {
     const file = e.target.files[0];
     if (file) {
-      dispatch(actions.openElement('progressModal'));
-      dispatch(actions.closeElement('menuOverlay'));
+      dispatch(actions.openElement(DataElements.PROGRESS_MODAL));
+      dispatch(actions.closeElement(DataElements.MENU_OVERLAY));
       if (isMultiTab) {
         return TabManager.addTab(file, { saveCurrentActiveTabState: true, load: true });
       }

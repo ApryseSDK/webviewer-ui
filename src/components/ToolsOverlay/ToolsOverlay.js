@@ -6,15 +6,16 @@ import PresetButton from 'components/ToolButton/PresetButton';
 import ToolStylePopup from 'components/ToolStylePopup';
 import SelectedSignatureRow from 'components/SignatureStylePopup/SelectedSignatureRow';
 import SelectedRubberStamp from 'components/RubberStampOverlay/SelectedRubberStamp';
-import SelectedStamp from 'src/components/SelectedStamp/SelectedStamp';
+import SelectedStamp from 'components/SelectedStamp/SelectedStamp';
+import Icon from 'components/Icon';
 import { withTranslation } from 'react-i18next';
 
 import defaultTool from 'constants/defaultTool';
+import DataElements from 'constants/dataElement';
 import core from 'core';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import Icon from 'components/Icon';
 import actions from 'actions';
-import useMedia from 'hooks/useMedia';
+import { isDesktopSize, isMobileSize, isTabletAndMobileSize } from 'helpers/getDeviceSize';
 import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
 import classNames from 'classnames';
@@ -63,12 +64,12 @@ class ToolsOverlay extends React.PureComponent {
 
     if (!prevProps.isOpen && this.props.isOpen) {
       this.props.closeElements([
-        'viewControlsOverlay',
-        'menuOverlay',
-        'toolStylePopup',
-        'signatureOverlay',
-        'zoomOverlay',
-        'redactionOverlay',
+        DataElements.VIEW_CONTROLS_OVERLAY,
+        DataElements.MENU_OVERLAY,
+        DataElements.TOOL_STYLE_POPUP,
+        DataElements.SIGNATURE_OVERLAY,
+        DataElements.ZOOM_OVERLAY,
+        DataElements.REDACTION_OVERLAY,
       ]);
       this.setOverlayPosition();
     }
@@ -94,7 +95,7 @@ class ToolsOverlay extends React.PureComponent {
   setOverlayPosition = () => {
     const { activeToolGroup, activeHeaderItems } = this.props;
     const element = activeHeaderItems.find(
-      item => item.toolGroup === activeToolGroup,
+      (item) => item.toolGroup === activeToolGroup,
     );
 
     if (element) {
@@ -106,7 +107,7 @@ class ToolsOverlay extends React.PureComponent {
 
   handleCloseClick = () => {
     const { closeElements } = this.props;
-    closeElements(['toolsOverlay']);
+    closeElements([DataElements.TOOLS_OVERLAY]);
   };
 
   render() {
@@ -118,7 +119,6 @@ class ToolsOverlay extends React.PureComponent {
       toolNames,
       activeToolGroup,
       isToolStyleOpen,
-      isDesktop,
       isMobile,
       isInDesktopOnlyMode,
       showPresets,
@@ -135,7 +135,10 @@ class ToolsOverlay extends React.PureComponent {
       'fileAttachmentTools',
       'radioButtonFieldTools',
       'checkBoxFieldTools',
-      'contentEditTools'
+      'contentEditTools',
+      'addParagraphTools',
+      'calibrationTools',
+      'addImageContentTools'
     ];
     const noPresets = !activeToolGroup || toolsWithNoStylingPresets.includes(activeToolGroup);
     let Component = (
@@ -199,12 +202,12 @@ class ToolsOverlay extends React.PureComponent {
             shadow: isToolStyleOpen || (isMobile && !isInDesktopOnlyMode)
           })}
           ref={this.overlay}
-          data-element="toolsOverlay"
+          data-element={DataElements.TOOLS_OVERLAY}
         >
           <div
             className={classNames({
-              "tools-container": true,
-              "is-styling-open": isToolStyleOpen
+              'tools-container': true,
+              'is-styling-open': isToolStyleOpen
             })}
           >
             {Component}
@@ -212,7 +215,7 @@ class ToolsOverlay extends React.PureComponent {
               <button
                 className="close-icon-container"
                 onClick={() => {
-                  this.props.closeElements(['toolsOverlay']);
+                  this.props.closeElements([DataElements.TOOLS_OVERLAY]);
                   core.setToolMode(defaultTool);
                   this.props.setActiveToolGroup('');
                 }}
@@ -231,9 +234,9 @@ class ToolsOverlay extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  isDisabled: selectors.isElementDisabled(state, 'toolsOverlay'),
-  isOpen: selectors.isElementOpen(state, 'toolsOverlay'),
+const mapStateToProps = (state) => ({
+  isDisabled: selectors.isElementDisabled(state, DataElements.TOOLS_OVERLAY),
+  isOpen: selectors.isElementOpen(state, DataElements.TOOLS_OVERLAY),
   isToolStyleOpen: selectors.isElementOpen(state, 'toolStylePopup'),
   toolNames: selectors.getActiveToolNamesForActiveToolGroup(state),
   activeHeaderItems: selectors.getToolsHeaderItems(state),
@@ -252,32 +255,16 @@ const mapDispatchToProps = {
 
 const ConnectedToolsOverlay = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(ToolsOverlay));
 
-export default props => {
-  const isMobile = useMedia(
-    // Media queries
-    ['(max-width: 640px)'],
-    [true],
-    // Default value
-    false,
-  );
+const connectedComponent = (props) => {
+  const isMobile = isMobileSize();
 
-  const isTabletAndMobile = useMedia(
-    // Media queries
-    ['(max-width: 900px)'],
-    [true],
-    // Default value
-    false,
-  );
+  const isTabletAndMobile = isTabletAndMobileSize();
 
-  const isDesktop = useMedia(
-    // Media queries
-    ['(min-width: 901px)'],
-    [true],
-    // Default value
-    false,
-  );
+  const isDesktop = isDesktopSize();
 
   return (
     <ConnectedToolsOverlay {...props} isMobile={isMobile} isTabletAndMobile={isTabletAndMobile} isDesktop={isDesktop} />
   );
 };
+
+export default connectedComponent;

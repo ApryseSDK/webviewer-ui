@@ -13,6 +13,7 @@ import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
 import actions from 'actions';
 import { isIE11 } from 'helpers/device';
 import toggleFullscreen from 'helpers/toggleFullscreen';
+import DataElements from 'src/constants/dataElement';
 
 function ViewControlsOverlay() {
   const [t] = useTranslation();
@@ -29,7 +30,7 @@ function ViewControlsOverlay() {
   ] = useSelector((state) => [
     selectors.getTotalPages(state),
     selectors.getDisplayMode(state),
-    selectors.isElementDisabled(state, 'viewControlsOverlay'),
+    selectors.isElementDisabled(state, DataElements.VIEW_CONTROLS_OVERLAY),
     selectors.isReaderMode(state),
     selectors.isMultiViewerMode(state),
     selectors.isFullScreen(state),
