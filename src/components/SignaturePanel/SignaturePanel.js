@@ -1,12 +1,5 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
+import React, { useCallback, useEffect, useState, } from 'react';
+import { useDispatch, useSelector, } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import actions from 'actions';
@@ -63,24 +56,25 @@ const SignaturePanel = () => {
     // to be loaded in order to iterate through the signature fields in the
     // document
     if (document) {
-      setShowSpinner(true);
-      setVerificationResult(certificate, trustLists, currentLanguage, dispatch)
-        .then(async (verificationResult) => {
-          // We need to wait for the annotationsLoaded event, otherwise the
-          // Field will not exist in the document
-          await core.getAnnotationsLoadedPromise();
-          const fieldManager = core.getAnnotationManager().getFieldManager();
-          setFields(Object.keys(verificationResult).map((fieldName) => fieldManager.getField(fieldName)));
-          setCertificateErrorMessage('');
-          setShowSpinner(false);
-        })
-        .catch((e) => {
-          if (e && e.message) {
-            setCertificateErrorMessage(e.message);
-          } else {
-            console.error(e);
-          }
-        });
+      // We need to wait for the annotationsLoaded event, otherwise the
+      // Field will not exist in the document
+      core.getAnnotationsLoadedPromise().then(() => {
+        setShowSpinner(true);
+        setVerificationResult(document, certificate, trustLists, currentLanguage, dispatch)
+          .then(async (verificationResult) => {
+            const fieldManager = core.getAnnotationManager().getFieldManager();
+            setFields(Object.keys(verificationResult).map((fieldName) => fieldManager.getField(fieldName)));
+            setCertificateErrorMessage('');
+            setShowSpinner(false);
+          })
+          .catch((e) => {
+            if (e && e.message) {
+              setCertificateErrorMessage(e.message);
+            } else {
+              console.error(e);
+            }
+          });
+      });
     } else {
       setShowSpinner(true);
     }
@@ -98,10 +92,8 @@ const SignaturePanel = () => {
   const renderLoadingOrErrors = () => {
     let result;
     if (showSpinner) {
-      result = <Spinner/>;
-    } else if (
-      certificateErrorMessage === 'Error reading the local certificate'
-    ) {
+      result = <Spinner />;
+    } else if (certificateErrorMessage === 'Error reading the local certificate') {
       result = translate('digitalSignatureVerification.panelMessages.localCertificateError');
     } else if (certificateErrorMessage === 'Download Failed') {
       result = translate('digitalSignatureVerification.panelMessages.certificateDownloadError');
