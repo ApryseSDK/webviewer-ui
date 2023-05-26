@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getFileAttachments } from 'helpers/getFileAttachments';
 import { saveAs } from 'file-saver';
+import { getSaveAsHandler } from 'helpers/saveAs';
 import Icon from 'components/Icon';
 import core from 'core';
 import './FileAttachmentPanel.scss';
@@ -53,7 +54,12 @@ const FileAttachmentPanel = () => {
           {fileAttachments.embeddedFiles.map((file, idx) => renderAttachment(
             file.filename,
             () => {
-              saveAs(file.blob, file.filename);
+              if (getSaveAsHandler() !== null) {
+                const handler = getSaveAsHandler();
+                handler(file.blob, file.filename);
+              } else {
+                saveAs(file.blob, file.filename);
+              }
             },
             `embeddedFile_${idx}`,
           ),

@@ -1,6 +1,7 @@
 import extractPagesWithAnnotations from 'helpers/extractPagesWithAnnotations';
 import core from 'core';
 import { saveAs } from 'file-saver';
+import { getSaveAsHandler } from 'helpers/saveAs';
 import actions from 'actions';
 import i18next from 'i18next';
 import { workerTypes } from 'constants/types';
@@ -78,12 +79,22 @@ const extractPages = (pageNumbers, dispatch) => {
     title,
     confirmBtnText,
     onConfirm: () => extractPagesWithAnnotations(pageNumbers).then((file) => {
-      saveAs(file, 'extractedDocument.pdf');
+      if (getSaveAsHandler() !== null) {
+        const handler = getSaveAsHandler();
+        handler(file, 'extractedDocument.pdf');
+      } else {
+        saveAs(file, 'extractedDocument.pdf');
+      }
     }),
     secondaryBtnText,
     onSecondary: () => {
       extractPagesWithAnnotations(pageNumbers).then((file) => {
-        saveAs(file, 'extractedDocument.pdf');
+        if (getSaveAsHandler() !== null) {
+          const handler = getSaveAsHandler();
+          handler(file, 'extractedDocument.pdf');
+        } else {
+          saveAs(file, 'extractedDocument.pdf');
+        }
         core.removePages(pageNumbers).then(() => {
           dispatch(actions.setSelectedPageThumbnails([]));
         });

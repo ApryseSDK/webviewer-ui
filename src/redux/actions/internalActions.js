@@ -493,6 +493,10 @@ export const removeSearchListener = (func) => ({
   type: 'REMOVE_SEARCH_LISTENER',
   payload: { func },
 });
+export const setSaveAsHandler = (func) => ({
+  type: 'ADD_SAVE_AS_HANDLER',
+  payload: { func },
+});
 export const setSearchValue = (value) => ({
   type: 'SET_SEARCH_VALUE',
   payload: { value },
