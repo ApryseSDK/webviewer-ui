@@ -29,6 +29,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { isMobile } from 'src/helpers/device';
 import DataElements from 'src/constants/dataElement';
+import DataElementWrapper from '../DataElementWrapper';
 
 import './NoteContent.scss';
 
@@ -355,11 +356,13 @@ const NoteContent = ({
       // preview but instead show the entire text
       if (isString(highlightSearchResult) && shouldCollapseAnnotationText) {
         return (
-          <div className="selected-text-preview">
+          <DataElementWrapper
+            className="selected-text-preview"
+            dataElement="notesSelectedTextPreview">
             <NoteTextPreview linesToBreak={3}>
               {`"${highlightSearchResult}"`}
             </NoteTextPreview>
-          </div>
+          </DataElementWrapper>
         );
       }
       return (
