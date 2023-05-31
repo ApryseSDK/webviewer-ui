@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 import 'quill-mention';
 import mentionsManager from 'helpers/MentionsManager';
 import Button from 'components/Button';
@@ -37,6 +37,21 @@ const formats = [
   'formula',
   'mention',
 ];
+
+// We override the default keyboard module to disable the list autofill feature
+const Keyboard = Quill.import('modules/keyboard');
+
+class CustomKeyboard extends Keyboard {
+  static DEFAULTS = {
+    ...Keyboard.DEFAULTS,
+    bindings: {
+      ...Keyboard.DEFAULTS.bindings,
+      'list autofill': undefined,
+    }
+  }
+}
+
+Quill.register('modules/keyboard', CustomKeyboard, true);
 
 // mentionsModule has to be outside the funtion to be able to access it without it being destroyed and recreated
 const mentionModule = {

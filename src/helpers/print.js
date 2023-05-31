@@ -389,6 +389,8 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
 
     if (isGrayscale && grayscaleDarknessFactor >= 1) {
       const ctx = canvas.getContext('2d');
+      // Reset underlying transforms. This seems only for DWG (WVS) but could happen elsewhere.
+      ctx.resetTransform();
       ctx.globalCompositeOperation = 'color';
       ctx.fillStyle = 'white';
       ctx.globalAlpha = 1;
