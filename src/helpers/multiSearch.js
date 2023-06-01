@@ -18,6 +18,7 @@ function multiSearch(store) {
 
     const options = {
       regex: true,
+      caseSensitive: searchTerms.caseSensitive,
     };
 
     const { textSearch } = searchTerms;

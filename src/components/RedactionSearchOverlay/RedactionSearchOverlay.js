@@ -7,6 +7,7 @@ import './RedactionSearchOverlay.scss';
 const buildSearchOptions = (searchTerms) => {
   const options = {
     textSearch: [],
+    caseSensitive: true,
   };
 
   if (!searchTerms) {
@@ -19,6 +20,9 @@ const buildSearchOptions = (searchTerms) => {
       options.textSearch.push(searchTerm.label);
     } else {
       options[type] = true;
+    }
+    if (searchTerm.regex) {
+      options.caseSensitive = options.caseSensitive && !searchTerm.regex.ignoreCase;
     }
   });
 
@@ -52,6 +56,7 @@ const RedactionSearchOverlay = (props) => {
     const updatedSearchTerms = [...nonNullSearchTerms, textTerm];
     setSearchTerms(updatedSearchTerms);
     const options = buildSearchOptions(updatedSearchTerms);
+    options.caseSensitive = false;
     executeRedactionSearch(options);
   };
 
