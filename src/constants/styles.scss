@@ -63,15 +63,41 @@ $light-gray: #e7ebee;
   }
 }
 
+:host {
+  display: inline-block;
+  container-type: inline-size;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+@mixin webComponent {
+  .App.is-web-component & {
+    @content;
+  }
+}
+
 @mixin desktop {
   @media (min-width: #{$tablet-width + 1px}) {
+    .App:not(.is-web-component) & {
+      @content;
+    }
+  }
+
+  @container (min-width: #{$tablet-width + 1px}) {
     @content;
   }
 }
 
 @mixin tablet {
   @media (min-width: #{$mobile-width + 1px}) and (max-width: #{$tablet-width}) {
-    @at-root .App:not(.is-in-desktop-only-mode) & {
+    @at-root .App:not(.is-in-desktop-only-mode):not(.is-web-component) & {
+      @content;
+    }
+  }
+
+  @container (min-width: #{$mobile-width + 1px}) and (max-width: #{$tablet-width}) {
+    .App.is-web-component:not(.is-in-desktop-only-mode) & {
       @content;
     }
   }
@@ -79,7 +105,13 @@ $light-gray: #e7ebee;
 
 @mixin tablet-and-desktop {
   @media (min-width: #{$mobile-width + 1px}) {
-    @at-root .App:not(.is-in-desktop-only-mode) & {
+    @at-root .App:not(.is-in-desktop-only-mode):not(.is-web-component) & {
+      @content;
+    }
+  }
+
+  @container (min-width: #{$mobile-width + 1px}) {
+    .App.is-web-component:not(.is-in-desktop-only-mode) & {
       @content;
     }
   }
@@ -87,7 +119,13 @@ $light-gray: #e7ebee;
 
 @mixin mobile {
   @media (max-width: #{$mobile-width}) {
-    @at-root .App:not(.is-in-desktop-only-mode) & {
+    @at-root .App:not(.is-in-desktop-only-mode):not(.is-web-component) & {
+      @content;
+    }
+  }
+
+  @container (max-width: #{$mobile-width}) {
+    .App.is-web-component:not(.is-in-desktop-only-mode) & {
       @content;
     }
   }
@@ -95,7 +133,13 @@ $light-gray: #e7ebee;
 
 @mixin small-mobile {
   @media (max-width: #{$small-mobile-width}) {
-    @at-root .App:not(.is-in-desktop-only-mode) & {
+    @at-root .App:not(.is-in-desktop-only-mode):not(.is-web-component) & {
+      @content;
+    }
+  }
+
+  @container (max-width: #{$small-mobile-width}) {
+    .App.is-web-component:not(.is-in-desktop-only-mode) & {
       @content;
     }
   }
@@ -103,7 +147,13 @@ $light-gray: #e7ebee;
 
 @mixin tablet-and-mobile {
   @media (max-width: #{$tablet-width}) {
-    @at-root .App:not(.is-in-desktop-only-mode) & {
+    @at-root .App:not(.is-in-desktop-only-mode):not(.is-web-component) & {
+      @content;
+    }
+  }
+
+  @container (max-width: #{$tablet-width}) {
+    .App.is-web-component:not(.is-in-desktop-only-mode) & {
       @content;
     }
   }
@@ -119,13 +169,29 @@ $light-gray: #e7ebee;
 
 @mixin small-browser-height {
   @media (max-height: 500px) {
-    @content;
+    .App:not(.is-web-component) & {
+      @content;
+    }
+  }
+
+  @container (max-height: 500px) {
+    .App.is-web-component & {
+      @content;
+    }
   }
 }
 
 @mixin tiny-browser-height {
   @media (max-height: 320px) {
-    @content;
+    .App:not(.is-web-component) & {
+      @content;
+    }
+  }
+
+  @container (max-height: 320px) {
+    .App.is-web-component & {
+      @content;
+    }
   }
 }
 
@@ -143,13 +209,29 @@ $light-gray: #e7ebee;
 
 .hide-in-mobile {
   @media (max-width: #{$mobile-width}) and (min-width: #{$small-mobile-width + 1}) {
-    display: none;
+    .App:not(.is-web-component) & {
+      display: none;
+    }
+  }
+
+  @container (max-width: #{$mobile-width}) and (min-width: #{$small-mobile-width + 1}) {
+    .App.is-web-component & {
+      display: none;
+    }
   }
 }
 
 .hide-in-small-mobile {
   @media (max-width: #{$small-mobile-width}) {
-    display: none;
+    .App:not(.is-web-component) & {
+      display: none;
+    }
+  }
+
+  @container (max-width: #{$small-mobile-width}) {
+    .App.is-web-component & {
+      display: none;
+    }
   }
 }
 
@@ -184,7 +266,8 @@ $light-gray: #e7ebee;
   border: none;
   background-color: transparent;
 
-  @at-root html:not([data-tabbing='true']) #{&} {
+  @at-root html:not([data-tabbing='true']) #{&},
+  :host(:not([data-tabbing='true'])) #{&} {
     outline: none;
 
     // No need to use this if you aren't doing custom focus style.
