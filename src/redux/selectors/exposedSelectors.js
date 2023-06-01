@@ -88,6 +88,7 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const wv3dPropertiesPanelWidth = getWv3dPropertiesPanelWidth(state);
   const comparePanelWidth = getComparePanelWidthWithResizeBar(state);
   const redactionPanelWidth = getRedactionPanelWidth(state);
+  const notesInLeftPanel = getNotesInLeftPanel(state);
 
   const isLeftPanelOpen = isElementOpen(state, 'leftPanel');
   const isNotesPanelOpen = isElementOpen(state, 'notesPanel');
@@ -103,7 +104,7 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const spaceTakenUpByPanels =
     0 +
     (isLeftPanelOpen ? leftPanelWidth : 0) +
-    (isNotesPanelOpen ? notesPanelWidth : 0) +
+    (isNotesPanelOpen && !notesInLeftPanel ? notesPanelWidth : 0) +
     (isSearchPanelOpen ? searchPanelWidth : 0) +
     (isRedactionPanelOpen ? redactionPanelWidth : 0) +
     (isTextEditingPanelOpen ? textEditingPanelWidth : 0) +
@@ -131,6 +132,9 @@ export const isCustomFlxPanelOpen = (state) => {
 
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
 export const getIsAddingNewScale = (state) => state.viewer.isAddingNewScale;
+
+export const getIsRevocationCheckingEnabled = (state) => state.viewer.isRevocationCheckingEnabled;
+
 export const getMeasurementScalePreset = (state) => state.viewer.measurementScalePreset;
 export const getIsMultipleScalesMode = (state) => state.viewer.isMultipleScalesMode;
 export const getIsNotesPanelMultiSelectEnabled = (state) => state.viewer.isNotesPanelMultiSelectEnabled;
@@ -416,7 +420,7 @@ export const getIconColor = (state, colorMapKey) => state.viewer.colorMap[colorM
 
 export const getCustomNoteFilter = (state) => state.viewer.customNoteFilter;
 
-export const getInlineCommmentFilter = (state) => state.viewer.inlineCommmentFilter;
+export const getInlineCommentFilter = (state) => state.viewer.inlineCommentFilter;
 
 export const getIsReplyDisabled = (state) => state.viewer.isReplyDisabledFunc;
 

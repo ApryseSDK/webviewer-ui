@@ -9,6 +9,7 @@ import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 import { getCustomFlxPanels } from 'selectors/exposedSelectors';
+import DataElements from 'constants/dataElement';
 
 export const disableApplyCropWarningModal = () => ({
   type: 'SHOW_APPLY_CROP_WARNING',
@@ -397,7 +398,7 @@ export const openElement = (dataElement) => (dispatch, getState) => {
     dispatch(closeElements(keys));
   }
 
-  if (isDataElementLeftPanel(dataElement, state)) {
+  if (isDataElementLeftPanel(dataElement, state) && dataElement !== DataElements.NOTES_PANEL) {
     if (!isLeftPanelOpen) {
       dispatch({ type: 'OPEN_ELEMENT', payload: { dataElement: 'leftPanel' } });
       fireEvent(Events.VISIBILITY_CHANGED, { element: 'leftPanel', isVisible: true });
@@ -481,7 +482,7 @@ export const closeElements = (dataElements) => (dispatch) => {
   }
 };
 
-const rightPanelList = ['searchPanel', 'notesPanel', 'comparePanel', 'redactionPanel', 'wv3dPropertiesPanel', 'textEditingPanel', 'watermarkPanel'];
+const rightPanelList = ['searchPanel', DataElements.NOTES_PANEL, 'comparePanel', 'redactionPanel', 'wv3dPropertiesPanel', 'textEditingPanel', 'watermarkPanel'];
 export const toggleElement = (dataElement) => (dispatch, getState) => {
   const state = getState();
 
@@ -554,7 +555,7 @@ export const setActiveLeftPanel = (dataElement) => (dispatch, getState) => {
       'outlinesPanel',
       'layersPanel',
       'bookmarksPanel',
-      'notesPanel',
+      DataElements.NOTES_PANEL,
       'signaturePanel',
       'attachmentPanel',
     ].join(', ');
@@ -633,9 +634,9 @@ export const setCustomNoteFilter = (filterFunc) => ({
   type: 'SET_CUSTOM_NOTE_FILTER',
   payload: { customNoteFilter: filterFunc },
 });
-export const setInlineCommmentFilter = (filterFunc) => ({
-  type: 'SET_INLINE_COMMMENT_FILTER',
-  payload: { inlineCommmentFilter: filterFunc },
+export const setInlineCommentFilter = (filterFunc) => ({
+  type: 'SET_INLINE_COMMENT_FILTER',
+  payload: { inlineCommentFilter: filterFunc },
 });
 export const setZoomList = (zoomList) => (dispatch) => {
   const minZoomLevel = getMinZoomLevel();

@@ -13,11 +13,13 @@ import MultiSelectControls from 'components/NotesPanel/MultiSelectControls';
 import CustomElement from 'components/CustomElement';
 import NotesPanelHeader from 'components/NotesPanelHeader';
 
+import DataElements from 'constants/dataElement';
+
 import core from 'core';
 import { getSortStrategies } from 'constants/sortStrategies';
 import actions from 'actions';
 import selectors from 'selectors';
-import useMedia from 'hooks/useMedia';
+import { isMobileSize } from 'helpers/getDeviceSize';
 import { isIE } from 'helpers/device';
 import ReplyAttachmentPicker from './ReplyAttachmentPicker';
 
@@ -41,8 +43,8 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
-      selectors.isElementOpen(state, 'notesPanel'),
-      selectors.isElementDisabled(state, 'notesPanel'),
+      selectors.isElementOpen(state, DataElements.NOTES_PANEL),
+      selectors.isElementDisabled(state, DataElements.NOTES_PANEL),
       selectors.getPageLabels(state),
       selectors.getCustomNoteFilter(state),
       selectors.getNotesPanelWidth(state),
@@ -60,13 +62,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
 
   const dispatch = useDispatch();
 
-  const isMobile = useMedia(
-    // Media queries
-    ['(max-width: 640px)'],
-    [true],
-    // Default value
-    false,
-  );
+  const isMobile = isMobileSize();
 
   const [notes, setNotes] = useState([]);
   const [isMultiSelectedMap, setIsMultiSelectedMap] = useState({});
@@ -141,7 +137,14 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       setNotes(
         core
           .getAnnotationsList()
-          .filter((annot) => annot.Listable && !annot.isReply() && !annot.Hidden && !annot.isGrouped() && annot.ToolName !== window.Core.Tools.ToolNames.CROP && !annot.isContentEditPlaceholder()),
+          .filter(
+            (annot) => annot.Listable &&
+              !annot.isReply() &&
+              !annot.Hidden &&
+              !annot.isGrouped() &&
+              annot.ToolName !== window.Core.Tools.ToolNames.CROP &&
+              !annot.isContentEditPlaceholder(),
+          ),
       );
     };
 
@@ -222,15 +225,12 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       // https://docs.apryse.com/api/web/Core.AnnotationManager.html#createAnnotationReply__anchor
       const noteAndReplies = [note, ...replies];
 
-      shouldRender =
-        shouldRender &&
-        noteAndReplies.some(filterNotesWithSearch);
+      shouldRender = shouldRender && noteAndReplies.some(filterNotesWithSearch);
     }
     return shouldRender;
   };
 
-  const notesToRender = getSortStrategies()[sortStrategy].getSortedNotes(notes)
-    .filter(filterNote);
+  const notesToRender = getSortStrategies()[sortStrategy].getSortedNotes(notes).filter(filterNote);
 
   useEffect(() => {
     if (Object.keys(selectedNoteIds).length && singleSelectedNoteIndex !== -1) {
@@ -246,9 +246,14 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     if (Object.keys(selectedNoteIds).length) {
       return false;
     }
-    return searchInput && notesToRender.filter((note) => {
-      return note.getReplies().some(filterNotesWithSearch);
-    }).some((replies) => replies.Id === currNote.Id);
+    return (
+      searchInput &&
+      notesToRender
+        .filter((note) => {
+          return note.getReplies().some(filterNotesWithSearch);
+        })
+        .some((replies) => replies.Id === currNote.Id)
+    );
   };
 
   const [pendingEditTextMap, setPendingEditTextMap] = useState({});
@@ -277,13 +282,13 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const addAttachments = (annotationID, attachments) => {
     setPendingAttachmentMap((map) => ({
       ...map,
-      [annotationID]: [...(map[annotationID] || []), ...attachments]
+      [annotationID]: [...(map[annotationID] || []), ...attachments],
     }));
   };
   const clearAttachments = (annotationID) => {
     setPendingAttachmentMap((map) => ({
       ...map,
-      [annotationID]: []
+      [annotationID]: [],
     }));
   };
   const deleteAttachment = (annotationID, attachment) => {
@@ -294,7 +299,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
         attachmentList.splice(index, 1);
         setPendingAttachmentMap((map) => ({
           ...map,
-          [annotationID]: [...attachmentList]
+          [annotationID]: [...attachmentList],
         }));
       }
     }
@@ -319,7 +324,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     // this function needs to be called by a Note component whenever its height changes
     // to clear the cache(used by react-virtualized) and recompute the height so that each note
     // can have the correct position
-    resize = () => { },
+    resize = () => {},
   ) => {
     let listSeparator = null;
     const { shouldRenderSeparator, getSeparatorContent } = getSortStrategies()[sortStrategy];
@@ -363,7 +368,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       pendingAttachmentMap,
       clearAttachments,
       deleteAttachment,
-      addAttachments
+      addAttachments,
     };
 
     if (index === singleSelectedNoteIndex) {
@@ -419,35 +424,37 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     </div>
   );
 
-  const NoAnnotationsGlyph = (customEmptyPanel && customEmptyPanel.icon) ? customEmptyPanel.icon : 'illustration - empty state - outlines';
-  const NoAnnotationsMessage = (customEmptyPanel && customEmptyPanel.message) ? customEmptyPanel.message : t('message.noAnnotations');
-  const NoAnnotationsReadOnlyMessage = (customEmptyPanel && customEmptyPanel.readOnlyMessage) ? customEmptyPanel.readOnlyMessage : t('message.noAnnotationsReadOnly');
+  const NoAnnotationsGlyph =
+    customEmptyPanel && customEmptyPanel.icon ? customEmptyPanel.icon : 'illustration - empty state - outlines';
+  const NoAnnotationsMessage =
+    customEmptyPanel && customEmptyPanel.message ? customEmptyPanel.message : t('message.noAnnotations');
+  const NoAnnotationsReadOnlyMessage =
+    customEmptyPanel && customEmptyPanel.readOnlyMessage
+      ? customEmptyPanel.readOnlyMessage
+      : t('message.noAnnotationsReadOnly');
   const shouldRenderNoAnnotationsIcon = (customEmptyPanel && !customEmptyPanel.hideIcon) || !customEmptyPanel;
-  const shouldRenderCustomEmptyPanel = (customEmptyPanel && customEmptyPanel.render);
+  const shouldRenderCustomEmptyPanel = customEmptyPanel && customEmptyPanel.render;
 
   const NoAnnotations = (
     <div className="no-annotations">
-      {shouldRenderCustomEmptyPanel ?
-        <CustomElement render={customEmptyPanel.render} /> :
+      {shouldRenderCustomEmptyPanel ? (
+        <CustomElement render={customEmptyPanel.render} />
+      ) : (
         <>
-          {shouldRenderNoAnnotationsIcon &&
+          {shouldRenderNoAnnotationsIcon && (
             <div>
               <Icon className="empty-icon" glyph={NoAnnotationsGlyph} />
             </div>
-          }
+          )}
           <div className="msg">{isDocumentReadOnly ? NoAnnotationsReadOnlyMessage : NoAnnotationsMessage}</div>
         </>
-      }
+      )}
     </div>
   );
 
-  const MultiSelectPlaceHolder = (
-    <div className="multi-select-place-holder" />
-  );
+  const MultiSelectPlaceHolder = <div className="multi-select-place-holder" />;
 
-  const MultiReplyPlaceHolder = (
-    <div className="multi-reply-place-holder" />
-  );
+  const MultiReplyPlaceHolder = <div className="multi-reply-place-holder" />;
 
   // keep track of the index of the single selected note in the sorted and filtered list
   // in order to scroll it into view in this render effect
@@ -465,40 +472,34 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   }
 
   let style = {};
-  if ((isInDesktopOnlyMode || !isMobile)) {
+  if (isInDesktopOnlyMode || !isMobile) {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
 
   const showNotePanel = !isDisabled && (isOpen || notesInLeftPanel);
-  return (!showNotePanel ? null : (
-    <div
-      className="notes-panel-container"
-    >
+  return !showNotePanel ? null : (
+    <div className="notes-panel-container">
       <div
         className={classNames({
           Panel: true,
-          NotesPanel: true
+          NotesPanel: true,
         })}
         style={style}
         data-element="notesPanel"
         onMouseUp={() => core.deselectAllAnnotations}
       >
-        {(!isInDesktopOnlyMode && isMobile) && !notesInLeftPanel &&
-        <div
-          className="close-container"
-        >
-          <div
-            className="close-icon-container"
-            onClick={() => {
-              dispatch(actions.closeElements(['notesPanel']));
-            }}
-          >
-            <Icon
-              glyph="ic_close_black_24px"
-              className="close-icon"
-            />
+        {!isInDesktopOnlyMode && isMobile && !notesInLeftPanel && (
+          <div className="close-container">
+            <div
+              className="close-icon-container"
+              onClick={() => {
+                dispatch(actions.closeElements([DataElements.NOTES_PANEL]));
+              }}
+            >
+              <Icon glyph="ic_close_black_24px" className="close-icon" />
+            </div>
           </div>
-        </div>}
+        )}
         <React.Fragment>
           <NotesPanelHeader
             notes={notesToRender}
@@ -508,7 +509,13 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
             toggleMultiSelectMode={toggleMultiSelectMode}
             isMultiSelectEnabled={isNotesPanelMultiSelectEnabled}
           />
-          {notesToRender.length === 0 ? (notes.length === 0 ? NoAnnotations : NoResults) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
+          {notesToRender.length === 0 ? (
+            notes.length === 0 ? (
+              NoAnnotations
+            ) : (
+              NoResults
+            )
+          ) : notesToRender.length <= VIRTUALIZATION_THRESHOLD ? (
             <NormalList
               ref={listRef}
               notes={notesToRender}
@@ -532,12 +539,10 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
           {/* These two placeholders need to exist so that MultiSelectControls can
           be overlayed with position absolute and extend into the right panel while
           still being able to not have any notes cut off */}
-          {isMultiSelectMode
-            ? (showMultiReply ? MultiReplyPlaceHolder : MultiSelectPlaceHolder)
-            : null}
+          {isMultiSelectMode ? (showMultiReply ? MultiReplyPlaceHolder : MultiSelectPlaceHolder) : null}
         </React.Fragment>
       </div>
-      {isMultiSelectMode &&
+      {isMultiSelectMode && (
         <MultiSelectControls
           showMultiReply={showMultiReply}
           setShowMultiReply={setShowMultiReply}
@@ -550,13 +555,10 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
           setIsMultiSelectedMap={setIsMultiSelectedMap}
           multiSelectedAnnotations={multiSelectedAnnotations}
         />
-      }
-      <ReplyAttachmentPicker
-        annotationId={curAnnotId}
-        addAttachments={addAttachments}
-      />
+      )}
+      <ReplyAttachmentPicker annotationId={curAnnotId} addAttachments={addAttachments} />
     </div>
-  ));
+  );
 };
 
 export default NotesPanel;

@@ -9,17 +9,12 @@ import actions from 'actions';
 
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
-import OfficeEditorToolsHeader from 'components/Header/OfficeEditorToolsHeader';
 import ViewControlsOverlay from 'components/ViewControlsOverlay';
 import MenuOverlay from 'components/MenuOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
-import NotesPanel from 'components/NotesPanel';
-import SearchPanel from 'components/SearchPanel';
 import RightPanel from 'components/RightPanel';
-import AnnotationPopup from 'components/AnnotationPopup';
-import InlineCommentingPopup from '../InlineCommentingPopup';
 import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
@@ -49,10 +44,13 @@ import ZoomFlyoutMenu from 'components/ModularComponents/ZoomFlyoutMenu';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 
 import useOnTextSelected from 'hooks/useOnTextSelected';
-import useOnContextMenuOpen from 'src/hooks/useOnContextMenuOpen';
+import useOnContextMenuOpen from 'hooks/useOnContextMenuOpen';
+import useOnAnnotationPopupOpen from 'hooks/useOnAnnotationPopupOpen';
 import useOnFormFieldAnnotationAddedOrSelected from 'hooks/useOnFormFieldAnnotationAddedOrSelected';
 import useOnFreeTextEdit from 'hooks/useOnFreeTextEdit';
 import useOnMeasurementToolOrAnnotationSelected from 'hooks/useOnMeasurementToolOrAnnotationSelected';
+import useOnInlineCommentPopupOpen from 'hooks/useOnInlineCommentPopupOpen';
+import useOnRightClickAnnotation from 'hooks/useOnRightClickAnnotation';
 
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
@@ -73,7 +71,6 @@ import setLanguage from 'src/apis/setLanguage';
 
 import './App.scss';
 
-
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
 
@@ -91,11 +88,13 @@ const App = ({ removeEventHandlers }) => {
     isMultiViewerMode,
     customFlxPanels,
     customModals,
+    notesInLeftPanel,
   ] = useSelector((state) => [
     selectors.isInDesktopOnlyMode(state),
     selectors.isMultiViewerMode(state),
     selectors.getCustomFlxPanels(state),
     selectors.getCustomModals(state),
+    selectors.getNotesInLeftPanel(state),
   ]);
 
   useEffect(() => {
@@ -295,12 +294,23 @@ const App = ({ removeEventHandlers }) => {
 
   return (
     <>
-      <div className={classNames({ 'App': true, 'is-in-desktop-only-mode': isInDesktopOnlyMode })}>
+      <div
+        className={classNames({
+          'App': true,
+          'is-in-desktop-only-mode': isInDesktopOnlyMode,
+          'is-web-component': window.isApryseWebViewerWebComponent,
+        })}
+      >
         <FlyoutContainer />
         <ZoomFlyoutMenu />
         <Accessibility />
         <Header />
-        {isOfficeEditorMode() && <OfficeEditorToolsHeader />}
+        {isOfficeEditorMode() && (
+          <LazyLoadWrapper
+            Component={LazyLoadComponents.OfficeEditorToolsHeader}
+            dataElement={DataElements.OFFICE_EDITOR_TOOLS_HEADER}
+          />
+        )}
         <TopHeader />
         <div className="content">
           <LeftHeader />
@@ -309,11 +319,17 @@ const App = ({ removeEventHandlers }) => {
           {!isMultiViewerMode && <DocumentContainer />}
           {window?.ResizeObserver && <MultiViewer />}
           <RightHeader />
-          <RightPanel dataElement="searchPanel" onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
-            <SearchPanel />
+          <RightPanel dataElement={DataElements.SEARCH_PANEL} onResize={(width) => dispatch(actions.setSearchPanelWidth(width))}>
+            <LazyLoadWrapper
+              Component={LazyLoadComponents.SearchPanel}
+              dataElement={DataElements.SEARCH_PANEL}
+            />
           </RightPanel>
           <RightPanel dataElement="notesPanel" onResize={(width) => dispatch(actions.setNotesPanelWidth(width))}>
-            <NotesPanel />
+            {!notesInLeftPanel && <LazyLoadWrapper
+              Component={LazyLoadComponents.NotesPanel}
+              dataElement={DataElements.NOTES_PANEL}
+            />}
           </RightPanel>
           <RightPanel dataElement="redactionPanel" onResize={(width) => dispatch(actions.setRedactionPanelWidth(width))}>
             <RedactionPanel />
@@ -321,11 +337,17 @@ const App = ({ removeEventHandlers }) => {
           <RightPanel dataElement="watermarkPanel" onResize={(width) => dispatch(actions.setWatermarkPanelWidth(width))}>
             <WatermarkPanel />
           </RightPanel>
-          <RightPanel dataElement="wv3dPropertiesPanel" onResize={(width) => dispatch(actions.setWv3dPropertiesPanelWidth(width))}>
+          <RightPanel
+            dataElement="wv3dPropertiesPanel"
+            onResize={(width) => dispatch(actions.setWv3dPropertiesPanelWidth(width))}
+          >
             <Wv3dPropertiesPanel />
           </RightPanel>
           <MultiTabEmptyPage />
-          <RightPanel dataElement="textEditingPanel" onResize={(width) => dispatch(actions.setTextEditingPanelWidth(width))}>
+          <RightPanel
+            dataElement="textEditingPanel"
+            onResize={(width) => dispatch(actions.setTextEditingPanelWidth(width))}
+          >
             <TextEditingPanel />
           </RightPanel>
           {isMultiViewerMode && (
@@ -343,46 +365,68 @@ const App = ({ removeEventHandlers }) => {
         <LeftPanelOverlayContainer />
         <FormFieldIndicatorContainer />
         {/* Popups */}
+        {/* AnnotationPopup should be the first so that other popups can lay on top of it */}
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.AnnotationPopup}
+          dataElement={DataElements.ANNOTATION_POPUP}
+          onOpenHook={useOnAnnotationPopupOpen}
+        />
         <LazyLoadWrapper
           Component={LazyLoadComponents.TextPopup}
           dataElement={DataElements.TEXT_POPUP}
-          hook={useOnTextSelected}
+          onOpenHook={useOnTextSelected}
         />
         <LazyLoadWrapper
           Component={LazyLoadComponents.ContextMenuPopup}
           dataElement={DataElements.CONTEXT_MENU_POPUP}
-          hook={useOnContextMenuOpen}
+          onOpenHook={useOnContextMenuOpen}
         />
         <LazyLoadWrapper
           Component={LazyLoadComponents.FormFieldEditPopup}
           dataElement={DataElements.FORM_FIELD_EDIT_POPUP}
-          hook={useOnFormFieldAnnotationAddedOrSelected}
+          onOpenHook={useOnFormFieldAnnotationAddedOrSelected}
         />
         <LazyLoadWrapper
           Component={LazyLoadComponents.RichTextPopup}
           dataElement={DataElements.RICH_TEXT_POPUP}
-          hook={useOnFreeTextEdit}
+          onOpenHook={useOnFreeTextEdit}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.InlineCommentingPopup}
+          dataElement={DataElements.INLINE_COMMENT_POPUP}
+          onOpenHook={useOnInlineCommentPopupOpen}
         />
         <AudioPlaybackPopup />
         <DocumentCropPopup />
-        <InlineCommentingPopup />
-        <AnnotationPopup />
         {/* Modals */}
         <LazyLoadWrapper
           Component={LazyLoadComponents.ScaleModal}
           dataElement={DataElements.SCALE_MODAL}
-          hook={useOnMeasurementToolOrAnnotationSelected}
+          onOpenHook={useOnMeasurementToolOrAnnotationSelected}
         />
         <LazyLoadWrapper Component={LazyLoadComponents.ContentEditLinkModal} dataElement={DataElements.CONTENT_EDIT_LINK_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.SignatureModal} dataElement={DataElements.SIGNATURE_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.PrintModal} dataElement={DataElements.PRINT_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.ErrorModal} dataElement={DataElements.ERROR_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.PasswordModal} dataElement={DataElements.PASSWORD_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.CreateStampModal} dataElement={DataElements.CUSTOM_STAMP_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.PageReplacementModal} dataElement={DataElements.PAGE_REPLACEMENT_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.LinkModal} dataElement={DataElements.LINK_MODAL} />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.CreateStampModal}
+          dataElement={DataElements.CUSTOM_STAMP_MODAL}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.PageReplacementModal}
+          dataElement={DataElements.PAGE_REPLACEMENT_MODAL}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.LinkModal}
+          dataElement={DataElements.LINK_MODAL}
+          onOpenHook={useOnRightClickAnnotation}
+        />
         <LazyLoadWrapper Component={LazyLoadComponents.FilterAnnotModal} dataElement={DataElements.FILTER_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.PageRedactionModal} dataElement={DataElements.PAGE_REDACT_MODAL} />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.PageRedactionModal}
+          dataElement={DataElements.PAGE_REDACT_MODAL}
+        />
         <LazyLoadWrapper Component={LazyLoadComponents.CalibrationModal} dataElement={DataElements.CALIBRATION_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.SettingsModal} dataElement={DataElements.SETTINGS_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.SaveModal} dataElement={DataElements.SAVE_MODAL} />
@@ -390,12 +434,25 @@ const App = ({ removeEventHandlers }) => {
         <LazyLoadWrapper Component={LazyLoadComponents.LoadingModal} dataElement={DataElements.LOADING_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.ProgressModal} dataElement={DataElements.PROGRESS_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.WarningModal} dataElement={DataElements.WARNING_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.ContentEditModal} dataElement={DataElements.CONTENT_EDIT_MODAL} />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.ContentEditModal}
+          dataElement={DataElements.CONTENT_EDIT_MODAL}
+        />
         <LazyLoadWrapper Component={LazyLoadComponents.Model3DModal} dataElement={DataElements.MODEL3D_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.ColorPickerModal} dataElement={DataElements.COLOR_PICKER_MODAL} />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.ColorPickerModal}
+          dataElement={DataElements.COLOR_PICKER_MODAL}
+        />
         <LazyLoadWrapper Component={LazyLoadComponents.OpenFileModal} dataElement={DataElements.OPEN_FILE_MODAL} />
-        {customModals.length > 0 && <LazyLoadWrapper Component={LazyLoadComponents.CustomModal} dataElement={DataElements.CUSTOM_MODAL} />}
-        {core.isFullPDFEnabled() && <LazyLoadWrapper Component={LazyLoadComponents.SignatureValidationModal} dataElement={DataElements.SIGNATURE_VALIDATION_MODAL} />}
+        {customModals.length > 0 && (
+          <LazyLoadWrapper Component={LazyLoadComponents.CustomModal} dataElement={DataElements.CUSTOM_MODAL} />
+        )}
+        {core.isFullPDFEnabled() && (
+          <LazyLoadWrapper
+            Component={LazyLoadComponents.SignatureValidationModal}
+            dataElement={DataElements.SIGNATURE_VALIDATION_MODAL}
+          />
+        )}
       </div>
 
       <PrintHandler />

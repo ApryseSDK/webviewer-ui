@@ -340,12 +340,12 @@ class DocumentContainer extends React.PureComponent {
               <LazyLoadWrapper
                 Component={LazyLoadComponents.ScaleOverlayContainer}
                 dataElement={DataElements.SCALE_OVERLAY_CONTAINER}
-                hook={useOnMeasurementToolOrAnnotationSelected}
+                onOpenHook={useOnMeasurementToolOrAnnotationSelected}
               />
               <LazyLoadWrapper
                 Component={LazyLoadComponents.MeasurementOverlay}
                 dataElement={DataElements.MEASUREMENT_OVERLAY}
-                hook={useOnCountMeasurementAnnotationSelected}
+                onOpenHook={useOnCountMeasurementAnnotationSelected}
               />
               <div
                 className="footer"
