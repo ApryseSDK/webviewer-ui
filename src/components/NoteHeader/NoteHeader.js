@@ -135,7 +135,7 @@ function NoteHeader(props) {
                 }}
               />}
             <NoteUnpostedCommentIndicator annotationId={annotation.Id} />
-            {!isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember && isSelected &&
+            {!isNoteStateDisabled && !isReply && !isMultiSelectMode && !isGroupMember &&
               <NoteState
                 annotation={annotation}
                 isSelected={isSelected}

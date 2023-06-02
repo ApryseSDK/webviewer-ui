@@ -1,7 +1,7 @@
 {
   "name": "webviewer-ui",
   "author": "Apryse Software Inc.",
-  "version": "10.1.0",
+  "version": "10.1.1",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {

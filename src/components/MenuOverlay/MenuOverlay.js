@@ -54,7 +54,6 @@ function MenuOverlay() {
   const [t] = useTranslation();
 
   const [documentType, setDocumentType] = useState(null);
-  const [isSaveAsDisabled, setSaveAsDisabled] = useState(false);
 
   const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
   const colorMap = useSelector(selectors.getColorMap);
@@ -68,7 +67,6 @@ function MenuOverlay() {
     const onDocumentLoaded = () => {
       const type = core.getDocument().getType();
       setDocumentType(type);
-      setSaveAsDisabled(type === workerTypes.OFFICE_EDITOR && !core.getOfficeEditor().isLicenseValid());
     };
     core.addEventListener('documentLoaded', onDocumentLoaded);
     return () => {
@@ -85,14 +83,10 @@ function MenuOverlay() {
     downloadPdf(dispatch);
   };
 
-  const openSaveModal = useCallback(() => {
+  const openSaveModal = () => {
     closeMenuOverlay();
-    if (isSaveAsDisabled) {
-      dispatch(actions.showErrorMessage(t('officeEditor.notAvailableInDemoMode')));
-    } else {
-      dispatch(actions.openElement('saveModal'));
-    }
-  }, [isSaveAsDisabled]);
+    dispatch(actions.openElement(DataElements.SAVE_MODAL));
+  };
 
   const handleSettingsButtonClick = () => {
     closeMenuOverlay();
