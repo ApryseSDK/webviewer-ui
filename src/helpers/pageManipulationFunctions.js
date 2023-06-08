@@ -5,6 +5,7 @@ import actions from 'actions';
 import i18next from 'i18next';
 import { workerTypes } from 'constants/types';
 import { redactionTypeMap } from 'constants/redactionTypes';
+import DataElements from 'constants/dataElement';
 
 const getNewRotation = (curr, counterClockwise = false) => {
   const { E_0, E_90, E_180, E_270 } = window.Core.PageRotation;
@@ -63,7 +64,7 @@ const insertBelow = (pageNumbers, width, height) => {
 };
 
 const replace = (dispatch) => {
-  dispatch(actions.closeElement('pageManipulationOverlay'));
+  dispatch(actions.closeElement(DataElements.PAGE_MANIPULATION_OVERLAY));
   dispatch(actions.openElement('pageReplacementModal'));
 };
 
@@ -172,6 +173,22 @@ const exitPageInsertionWarning = (closeModal, dispatch) => {
   dispatch(actions.showWarningMessage(warning));
 };
 
+const exitPageReplacementWarning = (closeModal, dispatch) => {
+  const title = i18next.t('option.pageReplacementModal.warning.title');
+  const message = i18next.t('option.pageReplacementModal.warning.message');
+  const confirmBtnText = i18next.t('action.ok');
+
+  const warning = {
+    message,
+    title,
+    confirmBtnText,
+    onConfirm: closeModal,
+    keepOpen: ['leftPanel'],
+  };
+
+  dispatch(actions.showWarningMessage(warning));
+};
+
 const redactPages = (pageNumbers, redactionStyles) => {
   core.applyRedactions(createPageRedactions(pageNumbers, redactionStyles));
 };
@@ -181,9 +198,9 @@ const createPageRedactions = (pageNumbers, redactionStyles) => {
   for (const page of pageNumbers) {
     const pageInfo = core.getPageInfo(page);
     if (pageInfo) {
-      const redaction = new Annotations.RedactionAnnotation({
+      const redaction = new window.Core.Annotations.RedactionAnnotation({
         PageNumber: page,
-        Rect: new Annotations.Rect(0, 0, pageInfo.width, pageInfo.height),
+        Rect: new window.Core.Annotations.Rect(0, 0, pageInfo.width, pageInfo.height),
         ...redactionStyles
       });
       redaction.type = redactionTypeMap['FULL_PAGE'];
@@ -236,4 +253,5 @@ export {
   replacePages,
   insertPages,
   exitPageInsertionWarning,
+  exitPageReplacementWarning
 };

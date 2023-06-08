@@ -7,10 +7,9 @@ import selectors from 'selectors';
 import core from 'core';
 import actions from 'actions';
 
+import LogoBar from 'components/LogoBar';
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
-import ViewControlsOverlay from 'components/ViewControlsOverlay';
-import MenuOverlay from 'components/MenuOverlay';
 import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
@@ -19,8 +18,6 @@ import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
-import ZoomOverlay from 'components/ZoomOverlay';
-import PageManipulationOverlay from 'components/PageManipulationOverlay';
 import RedactionPanel from 'components/RedactionPanel';
 import TextEditingPanel from 'components/TextEditingPanel';
 import Wv3dPropertiesPanel from 'components/Wv3dPropertiesPanel';
@@ -357,11 +354,23 @@ const App = ({ removeEventHandlers }) => {
           )}
           <BottomHeader />
         </div>
-        <ViewControlsOverlay />
-        <MenuOverlay />
-        <ZoomOverlay />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.ViewControlsOverlay}
+          dataElement={DataElements.VIEW_CONTROLS_OVERLAY}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.MenuOverlay}
+          dataElement={DataElements.MENU_OVERLAY}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.ZoomOverlay}
+          dataElement={DataElements.ZOOM_OVERLAY}
+        />
         <AnnotationContentOverlay />
-        <PageManipulationOverlay />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.PageManipulationOverlay}
+          dataElement={DataElements.PAGE_MANIPULATION_OVERLAY}
+        />
         <LeftPanelOverlayContainer />
         <FormFieldIndicatorContainer />
         {/* Popups */}
@@ -453,6 +462,7 @@ const App = ({ removeEventHandlers }) => {
             dataElement={DataElements.SIGNATURE_VALIDATION_MODAL}
           />
         )}
+        <LogoBar />
       </div>
 
       <PrintHandler />

@@ -1,10 +1,12 @@
+import DataElements from 'constants/dataElement';
+
 export default () => [
-  'viewControlsOverlay',
+  DataElements.VIEW_CONTROLS_OVERLAY,
   'searchOverlay',
-  'menuOverlay',
+  DataElements.MENU_OVERLAY,
   'searchPanel',
   'signatureOverlay',
-  'zoomOverlay',
+  DataElements.ZOOM_OVERLAY,
   'redactionOverlay',
   'toolsOverlay',
   'toolStylePopup',

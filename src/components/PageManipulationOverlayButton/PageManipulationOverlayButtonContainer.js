@@ -4,6 +4,7 @@ import ToggleElementButton from '../ToggleElementButton';
 import { useDispatch, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
+import DataElements from 'constants/dataElement';
 
 function PageManipulationOverlayButtonContainer(props) {
   const { className, pageIndex } = props;
@@ -24,8 +25,8 @@ function PageManipulationOverlayButtonContainer(props) {
         onClick={onClickPageManipulationOverlayButton}
       >
         <ToggleElementButton
-          dataElement="pageManipulationOverlayButton"
-          element="pageManipulationOverlay"
+          dataElement={DataElements.PAGE_MANIPULATION_OVERLAY_BUTTON}
+          element={DataElements.PAGE_MANIPULATION_OVERLAY}
           img="icon-tool-more"
         />
       </div>

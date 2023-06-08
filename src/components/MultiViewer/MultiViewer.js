@@ -11,13 +11,14 @@ import DocumentContainer from 'components/MultiViewer/DocumentContainer';
 import classNames from 'classnames';
 import CompareZoomOverlay from 'components/MultiViewer/CompareZoomOverlay';
 import eventHandler from 'helpers/eventHandler';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import { zoomTo } from 'helpers/zoom';
 import ComparisonButton from 'components/MultiViewer/ComparisonButton';
 import { addDocumentViewer, syncDocumentViewers, removeDocumentViewer } from 'helpers/documentViewerHelper';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import { DISABLED_TOOLS_KEYWORDS, DISABLED_TOOL_GROUPS, SYNC_MODES } from 'constants/multiViewerContants';
+import DataElements from 'constants/dataElement';
 import multiViewerHelper, {
   getIsScrolledByClickingChangeItem,
   setIsScrolledByClickingChangeItem
@@ -148,7 +149,7 @@ const MultiViewer = () => {
     };
     const addHeaderItems = () => {
       const headerItems = selectors.getDefaultHeaderItems(store.getState());
-      const zoomOverlay = headerItems.find((item) => item.dataElement === 'zoomOverlayButton');
+      const zoomOverlay = headerItems.find((item) => item.dataElement === DataElements.ZOOM_OVERLAY_BUTTON);
       const index = headerItems.indexOf(zoomOverlay);
       if (index !== -1) {
         oldHeaderItems.current = {
@@ -302,6 +303,13 @@ const MultiViewer = () => {
           const currentDiffTop = otherSidePageBoundingRect && mainPageBoundingRect ? otherSidePageBoundingRect.top - mainPageBoundingRect.top : diffTop;
           const adjustedDiffTop = (scrollRatio !== 1 ? diffTop : currentDiffTop) * scrollRatio * heightRatio;
           otherContainer.scrollTop += adjustedDiffTop;
+        } else {
+          const visiblePageOtherSide = otherDocumentViewer.getDisplayModeManager().getDisplayMode().getVisiblePages();
+          const otherMainPage = visiblePageOtherSide[0];
+          const secondaryPage = visiblePageOtherSide[1];
+          if (!matchedPages[otherViewerNumber][otherMainPage] || (secondaryPage && !matchedPages[otherViewerNumber][secondaryPage])) {
+            otherContainer.scrollTop += diffTop;
+          }
         }
       } else {
         if (topOverflow < 0) {

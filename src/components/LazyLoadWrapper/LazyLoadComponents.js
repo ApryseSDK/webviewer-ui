@@ -2,17 +2,21 @@ import { lazy } from 'react';
 
 // Overlays
 const ScaleOverlayContainer = lazy(() => import('components/ScaleOverlay/ScaleOverlayContainer'));
+const MeasurementOverlay = lazy(() => import('components/MeasurementOverlay'));
+const ViewControlsOverlay = lazy(() => import('components/ViewControlsOverlay'));
+const MenuOverlay = lazy(() => import('components/MenuOverlay'));
+const ZoomOverlay = lazy(() => import('components/ZoomOverlay'));
+const PageManipulationOverlay = lazy(() => import('components/PageManipulationOverlay'));
 
 // Popups
 const AnnotationPopup = lazy(() => import('components/AnnotationPopup'));
 const FormFieldEditPopup = lazy(() => import('components/FormFieldEditPopup'));
 const TextPopup = lazy(() => import('components/TextPopup'));
 const ContextMenuPopup = lazy(() => import('components/ContextMenuPopup'));
-const InlineCommentingPopup = lazy(() => import('components/InlineCommentingPopup'));
 const RichTextPopup = lazy(() => import('components/RichTextPopup'));
 const AudioPlaybackPopup = lazy(() => import('components/AudioPlaybackPopup'));
 const DocumentCropPopup = lazy(() => import('components/DocumentCropPopup'));
-const MeasurementOverlay = lazy(() => import('components/MeasurementOverlay'));
+const InlineCommentingPopup = lazy(() => import('components/InlineCommentingPopup'));
 
 // Modals
 const ContentEditModal = lazy(() => import('components/ContentEditModal'));
@@ -40,6 +44,12 @@ const OpenFileModal = lazy(() => import('components/OpenFileModal'));
 const SignatureValidationModal = lazy(() => import('components/SignatureValidationModal'));
 const CustomModal = lazy(() => import('components/CustomModal'));
 
+// Panels
+const NotesPanel = lazy(() => import('components/NotesPanel'));
+const SearchPanel = lazy(() => import('components/SearchPanel'));
+
+const OfficeEditorToolsHeader = lazy(() => import('components/Header/OfficeEditorToolsHeader'));
+
 const LazyLoadComponents = {
   AnnotationPopup,
   FormFieldEditPopup,
@@ -51,6 +61,10 @@ const LazyLoadComponents = {
   DocumentCropPopup,
   MeasurementOverlay,
   ScaleOverlayContainer,
+  ViewControlsOverlay,
+  MenuOverlay,
+  ZoomOverlay,
+  PageManipulationOverlay,
   ContentEditModal,
   ContentEditLinkModal,
   SignatureModal,
@@ -75,6 +89,9 @@ const LazyLoadComponents = {
   OpenFileModal,
   SignatureValidationModal,
   CustomModal,
+  NotesPanel,
+  SearchPanel,
+  OfficeEditorToolsHeader,
 };
 
 export default LazyLoadComponents;

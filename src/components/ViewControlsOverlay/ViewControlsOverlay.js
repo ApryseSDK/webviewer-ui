@@ -90,7 +90,11 @@ function ViewControlsOverlay() {
   const showReaderButton = core.isFullPDFEnabled() && core.getDocument()?.getType() === 'pdf';
 
   return (
-    <FlyoutMenu menu="viewControlsOverlay" trigger="viewControlsButton" onClose={undefined} ariaLabel={t('component.viewControlsOverlay')}>
+    <FlyoutMenu
+      menu={DataElements.VIEW_CONTROLS_OVERLAY}
+      trigger={DataElements.VIEW_CONTROLS_OVERLAY_BUTTON}
+      ariaLabel={t('component.viewControlsOverlay')}
+    >
       {isPageTransitionEnabled && (
         <>
           <DataElementWrapper

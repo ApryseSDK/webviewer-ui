@@ -1,10 +1,11 @@
 import React from 'react';
 import PageRotationControls from './PageRotationControls';
-import { noPagesSelectedWarning, rotateClockwise, rotateCounterClockwise } from "helpers/pageManipulationFunctions";
-import { useDispatch } from "react-redux";
+import { noPagesSelectedWarning, rotateClockwise, rotateCounterClockwise } from 'helpers/pageManipulationFunctions';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import actions from 'actions';
 import { isMobile } from 'helpers/device';
+import DataElements from 'constants/dataElement';
 
 const propTypes = {
   pageNumbers: PropTypes.arrayOf(PropTypes.number),
@@ -21,7 +22,7 @@ function PageRotationControlsContainer(props) {
     } else {
       rotateCounterClockwise(pageNumbers);
     }
-    isMobile() && dispatch(actions.closeElement("pageManipulationOverlay"));
+    isMobile() && dispatch(actions.closeElement(DataElements.PAGE_MANIPULATION_OVERLAY));
   };
   const onRotateClockwise = () => {
     if (warn) {
@@ -29,7 +30,7 @@ function PageRotationControlsContainer(props) {
     } else {
       rotateClockwise(pageNumbers);
     }
-    isMobile() && dispatch(actions.closeElement("pageManipulationOverlay"));
+    isMobile() && dispatch(actions.closeElement(DataElements.PAGE_MANIPULATION_OVERLAY));
   };
   return (
     <PageRotationControls

@@ -186,7 +186,6 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
   };
 
   if (toolbarGroup === 'toolbarGroup-View') {
-    dispatch(closeElements(['toolsHeader']));
     core.setToolMode(defaultTool);
     dispatch({
       type: 'SET_ACTIVE_TOOL_GROUP',
@@ -457,7 +456,7 @@ export const closeElement = (dataElement) => (dispatch, getState) => {
         payload: { dataElement: null }
       });
     }
-    if (dataElement === 'pageManipulationOverlay') {
+    if (dataElement === DataElements.PAGE_MANIPULATION_OVERLAY) {
       dispatch({
         type: 'SET_PAGE_MANIPULATION_OVERLAY_ALTERNATIVE_POSITION',
         payload: null

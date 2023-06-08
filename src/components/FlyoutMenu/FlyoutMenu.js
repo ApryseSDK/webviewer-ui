@@ -1,7 +1,7 @@
 import actions from 'actions';
 import classNames from 'classnames';
 import getOverlayPositionBasedOn from 'helpers/getOverlayPositionBasedOn';
-import useMedia from 'hooks/useMedia';
+import { isMobileSize, isTabletAndMobileSize } from 'helpers/getDeviceSize';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import PropTypes from 'prop-types';
 import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
@@ -9,36 +9,36 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Swipeable } from 'react-swipeable';
 import selectors from 'selectors';
 import useArrowFocus from '../../hooks/useArrowFocus';
+import getRootNode from 'helpers/getRootNode';
+import DataElements from 'constants/dataElement';
 import './FlyoutMenu.scss';
 
 const MENUS = [
-  'menuOverlay',
+  DataElements.MENU_OVERLAY,
   'groupOverlay',
-  'viewControlsOverlay',
+  DataElements.VIEW_CONTROLS_OVERLAY,
   'searchOverlay',
   'signatureOverlay',
-  'zoomOverlay',
+  DataElements.ZOOM_OVERLAY,
   'zoomOverlay1',
   'zoomOverlay2',
   'redactionOverlay',
   'toolStylePopup',
-  'pageManipulationOverlay',
+  DataElements.PAGE_MANIPULATION_OVERLAY,
   'thumbnailsControlRotatePopup',
-  'thumbnailsControlInsertPopup',
   'thumbnailsControlManipulatePopup',
   'thumbnailsControlManipulatePopupSmall',
   'tabMenu',
 ];
 
 const TRIGGERS = [
-  'menuButton',
-  'viewControlsButton',
-  'zoomOverlayButton',
+  DataElements.MENU_OVERLAY_BUTTON,
+  DataElements.VIEW_CONTROLS_OVERLAY_BUTTON,
+  DataElements.ZOOM_OVERLAY_BUTTON,
   'zoomOverlayButton1',
   'zoomOverlayButton2',
-  'pageManipulationOverlayButton',
+  DataElements.PAGE_MANIPULATION_OVERLAY_BUTTON,
   'thumbnailsControlRotatePopupTrigger',
-  'thumbnailsControlInsertPopupTrigger',
   'thumbnailsControlManipulatePopupTrigger',
   'thumbnailsControlManipulatePopupSmallTrigger',
   'tabTrigger',
@@ -57,6 +57,8 @@ const propTypes = {
   ariaLabel: PropTypes.string,
 };
 
+const viewerHeight = window.isApryseWebViewerWebComponent ? getRootNode()?.host.clientHeight : window.innerHeight;
+
 function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const dispatch = useDispatch();
 
@@ -66,7 +68,8 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   const isOpen = useSelector((state) => selectors.isElementOpen(state, menu));
 
   const isInDesktopOnlyMode = useSelector((state) => selectors.isInDesktopOnlyMode(state));
-  const pageManipulationOverlayAlternativePosition = useSelector((state) => selectors.getPageManipulationOverlayAlternativePosition(state));
+  const pageManipulationOverlayAlternativePosition = useSelector((state) => selectors.getPageManipulationOverlayAlternativePosition(state),
+  );
 
   const closeMenu = useCallback(() => {
     dispatch(actions.closeElements([menu]));
@@ -78,7 +81,7 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
 
   const onClickOutside = useCallback(
     (e) => {
-      const menuButton = document.querySelector(`[data-element="${trigger}"]`);
+      const menuButton = getRootNode().querySelector(`[data-element="${trigger}"]`);
       const clickedMenuButton = menuButton?.contains(e.target);
       if (!clickedMenuButton) {
         closeMenu();
@@ -89,12 +92,12 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
   useOnClickOutside(overlayRef, onClickOutside);
 
   const [position, setPosition] = useState(() => ({ left: 0, right: 'auto', top: 'auto' }));
-  const isMobile = useMedia(['(max-width: 640px)'], [true], false);
-  const isTabletOrMobile = useMedia(['(max-width: 900px)'], [true], false);
+  const isMobile = isMobileSize();
+  const isTabletAndMobile = isTabletAndMobileSize();
 
   const getAlternativePosition = () => {
     const alternativePosition = pageManipulationOverlayAlternativePosition;
-    const verticalGap = isMobile && isTabletOrMobile ? 14 : 6;
+    const verticalGap = isMobile && isTabletAndMobile ? 14 : 6;
     const clickTop = alternativePosition.top;
     let top = clickTop + verticalGap;
     if (clickTop > 100) {
@@ -103,8 +106,8 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
        * if the right-click click was not on the top of the page, we should check if the popup will fit on the
        * the viewport and, if not, can adjust its position to "pass" the click position, otherwise the popup should always be below them
        */
-      if (clickTop + flyoutMenuHeight > window.innerHeight) {
-        const calculatedTop = window.innerHeight - flyoutMenuHeight - verticalGap;
+      if (clickTop + flyoutMenuHeight > viewerHeight) {
+        const calculatedTop = viewerHeight - flyoutMenuHeight - verticalGap;
         top = calculatedTop > 0 ? calculatedTop : 0;
         alternativePosition.top = top;
       }
@@ -122,11 +125,11 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
       const onResize = () => {
         let overlayAlternativePosition;
 
-        if (trigger === 'pageManipulationOverlayButton' && pageManipulationOverlayAlternativePosition) {
+        if (trigger === DataElements.PAGE_MANIPULATION_OVERLAY_BUTTON && pageManipulationOverlayAlternativePosition) {
           overlayAlternativePosition = getAlternativePosition();
         } else {
-          overlayAlternativePosition = getOverlayPositionBasedOn(trigger, overlayRef, isMobile && isTabletOrMobile);
-          overlayAlternativePosition.maxHeight = window.innerHeight - overlayAlternativePosition.top;
+          overlayAlternativePosition = getOverlayPositionBasedOn(trigger, overlayRef, isMobile && isTabletAndMobile);
+          overlayAlternativePosition.maxHeight = viewerHeight - overlayAlternativePosition.top;
         }
         setPosition(overlayAlternativePosition);
       };
@@ -135,7 +138,7 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
       window.addEventListener('resize', onResize);
       return () => window.removeEventListener('resize', onResize);
     }
-  }, [allOtherMenus, dispatch, isOpen, isTabletOrMobile, trigger, isMobile]);
+  }, [allOtherMenus, dispatch, isOpen, isTabletAndMobile, trigger, isMobile]);
 
   if (isDisabled) {
     return null;
@@ -148,7 +151,14 @@ function FlyoutMenu({ menu, trigger, onClose, children, ariaLabel }) {
 
   return (
     <Swipeable onSwipedUp={closeMenu} onSwipedDown={closeMenu} preventDefaultTouchmoveEvent>
-      <div className={overlayClass} data-element={menu} style={(!isMobile || isInDesktopOnlyMode) ? position : undefined} ref={overlayRef} role="listbox" aria-label={ariaLabel}>
+      <div
+        className={overlayClass}
+        data-element={menu}
+        style={!isMobile || isInDesktopOnlyMode ? position : undefined}
+        ref={overlayRef}
+        role="listbox"
+        aria-label={ariaLabel}
+      >
         {isMobile && !isInDesktopOnlyMode && <div className="swipe-indicator" />}
         {children}
       </div>

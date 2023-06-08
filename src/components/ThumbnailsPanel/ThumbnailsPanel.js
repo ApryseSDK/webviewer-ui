@@ -1,4 +1,4 @@
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import React, { useEffect, useRef, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { List } from 'react-virtualized';
@@ -15,9 +15,11 @@ import { extractPagesToMerge, mergeDocument, mergeExternalWebViewerDocument } fr
 import selectors from 'selectors';
 import actions from 'actions';
 import Events from 'constants/events';
+import DataElements from 'constants/dataElement';
 import fireEvent from 'helpers/fireEvent';
 
 import './ThumbnailsPanel.scss';
+import getRootNode from 'helpers/getRootNode';
 
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 
@@ -319,7 +321,7 @@ const ThumbnailsPanel = () => {
     }
 
     setDraggingOverPageIndex(index);
-    const virtualizedThumbnailContainerElement = document.getElementById('virtualized-thumbnails-container');
+    const virtualizedThumbnailContainerElement = getRootNode().querySelector('#virtualized-thumbnails-container');
     const { y, bottom } = virtualizedThumbnailContainerElement.getBoundingClientRect();
 
     if (e.pageY < y + hoverAreaHeight * 4) {
@@ -446,7 +448,7 @@ const ThumbnailsPanel = () => {
     }
 
     dispatch(actions.setPageManipulationOverlayAlternativePosition({ left: event.pageX, right: 'auto', top: event.pageY }));
-    dispatch(actions.openElements(['pageManipulationOverlay']));
+    dispatch(actions.openElements([DataElements.PAGE_MANIPULATION_OVERLAY]));
   };
 
   const getPendingThumbIndex = (pageIndex) => pendingThumbs.current.findIndex((thumbStatus) => thumbStatus.pageIndex === pageIndex);

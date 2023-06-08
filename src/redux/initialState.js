@@ -118,8 +118,8 @@ export default {
       default: [
         {
           type: 'toggleElementButton',
-          dataElement: 'menuButton',
-          element: 'menuOverlay',
+          dataElement: DataElements.MENU_OVERLAY_BUTTON,
+          element: DataElements.MENU_OVERLAY,
           img: 'ic-hamburger-menu',
           title: 'component.menuOverlay',
         },
@@ -136,9 +136,9 @@ export default {
         },
         {
           type: 'toggleElementButton',
-          img: 'icon-header-page manipulation-line',
-          element: 'viewControlsOverlay',
-          dataElement: 'viewControlsButton',
+          img: 'icon-header-page-manipulation-line',
+          element: DataElements.VIEW_CONTROLS_OVERLAY,
+          dataElement: DataElements.VIEW_CONTROLS_OVERLAY_BUTTON,
           title: 'component.viewControlsOverlay',
         },
         {
@@ -148,8 +148,8 @@ export default {
         {
           type: 'customElement',
           render: () => <ToggleZoomOverlay />,
-          dataElement: 'zoomOverlayButton',
-          element: 'zoomOverlay',
+          dataElement: DataElements.ZOOM_OVERLAY_BUTTON,
+          element: DataElements.ZOOM_OVERLAY,
           hiddenOnMobileDevice: true,
         },
         { type: 'divider', hidden: ['small-mobile', 'mobile', 'tablet'] },
@@ -1694,7 +1694,7 @@ export default {
         img: 'multi select',
         showColor: 'never',
       },
-      TextSelect: { dataElement: 'textSelectButton', img: 'icon - header - select - line', showColor: 'never' },
+      TextSelect: { dataElement: 'textSelectButton', img: 'icon-header-select-line', showColor: 'never' },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
       AnnotationEraserTool: {
         dataElement: 'eraserToolButton',
@@ -1918,7 +1918,7 @@ export default {
     colorMap: copyMapWithDataProperties('currentStyleTab', 'iconColor'),
     warning: {},
     customNoteFilter: null,
-    inlineCommmentFilter: (annot) => {
+    inlineCommentFilter: (annot) => {
       const isAnnotationInstanceOf = defaultToolsWithInlineComment.some((annotationInstance) => annot instanceof annotationInstance);
       return isAnnotationInstanceOf;
     },
@@ -2113,4 +2113,5 @@ export default {
     availableFontFaces,
     cssFontValues,
   },
+  isRevocationCheckingEnabled: false,
 };
