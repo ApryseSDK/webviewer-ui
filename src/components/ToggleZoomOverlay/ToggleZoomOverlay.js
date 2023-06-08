@@ -71,6 +71,7 @@ const ToggleZoomOverlay = ({ documentViewerKey = undefined }) => {
   };
 
   const onBlur = (e) => {
+    window.getSelection().removeAllRanges(); // this is to prevent the selection of the text in the zoom input after blurring
     const zoom = Math.ceil(core.getZoom(documentViewerKey) * 100).toString();
     if (e.target.value === zoom) {
       return;
