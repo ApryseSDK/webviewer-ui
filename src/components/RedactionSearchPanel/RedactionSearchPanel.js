@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import RedactionSearchOverlay from 'src/components/RedactionSearchOverlay';
 import { RedactionPanelContext } from 'components/RedactionPanel/RedactionPanelContext';
 import RedactionSearchResults from 'components/RedactionSearchResults';
 
 const RedactionSearchPanel = (props) => {
-  const [searchTerms, setSearchTerms] = useState([]);
   const { isRedactionSearchActive, setIsRedactionSearchActive } = useContext(RedactionPanelContext);
   const onCancelSearch = () => {
     setSearchTerms([]);
@@ -17,6 +16,8 @@ const RedactionSearchPanel = (props) => {
     isProcessingRedactionResults,
     clearRedactionSearchResults,
     searchStatus,
+    searchTerms,
+    setSearchTerms
   } = props;
 
   return (
