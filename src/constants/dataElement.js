@@ -77,6 +77,12 @@ const DataElements = {
   STAMP_OVERLAY: 'stampOverlay',
   SIGNATURE_OVERLAY: 'signatureOverlay',
   REDACTION_OVERLAY: 'redactionOverlay',
+  THUMBNAILS_CONTROL_ROTATE_POPUP: 'thumbnailsControlRotatePopup',
+  THUMBNAILS_CONTROL_ROTATE_POPUP_TRIGGER: 'thumbnailsControlRotatePopupTrigger',
+  THUMBNAILS_CONTROL_MANIPULATE_POPUP: 'thumbnailsControlManipulatePopup',
+  THUMBNAILS_CONTROL_MANIPULATE_POPUP_TRIGGER: 'thumbnailsControlManipulatePopupTrigger',
+  THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL: 'thumbnailsControlManipulatePopupSmall',
+  THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL_TRIGGER: 'thumbnailsControlManipulatePopupSmallTrigger',
 
   // Popups
   ANNOTATION_POPUP: 'annotationPopup',

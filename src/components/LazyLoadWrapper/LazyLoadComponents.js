@@ -7,6 +7,9 @@ const ViewControlsOverlay = lazy(() => import('components/ViewControlsOverlay'))
 const MenuOverlay = lazy(() => import('components/MenuOverlay'));
 const ZoomOverlay = lazy(() => import('components/ZoomOverlay'));
 const PageManipulationOverlay = lazy(() => import('components/PageManipulationOverlay'));
+const RotatePopup = lazy(() => import('components/LeftPanelOverlay/RotatePopup'));
+const MoreOptionsPopup = lazy(() => import('components/LeftPanelOverlay/MoreOptionsPopup'));
+const MoreOptionsPopupSmall = lazy(() => import('components/LeftPanelOverlay/MoreOptionsPopupSmall'));
 
 // Popups
 const AnnotationPopup = lazy(() => import('components/AnnotationPopup'));
@@ -65,6 +68,9 @@ const LazyLoadComponents = {
   MenuOverlay,
   ZoomOverlay,
   PageManipulationOverlay,
+  RotatePopup,
+  MoreOptionsPopup,
+  MoreOptionsPopupSmall,
   ContentEditModal,
   ContentEditLinkModal,
   SignatureModal,

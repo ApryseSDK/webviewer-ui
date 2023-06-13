@@ -25,9 +25,9 @@ const MENUS = [
   'redactionOverlay',
   'toolStylePopup',
   DataElements.PAGE_MANIPULATION_OVERLAY,
-  'thumbnailsControlRotatePopup',
-  'thumbnailsControlManipulatePopup',
-  'thumbnailsControlManipulatePopupSmall',
+  DataElements.THUMBNAILS_CONTROL_ROTATE_POPUP,
+  DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP,
+  DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL,
   'tabMenu',
 ];
 
@@ -38,9 +38,9 @@ const TRIGGERS = [
   'zoomOverlayButton1',
   'zoomOverlayButton2',
   DataElements.PAGE_MANIPULATION_OVERLAY_BUTTON,
-  'thumbnailsControlRotatePopupTrigger',
-  'thumbnailsControlManipulatePopupTrigger',
-  'thumbnailsControlManipulatePopupSmallTrigger',
+  DataElements.THUMBNAILS_CONTROL_ROTATE_POPUP_TRIGGER,
+  DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP_TRIGGER,
+  DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL_TRIGGER,
   'tabTrigger',
 ];
 

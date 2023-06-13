@@ -23,7 +23,6 @@ import TextEditingPanel from 'components/TextEditingPanel';
 import Wv3dPropertiesPanel from 'components/Wv3dPropertiesPanel';
 import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
 import DocumentCropPopup from 'components/DocumentCropPopup';
-import LeftPanelOverlayContainer from 'components/LeftPanelOverlay';
 import FormFieldIndicatorContainer from 'components/FormFieldIndicator';
 import MultiTabEmptyPage from 'components/MultiTabEmptyPage';
 import MultiViewer from 'components/MultiViewer';
@@ -371,7 +370,18 @@ const App = ({ removeEventHandlers }) => {
           Component={LazyLoadComponents.PageManipulationOverlay}
           dataElement={DataElements.PAGE_MANIPULATION_OVERLAY}
         />
-        <LeftPanelOverlayContainer />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.RotatePopup}
+          dataElement={DataElements.THUMBNAILS_CONTROL_ROTATE_POPUP}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.MoreOptionsPopup}
+          dataElement={DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.MoreOptionsPopupSmall}
+          dataElement={DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL}
+        />
         <FormFieldIndicatorContainer />
         {/* Popups */}
         {/* AnnotationPopup should be the first so that other popups can lay on top of it */}
