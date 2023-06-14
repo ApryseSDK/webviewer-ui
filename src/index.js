@@ -94,8 +94,8 @@ if (window.CanvasRenderingContext2D) {
 
   if (state.advanced.fullAPI) {
     window.Core.enableFullPDF();
-    if (process.env.WEBCOMPONENT) {
-      fullAPIReady = loadScript('/lib/core/pdf/PDFNet.js');
+    if (window.isApryseWebViewerWebComponent) {
+      fullAPIReady = loadScript(`${window.webViewerPath}core/pdf/PDFNet.js`);
     } else {
       fullAPIReady = loadScript('../core/pdf/PDFNet.js');
     }
@@ -123,8 +123,13 @@ if (window.CanvasRenderingContext2D) {
 
   try {
     const isUsingSharedWorker = state.advanced.useSharedWorker === 'true';
-    if (isUsingSharedWorker && window.parent.WebViewer) {
-      const workerTransportPromise = window.parent.WebViewer.workerTransportPromise(window.frameElement);
+    if (isUsingSharedWorker) {
+      let workerTransportPromise;
+      if (window.parent.WebViewer && !window.isApryseWebViewerWebComponent) {
+        workerTransportPromise = window.parent.WebViewer.workerTransportPromise(window.frameElement);
+      } else if (window.isApryseWebViewerWebComponent && window.apryseWorkerTransportPromise) {
+        workerTransportPromise = window.apryseWorkerTransportPromise;
+      }
       // originally the option was just for the pdf worker transport promise, now it can be an object
       // containing both the pdf and office promises
       if (workerTransportPromise.pdf || workerTransportPromise.office) {
