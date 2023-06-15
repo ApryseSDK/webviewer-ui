@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import throttle from 'lodash/throttle';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import selectors from 'selectors';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
@@ -56,7 +57,7 @@ export default function useOnMeasurementToolOrAnnotationSelected() {
     };
   }, []);
 
-  const onMouseMove = _.throttle(() => {
+  const onMouseMove = throttle(() => {
     const tool = core.getTool(activeToolName);
     if (isMeasurementToolWithInfo(tool) && !isSmallAnnotation(tool.annotation)) {
       setAnnotations([tool.annotation]);
@@ -122,8 +123,7 @@ export default function useOnMeasurementToolOrAnnotationSelected() {
   }, [activeToolName]);
 
   useEffect(() => {
-    const documentElement = core.getViewerElement();
-    if ((annotations.length || selectedTool) && documentElement?.offsetWidth) {
+    if (annotations.length || selectedTool) {
       dispatch(actions.openElements([DataElements.SCALE_OVERLAY_CONTAINER]));
     } else {
       dispatch(actions.closeElements([DataElements.SCALE_OVERLAY_CONTAINER]));
