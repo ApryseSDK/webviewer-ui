@@ -9,7 +9,7 @@ import selectors from 'selectors';
 import blobStream from 'blob-stream';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
-import { range } from 'lodash';
+import range from 'lodash/range';
 import getRootNode from 'helpers/getRootNode';
 import { workerTypes } from 'constants/types';
 import { isOfficeEditorMode } from './officeEditor';
@@ -475,6 +475,8 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     } else {
       annotationsPromise = core.exportAnnotations({ useDisplayAuthor }, documentViewerKey);
     }
+  } else if (!options.xfdfString && !includeAnnotations) {
+    options.xfdfString = window.Core.EMPTY_XFDF;
   }
 
   return annotationsPromise.then(async (xfdfString) => {
