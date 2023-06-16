@@ -17,7 +17,9 @@ const DEFAULT_NOTES_PANEL_WIDTH = 293;
 const initialState = {
   viewer: {
     customElementOverrides: {},
-    disabledElements: {},
+    disabledElements: {
+      logoBar: { disabled: true },
+    },
     openElements: {
       panel: true,
       header: true
@@ -42,6 +44,7 @@ export function Basic() {
 
 export function PanelOnRightSide() {
   initialState.viewer.panelCustomEmptyPanel = undefined;
+  initialState.viewer.openElements.panel2 = true;
   const store = configureStore({ reducer: () => initialState });
   return (
     <Provider store={store}>

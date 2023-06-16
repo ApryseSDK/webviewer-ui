@@ -11,15 +11,12 @@ import FileInputPanel from 'components/PageReplacementModal/FileInputPanel';
 import FilePickerPanel from 'components/PageReplacementModal/FilePickerPanel';
 import selectors from 'selectors';
 import actions from 'actions';
+import DataElements from 'constants/dataElement';
 
 import '../PageReplacementModal/PageReplacementModal.scss';
 import './OpenFileModal.scss';
 
 const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
-  if (isDisabled) {
-    return null;
-  }
-
   const { t } = useTranslation();
 
   const [src, setSrc] = useState('');
@@ -29,7 +26,7 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
   const [error, setError] = useState({ 'fileError': '', 'urlError': '', 'extensionError': '' });
 
   const closeModal = () => {
-    closeElements(['OpenFileModal']);
+    closeElements([DataElements.OPEN_FILE_MODAL]);
     setSrc('');
     setError({ 'fileError': '', 'urlError': '' });
     setFilename(null);
@@ -39,7 +36,13 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
 
   useEffect(() => {
     if (isOpen) {
-      closeElements(['printModal', 'loadingModal', 'progressModal', 'errorModal', 'Model3DModal']);
+      closeElements([
+        DataElements.PRINT_MODAL,
+        DataElements.LOADING_MODAL,
+        DataElements.PROGRESS_MODAL,
+        DataElements.ERROR_MODAL,
+        DataElements.MODEL3D_MODAL,
+      ]);
     } else {
       setSrc('');
       setError({ 'fileError': '', 'urlError': '' });
@@ -114,9 +117,9 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
     return uniqueArr;
   }, []);
 
-  return (
+  return !isDisabled && (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal}>
-      <div className={modalClass} data-element="OpenFileModal" onMouseDown={closeModal}>
+      <div className={modalClass} data-element={DataElements.OPEN_FILE_MODAL} onMouseDown={closeModal}>
         <div className="container" onMouseDown={(e) => e.stopPropagation()}>
           <Tabs className="open-file-modal-tabs" id="openFileModal">
             <div className="header-container">
@@ -185,8 +188,8 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
 };
 
 const mapStateToProps = (state) => ({
-  isDisabled: selectors.isElementDisabled(state, 'OpenFileModal'),
-  isOpen: selectors.isElementOpen(state, 'OpenFileModal'),
+  isDisabled: selectors.isElementDisabled(state, DataElements.OPEN_FILE_MODAL),
+  isOpen: selectors.isElementOpen(state, DataElements.OPEN_FILE_MODAL),
   tabManager: selectors.getTabManager(state),
 });
 

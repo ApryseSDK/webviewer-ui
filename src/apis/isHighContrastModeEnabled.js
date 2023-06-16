@@ -10,6 +10,6 @@ WebViewer(...)
   });
  */
 
-export default store => () => {
+export default (store) => () => {
   return selectors.getIsHighContrastMode(store.getState());
 };

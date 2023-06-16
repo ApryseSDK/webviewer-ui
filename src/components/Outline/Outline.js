@@ -3,44 +3,48 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { DragSource, DropTarget } from 'react-dnd';
-import { useTranslation } from 'react-i18next';
+import { getEmptyImage } from 'react-dnd-html5-backend';
 import { ItemTypes, DropLocation, BUFFER_ROOM } from 'constants/dnd';
-import Events from 'constants/events';
-import fireEvent from 'helpers/fireEvent';
-import OutlineContext from './Context';
-import Icon from 'components/Icon';
-import Button from 'components/Button';
-import DataElementWrapper from 'components/DataElementWrapper';
-import OutlineEditPopup from 'components/OutlineEditPopup';
-import OutlineTextInput from 'components/OutlineTextInput';
 import core from 'core';
-import outlineUtils from 'helpers/OutlineUtils';
-import { isMobile, isIE } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
+
+import Events from 'constants/events';
+import fireEvent from 'helpers/fireEvent';
+import outlineUtils from 'helpers/OutlineUtils';
+import { isMobile, isIE } from 'helpers/device';
+import OutlineContext from './Context';
+import OutlineContent from 'src/components/OutlineContent';
+import DataElementWrapper from '../DataElementWrapper';
+import Choice from '../Choice';
+import Button from '../Button';
+
 import './Outline.scss';
+
 const propTypes = {
   outline: PropTypes.object.isRequired,
+  setMultiSelected: PropTypes.func,
   moveOutlineInward: PropTypes.func.isRequired,
   moveOutlineBeforeTarget: PropTypes.func.isRequired,
   moveOutlineAfterTarget: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func,
+  connectDragPreview: PropTypes.func,
   connectDropTarget: PropTypes.func,
   isDragging: PropTypes.bool,
   isDraggedUpwards: PropTypes.bool,
   isDraggedDownwards: PropTypes.bool,
-  outlineEditingEnabled: PropTypes.bool,
 };
 
 const Outline = forwardRef(
   function Outline(
     {
       outline,
+      setMultiSelected,
       isDragging,
       isDraggedUpwards,
       isDraggedDownwards,
-      outlineEditingEnabled,
       connectDragSource,
+      connectDragPreview,
       connectDropTarget,
       moveOutlineInward,
       moveOutlineBeforeTarget,
@@ -48,317 +52,335 @@ const Outline = forwardRef(
     },
     ref
   ) {
-    const outlines = useSelector(state => selectors.getOutlines(state));
+    const outlines = useSelector((state) => selectors.getOutlines(state));
     const {
-      setSelectedOutlinePath,
-      isOutlineSelected,
-      selectedOutlinePath,
-      setIsAddingNewOutline,
+      setActiveOutlinePath,
+      activeOutlinePath,
+      isOutlineActive,
+      setAddingNewOutline,
       isAddingNewOutline,
-      reRenderPanel,
-      addNewOutline,
+      isAnyOutlineRenaming,
+      isMultiSelectMode,
+      shouldAutoExpandOutlines,
+      isOutlineEditable,
+      selectedOutlines,
+      updateOutlines,
     } = useContext(OutlineContext);
-    const [isExpanded, setIsExpanded] = useState(false);
-    const [isEditingName, setIsEditingName] = useState(false);
-    const [showHoverBackground, setShowHoverBackground] = useState(false);
+
+    const outlinePath = outlineUtils.getPath(outline);
+
+    const [isExpanded, setIsExpanded] = useState(shouldAutoExpandOutlines);
+    const [isSelected, setIsSelected] = useState(selectedOutlines.includes(outlinePath));
+    const [isRenaming, setIsRenaming] = useState(false);
+    const [isChangingDest, setChangingDest] = useState(false);
+    const [isHovered, setHovered] = useState(false);
+    const [clearSingleClick, setClearSingleClick] = useState(undefined);
+
     const dispatch = useDispatch();
-    const [t] = useTranslation();
 
     const elementRef = useRef(null);
     connectDragSource(elementRef);
+    connectDragPreview(getEmptyImage(), { captureDraggingState: true });
     connectDropTarget(elementRef);
-    const opacity = isDragging ? 0 : 1;
+    const opacity = isDragging ? 0.5 : 1;
     useImperativeHandle(ref, () => ({
       getNode: () => elementRef.current,
     }));
 
     useEffect(() => {
-    // automatically sets the current outline to be expanded in two cases
-    // 1. another outline is nested into this outline (by listening to the change of selectedOutlinePath)
-    // 2. a new child outline is going to be added (by listening to the change of isAddingNewOutline)
-      const path = outlineUtils.getPath(outline);
-
-      if (
-        selectedOutlinePath !== null &&
-      selectedOutlinePath !== path &&
-      selectedOutlinePath.startsWith(path)
-      ) {
+      const shouldExpandOutline =
+        activeOutlinePath !== null
+        && activeOutlinePath !== outlinePath
+        && activeOutlinePath.startsWith(outlinePath);
+      if (shouldExpandOutline) {
         setIsExpanded(true);
       }
-    }, [selectedOutlinePath, isAddingNewOutline, outline]);
+    }, [activeOutlinePath, isAddingNewOutline, outline]);
 
     useLayoutEffect(() => {
-      setIsEditingName(false);
+      setIsExpanded(shouldAutoExpandOutlines);
+    }, [shouldAutoExpandOutlines]);
+
+    useLayoutEffect(() => {
+      setIsRenaming(false);
+      setChangingDest(false);
     }, [outlines]);
 
-    const handleClickExpand = useCallback(function() {
-      setIsExpanded(expand => !expand);
+    useEffect(() => {
+      setIsSelected(selectedOutlines.includes(outlinePath));
+    }, [selectedOutlines]);
+
+    const toggleOutline = useCallback(() => {
+      setIsExpanded((expand) => !expand);
     }, []);
 
-    const handleArrowKeyPress = useCallback(function(event) {
-      if (event.key === 'Enter') {
-        handleClickExpand();
-      }
-    });
+    const onSingleClick = useCallback(() => {
+      core.goToOutline(outline);
 
-    const handleOutlineClick = useCallback(
-      function() {
-        core.goToOutline(outline);
-        setSelectedOutlinePath(outlineUtils.getPath(outline));
+      outlinePath === activeOutlinePath
+        ? setActiveOutlinePath(null)
+        : setActiveOutlinePath(outlinePath);
 
-        if (isMobile()) {
-          dispatch(actions.closeElement('leftPanel'));
-        }
-      },
-      [dispatch, setSelectedOutlinePath, outline],
-    );
-    const handleOutlineKeyPress = event => {
-      if (event.key === 'Enter') {
-        handleOutlineClick();
-      }
-    }
-    function handleOutlineDoubleClick() {
-      if (!core.isFullPDFEnabled()||!outlineEditingEnabled) {
-        return;
+
+      if (isAddingNewOutline) {
+        setAddingNewOutline(false);
+        updateOutlines();
       }
 
-      setIsEditingName(true);
-    }
-
-    async function changeOutlineName(e) {
-      const newName = e.target.value;
-
-      if (!newName || outline.getName() === newName) {
-        setIsEditingName(false);
-        return;
+      if (isMobile()) {
+        dispatch(actions.closeElement('leftPanel'));
       }
+    }, [dispatch, setActiveOutlinePath, activeOutlinePath, isAddingNewOutline, outline]);
 
-      await outlineUtils.setOutlineName(outlineUtils.getPath(outline), newName);
-      reRenderPanel();
-    }
-
-    const isSelected = isOutlineSelected(outline);
+    const isActive = isOutlineActive(outline);
 
     return (
       <div
-        className="Outline"
+        ref={(!isAddingNewOutline && !isAnyOutlineRenaming && isMultiSelectMode && isOutlineEditable) ? elementRef : null}
+        className="outline-drag-container"
         style={{ opacity }}
       >
-        <div className="padding">
-          {(outline.getChildren().length > 0 ) && (
-            <div
-              className={classNames({
-                arrow: true,
-                expanded: isExpanded,
-              })}
-            tabIndex={0}
-            onClick={handleClickExpand}
-            onKeyPress={handleArrowKeyPress}
-            >
-              <Icon glyph="ic_chevron_right_black_24px" />
-            </div>
-          )}
-        </div>
-        <div className={classNames({ content: true, editable: core.isFullPDFEnabled() && outlineEditingEnabled})}>
-          {isDraggedUpwards && <div style={{ borderTop: '1px solid #bbb' }}/>}
-          {isEditingName ? (
-            <OutlineTextInput
-              defaultValue={outline.getName()}
-              onEscape={() => setIsEditingName(false)}
-              onEnter={changeOutlineName}
-              onBlur={changeOutlineName}
+        <div className="outline-drag-line" style={{ opacity: isDraggedUpwards ? 1 : 0 }} />
+        <DataElementWrapper
+          className={classNames({
+            'bookmark-outline-single-container': true,
+            'editing': isRenaming || isChangingDest,
+            'default': !isRenaming && !isChangingDest,
+            'selected': isActive,
+            'hover': isHovered && !isActive,
+          })}
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && onSingleClick()}
+          onClick={(e) => {
+            if (!isRenaming && !isChangingDest && e.detail === 1) {
+              setClearSingleClick(setTimeout(onSingleClick, 300));
+            }
+          }}
+          onDoubleClick={() => {
+            if (!isRenaming && !isChangingDest) {
+              clearTimeout(clearSingleClick);
+            }
+          }}
+        >
+          {isMultiSelectMode &&
+            <Choice
+              type="checkbox"
+              className="bookmark-outline-checkbox"
+              id={`outline-checkbox-${outlinePath}`}
+              checked={isSelected}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => {
+                setIsSelected(e.target.checked);
+                setMultiSelected(outlinePath, e.target.checked);
+              }}
             />
-          ) : (
-            <div className={classNames({ row: true, selected: isSelected, hover: showHoverBackground && !isSelected })} ref={elementRef} onKeyPress={handleOutlineKeyPress} tabIndex={0}>
+          }
+
+          <div
+            className={classNames({
+              'outline-treeview-toggle': true,
+              expanded: isExpanded,
+            })}
+            style={{ marginLeft: outlineUtils.getNestedLevel(outline) * 12 }}
+          >
+            {outline.getChildren().length > 0 &&
               <Button
-                className="contentButton"
-                onDoubleClick={handleOutlineDoubleClick}
-                label={outline.getName()}
-                useI18String={false}
-                onClick={handleOutlineClick}
-                tabIndex={-1}
+                img="icon-chevron-right"
+                tabIndex={0}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleOutline();
+                }}
               />
-              <OutlineEditButton
-                outline={outline}
-                setIsEditingName={setIsEditingName}
-                onPopupOpen={() => setShowHoverBackground(true)}
-                onPopupClose={() => setShowHoverBackground(false)}
-              />
-            </div>
-          )}
-          {isDraggedDownwards && <div style={{ borderTop: '1px solid #bbb' }}/>}
-          {isExpanded &&
-          outline.getChildren().map(outline =>
-            <DropOutine
-              outline={outline}
-              key={outlineUtils.getOutlineId(outline)}
+            }
+          </div>
+
+          <OutlineContent
+            text={outline.getName()}
+            outlinePath={outlinePath}
+            isOutlineRenaming={isRenaming}
+            setOutlineRenaming={setIsRenaming}
+            isOutlineChangingDest={isChangingDest}
+            setOutlineChangingDest={setChangingDest}
+            setIsHovered={setHovered}
+          />
+        </DataElementWrapper>
+
+        <div className="outline-drag-line" style={{ opacity: isDraggedDownwards ? 1 : 0 }} />
+
+        {isExpanded &&
+          outline.getChildren().map((child) => (
+            <OutlineNested
+              outline={child}
+              key={outlineUtils.getOutlineId(child)}
+              setMultiSelected={setMultiSelected}
               moveOutlineInward={moveOutlineInward}
               moveOutlineBeforeTarget={moveOutlineBeforeTarget}
               moveOutlineAfterTarget={moveOutlineAfterTarget}
-            />)
-          }
-          {isAddingNewOutline && isSelected && (
-            <OutlineTextInput
-              defaultValue={t('message.untitled')}
-              onEscape={() => setIsAddingNewOutline(false)}
-              onEnter={addNewOutline}
-              onBlur={addNewOutline}
             />
-          )}
-        </div>
+          ))
+        }
+        {isAddingNewOutline && isActive && (
+          <DataElementWrapper className="bookmark-outline-single-container editing">
+            <div
+              className="outline-treeview-toggle"
+              style={{ marginLeft: outlineUtils.getNestedLevel(outline) * 12 }}
+            ></div>
+            <OutlineContent
+              isAdding={true}
+              text={''}
+              onCancel={() => setAddingNewOutline(false)}
+            />
+          </DataElementWrapper>
+        )}
       </div>
     );
-  });
+  }
+);
 
 Outline.propTypes = propTypes;
 
-function OutlineEditButton({ outline, setIsEditingName, onPopupOpen, onPopupClose }) {
-  const [isOpen, setIsOpen] = useState(false);
-  useEffect(() => {
-    if (isOpen) {
-      onPopupOpen();
-    } else {
-      onPopupClose();
-    }
-  }, [isOpen, onPopupOpen, onPopupClose]);
-  function handleButtonClick() {
-    setIsOpen(open => !open);
-  }
-  const trigger = `edit-button-${outlineUtils.getPath(outline)}`;
-  return (
-    <DataElementWrapper className="editOutlineButton" dataElement="editOutlineButton">
-      <Button dataElement={trigger} img="icon-tool-more" onClick={handleButtonClick} tabIndex={-1}/>
-      {isOpen && (
-        <OutlineEditPopup
-          outline={outline}
-          trigger={trigger}
-          setIsOpen={setIsOpen}
-          setIsEditingName={setIsEditingName}
-        />
-      )}
-    </DataElementWrapper>
-  );
-}
-OutlineEditButton.propTypes = {
-  outline: PropTypes.object.isRequired,
-  setIsEditingName: PropTypes.func.isRequired,
-  onPopupOpen: PropTypes.func.isRequired,
-  onPopupClose: PropTypes.func.isRequired,
-};
+const OutlineNested = DropTarget(
+  ItemTypes.OUTLINE,
+  {
+    hover(props, dropTargetMonitor, dropTargetContainer) {
+      if (!dropTargetContainer) {
+        return;
+      }
 
-const DropOutine = DropTarget(ItemTypes.OUTLINE, {
-  hover(props, dragSourceState, outlineComponentInstance) {
-    if (!outlineComponentInstance) {
-      return null;
-    }
+      const dragObject = dropTargetMonitor.getItem();
+      if (!dragObject) {
+        return;
+      }
 
-    if (dragSourceState.getItem() === null) {
-      return;
-    }
+      const { dragOutline, dragSourceNode } = dragObject;
+      const { outline: dropOutline } = props;
 
-    // node = HTML Div element from imperative API
-    const node = outlineComponentInstance.getNode();
-    if (!node) {
-      return null;
-    }
-    dragSourceState.getItem().node = node;
-    const dragIndex = dragSourceState.getItem().outline.index;
-    const hoverIndex = props.outline.index;
-    if (dragSourceState.getItem().outline.parent === props.outline.parent && dragIndex === hoverIndex) {
-      return;
-    }
+      const dropTargetNode = dropTargetContainer.getNode();
+      if (!dragSourceNode || !dropTargetNode) {
+        return;
+      }
 
-    // Determine rectangle on screen
-    const dropTargetBoundingRect = node.getBoundingClientRect();
-    // Get vertical middle
-    const dropTargetYMidPoint = (dropTargetBoundingRect.bottom - dropTargetBoundingRect.top) / 2;
-    // Determine mouse position
-    const clientOffset = dragSourceState.getClientOffset();
-    // Get pixels to the top
-    const dropTargetClientY = clientOffset.y - dropTargetBoundingRect.top;
-    switch (true) {
-      case  dropTargetClientY <= dropTargetYMidPoint + BUFFER_ROOM && dropTargetClientY >= dropTargetYMidPoint - BUFFER_ROOM:
-        dragSourceState.getItem().dropLocation = DropLocation.ON_TARGET_HORIZONTAL_MIDPOINT;
-        node.style.backgroundColor = '#bbb';
-        setTimeout(() => {
-          if (dragSourceState.getItem()?.node !== node) {
-            node.style.backgroundColor = 'transparent';
+      const outlineIsBeingDraggedIntoDescendant = dragSourceNode.contains(dropTargetNode);
+      if (outlineIsBeingDraggedIntoDescendant) {
+        dragObject.dropTargetNode = undefined;
+        dragObject.dropLocation = DropLocation.INITIAL;
+        return;
+      }
+
+      dragObject.dropTargetNode = dropTargetNode;
+      const dragIndex = dragOutline.index;
+      const hoverIndex = dropOutline.index;
+      if (dragOutline.parent === dropOutline.parent && dragIndex === hoverIndex) {
+        return;
+      }
+
+      const dropTargetBoundingRect = dropTargetNode.getBoundingClientRect();
+      const dropTargetVerticalMiddlePoint = (dropTargetBoundingRect.bottom - dropTargetBoundingRect.top) / 2;
+      const clientOffset = dropTargetMonitor.getClientOffset();
+      const dropTargetClientY = clientOffset.y - dropTargetBoundingRect.top;
+      switch (true) {
+        case dropTargetClientY <= dropTargetVerticalMiddlePoint + BUFFER_ROOM && dropTargetClientY >= dropTargetVerticalMiddlePoint - BUFFER_ROOM:
+          dragObject.dropLocation = DropLocation.ON_TARGET_HORIZONTAL_MIDPOINT;
+          if (dropTargetMonitor.isOver({ shallow: true })) {
+            dropTargetNode.classList.add('isNesting');
           }
-        }, 100);
-        break;
-      case dropTargetClientY > dropTargetYMidPoint + BUFFER_ROOM:
-        dragSourceState.getItem().dropLocation = DropLocation.BELOW_TARGET;
-        node.style.backgroundColor = 'transparent';
-        break;
-      case dropTargetClientY < dropTargetYMidPoint - BUFFER_ROOM:
-        dragSourceState.getItem().dropLocation = DropLocation.ABOVE_TARGET;
-        node.style.backgroundColor = 'transparent';
-        break;
-      default:
-        dragSourceState.getItem().dropLocation = DropLocation.INITIAL;
-        node.style.backgroundColor = 'transparent';
-        break;
-    }
-    fireEvent(Events.DRAG_OUTLINE,
-      {
-        targetOutline: props.outline,
-        draggedOutline: dragSourceState.getItem().outline,
-        dropLocation: dragSourceState.getItem().dropLocation
+          setTimeout(() => {
+            if (dragObject?.dropTargetNode !== dropTargetNode) {
+              dropTargetNode.classList.remove('isNesting');
+            }
+          }, 100);
+          break;
+        case dropTargetClientY > dropTargetVerticalMiddlePoint + BUFFER_ROOM:
+          dragObject.dropLocation = DropLocation.BELOW_TARGET;
+          dropTargetNode.classList.remove('isNesting');
+          break;
+        case dropTargetClientY < dropTargetVerticalMiddlePoint - BUFFER_ROOM:
+          dragObject.dropLocation = DropLocation.ABOVE_TARGET;
+          dropTargetNode.classList.remove('isNesting');
+          break;
+        default:
+          dragObject.dropLocation = DropLocation.INITIAL;
+          dropTargetNode.classList.remove('isNesting');
+          break;
       }
-    );
-  },
-  drop(props, dragSourceState, outlineComponentInstance) {
-    if (!outlineComponentInstance) {
-      return null;
-    }
-    const { outline, moveOutlineInward, moveOutlineBeforeTarget, moveOutlineAfterTarget } = props;
-    switch (dragSourceState.getItem().dropLocation) {
-      case DropLocation.ON_TARGET_HORIZONTAL_MIDPOINT:
-        moveOutlineInward(dragSourceState.getItem().outline, outline);
-        break;
-      case DropLocation.ABOVE_TARGET:
-        moveOutlineBeforeTarget(dragSourceState.getItem().outline, outline);
-        break;
-      case DropLocation.BELOW_TARGET:
-        moveOutlineAfterTarget(dragSourceState.getItem().outline, outline);
-        break;
-    }
-    dragSourceState.getItem().node.style.backgroundColor = 'transparent';
-    fireEvent(Events.DROP_OUTLINE,
-      {
-        targetOutline: outline,
-        draggedOutline: dragSourceState.getItem().outline,
-        dropLocation: dragSourceState.getItem().dropLocation
+      fireEvent(Events.DRAG_OUTLINE,
+        {
+          targetOutline: dropOutline,
+          draggedOutline: dragObject.dragOutline,
+          dropLocation: dragObject.dropLocation
+        }
+      );
+    },
+    drop(props, dropTargetMonitor, dropTargetContainer) {
+      if (!dropTargetContainer) {
+        return;
       }
-    );
-    dragSourceState.getItem().dropLocation = DropLocation.INITIAL;
-  }
-}, (connect, dropTargetState) => ({
-  connectDropTarget: connect.dropTarget(),
-  // check if the position of drag card higher than the position of the hovered card
-  isDraggedUpwards: dropTargetState.isOver({ shallow: true }) && (dropTargetState.getItem()?.dropLocation === DropLocation.ABOVE_TARGET),
-  // check if the position of drag card lower than the position of the hovered card
-  isDraggedDownwards: dropTargetState.isOver({ shallow: true }) && (dropTargetState.getItem()?.dropLocation === DropLocation.BELOW_TARGET),
-}))(DragSource(ItemTypes.OUTLINE, {
-  beginDrag: props => ({
-    id: props.id,
-    outline: props.outline,
-    dropLocation: DropLocation.INITIAL,
-  }),
-  canDrag(props) {
-    if (!core.isFullPDFEnabled() && !isIE) {
-      console.warn('Full API must be enabled to drag and drop outlines');
-    } else if (isIE) {
-      console.warn('Drag and drop outlines for IE11 is not supported');
-    } else if (!props.outlineEditingEnabled) {
-      console.warn('Drag and drop outlines disabled');
-    }
-    // enable fullPdfEnabled and disable IE
-    return core.isFullPDFEnabled() && !isIE && props.outlineEditingEnabled;
-  }
-}, (connect, dragSourceState) => ({
-  connectDragSource: connect.dragSource(),
-  isDragging: dragSourceState.isDragging(),
-}))(Outline));
+      const dragObject = dropTargetMonitor.getItem();
+      const { dragOutline, dropTargetNode } = dragObject;
+      const { outline: dropOutline, moveOutlineInward, moveOutlineBeforeTarget, moveOutlineAfterTarget } = props;
 
-export default DropOutine;
+      if (!dropTargetNode) {
+        return;
+      }
+
+      switch (dragObject.dropLocation) {
+        case DropLocation.ON_TARGET_HORIZONTAL_MIDPOINT:
+          moveOutlineInward(dragOutline, dropOutline);
+          break;
+        case DropLocation.ABOVE_TARGET:
+          moveOutlineBeforeTarget(dragOutline, dropOutline);
+          break;
+        case DropLocation.BELOW_TARGET:
+          moveOutlineAfterTarget(dragOutline, dropOutline);
+          break;
+        default:
+          break;
+      }
+      dropTargetNode.classList.remove('isNesting');
+      fireEvent(Events.DROP_OUTLINE,
+        {
+          targetOutline: dropOutline,
+          draggedOutline: dragOutline,
+          dropLocation: dragObject.dropLocation
+        }
+      );
+      dragObject.dropLocation = DropLocation.INITIAL;
+    }
+  },
+  (connect, dropTargetState) => ({
+    connectDropTarget: connect.dropTarget(),
+    isDraggedUpwards: dropTargetState.isOver({ shallow: true }) && (dropTargetState.getItem()?.dropLocation === DropLocation.ABOVE_TARGET),
+    isDraggedDownwards: dropTargetState.isOver({ shallow: true }) && (dropTargetState.getItem()?.dropLocation === DropLocation.BELOW_TARGET),
+  })
+)(DragSource(
+  ItemTypes.OUTLINE,
+  {
+    beginDrag: (props, dragSourceMonitor, dragSourceContainer) => ({
+      sourceId: dragSourceMonitor.sourceId,
+      dragOutline: props.outline,
+      dragSourceNode: dragSourceContainer.getNode(),
+      dropLocation: DropLocation.INITIAL,
+    }),
+    canDrag() {
+      if (isIE) {
+        console.warn('Drag and drop outlines for IE11 is not supported');
+        return false;
+      }
+      if (!core.isFullPDFEnabled()) {
+        console.warn('Full API must be enabled to drag and drop outlines');
+        return false;
+      }
+      return true;
+    }
+  },
+  (connect, dragSourceState) => ({
+    connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
+    isDragging: dragSourceState.isDragging(),
+  })
+)(Outline));
+
+OutlineNested.propTypes = propTypes;
+
+export default OutlineNested;

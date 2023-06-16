@@ -8,7 +8,7 @@ const FormFieldPlaceHolderOverlay = ({ annotation, overlayPosition, overlayRef }
 
   const formFieldCreationManager = core.getFormFieldCreationManager();
   const formFieldPlaceHolderName = formFieldCreationManager.getFieldName(annotation);
-  const formFieldPlaceHolderType = annotation.getFormFieldPlaceHolderType();
+  const formFieldPlaceHolderType = annotation.getFormFieldPlaceholderType();
 
   const mapPlaceHolderTypeToTranslation = (formFieldPlaceHolderType) => {
     switch (formFieldPlaceHolderType) {
@@ -43,7 +43,7 @@ const FormFieldPlaceHolderOverlay = ({ annotation, overlayPosition, overlayRef }
         {formFieldPlaceHolderName}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default FormFieldPlaceHolderOverlay;

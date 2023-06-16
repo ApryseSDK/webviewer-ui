@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Reply to selected annotations ({{count}})",
     "comparePages": "Compare pages",
     "startComparison": "Start Comparison",
+    "showComparison": "Show Comparison",
     "back": "Back",
     "clearSignature": "Clear signature",
     "newDocument": "New Document"
@@ -1093,7 +1094,6 @@
     "numberList": "Numbered list",
     "insertLink": "Insert link",
     "insertImage": "Insert image",
-    "notAvailableInDemoMode": "Not available in demo mode",
     "notSupportedOnMobile": "Office editing is not supported on mobile devices."
   },
   "insertPageModal": {

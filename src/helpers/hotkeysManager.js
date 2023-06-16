@@ -370,11 +370,16 @@ WebViewer(...)
       // https://github.com/jaywcjlove/hotkeys#defining-shortcuts
       const { keyup = NOOP, keydown = _handler } = _handler;
       hotkeys(_key, { keyup: true, scope: defaultHotkeysScope }, (e) => {
-        if (e.type === 'keyup') {
-          keyup(e);
-        }
-        if (e.type === 'keydown') {
-          keydown(e);
+        // Preventing the hotkey from being called multiple times or in the wrong viewer
+        // when using the web component version of webviewer.
+        const calledFromCurrentViewer = e.currentTarget.activeElement.shadowRoot === getRootNode();
+        if (calledFromCurrentViewer || !window.isApryseWebViewerWebComponent) {
+          if (e.type === 'keyup') {
+            keyup(e);
+          }
+          if (e.type === 'keydown') {
+            keydown(e);
+          }
         }
       });
     }
@@ -383,7 +388,7 @@ WebViewer(...)
       this.keyHandlerMap = this.createKeyHandlerMap();
       this.prevToolName = null;
       Object.keys(this.keyHandlerMap).forEach((_key) => {
-        // Check if the "key" has already been inilized
+        // Check if the "key" has already been initialized
         if (!unbindedHotkeysMap[_key]) {
           enableHotkey(_key, this.keyHandlerMap[_key]);
         }
@@ -484,16 +489,13 @@ WebViewer(...)
         e.preventDefault();
         core.rotateCounterClockwise(activeDocumentViewerKey);
       },
-      [ShortcutKeys[Shortcuts.COPY]]: (e) => {
-        const isFromCurrentViewer = e.currentTarget.activeElement.shadowRoot === getRootNode();
-        if (isFromCurrentViewer || !window.isApryseWebViewerWebComponent) {
-          const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
-          if (core.getSelectedText(activeDocumentViewerKey)) {
-            copyText(activeDocumentViewerKey);
-            dispatch(actions.closeElement('textPopup'));
-          } else if (core.getSelectedAnnotations(activeDocumentViewerKey).length) {
-            core.updateCopiedAnnotations(activeDocumentViewerKey);
-          }
+      [ShortcutKeys[Shortcuts.COPY]]: () => {
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
+        if (core.getSelectedText(activeDocumentViewerKey)) {
+          copyText(activeDocumentViewerKey);
+          dispatch(actions.closeElement('textPopup'));
+        } else if (core.getSelectedAnnotations(activeDocumentViewerKey).length) {
+          core.updateCopiedAnnotations(activeDocumentViewerKey);
         }
       },
       [ShortcutKeys[Shortcuts.PASTE]]: (e) => {

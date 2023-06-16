@@ -556,8 +556,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, errorMessage: payload.message };
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
-    case 'SET_INLINE_COMMMENT_FILTER':
-      return { ...state, inlineCommmentFilter: payload.inlineCommmentFilter };
+    case 'SET_INLINE_COMMENT_FILTER':
+      return { ...state, inlineCommentFilter: payload.inlineCommentFilter };
     case 'SET_ZOOM_LIST':
       return { ...state, zoomList: payload.zoomList };
     case 'SET_MEASUREMENT_UNITS': {
@@ -742,6 +742,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         isAddingNewScale: payload.isAddingNewScale,
       };
+    case 'SET_IS_REVOCATION_CHECKING_ENABLED':
+      return {
+        ...state,
+        isRevocationCheckingEnabled: payload.isRevocationCheckingEnabled,
+      };
     case 'UPDATE_DELETE_SCALE':
       return {
         ...state,
@@ -807,8 +812,6 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, annotationFilters: payload.annotationFilters };
     case 'SET_ZOOM_STEP_FACTORS':
       return { ...state, zoomStepFactors: payload.zoomStepFactors };
-    case 'SET_CONTENT_EDITOR':
-      return { ...state, contentEditor: payload.contentEditor };
     case 'SET_CONTENTBOX_EDITOR':
       return { ...state, contentBoxEditor: payload.contentBoxEditor };
     case 'SET_NOTES_PANEL_CUSTOM_HEADER_OPTIONS':

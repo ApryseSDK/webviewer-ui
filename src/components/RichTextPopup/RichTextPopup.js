@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -93,12 +93,6 @@ const RichTextPopup = ({ annotation, editor }) => {
   }, []);
 
   useEffect(() => {
-    const position = getRichTextPopupPosition(
-      annotation,
-      popupRef,
-    );
-
-    setCssPosition(position);
     // when the editor is focused, we want to reset any previous drag movements so that
     // the popup will be positioned centered to the editor
     setDraggablePosition({ x: 0, y: 0 });
@@ -146,15 +140,17 @@ const RichTextPopup = ({ annotation, editor }) => {
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    if (popupRef.current && annotationRef.current) {
+  // useLayoutEffect so the popup can adjust position smoothly without flashing
+  useLayoutEffect(() => {
+    if (popupRef.current) {
       const position = getRichTextPopupPosition(
-        annotationRef.current,
+        annotation,
         popupRef,
       );
       setCssPosition(position);
     }
-  }, [symbolsVisible]);
+    // The popup position should be updated when the math symbols are visible or hidden
+  }, [annotation, symbolsVisible]);
 
   const getFormat = (range) => {
     if (!range) {
@@ -340,14 +336,14 @@ const RichTextPopup = ({ annotation, editor }) => {
                 title="option.mathSymbols"
               />
             </Element>
-            <HorizontalDivider style={{ paddingTop: 0 }}/>
+            <HorizontalDivider style={{ paddingTop: 0 }} />
           </>) :
             (<>
               <div className="collapsible-menu" onClick={openTextStyle} onTouchStart={openTextStyle} role={'toolbar'}>
                 <div className="menu-title">
                   {i18next.t('option.stylePopup.textStyle')}
                 </div>
-                <Icon glyph={`icon-chevron-${isTextStylePickerOpen ? 'up' : 'down'}`}/>
+                <Icon glyph={`icon-chevron-${isTextStylePickerOpen ? 'up' : 'down'}`} />
               </div>
               {isTextStylePickerOpen && (
                 <div className="menu-items">
@@ -360,13 +356,13 @@ const RichTextPopup = ({ annotation, editor }) => {
                   />
                 </div>
               )}
-              <div className="divider"/>
+              <div className="divider" />
               {!isPaletteDisabled &&
                 <div className="collapsible-menu" onClick={openColors} onTouchStart={openColors} role={'toolbar'}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.colors')}
                   </div>
-                  <Icon glyph={`icon-chevron-${isColorPickerOpen ? 'up' : 'down'}`}/>
+                  <Icon glyph={`icon-chevron-${isColorPickerOpen ? 'up' : 'down'}`} />
                 </div>
               }
             </>)
@@ -390,7 +386,7 @@ const RichTextPopup = ({ annotation, editor }) => {
             )}
           </>
         )}
-        {symbolsVisible && <MathSymbolsPicker onClickHandler={insertSymbols} maxHeight={symbolsAreaHeight}/>}
+        {symbolsVisible && <MathSymbolsPicker onClickHandler={insertSymbols} maxHeight={symbolsAreaHeight} />}
       </div>
     </Draggable>
   );

@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Απάντηση σε επιλεγμένους σχολιασμούς ({{count}})",
     "comparePages": "Συγκρίνετε σελίδες",
     "startComparison": "Έναρξη σύγκρισης",
+    "showComparison": "Εμφάνιση σύγκρισης",
     "back": "Πίσω",
     "clearSignature": "Καθαρή υπογραφή",
     "newDocument": "Νέο Έγγραφο"
@@ -1093,7 +1094,6 @@
     "numberList": "Αριθμημένη λίστα",
     "insertLink": "Εισαγωγή συνδέσμου",
     "insertImage": "Εισαγωγή εικόνας",
-    "notAvailableInDemoMode": "Δεν είναι διαθέσιμο σε λειτουργία επίδειξης",
     "notSupportedOnMobile": "Η επεξεργασία του Office δεν υποστηρίζεται σε κινητές συσκευές."
   },
   "insertPageModal": {

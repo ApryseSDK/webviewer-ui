@@ -19,7 +19,9 @@ const DEFAULT_NOTES_PANEL_WIDTH = 293;
 const initialState = {
   viewer: {
     customElementOverrides: {},
-    disabledElements: {},
+    disabledElements: {
+      logoBar: { disabled: true },
+    },
     openElements: {
       notesPanel: true,
       header: true

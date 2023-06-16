@@ -13,6 +13,7 @@ export default {
 
 // Mock some state to show the style popups
 initialState.viewer.openElements.watermarkPanel = true;
+initialState.viewer.disabledElements.logoBar = { disabled: true };
 
 const noop = () => { };
 

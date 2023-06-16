@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Відповідь на вибрані анотації ({{count}})",
     "comparePages": "Порівняти сторінки",
     "startComparison": "Почати порівняння",
+    "showComparison": "Показати порівняння",
     "back": "Назад",
     "clearSignature": "Чіткий підпис",
     "newDocument": "Новий документ"
@@ -1093,7 +1094,6 @@
     "numberList": "Нумерований список",
     "insertLink": "Вставте посилання",
     "insertImage": "Вставте зображення",
-    "notAvailableInDemoMode": "Недоступно в демонстраційному режимі",
     "notSupportedOnMobile": "Редагування Office не підтримується на мобільних пристроях."
   },
   "insertPageModal": {

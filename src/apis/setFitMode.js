@@ -19,7 +19,7 @@ WebViewer(...)
 import core from 'core';
 import FitMode from 'constants/fitMode';
 
-export default mode => {
+export default (mode) => {
   const fitModeToFunctionMap = {
     [FitMode.FitWidth]: core.fitToWidth,
     [FitMode.FitPage]: core.fitToPage,

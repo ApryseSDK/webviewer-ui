@@ -57,6 +57,7 @@ class DocumentContainer extends React.PureComponent {
     featureFlags: PropTypes.object,
     bottomHeaderHeight: PropTypes.number,
     activeDocumentViewerKey: PropTypes.number,
+    isLogoBarEnabled: PropTypes.bool,
   };
 
   constructor(props) {
@@ -360,6 +361,7 @@ class DocumentContainer extends React.PureComponent {
                     showNavOverlay={this.state.showNavOverlay}
                     onMouseEnter={this.pageNavOnMouseEnter}
                     onMouseLeave={this.pageNavOnMouseLeave}
+                    isLogoBarEnabled={this.props.isLogoBarEnabled}
                   />
                 )}
 
@@ -398,6 +400,7 @@ const mapStateToProps = (state) => ({
   featureFlags: selectors.getFeatureFlags(state),
   bottomHeaderHeight: selectors.getBottomHeadersHeight(state),
   activeDocumentViewerKey: selectors.getActiveDocumentViewerKey(state),
+  isLogoBarEnabled: !selectors.isElementDisabled(state, DataElements.LOGO_BAR),
 });
 
 const mapDispatchToProps = (dispatch) => ({

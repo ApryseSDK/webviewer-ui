@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Membalas anotasi yang dipilih ({{count}})",
     "comparePages": "Bandingkan halaman",
     "startComparison": "Mulai Perbandingan",
+    "showComparison": "Tampilkan Perbandingan",
     "back": "Kembali",
     "clearSignature": "Tanda tangan yang jelas",
     "newDocument": "Dokumen Baru"
@@ -1093,7 +1094,6 @@
     "numberList": "Daftar bernomor",
     "insertLink": "Sisipkan tautan",
     "insertImage": "Sisipkan gambar",
-    "notAvailableInDemoMode": "Tidak tersedia dalam mode demo",
     "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler."
   },
   "insertPageModal": {

@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
+import debounce from 'lodash/debounce';
 
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
@@ -67,7 +68,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
   const onClose = useCallback(() => dispatch(actions.closeElement(DataElements.TEXT_POPUP)), [dispatch]);
 
   useEffect(() => {
-    const onScroll = _.debounce(() => {
+    const onScroll = debounce(() => {
       setPopupPositionAndShow();
     }, 100);
     const scrollViewElement = core.getDocumentViewer().getScrollViewElement();

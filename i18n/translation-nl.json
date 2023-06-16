@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Reageren op geselecteerde annotaties ({{count}})",
     "comparePages": "Vergelijk pagina's",
     "startComparison": "Vergelijking starten",
+    "showComparison": "Toon vergelijking",
     "back": "Rug",
     "clearSignature": "Duidelijke handtekening",
     "newDocument": "Nieuw document"
@@ -1093,7 +1094,6 @@
     "numberList": "Genummerde lijst",
     "insertLink": "Koppeling invoegen",
     "insertImage": "Voeg afbeelding in",
-    "notAvailableInDemoMode": "Niet beschikbaar in demo-modus",
     "notSupportedOnMobile": "Office-bewerking wordt niet ondersteund op mobiele apparaten."
   },
   "insertPageModal": {

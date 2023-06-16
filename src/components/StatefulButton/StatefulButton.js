@@ -65,7 +65,7 @@ class StatefulButton extends React.PureComponent {
     }
   }
 
-  update = newState => {
+  update = (newState) => {
     if (newState) {
       this.setState({
         activeState: newState,

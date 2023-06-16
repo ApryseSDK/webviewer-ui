@@ -6,11 +6,17 @@
   position: relative;
   gap: 8px;
 
+  .Dropdown__wrapper {
+    @include mobile {
+      width: 100%;
+    }
+  }
+
   .Dropdown {
     padding: 3px 4px;
     text-align: left;
     @include mobile {
-      width: calc(100vw - 125px) !important;
+      width: 100% !important;
     }
 
     .Icon {

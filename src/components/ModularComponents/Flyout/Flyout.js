@@ -1,13 +1,15 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'selectors';
+import classNames from 'classnames';
 import './Flyout.scss';
 import Icon from 'components/Icon';
+import ToolButton from 'components/ToolButton';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import { FLYOUT_ITEM_HEIGHT, WIDTH_PLUS_PADDING } from 'constants/flyoutConstants';
-
+import getRootNode from 'helpers/getRootNode';
 
 const Flyout = () => {
   const { t } = useTranslation();
@@ -21,6 +23,7 @@ const Flyout = () => {
   const {
     dataElement,
     items,
+    className
   } = flyoutProperties;
   const [activeItem, setActiveItem] = useState(null);
   const flyoutRef = React.createRef();
@@ -28,7 +31,8 @@ const Flyout = () => {
 
   useEffect(() => {
     const correctedPosition = { x: position.x, y: position.y };
-    const appRect = document.getElementById('app').getBoundingClientRect();
+    const appRect = getRootNode().getElementById('app').getBoundingClientRect();
+
     const widthOverflow = position.x + WIDTH_PLUS_PADDING - appRect.width;
     const heightOverflow = position.y +
       (activeItem && activeItem.children.length > items.length ? activeItem.children.length : items.length) *
@@ -49,7 +53,6 @@ const Flyout = () => {
   }, [activeItem, position]);
 
   const onClickOutside = useCallback(() => {
-    dispatch(actions.closeElement(activeFlyout));
     dispatch(actions.setActiveFlyout(undefined));
   }, [dispatch, activeFlyout]);
   useOnClickOutside(flyoutRef, onClickOutside);
@@ -67,14 +70,25 @@ const Flyout = () => {
     }
   };
 
-  const renderFlyoutItem = (flyoutItem, isChild = false) => {
-    return (flyoutItem === 'divider' ? <div className="divider"/> : (
-      <div key={flyoutItem.label} className="flyout-item-container" onClick={onClickHandler(flyoutItem, isChild)}>
+  const renderFlyoutItem = (flyoutItem, index, isChild = false) => {
+    const itemIsATool = !!flyoutItem.toolName;
+    return (flyoutItem === 'divider' ? <div className="divider" key={`divider-${index}`}/> : (
+      <div key={flyoutItem.label} className="flyout-item-container"
+        data-element={flyoutItem.dataElement} onClick={onClickHandler(flyoutItem, isChild)}>
         <div className="menu-container">
-          {flyoutItem.icon && <Icon className="menu-icon" glyph={flyoutItem.icon}/>}
-          <div className="flyout-item-label">{flyoutItem.label}</div>
+          {!itemIsATool && flyoutItem.icon && <Icon className="menu-icon" glyph={flyoutItem.icon}/>}
+          {!itemIsATool && <div className="flyout-item-label">{t(flyoutItem.label)}</div>}
+          {itemIsATool &&
+            // We should update when we have the customizable Tool Button component
+            <ToolButton
+              className={classNames({ ZoomItem: true })}
+              role="option"
+              toolName={flyoutItem.toolName}
+              label={flyoutItem.label}
+              img={flyoutItem.icon}
+            />}
         </div>
-        {flyoutItem.children && <Icon className="icon-open-submneu" glyph="icon-chevron-right"/>}
+        {flyoutItem.children && <Icon className="icon-open-submenu" glyph="icon-chevron-right"/>}
       </div>
     ));
   };
@@ -86,17 +100,20 @@ const Flyout = () => {
 
   return (
     <div className="Flyout" data-element={dataElement} ref={flyoutRef} style={flyoutStyles}>
-      <div className="FlyoutContainer">
+      <div className={classNames({
+        'FlyoutContainer': true,
+        [className]: true
+      })}>
         {activeItem ? (
           <>
             <div className="back-button-container" onClick={() => setActiveItem(null)}>
               <Icon glyph="icon-chevron-left"/>
               <div className="back-button-label">{t('action.back')}</div>
             </div>
-            {activeItem.children.map(((activeChild) => renderFlyoutItem(activeChild, true)))}
+            {activeItem.children.map(((activeChild, index) => renderFlyoutItem(activeChild, index, true)))}
           </>
         ) :
-          items.map((flyoutItem) => renderFlyoutItem(flyoutItem))
+          items.map((flyoutItem, index) => renderFlyoutItem(flyoutItem, index))
         }
       </div>
     </div>

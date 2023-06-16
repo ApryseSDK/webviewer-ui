@@ -7,9 +7,9 @@ import core from 'core';
 import applyRedactions from 'helpers/applyRedactions';
 import { RedactionPanelContext, RedactionPanelProvider } from './RedactionPanelContext';
 import useOnRedactionAnnotationChanged from '../../hooks/useOnRedactionAnnotationChanged';
-import useMedia from 'hooks/useMedia';
+import { isMobileSize } from 'helpers/getDeviceSize';
 import DataElementWrapper from '../DataElementWrapper';
-import Icon from 'components/Icon'
+import Icon from 'components/Icon';
 import RedactionSearchPanel from 'components/RedactionSearchPanel';
 import { defaultRedactionTypes } from 'constants/redactionTypes';
 
@@ -22,22 +22,18 @@ export const RedactionPanelContainer = () => {
     customApplyRedactionsHandler,
     redactionSearchPatterns,
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.isElementOpen(state, 'redactionPanel'),
       selectors.isElementDisabled(state, 'redactionPanel'),
       selectors.getRedactionPanelWidth(state),
       selectors.isInDesktopOnlyMode(state),
       selectors.getCustomApplyRedactionsHandler(state),
       selectors.getRedactionSearchPatterns(state),
-    ], shallowEqual);
-
-  const isMobile = useMedia(
-    // Media queries
-    ['(max-width: 640px)'],
-    [true],
-    // Default value
-    false,
+    ],
+    shallowEqual,
   );
+
+  const isMobile = isMobileSize();
 
   const redactionAnnotationsList = useOnRedactionAnnotationChanged();
 
@@ -46,10 +42,10 @@ export const RedactionPanelContainer = () => {
       const { label, type, icon } = redactionSearchPatterns[key];
       map[type] = {
         label,
-        icon
+        icon,
       };
       return map;
-    }, {})
+    }, {});
 
     return { ...storedRedactionTypes, ...defaultRedactionTypes };
   }, [redactionSearchPatterns]);
@@ -75,46 +71,36 @@ export const RedactionPanelContainer = () => {
 
   const renderMobileCloseButton = () => {
     return (
-      <div
-        className="close-container"
-      >
-        <div
-          className="close-icon-container"
-          onClick={closeRedactionPanel}
-        >
-          <Icon
-            glyph="ic_close_black_24px"
-            className="close-icon"
-          />
+      <div className="close-container">
+        <div className="close-icon-container" onClick={closeRedactionPanel}>
+          <Icon glyph="ic_close_black_24px" className="close-icon" />
         </div>
       </div>
     );
   };
 
-  const style = !isInDesktopOnlyMode && isMobile ? {} : { width: `${redactionPanelWidth}px`, minWidth: `${redactionPanelWidth}px`, };
+  const style =
+    !isInDesktopOnlyMode && isMobile ? {} : { width: `${redactionPanelWidth}px`, minWidth: `${redactionPanelWidth}px` };
 
   const { isRedactionSearchActive } = useContext(RedactionPanelContext);
 
   if (isDisabled || !isOpen) {
     return null;
-  } else {
-    return (
-      <DataElementWrapper
-        dataElement="redactionPanel"
-        className="Panel RedactionPanel"
-        style={style}
-      >
-        {(!isInDesktopOnlyMode && isMobile) && renderMobileCloseButton()}
-        <RedactionSearchPanel />
-        {!isRedactionSearchActive &&
-          <RedactionPanel
-            redactionAnnotations={redactionAnnotationsList}
-            redactionTypesDictionary={redactionTypesDictionary}
-            applyAllRedactions={applyAllRedactions}
-            deleteAllRedactionAnnotations={deleteAllRedactionAnnotations} />}
-      </DataElementWrapper>
-    );
   }
+  return (
+    <DataElementWrapper dataElement="redactionPanel" className="Panel RedactionPanel" style={style}>
+      {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
+      <RedactionSearchPanel />
+      {!isRedactionSearchActive && (
+        <RedactionPanel
+          redactionAnnotations={redactionAnnotationsList}
+          redactionTypesDictionary={redactionTypesDictionary}
+          applyAllRedactions={applyAllRedactions}
+          deleteAllRedactionAnnotations={deleteAllRedactionAnnotations}
+        />
+      )}
+    </DataElementWrapper>
+  );
 };
 
 const RedactionPanelContainerWithProvider = () => {
@@ -122,7 +108,7 @@ const RedactionPanelContainerWithProvider = () => {
     <RedactionPanelProvider>
       <RedactionPanelContainer />
     </RedactionPanelProvider>
-  )
-}
+  );
+};
 
 export default RedactionPanelContainerWithProvider;

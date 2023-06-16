@@ -66,12 +66,11 @@ class MentionsManager {
     this.allowedTrailingCharacters = [' '];
     this.mentionLookupCallback = this.defaultMentionsSearchCallback;
     annotManager.addEventListener('annotationChanged', (annotations, action, { imported }) => {
-      if (imported || !annotations.length || !this.getUserData().length) {
+      if (!annotations.length || !this.getUserData().length) {
         return;
       }
-
       if (action === 'add') {
-        this.handleAnnotationsAdded(annotations);
+        imported ? this.handleAnnotationsAdded(annotations, imported) : this.handleAnnotationsAdded(annotations);
       } else if (action === 'modify') {
         this.handleAnnotationsModified(annotations);
       } else if (action === 'delete') {
@@ -80,7 +79,7 @@ class MentionsManager {
     });
   }
 
-  handleAnnotationsAdded(annotations) {
+  handleAnnotationsAdded(annotations, imported = false) {
     let newMentions = [];
 
     annotations.forEach((annotation) => {
@@ -90,7 +89,7 @@ class MentionsManager {
       newMentions = newMentions.concat(mentionData.mentions);
     });
 
-    if (newMentions.length) {
+    if (newMentions.length && !imported) {
       this.trigger('mentionChanged', [newMentions, 'add']);
     }
   }

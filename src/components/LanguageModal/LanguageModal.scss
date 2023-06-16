@@ -6,6 +6,8 @@
 
   .container {
     @extend %modal-shared-container-style;
+    @extend %modal-shared-container-style-mobile;
+
     display: flex;
     flex-direction: column;
     border-radius: 4px;
@@ -27,12 +29,30 @@
       display: grid;
       grid-gap: 5px 16px;
       grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      @include mobile {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .ui__choice {
+        align-items: flex-start !important;
+
+        .ui__choice__input {
+          margin: 1px 0;
+        }
+      }
     }
 
     .footer {
       margin-top: 8px;
       margin-bottom: 16px;
       padding-right: 16px;
+
+      .modal-button {
+        @include mobile {
+          padding: 8px 16px;
+        }
+      }
     }
 
     .divider {

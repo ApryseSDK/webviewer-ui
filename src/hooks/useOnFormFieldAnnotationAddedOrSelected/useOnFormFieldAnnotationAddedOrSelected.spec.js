@@ -1,16 +1,20 @@
+import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import useOnFormFieldAnnotationAddedOrSelected from './useOnFormFieldAnnotationAddedOrSelected';
 import core from 'core';
 
 jest.mock('core');
 
+const MockComponent = ({ children }) => (<div>{children}</div>);
+const wrapper = withProviders(MockComponent);
+
 describe('useOnFormFieldAnnotationAddedOrSelected hook', () => {
   it('adds event listeners to Annotation Changed', () => {
     core.addEventListener = jest.fn();
 
-    const { result } = renderHook(function () {
+    const { result } = renderHook(function() {
       return useOnFormFieldAnnotationAddedOrSelected();
-    });
+    }, { wrapper });
 
     expect(result.error).toBeUndefined();
 
@@ -20,9 +24,9 @@ describe('useOnFormFieldAnnotationAddedOrSelected hook', () => {
   it('adds event listeners to Annotation Selected', () => {
     core.addEventListener = jest.fn();
 
-    const { result } = renderHook(function () {
+    const { result } = renderHook(function() {
       return useOnFormFieldAnnotationAddedOrSelected();
-    });
+    }, { wrapper });
 
     expect(result.error).toBeUndefined();
 
@@ -32,9 +36,9 @@ describe('useOnFormFieldAnnotationAddedOrSelected hook', () => {
   it('removes event listeners to Annotation Changed when component is unmounted', () => {
     core.removeEventListener = jest.fn();
 
-    const { result, unmount } = renderHook(function () {
+    const { result, unmount } = renderHook(function() {
       return useOnFormFieldAnnotationAddedOrSelected();
-    });
+    }, { wrapper });
 
     expect(result.error).toBeUndefined();
     unmount();
@@ -45,14 +49,13 @@ describe('useOnFormFieldAnnotationAddedOrSelected hook', () => {
   it('removes event listeners to Annotation Selected when component is unmounted', () => {
     core.removeEventListener = jest.fn();
 
-    const { result, unmount } = renderHook(function () {
+    const { result, unmount } = renderHook(function() {
       return useOnFormFieldAnnotationAddedOrSelected();
-    });
+    }, { wrapper });
 
     expect(result.error).toBeUndefined();
     unmount();
 
     expect(core.removeEventListener).toBeCalledWith('annotationSelected', expect.any(Function));
   });
-
-})
+});

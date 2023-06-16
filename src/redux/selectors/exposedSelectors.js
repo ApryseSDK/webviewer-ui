@@ -631,8 +631,6 @@ export const getAvailableFontFaces = (state) => state.officeEditor.availableFont
 
 export const getCSSFontValues = (state) => state.officeEditor.cssFontValues;
 
-export const getContentEditor = (state) => state.viewer.contentEditor;
-
 export const getContentBoxEditor = (state) => state.viewer.contentBoxEditor;
 
 export const getAnnotationFilters = (state) => state.viewer.annotationFilters;

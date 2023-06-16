@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Seçili ek açıklamaları yanıtla ({{count}})",
     "comparePages": "Sayfaları karşılaştır",
     "startComparison": "Karşılaştırmayı Başlat",
+    "showComparison": "Karşılaştırmayı Göster",
     "back": "Geri",
     "clearSignature": "İmzayı temizle",
     "newDocument": "Yeni belge"
@@ -1093,7 +1094,6 @@
     "numberList": "Numaralı liste",
     "insertLink": "Bağlantı ekle",
     "insertImage": "Resim ekle",
-    "notAvailableInDemoMode": "Demo modunda kullanılamaz",
     "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez."
   },
   "insertPageModal": {

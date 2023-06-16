@@ -17,6 +17,6 @@ WebViewer(...)
 
 import selectors from 'selectors';
 
-export default store => () => {
+export default (store) => () => {
   return selectors.getBookmarks(store.getState());
 };

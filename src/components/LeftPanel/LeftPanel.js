@@ -47,6 +47,7 @@ const LeftPanel = () => {
     isBookmarkPanelEnabled,
     isBookmarkIconShortcutVisible,
     isMultiTabActive,
+    isLogoBarEnabled,
     featureFlags,
     topHeadersHeight,
     bottomHeadersHeight,
@@ -68,6 +69,7 @@ const LeftPanel = () => {
       !selectors.isElementDisabled(state, DataElements.BOOKMARK_PANEL),
       selectors.isBookmarkIconShortcutVisible(state),
       selectors.getIsMultiTab(state),
+      !selectors.isElementDisabled(state, DataElements.LOGO_BAR),
       selectors.getFeatureFlags(state),
       selectors.getTopHeadersHeight(state),
       selectors.getBottomHeadersHeight(state),
@@ -141,7 +143,8 @@ const LeftPanel = () => {
         'tools-header-and-header-hidden': legacyAllHeadersHidden,
         'thumbnail-panel-active': activePanel === 'thumbnailsPanel',
         'outlines-panel-active': activePanel === 'outlinesPanel',
-        'multi-tab-active': isMultiTabActive
+        'multi-tab-active': isMultiTabActive,
+        'logo-bar-enabled': isLogoBarEnabled,
       })}
       onDrop={onDrop}
       onDragOver={onDragOver}

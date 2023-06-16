@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "回复所選註釋 ({{count}})",
     "comparePages": "比較頁面",
     "startComparison": "開始比較",
+    "showComparison": "顯示比較",
     "back": "後退",
     "clearSignature": "清晰的簽名",
     "newDocument": "新建文件"
@@ -1093,7 +1094,6 @@
     "numberList": "編號列表",
     "insertLink": "插入鏈接",
     "insertImage": "插入圖片",
-    "notAvailableInDemoMode": "在演示模式下不可用",
     "notSupportedOnMobile": "移動設備不支持 Office 編輯。"
   },
   "insertPageModal": {

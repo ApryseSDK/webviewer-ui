@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
@@ -8,26 +8,35 @@ import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import CustomStampForums from './CustomStampForums';
 import Button from 'components/Button';
+import DataElements from 'constants/dataElement';
 
 import './CreateStampModal.scss';
 
 const TOOL_NAME = 'AnnotationCreateRubberStamp';
+const fillColors = window.Core.Tools.RubberStampCreateTool['FILL_COLORS'];
 
 const CustomStampModal = () => {
-  const [state, setState] = useState({ font: 'Helvetica', bold: true });
-  const stampTool = core.getTool(TOOL_NAME);
+  const [state, setState] = useState({ font: 'Helvetica', bold: true, color: fillColors[0] });
+  const stampToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
   const [t] = useTranslation();
   const store = useStore();
   const [emptyInput, setEmptyInput] = useState(false);
-  const [isOpen, fonts, dateTimeFormats, userName] = useSelector(state => [
-    selectors.isElementOpen(state, 'customStampModal'),
+  const [isOpen, fonts, dateTimeFormats, userName] = useSelector((state) => [
+    selectors.isElementOpen(state, DataElements.CUSTOM_STAMP_MODAL),
     selectors.getFonts(state),
     selectors.getDateTimeFormats(state),
     selectors.getUserName(state),
   ]);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isOpen) {
+      core.deselectAllAnnotations();
+    }
+  }, [isOpen]);
+
   const closeModal = () => {
-    dispatch(actions.closeElement('customStampModal'));
+    dispatch(actions.closeElement(DataElements.CUSTOM_STAMP_MODAL));
   };
 
   const openColorPicker = () => {
@@ -40,7 +49,7 @@ const CustomStampModal = () => {
     return customColor;
   };
 
-  const openDeleteModal = async onConfirm => {
+  const openDeleteModal = async (onConfirm) => {
     const message = t('warning.colorPicker.deleteMessage');
     const title = t('warning.colorPicker.deleteTitle');
     const confirmBtnText = t('action.ok');
@@ -63,13 +72,15 @@ const CustomStampModal = () => {
 
   const createCustomStamp = async () => {
     core.setToolMode(TOOL_NAME);
-    stampTool.addCustomStamp(state);
-    const annot = await stampTool.createCustomStampAnnotation(state);
-    await stampTool.setRubberStamp(annot);
-    stampTool.showPreview();
-    dispatch(actions.closeElement('customStampModal'));
-    const standardStampCount = stampTool.getStandardStamps().length;
-    const customStampCount = stampTool.getCustomStamps().length;
+    for (const stampTool of stampToolArray) {
+      stampTool.addCustomStamp(state);
+      const annot = await stampTool.createCustomStampAnnotation(state);
+      await stampTool.setRubberStamp(annot);
+      stampTool.showPreview();
+    }
+    dispatch(actions.closeElement(DataElements.CUSTOM_STAMP_MODAL));
+    const standardStampCount = stampToolArray[0].getStandardStamps().length;
+    const customStampCount = stampToolArray[0].getCustomStamps().length;
     dispatch(actions.setSelectedStampIndex(standardStampCount + customStampCount - 1));
   };
 
@@ -77,12 +88,12 @@ const CustomStampModal = () => {
     isOpen ?
       <div
         className={modalClass}
-        data-element="customStampModal"
+        data-element={DataElements.CUSTOM_STAMP_MODAL}
       >
         <FocusTrap locked={isOpen}>
-          <div className="container" onMouseDown={e => e.stopPropagation()}>
+          <div className="container" onMouseDown={(e) => e.stopPropagation()}>
             <div className="header">
-              <p>{t(`option.customStampModal.modalName`)}</p>
+              <p>{t('option.customStampModal.modalName')}</p>
               <Button
                 dataElement="customStampModalCloseButton"
                 title="action.close"
@@ -101,7 +112,7 @@ const CustomStampModal = () => {
               setEmptyInput={setEmptyInput}
               fonts={fonts}
               dateTimeFormats={dateTimeFormats}
-              stampTool={stampTool}
+              stampTool={stampToolArray[0]}
               userName={userName}
             />
             <div className="footer">

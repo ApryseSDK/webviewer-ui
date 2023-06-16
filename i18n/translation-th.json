@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "ตอบกลับคำอธิบายประกอบที่เลือก ({{จำนวน}})",
     "comparePages": "เปรียบเทียบหน้า",
     "startComparison": "เริ่มการเปรียบเทียบ",
+    "showComparison": "แสดงการเปรียบเทียบ",
     "back": "กลับ",
     "clearSignature": "ลายเซ็นที่ชัดเจน",
     "newDocument": "เอกสารใหม่"
@@ -1093,7 +1094,6 @@
     "numberList": "รายการหมายเลข",
     "insertLink": "ใส่ลิงค์",
     "insertImage": "แทรกรูปภาพ",
-    "notAvailableInDemoMode": "ไม่พร้อมใช้งานในโหมดสาธิต",
     "notSupportedOnMobile": "อุปกรณ์พกพาไม่รองรับการแก้ไข Office"
   },
   "insertPageModal": {

@@ -9,9 +9,10 @@ import PropTypes from 'prop-types';
 import { getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
 import _setCurrentPage from 'helpers/setCurrentPage';
 import { getStep } from 'helpers/zoom';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import core from 'core';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
+import getRootNode from 'helpers/getRootNode';
 
 const propTypes = {
   documentViewerKey: PropTypes.number.isRequired,
@@ -88,9 +89,9 @@ const DocumentContainer = ({
         getMinZoomLevel()
       );
     }
-    const yOffset = window.document.getElementById(`header${documentViewerKey}`).getBoundingClientRect().bottom;
-    const xOffset = e.clientX - window.document.getElementById(`container${documentViewerKey}`).getBoundingClientRect().left;
-    documentViewer.zoomToMouse(newZoomFactor, xOffset, yOffset);
+    const yOffset = getRootNode().getElementById(`header${documentViewerKey}`).getBoundingClientRect().bottom;
+    const xOffset = e.clientX - getRootNode().getElementById(`container${documentViewerKey}`).getBoundingClientRect().left;
+    documentViewer.zoomToMouse(newZoomFactor, xOffset, yOffset, e);
   }, 30, { trailing: false });
   const wheelToNavigatePages = (e) => {
     const currentPage = core.getCurrentPage(documentViewerKey);

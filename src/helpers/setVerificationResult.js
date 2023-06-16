@@ -1,4 +1,3 @@
-import core from 'core';
 import actions from 'actions';
 
 /**
@@ -16,16 +15,16 @@ import actions from 'actions';
  * The above results are dictated by the return values of:
  *
  * PDFNet.VerificationResult.getDocumentStatus:
- * https://www.pdftron.com/api/web/PDFNet.VerificationResult.html#getDocumentStatus__anchor
+ * https://docs.apryse.com/api/web/Core.PDFNet.VerificationResult.html#getDocumentStatus__anchor
  *
  * PDFNet.VerificationResult.getTrustStatus:
- * https://www.pdftron.com/api/web/PDFNet.VerificationResult.html#getTrustStatus__anchor
+ * https://docs.apryse.com/api/web/Core.PDFNet.VerificationResult.html#getTrustStatus__anchor
  *
  * PDFNet.VerificationResult.getDigestStatus:
- * https://www.pdftron.com/api/web/PDFNet.VerificationResult.html#getDigestStatus__anchor
+ * https://docs.apryse.com/api/web/Core.PDFNet.VerificationResult.html#getDigestStatus__anchor
  *
  * PDFNet.VerificationResult.getPermissionsStatus:
- * https://www.pdftron.com/api/web/PDFNet.VerificationResult.html#getPermissionsStatus__anchor
+ * https://docs.apryse.com/api/web/Core.PDFNet.VerificationResult.html#getPermissionsStatus__anchor
  *
  * Valid:
  * DocumentStatus.e_no_error && TrustStatus.e_trust_verified
@@ -46,13 +45,10 @@ import actions from 'actions';
  * Invalid.
  * @ignore
  */
-export default async (certificates, trustLists, currentLanguage, dispatch) => {
-  const doc = core.getDocument();
-  if (doc) {
-    const verificationResult = await getVerificationResult(doc, certificates, trustLists, currentLanguage);
-    dispatch(actions.setVerificationResult(verificationResult));
-    return verificationResult;
-  }
+export default async (doc, certificates, trustLists, currentLanguage, revocationChecking, dispatch) => {
+  const verificationResult = await getVerificationResult(doc, certificates, trustLists, currentLanguage, revocationChecking);
+  dispatch(actions.setVerificationResult(verificationResult));
+  return verificationResult;
 };
 
 /**
@@ -68,12 +64,16 @@ export default async (certificates, trustLists, currentLanguage, dispatch) => {
  *   Array<Blob | ArrayBuffer | Int8Array | Uint8Array | Uint8ClampedArray>
  * } trustLists The Trust Lists to load for verification.
  * @param {string} currentLanguage Current UI language
+ * @param {boolean} revocationChecking Determines if the PDFNet API
+ * VerificationOptions.enableOnlineCRLRevocationChecking is invoked to enable
+ * Online Certification Revocation List (CRL) Revocation Checking is done
+ * within the PDFNet logic
  * @returns {object} An object mapping the field name of each signature widget
  * to their verification results
  * @ignore
  */
-const getVerificationResult = async (doc, certificates, trustLists, currentLanguage) => {
-  const { PDFNet } = window;
+const getVerificationResult = async (doc, certificates, trustLists, currentLanguage, revocationChecking) => {
+  const { PDFNet } = window.Core;
   const { VerificationResult } = PDFNet;
   const {
     TrustStatus,
@@ -83,6 +83,7 @@ const getVerificationResult = async (doc, certificates, trustLists, currentLangu
   } = VerificationResult;
   const verificationResults = {};
 
+
   await PDFNet.runWithCleanup(async () => {
     /**
      * @todo Remove re-assignment of argument from original code?
@@ -91,6 +92,10 @@ const getVerificationResult = async (doc, certificates, trustLists, currentLangu
     const opts = await PDFNet.VerificationOptions.create(
       PDFNet.VerificationOptions.SecurityLevel.e_compatibility_and_archiving
     );
+
+    if (revocationChecking) {
+      await opts.enableOnlineCRLRevocationChecking(true);
+    }
 
     for (const certificate of certificates) {
       if (typeof certificate === 'string') {
@@ -377,10 +382,7 @@ const getVerificationResult = async (doc, certificates, trustLists, currentLangu
           validAtTimeOfSigning,
         };
       } catch (e) {
-        /**
-         * @todo Add proper error handling when an error occurs?
-         */
-        // console.log(e);
+        console.error(e);
       }
     }
   });
@@ -399,8 +401,9 @@ const getVerificationResult = async (doc, certificates, trustLists, currentLangu
  */
 const formatPDFNetDate = (date) => {
   const { year, month, day, hour, minute, second } = date;
+  const d = new Date(year, month, day, hour, minute, second);
 
-  return `${year}-${month}-${day}, ${hour}:${minute}:${second}`;
+  return d.toLocaleString();
 };
 
 /**

@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Auf ausgewählte Anmerkungen antworten ({{count}})",
     "comparePages": "Seiten vergleichen",
     "startComparison": "Vergleich starten",
+    "showComparison": "Vergleich anzeigen",
     "back": "Der Rücken",
     "clearSignature": "Klare Unterschrift",
     "newDocument": "Neues Dokument"
@@ -420,7 +421,7 @@
       "addStamp": "Neuen Stempel hinzufügen"
     },
     "signatureOverlay": {
-      "addSignature": "Eine Unterschrift hinzufügen",
+      "addSignature": "Unterschrift hinzufügen",
       "addSignatureOrInitials": "Unterschrift/Initialen"
     },
     "signatureModal": {
@@ -503,7 +504,7 @@
       },
       "scaleOverlay": {
         "addNewScale": "Neuen Maßstab hinzufügen",
-        "selectTwoPoints": "Wählen Sie zwei Punkte mit bekannter Abmessung zum Kalibrieren aus",
+        "selectTwoPoints": "Zwei Punkte mit bekannten Abmessungen für die Kalibrierung auswählen",
         "inputKnowDimension": "Geben Sie bekannte Dimensionen und Einheiten zum Kalibrieren ein",
         "multipleScales": "Mehrere Skalen"
       },
@@ -791,7 +792,7 @@
   "link": {
     "url": "URL",
     "page": "Seite",
-    "enterurl": "Geben Sie die URL ein, zu der Sie einen Link erstellen möchten",
+    "enterurl": "URL eingeben, auf die der Link verweisen soll",
     "enterpage": "Wählen Sie die Seitennummer aus, zu der Sie einen Link erstellen möchten",
     "urlLink": "URL-Link"
   },
@@ -1093,7 +1094,6 @@
     "numberList": "Nummerierte Liste",
     "insertLink": "Verknüpfung einfügen",
     "insertImage": "Bild einfügen",
-    "notAvailableInDemoMode": "Im Demomodus nicht verfügbar",
     "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt."
   },
   "insertPageModal": {

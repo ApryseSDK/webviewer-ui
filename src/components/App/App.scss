@@ -30,11 +30,13 @@
 
 .DocumentContainer {
   border-right: 3px solid transparent;
+
+  overflow-x: hidden;
 }
 
 html, body , #app {
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;

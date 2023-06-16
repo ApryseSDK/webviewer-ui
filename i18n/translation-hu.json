@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Válasz a kiválasztott megjegyzésekre ({{count}})",
     "comparePages": "Oldalak összehasonlítása",
     "startComparison": "Indítsa el az összehasonlítást",
+    "showComparison": "Összehasonlítás megjelenítése",
     "back": "Vissza",
     "clearSignature": "Világos aláírás",
     "newDocument": "Új dokumentum"
@@ -1093,7 +1094,6 @@
     "numberList": "Számozott lista",
     "insertLink": "Link beszúrása",
     "insertImage": "Kép beszúrása",
-    "notAvailableInDemoMode": "Demo módban nem elérhető",
     "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön."
   },
   "insertPageModal": {

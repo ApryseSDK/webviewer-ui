@@ -1,6 +1,6 @@
 import React, { useRef, useCallback } from 'react';
 import Button from '../Button';
-import { useDrag, useDrop } from 'react-dnd'
+import { useDrag, useDrop } from 'react-dnd';
 import Icon from 'components/Icon';
 
 import './CreatableList.scss';
@@ -14,7 +14,6 @@ const CreatableListItem = ({
   id,
   addItem,
 }) => {
-
   const ItemTypes = {
     ITEM: 'item'
   };
@@ -25,14 +24,14 @@ const CreatableListItem = ({
     accept: ItemTypes.ITEM,
     hover(item, monitor) {
       if (!ref.current) {
-        return
+        return;
       }
-      const dragIndex = item.index
-      const hoverIndex = index
+      const dragIndex = item.index;
+      const hoverIndex = index;
 
       // Don't replace items with themselves
       if (dragIndex === hoverIndex) {
-        return
+        return;
       }
 
       // Determine rectangle on screen
@@ -71,7 +70,7 @@ const CreatableListItem = ({
       // to avoid expensive index searches.
       item.index = hoverIndex;
     },
-  })
+  });
 
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.ITEM,
@@ -83,13 +82,13 @@ const CreatableListItem = ({
 
   const onChangeHandler = useCallback((event) => {
     onChange(event.target.value);
-  }, [onChange])
+  }, [onChange]);
 
   const addNewItemOnEnterKey = useCallback((event) => {
     if (event.key === 'Enter') {
       addItem();
     }
-  }, [addItem])
+  }, [addItem]);
 
   drag(drop(ref));
 
@@ -115,7 +114,7 @@ const CreatableListItem = ({
         onClick={onDeleteItem}
       />
     </div>
-  )
-}
+  );
+};
 
 export default CreatableListItem;

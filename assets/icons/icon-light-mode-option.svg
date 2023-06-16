@@ -1,0 +1,25 @@
+<svg width="160" height="120" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="160" height="120" fill="white"/>
+<g clip-path="url(#clip0_954_17345)">
+<path d="M24 24H160V120H24V24Z" fill="#E7EBEE"/>
+<mask id="path-5-inside-2_954_17345" fill="white">
+<path d="M24 24H160V40H24V24Z"/>
+</mask>
+<path d="M24 24H160V40H24V24Z" fill="#F8F9FA"/>
+<path d="M24 24H160H24ZM160 41H24V39H160V41ZM24 40V24V40ZM160 24V40V24Z" fill="#CFD4DA" mask="url(#path-5-inside-2_954_17345)"/>
+<mask id="path-7-inside-3_954_17345" fill="white">
+<path d="M24 40H72V120H24V40Z"/>
+</mask>
+<path d="M24 40H72V120H24V40Z" fill="#F8F9FA"/>
+<path d="M24 40H72H24ZM72 120H24H72ZM24 120V40V120ZM73 40V120H71V40H73Z" fill="#CFD4DA" mask="url(#path-7-inside-3_954_17345)"/>
+<rect x="29" y="29.5" width="6" height="6" rx="1" fill="#E7EBEE"/>
+<rect x="39" y="29.5" width="6" height="6" rx="1" fill="#E7EBEE"/>
+<rect x="49" y="29.5" width="16" height="6" rx="1" fill="#E7EBEE"/>
+</g>
+<path d="M23 28C23 25.2386 25.2386 23 28 23H160V25H28C26.3431 25 25 26.3431 25 28H23ZM160 120H24H160ZM23 120V28C23 25.2386 25.2386 23 28 23V25C26.3431 25 25 26.3431 25 28V120H23ZM160 24V120V24Z" fill="#CFD4DA" mask="url(#path-2-inside-1_954_17345)"/>
+<defs>
+<clipPath id="clip0_954_17345">
+<path d="M24 28C24 25.7909 25.7909 24 28 24H160V120H24V28Z" fill="white"/>
+</clipPath>
+</defs>
+</svg>

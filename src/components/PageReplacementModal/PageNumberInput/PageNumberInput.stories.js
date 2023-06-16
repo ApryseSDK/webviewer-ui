@@ -1,7 +1,7 @@
 import React from 'react';
 import PageNumberInput from './PageNumberInput';
 
-function noop() { };
+function noop() { }
 
 export default {
   title: 'Components/PageReplacementModal/PageNumberInput',

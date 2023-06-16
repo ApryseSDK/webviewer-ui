@@ -3,6 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import selectors from 'selectors';
+import DataElements from 'constants/dataElement';
 
 import {
   renderPermissionStatus,
@@ -23,7 +24,7 @@ const SignatureValidationModal = () => {
     (state) => {
       const { validationModalWidgetName } = state.viewer;
       return [
-        selectors.isElementOpen(state, 'signatureValidationModal'),
+        selectors.isElementOpen(state, DataElements.SIGNATURE_VALIDATION_MODAL),
         selectors.getVerificationResult(state, validationModalWidgetName),
       ];
     },
@@ -33,7 +34,7 @@ const SignatureValidationModal = () => {
   const dispatch = useDispatch();
 
   const closeModal = () => {
-    dispatch(actions.closeElements(['signatureValidationModal']));
+    dispatch(actions.closeElements([DataElements.SIGNATURE_VALIDATION_MODAL]));
   };
 
   useOnClickOutside(containerRef, closeModal);
@@ -42,11 +43,11 @@ const SignatureValidationModal = () => {
     if (isOpen) {
       dispatch(
         actions.closeElements([
-          'signatureModal',
-          'printModal',
-          'errorModal',
-          'loadingModal',
-          'passwordModal',
+          DataElements.SIGNATURE_MODAL,
+          DataElements.LOADING_MODAL,
+          DataElements.PRINT_MODAL,
+          DataElements.ERROR_MODAL,
+          DataElements.PASSWORD_MODAL,
         ])
       );
     }
@@ -484,7 +485,7 @@ const SignatureValidationModal = () => {
         open: isOpen,
         closed: !isOpen,
       })}
-      data-element="signatureValidationModal"
+      data-element={DataElements.SIGNATURE_VALIDATION_MODAL}
     >
       <div className="container" ref={containerRef}>
         {renderHeader()}

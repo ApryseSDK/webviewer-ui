@@ -2003,7 +2003,6 @@ export default {
         startZoom: 6400,
       },
     ],
-    contentEditor: null,
     contentBoxEditor: null,
     notesPanelCustomHeaderOptions: null,
     notesPanelCustomEmptyPanel: null,

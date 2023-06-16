@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "चयनित टिप्पणियों का उत्तर दें",
     "comparePages": "पृष्ठों की तुलना करें",
     "startComparison": "तुलना शुरू करें",
+    "showComparison": "तुलना दिखाएँ",
     "back": "पीछे",
     "clearSignature": "स्पष्ट हस्ताक्षर",
     "newDocument": "नया दस्तावेज़"
@@ -1093,7 +1094,6 @@
     "numberList": "क्रमांकित सूची",
     "insertLink": "लिंक डालें",
     "insertImage": "चित्र डालें",
-    "notAvailableInDemoMode": "डेमो मोड में उपलब्ध नहीं है",
     "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।"
   },
   "insertPageModal": {

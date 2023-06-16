@@ -11,6 +11,7 @@ import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import { isSafari, isChromeOniOS, isFirefoxOniOS } from 'helpers/device';
 import DataElements from 'src/constants/dataElement';
 import core from 'core';
+import getRootNode from './getRootNode';
 
 let pendingCanvases = [];
 let PRINT_QUALITY = 1;
@@ -105,8 +106,7 @@ const printPdf = () => core.exportAnnotations().then((xfdfString) => {
     .then((data) => {
       const arr = new Uint8Array(data);
       const blob = new Blob([arr], { type: 'application/pdf' });
-
-      const printHandler = document.getElementById('print-handler');
+      const printHandler = getRootNode().getElementById('print-handler');
       printHandler.src = URL.createObjectURL(blob);
 
       return new Promise((resolve) => {
@@ -155,7 +155,7 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnotations,
 };
 
 export const printPages = (pages) => {
-  const printHandler = document.getElementById('print-handler');
+  const printHandler = getRootNode().getElementById('print-handler');
   printHandler.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
@@ -173,13 +173,14 @@ export const printPages = (pages) => {
     // so we need to teleport the print handler div to the top parent and inject some CSS to make it print nicely.
     // This can be removed when Chrome and Firefox for iOS respect the origin frame as the actual target for window.print
     if (isChromeOniOS || isFirefoxOniOS) {
-      if (window.parent.document.getElementById('print-handler')) {
-        window.parent.document.getElementById('print-handler').remove();
+      const node = (window.isApryseWebViewerWebComponent) ? getRootNode() : window.parent.document;
+      if (node.getElementById('print-handler')) {
+        node.getElementById('print-handler').remove();
       }
-      window.parent.document.body.appendChild(printHandler.cloneNode(true));
+      node.appendChild(printHandler.cloneNode(true));
 
-      if (!window.parent.document.getElementById('print-handler-css')) {
-        const style = window.parent.document.createElement('style');
+      if (!node.getElementById('print-handler-css')) {
+        const style = window.document.createElement('style');
         style.id = 'print-handler-css';
 
         style.textContent = `
@@ -314,9 +315,9 @@ export const printPages = (pages) => {
               max-width: none !important;
             }
           }
-      `;
-
-        window.parent.document.head.appendChild(style);
+        `;
+        const node = (window.isApryseWebViewerWebComponent) ? getRootNode() : window.parent.document.head;
+        node.appendChild(style);
       }
     }
 
@@ -326,6 +327,7 @@ export const printPages = (pages) => {
 
 const printDocument = () => {
   const doc = core.getDocument();
+
   const tempTitle = window.parent.document.title;
 
   if (!doc) {
@@ -432,8 +434,8 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
     const displayMode = core.getDisplayModeObject();
     const containerElement = core.getScrollViewElement();
     const documentElement = core.getViewerElement();
-    const headerElement = document.querySelector('.Header');
-    const headerItemsElements = document.querySelector('.HeaderToolsContainer');
+    const headerElement = getRootNode().querySelector('.Header');
+    const headerItemsElements = getRootNode().querySelector('.HeaderToolsContainer');
 
     const headerHeight = headerElement?.clientHeight + headerItemsElements?.clientHeight;
     const coordinates = [];
@@ -572,7 +574,8 @@ const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
   // draw all annotations
   const widgetContainer = createWidgetContainer(pageNumber - 1);
   return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
-    document.body.appendChild(widgetContainer);
+    const node = (window.isApryseWebViewerWebComponent) ? getRootNode() : document.body;
+    node.appendChild(widgetContainer);
     return import(/* webpackChunkName: 'html2canvas' */ 'html2canvas').then(({ default: html2canvas }) => {
       return html2canvas(widgetContainer, {
         canvas,
@@ -580,7 +583,7 @@ const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
         scale: 1,
         logging: false,
       }).then(() => {
-        document.body.removeChild(widgetContainer);
+        node.removeChild(widgetContainer);
       });
     });
   });

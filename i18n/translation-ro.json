@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Răspundeți la adnotările selectate ({{count}})",
     "comparePages": "Comparați paginile",
     "startComparison": "Începeți comparația",
+    "showComparison": "Arată comparația",
     "back": "Înapoi",
     "clearSignature": "Semnătură clară",
     "newDocument": "Document nou"
@@ -1093,7 +1094,6 @@
     "numberList": "Lista numerotata",
     "insertLink": "Introduceți linkul",
     "insertImage": "Inserați imaginea",
-    "notAvailableInDemoMode": "Nu este disponibil în modul demonstrativ",
     "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile."
   },
   "insertPageModal": {

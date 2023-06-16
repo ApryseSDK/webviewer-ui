@@ -13,7 +13,7 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => sortStrategy => {
+export default (store) => (sortStrategy) => {
   if (!sortStrategy) {
     throw new Error('Unsupported sort strategy.');
   }

@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Odpovědět na vybrané poznámky ({{count}})",
     "comparePages": "Porovnejte stránky",
     "startComparison": "Spusťte porovnávání",
+    "showComparison": "Zobrazit srovnání",
     "back": "Zadní",
     "clearSignature": "Jasný podpis",
     "newDocument": "Nový dokument"
@@ -1093,7 +1094,6 @@
     "numberList": "Číslovaný seznam",
     "insertLink": "Vložit odkaz",
     "insertImage": "Vložit obrázek",
-    "notAvailableInDemoMode": "Není k dispozici v demo režimu",
     "notSupportedOnMobile": "Úpravy Office nejsou podporovány na mobilních zařízeních."
   },
   "insertPageModal": {

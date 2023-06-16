@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Rispondi alle annotazioni selezionate ({{count}})",
     "comparePages": "Confronta le pagine",
     "startComparison": "Inizia il confronto",
+    "showComparison": "Mostra confronto",
     "back": "Di ritorno",
     "clearSignature": "Firma chiara",
     "newDocument": "Nuovo documento"
@@ -1093,7 +1094,6 @@
     "numberList": "Elenco numerato",
     "insertLink": "Inserisci collegamento",
     "insertImage": "Inserisci immagine",
-    "notAvailableInDemoMode": "Non disponibile in modalità demo",
     "notSupportedOnMobile": "La modifica di Office non è supportata sui dispositivi mobili."
   },
   "insertPageModal": {

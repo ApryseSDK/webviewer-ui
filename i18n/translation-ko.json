@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "선택한 주석에 답장({{count}}개)",
     "comparePages": "페이지 비교",
     "startComparison": "비교 시작",
+    "showComparison": "비교 표시",
     "back": "뒤",
     "clearSignature": "명확한 서명",
     "newDocument": "새 문서"
@@ -1093,7 +1094,6 @@
     "numberList": "번호 매기기 목록",
     "insertLink": "링크 삽입",
     "insertImage": "이미지 삽입",
-    "notAvailableInDemoMode": "데모 모드에서는 사용할 수 없습니다.",
     "notSupportedOnMobile": "Office 편집은 모바일 장치에서 지원되지 않습니다."
   },
   "insertPageModal": {

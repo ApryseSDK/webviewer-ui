@@ -28,6 +28,7 @@ const ITEM_TYPE = {
   TOGGLE_BUTTON: 'toggleButton',
   RIBBON_GROUP: 'ribbonGroup',
   TOOL_GROUP_BUTTON: 'toolGroupButton',
+  ZOOM: 'zoom',
   FLYOUT: 'flyout',
 };
 

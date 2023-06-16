@@ -63,7 +63,10 @@ function SearchOverlay(props) {
 
   useEffect(() => {
     if (searchTextInputRef.current && isPanelOpen) {
-      searchTextInputRef.current.focus();
+      // give time for the search panel to open before focusing on the input
+      setTimeout(() => {
+        searchTextInputRef.current.focus();
+      }, waitTime);
     }
     if (!isSearchAndReplaceDisabled && isPanelOpen) {
       console.warn('Search and Replace is not supported in this browser');
@@ -329,7 +332,7 @@ function SearchOverlay(props) {
             onClick={clearSearchResult}
             aria-label={t('message.searchDocumentPlaceholder')}
           >
-            <Icon glyph="icon-header-clear-search" />
+            <Icon glyph="icon-close" />
           </button>
         )
         }

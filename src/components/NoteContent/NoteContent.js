@@ -524,6 +524,14 @@ const ContentArea = ({
     if (isMentionEnabled) {
       const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
 
+      // If modified, double check for ids
+      const annotMentionData = mentionsManager.extractMentionDataFromAnnot(annotation);
+      annotMentionData.mentions.forEach((mention) => {
+        if (plainTextValue.includes(mention.value)) {
+          ids.push(mention.id);
+        }
+      });
+
       annotation.setCustomData('trn-mention', JSON.stringify({
         contents: textAreaValue,
         ids,

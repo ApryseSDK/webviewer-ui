@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "選択した注釈に返信 ({{count}})",
     "comparePages": "ページを比較する",
     "startComparison": "比較を開始",
+    "showComparison": "比較を表示",
     "back": "戻る",
     "clearSignature": "明確な署名",
     "newDocument": "新しいドキュメント"
@@ -1093,7 +1094,6 @@
     "numberList": "番号付きリスト",
     "insertLink": "リンクを挿入",
     "insertImage": "画像を挿入",
-    "notAvailableInDemoMode": "デモモードでは利用できません",
     "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。"
   },
   "insertPageModal": {

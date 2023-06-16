@@ -11,6 +11,7 @@ import FlyoutMenu from 'components/FlyoutMenu/FlyoutMenu';
 import CollapsedTab from 'components/TabsHeader/CollapsedTab/CollapsedTab';
 import classNames from 'classnames';
 import useWindowDimensions from 'helpers/useWindowsDimensions';
+import getRootNode from 'helpers/getRootNode';
 
 
 const TabsHeader = () => {
@@ -60,7 +61,7 @@ const TabsHeader = () => {
   const onDragOver = (e, index, id) => {
     e.preventDefault();
     e.stopPropagation();
-    const element = document.getElementById(`tab-${id}`);
+    const element = getRootNode().querySelector(`#tab-${id}`);
     const centerX = element.offsetLeft + element.offsetWidth / 2;
     const moveLeft = centerX >= e.pageX;
     if (index === dragIndex ||
@@ -91,7 +92,7 @@ const TabsHeader = () => {
   const onDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!document.getElementsByClassName('TabsHeader')[0]?.contains(e.target)) {
+    if (!getRootNode().getElementsByClassName('TabsHeader')[0]?.contains(e.target)) {
       hoveredTab.current.remove();
     }
     setHovering(false);

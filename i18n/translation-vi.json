@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Trả lời các chú thích đã chọn ({{count}})",
     "comparePages": "So sánh các trang",
     "startComparison": "Bắt đầu so sánh",
+    "showComparison": "Hiển thị so sánh",
     "back": "Mặt sau",
     "clearSignature": "Xóa chữ ký",
     "newDocument": "Tài liệu mới"
@@ -1093,7 +1094,6 @@
     "numberList": "danh sách được đánh số",
     "insertLink": "Chèn đường dẫn",
     "insertImage": "Chèn hình ảnh",
-    "notAvailableInDemoMode": "Không có sẵn trong chế độ demo",
     "notSupportedOnMobile": "Chỉnh sửa văn phòng không được hỗ trợ trên thiết bị di động."
   },
   "insertPageModal": {

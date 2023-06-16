@@ -1,4 +1,8 @@
+import core from 'core';
+
 /**
- * https://www.pdftron.com/api/web/Core.DocumentViewer.html#getSelectedText__anchor
+ * https://docs.apryse.com/api/web/Core.DocumentViewer.html#getSelectedText__anchor
  */
-export default () => window.documentViewer.getSelectedText();
+export default (documentViewerKey = 1) => {
+  return core.getDocumentViewer(documentViewerKey).getSelectedText();
+};

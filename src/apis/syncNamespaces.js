@@ -1,4 +1,5 @@
 import core from 'core';
+import { getInstanceNode } from 'helpers/getRootNode';
 
 /**
  * Syncs the namespaces under the Core namespace for the window, this instance, as well as others instances.
@@ -29,38 +30,28 @@ WebViewer(...)
  */
 
 export default (namespaces, ...otherInstances) => {
-  const instances = [window.instance, ...otherInstances];
+  const instances = [getInstanceNode().instance, ...otherInstances];
   if (!namespaces) {
-    namespaces = window.instance;
+    namespaces = getInstanceNode().instance;
   }
   const { PDFNet, Actions, Annotations, Math, Tools } = namespaces;
-  instances.forEach(instance => {
+  instances.forEach((instance) => {
     if (instance && instance !== namespaces) {
       core.syncNamespaces(namespaces);
       if (PDFNet) {
         instance.Core.PDFNet = PDFNet;
-        // Remove in 9.0
-        instance.CoreControls.PDFNet = instance.PDFNet = PDFNet;
       }
       if (Actions) {
         instance.Core.Actions = Actions;
-        // Remove in 9.0
-        instance.CoreControls.Actions = instance.Actions = Actions;
       }
       if (Annotations) {
         instance.Core.Annotations = Annotations;
-        // Remove in 9.0
-        instance.CoreControls.Annotations = instance.Annotations = Annotations;
       }
       if (Math) {
         instance.Core.Math = Math;
-        // Remove in 9.0
-        instance.CoreControls.Math = instance.Math = Math;
       }
       if (Tools) {
         instance.Core.Tools = Tools;
-        // Remove in 9.0
-        instance.CoreControls.Tools = instance.Tools = Tools;
       }
     }
   });

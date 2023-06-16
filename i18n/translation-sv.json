@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Svara på valda kommentarer ({{count}})",
     "comparePages": "Jämför sidor",
     "startComparison": "Starta jämförelse",
+    "showComparison": "Visa jämförelse",
     "back": "Tillbaka",
     "clearSignature": "Tydlig signatur",
     "newDocument": "Nytt dokument"
@@ -1093,7 +1094,6 @@
     "numberList": "Numrerad lista",
     "insertLink": "Infoga länk",
     "insertImage": "Infoga bild",
-    "notAvailableInDemoMode": "Ej tillgängligt i demoläge",
     "notSupportedOnMobile": "Office-redigering stöds inte på mobila enheter."
   },
   "insertPageModal": {

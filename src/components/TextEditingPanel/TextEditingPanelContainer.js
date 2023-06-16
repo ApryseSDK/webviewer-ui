@@ -8,9 +8,7 @@ import Icon from 'components/Icon';
 import TextEditingPanel from './TextEditingPanel';
 import DataElements from 'constants/dataElement';
 import useDidUpdate from 'hooks/useDidUpdate';
-
-// //TODO: Implement when opacity is available from worker
-// import { circleRadius } from 'constants/slider';
+import { isMobileSize } from 'helpers/getDeviceSize';
 
 const fonts = [];
 
@@ -25,7 +23,7 @@ const TextEditingPanelContainer = () => {
     shallowEqual,
   );
 
-  const isMobile = () => window.innerWidth < 640;
+  const isMobile = isMobileSize();
 
   // selection modes used are 'FreeText' and 'ContentBox'
   const [selectionMode, setSelectionMode] = useState(null);
@@ -40,7 +38,6 @@ const TextEditingPanelContainer = () => {
     }));
   }, [selectionMode]);
 
-  const editorRef = useRef(null);
   const annotationRef = useRef(null);
   const contentEditorRef = useRef(null);
 
@@ -51,17 +48,6 @@ const TextEditingPanelContainer = () => {
 
   // properties for custom buttons and color picker
   const [format, setFormat] = useState({});
-
-  useEffect(() => {
-    const handleSelectionChange = (range) => {
-      if (range && editorRef.current && core.getContentEditManager().isInContentEditMode()) {
-        setFormat(getFormat(range));
-      }
-    };
-
-    core.addEventListener('editorSelectionChanged', handleSelectionChange);
-    return () => core.removeEventListener('editorSelectionChanged', handleSelectionChange);
-  }, []);
 
   useEffect(() => {
     const handleSelectionChange = async () => {
@@ -80,46 +66,6 @@ const TextEditingPanelContainer = () => {
   }, []);
 
   useEffect(() => {
-    const handleTextChange = () => {
-      if (core.getContentEditManager().isInContentEditMode()) {
-        setFormat(getFormat(editorRef.current?.getSelection()));
-      }
-    };
-
-    core.addEventListener('editorTextChanged', handleTextChange);
-    return () => core.removeEventListener('editorTextChanged', handleTextChange);
-  }, []);
-
-  useEffect(() => {
-    // For V2
-    const handleEditorFocus = (editor, annotation) => {
-      if (
-        annotation instanceof window.Core.Annotations.FreeTextAnnotation &&
-        core.getContentEditManager().isInContentEditMode()
-      ) {
-        editorRef.current = editor;
-        annotationRef.current = annotation;
-        setSelectionMode('FreeText');
-
-        const richTextStyles = annotationRef.current.getRichTextStyle();
-
-        const selectedTextEditProperties = textEditProperties;
-        selectedTextEditProperties.bold = richTextStyles?.[0]['font-weight'] === 'bold' ?? false;
-        selectedTextEditProperties.italic = richTextStyles?.[0]['font-style'] === 'italic' ?? false;
-        selectedTextEditProperties.underline =
-          richTextStyles?.[0]['text-decoration']?.includes('underline') ||
-          richTextStyles?.[0]['text-decoration']?.includes('word');
-
-        setTextEditProperties(selectedTextEditProperties);
-        dispatch(actions.setContentEditor(editorRef.current));
-        dispatch(actions.closeElement('annotationPopup'));
-      }
-    };
-    core.addEventListener('editorFocus', handleEditorFocus);
-    return () => core.removeEventListener('editorFocus', handleEditorFocus);
-  }, []);
-
-  useEffect(() => {
     const handleEditorStarted = ({ editor }) => {
       contentEditorRef.current = editor;
       dispatch(actions.setContentBoxEditor(contentEditorRef.current));
@@ -127,20 +73,6 @@ const TextEditingPanelContainer = () => {
     core.addEventListener('contentBoxEditStarted', handleEditorStarted);
     return () => core.removeEventListener('contentBoxEditStarted', handleEditorStarted);
   }, []);
-
-  useEffect(() => {
-    const handleEditorBlur = () => {
-      if (core.getContentEditManager().isInContentEditMode()) {
-        editorRef.current = null;
-        annotationRef.current = null;
-        dispatch(actions.setContentEditor(null));
-      }
-    };
-
-    core.addEventListener('editorBlur', handleEditorBlur);
-    return () => core.removeEventListener('editorBlur', handleEditorBlur);
-  }, []);
-
 
   useEffect(() => {
     const handleEditorEnd = () => {
@@ -154,56 +86,12 @@ const TextEditingPanelContainer = () => {
     return () => core.removeEventListener('contentBoxEditEnded', handleEditorEnd);
   }, []);
 
-  const getFormat = (range) => {
-    if (!range) {
-      return {};
-    }
-
-    const format = editorRef.current.getFormat(range.index, range.length);
-
-    if (typeof format.color === 'string') {
-      format.color = new window.Core.Annotations.Color(format.color);
-    } else if (Array.isArray(format.color)) {
-      // the selection contains multiple colors, so we set the current color to null
-      format.color = null;
-    } else if (!format.color) {
-      format.color = annotationRef.current['TextColor'];
-    }
-
-    return format;
-  };
-
-  // //TODO: implement when opacity is available from worker
-  // const sliderProperties = {
-  //   property: 'Opacity',
-  //   displayProperty: 'opacity',
-  //   value: annotation.Opacity,
-  //   getDisplayValue: Opacity => `${Math.round(Opacity * 100)}%`,
-  //   dataElement: DataElements.OPACITY_SLIDER,
-  //   getCirclePosition: (lineLength, Opacity) => Opacity * lineLength + circleRadius,
-  //   convertRelativeCirclePositionToValue: circlePosition => circlePosition,
-  //   withInputField: true,
-  //   inputFieldType: 'number',
-  //   min: 0,
-  //   max: 100,
-  //   step: 1,
-  //   getLocalValue: opacity => parseInt(opacity) / 100,
-  // };
-
-  // const isMobile() = useMedia(
-  //   // Media queries
-  //   ['(max-width: 640px)'],
-  //   [true],
-  //   // Default value
-  //   false,
-  // );
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     const handleContentEditModeStart = () => {
       // start with panel closed in mobile so it doesn't cover the whole screen
-      if (!isInDesktopOnlyMode && isMobile()) {
+      if (!isInDesktopOnlyMode && isMobile) {
         return;
       }
       dispatch(actions.closeElements(['searchPanel', 'notesPanel', 'redactionPanel', 'wv3dPropertiesPanel']));
@@ -233,7 +121,7 @@ const TextEditingPanelContainer = () => {
         annotation.getIntent() === window.Core.Annotations.FreeTextAnnotation.Intent.FreeText &&
         (annotation.getContentEditAnnotationId() || annotation.ToolName === window.Core.Tools.ToolNames.ADD_PARAGRAPH);
       if (action === 'selected') {
-        if (!isInDesktopOnlyMode && isMobile()) {
+        if (!isInDesktopOnlyMode && isMobile) {
           return;
         }
         if (isFreeText) {
@@ -247,7 +135,6 @@ const TextEditingPanelContainer = () => {
           setFormat(getDefaultFormat(annotation));
           setTextEditProperties(getTextEditPropertiesFromContentEditPlaceHolder(annotation));
           setSelectionMode('ContentBox');
-          editorRef.current = null;
           annotationRef.current = null;
           if (!isDisabled && !isOpen) {
             dispatch(actions.toggleElement('textEditingPanel'));
@@ -256,7 +143,7 @@ const TextEditingPanelContainer = () => {
       } else if (action === 'deselected') {
         if (selectedContentBox !== undefined) {
           setSelectedContentBox(null);
-          if (!editorRef.current && !annotationRef.current) {
+          if (!annotationRef.current) {
             setSelectionMode(null);
           }
         }
@@ -272,7 +159,7 @@ const TextEditingPanelContainer = () => {
   useEffect(() => {
     const onResize = () => {
       if (core.getContentEditManager().isInContentEditMode()) {
-        if (isMobile()) {
+        if (isMobile) {
           dispatch(actions.closeElement('textEditingPanel'));
         } else {
           dispatch(actions.openElement('textEditingPanel'));
@@ -295,7 +182,7 @@ const TextEditingPanelContainer = () => {
       });
     }
 
-    if (selectedContentBox && !editorRef.current) {
+    if (selectedContentBox) {
       switch (property) {
         case 'Font':
           window.Core.ContentEdit.setContentFont(selectedContentBox, value);
@@ -333,7 +220,7 @@ const TextEditingPanelContainer = () => {
   };
 
   const handleTextFormatChange = (updatedDecorator) => () => {
-    if (selectedContentBox && !editorRef.current) {
+    if (selectedContentBox) {
       switch (updatedDecorator) {
         case 'bold':
           window.Core.ContentEdit.toggleBoldContents(selectedContentBox);
@@ -350,20 +237,10 @@ const TextEditingPanelContainer = () => {
         ...format,
         [updatedDecorator]: !format[updatedDecorator]
       }));
-      return;
-    }
-
-    if (editorRef.current) {
-      const { index, length } = editorRef.current.getSelection();
-      const currentFormat = editorRef.current.getFormat(index, length);
-      applyFormat(format, !currentFormat[format]);
     }
   };
 
   const handleAddLinkToText = async () => {
-    if (editorRef.current) {
-      dispatch(actions.openElement(DataElements.CONTENT_EDIT_LINK_MODAL));
-    }
     if (contentEditorRef.current) {
       await contentEditorRef.current.loadHyperLinkURL();
       dispatch(actions.openElement(DataElements.CONTENT_EDIT_LINK_MODAL));
@@ -372,15 +249,13 @@ const TextEditingPanelContainer = () => {
 
   const handleColorChange = (_, color) => {
     const textColor = color.toHexString();
-    if (selectedContentBox && !editorRef.current) {
+    if (selectedContentBox) {
       window.Core.ContentEdit.setTextColor(selectedContentBox, textColor);
     }
     applyFormat('color', color);
   };
 
   const applyFormat = (formatKey, value) => {
-    editorRef.current?.format(formatKey, value);
-
     if (formatKey === 'color') {
       value = new window.Core.Annotations.Color(value);
     }
@@ -391,13 +266,6 @@ const TextEditingPanelContainer = () => {
       [formatKey]: value,
     });
   };
-  // //TODO: implement when opacity is available from worker
-  // const handleSliderChange = (property, value) => {
-  //   const annotationManager = core.getAnnotationManager();
-
-  //   annotation[property] = value;
-  //   annotationManager.redrawAnnotation(annotation);
-  // };
 
   const getTextEditPropertiesFromContentEditPlaceHolder = (annotation) => {
     const fontMap = {};
@@ -429,6 +297,21 @@ const TextEditingPanelContainer = () => {
     }
   };
 
+  const handleUndo = async () => {
+    await core.getDocumentViewer().getContentEditHistoryManager().undo();
+  };
+
+  const handleRedo = async () => {
+    await core.getDocumentViewer().getContentEditHistoryManager().redo();
+  };
+
+  const undoRedoProperties = {
+    canUndo: core.getDocumentViewer().getContentEditHistoryManager().canUndo(),
+    canRedo: core.getDocumentViewer().getContentEditHistoryManager().canRedo(),
+    handleUndo: handleUndo,
+    handleRedo: handleRedo
+  };
+
   const closeTextEditingPanel = () => {
     dispatch(actions.closeElement('textEditingPanel'));
   };
@@ -444,7 +327,7 @@ const TextEditingPanelContainer = () => {
   };
 
   const style =
-    !isInDesktopOnlyMode && isMobile()
+    !isInDesktopOnlyMode && isMobile
       ? {}
       : { width: `${textEditingPanelWidth}px`, minWidth: `${textEditingPanelWidth}px` };
 
@@ -453,10 +336,11 @@ const TextEditingPanelContainer = () => {
   }
   return (
     <DataElementWrapper dataElement="textEditingPanel" className="Panel TextEditingPanel" style={style}>
-      {!isInDesktopOnlyMode && isMobile() && renderMobileCloseButton()}
+      {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
       <TextEditingPanel
         // sliderProperties={sliderProperties}
         // handleSliderChange={handleSliderChange}
+        undoRedoProperties={undoRedoProperties}
         freeTextMode={selectionMode === 'FreeText'}
         contentSelectMode={selectionMode === 'ContentBox'}
         textEditProperties={textEditProperties}
@@ -468,7 +352,7 @@ const TextEditingPanelContainer = () => {
         fonts={fonts}
         handleAddLinkToText={handleAddLinkToText}
         disableLinkButton={
-          (!editorRef.current || annotationRef.current?.ToolName === window.Core.Tools.ToolNames.ADD_PARAGRAPH) && !contentEditorRef.current
+          (annotationRef.current?.ToolName === window.Core.Tools.ToolNames.ADD_PARAGRAPH) && !contentEditorRef.current
         }
       />
     </DataElementWrapper>

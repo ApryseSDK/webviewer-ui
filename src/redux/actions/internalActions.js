@@ -91,11 +91,14 @@ export const enableElements = (dataElements, priority) => (
     payload: { dataElements: filteredDataElements, priority },
   });
 };
+export const setIsElementHidden = (dataElement, isHidden) => ({
+  type: 'SET_IS_ELEMENT_HIDDEN',
+  payload: { dataElement, isHidden }
+});
 export const setThumbnailMerging = (useThumbnailMerging = true) => ({
   type: 'SET_THUMBNAIL_MERGING',
   payload: { useThumbnailMerging },
 });
-
 export const setThumbnailReordering = (useThumbnailReordering = true) => ({
   type: 'SET_THUMBNAIL_REORDERING',
   payload: { useThumbnailReordering },
@@ -115,6 +118,10 @@ export const updateCalibrationInfo = ({ isCalibration = true, tempScale = '', pr
 export const setIsAddingNewScale = (isAddingNewScale = false) => ({
   type: 'SET_IS_ADDING_NEW_SCALE',
   payload: { isAddingNewScale }
+});
+export const setIsRevocationCheckingEnabled = (isRevocationCheckingEnabled = false) => ({
+  type: 'SET_IS_REVOCATION_CHECKING_ENABLED',
+  payload: { isRevocationCheckingEnabled }
 });
 export const updateDeleteScale = (deleteScale = '') => ({
   type: 'UPDATE_DELETE_SCALE',
@@ -640,9 +647,9 @@ export const setAnnotationFilters = (annotationFilters) => ({
   payload: { annotationFilters }
 });
 
-export const setContentEditor = (contentEditor) => ({
-  type: 'SET_CONTENT_EDITOR',
-  payload: { contentEditor }
+export const setContentBoxEditor = (contentBoxEditor) => ({
+  type: 'SET_CONTENTBOX_EDITOR',
+  payload: { contentBoxEditor }
 });
 
 export const setInitialsMode = (isEnabled) => ({

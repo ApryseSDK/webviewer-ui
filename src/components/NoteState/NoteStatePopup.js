@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import './NoteState.scss';
 
 const propTypes = {
-  style: PropTypes.object.isRequired,
+  style: PropTypes.object,
   triggerElementName: PropTypes.string.isRequired,
   onClose: PropTypes.func,
   handleStateChange: PropTypes.func,

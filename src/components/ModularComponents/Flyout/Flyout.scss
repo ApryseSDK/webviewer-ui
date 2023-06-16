@@ -9,7 +9,7 @@
   background: transparent;
 
   .FlyoutContainer {
-    max-height: 100vw;
+    max-height: 100%;
     overflow-y: auto;
     height: fit-content;
     z-index: 200;
@@ -58,7 +58,7 @@
         font-size: var(--font-size-default);
       }
 
-      .icon-open-submneu {
+      .icon-open-submenu {
         justify-self: flex-end;
       }
 
@@ -68,6 +68,18 @@
 
       &:active {
         background-color: var(--blue-3);
+      }
+
+      .ZoomItem {
+        padding: 0;
+
+        &:hover {
+          background: transparent;
+        }
+
+        .Icon {
+          margin-left: 0;
+        }
       }
     }
   }

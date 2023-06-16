@@ -6,7 +6,7 @@ export function addSearchListener(searchListener) {
 }
 
 export function removeSearchListener(searchListener) {
-  searchListeners = searchListeners.filter(listener => {
+  searchListeners = searchListeners.filter((listener) => {
     return listener !== searchListener;
   });
 }

@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "নির্বাচিত টীকাগুলির উত্তর দিন ({{count}})",
     "comparePages": "পৃষ্ঠাগুলির তুলনা করুন",
     "startComparison": "তুলনা শুরু করুন",
+    "showComparison": "তুলনা দেখান",
     "back": "পেছনে",
     "clearSignature": "সাফ স্বাক্ষর",
     "newDocument": "নতুন নথি"
@@ -1093,7 +1094,6 @@
     "numberList": "সংখ্যাযুক্ত তালিকা",
     "insertLink": "লিঙ্ক ঢোকান",
     "insertImage": "ছবি ঢোকান",
-    "notAvailableInDemoMode": "ডেমো মোডে উপলব্ধ নয়",
     "notSupportedOnMobile": "অফিস সম্পাদনা মোবাইল ডিভাইসে সমর্থিত নয়।"
   },
   "insertPageModal": {

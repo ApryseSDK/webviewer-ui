@@ -20,10 +20,17 @@ const RedactionItem = (props) => {
     onRedactionItemSelection,
     textPreview,
     isSelected,
+    timezone,
   } = props;
   const { t } = useTranslation();
 
-  const date = getLatestActivityDate(annotation);
+  let date = getLatestActivityDate(annotation);
+
+  if (timezone) {
+    const datetimeStr = date.toLocaleString('en-US', { timeZone: timezone });
+    date = new Date(datetimeStr);
+  }
+
   const formattedDate = date ? dayjs(date).locale(language).format(dateFormat) : t('option.notesPanel.noteContent.noDate');
   const dateAndAuthor = `${author} - ${formattedDate}`;
   const className = classNames('redaction-item', { 'redaction-item-selected': isSelected });
