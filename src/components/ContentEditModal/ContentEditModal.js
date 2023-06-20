@@ -12,7 +12,7 @@ import Choice from 'components/Choice';
 import ReactQuill from 'react-quill';
 import DataElements from 'constants/dataElement';
 
-import '../../constants/quill.scss';
+import '../../constants/quillNewContentBox.scss';
 import './ContentEditModal.scss';
 
 function ContentEditModal() {

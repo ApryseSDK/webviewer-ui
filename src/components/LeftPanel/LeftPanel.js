@@ -126,7 +126,10 @@ const LeftPanel = () => {
   const legacyAllHeadersHidden = !isHeaderOpen && !legacyToolsHeaderOpen;
 
   const { modularHeader } = featureFlags;
-  const wrapperStyle = {};
+  const wrapperStyle = {
+    // prevent panel from appearing until scss is loaded
+    display: 'none',
+  };
   // Calculating its height according to the existing horizontal modular headers
   if (modularHeader) {
     const horizontalHeadersHeight = topHeadersHeight + bottomHeadersHeight;

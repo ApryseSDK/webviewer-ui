@@ -43,6 +43,7 @@ html, body , #app {
   overflow: hidden;
   font-family: 'Lato', sans-serif;
   color: var(--text-color);
+  visibility: visible !important;
 }
 
 input, button, label, textarea, form, select, #app {

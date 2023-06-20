@@ -122,7 +122,7 @@ if (window.CanvasRenderingContext2D) {
   }
 
   try {
-    const isUsingSharedWorker = state.advanced.useSharedWorker === 'true';
+    const isUsingSharedWorker = state.advanced.useSharedWorker === 'true' || state.advanced.useSharedWorker === true;
     if (isUsingSharedWorker) {
       let workerTransportPromise;
       if (window.parent.WebViewer && !window.isApryseWebViewerWebComponent) {

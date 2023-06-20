@@ -3,7 +3,7 @@
 
 .LeftPanel {
   z-index: 65;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   background-color: var(--panel-background);
   display: flex;
