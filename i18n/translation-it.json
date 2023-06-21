@@ -524,6 +524,12 @@
         "ifToContinue": "Sei sicuro di voler continuare?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Elimina contenuto",
+        "message": "Sei sicuro di voler eliminare il contenuto selezionato? Questo non può essere annullato."
+      }
+    },
     "stylePopup": {
       "textStyle": "Stile di testo",
       "colors": "Colori",

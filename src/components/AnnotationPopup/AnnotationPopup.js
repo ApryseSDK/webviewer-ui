@@ -52,6 +52,7 @@ const propTypes = {
 
   showContentEditButton: PropTypes.bool,
   onEditContent: PropTypes.func,
+  openContentEditDeleteWarningModal: PropTypes.func,
 
   isAppearanceSignature: PropTypes.bool,
   onClearAppearanceSignature: PropTypes.func,
@@ -118,6 +119,7 @@ const AnnotationPopup = ({
 
   showContentEditButton,
   onEditContent,
+  openContentEditDeleteWarningModal,
 
   isAppearanceSignature,
   onClearAppearanceSignature,
@@ -169,6 +171,7 @@ const AnnotationPopup = ({
   const showLineStyleOptions = getDataWithKey(mapToolNameToKey(focusedAnnotation.ToolName)).hasLineEndings;
   const isInstanceActive = !window.isApryseWebViewerWebComponent || document.activeElement?.shadowRoot === getRootNode();
   let StrokeStyle = 'solid';
+  const isContentEdit = focusedAnnotation.isContentEditPlaceholder?.();
 
   try {
     StrokeStyle = (focusedAnnotation['Style'] === 'dash')
@@ -358,7 +361,7 @@ const AnnotationPopup = ({
                     label={isRightClickMenu ? 'action.delete' : ''}
                     title={!isRightClickMenu ? 'action.delete' : ''}
                     img="icon-delete-line"
-                    onClick={onDeleteAnnotation}
+                    onClick={isContentEdit ? openContentEditDeleteWarningModal : onDeleteAnnotation}
                   />
                 )}
                 {showCalibrateButton && (

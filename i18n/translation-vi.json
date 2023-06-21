@@ -524,6 +524,12 @@
         "ifToContinue": "Bạn có chắc chắn muốn tiếp tục không?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Xóa nội dung",
+        "message": "Bạn có chắc chắn muốn xóa nội dung đã chọn không? Không thể hoàn tác thao tác này."
+      }
+    },
     "stylePopup": {
       "textStyle": "Kiểu Văn Bản",
       "colors": "Màu",

@@ -524,6 +524,12 @@
         "ifToContinue": "Biztos, hogy folytatni szeretnéd?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Tartalom törlése",
+        "message": "Biztosan törli a kiválasztott tartalmat? Ezt nem lehet visszavonni."
+      }
+    },
     "stylePopup": {
       "textStyle": "Szöveg stílusa",
       "colors": "Színek",

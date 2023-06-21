@@ -524,6 +524,12 @@
         "ifToContinue": "Tem certeza de que deseja continuar?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Excluir conteúdo",
+        "message": "Tem certeza de que deseja excluir o conteúdo selecionado? Isso não pode ser desfeito."
+      }
+    },
     "stylePopup": {
       "textStyle": "Estilo de Texto",
       "colors": "Cores",

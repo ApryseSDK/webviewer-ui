@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Swipeable } from 'react-swipeable';
 import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
@@ -251,163 +250,160 @@ const PrintModal = () => {
   };
 
   return isDisabled ? null : (
-    <Swipeable
-      onSwipedUp={closePrintModal}
-      onSwipedDown={closePrintModal}
-      preventDefaultTouchmoveEvent
-    >
-      <>
-        <WatermarkModal
-          isVisible={!!(isOpen && isWatermarkModalVisible)}
-          // pageIndex starts at index 0 and getCurrPage number starts at index 1
-          pageIndexToView={currentPage - 1}
-          modalClosed={setWatermarkModalVisibility}
-          formSubmitted={(value) => dispatch(actions.setWatermarkModalOptions(value))}
-        />
-        <div
-          className={className}
-          data-element={DataElements.PRINT_MODAL}
+    <>
+      <WatermarkModal
+        isVisible={!!(isOpen && isWatermarkModalVisible)}
+        // pageIndex starts at index 0 and getCurrPage number starts at index 1
+        pageIndexToView={currentPage - 1}
+        modalClosed={setWatermarkModalVisibility}
+        formSubmitted={(value) => dispatch(actions.setWatermarkModalOptions(value))}
+      />
+      <div
+        className={className}
+        data-element={DataElements.PRINT_MODAL}
+      >
+        <ModalWrapper
+          isOpen={isOpen && !isWatermarkModalVisible} title={'option.print.printSettings'}
+          containerOnClick={(e) => e.stopPropagation()} onCloseClick={closePrintModal}
+          closeButtonDataElement={'printModalCloseButton'}
+          swipeToClose
+          closeHandler={closePrintModal}
         >
-          <ModalWrapper isOpen={isOpen && !isWatermarkModalVisible} title={'option.print.printSettings'}
-            containerOnClick={(e) => e.stopPropagation()} onCloseClick={closePrintModal}
-            closeButtonDataElement={'printModalCloseButton'}
-          >
-            <div className="swipe-indicator" />
-            <div className="settings">
-              <div className="section">
-                <div className="section-label">{`${t('option.print.pages')}:`}</div>
-                <form
-                  className="settings-form"
-                  onChange={onChange}
-                  onSubmit={createPagesAndPrint}
-                >
-                  <Choice
-                    dataElement="allPagesPrintOption"
-                    ref={allPages}
-                    id="all-pages"
-                    name="pages"
-                    radio
-                    label={t('option.print.all')}
-                    defaultChecked
-                    disabled={isPrinting}
-                    center
-                  />
-                  <Choice
-                    dataElement="currentPagePrintOption"
-                    ref={currentPageRef}
-                    id="current-page"
-                    name="pages"
-                    radio
-                    label={t('option.print.current')}
-                    disabled={isPrinting}
-                    center
-                  />
-                  <Choice
-                    dataElement="currentViewPrintOption"
-                    ref={currentView}
-                    id="current-view"
-                    name="pages"
-                    radio
-                    label={t('option.print.view')}
-                    disabled={isPrinting}
-                    center
-                  />
-                  <Choice
-                    dataElement="customPagesPrintOption"
-                    ref={customPages}
-                    id="custom-pages"
-                    name="pages"
-                    className="specify-pages-choice"
-                    radio
-                    label={customPagesLabelElement}
-                    disabled={isPrinting}
-                    center
-                  />
-                  <Choice
-                    dataElement="commentsPrintOption"
-                    ref={includeCommentsRef}
-                    id="include-comments"
-                    name="comments"
-                    label={t('option.print.includeComments')}
-                    onChange={() => setIncludeComments((prevState) => !prevState)}
-                    disabled={isPrinting}
-                    checked={includeComments}
-                    center
-                  />
-                  <Choice
-                    dataElement="annotationsPrintOption"
-                    id="include-annotations"
-                    name="annotations"
-                    label={t('option.print.includeAnnotations')}
-                    disabled={isPrinting}
-                    onChange={() => setIncludeAnnotations((prevState) => !prevState)}
-                    checked={includeAnnotations}
-                    center
-                  />
-                  <Choice
-                    dataElement="grayscalePrintOption"
-                    id="print-grayscale"
-                    name="grayscale"
-                    label={t('option.print.printGrayscale')}
-                    disabled={isPrinting}
-                    onChange={() => setIsGrayscale((prevState) => !prevState)}
-                    checked={isGrayscale}
-                    center
-                  />
-                </form>
-              </div>
-              <div className="section">
-                <div className="section-label">{`${t('option.print.pageQuality')}:`}</div>
-                <label className="printQualitySelectLabel">
-                  <select
-                    className="printQualitySelect"
-                    onChange={(e) => dispatch(actions.setPrintQuality(Number(e.target.value)))}
-                    value={printQuality}
-                  >
-                    <option value="2">{`${t('option.print.qualityHigh')}`}</option>
-                    <option value="1">{`${t('option.print.qualityNormal')}`}</option>
-                  </select>
-                </label>
-                <div className="total">
-                  {isPrinting ? (
-                    <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
-                  ) : (
-                    <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
-                  )}
-                </div>
-              </div>
-              {!isApplyWatermarkDisabled && (
-                <div className="section watermark-section">
-                  <div className="section-label">{t('option.watermark.title')}</div>
-                  <button
-                    data-element="applyWatermark"
-                    className="apply-watermark"
-                    disabled={isPrinting}
-                    onClick={() => {
-                      if (!isPrinting) {
-                        setWatermarkModalVisibility(true);
-                      }
-                    }}
-                  >
-                    {t('option.watermark.addNew')}
-                  </button>
-                </div>
-              )}
-            </div>
-            <div className="divider"></div>
-            <div className="buttons">
-              <button
-                className="button"
-                onClick={createPagesAndPrint}
-                disabled={isPrinting || pagesToPrint.length < 1}
+          <div className="swipe-indicator" />
+          <div className="settings">
+            <div className="section">
+              <div className="section-label">{`${t('option.print.pages')}:`}</div>
+              <form
+                className="settings-form"
+                onChange={onChange}
+                onSubmit={createPagesAndPrint}
               >
-                {t('action.print')}
-              </button>
+                <Choice
+                  dataElement="allPagesPrintOption"
+                  ref={allPages}
+                  id="all-pages"
+                  name="pages"
+                  radio
+                  label={t('option.print.all')}
+                  defaultChecked
+                  disabled={isPrinting}
+                  center
+                />
+                <Choice
+                  dataElement="currentPagePrintOption"
+                  ref={currentPageRef}
+                  id="current-page"
+                  name="pages"
+                  radio
+                  label={t('option.print.current')}
+                  disabled={isPrinting}
+                  center
+                />
+                <Choice
+                  dataElement="currentViewPrintOption"
+                  ref={currentView}
+                  id="current-view"
+                  name="pages"
+                  radio
+                  label={t('option.print.view')}
+                  disabled={isPrinting}
+                  center
+                />
+                <Choice
+                  dataElement="customPagesPrintOption"
+                  ref={customPages}
+                  id="custom-pages"
+                  name="pages"
+                  className="specify-pages-choice"
+                  radio
+                  label={customPagesLabelElement}
+                  disabled={isPrinting}
+                  center
+                />
+                <Choice
+                  dataElement="commentsPrintOption"
+                  ref={includeCommentsRef}
+                  id="include-comments"
+                  name="comments"
+                  label={t('option.print.includeComments')}
+                  onChange={() => setIncludeComments((prevState) => !prevState)}
+                  disabled={isPrinting}
+                  checked={includeComments}
+                  center
+                />
+                <Choice
+                  dataElement="annotationsPrintOption"
+                  id="include-annotations"
+                  name="annotations"
+                  label={t('option.print.includeAnnotations')}
+                  disabled={isPrinting}
+                  onChange={() => setIncludeAnnotations((prevState) => !prevState)}
+                  checked={includeAnnotations}
+                  center
+                />
+                <Choice
+                  dataElement="grayscalePrintOption"
+                  id="print-grayscale"
+                  name="grayscale"
+                  label={t('option.print.printGrayscale')}
+                  disabled={isPrinting}
+                  onChange={() => setIsGrayscale((prevState) => !prevState)}
+                  checked={isGrayscale}
+                  center
+                />
+              </form>
             </div>
-          </ModalWrapper>
-        </div>
-      </>
-    </Swipeable>
+            <div className="section">
+              <div className="section-label">{`${t('option.print.pageQuality')}:`}</div>
+              <label className="printQualitySelectLabel">
+                <select
+                  className="printQualitySelect"
+                  onChange={(e) => dispatch(actions.setPrintQuality(Number(e.target.value)))}
+                  value={printQuality}
+                >
+                  <option value="2">{`${t('option.print.qualityHigh')}`}</option>
+                  <option value="1">{`${t('option.print.qualityNormal')}`}</option>
+                </select>
+              </label>
+              <div className="total">
+                {isPrinting ? (
+                  <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
+                ) : (
+                  <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
+                )}
+              </div>
+            </div>
+            {!isApplyWatermarkDisabled && (
+              <div className="section watermark-section">
+                <div className="section-label">{t('option.watermark.title')}</div>
+                <button
+                  data-element="applyWatermark"
+                  className="apply-watermark"
+                  disabled={isPrinting}
+                  onClick={() => {
+                    if (!isPrinting) {
+                      setWatermarkModalVisibility(true);
+                    }
+                  }}
+                >
+                  {t('option.watermark.addNew')}
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="divider"></div>
+          <div className="buttons">
+            <button
+              className="button"
+              onClick={createPagesAndPrint}
+              disabled={isPrinting || pagesToPrint.length < 1}
+            >
+              {t('action.print')}
+            </button>
+          </div>
+        </ModalWrapper>
+      </div>
+    </>
   );
 };
 

@@ -53,17 +53,62 @@ const TextEditingPanelContainer = () => {
     const handleSelectionChange = async () => {
       if (contentEditorRef.current && core.getContentEditManager().isInContentEditMode()) {
         const attribute = await contentEditorRef.current.getTextAttributes();
+
         setFormat((format) => {
           return {
             ...format,
             ...attribute
           };
         });
+
+        const fontObject = {
+          FontSize: attribute.fontSize,
+          Font: getFontName(attribute.fontName),
+        };
+
+        if (!fonts.includes(fontObject.Font)) {
+          fonts.push(fontObject.Font);
+        }
+
+        setTextEditProperties(fontObject);
+
+        window.Core.ContentEdit.setTextAttributes(attribute);
       }
     };
     core.addEventListener('contentEditSelectionChange', handleSelectionChange);
     return () => core.removeEventListener('contentEditSelectionChange', handleSelectionChange);
   }, []);
+
+  /**
+   * @ignore
+   * Small routine that strips out the bold and italic from the font name, separates the Font into separate words for the UI
+   * @param {string} fontString
+   * @returns {string} the separated font name
+   */
+  function getFontName(fontString) {
+    const cleanedFontString = fontString.replace(/(Bold|Italic)/gi, '').trim();
+    const words = [];
+    let currentWord = '';
+
+    for (const char of cleanedFontString) {
+      if (char.toUpperCase() === char) {
+        if (currentWord) {
+          words.push(currentWord.trim());
+        }
+        currentWord = char;
+      } else {
+        currentWord += char;
+      }
+    }
+
+    if (currentWord) {
+      words.push(currentWord.trim());
+    }
+
+    const separatedFontName = words.join(' ');
+
+    return separatedFontName;
+  }
 
   useEffect(() => {
     const handleEditorStarted = ({ editor }) => {
@@ -195,6 +240,14 @@ const TextEditingPanelContainer = () => {
           break;
       }
     }
+
+    const conversionMap = {
+      Font: 'fontName',
+      FontSize: 'fontSize',
+      TextAlign: 'textAlign',
+    };
+
+    window.Core.ContentEdit.setTextAttributes({ [conversionMap[property]]: value });
   };
 
   const getDefaultFormat = (annotation) => {
@@ -338,8 +391,6 @@ const TextEditingPanelContainer = () => {
     <DataElementWrapper dataElement="textEditingPanel" className="Panel TextEditingPanel" style={style}>
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
       <TextEditingPanel
-        // sliderProperties={sliderProperties}
-        // handleSliderChange={handleSliderChange}
         undoRedoProperties={undoRedoProperties}
         freeTextMode={selectionMode === 'FreeText'}
         contentSelectMode={selectionMode === 'ContentBox'}

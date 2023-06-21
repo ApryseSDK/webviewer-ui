@@ -524,6 +524,12 @@
         "ifToContinue": "Weet je zeker dat je wilt doorgaan?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Inhoud verwijderen",
+        "message": "Weet u zeker dat u de geselecteerde inhoud wilt verwijderen? Dit kan niet ongedaan worden gemaakt."
+      }
+    },
     "stylePopup": {
       "textStyle": "Tekststijl",
       "colors": "Kleuren",

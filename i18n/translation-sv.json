@@ -524,6 +524,12 @@
         "ifToContinue": "Är du säker på att du vill fortsätta?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Ta bort innehåll",
+        "message": "Är du säker på att du vill ta bort det valda innehållet? Detta kan inte ångras."
+      }
+    },
     "stylePopup": {
       "textStyle": "Textstil",
       "colors": "Färger",

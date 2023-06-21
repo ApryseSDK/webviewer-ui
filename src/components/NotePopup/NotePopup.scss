@@ -7,8 +7,7 @@
   user-select: none;
   width: 28px;
   height: 28px;
-  right: -10px;
-  top: -8px;
+  position: relative; // needs position: relative so that .note-popup-options can be positioned absolute correctly
 
   .overflow {
     width: 28px;

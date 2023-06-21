@@ -524,6 +524,12 @@
         "ifToContinue": "Devam etmek istediğinizden emin misiniz?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "İçeriği Sil",
+        "message": "Seçilen içeriği silmek istediğinizden emin misiniz? Bu geri alınamaz."
+      }
+    },
     "stylePopup": {
       "textStyle": "Yazı stili",
       "colors": "Renkler",

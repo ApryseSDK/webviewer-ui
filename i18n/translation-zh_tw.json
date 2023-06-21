@@ -524,6 +524,12 @@
         "ifToContinue": "您確定要繼續嗎？"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "刪除內容",
+        "message": "您確定要刪除所選內容嗎？這無法撤消。"
+      }
+    },
     "stylePopup": {
       "textStyle": "文字樣式",
       "colors": "顏色",

@@ -524,6 +524,12 @@
         "ifToContinue": "Opravdu chcete pokračovat?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Smazat obsah",
+        "message": "Opravdu chcete smazat vybraný obsah? Toto nelze vrátit zpět."
+      }
+    },
     "stylePopup": {
       "textStyle": "Styl textu",
       "colors": "Barvy",

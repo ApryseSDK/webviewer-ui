@@ -524,6 +524,12 @@
         "ifToContinue": "Anda yakin ingin melanjutkan?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Hapus Konten",
+        "message": "Apakah Anda yakin ingin menghapus konten yang dipilih? Ini tidak dapat diurungkan."
+      }
+    },
     "stylePopup": {
       "textStyle": "Gaya Teks",
       "colors": "warna",

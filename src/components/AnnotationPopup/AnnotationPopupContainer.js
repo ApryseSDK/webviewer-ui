@@ -7,6 +7,7 @@ import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
 import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
 import { isMobile, isIE } from 'helpers/device';
+import { useTranslation } from 'react-i18next';
 import { getOpenedWarningModal, getOpenedColorPicker, getDatePicker } from 'helpers/getElements';
 import getGroupedLinkAnnotations from 'helpers/getGroupedLinkAnnotations';
 import getHashParameters from 'helpers/getHashParameters';
@@ -92,6 +93,7 @@ const AnnotationPopupContainer = ({
     ],
     shallowEqual,
   );
+  const [t] = useTranslation();
   const dispatch = useDispatch();
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const [isCalibrationPopupOpen, setCalibrationPopupOpen] = useState(false);
@@ -337,6 +339,20 @@ const AnnotationPopupContainer = ({
   /* DELETE ANNOTATION */
   const showDeleteButton = canModify;
 
+  const openContentEditDeleteWarningModal = () => {
+    const message = t('option.contentEdit.deletionModal.message');
+    const title = t('option.contentEdit.deletionModal.title');
+    const confirmBtnText = t('action.ok');
+
+    const warning = {
+      message,
+      title,
+      confirmBtnText,
+      onConfirm: () => onDeleteAnnotation(),
+    };
+    dispatch(actions.showWarningMessage(warning));
+  };
+
   const onDeleteAnnotation = () => {
     if (isFocusedAnnotationSelected) {
       core.deleteAnnotations(core.getSelectedAnnotations());
@@ -458,6 +474,7 @@ const AnnotationPopupContainer = ({
 
       showContentEditButton={showContentEditButton}
       onEditContent={onEditContent}
+      openContentEditDeleteWarningModal={openContentEditDeleteWarningModal}
 
       isAppearanceSignature={isAppearanceSignature}
       onClearAppearanceSignature={onClearAppearanceSignature}

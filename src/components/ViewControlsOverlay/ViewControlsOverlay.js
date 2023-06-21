@@ -11,9 +11,9 @@ import FlyoutMenu from '../FlyoutMenu/FlyoutMenu';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { enterReaderMode, exitReaderMode } from 'helpers/readerMode';
 import actions from 'actions';
-import { isIE11 } from 'helpers/device';
 import toggleFullscreen from 'helpers/toggleFullscreen';
 import DataElements from 'src/constants/dataElement';
+import { isIE11, isIOS, isIOSFullScreenSupported } from 'helpers/device';
 
 function ViewControlsOverlay() {
   const [t] = useTranslation();
@@ -88,6 +88,31 @@ function ViewControlsOverlay() {
   }
 
   const showReaderButton = core.isFullPDFEnabled() && core.getDocument()?.getType() === 'pdf';
+  // Full screen is supported in iPad OS for non-video elements, but not in iOS
+  const renderFullScreenToggle = () => {
+    if (isIOS && !isIOSFullScreenSupported) {
+      return null;
+    }
+    return (
+      <>
+        <DataElementWrapper
+          dataElement="viewControlsDivider3"
+          className="divider"
+        />
+        <DataElementWrapper
+          className="row"
+          onClick={toggleFullscreen}
+          dataElement="fullScreenButton"
+        >
+          <Button
+            img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
+            role="option"
+          />
+          <div className="title">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
+        </DataElementWrapper>
+      </>
+    );
+  };
 
   return (
     <FlyoutMenu
@@ -242,21 +267,7 @@ function ViewControlsOverlay() {
           )}
         </>
       )}
-      <DataElementWrapper
-        dataElement="viewControlsDivider3"
-        className="divider"
-      />
-      <DataElementWrapper
-        className="row"
-        onClick={toggleFullscreen}
-        dataElement="fullScreenButton"
-      >
-        <Button
-          img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
-          role="option"
-        />
-        <div className="title">{isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}</div>
-      </DataElementWrapper>
+      {renderFullScreenToggle()}
     </FlyoutMenu>
   );
 }

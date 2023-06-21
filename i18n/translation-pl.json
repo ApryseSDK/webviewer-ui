@@ -524,6 +524,12 @@
         "ifToContinue": "Czy na pewno chcesz kontynuować?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Usuń zawartość",
+        "message": "Czy na pewno chcesz usunąć wybraną zawartość? Tego nie można cofnąć."
+      }
+    },
     "stylePopup": {
       "textStyle": "Styl tekstu",
       "colors": "Kolory",

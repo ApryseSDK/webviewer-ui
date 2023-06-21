@@ -524,6 +524,12 @@
         "ifToContinue": "Voulez-vous vraiment continuer ?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Supprimer le contenu",
+        "message": "Voulez-vous vraiment supprimer le contenu sélectionné ? Cela ne peut pas être annulé."
+      }
+    },
     "stylePopup": {
       "textStyle": "Style de texte",
       "colors": "Couleurs",

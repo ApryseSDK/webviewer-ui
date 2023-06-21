@@ -524,6 +524,12 @@
         "ifToContinue": "Möchten Sie wirklich fortfahren?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Inhalt löschen",
+        "message": "Sind Sie sicher, dass Sie den ausgewählten Inhalt löschen möchten? Dies kann nicht rückgängig gemacht werden."
+      }
+    },
     "stylePopup": {
       "textStyle": "Textstil",
       "colors": "Farben",

@@ -524,6 +524,12 @@
         "ifToContinue": "Adakah anda pasti mahu meneruskan?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Padamkan Kandungan",
+        "message": "Adakah anda pasti mahu memadamkan kandungan yang dipilih? Ini tidak boleh dibuat asal."
+      }
+    },
     "stylePopup": {
       "textStyle": "Gaya Teks",
       "colors": "Warna",

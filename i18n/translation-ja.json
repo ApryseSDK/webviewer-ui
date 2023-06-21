@@ -524,6 +524,12 @@
         "ifToContinue": "続行してもよろしいですか？"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "コンテンツの削除",
+        "message": "選択したコンテンツを削除してもよろしいですか?これを元に戻すことはできません。"
+      }
+    },
     "stylePopup": {
       "textStyle": "テキストスタイル",
       "colors": "色",

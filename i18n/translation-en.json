@@ -524,6 +524,12 @@
         "ifToContinue": "Are you sure you'd like to continue?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Delete Content",
+        "message": "Are you sure you want to delete the selected content? This can't be undone."
+      }
+    },
     "stylePopup": {
       "textStyle": "Text Style",
       "colors": "Colors",
@@ -1153,10 +1159,10 @@
       "old": "Old",
       "new": "New",
       "page": "Page",
-			"textContent": "Text Content",
-			"delete": "delete",
-			"insert": "insert",
-			"edit": "edit"
+      "textContent": "Text Content",
+      "delete": "delete",
+      "insert": "insert",
+      "edit": "edit"
     }
   },
   "saveModal": {

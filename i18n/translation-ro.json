@@ -524,6 +524,12 @@
         "ifToContinue": "Sunteți sigur că doriți să continuați?"
       }
     },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Șterge conținut",
+        "message": "Sigur doriți să ștergeți conținutul selectat? Acest lucru nu poate fi anulat."
+      }
+    },
     "stylePopup": {
       "textStyle": "Stil text",
       "colors": "Culori",
