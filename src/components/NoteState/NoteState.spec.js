@@ -7,8 +7,11 @@ import { Basic, PopupOpen } from './NoteState.stories';
 
 const NoteState = withI18n(NoteStateWithOutI18n);
 
+const ANNOTATION_ID = '123';
+
 function getAnnotationWithStatus(status = 'Accepted', isReply = false) {
   return {
+    Id: ANNOTATION_ID,
     getStatus: () => status,
     isReply: () => isReply,
   };
@@ -61,7 +64,7 @@ describe('NoteState', () => {
     );
     const noteStateElement = container.querySelector('.NoteState');
     expect(noteStateElement).toBeInTheDocument();
-    expect(noteStateElement).toHaveAttribute('data-element', 'noteState');
+    expect(noteStateElement).toHaveAttribute('data-element', `noteState-${ANNOTATION_ID}`);
   });
 
   it('Should include all states in popup', () => {
@@ -210,7 +213,7 @@ describe('NoteState', () => {
       </ReduxWrapper>
     );
     expect(document.querySelector('.note-state-options')).not.toBeInTheDocument();
-    const noteState = document.querySelector('div[data-element="noteState"]');
+    const noteState = document.querySelector(`div[data-element="noteState-${ANNOTATION_ID}"]`);
     expect(noteState).toBeInTheDocument();
     fireEvent.click(noteState);
     expect(document.querySelector('.note-state-options')).toBeInTheDocument();

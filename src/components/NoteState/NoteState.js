@@ -39,11 +39,12 @@ function NoteState(props) {
   const annotationState = annotation.getStatus();
   const icon = `icon-annotation-status-${annotationState === '' ? 'none' : annotationState.toLowerCase()}`;
   const noteStateButtonClassName = classNames('overflow', { active: isOpen });
+  const dataElementWithID = `noteState-${annotation['Id']}`;
 
   return (
     <DataElementWrapper
       className="NoteState"
-      dataElement="noteState"
+      dataElement={dataElementWithID}
       onClick={togglePopup}
       ref={popupRef}
     >
@@ -54,7 +55,7 @@ function NoteState(props) {
       </Tooltip>
       {isOpen && (
         <NoteStatePopup
-          triggerElementName="noteState"
+          triggerElementName={dataElementWithID}
           handleStateChange={handleStateChange}
           onClose={() => {
             setIsOpen(false);
