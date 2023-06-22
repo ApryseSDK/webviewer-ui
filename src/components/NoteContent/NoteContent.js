@@ -492,7 +492,7 @@ const ContentArea = ({
             setReactQuillContent(annotation);
           }
         }
-      }, 0);
+      }, 100);
 
       const lastNewLineCharacterLength = 1;
       const textLength = editor.getLength() - lastNewLineCharacterLength;
@@ -501,7 +501,9 @@ const ContentArea = ({
         return;
       }
 
-      annotation.editor.setSelection(textLength, textLength);
+      setTimeout(() => {
+        annotation.editor.setSelection(textLength, textLength);
+      }, 100);
     }
   }, [isNotesPanelOpen, isInlineCommentOpen, shouldNotFocusOnInput]);
 

@@ -98,7 +98,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
         if (textareaRef && textareaRef.current && autoFocusNoteOnAnnotationSelection) {
           textareaRef.current.focus();
         }
-      }, 0);
+      }, 100);
     }
     if (textareaRef && textareaRef.current) {
       if (shouldNotFocusOnInput) {
@@ -108,7 +108,9 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       const editor = textareaRef.current.getEditor();
       const lastNewLineCharacterLength = 1;
       const textLength = editor.getLength() - lastNewLineCharacterLength;
-      textareaRef.current.editor.setSelection(textLength, textLength);
+      setTimeout(() => {
+        textareaRef.current.editor.setSelection(textLength, textLength);
+      }, 100);
     }
   }, []);
 
