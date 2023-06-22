@@ -492,7 +492,7 @@ const ContentArea = ({
             setReactQuillContent(annotation);
           }
         }
-      }, 0);
+      }, 100);
 
       const lastNewLineCharacterLength = 1;
       const textLength = editor.getLength() - lastNewLineCharacterLength;
@@ -501,7 +501,9 @@ const ContentArea = ({
         return;
       }
 
-      annotation.editor.setSelection(textLength, textLength);
+      setTimeout(() => {
+        annotation.editor.setSelection(textLength, textLength);
+      }, 100);
     }
   }, [isNotesPanelOpen, isInlineCommentOpen, shouldNotFocusOnInput]);
 
@@ -523,6 +525,14 @@ const ContentArea = ({
 
     if (isMentionEnabled) {
       const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
+
+      // If modified, double check for ids
+      const annotMentionData = mentionsManager.extractMentionDataFromAnnot(annotation);
+      annotMentionData.mentions.forEach((mention) => {
+        if (plainTextValue.includes(mention.value)) {
+          ids.push(mention.id);
+        }
+      });
 
       annotation.setCustomData('trn-mention', JSON.stringify({
         contents: textAreaValue,
