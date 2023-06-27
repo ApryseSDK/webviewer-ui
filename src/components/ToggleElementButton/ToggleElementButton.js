@@ -5,16 +5,9 @@ import Button from 'components/Button';
 
 import selectors from 'selectors';
 import actions from 'actions';
-import useMedia from 'hooks/useMedia';
+import { isMobileSize } from 'helpers/getDeviceSize';
 
-const ToggleElementButton = ({
-  onClick,
-  dataElement,
-  isElementDisabled,
-  isActive,
-  ariaLabel,
-  ...restProps
-}) => {
+const ToggleElementButton = ({ onClick, dataElement, isElementDisabled, isActive, ariaLabel, ...restProps }) => {
   if (isElementDisabled) {
     return null;
   }
@@ -36,24 +29,18 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: () => {
     dispatch(actions.toggleElement(ownProps.element));
+    if (ownProps.onClick) {
+      ownProps.onClick();
+    }
   },
 });
 
-const ConnectedToggleElementButton = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ToggleElementButton);
+const ConnectedToggleElementButton = connect(mapStateToProps, mapDispatchToProps)(ToggleElementButton);
 
-export default props => {
-  const isMobile = useMedia(
-    // Media queries
-    ['(max-width: 640px)'],
-    [true],
-    // Default value
-    false,
-  );
+const connectedComponent = (props) => {
+  const isMobile = isMobileSize();
 
-  return (
-    <ConnectedToggleElementButton {...props} isMobile={isMobile} />
-  );
+  return <ConnectedToggleElementButton {...props} isMobile={isMobile} />;
 };
+
+export default connectedComponent;
