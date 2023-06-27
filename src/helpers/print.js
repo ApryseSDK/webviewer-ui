@@ -11,11 +11,151 @@ import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import { isSafari, isChromeOniOS, isFirefoxOniOS } from 'helpers/device';
 import DataElements from 'src/constants/dataElement';
 import core from 'core';
+import getRootNode, { getInstanceNode } from './getRootNode';
 
 let pendingCanvases = [];
 let PRINT_QUALITY = 1;
 let colorMap;
 let grayscaleDarknessFactor = 1;
+const printResetStyle = `
+#print-handler {
+  display: none;
+}
+
+@media print {
+  * {
+    display: none! important;
+  }
+
+  @page {
+    margin: 0; /* Set all margins to 0 */
+  }
+
+  html {
+    height: 100%;
+    display: block! important;
+  }
+
+  body {
+    height: 100%;
+    display: block! important;
+    overflow: visible !important;
+    padding: 0;
+    margin: 0 !important;
+  }
+
+  #print-handler {
+    display: block !important;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  #print-handler img {
+    display: block !important;
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    page-break-after: always;
+    padding: 0;
+    margin: 0;
+  }
+
+  #print-handler .page__container {
+    box-sizing: border-box;
+    display: flex !important;
+    flex-direction: column;
+    padding: 10px;
+    min-height: 100%;
+    min-width: 100%;
+    font-size: 10px;
+  }
+
+  #print-handler .page__container .page__header {
+    display: block !important;
+    align-self: flex-start;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 0.1rem solid black;
+  }
+
+  #print-handler .page__container .note {
+    display: flex !important;
+    flex-direction: column;
+    padding: 0.6rem;
+    border: 0.1rem lightgray solid;
+    border-radius: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  #print-handler .page__container .note .note__info {
+    display: block !important;
+    font-size: 1.3rem;
+    margin-bottom: 0.1rem;
+  }
+
+  #print-handler .page__container .note .note__info--with-icon {
+    display: flex !important;
+  }
+
+  #print-handler .page__container .note .note__info--with-icon .note__icon {
+    display: block !important;
+    width: 1.65rem;
+    height: 1.65rem;
+    margin-top: -0.1rem;
+    margin-right: 0.2rem;
+  }
+
+  #print-handler .page__container .note .note__info--with-icon .note__icon path:not([fill=none]) {
+    display: block !important;
+    fill: currentColor;
+  }
+
+  #print-handler .page__container .note .note__root .note__content {
+    display: block !important;
+    margin-left: 0.3rem;
+  }
+
+  #print-handler .page__container .note .note__root {
+    display: block !important;
+  }
+
+  #print-handler .page__container .note .note__info--with-icon .note__icon svg {
+    display: block !important;
+  }
+
+  #print-handler .page__container .note .note__reply {
+    display: block !important;
+    margin: 0.5rem 0 0 2rem;
+  }
+
+  #print-handler .page__container .note .note__content {
+    display: block !important;
+    font-size: 1.2rem;
+    margin-top: 0.1rem;
+  }
+
+  #app {
+    overflow: visible !important;
+  }
+
+  .App {
+    display: none !important;
+  }
+
+  html, body, #app {
+    max-width: none !important;
+  }
+}
+`;
 
 export const setGrayscaleDarknessFactor = (factor) => {
   grayscaleDarknessFactor = factor;
@@ -105,8 +245,7 @@ const printPdf = () => core.exportAnnotations().then((xfdfString) => {
     .then((data) => {
       const arr = new Uint8Array(data);
       const blob = new Blob([arr], { type: 'application/pdf' });
-
-      const printHandler = document.getElementById('print-handler');
+      const printHandler = getRootNode().getElementById('print-handler');
       printHandler.src = URL.createObjectURL(blob);
 
       return new Promise((resolve) => {
@@ -154,9 +293,29 @@ export const creatingPages = (pagesToPrint, includeComments, includeAnnotations,
   return createdPages;
 };
 
+const getResetPrintStyle = () => {
+  const style = document.createElement('style');
+  style.id = 'print-handler-css';
+  style.textContent = printResetStyle;
+  return style;
+};
+
 export const printPages = (pages) => {
-  const printHandler = document.getElementById('print-handler');
+  const printHandler = getRootNode().getElementById('print-handler');
   printHandler.innerHTML = '';
+  const isApryseWebViewerWebComponent = window.isApryseWebViewerWebComponent;
+
+  if (isApryseWebViewerWebComponent) {
+    // In the Web component mode, the window.print function uses the top window as target for printing.
+    // The approach here is to teleport the print handler div to the top parent and inject some CSS
+    // to make it print nicely
+    printHandler.parentNode.removeChild(printHandler);
+    document.body.appendChild(printHandler);
+    if (!document.getElementById('print-handler-css')) {
+      const style = getResetPrintStyle();
+      document.head.appendChild(style);
+    }
+  }
 
   const fragment = document.createDocumentFragment();
   pages.forEach((page) => {
@@ -173,150 +332,16 @@ export const printPages = (pages) => {
     // so we need to teleport the print handler div to the top parent and inject some CSS to make it print nicely.
     // This can be removed when Chrome and Firefox for iOS respect the origin frame as the actual target for window.print
     if (isChromeOniOS || isFirefoxOniOS) {
-      if (window.parent.document.getElementById('print-handler')) {
-        window.parent.document.getElementById('print-handler').remove();
+      const node = isApryseWebViewerWebComponent ? getRootNode() : window.parent.document;
+      if (node.getElementById('print-handler')) {
+        node.getElementById('print-handler').remove();
       }
-      window.parent.document.body.appendChild(printHandler.cloneNode(true));
+      node.appendChild(printHandler.cloneNode(true));
 
-      if (!window.parent.document.getElementById('print-handler-css')) {
-        const style = window.parent.document.createElement('style');
-        style.id = 'print-handler-css';
-
-        style.textContent = `
-          #print-handler {
-            display: none;
-          }
-
-          @media print {
-            * {
-              display: none! important;
-            }
-
-            html {
-              height: 100%;
-              display: block! important;
-            }
-
-            body {
-              height: 100%;
-              display: block! important;
-              overflow: visible !important;
-              padding: 0;
-            }
-
-            #print-handler {
-              display: block !important;
-              height: 100%;
-              padding: 0;
-              top: 0;
-              bottom: 0;
-              left: 0;
-              right: 0;
-              position: absolute;
-            }
-
-            #print-handler img {
-              display: block !important;
-              max-width: 100%;
-              max-height: 100%;
-              height: 100%;
-              width: 100%;
-              object-fit: contain;
-              page-break-after: always;
-              padding: 0;
-              margin: 0;
-            }
-
-            #print-handler .page__container {
-              box-sizing: border-box;
-              display: flex !important;
-              flex-direction: column;
-              padding: 10px;
-              min-height: 100%;
-              min-width: 100%;
-              font-size: 10px;
-            }
-
-            #print-handler .page__container .page__header {
-              display: block !important;
-              align-self: flex-start;
-              font-size: 2rem;
-              margin-bottom: 2rem;
-              padding-bottom: 0.6rem;
-              border-bottom: 0.1rem solid black;
-            }
-
-            #print-handler .page__container .note {
-              display: flex !important;
-              flex-direction: column;
-              padding: 0.6rem;
-              border: 0.1rem lightgray solid;
-              border-radius: 0.4rem;
-              margin-bottom: 0.5rem;
-            }
-
-            #print-handler .page__container .note .note__info {
-              display: block !important;
-              font-size: 1.3rem;
-              margin-bottom: 0.1rem;
-            }
-
-            #print-handler .page__container .note .note__info--with-icon {
-              display: flex !important;
-            }
-
-            #print-handler .page__container .note .note__info--with-icon .note__icon {
-              display: block !important;
-              width: 1.65rem;
-              height: 1.65rem;
-              margin-top: -0.1rem;
-              margin-right: 0.2rem;
-            }
-
-            #print-handler .page__container .note .note__info--with-icon .note__icon path:not([fill=none]) {
-              display: block !important;
-              fill: currentColor;
-            }
-
-            #print-handler .page__container .note .note__root .note__content {
-              display: block !important;
-              margin-left: 0.3rem;
-            }
-
-            #print-handler .page__container .note .note__root {
-              display: block !important;
-            }
-
-            #print-handler .page__container .note .note__info--with-icon .note__icon svg {
-              display: block !important;
-            }
-
-            #print-handler .page__container .note .note__reply {
-              display: block !important;
-              margin: 0.5rem 0 0 2rem;
-            }
-
-            #print-handler .page__container .note .note__content {
-              display: block !important;
-              font-size: 1.2rem;
-              margin-top: 0.1rem;
-            }
-
-            #app {
-              overflow: visible !important;
-            }
-
-            .App {
-              display: none !important;
-            }
-
-            html, body, #app {
-              max-width: none !important;
-            }
-          }
-      `;
-
-        window.parent.document.head.appendChild(style);
+      if (!node.getElementById('print-handler-css')) {
+        const style = getResetPrintStyle();
+        const node = isApryseWebViewerWebComponent ? getRootNode() : window.parent.document.head;
+        node.appendChild(style);
       }
     }
 
@@ -341,11 +366,17 @@ const printDocument = () => {
 
   const onAfterPrint = () => {
     window.parent.document.title = tempTitle;
+
+    if (window.isApryseWebViewerWebComponent) {
+      const printHandler = document.getElementById('print-handler');
+      document.body.removeChild(printHandler);
+      const parentElement = getRootNode().querySelector('.PrintHandler');
+      parentElement.appendChild(printHandler);
+    }
   };
 
   window.addEventListener('beforeprint', onBeforePrint, { once: true });
   window.addEventListener('afterprint', onAfterPrint, { once: true });
-
   window.print();
 };
 
@@ -390,6 +421,8 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
 
     if (isGrayscale && grayscaleDarknessFactor >= 1) {
       const ctx = canvas.getContext('2d');
+      // Get the old transform before reset because the annotation canvas will need it
+      const oldTransform = ctx.getTransform();
       // Reset underlying transforms. This seems only for DWG (WVS) but could happen elsewhere.
       ctx.resetTransform();
       ctx.globalCompositeOperation = 'color';
@@ -397,6 +430,7 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
       ctx.globalAlpha = 1;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = 'source-over';
+      ctx.setTransform(oldTransform);
     } else if (isGrayscale) {
       const ctx = canvas.getContext('2d');
       ctx.globalCompositeOperation = 'source-over';
@@ -432,18 +466,31 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
     const displayMode = core.getDisplayModeObject();
     const containerElement = core.getScrollViewElement();
     const documentElement = core.getViewerElement();
-    const headerElement = document.querySelector('.Header');
-    const headerItemsElements = document.querySelector('.HeaderToolsContainer');
+    const headerElement = getRootNode().querySelector('.Header');
+    const headerItemsElements = getRootNode().querySelector('.HeaderToolsContainer');
+    const isApryseWebViewerWebComponent = window.isApryseWebViewerWebComponent;
+    let innerWidth = window.innerWidth;
+    let innerHeight = window.innerHeight;
+    let containerScrollLeft = containerElement.scrollLeft;
+    let documentElementOffsetLeft = documentElement.offsetLeft;
+
+    if (isApryseWebViewerWebComponent) {
+      const instanceRect = getInstanceNode().getBoundingClientRect();
+      innerWidth = instanceRect.width;
+      innerHeight = instanceRect.height;
+      containerScrollLeft = instanceRect.x + containerElement.scrollLeft;
+      documentElementOffsetLeft = instanceRect.x + documentElement.offsetLeft;
+    }
 
     const headerHeight = headerElement?.clientHeight + headerItemsElements?.clientHeight;
     const coordinates = [];
     coordinates[0] = displayMode.windowToPageNoRotate({
-      x: Math.max(containerElement.scrollLeft, documentElement.offsetLeft),
+      x: Math.max(containerScrollLeft, documentElementOffsetLeft),
       y: Math.max(containerElement.scrollTop + headerHeight, 0)
     }, pageNumber);
     coordinates[1] = displayMode.windowToPageNoRotate({
-      x: Math.min(window.innerWidth, documentElement.offsetLeft + documentElement.offsetWidth) + containerElement.scrollLeft,
-      y: window.innerHeight + containerElement.scrollTop
+      x: Math.min(innerWidth, documentElementOffsetLeft + documentElement.offsetWidth) + containerScrollLeft,
+      y: innerHeight + containerElement.scrollTop
     }, pageNumber);
     const x1 = Math.min(coordinates[0].x, coordinates[1].x);
     const y1 = Math.min(coordinates[0].y, coordinates[1].y);
@@ -572,7 +619,8 @@ const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
   // draw all annotations
   const widgetContainer = createWidgetContainer(pageNumber - 1);
   return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
-    document.body.appendChild(widgetContainer);
+    const node = (window.isApryseWebViewerWebComponent) ? getRootNode() : document.body;
+    node.appendChild(widgetContainer);
     return import(/* webpackChunkName: 'html2canvas' */ 'html2canvas').then(({ default: html2canvas }) => {
       return html2canvas(widgetContainer, {
         canvas,
@@ -580,7 +628,7 @@ const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
         scale: 1,
         logging: false,
       }).then(() => {
-        document.body.removeChild(widgetContainer);
+        node.removeChild(widgetContainer);
       });
     });
   });
