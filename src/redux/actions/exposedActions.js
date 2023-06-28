@@ -186,11 +186,11 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
   };
 
   if (toolbarGroup === 'toolbarGroup-View') {
-    core.setToolMode(defaultTool);
     dispatch({
       type: 'SET_ACTIVE_TOOL_GROUP',
       payload: { toolGroup: '', toolbarGroup },
     });
+    core.setToolMode(defaultTool);
   } else {
     dispatch(openElements(['toolsHeader']));
     const state = getState();
@@ -550,6 +550,7 @@ export const setActiveLeftPanel = (dataElement) => (dispatch, getState) => {
   } else {
     const panelDataElements = [
       ...state.viewer.customPanels.map(({ panel }) => panel.dataElement),
+      DataElements.PORTFOLIO_PANEL,
       'thumbnailsPanel',
       'outlinesPanel',
       'layersPanel',
