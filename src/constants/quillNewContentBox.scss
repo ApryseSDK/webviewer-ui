@@ -1,0 +1,23 @@
+.ql-container {
+  position: relative;
+}
+.ql-container.ql-disabled .ql-tooltip {
+  visibility: hidden;
+}
+.ql-container.ql-disabled .ql-editor ul[data-checked] > li::before {
+  pointer-events: none;
+}
+.ql-clipboard {
+  height: 1px;
+  position: absolute;
+}
+
+.ql-clipboard p {
+  margin: 0;
+  padding: 0;
+}
+
+.ql-editor p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
