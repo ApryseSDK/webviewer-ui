@@ -56,6 +56,7 @@ export const getSignatureMode = (state) => state.viewer.signatureMode;
 export const getSavedInitials = (state) => state.viewer.savedInitials;
 export const getSelectedDisplayedInitialsIndex = (state) => state.viewer.selectedDisplayedInitialsIndex;
 export const getIsInitialsModeEnabled = (state) => state.viewer.isInitialsModeEnabled;
+export const getDisplayedInitial = (state) => state.viewer.savedInitials[state.viewer.selectedDisplayedInitialsIndex];
 
 export const getAutoFocusNoteOnAnnotationSelection = (state) => state.viewer.autoFocusNoteOnAnnotationSelection;
 export const getNotesInLeftPanel = (state) => state.viewer.notesInLeftPanel;
@@ -509,6 +510,8 @@ export const getWarningTemplateStrings = (state) => state.viewer.warning?.templa
 
 export const getWarningModalClass = (state) => state.viewer.warning?.modalClass || '';
 
+export const getWarningCloseEvent = (state) => state.viewer.warning?.onClose;
+
 // error message
 export const getErrorMessage = (state) => state.viewer.errorMessage || '';
 
@@ -630,8 +633,6 @@ export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.
 export const getAvailableFontFaces = (state) => state.officeEditor.availableFontFaces;
 
 export const getCSSFontValues = (state) => state.officeEditor.cssFontValues;
-
-export const getContentEditor = (state) => state.viewer.contentEditor;
 
 export const getContentBoxEditor = (state) => state.viewer.contentBoxEditor;
 

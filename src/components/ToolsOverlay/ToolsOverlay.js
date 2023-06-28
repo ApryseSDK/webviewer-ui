@@ -157,7 +157,7 @@ class ToolsOverlay extends React.PureComponent {
 
     if (activeToolGroup === 'signatureTools') {
       Component = (
-        <SelectedSignatureRow t={t} />
+        <SelectedSignatureRow/>
       );
     } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
