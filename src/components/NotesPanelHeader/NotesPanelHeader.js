@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
+import debounce from 'lodash/debounce';
 import selectors from 'selectors';
 import actions from 'actions';
 import classNames from 'classnames';
@@ -65,7 +65,7 @@ function NotesPanelHeader({
     _handleInputChange(e.target.value);
   };
 
-  const _handleInputChange = _.debounce((value) => {
+  const _handleInputChange = debounce((value) => {
     // this function is used to solve the issue with using synthetic event asynchronously.
     // https://reactjs.org/docs/events.html#event-pooling
     core.deselectAllAnnotations();
@@ -127,6 +127,7 @@ function NotesPanelHeader({
               disabled={notes.length === 0}
               img="icon-annotation-select-multiple"
               onClick={() => {
+                core.deselectAllAnnotations();
                 toggleMultiSelectMode();
               }}
               title={t('component.multiSelectButton')}

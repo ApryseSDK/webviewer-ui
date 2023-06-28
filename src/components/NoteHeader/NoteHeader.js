@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import Choice from 'components/Choice';
+import core from 'core';
 
 import './NoteHeader.scss';
 
@@ -131,6 +132,7 @@ function NoteHeader(props) {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
+                  core.deselectAllAnnotations();
                   handleMultiSelect(!isMultiSelected);
                 }}
               />}
