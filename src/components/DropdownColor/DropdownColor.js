@@ -36,17 +36,12 @@ function DropdownColor({color,property,onStyleChange}) {
     setIsDropdownOpen(!isDropdownOpen);
   }
 
-  function handleWindowClick(event) {
-    if (!event.target.matches('.dropClass')) {
-      setIsDropdownOpen(false);
-    }
-  }
-
   const onClickCurrent = (selectedkey) => {
     const obj = items.find(item => item.color === selectedkey);
     const color = new window.Annotations.Color(selectedkey);
     onStyleChange(property,color)
     setSelectedColorCurrent(obj);
+    setIsDropdownOpen(false);
   };
 
   function transformArray(arr) {
@@ -68,14 +63,10 @@ function DropdownColor({color,property,onStyleChange}) {
     });
   }
 
-
-  window.addEventListener('click', handleWindowClick);
-
   useEffect(() => {    
     const obj = items.find(item => item.color.toLowerCase() === color?.toHexString?.()?.toLowerCase());
     setSelectedColorCurrent(obj);
   },[]);
-
 
   return (
     <>
