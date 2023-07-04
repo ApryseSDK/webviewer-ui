@@ -857,3 +857,8 @@ export const setMultiViewerSyncScrollingMode = (multiViewerComparedSyncScrolling
   type: 'SET_MULTI_VIEWER_SYNC_SCROLLING_MODE',
   payload: multiViewerComparedSyncScrollingMode
 });
+
+export const setTextSignatureQuality = (multiplier) => ({
+  type: 'SET_TEXT_SIGNATURE_CANVAS_MULTIPLIER',
+  payload: { multiplier },
+});

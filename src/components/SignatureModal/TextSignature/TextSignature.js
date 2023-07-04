@@ -11,6 +11,7 @@ import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 
 import './TextSignature.scss';
+import getRootNode from 'helpers/getRootNode';
 
 const propTypes = {
   isModalOpen: PropTypes.bool,
@@ -43,8 +44,13 @@ const getSignatureLength = (text, fontSize, fontFamily) => {
   textSpan.style.display = 'inline-block';
   textSpan.style.visibility = 'hidden';
   textSpan.style.font = font;
+  const rootNode = getRootNode();
+  if (window.isApryseWebViewerWebComponent) {
+    rootNode.appendChild(textSpan);
+  } else {
+    rootNode.getElementsByTagName('body')[0].appendChild(textSpan);
+  }
 
-  document.getElementsByTagName('body')[0].appendChild(textSpan);
   textSpan.textContent = text;
 
   const signatureWidth = textSpan.getBoundingClientRect().width;
@@ -70,23 +76,23 @@ const scaleFontSize = (text, fontFamily) => {
   return currentFontSize;
 };
 
-const resizeCanvas = (canvas, measurementReference) => {
+const resizeCanvas = (canvas, measurementReference, overrideMultiplier = 0) => {
   let { width, height } = measurementReference.current.getBoundingClientRect();
   width += TEXT_CLIP_PADDING;
   height += TEXT_CLIP_PADDING;
   canvas.style.width = `${width}px`;
   canvas.style.height = `${height}px`;
-  canvas.width = width * CANVAS_MULTIPLIER;
-  canvas.height = height * CANVAS_MULTIPLIER;
+  canvas.width = width * Math.max(overrideMultiplier, CANVAS_MULTIPLIER);
+  canvas.height = height * Math.max(overrideMultiplier, CANVAS_MULTIPLIER);
 };
 
-const setFontInCanvas = ({ canvas, text, selectedFontFamily, fontColor }) => {
+const setFontInCanvas = ({ canvas, text, selectedFontFamily, fontColor, overrideMultiplier = 0 }) => {
   const ctx = canvas.getContext('2d');
   const fontSize = scaleFontSize(text, selectedFontFamily);
   ctx.fillStyle = fontColor;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `${fontSize * CANVAS_MULTIPLIER}px ${selectedFontFamily}`;
+  ctx.font = `${fontSize * Math.max(overrideMultiplier, CANVAS_MULTIPLIER)}px ${selectedFontFamily}`;
 };
 
 const drawTextInCanvas = (canvas, text) => {
@@ -104,10 +110,11 @@ const TextSignature = ({
   isInitialsModeEnabled = false,
 }) => {
   const fonts = useSelector((state) => selectors.getSignatureFonts(state));
+  const textSignatureCanvasMultiplier = useSelector((state) => selectors.getTextSignatureQuality(state));
   const [fullSignature, setFullSiganture] = useState('');
   const [initials, setInitials] = useState('');
   const [isDefaultValue, setIsDefaultValue] = useState(true);
-  const [fontColor, setFontColor] = useState(new window.Annotations.Color(DEFAULT_FONT_COLOR));
+  const [fontColor, setFontColor] = useState(new window.Core.Annotations.Color(DEFAULT_FONT_COLOR));
   const [fontSize, setFontSize] = useState(TYPED_SIGNATURE_FONT_SIZE);
   const inputRef = useRef();
   const fullSignatureHiddenCanvasRef = useRef();
@@ -151,12 +158,13 @@ const TextSignature = ({
     const fullSignatureCanvas = fullSignatureHiddenCanvasRef.current;
 
     if (isTabPanelSelected) {
-      resizeCanvas(fullSignatureCanvas, hiddenFullSignatureRef);
+      resizeCanvas(fullSignatureCanvas, hiddenFullSignatureRef, textSignatureCanvasMultiplier);
       setFontInCanvas({
         canvas: fullSignatureCanvas,
         text: fullSignature,
         selectedFontFamily,
         fontColor,
+        overrideMultiplier: textSignatureCanvasMultiplier,
       });
       drawTextInCanvas(fullSignatureCanvas, fullSignature);
       if (isModalOpen) {

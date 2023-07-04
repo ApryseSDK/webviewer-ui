@@ -653,3 +653,5 @@ export const isToolDefaultStyleUpdateFromAnnotationPopupEnabled = (state) => sta
 export const getShortcutKeyMap = (state) => state.viewer.shortcutKeyMap;
 
 export const getMultiViewerSyncScrollMode = (state) => state.viewer.multiViewerSyncScrollMode;
+
+export const getTextSignatureQuality = (state) => state.viewer.textSignatureCanvasMultiplier;

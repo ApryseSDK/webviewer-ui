@@ -67,6 +67,7 @@ export default {
       [DataElements.SAVED_SIGNATURES_TAB]: { disabled: true, priorty: 2 },
       [DataElements.CALIBRATION_POPUP_BUTTON]: { disabled: true, priorty: 2 },
       [DataElements.LEGACY_RICH_TEXT_POPUP]: { disabled: true, priority: 2 },
+      [DataElements.LOGO_BAR]: { disabled: true, priority: 2 },
     },
     selectedScale: initialScale,
     isAddingNewScale: false,
@@ -177,7 +178,6 @@ export default {
           title: 'component.notesPanel',
           element: 'notesPanel',
           onClick: (dispatch) => {
-            dispatch(actions.toggleElement('notesPanel'));
             // Trigger with a delay so we ensure the panel is open before we compute correct coordinates of annotation
             setTimeout(() => dispatch(actions.toggleElement('annotationNoteConnectorLine')), 400);
           },
@@ -1866,10 +1866,11 @@ export default {
       linkModal: 'URLPanelButton',
       rubberStampTab: 'standardStampPanelButton',
       filterAnnotModal: DataElements.ANNOTATION_USER_FILTER_PANEL_BUTTON,
-      settingsModal: DataElements.SETTINGS_GENERAL_BUTTON,
+      [DataElements.SETTINGS_MODAL]: DataElements.SETTINGS_GENERAL_BUTTON,
       savedSignatures: DataElements.SAVED_SIGNATURES_PANEL_BUTTON,
       openFileModal: 'urlInputPanelButton',
-      insertPageModal: 'insertBlankPagePanelButton'
+      insertPageModal: 'insertBlankPagePanelButton',
+      [DataElements.CREATE_PORTFOLIO_MODAL]: DataElements.PORTFOLIO_UPLOAD_FILES_TAB
     },
     customElementOverrides: {},
     activeHeaderGroup: 'default',
@@ -2003,7 +2004,6 @@ export default {
         startZoom: 6400,
       },
     ],
-    contentEditor: null,
     contentBoxEditor: null,
     notesPanelCustomHeaderOptions: null,
     notesPanelCustomEmptyPanel: null,
@@ -2026,6 +2026,7 @@ export default {
     flyoutMap: {},
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: null,
+    textSignatureCanvasMultiplier: 1,
   },
   search: {
     value: '',

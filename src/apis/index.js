@@ -111,7 +111,7 @@ import setPageReplacementModalFileList from './setPageReplacementModalFileList';
 import setCurrentPageNumber from './setCurrentPageNumber';
 import addCustomModal from './addCustomModal';
 import setCustomNoteFilter from './setCustomNoteFilter';
-import setInlineCommmentFilter from './setInlineCommmentFilter';
+import setInlineCommentFilter from './setInlineCommentFilter';
 import setCustomPanel from './setCustomPanel';
 import exportBookmarks from './exportBookmarks';
 import importBookmarks from './importBookmarks';
@@ -169,7 +169,7 @@ import setActiveResult from './setActiveResult';
 import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
 import overrideSearchExecution from './overrideSearchExecution';
 import reactElements from './reactElements';
-import { addTrustedCertificates, loadTrustList } from './verificationOptions';
+import { addTrustedCertificates, loadTrustList, enableOnlineCRLRevocationChecking } from './verificationOptions';
 import {
   enableTextCollapse,
   disableTextCollapse,
@@ -254,7 +254,8 @@ import ToolGroupButton from './ModularComponents/toolGroupButton';
 import Zoom from './ModularComponents/zoom';
 import Flyout from './ModularComponents/flyout';
 import setMultiViewerSyncScrollingMode from './setMultiViewerSyncScrollingMode';
-
+import setTextSignatureQuality from './setTextSignatureQuality';
+import getTextSignatureQuality from './getTextSignatureQuality';
 import {
   getMeasurementScalePreset,
   addMeasurementScalePreset,
@@ -347,7 +348,7 @@ export default (store) => {
     addPanel: addPanel(store),
     showOutlineControl: showOutlineControl(store),
     setCustomNoteFilter: setCustomNoteFilter(store),
-    setInlineCommmentFilter: setInlineCommmentFilter(store),
+    setInlineCommentFilter: setInlineCommentFilter(store),
     setCustomPanel: setCustomPanel(store),
     exportBookmarks: exportBookmarks(store),
     extractPagesWithAnnotations,
@@ -401,6 +402,7 @@ export default (store) => {
     VerificationOptions: {
       addTrustedCertificates: addTrustedCertificates(store),
       loadTrustList: loadTrustList(store),
+      enableOnlineCRLRevocationChecking: enableOnlineCRLRevocationChecking(store)
     },
     Panels: panelNames,
     ThumbnailsPanel: {
@@ -546,6 +548,8 @@ export default (store) => {
     setGrayscaleDarknessFactor,
     setSideWindowVisibility: setSideWindowVisibility(store),
     setMultiViewerSyncScrollingMode: setMultiViewerSyncScrollingMode(store),
+    setTextSignatureQuality: setTextSignatureQuality(store),
+    getTextSignatureQuality: getTextSignatureQuality(store),
 
     // undocumented
     loadedFromServer: false,
