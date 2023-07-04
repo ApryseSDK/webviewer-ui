@@ -11,17 +11,17 @@ export const removeEventListener = (event, eventListener, documentViewerKey = 1)
   const eventToObjectMap = getEventToObjectMap(documentViewerKey);
   const object = eventToObjectMap[event];
 
-  object.removeEventListener(event, eventListener);
+  object?.removeEventListener(event, eventListener);
 };
 
 const getEventToObjectMap = (documentViewerKey = 1) => {
   const documentViewer = core.getDocumentViewer(documentViewerKey);
-  const annotManager = documentViewer.getAnnotationManager();
-  const contentEditManager = documentViewer.getContentEditManager();
-  const historyManager = documentViewer.getAnnotationHistoryManager();
-  const editBoxManager = annotManager.getEditBoxManager();
-  const formFieldCreationManager = annotManager.getFormFieldCreationManager();
-  const measurementManager = documentViewer.getMeasurementManager();
+  const annotManager = documentViewer?.getAnnotationManager();
+  const contentEditManager = documentViewer?.getContentEditManager();
+  const historyManager = documentViewer?.getAnnotationHistoryManager();
+  const editBoxManager = annotManager?.getEditBoxManager();
+  const formFieldCreationManager = annotManager?.getFormFieldCreationManager();
+  const measurementManager = documentViewer?.getMeasurementManager();
 
   return {
     signatureSaved: documentViewer,
