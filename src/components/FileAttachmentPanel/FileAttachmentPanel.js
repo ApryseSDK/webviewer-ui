@@ -5,6 +5,10 @@ import { saveAs } from 'file-saver';
 import Icon from 'components/Icon';
 import core from 'core';
 import './FileAttachmentPanel.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIsMultiTab, getTabManager } from 'src/redux/selectors/exposedSelectors';
+import actions from 'actions';
+import DataElements from 'src/constants/dataElement';
 
 const renderAttachment = (filename, onClickCallback, key) => {
   const fileExtension = filename.split('.').pop().toUpperCase();
@@ -17,10 +21,13 @@ const renderAttachment = (filename, onClickCallback, key) => {
 
 const FileAttachmentPanel = () => {
   const [t] = useTranslation();
+  const dispatch = useDispatch();
   const [fileAttachments, setFileAttachments] = useState({
     embeddedFiles: [],
     fileAttachmentAnnotations: [],
   });
+  const isMultiTab = useSelector(getIsMultiTab);
+  const tabManager = useSelector(getTabManager);
 
   useEffect(() => {
     const updateFileAttachments = async () => {
@@ -28,9 +35,11 @@ const FileAttachmentPanel = () => {
       setFileAttachments(attachments);
     };
     core.addEventListener('annotationChanged', updateFileAttachments);
+    core.addEventListener('documentLoaded', updateFileAttachments);
     updateFileAttachments();
     return () => {
       core.removeEventListener('annotationChanged', updateFileAttachments);
+      core.removeEventListener('documentLoaded', updateFileAttachments);
     };
   }, []);
 
@@ -45,19 +54,35 @@ const FileAttachmentPanel = () => {
       </div>
     );
   }
+
+  const attachmentPanelItemOnClick = async (fileAttachmentAnnot) => {
+    if (isMultiTab) {
+      dispatch(actions.openElement(DataElements.LOADING_MODAL));
+      setTimeout(async () => {
+        const blob = await fileAttachmentAnnot.getFileData();
+        const filename = fileAttachmentAnnot.filename;
+        const newTabId = await tabManager.addTab(blob, { filename });
+        dispatch(actions.closeElement(DataElements.LOADING_MODAL));
+        dispatch(actions.closeElement(DataElements.LEFT_PANEL));
+        await tabManager.setActiveTab(newTabId);
+      }, 100);
+    } else {
+      return core.getAnnotationManager().trigger('annotationDoubleClicked', fileAttachmentAnnot);
+    }
+  };
+
   return (
     <div className="fileAttachmentPanel">
       <div className="section">
         {fileAttachments.embeddedFiles.length ? <p className="title">{t('message.embeddedFiles')}</p> : null}
         <ul className="downloadable">
-          {fileAttachments.embeddedFiles.map((file, idx) =>
-            renderAttachment(
-              file.filename,
-              () => {
-                saveAs(file.blob, file.filename);
-              },
-              `embeddedFile_${idx}`,
-            ),
+          {fileAttachments.embeddedFiles.map((file, idx) => renderAttachment(
+            file.filename,
+            () => {
+              saveAs(file.blob, file.filename);
+            },
+            `embeddedFile_${idx}`,
+          ),
           )}
         </ul>
       </div>
@@ -69,16 +94,15 @@ const FileAttachmentPanel = () => {
               {t('message.pageNum')}: {pageNumber}
             </p>
             <ul className="downloadable">
-              {fileAttachmentAnnotsPerPage.map((fileAttachmentAnnot, idx) =>
-                renderAttachment(
-                  fileAttachmentAnnot.filename,
-                  () => {
-                    core.setCurrentPage(fileAttachmentAnnot['PageNumber']);
-                    core.selectAnnotation(fileAttachmentAnnot);
-                    core.getAnnotationManager().trigger('annotationDoubleClicked', fileAttachmentAnnot);
-                  },
-                  `fileAttachmentAnnotation_${idx}`,
-                ),
+              {fileAttachmentAnnotsPerPage.map((fileAttachmentAnnot, idx) => renderAttachment(
+                fileAttachmentAnnot.filename,
+                async () => {
+                  core.setCurrentPage(fileAttachmentAnnot['PageNumber']);
+                  core.selectAnnotation(fileAttachmentAnnot);
+                  await attachmentPanelItemOnClick(fileAttachmentAnnot);
+                },
+                `fileAttachmentAnnotation_${idx}`,
+              ),
               )}
             </ul>
           </div>
