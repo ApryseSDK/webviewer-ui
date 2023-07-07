@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import LeftPanelTabs from 'components/LeftPanelTabs';
+import PortfolioPanel from 'components/PortfolioPanel';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
 import OutlinesPanel from 'components/OutlinesPanel';
 import BookmarksPanel from 'components/BookmarksPanel';
@@ -19,6 +20,7 @@ import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import { isMobileSize, isTabletAndMobileSize } from 'helpers/getDeviceSize';
+import { getFileAttachments } from 'helpers/getFileAttachments';
 import { isIE } from 'helpers/device';
 
 import './LeftPanel.scss';
@@ -47,6 +49,7 @@ const LeftPanel = () => {
     isBookmarkPanelEnabled,
     isBookmarkIconShortcutVisible,
     isMultiTabActive,
+    isLogoBarEnabled,
     featureFlags,
     topHeadersHeight,
     bottomHeadersHeight,
@@ -68,6 +71,7 @@ const LeftPanel = () => {
       !selectors.isElementDisabled(state, DataElements.BOOKMARK_PANEL),
       selectors.isBookmarkIconShortcutVisible(state),
       selectors.getIsMultiTab(state),
+      !selectors.isElementDisabled(state, DataElements.LOGO_BAR),
       selectors.getFeatureFlags(state),
       selectors.getTopHeadersHeight(state),
       selectors.getBottomHeadersHeight(state),
@@ -78,6 +82,7 @@ const LeftPanel = () => {
   const minWidth = 264;
   const dispatch = useDispatch();
   const [t] = useTranslation();
+  const [portfolioFiles, setPortfolioFiles] = useState([]);
 
   const onDrop = (e) => {
     // this is mainly for the thumbnail panel, to prevent the broswer from loading a document that dropped in
@@ -97,6 +102,35 @@ const LeftPanel = () => {
   }
 
   const isVisible = !(!isOpen || isDisabled);
+
+
+  useEffect(() => {
+    const onDocumentLoaded = async () => {
+      if (core.isFullPDFEnabled()) {
+        let id = 0;
+        const attachments = await getFileAttachments();
+
+        const { embeddedFiles } = attachments;
+        const portfolioFiles = embeddedFiles.map(({ filename, blob }) => {
+          id += 1;
+          return {
+            id: id.toString(),
+            name: filename,
+            isFolder: false,
+            getNestedLevel: () => 0,
+            children: [],
+            blob: blob,
+          };
+        });
+        setPortfolioFiles(portfolioFiles);
+      }
+    };
+    core.addEventListener('documentLoaded', onDocumentLoaded);
+
+    return () => {
+      core.removeEventListener('documentLoaded', onDocumentLoaded);
+    };
+  }, []);
 
   useEffect(() => {
     if (isBookmarkPanelEnabled) {
@@ -124,7 +158,10 @@ const LeftPanel = () => {
   const legacyAllHeadersHidden = !isHeaderOpen && !legacyToolsHeaderOpen;
 
   const { modularHeader } = featureFlags;
-  const wrapperStyle = {};
+  const wrapperStyle = {
+    // prevent panel from appearing until scss is loaded
+    display: 'none',
+  };
   // Calculating its height according to the existing horizontal modular headers
   if (modularHeader) {
     const horizontalHeadersHeight = topHeadersHeight + bottomHeadersHeight;
@@ -141,7 +178,8 @@ const LeftPanel = () => {
         'tools-header-and-header-hidden': legacyAllHeadersHidden,
         'thumbnail-panel-active': activePanel === 'thumbnailsPanel',
         'outlines-panel-active': activePanel === 'outlinesPanel',
-        'multi-tab-active': isMultiTabActive
+        'multi-tab-active': isMultiTabActive,
+        'logo-bar-enabled': isLogoBarEnabled,
       })}
       onDrop={onDrop}
       onDragOver={onDragOver}
@@ -169,8 +207,14 @@ const LeftPanel = () => {
             </div>
           </div>}
         <div className="left-panel-header">
-          {isThumbnailSelectingPages ? <LeftPanelPageTabs /> : <LeftPanelTabs />}
+          {isThumbnailSelectingPages ?
+            <LeftPanelPageTabs /> :
+            <LeftPanelTabs />}
         </div>
+        {activePanel === DataElements.PORTFOLIO_PANEL
+          && core.isFullPDFEnabled()
+          && portfolioFiles.length > 0
+          && <PortfolioPanel portfolioFiles={portfolioFiles} />}
         {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel />}
         {activePanel === 'outlinesPanel' && <OutlinesPanel />}
         {activePanel === 'bookmarksPanel' && <BookmarksPanel />}

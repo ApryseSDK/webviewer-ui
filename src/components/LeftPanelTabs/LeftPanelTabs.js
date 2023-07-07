@@ -16,6 +16,7 @@ import './LeftPanelTabs.scss';
 class LeftPanelTabs extends React.Component {
   static propTypes = {
     isLeftPanelOpen: PropTypes.bool,
+    showPortfolio: PropTypes.bool,
     activePanel: PropTypes.string.isRequired,
     disabledCustomPanelTabs: PropTypes.array.isRequired,
     customPanels: PropTypes.array.isRequired,
@@ -28,6 +29,7 @@ class LeftPanelTabs extends React.Component {
   render() {
     const {
       isLeftPanelOpen,
+      showPortfolio,
       customPanels,
       isLeftPanelTabsDisabled,
       setActiveLeftPanel,
@@ -41,6 +43,15 @@ class LeftPanelTabs extends React.Component {
 
     return (
       <Element className="LeftPanelTabs" dataElement="leftPanelTabs">
+        {showPortfolio &&
+          <Button
+            isActive={this.isActive(DataElements.PORTFOLIO_PANEL)}
+            dataElement={DataElements.PORTFOLIO_PANEL_BUTTON}
+            img="icon-compare-change"
+            onClick={() => setActiveLeftPanel(DataElements.PORTFOLIO_PANEL)}
+            title="portfolioPanel.portfolioPanelTitle"
+            tabIndex={isLeftPanelOpen ? 0 : -1}
+          />}
         <Button
           isActive={this.isActive('thumbnailsPanel')}
           dataElement="thumbnailsPanelButton"

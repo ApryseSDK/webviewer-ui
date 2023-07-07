@@ -14,7 +14,7 @@ import core from 'core';
  * If a element is disabled with priority 3, then calling enableElement with priority 2 won't enable it back because the element is disabled in a more specific manner.
  * This priority argument is used by external APIs such as instance.disableElements and instance.disableFeatures(...)
  * For example, instance.disableElements has priority 3 and instance.enableFeatures has priority 1.
- * So calling instance.enableFeatures([instance.Feature.NotesPanel]) won't enable the notes panel if it's disabled by instance.disableElements(['notesPanel'])
+ * So calling instance.enableFeatures([instance.UI.Feature.NotesPanel]) won't enable the notes panel if it's disabled by instance.disableElements(['notesPanel'])
  */
 export const disableElement = (dataElement, priority) => (
   dispatch,
@@ -91,11 +91,28 @@ export const enableElements = (dataElements, priority) => (
     payload: { dataElements: filteredDataElements, priority },
   });
 };
+
+export const addPortfolioTab = ({ blob, name, extension }) => (dispatch, getState) => {
+  const state = getState();
+  const tabManager = selectors.getTabManager(state);
+  tabManager.addTab(
+    blob,
+    {
+      setActive: true,
+      extension: extension,
+      filename: name,
+    },
+  );
+};
+
+export const setIsElementHidden = (dataElement, isHidden) => ({
+  type: 'SET_IS_ELEMENT_HIDDEN',
+  payload: { dataElement, isHidden }
+});
 export const setThumbnailMerging = (useThumbnailMerging = true) => ({
   type: 'SET_THUMBNAIL_MERGING',
   payload: { useThumbnailMerging },
 });
-
 export const setThumbnailReordering = (useThumbnailReordering = true) => ({
   type: 'SET_THUMBNAIL_REORDERING',
   payload: { useThumbnailReordering },
@@ -115,6 +132,10 @@ export const updateCalibrationInfo = ({ isCalibration = true, tempScale = '', pr
 export const setIsAddingNewScale = (isAddingNewScale = false) => ({
   type: 'SET_IS_ADDING_NEW_SCALE',
   payload: { isAddingNewScale }
+});
+export const setIsRevocationCheckingEnabled = (isRevocationCheckingEnabled = false) => ({
+  type: 'SET_IS_REVOCATION_CHECKING_ENABLED',
+  payload: { isRevocationCheckingEnabled }
 });
 export const updateDeleteScale = (deleteScale = '') => ({
   type: 'UPDATE_DELETE_SCALE',
@@ -640,9 +661,9 @@ export const setAnnotationFilters = (annotationFilters) => ({
   payload: { annotationFilters }
 });
 
-export const setContentEditor = (contentEditor) => ({
-  type: 'SET_CONTENT_EDITOR',
-  payload: { contentEditor }
+export const setContentBoxEditor = (contentBoxEditor) => ({
+  type: 'SET_CONTENTBOX_EDITOR',
+  payload: { contentBoxEditor }
 });
 
 export const setInitialsMode = (isEnabled) => ({
