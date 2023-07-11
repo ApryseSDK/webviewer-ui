@@ -34,4 +34,42 @@ test.describe('Flyout Menu', () => {
       await body.click();
     }
   });
+
+  test('should close flyout menus on left panel when clicking outside the viewer', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    await waitForInstance();
+    await page.waitForTimeout(5000);
+
+    const flyoutMenuTriggers = [
+      'thumbnailsControlRotatePopupTrigger',
+      'thumbnailsControlManipulatePopupSmallTrigger',
+    ];
+
+    const flyoutMenuSelectors = [
+      'thumbnailsControlRotatePopup',
+      'thumbnailsControlManipulatePopupSmall'
+    ];
+
+    await iframe.click('[data-element=leftPanelButton]');
+    await page.waitForTimeout(1000);
+
+    await iframe.evaluate(async () => {
+      window.instance.UI.ThumbnailsPanel.enableMultiselect();
+    });
+
+    for (let i = 0; i < flyoutMenuTriggers.length; i++) {
+      const button = await iframe.$(`button[data-element=${flyoutMenuTriggers[i]}]`);
+      await button.click();
+      await page.waitForTimeout(2000);
+      const currentFlyoutMenuSelector = `[data-element="${flyoutMenuSelectors[i]}"]`;
+      const currentFlyout = await page.locator(currentFlyoutMenuSelector);
+      // Clicking outside the viewer
+      const inputOutsideViewer = await iframe.$('#url-form input');
+      await inputOutsideViewer?.click();
+      await page.waitForTimeout(2000);
+      // The flyout should be hidden
+      const isFlyoutHidden = await currentFlyout.isHidden();
+      expect(isFlyoutHidden).toEqual(true);
+    }
+  });
 });
