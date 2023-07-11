@@ -1,5 +1,5 @@
 import { loadViewerSample, Timeouts, WebViewerInstance } from '../../playwright-utils';
-import { expect, test, Frame, Page } from '@playwright/test';
+import { expect, Frame, Page, test } from '@playwright/test';
 
 test.describe('Comment panel', () => {
   let iframe: Frame;
@@ -876,7 +876,7 @@ test.describe('Comment panel', () => {
     const allowedTrailingChars = await iframe.evaluate(() => {
       return window.instance.UI.mentions.getAllowedTrailingCharacters();
     });
-    expect(allowedTrailingChars).toStrictEqual([' ']);
+    expect(allowedTrailingChars).toStrictEqual([' ', '\n']);
 
     const userData = [
       {
@@ -982,5 +982,32 @@ test.describe('Comment panel', () => {
     // there was a bug that the text was added on the same line
     const commentTextareaText = await iframe.$(`#note_${lastAnnotationId} .comment-textarea .ql-container .ql-editor`);
     expect(await commentTextareaText?.innerHTML()).toBe('<p>Test comment</p><p>Should add this text on a new line</p>');
+  });
+
+  test('should render text properly when adding new comment', async ({ page }) => {
+    await instance('loadDocument', '/test-files/demo-annotated.pdf');
+    await page.waitForTimeout(4000);
+    await instance('openElement', 'notesPanel');
+
+    const annotWithReplyId = await iframe.evaluate(async () => {
+      const annotationManager = window.instance.Core.annotationManager;
+      const annotWithReply = annotationManager.getAnnotationsList().filter((a) => a.PageNumber === 2 && a.getReplies().length > 0)[0];
+      return annotWithReply.Id;
+    },);
+
+    await page.waitForTimeout(500);
+    const lastNoteContainer = await iframe.$(`#note_${annotWithReplyId}`);
+    await lastNoteContainer?.click();
+
+    await page.waitForTimeout(500);
+    await page.keyboard.type('In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual');
+    await page.keyboard.type('form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before ');
+    await page.keyboard.type('final copy is available. It is also used to temporarily replace text in a process called greeking, ');
+    await page.keyboard.type(' which allows designers to consider the form of a webpage or publication, without the meaning of the text influencing the design.');
+
+    await page.waitForTimeout(500);
+
+    const commentTextareaText = await iframe.$(`#note_${annotWithReplyId}`);
+    expect(await commentTextareaText.screenshot()).toMatchSnapshot(['comment-panel', 'comment-panel-adding-new-comment.png']);
   });
 });
