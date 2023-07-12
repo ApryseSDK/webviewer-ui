@@ -50,11 +50,12 @@ const InitialMenuOverLayItem = ({ dataElement, children }) => {
   });
 };
 
+
 function MenuOverlay() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
 
-  const [documentType, setDocumentType] = useState(null);
+  const [documentType, setDocumentType] = useState();
 
   const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
   const colorMap = useSelector(selectors.getColorMap);
@@ -66,9 +67,10 @@ function MenuOverlay() {
 
   useEffect(() => {
     const onDocumentLoaded = () => {
-      const type = core.getDocument().getType();
+      const type = core.getDocument()?.getType();
       setDocumentType(type);
     };
+    onDocumentLoaded();
     core.addEventListener('documentLoaded', onDocumentLoaded);
     return () => {
       core.removeEventListener('documentLoaded', onDocumentLoaded);
@@ -94,9 +96,14 @@ function MenuOverlay() {
     dispatch(actions.openElement(DataElements.SETTINGS_MODAL));
   };
 
+  const handlePortfolioButtonClick = () => {
+    closeMenuOverlay();
+    dispatch(actions.openElement(DataElements.CREATE_PORTFOLIO_MODAL));
+  };
+
   const handleNewDocumentClick = async () => {
     closeMenuOverlay();
-    loadDocument(dispatch, (await core.getEmptyWordDocument()).default, {
+    loadDocument(dispatch, null, {
       filename: 'Untitled.docx',
       enableOfficeEditing: true
     });
@@ -173,12 +180,26 @@ function MenuOverlay() {
         />
       </InitialMenuOverLayItem>
       <div className="divider"></div>
+      {false && core.isFullPDFEnabled() && (
+        <>
+          <ActionButton
+            dataElement="portfolioButton"
+            className="row"
+            img="icon-pdf-portfolio"
+            label={t('portfolio.createPDFPortfolio')}
+            ariaLabel={t('portfolio.createPDFPortfolio')}
+            role="option"
+            onClick={handlePortfolioButtonClick}
+          />
+          <div className="divider"></div>
+        </>
+      )}
       <ActionButton
         dataElement="settingsButton"
         className="row"
         img="icon-header-settings-line"
         label={t('option.settings.settings')}
-        ariaLabel={t('settings')}
+        ariaLabel={t('option.settings.settings')}
         role="option"
         onClick={handleSettingsButtonClick}
       />

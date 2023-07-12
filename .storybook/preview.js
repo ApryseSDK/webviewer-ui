@@ -1,4 +1,4 @@
-import core from 'core'
+import core from 'core';
 import I18nDecorator from "./I18nDecorator";
 import 'react-quill/dist/quill.snow.css';
 
@@ -10,7 +10,17 @@ import '../src/components/App/App.scss';
 // If this is not done we miss some styles, and the Stories will look a bit different.
 document.getElementById('root').className = 'App';
 
-function noop() { }
+function noop() {
+}
+
+let rectAnnot;
+let freeTextAnnot;
+
+let docType = 'PDF';
+window.setDocType = (type) => {
+  console.log('setDocType', type);
+  docType = type;
+};
 
 const mockTool = {
   name: 'AnnotationCreateFreeHand',
@@ -35,10 +45,12 @@ const mockTool = {
   setInitials: noop,
   clearInitialsCanvas: noop,
   setStyles: noop,
+  finish: noop,
 };
 
 const mockAnnotationManager = {
   exportAnnotations: noop,
+  redrawAnnotation: noop,
   redrawAnnotations: noop,
   getEditBoxManager: noop,
   getFormFieldCreationManager: noop,
@@ -50,9 +62,17 @@ const mockAnnotationManager = {
   updateAnnotationRichTextStyle: noop,
   getCurrentUser: noop,
   getSelectedAnnotations: () => [],
-  getAnnotationsList: () => [],
+  getAnnotationsList: () => ([
+    rectAnnot,
+    freeTextAnnot
+  ]),
   addEventListener: noop,
   removeEventListener: noop,
+  getGroupAnnotations: () => [],
+  canModifyContents: () => true,
+  canModify: () => true,
+  setNoteContents: () => '',
+  trigger: noop,
 };
 
 const mockFormFieldCreationManager = {
@@ -61,17 +81,21 @@ const mockFormFieldCreationManager = {
   endFormFieldCreationMode: noop,
 };
 
+const mockDocument = {
+  getPageInfo: () => ({
+    width: DEFAULT_PAGE_HEIGHT,
+    height: DEFAULT_PAGE_WIDTH
+  }),
+  getType: () => docType,
+  getFilename: () => 'test',
+  loadCanvas: noop,
+  getBookmarks: () => new Promise((res, rej) => res),
+};
+
+
 const mockDocumentViewer = {
   doc: {},
-  getDocument: () => ({
-    getPageInfo: () => ({
-      width: DEFAULT_PAGE_HEIGHT,
-      height: DEFAULT_PAGE_WIDTH
-    }),
-    getType: () => 'PDF',
-    loadCanvas: noop,
-    getBookmarks: () => new Promise((res, rej) => res),
-  }),
+  getDocument: () => mockDocument,
   getPageCount: () => 9,
   getAnnotationManager: () => mockAnnotationManager,
   getRotation: () => 0,
@@ -80,14 +104,16 @@ const mockDocumentViewer = {
   setWatermark: noop,
   getPageHeight: () => DEFAULT_PAGE_HEIGHT,
   getPageWidth: () => DEFAULT_PAGE_WIDTH,
-  setCurrentPage: (page) => { },
+  setCurrentPage: (page) => {
+  },
   setBookmarkIconShortcutVisibility: noop,
   displayBookmark: noop,
   addEventListener: noop,
   removeEventListener: noop,
   getAnnotationHistoryManager: noop,
   getMeasurementManager: noop,
-  getToolModeMap: () => ({})
+  getToolModeMap: () => ({}),
+  getWatermark: () => Promise.resolve()
 };
 
 core.getTool = () => mockTool;
@@ -98,17 +124,26 @@ core.removeEventListener = () => { };
 core.getFormFieldCreationManager = () => mockFormFieldCreationManager;
 core.getDocumentViewer = () => mockDocumentViewer;
 core.getDocumentViewers = () => [mockDocumentViewer];
-core.getDisplayAuthor = (author) => author ? author : 'Duncan Idaho'
+core.getDisplayAuthor = (author) => author ? author : 'Duncan Idaho';
+core.getAnnotationManager = () => mockAnnotationManager;
+core.getCurrentPage = () => 1;
 
 window.Core = {
   documentViewer: mockDocumentViewer,
+  annotationManager: mockAnnotationManager,
   AnnotationManager: mockAnnotationManager,
   Tools: {
     ToolNames: {},
     RubberStampCreateTool: {
       FILL_COLORS: ['#4F9964', '#2A85D0', '#D65656'],
       TEXT_COLORS: ['#FFFFFF', '#000000']
-    }
+    },
+    SignatureCreateTool: {
+      SignatureTypes: {
+        FULL_SIGNATURE: 'fullSignature',
+        INITIALS: 'initialsSignature'
+      },
+    },
   },
   getHashParameter: () => false,
   SupportedFileFormats: {
@@ -139,15 +174,7 @@ const DEFAULT_PAGE_WIDTH = 612;
 
 window.documentViewer = {
   doc: {},
-  getDocument: () => ({
-    getPageInfo: () => ({
-      width: DEFAULT_PAGE_HEIGHT,
-      height: DEFAULT_PAGE_WIDTH
-    }),
-    getType: () => 'PDF',
-    loadCanvas: noop,
-    getBookmarks: () => new Promise((res, rej) => res),
-  }),
+  getDocument: () => mockDocument,
   getPageCount: () => 9,
   getAnnotationManager: () => mockAnnotationManager,
   getAnnotationHistoryManager: () => ({}),
@@ -157,7 +184,8 @@ window.documentViewer = {
   setWatermark: noop,
   getPageHeight: () => DEFAULT_PAGE_HEIGHT,
   getPageWidth: () => DEFAULT_PAGE_WIDTH,
-  setCurrentPage: (page) => { },
+  setCurrentPage: (page) => {
+  },
   setBookmarkIconShortcutVisibility: noop,
   displayBookmark: noop,
 };
@@ -189,23 +217,18 @@ class MockFreeTextAnnotation {
   getIntent = () => 'FreeText';
   getRichTextStyle = () => null;
   isFormFieldPlaceholder = () => false;
-  setLineStyle = () => {};
+  setLineStyle = () => { };
 };
 
 class MockRectangleAnnotation {
   isFormFieldPlaceholder = () => false;
 }
 
-window.Tools = {
-  ToolNames: {},
-  SignatureCreateTool: {
-    SignatureTypes: {
-      FULL_SIGNATURE: 'fullSignature',
-      INITIALS: 'initialsSignature'
-    }
-  }
-};
-window.Annotations = {
+class MockEllipseAnnotation {
+  getIntent = () => 'EllipseDimension';
+}
+
+window.Core.Annotations = {
   Annotation: {
     MeasurementUnits: {},
   },
@@ -215,7 +238,7 @@ window.Annotations = {
   PolylineAnnotation: MockAnnotation,
   ArcAnnotation: MockAnnotation,
   PolygonAnnotation: MockAnnotation,
-  EllipseAnnotation: MockAnnotation,
+  EllipseAnnotation: MockEllipseAnnotation,
   StickyAnnotation: MockAnnotation,
   TextHighlightAnnotation: MockAnnotation,
   TextUnderlineAnnotation: MockAnnotation,
@@ -266,7 +289,7 @@ const hexToRgb = (hex) => {
   } : null;
 };
 
-Annotations.Color = (R = 255, G = 0, B = 0) => {
+Core.Annotations.Color = (R = 255, G = 0, B = 0) => {
   if (R[0] === '#') {
     const { r, g, b } = hexToRgb(R);
     return {
@@ -281,10 +304,23 @@ Annotations.Color = (R = 255, G = 0, B = 0) => {
   if (R instanceof Object) {
     return R;
   }
-  const toHexString = () => { return colorToHexString({ R, G, B }); };
+  const toHexString = () => {
+    return colorToHexString({ R, G, B });
+  };
   return { R, G, B, A: 1, toHexString };
 };
 
 export const decorators = [
   I18nDecorator,
 ];
+
+rectAnnot = new window.Core.Annotations.RectangleAnnotation();
+rectAnnot.Author = 'Guest_1';
+rectAnnot.getStatus = () => null;
+rectAnnot.getCustomData = () => '';
+rectAnnot.StrokeColor = new window.Core.Annotations.Color(255, 0, 0);
+
+freeTextAnnot = new window.Core.Annotations.FreeTextAnnotation();
+freeTextAnnot.Author = 'Guest_2';
+freeTextAnnot.getStatus = () => null;
+freeTextAnnot.TextColor = new window.Core.Annotations.Color(0, 255, 0);
