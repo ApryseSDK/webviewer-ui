@@ -21,12 +21,15 @@ export default (store) => (src, options) => {
 };
 
 /**
- * @typedef {Object} UI.loadDocumentOptions
+ * @typedef {Object} UI.loadDocumentOptions inherits from {@link Core.loadDocumentOptions}
  * @property {string} [extension] The extension of the file. If file is a blob/file object or a URL without an extension then this is necessary so that WebViewer knows what type of file to load.
  * @property {string} [filename] Filename of the document, which is used when downloading the PDF.
  * @property {object} [customHeaders] An object of custom HTTP headers to use when retrieving the document from the specified url.
  * @property {object} [webViewerServerCustomQuerypropertyeters] An object of custom query propertyeters to be appended to every WebViewer Server request.
- * @property {string} [documentId] Unique id of the document.
+ * @property {string} [documentId] Unique id of the document. Same as docId (For backward compatibility).
+ * @property {string} [docId] Unique id of the document.
+ * @property {boolean} [loadAnnotations=true] Whether to load document with or without annotations.
+ * @property {function} [onLoadingProgress] A callback function for loading progress (Only for files loaded over network), function signature: function(percent) {}.
  * @property {boolean} [withCredentials] Whether or not cross-site requests should be made using credentials.
  * @property {string} [cacheKey] A key that will be used for caching the document on WebViewer Server.
  * @property {object} [officeOptions] An object that contains the options for an Office document.
@@ -38,11 +41,13 @@ export default (store) => (src, options) => {
  * disableBrowserFontSubstitution prevents this browser substitution, forcing the WebViewer backend to handle all fonts. This means that viewing and conversion to PDF will be 100% consistent from system-to-system, at the expense of a slightly slower initial viewing time and higher bandwidth usage.
  * Using https://docs.apryse.com/documentation/web/faq/self-serve-substitute-fonts/ along with this option allows you to fully customize the substitution behaviour for all office files.
  * @property {object} [officeOptions.formatOptions] An object that contains formatting options for an Office document. Same options as allowed here {@link Core.PDFNet.Convert.OfficeToPDFOptions}.
+ * @property {boolean} [officeOptions.formatOptions.hideTotalNumberOfPages] If true will hide total number of pages from page number labels (i.e, Page 1, Page 2, vs Page 1 of 2, Page 2 of 2)
  * @property {boolean} [officeOptions.formatOptions.applyPageBreaksToSheet] If true will split Excel worksheets into pages so that the output resembles print output.
  * @property {boolean} [officeOptions.formatOptions.displayChangeTracking] If true will display office change tracking markup present in the document (i.e, red strikethrough of deleted content and underlining of new content). Otherwise displays the resolved document content, with no markup. Defaults to true.
  * @property {number} [officeOptions.formatOptions.excelDefaultCellBorderWidth] Cell border width for table cells that would normally be drawn with no border. In units of points. Can be used to achieve a similar effect to the "show gridlines" display option within Microsoft Excel.
  * @property {number} [officeOptions.formatOptions.excelMaxAllowedCellCount] An exception will be thrown if the number of cells in an Excel document is above the value. Used for early termination of resource intensive documents. Setting this value to 250000 will allow the vast majority of Excel documents to convert without issue, while keeping RAM usage to a reasonable level. By default there is no limit to the number of allowed cells.
  * @property {string} [officeOptions.formatOptions.locale] Sets the value for Locale in the options object ISO 639-1 code of the current system locale. For example: 'en-US', 'ar-SA', 'de-DE', etc.
+ * @property {boolean} [enableOfficeEditing] If true, will load docx files with editing capabilities.
  * @property {string} [password] A string that will be used to as the password to load a password protected document.
  * @property {function} [onError] - A callback function that will be called when error occurs in the process of loading a document. The function signature is `function(e) {}`
  * @property {object} [xodOptions] - An object that contains the options for a XOD document.

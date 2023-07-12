@@ -1,33 +1,42 @@
 import { setCheckPasswordFunction } from 'components/PasswordModal';
-
 import core from 'core';
 import { fireError } from 'helpers/fireEvent';
 import getHashParameters from 'helpers/getHashParameters';
 import actions from 'actions';
+import DataElements from 'constants/dataElement';
 
-export default (dispatch, src, options = {}) => {
-  core.closeDocument();
+export default (dispatch, src, options = {}, documentViewerKey = 1) => {
+  core.closeDocument(documentViewerKey);
   options = { ...getDefaultOptions(), ...options };
 
-  options.docId = options.documentId || null;
-  options.onLoadingProgress = percent => dispatch(actions.setLoadingProgress(percent));
+  options.docId = options.docId || options.documentId || null;
+  const customLoadingProgressFunction = options.onLoadingProgress;
+  options.onLoadingProgress = (percent) => {
+    customLoadingProgressFunction && customLoadingProgressFunction(percent);
+    dispatch(actions.setLoadingProgress(percent));
+  };
   options.password = transformPasswordOption(options.password, dispatch);
   options.xodOptions = extractXodOptions(options);
   if ('onError' in options) {
     const userDefinedOnErrorCallback = options.onError;
     options.onError = function(error) {
-      userDefinedOnErrorCallback(error);
       fireError(error);
+      userDefinedOnErrorCallback(error);
     };
   } else {
     options.onError = fireError;
   }
 
+  dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
 
-  dispatch(actions.closeElement('passwordModal'));
-  // ignore caught errors because they are already being handled in the onError callback
-  core.loadDocument(src, options).catch(() => {});
-  dispatch(actions.openElement('progressModal'));
+  if (options.enableOfficeEditing && !src) {
+    core.loadBlankOfficeEditorDocument(options);
+  } else {
+    // ignore caught errors because they are already being handled in the onError callback
+    core.loadDocument(src, options, documentViewerKey).catch(() => {});
+  }
+
+  dispatch(actions.openElement(DataElements.PROGRESS_MODAL));
 };
 
 
@@ -45,12 +54,14 @@ const getDefaultOptions = () => ({
   singleServerMode: getHashParameters('singleServerMode', false),
   forceClientSideInit: getHashParameters('forceClientSideInit', false),
   disableWebsockets: getHashParameters('disableWebsockets', false),
-  cacheKey: JSON.parse(getHashParameters('cacheKey', null)),
+  cacheKey: getHashParameters('cacheKey', null),
   officeOptions: JSON.parse(getHashParameters('officeOptions', null)),
+  rasterizerOptions: JSON.parse(getHashParameters('rasterizerOptions', null)),
   streaming: getHashParameters('streaming', null),
   useDownloader: getHashParameters('useDownloader', true),
   backendType: getHashParameters('pdf', null),
   loadAsPDF: getHashParameters('loadAsPDF', null),
+  enableOfficeEditing: getHashParameters('enableOfficeEditing', false),
 });
 
 /**
@@ -62,7 +73,7 @@ const transformPasswordOption = (password, dispatch) => {
   let passwordChecked = false;
   let attempt = 0;
 
-  return checkPassword => {
+  return (checkPassword) => {
     dispatch(actions.setPasswordAttempts(attempt++));
 
     if (!passwordChecked && typeof password === 'string') {
@@ -76,12 +87,12 @@ const transformPasswordOption = (password, dispatch) => {
       }
 
       setCheckPasswordFunction(checkPassword);
-      dispatch(actions.openElement('passwordModal'));
+      dispatch(actions.openElement(DataElements.PASSWORD_MODAL));
     }
   };
 };
 
-const extractXodOptions = options => {
+const extractXodOptions = (options) => {
   const xodOptions = options.xodOptions || {};
 
   if (options.decryptOptions) {
