@@ -48,6 +48,11 @@ const DataElements = {
   SEARCH_PANEL: 'searchPanel',
   TEXT_EDITING_PANEL: 'textEditingPanel',
   COMPARE_PANEL: 'comparePanel',
+  PORTFOLIO_PANEL: 'portfolioPanel',
+  PORTFOLIO_PANEL_BUTTON: 'portfolioPanelButton',
+  PORTFOLIO_ADD_FILE: 'portfolioAddFile',
+  PORTFOLIO_ADD_FOLDER: 'portfolioAddFolder',
+  PORTFOLIO_ADD_NEW_BUTTON: 'portfolioAddNewButton',
   CALIBRATION_POPUP_BUTTON: 'calibratePopupButton',
   CALIBRATION_MODAL: 'calibrationModal',
 
@@ -77,6 +82,7 @@ const DataElements = {
   STAMP_OVERLAY: 'stampOverlay',
   SIGNATURE_OVERLAY: 'signatureOverlay',
   REDACTION_OVERLAY: 'redactionOverlay',
+  ANNOTATION_CONTENT_OVERLAY: 'annotationContentOverlay',
   THUMBNAILS_CONTROL_ROTATE_POPUP: 'thumbnailsControlRotatePopup',
   THUMBNAILS_CONTROL_ROTATE_POPUP_TRIGGER: 'thumbnailsControlRotatePopupTrigger',
   THUMBNAILS_CONTROL_MANIPULATE_POPUP: 'thumbnailsControlManipulatePopup',
@@ -120,6 +126,7 @@ const DataElements = {
   COLOR_PICKER_MODAL: 'ColorPickerModal',
   OPEN_FILE_MODAL: 'OpenFileModal',
   CUSTOM_MODAL: 'customModal',
+  CREATE_PORTFOLIO_MODAL: 'createPortfolioModal',
 
   // Filter modal
   ANNOTATION_USER_FILTER_PANEL_BUTTON: 'annotationUserFilterPanelButton',
@@ -134,6 +141,11 @@ const DataElements = {
   SETTINGS_LANGUAGE_SECTION: 'settingsLanguageSection',
   SETTINGS_LANGUAGE_DROPDOWN: 'settingsLanguageDropdown',
   SETTINGS_THEME_SECTION: 'settingsThemeSection',
+
+  // Create portfolio modal
+  PORTFOLIO_UPLOAD_FILES_TAB: 'portfolioUploadFilesTab',
+  PORTFOLIO_UPLOAD_FOLDER_TAB: 'portfolioUploadFolderTab',
+  PORTFOLIO_MODAL_ADD_ITEM_TRIGGER: 'portfolioModalAddItemTrigger',
 
   // Signature Modal
   SAVED_SIGNATURES_TAB: 'signatureModalSavedSignaturesTab',
@@ -152,17 +164,45 @@ const DataElements = {
   SAVED_INTIALS_PANEL_BUTTON: 'savedInitialsPanelButton',
   SAVED_FULL_SIGNATURES_PANEL: 'savedFullSignaturePanel',
   SAVED_INITIALS_PANEL: 'savedInitialsPanel',
+
   // MultiViewer Mode (MultiViewer)
   MULTI_VIEWER_SAVE_DOCUMENT_BUTTON: 'multiViewerSaveDocumentButton',
 
   // Office Editor
   OFFICE_EDITOR_TOOLS_HEADER: 'officeEditorToolsHeader',
+
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',
   INSERT_FROM_FILE_TAB: 'insertUploadedPagePanelButton',
   INSERT_BLANK_PAGE_PANEL: 'insertBlankPagePanel',
   INSERT_FROM_FILE_PANEL: 'insertUploadedPagePanel',
+
+  // Toolbar groups/Ribbons
+  VIEW_TOOLBAR_GROUP: 'toolbarGroup-View',
+  ANNOTATE_TOOLBAR_GROUP: 'toolbarGroup-Annotate',
+  SHAPES_TOOLBAR_GROUP: 'toolbarGroup-Shapes',
+  REDACT_TOOLBAR_GROUP: 'toolbarGroup-Redact',
+  INSERT_TOOLBAR_GROUP: 'toolbarGroup-Insert',
+  MEASURE_TOOLBAR_GROUP: 'toolbarGroup-Measure',
+  EDIT_TOOLBAR_GROUP: 'toolbarGroup-Edit',
+  EDIT_TEXT_TOOLBAR_GROUP: 'toolbarGroup-EditText',
+  FILL_AND_SIGN_TOOLBAR_GROUP: 'toolbarGroup-FillAndSign',
+  FORMS_TOOLBAR_GROUP: 'toolbarGroup-Forms',
+
+  TOOLBAR_GROUPS: [],
 };
 
+DataElements.TOOLBAR_GROUPS = [
+  DataElements.VIEW_TOOLBAR_GROUP,
+  DataElements.ANNOTATE_TOOLBAR_GROUP,
+  DataElements.SHAPES_TOOLBAR_GROUP,
+  DataElements.REDACT_TOOLBAR_GROUP,
+  DataElements.INSERT_TOOLBAR_GROUP,
+  DataElements.MEASURE_TOOLBAR_GROUP,
+  DataElements.EDIT_TOOLBAR_GROUP,
+  DataElements.EDIT_TEXT_TOOLBAR_GROUP,
+  DataElements.FILL_AND_SIGN_TOOLBAR_GROUP,
+  DataElements.FORMS_TOOLBAR_GROUP,
+];
 
 export default DataElements;

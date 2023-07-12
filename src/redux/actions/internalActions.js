@@ -4,6 +4,8 @@ import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import selectors from 'selectors';
 import core from 'core';
+import DataElements from 'constants/dataElement';
+import { setToolbarGroup } from './exposedActions';
 
 // viewer
 /**
@@ -33,6 +35,7 @@ export const disableElement = (dataElement, priority) => (
     );
     if (!currentPriority || priority >= currentPriority) {
       dispatch({ type: 'DISABLE_ELEMENT', payload: { dataElement, priority } });
+      updateCurrentToolbarGroup([dataElement], dispatch, getState);
     }
   }
 };
@@ -49,6 +52,26 @@ export const disableElements = (dataElements, priority) => (
     type: 'DISABLE_ELEMENTS',
     payload: { dataElements: filteredDataElements, priority },
   });
+
+  updateCurrentToolbarGroup(filteredDataElements, dispatch, getState);
+};
+
+// A helper that updates the current toolbar group if the current toolbar group is disabled
+const updateCurrentToolbarGroup = (dataElements, dispatch, getState) => {
+  // Check if we disabled a toolbar group
+  const disabledToolbarGroups = dataElements.filter((dataElement) => DataElements.TOOLBAR_GROUPS.includes(dataElement));
+  if (disabledToolbarGroups.length > 0) {
+    // If we did check if it is the currently active toolbar group
+    const activeToolbarGroup = selectors.getCurrentToolbarGroup(getState());
+    const wasActiveToolbarGroupDisabled = disabledToolbarGroups.includes(activeToolbarGroup);
+    // If it is disabled, switch to the first enabled toolbar group, or the view group if none are enabled
+    if (wasActiveToolbarGroupDisabled) {
+      const enabledToolbarGroups = selectors.getEnabledToolbarGroups(getState());
+      const firstEnabledToolbarGroup = enabledToolbarGroups[0] || DataElements.VIEW_TOOLBAR_GROUP;
+      // Set the toolbar group, with no default tool selected by default
+      setToolbarGroup(firstEnabledToolbarGroup, false)(dispatch, getState);
+    }
+  }
 };
 export const enableElement = (dataElement, priority) => (
   dispatch,

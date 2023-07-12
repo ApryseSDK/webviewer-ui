@@ -59,7 +59,7 @@ export default {
     isMultiTab: false,
     thumbnailSelectingPages: false,
     isInDesktopOnlyMode: false,
-    toolbarGroup: 'toolbarGroup-Annotate',
+    toolbarGroup: DataElements.ANNOTATE_TOOLBAR_GROUP,
     activeTheme: 'light',
     currentLanguage: 'en',
     disabledElements: {
@@ -222,8 +222,8 @@ export default {
           },
         },
       ],
-      'toolbarGroup-View': [],
-      'toolbarGroup-Annotate': [
+      [DataElements.VIEW_TOOLBAR_GROUP]: [],
+      [DataElements.ANNOTATE_TOOLBAR_GROUP]: [
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
@@ -297,7 +297,7 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
-      'toolbarGroup-Shapes': [
+      [DataElements.SHAPES_TOOLBAR_GROUP]: [
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
@@ -373,7 +373,7 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
-      'toolbarGroup-Redact': [
+      [DataElements.REDACT_TOOLBAR_GROUP]: [
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
@@ -409,7 +409,7 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
-      'toolbarGroup-Insert': [
+      [DataElements.INSERT_TOOLBAR_GROUP]: [
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
@@ -473,7 +473,7 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
-      'toolbarGroup-Measure': [
+      [DataElements.MEASURE_TOOLBAR_GROUP]: [
         { type: 'spacer' },
         // @todo: add "measurement" to data-element names in 9.0. Note: do not rename arcMeasurementTools to arcTools as it is being used elsewhere.
         {
@@ -536,7 +536,7 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
-      'toolbarGroup-Edit': [
+      [DataElements.EDIT_TOOLBAR_GROUP]: [
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
@@ -559,7 +559,7 @@ export default {
         },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
-      'toolbarGroup-EditText': [
+      [DataElements.EDIT_TEXT_TOOLBAR_GROUP]: [
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
@@ -575,7 +575,7 @@ export default {
         },
         { type: 'spacer', hidden: ['mobile', 'small-mobile'] },
       ],
-      'toolbarGroup-FillAndSign': [
+      [DataElements.FILL_AND_SIGN_TOOLBAR_GROUP]: [
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
@@ -641,7 +641,7 @@ export default {
         { type: 'toolButton', toolName: 'AnnotationEraserTool' },
         { type: 'spacer', hidden: ['tablet', 'mobile', 'small-mobile'] },
       ],
-      'toolbarGroup-Forms': [
+      [DataElements.FORMS_TOOLBAR_GROUP]: [
         { type: 'spacer' },
         {
           type: 'toolGroupButton',
