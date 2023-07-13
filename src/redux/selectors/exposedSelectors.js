@@ -56,6 +56,7 @@ export const getSignatureMode = (state) => state.viewer.signatureMode;
 export const getSavedInitials = (state) => state.viewer.savedInitials;
 export const getSelectedDisplayedInitialsIndex = (state) => state.viewer.selectedDisplayedInitialsIndex;
 export const getIsInitialsModeEnabled = (state) => state.viewer.isInitialsModeEnabled;
+export const getDisplayedInitial = (state) => state.viewer.savedInitials[state.viewer.selectedDisplayedInitialsIndex];
 
 export const getAutoFocusNoteOnAnnotationSelection = (state) => state.viewer.autoFocusNoteOnAnnotationSelection;
 export const getNotesInLeftPanel = (state) => state.viewer.notesInLeftPanel;
