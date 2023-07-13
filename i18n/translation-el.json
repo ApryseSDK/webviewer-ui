@@ -435,7 +435,8 @@
       "drawSignature": "Κλήρωση υπογραφής*",
       "drawInitial": "Αρχικά κλήρωσης*",
       "pickInitialsFile": "Επιλέξτε Αρχικά",
-      "noSignatures": "Αυτήν τη στιγμή δεν υπάρχουν αποθηκευμένες υπογραφές."
+      "noSignatures": "Αυτήν τη στιγμή δεν υπάρχουν αποθηκευμένες υπογραφές.",
+      "fontStyle": "στυλ γραμματοσειράς"
     },
     "pageReplacementModal": {
       "yourFiles": "Τα αρχεία σας",

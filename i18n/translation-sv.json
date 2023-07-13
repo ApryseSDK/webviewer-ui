@@ -435,7 +435,8 @@
       "drawSignature": "Rita signatur*",
       "drawInitial": "Rita initialer*",
       "pickInitialsFile": "Välj initialer",
-      "noSignatures": "Det finns för närvarande inga sparade signaturer."
+      "noSignatures": "Det finns för närvarande inga sparade signaturer.",
+      "fontStyle": "typsnitt"
     },
     "pageReplacementModal": {
       "yourFiles": "Dina filer",

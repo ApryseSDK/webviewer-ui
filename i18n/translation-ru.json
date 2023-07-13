@@ -435,7 +435,8 @@
       "drawSignature": "Нарисовать подпись*",
       "drawInitial": "Нарисовать инициалы*",
       "pickInitialsFile": "Выберите инициалы",
-      "noSignatures": "В настоящее время нет сохраненных подписей."
+      "noSignatures": "В настоящее время нет сохраненных подписей.",
+      "fontStyle": "стиль шрифта"
     },
     "pageReplacementModal": {
       "yourFiles": "Ваши файлы",

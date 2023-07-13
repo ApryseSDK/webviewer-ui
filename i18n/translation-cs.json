@@ -435,7 +435,8 @@
       "drawSignature": "Nakreslit podpis*",
       "drawInitial": "Kreslit iniciály*",
       "pickInitialsFile": "Vyberte Iniciály",
-      "noSignatures": "Momentálně nejsou žádné uložené podpisy."
+      "noSignatures": "Momentálně nejsou žádné uložené podpisy.",
+      "fontStyle": "styl fontu"
     },
     "pageReplacementModal": {
       "yourFiles": "Vaše soubory",

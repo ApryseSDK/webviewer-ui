@@ -435,7 +435,8 @@
       "drawSignature": "Handtekening tekenen*",
       "drawInitial": "Initialen tekenen*",
       "pickInitialsFile": "Kies initialen",
-      "noSignatures": "Er zijn momenteel geen opgeslagen handtekeningen."
+      "noSignatures": "Er zijn momenteel geen opgeslagen handtekeningen.",
+      "fontStyle": "lettertype"
     },
     "pageReplacementModal": {
       "yourFiles": "Uw bestanden",

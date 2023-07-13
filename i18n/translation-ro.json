@@ -435,7 +435,8 @@
       "drawSignature": "Semnătura extragerii*",
       "drawInitial": "Desenați inițiale*",
       "pickInitialsFile": "Alegeți Inițiale",
-      "noSignatures": "În prezent, nu există semnături salvate."
+      "noSignatures": "În prezent, nu există semnături salvate.",
+      "fontStyle": "stilul fontului"
     },
     "pageReplacementModal": {
       "yourFiles": "Fișierele dvs",

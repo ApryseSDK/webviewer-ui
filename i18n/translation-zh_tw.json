@@ -435,7 +435,8 @@
       "drawSignature": "繪製簽名*",
       "drawInitial": "畫首字母*",
       "pickInitialsFile": "選擇縮寫",
-      "noSignatures": "當前沒有保存的簽名。"
+      "noSignatures": "當前沒有保存的簽名。",
+      "fontStyle": "字體樣式"
     },
     "pageReplacementModal": {
       "yourFiles": "您的文件",

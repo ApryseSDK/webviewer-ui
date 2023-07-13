@@ -435,7 +435,8 @@
       "drawSignature": "서명 그리기*",
       "drawInitial": "이니셜 그리기*",
       "pickInitialsFile": "이니셜 선택",
-      "noSignatures": "현재 저장된 서명이 없습니다."
+      "noSignatures": "현재 저장된 서명이 없습니다.",
+      "fontStyle": "글꼴 스타일"
     },
     "pageReplacementModal": {
       "yourFiles": "내 파일",

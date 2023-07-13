@@ -435,7 +435,8 @@
       "drawSignature": "Lukis Tandatangan*",
       "drawInitial": "Lukis Huruf Awal*",
       "pickInitialsFile": "Pilih Inisial",
-      "noSignatures": "Pada masa ini tiada tandatangan yang disimpan."
+      "noSignatures": "Pada masa ini tiada tandatangan yang disimpan.",
+      "fontStyle": "gaya fon"
     },
     "pageReplacementModal": {
       "yourFiles": "Fail Anda",

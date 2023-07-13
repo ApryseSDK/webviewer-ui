@@ -435,7 +435,8 @@
       "drawSignature": "Gambar Tanda Tangan*",
       "drawInitial": "Gambar Inisial*",
       "pickInitialsFile": "Pilih Inisial",
-      "noSignatures": "Saat ini tidak ada tanda tangan yang disimpan."
+      "noSignatures": "Saat ini tidak ada tanda tangan yang disimpan.",
+      "fontStyle": "gaya tulisan"
     },
     "pageReplacementModal": {
       "yourFiles": "File Anda",

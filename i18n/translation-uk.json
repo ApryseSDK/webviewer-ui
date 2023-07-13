@@ -435,7 +435,8 @@
       "drawSignature": "Намалювати підпис*",
       "drawInitial": "Намалювати ініціали*",
       "pickInitialsFile": "Виберіть Ініціали",
-      "noSignatures": "Наразі немає збережених підписів."
+      "noSignatures": "Наразі немає збережених підписів.",
+      "fontStyle": "стиль шрифту"
     },
     "pageReplacementModal": {
       "yourFiles": "Ваші файли",

@@ -435,7 +435,8 @@
       "drawSignature": "Tirage au sort Signature*",
       "drawInitial": "Dessiner des initiales*",
       "pickInitialsFile": "Choisissez les initiales",
-      "noSignatures": "Il n'y a actuellement aucune signature enregistrée."
+      "noSignatures": "Il n'y a actuellement aucune signature enregistrée.",
+      "fontStyle": "Police"
     },
     "pageReplacementModal": {
       "yourFiles": "Vos fichiers",

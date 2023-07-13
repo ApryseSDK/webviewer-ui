@@ -435,7 +435,8 @@
       "drawSignature": "Narysuj podpis*",
       "drawInitial": "Narysuj inicjały*",
       "pickInitialsFile": "Wybierz inicjały",
-      "noSignatures": "Obecnie nie ma zapisanych podpisów."
+      "noSignatures": "Obecnie nie ma zapisanych podpisów.",
+      "fontStyle": "styl czcionki"
     },
     "pageReplacementModal": {
       "yourFiles": "Twoje pliki",

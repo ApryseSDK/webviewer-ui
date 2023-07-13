@@ -435,7 +435,8 @@
       "drawSignature": "স্বাক্ষর আঁক*",
       "drawInitial": "আঁকুন আদ্যক্ষর*",
       "pickInitialsFile": "আদ্যক্ষর নির্বাচন করুন",
-      "noSignatures": "বর্তমানে কোনো সংরক্ষিত স্বাক্ষর নেই।"
+      "noSignatures": "বর্তমানে কোনো সংরক্ষিত স্বাক্ষর নেই।",
+      "fontStyle": "ফন্ট-স্টাইল"
     },
     "pageReplacementModal": {
       "yourFiles": "আপনার ফাইল",

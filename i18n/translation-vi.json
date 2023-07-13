@@ -435,7 +435,8 @@
       "drawSignature": "Vẽ Chữ ký *",
       "drawInitial": "Rút tên viết tắt *",
       "pickInitialsFile": "Chọn tên viết tắt",
-      "noSignatures": "Hiện tại không có chữ ký nào được lưu."
+      "noSignatures": "Hiện tại không có chữ ký nào được lưu.",
+      "fontStyle": "kiểu phông chữ"
     },
     "pageReplacementModal": {
       "yourFiles": "Tệp của bạn",

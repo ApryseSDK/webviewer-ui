@@ -435,7 +435,8 @@
       "drawSignature": "हस्ताक्षर बनाएं*",
       "drawInitial": "आद्याक्षर ड्रा करें*",
       "pickInitialsFile": "आद्याक्षर चुनें",
-      "noSignatures": "वर्तमान में कोई सहेजे गए हस्ताक्षर नहीं हैं।"
+      "noSignatures": "वर्तमान में कोई सहेजे गए हस्ताक्षर नहीं हैं।",
+      "fontStyle": "लिपि शैली"
     },
     "pageReplacementModal": {
       "yourFiles": "आपकी फ़ाइलें",

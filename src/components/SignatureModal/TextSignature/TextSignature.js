@@ -248,7 +248,6 @@ const TextSignature = ({
     setSignature();
     setFullSiganture(value);
     setInitials(parseInitialsFromFullSignature(value));
-
     const newFontSize = scaleFontSize(value, selectedFontFamily);
     setFontSize(newFontSize);
   };
@@ -297,6 +296,32 @@ const TextSignature = ({
           {initials}
         </div>
       </div>
+    );
+  };
+
+  // Renders the font options if initials and text signature are occupied
+  const renderFontOptions = () => {
+    if (fullSignature === '' && initials === '') {
+      return (
+        <Dropdown
+          disabled={true}
+          placeholder={t('option.signatureModal.fontStyle')}
+        />
+      );
+    }
+    return (
+      <Dropdown
+        items={fonts.map((font) => ({ font, value: `${fullSignature} ${isInitialsModeEnabled ? initials : ''}` }))}
+        getCustomItemStyle={(item) => ({ fontFamily: item.font })}
+        getKey={(item) => item.font}
+        getDisplayValue={(item) => {
+          return item.value || item.font;
+        }}
+        onClickItem={handleDropdownSelectionChange}
+        currentSelectionKey={selectedFontFamily || fonts[0]}
+        maxHeight={isMobile() ? 80 : null}
+        dataElement="text-signature-font-dropdown"
+      />
     );
   };
 
@@ -364,18 +389,7 @@ const TextSignature = ({
       <canvas ref={initialsHiddenCanvasRef} />
       <div className="colorpalette-clear-container">
         <div className="signature-style-options">
-          <Dropdown
-            items={fonts.map((font) => ({ font, value: `${fullSignature} ${isInitialsModeEnabled ? initials : ''}` }))}
-            getCustomItemStyle={(item) => ({ fontFamily: item.font })}
-            getKey={(item) => item.font}
-            getDisplayValue={(item) => {
-              return item.value || item.font;
-            }}
-            onClickItem={handleDropdownSelectionChange}
-            currentSelectionKey={selectedFontFamily || fonts[0]}
-            maxHeight={isMobile() ? 80 : null}
-            dataElement="text-signature-font-dropdown"
-          />
+          {renderFontOptions()}
           <div className="placeholder-dropdown"></div>
           <div className="divider"></div>
           <ColorPalette

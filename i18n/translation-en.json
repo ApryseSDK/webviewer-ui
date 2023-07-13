@@ -435,7 +435,8 @@
       "drawSignature": "Draw Signature*",
       "drawInitial": "Draw Initials*",
       "pickInitialsFile": "Choose Initials",
-      "noSignatures": "There are currently no saved signatures."
+      "noSignatures": "There are currently no saved signatures.",
+      "fontStyle": "Font style"
     },
     "pageReplacementModal": {
       "yourFiles": "Your Files",

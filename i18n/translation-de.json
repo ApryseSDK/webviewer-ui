@@ -435,7 +435,8 @@
       "drawSignature": "Unterschrift zeichnen*",
       "drawInitial": "Initialen zeichnen*",
       "pickInitialsFile": "Wählen Sie Initialen",
-      "noSignatures": "Es sind derzeit keine gespeicherten Unterschriften vorhanden."
+      "noSignatures": "Es sind derzeit keine gespeicherten Unterschriften vorhanden.",
+      "fontStyle": "Schriftstil"
     },
     "pageReplacementModal": {
       "yourFiles": "Ihre Dateien",
