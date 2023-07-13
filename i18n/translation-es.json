@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Responder a las anotaciones seleccionadas ({{count}})",
     "comparePages": "Comparar páginas",
     "startComparison": "Iniciar comparación",
+    "showComparison": "Mostrar comparación",
     "back": "atrás",
     "clearSignature": "Firma clara",
     "newDocument": "Nuevo documento"
@@ -437,9 +438,6 @@
       "noSignatures": "Actualmente no hay firmas guardadas."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Arrastra y suelta tu archivo aquí",
-      "selectFile": "Seleccione su archivo aquí",
-      "or": "O",
       "yourFiles": "Tus archivos",
       "chooseFile": "Escoge un archivo",
       "localFile": "Archivo local",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Si cambia la escala para la medida o herramienta seleccionada, la escala",
         "notUsedWillDelete": " ya no será utilizado por ninguna medida o herramienta y será eliminado. La eliminación es irreversible.",
         "ifToContinue": "¿Está seguro de que desea continuar?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Eliminar contenido",
+        "message": "¿Está seguro de que desea eliminar el contenido seleccionado? Esto no se puede deshacer."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Opciones de marca de agua",
     "watermarks": "marcas de agua"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portafolio PDF",
+    "portfolioAddFile": "Agregar archivo",
+    "portfolioAddFolder": "Agregar carpeta",
+    "portfolioCreateFolder": "Crear carpeta",
+    "portfolioNewFolder": "Nueva carpeta",
+    "portfolioNewFolderPlaceholder": "Nombre de la carpeta"
+  },
   "languageModal": {
     "selectLanguage": "Seleccione el idioma"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "lista numerada",
     "insertLink": "Insertar el link",
     "insertImage": "Insertar imagen",
-    "notAvailableInDemoMode": "No disponible en modo de demostración",
     "notSupportedOnMobile": "La edición de Office no es compatible con dispositivos móviles."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Filigrana",
     "addWatermark": "Agregar marca de agua",
     "save": "Guardar el archivo",
-    "pageError": "Página no válida. Los intervalos de páginas válidos están entre 1 y"
+    "pageError": "Página no válida. Los intervalos de páginas válidos están entre 1 y",
+    "fileNameCannotBeEmpty": "El nombre del archivo no puede estar vacío"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Crear cartera PDF",
+    "uploadFiles": "Subir archivos",
+    "uploadFolder": "Cargar carpeta",
+    "addFiles": "Agregar archivos",
+    "addFolder": "Agregar carpeta"
+  },
+  "filePicker": {
+    "dragAndDrop": "Arrastra y suelta tu archivo aquí",
+    "selectFile": "Seleccione su archivo aquí",
+    "or": "O"
   }
 }

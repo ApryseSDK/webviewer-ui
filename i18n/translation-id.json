@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Membalas anotasi yang dipilih ({{count}})",
     "comparePages": "Bandingkan halaman",
     "startComparison": "Mulai Perbandingan",
+    "showComparison": "Tampilkan Perbandingan",
     "back": "Kembali",
     "clearSignature": "Tanda tangan yang jelas",
     "newDocument": "Dokumen Baru"
@@ -437,9 +438,6 @@
       "noSignatures": "Saat ini tidak ada tanda tangan yang disimpan."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Seret & Jatuhkan file Anda di sini",
-      "selectFile": "Pilih file Anda di sini",
-      "or": "Atau",
       "yourFiles": "File Anda",
       "chooseFile": "Pilih file",
       "localFile": "File Lokal",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Jika Anda mengubah skala untuk pengukuran atau alat yang dipilih, skala",
         "notUsedWillDelete": " tidak akan lagi digunakan oleh pengukuran atau alat apa pun dan akan dihapus. Penghapusan tidak dapat diubah.",
         "ifToContinue": "Anda yakin ingin melanjutkan?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Hapus Konten",
+        "message": "Apakah Anda yakin ingin menghapus konten yang dipilih? Ini tidak dapat diurungkan."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Opsi Tanda Air",
     "watermarks": "Tanda air"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portofolio PDF",
+    "portfolioAddFile": "Tambah berkas",
+    "portfolioAddFolder": "Tambah Folder",
+    "portfolioCreateFolder": "Membuat folder",
+    "portfolioNewFolder": "Folder baru",
+    "portfolioNewFolderPlaceholder": "Nama folder"
+  },
   "languageModal": {
     "selectLanguage": "Pilih bahasa"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Daftar bernomor",
     "insertLink": "Sisipkan tautan",
     "insertImage": "Sisipkan gambar",
-    "notAvailableInDemoMode": "Tidak tersedia dalam mode demo",
     "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Tanda air",
     "addWatermark": "Tambahkan Tanda Air",
     "save": "Menyimpan file",
-    "pageError": "Halaman tidak valid. Rentang halaman yang valid adalah antara 1 -"
+    "pageError": "Halaman tidak valid. Rentang halaman yang valid adalah antara 1 -",
+    "fileNameCannotBeEmpty": "Nama File tidak boleh kosong"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Buat Portofolio PDF",
+    "uploadFiles": "Unggah berkas",
+    "uploadFolder": "Unggah Folder",
+    "addFiles": "Tambahkan File",
+    "addFolder": "Tambah Folder"
+  },
+  "filePicker": {
+    "dragAndDrop": "Seret & Jatuhkan file Anda di sini",
+    "selectFile": "Pilih file Anda di sini",
+    "or": "Atau"
   }
 }

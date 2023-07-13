@@ -7,7 +7,7 @@
     "calendar": "Kalender",
     "calibrate": "Kalibrieren",
     "cancel": "Abbrechen",
-    "confirm": "Bestätigen Sie",
+    "confirm": "Bestätigen",
     "clear": "Löschen",
     "clearAll": "Alles löschen",
     "close": "Schliessen",
@@ -55,13 +55,13 @@
     "zoom": "Zoom",
     "zoomIn": "Heranzoomen",
     "zoomOut": "Rauszoomen",
-    "zoomSet": "Stellen Sie den Zoom ein",
+    "zoomSet": "Zoom einstellen",
     "zoomControls": "Zoomeinstellungen",
     "draw": "Zeichnen",
     "type": "Schreiben",
     "upload": "Hochladen",
     "link": "Verknüpfung",
-    "fileAttachmentDownload": "Laden Sie die angehängte Datei herunter",
+    "fileAttachmentDownload": "Anhand herunterladen",
     "prevResult": "Vorheriges Ergebnis",
     "nextResult": "Nächstes Ergebnis",
     "prev": "Zurück",
@@ -100,14 +100,15 @@
     "multiReplyAnnotations": "Auf ausgewählte Anmerkungen antworten ({{count}})",
     "comparePages": "Seiten vergleichen",
     "startComparison": "Vergleich starten",
-    "back": "Der Rücken",
-    "clearSignature": "Klare Unterschrift",
+    "showComparison": "Vergleich anzeigen",
+    "back": "Zurück",
+    "clearSignature": "Signatur zurücksetzen",
     "newDocument": "Neues Dokument"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
     "arc": "Bogen",
-    "arcMeasurement": "Lichtbogenmessung",
+    "arcMeasurement": "Gradmessung",
     "arrow": "Pfeil",
     "callout": "Callout",
     "crop": "Seite zuschneiden",
@@ -141,7 +142,7 @@
     "stickyNote": "Notiz",
     "strikeout": "Durchstreichen",
     "underline": "Unterstreichen",
-    "custom": "Angepasst",
+    "custom": "Benutzerdefiniert",
     "rubberStamp": "Stempel",
     "note": "Hinweis",
     "textField": "Textfeld",
@@ -261,8 +262,8 @@
     "enterContentEditingMode": "Sie sind dabei, in den Textbearbeitungsmodus zu wechseln.",
     "existingAnnotationWarning": "Vorhandene Anmerkungen stimmen möglicherweise nicht mit dem Text überein, nachdem dieser bearbeitet wurde.",
     "changesCannotBeUndone": "Vorgenommene Änderungen können nicht rückgängig gemacht werden.",
-    "doNotShowAgain": "Zeig mir das nicht noch einmal",
-    "doNotAskAgain": "Frag nicht nochmal",
+    "doNotShowAgain": "Diese Meldung nicht mehr anzeigen",
+    "doNotAskAgain": "Nicht noch einmal fragen",
     "enterReplacementText": "Geben Sie den Text ein, den Sie ersetzen möchten",
     "sortBy": "Sortiere nach",
     "emptyCustomStampInput": "Stempeltext darf nicht leer sein",
@@ -420,7 +421,7 @@
       "addStamp": "Neuen Stempel hinzufügen"
     },
     "signatureOverlay": {
-      "addSignature": "Eine Unterschrift hinzufügen",
+      "addSignature": "Unterschrift hinzufügen",
       "addSignatureOrInitials": "Unterschrift/Initialen"
     },
     "signatureModal": {
@@ -437,9 +438,6 @@
       "noSignatures": "Es sind derzeit keine gespeicherten Unterschriften vorhanden."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",
-      "selectFile": "Wählen Sie hier Ihre Datei aus",
-      "or": "Oder",
       "yourFiles": "Ihre Dateien",
       "chooseFile": "Wähle eine Datei aus",
       "localFile": "Lokale Datei",
@@ -503,13 +501,13 @@
       },
       "scaleOverlay": {
         "addNewScale": "Neuen Maßstab hinzufügen",
-        "selectTwoPoints": "Wählen Sie zwei Punkte mit bekannter Abmessung zum Kalibrieren aus",
+        "selectTwoPoints": "Zwei Punkte mit bekannten Abmessungen für die Kalibrierung auswählen",
         "inputKnowDimension": "Geben Sie bekannte Dimensionen und Einheiten zum Kalibrieren ein",
         "multipleScales": "Mehrere Skalen"
       },
       "deleteScaleModal": {
-        "deleteScale": "Waage löschen",
-        "scaleIsOn-delete-info": "Diese Waage wird derzeit am verwendet",
+        "deleteScale": "Maßstab löschen",
+        "scaleIsOn-delete-info": "Aktuell verwendeter Maßstab",
         "page-delete-info": "Seite",
         "appliedTo-delete-info": "und beantragt",
         "measurement": "Messung",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Wenn Sie den Maßstab für die ausgewählte Messung oder das ausgewählte Werkzeug ändern, skalieren Sie",
         "notUsedWillDelete": " werden von keinen Messungen oder Werkzeugen mehr verwendet und gelöscht. Die Löschung ist irreversibel.",
         "ifToContinue": "Möchten Sie wirklich fortfahren?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Inhalt löschen",
+        "message": "Sind Sie sicher, dass Sie den ausgewählten Inhalt löschen möchten? Dies kann nicht rückgängig gemacht werden."
       }
     },
     "stylePopup": {
@@ -639,7 +643,7 @@
       "disableNoteSubmissionWithEnterDesc": "Deaktivieren Sie die Möglichkeit, Notizen zu senden, indem Sie nur die Eingabetaste drücken, wenn sie zuvor aktiviert war. Dadurch wird das Senden von Notizen auf die Standardeinstellung zurückgesetzt, die Strg/Befehl + Eingabetaste ist.",
       "disableAutoExpandCommentThread": "Kommentar-Thread automatisch erweitern deaktivieren",
       "disableAutoExpandCommentThreadDesc": "Deaktiviert die automatische Erweiterung aller Kommentar-Threads im Notizenbereich.",
-      "disableReplyCollapse": "Reply Collapse deaktivieren",
+      "disableReplyCollapse": "Deaktiviere eingeklappte Antworten",
       "disableReplyCollapseDesc": "Deaktiviert das Reduzieren der Antworten im Notizenbereich.",
       "disableTextCollapse": "Deaktivieren Sie die Textreduzierung",
       "disableTextCollapseDesc": "Deaktiviert das Reduzieren des Anmerkungstexts im Notizenbereich.",
@@ -791,7 +795,7 @@
   "link": {
     "url": "URL",
     "page": "Seite",
-    "enterurl": "Geben Sie die URL ein, zu der Sie einen Link erstellen möchten",
+    "enterurl": "URL eingeben, auf die der Link verweisen soll",
     "enterpage": "Wählen Sie die Seitennummer aus, zu der Sie einen Link erstellen möchten",
     "urlLink": "URL-Link"
   },
@@ -1022,15 +1026,15 @@
     "allPages": "Alle",
     "singlePage": "Aktuelle Seite",
     "multiPage": "Seite angeben",
-    "cropDimensions": "Crop-Abmessungen",
+    "cropDimensions": "Zuschneidungsabmessungen",
     "dimensionInput": {
       "unitOfMeasurement": "Einheit",
       "autoTrim": "Automatisches Trimmen"
     },
     "cropModal": {
-      "applyTitle": "Ernte anwenden?",
+      "applyTitle": "Zuschneidung bestätigen",
       "applyMessage": "Durch diese Aktion werden alle ausgewählten Seiten dauerhaft beschnitten. Es kann nicht ungeschehen gemacht werden.",
-      "cancelTitle": "Ernte abbrechen?",
+      "cancelTitle": "Zuschneidung abbrechen",
       "cancelMessage": "Möchten Sie das Zuschneiden aller ausgewählten Seiten wirklich abbrechen?"
     }
   },
@@ -1045,15 +1049,15 @@
     "clearMarked": "Markierung entfernen",
     "redactAllMarked": "Alle schwärzen",
     "redactionItem": {
-      "regionRedaction": "Regionsredaktion",
-      "fullPageRedaction": "Ganzseitige Redaktion",
-      "fullVideoFrameRedaction": "Video-Redaktion",
-      "audioRedaction": "Audio-Redaktion",
-      "fullVideoFrameAndAudioRedaction": "Video- und Audioredaktion",
+      "regionRedaction": "Region schwärzen",
+      "fullPageRedaction": "Seite schwärzen",
+      "fullVideoFrameRedaction": "Videoframe schwärzen",
+      "audioRedaction": "Audio schwärzen",
+      "fullVideoFrameAndAudioRedaction": "Video- und Audio schwärzen",
       "image": "Bild"
     },
-    "expand": "Erweitern",
-    "collapse": "Zusammenbruch",
+    "expand": "Mehr",
+    "collapse": "Weniger",
     "searchResults": "Suchergebnisse",
     "search": {
       "creditCards": "Kreditkarte",
@@ -1076,24 +1080,31 @@
     "watermarkOptions": "Wasserzeichenoptionen",
     "watermarks": "Wasserzeichen"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF-Portfolio",
+    "portfolioAddFile": "Datei hinzufügen",
+    "portfolioAddFolder": "Ordner hinzufügen",
+    "portfolioCreateFolder": "Ordner erstellen",
+    "portfolioNewFolder": "Neuer Ordner",
+    "portfolioNewFolderPlaceholder": "Ordnernamen"
+  },
   "languageModal": {
     "selectLanguage": "Sprache auswählen"
   },
   "officeEditor": {
-    "bold": "Deutlich",
+    "bold": "Fett",
     "italic": "Kursiv",
     "underline": "Unterstreichen",
     "textColor": "Textfarbe",
     "leftAlign": "Links ausrichten",
     "centerAlign": "Zentrieren",
     "rightAlign": "Rechts ausrichten",
-    "justify": "Rechtfertigen",
+    "justify": "Blocksatz",
     "lineSpacing": "Zeilen- und Absatzabstand",
     "bulletList": "Liste mit Aufzählungszeichen",
     "numberList": "Nummerierte Liste",
     "insertLink": "Verknüpfung einfügen",
     "insertImage": "Bild einfügen",
-    "notAvailableInDemoMode": "Im Demomodus nicht verfügbar",
     "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt."
   },
   "insertPageModal": {
@@ -1122,7 +1133,7 @@
         "letter": "Brief",
         "halfLetter": "Halber Buchstabe",
         "juniorLegal": "Junior legal",
-        "custom": "Brauch"
+        "custom": "Benutzerdefiniert"
       },
       "units": "Einheiten"
     },
@@ -1149,18 +1160,18 @@
     "comparePanel": {
       "Find": "Im Dokument finden",
       "changesList": "Änderungsliste",
-      "change": "Veränderung",
+      "change": "Ändern",
       "old": "Alt",
       "new": "Neu",
-      "page": "Buchseite",
+      "page": "Seite",
       "textContent": "Textinhalt",
-      "delete": "löschen",
-      "insert": "Einfügung",
-      "edit": "bearbeiten"
+      "delete": "Löschen",
+      "insert": "Einfügen",
+      "edit": "Bearbeiten"
     }
   },
   "saveModal": {
-    "close": "Nah dran",
+    "close": "Schließen",
     "saveAs": "Speichern als",
     "general": "Allgemein",
     "fileName": "Dateiname",
@@ -1178,6 +1189,19 @@
     "watermark": "Wasserzeichen",
     "addWatermark": "Wasserzeichen hinzufügen",
     "save": "Datei speichern",
-    "pageError": "Ungültige Seite. Gültige Seitenbereiche liegen zwischen 1 -"
+    "pageError": "Ungültige Seite. Gültige Seitenbereiche liegen zwischen 1 -",
+    "fileNameCannotBeEmpty": "Der Dateiname darf nicht leer sein"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Erstellen Sie ein PDF-Portfolio",
+    "uploadFiles": "Daten hochladen",
+    "uploadFolder": "Ordner hochladen",
+    "addFiles": "Dateien hinzufügen",
+    "addFolder": "Ordner hinzufügen"
+  },
+  "filePicker": {
+    "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",
+    "selectFile": "Wählen Sie hier Ihre Datei aus",
+    "or": "Oder"
   }
 }

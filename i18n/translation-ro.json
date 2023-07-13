@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Răspundeți la adnotările selectate ({{count}})",
     "comparePages": "Comparați paginile",
     "startComparison": "Începeți comparația",
+    "showComparison": "Arată comparația",
     "back": "Înapoi",
     "clearSignature": "Semnătură clară",
     "newDocument": "Document nou"
@@ -437,9 +438,6 @@
       "noSignatures": "În prezent, nu există semnături salvate."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Trageți și plasați fișierul aici",
-      "selectFile": "Selectați fișierul dvs. aici",
-      "or": "Sau",
       "yourFiles": "Fișierele dvs",
       "chooseFile": "Alegeți un fișier",
       "localFile": "Fișier local",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Dacă schimbați scara pentru măsurarea sau instrumentul selectat, scalați",
         "notUsedWillDelete": " nu vor mai fi folosite de nicio măsurătoare sau instrumente și vor fi șterse. Ștergerea este ireversibilă.",
         "ifToContinue": "Sunteți sigur că doriți să continuați?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Șterge conținut",
+        "message": "Sigur doriți să ștergeți conținutul selectat? Acest lucru nu poate fi anulat."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Opțiuni filigran",
     "watermarks": "Filigrane"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portofoliu PDF",
+    "portfolioAddFile": "Adauga fisier",
+    "portfolioAddFolder": "Adaugă folder",
+    "portfolioCreateFolder": "Creeaza dosar",
+    "portfolioNewFolder": "Dosar nou",
+    "portfolioNewFolderPlaceholder": "Numele fisierului"
+  },
   "languageModal": {
     "selectLanguage": "Selecteaza limba"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Lista numerotata",
     "insertLink": "Introduceți linkul",
     "insertImage": "Inserați imaginea",
-    "notAvailableInDemoMode": "Nu este disponibil în modul demonstrativ",
     "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Filigran",
     "addWatermark": "Adăugați filigran",
     "save": "Salvează fișierul",
-    "pageError": "Pagina nevalidă. Intervalele de pagini valide sunt cuprinse între 1 -"
+    "pageError": "Pagina nevalidă. Intervalele de pagini valide sunt cuprinse între 1 -",
+    "fileNameCannotBeEmpty": "Numele fișierului nu poate fi gol"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Creați portofoliu PDF",
+    "uploadFiles": "Încărca fișiere",
+    "uploadFolder": "Încărcați dosarul",
+    "addFiles": "Adăugați fișiere",
+    "addFolder": "Adaugă folder"
+  },
+  "filePicker": {
+    "dragAndDrop": "Trageți și plasați fișierul aici",
+    "selectFile": "Selectați fișierul dvs. aici",
+    "or": "Sau"
   }
 }

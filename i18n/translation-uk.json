@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Відповідь на вибрані анотації ({{count}})",
     "comparePages": "Порівняти сторінки",
     "startComparison": "Почати порівняння",
+    "showComparison": "Показати порівняння",
     "back": "Назад",
     "clearSignature": "Чіткий підпис",
     "newDocument": "Новий документ"
@@ -437,9 +438,6 @@
       "noSignatures": "Наразі немає збережених підписів."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Перетягніть свій файл сюди",
-      "selectFile": "Виберіть свій файл тут",
-      "or": "Або",
       "yourFiles": "Ваші файли",
       "chooseFile": "Виберіть файл",
       "localFile": "Локальний файл",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Якщо ви змінюєте масштаб для вибраного вимірювання або інструменту, масштабуйте",
         "notUsedWillDelete": " більше не використовуватимуться для вимірювань чи інструментів і будуть видалені. Видалення незворотне.",
         "ifToContinue": "Ви впевнені, що бажаєте продовжити?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Видалити вміст",
+        "message": "Ви впевнені, що бажаєте видалити вибраний вміст? Цю дію не можна скасувати."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Параметри водяного знака",
     "watermarks": "Водяні знаки"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF-портфоліо",
+    "portfolioAddFile": "Додати файл",
+    "portfolioAddFolder": "Додати папку",
+    "portfolioCreateFolder": "Створити папку",
+    "portfolioNewFolder": "Нова папка",
+    "portfolioNewFolderPlaceholder": "Назва папки"
+  },
   "languageModal": {
     "selectLanguage": "Оберіть мову"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Нумерований список",
     "insertLink": "Вставте посилання",
     "insertImage": "Вставте зображення",
-    "notAvailableInDemoMode": "Недоступно в демонстраційному режимі",
     "notSupportedOnMobile": "Редагування Office не підтримується на мобільних пристроях."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Водяний знак",
     "addWatermark": "Додати водяний знак",
     "save": "Зберегти файл",
-    "pageError": "Недійсна сторінка. Дійсні діапазони сторінок від 1 до"
+    "pageError": "Недійсна сторінка. Дійсні діапазони сторінок від 1 до",
+    "fileNameCannotBeEmpty": "Назва файлу не може бути пустою"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Створити PDF-портфоліо",
+    "uploadFiles": "Завантажити файли",
+    "uploadFolder": "Завантажити папку",
+    "addFiles": "Додати файли",
+    "addFolder": "Додати папку"
+  },
+  "filePicker": {
+    "dragAndDrop": "Перетягніть файл сюди",
+    "selectFile": "Виберіть свій файл тут",
+    "or": "Або"
   }
 }

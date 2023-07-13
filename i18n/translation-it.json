@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Rispondi alle annotazioni selezionate ({{count}})",
     "comparePages": "Confronta le pagine",
     "startComparison": "Inizia il confronto",
+    "showComparison": "Mostra confronto",
     "back": "Di ritorno",
     "clearSignature": "Firma chiara",
     "newDocument": "Nuovo documento"
@@ -437,9 +438,6 @@
       "noSignatures": "Al momento non ci sono firme salvate."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Trascina e rilascia il tuo file qui",
-      "selectFile": "Seleziona qui il tuo file",
-      "or": "O",
       "yourFiles": "I tuoi file",
       "chooseFile": "Scegli un file",
       "localFile": "File locale",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Se si modifica la scala per la misurazione o lo strumento selezionato, scalare",
         "notUsedWillDelete": " non sarà più utilizzato da alcuna misura o strumento e sarà cancellato. La cancellazione è irreversibile.",
         "ifToContinue": "Sei sicuro di voler continuare?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Elimina contenuto",
+        "message": "Sei sicuro di voler eliminare il contenuto selezionato? Questo non può essere annullato."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Opzioni filigrana",
     "watermarks": "Filigrane"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portafoglio PDF",
+    "portfolioAddFile": "Aggiungi file",
+    "portfolioAddFolder": "Aggiungi cartella",
+    "portfolioCreateFolder": "Creare una cartella",
+    "portfolioNewFolder": "Nuova cartella",
+    "portfolioNewFolderPlaceholder": "Nome della cartella"
+  },
   "languageModal": {
     "selectLanguage": "Seleziona la lingua"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Elenco numerato",
     "insertLink": "Inserisci collegamento",
     "insertImage": "Inserisci immagine",
-    "notAvailableInDemoMode": "Non disponibile in modalità demo",
     "notSupportedOnMobile": "La modifica di Office non è supportata sui dispositivi mobili."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Filigrana",
     "addWatermark": "Aggiungi filigrana",
     "save": "Salvare il file",
-    "pageError": "Pagina non valida. Gli intervalli di pagine validi sono compresi tra 1 -"
+    "pageError": "Pagina non valida. Gli intervalli di pagine validi sono compresi tra 1 -",
+    "fileNameCannotBeEmpty": "Il nome del file non può essere vuoto"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Crea portafoglio PDF",
+    "uploadFiles": "Caricare files",
+    "uploadFolder": "Carica cartella",
+    "addFiles": "Aggiungere i file",
+    "addFolder": "Aggiungi cartella"
+  },
+  "filePicker": {
+    "dragAndDrop": "Trascina e rilascia qui il tuo file",
+    "selectFile": "Seleziona qui il tuo file",
+    "or": "O"
   }
 }

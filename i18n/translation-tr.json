@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Seçili ek açıklamaları yanıtla ({{count}})",
     "comparePages": "Sayfaları karşılaştır",
     "startComparison": "Karşılaştırmayı Başlat",
+    "showComparison": "Karşılaştırmayı Göster",
     "back": "Geri",
     "clearSignature": "İmzayı temizle",
     "newDocument": "Yeni belge"
@@ -437,9 +438,6 @@
       "noSignatures": "Şu anda kayıtlı imza yok."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Dosyanızı buraya sürükleyip bırakın",
-      "selectFile": "Dosyanızı buradan seçin",
-      "or": "Veya",
       "yourFiles": "Dosyalarınız",
       "chooseFile": "Bir dosya seçin",
       "localFile": "Yerel dosya",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Seçilen ölçüm veya araç için ölçeği değiştirirseniz, ölçek",
         "notUsedWillDelete": " artık herhangi bir ölçüm veya araç tarafından kullanılmayacak ve silinecektir. Silme işlemi geri döndürülemez.",
         "ifToContinue": "Devam etmek istediğinizden emin misiniz?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "İçeriği Sil",
+        "message": "Seçilen içeriği silmek istediğinizden emin misiniz? Bu geri alınamaz."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Filigran Seçenekleri",
     "watermarks": "filigranlar"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF Portföyü",
+    "portfolioAddFile": "Dosya Ekle",
+    "portfolioAddFolder": "Klasörü eklemek",
+    "portfolioCreateFolder": "Klasör oluşturun",
+    "portfolioNewFolder": "Yeni dosya",
+    "portfolioNewFolderPlaceholder": "Klasör adı"
+  },
   "languageModal": {
     "selectLanguage": "Dil Seçin"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Numaralı liste",
     "insertLink": "Bağlantı ekle",
     "insertImage": "Resim ekle",
-    "notAvailableInDemoMode": "Demo modunda kullanılamaz",
     "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Filigran",
     "addWatermark": "Filigran ekle",
     "save": "Dosyayı kaydet",
-    "pageError": "Geçersiz sayfa. Geçerli sayfa aralıkları 1 -"
+    "pageError": "Geçersiz sayfa. Geçerli sayfa aralıkları 1 -",
+    "fileNameCannotBeEmpty": "Dosya Adı boş olamaz"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "PDF Portföyü Oluştur",
+    "uploadFiles": "Dosyaları yükle",
+    "uploadFolder": "Klasörü Yükle",
+    "addFiles": "Dosya Ekle",
+    "addFolder": "Klasörü eklemek"
+  },
+  "filePicker": {
+    "dragAndDrop": "Dosyanızı buraya sürükleyip bırakın",
+    "selectFile": "dosyanızı buradan seçin",
+    "or": "Veya"
   }
 }

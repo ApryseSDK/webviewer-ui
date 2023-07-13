@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "回复所选注释 ({{count}})",
     "comparePages": "比较页面",
     "startComparison": "开始比较",
+    "showComparison": "显示比较",
     "back": "后退",
     "clearSignature": "清晰的签名",
     "newDocument": "新建文件"
@@ -437,9 +438,6 @@
       "noSignatures": "当前没有保存的签名。"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "将您的文件拖放到此处",
-      "selectFile": "在此处选择您的文件",
-      "or": "或者",
       "yourFiles": "您的文件",
       "chooseFile": "选择一个文件",
       "localFile": "本地文件",
@@ -521,6 +519,12 @@
         "ifChangeScale": "如果您更改所选测量或工具的比例，请按比例",
         "notUsedWillDelete": " 将不再被任何测量或工具使用，并将被删除。删除是不可逆的。",
         "ifToContinue": "您确定要继续吗？"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "删除内容",
+        "message": "您确定要删除所选内容吗？这无法撤消。"
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "水印选项",
     "watermarks": "水印"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF 作品集",
+    "portfolioAddFile": "添加文件",
+    "portfolioAddFolder": "新增文件夹",
+    "portfolioCreateFolder": "创建文件夹",
+    "portfolioNewFolder": "新建文件夹",
+    "portfolioNewFolderPlaceholder": "文件夹名称"
+  },
   "languageModal": {
     "selectLanguage": "选择语言"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "编号列表",
     "insertLink": "插入链接",
     "insertImage": "插入图片",
-    "notAvailableInDemoMode": "在演示模式下不可用",
     "notSupportedOnMobile": "移动设备不支持 Office 编辑。"
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "水印",
     "addWatermark": "加水印",
     "save": "保存存档",
-    "pageError": "无效页面。有效页面范围介于 1 -"
+    "pageError": "无效页面。有效页面范围介于 1 -",
+    "fileNameCannotBeEmpty": "文件名不能为空"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "创建 PDF 包",
+    "uploadFiles": "上传文件",
+    "uploadFolder": "上传文件夹",
+    "addFiles": "添加文件",
+    "addFolder": "新增文件夹"
+  },
+  "filePicker": {
+    "dragAndDrop": "将您的文件拖放到此处",
+    "selectFile": "在这里选择您的文件",
+    "or": "或者"
   }
 }

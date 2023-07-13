@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "चयनित टिप्पणियों का उत्तर दें",
     "comparePages": "पृष्ठों की तुलना करें",
     "startComparison": "तुलना शुरू करें",
+    "showComparison": "तुलना दिखाएँ",
     "back": "पीछे",
     "clearSignature": "स्पष्ट हस्ताक्षर",
     "newDocument": "नया दस्तावेज़"
@@ -437,9 +438,6 @@
       "noSignatures": "वर्तमान में कोई सहेजे गए हस्ताक्षर नहीं हैं।"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "अपनी फ़ाइल को यहां खींचें और छोड़ें",
-      "selectFile": "यहां अपनी फाइल चुनें",
-      "or": "या",
       "yourFiles": "आपकी फ़ाइलें",
       "chooseFile": "एक फ़ाइल चुनें",
       "localFile": "स्थानीय फ़ाइल",
@@ -521,6 +519,12 @@
         "ifChangeScale": "यदि आप चयनित माप या उपकरण के लिए पैमाना बदलते हैं, तो पैमाना",
         "notUsedWillDelete": " अब किसी भी माप या उपकरण द्वारा उपयोग नहीं किया जाएगा और हटा दिया जाएगा। हटाना अपरिवर्तनीय है।",
         "ifToContinue": "क्या आप वाकई जारी रखना चाहते हैं?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "सामग्री हटाएं",
+        "message": "क्या आप वाकई चयनित सामग्री को हटाना चाहते हैं? इसे पूर्ववत नहीं किया जा सकता."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "वॉटरमार्क विकल्प",
     "watermarks": "वाटरमार्क"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "पीडीएफ पोर्टफोलियो",
+    "portfolioAddFile": "फ़ाइल जोड़ें",
+    "portfolioAddFolder": "फ़ोल्डर जोड़ें",
+    "portfolioCreateFolder": "फोल्डर बनाएं",
+    "portfolioNewFolder": "नया फ़ोल्डर",
+    "portfolioNewFolderPlaceholder": "फ़ोल्डर का नाम"
+  },
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "क्रमांकित सूची",
     "insertLink": "लिंक डालें",
     "insertImage": "चित्र डालें",
-    "notAvailableInDemoMode": "डेमो मोड में उपलब्ध नहीं है",
     "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।"
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "वाटर-मार्क",
     "addWatermark": "वॉटरमार्क जोड़िए",
     "save": "फाइल सुरक्षित करें",
-    "pageError": "अमान्य पृष्ठ। मान्य पृष्ठ श्रेणियां 1 के बीच हैं -"
+    "pageError": "अमान्य पृष्ठ। मान्य पृष्ठ श्रेणियां 1 के बीच हैं -",
+    "fileNameCannotBeEmpty": "फ़ाइल नाम रिक्त नहीं हो सकता"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "पीडीएफ पोर्टफोलियो बनाएं",
+    "uploadFiles": "फाइलें अपलोड करें",
+    "uploadFolder": "फ़ोल्डर अपलोड करें",
+    "addFiles": "फाइलें जोड़ो",
+    "addFolder": "फ़ोल्डर जोड़ें"
+  },
+  "filePicker": {
+    "dragAndDrop": "अपनी फ़ाइल को यहां खींचें और छोड़ें",
+    "selectFile": "यहां अपनी फ़ाइल चुनें",
+    "or": "या"
   }
 }

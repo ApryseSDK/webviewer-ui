@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Trả lời các chú thích đã chọn ({{count}})",
     "comparePages": "So sánh các trang",
     "startComparison": "Bắt đầu so sánh",
+    "showComparison": "Hiển thị so sánh",
     "back": "Mặt sau",
     "clearSignature": "Xóa chữ ký",
     "newDocument": "Tài liệu mới"
@@ -437,9 +438,6 @@
       "noSignatures": "Hiện tại không có chữ ký nào được lưu."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Kéo & Thả tệp của bạn tại đây",
-      "selectFile": "Chọn tệp của bạn ở đây",
-      "or": "Hoặc",
       "yourFiles": "Tệp của bạn",
       "chooseFile": "Chọn một tệp",
       "localFile": "Tệp Cục Bộ",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Nếu bạn thay đổi thang đo cho phép đo hoặc công cụ đã chọn, hãy chia tỷ lệ",
         "notUsedWillDelete": " sẽ không còn được sử dụng bởi bất kỳ phép đo hoặc công cụ nào nữa và sẽ bị xóa. Việc xóa là không thể hoàn tác.",
         "ifToContinue": "Bạn có chắc chắn muốn tiếp tục không?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Xóa nội dung",
+        "message": "Bạn có chắc chắn muốn xóa nội dung đã chọn không? Không thể hoàn tác thao tác này."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Tùy chọn hình mờ",
     "watermarks": "Hình mờ"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Danh mục đầu tư PDF",
+    "portfolioAddFile": "Thêm tập tin",
+    "portfolioAddFolder": "Thêm thư mục",
+    "portfolioCreateFolder": "Tạo thư mục",
+    "portfolioNewFolder": "Thư mục mới",
+    "portfolioNewFolderPlaceholder": "Tên thư mục"
+  },
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "danh sách được đánh số",
     "insertLink": "Chèn đường dẫn",
     "insertImage": "Chèn hình ảnh",
-    "notAvailableInDemoMode": "Không có sẵn trong chế độ demo",
     "notSupportedOnMobile": "Chỉnh sửa văn phòng không được hỗ trợ trên thiết bị di động."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Chữ ký ảnh",
     "addWatermark": "Thêm hình mờ",
     "save": "Lưu tập tin",
-    "pageError": "Trang không hợp lệ. Phạm vi trang hợp lệ là từ 1 -"
+    "pageError": "Trang không hợp lệ. Phạm vi trang hợp lệ là từ 1 -",
+    "fileNameCannotBeEmpty": "Tên tệp không được để trống"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Tạo danh mục đầu tư PDF",
+    "uploadFiles": "Tải tệp lên",
+    "uploadFolder": "Thư mục tải lên",
+    "addFiles": "Thêm các tập tin",
+    "addFolder": "Thêm thư mục"
+  },
+  "filePicker": {
+    "dragAndDrop": "Kéo và thả tệp của bạn vào đây",
+    "selectFile": "Chọn tập tin của bạn ở đây",
+    "or": "Hoặc"
   }
 }

@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "ตอบกลับคำอธิบายประกอบที่เลือก ({{จำนวน}})",
     "comparePages": "เปรียบเทียบหน้า",
     "startComparison": "เริ่มการเปรียบเทียบ",
+    "showComparison": "แสดงการเปรียบเทียบ",
     "back": "กลับ",
     "clearSignature": "ลายเซ็นที่ชัดเจน",
     "newDocument": "เอกสารใหม่"
@@ -437,9 +438,6 @@
       "noSignatures": "ขณะนี้ไม่มีลายเซ็นที่บันทึกไว้"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่",
-      "selectFile": "เลือกไฟล์ของคุณที่นี่",
-      "or": "หรือ",
       "yourFiles": "ไฟล์ของคุณ",
       "chooseFile": "เลือกไฟล์",
       "localFile": "ไฟล์ในเครื่อง",
@@ -521,6 +519,12 @@
         "ifChangeScale": "หากคุณเปลี่ยนมาตราส่วนสำหรับการวัดหรือเครื่องมือที่เลือก มาตราส่วน",
         "notUsedWillDelete": " จะไม่ถูกใช้โดยการวัดหรือเครื่องมือใดๆ อีกต่อไป และจะถูกลบ การลบจะย้อนกลับไม่ได้",
         "ifToContinue": "คุณแน่ใจหรือไม่ว่าต้องการดำเนินการต่อ"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "ลบเนื้อหา",
+        "message": "คุณแน่ใจหรือไม่ว่าต้องการลบเนื้อหาที่เลือก สิ่งนี้ไม่สามารถยกเลิกได้"
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "ตัวเลือกลายน้ำ",
     "watermarks": "ลายน้ำ"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "ไฟล์ PDF",
+    "portfolioAddFile": "เพิ่มไฟล์",
+    "portfolioAddFolder": "เพิ่มกล่องเก็บไฟล์",
+    "portfolioCreateFolder": "สร้างโฟลเดอร์",
+    "portfolioNewFolder": "แฟ้มใหม่",
+    "portfolioNewFolderPlaceholder": "ชื่อโฟลเดอร์"
+  },
   "languageModal": {
     "selectLanguage": "เลือกภาษา"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "รายการหมายเลข",
     "insertLink": "ใส่ลิงค์",
     "insertImage": "แทรกรูปภาพ",
-    "notAvailableInDemoMode": "ไม่พร้อมใช้งานในโหมดสาธิต",
     "notSupportedOnMobile": "อุปกรณ์พกพาไม่รองรับการแก้ไข Office"
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "ลายน้ำ",
     "addWatermark": "ใส่ลายน้ำ",
     "save": "บันทึกไฟล์",
-    "pageError": "หน้าไม่ถูกต้อง ช่วงหน้าที่ถูกต้องอยู่ระหว่าง 1 -"
+    "pageError": "หน้าไม่ถูกต้อง ช่วงหน้าที่ถูกต้องอยู่ระหว่าง 1 -",
+    "fileNameCannotBeEmpty": "ชื่อไฟล์ต้องไม่ว่างเปล่า"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "สร้างผลงาน PDF",
+    "uploadFiles": "อัพโหลดไฟล์",
+    "uploadFolder": "อัปโหลดโฟลเดอร์",
+    "addFiles": "เพิ่มไฟล์",
+    "addFolder": "เพิ่มกล่องเก็บไฟล์"
+  },
+  "filePicker": {
+    "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่",
+    "selectFile": "เลือกไฟล์ของคุณที่นี่",
+    "or": "หรือ"
   }
 }

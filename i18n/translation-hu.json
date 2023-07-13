@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Válasz a kiválasztott megjegyzésekre ({{count}})",
     "comparePages": "Oldalak összehasonlítása",
     "startComparison": "Indítsa el az összehasonlítást",
+    "showComparison": "Összehasonlítás megjelenítése",
     "back": "Vissza",
     "clearSignature": "Világos aláírás",
     "newDocument": "Új dokumentum"
@@ -437,9 +438,6 @@
       "noSignatures": "Jelenleg nincsenek mentett aláírások."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Drag & Drop ide a fájlt",
-      "selectFile": "Válassza ki a fájlt itt",
-      "or": "Vagy",
       "yourFiles": "Az Ön Fájljai",
       "chooseFile": "Válasszon egy fájlt",
       "localFile": "Helyi fájl",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Ha módosítja a skálát a kiválasztott méréshez vagy szerszámhoz, skálázza",
         "notUsedWillDelete": " a továbbiakban semmilyen mérés vagy eszköz nem fogja használni, és törlésre kerül. A törlés visszafordíthatatlan.",
         "ifToContinue": "Biztos, hogy folytatni szeretnéd?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Tartalom törlése",
+        "message": "Biztosan törli a kiválasztott tartalmat? Ezt nem lehet visszavonni."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Vízjel opciók",
     "watermarks": "Vízjelek"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF portfólió",
+    "portfolioAddFile": "Fájl hozzáadása",
+    "portfolioAddFolder": "Mappa hozzáadása",
+    "portfolioCreateFolder": "Mappa létrehozás",
+    "portfolioNewFolder": "Új mappa",
+    "portfolioNewFolderPlaceholder": "Mappa neve"
+  },
   "languageModal": {
     "selectLanguage": "Válasszon nyelvet"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Számozott lista",
     "insertLink": "Link beszúrása",
     "insertImage": "Kép beszúrása",
-    "notAvailableInDemoMode": "Demo módban nem elérhető",
     "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Vízjel",
     "addWatermark": "Vízjel hozzáadása",
     "save": "Fájl mentése",
-    "pageError": "Érvénytelen oldal. Az érvényes oldaltartományok 1 -"
+    "pageError": "Érvénytelen oldal. Az érvényes oldaltartományok 1 -",
+    "fileNameCannotBeEmpty": "A fájlnév nem lehet üres"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "PDF-portfólió létrehozása",
+    "uploadFiles": "Fájlok feltöltése",
+    "uploadFolder": "Mappa feltöltése",
+    "addFiles": "Fájlok hozzáadása",
+    "addFolder": "Mappa hozzáadása"
+  },
+  "filePicker": {
+    "dragAndDrop": "Drag & Drop ide a fájlt",
+    "selectFile": "Válassza ki a fájlt itt",
+    "or": "Vagy"
   }
 }

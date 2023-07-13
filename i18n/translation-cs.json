@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Odpovědět na vybrané poznámky ({{count}})",
     "comparePages": "Porovnejte stránky",
     "startComparison": "Spusťte porovnávání",
+    "showComparison": "Zobrazit srovnání",
     "back": "Zadní",
     "clearSignature": "Jasný podpis",
     "newDocument": "Nový dokument"
@@ -437,9 +438,6 @@
       "noSignatures": "Momentálně nejsou žádné uložené podpisy."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Přetáhněte soubor sem",
-      "selectFile": "Zde vyberte svůj soubor",
-      "or": "Nebo",
       "yourFiles": "Vaše soubory",
       "chooseFile": "Vyberte soubor",
       "localFile": "Místní soubor",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Pokud změníte měřítko pro vybrané měření nebo nástroj, upravte měřítko",
         "notUsedWillDelete": " již nebudou používány žádnými měřeními ani nástroji a budou smazány. Smazání je nevratné.",
         "ifToContinue": "Opravdu chcete pokračovat?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Smazat obsah",
+        "message": "Opravdu chcete smazat vybraný obsah? Toto nelze vrátit zpět."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Možnosti vodoznaku",
     "watermarks": "Vodoznaky"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portfolio PDF",
+    "portfolioAddFile": "Přidat soubor",
+    "portfolioAddFolder": "Přidat složku",
+    "portfolioCreateFolder": "Vytvořit složku",
+    "portfolioNewFolder": "Nová složka",
+    "portfolioNewFolderPlaceholder": "Název složky"
+  },
   "languageModal": {
     "selectLanguage": "Zvolte jazyk"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Číslovaný seznam",
     "insertLink": "Vložit odkaz",
     "insertImage": "Vložit obrázek",
-    "notAvailableInDemoMode": "Není k dispozici v demo režimu",
     "notSupportedOnMobile": "Úpravy Office nejsou podporovány na mobilních zařízeních."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Vodoznak",
     "addWatermark": "Přidat vodoznak",
     "save": "Uložení souboru",
-    "pageError": "Neplatná stránka. Platné rozsahy stránek jsou mezi 1 -"
+    "pageError": "Neplatná stránka. Platné rozsahy stránek jsou mezi 1 -",
+    "fileNameCannotBeEmpty": "Název souboru nesmí být prázdný"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Vytvořte portfolio PDF",
+    "uploadFiles": "Nahrát soubory",
+    "uploadFolder": "Nahrát složku",
+    "addFiles": "Přidat soubory",
+    "addFolder": "Přidat složku"
+  },
+  "filePicker": {
+    "dragAndDrop": "Sem přetáhněte soubor",
+    "selectFile": "Zde vyberte svůj soubor",
+    "or": "Nebo"
   }
 }

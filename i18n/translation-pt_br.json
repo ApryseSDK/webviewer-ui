@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Responder às anotações selecionadas ({{count}})",
     "comparePages": "Comparar páginas",
     "startComparison": "Iniciar comparação",
+    "showComparison": "Mostrar comparação",
     "back": "De volta",
     "clearSignature": "Assinatura clara",
     "newDocument": "Novo Documento"
@@ -437,9 +438,6 @@
       "noSignatures": "No momento, não há assinaturas salvas."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Arraste e solte seu arquivo aqui",
-      "selectFile": "Selecione seu arquivo aqui",
-      "or": "Ou",
       "yourFiles": "Seus arquivos",
       "chooseFile": "Escolha um arquivo",
       "localFile": "Arquivo local",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Se você alterar a escala da medida ou ferramenta selecionada, a escala",
         "notUsedWillDelete": " não será mais usado por nenhuma medida ou ferramenta e será excluído. A exclusão é irreversível.",
         "ifToContinue": "Tem certeza de que deseja continuar?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Excluir conteúdo",
+        "message": "Tem certeza de que deseja excluir o conteúdo selecionado? Isso não pode ser desfeito."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Opções de marca d'água",
     "watermarks": "Marcas d'água"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portfólio PDF",
+    "portfolioAddFile": "Adicionar ficheiro",
+    "portfolioAddFolder": "Adicionar pasta",
+    "portfolioCreateFolder": "Criar pasta",
+    "portfolioNewFolder": "Nova pasta",
+    "portfolioNewFolderPlaceholder": "Nome da pasta"
+  },
   "languageModal": {
     "selectLanguage": "Selecione o idioma"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "lista numerada",
     "insertLink": "Inserir link",
     "insertImage": "Inserir Imagem",
-    "notAvailableInDemoMode": "Não disponível no modo de demonstração",
     "notSupportedOnMobile": "A edição do Office não é suportada em dispositivos móveis."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Marca d'água",
     "addWatermark": "Adicione uma Marca D'água",
     "save": "Salvar Arquivo",
-    "pageError": "Página inválida. Os intervalos de páginas válidos estão entre 1 -"
+    "pageError": "Página inválida. Os intervalos de páginas válidos estão entre 1 -",
+    "fileNameCannotBeEmpty": "O nome do arquivo não pode estar vazio"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Criar Portfólio PDF",
+    "uploadFiles": "Fazer upload de arquivos",
+    "uploadFolder": "Carregar Pasta",
+    "addFiles": "Adicionar arquivos",
+    "addFolder": "Adicionar pasta"
+  },
+  "filePicker": {
+    "dragAndDrop": "Arraste e solte seu arquivo aqui",
+    "selectFile": "Selecione seu arquivo aqui",
+    "or": "Ou"
   }
 }

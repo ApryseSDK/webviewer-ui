@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Reply to selected annotations ({{count}})",
     "comparePages": "Compare pages",
     "startComparison": "Start Comparison",
+    "showComparison": "Show Comparison",
     "back": "Back",
     "clearSignature": "Clear signature",
     "newDocument": "New Document"
@@ -437,9 +438,6 @@
       "noSignatures": "There are currently no saved signatures."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Drag & Drop your file here",
-      "selectFile": "Select your file here",
-      "or": "Or",
       "yourFiles": "Your Files",
       "chooseFile": "Choose a file",
       "localFile": "Upload",
@@ -521,6 +519,12 @@
         "ifChangeScale": "If you change the scale for the selected measurement or tool, scale ",
         "notUsedWillDelete": " will no longer be used by any measurements or tools and will be deleted. Deletion is irreversible.",
         "ifToContinue": "Are you sure you'd like to continue?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Delete Content",
+        "message": "Are you sure you want to delete the selected content? This can't be undone."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Watermark Options",
     "watermarks": "Watermarks"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF Portfolio",
+    "portfolioAddFile": "Add File",
+    "portfolioAddFolder": "Add Folder",
+    "portfolioCreateFolder": "Create Folder",
+    "portfolioNewFolder": "New Folder",
+    "portfolioNewFolderPlaceholder": "Folder Name"
+  },
   "languageModal": {
     "selectLanguage": "Select language"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Numbered list",
     "insertLink": "Insert link",
     "insertImage": "Insert image",
-    "notAvailableInDemoMode": "Not available in demo mode",
     "notSupportedOnMobile": "Office editing is not supported on mobile devices."
   },
   "insertPageModal": {
@@ -1153,10 +1164,10 @@
       "old": "Old",
       "new": "New",
       "page": "Page",
-			"textContent": "Text Content",
-			"delete": "delete",
-			"insert": "insert",
-			"edit": "edit"
+      "textContent": "Text Content",
+      "delete": "delete",
+      "insert": "insert",
+      "edit": "edit"
     }
   },
   "saveModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Watermark",
     "addWatermark": "Add Watermark",
     "save": "Save File",
-    "pageError": "Invalid page. Valid page ranges are between  1 - "
+    "pageError": "Invalid page. Valid page ranges are between  1 - ",
+    "fileNameCannotBeEmpty": "File Name cannot be empty"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Create PDF Portfolio",
+    "uploadFiles": "Upload Files",
+    "uploadFolder": "Upload Folder",
+    "addFiles": "Add Files",
+    "addFolder": "Add Folder"
+  },
+  "filePicker": {
+    "dragAndDrop": "Drag & Drop your file here",
+    "selectFile": "Select your file here",
+    "or": "Or"
   }
 }

@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "選択した注釈に返信 ({{count}})",
     "comparePages": "ページを比較する",
     "startComparison": "比較を開始",
+    "showComparison": "比較を表示",
     "back": "戻る",
     "clearSignature": "明確な署名",
     "newDocument": "新しいドキュメント"
@@ -437,9 +438,6 @@
       "noSignatures": "現在、保存されている署名はありません。"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "ここにファイルをドラッグ＆ドロップ",
-      "selectFile": "ここでファイルを選択",
-      "or": "または",
       "yourFiles": "あなたのファイル",
       "chooseFile": "ファイルを選択",
       "localFile": "ローカルファイル",
@@ -521,6 +519,12 @@
         "ifChangeScale": "選択した測定またはツールのスケールを変更すると、スケール",
         "notUsedWillDelete": " 測定やツールで使用されなくなり、削除されます。削除は元に戻せません。",
         "ifToContinue": "続行してもよろしいですか？"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "コンテンツの削除",
+        "message": "選択したコンテンツを削除してもよろしいですか?これを元に戻すことはできません。"
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "透かしオプション",
     "watermarks": "透かし"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDFポートフォリオ",
+    "portfolioAddFile": "ファイルの追加",
+    "portfolioAddFolder": "フォルダーを追加",
+    "portfolioCreateFolder": "フォルダーを作る",
+    "portfolioNewFolder": "新しいフォルダー",
+    "portfolioNewFolderPlaceholder": "フォルダ名"
+  },
   "languageModal": {
     "selectLanguage": "言語を選択する"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "番号付きリスト",
     "insertLink": "リンクを挿入",
     "insertImage": "画像を挿入",
-    "notAvailableInDemoMode": "デモモードでは利用できません",
     "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。"
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "透かし",
     "addWatermark": "透かしを追加",
     "save": "ファイルを保存",
-    "pageError": "ページが無効です。有効なページ範囲は 1 ～"
+    "pageError": "ページが無効です。有効なページ範囲は 1 ～",
+    "fileNameCannotBeEmpty": "ファイル名を空にすることはできません"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "PDF ポートフォリオを作成する",
+    "uploadFiles": "ファイルをアップロードする",
+    "uploadFolder": "アップロードフォルダー",
+    "addFiles": "追加ファイル",
+    "addFolder": "フォルダーを追加"
+  },
+  "filePicker": {
+    "dragAndDrop": "ここにファイルをドラッグ＆ドロップします",
+    "selectFile": "ここでファイルを選択してください",
+    "or": "また"
   }
 }

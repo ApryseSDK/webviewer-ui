@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "回复所選註釋 ({{count}})",
     "comparePages": "比較頁面",
     "startComparison": "開始比較",
+    "showComparison": "顯示比較",
     "back": "後退",
     "clearSignature": "清晰的簽名",
     "newDocument": "新建文件"
@@ -437,9 +438,6 @@
       "noSignatures": "當前沒有保存的簽名。"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "將您的文件拖放到此處",
-      "selectFile": "在此處選擇您的文件",
-      "or": "或者",
       "yourFiles": "您的文件",
       "chooseFile": "選擇一個文件",
       "localFile": "本地文件",
@@ -521,6 +519,12 @@
         "ifChangeScale": "如果您更改所選測量或工具的比例，請按比例",
         "notUsedWillDelete": " 將不再被任何測量或工具使用，並將被刪除。刪除是不可逆的。",
         "ifToContinue": "您確定要繼續嗎？"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "刪除內容",
+        "message": "您確定要刪除所選內容嗎？這無法撤消。"
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "水印選項",
     "watermarks": "水印"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF 作品集",
+    "portfolioAddFile": "添加文件",
+    "portfolioAddFolder": "新增文件夾",
+    "portfolioCreateFolder": "創建文件夾",
+    "portfolioNewFolder": "新建文件夾",
+    "portfolioNewFolderPlaceholder": "文件夾名稱"
+  },
   "languageModal": {
     "selectLanguage": "選擇語言"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "編號列表",
     "insertLink": "插入鏈接",
     "insertImage": "插入圖片",
-    "notAvailableInDemoMode": "在演示模式下不可用",
     "notSupportedOnMobile": "移動設備不支持 Office 編輯。"
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "水印",
     "addWatermark": "加水印",
     "save": "保存存檔",
-    "pageError": "無效頁面。有效頁面範圍介於 1 -"
+    "pageError": "無效頁面。有效頁面範圍介於 1 -",
+    "fileNameCannotBeEmpty": "文件名不能為空"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "創建 PDF 包",
+    "uploadFiles": "上傳文件",
+    "uploadFolder": "上傳文件夾",
+    "addFiles": "添加文件",
+    "addFolder": "新增文件夾"
+  },
+  "filePicker": {
+    "dragAndDrop": "將您的文件拖放到此處",
+    "selectFile": "在這裡選擇您的文件",
+    "or": "或者"
   }
 }

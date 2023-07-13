@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Απάντηση σε επιλεγμένους σχολιασμούς ({{count}})",
     "comparePages": "Συγκρίνετε σελίδες",
     "startComparison": "Έναρξη σύγκρισης",
+    "showComparison": "Εμφάνιση σύγκρισης",
     "back": "Πίσω",
     "clearSignature": "Καθαρή υπογραφή",
     "newDocument": "Νέο Έγγραφο"
@@ -437,9 +438,6 @@
       "noSignatures": "Αυτήν τη στιγμή δεν υπάρχουν αποθηκευμένες υπογραφές."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Σύρετε και αποθέστε το αρχείο σας εδώ",
-      "selectFile": "Επιλέξτε το αρχείο σας εδώ",
-      "or": "Ή",
       "yourFiles": "Τα αρχεία σας",
       "chooseFile": "Επιλέξτε ένα αρχείο",
       "localFile": "Τοπικό αρχείο",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Εάν αλλάξετε την κλίμακα για την επιλεγμένη μέτρηση ή εργαλείο, κάντε κλίμακα",
         "notUsedWillDelete": " δεν θα χρησιμοποιείται πλέον από μετρήσεις ή εργαλεία και θα διαγραφεί. Η διαγραφή είναι μη αναστρέψιμη.",
         "ifToContinue": "Είστε σίγουροι ότι θέλετε να συνεχίσετε;"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Διαγραφή Περιεχομένου",
+        "message": "Είστε βέβαιοι ότι θέλετε να διαγράψετε το επιλεγμένο περιεχόμενο; Αυτό δεν μπορεί να αναιρεθεί."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Επιλογές υδατογραφήματος",
     "watermarks": "Υδατογράφημα"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Χαρτοφυλάκιο PDF",
+    "portfolioAddFile": "Προσθήκη αρχείου",
+    "portfolioAddFolder": "Προσθήκη φακέλου",
+    "portfolioCreateFolder": "ΔΗΜΙΟΥΡΓΩ φακελο",
+    "portfolioNewFolder": "Νέος φάκελος",
+    "portfolioNewFolderPlaceholder": "Ονομα φακέλου"
+  },
   "languageModal": {
     "selectLanguage": "Επιλέξτε γλώσσα"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Αριθμημένη λίστα",
     "insertLink": "Εισαγωγή συνδέσμου",
     "insertImage": "Εισαγωγή εικόνας",
-    "notAvailableInDemoMode": "Δεν είναι διαθέσιμο σε λειτουργία επίδειξης",
     "notSupportedOnMobile": "Η επεξεργασία του Office δεν υποστηρίζεται σε κινητές συσκευές."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Στάθμη ύδατος",
     "addWatermark": "Προσθέστε υδατογράφημα",
     "save": "Αποθηκεύσετε το αρχείο",
-    "pageError": "Μη έγκυρη σελίδα. Τα έγκυρα εύρη σελίδων είναι μεταξύ 1 -"
+    "pageError": "Μη έγκυρη σελίδα. Τα έγκυρα εύρη σελίδων είναι μεταξύ 1 -",
+    "fileNameCannotBeEmpty": "Το όνομα αρχείου δεν μπορεί να είναι κενό"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Δημιουργία χαρτοφυλακίου PDF",
+    "uploadFiles": "Μεταφόρτωση Αρχείων",
+    "uploadFolder": "Μεταφόρτωση φακέλου",
+    "addFiles": "Πρόσθεσε αρχεία",
+    "addFolder": "Προσθήκη φακέλου"
+  },
+  "filePicker": {
+    "dragAndDrop": "Σύρετε και αποθέστε το αρχείο σας εδώ",
+    "selectFile": "Επιλέξτε το αρχείο σας εδώ",
+    "or": "Ή"
   }
 }

@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Répondre aux annotations sélectionnées ({{count}})",
     "comparePages": "Comparer les pages",
     "startComparison": "Commencer la comparaison",
+    "showComparison": "Afficher la comparaison",
     "back": "Retour",
     "clearSignature": "Signature claire",
     "newDocument": "Nouveau document"
@@ -437,9 +438,6 @@
       "noSignatures": "Il n'y a actuellement aucune signature enregistrée."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Glissez & Déposez votre fichier ici",
-      "selectFile": "Sélectionnez votre fichier ici",
-      "or": "Ou",
       "yourFiles": "Vos fichiers",
       "chooseFile": "Choisissez un fichier",
       "localFile": "Fichier local",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Si vous modifiez l'échelle de la mesure ou de l'outil sélectionné, l'échelle",
         "notUsedWillDelete": " ne sera plus utilisé par aucune mesure ou outil et sera supprimé. La suppression est irréversible.",
         "ifToContinue": "Voulez-vous vraiment continuer ?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Supprimer le contenu",
+        "message": "Voulez-vous vraiment supprimer le contenu sélectionné ? Cela ne peut pas être annulé."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Options de filigrane",
     "watermarks": "Filigranes"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portfolio PDF",
+    "portfolioAddFile": "Ajouter le fichier",
+    "portfolioAddFolder": "Ajouter le dossier",
+    "portfolioCreateFolder": "Créer le dossier",
+    "portfolioNewFolder": "Nouveau dossier",
+    "portfolioNewFolderPlaceholder": "Nom de dossier"
+  },
   "languageModal": {
     "selectLanguage": "Choisir la langue"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Liste numérotée",
     "insertLink": "Insérer un lien",
     "insertImage": "Insérer une image",
-    "notAvailableInDemoMode": "Non disponible en mode démo",
     "notSupportedOnMobile": "L'édition Office n'est pas prise en charge sur les appareils mobiles."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Filigrane",
     "addWatermark": "Ajouter un filigrane",
     "save": "Enregistrer le fichier",
-    "pageError": "Page invalide. Les plages de pages valides sont comprises entre 1 et"
+    "pageError": "Page invalide. Les plages de pages valides sont comprises entre 1 et",
+    "fileNameCannotBeEmpty": "Le nom du fichier ne peut pas être vide"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Créer un portfolio PDF",
+    "uploadFiles": "Télécharger des fichiers",
+    "uploadFolder": "Télécharger le dossier",
+    "addFiles": "Ajouter des fichiers",
+    "addFolder": "Ajouter le dossier"
+  },
+  "filePicker": {
+    "dragAndDrop": "Faites glisser et déposez votre fichier ici",
+    "selectFile": "Sélectionnez votre dossier ici",
+    "or": "Ou"
   }
 }

@@ -100,6 +100,7 @@
     "multiReplyAnnotations": "Ответить на выбранные аннотации ({{count}})",
     "comparePages": "Сравните страницы",
     "startComparison": "Начать сравнение",
+    "showComparison": "Показать сравнение",
     "back": "Назад",
     "clearSignature": "Очистить подпись",
     "newDocument": "Новый документ"
@@ -437,9 +438,6 @@
       "noSignatures": "В настоящее время нет сохраненных подписей."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Перетащите файл сюда",
-      "selectFile": "Выберите файл здесь",
-      "or": "Или",
       "yourFiles": "Ваши файлы",
       "chooseFile": "Выберите файл",
       "localFile": "Локальный файл",
@@ -521,6 +519,12 @@
         "ifChangeScale": "Если вы измените масштаб для выбранного измерения или инструмента, масштаб",
         "notUsedWillDelete": " больше не будут использоваться никакими измерениями или инструментами и будут удалены. Удаление необратимо.",
         "ifToContinue": "Вы уверены, что хотите продолжить?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Удалить контент",
+        "message": "Вы уверены, что хотите удалить выбранный контент? Это не может быть отменено."
       }
     },
     "stylePopup": {
@@ -1076,6 +1080,14 @@
     "watermarkOptions": "Параметры водяного знака",
     "watermarks": "Водяные знаки"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF-портфолио",
+    "portfolioAddFile": "Добавить файл",
+    "portfolioAddFolder": "Добавить папку",
+    "portfolioCreateFolder": "Создать папку",
+    "portfolioNewFolder": "Новая папка",
+    "portfolioNewFolderPlaceholder": "Имя папки"
+  },
   "languageModal": {
     "selectLanguage": "Выбрать язык"
   },
@@ -1093,7 +1105,6 @@
     "numberList": "Нумерованный список",
     "insertLink": "Вставить ссылку",
     "insertImage": "Вставить изображение",
-    "notAvailableInDemoMode": "Недоступно в демонстрационном режиме",
     "notSupportedOnMobile": "Редактирование Office не поддерживается на мобильных устройствах."
   },
   "insertPageModal": {
@@ -1178,6 +1189,19 @@
     "watermark": "Водяной знак",
     "addWatermark": "Добавить водяной знак",
     "save": "Сохранить файл",
-    "pageError": "Недопустимая страница. Допустимые диапазоны страниц: от 1 до"
+    "pageError": "Недопустимая страница. Допустимые диапазоны страниц: от 1 до",
+    "fileNameCannotBeEmpty": "Имя файла не может быть пустым"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Создать PDF-портфолио",
+    "uploadFiles": "Загрузить файлы",
+    "uploadFolder": "Загрузить папку",
+    "addFiles": "Добавить файлы",
+    "addFolder": "Добавить папку"
+  },
+  "filePicker": {
+    "dragAndDrop": "Перетащите файл сюда",
+    "selectFile": "Выберите файл здесь",
+    "or": "Или"
   }
 }
