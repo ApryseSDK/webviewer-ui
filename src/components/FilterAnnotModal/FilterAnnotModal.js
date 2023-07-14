@@ -11,19 +11,20 @@ import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
 import { mapAnnotationToKey } from 'constants/map';
-import DataElements from "constants/dataElement";
+import DataElements from 'constants/dataElement';
 import { rgbaToHex, hexToRgba } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import Choice from 'components/Choice';
 import Button from 'components/Button';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
+import Tooltip from 'components/Tooltip';
 
 import './FilterAnnotModal.scss';
 
 const TABS_ID = 'filterAnnotModal';
 
 const FilterAnnotModal = () => {
-  const [isDisabled, isOpen, colorMap, selectedTab, annotationFilters] = useSelector(state => [
+  const [isDisabled, isOpen, colorMap, selectedTab, annotationFilters] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.FILTER_MODAL),
     selectors.isElementOpen(state, DataElements.FILTER_MODAL),
     selectors.getColorMap(state),
@@ -41,6 +42,7 @@ const FilterAnnotModal = () => {
   const [typesFilter, setTypesFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
   const [checkRepliesForAuthorFilter, setCheckRepliesForAuthorFilter] = useState(true);
+  const [filterDocumentResults, setFilterDocumentResults] = useState(false);
   const [statusFilter, setStatusFilter] = useState([]);
   const [filterCount, setFilterCount] = useState(0);
   const [ifShowAnnotationStatus, setIfShowAnnotationStatus] = useState(false);
@@ -53,7 +55,7 @@ const FilterAnnotModal = () => {
   };
 
   const similarColorExist = (currColors, newColor) => {
-    const colorObject = currColors.map(c => Object.assign({
+    const colorObject = currColors.map((c) => Object.assign({
       R: parseInt(`${c[1]}${c[2]}`, 16),
       G: parseInt(`${c[3]}${c[4]}`, 16),
       B: parseInt(`${c[5]}${c[6]}`, 16)
@@ -61,7 +63,7 @@ const FilterAnnotModal = () => {
 
     const threshold = 10;
     const similarColors = colorObject
-      .filter(c => Math.abs(newColor.R - c.R) < threshold
+      .filter((c) => Math.abs(newColor.R - c.R) < threshold
         && Math.abs(newColor.G - c.G) < threshold
         && Math.abs(newColor.B - c.B) < threshold);
 
@@ -69,55 +71,74 @@ const FilterAnnotModal = () => {
   };
 
   const filterApply = () => {
-    dispatch(
-      actions.setCustomNoteFilter(annot => {
-        let type = true;
-        let author = true;
-        let color = true;
-        let status = true;
-        if (typesFilter.length > 0) {
-          type = typesFilter.includes(getAnnotationClass(annot));
-        }
-        if (authorFilter.length > 0) {
-          author = authorFilter.includes(core.getDisplayAuthor(annot['Author']));
-          if (!author && checkRepliesForAuthorFilter) {
-            const allReplies = annot.getReplies();
-            for (const reply of allReplies) {
-              // Short-circuit the search if at least one reply is created by
-              // one of the desired authors
-              if (authorFilter.includes(core.getDisplayAuthor(reply['Author']))) {
-                author = true;
-                break;
-              }
+    const newFilter = (annot, documentViewerKey = 1) => {
+      let type = true;
+      let author = true;
+      let color = true;
+      let status = true;
+      if (typesFilter.length > 0) {
+        type = typesFilter.includes(getAnnotationClass(annot));
+      }
+      if (authorFilter.length > 0) {
+        author = authorFilter.includes(core.getDisplayAuthor(annot['Author'], documentViewerKey));
+        if (!author && checkRepliesForAuthorFilter) {
+          const allReplies = annot.getReplies();
+          for (const reply of allReplies) {
+            // Short-circuit the search if at least one reply is created by
+            // one of the desired authors
+            if (authorFilter.includes(core.getDisplayAuthor(reply['Author'], documentViewerKey))) {
+              author = true;
+              break;
             }
           }
         }
-        if (colorFilter.length > 0) {
-          const iconColor = getIconColor(annot);
-          if (iconColor) {
-            color = similarColorExist(colorFilter, iconColor);
-          } else {
-            // check for default color if no color is available
-            color = colorFilter.includes('#485056');
-          }
+      }
+      if (colorFilter.length > 0) {
+        const iconColor = getIconColor(annot);
+        if (iconColor) {
+          color = similarColorExist(colorFilter, iconColor);
+        } else {
+          // check for default color if no color is available
+          color = colorFilter.includes('#485056');
         }
-        if (statusFilter.length > 0) {
-          if (annot.getStatus()) {
-            status = statusFilter.includes(annot.getStatus());
-          } else {
-            status = statusFilter.includes('None');
-          }
+      }
+      if (statusFilter.length > 0) {
+        if (annot.getStatus()) {
+          status = statusFilter.includes(annot.getStatus());
+        } else {
+          status = statusFilter.includes('None');
         }
-        return type && author && color && status;
-      }),
-    );
+      }
+      return type && author && color && status;
+    };
+    dispatch(actions.setCustomNoteFilter(newFilter));
     dispatch(actions.setAnnotationFilters({
       includeReplies: checkRepliesForAuthorFilter,
-      authorFilter: authorFilter,
-      colorFilter: colorFilter,
+      authorFilter,
+      colorFilter,
       typeFilter: typesFilter,
-      statusFilter: statusFilter
+      statusFilter
     }));
+    const redrawList = [];
+    if (filterDocumentResults) {
+      core.getDocumentViewers().forEach((documentViewer, index) => documentViewer.getAnnotationManager()
+        .getAnnotationsList().forEach((annot) => {
+          const shouldHide = !newFilter(annot, index + 1);
+          if (shouldHide !== annot.NoView) {
+            annot.NoView = shouldHide;
+            redrawList.push(annot);
+          }
+        }));
+    } else {
+      core.getDocumentViewers().forEach((documentViewer) => documentViewer.getAnnotationManager()
+        .getAnnotationsList().forEach((annot) => {
+          if (annot.NoView === true) {
+            annot.NoView = false;
+            redrawList.push(annot);
+          }
+        }));
+    }
+    core.getDocumentViewers().forEach((documentViewer) => documentViewer.getAnnotationManager().drawAnnotationsFromList(redrawList));
     fireEvent(
       Events.ANNOTATION_FILTER_CHANGED,
       {
@@ -137,6 +158,16 @@ const FilterAnnotModal = () => {
     setTypesFilter([]);
     setColorFilter([]);
     setStatusFilter([]);
+
+    const redrawList = [];
+    core.getDocumentViewers().forEach((documentViewer) => documentViewer.getAnnotationManager().getAnnotationsList()
+      .forEach((annot) => {
+        if (annot.NoView === true) {
+          annot.NoView = false;
+          redrawList.push(annot);
+        }
+      }));
+    core.getDocumentViewers().forEach((documentViewer) => documentViewer.getAnnotationManager().drawAnnotationsFromList(redrawList));
   };
 
   const closeModal = () => {
@@ -145,23 +176,35 @@ const FilterAnnotModal = () => {
   };
 
   useEffect(() => {
-    const annots = core.getAnnotationsList();
+    const clearAllFilters = () => {
+      filterClear();
+      filterApply();
+    };
+    core.addEventListener('documentUnloaded', clearAllFilters);
+    return () => {
+      core.removeEventListener('documentUnloaded', clearAllFilters);
+    };
+  }, []);
+
+  useEffect(() => {
+    const annotLists = core.getDocumentViewers().map((documentViewer) => documentViewer.getAnnotationManager().getAnnotationsList());
+    const annots = [].concat(...annotLists).filter((annot) => !annot.Hidden);
     // set is a great way to remove any duplicate additions and ensure the unique items are present
     // the only gotcha that it should not be used by state since not always it will trigger a rerender
     const authorsToBeAdded = new Set();
     const annotTypesToBeAdded = new Set();
     const annotColorsToBeAdded = new Set();
     const annotStatusesToBeAdded = new Set();
-    annots.forEach(annot => {
+    annots.forEach((annot) => {
       const displayAuthor = core.getDisplayAuthor(annot['Author']);
       if (displayAuthor && displayAuthor !== '') {
         authorsToBeAdded.add(displayAuthor);
       }
       // We don't show it in the filter for WidgetAnnotation or StickyAnnotation or LinkAnnotation from the comments
       if (
-        annot instanceof Annotations.WidgetAnnotation ||
-        (annot instanceof Annotations.StickyAnnotation && annot.isReply()) ||
-        annot instanceof Annotations.Link
+        annot instanceof window.Core.Annotations.WidgetAnnotation ||
+        (annot instanceof window.Core.Annotations.StickyAnnotation && annot.isReply()) ||
+        annot instanceof window.Core.Annotations.Link
       ) {
         return;
       }
@@ -215,37 +258,26 @@ const FilterAnnotModal = () => {
 
   const renderAuthors = () => {
     return (
-      <>
-        <div className="include-replies">
-          <Choice
-            isSwitch
-            label={t('option.filterAnnotModal.includeReplies')}
-            checked={checkRepliesForAuthorFilter}
-            onChange={e => setCheckRepliesForAuthorFilter(e.target.checked)}
-            id="filter-annot-modal-include-replies"
-          />
-        </div>
-        <div className="user-filters three-column-filter">
-          {[...authors].map((val, index) => {
-            return (
-              <Choice
-                type="checkbox"
-                key={index}
-                label={val}
-                checked={authorFilter.includes(val)}
-                id={val}
-                onChange={e => {
-                  if (authorFilter.indexOf(e.target.getAttribute('id')) === -1) {
-                    setAuthorFilter([...authorFilter, e.target.getAttribute('id')]);
-                  } else {
-                    setAuthorFilter(authorFilter.filter(author => author !== e.target.getAttribute('id')));
-                  }
-                }}
-              />
-            );
-          })}
-        </div>
-      </>
+      <div className="user-filters three-column-filter">
+        {[...authors].map((val, index) => {
+          return (
+            <Choice
+              type="checkbox"
+              key={index}
+              label={<Tooltip content={val}><div>{val}</div></Tooltip>}
+              checked={authorFilter.includes(val)}
+              id={val}
+              onChange={(e) => {
+                if (authorFilter.indexOf(e.target.getAttribute('id')) === -1) {
+                  setAuthorFilter([...authorFilter, e.target.getAttribute('id')]);
+                } else {
+                  setAuthorFilter(authorFilter.filter((author) => author !== e.target.getAttribute('id')));
+                }
+              }}
+            />
+          );
+        })}
+      </div>
     );
   };
 
@@ -259,14 +291,14 @@ const FilterAnnotModal = () => {
               <Choice
                 type="checkbox"
                 key={index}
-                label={t(`annotation.${val}`)}
+                label={<Tooltip content={t(`annotation.${val}`)}><div>{t(`annotation.${val}`)}</div></Tooltip>}
                 checked={typesFilter.includes(val)}
                 id={val}
-                onChange={e => {
+                onChange={(e) => {
                   if (typesFilter.indexOf(e.target.getAttribute('id')) === -1) {
                     setTypesFilter([...typesFilter, e.target.getAttribute('id')]);
                   } else {
-                    setTypesFilter(typesFilter.filter(type => type !== e.target.getAttribute('id')));
+                    setTypesFilter(typesFilter.filter((type) => type !== e.target.getAttribute('id')));
                   }
                 }}
               />
@@ -286,11 +318,11 @@ const FilterAnnotModal = () => {
                 type="checkbox"
                 checked={colorFilter.includes(val)}
                 id={val}
-                onChange={e => {
+                onChange={(e) => {
                   if (colorFilter.indexOf(e.target.getAttribute('id')) === -1) {
                     setColorFilter([...colorFilter, e.target.getAttribute('id')]);
                   } else {
-                    setColorFilter(colorFilter.filter(color => color !== e.target.getAttribute('id')));
+                    setColorFilter(colorFilter.filter((color) => color !== e.target.getAttribute('id')));
                   }
                 }}
               />
@@ -318,11 +350,11 @@ const FilterAnnotModal = () => {
               checked={statusFilter.includes(val)}
               label={t(`option.state.${val.toLocaleLowerCase()}`)}
               id={val}
-              onChange={e => {
+              onChange={(e) => {
                 if (statusFilter.indexOf(e.target.getAttribute('id')) === -1) {
                   setStatusFilter([...statusFilter, e.target.getAttribute('id')]);
                 } else {
-                  setStatusFilter(statusFilter.filter(status => status !== e.target.getAttribute('id')));
+                  setStatusFilter(statusFilter.filter((status) => status !== e.target.getAttribute('id')));
                 }
               }}
             />
@@ -342,7 +374,7 @@ const FilterAnnotModal = () => {
   return isDisabled ? null : (
     <div className={modalClass} data-element={DataElements.FILTER_MODAL} onMouseDown={closeModal}>
       <FocusTrap locked={isOpen} focusLastOnUnlock>
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
+        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
           {core.getAnnotationsList().length > 0 ? (
             <div className="filter-modal">
               <Swipeable onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
@@ -352,7 +384,7 @@ const FilterAnnotModal = () => {
                   <Button
                     img="icon-close"
                     onClick={closeModal}
-                    title="action.cancel"
+                    title="action.close"
                   />
                 </div>
               </Swipeable>
@@ -407,17 +439,36 @@ const FilterAnnotModal = () => {
                 </Tabs>
               </div>
               <div className="divider"></div>
+              <div className="settings-body">
+                <div className="settings-header">{t('option.filterAnnotModal.filterSettings')}</div>
+                <div className="settings">
+                  <Choice
+                    label={t('option.filterAnnotModal.includeReplies')}
+                    checked={checkRepliesForAuthorFilter}
+                    onChange={(e) => setCheckRepliesForAuthorFilter(e.target.checked)}
+                    id="filter-annot-modal-include-replies"
+                  />
+                  <Choice
+                    label={t('option.filterAnnotModal.filterDocument')}
+                    checked={filterDocumentResults}
+                    onChange={(e) => setFilterDocumentResults(e.target.checked)}
+                    id="filter-annot-modal-filter-document"
+                  />
+                </div>
+              </div>
+              <div className="divider"></div>
               <div className="footer">
-                <Button className="filter-annot-clear" onClick={filterClear} label={t('action.clearAll')} disabled={filterCount === 0} />
-                <Button className="filter-annot-apply" onClick={filterApply} label={t('action.apply')} />
+                <Button className="filter-annot-clear" onClick={filterClear} label={t('action.clearAll')}
+                  disabled={filterCount === 0}/>
+                <Button className="filter-annot-apply" onClick={filterApply} label={t('action.apply')}/>
               </div>
             </div>
           ) : (
-              <div>
-                <div className="swipe-indicator" />
-                <div className="message">{t('message.noAnnotationsFilter')}</div>
-              </div>
-            )}
+            <div>
+              <div className="swipe-indicator" />
+              <div className="message">{t('message.noAnnotationsFilter')}</div>
+            </div>
+          )}
         </div>
       </FocusTrap>
     </div>
