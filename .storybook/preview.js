@@ -92,6 +92,9 @@ const mockDocument = {
   getBookmarks: () => new Promise((res, rej) => res),
 };
 
+const mockDisplayModeManager = {
+  isVirtualDisplayEnabled: () => true,
+};
 
 const mockDocumentViewer = {
   doc: {},
@@ -113,7 +116,8 @@ const mockDocumentViewer = {
   getAnnotationHistoryManager: noop,
   getMeasurementManager: noop,
   getToolModeMap: () => ({}),
-  getWatermark: () => Promise.resolve()
+  getWatermark: () => Promise.resolve(),
+  getDisplayModeManager: () => mockDisplayModeManager,
 };
 
 core.getTool = () => mockTool;

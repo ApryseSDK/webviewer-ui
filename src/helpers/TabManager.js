@@ -285,15 +285,21 @@ export default class TabManager {
       }
       const { tabs, activeTab } = this.store.getState().viewer;
       const tab = tabs.find((t) => t.id === activeTab);
-      tab.changes.annotations = true;
-      tab.changes.hasUnsavedChanges = true;
+      // if we switch between multiviewer and multitab amd have annotations being removed,
+      // we can end up with a events fired for tabs that are no longer in the store
+      if (tab) {
+        tab.changes.annotations = true;
+        tab.changes.hasUnsavedChanges = true;
+      }
       removeListeners();
     };
     const onFieldChange = () => {
       const { tabs, activeTab } = this.store.getState().viewer;
       const tab = tabs.find((t) => t.id === activeTab);
-      tab.changes.annotations = true;
-      tab.changes.hasUnsavedChanges = true;
+      if (tab) {
+        tab.changes.annotations = true;
+        tab.changes.hasUnsavedChanges = true;
+      }
       removeListeners();
     };
 

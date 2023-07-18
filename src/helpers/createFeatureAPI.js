@@ -284,6 +284,10 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         }
 
         if (enable) {
+          if (selectors.isMultiViewerMode(store.getState())) {
+            console.error('MultiTab and MultiViewerMode cannot be enabled at the same time, disabling MultiViewerMode');
+            store.dispatch(actions.setIsMultiViewerMode(false));
+          }
           store.dispatch(enableMultiTab());
         } else {
           store.dispatch(actions.setMultiTab(false));
@@ -309,6 +313,13 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.MultiViewerMode]: {
       fn: () => {
+        if (enable && selectors.getIsMultiTab(store.getState())) {
+          console.error('MultiTab and MultiViewerMode cannot be enabled at the same time, disabling MultiTab');
+          store.dispatch(actions.setMultiTab(false));
+          store.dispatch(actions.setTabManager(null));
+          store.dispatch(actions.setTabs([]));
+          store.dispatch(actions.setActiveTab(0));
+        }
         store.dispatch(actions.setIsMultiViewerMode(enable));
       }
     },
