@@ -63,9 +63,13 @@ function SearchOverlay(props) {
 
   useEffect(() => {
     if (searchTextInputRef.current && isPanelOpen) {
-      searchTextInputRef.current.focus();
+      // give time for the search panel to open before focusing on the input
+      setTimeout(() => {
+        searchTextInputRef.current.focus();
+      }, waitTime);
     }
-    if (!isSearchAndReplaceDisabled && isPanelOpen) {
+
+    if (isSearchAndReplaceDisabled && isPanelOpen) {
       console.warn('Search and Replace is not supported in this browser');
     }
   }, [isPanelOpen]);
@@ -94,7 +98,7 @@ function SearchOverlay(props) {
   };
 
   const search = async (searchValue) => {
-    if (searchValue && searchValue.length > 0) {
+    if (searchValue && searchValue.length > 1) {
       setIsSearchInProgress(true);
       setSearchStatus('SEARCH_IN_PROGRESS');
 
@@ -106,7 +110,7 @@ function SearchOverlay(props) {
         wholeWord: isWholeWord,
         wildcard: isWildcard,
       });
-    } else {
+    } else if (!searchValue) {
       clearSearchResult();
     }
   };
@@ -329,7 +333,7 @@ function SearchOverlay(props) {
             onClick={clearSearchResult}
             aria-label={t('message.searchDocumentPlaceholder')}
           >
-            <Icon glyph="icon-header-clear-search" />
+            <Icon glyph="icon-close" />
           </button>
         )
         }
