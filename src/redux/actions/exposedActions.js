@@ -159,7 +159,7 @@ export const setCurrentGroupedItem = (groupedItems) => (dispatch) => {
   });
 };
 
-export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
+export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
@@ -195,7 +195,7 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
     dispatch(openElements(['toolsHeader']));
     const state = getState();
     const lastPickedToolGroup =
-      state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
+      toolGroup || state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
     const lastPickedToolName =
       state.viewer.lastPickedToolForGroup[lastPickedToolGroup] || getFirstToolNameForGroup(state, lastPickedToolGroup);
     if (pickTool) {
