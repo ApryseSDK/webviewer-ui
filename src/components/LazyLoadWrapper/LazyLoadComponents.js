@@ -7,6 +7,7 @@ const ViewControlsOverlay = lazy(() => import('components/ViewControlsOverlay'))
 const MenuOverlay = lazy(() => import('components/MenuOverlay'));
 const ZoomOverlay = lazy(() => import('components/ZoomOverlay'));
 const PageManipulationOverlay = lazy(() => import('components/PageManipulationOverlay'));
+const AnnotationContentOverlay = lazy(() => import('components/AnnotationContentOverlay'));
 const RotatePopup = lazy(() => import('components/LeftPanelOverlay/RotatePopup'));
 const MoreOptionsPopup = lazy(() => import('components/LeftPanelOverlay/MoreOptionsPopup'));
 const MoreOptionsPopupSmall = lazy(() => import('components/LeftPanelOverlay/MoreOptionsPopupSmall'));
@@ -22,7 +23,6 @@ const DocumentCropPopup = lazy(() => import('components/DocumentCropPopup'));
 const InlineCommentingPopup = lazy(() => import('components/InlineCommentingPopup'));
 
 // Modals
-const ContentEditModal = lazy(() => import('components/ContentEditModal'));
 const ContentEditLinkModal = lazy(() => import('components/ContentEditLinkModal'));
 const SignatureModal = lazy(() => import('components/SignatureModal'));
 const ScaleModal = lazy(() => import('components/ScaleModal'));
@@ -46,6 +46,7 @@ const ColorPickerModal = lazy(() => import('components/ColorPickerModal'));
 const OpenFileModal = lazy(() => import('components/OpenFileModal'));
 const SignatureValidationModal = lazy(() => import('components/SignatureValidationModal'));
 const CustomModal = lazy(() => import('components/CustomModal'));
+const CreatePortfolioModal = lazy(() => import('components/CreatePortfolioModal'));
 
 // Panels
 const NotesPanel = lazy(() => import('components/NotesPanel'));
@@ -68,10 +69,10 @@ const LazyLoadComponents = {
   MenuOverlay,
   ZoomOverlay,
   PageManipulationOverlay,
+  AnnotationContentOverlay,
   RotatePopup,
   MoreOptionsPopup,
   MoreOptionsPopupSmall,
-  ContentEditModal,
   ContentEditLinkModal,
   SignatureModal,
   ScaleModal,
@@ -98,6 +99,7 @@ const LazyLoadComponents = {
   NotesPanel,
   SearchPanel,
   OfficeEditorToolsHeader,
+  CreatePortfolioModal
 };
 
 export default LazyLoadComponents;

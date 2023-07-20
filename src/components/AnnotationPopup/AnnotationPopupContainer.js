@@ -281,14 +281,8 @@ const AnnotationPopupContainer = ({
     && focusedAnnotation.getContentEditType() === window.Core.ContentEdit.Types.TEXT;
 
   const onEditContent = async () => {
-    // TODO: remove this from the state and nuke the modal
-    if (isMobile()) {
-      const content = await window.Core.ContentEdit.getDocumentContent(focusedAnnotation);
-      dispatch(actions.setCurrentContentBeingEdited({ content, annotation: focusedAnnotation }));
-      dispatch(actions.openElement(DataElements.CONTENT_EDIT_MODAL));
-    } else {
-      annotManager.trigger('annotationDoubleClicked', focusedAnnotation);
-    }
+    annotManager.trigger('annotationDoubleClicked', focusedAnnotation);
+
     dispatch(actions.closeElement(DataElements.ANNOTATION_POPUP));
   };
 

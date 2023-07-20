@@ -135,12 +135,10 @@ const TextEditingPanelContainer = () => {
 
   useEffect(() => {
     const handleContentEditModeStart = () => {
-      // start with panel closed in mobile so it doesn't cover the whole screen
-      if (!isInDesktopOnlyMode && isMobile) {
-        return;
-      }
       dispatch(actions.closeElements(['searchPanel', 'notesPanel', 'redactionPanel', 'wv3dPropertiesPanel']));
-      dispatch(actions.openElement('textEditingPanel'));
+      if (!isMobile) {
+        dispatch(actions.openElement('textEditingPanel'));
+      }
     };
 
     const handleContentEditModeEnd = () => {

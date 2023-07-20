@@ -10,7 +10,6 @@ import actions from 'actions';
 import LogoBar from 'components/LogoBar';
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
-import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import RightPanel from 'components/RightPanel';
@@ -47,6 +46,7 @@ import useOnFreeTextEdit from 'hooks/useOnFreeTextEdit';
 import useOnMeasurementToolOrAnnotationSelected from 'hooks/useOnMeasurementToolOrAnnotationSelected';
 import useOnInlineCommentPopupOpen from 'hooks/useOnInlineCommentPopupOpen';
 import useOnRightClickAnnotation from 'hooks/useOnRightClickAnnotation';
+import useOnAnnotationContentOverlayOpen from 'hooks/useOnAnnotationContentOverlayOpen';
 
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
@@ -121,8 +121,9 @@ const App = ({ removeEventHandlers }) => {
       let initialDoc = getHashParameters('d', '');
       const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
       if (!initialDoc && isOfficeEditingEnabled) {
-        loadDocument(dispatch, (await core.getEmptyWordDocument()).default, {
+        loadDocument(dispatch, null, {
           filename: 'Untitled.docx',
+          isOfficeEditingEnabled: true,
         });
 
         return;
@@ -238,36 +239,6 @@ const App = ({ removeEventHandlers }) => {
     return () => window.removeEventListener('loaderror', onError);
   }, []);
 
-
-  useEffect(() => {
-    const handleToolModeChange = (newTool, oldTool) => {
-      if (newTool instanceof window.Core.Tools.ContentEditTool) {
-        setTimeout(() => {
-          dispatch(actions.openElement(DataElements.CONTENT_EDIT_MODAL));
-        }, 500);
-      } else if (oldTool instanceof window.Core.Tools.ContentEditTool) {
-        dispatch(actions.clearCurrentContentBeingEdited());
-      }
-    };
-
-    const handleContentEditModeStart = () => {
-      dispatch(actions.openElement(DataElements.CONTENT_EDIT_MODAL));
-    };
-
-    const handleContentEditModeEnd = () => {
-      dispatch(actions.clearCurrentContentBeingEdited());
-    };
-
-    core.addEventListener('toolModeUpdated', handleToolModeChange);
-    core.addEventListener('contentEditModeStarted', handleContentEditModeStart);
-    core.addEventListener('contentEditModeEnded', handleContentEditModeEnd);
-    return () => {
-      core.removeEventListener('toolModeUpdated', handleToolModeChange);
-      core.removeEventListener('contentEditModeStarted', handleContentEditModeStart);
-      core.removeEventListener('contentEditModeEnded', handleContentEditModeEnd);
-    };
-  }, []);
-
   const panels = customFlxPanels.map((panel, index) => {
     return (
       panel.render && (
@@ -365,7 +336,11 @@ const App = ({ removeEventHandlers }) => {
           Component={LazyLoadComponents.ZoomOverlay}
           dataElement={DataElements.ZOOM_OVERLAY}
         />
-        <AnnotationContentOverlay />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.AnnotationContentOverlay}
+          dataElement={DataElements.ANNOTATION_CONTENT_OVERLAY}
+          onOpenHook={useOnAnnotationContentOverlayOpen}
+        />
         <LazyLoadWrapper
           Component={LazyLoadComponents.PageManipulationOverlay}
           dataElement={DataElements.PAGE_MANIPULATION_OVERLAY}
@@ -453,10 +428,6 @@ const App = ({ removeEventHandlers }) => {
         <LazyLoadWrapper Component={LazyLoadComponents.LoadingModal} dataElement={DataElements.LOADING_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.ProgressModal} dataElement={DataElements.PROGRESS_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.WarningModal} dataElement={DataElements.WARNING_MODAL} />
-        <LazyLoadWrapper
-          Component={LazyLoadComponents.ContentEditModal}
-          dataElement={DataElements.CONTENT_EDIT_MODAL}
-        />
         <LazyLoadWrapper Component={LazyLoadComponents.Model3DModal} dataElement={DataElements.MODEL3D_MODAL} />
         <LazyLoadWrapper
           Component={LazyLoadComponents.ColorPickerModal}
@@ -473,6 +444,7 @@ const App = ({ removeEventHandlers }) => {
           />
         )}
         <LogoBar />
+        <LazyLoadWrapper Component={LazyLoadComponents.CreatePortfolioModal} dataElement={DataElements.CREATE_PORTFOLIO_MODAL} />
       </div>
 
       <PrintHandler />

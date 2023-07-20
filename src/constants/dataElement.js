@@ -106,7 +106,6 @@ const DataElements = {
   LINK_MODAL: 'linkModal',
   LANGUAGE_MODAL: 'languageModal',
   FILTER_MODAL: 'filterModal',
-  CONTENT_EDIT_MODAL: 'contentEditModal',
   CONTENT_EDIT_LINK_MODAL: 'contentEditLinkModal',
   SCALE_MODAL: 'scaleModal',
   INSERT_PAGE_MODAL: 'insertPageModal',
