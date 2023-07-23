@@ -166,11 +166,12 @@
       font-size: 13px;
 
       &.ok {
-        color: var(--primary-button-text);
-        background: var(--primary-button);
+        background: #333;
+        border-radius: 6px;
+        color: #fff;
 
         &:hover {
-          background: var(--primary-button-hover);
+          background: #70c78e;
         }
       }
 

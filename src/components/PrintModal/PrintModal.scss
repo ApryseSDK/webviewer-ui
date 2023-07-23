@@ -12,6 +12,7 @@
 
   .modal-container {
     width: 480px;
+    border-radius: 8px;
 
     .settings {
       display: flex;
@@ -111,21 +112,21 @@
       .button {
         @include button-reset;
         display: flex;
+        background: #333;
+        border-radius: 6px;
         justify-content: center;
         align-items: center;
         color: var(--primary-button-text);
         padding: 6px 18px;
         width: auto;
         width: fit-content;
-        background: var(--primary-button);
-        border-radius: 4px;
         border: 0px;
         height: 32px;
         cursor: pointer;
         font-size: 13px;
 
-        &:hover {
-          background: var(--primary-button-hover);
+        &:hover{
+          background: #70c78e;
         }
 
         &:disabled {
