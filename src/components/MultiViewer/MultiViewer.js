@@ -18,6 +18,7 @@ import { addDocumentViewer, syncDocumentViewers, removeDocumentViewer } from 'he
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import { DISABLED_TOOLS_KEYWORDS, DISABLED_TOOL_GROUPS } from 'constants/multiViewerDisabledTools';
+import MultiViewerLoader from './MultiViewerLoader/MultiViewerLoader';
 
 const MIN_WIDTH = 350;
 
@@ -427,7 +428,10 @@ const MultiViewer = () => {
           onClick={setSecondViewerActive}
           onScroll={() => !isSyncing && setSecondViewerActive()}
         >
-          {!doc2Loaded && <DropArea documentViewerKey={2} />}
+          {!doc2Loaded &&
+          //  <DropArea documentViewerKey={2} />
+          <MultiViewerLoader/>
+           }
           <DocumentHeader documentViewerKey={2} docLoaded={doc2Loaded} isSyncing={isSyncing} />
           <DocumentContainer container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} onReady={onReady}/>
           <div className={'custom-container-2'} style={{ width: '100%' }}/>
