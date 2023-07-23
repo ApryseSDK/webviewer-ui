@@ -244,7 +244,7 @@ const App = ({ removeEventHandlers }) => {
         <ErrorModal />
         <WarningModal />
         <PasswordModal />
-        <ProgressModal />
+        {/* <ProgressModal /> */}
         <CreateStampModal />
         <PageReplacementModal />
         <LinkModal />
