@@ -16,16 +16,23 @@
   }
 
   .linestyle-image svg {
-    width: 48px;
+    width: 35px;
+    margin-top: 11px;
   }
 
-  .linestyle-image.shift-alignment {
-    padding-top: 3px;
+  .linestyle-image.shift-alignment svg {
+    margin-top: 8px;
   }
 
-  .renderUpwards {
-    .Dropdown__items {
-      top: -282px;
-    }
+  .Dropdown__items .linestyle-image svg {
+    width: 45px;
+  }
+
+  [data-element="middleLineStyleDropdown"] .linestyle-image.shift-alignment {
+    padding-top: 0;
+  }
+
+  [data-element="middleLineStyleDropdown"] .Dropdown__items  {
+    top: -197px;
   }
 }
