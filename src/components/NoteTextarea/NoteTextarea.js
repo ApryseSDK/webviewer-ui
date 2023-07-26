@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
+import throttle from 'lodash/throttle';
 import NoteContext from 'components/Note/Context';
 import selectors from 'selectors';
 import CommentTextarea from './CommentTextarea/CommentTextarea';
@@ -81,29 +82,32 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   };
 
   const handleChange = (content, delta, source, editor) => {
-    /* For the React Quill editor, the text won't ever be empty, at least a '\n'
-     * will be there, so it is necessary to trim the value to check if it is empty
-     */
-    const isEmpty = editor && editor.getText().trim() === '' && content === '<p><br></p>';
-    let value = '';
+    if (textareaRef.current) {
+      /* For the React Quill editor, the text won't ever be empty, at least a '\n'
+       * will be there, so it is necessary to trim the value to check if it is empty
+       */
+      const isEmpty = editor && editor.getText().trim() === '' && content === '<p><br></p>';
+      let value = '';
 
-    if (!isEmpty) {
-      value = content.target ? content.target.value : content;
-    }
-    props.onChange(value);
+      if (!isEmpty) {
+        value = content.target ? content.target.value : content;
+      }
+      props.onChange(value);
 
-    // If the delta contains a mention, then move the cursor to the end of the editor.
-    // This is necessary instead of using debounce when mentioning a user because
-    // the debounce was generating the following bug
-    // https://apryse.atlassian.net/browse/WVR-2380
-    const deltaContainsMention = mentionsManager.doesDeltaContainMention(delta.ops);
-    if (deltaContainsMention) {
-      const formattedText = mentionsManager.getFormattedTextFromDeltas(delta.ops);
-      const mentionData = mentionsManager.extractMentionDataFromStr(formattedText);
-      const editortextValue = editor.getText();
-      const totalTextLength = editortextValue.length + mentionData.plainTextValue.length;
-      const textareaEditor = textareaRef.current.editor;
-      setTimeout(() => textareaEditor.setSelection(totalTextLength, totalTextLength), 1);
+      // If the delta contains a mention, then move the cursor to the end of the editor.
+      // This is necessary instead of using debounce when mentioning a user because
+      // the debounce was generating the following bug
+      // https://apryse.atlassian.net/browse/WVR-2380
+      const deltaContainsMention = mentionsManager.doesDeltaContainMention(delta.ops);
+
+      if (deltaContainsMention) {
+        const formattedText = mentionsManager.getFormattedTextFromDeltas(delta.ops);
+        const mentionData = mentionsManager.extractMentionDataFromStr(formattedText);
+        const editortextValue = editor.getText();
+        const totalTextLength = editortextValue.length + mentionData.plainTextValue.length;
+        const textareaEditor = textareaRef.current?.editor;
+        setTimeout(() => textareaEditor?.setSelection(totalTextLength, totalTextLength), 1);
+      }
     }
   };
 
@@ -113,7 +117,7 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
       textareaRef.current = el;
       forwardedRef(el);
     },
-    onChange: handleChange,
+    onChange: throttle(handleChange, 100),
     onKeyDown: handleKeyDown,
     userData,
   };
