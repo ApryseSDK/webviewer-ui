@@ -27,7 +27,8 @@ const propTypes = {
   maxHeight: PropTypes.number,
   getKey: PropTypes.func,
   getDisplayValue: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  onOpened: PropTypes.func
 };
 
 function Dropdown({
@@ -50,7 +51,8 @@ function Dropdown({
   hasInput = false,
   displayButton = null,
   customDataValidator = () => true,
-  isSearchEnabled = true
+  isSearchEnabled = true,
+  onOpened = () => {}
 }) {
   const { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
@@ -77,6 +79,15 @@ function Dropdown({
         inputRef?.current?.focus();
       });
     }
+
+    // Checking if there is space to place the overlay under its trigger, if not, place it on the trigger's top.
+    const overlayRect = overlayRef?.current?.getBoundingClientRect();
+    const buttonRect = buttonRef.current.getBoundingClientRect();
+    if (overlayRect && buttonRect.bottom + overlayRect.height > window.innerHeight) {
+      overlayRef.current.style.top = `-${overlayRect.height}px`;
+    } else {
+      overlayRef.current.style.top = 0;
+    }
   }, [hasInput, isOpen, disabled]);
 
   // Close dropdown if WebViewer loses focus (ie, user clicks outside iframe).
@@ -94,6 +105,8 @@ function Dropdown({
   useEffect(() => {
     if (!isOpen) {
       setInputVal('');
+    } else {
+      onOpened();
     }
   }, [isOpen]);
 

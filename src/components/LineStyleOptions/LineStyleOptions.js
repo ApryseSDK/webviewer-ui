@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Dropdown from 'components/Dropdown';
 import { defaultStrokeStyles } from 'constants/strokeStyleIcons';
@@ -38,14 +38,6 @@ function LineStyleOptions({ properties, onLineStyleChange }) {
   const [selectedStartLineStyle, setSelectedStartLineStyle] = useState(properties.StartLineStyle);
   const [selectedEndLineStyle, setSelectedEndLineStyle] = useState(properties.EndLineStyle);
   const [selectedMiddleLineStyle, setSelectedMiddleLineStyle] = useState(properties.StrokeStyle);
-  const [isMouseInLowerHalfOfWindow, setIsMouseInLowerHalfOfWindow] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener('click', handleMouseClick);
-    return () => {
-      window.removeEventListener('click', handleMouseClick);
-    };
-  }, []);
 
   function onClickStartLineStyle(key) {
     setSelectedStartLineStyle(key);
@@ -62,21 +54,12 @@ function LineStyleOptions({ properties, onLineStyleChange }) {
     onLineStyleChange('end', key);
   }
 
-  function handleMouseClick(event) {
-    if (event.clientY > window.innerHeight / 2) {
-      setIsMouseInLowerHalfOfWindow(true);
-    } else {
-      setIsMouseInLowerHalfOfWindow(false);
-    }
-  }
-
   const lineEndingDropdownWidth = 62;
-  const dropdownContainerClass = `StyleContainer ${isMouseInLowerHalfOfWindow ? 'renderUpwards' : ''}`;
 
   return (
     <div className="LineStyleOptions">
       <div className="LayoutTitle">{t('option.lineStyleOptions.title')}</div>
-      <div className={dropdownContainerClass}>
+      <div className="StyleContainer">
         <Dropdown
           dataElement="startLineStyleDropdown"
           images={startLineStyles}
