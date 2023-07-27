@@ -41,7 +41,7 @@ export const getSelectedStamp = (state) => {
   const customStamps = getCustomStamps(state);
   const index = getSelectedStampIndex(state);
   let selectedStamp = standardStamps[index];
-  // selected stamp is not found in standard stamps, search dyamic stamps
+  // selected stamp is not found in standard stamps, search dynamic stamps
   if (!selectedStamp && !!customStamps.length) {
     selectedStamp = customStamps[index - standardStamps.length];
   }
@@ -133,8 +133,6 @@ export const isCustomFlxPanelOpen = (state) => {
 
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
 export const getIsAddingNewScale = (state) => state.viewer.isAddingNewScale;
-
-export const getIsRevocationCheckingEnabled = (state) => state.viewer.isRevocationCheckingEnabled;
 
 export const getMeasurementScalePreset = (state) => state.viewer.measurementScalePreset;
 export const getIsMultipleScalesMode = (state) => state.viewer.isMultipleScalesMode;
@@ -476,6 +474,10 @@ export const getTrustLists = (state) => state.viewer.trustLists;
 export const getValidationModalWidgetName = (state) => state.viewer.validationModalWidgetName;
 
 export const getVerificationResult = (state, fieldName) => state.viewer.verificationResult[fieldName] || {};
+
+export const getIsRevocationCheckingEnabled = (state) => state.viewer.isRevocationCheckingEnabled;
+
+export const getRevocationProxyPrefix = (state) => state.viewer.revocationProxyPrefix;
 
 export const isThumbnailSelectingPages = (state) => state.viewer.thumbnailSelectingPages;
 
