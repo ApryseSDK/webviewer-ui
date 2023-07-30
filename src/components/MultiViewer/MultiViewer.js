@@ -30,6 +30,7 @@ const MultiViewer = () => {
   const oldHeaderItems = useRef({});
   const container = useRef();
   const container2 = useRef();
+  const currentReadOnlyMode = useRef(false);
   const [doc1Loaded, setDoc1Loaded] = useState(false);
   const [doc2Loaded, setDoc2Loaded] = useState(false);
   const [width, setWidth] = useState(0);
@@ -152,7 +153,7 @@ const MultiViewer = () => {
         };
         headerItems.splice(index, 1, {
           type: 'customElement',
-          render: () => <ComparisonButton/>,
+          render: () => <ComparisonButton />,
           dataElement: 'comparisonToggleButton',
           hiddenOnMobileDevices: true,
         });
@@ -192,6 +193,7 @@ const MultiViewer = () => {
       if (hasSecondViewer) {
         core.removeEventListener('documentLoaded', onLoaded2, 2);
         core.removeEventListener('documentUnloaded', unLoaded2, 2);
+        core.getDocumentViewer(2).removeEventListener('readOnlyModeChanged', setCurrentReadOnlyMode)
       }
     };
     const addEventListeners = () => {
@@ -199,6 +201,10 @@ const MultiViewer = () => {
       core.addEventListener('documentUnloaded', unLoaded1, undefined, 1);
       core.addEventListener('documentUnloaded', unLoaded2, undefined, 2);
       core.addEventListener('documentLoaded', onLoaded2, undefined, 2);
+      const hasSecondViewer = !!core.getDocumentViewer(2);
+      if (hasSecondViewer) {
+        core.getDocumentViewer(2).addEventListener('readOnlyModeChanged', setCurrentReadOnlyMode);
+      }
     };
     const onLoaded1 = () => {
       setDoc1Loaded(true);
@@ -237,11 +243,45 @@ const MultiViewer = () => {
   }, [width, width2]);
 
   useEffect(() => {
+    const removeListeners = () => {
+      const hasSecondViewer = !!container2.current;
+      if (hasSecondViewer) {
+        container2.current.removeEventListener('scroll', onScrollDifferMode)
+      }
+    };
+    const addEventListeners = () => {
+      const hasSecondViewer = !!container2.current;
+      if (hasSecondViewer) {
+        container2.current.addEventListener('scroll', onScrollDifferMode);
+      }
+    };
+
+    if (currentReadOnlyMode.current) {
+      addEventListeners();
+    } else {
+      removeListeners();
+    }
+    return removeListeners;
+
+  }, [currentReadOnlyMode.current])
+
+
+  useEffect(() => {
     if (initialSetup && isMultiViewerMode) {
       onReady('viewer');
+      currentReadOnlyMode.current = false;
     }
   }, [initialSetup]);
 
+  const onScrollDifferMode = (e) => {
+    const { scrollTop, scrollLeft } = e.target;
+    container.current.scrollTop = scrollTop;
+    container.current.scrollLeft = scrollLeft;
+  }
+
+  const setCurrentReadOnlyMode = (e) => {
+    currentReadOnlyMode.current = e;
+  }
   const setActiveDocumentViewerKey = (documentViewerKey) => {
     dispatch(actions.setActiveDocumentViewerKey(documentViewerKey));
   };
@@ -255,7 +295,7 @@ const MultiViewer = () => {
   const shouldSkipSyncEvent = () => {
     const state = store.getState();
     return core.getDocumentViewers().length < 2 || !core.getDocument(1) || !core.getDocument(2) ||
-    !selectors.isMultiViewerMode(state) || !selectors.getSyncViewer(state);
+      !selectors.isMultiViewerMode(state) || !selectors.getSyncViewer(state);
   };
   const createOnScrollHandler = (documentViewerKey) => (e) => {
     if (shouldSkipSyncEvent()) {
@@ -398,7 +438,7 @@ const MultiViewer = () => {
       width: documentContentContainerWidthStyle,
       marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
     }}
-    ref={rootContainerRef}
+      ref={rootContainerRef}
     >
       {isMultiViewerMode && initialSetup && <>
         <div className={classNames('CompareContainer', { active: activeDocumentViewerKey === 1 })} id="container1"
@@ -407,9 +447,9 @@ const MultiViewer = () => {
           onScroll={() => !isSyncing && setFirstViewerActive()}
         >
           {!doc1Loaded && <DropArea documentViewerKey={1} />}
-          <DocumentHeader documentViewerKey={1} docLoaded={doc1Loaded} isSyncing={isSyncing}/>
-          <DocumentContainer container={container} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={1} onReady={onReady} />
-          <div className={'custom-container-1'} style={{ width: '100%' }}/>
+          <DocumentHeader documentViewerKey={1} docLoaded={doc1Loaded} isSyncing={isSyncing} />
+          <DocumentContainer currentReadOnlyMode={currentReadOnlyMode} container={container} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={1} onReady={onReady} />
+          <div className={'custom-container-1'} style={{ width: '100%' }} />
           <div style={{ width }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 1 })} />
         </div>
         <ResizeBar
@@ -429,12 +469,12 @@ const MultiViewer = () => {
           onScroll={() => !isSyncing && setSecondViewerActive()}
         >
           {!doc2Loaded &&
-          //  <DropArea documentViewerKey={2} />
-          <MultiViewerLoader/>
-           }
+            //  <DropArea documentViewerKey={2} />
+            <MultiViewerLoader />
+          }
           <DocumentHeader documentViewerKey={2} docLoaded={doc2Loaded} isSyncing={isSyncing} />
-          <DocumentContainer container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} onReady={onReady}/>
-          <div className={'custom-container-2'} style={{ width: '100%' }}/>
+          <DocumentContainer currentReadOnlyMode={currentReadOnlyMode} container={container2} activeDocumentViewerKey={activeDocumentViewerKey} documentViewerKey={2} onReady={onReady} />
+          <div className={'custom-container-2'} style={{ width: '100%' }} />
           <div style={{ width: width2 }} className={classNames('borderLineBottom', { active: activeDocumentViewerKey === 2 })} />
         </div>
         <CompareZoomOverlay zoom1={zoom} zoom2={zoom2} />

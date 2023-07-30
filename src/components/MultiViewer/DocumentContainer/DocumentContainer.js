@@ -22,6 +22,7 @@ const propTypes = {
 
 // TODO compare: check display mode scrolling
 const DocumentContainer = ({
+  currentReadOnlyMode,
   documentViewerKey,
   activeDocumentViewerKey,
   container,
@@ -61,16 +62,18 @@ const DocumentContainer = ({
   };
   const onWheel = (e) => {
     const displayMode = documentViewer.getDisplayModeManager().getDisplayMode();
-    if (isMouseWheelZoomEnabled && (e.metaKey || e.ctrlKey)) {
-      e.preventDefault();
-      wheelToZoom(e, core.getZoom(documentViewerKey));
-    } else if (!displayMode?.isContinuous() && displayMode?.IsScrollable()) {
-      wheelToNavigatePages(e);
-      dispatch(actions.closeElements([
-        'annotationPopup',
-        'textPopup',
-        'annotationNoteConnectorLine',
-      ]));
+    if (!currentReadOnlyMode.current) {
+      if (isMouseWheelZoomEnabled && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        wheelToZoom(e, core.getZoom(documentViewerKey));
+      } else if (!displayMode?.isContinuous() && displayMode?.IsScrollable()) {
+        wheelToNavigatePages(e);
+        dispatch(actions.closeElements([
+          'annotationPopup',
+          'textPopup',
+          'annotationNoteConnectorLine',
+        ]));
+      }
     }
   };
   const wheelToZoom = throttle((e, zoom) => {
@@ -90,6 +93,7 @@ const DocumentContainer = ({
     const xOffset = e.clientX - window.document.getElementById(`container${documentViewerKey}`).getBoundingClientRect().left;
     documentViewer.zoomToMouse(newZoomFactor, xOffset, yOffset);
   }, 30, { trailing: false });
+
   const wheelToNavigatePages = (e) => {
     const currentPage = core.getCurrentPage(documentViewerKey);
     const totalPages = documentViewer.getPageCount();

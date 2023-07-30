@@ -25,13 +25,13 @@
     border: 2px solid var(--document-background-color);
     box-sizing: border-box;
     &.active {
-      border: 2px solid var(--blue-5);
+      border: 2px solid #a7ffc5;
     }
 
     .borderLineBottom {
       visibility: hidden;
       height: 2px;
-      background-color: var(--blue-5);
+      background-color: #a7ffc5;
       position: absolute;
       bottom: 0;
       z-index: 41;
