@@ -7,13 +7,12 @@ export default {
   component: ColorPalettePicker,
 };
 
+const color = { R: 100, G: 0, B: 0, A: 1 };
+const customColors = ['#000000', '#ff1111', '#ffffff'];
+
 export function Basic() {
   const [t] = useTranslation();
-  const color = { R: 100, G: 0, B: 0, A: 1 };
-  const customColors = ["#000000", "#ff1111", "#ffffff"];
-
   function noop() {}
- 
   const props = {
     t,
     color,
@@ -21,6 +20,26 @@ export function Basic() {
     getHexColor: noop,
     findCustomColorsIndex: noop,
     setColorToBeDeleted: noop,
+  };
+  return (
+    <div>
+      <ColorPalettePicker {...props} />
+    </div>
+  );
+}
+
+export function IgnoredColors() {
+  const [t] = useTranslation();
+  function noop() {}
+  const colorsToIgnore = ['#000000', '#ffffff'];
+  const props = {
+    t,
+    color,
+    customColors,
+    getHexColor: noop,
+    findCustomColorsIndex: noop,
+    setColorToBeDeleted: noop,
+    colorsToIgnore,
   };
   return (
     <div>

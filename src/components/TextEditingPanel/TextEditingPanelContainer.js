@@ -49,17 +49,14 @@ const TextEditingPanelContainer = () => {
   // properties for custom buttons and color picker
   const [format, setFormat] = useState({});
 
+  const [colorArray] = useState(['#000000', '#FFFFFF']);
+
   useEffect(() => {
     const handleSelectionChange = async () => {
       if (contentEditorRef.current && core.getContentEditManager().isInContentEditMode()) {
         const attribute = await contentEditorRef.current.getTextAttributes();
-
-        setFormat((format) => {
-          return {
-            ...format,
-            ...attribute
-          };
-        });
+        const hexColor = attribute.fontColors[0].fontColor;
+        const color = new window.Core.Annotations.Color(hexColor);
 
         const fontObject = {
           FontSize: attribute.fontSize,
@@ -71,8 +68,11 @@ const TextEditingPanelContainer = () => {
         }
 
         setTextEditProperties(fontObject);
-
+        handleColorChange(null, color);
+        attribute.fontColor = hexColor;
         window.Core.ContentEdit.setTextAttributes(attribute);
+
+        setFormat({ ...attribute, color });
       }
     };
     core.addEventListener('contentEditSelectionChange', handleSelectionChange);
@@ -154,7 +154,7 @@ const TextEditingPanelContainer = () => {
   }, []);
 
   useEffect(() => {
-    const handleAnnotationSelected = (annotations, action) => {
+    const handleAnnotationSelected = async (annotations, action) => {
       if (!core.getContentEditManager().isInContentEditMode()) {
         return;
       }
@@ -175,8 +175,10 @@ const TextEditingPanelContainer = () => {
           }
         } else if (annotation.isContentEditPlaceholder()) {
           setSelectedContentBox(annotation);
-          setFormat(getDefaultFormat(annotation));
-          setTextEditProperties(getTextEditPropertiesFromContentEditPlaceHolder(annotation));
+
+          const textAttributes = await getTextEditPropertiesFromContentEditPlaceHolder(annotation);
+          setFormat(textAttributes);
+          setTextEditProperties(textAttributes);
           setSelectionMode('ContentBox');
           annotationRef.current = null;
           if (!isDisabled && !isOpen) {
@@ -248,28 +250,6 @@ const TextEditingPanelContainer = () => {
     window.Core.ContentEdit.setTextAttributes({ [conversionMap[property]]: value });
   };
 
-  const getDefaultFormat = (annotation) => {
-    const { color } = annotation.getContentEditingFormat();
-    const defaultColor = color || '#000000';
-    return {
-      bold: false,
-      italic: false,
-      underline: false,
-      color: defaultColor
-    };
-  };
-
-  const handleRichTextStyleChange = (property, value) => {
-    if (annotationRef.current) {
-      core.updateAnnotationRichTextStyle(annotationRef.current, { [property]: value });
-    } else {
-      setTextEditProperties({
-        ...textEditProperties,
-        [property]: value,
-      });
-    }
-  };
-
   const handleTextFormatChange = (updatedDecorator) => () => {
     if (selectedContentBox) {
       switch (updatedDecorator) {
@@ -299,11 +279,14 @@ const TextEditingPanelContainer = () => {
   };
 
   const handleColorChange = (_, color) => {
-    const textColor = color.toHexString();
+    const textColor = color?.toHexString?.() || color;
     if (selectedContentBox) {
+      if (!colorArray.includes(textColor)) {
+        colorArray.push(textColor);
+      }
       window.Core.ContentEdit.setTextColor(selectedContentBox, textColor);
     }
-    applyFormat('color', color);
+    applyFormat('color', textColor);
   };
 
   const applyFormat = (formatKey, value) => {
@@ -318,7 +301,7 @@ const TextEditingPanelContainer = () => {
     });
   };
 
-  const getTextEditPropertiesFromContentEditPlaceHolder = (annotation) => {
+  const getTextEditPropertiesFromContentEditPlaceHolder = async (annotation) => {
     const fontMap = {};
 
     fonts.forEach((font) => {
@@ -328,22 +311,34 @@ const TextEditingPanelContainer = () => {
 
     const isTextContentPlaceholder = annotation.isContentEditPlaceholder() && annotation.getContentEditType() === window.Core.ContentEdit.Types.TEXT;
     if (isTextContentPlaceholder) {
-      const styleProperties = annotation.getContentStyleProperties();
-      if (!styleProperties) {
-        return;
-      }
-      const { fontSize, fontFamily, textAlign } = styleProperties;
-      let fontName = fontMap[fontFamily.replace(/\s+/g, '')];
+      const contentBoxId = annotation.getCustomData('contentEditBoxId');
 
-      // hack to use placeholder in font dropdown needs to have a non-empty, not included value
-      if (!fontName) {
-        fontName = 'Font';
+      await window.Core.ContentEdit.loadTextAttributes(contentBoxId, 0, 0, {
+        restrictFontName: false,
+        restrictFontSize: false,
+      }, 1);
+
+      await new Promise((r) => setTimeout(r, 100));
+
+      const manager = core.getContentEditManager();
+      const box = manager.getContentBoxById(contentBoxId);
+      const contentBoxAttributes = box.boxAttributes;
+      const fontName = getFontName(contentBoxAttributes?.fontName);
+      const { bold, italic, underline, fontColors, fontSize, textAlign } = contentBoxAttributes;
+      const color = new window.Core.Annotations.Color(fontColors[0].fontColor);
+
+      if (!fonts.includes(fontName)) {
+        fonts.push(fontName);
       }
 
       return {
         Font: fontName,
         FontSize: fontSize,
         TextAlign: textAlign,
+        bold,
+        italic,
+        underline,
+        color
       };
     }
   };
@@ -394,7 +389,6 @@ const TextEditingPanelContainer = () => {
         contentSelectMode={selectionMode === 'ContentBox'}
         textEditProperties={textEditProperties}
         handlePropertyChange={handlePropertyChange}
-        handleRichTextStyleChange={handleRichTextStyleChange}
         format={format}
         handleTextFormatChange={handleTextFormatChange}
         handleColorChange={handleColorChange}
@@ -403,6 +397,7 @@ const TextEditingPanelContainer = () => {
         disableLinkButton={
           (annotationRef.current?.ToolName === window.Core.Tools.ToolNames.ADD_PARAGRAPH) && !contentEditorRef.current
         }
+        colorArray={colorArray}
       />
     </DataElementWrapper>
   );
