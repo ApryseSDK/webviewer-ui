@@ -435,12 +435,10 @@
       "drawSignature": "Vẽ Chữ ký *",
       "drawInitial": "Rút tên viết tắt *",
       "pickInitialsFile": "Chọn tên viết tắt",
-      "noSignatures": "Hiện tại không có chữ ký nào được lưu."
+      "noSignatures": "Hiện tại không có chữ ký nào được lưu.",
+      "fontStyle": "kiểu phông chữ"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Kéo & Thả tệp của bạn tại đây",
-      "selectFile": "Chọn tệp của bạn ở đây",
-      "or": "Hoặc",
       "yourFiles": "Tệp của bạn",
       "chooseFile": "Chọn một tệp",
       "localFile": "Tệp Cục Bộ",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Tùy chọn hình mờ",
     "watermarks": "Hình mờ"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Danh mục đầu tư PDF",
+    "portfolioAddFile": "Thêm tập tin",
+    "portfolioAddFolder": "Thêm thư mục",
+    "portfolioCreateFolder": "Tạo thư mục",
+    "portfolioNewFolder": "Thư mục mới",
+    "portfolioNewFolderPlaceholder": "Tên thư mục"
+  },
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Chữ ký ảnh",
     "addWatermark": "Thêm hình mờ",
     "save": "Lưu tập tin",
-    "pageError": "Trang không hợp lệ. Phạm vi trang hợp lệ là từ 1 -"
+    "pageError": "Trang không hợp lệ. Phạm vi trang hợp lệ là từ 1 -",
+    "fileNameCannotBeEmpty": "Tên tệp không được để trống"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Tạo danh mục đầu tư PDF",
+    "uploadFiles": "Tải tệp lên",
+    "uploadFolder": "Thư mục tải lên",
+    "addFiles": "Thêm các tập tin",
+    "addFolder": "Thêm thư mục"
+  },
+  "filePicker": {
+    "dragAndDrop": "Kéo và thả tệp của bạn vào đây",
+    "selectFile": "Chọn tập tin của bạn ở đây",
+    "or": "Hoặc"
   }
 }

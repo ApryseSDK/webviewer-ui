@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
@@ -39,6 +39,7 @@ const FormFieldEditPopup = ({
 
   const [initialWidth] = useState(annotation.Width.toFixed(0));
   const [initialHeight] = useState(annotation.Height.toFixed(0));
+  const popupRef = useRef(null);
 
   // If no radio group is yet set, set this as null as the select input will then show the correct prompt
   const [radioButtonGroup, setRadioButtonGroup] = useState(
@@ -160,7 +161,7 @@ const FormFieldEditPopup = ({
     return (
       <div className="field-options-container">
         {t('formField.formFieldPopup.options')}
-        <CreatableList options={options} onOptionsUpdated={onOptionsChange} />
+        <CreatableList options={options} onOptionsUpdated={onOptionsChange} popupRef={popupRef}/>
       </div>
     );
   }
@@ -168,7 +169,7 @@ const FormFieldEditPopup = ({
   const indicatorPlaceholder = t(`formField.formFieldPopup.indicatorPlaceHolders.${annotation.getFormFieldPlaceholderType()}`);
 
   return (
-    <div className={className}>
+    <div className={className} ref={popupRef}>
       <div className="fields-container">
         {fields.map((field) => (
           <div className="field-input" key={field.label}>

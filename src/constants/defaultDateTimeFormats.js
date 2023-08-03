@@ -54,4 +54,9 @@ export default [
     time: 'HH:mm',
     timeFirst: false,
   },
+  {
+    date: 'MMM DD YYYY',
+    time: 'h:mm A',
+    timeFirst: false,
+  },
 ];

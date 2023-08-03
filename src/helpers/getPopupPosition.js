@@ -31,19 +31,19 @@ export const getTextPopupPositionBasedOn = (allQuads, popup) => {
   return { left, top };
 };
 
-export const getAnnotationPosition = (annotation) => {
-  const { left, top, right, bottom } = getAnnotationPageCoordinates(annotation);
+export const getAnnotationPosition = (annotation, documentViewerKey = 1) => {
+  const { left, top, right, bottom } = getAnnotationPageCoordinates(annotation, documentViewerKey);
 
   const pageNumber = annotation.getPageNumber();
-  const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageNumber);
-  const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber);
+  const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageNumber, documentViewerKey);
+  const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber, documentViewerKey);
 
   if (annotation['NoZoom']) {
     const isNote = annotation instanceof window.Core.Annotations.StickyAnnotation;
     const rect = annotation.getRect();
     const width = isNote ? window.Core.Annotations.StickyAnnotation['SIZE'] : rect.getWidth();
     const height = isNote ? window.Core.Annotations.StickyAnnotation['SIZE'] : rect.getHeight();
-    const rotation = core.getCompleteRotation(annotation.PageNumber);
+    const rotation = core.getCompleteRotation(annotation.PageNumber, documentViewerKey);
     if (rotation === 0) {
       bottomRight.x = topLeft.x + width;
       bottomRight.y = topLeft.y + height;
@@ -72,14 +72,14 @@ export const getAnnotationPosition = (annotation) => {
   return { topLeft, bottomRight };
 };
 
-const getAnnotationPageCoordinates = (annotation) => {
+const getAnnotationPageCoordinates = (annotation, documentViewerKey = 1) => {
   const rect = annotation.getRect();
   let { x1: left, y1: top, x2: right, y2: bottom } = rect;
 
   const isNote = annotation instanceof window.Core.Annotations.StickyAnnotation;
   const noteAdjustment = window.Core.Annotations.StickyAnnotation['SIZE'];
 
-  const rotation = core.getCompleteRotation(annotation.PageNumber);
+  const rotation = core.getCompleteRotation(annotation.PageNumber, documentViewerKey);
   if (rotation === 1) {
     [top, bottom] = [bottom, top];
     if (isNote) {
@@ -173,8 +173,8 @@ const getSelectedTextPageCoordinates = (allQuads, startPageNumber, endPageNumber
   return { left, top, bottom, right };
 };
 
-const convertPageCoordinatesToWindowCoordinates = (x, y, pageNumber) => {
-  const displayMode = core.getDisplayModeObject();
+const convertPageCoordinatesToWindowCoordinates = (x, y, pageNumber, documentViewerKey = 1) => {
+  const displayMode = core.getDisplayModeObject(documentViewerKey);
 
   return displayMode.pageToWindow({ x, y }, pageNumber);
 };
@@ -203,6 +203,12 @@ export const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
   const { scrollLeft } = core.getScrollViewElement();
   const center = (topLeft.x + bottomRight.x) / 2 - scrollLeft;
   let left = center - width / 2;
+
+  if (window.isApryseWebViewerWebComponent) {
+    const hostContainer = getRootNode().host;
+    const containerBox = hostContainer.getBoundingClientRect();
+    left -= containerBox.left;
+  }
 
   if (left < 0) {
     left = 0;
@@ -246,6 +252,11 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
     } else { // otherwise, place it to bottom
       top = visibleRegion.bottom - padding - height;
     }
+  }
+  if (window.isApryseWebViewerWebComponent) {
+    const hostContainer = getRootNode().host;
+    const containerBox = hostContainer.getBoundingClientRect();
+    top -= containerBox.top;
   }
 
   return Math.round(top - scrollContainer.scrollTop);

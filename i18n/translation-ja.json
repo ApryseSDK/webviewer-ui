@@ -435,12 +435,10 @@
       "drawSignature": "署名を描く*",
       "drawInitial": "イニシャルを描く*",
       "pickInitialsFile": "イニシャルを選択",
-      "noSignatures": "現在、保存されている署名はありません。"
+      "noSignatures": "現在、保存されている署名はありません。",
+      "fontStyle": "フォントスタイル"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "ここにファイルをドラッグ＆ドロップ",
-      "selectFile": "ここでファイルを選択",
-      "or": "または",
       "yourFiles": "あなたのファイル",
       "chooseFile": "ファイルを選択",
       "localFile": "ローカルファイル",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "透かしオプション",
     "watermarks": "透かし"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDFポートフォリオ",
+    "portfolioAddFile": "ファイルの追加",
+    "portfolioAddFolder": "フォルダーを追加",
+    "portfolioCreateFolder": "フォルダーを作る",
+    "portfolioNewFolder": "新しいフォルダー",
+    "portfolioNewFolderPlaceholder": "フォルダ名"
+  },
   "languageModal": {
     "selectLanguage": "言語を選択する"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "透かし",
     "addWatermark": "透かしを追加",
     "save": "ファイルを保存",
-    "pageError": "ページが無効です。有効なページ範囲は 1 ～"
+    "pageError": "ページが無効です。有効なページ範囲は 1 ～",
+    "fileNameCannotBeEmpty": "ファイル名を空にすることはできません"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "PDF ポートフォリオを作成する",
+    "uploadFiles": "ファイルをアップロードする",
+    "uploadFolder": "アップロードフォルダー",
+    "addFiles": "追加ファイル",
+    "addFolder": "フォルダーを追加"
+  },
+  "filePicker": {
+    "dragAndDrop": "ここにファイルをドラッグ＆ドロップします",
+    "selectFile": "ここでファイルを選択してください",
+    "or": "また"
   }
 }

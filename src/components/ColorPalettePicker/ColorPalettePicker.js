@@ -18,6 +18,7 @@ const ColorPalettePicker = ({
   enableEdit,
   disableTitle = false,
   colorsAreHex = false,
+  colorsToIgnore
 }) => {
   useEffect(() => {
     if (!customColors.includes(colorsAreHex ? color : getHexColor(color))) {
@@ -34,6 +35,10 @@ const ColorPalettePicker = ({
       openColorPicker(true);
     }
   };
+
+  if (colorsToIgnore) {
+    customColors = customColors.filter((color) => !colorsToIgnore.includes(color));
+  }
 
   return (
     <div>

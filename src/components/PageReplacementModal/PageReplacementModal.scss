@@ -35,6 +35,10 @@
     .Button {
       height: 100%;
       justify-content: right;
+
+      &.close-button {
+        justify-content: center;
+      }
     }
 
     .page-replacement-divider {
@@ -42,9 +46,14 @@
       margin: 0;
     }
 
+    .modal-container .wrapper .header-container {
+      border-bottom: 0;
+      padding-top: 20px;
+      padding-bottom: 0;
+    }
 
-    .header-container {
-      padding: 20px 16px 16px 16px;
+    .tabs-header-container {
+      padding: 0 16px 16px 16px;
     }
 
     .header {

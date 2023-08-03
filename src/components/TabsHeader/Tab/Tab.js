@@ -31,8 +31,8 @@ const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, c
     <div className={'draggable-tab'}
       onDragOver={onDragOver} onDragStart={onDragStart} onDragLeave={onDragLeave} draggable id={id}
     >
-      <div className={classNames({ Tab: true, active: isActive })}>
-        <div className={classNames({ 'file-text': true, disabled })} onClick={setActive}>
+      <div className={classNames({ Tab: true, active: isActive })} onClick={setActive}>
+        <div className={classNames({ 'file-text': true, disabled })} >
           <p>{name}</p>
         </div>
         <div className={'close-button-wrapper'}>

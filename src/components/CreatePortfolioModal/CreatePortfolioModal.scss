@@ -1,0 +1,210 @@
+@import "../../constants/styles";
+@import "../../constants/modal";
+@import "../../constants/tabs";
+
+.CreatePortfolioModal {
+  @extend %modal;
+
+  .container {
+    @extend %modal-shared-container-style;
+    @extend %modal-shared-container-style-mobile;
+    @extend %tab-list;
+    @extend %tab-panel;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 737px;
+    height: 584px;
+    padding: 0px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px var(--document-box-shadow);
+    background: var(--component-background);
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      margin: 16px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      align-items: center;
+      height: 24px;
+
+      .Button {
+        height: 24px;
+      }
+    }
+
+    .divider {
+      height: 1px;
+      width: 100%;
+      background: var(--divider);
+    }
+
+    .tab-list {
+      font-size: 13px;
+      margin: 0 16px 16px 16px;
+      width: calc(100% - 32px);
+
+      .tab-options-button {
+        @include button-reset;
+      }
+    }
+
+    .tab-panels {
+      height: 100%;
+      padding: 16px;
+
+      .tab-panel {
+        height: 100%;
+
+        .file-picker-body .modal-btn-file {
+          height: 36px;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+
+    .footer {
+      display: flex;
+      padding: 16px;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin: 0;
+
+      .Button {
+        @include button-reset;
+        background: var(--primary-button);
+        border-radius: 4px;
+        padding: 0 8px;
+        height: 32px;
+        min-width: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        color: var(--primary-button-text);
+        cursor: pointer;
+
+        @include mobile {
+          font-size: 13px;
+        }
+
+        &:enabled:hover {
+          background: var(--primary-button-hover);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+
+      .create-portfolio {
+        @include button-reset;
+        background: var(--primary-button);
+        border-radius: 4px;
+        padding: 0 8px;
+        height: 32px;
+        min-width: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        color: var(--primary-button-text);
+        cursor: pointer;
+
+        @include mobile {
+          font-size: 13px;
+        }
+
+        &:enabled:hover {
+          background: var(--primary-button-hover);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+
+      .add-item-option {
+        visibility: hidden;
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+        color: var(--secondary-button-text);
+        position: relative;
+        cursor: pointer;
+
+        &.show-popup {
+          color: var(--secondary-button-hover);
+
+          .add-item-icon {
+            color: var(--secondary-button-hover);
+          }
+
+          .Button .Icon {
+            color: var(--secondary-button-hover);
+          }
+        }
+
+        .add-item-icon {
+          color: var(--secondary-button-text);
+        }
+
+        .add-item-option-text {
+          margin-left: 4px;
+        }
+
+        .Button {
+          background-color: transparent;
+          padding-left: 0;
+          min-width: 0px;
+          width: 50px;
+
+          &:hover {
+            background-color: transparent;
+          }
+
+          &.active {
+            background-color: transparent;
+          }
+
+          .Icon {
+            width: 12px;
+            height: 12px;
+            color: var(--secondary-button-text);
+          }
+        }
+
+        .add-item-trigger {
+          width: 1px;
+          height: 1px;
+          visibility: hidden;
+          position: absolute;
+          left: 100px;
+          top: 30px;
+        }
+      }
+    }
+  }
+
+  &.is-editing .container {
+    height: 604px;
+    width: 786px;
+
+    .header {
+      margin-bottom: 20px;
+    }
+
+    .footer {
+      .add-item-option {
+        visibility: visible;
+      }
+    }
+  }
+}

@@ -149,7 +149,10 @@ const SignatureValidationModal = () => {
               badgeIcon === 'digital_signature_valid'
                 ? translate(
                   'digitalSignatureModal.summaryBox.signedBy',
-                  { name: signerName || translate('digitalSignatureModal.unknown') },
+                  {
+                    name: signerName || translate('digitalSignatureModal.unknown'),
+                    interpolation: { escapeValue: false }
+                  },
                 ) : ''
             }
           </div>

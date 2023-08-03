@@ -6,7 +6,7 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.UI.enableFeatures(instance.Feature.Measurement);
+    instance.UI.enableFeatures(instance.UI.Feature.Measurement);
   });
  */
 

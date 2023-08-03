@@ -430,13 +430,15 @@ const ContentArea = ({
     isMentionEnabled,
     isInlineCommentDisabled,
     isInlineCommentOpen,
-    isNotesPanelOpen
+    isNotesPanelOpen,
+    activeDocumentViewerKey
   ] = useSelector((state) => [
     selectors.getAutoFocusNoteOnAnnotationSelection(state),
     selectors.getIsMentionEnabled(state),
     selectors.isElementDisabled(state, DataElements.INLINE_COMMENT_POPUP),
     selectors.isElementOpen(state, DataElements.INLINE_COMMENT_POPUP),
     selectors.isElementOpen(state, DataElements.NOTES_PANEL),
+    selectors.getActiveDocumentViewerKey(state),
   ]);
   const [t] = useTranslation();
   const textareaRef = useRef();
@@ -457,9 +459,6 @@ const ContentArea = ({
       const editor = textareaRef.current.getEditor();
       const isFreeTextAnnnotation = annotation && annotation instanceof window.Core.Annotations.FreeTextAnnotation;
       isFreeTextAnnnotation && editor.setText('');
-      const container = annotation.editor?.getContainerElement?.();
-      container?.parentNode.removeChild(container);
-      annotation.editor = editor;
 
       /**
        * If there is a pending text we should update the annotation rich text style
@@ -489,7 +488,7 @@ const ContentArea = ({
 
           const annotRichTextStyle = annotation.getRichTextStyle();
           if (annotRichTextStyle) {
-            setReactQuillContent(annotation);
+            setReactQuillContent(annotation, editor);
           }
         }
       }, 100);
@@ -502,7 +501,7 @@ const ContentArea = ({
       }
 
       setTimeout(() => {
-        annotation.editor.setSelection(textLength, textLength);
+        editor.setSelection(textLength, textLength);
       }, 100);
     }
   }, [isNotesPanelOpen, isInlineCommentOpen, shouldNotFocusOnInput]);
@@ -547,7 +546,7 @@ const ContentArea = ({
 
     const source = (annotation instanceof window.Core.Annotations.FreeTextAnnotation)
       ? 'textChanged' : 'noteChanged';
-    core.getAnnotationManager().trigger('annotationChanged', [[annotation], 'modify', { 'source': source }]);
+    core.getAnnotationManager(activeDocumentViewerKey).trigger('annotationChanged', [[annotation], 'modify', { 'source': source }]);
 
     if (annotation instanceof window.Core.Annotations.FreeTextAnnotation) {
       core.drawAnnotationsFromList([annotation]);

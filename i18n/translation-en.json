@@ -117,6 +117,8 @@
     "formFillCheckmark": "Tick",
     "formFillCross": "Cross",
     "distanceMeasurement": "Distance",
+    "rectangularAreaMeasurement": "Rectangular Area",
+    "ellipseMeasurement": "Ellipse Area",
     "countMeasurement": "Count measurement",
     "ellipse": "Ellipse",
     "eraser": "Eraser",
@@ -435,12 +437,10 @@
       "drawSignature": "Draw Signature*",
       "drawInitial": "Draw Initials*",
       "pickInitialsFile": "Choose Initials",
-      "noSignatures": "There are currently no saved signatures."
+      "noSignatures": "There are currently no saved signatures.",
+      "fontStyle": "Font style"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Drag & Drop your file here",
-      "selectFile": "Select your file here",
-      "or": "Or",
       "yourFiles": "Your Files",
       "chooseFile": "Choose a file",
       "localFile": "Upload",
@@ -1083,6 +1083,14 @@
     "watermarkOptions": "Watermark Options",
     "watermarks": "Watermarks"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF Portfolio",
+    "portfolioAddFile": "Add File",
+    "portfolioAddFolder": "Add Folder",
+    "portfolioCreateFolder": "Create Folder",
+    "portfolioNewFolder": "New Folder",
+    "portfolioNewFolderPlaceholder": "Folder Name"
+  },
   "languageModal": {
     "selectLanguage": "Select language"
   },
@@ -1184,6 +1192,19 @@
     "watermark": "Watermark",
     "addWatermark": "Add Watermark",
     "save": "Save File",
-    "pageError": "Invalid page. Valid page ranges are between  1 - "
+    "pageError": "Invalid page. Valid page ranges are between  1 - ",
+    "fileNameCannotBeEmpty": "File Name cannot be empty"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Create PDF Portfolio",
+    "uploadFiles": "Upload Files",
+    "uploadFolder": "Upload Folder",
+    "addFiles": "Add Files",
+    "addFolder": "Add Folder"
+  },
+  "filePicker": {
+    "dragAndDrop": "Drag & Drop your file here",
+    "selectFile": "Select your file here",
+    "or": "Or"
   }
 }

@@ -1,14 +1,11 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState, } from 'react';
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
 import Button from 'components/Button';
-import { FocusTrap, Choice } from '@pdftron/webviewer-react-toolkit';
+import { FocusTrap, Choice, Input } from '@pdftron/webviewer-react-toolkit';
 import { Swipeable } from 'react-swipeable';
 import core from 'core';
 import classNames from 'classnames';
@@ -95,26 +92,47 @@ const SaveModal = () => {
           }
           await document.getDocumentCompletePromise();
         } else if (type === workerTypes.OFFICE_EDITOR) {
-          setFileTypes([FILE_TYPES.OFFICE_EDITOR]);
+          setFileTypes([
+            FILE_TYPES.OFFICE_EDITOR,
+            FILE_TYPES.PDF
+          ]);
           setFiletype(FILE_TYPES.OFFICE_EDITOR);
         }
         setPageCount(core.getTotalPages(activeDocumentViewerKey));
       }
     };
+    const documentUnloaded = () => {
+      setFilename('');
+      setPageCount(0);
+      setFileTypes(initalFileTypes);
+      setFiletype(initalFileTypes[0]);
+      dispatch(actions.closeElement(DataElements.SAVE_MODAL));
+    };
     updateFile();
+    core.addEventListener('documentUnloaded', documentUnloaded, undefined, activeDocumentViewerKey);
     core.addEventListener('documentLoaded', updateFile, undefined, activeDocumentViewerKey);
-    return () => core.removeEventListener('documentLoaded', updateFile, activeDocumentViewerKey);
+    return () => {
+      core.removeEventListener('documentUnloaded', documentUnloaded, activeDocumentViewerKey);
+      core.removeEventListener('documentLoaded', updateFile, activeDocumentViewerKey);
+    };
   }, [activeDocumentViewerKey]);
 
   useEffect(() => {
-    if (isOfficeEditorMode()) {
-      setFilename(core.getDocument().getFilename());
+    const document = core.getDocument(activeDocumentViewerKey);
+
+    if (isOfficeEditorMode() && document) {
+      setFiletype(FILE_TYPES.OFFICE_EDITOR);
+      const filename = document.getFilename();
+      const newFilename = filename.substring(0, filename.lastIndexOf('.')) || filename;
+      setFilename(newFilename);
     }
   }, [isOpen]);
 
   const closeModal = () => dispatch(actions.closeElement(DataElements.SAVE_MODAL));
   const preventDefault = (e) => e.preventDefault();
-  const onFilenameChange = (e) => setFilename(e?.target?.value);
+  const onFilenameChange = (e) => {
+    setFilename(e?.target?.value);
+  };
   const onFiletypeChange = (e) => {
     setFiletype(fileTypes.find((i) => i.label === e));
     if (e === FILE_TYPES.OFFICE.label) {
@@ -142,6 +160,10 @@ const SaveModal = () => {
     clearError();
   };
   const onSave = () => {
+    if (!filename) {
+      return;
+    }
+
     let pages;
     if (pageRange === PAGE_RANGES.SPECIFY) {
       pages = specifiedPages?.length ? specifiedPages : [core.getCurrentPage(activeDocumentViewerKey)];
@@ -167,9 +189,9 @@ const SaveModal = () => {
   };
 
   const [hasTyped, setHasTyped] = useState(false);
-  const saveDisabled = (errorText || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY;
-  const optionsDisabled = filetype.extension === 'office' || isOfficeEditorMode();
+  const saveDisabled = (errorText || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY || !filename;
 
+  const optionsDisabled = filetype.extension === 'office' || isOfficeEditorMode();
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
       <FocusTrap locked={isOpen}>
@@ -183,7 +205,15 @@ const SaveModal = () => {
               <div className='title'>{t('saveModal.general')}</div>
               <div className='input-container'>
                 <div className='label'>{t('saveModal.fileName')}</div>
-                <input type='text' placeholder={t('saveModal.fileName')} value={filename} onChange={onFilenameChange} />
+                <Input
+                  type='text'
+                  data-testid="fileNameInput"
+                  onChange={onFilenameChange}
+                  value={filename}
+                  fillWidth="false"
+                  messageText={filename === '' ? t('saveModal.fileNameCannotBeEmpty') : ''}
+                  message={filename === '' ? 'warning' : 'default'}
+                />
               </div>
               <div className='input-container'>
                 <div className='label'>{t('saveModal.fileType')}</div>

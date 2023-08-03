@@ -23,7 +23,15 @@ const LineConnectorPortal = ({ children }) => {
 };
 
 const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
-  const [notePanelWidth, lineIsOpen, notePanelIsOpen, isLineDisabled, documentContainerWidth, documentContainerHeight] = useSelector(
+  const [
+    notePanelWidth,
+    lineIsOpen,
+    notePanelIsOpen,
+    isLineDisabled,
+    documentContainerWidth,
+    documentContainerHeight,
+    activeDocumentViewerKey,
+  ] = useSelector(
     (state) => [
       selectors.getNotesPanelWidth(state),
       selectors.isElementOpen(state, 'annotationNoteConnectorLine'),
@@ -31,6 +39,7 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
       selectors.isElementDisabled(state, 'annotationNoteConnectorLine'),
       selectors.getDocumentContainerWidth(state),
       selectors.getDocumentContainerHeight(state),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -47,7 +56,10 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
   const [leftHorizontalLineTop, setLeftHorizontalLineTop] = useState(0);
   const [leftHorizontalLineRight, setLeftHorizontalLineRight] = useState(0);
 
-  const { bottomRight: annotationBottomRight, topLeft: annotationTopLeft } = getAnnotationPosition(annotation);
+  const {
+    bottomRight: annotationBottomRight,
+    topLeft: annotationTopLeft
+  } = getAnnotationPosition(annotation, activeDocumentViewerKey);
 
   const getAnnotationLineOffset = useCallback(() => {
     if (annotation.Subject === 'Note') {
@@ -57,34 +69,39 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
   }, [annotation]);
 
   useEffect(() => {
-    const { scrollTop, scrollLeft } = core.getScrollViewElement();
+    const { scrollTop, scrollLeft } = core.getScrollViewElement(activeDocumentViewerKey);
     const notePanelLeftPadding = 16;
 
     const annotWidthInPixels = annotationBottomRight.x - annotationTopLeft.x;
     const annotHeightInPixels = annotationBottomRight.y - annotationTopLeft.y;
 
+    const viewerWidth = window.isApryseWebViewerWebComponent ? getRootNode().host.clientWidth : window.innerWidth;
+    const viewerOffset = window.isApryseWebViewerWebComponent ? getRootNode().host.offsetLeft : 0;
+
     setRightHorizontalLineRight(notePanelWidth - notePanelLeftPadding);
     setRightHorizontalLineTop(noteContainerRef.current.getBoundingClientRect().top);
-
-    const lineWidth = window.innerWidth - notePanelWidth - annotationTopLeft.x + notePanelLeftPadding + scrollLeft - annotWidthInPixels;
+    const lineWidth = viewerWidth + viewerOffset - notePanelWidth - annotationTopLeft.x + notePanelLeftPadding + scrollLeft - annotWidthInPixels;
     const rightHorizontalLineWidthRatio = 0.75;
     setRightHorizontalLineWidth(lineWidth * rightHorizontalLineWidthRatio);
-    setLeftHorizontalLineWidth(lineWidth - rightHorizontalLineWidth - getAnnotationLineOffset());
+    const noZoomRefPoint = annotation.getNoZoomReferencePoint();
+    const noZoomRefShiftX = (annotation.NoZoom && noZoomRefPoint.x) ? noZoomRefPoint.x * annotHeightInPixels : 0;
+    setLeftHorizontalLineWidth(lineWidth - rightHorizontalLineWidth - getAnnotationLineOffset() + noZoomRefShiftX);
 
     setLeftHorizontalLineRight(notePanelWidth - notePanelLeftPadding + rightHorizontalLineWidth);
 
-    setLeftHorizontalLineTop(annotationTopLeft.y + (annotHeightInPixels / 2) - scrollTop);
+    const noZoomRefShiftY = (annotation.NoZoom && noZoomRefPoint.y) ? noZoomRefPoint.y * annotHeightInPixels : 0;
+    setLeftHorizontalLineTop(annotationTopLeft.y + (annotHeightInPixels / 2) - scrollTop - noZoomRefShiftY);
 
     const onPageNumberUpdated = () => {
       dispatch(actions.closeElement('annotationNoteConnectorLine'));
     };
 
-    core.addEventListener('pageNumberUpdated', onPageNumberUpdated);
+    core.addEventListener('pageNumberUpdated', onPageNumberUpdated, undefined, activeDocumentViewerKey);
 
     return () => {
-      core.removeEventListener('pageNumberUpdated', onPageNumberUpdated);
+      core.removeEventListener('pageNumberUpdated', onPageNumberUpdated, activeDocumentViewerKey);
     };
-  }, [noteContainerRef, notePanelWidth, annotationBottomRight, annotationTopLeft, documentContainerWidth, documentContainerHeight, dispatch]);
+  }, [noteContainerRef, notePanelWidth, annotationBottomRight, annotationTopLeft, documentContainerWidth, documentContainerHeight, dispatch, activeDocumentViewerKey]);
 
   if (lineIsOpen && notePanelIsOpen && !isLineDisabled) {
     const verticalHeight = Math.abs(rightHorizontalLineTop - leftHorizontalLineTop);

@@ -30,8 +30,6 @@
 
 .DocumentContainer {
   border-right: 3px solid transparent;
-
-  overflow-x: hidden;
 }
 
 html, body , #app {
@@ -44,6 +42,11 @@ html, body , #app {
   font-family: 'Lato', sans-serif;
   color: var(--text-color);
   visibility: visible !important;
+}
+// This needed in WebComponent mode
+#note-state-popup-portal {
+  font-family: 'Lato', sans-serif;
+  color: var(--text-color);
 }
 
 input, button, label, textarea, form, select, #app {

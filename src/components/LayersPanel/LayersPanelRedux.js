@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
+import { toggleAnnotationsVisibility } from './helper';
 
 function LayersPanelRedux(props) {
   const dispatch = useDispatch();
@@ -24,8 +25,15 @@ function LayersPanelRedux(props) {
     const doc = core.getDocument();
     if (doc) {
       doc.setLayersArray(layers);
-      documentViewer.refreshAll();
-      documentViewer.updateView();
+      if (core.isFullPDFEnabled()) {
+        toggleAnnotationsVisibility(layers, core).then(() => {
+          documentViewer.refreshAll();
+          documentViewer.updateView();
+        });
+      } else {
+        documentViewer.refreshAll();
+        documentViewer.updateView();
+      }
     }
   }, [layers]);
 

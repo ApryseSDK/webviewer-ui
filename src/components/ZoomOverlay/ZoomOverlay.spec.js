@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { Basic } from './ZoomOverlay.stories';
 import ZoomOverlay from './ZoomOverlay';
 import { createStore } from 'redux';
@@ -32,7 +32,7 @@ const ZoomOverlayWithMockRedux = function(props) {
 // eslint-disable-next-line no-undef
 const TestZoomOverlay = withI18n(ZoomOverlayWithMockRedux);
 
-function noop() {}
+function noop() { }
 
 jest.mock('core');
 
@@ -141,7 +141,7 @@ describe('ZoomOverlay', () => {
     });
 
     it('Should highlight marqueeZoom button when the tool is activated', () => {
-      const { container } = render(
+      render(
         <TestZoomOverlay
           zoomList={[0.1, 0.5, 1]}
           currentZoomLevel={0.5}
@@ -153,7 +153,7 @@ describe('ZoomOverlay', () => {
           isMarqueeZoomActive
           isMarqueeToolButtonDisabled={false}
         />);
-      const highlightedOption = container.querySelector('Button.tool-button.ZoomItem');
+      const highlightedOption = screen.getByRole('option', { name: 'Marquee Zoom' });
       expect(highlightedOption).toHaveClass('selected');
     });
   });

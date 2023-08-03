@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import debounce from 'lodash/debounce';
 
 import Element from 'components/Element';
 import ColorPalette from 'components/ColorPalette';
@@ -140,8 +141,7 @@ const RichTextPopup = ({ annotation, editor }) => {
     };
   }, [dispatch]);
 
-  // useLayoutEffect so the popup can adjust position smoothly without flashing
-  useLayoutEffect(() => {
+  const setPopupPosition = () => {
     if (popupRef.current) {
       const position = getRichTextPopupPosition(
         annotation,
@@ -149,6 +149,25 @@ const RichTextPopup = ({ annotation, editor }) => {
       );
       setCssPosition(position);
     }
+  };
+
+  useLayoutEffect(() => {
+    setPopupPosition();
+  }, [annotation]);
+
+  // useLayoutEffect so the popup can adjust position smoothly without flashing
+  useLayoutEffect(() => {
+    const setPosition = debounce(() => {
+      if (popupRef.current) {
+        setPopupPosition();
+      }
+    }, 100);
+
+    const scrollViewElement = core.getDocumentViewer().getScrollViewElement();
+    scrollViewElement?.addEventListener('scroll', setPosition);
+
+    return () => scrollViewElement?.removeEventListener('scroll', setPosition);
+
     // The popup position should be updated when the math symbols are visible or hidden
   }, [annotation, symbolsVisible]);
 

@@ -26,6 +26,7 @@ const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 const ZOOM_RANGE_MIN = '100';
 const ZOOM_RANGE_MAX = '1000';
 const ZOOM_RANGE_STEP = '50';
+const MAX_COLUMNS = 16;
 
 const hoverAreaHeight = 25;
 
@@ -514,11 +515,11 @@ const ThumbnailsPanel = () => {
   const onPanelResize = ({ bounds }) => {
     setHeight(bounds.height);
     setWidth(bounds.width);
-    setNumberOfColumns(Math.min(3, Math.max(1, Math.floor(bounds.width / thumbnailSize))));
+    setNumberOfColumns(Math.min(MAX_COLUMNS, Math.max(1, Math.floor(bounds.width / thumbnailSize))));
   };
 
   const updateNumberOfColumns = () => {
-    setNumberOfColumns(Math.min(3, Math.max(1, Math.floor(width / thumbnailSize))));
+    setNumberOfColumns(Math.min(MAX_COLUMNS, Math.max(1, Math.floor(width / thumbnailSize))));
   };
 
   const thumbnailHeight = isThumbnailControlDisabled ? Number(thumbnailSize) + 50 : Number(thumbnailSize) + 80;

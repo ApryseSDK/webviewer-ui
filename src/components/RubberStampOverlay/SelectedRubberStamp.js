@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +9,7 @@ import actions from 'actions';
 import core from 'core';
 
 import './SelectedRubberStamp.scss';
+
 
 const usePrevious = (value) => {
   const ref = useRef();
@@ -23,6 +24,8 @@ const SelectedRubberStamp = () => {
   const [t, i18n] = useTranslation();
   const prevLanguage = usePrevious(i18n.language);
   const [isOpen, setIsOpen] = useState(false);
+  // https://legacy.reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const [
     activeToolName,
@@ -70,18 +73,9 @@ const SelectedRubberStamp = () => {
   );
 
   useEffect(() => {
-    async function preselectRubberStamp() {
-      core.setToolMode('AnnotationCreateRubberStamp');
-      const text = t(`rubberStamp.${selectedStamp.annotation['Icon']}`);
-      for (const rubberStampTool of rubberStampToolArray) {
-        await rubberStampTool.setRubberStamp(selectedStamp.annotation, text);
-        rubberStampTool.showPreview();
-      }
-    }
-
     if (!isOpen && activeToolGroup === 'rubberStampTools' && selectedStamp && i18n.language) {
       setIsOpen(true);
-      preselectRubberStamp();
+      core.setToolMode('AnnotationCreateRubberStamp');
     } else if (isOpen && activeToolGroup !== 'rubberStampTools') {
       setIsOpen(false);
     }
@@ -104,8 +98,9 @@ const SelectedRubberStamp = () => {
                 await rubberStampTool.setRubberStamp(selectedStamp.annotation, text);
                 rubberStampTool.showPreview();
               }
+              forceUpdate();
             }}
-            isActive={activeToolName === 'AnnotationCreateRubberStamp'}
+            isActive={activeToolName === 'AnnotationCreateRubberStamp' && !rubberStampToolArray[0].isEmptyStamp()}
             altText={t('option.toolsOverlay.currentStamp')}
           />
         }

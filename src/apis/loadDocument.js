@@ -21,12 +21,15 @@ export default (store) => (src, options) => {
 };
 
 /**
- * @typedef {Object} UI.loadDocumentOptions
+ * @typedef {Object} UI.loadDocumentOptions inherits from {@link Core.loadDocumentOptions}
  * @property {string} [extension] The extension of the file. If file is a blob/file object or a URL without an extension then this is necessary so that WebViewer knows what type of file to load.
  * @property {string} [filename] Filename of the document, which is used when downloading the PDF.
  * @property {object} [customHeaders] An object of custom HTTP headers to use when retrieving the document from the specified url.
  * @property {object} [webViewerServerCustomQuerypropertyeters] An object of custom query propertyeters to be appended to every WebViewer Server request.
- * @property {string} [documentId] Unique id of the document.
+ * @property {string} [documentId] Unique id of the document. Same as docId (For backward compatibility).
+ * @property {string} [docId] Unique id of the document.
+ * @property {boolean} [loadAnnotations=true] Whether to load document with or without annotations.
+ * @property {function} [onLoadingProgress] A callback function for loading progress (Only for files loaded over network), function signature: function(percent) {}.
  * @property {boolean} [withCredentials] Whether or not cross-site requests should be made using credentials.
  * @property {string} [cacheKey] A key that will be used for caching the document on WebViewer Server.
  * @property {object} [officeOptions] An object that contains the options for an Office document.

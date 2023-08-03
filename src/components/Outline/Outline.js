@@ -73,7 +73,7 @@ const Outline = forwardRef(
     const [isSelected, setIsSelected] = useState(selectedOutlines.includes(outlinePath));
     const [isRenaming, setIsRenaming] = useState(false);
     const [isChangingDest, setChangingDest] = useState(false);
-    const [isHovered, setHovered] = useState(false);
+    const [isHovered, setHovered] = useState(false); // when the popup menu is open, the container will have a background
     const [clearSingleClick, setClearSingleClick] = useState(undefined);
 
     const dispatch = useDispatch();
@@ -133,6 +133,13 @@ const Outline = forwardRef(
     }, [dispatch, setActiveOutlinePath, activeOutlinePath, isAddingNewOutline, outline]);
 
     const isActive = isOutlineActive(outline);
+
+    const convertRgbObjectToRgbString = (rgbObject) => {
+      const rValue = rgbObject['r'] * 255;
+      const gValue = rgbObject['g'] * 255;
+      const bValue = rgbObject['b'] * 255;
+      return `rgb(${rValue}, ${gValue}, ${bValue})`;
+    };
 
     return (
       <div
@@ -203,6 +210,7 @@ const Outline = forwardRef(
             isOutlineChangingDest={isChangingDest}
             setOutlineChangingDest={setChangingDest}
             setIsHovered={setHovered}
+            textColor={outline.color ? convertRgbObjectToRgbString(outline.color) : null}
           />
         </DataElementWrapper>
 

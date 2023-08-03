@@ -435,12 +435,10 @@
       "drawSignature": "Semnătura extragerii*",
       "drawInitial": "Desenați inițiale*",
       "pickInitialsFile": "Alegeți Inițiale",
-      "noSignatures": "În prezent, nu există semnături salvate."
+      "noSignatures": "În prezent, nu există semnături salvate.",
+      "fontStyle": "stilul fontului"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Trageți și plasați fișierul aici",
-      "selectFile": "Selectați fișierul dvs. aici",
-      "or": "Sau",
       "yourFiles": "Fișierele dvs",
       "chooseFile": "Alegeți un fișier",
       "localFile": "Fișier local",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Opțiuni filigran",
     "watermarks": "Filigrane"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portofoliu PDF",
+    "portfolioAddFile": "Adauga fisier",
+    "portfolioAddFolder": "Adaugă folder",
+    "portfolioCreateFolder": "Creeaza dosar",
+    "portfolioNewFolder": "Dosar nou",
+    "portfolioNewFolderPlaceholder": "Numele fisierului"
+  },
   "languageModal": {
     "selectLanguage": "Selecteaza limba"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Filigran",
     "addWatermark": "Adăugați filigran",
     "save": "Salvează fișierul",
-    "pageError": "Pagina nevalidă. Intervalele de pagini valide sunt cuprinse între 1 -"
+    "pageError": "Pagina nevalidă. Intervalele de pagini valide sunt cuprinse între 1 -",
+    "fileNameCannotBeEmpty": "Numele fișierului nu poate fi gol"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Creați portofoliu PDF",
+    "uploadFiles": "Încărca fișiere",
+    "uploadFolder": "Încărcați dosarul",
+    "addFiles": "Adăugați fișiere",
+    "addFolder": "Adaugă folder"
+  },
+  "filePicker": {
+    "dragAndDrop": "Trageți și plasați fișierul aici",
+    "selectFile": "Selectați fișierul dvs. aici",
+    "or": "Sau"
   }
 }

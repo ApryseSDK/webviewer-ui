@@ -424,6 +424,7 @@ const OfficeEditorToolsHeader = () => {
                 >
                   <Dropdown
                     items={Object.keys(availableStylePresetMap)}
+                    onOpened={() => setShowMoreTools(false)}
                     onClickItem={(item) => {
                       const stylePreset = availableStylePresetMap[item];
                       const fontPointSize = parseInt(stylePreset.fontSize, 10);
@@ -463,6 +464,7 @@ const OfficeEditorToolsHeader = () => {
                   />
                   <Dropdown
                     items={availableFontFaces}
+                    onOpened={() => setShowMoreTools(false)}
                     onClickItem={(fontFace) => {
                       core.getOfficeEditor().isTextSelected() && core.getOfficeEditor().updateSelectionStyle({ fontFace });
 
@@ -484,6 +486,7 @@ const OfficeEditorToolsHeader = () => {
                   />
                   <Dropdown
                     items={availablePointSizes}
+                    onOpened={() => setShowMoreTools(false)}
                     onClickItem={(pointSize) => {
                       let fontPointSize = parseInt(pointSize, 10);
 
@@ -533,6 +536,7 @@ const OfficeEditorToolsHeader = () => {
                   )}
                   <div className="divider" />
                   <ToggleElementButton
+                    onClick={() => setShowMoreTools(false)}
                     dataElement='textColorButton'
                     title='officeEditor.textColor'
                     img='icon-office-editor-circle'
@@ -588,7 +592,7 @@ const OfficeEditorToolsHeader = () => {
                         title='officeEditor.lineSpacing'
                         img='icon-office-editor-line-spacing'
                         isActive={isOpen}
-                        onClick={() => { }}
+                        onClick={() => setShowMoreTools(false)}
                       />
                     )}
                   />

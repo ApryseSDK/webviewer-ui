@@ -1,7 +1,7 @@
 {
   "name": "webviewer-ui",
   "author": "Apryse Software Inc.",
-  "version": "10.3",
+  "version": "10.3.0",
   "description": "WebViewer UI built in React",
   "main": "src/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "translation": "node ./scripts/translate-i18n-files.js",
     "storybook": "start-storybook -p 6006 --ci",
     "build-storybook": "build-storybook",
-    "jest": "jest --runInBand --logHeapUsage",
+    "jest": "node --expose-gc --no-compilation-cache ./node_modules/.bin/jest --logHeapUsage --maxWorkers=1",
     "jest:watch": "jest --watch"
   },
   "dependencies": {
@@ -52,7 +52,8 @@
     "react-virtuoso": "^2.8.1",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
@@ -71,6 +72,7 @@
     "@hot-loader/react-dom": "^17.0.2",
     "@pdftron/webviewer-downloader": "^1.4.2",
     "@pdftron/webviewer-reading-mode": "1.0.7",
+    "@reduxjs/toolkit": "^1.8.1",
     "@storybook/addon-actions": "^6.1.11",
     "@storybook/addon-essentials": "^6.1.11",
     "@storybook/addon-links": "^6.1.11",
@@ -79,7 +81,7 @@
     "@testing-library/react": "^10.4.9",
     "@testing-library/react-hooks": "^5.0.3",
     "@testing-library/user-event": "^12.7.3",
-    "babel-jest": "^26.3.0",
+    "babel-jest": "^29.5",
     "babel-loader": "^8.0.6",
     "body-parser": "^1.19.0",
     "clean-webpack-plugin": "^3.0.0",
@@ -98,8 +100,9 @@
     "file-loader": "^5.0.2",
     "identity-obj-proxy": "^3.0.0",
     "ip": "^1.1.5",
-    "jest": "^26.4.2",
-    "jest-canvas-mock": "^2.3.1",
+    "jest": "29.5",
+    "jest-canvas-mock": "^2.5.1",
+    "jest-environment-jsdom": "^29.5.0",
     "mini-css-extract-plugin": "0.8.0",
     "open": "^8.4.0",
     "postcss-import": "^12.0.1",
@@ -121,7 +124,6 @@
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10",
     "webpack-dev-middleware": "^3.7.2",
-    "webpack-hot-middleware": "^2.25.0",
-    "@reduxjs/toolkit": "^1.8.1"
+    "webpack-hot-middleware": "^2.25.0"
   }
 }

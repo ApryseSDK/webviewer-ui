@@ -145,7 +145,6 @@ const OutlinesPanel = () => {
     core.getOutlines((outlines) => {
       dispatch(actions.setOutlines(outlines));
     });
-
     clearOutlineDestination();
     setEditingOutlines({});
   };

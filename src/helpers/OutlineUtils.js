@@ -503,6 +503,32 @@ const OutlineUtils = {
     // eslint-disable-next-line no-return-await
     return pdfnetOutline && (await pdfnetOutline.isValid());
   },
+  async getOutlineColor(path) {
+    const target = await this.findPDFNetOutline(path);
+
+    if (!target) {
+      return null;
+    }
+
+    const color = await target.getColor();
+    if (color.r !== 0 || color.g !== 0 || color.b !== 0) {
+      return color;
+    }
+    return null;
+  },
+  async attachColorPropertyToOutlines(outlines) {
+    for (const outline of outlines) {
+      const path = this.getPath(outline);
+      const color = await this.getOutlineColor(path);
+      if (color) {
+        outline.color = color;
+      }
+
+      if (outline.children) {
+        await this.attachColorPropertyToOutlines(outline.children);
+      }
+    }
+  }
 };
 
 export default Object.create(OutlineUtils);

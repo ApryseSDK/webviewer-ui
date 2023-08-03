@@ -435,12 +435,10 @@
       "drawSignature": "Aláírás rajzolása*",
       "drawInitial": "Rajz kezdőbetűi*",
       "pickInitialsFile": "Válassza a Kezdőbetűket",
-      "noSignatures": "Jelenleg nincsenek mentett aláírások."
+      "noSignatures": "Jelenleg nincsenek mentett aláírások.",
+      "fontStyle": "betű stílus"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Drag & Drop ide a fájlt",
-      "selectFile": "Válassza ki a fájlt itt",
-      "or": "Vagy",
       "yourFiles": "Az Ön Fájljai",
       "chooseFile": "Válasszon egy fájlt",
       "localFile": "Helyi fájl",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Vízjel opciók",
     "watermarks": "Vízjelek"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF portfólió",
+    "portfolioAddFile": "Fájl hozzáadása",
+    "portfolioAddFolder": "Mappa hozzáadása",
+    "portfolioCreateFolder": "Mappa létrehozás",
+    "portfolioNewFolder": "Új mappa",
+    "portfolioNewFolderPlaceholder": "Mappa neve"
+  },
   "languageModal": {
     "selectLanguage": "Válasszon nyelvet"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Vízjel",
     "addWatermark": "Vízjel hozzáadása",
     "save": "Fájl mentése",
-    "pageError": "Érvénytelen oldal. Az érvényes oldaltartományok 1 -"
+    "pageError": "Érvénytelen oldal. Az érvényes oldaltartományok 1 -",
+    "fileNameCannotBeEmpty": "A fájlnév nem lehet üres"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "PDF-portfólió létrehozása",
+    "uploadFiles": "Fájlok feltöltése",
+    "uploadFolder": "Mappa feltöltése",
+    "addFiles": "Fájlok hozzáadása",
+    "addFolder": "Mappa hozzáadása"
+  },
+  "filePicker": {
+    "dragAndDrop": "Drag & Drop ide a fájlt",
+    "selectFile": "Válassza ki a fájlt itt",
+    "or": "Vagy"
   }
 }

@@ -33,12 +33,14 @@
         width: 80px!important;
         .picked-option-text svg {
           width: 48px;
+          margin-top: 11px;
         }
       }
       .Dropdown__items {
         width: 80px;
         svg {
-          width: 65px
+          width: 65px;
+          margin-top: 11px;
         }
       }
     }

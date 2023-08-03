@@ -435,12 +435,10 @@
       "drawSignature": "Намалювати підпис*",
       "drawInitial": "Намалювати ініціали*",
       "pickInitialsFile": "Виберіть Ініціали",
-      "noSignatures": "Наразі немає збережених підписів."
+      "noSignatures": "Наразі немає збережених підписів.",
+      "fontStyle": "стиль шрифту"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Перетягніть свій файл сюди",
-      "selectFile": "Виберіть свій файл тут",
-      "or": "Або",
       "yourFiles": "Ваші файли",
       "chooseFile": "Виберіть файл",
       "localFile": "Локальний файл",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Параметри водяного знака",
     "watermarks": "Водяні знаки"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF-портфоліо",
+    "portfolioAddFile": "Додати файл",
+    "portfolioAddFolder": "Додати папку",
+    "portfolioCreateFolder": "Створити папку",
+    "portfolioNewFolder": "Нова папка",
+    "portfolioNewFolderPlaceholder": "Назва папки"
+  },
   "languageModal": {
     "selectLanguage": "Оберіть мову"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Водяний знак",
     "addWatermark": "Додати водяний знак",
     "save": "Зберегти файл",
-    "pageError": "Недійсна сторінка. Дійсні діапазони сторінок від 1 до"
+    "pageError": "Недійсна сторінка. Дійсні діапазони сторінок від 1 до",
+    "fileNameCannotBeEmpty": "Назва файлу не може бути пустою"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Створити PDF-портфоліо",
+    "uploadFiles": "Завантажити файли",
+    "uploadFolder": "Завантажити папку",
+    "addFiles": "Додати файли",
+    "addFolder": "Додати папку"
+  },
+  "filePicker": {
+    "dragAndDrop": "Перетягніть файл сюди",
+    "selectFile": "Виберіть свій файл тут",
+    "or": "Або"
   }
 }

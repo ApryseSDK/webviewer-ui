@@ -1,0 +1,22 @@
+.PortfolioPanel {
+  .bookmark-outline-single-container {
+
+    .bookmark-outline-label-row {
+      align-items: center;
+    }
+
+    .bookmark-outline-text,
+    .bookmark-outline-input {
+      flex-basis: calc(100% - 38px); // icon + mr + more-button width + ml = 38px
+    }
+
+    .portfolio-item-icon {
+      margin-right: 5px;
+
+      .Icon {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+}

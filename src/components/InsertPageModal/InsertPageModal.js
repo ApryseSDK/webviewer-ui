@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -30,7 +29,6 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
   ]);
 
   const [selectedDoc, setSelectedDoc] = useState(null);
-  const fileInputId = 'insertPageFileInputId';
   const [insertNewPageBelow, setInsertNewPageBelow] = useState(false);
   const [insertNewPageIndexes, setInsertNewPageIndexes] = useState([]);
   const [numberOfBlankPagesToInsert, setNumberOfBlankPagesToInsert] = useState(1);
@@ -99,12 +97,6 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
     );
   };
 
-  const modalClass = classNames({
-    Modal: true,
-    InsertPageModal: true,
-    open: true,
-  });
-
   const renderSelectionTabs = () => {
     const isUploadPagePanelActive = selectedTab === DataElements.INSERT_FROM_FILE_TAB;
     const insertBlankPageProps = {
@@ -144,8 +136,7 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
           <TabPanel dataElement={DataElements.INSERT_FROM_FILE_PANEL}>
             <div className='panel-body'>
               <FilePickerPanel
-                fileInputId={fileInputId}
-                onFileProcessed={(file) => fileProcessedHandler(file)} />
+                onFileProcessed={fileProcessedHandler} />
             </div>
           </TabPanel>
         </Tabs>
@@ -163,7 +154,7 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
 
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <div className={modalClass} data-element={DataElements.INSERT_PAGE_MODAL} onMouseDown={selectedDoc ? showCloseModalWarning : closeModal}>
+      <div className="Modal open InsertPageModal" data-element={DataElements.INSERT_PAGE_MODAL} onMouseDown={selectedDoc ? showCloseModalWarning : closeModal}>
         <FocusTrap locked={true}>
           {selectedDoc ? renderFileSelectedPanel() : renderSelectionTabs()}
         </FocusTrap>

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import TabManager from 'helpers/TabManager';
 import classNames from 'classnames';
 import getHashParameters from 'helpers/getHashParameters';
-import { Swipeable } from 'react-swipeable';
 import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
@@ -12,6 +11,7 @@ import FilePickerPanel from 'components/PageReplacementModal/FilePickerPanel';
 import selectors from 'selectors';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
+import ModalWrapper from '../ModalWrapper';
 
 import '../PageReplacementModal/PageReplacementModal.scss';
 import './OpenFileModal.scss';
@@ -118,20 +118,18 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
   }, []);
 
   return !isDisabled && (
-    <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal}>
-      <div className={modalClass} data-element={DataElements.OPEN_FILE_MODAL} onMouseDown={closeModal}>
-        <div className="container" onMouseDown={(e) => e.stopPropagation()}>
+    <div className={modalClass} data-element={DataElements.OPEN_FILE_MODAL} onMouseDown={closeModal}>
+      <div className="container" onMouseDown={(e) => e.stopPropagation()}>
+        <ModalWrapper
+          title={t('OpenFile.enterUrlOrChooseFile')}
+          closeButtonDataElement={'openFileModalClose'}
+          onCloseClick={closeModal}
+          swipeToClose
+          closeHandler={closeModal}
+        >
+          <div className="swipe-indicator" />
           <Tabs className="open-file-modal-tabs" id="openFileModal">
-            <div className="header-container">
-              <div className="header">
-                <p>{t('OpenFile.enterUrlOrChooseFile')}</p>
-                <Button
-                  img={'icon-close'}
-                  onClick={closeModal}
-                  dataElement={'UNKNOWN'}
-                />
-              </div>
-
+            <div className="tabs-header-container">
               <div className="tab-list">
                 <Tab dataElement="urlInputPanelButton">
                   <button className="tab-options-button">
@@ -181,9 +179,9 @@ const OpenFileModal = ({ isDisabled, isOpen, tabManager, closeElements }) => {
               onClick={() => handleAddTab(src, extension, filename, size)}
             />
           </div>
-        </div>
+        </ModalWrapper>
       </div>
-    </Swipeable>
+    </div>
   );
 };
 

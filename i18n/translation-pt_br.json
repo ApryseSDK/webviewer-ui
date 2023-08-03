@@ -435,12 +435,10 @@
       "drawSignature": "Desenhar Assinatura*",
       "drawInitial": "Desenhe iniciais*",
       "pickInitialsFile": "Escolha as iniciais",
-      "noSignatures": "No momento, não há assinaturas salvas."
+      "noSignatures": "No momento, não há assinaturas salvas.",
+      "fontStyle": "estilo de fonte"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Arraste e solte seu arquivo aqui",
-      "selectFile": "Selecione seu arquivo aqui",
-      "or": "Ou",
       "yourFiles": "Seus arquivos",
       "chooseFile": "Escolha um arquivo",
       "localFile": "Arquivo local",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Opções de marca d'água",
     "watermarks": "Marcas d'água"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portfólio PDF",
+    "portfolioAddFile": "Adicionar ficheiro",
+    "portfolioAddFolder": "Adicionar pasta",
+    "portfolioCreateFolder": "Criar pasta",
+    "portfolioNewFolder": "Nova pasta",
+    "portfolioNewFolderPlaceholder": "Nome da pasta"
+  },
   "languageModal": {
     "selectLanguage": "Selecione o idioma"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Marca d'água",
     "addWatermark": "Adicione uma Marca D'água",
     "save": "Salvar Arquivo",
-    "pageError": "Página inválida. Os intervalos de páginas válidos estão entre 1 -"
+    "pageError": "Página inválida. Os intervalos de páginas válidos estão entre 1 -",
+    "fileNameCannotBeEmpty": "O nome do arquivo não pode estar vazio"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Criar Portfólio PDF",
+    "uploadFiles": "Fazer upload de arquivos",
+    "uploadFolder": "Carregar Pasta",
+    "addFiles": "Adicionar arquivos",
+    "addFolder": "Adicionar pasta"
+  },
+  "filePicker": {
+    "dragAndDrop": "Arraste e solte seu arquivo aqui",
+    "selectFile": "Selecione seu arquivo aqui",
+    "or": "Ou"
   }
 }

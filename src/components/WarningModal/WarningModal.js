@@ -2,17 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import i18next from 'i18next';
 import core from 'core';
-
 import Button from 'components/Button';
 import Choice from 'components/Choice/Choice';
-
 import getClassName from 'helpers/getClassName';
 import classNames from 'classnames';
-
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
-
 import { Swipeable } from 'react-swipeable';
 
 import './WarningModal.scss';
@@ -34,6 +30,7 @@ const WarningModal = () => {
     showAskAgainCheckbox,
     templateStrings,
     warningModalClass,
+    onClose,
   ] = useSelector(
     (state) => [
       selectors.getWarningTitle(state) || '',
@@ -49,16 +46,13 @@ const WarningModal = () => {
       selectors.getShowAskAgainCheckbox(state),
       selectors.getWarningTemplateStrings(state) || {},
       selectors.getWarningModalClass(state) || '',
+      selectors.getWarningCloseEvent(state) || '',
     ],
     shallowEqual,
   );
 
   const [disableWarning, setDisableWarning] = useState(false);
   const dispatch = useDispatch();
-
-  if (isDisabled) {
-    return null;
-  }
 
   const className = getClassName(`Modal WarningModal ${warningModalClass}`, { isOpen });
   const label = i18next.t(confirmBtnText, templateStrings) || i18next.t('action.ok');
@@ -70,6 +64,13 @@ const WarningModal = () => {
       core.removeEventListener('documentUnloaded', cancel);
     };
   }, []);
+
+  // Reset disableWarning state
+  useEffect(() => {
+    if (isOpen) {
+      setDisableWarning(false);
+    }
+  }, [isOpen]);
 
   const getMessageWithNewLine = () => {
     const messageIsAValidStringKey = typeof message === 'string' && i18next.exists(message);
@@ -104,12 +105,12 @@ const WarningModal = () => {
 
   const closeModal = async () => {
     if (isOpen) {
-      disableWarning && await dispatch(actions.disableDeleteTabWarning());
-      dispatch(actions.closeElements([DataElements.WARNING_MODAL]));
+      onClose && await onClose(disableWarning);
+      dispatch(actions.closeElements(DataElements.WARNING_MODAL));
     }
   };
 
-  return (
+  return isDisabled ? null : (
     <Swipeable onSwipedUp={cancel} onSwipedDown={cancel} preventDefaultTouchmoveEvent>
       <div className={className} onMouseDown={cancel}>
         <div className="container" onMouseDown={(e) => e.stopPropagation()}>
@@ -131,20 +132,19 @@ const WarningModal = () => {
           </div>
           <div className="divider" />
           <div className="footer">
-            {
-              showAskAgainCheckbox && (
-                <Choice
-                  dataElement="doNotAskAgainCheckbox"
-                  ref={doNotAskCheckboxRef}
-                  id="do-not-ask-again-checkbox"
-                  name="do-not-ask-again-checkbox"
-                  label={i18next.t('message.doNotAskAgain')}
-                  onChange={(e) => setDisableWarning(e.target.checked)}
-                  checked={disableWarning}
-                  center
-                />
-              )
-            }
+            {showAskAgainCheckbox && (
+              <Choice
+                dataElement="doNotAskAgainCheckbox"
+                ref={doNotAskCheckboxRef}
+                id="do-not-ask-again-checkbox"
+                name="do-not-ask-again-checkbox"
+                label={i18next.t('message.doNotAskAgain')}
+                onChange={(e) => setDisableWarning(e.target.checked)}
+                checked={disableWarning}
+                center
+              />
+
+            )}
             {onSecondary && (
               <Button
                 className={classNames({

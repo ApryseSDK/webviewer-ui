@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { mapAnnotationToKey, mapToolNameToKey, getDataWithKey } from 'constants/map';
+import { measurementTypeTranslationMap } from 'constants/measurementTypes';
 import { precisionFractions } from 'constants/measurementScale';
 import getNumberOfDecimalPlaces from 'helpers/getNumberOfDecimalPlaces';
 import Icon from 'components/Icon';
@@ -33,20 +34,12 @@ const MeasurementDetail = ({ annotation, isOpen, selectedTool }) => {
 
   const renderTitle = () => {
     const { key, icon, color } = data;
-    const keyTitleMap = {
-      distanceMeasurement: t('option.measurementOverlay.distanceMeasurement'),
-      perimeterMeasurement: t('option.measurementOverlay.perimeterMeasurement'),
-      areaMeasurement: t('option.measurementOverlay.areaMeasurement'),
-      rectangularAreaMeasurement: t('option.measurementOverlay.areaMeasurement'),
-      cloudyRectangularAreaMeasurement: t('option.measurementOverlay.areaMeasurement'),
-      ellipseMeasurement: t('option.measurementOverlay.areaMeasurement'),
-      arcMeasurement: t('option.measurementOverlay.arcMeasurement'),
-    };
+    const translationKey = measurementTypeTranslationMap[key];
 
     return (
       <div className="header">
         <Icon glyph={icon} color={color} className="icon" />
-        <div>{keyTitleMap[key]}</div>
+        <div>{t(translationKey)}</div>
       </div>
     );
   };

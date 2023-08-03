@@ -1,64 +1,17 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import core from 'core';
-import Icon from 'components/Icon';
-import { v4 as uuidv4 } from 'uuid';
-import classNames from 'classnames';
-import { isMobile } from 'helpers/device';
-import getRootNode from 'helpers/getRootNode';
+import FilePicker from 'components/FilePicker';
 
-import './FilePickerPanel.scss';
+const acceptFormats = window.Core.SupportedFileFormats.CLIENT.map((format) => `.${format}`,).join(', ');
 
-const FilePickerPanel = ({ onFileProcessed, shouldShowIcon, fileInputId = uuidv4() }) => {
-  const [t] = useTranslation();
-  const [isDragging, setIsDragging] = useState(false);
+const FilePickerPanel = ({ onFileProcessed, shouldShowIcon }) => {
   const [errorMessage, setErrorMessage] = useState('');
-  const acceptFormats = window.Core.SupportedFileFormats.CLIENT;
 
-  const onClick = () => {
-    getRootNode().getElementById(fileInputId).click();
+  const onChange = (files) => {
+    onFileProcessed(files[0]);
   };
 
-  const onKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      getRootNode().getElementById(fileInputId).click();
-    }
-  };
-
-  const onChange = (e) => {
-    const files = e.target.files;
-    if (files.length) {
-      onFileProcessed(files[0]);
-    }
-  };
-
-  const handleDragEnter = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-
-    if (!e.target.parentNode.contains(e.relatedTarget)) {
-      setIsDragging(false);
-    }
-  };
-
-  const handleDragExit = (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
-
-  const handleFileDrop = async (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const { files } = e.dataTransfer;
-
+  const onDrop = async (files) => {
     let processedFile = files[0];
 
     if (files.length > 1) {
@@ -96,67 +49,15 @@ const FilePickerPanel = ({ onFileProcessed, shouldShowIcon, fileInputId = uuidv4
     });
   }
 
-  const renderPrompt = () => {
-    if (isMobile()) {
-      return (
-        <div className="image-signature-separator">
-          {t('option.pageReplacementModal.selectFile')}
-        </div>
-      );
-    }
-    return (
-      <>
-        <div className="image-signature-dnd">
-          {t('option.pageReplacementModal.dragAndDrop')}
-        </div>
-        <div className="image-signature-separator">
-          {t('option.pageReplacementModal.or')}
-        </div>
-      </>
-    );
-  };
-
-  const uploadContainerClass = classNames('file-picker-upload-container', { dragging: isDragging });
-
   return (
-    <React.Fragment>
-      <div className="file-picker-page-replacement">
-        <div
-          className={uploadContainerClass}
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragLeave}
-          onDragOver={handleDragOver}
-          onDrop={handleFileDrop}
-          onDragExit={handleDragExit}
-        >
-          <div className="FilePickerPanel">
-            {shouldShowIcon && <Icon glyph="icon-open-folder" />}
-            {renderPrompt()}
-            <div
-              className="md-row modal-btn-file"
-              tabIndex="0"
-              onKeyDown={onKeyDown}
-              onClick={onClick}
-            >{t('action.browse')}
-              <input
-                id={fileInputId}
-                style={{ display: 'none' }}
-                type="file"
-                accept={acceptFormats.map((format) => `.${format}`,).join(', ')}
-                onChange={(event) => {
-                  onChange(event);
-                  event.target.value = null;
-                }}
-              />
-            </div>
-          </div>
-          {isDragging && <div className="image-signature-background" />}
-          {errorMessage && (
-            <div className="image-signature-error">{errorMessage}</div>
-          )}
-        </div>
-      </div>
-    </React.Fragment>
+    <FilePicker
+      onChange={onChange}
+      onDrop={onDrop}
+      shouldShowIcon={shouldShowIcon}
+      acceptFormats={acceptFormats}
+      allowMultiple={false}
+      errorMessage={errorMessage}
+    />
   );
 };
 

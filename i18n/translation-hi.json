@@ -435,12 +435,10 @@
       "drawSignature": "हस्ताक्षर बनाएं*",
       "drawInitial": "आद्याक्षर ड्रा करें*",
       "pickInitialsFile": "आद्याक्षर चुनें",
-      "noSignatures": "वर्तमान में कोई सहेजे गए हस्ताक्षर नहीं हैं।"
+      "noSignatures": "वर्तमान में कोई सहेजे गए हस्ताक्षर नहीं हैं।",
+      "fontStyle": "लिपि शैली"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "अपनी फ़ाइल को यहां खींचें और छोड़ें",
-      "selectFile": "यहां अपनी फाइल चुनें",
-      "or": "या",
       "yourFiles": "आपकी फ़ाइलें",
       "chooseFile": "एक फ़ाइल चुनें",
       "localFile": "स्थानीय फ़ाइल",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "वॉटरमार्क विकल्प",
     "watermarks": "वाटरमार्क"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "पीडीएफ पोर्टफोलियो",
+    "portfolioAddFile": "फ़ाइल जोड़ें",
+    "portfolioAddFolder": "फ़ोल्डर जोड़ें",
+    "portfolioCreateFolder": "फोल्डर बनाएं",
+    "portfolioNewFolder": "नया फ़ोल्डर",
+    "portfolioNewFolderPlaceholder": "फ़ोल्डर का नाम"
+  },
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "वाटर-मार्क",
     "addWatermark": "वॉटरमार्क जोड़िए",
     "save": "फाइल सुरक्षित करें",
-    "pageError": "अमान्य पृष्ठ। मान्य पृष्ठ श्रेणियां 1 के बीच हैं -"
+    "pageError": "अमान्य पृष्ठ। मान्य पृष्ठ श्रेणियां 1 के बीच हैं -",
+    "fileNameCannotBeEmpty": "फ़ाइल नाम रिक्त नहीं हो सकता"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "पीडीएफ पोर्टफोलियो बनाएं",
+    "uploadFiles": "फाइलें अपलोड करें",
+    "uploadFolder": "फ़ोल्डर अपलोड करें",
+    "addFiles": "फाइलें जोड़ो",
+    "addFolder": "फ़ोल्डर जोड़ें"
+  },
+  "filePicker": {
+    "dragAndDrop": "अपनी फ़ाइल को यहां खींचें और छोड़ें",
+    "selectFile": "यहां अपनी फ़ाइल चुनें",
+    "or": "या"
   }
 }

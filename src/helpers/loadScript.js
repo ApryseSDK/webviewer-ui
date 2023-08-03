@@ -24,7 +24,7 @@ const loadScript = (scriptSrc, warning) => new Promise((resolve) => {
 // communicates with the parent window to get the URL of the config file and loads it
 // ignore subsequent messages after successfully loads a config file
 const loadConfig = () => new Promise((resolve) => {
-  if (window.parent === window) {
+  if (window.parent === window || window.isApryseWebViewerWebComponent) {
     // resolve immediately if we are developing the UI on its own
     resolve();
   } else {

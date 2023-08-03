@@ -2,19 +2,11 @@ import React from 'react';
 import SaveModal from './SaveModal';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import core from 'core';
 
 export default {
   title: 'Components/SaveModal',
   component: SaveModal
 };
-
-core.getDocument = () => ({
-  getFilename: () => 'test',
-  getType: () => 'pdf',
-});
-
-
 const getStore = () => {
   const initialState = {
     viewer: {

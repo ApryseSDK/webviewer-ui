@@ -2,6 +2,7 @@ import core from 'core';
 import localStorageManager from 'helpers/localStorageManager';
 import touchEventManager from 'helpers/TouchEventManager';
 import hotkeysManager, { Shortcuts } from 'helpers/hotkeysManager';
+import { enableMultiTab } from 'helpers/TabManager';
 import Feature from 'constants/feature';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import actions from 'actions';
@@ -9,12 +10,8 @@ import enableTools from 'src/apis/enableTools';
 import disableTools from 'src/apis/disableTools';
 import setToolMode from 'src/apis/setToolMode';
 import selectors from 'selectors';
-import TabManager from 'helpers/TabManager';
-import getHashParameters from './getHashParameters';
 import DataElements from 'constants/dataElement';
 import { isOfficeEditorMode } from './officeEditor';
-import fireEvent from 'helpers/fireEvent';
-import Events from 'constants/events';
 
 // a higher order function that creates the enableFeatures and disableFeatures APIs
 export default (enable, store) => (features, priority = PRIORITY_TWO) => {
@@ -282,37 +279,16 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     [Feature.MultiTab]: {
       fn: () => {
         if (isOfficeEditorMode()) {
+          console.warn('Multi-tab is not supported in Office Editor mode');
           return;
         }
 
         if (enable) {
-          const state = store.getState();
-          // if already in multi-tab mode do not recreate TabManager
-          if (selectors.getIsMultiTab(state) && selectors.getTabManager(state)) {
-            return;
+          if (selectors.isMultiViewerMode(store.getState())) {
+            console.error('MultiTab and MultiViewerMode cannot be enabled at the same time, disabling MultiViewerMode');
+            store.dispatch(actions.setIsMultiViewerMode(false));
           }
-          const doc = core.getDocument();
-          let docArr = [];
-          if (doc) {
-            docArr.push(doc);
-          } else {
-            let initialDoc = getHashParameters('d', '');
-            initialDoc = initialDoc ? JSON.parse(initialDoc) : '';
-            if (initialDoc) {
-              if (Array.isArray(initialDoc)) {
-                docArr = docArr.concat(initialDoc);
-              } else {
-                docArr.push(initialDoc);
-              }
-            }
-          }
-          const tabManager = new TabManager(docArr, [], store);
-          store.dispatch(actions.setMultiTab(true));
-          store.dispatch(actions.setTabManager(tabManager));
-          // Fix for event not firing on some devices
-          setTimeout(() => {
-            fireEvent(Events.TAB_MANAGER_READY);
-          }, 300);
+          store.dispatch(enableMultiTab());
         } else {
           store.dispatch(actions.setMultiTab(false));
           store.dispatch(actions.setTabManager(null));
@@ -337,6 +313,13 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.MultiViewerMode]: {
       fn: () => {
+        if (enable && selectors.getIsMultiTab(store.getState())) {
+          console.error('MultiTab and MultiViewerMode cannot be enabled at the same time, disabling MultiTab');
+          store.dispatch(actions.setMultiTab(false));
+          store.dispatch(actions.setTabManager(null));
+          store.dispatch(actions.setTabs([]));
+          store.dispatch(actions.setActiveTab(0));
+        }
         store.dispatch(actions.setIsMultiViewerMode(enable));
       }
     },

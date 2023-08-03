@@ -9,8 +9,12 @@ export default (dispatch, src, options = {}, documentViewerKey = 1) => {
   core.closeDocument(documentViewerKey);
   options = { ...getDefaultOptions(), ...options };
 
-  options.docId = options.documentId || null;
-  options.onLoadingProgress = (percent) => dispatch(actions.setLoadingProgress(percent));
+  options.docId = options.docId || options.documentId || null;
+  const customLoadingProgressFunction = options.onLoadingProgress;
+  options.onLoadingProgress = (percent) => {
+    customLoadingProgressFunction && customLoadingProgressFunction(percent);
+    dispatch(actions.setLoadingProgress(percent));
+  };
   options.password = transformPasswordOption(options.password, dispatch);
   options.xodOptions = extractXodOptions(options);
   if ('onError' in options) {
@@ -24,8 +28,14 @@ export default (dispatch, src, options = {}, documentViewerKey = 1) => {
   }
 
   dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
-  // ignore caught errors because they are already being handled in the onError callback
-  core.loadDocument(src, options, documentViewerKey).catch(() => {});
+
+  if (options.enableOfficeEditing && !src) {
+    core.loadBlankOfficeEditorDocument(options);
+  } else {
+    // ignore caught errors because they are already being handled in the onError callback
+    core.loadDocument(src, options, documentViewerKey).catch(() => {});
+  }
+
   dispatch(actions.openElement(DataElements.PROGRESS_MODAL));
 };
 

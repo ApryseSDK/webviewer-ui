@@ -242,7 +242,7 @@ const getVerificationResult = async (doc, certificates, trustLists, currentLangu
             signTime = await digitalSigField.getSigningTime();
 
             if (await signTime.isValid()) {
-              signTime = formatPDFNetDate(signTime);
+              signTime = formatPDFNetDate(signTime, currentLanguage);
             } else {
               signTime = null;
             }
@@ -399,11 +399,19 @@ const getVerificationResult = async (doc, certificates, trustLists, currentLangu
  * @returns {string} Human readable formatted date and time
  * @ignore
  */
-const formatPDFNetDate = (date) => {
+const formatPDFNetDate = (date, currentLanguage) => {
   const { year, month, day, hour, minute, second } = date;
-  const d = new Date(year, month, day, hour, minute, second);
+  const d = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
 
-  return d.toLocaleString();
+  return d.toLocaleDateString(currentLanguage.replace('_', '-'), {
+    year: 'numeric',
+    month: 'long',
+    weekday: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZoneName: 'short',
+  });
 };
 
 /**
@@ -426,6 +434,7 @@ const formatDate = (epochTime, currentLanguage) => {
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
+    timeZoneName: 'short',
   });
 };
 

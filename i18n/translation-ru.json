@@ -435,12 +435,10 @@
       "drawSignature": "Нарисовать подпись*",
       "drawInitial": "Нарисовать инициалы*",
       "pickInitialsFile": "Выберите инициалы",
-      "noSignatures": "В настоящее время нет сохраненных подписей."
+      "noSignatures": "В настоящее время нет сохраненных подписей.",
+      "fontStyle": "стиль шрифта"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Перетащите файл сюда",
-      "selectFile": "Выберите файл здесь",
-      "or": "Или",
       "yourFiles": "Ваши файлы",
       "chooseFile": "Выберите файл",
       "localFile": "Локальный файл",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Параметры водяного знака",
     "watermarks": "Водяные знаки"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF-портфолио",
+    "portfolioAddFile": "Добавить файл",
+    "portfolioAddFolder": "Добавить папку",
+    "portfolioCreateFolder": "Создать папку",
+    "portfolioNewFolder": "Новая папка",
+    "portfolioNewFolderPlaceholder": "Имя папки"
+  },
   "languageModal": {
     "selectLanguage": "Выбрать язык"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Водяной знак",
     "addWatermark": "Добавить водяной знак",
     "save": "Сохранить файл",
-    "pageError": "Недопустимая страница. Допустимые диапазоны страниц: от 1 до"
+    "pageError": "Недопустимая страница. Допустимые диапазоны страниц: от 1 до",
+    "fileNameCannotBeEmpty": "Имя файла не может быть пустым"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Создать PDF-портфолио",
+    "uploadFiles": "Загрузить файлы",
+    "uploadFolder": "Загрузить папку",
+    "addFiles": "Добавить файлы",
+    "addFolder": "Добавить папку"
+  },
+  "filePicker": {
+    "dragAndDrop": "Перетащите файл сюда",
+    "selectFile": "Выберите файл здесь",
+    "or": "Или"
   }
 }

@@ -93,27 +93,36 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       const childRect = childEle.getBoundingClientRect();
       const tooltipRect = tooltipEle.getBoundingClientRect();
 
+      let hostX = 0;
+      let hostY = 0;
+      if (window.isApryseWebViewerWebComponent) {
+        const shadowRoot = getRootNode();
+        const hostRect = shadowRoot.host.getBoundingClientRect();
+        hostX = hostRect.x;
+        hostY = hostRect.y;
+      }
+
       const locationTopLeftMap = {
         // TODO be able to support other directions too
         bottom: {
-          top: childRect.bottom,
-          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2,
+          top: childRect.bottom - hostY,
+          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2 - hostX,
         },
         bottomLeft: {
-          top: childRect.bottom,
-          left: childRect.left,
+          top: childRect.bottom - hostY,
+          left: childRect.left - hostX,
         },
         left: {
-          top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
-          left: childRect.left - tooltipRect.width,
+          top: childRect.top + childRect.height / 2 - tooltipRect.height / 2 - hostY,
+          left: childRect.left - tooltipRect.width - hostX,
         },
         right: {
-          top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
-          left: childRect.right,
+          top: childRect.top + childRect.height / 2 - tooltipRect.height / 2 - hostY,
+          left: childRect.right - hostX,
         },
         top: {
-          top: childRect.top - tooltipRect.height,
-          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2,
+          top: childRect.top - tooltipRect.height - hostY,
+          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2 - hostX,
         },
       };
 

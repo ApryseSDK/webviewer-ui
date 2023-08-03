@@ -156,3 +156,35 @@ export const ChangingDestination = () => {
     </ReduxProvider>
   );
 };
+
+export const ColoredOutline = () => {
+  return (
+    <ReduxProvider store={createStore(reducer)}>
+      <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+        <div className='left-panel-container' style={{ minWidth: '330px' }}>
+          <div className='bookmark-outline-single-container default'>
+            <OutlineContext.Provider
+              value={{
+                setEditingOutlines: NOOP,
+                editingOutlines: {},
+                isMultiSelectMode: false,
+                isOutlineEditable: true,
+                addNewOutline: NOOP,
+                renameOutline: NOOP,
+                removeOutlines: NOOP,
+              }}
+            >
+              <OutlineContent
+                outlinePath='0'
+                text='A colored outline'
+                // isAdding={true}
+                setIsHovered={NOOP}
+                textColor="rgb(255, 0, 0)"
+              />
+            </OutlineContext.Provider>
+          </div>
+        </div>
+      </div>
+    </ReduxProvider>
+  );
+};

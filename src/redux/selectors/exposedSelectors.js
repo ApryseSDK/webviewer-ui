@@ -41,7 +41,7 @@ export const getSelectedStamp = (state) => {
   const customStamps = getCustomStamps(state);
   const index = getSelectedStampIndex(state);
   let selectedStamp = standardStamps[index];
-  // selected stamp is not found in standard stamps, search dyamic stamps
+  // selected stamp is not found in standard stamps, search dynamic stamps
   if (!selectedStamp && !!customStamps.length) {
     selectedStamp = customStamps[index - standardStamps.length];
   }
@@ -510,6 +510,8 @@ export const getWarningTemplateStrings = (state) => state.viewer.warning?.templa
 
 export const getWarningModalClass = (state) => state.viewer.warning?.modalClass || '';
 
+export const getWarningCloseEvent = (state) => state.viewer.warning?.onClose;
+
 // error message
 export const getErrorMessage = (state) => state.viewer.errorMessage || '';
 
@@ -651,3 +653,7 @@ export const isToolDefaultStyleUpdateFromAnnotationPopupEnabled = (state) => sta
 export const getShortcutKeyMap = (state) => state.viewer.shortcutKeyMap;
 
 export const getMultiViewerSyncScrollMode = (state) => state.viewer.multiViewerSyncScrollMode;
+
+export const getTextSignatureQuality = (state) => state.viewer.textSignatureCanvasMultiplier;
+
+export const getIsMeasurementAnnotationFilterEnabled = (state) => state.viewer.isMeasurementAnnotationFilterEnabled;

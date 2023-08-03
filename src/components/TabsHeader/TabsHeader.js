@@ -131,7 +131,10 @@ const TabsHeader = () => {
           key={tab.id}
           id={`tab-${tab.id}`}
           isActive={tab.id === activeTab}
-          closeTab={() => deleteTab(tab.id)}
+          closeTab={(e) => {
+            e.stopPropagation();
+            deleteTab(tab.id);
+          }}
           tab={tab}
           isToLeftOfActive={index === activeIndex - 1}
         />;

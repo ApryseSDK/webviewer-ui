@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
 import CreatableListItem from './CreatableListItem';
@@ -8,6 +8,7 @@ import './CreatableList.scss';
 const CreatableListContainer = ({
   options,
   onOptionsUpdated,
+  popupRef,
 }) => {
   const { t } = useTranslation();
 
@@ -22,7 +23,7 @@ const CreatableListContainer = ({
   });
   const [items, setItems] = useState(draggableItems);
   const [nextId, setNextId] = useState(draggableItems.length);
-
+  const containerRef = useRef();
 
   useEffect(() => {
     const sanitizedOptions = items.map((item) => ({ value: item.value, displayValue: item.displayValue }));
@@ -33,6 +34,7 @@ const CreatableListContainer = ({
     const id = nextId;
     setNextId(nextId + 1);
     setItems([...items, { id, value: '', displayValue: '' }]);
+    validatePopupHeight();
   }, [nextId, items]);
 
   const handleDeleteItem = (id) => () => {
@@ -77,9 +79,25 @@ const CreatableListContainer = ({
     [items],
   );
 
+  const validatePopupHeight = () => {
+    const popupContainer = popupRef.current;
+    const containerElement = containerRef.current;
+    const { bottom } = popupContainer.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const availableHeight = viewportHeight - bottom;
+    const isListOverflowing = containerElement.scrollHeight > containerElement.clientHeight;
+    if (availableHeight <= 40 && !isListOverflowing) {
+      const inputCount = containerElement.childElementCount;
+      const maxContainerHeight = inputCount * 40;
+      containerElement.style.maxHeight = `${maxContainerHeight}px`;
+    } else if (availableHeight > 40) {
+      containerElement.style.maxHeight = '200px';
+    }
+  };
+
   return (
     <div>
-      <div className="creatable-list">
+      <div className="creatable-list" ref={containerRef}>
         {items.map((item, index) => (
           <CreatableListItem
             key={item.id}

@@ -18,6 +18,7 @@ const propTypes = {
   setOutlineChangingDest: PropTypes.func,
   setIsHovered: PropTypes.func,
   onCancel: PropTypes.func,
+  textColor: PropTypes.string,
 };
 
 const OutlineContent = ({
@@ -30,6 +31,7 @@ const OutlineContent = ({
   setOutlineChangingDest,
   setIsHovered,
   onCancel,
+  textColor,
 }) => {
   const {
     currentDestPage,
@@ -127,6 +129,10 @@ const OutlineContent = ({
     }
   }, [isContextMenuOpen]);
 
+  const textStyle = {
+    color: textColor || 'auto'
+  };
+
   return (
     <div className="bookmark-outline-label-row">
       {isAdding &&
@@ -144,6 +150,7 @@ const OutlineContent = ({
                 setOutlineRenaming(true);
               }
             }}
+            style={textStyle}
           >
             {text}
           </div>
@@ -185,7 +192,10 @@ const OutlineContent = ({
       }
 
       {isOutlineChangingDest &&
-        <div className="bookmark-outline-text outline-text">
+        <div
+          className="bookmark-outline-text outline-text"
+          style={textStyle}
+        >
           {text}
         </div>
       }

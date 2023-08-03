@@ -1,0 +1,28 @@
+.add-portfolio-item-popup {
+  width: 160px;
+  padding: 8px 0;
+  box-shadow: 0px 0px 3px #868E96;
+  border-radius: 4px;
+  background-color: var(--component-background);
+  pointer-events: auto;
+  position: relative;
+
+  .add-portfolio-item-popup-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 4px 8px;
+
+    &:first-child {
+      margin-bottom: 8px;
+    }
+
+    &:hover {
+      background-color: var(--popup-button-hover);
+    }
+
+    .Icon {
+      margin-right: 8px;
+    }
+  }
+}

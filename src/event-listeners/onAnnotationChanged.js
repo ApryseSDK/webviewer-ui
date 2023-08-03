@@ -4,7 +4,7 @@ import core from 'core';
 
 export default (documentViewerKey) => (annotations, action, info) => {
   if (action === 'delete') {
-    deleteReplies(annotations, documentViewerKey);
+    deleteReplies(annotations, documentViewerKey, info);
   }
 
   const selectAnnotationOnCreation = getHashParameters('selectAnnotationOnCreation', false);
@@ -17,8 +17,8 @@ export default (documentViewerKey) => (annotations, action, info) => {
   }
 };
 
-const deleteReplies = (annotations, documentViewerKey) => {
+const deleteReplies = (annotations, documentViewerKey, info) => {
   annotations.forEach((annotation) => {
-    core.deleteAnnotations(annotation.getReplies(), { 'imported': false, 'force': true }, documentViewerKey);
+    core.deleteAnnotations(annotation.getReplies(), { 'imported': false, 'force': true, 'isUndoRedo': info?.isUndoRedo }, documentViewerKey);
   });
 };

@@ -44,6 +44,7 @@
     border-radius: 4px;
     background: var(--component-background);
     top: 40px;
+    width: max-content;
 
     .note-popup-option {
       @include button-reset;

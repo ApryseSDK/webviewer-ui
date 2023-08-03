@@ -435,12 +435,10 @@
       "drawSignature": "Narysuj podpis*",
       "drawInitial": "Narysuj inicjały*",
       "pickInitialsFile": "Wybierz inicjały",
-      "noSignatures": "Obecnie nie ma zapisanych podpisów."
+      "noSignatures": "Obecnie nie ma zapisanych podpisów.",
+      "fontStyle": "styl czcionki"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Przeciągnij i upuść plik tutaj",
-      "selectFile": "Wybierz swój plik tutaj",
-      "or": "Lub",
       "yourFiles": "Twoje pliki",
       "chooseFile": "Wybierz plik",
       "localFile": "Plik lokalny",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Opcje znaku wodnego",
     "watermarks": "Znaki wodne"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portfolio PDF",
+    "portfolioAddFile": "Dodaj plik",
+    "portfolioAddFolder": "Dodaj folder",
+    "portfolioCreateFolder": "Utwórz folder",
+    "portfolioNewFolder": "Nowy folder",
+    "portfolioNewFolderPlaceholder": "Nazwa folderu"
+  },
   "languageModal": {
     "selectLanguage": "Wybierz język"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "znak wodny",
     "addWatermark": "Dodaj znak wodny",
     "save": "Zapisz plik",
-    "pageError": "Nieprawidłowa strona. Prawidłowe zakresy stron mieszczą się w przedziale od 1 do"
+    "pageError": "Nieprawidłowa strona. Prawidłowe zakresy stron mieszczą się w przedziale od 1 do",
+    "fileNameCannotBeEmpty": "Nazwa pliku nie może być pusta"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Utwórz portfolio PDF",
+    "uploadFiles": "Prześlij pliki",
+    "uploadFolder": "Prześlij folder",
+    "addFiles": "Dodaj pliki",
+    "addFolder": "Dodaj folder"
+  },
+  "filePicker": {
+    "dragAndDrop": "Przeciągnij i upuść swój plik tutaj",
+    "selectFile": "Wybierz swój plik tutaj",
+    "or": "Lub"
   }
 }

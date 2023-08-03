@@ -77,25 +77,29 @@ const TextStylePicker = ({
   const fontSizeProps = fontSize?.match(/([0-9.]+)|([a-z]+)/gi);
 
   const [error, setError] = useState('');
+  const fontSizePropsToUpdate = (fontSizeProps && parseFloat(fontSizeProps[0])) || 12;
 
   return (
     <>
       <div className={`container-fluid ${error && 'error'}`}>
-        <Dropdown
-          items={supportedFonts}
-          onClickItem={changeFont}
-          currentSelectionKey={font}
-          getCustomItemStyle={(item) => ({ fontFamily: item })}
-          maxHeight={200}
-          placeholder={isContentEditing ? 'Font' : undefined}
-        />
-        <FontSizeDropdown
-          fontSize={(fontSizeProps && parseFloat(fontSizeProps[0])) || 12}
-          fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
-          onFontSizeChange={changeFontSize}
-          onError={setError}
-          applyOnlyOnBlur={isContentEditing}
-        />
+        <div className="container-dropdown">
+          <Dropdown
+            items={supportedFonts}
+            onClickItem={changeFont}
+            currentSelectionKey={font}
+            getCustomItemStyle={(item) => ({ fontFamily: item })}
+            maxHeight={200}
+            placeholder={isContentEditing ? 'Font' : undefined}
+          />
+          <FontSizeDropdown
+            fontSize={fontSizePropsToUpdate}
+            key={fontSizePropsToUpdate}
+            fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
+            onFontSizeChange={changeFontSize}
+            onError={setError}
+            applyOnlyOnBlur={isContentEditing}
+          />
+        </div>
         {error && <div className="error-text">{error}</div>}
       </div>
       <div className="icon-grid">

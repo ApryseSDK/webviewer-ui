@@ -68,7 +68,8 @@ function SearchOverlay(props) {
         searchTextInputRef.current.focus();
       }, waitTime);
     }
-    if (!isSearchAndReplaceDisabled && isPanelOpen) {
+
+    if (isSearchAndReplaceDisabled && isPanelOpen) {
       console.warn('Search and Replace is not supported in this browser');
     }
   }, [isPanelOpen]);
@@ -97,7 +98,7 @@ function SearchOverlay(props) {
   };
 
   const search = async (searchValue) => {
-    if (searchValue && searchValue.length > 0) {
+    if (searchValue && searchValue.length > 1) {
       setIsSearchInProgress(true);
       setSearchStatus('SEARCH_IN_PROGRESS');
 
@@ -109,7 +110,7 @@ function SearchOverlay(props) {
         wholeWord: isWholeWord,
         wildcard: isWildcard,
       });
-    } else {
+    } else if (!searchValue) {
       clearSearchResult();
     }
   };

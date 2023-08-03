@@ -182,7 +182,9 @@ import {
   enableAttachmentPreview,
   disableAttachmentPreview,
   disableMultiSelect as notesPanelDisableMultiSelect,
-  setAttachmentHandler
+  setAttachmentHandler,
+  enableMeasurementAnnotationFilter,
+  disableMeasurementAnnotationFilter,
 } from './notesPanel';
 import {
   enableMultiselect,
@@ -254,7 +256,8 @@ import ToolGroupButton from './ModularComponents/toolGroupButton';
 import Zoom from './ModularComponents/zoom';
 import Flyout from './ModularComponents/flyout';
 import setMultiViewerSyncScrollingMode from './setMultiViewerSyncScrollingMode';
-
+import setTextSignatureQuality from './setTextSignatureQuality';
+import getTextSignatureQuality from './getTextSignatureQuality';
 import {
   getMeasurementScalePreset,
   addMeasurementScalePreset,
@@ -424,7 +427,9 @@ export default (store) => {
       enableAttachmentPreview: enableAttachmentPreview(store),
       disableAttachmentPreview: disableAttachmentPreview(store),
       disableMultiSelect: notesPanelDisableMultiSelect(store),
-      setAttachmentHandler: setAttachmentHandler(store)
+      setAttachmentHandler: setAttachmentHandler(store),
+      enableMeasurementAnnotationFilter: enableMeasurementAnnotationFilter(store),
+      disableMeasurementAnnotationFilter: disableMeasurementAnnotationFilter(store),
     },
     OutlinesPanel: {
       setDefaultOptions: setDefaultOptions(store),
@@ -547,6 +552,8 @@ export default (store) => {
     setGrayscaleDarknessFactor,
     setSideWindowVisibility: setSideWindowVisibility(store),
     setMultiViewerSyncScrollingMode: setMultiViewerSyncScrollingMode(store),
+    setTextSignatureQuality: setTextSignatureQuality(store),
+    getTextSignatureQuality: getTextSignatureQuality(store),
 
     // undocumented
     loadedFromServer: false,

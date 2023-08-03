@@ -435,12 +435,10 @@
       "drawSignature": "Nakreslit podpis*",
       "drawInitial": "Kreslit iniciály*",
       "pickInitialsFile": "Vyberte Iniciály",
-      "noSignatures": "Momentálně nejsou žádné uložené podpisy."
+      "noSignatures": "Momentálně nejsou žádné uložené podpisy.",
+      "fontStyle": "styl fontu"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Přetáhněte soubor sem",
-      "selectFile": "Zde vyberte svůj soubor",
-      "or": "Nebo",
       "yourFiles": "Vaše soubory",
       "chooseFile": "Vyberte soubor",
       "localFile": "Místní soubor",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Možnosti vodoznaku",
     "watermarks": "Vodoznaky"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portfolio PDF",
+    "portfolioAddFile": "Přidat soubor",
+    "portfolioAddFolder": "Přidat složku",
+    "portfolioCreateFolder": "Vytvořit složku",
+    "portfolioNewFolder": "Nová složka",
+    "portfolioNewFolderPlaceholder": "Název složky"
+  },
   "languageModal": {
     "selectLanguage": "Zvolte jazyk"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Vodoznak",
     "addWatermark": "Přidat vodoznak",
     "save": "Uložení souboru",
-    "pageError": "Neplatná stránka. Platné rozsahy stránek jsou mezi 1 -"
+    "pageError": "Neplatná stránka. Platné rozsahy stránek jsou mezi 1 -",
+    "fileNameCannotBeEmpty": "Název souboru nesmí být prázdný"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Vytvořte portfolio PDF",
+    "uploadFiles": "Nahrát soubory",
+    "uploadFolder": "Nahrát složku",
+    "addFiles": "Přidat soubory",
+    "addFolder": "Přidat složku"
+  },
+  "filePicker": {
+    "dragAndDrop": "Sem přetáhněte soubor",
+    "selectFile": "Zde vyberte svůj soubor",
+    "or": "Nebo"
   }
 }

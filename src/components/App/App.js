@@ -10,7 +10,6 @@ import actions from 'actions';
 import LogoBar from 'components/LogoBar';
 import Accessibility from 'components/Accessibility';
 import Header from 'components/Header';
-import AnnotationContentOverlay from 'components/AnnotationContentOverlay';
 import DocumentContainer from 'components/DocumentContainer';
 import LeftPanel from 'components/LeftPanel';
 import RightPanel from 'components/RightPanel';
@@ -23,7 +22,6 @@ import TextEditingPanel from 'components/TextEditingPanel';
 import Wv3dPropertiesPanel from 'components/Wv3dPropertiesPanel';
 import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
 import DocumentCropPopup from 'components/DocumentCropPopup';
-import LeftPanelOverlayContainer from 'components/LeftPanelOverlay';
 import FormFieldIndicatorContainer from 'components/FormFieldIndicator';
 import MultiTabEmptyPage from 'components/MultiTabEmptyPage';
 import MultiViewer from 'components/MultiViewer';
@@ -38,6 +36,7 @@ import TopHeader from 'components/TopHeader';
 import GenericOutlinesPanel from 'components/GenericOutlinesPanel';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import ZoomFlyoutMenu from 'components/ModularComponents/ZoomFlyoutMenu';
+import ProgressModal from 'components/ProgressModal';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 
 import useOnTextSelected from 'hooks/useOnTextSelected';
@@ -48,6 +47,7 @@ import useOnFreeTextEdit from 'hooks/useOnFreeTextEdit';
 import useOnMeasurementToolOrAnnotationSelected from 'hooks/useOnMeasurementToolOrAnnotationSelected';
 import useOnInlineCommentPopupOpen from 'hooks/useOnInlineCommentPopupOpen';
 import useOnRightClickAnnotation from 'hooks/useOnRightClickAnnotation';
+import useOnAnnotationContentOverlayOpen from 'hooks/useOnAnnotationContentOverlayOpen';
 
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
@@ -122,8 +122,9 @@ const App = ({ removeEventHandlers }) => {
       let initialDoc = getHashParameters('d', '');
       const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
       if (!initialDoc && isOfficeEditingEnabled) {
-        loadDocument(dispatch, (await core.getEmptyWordDocument()).default, {
+        loadDocument(dispatch, null, {
           filename: 'Untitled.docx',
+          isOfficeEditingEnabled: true,
         });
 
         return;
@@ -239,36 +240,6 @@ const App = ({ removeEventHandlers }) => {
     return () => window.removeEventListener('loaderror', onError);
   }, []);
 
-
-  useEffect(() => {
-    const handleToolModeChange = (newTool, oldTool) => {
-      if (newTool instanceof window.Core.Tools.ContentEditTool) {
-        setTimeout(() => {
-          dispatch(actions.openElement(DataElements.CONTENT_EDIT_MODAL));
-        }, 500);
-      } else if (oldTool instanceof window.Core.Tools.ContentEditTool) {
-        dispatch(actions.clearCurrentContentBeingEdited());
-      }
-    };
-
-    const handleContentEditModeStart = () => {
-      dispatch(actions.openElement(DataElements.CONTENT_EDIT_MODAL));
-    };
-
-    const handleContentEditModeEnd = () => {
-      dispatch(actions.clearCurrentContentBeingEdited());
-    };
-
-    core.addEventListener('toolModeUpdated', handleToolModeChange);
-    core.addEventListener('contentEditModeStarted', handleContentEditModeStart);
-    core.addEventListener('contentEditModeEnded', handleContentEditModeEnd);
-    return () => {
-      core.removeEventListener('toolModeUpdated', handleToolModeChange);
-      core.removeEventListener('contentEditModeStarted', handleContentEditModeStart);
-      core.removeEventListener('contentEditModeEnded', handleContentEditModeEnd);
-    };
-  }, []);
-
   const panels = customFlxPanels.map((panel, index) => {
     return (
       panel.render && (
@@ -366,12 +337,27 @@ const App = ({ removeEventHandlers }) => {
           Component={LazyLoadComponents.ZoomOverlay}
           dataElement={DataElements.ZOOM_OVERLAY}
         />
-        <AnnotationContentOverlay />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.AnnotationContentOverlay}
+          dataElement={DataElements.ANNOTATION_CONTENT_OVERLAY}
+          onOpenHook={useOnAnnotationContentOverlayOpen}
+        />
         <LazyLoadWrapper
           Component={LazyLoadComponents.PageManipulationOverlay}
           dataElement={DataElements.PAGE_MANIPULATION_OVERLAY}
         />
-        <LeftPanelOverlayContainer />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.RotatePopup}
+          dataElement={DataElements.THUMBNAILS_CONTROL_ROTATE_POPUP}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.MoreOptionsPopup}
+          dataElement={DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.MoreOptionsPopupSmall}
+          dataElement={DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL}
+        />
         <FormFieldIndicatorContainer />
         {/* Popups */}
         {/* AnnotationPopup should be the first so that other popups can lay on top of it */}
@@ -441,12 +427,19 @@ const App = ({ removeEventHandlers }) => {
         <LazyLoadWrapper Component={LazyLoadComponents.SaveModal} dataElement={DataElements.SAVE_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.InsertPageModal} dataElement={DataElements.INSERT_PAGE_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.LoadingModal} dataElement={DataElements.LOADING_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.ProgressModal} dataElement={DataElements.PROGRESS_MODAL} />
+
+        {
+        /*
+          There were issues appearing in WebViewer BIM add-on with lazy loading ProgressModal.
+          The BIM add-on relies on ProgressModal styling which wouldn't not get loaded explicitly.
+          This caused styling issues when loading a 3D model and would impact the UI of the BIM add-on.
+
+          See https://apryse.atlassian.net/browse/WVR-3094
+        */
+        }
+        <ProgressModal/>
+
         <LazyLoadWrapper Component={LazyLoadComponents.WarningModal} dataElement={DataElements.WARNING_MODAL} />
-        <LazyLoadWrapper
-          Component={LazyLoadComponents.ContentEditModal}
-          dataElement={DataElements.CONTENT_EDIT_MODAL}
-        />
         <LazyLoadWrapper Component={LazyLoadComponents.Model3DModal} dataElement={DataElements.MODEL3D_MODAL} />
         <LazyLoadWrapper
           Component={LazyLoadComponents.ColorPickerModal}
@@ -463,6 +456,7 @@ const App = ({ removeEventHandlers }) => {
           />
         )}
         <LogoBar />
+        <LazyLoadWrapper Component={LazyLoadComponents.CreatePortfolioModal} dataElement={DataElements.CREATE_PORTFOLIO_MODAL} />
       </div>
 
       <PrintHandler />

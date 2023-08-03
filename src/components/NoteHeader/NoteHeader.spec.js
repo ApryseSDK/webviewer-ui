@@ -2,22 +2,35 @@ import React from 'react';
 import { render, getByText } from '@testing-library/react';
 import NoteHeader from './NoteHeader';
 import * as reactRedux from 'react-redux';
-import { Basic, testProps, testPropsWithAnnotationNumbering } from './NoteHeader.stories';
+import { testProps, testPropsWithAnnotationNumbering } from './NoteHeader.stories';
 
-const BasicNoteHeader = withI18n(Basic);
 const TestNoteHeader = withProviders(NoteHeader);
 const notSelectedProps = {
   ...testProps,
   isSelected: false,
 };
 
+const initialState = {
+  viewer: {
+    disabledElements: {
+      unpostedCommentIndicator: { disabled: false },
+    },
+    customElementOverrides: {},
+    activeDocumentViewerKey: 1,
+  }
+};
+
 describe('NoteHeader Component', () => {
   beforeEach(() => {
     // We mock the redux call to always return "false" for isElementDisabled
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockReturnValue(false);
+    useSelectorMock.mockImplementation((callback) => callback(initialState));
     // Mock some context items
-    jest.spyOn(React, 'useContext').mockReturnValue({ pendingEditTextMap: {}, pendingReplyMap: {}, pendingAttachmentMap: {} });
+    jest.spyOn(React, 'useContext').mockReturnValue({
+      pendingEditTextMap: {},
+      pendingReplyMap: {},
+      pendingAttachmentMap: {}
+    });
   });
 
   afterEach(() => {
@@ -26,7 +39,7 @@ describe('NoteHeader Component', () => {
 
   it('Should not throw any errors when rendering storybook component', () => {
     expect(() => {
-      render(<BasicNoteHeader />);
+      render(<TestNoteHeader {...notSelectedProps}/>);
     }).not.toThrow();
   });
 

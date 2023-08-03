@@ -127,6 +127,7 @@ function NotesPanelHeader({
               disabled={notes.length === 0}
               img="icon-annotation-select-multiple"
               onClick={() => {
+                core.deselectAllAnnotations();
                 toggleMultiSelectMode();
               }}
               title={t('component.multiSelectButton')}

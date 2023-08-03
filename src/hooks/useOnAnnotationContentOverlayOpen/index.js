@@ -1,0 +1,3 @@
+import useOnAnnotationContentOverlayOpen from './useOnAnnotationContentOverlayOpen';
+
+export default useOnAnnotationContentOverlayOpen;

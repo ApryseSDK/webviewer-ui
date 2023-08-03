@@ -17,6 +17,7 @@ const initialState = {
   viewer: {
     disabledElements: {},
     customElementOverrides: {},
+    activeDocumentViewerKey: 1,
   }
 };
 function rootReducer(state = initialState, action) {

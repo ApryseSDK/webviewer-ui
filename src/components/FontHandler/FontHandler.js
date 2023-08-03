@@ -24,7 +24,7 @@ const FontHandler = () => {
         fileName = fontName;
       }
       // eslint-disable-next-line no-undef, camelcase
-      const fontPath = `${isWebComponent ? __webpack_public_path__ : '.'}/assets/fonts/${isWebFont ? 'webfonts/' : ''}${fileName}.${fontType}`;
+      const fontPath = `${isWebComponent ? __webpack_public_path__ : './'}assets/fonts/${isWebFont ? 'webfonts/' : ''}${fileName}.${fontType}`;
       const fontFace = new FontFace(font, `url(${fontPath}) format("${fontTypes[fontType]}")`, style);
       fontFace.load().then(function(loadedFace) {
         document.fonts.add(loadedFace);

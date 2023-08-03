@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import core from 'core';
 
-function createStateAnnotation(annotation, state) {
+function createStateAnnotation(annotation, state, documentViewerKey = 1) {
   // TODO: the code below is copied from annotManager.updateAnnotationState in WebViewer to work around the issue
   // in https://github.com/PDFTron/webviewer-ui/issues/620
   // the implement before wasn't causing any actual issues, but it was confusing and unnecessary to trigger two annotationChanged events when a status is set
@@ -20,7 +20,7 @@ function createStateAnnotation(annotation, state) {
   stateAnnotation['StateModel'] = state === 'Marked' || state === 'Unmarked' ? 'Marked' : 'Review';
   stateAnnotation['Hidden'] = true;
 
-  const displayAuthor = core.getDisplayAuthor(stateAnnotation['Author']);
+  const displayAuthor = core.getDisplayAuthor(stateAnnotation['Author'], documentViewerKey);
   const stateMessage = i18next.t(`option.state.${state.toLowerCase()}`);
   const contents = `${stateMessage} ${i18next.t('option.state.setBy')} ${displayAuthor}`;
   stateAnnotation.setContents(contents);

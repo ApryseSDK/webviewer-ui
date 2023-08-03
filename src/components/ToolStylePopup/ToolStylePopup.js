@@ -20,6 +20,7 @@ import RubberStampStylePopup from 'components/RubberStampOverlay';
 import './ToolStylePopup.scss';
 import getToolStyles from 'helpers/getToolStyles';
 import DataElements from 'constants/dataElement';
+import getRootNode from 'helpers/getRootNode';
 
 class ToolStylePopup extends React.PureComponent {
   static propTypes = {
@@ -45,21 +46,23 @@ class ToolStylePopup extends React.PureComponent {
 
   handleClickOutside = (e) => {
     // can have multiple toolsOverlays because of mobile mode
-    const toolsOverlays = Array.from(document.querySelectorAll(
+    const toolsOverlays = Array.from(getRootNode().querySelectorAll(
       '[data-element="toolsOverlay"]',
     ));
-    const pageNavOverlays = Array.from(document.querySelectorAll(
+    const pageNavOverlays = Array.from(getRootNode().querySelectorAll(
       '[data-element="pageNavOverlay"]',
     ));
     const warningModal = getOpenedWarningModal();
     const colorPicker = getOpenedColorPicker();
     const openedModal = Array.from(getAllOpenedModals());
 
+    const target = e.composedPath()[0];
+
     const clickedOnToolsOverlay = toolsOverlays.some((toolsOverlay) => {
-      return toolsOverlay?.contains(e.target);
+      return toolsOverlay?.contains(target);
     });
     const clickedOnPageNavOverlay = pageNavOverlays.some((pageNavOverlay) => {
-      return pageNavOverlay?.contains(e.target);
+      return pageNavOverlay?.contains(target);
     });
     const clickedOnCreateStampModal = openedModal.some((pageModal) => {
       return pageModal.classList.contains('CustomStampModal');

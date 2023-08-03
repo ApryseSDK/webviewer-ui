@@ -87,7 +87,7 @@ const SavedSignatures = ({ selectedIndex, setSelectedIndex }) => {
               </div>}
               {!isSignatureDeleteButtonDisabled && (
                 <button
-                  className="icon"
+                  className="icon-button"
                   data-element="defaultSignatureDeleteButton"
                   onClick={() => deleteSignatureAndInitials(index)}
                 >

@@ -27,6 +27,18 @@
         align-items: center;
         font-weight: 700;
         font-size: 16px;
+
+        .left-header {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .back-button {
+          height: 24px;
+          width: 32px;
+          justify-content: center;
+        }
   
         .close-button {
           position: static;

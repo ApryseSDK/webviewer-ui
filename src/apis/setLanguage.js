@@ -2,9 +2,10 @@
  * Set the language of WebViewer UI.
  * @method UI.setLanguage
  * @param {string} language The language WebViewer UI will use. By default, following languages are supported: en, zh_cn, fr.
+ * @returns {Promise<void>} A promise which is resolved after the language is set.
  * @example
-WebViewer(...)
-  .then(function(instance) {
+ WebViewer(...)
+ .then(function(instance) {
     instance.UI.setLanguage('fr'); // set the language to French
   });
  */
@@ -18,29 +19,40 @@ import languageRules from 'constants/languageRules';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 
-export default (store) => (language) => {
-  let languageObj = null;
-  let languageToImportLocaleFile = language;
-
-  if (languageRules[language]) {
-    languageObj = languageRules[language];
-    languageToImportLocaleFile = languageObj.dayjs || language;
+let pendingLanguageTimeout;
+export default (store) => async (language) => {
+  if (pendingLanguageTimeout) {
+    clearTimeout(pendingLanguageTimeout);
   }
+  await new Promise((resolve) => {
+    pendingLanguageTimeout = setTimeout(async () => {
+      let languageObj = null;
+      let languageToImportLocaleFile = language;
 
-  // load locale file from "dayjs/locale/" folder, must match filename
-  import(`dayjs/locale/${languageToImportLocaleFile}.js`).then(() => {
-    dayjs.locale(languageToImportLocaleFile);
-  }).catch(() => {
-    dayjs.locale('en');
-  }).finally(() => {
-    const languageEventObject = {
-      prev: selectors.getCurrentLanguage(store.getState()),
-      next: language,
-    };
-    store.dispatch(actions.setLanguage(language));
-    const promise = i18next.changeLanguage(language);
-    promise.then(() => fireEvent(Events['LANGUAGE_CHANGED'], languageEventObject));
-    setDatePickerLocale(promise, language);
+      if (languageRules[language]) {
+        languageObj = languageRules[language];
+        languageToImportLocaleFile = languageObj.dayjs || language;
+      }
+
+      // load locale file from "dayjs/locale/" folder, must match filename
+      try {
+        await import(`dayjs/locale/${languageToImportLocaleFile}.js`);
+        dayjs.locale(languageToImportLocaleFile);
+      } catch (e) {
+        dayjs.locale('en');
+      } finally {
+        const languageEventObject = {
+          prev: selectors.getCurrentLanguage(store.getState()),
+          next: language,
+        };
+        store.dispatch(actions.setLanguage(language));
+        const pendingLanguagePromise = i18next.changeLanguage(language);
+        setDatePickerLocale(pendingLanguagePromise, language);
+        await pendingLanguagePromise;
+        fireEvent(Events['LANGUAGE_CHANGED'], languageEventObject);
+      }
+      resolve();
+    }, 0);
   });
 };
 

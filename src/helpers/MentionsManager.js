@@ -63,7 +63,7 @@ class MentionsManager {
      * @ignore
      */
     this.idMentionDataMap = {};
-    this.allowedTrailingCharacters = [' '];
+    this.allowedTrailingCharacters = [' ', '\n'];
     this.mentionLookupCallback = this.defaultMentionsSearchCallback;
     annotManager.addEventListener('annotationChanged', (annotations, action, { imported }) => {
       if (!annotations.length || !this.getUserData().length) {
@@ -99,7 +99,7 @@ class MentionsManager {
     let modifiedMentions = [];
     const deletedMentions = [];
 
-    annotations.forEach((annotation) => {
+    for (const annotation of annotations) {
       const prevMentionData = this.idMentionDataMap[annotation.Id] || {
         mentions: [],
         contentWithoutMentions: '',
@@ -110,21 +110,21 @@ class MentionsManager {
 
       this.idMentionDataMap[annotation.Id] = currMentionData;
 
-      currMentions.forEach((currMention) => {
+      for (const currMention of currMentions) {
         const isNewMention = !prevMentions.find((prevMention) => this.isSameMention(prevMention, currMention)
         );
         if (isNewMention) {
           newMentions.push(currMention);
         }
-      });
+      }
 
-      prevMentions.forEach((prevMention) => {
+      for (const prevMention of prevMentions) {
         const isDeletedMention = !currMentions.find((currMention) => this.isSameMention(prevMention, currMention)
         );
         if (isDeletedMention) {
           deletedMentions.push(prevMention);
         }
-      });
+      }
 
       if (
         prevMentions.length &&
@@ -132,7 +132,7 @@ class MentionsManager {
       ) {
         modifiedMentions = modifiedMentions.concat(currMentions);
       }
-    });
+    }
 
     if (newMentions.length) {
       this.trigger('mentionChanged', [newMentions, 'add']);

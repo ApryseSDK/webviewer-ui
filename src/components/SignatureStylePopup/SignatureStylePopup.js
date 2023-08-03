@@ -45,7 +45,7 @@ const SavedSignatures = (props) => {
             />
             {!isDeleteDisabled && (
               <button
-                className="icon"
+                className="icon-button"
                 data-element="defaultSignatureDeleteButton"
                 onClick={() => deleteHandler(savedSignatureIndex)}
               >

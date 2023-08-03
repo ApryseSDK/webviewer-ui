@@ -26,6 +26,7 @@ const propTypes = {
   isNotesPanelOpenOrActive: PropTypes.bool,
   isRichTextPopupOpen: PropTypes.bool,
   isLinkModalOpen: PropTypes.bool,
+  isContextMenuPopupOpen: PropTypes.bool,
 
   focusedAnnotation: PropTypes.object,
   popupRef: PropTypes.any,
@@ -93,6 +94,7 @@ const AnnotationPopup = ({
   isNotesPanelOpenOrActive,
   isRichTextPopupOpen,
   isLinkModalOpen,
+  isContextMenuPopupOpen,
 
   focusedAnnotation,
   popupRef,
@@ -257,7 +259,7 @@ const AnnotationPopup = ({
       default:
         return (
           <FocusTrap
-            locked={isOpen && isInstanceActive && !isRichTextPopupOpen && !isNotesPanelOpenOrActive && !isLinkModalOpen && !isFreeText}
+            locked={isOpen && isInstanceActive && !isRichTextPopupOpen && !isNotesPanelOpenOrActive && !isLinkModalOpen && !isFreeText && !isContextMenuPopupOpen}
           >
             <div className="container">
               <CustomizablePopup

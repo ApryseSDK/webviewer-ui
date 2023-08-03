@@ -435,12 +435,10 @@
       "drawSignature": "วาดลายเซ็น*",
       "drawInitial": "วาดชื่อย่อ*",
       "pickInitialsFile": "เลือกชื่อย่อ",
-      "noSignatures": "ขณะนี้ไม่มีลายเซ็นที่บันทึกไว้"
+      "noSignatures": "ขณะนี้ไม่มีลายเซ็นที่บันทึกไว้",
+      "fontStyle": "รูปแบบตัวอักษร"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่",
-      "selectFile": "เลือกไฟล์ของคุณที่นี่",
-      "or": "หรือ",
       "yourFiles": "ไฟล์ของคุณ",
       "chooseFile": "เลือกไฟล์",
       "localFile": "ไฟล์ในเครื่อง",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "ตัวเลือกลายน้ำ",
     "watermarks": "ลายน้ำ"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "ไฟล์ PDF",
+    "portfolioAddFile": "เพิ่มไฟล์",
+    "portfolioAddFolder": "เพิ่มกล่องเก็บไฟล์",
+    "portfolioCreateFolder": "สร้างโฟลเดอร์",
+    "portfolioNewFolder": "แฟ้มใหม่",
+    "portfolioNewFolderPlaceholder": "ชื่อโฟลเดอร์"
+  },
   "languageModal": {
     "selectLanguage": "เลือกภาษา"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "ลายน้ำ",
     "addWatermark": "ใส่ลายน้ำ",
     "save": "บันทึกไฟล์",
-    "pageError": "หน้าไม่ถูกต้อง ช่วงหน้าที่ถูกต้องอยู่ระหว่าง 1 -"
+    "pageError": "หน้าไม่ถูกต้อง ช่วงหน้าที่ถูกต้องอยู่ระหว่าง 1 -",
+    "fileNameCannotBeEmpty": "ชื่อไฟล์ต้องไม่ว่างเปล่า"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "สร้างผลงาน PDF",
+    "uploadFiles": "อัพโหลดไฟล์",
+    "uploadFolder": "อัปโหลดโฟลเดอร์",
+    "addFiles": "เพิ่มไฟล์",
+    "addFolder": "เพิ่มกล่องเก็บไฟล์"
+  },
+  "filePicker": {
+    "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่",
+    "selectFile": "เลือกไฟล์ของคุณที่นี่",
+    "or": "หรือ"
   }
 }

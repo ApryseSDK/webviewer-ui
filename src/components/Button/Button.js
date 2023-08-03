@@ -100,9 +100,19 @@ const Button = (props) => {
   const actuallyDisabled = disable || disabled;
   let onClickHandler;
   if (shouldPassActiveDocumentViewerKeyToOnClickHandler) {
-    onClickHandler = () => onClick(activeDocumentViewerKey);
+    onClickHandler = (e) => {
+      e.target.blur();
+      if (onClick) {
+        return onClick(activeDocumentViewerKey);
+      }
+    };
   } else {
-    onClickHandler = onClick;
+    onClickHandler = (e) => {
+      e.target.blur();
+      if (onClick) {
+        return onClick(e);
+      }
+    };
   }
 
   // if there is no file extension then assume that this is a glyph

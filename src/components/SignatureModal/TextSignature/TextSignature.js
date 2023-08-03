@@ -76,23 +76,23 @@ const scaleFontSize = (text, fontFamily) => {
   return currentFontSize;
 };
 
-const resizeCanvas = (canvas, measurementReference) => {
+const resizeCanvas = (canvas, measurementReference, overrideMultiplier = 0) => {
   let { width, height } = measurementReference.current.getBoundingClientRect();
   width += TEXT_CLIP_PADDING;
   height += TEXT_CLIP_PADDING;
   canvas.style.width = `${width}px`;
   canvas.style.height = `${height}px`;
-  canvas.width = width * CANVAS_MULTIPLIER;
-  canvas.height = height * CANVAS_MULTIPLIER;
+  canvas.width = width * Math.max(overrideMultiplier, CANVAS_MULTIPLIER);
+  canvas.height = height * Math.max(overrideMultiplier, CANVAS_MULTIPLIER);
 };
 
-const setFontInCanvas = ({ canvas, text, selectedFontFamily, fontColor }) => {
+const setFontInCanvas = ({ canvas, text, selectedFontFamily, fontColor, overrideMultiplier = 0 }) => {
   const ctx = canvas.getContext('2d');
   const fontSize = scaleFontSize(text, selectedFontFamily);
   ctx.fillStyle = fontColor;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `${fontSize * CANVAS_MULTIPLIER}px ${selectedFontFamily}`;
+  ctx.font = `${fontSize * Math.max(overrideMultiplier, CANVAS_MULTIPLIER)}px ${selectedFontFamily}`;
 };
 
 const drawTextInCanvas = (canvas, text) => {
@@ -110,6 +110,7 @@ const TextSignature = ({
   isInitialsModeEnabled = false,
 }) => {
   const fonts = useSelector((state) => selectors.getSignatureFonts(state));
+  const textSignatureCanvasMultiplier = useSelector((state) => selectors.getTextSignatureQuality(state));
   const [fullSignature, setFullSiganture] = useState('');
   const [initials, setInitials] = useState('');
   const [isDefaultValue, setIsDefaultValue] = useState(true);
@@ -157,12 +158,13 @@ const TextSignature = ({
     const fullSignatureCanvas = fullSignatureHiddenCanvasRef.current;
 
     if (isTabPanelSelected) {
-      resizeCanvas(fullSignatureCanvas, hiddenFullSignatureRef);
+      resizeCanvas(fullSignatureCanvas, hiddenFullSignatureRef, textSignatureCanvasMultiplier);
       setFontInCanvas({
         canvas: fullSignatureCanvas,
         text: fullSignature,
         selectedFontFamily,
         fontColor,
+        overrideMultiplier: textSignatureCanvasMultiplier,
       });
       drawTextInCanvas(fullSignatureCanvas, fullSignature);
       if (isModalOpen) {
@@ -246,7 +248,6 @@ const TextSignature = ({
     setSignature();
     setFullSiganture(value);
     setInitials(parseInitialsFromFullSignature(value));
-
     const newFontSize = scaleFontSize(value, selectedFontFamily);
     setFontSize(newFontSize);
   };
@@ -295,6 +296,33 @@ const TextSignature = ({
           {initials}
         </div>
       </div>
+    );
+  };
+
+  // Renders the font options if initials and text signature are occupied
+  const renderFontOptions = () => {
+    const isInitialsModeEnabledAndEmpty = isInitialsModeEnabled && initials === '';
+    if (fullSignature === '' && (isInitialsModeEnabledAndEmpty || !isInitialsModeEnabled)) {
+      return (
+        <Dropdown
+          disabled={true}
+          placeholder={t('option.signatureModal.fontStyle')}
+        />
+      );
+    }
+    return (
+      <Dropdown
+        items={fonts.map((font) => ({ font, value: `${fullSignature} ${isInitialsModeEnabled ? initials : ''}` }))}
+        getCustomItemStyle={(item) => ({ fontFamily: item.font })}
+        getKey={(item) => item.font}
+        getDisplayValue={(item) => {
+          return item.value || item.font;
+        }}
+        onClickItem={handleDropdownSelectionChange}
+        currentSelectionKey={selectedFontFamily || fonts[0]}
+        maxHeight={isMobile() ? 80 : null}
+        dataElement="text-signature-font-dropdown"
+      />
     );
   };
 
@@ -362,18 +390,7 @@ const TextSignature = ({
       <canvas ref={initialsHiddenCanvasRef} />
       <div className="colorpalette-clear-container">
         <div className="signature-style-options">
-          <Dropdown
-            items={fonts.map((font) => ({ font, value: `${fullSignature} ${isInitialsModeEnabled ? initials : ''}` }))}
-            getCustomItemStyle={(item) => ({ fontFamily: item.font })}
-            getKey={(item) => item.font}
-            getDisplayValue={(item) => {
-              return item.value || item.font;
-            }}
-            onClickItem={handleDropdownSelectionChange}
-            currentSelectionKey={selectedFontFamily || fonts[0]}
-            maxHeight={isMobile() ? 80 : null}
-            dataElement="text-signature-font-dropdown"
-          />
+          {renderFontOptions()}
           <div className="placeholder-dropdown"></div>
           <div className="divider"></div>
           <ColorPalette

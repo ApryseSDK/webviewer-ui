@@ -13,6 +13,7 @@ import './Header.scss';
 class ToolsHeader extends React.PureComponent {
   static propTypes = {
     isDisabled: PropTypes.bool,
+    isHeaderDisabled: PropTypes.bool,
     isOpen: PropTypes.bool,
     activeHeaderItems: PropTypes.array.isRequired,
     isToolGroupReorderingEnabled: PropTypes.bool,
@@ -20,8 +21,8 @@ class ToolsHeader extends React.PureComponent {
   }
 
   render() {
-    const { isDisabled, activeHeaderItems, isOpen, currentToolbarGroup, isToolGroupReorderingEnabled, isInDesktopOnlyMode } = this.props;
-    const isVisible = !isDisabled && isOpen && currentToolbarGroup !== 'toolbarGroup-View';
+    const { isDisabled, isHeaderDisabled, activeHeaderItems, isOpen, currentToolbarGroup, isToolGroupReorderingEnabled, isInDesktopOnlyMode } = this.props;
+    const isVisible = !(isDisabled || isHeaderDisabled) && isOpen && currentToolbarGroup !== 'toolbarGroup-View';
 
     return (
       <div
@@ -44,6 +45,7 @@ class ToolsHeader extends React.PureComponent {
 const mapStateToProps = (state) => ({
   currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isDisabled: selectors.isElementDisabled(state, 'toolsHeader'),
+  isHeaderDisabled: selectors.isElementDisabled(state, 'header'),
   isOpen: selectors.isElementOpen(state, 'toolsHeader'),
   activeHeaderItems: selectors.getToolsHeaderItems(state),
   isToolsOverlayOpen: selectors.isElementOpen(state, 'toolsOverlay'),

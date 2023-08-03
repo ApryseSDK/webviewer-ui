@@ -117,8 +117,12 @@
 
             label {
               overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
+
+              div {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
             }
           }
         }

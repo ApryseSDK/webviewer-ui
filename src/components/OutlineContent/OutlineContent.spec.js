@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { Basic, Renaming } from './OutlineContent.stories';
+import { Basic, Renaming, ColoredOutline } from './OutlineContent.stories';
 
 const BasicOutline = withProviders(Basic);
 const RenamingOutline = withProviders(Renaming);
@@ -24,5 +24,12 @@ describe('Outline', () => {
 
     fireEvent.change(textInput, { target: { value: '' } });
     expect(saveButton.disabled).toBe(true);
+  });
+
+  it('should set font color if textColor is passed to OutlineContent', () => {
+    const { container } = render(<ColoredOutline />);
+
+    const outline = container.querySelector('.bookmark-outline-text');
+    expect(outline.style.color).toBe('rgb(255, 0, 0)');
   });
 });

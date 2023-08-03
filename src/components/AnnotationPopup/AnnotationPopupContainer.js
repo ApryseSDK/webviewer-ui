@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, memo, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -19,6 +19,7 @@ import { PRIORITY_THREE } from 'constants/actionPriority';
 import getRootNode from 'helpers/getRootNode';
 
 import AnnotationPopup from './AnnotationPopup';
+
 import './AnnotationPopup.scss';
 
 const { ToolNames } = window.Core.Tools;
@@ -60,6 +61,7 @@ const AnnotationPopupContainer = ({
   const [
     isDisabled,
     isOpen,
+    isContextMenuPopupOpen,
     isRightClickAnnotationPopupEnabled,
     isNotesPanelDisabled,
     isAnnotationStylePopupDisabled,
@@ -77,6 +79,7 @@ const AnnotationPopupContainer = ({
     (state) => [
       selectors.isElementDisabled(state, DataElements.ANNOTATION_POPUP),
       selectors.isElementOpen(state, DataElements.ANNOTATION_POPUP),
+      selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP),
       selectors.isRightClickAnnotationPopupEnabled(state),
       selectors.isElementDisabled(state, DataElements.NOTES_PANEL),
       selectors.isElementDisabled(state, DataElements.ANNOTATION_STYLE_POPUP),
@@ -279,14 +282,8 @@ const AnnotationPopupContainer = ({
     && focusedAnnotation.getContentEditType() === window.Core.ContentEdit.Types.TEXT;
 
   const onEditContent = async () => {
-    // TODO: remove this from the state and nuke the modal
-    if (isMobile()) {
-      const content = await window.Core.ContentEdit.getDocumentContent(focusedAnnotation);
-      dispatch(actions.setCurrentContentBeingEdited({ content, annotation: focusedAnnotation }));
-      dispatch(actions.openElement(DataElements.CONTENT_EDIT_MODAL));
-    } else {
-      annotManager.trigger('annotationDoubleClicked', focusedAnnotation);
-    }
+    annotManager.trigger('annotationDoubleClicked', focusedAnnotation);
+
     dispatch(actions.closeElement(DataElements.ANNOTATION_POPUP));
   };
 
@@ -448,6 +445,7 @@ const AnnotationPopupContainer = ({
       isNotesPanelOpenOrActive={isNotesPanelOpenOrActive}
       isRichTextPopupOpen={isRichTextPopupOpen}
       isLinkModalOpen={isLinkModalOpen}
+      isContextMenuPopupOpen={isContextMenuPopupOpen}
 
       popupRef={popupRef}
       position={position}
@@ -511,4 +509,4 @@ const AnnotationPopupContainer = ({
 
 AnnotationPopupContainer.propTypes = propTypes;
 
-export default memo(AnnotationPopupContainer);
+export default AnnotationPopupContainer;

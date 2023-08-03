@@ -435,12 +435,10 @@
       "drawSignature": "Rita signatur*",
       "drawInitial": "Rita initialer*",
       "pickInitialsFile": "Välj initialer",
-      "noSignatures": "Det finns för närvarande inga sparade signaturer."
+      "noSignatures": "Det finns för närvarande inga sparade signaturer.",
+      "fontStyle": "typsnitt"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Dra och släpp din fil här",
-      "selectFile": "Välj din fil här",
-      "or": "Eller",
       "yourFiles": "Dina filer",
       "chooseFile": "Välj en fil",
       "localFile": "Lokal fil",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Vattenstämpelalternativ",
     "watermarks": "Vattenstämplar"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "PDF-portfölj",
+    "portfolioAddFile": "Lägg till fil",
+    "portfolioAddFolder": "Lägg till mapp",
+    "portfolioCreateFolder": "Skapa mapp",
+    "portfolioNewFolder": "Ny mapp",
+    "portfolioNewFolderPlaceholder": "Mapp namn"
+  },
   "languageModal": {
     "selectLanguage": "Välj språk"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Vattenstämpel",
     "addWatermark": "Lägg till vattenstämpel",
     "save": "Spara fil",
-    "pageError": "Ogiltig sida. Giltiga sidintervall är mellan 1 -"
+    "pageError": "Ogiltig sida. Giltiga sidintervall är mellan 1 -",
+    "fileNameCannotBeEmpty": "Filnamnet får inte vara tomt"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Skapa PDF-portfölj",
+    "uploadFiles": "Ladda upp filer",
+    "uploadFolder": "Ladda upp mapp",
+    "addFiles": "Lägga till filer",
+    "addFolder": "Lägg till mapp"
+  },
+  "filePicker": {
+    "dragAndDrop": "Dra och släpp din fil här",
+    "selectFile": "Välj din fil här",
+    "or": "Eller"
   }
 }

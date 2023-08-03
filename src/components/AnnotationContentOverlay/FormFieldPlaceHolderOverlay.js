@@ -2,6 +2,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import core from 'core';
+import DataElements from 'constants/dataElement';
 
 const FormFieldPlaceHolderOverlay = ({ annotation, overlayPosition, overlayRef }) => {
   const [t] = useTranslation();
@@ -30,7 +31,7 @@ const FormFieldPlaceHolderOverlay = ({ annotation, overlayPosition, overlayRef }
   return (
     <div
       className="Overlay AnnotationContentOverlay"
-      data-element="annotationContentOverlay"
+      data-element={DataElements.ANNOTATION_CONTENT_OVERLAY}
       style={{ ...overlayPosition }}
       ref={overlayRef}
     >

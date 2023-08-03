@@ -107,6 +107,7 @@ const deletePages = (pageNumbers, dispatch, isModalEnabled = true) => {
       confirmBtnText,
       onConfirm: () => core.removePages(pageNumbers).then(() => {
         dispatch(actions.setSelectedPageThumbnails([]));
+        dispatch(actions.setShiftKeyThumbnailsPivotIndex());
       }),
     };
 
@@ -125,6 +126,7 @@ const deletePages = (pageNumbers, dispatch, isModalEnabled = true) => {
   } else {
     core.removePages(pageNumbers).then(() => {
       dispatch(actions.setSelectedPageThumbnails([]));
+      dispatch(actions.setShiftKeyThumbnailsPivotIndex());
     });
   }
 };

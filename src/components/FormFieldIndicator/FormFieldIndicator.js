@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAnnotationPosition } from 'helpers/getPopupPosition';
 import core from 'core';
+import getRootNode from 'helpers/getRootNode';
 
 import './FormFieldIndicator.scss';
 
@@ -50,9 +51,11 @@ const FormFieldIndicator = ({ annotation }) => {
 
     const { scrollLeft } = core.getScrollViewElement();
 
+    const origin = getRootNode().getElementById('app').getBoundingClientRect().left;
+
     const leftPosition =
       core.getViewerElement().getBoundingClientRect().left - INDICATOR_WIDTH - INDICATOR_PADDING + scrollLeft;
-    setXOffset(leftPosition);
+    setXOffset(leftPosition - origin);
 
     switch (displayMode.mode) {
       case 'Facing':

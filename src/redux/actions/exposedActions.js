@@ -159,7 +159,7 @@ export const setCurrentGroupedItem = (groupedItems) => (dispatch) => {
   });
 };
 
-export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
+export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
@@ -186,16 +186,16 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
   };
 
   if (toolbarGroup === 'toolbarGroup-View') {
-    core.setToolMode(defaultTool);
     dispatch({
       type: 'SET_ACTIVE_TOOL_GROUP',
       payload: { toolGroup: '', toolbarGroup },
     });
+    core.setToolMode(defaultTool);
   } else {
     dispatch(openElements(['toolsHeader']));
     const state = getState();
     const lastPickedToolGroup =
-      state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
+      toolGroup || state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
     const lastPickedToolName =
       state.viewer.lastPickedToolForGroup[lastPickedToolGroup] || getFirstToolNameForGroup(state, lastPickedToolGroup);
     if (pickTool) {
@@ -550,6 +550,7 @@ export const setActiveLeftPanel = (dataElement) => (dispatch, getState) => {
   } else {
     const panelDataElements = [
       ...state.viewer.customPanels.map(({ panel }) => panel.dataElement),
+      DataElements.PORTFOLIO_PANEL,
       'thumbnailsPanel',
       'outlinesPanel',
       'layersPanel',
@@ -855,4 +856,14 @@ export const setToolDefaultStyleUpdateFromAnnotationPopupEnabled = (isToolDefaul
 export const setMultiViewerSyncScrollingMode = (multiViewerComparedSyncScrollingMode) => ({
   type: 'SET_MULTI_VIEWER_SYNC_SCROLLING_MODE',
   payload: multiViewerComparedSyncScrollingMode
+});
+
+export const setTextSignatureQuality = (multiplier) => ({
+  type: 'SET_TEXT_SIGNATURE_CANVAS_MULTIPLIER',
+  payload: { multiplier },
+});
+
+export const setEnableMeasurementAnnotationsFilter = (isEnabled) => ({
+  type: 'SET_ENABLE_MEASUREMENT_ANNOTATIONS_FILTER',
+  payload: { isEnabled },
 });

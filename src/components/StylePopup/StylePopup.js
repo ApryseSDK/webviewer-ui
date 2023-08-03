@@ -78,7 +78,7 @@ class StylePopup extends React.PureComponent {
   onDocumentLoaded = () => {
     this.setState({
       document: core.getDocument(),
-      documentType: core.getDocument().getType(),
+      documentType: core.getDocument()?.getType(),
     });
   };
 
@@ -307,7 +307,7 @@ class StylePopup extends React.PureComponent {
     const hideStylePicker = currentStyleTab !== 'StrokeColor' && (isFreeText || isRedaction);
     const wasDocumentSwappedToClientSide =
       this.state.documentType === workerTypes.WEBVIEWER_SERVER && !this.state.document.isWebViewerServerDocument();
-    const isEligibleDocumentForSnapping = this.state.documentType === workerTypes.PDF || wasDocumentSwappedToClientSide;
+    const isEligibleDocumentForSnapping = this.state.documentType?.toLowerCase() === workerTypes.PDF || wasDocumentSwappedToClientSide;
 
     const showMeasurementSnappingOption = Scale && Precision && isEligibleDocumentForSnapping && !hideSnapModeCheckbox;
 
@@ -324,7 +324,7 @@ class StylePopup extends React.PureComponent {
             />
             {showLabelText && !isLabelTextContainerDisabled && (
               <>
-                <div className="collapsible-menu" onClick={openLabelText} role={'toolbar'}>
+                <div className="collapsible-menu" onClick={openLabelText} onTouchStart={openLabelText} role={'toolbar'}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.labelText')}
                   </div>
@@ -340,7 +340,7 @@ class StylePopup extends React.PureComponent {
             )}
             {showTextStyle && (
               <>
-                <div className="collapsible-menu" onClick={openTextStyle} role={'toolbar'}>
+                <div className="collapsible-menu" onClick={openTextStyle} onTouchStart={openTextStyle} role={'toolbar'}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.textStyle')}
                   </div>
@@ -362,7 +362,7 @@ class StylePopup extends React.PureComponent {
             )}
             {showColorsMenu && (
               <>
-                <div className="collapsible-menu" onClick={openColors} role={'toolbar'}>
+                <div className="collapsible-menu" onClick={openColors} onTouchStart={openColors} role={'toolbar'}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.colors')}
                   </div>

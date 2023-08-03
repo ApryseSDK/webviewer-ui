@@ -1,5 +1,6 @@
 export const ItemTypes = {
-  OUTLINE: 'outline'
+  OUTLINE: 'outline',
+  PORTFOLIO: 'portfolio',
 };
 
 export const DropLocation = {

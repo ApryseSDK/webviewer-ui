@@ -435,12 +435,10 @@
       "drawSignature": "স্বাক্ষর আঁক*",
       "drawInitial": "আঁকুন আদ্যক্ষর*",
       "pickInitialsFile": "আদ্যক্ষর নির্বাচন করুন",
-      "noSignatures": "বর্তমানে কোনো সংরক্ষিত স্বাক্ষর নেই।"
+      "noSignatures": "বর্তমানে কোনো সংরক্ষিত স্বাক্ষর নেই।",
+      "fontStyle": "ফন্ট-স্টাইল"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "এখানে আপনার ফাইল টানুন এবং ড্রপ করুন",
-      "selectFile": "এখানে আপনার ফাইল নির্বাচন করুন",
-      "or": "বা",
       "yourFiles": "আপনার ফাইল",
       "chooseFile": "একটি ফাইল নির্বাচন করুন",
       "localFile": "স্থানীয় ফাইল",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "ওয়াটারমার্ক বিকল্প",
     "watermarks": "জলছাপ"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "পিডিএফ পোর্টফোলিও",
+    "portfolioAddFile": "নথি যুক্ত করা",
+    "portfolioAddFolder": "ফোল্ডার যোগ করুন",
+    "portfolioCreateFolder": "ফোল্ডার তৈরি করুন",
+    "portfolioNewFolder": "নতুন ফোল্ডার",
+    "portfolioNewFolderPlaceholder": "ফোল্ডারের নাম"
+  },
   "languageModal": {
     "selectLanguage": "ভাষা নির্বাচন কর"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "জলছাপ",
     "addWatermark": "জলছাপ যোগ করুন",
     "save": "ফাইল সংরক্ষণ",
-    "pageError": "অবৈধ পৃষ্ঠা। বৈধ পৃষ্ঠা পরিসীমা 1-এর মধ্যে"
+    "pageError": "অবৈধ পৃষ্ঠা। বৈধ পৃষ্ঠা পরিসীমা 1-এর মধ্যে",
+    "fileNameCannotBeEmpty": "ফাইলের নাম খালি থাকতে পারে না"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "PDF পোর্টফোলিও তৈরি করুন",
+    "uploadFiles": "ফাইল আপলোড",
+    "uploadFolder": "আপলোড ফোল্ডার",
+    "addFiles": "ফাইল যোগ করুন",
+    "addFolder": "ফোল্ডার যোগ করুন"
+  },
+  "filePicker": {
+    "dragAndDrop": "এখানে আপনার ফাইল টানুন এবং ড্রপ করুন",
+    "selectFile": "এখানে আপনার ফাইল নির্বাচন করুন",
+    "or": "বা"
   }
 }

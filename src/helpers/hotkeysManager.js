@@ -57,7 +57,9 @@ export const Shortcuts = {
   SQUIGGLY: 'squiggly',
   HIGHLIGHT: 'highlight',
   STRIKEOUT: 'strikeout',
-  UNDERLINE: 'underline'
+  UNDERLINE: 'underline',
+  HOME: 'home',
+  END: 'end',
 };
 
 // prettier-ignore
@@ -95,6 +97,8 @@ const keyMap = {
   'richText.italic': 'Control+I',
   'richText.underline': 'Control+U',
   'richText.strikeout': 'Control+K',
+  [Shortcuts.HOME]: 'Home',
+  [Shortcuts.END]: 'End',
 };
 
 export function shortcutAria(shortcut) {
@@ -207,6 +211,8 @@ export const Keys = {
   DOWN: 'down',
   SPACE: 'space',
   ESCAPE: 'escape',
+  HOME: 'home',
+  END: 'end',
   P: 'p',
   A: 'a',
   C: 'c',
@@ -275,7 +281,9 @@ export const ShortcutKeys = {
   [Shortcuts.SQUIGGLY]: Keys.G,
   [Shortcuts.HIGHLIGHT]: Keys.H,
   [Shortcuts.STRIKEOUT]: Keys.K,
-  [Shortcuts.UNDERLINE]: Keys.U
+  [Shortcuts.UNDERLINE]: Keys.U,
+  [Shortcuts.HOME]: Keys.HOME,
+  [Shortcuts.END]: Keys.END,
 };
 
 const ToolNameHotkeyMap = {
@@ -693,7 +701,6 @@ WebViewer(...)
             'customStampModal',
             DataElements.PRINT_MODAL,
             'rubberStampOverlay',
-            DataElements.CONTENT_EDIT_MODAL,
             DataElements.FILTER_MODAL
           ]),
         );
@@ -735,9 +742,11 @@ WebViewer(...)
         setToolModeAndGroup(store, 'AnnotationCreateFreeText');
       }),
       [ShortcutKeys[Shortcuts.SIGNATURE]]: this.createToolHotkeyHandler(() => {
-        const sigToolButton = document.querySelector('[data-element="signatureToolButton"] .Button');
-
-        sigToolButton?.click();
+        dispatch(actions.setToolbarGroup('toolbarGroup-FillAndSign', false));
+        const sigToolButton = document.querySelector('[data-element="signatureToolGroupButton"] .Button');
+        sigToolButton.click();
+        const sigModalButton = document.querySelector('.signature-row-content');
+        sigModalButton.click();
       }),
       [ShortcutKeys[Shortcuts.SQUIGGLY]]: this.createToolHotkeyHandler(() => {
         if (core.getSelectedText()) {
@@ -766,6 +775,21 @@ WebViewer(...)
         } else {
           setToolModeAndGroup(store, 'AnnotationCreateTextUnderline');
         }
+      }),
+      [ShortcutKeys[Shortcuts.HOME]]: () => {
+        if (isFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
+          return;
+        }
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
+        setCurrentPage(1, activeDocumentViewerKey);
+      },
+      [ShortcutKeys[Shortcuts.END]]: this.createToolHotkeyHandler(() => {
+        if (isFocusingElement() || core.isContinuousDisplayMode(activeDocumentViewerKey)) {
+          return;
+        }
+        const activeDocumentViewerKey = selectors.getActiveDocumentViewerKey(getState());
+        const pageCount = selectors.getTotalPages(getState());
+        setCurrentPage(pageCount, activeDocumentViewerKey);
       }),
     };
   },

@@ -435,12 +435,10 @@
       "drawSignature": "Dibujar Firma*",
       "drawInitial": "Dibujar iniciales*",
       "pickInitialsFile": "Elija Iniciales",
-      "noSignatures": "Actualmente no hay firmas guardadas."
+      "noSignatures": "Actualmente no hay firmas guardadas.",
+      "fontStyle": "Estilo de fuente"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Arrastra y suelta tu archivo aquí",
-      "selectFile": "Seleccione su archivo aquí",
-      "or": "O",
       "yourFiles": "Tus archivos",
       "chooseFile": "Escoge un archivo",
       "localFile": "Archivo local",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Opciones de marca de agua",
     "watermarks": "marcas de agua"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portafolio PDF",
+    "portfolioAddFile": "Agregar archivo",
+    "portfolioAddFolder": "Agregar carpeta",
+    "portfolioCreateFolder": "Crear carpeta",
+    "portfolioNewFolder": "Nueva carpeta",
+    "portfolioNewFolderPlaceholder": "Nombre de la carpeta"
+  },
   "languageModal": {
     "selectLanguage": "Seleccione el idioma"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Filigrana",
     "addWatermark": "Agregar marca de agua",
     "save": "Guardar el archivo",
-    "pageError": "Página no válida. Los intervalos de páginas válidos están entre 1 y"
+    "pageError": "Página no válida. Los intervalos de páginas válidos están entre 1 y",
+    "fileNameCannotBeEmpty": "El nombre del archivo no puede estar vacío"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Crear cartera PDF",
+    "uploadFiles": "Subir archivos",
+    "uploadFolder": "Cargar carpeta",
+    "addFiles": "Agregar archivos",
+    "addFolder": "Agregar carpeta"
+  },
+  "filePicker": {
+    "dragAndDrop": "Arrastra y suelta tu archivo aquí",
+    "selectFile": "Seleccione su archivo aquí",
+    "or": "O"
   }
 }

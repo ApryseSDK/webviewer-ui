@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 import { Basic, EmptyWithCustomIconAndMessage, EmptyWithCustomRenderCallback } from './NotesPanel.stories';
-import NotesPanel from './NotesPanel';
+import NotesPanelContainer from './NotesPanelContainer';
 import core from 'core';
 
 const BasicStory = withI18n(Basic);
@@ -19,6 +19,7 @@ const DEFAULT_NOTES_PANEL_WIDTH = 293;
 
 const initialState = {
   viewer: {
+    activeDocumentViewerKey: 1,
     customElementOverrides: {},
     isNotesPanelMultiSelectEnabled: true,
     disabledElements: {},
@@ -79,7 +80,7 @@ describe('NotesPanel', () => {
     it('NotesPanel should render default header and empty content', () => {
       render(
         <Provider store={store}>
-          <NotesPanel />
+          <NotesPanelContainer/>
         </Provider>
       );
 
@@ -101,7 +102,7 @@ describe('NotesPanel', () => {
 
       render(
         <Provider store={store}>
-          <NotesPanel />
+          <NotesPanelContainer/>
         </Provider>
       );
 
@@ -125,7 +126,7 @@ describe('NotesPanel', () => {
 
       render(
         <Provider store={store}>
-          <NotesPanel />
+          <NotesPanelContainer/>
         </Provider>
       );
 
@@ -152,7 +153,7 @@ describe('NotesPanel', () => {
 
       render(
         <Provider store={store}>
-          <NotesPanel />
+          <NotesPanelContainer/>
         </Provider>
       );
 

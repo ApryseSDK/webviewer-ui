@@ -37,7 +37,15 @@ const Note = ({
   isInNotesPanel,
   handleMultiSelect,
 }) => {
-  const { isSelected, resize, pendingEditTextMap, isContentEditable, isDocumentReadOnly, isExpandedFromSearch } = useContext(NoteContext);
+  const {
+    isSelected,
+    resize,
+    pendingEditTextMap,
+    isContentEditable,
+    isDocumentReadOnly,
+    isExpandedFromSearch,
+    // documentViewerKey,
+  } = useContext(NoteContext);
   const containerRef = useRef();
   const containerHeightRef = useRef();
   const [isEditingMap, setIsEditingMap] = useState({});
@@ -52,6 +60,7 @@ const Note = ({
     unreadAnnotationIdSet,
     shouldExpandCommentThread,
     isRightClickAnnotationPopupEnabled,
+    documentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.getNoteTransformFunction(state),
@@ -59,6 +68,7 @@ const Note = ({
       selectors.getUnreadAnnotationIdSet(state),
       selectors.isCommentThreadExpansionEnabled(state),
       selectors.isRightClickAnnotationPopupEnabled(state),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -79,10 +89,10 @@ const Note = ({
         });
       }
     };
-    core.addEventListener('annotationChanged', annotationChangedListener);
+    core.addEventListener('annotationChanged', annotationChangedListener, undefined, documentViewerKey);
 
     return () => {
-      core.removeEventListener('annotationChanged', annotationChangedListener);
+      core.removeEventListener('annotationChanged', annotationChangedListener, documentViewerKey);
     };
   }, [unreadAnnotationIdSet]);
 
@@ -156,14 +166,14 @@ const Note = ({
 
     customNoteSelectionFunction && customNoteSelectionFunction(annotation);
     if (!isSelected) {
-      core.deselectAllAnnotations();
+      core.deselectAllAnnotations(documentViewerKey);
 
       // Need this delay to ensure all other event listeners fire before we open the line
       setTimeout(() => dispatch(actions.openElement(DataElements.ANNOTATION_NOTE_CONNECTOR_LINE)), 300);
     }
     if (isInNotesPanel) {
-      core.selectAnnotation(annotation);
-      core.jumpToAnnotation(annotation);
+      core.selectAnnotation(annotation, documentViewerKey);
+      core.jumpToAnnotation(annotation, documentViewerKey);
       if (!isRightClickAnnotationPopupEnabled) {
         dispatch(actions.openElement(DataElements.ANNOTATION_POPUP));
       }
@@ -218,7 +228,7 @@ const Note = ({
     // set clicked reply as read
     if (unreadReplyIdSet.has(reply.Id)) {
       dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: reply.Id }));
-      core.getAnnotationManager().selectAnnotation(reply);
+      core.getAnnotationManager(documentViewerKey).selectAnnotation(reply);
     }
   };
 
@@ -226,7 +236,7 @@ const Note = ({
     // set all replies to read state if user starts to type in reply textarea
     if (unreadReplyIdSet.size > 0) {
       const repliesSetToRead = replies.filter((r) => unreadReplyIdSet.has(r.Id));
-      core.getAnnotationManager().selectAnnotations(repliesSetToRead);
+      core.getAnnotationManager(documentViewerKey).selectAnnotations(repliesSetToRead);
       repliesSetToRead.forEach((r) => dispatch(actions.setAnnotationReadState({ isRead: true, annotationId: r.Id })));
     }
   };
@@ -241,7 +251,7 @@ const Note = ({
     [setIsEditingMap],
   );
 
-  const groupAnnotations = core.getGroupAnnotations(annotation);
+  const groupAnnotations = core.getGroupAnnotations(annotation, documentViewerKey);
   const isGroup = groupAnnotations.length > 1;
   let isCaretAnnotation = false;
   isCaretAnnotation = groupAnnotations.some((annotation) => annotation instanceof window.Core.Annotations.CaretAnnotation);

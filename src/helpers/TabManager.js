@@ -3,14 +3,44 @@ import { workerTypes } from 'constants/types';
 import loadDocument from 'helpers/loadDocument';
 import { setLoadingProgress } from 'actions/internalActions';
 import actions from 'actions';
+import selectors from 'selectors';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
 import downloadPdf from 'helpers/downloadPdf';
 import Events from 'constants/events';
 import isString from 'lodash/isString';
-import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import getRootNode, { getInstanceNode } from 'helpers/getRootNode';
+
+export const enableMultiTab = () => (dispatch, getState) => {
+  const state = getState();
+  // if already in multi-tab mode do not recreate TabManager
+  if (selectors.getIsMultiTab(state) && selectors.getTabManager(state)) {
+    return;
+  }
+  const doc = core.getDocument();
+  let docArr = [];
+  if (doc) {
+    docArr.push(doc);
+  } else {
+    let initialDoc = getHashParameters('d', '');
+    initialDoc = initialDoc ? JSON.parse(initialDoc) : '';
+    if (initialDoc) {
+      if (Array.isArray(initialDoc)) {
+        docArr = docArr.concat(initialDoc);
+      } else {
+        docArr.push(initialDoc);
+      }
+    }
+  }
+  const tabManager = new TabManager(docArr, [], { dispatch, getState });
+  dispatch(actions.setMultiTab(true));
+  dispatch(actions.setTabManager(tabManager));
+  // Fix for event not firing on some devices
+  setTimeout(() => {
+    fireEvent(Events.TAB_MANAGER_READY);
+  }, 300);
+};
 
 export function prepareMultiTab(initialDoc, store) {
   const extensions = getHashParameters('extension', null)?.split(',');
@@ -149,7 +179,7 @@ export default class TabManager {
     return currentViewerState;
   }
 
-  showDeleteWarning = (tabToDelete) => {
+  showDeleteWarning(tabToDelete) {
     const title = 'warning.closeFile.title';
     const message = 'warning.closeFile.message';
     const confirmationWarning = {
@@ -168,7 +198,10 @@ export default class TabManager {
       confirmBtnText: 'action.download',
       secondaryBtnText: 'warning.closeFile.rejectDownloadButton',
       secondaryBtnClass: 'secondary-btn-custom',
-      showAskAgainCheckbox: true
+      showAskAgainCheckbox: true,
+      onClose: (disableWarning) => {
+        disableWarning && this.store.dispatch(actions.disableDeleteTabWarning());
+      }
     };
     this.store.dispatch(actions.showWarningMessage(confirmationWarning));
   }
@@ -252,15 +285,21 @@ export default class TabManager {
       }
       const { tabs, activeTab } = this.store.getState().viewer;
       const tab = tabs.find((t) => t.id === activeTab);
-      tab.changes.annotations = true;
-      tab.changes.hasUnsavedChanges = true;
+      // if we switch between multiviewer and multitab amd have annotations being removed,
+      // we can end up with a events fired for tabs that are no longer in the store
+      if (tab) {
+        tab.changes.annotations = true;
+        tab.changes.hasUnsavedChanges = true;
+      }
       removeListeners();
     };
     const onFieldChange = () => {
       const { tabs, activeTab } = this.store.getState().viewer;
       const tab = tabs.find((t) => t.id === activeTab);
-      tab.changes.annotations = true;
-      tab.changes.hasUnsavedChanges = true;
+      if (tab) {
+        tab.changes.annotations = true;
+        tab.changes.hasUnsavedChanges = true;
+      }
       removeListeners();
     };
 

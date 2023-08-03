@@ -454,7 +454,7 @@ describe('FileSelectedPanel', () => {
       expect(clearLoadedFileMock).toBeCalled();
 
       // Close button shows a warning
-      const closeButton = document.getElementsByClassName('closeButton')[0];
+      const closeButton = document.getElementsByClassName('close-button')[0];
       userEvent.click(closeButton);
       expect(closeModalWarningMock).toBeCalled();
 

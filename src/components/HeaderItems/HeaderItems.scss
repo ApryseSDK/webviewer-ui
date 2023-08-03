@@ -38,7 +38,7 @@
     height: 100%;
   }
 
-  .divider {
+  >.divider {
     width: 1px;
     height: 20px;
     margin: 0 6px;
@@ -145,7 +145,7 @@
 }
 
 .HeaderItems {
-  .divider {
+  >.divider {
     margin-left: 0px;
     @include desktop {
       margin-left: 16px;

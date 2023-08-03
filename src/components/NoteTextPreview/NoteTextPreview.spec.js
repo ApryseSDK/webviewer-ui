@@ -25,10 +25,6 @@ export const setMockRefElement = (node) => {
 
 describe('NoteTextPreview', () => {
   describe('Component', () => {
-    afterEach(() => {
-      jest.restoreAllMocks();
-    });
-
     const panelWidth = 300;
     const clientWidth = 150;
 

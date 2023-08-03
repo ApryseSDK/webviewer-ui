@@ -435,12 +435,10 @@
       "drawSignature": "Κλήρωση υπογραφής*",
       "drawInitial": "Αρχικά κλήρωσης*",
       "pickInitialsFile": "Επιλέξτε Αρχικά",
-      "noSignatures": "Αυτήν τη στιγμή δεν υπάρχουν αποθηκευμένες υπογραφές."
+      "noSignatures": "Αυτήν τη στιγμή δεν υπάρχουν αποθηκευμένες υπογραφές.",
+      "fontStyle": "στυλ γραμματοσειράς"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Σύρετε και αποθέστε το αρχείο σας εδώ",
-      "selectFile": "Επιλέξτε το αρχείο σας εδώ",
-      "or": "Ή",
       "yourFiles": "Τα αρχεία σας",
       "chooseFile": "Επιλέξτε ένα αρχείο",
       "localFile": "Τοπικό αρχείο",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Επιλογές υδατογραφήματος",
     "watermarks": "Υδατογράφημα"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Χαρτοφυλάκιο PDF",
+    "portfolioAddFile": "Προσθήκη αρχείου",
+    "portfolioAddFolder": "Προσθήκη φακέλου",
+    "portfolioCreateFolder": "ΔΗΜΙΟΥΡΓΩ φακελο",
+    "portfolioNewFolder": "Νέος φάκελος",
+    "portfolioNewFolderPlaceholder": "Ονομα φακέλου"
+  },
   "languageModal": {
     "selectLanguage": "Επιλέξτε γλώσσα"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Στάθμη ύδατος",
     "addWatermark": "Προσθέστε υδατογράφημα",
     "save": "Αποθηκεύσετε το αρχείο",
-    "pageError": "Μη έγκυρη σελίδα. Τα έγκυρα εύρη σελίδων είναι μεταξύ 1 -"
+    "pageError": "Μη έγκυρη σελίδα. Τα έγκυρα εύρη σελίδων είναι μεταξύ 1 -",
+    "fileNameCannotBeEmpty": "Το όνομα αρχείου δεν μπορεί να είναι κενό"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Δημιουργία χαρτοφυλακίου PDF",
+    "uploadFiles": "Μεταφόρτωση Αρχείων",
+    "uploadFolder": "Μεταφόρτωση φακέλου",
+    "addFiles": "Πρόσθεσε αρχεία",
+    "addFolder": "Προσθήκη φακέλου"
+  },
+  "filePicker": {
+    "dragAndDrop": "Σύρετε και αποθέστε το αρχείο σας εδώ",
+    "selectFile": "Επιλέξτε το αρχείο σας εδώ",
+    "or": "Ή"
   }
 }

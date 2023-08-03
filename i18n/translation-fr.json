@@ -435,12 +435,10 @@
       "drawSignature": "Tirage au sort Signature*",
       "drawInitial": "Dessiner des initiales*",
       "pickInitialsFile": "Choisissez les initiales",
-      "noSignatures": "Il n'y a actuellement aucune signature enregistrée."
+      "noSignatures": "Il n'y a actuellement aucune signature enregistrée.",
+      "fontStyle": "Police"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Glissez & Déposez votre fichier ici",
-      "selectFile": "Sélectionnez votre fichier ici",
-      "or": "Ou",
       "yourFiles": "Vos fichiers",
       "chooseFile": "Choisissez un fichier",
       "localFile": "Fichier local",
@@ -1083,6 +1081,14 @@
     "watermarkOptions": "Options de filigrane",
     "watermarks": "Filigranes"
   },
+  "portfolioPanel": {
+    "portfolioPanelTitle": "Portfolio PDF",
+    "portfolioAddFile": "Ajouter le fichier",
+    "portfolioAddFolder": "Ajouter le dossier",
+    "portfolioCreateFolder": "Créer le dossier",
+    "portfolioNewFolder": "Nouveau dossier",
+    "portfolioNewFolderPlaceholder": "Nom de dossier"
+  },
   "languageModal": {
     "selectLanguage": "Choisir la langue"
   },
@@ -1184,6 +1190,19 @@
     "watermark": "Filigrane",
     "addWatermark": "Ajouter un filigrane",
     "save": "Enregistrer le fichier",
-    "pageError": "Page invalide. Les plages de pages valides sont comprises entre 1 et"
+    "pageError": "Page invalide. Les plages de pages valides sont comprises entre 1 et",
+    "fileNameCannotBeEmpty": "Le nom du fichier ne peut pas être vide"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Créer un portfolio PDF",
+    "uploadFiles": "Télécharger des fichiers",
+    "uploadFolder": "Télécharger le dossier",
+    "addFiles": "Ajouter des fichiers",
+    "addFolder": "Ajouter le dossier"
+  },
+  "filePicker": {
+    "dragAndDrop": "Faites glisser et déposez votre fichier ici",
+    "selectFile": "Sélectionnez votre dossier ici",
+    "or": "Ou"
   }
 }

@@ -620,14 +620,16 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, modularHeaders: updatedModularHeaders };
     }
     case 'SET_RIGHT_HEADER_WIDTH':
-      return { ...state,
+      return {
+        ...state,
         modularHeadersWidth: {
           ...state.modularHeadersWidth,
           rightHeader: payload,
         }
       };
     case 'SET_LEFT_HEADER_WIDTH':
-      return { ...state,
+      return {
+        ...state,
         modularHeadersWidth: {
           ...state.modularHeadersWidth,
           leftHeader: payload,
@@ -863,6 +865,10 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, shortcutKeyMap: payload };
     case 'SET_MULTI_VIEWER_SYNC_SCROLLING_MODE':
       return { ...state, multiViewerSyncScrollMode: payload };
+    case 'SET_TEXT_SIGNATURE_CANVAS_MULTIPLIER':
+      return { ...state, textSignatureCanvasMultiplier: payload.multiplier };
+    case 'SET_ENABLE_MEASUREMENT_ANNOTATIONS_FILTER':
+      return { ...state, isMeasurementAnnotationFilterEnabled: payload.isEnabled };
     default:
       return state;
   }

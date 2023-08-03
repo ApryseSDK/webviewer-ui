@@ -41,13 +41,24 @@ const getStore = (num) => {
   if (num === 1) {
     initialState.viewer.tab.settingsModal = DataElements.SETTINGS_GENERAL_BUTTON;
   } else if (num === 2) {
-    initialState.viewer.tab.settingsModal = DataElements.SETTINGS_ADVANCED_BUTTON;
-  } else if (num === 3) {
     initialState.viewer.tab.settingsModal = DataElements.SETTINGS_KEYBOARD_BUTTON;
+  } else if (num === 3) {
+    initialState.viewer.tab.settingsModal = DataElements.SETTINGS_ADVANCED_BUTTON;
+  } else if (num === 4) {
+    initialState.viewer.tab.settingsModal = DataElements.SETTINGS_GENERAL_BUTTON;
+    initialState.viewer.disabledElements[DataElements.SETTINGS_GENERAL_BUTTON] = { disabled: true, priority: 2 };
   }
 
   function rootReducer(state = initialState, action) {
-    return state;
+    const { type, payload } = action;
+    switch (type) {
+      case 'SET_SELECTED_TAB':
+        const newState = { ...state };
+        newState.viewer.tab[payload.id] = payload.dataElement;
+        return newState;
+      default:
+        return state;
+    }
   }
 
   return createStore(rootReducer);
@@ -62,8 +73,11 @@ export function General() {
   );
 }
 
-// Advanced Setting tab
-export function AdvancedSetting() {
+// Keyboard Shortcut tab
+export function KeyboardShortcut() {
+  const store = getStore(2);
+  hotkeysManager.initialize(store);
+
   return (
     <Provider store={getStore(2)}>
       <SettingsModal />
@@ -71,13 +85,19 @@ export function AdvancedSetting() {
   );
 }
 
-// Keyboard Shortcut tab
-export function KeyboardShortcut() {
-  const store = getStore(3);
-  hotkeysManager.initialize(store);
-
+// Advanced Setting tab
+export function AdvancedSetting() {
   return (
     <Provider store={getStore(3)}>
+      <SettingsModal />
+    </Provider>
+  );
+}
+
+// General tab disabled
+export function GeneralDisabled() {
+  return (
+    <Provider store={getStore(4)}>
       <SettingsModal />
     </Provider>
   );

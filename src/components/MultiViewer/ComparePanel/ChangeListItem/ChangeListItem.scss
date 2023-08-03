@@ -21,9 +21,10 @@
 
   .container-right {
     padding: 12px;
-    width: 100%;
+    width: calc(100% - 14px - 24px); // Subtract icon padding + icon width
     display: flex;
     flex-direction: column;
+    overflow-wrap: break-word;
 
     .title {
       font-size: var(--font-size-medium);

@@ -13,12 +13,13 @@ import Button from '../Button';
 import getRootNode from 'helpers/getRootNode';
 
 const propTypes = {
-  type: PropTypes.oneOf(['bookmark', 'outline']).isRequired,
+  type: PropTypes.oneOf(['bookmark', 'outline', 'portfolio']).isRequired,
   anchorButton: PropTypes.string.isRequired,
   shouldDisplayDeleteButton: PropTypes.bool,
   onClosePopup: PropTypes.func.isRequired,
   onRenameClick: PropTypes.func,
   onSetDestinationClick: PropTypes.func,
+  onDownloadClick: PropTypes.func,
   onDeleteClick: PropTypes.func,
 };
 
@@ -29,6 +30,7 @@ const BookmarkOutlineContextMenuPopup = ({
   onClosePopup,
   onRenameClick,
   onSetDestinationClick,
+  onDownloadClick,
   onDeleteClick,
 }) => {
   const [t] = useTranslation();
@@ -87,6 +89,19 @@ const BookmarkOutlineContextMenuPopup = ({
             onClick={(e) => {
               e.stopPropagation();
               onSetDestinationClick();
+            }}
+          />
+        }
+        {type === 'portfolio' &&
+          <Button
+            className="option-button"
+            dataElement={`${type}DownloadButton`}
+            img="icon-download"
+            label={t('action.download')}
+            ariaLabel={t('action.download')}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDownloadClick();
             }}
           />
         }
