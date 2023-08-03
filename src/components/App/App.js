@@ -36,6 +36,7 @@ import TopHeader from 'components/TopHeader';
 import GenericOutlinesPanel from 'components/GenericOutlinesPanel';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import ZoomFlyoutMenu from 'components/ModularComponents/ZoomFlyoutMenu';
+import ProgressModal from 'components/ProgressModal';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 
 import useOnTextSelected from 'hooks/useOnTextSelected';
@@ -426,7 +427,18 @@ const App = ({ removeEventHandlers }) => {
         <LazyLoadWrapper Component={LazyLoadComponents.SaveModal} dataElement={DataElements.SAVE_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.InsertPageModal} dataElement={DataElements.INSERT_PAGE_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.LoadingModal} dataElement={DataElements.LOADING_MODAL} />
-        <LazyLoadWrapper Component={LazyLoadComponents.ProgressModal} dataElement={DataElements.PROGRESS_MODAL} />
+
+        {
+        /*
+          There were issues appearing in WebViewer BIM add-on with lazy loading ProgressModal.
+          The BIM add-on relies on ProgressModal styling which wouldn't not get loaded explicitly.
+          This caused styling issues when loading a 3D model and would impact the UI of the BIM add-on.
+
+          See https://apryse.atlassian.net/browse/WVR-3094
+        */
+        }
+        <ProgressModal/>
+
         <LazyLoadWrapper Component={LazyLoadComponents.WarningModal} dataElement={DataElements.WARNING_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.Model3DModal} dataElement={DataElements.MODEL3D_MODAL} />
         <LazyLoadWrapper
