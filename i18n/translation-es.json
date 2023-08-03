@@ -746,7 +746,7 @@
     },
     "connectToURL": {
       "title": "Advertencia de seguridad",
-      "message": "Este documento está intentando conectarse a:\n\n{{-uri}}.\n\n Si confía en este documento, haga clic en Confirmar para abrirlo."
+      "message": "Este documento está intentando conectarse a:\n\n{{- uri}}.\n\n Si confía en este documento, haga clic en Confirmar para abrirlo."
     }
   },
   "shortcut": {

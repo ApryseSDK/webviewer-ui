@@ -53,11 +53,16 @@ const addMissingKey = async(baseTranslationData, translationData, result, langua
       // a translation already exists, copy it over
       result[key] = translationData[key];
     } else {
+      // We can use interpolation {{}} to pass dynamic values with i18n
+      // https://www.i18next.com/translation-function/interpolation#basic
+      // Google unfortunately translates these keys so we're extracting them and replacing them after translation
+      const interpolationRegex = /({{.+?}})/gi;
+      const keyToNotTranslate = baseTranslationData[key].match(interpolationRegex);
       const [translated] = await translate.translate(
         baseTranslationData[key],
         mapI18nCodeToGoogleTranslationCode(languageCode)
       );
-      result[key] = translated;
+      result[key] = keyToNotTranslate === null ? translated : translated.replace(interpolationRegex, () => keyToNotTranslate.shift());
     }
   }
 };
