@@ -32,6 +32,8 @@ test.describe('Annotation filter modal', () => {
     await page.waitForTimeout(1000);
     expect(await filterModal.screenshot()).toMatchSnapshot(['annotation-filter-modal', 'filter-modal-test-1.png']);
 
+    const filterDocumentButton = await filterModal.$('#filter-annot-modal-filter-document');
+    await filterDocumentButton.click();
     const clearAllButton = await filterModal.$('.filter-annot-clear');
     await clearAllButton.click();
     await page.waitForTimeout(1000);
@@ -60,6 +62,7 @@ test.describe('Annotation filter modal', () => {
     expect(notes.length).toBe(1);
     expect(await notes[0].screenshot()).toMatchSnapshot(['annotation-filter-modal', 'filter-modal-test-5.png']);
   });
+
   test('Should filter annotations from document', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
     const instance = await waitForInstance();

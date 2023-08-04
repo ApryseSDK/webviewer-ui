@@ -24,12 +24,13 @@ import './FilterAnnotModal.scss';
 const TABS_ID = 'filterAnnotModal';
 
 const FilterAnnotModal = () => {
-  const [isDisabled, isOpen, colorMap, selectedTab, annotationFilters] = useSelector((state) => [
+  const [isDisabled, isOpen, colorMap, selectedTab, annotationFilters, isMeasurementAnnotationFilterEnabled] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.FILTER_MODAL),
     selectors.isElementOpen(state, DataElements.FILTER_MODAL),
     selectors.getColorMap(state),
     selectors.getSelectedTab(state, TABS_ID),
-    selectors.getAnnotationFilters(state)
+    selectors.getAnnotationFilters(state),
+    selectors.getIsMeasurementAnnotationFilterEnabled(state),
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const FilterAnnotModal = () => {
   const [typesFilter, setTypesFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
   const [checkRepliesForAuthorFilter, setCheckRepliesForAuthorFilter] = useState(true);
-  const [filterDocumentResults, setFilterDocumentResults] = useState(false);
+  const [isDocumentFilterActive, setIsDocumentFilterActive] = useState(false);
   const [statusFilter, setStatusFilter] = useState([]);
   const [filterCount, setFilterCount] = useState(0);
   const [ifShowAnnotationStatus, setIfShowAnnotationStatus] = useState(false);
@@ -77,7 +78,13 @@ const FilterAnnotModal = () => {
       let color = true;
       let status = true;
       if (typesFilter.length > 0) {
-        type = typesFilter.includes(getAnnotationClass(annot));
+        const isMeasurementAnnotation = annot.IT || annot.getCustomData('trn-is-count');
+        if (isMeasurementAnnotationFilterEnabled && isMeasurementAnnotation) {
+          const measurementKey = mapAnnotationToKey(annot);
+          type = typesFilter.includes(measurementKey);
+        } else {
+          type = typesFilter.includes(getAnnotationClass(annot));
+        }
       }
       if (authorFilter.length > 0) {
         author = authorFilter.includes(core.getDisplayAuthor(annot['Author'], documentViewerKey));
@@ -113,6 +120,7 @@ const FilterAnnotModal = () => {
     };
     dispatch(actions.setCustomNoteFilter(newFilter));
     dispatch(actions.setAnnotationFilters({
+      isDocumentFilterActive,
       includeReplies: checkRepliesForAuthorFilter,
       authorFilter,
       colorFilter,
@@ -120,7 +128,7 @@ const FilterAnnotModal = () => {
       statusFilter
     }));
     const redrawList = [];
-    if (filterDocumentResults) {
+    if (isDocumentFilterActive) {
       core.getDocumentViewers().forEach((documentViewer, index) => documentViewer.getAnnotationManager()
         .getAnnotationsList().forEach((annot) => {
           const shouldHide = !newFilter(annot, index + 1);
@@ -154,6 +162,7 @@ const FilterAnnotModal = () => {
 
   const filterClear = () => {
     setCheckRepliesForAuthorFilter(false);
+    setIsDocumentFilterActive(false);
     setAuthorFilter([]);
     setTypesFilter([]);
     setColorFilter([]);
@@ -208,7 +217,15 @@ const FilterAnnotModal = () => {
       ) {
         return;
       }
-      annotTypesToBeAdded.add(getAnnotationClass(annot));
+
+      // If the annotation is also measurement, and the API is on, we want to instead add the measurement type
+      const isMeasurementAnnotation = annot.IT || annot.getCustomData('trn-is-count');
+      if (isMeasurementAnnotationFilterEnabled && isMeasurementAnnotation) {
+        const measurementKey = mapAnnotationToKey(annot);
+        annotTypesToBeAdded.add(measurementKey);
+      } else {
+        annotTypesToBeAdded.add(getAnnotationClass(annot));
+      }
       const iconColor = getIconColor(annot);
       if (iconColor && !similarColorExist([...annotColorsToBeAdded], iconColor)) {
         annotColorsToBeAdded.add(rgbaToHex(iconColor.R, iconColor.G, iconColor.B, iconColor.A));
@@ -230,7 +247,7 @@ const FilterAnnotModal = () => {
     return () => {
       core.removeEventListener('documentUnloaded', closeModal);
     };
-  }, [isOpen]);
+  }, [isOpen, isMeasurementAnnotationFilterEnabled]);
 
   useEffect(() => {
     if (selectedTab === DataElements.ANNOTATION_STATUS_FILTER_PANEL_BUTTON && !ifShowAnnotationStatus) {
@@ -248,6 +265,7 @@ const FilterAnnotModal = () => {
 
   useEffect(() => {
     if (isOpen) {
+      setIsDocumentFilterActive(annotationFilters.isDocumentFilterActive);
       setCheckRepliesForAuthorFilter(annotationFilters.includeReplies);
       setAuthorFilter(annotationFilters.authorFilter);
       setColorFilter(annotationFilters.colorFilter);
@@ -450,8 +468,8 @@ const FilterAnnotModal = () => {
                   />
                   <Choice
                     label={t('option.filterAnnotModal.filterDocument')}
-                    checked={filterDocumentResults}
-                    onChange={(e) => setFilterDocumentResults(e.target.checked)}
+                    checked={isDocumentFilterActive}
+                    onChange={(e) => setIsDocumentFilterActive(e.target.checked)}
                     id="filter-annot-modal-filter-document"
                   />
                 </div>
@@ -459,8 +477,8 @@ const FilterAnnotModal = () => {
               <div className="divider"></div>
               <div className="footer">
                 <Button className="filter-annot-clear" onClick={filterClear} label={t('action.clearAll')}
-                  disabled={filterCount === 0}/>
-                <Button className="filter-annot-apply" onClick={filterApply} label={t('action.apply')}/>
+                  disabled={filterCount === 0} />
+                <Button className="filter-annot-apply" onClick={filterApply} label={t('action.apply')} />
               </div>
             </div>
           ) : (
