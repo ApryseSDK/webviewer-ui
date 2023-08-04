@@ -86,7 +86,7 @@ function Dropdown({
     if (overlayRect && buttonRect.bottom + overlayRect.height > window.innerHeight) {
       overlayRef.current.style.top = `-${overlayRect.height}px`;
     } else {
-      overlayRef.current.style.top = 0;
+      overlayRef.current.style.top = '28px';
     }
   }, [hasInput, isOpen, disabled]);
 

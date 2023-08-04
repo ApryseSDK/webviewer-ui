@@ -135,6 +135,7 @@ class ToolStylePopup extends React.PureComponent {
     let properties = {};
     const colorMapKey = mapToolNameToKey(activeToolName);
     const isRedaction = activeToolName.includes('AnnotationCreateRedaction');
+    const isRectangle = activeToolName.includes('AnnotationCreateRectangle');
     const showLineStyleOptions = getDataWithKey(colorMapKey).hasLineEndings;
 
     if (isDisabled) {
@@ -172,6 +173,11 @@ class ToolStylePopup extends React.PureComponent {
       };
     }
 
+    if (isRectangle) {
+      properties = {
+        StrokeStyle: activeToolStyle['StrokeStyle'],
+      };
+    }
     const isEllipseMeasurementTool = activeToolName.includes('AnnotationCreateEllipseMeasurement');
 
     let Component = (
