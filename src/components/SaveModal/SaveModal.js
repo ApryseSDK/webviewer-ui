@@ -183,9 +183,8 @@ const SaveModal = () => {
       pages,
       store,
     }, activeDocumentViewerKey);
-    if (isOfficeEditorMode()) {
-      closeModal();
-    }
+
+    closeModal();
   };
 
   const [hasTyped, setHasTyped] = useState(false);
