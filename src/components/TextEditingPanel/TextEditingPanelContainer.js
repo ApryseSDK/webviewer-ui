@@ -316,7 +316,7 @@ const TextEditingPanelContainer = () => {
       await window.Core.ContentEdit.loadTextAttributes(contentBoxId, 0, 0, {
         restrictFontName: false,
         restrictFontSize: false,
-      }, 1);
+      });
 
       await new Promise((r) => setTimeout(r, 100));
 
