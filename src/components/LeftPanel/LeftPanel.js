@@ -111,7 +111,7 @@ const LeftPanel = () => {
         const attachments = await getFileAttachments();
 
         const { embeddedFiles } = attachments;
-        const portfolioFiles = embeddedFiles.map(({ filename, blob }) => {
+        const portfolioFiles = embeddedFiles.map(({ filename, fileObject }) => {
           id += 1;
           return {
             id: id.toString(),
@@ -119,7 +119,7 @@ const LeftPanel = () => {
             isFolder: false,
             getNestedLevel: () => 0,
             children: [],
-            blob: blob,
+            fileObject
           };
         });
         setPortfolioFiles(portfolioFiles);
@@ -209,7 +209,7 @@ const LeftPanel = () => {
         <div className="left-panel-header">
           {isThumbnailSelectingPages ?
             <LeftPanelPageTabs /> :
-            <LeftPanelTabs />}
+            <LeftPanelTabs showPortfolio={portfolioFiles.length > 0 && false} />}
         </div>
         {activePanel === DataElements.PORTFOLIO_PANEL
           && core.isFullPDFEnabled()
