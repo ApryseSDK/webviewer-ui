@@ -438,9 +438,6 @@
       "noSignatures": "Det finns för närvarande inga sparade signaturer."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Dra och släpp din fil här",
-      "selectFile": "Välj din fil här",
-      "or": "Eller",
       "yourFiles": "Dina filer",
       "chooseFile": "Välj en fil",
       "localFile": "Lokal fil",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Säkerhetsvarning",
-      "message": "Det här dokumentet försöker ansluta till:\n\n{{- uri}}.\n\n Om du litar på det här dokumentet klickar du på Bekräfta för att öppna det."
+      "message": "Det här dokumentet försöker ansluta till:\n\n{{- uri}}\n\n Om du litar på det här dokumentet klickar du på Bekräfta för att öppna det."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Vattenstämpel",
     "addWatermark": "Lägg till vattenstämpel",
     "save": "Spara fil",
-    "pageError": "Ogiltig sida. Giltiga sidintervall är mellan 1 -"
+    "pageError": "Ogiltig sida. Giltiga sidintervall är mellan 1 -",
+    "fileNameCannotBeEmpty": "Filnamnet får inte vara tomt"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Skapa PDF-portfölj",
+    "uploadFiles": "Ladda upp filer",
+    "uploadFolder": "Ladda upp mapp",
+    "addFiles": "Lägga till filer",
+    "addFolder": "Lägg till mapp"
+  },
+  "filePicker": {
+    "dragAndDrop": "Dra och släpp din fil här",
+    "selectFile": "Välj din fil här",
+    "or": "Eller"
   }
 }

@@ -438,9 +438,6 @@
       "noSignatures": "現在、保存されている署名はありません。"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "ここにファイルをドラッグ＆ドロップ",
-      "selectFile": "ここでファイルを選択",
-      "or": "または",
       "yourFiles": "あなたのファイル",
       "chooseFile": "ファイルを選択",
       "localFile": "ローカルファイル",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "セキュリティ警告",
-      "message": "このドキュメントは次の場所に接続しようとしています:\n\n{{- うり}}。\n\n このドキュメントが信頼できる場合は、[確認] をクリックして開きます。"
+      "message": "このドキュメントは次の場所に接続しようとしています:\n\n{{- uri}}\n\n このドキュメントが信頼できる場合は、[確認] をクリックして開きます。"
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "透かし",
     "addWatermark": "透かしを追加",
     "save": "ファイルを保存",
-    "pageError": "ページが無効です。有効なページ範囲は 1 ～"
+    "pageError": "ページが無効です。有効なページ範囲は 1 ～",
+    "fileNameCannotBeEmpty": "ファイル名を空にすることはできません"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "PDF ポートフォリオを作成する",
+    "uploadFiles": "ファイルをアップロードする",
+    "uploadFolder": "アップロードフォルダー",
+    "addFiles": "追加ファイル",
+    "addFolder": "フォルダーを追加"
+  },
+  "filePicker": {
+    "dragAndDrop": "ここにファイルをドラッグ＆ドロップします",
+    "selectFile": "ここでファイルを選択してください",
+    "or": "また"
   }
 }

@@ -438,9 +438,6 @@
       "noSignatures": "Obecnie nie ma zapisanych podpisów."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Przeciągnij i upuść plik tutaj",
-      "selectFile": "Wybierz swój plik tutaj",
-      "or": "Lub",
       "yourFiles": "Twoje pliki",
       "chooseFile": "Wybierz plik",
       "localFile": "Plik lokalny",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Ostrzeżenie bezpieczeństwa",
-      "message": "Ten dokument próbuje połączyć się z:\n\n{{- ur}}.\n\n Jeśli ufasz temu dokumentowi, kliknij Potwierdź, aby go otworzyć."
+      "message": "Ten dokument próbuje połączyć się z:\n\n{{- uri}}\n\n Jeśli ufasz temu dokumentowi, kliknij Potwierdź, aby go otworzyć."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "znak wodny",
     "addWatermark": "Dodaj znak wodny",
     "save": "Zapisz plik",
-    "pageError": "Nieprawidłowa strona. Prawidłowe zakresy stron mieszczą się w przedziale od 1 do"
+    "pageError": "Nieprawidłowa strona. Prawidłowe zakresy stron mieszczą się w przedziale od 1 do",
+    "fileNameCannotBeEmpty": "Nazwa pliku nie może być pusta"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Utwórz portfolio PDF",
+    "uploadFiles": "Prześlij pliki",
+    "uploadFolder": "Prześlij folder",
+    "addFiles": "Dodaj pliki",
+    "addFolder": "Dodaj folder"
+  },
+  "filePicker": {
+    "dragAndDrop": "Przeciągnij i upuść swój plik tutaj",
+    "selectFile": "Wybierz swój plik tutaj",
+    "or": "Lub"
   }
 }

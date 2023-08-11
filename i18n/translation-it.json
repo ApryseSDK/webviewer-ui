@@ -438,9 +438,6 @@
       "noSignatures": "Al momento non ci sono firme salvate."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Trascina e rilascia il tuo file qui",
-      "selectFile": "Seleziona qui il tuo file",
-      "or": "O",
       "yourFiles": "I tuoi file",
       "chooseFile": "Scegli un file",
       "localFile": "File locale",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Avviso di sicurezza",
-      "message": "Questo documento sta tentando di connettersi a:\n\n{{-uri}}.\n\n Se ritieni attendibile questo documento, fai clic su Conferma per aprirlo."
+      "message": "Questo documento sta tentando di connettersi a:\n\n{{-uri}}\n\n Se ritieni attendibile questo documento, fai clic su Conferma per aprirlo."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Filigrana",
     "addWatermark": "Aggiungi filigrana",
     "save": "Salvare il file",
-    "pageError": "Pagina non valida. Gli intervalli di pagine validi sono compresi tra 1 -"
+    "pageError": "Pagina non valida. Gli intervalli di pagine validi sono compresi tra 1 -",
+    "fileNameCannotBeEmpty": "Il nome del file non può essere vuoto"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Crea portafoglio PDF",
+    "uploadFiles": "Caricare files",
+    "uploadFolder": "Carica cartella",
+    "addFiles": "Aggiungere i file",
+    "addFolder": "Aggiungi cartella"
+  },
+  "filePicker": {
+    "dragAndDrop": "Trascina e rilascia qui il tuo file",
+    "selectFile": "Seleziona qui il tuo file",
+    "or": "O"
   }
 }

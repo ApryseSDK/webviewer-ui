@@ -438,9 +438,6 @@
       "noSignatures": "Pada masa ini tiada tandatangan yang disimpan."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Seret & Lepaskan fail anda di sini",
-      "selectFile": "Pilih fail anda di sini",
-      "or": "Ataupun",
       "yourFiles": "Fail Anda",
       "chooseFile": "Pilih fail",
       "localFile": "Fail Tempatan",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Amaran keselamatan",
-      "message": "Dokumen ini cuba disambungkan ke:\n\n{{- uri}}.\n\n Jika anda mempercayai dokumen ini, klik Sahkan untuk membukanya."
+      "message": "Dokumen ini cuba disambungkan ke:\n\n{{- uri}}\n\n Jika anda mempercayai dokumen ini, klik Sahkan untuk membukanya."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Tera air",
     "addWatermark": "Tambah Tera Air",
     "save": "Simpan fail",
-    "pageError": "Halaman tidak sah. Julat halaman yang sah adalah antara 1 -"
+    "pageError": "Halaman tidak sah. Julat halaman yang sah adalah antara 1 -",
+    "fileNameCannotBeEmpty": "Nama Fail tidak boleh kosong"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Cipta Portfolio PDF",
+    "uploadFiles": "Memuat naik fail",
+    "uploadFolder": "Muat naik Folder",
+    "addFiles": "Menambah fail",
+    "addFolder": "Tambah folder"
+  },
+  "filePicker": {
+    "dragAndDrop": "Seret & Lepaskan fail anda di sini",
+    "selectFile": "Pilih fail anda di sini",
+    "or": "Ataupun"
   }
 }

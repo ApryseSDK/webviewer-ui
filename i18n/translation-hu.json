@@ -438,9 +438,6 @@
       "noSignatures": "Jelenleg nincsenek mentett aláírások."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Drag & Drop ide a fájlt",
-      "selectFile": "Válassza ki a fájlt itt",
-      "or": "Vagy",
       "yourFiles": "Az Ön Fájljai",
       "chooseFile": "Válasszon egy fájlt",
       "localFile": "Helyi fájl",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Biztonsági figyelmeztetés",
-      "message": "Ez a dokumentum a következőhöz próbál csatlakozni:\n\n{{- uri}}.\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra a megnyitásához."
+      "message": "Ez a dokumentum a következőhöz próbál csatlakozni:\n\n{{- uri}}\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra a megnyitásához."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Vízjel",
     "addWatermark": "Vízjel hozzáadása",
     "save": "Fájl mentése",
-    "pageError": "Érvénytelen oldal. Az érvényes oldaltartományok 1 -"
+    "pageError": "Érvénytelen oldal. Az érvényes oldaltartományok 1 -",
+    "fileNameCannotBeEmpty": "A fájlnév nem lehet üres"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "PDF-portfólió létrehozása",
+    "uploadFiles": "Fájlok feltöltése",
+    "uploadFolder": "Mappa feltöltése",
+    "addFiles": "Fájlok hozzáadása",
+    "addFolder": "Mappa hozzáadása"
+  },
+  "filePicker": {
+    "dragAndDrop": "Drag & Drop ide a fájlt",
+    "selectFile": "Válassza ki a fájlt itt",
+    "or": "Vagy"
   }
 }

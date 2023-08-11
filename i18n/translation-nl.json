@@ -438,9 +438,6 @@
       "noSignatures": "Er zijn momenteel geen opgeslagen handtekeningen."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Sleep en zet uw bestand hier neer",
-      "selectFile": "Selecteer hier uw bestand",
-      "or": "Of",
       "yourFiles": "Uw bestanden",
       "chooseFile": "Kies een bestand",
       "localFile": "Lokaal bestand",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Veiligheidswaarschuwing",
-      "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}.\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
+      "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Watermerk",
     "addWatermark": "Voeg een watermerk toe",
     "save": "Sla bestand op",
-    "pageError": "Ongeldige pagina. Geldige paginabereiken liggen tussen 1 -"
+    "pageError": "Ongeldige pagina. Geldige paginabereiken liggen tussen 1 -",
+    "fileNameCannotBeEmpty": "Bestandsnaam mag niet leeg zijn"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "PDF-portfolio maken",
+    "uploadFiles": "Upload bestanden",
+    "uploadFolder": "Map uploaden",
+    "addFiles": "Bestanden toevoegen",
+    "addFolder": "Map toevoegen"
+  },
+  "filePicker": {
+    "dragAndDrop": "Sleep uw bestand hierheen",
+    "selectFile": "Selecteer hier uw bestand",
+    "or": "Of"
   }
 }

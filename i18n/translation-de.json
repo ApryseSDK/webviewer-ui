@@ -438,9 +438,6 @@
       "noSignatures": "Es sind derzeit keine gespeicherten Unterschriften vorhanden."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",
-      "selectFile": "Wählen Sie hier Ihre Datei aus",
-      "or": "Oder",
       "yourFiles": "Ihre Dateien",
       "chooseFile": "Wähle eine Datei aus",
       "localFile": "Lokale Datei",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Sicherheitswarnung",
-      "message": "Dieses Dokument versucht, eine Verbindung herzustellen zu:\n\n{{-uri}}.\n\n Wenn Sie diesem Dokument vertrauen, klicken Sie auf Bestätigen, um es zu öffnen."
+      "message": "Dieses Dokument versucht, eine Verbindung herzustellen zu:\n\n{{-uri}}\n\n Wenn Sie diesem Dokument vertrauen, klicken Sie auf Bestätigen, um es zu öffnen."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Wasserzeichen",
     "addWatermark": "Wasserzeichen hinzufügen",
     "save": "Datei speichern",
-    "pageError": "Ungültige Seite. Gültige Seitenbereiche liegen zwischen 1 -"
+    "pageError": "Ungültige Seite. Gültige Seitenbereiche liegen zwischen 1 -",
+    "fileNameCannotBeEmpty": "Der Dateiname darf nicht leer sein"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Erstellen Sie ein PDF-Portfolio",
+    "uploadFiles": "Daten hochladen",
+    "uploadFolder": "Ordner hochladen",
+    "addFiles": "Dateien hinzufügen",
+    "addFolder": "Ordner hinzufügen"
+  },
+  "filePicker": {
+    "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",
+    "selectFile": "Wählen Sie hier Ihre Datei aus",
+    "or": "Oder"
   }
 }

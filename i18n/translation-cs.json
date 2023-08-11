@@ -438,9 +438,6 @@
       "noSignatures": "Momentálně nejsou žádné uložené podpisy."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Přetáhněte soubor sem",
-      "selectFile": "Zde vyberte svůj soubor",
-      "or": "Nebo",
       "yourFiles": "Vaše soubory",
       "chooseFile": "Vyberte soubor",
       "localFile": "Místní soubor",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Bezpečnostní varování",
-      "message": "Tento dokument se pokouší připojit k:\n\n{{- uri}}.\n\n Pokud tomuto dokumentu důvěřujete, otevřete jej kliknutím na Potvrdit."
+      "message": "Tento dokument se pokouší připojit k:\n\n{{- uri}}\n\n Pokud tomuto dokumentu důvěřujete, otevřete jej kliknutím na Potvrdit."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Vodoznak",
     "addWatermark": "Přidat vodoznak",
     "save": "Uložení souboru",
-    "pageError": "Neplatná stránka. Platné rozsahy stránek jsou mezi 1 -"
+    "pageError": "Neplatná stránka. Platné rozsahy stránek jsou mezi 1 -",
+    "fileNameCannotBeEmpty": "Název souboru nesmí být prázdný"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Vytvořte portfolio PDF",
+    "uploadFiles": "Nahrát soubory",
+    "uploadFolder": "Nahrát složku",
+    "addFiles": "Přidat soubory",
+    "addFolder": "Přidat složku"
+  },
+  "filePicker": {
+    "dragAndDrop": "Sem přetáhněte soubor",
+    "selectFile": "Zde vyberte svůj soubor",
+    "or": "Nebo"
   }
 }

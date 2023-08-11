@@ -438,9 +438,6 @@
       "noSignatures": "Hiện tại không có chữ ký nào được lưu."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Kéo & Thả tệp của bạn tại đây",
-      "selectFile": "Chọn tệp của bạn ở đây",
-      "or": "Hoặc",
       "yourFiles": "Tệp của bạn",
       "chooseFile": "Chọn một tệp",
       "localFile": "Tệp Cục Bộ",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Cảnh báo an ninh",
-      "message": "Tài liệu này đang cố kết nối với:\n\n{{-uri}}.\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
+      "message": "Tài liệu này đang cố kết nối với:\n\n{{-uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Chữ ký ảnh",
     "addWatermark": "Thêm hình mờ",
     "save": "Lưu tập tin",
-    "pageError": "Trang không hợp lệ. Phạm vi trang hợp lệ là từ 1 -"
+    "pageError": "Trang không hợp lệ. Phạm vi trang hợp lệ là từ 1 -",
+    "fileNameCannotBeEmpty": "Tên tệp không được để trống"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Tạo danh mục đầu tư PDF",
+    "uploadFiles": "Tải tệp lên",
+    "uploadFolder": "Thư mục tải lên",
+    "addFiles": "Thêm các tập tin",
+    "addFolder": "Thêm thư mục"
+  },
+  "filePicker": {
+    "dragAndDrop": "Kéo và thả tệp của bạn vào đây",
+    "selectFile": "Chọn tập tin của bạn ở đây",
+    "or": "Hoặc"
   }
 }

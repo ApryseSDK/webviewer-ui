@@ -748,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Security Warning",
-      "message": "This document is trying to connect to: \n\n{{- uri}}.\n\n If you trust this document, click Confirm to open it."
+      "message": "This document is trying to connect to: \n\n{{- uri}}\n\n If you trust this document, click Confirm to open it."
     }
   },
   "shortcut": {

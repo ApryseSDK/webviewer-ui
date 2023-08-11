@@ -438,9 +438,6 @@
       "noSignatures": "當前沒有保存的簽名。"
     },
     "pageReplacementModal": {
-      "dragAndDrop": "將您的文件拖放到此處",
-      "selectFile": "在此處選擇您的文件",
-      "or": "或者",
       "yourFiles": "您的文件",
       "chooseFile": "選擇一個文件",
       "localFile": "本地文件",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "安全警告",
-      "message": "此文檔正在嘗試連接到：\n\n{{- uri}}。\n\n 如果您信任此文檔，請單擊“確認”將其打開。"
+      "message": "此文檔正在嘗試連接到：\n\n{{- uri}}\n\n 如果您信任此文檔，請單擊“確認”將其打開。"
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "水印",
     "addWatermark": "加水印",
     "save": "保存存檔",
-    "pageError": "無效頁面。有效頁面範圍介於 1 -"
+    "pageError": "無效頁面。有效頁面範圍介於 1 -",
+    "fileNameCannotBeEmpty": "文件名不能為空"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "創建 PDF 包",
+    "uploadFiles": "上傳文件",
+    "uploadFolder": "上傳文件夾",
+    "addFiles": "添加文件",
+    "addFolder": "新增文件夾"
+  },
+  "filePicker": {
+    "dragAndDrop": "將您的文件拖放到此處",
+    "selectFile": "在這裡選擇您的文件",
+    "or": "或者"
   }
 }

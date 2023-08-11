@@ -438,9 +438,6 @@
       "noSignatures": "Şu anda kayıtlı imza yok."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Dosyanızı buraya sürükleyip bırakın",
-      "selectFile": "Dosyanızı buradan seçin",
-      "or": "Veya",
       "yourFiles": "Dosyalarınız",
       "chooseFile": "Bir dosya seçin",
       "localFile": "Yerel dosya",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Güvenlik uyarısı",
-      "message": "Bu belge şuraya bağlanmaya çalışıyor:\n\n{{- uri}}.\n\n Bu belgeye güveniyorsanız açmak için Onayla'yı tıklayın."
+      "message": "Bu belge şuraya bağlanmaya çalışıyor:\n\n{{- uri}}\n\n Bu belgeye güveniyorsanız açmak için Onayla'yı tıklayın."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Filigran",
     "addWatermark": "Filigran ekle",
     "save": "Dosyayı kaydet",
-    "pageError": "Geçersiz sayfa. Geçerli sayfa aralıkları 1 -"
+    "pageError": "Geçersiz sayfa. Geçerli sayfa aralıkları 1 -",
+    "fileNameCannotBeEmpty": "Dosya Adı boş olamaz"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "PDF Portföyü Oluştur",
+    "uploadFiles": "Dosyaları yükle",
+    "uploadFolder": "Klasörü Yükle",
+    "addFiles": "Dosya Ekle",
+    "addFolder": "Klasörü eklemek"
+  },
+  "filePicker": {
+    "dragAndDrop": "Dosyanızı buraya sürükleyip bırakın",
+    "selectFile": "dosyanızı buradan seçin",
+    "or": "Veya"
   }
 }

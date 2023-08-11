@@ -438,9 +438,6 @@
       "noSignatures": "În prezent, nu există semnături salvate."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Trageți și plasați fișierul aici",
-      "selectFile": "Selectați fișierul dvs. aici",
-      "or": "Sau",
       "yourFiles": "Fișierele dvs",
       "chooseFile": "Alegeți un fișier",
       "localFile": "Fișier local",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Avertizare de securitate",
-      "message": "Acest document încearcă să se conecteze la:\n\n{{- uri}}.\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a-l deschide."
+      "message": "Acest document încearcă să se conecteze la:\n\n{{- uri}}\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a-l deschide."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Filigran",
     "addWatermark": "Adăugați filigran",
     "save": "Salvează fișierul",
-    "pageError": "Pagina nevalidă. Intervalele de pagini valide sunt cuprinse între 1 -"
+    "pageError": "Pagina nevalidă. Intervalele de pagini valide sunt cuprinse între 1 -",
+    "fileNameCannotBeEmpty": "Numele fișierului nu poate fi gol"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Creați portofoliu PDF",
+    "uploadFiles": "Încărca fișiere",
+    "uploadFolder": "Încărcați dosarul",
+    "addFiles": "Adăugați fișiere",
+    "addFolder": "Adaugă folder"
+  },
+  "filePicker": {
+    "dragAndDrop": "Trageți și plasați fișierul aici",
+    "selectFile": "Selectați fișierul dvs. aici",
+    "or": "Sau"
   }
 }

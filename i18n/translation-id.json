@@ -438,9 +438,6 @@
       "noSignatures": "Saat ini tidak ada tanda tangan yang disimpan."
     },
     "pageReplacementModal": {
-      "dragAndDrop": "Seret & Jatuhkan file Anda di sini",
-      "selectFile": "Pilih file Anda di sini",
-      "or": "Atau",
       "yourFiles": "File Anda",
       "chooseFile": "Pilih file",
       "localFile": "File Lokal",
@@ -748,7 +745,7 @@
     },
     "connectToURL": {
       "title": "Peringatan keamanan",
-      "message": "Dokumen ini mencoba terhubung ke:\n\n{{- uri}}.\n\n Jika Anda mempercayai dokumen ini, klik Konfirmasi untuk membukanya."
+      "message": "Dokumen ini mencoba terhubung ke:\n\n{{- uri}}\n\n Jika Anda mempercayai dokumen ini, klik Konfirmasi untuk membukanya."
     }
   },
   "shortcut": {
@@ -1184,6 +1181,19 @@
     "watermark": "Tanda air",
     "addWatermark": "Tambahkan Tanda Air",
     "save": "Menyimpan file",
-    "pageError": "Halaman tidak valid. Rentang halaman yang valid adalah antara 1 -"
+    "pageError": "Halaman tidak valid. Rentang halaman yang valid adalah antara 1 -",
+    "fileNameCannotBeEmpty": "Nama File tidak boleh kosong"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Buat Portofolio PDF",
+    "uploadFiles": "Unggah berkas",
+    "uploadFolder": "Unggah Folder",
+    "addFiles": "Tambahkan File",
+    "addFolder": "Tambah Folder"
+  },
+  "filePicker": {
+    "dragAndDrop": "Seret & Jatuhkan file Anda di sini",
+    "selectFile": "Pilih file Anda di sini",
+    "or": "Atau"
   }
 }
