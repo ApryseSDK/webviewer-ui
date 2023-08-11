@@ -746,7 +746,7 @@
     },
     "connectToURL": {
       "title": "Cảnh báo an ninh",
-      "message": "Tài liệu này đang cố kết nối với:\n\n{{-uri}}.\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
+      "message": "Tài liệu này đang cố kết nối với:\n\n{{-uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
     }
   },
   "shortcut": {

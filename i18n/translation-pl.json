@@ -746,7 +746,7 @@
     },
     "connectToURL": {
       "title": "Ostrzeżenie bezpieczeństwa",
-      "message": "Ten dokument próbuje połączyć się z:\n\n{{- ur}}.\n\n Jeśli ufasz temu dokumentowi, kliknij Potwierdź, aby go otworzyć."
+      "message": "Ten dokument próbuje połączyć się z:\n\n{{- uri}}\n\n Jeśli ufasz temu dokumentowi, kliknij Potwierdź, aby go otworzyć."
     }
   },
   "shortcut": {

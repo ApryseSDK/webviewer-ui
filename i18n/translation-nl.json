@@ -746,7 +746,7 @@
     },
     "connectToURL": {
       "title": "Veiligheidswaarschuwing",
-      "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}.\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
+      "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
     }
   },
   "shortcut": {
