@@ -117,6 +117,8 @@
     "formFillCheckmark": "kene",
     "formFillCross": "Geçmek",
     "distanceMeasurement": "Mesafe",
+    "rectangularAreaMeasurement": "Dikdörtgen Alan",
+    "ellipseMeasurement": "Elips Alanı",
     "countMeasurement": "sayım ölçümü",
     "ellipse": "Elips",
     "eraser": "Silgi",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Güvenlik uyarısı",
-      "message": "Bu belge şuraya bağlanmaya çalışıyor:\n\n{{- uri}}.\n\n Bu belgeye güveniyorsanız açmak için Onayla'yı tıklayın."
+      "message": "Bu belge şuraya bağlanmaya çalışıyor:\n\n{{- uri}}\n\n Bu belgeye güveniyorsanız açmak için Onayla'yı tıklayın."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Klasörü eklemek",
     "portfolioCreateFolder": "Klasör oluşturun",
     "portfolioNewFolder": "Yeni dosya",
-    "portfolioNewFolderPlaceholder": "Klasör adı"
+    "portfolioNewFolderPlaceholder": "Klasör adı",
+    "openFile": "Yeni sekmede aç"
   },
   "languageModal": {
     "selectLanguage": "Dil Seçin"

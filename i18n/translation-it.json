@@ -117,6 +117,8 @@
     "formFillCheckmark": "Tick",
     "formFillCross": "Attraversare",
     "distanceMeasurement": "Misurazione della distanza",
+    "rectangularAreaMeasurement": "Zona Rettangolare",
+    "ellipseMeasurement": "Area dell'ellisse",
     "countMeasurement": "Misurazione del conteggio",
     "ellipse": "Ellisse",
     "eraser": "Gomma per cancellare",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Avviso di sicurezza",
-      "message": "Questo documento sta tentando di connettersi a:\n\n{{- uri}}.\n\n Se ritieni attendibile questo documento, fai clic su Conferma per aprirlo."
+      "message": "Questo documento sta tentando di connettersi a:\n\n{{- uri}}\n\n Se ritieni attendibile questo documento, fai clic su Conferma per aprirlo."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Aggiungi cartella",
     "portfolioCreateFolder": "Creare una cartella",
     "portfolioNewFolder": "Nuova cartella",
-    "portfolioNewFolderPlaceholder": "Nome della cartella"
+    "portfolioNewFolderPlaceholder": "Nome della cartella",
+    "openFile": "Apri in una nuova scheda"
   },
   "languageModal": {
     "selectLanguage": "Seleziona la lingua"

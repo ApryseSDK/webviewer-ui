@@ -117,6 +117,8 @@
     "formFillCheckmark": "ติ๊ก",
     "formFillCross": "ข้าม",
     "distanceMeasurement": "ระยะทาง",
+    "rectangularAreaMeasurement": "พื้นที่สี่เหลี่ยม",
+    "ellipseMeasurement": "พื้นที่วงรี",
     "countMeasurement": "นับการวัด",
     "ellipse": "วงรี",
     "eraser": "ยางลบ",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "คำเตือนความปลอดภัย",
-      "message": "เอกสารนี้พยายามเชื่อมต่อกับ:\n\n{{- uri}}.\n\n หากคุณเชื่อถือเอกสารนี้ ให้คลิกยืนยันเพื่อเปิด"
+      "message": "เอกสารนี้พยายามเชื่อมต่อกับ:\n\n{{- uri}}\n\n หากคุณเชื่อถือเอกสารนี้ ให้คลิกยืนยันเพื่อเปิด"
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "เพิ่มกล่องเก็บไฟล์",
     "portfolioCreateFolder": "สร้างโฟลเดอร์",
     "portfolioNewFolder": "แฟ้มใหม่",
-    "portfolioNewFolderPlaceholder": "ชื่อโฟลเดอร์"
+    "portfolioNewFolderPlaceholder": "ชื่อโฟลเดอร์",
+    "openFile": "เปิดในแท็บใหม่"
   },
   "languageModal": {
     "selectLanguage": "เลือกภาษา"

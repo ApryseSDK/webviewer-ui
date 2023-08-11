@@ -117,6 +117,8 @@
     "formFillCheckmark": "Dấu kiểm",
     "formFillCross": "Dấu gạch chéo",
     "distanceMeasurement": "Khoảng cách",
+    "rectangularAreaMeasurement": "Diện tích hình chữ nhật",
+    "ellipseMeasurement": "Diện tích hình elip",
     "countMeasurement": "Đo đếm",
     "ellipse": "Elip",
     "eraser": "Tẩy",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Cảnh báo an ninh",
-      "message": "Tài liệu này đang cố kết nối với:\n\n{{- uri}}.\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
+      "message": "Tài liệu này đang cố kết nối với:\n\n{{- uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Thêm thư mục",
     "portfolioCreateFolder": "Tạo thư mục",
     "portfolioNewFolder": "Thư mục mới",
-    "portfolioNewFolderPlaceholder": "Tên thư mục"
+    "portfolioNewFolderPlaceholder": "Tên thư mục",
+    "openFile": "Mở ra trong trang mới"
   },
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"

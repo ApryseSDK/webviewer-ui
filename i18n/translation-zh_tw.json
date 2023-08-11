@@ -117,6 +117,8 @@
     "formFillCheckmark": "打鉤",
     "formFillCross": "叉",
     "distanceMeasurement": "測量距離",
+    "rectangularAreaMeasurement": "矩形面積",
+    "ellipseMeasurement": "橢圓面積",
     "countMeasurement": "計數測量",
     "ellipse": "橢圓",
     "eraser": "橡皮",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "安全警告",
-      "message": "該文檔正在嘗試連接到：\n\n{{- uri}}。\n\n 如果您信任此文檔，請單擊“確認”將其打開。"
+      "message": "該文檔正在嘗試連接到：\n\n{{- uri}}\n\n 如果您信任此文檔，請單擊“確認”將其打開。"
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "新增文件夾",
     "portfolioCreateFolder": "創建文件夾",
     "portfolioNewFolder": "新建文件夾",
-    "portfolioNewFolderPlaceholder": "文件夾名稱"
+    "portfolioNewFolderPlaceholder": "文件夾名稱",
+    "openFile": "在新選項卡中打開"
   },
   "languageModal": {
     "selectLanguage": "選擇語言"

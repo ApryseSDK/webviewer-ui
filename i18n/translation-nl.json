@@ -117,6 +117,8 @@
     "formFillCheckmark": "Kruis aan",
     "formFillCross": "Kruis",
     "distanceMeasurement": "Afstandsmeting",
+    "rectangularAreaMeasurement": "rechthoekig gebied",
+    "ellipseMeasurement": "Ellips gebied",
     "countMeasurement": "Tel meting",
     "ellipse": "Ellips",
     "eraser": "Gum",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Veiligheidswaarschuwing",
-      "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}.\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
+      "message": "Dit document probeert verbinding te maken met:\n\n{{- uri}}\n\n Als u dit document vertrouwt, klikt u op Bevestigen om het te openen."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Map toevoegen",
     "portfolioCreateFolder": "Map aanmaken",
     "portfolioNewFolder": "Nieuwe map",
-    "portfolioNewFolderPlaceholder": "Naam van de map"
+    "portfolioNewFolderPlaceholder": "Naam van de map",
+    "openFile": "Openen in nieuw tabblad"
   },
   "languageModal": {
     "selectLanguage": "Selecteer taal"

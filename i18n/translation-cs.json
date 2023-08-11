@@ -117,6 +117,8 @@
     "formFillCheckmark": "Klíště",
     "formFillCross": "Přejít",
     "distanceMeasurement": "Vzdálenost",
+    "rectangularAreaMeasurement": "Obdélníková oblast",
+    "ellipseMeasurement": "Oblast elipsy",
     "countMeasurement": "Měření počtu",
     "ellipse": "Elipsa",
     "eraser": "Guma",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Bezpečnostní varování",
-      "message": "Tento dokument se pokouší připojit k:\n\n{{- uri}}.\n\n Pokud tomuto dokumentu důvěřujete, otevřete jej kliknutím na Potvrdit."
+      "message": "Tento dokument se pokouší připojit k:\n\n{{- uri}}\n\n Pokud tomuto dokumentu důvěřujete, otevřete jej kliknutím na Potvrdit."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Přidat složku",
     "portfolioCreateFolder": "Vytvořit složku",
     "portfolioNewFolder": "Nová složka",
-    "portfolioNewFolderPlaceholder": "Název složky"
+    "portfolioNewFolderPlaceholder": "Název složky",
+    "openFile": "Otevřít na nové kartě"
   },
   "languageModal": {
     "selectLanguage": "Zvolte jazyk"

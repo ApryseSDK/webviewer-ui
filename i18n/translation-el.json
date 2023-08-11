@@ -117,6 +117,8 @@
     "formFillCheckmark": "Τσιμπούρι",
     "formFillCross": "Σταυρός",
     "distanceMeasurement": "Απόσταση",
+    "rectangularAreaMeasurement": "Ορθογώνιος Χώρος",
+    "ellipseMeasurement": "Περιοχή έλλειψης",
     "countMeasurement": "Μέτρηση μέτρησης",
     "ellipse": "Ελλειψη",
     "eraser": "Γόμα",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Προειδοποίηση ασφαλείας",
-      "message": "Αυτό το έγγραφο προσπαθεί να συνδεθεί με:\n\n{{- uri}}.\n\n Εάν εμπιστεύεστε αυτό το έγγραφο, κάντε κλικ στην Επιβεβαίωση για να το ανοίξετε."
+      "message": "Αυτό το έγγραφο προσπαθεί να συνδεθεί με:\n\n{{- uri}}\n\n Εάν εμπιστεύεστε αυτό το έγγραφο, κάντε κλικ στην Επιβεβαίωση για να το ανοίξετε."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Προσθήκη φακέλου",
     "portfolioCreateFolder": "ΔΗΜΙΟΥΡΓΩ φακελο",
     "portfolioNewFolder": "Νέος φάκελος",
-    "portfolioNewFolderPlaceholder": "Ονομα φακέλου"
+    "portfolioNewFolderPlaceholder": "Ονομα φακέλου",
+    "openFile": "Άνοιγμα σε Νέα καρτέλα"
   },
   "languageModal": {
     "selectLanguage": "Επιλέξτε γλώσσα"

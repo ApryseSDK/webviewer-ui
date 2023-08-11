@@ -117,6 +117,8 @@
     "formFillCheckmark": "체크표시",
     "formFillCross": "X표시",
     "distanceMeasurement": "거리측정",
+    "rectangularAreaMeasurement": "직사각형 영역",
+    "ellipseMeasurement": "타원 영역",
     "countMeasurement": "체크표시",
     "ellipse": "타원형",
     "eraser": "지우개",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "보안 경고",
-      "message": "이 문서는 다음에 연결하려고 합니다.\n\n{{- uri}}.\n\n 이 문서를 신뢰하는 경우 확인을 클릭하여 엽니다."
+      "message": "이 문서는 다음에 연결하려고 합니다.\n\n{{- uri}}\n\n 이 문서를 신뢰하는 경우 확인을 클릭하여 엽니다."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "폴더 추가",
     "portfolioCreateFolder": "폴더 만들기",
     "portfolioNewFolder": "새 폴더",
-    "portfolioNewFolderPlaceholder": "폴더 이름"
+    "portfolioNewFolderPlaceholder": "폴더 이름",
+    "openFile": "새 탭에서 열기"
   },
   "languageModal": {
     "selectLanguage": "언어 선택"

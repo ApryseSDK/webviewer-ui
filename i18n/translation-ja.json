@@ -117,6 +117,8 @@
     "formFillCheckmark": "チェックマーク",
     "formFillCross": "クロス",
     "distanceMeasurement": "距離測定",
+    "rectangularAreaMeasurement": "長方形の領域",
+    "ellipseMeasurement": "楕円領域",
     "countMeasurement": "カウント測定",
     "ellipse": "楕円",
     "eraser": "消しゴム",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "セキュリティ警告 ",
-      "message": "このドキュメントは以下に接続しようとしています:\n\n{{- uri}}。\n\n この文書を信頼できる場合は、「確認」をクリックして文書を開きます。"
+      "message": "このドキュメントは以下に接続しようとしています:\n\n{{- uri}}\n\n この文書を信頼できる場合は、「確認」をクリックして文書を開きます。"
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "フォルダーを追加",
     "portfolioCreateFolder": "フォルダーを作る",
     "portfolioNewFolder": "新しいフォルダー",
-    "portfolioNewFolderPlaceholder": "フォルダ名"
+    "portfolioNewFolderPlaceholder": "フォルダ名",
+    "openFile": "新しいタブで開く"
   },
   "languageModal": {
     "selectLanguage": "言語を選択する"

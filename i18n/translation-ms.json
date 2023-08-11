@@ -117,6 +117,8 @@
     "formFillCheckmark": "Tandakan",
     "formFillCross": "Menyeberang",
     "distanceMeasurement": "Jarak",
+    "rectangularAreaMeasurement": "Kawasan Segiempat",
+    "ellipseMeasurement": "Kawasan Ellipse",
     "countMeasurement": "Kira ukuran",
     "ellipse": "Ellipse",
     "eraser": "Pemadam",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Amaran keselamatan",
-      "message": "Dokumen ini cuba disambungkan ke:\n\n{{- uri}}.\n\n Jika anda mempercayai dokumen ini, klik Sahkan untuk membukanya."
+      "message": "Dokumen ini cuba disambungkan ke:\n\n{{- uri}}\n\n Jika anda mempercayai dokumen ini, klik Sahkan untuk membukanya."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Tambah folder",
     "portfolioCreateFolder": "Buat Folder",
     "portfolioNewFolder": "Fail baharu",
-    "portfolioNewFolderPlaceholder": "Nama folder"
+    "portfolioNewFolderPlaceholder": "Nama folder",
+    "openFile": "Buka dalam Tab Baharu"
   },
   "languageModal": {
     "selectLanguage": "Pilih Bahasa"

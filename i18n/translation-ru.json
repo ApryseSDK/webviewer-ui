@@ -117,6 +117,8 @@
     "formFillCheckmark": "Галочка",
     "formFillCross": "Крест",
     "distanceMeasurement": "Дистанция",
+    "rectangularAreaMeasurement": "Прямоугольная площадь",
+    "ellipseMeasurement": "Площадь эллипса",
     "countMeasurement": "Измерение счета",
     "ellipse": "Эллипс",
     "eraser": "ластик",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Предупреждение безопасности",
-      "message": "Этот документ пытается подключиться к:\n\n{{- uri}}.\n\n Если вы доверяете этому документу, нажмите «Подтвердить», чтобы открыть его."
+      "message": "Этот документ пытается подключиться к:\n\n{{- uri}}\n\n Если вы доверяете этому документу, нажмите «Подтвердить», чтобы открыть его."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Добавить папку",
     "portfolioCreateFolder": "Создать папку",
     "portfolioNewFolder": "Новая папка",
-    "portfolioNewFolderPlaceholder": "Имя папки"
+    "portfolioNewFolderPlaceholder": "Имя папки",
+    "openFile": "Открыть в новой вкладке"
   },
   "languageModal": {
     "selectLanguage": "Выбрать язык"

@@ -117,6 +117,8 @@
     "formFillCheckmark": "Bifă",
     "formFillCross": "Cruce",
     "distanceMeasurement": "Distanţă",
+    "rectangularAreaMeasurement": "Zona dreptunghiulară",
+    "ellipseMeasurement": "Zona elipsei",
     "countMeasurement": "Măsurarea numărului",
     "ellipse": "Elipsă",
     "eraser": "Radieră",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Avertizare de securitate",
-      "message": "Acest document încearcă să se conecteze la:\n\n{{- uri}}.\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a-l deschide."
+      "message": "Acest document încearcă să se conecteze la:\n\n{{- uri}}\n\n Dacă aveți încredere în acest document, faceți clic pe Confirmare pentru a-l deschide."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Adaugă folder",
     "portfolioCreateFolder": "Creeaza dosar",
     "portfolioNewFolder": "Dosar nou",
-    "portfolioNewFolderPlaceholder": "Numele fisierului"
+    "portfolioNewFolderPlaceholder": "Numele fisierului",
+    "openFile": "Deschideți în filă nouă"
   },
   "languageModal": {
     "selectLanguage": "Selecteaza limba"

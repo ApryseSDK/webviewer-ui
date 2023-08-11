@@ -117,6 +117,8 @@
     "formFillCheckmark": "Bock",
     "formFillCross": "Korsa",
     "distanceMeasurement": "Distans",
+    "rectangularAreaMeasurement": "Rektangulärt område",
+    "ellipseMeasurement": "Ellipsområdet",
     "countMeasurement": "Räkna mätning",
     "ellipse": "Ellips",
     "eraser": "Suddgummi",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Säkerhetsvarning",
-      "message": "Det här dokumentet försöker ansluta till:\n\n{{- uri}}.\n\n Om du litar på det här dokumentet klickar du på Bekräfta för att öppna det."
+      "message": "Det här dokumentet försöker ansluta till:\n\n{{- uri}}\n\n Om du litar på det här dokumentet klickar du på Bekräfta för att öppna det."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Lägg till mapp",
     "portfolioCreateFolder": "Skapa mapp",
     "portfolioNewFolder": "Ny mapp",
-    "portfolioNewFolderPlaceholder": "Mapp namn"
+    "portfolioNewFolderPlaceholder": "Mapp namn",
+    "openFile": "Öppna i Ny flik"
   },
   "languageModal": {
     "selectLanguage": "Välj språk"

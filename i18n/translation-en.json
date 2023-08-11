@@ -117,6 +117,8 @@
     "formFillCheckmark": "Tick",
     "formFillCross": "Cross",
     "distanceMeasurement": "Distance",
+    "rectangularAreaMeasurement": "Rectangular Area",
+    "ellipseMeasurement": "Ellipse Area",
     "countMeasurement": "Count measurement",
     "ellipse": "Ellipse",
     "eraser": "Eraser",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Security Warning",
-      "message": "This document is trying to connect to: \n\n{{- uri}}.\n\n If you trust this document, click Confirm to open it."
+      "message": "This document is trying to connect to: \n\n{{- uri}}\n\n If you trust this document, click Confirm to open it."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Add Folder",
     "portfolioCreateFolder": "Create Folder",
     "portfolioNewFolder": "New Folder",
-    "portfolioNewFolderPlaceholder": "Folder Name"
+    "portfolioNewFolderPlaceholder": "Folder Name",
+    "openFile": "Open in New Tab"
   },
   "languageModal": {
     "selectLanguage": "Select language"

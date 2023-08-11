@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { DndProvider } from 'react-dnd';
 import TouchBackEnd from 'react-dnd-touch-backend';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import selectors from 'selectors';
+import actions from 'actions';
 
 import Button from 'components/Button';
 import PortfolioContext from './PortfolioContext';
@@ -14,6 +15,8 @@ import { PortfolioDragLayer } from './PortfolioDragLayer';
 import DataElementWrapper from 'components/DataElementWrapper';
 import DataElements from 'constants/dataElement';
 import { isMobileDevice } from 'helpers/device';
+import { enableMultiTab } from 'helpers/TabManager';
+import { isOpenableFile } from 'helpers/portfolioUtils';
 
 import '../../constants/bookmarksOutlinesShared.scss';
 import './PortfolioPanel.scss';
@@ -30,6 +33,7 @@ const PortfolioPanel = ({ portfolioFiles }) => {
     shallowEqual,
   );
 
+  const dispatch = useDispatch();
   const [t] = useTranslation();
 
   const [activePortfolioItem, setActivePortfolioItem] = useState(null);
@@ -46,7 +50,7 @@ const PortfolioPanel = ({ portfolioFiles }) => {
     refreshPortfolio();
   };
 
-  const renamePortfolio = () => {
+  const renamePortfolioItem = () => {
     // TODO: rename file or folder here
     refreshPortfolio();
   };
@@ -55,11 +59,18 @@ const PortfolioPanel = ({ portfolioFiles }) => {
     setAddingNewFolder(false);
   };
 
-  const removePortfolio = (name) => {
+  const removePortfolioItem = (name) => {
     /* eslint-disable no-console */
     console.log('removePortfolio', name);
     // TODO: remove file or folder here
     refreshPortfolio();
+  };
+
+  const openPortfolioItem = (portfolioItem) => {
+    if (isOpenableFile(portfolioItem)) {
+      dispatch(enableMultiTab());
+      dispatch(actions.addPortfolioTab(portfolioItem));
+    }
   };
 
   const movePortfolioInward = (dragPortfolioItem, dropPortfolioItem) => {
@@ -98,14 +109,6 @@ const PortfolioPanel = ({ portfolioFiles }) => {
             disabled={isAddingNewFolder}
             onClick={addNewFile}
           />
-          <Button
-            className="portfolio-panel-control-button"
-            dataElement={DataElements.PORTFOLIO_ADD_FOLDER}
-            img="icon-add-folder"
-            title={t('portfolioPanel.portfolioAddFolder')}
-            disabled={isAddingNewFolder}
-            onClick={() => setAddingNewFolder(true)}
-          />
         </div>
       </div>
 
@@ -117,8 +120,9 @@ const PortfolioPanel = ({ portfolioFiles }) => {
           isAddingNewFolder,
           setAddingNewFolder,
           addNewFolder,
-          renamePortfolio,
-          removePortfolio,
+          renamePortfolioItem,
+          removePortfolioItem,
+          openPortfolioItem,
           refreshPortfolio,
           tabManager,
         }}
@@ -149,20 +153,6 @@ const PortfolioPanel = ({ portfolioFiles }) => {
             )}
           </div>
         </DndProvider>
-
-        <DataElementWrapper
-          className="bookmark-outline-footer"
-          dataElement={DataElements.PORTFOLIO_ADD_NEW_BUTTON}
-        >
-          <Button
-            className="bookmark-outline-control-button add-new-button"
-            dataElement={DataElements.PORTFOLIO_ADD_NEW_BUTTON}
-            label={t('portfolioPanel.portfolioCreateFolder')}
-            img="icon-menu-add"
-            disabled={isAddingNewFolder}
-            onClick={() => setAddingNewFolder(true)}
-          />
-        </DataElementWrapper>
       </PortfolioContext.Provider>
     </DataElementWrapper>
   );

@@ -117,6 +117,8 @@
     "formFillCheckmark": "Znacznik",
     "formFillCross": "Krzyżyk",
     "distanceMeasurement": "Dystans",
+    "rectangularAreaMeasurement": "Obszar prostokątny",
+    "ellipseMeasurement": "Obszar elipsy",
     "countMeasurement": "Pomiar",
     "ellipse": "Elipsa",
     "eraser": "Gumka",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Ostrzeżenie bezpieczeństwa",
-      "message": "Ten dokument próbuje połączyć się z:\n\n{{- uri}}.\n\n Jeśli ufasz temu dokumentowi, kliknij Potwierdź, aby go otworzyć."
+      "message": "Ten dokument próbuje połączyć się z:\n\n{{- uri}}\n\n Jeśli ufasz temu dokumentowi, kliknij Potwierdź, aby go otworzyć."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Dodaj folder",
     "portfolioCreateFolder": "Utwórz folder",
     "portfolioNewFolder": "Nowy folder",
-    "portfolioNewFolderPlaceholder": "Nazwa folderu"
+    "portfolioNewFolderPlaceholder": "Nazwa folderu",
+    "openFile": "Otwórz w nowej karcie"
   },
   "languageModal": {
     "selectLanguage": "Wybierz język"

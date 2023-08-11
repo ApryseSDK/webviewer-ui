@@ -117,6 +117,8 @@
     "formFillCheckmark": "Ketyegés",
     "formFillCross": "Kereszt",
     "distanceMeasurement": "Távolság",
+    "rectangularAreaMeasurement": "Téglalap alakú terület",
+    "ellipseMeasurement": "Ellipszis terület",
     "countMeasurement": "Gróf mérés",
     "ellipse": "Ellipszis",
     "eraser": "Radír",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "Biztonsági figyelmeztetés",
-      "message": "Ez a dokumentum a következőhöz próbál csatlakozni:\n\n{{- uri}}.\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra a megnyitásához."
+      "message": "Ez a dokumentum a következőhöz próbál csatlakozni:\n\n{{- uri}}\n\n Ha megbízik ebben a dokumentumban, kattintson a Megerősítés gombra a megnyitásához."
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "Mappa hozzáadása",
     "portfolioCreateFolder": "Mappa létrehozás",
     "portfolioNewFolder": "Új mappa",
-    "portfolioNewFolderPlaceholder": "Mappa neve"
+    "portfolioNewFolderPlaceholder": "Mappa neve",
+    "openFile": "Megnyitás új lapon"
   },
   "languageModal": {
     "selectLanguage": "Válasszon nyelvet"

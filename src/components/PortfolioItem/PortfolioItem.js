@@ -1,18 +1,15 @@
 import React, { forwardRef, useCallback, useContext, useImperativeHandle, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { DragSource, DropTarget } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { ItemTypes, DropLocation, BUFFER_ROOM } from 'constants/dnd';
-import actions from 'actions';
 
 import Button from 'components/Button';
 import DataElementWrapper from 'components/DataElementWrapper';
 import PortfolioContext from 'components/PortfolioPanel/PortfolioContext';
 import PortfolioItemContent from 'components/PortfolioItemContent';
 import { hasChildren } from 'helpers/portfolioUtils';
-import { enableMultiTab } from 'helpers/TabManager';
 
 import './PortfolioItem.scss';
 
@@ -47,9 +44,8 @@ const PortfolioItem = forwardRef(({
     isPortfolioItemActive,
     isAddingNewFolder,
     setAddingNewFolder,
+    openPortfolioItem,
   } = useContext(PortfolioContext);
-  const dispatch = useDispatch();
-
   const [isExpanded, setIsExpanded] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
   const [isHovered, setHovered] = useState(false); // when the popup menu is open, the container will have a background
@@ -101,14 +97,8 @@ const PortfolioItem = forwardRef(({
         tabIndex={0}
         onKeyDown={(e) => e.key === 'Enter' && onSingleClick()}
         onClick={onSingleClick}
-        onDoubleClick={async () => {
-          const extensionRegExp = /(?:\.([^.?]+))?$/;
-          const extension = extensionRegExp.exec(portfolioItem.name)[1];
-          const isOpenableFile = ['pdf', 'doc', 'docx', 'xod'].includes(extension);
-          if (isOpenableFile) {
-            dispatch(enableMultiTab());
-            dispatch(actions.addPortfolioTab(portfolioItem));
-          }
+        onDoubleClick={() => {
+          openPortfolioItem(portfolioItem);
         }}
       >
         <div
@@ -131,8 +121,7 @@ const PortfolioItem = forwardRef(({
         </div>
 
         <PortfolioItemContent
-          name={portfolioItem.name}
-          id={portfolioItem.id}
+          portfolioItem={portfolioItem}
           isFolder={portfolioItem.isFolder}
           isPortfolioRenaming={isRenaming}
           setPortfolioRenaming={setIsRenaming}

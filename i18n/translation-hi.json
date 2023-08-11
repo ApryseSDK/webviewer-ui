@@ -117,6 +117,8 @@
     "formFillCheckmark": "टिकटिक",
     "formFillCross": "पार करना",
     "distanceMeasurement": "दूरी",
+    "rectangularAreaMeasurement": "आयताकार क्षेत्र",
+    "ellipseMeasurement": "दीर्घवृत्त क्षेत्र",
     "countMeasurement": "गणना माप",
     "ellipse": "अंडाकार",
     "eraser": "रबड़",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "सुरक्षा चेतावनी",
-      "message": "यह दस्तावेज़ इससे कनेक्ट करने का प्रयास कर रहा है:\n\n{{- uri}}.\n\n यदि आपको इस दस्तावेज़ पर भरोसा है, तो इसे खोलने के लिए पुष्टि करें पर क्लिक करें।"
+      "message": "यह दस्तावेज़ इससे कनेक्ट करने का प्रयास कर रहा है:\n\n{{- uri}}\n\n यदि आपको इस दस्तावेज़ पर भरोसा है, तो इसे खोलने के लिए पुष्टि करें पर क्लिक करें।"
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "फ़ोल्डर जोड़ें",
     "portfolioCreateFolder": "फोल्डर बनाएं",
     "portfolioNewFolder": "नया फ़ोल्डर",
-    "portfolioNewFolderPlaceholder": "फ़ोल्डर का नाम"
+    "portfolioNewFolderPlaceholder": "फ़ोल्डर का नाम",
+    "openFile": "वेब टेब में खोलें"
   },
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"

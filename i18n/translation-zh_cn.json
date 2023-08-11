@@ -117,6 +117,8 @@
     "formFillCheckmark": "打钩",
     "formFillCross": "叉",
     "distanceMeasurement": "距离测量",
+    "rectangularAreaMeasurement": "矩形面积",
+    "ellipseMeasurement": "椭圆面积",
     "countMeasurement": "计数测量",
     "ellipse": "椭圆",
     "eraser": "橡皮",
@@ -746,7 +748,7 @@
     },
     "connectToURL": {
       "title": "安全警告",
-      "message": "该文档正在尝试连接到：\n\n{{- uri}}。\n\n 如果您信任此文档，请单击“确认”将其打开。"
+      "message": "该文档正在尝试连接到：\n\n{{- uri}}\n\n 如果您信任此文档，请单击“确认”将其打开。"
     }
   },
   "shortcut": {
@@ -1087,7 +1089,8 @@
     "portfolioAddFolder": "新增文件夹",
     "portfolioCreateFolder": "创建文件夹",
     "portfolioNewFolder": "新建文件夹",
-    "portfolioNewFolderPlaceholder": "文件夹名称"
+    "portfolioNewFolderPlaceholder": "文件夹名称",
+    "openFile": "在新选项卡中打开"
   },
   "languageModal": {
     "selectLanguage": "选择语言"
