@@ -159,7 +159,14 @@ export const setCurrentGroupedItem = (groupedItems) => (dispatch) => {
   });
 };
 
-export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, getState) => {
+export const setFixedGroupedItems = (groupedItems) => (dispatch) => {
+  dispatch({
+    type: 'SET_FIXED_GROUPED_ITEMS',
+    payload: { groupedItems }
+  });
+};
+
+export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
     const toolGroups = state.viewer.headers[_toolbarGroup];
     let firstToolGroupForToolbarGroup = '';
@@ -195,7 +202,7 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true) => (dispatch, get
     dispatch(openElements(['toolsHeader']));
     const state = getState();
     const lastPickedToolGroup =
-      state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
+      toolGroup || state.viewer.lastPickedToolGroup[toolbarGroup] || getFirstToolGroupForToolbarGroup(state, toolbarGroup);
     const lastPickedToolName =
       state.viewer.lastPickedToolForGroup[lastPickedToolGroup] || getFirstToolNameForGroup(state, lastPickedToolGroup);
     if (pickTool) {
@@ -861,4 +868,9 @@ export const setMultiViewerSyncScrollingMode = (multiViewerComparedSyncScrolling
 export const setTextSignatureQuality = (multiplier) => ({
   type: 'SET_TEXT_SIGNATURE_CANVAS_MULTIPLIER',
   payload: { multiplier },
+});
+
+export const setEnableMeasurementAnnotationsFilter = (isEnabled) => ({
+  type: 'SET_ENABLE_MEASUREMENT_ANNOTATIONS_FILTER',
+  payload: { isEnabled },
 });

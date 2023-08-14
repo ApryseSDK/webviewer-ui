@@ -1,7 +1,7 @@
 import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import { panelMinWidth, RESIZE_BAR_WIDTH } from 'constants/panel';
-import { PLACEMENT } from 'constants/customizationVariables';
+import { PLACEMENT, ITEM_TYPE } from 'constants/customizationVariables';
 
 // viewer
 export const getActiveFlyout = (state) => state.viewer.activeFlyout;
@@ -201,12 +201,17 @@ export const getCurrentToolbarGroup = (state) => state.viewer.toolbarGroup;
 
 export const getCurrentGroupedItems = (state) => state.viewer.activeGroupedItems;
 
+export const getFixedGroupedItems = (state) => state.viewer.fixedGroupedItems;
+
 export const getActiveHeaders = (state) => {
   return state.viewer.modularHeaders?.filter((header) => {
     return header.items?.length && header.items.filter((item) => {
       const itemProps = item.props || item;
-      if (itemProps.type === 'groupedItems' && state.viewer.activeGroupedItems) {
-        return state.viewer.activeGroupedItems.includes(itemProps.dataElement);
+      const hasActiveGroupedItems = state.viewer.activeGroupedItems?.length;
+      const hasFixedGroupedItems = state.viewer.fixedGroupedItems?.length;
+      if (itemProps.type === ITEM_TYPE.GROUPED_ITEMS && (hasActiveGroupedItems || hasFixedGroupedItems)) {
+        return state.viewer.activeGroupedItems.includes(itemProps.dataElement) ||
+               state.viewer.fixedGroupedItems.includes(itemProps.dataElement);
       }
       return true;
     });
@@ -657,3 +662,5 @@ export const getShortcutKeyMap = (state) => state.viewer.shortcutKeyMap;
 export const getMultiViewerSyncScrollMode = (state) => state.viewer.multiViewerSyncScrollMode;
 
 export const getTextSignatureQuality = (state) => state.viewer.textSignatureCanvasMultiplier;
+
+export const getIsMeasurementAnnotationFilterEnabled = (state) => state.viewer.isMeasurementAnnotationFilterEnabled;

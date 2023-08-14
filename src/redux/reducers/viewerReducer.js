@@ -177,6 +177,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         activeGroupedItems: payload.groupedItems
       };
+    case 'SET_FIXED_GROUPED_ITEMS':
+      return {
+        ...state,
+        fixedGroupedItems: [...state.fixedGroupedItems, payload.groupedItems]
+      };
     case 'SET_TOOLBAR_GROUP':
       return {
         ...state,
@@ -620,14 +625,16 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, modularHeaders: updatedModularHeaders };
     }
     case 'SET_RIGHT_HEADER_WIDTH':
-      return { ...state,
+      return {
+        ...state,
         modularHeadersWidth: {
           ...state.modularHeadersWidth,
           rightHeader: payload,
         }
       };
     case 'SET_LEFT_HEADER_WIDTH':
-      return { ...state,
+      return {
+        ...state,
         modularHeadersWidth: {
           ...state.modularHeadersWidth,
           leftHeader: payload,
@@ -687,6 +694,16 @@ export default (initialState) => (state = initialState, action) => {
       };
     case 'SET_VERIFICATION_RESULT':
       return { ...state, verificationResult: payload.result };
+    case 'SET_REVOCATION_PROXY_PREFIX':
+      return {
+        ...state,
+        revocationProxyPrefix: payload.revocationProxyPrefix,
+      };
+    case 'SET_IS_REVOCATION_CHECKING_ENABLED':
+      return {
+        ...state,
+        isRevocationCheckingEnabled: payload.isRevocationCheckingEnabled,
+      };
     case 'SET_DISPLAYED_SIGNATURES_FILTER_FUNCTION':
       return { ...state, displayedSignaturesFilterFunction: payload.filterFunction };
     case 'SET_ANNOTATION_READ_STATE':
@@ -741,11 +758,6 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isAddingNewScale: payload.isAddingNewScale,
-      };
-    case 'SET_IS_REVOCATION_CHECKING_ENABLED':
-      return {
-        ...state,
-        isRevocationCheckingEnabled: payload.isRevocationCheckingEnabled,
       };
     case 'UPDATE_DELETE_SCALE':
       return {
@@ -865,6 +877,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, multiViewerSyncScrollMode: payload };
     case 'SET_TEXT_SIGNATURE_CANVAS_MULTIPLIER':
       return { ...state, textSignatureCanvasMultiplier: payload.multiplier };
+    case 'SET_ENABLE_MEASUREMENT_ANNOTATIONS_FILTER':
+      return { ...state, isMeasurementAnnotationFilterEnabled: payload.isEnabled };
     default:
       return state;
   }
