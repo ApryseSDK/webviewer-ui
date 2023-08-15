@@ -42,13 +42,14 @@ const FontSizeDropdown = ({
   const inputRef = useRef();
   const iconButtonRef = useRef();
   const dropdownDivRef = useRef();
+  const dropdownContainerRef = useRef();
   const [sizes, setSizes] = useState([]);
   const [error, setError] = useState(false);
 
   const onClickOutside = useCallback(() => {
     setOpen(false);
   }, []);
-  useOnClickOutside(dropdownDivRef, onClickOutside);
+  useOnClickOutside(dropdownContainerRef, onClickOutside);
 
   const [currSize, setCurrSize] = useState(fontSize <= maxFontSize ? fontSize : 1);
   const isValidNum = (num, arr = []) => num && arr.indexOf(num) === -1 && num <= maxFontSize && num >= MIN_FONT_SIZE;
@@ -189,15 +190,21 @@ const FontSizeDropdown = ({
         disabled={isOpen}
         className={error ? 'error' : undefined}
       />
-      <div className={classNames('icon-button')} onClick={() => setOpen(true)} ref={iconButtonRef}>
-        <Icon glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
-      </div>
-      <div
-        className={classNames('Dropdown__items', { 'hidden': !isOpen })}
-        role="listbox"
-        ref={dropdownDivRef}
-      >
-        {dropdownItems}
+      <div ref={dropdownContainerRef}>
+        <div
+          className={classNames('icon-button')}
+          onClick={() => setOpen(!isOpen)}
+          onTouchEnd={() => setOpen(!isOpen)}
+          ref={iconButtonRef}>
+          <Icon glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
+        </div>
+        <div
+          className={classNames('Dropdown__items', { 'hidden': !isOpen })}
+          role="listbox"
+          ref={dropdownDivRef}
+        >
+          {dropdownItems}
+        </div>
       </div>
     </div>
   );
