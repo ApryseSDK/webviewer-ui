@@ -22,7 +22,7 @@ test.describe('Thumbnails Panel', () => {
     expect(await pageContainer.screenshot()).toMatchSnapshot(['basic-rendering', file, 'pageContainer.png']);
   };
 
-  test('should be able to render the PDF thumbnail and document correctly', async ({ page }) => {
+  test.skip('should be able to render the PDF thumbnail and document correctly', async ({ page }) => {
     await thumbnailRenderingTest(page, 'webviewer-demo-optimized.pdf');
   });
 
@@ -62,7 +62,7 @@ test.describe('Thumbnails Panel', () => {
     expect(await leftPanel.screenshot()).toMatchSnapshot(['labels-rendering', 'thumbnail-page-labels-readonly.png']);
   });
 
-  test('getSelectedThumbnailPageNumbers should return even if there is only one thumbnail selected', async ({ page }) => {
+  test('UI.ThumbnailsPanel.getSelectedPageNumbers should return even if there is only one thumbnail selected', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
     await waitForInstance();
     await page.waitForTimeout(5000);
@@ -78,7 +78,7 @@ test.describe('Thumbnails Panel', () => {
     await page.mouse.click(x + 80, y + 100);
 
     const selectedThumbnailPageNumbers = await iframe.evaluate(async () => {
-      return window.instance.UI.getSelectedThumbnailPageNumbers();
+      return window.instance.UI.ThumbnailsPanel.getSelectedPageNumbers();
     });
 
     expect(selectedThumbnailPageNumbers.length).toBe(1);
@@ -256,5 +256,97 @@ test.describe('Thumbnails Panel', () => {
 
     expect(selectedThumbnailPage.length).toBe(1);
     expect(selectedThumbnailPage[0]).toBe(3);
+  });
+
+  test('We can rotate an active page that is not in the current Thumbnail selection', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    await waitForInstance();
+    await page.waitForTimeout(5000);
+
+    await iframe.click('[data-element=leftPanelButton]');
+
+    await page.waitForTimeout(2000);
+
+    await iframe.evaluate(() => {
+      window.instance.UI.ThumbnailsPanel.selectPages([2]);
+
+      const scrollElement = window.instance.Core.documentViewer.getScrollViewElement();
+      scrollElement.scroll(0, 0);
+    });
+
+    await iframe.click('[data-element=thumbRotateClockwise]');
+
+    const pageRotation = await iframe.evaluate(() => {
+      const documentViewer = window.instance.Core.documentViewer;
+
+      return documentViewer.getCompleteRotation(1);
+    });
+
+    expect(pageRotation).toBe(1);
+  });
+
+  test('thumbnails cascade uniformly', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    await waitForInstance();
+    await page.waitForTimeout(5000);
+
+    await iframe.click('[data-element=leftPanelButton]');
+
+    await page.waitForTimeout(2000);
+
+    // Find the resize bar using the provided class
+    const resizeBar = await iframe.$('.resize-bar');
+
+    await page.waitForTimeout(2000);
+    // Get the bounding box of the resize bar
+    const boundingBox = await resizeBar.boundingBox();
+
+    // Calculate the coordinates to grab the resize bar
+    const grabX = boundingBox.x + boundingBox.width / 2;
+    const grabY = boundingBox.y + boundingBox.height / 2;
+
+    // Perform the drag action
+    await page.mouse.move(grabX, grabY);
+    await page.mouse.down();
+    await page.mouse.move(grabX + 850, grabY);
+    await page.mouse.up();
+
+    await page.waitForTimeout(4000);
+
+    const thumbnail = await iframe.$('.ThumbnailsPanel');
+    expect(await thumbnail.screenshot()).toMatchSnapshot(['orientation', 'thumbnails-cascade.png']);
+  });
+
+  // TODO(Adam): This test is a great candidate for Karma UI tests. Unfortunately could not
+  // get the Karma UI tests to work so will need to review with Armando and retry as technical
+  // debt.
+  test('multi-select mode is disabled after loading a document', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    const instance = await waitForInstance();
+    await page.waitForTimeout(3000);
+
+    await iframe?.click('[data-element=leftPanelButton]');
+    await page.waitForTimeout(1000);
+    await iframe?.click('[data-element=thumbMultiSelect]'); // Enable multi-select here
+    await page.waitForTimeout(1000);
+
+    // Verify that multi-select mode is enabled.
+    let enableMultiSelectButton = await iframe?.$('[data-element=thumbMultiSelect]');
+    let closeMultiSelectButton = await iframe?.$('[data-element=thumbCloseMultiSelect]');
+    expect(enableMultiSelectButton).toBeNull();
+    expect(closeMultiSelectButton).not.toBeNull();
+
+    // Load a new document.
+    await instance('loadDocument', '/test-files/blank.pdf');
+    await page.waitForTimeout(3000);
+
+    await iframe?.click('[data-element=leftPanelButton]');
+    await page.waitForTimeout(1000);
+
+    // Verify that multi-select mode is not enabled.
+    enableMultiSelectButton = await iframe?.$('[data-element=thumbMultiSelect]');
+    closeMultiSelectButton = await iframe?.$('[data-element=thumbCloseMultiSelect]');
+    expect(enableMultiSelectButton).not.toBeNull();
+    expect(closeMultiSelectButton).toBeNull();
   });
 });

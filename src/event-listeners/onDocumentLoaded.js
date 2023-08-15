@@ -216,6 +216,6 @@ export default (store, documentViewerKey) => async () => {
 
   // init zoom level value in redux
   dispatch(actions.setZoom(core.getZoom(documentViewerKey), documentViewerKey));
-
+  dispatch(actions.setThumbnailSelectingPages(false));
   fireEvent(Events.DOCUMENT_LOADED);
 };

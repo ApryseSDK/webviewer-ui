@@ -154,6 +154,16 @@ test.describe('Settings modal', () => {
       const choices = await settingSection.$$('.setting-item .ui__choice');
       for (const choice of choices) {
         const isChecked = await getIsChecked(choice);
+
+        // Force "Disable Multi-select" to be true since we reset this value after a page document loads.
+        // https://apryse.atlassian.net/browse/WVR-2845
+        const parent = await choice.$('xpath=..');
+        const choiceTitle = await parent?.innerText();
+        if (choiceTitle?.includes('Multiselect')) {
+          settings.push(true);
+          continue;
+        }
+
         await (await choice.$('input')).click();
         await page.waitForTimeout(1000);
         expect(await getIsChecked(choice)).toBe(!isChecked);
@@ -233,11 +243,14 @@ test.describe('Settings modal', () => {
       return window.instance.UI.importUserSettings(newUserSettings);
     }, newUserSettings);
 
-    await page.waitForTimeout(3000);
+    await iframe.click('[data-element="menuButton"]');
+    await iframe.click('[data-element="settingsButton"]');
+    await page.waitForTimeout(1000);
 
     const activeTheme = await iframe.$('.theme-option.active-theme .ui__choice__label');
     expect(await activeTheme.textContent()).toBe('深色模式');
 
+    await iframe.click('.SettingsModal .header .Button');
     await iframe.click('[data-element="menuButton"]');
 
     await page.keyboard.down('Control');
@@ -257,5 +270,51 @@ test.describe('Settings modal', () => {
     const getIsChecked = async (choice) => (await choice.getAttribute('class')).includes('ui__choice--checked');
     expect(await getIsChecked(choices[0])).toBe(true);
     expect(await getIsChecked(choices[1])).toBe(false);
+  });
+
+  test('Search settings', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
+    await page.waitForTimeout(5000);
+
+    // General tab
+    await iframe.click('[data-element="menuButton"]');
+    await iframe.click('[data-element="settingsButton"]');
+    await page.waitForTimeout(1000);
+
+    const searchInput = await iframe.$('.SettingsModal .header input');
+    await searchInput.fill('lang');
+    await page.waitForTimeout(500);
+
+
+    const languageSection = await iframe.$('[data-element="settingsLanguageSection"]');
+    expect(languageSection).toBeTruthy();
+
+    const themeSection = await iframe.$('[data-element="settingsThemeSection"]');
+    expect(themeSection).toBeFalsy();
+
+    // Keyboard Shortcut tab
+    await iframe.click('[data-element="settingsKeyboardButton"]');
+    await page.waitForTimeout(1000);
+
+    await searchInput.fill('rotate');
+    await page.waitForTimeout(500);
+
+    const shortcutItems = await iframe.$$('.settings-content .shortcut-table-item');
+    expect(shortcutItems.length).toBe(2);
+    expect(await (await shortcutItems[0].$('.shortcut-table-item-description')).textContent()).toBe('Rotate the document clockwise');
+    expect(await (await shortcutItems[1].$('.shortcut-table-item-description')).textContent()).toBe('Rotate the document counterclockwise');
+
+    // Advanced tab
+    await iframe.click('[data-element="settingsAdvancedButton"]');
+    await page.waitForTimeout(1000);
+
+    await searchInput.fill('native');
+    await page.waitForTimeout(500);
+
+    const settingSections = await iframe.$$('.settings-content .setting-section');
+    expect(settingSections.length).toBe(1);
+
+    expect(await (await settingSections[0].$('.setting-label')).textContent()).toBe('Viewing');
+    expect(await (await settingSections[0].$('.setting-item-label')).textContent()).toBe('Disable Native Scrolling');
   });
 });
