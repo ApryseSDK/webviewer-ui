@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Wasserzeichenoptionen",
     "watermarks": "Wasserzeichen"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Erstellen Sie ein PDF-Portfolio",
+    "uploadFiles": "Daten hochladen",
+    "uploadFolder": "Ordner hochladen",
+    "addFiles": "Dateien hinzufügen",
+    "addFile": "Datei hinzufügen",
+    "addFolder": "Ordner hinzufügen",
+    "createFolder": "Ordner erstellen",
     "portfolioPanelTitle": "PDF-Portfolio",
-    "portfolioAddFile": "Datei hinzufügen",
-    "portfolioAddFolder": "Ordner hinzufügen",
-    "portfolioCreateFolder": "Ordner erstellen",
     "portfolioNewFolder": "Neuer Ordner",
-    "portfolioNewFolderPlaceholder": "Ordnernamen",
+    "portfolioFolderPlaceholder": "Ordnernamen",
+    "portfolioFilePlaceholder": "Dateiname",
+    "folderNameAlreadyExists": "Der Ordnername existiert bereits",
+    "fileNameAlreadyExists": "Der Dateiname existiert bereits",
     "openFile": "In neuem Tab öffnen"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Datei speichern",
     "pageError": "Ungültige Seite. Gültige Seitenbereiche liegen zwischen 1 -",
     "fileNameCannotBeEmpty": "Der Dateiname darf nicht leer sein"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Erstellen Sie ein PDF-Portfolio",
-    "uploadFiles": "Daten hochladen",
-    "uploadFolder": "Ordner hochladen",
-    "addFiles": "Dateien hinzufügen",
-    "addFolder": "Ordner hinzufügen"
   },
   "filePicker": {
     "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",

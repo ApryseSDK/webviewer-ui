@@ -1083,13 +1083,20 @@
     "watermarkOptions": "水印選項",
     "watermarks": "水印"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "創建 PDF 包",
+    "uploadFiles": "上傳文件",
+    "uploadFolder": "上傳文件夾",
+    "addFiles": "添加文件",
+    "addFile": "添加文件",
+    "addFolder": "新增文件夾",
+    "createFolder": "創建文件夾",
     "portfolioPanelTitle": "PDF 作品集",
-    "portfolioAddFile": "添加文件",
-    "portfolioAddFolder": "新增文件夾",
-    "portfolioCreateFolder": "創建文件夾",
     "portfolioNewFolder": "新建文件夾",
-    "portfolioNewFolderPlaceholder": "文件夾名稱",
+    "portfolioFolderPlaceholder": "文件夾名稱",
+    "portfolioFilePlaceholder": "文件名",
+    "folderNameAlreadyExists": "文件夾名稱已存在",
+    "fileNameAlreadyExists": "文件名已存在",
     "openFile": "在新選項卡中打開"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "保存存檔",
     "pageError": "無效頁面。有效頁面範圍介於 1 -",
     "fileNameCannotBeEmpty": "文件名不能為空"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "創建 PDF 包",
-    "uploadFiles": "上傳文件",
-    "uploadFolder": "上傳文件夾",
-    "addFiles": "添加文件",
-    "addFolder": "新增文件夾"
   },
   "filePicker": {
     "dragAndDrop": "將您的文件拖放到此處",

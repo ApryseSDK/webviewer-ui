@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Параметри водяного знака",
     "watermarks": "Водяні знаки"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Створити PDF-портфоліо",
+    "uploadFiles": "Завантажити файли",
+    "uploadFolder": "Завантажити папку",
+    "addFiles": "Додати файли",
+    "addFile": "Додати файл",
+    "addFolder": "Додати папку",
+    "createFolder": "Створити папку",
     "portfolioPanelTitle": "PDF-портфоліо",
-    "portfolioAddFile": "Додати файл",
-    "portfolioAddFolder": "Додати папку",
-    "portfolioCreateFolder": "Створити папку",
     "portfolioNewFolder": "Нова папка",
-    "portfolioNewFolderPlaceholder": "Назва папки",
+    "portfolioFolderPlaceholder": "Назва папки",
+    "portfolioFilePlaceholder": "Ім'я файлу",
+    "folderNameAlreadyExists": "Назва папки вже існує",
+    "fileNameAlreadyExists": "Назва файлу вже існує",
     "openFile": "Відкрити в новій вкладці"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Зберегти файл",
     "pageError": "Недійсна сторінка. Дійсні діапазони сторінок від 1 до",
     "fileNameCannotBeEmpty": "Назва файлу не може бути пустою"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Створити PDF-портфоліо",
-    "uploadFiles": "Завантажити файли",
-    "uploadFolder": "Завантажити папку",
-    "addFiles": "Додати файли",
-    "addFolder": "Додати папку"
   },
   "filePicker": {
     "dragAndDrop": "Перетягніть файл сюди",

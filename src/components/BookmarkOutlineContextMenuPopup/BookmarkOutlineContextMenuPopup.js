@@ -75,8 +75,8 @@ const BookmarkOutlineContextMenuPopup = ({
             className="option-button"
             dataElement={`${type}OpenFileButton`}
             img="icon-portfolio-file"
-            label={t('portfolioPanel.openFile')}
-            ariaLabel={t('portfolioPanel.openFile')}
+            label={t('portfolio.openFile')}
+            ariaLabel={t('portfolio.openFile')}
             onClick={(e) => {
               e.stopPropagation();
               onOpenClick();

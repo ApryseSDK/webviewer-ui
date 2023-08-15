@@ -39,7 +39,6 @@ const PortfolioItem = forwardRef(({
   isDraggedDownwards,
 }, ref) => {
   const {
-    activePortfolioItem,
     setActivePortfolioItem,
     isPortfolioItemActive,
     isAddingNewFolder,
@@ -64,20 +63,20 @@ const PortfolioItem = forwardRef(({
     setIsExpanded((expand) => !expand);
   }, []);
 
-  const onSingleClick = useCallback(() => {
-    // If the item is in renaming-mode, clicking on it won't do anything
+  const onDoubleClick = useCallback(() => {
+    // If the item is in renaming-mode, double-clicking on it won't do anything
     if (isRenaming) {
       return;
     }
 
-    // TODO: open document here
+    openPortfolioItem(portfolioItem);
     setActivePortfolioItem(portfolioItem.id);
 
-    // If the panel is in add-folder-mode, reset it when clicking on other items
+    // If the panel is in add-folder-mode, reset it when double-clicking on other items
     if (isAddingNewFolder) {
       setAddingNewFolder(false);
     }
-  }, [setActivePortfolioItem, activePortfolioItem, isAddingNewFolder]);
+  }, [isRenaming, portfolioItem, openPortfolioItem, setActivePortfolioItem, isAddingNewFolder, setAddingNewFolder]);
 
   return (
     <div
@@ -95,11 +94,7 @@ const PortfolioItem = forwardRef(({
           'hover': isHovered && !isActive,
         })}
         tabIndex={0}
-        onKeyDown={(e) => e.key === 'Enter' && onSingleClick()}
-        onClick={onSingleClick}
-        onDoubleClick={() => {
-          openPortfolioItem(portfolioItem);
-        }}
+        onDoubleClick={onDoubleClick}
       >
         <div
           className={classNames({
@@ -122,7 +117,6 @@ const PortfolioItem = forwardRef(({
 
         <PortfolioItemContent
           portfolioItem={portfolioItem}
-          isFolder={portfolioItem.isFolder}
           isPortfolioRenaming={isRenaming}
           setPortfolioRenaming={setIsRenaming}
           setIsHovered={setHovered}
@@ -260,6 +254,7 @@ const PortfolioItemNested = DropTarget(
       dragSourceNode: dragSourceContainer.getNode(),
       dropLocation: DropLocation.INITIAL,
     }),
+    canDrag: () => false, // remove this to have dragging enabled
   },
   (connect, dragSourceState) => ({
     connectDragSource: connect.dragSource(),

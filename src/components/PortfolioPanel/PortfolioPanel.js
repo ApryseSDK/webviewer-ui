@@ -73,6 +73,11 @@ const PortfolioPanel = ({ portfolioFiles }) => {
     }
   };
 
+  const isNameDuplicated = (name, id) => {
+    const otherFiles = portfolioFiles.filter((file) => file.id !== id);
+    return otherFiles.some((file) => file.name === name);
+  };
+
   const movePortfolioInward = (dragPortfolioItem, dropPortfolioItem) => {
     console.log(dragPortfolioItem.name, 'movePortfolioInward', dropPortfolioItem.name);
   };
@@ -97,7 +102,7 @@ const PortfolioPanel = ({ portfolioFiles }) => {
     >
       <div className="bookmark-outline-panel-header">
         <div className="header-title">
-          {t('portfolioPanel.portfolioPanelTitle')}
+          {t('portfolio.portfolioPanelTitle')}
         </div>
 
         <div className="portfolio-panel-control">
@@ -105,7 +110,7 @@ const PortfolioPanel = ({ portfolioFiles }) => {
             className="portfolio-panel-control-button"
             dataElement={DataElements.PORTFOLIO_ADD_FILE}
             img="icon-add-file"
-            title={t('portfolioPanel.portfolioAddFile')}
+            title={t('portfolio.addFile')}
             disabled={isAddingNewFolder}
             onClick={addNewFile}
           />
@@ -124,6 +129,7 @@ const PortfolioPanel = ({ portfolioFiles }) => {
           removePortfolioItem,
           openPortfolioItem,
           refreshPortfolio,
+          isNameDuplicated,
           tabManager,
         }}
       >

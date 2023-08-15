@@ -1083,13 +1083,20 @@
     "watermarkOptions": "वॉटरमार्क विकल्प",
     "watermarks": "वाटरमार्क"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "पीडीएफ पोर्टफोलियो बनाएं",
+    "uploadFiles": "फाइलें अपलोड करें",
+    "uploadFolder": "फ़ोल्डर अपलोड करें",
+    "addFiles": "फाइलें जोड़ो",
+    "addFile": "फ़ाइल जोड़ें",
+    "addFolder": "फ़ोल्डर जोड़ें",
+    "createFolder": "फोल्डर बनाएं",
     "portfolioPanelTitle": "पीडीएफ पोर्टफोलियो",
-    "portfolioAddFile": "फ़ाइल जोड़ें",
-    "portfolioAddFolder": "फ़ोल्डर जोड़ें",
-    "portfolioCreateFolder": "फोल्डर बनाएं",
     "portfolioNewFolder": "नया फ़ोल्डर",
-    "portfolioNewFolderPlaceholder": "फ़ोल्डर का नाम",
+    "portfolioFolderPlaceholder": "फ़ोल्डर का नाम",
+    "portfolioFilePlaceholder": "फ़ाइल का नाम",
+    "folderNameAlreadyExists": "फ़ोल्डर नाम पहले से मौजूद है",
+    "fileNameAlreadyExists": "फ़ाइल नाम पहले से मौजूद है",
     "openFile": "वेब टेब में खोलें"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "फाइल सुरक्षित करें",
     "pageError": "अमान्य पृष्ठ। मान्य पृष्ठ श्रेणियां 1 के बीच हैं -",
     "fileNameCannotBeEmpty": "फ़ाइल नाम रिक्त नहीं हो सकता"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "पीडीएफ पोर्टफोलियो बनाएं",
-    "uploadFiles": "फाइलें अपलोड करें",
-    "uploadFolder": "फ़ोल्डर अपलोड करें",
-    "addFiles": "फाइलें जोड़ो",
-    "addFolder": "फ़ोल्डर जोड़ें"
   },
   "filePicker": {
     "dragAndDrop": "अपनी फ़ाइल को यहां खींचें और छोड़ें",

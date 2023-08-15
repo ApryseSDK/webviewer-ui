@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Επιλογές υδατογραφήματος",
     "watermarks": "Υδατογράφημα"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Δημιουργία χαρτοφυλακίου PDF",
+    "uploadFiles": "Μεταφόρτωση Αρχείων",
+    "uploadFolder": "Μεταφόρτωση φακέλου",
+    "addFiles": "Πρόσθεσε αρχεία",
+    "addFile": "Προσθήκη αρχείου",
+    "addFolder": "Προσθήκη φακέλου",
+    "createFolder": "ΔΗΜΙΟΥΡΓΩ φακελο",
     "portfolioPanelTitle": "Χαρτοφυλάκιο PDF",
-    "portfolioAddFile": "Προσθήκη αρχείου",
-    "portfolioAddFolder": "Προσθήκη φακέλου",
-    "portfolioCreateFolder": "ΔΗΜΙΟΥΡΓΩ φακελο",
     "portfolioNewFolder": "Νέος φάκελος",
-    "portfolioNewFolderPlaceholder": "Ονομα φακέλου",
+    "portfolioFolderPlaceholder": "Ονομα φακέλου",
+    "portfolioFilePlaceholder": "Ονομα αρχείου",
+    "folderNameAlreadyExists": "Το όνομα φακέλου υπάρχει ήδη",
+    "fileNameAlreadyExists": "Το όνομα αρχείου υπάρχει ήδη",
     "openFile": "Άνοιγμα σε Νέα καρτέλα"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Αποθηκεύσετε το αρχείο",
     "pageError": "Μη έγκυρη σελίδα. Τα έγκυρα εύρη σελίδων είναι μεταξύ 1 -",
     "fileNameCannotBeEmpty": "Το όνομα αρχείου δεν μπορεί να είναι κενό"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Δημιουργία χαρτοφυλακίου PDF",
-    "uploadFiles": "Μεταφόρτωση Αρχείων",
-    "uploadFolder": "Μεταφόρτωση φακέλου",
-    "addFiles": "Πρόσθεσε αρχεία",
-    "addFolder": "Προσθήκη φακέλου"
   },
   "filePicker": {
     "dragAndDrop": "Σύρετε και αποθέστε το αρχείο σας εδώ",

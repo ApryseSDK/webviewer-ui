@@ -1083,13 +1083,20 @@
     "watermarkOptions": "透かしオプション",
     "watermarks": "透かし"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "PDF ポートフォリオを作成する",
+    "uploadFiles": "ファイルをアップロードする",
+    "uploadFolder": "アップロードフォルダー",
+    "addFiles": "追加ファイル",
+    "addFile": "ファイルの追加",
+    "addFolder": "フォルダーを追加",
+    "createFolder": "フォルダーを作る",
     "portfolioPanelTitle": "PDFポートフォリオ",
-    "portfolioAddFile": "ファイルの追加",
-    "portfolioAddFolder": "フォルダーを追加",
-    "portfolioCreateFolder": "フォルダーを作る",
     "portfolioNewFolder": "新しいフォルダー",
-    "portfolioNewFolderPlaceholder": "フォルダ名",
+    "portfolioFolderPlaceholder": "フォルダ名",
+    "portfolioFilePlaceholder": "ファイル名",
+    "folderNameAlreadyExists": "フォルダ名はすでに存在します",
+    "fileNameAlreadyExists": "ファイル名はすでに存在します",
     "openFile": "新しいタブで開く"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "ファイルを保存",
     "pageError": "ページが無効です。有効なページ範囲は 1 ～",
     "fileNameCannotBeEmpty": "ファイル名を空にすることはできません"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "PDF ポートフォリオを作成する",
-    "uploadFiles": "ファイルをアップロードする",
-    "uploadFolder": "アップロードフォルダー",
-    "addFiles": "追加ファイル",
-    "addFolder": "フォルダーを追加"
   },
   "filePicker": {
     "dragAndDrop": "ここにファイルをドラッグ＆ドロップします",

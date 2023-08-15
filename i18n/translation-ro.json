@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Opțiuni filigran",
     "watermarks": "Filigrane"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Creați portofoliu PDF",
+    "uploadFiles": "Încărca fișiere",
+    "uploadFolder": "Încărcați dosarul",
+    "addFiles": "Adăugați fișiere",
+    "addFile": "Adauga fisier",
+    "addFolder": "Adaugă folder",
+    "createFolder": "Creeaza dosar",
     "portfolioPanelTitle": "Portofoliu PDF",
-    "portfolioAddFile": "Adauga fisier",
-    "portfolioAddFolder": "Adaugă folder",
-    "portfolioCreateFolder": "Creeaza dosar",
     "portfolioNewFolder": "Dosar nou",
-    "portfolioNewFolderPlaceholder": "Numele fisierului",
+    "portfolioFolderPlaceholder": "Numele fisierului",
+    "portfolioFilePlaceholder": "Nume de fișier",
+    "folderNameAlreadyExists": "Numele dosarului există deja",
+    "fileNameAlreadyExists": "Numele fișierului există deja",
     "openFile": "Deschideți în filă nouă"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Salvează fișierul",
     "pageError": "Pagina nevalidă. Intervalele de pagini valide sunt cuprinse între 1 -",
     "fileNameCannotBeEmpty": "Numele fișierului nu poate fi gol"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Creați portofoliu PDF",
-    "uploadFiles": "Încărca fișiere",
-    "uploadFolder": "Încărcați dosarul",
-    "addFiles": "Adăugați fișiere",
-    "addFolder": "Adaugă folder"
   },
   "filePicker": {
     "dragAndDrop": "Trageți și plasați fișierul aici",

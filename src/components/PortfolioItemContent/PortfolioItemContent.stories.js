@@ -26,14 +26,25 @@ const portfolioItem = {
   id: '0',
 };
 
-const portfolioItem2 = {
+const portfolioFolderAdding = {
   name: '',
   id: '0',
+  isFolder: true,
 };
 
 const portfolioItemFolder = {
   name: 'A test folder',
   id: '0',
+  isFolder: true,
+};
+
+const PortfolioContextValues = {
+  addNewFolder: NOOP,
+  setAddingNewFolder: NOOP,
+  refreshPortfolio: NOOP,
+  renamePortfolio: NOOP,
+  removePortfolio: NOOP,
+  isNameDuplicated: NOOP,
 };
 
 export const File = () => {
@@ -43,9 +54,7 @@ export const File = () => {
         <div className='left-panel-container' style={{ minWidth: '330px' }}>
           <div className='bookmark-outline-single-container default'>
             <PortfolioContext.Provider
-              value={{
-                addNewFolder: NOOP,
-              }}
+              value={PortfolioContextValues}
             >
               <PortfolioItemContent
                 portfolioItem={portfolioItem}
@@ -66,13 +75,10 @@ export const Folder = () => {
         <div className='left-panel-container' style={{ minWidth: '330px' }}>
           <div className='bookmark-outline-single-container default'>
             <PortfolioContext.Provider
-              value={{
-                addNewFolder: NOOP,
-              }}
+              value={PortfolioContextValues}
             >
               <PortfolioItemContent
                 portfolioItem={portfolioItemFolder}
-                isFolder={true}
                 setIsHovered={NOOP}
               />
             </PortfolioContext.Provider>
@@ -90,16 +96,11 @@ export const Adding = () => {
         <div className='left-panel-container' style={{ minWidth: '330px' }}>
           <div className='bookmark-outline-single-container editing'>
             <PortfolioContext.Provider
-              value={{
-                addNewFolder: NOOP,
-                setAddingNewFolder: NOOP,
-                refreshPortfolio: NOOP,
-              }}
+              value={PortfolioContextValues}
             >
               <PortfolioItemContent
-                portfolioItem={portfolioItem2}
+                portfolioItem={portfolioFolderAdding}
                 isAdding={true}
-                isFolder={true}
                 setIsHovered={NOOP}
               />
             </PortfolioContext.Provider>
@@ -117,16 +118,36 @@ export const Renaming = () => {
         <div className='left-panel-container' style={{ minWidth: '330px' }}>
           <div className='bookmark-outline-single-container editing'>
             <PortfolioContext.Provider
-              value={{
-                addNewFolder: NOOP,
-                refreshPortfolio: NOOP,
-                renamePortfolioItem: NOOP,
-                removePortfolioItem: NOOP,
-              }}
+              value={PortfolioContextValues}
             >
               <PortfolioItemContent
                 portfolioItem={portfolioItemFolder}
-                isFolder={true}
+                isPortfolioRenaming={true}
+                setPortfolioRenaming={NOOP}
+                setIsHovered={NOOP}
+              />
+            </PortfolioContext.Provider>
+          </div>
+        </div>
+      </div>
+    </ReduxProvider>
+  );
+};
+
+export const RenamingDuplicateError = () => {
+  return (
+    <ReduxProvider store={createStore(reducer)}>
+      <div className='Panel LeftPanel PortfolioPanel' style={{ width: '330px', minWidth: '330px' }}>
+        <div className='left-panel-container' style={{ minWidth: '330px' }}>
+          <div className='bookmark-outline-single-container editing'>
+            <PortfolioContext.Provider
+              value={{
+                ...PortfolioContextValues,
+                isNameDuplicated: () => true,
+              }}
+            >
+              <PortfolioItemContent
+                portfolioItem={portfolioItem}
                 isPortfolioRenaming={true}
                 setPortfolioRenaming={NOOP}
                 setIsHovered={NOOP}

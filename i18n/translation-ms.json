@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Pilihan Tera Air",
     "watermarks": "Tera air"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Cipta Portfolio PDF",
+    "uploadFiles": "Memuat naik fail",
+    "uploadFolder": "Muat naik Folder",
+    "addFiles": "Menambah fail",
+    "addFile": "Tambah fail",
+    "addFolder": "Tambah folder",
+    "createFolder": "Buat Folder",
     "portfolioPanelTitle": "Portfolio PDF",
-    "portfolioAddFile": "Tambah fail",
-    "portfolioAddFolder": "Tambah folder",
-    "portfolioCreateFolder": "Buat Folder",
     "portfolioNewFolder": "Fail baharu",
-    "portfolioNewFolderPlaceholder": "Nama folder",
+    "portfolioFolderPlaceholder": "Nama folder",
+    "portfolioFilePlaceholder": "Nama fail",
+    "folderNameAlreadyExists": "Nama folder sudah wujud",
+    "fileNameAlreadyExists": "Nama fail sudah wujud",
     "openFile": "Buka dalam Tab Baharu"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Simpan fail",
     "pageError": "Halaman tidak sah. Julat halaman yang sah adalah antara 1 -",
     "fileNameCannotBeEmpty": "Nama Fail tidak boleh kosong"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Cipta Portfolio PDF",
-    "uploadFiles": "Memuat naik fail",
-    "uploadFolder": "Muat naik Folder",
-    "addFiles": "Menambah fail",
-    "addFolder": "Tambah folder"
   },
   "filePicker": {
     "dragAndDrop": "Seret & Lepaskan fail anda di sini",

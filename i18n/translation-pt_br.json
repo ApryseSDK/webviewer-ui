@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Opções de marca d'água",
     "watermarks": "Marcas d'água"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Criar Portfólio PDF",
+    "uploadFiles": "Fazer upload de arquivos",
+    "uploadFolder": "Carregar Pasta",
+    "addFiles": "Adicionar arquivos",
+    "addFile": "Adicionar ficheiro",
+    "addFolder": "Adicionar pasta",
+    "createFolder": "Criar pasta",
     "portfolioPanelTitle": "Portfólio PDF",
-    "portfolioAddFile": "Adicionar ficheiro",
-    "portfolioAddFolder": "Adicionar pasta",
-    "portfolioCreateFolder": "Criar pasta",
     "portfolioNewFolder": "Nova pasta",
-    "portfolioNewFolderPlaceholder": "Nome da pasta",
+    "portfolioFolderPlaceholder": "Nome da pasta",
+    "portfolioFilePlaceholder": "Nome do arquivo",
+    "folderNameAlreadyExists": "O nome da pasta já existe",
+    "fileNameAlreadyExists": "O nome do arquivo já existe",
     "openFile": "Abrir em nova guia"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Salvar Arquivo",
     "pageError": "Página inválida. Os intervalos de páginas válidos estão entre 1 -",
     "fileNameCannotBeEmpty": "O nome do arquivo não pode estar vazio"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Criar Portfólio PDF",
-    "uploadFiles": "Fazer upload de arquivos",
-    "uploadFolder": "Carregar Pasta",
-    "addFiles": "Adicionar arquivos",
-    "addFolder": "Adicionar pasta"
   },
   "filePicker": {
     "dragAndDrop": "Arraste e solte seu arquivo aqui",

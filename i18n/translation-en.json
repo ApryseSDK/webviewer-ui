@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Watermark Options",
     "watermarks": "Watermarks"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Create PDF Portfolio",
+    "uploadFiles": "Upload Files",
+    "uploadFolder": "Upload Folder",
+    "addFiles": "Add Files",
+    "addFile": "Add File",
+    "addFolder": "Add Folder",
+    "createFolder": "Create Folder",
     "portfolioPanelTitle": "PDF Portfolio",
-    "portfolioAddFile": "Add File",
-    "portfolioAddFolder": "Add Folder",
-    "portfolioCreateFolder": "Create Folder",
     "portfolioNewFolder": "New Folder",
-    "portfolioNewFolderPlaceholder": "Folder Name",
+    "portfolioFolderPlaceholder": "Folder Name",
+    "portfolioFilePlaceholder": "File Name",
+    "folderNameAlreadyExists": "Folder name already exists",
+    "fileNameAlreadyExists": "File name already exists",
     "openFile": "Open in New Tab"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Save File",
     "pageError": "Invalid page. Valid page ranges are between  1 - ",
     "fileNameCannotBeEmpty": "File Name cannot be empty"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Create PDF Portfolio",
-    "uploadFiles": "Upload Files",
-    "uploadFolder": "Upload Folder",
-    "addFiles": "Add Files",
-    "addFolder": "Add Folder"
   },
   "filePicker": {
     "dragAndDrop": "Drag & Drop your file here",

@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Filigran Seçenekleri",
     "watermarks": "filigranlar"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "PDF Portföyü Oluştur",
+    "uploadFiles": "Dosyaları yükle",
+    "uploadFolder": "Klasörü Yükle",
+    "addFiles": "Dosya Ekle",
+    "addFile": "Dosya Ekle",
+    "addFolder": "Klasörü eklemek",
+    "createFolder": "Klasör oluşturun",
     "portfolioPanelTitle": "PDF Portföyü",
-    "portfolioAddFile": "Dosya Ekle",
-    "portfolioAddFolder": "Klasörü eklemek",
-    "portfolioCreateFolder": "Klasör oluşturun",
     "portfolioNewFolder": "Yeni dosya",
-    "portfolioNewFolderPlaceholder": "Klasör adı",
+    "portfolioFolderPlaceholder": "Klasör adı",
+    "portfolioFilePlaceholder": "Dosya adı",
+    "folderNameAlreadyExists": "Klasör adı zaten var",
+    "fileNameAlreadyExists": "Dosya adı zaten var",
     "openFile": "Yeni sekmede aç"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Dosyayı kaydet",
     "pageError": "Geçersiz sayfa. Geçerli sayfa aralıkları 1 -",
     "fileNameCannotBeEmpty": "Dosya Adı boş olamaz"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "PDF Portföyü Oluştur",
-    "uploadFiles": "Dosyaları yükle",
-    "uploadFolder": "Klasörü Yükle",
-    "addFiles": "Dosya Ekle",
-    "addFolder": "Klasörü eklemek"
   },
   "filePicker": {
     "dragAndDrop": "Dosyanızı buraya sürükleyip bırakın",

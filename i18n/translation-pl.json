@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Opcje znaku wodnego",
     "watermarks": "Znaki wodne"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Utwórz portfolio PDF",
+    "uploadFiles": "Prześlij pliki",
+    "uploadFolder": "Prześlij folder",
+    "addFiles": "Dodaj pliki",
+    "addFile": "Dodaj plik",
+    "addFolder": "Dodaj folder",
+    "createFolder": "Utwórz folder",
     "portfolioPanelTitle": "Portfolio PDF",
-    "portfolioAddFile": "Dodaj plik",
-    "portfolioAddFolder": "Dodaj folder",
-    "portfolioCreateFolder": "Utwórz folder",
     "portfolioNewFolder": "Nowy folder",
-    "portfolioNewFolderPlaceholder": "Nazwa folderu",
+    "portfolioFolderPlaceholder": "Nazwa folderu",
+    "portfolioFilePlaceholder": "Nazwa pliku",
+    "folderNameAlreadyExists": "Nazwa folderu już istnieje",
+    "fileNameAlreadyExists": "Nazwa pliku już istnieje",
     "openFile": "Otwórz w nowej karcie"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Zapisz plik",
     "pageError": "Nieprawidłowa strona. Prawidłowe zakresy stron mieszczą się w przedziale od 1 do",
     "fileNameCannotBeEmpty": "Nazwa pliku nie może być pusta"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Utwórz portfolio PDF",
-    "uploadFiles": "Prześlij pliki",
-    "uploadFolder": "Prześlij folder",
-    "addFiles": "Dodaj pliki",
-    "addFolder": "Dodaj folder"
   },
   "filePicker": {
     "dragAndDrop": "Przeciągnij i upuść swój plik tutaj",

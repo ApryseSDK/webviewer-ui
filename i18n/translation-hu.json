@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Vízjel opciók",
     "watermarks": "Vízjelek"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "PDF-portfólió létrehozása",
+    "uploadFiles": "Fájlok feltöltése",
+    "uploadFolder": "Mappa feltöltése",
+    "addFiles": "Fájlok hozzáadása",
+    "addFile": "Fájl hozzáadása",
+    "addFolder": "Mappa hozzáadása",
+    "createFolder": "Mappa létrehozás",
     "portfolioPanelTitle": "PDF portfólió",
-    "portfolioAddFile": "Fájl hozzáadása",
-    "portfolioAddFolder": "Mappa hozzáadása",
-    "portfolioCreateFolder": "Mappa létrehozás",
     "portfolioNewFolder": "Új mappa",
-    "portfolioNewFolderPlaceholder": "Mappa neve",
+    "portfolioFolderPlaceholder": "Mappa neve",
+    "portfolioFilePlaceholder": "Fájl név",
+    "folderNameAlreadyExists": "A mappanév már létezik",
+    "fileNameAlreadyExists": "A fájlnév már létezik",
     "openFile": "Megnyitás új lapon"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Fájl mentése",
     "pageError": "Érvénytelen oldal. Az érvényes oldaltartományok 1 -",
     "fileNameCannotBeEmpty": "A fájlnév nem lehet üres"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "PDF-portfólió létrehozása",
-    "uploadFiles": "Fájlok feltöltése",
-    "uploadFolder": "Mappa feltöltése",
-    "addFiles": "Fájlok hozzáadása",
-    "addFolder": "Mappa hozzáadása"
   },
   "filePicker": {
     "dragAndDrop": "Drag & Drop ide a fájlt",

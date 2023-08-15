@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Options de filigrane",
     "watermarks": "Filigranes"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Créer un portfolio PDF",
+    "uploadFiles": "Télécharger des fichiers",
+    "uploadFolder": "Télécharger le dossier",
+    "addFiles": "Ajouter des fichiers",
+    "addFile": "Ajouter le fichier",
+    "addFolder": "Ajouter le dossier",
+    "createFolder": "Créer le dossier",
     "portfolioPanelTitle": "Portfolio PDF",
-    "portfolioAddFile": "Ajouter le fichier",
-    "portfolioAddFolder": "Ajouter le dossier",
-    "portfolioCreateFolder": "Créer le dossier",
     "portfolioNewFolder": "Nouveau dossier",
-    "portfolioNewFolderPlaceholder": "Nom de dossier",
+    "portfolioFolderPlaceholder": "Nom de dossier",
+    "portfolioFilePlaceholder": "Nom de fichier",
+    "folderNameAlreadyExists": "Le nom du dossier existe déjà",
+    "fileNameAlreadyExists": "Le nom du fichier existe déjà",
     "openFile": "Ouvrir dans un nouvel onglet"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Enregistrer le fichier",
     "pageError": "Page invalide. Les plages de pages valides sont comprises entre 1 et",
     "fileNameCannotBeEmpty": "Le nom du fichier ne peut pas être vide"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Créer un portfolio PDF",
-    "uploadFiles": "Télécharger des fichiers",
-    "uploadFolder": "Télécharger le dossier",
-    "addFiles": "Ajouter des fichiers",
-    "addFolder": "Ajouter le dossier"
   },
   "filePicker": {
     "dragAndDrop": "Faites glisser et déposez votre fichier ici",

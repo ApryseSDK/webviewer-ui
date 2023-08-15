@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Možnosti vodoznaku",
     "watermarks": "Vodoznaky"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Vytvořte portfolio PDF",
+    "uploadFiles": "Nahrát soubory",
+    "uploadFolder": "Nahrát složku",
+    "addFiles": "Přidat soubory",
+    "addFile": "Přidat soubor",
+    "addFolder": "Přidat složku",
+    "createFolder": "Vytvořit složku",
     "portfolioPanelTitle": "Portfolio PDF",
-    "portfolioAddFile": "Přidat soubor",
-    "portfolioAddFolder": "Přidat složku",
-    "portfolioCreateFolder": "Vytvořit složku",
     "portfolioNewFolder": "Nová složka",
-    "portfolioNewFolderPlaceholder": "Název složky",
+    "portfolioFolderPlaceholder": "Název složky",
+    "portfolioFilePlaceholder": "Název souboru",
+    "folderNameAlreadyExists": "Název složky již existuje",
+    "fileNameAlreadyExists": "Název souboru již existuje",
     "openFile": "Otevřít na nové kartě"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Uložení souboru",
     "pageError": "Neplatná stránka. Platné rozsahy stránek jsou mezi 1 -",
     "fileNameCannotBeEmpty": "Název souboru nesmí být prázdný"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Vytvořte portfolio PDF",
-    "uploadFiles": "Nahrát soubory",
-    "uploadFolder": "Nahrát složku",
-    "addFiles": "Přidat soubory",
-    "addFolder": "Přidat složku"
   },
   "filePicker": {
     "dragAndDrop": "Sem přetáhněte soubor",

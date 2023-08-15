@@ -1083,13 +1083,20 @@
     "watermarkOptions": "ตัวเลือกลายน้ำ",
     "watermarks": "ลายน้ำ"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "สร้างผลงาน PDF",
+    "uploadFiles": "อัพโหลดไฟล์",
+    "uploadFolder": "อัปโหลดโฟลเดอร์",
+    "addFiles": "เพิ่มไฟล์",
+    "addFile": "เพิ่มไฟล์",
+    "addFolder": "เพิ่มกล่องเก็บไฟล์",
+    "createFolder": "สร้างโฟลเดอร์",
     "portfolioPanelTitle": "ไฟล์ PDF",
-    "portfolioAddFile": "เพิ่มไฟล์",
-    "portfolioAddFolder": "เพิ่มกล่องเก็บไฟล์",
-    "portfolioCreateFolder": "สร้างโฟลเดอร์",
     "portfolioNewFolder": "แฟ้มใหม่",
-    "portfolioNewFolderPlaceholder": "ชื่อโฟลเดอร์",
+    "portfolioFolderPlaceholder": "ชื่อโฟลเดอร์",
+    "portfolioFilePlaceholder": "ชื่อไฟล์",
+    "folderNameAlreadyExists": "ชื่อโฟลเดอร์มีอยู่แล้ว",
+    "fileNameAlreadyExists": "ชื่อไฟล์มีอยู่แล้ว",
     "openFile": "เปิดในแท็บใหม่"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "บันทึกไฟล์",
     "pageError": "หน้าไม่ถูกต้อง ช่วงหน้าที่ถูกต้องอยู่ระหว่าง 1 -",
     "fileNameCannotBeEmpty": "ชื่อไฟล์ต้องไม่ว่างเปล่า"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "สร้างผลงาน PDF",
-    "uploadFiles": "อัพโหลดไฟล์",
-    "uploadFolder": "อัปโหลดโฟลเดอร์",
-    "addFiles": "เพิ่มไฟล์",
-    "addFolder": "เพิ่มกล่องเก็บไฟล์"
   },
   "filePicker": {
     "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่",

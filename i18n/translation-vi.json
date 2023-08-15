@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Tùy chọn hình mờ",
     "watermarks": "Hình mờ"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Tạo danh mục đầu tư PDF",
+    "uploadFiles": "Tải tệp lên",
+    "uploadFolder": "Thư mục tải lên",
+    "addFiles": "Thêm các tập tin",
+    "addFile": "Thêm tập tin",
+    "addFolder": "Thêm thư mục",
+    "createFolder": "Tạo thư mục",
     "portfolioPanelTitle": "Danh mục đầu tư PDF",
-    "portfolioAddFile": "Thêm tập tin",
-    "portfolioAddFolder": "Thêm thư mục",
-    "portfolioCreateFolder": "Tạo thư mục",
     "portfolioNewFolder": "Thư mục mới",
-    "portfolioNewFolderPlaceholder": "Tên thư mục",
+    "portfolioFolderPlaceholder": "Tên thư mục",
+    "portfolioFilePlaceholder": "Tên tệp",
+    "folderNameAlreadyExists": "Tên thư mục đã tồn tại",
+    "fileNameAlreadyExists": "Tên tệp đã tồn tại",
     "openFile": "Mở ra trong trang mới"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Lưu tập tin",
     "pageError": "Trang không hợp lệ. Phạm vi trang hợp lệ là từ 1 -",
     "fileNameCannotBeEmpty": "Tên tệp không được để trống"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Tạo danh mục đầu tư PDF",
-    "uploadFiles": "Tải tệp lên",
-    "uploadFolder": "Thư mục tải lên",
-    "addFiles": "Thêm các tập tin",
-    "addFolder": "Thêm thư mục"
   },
   "filePicker": {
     "dragAndDrop": "Kéo và thả tệp của bạn vào đây",

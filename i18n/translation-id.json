@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Opsi Tanda Air",
     "watermarks": "Tanda air"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Buat Portofolio PDF",
+    "uploadFiles": "Unggah berkas",
+    "uploadFolder": "Unggah Folder",
+    "addFiles": "Tambahkan File",
+    "addFile": "Tambah berkas",
+    "addFolder": "Tambah Folder",
+    "createFolder": "Membuat folder",
     "portfolioPanelTitle": "Portofolio PDF",
-    "portfolioAddFile": "Tambah berkas",
-    "portfolioAddFolder": "Tambah Folder",
-    "portfolioCreateFolder": "Membuat folder",
     "portfolioNewFolder": "Folder baru",
-    "portfolioNewFolderPlaceholder": "Nama folder",
+    "portfolioFolderPlaceholder": "Nama folder",
+    "portfolioFilePlaceholder": "Nama file",
+    "folderNameAlreadyExists": "Nama folder sudah ada",
+    "fileNameAlreadyExists": "Nama file sudah ada",
     "openFile": "Buka di Tab Baru"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Menyimpan file",
     "pageError": "Halaman tidak valid. Rentang halaman yang valid adalah antara 1 -",
     "fileNameCannotBeEmpty": "Nama File tidak boleh kosong"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Buat Portofolio PDF",
-    "uploadFiles": "Unggah berkas",
-    "uploadFolder": "Unggah Folder",
-    "addFiles": "Tambahkan File",
-    "addFolder": "Tambah Folder"
   },
   "filePicker": {
     "dragAndDrop": "Seret & Jatuhkan file Anda di sini",

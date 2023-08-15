@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Watermerkopties",
     "watermarks": "Watermerken"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "PDF-portfolio maken",
+    "uploadFiles": "Upload bestanden",
+    "uploadFolder": "Map uploaden",
+    "addFiles": "Bestanden toevoegen",
+    "addFile": "Bestand toevoegen",
+    "addFolder": "Map toevoegen",
+    "createFolder": "Map aanmaken",
     "portfolioPanelTitle": "PDF-portfolio",
-    "portfolioAddFile": "Bestand toevoegen",
-    "portfolioAddFolder": "Map toevoegen",
-    "portfolioCreateFolder": "Map aanmaken",
     "portfolioNewFolder": "Nieuwe map",
-    "portfolioNewFolderPlaceholder": "Naam van de map",
+    "portfolioFolderPlaceholder": "Naam van de map",
+    "portfolioFilePlaceholder": "Bestandsnaam",
+    "folderNameAlreadyExists": "Mapnaam bestaat al",
+    "fileNameAlreadyExists": "Bestandsnaam bestaat al",
     "openFile": "Openen in nieuw tabblad"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Sla bestand op",
     "pageError": "Ongeldige pagina. Geldige paginabereiken liggen tussen 1 -",
     "fileNameCannotBeEmpty": "Bestandsnaam mag niet leeg zijn"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "PDF-portfolio maken",
-    "uploadFiles": "Upload bestanden",
-    "uploadFolder": "Map uploaden",
-    "addFiles": "Bestanden toevoegen",
-    "addFolder": "Map toevoegen"
   },
   "filePicker": {
     "dragAndDrop": "Sleep uw bestand hierheen",

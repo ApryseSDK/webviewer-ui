@@ -1083,13 +1083,20 @@
     "watermarkOptions": "Opzioni filigrana",
     "watermarks": "Filigrane"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Crea portafoglio PDF",
+    "uploadFiles": "Caricare files",
+    "uploadFolder": "Carica cartella",
+    "addFiles": "Aggiungere i file",
+    "addFile": "Aggiungi file",
+    "addFolder": "Aggiungi cartella",
+    "createFolder": "Creare una cartella",
     "portfolioPanelTitle": "Portafoglio PDF",
-    "portfolioAddFile": "Aggiungi file",
-    "portfolioAddFolder": "Aggiungi cartella",
-    "portfolioCreateFolder": "Creare una cartella",
     "portfolioNewFolder": "Nuova cartella",
-    "portfolioNewFolderPlaceholder": "Nome della cartella",
+    "portfolioFolderPlaceholder": "Nome della cartella",
+    "portfolioFilePlaceholder": "Nome del file",
+    "folderNameAlreadyExists": "Il nome della cartella esiste già",
+    "fileNameAlreadyExists": "Il nome del file esiste già",
     "openFile": "Apri in una nuova scheda"
   },
   "languageModal": {
@@ -1195,13 +1202,6 @@
     "save": "Salvare il file",
     "pageError": "Pagina non valida. Gli intervalli di pagine validi sono compresi tra 1 -",
     "fileNameCannotBeEmpty": "Il nome del file non può essere vuoto"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Crea portafoglio PDF",
-    "uploadFiles": "Caricare files",
-    "uploadFolder": "Carica cartella",
-    "addFiles": "Aggiungere i file",
-    "addFolder": "Aggiungi cartella"
   },
   "filePicker": {
     "dragAndDrop": "Trascina e rilascia qui il tuo file",
