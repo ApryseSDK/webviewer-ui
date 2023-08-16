@@ -4,6 +4,7 @@ import { expect, Frame, Page, test } from '@playwright/test';
 test.describe('Comment panel', () => {
   let iframe: Frame;
   let instance: WebViewerInstance;
+  let consoleLogs: string[] = [];
 
   const createAndAddAnnotation = async (page: Page, isFreeTextAnnot: boolean, isLockedContents: boolean, noteContent = '', author = '', richTextStyle = {}) => {
     await iframe.evaluate(async ([isFreeTextAnnot, isLockedContents, noteContent, author, richTextStyle]) => {
@@ -73,9 +74,10 @@ test.describe('Comment panel', () => {
   };
 
   test.beforeEach(async ({ page }) => {
-    const { iframe: sampleIframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
+    const { iframe: sampleIframe, waitForInstance, consoleLogs: console } = await loadViewerSample(page, 'viewing/blank');
 
     iframe = sampleIframe;
+    consoleLogs = console;
 
     instance = await waitForInstance();
     await instance('enableElements', ['richTextPopup']);
@@ -901,6 +903,10 @@ test.describe('Comment panel', () => {
         },
       ];
       window.instance.UI.mentions.setUserData(userData);
+      window.instance.UI.mentions.addEventListener('mentionChanged', (mentions, action) => {
+        // Logging the mentions value and action to test if the event is fired if we leave a pending comment
+        console.log(`${mentions[0].value}, action: ${action}`);
+      });
     });
 
     await instance('setToolMode', 'AnnotationCreateSticky');
@@ -913,6 +919,11 @@ test.describe('Comment panel', () => {
     await page.keyboard.type('@John');
     await page.waitForTimeout(1000);
     await page.keyboard.press('Enter');
+    // Adding bold text
+    await page.waitForTimeout(1000);
+    await page.keyboard.press('Control+B');
+    await page.waitForTimeout(1000);
+    await page.keyboard.type(' bold text');
     // Leaving the note input field without submit first to test if app will not crash
     await page.mouse.click(x + 100, y + 200);
     await page.waitForTimeout(1000);
@@ -920,18 +931,17 @@ test.describe('Comment panel', () => {
     await instance('enableNoteSubmissionWithEnter');
     const noteContent = await iframe.$('.normal-notes-container > .note-wrapper .Note');
     await noteContent?.click();
-    const noteContentInput = await iframe.$('.normal-notes-container > .note-wrapper .Note .comment-textarea .ql-editor');
-    await noteContentInput?.click();
     await page.waitForTimeout(2000);
     await page.keyboard.press('Enter');
     await iframe.click('.note-popup-toggle-trigger');
     await page.waitForTimeout(1000);
     const editButton = await iframe.$('.NotePopup .note-popup-options > .note-popup-option');
     await editButton?.click();
-    await page.waitForTimeout(1000);
-
+    await page.waitForTimeout(2000);
     const commentTextareaText = await iframe.$('.comment-textarea .ql-container .ql-editor p');
-    expect(await commentTextareaText?.textContent()).toBe('@John Doe');
+    expect(await commentTextareaText?.innerHTML()).toBe('@John Doe <strong>bold text</strong>');
+    expect(await commentTextareaText?.textContent()).toBe('@John Doe bold text');
+    expect(consoleLogs.includes('John Doe, action: add')).toBeTruthy();
   });
 
   test('should be able to edit note when delete content in freetext annotation', async ({ page }) => {
