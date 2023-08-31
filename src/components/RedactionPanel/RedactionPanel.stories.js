@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import RedactionPanel from './RedactionPanel';
-import RedactionPanelContainerWithProvider from './RedactionPanelContainer'
+import RedactionPanelContainerWithProvider from './RedactionPanelContainer';
 import RightPanel from 'components/RightPanel';
 import { RedactionPanelContext } from './RedactionPanelContext';
 import { defaultRedactionTypes, redactionTypeMap } from 'constants/redactionTypes';
@@ -18,7 +18,9 @@ export default {
 export const RedactionContextMock = ({ children, mockContext }) => {
   const context = {
     selectedRedactionItemId: '1',
-    setSelectedRedactionItemId: (id) => { console.log({ id }) },
+    setSelectedRedactionItemId: (id) => {
+      console.log({ id });
+    },
     ...mockContext
   };
 
@@ -41,7 +43,9 @@ export const mockRedactionTypesDictionary = {
 const initialState = {
   viewer: {
     isInDesktopOnlyMode: true,
-    disabledElements: {},
+    disabledElements: {
+      logoBar: { disabled: true },
+    },
     customElementOverrides: {},
     openElements: {
       header: true,
@@ -51,6 +55,14 @@ const initialState = {
     panelWidths: {
       redactionPanel: 330,
     },
+    modularHeaders: [],
+    modularHeadersHeight: {
+      topHeaders: 40,
+      bottomHeaders: 40
+    },
+  },
+  featureFlags: {
+    customizableUI: false,
   },
   search: {
     redactionSearchPatterns: {
@@ -76,7 +88,7 @@ const initialState = {
   }
 };
 
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState) {
   return state;
 }
 
@@ -86,26 +98,27 @@ const basicProps = {
   currentWidth: 330,
   redactionAnnotations: [],
   redactionTypesDictionary: mockRedactionTypesDictionary,
-}
+};
 
 export const RedactionPanelStoryWrapper = ({ children, mockContext }) => {
   return (
     <Provider store={store}>
       <RightPanel
         dataElement="redactionPanel"
-        onResize={noop}>
+        onResize={noop}
+      >
         <RedactionContextMock mockContext={mockContext}>
           {children}
         </RedactionContextMock>
       </RightPanel>
     </Provider >
-  )
+  );
 };
 
 export function EmptyList() {
   return (
     <RedactionPanelStoryWrapper>
-      <div className="Panel RedactionPanel" style={{ width: `330px`, minWidth: `$330px` }}>
+      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
         <RedactionPanel {...basicProps} />
       </div>
     </RedactionPanelStoryWrapper>
@@ -177,12 +190,12 @@ const redactionAnnotations = [
 export function PanelWithRedactionItems() {
   return (
     <RedactionPanelStoryWrapper>
-      <div className="Panel RedactionPanel" style={{ width: `330px`, minWidth: `330px` }}>
+      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '330px' }}>
         <RedactionPanel {...basicProps} redactionAnnotations={redactionAnnotations} />
       </div>
     </RedactionPanelStoryWrapper>
-  )
-};
+  );
+}
 
 export function RedactionPanelWithSearch() {
   return (
@@ -190,4 +203,4 @@ export function RedactionPanelWithSearch() {
       <RedactionPanelContainerWithProvider />
     </RedactionPanelStoryWrapper>
   );
-};
+}

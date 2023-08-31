@@ -69,6 +69,7 @@ export default {
       [DataElements.LEGACY_RICH_TEXT_POPUP]: { disabled: true, priority: 2 },
       [DataElements.LOGO_BAR]: { disabled: true, priority: 2 },
       [DataElements.PORTFOLIO_PANEL_BUTTON]: { disabled: true, priority: 2 },
+      [DataElements.CREATE_PORTFOLIO_BUTTON]: { disabled: true, priority: 2 },
     },
     selectedScale: initialScale,
     isAddingNewScale: false,
@@ -2107,7 +2108,7 @@ export default {
       getHashParameters('disableMultiViewerComparison', false) || !getHashParameters('pdfnet', false),
   },
   featureFlags: {
-    modularHeader: false,
+    customizableUI: false,
   },
   wv3dPropertiesPanel: {
     modelData: [],

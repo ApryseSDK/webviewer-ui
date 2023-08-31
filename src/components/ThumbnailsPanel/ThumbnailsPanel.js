@@ -26,12 +26,13 @@ const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 const ZOOM_RANGE_MIN = '100';
 const ZOOM_RANGE_MAX = '1000';
 const ZOOM_RANGE_STEP = '50';
+const MAX_COLUMNS = 16;
 
 const hoverAreaHeight = 25;
 
-const ThumbnailsPanel = () => {
+const ThumbnailsPanel = ({ panelSelector }) => {
   const [
-    isOpen,
+    isLeftPanelOpen,
     isDisabled,
     totalPages,
     currentPage,
@@ -45,7 +46,8 @@ const ThumbnailsPanel = () => {
     isDocumentReadOnly,
     totalPagesFromSecondaryDocumentViewer,
     activeDocumentViewerKey,
-    isRightClickEnabled
+    isRightClickEnabled,
+    featureFlags
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, 'leftPanel'),
@@ -62,7 +64,8 @@ const ThumbnailsPanel = () => {
       selectors.isDocumentReadOnly(state),
       selectors.getTotalPages(state, 2),
       selectors.getActiveDocumentViewerKey(state),
-      selectors.openingPageManipulationOverlayByRightClickEnabled(state)
+      selectors.openingPageManipulationOverlayByRightClickEnabled(state),
+      selectors.getFeatureFlags(state)
     ],
     shallowEqual,
   );
@@ -285,8 +288,10 @@ const ThumbnailsPanel = () => {
     }
   }, [isReaderMode, isDocumentReadOnly]);
 
-  // if disabled or is not open return
-  if (isDisabled || !isOpen) {
+  const { customizableUI } = featureFlags;
+
+  // if disabled or left panel is not open when we are not in customize mode, return
+  if (isDisabled || (!isLeftPanelOpen && !customizableUI)) {
     return null;
   }
   const onDragEnd = () => {
@@ -501,6 +506,7 @@ const ThumbnailsPanel = () => {
                   updateAnnotations={updateAnnotations}
                   shouldShowControls={allowPageOperationsUI}
                   thumbnailSize={thumbnailSize}
+                  panelSelector={panelSelector}
                 />
               </div>
               {showPlaceHolder && !isDraggingToPreviousPage && <div key={`placeholder2-${thumbIndex}`} className="thumbnailPlaceholder" />}
@@ -514,11 +520,11 @@ const ThumbnailsPanel = () => {
   const onPanelResize = ({ bounds }) => {
     setHeight(bounds.height);
     setWidth(bounds.width);
-    setNumberOfColumns(Math.min(3, Math.max(1, Math.floor(bounds.width / thumbnailSize))));
+    setNumberOfColumns(Math.min(MAX_COLUMNS, Math.max(1, Math.floor(bounds.width / thumbnailSize))));
   };
 
   const updateNumberOfColumns = () => {
-    setNumberOfColumns(Math.min(3, Math.max(1, Math.floor(width / thumbnailSize))));
+    setNumberOfColumns(Math.min(MAX_COLUMNS, Math.max(1, Math.floor(width / thumbnailSize))));
   };
 
   const thumbnailHeight = isThumbnailControlDisabled ? Number(thumbnailSize) + 50 : Number(thumbnailSize) + 80;
@@ -570,10 +576,10 @@ const ThumbnailsPanel = () => {
       </div>}
       <Measure bounds onResize={onPanelResize} key={thumbnailSize}>
         {({ measureRef }) => (
-          <div className="Panel ThumbnailsPanel" id="virtualized-thumbnails-container" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
+          <div className={`Panel ThumbnailsPanel ${panelSelector}`} id="virtualized-thumbnails-container" data-element="thumbnailsPanel" onDrop={onDrop} ref={measureRef}>
             <div className="virtualized-thumbnails-container">
               {isDragging ?
-                <div className="thumbnailAutoScollArea" onDragOver={scrollUp} style={thumbnailAutoScrollAreaStyle}></div> : ''
+                <div className="thumbnailAutoScrollArea" onDragOver={scrollUp} style={thumbnailAutoScrollAreaStyle}></div> : ''
               }
               <List
                 ref={listRef}
@@ -591,7 +597,7 @@ const ThumbnailsPanel = () => {
                 scrollToIndex={Math.floor((currentPage - 1) / numberOfColumns)}
               />
               {isDragging ?
-                <div className="thumbnailAutoScollArea" onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ''
+                <div className="thumbnailAutoScrollArea" onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ''
               }
             </div>
           </div>

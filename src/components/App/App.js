@@ -29,13 +29,12 @@ import ComparePanel from 'components/MultiViewer/ComparePanel';
 import WatermarkPanel from 'components/WatermarkPanel';
 import CustomElement from 'components/CustomElement';
 import Panel from 'components/Panel';
-import LeftHeader from 'components/LeftHeader';
-import RightHeader from 'components/RightHeader';
-import BottomHeader from 'components/BottomHeader';
-import TopHeader from 'components/TopHeader';
-import GenericOutlinesPanel from 'components/GenericOutlinesPanel';
+import LeftHeader from 'components/ModularComponents/LeftHeader';
+import RightHeader from 'components/ModularComponents/RightHeader';
+import BottomHeader from 'components/ModularComponents/BottomHeader';
+import TopHeader from 'components/ModularComponents/TopHeader';
+import GenericOutlinesPanel from 'components/ModularComponents/GenericOutlinesPanel';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
-import ZoomFlyoutMenu from 'components/ModularComponents/ZoomFlyoutMenu';
 import ProgressModal from 'components/ProgressModal';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 
@@ -67,6 +66,8 @@ import DataElements from 'constants/dataElement';
 import setLanguage from 'src/apis/setLanguage';
 
 import './App.scss';
+import SignaturePanel from 'components/SignaturePanel';
+import ThumbnailsPanel from 'components/ThumbnailsPanel';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -184,6 +185,18 @@ const App = ({ removeEventHandlers }) => {
     });
     window.addEventListener('message', messageHandler, false);
 
+    // When a user switches tabs, the focused element can cause unexpected behavior,
+    // such as triggering keyboard events or displaying tooltips, when they return
+    // to the tab. Blurring the focused element before switching tabs helps to
+    // prevent these unwanted interactions.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        if (document.activeElement) {
+          document.activeElement.blur();
+        }
+      }
+    });
+
     // In case WV is used outside of iframe, postMessage will not
     // receive the message, and this timeout will trigger loadInitialDocument
     timeoutReturn = setTimeout(loadDocumentAndCleanup, 500);
@@ -240,13 +253,22 @@ const App = ({ removeEventHandlers }) => {
     return () => window.removeEventListener('loaderror', onError);
   }, []);
 
+  const renderPanel = (panelName, dataElement) => {
+    switch (panelName) {
+      case panelNames.OUTLINE:
+        return <GenericOutlinesPanel/>;
+      case panelNames.SIGNATURE:
+        return <SignaturePanel/>;
+      case panelNames.THUMBNAIL:
+        return <ThumbnailsPanel panelSelector={dataElement} />;
+    }
+  };
+
   const panels = customFlxPanels.map((panel, index) => {
     return (
       panel.render && (
         <Panel key={index} dataElement={panel.dataElement} location={panel.location}>
-          {Object.values(panelNames).includes(panel.render) ? (
-            panel.render === panelNames.OUTLINE && <GenericOutlinesPanel />
-          ) : (
+          {Object.values(panelNames).includes(panel.render) ? renderPanel(panel.render, panel.dataElement) : (
             <CustomElement
               key={panel.dataElement || index}
               className={`Panel ${panel.dataElement}`}
@@ -270,7 +292,6 @@ const App = ({ removeEventHandlers }) => {
         })}
       >
         <FlyoutContainer />
-        <ZoomFlyoutMenu />
         <Accessibility />
         <Header />
         {isOfficeEditorMode() && (
@@ -351,11 +372,11 @@ const App = ({ removeEventHandlers }) => {
           dataElement={DataElements.THUMBNAILS_CONTROL_ROTATE_POPUP}
         />
         <LazyLoadWrapper
-          Component={LazyLoadComponents.MoreOptionsPopup}
+          Component={LazyLoadComponents.ThumbnailMoreOptionsPopup}
           dataElement={DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP}
         />
         <LazyLoadWrapper
-          Component={LazyLoadComponents.MoreOptionsPopupSmall}
+          Component={LazyLoadComponents.ThumbnailMoreOptionsPopupSmall}
           dataElement={DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL}
         />
         <FormFieldIndicatorContainer />
@@ -429,15 +450,15 @@ const App = ({ removeEventHandlers }) => {
         <LazyLoadWrapper Component={LazyLoadComponents.LoadingModal} dataElement={DataElements.LOADING_MODAL} />
 
         {
-        /*
-          There were issues appearing in WebViewer BIM add-on with lazy loading ProgressModal.
-          The BIM add-on relies on ProgressModal styling which wouldn't not get loaded explicitly.
-          This caused styling issues when loading a 3D model and would impact the UI of the BIM add-on.
+          /*
+            There were issues appearing in WebViewer BIM add-on with lazy loading ProgressModal.
+            The BIM add-on relies on ProgressModal styling which wouldn't not get loaded explicitly.
+            This caused styling issues when loading a 3D model and would impact the UI of the BIM add-on.
 
-          See https://apryse.atlassian.net/browse/WVR-3094
-        */
+            See https://apryse.atlassian.net/browse/WVR-3094
+          */
         }
-        <ProgressModal/>
+        <ProgressModal />
 
         <LazyLoadWrapper Component={LazyLoadComponents.WarningModal} dataElement={DataElements.WARNING_MODAL} />
         <LazyLoadWrapper Component={LazyLoadComponents.Model3DModal} dataElement={DataElements.MODEL3D_MODAL} />

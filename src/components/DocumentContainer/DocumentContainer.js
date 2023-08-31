@@ -57,6 +57,7 @@ class DocumentContainer extends React.PureComponent {
     featureFlags: PropTypes.object,
     bottomHeaderHeight: PropTypes.number,
     activeDocumentViewerKey: PropTypes.number,
+    isLogoBarEnabled: PropTypes.bool,
   };
 
   constructor(props) {
@@ -284,7 +285,7 @@ class DocumentContainer extends React.PureComponent {
     const {
       leftPanelWidth,
       isLeftPanelOpen,
-      isFlxPanelOpen,
+      isFlxPanelOpenLeft,
       isMultiTabEmptyPageOpen,
       isMobile,
       documentContentContainerWidthStyle,
@@ -292,9 +293,10 @@ class DocumentContainer extends React.PureComponent {
       isInDesktopOnlyMode,
       featureFlags,
       bottomHeaderHeight,
+      leftHeaderWidth,
     } = this.props;
 
-    const marginLeft = 0 + (isLeftPanelOpen ? leftPanelWidth : 0) + (isFlxPanelOpen ? panelMinWidth : 0);
+    const marginLeft = 0 + (isLeftPanelOpen ? leftPanelWidth : 0) + (isFlxPanelOpenLeft ? panelMinWidth : 0);
 
     const style = {
       width: documentContentContainerWidthStyle,
@@ -309,10 +311,14 @@ class DocumentContainer extends React.PureComponent {
     });
     const showPageNav = totalPages > 1;
 
-    const { modularHeader } = featureFlags;
-    const bottomHeadersHeight = 0;
+    const { customizableUI } = featureFlags;
+    const footerStyle = {
+      ...style,
+      left: customizableUI ? `${leftHeaderWidth}px` : undefined,
+      bottom: `${customizableUI ? bottomHeaderHeight : 0}px`,
+    };
     // Calculating its height according to the existing horizontal modular headers
-    if (modularHeader) {
+    if (customizableUI) {
       style['height'] = `calc(100% - ${bottomHeaderHeight}px)`;
     }
     return (
@@ -349,17 +355,14 @@ class DocumentContainer extends React.PureComponent {
               />
               <div
                 className="footer"
-                style={{
-                  width: documentContentContainerWidthStyle,
-                  marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
-                  bottom: `${bottomHeadersHeight}px`,
-                }}
+                style={footerStyle}
               >
                 {showPageNav && (
                   <PageNavOverlay
                     showNavOverlay={this.state.showNavOverlay}
                     onMouseEnter={this.pageNavOnMouseEnter}
                     onMouseLeave={this.pageNavOnMouseLeave}
+                    isLogoBarEnabled={this.props.isLogoBarEnabled}
                   />
                 )}
 
@@ -378,7 +381,7 @@ const mapStateToProps = (state) => ({
   documentContentContainerWidthStyle: selectors.getDocumentContentContainerWidthStyle(state),
   leftPanelWidth: selectors.getLeftPanelWidthWithResizeBar(state),
   isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
-  isFlxPanelOpen: selectors.isCustomFlxPanelOpen(state),
+  isFlxPanelOpenLeft: selectors.isCustomFlxPanelOpen(state, 'left'),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isMultiTabEmptyPageOpen: selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0,
   isSearchOverlayOpen: selectors.isElementOpen(state, DataElements.SEARCH_OVERLAY),
@@ -398,6 +401,8 @@ const mapStateToProps = (state) => ({
   featureFlags: selectors.getFeatureFlags(state),
   bottomHeaderHeight: selectors.getBottomHeadersHeight(state),
   activeDocumentViewerKey: selectors.getActiveDocumentViewerKey(state),
+  isLogoBarEnabled: !selectors.isElementDisabled(state, DataElements.LOGO_BAR),
+  leftHeaderWidth: selectors.getLeftHeaderWidth(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

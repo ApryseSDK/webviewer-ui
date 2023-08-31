@@ -2,7 +2,7 @@
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import NotesPanel from './NotesPanel';
+import NotesPanel from './NotesPanelContainer';
 import RightPanel from '../RightPanel';
 
 export default {
@@ -18,8 +18,11 @@ const DEFAULT_NOTES_PANEL_WIDTH = 293;
 
 const initialState = {
   viewer: {
+    activeDocumentViewerKey: 1,
     customElementOverrides: {},
-    disabledElements: {},
+    disabledElements: {
+      logoBar: { disabled: true },
+    },
     openElements: {
       notesPanel: true,
       header: true
@@ -35,7 +38,7 @@ const initialState = {
     },
   },
   featureFlags: {
-    modularHeader: false,
+    customizableUI: false,
   },
 };
 

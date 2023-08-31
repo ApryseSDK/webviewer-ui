@@ -1,24 +1,28 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import selectors from 'selectors';
 import Header from './Header';
 import ToolsHeader from './ToolsHeader';
-import CustomHeader from './CustomHeader/CustomHeader';
-
 
 function HeaderContainer() {
-  const featureFlags = useSelector((state) => selectors.getFeatureFlags(state));
-  const { modularHeader } = featureFlags;
+  const [
+    featureFlags,
+  ] = useSelector(
+    (state) => [
+      selectors.getFeatureFlags(state),
+    ], shallowEqual);
+  const { customizableUI } = featureFlags;
 
-  if (modularHeader) {
-    return <CustomHeader />;
+  if (!customizableUI) {
+    return (
+      <>
+        <Header />
+        <ToolsHeader />
+      </>
+    );
   }
-  return (
-    <>
-      <Header />
-      <ToolsHeader />
-    </>
-  );
+
+  return null;
 }
 
 export default HeaderContainer;
