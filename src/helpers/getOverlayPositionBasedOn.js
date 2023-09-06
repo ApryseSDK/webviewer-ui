@@ -1,5 +1,11 @@
-export default (element, overlay, isTabletAndMobile) => {
-  const button = document.querySelector(`[data-element=${element}]`);
+import getRootNode from 'helpers/getRootNode';
+
+export default (element, overlay, isTabletAndMobile, selector = 'data-element') => {
+  const isApryseWebViewerWebComponent = window.isApryseWebViewerWebComponent;
+  const innerWidth = isApryseWebViewerWebComponent ? getRootNode().host.clientWidth : window.innerWidth;
+  const innerHeight = isApryseWebViewerWebComponent ? getRootNode().host.clientHeight : window.innerHeight;
+  const button = getRootNode().querySelector(`[${selector}="${element}"]`);
+
   let left = 0;
   let right = 'auto';
 
@@ -15,22 +21,23 @@ export default (element, overlay, isTabletAndMobile) => {
     left: buttonLeft,
   } = button.getBoundingClientRect();
   const { width: overlayWidth, height: overlayHeight } = overlay.current.getBoundingClientRect();
-
-  if (buttonLeft + overlayWidth > window.innerWidth) {
+  const rootLeft = isApryseWebViewerWebComponent ? getRootNode().host.getBoundingClientRect().left : 0;
+  if ((buttonLeft - rootLeft) + overlayWidth > innerWidth) {
     const rightMargin = 6;
-    left = window.innerWidth - rightMargin - overlayWidth;
+    left = innerWidth - rightMargin - overlayWidth;
     right = 'auto';
   } else {
-    left = buttonLeft;
+    left = buttonLeft - rootLeft;
     right = 'auto';
   }
 
   const verticalGap = isTabletAndMobile ? 14 : 6;
-  let top = buttonBottom + verticalGap;
+  const rootTop = isApryseWebViewerWebComponent ? getRootNode().host.getBoundingClientRect().top : 0;
+  let top = (buttonBottom - rootTop) + verticalGap;
   if (buttonBottom > 100) {
     // if the buttons are not on the top of the page, the popup can adjust its position to "pass" them, otherwise the popup should always be below them
-    if (buttonBottom + overlayHeight > window.innerHeight) {
-      const calculatedTop = window.innerHeight - overlayHeight - verticalGap;
+    if (buttonBottom + overlayHeight > innerHeight) {
+      const calculatedTop = innerHeight - overlayHeight - verticalGap;
       top = calculatedTop > 0 ? calculatedTop : 0;
     }
   }
