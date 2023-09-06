@@ -42,6 +42,7 @@ test.describe('Scroll', () => {
 
     await page.mouse.move(x + 100, y + 100);
     await page.mouse.wheel(0, 1000);
+    await page.waitForTimeout(500);
 
     const finalScrollY = await page.evaluate(() => window.scrollY);
     const finalDocumentContainerScrollY = await documentContainer.evaluate((element) => element.scrollTop);
