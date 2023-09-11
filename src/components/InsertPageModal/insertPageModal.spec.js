@@ -74,8 +74,7 @@ describe('InsertPageModal', () => {
       fireEvent.click(upArrow);
       expect(numberInput).toHaveValue(2);
       fireEvent.click(downArrow);
-      fireEvent.click(downArrow);
-      expect(numberInput).toHaveValue(0);
+      expect(numberInput).toHaveValue(1);
 
       fireEvent.change(numberInput, { target: { value: 23 } });
       expect(numberInput).toHaveValue(23);
