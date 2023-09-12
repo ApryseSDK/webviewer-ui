@@ -70,6 +70,9 @@ const TextEditingPanelContainer = () => {
         setTextEditProperties(fontObject);
         handleColorChange(null, color);
         attribute.fontColor = hexColor;
+
+        // remove the fontName attribute so that we don't override the fontName when we set the text attributes
+        delete attribute.fontName;
         window.Core.ContentEdit.setTextAttributes(attribute);
 
         setFormat({ ...attribute, color });
@@ -313,18 +316,11 @@ const TextEditingPanelContainer = () => {
     if (isTextContentPlaceholder) {
       const contentBoxId = annotation.getCustomData('contentEditBoxId');
 
-      await window.Core.ContentEdit.loadTextAttributes(contentBoxId, 0, 0, {
-        restrictFontName: false,
-        restrictFontSize: false,
-      });
+      const editManager = core.getDocumentViewer().getContentEditManager();
+      const attribs = await editManager.getContentBoxAttributes(contentBoxId);
 
-      await new Promise((r) => setTimeout(r, 100));
-
-      const manager = core.getContentEditManager();
-      const box = manager.getContentBoxById(contentBoxId);
-      const contentBoxAttributes = box.boxAttributes;
-      const fontName = getFontName(contentBoxAttributes?.fontName);
-      const { bold, italic, underline, fontColors, fontSize, textAlign } = contentBoxAttributes;
+      const fontName = getFontName(attribs.fontName);
+      const { bold, italic, underline, fontColors, fontSize, textAlign } = attribs;
       const color = new window.Core.Annotations.Color(fontColors[0].fontColor);
 
       if (!fonts.includes(fontName)) {
