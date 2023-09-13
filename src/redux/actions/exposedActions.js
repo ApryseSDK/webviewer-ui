@@ -21,6 +21,16 @@ export const enableApplyCropWarningModal = () => ({
   payload: { shouldShowApplyCropWarning: true },
 });
 
+export const disableApplySnippingWarningModal = () => ({
+  type: 'SHOW_APPLY_SNIPPING_WARNING',
+  payload: { shouldShowApplySnippingWarning: false },
+});
+
+export const enableApplySnippingWarningModal = () => ({
+  type: 'SHOW_APPLY_SNIPPING_WARNING',
+  payload: { shouldShowApplySnippingWarning: true },
+});
+
 export const setPresetCropDimensions = (presetCropDimensions) => ({
   type: 'SET_PRESET_CROP_DIMENSIONS',
   payload: { presetCropDimensions },
@@ -332,6 +342,10 @@ export const setGapBetweenHeaderItems = (dataElement, gap) => updateHeaderProper
 
 export const setHeaderAlignment = (dataElement, alignment) => updateHeaderProperty(dataElement, 'alignment', alignment);
 
+export const setHeaderMaxWidth = (dataElement, maxWidth) => updateHeaderProperty(dataElement, 'maxWidth', maxWidth);
+
+export const setHeaderMaxHeight = (dataElement, maxHeight) => updateHeaderProperty(dataElement, 'maxHeight', maxHeight);
+
 const updateHeaderProperty = (dataElement, property, value) => ({
   type: 'UPDATE_MODULAR_HEADERS',
   payload: {
@@ -397,11 +411,13 @@ export const openElement = (dataElement) => (dispatch, getState) => {
     return;
   }
 
-  const isFlxPanel = state.viewer.customFlxPanels.find((item) => dataElement === item.dataElement);
-  if (isFlxPanel) {
+  const flexPanel = state.viewer.customFlxPanels.find((item) => dataElement === item.dataElement);
+  if (flexPanel?.location === 'left') {
     const keys = ['leftPanel'];
-    getAllPanels(isFlxPanel.location).forEach((item) => keys.push(item.dataset.element));
+    getAllPanels(flexPanel.location).forEach((item) => keys.push(item.dataset.element));
     dispatch(closeElements(keys));
+  } else if (flexPanel?.location === 'right') {
+    dispatch(closeElements(rightPanelList));
   }
 
   if (isDataElementLeftPanel(dataElement, state) && dataElement !== DataElements.NOTES_PANEL) {
@@ -504,6 +520,10 @@ export const toggleElement = (dataElement) => (dispatch, getState) => {
           dispatch(closeElement(panel));
         }
       }
+      const openFlexPanelsRight = getCustomFlxPanels(state, 'right');
+      for (const panel of openFlexPanelsRight) {
+        dispatch(closeElement(panel.dataElement));
+      }
     }
   }
 
@@ -533,6 +553,14 @@ export const setRightHeaderWidth = (width) => ({
 export const setLeftHeaderWidth = (width) => ({
   type: 'SET_LEFT_HEADER_WIDTH',
   payload: width
+});
+export const setTopFloatingContainerHeight = (height) => ({
+  type: 'SET_TOP_FLOATING_CONTAINER_HEIGHT',
+  payload: height
+});
+export const setBottomFloatingContainerHeight = (height) => ({
+  type: 'SET_BOTTOM_FLOATING_CONTAINER_HEIGHT',
+  payload: height
 });
 export const setActiveHeaderGroup = (headerGroup) => ({
   type: 'SET_ACTIVE_HEADER_GROUP',

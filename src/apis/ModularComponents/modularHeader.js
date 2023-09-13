@@ -1,5 +1,5 @@
 import actions from 'actions';
-import { ITEM_TYPE, ALIGNMENT } from 'constants/customizationVariables';
+import { ITEM_TYPE, ALIGNMENT, DEFAULT_GAP } from 'constants/customizationVariables';
 
 export default (store) => (props) => {
   class ModularHeader {
@@ -9,10 +9,13 @@ export default (store) => (props) => {
         dataElement,
         alignment,
         grow = 0,
-        gap = 16,
+        float = false,
+        gap = DEFAULT_GAP,
         position,
         placement,
-        items = []
+        maxWidth,
+        maxHeight,
+        items = [],
       } = props;
       this.label = label;
       this.dataElement = dataElement;
@@ -21,6 +24,9 @@ export default (store) => (props) => {
       this.grow = grow;
       this.gap = gap;
       this.position = position;
+      this.float = float;
+      this.maxWidth = maxWidth;
+      this.maxHeight = maxHeight;
       // items is a list of things. We want to clone them
       this.items = items.map((item) => ({ ...item }));
       this.itemValidTypes = Object.values(ITEM_TYPE);
@@ -100,6 +106,22 @@ export default (store) => (props) => {
         return;
       }
       store.dispatch(actions.setHeaderAlignment(this.dataElement, alignment));
+    };
+
+    setMaxWidth = (maxWidth) => {
+      if (isNaN(maxWidth)) {
+        console.warn(`${maxWidth} is not a valid value for maxWidth. Please use a number, which represents the maximum width of the header in pixels.`);
+        return;
+      }
+      store.dispatch(actions.setHeaderMaxWidth(this.dataElement, maxWidth));
+    };
+
+    setMaxHeight = (maxHeight) => {
+      if (isNaN(maxHeight)) {
+        console.warn(`${maxHeight} is not a valid value for maxHeight. Please use a number, which represents the maximum height of the header in pixels.`);
+        return;
+      }
+      store.dispatch(actions.setHeaderMaxHeight(this.dataElement, maxHeight));
     };
   }
 
