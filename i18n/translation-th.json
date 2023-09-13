@@ -117,6 +117,8 @@
     "formFillCheckmark": "ติ๊ก",
     "formFillCross": "ข้าม",
     "distanceMeasurement": "ระยะทาง",
+    "rectangularAreaMeasurement": "พื้นที่สี่เหลี่ยม",
+    "ellipseMeasurement": "พื้นที่วงรี",
     "countMeasurement": "นับการวัด",
     "ellipse": "วงรี",
     "eraser": "ยางลบ",
@@ -137,6 +139,7 @@
     "redact": "Redact",
     "formFillDot": "Dot",
     "signature": "ลายเซ็น",
+    "snipping": "เครื่องมือตัด",
     "squiggly": "ไก่เขี่ย",
     "stamp": "ประทับ",
     "stickyNote": "บันทึก",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการครอบตัดหน้าที่เลือกทั้งหมด"
     }
   },
+  "snippingPopUp": {
+    "title": "เครื่องมือตัด",
+    "clipboard": "คัดลอกไปยังคลิปบอร์ด",
+    "download": "ดาวน์โหลด",
+    "cropAndRemove": "ครอบและลบ",
+    "snippingModal": {
+      "applyTitle": "ใช้การตัด?",
+      "applyMessage": "การดำเนินการนี้จะตัดพื้นที่ที่ระบุโดยถาวรและเอาหน้าอื่นออก ไม่สามารถยกเลิกได้",
+      "cancelTitle": "ยกเลิกการตัด?",
+      "cancelMessage": "คุณแน่ใจหรือไม่ว่าต้องการหยุดการตัด?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "ย่อหน้า",
     "text": "ข้อความ"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "ตัวเลือกลายน้ำ",
     "watermarks": "ลายน้ำ"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "สร้างผลงาน PDF",
+    "uploadFiles": "อัพโหลดไฟล์",
+    "uploadFolder": "อัปโหลดโฟลเดอร์",
+    "addFiles": "เพิ่มไฟล์",
+    "addFile": "เพิ่มไฟล์",
+    "addFolder": "เพิ่มกล่องเก็บไฟล์",
+    "createFolder": "สร้างโฟลเดอร์",
     "portfolioPanelTitle": "ไฟล์ PDF",
-    "portfolioAddFile": "เพิ่มไฟล์",
-    "portfolioAddFolder": "เพิ่มกล่องเก็บไฟล์",
-    "portfolioCreateFolder": "สร้างโฟลเดอร์",
     "portfolioNewFolder": "แฟ้มใหม่",
-    "portfolioNewFolderPlaceholder": "ชื่อโฟลเดอร์"
+    "portfolioFolderPlaceholder": "ชื่อโฟลเดอร์",
+    "portfolioFilePlaceholder": "ชื่อไฟล์",
+    "folderNameAlreadyExists": "ชื่อโฟลเดอร์มีอยู่แล้ว",
+    "fileNameAlreadyExists": "ชื่อไฟล์มีอยู่แล้ว",
+    "openFile": "เปิดในแท็บใหม่",
+    "fileAlreadyExists": "มีไฟล์อยู่แล้ว",
+    "fileAlreadyExistsMessage": "ไฟล์ \"{{fileName}}\" มีอยู่ในพอร์ตโฟลิโอแล้ว",
+    "deletePortfolio": "แน่ใจไหมว่าต้องการลบ \"{{fileName}}\"",
+    "reselect": "เลือกใหม่"
   },
   "languageModal": {
     "selectLanguage": "เลือกภาษา"
@@ -1192,13 +1219,6 @@
     "save": "บันทึกไฟล์",
     "pageError": "หน้าไม่ถูกต้อง ช่วงหน้าที่ถูกต้องอยู่ระหว่าง 1 -",
     "fileNameCannotBeEmpty": "ชื่อไฟล์ต้องไม่ว่างเปล่า"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "สร้างผลงาน PDF",
-    "uploadFiles": "อัพโหลดไฟล์",
-    "uploadFolder": "อัปโหลดโฟลเดอร์",
-    "addFiles": "เพิ่มไฟล์",
-    "addFolder": "เพิ่มกล่องเก็บไฟล์"
   },
   "filePicker": {
     "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่",

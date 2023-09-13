@@ -117,6 +117,8 @@
     "formFillCheckmark": "Dấu kiểm",
     "formFillCross": "Dấu gạch chéo",
     "distanceMeasurement": "Khoảng cách",
+    "rectangularAreaMeasurement": "Diện tích hình chữ nhật",
+    "ellipseMeasurement": "Diện tích hình elip",
     "countMeasurement": "Đo đếm",
     "ellipse": "Elip",
     "eraser": "Tẩy",
@@ -137,6 +139,7 @@
     "redact": "Biên tập",
     "formFillDot": "Chấm",
     "signature": "Chữ ký",
+    "snipping": "Công cụ Cắt",
     "squiggly": "Nguệch ngoạc",
     "stamp": "Tem",
     "stickyNote": "Ghi chú",
@@ -746,7 +749,7 @@
     },
     "connectToURL": {
       "title": "Cảnh báo an ninh",
-      "message": "Tài liệu này đang cố kết nối với:\n\n{{-uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
+      "message": "Tài liệu này đang cố kết nối với:\n\n{{- uri}}\n\n Nếu bạn tin tưởng tài liệu này, hãy nhấp vào Xác nhận để mở nó."
     }
   },
   "shortcut": {
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Bạn có chắc chắn muốn hủy việc cắt xén tất cả các trang đã chọn không?"
     }
   },
+  "snippingPopUp": {
+    "title": "Công cụ Cắt",
+    "clipboard": "Sao chép vào Clipboard",
+    "download": "Tải về",
+    "cropAndRemove": "Cắt và Loại bỏ",
+    "snippingModal": {
+      "applyTitle": "Áp dụng cắt?",
+      "applyMessage": "Hành động này sẽ cắt vĩnh viễn khu vực cụ thể và loại bỏ các trang khác. Không thể hoàn tác.",
+      "cancelTitle": "Hủy cắt?",
+      "cancelMessage": "Bạn có chắc chắn muốn dừng cắt không?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Đoạn văn",
     "text": "Chữ"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Tùy chọn hình mờ",
     "watermarks": "Hình mờ"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Tạo danh mục đầu tư PDF",
+    "uploadFiles": "Tải tệp lên",
+    "uploadFolder": "Thư mục tải lên",
+    "addFiles": "Thêm các tập tin",
+    "addFile": "Thêm tập tin",
+    "addFolder": "Thêm thư mục",
+    "createFolder": "Tạo thư mục",
     "portfolioPanelTitle": "Danh mục đầu tư PDF",
-    "portfolioAddFile": "Thêm tập tin",
-    "portfolioAddFolder": "Thêm thư mục",
-    "portfolioCreateFolder": "Tạo thư mục",
     "portfolioNewFolder": "Thư mục mới",
-    "portfolioNewFolderPlaceholder": "Tên thư mục"
+    "portfolioFolderPlaceholder": "Tên thư mục",
+    "portfolioFilePlaceholder": "Tên tệp",
+    "folderNameAlreadyExists": "Tên thư mục đã tồn tại",
+    "fileNameAlreadyExists": "Tên tệp đã tồn tại",
+    "openFile": "Mở ra trong trang mới",
+    "fileAlreadyExists": "Tập tin đã tồn tại",
+    "fileAlreadyExistsMessage": "Tệp \"{{fileName}}\" đã tồn tại trong danh mục đầu tư.",
+    "deletePortfolio": "Bạn có chắc chắn muốn xóa \"{{fileName}}\" không?",
+    "reselect": "Chọn lại"
   },
   "languageModal": {
     "selectLanguage": "Chọn ngôn ngữ"
@@ -1192,13 +1219,6 @@
     "save": "Lưu tập tin",
     "pageError": "Trang không hợp lệ. Phạm vi trang hợp lệ là từ 1 -",
     "fileNameCannotBeEmpty": "Tên tệp không được để trống"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Tạo danh mục đầu tư PDF",
-    "uploadFiles": "Tải tệp lên",
-    "uploadFolder": "Thư mục tải lên",
-    "addFiles": "Thêm các tập tin",
-    "addFolder": "Thêm thư mục"
   },
   "filePicker": {
     "dragAndDrop": "Kéo và thả tệp của bạn vào đây",

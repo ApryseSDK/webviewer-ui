@@ -2,13 +2,18 @@ import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import ModularHeader from './ModularHeader';
+import { ITEM_TYPE } from 'constants/customizationVariables';
 
 const ModularHeaderContainer = React.forwardRef((props, ref) => {
   const { items } = props;
 
-  const [activeGroupedItems] = useSelector(
+  const [
+    activeGroupedItems,
+    fixedGroupedItems
+  ] = useSelector(
     (state) => [
       selectors.getCurrentGroupedItems(state),
+      selectors.getFixedGroupedItems(state),
     ],
     shallowEqual
   );
@@ -17,12 +22,12 @@ const ModularHeaderContainer = React.forwardRef((props, ref) => {
   const memoizedItems = React.useMemo(() => {
     return items?.filter((item) => {
       const itemProps = item.props || item;
-      if (itemProps.type === 'groupedItems' && activeGroupedItems) {
-        return activeGroupedItems.includes(itemProps.dataElement);
+      if (itemProps.type === ITEM_TYPE.GROUPED_ITEMS && (activeGroupedItems.length || fixedGroupedItems.length)) {
+        return activeGroupedItems.includes(itemProps.dataElement) || fixedGroupedItems.includes(itemProps.dataElement);
       }
       return true;
     });
-  }, [items, activeGroupedItems]);
+  }, [items, activeGroupedItems, fixedGroupedItems]);
 
   return <ModularHeader ref={ref} {...props} items={memoizedItems} />;
 });

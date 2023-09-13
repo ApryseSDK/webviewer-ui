@@ -10,6 +10,7 @@ import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import { FLYOUT_ITEM_HEIGHT, WIDTH_PLUS_PADDING } from 'constants/flyoutConstants';
 import getRootNode from 'helpers/getRootNode';
+import ZoomText from './Helpers/ZoomText';
 
 const Flyout = () => {
   const { t } = useTranslation();
@@ -53,7 +54,7 @@ const Flyout = () => {
   }, [activeItem, position]);
 
   const onClickOutside = useCallback(() => {
-    dispatch(actions.setActiveFlyout(undefined));
+    dispatch(actions.closeElement(activeFlyout));
   }, [dispatch, activeFlyout]);
   useOnClickOutside(flyoutRef, onClickOutside);
 
@@ -72,25 +73,45 @@ const Flyout = () => {
 
   const renderFlyoutItem = (flyoutItem, index, isChild = false) => {
     const itemIsATool = !!flyoutItem.toolName;
-    return (flyoutItem === 'divider' ? <div className="divider" key={`divider-${index}`}/> : (
-      <div key={flyoutItem.label} className="flyout-item-container"
-        data-element={flyoutItem.dataElement} onClick={onClickHandler(flyoutItem, isChild)}>
-        <div className="menu-container">
-          {!itemIsATool && flyoutItem.icon && <Icon className="menu-icon" glyph={flyoutItem.icon}/>}
-          {!itemIsATool && <div className="flyout-item-label">{t(flyoutItem.label)}</div>}
-          {itemIsATool &&
-            // We should update when we have the customizable Tool Button component
-            <ToolButton
-              className={classNames({ ZoomItem: true })}
-              role="option"
-              toolName={flyoutItem.toolName}
-              label={flyoutItem.label}
-              img={flyoutItem.icon}
-            />}
-        </div>
-        {flyoutItem.children && <Icon className="icon-open-submenu" glyph="icon-chevron-right"/>}
-      </div>
-    ));
+    // Switch statement for special flyout items
+    switch (flyoutItem.dataElement) {
+      case 'zoomOptionsButton':
+        return <div key={flyoutItem.label} className="flyout-item-container zoom-options"
+          data-element={flyoutItem.dataElement} onClick={onClickHandler(flyoutItem, isChild)}>
+          <div className="menu-container">
+            <ZoomText/>
+          </div>
+          {flyoutItem.children && <Icon className="icon-open-submenu" glyph="icon-chevron-right"/>}
+        </div>;
+      default:
+        return (flyoutItem === 'divider' ? <div className="divider" key={`divider-${index}`}/> : (
+          <div key={flyoutItem.label} className="flyout-item-container"
+            data-element={flyoutItem.dataElement} onClick={onClickHandler(flyoutItem, isChild)}>
+            <div className="menu-container">
+              {!itemIsATool && flyoutItem.icon && <Icon className="menu-icon" glyph={flyoutItem.icon}/>}
+              {!itemIsATool && <div className="flyout-item-label">{t(flyoutItem.label)}</div>}
+              {itemIsATool &&
+                // We should update when we have the customizable Tool Button component
+                <ToolButton
+                  className={classNames({ ZoomItem: true })}
+                  role="option"
+                  toolName={flyoutItem.toolName}
+                  label={flyoutItem.label}
+                  img={flyoutItem.icon}
+                />}
+            </div>
+            {flyoutItem.children && <Icon className="icon-open-submenu" glyph="icon-chevron-right"/>}
+          </div>
+        ));
+    }
+  };
+
+  const renderBackButton = () => {
+    const isZoomOptions = activeItem.dataElement === 'zoomOptionsButton';
+    return <div className="back-button-container" onClick={() => setActiveItem(null)}>
+      <Icon glyph="icon-chevron-left"/>
+      {isZoomOptions ? <ZoomText/> : <div className="back-button-label">{t('action.back')}</div>}
+    </div>;
   };
 
   const flyoutStyles = {
@@ -106,10 +127,7 @@ const Flyout = () => {
       })}>
         {activeItem ? (
           <>
-            <div className="back-button-container" onClick={() => setActiveItem(null)}>
-              <Icon glyph="icon-chevron-left"/>
-              <div className="back-button-label">{t('action.back')}</div>
-            </div>
+            {renderBackButton()}
             {activeItem.children.map(((activeChild, index) => renderFlyoutItem(activeChild, index, true)))}
           </>
         ) :

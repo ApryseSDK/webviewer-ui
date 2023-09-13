@@ -1,60 +1,53 @@
 import React, { useState } from 'react';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import { useTranslation } from 'react-i18next';
-import Icon from 'components/Icon';
 import DataElementWrapper from 'components/DataElementWrapper';
 import SignatureModes from 'constants/signatureModes';
-
+import ReactSelectCustomArrowIndicator from 'components/ReactSelectCustomArrowIndicator';
 import ReactSelectWebComponentProvider from 'src/components/ReactSelectWebComponentProvider';
 
 import './SignatureOptionsDropdown.scss';
 
-const getStyles = (isDarkMode) => ({
-  valueContainer: (base) => ({
-    ...base,
+const getStyles = () => ({
+  control: (provided) => ({
+    ...provided,
+    minHeight: '28px',
+    backgroundColor: 'var(--component-background)',
+    borderColor: 'hsl(0, 0%, 80%)',
+    boxShadow: null,
+    '&:hover': null,
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
     padding: '2px',
   }),
-  control: (base) => ({
-    ...base,
-    backgroundColor: isDarkMode ? '#21242A' : '#FFFFFF',
-    minHeight: '28px',
-    borderColor: isDarkMode ? '#485056' : '#CFD4DA',
-    '&:hover': {
-      borderColor: isDarkMode ? '#485056' : '#CFD4DA',
-    },
+  singleValue: (provided) => ({
+    ...provided,
+    color: 'var(--text-color)',
   }),
-  container: (base) => ({
-    ...base,
-    backgroundColor: isDarkMode ? '#21242A' : '#FFFFFF',
-    height: '29px',
-    borderColor: isDarkMode ? '#485056' : 'red',
-    '&:hover': {
-      borderColor: isDarkMode ? '#485056' : '#CFD4DA',
-    },
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: 'var(--component-background)',
   }),
-  indicatorsContainer: (base) => {
-    return {
-      ...base,
-      paddingRight: '6px',
-      height: '26px',
-    };
-  },
+  option: (provided) => ({
+    ...provided,
+    backgroundColor: 'var(--component-background)',
+    color: 'var(--text-color)',
+    '&:hover': {
+      backgroundColor: 'var(--popup-button-hover)',
+    }
+  }),
+  indicatorsContainer: (provided) => ({
+    ...provided,
+    paddingRight: '6px',
+    height: '26px',
+  }),
 });
-
-const CustomArrowIndicator = (props) => {
-  const { selectProps } = props;
-  const { menuIsOpen } = selectProps;
-  return (
-    <components.IndicatorsContainer {...props}>
-      <Icon className="arrow" glyph={`icon-chevron-${menuIsOpen ? 'up' : 'down'}`} />
-    </components.IndicatorsContainer>
-  );
-};
 
 const SignatureOptionsDropdown = (props) => {
   const { onChangeHandler, initialOption } = props;
   const { t } = useTranslation();
-  const styles = getStyles(false);
+  const styles = getStyles();
   const signatureOptions = [
     { value: SignatureModes.FULL_SIGNATURE, label: t('formField.types.signature') },
     { value: SignatureModes.INITIALS, label: t('option.type.initials') },
@@ -79,7 +72,7 @@ const SignatureOptionsDropdown = (props) => {
           options={signatureOptions}
           isSearchable={false}
           isClearable={false}
-          components={{ IndicatorsContainer: CustomArrowIndicator }}
+          components={{ IndicatorsContainer: ReactSelectCustomArrowIndicator }}
         />
       </ReactSelectWebComponentProvider>
     </DataElementWrapper>

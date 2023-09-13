@@ -108,6 +108,10 @@ class Slider extends React.PureComponent {
     this.onMove(e);
   };
 
+  onTouchEnd = (e) => {
+    this.onMouseUp(e);
+  };
+
   onMove = (e) => {
     const isUsingMouse = !e.touches;
     if (isUsingMouse && !this.isMouseDown) {
@@ -134,10 +138,17 @@ class Slider extends React.PureComponent {
     const svgLeft = this.sliderSvg.current.getBoundingClientRect().left;
     let circlePosition;
 
-    if (isUsingMouse) {
-      circlePosition = e.pageX - svgLeft;
-    } else {
-      circlePosition = e.touches[0].pageX - svgLeft;
+    try {
+      if (isUsingMouse) {
+        circlePosition = e.pageX - svgLeft;
+      } else {
+        circlePosition = e.touches[0].pageX - svgLeft;
+      }
+    } catch {
+      // In the event we cannot get a pageX value, stay still instead
+      const { convertRelativeCirclePositionToValue } = this.props;
+      const factor = convertRelativeCirclePositionToValue(this.state.localValue) / this.state.localValue;
+      return this.state.localValue / factor;
     }
 
     if (circlePosition < lineStart) {
@@ -237,6 +248,7 @@ class Slider extends React.PureComponent {
             data-element={dataElement}
             onMouseDown={this.onMouseDown}
             onTouchStart={this.onTouchStart}
+            onTouchEnd={this.onTouchEnd}
             ref={this.sliderSvg}
           >
             <line

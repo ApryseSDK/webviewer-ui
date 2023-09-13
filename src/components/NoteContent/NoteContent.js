@@ -466,32 +466,31 @@ const ContentArea = ({
        */
       if (pendingText) {
         setAnnotationRichTextStyle(editor, annotation);
+      } else if (editor.getContents()) {
+        setTimeout(() => {
+          // need setTimeout because textarea seem to rerender and unfocus
+          if (isMentionEnabled) {
+            textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
+            const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
+
+            if (ids.length) {
+              editor.setText(plainTextValue);
+            }
+          }
+
+          if (shouldNotFocusOnInput) {
+            return;
+          }
+
+          if (autoFocusNoteOnAnnotationSelection) {
+            textareaRef.current.focus();
+            const annotRichTextStyle = annotation.getRichTextStyle();
+            if (annotRichTextStyle) {
+              setReactQuillContent(annotation, editor);
+            }
+          }
+        }, 100);
       }
-
-      setTimeout(() => {
-        // need setTimeout because textarea seem to rerender and unfocus
-        if (isMentionEnabled) {
-          textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
-          const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
-
-          if (ids.length) {
-            editor.setText(plainTextValue);
-          }
-        }
-
-        if (shouldNotFocusOnInput) {
-          return;
-        }
-
-        if (textareaRef && textareaRef.current && autoFocusNoteOnAnnotationSelection) {
-          textareaRef.current.focus();
-
-          const annotRichTextStyle = annotation.getRichTextStyle();
-          if (annotRichTextStyle) {
-            setReactQuillContent(annotation, editor);
-          }
-        }
-      }, 100);
 
       const lastNewLineCharacterLength = 1;
       const textLength = editor.getLength() - lastNewLineCharacterLength;

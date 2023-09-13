@@ -4,7 +4,12 @@ const setAnnotationRichTextStyle = (editor, annotation) => {
   let breakpoint = 0;
   ops.forEach((item) => {
     const attributes = item.attributes;
-    const insert = item.insert;
+    const isMention = item.insert?.mention;
+    let value = item.insert;
+    if (isMention) {
+      const mention = item.insert.mention;
+      value = mention.denotationChar + mention.value;
+    }
     const cssStyle = {};
     if (attributes === null || attributes === undefined ? undefined : attributes.bold) {
       cssStyle['font-weight'] = 'bold';
@@ -26,7 +31,7 @@ const setAnnotationRichTextStyle = (editor, annotation) => {
       }
     }
     richTextStyle[breakpoint] = cssStyle;
-    breakpoint += insert.length;
+    breakpoint += value.length;
   });
   annotation.setRichTextStyle(richTextStyle);
 };

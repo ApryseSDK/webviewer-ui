@@ -106,13 +106,12 @@ function NotePopupContainer(props) {
         core.removeEventListener('annotationHidden', setNotes2, 2);
         core.removeEventListener('updateAnnotationPermission', setNotes2, 2);
       }
-      core.removeEventListener('documentUnloaded', onDocumentUnloaded);
-      core.removeEventListener('annotationChanged', _setNotes);
-      core.removeEventListener('annotationHidden', _setNotes);
-      core.removeEventListener('updateAnnotationPermission', _setNotes);
+      core.removeEventListener('documentUnloaded', setDocumentUnloaded1);
+      core.removeEventListener('annotationChanged', setNotes1);
+      core.removeEventListener('annotationHidden', setNotes1);
+      core.removeEventListener('updateAnnotationPermission', setNotes1);
     };
   }, [isMultiViewerMode]);
-
 
   useEffect(() => {
     const onAnnotationSelected = (documentViewerKey = activeDocumentViewerKey) => (annotations, action) => {

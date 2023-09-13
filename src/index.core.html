@@ -14,7 +14,6 @@
   <div id="line-connector-wrapper">
     <div id="line-connector-root"></div>
   </div>
-  <div id="form-field-indicator-wrapper"></div>
   <div id="outline-edit-popup-portal"></div>
   <script src="../core/webviewer-core.min.js"></script>
   <script src="webviewer-ui.min.js"></script>

@@ -5,9 +5,51 @@
       align-items: center;
     }
 
-    .bookmark-outline-text,
-    .bookmark-outline-input {
+    .bookmark-outline-text {
       flex-basis: calc(100% - 38px); // icon + mr + more-button width + ml = 38px
+    }
+
+    .portfolio-input {
+      -webkit-font-smoothing: antialiased;
+
+      .ui__input {
+        border-color: var(--border);
+
+        &.ui__input--message-error {
+          border-color: var(--error-border-color);
+
+          &.ui__input--focused {
+            box-shadow: none;
+          }
+
+          .ui__input__icon {
+            display: none;
+          }
+        }
+
+        &.ui__input--message-default.ui__input--focused {
+          border-color: var(--outline-color);
+          box-shadow: none;
+        }
+
+        .ui__input__input {
+          padding: var(--padding-small);
+          color: var(--text-color);
+          height: auto;
+          overflow: auto;
+          line-height: normal;
+
+          &::placeholder {
+            color: var(--placeholder-text);
+          }
+        }
+      }
+
+      .ui__input__messageText {
+        color: var(--error-text-color);
+        margin-top: var(--padding-small);
+        font-size: inherit;
+      }
     }
 
     .portfolio-item-icon {

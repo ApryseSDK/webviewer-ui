@@ -117,6 +117,8 @@
     "formFillCheckmark": "Bock",
     "formFillCross": "Korsa",
     "distanceMeasurement": "Distans",
+    "rectangularAreaMeasurement": "Rektangulärt område",
+    "ellipseMeasurement": "Ellipsområdet",
     "countMeasurement": "Räkna mätning",
     "ellipse": "Ellips",
     "eraser": "Suddgummi",
@@ -137,6 +139,7 @@
     "redact": "Redigera",
     "formFillDot": "Punkt",
     "signature": "Signatur",
+    "snipping": "Beskärningsverktyg",
     "squiggly": "Snyggt",
     "stamp": "Stämpel",
     "stickyNote": "Notera",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Är du säker på att du vill avbryta beskärningen av alla markerade sidor?"
     }
   },
+  "snippingPopUp": {
+    "title": "Beskärningsverktyg",
+    "clipboard": "Kopiera till Urklipp",
+    "download": "Ladda ner",
+    "cropAndRemove": "Beskära och Ta bort",
+    "snippingModal": {
+      "applyTitle": "Tillämpa beskärning?",
+      "applyMessage": "Den här åtgärden kommer att permanent klippa ut det angivna området och ta bort andra sidor. Det går inte att ångra.",
+      "cancelTitle": "Avbryta beskärning?",
+      "cancelMessage": "Är du säker på att du vill avbryta beskärningen?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragraf",
     "text": "Text"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Vattenstämpelalternativ",
     "watermarks": "Vattenstämplar"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Skapa PDF-portfölj",
+    "uploadFiles": "Ladda upp filer",
+    "uploadFolder": "Ladda upp mapp",
+    "addFiles": "Lägga till filer",
+    "addFile": "Lägg till fil",
+    "addFolder": "Lägg till mapp",
+    "createFolder": "Skapa mapp",
     "portfolioPanelTitle": "PDF-portfölj",
-    "portfolioAddFile": "Lägg till fil",
-    "portfolioAddFolder": "Lägg till mapp",
-    "portfolioCreateFolder": "Skapa mapp",
     "portfolioNewFolder": "Ny mapp",
-    "portfolioNewFolderPlaceholder": "Mapp namn"
+    "portfolioFolderPlaceholder": "Mapp namn",
+    "portfolioFilePlaceholder": "Filnamn",
+    "folderNameAlreadyExists": "Mappnamnet finns redan",
+    "fileNameAlreadyExists": "Filnamnet finns redan",
+    "openFile": "Öppna i Ny flik",
+    "fileAlreadyExists": "Filen finns redan",
+    "fileAlreadyExistsMessage": "Filen \"{{fileName}}\" finns redan i portföljen.",
+    "deletePortfolio": "Är du säker på att du vill ta bort \"{{fileName}}\"?",
+    "reselect": "Välj igen"
   },
   "languageModal": {
     "selectLanguage": "Välj språk"
@@ -1192,13 +1219,6 @@
     "save": "Spara fil",
     "pageError": "Ogiltig sida. Giltiga sidintervall är mellan 1 -",
     "fileNameCannotBeEmpty": "Filnamnet får inte vara tomt"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Skapa PDF-portfölj",
-    "uploadFiles": "Ladda upp filer",
-    "uploadFolder": "Ladda upp mapp",
-    "addFiles": "Lägga till filer",
-    "addFolder": "Lägg till mapp"
   },
   "filePicker": {
     "dragAndDrop": "Dra och släpp din fil här",

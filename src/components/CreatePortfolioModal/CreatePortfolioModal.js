@@ -9,7 +9,6 @@ import Button from 'components/Button';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import FilePicker from 'components/FilePicker';
 import Icon from 'components/Icon';
-import AddItemPopup from './AddItemPopup';
 import PortfolioItemGrid from './PortfolioItemGrid';
 import { createPortfolio } from 'helpers/portfolio';
 import loadDocument from 'helpers/loadDocument';
@@ -29,7 +28,6 @@ const CreatePortfolioModal = () => {
   ]);
 
   const [items, setItems] = useState([]);
-  const [isAddPopupActive, setIsAddPopupActive] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -48,25 +46,29 @@ const CreatePortfolioModal = () => {
   };
 
   const handleFileChange = (e) => {
-    const files = e.target.files;
+    let files = e.target.files;
     if (files.length > 0) {
-      setItems(items.concat(Array.from(files)));
+      files = Array.from(files);
+      const conflictItem = items.find((item) => files.find((file) => file.name === item.name));
+      if (conflictItem) {
+        const message = t('portfolio.fileAlreadyExistsMessage', { fileName: conflictItem.name });
+        const title = t('portfolio.fileAlreadyExists');
+        const confirmBtnText = t('portfolio.reselect');
+        const warning = {
+          message,
+          title,
+          confirmBtnText,
+          onConfirm: () => addFiles(),
+        };
+        dispatch(actions.showWarningMessage(warning));
+      } else {
+        setItems(items.concat(files));
+      }
     }
-  };
-
-  const toggleAddItemOption = () => {
-    setIsAddPopupActive(!isAddPopupActive);
-  };
-
-  const closePopup = () => {
-    setIsAddPopupActive(false);
   };
 
   const addFiles = () => {
     fileInputRef?.current?.click();
-  };
-
-  const addFolder = () => {
   };
 
   const deleteItem = (index) => {
@@ -81,7 +83,6 @@ const CreatePortfolioModal = () => {
 
   const addItemOptionClass = classNames({
     'add-item-option': true,
-    'show-popup': isAddPopupActive
   });
 
   return (isDisabled || !isOpen) ? null : (
@@ -104,11 +105,6 @@ const CreatePortfolioModal = () => {
                 </button>
               </Tab>
               <div className="tab-options-divider" />
-              <Tab dataElement={DataElements.PORTFOLIO_UPLOAD_FOLDER_TAB}>
-                <button className="tab-options-button">
-                  {t('portfolio.uploadFolder')}
-                </button>
-              </Tab>
             </div>
             <div className="divider"></div>
             <div className="tab-panels">
@@ -138,7 +134,7 @@ const CreatePortfolioModal = () => {
         <div className="footer">
           <div
             className={addItemOptionClass}
-            onClick={toggleAddItemOption}
+            onClick={addFiles}
           >
             <Icon
               glyph="icon-portfolio-file"
@@ -147,18 +143,7 @@ const CreatePortfolioModal = () => {
             <div className="add-item-option-text">
               {`${t('portfolio.addFiles')}...`}
             </div>
-            <Button
-              img={`icon-chevron-${isAddPopupActive ? 'up' : 'down'}`}
-            />
             <div className="add-item-trigger" data-element={DataElements.PORTFOLIO_MODAL_ADD_ITEM_TRIGGER}></div>
-            {isAddPopupActive && (
-              <AddItemPopup
-                triggerElementName={DataElements.PORTFOLIO_MODAL_ADD_ITEM_TRIGGER}
-                onClose={closePopup}
-                onAddFiles={addFiles}
-                onAddFolder={addFolder}
-              />
-            )}
           </div>
           <button className="create-portfolio" disabled={items.length === 0} onClick={create}>
             {t('action.create')}

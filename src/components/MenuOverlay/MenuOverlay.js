@@ -180,10 +180,10 @@ function MenuOverlay() {
         />
       </InitialMenuOverLayItem>
       <div className="divider"></div>
-      {false && core.isFullPDFEnabled() && (
+      {core.isFullPDFEnabled() && (
         <>
           <ActionButton
-            dataElement="portfolioButton"
+            dataElement={DataElements.CREATE_PORTFOLIO_BUTTON}
             className="row"
             img="icon-pdf-portfolio"
             label={t('portfolio.createPDFPortfolio')}

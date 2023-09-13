@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import core from 'core';
 
 import Button from '../Button';
-import BookmarkOutlineContextMenuPopup from '../BookmarkOutlineContextMenuPopup';
+import MoreOptionsContextMenuPopup from '../MoreOptionsContextMenuPopup';
 import OutlineContext from '../Outline/Context';
 import './OutlineContent.scss';
 
@@ -168,7 +168,7 @@ const OutlineContent = ({
             />
           }
           {isContextMenuOpen &&
-            <BookmarkOutlineContextMenuPopup
+            <MoreOptionsContextMenuPopup
               type={'outline'}
               anchorButton={`outline-more-button-${outlinePath}`}
               shouldDisplayDeleteButton={!isMultiSelectMode}

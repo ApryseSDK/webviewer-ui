@@ -117,6 +117,8 @@
     "formFillCheckmark": "Haken",
     "formFillCross": "Kreuz",
     "distanceMeasurement": "Abstandsmessung",
+    "rectangularAreaMeasurement": "Rechteckiger Bereich",
+    "ellipseMeasurement": "Ellipsenbereich",
     "countMeasurement": "Zählen",
     "ellipse": "Ellipse",
     "eraser": "Radiergummi",
@@ -137,6 +139,7 @@
     "redact": "Schwärzen",
     "formFillDot": "Punkt",
     "signature": "Unterschrift",
+    "snipping": "Ausschneidewerkzeug",
     "squiggly": "Gewellte Linie",
     "stamp": "Stempel",
     "stickyNote": "Notiz",
@@ -746,7 +749,7 @@
     },
     "connectToURL": {
       "title": "Sicherheitswarnung",
-      "message": "Dieses Dokument versucht, eine Verbindung herzustellen zu:\n\n{{-uri}}\n\n Wenn Sie diesem Dokument vertrauen, klicken Sie auf Bestätigen, um es zu öffnen."
+      "message": "Dieses Dokument versucht, eine Verbindung herzustellen zu:\n\n{{- uri}}\n\n Wenn Sie diesem Dokument vertrauen, klicken Sie auf Bestätigen, um es zu öffnen."
     }
   },
   "shortcut": {
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Möchten Sie das Zuschneiden aller ausgewählten Seiten wirklich abbrechen?"
     }
   },
+  "snippingPopUp": {
+    "title": "Ausschneidewerkzeug",
+    "clipboard": "In die Zwischenablage kopieren",
+    "download": "Herunterladen",
+    "cropAndRemove": "Zuschneiden und entfernen",
+    "snippingModal": {
+      "applyTitle": "Ausschneiden anwenden?",
+      "applyMessage": "Diese Aktion schneidet den angegebenen Bereich dauerhaft aus und entfernt andere Seiten. Es kann nicht rückgängig gemacht werden.",
+      "cancelTitle": "Ausschneiden abbrechen?",
+      "cancelMessage": "Möchten Sie das Ausschneiden wirklich abbrechen?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Absatz",
     "text": "Text"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Wasserzeichenoptionen",
     "watermarks": "Wasserzeichen"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Erstellen Sie ein PDF-Portfolio",
+    "uploadFiles": "Daten hochladen",
+    "uploadFolder": "Ordner hochladen",
+    "addFiles": "Dateien hinzufügen",
+    "addFile": "Datei hinzufügen",
+    "addFolder": "Ordner hinzufügen",
+    "createFolder": "Ordner erstellen",
     "portfolioPanelTitle": "PDF-Portfolio",
-    "portfolioAddFile": "Datei hinzufügen",
-    "portfolioAddFolder": "Ordner hinzufügen",
-    "portfolioCreateFolder": "Ordner erstellen",
     "portfolioNewFolder": "Neuer Ordner",
-    "portfolioNewFolderPlaceholder": "Ordnernamen"
+    "portfolioFolderPlaceholder": "Ordnernamen",
+    "portfolioFilePlaceholder": "Dateiname",
+    "folderNameAlreadyExists": "Der Ordnername existiert bereits",
+    "fileNameAlreadyExists": "Der Dateiname existiert bereits",
+    "openFile": "In neuem Tab öffnen",
+    "fileAlreadyExists": "Die Datei existiert bereits",
+    "fileAlreadyExistsMessage": "Die Datei „{{fileName}}“ ist bereits im Portfolio vorhanden.",
+    "deletePortfolio": "Sind Sie sicher, dass Sie „{{fileName}}“ löschen möchten?",
+    "reselect": "Neu auswählen"
   },
   "languageModal": {
     "selectLanguage": "Sprache auswählen"
@@ -1192,13 +1219,6 @@
     "save": "Datei speichern",
     "pageError": "Ungültige Seite. Gültige Seitenbereiche liegen zwischen 1 -",
     "fileNameCannotBeEmpty": "Der Dateiname darf nicht leer sein"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Erstellen Sie ein PDF-Portfolio",
-    "uploadFiles": "Daten hochladen",
-    "uploadFolder": "Ordner hochladen",
-    "addFiles": "Dateien hinzufügen",
-    "addFolder": "Ordner hinzufügen"
   },
   "filePicker": {
     "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",

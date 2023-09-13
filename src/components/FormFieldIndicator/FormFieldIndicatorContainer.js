@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { createPortal } from 'react-dom';
 import debounce from 'lodash/debounce';
 import useOnFormFieldsChanged from '../../hooks/useOnFormFieldsChanged';
 import core from 'core';
 import selectors from 'selectors';
 import FormFieldIndicator from './FormFieldIndicator';
-
 import './FormFieldIndicator.scss';
 import DataElements from 'src/constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
+import { createPortal } from 'react-dom';
 
 const FormFieldIndicatorContainer = () => {
   const [
@@ -28,14 +27,32 @@ const FormFieldIndicatorContainer = () => {
     selectors.getDocumentContentContainerWidthStyle(state),
     selectors.getNotesPanelWidth(state),
   ]);
-
   const formFieldAnnotationsList = useOnFormFieldsChanged();
-
   const [indicators, setIndicators] = useState([]);
 
   const getIndicators = () => {
-    return formFieldAnnotationsList.map((fieldAnnotation) => createFormFieldIndicator(fieldAnnotation));
+    if (!core.getDocument()) {
+      return [];
+    }
+    return formFieldAnnotationsList
+      .filter((fieldAnnotation) => {
+        return fieldAnnotation.getCustomData('trn-form-field-show-indicator') === 'true';
+      }).map((fieldAnnotation) => {
+        return createFormFieldIndicator(fieldAnnotation);
+      });
   };
+
+  const resetIndicators = () => {
+    setIndicators([]);
+  };
+
+  useEffect(() => {
+    core.addEventListener('documentUnloaded', resetIndicators);
+    return () => {
+      core.removeEventListener('documentUnloaded', resetIndicators);
+    };
+  }, []);
+
 
   useEffect(() => {
     setIndicators(getIndicators());
@@ -49,7 +66,6 @@ const FormFieldIndicatorContainer = () => {
     const scrollViewElement = core.getScrollViewElement();
 
     scrollViewElement?.addEventListener('scroll', onScroll);
-
     return () => {
       scrollViewElement?.removeEventListener('scroll', onScroll);
     };
@@ -63,38 +79,35 @@ const FormFieldIndicatorContainer = () => {
     notePanelWidth,
   ]);
 
-  const resetIndicators = () => {
-    setIndicators([]);
-  };
-
-  useEffect(() => {
-    core.addEventListener('documentUnloaded', resetIndicators);
-    return () => {
-      core.removeEventListener('documentUnloaded', resetIndicators);
-    };
-  }, []);
-
   const createFormFieldIndicator = (annotation) => {
-    return <FormFieldIndicator key={`indicator_${annotation.Id}`} annotation={annotation} />;
+    const { scrollLeft, scrollTop } = core.getScrollViewElement();
+    const payload = {
+      displayMode: core.getDocumentViewer().getDisplayModeManager().getDisplayMode(),
+      viewerBoundingRect: core.getViewerElement().getBoundingClientRect(),
+      appBoundingRect: getRootNode().getElementById('app').getBoundingClientRect(),
+      scrollLeft: scrollLeft,
+      scrollTop: scrollTop,
+    };
+    return (<FormFieldIndicator
+      key={`indicator_${annotation.Id}`}
+      annotation={annotation}
+      parameters={payload} />);
   };
 
   if (isOpen && !isDisabled) {
-    return <FormFieldIndicatorPortal>{indicators}</FormFieldIndicatorPortal>;
+    return (<>
+      {
+        createPortal(<div id="form-field-indicator-wrapper" >
+          <div data-element={DataElements['FORM_FIELD_INDICATOR_CONTAINER']}>
+            {indicators}
+          </div>
+        </div>, (window.isApryseWebViewerWebComponent)
+          ? getRootNode().getElementById('app') : document.body)
+      }
+    </>);
   }
 
   return null;
-};
-
-const FormFieldIndicatorPortal = ({ children }) => {
-  const mount = getRootNode().querySelector('#form-field-indicator-wrapper');
-  const el = document.createElement('div');
-  el.setAttribute('data-element', DataElements['FORM_FIELD_INDICATOR_CONTAINER']);
-
-  useEffect(() => {
-    mount.appendChild(el);
-    return () => mount.removeChild(el);
-  }, [el, mount]);
-  return createPortal(children, el);
 };
 
 export default FormFieldIndicatorContainer;

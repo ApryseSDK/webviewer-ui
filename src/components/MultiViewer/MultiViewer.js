@@ -422,10 +422,12 @@ const MultiViewer = () => {
   };
 
   useEffect(() => {
-    if (syncViewer && !isSyncing) {
-      startSyncing(syncViewer);
-    } else if (!syncViewer && isSyncing) {
-      stopSyncing();
+    if (isMultiViewerMode) {
+      if (syncViewer && !isSyncing) {
+        startSyncing(syncViewer);
+      } else if (!syncViewer && isSyncing) {
+        stopSyncing();
+      }
     }
   }, [syncViewer]);
 

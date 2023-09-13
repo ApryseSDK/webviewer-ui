@@ -117,6 +117,8 @@
     "formFillCheckmark": "Kruis aan",
     "formFillCross": "Kruis",
     "distanceMeasurement": "Afstandsmeting",
+    "rectangularAreaMeasurement": "rechthoekig gebied",
+    "ellipseMeasurement": "Ellips gebied",
     "countMeasurement": "Tel meting",
     "ellipse": "Ellips",
     "eraser": "Gum",
@@ -137,6 +139,7 @@
     "redact": "Redigeren",
     "formFillDot": "Punt",
     "signature": "Handtekening",
+    "snipping": "Uitsnijden gereedschap",
     "squiggly": "Squiggly",
     "stamp": "Stempel",
     "stickyNote": "Commentaar",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Weet u zeker dat u het bijsnijden van alle geselecteerde pagina's wilt annuleren?"
     }
   },
+  "snippingPopUp": {
+    "title": "Uitsnijden gereedschap",
+    "clipboard": "Kopiëren naar Klembord",
+    "download": "Downloaden",
+    "cropAndRemove": "Bijsnijden en Verwijderen",
+    "snippingModal": {
+      "applyTitle": "Uitsnijden toepassen?",
+      "applyMessage": "Deze actie zal het opgegeven gebied permanent uitsnijden en andere pagina's verwijderen. Dit kan niet ongedaan worden gemaakt.",
+      "cancelTitle": "Uitsnijden annuleren?",
+      "cancelMessage": "Weet u zeker dat u het uitsnijden wilt stoppen?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragraaf",
     "text": "Tekst"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Watermerkopties",
     "watermarks": "Watermerken"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "PDF-portfolio maken",
+    "uploadFiles": "Upload bestanden",
+    "uploadFolder": "Map uploaden",
+    "addFiles": "Bestanden toevoegen",
+    "addFile": "Bestand toevoegen",
+    "addFolder": "Map toevoegen",
+    "createFolder": "Map aanmaken",
     "portfolioPanelTitle": "PDF-portfolio",
-    "portfolioAddFile": "Bestand toevoegen",
-    "portfolioAddFolder": "Map toevoegen",
-    "portfolioCreateFolder": "Map aanmaken",
     "portfolioNewFolder": "Nieuwe map",
-    "portfolioNewFolderPlaceholder": "Naam van de map"
+    "portfolioFolderPlaceholder": "Naam van de map",
+    "portfolioFilePlaceholder": "Bestandsnaam",
+    "folderNameAlreadyExists": "Mapnaam bestaat al",
+    "fileNameAlreadyExists": "Bestandsnaam bestaat al",
+    "openFile": "Openen in nieuw tabblad",
+    "fileAlreadyExists": "Bestand bestaat al",
+    "fileAlreadyExistsMessage": "Het bestand \"{{fileName}}\" bestaat al in het portfolio.",
+    "deletePortfolio": "Weet u zeker dat u \"{{fileName}}\" wilt verwijderen?",
+    "reselect": "Opnieuw selecteren"
   },
   "languageModal": {
     "selectLanguage": "Selecteer taal"
@@ -1192,13 +1219,6 @@
     "save": "Sla bestand op",
     "pageError": "Ongeldige pagina. Geldige paginabereiken liggen tussen 1 -",
     "fileNameCannotBeEmpty": "Bestandsnaam mag niet leeg zijn"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "PDF-portfolio maken",
-    "uploadFiles": "Upload bestanden",
-    "uploadFolder": "Map uploaden",
-    "addFiles": "Bestanden toevoegen",
-    "addFolder": "Map toevoegen"
   },
   "filePicker": {
     "dragAndDrop": "Sleep uw bestand hierheen",

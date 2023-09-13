@@ -139,6 +139,7 @@
     "redact": "Redact",
     "formFillDot": "Dot",
     "signature": "Signature",
+    "snipping": "Snipping Tool",
     "squiggly": "Squiggly",
     "stamp": "Stamp",
     "stickyNote": "Note",
@@ -1041,6 +1042,18 @@
       "cancelMessage": "Are you sure you want to cancel cropping all selected pages?"
     }
   },
+  "snippingPopUp": {
+    "title": "Snipping Tool",
+    "clipboard": "Copy to Clipboard",
+    "download": "Download",
+    "cropAndRemove": "Crop and Remove",
+    "snippingModal": {
+      "applyTitle": "Apply snipping?",
+      "applyMessage": "This action will permanently cut out the specified area and remove other pages. It cannot be undone.",
+      "cancelTitle": "Cancel snipping?",
+      "cancelMessage": "Are you sure you want to stop snipping?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragraph",
     "text": "Text"
@@ -1083,13 +1096,25 @@
     "watermarkOptions": "Watermark Options",
     "watermarks": "Watermarks"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Create PDF Portfolio",
+    "uploadFiles": "Upload Files",
+    "uploadFolder": "Upload Folder",
+    "addFiles": "Add Files",
+    "addFile": "Add File",
+    "addFolder": "Add Folder",
+    "createFolder": "Create Folder",
     "portfolioPanelTitle": "PDF Portfolio",
-    "portfolioAddFile": "Add File",
-    "portfolioAddFolder": "Add Folder",
-    "portfolioCreateFolder": "Create Folder",
     "portfolioNewFolder": "New Folder",
-    "portfolioNewFolderPlaceholder": "Folder Name"
+    "portfolioFolderPlaceholder": "Folder Name",
+    "portfolioFilePlaceholder": "File Name",
+    "folderNameAlreadyExists": "Folder name already exists",
+    "fileNameAlreadyExists": "File name already exists",
+    "openFile": "Open in New Tab",
+    "fileAlreadyExists": "File Already Exists",
+    "fileAlreadyExistsMessage": "The file \"{{fileName}}\" already exists in the portfolio.",
+    "deletePortfolio": "Are you sure you want to delete \"{{fileName}}\"?",
+    "reselect": "Reselect"
   },
   "languageModal": {
     "selectLanguage": "Select language"
@@ -1194,13 +1219,6 @@
     "save": "Save File",
     "pageError": "Invalid page. Valid page ranges are between  1 - ",
     "fileNameCannotBeEmpty": "File Name cannot be empty"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Create PDF Portfolio",
-    "uploadFiles": "Upload Files",
-    "uploadFolder": "Upload Folder",
-    "addFiles": "Add Files",
-    "addFolder": "Add Folder"
   },
   "filePicker": {
     "dragAndDrop": "Drag & Drop your file here",

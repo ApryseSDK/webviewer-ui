@@ -1,5 +1,5 @@
 import actions from 'actions';
-import { ITEM_TYPE } from 'constants/customizationVariables';
+import { ITEM_TYPE, DEFAULT_GAP } from 'constants/customizationVariables';
 
 export default (store) => (props) => {
   class GroupedItems {
@@ -9,10 +9,11 @@ export default (store) => (props) => {
         dataElement,
         alignment,
         grow = 0,
-        gap = 16,
+        gap = DEFAULT_GAP,
         position,
         placement,
-        items = []
+        items = [],
+        alwaysVisible = false
       } = props;
       this.label = label;
       this.dataElement = dataElement;
@@ -23,7 +24,9 @@ export default (store) => (props) => {
       this.position = position;
       this.items = items;
       this.type = ITEM_TYPE.GROUPED_ITEMS;
+      this.alwaysVisible = alwaysVisible;
     }
+
     setGap = (gap) => {
       store.dispatch(actions.setGroupedItemsProperty('gap', gap, this.dataElement));
     };

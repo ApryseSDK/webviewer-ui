@@ -75,6 +75,7 @@ const AnnotationPopupContainer = ({
     notesInLeftPanel,
     leftPanelOpen,
     activeLeftPanel,
+    activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, DataElements.ANNOTATION_POPUP),
@@ -93,6 +94,7 @@ const AnnotationPopupContainer = ({
       selectors.getNotesInLeftPanel(state),
       selectors.isElementOpen(state, DataElements.LEFT_PANEL),
       selectors.getActiveLeftPanel(state),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -133,7 +135,7 @@ const AnnotationPopupContainer = ({
 
   const setPopupPosition = () => {
     if (popupRef.current) {
-      setPosition(getAnnotationPopupPositionBasedOn(focusedAnnotation, popupRef));
+      setPosition(getAnnotationPopupPositionBasedOn(focusedAnnotation, popupRef, activeDocumentViewerKey));
     }
   };
 
@@ -143,7 +145,7 @@ const AnnotationPopupContainer = ({
       setPopupPosition();
     }
     // canModify is needed here because the effect from useOnAnnotationPopupOpen hook will run again and determine which button to show, which in turn change the popup size and will need to recalculate position
-  }, [focusedAnnotation, isStylePopupOpen, isDatePickerMount, canModify]);
+  }, [focusedAnnotation, isStylePopupOpen, isDatePickerMount, canModify, activeDocumentViewerKey]);
 
 
   useEffect(() => {
@@ -188,12 +190,12 @@ const AnnotationPopupContainer = ({
   }
 
   /* COMMENT / DATE */
-  const selectedAnnotations = core.getSelectedAnnotations();
+  const selectedAnnotations = core.getSelectedAnnotations(activeDocumentViewerKey);
   const numberOfSelectedAnnotations = selectedAnnotations.length;
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
   const isFreeTextAnnot = focusedAnnotation instanceof Annotations.FreeTextAnnotation;
   const isDateFreeTextCanEdit = isFreeTextAnnot && !!focusedAnnotation.getDateFormat() && core.canModifyContents(focusedAnnotation);
-  const numberOfGroups = core.getNumberOfGroups(selectedAnnotations);
+  const numberOfGroups = core.getNumberOfGroups(selectedAnnotations, activeDocumentViewerKey);
   const canGroup = numberOfGroups > 1;
   const canUngroup = numberOfGroups === 1 && numberOfSelectedAnnotations > 1 && isFocusedAnnotationSelected;
   const isAppearanceSignature =

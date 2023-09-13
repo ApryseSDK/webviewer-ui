@@ -34,7 +34,7 @@
   width: 100%;
   height: 36px;
   background: var(--view-header-background);
-  z-index: 72;
+  z-index: $headers-z-index;
 
   &:not(.Tools) {
     .Button {

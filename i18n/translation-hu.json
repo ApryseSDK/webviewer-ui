@@ -117,6 +117,8 @@
     "formFillCheckmark": "Ketyegés",
     "formFillCross": "Kereszt",
     "distanceMeasurement": "Távolság",
+    "rectangularAreaMeasurement": "Téglalap alakú terület",
+    "ellipseMeasurement": "Ellipszis terület",
     "countMeasurement": "Gróf mérés",
     "ellipse": "Ellipszis",
     "eraser": "Radír",
@@ -137,6 +139,7 @@
     "redact": "Szerkeszt",
     "formFillDot": "Pont",
     "signature": "Aláírás",
+    "snipping": "Vágóeszköz",
     "squiggly": "kacskaringós",
     "stamp": "Bélyeg",
     "stickyNote": "jegyzet",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Biztosan megszakítja az összes kiválasztott oldal levágását?"
     }
   },
+  "snippingPopUp": {
+    "title": "Vágóeszköz",
+    "clipboard": "Másolás a vágólapra",
+    "download": "Letöltés",
+    "cropAndRemove": "Vágás és eltávolítás",
+    "snippingModal": {
+      "applyTitle": "Vágás alkalmazása?",
+      "applyMessage": "Ez a művelet véglegesen kivágja a megadott területet, és eltávolítja a másik oldalakat. Nem lehet visszavonni.",
+      "cancelTitle": "Vágás megszakítása?",
+      "cancelMessage": "Biztosan meg akarja állítani a vágást?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Bekezdés",
     "text": "Szöveg"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Vízjel opciók",
     "watermarks": "Vízjelek"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "PDF-portfólió létrehozása",
+    "uploadFiles": "Fájlok feltöltése",
+    "uploadFolder": "Mappa feltöltése",
+    "addFiles": "Fájlok hozzáadása",
+    "addFile": "Fájl hozzáadása",
+    "addFolder": "Mappa hozzáadása",
+    "createFolder": "Mappa létrehozás",
     "portfolioPanelTitle": "PDF portfólió",
-    "portfolioAddFile": "Fájl hozzáadása",
-    "portfolioAddFolder": "Mappa hozzáadása",
-    "portfolioCreateFolder": "Mappa létrehozás",
     "portfolioNewFolder": "Új mappa",
-    "portfolioNewFolderPlaceholder": "Mappa neve"
+    "portfolioFolderPlaceholder": "Mappa neve",
+    "portfolioFilePlaceholder": "Fájl név",
+    "folderNameAlreadyExists": "A mappanév már létezik",
+    "fileNameAlreadyExists": "A fájlnév már létezik",
+    "openFile": "Megnyitás új lapon",
+    "fileAlreadyExists": "A fájl már létezik",
+    "fileAlreadyExistsMessage": "A \"{{fileName}}\" fájl már létezik a portfólióban.",
+    "deletePortfolio": "Biztosan törli a következőt: \"{{fileName}}\"?",
+    "reselect": "Válassza ki újra"
   },
   "languageModal": {
     "selectLanguage": "Válasszon nyelvet"
@@ -1192,13 +1219,6 @@
     "save": "Fájl mentése",
     "pageError": "Érvénytelen oldal. Az érvényes oldaltartományok 1 -",
     "fileNameCannotBeEmpty": "A fájlnév nem lehet üres"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "PDF-portfólió létrehozása",
-    "uploadFiles": "Fájlok feltöltése",
-    "uploadFolder": "Mappa feltöltése",
-    "addFiles": "Fájlok hozzáadása",
-    "addFolder": "Mappa hozzáadása"
   },
   "filePicker": {
     "dragAndDrop": "Drag & Drop ide a fájlt",

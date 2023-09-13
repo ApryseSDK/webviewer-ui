@@ -30,10 +30,8 @@ const OutlineUtils = {
     }
 
     const PDFNet = window.Core.PDFNet;
-
+    const document = await this.doc.getPDFDoc();
     return PDFNet.runWithCleanup(async () => {
-      const document = await this.doc.getPDFDoc();
-
       const page = await document.getPage(pageNum);
       const destination = await PDFNet.Destination.createXYZ(page, x, y, zoom);
       target.setAction(await PDFNet.Action.createGoto(destination));
@@ -92,11 +90,10 @@ const OutlineUtils = {
     fireEvent(Events.OUTLINE_BOOKMARKS_CHANGED, bookmarkEventObject);
     return addedOutlinePath;
   },
-  createOutlineXYZ(newName, pageNum, x, y, zoom) {
+  async createOutlineXYZ(newName, pageNum, x, y, zoom) {
     const PDFNet = window.Core.PDFNet;
-
+    const doc = await this.doc.getPDFDoc();
     return PDFNet.runWithCleanup(async () => {
-      const doc = await this.doc.getPDFDoc();
       const newOutline = await PDFNet.Bookmark.create(doc, newName);
 
       const page = await doc.getPage(pageNum);
@@ -381,9 +378,9 @@ const OutlineUtils = {
 
     return `${path}${this.getSplitter()}${name}`;
   },
-  getLastOutline() {
+  async getLastOutline() {
+    const doc = await this.doc.getPDFDoc();
     return window.Core.PDFNet.runWithCleanup(async () => {
-      const doc = await this.doc.getPDFDoc();
       const root = await doc.getFirstBookmark();
 
       let curr = root;
@@ -440,9 +437,8 @@ const OutlineUtils = {
     }
 
     const paths = path.split(this.getSplitter());
-
+    const doc = await this.doc.getPDFDoc();
     return window.Core.PDFNet.runWithCleanup(async () => {
-      const doc = await this.doc.getPDFDoc();
       const rootOutline = await doc.getFirstBookmark();
 
       let curr = rootOutline;

@@ -64,7 +64,8 @@ describe('NoteState', () => {
     );
     const noteStateElement = container.querySelector('.NoteState');
     expect(noteStateElement).toBeInTheDocument();
-    expect(noteStateElement).toHaveAttribute('data-element', `noteState-${ANNOTATION_ID}`);
+    expect(noteStateElement).toHaveAttribute('data-element', 'noteState');
+    expect(noteStateElement).toHaveAttribute('data-id', ANNOTATION_ID);
   });
 
   it('Should include all states in popup', () => {
@@ -213,7 +214,7 @@ describe('NoteState', () => {
       </ReduxWrapper>
     );
     expect(document.querySelector('.note-state-options')).not.toBeInTheDocument();
-    const noteState = document.querySelector(`div[data-element="noteState-${ANNOTATION_ID}"]`);
+    const noteState = document.querySelector('div[data-element="noteState"]');
     expect(noteState).toBeInTheDocument();
     fireEvent.click(noteState);
     expect(document.querySelector('.note-state-options')).toBeInTheDocument();

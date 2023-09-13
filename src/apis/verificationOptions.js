@@ -75,8 +75,29 @@ const enableOnlineCRLRevocationChecking = (store) => () => {
   store.dispatch(actions.setIsRevocationCheckingEnabled(true));
 };
 
+/**
+ * Sets the proxy URL server used for online revocation requests during
+ * Digital Signature Verification. Used to avoid CORS-related errors.
+ * The default value is https://proxy.pdftron.com.
+ * @method UI.VerificationOptions.setRevocationProxyPrefix
+ *
+ * @param {string} proxy_server_url
+ * The URL (including the protocol such as 'https://') to use as a prefix for
+ * making online revocation requests through a proxy server to avoid CORS
+ * related issues
+ *
+ * @example
+ * WebViewer(...).then(async function(instance) {
+ *   instance.UI.VerificationOptions.setRevocationProxyPrefix('https://proxy.mydomain.com');
+ * });
+ */
+const setRevocationProxyPrefix = (store) => (revocationProxyPrefix) => {
+  store.dispatch(actions.setRevocationProxyPrefix(revocationProxyPrefix));
+};
+
 export {
   addTrustedCertificates,
   loadTrustList,
-  enableOnlineCRLRevocationChecking
+  enableOnlineCRLRevocationChecking,
+  setRevocationProxyPrefix,
 };

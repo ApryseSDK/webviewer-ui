@@ -23,13 +23,15 @@ const SignaturePanel = () => {
     certificate,
     trustLists,
     currentLanguage,
-    revocationChecking
+    revocationChecking,
+    revocationProxyPrefix,
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, 'signaturePanel'),
     selectors.getCertificates(state),
     selectors.getTrustLists(state),
     selectors.getCurrentLanguage(state),
-    selectors.getIsRevocationCheckingEnabled(state)
+    selectors.getIsRevocationCheckingEnabled(state),
+    selectors.getRevocationProxyPrefix(state),
   ]);
   const [translate] = useTranslation();
 
@@ -62,7 +64,7 @@ const SignaturePanel = () => {
       // Field will not exist in the document
       core.getAnnotationsLoadedPromise().then(() => {
         setShowSpinner(true);
-        setVerificationResult(document, certificate, trustLists, currentLanguage, revocationChecking, dispatch)
+        setVerificationResult(document, certificate, trustLists, currentLanguage, revocationChecking, revocationProxyPrefix, dispatch)
           .then(async (verificationResult) => {
             const fieldManager = core.getAnnotationManager().getFieldManager();
             setFields(Object.keys(verificationResult).map((fieldName) => fieldManager.getField(fieldName)));

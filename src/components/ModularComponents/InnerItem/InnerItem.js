@@ -1,6 +1,7 @@
 import React from 'react';
 import { ITEM_TYPE } from 'constants/customizationVariables';
-import CustomButton from 'components/Button/CustomButton';
+import CustomButton from '../CustomButton';
+import StatefulButton from '../StatefulButton';
 import GroupedItems from '../GroupedItems/GroupedItems';
 import Divider from '../Divider';
 import RibbonGroup from '../RibbonGroup';
@@ -15,6 +16,8 @@ const InnerItem = (props) => {
   switch (type) {
     case ITEM_TYPE.BUTTON:
       return <CustomButton key={key} {...props} />;
+    case ITEM_TYPE.STATEFUL_BUTTON:
+      return <StatefulButton key={key} {...props} />;
     case ITEM_TYPE.GROUPED_ITEMS:
       return <GroupedItems key={key} {...props} headerDirection={headerDirection} />;
     case ITEM_TYPE.RIBBON_ITEM:

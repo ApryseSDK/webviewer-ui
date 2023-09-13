@@ -1,24 +1,34 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import './GroupedItems.scss';
 import InnerItem from '../InnerItem/InnerItem';
-import { ALIGNMENT, ITEM_TYPE } from 'constants/customizationVariables';
+import { ALIGNMENT, ITEM_TYPE, DEFAULT_GAP } from 'constants/customizationVariables';
+import actions from 'actions';
 
 const GroupedItems = (props) => {
   const {
     dataElement,
     items,
     headerDirection,
-    gap = 16,
+    gap = DEFAULT_GAP,
     alignment = ALIGNMENT.START,
     grow = 0,
+    alwaysVisible = false
   } = props;
+  const dispatch = useDispatch();
   const [itemsGap, setItemsGap] = useState(gap);
   const itemValidTypes = Object.values(ITEM_TYPE);
   const validItems = items?.filter((item) => {
     const itemType = item.type || item.props.type;
     return itemValidTypes.includes(itemType);
   });
+
+  useEffect(() => {
+    if (alwaysVisible) {
+      dispatch(actions.setFixedGroupedItems(dataElement));
+    }
+  }, []);
 
   useEffect(() => {
     setItemsGap(gap);

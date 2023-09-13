@@ -162,6 +162,7 @@ const FilterAnnotModal = () => {
 
   const filterClear = () => {
     setCheckRepliesForAuthorFilter(false);
+    setIsDocumentFilterActive(false);
     setAuthorFilter([]);
     setTypesFilter([]);
     setColorFilter([]);

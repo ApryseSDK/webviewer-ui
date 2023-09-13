@@ -240,7 +240,7 @@ const MultiSelectControls = ({
               message,
               confirmBtnText,
               onConfirm: () => {
-                core.deleteAnnotations(modifiableMultiSelectAnnotations, activeDocumentViewerKey);
+                core.deleteAnnotations(modifiableMultiSelectAnnotations, undefined, activeDocumentViewerKey);
               },
             };
             dispatch(actions.showWarningMessage(warning));

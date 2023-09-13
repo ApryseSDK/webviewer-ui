@@ -148,7 +148,18 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
   const addURLLink = (e) => {
     e.preventDefault();
 
-    const action = new window.Core.Actions.URI({ uri: url });
+    if (!url.length) {
+      return;
+    }
+
+    let urlWithProtocol;
+    if (!core.isValidURI(url)) {
+      urlWithProtocol = `https://${url}`;
+    } else {
+      urlWithProtocol = url;
+    }
+
+    const action = new window.Core.Actions.URI({ uri: urlWithProtocol });
     const links = createLink(action);
 
     let pageNumbersToDraw = links.map((link) => link.PageNumber);
@@ -259,6 +270,7 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
                     dataElement="linkSubmitButton"
                     label={t('action.link')}
                     onClick={addURLLink}
+                    disabled={!url.length}
                   />
                 </div>
               </form>

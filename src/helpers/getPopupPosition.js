@@ -4,25 +4,30 @@ import getRootNode from 'helpers/getRootNode';
 // gap between the annotation selection box and the popup element
 const gap = 17;
 
-export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
+export const getAnnotationPopupPositionBasedOn = (annotation, popup, documentViewerKey = 1) => {
   const { left, top } = calcAnnotationPopupPosition(
-    getAnnotationPosition(annotation),
-    getPopupDimensions(popup)
+    getAnnotationPosition(annotation, documentViewerKey),
+    getPopupDimensions(popup),
+    documentViewerKey,
   );
 
   return { left: Math.max(left, 4), top };
 };
 
-export const getTextPopupPositionBasedOn = (allQuads, popup) => {
+export const getTextPopupPositionBasedOn = (allQuads, popup, documentViewerKey = 1, isMultiViewerMode = false) => {
   const { left, top } = calcTextPopupPosition(
-    getSelectedTextPosition(allQuads),
-    getPopupDimensions(popup)
+    getSelectedTextPosition(allQuads, documentViewerKey),
+    getPopupDimensions(popup),
+    documentViewerKey,
   );
 
   // Fixes the issue where viewer has space on
   // left side in WebComponent mode
   if (window.isApryseWebViewerWebComponent) {
-    const documentContainer = getRootNode().querySelector('.DocumentContainer');
+    const documentContainer =
+      isMultiViewerMode
+        ? getRootNode().querySelector(`#DocumentContainer${documentViewerKey}`)
+        : getRootNode().querySelector('.DocumentContainer');
     const containerBox = documentContainer.getBoundingClientRect();
     const updatedLeft = left - containerBox.left;
     return { left: updatedLeft, top };
@@ -106,7 +111,7 @@ const getAnnotationPageCoordinates = (annotation, documentViewerKey = 1) => {
   return { left, top, right, bottom };
 };
 
-const getSelectedTextPosition = (allQuads) => {
+const getSelectedTextPosition = (allQuads, documentViewerKey) => {
   const { startPageNumber, endPageNumber } = getSelectedTextPageNumber(allQuads);
   const { left, right, top, bottom } = getSelectedTextPageCoordinates(
     allQuads,
@@ -114,8 +119,8 @@ const getSelectedTextPosition = (allQuads) => {
     endPageNumber
   );
 
-  let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, startPageNumber);
-  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, endPageNumber);
+  let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, startPageNumber, documentViewerKey);
+  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, endPageNumber, documentViewerKey);
 
   if (core.getRotation() > 1) {
     const tmp = topLeft;
@@ -185,22 +190,22 @@ const getPopupDimensions = (popup) => {
   return { width, height };
 };
 
-const calcAnnotationPopupPosition = (annotationPosition, popupDimension) => {
-  const top = calcPopupTop(annotationPosition, popupDimension);
-  const left = calcPopupLeft(annotationPosition, popupDimension);
+const calcAnnotationPopupPosition = (annotationPosition, popupDimension, documentViewerKey) => {
+  const top = calcPopupTop(annotationPosition, popupDimension, documentViewerKey);
+  const left = calcPopupLeft(annotationPosition, popupDimension, documentViewerKey);
 
   return { left, top };
 };
 
-const calcTextPopupPosition = (selectedTextPosition, popupDimension) => {
-  const top = calcPopupTop(selectedTextPosition, popupDimension);
-  const left = calcPopupLeft(selectedTextPosition, popupDimension);
+const calcTextPopupPosition = (selectedTextPosition, popupDimension, documentViewerKey) => {
+  const top = calcPopupTop(selectedTextPosition, popupDimension, documentViewerKey);
+  const left = calcPopupLeft(selectedTextPosition, popupDimension, documentViewerKey);
 
   return { left, top };
 };
 
-export const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
-  const { scrollLeft } = core.getScrollViewElement();
+export const calcPopupLeft = ({ topLeft, bottomRight }, { width }, documentViewerKey) => {
+  const { scrollLeft } = core.getScrollViewElement(documentViewerKey);
   const center = (topLeft.x + bottomRight.x) / 2 - scrollLeft;
   let left = center - width / 2;
 
@@ -225,9 +230,9 @@ export const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
  * @param {number} popupDimension The deminition of the popup (width, height)
  * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
  */
-export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
+export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewerKey) => {
   const padding = 5;
-  const scrollContainer = core.getScrollViewElement();
+  const scrollContainer = core.getScrollViewElement(documentViewerKey);
   const boundingBox = scrollContainer.getBoundingClientRect();
   const visibleRegion = {
     left: boundingBox.left + scrollContainer.scrollLeft,

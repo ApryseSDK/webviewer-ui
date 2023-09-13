@@ -117,6 +117,8 @@
     "formFillCheckmark": "Tick",
     "formFillCross": "Attraversare",
     "distanceMeasurement": "Misurazione della distanza",
+    "rectangularAreaMeasurement": "Zona Rettangolare",
+    "ellipseMeasurement": "Area dell'ellisse",
     "countMeasurement": "Misurazione del conteggio",
     "ellipse": "Ellisse",
     "eraser": "Gomma per cancellare",
@@ -137,6 +139,7 @@
     "redact": "Oscura",
     "formFillDot": "Punto",
     "signature": "Firma",
+    "snipping": "Strumento di Ritaglio",
     "squiggly": "Squiggly",
     "stamp": "Francobollo",
     "stickyNote": "Commento",
@@ -746,7 +749,7 @@
     },
     "connectToURL": {
       "title": "Avviso di sicurezza",
-      "message": "Questo documento sta tentando di connettersi a:\n\n{{-uri}}\n\n Se ritieni attendibile questo documento, fai clic su Conferma per aprirlo."
+      "message": "Questo documento sta tentando di connettersi a:\n\n{{- uri}}\n\n Se ritieni attendibile questo documento, fai clic su Conferma per aprirlo."
     }
   },
   "shortcut": {
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Sei sicuro di voler annullare il ritaglio di tutte le pagine selezionate?"
     }
   },
+  "snippingPopUp": {
+    "title": "Strumento di Ritaglio",
+    "clipboard": "Copia negli Appunti",
+    "download": "Scarica",
+    "cropAndRemove": "Ritaglia ed Elimina",
+    "snippingModal": {
+      "applyTitle": "Applicare il ritaglio?",
+      "applyMessage": "Questa azione ritaglierà definitivamente l'area specificata e rimuoverà altre pagine. Non può essere annullato.",
+      "cancelTitle": "Annullare il ritaglio?",
+      "cancelMessage": "Sei sicuro di voler interrompere il ritaglio?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragrafo",
     "text": "Testo"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Opzioni filigrana",
     "watermarks": "Filigrane"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Crea portafoglio PDF",
+    "uploadFiles": "Caricare files",
+    "uploadFolder": "Carica cartella",
+    "addFiles": "Aggiungere i file",
+    "addFile": "Aggiungi file",
+    "addFolder": "Aggiungi cartella",
+    "createFolder": "Creare una cartella",
     "portfolioPanelTitle": "Portafoglio PDF",
-    "portfolioAddFile": "Aggiungi file",
-    "portfolioAddFolder": "Aggiungi cartella",
-    "portfolioCreateFolder": "Creare una cartella",
     "portfolioNewFolder": "Nuova cartella",
-    "portfolioNewFolderPlaceholder": "Nome della cartella"
+    "portfolioFolderPlaceholder": "Nome della cartella",
+    "portfolioFilePlaceholder": "Nome del file",
+    "folderNameAlreadyExists": "Il nome della cartella esiste già",
+    "fileNameAlreadyExists": "Il nome del file esiste già",
+    "openFile": "Apri in una nuova scheda",
+    "fileAlreadyExists": "Il file esiste già",
+    "fileAlreadyExistsMessage": "Il file \"{{fileName}}\" esiste già nel portfolio.",
+    "deletePortfolio": "Sei sicuro di voler eliminare \"{{fileName}}\"?",
+    "reselect": "Riseleziona"
   },
   "languageModal": {
     "selectLanguage": "Seleziona la lingua"
@@ -1192,13 +1219,6 @@
     "save": "Salvare il file",
     "pageError": "Pagina non valida. Gli intervalli di pagine validi sono compresi tra 1 -",
     "fileNameCannotBeEmpty": "Il nome del file non può essere vuoto"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Crea portafoglio PDF",
-    "uploadFiles": "Caricare files",
-    "uploadFolder": "Carica cartella",
-    "addFiles": "Aggiungere i file",
-    "addFolder": "Aggiungi cartella"
   },
   "filePicker": {
     "dragAndDrop": "Trascina e rilascia qui il tuo file",

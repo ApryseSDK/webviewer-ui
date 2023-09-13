@@ -14,10 +14,11 @@
     height: 182px;
     padding: 12px 24px;
     background-color: #F8F9FA;
-    border: 1px solid #E7EDF3;
+    border: 1px solid var(--tools-overlay-button-hover);
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 6px;
 
     .portfolio-item-preview {
       width: 100%;

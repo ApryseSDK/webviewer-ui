@@ -55,13 +55,22 @@ const button7 = { ...baseButton, dataElement: 'button7', label: 'Button 7' };
 const button8 = { ...baseButton, dataElement: 'button8', label: 'Button 8' };
 const button9 = { ...baseButton, dataElement: 'button9', label: 'Button 9' };
 
+const group1 = {
+  dataElement: 'group1',
+  items: [button8, button9],
+  gap: 100,
+  grow: 1,
+  alignment: 'center',
+  alwaysVisible: true,
+  type: 'groupedItems'
+};
 
 export const TopHeader = (storyProps) => {
   const props = {
     dataElement: 'defaultHeader',
     placement: 'top',
     gap: 20,
-    items: [button1, button2, divider, button3],
+    items: [button1, button2, divider, button3, group1],
     ...storyProps,
   };
   return (
@@ -96,7 +105,7 @@ export const RightHeader = (storyProps) => {
     dataElement: 'rightHeader',
     placement: 'right',
     gap: 20,
-    items: [button7, divider, button8, button9],
+    items: [button7, divider, button8, button9, group1],
     ...storyProps,
   };
   return (

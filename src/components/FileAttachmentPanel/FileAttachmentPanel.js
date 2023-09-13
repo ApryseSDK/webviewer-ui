@@ -11,8 +11,13 @@ import { getIsMultiTab, getTabManager } from 'src/redux/selectors/exposedSelecto
 import actions from 'actions';
 import DataElements from 'src/constants/dataElement';
 
+const getActualFileName = (filename) => {
+  const fileNameRegex = /[^\\\/]+$/g;
+  return filename.match(fileNameRegex)[0];
+};
 
 const renderAttachment = (filename, onClickCallback, key, showFileIdProcessSpinner) => {
+  filename = getActualFileName(filename);
   const fileExtension = filename.split('.').pop().toUpperCase();
   if (showFileIdProcessSpinner === key) {
     return (
@@ -70,7 +75,7 @@ const FileAttachmentPanel = () => {
       dispatch(actions.openElement(DataElements.LOADING_MODAL));
       setTimeout(async () => {
         const blob = await fileAttachmentAnnot.getFileData();
-        const filename = fileAttachmentAnnot.filename;
+        const filename = getActualFileName(fileAttachmentAnnot.filename);
         const newTabId = await tabManager.addTab(blob, { filename });
         dispatch(actions.closeElement(DataElements.LOADING_MODAL));
         dispatch(actions.closeElement(DataElements.LEFT_PANEL));
@@ -87,11 +92,11 @@ const FileAttachmentPanel = () => {
         {fileAttachments.embeddedFiles.length ? <p className="title">{t('message.embeddedFiles')}</p> : null}
         <ul className="downloadable">
           {fileAttachments.embeddedFiles.map((file, idx) => renderAttachment(
-            file.filename,
+            getActualFileName(file.filename),
             () => {
               setFileIdProcessSpinner(`embeddedFile_${idx}`);
               getEmbeddedFileData(file.fileObject).then((blob) => {
-                saveAs(blob, file.filename);
+                saveAs(blob, getActualFileName(file.filename));
               }).finally(() => {
                 setFileIdProcessSpinner(null);
               });
@@ -111,7 +116,7 @@ const FileAttachmentPanel = () => {
             </p>
             <ul className="downloadable">
               {fileAttachmentAnnotsPerPage.map((fileAttachmentAnnot, idx) => renderAttachment(
-                fileAttachmentAnnot.filename,
+                getActualFileName(fileAttachmentAnnot.filename),
                 async () => {
                   core.setCurrentPage(fileAttachmentAnnot['PageNumber']);
                   core.selectAnnotation(fileAttachmentAnnot);

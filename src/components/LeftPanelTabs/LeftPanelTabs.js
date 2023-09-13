@@ -49,7 +49,7 @@ class LeftPanelTabs extends React.Component {
             dataElement={DataElements.PORTFOLIO_PANEL_BUTTON}
             img="icon-compare-change"
             onClick={() => setActiveLeftPanel(DataElements.PORTFOLIO_PANEL)}
-            title="portfolioPanel.portfolioPanelTitle"
+            title="portfolio.portfolioPanelTitle"
             tabIndex={isLeftPanelOpen ? 0 : -1}
           />}
         <Button

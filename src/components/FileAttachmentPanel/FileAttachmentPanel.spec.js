@@ -61,9 +61,15 @@ jest.mock('helpers/getFileAttachments', () => {
       fileAttachmentAnnotations: {
         1: [
           {
-            filename: 'mock 1',
+            filename: 'C:\\Windows\\TEMP\\mock 1.pdf',
             getFileData: () => ({
-              filename: 'mock 1'
+              filename: 'C:\\Windows\\TEMP\\mock 1.pdf'
+            })
+          },
+          {
+            filename: 'C:/Windows/TEMP/mock 2.docx',
+            getFileData: () => ({
+              filename: 'C:/Windows/TEMP/mock 2.docx'
             })
           }
         ]
@@ -73,6 +79,26 @@ jest.mock('helpers/getFileAttachments', () => {
 });
 
 describe('File attachment panel', () => {
+  it('should rener file names correctly', async () => {
+    await act(async () => {
+      const store = configureStore({ reducer: (state = initialState) => state });
+      const component = render(
+        <Provider store={store}>
+          <FileAttachmentPanel />
+        </Provider>
+      );
+
+      await waitFor(() => component.getByText('[PDF] mock 1.pdf'));
+
+      const button = component.getByText('[PDF] mock 1.pdf');
+      expect(button).toBeInTheDocument();
+
+      await waitFor(() => component.getByText('[DOCX] mock 2.docx'));
+
+      const button2 = component.getByText('[DOCX] mock 2.docx');
+      expect(button2).toBeInTheDocument();
+    });
+  });
   it('should trigger open new tab function in multi tab mode', async () => {
     await act(async () => {
       const store = configureStore({ reducer: (state = initialState) => state });
@@ -82,9 +108,9 @@ describe('File attachment panel', () => {
         </Provider>
       );
 
-      await waitFor(() => component.getByText('[MOCK 1] mock 1'));
+      await waitFor(() => component.getByText('[PDF] mock 1.pdf'));
 
-      const button = component.getByText('[MOCK 1] mock 1');
+      const button = component.getByText('[PDF] mock 1.pdf');
       expect(button).toBeInTheDocument();
 
       button.click();

@@ -13,10 +13,12 @@ export default function useOnContextMenuOpen() {
   const [
     popupItems,
     isRightClickAnnotationPopupEnabled,
+    activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.getPopupItems(state, DataElements.CONTEXT_MENU_POPUP),
       selectors.isRightClickAnnotationPopupEnabled(state),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -33,14 +35,14 @@ export default function useOnContextMenuOpen() {
     useCallback((e) => {
       const { pageX: left, pageY: top } = e;
 
-      const annotationUnderMouse = core.getAnnotationByMouseEvent(e);
+      const annotationUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
       if ((!isRightClickAnnotationPopupEnabled && !isMobile) || (isRightClickAnnotationPopupEnabled && !annotationUnderMouse)) {
         if (popupItems.length > 0) {
           setClickPosition({ left, top });
           dispatch(actions.openElement(DataElements.CONTEXT_MENU_POPUP));
         }
       }
-    }, [popupItems, isRightClickAnnotationPopupEnabled])
+    }, [popupItems, isRightClickAnnotationPopupEnabled, activeDocumentViewerKey])
   );
 
   return { clickPosition };

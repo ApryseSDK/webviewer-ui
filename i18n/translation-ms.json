@@ -117,6 +117,8 @@
     "formFillCheckmark": "Tandakan",
     "formFillCross": "Menyeberang",
     "distanceMeasurement": "Jarak",
+    "rectangularAreaMeasurement": "Kawasan Segiempat",
+    "ellipseMeasurement": "Kawasan Ellipse",
     "countMeasurement": "Kira ukuran",
     "ellipse": "Ellipse",
     "eraser": "Pemadam",
@@ -137,6 +139,7 @@
     "redact": "sunting",
     "formFillDot": "titik",
     "signature": "Tandatangan",
+    "snipping": "Alat Pemotongan",
     "squiggly": "Dengan berlekuk-lekuk",
     "stamp": "setem",
     "stickyNote": "Catatan",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Adakah anda pasti mahu membatalkan pemangkasan semua halaman yang dipilih?"
     }
   },
+  "snippingPopUp": {
+    "title": "Alat Pemotongan",
+    "clipboard": "Salin ke Papan Keratan",
+    "download": "Muat turun",
+    "cropAndRemove": "Potong dan Buang",
+    "snippingModal": {
+      "applyTitle": "Terapkan pemotongan?",
+      "applyMessage": "Tindakan ini akan memotong kawasan yang ditentukan secara kekal dan mengeluarkan halaman lain. Ia tidak boleh dikembalikan.",
+      "cancelTitle": "Batal pemotongan?",
+      "cancelMessage": "Adakah anda pasti mahu menghentikan pemotongan?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Perenggan",
     "text": "Teks"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Pilihan Tera Air",
     "watermarks": "Tera air"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Cipta Portfolio PDF",
+    "uploadFiles": "Memuat naik fail",
+    "uploadFolder": "Muat naik Folder",
+    "addFiles": "Menambah fail",
+    "addFile": "Tambah fail",
+    "addFolder": "Tambah folder",
+    "createFolder": "Buat Folder",
     "portfolioPanelTitle": "Portfolio PDF",
-    "portfolioAddFile": "Tambah fail",
-    "portfolioAddFolder": "Tambah folder",
-    "portfolioCreateFolder": "Buat Folder",
     "portfolioNewFolder": "Fail baharu",
-    "portfolioNewFolderPlaceholder": "Nama folder"
+    "portfolioFolderPlaceholder": "Nama folder",
+    "portfolioFilePlaceholder": "Nama fail",
+    "folderNameAlreadyExists": "Nama folder sudah wujud",
+    "fileNameAlreadyExists": "Nama fail sudah wujud",
+    "openFile": "Buka dalam Tab Baharu",
+    "fileAlreadyExists": "Fail Sudah Wujud",
+    "fileAlreadyExistsMessage": "Fail \"{{fileName}}\" sudah wujud dalam portfolio.",
+    "deletePortfolio": "Adakah anda pasti mahu memadamkan \"{{fileName}}\"?",
+    "reselect": "Pilih semula"
   },
   "languageModal": {
     "selectLanguage": "Pilih Bahasa"
@@ -1192,13 +1219,6 @@
     "save": "Simpan fail",
     "pageError": "Halaman tidak sah. Julat halaman yang sah adalah antara 1 -",
     "fileNameCannotBeEmpty": "Nama Fail tidak boleh kosong"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Cipta Portfolio PDF",
-    "uploadFiles": "Memuat naik fail",
-    "uploadFolder": "Muat naik Folder",
-    "addFiles": "Menambah fail",
-    "addFolder": "Tambah folder"
   },
   "filePicker": {
     "dragAndDrop": "Seret & Lepaskan fail anda di sini",

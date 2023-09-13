@@ -8,5 +8,5 @@
   min-height: $top-bar-height;
   padding: 2px;
   background: var(--gray-1);
-  z-index: 72;
+  z-index: $headers-z-index;
 }

@@ -327,7 +327,9 @@ function Dropdown({
       >
         {dropdownItems.length > 0 ?
           dropdownItems :
-          <div className="Dropdown__item">{t('message.noResults')}</div>
+          <>
+            <button data-testid="sig-no-result" className="Dropdown__item">{t('message.noResults')}</button>
+          </>
         }
       </div>
     </DataElementWrapper>

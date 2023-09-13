@@ -1,10 +1,10 @@
 import getRootNode from 'helpers/getRootNode';
 
-export default (element, overlay, isTabletAndMobile) => {
+export default (element, overlay, isTabletAndMobile, selector = 'data-element') => {
   const isApryseWebViewerWebComponent = window.isApryseWebViewerWebComponent;
   const innerWidth = isApryseWebViewerWebComponent ? getRootNode().host.clientWidth : window.innerWidth;
   const innerHeight = isApryseWebViewerWebComponent ? getRootNode().host.clientHeight : window.innerHeight;
-  const button = getRootNode().querySelector(`[data-element=${element}]`);
+  const button = getRootNode().querySelector(`[${selector}="${element}"]`);
 
   let left = 0;
   let right = 'auto';

@@ -1,37 +1,33 @@
 import React from 'react';
-import ZoomControls from './ZoomControls';
-import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import ZoomControlsContainer from 'components/ModularComponents/ZoomControls/ZoomControlsContainer';
+import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
+import rootReducer from 'reducers/rootReducer';
 
 export default {
   title: 'ModularComponents/ZoomControls',
-  component: ZoomControls,
+  component: ZoomControlsContainer,
 };
 
 const store = configureStore({
-  reducer: () => initialState
+  reducer: rootReducer,
 });
 
-const noop = () => {};
-
-export const BasicComponent = () => {
-  const props = {
-    getZoom: noop,
-    setZoomHandler: noop,
-    zoomValue: '100',
-    zoomTo: noop,
-    zoomIn: noop,
-    zoomOut: noop,
-    isZoomFlyoutMenuActive: false,
-    isActive: true,
-    dataElement: 'zoom-container',
-    onFlyoutToggle: noop,
-    onClick: noop
-  };
+export const FullSize = () => {
   return (
     <Provider store={store}>
-      <ZoomControls {...props} />
+      <FlyoutContainer/>
+      <ZoomControlsContainer initialSize={0}/>
+    </Provider>
+  );
+};
+
+export const SmallSize = () => {
+  return (
+    <Provider store={store}>
+      <FlyoutContainer/>
+      <ZoomControlsContainer initialSize={1}/>
     </Provider>
   );
 };

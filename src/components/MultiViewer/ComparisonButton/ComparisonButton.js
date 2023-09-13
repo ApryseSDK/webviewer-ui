@@ -19,7 +19,12 @@ const ComparisonButton = () => {
 
   useEffect(() => {
     const checkDisabled = () => {
-      if (core.getDocument(1) && core.getDocument(2)) {
+      const documentsLoaded = core.getDocument(1) && core.getDocument(2);
+      const document1IsValidType = core.getDocument(1)?.getType() === 'pdf' ||
+        (core.getDocument(1)?.getType() === 'webviewerServer' && !core.getDocument(1)?.isWebViewerServerDocument());
+      const document2IsValidType = core.getDocument(2)?.getType() === 'pdf' ||
+        (core.getDocument(2)?.getType() === 'webviewerServer' && !core.getDocument(2)?.isWebViewerServerDocument());
+      if (documentsLoaded && document1IsValidType && document2IsValidType) {
         setDisabled(false);
       } else {
         setDisabled(true);
@@ -51,7 +56,10 @@ const ComparisonButton = () => {
       dispatch(actions.setIsCompareStarted(true));
       dispatch(actions.enableElement('comparePanelToggleButton'));
       dispatch(actions.openElement(DataElements.LOADING_MODAL));
-      documentViewer.startSemanticDiff(documentViewer2);
+      documentViewer.startSemanticDiff(documentViewer2).catch((error) => {
+        console.error(error);
+        dispatch(actions.closeElement(DataElements.LOADING_MODAL));
+      });
     }
   }, []);
 

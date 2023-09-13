@@ -17,11 +17,13 @@ export default function useOnAnnotationPopupOpen() {
     popupItems,
     isRightClickAnnotationPopupEnabled,
     isNotesPanelOpen,
+    activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.getPopupItems(state, DataElements.ANNOTATION_POPUP),
       selectors.isRightClickAnnotationPopupEnabled(state),
       selectors.isElementOpen(state, DataElements.NOTES_PANEL),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -87,7 +89,7 @@ export default function useOnAnnotationPopupOpen() {
 
   useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
-      if (annotations.length === 0 || annotations[0].ToolName === ToolNames.CROP) {
+      if (annotations.length === 0 || annotations[0].ToolName === ToolNames.CROP || annotations[0].ToolName === ToolNames.SNIPPING) {
         return;
       }
 
@@ -116,14 +118,14 @@ export default function useOnAnnotationPopupOpen() {
       }
     };
 
-    core.addEventListener('annotationSelected', onAnnotationSelected);
-    core.addEventListener('documentUnloaded', closePopup);
+    core.addEventListener('annotationSelected', onAnnotationSelected, null, activeDocumentViewerKey);
+    core.addEventListener('documentUnloaded', closePopup, null, activeDocumentViewerKey);
 
     return () => {
-      core.removeEventListener('annotationSelected', onAnnotationSelected);
-      core.removeEventListener('documentUnloaded', closePopup);
+      core.removeEventListener('annotationSelected', onAnnotationSelected, null, activeDocumentViewerKey);
+      core.removeEventListener('documentUnloaded', closePopup, null, activeDocumentViewerKey);
     };
-  }, [focusedAnnotation, isNotesPanelOpen, isDatePickerOpen, isRightClickAnnotationPopupEnabled]);
+  }, [focusedAnnotation, isNotesPanelOpen, isDatePickerOpen, isRightClickAnnotationPopupEnabled, activeDocumentViewerKey]);
 
   useEffect(() => {
     const onAnnotationChanged = (annotations, action) => {
@@ -151,14 +153,14 @@ export default function useOnAnnotationPopupOpen() {
       }
     };
 
-    core.addEventListener('annotationChanged', onAnnotationChanged);
-    core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+    core.addEventListener('annotationChanged', onAnnotationChanged, null, activeDocumentViewerKey);
+    core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, null, activeDocumentViewerKey);
 
     return () => {
-      core.removeEventListener('annotationChanged', onAnnotationChanged);
-      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+      core.removeEventListener('annotationChanged', onAnnotationChanged, null, activeDocumentViewerKey);
+      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, null, activeDocumentViewerKey);
     };
-  }, [canModify, focusedAnnotation]);
+  }, [canModify, focusedAnnotation, activeDocumentViewerKey]);
 
   useEffect(() => {
     const onMouseLeftUp = (e) => {
@@ -166,7 +168,7 @@ export default function useOnAnnotationPopupOpen() {
       // so this component will close due to useOnClickOutside
       // this handler is used to make sure that if we click on the selected annotation, this component will show up again
       if (focusedAnnotation) {
-        const annotUnderMouse = core.getAnnotationByMouseEvent(e);
+        const annotUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
 
         if (!annotUnderMouse) {
           closePopup();
@@ -187,19 +189,19 @@ export default function useOnAnnotationPopupOpen() {
       }
     };
 
-    core.addEventListener('mouseLeftUp', onMouseLeftUp);
-    return () => core.removeEventListener('mouseLeftUp', onMouseLeftUp);
-  }, [focusedAnnotation, isStylePopupOpen, isRightClickAnnotationPopupEnabled]);
+    core.addEventListener('mouseLeftUp', onMouseLeftUp, null, activeDocumentViewerKey);
+    return () => core.removeEventListener('mouseLeftUp', onMouseLeftUp, null, activeDocumentViewerKey);
+  }, [focusedAnnotation, isStylePopupOpen, isRightClickAnnotationPopupEnabled, activeDocumentViewerKey]);
 
   useEffect(() => {
-    const scrollViewElement = core.getDocumentViewer().getScrollViewElement();
+    const scrollViewElement = core.getScrollViewElement(activeDocumentViewerKey);
     const onScroll = debounce(() => {
       setStylePopupRepositionFlag((flag) => !flag);
     }, 100);
 
-    scrollViewElement?.addEventListener('scroll', onScroll);
-    return () => scrollViewElement?.removeEventListener('scroll', onScroll);
-  }, []);
+    scrollViewElement?.addEventListener('scroll', onScroll, null, activeDocumentViewerKey);
+    return () => scrollViewElement?.removeEventListener('scroll', onScroll, null, activeDocumentViewerKey);
+  }, [activeDocumentViewerKey]);
 
   useOnRightClick(
     useCallback((e) => {
@@ -207,7 +209,7 @@ export default function useOnAnnotationPopupOpen() {
         return;
       }
 
-      const annotUnderMouse = core.getAnnotationByMouseEvent(e);
+      const annotUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
       if (annotUnderMouse && annotUnderMouse.ToolName !== ToolNames.CROP) {
         if (e.ctrlKey && isMac) {
           return;
@@ -226,7 +228,7 @@ export default function useOnAnnotationPopupOpen() {
       } else {
         closePopup();
       }
-    }, [focusedAnnotation, isRightClickAnnotationPopupEnabled])
+    }, [focusedAnnotation, isRightClickAnnotationPopupEnabled, activeDocumentViewerKey])
   );
 
   return {

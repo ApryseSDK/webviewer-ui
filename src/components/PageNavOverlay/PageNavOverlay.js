@@ -32,7 +32,7 @@ class PageNavOverlay extends React.PureComponent {
     super(props);
     this.textInput = React.createRef();
     this.state = {
-      input: '',
+      input: this.props.pageLabels?.[this.props.currentPage - 1] ?? '',
       isCustomPageLabels: false,
       isFocused: false,
     };

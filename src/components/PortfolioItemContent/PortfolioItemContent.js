@@ -2,16 +2,17 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
+import { Input } from '@pdftron/webviewer-react-toolkit';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import PortfolioContext from 'components/PortfolioPanel/PortfolioContext';
-import BookmarkOutlineContextMenuPopup from 'components/BookmarkOutlineContextMenuPopup';
+import MoreOptionsContextMenuPopup from 'components/MoreOptionsContextMenuPopup';
+import { isOpenableFile } from 'helpers/portfolio';
+
 import './PortfolioItemContent.scss';
 
 const propTypes = {
-  name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  isFolder: PropTypes.bool,
+  portfolioItem: PropTypes.object.isRequired,
   isAdding: PropTypes.bool,
   isPortfolioRenaming: PropTypes.bool,
   setPortfolioRenaming: PropTypes.func,
@@ -19,9 +20,7 @@ const propTypes = {
 };
 
 const PortfolioItemContent = ({
-  name,
-  id,
-  isFolder,
+  portfolioItem,
   isAdding,
   isPortfolioRenaming,
   setPortfolioRenaming,
@@ -30,15 +29,20 @@ const PortfolioItemContent = ({
   const {
     setAddingNewFolder,
     addNewFolder,
-    renamePortfolio,
     refreshPortfolio,
-    removePortfolio,
+    renamePortfolioItem,
+    removePortfolioItem,
+    openPortfolioItem,
+    downloadPortfolioItem,
+    isNameDuplicated,
   } = useContext(PortfolioContext);
+
+  const { name, nameWithoutExtension, extension, id, isFolder } = portfolioItem;
 
   const [t] = useTranslation();
   const inputRef = useRef();
   const [isDefault, setIsDefault] = useState(false);
-  const [portfolioEditName, setPortfolioEditName] = useState(name);
+  const [portfolioEditName, setPortfolioEditName] = useState(nameWithoutExtension);
   const [isContextMenuOpen, setContextMenuOpen] = useState(false);
 
   const getIcon = () => {
@@ -46,7 +50,7 @@ const PortfolioItemContent = ({
   };
 
   const isRenameButtonDisabled = () => {
-    return !portfolioEditName || name === portfolioEditName;
+    return !portfolioEditName || nameWithoutExtension === portfolioEditName || isNameDuplicated(`${portfolioEditName}.${extension}`, id);
   };
 
   const handleKeyDown = (e) => {
@@ -70,13 +74,13 @@ const PortfolioItemContent = ({
 
   const onRenamePortfolioItem = () => {
     setPortfolioRenaming(false);
-    renamePortfolio(id, portfolioEditName);
+    renamePortfolioItem(id, `${portfolioEditName}.${extension}`);
   };
 
   const onCancelPortfolio = () => {
     if (isPortfolioRenaming) {
       setPortfolioRenaming(false);
-      setPortfolioEditName(name);
+      setPortfolioEditName(nameWithoutExtension);
     }
     if (isAdding) {
       setAddingNewFolder(false);
@@ -84,11 +88,11 @@ const PortfolioItemContent = ({
     refreshPortfolio();
   };
 
-  const onDownloadPortfolioItem = () => {
-    // TODO: download document here
-    /* eslint-disable no-console */
-    console.log('download', name);
-    /* eslint-enable no-console */
+  const duplicatedMessage = () => {
+    if (!isNameDuplicated(`${portfolioEditName}.${extension}`, id)) {
+      return '';
+    }
+    return isFolder ? t('portfolio.folderNameAlreadyExists') : t('portfolio.fileNameAlreadyExists');
   };
 
   useEffect(() => {
@@ -111,7 +115,7 @@ const PortfolioItemContent = ({
     <div className="bookmark-outline-label-row">
       {isAdding &&
         <div className="bookmark-outline-label">
-          {t('portfolioPanel.portfolioNewFolder')}
+          {t('portfolio.portfolioNewFolder')}
         </div>
       }
 
@@ -138,7 +142,7 @@ const PortfolioItemContent = ({
           />
 
           {isContextMenuOpen &&
-            <BookmarkOutlineContextMenuPopup
+            <MoreOptionsContextMenuPopup
               type={'portfolio'}
               anchorButton={`portfolio-item-more-button-${id}`}
               onClosePopup={() => setContextMenuOpen(false)}
@@ -148,13 +152,17 @@ const PortfolioItemContent = ({
               }}
               onDownloadClick={() => {
                 setContextMenuOpen(false);
-                onDownloadPortfolioItem();
+                downloadPortfolioItem(portfolioItem);
               }}
               shouldDisplayDeleteButton={true}
               onDeleteClick={() => {
                 setContextMenuOpen(false);
-                removePortfolio(name);
+                removePortfolioItem(id);
               }}
+              onOpenClick={isOpenableFile(extension) ? () => {
+                setContextMenuOpen(false);
+                openPortfolioItem(portfolioItem);
+              } : null}
             />
           }
         </>
@@ -162,16 +170,19 @@ const PortfolioItemContent = ({
 
       {(isAdding || isPortfolioRenaming) &&
         <>
-          <input
+          <Input
             type="text"
             name="outline"
             ref={inputRef}
-            className="bookmark-outline-input"
-            placeholder={t('portfolioPanel.portfolioNewFolderPlaceholder')}
+            wrapperClassName="portfolio-input"
+            placeholder={isFolder ? t('portfolio.portfolioFolderPlaceholder') : t('portfolio.portfolioFilePlaceholder')}
             aria-label={t('action.name')}
             value={portfolioEditName}
             onKeyDown={handleKeyDown}
             onChange={(e) => setPortfolioEditName(e.target.value)}
+            fillWidth
+            messageText={duplicatedMessage()}
+            message={isNameDuplicated(`${portfolioEditName}.${extension}`, id) ? 'error' : 'default'}
           />
 
           <div className="bookmark-outline-editing-controls">

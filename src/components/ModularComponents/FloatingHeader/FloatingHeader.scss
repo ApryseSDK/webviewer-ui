@@ -1,0 +1,80 @@
+@import '../../../constants/styles.scss';
+
+.FloatingHeaderContainer {
+  transition: all .3s ease-in-out;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  min-height: $top-bar-height;
+  padding: 24px;
+  z-index: $headers-z-index;
+  pointer-events: none;
+
+  &.bottom {
+    position: relative;
+  }
+
+  &.left {
+    width: $left-header-width;
+    padding: 24px 0px 24px 24px;
+  }
+
+  &.right {
+    width: $right-header-width;
+    align-items: end;
+  }
+
+  &.vertical {
+    flex-direction: column;
+  }
+
+  .FloatSection {
+    display: flex;
+    flex: 1;
+
+    &.vertical {
+      flex-direction: column;
+    }
+
+    // Maybe we'll need these maybe we wont
+    // &.start__top,
+    // &.start__bottom {
+    //   // align-self: flex-start;
+    // }
+
+    // &.start__left,
+    // &.start__right {
+    //   // align-self: flex-start;
+    // }
+
+    &.center__top,
+    &.center__bottom {
+      justify-content: center;
+    }
+
+    &.center__left,
+    &.center__right {
+      justify-content: center;
+    }
+
+    &.end__top,
+    &.end__bottom {
+      justify-content: flex-end;
+    }
+
+    &.end__left,
+    &.end__right {
+      justify-content: flex-end;
+    }
+  }
+}
+
+.FloatingHeader {
+  background: var(--gray-0);
+  border-radius: 4px;
+  border: 1px solid var(--gray-5);
+  pointer-events: auto;
+}

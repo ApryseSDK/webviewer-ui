@@ -132,3 +132,18 @@ export function DropdownWithCustomDisplayAndDisabled() {
     </ReduxProvider>
   );
 }
+
+export function DropdownWithNoItems() {
+  const images = [];
+  const dropdownWidth = 145;
+  return (
+    <ReduxProvider store={createStore((state = {}) => state)}>
+      <div style={{ width: dropdownWidth }}>
+        <Dropdown
+          width={dropdownWidth}
+          images={images}
+        />
+      </div>
+    </ReduxProvider>
+  );
+}

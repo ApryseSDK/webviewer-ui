@@ -59,14 +59,15 @@ const TabManagerAPI = {
    * @param {string} [options.extension] The extension of the file. If file is a blob/file object or a URL without an extension then this is necessary so that WebViewer knows what type of file to load.
    * @param {string} [options.filename] Filename of the document, which is used when downloading the PDF.
    * @param {object} [options.customHeaders] An object of custom HTTP headers to use when retrieving the document from the specified url.
-   * @param {object} [options.webViewerServerCustomQuerypropertyeters] An object of custom query propertyeters to be appended to every WebViewer Server request.
+   * @param {object} [options.webViewerServerCustomQueryParameters] An object of custom query parameters to be appended to every WebViewer Server request.
    * @param {string} [options.documentId] Unique id of the document.
    * @param {boolean} [options.withCredentials] Whether or not cross-site requests should be made using credentials.
    * @param {string} [options.cacheKey] A key that will be used for caching the document on WebViewer Server.
    * @param {object} [options.officeOptions] An object that contains the options for an Office document.
    * @param {object} [options.rasterizerOptions] An object that contains the rasterizer options for WebViewer Server.
-   * @param {Core.TemplateData} [options.officeOptions.templateValues] If set, will perform template replacement with the data specified by this parameter
-   * @param {boolean} [options.officeOptions.doTemplatePrep] If set, it will interpret the office document as a template document and compile all of the template tags in the document
+   * @param {Core.TemplateData} [options.officeOptions.templateValues] If set, will perform template replacement with the data specified by this parameter.
+   * @param {Core.TemplateOptions} [options.officeOptions.templateOptions] If set, it will interpret the office document as a template document and compile all of the template tags in the document using the provided options.
+   * @param {boolean} [options.officeOptions.doTemplatePrep] If set, it will interpret the office document as a template document and compile all of the template tags in the document.
    * @param {boolean} [options.officeOptions.disableBrowserFontSubstitution] By default, office viewing takes a lightweight approach to font substitution, allowing the browser to select fonts when they are not embedded in the document itself.
    * While this means that WebViewer has access to all the fonts on the user's system, it also means that an office document may have a different "look" on different systems (depending on the fonts available) and when it is converted to PDF (as the PDF conversion routine cannot obtain low-level access to user fonts, for security reasons).
    * disableBrowserFontSubstitution prevents this browser substitution, forcing the WebViewer backend to handle all fonts. This means that viewing and conversion to PDF will be 100% consistent from system-to-system, at the expense of a slightly slower initial viewing time and higher bandwidth usage.

@@ -130,32 +130,16 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
       return;
     }
 
-    const annotationHasNoContents = !annotation.getContents();
     if (isMentionEnabled) {
-      if (annotationHasNoContents && isContentEditable) {
-        const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(replyText);
-
-        annotation.setCustomData('trn-mention', JSON.stringify({
-          contents: replyText,
-          ids,
-        }));
-        core.setNoteContents(annotation, plainTextValue, activeDocumentViewerKey);
-      } else {
-        const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
-        setAnnotationRichTextStyle(editor, replyAnnotation);
-        await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
-        core.addAnnotations([replyAnnotation], activeDocumentViewerKey);
-      }
+      const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
+      setAnnotationRichTextStyle(editor, replyAnnotation);
+      await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
+      core.addAnnotations([replyAnnotation], activeDocumentViewerKey);
     } else {
-      if (annotationHasNoContents && isContentEditable) {
-        core.setNoteContents(annotation, replyText, activeDocumentViewerKey);
-        setAnnotationRichTextStyle(editor, annotation);
-      } else {
-        const replyAnnotation = core.createAnnotationReply(annotation, replyText);
-        setAnnotationRichTextStyle(editor, replyAnnotation);
-        await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
-        core.getAnnotationManager(activeDocumentViewerKey).trigger('annotationChanged', [[replyAnnotation], 'modify', {}]);
-      }
+      const replyAnnotation = core.createAnnotationReply(annotation, replyText);
+      setAnnotationRichTextStyle(editor, replyAnnotation);
+      await setAnnotationAttachments(replyAnnotation, pendingAttachmentMap[annotation.Id]);
+      core.getAnnotationManager(activeDocumentViewerKey).trigger('annotationChanged', [[replyAnnotation], 'modify', {}]);
     }
 
     setPendingReply('', annotation.Id);

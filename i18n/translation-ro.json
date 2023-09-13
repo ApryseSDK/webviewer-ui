@@ -117,6 +117,8 @@
     "formFillCheckmark": "Bifă",
     "formFillCross": "Cruce",
     "distanceMeasurement": "Distanţă",
+    "rectangularAreaMeasurement": "Zona dreptunghiulară",
+    "ellipseMeasurement": "Zona elipsei",
     "countMeasurement": "Măsurarea numărului",
     "ellipse": "Elipsă",
     "eraser": "Radieră",
@@ -137,6 +139,7 @@
     "redact": "Redacta",
     "formFillDot": "Punct",
     "signature": "Semnătură",
+    "snipping": "Instrument de Tăiere",
     "squiggly": "Squiggly",
     "stamp": "Timbru",
     "stickyNote": "Notă",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Sigur doriți să anulați decuparea tuturor paginilor selectate?"
     }
   },
+  "snippingPopUp": {
+  "title": "Instrument de Tăiere",
+  "clipboard": "Copiați în Clipboard",
+  "download": "Descărcare",
+  "cropAndRemove": "Decupați și Eliminați",
+    "snippingModal": {
+      "applyTitle": "Aplicați tăierea?",
+      "applyMessage": "Această acțiune va tăia în mod permanent zona specificată și va elimina alte pagini. Nu poate fi anulată.",
+      "cancelTitle": "Anulați tăierea?",
+      "cancelMessage": "Sunteți sigur că doriți să opriți tăierea?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragraf",
     "text": "Text"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Opțiuni filigran",
     "watermarks": "Filigrane"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Creați portofoliu PDF",
+    "uploadFiles": "Încărca fișiere",
+    "uploadFolder": "Încărcați dosarul",
+    "addFiles": "Adăugați fișiere",
+    "addFile": "Adauga fisier",
+    "addFolder": "Adaugă folder",
+    "createFolder": "Creeaza dosar",
     "portfolioPanelTitle": "Portofoliu PDF",
-    "portfolioAddFile": "Adauga fisier",
-    "portfolioAddFolder": "Adaugă folder",
-    "portfolioCreateFolder": "Creeaza dosar",
     "portfolioNewFolder": "Dosar nou",
-    "portfolioNewFolderPlaceholder": "Numele fisierului"
+    "portfolioFolderPlaceholder": "Numele fisierului",
+    "portfolioFilePlaceholder": "Nume de fișier",
+    "folderNameAlreadyExists": "Numele dosarului există deja",
+    "fileNameAlreadyExists": "Numele fișierului există deja",
+    "openFile": "Deschideți în filă nouă",
+    "fileAlreadyExists": "Fisierul există deja",
+    "fileAlreadyExistsMessage": "Fișierul „{{fileName}}” există deja în portofoliu.",
+    "deletePortfolio": "Sigur doriți să ștergeți „{{fileName}}”?",
+    "reselect": "Reselectați"
   },
   "languageModal": {
     "selectLanguage": "Selecteaza limba"
@@ -1192,13 +1219,6 @@
     "save": "Salvează fișierul",
     "pageError": "Pagina nevalidă. Intervalele de pagini valide sunt cuprinse între 1 -",
     "fileNameCannotBeEmpty": "Numele fișierului nu poate fi gol"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Creați portofoliu PDF",
-    "uploadFiles": "Încărca fișiere",
-    "uploadFolder": "Încărcați dosarul",
-    "addFiles": "Adăugați fișiere",
-    "addFolder": "Adaugă folder"
   },
   "filePicker": {
     "dragAndDrop": "Trageți și plasați fișierul aici",

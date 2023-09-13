@@ -1,4 +1,5 @@
 import getFilteredDataElements from 'helpers/getFilteredDataElements';
+import { getEmbeddedFileData } from 'helpers/getFileAttachments';
 import { isAndroid, isIOS } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
@@ -115,11 +116,11 @@ export const enableElements = (dataElements, priority) => (
   });
 };
 
-export const addPortfolioTab = ({ blob, name, extension }) => (dispatch, getState) => {
+export const addPortfolioTab = ({ fileObject, name, extension }) => async (dispatch, getState) => {
   const state = getState();
   const tabManager = selectors.getTabManager(state);
   tabManager.addTab(
-    blob,
+    await getEmbeddedFileData(fileObject),
     {
       setActive: true,
       extension: extension,
@@ -155,10 +156,6 @@ export const updateCalibrationInfo = ({ isCalibration = true, tempScale = '', pr
 export const setIsAddingNewScale = (isAddingNewScale = false) => ({
   type: 'SET_IS_ADDING_NEW_SCALE',
   payload: { isAddingNewScale }
-});
-export const setIsRevocationCheckingEnabled = (isRevocationCheckingEnabled = false) => ({
-  type: 'SET_IS_REVOCATION_CHECKING_ENABLED',
-  payload: { isRevocationCheckingEnabled }
 });
 export const updateDeleteScale = (deleteScale = '') => ({
   type: 'UPDATE_DELETE_SCALE',
@@ -528,6 +525,10 @@ export const setBookmarkIconShortcutVisibility = (bookmarkIconShortcutVisibility
   type: 'SET_BOOKMARK_ICON_SHORTCUT_VISIBILITY',
   payload: { bookmarkIconShortcutVisibility },
 });
+export const setPortfolio = (portfolio) => ({
+  type: 'SET_PORTFOLIO',
+  payload: { portfolio },
+});
 export const setLayers = (layers) => ({
   type: 'SET_LAYERS',
   payload: { layers },
@@ -555,6 +556,14 @@ export const resetLoadingProgress = () => ({
 export const setVerificationResult = (result) => ({
   type: 'SET_VERIFICATION_RESULT',
   payload: { result },
+});
+export const setIsRevocationCheckingEnabled = (isRevocationCheckingEnabled = false) => ({
+  type: 'SET_IS_REVOCATION_CHECKING_ENABLED',
+  payload: { isRevocationCheckingEnabled }
+});
+export const setRevocationProxyPrefix = (revocationProxyPrefix) => ({
+  type: 'SET_REVOCATION_PROXY_PREFIX',
+  payload: { revocationProxyPrefix }
 });
 
 // user

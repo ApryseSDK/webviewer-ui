@@ -1,4 +1,49 @@
-const addFile = async (pdfDoc, file) => {
+import { saveAs } from 'file-saver';
+import { getEmbeddedFileData, getFileAttachments } from './getFileAttachments';
+import core from 'core';
+
+const extensionRegExp = /(?:\.([^.?]+))?$/;
+
+const getExtension = (filename) => extensionRegExp.exec(filename)[1] || '';
+
+const getFileNameWithoutExtension = (filename) => {
+  const extension = getExtension(filename);
+  if (extension === '') {
+    return filename;
+  }
+  return filename.slice(0, -(extension.length + 1));
+};
+
+export const isOpenableFile = (extension) => {
+  return window.Core.SupportedFileFormats.CLIENT.includes(extension);
+};
+
+export const hasChildren = (portfolioItem) => {
+  return portfolioItem?.children?.length > 0;
+};
+
+export const getPortfolioFiles = async () => {
+  if (!core.isFullPDFEnabled()) {
+    return [];
+  }
+
+  const { embeddedFiles } = await getFileAttachments();
+  const unsortedPortfolioFiles = embeddedFiles.map(({ filename, fileObject, id, order }) => ({
+    id,
+    order,
+    name: filename,
+    nameWithoutExtension: getFileNameWithoutExtension(filename),
+    extension: getExtension(filename),
+    isFolder: false,
+    getNestedLevel: () => 0,
+    children: [],
+    fileObject,
+  }));
+
+  return unsortedPortfolioFiles.sort((a, b) => a.order - b.order);
+};
+
+export const addFile = async (pdfDoc, file) => {
   const PDFNet = window.Core.PDFNet;
 
   // Create FileSpec dict
@@ -30,11 +75,11 @@ const addCoverPage = async (pdfDoc) => {
   w.beginOnPage(page);
   const font = await PDFNet.Font.create(pdfDoc, PDFNet.Font.StandardType1Font.e_helvetica);
   w.writeElement(await b.createTextBeginWithFont(font, 12));
-  const e = await b.createNewTextRun('My PDF Portfolio');
-  e.setTextMatrixEntries(1, 0, 0, 1, 50, 96);
+  const e = await b.createNewTextRun('PDF Portfolio');
+  e.setTextMatrixEntries(1, 0, 0, 1, 70, 96);
   const gstate = await e.getGState();
   gstate.setFillColorSpace(await PDFNet.ColorSpace.createDeviceRGB());
-  gstate.setFillColorWithColorPt(await PDFNet.ColorPt.init(1, 0, 0));
+  gstate.setFillColorWithColorPt(await PDFNet.ColorPt.init(0, 0, 0));
   w.writeElement(e);
   w.writeElement(await b.createTextEnd());
   w.end();
@@ -68,4 +113,73 @@ export const createPortfolio = async (files) => {
   await addCollection(pdfDoc);
 
   return pdfDoc;
+};
+
+const getPDFNetFiles = async () => {
+  let files = null;
+  if (core.isFullPDFEnabled()) {
+    const PDFNet = window.Core.PDFNet;
+    let doc = core.getDocument();
+    if (doc) {
+      doc = await doc.getPDFDoc();
+    }
+    // doc will be undefined for non-pdf files
+    if (doc) {
+      await PDFNet.runWithCleanup(async () => {
+        files = await PDFNet.NameTree.find(doc, 'EmbeddedFiles');
+      });
+    }
+    if (files && (await files.isValid())) {
+      return files;
+    }
+  }
+  return null;
+};
+
+export const findPDFNetPortfolioItem = async (id) => {
+  let target = null;
+  const files = await getPDFNetFiles();
+
+  // Traverse the list of embedded files.
+  const fileItr = await files.getIteratorBegin();
+  while (await fileItr.hasNext()) {
+    const filesIteratorKey = await fileItr.key();
+    if (id === filesIteratorKey.id) {
+      target = fileItr;
+      break;
+    }
+    await fileItr.next();
+  }
+
+  return target;
+};
+
+export const renamePortfolioFile = async (id, newName) => {
+  const target = await findPDFNetPortfolioItem(id);
+  if (!target) {
+    return;
+  }
+  const filesIteratorValue = await target.value();
+  // filesIteratorKey.getAsPDFText() returns name with nested level if file is in folder: format "<0>name.pdf"
+  await filesIteratorValue.putString('F', newName);
+  await filesIteratorValue.putText('UF', newName);
+};
+
+export const deletePortfolioFile = async (id) => {
+  const target = await findPDFNetPortfolioItem(id);
+  const files = await getPDFNetFiles();
+  if (!target || !files) {
+    return;
+  }
+  await files.erase(target);
+};
+
+export const downloadPortfolioFile = async (portfolioItem) => {
+  const { fileObject, name } = portfolioItem;
+  try {
+    const blob = await getEmbeddedFileData(fileObject);
+    saveAs(blob, name);
+  } catch (e) {
+    console.warn(e);
+  }
 };

@@ -117,6 +117,8 @@
     "formFillCheckmark": "Carraça",
     "formFillCross": "Cruzar",
     "distanceMeasurement": "Medição de distância",
+    "rectangularAreaMeasurement": "área retangular",
+    "ellipseMeasurement": "Área da Elipse",
     "countMeasurement": "Medição de contagem",
     "ellipse": "Elipse",
     "eraser": "Apagador",
@@ -137,6 +139,7 @@
     "redact": "Suprimir",
     "formFillDot": "Ponto",
     "signature": "Assinatura",
+    "snipping": "Ferramenta de Recorte",
     "squiggly": "Linha ondulada",
     "stamp": "Carimbo",
     "stickyNote": "Comentário",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Tem certeza de que deseja cancelar o corte de todas as páginas selecionadas?"
     }
   },
+  "snippingPopUp": {
+    "title": "Ferramenta de Recorte",
+    "clipboard": "Copiar para a Área de Transferência",
+    "download": "Baixar",
+    "cropAndRemove": "Recortar e Remover",
+    "snippingModal": {
+      "applyTitle": "Aplicar recorte?",
+      "applyMessage": "Esta ação recortará permanentemente a área especificada e removerá outras páginas. Não pode ser desfeito.",
+      "cancelTitle": "Cancelar recorte?",
+      "cancelMessage": "Tem certeza de que deseja interromper o recorte?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Parágrafo",
     "text": "Texto"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Opções de marca d'água",
     "watermarks": "Marcas d'água"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Criar Portfólio PDF",
+    "uploadFiles": "Fazer upload de arquivos",
+    "uploadFolder": "Carregar Pasta",
+    "addFiles": "Adicionar arquivos",
+    "addFile": "Adicionar ficheiro",
+    "addFolder": "Adicionar pasta",
+    "createFolder": "Criar pasta",
     "portfolioPanelTitle": "Portfólio PDF",
-    "portfolioAddFile": "Adicionar ficheiro",
-    "portfolioAddFolder": "Adicionar pasta",
-    "portfolioCreateFolder": "Criar pasta",
     "portfolioNewFolder": "Nova pasta",
-    "portfolioNewFolderPlaceholder": "Nome da pasta"
+    "portfolioFolderPlaceholder": "Nome da pasta",
+    "portfolioFilePlaceholder": "Nome do arquivo",
+    "folderNameAlreadyExists": "O nome da pasta já existe",
+    "fileNameAlreadyExists": "O nome do arquivo já existe",
+    "openFile": "Abrir em nova guia",
+    "fileAlreadyExists": "O arquivo já existe",
+    "fileAlreadyExistsMessage": "O arquivo \"{{fileName}}\" já existe no portfólio.",
+    "deletePortfolio": "Tem certeza de que deseja excluir \"{{fileName}}\"?",
+    "reselect": "Selecione novamente"
   },
   "languageModal": {
     "selectLanguage": "Selecione o idioma"
@@ -1192,13 +1219,6 @@
     "save": "Salvar Arquivo",
     "pageError": "Página inválida. Os intervalos de páginas válidos estão entre 1 -",
     "fileNameCannotBeEmpty": "O nome do arquivo não pode estar vazio"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Criar Portfólio PDF",
-    "uploadFiles": "Fazer upload de arquivos",
-    "uploadFolder": "Carregar Pasta",
-    "addFiles": "Adicionar arquivos",
-    "addFolder": "Adicionar pasta"
   },
   "filePicker": {
     "dragAndDrop": "Arraste e solte seu arquivo aqui",

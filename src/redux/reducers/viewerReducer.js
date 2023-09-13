@@ -93,6 +93,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         shouldShowApplyCropWarning: payload.shouldShowApplyCropWarning,
       };
+    case 'SHOW_APPLY_SNIPPING_WARNING':
+      return {
+        ...state,
+        shouldShowApplySnippingWarning: payload.shouldShowApplySnippingWarning,
+      };
     case 'SET_PRESET_CROP_DIMENSIONS':
       return {
         ...state,
@@ -176,6 +181,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         activeGroupedItems: payload.groupedItems
+      };
+    case 'SET_FIXED_GROUPED_ITEMS':
+      return {
+        ...state,
+        fixedGroupedItems: [...state.fixedGroupedItems, payload.groupedItems]
       };
     case 'SET_TOOLBAR_GROUP':
       return {
@@ -641,11 +651,6 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, isSnapModeEnabled: payload.enable };
     case 'SET_READER_MODE':
       return { ...state, isReaderMode: payload.isReaderMode };
-    case 'SET_VALIDATION_MODAL_WIDGET_NAME':
-      return {
-        ...state,
-        validationModalWidgetName: payload.validationModalWidgetName,
-      };
     case 'SET_SUBMIT_COMMENT_MODE':
       return {
         ...state,
@@ -666,29 +671,6 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         isCommentThreadExpansionEnabled: payload.enableCommentThreadExpansion,
       };
-    case 'ADD_TRUSTED_CERTIFICATES':
-      /**
-       * To mimic the behavior of the Core implementation, where certificates
-       * can only be added but not removed, only allow this action to append
-       * to the existing array
-       */
-      return {
-        ...state,
-        certificates: [...state.certificates, ...payload.certificates],
-      };
-    case 'ADD_TRUST_LIST':
-      /**
-       * The Core implementation only allows a single Trust List to be passed
-       * as a parameter, but in order to allow flexibility of future potential
-       * requirements where a developer may want to add multiple Trust Lists,
-       * we are storing an Array of Trust Lists
-       */
-      return {
-        ...state,
-        trustLists: [...state.trustLists, payload.trustList],
-      };
-    case 'SET_VERIFICATION_RESULT':
-      return { ...state, verificationResult: payload.result };
     case 'SET_DISPLAYED_SIGNATURES_FILTER_FUNCTION':
       return { ...state, displayedSignaturesFilterFunction: payload.filterFunction };
     case 'SET_ANNOTATION_READ_STATE':
@@ -743,11 +725,6 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isAddingNewScale: payload.isAddingNewScale,
-      };
-    case 'SET_IS_REVOCATION_CHECKING_ENABLED':
-      return {
-        ...state,
-        isRevocationCheckingEnabled: payload.isRevocationCheckingEnabled,
       };
     case 'UPDATE_DELETE_SCALE':
       return {

@@ -7,15 +7,15 @@ import core from 'core';
 const ZoomControlWithRedux = withProviders(ZoomControls);
 
 const props = {
-  getZoom: jest.fn(),
   setZoomHandler: jest.fn(),
   zoomValue: '100',
   zoomTo: jest.fn(),
-  zoomIn: jest.fn(),
-  zoomOut: jest.fn(),
+  onZoomInClicked: jest.fn(),
+  onZoomOutClicked: jest.fn(),
   isZoomFlyoutMenuActive: false,
   isActive: true,
   dataElement: 'zoom-container',
+  size: 0,
 };
 
 describe('Zoom Container component', () => {
@@ -43,10 +43,9 @@ describe('Zoom Container component', () => {
     const zoomOutButton = screen.getByRole('button', { name: 'Zoom out' });
     expect(zoomInButton).toBeInTheDocument();
     fireEvent.click(zoomInButton);
-    expect(props.zoomIn).toHaveBeenCalledTimes(1);
+    expect(props.onZoomInClicked).toHaveBeenCalledTimes(1);
     fireEvent.click(zoomOutButton);
-    expect(props.zoomOut).toHaveBeenCalledTimes(1);
-    expect(props.getZoom).toHaveBeenCalledTimes(2);
+    expect(props.onZoomOutClicked).toHaveBeenCalledTimes(1);
   });
 
   it('it renders the zoomvalue correctly', () => {

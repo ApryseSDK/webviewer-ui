@@ -117,6 +117,8 @@
     "formFillCheckmark": "Τσιμπούρι",
     "formFillCross": "Σταυρός",
     "distanceMeasurement": "Απόσταση",
+    "rectangularAreaMeasurement": "Ορθογώνιος Χώρος",
+    "ellipseMeasurement": "Περιοχή έλλειψης",
     "countMeasurement": "Μέτρηση μέτρησης",
     "ellipse": "Ελλειψη",
     "eraser": "Γόμα",
@@ -137,6 +139,7 @@
     "redact": "Συντάσσω",
     "formFillDot": "Τελεία",
     "signature": "Υπογραφή",
+    "snipping": "Εργαλείο Αποκοπής",
     "squiggly": "Στριμμένος",
     "stamp": "Σφραγίδα",
     "stickyNote": "Σημείωση",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Είστε βέβαιοι ότι θέλετε να ακυρώσετε την περικοπή όλων των επιλεγμένων σελίδων;"
     }
   },
+  "snippingPopUp": {
+    "title": "Εργαλείο Αποκοπής",
+    "clipboard": "Αντιγραφή στο πρόχειρο",
+    "download": "Λήψη",
+    "cropAndRemove": "Περικοπή και αφαίρεση",
+    "snippingModal": {
+      "applyTitle": "Εφαρμογή αποκοπής;",
+      "applyMessage": "Αυτή η ενέργεια θα αποκόψει μόνιμα την καθορισμένη περιοχή και θα αφαιρέσει άλλες σελίδες. Δεν μπορεί να αναιρεθεί.",
+      "cancelTitle": "Ακύρωση αποκοπής;",
+      "cancelMessage": "Είστε βέβαιοι ότι θέλετε να σταματήσετε την αποκοπή;"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Παράγραφος",
     "text": "Κείμενο"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Επιλογές υδατογραφήματος",
     "watermarks": "Υδατογράφημα"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Δημιουργία χαρτοφυλακίου PDF",
+    "uploadFiles": "Μεταφόρτωση Αρχείων",
+    "uploadFolder": "Μεταφόρτωση φακέλου",
+    "addFiles": "Πρόσθεσε αρχεία",
+    "addFile": "Προσθήκη αρχείου",
+    "addFolder": "Προσθήκη φακέλου",
+    "createFolder": "ΔΗΜΙΟΥΡΓΩ φακελο",
     "portfolioPanelTitle": "Χαρτοφυλάκιο PDF",
-    "portfolioAddFile": "Προσθήκη αρχείου",
-    "portfolioAddFolder": "Προσθήκη φακέλου",
-    "portfolioCreateFolder": "ΔΗΜΙΟΥΡΓΩ φακελο",
     "portfolioNewFolder": "Νέος φάκελος",
-    "portfolioNewFolderPlaceholder": "Ονομα φακέλου"
+    "portfolioFolderPlaceholder": "Ονομα φακέλου",
+    "portfolioFilePlaceholder": "Ονομα αρχείου",
+    "folderNameAlreadyExists": "Το όνομα φακέλου υπάρχει ήδη",
+    "fileNameAlreadyExists": "Το όνομα αρχείου υπάρχει ήδη",
+    "openFile": "Άνοιγμα σε Νέα καρτέλα",
+    "fileAlreadyExists": "Ο φάκελος υπάρχει ήδη",
+    "fileAlreadyExistsMessage": "Το αρχείο \"{{fileName}}\" υπάρχει ήδη στο χαρτοφυλάκιο.",
+    "deletePortfolio": "Είστε βέβαιοι ότι θέλετε να διαγράψετε το \"{{fileName}}\";",
+    "reselect": "Επιλέξτε ξανά"
   },
   "languageModal": {
     "selectLanguage": "Επιλέξτε γλώσσα"
@@ -1192,13 +1219,6 @@
     "save": "Αποθηκεύσετε το αρχείο",
     "pageError": "Μη έγκυρη σελίδα. Τα έγκυρα εύρη σελίδων είναι μεταξύ 1 -",
     "fileNameCannotBeEmpty": "Το όνομα αρχείου δεν μπορεί να είναι κενό"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Δημιουργία χαρτοφυλακίου PDF",
-    "uploadFiles": "Μεταφόρτωση Αρχείων",
-    "uploadFolder": "Μεταφόρτωση φακέλου",
-    "addFiles": "Πρόσθεσε αρχεία",
-    "addFolder": "Προσθήκη φακέλου"
   },
   "filePicker": {
     "dragAndDrop": "Σύρετε και αποθέστε το αρχείο σας εδώ",

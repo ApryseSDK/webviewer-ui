@@ -22,7 +22,7 @@ describe('PortfolioItemContent', () => {
     const saveButton = container.querySelector('.bookmark-outline-save-button');
     expect(saveButton.disabled).toBe(true);
 
-    const textInput = container.querySelector('.bookmark-outline-input');
+    const textInput = container.querySelector('.portfolio-input .ui__input__input');
     fireEvent.change(textInput, { target: { value: 'new folder' } });
     expect(saveButton.disabled).toBe(false);
 

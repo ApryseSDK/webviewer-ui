@@ -27,7 +27,7 @@
 
     .scale-overlay-title {
       margin-left: 0.8rem;
-      color: #485056;
+      color: var(--text-color);
       font-weight: bold;
       line-height: 1rem;
     }
@@ -65,7 +65,7 @@
         border-radius: 0.3rem;
         line-height: 2rem;
         padding: 0 32px 0 .5rem;
-        color: #485056;
+        color: var(--text-color);
         font-weight: normal;
         font-size: 0.8rem;
         text-align: left;
@@ -83,7 +83,7 @@
         width: 16px;
         height: 16px;
         padding: 2px;
-        color: #485056;
+        color: var(--text-color);
       }
 
       & ul {
@@ -99,7 +99,7 @@
         border-radius: 4px;
         pointer-events: all;
         z-index: 1000;
-        background-color: #ffffff;
+        background-color: var(--component-background);
         box-shadow: 0px 0px 4px #868e96;
         padding-left: 0px;
       }
@@ -121,7 +121,7 @@
       }
 
       & li:not(:last-child):not(:first-child) .options:hover {
-        background-color: #dee5ed;
+        background-color: var(--scale-overlay-item-hover);
       }
 
       & li:last-child {
@@ -161,7 +161,7 @@
       }
 
       .delete:hover {
-        background-color: #C7D2DD;
+        background-color: var(--scale-overlay-item-hover);
       }
 
       .delete:disabled {

@@ -117,6 +117,8 @@
     "formFillCheckmark": "체크표시",
     "formFillCross": "X표시",
     "distanceMeasurement": "거리측정",
+    "rectangularAreaMeasurement": "직사각형 영역",
+    "ellipseMeasurement": "타원 영역",
     "countMeasurement": "체크표시",
     "ellipse": "타원형",
     "eraser": "지우개",
@@ -137,6 +139,7 @@
     "redact": "수정",
     "formFillDot": "점표시",
     "signature": "서명",
+    "snipping": "잘라내기 도구",
     "squiggly": "물결선",
     "stamp": "이미지",
     "stickyNote": "코멘트",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "선택한 모든 페이지 자르기를 취소하시겠습니까?"
     }
   },
+  "snippingPopUp": {
+    "title": "잘라내기 도구",
+    "clipboard": "클립 보드에 복사",
+    "download": "다운로드",
+    "cropAndRemove": "자르고 제거",
+    "snippingModal": {
+      "applyTitle": "잘라내기 적용?",
+      "applyMessage": "이 작업은 지정한 영역을 영구적으로 잘라내고 다른 페이지를 제거합니다. 취소할 수 없습니다.",
+      "cancelTitle": "잘라내기 취소?",
+      "cancelMessage": "잘라내기를 중지하시겠습니까?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "절",
     "text": "텍스트"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "워터마크 옵션",
     "watermarks": "워터마크"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "PDF 포트폴리오 만들기",
+    "uploadFiles": "파일 업로드하다",
+    "uploadFolder": "폴더 업로드",
+    "addFiles": "파일 추가",
+    "addFile": "파일 추가",
+    "addFolder": "폴더 추가",
+    "createFolder": "폴더 만들기",
     "portfolioPanelTitle": "PDF 포트폴리오",
-    "portfolioAddFile": "파일 추가",
-    "portfolioAddFolder": "폴더 추가",
-    "portfolioCreateFolder": "폴더 만들기",
     "portfolioNewFolder": "새 폴더",
-    "portfolioNewFolderPlaceholder": "폴더 이름"
+    "portfolioFolderPlaceholder": "폴더 이름",
+    "portfolioFilePlaceholder": "파일 이름",
+    "folderNameAlreadyExists": "폴더 이름이 이미 존재합니다",
+    "fileNameAlreadyExists": "파일 이름이 이미 존재합니다",
+    "openFile": "새 탭에서 열기",
+    "fileAlreadyExists": "존재하는 파일입니다",
+    "fileAlreadyExistsMessage": "\"{{fileName}}\" 파일이 이미 포트폴리오에 있습니다.",
+    "deletePortfolio": "정말 \"{{fileName}}\"을(를) 삭제하시겠습니까?",
+    "reselect": "재선택"
   },
   "languageModal": {
     "selectLanguage": "언어 선택"
@@ -1192,13 +1219,6 @@
     "save": "파일을 저장",
     "pageError": "잘못된 페이지입니다. 유효한 페이지 범위는 1 -",
     "fileNameCannotBeEmpty": "파일 이름은 비워둘 수 없습니다."
-  },
-  "portfolio": {
-    "createPDFPortfolio": "PDF 포트폴리오 만들기",
-    "uploadFiles": "파일 업로드하다",
-    "uploadFolder": "폴더 업로드",
-    "addFiles": "파일 추가",
-    "addFolder": "폴더 추가"
   },
   "filePicker": {
     "dragAndDrop": "여기에 파일을 끌어다 놓습니다.",

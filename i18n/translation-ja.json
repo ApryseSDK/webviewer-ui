@@ -117,6 +117,8 @@
     "formFillCheckmark": "チェックマーク",
     "formFillCross": "クロス",
     "distanceMeasurement": "距離測定",
+    "rectangularAreaMeasurement": "長方形の領域",
+    "ellipseMeasurement": "楕円領域",
     "countMeasurement": "カウント測定",
     "ellipse": "楕円",
     "eraser": "消しゴム",
@@ -137,6 +139,7 @@
     "redact": "墨消し",
     "formFillDot": "ドット",
     "signature": "署名",
+    "snipping": "切り取りツール",
     "squiggly": "波線",
     "stamp": "スタンプ",
     "stickyNote": "注釈",
@@ -745,8 +748,8 @@
       "rejectDownloadButton": "ダウンロードせずに閉じる"
     },
     "connectToURL": {
-      "title": "セキュリティ警告",
-      "message": "このドキュメントは次の場所に接続しようとしています:\n\n{{- uri}}\n\n このドキュメントが信頼できる場合は、[確認] をクリックして開きます。"
+      "title": "セキュリティ警告 ",
+      "message": "このドキュメントは以下に接続しようとしています:\n\n{{- uri}}\n\n この文書を信頼できる場合は、「確認」をクリックして文書を開きます。"
     }
   },
   "shortcut": {
@@ -1039,6 +1042,18 @@
       "cancelMessage": "選択したすべてのページの切り抜きをキャンセルしてもよろしいですか？"
     }
   },
+  "snippingPopUp": {
+    "title": "切り取りツール",
+    "clipboard": "クリップボードにコピー",
+    "download": "ダウンロード",
+    "cropAndRemove": "クロップして削除",
+    "snippingModal": {
+      "applyTitle": "切り取りを適用しますか？",
+      "applyMessage": "このアクションにより指定されたエリアが永久に切り取られ、他のページが削除されます。取り消すことはできません。",
+      "cancelTitle": "切り取りをキャンセルしますか？",
+      "cancelMessage": "切り取りを停止することを本当に確認しますか？"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "段落",
     "text": "文章"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "透かしオプション",
     "watermarks": "透かし"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "PDF ポートフォリオを作成する",
+    "uploadFiles": "ファイルをアップロードする",
+    "uploadFolder": "アップロードフォルダー",
+    "addFiles": "追加ファイル",
+    "addFile": "ファイルの追加",
+    "addFolder": "フォルダーを追加",
+    "createFolder": "フォルダーを作る",
     "portfolioPanelTitle": "PDFポートフォリオ",
-    "portfolioAddFile": "ファイルの追加",
-    "portfolioAddFolder": "フォルダーを追加",
-    "portfolioCreateFolder": "フォルダーを作る",
     "portfolioNewFolder": "新しいフォルダー",
-    "portfolioNewFolderPlaceholder": "フォルダ名"
+    "portfolioFolderPlaceholder": "フォルダ名",
+    "portfolioFilePlaceholder": "ファイル名",
+    "folderNameAlreadyExists": "フォルダ名はすでに存在します",
+    "fileNameAlreadyExists": "ファイル名はすでに存在します",
+    "openFile": "新しいタブで開く",
+    "fileAlreadyExists": "ファイルが既に存在します",
+    "fileAlreadyExistsMessage": "ファイル「{{fileName}}」はポートフォリオにすでに存在します。",
+    "deletePortfolio": "「{{fileName}}」を削除してもよろしいですか?",
+    "reselect": "再選択"
   },
   "languageModal": {
     "selectLanguage": "言語を選択する"
@@ -1192,13 +1219,6 @@
     "save": "ファイルを保存",
     "pageError": "ページが無効です。有効なページ範囲は 1 ～",
     "fileNameCannotBeEmpty": "ファイル名を空にすることはできません"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "PDF ポートフォリオを作成する",
-    "uploadFiles": "ファイルをアップロードする",
-    "uploadFolder": "アップロードフォルダー",
-    "addFiles": "追加ファイル",
-    "addFolder": "フォルダーを追加"
   },
   "filePicker": {
     "dragAndDrop": "ここにファイルをドラッグ＆ドロップします",

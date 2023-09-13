@@ -22,7 +22,7 @@ const SignatureValidationModal = () => {
 
   const [isOpen, verificationResult] = useSelector(
     (state) => {
-      const { validationModalWidgetName } = state.viewer;
+      const { validationModalWidgetName } = state.digitalSignatureValidation;
       return [
         selectors.isElementOpen(state, DataElements.SIGNATURE_VALIDATION_MODAL),
         selectors.getVerificationResult(state, validationModalWidgetName),

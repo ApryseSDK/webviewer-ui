@@ -1,24 +1,25 @@
 import React from 'react';
 import classNames from 'classnames';
 import ToggleElementButton from '../ToggleElementButton';
-import CustomButton from 'components/Button/CustomButton';
+import CustomButton from '../CustomButton';
 import { useTranslation } from 'react-i18next';
 import './ZoomControls.scss';
 
 function ZoomControls(props) {
   const {
-    getZoom,
     setZoomHandler,
     zoomValue,
     zoomTo,
-    zoomIn,
-    zoomOut,
     isZoomFlyoutMenuActive,
     dataElement,
     isActive,
     onClick,
     onFlyoutToggle,
-    elementRef
+    elementRef,
+    size,
+    onZoomInClicked,
+    onZoomOutClicked,
+    getCurrentZoom,
   } = props;
 
   const [t] = useTranslation();
@@ -41,10 +42,6 @@ function ZoomControls(props) {
     }
   };
 
-  const getCurrentZoom = () => {
-    return Math.ceil(getZoom() * 100).toString();
-  };
-
   const onBlur = (e) => {
     const zoom = getCurrentZoom();
     if (e.target.value === zoom) {
@@ -62,60 +59,68 @@ function ZoomControls(props) {
 
   return (
     <div className="ZoomContainerWrapper" data-element={dataElement} ref={elementRef}>
-      <div className="ToggleZoomMenu">
-        <div tabIndex={0}
-          className={classNames({
-            ZoomContainer: true,
-            active: isActive,
-          })}
-        >
-          <div className='ZoomText'
-            onClick={() => onClick}>
-            <input
-              type="text"
-              className="textarea"
-              value={zoomValue}
-              onChange={handleChange}
-              onBlur={onBlur}
-              onKeyDown={handleKeyDown}
+      {size === 0 && <>
+        <div className="ToggleZoomMenu">
+          <div tabIndex={0}
+            className={classNames({
+              ZoomContainer: true,
+              active: isActive,
+            })}
+          >
+            <div className="ZoomText"
+              onClick={() => onClick}>
+              <input
+                type="text"
+                className="textarea"
+                value={zoomValue}
+                onChange={handleChange}
+                onBlur={onBlur}
+                onKeyDown={handleKeyDown}
+                tabIndex={-1}
+                style={{ width: inputWidth }}
+                aria-label={t('action.zoomSet')}
+              />
+              <span>%</span>
+            </div>
+            <ToggleElementButton
+              dataElement="zoom-toggle-button"
+              className="zoomToggleButton"
+              title="Zoom Toggle Button"
+              disabled={false}
+              img={`icon-chevron-${isZoomFlyoutMenuActive ? 'up' : 'down'}`}
+              toggleElement="zoomFlyoutMenu"
               tabIndex={-1}
-              style={{ width: inputWidth }}
-              aria-label={t('action.zoomSet')}
+              onFlyoutToggled={onFlyoutToggle}
             />
-            <span>%</span>
           </div>
-          <ToggleElementButton
-            dataElement='zoom-toggle-button'
-            className="zoomToggleButton"
-            title='Zoom Toggle Button'
-            disabled={false}
-            img={`icon-chevron-${isZoomFlyoutMenuActive ? 'up' : 'down'}`}
-            toggleElement='zoomFlyoutMenu'
-            tabIndex={-1}
-            onFlyoutToggled={onFlyoutToggle}
-          />
         </div>
-      </div>
-      <CustomButton
-        img="icon-header-zoom-out-line"
-        onClick={() => {
-          zoomOut();
-          setZoomHandler(getCurrentZoom());
-        }}
-        title="action.zoomOut"
-        dataElement="zoomOutButton"
-        className="zoomButton"
-      />
-      <CustomButton
-        img="icon-header-zoom-in-line"
-        onClick={() => {
-          zoomIn();
-          setZoomHandler(getCurrentZoom());
-        }}
-        title="action.zoomIn"
-        dataElement="zoomInButton"
-        className="zoomButton"
-      />
+        <CustomButton
+          img="icon-header-zoom-out-line"
+          onClick={onZoomOutClicked}
+          title="action.zoomOut"
+          dataElement="zoomOutButton"
+          className="zoomButton"
+        />
+        <CustomButton
+          img="icon-header-zoom-in-line"
+          onClick={onZoomInClicked}
+          title="action.zoomIn"
+          dataElement="zoomInButton"
+          className="zoomButton"
+        />
+      </>}
+      {size === 1 && <>
+        <ToggleElementButton
+          dataElement="zoom-toggle-button"
+          className="zoomToggleButton"
+          title="Zoom Toggle Button"
+          disabled={false}
+          img={'icon-magnifying-glass'}
+          toggleElement="zoomFlyoutMenu"
+          tabIndex={-1}
+          onFlyoutToggled={onFlyoutToggle}
+        />
+      </>}
     </div>
   );
 }

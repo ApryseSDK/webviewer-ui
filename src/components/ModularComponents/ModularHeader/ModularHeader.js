@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ALIGNMENT, PLACEMENT } from 'constants/customizationVariables';
+import { ALIGNMENT, PLACEMENT, DEFAULT_GAP } from 'constants/customizationVariables';
 import ModularHeaderItems from '../../ModularHeaderItems';
 import './ModularHeader.scss';
+import DataElementWrapper from 'src/components/DataElementWrapper';
 
 const ModularHeader = React.forwardRef((props, ref) => {
   const { dataElement,
     placement,
     position = '', // This is to be used for floating headers
     items = [],
-    gap = 16,
+    gap = DEFAULT_GAP,
     alignment = ALIGNMENT.START,
     style,
     autohide = true,
@@ -43,7 +44,7 @@ const ModularHeader = React.forwardRef((props, ref) => {
   }
 
   return (
-    <div
+    <DataElementWrapper
       className={classNames({
         'ModularHeader': true,
         'closed': isClosed,
@@ -68,7 +69,7 @@ const ModularHeader = React.forwardRef((props, ref) => {
         gap={gap}
         placement={placement}
         alignment={alignment} />
-    </div>
+    </DataElementWrapper>
   );
 });
 

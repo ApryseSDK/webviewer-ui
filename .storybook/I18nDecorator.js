@@ -1,22 +1,9 @@
 import React from 'react';
 import i18next from 'i18next';
 import { I18nextProvider } from "react-i18next";
-import thunk from 'redux-thunk';
+import getAvailableLanguages from '../src/apis/getAvailableLanguages';
 
-i18next.languages = [
-  'en',
-  'de',
-  'es',
-  'fr',
-  'it',
-  'ja',
-  'ko',
-  'nl',
-  'pt_br',
-  'ru',
-  'zh_cn',
-  'zh_tw'
-];
+i18next.languages = getAvailableLanguages();
 
 const resources = i18next.languages.reduce((accumulator, language, ) => {
   const translation = require(`../i18n/translation-${language}.json`);
@@ -30,7 +17,6 @@ const options = {
   fallbackLng: 'en',
   react: {
     useSuspense: false,
-    wait: true,
   },
   resources
 };

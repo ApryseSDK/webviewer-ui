@@ -1,5 +1,5 @@
 import actions from 'actions';
-import { ITEM_TYPE, ALIGNMENT } from 'constants/customizationVariables';
+import { ITEM_TYPE, ALIGNMENT, DEFAULT_GAP } from 'constants/customizationVariables';
 
 export default (store) => (props) => {
   class ModularHeader {
@@ -9,7 +9,8 @@ export default (store) => (props) => {
         dataElement,
         alignment,
         grow = 0,
-        gap = 16,
+        float = false,
+        gap = DEFAULT_GAP,
         position,
         placement,
         items = []
@@ -21,6 +22,7 @@ export default (store) => (props) => {
       this.grow = grow;
       this.gap = gap;
       this.position = position;
+      this.float = float;
       // items is a list of things. We want to clone them
       this.items = items.map((item) => ({ ...item }));
       this.itemValidTypes = Object.values(ITEM_TYPE);
@@ -31,9 +33,11 @@ export default (store) => (props) => {
       // What if the header already exists in redux? we must update it
       store.dispatch(actions.setGapBetweenHeaderItems(this.dataElement, gap));
     }
+
     // Validates the items type of a grouped item
     validateGroupedItems = (groupedItems) => {
-      groupedItems.props.items?.forEach((item) => {
+      const items = groupedItems.items || groupedItems.props?.items;
+      items?.forEach((item) => {
         this.isItemTypeValid(item);
       });
     };
@@ -54,13 +58,6 @@ export default (store) => (props) => {
         const clonedItem = Object.assign({}, item);
         this.items.push(clonedItem);
       }
-    };
-
-    // Validates the items type of a grouped item
-    validateGroupedItems = (groupedItems) => {
-      groupedItems.items.forEach((item) => {
-        this.isItemTypeValid(item);
-      });
     };
 
     // Shows a warn if the item type is not valid.

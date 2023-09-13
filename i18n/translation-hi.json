@@ -117,6 +117,8 @@
     "formFillCheckmark": "टिकटिक",
     "formFillCross": "पार करना",
     "distanceMeasurement": "दूरी",
+    "rectangularAreaMeasurement": "आयताकार क्षेत्र",
+    "ellipseMeasurement": "दीर्घवृत्त क्षेत्र",
     "countMeasurement": "गणना माप",
     "ellipse": "अंडाकार",
     "eraser": "रबड़",
@@ -137,6 +139,7 @@
     "redact": "संपादन",
     "formFillDot": "दूरसंचार विभाग",
     "signature": "हस्ताक्षर",
+    "snipping": "स्निपिंग टूल",
     "squiggly": "टेढ़ा-मेढ़ा",
     "stamp": "डाक टिकट",
     "stickyNote": "ध्यान दें",
@@ -746,7 +749,7 @@
     },
     "connectToURL": {
       "title": "सुरक्षा चेतावनी",
-      "message": "यह दस्तावेज़ इससे कनेक्ट करने का प्रयास कर रहा है:\n\n{{- uri}}\n\n यदि आप इस दस्तावेज़ पर भरोसा करते हैं, तो इसे खोलने के लिए पुष्टि करें पर क्लिक करें।"
+      "message": "यह दस्तावेज़ इससे कनेक्ट करने का प्रयास कर रहा है:\n\n{{- uri}}\n\n यदि आपको इस दस्तावेज़ पर भरोसा है, तो इसे खोलने के लिए पुष्टि करें पर क्लिक करें।"
     }
   },
   "shortcut": {
@@ -1039,6 +1042,18 @@
       "cancelMessage": "क्या आप वाकई सभी चयनित पृष्ठों को क्रॉप करना रद्द करना चाहते हैं?"
     }
   },
+  "snippingPopUp": {
+    "title": "स्निपिंग टूल",
+    "clipboard": "क्लिपबोर्ड पर कॉपी करें",
+    "download": "डाउनलोड",
+    "cropAndRemove": "कट और हटाएं",
+    "snippingModal": {
+      "applyTitle": "कट निकालने का आवेदन करें?",
+      "applyMessage": "इस क्रिया से निर्दिष्ट क्षेत्र को स्थायित रूप से कट दिया जाएगा और अन्य पृष्ठ हटा दिए जाएंगे। इसे पूर्ववत नहीं किया जा सकता है।",
+      "cancelTitle": "कट निकालने को रद्द करें?",
+      "cancelMessage": "क्या आप वाकई कट निकालना बंद करना चाहते हैं?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "अनुच्छेद",
     "text": "मूलपाठ"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "वॉटरमार्क विकल्प",
     "watermarks": "वाटरमार्क"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "पीडीएफ पोर्टफोलियो बनाएं",
+    "uploadFiles": "फाइलें अपलोड करें",
+    "uploadFolder": "फ़ोल्डर अपलोड करें",
+    "addFiles": "फाइलें जोड़ो",
+    "addFile": "फ़ाइल जोड़ें",
+    "addFolder": "फ़ोल्डर जोड़ें",
+    "createFolder": "फोल्डर बनाएं",
     "portfolioPanelTitle": "पीडीएफ पोर्टफोलियो",
-    "portfolioAddFile": "फ़ाइल जोड़ें",
-    "portfolioAddFolder": "फ़ोल्डर जोड़ें",
-    "portfolioCreateFolder": "फोल्डर बनाएं",
     "portfolioNewFolder": "नया फ़ोल्डर",
-    "portfolioNewFolderPlaceholder": "फ़ोल्डर का नाम"
+    "portfolioFolderPlaceholder": "फ़ोल्डर का नाम",
+    "portfolioFilePlaceholder": "फ़ाइल का नाम",
+    "folderNameAlreadyExists": "फ़ोल्डर नाम पहले से मौजूद है",
+    "fileNameAlreadyExists": "फ़ाइल नाम पहले से मौजूद है",
+    "openFile": "वेब टेब में खोलें",
+    "fileAlreadyExists": "फ़ाइल पहले से ही मौजूद है",
+    "fileAlreadyExistsMessage": "फ़ाइल \"{{fileName}}\" पहले से ही पोर्टफ़ोलियो में मौजूद है।",
+    "deletePortfolio": "क्या आप वाकई \"{{fileName}}\" को हटाना चाहते हैं?",
+    "reselect": "फिर से चुनें"
   },
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"
@@ -1192,13 +1219,6 @@
     "save": "फाइल सुरक्षित करें",
     "pageError": "अमान्य पृष्ठ। मान्य पृष्ठ श्रेणियां 1 के बीच हैं -",
     "fileNameCannotBeEmpty": "फ़ाइल नाम रिक्त नहीं हो सकता"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "पीडीएफ पोर्टफोलियो बनाएं",
-    "uploadFiles": "फाइलें अपलोड करें",
-    "uploadFolder": "फ़ोल्डर अपलोड करें",
-    "addFiles": "फाइलें जोड़ो",
-    "addFolder": "फ़ोल्डर जोड़ें"
   },
   "filePicker": {
     "dragAndDrop": "अपनी फ़ाइल को यहां खींचें और छोड़ें",

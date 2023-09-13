@@ -117,6 +117,8 @@
     "formFillCheckmark": "Kutu",
     "formFillCross": "Menyeberang",
     "distanceMeasurement": "Jarak",
+    "rectangularAreaMeasurement": "Luas Persegi Panjang",
+    "ellipseMeasurement": "Daerah Elips",
     "countMeasurement": "Hitung pengukuran",
     "ellipse": "Elips",
     "eraser": "Penghapus",
@@ -137,6 +139,7 @@
     "redact": "Menyusun",
     "formFillDot": "Dot",
     "signature": "Tanda tangan",
+    "snipping": "Alat Potong",
     "squiggly": "berlekuk-lekuk",
     "stamp": "Stempel",
     "stickyNote": "Catatan",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Anda yakin ingin membatalkan pemotongan semua halaman yang dipilih?"
     }
   },
+  "snippingPopUp": {
+    "title": "Alat Potong",
+    "clipboard": "Salin ke Clipboard",
+    "download": "Unduh",
+    "cropAndRemove": "Potong dan Hapus",
+    "snippingModal": {
+      "applyTitle": "Terapkan pemotongan?",
+      "applyMessage": "Tindakan ini akan memotong area yang ditentukan secara permanen dan menghapus halaman lainnya. Ini tidak dapat dibatalkan.",
+      "cancelTitle": "Batal pemotongan?",
+      "cancelMessage": "Apakah Anda yakin ingin menghentikan pemotongan?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Gugus kalimat",
     "text": "Teks"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Opsi Tanda Air",
     "watermarks": "Tanda air"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Buat Portofolio PDF",
+    "uploadFiles": "Unggah berkas",
+    "uploadFolder": "Unggah Folder",
+    "addFiles": "Tambahkan File",
+    "addFile": "Tambah berkas",
+    "addFolder": "Tambah Folder",
+    "createFolder": "Membuat folder",
     "portfolioPanelTitle": "Portofolio PDF",
-    "portfolioAddFile": "Tambah berkas",
-    "portfolioAddFolder": "Tambah Folder",
-    "portfolioCreateFolder": "Membuat folder",
     "portfolioNewFolder": "Folder baru",
-    "portfolioNewFolderPlaceholder": "Nama folder"
+    "portfolioFolderPlaceholder": "Nama folder",
+    "portfolioFilePlaceholder": "Nama file",
+    "folderNameAlreadyExists": "Nama folder sudah ada",
+    "fileNameAlreadyExists": "Nama file sudah ada",
+    "openFile": "Buka di Tab Baru",
+    "fileAlreadyExists": "File Sudah Ada",
+    "fileAlreadyExistsMessage": "File \"{{fileName}}\" sudah ada di portofolio.",
+    "deletePortfolio": "Anda yakin ingin menghapus \"{{fileName}}\"?",
+    "reselect": "Pilih ulang"
   },
   "languageModal": {
     "selectLanguage": "Pilih bahasa"
@@ -1192,13 +1219,6 @@
     "save": "Menyimpan file",
     "pageError": "Halaman tidak valid. Rentang halaman yang valid adalah antara 1 -",
     "fileNameCannotBeEmpty": "Nama File tidak boleh kosong"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Buat Portofolio PDF",
-    "uploadFiles": "Unggah berkas",
-    "uploadFolder": "Unggah Folder",
-    "addFiles": "Tambahkan File",
-    "addFolder": "Tambah Folder"
   },
   "filePicker": {
     "dragAndDrop": "Seret & Jatuhkan file Anda di sini",

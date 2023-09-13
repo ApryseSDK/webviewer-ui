@@ -50,5 +50,9 @@ const props = {
 
 
 export function Basic() {
-  return (<CreatableDropdown {...props} />);
+  return (
+    <div id="app">
+      <CreatableDropdown {...props} />
+    </div>
+  );
 }

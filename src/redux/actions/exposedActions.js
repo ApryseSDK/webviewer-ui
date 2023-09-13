@@ -21,6 +21,16 @@ export const enableApplyCropWarningModal = () => ({
   payload: { shouldShowApplyCropWarning: true },
 });
 
+export const disableApplySnippingWarningModal = () => ({
+  type: 'SHOW_APPLY_SNIPPING_WARNING',
+  payload: { shouldShowApplySnippingWarning: false },
+});
+
+export const enableApplySnippingWarningModal = () => ({
+  type: 'SHOW_APPLY_SNIPPING_WARNING',
+  payload: { shouldShowApplySnippingWarning: true },
+});
+
 export const setPresetCropDimensions = (presetCropDimensions) => ({
   type: 'SET_PRESET_CROP_DIMENSIONS',
   payload: { presetCropDimensions },
@@ -156,6 +166,13 @@ export const setCurrentGroupedItem = (groupedItems) => (dispatch) => {
   dispatch({
     type: 'SET_CURRENT_GROUPED_ITEMS',
     payload: { groupedItems },
+  });
+};
+
+export const setFixedGroupedItems = (groupedItems) => (dispatch) => {
+  dispatch({
+    type: 'SET_FIXED_GROUPED_ITEMS',
+    payload: { groupedItems }
   });
 };
 

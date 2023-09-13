@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import Button from '../Button';
 import DataElementWrapper from '../DataElementWrapper';
-import BookmarkOutlineContextMenuPopup from '../BookmarkOutlineContextMenuPopup';
+import MoreOptionsContextMenuPopup from '../MoreOptionsContextMenuPopup';
 import Choice from 'components/Choice';
 
 const propTypes = {
@@ -161,7 +161,7 @@ const Bookmark = ({
               />
             }
             {isContextMenuOpen && (
-              <BookmarkOutlineContextMenuPopup
+              <MoreOptionsContextMenuPopup
                 type={'bookmark'}
                 anchorButton={`bookmark-more-button-${pageIndex}`}
                 shouldDisplayDeleteButton={true}

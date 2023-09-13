@@ -1,7 +1,5 @@
 @import './styles';
 
-$modal-z-index: 100;
-
 %modal {
   @extend %open;
   @extend %closed;

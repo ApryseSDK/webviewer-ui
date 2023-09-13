@@ -136,6 +136,7 @@ import enableAnnotationNumbering from './enableAnnotationNumbering';
 import getSemanticDiffAnnotations from './getSemanticDiffAnnotations';
 import loadBlankOfficeEditorDocument from './loadBlankOfficeEditorDocument';
 import getOfficeEditor from './getOfficeEditor';
+import isValidURI from './isValidURI';
 
 export default {
   getSemanticDiffAnnotations,
@@ -279,5 +280,6 @@ export default {
   getScalePrecision,
   enableAnnotationNumbering,
   getOfficeEditor,
-  loadBlankOfficeEditorDocument
+  loadBlankOfficeEditorDocument,
+  isValidURI
 };

@@ -117,6 +117,8 @@
     "formFillCheckmark": "打钩",
     "formFillCross": "叉",
     "distanceMeasurement": "距离测量",
+    "rectangularAreaMeasurement": "矩形面积",
+    "ellipseMeasurement": "椭圆面积",
     "countMeasurement": "计数测量",
     "ellipse": "椭圆",
     "eraser": "橡皮",
@@ -137,6 +139,7 @@
     "redact": "新版本",
     "formFillDot": "点",
     "signature": "签名",
+    "snipping": "剪裁工具",
     "squiggly": "曲线",
     "stamp": "盖章",
     "stickyNote": "注释",
@@ -746,7 +749,7 @@
     },
     "connectToURL": {
       "title": "安全警告",
-      "message": "此文档正在尝试连接到：\n\n{{- uri}}\n\n 如果您信任此文档，请单击“确认”将其打开。"
+      "message": "该文档正在尝试连接到：\n\n{{- uri}}\n\n 如果您信任此文档，请单击“确认”将其打开。"
     }
   },
   "shortcut": {
@@ -1039,6 +1042,18 @@
       "cancelMessage": "您确定要取消裁剪所有选定的页面吗？"
     }
   },
+  "snippingPopUp": {
+    "title": "剪裁工具",
+    "clipboard": "复制到剪贴板",
+    "download": "下载",
+    "cropAndRemove": "裁剪和删除",
+    "snippingModal": {
+      "applyTitle": "应用剪裁？",
+      "applyMessage": "此操作将永久剪裁指定的区域并删除其他页面。无法撤消。",
+      "cancelTitle": "取消剪裁？",
+      "cancelMessage": "您确定要停止剪裁吗？"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "段落",
     "text": "文本"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "水印选项",
     "watermarks": "水印"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "创建 PDF 包",
+    "uploadFiles": "上传文件",
+    "uploadFolder": "上传文件夹",
+    "addFiles": "添加文件",
+    "addFile": "添加文件",
+    "addFolder": "新增文件夹",
+    "createFolder": "创建文件夹",
     "portfolioPanelTitle": "PDF 作品集",
-    "portfolioAddFile": "添加文件",
-    "portfolioAddFolder": "新增文件夹",
-    "portfolioCreateFolder": "创建文件夹",
     "portfolioNewFolder": "新建文件夹",
-    "portfolioNewFolderPlaceholder": "文件夹名称"
+    "portfolioFolderPlaceholder": "文件夹名称",
+    "portfolioFilePlaceholder": "文件名",
+    "folderNameAlreadyExists": "文件夹名称已存在",
+    "fileNameAlreadyExists": "文件名已存在",
+    "openFile": "在新选项卡中打开",
+    "fileAlreadyExists": "文件已存在",
+    "fileAlreadyExistsMessage": "文件“{{fileName}}”已存在于组合中。",
+    "deletePortfolio": "您确定要删除“{{fileName}}”吗？",
+    "reselect": "重新选择"
   },
   "languageModal": {
     "selectLanguage": "选择语言"
@@ -1192,13 +1219,6 @@
     "save": "保存存档",
     "pageError": "无效页面。有效页面范围介于 1 -",
     "fileNameCannotBeEmpty": "文件名不能为空"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "创建 PDF 包",
-    "uploadFiles": "上传文件",
-    "uploadFolder": "上传文件夹",
-    "addFiles": "添加文件",
-    "addFolder": "新增文件夹"
   },
   "filePicker": {
     "dragAndDrop": "将您的文件拖放到此处",

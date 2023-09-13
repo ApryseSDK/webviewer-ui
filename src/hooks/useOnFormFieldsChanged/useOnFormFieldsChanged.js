@@ -48,11 +48,13 @@ export default function useOnFormFieldsChanged() {
     };
 
     core.addEventListener('documentLoaded', onDocumentLoaded);
+    core.addEventListener('zoomUpdated', setFormFieldIndicators);
     core.addEventListener('annotationChanged', setFormFieldIndicators);
     core.addEventListener('pageNumberUpdated', setFormFieldIndicators);
 
     return () => {
       core.removeEventListener('documentLoaded', onDocumentLoaded);
+      core.removeEventListener('zoomUpdated', setFormFieldIndicators);
       core.removeEventListener('annotationChanged', setFormFieldIndicators);
       core.removeEventListener('pageNumberUpdated', setFormFieldIndicators);
     };

@@ -1,8 +1,21 @@
 import { useEffect } from 'react';
 import core from 'core';
 import getRootNode from 'helpers/getRootNode';
+import { shallowEqual, useSelector } from 'react-redux';
+import selectors from 'selectors';
 
 export default (handler) => {
+  const [
+    activeDocumentViewerKey,
+    isMultiViewerMode,
+  ] = useSelector(
+    (state) => [
+      selectors.getActiveDocumentViewerKey(state),
+      selectors.isMultiViewerMode(state),
+    ],
+    shallowEqual,
+  );
+
   useEffect(() => {
     const listener = (e) => {
       const { tagName } = e.target;
@@ -14,9 +27,11 @@ export default (handler) => {
         || e.target.parentNode.parentNode.className === 'ql-editor'
       ));
 
-      const clickedOnDocumentContainer = getRootNode()
-        .querySelector('.DocumentContainer')
-        .contains(e.target);
+      const documentContainer =
+        isMultiViewerMode
+          ? getRootNode().querySelector(`#DocumentContainer${activeDocumentViewerKey}`)
+          : getRootNode().querySelector('.DocumentContainer');
+      const clickedOnDocumentContainer = documentContainer.contains(e.target);
 
       if (
         clickedOnDocumentContainer &&
@@ -29,10 +44,10 @@ export default (handler) => {
     };
 
     getRootNode().addEventListener('contextmenu', listener);
-    core.addEventListener('longTap', listener);
+    core.addEventListener('longTap', listener, null, activeDocumentViewerKey);
     return () => {
       getRootNode().removeEventListener('contextmenu', listener);
-      core.removeEventListener('longTap', listener);
+      core.removeEventListener('longTap', listener, null, activeDocumentViewerKey);
     };
-  }, [handler]);
+  }, [activeDocumentViewerKey, isMultiViewerMode]);
 };

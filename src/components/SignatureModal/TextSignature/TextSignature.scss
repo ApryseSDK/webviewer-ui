@@ -69,4 +69,12 @@
     margin-top: 60px;
     width: 100%;
   }
+
+  .Dropdown__items {
+    top: unset !important;
+
+    [data-testid='sig-no-result'] {
+      font-size: 13px !important;
+    }
+  }
 }

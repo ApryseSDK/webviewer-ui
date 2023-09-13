@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import useOnClickOutside from 'hooks/useOnClickOutside';
@@ -29,7 +28,7 @@ const NoteStatePopup = ({
   const popupRef = useRef();
 
   useOnClickOutside(popupRef, (e) => {
-    const triggerElement = getRootNode().querySelector(`[data-element=${triggerElementName}]`);
+    const triggerElement = getRootNode().querySelector(`[data-id="${triggerElementName}"]`);
     const clickedTrigger = triggerElement.contains(e.target);
     if (!clickedTrigger) {
       // we only want to close the popup if we clicked outside and not on the trigger
@@ -44,7 +43,7 @@ const NoteStatePopup = ({
   };
 
   useEffect(() => {
-    const position = getOverlayPositionBasedOn(triggerElementName, popupRef);
+    const position = getOverlayPositionBasedOn(triggerElementName, popupRef, false, 'data-id');
     setPosition(position);
   }, []);
 

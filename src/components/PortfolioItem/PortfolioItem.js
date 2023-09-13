@@ -1,18 +1,15 @@
 import React, { forwardRef, useCallback, useContext, useImperativeHandle, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { DragSource, DropTarget } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { ItemTypes, DropLocation, BUFFER_ROOM } from 'constants/dnd';
-import actions from 'actions';
 
 import Button from 'components/Button';
 import DataElementWrapper from 'components/DataElementWrapper';
 import PortfolioContext from 'components/PortfolioPanel/PortfolioContext';
 import PortfolioItemContent from 'components/PortfolioItemContent';
-import { hasChildren } from 'helpers/portfolioUtils';
-import { enableMultiTab } from 'helpers/TabManager';
+import { hasChildren } from 'helpers/portfolio';
 
 import './PortfolioItem.scss';
 
@@ -42,14 +39,12 @@ const PortfolioItem = forwardRef(({
   isDraggedDownwards,
 }, ref) => {
   const {
-    activePortfolioItem,
     setActivePortfolioItem,
     isPortfolioItemActive,
     isAddingNewFolder,
     setAddingNewFolder,
+    openPortfolioItem,
   } = useContext(PortfolioContext);
-  const dispatch = useDispatch();
-
   const [isExpanded, setIsExpanded] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
   const [isHovered, setHovered] = useState(false); // when the popup menu is open, the container will have a background
@@ -68,20 +63,20 @@ const PortfolioItem = forwardRef(({
     setIsExpanded((expand) => !expand);
   }, []);
 
-  const onSingleClick = useCallback(() => {
-    // If the item is in renaming-mode, clicking on it won't do anything
+  const onDoubleClick = useCallback(() => {
+    // If the item is in renaming-mode, double-clicking on it won't do anything
     if (isRenaming) {
       return;
     }
 
-    // TODO: open document here
+    openPortfolioItem(portfolioItem);
     setActivePortfolioItem(portfolioItem.id);
 
-    // If the panel is in add-folder-mode, reset it when clicking on other items
+    // If the panel is in add-folder-mode, reset it when double-clicking on other items
     if (isAddingNewFolder) {
       setAddingNewFolder(false);
     }
-  }, [setActivePortfolioItem, activePortfolioItem, isAddingNewFolder]);
+  }, [isRenaming, portfolioItem, openPortfolioItem, setActivePortfolioItem, isAddingNewFolder, setAddingNewFolder]);
 
   return (
     <div
@@ -99,17 +94,7 @@ const PortfolioItem = forwardRef(({
           'hover': isHovered && !isActive,
         })}
         tabIndex={0}
-        onKeyDown={(e) => e.key === 'Enter' && onSingleClick()}
-        onClick={onSingleClick}
-        onDoubleClick={async () => {
-          const extensionRegExp = /(?:\.([^.?]+))?$/;
-          const extension = extensionRegExp.exec(portfolioItem.name)[1];
-          const isOpenableFile = ['pdf', 'doc', 'docx', 'xod'].includes(extension);
-          if (isOpenableFile) {
-            dispatch(enableMultiTab());
-            dispatch(actions.addPortfolioTab(portfolioItem));
-          }
-        }}
+        onDoubleClick={onDoubleClick}
       >
         <div
           className={classNames({
@@ -131,9 +116,7 @@ const PortfolioItem = forwardRef(({
         </div>
 
         <PortfolioItemContent
-          name={portfolioItem.name}
-          id={portfolioItem.id}
-          isFolder={portfolioItem.isFolder}
+          portfolioItem={portfolioItem}
           isPortfolioRenaming={isRenaming}
           setPortfolioRenaming={setIsRenaming}
           setIsHovered={setHovered}
@@ -271,6 +254,7 @@ const PortfolioItemNested = DropTarget(
       dragSourceNode: dragSourceContainer.getNode(),
       dropLocation: DropLocation.INITIAL,
     }),
+    canDrag: () => false, // remove this to have dragging enabled
   },
   (connect, dragSourceState) => ({
     connectDragSource: connect.dragSource(),

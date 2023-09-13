@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -15,17 +15,16 @@ import CustomElement from 'components/CustomElement';
 import ResizeBar from 'components/ResizeBar';
 import Icon from 'components/Icon';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
+import LeftPanelPageTabs from 'components/LeftPanelPageTabs';
 
 import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import { isMobileSize, isTabletAndMobileSize } from 'helpers/getDeviceSize';
-import { getFileAttachments } from 'helpers/getFileAttachments';
 import { isIE } from 'helpers/device';
+import DataElements from 'constants/dataElement';
 
 import './LeftPanel.scss';
-import LeftPanelPageTabs from 'components/LeftPanelPageTabs';
-import DataElements from 'constants/dataElement';
 
 const LeftPanel = () => {
   const isMobile = isMobileSize();
@@ -53,6 +52,7 @@ const LeftPanel = () => {
     featureFlags,
     topHeadersHeight,
     bottomHeadersHeight,
+    portfolioFiles,
   ] = useSelector(
     (state) => [
       selectors.getCurrentToolbarGroup(state),
@@ -75,6 +75,7 @@ const LeftPanel = () => {
       selectors.getFeatureFlags(state),
       selectors.getTopHeadersHeight(state),
       selectors.getBottomHeadersHeight(state),
+      selectors.getPortfolio(state),
     ],
     shallowEqual,
   );
@@ -82,7 +83,6 @@ const LeftPanel = () => {
   const minWidth = 264;
   const dispatch = useDispatch();
   const [t] = useTranslation();
-  const [portfolioFiles, setPortfolioFiles] = useState([]);
 
   const onDrop = (e) => {
     // this is mainly for the thumbnail panel, to prevent the broswer from loading a document that dropped in
@@ -102,35 +102,6 @@ const LeftPanel = () => {
   }
 
   const isVisible = !(!isOpen || isDisabled);
-
-
-  useEffect(() => {
-    const onDocumentLoaded = async () => {
-      if (core.isFullPDFEnabled()) {
-        let id = 0;
-        const attachments = await getFileAttachments();
-
-        const { embeddedFiles } = attachments;
-        const portfolioFiles = embeddedFiles.map(({ filename, blob }) => {
-          id += 1;
-          return {
-            id: id.toString(),
-            name: filename,
-            isFolder: false,
-            getNestedLevel: () => 0,
-            children: [],
-            blob: blob,
-          };
-        });
-        setPortfolioFiles(portfolioFiles);
-      }
-    };
-    core.addEventListener('documentLoaded', onDocumentLoaded);
-
-    return () => {
-      core.removeEventListener('documentLoaded', onDocumentLoaded);
-    };
-  }, []);
 
   useEffect(() => {
     if (isBookmarkPanelEnabled) {
@@ -209,12 +180,12 @@ const LeftPanel = () => {
         <div className="left-panel-header">
           {isThumbnailSelectingPages ?
             <LeftPanelPageTabs /> :
-            <LeftPanelTabs />}
+            <LeftPanelTabs showPortfolio={portfolioFiles.length > 0} />}
         </div>
         {activePanel === DataElements.PORTFOLIO_PANEL
           && core.isFullPDFEnabled()
           && portfolioFiles.length > 0
-          && <PortfolioPanel portfolioFiles={portfolioFiles} />}
+          && <PortfolioPanel />}
         {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel />}
         {activePanel === 'outlinesPanel' && <OutlinesPanel />}
         {activePanel === 'bookmarksPanel' && <BookmarksPanel />}

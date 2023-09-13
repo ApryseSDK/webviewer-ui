@@ -117,6 +117,8 @@
     "formFillCheckmark": "Галочка",
     "formFillCross": "Крест",
     "distanceMeasurement": "Дистанция",
+    "rectangularAreaMeasurement": "Прямоугольная площадь",
+    "ellipseMeasurement": "Площадь эллипса",
     "countMeasurement": "Измерение счета",
     "ellipse": "Эллипс",
     "eraser": "ластик",
@@ -137,6 +139,7 @@
     "redact": "Редактировать",
     "formFillDot": "Точка",
     "signature": "Подпись",
+    "snipping": "Инструмент обрезки",
     "squiggly": "Волнистая линия",
     "stamp": "Штамп",
     "stickyNote": "Комментировать",
@@ -1039,6 +1042,18 @@
       "cancelMessage": "Вы уверены, что хотите отменить обрезку всех выбранных страниц?"
     }
   },
+  "snippingPopUp": {
+    "title": "Инструмент обрезки",
+    "clipboard": "Копировать в буфер обмена",
+    "download": "Скачать",
+    "cropAndRemove": "Обрезать и Удалить",
+    "snippingModal": {
+      "applyTitle": "Применить обрезку?",
+      "applyMessage": "Это действие окончательно обрежет указанную область и удалит другие страницы. Это нельзя отменить.",
+      "cancelTitle": "Отменить обрезку?",
+      "cancelMessage": "Вы уверены, что хотите прекратить обрезку?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Параграф",
     "text": "Текст"
@@ -1081,13 +1096,25 @@
     "watermarkOptions": "Параметры водяного знака",
     "watermarks": "Водяные знаки"
   },
-  "portfolioPanel": {
+  "portfolio": {
+    "createPDFPortfolio": "Создать PDF-портфолио",
+    "uploadFiles": "Загрузить файлы",
+    "uploadFolder": "Загрузить папку",
+    "addFiles": "Добавить файлы",
+    "addFile": "Добавить файл",
+    "addFolder": "Добавить папку",
+    "createFolder": "Создать папку",
     "portfolioPanelTitle": "PDF-портфолио",
-    "portfolioAddFile": "Добавить файл",
-    "portfolioAddFolder": "Добавить папку",
-    "portfolioCreateFolder": "Создать папку",
     "portfolioNewFolder": "Новая папка",
-    "portfolioNewFolderPlaceholder": "Имя папки"
+    "portfolioFolderPlaceholder": "Имя папки",
+    "portfolioFilePlaceholder": "Имя файла",
+    "folderNameAlreadyExists": "Имя папки уже существует",
+    "fileNameAlreadyExists": "Имя файла уже существует",
+    "openFile": "Открыть в новой вкладке",
+    "fileAlreadyExists": "Файл уже существует",
+    "fileAlreadyExistsMessage": "Файл \"{{fileName}}\" уже существует в портфолио.",
+    "deletePortfolio": "Вы уверены, что хотите удалить \"{{fileName}}\"?",
+    "reselect": "Выберите повторно"
   },
   "languageModal": {
     "selectLanguage": "Выбрать язык"
@@ -1192,13 +1219,6 @@
     "save": "Сохранить файл",
     "pageError": "Недопустимая страница. Допустимые диапазоны страниц: от 1 до",
     "fileNameCannotBeEmpty": "Имя файла не может быть пустым"
-  },
-  "portfolio": {
-    "createPDFPortfolio": "Создать PDF-портфолио",
-    "uploadFiles": "Загрузить файлы",
-    "uploadFolder": "Загрузить папку",
-    "addFiles": "Добавить файлы",
-    "addFolder": "Добавить папку"
   },
   "filePicker": {
     "dragAndDrop": "Перетащите файл сюда",

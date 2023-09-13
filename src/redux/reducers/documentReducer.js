@@ -34,6 +34,8 @@ export default (initialState) => (state = initialState, action) => {
 
       return { ...state, bookmarks: newBookmarks };
     }
+    case 'SET_PORTFOLIO':
+      return { ...state, portfolio: payload.portfolio };
     case 'SET_LAYERS':
       return { ...state, layers: payload.layers };
     case 'SET_PASSWORD_ATTEMPTS':

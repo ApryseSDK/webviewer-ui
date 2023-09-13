@@ -17,7 +17,7 @@ module.exports = {
     // 'PRODUCTION' is used when building the static version of storybook.
 
     const svgRule = config.module.rules.find((rule) => 'test.svg'.match(rule.test));
-    svgRule.exclude = [ appDirectory ];
+    svgRule.exclude = [appDirectory];
 
     config.module.rules.push({
       test: /\.scss$/,
