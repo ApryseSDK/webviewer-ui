@@ -15,6 +15,7 @@ const propTypes = {
   items: PropTypes.array,
   images: PropTypes.array,
   width: PropTypes.number,
+  columns: PropTypes.number,
   currentSelectionKey: PropTypes.string,
   translationPrefix: PropTypes.string,
   getTranslationLabel: PropTypes.func,
@@ -35,6 +36,7 @@ function Dropdown({
   items = [],
   images = [],
   width = DEFAULT_WIDTH,
+  columns = 1,
   currentSelectionKey,
   translationPrefix,
   getTranslationLabel,
@@ -86,7 +88,7 @@ function Dropdown({
     if (overlayRect && buttonRect.bottom + overlayRect.height > window.innerHeight) {
       overlayRef.current.style.top = `-${overlayRect.height}px`;
     } else {
-      overlayRef.current.style.top = 0;
+      overlayRef.current.style.top = '28px';
     }
   }, [hasInput, isOpen, disabled]);
 
@@ -326,13 +328,52 @@ function Dropdown({
         style={maxHeight ? scrollItemsStyle : undefined}
       >
         {dropdownItems.length > 0 ?
-          dropdownItems :
-          <div className="Dropdown__item">{t('message.noResults')}</div>
+          (columns > 1 ?
+            displayDropdownAsList(dropdownItems, columns)
+            : dropdownItems
+          ) :
+          <>
+            <button data-testid="sig-no-result" className="Dropdown__item">{t('message.noResults')}</button>
+          </>
         }
       </div>
     </DataElementWrapper>
   );
 }
+
+const displayDropdownAsList = (items, columns) => {
+  const table = [];
+  let row = [];
+
+  items.forEach((item, index) => {
+    if (index % columns === 0 && row.length > 0) {
+      table.push(
+        <tr key={`row-${index}`}>
+          {row}
+        </tr>
+      );
+      row = [];
+    }
+
+    row.push(<td key={index} >{item}</td>);
+  });
+
+  if (row.length > 0) {
+    table.push(
+      <tr key={`row-${items.length + 1}`}>
+        {row}
+      </tr>
+    );
+  }
+
+  return (
+    <table>
+      <tbody>
+        {table}
+      </tbody>
+    </table>
+  );
+};
 
 const getImageIndexFromKey = (imageArray, key) => {
   if (!imageArray || imageArray.length === 0) {

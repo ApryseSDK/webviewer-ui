@@ -13,8 +13,10 @@ document.getElementById('root').className = 'App';
 function noop() {
 }
 
-let rectAnnot;
-let freeTextAnnot;
+// Some helpful mocked annotations
+let rectangle;
+let freeText;
+let distanceMeasurement;
 
 let docType = 'PDF';
 window.setDocType = (type) => {
@@ -46,6 +48,13 @@ const mockTool = {
   clearInitialsCanvas: noop,
   setStyles: noop,
   finish: noop,
+  getIsCropping: () => false,
+  getIsSnipping: () => false,
+  setSnippingMode: noop,
+  getPagesToCrop: noop,
+  setCropMode: noop,
+  addEventListener: noop,
+  removeEventListener: noop,
 };
 
 const mockAnnotationManager = {
@@ -63,8 +72,9 @@ const mockAnnotationManager = {
   getCurrentUser: noop,
   getSelectedAnnotations: () => [],
   getAnnotationsList: () => ([
-    rectAnnot,
-    freeTextAnnot
+    rectangle,
+    freeText,
+    distanceMeasurement,
   ]),
   addEventListener: noop,
   removeEventListener: noop,
@@ -73,6 +83,9 @@ const mockAnnotationManager = {
   canModify: () => true,
   setNoteContents: () => '',
   trigger: noop,
+  hideAnnotations: noop,
+  isCreateRedactionEnabled: noop,
+  disableRedaction: noop,
 };
 
 const mockFormFieldCreationManager = {
@@ -90,6 +103,8 @@ const mockDocument = {
   getFilename: () => 'test',
   loadCanvas: noop,
   getBookmarks: () => new Promise((res, rej) => res),
+  getViewerCoordinates: () => ({ x: 0, y: 0 }),
+  setLayersArray: noop,
 };
 
 const mockDisplayModeManager = {
@@ -118,6 +133,20 @@ const mockDocumentViewer = {
   getToolModeMap: () => ({}),
   getWatermark: () => Promise.resolve(),
   getDisplayModeManager: () => mockDisplayModeManager,
+  getContentEditHistoryManager: () => ({
+    canUndo: noop,
+    canRedo: noop,
+  }),
+  getViewerElement: noop,
+  scrollViewUpdated: noop,
+  setBookmarkShortcutToggleOnFunction: noop,
+  setBookmarkShortcutToggleOffFunction: noop,
+  setUserBookmarks: noop,
+  getToolMode: noop,
+  getAnnotationsLoadedPromise: () => Promise.resolve(),
+  getDisplayModeManager: noop,
+  refreshAll: noop,
+  updateView: noop
 };
 
 core.getTool = () => mockTool;
@@ -131,6 +160,16 @@ core.getDocumentViewers = () => [mockDocumentViewer];
 core.getDisplayAuthor = (author) => author ? author : 'Duncan Idaho';
 core.getAnnotationManager = () => mockAnnotationManager;
 core.getCurrentPage = () => 1;
+core.setScrollViewElement = noop;
+core.setViewerElement = noop;
+core.getScrollViewElement = () => ({
+  scrollTop: 0,
+  addEventListener: noop,
+  removeEventListener: noop,
+});
+core.getContentEditManager = () => ({
+  isInContentEditMode: () => false,
+});
 
 window.Core = {
   documentViewer: mockDocumentViewer,
@@ -148,8 +187,16 @@ window.Core = {
         INITIALS: 'initialsSignature'
       },
     },
+    CropPage: {
+      getIsCropping: () => false,
+    }
   },
-  getHashParameter: () => false,
+  getHashParameter: (hashParameter, defaultValue) => {
+    if (hashParameter === 'a') {
+      return true;
+    }
+    return defaultValue;
+  },
   SupportedFileFormats: {
     CLIENT: [],
   },
@@ -170,7 +217,23 @@ window.Core = {
       getScaleRatioAsArray: () => [[1, 'in'], [1, 'in']],
       isValid: () => true
     }
-  }
+  },
+  Document: {
+    OfficeEditorListStylePresets: {
+      '0': 'BULLET',
+      '1': 'BULLET_SQUARE',
+      '2': 'SQUARE_BULLET',
+      '3': 'DIAMOND',
+      '4': 'CHECK',
+      '5': 'ARROW',
+      '6': 'NUMBER_LATIN_ROMAN_1',
+      '7': 'NUMBER_DECIMAL',
+      '8': 'NUMBER_LATIN_ROMAN_2',
+      '10': 'LATIN_ROMAN',
+      '11': 'ROMAN_LATIN_NUMBER'
+    }
+  },
+  setBasePath: noop,
 };
 
 const DEFAULT_PAGE_HEIGHT = 792;
@@ -202,6 +265,8 @@ window.documentViewer = {
 // For an example of the preferred mocking method refer to RedactionPageGroup.stories.js
 class MockAnnotation {
   isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
+  static datePickerOptions = {};
 }
 
 class MockLineAnnotation {
@@ -221,15 +286,18 @@ class MockFreeTextAnnotation {
   getIntent = () => 'FreeText';
   getRichTextStyle = () => null;
   isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
   setLineStyle = () => { };
 };
 
 class MockRectangleAnnotation {
   isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
 }
 
 class MockEllipseAnnotation {
   getIntent = () => 'EllipseDimension';
+  getCustomData = () => '';
 }
 
 window.Core.Annotations = {
@@ -258,7 +326,11 @@ window.Core.Annotations = {
   Link: MockAnnotation,
   CaretAnnotation: MockAnnotation,
   CustomAnnotation: MockAnnotation,
-  SignatureWidgetAnnotation: MockAnnotation
+  SignatureWidgetAnnotation: MockAnnotation,
+  DatePickerWidgetAnnotation: MockAnnotation,
+  Forms: {
+    Field: MockAnnotation,
+  }
 }
 
 const colorToHexString = (color) => {
@@ -318,13 +390,19 @@ export const decorators = [
   I18nDecorator,
 ];
 
-rectAnnot = new window.Core.Annotations.RectangleAnnotation();
-rectAnnot.Author = 'Guest_1';
-rectAnnot.getStatus = () => null;
-rectAnnot.getCustomData = () => '';
-rectAnnot.StrokeColor = new window.Core.Annotations.Color(255, 0, 0);
+rectangle = new window.Core.Annotations.RectangleAnnotation();
+rectangle.Author = 'Guest_1';
+rectangle.getStatus = () => null;
+rectangle.getCustomData = () => '';
+rectangle.StrokeColor = new window.Core.Annotations.Color(255, 0, 0);
 
-freeTextAnnot = new window.Core.Annotations.FreeTextAnnotation();
-freeTextAnnot.Author = 'Guest_2';
-freeTextAnnot.getStatus = () => null;
-freeTextAnnot.TextColor = new window.Core.Annotations.Color(0, 255, 0);
+freeText = new window.Core.Annotations.FreeTextAnnotation();
+freeText.Author = 'Guest_2';
+freeText.getStatus = () => null;
+freeText.TextColor = new window.Core.Annotations.Color(0, 255, 0);
+
+distanceMeasurement = new window.Core.Annotations.LineAnnotation();
+distanceMeasurement.IT = 'LineDimension';
+distanceMeasurement.getStatus = () => null;
+distanceMeasurement.StrokeColor = new window.Core.Annotations.Color(255, 0, 0);
+distanceMeasurement.Measure = {};

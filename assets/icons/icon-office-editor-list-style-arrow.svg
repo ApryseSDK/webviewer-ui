@@ -1,0 +1,15 @@
+<svg width="60" height="74" viewBox="0 0 60 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14.7333 12.9651L11.4 10.3937C11.2352 10.2666 11 10.3875 11 10.5994V15.7423C11 15.9542 11.2352 16.0751 11.4 15.948L14.7333 13.3765C14.8667 13.2737 14.8667 13.068 14.7333 12.9651Z" fill="#485056"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11 14.1994H7V12.1423H11V14.1994Z" fill="#485056"/>
+<line x1="18.8334" y1="13.1709" x2="52" y2="13.1709" stroke="#868E96" stroke-width="2"/>
+<circle cx="21" cy="25" r="3" fill="#485056"/>
+<line x1="28" y1="25" x2="52" y2="25" stroke="#868E96" stroke-width="2"/>
+<circle cx="21" cy="37" r="3" fill="#485056"/>
+<line x1="28" y1="37" x2="52" y2="37" stroke="#868E96" stroke-width="2"/>
+<circle cx="31" cy="49" r="2.75" stroke="#485056" stroke-width="0.5"/>
+<line x1="38" y1="49" x2="52" y2="49" stroke="#868E96" stroke-width="2"/>
+<path d="M14.7333 60.6233L11.4 58.0519C11.2352 57.9248 11 58.0457 11 58.2576V63.4005C11 63.6124 11.2352 63.7333 11.4 63.6062L14.7333 61.0348C14.8667 60.9319 14.8667 60.7262 14.7333 60.6233Z" fill="#485056"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11 61.8576H7V59.8005H11V61.8576Z" fill="#485056"/>
+<line x1="18.8334" y1="60.8291" x2="52" y2="60.8291" stroke="#868E96" stroke-width="2"/>
+<rect x="0.5" y="0.5" width="59" height="73" stroke="#ADB5BD" style="fill: none;"/>
+</svg>

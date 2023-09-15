@@ -1,0 +1,106 @@
+@import '../../constants/styles';
+
+.MainHeader.OfficeEditorTools {
+  padding: 0 8px;
+  align-items: center;
+  flex-direction: row;
+
+  .HeaderItems {
+    width: auto;
+
+    .Dropdown {
+      &.small-dropdown {
+        width: 80px !important;
+      }
+
+      &.large-dropdown {
+        width: 160px !important;
+      }
+
+      margin-left: 8px;
+
+      .picked-option {
+        text-align: left;
+      }
+    }
+
+    .line-spacing-dropdown {
+      .Dropdown__items {
+        top: 40px;
+      }
+    }
+
+    .action-button-wrapper {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      .more-tools {
+        position: absolute;
+        top: 46px;
+        right: 6px;
+        width: auto;
+        padding: 0;
+      }
+    }
+  }
+
+  .Button .Icon svg {
+    vertical-align: middle;
+  }
+
+  .list-style-button {
+    margin-right: 0px !important;
+  }
+  
+  .list-style-dropdown {
+    background: transparent;
+    border: none;
+    width: 12px !important;
+    height: 32px !important;
+    margin-left: 0px !important;
+    z-index: 0;
+  
+    &.Dropdown__wrapper:hover {
+      border-radius: 4px;
+      background: var(--tools-button-hover);
+    }
+    
+    .Dropdown{
+      padding: 0px;
+  
+      svg {
+        rect {
+          stroke: none;
+        }
+      }
+    }
+  
+    .picked-option-text{
+      display: none;
+    }
+  
+    .arrow{
+      padding-left: 0px;
+    }
+  
+    .Dropdown__items {
+      overflow: hidden;
+  
+      $button-height: 74px;
+      $button-width: 60px;
+  
+      .Dropdown__item {
+        height: $button-height !important;
+        padding: 15px 0px;
+        margin: 3px;
+        cursor: pointer;
+
+        .officeEditor-list-style-icon {
+          width: $button-width !important;
+          height: $button-height !important;
+        }
+      }
+    }
+  }
+}

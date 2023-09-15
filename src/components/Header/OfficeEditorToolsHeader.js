@@ -4,18 +4,22 @@ import Dropdown from 'components/Dropdown';
 import ActionButton from 'components/ActionButton';
 import ToggleElementButton from 'components/ToggleElementButton';
 import DataElementWrapper from 'components/DataElementWrapper';
+import OfficeEditorImageFilePickerHandler from 'components/OfficeEditorImageFilePickerHandler';
 import DataElement from 'constants/dataElement';
 import actions from 'actions';
 import core from 'core';
 import selectors from 'selectors';
 import ColorPickerOverlay from 'components/ColorPickerOverlay';
 import { rgbaToHex } from 'src/helpers/color';
+import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
 import Theme from 'src/constants/theme';
 import {
   LINE_SPACING_OPTIONS,
   JUSTIFICATION_OPTIONS,
   LIST_OPTIONS,
   DEFAULT_POINT_SIZE,
+  OFFICE_BULLET_OPTIONS,
+  OFFICE_NUMBER_OPTIONS
 } from 'src/constants/officeEditor';
 import Measure from 'react-measure';
 
@@ -213,6 +217,18 @@ const JustificationOptions = ({ justification }) => {
 };
 
 const ListOptions = ({ listType }) => {
+  const bulletListObjects = OFFICE_BULLET_OPTIONS.map((options) => ({
+    className: 'officeEditor-list-style-icon',
+    key: options.enum,
+    src: options.img
+  }));
+
+  const numberListOptions = OFFICE_NUMBER_OPTIONS.map((options) => ({
+    className: 'officeEditor-list-style-icon',
+    key: options.enum,
+    src: options.img
+  }));
+
   return (
     <>
       <ActionButton
@@ -220,20 +236,56 @@ const ListOptions = ({ listType }) => {
         dataElement='office-editor-bullet-list'
         title='officeEditor.bulletList'
         img='icon-office-editor-bullet-list'
+        className='list-style-button'
         onClick={() => {
           core.getOfficeEditor().toggleListSelection(LIST_OPTIONS.Unordered);
-
           focusContent();
         }}
+      />
+      <Dropdown
+        dataElement='office-editor-bullet-list-dropdown'
+        images={bulletListObjects}
+        columns={3}
+        onClickItem={(val) => {
+          core.getOfficeEditor().setListPreset(val);
+        }}
+        className={'list-style-dropdown'}
       />
       <ActionButton
         isActive={listType === LIST_OPTIONS.Ordered}
         dataElement='office-editor-number-list'
         title='officeEditor.numberList'
         img='icon-office-number-list'
+        className='list-style-button'
         onClick={() => {
           core.getOfficeEditor().toggleListSelection(LIST_OPTIONS.Ordered);
-
+          focusContent();
+        }}
+      />
+      <Dropdown
+        dataElement='office-editor-number-list-dropdown'
+        images={numberListOptions}
+        columns={3}
+        onClickItem={(val) => {
+          core.getOfficeEditor().setListPreset(val);
+        }}
+        className={'list-style-dropdown'}
+      />
+      <ActionButton
+        dataElement='office-editor-decrease-indent'
+        title='officeEditor.decreaseIndent'
+        img='ic-indent-decrease'
+        onClick={async () => {
+          await core.getOfficeEditor().decreaseIndent();
+          focusContent();
+        }}
+      />
+      <ActionButton
+        dataElement='office-editor-increase-indent'
+        title='officeEditor.increaseIndent'
+        img='ic-indent-increase'
+        onClick={async () => {
+          await core.getOfficeEditor().increaseIndent();
           focusContent();
         }}
       />
@@ -250,6 +302,7 @@ const OfficeEditorToolsHeader = () => {
     availableFontFaces,
     activeTheme,
     cssFontValues,
+    isInsertImageDisabled,
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElement.OFFICE_EDITOR_TOOLS_HEADER),
@@ -258,6 +311,7 @@ const OfficeEditorToolsHeader = () => {
       selectors.getAvailableFontFaces(state),
       selectors.getActiveTheme(state),
       selectors.getCSSFontValues(state),
+      selectors.isElementDisabled(state, DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE),
     ],
     shallowEqual
   );
@@ -316,8 +370,9 @@ const OfficeEditorToolsHeader = () => {
     }
   }, [containerWidth, initialHeaderWidth]);
 
-  const calculateLineSpacing = (lineHeight, fontSize) => {
-    const lineSpacing = lineHeight / fontSize;
+  const calculateLineSpacing = (lineHeightMultiplier, lineHeight, fontSize) => {
+    // if lineHeight is provided, it takes precedence, because the rule sets the line height in points (either exact or at least)
+    const lineSpacing = lineHeight ? lineHeight / fontSize : lineHeightMultiplier;
 
     // Sometimes we get floating points so we locate the closest line spacing option
     const roundedLineSpacing = Object.values(LINE_SPACING_OPTIONS).reduce((a, b) => {
@@ -353,6 +408,7 @@ const OfficeEditorToolsHeader = () => {
   const pointSizeSelectionKey = pointSize === undefined ? undefined : pointSize.toString();
   const justification = isTextSelected ? selectionProperties.justification : cursorProperties.justification;
   const lineHeight = calculateLineSpacing(
+    isTextSelected ? selectionProperties.lineHeightMultiplier : cursorProperties.lineHeightMultiplier,
     isTextSelected ? selectionProperties.lineHeight : cursorProperties.lineHeight,
     cursorProperties.fontPointSize || DEFAULT_POINT_SIZE,
   );
@@ -575,9 +631,11 @@ const OfficeEditorToolsHeader = () => {
                     items={Object.keys(LINE_SPACING_OPTIONS)}
                     onClickItem={(lineSpacingOption) => {
                       const lineSpacing = LINE_SPACING_OPTIONS[lineSpacingOption];
-                      const lineHeight = lineSpacing * (cursorProperties.pointSize || DEFAULT_POINT_SIZE);
                       core.getOfficeEditor().updateParagraphStyle({
-                        lineSpacing: lineHeight
+                        'lineHeightMultiplier': lineSpacing
+                      });
+                      core.getOfficeEditor().setCursorStyle({
+                        lineHeight,
                       });
 
                       // focus so that after clicking you can still input text
@@ -596,6 +654,19 @@ const OfficeEditorToolsHeader = () => {
                       />
                     )}
                   />
+                  {!isInsertImageDisabled && (
+                    <>
+                      <div className="divider" />
+                      <ActionButton
+                        className="tool-group-button"
+                        dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE}
+                        title='officeEditor.insertImage'
+                        img='icon-tool-image-line'
+                        onClick={openOfficeEditorFilePicker}
+                      />
+                      <OfficeEditorImageFilePickerHandler />
+                    </>
+                  )}
                   {(visibleGroupCount === 6) && (
                     <>
                       <div className="divider" />
@@ -615,7 +686,7 @@ const OfficeEditorToolsHeader = () => {
                           onClick={() => setShowMoreTools(!showMoreTools)}
                         />
                         {showMoreTools && (
-                          <div className="more-tools Header Tools OfficeEditorTools">
+                          <div className="more-tools MainHeader Tools OfficeEditorTools">
                             <div className="HeaderItems">
                               {(visibleGroupCount < 4) && (
                                 <>
