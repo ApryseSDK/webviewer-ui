@@ -7,7 +7,7 @@ import selectors from 'selectors';
 
 // a higher order function that creates the enableTools and disableTools APIs
 export default (enable, store) => (
-  toolNames = getAnnotationCreateToolNames(),
+  toolNames,
 ) => {
   const map = {
     AnnotationCreateTextUnderline: 'textUnderlineToolButton',
@@ -16,14 +16,26 @@ export default (enable, store) => (
     AnnotationCreateTextStrikeout: 'textStrikeoutToolButton',
   };
 
+  let emptyArgument = false;
+
+  if (toolNames === undefined) {
+    toolNames = getAnnotationCreateToolNames();
+    emptyArgument = true;
+  }
+
   const toolNameArray = typeof toolNames === 'string' ? [toolNames] : toolNames;
   const dataElements = selectors.getToolButtonDataElements(
     store.getState(),
     toolNameArray,
   );
 
+  // if the argument is empty, disable the forms group to prevent the user from re-enabling all tools
+  if (emptyArgument) {
+    dataElements.push('toolbarGroup-Forms');
+  }
+
   // for the tool names in the map, enable/disable other related buttons
-  Object.keys(map).forEach(toolName => {
+  Object.keys(map).forEach((toolName) => {
     if (toolNameArray.indexOf(toolName) !== -1) {
       dataElements.push(map[toolName]);
     }
@@ -35,14 +47,14 @@ export default (enable, store) => (
   }
 
   if (enable) {
-    toolNameArray.forEach(toolName => {
-      hotkeys.on(toolName);
+    toolNameArray.forEach((toolName) => {
+      toolName && hotkeys.on(toolName);
     });
 
     store.dispatch(actions.enableElements(dataElements, PRIORITY_TWO));
   } else {
-    toolNameArray.forEach(toolName => {
-      hotkeys.off(toolName);
+    toolNameArray.forEach((toolName) => {
+      toolName && hotkeys.off(toolName);
     });
 
     store.dispatch(actions.disableElements(dataElements, PRIORITY_TWO));
