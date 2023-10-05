@@ -24,6 +24,14 @@ const initialState = {
     sortStrategy: 'position',
     disabledElements: {},
     customElementOverrides: {},
+    annotationFilters: {
+      isDocumentFilterActive: false,
+      includeReplies: true,
+      authorFilter: [],
+      colorFilter: [],
+      typeFilter: [],
+      statusFilter: []
+    },
   }
 };
 

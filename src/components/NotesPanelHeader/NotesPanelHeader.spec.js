@@ -17,6 +17,14 @@ const initialState = {
     customElementOverrides: {}, // Need to define customElementOverrides otherwise component will fail to render.
     disabledElements: {},
     isNotesPanelMultiSelectEnabled: true,
+    annotationFilters: {
+      isDocumentFilterActive: false,
+      includeReplies: true,
+      authorFilter: [],
+      colorFilter: [],
+      typeFilter: [],
+      statusFilter: []
+    },
   }
 };
 

@@ -31,12 +31,14 @@ function NotesPanelHeader({
   const [
     sortStrategy,
     isSortContainerDisabled,
-    customHeaderOptions
+    customHeaderOptions,
+    annotationFilters,
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
       selectors.isElementDisabled(state, SORT_CONTAINER_ELEMENT),
-      selectors.getNotesPanelCustomHeaderOptions(state)
+      selectors.getNotesPanelCustomHeaderOptions(state),
+      selectors.getAnnotationFilters(state)
     ],
     shallowEqual
   );
@@ -46,6 +48,12 @@ function NotesPanelHeader({
   const [filterEnabled, setFilterEnabled] = useState(false);
 
   useEffect(() => {
+    // check if Redux filter state is enabled on mount and set filterEnabled to true
+    const { authorFilter, colorFilter, statusFilter, typeFilter } = annotationFilters;
+    if (authorFilter?.length > 0 || colorFilter?.length > 0 || statusFilter?.length > 0 || typeFilter?.length > 0) {
+      setFilterEnabled(true);
+    }
+
     const toggleFilterStyle = (e) => {
       const { types, authors, colors, statuses } = e.detail;
       if (types.length > 0 || authors.length > 0 || colors.length > 0 || statuses.length > 0) {
