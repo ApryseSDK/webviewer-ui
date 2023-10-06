@@ -170,14 +170,10 @@ export default function useOnAnnotationPopupOpen() {
       if (focusedAnnotation) {
         const annotUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
 
-        if (!annotUnderMouse) {
-          closePopup();
-        }
-
         const shouldShowPopup =
           !isRightClickAnnotationPopupEnabled
           && annotUnderMouse === focusedAnnotation
-          && !isInContentEditFocusMode(annotUnderMouse);
+          && !isInContentEditFocusMode(focusedAnnotation);
         if (shouldShowPopup) {
           openPopup();
         }
