@@ -36,6 +36,7 @@ export default {
     initalsOffset: 0,
     isInitialsModeEnabled: false,
     isMultiViewerMode: false,
+    isMultiViewerReady: false,
     multiViewerSyncScrollMode: SYNC_MODES.SKIP_UNMATCHED,
     syncViewer: null,
     isCompareStarted: false,
@@ -68,8 +69,7 @@ export default {
       [DataElements.CALIBRATION_POPUP_BUTTON]: { disabled: true, priorty: 2 },
       [DataElements.LEGACY_RICH_TEXT_POPUP]: { disabled: true, priority: 2 },
       [DataElements.LOGO_BAR]: { disabled: true, priority: 2 },
-      [DataElements.PORTFOLIO_PANEL_BUTTON]: { disabled: true, priority: 2 },
-      [DataElements.CREATE_PORTFOLIO_BUTTON]: { disabled: true, priority: 2 },
+      [DataElements.OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE]: { disabled: true, priority: 2 },
     },
     selectedScale: initialScale,
     isAddingNewScale: false,
@@ -557,6 +557,12 @@ export default {
           toolGroup: 'cropTools',
           dataElement: 'cropToolGroupButton',
           title: 'annotation.crop',
+        },
+        {
+          type: 'toolGroupButton',
+          toolGroup: 'snippingTools',
+          dataElement: 'snippingToolGroupButton',
+          title: 'annotation.snipping',
         },
         {
           type: 'toolGroupButton',
@@ -1652,6 +1658,13 @@ export default {
         showColor: 'never',
         group: 'cropTools',
       },
+      SnippingTool: {
+        dataElement: 'snippingToolButton',
+        title: 'annotation.snipping',
+        img: 'ic_snipping_black_24px',
+        showColor: 'never',
+        group: 'snippingTools',
+      },
       ContentEditTool: {
         dataElement: 'contentEditToolButton',
         title: 'action.edit',
@@ -1970,6 +1983,7 @@ export default {
     shouldResetAudioPlaybackPosition: false,
     activeSoundAnnotation: null,
     shouldShowApplyCropWarning: true,
+    shouldShowApplySnippingWarning: true,
     presetCropDimensions,
     presetNewPageDimensions,
     dateTimeFormats: defaultDateTimeFormats,
@@ -2027,18 +2041,23 @@ export default {
     activeGroupedItems: [],
     fixedGroupedItems: [],
     modularHeadersHeight: {
-      topHeaders: 40,
-      bottomHeaders: 40
+      topHeaders: 32,
+      bottomHeaders: 32
     },
     modularHeadersWidth: {
       rightHeader: 0,
       leftHeader: 0
+    },
+    floatingContainersDimensions: {
+      topFloatingContainerHeight: 0,
+      bottomFloatingContainerHeight: 0,
     },
     toolDefaultStyleUpdateFromAnnotationPopupEnabled: true,
     shortcutKeyMap: { ...ShortcutKeys },
     flyoutMap: {},
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: null,
+    flyoutToggleElement: null,
     textSignatureCanvasMultiplier: 1,
   },
   search: {

@@ -5,13 +5,6 @@ export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'UPDATE_FLYOUT':
-      return {
-        ...state,
-        flyoutMap: {
-          [payload.dataElement]: payload.flyout
-        }
-      };
     case 'SET_ACTIVE_FLYOUT':
       return {
         ...state,
@@ -25,6 +18,7 @@ export default (initialState) => (state = initialState, action) => {
         flyoutMap,
       };
     case 'ADD_FLYOUT':
+    case 'UPDATE_FLYOUT':
       return {
         ...state,
         flyoutMap: {
@@ -36,6 +30,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         flyoutPosition: payload.newPosition,
+      };
+    case 'SET_FLYOUT_TOGGLE_ELEMENT':
+      return {
+        ...state,
+        flyoutToggleElement: payload.toggleElement,
       };
     case 'SET_INITIALS_OFFSET':
       return {
@@ -83,6 +82,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         activeDocumentViewerKey: payload.activeDocumentViewerKey,
       };
+    case 'SET_IS_MULTI_VIEWER_READY':
+      return {
+        ...state,
+        isMultiViewerReady: payload.isMultiViewerReady,
+      };
     case 'SET_IS_MULTI_VIEWER_MODE':
       return {
         ...state,
@@ -92,6 +96,11 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         shouldShowApplyCropWarning: payload.shouldShowApplyCropWarning,
+      };
+    case 'SHOW_APPLY_SNIPPING_WARNING':
+      return {
+        ...state,
+        shouldShowApplySnippingWarning: payload.shouldShowApplySnippingWarning,
       };
     case 'SET_PRESET_CROP_DIMENSIONS':
       return {
@@ -640,17 +649,28 @@ export default (initialState) => (state = initialState, action) => {
           leftHeader: payload,
         }
       };
+    case 'SET_TOP_FLOATING_CONTAINER_HEIGHT':
+      return {
+        ...state,
+        floatingContainersDimensions: {
+          ...state.floatingContainersDimensions,
+          topFloatingContainerHeight: payload,
+        }
+      };
+    case 'SET_BOTTOM_FLOATING_CONTAINER_HEIGHT':
+      return {
+        ...state,
+        floatingContainersDimensions: {
+          ...state.floatingContainersDimensions,
+          bottomFloatingContainerHeight: payload,
+        }
+      };
     case 'SET_MOUSE_WHEEL_ZOOM':
       return { ...state, enableMouseWheelZoom: payload.enableMouseWheelZoom };
     case 'SET_ENABLE_SNAP_MODE':
       return { ...state, isSnapModeEnabled: payload.enable };
     case 'SET_READER_MODE':
       return { ...state, isReaderMode: payload.isReaderMode };
-    case 'SET_VALIDATION_MODAL_WIDGET_NAME':
-      return {
-        ...state,
-        validationModalWidgetName: payload.validationModalWidgetName,
-      };
     case 'SET_SUBMIT_COMMENT_MODE':
       return {
         ...state,
@@ -670,39 +690,6 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isCommentThreadExpansionEnabled: payload.enableCommentThreadExpansion,
-      };
-    case 'ADD_TRUSTED_CERTIFICATES':
-      /**
-       * To mimic the behavior of the Core implementation, where certificates
-       * can only be added but not removed, only allow this action to append
-       * to the existing array
-       */
-      return {
-        ...state,
-        certificates: [...state.certificates, ...payload.certificates],
-      };
-    case 'ADD_TRUST_LIST':
-      /**
-       * The Core implementation only allows a single Trust List to be passed
-       * as a parameter, but in order to allow flexibility of future potential
-       * requirements where a developer may want to add multiple Trust Lists,
-       * we are storing an Array of Trust Lists
-       */
-      return {
-        ...state,
-        trustLists: [...state.trustLists, payload.trustList],
-      };
-    case 'SET_VERIFICATION_RESULT':
-      return { ...state, verificationResult: payload.result };
-    case 'SET_REVOCATION_PROXY_PREFIX':
-      return {
-        ...state,
-        revocationProxyPrefix: payload.revocationProxyPrefix,
-      };
-    case 'SET_IS_REVOCATION_CHECKING_ENABLED':
-      return {
-        ...state,
-        isRevocationCheckingEnabled: payload.isRevocationCheckingEnabled,
       };
     case 'SET_DISPLAYED_SIGNATURES_FILTER_FUNCTION':
       return { ...state, displayedSignaturesFilterFunction: payload.filterFunction };

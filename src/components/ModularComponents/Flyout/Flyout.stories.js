@@ -59,7 +59,6 @@ const initialState = {
             'icon': 'icon-save'
           },
           {
-            'label': 'Item 4',
             'icon': 'icon-download',
             'children': [
               {
@@ -102,7 +101,6 @@ const initialState = {
           },
           {
             'label': 'Item 7',
-            'icon': 'icon-save'
           },
           {
             'label': 'Item 8',
@@ -124,10 +122,47 @@ const initialState = {
             ]
           }
         ],
+      },
+      'noIcons': {
+        'dataElement': 'noIcons',
+        'items': [
+          {
+            'label': 'Item 1',
+            'children': [
+              {
+                'label': 'Item 1.1',
+                'icon': 'icon-arrow-right'
+              },
+              {
+                'label': 'Item 1.2',
+                'icon': 'icon-arrow-left'
+              },
+              'divider'
+            ]
+          },
+          'divider',
+          {
+            'label': 'Item 2',
+          },
+          {
+            'label': 'Item 3',
+          },
+          {
+            'label': 'Item 4',
+          },
+          {
+            'label': 'Item 5',
+          }
+        ],
       }
     },
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: 'flyoutMenu',
+    modularHeaders: [],
+    modularHeadersHeight: {
+      topHeaders: 40,
+      bottomHeaders: 40
+    },
   },
 };
 const store = configureStore({
@@ -136,6 +171,21 @@ const store = configureStore({
 
 export const FlyoutComponent = () => (
   <Provider store={store}>
-    <Flyout/>
+    <Flyout />
+  </Provider>
+);
+
+const store2 = configureStore({
+  reducer: () => {
+    return {
+      ...initialState,
+      viewer: { ...initialState.viewer, activeFlyout: 'noIcons' }
+    };
+  }
+});
+
+export const FlyoutWithoutIcons = () => (
+  <Provider store={store2}>
+    <Flyout />
   </Provider>
 );

@@ -1,13 +1,15 @@
 import { isAndroid, isChrome } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import { panelMinWidth, RESIZE_BAR_WIDTH } from 'constants/panel';
-import { PLACEMENT, ITEM_TYPE } from 'constants/customizationVariables';
+import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables';
+import DataElements from 'constants/dataElement';
 
 // viewer
 export const getActiveFlyout = (state) => state.viewer.activeFlyout;
 export const getFlyoutPosition = (state) => state.viewer.flyoutPosition;
 export const getFlyoutMap = (state) => state.viewer.flyoutMap;
 export const getFlyout = (state, dataElement) => state.viewer.flyoutMap[dataElement];
+export const getFlyoutToggleElement = (state) => state.viewer.flyoutToggleElement;
 export const getInitialsOffset = (state) => state.viewer.initalsOffset;
 export const isSavedSignaturesTabEnabled = (state) => state.viewer.savedSignatureTabEnabled;
 export const getSyncViewer = (state) => state.viewer.syncViewer;
@@ -16,6 +18,7 @@ export const isComparisonDisabled = (state) => state.advanced.disableMultiViewer
 export const getIsComparisonOverlayEnabled = (state) => state.viewer.isComparisonOverlayEnabled;
 export const getActiveDocumentViewerKey = (state) => state.viewer.activeDocumentViewerKey;
 export const isMultiViewerMode = (state) => state.viewer.isMultiViewerMode;
+export const isMultiViewerReady = (state) => state.viewer.isMultiViewerReady;
 export const getCustomFlxPanels = (state, location) => {
   if (location) {
     return state.viewer.customFlxPanels.filter((item) => item.location === location);
@@ -23,6 +26,7 @@ export const getCustomFlxPanels = (state, location) => {
   return state.viewer.customFlxPanels;
 };
 export const shouldShowApplyCropWarning = (state) => state.viewer.shouldShowApplyCropWarning;
+export const shouldShowApplySnippingWarning = (state) => state.viewer.shouldShowApplySnippingWarning;
 export const getPresetCropDimensions = (state) => state.viewer.presetCropDimensions;
 export const getPresetNewPageDimensions = (state) => state.viewer.presetNewPageDimensions;
 export const getDateTimeFormats = (state) => state.viewer.dateTimeFormats;
@@ -137,6 +141,12 @@ export const isCustomFlxPanelOpen = (state, location) => {
     .some((elName) => isElementOpen(state, elName) === true);
 };
 
+export const getDocumentContainerLeftMargin = (state) => {
+  return 0 +
+    (isElementOpen(state, 'leftPanel') ? getLeftPanelWidthWithResizeBar(state) : 0) +
+    (isCustomFlxPanelOpen(state, 'left') ? panelMinWidth : 0);
+};
+
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
 export const getIsAddingNewScale = (state) => state.viewer.isAddingNewScale;
 
@@ -247,7 +257,10 @@ export const getBottomHeadersHeight = (state) => {
   // this is because they have no bearing on the height of the panels, as the float besides them
   const bottomHeaders = getBottomHeaders(state)
     .filter((header) => !header.float);
-  return bottomHeaders.length * state.viewer.modularHeadersHeight.bottomHeaders;
+
+  const sum = bottomHeaders.reduce((accumulator, current) => accumulator + current.getDimensionTotal(), 0);
+
+  return sum + (bottomHeaders.length * state.viewer.modularHeadersHeight.bottomHeaders);
 };
 
 export const getTopHeaders = (state) => {
@@ -301,6 +314,26 @@ export const getActiveRightHeaderWidth = (state) => {
   const activeHeaders = getActiveHeaders(state);
   const isRightHeaderActive = activeHeaders?.some((header) => header.placement === PLACEMENT.RIGHT);
   return isRightHeaderActive ? getRightHeaderWidth(state) : 0;
+};
+
+export const getTopFloatingContainerHeight = (state) => state.viewer.floatingContainersDimensions.topFloatingContainerHeight;
+
+export const getBottomFloatingContainerHeight = (state) => state.viewer.floatingContainersDimensions.bottomFloatingContainerHeight;
+
+export const getTopStartFloatingHeaders = (state) => {
+  return getTopHeaders(state).filter((header) => header.position === POSITION.START && header.float);
+};
+
+export const getBottomStartFloatingHeaders = (state) => {
+  return getBottomHeaders(state).filter((header) => header.position === POSITION.START && header.float);
+};
+
+export const getTopEndFloatingHeaders = (state) => {
+  return state.viewer.modularHeaders.filter((header) => header.placement === PLACEMENT.TOP && header.position === POSITION.END && header.float);
+};
+
+export const getBottomEndFloatingHeaders = (state) => {
+  return state.viewer.modularHeaders.filter((header) => header.placement === PLACEMENT.BOTTOM && header.position === POSITION.END && header.float);
 };
 
 export const getActiveHeaderItems = (state) => {
@@ -692,3 +725,38 @@ export const getMultiViewerSyncScrollMode = (state) => state.viewer.multiViewerS
 export const getTextSignatureQuality = (state) => state.viewer.textSignatureCanvasMultiplier;
 
 export const getIsMeasurementAnnotationFilterEnabled = (state) => state.viewer.isMeasurementAnnotationFilterEnabled;
+
+// We will need to refactor this once we have generic panels
+export const isRightPanelOpen = (state) => {
+  const rightPanelElements = [
+    DataElements.NOTES_PANEL,
+    DataElements.SEARCH_PANEL,
+    DataElements.REDACTION_PANEL,
+    DataElements.TEXT_EDITING_PANEL,
+    DataElements.WV3D_PROPERTIES_PANEL,
+    DataElements.COMPARE_PANEL,
+    DataElements.WATERMARK_PANEL
+  ];
+
+  return rightPanelElements.some((element) => isElementOpen(state, element));
+};
+
+export const getOpenRightPanelWidth = (state) => {
+  const panelMap = [
+    { name: DataElements.NOTES_PANEL, isOpen: isElementOpen, getWidth: getNotesPanelWidthWithResizeBar },
+    { name: DataElements.SEARCH_PANEL, isOpen: isElementOpen, getWidth: getSearchPanelWidthWithResizeBar },
+    { name: DataElements.WATERMARK_PANEL, isOpen: isElementOpen, getWidth: getWatermarkPanelWidth },
+    { name: DataElements.TEXT_EDITING_PANEL, isOpen: isElementOpen, getWidth: getTextEditingPanelWidth },
+    { name: DataElements.WV3D_PROPERTIES_PANEL, isOpen: isElementOpen, getWidth: getWv3dPropertiesPanelWidth },
+    { name: DataElements.COMPARE_PANEL, isOpen: isElementOpen, getWidth: getComparePanelWidthWithResizeBar },
+    { name: DataElements.REDACTION_PANEL, isOpen: isElementOpen, getWidth: getRedactionPanelWidth },
+  ];
+
+  for (const panel of panelMap) {
+    if (panel.isOpen(state, panel.name)) {
+      return panel.getWidth(state);
+    }
+  }
+
+  return 0; // return 0 if no panel is open
+};

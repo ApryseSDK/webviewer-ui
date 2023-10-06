@@ -399,6 +399,10 @@ export const setIsMultiViewerMode = (isMultiViewerMode) => ({
   type: 'SET_IS_MULTI_VIEWER_MODE',
   payload: { isMultiViewerMode },
 });
+export const setIsMultiViewerReady = (isMultiViewerReady) => ({
+  type: 'SET_IS_MULTI_VIEWER_READY',
+  payload: { isMultiViewerReady },
+});
 export const setActiveDocumentViewerKey = (activeDocumentViewerKey) => ({
   type: 'SET_ACTIVE_DOCUMENT_VIEWER_KEY',
   payload: { activeDocumentViewerKey },
@@ -470,6 +474,10 @@ export const updateFlyout = (dataElement, newFlyout) => (dispatch, getState) => 
     payload: { dataElement, flyout: newFlyout },
   });
 };
+export const setFlyoutToggleElement = (toggleElement) => ({
+  type: 'SET_FLYOUT_TOGGLE_ELEMENT',
+  payload: { toggleElement },
+});
 
 // document
 export const setTotalPages = (totalPages, documentViewerKey = 1) => ({
@@ -524,6 +532,10 @@ export const removeBookmark = (pageIndex) => (dispatch, getState) => {
 export const setBookmarkIconShortcutVisibility = (bookmarkIconShortcutVisibility) => ({
   type: 'SET_BOOKMARK_ICON_SHORTCUT_VISIBILITY',
   payload: { bookmarkIconShortcutVisibility },
+});
+export const setPortfolio = (portfolio) => ({
+  type: 'SET_PORTFOLIO',
+  payload: { portfolio },
 });
 export const setLayers = (layers) => ({
   type: 'SET_LAYERS',
@@ -702,4 +714,14 @@ export const setInitialsMode = (isEnabled) => ({
 export const setShortcutKeyMap = (shortcutKeyMap) => ({
   type: 'SET_SHORTCUT_KEY_MAP',
   payload: shortcutKeyMap
+});
+
+export const enableFeatureFlag = (featureFlag) => ({
+  type: 'ENABLE_FEATURE_FLAG',
+  payload: { featureFlag }
+});
+
+export const disableFeatureFlag = (featureFlag) => ({
+  type: 'DISABLE_FEATURE_FLAG',
+  payload: { featureFlag }
 });

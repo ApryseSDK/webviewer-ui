@@ -1,0 +1,45 @@
+.GroupedTools {
+  height: 100%;
+  width: 100%;
+  
+  .ResponsiveContainer {
+    max-width: 100%;
+    padding: auto 8px;
+    position: relative;
+  }
+  
+  .ResponsiveContainerContent {
+    display: flex;
+    align-items: stretch;
+    &.hidden {
+      visibility: hidden;
+    }
+  }
+  
+  .ResponsiveContainer__moreButton {
+    &.hidden {
+      display: none;
+    }
+    .ToggleElementButton .Button {
+      padding: 0 2px;
+      
+      &:hover {
+        background-color: var(--blue-1);
+      }
+  
+      &.active {
+        background-color: var(--blue-2) !important;
+  
+        .Icon {
+          color: var(--blue-6) !important;
+        }
+      }
+    }
+    .ToggleElementButton .Button .Icon {
+      color: var(--faded-text) !important;
+    }
+    .active {
+      background-color: transparent !important;
+    }
+  }
+}

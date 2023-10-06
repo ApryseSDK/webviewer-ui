@@ -1,41 +1,36 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import selectors from 'selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import PropTypes from 'prop-types';
 import './ToggleElementButton.scss';
 import Button from 'components/Button';
-import { WIDTH_PLUS_PADDING } from 'constants/flyoutConstants';
 
 const ToggleElementButton = (props) => {
   const buttonRef = useRef();
-  const { dataElement, title, disabled, img, label, toggleElement } = props;
+  const { dataElement, title, disabled, img, label, toggleElement, onFlyoutToggled = null } = props;
   const [isActive, flyoutMap] = useSelector((state) => [
     selectors.isElementOpen(state, toggleElement),
     selectors.getFlyoutMap(state),
   ]);
 
+  const [isElementActive, setIsElementActive] = useState(isActive);
+
+  useEffect(() => {
+    setIsElementActive(isActive);
+  }, [isActive]);
+
   const dispatch = useDispatch();
 
   const onClick = () => {
     if (flyoutMap[toggleElement]) {
-      const appRect = document.getElementById('app').getBoundingClientRect();
-      const buttonRect = buttonRef.current.getBoundingClientRect();
-      let x = buttonRect.x - appRect.x;
-      let y = buttonRect.y - appRect.y;
-      const parentHeader = buttonRef.current.closest('.ModularHeader');
-      if (parentHeader && parentHeader.classList.contains('LeftHeader')) {
-        x += buttonRect.width;
-      } else if (parentHeader && parentHeader.classList.contains('RightHeader')) {
-        x -= WIDTH_PLUS_PADDING;
-      } else if (parentHeader && parentHeader.classList.contains('TopHeader')) {
-        y += buttonRect.height;
-      } else if (parentHeader && parentHeader.classList.contains('BottomHeader')) {
-        y -= buttonRect.height;
+      if (onFlyoutToggled) {
+        onFlyoutToggled();
+      } else {
+        dispatch(actions.setFlyoutToggleElement(buttonRef.current));
       }
-      dispatch(actions.setFlyoutPosition({ x, y }));
     }
-    if (isActive) {
+    if (isElementActive) {
       dispatch(actions.closeElement(toggleElement));
     } else {
       dispatch(actions.openElement(toggleElement));
@@ -45,7 +40,7 @@ const ToggleElementButton = (props) => {
   return (
     <div className="ToggleElementButton" data-element={dataElement} ref={buttonRef}>
       <Button
-        isActive={isActive}
+        isActive={isElementActive}
         dataElement={dataElement}
         img={img}
         label={label}
@@ -53,6 +48,7 @@ const ToggleElementButton = (props) => {
         onClick={onClick}
         disabled={disabled}
       >
+        {props.children}
       </Button>
     </div>
   );

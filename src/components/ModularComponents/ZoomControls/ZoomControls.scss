@@ -1,0 +1,105 @@
+@import '../../../constants/styles';
+@import '../../../constants/overlay';
+
+.ZoomContainerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--toggle-zoom-overlay-background);
+  border-radius: 4px;
+  height: 28px;
+  min-width: 28px;
+  margin: 2px;
+
+  .ZoomContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 68px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--view-header-button-hover);
+    }
+
+    &.active {
+      background-color: var(--view-header-button-active);
+    }
+
+    .ToggleElementButton {
+      width: 32px;
+      height: 32px;
+
+      .Icon {
+        color: var(--view-header-icon-active-fill);
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    .ZoomText {
+      border-radius: 4px;
+      align-items: center;
+
+      input {
+        resize: none;
+        border: none;
+        background-color: transparent;
+        font-weight: 700;
+        min-width: 28px;
+        text-align: right;
+      }
+    }
+  }
+
+  // Avoids the child button chevron from overlapping the zoom text
+  .Button.active,
+  .Button:hover,
+  .Button.zoomButton {
+    background: none !important;
+  }
+}
+
+.Flyout .ZoomFlyoutMenu {
+  overflow-y: auto;
+  z-index: 200;
+  background-color: var(--component-background);
+  width: 170px;
+  font-size: var(--font-size-default);
+  font-family: var(--font-family);
+  border: 1px solid var(--divider);
+  border-radius: 4px;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  padding: 6px 0;
+
+  .flyout-item-container {
+    border: none;
+    background-color: transparent;
+    margin: 2px 0;
+    display: flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 0 0 10px;
+    cursor: pointer;
+    width: 100%;
+
+    .menu-container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      align-items: center;
+      padding: 2px 19px 2px 6px;
+    }
+
+    .Icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .divider {
+    width: 90%;
+    margin: 8px;
+  }
+}
