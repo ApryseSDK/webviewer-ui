@@ -26,7 +26,6 @@ test.describe('Tests for outline bookmarks', () => {
 
   test('should fire an event when an outline is renamed', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
-    await iframe.click('.outline-treeview-toggle');
     const outline = await iframe.$$('.bookmark-outline-single-container');
     await outline[0].click();
     const editOptions = await outline[0].$('.bookmark-outline-more-button');
@@ -48,7 +47,6 @@ test.describe('Tests for outline bookmarks', () => {
 
   test('should fire an event when an outline is deleted', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
-    await iframe.click('.outline-treeview-toggle');
     const outline = await iframe.$$('.bookmark-outline-single-container');
     await outline[0].click();
     await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
@@ -142,10 +140,16 @@ test.describe('Tests for outline bookmarks', () => {
   test('should be able to render more complex bookmarks', async ({ page }) => {
     // should be able to render children and url bookmark
     // we currently don't support "action" bookmark (bookmark that perform an action but not assoicated to a page)
-    // so "action" bookmarks don't get rendered currently
+    // but we still display these "action" bookmarks
 
     await instance('loadDocument', '/test-files/bookmarkSample.pdf');
     await page.waitForTimeout(5000);
+    // expand all nested children
+    await iframe.evaluate(() => {
+      instance.UI.OutlinesPanel.setDefaultOptions({
+        autoExpandOutlines: true
+      });
+    });
 
     await instance('openElements', ['outlinesPanel']);
     await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
@@ -154,10 +158,10 @@ test.describe('Tests for outline bookmarks', () => {
     expect(await outlinesPanel.screenshot()).toMatchSnapshot(['outlines-panel', 'more-complex.png']);
   });
 
-  test('should be able to render not supported bookmarks', async ({ page }) => {
-    // should be able to render bookmarks that we don't support (we don't support a lot of actions)
+  test('should be able to hide unsupported bookmarks', async ({ page }) => {
+    // should be able to hide bookmarks that we don't support (unsupported actions)
 
-    await instance('loadDocument', '/test-files/bookmarkSample.pdf', { showInvalidBookmarks: true });
+    await instance('loadDocument', '/test-files/bookmarkSample.pdf', { showInvalidBookmarks: false });
     await page.waitForTimeout(5000);
 
     await instance('openElements', ['outlinesPanel']);
@@ -165,5 +169,50 @@ test.describe('Tests for outline bookmarks', () => {
 
     const outlinesPanel = await iframe.$('[data-element=outlinesPanel]');
     expect(await outlinesPanel.screenshot()).toMatchSnapshot(['outlines-panel', 'not-supported-outline.png']);
+  });
+
+  test('should be able to show color for colored bookmarks when fullAPI is enabled', async ({ page }) => {
+    await instance('loadDocument', '/test-files/colored-outlines-nested.pdf');
+    await page.waitForTimeout(Timeouts.PDF_PRIME_DOCUMENT);
+    await iframe.evaluate(() => {
+      instance.UI.OutlinesPanel.setDefaultOptions({
+        autoExpandOutlines: true
+      });
+    });
+    await instance('openElements', ['outlinesPanel']);
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION * 3);
+    const outlinesPanel = await iframe.$('[data-element=outlinesPanel]');
+    expect(await outlinesPanel.screenshot()).toMatchSnapshot(['outlines-panel', 'colored-bookmarks.png']);
+  });
+
+  test('the outline should redirect to the correct place when applied in a rotated page', async ({ page, browserName }) => {
+    await instance('loadDocument', '/test-files/demo-annotated.pdf');
+    await page.waitForTimeout(5000);
+
+    await instance('openElements', ['thumbnailsPanel']);
+    await page.waitForTimeout(3000);
+
+    const clockwiseButton = await iframe.$('.Thumbnail.active [data-element="thumbRotateClockwise"]');
+    await clockwiseButton?.click();
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    await instance('openElements', ['outlinesPanel']);
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    await iframe.click('.bookmark-outline-control-button.add-new-button');
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    await page.keyboard.type('Page 1 Outline');
+    await page.keyboard.down('Enter');
+
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    // Going to a different page to check if the outline will redirect correctly
+    await instance('setCurrentPageNumber', 5);
+    const outline = await iframe.$('.bookmark-outline-single-container');
+    await outline?.click();
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    expect(await instance('getCurrentPage')).toBe(1);
   });
 });

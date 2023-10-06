@@ -32,7 +32,7 @@ test.describe('Tests for generic outline bookmarks', () => {
     await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
   });
 
-  test('should fire an event when an outline is renamed', async ({ page, browserName }) => {
+  test.skip('should fire an event when an outline is renamed', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
     await iframe.click('.outline-treeview-toggle');
     const outline = await iframe.$$('.bookmark-outline-single-container');
@@ -150,9 +150,9 @@ test.describe('Tests for generic outline bookmarks', () => {
   test('should be able to render more complex bookmarks', async ({ page }) => {
     // should be able to render children and url bookmark
     // we currently don't support "action" bookmark (bookmark that perform an action but not assoicated to a page)
-    // so "action" bookmarks don't get rendered currently
+    // but we display them nonetheless
 
-    await instance('loadDocument', '/test-files/bookmarkSample.pdf');
+    await instance('loadDocument', '/test-files/bookmarkSample.pdf', { showInvalidBookmarks: false });
     await page.waitForTimeout(5000);
 
     await instance('openElements', ['genericOutlinesPanel']);

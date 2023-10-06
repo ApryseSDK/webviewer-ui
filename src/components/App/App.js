@@ -22,6 +22,7 @@ import TextEditingPanel from 'components/TextEditingPanel';
 import Wv3dPropertiesPanel from 'components/Wv3dPropertiesPanel';
 import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
 import DocumentCropPopup from 'components/DocumentCropPopup';
+import SnippingToolPopup from '../SnippingToolPopup';
 import FormFieldIndicatorContainer from 'components/FormFieldIndicator';
 import MultiTabEmptyPage from 'components/MultiTabEmptyPage';
 import MultiViewer from 'components/MultiViewer';
@@ -35,6 +36,8 @@ import BottomHeader from 'components/ModularComponents/BottomHeader';
 import TopHeader from 'components/ModularComponents/TopHeader';
 import GenericOutlinesPanel from 'components/ModularComponents/GenericOutlinesPanel';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
+import RibbonOverflowFlyout from 'components/ModularComponents/RibbonOverflowFlyout';
+import GroupedToolsOverflowFlyout from 'components/ModularComponents/GroupedToolsOverflowFlyout';
 import ProgressModal from 'components/ProgressModal';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 
@@ -67,7 +70,12 @@ import setLanguage from 'src/apis/setLanguage';
 
 import './App.scss';
 import SignaturePanel from 'components/SignaturePanel';
+import BookmarksPanel from 'components/BookmarksPanel';
+import FileAttachmentPanel from 'components/FileAttachmentPanel';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
+import LayersPanel from 'components/LayersPanel';
+import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
+import TextEditingWrapper from 'components/TextEditingPanel/TextEditingWrapper';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -160,7 +168,7 @@ const App = ({ removeEventHandlers }) => {
             filename: getHashParameters('filename', null),
             externalPath: getHashParameters('p', ''),
             documentId: getHashParameters('did', null),
-            showInvalidBookmarks: getHashParameters('showInvalidBookmarks', null),
+            showInvalidBookmarks: getHashParameters('showInvalidBookmarks', false),
           };
 
           loadDocument(dispatch, initialDoc, options);
@@ -259,8 +267,18 @@ const App = ({ removeEventHandlers }) => {
         return <GenericOutlinesPanel/>;
       case panelNames.SIGNATURE:
         return <SignaturePanel/>;
+      case panelNames.BOOKMARKS:
+        return <BookmarksPanel panelSelector={dataElement}/>;
+      case panelNames.FILE_ATTACHMENT:
+        return <FileAttachmentPanel/>;
       case panelNames.THUMBNAIL:
         return <ThumbnailsPanel panelSelector={dataElement} />;
+      case panelNames.LAYERS:
+        return <LayersPanel/>;
+      case panelNames.TEXT_EDITING:
+        return <TextEditingWrapper><TextEditingPanel dataElement={dataElement}/></TextEditingWrapper>;
+      case panelNames.CHANGE_LIST:
+        return <MultiViewerWrapper><ComparePanel dataElement={dataElement}/></MultiViewerWrapper>;
     }
   };
 
@@ -292,6 +310,8 @@ const App = ({ removeEventHandlers }) => {
         })}
       >
         <FlyoutContainer />
+        <RibbonOverflowFlyout />
+        <GroupedToolsOverflowFlyout />
         <Accessibility />
         <Header />
         {isOfficeEditorMode() && (
@@ -339,11 +359,11 @@ const App = ({ removeEventHandlers }) => {
           >
             <TextEditingPanel />
           </RightPanel>
-          {isMultiViewerMode && (
+          <MultiViewerWrapper>
             <RightPanel dataElement="comparePanel" onResize={(width) => dispatch(actions.setComparePanelWidth(width))}>
               <ComparePanel />
             </RightPanel>
-          )}
+          </MultiViewerWrapper>
           <BottomHeader />
         </div>
         <LazyLoadWrapper
@@ -414,6 +434,7 @@ const App = ({ removeEventHandlers }) => {
         />
         <AudioPlaybackPopup />
         <DocumentCropPopup />
+        <SnippingToolPopup />
         {/* Modals */}
         <LazyLoadWrapper
           Component={LazyLoadComponents.ScaleModal}
