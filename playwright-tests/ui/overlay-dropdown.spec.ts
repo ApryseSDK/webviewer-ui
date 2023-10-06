@@ -126,4 +126,27 @@ test.describe('Overlay Dropdown', () => {
 
     expect(await pageContainer.screenshot()).toMatchSnapshot(['overlay-dropdown', 'overlay-dropdown-bottom-position.png']);
   });
+
+  test('should be able to open dropdown in modal', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    const instance = await waitForInstance();
+
+    await instance('openElement', 'customStampModal');
+    await page.waitForTimeout(3000);
+
+    const modalContainer = await iframe?.$('.text-customstamp');
+    const dateCheckbox = await iframe?.$('#default-date');
+    const timeCheckbox = await iframe?.$('#default-time');
+    dateCheckbox?.click();
+    await page.waitForTimeout(3000);
+    timeCheckbox?.click();
+    await page.waitForTimeout(3000);
+
+    const fontDropdown = await iframe?.$('.font-inner-container .Dropdown');
+    await fontDropdown?.click();
+
+    await page.waitForTimeout(3000);
+
+    expect(await modalContainer?.screenshot()).toMatchSnapshot(['overlay-dropdown', 'modal-dropdown-still-works.png']);
+  });
 });
