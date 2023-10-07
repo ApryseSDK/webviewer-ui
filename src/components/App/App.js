@@ -160,7 +160,7 @@ const App = ({ removeEventHandlers }) => {
             filename: getHashParameters('filename', null),
             externalPath: getHashParameters('p', ''),
             documentId: getHashParameters('did', null),
-            showInvalidBookmarks: getHashParameters('showInvalidBookmarks', null),
+            showInvalidBookmarks: getHashParameters('showInvalidBookmarks', false),
           };
 
           loadDocument(dispatch, initialDoc, options);
