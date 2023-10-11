@@ -171,7 +171,7 @@ test.describe('Tests for outline bookmarks', () => {
     expect(await outlinesPanel.screenshot()).toMatchSnapshot(['outlines-panel', 'not-supported-outline.png']);
   });
 
-  test('should be able to show color for colored bookmarks when fullAPI is enabled', async ({ page }) => {
+  test('should be able to show color for colored bookmarks', async ({ page }) => {
     await instance('loadDocument', '/test-files/colored-outlines-nested.pdf');
     await page.waitForTimeout(Timeouts.PDF_PRIME_DOCUMENT);
     await iframe.evaluate(() => {
