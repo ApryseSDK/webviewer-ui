@@ -90,6 +90,15 @@ const DataElements = {
   THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL: 'thumbnailsControlManipulatePopupSmall',
   THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL_TRIGGER: 'thumbnailsControlManipulatePopupSmallTrigger',
 
+  // Stamps overlay
+  RUBBER_STAMP_TAB_HEADER: 'rubberStampTabHeader',
+  STANDARD_STAMPS_PANEL_BUTTON: 'standardStampPanelButton',
+  CUSTOM_STAMPS_PANEL_BUTTON: 'customStampPanelButton',
+  STANDARD_STAMPS_PANEL: 'standardStampPanel',
+  CUSTOM_STAMPS_PANEL: 'customStampPanel',
+  CREATE_CUSTOM_STAMP_BUTTON: 'createCustomStampButton',
+  DELETE_CUSTOM_STAMP_BUTTON: 'deleteCustomStampButton',
+
   // Popups
   ANNOTATION_POPUP: 'annotationPopup',
   FORM_FIELD_EDIT_POPUP: 'formFieldEditPopup',
@@ -100,6 +109,7 @@ const DataElements = {
   RICH_TEXT_POPUP: 'richTextPopup',
   AUDIO_PLAYBACK_POPUP: 'audioPlaybackPopup',
   DOCUMENT_CROP_POPUP: 'documentCropPopup',
+  SNIPPING_TOOL_POPUP: 'snippingToolPopup',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',
@@ -169,6 +179,8 @@ const DataElements = {
 
   // Office Editor
   OFFICE_EDITOR_TOOLS_HEADER: 'officeEditorToolsHeader',
+  OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE: 'officeEditorToolsHeaderInsertImage',
+  OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
 
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',
@@ -189,6 +201,13 @@ const DataElements = {
   FORMS_TOOLBAR_GROUP: 'toolbarGroup-Forms',
 
   TOOLBAR_GROUPS: [],
+
+  // Menu overlay items
+  CREATE_PORTFOLIO_BUTTON: 'createPortfolioButton',
+
+  // Print modal
+  PRINT_QUALITY: 'printQuality',
+  PRINT_WATERMARK: 'printWatermark',
 };
 
 DataElements.TOOLBAR_GROUPS = [

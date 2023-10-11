@@ -15,6 +15,7 @@ import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
 
 import './PrintModal.scss';
+import DataElementWrapper from '../DataElementWrapper';
 
 const PrintModal = () => {
   const [
@@ -353,7 +354,7 @@ const PrintModal = () => {
                 />
               </form>
             </div>
-            <div className="section">
+            <DataElementWrapper className="section" dataElement={DataElements.PRINT_QUALITY}>
               <div className="section-label">{`${t('option.print.pageQuality')}:`}</div>
               <label className="printQualitySelectLabel">
                 <select
@@ -372,9 +373,9 @@ const PrintModal = () => {
                   <div>{t('message.printTotalPageCount', { count: pagesToPrint.length })}</div>
                 )}
               </div>
-            </div>
+            </DataElementWrapper>
             {!isApplyWatermarkDisabled && (
-              <div className="section watermark-section">
+              <DataElementWrapper className="section watermark-section" dataElement={DataElements.PRINT_WATERMARK}>
                 <div className="section-label">{t('option.watermark.title')}</div>
                 <button
                   data-element="applyWatermark"
@@ -388,7 +389,7 @@ const PrintModal = () => {
                 >
                   {t('option.watermark.addNew')}
                 </button>
-              </div>
+              </DataElementWrapper>
             )}
           </div>
           <div className="divider"></div>
