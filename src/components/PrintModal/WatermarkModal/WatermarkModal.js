@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Button from 'components/Button';
+import FontSizeDropdown from 'components/FontSizeDropdown';
 import { FONTS } from './web-fonts';
 import './WatermarkModal.scss';
 import ModalWrapper from '../../ModalWrapper';
@@ -15,8 +16,6 @@ import DataElementWrapper from 'src/components/DataElementWrapper';
 const DESIRED_WIDTH = 300;
 const DESIRED_HEIGHT = 300;
 
-// numbers were taken from font dropdown menu in google docs
-const FONT_SIZES = [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72, 96];
 const DEFAULT_FONT_SIZE = 48;
 
 const WATERMARK_LOCATIONS = {
@@ -416,19 +415,13 @@ class WatermarkModal extends React.PureComponent {
                 </div>
                 <div className="form-field">
                   <label htmlFor="fontSize">{t('option.watermark.size')}</label>
-                  <select
-                    id="fontSize"
-                    value={formInfo[FORM_FIELD_KEYS.fontSize]}
-                    onChange={(event) => this.handleInputChange(
-                      FORM_FIELD_KEYS.fontSize,
-                      +event.target.value,
-                    )
-                    }
-                  >
-                    {FONT_SIZES.map((fontSize) => (
-                      <option key={fontSize}>{fontSize}</option>
-                    ))}
-                  </select>
+                  <FontSizeDropdown
+                    fontSize={formInfo[FORM_FIELD_KEYS.fontSize]}
+                    key="fontSize"
+                    fontUnit="pt"
+                    onFontSizeChange={(val) => this.handleInputChange(FORM_FIELD_KEYS.fontSize, Number.parseInt(val))}
+                    maxFontSize={512}
+                  />
                 </div>
                 <div className="form-field opacity-slider" id="opacitySlider">
                   <Slider

@@ -84,7 +84,7 @@
       }
 
       select,
-      input {
+      .text-input {
         height: 30px;
       }
 
@@ -102,6 +102,19 @@
 
         @include ie11 {
           align-items: stretch;
+        }
+      }
+
+      .FontSizeDropdown {
+        padding: 2px;
+
+        .icon-button {
+          width: 14px;
+          height: 14px;
+        }
+
+        .icon-button > .Icon {
+          color: var(--text-color);
         }
       }
     }
