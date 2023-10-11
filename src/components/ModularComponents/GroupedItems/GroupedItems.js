@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import './GroupedItems.scss';
 import InnerItem from '../InnerItem/InnerItem';
-import { ALIGNMENT, ITEM_TYPE } from 'constants/customizationVariables';
+import { ALIGNMENT, ITEM_TYPE, DEFAULT_GAP } from 'constants/customizationVariables';
 import actions from 'actions';
 
 const GroupedItems = (props) => {
@@ -11,10 +11,11 @@ const GroupedItems = (props) => {
     dataElement,
     items,
     headerDirection,
-    gap = 16,
+    gap = DEFAULT_GAP,
     alignment = ALIGNMENT.START,
     grow = 0,
-    alwaysVisible = false
+    alwaysVisible = false,
+    style,
   } = props;
   const dispatch = useDispatch();
   const [itemsGap, setItemsGap] = useState(gap);
@@ -42,7 +43,8 @@ const GroupedItems = (props) => {
           gap: `${itemsGap}px`,
           flexDirection: headerDirection,
           justifyContent: alignment,
-          flexGrow: grow
+          flexGrow: grow,
+          ...style,
         }}>
         {
           validItems.map((item) => {

@@ -9,6 +9,7 @@ import ToolGroupButton from '../ToolGroupButton';
 import ToggleElementButton from '../ToggleElementButton';
 import ZoomControls from '../ZoomControls';
 import GroupedTools from '../GroupedTools';
+import ToolButton from '../ToolButton';
 
 const InnerItem = (props) => {
   const { type, dataElement, headerDirection, headerPlacement } = props;
@@ -35,6 +36,8 @@ const InnerItem = (props) => {
       return <GroupedTools key={key} uniqueID={key} {...props} headerDirection={headerDirection} />;
     case ITEM_TYPE.ZOOM:
       return <ZoomControls {...props} />;
+    case ITEM_TYPE.TOOL_BUTTON:
+      return <ToolButton key={key} {...props} />;
     default:
       console.warn(`${type} is not a valid item type.`);
       return null;

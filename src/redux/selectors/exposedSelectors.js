@@ -258,7 +258,12 @@ export const getBottomHeadersHeight = (state) => {
   const bottomHeaders = getBottomHeaders(state)
     .filter((header) => !header.float);
 
-  const sum = bottomHeaders.reduce((accumulator, current) => accumulator + current.getDimensionTotal(), 0);
+  const sum = bottomHeaders.reduce((accumulator, current) => {
+    if (current.getDimensionTotal) {
+      return accumulator + current.getDimensionTotal();
+    }
+    return 0;
+  }, 0);
 
   return sum + (bottomHeaders.length * state.viewer.modularHeadersHeight.bottomHeaders);
 };

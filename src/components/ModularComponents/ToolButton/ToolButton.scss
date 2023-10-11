@@ -1,0 +1,14 @@
+@import '../../../constants/styles';
+
+.ToolButton {
+  &:hover {
+    background: var(--tools-overlay-button-hover);
+  }
+  &.active {
+    background: var(--tools-overlay-button-active);
+  }
+
+
+  width: 26px;
+  height: 26px;
+}

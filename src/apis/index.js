@@ -169,7 +169,12 @@ import setActiveResult from './setActiveResult';
 import setAnnotationContentOverlayHandler from './setAnnotationContentOverlayHandler';
 import overrideSearchExecution from './overrideSearchExecution';
 import reactElements from './reactElements';
-import { addTrustedCertificates, loadTrustList, enableOnlineCRLRevocationChecking } from './verificationOptions';
+import {
+  addTrustedCertificates,
+  loadTrustList,
+  enableOnlineCRLRevocationChecking,
+  setRevocationProxyPrefix,
+} from './verificationOptions';
 import {
   enableTextCollapse,
   disableTextCollapse,
@@ -182,11 +187,15 @@ import {
   enableAttachmentPreview,
   disableAttachmentPreview,
   disableMultiSelect as notesPanelDisableMultiSelect,
-  setAttachmentHandler
+  setAttachmentHandler,
+  enableMeasurementAnnotationFilter,
+  disableMeasurementAnnotationFilter,
 } from './notesPanel';
 import {
   enableMultiselect,
   disableMultiselect,
+  enableMultiSelect,
+  disableMultiSelect,
   selectPages,
   unselectPages,
   getSelectedPageNumbers,
@@ -220,6 +229,8 @@ import getAvailableLanguages from './getAvailableLanguages';
 import replaceRedactionSearchPattern from './replaceRedactionSearchPattern';
 import disableApplyCropWarningModal from './disableApplyCropWarningModal';
 import enableApplyCropWarningModal from './enableApplyCropWarningModal';
+import disableApplySnippingWarningModal from './disableApplySnippingWarningModal';
+import enableApplySnippingWarningModal from './enableApplySnippingWarningModal';
 import setPresetCropDimensions from './setPresetCropDimensions';
 import setPresetNewPageDimensions from './setPresetNewPageDimensions';
 import addDateTimeFormat from './addDateTimeFormat';
@@ -247,12 +258,14 @@ import Item from './ModularComponents/item';
 import GroupedItems from './ModularComponents/groupedItems';
 import ModularHeader from './ModularComponents/modularHeader';
 import CustomButton from './ModularComponents/customButton';
+import ToolButton from './ModularComponents/toolButton';
 import RibbonItem from './ModularComponents/ribbonItem';
 import RibbonGroup from './ModularComponents/ribbonGroup';
 import ToggleElementButton from './ModularComponents/toggleElementButton';
 import ToolGroupButton from './ModularComponents/toolGroupButton';
 import Zoom from './ModularComponents/zoom';
 import Flyout from './ModularComponents/flyout';
+import GroupedTools from './ModularComponents/groupedTools';
 import setMultiViewerSyncScrollingMode from './setMultiViewerSyncScrollingMode';
 import setTextSignatureQuality from './setTextSignatureQuality';
 import getTextSignatureQuality from './getTextSignatureQuality';
@@ -273,6 +286,11 @@ import setGrayscaleDarknessFactor from './setGrayscaleDarknessFactor';
 import { ALIGNMENT } from 'constants/customizationVariables';
 import FlyoutsAPI from './FlyoutsAPI';
 import { getInstanceNode } from 'helpers/getRootNode';
+import { setClickMiddleware } from 'src/apis/setClickMiddleware';
+import { ClickedItemTypes } from 'helpers/clickTracker';
+import FeatureFlags from 'constants/featureFlags';
+import enableFeatureFlag from './enableFeatureFlag';
+import disableFeatureFlag from './disableFeatureFlag';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -402,7 +420,8 @@ export default (store) => {
     VerificationOptions: {
       addTrustedCertificates: addTrustedCertificates(store),
       loadTrustList: loadTrustList(store),
-      enableOnlineCRLRevocationChecking: enableOnlineCRLRevocationChecking(store)
+      enableOnlineCRLRevocationChecking: enableOnlineCRLRevocationChecking(store),
+      setRevocationProxyPrefix: setRevocationProxyPrefix(store),
     },
     Panels: panelNames,
     ThumbnailsPanel: {
@@ -411,6 +430,8 @@ export default (store) => {
       getSelectedPageNumbers: getSelectedPageNumbers(store),
       enableMultiselect: enableMultiselect(store),
       disableMultiselect: disableMultiselect(store),
+      enableMultiSelect: enableMultiSelect(store),
+      disableMultiSelect: disableMultiSelect(store),
       setThumbnailSelectionMode: setThumbnailSelectionMode(store),
     },
     NotesPanel: {
@@ -425,7 +446,9 @@ export default (store) => {
       enableAttachmentPreview: enableAttachmentPreview(store),
       disableAttachmentPreview: disableAttachmentPreview(store),
       disableMultiSelect: notesPanelDisableMultiSelect(store),
-      setAttachmentHandler: setAttachmentHandler(store)
+      setAttachmentHandler: setAttachmentHandler(store),
+      enableMeasurementAnnotationFilter: enableMeasurementAnnotationFilter(store),
+      disableMeasurementAnnotationFilter: disableMeasurementAnnotationFilter(store),
     },
     OutlinesPanel: {
       setDefaultOptions: setDefaultOptions(store),
@@ -446,12 +469,14 @@ export default (store) => {
       LeftHeader: ModularHeader(store),
       RightHeader: ModularHeader(store),
       CustomButton,
+      ToolButton,
       ToggleElementButton,
       RibbonItem,
       RibbonGroup,
       ToolGroupButton,
       Zoom,
       Flyout: Flyout(store),
+      GroupedTools
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
@@ -522,6 +547,8 @@ export default (store) => {
     replaceRedactionSearchPattern: replaceRedactionSearchPattern(store),
     disableApplyCropWarningModal: disableApplyCropWarningModal(store),
     enableApplyCropWarningModal: enableApplyCropWarningModal(store),
+    disableApplySnippingWarningModal: disableApplySnippingWarningModal(store),
+    enableApplySnippingWarningModal: enableApplySnippingWarningModal(store),
     setPresetCropDimensions: setPresetCropDimensions(store),
     setPresetNewPageDimensions: setPresetNewPageDimensions(store),
     addDateTimeFormat: addDateTimeFormat(store),
@@ -550,6 +577,11 @@ export default (store) => {
     setMultiViewerSyncScrollingMode: setMultiViewerSyncScrollingMode(store),
     setTextSignatureQuality: setTextSignatureQuality(store),
     getTextSignatureQuality: getTextSignatureQuality(store),
+    setClickMiddleware,
+    ClickedItemTypes,
+    FeatureFlags,
+    enableFeatureFlag: enableFeatureFlag(store),
+    disableFeatureFlag: disableFeatureFlag(store),
 
     // undocumented
     loadedFromServer: false,
