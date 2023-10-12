@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -17,11 +17,15 @@ export default function useOnAnnotationPopupOpen() {
     popupItems,
     isRightClickAnnotationPopupEnabled,
     isNotesPanelOpen,
+    isMeasurementOverlayOpen,
+    activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.getPopupItems(state, DataElements.ANNOTATION_POPUP),
       selectors.isRightClickAnnotationPopupEnabled(state),
       selectors.isElementOpen(state, DataElements.NOTES_PANEL),
+      selectors.isElementOpen(state, DataElements.MEASUREMENT_OVERLAY),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -85,14 +89,21 @@ export default function useOnAnnotationPopupOpen() {
     }
   }, [focusedAnnotation, groupedLinkAnnotations]);
 
+  // Use this to store isRightClickAnnotationPopupEnabled value to avoid stale closure
+  const isRightClickAnnotationPopupEnabledRef = useRef();
+
+  useEffect(() => {
+    isRightClickAnnotationPopupEnabledRef.current = isRightClickAnnotationPopupEnabled;
+  }, [isRightClickAnnotationPopupEnabled]);
+
   useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
-      if (annotations.length === 0 || annotations[0].ToolName === ToolNames.CROP) {
+      if (annotations.length === 0 || annotations[0].ToolName === ToolNames.CROP || annotations[0].ToolName === ToolNames.SNIPPING) {
         return;
       }
 
       if (action === 'selected') {
-        if (!isRightClickAnnotationPopupEnabled) {
+        if (!isRightClickAnnotationPopupEnabledRef.current) {
           setFocusedAnnotation(annotations[0]);
         }
 
@@ -116,23 +127,25 @@ export default function useOnAnnotationPopupOpen() {
       }
     };
 
-    core.addEventListener('annotationSelected', onAnnotationSelected);
-    core.addEventListener('documentUnloaded', closePopup);
+    core.addEventListener('annotationSelected', onAnnotationSelected, null, activeDocumentViewerKey);
+    core.addEventListener('documentUnloaded', closePopup, null, activeDocumentViewerKey);
 
     return () => {
-      core.removeEventListener('annotationSelected', onAnnotationSelected);
-      core.removeEventListener('documentUnloaded', closePopup);
+      core.removeEventListener('annotationSelected', onAnnotationSelected, null, activeDocumentViewerKey);
+      core.removeEventListener('documentUnloaded', closePopup, null, activeDocumentViewerKey);
     };
-  }, [focusedAnnotation, isNotesPanelOpen, isDatePickerOpen, isRightClickAnnotationPopupEnabled]);
+  }, [focusedAnnotation, isNotesPanelOpen, isDatePickerOpen, activeDocumentViewerKey]);
 
   useEffect(() => {
     const onAnnotationChanged = (annotations, action) => {
       if (!core.isAnnotationSelected(focusedAnnotation)) {
         return;
       }
-      if (action === 'modify') {
+
+      if (action === 'modify' && !isMeasurementOverlayOpen) {
         openPopup();
       }
+
       const hasLinkAnnotation = annotations.some((annotation) => annotation instanceof Annotations.Link);
       if (!hasLinkAnnotation) {
         return;
@@ -151,14 +164,14 @@ export default function useOnAnnotationPopupOpen() {
       }
     };
 
-    core.addEventListener('annotationChanged', onAnnotationChanged);
-    core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+    core.addEventListener('annotationChanged', onAnnotationChanged, null, activeDocumentViewerKey);
+    core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, null, activeDocumentViewerKey);
 
     return () => {
-      core.removeEventListener('annotationChanged', onAnnotationChanged);
-      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
+      core.removeEventListener('annotationChanged', onAnnotationChanged, null, activeDocumentViewerKey);
+      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, null, activeDocumentViewerKey);
     };
-  }, [canModify, focusedAnnotation]);
+  }, [canModify, focusedAnnotation, isMeasurementOverlayOpen, activeDocumentViewerKey]);
 
   useEffect(() => {
     const onMouseLeftUp = (e) => {
@@ -166,16 +179,12 @@ export default function useOnAnnotationPopupOpen() {
       // so this component will close due to useOnClickOutside
       // this handler is used to make sure that if we click on the selected annotation, this component will show up again
       if (focusedAnnotation) {
-        const annotUnderMouse = core.getAnnotationByMouseEvent(e);
-
-        if (!annotUnderMouse) {
-          closePopup();
-        }
+        const annotUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
 
         const shouldShowPopup =
-          !isRightClickAnnotationPopupEnabled
+          !isRightClickAnnotationPopupEnabledRef.current
           && annotUnderMouse === focusedAnnotation
-          && !isInContentEditFocusMode(annotUnderMouse);
+          && !isInContentEditFocusMode(focusedAnnotation);
         if (shouldShowPopup) {
           openPopup();
         }
@@ -187,37 +196,37 @@ export default function useOnAnnotationPopupOpen() {
       }
     };
 
-    core.addEventListener('mouseLeftUp', onMouseLeftUp);
-    return () => core.removeEventListener('mouseLeftUp', onMouseLeftUp);
-  }, [focusedAnnotation, isStylePopupOpen, isRightClickAnnotationPopupEnabled]);
+    core.addEventListener('mouseLeftUp', onMouseLeftUp, null, activeDocumentViewerKey);
+    return () => core.removeEventListener('mouseLeftUp', onMouseLeftUp, null, activeDocumentViewerKey);
+  }, [focusedAnnotation, isStylePopupOpen, activeDocumentViewerKey]);
 
   useEffect(() => {
-    const scrollViewElement = core.getDocumentViewer().getScrollViewElement();
+    const scrollViewElement = core.getScrollViewElement(activeDocumentViewerKey);
     const onScroll = debounce(() => {
       setStylePopupRepositionFlag((flag) => !flag);
     }, 100);
 
-    scrollViewElement?.addEventListener('scroll', onScroll);
-    return () => scrollViewElement?.removeEventListener('scroll', onScroll);
-  }, []);
+    scrollViewElement?.addEventListener('scroll', onScroll, null, activeDocumentViewerKey);
+    return () => scrollViewElement?.removeEventListener('scroll', onScroll, null, activeDocumentViewerKey);
+  }, [activeDocumentViewerKey]);
 
   useOnRightClick(
     useCallback((e) => {
-      if (!isRightClickAnnotationPopupEnabled) {
+      if (!isRightClickAnnotationPopupEnabledRef.current) {
         return;
       }
 
-      const annotUnderMouse = core.getAnnotationByMouseEvent(e);
+      const annotUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
       if (annotUnderMouse && annotUnderMouse.ToolName !== ToolNames.CROP) {
         if (e.ctrlKey && isMac) {
           return;
         }
 
         if (annotUnderMouse !== focusedAnnotation) {
-          if (!core.isAnnotationSelected(annotUnderMouse)) {
+          if (!core.isAnnotationSelected(annotUnderMouse, activeDocumentViewerKey)) {
             core.deselectAllAnnotations();
           }
-          core.selectAnnotation(annotUnderMouse);
+          core.selectAnnotation(annotUnderMouse, activeDocumentViewerKey);
           setFocusedAnnotation(annotUnderMouse);
         }
         if (annotUnderMouse === focusedAnnotation && !isInContentEditFocusMode(annotUnderMouse)) {
@@ -226,7 +235,7 @@ export default function useOnAnnotationPopupOpen() {
       } else {
         closePopup();
       }
-    }, [focusedAnnotation, isRightClickAnnotationPopupEnabled])
+    }, [focusedAnnotation, activeDocumentViewerKey])
   );
 
   return {

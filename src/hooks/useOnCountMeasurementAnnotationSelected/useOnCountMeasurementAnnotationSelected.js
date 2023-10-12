@@ -6,6 +6,7 @@ import core from 'core';
 import DataElements from 'constants/dataElement';
 import { mapAnnotationToKey, mapToolNameToKey } from 'constants/map';
 import usePrevious from 'hooks/usePrevious';
+import { isMeasurementTool } from 'src/helpers/getMeasurementTools';
 
 export default function useOnCountMeasurementAnnotationSelected() {
   const dispatch = useDispatch();
@@ -40,7 +41,8 @@ export default function useOnCountMeasurementAnnotationSelected() {
 
   useEffect(() => {
     if (prevActiveToolName !== activeToolName) {
-      if (!isCountMeasurementTool(activeToolName)) {
+      const tool = core.getTool(activeToolName);
+      if (!isCountMeasurementTool(activeToolName) && isMeasurementTool(tool)) {
         dispatch(actions.openElement(DataElements.MEASUREMENT_OVERLAY));
       } else {
         dispatch(actions.closeElement(DataElements.MEASUREMENT_OVERLAY));
