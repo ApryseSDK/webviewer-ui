@@ -4,6 +4,7 @@ import PageRotationControls from './PageRotationControls';
 import PageManipulationControls from './PageManipulationControls';
 import PageAdditionalControls from 'components/PageManipulationOverlay/PageAdditionalControls';
 import CustomPageManipulationOperations from './CustomPageManipulationOperations';
+import { workerTypes } from 'constants/types';
 import core from 'core';
 
 import { useDispatch } from 'react-redux';
@@ -46,6 +47,30 @@ function PageManipulationOverlay(props) {
     dispatch(actions.closeElements([DataElements.PAGE_MANIPULATION_OVERLAY]));
   }, [dispatch]);
 
+  const document = core.getDocument();
+  const documentType = document?.type;
+  const isXod = documentType === workerTypes.XOD;
+  const isOffice = documentType === workerTypes.OFFICE || documentType === workerTypes.LEGACY_OFFICE;
+  let filteredPageManipulationOverlayItems = pageManipulationOverlayItems;
+  if (isXod || isOffice) {
+    const removedIndices = filteredPageManipulationOverlayItems.reduce((acc, { dataElement }, index) => {
+      if (dataElement === 'pageAdditionalControls') {
+        acc.push(index);
+        if (filteredPageManipulationOverlayItems[index + 1]?.type === 'divider') {
+          acc.push(index + 1);
+        }
+      }
+      if (dataElement === 'pageManipulationControls') {
+        acc.push(index);
+        if (filteredPageManipulationOverlayItems[index - 1]?.type === 'divider') {
+          acc.push(index - 1);
+        }
+      }
+      return acc;
+    }, []);
+    filteredPageManipulationOverlayItems = filteredPageManipulationOverlayItems.filter((_, index) => !removedIndices.includes(index));
+  }
+
   useEffect(() => {
     core.addEventListener('documentLoaded', closeOverlay);
     return () => {
@@ -54,10 +79,10 @@ function PageManipulationOverlay(props) {
   }, []);
 
   return (
-    <InitialPageManipulationOverlay pageNumbers={pageNumbers} pageManipulationOverlayItems={pageManipulationOverlayItems}>
-      <PageAdditionalControls pageNumbers={pageNumbers} dataElement="pageAdditionalControls" />
+    <InitialPageManipulationOverlay pageNumbers={pageNumbers} pageManipulationOverlayItems={filteredPageManipulationOverlayItems}>
+      { !isXod && !isOffice && <PageAdditionalControls pageNumbers={pageNumbers} dataElement="pageAdditionalControls" /> }
       <PageRotationControls pageNumbers={pageNumbers} dataElement="pageRotationControls" />
-      <PageManipulationControls pageNumbers={pageNumbers} dataElement="pageManipulationControls" />
+      { !isXod && !isOffice && <PageManipulationControls pageNumbers={pageNumbers} dataElement="pageManipulationControls" /> }
     </InitialPageManipulationOverlay>
   );
 }
