@@ -10,8 +10,8 @@ import Button from 'components/Button';
 import FileSelectedPanel from './FileSelectedPanel';
 import { exitPageReplacementWarning } from 'helpers/pageManipulationFunctions';
 import { useDispatch } from 'react-redux';
-import getRootNode from 'helpers/getRootNode';
 import ModalWrapper from '../ModalWrapper';
+import getRootNode, { getInstanceNode } from 'helpers/getRootNode';
 
 import './PageReplacementModal.scss';
 
@@ -82,7 +82,7 @@ const PageReplacementModal = ({
   const fileProcessedHandler = async (file) => {
     let document;
     // eslint-disable-next-line no-undef
-    if (file instanceof instance.Core.Document) {
+    if (file instanceof getInstanceNode().instance.Core.Document) {
       document = file;
     } else {
       document = await core.createDocument(file, options);

@@ -8,6 +8,7 @@ import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import { Swipeable } from 'react-swipeable';
+import { getInstanceNode } from 'helpers/getRootNode';
 
 import core from 'core';
 
@@ -69,7 +70,7 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
   const fileProcessedHandler = async (file) => {
     let document;
     // eslint-disable-next-line no-undef
-    if (file instanceof instance.Core.Document) {
+    if (file instanceof getInstanceNode().instance.Core.Document) {
       document = file;
     } else {
       try {
