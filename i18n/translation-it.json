@@ -20,11 +20,13 @@
     "paste": "Impasto",
     "pasteWithoutFormatting": "Incolla senza formattare",
     "delete": "Elimina",
+    "deleted": "Eliminato",
     "group": "Gruppo",
     "ungroup": "Separa",
     "download": "Scarica",
     "edit": "modificare",
     "extract": "Estratto",
+    "extractPage": "Estrai pagina",
     "enterFullscreen": "A schermo intero",
     "exitFullscreen": "Esci dalla modalità schermo intero",
     "fit": "In forma",
@@ -32,6 +34,7 @@
     "fitToWidth": "Adatta alla larghezza",
     "more": "Di più",
     "openFile": "Apri il file",
+    "page": "Pagina",
     "pagePrev": "Pagina precedente",
     "pageNext": "Pagina successiva",
     "pageSet": "Imposta pagina",
@@ -44,6 +47,12 @@
     "rotate3D": "Ruotare",
     "rotateClockwise": "Senso orario",
     "rotateCounterClockwise": "Antiorario",
+    "rotatedClockwise": "ruotato in senso orario",
+    "rotatedCounterClockwise": "ruotato in senso antiorario",
+    "rotationIs": "la rotazione della pagina corrente è",
+    "movedToBottomOfDocument": "spostato in fondo al documento",
+    "movedToTopofDocument": "spostato all'inizio del documento",
+    "extracted": "estratto",
     "save": "Salva",
     "post": "Inviare",
     "create": "Creare",
@@ -56,6 +65,7 @@
     "zoomIn": "Ingrandire",
     "zoomOut": "Rimpicciolisci",
     "zoomSet": "Imposta lo zoom",
+    "zoomChanged": "Lo zoom attuale è",
     "zoomControls": "Controlli dello zoom",
     "draw": "Disegnare",
     "type": "genere",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Modifica campo modulo",
     "viewShortCutKeysFor3D": "Visualizza i tasti di scelta rapida",
     "markAllRead": "segna tutto come letto",
+    "pageInsertion": "Inserimento pagina",
     "insertPage": "Inserimento pagina",
     "insert": "Inserire",
     "pageManipulation": "Manipolazione della pagina",
     "replace": "Sostituire",
+    "replacePage": "Sostituisci pagina",
+    "modal": "modale",
+    "isOpen": "è aperto",
     "setDestination": "Impostare la destinazione",
     "showLess": "mostra meno",
     "showMore": "...Di più",
@@ -89,6 +103,8 @@
     "select": "Selezionare",
     "moveToTop": "Sposta in alto",
     "moveToBottom": "Sposta in basso",
+    "movePageToTop": "Sposta la pagina in alto",
+    "movePageToBottom": "Sposta la pagina in fondo",
     "backToMenu": "Torna al menu",
     "redactPages": "Redigere le pagine",
     "playAudio": "Riproduci l'audio",
@@ -139,6 +155,7 @@
     "redact": "Oscura",
     "formFillDot": "Punto",
     "signature": "Firma",
+    "snipping": "Strumento di Ritaglio",
     "squiggly": "Squiggly",
     "stamp": "Francobollo",
     "stickyNote": "Commento",
@@ -576,7 +593,11 @@
       "delete": "Elimina",
       "rotateClockwise": "Senso orario",
       "rotateCounterClockwise": "Antiorario",
-      "moreOptions": "Più opzioni"
+      "rotatePageClockwise": "Ruota la pagina in senso orario",
+      "rotatePageCounterClockwise": "Ruota la pagina in senso antiorario",
+      "moreOptions": "Più opzioni",
+      "moreOptionsMenu": "Menu Altre opzioni miniature",
+      "enterPageNumbers": "Immettere i numeri di pagina da selezionare"
     },
     "thumbnailsControlOverlay": {
       "move": "Sposta pagine"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Sei sicuro di voler annullare il ritaglio di tutte le pagine selezionate?"
     }
   },
+  "snippingPopUp": {
+    "title": "Strumento di Ritaglio",
+    "clipboard": "Copia negli Appunti",
+    "download": "Scarica",
+    "cropAndRemove": "Ritaglia ed Elimina",
+    "snippingModal": {
+      "applyTitle": "Applicare il ritaglio?",
+      "applyMessage": "Questa azione ritaglierà definitivamente l'area specificata e rimuoverà altre pagine. Non può essere annullato.",
+      "cancelTitle": "Annullare il ritaglio?",
+      "cancelMessage": "Sei sicuro di voler interrompere il ritaglio?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragrafo",
     "text": "Testo"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Nome del file",
     "folderNameAlreadyExists": "Il nome della cartella esiste già",
     "fileNameAlreadyExists": "Il nome del file esiste già",
-    "openFile": "Apri in una nuova scheda"
+    "openFile": "Apri in una nuova scheda",
+    "fileAlreadyExists": "Il file esiste già",
+    "fileAlreadyExistsMessage": "Il file \"{{fileName}}\" esiste già nel portfolio.",
+    "deletePortfolio": "Sei sicuro di voler eliminare \"{{fileName}}\"?",
+    "reselect": "Riseleziona"
   },
   "languageModal": {
     "selectLanguage": "Seleziona la lingua"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Interlinea e interlinea",
     "bulletList": "Elenco puntato",
     "numberList": "Elenco numerato",
+    "decreaseIndent": "Diminuisci rientro",
+    "increaseIndent": "Aumenta rientro",
     "insertLink": "Inserisci collegamento",
     "insertImage": "Inserisci immagine",
     "notSupportedOnMobile": "La modifica di Office non è supportata sui dispositivi mobili."

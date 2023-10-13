@@ -12,6 +12,7 @@ function PageAdditionalControls(props) {
       <DataElementWrapper
         dataElement="pageAdditionalControlsHeader"
         className="type"
+        aria-label="presentation"
       >
         {t('option.thumbnailsControlOverlay.move')}
       </DataElementWrapper>
@@ -21,12 +22,12 @@ function PageAdditionalControls(props) {
         onClick={moveToTop}
       >
         <Button
-          title="action.moveToTop"
+          title="action.movePageToTop"
           img="icon-page-move-up"
           role="option"
           onClick={moveToTop}
         />
-        <div className="title">{t('action.moveToTop')}</div>
+        <div className="title" >{t('action.moveToTop')}</div>
       </DataElementWrapper>
       <DataElementWrapper
         className="row"
@@ -34,7 +35,7 @@ function PageAdditionalControls(props) {
         onClick={moveToBottom}
       >
         <Button
-          title="action.moveToBottom"
+          title="action.movePageToBottom"
           img="icon-page-move-down"
           role="option"
           onClick={moveToBottom}
@@ -43,7 +44,6 @@ function PageAdditionalControls(props) {
       </DataElementWrapper>
     </>
   );
-
 }
 
 export default PageAdditionalControls;

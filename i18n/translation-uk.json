@@ -20,11 +20,13 @@
     "paste": "Вставити",
     "pasteWithoutFormatting": "Вставити без форматування",
     "delete": "Видалити",
+    "deleted": "Видалено",
     "group": "Група",
     "ungroup": "Розгрупувати",
     "download": "Завантажити",
     "edit": "Редагувати",
     "extract": "Екстракт",
+    "extractPage": "Витягти сторінку",
     "enterFullscreen": "Повноекранний",
     "exitFullscreen": "Вийти з повноекранного режиму",
     "fit": "Підходить",
@@ -32,6 +34,7 @@
     "fitToWidth": "Підходить до ширини",
     "more": "Більше",
     "openFile": "Відкрити файл",
+    "page": "Сторінка",
     "pagePrev": "Попередня сторінка",
     "pageNext": "Наступна сторінка",
     "pageSet": "Встановити сторінку",
@@ -44,6 +47,12 @@
     "rotate3D": "Поворот",
     "rotateClockwise": "Обертайте за годинниковою стрілкою",
     "rotateCounterClockwise": "Обертайте проти годинникової стрілки",
+    "rotatedClockwise": "обертається за годинниковою стрілкою",
+    "rotatedCounterClockwise": "обертається проти годинникової стрілки",
+    "rotationIs": "поточне обертання сторінки",
+    "movedToBottomOfDocument": "переміщено в нижню частину документа",
+    "movedToTopofDocument": "переміщено вгору документа",
+    "extracted": "видобутий",
     "save": "Зберегти",
     "post": "Пост",
     "create": "Створюйте",
@@ -56,6 +65,7 @@
     "zoomIn": "Збільшувати",
     "zoomOut": "Зменшення",
     "zoomSet": "Встановити масштаб",
+    "zoomChanged": "Поточний масштаб становить",
     "zoomControls": "Елементи керування масштабуванням",
     "draw": "Намалювати",
     "type": "Тип",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Редагувати поле форми",
     "viewShortCutKeysFor3D": "Перегляд комбінацій клавіш",
     "markAllRead": "Позначити все як прочитане",
+    "pageInsertion": "Вставка сторінки",
     "insertPage": "Вставка сторінки",
     "insert": "Вставка",
     "pageManipulation": "Маніпулювання сторінками",
     "replace": "Замінити",
+    "replacePage": "Замінити сторінку",
+    "modal": "модальний",
+    "isOpen": "відкритий",
     "setDestination": "Встановити пункт призначення",
     "showLess": "показувати менше",
     "showMore": "...більше",
@@ -89,6 +103,8 @@
     "select": "Виберіть",
     "moveToTop": "Перейти вгору",
     "moveToBottom": "Переміститися вниз",
+    "movePageToTop": "Перемістити сторінку вгору",
+    "movePageToBottom": "Перемістити сторінку вниз",
     "backToMenu": "Назад до меню",
     "redactPages": "Редагувати сторінки",
     "playAudio": "Відтворити аудіо",
@@ -139,6 +155,7 @@
     "redact": "Редагувати",
     "formFillDot": "Крапка",
     "signature": "Підпис",
+    "snipping": "Інструмент обрізки",
     "squiggly": "Хвиляста",
     "stamp": "штамп",
     "stickyNote": "Примітка",
@@ -576,7 +593,11 @@
       "delete": "Видалити",
       "rotateClockwise": "За годинниковою стрілкою",
       "rotateCounterClockwise": "Проти годинникової стрілки",
-      "moreOptions": "Більше варіантів"
+      "rotatePageClockwise": "Повернути сторінку за годинниковою стрілкою",
+      "rotatePageCounterClockwise": "Повернути сторінку проти годинникової стрілки",
+      "moreOptions": "Більше варіантів",
+      "moreOptionsMenu": "Меню додаткових параметрів мініатюр",
+      "enterPageNumbers": "Введіть номери сторінок для вибору"
     },
     "thumbnailsControlOverlay": {
       "move": "Переміщення сторінок"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Ви впевнені, що хочете скасувати обрізання всіх вибраних сторінок?"
     }
   },
+  "snippingPopUp": {
+    "title": "Інструмент обрізки",
+    "clipboard": "Копіювати до буферу обміну",
+    "download": "Завантажити",
+    "cropAndRemove": "Обрізати та Видалити",
+    "snippingModal": {
+      "applyTitle": "Застосувати обрізку?",
+      "applyMessage": "Ця дія назавжди обріже вказану область і видалить інші сторінки. Це не можна скасувати.",
+      "cancelTitle": "Скасувати обрізку?",
+      "cancelMessage": "Ви впевнені, що хочете припинити обрізку?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Абзац",
     "text": "текст"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Ім'я файлу",
     "folderNameAlreadyExists": "Назва папки вже існує",
     "fileNameAlreadyExists": "Назва файлу вже існує",
-    "openFile": "Відкрити в новій вкладці"
+    "openFile": "Відкрити в новій вкладці",
+    "fileAlreadyExists": "Файл уже існує",
+    "fileAlreadyExistsMessage": "Файл \"{{fileName}}\" вже існує в портфоліо.",
+    "deletePortfolio": "Ви впевнені, що хочете видалити \"{{fileName}}\"?",
+    "reselect": "Виберіть повторно"
   },
   "languageModal": {
     "selectLanguage": "Оберіть мову"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Міжрядковий і абзацний інтервали",
     "bulletList": "Маркірований список",
     "numberList": "Нумерований список",
+    "decreaseIndent": "Зменшити відступ",
+    "increaseIndent": "Збільшити відступ",
     "insertLink": "Вставте посилання",
     "insertImage": "Вставте зображення",
     "notSupportedOnMobile": "Редагування Office не підтримується на мобільних пристроях."

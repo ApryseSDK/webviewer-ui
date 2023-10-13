@@ -24,7 +24,7 @@ describe('PageAdditionalControls', () => {
         moveToBottom={noop}
       />);
 
-      const moveToTopButton = container.querySelector('.Button[aria-label="Move to top"]');
+      const moveToTopButton = container.querySelector('.Button[aria-label="Move Page to Top"]');
       expect(moveToTopButton).toBeInTheDocument();
       fireEvent.click(moveToTopButton);
       expect(moveToTop).toBeCalled();
@@ -37,11 +37,10 @@ describe('PageAdditionalControls', () => {
         moveToBottom={moveToBottom}
       />);
 
-      const moveToBottomButton = container.querySelector('.Button[aria-label="Move to bottom"]');
+      const moveToBottomButton = container.querySelector('.Button[aria-label="Move Page to Bottom"]');
       expect(moveToBottomButton).toBeInTheDocument();
       fireEvent.click(moveToBottomButton);
       expect(moveToBottom).toBeCalled();
     });
-
   });
 });

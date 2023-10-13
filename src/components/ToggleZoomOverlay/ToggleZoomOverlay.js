@@ -133,6 +133,9 @@ const ToggleZoomOverlay = ({ documentViewerKey = undefined }) => {
         title="action.zoomOut"
         dataElement="zoomOutButton"
       />
+      <span className="visually-hidden">
+        <p aria-live="assertive" role="status">{t('action.zoomChanged')} {value}%</p>
+      </span>
       <ActionButton
         img="icon-header-zoom-in-line"
         onClick={() => zoomIn(isMultiViewerMode, documentViewerKey)}

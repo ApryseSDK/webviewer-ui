@@ -20,11 +20,13 @@
     "paste": "Pasta",
     "pasteWithoutFormatting": "Wklej bez formatowania",
     "delete": "Usuń",
+    "deleted": "Usunięto",
     "group": "Grupuj",
     "ungroup": "Rozgrupuj",
     "download": "Pobierz",
     "edit": "Edytuj",
     "extract": "Wyodrębnij",
+    "extractPage": "Wyodrębnij stronę",
     "enterFullscreen": "Pełny ekran",
     "exitFullscreen": "Wyłącz tryb pełnoekranowy",
     "fit": "Dopasuj",
@@ -32,6 +34,7 @@
     "fitToWidth": "Dopasuj do szerokości",
     "more": "Więcej",
     "openFile": "Otwórz plik",
+    "page": "Strona",
     "pagePrev": "Poprzednia strona",
     "pageNext": "Następna strona",
     "pageSet": "Ustaw stronę",
@@ -44,6 +47,12 @@
     "rotate3D": "Obróć 3D",
     "rotateClockwise": "Obróć w prawo",
     "rotateCounterClockwise": "Obróć w lewo",
+    "rotatedClockwise": "obrócony zgodnie z ruchem wskazówek zegara",
+    "rotatedCounterClockwise": "obrócony w kierunku przeciwnym do ruchu wskazówek zegara",
+    "rotationIs": "bieżąca rotacja strony wynosi",
+    "movedToBottomOfDocument": "przeniesiony na dół dokumentu",
+    "movedToTopofDocument": "przeniesiono na górę dokumentu",
+    "extracted": "wytłoczony",
     "save": "Zapisz",
     "post": "Opublikuj",
     "create": "Stwórz",
@@ -56,6 +65,7 @@
     "zoomIn": "Powiększ",
     "zoomOut": "Oddal",
     "zoomSet": "Ustaw powiększenie",
+    "zoomChanged": "Aktualny zoom to",
     "zoomControls": "Sterowanie powiększeniem",
     "draw": "Rysuj",
     "type": "Rodzaj",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Edytuj pole formularza",
     "viewShortCutKeysFor3D": "Wyświetl klawisze skrótów",
     "markAllRead": "Oznacz wszystkie jako przeczytane",
+    "pageInsertion": "Wstawianie strony",
     "insertPage": "Wstaw stronę",
     "insert": "Wstawić",
     "pageManipulation": "Manipulacja stronami",
     "replace": "Zastąp",
+    "replacePage": "Zamień stronę",
+    "modal": "modalny",
+    "isOpen": "jest otwarte",
     "setDestination": "Ustaw cel",
     "showLess": "Pokaż mniej",
     "showMore": "Pokaż więcej",
@@ -89,6 +103,8 @@
     "select": "Wybierz",
     "moveToTop": "Przejdź na górę",
     "moveToBottom": "Przejdź na dół",
+    "movePageToTop": "Przenieś stronę na górę",
+    "movePageToBottom": "Przesuń stronę na dół",
     "backToMenu": "Powrót do menu",
     "redactPages": "Redaguj strony",
     "playAudio": "Odtwórz dźwięk",
@@ -139,6 +155,7 @@
     "redact": "Redaguj",
     "formFillDot": "Kropka",
     "signature": "Podpis",
+    "snipping": "Narzędzie Wycinania",
     "squiggly": "Falista linia",
     "stamp": "Stempel",
     "stickyNote": "Notatka",
@@ -576,7 +593,11 @@
       "delete": "Usuń",
       "rotateClockwise": "Zgodnie ze wskazówkami zegara",
       "rotateCounterClockwise": "Przeciwnie do ruchu wskazówek zegara",
-      "moreOptions": "Więcej opcji"
+      "rotatePageClockwise": "Obróć stronę zgodnie z ruchem wskazówek zegara",
+      "rotatePageCounterClockwise": "Obróć stronę przeciwnie do ruchu wskazówek zegara",
+      "moreOptions": "Więcej opcji",
+      "moreOptionsMenu": "Więcej menu opcji miniatur",
+      "enterPageNumbers": "Wprowadź numery stron do wyboru"
     },
     "thumbnailsControlOverlay": {
       "move": "Przenieś strony"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Czy na pewno chcesz anulować przycinanie wszystkich wybranych stron?"
     }
   },
+  "snippingPopUp": {
+    "title": "Narzędzie Wycinania",
+    "clipboard": "Kopiuj do Schowka",
+    "download": "Pobierz",
+    "cropAndRemove": "Przytnij i Usuń",
+    "snippingModal": {
+      "applyTitle": "Zastosować wycinanie?",
+      "applyMessage": "Ta operacja trwale wycina określony obszar i usuwa inne strony. Nie można jej cofnąć.",
+      "cancelTitle": "Anulować wycinanie?",
+      "cancelMessage": "Czy na pewno chcesz przerwać wycinanie?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Ustęp",
     "text": "Tekst"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Nazwa pliku",
     "folderNameAlreadyExists": "Nazwa folderu już istnieje",
     "fileNameAlreadyExists": "Nazwa pliku już istnieje",
-    "openFile": "Otwórz w nowej karcie"
+    "openFile": "Otwórz w nowej karcie",
+    "fileAlreadyExists": "Plik już istnieje",
+    "fileAlreadyExistsMessage": "Plik „{{fileName}}” już istnieje w portfolio.",
+    "deletePortfolio": "Czy na pewno chcesz usunąć „{{fileName}}”?",
+    "reselect": "Wybierz ponownie"
   },
   "languageModal": {
     "selectLanguage": "Wybierz język"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Odstępy między wierszami i akapitami",
     "bulletList": "Lista wypunktowana",
     "numberList": "Lista numerowana",
+    "decreaseIndent": "Zmniejsz wcięcie",
+    "increaseIndent": "Zwiększ wcięcie",
     "insertLink": "Wstaw łącze",
     "insertImage": "Umieść obraz",
     "notSupportedOnMobile": "Edycja pakietu Office nie jest obsługiwana na urządzeniach mobilnych."

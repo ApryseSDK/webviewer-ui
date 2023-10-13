@@ -10,6 +10,7 @@ import PageManipulationOverlayButton from 'components/PageManipulationOverlayBut
 import { workerTypes } from 'constants/types';
 import core from 'src/core';
 import DataElements from 'constants/dataElement';
+import { useTranslation } from 'react-i18next';
 
 const propTypes = {
   index: PropTypes.number.isRequired,
@@ -18,6 +19,7 @@ const propTypes = {
 const dataElementName = 'thumbnailControl';
 
 const ThumbnailControls = ({ index }) => {
+  const { t } = useTranslation();
   const [isElementDisabled] = useSelector((state) => [selectors.isElementDisabled(state, dataElementName)]);
   const [isMoreOptionDisabled] = useSelector((state) => [selectors.isElementDisabled(state, DataElements.PAGE_MANIPULATION_OVERLAY_BUTTON)]);
   const [isPageDeletionConfirmationModalEnabled, selectedIndexes] = useSelector((state) => [
@@ -52,13 +54,13 @@ const ThumbnailControls = ({ index }) => {
       className="rotate-button"
       img="icon-header-page-manipulation-page-rotation-clockwise-line"
       onClick={() => rotateClockwise(pageNumbers)}
-      title="option.thumbnailPanel.rotateClockwise"
+      title="option.thumbnailPanel.rotatePageClockwise"
       dataElement="thumbRotateClockwise"
     />,
     'thumbRotateCounterClockwise': <Button
       img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
       onClick={() => rotateCounterClockwise(pageNumbers)}
-      title="option.thumbnailPanel.rotateCounterClockwise"
+      title="option.thumbnailPanel.rotatePageCounterClockwise"
       dataElement="thumbRotateCounterClockwise"
     />,
     'thumbDelete': <Button
@@ -67,6 +69,7 @@ const ThumbnailControls = ({ index }) => {
       onClick={() => deletePages(pageNumbers, dispatch, isPageDeletionConfirmationModalEnabled)}
       title="option.thumbnailPanel.delete"
       dataElement="thumbDelete"
+      onClickAnnouncement={`${t('action.delete')} ${t('action.modal')} ${t('action.isOpen')}`}
     />,
   };
   let isCustomized = false;
@@ -116,13 +119,13 @@ const ThumbnailControls = ({ index }) => {
         <Button
           img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
           onClick={() => rotateCounterClockwise(pageNumbers)}
-          title="option.thumbnailPanel.rotateCounterClockwise"
+          title="option.thumbnailPanel.rotatePageCounterClockwise"
           dataElement="thumbRotateCounterClockwise"
         />
         <Button
           img="icon-header-page-manipulation-page-rotation-clockwise-line"
           onClick={() => rotateClockwise(pageNumbers)}
-          title="option.thumbnailPanel.rotateClockwise"
+          title="option.thumbnailPanel.rotatePageClockwise"
           dataElement="thumbRotateClockwise"
         />
       </div>

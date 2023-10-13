@@ -20,6 +20,7 @@ import fireEvent from 'helpers/fireEvent';
 
 import './ThumbnailsPanel.scss';
 import getRootNode from 'helpers/getRootNode';
+import { useTranslation } from 'react-i18next';
 
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 
@@ -69,6 +70,8 @@ const ThumbnailsPanel = ({ panelSelector }) => {
     ],
     shallowEqual,
   );
+
+  const [t] = useTranslation();
 
   const listRef = useRef();
   const pendingThumbs = useRef([]);
@@ -549,10 +552,15 @@ const ThumbnailsPanel = ({ panelSelector }) => {
           dataElement="zoomThumbOutButton"
         />
         <input
+          role='slider'
           type="range"
+          aria-label='thumbnail size slider'
           min={ZOOM_RANGE_MIN}
           max={ZOOM_RANGE_MAX}
           value={thumbnailSize}
+          aria-valuemin={ZOOM_RANGE_MIN}
+          aria-valuemax={ZOOM_RANGE_MAX}
+          aria-valuenow={thumbnailSize}
           onChange={(e) => {
             setThumbnailSize(Number(e.target.value));
             updateNumberOfColumns();
@@ -595,6 +603,8 @@ const ThumbnailsPanel = ({ panelSelector }) => {
                 style={{ outline: 'none' }}
                 // Ensure we show the current page in the thumbnails when we open the panel
                 scrollToIndex={Math.floor((currentPage - 1) / numberOfColumns)}
+                role='grid'
+                aria-label={t('component.thumbnailsPanel')}
               />
               {isDragging ?
                 <div className="thumbnailAutoScrollArea" onDragOver={scrollDown} style={{ ...thumbnailAutoScrollAreaStyle, 'bottom': '70px' }}></div> : ''

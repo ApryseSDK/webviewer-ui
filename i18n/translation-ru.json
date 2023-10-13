@@ -20,11 +20,13 @@
     "paste": "Вставить",
     "pasteWithoutFormatting": "Вставить без форматирования",
     "delete": "Удалить",
+    "deleted": "Удалено",
     "group": "группа",
     "ungroup": "Ungroup",
     "download": "Скачать",
     "edit": "Редактировать",
     "extract": "экстракт",
+    "extractPage": "Извлечь страницу",
     "enterFullscreen": "Полный экран",
     "exitFullscreen": "Выйти из полного экрана",
     "fit": "Уместить",
@@ -32,6 +34,7 @@
     "fitToWidth": "Уместить по ширине",
     "more": "Больше",
     "openFile": "Открыть документ",
+    "page": "Страница",
     "pagePrev": "Предыдущая страница",
     "pageNext": "Следующая страница",
     "pageSet": "Установить страницу",
@@ -44,6 +47,12 @@
     "rotate3D": "Повернуть",
     "rotateClockwise": "По часовой",
     "rotateCounterClockwise": "Против часовой",
+    "rotatedClockwise": "повернут по часовой стрелке",
+    "rotatedCounterClockwise": "вращается против часовой стрелки",
+    "rotationIs": "текущая ротация страниц",
+    "movedToBottomOfDocument": "перемещено в конец документа",
+    "movedToTopofDocument": "перемещено в начало документа",
+    "extracted": "извлеченный",
     "save": "Сохранить",
     "post": "Почта",
     "create": "Создать",
@@ -56,6 +65,7 @@
     "zoomIn": "Увеличить",
     "zoomOut": "Уменьшить",
     "zoomSet": "Установить зум",
+    "zoomChanged": "Текущий масштаб",
     "zoomControls": "Управление масштабированием",
     "draw": "Привлечь",
     "type": "Тип",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Изменить поле формы",
     "viewShortCutKeysFor3D": "Просмотр горячих клавиш",
     "markAllRead": "Отметить все как прочитанные",
+    "pageInsertion": "Вставка страницы",
     "insertPage": "Вставка страницы",
     "insert": "Вставлять",
     "pageManipulation": "Манипуляции со страницей",
     "replace": "Заменять",
+    "replacePage": "Заменить страницу",
+    "modal": "модальный",
+    "isOpen": "открыт",
     "setDestination": "Установить пункт назначения",
     "showLess": "показывай меньше",
     "showMore": "...более",
@@ -89,6 +103,8 @@
     "select": "Выбирать",
     "moveToTop": "Наверх",
     "moveToBottom": "Вниз",
+    "movePageToTop": "Переместить страницу вверх",
+    "movePageToBottom": "Переместить страницу вниз",
     "backToMenu": "Назад к меню",
     "redactPages": "Редактировать страницы",
     "playAudio": "Воспроизвести аудио",
@@ -139,6 +155,7 @@
     "redact": "Редактировать",
     "formFillDot": "Точка",
     "signature": "Подпись",
+    "snipping": "Инструмент обрезки",
     "squiggly": "Волнистая линия",
     "stamp": "Штамп",
     "stickyNote": "Комментировать",
@@ -576,7 +593,11 @@
       "delete": "удалять",
       "rotateClockwise": "по часовой стрелке",
       "rotateCounterClockwise": "Против часовой стрелки",
-      "moreOptions": "Больше опций"
+      "rotatePageClockwise": "Повернуть страницу по часовой стрелке",
+      "rotatePageCounterClockwise": "Повернуть страницу против часовой стрелки",
+      "moreOptions": "Больше опций",
+      "moreOptionsMenu": "Меню дополнительных параметров миниатюр",
+      "enterPageNumbers": "Введите номера страниц, чтобы выбрать"
     },
     "thumbnailsControlOverlay": {
       "move": "Переместить страницы"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Вы уверены, что хотите отменить обрезку всех выбранных страниц?"
     }
   },
+  "snippingPopUp": {
+    "title": "Инструмент обрезки",
+    "clipboard": "Копировать в буфер обмена",
+    "download": "Скачать",
+    "cropAndRemove": "Обрезать и Удалить",
+    "snippingModal": {
+      "applyTitle": "Применить обрезку?",
+      "applyMessage": "Это действие окончательно обрежет указанную область и удалит другие страницы. Это нельзя отменить.",
+      "cancelTitle": "Отменить обрезку?",
+      "cancelMessage": "Вы уверены, что хотите прекратить обрезку?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Параграф",
     "text": "Текст"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Имя файла",
     "folderNameAlreadyExists": "Имя папки уже существует",
     "fileNameAlreadyExists": "Имя файла уже существует",
-    "openFile": "Открыть в новой вкладке"
+    "openFile": "Открыть в новой вкладке",
+    "fileAlreadyExists": "Файл уже существует",
+    "fileAlreadyExistsMessage": "Файл \"{{fileName}}\" уже существует в портфолио.",
+    "deletePortfolio": "Вы уверены, что хотите удалить \"{{fileName}}\"?",
+    "reselect": "Выберите повторно"
   },
   "languageModal": {
     "selectLanguage": "Выбрать язык"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Расстояние между строками и абзацами",
     "bulletList": "Маркированный список",
     "numberList": "Нумерованный список",
+    "decreaseIndent": "Уменьшить отступ",
+    "increaseIndent": "Увеличить отступ",
     "insertLink": "Вставить ссылку",
     "insertImage": "Вставить изображение",
     "notSupportedOnMobile": "Редактирование Office не поддерживается на мобильных устройствах."

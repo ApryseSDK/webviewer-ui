@@ -20,11 +20,13 @@
     "paste": "Vložit",
     "pasteWithoutFormatting": "Vložit bez formátování",
     "delete": "Vymazat",
+    "deleted": "Smazáno",
     "group": "Skupina",
     "ungroup": "Zrušit seskupení",
     "download": "Stažení",
     "edit": "Upravit",
     "extract": "Výpis",
+    "extractPage": "Extrahovat stránku",
     "enterFullscreen": "Celá obrazovka",
     "exitFullscreen": "Ukončete celou obrazovku",
     "fit": "Vejít se",
@@ -32,6 +34,7 @@
     "fitToWidth": "Přizpůsobit na šířku",
     "more": "Více",
     "openFile": "Otevřít soubor",
+    "page": "Strana",
     "pagePrev": "Předchozí stránka",
     "pageNext": "Další strana",
     "pageSet": "Nastavit stránku",
@@ -44,6 +47,12 @@
     "rotate3D": "Točit se",
     "rotateClockwise": "Otáčet po směru hodinových ručiček",
     "rotateCounterClockwise": "Otočte proti směru hodinových ručiček",
+    "rotatedClockwise": "otočený ve směru hodinových ručiček",
+    "rotatedCounterClockwise": "otočený proti směru hodinových ručiček",
+    "rotationIs": "aktuální rotace stránky je",
+    "movedToBottomOfDocument": "přesunuto na konec dokumentu",
+    "movedToTopofDocument": "přesunuto na začátek dokumentu",
+    "extracted": "extrahováno",
     "save": "Uložit",
     "post": "Pošta",
     "create": "Vytvořit",
@@ -56,6 +65,7 @@
     "zoomIn": "Přiblížit",
     "zoomOut": "Oddálit",
     "zoomSet": "Nastavte zoom",
+    "zoomChanged": "Aktuální zoom je",
     "zoomControls": "Ovládací prvky zoomu",
     "draw": "Kreslit",
     "type": "Typ",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Upravit pole formuláře",
     "viewShortCutKeysFor3D": "Zobrazit klávesové zkratky",
     "markAllRead": "označit vše jako přečtené",
+    "pageInsertion": "Vkládání stránky",
     "insertPage": "Vkládání stránky",
     "insert": "Vložit",
     "pageManipulation": "Manipulace se stránkou",
     "replace": "Nahradit",
+    "replacePage": "Nahradit stránku",
+    "modal": "modální",
+    "isOpen": "je otevřeno",
     "setDestination": "Nastav destinaci",
     "showLess": "Ukaž méně",
     "showMore": "...více",
@@ -89,6 +103,8 @@
     "select": "Vybrat",
     "moveToTop": "Přesunout nahoru",
     "moveToBottom": "Přesunout dolů",
+    "movePageToTop": "Přesunout stránku nahoru",
+    "movePageToBottom": "Přesunout stránku dolů",
     "backToMenu": "Zpět do menu",
     "redactPages": "Upravit stránky",
     "playAudio": "Přehrát zvuk",
@@ -139,6 +155,7 @@
     "redact": "Redigovat",
     "formFillDot": "Tečka",
     "signature": "Podpis",
+    "snipping": "Nástroj pro výřez",
     "squiggly": "Zkrouceně",
     "stamp": "Razítko",
     "stickyNote": "Poznámka",
@@ -576,7 +593,11 @@
       "delete": "Vymazat",
       "rotateClockwise": "Ve směru hodinových ručiček",
       "rotateCounterClockwise": "Proti směru hodinových ručiček",
-      "moreOptions": "Více možností"
+      "rotatePageClockwise": "Otočit stránku ve směru hodinových ručiček",
+      "rotatePageCounterClockwise": "Otočit stránku proti směru hodinových ručiček",
+      "moreOptions": "Více možností",
+      "moreOptionsMenu": "Nabídka možností více miniatur",
+      "enterPageNumbers": "Zadejte čísla stránek, které chcete vybrat"
     },
     "thumbnailsControlOverlay": {
       "move": "Přesunout stránky"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Opravdu chcete zrušit oříznutí všech vybraných stránek?"
     }
   },
+  "snippingPopUp": {
+    "title": "Nástroj pro výřez",
+    "clipboard": "Kopírovat do schránky",
+    "download": "Stáhnout",
+    "cropAndRemove": "Oříznout a odstranit",
+    "snippingModal": {
+      "applyTitle": "Použít výřez?",
+      "applyMessage": "Tato akce trvale vyřeže zvolenou oblast a odebere ostatní stránky. Nelze vrátit zpět.",
+      "cancelTitle": "Zrušit výřez?",
+      "cancelMessage": "Opravdu chcete zastavit výřez?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Odstavec",
     "text": "Text"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Název souboru",
     "folderNameAlreadyExists": "Název složky již existuje",
     "fileNameAlreadyExists": "Název souboru již existuje",
-    "openFile": "Otevřít na nové kartě"
+    "openFile": "Otevřít na nové kartě",
+    "fileAlreadyExists": "Soubor již existuje",
+    "fileAlreadyExistsMessage": "Soubor \"{{fileName}}\" již v portfoliu existuje.",
+    "deletePortfolio": "Opravdu chcete smazat \"{{fileName}}\"?",
+    "reselect": "Znovu vybrat"
   },
   "languageModal": {
     "selectLanguage": "Zvolte jazyk"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Řádkování a řádkování",
     "bulletList": "Seznam s odrážkami",
     "numberList": "Číslovaný seznam",
+    "decreaseIndent": "Zmenšit odsazení",
+    "increaseIndent": "Zvětšit odsazení",
     "insertLink": "Vložit odkaz",
     "insertImage": "Vložit obrázek",
     "notSupportedOnMobile": "Úpravy Office nejsou podporovány na mobilních zařízeních."

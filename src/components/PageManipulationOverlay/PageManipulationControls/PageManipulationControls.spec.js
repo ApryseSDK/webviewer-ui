@@ -28,7 +28,7 @@ describe('PageManipulationControls', () => {
         replacePages={noop}
       />);
 
-      const deletePagesButton = container.querySelector('.Button[aria-label="Delete"]');
+      const deletePagesButton = container.querySelector('.Button[aria-label="Delete Page"]');
       expect(deletePagesButton).toBeInTheDocument();
       fireEvent.click(deletePagesButton);
       expect(deletePages).toBeCalled();
@@ -43,7 +43,7 @@ describe('PageManipulationControls', () => {
         replacePages={noop}
       />);
 
-      const extractPagesButton = container.querySelector('.Button[aria-label="Extract"]');
+      const extractPagesButton = container.querySelector('.Button[aria-label="Extract Page"]');
       expect(extractPagesButton).toBeInTheDocument();
       fireEvent.click(extractPagesButton);
       expect(extractPages).toBeCalled();
@@ -58,7 +58,7 @@ describe('PageManipulationControls', () => {
         replacePages={replacePages}
       />);
 
-      const replacePagesButton = container.querySelector('.Button[aria-label="Replace"]');
+      const replacePagesButton = container.querySelector('.Button[aria-label="Replace Page"]');
       expect(replacePagesButton).toBeInTheDocument();
       fireEvent.click(replacePagesButton);
       expect(replacePages).toBeCalled();
@@ -73,7 +73,7 @@ describe('PageManipulationControls', () => {
         replacePages={noop}
       />);
 
-      const insertPagesButton = container.querySelector('.Button[aria-label="Insert"]');
+      const insertPagesButton = container.querySelector('.Button[aria-label="Insert Page"]');
       expect(insertPagesButton).toBeInTheDocument();
       fireEvent.click(insertPagesButton);
       expect(insertPages).toBeCalled();

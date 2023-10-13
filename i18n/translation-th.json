@@ -20,11 +20,13 @@
     "paste": "แปะ",
     "pasteWithoutFormatting": "วางโดยไม่ต้องจัดรูปแบบ",
     "delete": "ลบ",
+    "deleted": "ลบแล้ว",
     "group": "กลุ่ม",
     "ungroup": "เลิกจัดกลุ่ม",
     "download": "ดาวน์โหลด",
     "edit": "แก้ไข",
     "extract": "สารสกัด",
+    "extractPage": "แยกหน้า",
     "enterFullscreen": "เต็มจอ",
     "exitFullscreen": "ออกจากโหมดเต็มหน้าจอ",
     "fit": "พอดี",
@@ -32,6 +34,7 @@
     "fitToWidth": "พอดีกับความกว้าง",
     "more": "มากกว่า",
     "openFile": "เปิดไฟล์",
+    "page": "หน้าหนังสือ",
     "pagePrev": "หน้าก่อน",
     "pageNext": "หน้าต่อไป",
     "pageSet": "ตั้งหน้า",
@@ -44,6 +47,12 @@
     "rotate3D": "หมุน",
     "rotateClockwise": "หมุนตามเข็มนาฬิกา",
     "rotateCounterClockwise": "หมุนทวนเข็มนาฬิกา",
+    "rotatedClockwise": "หมุนตามเข็มนาฬิกา",
+    "rotatedCounterClockwise": "หมุนทวนเข็มนาฬิกา",
+    "rotationIs": "การหมุนหน้าปัจจุบันคือ",
+    "movedToBottomOfDocument": "ย้ายไปที่ด้านล่างของเอกสาร",
+    "movedToTopofDocument": "ย้ายไปที่ด้านบนของเอกสาร",
+    "extracted": "สกัดแล้ว",
     "save": "บันทึก",
     "post": "โพสต์",
     "create": "สร้าง",
@@ -56,6 +65,7 @@
     "zoomIn": "ขยายเข้า",
     "zoomOut": "ซูมออก",
     "zoomSet": "ตั้งค่าการซูม",
+    "zoomChanged": "การซูมปัจจุบันคือ",
     "zoomControls": "การควบคุมการซูม",
     "draw": "วาด",
     "type": "พิมพ์",
@@ -73,10 +83,14 @@
     "formFieldEdit": "แก้ไขแบบฟอร์มฟิลด์",
     "viewShortCutKeysFor3D": "ดูปุ่มลัด",
     "markAllRead": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว",
+    "pageInsertion": "การแทรกหน้า",
     "insertPage": "การแทรกหน้า",
     "insert": "แทรก",
     "pageManipulation": "การจัดการหน้า",
     "replace": "แทนที่",
+    "replacePage": "แทนที่หน้า",
+    "modal": "เป็นกิริยาช่วย",
+    "isOpen": "เปิด",
     "setDestination": "กำหนดปลายทาง",
     "showLess": "แสดงน้อยลง",
     "showMore": "...มากกว่า",
@@ -89,6 +103,8 @@
     "select": "เลือก",
     "moveToTop": "ย้ายไปด้านบน",
     "moveToBottom": "ย้ายไปด้านล่าง",
+    "movePageToTop": "ย้ายเพจไปด้านบน",
+    "movePageToBottom": "ย้ายเพจไปที่ด้านล่าง",
     "backToMenu": "กลับไปที่เมนู",
     "redactPages": "แก้ไขหน้า",
     "playAudio": "เล่นเสียง",
@@ -139,6 +155,7 @@
     "redact": "Redact",
     "formFillDot": "Dot",
     "signature": "ลายเซ็น",
+    "snipping": "เครื่องมือตัด",
     "squiggly": "ไก่เขี่ย",
     "stamp": "ประทับ",
     "stickyNote": "บันทึก",
@@ -576,7 +593,11 @@
       "delete": "ลบ",
       "rotateClockwise": "ตามเข็มนาฬิกา",
       "rotateCounterClockwise": "ทวนเข็มนาฬิกา",
-      "moreOptions": "ตัวเลือกเพิ่มเติม"
+      "rotatePageClockwise": "หมุนหน้าตามเข็มนาฬิกา",
+      "rotatePageCounterClockwise": "หมุนหน้าทวนเข็มนาฬิกา",
+      "moreOptions": "ตัวเลือกเพิ่มเติม",
+      "moreOptionsMenu": "เมนูตัวเลือกรูปขนาดย่อเพิ่มเติม",
+      "enterPageNumbers": "ใส่หมายเลขหน้าเพื่อเลือก"
     },
     "thumbnailsControlOverlay": {
       "move": "ย้ายหน้า"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการครอบตัดหน้าที่เลือกทั้งหมด"
     }
   },
+  "snippingPopUp": {
+    "title": "เครื่องมือตัด",
+    "clipboard": "คัดลอกไปยังคลิปบอร์ด",
+    "download": "ดาวน์โหลด",
+    "cropAndRemove": "ครอบและลบ",
+    "snippingModal": {
+      "applyTitle": "ใช้การตัด?",
+      "applyMessage": "การดำเนินการนี้จะตัดพื้นที่ที่ระบุโดยถาวรและเอาหน้าอื่นออก ไม่สามารถยกเลิกได้",
+      "cancelTitle": "ยกเลิกการตัด?",
+      "cancelMessage": "คุณแน่ใจหรือไม่ว่าต้องการหยุดการตัด?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "ย่อหน้า",
     "text": "ข้อความ"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "ชื่อไฟล์",
     "folderNameAlreadyExists": "ชื่อโฟลเดอร์มีอยู่แล้ว",
     "fileNameAlreadyExists": "ชื่อไฟล์มีอยู่แล้ว",
-    "openFile": "เปิดในแท็บใหม่"
+    "openFile": "เปิดในแท็บใหม่",
+    "fileAlreadyExists": "มีไฟล์อยู่แล้ว",
+    "fileAlreadyExistsMessage": "ไฟล์ \"{{fileName}}\" มีอยู่ในพอร์ตโฟลิโอแล้ว",
+    "deletePortfolio": "แน่ใจไหมว่าต้องการลบ \"{{fileName}}\"",
+    "reselect": "เลือกใหม่"
   },
   "languageModal": {
     "selectLanguage": "เลือกภาษา"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "ระยะห่างระหว่างบรรทัดและย่อหน้า",
     "bulletList": "รายการสัญลักษณ์แสดงหัวข้อย่อย",
     "numberList": "รายการหมายเลข",
+    "decreaseIndent": "ลดการเยื้อง",
+    "increaseIndent": "เพิ่มการเยื้อง",
     "insertLink": "ใส่ลิงค์",
     "insertImage": "แทรกรูปภาพ",
     "notSupportedOnMobile": "อุปกรณ์พกพาไม่รองรับการแก้ไข Office"

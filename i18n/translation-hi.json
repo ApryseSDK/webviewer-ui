@@ -20,11 +20,13 @@
     "paste": "पेस्ट करें",
     "pasteWithoutFormatting": "बिना फॉर्मेट किए पेस्ट करें",
     "delete": "हटाएं",
+    "deleted": "हटाए गए",
     "group": "समूह",
     "ungroup": "असमूहीकृत",
     "download": "डाउनलोड",
     "edit": "संपादित करें",
     "extract": "निचोड़",
+    "extractPage": "पेज निकालें",
     "enterFullscreen": "पूर्ण स्क्रीन",
     "exitFullscreen": "पूर्ण स्क्रीन से बाहर निकलें",
     "fit": "फ़िट",
@@ -32,6 +34,7 @@
     "fitToWidth": "चौड़ाई में फ़िट करें",
     "more": "अधिक",
     "openFile": "खुली फाइल",
+    "page": "पृष्ठ",
     "pagePrev": "पिछला पृष्ठ",
     "pageNext": "अगला पृष्ठ",
     "pageSet": "पृष्ठ स्थापित करें",
@@ -44,6 +47,12 @@
     "rotate3D": "घुमाएँ",
     "rotateClockwise": "घड़ी की सुई की दिशा में घुमाओ",
     "rotateCounterClockwise": "वामावर्त स्थिति में घुमाएं",
+    "rotatedClockwise": "दक्षिणावर्त घुमाया गया",
+    "rotatedCounterClockwise": "वामावर्त घुमाया",
+    "rotationIs": "वर्तमान पेज रोटेशन है",
+    "movedToBottomOfDocument": "दस्तावेज़ के निचले भाग में ले जाया गया",
+    "movedToTopofDocument": "दस्तावेज़ के शीर्ष पर ले जाया गया",
+    "extracted": "निकाले",
     "save": "सहेजें",
     "post": "पद",
     "create": "सृजन करना",
@@ -56,6 +65,7 @@
     "zoomIn": "ज़ूम इन",
     "zoomOut": "ज़ूम आउट",
     "zoomSet": "ज़ूम सेट करें",
+    "zoomChanged": "वर्तमान ज़ूम है",
     "zoomControls": "ज़ूम नियंत्रण",
     "draw": "खींचना",
     "type": "प्रकार",
@@ -73,10 +83,14 @@
     "formFieldEdit": "प्रपत्र फ़ील्ड संपादित करें",
     "viewShortCutKeysFor3D": "शॉर्टकट कुंजियाँ देखें",
     "markAllRead": "सभी को पढ़ा हुआ मार्क करें",
+    "pageInsertion": "पृष्ठ प्रविष्टि",
     "insertPage": "पेज इंसर्शन",
     "insert": "डालना",
     "pageManipulation": "पृष्ठ हेरफेर",
     "replace": "बदलने के",
+    "replacePage": "पेज बदलें",
+    "modal": "मॉडल",
+    "isOpen": "खुला है",
     "setDestination": "गंतव्य तय करें",
     "showLess": "कम दिखाएं",
     "showMore": "...अधिक",
@@ -89,6 +103,8 @@
     "select": "चुनते हैं",
     "moveToTop": "शीर्ष पर जाएं",
     "moveToBottom": "नीचे ले जाएँ",
+    "movePageToTop": "पृष्ठ को शीर्ष पर ले जाएँ",
+    "movePageToBottom": "पेज को नीचे ले जाएँ",
     "backToMenu": "मैन्यू में वापस",
     "redactPages": "पृष्ठ सुधारें",
     "playAudio": "ऑडियो चलाएं",
@@ -139,6 +155,7 @@
     "redact": "संपादन",
     "formFillDot": "दूरसंचार विभाग",
     "signature": "हस्ताक्षर",
+    "snipping": "स्निपिंग टूल",
     "squiggly": "टेढ़ा-मेढ़ा",
     "stamp": "डाक टिकट",
     "stickyNote": "ध्यान दें",
@@ -576,7 +593,11 @@
       "delete": "हटाएं",
       "rotateClockwise": "दक्षिणावर्त",
       "rotateCounterClockwise": "वामावर्त",
-      "moreOptions": "अधिक विकल्प"
+      "rotatePageClockwise": "पृष्ठ को दक्षिणावर्त घुमाएँ",
+      "rotatePageCounterClockwise": "पृष्ठ को वामावर्त घुमाएँ",
+      "moreOptions": "अधिक विकल्प",
+      "moreOptionsMenu": "अधिक थंबनेल विकल्प मेनू",
+      "enterPageNumbers": "चयन करने के लिए पृष्ठ क्रमांक दर्ज करें"
     },
     "thumbnailsControlOverlay": {
       "move": "पन्ने ले जाएँ"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "क्या आप वाकई सभी चयनित पृष्ठों को क्रॉप करना रद्द करना चाहते हैं?"
     }
   },
+  "snippingPopUp": {
+    "title": "स्निपिंग टूल",
+    "clipboard": "क्लिपबोर्ड पर कॉपी करें",
+    "download": "डाउनलोड",
+    "cropAndRemove": "कट और हटाएं",
+    "snippingModal": {
+      "applyTitle": "कट निकालने का आवेदन करें?",
+      "applyMessage": "इस क्रिया से निर्दिष्ट क्षेत्र को स्थायित रूप से कट दिया जाएगा और अन्य पृष्ठ हटा दिए जाएंगे। इसे पूर्ववत नहीं किया जा सकता है।",
+      "cancelTitle": "कट निकालने को रद्द करें?",
+      "cancelMessage": "क्या आप वाकई कट निकालना बंद करना चाहते हैं?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "अनुच्छेद",
     "text": "मूलपाठ"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "फ़ाइल का नाम",
     "folderNameAlreadyExists": "फ़ोल्डर नाम पहले से मौजूद है",
     "fileNameAlreadyExists": "फ़ाइल नाम पहले से मौजूद है",
-    "openFile": "वेब टेब में खोलें"
+    "openFile": "वेब टेब में खोलें",
+    "fileAlreadyExists": "फ़ाइल पहले से ही मौजूद है",
+    "fileAlreadyExistsMessage": "फ़ाइल \"{{fileName}}\" पहले से ही पोर्टफ़ोलियो में मौजूद है।",
+    "deletePortfolio": "क्या आप वाकई \"{{fileName}}\" को हटाना चाहते हैं?",
+    "reselect": "फिर से चुनें"
   },
   "languageModal": {
     "selectLanguage": "भाषा का चयन करें"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "लाइन और पैराग्राफ स्पेसिंग",
     "bulletList": "बुलेटेड सूची",
     "numberList": "क्रमांकित सूची",
+    "decreaseIndent": "समान का आर्डर कम करें",
+    "increaseIndent": "बढ़ते हुए अंतर में",
     "insertLink": "लिंक डालें",
     "insertImage": "चित्र डालें",
     "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।"

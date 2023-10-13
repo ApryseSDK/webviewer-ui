@@ -20,11 +20,13 @@
     "paste": "Pastă",
     "pasteWithoutFormatting": "Lipiți fără formatare",
     "delete": "Șterge",
+    "deleted": "Șters",
     "group": "grup",
     "ungroup": "Degrupați",
     "download": "Descarca",
     "edit": "Editați | ×",
     "extract": "Extrage",
+    "extractPage": "Extrage pagina",
     "enterFullscreen": "Ecran complet",
     "exitFullscreen": "Ieșiți din ecranul complet",
     "fit": "Potrivi",
@@ -32,6 +34,7 @@
     "fitToWidth": "Se potrivește la lățime",
     "more": "Mai mult",
     "openFile": "Deschide fișierul",
+    "page": "Pagină",
     "pagePrev": "Pagina anterioară",
     "pageNext": "Pagina următoare",
     "pageSet": "Setați pagina",
@@ -44,6 +47,12 @@
     "rotate3D": "Roti",
     "rotateClockwise": "Roteste in sensul acelor de ceasornic",
     "rotateCounterClockwise": "Rotiți în sens invers acelor de ceasornic",
+    "rotatedClockwise": "rotit în sensul acelor de ceasornic",
+    "rotatedCounterClockwise": "rotit în sens invers acelor de ceasornic",
+    "rotationIs": "rotația curentă a paginii este",
+    "movedToBottomOfDocument": "mutat în partea de jos a documentului",
+    "movedToTopofDocument": "mutat în partea de sus a documentului",
+    "extracted": "extrase",
     "save": "Salvați",
     "post": "Post",
     "create": "Crea",
@@ -56,6 +65,7 @@
     "zoomIn": "A mari",
     "zoomOut": "A micsora",
     "zoomSet": "Setați zoom-ul",
+    "zoomChanged": "Zoomul actual este",
     "zoomControls": "Controale zoom",
     "draw": "A desena",
     "type": "Tip",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Editați câmpul formularului",
     "viewShortCutKeysFor3D": "Vizualizați tastele de comenzi rapide",
     "markAllRead": "Marcheaza totul ca fiind citit",
+    "pageInsertion": "Inserarea paginii",
     "insertPage": "Inserarea paginii",
     "insert": "Introduce",
     "pageManipulation": "Manipularea paginii",
     "replace": "A inlocui",
+    "replacePage": "Înlocuiește pagina",
+    "modal": "modal",
+    "isOpen": "este deschis",
     "setDestination": "Seteaza destinatia",
     "showLess": "arata mai putin",
     "showMore": "...Mai mult",
@@ -89,6 +103,8 @@
     "select": "Selectați",
     "moveToTop": "Mutați sus",
     "moveToBottom": "Mutați în jos",
+    "movePageToTop": "Mutați pagina în sus",
+    "movePageToBottom": "Mutați pagina în jos",
     "backToMenu": "Inapoi la meniu",
     "redactPages": "Redact pagini",
     "playAudio": "Redați audio",
@@ -139,6 +155,7 @@
     "redact": "Redacta",
     "formFillDot": "Punct",
     "signature": "Semnătură",
+    "snipping": "Instrument de Tăiere",
     "squiggly": "Squiggly",
     "stamp": "Timbru",
     "stickyNote": "Notă",
@@ -576,7 +593,11 @@
       "delete": "Șterge",
       "rotateClockwise": "În sensul acelor de ceasornic",
       "rotateCounterClockwise": "În sens invers acelor de ceasornic",
-      "moreOptions": "Mai multe opțiuni"
+      "rotatePageClockwise": "Rotiți pagina în sensul acelor de ceasornic",
+      "rotatePageCounterClockwise": "Rotiți pagina în sens invers acelor de ceasornic",
+      "moreOptions": "Mai multe opțiuni",
+      "moreOptionsMenu": "Mai multe miniaturi Meniu Opțiuni",
+      "enterPageNumbers": "Introduceți numerele de pagină pentru a le selecta"
     },
     "thumbnailsControlOverlay": {
       "move": "Mutați paginile"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Sigur doriți să anulați decuparea tuturor paginilor selectate?"
     }
   },
+  "snippingPopUp": {
+    "title": "Instrument de Tăiere",
+    "clipboard": "Copiați în Clipboard",
+    "download": "Descărcare",
+    "cropAndRemove": "Decupați și Eliminați",
+    "snippingModal": {
+      "applyTitle": "Aplicați tăierea?",
+      "applyMessage": "Această acțiune va tăia în mod permanent zona specificată și va elimina alte pagini. Nu poate fi anulată.",
+      "cancelTitle": "Anulați tăierea?",
+      "cancelMessage": "Sunteți sigur că doriți să opriți tăierea?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragraf",
     "text": "Text"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Nume de fișier",
     "folderNameAlreadyExists": "Numele dosarului există deja",
     "fileNameAlreadyExists": "Numele fișierului există deja",
-    "openFile": "Deschideți în filă nouă"
+    "openFile": "Deschideți în filă nouă",
+    "fileAlreadyExists": "Fisierul există deja",
+    "fileAlreadyExistsMessage": "Fișierul „{{fileName}}” există deja în portofoliu.",
+    "deletePortfolio": "Sigur doriți să ștergeți „{{fileName}}”?",
+    "reselect": "Reselectați"
   },
   "languageModal": {
     "selectLanguage": "Selecteaza limba"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Spațiere între rânduri și paragrafe",
     "bulletList": "Listă cu puncte",
     "numberList": "Lista numerotata",
+    "decreaseIndent": "Reduceți indentarea",
+    "increaseIndent": "Mareste indent-ul",
     "insertLink": "Introduceți linkul",
     "insertImage": "Inserați imaginea",
     "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile."

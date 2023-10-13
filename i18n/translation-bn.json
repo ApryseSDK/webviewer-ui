@@ -20,11 +20,13 @@
     "paste": "পেস্ট করুন",
     "pasteWithoutFormatting": "বিন্যাস ছাড়া পেস্ট করুন",
     "delete": "মুছে ফেলা",
+    "deleted": "মুছে ফেলা হয়েছে",
     "group": "গ্রুপ",
     "ungroup": "আনগ্রুপ করুন",
     "download": "ডাউনলোড করুন",
     "edit": "সম্পাদনা করুন",
     "extract": "নির্যাস",
+    "extractPage": "পৃষ্ঠা এক্সট্র্যাক্ট করুন",
     "enterFullscreen": "পূর্ণ পর্দা",
     "exitFullscreen": "পূর্ণ পর্দা সরান",
     "fit": "ফিট",
@@ -32,6 +34,7 @@
     "fitToWidth": "প্রস্থে মাপসই",
     "more": "আরও",
     "openFile": "খোলা ফাইল",
+    "page": "পাতা",
     "pagePrev": "আগের পৃষ্ঠা",
     "pageNext": "পরবর্তী পৃষ্ঠা",
     "pageSet": "পৃষ্ঠা সেট করুন",
@@ -44,6 +47,12 @@
     "rotate3D": "আবর্তিত",
     "rotateClockwise": "ঘড়ির কাঁটার দিকে ঘোরান",
     "rotateCounterClockwise": "বামাবর্তে ঘোরাতে",
+    "rotatedClockwise": "ঘড়ির কাঁটার দিকে ঘোরানো",
+    "rotatedCounterClockwise": "ঘড়ির কাঁটার বিপরীত দিকে ঘোরানো",
+    "rotationIs": "বর্তমান পৃষ্ঠা ঘূর্ণন হয়",
+    "movedToBottomOfDocument": "নথির নীচে সরানো হয়েছে",
+    "movedToTopofDocument": "নথির শীর্ষে সরানো হয়েছে",
+    "extracted": "নিষ্কাশিত",
     "save": "সংরক্ষণ",
     "post": "পোস্ট",
     "create": "সৃষ্টি",
@@ -56,6 +65,7 @@
     "zoomIn": "প্রসারিত করো",
     "zoomOut": "ছোট করা",
     "zoomSet": "জুম সেট করুন",
+    "zoomChanged": "বর্তমান জুম হয়",
     "zoomControls": "জুম নিয়ন্ত্রণ",
     "draw": "আঁকা",
     "type": "টাইপ",
@@ -73,10 +83,14 @@
     "formFieldEdit": "ফর্ম ক্ষেত্র সম্পাদনা করুন",
     "viewShortCutKeysFor3D": "শর্টকাট কী দেখুন",
     "markAllRead": "সবগুলো পঠিত বলে সনাক্ত কর",
+    "pageInsertion": "পৃষ্ঠা সন্নিবেশ",
     "insertPage": "পৃষ্ঠা সন্নিবেশ",
     "insert": "ঢোকান",
     "pageManipulation": "পৃষ্ঠা ম্যানিপুলেশন",
     "replace": "প্রতিস্থাপন করুন",
+    "replacePage": "পৃষ্ঠা প্রতিস্থাপন করুন",
+    "modal": "মডেল",
+    "isOpen": "খোলা",
     "setDestination": "লক্ষ ঠিক করো",
     "showLess": "প্রদর্শন কম",
     "showMore": "...আরো",
@@ -89,6 +103,8 @@
     "select": "নির্বাচন করুন",
     "moveToTop": "উপরে সরান",
     "moveToBottom": "নীচে সরান",
+    "movePageToTop": "পৃষ্ঠাটি শীর্ষে সরান৷",
+    "movePageToBottom": "পৃষ্ঠাটি নীচে সরান",
     "backToMenu": "মেনুতে ফিরে যান",
     "redactPages": "পৃষ্ঠাগুলি সংশোধন করুন",
     "playAudio": "অডিও চালান",
@@ -139,6 +155,7 @@
     "redact": "সংশোধিত",
     "formFillDot": "ডট",
     "signature": "স্বাক্ষর",
+    "snipping": "স্নিপিং টুল",
     "squiggly": "স্কুইগ্লি",
     "stamp": "ছাপ",
     "stickyNote": "বিঃদ্রঃ",
@@ -576,7 +593,11 @@
       "delete": "মুছে ফেলা",
       "rotateClockwise": "ঘড়ির কাঁটার দিকে",
       "rotateCounterClockwise": "ঘড়ির কাঁটার বিপরীত দিকে",
-      "moreOptions": "আরও বিকল্প"
+      "rotatePageClockwise": "পৃষ্ঠা ঘড়ির কাঁটার দিকে ঘোরান",
+      "rotatePageCounterClockwise": "পৃষ্ঠা ঘড়ির কাঁটার বিপরীত দিকে ঘোরান",
+      "moreOptions": "আরও বিকল্প",
+      "moreOptionsMenu": "আরও থাম্বনেল বিকল্প মেনু",
+      "enterPageNumbers": "নির্বাচন করতে পৃষ্ঠা নম্বর লিখুন"
     },
     "thumbnailsControlOverlay": {
       "move": "পৃষ্ঠাগুলি সরান"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "আপনি কি নিশ্চিত যে আপনি সমস্ত নির্বাচিত পৃষ্ঠা ক্রপ করা বাতিল করতে চান?"
     }
   },
+  "snippingPopUp": {
+    "title": "স্নিপিং টুল",
+    "clipboard": "ক্লিপবোর্ডে কপি করুন",
+    "download": "ডাউনলোড",
+    "cropAndRemove": "ক্রপ এবং সরানো",
+    "snippingModal": {
+      "applyTitle": "স্নিপিং প্রয়োগ করুন?",
+      "applyMessage": "এই ক্রিয়াটি নির্দিষ্ট এলাকাটি চিরকালের জন্য কাটবে এবং অন্যান্য পৃষ্ঠাগুলি সরাবে। এটি ফিরে পাওয়া যাবে না।",
+      "cancelTitle": "স্নিপিং বাতিল করতে?",
+      "cancelMessage": "আপনি কি নিশ্চিত যে আপনি স্নিপিং বন্ধ করতে চান?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "অনুচ্ছেদ",
     "text": "পাঠ্য"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "ফাইলের নাম",
     "folderNameAlreadyExists": "ফোল্ডারের নাম আগে থেকেই আছে",
     "fileNameAlreadyExists": "ফাইলের নাম আগে থেকেই আছে",
-    "openFile": "নতুন ট্যাবে খুলুন"
+    "openFile": "নতুন ট্যাবে খুলুন",
+    "fileAlreadyExists": "ফাইল ইতিমধ্যে বিদ্যমান",
+    "fileAlreadyExistsMessage": "পোর্টফোলিওতে \"{{fileName}}\" ফাইলটি আগে থেকেই আছে।",
+    "deletePortfolio": "আপনি কি \"{{fileName}}\" মুছতে চান?",
+    "reselect": "পুনরায় নির্বাচন করুন"
   },
   "languageModal": {
     "selectLanguage": "ভাষা নির্বাচন কর"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "লাইন এবং অনুচ্ছেদের ব্যবধান",
     "bulletList": "বুলেটযুক্ত তালিকা",
     "numberList": "সংখ্যাযুক্ত তালিকা",
+    "decreaseIndent": "ঘটণা হ্রাস",
+    "increaseIndent": "ইন্ডেন্ট বাড়ান",
     "insertLink": "লিঙ্ক ঢোকান",
     "insertImage": "ছবি ঢোকান",
     "notSupportedOnMobile": "অফিস সম্পাদনা মোবাইল ডিভাইসে সমর্থিত নয়।"

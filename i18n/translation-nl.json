@@ -20,11 +20,13 @@
     "paste": "Plakken",
     "pasteWithoutFormatting": "Plakken zonder opmaak",
     "delete": "Verwijder",
+    "deleted": "Verwijderd",
     "group": "Groep",
     "ungroup": "Ungroup",
     "download": "Download bestand",
     "edit": "Titel aanpassen",
     "extract": "Extract",
+    "extractPage": "Pagina uitpakken",
     "enterFullscreen": "Document in volledig scherm",
     "exitFullscreen": "Document normaal weergeven",
     "fit": "Zoomen",
@@ -32,6 +34,7 @@
     "fitToWidth": "Vensterbreedte",
     "more": "Meer",
     "openFile": "Open bestand",
+    "page": "Bladzijde",
     "pagePrev": "Vorige pagina",
     "pageNext": "Volgende bladzijde",
     "pageSet": "Kies pagina",
@@ -44,6 +47,12 @@
     "rotate3D": "Draaien",
     "rotateClockwise": "Met de klok mee",
     "rotateCounterClockwise": "Tegen de klok in",
+    "rotatedClockwise": "met de klok mee gedraaid",
+    "rotatedCounterClockwise": "tegen de klok in gedraaid",
+    "rotationIs": "huidige paginarotatie is",
+    "movedToBottomOfDocument": "verplaatst naar de onderkant van het document",
+    "movedToTopofDocument": "verplaatst naar de bovenkant van het document",
+    "extracted": "geëxtraheerd",
     "save": "Bewaren",
     "post": "Plaats",
     "create": "creëren",
@@ -56,6 +65,7 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom uit",
     "zoomSet": "Zoom instellen",
+    "zoomChanged": "Huidige zoom is",
     "zoomControls": "Zoomregelaars",
     "draw": "Teken",
     "type": "Type",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Formulierveld bewerken",
     "viewShortCutKeysFor3D": "Bekijk sneltoetsen",
     "markAllRead": "Markeer alles als gelezen",
+    "pageInsertion": "Pagina-invoeging",
     "insertPage": "Pagina invoegen",
     "insert": "Invoegen",
     "pageManipulation": "Paginamanipulatie",
     "replace": "Vervangen",
+    "replacePage": "Pagina vervangen",
+    "modal": "modaal",
+    "isOpen": "is geopend",
     "setDestination": "Bestemming instellen",
     "showLess": "laat minder zien",
     "showMore": "...meer",
@@ -89,6 +103,8 @@
     "select": "Selecteer",
     "moveToTop": "Ga naar boven",
     "moveToBottom": "Naar beneden verplaatsen",
+    "movePageToTop": "Pagina naar boven verplaatsen",
+    "movePageToBottom": "Pagina naar beneden verplaatsen",
     "backToMenu": "Terug naar menu",
     "redactPages": "Pagina's redigeren",
     "playAudio": "Audio afspelen",
@@ -139,6 +155,7 @@
     "redact": "Redigeren",
     "formFillDot": "Punt",
     "signature": "Handtekening",
+    "snipping": "Uitsnijden gereedschap",
     "squiggly": "Squiggly",
     "stamp": "Stempel",
     "stickyNote": "Commentaar",
@@ -576,7 +593,11 @@
       "delete": "Verwijderen",
       "rotateClockwise": "Met de klok mee",
       "rotateCounterClockwise": "Tegen de klok in",
-      "moreOptions": "Meer opties"
+      "rotatePageClockwise": "Pagina met de klok mee draaien",
+      "rotatePageCounterClockwise": "Pagina tegen de klok in draaien",
+      "moreOptions": "Meer opties",
+      "moreOptionsMenu": "Meer miniaturen Optiemenu",
+      "enterPageNumbers": "Voer paginanummers in om te selecteren"
     },
     "thumbnailsControlOverlay": {
       "move": "Pagina's verplaatsen"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Weet u zeker dat u het bijsnijden van alle geselecteerde pagina's wilt annuleren?"
     }
   },
+  "snippingPopUp": {
+    "title": "Uitsnijden gereedschap",
+    "clipboard": "Kopiëren naar Klembord",
+    "download": "Downloaden",
+    "cropAndRemove": "Bijsnijden en Verwijderen",
+    "snippingModal": {
+      "applyTitle": "Uitsnijden toepassen?",
+      "applyMessage": "Deze actie zal het opgegeven gebied permanent uitsnijden en andere pagina's verwijderen. Dit kan niet ongedaan worden gemaakt.",
+      "cancelTitle": "Uitsnijden annuleren?",
+      "cancelMessage": "Weet u zeker dat u het uitsnijden wilt stoppen?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragraaf",
     "text": "Tekst"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Bestandsnaam",
     "folderNameAlreadyExists": "Mapnaam bestaat al",
     "fileNameAlreadyExists": "Bestandsnaam bestaat al",
-    "openFile": "Openen in nieuw tabblad"
+    "openFile": "Openen in nieuw tabblad",
+    "fileAlreadyExists": "Bestand bestaat al",
+    "fileAlreadyExistsMessage": "Het bestand \"{{fileName}}\" bestaat al in het portfolio.",
+    "deletePortfolio": "Weet u zeker dat u \"{{fileName}}\" wilt verwijderen?",
+    "reselect": "Opnieuw selecteren"
   },
   "languageModal": {
     "selectLanguage": "Selecteer taal"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Regel- en alinea-afstand",
     "bulletList": "Lijst met opsommingstekens",
     "numberList": "Genummerde lijst",
+    "decreaseIndent": "Inspringing verkleinen",
+    "increaseIndent": "Inspringing vergroten",
     "insertLink": "Koppeling invoegen",
     "insertImage": "Voeg afbeelding in",
     "notSupportedOnMobile": "Office-bewerking wordt niet ondersteund op mobiele apparaten."

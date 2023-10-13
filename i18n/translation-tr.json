@@ -20,11 +20,13 @@
     "paste": "Yapıştırmak",
     "pasteWithoutFormatting": "biçimlendirmeden yapıştır",
     "delete": "Silmek",
+    "deleted": "silindi",
     "group": "Grup",
     "ungroup": "Grubu çöz",
     "download": "İndirmek",
     "edit": "Düzenlemek",
     "extract": "Çıkarmak",
+    "extractPage": "Sayfayı Çıkart",
     "enterFullscreen": "Tam ekran",
     "exitFullscreen": "Tam ekrandan çık",
     "fit": "Yerleştirmek",
@@ -32,6 +34,7 @@
     "fitToWidth": "Genişliğe sığdır",
     "more": "Daha",
     "openFile": "Açık dosya",
+    "page": "Sayfa",
     "pagePrev": "Önceki sayfa",
     "pageNext": "Sonraki Sayfa",
     "pageSet": "Sayfa ayarla",
@@ -44,6 +47,12 @@
     "rotate3D": "Döndür",
     "rotateClockwise": "Saat Yönünde Döndür",
     "rotateCounterClockwise": "Saat yönünün tersine çevirin",
+    "rotatedClockwise": "saat yönünde döndürüldü",
+    "rotatedCounterClockwise": "saat yönünün tersine döndürüldü",
+    "rotationIs": "geçerli sayfa rotasyonu",
+    "movedToBottomOfDocument": "belgenin altına taşındı",
+    "movedToTopofDocument": "belgenin en üstüne taşındı",
+    "extracted": "çıkarılan",
     "save": "Kayıt etmek",
     "post": "Postalamak",
     "create": "Yaratmak",
@@ -56,6 +65,7 @@
     "zoomIn": "Yakınlaştır",
     "zoomOut": "Uzaklaştırmak",
     "zoomSet": "Yakınlaştırmayı ayarla",
+    "zoomChanged": "Geçerli yakınlaştırma",
     "zoomControls": "Yakınlaştırma Kontrolleri",
     "draw": "Çizmek",
     "type": "Tip",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Form Alanını Düzenle",
     "viewShortCutKeysFor3D": "Kısayol Tuşlarını Görüntüle",
     "markAllRead": "Tümünü okundu olarak işaretle",
+    "pageInsertion": "Sayfa Ekleme",
     "insertPage": "Sayfa Ekleme",
     "insert": "Sokmak",
     "pageManipulation": "Sayfa Manipülasyonu",
     "replace": "Yer değiştirmek",
+    "replacePage": "Sayfayı Değiştir",
+    "modal": "modal",
+    "isOpen": "açık",
     "setDestination": "Hedef belirlemek",
     "showLess": "daha az göster",
     "showMore": "...daha fazla",
@@ -89,6 +103,8 @@
     "select": "Seçme",
     "moveToTop": "En üste taşı",
     "moveToBottom": "Aşağıya taşı",
+    "movePageToTop": "Sayfayı En Üste Taşı",
+    "movePageToBottom": "Sayfayı Alta Taşı",
     "backToMenu": "Menüye dön",
     "redactPages": "Sayfaları yeniden düzenleyin",
     "playAudio": "ses çal",
@@ -139,6 +155,7 @@
     "redact": "Yazıya dökmek",
     "formFillDot": "Nokta",
     "signature": "İmza",
+    "snipping": "Kesme Aracı",
     "squiggly": "dalgalı",
     "stamp": "Damga vurmak",
     "stickyNote": "Not",
@@ -576,7 +593,11 @@
       "delete": "Silmek",
       "rotateClockwise": "Saat yönünde",
       "rotateCounterClockwise": "saat yönünün tersine",
-      "moreOptions": "Daha fazla seçenek"
+      "rotatePageClockwise": "Sayfayı Saat Yönünde Döndür",
+      "rotatePageCounterClockwise": "Sayfayı Saat Yönünün Tersine Döndür",
+      "moreOptions": "Daha fazla seçenek",
+      "moreOptionsMenu": "Diğer Küçük Resim Seçenekleri Menüsü",
+      "enterPageNumbers": "Seçilecek sayfa numaralarını girin"
     },
     "thumbnailsControlOverlay": {
       "move": "Sayfaları taşı"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Seçilen tüm sayfaları kırpmayı iptal etmek istediğinizden emin misiniz?"
     }
   },
+  "snippingPopUp": {
+    "title": "Kesme Aracı",
+    "clipboard": "Panoya Kopyala",
+    "download": "İndir",
+    "cropAndRemove": "Kırp ve Kaldır",
+    "snippingModal": {
+      "applyTitle": "Kesmeyi Uygula?",
+      "applyMessage": "Bu eylem belirtilen alanı kalıcı olarak keser ve diğer sayfaları kaldırır. Geri alınamaz.",
+      "cancelTitle": "Kesmeyi İptal Et?",
+      "cancelMessage": "Kesmeyi durdurmak istediğinizden emin misiniz?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragraf",
     "text": "Metin"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Dosya adı",
     "folderNameAlreadyExists": "Klasör adı zaten var",
     "fileNameAlreadyExists": "Dosya adı zaten var",
-    "openFile": "Yeni sekmede aç"
+    "openFile": "Yeni sekmede aç",
+    "fileAlreadyExists": "Dosya zaten mevcut",
+    "fileAlreadyExistsMessage": "\"{{fileName}}\" dosyası portföyde zaten var.",
+    "deletePortfolio": "\"{{fileName}}\" dosyasını silmek istediğinizden emin misiniz?",
+    "reselect": "yeniden seç"
   },
   "languageModal": {
     "selectLanguage": "Dil Seçin"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Satır ve paragraf aralığı",
     "bulletList": "Maddeli liste",
     "numberList": "Numaralı liste",
+    "decreaseIndent": "Girintiyi azalt",
+    "increaseIndent": "Girintiyi artır",
     "insertLink": "Bağlantı ekle",
     "insertImage": "Resim ekle",
     "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez."

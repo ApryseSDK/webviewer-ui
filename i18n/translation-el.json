@@ -20,11 +20,13 @@
     "paste": "Επικόλληση",
     "pasteWithoutFormatting": "Επικόλληση χωρίς μορφοποίηση",
     "delete": "Διαγράφω",
+    "deleted": "Διαγράφηκε",
     "group": "Ομάδα",
     "ungroup": "Κατάργηση ομαδοποίησης",
     "download": "Κατεβάστε",
     "edit": "Επεξεργασία",
     "extract": "Εκχύλισμα",
+    "extractPage": "Εξαγωγή σελίδας",
     "enterFullscreen": "ΠΛΗΡΗΣ ΟΘΟΝΗ",
     "exitFullscreen": "Έξοδος από πλήρη οθόνη",
     "fit": "Κατάλληλος",
@@ -32,6 +34,7 @@
     "fitToWidth": "Ταιριάζει στο πλάτος",
     "more": "Περισσότερο",
     "openFile": "Ανοιγμα αρχείου",
+    "page": "Σελίδα",
     "pagePrev": "Προηγούμενη σελίδα",
     "pageNext": "Επόμενη σελίδα",
     "pageSet": "Ορισμός σελίδας",
@@ -44,6 +47,12 @@
     "rotate3D": "Γυρίζω",
     "rotateClockwise": "Γυρίστε με την φορά του ρολογιού",
     "rotateCounterClockwise": "Περιστρέψτε αριστερόστροφα",
+    "rotatedClockwise": "περιστράφηκε δεξιόστροφα",
+    "rotatedCounterClockwise": "περιστράφηκε αριστερόστροφα",
+    "rotationIs": "τρέχουσα εναλλαγή σελίδας είναι",
+    "movedToBottomOfDocument": "μετακινήθηκε στο κάτω μέρος του εγγράφου",
+    "movedToTopofDocument": "μετακινήθηκε στην κορυφή του εγγράφου",
+    "extracted": "εξάγονται",
     "save": "Αποθηκεύσετε",
     "post": "Θέση",
     "create": "Δημιουργώ",
@@ -56,6 +65,7 @@
     "zoomIn": "Μεγέθυνση",
     "zoomOut": "Σμίκρυνση",
     "zoomSet": "Ρύθμιση ζουμ",
+    "zoomChanged": "Το τρέχον ζουμ είναι",
     "zoomControls": "Χειριστήρια ζουμ",
     "draw": "Σχεδιάζω",
     "type": "Τύπος",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Επεξεργασία πεδίου φόρμας",
     "viewShortCutKeysFor3D": "Προβολή πλήκτρων συντόμευσης",
     "markAllRead": "Επισήμανση όλων ως αναγνωσμένων",
+    "pageInsertion": "Εισαγωγή σελίδας",
     "insertPage": "Εισαγωγή σελίδας",
     "insert": "Εισάγετε",
     "pageManipulation": "Χειρισμός σελίδας",
     "replace": "Αντικαθιστώ",
+    "replacePage": "Αντικατάσταση σελίδας",
+    "modal": "τροπικός",
+    "isOpen": "είναι ανοιχτό",
     "setDestination": "Θέτω προορισμό",
     "showLess": "Δείξε λιγότερο",
     "showMore": "...περισσότερο",
@@ -89,6 +103,8 @@
     "select": "Επιλέγω",
     "moveToTop": "Μετακίνηση στην κορυφή",
     "moveToBottom": "Μετακίνηση προς τα κάτω",
+    "movePageToTop": "Μετακίνηση σελίδας στην κορυφή",
+    "movePageToBottom": "Μετακινήστε τη σελίδα στο κάτω μέρος",
     "backToMenu": "Πίσω στο μενού",
     "redactPages": "Διορθώστε σελίδες",
     "playAudio": "Αναπαραγωγή ήχου",
@@ -139,6 +155,7 @@
     "redact": "Συντάσσω",
     "formFillDot": "Τελεία",
     "signature": "Υπογραφή",
+    "snipping": "Εργαλείο Αποκοπής",
     "squiggly": "Στριμμένος",
     "stamp": "Σφραγίδα",
     "stickyNote": "Σημείωση",
@@ -576,7 +593,11 @@
       "delete": "Διαγράφω",
       "rotateClockwise": "Δεξιόστροφος",
       "rotateCounterClockwise": "Αριστερόστροφα",
-      "moreOptions": "Περισσότερες επιλογές"
+      "rotatePageClockwise": "Περιστροφή σελίδας δεξιόστροφα",
+      "rotatePageCounterClockwise": "Περιστρέψτε τη σελίδα αριστερόστροφα",
+      "moreOptions": "Περισσότερες επιλογές",
+      "moreOptionsMenu": "Μενού επιλογών περισσότερων μικρογραφιών",
+      "enterPageNumbers": "Εισαγάγετε αριθμούς σελίδων για επιλογή"
     },
     "thumbnailsControlOverlay": {
       "move": "Μετακίνηση σελίδων"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Είστε βέβαιοι ότι θέλετε να ακυρώσετε την περικοπή όλων των επιλεγμένων σελίδων;"
     }
   },
+  "snippingPopUp": {
+    "title": "Εργαλείο Αποκοπής",
+    "clipboard": "Αντιγραφή στο πρόχειρο",
+    "download": "Λήψη",
+    "cropAndRemove": "Περικοπή και αφαίρεση",
+    "snippingModal": {
+      "applyTitle": "Εφαρμογή αποκοπής;",
+      "applyMessage": "Αυτή η ενέργεια θα αποκόψει μόνιμα την καθορισμένη περιοχή και θα αφαιρέσει άλλες σελίδες. Δεν μπορεί να αναιρεθεί.",
+      "cancelTitle": "Ακύρωση αποκοπής;",
+      "cancelMessage": "Είστε βέβαιοι ότι θέλετε να σταματήσετε την αποκοπή;"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Παράγραφος",
     "text": "Κείμενο"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Ονομα αρχείου",
     "folderNameAlreadyExists": "Το όνομα φακέλου υπάρχει ήδη",
     "fileNameAlreadyExists": "Το όνομα αρχείου υπάρχει ήδη",
-    "openFile": "Άνοιγμα σε Νέα καρτέλα"
+    "openFile": "Άνοιγμα σε Νέα καρτέλα",
+    "fileAlreadyExists": "Ο φάκελος υπάρχει ήδη",
+    "fileAlreadyExistsMessage": "Το αρχείο \"{{fileName}}\" υπάρχει ήδη στο χαρτοφυλάκιο.",
+    "deletePortfolio": "Είστε βέβαιοι ότι θέλετε να διαγράψετε το \"{{fileName}}\";",
+    "reselect": "Επιλέξτε ξανά"
   },
   "languageModal": {
     "selectLanguage": "Επιλέξτε γλώσσα"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Διάστιχο γραμμών και παραγράφων",
     "bulletList": "Λίστα με κουκκίδες",
     "numberList": "Αριθμημένη λίστα",
+    "decreaseIndent": "Μείωση εσοχής",
+    "increaseIndent": "Αύξηση εσοχής",
     "insertLink": "Εισαγωγή συνδέσμου",
     "insertImage": "Εισαγωγή εικόνας",
     "notSupportedOnMobile": "Η επεξεργασία του Office δεν υποστηρίζεται σε κινητές συσκευές."

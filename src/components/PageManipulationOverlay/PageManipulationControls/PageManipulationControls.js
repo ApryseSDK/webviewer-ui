@@ -5,7 +5,7 @@ import Button from 'components/Button';
 
 function PageManipulationControls(props) {
   const { t } = useTranslation();
-  const { deletePages, extractPages, replacePages } = props;
+  const { deletePages, extractPages, insertPages, replacePages } = props;
 
   return (
     <>
@@ -16,16 +16,30 @@ function PageManipulationControls(props) {
         {t('action.pageManipulation')}
       </DataElementWrapper>
       <DataElementWrapper
-        className='row'
-        dataElement='replacePage'
+        className="row"
+        dataElement="insertPage"
+        onClick={insertPages}
+      >
+        <Button
+          title="action.insertPage"
+          img="icon-page-insertion-insert"
+          role="option"
+          onClickAnnouncement={`${t('action.insertPage')} ${t('action.modal')} ${t('action.isOpen')}`}
+        />
+        <div className="title">{t('action.insert')}</div>
+      </DataElementWrapper>
+      <DataElementWrapper
+        className="row"
+        dataElement="replacePage"
         onClick={replacePages}
       >
         <Button
-          title='action.replace'
-          img='icon-page-replacement'
-          role='option'
+          title="action.replacePage"
+          img="icon-page-replacement"
+          role="option"
+          onClickAnnouncement={`${t('action.replacePage')} ${t('action.modal')} ${t('action.isOpen')}`}
         />
-        <div className='title'>{t('action.replace')}</div>
+        <div className="title">{t('action.replace')}</div>
       </DataElementWrapper>
       <DataElementWrapper
         className="row"
@@ -33,9 +47,10 @@ function PageManipulationControls(props) {
         onClick={extractPages}
       >
         <Button
-          title="action.extract"
+          title="action.extractPage"
           img="icon-page-manipulation-extract"
           role="option"
+          onClickAnnouncement={`${t('action.extractPage')} ${t('action.modal')} ${t('action.isOpen')}`}
         />
         <div className="title">{t('action.extract')}</div>
       </DataElementWrapper>
@@ -45,17 +60,15 @@ function PageManipulationControls(props) {
         onClick={deletePages}
       >
         <Button
-          title="action.delete"
-          img="icon-page-manipulation-delete"
+          title="option.thumbnailPanel.delete"
+          img="icon-delete-line"
           role="option"
+          onClickAnnouncement={`${t('action.delete')} ${t('action.modal')} ${t('action.isOpen')}`}
         />
         <div className="title">{t('action.delete')}</div>
       </DataElementWrapper>
     </>
   );
-
-
-
 }
 
 

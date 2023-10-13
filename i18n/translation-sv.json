@@ -20,11 +20,13 @@
     "paste": "Klistra",
     "pasteWithoutFormatting": "Klistra in utan att formatera",
     "delete": "Radera",
+    "deleted": "raderade",
     "group": "Grupp",
     "ungroup": "Dela upp gruppen",
     "download": "Ladda ner",
     "edit": "Redigera",
     "extract": "Extrahera",
+    "extractPage": "Extrahera sida",
     "enterFullscreen": "Fullskärm",
     "exitFullscreen": "Avsluta helskärm",
     "fit": "Passa",
@@ -32,6 +34,7 @@
     "fitToWidth": "Passar till bredden",
     "more": "Mer",
     "openFile": "Öppna fil",
+    "page": "Sida",
     "pagePrev": "Föregående sida",
     "pageNext": "Nästa sida",
     "pageSet": "Ställ in sida",
@@ -44,6 +47,12 @@
     "rotate3D": "Rotera",
     "rotateClockwise": "Rotera klockvis",
     "rotateCounterClockwise": "Rotera moturs",
+    "rotatedClockwise": "roteras medurs",
+    "rotatedCounterClockwise": "roteras moturs",
+    "rotationIs": "nuvarande sidrotation är",
+    "movedToBottomOfDocument": "flyttas till botten av dokumentet",
+    "movedToTopofDocument": "flyttas till toppen av dokumentet",
+    "extracted": "extraherades",
     "save": "Spara",
     "post": "Posta",
     "create": "Skapa",
@@ -56,6 +65,7 @@
     "zoomIn": "Zooma in",
     "zoomOut": "Zooma ut",
     "zoomSet": "Ställ in zoom",
+    "zoomChanged": "Nuvarande zoom är",
     "zoomControls": "Zoomkontroller",
     "draw": "Dra",
     "type": "Typ",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Redigera formulärfält",
     "viewShortCutKeysFor3D": "Visa kortkommandon",
     "markAllRead": "Markera allt som läst",
+    "pageInsertion": "Sidinsättning",
     "insertPage": "Sidinsättning",
     "insert": "Föra in",
     "pageManipulation": "Sidmanipulation",
     "replace": "Byta ut",
+    "replacePage": "Ersätt sida",
+    "modal": "modal",
+    "isOpen": "är öppen",
     "setDestination": "Ställ in destination",
     "showLess": "visa mindre",
     "showMore": "...Mer",
@@ -89,6 +103,8 @@
     "select": "Välj",
     "moveToTop": "Flytta till toppen",
     "moveToBottom": "Flytta till botten",
+    "movePageToTop": "Flytta sidan till toppen",
+    "movePageToBottom": "Flytta sidan till botten",
     "backToMenu": "Tillbaka till menyn",
     "redactPages": "Redigera sidor",
     "playAudio": "Spela upp ljud",
@@ -139,6 +155,7 @@
     "redact": "Redigera",
     "formFillDot": "Punkt",
     "signature": "Signatur",
+    "snipping": "Beskärningsverktyg",
     "squiggly": "Snyggt",
     "stamp": "Stämpel",
     "stickyNote": "Notera",
@@ -576,7 +593,11 @@
       "delete": "Radera",
       "rotateClockwise": "Medurs",
       "rotateCounterClockwise": "Moturs",
-      "moreOptions": "Fler alternativ"
+      "rotatePageClockwise": "Rotera sidan medurs",
+      "rotatePageCounterClockwise": "Rotera sidan moturs",
+      "moreOptions": "Fler alternativ",
+      "moreOptionsMenu": "Fler miniatyrbilder Alternativmeny",
+      "enterPageNumbers": "Ange sidnummer för att välja"
     },
     "thumbnailsControlOverlay": {
       "move": "Flytta sidor"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Är du säker på att du vill avbryta beskärningen av alla markerade sidor?"
     }
   },
+  "snippingPopUp": {
+    "title": "Beskärningsverktyg",
+    "clipboard": "Kopiera till Urklipp",
+    "download": "Ladda ner",
+    "cropAndRemove": "Beskära och Ta bort",
+    "snippingModal": {
+      "applyTitle": "Tillämpa beskärning?",
+      "applyMessage": "Den här åtgärden kommer att permanent klippa ut det angivna området och ta bort andra sidor. Det går inte att ångra.",
+      "cancelTitle": "Avbryta beskärning?",
+      "cancelMessage": "Är du säker på att du vill avbryta beskärningen?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragraf",
     "text": "Text"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Filnamn",
     "folderNameAlreadyExists": "Mappnamnet finns redan",
     "fileNameAlreadyExists": "Filnamnet finns redan",
-    "openFile": "Öppna i Ny flik"
+    "openFile": "Öppna i Ny flik",
+    "fileAlreadyExists": "Filen finns redan",
+    "fileAlreadyExistsMessage": "Filen \"{{fileName}}\" finns redan i portföljen.",
+    "deletePortfolio": "Är du säker på att du vill ta bort \"{{fileName}}\"?",
+    "reselect": "Välj igen"
   },
   "languageModal": {
     "selectLanguage": "Välj språk"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Rad- och styckeavstånd",
     "bulletList": "Punktlista",
     "numberList": "Numrerad lista",
+    "decreaseIndent": "Minska indraget",
+    "increaseIndent": "Öka indrag",
     "insertLink": "Infoga länk",
     "insertImage": "Infoga bild",
     "notSupportedOnMobile": "Office-redigering stöds inte på mobila enheter."

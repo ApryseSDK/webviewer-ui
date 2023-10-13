@@ -20,11 +20,13 @@
     "paste": "Pâte",
     "pasteWithoutFormatting": "Coller sans formater",
     "delete": "Supprimer",
+    "deleted": "Supprimé",
     "group": "Grouper",
     "ungroup": "Dissocier",
     "download": "Télécharger",
     "edit": "Modifier",
     "extract": "Extraire",
+    "extractPage": "Extraire la page",
     "enterFullscreen": "Plein écran",
     "exitFullscreen": "Quitter le plein écran",
     "fit": "Ajuster",
@@ -32,6 +34,7 @@
     "fitToWidth": "Ajuster à la largeur",
     "more": "Autres ...",
     "openFile": "Ouvrir un fichier",
+    "page": "Page",
     "pagePrev": "Page précédente",
     "pageNext": "Page suivante",
     "pageSet": "Mise en page",
@@ -44,6 +47,12 @@
     "rotate3D": "Tourner",
     "rotateClockwise": "Rotation horaire",
     "rotateCounterClockwise": "Rotation antihoraire",
+    "rotatedClockwise": "tourné dans le sens des aiguilles d'une montre",
+    "rotatedCounterClockwise": "tourné dans le sens inverse des aiguilles d'une montre",
+    "rotationIs": "la rotation actuelle de la page est",
+    "movedToBottomOfDocument": "déplacé au bas du document",
+    "movedToTopofDocument": "déplacé en haut du document",
+    "extracted": "extrait",
     "save": "Enregistrer",
     "post": "Publier",
     "create": "Créer",
@@ -56,6 +65,7 @@
     "zoomIn": "Zoom avant",
     "zoomOut": "Zoom arrière",
     "zoomSet": "Définir le zoom",
+    "zoomChanged": "Le zoom actuel est",
     "zoomControls": "Commandes de zoom",
     "draw": "Dessiner",
     "type": "Type",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Modifier le champ de formulaire",
     "viewShortCutKeysFor3D": "Afficher les touches de raccourci",
     "markAllRead": "Marquer tout comme lu",
+    "pageInsertion": "Insertion de pages",
     "insertPage": "Insertion de pages",
     "insert": "Insérer",
     "pageManipulation": "Manipulation des pages",
     "replace": "Remplacer",
+    "replacePage": "Remplacer la page",
+    "modal": "modal",
+    "isOpen": "est ouvert",
     "setDestination": "Destination choisie",
     "showLess": "Montrer moins",
     "showMore": "...Suite",
@@ -89,6 +103,8 @@
     "select": "Sélectionner",
     "moveToTop": "Déplacer vers le haut",
     "moveToBottom": "Déplacer vers le bas",
+    "movePageToTop": "Déplacer la page vers le haut",
+    "movePageToBottom": "Déplacer la page vers le bas",
     "backToMenu": "Retour au menu",
     "redactPages": "Masquer les pages",
     "playAudio": "Lecture audio",
@@ -139,6 +155,7 @@
     "redact": "Caviardage",
     "formFillDot": "Point",
     "signature": "Signature",
+    "snipping": "Outil de Découpage",
     "squiggly": "Ligne ondulée",
     "stamp": "Tampon",
     "stickyNote": "Note collante",
@@ -576,7 +593,11 @@
       "delete": "Supprimer",
       "rotateClockwise": "Rotation horaire",
       "rotateCounterClockwise": "Rotation antihoraire",
-      "moreOptions": "Plus d'options"
+      "rotatePageClockwise": "Faire pivoter la page dans le sens des aiguilles d'une montre",
+      "rotatePageCounterClockwise": "Faire pivoter la page dans le sens inverse des aiguilles d'une montre",
+      "moreOptions": "Plus d'options",
+      "moreOptionsMenu": "Menu d'options Plus de vignettes",
+      "enterPageNumbers": "Entrez les numéros de page à sélectionner"
     },
     "thumbnailsControlOverlay": {
       "move": "Déplacer des pages"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Voulez-vous vraiment annuler le recadrage de toutes les pages sélectionnées?"
     }
   },
+  "snippingPopUp": {
+    "title": "Outil de Découpage",
+    "clipboard": "Copier dans le presse-papiers",
+    "download": "Télécharger",
+    "cropAndRemove": "Recadrer et supprimer",
+    "snippingModal": {
+      "applyTitle": "Appliquer le découpage ?",
+      "applyMessage": "Cette action découpera définitivement la zone spécifiée et supprimera les autres pages. Elle est irréversible.",
+      "cancelTitle": "Annuler le découpage ?",
+      "cancelMessage": "Êtes-vous sûr de vouloir arrêter le découpage ?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragraphe",
     "text": "Texte"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Nom de fichier",
     "folderNameAlreadyExists": "Le nom du dossier existe déjà",
     "fileNameAlreadyExists": "Le nom du fichier existe déjà",
-    "openFile": "Ouvrir dans un nouvel onglet"
+    "openFile": "Ouvrir dans un nouvel onglet",
+    "fileAlreadyExists": "Le fichier existe déjà",
+    "fileAlreadyExistsMessage": "Le fichier \"{{fileName}}\" existe déjà dans le portfolio.",
+    "deletePortfolio": "Voulez-vous vraiment supprimer \"{{fileName}}\" ?",
+    "reselect": "Sélectionner de nouveau"
   },
   "languageModal": {
     "selectLanguage": "Choisir la langue"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Espacement des lignes et des paragraphes",
     "bulletList": "Liste à puces",
     "numberList": "Liste numérotée",
+    "decreaseIndent": "Diminuer le retrait",
+    "increaseIndent": "Augmenter le retrait",
     "insertLink": "Insérer un lien",
     "insertImage": "Insérer une image",
     "notSupportedOnMobile": "L'édition Office n'est pas prise en charge sur les appareils mobiles."

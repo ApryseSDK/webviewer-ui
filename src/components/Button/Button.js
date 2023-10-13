@@ -3,16 +3,15 @@ import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-
 import Tooltip from 'components/Tooltip';
 import Icon from 'components/Icon';
 import { shortcutAria } from 'helpers/hotkeysManager';
-
 import selectors from 'selectors';
+import { getClickMiddleWare, ClickedItemTypes } from 'helpers/clickTracker';
 
 import './Button.scss';
 
-const NOOP = e => {
+const NOOP = (e) => {
   e?.stopPropagation();
   e?.preventDefault();
 };
@@ -35,13 +34,15 @@ const propTypes = {
   role: PropTypes.string,
   hideTooltipShortcut: PropTypes.bool,
   useI18String: PropTypes.bool,
+  shouldPassActiveDocumentViewerKeyToOnClickHandler: PropTypes.bool,
 };
 
-const Button = props => {
-  const [removeElement, customOverrides = {}] = useSelector(
-    state => [
+const Button = (props) => {
+  const [removeElement, customOverrides = {}, activeDocumentViewerKey = 1] = useSelector(
+    (state) => [
       selectors.isElementDisabled(state, props.dataElement),
       selectors.getCustomElementOverrides(state, props.dataElement),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -74,8 +75,17 @@ const Button = props => {
     forceTooltipPosition,
     isSubmitType,
     hideOnClick,
+    shouldPassActiveDocumentViewerKeyToOnClickHandler,
+    onClickAnnouncement,
   } = { ...props, ...customOverrides };
   const [t] = useTranslation();
+
+  const customOverrideClasses = {};
+  if (customOverrides && customOverrides.hidden && customOverrides.hidden.length) {
+    for (const screenSize of customOverrides.hidden) {
+      customOverrideClasses[`hide-in-${screenSize}`] = true;
+    }
+  }
 
   const aLabel = ariaLabel || (title ? t(title) : undefined);
 
@@ -86,8 +96,45 @@ const Button = props => {
 
   const imgToShow = img;
 
+  const createAnnouncement = () => {
+    if (onClickAnnouncement) {
+      const el = document.createElement('div');
+      const id = `speak-${Date.now()}`;
+      el.setAttribute('id', id);
+      el.setAttribute('aria-live', 'assertive');
+      el.classList.add('visually-hidden');
+      document.body.appendChild(el);
+
+      window.setTimeout(function() {
+        document.getElementById(id).innerText = onClickAnnouncement;
+      }, 100);
+
+      window.setTimeout(function() {
+        document.body.removeChild(document.getElementById(id));
+      }, 1000);
+    }
+  };
+
   // for backwards compatibility
   const actuallyDisabled = disable || disabled;
+  let onClickHandler;
+  if (shouldPassActiveDocumentViewerKeyToOnClickHandler) {
+    onClickHandler = () => {
+      createAnnouncement();
+      getClickMiddleWare()?.(dataElement, { type: ClickedItemTypes.BUTTON });
+      if (onClick) {
+        return onClick(activeDocumentViewerKey);
+      }
+    };
+  } else {
+    onClickHandler = (e) => {
+      createAnnouncement();
+      getClickMiddleWare()?.(dataElement, { type: ClickedItemTypes.BUTTON });
+      if (onClick) {
+        return onClick(e);
+      }
+    };
+  }
 
   // if there is no file extension then assume that this is a glyph
   const isGlyph =
@@ -101,13 +148,14 @@ const Button = props => {
         disabled: actuallyDisabled,
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
+        ...customOverrideClasses,
       })}
       style={style}
       data-element={dataElement}
       // Can't use button disabled property here.
       // Because mouse events won't fire and we want them to
       // so that we can show the button tooltip
-      onClick={actuallyDisabled ? NOOP : onClick}
+      onClick={actuallyDisabled ? NOOP : onClickHandler}
       onDoubleClick={actuallyDisabled ? NOOP : onDoubleClick}
       onMouseUp={actuallyDisabled ? NOOP : onMouseUp}
       aria-label={aLabel}
@@ -141,7 +189,8 @@ const Button = props => {
       content={title}
       hideShortcut={hideTooltipShortcut || actuallyDisabled}
       forcePosition={forceTooltipPosition}
-      hideOnClick={hideOnClick}>
+      hideOnClick={hideOnClick}
+    >
       {children}
     </Tooltip>
   ) : (

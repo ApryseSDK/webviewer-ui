@@ -20,11 +20,13 @@
     "paste": "Pegar",
     "pasteWithoutFormatting": "Pegar sin formatear",
     "delete": "Eliminar",
+    "deleted": "Eliminado",
     "group": "Grupo",
     "ungroup": "Desagrupar",
     "download": "Descargar",
     "edit": "Editar",
     "extract": "Extraer",
+    "extractPage": "Extraer página",
     "enterFullscreen": "Pantalla completa",
     "exitFullscreen": "Salir de pantalla completa",
     "fit": "Ajustar",
@@ -32,6 +34,7 @@
     "fitToWidth": "Ajustar al ancho",
     "more": "Más",
     "openFile": "Abrir archivo",
+    "page": "Página",
     "pagePrev": "Pagina anterior",
     "pageNext": "Siguiente página",
     "pageSet": "Configurar página",
@@ -44,6 +47,12 @@
     "rotate3D": "Girar",
     "rotateClockwise": "Sentido horario",
     "rotateCounterClockwise": "Sentido antihorario",
+    "rotatedClockwise": "girado en el sentido de las agujas del reloj",
+    "rotatedCounterClockwise": "girado en sentido antihorario",
+    "rotationIs": "la rotación de página actual es",
+    "movedToBottomOfDocument": "movido al final del documento",
+    "movedToTopofDocument": "movido a la parte superior del documento",
+    "extracted": "extraído",
     "save": "Guardar",
     "post": "Enviar",
     "create": "Crear",
@@ -56,6 +65,7 @@
     "zoomIn": "Acercar zoom",
     "zoomOut": "Alejar zoom",
     "zoomSet": "Establecer zoom",
+    "zoomChanged": "El zoom actual es",
     "zoomControls": "Controles de zoom",
     "draw": "Dibujar",
     "type": "Tipo",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Editar campo de formulario",
     "viewShortCutKeysFor3D": "Ver teclas de acceso directo",
     "markAllRead": "marcar todo como leido",
+    "pageInsertion": "Inserción de página",
     "insertPage": "Inserción de página",
     "insert": "Insertar",
     "pageManipulation": "Manipulación de página",
     "replace": "Reemplazar",
+    "replacePage": "Reemplazar página",
+    "modal": "modal",
+    "isOpen": "Esta abierto",
     "setDestination": "Marcar el destino",
     "showLess": "Muestra menos",
     "showMore": "...más",
@@ -89,6 +103,8 @@
     "select": "Seleccione",
     "moveToTop": "Mover al principio",
     "moveToBottom": "Mover al final",
+    "movePageToTop": "Mover página al principio",
+    "movePageToBottom": "Mover página al final",
     "backToMenu": "Volver al Menú",
     "redactPages": "Redactar páginas",
     "playAudio": "reproducir audio",
@@ -139,6 +155,7 @@
     "redact": "Modificar",
     "formFillDot": "Punto",
     "signature": "Firma",
+    "snipping": "Herramienta de Recorte",
     "squiggly": "Subrayado ondulado",
     "stamp": "Sello",
     "stickyNote": "Comentario",
@@ -576,7 +593,11 @@
       "delete": "Borrar",
       "rotateClockwise": "Agujas del reloj",
       "rotateCounterClockwise": "Sinistrórsum",
-      "moreOptions": "Mas opciones"
+      "rotatePageClockwise": "Girar página en el sentido de las agujas del reloj",
+      "rotatePageCounterClockwise": "Girar página en sentido antihorario",
+      "moreOptions": "Mas opciones",
+      "moreOptionsMenu": "Menú de opciones de más miniaturas",
+      "enterPageNumbers": "Ingrese los números de página para seleccionar"
     },
     "thumbnailsControlOverlay": {
       "move": "Mover páginas"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "¿Está seguro de que desea cancelar el recorte de todas las páginas seleccionadas?"
     }
   },
+  "snippingPopUp": {
+    "title": "Herramienta de Recorte",
+    "clipboard": "Copiar al portapapeles",
+    "download": "Descargar",
+    "cropAndRemove": "Recortar y eliminar",
+    "snippingModal": {
+      "applyTitle": "¿Aplicar recorte?",
+      "applyMessage": "Esta acción recortará permanentemente el área especificada y eliminará otras páginas. No se puede deshacer.",
+      "cancelTitle": "¿Cancelar recorte?",
+      "cancelMessage": "¿Está seguro de que desea detener el recorte?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Párrafo",
     "text": "Texto"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Nombre del archivo",
     "folderNameAlreadyExists": "El nombre de la carpeta ya existe",
     "fileNameAlreadyExists": "El nombre del archivo ya existe",
-    "openFile": "Abrir en una pestaña nueva"
+    "openFile": "Abrir en una pestaña nueva",
+    "fileAlreadyExists": "El archivo ya existe",
+    "fileAlreadyExistsMessage": "El archivo \"{{fileName}}\" ya existe en la cartera.",
+    "deletePortfolio": "¿Está seguro de que desea eliminar \"{{fileName}}\"?",
+    "reselect": "Reseleccionar"
   },
   "languageModal": {
     "selectLanguage": "Seleccione el idioma"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Espaciado de líneas y párrafos",
     "bulletList": "Lista con viñetas",
     "numberList": "lista numerada",
+    "decreaseIndent": "Disminuir sangría",
+    "increaseIndent": "Aumentar sangría",
     "insertLink": "Insertar el link",
     "insertImage": "Insertar imagen",
     "notSupportedOnMobile": "La edición de Office no es compatible con dispositivos móviles."

@@ -20,11 +20,13 @@
     "paste": "ペースト",
     "pasteWithoutFormatting": "書式なしで貼り付け",
     "delete": "削除",
+    "deleted": "削除されました",
     "group": "グループ化",
     "ungroup": "グループ解除",
     "download": "ダウンロード",
     "edit": "編集",
     "extract": "抽出",
+    "extractPage": "ページの抽出",
     "enterFullscreen": "全画面表示",
     "exitFullscreen": "全画面表示を終了",
     "fit": "フィット",
@@ -32,6 +34,7 @@
     "fitToWidth": "幅に合わせる",
     "more": "さらに表示",
     "openFile": "ファイルを開く",
+    "page": "ページ",
     "pagePrev": "前のページ",
     "pageNext": "次のページ",
     "pageSet": "ページを設定",
@@ -44,6 +47,12 @@
     "rotate3D": "回転する",
     "rotateClockwise": "右90°回転",
     "rotateCounterClockwise": "左90°回転",
+    "rotatedClockwise": "時計回りに回転",
+    "rotatedCounterClockwise": "反時計回りに回転",
+    "rotationIs": "現在のページ回転は",
+    "movedToBottomOfDocument": "文書の最後に移動",
+    "movedToTopofDocument": "文書の先頭に移動",
+    "extracted": "抽出された",
     "save": "保存",
     "post": "投稿",
     "create": "作成",
@@ -56,6 +65,7 @@
     "zoomIn": "ズームイン",
     "zoomOut": "ズームアウト",
     "zoomSet": "ズームを設定",
+    "zoomChanged": "現在のズームは",
     "zoomControls": "ズームコントロール",
     "draw": "手書き",
     "type": "タイピング",
@@ -73,10 +83,14 @@
     "formFieldEdit": "フォームフィールドの編集",
     "viewShortCutKeysFor3D": "ショートカットキーを表示する",
     "markAllRead": "すべて既読にする",
+    "pageInsertion": "ページの挿入",
     "insertPage": "ページ挿入",
     "insert": "入れる",
     "pageManipulation": "ページ操作",
     "replace": "入れ替え",
+    "replacePage": "ページを置換",
+    "modal": "モーダル",
+    "isOpen": "開いています",
     "setDestination": "行き先を設定する",
     "showLess": "表示を減らす",
     "showMore": "...さらに表示",
@@ -89,6 +103,8 @@
     "select": "選択する",
     "moveToTop": "上に移動",
     "moveToBottom": "下に移動",
+    "movePageToTop": "ページを先頭に移動",
+    "movePageToBottom": "ページを一番下に移動",
     "backToMenu": "メニューに戻る",
     "redactPages": "ページを編集する",
     "playAudio": "オーディオを再生",
@@ -139,6 +155,7 @@
     "redact": "墨消し",
     "formFillDot": "ドット",
     "signature": "署名",
+    "snipping": "切り取りツール",
     "squiggly": "波線",
     "stamp": "スタンプ",
     "stickyNote": "注釈",
@@ -576,7 +593,11 @@
       "delete": "削除",
       "rotateClockwise": "右90°回転",
       "rotateCounterClockwise": "左90°回転",
-      "moreOptions": "より多くのオプション"
+      "rotatePageClockwise": "ページを時計回りに回転",
+      "rotatePageCounterClockwise": "ページを反時計回りに回転",
+      "moreOptions": "より多くのオプション",
+      "moreOptionsMenu": "その他のサムネイル オプション メニュー",
+      "enterPageNumbers": "選択するページ番号を入力してください"
     },
     "thumbnailsControlOverlay": {
       "move": "ページを移動する"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "選択したすべてのページの切り抜きをキャンセルしてもよろしいですか？"
     }
   },
+  "snippingPopUp": {
+    "title": "切り取りツール",
+    "clipboard": "クリップボードにコピー",
+    "download": "ダウンロード",
+    "cropAndRemove": "クロップして削除",
+    "snippingModal": {
+      "applyTitle": "切り取りを適用しますか？",
+      "applyMessage": "このアクションにより指定されたエリアが永久に切り取られ、他のページが削除されます。取り消すことはできません。",
+      "cancelTitle": "切り取りをキャンセルしますか？",
+      "cancelMessage": "切り取りを停止することを本当に確認しますか？"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "段落",
     "text": "文章"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "ファイル名",
     "folderNameAlreadyExists": "フォルダ名はすでに存在します",
     "fileNameAlreadyExists": "ファイル名はすでに存在します",
-    "openFile": "新しいタブで開く"
+    "openFile": "新しいタブで開く",
+    "fileAlreadyExists": "ファイルが既に存在します",
+    "fileAlreadyExistsMessage": "ファイル「{{fileName}}」はポートフォリオにすでに存在します。",
+    "deletePortfolio": "「{{fileName}}」を削除してもよろしいですか?",
+    "reselect": "再選択"
   },
   "languageModal": {
     "selectLanguage": "言語を選択する"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "行と段落の間隔",
     "bulletList": "箇条書きリスト",
     "numberList": "番号付きリスト",
+    "decreaseIndent": "インデントを減らす",
+    "increaseIndent": "インデントを増やします",
     "insertLink": "リンクを挿入",
     "insertImage": "画像を挿入",
     "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。"

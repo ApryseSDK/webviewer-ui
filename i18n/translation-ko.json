@@ -20,11 +20,13 @@
     "paste": "반죽",
     "pasteWithoutFormatting": "서식 없이 붙여넣기",
     "delete": "삭제",
+    "deleted": "삭제됨",
     "group": "그룹",
     "ungroup": "그룹해제",
     "download": "다운로드",
     "edit": "편집",
     "extract": "선택페이지 다운로드",
+    "extractPage": "페이지 추출",
     "enterFullscreen": "전체화면",
     "exitFullscreen": "전체화면 나가기",
     "fit": "맞추기",
@@ -32,6 +34,7 @@
     "fitToWidth": "너비에 맞추기",
     "more": "더보기",
     "openFile": "파일열기",
+    "page": "페이지",
     "pagePrev": "이전페이지",
     "pageNext": "다음페이지",
     "pageSet": "페이지설정",
@@ -44,6 +47,12 @@
     "rotate3D": "3D회전",
     "rotateClockwise": "오른쪽으로 회전",
     "rotateCounterClockwise": "왼쪽으로 회전",
+    "rotatedClockwise": "시계 방향으로 회전",
+    "rotatedCounterClockwise": "시계 반대 방향으로 회전",
+    "rotationIs": "현재 페이지 회전은",
+    "movedToBottomOfDocument": "문서 하단으로 이동됨",
+    "movedToTopofDocument": "문서의 맨 위로 이동됨",
+    "extracted": "추출됨",
     "save": "저장",
     "post": "게시",
     "create": "생성",
@@ -56,6 +65,7 @@
     "zoomIn": "확대",
     "zoomOut": "축소",
     "zoomSet": "줌 설정",
+    "zoomChanged": "현재 확대/축소는",
     "zoomControls": "줌 컨트롤",
     "draw": "그리기",
     "type": "입력",
@@ -73,10 +83,14 @@
     "formFieldEdit": "폼편집",
     "viewShortCutKeysFor3D": "3D 단축키 보기",
     "markAllRead": "모두 읽은상태로 표시",
+    "pageInsertion": "페이지 삽입",
     "insertPage": "페이지 삽입",
     "insert": "끼워 넣다",
     "pageManipulation": "페이지 편집",
     "replace": "바꾸기",
+    "replacePage": "페이지 교체",
+    "modal": "모달",
+    "isOpen": "열려있습니다",
     "setDestination": "목적지 설정",
     "showLess": "간략히 보기",
     "showMore": "더보기",
@@ -89,6 +103,8 @@
     "select": "선택",
     "moveToTop": "맨 위로 이동",
     "moveToBottom": "맨 아래로 이동",
+    "movePageToTop": "페이지를 맨 위로 이동",
+    "movePageToBottom": "페이지를 아래쪽으로 이동",
     "backToMenu": "메뉴로 돌아가기",
     "redactPages": "페이지 수정",
     "playAudio": "재생",
@@ -139,6 +155,7 @@
     "redact": "수정",
     "formFillDot": "점표시",
     "signature": "서명",
+    "snipping": "잘라내기 도구",
     "squiggly": "물결선",
     "stamp": "이미지",
     "stickyNote": "코멘트",
@@ -576,7 +593,11 @@
       "delete": "삭제",
       "rotateClockwise": "오른쪽으로 회전",
       "rotateCounterClockwise": "왼쪽으로 회전",
-      "moreOptions": "추가 옵션"
+      "rotatePageClockwise": "페이지를 시계 방향으로 회전",
+      "rotatePageCounterClockwise": "페이지를 시계 반대 방향으로 회전",
+      "moreOptions": "추가 옵션",
+      "moreOptionsMenu": "추가 썸네일 옵션 메뉴",
+      "enterPageNumbers": "선택할 페이지 번호를 입력하세요."
     },
     "thumbnailsControlOverlay": {
       "move": "페이지 이동"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "선택한 모든 페이지 자르기를 취소하시겠습니까?"
     }
   },
+  "snippingPopUp": {
+    "title": "잘라내기 도구",
+    "clipboard": "클립 보드에 복사",
+    "download": "다운로드",
+    "cropAndRemove": "자르고 제거",
+    "snippingModal": {
+      "applyTitle": "잘라내기 적용?",
+      "applyMessage": "이 작업은 지정한 영역을 영구적으로 잘라내고 다른 페이지를 제거합니다. 취소할 수 없습니다.",
+      "cancelTitle": "잘라내기 취소?",
+      "cancelMessage": "잘라내기를 중지하시겠습니까?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "절",
     "text": "텍스트"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "파일 이름",
     "folderNameAlreadyExists": "폴더 이름이 이미 존재합니다",
     "fileNameAlreadyExists": "파일 이름이 이미 존재합니다",
-    "openFile": "새 탭에서 열기"
+    "openFile": "새 탭에서 열기",
+    "fileAlreadyExists": "존재하는 파일입니다",
+    "fileAlreadyExistsMessage": "\"{{fileName}}\" 파일이 이미 포트폴리오에 있습니다.",
+    "deletePortfolio": "정말 \"{{fileName}}\"을(를) 삭제하시겠습니까?",
+    "reselect": "재선택"
   },
   "languageModal": {
     "selectLanguage": "언어 선택"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "줄 및 단락 간격",
     "bulletList": "글머리 기호 목록",
     "numberList": "번호 매기기 목록",
+    "decreaseIndent": "들여쓰기 줄이기",
+    "increaseIndent": "들여쓰기 증가",
     "insertLink": "링크 삽입",
     "insertImage": "이미지 삽입",
     "notSupportedOnMobile": "Office 편집은 모바일 장치에서 지원되지 않습니다."

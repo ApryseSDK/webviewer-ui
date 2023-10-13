@@ -20,11 +20,13 @@
     "paste": "Paste",
     "pasteWithoutFormatting": "Paste without formatting",
     "delete": "Delete",
+    "deleted": "Deleted",
     "group": "Group",
     "ungroup": "Ungroup",
     "download": "Download",
     "edit": "Edit",
     "extract": "Extract",
+    "extractPage": "Extract Page",
     "enterFullscreen": "Enter Full Screen",
     "exitFullscreen": "Exit Full Screen",
     "fit": "Fit",
@@ -32,6 +34,7 @@
     "fitToWidth": "Fit to width",
     "more": "More",
     "openFile": "Open file",
+    "page":"Page",
     "pagePrev": "Previous page",
     "pageNext": "Next page",
     "pageSet": "Set page",
@@ -44,6 +47,12 @@
     "rotate3D": "Rotate",
     "rotateClockwise": "Rotate Clockwise",
     "rotateCounterClockwise": "Rotate Counterclockwise",
+    "rotatedClockwise": "rotated clockwise",
+    "rotatedCounterClockwise": "rotated counterclockwise",
+    "rotationIs": "current page rotation is ",
+    "movedToBottomOfDocument": "moved to bottom of document",
+    "movedToTopofDocument": "moved to top of document",
+    "extracted": "extracted",
     "save": "Save",
     "post": "Post",
     "create": "Create",
@@ -56,6 +65,7 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "zoomSet": "Set zoom",
+    "zoomChanged": "Current zoom is",
     "zoomControls": "Zoom Controls",
     "draw": "Draw",
     "type": "Type",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Edit Form Field",
     "viewShortCutKeysFor3D": "View Shortcut Keys",
     "markAllRead": "Mark all as read",
-    "insertPage": "Page Insertion",
+    "pageInsertion": "Page Insertion",
+    "insertPage": "Insert Page",
     "insert": "Insert",
     "pageManipulation": "Page Manipulation",
     "replace": "Replace",
+    "replacePage": "Replace Page",
+    "modal": "modal",
+    "isOpen": "is open",
     "setDestination": "Set Destination",
     "showLess": "show less",
     "showMore": "...more",
@@ -87,8 +101,10 @@
     "open": "Open",
     "deselectAll": "Deselect All",
     "select": "Select",
-    "moveToTop": "Move to top",
-    "moveToBottom": "Move to bottom",
+    "moveToTop": "Move to Top",
+    "moveToBottom": "Move to Bottom",
+    "movePageToTop": "Move Page to Top",
+    "movePageToBottom": "Move Page to Bottom",
     "backToMenu": "Back to Menu",
     "redactPages": "Redact pages",
     "playAudio": "Play audio",
@@ -139,6 +155,7 @@
     "redact": "Redact",
     "formFillDot": "Dot",
     "signature": "Signature",
+    "snipping": "Snipping Tool",
     "squiggly": "Squiggly",
     "stamp": "Stamp",
     "stickyNote": "Note",
@@ -573,10 +590,14 @@
       }
     },
     "thumbnailPanel": {
-      "delete": "Delete",
-      "rotateClockwise": "Clockwise",
-      "rotateCounterClockwise": "Counterclockwise",
-      "moreOptions": "More options"
+      "delete": "Delete Page",
+      "rotateClockwise": "Rotate Clockwise",
+      "rotateCounterClockwise": "Rotate Counterclockwise",
+      "rotatePageClockwise": "Rotate Page Clockwise",
+      "rotatePageCounterClockwise": "Rotate Page Counterclockwise",
+      "moreOptions": "More Options",
+      "moreOptionsMenu": "More Thumbnails Options Menu",
+      "enterPageNumbers": "Enter page numbers to select"
     },
     "thumbnailsControlOverlay": {
       "move": "Move pages"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Are you sure you want to cancel cropping all selected pages?"
     }
   },
+  "snippingPopUp": {
+    "title": "Snipping Tool",
+    "clipboard": "Copy to Clipboard",
+    "download": "Download",
+    "cropAndRemove": "Crop and Remove",
+    "snippingModal": {
+      "applyTitle": "Apply snipping?",
+      "applyMessage": "This action will permanently cut out the specified area and remove other pages. It cannot be undone.",
+      "cancelTitle": "Cancel snipping?",
+      "cancelMessage": "Are you sure you want to stop snipping?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Paragraph",
     "text": "Text"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "File Name",
     "folderNameAlreadyExists": "Folder name already exists",
     "fileNameAlreadyExists": "File name already exists",
-    "openFile": "Open in New Tab"
+    "openFile": "Open in New Tab",
+    "fileAlreadyExists": "File Already Exists",
+    "fileAlreadyExistsMessage": "The file \"{{fileName}}\" already exists in the portfolio.",
+    "deletePortfolio": "Are you sure you want to delete \"{{fileName}}\"?",
+    "reselect": "Reselect"
   },
   "languageModal": {
     "selectLanguage": "Select language"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Line & paragraph spacing",
     "bulletList": "Bulleted list",
     "numberList": "Numbered list",
+    "decreaseIndent": "Decrease indent",
+    "increaseIndent": "Increase indent",
     "insertLink": "Insert link",
     "insertImage": "Insert image",
     "notSupportedOnMobile": "Office editing is not supported on mobile devices."

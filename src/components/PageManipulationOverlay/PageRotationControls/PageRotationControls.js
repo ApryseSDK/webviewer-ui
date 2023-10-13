@@ -4,12 +4,9 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import Button from 'components/Button';
 
 
-
 function PageRotationControls(props) {
   const { t } = useTranslation();
   const { rotateClockwise, rotateCounterClockwise } = props;
-
-  
 
 
   return (
@@ -26,11 +23,11 @@ function PageRotationControls(props) {
         onClick={rotateClockwise}
       >
         <Button
-          title="action.rotateClockwise"
+          title="option.thumbnailPanel.rotatePageClockwise"
           img="icon-header-page-manipulation-page-rotation-clockwise-line"
           role="option"
         />
-        <div className="title">{t('action.rotateClockwise')}</div>
+        <div className="title">{t('option.thumbnailPanel.rotateClockwise')}</div>
       </DataElementWrapper>
       <DataElementWrapper
         dataElement="rotatePageCounterClockwise"
@@ -38,11 +35,11 @@ function PageRotationControls(props) {
         onClick={rotateCounterClockwise}
       >
         <Button
-          title="action.rotateCounterClockwise"
+          title="option.thumbnailPanel.rotatePageCounterClockwise"
           img="icon-header-page-manipulation-page-rotation-counterclockwise-line"
           role="option"
         />
-        <div className="title">{t('action.rotateCounterClockwise')}</div>
+        <div className="title">{t('option.thumbnailPanel.rotateCounterClockwise')}</div>
       </DataElementWrapper>
     </>
   );

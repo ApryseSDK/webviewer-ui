@@ -20,11 +20,13 @@
     "paste": "粘贴",
     "pasteWithoutFormatting": "不带格式粘贴",
     "delete": "删除",
+    "deleted": "已删除",
     "group": "组",
     "ungroup": "取消组合",
     "download": "下载",
     "edit": "编辑",
     "extract": "提取",
+    "extractPage": "提取页面",
     "enterFullscreen": "全屏",
     "exitFullscreen": "退出全屏",
     "fit": "文档尺寸",
@@ -32,6 +34,7 @@
     "fitToWidth": "自身尺寸",
     "more": "更多",
     "openFile": "打开文件",
+    "page": "页",
     "pagePrev": "上一页",
     "pageNext": "下一页",
     "pageSet": "设定页面",
@@ -44,6 +47,12 @@
     "rotate3D": "旋转",
     "rotateClockwise": "顺时针",
     "rotateCounterClockwise": "逆时针",
+    "rotatedClockwise": "顺时针旋转",
+    "rotatedCounterClockwise": "逆时针旋转",
+    "rotationIs": "当前页面旋转是",
+    "movedToBottomOfDocument": "移至文档底部",
+    "movedToTopofDocument": "移至文档顶部",
+    "extracted": "提取的",
     "save": "保存",
     "post": "发布",
     "create": "创建",
@@ -56,6 +65,7 @@
     "zoomIn": "放大",
     "zoomOut": "缩小",
     "zoomSet": "设定缩放",
+    "zoomChanged": "当前缩放为",
     "zoomControls": "缩放控制",
     "draw": "画",
     "type": "类型",
@@ -73,10 +83,14 @@
     "formFieldEdit": "编辑表格栏位",
     "viewShortCutKeysFor3D": "查看快捷键",
     "markAllRead": "将所有内容标记为已读",
+    "pageInsertion": "页面插入",
     "insertPage": "页面插入",
     "insert": "插入",
     "pageManipulation": "页面操作",
     "replace": "代替",
+    "replacePage": "替换页面",
+    "modal": "莫代尔",
+    "isOpen": "开了",
     "setDestination": "设置目的地",
     "showLess": "显示较少",
     "showMore": "...更多的",
@@ -89,6 +103,8 @@
     "select": "选择",
     "moveToTop": "移到顶部",
     "moveToBottom": "移到底部",
+    "movePageToTop": "将页面移至顶部",
+    "movePageToBottom": "将页面移至底部",
     "backToMenu": "返回菜单",
     "redactPages": "编辑页面",
     "playAudio": "播放音频",
@@ -139,6 +155,7 @@
     "redact": "新版本",
     "formFillDot": "点",
     "signature": "签名",
+    "snipping": "剪裁工具",
     "squiggly": "曲线",
     "stamp": "盖章",
     "stickyNote": "注释",
@@ -576,7 +593,11 @@
       "delete": "删除",
       "rotateClockwise": "顺时针",
       "rotateCounterClockwise": "逆时针方向",
-      "moreOptions": "更多选择"
+      "rotatePageClockwise": "顺时针旋转页面",
+      "rotatePageCounterClockwise": "逆时针旋转页面",
+      "moreOptions": "更多选择",
+      "moreOptionsMenu": "更多缩略图选项菜单",
+      "enterPageNumbers": "输入要选择的页码"
     },
     "thumbnailsControlOverlay": {
       "move": "移动页面"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "您确定要取消裁剪所有选定的页面吗？"
     }
   },
+  "snippingPopUp": {
+    "title": "剪裁工具",
+    "clipboard": "复制到剪贴板",
+    "download": "下载",
+    "cropAndRemove": "裁剪和删除",
+    "snippingModal": {
+      "applyTitle": "应用剪裁？",
+      "applyMessage": "此操作将永久剪裁指定的区域并删除其他页面。无法撤消。",
+      "cancelTitle": "取消剪裁？",
+      "cancelMessage": "您确定要停止剪裁吗？"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "段落",
     "text": "文本"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "文件名",
     "folderNameAlreadyExists": "文件夹名称已存在",
     "fileNameAlreadyExists": "文件名已存在",
-    "openFile": "在新选项卡中打开"
+    "openFile": "在新选项卡中打开",
+    "fileAlreadyExists": "文件已存在",
+    "fileAlreadyExistsMessage": "文件“{{fileName}}”已存在于组合中。",
+    "deletePortfolio": "您确定要删除“{{fileName}}”吗？",
+    "reselect": "重新选择"
   },
   "languageModal": {
     "selectLanguage": "选择语言"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "行间距和段落间距",
     "bulletList": "项目符号列表",
     "numberList": "编号列表",
+    "decreaseIndent": "减少缩进",
+    "increaseIndent": "增加缩进",
     "insertLink": "插入链接",
     "insertImage": "插入图片",
     "notSupportedOnMobile": "移动设备不支持 Office 编辑。"

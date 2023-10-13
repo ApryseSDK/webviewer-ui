@@ -7,6 +7,25 @@ import { workerTypes } from 'constants/types';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import DataElements from 'constants/dataElement';
 
+const createAnnouncement = (onClickAnnouncement) => {
+  if (onClickAnnouncement) {
+    const el = document.createElement('div');
+    const id = `speak-${Date.now()}`;
+    el.setAttribute('id', id);
+    el.setAttribute('aria-live', 'assertive');
+    el.classList.add('visually-hidden');
+    document.body.appendChild(el);
+
+    window.setTimeout(function() {
+      document.getElementById(id).innerText = onClickAnnouncement;
+    }, 100);
+
+    window.setTimeout(function() {
+      document.body.removeChild(document.getElementById(id));
+    }, 1000);
+  }
+};
+
 const getNewRotation = (curr, counterClockwise = false) => {
   const { E_0, E_90, E_180, E_270 } = window.Core.PageRotation;
   switch (curr) {
@@ -49,10 +68,12 @@ const rotatePages = (pageNumbers, counterClockwise) => {
 
 const rotateClockwise = (pageNumbers) => {
   rotatePages(pageNumbers, false);
+  createAnnouncement(`${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.rotatedClockwise')} ${i18next.t('action.rotationIs')} ${(core.getDocument().getPageRotation(core.getCurrentPage()) + 90) % 360} degrees`);
 };
 
 const rotateCounterClockwise = (pageNumbers) => {
   rotatePages(pageNumbers, true);
+  createAnnouncement(`${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.rotatedCounterClockwise')} ${i18next.t('action.rotationIs')} ${(core.getDocument().getPageRotation(core.getCurrentPage()) + 270) % 360} degrees`);
 };
 
 const insertAbove = (pageNumbers, width, height) => {
@@ -73,6 +94,8 @@ const extractPages = (pageNumbers, dispatch) => {
   const title = i18next.t('warning.extractPage.title');
   const confirmBtnText = i18next.t('warning.extractPage.confirmBtn');
   const secondaryBtnText = i18next.t('warning.extractPage.secondaryBtn');
+  const extractAnnouncement = `${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.extracted')}`;
+  const deleteAnnouncement = `${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.deleted')}`;
 
   const warning = {
     message,
@@ -80,6 +103,7 @@ const extractPages = (pageNumbers, dispatch) => {
     confirmBtnText,
     onConfirm: () => extractPagesWithAnnotations(pageNumbers).then((file) => {
       saveAs(file, 'extractedDocument.pdf');
+      createAnnouncement(extractAnnouncement + deleteAnnouncement);
     }),
     secondaryBtnText,
     onSecondary: () => {
@@ -88,6 +112,7 @@ const extractPages = (pageNumbers, dispatch) => {
         core.removePages(pageNumbers).then(() => {
           dispatch(actions.setSelectedPageThumbnails([]));
         });
+        createAnnouncement(extractAnnouncement);
       });
     },
   };
@@ -96,6 +121,7 @@ const extractPages = (pageNumbers, dispatch) => {
 };
 
 const deletePages = (pageNumbers, dispatch, isModalEnabled = true) => {
+  const deleteAnnouncement = `${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.deleted')}`;
   if (isModalEnabled) {
     let message = i18next.t('warning.deletePage.deleteMessage');
     const title = i18next.t('warning.deletePage.deleteTitle');
@@ -107,6 +133,8 @@ const deletePages = (pageNumbers, dispatch, isModalEnabled = true) => {
       confirmBtnText,
       onConfirm: () => core.removePages(pageNumbers).then(() => {
         dispatch(actions.setSelectedPageThumbnails([]));
+        dispatch(actions.setShiftKeyThumbnailsPivotIndex());
+        createAnnouncement(deleteAnnouncement);
       }),
     };
 
@@ -125,16 +153,20 @@ const deletePages = (pageNumbers, dispatch, isModalEnabled = true) => {
   } else {
     core.removePages(pageNumbers).then(() => {
       dispatch(actions.setSelectedPageThumbnails([]));
+      dispatch(actions.setShiftKeyThumbnailsPivotIndex());
+      createAnnouncement(deleteAnnouncement);
     });
   }
 };
 
 const movePagesToBottom = (pageNumbers) => {
   core.movePages(pageNumbers, core.getTotalPages() + 1);
+  createAnnouncement(`${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.movedToBottomOfDocument')}`);
 };
 
 const movePagesToTop = (pageNumbers) => {
   core.movePages(pageNumbers, 0);
+  createAnnouncement(`${i18next.t('action.page')} ${pageNumbers} ${i18next.t('action.movedToTopofDocument')}`);
 };
 
 const noPagesSelectedWarning = (pageNumbers, dispatch) => {

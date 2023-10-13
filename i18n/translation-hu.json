@@ -20,11 +20,13 @@
     "paste": "Paszta",
     "pasteWithoutFormatting": "Beillesztés formázás nélkül",
     "delete": "Töröl",
+    "deleted": "Törölve",
     "group": "Csoport",
     "ungroup": "Csoportbontás feloldása",
     "download": "Letöltés",
     "edit": "Szerkesztés",
     "extract": "Kivonat",
+    "extractPage": "Oldal kibontása",
     "enterFullscreen": "Teljes képernyő",
     "exitFullscreen": "Kilépés a teljes képernyőről",
     "fit": "Elfér",
@@ -32,6 +34,7 @@
     "fitToWidth": "A szélességhez illeszkedik",
     "more": "Több",
     "openFile": "Fájl megnyitása",
+    "page": "oldal",
     "pagePrev": "Előző oldal",
     "pageNext": "Következő oldal",
     "pageSet": "Oldal beállítása",
@@ -44,6 +47,12 @@
     "rotate3D": "Forog",
     "rotateClockwise": "Forgatás az óramutató járásával megegyező irányba",
     "rotateCounterClockwise": "Forgatás az óramutató járásával ellentétes irányba",
+    "rotatedClockwise": "az óramutató járásával megegyező irányba forgatva",
+    "rotatedCounterClockwise": "az óramutató járásával ellentétes irányba forgatva",
+    "rotationIs": "az aktuális oldalforgatás",
+    "movedToBottomOfDocument": "áthelyezve a dokumentum aljára",
+    "movedToTopofDocument": "áthelyezve a dokumentum tetejére",
+    "extracted": "kivont",
     "save": "Megment",
     "post": "Hozzászólás",
     "create": "Teremt",
@@ -56,6 +65,7 @@
     "zoomIn": "Ráközelíteni",
     "zoomOut": "Kicsinyítés",
     "zoomSet": "Állítsa be a nagyítást",
+    "zoomChanged": "A jelenlegi nagyítás",
     "zoomControls": "Zoom Controls",
     "draw": "Húz",
     "type": "típus",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Űrlapmező szerkesztése",
     "viewShortCutKeysFor3D": "Gyorsbillentyűk megtekintése",
     "markAllRead": "összes megjelölése olvasottként",
+    "pageInsertion": "Oldal beillesztése",
     "insertPage": "Oldal beillesztése",
     "insert": "Beszúrás",
     "pageManipulation": "Oldal Manipuláció",
     "replace": "Cserélje ki",
+    "replacePage": "Oldal cseréje",
+    "modal": "modális",
+    "isOpen": "nyitva van",
     "setDestination": "Uticél beállítása",
     "showLess": "mutass kevesebbet",
     "showMore": "...több",
@@ -89,6 +103,8 @@
     "select": "Válassza ki",
     "moveToTop": "Ugrás a tetejére",
     "moveToBottom": "Mozgás lefelé",
+    "movePageToTop": "Oldal áthelyezése a tetejére",
+    "movePageToBottom": "Oldal mozgatása lefelé",
     "backToMenu": "Vissza a menübe",
     "redactPages": "Oldalak szerkesztése",
     "playAudio": "Hang lejátszása",
@@ -139,6 +155,7 @@
     "redact": "Szerkeszt",
     "formFillDot": "Pont",
     "signature": "Aláírás",
+    "snipping": "Vágóeszköz",
     "squiggly": "kacskaringós",
     "stamp": "Bélyeg",
     "stickyNote": "jegyzet",
@@ -576,7 +593,11 @@
       "delete": "Töröl",
       "rotateClockwise": "Óramutató járásával megegyező",
       "rotateCounterClockwise": "Óramutató járásával ellentétes irányban",
-      "moreOptions": "Több lehetőség"
+      "rotatePageClockwise": "Oldal elforgatása az óramutató járásával megegyező irányba",
+      "rotatePageCounterClockwise": "Oldal elforgatása az óramutató járásával ellentétes irányba",
+      "moreOptions": "Több lehetőség",
+      "moreOptionsMenu": "További miniatűrök opciók menü",
+      "enterPageNumbers": "Írja be az oldalszámokat a kiválasztáshoz"
     },
     "thumbnailsControlOverlay": {
       "move": "Oldalak mozgatása"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Biztosan megszakítja az összes kiválasztott oldal levágását?"
     }
   },
+  "snippingPopUp": {
+    "title": "Vágóeszköz",
+    "clipboard": "Másolás a vágólapra",
+    "download": "Letöltés",
+    "cropAndRemove": "Vágás és eltávolítás",
+    "snippingModal": {
+      "applyTitle": "Vágás alkalmazása?",
+      "applyMessage": "Ez a művelet véglegesen kivágja a megadott területet, és eltávolítja a másik oldalakat. Nem lehet visszavonni.",
+      "cancelTitle": "Vágás megszakítása?",
+      "cancelMessage": "Biztosan meg akarja állítani a vágást?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Bekezdés",
     "text": "Szöveg"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Fájl név",
     "folderNameAlreadyExists": "A mappanév már létezik",
     "fileNameAlreadyExists": "A fájlnév már létezik",
-    "openFile": "Megnyitás új lapon"
+    "openFile": "Megnyitás új lapon",
+    "fileAlreadyExists": "A fájl már létezik",
+    "fileAlreadyExistsMessage": "A \"{{fileName}}\" fájl már létezik a portfólióban.",
+    "deletePortfolio": "Biztosan törli a következőt: \"{{fileName}}\"?",
+    "reselect": "Válassza ki újra"
   },
   "languageModal": {
     "selectLanguage": "Válasszon nyelvet"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Sor- és bekezdésköz",
     "bulletList": "Felsorolásos lista",
     "numberList": "Számozott lista",
+    "decreaseIndent": "Behúzás csökkentése",
+    "increaseIndent": "Behúzás növelése",
     "insertLink": "Link beszúrása",
     "insertImage": "Kép beszúrása",
     "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön."

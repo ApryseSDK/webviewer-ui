@@ -20,11 +20,13 @@
     "paste": "tampal",
     "pasteWithoutFormatting": "Tampal tanpa memformat",
     "delete": "Padam",
+    "deleted": "Dipadamkan",
     "group": "Kumpulan",
     "ungroup": "Nyahkumpulan",
     "download": "Muat turun",
     "edit": "Sunting",
     "extract": "Ekstrak",
+    "extractPage": "Ekstrak Halaman",
     "enterFullscreen": "Skrin penuh",
     "exitFullscreen": "Keluar dari skrin penuh",
     "fit": "Sesuai",
@@ -32,6 +34,7 @@
     "fitToWidth": "Sesuai dengan lebar",
     "more": "Lagi",
     "openFile": "Buka fail",
+    "page": "Halaman",
     "pagePrev": "Halaman sebelumnya",
     "pageNext": "Muka surat seterusnya",
     "pageSet": "Tetapkan halaman",
@@ -44,6 +47,12 @@
     "rotate3D": "Putar",
     "rotateClockwise": "Putar mengikut arah jam",
     "rotateCounterClockwise": "Putar lawan jam",
+    "rotatedClockwise": "diputar mengikut arah jam",
+    "rotatedCounterClockwise": "diputar lawan jam",
+    "rotationIs": "putaran halaman semasa ialah",
+    "movedToBottomOfDocument": "dialihkan ke bahagian bawah dokumen",
+    "movedToTopofDocument": "dialihkan ke bahagian atas dokumen",
+    "extracted": "diekstrak",
     "save": "Jimat",
     "post": "Pos",
     "create": "Buat",
@@ -56,6 +65,7 @@
     "zoomIn": "Mengezum masuk",
     "zoomOut": "Zum keluar",
     "zoomSet": "Tetapkan zum",
+    "zoomChanged": "Zum semasa ialah",
     "zoomControls": "Kawalan Zum",
     "draw": "Lukis",
     "type": "taip",
@@ -73,10 +83,14 @@
     "formFieldEdit": "Edit Medan Borang",
     "viewShortCutKeysFor3D": "Lihat Kekunci Pintasan",
     "markAllRead": "Tandai semua sebagai dibaca",
+    "pageInsertion": "Sisipan Halaman",
     "insertPage": "Sisipan Halaman",
     "insert": "Sisipkan",
     "pageManipulation": "Manipulasi Halaman",
     "replace": "Gantikan",
+    "replacePage": "Gantikan Halaman",
+    "modal": "modal",
+    "isOpen": "ia terbuka",
     "setDestination": "Tetapkan Destinasi",
     "showLess": "kurang menunjukkan",
     "showMore": "... lagi",
@@ -89,6 +103,8 @@
     "select": "Pilih",
     "moveToTop": "Bergerak ke atas",
     "moveToBottom": "Bergerak ke bawah",
+    "movePageToTop": "Alihkan Halaman ke Atas",
+    "movePageToBottom": "Alihkan Halaman ke Bawah",
     "backToMenu": "Kembali ke Menu",
     "redactPages": "Sunting halaman",
     "playAudio": "Mainkan audio",
@@ -139,6 +155,7 @@
     "redact": "sunting",
     "formFillDot": "titik",
     "signature": "Tandatangan",
+    "snipping": "Alat Pemotongan",
     "squiggly": "Dengan berlekuk-lekuk",
     "stamp": "setem",
     "stickyNote": "Catatan",
@@ -576,7 +593,11 @@
       "delete": "Padam",
       "rotateClockwise": "ikut arah jam",
       "rotateCounterClockwise": "lawan jam",
-      "moreOptions": "Lebih banyak pilihan"
+      "rotatePageClockwise": "Putar Halaman Mengikut Jam",
+      "rotatePageCounterClockwise": "Putar Halaman lawan jam",
+      "moreOptions": "Lebih banyak pilihan",
+      "moreOptionsMenu": "Lagi Menu Pilihan Imej Kecil",
+      "enterPageNumbers": "Masukkan nombor halaman untuk dipilih"
     },
     "thumbnailsControlOverlay": {
       "move": "Pindahkan halaman"
@@ -1041,6 +1062,18 @@
       "cancelMessage": "Adakah anda pasti mahu membatalkan pemangkasan semua halaman yang dipilih?"
     }
   },
+  "snippingPopUp": {
+    "title": "Alat Pemotongan",
+    "clipboard": "Salin ke Papan Keratan",
+    "download": "Muat turun",
+    "cropAndRemove": "Potong dan Buang",
+    "snippingModal": {
+      "applyTitle": "Terapkan pemotongan?",
+      "applyMessage": "Tindakan ini akan memotong kawasan yang ditentukan secara kekal dan mengeluarkan halaman lain. Ia tidak boleh dikembalikan.",
+      "cancelTitle": "Batal pemotongan?",
+      "cancelMessage": "Adakah anda pasti mahu menghentikan pemotongan?"
+    }
+  },
   "textEditingPanel": {
     "paragraph": "Perenggan",
     "text": "Teks"
@@ -1097,7 +1130,11 @@
     "portfolioFilePlaceholder": "Nama fail",
     "folderNameAlreadyExists": "Nama folder sudah wujud",
     "fileNameAlreadyExists": "Nama fail sudah wujud",
-    "openFile": "Buka dalam Tab Baharu"
+    "openFile": "Buka dalam Tab Baharu",
+    "fileAlreadyExists": "Fail Sudah Wujud",
+    "fileAlreadyExistsMessage": "Fail \"{{fileName}}\" sudah wujud dalam portfolio.",
+    "deletePortfolio": "Adakah anda pasti mahu memadamkan \"{{fileName}}\"?",
+    "reselect": "Pilih semula"
   },
   "languageModal": {
     "selectLanguage": "Pilih Bahasa"
@@ -1114,6 +1151,8 @@
     "lineSpacing": "Jarak baris & perenggan",
     "bulletList": "Senarai berbulet",
     "numberList": "Senarai bernombor",
+    "decreaseIndent": "Kurangkan inden",
+    "increaseIndent": "Tingkatkan inden",
     "insertLink": "Sisipkan pautan",
     "insertImage": "Sisipkan imej",
     "notSupportedOnMobile": "Penyuntingan pejabat tidak disokong pada peranti mudah alih."
