@@ -69,7 +69,6 @@ export default {
       [DataElements.CALIBRATION_POPUP_BUTTON]: { disabled: true, priorty: 2 },
       [DataElements.LEGACY_RICH_TEXT_POPUP]: { disabled: true, priority: 2 },
       [DataElements.LOGO_BAR]: { disabled: true, priority: 2 },
-      [DataElements.OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE]: { disabled: true, priority: 2 },
     },
     selectedScale: initialScale,
     isAddingNewScale: false,

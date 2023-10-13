@@ -302,7 +302,6 @@ const OfficeEditorToolsHeader = () => {
     availableFontFaces,
     activeTheme,
     cssFontValues,
-    isInsertImageDisabled,
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElement.OFFICE_EDITOR_TOOLS_HEADER),
@@ -311,7 +310,6 @@ const OfficeEditorToolsHeader = () => {
       selectors.getAvailableFontFaces(state),
       selectors.getActiveTheme(state),
       selectors.getCSSFontValues(state),
-      selectors.isElementDisabled(state, DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE),
     ],
     shallowEqual
   );
@@ -654,19 +652,17 @@ const OfficeEditorToolsHeader = () => {
                       />
                     )}
                   />
-                  {!isInsertImageDisabled && (
-                    <>
-                      <div className="divider" />
-                      <ActionButton
-                        className="tool-group-button"
-                        dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE}
-                        title='officeEditor.insertImage'
-                        img='icon-tool-image-line'
-                        onClick={openOfficeEditorFilePicker}
-                      />
-                      <OfficeEditorImageFilePickerHandler />
-                    </>
-                  )}
+                  <div className="divider" />
+                  <>
+                    <ActionButton
+                      className="tool-group-button"
+                      dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE}
+                      title='officeEditor.insertImage'
+                      img='icon-tool-image-line'
+                      onClick={openOfficeEditorFilePicker}
+                    />
+                    <OfficeEditorImageFilePickerHandler />
+                  </>
                   {(visibleGroupCount === 6) && (
                     <>
                       <div className="divider" />
