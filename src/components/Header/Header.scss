@@ -12,6 +12,7 @@
   width: 100%;
   z-index: 71;
   height: 40px;
+  touch-action: none;
 
   @include tablet-and-mobile {
     height: 52px;
@@ -35,6 +36,7 @@
   height: 36px;
   background: var(--view-header-background);
   z-index: $headers-z-index;
+  touch-action: none;
 
   &:not(.Tools) {
     .Button {

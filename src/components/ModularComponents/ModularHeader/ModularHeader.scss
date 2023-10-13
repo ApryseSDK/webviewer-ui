@@ -9,4 +9,5 @@
   padding: 2px;
   background: var(--gray-1);
   z-index: $headers-z-index;
+  touch-action: none;
 }
