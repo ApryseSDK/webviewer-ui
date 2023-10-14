@@ -11,7 +11,7 @@ const POSITION = {
   END: 'end',
 };
 
-const ALIGNMENT = {
+const JUSTIFY_CONTENT = {
   START: 'start',
   CENTER: 'center',
   END: 'end',
@@ -40,6 +40,13 @@ const ITEM_TYPE = {
   FLYOUT: 'flyout',
 };
 
+const RESPONSIVE_ITEMS = [
+  ITEM_TYPE.GROUPED_ITEMS,
+  ITEM_TYPE.GROUPED_TOOLS,
+  ITEM_TYPE.RIBBON_GROUP,
+  ITEM_TYPE.ZOOM,
+];
+
 const OPACITY_MODES = {
   STATIC: 'static',
   DYANMIC: 'dynamic',
@@ -58,16 +65,17 @@ const DEFAULT_STYLES = {
   BORDER_STYLE: 'solid',
 };
 
-const DEFAULT_GAP = 16;
+const DEFAULT_GAP = 12;
 
 export {
   PLACEMENT,
   POSITION,
-  ALIGNMENT,
+  JUSTIFY_CONTENT,
   DIRECTION,
   ITEM_TYPE,
   DEFAULT_GAP,
   OPACITY_LEVELS,
   OPACITY_MODES,
+  RESPONSIVE_ITEMS,
   DEFAULT_STYLES,
 };

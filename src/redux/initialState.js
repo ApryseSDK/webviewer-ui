@@ -2047,6 +2047,7 @@ export default {
       rightHeader: 0,
       leftHeader: 0
     },
+    customElementSizes: {},
     floatingContainersDimensions: {
       topFloatingContainerHeight: 0,
       bottomFloatingContainerHeight: 0,

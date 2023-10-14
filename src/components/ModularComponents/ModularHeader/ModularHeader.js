@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { PLACEMENT } from 'constants/customizationVariables';
+import { JUSTIFY_CONTENT, PLACEMENT, DEFAULT_GAP } from 'constants/customizationVariables';
 import ModularHeaderItems from '../../ModularHeaderItems';
 import './ModularHeader.scss';
+import DataElementWrapper from 'src/components/DataElementWrapper';
 
 const ModularHeader = React.forwardRef((props, ref) => {
   const { dataElement,
     placement,
     position = '', // This is to be used for floating headers
     items = [],
-    gap = 16,
-    alignment = 'start',
-    autohide = true
+    gap = DEFAULT_GAP,
+    justifyContent = JUSTIFY_CONTENT.START,
+    style,
+    autohide = true,
+    stroke,
   } = props;
-  let { style } = props;
   const [loadedFirstTime, setLoadedFirstTime] = useState(true);
 
   useEffect(() => {
@@ -36,12 +38,15 @@ const ModularHeader = React.forwardRef((props, ref) => {
   if (canRemoveItems) {
     originalItems = items;
   }
-  if (placement === PLACEMENT.RIGHT && (canApplyAnimation || (isClosed && !loadedFirstTime))) {
-    style = Object.assign({}, style, { position: 'fixed', right: 0 });
+  // Why is this here? This needs to be in the right header not the generic one
+  let headerStyle = style;
+  if (placement === PLACEMENT.RIGHT
+    && (canApplyAnimation || (isClosed && !loadedFirstTime))) {
+    headerStyle = Object.assign({}, style, { position: 'fixed', right: 0 });
   }
 
   return (
-    <div
+    <DataElementWrapper
       className={classNames({
         'ModularHeader': true,
         'closed': isClosed,
@@ -49,10 +54,11 @@ const ModularHeader = React.forwardRef((props, ref) => {
         'BottomHeader': placement === PLACEMENT.BOTTOM,
         'LeftHeader': placement === PLACEMENT.LEFT,
         'RightHeader': placement === PLACEMENT.RIGHT,
+        'stroke': stroke
       }, `${position}`)}
       data-element={dataElement}
       key={key}
-      style={style}
+      style={headerStyle}
       ref={ref}
       onTransitionEnd={() => {
         setCanRemoveItems(!isClosed);
@@ -65,8 +71,10 @@ const ModularHeader = React.forwardRef((props, ref) => {
         headerId={dataElement}
         gap={gap}
         placement={placement}
-        alignment={alignment} />
-    </div>
+        justifyContent={justifyContent}
+        parentRef={ref}
+      />
+    </DataElementWrapper>
   );
 });
 
@@ -76,7 +84,7 @@ ModularHeader.propTypes = {
   position: PropTypes.string,
   items: PropTypes.array,
   gap: PropTypes.number,
-  alignment: PropTypes.string,
+  justifyContent: PropTypes.string,
 };
 
 ModularHeader.displayName = 'ModularHeader';

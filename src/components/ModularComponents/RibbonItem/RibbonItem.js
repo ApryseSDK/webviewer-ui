@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,12 +6,14 @@ import actions from 'actions';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import classNames from 'classnames';
-import { ALIGNMENT, DIRECTION } from 'constants/customizationVariables';
+import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 
 import './RibbonItem.scss';
+import sizeManager from 'helpers/responsivnessHelper';
 
 
 const RibbonItem = (props) => {
+  const elementRef = useRef();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
@@ -23,13 +25,23 @@ const RibbonItem = (props) => {
     toolbarGroup,
     groupedItems = [],
     direction,
-    alignment,
+    justifyContent,
     isFlyoutItem,
     iconDOMElement
   } = props;
   const [currentToolbarGroup] = useSelector((state) => [
     selectors.getCurrentToolbarGroup(state),
   ]);
+
+  useEffect(() => {
+    if (elementRef.current) {
+      sizeManager[dataElement] = {
+        width: elementRef.current.clientWidth,
+        height: elementRef.current.clientHeight,
+        visible: true,
+      };
+    }
+  }, []);
 
   useEffect(() => {
     if (currentToolbarGroup === toolbarGroup) {
@@ -63,8 +75,8 @@ const RibbonItem = (props) => {
           'RibbonItem': true,
           'vertical': direction === DIRECTION.COLUMN,
           'horizontal': direction === DIRECTION.ROW,
-          'left': alignment !== ALIGNMENT.END,
-          'right': alignment === ALIGNMENT.END,
+          'left': justifyContent !== JUSTIFY_CONTENT.END,
+          'right': justifyContent === JUSTIFY_CONTENT.END,
         })}
         >
           <Button
@@ -92,7 +104,7 @@ RibbonItem.propTypes = {
   toolbarGroup: PropTypes.string,
   groupedItems: PropTypes.array,
   direction: PropTypes.string,
-  alignment: PropTypes.string,
+  justifyContent: PropTypes.string,
   isFlyoutItem: PropTypes.bool,
   iconDOMElement: PropTypes.any,
 };

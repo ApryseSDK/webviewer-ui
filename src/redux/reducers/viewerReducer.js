@@ -5,6 +5,14 @@ export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_CUSTOM_ELEMENT_SIZE':
+      return {
+        ...state,
+        customElementSizes: {
+          ...state.customElementSizes,
+          [payload.dataElement]: payload.size,
+        }
+      };
     case 'SET_ACTIVE_FLYOUT':
       return {
         ...state,

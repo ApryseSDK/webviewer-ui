@@ -25,7 +25,7 @@ const InnerItem = (props) => {
     case ITEM_TYPE.RIBBON_ITEM:
       console.warn(`${ITEM_TYPE.RIBBON_ITEM} needs to be added to a ${ITEM_TYPE.RIBBON_GROUP}`);
     case ITEM_TYPE.DIVIDER:
-      return <Divider headerDirection={headerDirection} />;
+      return <Divider headerDirection={headerDirection} {...props} />;
     case ITEM_TYPE.TOGGLE_BUTTON:
       return <ToggleElementButton key={key} {...props} />;
     case ITEM_TYPE.RIBBON_GROUP:

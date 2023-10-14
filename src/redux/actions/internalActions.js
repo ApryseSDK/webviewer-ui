@@ -467,7 +467,7 @@ export const updateFlyout = (dataElement, newFlyout) => (dispatch, getState) => 
   const flyoutMap = selectors.getFlyoutMap(getState());
   if (!flyoutMap[dataElement]) {
     console.warn(`Flyout with dataElement ${dataElement} does not exist, adding new flyout`);
-    return addFlyout(newFlyout);
+    return dispatch(addFlyout(newFlyout));
   }
   dispatch({
     type: 'UPDATE_FLYOUT',
@@ -724,4 +724,21 @@ export const enableFeatureFlag = (featureFlag) => ({
 export const disableFeatureFlag = (featureFlag) => ({
   type: 'DISABLE_FEATURE_FLAG',
   payload: { featureFlag }
+});
+
+export const growCustomElement = (dataElement) => (dispatch, getState) => {
+  const currentSize = getState().viewer.customElementSizes[dataElement] || 0;
+  const newSize = currentSize + 1;
+  dispatch(setCustomElementSize(dataElement, newSize));
+};
+
+export const shrinkCustomElement = (dataElement) => (dispatch, getState) => {
+  const currentSize = getState().viewer.customElementSizes[dataElement] || 0;
+  const newSize = currentSize > 0 ? currentSize - 1 : 0;
+  dispatch(setCustomElementSize(dataElement, newSize));
+};
+
+export const setCustomElementSize = (dataElement, size) => ({
+  type: 'SET_CUSTOM_ELEMENT_SIZE',
+  payload: { dataElement, size },
 });
