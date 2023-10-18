@@ -596,7 +596,7 @@ const OfficeEditorToolsHeader = () => {
                     img='icon-office-editor-circle'
                     element='colorPickerOverlay'
                     color={wvFontColor.toString()}
-                    iconClassName={useColorIconBorder ? 'icon-border' : ''}
+                    iconClassName={`${useColorIconBorder ? 'icon-border' : ''} icon-text-color`}
                   />
                   <ColorPickerOverlay
                     onStyleChange={(_, color) => {
