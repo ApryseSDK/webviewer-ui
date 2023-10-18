@@ -119,7 +119,8 @@
     "showComparison": "Εμφάνιση σύγκρισης",
     "back": "Πίσω",
     "clearSignature": "Καθαρή υπογραφή",
-    "newDocument": "Νέο Έγγραφο"
+    "newDocument": "Νέο Έγγραφο",
+    "sideBySideView": "Άποψη δίπλα δίπλα"
   },
   "annotation": {
     "areaMeasurement": "Περιοχή",
@@ -1246,5 +1247,11 @@
     "dragAndDrop": "Σύρετε και αποθέστε το αρχείο σας εδώ",
     "selectFile": "Επιλέξτε το αρχείο σας εδώ",
     "or": "Ή"
+  },
+  "stylePanel": {
+    "headings": {
+      "styles": "Στυλ"
+    },
+    "noToolSelected": "Επιλέξτε ένα εργαλείο για να δείτε τις ιδιότητες του εργαλείου"
   }
 }

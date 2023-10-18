@@ -119,7 +119,8 @@
     "showComparison": "Vergleich anzeigen",
     "back": "Zurück",
     "clearSignature": "Signatur zurücksetzen",
-    "newDocument": "Neues Dokument"
+    "newDocument": "Neues Dokument",
+    "sideBySideView": "Nebeneinander-Ansicht"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -1246,5 +1247,11 @@
     "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",
     "selectFile": "Wählen Sie hier Ihre Datei aus",
     "or": "Oder"
+  },
+  "stylePanel": {
+    "headings": {
+      "styles": "Stile"
+    },
+    "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen"
   }
 }

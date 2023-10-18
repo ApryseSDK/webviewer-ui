@@ -119,7 +119,8 @@
     "showComparison": "Hiển thị so sánh",
     "back": "Mặt sau",
     "clearSignature": "Xóa chữ ký",
-    "newDocument": "Tài liệu mới"
+    "newDocument": "Tài liệu mới",
+    "sideBySideView": "Xem cạnh nhau"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -1246,5 +1247,11 @@
     "dragAndDrop": "Kéo và thả tệp của bạn vào đây",
     "selectFile": "Chọn tập tin của bạn ở đây",
     "or": "Hoặc"
+  },
+  "stylePanel": {
+    "headings": {
+      "styles": "Kiểu dáng"
+    },
+    "noToolSelected": "Chọn một công cụ để xem thuộc tính công cụ"
   }
 }

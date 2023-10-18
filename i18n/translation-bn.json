@@ -119,7 +119,8 @@
     "showComparison": "তুলনা দেখান",
     "back": "পেছনে",
     "clearSignature": "সাফ স্বাক্ষর",
-    "newDocument": "নতুন নথি"
+    "newDocument": "নতুন নথি",
+    "sideBySideView": "সাইড বাই সাইড ভিউ"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -1246,5 +1247,11 @@
     "dragAndDrop": "এখানে আপনার ফাইল টানুন এবং ড্রপ করুন",
     "selectFile": "এখানে আপনার ফাইল নির্বাচন করুন",
     "or": "বা"
+  },
+  "stylePanel": {
+    "headings": {
+      "styles": "শৈলী"
+    },
+    "noToolSelected": "টুল বৈশিষ্ট্য দেখতে একটি টুল নির্বাচন করুন"
   }
 }

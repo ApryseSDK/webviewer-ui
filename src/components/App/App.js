@@ -40,6 +40,7 @@ import RibbonOverflowFlyout from 'components/ModularComponents/RibbonOverflowFly
 import GroupedToolsOverflowFlyout from 'components/ModularComponents/GroupedToolsOverflowFlyout';
 import ProgressModal from 'components/ProgressModal';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
+import StylePanel from 'components/StylePanel';
 
 import useOnTextSelected from 'hooks/useOnTextSelected';
 import useOnContextMenuOpen from 'hooks/useOnContextMenuOpen';
@@ -264,21 +265,23 @@ const App = ({ removeEventHandlers }) => {
   const renderPanel = (panelName, dataElement) => {
     switch (panelName) {
       case panelNames.OUTLINE:
-        return <GenericOutlinesPanel/>;
+        return <GenericOutlinesPanel />;
       case panelNames.SIGNATURE:
-        return <SignaturePanel/>;
+        return <SignaturePanel />;
       case panelNames.BOOKMARKS:
-        return <BookmarksPanel panelSelector={dataElement}/>;
+        return <BookmarksPanel panelSelector={dataElement} />;
       case panelNames.FILE_ATTACHMENT:
-        return <FileAttachmentPanel/>;
+        return <FileAttachmentPanel />;
       case panelNames.THUMBNAIL:
         return <ThumbnailsPanel panelSelector={dataElement} />;
       case panelNames.LAYERS:
-        return <LayersPanel/>;
+        return <LayersPanel />;
       case panelNames.TEXT_EDITING:
-        return <TextEditingWrapper><TextEditingPanel dataElement={dataElement}/></TextEditingWrapper>;
+        return <TextEditingWrapper><TextEditingPanel dataElement={dataElement} /></TextEditingWrapper>;
       case panelNames.CHANGE_LIST:
-        return <MultiViewerWrapper><ComparePanel dataElement={dataElement}/></MultiViewerWrapper>;
+        return <MultiViewerWrapper><ComparePanel dataElement={dataElement} /></MultiViewerWrapper>;
+      case panelNames.STYLE:
+        return <StylePanel />;
     }
   };
 

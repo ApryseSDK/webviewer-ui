@@ -119,7 +119,8 @@
     "showComparison": "Pokaż porównanie",
     "back": "Z powrotem",
     "clearSignature": "Wyraźny podpis",
-    "newDocument": "Nowy dokument"
+    "newDocument": "Nowy dokument",
+    "sideBySideView": "Widok obok siebie"
   },
   "annotation": {
     "areaMeasurement": "Pomiar powierzchni",
@@ -1246,5 +1247,11 @@
     "dragAndDrop": "Przeciągnij i upuść swój plik tutaj",
     "selectFile": "Wybierz swój plik tutaj",
     "or": "Lub"
+  },
+  "stylePanel": {
+    "headings": {
+      "styles": "Style"
+    },
+    "noToolSelected": "Wybierz narzędzie, aby wyświetlić właściwości narzędzia"
   }
 }

@@ -2,12 +2,18 @@
 
 .ToggleElementButton {
   .Button {
+    width: 32px;
+    height: 32px;
+
     &:hover {
-      background: var(--popup-button-hover);
+      background: var(--tools-button-hover);
     }
-    &.isActive {
-      background: var(--popup-button-active);
+
+    &.active {
+      background: var(--tools-button-active);
+      color: var(--view-header-icon-active-fill);
       cursor: default;
+
       .Icon {
         color: var(--view-header-icon-active-fill)
       }

@@ -119,7 +119,8 @@
     "showComparison": "顯示比較",
     "back": "後退",
     "clearSignature": "清晰的簽名",
-    "newDocument": "新建文件"
+    "newDocument": "新建文件",
+    "sideBySideView": "並排視圖"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -1246,5 +1247,11 @@
     "dragAndDrop": "將您的文件拖放到此處",
     "selectFile": "在這裡選擇您的文件",
     "or": "或者"
+  },
+  "stylePanel": {
+    "headings": {
+      "styles": "風格"
+    },
+    "noToolSelected": "選擇工具以查看工具屬性"
   }
 }

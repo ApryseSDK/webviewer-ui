@@ -1,0 +1,49 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.StylePanel {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--panel-background);
+
+  .style-panel-header {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .no-tool-selected {
+    padding-top: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 auto;
+
+    .msg {
+      padding-top: 24px;
+      font-size: 14px;
+
+      @include tablet-and-desktop {
+        line-height: 15px;
+        width: 146px;
+      }
+
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 55px;
+      height: 56px;
+
+      svg {
+        width: 55px;
+        height: 56px;
+      }
+
+      * {
+        fill: var(--gray-5);
+        color: var(--gray-5);
+      }
+    }
+  }
+
+}

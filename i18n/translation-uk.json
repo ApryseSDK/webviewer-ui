@@ -119,7 +119,8 @@
     "showComparison": "Показати порівняння",
     "back": "Назад",
     "clearSignature": "Чіткий підпис",
-    "newDocument": "Новий документ"
+    "newDocument": "Новий документ",
+    "sideBySideView": "Пліч-о-пліч"
   },
   "annotation": {
     "areaMeasurement": "Площа",
@@ -1246,5 +1247,11 @@
     "dragAndDrop": "Перетягніть файл сюди",
     "selectFile": "Виберіть свій файл тут",
     "or": "Або"
+  },
+  "stylePanel": {
+    "headings": {
+      "styles": "Стилі"
+    },
+    "noToolSelected": "Виберіть інструмент, щоб переглянути властивості інструмента"
   }
 }

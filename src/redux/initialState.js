@@ -98,6 +98,7 @@ export default {
       wv3dPropertiesPanel: 307,
       comparePanel: 330,
       watermarkPanel: 330,
+      stylePanel: 301,
     },
     documentContainerWidth: null,
     documentContainerHeight: null,
@@ -2059,6 +2060,8 @@ export default {
     activeFlyout: null,
     flyoutToggleElement: null,
     textSignatureCanvasMultiplier: 1,
+    isShowComparisonButtonEnabled: false,
+    isMultiViewerModeAvailable: false,
   },
   search: {
     value: '',
