@@ -14,7 +14,7 @@ export const getSyncViewer = (state) => state.viewer.syncViewer;
 export const isCompareStarted = (state) => state.viewer.isCompareStarted;
 export const isComparisonDisabled = (state) => state.advanced.disableMultiViewerComparison;
 export const getIsComparisonOverlayEnabled = (state) => state.viewer.isComparisonOverlayEnabled;
-export const getActiveDocumentViewerKey = (state) => state.viewer.activeDocumentViewerKey;
+export const getActiveDocumentViewerKey = (state) => (state.viewer.isMultiViewerMode && state.viewer.activeDocumentViewerKey ? state.viewer.activeDocumentViewerKey : 1);
 export const isMultiViewerMode = (state) => state.viewer.isMultiViewerMode;
 export const getCustomFlxPanels = (state, location) => {
   if (location) {
