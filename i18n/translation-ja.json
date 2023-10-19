@@ -1050,15 +1050,15 @@
     "clearMarked": "クリア",
     "redactAllMarked": "すべて編集",
     "redactionItem": {
-      "regionRedaction": "地域の編集",
+      "regionRedaction": "領域の編集",
       "fullPageRedaction": "全ページの編集",
       "fullVideoFrameRedaction": "ビデオ編集",
-      "audioRedaction": "音声秘匿化",
-      "fullVideoFrameAndAudioRedaction": "ビデオとオーディオのリダクション",
+      "audioRedaction": "音声編集",
+      "fullVideoFrameAndAudioRedaction": "ビデオとオーディオの編集",
       "image": "画像"
     },
     "expand": "拡大",
-    "collapse": "崩壊",
+    "collapse": "折りたたみ",
     "searchResults": "の検索結果",
     "search": {
       "creditCards": "クレジットカード",
