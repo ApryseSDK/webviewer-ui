@@ -54,16 +54,12 @@ Webviewer.WebComponent({
   // Pan Tool Button
   const panToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'panToolButton',
-    title: 'tool.pan',
-    img: 'icon-header-pan',
     toolName: Tools.ToolNames.PAN,
   });
 
   // Annotation Edit/Select Tool Button
   const annotationEditToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'annotationEditToolButton',
-    title: 'tool.select',
-    img: 'multi select',
     toolName: Tools.ToolNames.EDIT,
   });
 
@@ -101,52 +97,38 @@ Webviewer.WebComponent({
 
   const eraserToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'eraserToolButton',
-    title: 'annotation.eraser',
-    img: 'icon-operation-eraser',
     toolName: Tools.ToolNames.ERASER,
   });
 
   // ** Annotate Tools ** //
   const underlineToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'underlineToolButton',
-    title: 'annotation.underline',
-    img: 'icon-tool-text-manipulation-underline',
     toolName: Tools.ToolNames.UNDERLINE,
   });
 
   const underlineToolButton2 = new instance.UI.Components.ToolButton({
     dataElement: 'underlineToolButton2',
-    title: 'annotation.underline',
-    img: 'icon-tool-text-manipulation-underline',
     toolName: Tools.ToolNames.UNDERLINE2,
   });
 
   const highlightToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'highlightToolButton',
-    title: 'annotation.highlight',
-    img: 'icon-tool-text-manipulation-highlight',
     toolName: Tools.ToolNames.HIGHLIGHT,
   });
 
   // ** Shapes Tools ** //
   const rectangleToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'rectangleToolButton',
-    title: 'annotation.rectangle',
-    img: 'icon-tool-shape-rectangle',
     toolName: Tools.ToolNames.RECTANGLE,
   });
 
   const rectangleToolButton2 = new instance.UI.Components.ToolButton({
     dataElement: 'rectangleToolButton2',
-    title: 'annotation.rectangle',
-    img: 'icon-tool-shape-rectangle',
     toolName: Tools.ToolNames.RECTANGLE2,
   });
 
   const freeHandHighlightToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'freeHandHighlightToolButton',
-    title: 'annotation.freeHandHighlight',
-    img: 'icon-tool-pen-highlight',
     toolName: Tools.ToolNames.FREEHAND_HIGHLIGHT,
   });
 
@@ -154,31 +136,23 @@ Webviewer.WebComponent({
   // ** Insert Tools ** //
   const rubberStampToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'rubberStampToolButton',
-    title: 'annotation.rubberStamp',
-    img: 'icon-tool-stamp-line',
     toolName: Tools.ToolNames.RUBBER_STAMP,
   });
 
   // ** Measure Tools ** //
   const distanceMeasurementToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'distanceMeasurementToolButton',
-    title: 'annotation.distanceMeasurement',
-    img: 'icon-tool-measurement-distance-line',
     toolName: Tools.ToolNames.DISTANCE_MEASUREMENT,
   });
 
   const areaMeasurementToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'areaMeasurementToolButton',
-    title: 'annotation.areaMeasurement',
-    img: 'icon-tool-measurement-area-polygon-line',
     toolName: Tools.ToolNames.AREA_MEASUREMENT,
   });
 
   // ** Edit Tools ** //
   const cropToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'cropToolButton',
-    title: 'annotation.crop',
-    img: 'ic_crop_black_24px',
     toolName: Tools.ToolNames.CROP,
   });
 

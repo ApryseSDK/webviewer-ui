@@ -8,10 +8,10 @@ import actions from 'actions';
 import selectors from 'selectors';
 import { mapToolNameToKey } from 'constants/map';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import toolStylesExist from 'helpers/toolStylesExist';
 import getToolStyles from 'helpers/getToolStyles';
 import getColor from 'helpers/getColor';
 import core from 'core';
+import defaultTool from 'constants/defaultTool';
 
 const ToolButton = (props) => {
   const {
@@ -44,11 +44,7 @@ const ToolButton = (props) => {
 
   const handleClick = () => {
     if (isActive) {
-      if (toolName !== 'AnnotationCreateStamp' && toolName !== 'AnnotationCreateRedaction' && toolName !== 'AnnotationEraserTool') {
-        if (toolStylesExist(toolName)) {
-          dispatch(actions.toggleElement('toolStylePopup'));
-        }
-      }
+      core.setToolMode(defaultTool);
     } else {
       core.setToolMode(toolName);
       if (toolName === 'AnnotationCreateRubberStamp') {
@@ -57,7 +53,8 @@ const ToolButton = (props) => {
     }
   };
 
-
+  const icon = img || toolButtonObject.img;
+  const toolTipTitle = title || toolButtonObject.title;
   let color = '';
   let fillColor = '';
   let strokeColor = '';
@@ -88,9 +85,9 @@ const ToolButton = (props) => {
         'confirm-button': preset === 'confirm',
         'cancel-button': preset === 'cancel'
       })}
-      img={img}
+      img={icon}
       label={label}
-      title={title}
+      title={toolTipTitle}
       dataElement={dataElement}
       onClick={handleClick}
       disabled={disabled}
@@ -99,8 +96,7 @@ const ToolButton = (props) => {
       color={color}
       fillColor={fillColor}
       strokeColor={strokeColor}
-      {...props}
-    ></Button>
+    />
   );
 };
 

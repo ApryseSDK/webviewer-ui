@@ -86,6 +86,8 @@ const mockAnnotationManager = {
   hideAnnotations: noop,
   isCreateRedactionEnabled: noop,
   disableRedaction: noop,
+  setAnnotationCanvasTransform: noop,
+  drawAnnotations: noop,
 };
 
 const mockFormFieldCreationManager = {
@@ -94,6 +96,23 @@ const mockFormFieldCreationManager = {
   endFormFieldCreationMode: noop,
 };
 
+function generateCanvasWithImage() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 116;
+  canvas.height = 150;
+
+  const ctx = canvas.getContext('2d');
+
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = "https://placekitten.com/200/300?image=5";
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      resolve(canvas);
+    };
+  });
+}
+
 const mockDocument = {
   getPageInfo: () => ({
     width: DEFAULT_PAGE_HEIGHT,
@@ -101,10 +120,14 @@ const mockDocument = {
   }),
   getType: () => docType,
   getFilename: () => 'test',
-  loadCanvas: noop,
+  loadCanvas: async ({ drawComplete }) => {
+    const canvas = await generateCanvasWithImage();
+    drawComplete(canvas);
+  },
   getBookmarks: () => new Promise((res, rej) => res),
   getViewerCoordinates: () => ({ x: 0, y: 0 }),
   setLayersArray: noop,
+  isWebViewerServerDocument: () => false,
 };
 
 const mockDisplayModeManager = {
@@ -117,6 +140,7 @@ const mockDocumentViewer = {
   getPageCount: () => 9,
   getAnnotationManager: () => mockAnnotationManager,
   getRotation: () => 0,
+  getCompleteRotation: () => 0,
   clearSearchResults: noop,
   getTool: (toolName) => mockTool,
   setWatermark: noop,
@@ -166,6 +190,16 @@ core.getScrollViewElement = () => ({
   scrollTop: 0,
   addEventListener: noop,
   removeEventListener: noop,
+  getBoundingClientRect: () => ({
+    bottom: 726,
+    height: 726,
+    left: 0,
+    right: 2149,
+    top: 0,
+    width: 2149,
+    x: 0,
+    y: 0,
+  })
 });
 core.getContentEditManager = () => ({
   isInContentEditMode: () => false,
@@ -176,7 +210,60 @@ window.Core = {
   annotationManager: mockAnnotationManager,
   AnnotationManager: mockAnnotationManager,
   Tools: {
-    ToolNames: {},
+    ToolNames: {
+      'ARROW': 'AnnotationCreateArrow',
+      'CALLOUT': 'AnnotationCreateCallout',
+      'ELLIPSE': 'AnnotationCreateEllipse',
+      'FREEHAND': 'AnnotationCreateFreeHand',
+      'FREEHAND_HIGHLIGHT': 'AnnotationCreateFreeHandHighlight',
+      'FREETEXT': 'AnnotationCreateFreeText',
+      'MARK_INSERT_TEXT': 'AnnotationCreateMarkInsertText',
+      'MARK_REPLACE_TEXT': 'AnnotationCreateMarkReplaceText',
+      'DATE_FREETEXT': 'AnnotationCreateDateFreeText',
+      'LINE': 'AnnotationCreateLine',
+      'POLYGON': 'AnnotationCreatePolygon',
+      'POLYGON_CLOUD': 'AnnotationCreatePolygonCloud',
+      'POLYLINE': 'AnnotationCreatePolyline',
+      'ARC': 'AnnotationCreateArc',
+      'RECTANGLE': 'AnnotationCreateRectangle',
+      'CALIBRATION_MEASUREMENT': 'AnnotationCreateCalibrationMeasurement',
+      'DISTANCE_MEASUREMENT': 'AnnotationCreateDistanceMeasurement',
+      'PERIMETER_MEASUREMENT': 'AnnotationCreatePerimeterMeasurement',
+      'ARC_MEASUREMENT': 'AnnotationCreateArcMeasurement',
+      'AREA_MEASUREMENT': 'AnnotationCreateAreaMeasurement',
+      'RECTANGULAR_AREA_MEASUREMENT': 'AnnotationCreateRectangularAreaMeasurement',
+      'ELLIPSE_MEASUREMENT': 'AnnotationCreateEllipseMeasurement',
+      'COUNT_MEASUREMENT': 'AnnotationCreateCountMeasurement',
+      'SIGNATURE': 'AnnotationCreateSignature',
+      'STAMP': 'AnnotationCreateStamp',
+      'FILEATTACHMENT': 'AnnotationCreateFileAttachment',
+      'RUBBER_STAMP': 'AnnotationCreateRubberStamp',
+      'FORM_FILL_CROSS': 'AnnotationCreateCrossStamp',
+      'FORM_FILL_CHECKMARK': 'AnnotationCreateCheckStamp',
+      'FORM_FILL_DOT': 'AnnotationCreateDotStamp',
+      'STICKY': 'AnnotationCreateSticky',
+      'HIGHLIGHT': 'AnnotationCreateTextHighlight',
+      'SQUIGGLY': 'AnnotationCreateTextSquiggly',
+      'STRIKEOUT': 'AnnotationCreateTextStrikeout',
+      'UNDERLINE': 'AnnotationCreateTextUnderline',
+      'REDACTION': 'AnnotationCreateRedaction',
+      'TEXT_SELECT': 'TextSelect',
+      'EDIT': 'AnnotationEdit',
+      'PAN': 'Pan',
+      'CONTENT_EDIT': 'ContentEditTool',
+      'ADD_PARAGRAPH': 'AddParagraphTool',
+      'ADD_IMAGE_CONTENT': 'AddImageContentTool',
+      'CROP': 'CropPage',
+      'SNIPPING': 'SnippingTool',
+      'ERASER': 'AnnotationEraserTool',
+      'TEXT_FORM_FIELD': 'TextFormFieldCreateTool',
+      'SIG_FORM_FIELD': 'SignatureFormFieldCreateTool',
+      'CHECK_BOX_FIELD': 'CheckBoxFormFieldCreateTool',
+      'RADIO_FORM_FIELD': 'RadioButtonFormFieldCreateTool',
+      'LIST_BOX_FIELD': 'ListBoxFormFieldCreateTool',
+      'COMBO_BOX_FIELD': 'ComboBoxFormFieldCreateTool',
+      'CHANGEVIEW': 'AnnotationCreateChangeViewTool',
+    },
     RubberStampCreateTool: {
       FILL_COLORS: ['#4F9964', '#2A85D0', '#D65656'],
       TEXT_COLORS: ['#FFFFFF', '#000000']
