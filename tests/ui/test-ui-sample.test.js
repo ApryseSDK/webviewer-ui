@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { setupWebViewerInstance, simulateClick, } from '../../utils/TestingUtils';
+import { setupWebViewerInstance, simulateClick, delay } from '../../utils/TestingUtils';
 
 /* eslint-disable no-unused-expressions */
 describe('Test UI APIs', function() {
@@ -104,17 +104,6 @@ describe('Test UI APIs', function() {
     expect(languageChangeCount).to.equal(1);
     expect(instance.UI.getCurrentLanguage()).to.equal('fr');
   });
-
-
-  // The following test is debatable whether we want to do with a unit test
-  // the issue is that with the lazy loading, and timing of when modals are created, there are
-  // timing issues with the various event listeners and events being fired. In this case, the documentUnloaded
-  // listener in the save modal gets attached after the event is fired, so the save modal never gets closed.
-  // Adding a delay fixes this, but I think this makes things brittle. The test is based on an e2e test that is equally full of timeouts.
-  // Leaving as a discussion point for now.
-  function delay(time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
 
   it('closes the save modal when we unload the document', async () => {
     const options = {

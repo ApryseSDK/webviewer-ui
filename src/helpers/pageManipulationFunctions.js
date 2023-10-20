@@ -227,12 +227,23 @@ const redactPages = (pageNumbers, redactionStyles) => {
 
 const createPageRedactions = (pageNumbers, redactionStyles) => {
   const annots = [];
+  const document = core.getDocument();
   for (const page of pageNumbers) {
-    const pageInfo = core.getPageInfo(page);
+    const pageInfo = document.getPageInfo(page);
+    const pageRotation = document.getPageRotation(page);
     if (pageInfo) {
+      let width;
+      let height;
+      if (pageRotation === 90 || pageRotation === 270) {
+        width = pageInfo.height;
+        height = pageInfo.width;
+      } else {
+        width = pageInfo.width;
+        height = pageInfo.height;
+      }
       const redaction = new window.Core.Annotations.RedactionAnnotation({
         PageNumber: page,
-        Rect: new window.Core.Annotations.Rect(0, 0, pageInfo.width, pageInfo.height),
+        Rect: new window.Core.Annotations.Rect(0, 0, width, height),
         ...redactionStyles
       });
       redaction.type = redactionTypeMap['FULL_PAGE'];
