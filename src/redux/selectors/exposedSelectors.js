@@ -17,7 +17,7 @@ export const getSyncViewer = (state) => state.viewer.syncViewer;
 export const isCompareStarted = (state) => state.viewer.isCompareStarted;
 export const isComparisonDisabled = (state) => state.advanced.disableMultiViewerComparison;
 export const getIsComparisonOverlayEnabled = (state) => state.viewer.isComparisonOverlayEnabled;
-export const getActiveDocumentViewerKey = (state) => state.viewer.activeDocumentViewerKey;
+export const getActiveDocumentViewerKey = (state) => (state.viewer.isMultiViewerMode && state.viewer.activeDocumentViewerKey ? state.viewer.activeDocumentViewerKey : 1);
 export const isMultiViewerMode = (state) => state.viewer.isMultiViewerMode;
 export const isMultiViewerReady = (state) => state.viewer.isMultiViewerReady;
 export const getCustomFlxPanels = (state, location) => {
@@ -708,6 +708,8 @@ export const getAvailableFontFaces = (state) => state.officeEditor.availableFont
 
 export const getCSSFontValues = (state) => state.officeEditor.cssFontValues;
 
+export const getOfficeEditorParagraphProperties = (state) => state.officeEditor.paragraphProperties;
+
 export const getContentBoxEditor = (state) => state.viewer.contentBoxEditor;
 
 export const getAnnotationFilters = (state) => state.viewer.annotationFilters;
@@ -765,4 +767,12 @@ export const getOpenRightPanelWidth = (state) => {
   }
 
   return 0; // return 0 if no panel is open
+};
+
+export const getIsShowComparisonButtonEnabled = (state) => {
+  return state.viewer.isShowComparisonButtonEnabled;
+};
+
+export const getIsMultiViewerModeAvailable = (state) => {
+  return state.viewer.isMultiViewerModeAvailable;
 };

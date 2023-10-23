@@ -2146,6 +2146,7 @@ export default {
   },
   officeEditor: {
     cursorProperties: {},
+    paragraphProperties: {},
     selectionProperties: {},
     availableFontFaces,
     cssFontValues,
