@@ -183,6 +183,12 @@ class StylePopup extends React.PureComponent {
         dataElement: DataElements.FONT_SIZE_SLIDER,
         getCirclePosition: (lineLength, FontSize) => ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
         convertRelativeCirclePositionToValue: (circlePosition) => `${circlePosition * 40 + 5}pt`,
+        min: 5,
+        max: 45,
+        step: 1,
+        withInputField: true,
+        inputFieldType: 'number',
+        getLocalValue: (FontSize) => `${parseFloat(FontSize).toFixed(2)}pt`,
       };
     }
 

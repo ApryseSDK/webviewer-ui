@@ -131,6 +131,16 @@ test.describe('Style popup', () => {
     await iframe.waitForSelector('[data-element=annotationPopup]');
     await iframe.click('[data-element=annotationStyleEditButton]');
     await iframe.waitForSelector('[data-element=fontSizeSlider]');
+
+    const fontSizeSliderInput = await iframe?.$('[data-element=fontSizeSlider] > .slider-element-container > input');
+    await fontSizeSliderInput?.focus();
+    await iframe.waitForSelector('[data-element=fontSizeSlider]');
+    const realInput = await iframe.$('[data-element="fontSizeSlider"] > .slider-element-container > .slider-input-wrapper > input');
+    await realInput.fill('15', {
+      force: true
+    });
+    await page.waitForTimeout(500);
+    expect(await pageContainer?.screenshot()).toMatchSnapshot(['tool-style', 'measurement-font-size-slider.png']);
   });
 
   test('Opacity slider input should be 0% if a user enter a negative value', async ({ page }) => {
