@@ -10,6 +10,7 @@ test.describe('Tests for outline bookmarks', () => {
     iframe = (sampleIframe as Frame);
     instance = await waitForInstance();
     await instance('loadDocument', '/test-files/outlines-nested.pdf');
+    await instance('openElements', ['outlinesPanel']);
     await page.waitForTimeout(Timeouts.PDF_PRIME_DOCUMENT);
 
     await iframe.evaluate(() => {
@@ -19,13 +20,11 @@ test.describe('Tests for outline bookmarks', () => {
         window.numberOfTimesOutlineBookmarksChangedEventWasTriggered++;
       });
     });
-
-    await instance('openElements', ['outlinesPanel']);
-    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION * 3);
   });
 
   test('should fire an event when an outline is renamed', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
+    await iframe.$('[data-element="outlinesPanel"]');
     const outline = await iframe.$$('.bookmark-outline-single-container');
     await outline[0].click();
     const editOptions = await outline[0].$('.bookmark-outline-more-button');

@@ -449,7 +449,9 @@ const ThumbnailsPanel = ({ panelSelector }) => {
   const onRightClick = (event, pageIndex) => {
     event.preventDefault();
     core.setCurrentPage(pageIndex + 1);
-    dispatch(actions.setSelectedPageThumbnails([pageIndex]));
+    if (!selectedPageIndexes.includes(pageIndex)) {
+      dispatch(actions.setSelectedPageThumbnails([pageIndex]));
+    }
 
     if (isReaderMode || isDocumentReadOnly) {
       return;

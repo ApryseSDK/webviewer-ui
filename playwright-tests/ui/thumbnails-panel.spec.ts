@@ -22,7 +22,7 @@ test.describe('Thumbnails Panel', () => {
     expect(await pageContainer.screenshot()).toMatchSnapshot(['basic-rendering', file, 'pageContainer.png']);
   };
 
-  test.skip('should be able to render the PDF thumbnail and document correctly', async ({ page }) => {
+  test('should be able to render the PDF thumbnail and document correctly', async ({ page }) => {
     await thumbnailRenderingTest(page, 'webviewer-demo-optimized.pdf');
   });
 
@@ -181,7 +181,7 @@ test.describe('Thumbnails Panel', () => {
     expect(await thumbnailPanel.screenshot()).toMatchSnapshot(['multi-select', 'thumbnail-multi-select-mode-unselected.png']);
   });
 
-  test('should select a page when checking box in "checkbox" mode', async ({ page, browserName }) => {
+  test('should select a page when checking box in "checkbox" mode and right click on thumbnails will not deselect', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: investigate why this test is flaky on webkit');
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
     await waitForInstance();
@@ -202,6 +202,14 @@ test.describe('Thumbnails Panel', () => {
 
     await page.waitForTimeout(2000);
     expect(await thumbnailPanel.screenshot()).toMatchSnapshot(['multi-select', 'thumbnail-multi-select-mode-selected.png']);
+
+    // Right click on thumbnails will not deselect
+    await checkboxes[0].click();
+    const thumbnails = await iframe.$$('.Thumbnail');
+    await thumbnails[0].click({ button: 'right' });
+    await page.waitForTimeout(1000);
+    const pagesInput = await iframe.$('.pagesInput');
+    expect(await pagesInput?.inputValue()).toBe('1-2');
   });
 
   test('should select a page when clicking thumbnail in "thumbnail" mode', async ({ page, browserName }) => {
