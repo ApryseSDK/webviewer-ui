@@ -58,9 +58,7 @@ function ZoomControls(props) {
   const inputWidth = zoomValue ? (zoomValue.length + 1) * INPUT_WIDTH_MULTIPLIER : 0;
 
   return (
-    <div className={classNames('ZoomContainerWrapper', {
-      [`size${size}`]: true,
-    })} data-element={dataElement} ref={elementRef}>
+    <div className="ZoomContainerWrapper" data-element={dataElement} ref={elementRef}>
       {size === 0 && <>
         <div className="ToggleZoomMenu">
           <div tabIndex={0}

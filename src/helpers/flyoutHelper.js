@@ -1,8 +1,9 @@
 import getRootNode from 'helpers/getRootNode';
 
-export function getFlyoutPositionOnElement(referenceElement, flyoutRef) {
+export function getFlyoutPositionOnElement(dataElement, flyoutRef) {
   // Get the container, toggle element, and target elements
   const appRect = getRootNode().getElementById('app').getBoundingClientRect();
+  const referenceElement = getRootNode().querySelector(`[data-element="${dataElement}"]`);
   const referenceButtonRect = referenceElement.getBoundingClientRect();
   const parentHeader = referenceElement.closest('.ModularHeader');
   const targetElement = flyoutRef.current;

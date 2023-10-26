@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Styl tekstu",
       "colors": "Kolory",
-      "invalidFontSize": "Rozmiar czcionki musi być mniejszy niż",
+      "invalidFontSize": "Rozmiar czcionki musi mieścić się w następującym zakresie",
       "labelText": "Tekst",
       "labelTextPlaceholder": "Dodaj tekst"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Przeciągnij i upuść swój plik tutaj",
     "selectFile": "Wybierz swój plik tutaj",
     "or": "Lub"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Style"
-    },
-    "noToolSelected": "Wybierz narzędzie, aby wyświetlić właściwości narzędzia"
   }
 }

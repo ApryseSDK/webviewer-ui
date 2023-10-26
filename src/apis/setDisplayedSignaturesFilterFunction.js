@@ -20,6 +20,6 @@ Webviewer(...)
     instance.UI.setDisplayedSignaturesFilter((a) => a.getCustomData('isInitial'));
   });
  */
-export default store => filterFunction => {
+export default (store) => (filterFunction) => {
   store.dispatch(actions.setDisplayedSignaturesFilterFunction(filterFunction));
 };

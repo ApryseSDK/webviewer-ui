@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Textstil",
       "colors": "Farben",
-      "invalidFontSize": "Schriftgröße muss kleiner sein als",
+      "invalidFontSize": "Die Schriftgröße muss im folgenden Bereich liegen",
       "labelText": "Etikettentext",
       "labelTextPlaceholder": "Beschriftungstext hinzufügen"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Ziehen Sie Ihre Datei per Drag & Drop hierher",
     "selectFile": "Wählen Sie hier Ihre Datei aus",
     "or": "Oder"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Stile"
-    },
-    "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen"
   }
 }

@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Style de texte",
       "colors": "Couleurs",
-      "invalidFontSize": "La taille de la police doit être inférieure à",
+      "invalidFontSize": "La taille de la police doit être comprise dans la plage suivante",
       "labelText": "Texte de l'étiquette",
       "labelTextPlaceholder": "Ajouter un texte d'étiquette"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Faites glisser et déposez votre fichier ici",
     "selectFile": "Sélectionnez votre dossier ici",
     "or": "Ou"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "modes"
-    },
-    "noToolSelected": "Sélectionnez un outil pour afficher les propriétés de l'outil"
   }
 }

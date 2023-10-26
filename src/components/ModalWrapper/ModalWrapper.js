@@ -30,7 +30,18 @@ const ModalWrapper = (props) => {
         <div className="wrapper">
           <SwipeableWrapper {...props}>
             <div className="header-container">
-              {t(props.title)}
+              <div className='left-header'>
+                {props.backButtonDataElement && (
+                  <Button
+                    className="back-button"
+                    dataElement={props.backButtonDataElement}
+                    title={t('action.back')}
+                    img={'icon-arrow-back'}
+                    onClick={props.onBackClick}
+                  />
+                )}
+                {t(props.title)}
+              </div>
               <Button
                 className="close-button"
                 dataElement={props.closeButtonDataElement}

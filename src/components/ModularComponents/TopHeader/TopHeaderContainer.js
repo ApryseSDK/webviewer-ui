@@ -1,10 +1,12 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'selectors';
 import './TopHeader.scss';
 import ModularHeader from '../ModularHeader';
 import FloatingHeaderContainer from '../FloatingHeader';
 import { PLACEMENT, POSITION } from 'constants/customizationVariables';
+import useResizeObserver from 'hooks/useResizeObserver';
+import actions from 'actions';
 
 const TopHeaderContainer = () => {
   const [
@@ -15,6 +17,7 @@ const TopHeaderContainer = () => {
       selectors.getFeatureFlags(state),
       selectors.getTopHeaders(state)
     ]);
+  const dispatch = useDispatch();
   const { customizableUI } = featureFlags;
 
   // Top headers can be either normal headers, or floating headers. You can have a max of two normal headers.
@@ -42,8 +45,14 @@ const TopHeaderContainer = () => {
     return sortedHeaders;
   }, []);
 
-  // Now we filter out the floating headers
   const floatingHeaders = topHeaders.filter((header) => header.float);
+
+  const [elementRef, dimensions] = useResizeObserver();
+  useEffect(() => {
+    if (dimensions.height !== null && floatingHeaders.length > 0) {
+      dispatch(actions.setTopFloatingContainerHeight(dimensions.height));
+    }
+  }, [dimensions, floatingHeaders.length]);
 
   if (customizableUI) {
     const modularHeaders = sortedTopHeaders.map((header, index) => {
@@ -56,7 +65,7 @@ const TopHeaderContainer = () => {
     return (
       <div>
         {modularHeaders}
-        <FloatingHeaderContainer floatingHeaders={floatingHeaders} placement={PLACEMENT.TOP} />
+        <FloatingHeaderContainer floatingHeaders={floatingHeaders} placement={PLACEMENT.TOP} ref={elementRef} />
       </div>
     );
   }

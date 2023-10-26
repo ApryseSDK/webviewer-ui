@@ -79,8 +79,6 @@ const MultiViewer = () => {
     isMultiViewerMode,
     isComparisonDisabled,
     activeDocumentViewerKey,
-    leftPanelWidth,
-    isLeftPanelOpen,
     documentContainerWidth,
     documentContentContainerWidthStyle,
     zoom,
@@ -90,12 +88,12 @@ const MultiViewer = () => {
     customMultiViewerSyncHandler,
     syncViewer,
     multiViewerSyncScrollMode,
+    documentContainerLeftMargin,
+    isShowComparisonButtonEnabled,
   ] = useSelector((state) => [
     selectors.isMultiViewerMode(state),
     selectors.isComparisonDisabled(state),
     selectors.getActiveDocumentViewerKey(state),
-    selectors.getLeftPanelWidthWithResizeBar(state),
-    selectors.isElementOpen(state, 'leftPanel'),
     selectors.getDocumentContainerWidth(state),
     selectors.getDocumentContentContainerWidthStyle(state),
     selectors.getZoom(state, 1),
@@ -105,6 +103,8 @@ const MultiViewer = () => {
     selectors.getCustomMultiViewerSyncHandler(state),
     selectors.getSyncViewer(state),
     selectors.getMultiViewerSyncScrollMode(state),
+    selectors.getDocumentContainerLeftMargin(state),
+    selectors.getIsShowComparisonButtonEnabled(state)
   ]);
 
   useEffect(() => {
@@ -128,11 +128,13 @@ const MultiViewer = () => {
       setWidth(width / 2);
       setWidth2(width / 2);
       resizeOberver.current.observe(rootContainerRef.current);
-      !isComparisonDisabled && addHeaderItems();
+      !isComparisonDisabled && isShowComparisonButtonEnabled && addHeaderItems();
       setInitialSetup(true);
       onReady('viewer');
+      dispatch(actions.setIsMultiViewerReady(true));
     };
     const cleanUpMultiViewer = () => {
+      dispatch(actions.setIsMultiViewerReady(false));
       stopSyncing();
       setInitialSetup(false);
       if (activeDocumentViewerKey === 2) {
@@ -180,14 +182,14 @@ const MultiViewer = () => {
     const resetHeaderItems = () => {
       const headerItems = selectors.getDefaultHeaderItems(store.getState());
       const index = oldHeaderItems.current.index;
-      if (index !== -1) {
+      if (index && index !== -1) {
         headerItems.splice(index, 1, oldHeaderItems.current.zoomOverlay);
         oldHeaderItems.current = {
           index: null,
           zoomOverlay: null,
         };
       }
-      const indexOfButton = headerItems.indexOf(headerItems.find((item) => item.dataElement === 'comparePanelToggleButton'));
+      const indexOfButton = headerItems.indexOf(headerItems.find((item) => item?.dataElement === 'comparePanelToggleButton'));
       indexOfButton !== -1 && headerItems.splice(indexOfButton, 1);
       dispatch(actions.setHeaderItems('default', [...headerItems]));
     };
@@ -234,9 +236,16 @@ const MultiViewer = () => {
     if (!initialSetup) {
       setupMultiViewer();
     }
+
+    if (isMultiViewerMode && isShowComparisonButtonEnabled && initialSetup) {
+      addHeaderItems();
+    } else if (initialSetup) {
+      resetHeaderItems();
+    }
+
     addEventListeners();
     return removeListeners;
-  }, [isMultiViewerMode]);
+  }, [isMultiViewerMode, isShowComparisonButtonEnabled]);
 
   useEffect(() => {
     if (isMultiViewerMode && initialSetup) {
@@ -422,10 +431,12 @@ const MultiViewer = () => {
   };
 
   useEffect(() => {
-    if (syncViewer && !isSyncing) {
-      startSyncing(syncViewer);
-    } else if (!syncViewer && isSyncing) {
-      stopSyncing();
+    if (isMultiViewerMode) {
+      if (syncViewer && !isSyncing) {
+        startSyncing(syncViewer);
+      } else if (!syncViewer && isSyncing) {
+        stopSyncing();
+      }
     }
   }, [syncViewer]);
 
@@ -443,7 +454,7 @@ const MultiViewer = () => {
   return (
     <div className={classNames('MultiViewer', { hidden: !isMultiViewerMode })} style={{
       width: documentContentContainerWidthStyle,
-      marginLeft: `${isLeftPanelOpen ? leftPanelWidth : 0}px`,
+      marginLeft: `${documentContainerLeftMargin}px`,
     }}
     ref={rootContainerRef}
     >

@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import RibbonItem from '../RibbonItem';
+import Measure from 'react-measure';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'selectors';
@@ -8,9 +9,9 @@ import actions from 'actions';
 import FlexDropdown from '../FlexDropdown';
 import { ITEM_TYPE, DIRECTION } from 'constants/customizationVariables';
 import ToggleElementButton from '../ToggleElementButton';
+import { isThereAvailableSpace, getResponsiveItems, getItemsToHide } from '../Helpers/responsiveness-helper';
 
 import './RibbonGroup.scss';
-import sizeManager, { itemToFlyout } from 'helpers/responsivnessHelper';
 
 const DEFAULT_DROPDOWN_HEIGHT = 72;
 
@@ -38,77 +39,119 @@ const RibbonGroup = (props) => {
     grow = 0,
   } = props;
   const [itemsGap, setItemsGap] = useState(gap);
+  const [ribbonsWidth, setRibbonsWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
-  const [ribbonItems] = useState(validateItems(items));
-  const [currentToolbarGroup] = useSelector((state) => [
+  const [ribbonsHeight, setRibbonsHeight] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
+  const [overflowItems, setOverflowItems] = useState([]);
+  const [ribbonItems, setRibbonItems] = useState(
+    validateItems(items)
+  );
+  const [currentToolbarGroup, flyoutMap] = useSelector((state) => [
     selectors.getCurrentToolbarGroup(state),
+    selectors.getFlyoutMap(state),
   ]);
 
+  const ribbonsRef = useRef();
   const containerRef = useRef();
+  const moreButtonRef = useRef();
 
   const dispatch = useDispatch();
 
-  const FLYOUT_NAME = `${dataElement}-flyout`;
-
-  const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
-  useEffect(() => {
-    sizeManager[dataElement] = {
-      ...(sizeManager[dataElement] ? sizeManager[dataElement] : {}),
-      canGrow: size > 0,
-      canShrink: size < items.length,
-      grow: () => {
-        const newSize = size - 1;
-        dispatch(actions.setCustomElementSize(dataElement, newSize < 0 ? 0 : newSize));
-      },
-      shrink: () => {
-        dispatch(actions.setCustomElementSize(dataElement, size + 1));
-      },
-      size: size,
-    };
-    if (containerRef.current) {
-      sizeManager[dataElement].sizeToWidth = {
-        ...(sizeManager[dataElement].sizeToWidth ? sizeManager[dataElement].sizeToWidth : {}),
-        [size]: containerRef.current.clientWidth,
-      };
-      sizeManager[dataElement].sizeToHeight = {
-        ...(sizeManager[dataElement].sizeToHeight ? sizeManager[dataElement].sizeToHeight : {}),
-        [size]: containerRef.current.clientHeight,
-      };
-    }
-  }, [size]);
-
-  useLayoutEffect(() => {
-    const flyout = {
-      dataElement: FLYOUT_NAME,
-      className: 'RibbonGroupFlyout',
-      items: [],
-    };
-    if (size > 0) {
-      const activeIndex = ribbonItems.findIndex((item) => item.toolbarGroup === currentToolbarGroup);
-      const lastIndex = ribbonItems.length - 1;
-      const indexToExcludeFrom = activeIndex >= lastIndex - size ? lastIndex - size : lastIndex - size + 1;
-      for (let i = 0; i < ribbonItems.length; i++) {
-        const item = ribbonItems[i];
-        if (i < indexToExcludeFrom || item.toolbarGroup === currentToolbarGroup) {
-          continue;
-        }
-        const flyoutItem = itemToFlyout(item, {
-          onClick: () => {
-            dispatch(actions.closeElements([FLYOUT_NAME]));
-          },
-        });
-        if (flyoutItem) {
-          flyout.items.push(flyoutItem);
-        }
-      }
-    }
-    dispatch(actions.updateFlyout(FLYOUT_NAME, flyout));
-    setContainerWidth(containerRef.current?.clientWidth ?? 0);
-  }, [size, currentToolbarGroup]);
+  const FLYOUT_NAME = 'RibbonOverflowFlyout';
 
   useEffect(() => {
     setItemsGap(gap);
   }, [gap]);
+
+  const moveItemsToOverflow = (items) => {
+    if (items) {
+      setOverflowItems(getResponsiveItems(items, overflowItems, true));
+      setRibbonItems(getResponsiveItems(items, ribbonItems, false));
+    }
+  };
+
+  const moveItemsToRibbon = (items) => {
+    if (items) {
+      setOverflowItems(getResponsiveItems(items, overflowItems, false));
+      setRibbonItems(getResponsiveItems(items, ribbonItems, true));
+    }
+  };
+
+  // Using parent size to determine if overflow is needed.
+  // This could probably be replaced when we have a better way to determine the size of the header items.
+  const parentRect = containerRef?.current?.parentElement?.getBoundingClientRect();
+  const parentWidth = parentRect?.width;
+  const parentHeight = parentRect?.height;
+
+  useLayoutEffect(() => {
+    // close flyout when ribbon groups change so we don't get left with an open empty flyout
+    dispatch(actions.closeElements([FLYOUT_NAME]));
+    const isHorizontalHeader = headerDirection === DIRECTION.ROW;
+    const ribbonItemsShown = ribbonsRef?.current?.getElementsByClassName('RibbonItem');
+    const moreButtonRect = moreButtonRef.current.getBoundingClientRect();
+    const availableSpace = isThereAvailableSpace(ribbonItemsShown, parentRect, headerDirection, justifyContent);
+    const sizeNeededForButton = isHorizontalHeader ? moreButtonRect.width + gap : moreButtonRect.height + gap;
+
+    if (availableSpace < sizeNeededForButton && ribbonItems.length > 1) {
+      let candidateItemsToHide = ribbonItems;
+      if (currentToolbarGroup === ribbonItems.at(-1).toolbarGroup) {
+        // If the last item is the current toolbar group, we don't want to hide it.
+        candidateItemsToHide = ribbonItems.slice(0, -1);
+      }
+      const itemsToHide = getItemsToHide(candidateItemsToHide, ribbonItemsShown, availableSpace, headerDirection);
+      moveItemsToOverflow(itemsToHide);
+    } else if (overflowItems.length > 0) {
+      const shownItems = [].slice.call(ribbonItemsShown);
+      const largestItem = shownItems.reduce((largestItem, item) => {
+        if (isHorizontalHeader) {
+          return largestItem.getBoundingClientRect().width > item.getBoundingClientRect().width ? largestItem : item;
+        }
+        return largestItem.getBoundingClientRect().height > item.getBoundingClientRect().height ? largestItem : item;
+      });
+
+      const spaceForLargestItem = (isHorizontalHeader
+        ? largestItem.getBoundingClientRect().width
+        : largestItem.getBoundingClientRect().height) + gap;
+      if (availableSpace > spaceForLargestItem + sizeNeededForButton) {
+        moveItemsToRibbon([overflowItems[0]]);
+      }
+    }
+
+    setOverflowFlyout();
+  }, [
+    parentWidth,
+    ribbonsWidth,
+    containerWidth,
+    parentHeight,
+    ribbonsHeight,
+    containerHeight,
+    ribbonsRef,
+    containerRef,
+    moreButtonRef,
+  ]);
+
+  const setOverflowFlyout = () => {
+    const RibbonOverflowFlyout = {
+      dataElement: FLYOUT_NAME,
+      className: FLYOUT_NAME,
+      items: getOverflowItems(),
+    };
+    if (flyoutMap[FLYOUT_NAME]) {
+      dispatch(actions.updateFlyout(FLYOUT_NAME, RibbonOverflowFlyout));
+    }
+  };
+
+  const getOverflowItems = () => {
+    const flyoutClosingItems = overflowItems.map((item) => {
+      item.onClick = () => {
+        moveItemsToRibbon([item]);
+        dispatch(actions.closeElements([FLYOUT_NAME]));
+      };
+      return item;
+    });
+    return flyoutClosingItems;
+  };
 
   const setToolbarGroup = useCallback(
     (group, pickTool) => {
@@ -118,18 +161,12 @@ const RibbonGroup = (props) => {
   );
 
   const renderRibbonItems = () => {
-    const activeIndex = ribbonItems.findIndex((item) => item.toolbarGroup === currentToolbarGroup);
-    const lastIndex = ribbonItems.length - 1;
-    const indexToExcludeFrom = activeIndex >= lastIndex - size ? lastIndex - size : lastIndex - size + 1;
-    return ribbonItems.map((item, index) => {
-      if (index >= indexToExcludeFrom && item.toolbarGroup !== currentToolbarGroup) {
-        return null;
-      }
+    return ribbonItems.map((item) => {
       const itemProps = item.props || item;
       itemProps.direction = headerDirection;
       itemProps.justifyContent = justifyContent;
       return <RibbonItem key={`${dataElement}-${itemProps.dataElement}`} {...itemProps} />;
-    }).filter((item) => !!item);
+    });
   };
 
   const getArrowDirection = () => {
@@ -147,57 +184,84 @@ const RibbonGroup = (props) => {
 
   if (ribbonItems && ribbonItems.length) {
     return (
-      <div ref={containerRef} className={'RibbonGroupContainer'} style={{ flexGrow: grow }}>
-        <div className={'RibbonGroup__wrapper'} data-element={dataElement}
-          style={{ display: 'flex', flexDirection: headerDirection, justifyContent: justifyContent }}>
-          <div
-            className={classNames({
-              'RibbonGroup': true,
-              'hidden': size === items.length,
-            })}
-            style={{
-              gap: `${itemsGap}px`,
-              flexDirection: headerDirection,
-            }}
-          >
-            {renderRibbonItems()}
-            <div
-              className={classNames({
-                'RibbonGroup__moreButton': true,
-                'hidden': size === 0,
-              })}
-            >
-              <ToggleElementButton
-                dataElement="moreRibbonsButton"
-                toggleElement={FLYOUT_NAME}
-                title="action.more"
-                img="icon-tools-more"
-              />
+      <>
+        <Measure
+          bounds
+          innerRef={containerRef}
+          onResize={({ bounds }) => {
+            setContainerWidth(bounds.width);
+            setContainerHeight(bounds.height);
+          }}
+        >
+          {({ measureRef }) => (
+            <div ref={measureRef} className={'RibbonGroupContainer'} style={{ flexGrow: grow }}>
+              <Measure
+                bounds
+                innerRef={ribbonsRef}
+                onResize={({ bounds }) => {
+                  setRibbonsWidth(bounds.width);
+                  setRibbonsHeight(bounds.height);
+                }}
+              >
+                {({ measureRef }) => (
+                  <div className={'RibbonGroup__wrapper'} ref={measureRef} data-element={dataElement} style={{ display: 'flex', flexDirection: headerDirection, justifyContent: justifyContent }}>
+                    <div
+                      className={classNames({
+                        'RibbonGroup': true,
+                        'hidden': ribbonItems.length <= 1 && overflowItems.length > 0,
+                      })}
+                      style={{
+                        gap: `${itemsGap}px`,
+                        flexDirection: headerDirection,
+                      }}
+                      onFocus={() => {
+                        setOverflowFlyout();
+                      }}
+                    >
+                      {renderRibbonItems()}
+                      <div
+                        ref={moreButtonRef}
+                        className={classNames({
+                          'RibbonGroup__moreButton': true,
+                          'hidden': overflowItems.length === 0,
+                        })}
+                      >
+                        <ToggleElementButton
+                          dataElement="moreRibbonsButton"
+                          toggleElement={FLYOUT_NAME}
+                          title="action.more"
+                          img="icon-tools-more"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      className={classNames({
+                        'RibbonGroup__dropdown': true,
+                        'hidden': ribbonItems.length > 1 || overflowItems.length === 0,
+                      })}
+                    >
+                      <FlexDropdown
+                        dataElement={`${dataElement}Dropdown`}
+                        width={headerDirection === DIRECTION.COLUMN ? containerWidth : undefined}
+                        height={headerDirection === DIRECTION.COLUMN ? DEFAULT_DROPDOWN_HEIGHT : undefined}
+                        direction={headerDirection}
+                        placement={headerPlacement}
+                        objects={validateItems(items)}
+                        objectKey={'toolbarGroup'}
+                        currentSelectionKey={currentToolbarGroup}
+                        onClickItem={(toolbarGroup) => {
+                          setToolbarGroup(toolbarGroup);
+                        }}
+                        arrowDirection={getArrowDirection()}
+                      />
+                    </div>
+                  </div>
+                )}
+              </Measure>
             </div>
-          </div>
-          <div
-            className={classNames({
-              'RibbonGroup__dropdown': true,
-              'hidden': size !== items.length,
-            })}
-          >
-            <FlexDropdown
-              dataElement={`${dataElement}Dropdown`}
-              width={headerDirection === DIRECTION.COLUMN ? containerWidth : undefined}
-              height={headerDirection === DIRECTION.COLUMN ? DEFAULT_DROPDOWN_HEIGHT : undefined}
-              direction={headerDirection}
-              placement={headerPlacement}
-              objects={validateItems(items)}
-              objectKey={'toolbarGroup'}
-              currentSelectionKey={currentToolbarGroup}
-              onClickItem={(toolbarGroup) => {
-                setToolbarGroup(toolbarGroup);
-              }}
-              arrowDirection={getArrowDirection()}
-            />
-          </div>
-        </div>
-      </div>
+          )}
+        </Measure>
+      </>
     );
   }
 

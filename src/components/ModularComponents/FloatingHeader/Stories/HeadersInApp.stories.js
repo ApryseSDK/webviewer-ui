@@ -1,0 +1,228 @@
+import React from 'react';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import App from 'components/App';
+import initialState from 'src/redux/initialState';
+import rootReducer from 'reducers/rootReducer';
+import {
+  defaultLeftHeader,
+  defaultTopHeader,
+  floatStartHeader,
+  secondFloatStartHeader,
+  floatCenterHeader,
+  floatEndHeader,
+  secondFloatStartLeftHeader,
+  floatStartLeftHeader,
+  floatCenterLeftHeader,
+  floatEndLeftHeader,
+  defaultRightHeader,
+  secondFloatStartRightHeader,
+  floatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
+  defaultBottomHeader,
+  floatStartBottomHeader,
+  secondFloatStartBottomHeader,
+  floatCenterBottomHeader,
+  floatEndBottomHeader,
+  floatStarTopHeaderStatic,
+  floatCenterTopHeaderDynamic,
+  floatEndTopHeaderNone,
+} from '../../Helpers/mockHeaders';
+
+export default {
+  title: 'ModularComponents/FloatingHeader/App',
+  component: App,
+};
+
+
+const noop = () => { };
+
+const MockApp = ({ initialState }) => {
+  return (
+    <Provider store={configureStore({
+      reducer: rootReducer,
+      preloadedState: initialState,
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+    })}>
+      <App removeEventHandlers={noop} />
+    </Provider>
+  );
+};
+
+const Template = (args) => {
+  const stateWithHeaders = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      modularHeaders: args.headers,
+      openElements: {},
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+  return <MockApp initialState={stateWithHeaders} />;
+};
+
+function createTemplate(headers) {
+  const template = Template.bind({});
+  template.args = { headers };
+  template.parameters = { layout: 'fullscreen' };
+  return template;
+}
+
+export const TopAndLeftHeaders = createTemplate([
+  defaultLeftHeader,
+  secondFloatStartLeftHeader,
+  floatStartLeftHeader,
+  floatCenterLeftHeader,
+  floatEndLeftHeader,
+  defaultTopHeader,
+  floatStartHeader,
+  secondFloatStartHeader,
+  floatCenterHeader,
+  floatEndHeader,
+]);
+
+export const TopCenterAndLeftHeaders = createTemplate([
+  defaultLeftHeader,
+  secondFloatStartLeftHeader,
+  floatStartLeftHeader,
+  floatCenterLeftHeader,
+  floatEndLeftHeader,
+  defaultTopHeader,
+  floatCenterHeader,
+  floatEndHeader,
+]);
+
+export const TopAndRightHeaders = createTemplate([
+  defaultRightHeader,
+  secondFloatStartRightHeader,
+  floatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
+  defaultTopHeader,
+  floatStartHeader,
+  secondFloatStartHeader,
+  floatCenterHeader,
+  floatEndHeader,
+]);
+
+export const TopCenterAndRightHeaders = createTemplate([
+  defaultRightHeader,
+  secondFloatStartRightHeader,
+  floatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
+  defaultTopHeader,
+  floatCenterHeader,
+]);
+
+export const BottomAndLeftHeaders = createTemplate([
+  defaultLeftHeader,
+  secondFloatStartLeftHeader,
+  floatStartLeftHeader,
+  floatCenterLeftHeader,
+  floatEndLeftHeader,
+  defaultBottomHeader,
+  floatStartBottomHeader,
+  secondFloatStartBottomHeader,
+  floatCenterBottomHeader,
+  floatEndBottomHeader,
+]);
+
+export const BottomCenterAndLeftHeaders = createTemplate([
+  defaultLeftHeader,
+  secondFloatStartLeftHeader,
+  floatStartLeftHeader,
+  floatCenterLeftHeader,
+  floatEndLeftHeader,
+  defaultBottomHeader,
+  floatCenterBottomHeader,
+  floatEndBottomHeader,
+]);
+
+export const BottomAndRightHeaders = createTemplate([
+  defaultRightHeader,
+  secondFloatStartRightHeader,
+  floatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
+  defaultBottomHeader,
+  floatStartBottomHeader,
+  secondFloatStartBottomHeader,
+  floatCenterBottomHeader,
+  floatEndBottomHeader,
+]);
+
+export const BottomCenterAndRightHeaders = createTemplate([
+  defaultRightHeader,
+  secondFloatStartRightHeader,
+  floatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
+  defaultBottomHeader,
+  floatCenterBottomHeader,
+]);
+
+export const TopAndBottomHeaders = createTemplate([
+  defaultBottomHeader,
+  floatStartBottomHeader,
+  secondFloatStartBottomHeader,
+  floatCenterBottomHeader,
+  floatEndBottomHeader,
+  defaultTopHeader,
+  floatStartHeader,
+  secondFloatStartHeader,
+  floatCenterHeader,
+  floatEndHeader,
+]);
+
+export const FloatingOnAllSides = createTemplate([
+  floatStartHeader,
+  secondFloatStartHeader,
+  floatCenterHeader,
+  floatEndHeader,
+  floatStartLeftHeader,
+  secondFloatStartLeftHeader,
+  floatCenterLeftHeader,
+  floatEndLeftHeader,
+  floatStartRightHeader,
+  secondFloatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
+  floatStartBottomHeader,
+  secondFloatStartBottomHeader,
+  floatCenterBottomHeader,
+  floatEndBottomHeader,
+]);
+
+export const FloatiesWithOpacityLevels = createTemplate([
+  floatStarTopHeaderStatic,
+  floatCenterTopHeaderDynamic,
+  floatEndTopHeaderNone,
+]);
+
+export const AllHeaders = createTemplate([
+  defaultTopHeader,
+  floatStartHeader,
+  secondFloatStartHeader,
+  floatCenterHeader,
+  floatEndHeader,
+  defaultLeftHeader,
+  floatStartLeftHeader,
+  secondFloatStartLeftHeader,
+  floatCenterLeftHeader,
+  floatEndLeftHeader,
+  defaultRightHeader,
+  floatStartRightHeader,
+  secondFloatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
+  defaultBottomHeader,
+  floatStartBottomHeader,
+  secondFloatStartBottomHeader,
+  floatCenterBottomHeader,
+  floatEndBottomHeader,
+]);

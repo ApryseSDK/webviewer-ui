@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Yazı stili",
       "colors": "Renkler",
-      "invalidFontSize": "Yazı tipi boyutu şundan küçük olmalıdır:",
+      "invalidFontSize": "Yazı tipi boyutu aşağıdaki aralıkta olmalıdır",
       "labelText": "Etiket Metni",
       "labelTextPlaceholder": "Etiket metni ekle"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Dosyanızı buraya sürükleyip bırakın",
     "selectFile": "dosyanızı buradan seçin",
     "or": "Veya"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Stiller"
-    },
-    "noToolSelected": "Araç özelliklerini görüntülemek için bir araç seçin"
   }
 }

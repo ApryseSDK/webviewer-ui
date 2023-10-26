@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Textstil",
       "colors": "Färger",
-      "invalidFontSize": "Teckenstorleken måste vara mindre än",
+      "invalidFontSize": "Teckenstorleken måste vara inom följande intervall",
       "labelText": "Etiketttext",
       "labelTextPlaceholder": "Lägg till etiketttext"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Dra och släpp din fil här",
     "selectFile": "Välj din fil här",
     "or": "Eller"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Stilar"
-    },
-    "noToolSelected": "Välj ett verktyg för att se verktygets egenskaper"
   }
 }

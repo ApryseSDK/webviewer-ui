@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Estilo de texto",
       "colors": "Colores",
-      "invalidFontSize": "El tamaño de la fuente debe ser menor que",
+      "invalidFontSize": "El tamaño de fuente debe estar en el siguiente rango",
       "labelText": "Texto de la etiqueta",
       "labelTextPlaceholder": "Agregar texto de etiqueta"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Arrastra y suelta tu archivo aquí",
     "selectFile": "Seleccione su archivo aquí",
     "or": "O"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Estilos"
-    },
-    "noToolSelected": "Seleccione una herramienta para ver los estilos de la herramienta"
   }
 }

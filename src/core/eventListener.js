@@ -29,7 +29,6 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
 
   return {
     cursorPropertiesUpdated: documentViewer,
-    paragraphPropertiesUpdated: documentViewer,
     selectionPropertiesUpdated: documentViewer,
     officeDocumentEdited: documentViewer,
     signatureSaved: documentViewer,

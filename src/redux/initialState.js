@@ -98,7 +98,6 @@ export default {
       wv3dPropertiesPanel: 307,
       comparePanel: 330,
       watermarkPanel: 330,
-      stylePanel: 301,
     },
     documentContainerWidth: null,
     documentContainerHeight: null,
@@ -2048,7 +2047,6 @@ export default {
       rightHeader: 0,
       leftHeader: 0
     },
-    customElementSizes: {},
     floatingContainersDimensions: {
       topFloatingContainerHeight: 0,
       bottomFloatingContainerHeight: 0,
@@ -2146,7 +2144,6 @@ export default {
   },
   officeEditor: {
     cursorProperties: {},
-    paragraphProperties: {},
     selectionProperties: {},
     availableFontFaces,
     cssFontValues,

@@ -1,5 +1,5 @@
 /**
- * Registers tool in the document viewer tool mode map, and adds a button object to be used in the header. See <a href='https://www.pdftron.com/documentation/web/guides/customizing-tools' target='_blank'>Customizing tools</a> to learn how to make a tool.
+ * Registers tool in the document viewer tool mode map, and adds a button object to be used in the header. See <a href='https://docs.apryse.com/documentation/web/guides/customizing-tools/' target='_blank'>Customizing tools</a> to learn how to make a tool.
  * @method UI.registerTool
  * @param {object} properties Tool properties.
  * @param {string} properties.toolName Name of the tool.
@@ -34,7 +34,7 @@ import { register, copyMapWithDataProperties } from 'constants/map';
 import actions from 'actions';
 import { setDefaultToolStyle } from 'src/helpers/setDefaultToolStyles';
 
-export default store => (tool, annotationConstructor, customAnnotationCheckFunc) => {
+export default (store) => (tool, annotationConstructor, customAnnotationCheckFunc) => {
   registerToolInToolModeMap(tool);
   registerToolInRedux(store, tool);
   register(tool, annotationConstructor, customAnnotationCheckFunc);
@@ -47,12 +47,14 @@ const registerToolInRedux = (store, tool) => {
 };
 
 const registerToolInToolModeMap = ({ toolObject, toolName }) => {
-  const toolModeMap = core.getToolModeMap();
-
-  toolModeMap[toolName] = toolObject;
-  toolModeMap[toolName].name = toolName;
+  core.getDocumentViewers().forEach((viewer) => {
+    const toolModeMap = viewer.getToolModeMap();
+    const toolConstructor = toolObject.constructor;
+    toolModeMap[toolName] = new toolConstructor(viewer);
+    toolModeMap[toolName].name = toolName;
+  });
 };
 
-const updateColorMapInRedux = store => {
-  store.dispatch(actions.setColorMap(copyMapWithDataProperties('iconColor', 'currentPalette')));
+const updateColorMapInRedux = (store) => {
+  store.dispatch(actions.setColorMap(copyMapWithDataProperties('iconColor', 'currentStyleTab')));
 };

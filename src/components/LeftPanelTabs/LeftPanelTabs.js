@@ -24,6 +24,7 @@ class LeftPanelTabs extends React.Component {
     setActiveLeftPanel: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
   };
+
   isActive = (panel) => this.props.activePanel === panel;
 
   render() {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
@@ -26,12 +26,16 @@ const TextPopup = ({ t, selectedTextQuads }) => {
     isOpen,
     popupItems,
     isRightClickAnnotationPopupEnabled,
+    activeDocumentViewerKey,
+    isMultiViewerMode,
   ] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, DataElements.TEXT_POPUP),
       selectors.isElementOpen(state, DataElements.TEXT_POPUP),
       selectors.getPopupItems(state, DataElements.TEXT_POPUP),
       selectors.isRightClickAnnotationPopupEnabled(state),
+      selectors.getActiveDocumentViewerKey(state),
+      selectors.isMultiViewerMode(state),
     ],
     shallowEqual,
   );
@@ -45,8 +49,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
 
   const setPopupPositionAndShow = () => {
     if (popupRef.current && popupItems.length > 0 && selectedTextQuads) {
-      setPosition(getTextPopupPositionBasedOn(selectedTextQuads, popupRef));
-      dispatch(actions.openElement(DataElements.TEXT_POPUP));
+      setPosition(getTextPopupPositionBasedOn(selectedTextQuads, popupRef, activeDocumentViewerKey, isMultiViewerMode));
     }
   };
 
@@ -62,21 +65,9 @@ const TextPopup = ({ t, selectedTextQuads }) => {
 
   useEffect(() => {
     setPopupPositionAndShow();
-  }, [selectedTextQuads]);
+  }, [selectedTextQuads, activeDocumentViewerKey, isMultiViewerMode]);
 
-  const onClose = useCallback(() => dispatch(actions.closeElement(DataElements.TEXT_POPUP)), [dispatch]);
-
-  useEffect(() => {
-    const onScroll = _.debounce(() => {
-      setPopupPositionAndShow();
-    }, 100);
-    const scrollViewElement = core.getDocumentViewer().getScrollViewElement();
-    scrollViewElement?.addEventListener('scroll', onScroll);
-
-    return () => {
-      scrollViewElement?.removeEventListener('scroll', onScroll);
-    };
-  }, [selectedTextQuads]);
+  const onClose = () => dispatch(actions.closeElement(DataElements.TEXT_POPUP));
 
   if (isDisabled) {
     return null;

@@ -124,6 +124,8 @@ class ToolsOverlay extends React.PureComponent {
       showPresets,
     } = this.props;
 
+    const isSmallComponent = window.isApryseWebViewerWebComponent ? isMobileSize() : isMobile;
+
     const isVisible = (isOpen || true) && !isDisabled;
     if (!isVisible) {
       return null;
@@ -181,7 +183,7 @@ class ToolsOverlay extends React.PureComponent {
       );
     }
 
-    if (noPresets && (isMobile && !isInDesktopOnlyMode)) {
+    if (noPresets && (isSmallComponent && !isInDesktopOnlyMode)) {
       return null;
     }
 
@@ -211,7 +213,7 @@ class ToolsOverlay extends React.PureComponent {
             })}
           >
             {Component}
-            {(isMobile && !isInDesktopOnlyMode) &&
+            {(isSmallComponent && !isInDesktopOnlyMode) &&
               <button
                 className="close-icon-container"
                 onClick={() => {

@@ -9,7 +9,7 @@ import StatefulButton from 'components/StatefulButton';
 import CustomElement from 'components/CustomElement';
 import ToolGroupButtonsScroll from './ToolGroupButtonsScroll';
 import ScrollGroup from './ScrollGroup';
-import useMedia from 'hooks/useMedia';
+import { isMobileSize } from 'helpers/getDeviceSize';
 import { isMobileDeviceFunc } from 'helpers/device';
 
 import './HeaderItems.scss';
@@ -18,29 +18,32 @@ class HeaderItems extends React.PureComponent {
   static propTypes = {
     isToolGroupReorderingEnabled: PropTypes.bool.isRequired,
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isInDesktopOnlyMode: PropTypes.bool
-  }
+    isInDesktopOnlyMode: PropTypes.bool,
+  };
 
   render() {
     const { items, isToolGroupReorderingEnabled, isInDesktopOnlyMode } = this.props;
     let handledToolGroupButtons = false;
 
     const headers = items.map((item, i) => {
-      const { type, dataElement, hidden, toolName, hiddenOnMobileDevice } = item;
-      let mediaQueryClassName = hidden ? hidden.map(screen => {
-        let result = '';
-        if (isInDesktopOnlyMode) {
-          // if in desktop only mode and if it should hide in desktop
-          // append style to always make it hidden
-          if (screen === 'desktop') {
-            result = `always-hide hide-in-${screen}`;
-          }
-        } else {
-          result = `hide-in-${screen}`;
-        }
-        return result;
-      })
-        .join(' ') : '';
+      const { type, dataElement, hidden, hiddenOnMobileDevice } = item;
+      let mediaQueryClassName = hidden
+        ? hidden
+          .map((screen) => {
+            let result = '';
+            if (isInDesktopOnlyMode) {
+              // if in desktop only mode and if it should hide in desktop
+              // append style to always make it hidden
+              if (screen === 'desktop') {
+                result = `always-hide hide-in-${screen}`;
+              }
+            } else {
+              result = `hide-in-${screen}`;
+            }
+            return result;
+          })
+          .join(' ')
+        : '';
       if (hiddenOnMobileDevice && isMobileDeviceFunc()) {
         mediaQueryClassName += ' hide-in-mobile hide-in-small-mobile';
       }
@@ -50,15 +53,22 @@ class HeaderItems extends React.PureComponent {
         case 'toolButton':
           return <ToolButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
         case 'scrollGroup':
-          return <ScrollGroup key={key}>
-            <HeaderItems items={item.children} isToolGroupReorderingEnabled={isToolGroupReorderingEnabled} isInDesktopOnlyMode={isInDesktopOnlyMode} />
-          </ScrollGroup>;
+          return (
+            <ScrollGroup key={key}>
+              <HeaderItems
+                items={item.children}
+                isToolGroupReorderingEnabled={isToolGroupReorderingEnabled}
+                isInDesktopOnlyMode={isInDesktopOnlyMode}
+              />
+            </ScrollGroup>
+          );
         case 'toolGroupButton':
           if (!isToolGroupReorderingEnabled) {
-            return <ToolGroupButton  key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
-          } else if (!handledToolGroupButtons) {
+            return <ToolGroupButton key={key} mediaQueryClassName={mediaQueryClassName} {...item} />;
+          }
+          if (!handledToolGroupButtons) {
             handledToolGroupButtons = true;
-            const toolGroupButtonsItems = items.filter(({ type }) => (type === 'toolGroupButton'));
+            const toolGroupButtonsItems = items.filter(({ type }) => type === 'toolGroupButton');
             return <ToolGroupButtonsScroll key={key} toolGroupButtonsItems={toolGroupButtonsItems} />;
           }
           return null;
@@ -79,24 +89,14 @@ class HeaderItems extends React.PureComponent {
       }
     });
 
-    return (
-      <div className="HeaderItems">
-        { headers }
-      </div>
-    );
+    return <div className="HeaderItems">{headers}</div>;
   }
 }
 
-export default props => {
-  const isMobile = useMedia(
-    // Media queries
-    ['(max-width: 640px)'],
-    [true],
-    // Default value
-    false,
-  );
+const connectedComponent = (props) => {
+  const isMobile = isMobileSize();
 
-  return (
-    <HeaderItems {...props} isMobile={isMobile} />
-  );
+  return <HeaderItems {...props} isMobile={isMobile} />;
 };
+
+export default connectedComponent;

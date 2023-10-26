@@ -27,14 +27,10 @@ const ToggleElementButton = (props) => {
       if (onFlyoutToggled) {
         onFlyoutToggled();
       } else {
-        dispatch(actions.setFlyoutToggleElement(buttonRef.current));
+        dispatch(actions.setFlyoutToggleElement(dataElement));
       }
     }
-    if (isElementActive) {
-      dispatch(actions.closeElement(toggleElement));
-    } else {
-      dispatch(actions.openElement(toggleElement));
-    }
+    dispatch(actions.toggleElement(toggleElement));
   };
 
   return (

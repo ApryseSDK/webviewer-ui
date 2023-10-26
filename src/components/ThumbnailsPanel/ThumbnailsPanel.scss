@@ -23,6 +23,7 @@
   }
   input[type=range]:focus {
     outline: none;
+    box-shadow: 0 0 5px var(--focus-border);
   }
   input[type=range]::-webkit-slider-runnable-track {
     width: 100%;

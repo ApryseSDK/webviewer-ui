@@ -661,14 +661,3 @@ export const mockHeaders = [
     }
   }
 ];
-
-const styleToggleButton = {
-  dataElement: 'stylePanelToggle',
-  toggleElement: 'stylePanel',
-  img: 'icon-style-panel-toggle',
-  title: 'component.notesPanel',
-  type: 'toggleButton'
-};
-const newHeaders = [...mockHeaders];
-newHeaders[0] = { ...newHeaders[0], items: [...newHeaders[0].items, styleToggleButton] };
-export const mockHeadersWithStyleButton = (newHeaders);

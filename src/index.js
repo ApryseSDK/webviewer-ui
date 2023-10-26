@@ -35,7 +35,6 @@ import retargetEvents from 'react-shadow-dom-retarget-events';
 import './index.scss';
 import getRootNode from 'helpers/getRootNode';
 import openURI from './helpers/openURI';
-import { setResponsiveHelperStore } from 'helpers/responsivnessHelper';
 
 if (window.isApryseWebViewerWebComponent) {
   if (window.webViewerPath.lastIndexOf('/') !== window.webViewerPath.length - 1) {
@@ -188,7 +187,6 @@ if (window.CanvasRenderingContext2D) {
   }
 
   defineWebViewerInstanceUIAPIs(store);
-  setResponsiveHelperStore(store);
 
   setupI18n(state);
   setEnableAnnotationNumbering(state);

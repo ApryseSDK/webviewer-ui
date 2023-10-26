@@ -5,14 +5,6 @@ export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case 'SET_CUSTOM_ELEMENT_SIZE':
-      return {
-        ...state,
-        customElementSizes: {
-          ...state.customElementSizes,
-          [payload.dataElement]: payload.size,
-        }
-      };
     case 'SET_ACTIVE_FLYOUT':
       return {
         ...state,
@@ -99,6 +91,16 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isMultiViewerMode: payload.isMultiViewerMode,
+      };
+    case 'SET_IS_MULTI_VIEWER_MODE_AVAILABLE':
+      return {
+        ...state,
+        isMultiViewerModeAvailable: payload.isMultiViewerModeAvailable,
+      };
+    case 'SET_COMPARE_PAGES_BUTTON_ENABLED':
+      return {
+        ...state,
+        isShowComparisonButtonEnabled: payload.isShowComparisonButtonEnabled,
       };
     case 'SHOW_APPLY_CROP_WARNING':
       return {

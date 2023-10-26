@@ -71,9 +71,7 @@ const ModularHeader = React.forwardRef((props, ref) => {
         headerId={dataElement}
         gap={gap}
         placement={placement}
-        justifyContent={justifyContent}
-        parentRef={ref}
-      />
+        justifyContent={justifyContent} />
     </DataElementWrapper>
   );
 });

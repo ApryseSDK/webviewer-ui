@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Styl textu",
       "colors": "Barvy",
-      "invalidFontSize": "Velikost písma musí být menší než",
+      "invalidFontSize": "Velikost písma musí být v následujícím rozsahu",
       "labelText": "Text štítku",
       "labelTextPlaceholder": "Přidejte text štítku"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Sem přetáhněte soubor",
     "selectFile": "Zde vyberte svůj soubor",
     "or": "Nebo"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Styly"
-    },
-    "noToolSelected": "Chcete-li zobrazit vlastnosti nástroje, vyberte nástroj"
   }
 }

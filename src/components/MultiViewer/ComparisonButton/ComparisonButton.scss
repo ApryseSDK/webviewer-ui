@@ -1,0 +1,36 @@
+@import '../../../constants/styles';
+
+.ComparisonButton {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-medium);
+
+  button {
+    @include button-reset;
+    background: var(--primary-button);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    justify-content: center;
+    position: relative;
+    color: var(--primary-button-text);
+    cursor: pointer;
+
+    @include mobile {
+      font-size: 13px;
+    }
+
+    &:hover {
+      background: var(--primary-button-hover);
+      &:disabled {
+        background: var(--primary-button);
+      }
+    }
+
+    &:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+  }
+}

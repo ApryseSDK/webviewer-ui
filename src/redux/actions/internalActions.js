@@ -467,7 +467,7 @@ export const updateFlyout = (dataElement, newFlyout) => (dispatch, getState) => 
   const flyoutMap = selectors.getFlyoutMap(getState());
   if (!flyoutMap[dataElement]) {
     console.warn(`Flyout with dataElement ${dataElement} does not exist, adding new flyout`);
-    return dispatch(addFlyout(newFlyout));
+    return addFlyout(newFlyout);
   }
   dispatch({
     type: 'UPDATE_FLYOUT',
@@ -726,19 +726,12 @@ export const disableFeatureFlag = (featureFlag) => ({
   payload: { featureFlag }
 });
 
-export const growCustomElement = (dataElement) => (dispatch, getState) => {
-  const currentSize = getState().viewer.customElementSizes[dataElement] || 0;
-  const newSize = currentSize + 1;
-  dispatch(setCustomElementSize(dataElement, newSize));
-};
+export const setComparePagesButtonEnabled = (isShowComparisonButtonEnabled) => ({
+  type: 'SET_COMPARE_PAGES_BUTTON_ENABLED',
+  payload: { isShowComparisonButtonEnabled }
+});
 
-export const shrinkCustomElement = (dataElement) => (dispatch, getState) => {
-  const currentSize = getState().viewer.customElementSizes[dataElement] || 0;
-  const newSize = currentSize > 0 ? currentSize - 1 : 0;
-  dispatch(setCustomElementSize(dataElement, newSize));
-};
-
-export const setCustomElementSize = (dataElement, size) => ({
-  type: 'SET_CUSTOM_ELEMENT_SIZE',
-  payload: { dataElement, size },
+export const setIsMultiViewerModeAvailable = (isMultiViewerModeAvailable) => ({
+  type: 'SET_IS_MULTI_VIEWER_MODE_AVAILABLE',
+  payload: { isMultiViewerModeAvailable }
 });

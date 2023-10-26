@@ -13,7 +13,6 @@ import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import Choice from 'components/Choice';
-import core from 'core';
 
 import './NoteHeader.scss';
 
@@ -72,7 +71,7 @@ function NoteHeader(props) {
 
   let date;
   const dateCreated = (sortStrategy === NotesPanelSortStrategy.MODIFIED_DATE || (notesShowLastUpdatedDate && sortStrategy !== NotesPanelSortStrategy.CREATED_DATE)) ? getLatestActivityDate(annotation) : annotation.DateCreated;
-  if (timezone) {
+  if (timezone && dateCreated) {
     const datetimeStr = dateCreated.toLocaleString('en-US', { timeZone: timezone });
     date = new Date(datetimeStr);
   } else {
@@ -132,7 +131,6 @@ function NoteHeader(props) {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  core.deselectAllAnnotations();
                   handleMultiSelect(!isMultiSelected);
                 }}
               />}

@@ -20,8 +20,8 @@ export default {
     },
     unmount: () => {
       const signatureTool = core.getTool('AnnotationCreateSignature');
-      signatureTool.removeEventListener('saveDefault.sigTool', null);
-      signatureTool.removeEventListener('noDefaultSignatures.sigTool', null);
+      signatureTool.removeEventListener('saveDefault.sigTool');
+      signatureTool.removeEventListener('noDefaultSignatures.sigTool');
     },
     states: {
       newSignature: {

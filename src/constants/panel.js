@@ -10,5 +10,4 @@ export const panelNames = {
   LAYERS: 'layersPanel',
   TEXT_EDITING: 'textEditingPanel',
   CHANGE_LIST: 'changeListPanel',
-  STYLE: 'stylePanel',
 };

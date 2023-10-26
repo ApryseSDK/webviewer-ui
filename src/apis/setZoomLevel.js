@@ -17,7 +17,7 @@ WebViewer(...)
 import core from 'core';
 import getActualZoomLevel from 'helpers/getActualZoomLevel';
 
-export default zoomLevel => {
+export default (zoomLevel) => {
   zoomLevel = getActualZoomLevel(zoomLevel);
 
   if (zoomLevel) {

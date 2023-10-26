@@ -1,9 +1,14 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import SearchOverlay from "./SearchOverlay";
-import { Basic } from "./SearchOverlay.stories";
-import { executeSearch, selectNextResult, selectPreviousResult } from "./SearchOverlayContainer";
+import SearchOverlay from './SearchOverlay';
+import { Basic } from './SearchOverlay.stories';
+import { executeSearch, selectNextResult, selectPreviousResult } from './SearchOverlayContainer';
 import core from 'core';
+
+// To create mocks of something that executeSearch uses we need to first import them
+// and then call jest.mock them.
+import { getOverrideSearchExecution } from 'helpers/search';
+import searchTextFullFactory from '../../apis/searchTextFull';
 
 // wrap story component with i18n provider, so component can use useTranslation()
 const BasicSearchOverlayStory = withI18n(Basic);
@@ -14,17 +19,13 @@ const TestSearchOverlay = withProviders(SearchOverlay);
 // thus having excessive comments
 
 function noop() {}
-
-
-// To create mocks of something that executeSearch uses we need to first import them
-// and then call jest.mock them.
-import { getOverrideSearchExecution } from "helpers/search";
-import searchTextFullFactory from '../../apis/searchTextFull';
 jest.mock('../../apis/searchTextFull');
 // To override something else that default export, we need to use factory function
 jest.mock('helpers/search', () => {
   return {
     getOverrideSearchExecution: jest.fn(),
+    addSearchListener: jest.fn(),
+    removeSearchListener: jest.fn(),
   };
 });
 
@@ -58,6 +59,7 @@ describe('SearchOverlay', () => {
           setWholeWord={noop}
           setWildcard={noop}
           executeSearch={noop}
+          setReplaceValue={noop}
           isSearchOverlayDisabled
         />
       );
@@ -75,6 +77,7 @@ describe('SearchOverlay', () => {
           setCaseSensitive={noop}
           setWholeWord={noop}
           setWildcard={noop}
+          setReplaceValue={noop}
           executeSearch={executeSearch}
         />
       );
@@ -97,6 +100,7 @@ describe('SearchOverlay', () => {
           setCaseSensitive={noop}
           setWholeWord={noop}
           setWildcard={noop}
+          setReplaceValue={noop}
           executeSearch={executeSearch}
         />
       );
@@ -117,6 +121,7 @@ describe('SearchOverlay', () => {
           setCaseSensitive={noop}
           setWholeWord={noop}
           setWildcard={noop}
+          setReplaceValue={noop}
           executeSearch={executeSearch}
         />
       );
@@ -137,6 +142,7 @@ describe('SearchOverlay', () => {
           setCaseSensitive={noop}
           setWholeWord={noop}
           setWildcard={noop}
+          setReplaceValue={noop}
           executeSearch={executeSearch}
         />
       );
@@ -155,13 +161,14 @@ describe('SearchOverlay', () => {
           setSearchStatus={noop}
           setWholeWord={noop}
           setWildcard={noop}
+          setReplaceValue={noop}
           executeSearch={noop}
         />
       );
 
       const searchInput = container.querySelector('#SearchPanel__input');
       expect(searchInput === document.activeElement).toBe(false);
-    })
+    });
   });
 
   describe('Functionality', () => {
@@ -230,7 +237,7 @@ describe('SearchOverlay', () => {
     it('Should select next result', () => {
       // create search results. As we mock the core, we can just pass any objects here and we can test
       // that the selection logic works correctly. In real code these object are SearchResult objects
-      const searchResults = [{ first:true }, { second:true }, { third:true }, { fourth:true }];
+      const searchResults = [{ first: true }, { second: true }, { third: true }, { fourth: true }];
       const activeResultIndex = 0;
       const setActiveSearchResultMock = jest.fn();
       // set mock for setActiveSearchResult so we can verify that it gets called correctly
@@ -240,7 +247,7 @@ describe('SearchOverlay', () => {
     });
 
     it('Should go back to first result when last is selected and next button is clicked', () => {
-      const searchResults = [{ first:true }, { second:true }, { third:true }, { fourth:true }];
+      const searchResults = [{ first: true }, { second: true }, { third: true }, { fourth: true }];
       const activeResultIndex = searchResults.length - 1;
       const setActiveSearchResultMock = jest.fn();
       // set mock for setActiveSearchResult so we can verify that it gets called correctly
@@ -258,7 +265,7 @@ describe('SearchOverlay', () => {
     });
 
     it('Should select previous result', () => {
-      const searchResults = [{ first:true }, { second:true }, { third:true }, { fourth:true }];
+      const searchResults = [{ first: true }, { second: true }, { third: true }, { fourth: true }];
       const activeResultIndex = 3;
       const setActiveSearchResultMock = jest.fn();
       core.setActiveSearchResult = setActiveSearchResultMock;
@@ -267,7 +274,7 @@ describe('SearchOverlay', () => {
     });
 
     it('Should go back to last result when first is selected and previous is clicked', () => {
-      const searchResults = [{ first:true }, { second:true }, { third:true }, { fourth:true }];
+      const searchResults = [{ first: true }, { second: true }, { third: true }, { fourth: true }];
       const activeResultIndex = 0;
       const setActiveSearchResultMock = jest.fn();
       core.setActiveSearchResult = setActiveSearchResultMock;

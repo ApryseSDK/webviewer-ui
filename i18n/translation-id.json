@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Gaya Teks",
       "colors": "warna",
-      "invalidFontSize": "Ukuran font harus kurang dari",
+      "invalidFontSize": "Ukuran font harus berada dalam kisaran berikut",
       "labelText": "Teks Label",
       "labelTextPlaceholder": "Tambahkan teks label"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Seret & Jatuhkan file Anda di sini",
     "selectFile": "Pilih file Anda di sini",
     "or": "Atau"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Gaya"
-    },
-    "noToolSelected": "Pilih alat untuk melihat properti alat"
   }
 }

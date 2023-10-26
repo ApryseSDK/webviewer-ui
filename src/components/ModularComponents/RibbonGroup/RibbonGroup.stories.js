@@ -108,20 +108,6 @@ export const ribbonGroupFull = () => {
   );
 };
 
-const initialStateDropdown = {
-  ...initialState,
-  viewer: {
-    ...initialState.viewer,
-    customElementSizes: {
-      'ribbon-group': 3
-    }
-  }
-};
-
-const storeDropdown = configureStore({
-  reducer: () => initialStateDropdown
-});
-
 
 export const ribbonGroupDropdown = () => {
   const props = {
@@ -131,7 +117,7 @@ export const ribbonGroupDropdown = () => {
   };
 
   return (
-    <Provider store={storeDropdown}>
+    <Provider store={store}>
       <div style={{ display: 'flex', maxWidth: '10%' }}>
         <RibbonGroup {...props}/>
       </div>

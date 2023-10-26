@@ -1247,11 +1247,5 @@
     "dragAndDrop": "ここにファイルをドラッグ＆ドロップします",
     "selectFile": "ここでファイルを選択してください",
     "or": "また"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "スタイル"
-    },
-    "noToolSelected": "ツールを選択してツールのプロパティを表示します"
   }
 }

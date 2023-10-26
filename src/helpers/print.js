@@ -46,8 +46,8 @@ const printResetStyle = `
 
   #print-handler {
     display: block !important;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     padding: 0;
     top: 0;
     bottom: 0;
@@ -445,7 +445,9 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
       ctx.putImageData(imageData, 0, 0);
     }
 
-    await drawAnnotationsOnCanvas(canvas, pageNumber, isGrayscale);
+    const alwaysPrintAnnotationsInColor = core.getDocumentViewer().isAlwaysPrintAnnotationsInColorEnabled();
+    const drawAnnotationsInGrayscale = isGrayscale && !alwaysPrintAnnotationsInColor;
+    await drawAnnotationsOnCanvas(canvas, pageNumber, drawAnnotationsInGrayscale);
 
     printableAnnotInfo.forEach((info) => {
       info.annotation.Printable = info.printable;
@@ -482,7 +484,7 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
       documentElementOffsetLeft = instanceRect.x + documentElement.offsetLeft;
     }
 
-    const headerHeight = headerElement?.clientHeight + headerItemsElements?.clientHeight;
+    const headerHeight = (headerElement?.clientHeight + headerItemsElements?.clientHeight) || 0;
     const coordinates = [];
     coordinates[0] = displayMode.windowToPageNoRotate({
       x: Math.max(containerScrollLeft, documentElementOffsetLeft),
@@ -550,7 +552,7 @@ const getPrintRotation = (pageIndex, maintainPageOrientation) => {
     if (printRotation % 2 === 0 && width > height) {
       printRotation++;
     } else if (printRotation % 2 === 1 && height > width) {
-      printRotation--;
+      printRotation = 0;
     }
     return printRotation;
   }

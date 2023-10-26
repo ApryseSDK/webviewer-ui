@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Estilo de Texto",
       "colors": "Cores",
-      "invalidFontSize": "O tamanho da fonte deve ser menor que",
+      "invalidFontSize": "O tamanho da fonte deve estar no seguinte intervalo",
       "labelText": "Texto do rótulo",
       "labelTextPlaceholder": "Adicionar texto do rótulo"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Arraste e solte seu arquivo aqui",
     "selectFile": "Selecione seu arquivo aqui",
     "or": "Ou"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Estilos"
-    },
-    "noToolSelected": "Selecione uma ferramenta para visualizar as propriedades da ferramenta"
   }
 }

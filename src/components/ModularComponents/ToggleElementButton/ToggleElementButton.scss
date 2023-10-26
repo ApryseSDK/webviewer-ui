@@ -6,11 +6,11 @@
     height: 32px;
 
     &:hover {
-      background: var(--tools-button-hover);
+      background: var(--popup-button-hover);
     }
 
     &.active {
-      background: var(--tools-button-active);
+      background: var(--popup-button-active);
       color: var(--view-header-icon-active-fill);
       cursor: default;
 

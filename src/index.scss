@@ -24,8 +24,67 @@
 //   --color-focus-shadow: rgba(20, 110, 170, 0.4);
 //   --color-overlay-canvas: rgba(0, 0, 0, 0.4);
 
+/* copied from webviewer react toolkit for shadow dom */
+:host {
+  --color-theme-primary: #00a5e4;
+  --color-theme-secondary: #242933;
+  --color-font-primary: #232229;
+  --color-font-secondary: #5b5c68;
+  --color-gray-1: #fff;
+  --color-gray-2: #f4f4f4;
+  --color-gray-3: #e7ebee;
+  --color-gray-4: #ddd;
+  --color-gray-5: #cfd4da;
+  --color-blue-gray-1: #dfe2ed;
+  --color-blue-gray-2: #c3c6d4;
+  --color-blue-gray-3: #abb0c4;
+  --color-blue-gray-4: #8b92ab;
+  --color-blue-gray-5: #6077bf;
+  --color-blue-gray-6: #415797;
+  --color-contrast-1: #fafafa;
+  --color-contrast-2: #f0f0f0;
+  --color-message-info: #2980b9;
+  --color-message-success: #27ae60;
+  --color-message-warning: #e67e22;
+  --color-message-error: #e74c3c;
+  --color-message-info-focus-shadow: rgba(41, 128, 185, 0.4);
+  --color-message-success-focus-shadow: rgba(39, 174, 96, 0.4);
+  --color-message-warning-focus-shadow: rgba(230, 126, 34, 0.4);
+  --color-message-error-focus-shadow: rgba(231, 76, 60, 0.4);
+  --color-background-canvas: #eee;
+  --color-focus-shadow: rgba(20, 110, 170, 0.4);
+  --color-overlay-canvas: rgba(0, 0, 0, 0.4);
+  --font-size-tiny: 9px;
+  --font-size-small: 11px;
+  --font-size-default: 13px;
+  --font-size-medium: 16px;
+  --font-size-large: 18px;
+  --font-size-huge: 24px;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --padding-tiny: 4px;
+  --padding-small: 8px;
+  --padding-medium: 12px;
+  --padding: 16px;
+  --padding-large: 24px;
+  --padding-huge: 32px;
+  --border-radius-small: 2px;
+  --border-radius: 4px;
+  --border-radius-large: 8px;
+  --box-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --box-shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --box-shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --z-index-local: 0;
+  --z-index-raised: 100;
+  --z-index-dragging: 200;
+  --z-index-overlay: 300;
+  --font-family: Lato, Tahoma, sans-serif;
+  --focus-transition: box-shadow 0.1s cubic-bezier(0.4, 1, 0.75, 0.9)
+}
+
 /* Overriding theme from webviewer-react-toolkit. */
 :root,
+:host,
 html[data-theme='dark'] {
   --color-font-primary: var(--text-color);
   // Choice background

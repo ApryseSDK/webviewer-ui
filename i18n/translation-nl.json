@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Tekststijl",
       "colors": "Kleuren",
-      "invalidFontSize": "Lettergrootte moet kleiner zijn dan",
+      "invalidFontSize": "De lettergrootte moet binnen het volgende bereik liggen",
       "labelText": "Labeltekst",
       "labelTextPlaceholder": "Labeltekst toevoegen"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Sleep uw bestand hierheen",
     "selectFile": "Selecteer hier uw bestand",
     "or": "Of"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Stijlen"
-    },
-    "noToolSelected": "Selecteer een gereedschap om de gereedschapseigenschappen te bekijken"
   }
 }

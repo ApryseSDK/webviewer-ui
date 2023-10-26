@@ -90,7 +90,7 @@ export function WithCustomComponents() {
         {data.label}
       </div >
     );
-  }
+  };
 
   const CustomOption = (props) => {
     const { data } = props;
@@ -108,7 +108,7 @@ export function WithCustomComponents() {
       options={groupedOptions}
       components={{ MultiValueLabel, Option: CustomOption }}
     />);
-};
+}
 
 export function MultiSelectGroups() {
   return (

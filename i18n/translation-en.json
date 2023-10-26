@@ -34,7 +34,7 @@
     "fitToWidth": "Fit to width",
     "more": "More",
     "openFile": "Open file",
-    "page": "Page",
+    "page":"Page",
     "pagePrev": "Previous page",
     "pageNext": "Next page",
     "pageSet": "Set page",
@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Text Style",
       "colors": "Colors",
-      "invalidFontSize": "Font size must be less than ",
+      "invalidFontSize": "Font size must be in the following range",
       "labelText": "Label Text",
       "labelTextPlaceholder": "Add label text"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Drag & Drop your file here",
     "selectFile": "Select your file here",
     "or": "Or"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Styles"
-    },
-    "noToolSelected": "Select a tool to view tool properties"
   }
 }

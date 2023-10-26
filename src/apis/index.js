@@ -250,7 +250,7 @@ import addModularHeaders from './addModularHeaders';
 import getModularHeader from './getModularHeader';
 import getModularHeaderList from './getModularHeaderList';
 import setGroupedItemsGap from './setGroupedItemsGap';
-import setGroupedItemsAlignment from './setGroupedItemsAlignment';
+import setGroupedItemsJustifyContent from './setGroupedItemsJustifyContent';
 import setGroupedItemsGrow from './setGroupedItemsGrow';
 import core from 'core';
 import { setDefaultOptions } from './outlinesPanel';
@@ -283,7 +283,7 @@ import { enableMultiViewerSync, disableMultiViewerSync, isMultiViewerSyncing } f
 import { setCustomSettings, exportUserSettings, importUserSettings } from './userSettings';
 import addPanel from './addPanel';
 import setGrayscaleDarknessFactor from './setGrayscaleDarknessFactor';
-import { ALIGNMENT } from 'constants/customizationVariables';
+import { JUSTIFY_CONTENT } from 'constants/customizationVariables';
 import FlyoutsAPI from './FlyoutsAPI';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { setClickMiddleware } from 'src/apis/setClickMiddleware';
@@ -291,6 +291,8 @@ import { ClickedItemTypes } from 'helpers/clickTracker';
 import FeatureFlags from 'constants/featureFlags';
 import enableFeatureFlag from './enableFeatureFlag';
 import disableFeatureFlag from './disableFeatureFlag';
+import enterMultiViewerMode from './enterMultiViewerMode';
+import exitMultiViewerMode from './exitMultiViewerMode';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -312,7 +314,7 @@ export default (store) => {
     NotesPanelSortStrategy,
     Theme,
     RedactionSearchPatterns,
-    Alignment: ALIGNMENT,
+    JustifyContent: JUSTIFY_CONTENT,
     addSearchListener,
     addSortStrategy: addSortStrategy(store),
     annotationPopup: annotationPopup(store),
@@ -458,7 +460,7 @@ export default (store) => {
     getModularHeaderList: getModularHeaderList(store),
     Flyouts: FlyoutsAPI(store),
     setGroupedItemsGap: setGroupedItemsGap(store),
-    setGroupedItemsAlignment: setGroupedItemsAlignment(store),
+    setGroupedItemsJustifyContent: setGroupedItemsJustifyContent(store),
     setGroupedItemsGrow: setGroupedItemsGrow(store),
     Components: {
       Item,
@@ -472,7 +474,7 @@ export default (store) => {
       ToolButton,
       ToggleElementButton,
       RibbonItem,
-      RibbonGroup,
+      RibbonGroup: RibbonGroup(store),
       ToolGroupButton,
       Zoom,
       Flyout: Flyout(store),
@@ -610,6 +612,8 @@ export default (store) => {
     getZoomStepFactors: getZoomStepFactors(store),
     setZoomStepFactors: setZoomStepFactors(store),
     getDocumentViewer,
+    enterMultiViewerMode: enterMultiViewerMode(store),
+    exitMultiViewerMode: exitMultiViewerMode(store),
   };
   const documentViewer = core.getDocumentViewer(1);
 

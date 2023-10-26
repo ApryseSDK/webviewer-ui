@@ -318,7 +318,9 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.ComparePages]: {
       fn: () => {
-        store.dispatch(actions.setComparePagesButtonEnabled(enable));
+        if (selectors.isMultiViewerMode(store.getState())) {
+          store.dispatch(actions.setComparePagesButtonEnabled(enable));
+        }
       }
     },
     [Feature.Initials]: {

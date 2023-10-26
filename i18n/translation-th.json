@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "สไตล์ข้อความ",
       "colors": "สี",
-      "invalidFontSize": "ขนาดตัวอักษรต้องน้อยกว่า",
+      "invalidFontSize": "ขนาดตัวอักษรต้องอยู่ในช่วงต่อไปนี้",
       "labelText": "ป้ายข้อความ",
       "labelTextPlaceholder": "เพิ่มข้อความป้ายกำกับ"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "ลากและวางไฟล์ของคุณที่นี่",
     "selectFile": "เลือกไฟล์ของคุณที่นี่",
     "or": "หรือ"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "สไตล์"
-    },
-    "noToolSelected": "เลือกเครื่องมือเพื่อดูคุณสมบัติของเครื่องมือ"
   }
 }

@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Stil text",
       "colors": "Culori",
-      "invalidFontSize": "Dimensiunea fontului trebuie să fie mai mică decât",
+      "invalidFontSize": "Dimensiunea fontului trebuie să fie în intervalul următor",
       "labelText": "Textul etichetei",
       "labelTextPlaceholder": "Adăugați textul etichetei"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Trageți și plasați fișierul aici",
     "selectFile": "Selectați fișierul dvs. aici",
     "or": "Sau"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Stiluri"
-    },
-    "noToolSelected": "Selectați un instrument pentru a vizualiza proprietățile instrumentului"
   }
 }

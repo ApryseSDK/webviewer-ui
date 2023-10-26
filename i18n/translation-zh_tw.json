@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "文字樣式",
       "colors": "顏色",
-      "invalidFontSize": "字體大小必須小於",
+      "invalidFontSize": "字體大小必須在以下範圍內",
       "labelText": "標籤文本",
       "labelTextPlaceholder": "添加標籤文本"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "將您的文件拖放到此處",
     "selectFile": "在這裡選擇您的文件",
     "or": "或者"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "風格"
-    },
-    "noToolSelected": "選擇工具以查看工具屬性"
   }
 }

@@ -1,5 +1,5 @@
-import selectors from 'selectors/index';
-import actions from 'actions/index';
+import selectors from 'selectors';
+import actions from 'actions';
 import { connect } from 'react-redux';
 import React from 'react';
 import SearchOverlayContainer from './SearchOverlayContainer';

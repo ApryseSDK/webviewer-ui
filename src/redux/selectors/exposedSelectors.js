@@ -5,7 +5,6 @@ import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables
 import DataElements from 'constants/dataElement';
 
 // viewer
-export const getCustomElementSize = (state, dataElement) => state.viewer.customElementSizes?.[dataElement] || 0;
 export const getActiveFlyout = (state) => state.viewer.activeFlyout;
 export const getFlyoutPosition = (state) => state.viewer.flyoutPosition;
 export const getFlyoutMap = (state) => state.viewer.flyoutMap;
@@ -707,8 +706,6 @@ export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.
 export const getAvailableFontFaces = (state) => state.officeEditor.availableFontFaces;
 
 export const getCSSFontValues = (state) => state.officeEditor.cssFontValues;
-
-export const getOfficeEditorParagraphProperties = (state) => state.officeEditor.paragraphProperties;
 
 export const getContentBoxEditor = (state) => state.viewer.contentBoxEditor;
 

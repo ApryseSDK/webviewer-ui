@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Szöveg stílusa",
       "colors": "Színek",
-      "invalidFontSize": "A betűméretnek kisebbnek kell lennie, mint",
+      "invalidFontSize": "A betűméretnek a következő tartományban kell lennie",
       "labelText": "Címke szövege",
       "labelTextPlaceholder": "Címkeszöveg hozzáadása"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Drag & Drop ide a fájlt",
     "selectFile": "Válassza ki a fájlt itt",
     "or": "Vagy"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Stílusok"
-    },
-    "noToolSelected": "Válasszon ki egy eszközt az eszköz tulajdonságainak megtekintéséhez"
   }
 }

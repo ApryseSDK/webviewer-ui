@@ -50,7 +50,6 @@ const InitialMenuOverLayItem = ({ dataElement, children }) => {
   });
 };
 
-
 function MenuOverlay() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -62,6 +61,7 @@ function MenuOverlay() {
   const sortStrategy = useSelector(selectors.getSortStrategy);
   const isFullScreen = useSelector((state) => selectors.isFullScreen(state));
   const timezone = useSelector((state) => selectors.getTimezone(state));
+  const isCreatePortfolioButtonEnabled = !useSelector((state) => selectors.isElementDisabled(state, DataElements.CREATE_PORTFOLIO_BUTTON)) && core.isFullPDFEnabled();
 
   const closeMenuOverlay = useCallback(() => dispatch(actions.closeElements([DataElements.MENU_OVERLAY])), [dispatch]);
 
@@ -180,10 +180,10 @@ function MenuOverlay() {
         />
       </InitialMenuOverLayItem>
       <div className="divider"></div>
-      {false && core.isFullPDFEnabled() && (
+      {isCreatePortfolioButtonEnabled && (
         <>
           <ActionButton
-            dataElement="portfolioButton"
+            dataElement={DataElements.CREATE_PORTFOLIO_BUTTON}
             className="row"
             img="icon-pdf-portfolio"
             label={t('portfolio.createPDFPortfolio')}

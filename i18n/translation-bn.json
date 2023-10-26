@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "পাঠ্য শৈলী",
       "colors": "রং",
-      "invalidFontSize": "ফন্ট সাইজ এর থেকে কম হতে হবে",
+      "invalidFontSize": "হরফের আকার অবশ্যই নিম্নলিখিত সীমার মধ্যে হতে হবে",
       "labelText": "লেবেল পাঠ্য",
       "labelTextPlaceholder": "লেবেল পাঠ্য যোগ করুন"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "এখানে আপনার ফাইল টানুন এবং ড্রপ করুন",
     "selectFile": "এখানে আপনার ফাইল নির্বাচন করুন",
     "or": "বা"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "শৈলী"
-    },
-    "noToolSelected": "টুল বৈশিষ্ট্য দেখতে একটি টুল নির্বাচন করুন"
   }
 }

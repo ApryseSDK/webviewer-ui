@@ -49,6 +49,12 @@
   }
 }
 
+.thumbnailControls-overlay.custom-buttons {
+  .Button {
+    grid-area: auto; // remove gride when buttons are customized
+  }
+}
+
 .thumbnailControls {
   display: flex;
   flex-direction: row;
@@ -74,5 +80,3 @@
     }
   }
 }
-
-

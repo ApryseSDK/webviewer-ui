@@ -5,35 +5,11 @@ import actions from 'actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { zoomTo, zoomIn, zoomOut, fitToWidth, fitToPage } from 'helpers/zoom';
 import ZoomControls from './ZoomControls';
-import sizeManager from 'helpers/responsivnessHelper';
 
-const ZoomControlsContainer = ({ dataElement = 'zoom-container' }) => {
-  const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
-  useEffect(() => {
-    sizeManager[dataElement] = {
-      ...(sizeManager[dataElement] ? sizeManager[dataElement] : {}),
-      canGrow: size === 1,
-      canShrink: size === 0,
-      grow: () => {
-        dispatch(actions.setCustomElementSize(dataElement, 0));
-      },
-      shrink: () => {
-        dispatch(actions.setCustomElementSize(dataElement, 1));
-      },
-      size: size,
-    };
-    if (elementRef.current) {
-      sizeManager[dataElement].sizeToWidth = {
-        ...(sizeManager[dataElement].sizeToWidth ? sizeManager[dataElement].sizeToWidth : {}),
-        [size]: elementRef.current.clientWidth,
-      };
-      sizeManager[dataElement].sizeToHeight = {
-        ...(sizeManager[dataElement].sizeToHeight ? sizeManager[dataElement].sizeToHeight : {}),
-        [size]: elementRef.current.clientHeight,
-      };
-    }
-  }, [size]);
-
+const ZoomControlsContainer = ({ dataElement = 'zoom-container', initialSize = 0 }) => {
+  // TODO: remove ignore below after resizing algorithm is implemented
+  // eslint-disable-next-line no-unused-vars
+  const [size, setSize] = useState(initialSize);
   const [zoomValue, setZoomValue] = useState('100');
   const dispatch = useDispatch();
   const elementRef = useRef();

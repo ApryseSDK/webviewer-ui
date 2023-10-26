@@ -1,34 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Measure from 'react-measure';
-
+import { useTranslation } from 'react-i18next';
 import StylePopup from 'components/StylePopup';
-
+import ActionButton from 'components/ActionButton';
 import core from 'core';
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
 import actions from 'actions';
 import selectors from 'selectors';
-import { isToolDefaultStyleUpdateFromAnnotationPopupEnabled } from '../../apis/toolDefaultStyleUpdateFromAnnotationPopup';
+import DataElements from 'constants/dataElement';
 
 import './AnnotationStylePopup.scss';
 
-class AnnotationStylePopup extends React.Component {
-  static propTypes = {
-    isDisabled: PropTypes.bool,
-    annotations: PropTypes.array.isRequired,
-    style: PropTypes.object.isRequired,
-    properties: PropTypes.object.isRequired,
-    isRedaction: PropTypes.bool,
-    isFreeText: PropTypes.bool,
-    isEllipse: PropTypes.bool,
-    closeElement: PropTypes.func.isRequired,
-  };
+const propTypes = {
+  annotations: PropTypes.array.isRequired,
+  style: PropTypes.object.isRequired,
+  properties: PropTypes.object.isRequired,
+  isRedaction: PropTypes.bool,
+  isFreeText: PropTypes.bool,
+  isEllipse: PropTypes.bool,
+  hasBackToMenu: PropTypes.bool,
+  onBackToMenu: PropTypes.func,
+};
 
-  adjustFreeTextBoundingBox = (annotation) => {
-    if (annotation instanceof window.Annotations.FreeTextAnnotation) {
+const AnnotationStylePopup = (props) => {
+  const {
+    annotations,
+    style,
+    isRedaction,
+    isFreeText,
+    isEllipse,
+    isMeasure,
+    colorMapKey,
+    showLineStyleOptions,
+    properties,
+    hideSnapModeCheckbox,
+    onResize,
+    hasBackToMenu,
+    onBackToMenu
+  } = props;
+
+  const [
+    isDisabled,
+    isToolDefaultStyleUpdateFromAnnotationPopupEnabled
+  ] = useSelector((state) => [
+    selectors.isElementDisabled(state, DataElements.ANNOTATION_STYLE_POPUP),
+    selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled(state)
+  ]);
+
+  const dispatch = useDispatch();
+  const [t] = useTranslation();
+
+  const adjustFreeTextBoundingBox = (annotation) => {
+    const { FreeTextAnnotation } = window.Core.Annotations;
+    if (annotation instanceof FreeTextAnnotation && annotation.getAutoSizeType() !== FreeTextAnnotation.AutoSizeTypes.NONE) {
       const doc = core.getDocument();
       const pageNumber = annotation['PageNumber'];
       const pageInfo = doc.getPageInfo(pageNumber);
@@ -36,56 +64,49 @@ class AnnotationStylePopup extends React.Component {
       const pageRotation = doc.getPageRotation(pageNumber);
       annotation.fitText(pageInfo, pageMatrix, pageRotation);
     }
-  }
+  };
 
-  handleSliderChange = (property, value) => {
-    const { annotations } = this.props;
+  const handleSliderChange = (property, value) => {
     const annotationManager = core.getAnnotationManager();
     annotations.forEach((annotation) => {
       annotation[property] = value;
       annotationManager.redrawAnnotation(annotation);
     });
-  }
+  };
 
-  handlePropertyChange = (property, value) => {
-    const { annotations } = this.props;
-
+  const handlePropertyChange = (property, value) => {
     annotations.forEach((annotation) => {
       core.setAnnotationStyles(annotation, {
         [property]: value,
       });
-      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, property, value);
       }
-      this.adjustFreeTextBoundingBox(annotation);
+      if (property === 'FontSize' || property === 'Font') {
+        adjustFreeTextBoundingBox(annotation);
+      }
     });
-  }
+  };
 
-  handleStyleChange = (property, value) => {
-    const { annotations } = this.props;
-
+  const handleStyleChange = (property, value) => {
     annotations.forEach((annotation) => {
       core.setAnnotationStyles(annotation, {
         [property]: value,
       });
 
-      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, property, value);
       }
     });
   };
 
-  handleRichTextStyleChange = (property, value) => {
-    const { annotations } = this.props;
-
+  const handleRichTextStyleChange = (property, value) => {
     annotations.forEach((annotation) => {
       core.updateAnnotationRichTextStyle(annotation, { [property]: value });
     });
-  }
+  };
 
-  handleLineStyleChange = (section, value) => {
-    const { annotations } = this.props;
-
+  const handleLineStyleChange = (section, value) => {
     annotations.forEach((annotation) => {
       let lineStyle = '';
       if (section === 'start') {
@@ -102,7 +123,7 @@ class AnnotationStylePopup extends React.Component {
         lineStyle = 'StrokeStyle';
       }
 
-      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled()) {
+      if (isToolDefaultStyleUpdateFromAnnotationPopupEnabled) {
         setToolStyles(annotation.ToolName, lineStyle, value);
       }
 
@@ -112,81 +133,67 @@ class AnnotationStylePopup extends React.Component {
     core.getAnnotationManager().trigger('annotationChanged', [annotations, 'modify', {}]);
   };
 
-  handleClick = (e) => {
+  const handleClick = (e) => {
     if (isMobile() && e.target === e.currentTarget) {
-      this.props.closeElement('annotationPopup');
+      dispatch(actions.closeElement(DataElements.ANNOTATION_POPUP));
     }
-  }
+  };
 
-  handleResize = () => {
-    const { onResize } = this.props;
+  const handleResize = () => {
     onResize && onResize();
-  }
+  };
 
-  render() {
-    const {
-      isDisabled,
-      style, isRedaction,
-      isFreeText,
-      isEllipse,
-      isMeasure,
-      colorMapKey,
-      showLineStyleOptions,
-      properties,
-      hideSnapModeCheckbox,
-    } = this.props;
+  const className = getClassName('Popup AnnotationStylePopup', props);
 
-    const className = getClassName('Popup AnnotationStylePopup', this.props);
-
-    if (isDisabled) {
-      return null;
-    }
-
-    return (
-      <Measure
-        onResize={this.handleResize}
-      >
-        {({ measureRef }) => (
-          <div
-            className={className}
-            data-element="annotationStylePopup"
-            onClick={this.handleClick}
-            ref={measureRef}
-          >
-            {/* Do not show checkbox for ellipse as snap mode does not exist for it */}
-            <StylePopup
-              hideSnapModeCheckbox={hideSnapModeCheckbox}
-              colorMapKey={colorMapKey}
-              style={style}
-              isFreeText={isFreeText}
-              isEllipse={isEllipse}
-              isMeasure={isMeasure}
-              onStyleChange={this.handleStyleChange}
-              onSliderChange={this.handleSliderChange}
-              onPropertyChange={this.handlePropertyChange}
-              disableSeparator
-              properties={properties}
-              onRichTextStyleChange={this.handleRichTextStyleChange}
-              isRedaction={isRedaction}
-              showLineStyleOptions={showLineStyleOptions}
-              onLineStyleChange={this.handleLineStyleChange}
-            />
-          </div>
-        )}
-      </Measure>
-    );
-  }
-}
-
-const mapStateToProps = (state) => ({
-  isDisabled: selectors.isElementDisabled(state, 'annotationStylePopup'),
-});
-
-const mapDispatchToProps = {
-  closeElement: actions.closeElement,
+  return isDisabled ? null : (
+    <Measure
+      onResize={handleResize}
+    >
+      {({ measureRef }) => (
+        <div
+          className={className}
+          data-element={DataElements.ANNOTATION_STYLE_POPUP}
+          onClick={handleClick}
+          ref={measureRef}
+        >
+          {hasBackToMenu &&
+            <div
+              className="back-to-menu-container"
+              data-element={DataElements.ANNOTATION_STYLE_POPUP_BACK_BUTTON_CONTAINER}
+            >
+              <ActionButton
+                className="back-to-menu-button"
+                dataElement={DataElements.ANNOTATION_STYLE_POPUP_BACK_BUTTON}
+                label={t('action.backToMenu')}
+                img="icon-chevron-left"
+                onClick={onBackToMenu}
+              />
+            </div>
+          }
+          {/* Do not show checkbox for ellipse as snap mode does not exist for it */}
+          <StylePopup
+            hideSnapModeCheckbox={hideSnapModeCheckbox}
+            colorMapKey={colorMapKey}
+            style={style}
+            isFreeText={isFreeText}
+            isEllipse={isEllipse}
+            isMeasure={isMeasure}
+            onStyleChange={handleStyleChange}
+            onSliderChange={handleSliderChange}
+            onPropertyChange={handlePropertyChange}
+            disableSeparator
+            properties={properties}
+            onRichTextStyleChange={handleRichTextStyleChange}
+            isRedaction={isRedaction}
+            showLineStyleOptions={showLineStyleOptions}
+            onLineStyleChange={handleLineStyleChange}
+          />
+        </div>
+      )}
+    </Measure>
+  );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AnnotationStylePopup);
+AnnotationStylePopup.propTypes = propTypes;
+
+export default AnnotationStylePopup;

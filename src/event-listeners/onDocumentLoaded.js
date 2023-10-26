@@ -17,6 +17,7 @@ import hotkeysManager, { ShortcutKeys, Shortcuts, defaultHotkeysScope } from 'he
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
+import { getPortfolioFiles } from 'helpers/portfolio';
 
 let onFirstLoad = true;
 const officeEditorScope = 'office-editor';
@@ -73,6 +74,8 @@ export default (store, documentViewerKey) => async () => {
     doc.addEventListener('bookmarksUpdated', () => core.getOutlines((outlines) => dispatch(actions.setOutlines(outlines)), documentViewerKey));
 
     outlineUtils.setDoc(core.getDocument(documentViewerKey));
+
+    dispatch(actions.setPortfolio(await getPortfolioFiles()));
 
     if (!doc.isWebViewerServerDocument()) {
       doc.addEventListener('layersUpdated', async () => {

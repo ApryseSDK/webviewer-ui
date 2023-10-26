@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'selectors';
 import classNames from 'classnames';
@@ -48,7 +48,7 @@ const Flyout = () => {
   const [correctedPosition, setCorrectedPosition] = useState(position);
   const [maxHeightValue, setMaxHeightValue] = useState(window.innerHeight - horizontalHeadersUsedHeight);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const correctedPosition = { x: position.x, y: position.y };
     const appRect = getRootNode().getElementById('app').getBoundingClientRect();
     const maxHeightValue = appRect.height - horizontalHeadersUsedHeight;

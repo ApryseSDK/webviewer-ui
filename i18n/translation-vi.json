@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Kiểu Văn Bản",
       "colors": "Màu",
-      "invalidFontSize": "Cỡ chữ phải nhỏ hơn ",
+      "invalidFontSize": "Cỡ chữ phải nằm trong phạm vi sau",
       "labelText": "Văn Bản Nhãn",
       "labelTextPlaceholder": "Thêm văn bản nhãn"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Kéo và thả tệp của bạn vào đây",
     "selectFile": "Chọn tập tin của bạn ở đây",
     "or": "Hoặc"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Kiểu dáng"
-    },
-    "noToolSelected": "Chọn một công cụ để xem thuộc tính công cụ"
   }
 }

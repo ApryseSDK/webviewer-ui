@@ -24,6 +24,11 @@
     }
   }
 
+  &.connect-to-url-modal {
+    overflow: hidden;
+    word-break: break-all;
+  }
+
   .header {
     position: relative;
     width: 100%;
@@ -31,7 +36,6 @@
 
     .header-text {
       padding: 10px;
-
       font-size: 18px;
       font-weight: bold;
     }
@@ -50,6 +54,11 @@
           width: 28px;
         }
       }
+
+      &:hover {
+        background: var(--view-header-button-hover);
+        border-radius: 4px;
+      }
     }
   }
 
@@ -67,6 +76,11 @@
 
   .footer {
     padding: 0 8px 8px 8px;
+
+    .ui__choice--center {
+      flex: auto;
+      align-self: center;
+    }
   }
 
   .divider {

@@ -18,7 +18,7 @@
       groupedItem: 'group1'
     });
 
-    // Setting the gap of Grouped Items with a specific data element in a specific header
+    // Setting the gap of Grouped Items with a specific data element in a specifi header
     instance.UI.setGroupedItemsGap(40, {
       groupedItem: 'group1',
       header: 'top-header'

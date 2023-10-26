@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,11 +9,9 @@ import classNames from 'classnames';
 import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 
 import './RibbonItem.scss';
-import sizeManager from 'helpers/responsivnessHelper';
 
 
 const RibbonItem = (props) => {
-  const elementRef = useRef();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
@@ -32,16 +30,6 @@ const RibbonItem = (props) => {
   const [currentToolbarGroup] = useSelector((state) => [
     selectors.getCurrentToolbarGroup(state),
   ]);
-
-  useEffect(() => {
-    if (elementRef.current) {
-      sizeManager[dataElement] = {
-        width: elementRef.current.clientWidth,
-        height: elementRef.current.clientHeight,
-        visible: true,
-      };
-    }
-  }, []);
 
   useEffect(() => {
     if (currentToolbarGroup === toolbarGroup) {

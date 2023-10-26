@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "Gaya Teks",
       "colors": "Warna",
-      "invalidFontSize": "Saiz fon mestilah kurang daripada",
+      "invalidFontSize": "Saiz fon mestilah dalam julat berikut",
       "labelText": "Teks Label",
       "labelTextPlaceholder": "Tambahkan teks label"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "Seret & Lepaskan fail anda di sini",
     "selectFile": "Pilih fail anda di sini",
     "or": "Ataupun"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "Gaya"
-    },
-    "noToolSelected": "Pilih alat untuk melihat sifat alat"
   }
 }

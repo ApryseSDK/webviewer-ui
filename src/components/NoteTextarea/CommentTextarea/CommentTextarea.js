@@ -54,6 +54,27 @@ class CustomKeyboard extends Keyboard {
 
 Quill.register('modules/keyboard', CustomKeyboard, true);
 
+// Overriding clipboard module to fix cursor issue after pasting text
+const Clipboard = Quill.import('modules/clipboard');
+const Delta = Quill.import('delta');
+
+class QuillPasteExtra extends Clipboard {
+  constructor(quill, options) {
+    super(quill, options);
+    this.keepSelection = options.keepSelection;
+  }
+  onPaste() {
+    const range = this.quill.getSelection();
+    const delta = new Delta().retain(range.index).delete(range.length);
+    if (this.keepSelection) {
+      this.quill.setSelection(range.index, delta.length(), Quill.sources.SILENT);
+    } else {
+      this.quill.setSelection(range.index + delta.length(), Quill.sources.SILENT);
+    }
+  }
+}
+Quill.register('modules/clipboard', QuillPasteExtra, true);
+
 // mentionsModule has to be outside the funtion to be able to access it without it being destroyed and recreated
 const mentionModule = {
   mention: {

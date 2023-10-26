@@ -15,7 +15,6 @@ const paramCorrections = {
   'p': 'externalPath',
   'did': 'documentId',
   'toolbar': 'showToolbarControl',
-  'pageHistory': 'showPageHistoryButtons',
 };
 const paramsToStringify = ['initialDoc'];
 

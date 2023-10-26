@@ -9,7 +9,6 @@
 
   .fields-container {
     margin-bottom: 5px;
-    padding-right: 17px;
   }
 
   .radio-group-label {
@@ -54,9 +53,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--blue-5);
-    border: 1px solid var(--blue-5);
-    color: var(--gray-0);
+    background-color: var(--primary-button);
+    border: 1px solid var(--primary-button);
+    color: var(--primary-button-text);
     padding: 6px 18px;
     width: auto;
     width: fit-content;
@@ -65,7 +64,8 @@
     cursor: pointer;
 
     &:hover {
-      color: var(--blue-5);
+      background: var(--primary-button-hover);
+      border: 1px solid var(--primary-button-hover);
     }
   }
 
@@ -73,12 +73,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--blue-5);
+    color: var(--secondary-button-text);
     padding: 6px 18px;
     width: auto;
     width: fit-content;
     height: 28px;
     cursor: pointer;
+
+    &:hover {
+      color: var(--secondary-button-hover);
+      background: transparent;
+    }
   }
 }
 
@@ -89,6 +94,7 @@
     max-height: 200px;
     overflow: auto;
   }
+
   input {
     width: 120px;
     height: 28px;

@@ -551,7 +551,7 @@
     "stylePopup": {
       "textStyle": "पाठ शैली",
       "colors": "रंग की",
-      "invalidFontSize": "फ़ॉन्ट आकार . से कम होना चाहिए",
+      "invalidFontSize": "फ़ॉन्ट का आकार निम्न श्रेणी में होना चाहिए",
       "labelText": "लेबल टेक्स्ट",
       "labelTextPlaceholder": "लेबल टेक्स्ट जोड़ें"
     },
@@ -1247,11 +1247,5 @@
     "dragAndDrop": "अपनी फ़ाइल को यहां खींचें और छोड़ें",
     "selectFile": "यहां अपनी फ़ाइल चुनें",
     "or": "या"
-  },
-  "stylePanel": {
-    "headings": {
-      "styles": "शैलियों"
-    },
-    "noToolSelected": "टूल गुण देखने के लिए एक टूल चुनें"
   }
 }

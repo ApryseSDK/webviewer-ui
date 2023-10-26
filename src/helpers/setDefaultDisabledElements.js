@@ -136,9 +136,12 @@ export default (store) => {
     ),
   );
 
-  disableFeatures([Feature.InlineComment]);
-  disableFeatures([Feature.WatermarkPanel]);
-  disableFeatures([Feature.WatermarkPanelImageTab]);
+  disableFeatures([
+    Feature.InlineComment,
+    Feature.WatermarkPanel,
+    Feature.WatermarkPanelImageTab,
+    Feature.Portfolio,
+  ]);
 
   const enableChangeView = getHashParameters('ChangeView', false);
   if (!enableChangeView) {
