@@ -12,6 +12,9 @@ import getToolStyles from 'helpers/getToolStyles';
 import getColor from 'helpers/getColor';
 import core from 'core';
 import defaultTool from 'constants/defaultTool';
+import { shortcutAria } from 'helpers/hotkeysManager';
+import { useTranslation } from 'react-i18next';
+import Icon from 'components/Icon';
 
 const ToolButton = (props) => {
   const {
@@ -24,6 +27,7 @@ const ToolButton = (props) => {
     preset,
     headerPlacement,
     toolName,
+    isFlyoutItem = false,
   } = props;
   const [
     isActive,
@@ -41,6 +45,7 @@ const ToolButton = (props) => {
   );
 
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleClick = () => {
     if (isActive) {
@@ -74,6 +79,21 @@ const ToolButton = (props) => {
 
   if (['left', 'right'].includes(headerPlacement)) {
     forceTooltipPosition = headerPlacement === 'left' ? 'right' : 'left';
+  }
+
+  if (isFlyoutItem) {
+    const shortcutKey = toolTipTitle ? toolTipTitle.slice(toolTipTitle.indexOf('.') + 1) : undefined;
+    const ariaKeyshortcuts = shortcutKey ? shortcutAria(shortcutKey) : undefined;
+    const displayTitle = label ? t(label) : toolTipTitle ? t(toolTipTitle) : undefined;
+    return (
+      <div className="menu-container" onClick={handleClick}>
+        <div className="icon-label-wrapper">
+          <Icon glyph={icon} className="menu-icon"/>
+          {displayTitle && <div className="flyout-item-label">{displayTitle}</div>}
+        </div>
+        {ariaKeyshortcuts && <span className="hotkey-wrapper">{`(${ariaKeyshortcuts})`}</span>}
+      </div>
+    );
   }
 
   return (

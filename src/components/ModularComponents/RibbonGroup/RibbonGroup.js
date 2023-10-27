@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import RibbonItem from '../RibbonItem';
 import classNames from 'classnames';
@@ -10,7 +10,8 @@ import { ITEM_TYPE, DIRECTION } from 'constants/customizationVariables';
 import ToggleElementButton from '../ToggleElementButton';
 
 import './RibbonGroup.scss';
-import sizeManager, { itemToFlyout } from 'helpers/responsivnessHelper';
+import sizeManager, { storeSizeHook } from 'helpers/responsivnessHelper';
+import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 
 const DEFAULT_DROPDOWN_HEIGHT = 72;
 
@@ -44,7 +45,7 @@ const RibbonGroup = (props) => {
     selectors.getCurrentToolbarGroup(state),
   ]);
 
-  const containerRef = useRef();
+  const elementRef = useRef();
 
   const dispatch = useDispatch();
 
@@ -65,19 +66,10 @@ const RibbonGroup = (props) => {
       },
       size: size,
     };
-    if (containerRef.current) {
-      sizeManager[dataElement].sizeToWidth = {
-        ...(sizeManager[dataElement].sizeToWidth ? sizeManager[dataElement].sizeToWidth : {}),
-        [size]: containerRef.current.clientWidth,
-      };
-      sizeManager[dataElement].sizeToHeight = {
-        ...(sizeManager[dataElement].sizeToHeight ? sizeManager[dataElement].sizeToHeight : {}),
-        [size]: containerRef.current.clientHeight,
-      };
-    }
   }, [size]);
+  storeSizeHook(dataElement, size, elementRef, headerDirection);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const flyout = {
       dataElement: FLYOUT_NAME,
       className: 'RibbonGroupFlyout',
@@ -103,7 +95,7 @@ const RibbonGroup = (props) => {
       }
     }
     dispatch(actions.updateFlyout(FLYOUT_NAME, flyout));
-    setContainerWidth(containerRef.current?.clientWidth ?? 0);
+    setContainerWidth(elementRef.current?.clientWidth ?? 0);
   }, [size, currentToolbarGroup]);
 
   useEffect(() => {
@@ -147,55 +139,53 @@ const RibbonGroup = (props) => {
 
   if (ribbonItems && ribbonItems.length) {
     return (
-      <div ref={containerRef} className={'RibbonGroupContainer'} style={{ flexGrow: grow }}>
-        <div className={'RibbonGroup__wrapper'} data-element={dataElement}
-          style={{ display: 'flex', flexDirection: headerDirection, justifyContent: justifyContent }}>
+      <div ref={elementRef} className={'RibbonGroupContainer'} data-element={dataElement}
+        style={{ display: 'flex', flexDirection: headerDirection, justifyContent: justifyContent, flexGrow: grow }}>
+        <div
+          className={classNames({
+            'RibbonGroup': true,
+            'hidden': size === items.length,
+          })}
+          style={{
+            gap: `${itemsGap}px`,
+            flexDirection: headerDirection,
+          }}
+        >
+          {renderRibbonItems()}
           <div
             className={classNames({
-              'RibbonGroup': true,
-              'hidden': size === items.length,
-            })}
-            style={{
-              gap: `${itemsGap}px`,
-              flexDirection: headerDirection,
-            }}
-          >
-            {renderRibbonItems()}
-            <div
-              className={classNames({
-                'RibbonGroup__moreButton': true,
-                'hidden': size === 0,
-              })}
-            >
-              <ToggleElementButton
-                dataElement="moreRibbonsButton"
-                toggleElement={FLYOUT_NAME}
-                title="action.more"
-                img="icon-tools-more"
-              />
-            </div>
-          </div>
-          <div
-            className={classNames({
-              'RibbonGroup__dropdown': true,
-              'hidden': size !== items.length,
+              'RibbonGroup__moreButton': true,
+              'hidden': size === 0,
             })}
           >
-            <FlexDropdown
-              dataElement={`${dataElement}Dropdown`}
-              width={headerDirection === DIRECTION.COLUMN ? containerWidth : undefined}
-              height={headerDirection === DIRECTION.COLUMN ? DEFAULT_DROPDOWN_HEIGHT : undefined}
-              direction={headerDirection}
-              placement={headerPlacement}
-              objects={validateItems(items)}
-              objectKey={'toolbarGroup'}
-              currentSelectionKey={currentToolbarGroup}
-              onClickItem={(toolbarGroup) => {
-                setToolbarGroup(toolbarGroup);
-              }}
-              arrowDirection={getArrowDirection()}
+            <ToggleElementButton
+              dataElement="moreRibbonsButton"
+              toggleElement={FLYOUT_NAME}
+              title="action.more"
+              img="icon-tools-more"
             />
           </div>
+        </div>
+        <div
+          className={classNames({
+            'RibbonGroup__dropdown': true,
+            'hidden': size !== items.length,
+          })}
+        >
+          <FlexDropdown
+            dataElement={`${dataElement}Dropdown`}
+            width={headerDirection === DIRECTION.COLUMN ? containerWidth : undefined}
+            height={headerDirection === DIRECTION.COLUMN ? DEFAULT_DROPDOWN_HEIGHT : undefined}
+            direction={headerDirection}
+            placement={headerPlacement}
+            objects={validateItems(items)}
+            objectKey={'toolbarGroup'}
+            currentSelectionKey={currentToolbarGroup}
+            onClickItem={(toolbarGroup) => {
+              setToolbarGroup(toolbarGroup);
+            }}
+            arrowDirection={getArrowDirection()}
+          />
         </div>
       </div>
     );

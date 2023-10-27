@@ -3,11 +3,21 @@ import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import { useSelector, useDispatch } from 'react-redux';
-import { zoomTo, zoomIn, zoomOut, fitToWidth, fitToPage } from 'helpers/zoom';
+import { zoomTo } from 'helpers/zoom';
 import ZoomControls from './ZoomControls';
-import sizeManager from 'helpers/responsivnessHelper';
+import sizeManager, { storeSizeHook } from 'helpers/responsivnessHelper';
+import { getZoomHandlers, getZoomFlyoutItems } from 'components/ModularComponents/ZoomControls/ZoomHelper';
 
-const ZoomControlsContainer = ({ dataElement = 'zoom-container' }) => {
+const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection }) => {
+  const flyoutElement = `${dataElement}Flyout`;
+  const [zoomValue, setZoomValue] = useState('100');
+  const dispatch = useDispatch();
+  const elementRef = useRef();
+  const [isActive, isZoomFlyoutMenuActive] = useSelector((state) => [
+    selectors.isElementOpen(state, dataElement),
+    selectors.isElementOpen(state, flyoutElement),
+  ]);
+
   const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
   useEffect(() => {
     sizeManager[dataElement] = {
@@ -22,25 +32,8 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container' }) => {
       },
       size: size,
     };
-    if (elementRef.current) {
-      sizeManager[dataElement].sizeToWidth = {
-        ...(sizeManager[dataElement].sizeToWidth ? sizeManager[dataElement].sizeToWidth : {}),
-        [size]: elementRef.current.clientWidth,
-      };
-      sizeManager[dataElement].sizeToHeight = {
-        ...(sizeManager[dataElement].sizeToHeight ? sizeManager[dataElement].sizeToHeight : {}),
-        [size]: elementRef.current.clientHeight,
-      };
-    }
   }, [size]);
-
-  const [zoomValue, setZoomValue] = useState('100');
-  const dispatch = useDispatch();
-  const elementRef = useRef();
-  const [isActive, isZoomFlyoutMenuActive] = useSelector((state) => [
-    selectors.isElementOpen(state, dataElement),
-    selectors.isElementOpen(state, 'zoomFlyoutMenu'),
-  ]);
+  storeSizeHook(dataElement, size, elementRef, headerDirection);
 
   useEffect(() => {
     const onDocumentLoaded = () => setZoomValue(Math.ceil(core.getZoom() * 100).toString());
@@ -68,122 +61,32 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container' }) => {
     dispatch(actions.toggleElement('zoomFlyoutMenu'));
   };
 
-  const onFlyoutToggle = () => {
+  // This is necessary because the button triggering the flyout menu is not the element we want to set as the trigger for positioning it
+  const setFlyoutTriggerRef = () => {
     const dataElement = elementRef.current.getAttribute('data-element');
     dispatch(actions.setFlyoutToggleElement(dataElement));
   };
 
-  const [zoomOptionsList, currentFlyout] = useSelector((state) => [
+  const [zoomOptionsList] = useSelector((state) => [
     selectors.getZoomList(state),
-    selectors.getFlyout(state, 'zoomFlyoutMenu')
   ]);
 
-  const onClickZoomLevelOption = (zoomLevel) => {
-    zoomTo(zoomLevel);
-    size === 0 && dispatch(actions.closeElement('zoomFlyoutMenu'));
-  };
-
-  const onMarqueeZoom = () => {
-    dispatch(actions.closeElement('zoomFlyoutMenu'));
-  };
+  const {
+    onZoomInClicked,
+    onZoomOutClicked,
+  } = getZoomHandlers(zoomOptionsList, dispatch, size, setZoomValue);
 
   const getCurrentZoom = () => {
     return Math.ceil(core.getZoom() * 100).toString();
   };
 
-  const onZoomInClicked = () => {
-    zoomIn();
-    setZoomValue(getCurrentZoom());
-  };
-
-  const onZoomOutClicked = () => {
-    zoomOut();
-    setZoomValue(getCurrentZoom());
-  };
-
-
-  const getZoomItems = () => {
-    const fitToWidthButton = {
-      icon: 'icon-header-zoom-fit-to-width',
-      label: 'action.fitToWidth',
-      title: 'action.fitToWidth',
-      onClick: fitToWidth,
-      dataElement: 'fitToWidthButton'
-    };
-    const fitToPageButton = {
-      icon: 'icon-header-zoom-fit-to-page',
-      label: 'action.fitToPage',
-      title: 'action.fitToPage',
-      onClick: fitToPage,
-      type: 'customButton',
-      dataElement: 'fitToPageButton'
-    };
-    const marqueeButton = {
-      icon: 'icon-header-zoom-marquee',
-      toolName: 'MarqueeZoomTool',
-      label: 'tool.Marquee',
-      onClick: onMarqueeZoom,
-      dataElement: 'marqueeButton'
-    };
-    const zoomInButton = {
-      icon: 'icon-header-zoom-in-line',
-      label: 'action.zoomIn',
-      dataElement: 'zoomInButton',
-      onClick: onZoomInClicked,
-    };
-    const zoomOutButton = {
-      icon: 'icon-header-zoom-out-line',
-      label: 'action.zoomOut',
-      dataElement: 'zoomOutButton',
-      onClick: onZoomOutClicked,
-    };
-
-    let zoomItems;
-    if (size === 0) {
-      const divider = 'divider';
-      zoomItems = [fitToWidthButton, fitToPageButton, divider];
-      zoomOptionsList.forEach((zoomValue) => {
-        const item = {
-          label: `${zoomValue * 100}%`,
-          onClick: () => {
-            onClickZoomLevelOption(zoomValue);
-          },
-          dataElement: `zoom-button-${zoomValue * 100}`
-        };
-        zoomItems.push(item);
-      });
-      zoomItems.push(divider);
-      zoomItems.push(marqueeButton);
-    } else if (size === 1) {
-      const zoomOptionsItem = {
-        dataElement: 'zoomOptionsButton',
-        children: zoomOptionsList.map((zoomValue) => {
-          return {
-            label: `${zoomValue * 100}%`,
-            onClick: () => {
-              onClickZoomLevelOption(zoomValue);
-            },
-            dataElement: `zoom-button-${zoomValue * 100}`
-          };
-        }),
-      };
-      zoomItems = [zoomOptionsItem, zoomInButton, zoomOutButton, fitToWidthButton, fitToPageButton, marqueeButton];
-    }
-    return zoomItems;
-  };
-
   useEffect(() => {
     const zoomFlyoutMenu = {
-      dataElement: 'zoomFlyoutMenu',
+      dataElement: flyoutElement,
       className: 'ZoomFlyoutMenu',
-      items: getZoomItems()
+      items: getZoomFlyoutItems(zoomOptionsList, dispatch, size, setZoomValue)
     };
-
-    if (!currentFlyout) {
-      dispatch(actions.addFlyout(zoomFlyoutMenu));
-    } else {
-      dispatch(actions.updateFlyout(zoomFlyoutMenu.dataElement, zoomFlyoutMenu));
-    }
+    dispatch(actions.updateFlyout(flyoutElement, zoomFlyoutMenu));
   }, [size]);
 
   return (
@@ -201,7 +104,7 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container' }) => {
       dataElement={dataElement}
       isActive={isActive}
       onClick={onClickHandler}
-      onFlyoutToggle={onFlyoutToggle} />
+      setFlyoutTriggerRef={setFlyoutTriggerRef} />
   );
 };
 

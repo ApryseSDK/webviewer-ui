@@ -27,8 +27,8 @@ const ResponsiveContainer = ({
         if (newSize <= 0) {
           break;
         }
-        freeSpace = getCurrentFreeSpace(newSize, items, headerDirection, elementRef.current);
-        const itemToResizeFunc = findItemToResize(items, freeSpace, headerDirection, parent);
+        freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current);
+        const itemToResizeFunc = findItemToResize(items, freeSpace, headerDirection, parent, elementRef.current);
         if (itemToResizeFunc) {
           lastCheckedFreeSpaceRef.current = null;
           itemToResizeFunc();
@@ -50,15 +50,16 @@ const ResponsiveContainer = ({
     const resizeFunction = throttle(resizeResponsively, 200, { trailing: true });
     const resizeObserver = new ResizeObserver(resizeFunction);
     resizeObserver.observe(elementRef.current);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [items, elementRef, parent, headerDirection]);
 
+  useEffect(() => {
     // Timeout to ensure component has properly been mutated into the dom before we try to fit elements
     setTimeout(() => {
       resizeResponsively();
     }, 500);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
   }, []);
 
   return (

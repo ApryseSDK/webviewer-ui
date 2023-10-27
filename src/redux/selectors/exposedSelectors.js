@@ -160,7 +160,7 @@ export const getDocumentContainerHeight = (state) => state.viewer.documentContai
 
 export const isElementDisabled = (state, dataElement) => state.viewer?.disabledElements[dataElement]?.disabled;
 
-export const isElementOpen = (state, dataElement) => state.viewer?.openElements[dataElement] && !state.viewer?.disabledElements[dataElement]?.disabled;
+export const isElementOpen = (state, dataElement) => !!(state.viewer?.openElements[dataElement] && !state.viewer?.disabledElements[dataElement]?.disabled);
 
 export const isElementHidden = (state, dataElement) => state.viewer?.hiddenElements[dataElement];
 
@@ -586,6 +586,9 @@ export const getWarningCloseEvent = (state) => state.viewer.warning?.onClose;
 
 // error message
 export const getErrorMessage = (state) => state.viewer.errorMessage || '';
+
+// error title
+export const getErrorTitle = (state) => state.viewer.errorTitle || '';
 
 // document
 export const getPasswordAttempts = (state) => state.document.passwordAttempts;

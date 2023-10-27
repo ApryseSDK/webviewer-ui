@@ -1,10 +1,10 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'selectors';
 import classNames from 'classnames';
 import './Flyout.scss';
 import Icon from 'components/Icon';
-import ToolButton from 'components/ToolButton';
+import ToolButton from 'components/ModularComponents/ToolButton';
 import RibbonItem from '../RibbonItem';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import actions from 'actions';
@@ -43,12 +43,16 @@ const Flyout = () => {
     items,
     className
   } = flyoutProperties;
-  const [activeItem, setActiveItem] = useState(null);
+  const [activePath, setActivePath] = useState([]);
+  let activeItem = null;
+  for (const index of activePath) {
+    activeItem = activeItem ? activeItem.children[index] : items[index];
+  }
   const flyoutRef = React.createRef();
   const [correctedPosition, setCorrectedPosition] = useState(position);
   const [maxHeightValue, setMaxHeightValue] = useState(window.innerHeight - horizontalHeadersUsedHeight);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const correctedPosition = { x: position.x, y: position.y };
     const appRect = getRootNode().getElementById('app').getBoundingClientRect();
     const maxHeightValue = appRect.height - horizontalHeadersUsedHeight;
@@ -77,20 +81,33 @@ const Flyout = () => {
       }
     }
     setCorrectedPosition(correctedPosition);
-  }, [activeItem, position]);
+  }, [activeItem, position, items]);
 
-  const onClickOutside = useCallback(() => {
-    dispatch(actions.closeElement(activeFlyout));
+
+  const closeFlyout = useCallback(() => {
+    dispatch(actions.closeElements([activeFlyout]));
   }, [dispatch, activeFlyout]);
+
+  const onClickOutside = useCallback(
+    (e) => {
+      const menuButton = getRootNode().querySelector(`[data-element="${toggleElement}"]`);
+      const clickedMenuButton = menuButton?.contains(e.target);
+      if (!clickedMenuButton) {
+        closeFlyout();
+      }
+    },
+    [closeFlyout, toggleElement],
+  );
+
   useOnClickOutside(flyoutRef, onClickOutside);
 
-  const onClickHandler = (flyoutItem, isChild) => (e) => {
+  const onClickHandler = (flyoutItem, isChild, index) => (e) => {
     e.stopPropagation();
     e.preventDefault();
-    if (flyoutItem.children && flyoutItem !== activeItem && !isChild) {
-      setActiveItem(flyoutItem);
-    } else if (!isChild) {
-      setActiveItem(null);
+    if (flyoutItem.children && flyoutItem !== activeItem) {
+      const newActivePath = [...activePath];
+      newActivePath.push(index);
+      setActivePath(newActivePath);
     }
     if (flyoutItem.onClick) {
       flyoutItem.onClick();
@@ -101,13 +118,14 @@ const Flyout = () => {
     const itemIsATool = !!flyoutItem.toolName;
     const itemIsAToolGroup = !!flyoutItem.toolGroup;
     const itemIsARibbonItem = flyoutItem.type === ITEM_TYPE.RIBBON_ITEM;
-    const itemIsAZoomOptionsButton = flyoutItem.dataElement === 'zoomOptionsButton';
+    const itemIsAZoomOptionsButton = flyoutItem.dataElement === 'zoomOptionsButton' || flyoutItem.className === 'ZoomFlyoutMenu';
     const itemsToRender = isChild ? activeItem.children : items;
+    const itemIsALabel = typeof flyoutItem === 'string' && flyoutItem !== ITEM_TYPE.DIVIDER;
 
     const getFlyoutItemWrapper = (elementDOM, additionalClass) => {
       return (
         <div key={flyoutItem.label} data-element={flyoutItem.dataElement}
-          onClick={onClickHandler(flyoutItem, isChild)}
+          onClick={onClickHandler(flyoutItem, isChild, index)}
           className={classNames({
             'flyout-item-container': true,
             [additionalClass]: true
@@ -139,19 +157,31 @@ const Flyout = () => {
       return getFlyoutItemWrapper(ribbonItemElement);
     }
     if (itemIsAZoomOptionsButton) {
+      const hasImg = !!flyoutItem.img || !!flyoutItem.icon;
       const zoomOptionsElement = (
         <>
           <div className="menu-container">
-            <ZoomText />
+            {
+              hasImg ? <div className="icon-label-wrapper">
+                {getIconDOMElement(flyoutItem, itemsToRender)}
+                <ZoomText/>
+              </div> : <ZoomText/>
+            }
           </div>
           {flyoutItem.children && <Icon className="icon-open-submenu" glyph="icon-chevron-right" />}
         </>
       );
       return getFlyoutItemWrapper(zoomOptionsElement, 'zoom-options');
     }
+    if (itemIsALabel) {
+      return <div className="flyout-label" key={`label-${index}`}>{t(flyoutItem)}</div>;
+    }
     return (flyoutItem === ITEM_TYPE.DIVIDER ? <div className="divider" key={`divider-${index}`} /> : (
-      <div key={flyoutItem.label} className="flyout-item-container"
-        data-element={flyoutItem.dataElement} onClick={onClickHandler(flyoutItem, isChild)}>
+      <div key={flyoutItem.label} className={classNames({
+        'flyout-item-container': true,
+        'active': flyoutItem.isActive,
+      })}
+      data-element={flyoutItem.dataElement} onClick={onClickHandler(flyoutItem, isChild, index)}>
         <div className="menu-container">
           {
             itemIsATool ? (
@@ -162,6 +192,7 @@ const Flyout = () => {
                 toolName={flyoutItem.toolName}
                 label={flyoutItem.label}
                 img={flyoutItem.icon}
+                isFlyoutItem={true}
               />
             ) : (
               <div className="icon-label-wrapper">
@@ -178,7 +209,11 @@ const Flyout = () => {
 
   const renderBackButton = () => {
     const isZoomOptions = activeItem.dataElement === 'zoomOptionsButton';
-    return <div className="back-button-container" onClick={() => setActiveItem(null)}>
+    return <div className="back-button-container" onClick={() => {
+      const newActivePath = [...activePath];
+      newActivePath.pop();
+      setActivePath(newActivePath);
+    }}>
       <Icon glyph="icon-chevron-left" />
       {isZoomOptions ? <ZoomText /> : <div className="back-button-label">{t('action.back')}</div>}
     </div>;

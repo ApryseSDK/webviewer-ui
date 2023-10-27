@@ -1,107 +1,78 @@
-import { ITEM_TYPE, RESPONSIVE_ITEMS } from 'constants/customizationVariables';
-import actions from 'actions';
-import selectors from 'selectors';
+import { ITEM_TYPE, RESPONSIVE_ITEMS, BUTTON_TYPES } from 'constants/customizationVariables';
+import { useLayoutEffect } from 'react';
 
 const sizeManager = {};
 export default sizeManager;
 
-let store;
-
-export const setResponsiveHelperStore = (newStore) => {
-  store = newStore;
-};
-
-export const itemToFlyout = (item, {
-  onClick = undefined,
-  children = undefined,
-} = {}) => {
-  const itemProps = item.props || item;
-
-  if (!itemProps || !itemProps.type || !Object.values(ITEM_TYPE).includes(itemProps.type)) {
-    return null;
-  }
-
-  if (itemProps.type === ITEM_TYPE.DIVIDER) {
-    return 'divider';
-  }
-
-  const flyoutItem = {
-    label: itemProps.label || itemProps.title,
-    onClick: () => {
-      itemProps.onClick && itemProps.onClick();
-      onClick && onClick();
-    },
-    dataElement: itemProps.dataElement,
-    icon: itemProps.icon || itemProps.img,
-    children,
-  };
-
-  if (itemProps.type === ITEM_TYPE.BUTTON) {
-    flyoutItem.className = 'FlyoutCustomButton';
-  } else if (itemProps.type === ITEM_TYPE.RIBBON_ITEM) {
-    flyoutItem.className = 'FlyoutRibbonItem';
-    flyoutItem.onClick = () => {
-      const currentToolbarGroup = selectors.getCurrentToolbarGroup(store.getState());
-      if (currentToolbarGroup !== itemProps.toolbarGroup) {
-        store.dispatch(actions.setToolbarGroup(itemProps.toolbarGroup));
-        const activeGroups = itemProps.groupedItems.map((item) => item?.dataElement);
-        store.dispatch(actions.setCurrentGroupedItem(activeGroups));
+export const storeSizeHook = (dataElement, size, elementRef, headerDirection) => {
+  useLayoutEffect(() => {
+    if (elementRef.current) {
+      const isVertical = headerDirection === 'column';
+      const freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current, true);
+      if (!sizeManager[dataElement]) {
+        sizeManager[dataElement] = {};
       }
-      onClick && onClick();
-    };
-  } else if (itemProps.type === ITEM_TYPE.TOGGLE_BUTTON) {
-    flyoutItem.className = 'FlyoutToggleButton';
-    flyoutItem.onClick = () => {
-      store.dispatch(actions.toggleElement(itemProps.toggleElement));
-      onClick && onClick();
-    };
-  }
-
-  return flyoutItem;
+      sizeManager[dataElement].sizeToWidth = {
+        ...(sizeManager[dataElement].sizeToWidth ? sizeManager[dataElement].sizeToWidth : {}),
+        [size]: elementRef.current.clientWidth - (isVertical ? 0 : freeSpace),
+      };
+      sizeManager[dataElement].sizeToHeight = {
+        ...(sizeManager[dataElement].sizeToHeight ? sizeManager[dataElement].sizeToHeight : {}),
+        [size]: elementRef.current.clientHeight - (isVertical ? freeSpace : 0)
+      };
+    }
+  }, [size, elementRef.current]);
 };
 
-export const getCurrentFreeSpace = (parentSize, items, headerDirection, element) => {
-  const isVertical = headerDirection === 'column';
-  let calculatedFreeSpace = parentSize;
-  for (const child of element.children) {
-    const boundingRect = child.getBoundingClientRect();
-    const widthOrHeight = isVertical ? 'height' : 'width';
-    calculatedFreeSpace -= boundingRect[widthOrHeight];
+const cssNonNumberValues = ['auto', 'inherit', 'initial', 'unset', 'normal', 'revert', 'revert-layer', 'none'];
+const pixelToNumber = (pixel) => Math.ceil(parseFloat(pixel.replace('px', '')));
+const getCSSValue = (style, property) => {
+  const value = style[property];
+  if (cssNonNumberValues.includes(value)) {
+    return 0;
   }
+  return pixelToNumber(value);
+};
+export const getCurrentFreeSpace = (headerDirection, element, isChild = false) => {
+  const isVertical = headerDirection === 'column';
+  const widthOrHeight = isVertical ? 'height' : 'width';
   const style = window.getComputedStyle(element);
+  const rect = element.getBoundingClientRect();
+  if (isChild && style.flexGrow === '0') {
+    return 0;
+  }
+  let calculatedFreeSpace = rect[widthOrHeight];
+  for (const child of element.children) {
+    calculatedFreeSpace -= child.getBoundingClientRect()[widthOrHeight] - getCurrentFreeSpace(headerDirection, child, true);
+  }
   const leftOrTop = isVertical ? 'Left' : 'Top';
   const rightOrBottom = isVertical ? 'Right' : 'Bottom';
-  calculatedFreeSpace -= pixelToNumber(style[`padding${leftOrTop}`]) + pixelToNumber(style[`padding${rightOrBottom}`]);
-  calculatedFreeSpace -= pixelToNumber(style[`margin${leftOrTop}`]) + pixelToNumber(style[`margin${rightOrBottom}`]);
-  calculatedFreeSpace -= pixelToNumber(style[`border${leftOrTop}Width`]) + pixelToNumber(style[`border${rightOrBottom}Width`]);
-  if (items.length > 1) {
+  calculatedFreeSpace -= getCSSValue(style, `padding${leftOrTop}`) + getCSSValue(style, `padding${rightOrBottom}`);
+  calculatedFreeSpace -= getCSSValue(style, `margin${leftOrTop}`) + getCSSValue(style, `margin${rightOrBottom}`);
+  calculatedFreeSpace -= getCSSValue(style, `border${leftOrTop}Width`) + getCSSValue(style, `border${rightOrBottom}Width`);
+  if (element.children.length > 1) {
     const columnOrRow = isVertical ? 'column' : 'row';
-    calculatedFreeSpace -= pixelToNumber(style[`${columnOrRow}Gap`]) * (items.length - 1);
+    calculatedFreeSpace -= getCSSValue(style, `${columnOrRow}Gap`) * (element.children.length - 1);
   }
   return calculatedFreeSpace;
 };
 
-const pixelToNumber = (pixel) => Math.ceil(parseFloat(pixel.replace('px', '')));
-
 const SIZE_CHANGE_TYPES = { GROW: 'grow', SHRINK: 'shrink' };
 const lastSizedElementMap = {};
 const elementToPreventLoop = {};
-const shrinkHistoryMap = {};
 
-export const findItemToResize = (items, freeSpace, headerDirection, parentDataElement) => {
-  if (freeSpace === 0) {
+export const findItemToResize = (items, freeSpace, headerDirection, parentDataElement, parentDomElement) => {
+  if (freeSpace === 0 || !items || items.length === 0) {
     return null;
   }
   const isVertical = headerDirection === 'column';
-  const sizeToGet = isVertical ? 'sizeToHeight' : 'sizeToWidth';
   if (lastSizedElementMap[parentDataElement]) {
     const lastSizedElement = lastSizedElementMap[parentDataElement];
     const element = lastSizedElement.getElement();
-    const currentSizeState = element.size;
     const hasToShrink = (lastSizedElement.type === SIZE_CHANGE_TYPES.GROW && freeSpace < 0);
     const hasToGrow = element.canGrow && (lastSizedElement.type === SIZE_CHANGE_TYPES.SHRINK && freeSpace > 0);
     if (hasToGrow && element.canGrow) {
-      const growSizeIncrease = element[sizeToGet][currentSizeState - 1] - element[sizeToGet][currentSizeState];
+      const growSizeIncrease = getGrowSizeIncrease(element, parentDataElement, isVertical, items, parentDomElement);
       if (growSizeIncrease > freeSpace) {
         return null;
       }
@@ -120,29 +91,19 @@ export const findItemToResize = (items, freeSpace, headerDirection, parentDataEl
           }
         };
         lastSizedElementMap[parentDataElement] = newSizeChangeEntry;
-        if (hasToShrink) {
-          shrinkHistoryMap[parentDataElement].push(newSizeChangeEntry);
-        } else {
-          shrinkHistoryMap[parentDataElement].pop();
-        }
         elementToPreventLoop[parentDataElement] = newSizeChangeEntry;
         lastSizedElement.reverse();
       };
     }
   }
+  const [itemList, groupedItemList] = sortResponsiveItems(items, parentDataElement);
   const isGrowing = freeSpace > 0;
   if (isGrowing) {
-    const shrinkHistory = shrinkHistoryMap[parentDataElement];
-    if (!shrinkHistory) {
+    const itemToGrow = findItemToGrow(itemList, groupedItemList);
+    if (!itemToGrow) {
       return null;
     }
-    const lastItem = shrinkHistory[shrinkHistory.length - 1];
-    if (!lastItem) {
-      return null;
-    }
-    const currentSize = lastItem.getElement().size;
-    const sizeToGet = isVertical ? 'sizeToHeight' : 'sizeToWidth';
-    const sizeDifference = lastItem.getElement()[sizeToGet][currentSize - 1] - lastItem.getElement()[sizeToGet][currentSize];
+    const sizeDifference = getGrowSizeIncrease(sizeManager[itemToGrow.dataElement], parentDataElement, isVertical, items, parentDomElement);
     if (sizeDifference > freeSpace) {
       return null;
     }
@@ -151,67 +112,49 @@ export const findItemToResize = (items, freeSpace, headerDirection, parentDataEl
       return null;
     }
     return () => {
-      const lastItem = shrinkHistory.pop();
       lastSizedElementMap[parentDataElement] = {
         type: SIZE_CHANGE_TYPES.GROW,
-        getElement: lastItem.getElement,
-        reverse: () => {
-          lastItem.getElement().shrink();
-        }
+        getElement: () => sizeManager[itemToGrow.dataElement],
+        reverse: () => sizeManager[itemToGrow.dataElement].shrink(),
       };
-      lastItem.reverse();
+      sizeManager[itemToGrow.dataElement].grow();
     };
   }
-  const [itemList, groupedItemList] = sortResponsiveItems(items);
-  const shrinkHistory = shrinkHistoryMap[parentDataElement];
-  let itemToShrink;
-  if (!shrinkHistory || shrinkHistory.length === 0) {
-    itemToShrink = findItemToShrink(itemList, groupedItemList, -1, -1);
-  } else {
-    const lastShrunkItem = shrinkHistory[shrinkHistory.length - 1].getElement();
-    const lastChangedIndex = itemList.findIndex((item) => sizeManager[item.dataElement] === lastShrunkItem);
-    const lastChangedGroupIndex = groupedItemList.findIndex((item) => sizeManager[item.dataElement] === lastShrunkItem);
-    itemToShrink = findItemToShrink(itemList, groupedItemList, lastChangedIndex, lastChangedGroupIndex);
-  }
+  const itemToShrink = findItemToShrink(itemList, groupedItemList);
   if (!itemToShrink) {
     return null;
   }
   return () => {
-    const newSizeChangeEntry = {
+    lastSizedElementMap[parentDataElement] = {
       type: SIZE_CHANGE_TYPES.SHRINK,
       getElement: () => sizeManager[itemToShrink.dataElement],
-      reverse: () => {
-        sizeManager[itemToShrink.dataElement].grow();
-      }
+      reverse: () => sizeManager[itemToShrink.dataElement].grow(),
     };
-    lastSizedElementMap[parentDataElement] = newSizeChangeEntry;
-    if (!shrinkHistoryMap[parentDataElement]) {
-      shrinkHistoryMap[parentDataElement] = [];
-    }
-    shrinkHistoryMap[parentDataElement].push(newSizeChangeEntry);
     sizeManager[itemToShrink.dataElement].shrink();
   };
 };
 
-const sortResponsiveItems = (items) => {
+const sortResponsiveItems = (items, parentDataElement) => {
   const arrayToSearch = [...items];
   const newItems = [];
   const groupedItems = [];
   while (arrayToSearch.length > 0) {
     const item = arrayToSearch.pop();
     if (item.type === ITEM_TYPE.GROUPED_ITEMS) {
+      const [innerItemList, innerGroupedItemList] = sortResponsiveItems(item.items, item.dataElement);
+      newItems.push(...innerItemList);
+      groupedItems.push(...innerGroupedItemList);
       groupedItems.push(item);
-      arrayToSearch.push(...item.items);
     } else if (RESPONSIVE_ITEMS.includes(item.type)) {
       newItems.push(item);
     }
   }
+  groupedItems.push({ dataElement: parentDataElement, type: 'header' });
   return [newItems, groupedItems];
 };
 
-const findItemToShrink = (items, groupedItems, lastChangedIndex, lastChangedGroupIndex) => {
-  let isValidIndex = lastChangedIndex >= 0;
-  let searchIndex = isValidIndex ? lastChangedIndex : 0;
+const findItemToShrink = (items, groupedItems) => {
+  let searchIndex = 0;
   while (searchIndex < items.length) {
     const rawItem = items[searchIndex];
     const item = sizeManager[rawItem.dataElement];
@@ -220,8 +163,7 @@ const findItemToShrink = (items, groupedItems, lastChangedIndex, lastChangedGrou
     }
     searchIndex++;
   }
-  isValidIndex = lastChangedGroupIndex >= 0;
-  searchIndex = isValidIndex ? lastChangedGroupIndex : 0;
+  searchIndex = 0;
   while (searchIndex < groupedItems.length) {
     const rawItem = groupedItems[searchIndex];
     const item = sizeManager[rawItem.dataElement];
@@ -230,4 +172,57 @@ const findItemToShrink = (items, groupedItems, lastChangedIndex, lastChangedGrou
     }
     searchIndex++;
   }
+};
+
+const findItemToGrow = (items, groupedItems) => {
+  let searchIndex = groupedItems.length - 1;
+  while (searchIndex >= 0) {
+    const rawItem = groupedItems[searchIndex];
+    const item = sizeManager[rawItem.dataElement];
+    if (item && item.canGrow) {
+      return rawItem;
+    }
+    searchIndex--;
+  }
+  searchIndex = items.length - 1;
+  while (searchIndex >= 0) {
+    const rawItem = items[searchIndex];
+    const item = sizeManager[rawItem.dataElement];
+    if (item && item.canGrow) {
+      return rawItem;
+    }
+    searchIndex--;
+  }
+};
+
+const getGrowSizeIncrease = (element, parentDataElement, isVertical, items, parentElement) => {
+  if (sizeManager[parentDataElement] === element) {
+    const currentSize = element.size;
+    if (currentSize === 0) {
+      return 0;
+    }
+    const sizeToGet = isVertical ? 'sizeToHeight' : 'sizeToWidth';
+    const itemToBeAddedIndex = items.length - currentSize;
+    let itemToBeAdded = items[itemToBeAddedIndex];
+    let itemsCount = 1;
+    if (itemToBeAdded.type === ITEM_TYPE.DIVIDER) {
+      itemsCount++;
+      itemToBeAdded = items[itemToBeAddedIndex + 1];
+    }
+    const columnOrRow = isVertical ? 'column' : 'row';
+    const paddingSizeIncrease = currentSize === 1 ? 0 : pixelToNumber(getComputedStyle(parentElement)[`${columnOrRow}Gap`]) * itemsCount;
+    if (BUTTON_TYPES.includes(itemToBeAdded.type)) {
+      if (currentSize === 1) {
+        return 0;
+      }
+      return 32 + paddingSizeIncrease;
+    }
+    const itemToBeAddedSize = sizeManager[itemToBeAdded.dataElement].size;
+    const elementToBeAdded = sizeManager[itemToBeAdded.dataElement];
+    const elementSize = elementToBeAdded[sizeToGet][itemToBeAddedSize];
+    return elementSize + paddingSizeIncrease;
+  }
+  const currentSize = element.size;
+  const sizeToGet = isVertical ? 'sizeToHeight' : 'sizeToWidth';
+  return element[sizeToGet][currentSize - 1] - element[sizeToGet][currentSize];
 };

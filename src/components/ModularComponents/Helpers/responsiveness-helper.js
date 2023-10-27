@@ -1,8 +1,8 @@
 import React from 'react';
-import { DIRECTION, ALIGNMENT } from 'constants/customizationVariables';
+import { DIRECTION, JUSTIFY_CONTENT } from 'constants/customizationVariables';
 import Icon from 'components/Icon';
 
-export const isThereAvailableSpace = (itemsShown, parentRect, headerDirection, alignment) => {
+export const isThereAvailableSpace = (itemsShown, parentRect, headerDirection, justification) => {
   const firstItemRect = itemsShown[0]?.getBoundingClientRect();
   const lastItemRect = itemsShown[itemsShown.length - 1]?.getBoundingClientRect();
   const isHorizontalHeader = headerDirection === DIRECTION.ROW;
@@ -12,7 +12,7 @@ export const isThereAvailableSpace = (itemsShown, parentRect, headerDirection, a
   const firstItemStart = isHorizontalHeader ? firstItemRect?.left : firstItemRect?.top;
   const parentRectStart = isHorizontalHeader ? parentRect?.left : parentRect?.top;
 
-  const availableSpace = alignment !== ALIGNMENT.END ? (parentRectEnd - lastItemEnd) : (firstItemStart - parentRectStart);
+  const availableSpace = justification !== JUSTIFY_CONTENT.END ? (parentRectEnd - lastItemEnd) : (firstItemStart - parentRectStart);
 
   return availableSpace;
 };
@@ -48,7 +48,7 @@ export const getItemsToHide = (items, itemsDom, missingSpace, headerDirection) =
 };
 
 export const getIconDOMElement = (currentItem, allItems) => {
-  const areAllitemsWithoutIcons = allItems.every((item) => !item.icon && !item.img);
+  const areAllitemsWithoutIcons = allItems.every((item) => !item.icon && !item.img && !item.toolName);
   if (areAllitemsWithoutIcons) {
     return null;
   }

@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import './GroupedItems.scss';
 import InnerItem from '../InnerItem/InnerItem';
 import { JUSTIFY_CONTENT, ITEM_TYPE, DEFAULT_GAP } from 'constants/customizationVariables';
 import actions from 'actions';
-import sizeManager, { itemToFlyout } from 'helpers/responsivnessHelper';
+import sizeManager, { storeSizeHook } from 'helpers/responsivnessHelper';
+import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import ToggleElementButton from '../ToggleElementButton';
 
@@ -39,10 +40,11 @@ const GroupedItems = (props) => {
   const elementRef = useRef();
   const size = useSelector((state) => selectors.getCustomElementSize(state, dataElement));
   useEffect(() => {
+    const responsiveItems = validItems.filter((item) => item.type !== ITEM_TYPE.DIVIDER);
     sizeManager[dataElement] = {
       ...(sizeManager[dataElement] ? sizeManager[dataElement] : {}),
       canGrow: size > 0,
-      canShrink: size < validItems.length,
+      canShrink: size < validItems.length - 1 && responsiveItems.length > 2,
       grow: () => {
         const newSize = size - 1;
         dispatch(actions.setCustomElementSize(dataElement, newSize < 0 ? 0 : newSize));
@@ -52,19 +54,10 @@ const GroupedItems = (props) => {
       },
       size: size,
     };
-    if (elementRef.current) {
-      sizeManager[dataElement].sizeToWidth = {
-        ...(sizeManager[dataElement].sizeToWidth ? sizeManager[dataElement].sizeToWidth : {}),
-        [size]: elementRef.current.clientWidth,
-      };
-      sizeManager[dataElement].sizeToHeight = {
-        ...(sizeManager[dataElement].sizeToHeight ? sizeManager[dataElement].sizeToHeight : {}),
-        [size]: elementRef.current.clientHeight,
-      };
-    }
-  }, [size]);
+  }, [size, items]);
+  storeSizeHook(dataElement, size, elementRef, headerDirection);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const flyout = {
       dataElement: flyoutDataElement,
       className: 'GroupedItemsFlyout',
@@ -78,11 +71,7 @@ const GroupedItems = (props) => {
         if (i < indexToExclude) {
           continue;
         }
-        const flyoutItem = itemToFlyout(item, {
-          onClick: () => {
-            dispatch(actions.closeElements([flyoutDataElement]));
-          },
-        });
+        const flyoutItem = itemToFlyout(item);
         if (flyoutItem) {
           flyout.items.push(flyoutItem);
         }
@@ -113,7 +102,7 @@ const GroupedItems = (props) => {
             const hasToShrink = size > 0;
             const indexesToExclude = validItems.length - size;
             const isLastIndexAndDivider = index === indexesToExclude - 1 && item.type === ITEM_TYPE.DIVIDER;
-            const shouldExcludeIndex = index >= indexesToExclude || !isLastIndexAndDivider;
+            const shouldExcludeIndex = index >= indexesToExclude || isLastIndexAndDivider;
             if (hasToShrink && shouldExcludeIndex) {
               return null;
             }
