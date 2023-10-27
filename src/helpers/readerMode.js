@@ -5,6 +5,7 @@ import enableFeatures from 'src/apis/enableFeatures';
 import disableFeatures from 'src/apis/disableFeatures';
 import Feature from 'constants/feature';
 import { PRIORITY_ONE } from 'constants/actionPriority';
+import DataElements from 'constants/dataElement';
 
 const features = [Feature.Download, Feature.Print, Feature.Search, Feature.NotesPanel];
 const dataElements = [
@@ -16,10 +17,13 @@ const dataElements = [
   'toolbarGroup-Shapes',
   'toolbarGroup-Insert',
   'toolbarGroup-Edit',
+  'toolbarGroup-EditText',
   'toolbarGroup-FillAndSign',
   'toolbarGroup-Forms',
   'stickyToolGroupButton',
   'freeTextToolGroupButton',
+  'markInsertTextGroupButton',
+  'markReplaceTextGroupButton',
   'shapeToolGroupButton',
   'freeHandToolGroupButton',
   'freeHandHighlightToolGroupButton',
@@ -28,20 +32,23 @@ const dataElements = [
   'eraserToolButton'
 ];
 
-export const enterReaderMode = store => {
+export const enterReaderMode = async (store) => {
+  store.dispatch(actions.openElement(DataElements.LOADING_MODAL));
+
   const state = store.getState();
+  const docViewer = core.getDocumentViewer();
+
+  // Sync text annotations
+  const pdfDoc = await docViewer.getDocument().getPDFDoc();
+  const xfdf = await core.getAnnotationManager().exportAnnotations({
+    widgets: false,
+    fields: false
+  });
+
   const PDFNet = window.Core.PDFNet;
   PDFNet.initialize().then(() => {
     const main = async () => {
       try {
-        const docViewer = core.getDocumentViewer();
-
-        // Sync text annotations
-        const pdfDoc = await docViewer.getDocument().getPDFDoc();
-        const xfdf = await core.getAnnotationManager().exportAnnotations({
-          widgets: false,
-          fields: false
-        });
         const fdfDoc = await PDFNet.FDFDoc.createFromXFDF(xfdf);
         await pdfDoc.fdfUpdate(fdfDoc);
 
@@ -59,13 +66,15 @@ export const enterReaderMode = store => {
         docViewer.setToolMode(docViewer.getTool(window.Core.Tools.ToolNames.EDIT));
       } catch (err) {
         console.warn(err);
+      } finally {
+        store.dispatch(actions.closeElement(DataElements.LOADING_MODAL));
       }
     };
     PDFNet.runWithCleanup(main);
   });
 };
 
-export const exitReaderMode = async store => {
+export const exitReaderMode = async (store) => {
   const PDFNet = window.Core.PDFNet;
 
   // Exit Reader Mode
@@ -78,5 +87,5 @@ export const exitReaderMode = async store => {
   const fdfDoc = await pdfDoc.fdfExtract(PDFNet.PDFDoc.ExtractFlag.e_both);
   const xfdf = await fdfDoc.saveAsXFDFAsString();
   const annotManager = core.getAnnotationManager();
-  await annotManager.importAnnotations(xfdf, { replace: [Annotations.TextMarkupAnnotation] });
+  await annotManager.importAnnotations(xfdf, { replace: [window.Core.Annotations.TextMarkupAnnotation] });
 };
