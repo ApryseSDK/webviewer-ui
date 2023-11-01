@@ -5,6 +5,14 @@ export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_PANEL_WIDTH':
+      return {
+        ...state,
+        panelWidths: {
+          ...state.panelWidths,
+          [payload.dataElement]: payload.width,
+        },
+      };
     case 'SET_CUSTOM_ELEMENT_SIZE':
       return {
         ...state,
@@ -99,6 +107,16 @@ export default (initialState) => (state = initialState, action) => {
       return {
         ...state,
         isMultiViewerMode: payload.isMultiViewerMode,
+      };
+    case 'SET_IS_MULTI_VIEWER_MODE_AVAILABLE':
+      return {
+        ...state,
+        isMultiViewerModeAvailable: payload.isMultiViewerModeAvailable,
+      };
+    case 'SET_COMPARE_PAGES_BUTTON_ENABLED':
+      return {
+        ...state,
+        isShowComparisonButtonEnabled: payload.isShowComparisonButtonEnabled,
       };
     case 'SHOW_APPLY_CROP_WARNING':
       return {
@@ -575,7 +593,7 @@ export default (initialState) => (state = initialState, action) => {
     case 'DISABLE_DELETE_TAB_WARNING':
       return { ...state, warning: payload };
     case 'SET_ERROR_MESSAGE':
-      return { ...state, errorMessage: payload.message };
+      return { ...state, errorMessage: payload.message, errorTitle: payload.title };
     case 'SET_CUSTOM_NOTE_FILTER':
       return { ...state, customNoteFilter: payload.customNoteFilter };
     case 'SET_INLINE_COMMENT_FILTER':

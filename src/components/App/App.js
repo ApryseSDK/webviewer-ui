@@ -38,6 +38,7 @@ import GenericOutlinesPanel from 'components/ModularComponents/GenericOutlinesPa
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import RibbonOverflowFlyout from 'components/ModularComponents/RibbonOverflowFlyout';
 import GroupedToolsOverflowFlyout from 'components/ModularComponents/GroupedToolsOverflowFlyout';
+import ViewControlsFlyout from 'components/ModularComponents/ViewControls/ViewControlsFlyout';
 import ProgressModal from 'components/ProgressModal';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 import StylePanel from 'components/StylePanel';
@@ -238,6 +239,10 @@ const App = ({ removeEventHandlers }) => {
 
   useEffect(() => {
     const onError = (error) => {
+      let errorTitle;
+      if (error.type && error.type === 'loaderror') {
+        errorTitle = 'message.loadError';
+      }
       error = error.detail?.message || error.detail || error.message;
 
       let errorMessage;
@@ -254,7 +259,7 @@ const App = ({ removeEventHandlers }) => {
       }
 
       if (errorMessage) {
-        dispatch(actions.showErrorMessage(errorMessage));
+        dispatch(actions.showErrorMessage(errorMessage, errorTitle));
       }
     };
 
@@ -288,7 +293,7 @@ const App = ({ removeEventHandlers }) => {
   const panels = customFlxPanels.map((panel, index) => {
     return (
       panel.render && (
-        <Panel key={index} dataElement={panel.dataElement} location={panel.location}>
+        <Panel key={index} dataElement={panel.dataElement} location={panel.location} isCustom={true}>
           {Object.values(panelNames).includes(panel.render) ? renderPanel(panel.render, panel.dataElement) : (
             <CustomElement
               key={panel.dataElement || index}
@@ -315,6 +320,7 @@ const App = ({ removeEventHandlers }) => {
         <FlyoutContainer />
         <RibbonOverflowFlyout />
         <GroupedToolsOverflowFlyout />
+        <ViewControlsFlyout />
         <Accessibility />
         <Header />
         {isOfficeEditorMode() && (

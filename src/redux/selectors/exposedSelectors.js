@@ -106,8 +106,8 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const isComparePanelOpen = isElementOpen(state, 'comparePanel');
   const isWatermarkPanelOpen = isElementOpen(state, 'watermarkPanel');
 
-  const isFlxPanelOpenLeft = isCustomFlxPanelOpen(state, 'left');
-  const isFlxPanelOpenRight = isCustomFlxPanelOpen(state, 'right');
+  const flxPanelOnLeft = isCustomFlxPanelOpen(state, 'left');
+  const flxPanelOnRight = isCustomFlxPanelOpen(state, 'right');
 
   const spaceTakenUpByPanels =
     0 +
@@ -119,8 +119,8 @@ export const getDocumentContentContainerWidthStyle = (state) => {
     (isWv3dPropertiesPanelOpen ? wv3dPropertiesPanelWidth : 0) +
     (isComparePanelOpen ? comparePanelWidth : 0) +
     (isWatermarkPanelOpen ? watermarkPanelWidth : 0) +
-    (isFlxPanelOpenLeft ? panelMinWidth : 0) +
-    (isFlxPanelOpenRight ? panelMinWidth : 0);
+    (flxPanelOnLeft ? getPanelWidth(state, flxPanelOnLeft) : 0) +
+    (flxPanelOnRight ? getPanelWidth(state, flxPanelOnRight) : 0);
 
 
   // Do not count headers without items
@@ -139,13 +139,14 @@ export const isCustomFlxPanelOpen = (state, location) => {
 
   return customFlxPanels
     .map((item) => item.dataElement)
-    .some((elName) => isElementOpen(state, elName) === true);
+    .find((elName) => isElementOpen(state, elName) === true);
 };
 
 export const getDocumentContainerLeftMargin = (state) => {
+  const flxPanelOpenOnLeft = isCustomFlxPanelOpen(state, 'left');
   return 0 +
     (isElementOpen(state, 'leftPanel') ? getLeftPanelWidthWithResizeBar(state) : 0) +
-    (isCustomFlxPanelOpen(state, 'left') ? panelMinWidth : 0);
+    (flxPanelOpenOnLeft ? getPanelWidth(state, flxPanelOpenOnLeft) : 0);
 };
 
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
@@ -670,7 +671,7 @@ export const isRightClickAnnotationPopupEnabled = (state) => state.viewer.enable
 
 export const isInDesktopOnlyMode = (state) => state.viewer.isInDesktopOnlyMode;
 
-export const getPanelWidth = (state, dataElement) => state.viewer.panelWidths[dataElement];
+export const getPanelWidth = (state, dataElement) => state.viewer.panelWidths[dataElement] || panelMinWidth;
 
 export const pageDeletionConfirmationModalEnabled = (state) => state.viewer.pageDeletionConfirmationModalEnabled;
 

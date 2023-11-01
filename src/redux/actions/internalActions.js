@@ -466,7 +466,6 @@ export const setActiveFlyout = (dataElement) => (dispatch, getState) => {
 export const updateFlyout = (dataElement, newFlyout) => (dispatch, getState) => {
   const flyoutMap = selectors.getFlyoutMap(getState());
   if (!flyoutMap[dataElement]) {
-    console.warn(`Flyout with dataElement ${dataElement} does not exist, adding new flyout`);
     return dispatch(addFlyout(newFlyout));
   }
   dispatch({
@@ -477,6 +476,11 @@ export const updateFlyout = (dataElement, newFlyout) => (dispatch, getState) => 
 export const setFlyoutToggleElement = (toggleElement) => ({
   type: 'SET_FLYOUT_TOGGLE_ELEMENT',
   payload: { toggleElement },
+});
+
+export const setPanelWidth = (dataElement, width) => ({
+  type: 'SET_PANEL_WIDTH',
+  payload: { dataElement, width },
 });
 
 // document
@@ -724,6 +728,16 @@ export const enableFeatureFlag = (featureFlag) => ({
 export const disableFeatureFlag = (featureFlag) => ({
   type: 'DISABLE_FEATURE_FLAG',
   payload: { featureFlag }
+});
+
+export const setComparePagesButtonEnabled = (isShowComparisonButtonEnabled) => ({
+  type: 'SET_COMPARE_PAGES_BUTTON_ENABLED',
+  payload: { isShowComparisonButtonEnabled }
+});
+
+export const setIsMultiViewerModeAvailable = (isMultiViewerModeAvailable) => ({
+  type: 'SET_IS_MULTI_VIEWER_MODE_AVAILABLE',
+  payload: { isMultiViewerModeAvailable }
 });
 
 export const growCustomElement = (dataElement) => (dispatch, getState) => {
