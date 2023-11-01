@@ -366,6 +366,9 @@ WebViewer(...)
   });
    */
   on(key, handler) {
+    if (key && typeof key === 'string') {
+      key = key.toLocaleLowerCase();
+    }
     const isToolName = !!core.getToolModeMap()[key];
     if (isToolName) {
       key = ToolNameHotkeyMap[key];
