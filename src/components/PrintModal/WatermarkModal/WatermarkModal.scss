@@ -126,6 +126,10 @@
       margin-right: 8px;
       border-radius: 10000000px;
     }
+
+    .white-color {
+      border: 1px solid var(--white-color-palette-border);
+    }
   }
 
   .canvas-container {

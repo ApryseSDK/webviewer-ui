@@ -345,6 +345,8 @@ class WatermarkModal extends React.PureComponent {
 
     const currLocation = this.getCurrentSelectedLocation();
     const formInfo = this.state.locationSettings[currLocation];
+    const hexColor = formInfo[FORM_FIELD_KEYS.color].toHexString();
+
     return (
       <DataElementWrapper
         className={'Modal Watermark'}
@@ -445,12 +447,10 @@ class WatermarkModal extends React.PureComponent {
                   <div className="style-container">
                     <Button
                       id="currentColorCell"
-                      className="colorSelect"
+                      className={`colorSelect ${hexColor === '#FFFFFF' ? 'white-color' : ''}`}
                       ariaLabel="colorSelectButton"
                       style={{
-                        backgroundColor: formInfo[
-                          FORM_FIELD_KEYS.color
-                        ].toHexString(),
+                        backgroundColor: hexColor,
                       }}
                       onClick={() => this.setColorPaletteVisibility(
                         !this.state.isColorPaletteVisible,
