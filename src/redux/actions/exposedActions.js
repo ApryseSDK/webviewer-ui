@@ -416,12 +416,10 @@ export const openElement = (dataElement) => (dispatch, getState) => {
   }
 
   const flexPanel = state.viewer.customFlxPanels.find((item) => dataElement === item.dataElement);
-  if (flexPanel?.location === 'left') {
-    const keys = ['leftPanel'];
+  if (flexPanel?.location === 'left' || flexPanel?.location === 'right') {
+    const keys = flexPanel.location === 'left' ? ['leftPanel'] : [...rightPanelList];
     getAllPanels(flexPanel.location).forEach((item) => keys.push(item.dataset.element));
     dispatch(closeElements(keys));
-  } else if (flexPanel?.location === 'right') {
-    dispatch(closeElements(rightPanelList));
   }
 
   if (isDataElementLeftPanel(dataElement, state) && dataElement !== DataElements.NOTES_PANEL) {
@@ -665,8 +663,8 @@ export const disableDeleteTabWarning = () => ({
   type: 'DISABLE_DELETE_TAB_WARNING',
   payload: { showDeleteTabWarning: false },
 });
-export const showErrorMessage = (message) => (dispatch) => {
-  dispatch({ type: 'SET_ERROR_MESSAGE', payload: { message } });
+export const showErrorMessage = (message, title = '') => (dispatch) => {
+  dispatch({ type: 'SET_ERROR_MESSAGE', payload: { message, title } });
   dispatch(openElement('errorModal'));
 };
 export const setCustomNoteFilter = (filterFunc) => ({
