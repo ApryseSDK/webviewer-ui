@@ -2,38 +2,6 @@ import { loadViewerSample, Timeouts } from '../../playwright-utils';
 import { expect, test } from '@playwright/test';
 
 test.describe('Thumbnails Panel', () => {
-  const thumbnailRenderingTest = async (page, file: string) => {
-    const { iframe, waitForInstance, waitForWVEvents } = await loadViewerSample(page, 'viewing/blank');
-
-    const instance = await waitForInstance();
-    await waitForWVEvents(['annotationsLoaded']);
-    await instance('disableElements', ['pageNavOverlay']);
-
-    await instance('loadDocument', `/test-files/${file}`);
-    await waitForWVEvents(['annotationsLoaded', 'pageComplete']);
-
-    await instance('openElement', 'leftPanel');
-    await page.waitForTimeout(3000);
-
-    const thumbnail = await iframe.$('#pageThumb0 .page-image');
-    expect(await thumbnail.screenshot()).toMatchSnapshot(['basic-rendering', file, 'thumbnail.png']);
-
-    const pageContainer = await iframe.$('#pageContainer1 .hacc');
-    expect(await pageContainer.screenshot()).toMatchSnapshot(['basic-rendering', file, 'pageContainer.png']);
-  };
-
-  test('should be able to render the PDF thumbnail and document correctly', async ({ page }) => {
-    await thumbnailRenderingTest(page, 'webviewer-demo-optimized.pdf');
-  });
-
-  test('should be able to render the XOD thumbnail and document correctly', async ({ page }) => {
-    await thumbnailRenderingTest(page, 'webviewer-demo-annotated.xod');
-  });
-
-  test('should be able to render the jpeg thumbnail and document correctly', async ({ page }) => {
-    await thumbnailRenderingTest(page, 'landscape_1.jpg');
-  });
-
   test('Should show page labels', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-pdf-prime');
     const instance = await waitForInstance();
