@@ -24,7 +24,8 @@ test.describe('Tests for outline bookmarks', () => {
 
   test('should fire an event when an outline is renamed', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
-    await iframe.$('[data-element="outlinesPanel"]');
+    // This test is flaky sometimes, it's because outlines aren't loaded in the UI
+    await instance('reloadOutline');
     const outline = await iframe.$$('.bookmark-outline-single-container');
     await outline[0].click();
     const editOptions = await outline[0].$('.bookmark-outline-more-button');
@@ -46,6 +47,8 @@ test.describe('Tests for outline bookmarks', () => {
 
   test('should fire an event when an outline is deleted', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
+    // This test is flaky sometimes, it's because outlines aren't loaded in the UI
+    await instance('reloadOutline');
     const outline = await iframe.$$('.bookmark-outline-single-container');
     await outline[0].click();
     await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
@@ -184,7 +187,7 @@ test.describe('Tests for outline bookmarks', () => {
     expect(await outlinesPanel.screenshot()).toMatchSnapshot(['outlines-panel', 'colored-bookmarks.png']);
   });
 
-  test('the outline should redirect to the correct place when applied in a rotated page', async ({ page, browserName }) => {
+  test('the outline should redirect to the correct place when applied in a rotated page', async ({ page }) => {
     await instance('loadDocument', '/test-files/demo-annotated.pdf');
     await page.waitForTimeout(5000);
 
