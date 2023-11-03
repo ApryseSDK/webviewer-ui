@@ -780,3 +780,7 @@ export const getIsShowComparisonButtonEnabled = (state) => {
 export const getIsMultiViewerModeAvailable = (state) => {
   return state.viewer.isMultiViewerModeAvailable;
 };
+
+export const getMaxPasswordAttempts = (state) => {
+  return state.document.maxPasswordAttempts;
+};

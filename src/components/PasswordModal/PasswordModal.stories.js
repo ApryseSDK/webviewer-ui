@@ -1,7 +1,7 @@
 import React from 'react';
-import PasswordModalComponent from './PasswordModal'
+import PasswordModalComponent from './PasswordModal';
 import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 
 export default {
   title: 'Components/PasswordModal',
@@ -19,7 +19,8 @@ const initialState = {
     customPanels: []
   },
   document: {
-    passwordAttempts:0,
+    maxPasswordAttempts: 3,
+    passwordAttempts: 0,
   }
 };
 
@@ -35,11 +36,12 @@ export const PasswordModal = () => (
   </Provider>
 );
 
-const failedAttemptState = {...initialState,
+const failedAttemptState = { ...initialState,
   document: {
+    maxPasswordAttempts: 3,
     passwordAttempts: 1,
   }
-}
+};
 
 const attemptFailedStore = configureStore({
   reducer: () => failedAttemptState
@@ -51,11 +53,12 @@ export const PasswordFailedAttemptModal = () => (
   </Provider>
 );
 
-const userExceedsMaxAttemptsState = {...initialState,
+const userExceedsMaxAttemptsState = { ...initialState,
   document: {
+    maxPasswordAttempts: 3,
     passwordAttempts: 3,
   }
-}
+};
 
 const userExceedsMaxAttemptsStore = configureStore({
   reducer: () => userExceedsMaxAttemptsState

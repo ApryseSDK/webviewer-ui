@@ -1,4 +1,4 @@
-import PasswordModal, { setCheckPasswordFunction } from './PasswordModal';
+import PasswordModal, { setCheckPasswordFunction, setCancelPasswordCheckCallback } from './PasswordModal';
 
-export { setCheckPasswordFunction };
+export { setCheckPasswordFunction, setCancelPasswordCheckCallback };
 export default PasswordModal;

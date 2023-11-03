@@ -37,8 +37,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onSignatureSaved = eventListeners.onSignatureSaved(dispatch, store);
   const onSignatureDeleted = eventListeners.onSignatureDeleted(dispatch, store);
   const onHistoryChanged = eventListeners.onHistoryChanged(dispatch, documentViewerKey);
-  const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch);
-  const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch, store);
+  const onFormFieldCreationModeStarted = eventListeners.onFormFieldCreationModeStarted(dispatch, hotkeysManager);
+  const onFormFieldCreationModeEnded = eventListeners.onFormFieldCreationModeEnded(dispatch, store, hotkeysManager);
   const onDigitalSignatureAvailable = eventListeners.onDigitalSignatureAvailable(dispatch, documentViewerKey);
   const onImageContentAdded = eventListeners.onImageContentAdded(dispatch);
   const onInitialSaved = eventListeners.onInitialSaved(dispatch, store);
@@ -47,6 +47,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onContentEditModeEnded = eventListeners.onContentEditModeEnded(dispatch);
   const onContentBoxEditStarted = eventListeners.onContentBoxEditStarted(dispatch, hotkeysManager);
   const onContentBoxEditEnded = eventListeners.onContentBoxEditEnded(hotkeysManager);
+  const onContentEditPasswordRequired = eventListeners.onContentEditPasswordRequired(dispatch, store);
 
   return {
     addEventHandlers: () => {
@@ -58,6 +59,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('contentEditModeEnded', onContentEditModeEnded);
         core.addEventListener('contentBoxEditStarted', onContentBoxEditStarted);
         core.addEventListener('contentBoxEditEnded', onContentBoxEditEnded);
+        core.addEventListener('contentEditPasswordRequired', onContentEditPasswordRequired);
         core.addEventListener('toolUpdated', onToolUpdated, undefined, documentViewerKey);
         core.addEventListener('toolModeUpdated', onToolModeUpdated, undefined, documentViewerKey);
         document.addEventListener('fullscreenchange', onFullScreenChange);
@@ -116,6 +118,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.removeEventListener('contentEditModeEnded', onContentEditModeEnded);
         core.removeEventListener('contentBoxEditStarted', onContentBoxEditStarted);
         core.removeEventListener('contentBoxEditEnded', onContentBoxEditEnded);
+        core.removeEventListener('contentEditPasswordRequired', onContentEditPasswordRequired);
         core.removeEventListener('toolUpdated', onToolUpdated, documentViewerKey);
         core.removeEventListener('toolModeUpdated', onToolModeUpdated, documentViewerKey);
         document.removeEventListener('fullscreenchange', onFullScreenChange);
