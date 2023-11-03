@@ -8,6 +8,7 @@
     "calibrate": "Calibrar",
     "cancel": "Cancelar",
     "confirm": "Confirmar",
+    "currentPageIs": "La página actual es",
     "clear": "Borrar",
     "clearAll": "Limpiar todo",
     "close": "Cerrar",
@@ -120,7 +121,8 @@
     "back": "atrás",
     "clearSignature": "Firma clara",
     "newDocument": "Nuevo documento",
-    "sideBySideView": "Vista de lado a lado"
+    "sideBySideView": "Vista de lado a lado",
+    "pageNumberInput": "Entrada del número de página"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -259,6 +261,7 @@
     "noAttachments": "Este documento no tiene anexos.",
     "noResults": "No se han encontrado resultados.",
     "numResultsFound": "resultados encontrados",
+    "loadError": "Error al cargar el documento",
     "notSupported": "Ese tipo de archivo no es compatible.",
     "passwordRequired": "Se requiere contraseña",
     "enterPasswordPlaceholder": "Introducir la contraseña",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Eliminar contenido",
         "message": "¿Está seguro de que desea eliminar el contenido seleccionado? Esto no se puede deshacer."
+      },
+      "digitalSign": {
+        "title": "Documento sellado de advertencia",
+        "message": "Este documento ha sido firmado y no puede alterarse ni cambiarse."
       }
     },
     "stylePopup": {
       "textStyle": "Estilo de texto",
       "colors": "Colores",
-      "invalidFontSize": "El tamaño de la fuente debe ser menor que",
+      "invalidFontSize": "El tamaño de fuente debe estar en el siguiente rango",
       "labelText": "Texto de la etiqueta",
       "labelTextPlaceholder": "Agregar texto de etiqueta"
     },

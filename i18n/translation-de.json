@@ -8,6 +8,7 @@
     "calibrate": "Kalibrieren",
     "cancel": "Abbrechen",
     "confirm": "Bestätigen",
+    "currentPageIs": "Aktuelle Seite ist",
     "clear": "Löschen",
     "clearAll": "Alles löschen",
     "close": "Schliessen",
@@ -120,7 +121,8 @@
     "back": "Zurück",
     "clearSignature": "Signatur zurücksetzen",
     "newDocument": "Neues Dokument",
-    "sideBySideView": "Nebeneinander-Ansicht"
+    "sideBySideView": "Nebeneinander-Ansicht",
+    "pageNumberInput": "Eingabe der Seitenzahl"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -259,6 +261,7 @@
     "noAttachments": "Dieses Dokument hat keine Anhänge.",
     "noResults": "Keine Ergebnisse gefunden.",
     "numResultsFound": "gefundene Ergebnisse",
+    "loadError": "Fehler beim Laden des Dokuments",
     "notSupported": "Dieser Dateityp wird nicht unterstützt.",
     "passwordRequired": "Passwort erforderlich",
     "enterPasswordPlaceholder": "Passwort eingeben",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Inhalt löschen",
         "message": "Sind Sie sicher, dass Sie den ausgewählten Inhalt löschen möchten? Dies kann nicht rückgängig gemacht werden."
+      },
+      "digitalSign": {
+        "title": "Warnung: Versiegeltes Dokument",
+        "message": "Dieses Dokument wurde unterzeichnet und kann nicht geändert oder geändert werden."
       }
     },
     "stylePopup": {
       "textStyle": "Textstil",
       "colors": "Farben",
-      "invalidFontSize": "Schriftgröße muss kleiner sein als",
+      "invalidFontSize": "Die Schriftgröße muss im folgenden Bereich liegen",
       "labelText": "Etikettentext",
       "labelTextPlaceholder": "Beschriftungstext hinzufügen"
     },

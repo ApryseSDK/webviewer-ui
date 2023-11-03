@@ -8,6 +8,7 @@
     "calibrate": "Kalibrera",
     "cancel": "Avbryt",
     "confirm": "Bekräfta",
+    "currentPageIs": "Aktuell sida är",
     "clear": "Klar",
     "clearAll": "Rensa alla",
     "close": "Stänga",
@@ -120,7 +121,8 @@
     "back": "Tillbaka",
     "clearSignature": "Tydlig signatur",
     "newDocument": "Nytt dokument",
-    "sideBySideView": "Vy sida vid sida"
+    "sideBySideView": "Vy sida vid sida",
+    "pageNumberInput": "Inmatning av sidnummer"
   },
   "annotation": {
     "areaMeasurement": "Område",
@@ -259,6 +261,7 @@
     "noAttachments": "Detta dokument har inga bilagor.",
     "noResults": "Inga resultat funna.",
     "numResultsFound": "resultat hittades",
+    "loadError": "Fel vid inläsning av dokument",
     "notSupported": "Den filtypen stöds inte.",
     "passwordRequired": "Lösenord krävs",
     "enterPasswordPlaceholder": "Skriv in lösenord",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Ta bort innehåll",
         "message": "Är du säker på att du vill ta bort det valda innehållet? Detta kan inte ångras."
+      },
+      "digitalSign": {
+        "title": "Varning förseglat dokument",
+        "message": "Detta dokument har undertecknats och kan inte ändras eller ändras."
       }
     },
     "stylePopup": {
       "textStyle": "Textstil",
       "colors": "Färger",
-      "invalidFontSize": "Teckenstorleken måste vara mindre än",
+      "invalidFontSize": "Teckenstorleken måste vara inom följande intervall",
       "labelText": "Etiketttext",
       "labelTextPlaceholder": "Lägg till etiketttext"
     },

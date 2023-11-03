@@ -8,6 +8,7 @@
     "calibrate": "Kalibrasi",
     "cancel": "Batal",
     "confirm": "sahkan",
+    "currentPageIs": "Halaman semasa ialah",
     "clear": "Jelas",
     "clearAll": "Kosongkan semua",
     "close": "tutup",
@@ -120,7 +121,8 @@
     "back": "belakang",
     "clearSignature": "Tandatangan yang jelas",
     "newDocument": "Dokumen Baharu",
-    "sideBySideView": "Pandangan Sebelah"
+    "sideBySideView": "Pandangan Sebelah",
+    "pageNumberInput": "Input nombor halaman"
   },
   "annotation": {
     "areaMeasurement": "kawasan",
@@ -259,6 +261,7 @@
     "noAttachments": "Dokumen ini tidak mempunyai lampiran.",
     "noResults": "Tiada keputusan dijumpai.",
     "numResultsFound": "keputusan dijumpai",
+    "loadError": "Ralat Memuatkan Dokumen",
     "notSupported": "Jenis fail itu tidak disokong.",
     "passwordRequired": "kata laluan diperlukan",
     "enterPasswordPlaceholder": "Masukkan kata laluan",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Padamkan Kandungan",
         "message": "Adakah anda pasti mahu memadamkan kandungan yang dipilih? Ini tidak boleh dibuat asal."
+      },
+      "digitalSign": {
+        "title": "Dokumen Termeterai Amaran",
+        "message": "Dokumen ini telah ditandatangani dan tidak boleh diubah atau diubah."
       }
     },
     "stylePopup": {
       "textStyle": "Gaya Teks",
       "colors": "Warna",
-      "invalidFontSize": "Saiz fon mestilah kurang daripada",
+      "invalidFontSize": "Saiz fon mestilah dalam julat berikut",
       "labelText": "Teks Label",
       "labelTextPlaceholder": "Tambahkan teks label"
     },

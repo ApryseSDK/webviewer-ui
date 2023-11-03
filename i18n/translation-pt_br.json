@@ -8,6 +8,7 @@
     "calibrate": "Calibrar",
     "cancel": "Cancelar",
     "confirm": "confirme",
+    "currentPageIs": "A página atual é",
     "clear": "Limpar",
     "clearAll": "Limpar tudo",
     "close": "Fechar",
@@ -120,7 +121,8 @@
     "back": "De volta",
     "clearSignature": "Assinatura clara",
     "newDocument": "Novo Documento",
-    "sideBySideView": "Vista lado a lado"
+    "sideBySideView": "Vista lado a lado",
+    "pageNumberInput": "Entrada do número da página"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -259,6 +261,7 @@
     "noAttachments": "Este documento não possui anexos.",
     "noResults": "Nenhum resultado encontrado.",
     "numResultsFound": "resultados encontrados",
+    "loadError": "Erro ao carregar o documento",
     "notSupported": "Esse tipo de arquivo não é compatível.",
     "passwordRequired": "Senha obrigatória",
     "enterPasswordPlaceholder": "Digite a senha",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Excluir conteúdo",
         "message": "Tem certeza de que deseja excluir o conteúdo selecionado? Isso não pode ser desfeito."
+      },
+      "digitalSign": {
+        "title": "Aviso de documento selado",
+        "message": "Este documento foi assinado e não pode ser alterado ou alterado."
       }
     },
     "stylePopup": {
       "textStyle": "Estilo de Texto",
       "colors": "Cores",
-      "invalidFontSize": "O tamanho da fonte deve ser menor que",
+      "invalidFontSize": "O tamanho da fonte deve estar no seguinte intervalo",
       "labelText": "Texto do rótulo",
       "labelTextPlaceholder": "Adicionar texto do rótulo"
     },

@@ -8,6 +8,7 @@
     "calibrate": "ปรับเทียบ",
     "cancel": "ยกเลิก",
     "confirm": "ยืนยัน",
+    "currentPageIs": "หน้าปัจจุบันคือ",
     "clear": "ชัดเจน",
     "clearAll": "ลบทั้งหมด",
     "close": "ปิด I",
@@ -120,7 +121,8 @@
     "back": "กลับ",
     "clearSignature": "ลายเซ็นที่ชัดเจน",
     "newDocument": "เอกสารใหม่",
-    "sideBySideView": "มุมมองด้านข้าง"
+    "sideBySideView": "มุมมองด้านข้าง",
+    "pageNumberInput": "การป้อนหมายเลขหน้า"
   },
   "annotation": {
     "areaMeasurement": "พื้นที่",
@@ -259,6 +261,7 @@
     "noAttachments": "เอกสารนี้ไม่มีไฟล์แนบ",
     "noResults": "ไม่พบผลลัพธ์.",
     "numResultsFound": "พบผลลัพธ์",
+    "loadError": "เกิดข้อผิดพลาดในการโหลดเอกสาร",
     "notSupported": "ไม่รองรับไฟล์ประเภทนั้น",
     "passwordRequired": "ต้องใช้รหัสผ่าน",
     "enterPasswordPlaceholder": "ใส่รหัสผ่าน",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "ลบเนื้อหา",
         "message": "คุณแน่ใจหรือไม่ว่าต้องการลบเนื้อหาที่เลือก สิ่งนี้ไม่สามารถยกเลิกได้"
+      },
+      "digitalSign": {
+        "title": "คำเตือนเอกสารปิดผนึก",
+        "message": "เอกสารนี้ได้รับการลงนามแล้วและไม่สามารถเปลี่ยนแปลงหรือเปลี่ยนแปลงได้"
       }
     },
     "stylePopup": {
       "textStyle": "สไตล์ข้อความ",
       "colors": "สี",
-      "invalidFontSize": "ขนาดตัวอักษรต้องน้อยกว่า",
+      "invalidFontSize": "ขนาดตัวอักษรต้องอยู่ในช่วงต่อไปนี้",
       "labelText": "ป้ายข้อความ",
       "labelTextPlaceholder": "เพิ่มข้อความป้ายกำกับ"
     },

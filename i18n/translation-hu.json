@@ -8,6 +8,7 @@
     "calibrate": "Kalibrálni",
     "cancel": "Megszünteti",
     "confirm": "megerősít",
+    "currentPageIs": "Az aktuális oldal",
     "clear": "Egyértelmű",
     "clearAll": "Mindent kitöröl",
     "close": "Bezárás",
@@ -120,7 +121,8 @@
     "back": "Vissza",
     "clearSignature": "Világos aláírás",
     "newDocument": "Új dokumentum",
-    "sideBySideView": "Oldalnézet"
+    "sideBySideView": "Oldalnézet",
+    "pageNumberInput": "Oldalszám bevitele"
   },
   "annotation": {
     "areaMeasurement": "Terület",
@@ -259,6 +261,7 @@
     "noAttachments": "Ennek a dokumentumnak nincsenek mellékletei.",
     "noResults": "Nincs találat.",
     "numResultsFound": "eredményeket találtunk",
+    "loadError": "Hiba a dokumentum betöltésekor",
     "notSupported": "Ez a fájltípus nem támogatott.",
     "passwordRequired": "jelszó szükséges",
     "enterPasswordPlaceholder": "Írd be a jelszót",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Tartalom törlése",
         "message": "Biztosan törli a kiválasztott tartalmat? Ezt nem lehet visszavonni."
+      },
+      "digitalSign": {
+        "title": "Figyelmeztetés Pecsétes dokumentum",
+        "message": "Ezt a dokumentumot aláírták, és nem módosítható vagy módosítható."
       }
     },
     "stylePopup": {
       "textStyle": "Szöveg stílusa",
       "colors": "Színek",
-      "invalidFontSize": "A betűméretnek kisebbnek kell lennie, mint",
+      "invalidFontSize": "A betűméretnek a következő tartományban kell lennie",
       "labelText": "Címke szövege",
       "labelTextPlaceholder": "Címkeszöveg hozzáadása"
     },

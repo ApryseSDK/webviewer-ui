@@ -8,6 +8,7 @@
     "calibrate": "校準",
     "cancel": "取消",
     "confirm": "確認",
+    "currentPageIs": "當前頁面是",
     "clear": "清除",
     "clearAll": "全部清除",
     "close": "關閉",
@@ -120,7 +121,8 @@
     "back": "後退",
     "clearSignature": "清晰的簽名",
     "newDocument": "新建文件",
-    "sideBySideView": "並排視圖"
+    "sideBySideView": "並排視圖",
+    "pageNumberInput": "頁碼輸入"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -259,6 +261,7 @@
     "noAttachments": "本文檔沒有附件。",
     "noResults": "沒有找到結果。",
     "numResultsFound": "找到結果",
+    "loadError": "載入文檔時出錯",
     "notSupported": "不支援該檔案類型。",
     "passwordRequired": "需要密碼",
     "enterPasswordPlaceholder": "輸入密碼",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "刪除內容",
         "message": "您確定要刪除所選內容嗎？這無法撤消。"
+      },
+      "digitalSign": {
+        "title": "警告密封文件",
+        "message": "本文件已簽署，不能更改或變更。"
       }
     },
     "stylePopup": {
       "textStyle": "文字樣式",
       "colors": "顏色",
-      "invalidFontSize": "字體大小必須小於",
+      "invalidFontSize": "字體大小必須在以下範圍內",
       "labelText": "標籤文本",
       "labelTextPlaceholder": "添加標籤文本"
     },

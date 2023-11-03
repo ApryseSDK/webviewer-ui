@@ -8,6 +8,7 @@
     "calibrate": "калибровать",
     "cancel": "Отменить",
     "confirm": "Подтверждать",
+    "currentPageIs": "Текущая страница",
     "clear": "Очистить",
     "clearAll": "Очистить все",
     "close": "Закрыть",
@@ -120,7 +121,8 @@
     "back": "Назад",
     "clearSignature": "Очистить подпись",
     "newDocument": "Новый документ",
-    "sideBySideView": "Вид сбоку"
+    "sideBySideView": "Вид сбоку",
+    "pageNumberInput": "Ввод номера страницы"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -259,6 +261,7 @@
     "noAttachments": "К этому документу нет приложений.",
     "noResults": "Поиск не вернул результатов.",
     "numResultsFound": "найдены результаты",
+    "loadError": "Ошибка загрузки документа",
     "notSupported": "Расширение файла не поддерживается.",
     "passwordRequired": "Пароль необходим",
     "enterPasswordPlaceholder": "Введите пароль",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Удалить контент",
         "message": "Вы уверены, что хотите удалить выбранный контент? Это не может быть отменено."
+      },
+      "digitalSign": {
+        "title": "Предупреждение: запечатанный документ",
+        "message": "Этот документ подписан и не может быть изменен или изменен."
       }
     },
     "stylePopup": {
       "textStyle": "Текстовый стиль",
       "colors": "Цвета",
-      "invalidFontSize": "Размер шрифта должен быть меньше",
+      "invalidFontSize": "Размер шрифта должен находиться в следующем диапазоне",
       "labelText": "Текст метки",
       "labelTextPlaceholder": "Добавить текст ярлыка"
     },

@@ -8,6 +8,7 @@
     "calibrate": "Калібрувати",
     "cancel": "Скасувати",
     "confirm": "Підтвердьте",
+    "currentPageIs": "Поточна сторінка",
     "clear": "Ясно",
     "clearAll": "Очистити все",
     "close": "Закрити",
@@ -120,7 +121,8 @@
     "back": "Назад",
     "clearSignature": "Чіткий підпис",
     "newDocument": "Новий документ",
-    "sideBySideView": "Пліч-о-пліч"
+    "sideBySideView": "Пліч-о-пліч",
+    "pageNumberInput": "Введення номера сторінки"
   },
   "annotation": {
     "areaMeasurement": "Площа",
@@ -259,6 +261,7 @@
     "noAttachments": "Цей документ не має вкладень.",
     "noResults": "Нічого не знайдено.",
     "numResultsFound": "знайдено результати",
+    "loadError": "Помилка завантаження документа",
     "notSupported": "Цей тип файлу не підтримується.",
     "passwordRequired": "Потрібен пароль",
     "enterPasswordPlaceholder": "Введіть пароль",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Видалити вміст",
         "message": "Ви впевнені, що бажаєте видалити вибраний вміст? Цю дію не можна скасувати."
+      },
+      "digitalSign": {
+        "title": "Попередження запечатаний документ",
+        "message": "Цей документ був підписаний і не може бути змінений чи змінений."
       }
     },
     "stylePopup": {
       "textStyle": "Стиль тексту",
       "colors": "Кольори",
-      "invalidFontSize": "Розмір шрифту має бути менше ніж",
+      "invalidFontSize": "Розмір шрифту має бути в такому діапазоні",
       "labelText": "Текст етикетки",
       "labelTextPlaceholder": "Додайте текст мітки"
     },

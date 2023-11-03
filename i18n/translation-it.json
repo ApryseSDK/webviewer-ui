@@ -8,6 +8,7 @@
     "calibrate": "Calibrare",
     "cancel": "Annulla",
     "confirm": "Confermare",
+    "currentPageIs": "La pagina corrente è",
     "clear": "Chiaro",
     "clearAll": "Cancella tutto",
     "close": "Vicino",
@@ -120,7 +121,8 @@
     "back": "Di ritorno",
     "clearSignature": "Firma chiara",
     "newDocument": "Nuovo documento",
-    "sideBySideView": "Vista affiancata"
+    "sideBySideView": "Vista affiancata",
+    "pageNumberInput": "Inserimento del numero di pagina"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -259,6 +261,7 @@
     "noAttachments": "Questo documento non ha allegati.",
     "noResults": "Nessun risultato trovato.",
     "numResultsFound": "risultati trovati",
+    "loadError": "Errore durante il caricamento del documento",
     "notSupported": "Quel tipo di file non è supportato.",
     "passwordRequired": "Password richiesta",
     "enterPasswordPlaceholder": "Inserire la password",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Elimina contenuto",
         "message": "Sei sicuro di voler eliminare il contenuto selezionato? Questo non può essere annullato."
+      },
+      "digitalSign": {
+        "title": "Avvertenza Documento Sigillato",
+        "message": "Questo documento è stato firmato e non può essere alterato o modificato."
       }
     },
     "stylePopup": {
       "textStyle": "Stile di testo",
       "colors": "Colori",
-      "invalidFontSize": "La dimensione del carattere deve essere inferiore a",
+      "invalidFontSize": "La dimensione del carattere deve essere compresa nel seguente intervallo",
       "labelText": "Testo etichetta",
       "labelTextPlaceholder": "Aggiungi il testo dell'etichetta"
     },

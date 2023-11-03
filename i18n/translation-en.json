@@ -8,6 +8,7 @@
     "calibrate": "Calibrate",
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "currentPageIs": "Current page is",
     "clear": "Clear",
     "clearAll": "Clear all",
     "close": "Close",
@@ -120,7 +121,8 @@
     "back": "Back",
     "clearSignature": "Clear signature",
     "newDocument": "New Document",
-    "sideBySideView": "Side By Side View"
+    "sideBySideView": "Side By Side View",
+    "pageNumberInput":"Page number input"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -259,6 +261,7 @@
     "noAttachments": "This document has no attachments.",
     "noResults": "No results found.",
     "numResultsFound": "results found",
+    "loadError": "Error Loading Document",
     "notSupported": "That file type is not supported.",
     "passwordRequired": "Password required",
     "enterPasswordPlaceholder": "Enter password",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Delete Content",
         "message": "Are you sure you want to delete the selected content? This can't be undone."
+      },
+      "digitalSign": {
+        "title": "Warning Sealed Document",
+        "message": "This document has been signed and cannot be altered or changed."
       }
     },
     "stylePopup": {
       "textStyle": "Text Style",
       "colors": "Colors",
-      "invalidFontSize": "Font size must be less than ",
+      "invalidFontSize": "Font size must be in the following range",
       "labelText": "Label Text",
       "labelTextPlaceholder": "Add label text"
     },

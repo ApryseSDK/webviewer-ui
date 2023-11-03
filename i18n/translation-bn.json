@@ -8,6 +8,7 @@
     "calibrate": "ক্যালিব্রেট করুন",
     "cancel": "বাতিল করুন",
     "confirm": "নিশ্চিত করুন",
+    "currentPageIs": "বর্তমান পৃষ্ঠা হল",
     "clear": "স্পষ্ট",
     "clearAll": "সব পরিষ্কার করে দাও",
     "close": "বন্ধ",
@@ -120,7 +121,8 @@
     "back": "পেছনে",
     "clearSignature": "সাফ স্বাক্ষর",
     "newDocument": "নতুন নথি",
-    "sideBySideView": "সাইড বাই সাইড ভিউ"
+    "sideBySideView": "সাইড বাই সাইড ভিউ",
+    "pageNumberInput": "পৃষ্ঠা নম্বর ইনপুট"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -259,6 +261,7 @@
     "noAttachments": "এই নথিতে কোন সংযুক্তি নেই.",
     "noResults": "কোন ফলাফল পাওয়া যায়নি.",
     "numResultsFound": "ফলাফল পাওয়া গেছে",
+    "loadError": "নথি লোড করার সময় ত্রুটি৷",
     "notSupported": "যে ফাইল টাইপ সমর্থিত নয়.",
     "passwordRequired": "পাসওয়ার্ড প্রয়োজন",
     "enterPasswordPlaceholder": "পাসওয়ার্ড লিখুন",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "কন্টেন্ট মুছুন",
         "message": "আপনি কি নির্বাচিত বিষয়বস্তু মুছতে চান? এটি পূর্বাবস্থায় ফেরানো যাবে না।"
+      },
+      "digitalSign": {
+        "title": "সতর্কতা সিল করা নথি",
+        "message": "এই নথিতে স্বাক্ষর করা হয়েছে এবং পরিবর্তন বা পরিবর্তন করা যাবে না।"
       }
     },
     "stylePopup": {
       "textStyle": "পাঠ্য শৈলী",
       "colors": "রং",
-      "invalidFontSize": "ফন্ট সাইজ এর থেকে কম হতে হবে",
+      "invalidFontSize": "হরফের আকার অবশ্যই নিম্নলিখিত সীমার মধ্যে হতে হবে",
       "labelText": "লেবেল পাঠ্য",
       "labelTextPlaceholder": "লেবেল পাঠ্য যোগ করুন"
     },

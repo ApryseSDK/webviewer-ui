@@ -8,6 +8,7 @@
     "calibrate": "जांचना",
     "cancel": "रद्द करें",
     "confirm": "पुष्टि करना",
+    "currentPageIs": "वर्तमान पृष्ठ है",
     "clear": "स्पष्ट",
     "clearAll": "सभी साफ करें",
     "close": "बंद करना",
@@ -120,7 +121,8 @@
     "back": "पीछे",
     "clearSignature": "स्पष्ट हस्ताक्षर",
     "newDocument": "नया दस्तावेज़",
-    "sideBySideView": "अगल-बगल का दृश्य"
+    "sideBySideView": "अगल-बगल का दृश्य",
+    "pageNumberInput": "पेज नंबर इनपुट"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -259,6 +261,7 @@
     "noAttachments": "इस दस्तावेज़ में कोई अनुलग्नक नहीं है।",
     "noResults": "कोई परिणाम नहीं मिला।",
     "numResultsFound": "परिणाम मिले",
+    "loadError": "दस्तावेज़ लोड करने में त्रुटि",
     "notSupported": "उस फ़ाइल प्रकार का समर्थन नहीं कर रहा है।",
     "passwordRequired": "पासवर्ड आवश्यक",
     "enterPasswordPlaceholder": "पास वर्ड दर्ज करें",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "सामग्री हटाएं",
         "message": "क्या आप वाकई चयनित सामग्री को हटाना चाहते हैं? इसे पूर्ववत नहीं किया जा सकता."
+      },
+      "digitalSign": {
+        "title": "चेतावनी सीलबंद दस्तावेज़",
+        "message": "इस दस्तावेज़ पर हस्ताक्षर किए जा चुके हैं और इसे बदला या परिवर्तित नहीं किया जा सकता है।"
       }
     },
     "stylePopup": {
       "textStyle": "पाठ शैली",
       "colors": "रंग की",
-      "invalidFontSize": "फ़ॉन्ट आकार . से कम होना चाहिए",
+      "invalidFontSize": "फ़ॉन्ट का आकार निम्न श्रेणी में होना चाहिए",
       "labelText": "लेबल टेक्स्ट",
       "labelTextPlaceholder": "लेबल टेक्स्ट जोड़ें"
     },

@@ -8,6 +8,7 @@
     "calibrate": "調整する",
     "cancel": "キャンセル",
     "confirm": "確認",
+    "currentPageIs": "現在のページは",
     "clear": "クリア",
     "clearAll": "すべてクリア",
     "close": "閉じる",
@@ -120,7 +121,8 @@
     "back": "戻る",
     "clearSignature": "明確な署名",
     "newDocument": "新しいドキュメント",
-    "sideBySideView": "並べて表示"
+    "sideBySideView": "並べて表示",
+    "pageNumberInput": "ページ番号入力"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -259,6 +261,7 @@
     "noAttachments": "このドキュメントには添付ファイルはありません。",
     "noResults": "結果が見つかりませんでした。",
     "numResultsFound": "結果が見つかりました",
+    "loadError": "ドキュメントの読み込みエラー",
     "notSupported": "このファイル形式はサポートされていません。",
     "passwordRequired": "パスワードが必要です",
     "enterPasswordPlaceholder": "パスワードを入力する",
@@ -546,6 +549,10 @@
       "deletionModal": {
         "title": "コンテンツの削除",
         "message": "選択したコンテンツを削除してもよろしいですか?これを元に戻すことはできません。"
+      },
+      "digitalSign": {
+        "title": "警告 封印された文書",
+        "message": "この文書は署名されており、変更または変更することはできません。"
       }
     },
     "stylePopup": {

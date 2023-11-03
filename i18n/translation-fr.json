@@ -8,6 +8,7 @@
     "calibrate": "Calibrer",
     "cancel": "Annuler",
     "confirm": "Confirmer",
+    "currentPageIs": "La page actuelle est",
     "clear": "Effacer",
     "clearAll": "Tout effacer",
     "close": "Fermer",
@@ -120,7 +121,8 @@
     "back": "Retour",
     "clearSignature": "Signature claire",
     "newDocument": "Nouveau document",
-    "sideBySideView": "Vue côte à côte"
+    "sideBySideView": "Vue côte à côte",
+    "pageNumberInput": "Saisie du numéro de page"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -259,6 +261,7 @@
     "noAttachments": "Ce document n'a pas de pièces jointes.",
     "noResults": "Aucun résultat trouvé.",
     "numResultsFound": "Résultats trouvés",
+    "loadError": "Erreur lors du chargement du document",
     "notSupported": "Ce type de fichier n'est pas pris en charge.",
     "passwordRequired": "Mot de passe requis",
     "enterPasswordPlaceholder": "Entrer le mot de passe",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Supprimer le contenu",
         "message": "Voulez-vous vraiment supprimer le contenu sélectionné ? Cela ne peut pas être annulé."
+      },
+      "digitalSign": {
+        "title": "Avertissement Document scellé",
+        "message": "Ce document a été signé et ne peut être modifié ou modifié."
       }
     },
     "stylePopup": {
       "textStyle": "Style de texte",
       "colors": "Couleurs",
-      "invalidFontSize": "La taille de la police doit être inférieure à",
+      "invalidFontSize": "La taille de la police doit être comprise dans la plage suivante",
       "labelText": "Texte de l'étiquette",
       "labelTextPlaceholder": "Ajouter un texte d'étiquette"
     },

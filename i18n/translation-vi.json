@@ -8,6 +8,7 @@
     "calibrate": "Hiệu chỉnh",
     "cancel": "Hủy",
     "confirm": "Xác nhận",
+    "currentPageIs": "Trang hiện tại là",
     "clear": "Xóa",
     "clearAll": "Quet sạch tât cả",
     "close": "Đóng",
@@ -120,7 +121,8 @@
     "back": "Mặt sau",
     "clearSignature": "Xóa chữ ký",
     "newDocument": "Tài liệu mới",
-    "sideBySideView": "Xem cạnh nhau"
+    "sideBySideView": "Xem cạnh nhau",
+    "pageNumberInput": "Nhập số trang"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -259,6 +261,7 @@
     "noAttachments": "Tài liệu này không có tệp đính kèm nào.",
     "noResults": "Không tìm thấy kết quả nào.",
     "numResultsFound": "kết quả tìm thấy",
+    "loadError": "Lỗi tải tài liệu",
     "notSupported": "Loại tệp đó không được hỗ trợ.",
     "passwordRequired": "Yêu cầu mật khẩu",
     "enterPasswordPlaceholder": "Nhập mật khẩu",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Xóa nội dung",
         "message": "Bạn có chắc chắn muốn xóa nội dung đã chọn không? Không thể hoàn tác thao tác này."
+      },
+      "digitalSign": {
+        "title": "Tài liệu niêm phong cảnh báo",
+        "message": "Tài liệu này đã được ký và không thể thay đổi hoặc thay đổi."
       }
     },
     "stylePopup": {
       "textStyle": "Kiểu Văn Bản",
       "colors": "Màu",
-      "invalidFontSize": "Cỡ chữ phải nhỏ hơn ",
+      "invalidFontSize": "Cỡ chữ phải nằm trong phạm vi sau",
       "labelText": "Văn Bản Nhãn",
       "labelTextPlaceholder": "Thêm văn bản nhãn"
     },

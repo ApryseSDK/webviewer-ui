@@ -8,6 +8,7 @@
     "calibrate": "Kalibrovat",
     "cancel": "zrušení",
     "confirm": "Potvrdit",
+    "currentPageIs": "Aktuální stránka je",
     "clear": "Průhledná",
     "clearAll": "Vymazat vše",
     "close": "Zavřít",
@@ -120,7 +121,8 @@
     "back": "Zadní",
     "clearSignature": "Jasný podpis",
     "newDocument": "Nový dokument",
-    "sideBySideView": "Pohled vedle sebe"
+    "sideBySideView": "Pohled vedle sebe",
+    "pageNumberInput": "Zadání čísla stránky"
   },
   "annotation": {
     "areaMeasurement": "Plocha",
@@ -259,6 +261,7 @@
     "noAttachments": "Tento dokument nemá žádné přílohy.",
     "noResults": "Nebyly nalezeny žádné výsledky.",
     "numResultsFound": "nalezeny výsledky",
+    "loadError": "Chyba při načítání dokumentu",
     "notSupported": "Tento typ souboru není podporován.",
     "passwordRequired": "Je vyžadováno heslo",
     "enterPasswordPlaceholder": "Zadejte heslo",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Smazat obsah",
         "message": "Opravdu chcete smazat vybraný obsah? Toto nelze vrátit zpět."
+      },
+      "digitalSign": {
+        "title": "Varování zapečetěný dokument",
+        "message": "Tento dokument byl podepsán a nelze jej měnit ani měnit."
       }
     },
     "stylePopup": {
       "textStyle": "Styl textu",
       "colors": "Barvy",
-      "invalidFontSize": "Velikost písma musí být menší než",
+      "invalidFontSize": "Velikost písma musí být v následujícím rozsahu",
       "labelText": "Text štítku",
       "labelTextPlaceholder": "Přidejte text štítku"
     },

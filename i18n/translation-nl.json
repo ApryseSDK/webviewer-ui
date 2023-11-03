@@ -8,6 +8,7 @@
     "calibrate": "Ijken",
     "cancel": "Annuleren",
     "confirm": "Bevestigen",
+    "currentPageIs": "De huidige pagina is",
     "clear": "Legen",
     "clearAll": "Wis alles",
     "close": "Sluiten",
@@ -120,7 +121,8 @@
     "back": "Rug",
     "clearSignature": "Duidelijke handtekening",
     "newDocument": "Nieuw document",
-    "sideBySideView": "Zij aan zij weergave"
+    "sideBySideView": "Zij aan zij weergave",
+    "pageNumberInput": "Invoer van paginanummer"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -259,6 +261,7 @@
     "noAttachments": "Dit document heeft geen bijlagen.",
     "noResults": "Geen resultaten.",
     "numResultsFound": "gevonden resultaten",
+    "loadError": "Fout bij het laden van document",
     "notSupported": "Dit bestandstype wordt niet ondersteund.",
     "passwordRequired": "Wachtwoord vereist",
     "enterPasswordPlaceholder": "Voer wachtwoord in",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Inhoud verwijderen",
         "message": "Weet u zeker dat u de geselecteerde inhoud wilt verwijderen? Dit kan niet ongedaan worden gemaakt."
+      },
+      "digitalSign": {
+        "title": "Waarschuwing verzegeld document",
+        "message": "Dit document is ondertekend en kan niet worden gewijzigd of gewijzigd."
       }
     },
     "stylePopup": {
       "textStyle": "Tekststijl",
       "colors": "Kleuren",
-      "invalidFontSize": "Lettergrootte moet kleiner zijn dan",
+      "invalidFontSize": "De lettergrootte moet binnen het volgende bereik liggen",
       "labelText": "Labeltekst",
       "labelTextPlaceholder": "Labeltekst toevoegen"
     },

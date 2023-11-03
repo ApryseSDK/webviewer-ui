@@ -8,6 +8,7 @@
     "calibrate": "Calibra",
     "cancel": "Anulare",
     "confirm": "A confirma",
+    "currentPageIs": "Pagina curentă este",
     "clear": "clar",
     "clearAll": "Curata tot",
     "close": "Închide",
@@ -120,7 +121,8 @@
     "back": "Înapoi",
     "clearSignature": "Semnătură clară",
     "newDocument": "Document nou",
-    "sideBySideView": "Vedere alăturată"
+    "sideBySideView": "Vedere alăturată",
+    "pageNumberInput": "Introducerea numărului paginii"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -259,6 +261,7 @@
     "noAttachments": "Acest document nu are atașamente.",
     "noResults": "Nici un rezultat gasit.",
     "numResultsFound": "rezultate găsite",
+    "loadError": "Eroare la încărcarea documentului",
     "notSupported": "Acel tip de fișier nu este suportat.",
     "passwordRequired": "Este necesară parola",
     "enterPasswordPlaceholder": "Introdu parola",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Șterge conținut",
         "message": "Sigur doriți să ștergeți conținutul selectat? Acest lucru nu poate fi anulat."
+      },
+      "digitalSign": {
+        "title": "Document sigilat de avertizare",
+        "message": "Acest document a fost semnat și nu poate fi modificat sau schimbat."
       }
     },
     "stylePopup": {
       "textStyle": "Stil text",
       "colors": "Culori",
-      "invalidFontSize": "Dimensiunea fontului trebuie să fie mai mică decât",
+      "invalidFontSize": "Dimensiunea fontului trebuie să fie în intervalul următor",
       "labelText": "Textul etichetei",
       "labelTextPlaceholder": "Adăugați textul etichetei"
     },

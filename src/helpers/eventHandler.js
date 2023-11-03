@@ -47,6 +47,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onContentEditModeEnded = eventListeners.onContentEditModeEnded(dispatch);
   const onContentBoxEditStarted = eventListeners.onContentBoxEditStarted(dispatch, hotkeysManager);
   const onContentBoxEditEnded = eventListeners.onContentBoxEditEnded(hotkeysManager);
+  const onContentEditDocumentDigitalSigned = eventListeners.onContentEditDocumentDigitalSigned(dispatch);
   const onContentEditPasswordRequired = eventListeners.onContentEditPasswordRequired(dispatch, store);
 
   return {
@@ -56,6 +57,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.addEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded);
         core.addEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted);
         core.addEventListener('contentEditModeStarted', onContentEditModeStarted);
+        core.addEventListener('contentEditDocumentDigitallySigned', onContentEditDocumentDigitalSigned);
         core.addEventListener('contentEditModeEnded', onContentEditModeEnded);
         core.addEventListener('contentBoxEditStarted', onContentBoxEditStarted);
         core.addEventListener('contentBoxEditEnded', onContentBoxEditEnded);
@@ -115,6 +117,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
         core.removeEventListener('formFieldCreationModeStarted', onFormFieldCreationModeStarted, documentViewerKey);
         core.removeEventListener('formFieldCreationModeEnded', onFormFieldCreationModeEnded, documentViewerKey);
         core.removeEventListener('contentEditModeStarted', onContentEditModeStarted);
+        core.removeEventListener('contentEditDocumentDigitallySigned', onContentEditDocumentDigitalSigned);
         core.removeEventListener('contentEditModeEnded', onContentEditModeEnded);
         core.removeEventListener('contentBoxEditStarted', onContentBoxEditStarted);
         core.removeEventListener('contentBoxEditEnded', onContentBoxEditEnded);

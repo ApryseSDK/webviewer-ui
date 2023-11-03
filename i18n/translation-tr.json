@@ -8,6 +8,7 @@
     "calibrate": "kalibre et",
     "cancel": "İptal",
     "confirm": "Onaylamak",
+    "currentPageIs": "Geçerli sayfa:",
     "clear": "Temizlemek",
     "clearAll": "Hepsini temizle",
     "close": "Kapat",
@@ -120,7 +121,8 @@
     "back": "Geri",
     "clearSignature": "İmzayı temizle",
     "newDocument": "Yeni belge",
-    "sideBySideView": "Yan Yana Görünüm"
+    "sideBySideView": "Yan Yana Görünüm",
+    "pageNumberInput": "Sayfa numarası girişi"
   },
   "annotation": {
     "areaMeasurement": "Alan",
@@ -259,6 +261,7 @@
     "noAttachments": "Bu belgenin eki yok.",
     "noResults": "Sonuç bulunamadı.",
     "numResultsFound": "sonuçlar bulundu",
+    "loadError": "Belge Yükleme Hatası",
     "notSupported": "Bu dosya tipi desteklenmiyor.",
     "passwordRequired": "şifre gerekli",
     "enterPasswordPlaceholder": "Parolanı Gir",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "İçeriği Sil",
         "message": "Seçilen içeriği silmek istediğinizden emin misiniz? Bu geri alınamaz."
+      },
+      "digitalSign": {
+        "title": "Uyarı Mühürlü Belge",
+        "message": "Bu belge imzalanmıştır ve değiştirilemez veya değiştirilemez."
       }
     },
     "stylePopup": {
       "textStyle": "Yazı stili",
       "colors": "Renkler",
-      "invalidFontSize": "Yazı tipi boyutu şundan küçük olmalıdır:",
+      "invalidFontSize": "Yazı tipi boyutu aşağıdaki aralıkta olmalıdır",
       "labelText": "Etiket Metni",
       "labelTextPlaceholder": "Etiket metni ekle"
     },

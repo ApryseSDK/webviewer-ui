@@ -8,6 +8,7 @@
     "calibrate": "Kalibruj",
     "cancel": "Anuluj",
     "confirm": "Potwierdź",
+    "currentPageIs": "Aktualna strona to",
     "clear": "Wyczyść",
     "clearAll": "Wyczyść wszystko",
     "close": "Zamknij",
@@ -120,7 +121,8 @@
     "back": "Z powrotem",
     "clearSignature": "Wyraźny podpis",
     "newDocument": "Nowy dokument",
-    "sideBySideView": "Widok obok siebie"
+    "sideBySideView": "Widok obok siebie",
+    "pageNumberInput": "Wprowadzanie numeru strony"
   },
   "annotation": {
     "areaMeasurement": "Pomiar powierzchni",
@@ -259,6 +261,7 @@
     "noAttachments": "Ten dokument nie ma załączników.",
     "noResults": "Nie znaleziono wyników.",
     "numResultsFound": "Wyniki",
+    "loadError": "Błąd podczas ładowania dokumentu",
     "notSupported": "Ten typ pliku nie jest obsługiwany.",
     "passwordRequired": "wymagane hasło",
     "enterPasswordPlaceholder": "Wprowadź hasło",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Usuń zawartość",
         "message": "Czy na pewno chcesz usunąć wybraną zawartość? Tego nie można cofnąć."
+      },
+      "digitalSign": {
+        "title": "Ostrzeżenie Zapieczętowany dokument",
+        "message": "Niniejszy dokument został podpisany i nie można go zmieniać ani zmieniać."
       }
     },
     "stylePopup": {
       "textStyle": "Styl tekstu",
       "colors": "Kolory",
-      "invalidFontSize": "Rozmiar czcionki musi być mniejszy niż",
+      "invalidFontSize": "Rozmiar czcionki musi mieścić się w następującym zakresie",
       "labelText": "Tekst",
       "labelTextPlaceholder": "Dodaj tekst"
     },

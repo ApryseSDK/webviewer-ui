@@ -99,6 +99,7 @@ const getEventToObjectMap = (documentViewerKey = 1) => {
     contentBoxEditStarted: contentEditManager,
     contentBoxEditEnded: contentEditManager,
     contentEditSelectionChange: contentEditManager,
+    contentEditDocumentDigitallySigned: contentEditManager,
     contentEditPasswordRequired: contentEditManager,
     createAnnotationWithNoScale: measurementManager,
   };

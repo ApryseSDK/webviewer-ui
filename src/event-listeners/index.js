@@ -39,6 +39,7 @@ import onContentEditModeStarted from './onContentEditModeStarted';
 import onContentEditModeEnded from './onContentEditModeEnded';
 import onContentBoxEditEnded from './onContentBoxEditEnded';
 import onContentBoxEditStarted from './onContentBoxEditStarted';
+import onContentEditDocumentDigitalSigned from './onContentEditDocumentDigitalSigned';
 import onContentEditPasswordRequired from './onContentEditPasswordRequired';
 
 export {
@@ -83,5 +84,6 @@ export {
   onContentEditModeEnded,
   onContentBoxEditStarted,
   onContentBoxEditEnded,
+  onContentEditDocumentDigitalSigned,
   onContentEditPasswordRequired,
 };

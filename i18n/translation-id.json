@@ -8,6 +8,7 @@
     "calibrate": "Menyesuaikan",
     "cancel": "Membatalkan",
     "confirm": "Mengonfirmasi",
+    "currentPageIs": "Halaman saat ini adalah",
     "clear": "Jernih",
     "clearAll": "Bersihkan semua",
     "close": "Menutup",
@@ -120,7 +121,8 @@
     "back": "Kembali",
     "clearSignature": "Tanda tangan yang jelas",
     "newDocument": "Dokumen Baru",
-    "sideBySideView": "Tampilan Berdampingan"
+    "sideBySideView": "Tampilan Berdampingan",
+    "pageNumberInput": "Masukan nomor halaman"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -259,6 +261,7 @@
     "noAttachments": "Dokumen ini tidak memiliki lampiran.",
     "noResults": "Tidak ada hasil yang ditemukan.",
     "numResultsFound": "hasil ditemukan",
+    "loadError": "Terjadi Kesalahan Saat Memuat Dokumen",
     "notSupported": "Tipe file tidak didukung.",
     "passwordRequired": "Kata sandi diperlukan",
     "enterPasswordPlaceholder": "Masukkan kata kunci",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "Hapus Konten",
         "message": "Apakah Anda yakin ingin menghapus konten yang dipilih? Ini tidak dapat diurungkan."
+      },
+      "digitalSign": {
+        "title": "Dokumen Tersegel Peringatan",
+        "message": "Dokumen ini telah ditandatangani dan tidak dapat diubah atau diubah."
       }
     },
     "stylePopup": {
       "textStyle": "Gaya Teks",
       "colors": "warna",
-      "invalidFontSize": "Ukuran font harus kurang dari",
+      "invalidFontSize": "Ukuran font harus berada dalam kisaran berikut",
       "labelText": "Teks Label",
       "labelTextPlaceholder": "Tambahkan teks label"
     },

@@ -8,6 +8,7 @@
     "calibrate": "校准",
     "cancel": "取消",
     "confirm": "确认",
+    "currentPageIs": "当前页面是",
     "clear": "清除",
     "clearAll": "全部清除",
     "close": "关闭",
@@ -120,7 +121,8 @@
     "back": "后退",
     "clearSignature": "清晰的签名",
     "newDocument": "新建文件",
-    "sideBySideView": "并排视图"
+    "sideBySideView": "并排视图",
+    "pageNumberInput": "页码输入"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -259,6 +261,7 @@
     "noAttachments": "本文档没有附件。",
     "noResults": "未找到结果。",
     "numResultsFound": "找到结果",
+    "loadError": "加载文档时出错",
     "notSupported": "不支持该文件类型。",
     "passwordRequired": "需要输入密码",
     "enterPasswordPlaceholder": "输入密码",
@@ -546,12 +549,16 @@
       "deletionModal": {
         "title": "删除内容",
         "message": "您确定要删除所选内容吗？这无法撤消。"
+      },
+      "digitalSign": {
+        "title": "警告密封文件",
+        "message": "本文件已签署，不能更改或更改。"
       }
     },
     "stylePopup": {
       "textStyle": "文字样式",
       "colors": "颜色",
-      "invalidFontSize": "字体大小必须小于",
+      "invalidFontSize": "字体大小必须在以下范围内",
       "labelText": "标签文本",
       "labelTextPlaceholder": "添加标签文本"
     },
