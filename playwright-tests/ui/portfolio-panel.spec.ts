@@ -6,12 +6,12 @@ test.describe('Portfolio panel', () => {
   test('Should be able to add file', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-fullAPI');
     const instance = await waitForInstance();
-    await instance('enableElement', 'portfolioPanelButton');
     await instance('loadDocument', '/test-files/portfolio-test.pdf');
     await page.waitForTimeout(3000);
 
+    await instance('enableFeatures', ['Portfolio']);
     await iframe.click('[data-element="leftPanelButton"]');
-    (await iframe.waitForSelector('[data-element="portfolioPanelButton"]')).click();
+    await (await iframe.waitForSelector('[data-element="portfolioPanelButton"]')).click();
     const portfolioPanel = await iframe.waitForSelector('[data-element="portfolioPanel"]');
     expect(await portfolioPanel.screenshot()).toMatchSnapshot('portfolio-panel-0.png');
 
@@ -37,14 +37,14 @@ test.describe('Portfolio panel', () => {
   test('Should open portfolio item properly', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-fullAPI');
     const instance = await waitForInstance();
-    await instance('enableElement', 'portfolioPanelButton');
     await instance('loadDocument', '/test-files/portfolio-test.pdf');
     await page.waitForTimeout(3000);
 
+    await instance('enableFeatures', ['Portfolio']);
     await iframe.click('[data-element="leftPanelButton"]');
-    (await iframe.waitForSelector('[data-element="portfolioPanelButton"]')).click();
+    await (await iframe.waitForSelector('[data-element="portfolioPanelButton"]')).click();
     const portfolioPanel = await iframe.waitForSelector('[data-element="portfolioPanel"]');
-    const portfolioItem = (await portfolioPanel.$$('.bookmark-outline-row .outline-drag-container'))[2];
+    const portfolioItem = (await portfolioPanel.$$('.bookmark-outline-row .outline-drag-container'))[0];
 
     // Open portfolio item in a new tab
     await portfolioItem.dblclick();
@@ -52,6 +52,8 @@ test.describe('Portfolio panel', () => {
     const tabsCount = await iframe.evaluate(() => window.instance.UI.TabManager.getAllTabs().length);
     expect(tabsCount).toBe(2);
     expect(await iframe.$('[data-element="portfolioPanelButton"]')).toBeNull();
+    expect(await iframe.$('[data-element="portfolioPanel"]')).toBeNull();
+    expect(await iframe.$('[data-element="thumbnailsPanel"]')).not.toBeNull();
     const documentContainer = await iframe.$('[data-element="documentContainer"]');
     expect(await documentContainer.screenshot()).toMatchSnapshot('open-portfolio-item.png');
 

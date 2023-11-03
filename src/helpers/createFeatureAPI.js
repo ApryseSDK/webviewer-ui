@@ -373,6 +373,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
       dataElements: [
         DataElements.CREATE_PORTFOLIO_BUTTON,
         DataElements.PORTFOLIO_PANEL_BUTTON,
+        DataElements.PORTFOLIO_PANEL,
       ],
     },
   };

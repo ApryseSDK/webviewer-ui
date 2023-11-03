@@ -1,4 +1,65 @@
-const addFile = async (pdfDoc, file) => {
+import core from 'core';
+import { saveAs } from 'file-saver';
+import { downloadFromEmbeddedFileData, getEmbeddedFileData, getFileAttachments } from './getFileAttachments';
+
+const extensionRegExp = /(?:\.([^.?]+))?$/;
+
+const getExtension = (filename) => extensionRegExp.exec(filename)[1] || '';
+
+const getFileNameWithoutExtension = (filename) => {
+  const extension = getExtension(filename);
+  if (extension === '') {
+    return filename;
+  }
+  return filename.slice(0, -(extension.length + 1));
+};
+
+export const PORTFOLIO_CONSTANTS = {
+  COLLECTION: 'Collection',
+  FILE_NAME: 'FileName',
+  ADOBE_ORDER: 'adobe:Order',
+  CI: 'CI',
+  REORDER: 'Reorder',
+  SORT: 'Sort',
+  SCHEMA: 'Schema',
+  SUBTYPE: 'Subtype',
+};
+
+export const isOpenableFile = (extension) => {
+  return window.Core.SupportedFileFormats.CLIENT.includes(extension);
+};
+
+export const hasChildren = (portfolioItem) => {
+  return portfolioItem?.children?.length > 0;
+};
+
+const getNextLargestValue = (files) => {
+  // TODO: will need to also get order values from folders
+  return Math.max(...files.map((a) => a.order)) + 1;
+};
+
+export const getPortfolioFiles = async () => {
+  if (!core.isFullPDFEnabled()) {
+    return [];
+  }
+
+  const { embeddedFiles } = await getFileAttachments();
+  const unsortedPortfolioFiles = embeddedFiles.map(({ filename, fileObject, id, order }) => ({
+    id,
+    order,
+    name: filename,
+    nameWithoutExtension: getFileNameWithoutExtension(filename),
+    extension: getExtension(filename),
+    isFolder: false,
+    getNestedLevel: () => 0,
+    children: [],
+    fileObject,
+  }));
+
+  return unsortedPortfolioFiles.sort((a, b) => a.order - b.order);
+};
+
+export const addFile = async (pdfDoc, file, order = undefined) => {
   const PDFNet = window.Core.PDFNet;
 
   // Create FileSpec dict
@@ -12,6 +73,15 @@ const addFile = async (pdfDoc, file) => {
   const flateFilter = await PDFNet.Filter.createFlateEncode();
   const embeddedStream = await pdfDoc.createIndirectStream(await file.arrayBuffer(), flateFilter);
   ef.put('F', embeddedStream);
+
+  if (order === undefined) {
+    order = getNextLargestValue(await getPortfolioFiles());
+  }
+
+  // Add internal order
+  const ci = await pdfDoc.createIndirectDict();
+  await ci.putNumber(PORTFOLIO_CONSTANTS.ADOBE_ORDER, order);
+  await fs.put(PORTFOLIO_CONSTANTS.CI, ci);
 
   // Add file attachment
   const fileSpec = await PDFNet.FileSpec.createFromObj(fs);
@@ -42,17 +112,55 @@ const addCoverPage = async (pdfDoc) => {
   pdfDoc.pagePushBack(page);
 };
 
-const addCollection = async (pdfDoc) => {
+const addCollection = async (pdfDoc, defaultFile = '') => {
   const root = await pdfDoc.getRoot();
-  let collection = await root.findObj('Collection');
+  let collection = await root.findObj(PORTFOLIO_CONSTANTS.COLLECTION);
   if (!collection) {
-    collection = await root.putDict('Collection');
+    collection = await pdfDoc.createIndirectDict();
   }
 
   // You could here manipulate any entry in the Collection dictionary.
   // For example, the following line sets the tile mode for initial view mode
   // Please refer to section '2.3.5 Collections' in PDF Reference for details.
-  collection.putName('View', 'T');
+  await collection.putName('View', 'T');
+
+  // Add default file for viewing (if not set, the cover page will show)
+  if (defaultFile) {
+    await collection.putString('D', defaultFile);
+  }
+
+  // Add Reorder
+  const reorder = await pdfDoc.createIndirectName(PORTFOLIO_CONSTANTS.REORDER);
+  await reorder.setName(PORTFOLIO_CONSTANTS.ADOBE_ORDER);
+  await collection.put(PORTFOLIO_CONSTANTS.REORDER, reorder);
+
+  // Add Sort
+  const sort = await collection.putDict(PORTFOLIO_CONSTANTS.SORT);
+  const sArray = await sort.putArray('S');
+  await sArray.insertName(0, PORTFOLIO_CONSTANTS.ADOBE_ORDER);
+  await sArray.insertName(1, PORTFOLIO_CONSTANTS.FILE_NAME);
+
+  // Add Schema
+  const schema = await pdfDoc.createIndirectDict();
+
+  const orderSchema = await pdfDoc.createIndirectDict();
+  await orderSchema.putString('N', 'Order');
+  await orderSchema.putNumber('O', 5);
+  await orderSchema.putName(PORTFOLIO_CONSTANTS.SUBTYPE, 'N');
+
+  const fileNameSchema = await pdfDoc.createIndirectDict();
+  await fileNameSchema.putString('N', 'Name');
+  await fileNameSchema.putBool('E', true);
+  await fileNameSchema.putNumber('O', 0);
+  await fileNameSchema.putName(PORTFOLIO_CONSTANTS.SUBTYPE, 'F');
+
+  // There are other fields in Schema (AFRelationship, CompressedSize, CreationDate, Description, ModDate, Size) but looks like we don't really need them
+  await schema.put(PORTFOLIO_CONSTANTS.ADOBE_ORDER, orderSchema);
+  await schema.put(PORTFOLIO_CONSTANTS.FILE_NAME, fileNameSchema);
+  await collection.put(PORTFOLIO_CONSTANTS.SCHEMA, schema);
+
+  // Add collection to root as an indirect dict
+  await root.put(PORTFOLIO_CONSTANTS.COLLECTION, collection);
 };
 
 export const createPortfolio = async (files) => {
@@ -61,11 +169,102 @@ export const createPortfolio = async (files) => {
 
   const pdfDoc = await PDFNet.PDFDoc.create();
 
-  for (const file of files) {
-    await addFile(pdfDoc, file);
+  let firstFileName = '';
+  for (const [index, file] of files.entries()) {
+    if (index === 0) {
+      firstFileName = file.name;
+    }
+    await addFile(pdfDoc, file, index);
   }
   await addCoverPage(pdfDoc);
-  await addCollection(pdfDoc);
+  await addCollection(pdfDoc, firstFileName);
 
   return pdfDoc;
+};
+
+const getPDFNetFiles = async () => {
+  let files = null;
+  if (core.isFullPDFEnabled()) {
+    const PDFNet = window.Core.PDFNet;
+    let doc = core.getDocument();
+    if (doc) {
+      doc = await doc.getPDFDoc();
+    }
+    // doc will be undefined for non-pdf files
+    if (doc) {
+      await PDFNet.runWithCleanup(async () => {
+        files = await PDFNet.NameTree.find(doc, 'EmbeddedFiles');
+      });
+    }
+    if (files && (await files.isValid())) {
+      return files;
+    }
+  }
+  return null;
+};
+
+export const findPDFNetPortfolioItem = async (id) => {
+  let target = null;
+  const files = await getPDFNetFiles();
+  if (!files) {
+    return;
+  }
+
+  // Traverse the list of embedded files.
+  const fileItr = await files.getIteratorBegin();
+  while (await fileItr.hasNext()) {
+    const filesIteratorKey = await fileItr.key();
+    if (id === filesIteratorKey.id) {
+      target = fileItr;
+      break;
+    }
+    await fileItr.next();
+  }
+
+  return target;
+};
+
+export const renamePortfolioFile = async (id, newName) => {
+  const target = await findPDFNetPortfolioItem(id);
+  if (!target) {
+    return;
+  }
+  const filesIteratorValue = await target.value();
+  // filesIteratorKey.getAsPDFText() returns name with nested level if file is in folder: format "<0>name.pdf"
+  await filesIteratorValue.putString('F', newName);
+  await filesIteratorValue.putText('UF', newName);
+};
+
+export const deletePortfolioFile = async (id) => {
+  const target = await findPDFNetPortfolioItem(id);
+  const files = await getPDFNetFiles();
+  if (!target || !files) {
+    return;
+  }
+  await files.erase(target);
+};
+
+export const downloadPortfolioFile = async (portfolioItem) => {
+  const { fileObject, name, extension } = portfolioItem;
+  try {
+    if (extension === 'pdf') {
+      await downloadFromEmbeddedFileData(fileObject, name, extension);
+    } else {
+      // TODO: handle non-pdf files
+      const blob = await getEmbeddedFileData(fileObject);
+      saveAs(blob, name);
+    }
+  } catch (e) {
+    console.warn(e);
+  }
+};
+
+export const reorderPortfolioFile = async (id, newOrder) => {
+  const target = await findPDFNetPortfolioItem(id);
+  if (!target) {
+    return;
+  }
+  const filesIteratorValue = await target.value();
+  const ciValue = await (await filesIteratorValue.get(PORTFOLIO_CONSTANTS.CI)).value();
+  await ciValue.putNumber(PORTFOLIO_CONSTANTS.ADOBE_ORDER, newOrder);
 };

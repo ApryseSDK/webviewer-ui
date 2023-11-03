@@ -17,6 +17,7 @@ import hotkeysManager, { ShortcutKeys, Shortcuts, defaultHotkeysScope } from 'he
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
+import { getPortfolioFiles } from 'helpers/portfolio';
 
 let onFirstLoad = true;
 const officeEditorScope = 'office-editor';
@@ -74,6 +75,24 @@ export default (store, documentViewerKey) => async () => {
 
     outlineUtils.setDoc(core.getDocument(documentViewerKey));
 
+    const setNextActivePanelDueToEmptyCurrentPanel = (currentActivePanel) => {
+      const state = getState();
+      const activeLeftPanel = selectors.getActiveLeftPanel(state);
+      if (activeLeftPanel === currentActivePanel) {
+        // set the active left panel to another one that's not disabled so that users don't see a blank left panel
+        const nextActivePanel = getLeftPanelDataElements(state).find(
+          (dataElement) => !selectors.isElementDisabled(state, dataElement),
+        );
+        dispatch(actions.setActiveLeftPanel(nextActivePanel));
+      }
+    };
+
+    const portfolio = await getPortfolioFiles();
+    dispatch(actions.setPortfolio(portfolio));
+    if (portfolio.length === 0) {
+      setNextActivePanelDueToEmptyCurrentPanel(DataElements.PORTFOLIO_PANEL);
+    }
+
     if (!doc.isWebViewerServerDocument()) {
       doc.addEventListener('layersUpdated', async () => {
         const newLayers = await doc.getLayersArray();
@@ -84,16 +103,7 @@ export default (store, documentViewerKey) => async () => {
         if (layers.length === 0) {
           dispatch(actions.disableElement('layersPanel', PRIORITY_ONE));
           dispatch(actions.disableElement('layersPanelButton', PRIORITY_ONE));
-
-          const state = getState();
-          const activeLeftPanel = selectors.getActiveLeftPanel(state);
-          if (activeLeftPanel === 'layersPanel') {
-            // set the active left panel to another one that's not disabled so that users don't see a blank left panel
-            const nextActivePanel = getLeftPanelDataElements(state).find(
-              (dataElement) => !selectors.isElementDisabled(state, dataElement),
-            );
-            dispatch(actions.setActiveLeftPanel(nextActivePanel));
-          }
+          setNextActivePanelDueToEmptyCurrentPanel('layersPanel');
         } else {
           dispatch(actions.enableElement('layersPanel', PRIORITY_ONE));
           dispatch(actions.enableElement('layersPanelButton', PRIORITY_ONE));
