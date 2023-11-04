@@ -14,7 +14,16 @@ const getFileNameWithoutExtension = (filename) => {
   return filename.slice(0, -(extension.length + 1));
 };
 
-const adobeOrderKey = 'adobe:Order';
+export const PORTFOLIO_CONSTANTS = {
+  COLLECTION: 'Collection',
+  FILE_NAME: 'FileName',
+  ADOBE_ORDER: 'adobe:Order',
+  CI: 'CI',
+  REORDER: 'Reorder',
+  SORT: 'Sort',
+  SCHEMA: 'Schema',
+  SUBTYPE: 'Subtype',
+};
 
 export const isOpenableFile = (extension) => {
   return window.Core.SupportedFileFormats.CLIENT.includes(extension);
@@ -71,8 +80,8 @@ export const addFile = async (pdfDoc, file, order = undefined) => {
 
   // Add internal order
   const ci = await pdfDoc.createIndirectDict();
-  await ci.putNumber(adobeOrderKey, order);
-  await fs.put('CI', ci);
+  await ci.putNumber(PORTFOLIO_CONSTANTS.ADOBE_ORDER, order);
+  await fs.put(PORTFOLIO_CONSTANTS.CI, ci);
 
   // Add file attachment
   const fileSpec = await PDFNet.FileSpec.createFromObj(fs);
@@ -103,17 +112,55 @@ const addCoverPage = async (pdfDoc) => {
   pdfDoc.pagePushBack(page);
 };
 
-const addCollection = async (pdfDoc) => {
+const addCollection = async (pdfDoc, defaultFile = '') => {
   const root = await pdfDoc.getRoot();
-  let collection = await root.findObj('Collection');
+  let collection = await root.findObj(PORTFOLIO_CONSTANTS.COLLECTION);
   if (!collection) {
-    collection = await root.putDict('Collection');
+    collection = await pdfDoc.createIndirectDict();
   }
 
   // You could here manipulate any entry in the Collection dictionary.
   // For example, the following line sets the tile mode for initial view mode
   // Please refer to section '2.3.5 Collections' in PDF Reference for details.
-  collection.putName('View', 'T');
+  await collection.putName('View', 'T');
+
+  // Add default file for viewing (if not set, the cover page will show)
+  if (defaultFile) {
+    await collection.putString('D', defaultFile);
+  }
+
+  // Add Reorder
+  const reorder = await pdfDoc.createIndirectName(PORTFOLIO_CONSTANTS.REORDER);
+  await reorder.setName(PORTFOLIO_CONSTANTS.ADOBE_ORDER);
+  await collection.put(PORTFOLIO_CONSTANTS.REORDER, reorder);
+
+  // Add Sort
+  const sort = await collection.putDict(PORTFOLIO_CONSTANTS.SORT);
+  const sArray = await sort.putArray('S');
+  await sArray.insertName(0, PORTFOLIO_CONSTANTS.ADOBE_ORDER);
+  await sArray.insertName(1, PORTFOLIO_CONSTANTS.FILE_NAME);
+
+  // Add Schema
+  const schema = await pdfDoc.createIndirectDict();
+
+  const orderSchema = await pdfDoc.createIndirectDict();
+  await orderSchema.putString('N', 'Order');
+  await orderSchema.putNumber('O', 5);
+  await orderSchema.putName(PORTFOLIO_CONSTANTS.SUBTYPE, 'N');
+
+  const fileNameSchema = await pdfDoc.createIndirectDict();
+  await fileNameSchema.putString('N', 'Name');
+  await fileNameSchema.putBool('E', true);
+  await fileNameSchema.putNumber('O', 0);
+  await fileNameSchema.putName(PORTFOLIO_CONSTANTS.SUBTYPE, 'F');
+
+  // There are other fields in Schema (AFRelationship, CompressedSize, CreationDate, Description, ModDate, Size) but looks like we don't really need them
+  await schema.put(PORTFOLIO_CONSTANTS.ADOBE_ORDER, orderSchema);
+  await schema.put(PORTFOLIO_CONSTANTS.FILE_NAME, fileNameSchema);
+  await collection.put(PORTFOLIO_CONSTANTS.SCHEMA, schema);
+
+  // Add collection to root as an indirect dict
+  await root.put(PORTFOLIO_CONSTANTS.COLLECTION, collection);
 };
 
 export const createPortfolio = async (files) => {
@@ -122,11 +169,15 @@ export const createPortfolio = async (files) => {
 
   const pdfDoc = await PDFNet.PDFDoc.create();
 
+  let firstFileName = '';
   for (const [index, file] of files.entries()) {
+    if (index === 0) {
+      firstFileName = file.name;
+    }
     await addFile(pdfDoc, file, index);
   }
   await addCoverPage(pdfDoc);
-  await addCollection(pdfDoc);
+  await addCollection(pdfDoc, firstFileName);
 
   return pdfDoc;
 };
@@ -209,6 +260,6 @@ export const reorderPortfolioFile = async (id, newOrder) => {
     return;
   }
   const filesIteratorValue = await target.value();
-  const ciValue = await (await filesIteratorValue.get('CI')).value();
-  await ciValue.putNumber(adobeOrderKey, newOrder);
+  const ciValue = await (await filesIteratorValue.get(PORTFOLIO_CONSTANTS.CI)).value();
+  await ciValue.putNumber(PORTFOLIO_CONSTANTS.ADOBE_ORDER, newOrder);
 };

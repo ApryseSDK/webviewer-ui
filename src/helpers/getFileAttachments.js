@@ -1,4 +1,5 @@
 import core from 'core';
+import { PORTFOLIO_CONSTANTS } from './portfolio';
 
 export async function getFileAttachments() {
   const attachments = {
@@ -25,13 +26,12 @@ export async function getFileAttachments() {
           const fileObject = await filesIteratorValue.get('F');
           const fileData = await fileObject.value();
           const filename = await fileData.getAsPDFText();
-          // Have -1 for now to keep it simple instead of getting the next largest value
-          // Files will be displayed at the top of the list
+          // Assume order is -1 for files without an order instead of getting the next largest value. Files will be displayed at the top of the list
           let order = -1;
           try {
             // After being created with Adobe, the nested files don’t have an internal order (the ones at root level will always have an internal order), so they won't always have 'CI'
-            const ciValue = await (await filesIteratorValue.get('CI')).value();
-            const adobeOrderValue = await (await ciValue.get('adobe:Order')).value();
+            const ciValue = await (await filesIteratorValue.get(PORTFOLIO_CONSTANTS.CI)).value();
+            const adobeOrderValue = await (await ciValue.get(PORTFOLIO_CONSTANTS.ADOBE_ORDER)).value();
             order = await adobeOrderValue.getNumber();
           } catch (e) {
             console.warn(e);
