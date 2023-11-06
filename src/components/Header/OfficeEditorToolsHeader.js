@@ -82,7 +82,7 @@ const convertCoreColorToWebViewerColor = (color) => {
 
 const focusContent = () => {
   // On safari, focusing the viewer element makes the screen jump up.
-  // So the toolbars disappear.
+  // This makes the toolbars disappear, so we don't focus on this platform.
   if (isSafari || isIOS) {
     return;
   }
@@ -654,7 +654,10 @@ const OfficeEditorToolsHeader = () => {
                       dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE}
                       title='officeEditor.insertImage'
                       img='icon-tool-image-line'
-                      onClick={openOfficeEditorFilePicker}
+                      onClick={() => {
+                        openOfficeEditorFilePicker();
+                        focusContent();
+                      }}
                     />
                     <OfficeEditorImageFilePickerHandler />
                   </>

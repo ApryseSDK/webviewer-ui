@@ -56,7 +56,7 @@ export default (store, documentViewerKey) => async () => {
 
   if (getHashParameters('a', false)) {
     core.getDocumentViewers().forEach((documentViewer) => {
-      if (!documentViewer.getDocument() || documentViewer.getDocument().getType() !== workerTypes.OFFICE_EDITOR) {
+      if (!documentViewer.getDocument() || !isOfficeEditorMode()) {
         documentViewer.enableAnnotations();
       }
     });
@@ -126,12 +126,13 @@ export default (store, documentViewerKey) => async () => {
       dispatch(actions.disableElement('addParagraphToolGroupButton', PRIORITY_ONE));
     }
 
+    const elementsToDisableInOfficeEditor = ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton', 'annotationPopup'];
     if (isOfficeEditorMode()) {
       dispatch(actions.setReadOnly(true));
       dispatch(actions.enableElement('officeEditorToolsHeader', PRIORITY_ONE));
       setZoomLevel(1);
       dispatch(actions.disableElements(
-        ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton'],
+        elementsToDisableInOfficeEditor,
         PRIORITY_ONE, // To allow customers to still disable these elements
       ));
       dispatch(actions.openElement('officeEditorToolsHeader'));
@@ -147,7 +148,7 @@ export default (store, documentViewerKey) => async () => {
     } else {
       dispatch(actions.setReadOnly(false));
       dispatch(actions.enableElements(
-        ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton'],
+        elementsToDisableInOfficeEditor,
         PRIORITY_ONE, // To allow customers to still disable these elements
       ));
       hotkeys.setScope(defaultHotkeysScope);
