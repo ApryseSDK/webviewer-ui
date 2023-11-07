@@ -8,6 +8,8 @@
  * @property {string} FilePicker Ctrl/Cmd + O hotkey and a open file button that can be clicked to load local files.
  * @property {string} LocalStorage Store and retrieve tool styles from window.localStorage.
  * @property {string} NotesPanel A panel that displays information of listable annotations.
+ * @property {string} InlineComment A popup that allows to directly comment on the annotation when an annotation is selected.
+ * @property {string} RightClickAnnotationPopup Ability to open the annotation menu popup on right click.
  * @property {string} Print Ctrl/Cmd + P hotkey and a print button that can be clicked to print the current document.
  * @property {string} Redaction Redaction tools that can redact text or areas. Need fullAPI to be on to use this feature.
  * @property {string} TextSelection Ability to select text in a document.
@@ -24,15 +26,19 @@
  * @property {string} NotesPanelVirtualizedList Ability to use a virtualized list in the note panel. Will limit the number of notes rendered on the DOM
  * @property {string} NotesShowLastUpdatedDate Show last updated date in notes panel instead of created date
  * @property {string} MultiTab toggle feature to open multiple documents in the same viewer instance
- * @property {string} MultiViewerMode toggle feature to activate 2 viewers in Compare Mode.
+ * @property {string} MultiViewerMode toggle feature to activate 2 viewers in Compare Mode. Note that this property name is deprecated. Please use the enterMultiViewerMode and exitMultiViewerMode functions instead.
+ * @property {string} SideBySideView toggle feature to show Side-by-side view in view controls dropdown
+ * @property {string} ComparePages toggle feature to enable Show Comparison button in side-by-side view
  * @property {string} Initials toggle feature to activate initials signing mode in the Signature Modal
  * @property {string} SavedSignaturesTab toggle feature to enable the saved signatures tab in the Signature Modal and use it to sign elements.
  * @property {string} WatermarkPanel toggle feature to enable the watermark panel
  * @property {string} WatermarkPanelImageTab toggle feature to enable the image tab in watermark panel
  * @property {string} ContentEdit toggle feature to enable content editing in a pdf document
+ * @property {string} LegacyRichTextPopup Toggle legacy richTextPopup
+ * @property {string} Portfolio Toggle feature to create PDF portfolio and the portfolio panel
  * @example
-WebViewer(...)
-  .then(function(instance) {
+ WebViewer(...)
+ .then(function(instance) {
     var Feature = instance.UI.Feature;
     instance.UI.enableFeatures([Feature.Measurement]);
     instance.UI.disableFeatures([Feature.Copy]);
@@ -47,6 +53,8 @@ export default {
   FilePicker: 'FilePicker',
   LocalStorage: 'LocalStorage',
   NotesPanel: 'NotesPanel',
+  InlineComment: 'InlineComment',
+  RightClickAnnotationPopup: 'RightClickAnnotationPopup',
   Print: 'Print',
   Redaction: 'Redaction',
   TextSelection: 'TextSelection',
@@ -67,9 +75,13 @@ export default {
   ChangeView: 'ChangeView',
   ContentEdit: 'ContentEdit',
   MultiViewerMode: 'MultiViewerMode',
+  SideBySideView: 'SideBySideView',
   Initials: 'Initials',
   SavedSignaturesTab: 'SavedSignaturesTab',
   WatermarkPanel: 'WatermarkPanel',
   WatermarkPanelImageTab: 'WatermarkPanelImageTab',
   Panel: 'Panel',
+  LegacyRichTextPopup: 'LegacyRichTextPopup',
+  ComparePages: 'ComparePages',
+  Portfolio: 'Portfolio',
 };
