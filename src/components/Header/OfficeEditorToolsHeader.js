@@ -401,11 +401,11 @@ const OfficeEditorToolsHeader = () => {
   const pointSizeSelectionKey = pointSize === undefined ? undefined : pointSize.toString();
   const justification = paragraphProperties?.justification;
   const lineHeight = calculateLineSpacing(
-    isTextSelected ? selectionProperties.lineHeightMultiplier : cursorProperties.lineHeightMultiplier,
-    isTextSelected ? selectionProperties.lineHeight : cursorProperties.lineHeight,
+    isTextSelected ? paragraphProperties.lineHeightMultiplier : cursorProperties.lineHeightMultiplier,
+    isTextSelected ? paragraphProperties.lineHeight : cursorProperties.lineHeight,
     cursorProperties.fontPointSize || DEFAULT_POINT_SIZE,
   );
-  const listType = isTextSelected ? selectionProperties.listType : cursorProperties.listType;
+  const listType = isTextSelected ? paragraphProperties.listType : cursorProperties.listType;
 
   const isLightMode = activeTheme === Theme.LIGHT;
   const wvFontColor = convertCoreColorToWebViewerColor(cursorProperties.color);
