@@ -18,7 +18,7 @@ import mentionsManager from 'helpers/MentionsManager';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
 import setReactQuillContent from 'helpers/setReactQuillContent';
-import { isDarkColorHex } from 'helpers/color';
+import { isDarkColorHex, isLightColorHex } from 'helpers/color';
 import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
 
 import core from 'core';
@@ -147,30 +147,35 @@ const NoteContent = ({
     [searchInput],
   );
 
-  const renderContents = useCallback(
-    (contents, richTextStyle, fontColor) => {
-      const autolinkerContent = [];
-      Autolinker.link(contents, {
-        stripPrefix: false,
-        stripTrailingSlash: false,
-        replaceFn(match) {
-          const href = match.getAnchorHref();
-          const anchorText = match.getAnchorText();
-          const offset = match.getOffset();
+  const skipAutoLink = annotation.getSkipAutoLink && annotation.getSkipAutoLink();
 
-          switch (match.getType()) {
-            case 'url':
-            case 'email':
-            case 'phone':
-              autolinkerContent.push({
-                href,
-                text: anchorText,
-                start: offset,
-                end: offset + match.getMatchedText().length
-              });
+  const renderContents = useCallback(
+    (contents, richTextStyle, fontColor, skipAutoLink) => {
+      const autolinkerContent = [];
+      if (!skipAutoLink) {
+        Autolinker.link(contents, {
+          stripPrefix: false,
+          stripTrailingSlash: false,
+          replaceFn(match) {
+            const href = match.getAnchorHref();
+            const anchorText = match.getAnchorText();
+            const offset = match.getOffset();
+
+            switch (match.getType()) {
+              case 'url':
+              case 'email':
+              case 'phone':
+                autolinkerContent.push({
+                  href,
+                  text: anchorText,
+                  start: offset,
+                  end: offset + match.getMatchedText().length
+                });
+            }
           }
-        }
-      });
+        });
+      }
+
       if (!autolinkerContent.length) {
         const highlightResult = highlightSearchInput(contents, searchInput, richTextStyle);
         const shouldCollapseAnnotationText = !isReply && canCollapseTextPreview;
@@ -270,6 +275,19 @@ const NoteContent = ({
         }
       });
     }
+  } else if (activeTheme === Theme.LIGHT) {
+    if (textColor && isLightColorHex(textColor.toHexString())) {
+      textColor = new window.Core.Annotations.Color(0, 0, 0, 1);
+    }
+
+    if (richTextStyle) {
+      const sections = Object.keys(richTextStyle);
+      sections.forEach((a) => {
+        if (richTextStyle[a]['color'] && isLightColorHex(richTextStyle[a]['color'])) {
+          richTextStyle[a]['color'] = '#000000';
+        }
+      });
+    }
   }
   // This is the text placeholder passed to the ContentArea
   // It ensures that if we try and edit, we get the right placeholder
@@ -333,7 +351,7 @@ const NoteContent = ({
                     isEditing={false}
                   />
                 )}
-                {renderContents(contentsToRender, richTextStyle, contentStyle)}
+                {renderContents(contentsToRender, richTextStyle, contentStyle, skipAutoLink)}
               </div>
             )
           )}
@@ -520,6 +538,11 @@ const ContentArea = ({
     const editor = textareaRef.current.getEditor();
     textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
     setAnnotationRichTextStyle(editor, annotation);
+
+    const skipAutoLink = annotation.getSkipAutoLink && annotation.getSkipAutoLink();
+    if (skipAutoLink) {
+      annotation.disableSkipAutoLink();
+    }
 
     if (isMentionEnabled) {
       const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
