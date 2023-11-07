@@ -14,19 +14,22 @@ import { ITEM_TYPE, DEFAULT_GAP } from 'constants/customizationVariables';
 import getRootNode from 'helpers/getRootNode';
 import ZoomText from '../Helpers/ZoomText';
 import ToolGroupButton from '../ToolGroupButton';
+import PageControlsFlyout from '../PageControls/PageControlsFlyout';
 import { getIconDOMElement, getSubMenuDOMElement } from '../Helpers/responsiveness-helper';
 import { getFlyoutPositionOnElement } from 'helpers/flyoutHelper';
 
 const Flyout = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [flyoutMap,
+  const [
+    flyoutMap,
     activeFlyout,
     position,
     activeToolGroup,
     toggleElement,
     topHeadersHeight,
-    bottomHeadersHeight
+    bottomHeadersHeight,
+    currentPage,
   ] = useSelector((state) => [
     selectors.getFlyoutMap(state),
     selectors.getActiveFlyout(state),
@@ -34,7 +37,8 @@ const Flyout = () => {
     selectors.getActiveToolGroup(state),
     selectors.getFlyoutToggleElement(state),
     selectors.getTopHeadersHeight(state),
-    selectors.getBottomHeadersHeight(state)
+    selectors.getBottomHeadersHeight(state),
+    selectors.getCurrentPage(state),
   ]);
   const flyoutProperties = flyoutMap[activeFlyout];
   const horizontalHeadersUsedHeight = topHeadersHeight + bottomHeadersHeight + DEFAULT_GAP;
@@ -53,12 +57,19 @@ const Flyout = () => {
   const [maxHeightValue, setMaxHeightValue] = useState(window.innerHeight - horizontalHeadersUsedHeight);
 
   useLayoutEffect(() => {
+    const tempRefElement = getRootNode().querySelector(`[data-element="${toggleElement}"]`);
     const correctedPosition = { x: position.x, y: position.y };
     const appRect = getRootNode().getElementById('app').getBoundingClientRect();
     const maxHeightValue = appRect.height - horizontalHeadersUsedHeight;
     setMaxHeightValue(maxHeightValue);
 
-    if (toggleElement) {
+    // Check if the elment is in the dom or invisible
+    if (tempRefElement && tempRefElement.offsetParent === null) {
+      return;
+    }
+
+    // Check if toggleElement is not null
+    if (toggleElement && tempRefElement) {
       const { x, y } = getFlyoutPositionOnElement(toggleElement, flyoutRef);
       correctedPosition.x = x;
       correctedPosition.y = y;
@@ -119,6 +130,7 @@ const Flyout = () => {
     const itemIsAToolGroup = !!flyoutItem.toolGroup;
     const itemIsARibbonItem = flyoutItem.type === ITEM_TYPE.RIBBON_ITEM;
     const itemIsAZoomOptionsButton = flyoutItem.dataElement === 'zoomOptionsButton' || flyoutItem.className === 'ZoomFlyoutMenu';
+    const itemIsPageNavButton = flyoutItem.dataElement === 'pageNavigationButton';
     const itemsToRender = isChild ? activeItem.children : items;
     const itemIsALabel = typeof flyoutItem === 'string' && flyoutItem !== ITEM_TYPE.DIVIDER;
 
@@ -156,6 +168,7 @@ const Flyout = () => {
       />;
       return getFlyoutItemWrapper(ribbonItemElement);
     }
+
     if (itemIsAZoomOptionsButton) {
       const hasImg = !!flyoutItem.img || !!flyoutItem.icon;
       const zoomOptionsElement = (
@@ -173,9 +186,22 @@ const Flyout = () => {
       );
       return getFlyoutItemWrapper(zoomOptionsElement, 'zoom-options');
     }
+
+    if (itemIsPageNavButton) {
+      return getFlyoutItemWrapper((
+        <div className="menu-container" key={flyoutItem.label}>
+          <div className="icon-label-wrapper">
+            {getIconDOMElement(flyoutItem, itemsToRender)}
+            <PageControlsFlyout {...flyoutItem} currentPage={currentPage}/>
+          </div>
+        </div>
+      ), 'page-nav-display');
+    }
+
     if (itemIsALabel) {
       return <div className="flyout-label" key={`label-${index}`}>{t(flyoutItem)}</div>;
     }
+
     return (flyoutItem === ITEM_TYPE.DIVIDER ? <div className="divider" key={`divider-${index}`} /> : (
       <div key={flyoutItem.label} className={classNames({
         'flyout-item-container': true,
@@ -225,7 +251,7 @@ const Flyout = () => {
     maxHeight: maxHeightValue
   };
 
-  return (
+  return ((!activeItem && !items.length) ? null :
     <div className="Flyout" data-element={dataElement} ref={flyoutRef} style={flyoutStyles}>
       <div id="FlyoutContainer"
         className={classNames({

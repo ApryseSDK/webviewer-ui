@@ -66,6 +66,12 @@ const RibbonGroup = (props) => {
       },
       size: size,
     };
+
+    // When size and items length are equal it means flyout is disabled
+    // and dropdown is enabled, so flyout needs to be closed.
+    if (size === items.length) {
+      dispatch(actions.closeElement(FLYOUT_NAME));
+    }
   }, [size]);
   storeSizeHook(dataElement, size, elementRef, headerDirection);
 
