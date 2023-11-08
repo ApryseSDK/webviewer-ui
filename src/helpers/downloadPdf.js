@@ -256,7 +256,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
   }
 
   if (convertToPDF || includeComments) {
-    const xfdfString = await core.exportAnnotations({ fields: true, widgets: true, links: true }, documentViewerKey);
+    const xfdfString = await core.exportAnnotations({ fields: true, widgets: true, links: true, useDisplayAuthor }, documentViewerKey);
     const fileData = await doc.getFileData({ xfdfString, includeAnnotations, downloadType: 'pdf' });
     doc = await core.createDocument(fileData, { extension: 'pdf', filename });
     if (includeComments) {
