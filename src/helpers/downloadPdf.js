@@ -9,7 +9,7 @@ import selectors from 'selectors';
 import blobStream from 'blob-stream';
 import { getSortStrategies } from 'constants/sortStrategies';
 import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
-import { range } from 'lodash';
+import range from 'lodash/range';
 import getRootNode from 'helpers/getRootNode';
 import { workerTypes } from 'constants/types';
 import { isOfficeEditorMode } from './officeEditor';
@@ -29,11 +29,33 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
   let includeComments = !!options.includeComments;
   const downloadAllPages = !pages || pages.length === doc.getPageCount();
 
+  const downloadDataAsFile = (data, extension, options) => {
+    const arr = new Uint8Array(data);
+    const { downloadName } = options;
+    let file;
+    let downloadType = 'application/pdf';
+    if (options.downloadType === 'office') {
+      const extensionToMimetype = reverseObject(window.Core.mimeTypeToExtension);
+      downloadType = extensionToMimetype[extension];
+    }
+    if (isIE) {
+      file = new Blob([arr], { type: downloadType });
+    } else {
+      file = new File([arr], filename, { type: downloadType });
+    }
+    saveAs(file, downloadName || filename);
+
+    dispatch(actions.closeElement(DataElements.LOADING_MODAL));
+    fireEvent(Events.FILE_DOWNLOADED);
+    if (includeComments || convertToPDF) {
+      doc.unloadResources();
+    }
+  };
+
   // We currently don't convert to pdf, png, etc. for office editor.
   // Until we can do that we force the download type to be 'office'.
   // Office editor can't include comments either so we force that to false.
   if (isOfficeEditorMode()) {
-    options.downloadType = 'office';
     includeComments = false;
   }
 
@@ -222,9 +244,19 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
   }
 
   let annotationsPromise = Promise.resolve();
-  const convertToPDF = options.downloadType === 'pdf' && doc.getType() === workerTypes.OFFICE;
+  const convertToPDF = options.downloadType === 'pdf' && (doc.getType() === workerTypes.OFFICE || isOfficeEditorMode());
+
+  if (isOfficeEditorMode() && convertToPDF) {
+    const data = await doc.getFileData({
+      downloadType: 'pdf'
+    });
+
+    downloadDataAsFile(data, 'pdf', options);
+    return;
+  }
+
   if (convertToPDF || includeComments) {
-    const xfdfString = await core.exportAnnotations({ fields: true, widgets: true, links: true }, documentViewerKey);
+    const xfdfString = await core.exportAnnotations({ fields: true, widgets: true, links: true, useDisplayAuthor }, documentViewerKey);
     const fileData = await doc.getFileData({ xfdfString, includeAnnotations, downloadType: 'pdf' });
     doc = await core.createDocument(fileData, { extension: 'pdf', filename });
     if (includeComments) {
@@ -475,6 +507,8 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     } else {
       annotationsPromise = core.exportAnnotations({ useDisplayAuthor }, documentViewerKey);
     }
+  } else if (!options.xfdfString && !includeAnnotations) {
+    options.xfdfString = window.Core.EMPTY_XFDF;
   }
 
   return annotationsPromise.then(async (xfdfString) => {
@@ -513,27 +547,6 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       delete clonedOptions.store;
     }
 
-    const downloadDataAsFile = (data) => {
-      const arr = new Uint8Array(data);
-      let file;
-      let downloadType = 'application/pdf';
-      if (options.downloadType === 'office') {
-        const extensionToMimetype = reverseObject(window.Core.mimeTypeToExtension);
-        downloadType = extensionToMimetype[extension];
-      }
-      if (isIE) {
-        file = new Blob([arr], { type: downloadType });
-      } else {
-        file = new File([arr], downloadName, { type: downloadType });
-      }
-      saveAs(file, downloadName);
-
-      dispatch(actions.closeElement(DataElements.LOADING_MODAL));
-      fireEvent(Events.FILE_DOWNLOADED);
-      if (includeComments || convertToPDF) {
-        doc.unloadResources();
-      }
-    };
     const handleError = (error) => {
       dispatch(actions.closeElement(DataElements.LOADING_MODAL));
       throw new Error(error.message);
@@ -559,9 +572,9 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       dispatch(actions.closeElement(DataElements.LOADING_MODAL));
       fireEvent(Events.FILE_DOWNLOADED);
     } else if (pages && !downloadAllPages) {
-      return doc.extractPages(pages, options.xfdfString).then(downloadDataAsFile, handleError);
+      return doc.extractPages(pages, options.xfdfString).then((data) => downloadDataAsFile(data, extension, { ...options, downloadName }), handleError);
     } else {
-      return doc.getFileData(clonedOptions).then(downloadDataAsFile, handleError);
+      return doc.getFileData(clonedOptions).then((data) => downloadDataAsFile(data, extension, { ...options, downloadName }), handleError);
     }
   }).catch((error) => {
     console.warn(error);
