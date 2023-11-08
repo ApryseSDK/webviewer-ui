@@ -19,6 +19,7 @@ function createStateAnnotation(annotation, state, documentViewerKey = 1) {
   stateAnnotation['State'] = state;
   stateAnnotation['StateModel'] = state === 'Marked' || state === 'Unmarked' ? 'Marked' : 'Review';
   stateAnnotation['Hidden'] = true;
+  stateAnnotation.enableSkipAutoLink();
 
   const displayAuthor = core.getDisplayAuthor(stateAnnotation['Author'], documentViewerKey);
   const stateMessage = i18next.t(`option.state.${state.toLowerCase()}`);
