@@ -313,14 +313,25 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.MultiViewerMode]: {
       fn: () => {
+        if (enable && selectors.getIsMultiTab(store.getState())) {
+          console.error('MultiTab and MultiViewerMode cannot be enabled at the same time, disabling MultiTab');
+          store.dispatch(actions.setMultiTab(false));
+          store.dispatch(actions.setTabManager(null));
+          store.dispatch(actions.setTabs([]));
+          store.dispatch(actions.setActiveTab(0));
+        }
+        console.warn('Feature.MultiViewerMode is deprecated and will be removed in the next major release. Please use UI.enterMultiViewerMode and UI.exitMultiViewerMode instead.');
+        store.dispatch(actions.setIsMultiViewerMode(enable));
+      }
+    },
+    [Feature.SideBySideView]: {
+      fn: () => {
         store.dispatch(actions.setIsMultiViewerModeAvailable(enable));
       }
     },
     [Feature.ComparePages]: {
       fn: () => {
-        if (selectors.isMultiViewerMode(store.getState())) {
-          store.dispatch(actions.setComparePagesButtonEnabled(enable));
-        }
+        store.dispatch(actions.setComparePagesButtonEnabled(enable));
       }
     },
     [Feature.Initials]: {
@@ -375,6 +386,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
       dataElements: [
         DataElements.CREATE_PORTFOLIO_BUTTON,
         DataElements.PORTFOLIO_PANEL_BUTTON,
+        DataElements.PORTFOLIO_PANEL,
       ],
     },
   };

@@ -26,7 +26,9 @@
  * @property {string} NotesPanelVirtualizedList Ability to use a virtualized list in the note panel. Will limit the number of notes rendered on the DOM
  * @property {string} NotesShowLastUpdatedDate Show last updated date in notes panel instead of created date
  * @property {string} MultiTab toggle feature to open multiple documents in the same viewer instance
- * @property {string} MultiViewerMode toggle feature to activate 2 viewers in Compare Mode.
+ * @property {string} MultiViewerMode toggle feature to activate 2 viewers in Compare Mode. Note that this property name is deprecated. Please use the enterMultiViewerMode and exitMultiViewerMode functions instead.
+ * @property {string} SideBySideView toggle feature to show Side-by-side view in view controls dropdown
+ * @property {string} ComparePages toggle feature to enable Show Comparison button in side-by-side view
  * @property {string} Initials toggle feature to activate initials signing mode in the Signature Modal
  * @property {string} SavedSignaturesTab toggle feature to enable the saved signatures tab in the Signature Modal and use it to sign elements.
  * @property {string} WatermarkPanel toggle feature to enable the watermark panel
@@ -73,6 +75,7 @@ export default {
   ChangeView: 'ChangeView',
   ContentEdit: 'ContentEdit',
   MultiViewerMode: 'MultiViewerMode',
+  SideBySideView: 'SideBySideView',
   Initials: 'Initials',
   SavedSignaturesTab: 'SavedSignaturesTab',
   WatermarkPanel: 'WatermarkPanel',
