@@ -83,7 +83,6 @@ const DataElements = {
   SIGNATURE_OVERLAY: 'signatureOverlay',
   REDACTION_OVERLAY: 'redactionOverlay',
   ANNOTATION_CONTENT_OVERLAY: 'annotationContentOverlay',
-  THUMBNAILS_CONTROL_ROTATE_POPUP: 'thumbnailsControlRotatePopup',
   THUMBNAILS_CONTROL_ROTATE_POPUP_TRIGGER: 'thumbnailsControlRotatePopupTrigger',
   THUMBNAILS_CONTROL_MANIPULATE_POPUP: 'thumbnailsControlManipulatePopup',
   THUMBNAILS_CONTROL_MANIPULATE_POPUP_TRIGGER: 'thumbnailsControlManipulatePopupTrigger',

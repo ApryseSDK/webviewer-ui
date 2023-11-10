@@ -8,7 +8,7 @@ import actions from 'actions';
 import pageNumberPlaceholder from 'constants/pageNumberPlaceholder';
 import core from 'src/core';
 import { useTranslation } from 'react-i18next';
-
+import LeftPanelPageTabs from 'components/LeftPanelPageTabs';
 import './DocumentControls.scss';
 
 function getPageString(selectedPageArray, pageLabels) {
@@ -30,11 +30,16 @@ function getPageString(selectedPageArray, pageLabels) {
   return pagesToPrint.slice(0, -2);
 }
 
-const DocumentControls = ({ shouldShowControls }) => {
+const DocumentControls = ({ shouldShowControls, parentElement }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
-  const [selectedPageIndexes, isDisabled, pageLabels, isThumbnailSelectingPages] = useSelector((state) => [
+  const [
+    selectedPageIndexes,
+    isDisabled,
+    pageLabels,
+    isThumbnailSelectingPages,
+  ] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.isElementDisabled(state, 'documentControl'),
     selectors.getPageLabels(state),
@@ -93,6 +98,7 @@ const DocumentControls = ({ shouldShowControls }) => {
       {shouldShowControls ? (
         <div className={'documentControls'}>
           <div className={'divider'}></div>
+          {isThumbnailSelectingPages && <LeftPanelPageTabs parentElement={parentElement}/>}
           <div className={'documentControlsInput'}>
             <input
               onBlur={onBlur}

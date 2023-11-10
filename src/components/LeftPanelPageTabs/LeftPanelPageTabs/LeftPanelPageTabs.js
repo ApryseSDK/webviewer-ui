@@ -1,11 +1,9 @@
 import React from 'react';
 
 import LeftPanelPageTabsMore from '../LeftPanelPageTabsMore/LeftPanelPageTabsMore';
-import LeftPanelPageTabsInsert from '../LeftPanelPageTabsInsert/LeftPanelPageTabsInsert';
 import LeftPanelPageTabsRotate from '../LeftPanelPageTabsRotate/LeftPanelPageTabsRotate';
-import LeftPanelPageTabsOperations from '../LeftPanelPageTabsOperations/LeftPanelPageTabsOperations';
 import CustomLeftPanelOperations from '../CustomLeftPanelOperations/CustomLeftPanelOperations';
-
+import LeftPanelPageTabsMove from 'components/LeftPanelPageTabs/LeftPanelPageTabsMove/LeftPanelPageTabsMove';
 
 
 function InitialLeftPanelPageTabs({ children, pageNumbers, multiPageManipulationControlsItems }) {
@@ -15,7 +13,7 @@ function InitialLeftPanelPageTabs({ children, pageNumbers, multiPageManipulation
   }
   return multiPageManipulationControlsItems.map((item, index) => {
     const { dataElement, type } = item;
-    let component = childrenArray.find(child => child.props.dataElement === dataElement);
+    let component = childrenArray.find((child) => child.props.dataElement === dataElement);
     const key = dataElement || `${type}-${index}`;
 
     if (!component) {
@@ -37,13 +35,19 @@ function InitialLeftPanelPageTabs({ children, pageNumbers, multiPageManipulation
 
 
 function LeftPanelPageTabs(props) {
-  const { pageNumbers, onRotateClockwise, onRotateCounterClockwise, onInsertAbove, onInsertBelow, onReplace, onExtractPages, onDeletePages, multiPageManipulationControlsItems } = props;
+  const {
+    pageNumbers,
+    onRotateClockwise,
+    onRotateCounterClockwise,
+    multiPageManipulationControlsItems,
+    moveToTop,
+    moveToBottom
+  } = props;
   return (
-    <div className={`PageControlContainer root`}>
+    <div className={'PageControlContainer root'}>
       <InitialLeftPanelPageTabs pageNumbers={pageNumbers} multiPageManipulationControlsItems={multiPageManipulationControlsItems} >
         <LeftPanelPageTabsRotate onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise} dataElement="leftPanelPageTabsRotate" />
-        <LeftPanelPageTabsInsert onInsertAbove={onInsertAbove} onInsertBelow={onInsertBelow} dataElement="leftPanelPageTabsInsert" />
-        <LeftPanelPageTabsOperations onReplace={onReplace} onExtractPages={onExtractPages} onDeletePages={onDeletePages} dataElement="leftPanelPageTabsOperations" />
+        <LeftPanelPageTabsMove moveToTop={moveToTop} moveToBottom={moveToBottom} dataElement="leftPanelPageTabsMove"/>
         <LeftPanelPageTabsMore dataElement="leftPanelPageTabsMore" />
       </InitialLeftPanelPageTabs>
     </div>

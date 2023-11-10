@@ -1,9 +1,9 @@
 import React from 'react';
-import "../LeftPanelPageTabs/LeftPanelPageTabsContainer.scss";
+import '../LeftPanelPageTabs/LeftPanelPageTabsContainer.scss';
 import LeftPanelPageTabsMoreSmall from '../LeftPanelPageTabsMoreSmall/LeftPanelPageTabsMoreSmall';
-import LeftPanelPageTabsRotateSmall from '../LeftPanelPageTabsRotateSmall/LeftPanelPageTabsRotateSmall';
 import LeftPanelPageTabsInsertSmall from '../LeftPanelPageTabsInsertSmall/LeftPanelPageTabsInsertSmall';
 import CustomLeftPanelOperations from '../CustomLeftPanelOperations/CustomLeftPanelOperations';
+import LeftPanelPageTabsRotate from '../LeftPanelPageTabsRotate/LeftPanelPageTabsRotate';
 
 function InitialLeftPanelPageTabsSmall({ children, pageNumbers, multiPageManipulationControlsItems }) {
   const childrenArray = React.Children.toArray(children);
@@ -12,7 +12,7 @@ function InitialLeftPanelPageTabsSmall({ children, pageNumbers, multiPageManipul
   }
   return multiPageManipulationControlsItems.map((item, index) => {
     const { dataElement, type } = item;
-    let component = childrenArray.find(child => child.props.dataElement === dataElement);
+    let component = childrenArray.find((child) => child.props.dataElement === dataElement);
     const key = dataElement || `${type}-${index}`;
 
     if (!component) {
@@ -33,14 +33,14 @@ function InitialLeftPanelPageTabsSmall({ children, pageNumbers, multiPageManipul
 }
 
 
-
 function LeftPanelPageTabsSmall(props) {
-
-  const { pageNumbers, multiPageManipulationControlsItemsSmall } = props;
+  const { pageNumbers, multiPageManipulationControlsItemsSmall, onRotateClockwise, onRotateCounterClockwise } = props;
   return (
-    <div className={`PageControlContainer root small`}>
+    <div className={'PageControlContainer root small'}>
       <InitialLeftPanelPageTabsSmall pageNumbers={pageNumbers} multiPageManipulationControlsItems={multiPageManipulationControlsItemsSmall}>
-        <LeftPanelPageTabsRotateSmall dataElement="leftPanelPageTabsRotateSmall" />
+        <LeftPanelPageTabsRotate onRotateClockwise={onRotateClockwise}
+          onRotateCounterClockwise={onRotateCounterClockwise}
+          dataElement="leftPanelPageTabsRotate"/>
         <LeftPanelPageTabsInsertSmall dataElement="leftPanelPageTabsInsertSmall" />
         <LeftPanelPageTabsMoreSmall dataElement="leftPanelPageTabsMoreSmall" />
       </InitialLeftPanelPageTabsSmall>

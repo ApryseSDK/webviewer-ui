@@ -41,12 +41,10 @@ test.describe('Flyout Menu', () => {
     await page.waitForTimeout(5000);
 
     const flyoutMenuTriggers = [
-      'thumbnailsControlRotatePopupTrigger',
       'thumbnailsControlManipulatePopupSmallTrigger',
     ];
 
     const flyoutMenuSelectors = [
-      'thumbnailsControlRotatePopup',
       'thumbnailsControlManipulatePopupSmall'
     ];
 

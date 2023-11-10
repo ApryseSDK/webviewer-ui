@@ -31,9 +31,9 @@ const MAX_COLUMNS = 16;
 
 const hoverAreaHeight = 25;
 
-const ThumbnailsPanel = ({ panelSelector }) => {
+const ThumbnailsPanel = ({ panelSelector = 'leftPanel' }) => {
   const [
-    isLeftPanelOpen,
+    isOpen,
     isDisabled,
     totalPages,
     currentPage,
@@ -48,10 +48,9 @@ const ThumbnailsPanel = ({ panelSelector }) => {
     totalPagesFromSecondaryDocumentViewer,
     activeDocumentViewerKey,
     isRightClickEnabled,
-    featureFlags
   ] = useSelector(
     (state) => [
-      selectors.isElementOpen(state, 'leftPanel'),
+      selectors.isElementOpen(state, panelSelector),
       selectors.isElementDisabled(state, 'thumbnailsPanel'),
       selectors.getTotalPages(state),
       selectors.getCurrentPage(state),
@@ -66,7 +65,6 @@ const ThumbnailsPanel = ({ panelSelector }) => {
       selectors.getTotalPages(state, 2),
       selectors.getActiveDocumentViewerKey(state),
       selectors.openingPageManipulationOverlayByRightClickEnabled(state),
-      selectors.getFeatureFlags(state)
     ],
     shallowEqual,
   );
@@ -78,6 +76,7 @@ const ThumbnailsPanel = ({ panelSelector }) => {
   const thumbs = useRef([]);
   const afterMovePageNumber = useRef(null);
 
+  const [isOfficeEditor, setIsOfficeEditor] = useState(false);
   const [canLoad, setCanLoad] = useState(true);
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
@@ -197,6 +196,11 @@ const ThumbnailsPanel = ({ panelSelector }) => {
     };
 
     const onDocumentLoaded = () => {
+      if (core.getDocument()?.getType() === 'officeEditor') {
+        setIsOfficeEditor(true);
+      } else {
+        setIsOfficeEditor(false);
+      }
       activeThumbRenders = {};
       dispatch(actions.setSelectedPageThumbnails([]));
     };
@@ -291,10 +295,8 @@ const ThumbnailsPanel = ({ panelSelector }) => {
     }
   }, [isReaderMode, isDocumentReadOnly]);
 
-  const { customizableUI } = featureFlags;
-
   // if disabled or left panel is not open when we are not in customize mode, return
-  if (isDisabled || (!isLeftPanelOpen && !customizableUI)) {
+  if (isDisabled || !isOpen || isOfficeEditor) {
     return null;
   }
   const onDragEnd = () => {
@@ -615,7 +617,7 @@ const ThumbnailsPanel = ({ panelSelector }) => {
           </div>
         )}
       </Measure>
-      <DocumentControls shouldShowControls={shouldShowControls} />
+      <DocumentControls shouldShowControls={shouldShowControls} parentElement={panelSelector}/>
     </React.Fragment>
   );
 };

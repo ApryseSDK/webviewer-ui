@@ -1,8 +1,8 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import LeftPanelPageTabs from "components/LeftPanelPageTabs/LeftPanelPageTabs/LeftPanelPageTabs";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
+import LeftPanelPageTabs from 'components/LeftPanelPageTabs/LeftPanelPageTabs/LeftPanelPageTabs';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 // create test component with mock redux
 const initialState = {
@@ -34,52 +34,36 @@ describe('LeftPanelPageTabs', () => {
         onDeletePages={noop}
         onRotateCounterClockwise={noop}
         onRotateClockwise={noop}
-        onInsertAbove={noop}
-        onInsertBelow={noop}
+        onInsert={noop}
       />);
 
-      expect(container.querySelectorAll('.Button')).toHaveLength(8);
+      expect(container.querySelectorAll('.Button')).toHaveLength(5);
     });
 
     it('Should call each handler when clicked', () => {
       const handlers = {
-        onReplace: {
-          fn: jest.fn(),
-          dataElement: "thumbnailsControlReplace"
-        },
-        onExtractPages: {
-          fn: jest.fn(),
-          dataElement: "thumbnailsControlExtract"
-        },
-        onDeletePages: {
-          fn: jest.fn(),
-          dataElement: "thumbnailsControlDelete"
-        },
         onRotateCounterClockwise: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlRotateCounterClockwise"
+          dataElement: 'thumbnailsControlRotateCounterClockwise'
         },
         onRotateClockwise: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlRotateClockwise"
+          dataElement: 'thumbnailsControlRotateClockwise'
         },
-        onInsertAbove: {
+        moveToTop: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlInsertAbove"
+          dataElement: 'moveToTop'
         },
-        onInsertBelow: {
+        moveToBottom: {
           fn: jest.fn(),
-          dataElement: "thumbnailsControlInsertBelow"
+          dataElement: 'moveToBottom'
         },
       };
       const { container } = render(<LeftPanelPageTabsWithRedux
-        onReplace={handlers.onReplace.fn}
-        onExtractPages={handlers.onExtractPages.fn}
-        onDeletePages={handlers.onDeletePages.fn}
         onRotateCounterClockwise={handlers.onRotateCounterClockwise.fn}
         onRotateClockwise={handlers.onRotateClockwise.fn}
-        onInsertAbove={handlers.onInsertAbove.fn}
-        onInsertBelow={handlers.onInsertBelow.fn}
+        moveToTop={handlers.moveToTop.fn}
+        moveToBottom={handlers.moveToBottom.fn}
       />);
 
       for (const action in handlers) {

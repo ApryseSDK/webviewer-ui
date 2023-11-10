@@ -1,59 +1,73 @@
 import React from 'react';
-import { legacy_createStore as createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Panel from 'components/Panel';
 import ThumbnailsPanel from './ThumbnailsPanel';
+import initialState from 'src/redux/initialState';
+import rootReducer from 'reducers/rootReducer';
 
 export default {
   title: 'Components/Thumbnails',
   component: ThumbnailsPanel,
 };
 
+
+const myState = {
+  ...initialState,
+  viewer: {
+    ...initialState.viewer,
+    openElements: {
+      ...initialState.viewer.openElements,
+      thumbnailsPanel: true,
+      leftPanel: true,
+    },
+    panelWidths: {
+      ...initialState.viewer.panelWidths,
+      leftPanel: 264,
+      thumbnailsPanel: 300,
+    },
+    pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+  },
+  document: {
+    ...initialState.document,
+    totalPages: {
+      1: 10,
+    },
+  },
+};
+
 export const Thumbnails = () => {
-  const reducer = () => {
-    return {
-      viewer: {
-        disabledElements: {
-          logoBar: { disabled: true },
-        },
-        customElementOverrides: {},
-        openElements: {
-          thumbnailsPanel: true,
-          leftPanel: true,
-        },
-        panelWidths: {
-          leftPanel: 264,
-          thumbnailsPanel: 300,
-        },
-        selectedThumbnailPageIndexes: [],
-        isThumbnailMerging: true,
-        isThumbnailReordering: false,
-        thumbnailSelectingPages: false,
-        isMultipleViewerMerging: false,
-        isReaderMode: false,
-        isReadOnly: false,
-        activeDocumentViewerKey: 1,
-        pageManipulationOverlayOpenByRightClick: true,
-        modularHeaders: []
-      },
-      document: {
-        totalPages: {
-          1: 2,
-          2: 3,
-        },
-      },
-      featureFlags: {
-        customizableUI: false,
-      },
-    };
-  };
   return (
-    <>
-      <Provider store={createStore(reducer)}>
-        <Panel dataElement="thumbnailsPanel">
-          <ThumbnailsPanel />
-        </Panel>
-      </Provider>
-    </>
+    <Provider store={configureStore({
+      reducer: rootReducer,
+      preloadedState: myState,
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+    })}>
+      <Panel dataElement="thumbnailsPanel">
+        <ThumbnailsPanel />
+      </Panel>
+    </Provider>
+  );
+};
+
+export const ThumbnailsMultiSelect = () => {
+  const state = {
+    ...myState,
+    viewer: {
+      ...myState.viewer,
+      thumbnailSelectingPages: true,
+    }
+  };
+
+  return (
+    <Provider store={configureStore({
+      reducer: rootReducer,
+      preloadedState: state,
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+    })}>
+      <Panel dataElement="thumbnailsPanel">
+        <ThumbnailsPanel/>
+      </Panel>
+    </Provider>
   );
 };

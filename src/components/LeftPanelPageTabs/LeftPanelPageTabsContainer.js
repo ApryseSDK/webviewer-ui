@@ -19,16 +19,32 @@ import core from 'src/core';
 import LeftPanelPageTabsRotate from 'components/LeftPanelPageTabs/LeftPanelPageTabsRotate/LeftPanelPageTabsRotate';
 import LeftPanelPageTabsLarge from './LeftPanelPageTabsLarge/LeftPanelPageTabsLarge';
 import DataElements from 'constants/dataElement';
+import { panelMinWidth } from 'constants/panel';
+import { isMobile as isInMobile } from 'helpers/device';
+import getRootNode from 'helpers/getRootNode';
 
-function LeftPanelPageTabsContainer() {
+// Values come from the CSS
+const WIDTH_MARGINS = 16 + 8 + 16 + 16 + 16 + 16;
+
+function LeftPanelPageTabsContainer({ parentElement }) {
   const dispatch = useDispatch();
-  const [selectedPageIndexes, leftPanelWidth, deleteModalEnabled, multiPageManipulationControlsItems, multiPageManipulationControlsSmall, multiPageManipulationControlsLarge] = useSelector((state) => [
+  const isMobile = isInMobile();
+  const [
+    selectedPageIndexes,
+    panelWidth,
+    deleteModalEnabled,
+    multiPageManipulationControlsItems,
+    multiPageManipulationControlsSmall,
+    multiPageManipulationControlsLarge,
+    isDesktopOnlyMode,
+  ] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
-    selectors.getLeftPanelWidth(state),
+    !parentElement || parentElement === 'leftPanel' ? selectors.getLeftPanelWidth(state) : selectors.getPanelWidth(state, parentElement),
     selectors.pageDeletionConfirmationModalEnabled(state),
     selectors.getMultiPageManipulationControlsItems(state),
     selectors.getMultiPageManipulationControlsItemsSmall(state),
     selectors.getMultiPageManipulationControlsItemsLarge(state),
+    selectors.isInDesktopOnlyMode(state),
   ]);
 
   const pageNumbers = selectedPageIndexes.map((index) => index + 1);
@@ -54,38 +70,50 @@ function LeftPanelPageTabsContainer() {
 
   if (isXod || isOffice || document?.isWebViewerServerDocument()) {
     return (
-      <LeftPanelPageTabsRotate onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise} />
+      <div className={'PageControlContainer root small'}>
+        <LeftPanelPageTabsRotate onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise} />
+      </div>
     );
   }
-  // Breakpoint to convert to popups
-  const breakPoint = 360;
-  const isPanelSmall = leftPanelWidth < breakPoint;
-  const isPanelLarge = leftPanelWidth > 600;
+
+  const smallBreakPoint = 190;
+  const largeBreakPoint = 290;
+  let widthMinusMargins;
+  if (!isDesktopOnlyMode && isMobile) {
+    try {
+      const appRect = getRootNode().querySelector('.App').getBoundingClientRect();
+      widthMinusMargins = appRect.width - WIDTH_MARGINS;
+    } catch (e) {
+      widthMinusMargins = (panelWidth || panelMinWidth) - WIDTH_MARGINS;
+    }
+  } else {
+    widthMinusMargins = (panelWidth || panelMinWidth) - WIDTH_MARGINS;
+  }
+  const isPanelSmall = widthMinusMargins < smallBreakPoint;
+  const isPanelLarge = widthMinusMargins > largeBreakPoint;
+
+  const childProps = {
+    onReplace,
+    onExtractPages,
+    onDeletePages,
+    onRotateCounterClockwise,
+    onRotateClockwise,
+    onInsert,
+    moveToTop,
+    moveToBottom,
+    pageNumbers,
+  };
 
   if (isPanelSmall) {
     return <LeftPanelPageTabsSmall
-      onReplace={onReplace}
-      onExtractPages={onExtractPages}
-      onDeletePages={onDeletePages}
-      onRotateCounterClockwise={onRotateCounterClockwise}
-      onRotateClockwise={onRotateClockwise}
-      onInsert={onInsert}
-      pageNumbers={pageNumbers}
+      {...childProps}
       multiPageManipulationControlsItemsSmall={multiPageManipulationControlsSmall}
     />;
   }
 
   if (isPanelLarge) {
     return <LeftPanelPageTabsLarge
-      onReplace={onReplace}
-      onExtractPages={onExtractPages}
-      onDeletePages={onDeletePages}
-      onRotateCounterClockwise={onRotateCounterClockwise}
-      onRotateClockwise={onRotateClockwise}
-      onInsert={onInsert}
-      moveToTop={moveToTop}
-      moveToBottom={moveToBottom}
-      pageNumbers={pageNumbers}
+      {...childProps}
       multiPageManipulationControlsItems={multiPageManipulationControlsLarge}
     />;
   }
@@ -93,13 +121,7 @@ function LeftPanelPageTabsContainer() {
 
   return (
     <LeftPanelPageTabs
-      onReplace={onReplace}
-      onExtractPages={onExtractPages}
-      onDeletePages={onDeletePages}
-      onRotateCounterClockwise={onRotateCounterClockwise}
-      onRotateClockwise={onRotateClockwise}
-      onInsert={onInsert}
-      pageNumbers={pageNumbers}
+      {...childProps}
       multiPageManipulationControlsItems={multiPageManipulationControlsItems}
     />
   );

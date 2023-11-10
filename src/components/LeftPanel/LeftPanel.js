@@ -15,7 +15,6 @@ import CustomElement from 'components/CustomElement';
 import ResizeBar from 'components/ResizeBar';
 import Icon from 'components/Icon';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
-import LeftPanelPageTabs from 'components/LeftPanelPageTabs';
 
 import core from 'core';
 import selectors from 'selectors';
@@ -43,7 +42,6 @@ const LeftPanel = () => {
     currentWidth,
     notesInLeftPanel,
     isInDesktopOnlyMode,
-    isThumbnailSelectingPages,
     bookmarks,
     isBookmarkPanelEnabled,
     isBookmarkIconShortcutVisible,
@@ -66,7 +64,6 @@ const LeftPanel = () => {
       selectors.getLeftPanelWidth(state),
       selectors.getNotesInLeftPanel(state),
       selectors.isInDesktopOnlyMode(state),
-      selectors.isThumbnailSelectingPages(state),
       selectors.getBookmarks(state),
       !selectors.isElementDisabled(state, DataElements.BOOKMARK_PANEL),
       selectors.isBookmarkIconShortcutVisible(state),
@@ -178,9 +175,7 @@ const LeftPanel = () => {
             </div>
           </div>}
         <div className="left-panel-header">
-          {isThumbnailSelectingPages ?
-            <LeftPanelPageTabs /> :
-            <LeftPanelTabs showPortfolio={portfolioFiles.length > 0} />}
+          <LeftPanelTabs showPortfolio={portfolioFiles.length > 0}/>
         </div>
         {activePanel === DataElements.PORTFOLIO_PANEL
           && core.isFullPDFEnabled()

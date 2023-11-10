@@ -2,23 +2,23 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
 import FlyoutMenu from 'components/FlyoutMenu/FlyoutMenu';
-import PageRotationControls from 'components/PageManipulationOverlay/PageRotationControls';
 import DataElements from 'constants/dataElement';
+import PageManipulationControls from '../PageManipulationOverlay/PageManipulationControls';
 
-function RotatePopup() {
+const ThumbnailMoreOptionsPopup = () => {
   const selectedPageIndexes = useSelector((state) => selectors.getSelectedThumbnailPageIndexes(state));
 
   return (
     <FlyoutMenu
-      menu={DataElements.THUMBNAILS_CONTROL_ROTATE_POPUP}
-      trigger={DataElements.THUMBNAILS_CONTROL_ROTATE_POPUP_TRIGGER}
+      menu={DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP}
+      trigger={DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP_TRIGGER}
     >
-      <PageRotationControls
+      <PageManipulationControls
         pageNumbers={selectedPageIndexes.map((i) => i + 1)}
         warn
       />
     </FlyoutMenu>
   );
-}
+};
 
-export default RotatePopup;
+export default ThumbnailMoreOptionsPopup;

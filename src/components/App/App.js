@@ -397,10 +397,6 @@ const App = ({ removeEventHandlers }) => {
           dataElement={DataElements.PAGE_MANIPULATION_OVERLAY}
         />
         <LazyLoadWrapper
-          Component={LazyLoadComponents.RotatePopup}
-          dataElement={DataElements.THUMBNAILS_CONTROL_ROTATE_POPUP}
-        />
-        <LazyLoadWrapper
           Component={LazyLoadComponents.ThumbnailMoreOptionsPopup}
           dataElement={DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP}
         />

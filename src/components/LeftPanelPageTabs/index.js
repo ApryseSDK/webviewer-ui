@@ -1,3 +1,3 @@
-import LeftPanelPageTabsContainer from "components/LeftPanelPageTabs/LeftPanelPageTabsContainer";
+import LeftPanelPageTabsContainer from './LeftPanelPageTabsContainer';
 
 export default LeftPanelPageTabsContainer;

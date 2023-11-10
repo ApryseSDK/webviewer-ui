@@ -25,7 +25,6 @@ const MENUS = [
   'redactionOverlay',
   'toolStylePopup',
   DataElements.PAGE_MANIPULATION_OVERLAY,
-  DataElements.THUMBNAILS_CONTROL_ROTATE_POPUP,
   DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP,
   DataElements.THUMBNAILS_CONTROL_MANIPULATE_POPUP_SMALL,
   'tabMenu',
