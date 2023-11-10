@@ -582,7 +582,11 @@ const ContentArea = ({
     clearAttachments(annotation.Id);
   };
 
-  const onBlur = () => {
+  const onBlur = (e) => {
+    if (e.relatedTarget?.getAttribute('data-element')?.includes('annotationCommentButton')) {
+      e.target.focus();
+      return;
+    }
     setCurAnnotId(undefined);
   };
 

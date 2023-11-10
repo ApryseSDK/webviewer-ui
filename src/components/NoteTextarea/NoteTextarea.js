@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useContext, useEffect } from 'react';
+import React, { useLayoutEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 import throttle from 'lodash/throttle';
@@ -26,8 +26,6 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
   const [
     userData,
     canSubmitByEnter,
-    autoFocusNoteOnAnnotationSelection,
-    isNoteEditing,
   ] = useSelector(
     (state) => [
       selectors.getUserData(state),
@@ -38,7 +36,7 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     shallowEqual,
   );
 
-  const { resize, isContentEditable, isSelected, } = useContext(NoteContext);
+  const { resize } = useContext(NoteContext);
   const textareaRef = useRef();
   const prevHeightRef = useRef();
 
@@ -55,18 +53,6 @@ const NoteTextarea = React.forwardRef((props, forwardedRef) => {
     // eslint-disable-next-line
   }, [props.value, resize]);
 
-  useEffect(() => {
-    if (
-      isNoteEditing &&
-      isSelected &&
-      isContentEditable &&
-      autoFocusNoteOnAnnotationSelection &&
-      textareaRef &&
-      textareaRef.current
-    ) {
-      textareaRef.current.focus();
-    }
-  });
 
   const handleKeyDown = (e) => {
     const enterKey = 13;
