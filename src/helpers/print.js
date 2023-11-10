@@ -11,7 +11,8 @@ import { mapAnnotationToKey, getDataWithKey } from 'constants/map';
 import { isSafari, isChromeOniOS, isFirefoxOniOS } from 'helpers/device';
 import DataElements from 'src/constants/dataElement';
 import core from 'core';
-import getRootNode, { getInstanceNode } from './getRootNode';
+import getRootNode from './getRootNode';
+import { getCurrentViewRect, doesCurrentViewContainEntirePage } from './printCurrentViewHelper';
 
 let pendingCanvases = [];
 let PRINT_QUALITY = 1;
@@ -46,8 +47,8 @@ const printResetStyle = `
 
   #print-handler {
     display: block !important;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     padding: 0;
     top: 0;
     bottom: 0;
@@ -397,8 +398,6 @@ export const getPrintableAnnotationNotes = (pageNumber) => core
 
 const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, isPrintCurrentView, createCanvases = false, isGrayscale = false) => new Promise((resolve) => {
   const pageIndex = pageNumber - 1;
-  let zoom = 1;
-  let renderRect;
   const printRotation = getPrintRotation(pageIndex, maintainPageOrientation);
   const onCanvasLoaded = async (canvas) => {
     pendingCanvases = pendingCanvases.filter((pendingCanvas) => pendingCanvas !== id);
@@ -445,7 +444,9 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
       ctx.putImageData(imageData, 0, 0);
     }
 
-    await drawAnnotationsOnCanvas(canvas, pageNumber, isGrayscale);
+    const alwaysPrintAnnotationsInColor = core.getDocumentViewer().isAlwaysPrintAnnotationsInColorEnabled();
+    const drawAnnotationsInGrayscale = isGrayscale && !alwaysPrintAnnotationsInColor;
+    await drawAnnotationsOnCanvas(canvas, pageNumber, drawAnnotationsInGrayscale);
 
     printableAnnotInfo.forEach((info) => {
       info.annotation.Printable = info.printable;
@@ -462,52 +463,20 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
     };
   };
 
+  let zoom = 1;
+  let renderRect;
   if (isPrintCurrentView) {
-    const displayMode = core.getDisplayModeObject();
-    const containerElement = core.getScrollViewElement();
-    const documentElement = core.getViewerElement();
-    const headerElement = getRootNode().querySelector('.Header');
-    const headerItemsElements = getRootNode().querySelector('.HeaderToolsContainer');
-    const isApryseWebViewerWebComponent = window.isApryseWebViewerWebComponent;
-    let innerWidth = window.innerWidth;
-    let innerHeight = window.innerHeight;
-    let containerScrollLeft = containerElement.scrollLeft;
-    let documentElementOffsetLeft = documentElement.offsetLeft;
-
-    if (isApryseWebViewerWebComponent) {
-      const instanceRect = getInstanceNode().getBoundingClientRect();
-      innerWidth = instanceRect.width;
-      innerHeight = instanceRect.height;
-      containerScrollLeft = instanceRect.x + containerElement.scrollLeft;
-      documentElementOffsetLeft = instanceRect.x + documentElement.offsetLeft;
-    }
-
-    const headerHeight = headerElement?.clientHeight + headerItemsElements?.clientHeight;
-    const coordinates = [];
-    coordinates[0] = displayMode.windowToPageNoRotate({
-      x: Math.max(containerScrollLeft, documentElementOffsetLeft),
-      y: Math.max(containerElement.scrollTop + headerHeight, 0)
-    }, pageNumber);
-    coordinates[1] = displayMode.windowToPageNoRotate({
-      x: Math.min(innerWidth, documentElementOffsetLeft + documentElement.offsetWidth) + containerScrollLeft,
-      y: innerHeight + containerElement.scrollTop
-    }, pageNumber);
-    const x1 = Math.min(coordinates[0].x, coordinates[1].x);
-    const y1 = Math.min(coordinates[0].y, coordinates[1].y);
-    const x2 = Math.max(coordinates[0].x, coordinates[1].x);
-    const y2 = Math.max(coordinates[0].y, coordinates[1].y);
-
     zoom = core.getZoom();
-    renderRect = { x1, y1, x2, y2 };
-  } else {
-    // cap the size that we render the page at when printing
-    const pageInfo = core.getDocument().getPageInfo(pageNumber);
-    const pageSize = Math.sqrt(pageInfo.width * pageInfo.height);
-    const pageSizeTarget = 2500;
+    renderRect = getCurrentViewRect(pageNumber);
 
-    if (pageSize > pageSizeTarget) {
-      zoom = pageSizeTarget / pageSize;
+    const pageDimensions = core.getDocument().getPageInfo(pageNumber);
+    if (doesCurrentViewContainEntirePage(renderRect, pageDimensions)) {
+      renderRect = undefined;
     }
+  }
+
+  if (!renderRect) {
+    zoom = calculatePageZoom(pageNumber);
   }
 
   const id = core.getDocument().loadCanvas({
@@ -519,6 +488,7 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
     'print': true,
     renderRect
   });
+
   pendingCanvases.push(id);
 });
 
@@ -550,7 +520,7 @@ const getPrintRotation = (pageIndex, maintainPageOrientation) => {
     if (printRotation % 2 === 0 && width > height) {
       printRotation++;
     } else if (printRotation % 2 === 1 && height > width) {
-      printRotation--;
+      printRotation = 0;
     }
     return printRotation;
   }
@@ -758,4 +728,19 @@ const createWidgetContainer = (pageIndex) => {
   widgetContainer.style.top = '-10000px';
 
   return widgetContainer;
+};
+
+const calculatePageZoom = (pageNumber) => {
+  let zoom = 1;
+
+  // cap the size that we render the page at when printing
+  const pageInfo = core.getDocument().getPageInfo(pageNumber);
+  const pageSize = Math.sqrt(pageInfo.width * pageInfo.height);
+  const pageSizeTarget = 2500;
+
+  if (pageSize > pageSizeTarget) {
+    zoom = pageSizeTarget / pageSize;
+  }
+
+  return zoom;
 };
