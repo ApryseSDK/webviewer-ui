@@ -84,7 +84,9 @@ const enableOnlineCRLRevocationChecking = (store) => () => {
  * @param {string} proxy_server_url
  * The URL (including the protocol such as 'https://') to use as a prefix for
  * making online revocation requests through a proxy server to avoid CORS
- * related issues
+ * related issues. This can be suppressed by passing an empty string.
+ * If null is provided, or if this API is not called, the default value
+ * (https://proxy.pdftron.com) is used.
  *
  * @example
  * WebViewer(...).then(async function(instance) {

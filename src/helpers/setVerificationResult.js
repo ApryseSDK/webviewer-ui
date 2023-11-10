@@ -1,5 +1,7 @@
 import actions from 'actions';
 
+const DEFAULT_REVOCATION_PROXY_PREFIX = 'https://proxy.pdftron.com';
+
 /**
  * Side-effect function that sets the verification status of the document.
  * One of three possible results can happen:
@@ -100,7 +102,9 @@ const getVerificationResult = async (doc, certificates, trustLists, currentLangu
       await opts.enableOnlineCRLRevocationChecking(true);
     }
 
-    if (revocationProxyPrefix) {
+    if (revocationProxyPrefix === null) {
+      await opts.setRevocationProxyPrefix(DEFAULT_REVOCATION_PROXY_PREFIX);
+    } else if (revocationProxyPrefix !== undefined) {
       await opts.setRevocationProxyPrefix(revocationProxyPrefix);
     }
 
