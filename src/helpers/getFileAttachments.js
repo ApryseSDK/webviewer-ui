@@ -70,20 +70,7 @@ export async function getEmbeddedFileData(iterator) {
   const fileSpec = await PDFNet.FileSpec.createFromObj(iterator);
   const stm = await fileSpec.getFileData();
   const filterReader = await PDFNet.FilterReader.create(stm);
-  const dataArray = [];
-  const chunkLength = 1024;
-  let retrievedLength = chunkLength;
-  while (chunkLength === retrievedLength) {
-    const bufferSubArray = await filterReader.read(chunkLength);
-    retrievedLength = bufferSubArray.length;
-    dataArray.push(bufferSubArray);
-  }
-  const buffer = new Uint8Array(dataArray.length * chunkLength + retrievedLength);
-  for (let i = 0; i < dataArray.length; i++) {
-    const offset = i * chunkLength;
-    const currentArr = dataArray[i];
-    buffer.set(currentArr, offset);
-  }
+  const buffer = await filterReader.readAllIntoBuffer();
   const blob = new Blob([buffer]);
   return blob;
 }

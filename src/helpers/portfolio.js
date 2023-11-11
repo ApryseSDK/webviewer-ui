@@ -1,6 +1,6 @@
+import core from 'core';
 import { saveAs } from 'file-saver';
 import { getEmbeddedFileData, getFileAttachments } from './getFileAttachments';
-import core from 'core';
 
 const extensionRegExp = /(?:\.([^.?]+))?$/;
 
