@@ -249,9 +249,11 @@ const TouchEventManager = {
         const docViewer = core.getDocumentViewer();
         const isStylusModeDisabled = !docViewer.isStylusModeEnabled();
         const isUsingAnnotationToolsAndStylusIsDisabled = this.isUsingAnnotationTools() && isStylusModeDisabled;
+        const isUsingPenAndStylusEnabled = this.isUsingPen() && !isStylusModeDisabled;
         if (
           !this.allowSwipe ||
           isUsingAnnotationToolsAndStylusIsDisabled ||
+          isUsingPenAndStylusEnabled ||
           core.getSelectedText().length ||
           core.getSelectedAnnotations().length
         ) {
@@ -295,7 +297,7 @@ const TouchEventManager = {
       }
       case touchType.DOUBLE_TAP: {
         const annotationUnderMouse = core.getAnnotationByMouseEvent(e);
-        const isFreeTextUnderMouse = annotationUnderMouse && annotationUnderMouse instanceof Annotations.FreeTextAnnotation;
+        const isFreeTextUnderMouse = annotationUnderMouse && annotationUnderMouse instanceof window.Core.Annotations.FreeTextAnnotation;
 
         if (this.isUsingAnnotationTools()) {
           const tool = core.getToolMode();
@@ -426,6 +428,9 @@ const TouchEventManager = {
     const tool = core.getToolMode();
 
     return getDataWithKey(mapToolNameToKey(tool.name)).annotationCheck;
+  },
+  isUsingPen() {
+    return core.getToolMode().pointerType && core.getToolMode().pointerType === 'pen';
   },
   get useNativeScroll() {
     return this._useNativeScroll;
