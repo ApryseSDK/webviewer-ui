@@ -1,5 +1,4 @@
 import core from 'core';
-import { saveAs } from 'file-saver';
 import { PORTFOLIO_CONSTANTS } from './portfolio';
 
 export async function getFileAttachments() {
@@ -72,35 +71,7 @@ export async function getEmbeddedFileData(iterator) {
   const fileSpec = await PDFNet.FileSpec.createFromObj(iterator);
   const stm = await fileSpec.getFileData();
   const filterReader = await PDFNet.FilterReader.create(stm);
-  const dataArray = [];
-  const chunkLength = 1024;
-  let retrievedLength = chunkLength;
-  while (chunkLength === retrievedLength) {
-    const bufferSubArray = await filterReader.read(chunkLength);
-    retrievedLength = bufferSubArray.length;
-    dataArray.push(bufferSubArray);
-  }
-  const buffer = new Uint8Array(dataArray.length * chunkLength + retrievedLength);
-  for (let i = 0; i < dataArray.length; i++) {
-    const offset = i * chunkLength;
-    const currentArr = dataArray[i];
-    buffer.set(currentArr, offset);
-  }
+  const buffer = await filterReader.readAllIntoBuffer();
   const blob = new Blob([buffer]);
   return blob;
 }
-
-// used for downloading portfolio files and attachment files
-// there's an issue where these files can't be opened with Adobe
-export const downloadFromEmbeddedFileData = async (iterator, name, extension) => {
-  const blob = await getEmbeddedFileData(iterator);
-  const document = await core.createDocument(blob, { extension });
-  const data = await document.getFileData({
-    downloadType: extension
-  });
-  const arr = new Uint8Array(data);
-  // TODO: handle non-pdf files
-  const downloadType = 'application/pdf';
-  const file = new File([arr], name, { type: downloadType });
-  saveAs(file, name);
-};

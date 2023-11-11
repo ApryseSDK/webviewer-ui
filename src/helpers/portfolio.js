@@ -1,6 +1,6 @@
 import core from 'core';
 import { saveAs } from 'file-saver';
-import { downloadFromEmbeddedFileData, getEmbeddedFileData, getFileAttachments } from './getFileAttachments';
+import { getEmbeddedFileData, getFileAttachments } from './getFileAttachments';
 
 const extensionRegExp = /(?:\.([^.?]+))?$/;
 
@@ -245,15 +245,10 @@ export const deletePortfolioFile = async (id) => {
 };
 
 export const downloadPortfolioFile = async (portfolioItem) => {
-  const { fileObject, name, extension } = portfolioItem;
+  const { fileObject, name } = portfolioItem;
   try {
-    if (extension === 'pdf') {
-      await downloadFromEmbeddedFileData(fileObject, name, extension);
-    } else {
-      // TODO: handle non-pdf files
-      const blob = await getEmbeddedFileData(fileObject);
-      saveAs(blob, name);
-    }
+    const blob = await getEmbeddedFileData(fileObject);
+    saveAs(blob, name);
   } catch (e) {
     console.warn(e);
   }
