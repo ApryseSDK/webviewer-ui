@@ -69,7 +69,11 @@ const RichTextPopup = ({ annotation, editor }) => {
   }, []);
 
   useEffect(() => {
-    const handleSelectionChange = (range) => {
+    const handleSelectionChange = (range, oldRange) => {
+      const shouldRestoreLostSelection = !range && oldRange && editorRef.current;
+      if (shouldRestoreLostSelection) {
+        editorRef.current.setSelection(oldRange.index, oldRange.length);
+      }
       if (range && editorRef.current) {
         setFormat(getFormat(range));
       }
@@ -214,6 +218,8 @@ const RichTextPopup = ({ annotation, editor }) => {
   };
 
   const applyFormat = (formatKey, value) => {
+    const annotation = annotationRef.current;
+    const { index, length } = editorRef.current.getSelection();
     editorRef.current?.format(formatKey, value);
 
     if (formatKey === 'color') {
@@ -226,10 +232,10 @@ const RichTextPopup = ({ annotation, editor }) => {
       [formatKey]: value
     });
 
-    if (oldSelectionRef.current !== null) {
-      editorRef.current.setSelection(oldSelectionRef.current, 0);
-      oldSelectionRef.current = null;
-    }
+    editorRef.current.blur();
+    oldSelectionRef.current = { index, length };
+    const editBoxManager = core.getAnnotationManager().getEditBoxManager();
+    editBoxManager.focusBox(annotation);
   };
 
   const syncDraggablePosition = (e, { x, y }) => {
