@@ -199,7 +199,6 @@ const RichTextPopup = ({ annotation, editor }) => {
     let { index, length } = editorRef.current.getSelection();
     if (length === 0) {
       oldSelectionRef.current = { index, length };
-      editorRef.current.selectAll();
       const newSelection = editorRef.current.getSelection();
       index = newSelection.index;
       length = newSelection.length;
@@ -218,8 +217,6 @@ const RichTextPopup = ({ annotation, editor }) => {
   };
 
   const applyFormat = (formatKey, value) => {
-    const annotation = annotationRef.current;
-    const { index, length } = editorRef.current.getSelection();
     editorRef.current?.format(formatKey, value);
 
     if (formatKey === 'color') {
@@ -231,11 +228,6 @@ const RichTextPopup = ({ annotation, editor }) => {
       ...format,
       [formatKey]: value
     });
-
-    editorRef.current.blur();
-    oldSelectionRef.current = { index, length };
-    const editBoxManager = core.getAnnotationManager().getEditBoxManager();
-    editBoxManager.focusBox(annotation);
   };
 
   const syncDraggablePosition = (e, { x, y }) => {
@@ -267,11 +259,26 @@ const RichTextPopup = ({ annotation, editor }) => {
   const openTextStyle = () => toggleMenuItem(DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER);
   const openColors = () => toggleMenuItem(DataElements.STYLE_POPUP_COLORS_CONTAINER);
 
+  const adjustFreeTextBoundingBox = (annotation) => {
+    const { FreeTextAnnotation } = window.Core.Annotations;
+    if (annotation instanceof FreeTextAnnotation && annotation.getAutoSizeType() !== FreeTextAnnotation.AutoSizeTypes.NONE) {
+      const doc = core.getDocument();
+      const pageNumber = annotation['PageNumber'];
+      const pageInfo = doc.getPageInfo(pageNumber);
+      const pageMatrix = doc.getPageMatrix(pageNumber);
+      const pageRotation = doc.getPageRotation(pageNumber);
+      annotation.fitText(pageInfo, pageMatrix, pageRotation);
+    }
+  };
+
   const onPropertyChange = (property, value) => {
     const { index, length } = editorRef.current.getSelection();
     const annotation = annotationRef.current;
     annotation[property] = value;
     editorRef.current.blur();
+    if (property === 'FontSize' || property === 'Font') {
+      adjustFreeTextBoundingBox(annotation);
+    }
     setTimeout(() => {
       oldSelectionRef.current = { index, length };
       const editBoxManager = core.getAnnotationManager().getEditBoxManager();
