@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-import { setupWebViewerInstance, simulateClick, delay } from '../../utils/TestingUtils';
+import { setupWebViewerInstance, simulateClick, delay, } from '../../utils/TestingUtils';
+import core from 'core';
 
 /* eslint-disable no-unused-expressions */
 describe('Test UI APIs', function() {
@@ -214,7 +215,7 @@ describe('Test UI APIs', function() {
   it('registers tools to all document viewers when in multiviewer mode', async () => {
     const instance = await setupWebViewerInstance();
     const { UI } = instance;
-    const { documentViewer, Tools, Annotations } = instance.Core;
+    const { Tools, Annotations } = instance.Core;
 
     const triangleToolName = 'AnnotationCreateTriangle';
 
@@ -230,7 +231,6 @@ describe('Test UI APIs', function() {
       }
     }
     TriangleAnnotation.prototype.elementName = 'triangle';
-    const triangleTool = new TriangleCreateTool(documentViewer);
 
     UI.enterMultiViewerMode();
 
@@ -240,16 +240,19 @@ describe('Test UI APIs', function() {
 
     await multiViewerPromise;
 
-    UI.registerTool({
-      toolName: triangleToolName,
-      toolObject: triangleTool,
-      buttonImage: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">' +
-        '<path d="M12 7.77L18.39 18H5.61L12 7.77M12 4L2 20h20L12 4z"/>' +
-        '<path fill="none" d="M0 0h24v24H0V0z"/>' +
-      '</svg>',
-      buttonName: 'triangleToolButton',
-      tooltip: 'Triangle'
-    }, TriangleAnnotation);
+    instance.Core.getDocumentViewers().forEach((documentViewer, i) => {
+      UI.registerTool({
+        toolName: triangleToolName,
+        toolObject: new TriangleCreateTool(documentViewer),
+        buttonImage: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">' +
+          '<path d="M12 7.77L18.39 18H5.61L12 7.77M12 4L2 20h20L12 4z"/>' +
+          '<path fill="none" d="M0 0h24v24H0V0z"/>' +
+        '</svg>',
+        buttonName: 'triangleToolButton',
+        tooltip: 'Triangle',
+        documentViewerNumber: i + 1,
+      }, TriangleAnnotation);
+    });
 
     expect(instance.Core.getDocumentViewers()[0].getToolModeMap()[triangleToolName]).not.to.equal(undefined);
     expect(instance.Core.getDocumentViewers()[1].getToolModeMap()[triangleToolName]).not.to.equal(undefined);
@@ -357,5 +360,41 @@ describe('Test UI APIs', function() {
 
     expect(annotations[0].getStatus()).to.equal('Accepted');
     expect(annotations[1].getStatus()).to.equal('Accepted');
+  });
+
+  it('should only accept allowed file extensions on multi tab upload button', async () => {
+    const options = {
+      fullAPI: true,
+      initialDoc: '/base/test/fixtures/pdfs/demo-redaction.pdf',
+    };
+    const instance = await setupWebViewerInstance(options);
+    const acceptFormats = ['pdf', 'xod'];
+
+    instance.UI.enableFeatures([instance.UI.Feature.MultiTab]);
+    instance.Core.setAllowedFileExtensions(acceptFormats); // sets the allowed file extensions for the UI component
+    window.Core.setAllowedFileExtensions(acceptFormats); // sets the allowed file extensions in core
+
+    // create a promise that resolves when the document loaded event fires
+    const documentLoadedPromise = new Promise((resolve) => {
+      instance.UI.addEventListener('documentLoaded', resolve);
+    });
+    await documentLoadedPromise;
+
+    const iframe = document.querySelector('#viewerDiv iframe');
+    iframe.style.height = '100vh';
+
+    // click on the new tab button
+    const addTabButton = iframe.contentDocument.querySelector('div.TabsHeader div.add-button button');
+    simulateClick(addTabButton);
+    await delay(500);
+
+    // click on the upload tab button
+    const filePickerPanelButton = iframe.contentDocument.querySelector('button[data-element="filePickerPanelButton"]');
+    simulateClick(filePickerPanelButton);
+    await delay(500);
+
+    // assert that the file input only accepts pdf and xod files
+    const fileInput = iframe.contentDocument.querySelector('div[data-element="filePickerPanel"] input[type="file"]');
+    expect(fileInput.accept).to.equal(core.getAllowedFileExtensions());
   });
 });
