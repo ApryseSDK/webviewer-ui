@@ -11,6 +11,10 @@ import Events from 'constants/events';
 import { getCustomFlxPanels } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
 
+export const setDefaultPrintMargins = (margins) => ({
+  type: 'SET_DEFAULT_PRINT_MARGINS',
+  payload: { margins },
+});
 export const disableApplyCropWarningModal = () => ({
   type: 'SHOW_APPLY_CROP_WARNING',
   payload: { shouldShowApplyCropWarning: false },
@@ -375,7 +379,7 @@ export const setGroupedItemsProperty = (propertyName, propertyValue, groupedItem
         }
       } else {
         const updatedItems = header.items.map((item) => {
-          if (item[propertyName]) {
+          if (item.hasOwnProperty(propertyName)) {
             item[propertyName] = propertyValue;
           }
           return { ...item };
@@ -903,4 +907,9 @@ export const setTextSignatureQuality = (multiplier) => ({
 export const setEnableMeasurementAnnotationsFilter = (isEnabled) => ({
   type: 'SET_ENABLE_MEASUREMENT_ANNOTATIONS_FILTER',
   payload: { isEnabled },
+});
+
+export const setColors = (colors) => ({
+  type: 'SET_COLORS',
+  payload: { colors },
 });

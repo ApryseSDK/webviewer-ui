@@ -2084,6 +2084,7 @@ export default {
       '#272727',
       '#000000'
     ],
+    defaultPrintMargins: '0',
   },
   search: {
     value: '',

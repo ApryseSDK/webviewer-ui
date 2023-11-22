@@ -250,7 +250,7 @@ import addModularHeaders from './addModularHeaders';
 import getModularHeader from './getModularHeader';
 import getModularHeaderList from './getModularHeaderList';
 import setGroupedItemsGap from './setGroupedItemsGap';
-import setGroupedItemsAlignment from './setGroupedItemsAlignment';
+import setGroupedItemsJustifyContent from './setGroupedItemsJustifyContent';
 import setGroupedItemsGrow from './setGroupedItemsGrow';
 import core from 'core';
 import { setDefaultOptions } from './outlinesPanel';
@@ -266,6 +266,10 @@ import ToolGroupButton from './ModularComponents/toolGroupButton';
 import Zoom from './ModularComponents/zoom';
 import Flyout from './ModularComponents/flyout';
 import GroupedTools from './ModularComponents/groupedTools';
+import PresetButton from './ModularComponents/presetButton';
+import StatefulButton from './ModularComponents/statefulButton';
+import ViewControls from './ModularComponents/viewControls';
+import MainMenu from './ModularComponents/menu';
 import setMultiViewerSyncScrollingMode from './setMultiViewerSyncScrollingMode';
 import setTextSignatureQuality from './setTextSignatureQuality';
 import getTextSignatureQuality from './getTextSignatureQuality';
@@ -283,7 +287,7 @@ import { enableMultiViewerSync, disableMultiViewerSync, isMultiViewerSyncing } f
 import { setCustomSettings, exportUserSettings, importUserSettings } from './userSettings';
 import addPanel from './addPanel';
 import setGrayscaleDarknessFactor from './setGrayscaleDarknessFactor';
-import { ALIGNMENT } from 'constants/customizationVariables';
+import { JUSTIFY_CONTENT, PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import FlyoutsAPI from './FlyoutsAPI';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { setClickMiddleware } from 'src/apis/setClickMiddleware';
@@ -291,6 +295,9 @@ import { ClickedItemTypes } from 'helpers/clickTracker';
 import FeatureFlags from 'constants/featureFlags';
 import enableFeatureFlag from './enableFeatureFlag';
 import disableFeatureFlag from './disableFeatureFlag';
+import enterMultiViewerMode from './enterMultiViewerMode';
+import exitMultiViewerMode from './exitMultiViewerMode';
+import setDefaultPrintMargins from './setDefaultPrintMargins';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -312,7 +319,8 @@ export default (store) => {
     NotesPanelSortStrategy,
     Theme,
     RedactionSearchPatterns,
-    Alignment: ALIGNMENT,
+    JustifyContent: JUSTIFY_CONTENT,
+    PRESET_BUTTON_TYPES: PRESET_BUTTON_TYPES,
     addSearchListener,
     addSortStrategy: addSortStrategy(store),
     annotationPopup: annotationPopup(store),
@@ -385,6 +393,7 @@ export default (store) => {
     setPageLabels: setPageLabels(store),
     setPrintQuality: setPrintQuality(store),
     setDefaultPrintOptions: setDefaultPrintOptions(store),
+    setDefaultPrintMargins: setDefaultPrintMargins(store),
     setNotesPanelSortStrategy: setNotesPanelSortStrategy(store),
     setSwipeOrientation,
     setTheme: setTheme(store),
@@ -458,7 +467,7 @@ export default (store) => {
     getModularHeaderList: getModularHeaderList(store),
     Flyouts: FlyoutsAPI(store),
     setGroupedItemsGap: setGroupedItemsGap(store),
-    setGroupedItemsAlignment: setGroupedItemsAlignment(store),
+    setGroupedItemsJustifyContent: setGroupedItemsJustifyContent(store),
     setGroupedItemsGrow: setGroupedItemsGrow(store),
     Components: {
       Item,
@@ -472,11 +481,15 @@ export default (store) => {
       ToolButton,
       ToggleElementButton,
       RibbonItem,
-      RibbonGroup,
+      RibbonGroup: RibbonGroup(store),
       ToolGroupButton,
       Zoom,
       Flyout: Flyout(store),
-      GroupedTools
+      GroupedTools,
+      PresetButton,
+      StatefulButton,
+      ViewControls,
+      MainMenu: MainMenu(store),
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
@@ -610,6 +623,8 @@ export default (store) => {
     getZoomStepFactors: getZoomStepFactors(store),
     setZoomStepFactors: setZoomStepFactors(store),
     getDocumentViewer,
+    enterMultiViewerMode: enterMultiViewerMode(store),
+    exitMultiViewerMode: exitMultiViewerMode(store),
   };
   const documentViewer = core.getDocumentViewer(1);
 

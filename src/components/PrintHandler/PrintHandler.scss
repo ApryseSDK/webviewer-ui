@@ -3,11 +3,6 @@
   height: 0;
 }
 
-/* Needs to be outside of print media query to work in Edge */
-@page {
-  margin: 0mm;
-}
-
 @media print {
 
   html {
@@ -39,6 +34,10 @@
       height: 100%;
       width: 100%;
       object-fit: contain;
+    }
+
+    /* fix bug in the latest chrome version(108) which print the extra blank page */
+    .img:not(:last-child) {
       page-break-after: always;
     }
 

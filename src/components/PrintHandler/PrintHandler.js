@@ -8,12 +8,14 @@ import { isIOS } from 'helpers/device';
 import selectors from 'selectors';
 
 import './PrintHandler.scss';
+import getRootNode from 'helpers/getRootNode';
 
 const PrintHandler = () => {
-  const [isDisabled, isEmbedPrintSupported] = useSelector(
-    state => [
+  const [isDisabled, isEmbedPrintSupported, printMargins] = useSelector(
+    (state) => [
       selectors.isElementDisabled(state, 'printHandler'),
       selectors.isEmbedPrintSupported(state),
+      selectors.getDefaultPrintMargins(state),
     ],
     shallowEqual,
   );
@@ -28,6 +30,24 @@ const PrintHandler = () => {
     core.addEventListener('documentLoaded', onDocumentLoaded);
     return () => core.removeEventListener('documentLoaded', onDocumentLoaded);
   });
+
+  useEffect(() => {
+    const rootElement = window.isApryseWebViewerWebComponent ? getRootNode() : document.head;
+    if (rootElement) {
+      const marginStyleID = 'margin-style';
+      let element = rootElement.querySelector(`#${marginStyleID}`);
+      if (!element) {
+        element = document.createElement('style');
+        element.id = marginStyleID;
+        rootElement.appendChild(element);
+      }
+      element.textContent = `
+        @page {
+          margin: ${printMargins};
+        }
+      `;
+    }
+  }, [printMargins]);
 
   return isDisabled ? null : (
     <div
