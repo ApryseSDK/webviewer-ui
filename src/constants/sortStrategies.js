@@ -25,43 +25,55 @@ function getRotationRad(pageNumber) {
   return (4 - orientation) * (Math.PI / 2);
 }
 
+function isNoteFreeTextAnnotation(note) {
+  return note instanceof window.Core.Annotations.FreeTextAnnotation;
+}
+
+function getNoteColor(note) {
+  let color = '#485056';
+  if (isNoteFreeTextAnnotation(note) && note.TextColor) {
+    color = rgbaToHex(note.TextColor.R, note.TextColor.G, note.TextColor.B, note.TextColor.A);
+  } else if (note.Color) {
+    color = rgbaToHex(note.Color.R, note.Color.G, note.Color.B, note.Color.A);
+  }
+  return color;
+}
+
 const sortStrategies = {
   position: {
-    getSortedNotes: notes =>
-      notes.sort((a, b) => {
-        if (a.PageNumber === b.PageNumber) {
-          const rotation = getRotationRad(a.PageNumber);
-          const center = getDocumentCenter(a.PageNumber);
+    getSortedNotes: (notes) => notes.sort((a, b) => {
+      if (a.PageNumber === b.PageNumber) {
+        const rotation = getRotationRad(a.PageNumber);
+        const center = getDocumentCenter(a.PageNumber);
 
-          // Simulated with respect to the document origin
-          const rotatedA = [
-            rotateRad(center.x, center.y, a.X, a.Y, rotation),
-            rotateRad(center.x, center.y, a.X + a.Width, a.Y + a.Height, rotation),
-          ];
-          const rotatedB = [
-            rotateRad(center.x, center.y, b.X, b.Y, rotation),
-            rotateRad(center.x, center.y, b.X + b.Width, b.Y + b.Height, rotation),
-          ];
+        // Simulated with respect to the document origin
+        const rotatedA = [
+          rotateRad(center.x, center.y, a.X, a.Y, rotation),
+          rotateRad(center.x, center.y, a.X + a.Width, a.Y + a.Height, rotation),
+        ];
+        const rotatedB = [
+          rotateRad(center.x, center.y, b.X, b.Y, rotation),
+          rotateRad(center.x, center.y, b.X + b.Width, b.Y + b.Height, rotation),
+        ];
 
-          const smallestA = rotatedA.reduce(
-            (smallest, current) => (current.y < smallest ? current.y : smallest),
-            Number.MAX_SAFE_INTEGER,
-          );
-          const smallestB = rotatedB.reduce(
-            (smallest, current) => (current.y < smallest ? current.y : smallest),
-            Number.MAX_SAFE_INTEGER,
-          );
+        const smallestA = rotatedA.reduce(
+          (smallest, current) => (current.y < smallest ? current.y : smallest),
+          Number.MAX_SAFE_INTEGER,
+        );
+        const smallestB = rotatedB.reduce(
+          (smallest, current) => (current.y < smallest ? current.y : smallest),
+          Number.MAX_SAFE_INTEGER,
+        );
 
-          return smallestA - smallestB;
-        }
-        return a.PageNumber - b.PageNumber;
-      }),
+        return smallestA - smallestB;
+      }
+      return a.PageNumber - b.PageNumber;
+    }),
     shouldRenderSeparator: (prevNote, currNote) => currNote.PageNumber !== prevNote.PageNumber,
-    getSeparatorContent: (prevNote, currNote, { pageLabels }) =>
-      `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
+    getSeparatorContent: (prevNote, currNote, { pageLabels }) => `${i18next.t('option.shared.page')} ${pageLabels[currNote.PageNumber - 1]}`,
   },
   createdDate: {
-    getSortedNotes: notes => notes.sort((a, b) => (a.DateCreated || 0) - (b.DateCreated || 0)),
+    getSortedNotes: (notes) => notes.sort((a, b) => (a.DateCreated || 0) - (b.DateCreated || 0)),
     shouldRenderSeparator: (prevNote, currNote) => {
       const prevNoteDate = prevNote.DateCreated;
       const currNoteDate = currNote.DateCreated;
@@ -97,7 +109,7 @@ const sortStrategies = {
     },
   },
   modifiedDate: {
-    getSortedNotes: notes => notes.sort((a, b) => (getLatestActivityDate(b) || 0) - (getLatestActivityDate(a) || 0)),
+    getSortedNotes: (notes) => notes.sort((a, b) => (getLatestActivityDate(b) || 0) - (getLatestActivityDate(a) || 0)),
     shouldRenderSeparator: (prevNote, currNote) => {
       const prevNoteDate = getLatestActivityDate(prevNote);
       const currNoteDate = getLatestActivityDate(currNote);
@@ -133,18 +145,17 @@ const sortStrategies = {
     },
   },
   status: {
-    getSortedNotes: notes =>
-      notes.sort((a, b) => {
-        const statusA =
+    getSortedNotes: (notes) => notes.sort((a, b) => {
+      const statusA =
           a.getStatus() === ''
             ? i18next.t('option.state.none').toUpperCase()
             : i18next.t(`option.state.${a.getStatus().toLowerCase()}`).toUpperCase();
-        const statusB =
+      const statusB =
           b.getStatus() === ''
             ? i18next.t('option.state.none').toUpperCase()
             : i18next.t(`option.state.${b.getStatus().toLowerCase()}`).toUpperCase();
-        return statusA < statusB ? -1 : statusA > statusB ? 1 : 0;
-      }),
+      return statusA < statusB ? -1 : statusA > statusB ? 1 : 0;
+    }),
     shouldRenderSeparator: (prevNote, currNote) => prevNote.getStatus() !== currNote.getStatus(),
     getSeparatorContent: (prevNote, currNote) => {
       return currNote.getStatus() === ''
@@ -153,24 +164,22 @@ const sortStrategies = {
     },
   },
   author: {
-    getSortedNotes: notes =>
-      notes.sort((a, b) => {
-        const authorA = core.getDisplayAuthor(a['Author'])?.toUpperCase();
-        const authorB = core.getDisplayAuthor(b['Author'])?.toUpperCase();
-        return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
-      }),
+    getSortedNotes: (notes) => notes.sort((a, b) => {
+      const authorA = core.getDisplayAuthor(a['Author'])?.toUpperCase();
+      const authorB = core.getDisplayAuthor(b['Author'])?.toUpperCase();
+      return authorA < authorB ? -1 : authorA > authorB ? 1 : 0;
+    }),
     shouldRenderSeparator: (prevNote, currNote) => core.getDisplayAuthor(prevNote['Author']) !== core.getDisplayAuthor(currNote['Author']),
     getSeparatorContent: (prevNote, currNote) => {
       return core.getDisplayAuthor(currNote['Author']);
     },
   },
   type: {
-    getSortedNotes: notes =>
-      notes.sort((a, b) => {
-        const typeA = getAnnotationClass(a);
-        const typeB = getAnnotationClass(b);
-        return typeA < typeB ? -1 : typeA > typeB ? 1 : 0;
-      }),
+    getSortedNotes: (notes) => notes.sort((a, b) => {
+      const typeA = getAnnotationClass(a);
+      const typeB = getAnnotationClass(b);
+      return typeA < typeB ? -1 : typeA > typeB ? 1 : 0;
+    }),
     shouldRenderSeparator: (prevNote, currNote) => {
       return getAnnotationClass(prevNote) !== getAnnotationClass(currNote);
     },
@@ -179,34 +188,21 @@ const sortStrategies = {
     },
   },
   color: {
-    getSortedNotes: notes =>
-      notes.sort((prevNote, currNote) => {
-        let colorA = '#485056';
-        let colorB = '#485056';
-        if (currNote.Color) {
-          colorA = rgbaToHex(currNote.Color.R, currNote.Color.G, currNote.Color.B, currNote.Color.A);
-        }
-        if (prevNote.Color) {
-          colorB = rgbaToHex(prevNote.Color.R, prevNote.Color.G, prevNote.Color.B, prevNote.Color.A);
-        }
-        return colorA < colorB ? -1 : colorA > colorB ? 1 : 0;
-      }),
+    getSortedNotes: (notes) => notes.sort((prevNote, currNote) => {
+      const colorA = getNoteColor(currNote);
+      const colorB = getNoteColor(prevNote);
+
+      return colorA < colorB ? -1 : colorA > colorB ? 1 : 0;
+    }),
     shouldRenderSeparator: (prevNote, currNote) => {
-      let colorA = '#485056';
-      let colorB = '#485056';
-      if (currNote.Color) {
-        colorA = rgbaToHex(currNote.Color.R, currNote.Color.G, currNote.Color.B, currNote.Color.A);
-      }
-      if (prevNote.Color) {
-        colorB = rgbaToHex(prevNote.Color.R, prevNote.Color.G, prevNote.Color.B, prevNote.Color.A);
-      }
+      const colorA = getNoteColor(currNote);
+      const colorB = getNoteColor(prevNote);
+
       return colorA !== colorB;
     },
     getSeparatorContent: (prevNote, currNote) => {
-      let color = '#485056';
-      if (currNote.Color) {
-        color = rgbaToHex(currNote.Color.R, currNote.Color.G, currNote.Color.B, currNote.Color.A);
-      }
+      const color = getNoteColor(currNote);
+
       return (
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           {i18next.t('option.notesOrder.color')}
@@ -221,7 +217,7 @@ const sortStrategies = {
 
 export const getSortStrategies = () => sortStrategies;
 
-export const addSortStrategy = newStrategy => {
+export const addSortStrategy = (newStrategy) => {
   const { name, getSortedNotes, shouldRenderSeparator, getSeparatorContent } = newStrategy;
 
   sortStrategies[name] = {
