@@ -100,4 +100,76 @@ test.describe('Annotation Popup tests', () => {
     });
     expect(newActiveElement).toBe(await contextMenuButtons[1].getAttribute('data-element'));
   });
+
+  test('Annotation popup should still show up after mouse left up on outside of annotation', async ({ page }) => {
+    const { iframe, waitForWVEvents, waitForInstance, getTextPosition } = await loadViewerSample(page, 'viewing/viewing');
+    await waitForWVEvents(['pageComplete', 'annotationsLoaded']);
+    instance = await waitForInstance();
+    await page.waitForTimeout(500);
+    await instance('setToolMode', 'AnnotationCreateTextHighlight');
+    const rect = await getTextPosition('Important');
+
+    // draw the highlight annotation
+    await page.mouse.move(rect.x1, rect.y1);
+    await page.mouse.down();
+    await page.mouse.move(rect.x2, rect.y2);
+    await page.mouse.up();
+
+    // select the highlight annotation
+    await page.mouse.click(rect.x1 + 10, rect.y1 + 10);
+    await page.waitForTimeout(200);
+
+    let annotationPopup = await iframe?.$('.AnnotationPopup.open');
+    expect(annotationPopup).not.toBeNull();
+
+    // move the bounding box of the highlight annotation
+    await page.mouse.move(rect.x1, rect.y1 - 2);
+    await page.mouse.down();
+    await page.mouse.move(rect.x1 + 200, rect.y1 - 2);
+
+    // mouse up outside of the highlight annotation
+    await page.mouse.move(rect.x1 + 200, rect.y1 - 200);
+
+    // trigger mouse left up event
+    await page.mouse.up();
+    await page.waitForTimeout(200);
+    annotationPopup = await iframe?.$('.AnnotationPopup.open');
+    expect(annotationPopup).not.toBeNull();
+  });
+
+  test('Annotation popup should give up focus to warning modal', async ({ page }) => {
+    const { iframe, consoleLogs, waitForWVEvents, waitForInstance, getTextPosition } = await loadViewerSample(page, 'viewing/viewing');
+    await waitForWVEvents(['pageComplete', 'annotationsLoaded']);
+    instance = await waitForInstance();
+    await page.waitForTimeout(500);
+    await instance('setToolMode', 'AnnotationCreateRectangle');
+    const rect = await getTextPosition('Important');
+
+    // draw the highlight annotation
+    await page.mouse.move(rect.x1, rect.y1);
+    await page.mouse.down();
+    await page.mouse.move(rect.x2, rect.y2);
+    await page.mouse.up();
+
+    // select the highlight annotation
+    await page.mouse.click(rect.x1 + 10, rect.y1 + 10);
+    await page.waitForTimeout(200);
+
+    const linkButton = await iframe?.$('[data-element=linkButton]');
+    await linkButton?.click();
+    await page.waitForTimeout(200);
+
+    await page.keyboard.type('https://www.pdftron.com');
+    await page.waitForTimeout(200);
+
+    const addLinkButton = await iframe?.$('[data-element=linkSubmitButton]');
+    await addLinkButton?.click();
+    await page.waitForTimeout(200);
+
+    await page.mouse.click(rect.x1 + 10, rect.y1 + 10);
+    await page.waitForTimeout(200);
+
+    const errorMessage = consoleLogs.filter((log: string) => (log.includes('Maximum call stack size exceeded')));
+    expect(errorMessage.length).toBe(0);
+  });
 });
