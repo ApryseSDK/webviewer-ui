@@ -22,8 +22,8 @@
     position: fixed;
     top: 0;
     right: 0;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
   }
 
   .NotesPanel {
@@ -72,8 +72,8 @@
     padding-top: 16px;
 
     @include mobile {
-      width: 100vw;
-      min-width: 100vw;
+      width: 100%;
+      min-width: 100%;
       padding-top: 0px;
     }
 
@@ -115,6 +115,9 @@
       padding-right: 18px;
     }
 
+    .virtualized-notes-container {
+      overflow: hidden;
+    }
 
     .normal-notes-container {
       overflow: auto;
