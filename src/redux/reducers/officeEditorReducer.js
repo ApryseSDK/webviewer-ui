@@ -17,13 +17,6 @@ export default (initialState) => (state = initialState, action) => {
         selectionProperties,
       };
     }
-    case 'SET_OFFICE_EDITOR_PARAGRAPH_PROPERTIES': {
-      const { paragraphProperties } = payload;
-      return {
-        ...state,
-        paragraphProperties,
-      };
-    }
     case 'ADD_OFFICE_EDITOR_AVAILABLE_FONT_FACE': {
       const { fontFace } = payload;
       const fontFaces = state.availableFontFaces.slice();

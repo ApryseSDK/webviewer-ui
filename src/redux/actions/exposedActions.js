@@ -328,10 +328,6 @@ export const setOfficeEditorSelectionProperties = (selectionProperties) => ({
   type: 'SET_OFFICE_EDITOR_SELECTION_PROPERTIES',
   payload: { selectionProperties },
 });
-export const setOfficeEditorParagraphProperties = (paragraphProperties) => ({
-  type: 'SET_OFFICE_EDITOR_PARAGRAPH_PROPERTIES',
-  payload: { paragraphProperties },
-});
 export const addOfficeEditorAvailableFontFace = (fontFace) => ({
   type: 'ADD_OFFICE_EDITOR_AVAILABLE_FONT_FACE',
   payload: { fontFace },

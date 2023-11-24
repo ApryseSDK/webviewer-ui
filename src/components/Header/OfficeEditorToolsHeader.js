@@ -290,7 +290,6 @@ const OfficeEditorToolsHeader = () => {
     availableFontFaces,
     activeTheme,
     cssFontValues,
-    paragraphProperties,
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElement.OFFICE_EDITOR_TOOLS_HEADER),
@@ -299,7 +298,6 @@ const OfficeEditorToolsHeader = () => {
       selectors.getAvailableFontFaces(state),
       selectors.getActiveTheme(state),
       selectors.getCSSFontValues(state),
-      selectors.getOfficeEditorParagraphProperties(state),
     ],
     shallowEqual
   );
@@ -316,18 +314,13 @@ const OfficeEditorToolsHeader = () => {
     const onSelectionPropertiesUpdated = (selectionProperties) => {
       dispatch(actions.setOfficeEditorSelectionProperties(selectionProperties));
     };
-    const onParagraphPropertiesUpdated = (paragraphProperties) => {
-      dispatch(actions.setOfficeEditorParagraphProperties(paragraphProperties));
-    };
 
     core.getDocument()?.addEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
     core.getDocument()?.addEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
-    core.getDocument()?.addEventListener('paragraphPropertiesUpdated', onParagraphPropertiesUpdated);
 
     return () => {
       core.getDocument()?.removeEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
       core.getDocument()?.removeEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
-      core.getDocument()?.removeEventListener('paragraphPropertiesUpdated', onParagraphPropertiesUpdated);
     };
   }, []);
 
@@ -393,19 +386,20 @@ const OfficeEditorToolsHeader = () => {
   };
 
   const isTextSelected = core.getOfficeEditor().isTextSelected();
-  const isBold = isTextSelected ? selectionProperties.bold : cursorProperties.bold;
-  const isItalic = isTextSelected ? selectionProperties.italic : cursorProperties.italic;
-  const isUnderline = isTextSelected ? selectionProperties.underlineStyle === 'single' : cursorProperties.underlineStyle === 'single';
-  const fontFace = isTextSelected ? selectionProperties.fontFace : cursorProperties.fontFace;
-  const pointSize = isTextSelected ? selectionProperties.pointSize : cursorProperties.pointSize;
+  const properties = isTextSelected ? selectionProperties : cursorProperties;
+  const isBold = properties.bold;
+  const isItalic = properties.italic;
+  const isUnderline = properties.underlineStyle === 'single';
+  const fontFace = properties.fontFace;
+  const pointSize = properties.pointSize;
   const pointSizeSelectionKey = pointSize === undefined ? undefined : pointSize.toString();
-  const justification = paragraphProperties?.justification;
+  const justification = properties.paragraphProperties.justification;
   const lineHeight = calculateLineSpacing(
-    isTextSelected ? paragraphProperties.lineHeightMultiplier : cursorProperties.lineHeightMultiplier,
-    isTextSelected ? paragraphProperties.lineHeight : cursorProperties.lineHeight,
-    cursorProperties.fontPointSize || DEFAULT_POINT_SIZE,
+    properties.paragraphProperties.lineHeightMultiplier,
+    properties.paragraphProperties.lineHeight,
+    cursorProperties.paragraphProperties.fontPointSize || DEFAULT_POINT_SIZE,
   );
-  const listType = isTextSelected ? paragraphProperties.listType : cursorProperties.listType;
+  const listType = properties.paragraphProperties.listType;
 
   const isLightMode = activeTheme === Theme.LIGHT;
   const wvFontColor = convertCoreColorToWebViewerColor(cursorProperties.color);
