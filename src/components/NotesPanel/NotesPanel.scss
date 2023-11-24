@@ -115,6 +115,9 @@
       padding-right: 18px;
     }
 
+    .virtualized-notes-container {
+      overflow: hidden;
+    }
 
     .normal-notes-container {
       overflow: auto;
