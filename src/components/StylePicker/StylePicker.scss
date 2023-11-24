@@ -1,0 +1,48 @@
+.StylePicker {
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .slider-property {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .LineStyleOptions {
+    .LayoutTitle {
+      margin: 0 0 16px 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .StyleContainer {
+      gap: 8px;
+    }
+
+    .StyleContainer > * {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+  
+    button {
+      &.Dropdown {
+        width: 100% !important;
+      }
+    }
+  
+    .Dropdown__items {
+      width: 100%;
+    }
+  }
+
+  .StyleOption {
+    .styles-container {
+      .styles-title {
+        margin: 0 0 16px 0;
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+  }
+}
