@@ -12,7 +12,7 @@ import defaultTool from 'constants/defaultTool';
 import Events from 'constants/events';
 import { mapAnnotationToKey } from 'constants/map';
 import DataElements from 'constants/dataElement';
-import { rgbaToHex, hexToRgba } from 'helpers/color';
+import { rgbaToHex, getHexToRgbaString } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import Choice from 'components/Choice';
 import Button from 'components/Button';
@@ -256,8 +256,15 @@ const FilterAnnotModal = () => {
   }, [isOpen, selectedTab, ifShowAnnotationStatus]);
 
   useEffect(() => {
-    setFilterCount((checkRepliesForAuthorFilter ? 1 : 0) + authorFilter.length + colorFilter.length + typesFilter.length + statusFilter.length);
-  }, [checkRepliesForAuthorFilter, authorFilter, colorFilter, typesFilter, statusFilter]);
+    setFilterCount(
+      (checkRepliesForAuthorFilter ? 1 : 0) +
+      (isDocumentFilterActive ? 1 : 0) +
+      authorFilter.length +
+      colorFilter.length +
+      typesFilter.length +
+      statusFilter.length
+    );
+  }, [checkRepliesForAuthorFilter, isDocumentFilterActive, authorFilter, colorFilter, typesFilter, statusFilter]);
 
   useEffect(() => {
     setIfShowAnnotationStatus((statuses.length > 1) || (statuses.length === 1 && statuses[0] !== 'None'));
@@ -347,7 +354,7 @@ const FilterAnnotModal = () => {
               <div
                 className="colorCell"
                 style={{
-                  background: hexToRgba(val),
+                  background: getHexToRgbaString(val),
                 }}
               ></div>
             </div>

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import './StylePicker.scss';
 import ColorPicker from './ColorPicker';
 import Slider from 'components/Slider';
@@ -10,15 +11,18 @@ import SnapModeToggle from './SnapModeToggle';
 import selectors from 'selectors';
 import { useSelector } from 'react-redux';
 
-const propTypes = {};
+const propTypes = {
+  onStyleChange: PropTypes.func.isRequired,
+  style: PropTypes.object.isRequired,
+  sliderProperties: PropTypes.arrayOf(PropTypes.string),
+};
 
 const MAX_STROKE_THICKNESS = 20;
 
 const StylePicker = ({
-  colorProperty,
   onStyleChange,
-  sliderProperties = [],
   style,
+  sliderProperties = [],
   lineStyleProperties,
   isFreeText,
   isEllipse,
@@ -28,6 +32,21 @@ const StylePicker = ({
   isInFormBuilderAndNotFreeText,
   hideSnapModeCheckbox,
 }) => {
+  const [strokeColor, setStrokeColor] = useState(style.StrokeColor);
+
+  useEffect(() => {
+    setStrokeColor(style.StrokeColor);
+  }, [strokeColor, style]);
+
+  const onStrokeColorChange = (color) => {
+    onStyleChange?.('StrokeColor', color);
+    setStrokeColor(color);
+  };
+
+  const onSliderChange = (property, value) => {
+    onStyleChange?.(property, value);
+  };
+
   // We do not have sliders to show up for redaction annots
   if (isRedaction) {
     style.Opacity = null;
@@ -36,14 +55,6 @@ const StylePicker = ({
 
   const isSnapModeEnabled = useSelector((state) => selectors.isSnapModeEnabled(state));
   const isStyleOptionDisabled = useSelector((state) => selectors.isElementDisabled(state, DataElements.STYLE_OPTION));
-
-  const onColorChange = (color) => {
-    onStyleChange && onStyleChange(colorProperty, color);
-  };
-
-  const onSliderChange = (property, value) => {
-    onStyleChange && onStyleChange(property, value);
-  };
 
   const getSliderProps = (type) => {
     const { Opacity, StrokeThickness } = style;
@@ -72,7 +83,7 @@ const StylePicker = ({
           value: StrokeThickness,
           getDisplayValue: (strokeThickness) => {
             const placeOfDecimal =
-              Math.floor(strokeThickness) !== strokeThickness ? strokeThickness.toString().split('.')[1].length || 0 : 0;
+              Math.floor(strokeThickness) !== strokeThickness ? strokeThickness?.toString().split('.')[1].length || 0 : 0;
             if (StrokeThickness === 0 || (StrokeThickness >= 1 && (placeOfDecimal > 2 || placeOfDecimal === 0))) {
               return `${Math.round(strokeThickness)}pt`;
             }
@@ -111,15 +122,19 @@ const StylePicker = ({
   const renderSliders = () => {
     return sliderProperties.map((property) => {
       const sliderProps = getSliderProps(property);
-      return <Slider key={property} {...sliderProps} onStyleChange={onSliderChange} onSliderChange={onSliderChange}/>;
+      return <Slider key={property} {...sliderProps} onStyleChange={onSliderChange} onSliderChange={onSliderChange} />;
     });
   };
 
   return (
     <div className="StylePicker">
-      <ColorPicker
-        onColorChange={onColorChange}
-      />
+      <div className="StrokeColorPicker">
+        <ColorPicker
+          onColorChange={onStrokeColorChange}
+          onStyleChange={onStyleChange}
+          color={strokeColor}
+        />
+      </div>
       {renderSliders()}
       {showLineStyleOptions &&
         <LineStyleOptions properties={lineStyleProperties} onLineStyleChange={onLineStyleChange} />}

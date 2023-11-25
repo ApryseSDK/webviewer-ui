@@ -24,13 +24,8 @@ Webviewer.WebComponent({
     dataElement: `divider-${Math.random()}`,
   });
 
-  // Menu overlay hamberder button -> Pending implementation
-  const menuOverlayToggle = new instance.UI.Components.CustomButton({
-    dataElement: 'menuOverlayToggle',
-    title: 'component.menuOverlay',
-    img: 'ic-hamburger-menu',
-    onClick: () => console.log('Menu Overlay button clicked'),
-  });
+  // Menu Flyout Hamburger button
+  const mainMenu = new instance.UI.Components.MainMenu();
 
   // Left panel toggle button
   const leftPanelToggle = new instance.UI.Components.ToggleElementButton({
@@ -40,13 +35,8 @@ Webviewer.WebComponent({
     img: 'icon-header-sidebar-line'
   });
 
-  // View Controls -> Pending implementation
-  const viewControlsToggle = new instance.UI.Components.CustomButton({
-    dataElement: 'viewControlsToggle',
-    title: 'component.viewControlsOverlay',
-    img: 'icon-header-page-manipulation-line',
-    onClick: () => console.log('View Controls button clicked'),
-  });
+  // View Controls
+  const viewControlsToggle = new instance.UI.Components.ViewControls();
 
   // Zoom Controls
   const zoomControls = new instance.UI.Components.Zoom();
@@ -80,20 +70,9 @@ Webviewer.WebComponent({
   // * Tool Buttons * //
 
   // ** Common Buttons ** //
-  // We need an abstraction for undo and redo buttons
-  const undoButton = new instance.UI.Components.CustomButton({
-    dataElement: 'undoToolButton',
-    title: 'action.undo',
-    img: 'icon-operation-undo',
-    onClick: () => console.log('Undo Tool button clicked'),
-  });
+  const undoButton = new instance.UI.Components.PresetButton({ buttonType: instance.UI.PRESET_BUTTON_TYPES.UNDO });
 
-  const redoButton = new instance.UI.Components.CustomButton({
-    dataElement: 'redoToolButton',
-    title: 'action.redo',
-    img: 'icon-operation-redo',
-    onClick: () => console.log('Redo Tool button clicked'),
-  });
+  const redoButton = new instance.UI.Components.PresetButton({ buttonType: instance.UI.PRESET_BUTTON_TYPES.REDO });
 
   const eraserToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'eraserToolButton',
@@ -114,6 +93,16 @@ Webviewer.WebComponent({
   const highlightToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'highlightToolButton',
     toolName: Tools.ToolNames.HIGHLIGHT,
+  });
+
+  const squigglyToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'squigglyToolButton',
+    toolName: Tools.ToolNames.SQUIGGLY,
+  });
+
+  const strikeoutToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'strikeoutToolButton',
+    toolName: Tools.ToolNames.STRIKEOUT,
   });
 
   // ** Shapes Tools ** //
@@ -150,6 +139,11 @@ Webviewer.WebComponent({
     toolName: Tools.ToolNames.AREA_MEASUREMENT,
   });
 
+  const countMeasurementToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'countMeasurementToolButton',
+    toolName: Tools.ToolNames.COUNT_MEASUREMENT,
+  });
+
   // ** Edit Tools ** //
   const cropToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'cropToolButton',
@@ -178,7 +172,10 @@ Webviewer.WebComponent({
     items: [
       underlineToolButton,
       underlineToolButton2,
+      rectangleToolButton,
       highlightToolButton,
+      squigglyToolButton,
+      strikeoutToolButton,
       defaultAnnotationUtilities,
     ],
   });
@@ -208,7 +205,8 @@ Webviewer.WebComponent({
     items: [
       distanceMeasurementToolButton,
       areaMeasurementToolButton,
-      annotateGroupedItems
+      countMeasurementToolButton,
+      defaultAnnotationUtilities,
     ],
   });
 
@@ -235,7 +233,7 @@ Webviewer.WebComponent({
     alwaysVisible: true,
     grow: 1,
     items: [
-      menuOverlayToggle,
+      mainMenu,
       createDivider(),
       leftPanelToggle,
       viewControlsToggle,
@@ -370,8 +368,26 @@ Webviewer.WebComponent({
     ],
   });
 
+  const pageNavigationTool = {
+    dataElement: 'page-controls-container',
+    type: 'pageControls',
+  };
+
+  const bottomHeader = new instance.UI.Components.ModularHeader({
+    dataElement: 'bottomHeader-23ds',
+    placement: 'bottom',
+    position: 'center',
+    float: true,
+    style: {
+      background: 'var(--gray-1)',
+      padding: '8px',
+    }
+  });
+  bottomHeader.addItems([pageNavigationTool]);
+
   instance.UI.addModularHeaders([
     primaryHeader,
     topToolsHeader,
+    bottomHeader,
   ]);
 });
