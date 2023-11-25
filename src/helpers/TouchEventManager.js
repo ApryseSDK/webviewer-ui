@@ -61,6 +61,12 @@ const TouchEventManager = {
     this.container.removeEventListener('touchcancel', this.handleTouchCancel);
   },
   handleTouchStart(e) {
+    if (core.getToolMode().name === 'Pan' &&
+      core.getDocumentViewer().isStylusModeEnabled() &&
+      e.touches[0].touchType === 'stylus') {
+      core.setToolMode(core.getTool('Pan')['previouslyUsedTool']['name']);
+      return;
+    }
     switch (e.touches.length) {
       case 1: {
         const touch = e.touches[0];
@@ -250,6 +256,7 @@ const TouchEventManager = {
         const isStylusModeDisabled = !docViewer.isStylusModeEnabled();
         const isUsingAnnotationToolsAndStylusIsDisabled = this.isUsingAnnotationTools() && isStylusModeDisabled;
         const isUsingPenAndStylusEnabled = this.isUsingPen() && !isStylusModeDisabled;
+
         if (
           !this.allowSwipe ||
           isUsingAnnotationToolsAndStylusIsDisabled ||
@@ -257,6 +264,8 @@ const TouchEventManager = {
           core.getSelectedText().length ||
           core.getSelectedAnnotations().length
         ) {
+          this.horziontalLock = false;
+          this.verticalLock = false;
           return;
         }
 
