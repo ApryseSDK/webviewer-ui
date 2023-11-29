@@ -1,7 +1,9 @@
+import React from 'react';
 import { ITEM_TYPE } from 'constants/customizationVariables';
 import selectors from 'selectors';
 import actions from 'actions';
 import { getZoomFlyoutItems } from 'components/ModularComponents/ZoomControls/ZoomHelper';
+import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 
 let store;
 export const setItemToFlyoutStore = (newStore) => {
@@ -69,13 +71,54 @@ export const itemToFlyout = (item, {
     flyoutItem.toolName = itemProps.toolName;
     flyoutItem.icon = itemProps.img || undefined;
     flyoutItem.label = itemProps.label || undefined;
+  } else if (itemProps.type === ITEM_TYPE.PRESET_BUTTON) {
+    const { label, dataElement, icon } = menuItems[itemProps.buttonType];
+    flyoutItem.label = label;
+    flyoutItem.onClick = () => {
+      itemProps.onClick && itemProps.onClick();
+      onClick && onClick();
+    };
+    flyoutItem.dataElement = dataElement;
+    flyoutItem.icon = icon;
+    flyoutItem.type = itemProps.type;
   }
 
   return flyoutItem;
 };
 
 const dataElementToLabel = (dataElement) => {
-  // Will split by CamelCase or symbols
-  const regex = /([^[\p{L}\d]+|(?<=[\p{Ll}\d])(?=\p{Lu})|(?<=\p{Lu})(?=\p{Lu}[\p{Ll}\d])|(?<=[\p{L}\d])(?=\p{Lu}[\p{Ll}\d]))/gu;
-  return dataElement.replace(regex, ' ');
+  try {
+    // Will split by CamelCase or symbols
+    const regex = new RegExp('([^[\\p{L}\\d]+|(?<=[\\p{Ll}\\d])(?=\\p{Lu})|(?<=\\p{Lu})(?=\\p{Lu}[\\p{Ll}\\d])|(?<=[\\p{L}\\d])(?=\\p{Lu}[\\p{Ll}\\d]))', 'gu');
+    return dataElement.replace(regex, ' ');
+  } catch (e) {
+    // In some browsers the regex above is not supported
+    return dataElement;
+  }
+};
+
+export const innerItemToFlyoutItem = (itemProps, onClick) => {
+  const { isDisabled, icon, label } = itemProps;
+  const handleClick = (event) => {
+    if (isDisabled) {
+      event.preventDefault();
+      return; // Do nothing if the element is disabled
+    }
+    onClick();
+  };
+  const onKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleClick(event);
+    }
+  };
+  return (
+    <div className="menu-container" disabled={isDisabled}
+      tabIndex="0" onClick={handleClick} onKeyDown={onKeyDown}
+      aria-disabled={isDisabled}>
+      <div className="icon-label-wrapper">
+        {icon}
+        {label && <div className="flyout-item-label">{label}</div>}
+      </div>
+    </div>
+  );
 };
