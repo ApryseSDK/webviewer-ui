@@ -120,6 +120,7 @@
     "showComparison": "Pokaż porównanie",
     "back": "Z powrotem",
     "clearSignature": "Wyraźny podpis",
+    "readOnlySignature": "Nie można usunąć podpisu tylko do odczytu",
     "newDocument": "Nowy dokument",
     "sideBySideView": "Widok obok siebie",
     "pageNumberInput": "Wprowadzanie numeru strony"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Panel znaku wodnego"
   },
   "message": {
+    "showMore": "Pokaż więcej",
+    "showLess": "Pokaż mniej",
     "toolsOverlayNoPresets": "Brak ustawień wstępnych",
     "badDocument": "Nie udało się wczytać dokumentu. Dokument jest uszkodzony lub nieważny.",
     "customPrintPlaceholder": "np. 3, 4-10",

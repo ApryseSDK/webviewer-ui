@@ -120,6 +120,7 @@
     "showComparison": "Zobrazit srovnání",
     "back": "Zadní",
     "clearSignature": "Jasný podpis",
+    "readOnlySignature": "Podpis pouze pro čtení nelze smazat",
     "newDocument": "Nový dokument",
     "sideBySideView": "Pohled vedle sebe",
     "pageNumberInput": "Zadání čísla stránky"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Panel vodoznaku"
   },
   "message": {
+    "showMore": "Zobrazit více",
+    "showLess": "Ukaž méně",
     "toolsOverlayNoPresets": "Žádné předvolby",
     "badDocument": "Dokument se nepodařilo načíst. Dokument je buď poškozený, nebo neplatný.",
     "customPrintPlaceholder": "např. 3, 4-10",

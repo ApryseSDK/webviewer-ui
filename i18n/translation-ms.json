@@ -120,6 +120,7 @@
     "showComparison": "Tunjukkan Perbandingan",
     "back": "belakang",
     "clearSignature": "Tandatangan yang jelas",
+    "readOnlySignature": "Tandatangan baca sahaja tidak boleh dipadamkan",
     "newDocument": "Dokumen Baharu",
     "sideBySideView": "Pandangan Sebelah",
     "pageNumberInput": "Input nombor halaman"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Panel Tera Air"
   },
   "message": {
+    "showMore": "Tunjukkan Lagi",
+    "showLess": "Tunjukkan Kurang",
     "toolsOverlayNoPresets": "Tiada Pratetap",
     "badDocument": "Gagal memuatkan dokumen. Dokumen itu sama ada rosak atau tidak sah.",
     "customPrintPlaceholder": "cth. 3, 4-10",

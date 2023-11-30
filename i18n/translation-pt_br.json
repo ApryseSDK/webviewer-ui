@@ -120,6 +120,7 @@
     "showComparison": "Mostrar comparação",
     "back": "De volta",
     "clearSignature": "Assinatura clara",
+    "readOnlySignature": "A assinatura somente leitura não pode ser excluída",
     "newDocument": "Novo Documento",
     "sideBySideView": "Vista lado a lado",
     "pageNumberInput": "Entrada do número da página"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Painel de marca d'água"
   },
   "message": {
+    "showMore": "Mostre mais",
+    "showLess": "Mostre menos",
     "toolsOverlayNoPresets": "Sem predefinições",
     "badDocument": "Falha ao carregar documento. O documento está corrompido ou é inválido.",
     "customPrintPlaceholder": "ex: 3, 4-10",

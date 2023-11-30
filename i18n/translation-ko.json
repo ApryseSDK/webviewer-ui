@@ -120,6 +120,7 @@
     "showComparison": "비교 표시",
     "back": "뒤",
     "clearSignature": "명확한 서명",
+    "readOnlySignature": "읽기 전용 서명은 삭제할 수 없습니다.",
     "newDocument": "새 문서",
     "sideBySideView": "나란히 보기",
     "pageNumberInput": "페이지 번호 입력"
@@ -246,6 +247,8 @@
     "watermarkPanel": "워터마크 패널"
   },
   "message": {
+    "showMore": "자세히보기",
+    "showLess": "간략히 표시",
     "toolsOverlayNoPresets": "사전설정 없음",
     "badDocument": "문서가 손상되어 불러올수 없습니다.",
     "customPrintPlaceholder": "예: 3, 4-10",

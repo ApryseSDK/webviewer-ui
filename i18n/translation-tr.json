@@ -120,6 +120,7 @@
     "showComparison": "Karşılaştırmayı Göster",
     "back": "Geri",
     "clearSignature": "İmzayı temizle",
+    "readOnlySignature": "Salt okunur imza silinemez",
     "newDocument": "Yeni belge",
     "sideBySideView": "Yan Yana Görünüm",
     "pageNumberInput": "Sayfa numarası girişi"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Filigran Paneli"
   },
   "message": {
+    "showMore": "Daha fazla göster",
+    "showLess": "Daha az göster",
     "toolsOverlayNoPresets": "Ön Ayar Yok",
     "badDocument": "Belge yüklenemedi. Belge bozuk veya geçerli değil.",
     "customPrintPlaceholder": "Örneğin. 3, 4-10",

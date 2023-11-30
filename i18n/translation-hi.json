@@ -120,6 +120,7 @@
     "showComparison": "तुलना दिखाएँ",
     "back": "पीछे",
     "clearSignature": "स्पष्ट हस्ताक्षर",
+    "readOnlySignature": "केवल पढ़ने योग्य हस्ताक्षर को हटाया नहीं जा सकता",
     "newDocument": "नया दस्तावेज़",
     "sideBySideView": "अगल-बगल का दृश्य",
     "pageNumberInput": "पेज नंबर इनपुट"
@@ -246,6 +247,8 @@
     "watermarkPanel": "वॉटरमार्क पैनल"
   },
   "message": {
+    "showMore": "और दिखाओ",
+    "showLess": "कम दिखाएं",
     "toolsOverlayNoPresets": "कोई प्रीसेट नहीं",
     "badDocument": "दस्तावेज़ लोड करने में विफल. दस्तावेज़ या तो भ्रष्ट है या मान्य नहीं है।",
     "customPrintPlaceholder": "जैसे 3, 4-10",

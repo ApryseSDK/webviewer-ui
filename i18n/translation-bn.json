@@ -120,6 +120,7 @@
     "showComparison": "তুলনা দেখান",
     "back": "পেছনে",
     "clearSignature": "সাফ স্বাক্ষর",
+    "readOnlySignature": "শুধুমাত্র পঠনযোগ্য স্বাক্ষর মুছে ফেলা যাবে না",
     "newDocument": "নতুন নথি",
     "sideBySideView": "সাইড বাই সাইড ভিউ",
     "pageNumberInput": "পৃষ্ঠা নম্বর ইনপুট"
@@ -246,6 +247,8 @@
     "watermarkPanel": "ওয়াটারমার্ক প্যানেল"
   },
   "message": {
+    "showMore": "আরো দেখুন",
+    "showLess": "প্রদর্শন কম",
     "toolsOverlayNoPresets": "কোনো প্রিসেট নেই",
     "badDocument": "নথি লোড করতে ব্যর্থ হয়েছে৷ নথিটি হয় দূষিত বা বৈধ নয়।",
     "customPrintPlaceholder": "যেমন 3, 4-10",

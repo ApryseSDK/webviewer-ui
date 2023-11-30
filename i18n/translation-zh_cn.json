@@ -120,6 +120,7 @@
     "showComparison": "显示比较",
     "back": "后退",
     "clearSignature": "清晰的签名",
+    "readOnlySignature": "只读签名无法删除",
     "newDocument": "新建文件",
     "sideBySideView": "并排视图",
     "pageNumberInput": "页码输入"
@@ -246,6 +247,8 @@
     "watermarkPanel": "水印面板"
   },
   "message": {
+    "showMore": "展示更多",
+    "showLess": "显示较少",
     "toolsOverlayNoPresets": "无预设",
     "badDocument": "无法加载文档，此文档已损坏或无效。",
     "customPrintPlaceholder": "例如，3 4-10",

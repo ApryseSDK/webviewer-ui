@@ -120,6 +120,7 @@
     "showComparison": "Hiển thị so sánh",
     "back": "Mặt sau",
     "clearSignature": "Xóa chữ ký",
+    "readOnlySignature": "Không thể xóa chữ ký chỉ đọc",
     "newDocument": "Tài liệu mới",
     "sideBySideView": "Xem cạnh nhau",
     "pageNumberInput": "Nhập số trang"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Bảng điều khiển hình mờ"
   },
   "message": {
+    "showMore": "Cho xem nhiều hơn",
+    "showLess": "Hiện ít hơn",
     "toolsOverlayNoPresets": "Không Có Cài Đặt Trước",
     "badDocument": "Không thể tải tài liệu. Tài liệu bị lỗi hoặc không hợp lệ.",
     "customPrintPlaceholder": "Ví dụ: 3, 4-10",

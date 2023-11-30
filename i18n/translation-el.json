@@ -120,6 +120,7 @@
     "showComparison": "Εμφάνιση σύγκρισης",
     "back": "Πίσω",
     "clearSignature": "Καθαρή υπογραφή",
+    "readOnlySignature": "Η υπογραφή μόνο για ανάγνωση δεν μπορεί να διαγραφεί",
     "newDocument": "Νέο Έγγραφο",
     "sideBySideView": "Άποψη δίπλα δίπλα",
     "pageNumberInput": "Εισαγωγή αριθμού σελίδας"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Πίνακας υδατογραφήματος"
   },
   "message": {
+    "showMore": "Δείτε περισσότερα",
+    "showLess": "Δείξε λιγότερο",
     "toolsOverlayNoPresets": "Χωρίς προεπιλογές",
     "badDocument": "Η φόρτωση του εγγράφου απέτυχε. Το έγγραφο είναι είτε κατεστραμμένο είτε δεν είναι έγκυρο.",
     "customPrintPlaceholder": "π.χ. 3, 4-10",

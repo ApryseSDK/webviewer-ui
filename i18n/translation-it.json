@@ -120,6 +120,7 @@
     "showComparison": "Mostra confronto",
     "back": "Di ritorno",
     "clearSignature": "Firma chiara",
+    "readOnlySignature": "La firma di sola lettura non può essere eliminata",
     "newDocument": "Nuovo documento",
     "sideBySideView": "Vista affiancata",
     "pageNumberInput": "Inserimento del numero di pagina"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Pannello filigrana"
   },
   "message": {
+    "showMore": "Mostra di più",
+    "showLess": "Mostra meno",
     "toolsOverlayNoPresets": "Nessun preset",
     "badDocument": "Caricamento del documento non riuscito. Il documento è corrotto o non valido.",
     "customPrintPlaceholder": "es 3, 4-10",

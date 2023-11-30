@@ -120,6 +120,7 @@
     "showComparison": "Arată comparația",
     "back": "Înapoi",
     "clearSignature": "Semnătură clară",
+    "readOnlySignature": "Semnătura numai pentru citire nu poate fi ștearsă",
     "newDocument": "Document nou",
     "sideBySideView": "Vedere alăturată",
     "pageNumberInput": "Introducerea numărului paginii"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Panoul filigran"
   },
   "message": {
+    "showMore": "Afișați mai multe",
+    "showLess": "Arata mai putin",
     "toolsOverlayNoPresets": "Fără presetări",
     "badDocument": "Nu s-a putut încărca documentul. Documentul fie este corupt, fie nu este valid.",
     "customPrintPlaceholder": "de exemplu. 3, 4-10",

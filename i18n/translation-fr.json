@@ -120,6 +120,7 @@
     "showComparison": "Afficher la comparaison",
     "back": "Retour",
     "clearSignature": "Signature claire",
+    "readOnlySignature": "La signature en lecture seule ne peut pas être supprimée",
     "newDocument": "Nouveau document",
     "sideBySideView": "Vue côte à côte",
     "pageNumberInput": "Saisie du numéro de page"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Panneau Filigrane"
   },
   "message": {
+    "showMore": "Montre plus",
+    "showLess": "Montrer moins",
     "toolsOverlayNoPresets": "Aucun préréglage",
     "badDocument": "Échec du chargement du document. Le document est corrompu ou non valide.",
     "customPrintPlaceholder": "par ex. : 3 4-10",

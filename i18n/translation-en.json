@@ -120,9 +120,10 @@
     "showComparison": "Show Comparison",
     "back": "Back",
     "clearSignature": "Clear signature",
+    "readOnlySignature": "Read-only signature cannot be deleted",
     "newDocument": "New Document",
     "sideBySideView": "Side By Side View",
-    "pageNumberInput":"Page number input"
+    "pageNumberInput": "Page number input"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -246,6 +247,8 @@
     "watermarkPanel": "Watermark Panel"
   },
   "message": {
+    "showMore": "Show More",
+    "showLess": "Show Less",
     "toolsOverlayNoPresets": "No Presets",
     "badDocument": "Failed to load document. The document is either corrupt or not valid.",
     "customPrintPlaceholder": "e.g. 3, 4-10",

@@ -120,6 +120,7 @@
     "showComparison": "Összehasonlítás megjelenítése",
     "back": "Vissza",
     "clearSignature": "Világos aláírás",
+    "readOnlySignature": "A csak olvasható aláírás nem törölhető",
     "newDocument": "Új dokumentum",
     "sideBySideView": "Oldalnézet",
     "pageNumberInput": "Oldalszám bevitele"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Vízjel panel"
   },
   "message": {
+    "showMore": "Mutass többet",
+    "showLess": "Mutass kevesebbet",
     "toolsOverlayNoPresets": "Nincs előbeállítás",
     "badDocument": "Nem sikerült betölteni a dokumentumot. A dokumentum vagy sérült, vagy érvénytelen.",
     "customPrintPlaceholder": "például. 3, 4-10",

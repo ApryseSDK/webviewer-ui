@@ -120,6 +120,7 @@
     "showComparison": "Показать сравнение",
     "back": "Назад",
     "clearSignature": "Очистить подпись",
+    "readOnlySignature": "Подпись только для чтения не может быть удалена",
     "newDocument": "Новый документ",
     "sideBySideView": "Вид сбоку",
     "pageNumberInput": "Ввод номера страницы"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Панель водяных знаков"
   },
   "message": {
+    "showMore": "Показать больше",
+    "showLess": "Показывай меньше",
     "toolsOverlayNoPresets": "Нет пресетов",
     "badDocument": "Произошла ошибка при загрузке документа. Документ содержит ошибки или недостоверный.",
     "customPrintPlaceholder": "пример 3, 4-10",

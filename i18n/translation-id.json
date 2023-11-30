@@ -120,6 +120,7 @@
     "showComparison": "Tampilkan Perbandingan",
     "back": "Kembali",
     "clearSignature": "Tanda tangan yang jelas",
+    "readOnlySignature": "Tanda tangan hanya-baca tidak dapat dihapus",
     "newDocument": "Dokumen Baru",
     "sideBySideView": "Tampilan Berdampingan",
     "pageNumberInput": "Masukan nomor halaman"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Panel Tanda Air"
   },
   "message": {
+    "showMore": "Menampilkan lebih banyak",
+    "showLess": "Tampilkan Lebih Sedikit",
     "toolsOverlayNoPresets": "Tidak Ada Preset",
     "badDocument": "Gagal memuat dokumen. Dokumen tersebut rusak atau tidak valid.",
     "customPrintPlaceholder": "misalnya 3, 4-10",

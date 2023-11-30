@@ -120,6 +120,7 @@
     "showComparison": "Visa jämförelse",
     "back": "Tillbaka",
     "clearSignature": "Tydlig signatur",
+    "readOnlySignature": "Skrivskyddad signatur kan inte raderas",
     "newDocument": "Nytt dokument",
     "sideBySideView": "Vy sida vid sida",
     "pageNumberInput": "Inmatning av sidnummer"
@@ -246,6 +247,8 @@
     "watermarkPanel": "Vattenstämpelpanel"
   },
   "message": {
+    "showMore": "Visa mer",
+    "showLess": "Visa mindre",
     "toolsOverlayNoPresets": "Inga förinställningar",
     "badDocument": "Det gick inte att ladda dokumentet. Dokumentet är antingen korrupt eller ogiltigt.",
     "customPrintPlaceholder": "t.ex. 3, 4-10",

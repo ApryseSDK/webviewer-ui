@@ -120,6 +120,7 @@
     "showComparison": "比較を表示",
     "back": "戻る",
     "clearSignature": "明確な署名",
+    "readOnlySignature": "読み取り専用の署名は削除できません",
     "newDocument": "新しいドキュメント",
     "sideBySideView": "並べて表示",
     "pageNumberInput": "ページ番号入力"
@@ -246,6 +247,8 @@
     "watermarkPanel": "透かしパネル"
   },
   "message": {
+    "showMore": "もっと見せる",
+    "showLess": "表示を減らす",
     "toolsOverlayNoPresets": "プリセットなし",
     "badDocument": "ドキュメントの読み込みに失敗しました。ドキュメントが破損しているか、有効ではありません。",
     "customPrintPlaceholder": "例：3, 4-10",
