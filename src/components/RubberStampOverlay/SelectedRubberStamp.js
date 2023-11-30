@@ -75,7 +75,6 @@ const SelectedRubberStamp = () => {
   useEffect(() => {
     if (!isOpen && activeToolGroup === 'rubberStampTools' && selectedStamp && i18n.language) {
       setIsOpen(true);
-      core.setToolMode('AnnotationCreateRubberStamp');
     } else if (isOpen && activeToolGroup !== 'rubberStampTools') {
       setIsOpen(false);
     }
