@@ -140,7 +140,7 @@ const ContextMenuPopup = ({
       style={{ ...position }}
       onClick={() => dispatch(actions.closeElement(DataElements.CONTEXT_MENU_POPUP))}
     >
-      <FocusTrap locked={isOpen}>
+      <FocusTrap locked={isOpen && position.top !== 0 && position.left !== 0}>
         <div className="container">
           {isOfficeEditorMode() ? (
             <>

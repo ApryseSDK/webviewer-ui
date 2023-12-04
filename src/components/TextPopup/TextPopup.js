@@ -100,7 +100,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
       role="listbox"
       aria-label={t('component.textPopup')}
     >
-      <FocusTrap locked={isOpen}>
+      <FocusTrap locked={isOpen && position.top !== 0 && position.left !== 0}>
         <div className="container">
           <CustomizablePopup
             dataElement={DataElements.TEXT_POPUP}
