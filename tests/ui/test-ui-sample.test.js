@@ -32,6 +32,18 @@ describe('Test UI APIs', function() {
     });
     await documentLoadedPromise;
   });
+  it('Check WebComponent for instance.UI.dispose() function', async () => {
+    const options = {
+      initialDoc: '/base/test/fixtures/pdfs/blank.pdf',
+    };
+    const instance = await setupWebViewerInstance(options);
+    // create a promise that resolves when the document loaded event fires
+    const documentLoadedPromise = new Promise((resolve) => {
+      instance.UI.addEventListener('documentLoaded', resolve);
+    });
+    await documentLoadedPromise;
+    expect(instance.UI.dispose).to.exists;
+  });
 
   it('correctly loads as a web component', async () => {
     const instance = await setupWebViewerInstance({}, true);
@@ -193,6 +205,8 @@ describe('Test UI APIs', function() {
 
     // Set the tool and open the overlay and set the custom stamp tab
     UI.setToolMode(instance.Core.Tools.ToolNames.RUBBER_STAMP);
+    // wait to set the tool mode before toggling the overlay
+    await delay(100);
     UI.toggleElementVisibility('toolStylePopup');
     UI.setSelectedTab('rubberStampTab', 'customStampPanel');
     // Add a small delay because the stamps are loaded async into the overlay

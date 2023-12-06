@@ -14,7 +14,7 @@ export default (dispatch, store) => (newTool, oldTool) => {
   const state = store.getState();
   const activeToolGroup = selectors.getActiveToolGroup(state);
   const activeToolName = selectors.getActiveToolName(state);
-  if (activeToolName === 'AnnotationEdit' && activeToolGroup === 'signatureTools') {
+  if (activeToolName === 'AnnotationEdit' && (activeToolGroup === 'signatureTools' || activeToolGroup === 'rubberStampTools')) {
     return;
   }
   const { group = '' } = selectors.getToolButtonObject(state, newTool.name);
