@@ -26,6 +26,9 @@ const DataElements = {
   WV3D_PROPERTIES_PANEL_TOGGLE: 'wv3dPropertiesPanelToggle',
   LEFT_PANEL: 'leftPanel',
   OUTLINE_PANEL: 'outlinesPanel',
+  STROKE_STYLE_CONTAINER: 'strokeStyleContainer',
+  FILL_COLOR_CONTAINER: 'fillColorContainer',
+  OPACITY_CONTAINER: 'opacityContainer',
   OUTLINE_MULTI_SELECT: 'outlineMultiSelect',
   OUTLINE_CONTROLS: 'outlineControls',
   OUTLINE_ADD_NEW_BUTTON_CONTAINER: 'addNewOutlineButtonContainer',
@@ -179,6 +182,7 @@ const DataElements = {
   // Office Editor
   OFFICE_EDITOR_TOOLS_HEADER: 'officeEditorToolsHeader',
   OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE: 'officeEditorToolsHeaderInsertImage',
+  OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE: 'officeEditorToolsHeaderInsertTable',
   OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
 
   // Insert Page Modal tabs
@@ -201,12 +205,31 @@ const DataElements = {
 
   TOOLBAR_GROUPS: [],
 
-  // Menu overlay items
-  CREATE_PORTFOLIO_BUTTON: 'createPortfolioButton',
-
   // Print modal
   PRINT_QUALITY: 'printQuality',
   PRINT_WATERMARK: 'printWatermark',
+
+  // Menu overlay items
+  CREATE_PORTFOLIO_BUTTON: 'createPortfolioButton',
+  NEW_DOCUMENT_BUTTON: 'newDocumentButton',
+  FILE_PICKER_BUTTON: 'filePickerButton',
+  DOWNLOAD_BUTTON: 'downloadButton',
+  SAVE_AS_BUTTON: 'saveAsButton',
+  PRINT_BUTTON: 'printButton',
+  FULLSCREEN_BUTTON: 'fullscreenButton',
+  SETTINGS_BUTTON: 'settingsButton',
+
+  // Preset Buttons
+  UNDO_PRESET_BUTTON: 'undoPresetButton',
+  REDO_PRESET_BUTTON: 'redoPresetButton',
+  NEW_DOCUMENT_PRESET_BUTTON: 'newDocumentPresetButton',
+  FILE_PICKER_PRESET_BUTTON: 'filePickerPresetButton',
+  DOWNLOAD_PRESET_BUTTON: 'downloadPresetButton',
+  FULLSCREEN_PRESET_BUTTON: 'fullscreenPresetButton',
+  SAVE_AS_PRESET_BUTTON: 'saveAsPresetButton',
+  PRINT_PRESET_BUTTON: 'printPresetButton',
+  CREATE_PORTFOLIO_PRESET_BUTTON: 'createPortfolioPresetButton',
+  SETTINGS_PRESET_BUTTON: 'settingsPresetButton',
 };
 
 DataElements.TOOLBAR_GROUPS = [

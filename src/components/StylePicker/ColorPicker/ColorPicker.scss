@@ -1,0 +1,119 @@
+@import '../../../constants/styles.scss';
+
+.StylePicker {
+  .ColorPalette {
+    display: flex; // fallback for ie11, grid not available
+    flex-wrap: wrap; // fallback for ie11, grid not available
+    @include ie11 {
+      width: 196px; // hack for ie11. Have to define width for flex basis to work.
+    }
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+
+    &.padding {
+      padding-top: 4px;
+      padding-bottom: 8px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    @include mobile {
+      max-width: 450px;
+      width: auto;
+      @include ie11 {
+        width: 308px; // hack for ie11. Have to define width for flex basis to work.
+      }
+    }
+
+    .cell-container {
+      @include button-reset;
+      flex: 1 0 14%; // fallback for ie11, grid not available
+
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @include mobile {
+        width: 44px;
+        height: 44px;
+      }
+
+      .cell-outer {
+        &.active {
+          border: 1px solid var(--color-palette-border);
+          width: 26px;
+          height: 26px;
+          border-radius: 10000000px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          @include mobile {
+            width: 36px;
+            height: 36px;
+          }
+        }
+
+        .cell {
+          width: 18px;
+          height: 18px;
+          border-radius: 10000000px;
+
+          .transparent {
+            border: 2px solid var(--faded-text);
+            border-radius: 10000000px;
+          }
+
+          &.border {
+            border: 1px solid var(--white-color-palette-border);
+          }
+
+          @include mobile {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+    }
+  }
+
+  .palette-controls {
+    padding-right: 12px;
+    padding-left: 2px;
+    display: flex;
+    justify-content: space-between;
+
+    .button-container {
+      display: flex;
+      gap: 8px;
+    }
+
+    .control-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-width: 32px;
+      min-height: 32px;
+      @include button-reset;
+
+      &.show-more-button {
+        color: var(--blue-5);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+      }
+
+      &.hidden {
+        display: none;
+      }
+    }
+
+  }
+}
+

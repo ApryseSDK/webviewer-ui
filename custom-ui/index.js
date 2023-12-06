@@ -7,6 +7,8 @@ const viewerElement = document.getElementById('viewer');
 Webviewer.WebComponent({
   path: '/lib',
   initialDoc: hashFile,
+  enableRedaction: true,
+  fullAPI: true,
 }, viewerElement).then((instance) => {
   // This makes it easier to access the instance from the browser console
   window.instance = instance;
@@ -62,7 +64,7 @@ Webviewer.WebComponent({
 
   const stylePanelToggle = new instance.UI.Components.ToggleElementButton({
     dataElement: 'stylePanelToggle',
-    toggleElement: 'stylePanel',
+    toggleElement: instance.UI.Panels.STYLE,
     img: 'icon-style-panel-toggle',
     title: 'component.notesPanel',
   });
@@ -85,14 +87,14 @@ Webviewer.WebComponent({
     toolName: Tools.ToolNames.UNDERLINE,
   });
 
-  const underlineToolButton2 = new instance.UI.Components.ToolButton({
-    dataElement: 'underlineToolButton2',
-    toolName: Tools.ToolNames.UNDERLINE2,
-  });
-
   const highlightToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'highlightToolButton',
     toolName: Tools.ToolNames.HIGHLIGHT,
+  });
+
+  const freeTextToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'freeTextToolButton',
+    toolName: Tools.ToolNames.FREETEXT,
   });
 
   const squigglyToolButton = new instance.UI.Components.ToolButton({
@@ -111,21 +113,36 @@ Webviewer.WebComponent({
     toolName: Tools.ToolNames.RECTANGLE,
   });
 
-  const rectangleToolButton2 = new instance.UI.Components.ToolButton({
-    dataElement: 'rectangleToolButton2',
-    toolName: Tools.ToolNames.RECTANGLE2,
-  });
-
   const freeHandHighlightToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'freeHandHighlightToolButton',
     toolName: Tools.ToolNames.FREEHAND_HIGHLIGHT,
   });
 
+  const ellipseToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'ellipseToolButton',
+    toolName: Tools.ToolNames.ELLIPSE,
+  });
+
+  const polygonToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'polygonToolButton',
+    toolName: Tools.ToolNames.POLYGON,
+  });
+
+  const polygonCloudToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'polygonCloudToolButton',
+    toolName: Tools.ToolNames.POLYGON_CLOUD,
+  });
 
   // ** Insert Tools ** //
   const rubberStampToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'rubberStampToolButton',
     toolName: Tools.ToolNames.RUBBER_STAMP,
+  });
+
+  // ** Redaction Tools ** //
+  const redactionToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'redactionToolButton',
+    toolName: Tools.ToolNames.REDACTION,
   });
 
   // ** Measure Tools ** //
@@ -137,6 +154,11 @@ Webviewer.WebComponent({
   const areaMeasurementToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'areaMeasurementToolButton',
     toolName: Tools.ToolNames.AREA_MEASUREMENT,
+  });
+
+  const ellipseMeasurementToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'ellipseMeasurementToolButton',
+    toolName: Tools.ToolNames.ELLIPSE_MEASUREMENT,
   });
 
   const countMeasurementToolButton = new instance.UI.Components.ToolButton({
@@ -171,9 +193,9 @@ Webviewer.WebComponent({
     justifyContent: 'center',
     items: [
       underlineToolButton,
-      underlineToolButton2,
-      rectangleToolButton,
       highlightToolButton,
+      rectangleToolButton,
+      freeTextToolButton,
       squigglyToolButton,
       strikeoutToolButton,
       defaultAnnotationUtilities,
@@ -184,8 +206,10 @@ Webviewer.WebComponent({
     dataElement: 'shapesGroupedItems',
     items: [
       rectangleToolButton,
-      rectangleToolButton2,
       freeHandHighlightToolButton,
+      ellipseToolButton,
+      polygonToolButton,
+      polygonCloudToolButton,
       annotateGroupedItems
     ],
   });
@@ -205,7 +229,33 @@ Webviewer.WebComponent({
     items: [
       distanceMeasurementToolButton,
       areaMeasurementToolButton,
+      ellipseMeasurementToolButton,
       countMeasurementToolButton,
+      defaultAnnotationUtilities,
+    ],
+  });
+
+  instance.UI.addPanel({
+    dataElement: 'redactPanel_1',
+    render: instance.UI.Panels.REDACTION,
+    location: 'right',
+  });
+
+  const redactionPanelToggle = new instance.UI.Components.ToggleElementButton(
+    {
+      type: 'toggleElementButton',
+      img: 'icon-redact-panel',
+      element: 'redactPanel_1',
+      dataElement: 'panel2Button',
+      toggleElement: 'redactPanel_1',
+    },
+  );
+
+  const redactionGroupedItems = new instance.UI.Components.GroupedItems({
+    dataElement: 'redactionGroupedItems',
+    items: [
+      redactionToolButton,
+      redactionPanelToggle,
       defaultAnnotationUtilities,
     ],
   });
@@ -289,6 +339,14 @@ Webviewer.WebComponent({
     groupedItems: [measureGroupedItems]
   });
 
+  const redactionRibbonItem = new instance.UI.Components.RibbonItem({
+    dataElement: 'redaction-ribbon-item',
+    label: 'Redact',
+    title: 'Redact',
+    toolbarGroup: 'toolbarGroup-Redact',
+    groupedItems: [redactionGroupedItems]
+  });
+
   const editRibbonItem = new instance.UI.Components.RibbonItem({
     dataElement: 'edit-ribbon-item',
     label: 'Edit',
@@ -317,6 +375,7 @@ Webviewer.WebComponent({
       annotateRibbonItem,
       shapesRibbomItem,
       insertRibbonItem,
+      redactionRibbonItem,
       measureRibbonItem,
       editRibbonItem,
       fillAndSignRibbonItem,
@@ -362,6 +421,7 @@ Webviewer.WebComponent({
       annotateGroupedItems,
       shapesGroupedItems,
       insertGroupedItems,
+      redactionGroupedItems,
       measureGroupedItems,
       editGroupedItems,
       fillAndSignGroupedItems,
