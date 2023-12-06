@@ -5,23 +5,28 @@
   width: 100%;
   height: 100%;
   padding: 16px;
-  position: relative;
-  border-radius: 4px;
-
-  >div{
-    width: 100%;
-    display: flex;
-  }
 
   &-canvas-container {
-    width: 100%;
-    height: 196px;
-    background: var(--signature-draw-background);
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    position: relative;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    background: var(--signature-draw-background);
+    border-radius: 4px;
+    border: 1px solid var(--modal-stroke-and-border);
+    padding: 8px;
+    height: 200px;
+
+    &.full-signature {
+      flex: 1.5 0 0;
+    }
+
+    &.initials {
+      flex: 1 0 0;
+    }
+  }
+
+  .ink-signature-canvas {
+    height: 144px;
+    border-bottom: 1px solid var(--modal-stroke-and-border);
 
     @include small-browser-height {
       height: 116px;
@@ -34,38 +39,43 @@
 
   &-canvas {
     z-index: 1;
-    width: 100%;
+    width: inherit;
+    height: inherit;
     cursor: crosshair;
   }
 
+  &-footer {
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid var(--modal-stroke-and-border);
+    padding-top: 7px;
+  }
 
   &-sign-here {
     color: var(--faded-text);
-    position: absolute;
-    top: 90.8px;
-    
-    @include small-browser-height {
-      top: 50%;
-    }
+    height: 48px;
+    text-align: center;
+    font-size: 10px;
+    flex: 2 0 0;
   }
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active){
+
+  @media all and (-ms-high-contrast: none),
+  (-ms-high-contrast: active) {
     &-sign-here {
       left: 44.5%;
     }
   }
+
   .canvas-colorpalette-container {
     padding: 0;
-    border: 1px solid var(--modal-stroke-and-border);
     box-sizing: border-box;
-    border-radius: 4px;
     display: flex;
     flex-direction: column;
   }
-  
-  .colorpalette-clear-container{
+
+  .colorpalette-clear-container {
     display: flex;
     height: 44px;
     justify-content: space-between;
-    border-top: 1px solid var(--modal-stroke-and-border);
   }
 }

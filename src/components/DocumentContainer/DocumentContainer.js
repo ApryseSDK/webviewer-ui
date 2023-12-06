@@ -20,7 +20,6 @@ import { getMinZoomLevel, getMaxZoomLevel } from 'constants/zoomFactors';
 import PageNavOverlay from 'components/PageNavOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import ReaderModeViewer from 'components/ReaderModeViewer';
-import { panelMinWidth } from 'constants/panel';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 import useOnMeasurementToolOrAnnotationSelected from 'hooks/useOnMeasurementToolOrAnnotationSelected';
 import useOnCountMeasurementAnnotationSelected from 'hooks/useOnCountMeasurementAnnotationSelected';
@@ -283,9 +282,6 @@ class DocumentContainer extends React.PureComponent {
 
   render() {
     const {
-      leftPanelWidth,
-      isLeftPanelOpen,
-      isFlxPanelOpenLeft,
       isMultiTabEmptyPageOpen,
       isMobile,
       documentContentContainerWidthStyle,
@@ -294,15 +290,14 @@ class DocumentContainer extends React.PureComponent {
       featureFlags,
       bottomHeaderHeight,
       leftHeaderWidth,
+      documentContainerLeftMargin,
     } = this.props;
-
-    const marginLeft = 0 + (isLeftPanelOpen ? leftPanelWidth : 0) + (isFlxPanelOpenLeft ? panelMinWidth : 0);
 
     const style = {
       width: documentContentContainerWidthStyle,
       // we animate with margin-left. For some reason it looks nicer than transform.
       // Using transform makes a clunky animation because the panels are using transform already.
-      marginLeft: `${marginLeft}px`,
+      marginLeft: `${documentContainerLeftMargin}px`,
     };
     const documentContainerClassName = isIE ? getClassNameInIE(this.props) : this.getClassName(this.props);
     const documentClassName = classNames({
@@ -379,9 +374,7 @@ class DocumentContainer extends React.PureComponent {
 
 const mapStateToProps = (state) => ({
   documentContentContainerWidthStyle: selectors.getDocumentContentContainerWidthStyle(state),
-  leftPanelWidth: selectors.getLeftPanelWidthWithResizeBar(state),
-  isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
-  isFlxPanelOpenLeft: selectors.isCustomFlxPanelOpen(state, 'left'),
+  documentContainerLeftMargin: selectors.getDocumentContainerLeftMargin(state),
   isRightPanelOpen: selectors.isElementOpen(state, 'searchPanel') || selectors.isElementOpen(state, 'notesPanel'),
   isMultiTabEmptyPageOpen: selectors.getIsMultiTab(state) && selectors.getTabs(state).length === 0,
   isSearchOverlayOpen: selectors.isElementOpen(state, DataElements.SEARCH_OVERLAY),

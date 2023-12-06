@@ -10,7 +10,7 @@ const TestColorPalettePicker = withProviders(ColorPalettePicker);
 
 function noop() {}
 
-const customColors = ["#00000"]
+const customColors = ['#00000'];
 
 describe('ColorPalettePicker', () => {
   it('Story should not throw any errors', () => {
@@ -36,7 +36,7 @@ describe('ColorPalettePicker', () => {
   it('Test add color button works', () => {
     const openColorPicker = jest.fn();
     const { container } = render(
-      <TestColorPalettePicker getHexColor={noop} findCustomColorsIndex={noop} setColorToBeDeleted={noop} openColorPicker={openColorPicker} enableEdit={true}/>
+      <TestColorPalettePicker getHexColor={noop} findCustomColorsIndex={noop} setColorToBeDeleted={noop} openColorPicker={openColorPicker} enableEdit/>
     );
     // Verify that ColorPalettePicker related classes are in the document
     expect(container.querySelector('.colorPickerController')).toBeInTheDocument();
@@ -45,7 +45,6 @@ describe('ColorPalettePicker', () => {
     expect(addButton).toBeInTheDocument();
     fireEvent.click(addButton);
     expect(openColorPicker).toBeCalled();
-    
   });
 
   it('Test no remove color button when there is not custom colors', () => {
@@ -64,7 +63,7 @@ describe('ColorPalettePicker', () => {
   it('Test remove color button does nothing if no color is selected', () => {
     const openDeleteModal = jest.fn();
     const { container } = render(
-      <TestColorPalettePicker getHexColor={noop} findCustomColorsIndex={noop} setColorToBeDeleted={noop} openDeleteModal={openDeleteModal} customColors={customColors} colorToBeDeleted={false} enableEdit={true}/>
+      <TestColorPalettePicker getHexColor={noop} findCustomColorsIndex={noop} setColorToBeDeleted={noop} openDeleteModal={openDeleteModal} customColors={customColors} colorToBeDeleted={false} enableEdit/>
     );
     // Verify that ColorPalettePicker related classes are in the document
     expect(container.querySelector('.colorPickerController')).toBeInTheDocument();
@@ -78,7 +77,7 @@ describe('ColorPalettePicker', () => {
   it('Test remove color button works', () => {
     const openDeleteModal = jest.fn();
     const { container } = render(
-      <TestColorPalettePicker getHexColor={noop} findCustomColorsIndex={noop} setColorToBeDeleted={noop} openDeleteModal={openDeleteModal} customColors={customColors} colorToBeDeleted={true} enableEdit={true}/>
+      <TestColorPalettePicker getHexColor={noop} findCustomColorsIndex={noop} setColorToBeDeleted={noop} openDeleteModal={openDeleteModal} customColors={customColors} colorToBeDeleted enableEdit/>
     );
     // Verify that ColorPalettePicker related classes are in the document
     expect(container.querySelector('.colorPickerController')).toBeInTheDocument();
@@ -87,13 +86,12 @@ describe('ColorPalettePicker', () => {
     expect(removeButton).toBeInTheDocument();
     fireEvent.click(removeButton);
     expect(openDeleteModal).toBeCalled();
-    
   });
 
   it('Test remove/add color button should not work when enableEdit=false', () => {
     const openDeleteModal = jest.fn();
     const { container } = render(
-      <TestColorPalettePicker enableEdit={false} getHexColor={noop} findCustomColorsIndex={noop} setColorToBeDeleted={noop} openDeleteModal={openDeleteModal} customColors={customColors} colorToBeDeleted={true} />
+      <TestColorPalettePicker enableEdit={false} getHexColor={noop} findCustomColorsIndex={noop} setColorToBeDeleted={noop} openDeleteModal={openDeleteModal} customColors={customColors} colorToBeDeleted />
     );
     // Verify that ColorPalettePicker related classes are in the document
     expect(container.querySelector('.colorPickerController')).toBeInTheDocument();
@@ -102,6 +100,5 @@ describe('ColorPalettePicker', () => {
     expect(removeButton).not.toBeInTheDocument();
     const addButton = container.querySelector('#addCustomColor');
     expect(addButton).not.toBeInTheDocument();
-    
   });
 });

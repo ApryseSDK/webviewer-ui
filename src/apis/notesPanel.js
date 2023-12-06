@@ -240,6 +240,37 @@ const setAttachmentHandler = (store) => (attachmentHandler) => {
   store.dispatch(actions.setReplyAttachmentHandler(attachmentHandler));
 };
 
+/**
+* Enables the capability to filter by different measurement types in the comments panel filter.
+* For example, line annotations can also be distance measurements. Enabling this API would allow you to
+* filter by line annotations and distance measurements separately.
+* This API is disabled by default.
+* @method UI.NotesPanel.enableMeasurementAnnotationFilter
+* @example
+WebViewer(...)
+.then(function(instance) {
+  instance.UI.NotesPanel.enableMeasurementAnnotationFilter();
+});
+*/
+const enableMeasurementAnnotationFilter = (store) => () => {
+  store.dispatch(actions.setEnableMeasurementAnnotationsFilter(true));
+};
+
+/**
+ * Disables the capability to filter by different measurement types in the comments panel filter.
+ * For example, if your document has line annotations and distance measurement annotations, they would be consolidated into one filter option: Line Annotation.
+ * @method UI.NotesPanel.disableMeasurementAnnotationFilter
+ * @example
+WebViewer(...)
+  .then(function(instance) {
+    instance.UI.NotesPanel.disableMeasurementAnnotationFilter();
+  });
+ */
+const disableMeasurementAnnotationFilter = (store) => () => {
+  store.dispatch(actions.setEnableMeasurementAnnotationsFilter(false));
+};
+
+
 export {
   enableTextCollapse,
   disableTextCollapse,
@@ -252,5 +283,7 @@ export {
   enableAttachmentPreview,
   disableAttachmentPreview,
   disableMultiSelect,
-  setAttachmentHandler
+  setAttachmentHandler,
+  enableMeasurementAnnotationFilter,
+  disableMeasurementAnnotationFilter,
 };

@@ -1,15 +1,17 @@
+import { ITEM_TYPE } from 'src/constants/customizationVariables';
 import Item from './item';
-import { ITEM_TYPE } from 'constants/customizationVariables';
 
 class RibbonItem extends Item {
   constructor(props) {
-    const { isActive, label, img, toolbarGroup, groupedItems } = props;
+    const { isActive, label, img, toolbarGroup, groupedItems, direction } = props;
     super(props);
     this.type = ITEM_TYPE.RIBBON_ITEM;
     this.isActive = isActive;
     this.label = label;
     this.img = img;
     this.toolbarGroup = toolbarGroup;
+    this.type = ITEM_TYPE.RIBBON_ITEM;
+    this.direction = direction;
 
     this.groupedItems = [];
     if (Array.isArray(groupedItems)) {

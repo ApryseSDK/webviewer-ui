@@ -15,10 +15,10 @@ const parseColor = (color) => {
     return color;
   }
   let parsedColor = color;
-  if (parsedColor?.toHexString) {
+  if (color.toHexString) {
     parsedColor = parsedColor.toHexString();
   }
-  if (parsedColor?.toLowerCase) {
+  if (parsedColor.toLowerCase) {
     parsedColor = parsedColor.toLowerCase();
   }
 

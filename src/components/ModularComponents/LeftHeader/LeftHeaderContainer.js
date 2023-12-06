@@ -33,8 +33,9 @@ function LeftHeaderContainer() {
   if (fullLengthHeaders.length > 1) {
     console.warn(`Left headers only support one full length header but ${fullLengthHeaders.length} were added. Only the first one will be rendered.`);
   }
-  const leftHeader = fullLengthHeaders[0];
 
+  const leftHeader = fullLengthHeaders[0];
+  const userDefinedStyle = leftHeader ? leftHeader.style : {};
   const [elementRef, dimensions] = useResizeObserver();
   useEffect(() => {
     if (dimensions.width !== null) {
@@ -42,7 +43,7 @@ function LeftHeaderContainer() {
     }
   }, [dimensions]);
 
-  const style = useMemo(() => {
+  let style = useMemo(() => {
     const styleObject = {};
     if (isLeftPanelOpen) {
       styleObject['transform'] = `translateX(${leftPanelWidth + RESIZE_BAR_WIDTH}px)`;
@@ -52,6 +53,9 @@ function LeftHeaderContainer() {
     }
     return styleObject;
   }, [isLeftPanelOpen, leftPanelWidth, bottomHeadersHeight]);
+
+
+  style = Object.assign({}, style, userDefinedStyle);
 
   if (customizableUI) {
     const renderLeftHeader = () => {

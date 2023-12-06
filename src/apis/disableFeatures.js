@@ -6,11 +6,11 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.UI.disableFeatures(instance.Feature.Measurement);
+    instance.UI.disableFeatures(instance.UI.Feature.Measurement);
   });
  */
 
 import createFeatureAPI from 'helpers/createFeatureAPI';
 
 const enable = false;
-export default store => createFeatureAPI(enable, store);
+export default (store) => createFeatureAPI(enable, store);

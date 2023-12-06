@@ -3,6 +3,7 @@ import './TextStylePicker.scss';
 import Dropdown from 'components/Dropdown';
 import FontSizeDropdown from 'components/FontSizeDropdown';
 import Button from 'components/Button';
+import PropTypes from 'prop-types';
 
 const TextStylePicker = ({
   onPropertyChange,
@@ -11,6 +12,7 @@ const TextStylePicker = ({
   isRedaction,
   isContentEditing,
   fonts,
+  stateless = false,
 }) => {
   // List is not complete
   const supportedFonts = fonts?.length ? fonts : ['Helvetica', 'Times New Roman'];
@@ -25,19 +27,23 @@ const TextStylePicker = ({
     onPropertyChange('FontSize', fontSize);
   };
 
-  const [bold, setBold] = useState(properties?.bold || false);
+  const defaultBold = properties?.bold || false;
+  const [bold, setBold] = useState(defaultBold);
   const toggleBold = () => {
     onRichTextStyleChange('font-weight', !bold ? 'bold' : '');
     setBold(!bold);
   };
 
-  const [italic, setItalic] = useState(properties?.italic || false);
+  const defaultItalic = properties?.italic || false;
+  const [italic, setItalic] = useState(defaultItalic);
   const toggleItalic = () => {
     onRichTextStyleChange('font-style', !italic ? 'italic' : '');
     setItalic(!italic);
   };
 
-  const [underline, setUnderline] = useState(properties?.underline || false);
+  const defaultUnderline = properties?.underline || false;
+  const defaultStrikeout = properties?.strikeout || false;
+  const [underline, setUnderline] = useState(defaultUnderline);
   const [strikeout, setStrikeout] = useState(properties?.strikeout || false);
   const toggleUnderline = () => {
     const newUnderline = !underline;
@@ -71,25 +77,29 @@ const TextStylePicker = ({
   const fontSizeProps = fontSize?.match(/([0-9.]+)|([a-z]+)/gi);
 
   const [error, setError] = useState('');
+  const fontSizePropsToUpdate = (fontSizeProps && parseFloat(fontSizeProps[0])) || 12;
 
   return (
     <>
       <div className={`container-fluid ${error && 'error'}`}>
-        <Dropdown
-          items={supportedFonts}
-          onClickItem={changeFont}
-          currentSelectionKey={font}
-          getCustomItemStyle={(item) => ({ fontFamily: item })}
-          maxHeight={200}
-          placeholder={isContentEditing ? 'Font' : undefined}
-        />
-        <FontSizeDropdown
-          fontSize={(fontSizeProps && parseFloat(fontSizeProps[0])) || 12}
-          fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
-          onFontSizeChange={changeFontSize}
-          onError={setError}
-          applyOnlyOnBlur={isContentEditing}
-        />
+        <div className="container-dropdown">
+          <Dropdown
+            items={supportedFonts}
+            onClickItem={changeFont}
+            currentSelectionKey={font}
+            getCustomItemStyle={(item) => ({ fontFamily: item })}
+            maxHeight={200}
+            placeholder={isContentEditing ? 'Font' : undefined}
+          />
+          <FontSizeDropdown
+            fontSize={fontSizePropsToUpdate}
+            key={fontSizePropsToUpdate}
+            fontUnit={(fontSizeProps && fontSizeProps[1]) || 'pt'}
+            onFontSizeChange={changeFontSize}
+            onError={setError}
+            applyOnlyOnBlur={isContentEditing}
+          />
+        </div>
         {error && <div className="error-text">{error}</div>}
       </div>
       <div className="icon-grid">
@@ -100,28 +110,28 @@ const TextStylePicker = ({
               onClick={toggleBold}
               img="icon-menu-bold"
               title="option.richText.bold"
-              isActive={bold}
+              isActive={stateless ? defaultBold : bold}
             />
             <Button
               dataElement="freeTextItalicButton"
               onClick={toggleItalic}
               img="icon-menu-italic"
               title="option.richText.italic"
-              isActive={italic}
+              isActive={stateless ? defaultItalic : italic}
             />
             <Button
               dataElement="freeTextUnderlineButton"
               onClick={toggleUnderline}
               img="icon-menu-text-underline"
               title="option.richText.underline"
-              isActive={underline}
+              isActive={stateless ? defaultUnderline : underline}
             />
             <Button
               dataElement="freeTextStrikeoutButton"
               onClick={toggleStrikeout}
               img="icon-tool-text-manipulation-strikethrough"
               title="option.richText.strikeout"
-              isActive={strikeout}
+              isActive={stateless ? defaultStrikeout : strikeout}
             />
           </div>
         )}
@@ -183,6 +193,10 @@ const TextStylePicker = ({
       </div>
     </>
   );
+};
+
+TextStylePicker.propTypes = {
+  onPropertyChange: PropTypes.func.isRequired,
 };
 
 export default TextStylePicker;

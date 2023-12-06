@@ -6,7 +6,90 @@
   background: var(--component-background);
   border-radius: 4px;
 
-  @include mobile {
-    display: none !important;
+  &.is-horizontal {
+    .container {
+      display: inherit;
+    }
+  }
+
+  &.is-vertical {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &.isOfficeEditor {
+    .container {
+      display: block;
+
+      .office-action-item {
+        width: 300px;
+        padding: 8px;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--blue-4);
+        }
+
+        &.disabled {
+          cursor: default;
+          background-color: inherit;
+          color: var(--disabled-text);
+        }
+
+        .icon-title {
+          display: flex;
+          align-items: center;
+
+          .Icon {
+            margin-right: 10px;
+          }
+        }
+
+        .shortcut {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+
+  &.isOfficeEditor {
+    .container {
+      display: block;
+
+      .office-action-item {
+        width: 300px;
+        padding: 8px;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--blue-4);
+        }
+
+        &.disabled {
+          cursor: default;
+          background-color: inherit;
+          color: var(--disabled-text);
+        }
+
+        .icon-title {
+          display: flex;
+          align-items: center;
+
+          .Icon {
+            margin-right: 10px;
+          }
+        }
+
+        .shortcut {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
   }
 }

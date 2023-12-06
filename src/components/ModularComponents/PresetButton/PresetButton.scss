@@ -1,0 +1,7 @@
+@import '../../../../src/constants/styles';
+
+.PresetButton {
+  &:hover {
+    background: var(--tools-button-hover);
+  }
+}

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -13,10 +13,12 @@ export default function useOnContextMenuOpen() {
   const [
     popupItems,
     isRightClickAnnotationPopupEnabled,
+    activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.getPopupItems(state, DataElements.CONTEXT_MENU_POPUP),
       selectors.isRightClickAnnotationPopupEnabled(state),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -29,18 +31,25 @@ export default function useOnContextMenuOpen() {
   // if it's on, on tablet + phone, it will be available without being draggable
   const isMobile = !!isMobileDevice || isMobileCSS();
 
+  // Use this to store isRightClickAnnotationPopupEnabled value to avoid stale closure
+  const isRightClickAnnotationPopupEnabledRef = useRef();
+
+  useEffect(() => {
+    isRightClickAnnotationPopupEnabledRef.current = isRightClickAnnotationPopupEnabled;
+  }, [isRightClickAnnotationPopupEnabled]);
+
   useOnRightClick(
     useCallback((e) => {
       const { pageX: left, pageY: top } = e;
 
-      const annotationUnderMouse = core.getAnnotationByMouseEvent(e);
-      if ((!isRightClickAnnotationPopupEnabled && !isMobile) || (isRightClickAnnotationPopupEnabled && !annotationUnderMouse)) {
+      const annotationUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
+      if ((!isRightClickAnnotationPopupEnabledRef.current && !isMobile) || (isRightClickAnnotationPopupEnabledRef.current && !annotationUnderMouse)) {
         if (popupItems.length > 0) {
           setClickPosition({ left, top });
           dispatch(actions.openElement(DataElements.CONTEXT_MENU_POPUP));
         }
       }
-    }, [popupItems, isRightClickAnnotationPopupEnabled])
+    }, [popupItems, activeDocumentViewerKey])
   );
 
   return { clickPosition };

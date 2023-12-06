@@ -7,6 +7,7 @@ import React from 'react';
 // tests will error out
 const initialState = {
   viewer: {
+    activeDocumentViewerKey: 1,
     disabledElements: {},
     customElementOverrides: {},
     panelWidths: {

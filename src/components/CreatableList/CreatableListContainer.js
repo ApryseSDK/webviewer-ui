@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
-import CreatableListItem from './CreatableListItem'
+import CreatableListItem from './CreatableListItem';
 
 import './CreatableList.scss';
 
 const CreatableListContainer = ({
   options,
   onOptionsUpdated,
+  popupRef,
 }) => {
   const { t } = useTranslation();
 
@@ -18,14 +19,14 @@ const CreatableListContainer = ({
       id: index,
       displayValue: option.displayValue,
       value: option.value,
-    }
+    };
   });
   const [items, setItems] = useState(draggableItems);
   const [nextId, setNextId] = useState(draggableItems.length);
-
+  const containerRef = useRef();
 
   useEffect(() => {
-    const sanitizedOptions = items.map(item => ({ value: item.value, displayValue: item.displayValue }));
+    const sanitizedOptions = items.map((item) => ({ value: item.value, displayValue: item.displayValue }));
     onOptionsUpdated(sanitizedOptions);
   }, [items, onOptionsUpdated]);
 
@@ -33,23 +34,23 @@ const CreatableListContainer = ({
     const id = nextId;
     setNextId(nextId + 1);
     setItems([...items, { id, value: '', displayValue: '' }]);
+    validatePopupHeight();
   }, [nextId, items]);
 
-  const handleDeleteItem = id => () => {
-    const updatedItems = items.filter(item => {
+  const handleDeleteItem = (id) => () => {
+    const updatedItems = items.filter((item) => {
       return id !== item.id;
     });
 
     setItems(updatedItems);
   };
 
-  const handleItemValueChange = id => value => {
-    const updatedItems = items.map(item => {
+  const handleItemValueChange = (id) => (value) => {
+    const updatedItems = items.map((item) => {
       if (item.id !== id) {
         return item;
-      } else {
-        return { ...item, value: value, displayValue: value };
       }
+      return { ...item, value, displayValue: value };
     });
 
     setItems(updatedItems);
@@ -78,9 +79,25 @@ const CreatableListContainer = ({
     [items],
   );
 
+  const validatePopupHeight = () => {
+    const popupContainer = popupRef.current;
+    const containerElement = containerRef.current;
+    const { bottom } = popupContainer.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const availableHeight = viewportHeight - bottom;
+    const isListOverflowing = containerElement.scrollHeight > containerElement.clientHeight;
+    if (availableHeight <= 40 && !isListOverflowing) {
+      const inputCount = containerElement.childElementCount;
+      const maxContainerHeight = inputCount * 40;
+      containerElement.style.maxHeight = `${maxContainerHeight}px`;
+    } else if (availableHeight > 40) {
+      containerElement.style.maxHeight = '200px';
+    }
+  };
+
   return (
     <div>
-      <div className="creatable-list">
+      <div className="creatable-list" ref={containerRef}>
         {items.map((item, index) => (
           <CreatableListItem
             key={item.id}
@@ -99,9 +116,10 @@ const CreatableListContainer = ({
         className="add-item-button"
         label={t('action.addOption')}
         img="icon-plus-sign"
-        onClick={onAddItem} />
+        onClick={onAddItem}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default CreatableListContainer;

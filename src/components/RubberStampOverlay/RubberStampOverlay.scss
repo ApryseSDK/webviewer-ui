@@ -123,7 +123,7 @@
   .stamp-row-content.add-btn {
     background-color: transparent;
     @include mobile {
-      width: 90vw;
+      width: 90%;
       margin-right: 0px;
     }
   }
@@ -154,6 +154,7 @@
       flex: 1;
       border-radius: 0px;
       cursor: pointer;
+      padding: 0 10px;
 
       &:first-child {
         border-bottom-left-radius: 4px;

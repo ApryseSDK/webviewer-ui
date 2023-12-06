@@ -6,8 +6,6 @@ import ResizeBar from './ResizeBar';
 
 const TestResizeBar = withProviders(ResizeBar);
 
-const noop = () => {};
-
 jest.mock('helpers/fireEvent', () => {
   return jest.fn();
 });

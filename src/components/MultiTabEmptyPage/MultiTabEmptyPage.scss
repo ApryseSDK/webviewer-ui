@@ -1,0 +1,13 @@
+.MultiTabEmptyPage {
+  width: 100%;
+
+  &.closed {
+    display: none;
+  }
+
+  .empty-page-body,
+  .image-signature {
+    height: 100%;
+    width: 100%;
+  }
+}

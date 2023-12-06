@@ -124,7 +124,7 @@ describe('Thumbnail', () => {
       fireEvent.click(tcontainer, { shiftKey: true });
       expect(actions.setSelectedPageThumbnails).toBeCalledWith([1, 2, 3]);
     });
-    it('Should select page1 and page2, page3 when already selected page 3 and page 4', () => {
+    it('Should select page1 and page2, page3 when 2 and 3 are already selected, and I click shift + select page 1', () => {
       const actions = {
         setThumbnailSelectingPages: noop,
       };
@@ -145,7 +145,7 @@ describe('Thumbnail', () => {
       fireEvent.click(tcontainer, { shiftKey: true });
       expect(actions.setSelectedPageThumbnails).toBeCalledWith([0, 1, 2]);
     });
-    it('Should select page3 and page2 when already selected page 3, page 2 and page 1', () => {
+    it('Should select page 2 and page 1 when already selected page 2, and I shift + select page 1', () => {
       const actions = {
         setThumbnailSelectingPages: noop,
       };

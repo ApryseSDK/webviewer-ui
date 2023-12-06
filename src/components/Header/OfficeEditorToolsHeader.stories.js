@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
 import { Provider } from 'react-redux';
@@ -17,6 +17,14 @@ initialState.viewer.openElements.colorPickerOverlay = false;
 const store = configureStore({ reducer: () => initialState });
 
 const BasicComponent = ({ children }) => {
+  core.getOfficeEditor = () => ({
+    isTextSelected: () => false
+  });
+  core.getDocument = () => ({
+    getType: () => workerTypes.OFFICE_EDITOR,
+    addEventListener: () => {},
+  });
+
   return (
     <Provider store={store}>
       {children}
@@ -25,22 +33,38 @@ const BasicComponent = ({ children }) => {
 };
 
 export function Basic() {
-  core.getOfficeEditor = () => ({
-    isTextSelected: () => false
-  });
-  core.getDocument = () => ({
-    getType: () => workerTypes.OFFICE_EDITOR,
-    addEventListener: () => {},
-  });
-  window.Core = {
-    Annotations: {
-      Color: () => {},
-    }
-  };
-
   return (
     <BasicComponent>
       <OfficeEditorToolsHeader />
     </BasicComponent>
   );
 }
+Basic.parameters = {
+  chromatic: {
+    viewports: [1300]
+  }
+};
+
+export function Overflow() {
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      headerRef.current.querySelector('[data-element=office-editor-more-tools]').click();
+    }, 2000);
+  }, []);
+
+  return (
+    <BasicComponent>
+      <div ref={headerRef}>
+        <OfficeEditorToolsHeader />
+      </div>
+    </BasicComponent>
+  );
+}
+Overflow.parameters = {
+  chromatic: {
+    viewports: [850],
+    delay: 3000
+  }
+};

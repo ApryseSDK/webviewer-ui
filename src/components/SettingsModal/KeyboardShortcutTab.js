@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import { useTranslation } from 'react-i18next';
+import selectors from 'selectors';
 import Button from 'components/Button';
 import DataElements from 'constants/dataElement';
-import hotkeysManager, { Shortcuts } from 'helpers/hotkeysManager';
+import { Shortcuts } from 'helpers/hotkeysManager';
 import { isMac } from 'helpers/device';
 import EditKeyboardShortcutModal from './EditKeyboardShortcutModal';
+import { SearchWrapper } from './SearchWrapper';
 
 import './KeyboardShortcutTab.scss';
 
@@ -53,6 +55,8 @@ const KeyboardShortcutTab = () => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
+  const shortcutKeyMap = useSelector(selectors.getShortcutKeyMap);
+
   const [currentShortcut, setCurrentShortcut] = useState(undefined);
 
   const getCommandStrings = (command) => {
@@ -65,13 +69,13 @@ const KeyboardShortcutTab = () => {
   };
 
   const editShortcut = (shortcut) => {
-    dispatch(actions.closeElement(DataElements.SETTINGS_MODAL));
+    dispatch(actions.setIsElementHidden(DataElements.SETTINGS_MODAL, true));
     setCurrentShortcut(shortcut);
   };
 
   const finishEditing = () => {
     setCurrentShortcut(undefined);
-    dispatch(actions.openElement(DataElements.SETTINGS_MODAL));
+    dispatch(actions.setIsElementHidden(DataElements.SETTINGS_MODAL, false));
   };
 
   return (
@@ -82,22 +86,27 @@ const KeyboardShortcutTab = () => {
         <div className="shortcut-table-header-action">{t('option.settings.action')}</div>
       </div>
       <div className="shortcut-table-content">
-        {keyboardShortcuts.map((item) => (
-          <div key={item[0]} className="shortcut-table-item">
-            <div className="shortcut-table-item-command">
-              {getCommandStrings(hotkeysManager.shortcutKeyMap[item[0]]).map((str, i) => (
-                <span key={i}>{str}</span>
-              ))}
+        {keyboardShortcuts.map(([command, description]) => (
+          <SearchWrapper
+            key={command}
+            keywords={[t(description)]}
+          >
+            <div className="shortcut-table-item">
+              <div className="shortcut-table-item-command">
+                {getCommandStrings(shortcutKeyMap[command]).map((str, i) => (
+                  <span key={i}>{str}</span>
+                ))}
+              </div>
+              <div className="shortcut-table-item-description">
+                {t(description)}
+              </div>
+              <Button
+                img="icon-edit-form-field"
+                title={t('action.edit')}
+                onClick={() => editShortcut(command)}
+              />
             </div>
-            <div className="shortcut-table-item-description">
-              {t(item[1])}
-            </div>
-            <Button
-              img="icon-edit-form-field"
-              title={t('action.edit')}
-              onClick={() => editShortcut(item[0])}
-            />
-          </div>
+          </SearchWrapper>
         ))}
       </div>
       {currentShortcut && (

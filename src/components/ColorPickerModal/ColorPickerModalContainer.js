@@ -8,7 +8,7 @@ function ColorPickerModalContainer(props) {
     closeColorPicker();
   }, [closeColorPicker]);
 
-  const handleChangeSave = selectedColor => {
+  const handleChangeSave = (selectedColor) => {
     onColorChange(selectedColor);
     closeColorPicker();
   };

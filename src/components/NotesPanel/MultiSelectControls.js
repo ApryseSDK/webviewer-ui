@@ -159,7 +159,7 @@ const MultiSelectControls = ({
       <div className="buttons-container">
         <Button
           dataElement={DataElements.NOTE_MULTI_REPLY_BUTTON}
-          disabled={modifiableMultiSelectAnnotations.length === 0}
+          disabled={multiSelectedAnnotations.length === 0}
           img="icon-header-chat-line"
           onClick={() => {
             setShowMultiReply(true);
@@ -240,7 +240,7 @@ const MultiSelectControls = ({
               message,
               confirmBtnText,
               onConfirm: () => {
-                core.deleteAnnotations(modifiableMultiSelectAnnotations, activeDocumentViewerKey);
+                core.deleteAnnotations(modifiableMultiSelectAnnotations, undefined, activeDocumentViewerKey);
               },
             };
             dispatch(actions.showWarningMessage(warning));

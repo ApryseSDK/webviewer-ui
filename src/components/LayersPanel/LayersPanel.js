@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Layer from 'components/Layer';
 
 import './LayersPanel.scss';
@@ -12,7 +11,6 @@ const propTypes = {
 };
 
 function LayersPanel(props) {
-
   const { layers = [], setLayers } = props;
 
   function onLayerUpdated(updatedLayer, index) {
@@ -30,7 +28,7 @@ function LayersPanel(props) {
         <Layer
           key={layer.id}
           layer={layer}
-          layerUpdated={updatedLayer => onLayerUpdated(updatedLayer, i)}
+          layerUpdated={(updatedLayer) => onLayerUpdated(updatedLayer, i)}
         />
       ))}
     </DataElementWrapper>

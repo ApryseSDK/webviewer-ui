@@ -1,0 +1,45 @@
+@import '../../../constants/styles';
+
+.DocumentHeader {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+
+  &.hidden {
+    visibility: hidden;
+  }
+
+  .Button {
+    width: 28px;
+    height: 28px;
+
+    &:hover {
+      background-color: var(--popup-button-hover);
+    }
+
+    &.active{
+      background-color: var(--view-header-button-active);
+      .Icon {
+        color: var(--view-header-icon-active-fill);
+      }
+    }
+  }
+
+  .zoom-overlay {
+    //align-self: flex-start;
+  }
+
+  .file-name {
+    font-family: var(--font-family);
+    font-size: var(--font-size-medium);
+  }
+
+  .control-buttons {
+    display: flex;
+    gap: 8px;
+  }
+}

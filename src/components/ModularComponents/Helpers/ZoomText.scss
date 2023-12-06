@@ -1,0 +1,11 @@
+.ZoomText {
+  display: flex;
+
+  .label {
+    font-size: var(--font-size-default);
+  }
+
+  .value {
+    color: var(--gray-7);
+  }
+}

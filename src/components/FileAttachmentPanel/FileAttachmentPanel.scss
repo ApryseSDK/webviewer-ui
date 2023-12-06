@@ -43,6 +43,14 @@
         overflow: hidden;
         white-space: nowrap;text-overflow: ellipsis;
       }
+      .embedSpinner{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .spinner {
+          margin: 0px;
+        }
+      }
     }
     ul ul{
       padding-left: 10px;

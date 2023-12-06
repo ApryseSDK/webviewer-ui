@@ -39,6 +39,7 @@ import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import RibbonOverflowFlyout from 'components/ModularComponents/RibbonOverflowFlyout';
 import GroupedToolsOverflowFlyout from 'components/ModularComponents/GroupedToolsOverflowFlyout';
 import ViewControlsFlyout from 'components/ModularComponents/ViewControls/ViewControlsFlyout';
+import MainMenu from 'components/ModularComponents/MainMenu/MainMenuFlyout';
 import ProgressModal from 'components/ProgressModal';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 import StylePanel from 'components/StylePanel';
@@ -321,6 +322,7 @@ const App = ({ removeEventHandlers }) => {
         <RibbonOverflowFlyout />
         <GroupedToolsOverflowFlyout />
         <ViewControlsFlyout />
+        <MainMenu />
         <Accessibility />
         <Header />
         {isOfficeEditorMode() && (

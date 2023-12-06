@@ -1,7 +1,7 @@
 import React from 'react';
 import { Choice } from '@pdftron/webviewer-react-toolkit';
-import Icon from 'components/Icon'
-import './RedactionSearchResult.scss'
+import Icon from 'components/Icon';
+import './RedactionSearchResult.scss';
 import classNames from 'classnames';
 import { redactionTypeMap } from 'constants/redactionTypes';
 
@@ -19,9 +19,8 @@ const displayRedactionSearchResult = (props) => {
         {textAfterSearchValue}
       </>
     );
-  } else {
-    return resultStr;
-  };
+  }
+  return resultStr;
 };
 
 const RedactionSearchResult = (props) => {
@@ -51,7 +50,7 @@ const RedactionSearchResult = (props) => {
         {displayResult}
       </div>
     </div >
-  )
+  );
 };
 
 export default React.memo(RedactionSearchResult);

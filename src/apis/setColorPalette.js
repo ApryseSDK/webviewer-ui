@@ -27,7 +27,7 @@ WebViewer(...)
   });
  */
 
-export default store => overrides => {
+export default (store) => (overrides) => {
   const currentOverride = {
     ...(selectors.getCustomElementOverrides(store.getState(), 'colorPalette') || {}),
   };
@@ -37,18 +37,18 @@ export default store => overrides => {
       currentOverride.global = overrides;
     } else {
       return console.warn(
-        `An array is passed to setColorPalette, but some colors are invalid. A color must be 'transparency' or a hex color string. For example #F0F0F0`
+        'An array is passed to setColorPalette, but some colors are invalid. A color must be \'transparency\' or a hex color string. For example #F0F0F0'
       );
     }
   } else if (typeof overrides === 'object') {
     if (overrides.toolNames && overrides.colors) {
-      overrides.toolNames.forEach(toolName => {
+      overrides.toolNames.forEach((toolName) => {
         const key = mapToolNameToKey(toolName);
         currentOverride[key] = overrides.colors;
       });
     } else {
       return console.warn(
-        `An object is passed to setColorPalette, but it doesn't have a toolNames or colors property.`
+        'An object is passed to setColorPalette, but it doesn\'t have a toolNames or colors property.'
       );
     }
   }
@@ -57,5 +57,4 @@ export default store => overrides => {
 };
 
 // examples of valid colors are: '#f0f0f0', '#FFFFFF'
-const isValidColor = color =>
-  color === 'transparency' || (color.startsWith('#') && color.split('#')[1].length === 6);
+const isValidColor = (color) => color === 'transparency' || (color.startsWith('#') && color.split('#')[1].length === 6);

@@ -297,7 +297,6 @@ import enableFeatureFlag from './enableFeatureFlag';
 import disableFeatureFlag from './disableFeatureFlag';
 import enterMultiViewerMode from './enterMultiViewerMode';
 import exitMultiViewerMode from './exitMultiViewerMode';
-import setDefaultPrintMargins from './setDefaultPrintMargins';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -393,7 +392,6 @@ export default (store) => {
     setPageLabels: setPageLabels(store),
     setPrintQuality: setPrintQuality(store),
     setDefaultPrintOptions: setDefaultPrintOptions(store),
-    setDefaultPrintMargins: setDefaultPrintMargins(store),
     setNotesPanelSortStrategy: setNotesPanelSortStrategy(store),
     setSwipeOrientation,
     setTheme: setTheme(store),

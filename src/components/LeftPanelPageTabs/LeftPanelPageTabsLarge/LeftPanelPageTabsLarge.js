@@ -7,7 +7,6 @@ import CustomLeftPanelOperations from '../CustomLeftPanelOperations/CustomLeftPa
 import LeftPanelPageTabsMove from '../LeftPanelPageTabsMove/LeftPanelPageTabsMove';
 
 
-
 function InitialLeftPanelPageTabs({ children, pageNumbers, multiPageManipulationControlsItems }) {
   const childrenArray = React.Children.toArray(children);
   if (!multiPageManipulationControlsItems) {
@@ -15,7 +14,7 @@ function InitialLeftPanelPageTabs({ children, pageNumbers, multiPageManipulation
   }
   return multiPageManipulationControlsItems.map((item, index) => {
     const { dataElement, type } = item;
-    let component = childrenArray.find(child => child.props.dataElement === dataElement);
+    let component = childrenArray.find((child) => child.props.dataElement === dataElement);
     const key = dataElement || `${type}-${index}`;
 
     if (!component) {
@@ -37,12 +36,12 @@ function InitialLeftPanelPageTabs({ children, pageNumbers, multiPageManipulation
 
 
 function LeftPanelPageTabsLarge(props) {
-  const { pageNumbers, onRotateClockwise, onRotateCounterClockwise, onInsertAbove, onInsertBelow, onReplace, onExtractPages, onDeletePages, moveToTop, moveToBottom, multiPageManipulationControlsItems } = props;
+  const { pageNumbers, onRotateClockwise, onRotateCounterClockwise, onInsert, onReplace, onExtractPages, onDeletePages, moveToTop, moveToBottom, multiPageManipulationControlsItems } = props;
   return (
-    <div className={`PageControlContainer root`}>
+    <div className={'PageControlContainer root'}>
       <InitialLeftPanelPageTabs pageNumbers={pageNumbers} multiPageManipulationControlsItems={multiPageManipulationControlsItems} >
         <LeftPanelPageTabsRotate onRotateClockwise={onRotateClockwise} onRotateCounterClockwise={onRotateCounterClockwise} dataElement="leftPanelPageTabsRotate" />
-        <LeftPanelPageTabsInsert onInsertAbove={onInsertAbove} onInsertBelow={onInsertBelow} dataElement="leftPanelPageTabsInsert" />
+        <LeftPanelPageTabsInsert onInsert={onInsert} dataElement="leftPanelPageTabsInsert" />
         <LeftPanelPageTabsOperations onReplace={onReplace} onExtractPages={onExtractPages} onDeletePages={onDeletePages} dataElement="leftPanelPageTabsOperations" />
         <LeftPanelPageTabsMove moveToTop={moveToTop} moveToBottom={moveToBottom} dataElement="leftPanelPageTabsMove" />
       </InitialLeftPanelPageTabs>

@@ -56,11 +56,15 @@ const ContextMenuPopup = ({
     isOpen,
     isDisabled,
     isRightClickAnnotationPopupEnabled,
+    isMultiViewerMode,
+    activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP),
       selectors.isElementDisabled(state, DataElements.CONTEXT_MENU_POPUP),
       selectors.isRightClickAnnotationPopupEnabled(state),
+      selectors.isMultiViewerMode(state),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -93,7 +97,10 @@ const ContextMenuPopup = ({
   useEffect(() => {
     let { left, top } = clickPosition;
     const { width, height } = popupRef.current.getBoundingClientRect();
-    const documentContainer = getRootNode().querySelector('.DocumentContainer');
+    const documentContainer =
+      isMultiViewerMode
+        ? getRootNode().querySelector(`#DocumentContainer${activeDocumentViewerKey}`)
+        : getRootNode().querySelector('.DocumentContainer');
     if (documentContainer) {
       const containerBox = documentContainer.getBoundingClientRect();
       const horizontalGap = 2;
@@ -120,7 +127,7 @@ const ContextMenuPopup = ({
       }
       setPosition({ left, top });
     }
-  }, [clickPosition]);
+  }, [clickPosition, isMultiViewerMode, activeDocumentViewerKey]);
 
   if (isDisabled) {
     return null;
@@ -140,7 +147,7 @@ const ContextMenuPopup = ({
       style={{ ...position }}
       onClick={() => dispatch(actions.closeElement(DataElements.CONTEXT_MENU_POPUP))}
     >
-      <FocusTrap locked={isOpen}>
+      <FocusTrap locked={isOpen && position.top !== 0 && position.left !== 0}>
         <div className="container">
           {isOfficeEditorMode() ? (
             <>

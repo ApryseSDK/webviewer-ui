@@ -301,7 +301,8 @@ const TextSignature = ({
 
   // Renders the font options if initials and text signature are occupied
   const renderFontOptions = () => {
-    if (fullSignature === '' && initials === '') {
+    const isInitialsModeEnabledAndEmpty = isInitialsModeEnabled && initials === '';
+    if (fullSignature === '' && (isInitialsModeEnabledAndEmpty || !isInitialsModeEnabled)) {
       return (
         <Dropdown
           disabled={true}

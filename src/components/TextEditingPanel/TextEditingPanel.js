@@ -13,6 +13,35 @@ import HorizontalDivider from 'components/HorizontalDivider';
 
 import './TextEditingPanel.scss';
 
+function hexToRGB(hex) {
+  // Convert the hex color to RGB components
+  const red = parseInt(hex.slice(1, 3), 16);
+  const green = parseInt(hex.slice(3, 5), 16);
+  const blue = parseInt(hex.slice(5, 7), 16);
+  return { red, green, blue };
+}
+
+function calculateEuclideanDistance(rgb1, rgb2) {
+  // Calculate the Euclidean distance between two RGB values
+  return Math.sqrt(
+    (rgb2.red - rgb1.red) ** 2 +
+    (rgb2.green - rgb1.green) ** 2 +
+    (rgb2.blue - rgb1.blue) ** 2
+  );
+}
+
+function areColorsClose(hex1, hex2, threshold) {
+  // Convert hex colors to RGB
+  const rgb1 = hexToRGB(hex1);
+  const rgb2 = hexToRGB(hex2);
+
+  // Calculate the Euclidean distance between RGB values
+  const distance = calculateEuclideanDistance(rgb1, rgb2);
+
+  // Compare the distance to the threshold
+  return distance <= threshold;
+}
+
 const TextEditingPanel = ({
   undoRedoProperties,
   freeTextMode,
@@ -65,11 +94,31 @@ const TextEditingPanel = ({
 
   const newColor = format?.color?.toHexString ? format.color.toHexString().toUpperCase() : DEFAULT_COLOR.toHexString().toUpperCase();
   const shouldUpdateColorsArray = colorArray?.length > 0 && !colorArray.includes(newColor);
+  // Currently there is an issue where CMYK documents will return slightly different hex values
+  // to prevent them from flooding the Color Swatch panel we check the distance between the new color
+  // and the existing colors and if it is less than 50 we use the existing color, once the Worker is
+  // updated to return the same hex values for CMYK documents this can be removed
+  let closeMatchColor;
   if (shouldUpdateColorsArray) {
-    colorArray.push(newColor);
+    let closeMatch = false;
+    for (let i = 0; i < colorArray.length; i++) {
+      const color = colorArray[i];
+      if (areColorsClose(color, newColor, 50)) {
+        closeMatch = true;
+        closeMatchColor = new window.Core.Annotations.Color(color);
+        break;
+      }
+    }
+
+    if (!closeMatch) {
+      colorArray.push(newColor);
+    }
   }
   colorsToIgnore = colorArray.map((color) => color.toLowerCase());
-  const rgbColor = format?.color || DEFAULT_COLOR;
+  let rgbColor = format?.color || DEFAULT_COLOR;
+  if (closeMatchColor) {
+    rgbColor = closeMatchColor;
+  }
 
   return (
     <>

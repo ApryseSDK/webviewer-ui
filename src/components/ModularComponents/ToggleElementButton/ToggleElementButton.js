@@ -8,7 +8,7 @@ import Button from 'components/Button';
 
 const ToggleElementButton = (props) => {
   const buttonRef = useRef();
-  const { dataElement, title, disabled, img, label, toggleElement, onFlyoutToggled = null } = props;
+  const { dataElement, title, disabled, img, label, toggleElement, setFlyoutTriggerRef = null } = props;
   const [isActive, flyoutMap] = useSelector((state) => [
     selectors.isElementOpen(state, toggleElement),
     selectors.getFlyoutMap(state),
@@ -24,17 +24,13 @@ const ToggleElementButton = (props) => {
 
   const onClick = () => {
     if (flyoutMap[toggleElement]) {
-      if (onFlyoutToggled) {
-        onFlyoutToggled();
+      if (setFlyoutTriggerRef) {
+        setFlyoutTriggerRef();
       } else {
-        dispatch(actions.setFlyoutToggleElement(buttonRef.current));
+        dispatch(actions.setFlyoutToggleElement(dataElement));
       }
     }
-    if (isElementActive) {
-      dispatch(actions.closeElement(toggleElement));
-    } else {
-      dispatch(actions.openElement(toggleElement));
-    }
+    dispatch(actions.toggleElement(toggleElement));
   };
 
   return (
@@ -55,9 +51,13 @@ const ToggleElementButton = (props) => {
 };
 
 ToggleElementButton.propTypes = {
-  isActive: PropTypes.bool,
-  closeElement: PropTypes.func,
-  openElement: PropTypes.func,
+  dataElement: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  disabled: PropTypes.bool,
+  img: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  toggleElement: PropTypes.string.isRequired,
+  setFlyoutTriggerRef: PropTypes.func,
 };
 
 export default ToggleElementButton;

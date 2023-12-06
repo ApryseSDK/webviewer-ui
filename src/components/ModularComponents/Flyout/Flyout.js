@@ -17,6 +17,7 @@ import ToolGroupButton from '../ToolGroupButton';
 import PageControlsFlyout from '../PageControls/PageControlsFlyout';
 import { getIconDOMElement, getSubMenuDOMElement } from '../Helpers/responsiveness-helper';
 import { getFlyoutPositionOnElement } from 'helpers/flyoutHelper';
+import PresetButton from '../PresetButton';
 
 const Flyout = () => {
   const { t } = useTranslation();
@@ -129,6 +130,7 @@ const Flyout = () => {
     const itemIsATool = !!flyoutItem.toolName;
     const itemIsAToolGroup = !!flyoutItem.toolGroup;
     const itemIsARibbonItem = flyoutItem.type === ITEM_TYPE.RIBBON_ITEM;
+    const itemIsAPresetButton = flyoutItem.type === ITEM_TYPE.PRESET_BUTTON;
     const itemIsAZoomOptionsButton = flyoutItem.dataElement === 'zoomOptionsButton' || flyoutItem.className === 'ZoomFlyoutMenu';
     const itemIsPageNavButton = flyoutItem.dataElement === 'pageNavigationButton';
     const itemsToRender = isChild ? activeItem.children : items;
@@ -168,7 +170,13 @@ const Flyout = () => {
       />;
       return getFlyoutItemWrapper(ribbonItemElement);
     }
-
+    if (itemIsAPresetButton) {
+      const presetButtonElement = <PresetButton
+        buttonType={flyoutItem.dataElement}
+        isFlyoutItem={true}
+        iconDOMElement={getIconDOMElement(flyoutItem, itemsToRender)}/>;
+      return getFlyoutItemWrapper(presetButtonElement);
+    }
     if (itemIsAZoomOptionsButton) {
       const hasImg = !!flyoutItem.img || !!flyoutItem.icon;
       const zoomOptionsElement = (

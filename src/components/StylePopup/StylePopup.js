@@ -183,6 +183,12 @@ class StylePopup extends React.PureComponent {
         dataElement: DataElements.FONT_SIZE_SLIDER,
         getCirclePosition: (lineLength, FontSize) => ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
         convertRelativeCirclePositionToValue: (circlePosition) => `${circlePosition * 40 + 5}pt`,
+        min: 5,
+        max: 45,
+        step: 1,
+        withInputField: true,
+        inputFieldType: 'number',
+        getLocalValue: (FontSize) => `${parseFloat(FontSize).toFixed(2)}pt`,
       };
     }
 
@@ -324,7 +330,7 @@ class StylePopup extends React.PureComponent {
             />
             {showLabelText && !isLabelTextContainerDisabled && (
               <>
-                <div className="collapsible-menu" onClick={openLabelText} role={'toolbar'}>
+                <div className="collapsible-menu" onClick={openLabelText} onTouchStart={openLabelText} role={'toolbar'}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.labelText')}
                   </div>
@@ -340,7 +346,7 @@ class StylePopup extends React.PureComponent {
             )}
             {showTextStyle && (
               <>
-                <div className="collapsible-menu" onClick={openTextStyle} role={'toolbar'}>
+                <div className="collapsible-menu" onClick={openTextStyle} onTouchStart={openTextStyle} role={'toolbar'}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.textStyle')}
                   </div>
@@ -362,7 +368,7 @@ class StylePopup extends React.PureComponent {
             )}
             {showColorsMenu && (
               <>
-                <div className="collapsible-menu" onClick={openColors} role={'toolbar'}>
+                <div className="collapsible-menu" onClick={openColors} onTouchStart={openColors} role={'toolbar'}>
                   <div className="menu-title">
                     {i18next.t('option.stylePopup.colors')}
                   </div>

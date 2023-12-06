@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import ToggleElementButton from '../ToggleElementButton';
 import CustomButton from '../CustomButton';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +15,7 @@ function ZoomControls(props) {
     dataElement,
     isActive,
     onClick,
-    onFlyoutToggle,
+    setFlyoutTriggerRef,
     elementRef,
     size,
     onZoomInClicked,
@@ -90,9 +91,9 @@ function ZoomControls(props) {
               title="Zoom Toggle Button"
               disabled={false}
               img={`icon-chevron-${isZoomFlyoutMenuActive ? 'up' : 'down'}`}
-              toggleElement="zoomFlyoutMenu"
+              toggleElement={`${dataElement}Flyout`}
               tabIndex={-1}
-              onFlyoutToggled={onFlyoutToggle}
+              setFlyoutTriggerRef={setFlyoutTriggerRef}
             />
           </div>
         </div>
@@ -117,14 +118,30 @@ function ZoomControls(props) {
           className="zoomToggleButton"
           title="Zoom Toggle Button"
           disabled={false}
-          img={'icon-magnifying-glass'}
-          toggleElement="zoomFlyoutMenu"
+          img="icon-magnifying-glass"
+          toggleElement={`${dataElement}Flyout`}
           tabIndex={-1}
-          onFlyoutToggled={onFlyoutToggle}
+          setFlyoutTriggerRef={setFlyoutTriggerRef}
         />
       </>}
     </div>
   );
 }
+
+ZoomControls.propTypes = {
+  setZoomHandler: PropTypes.func.isRequired,
+  zoomValue: PropTypes.string.isRequired,
+  zoomTo: PropTypes.func.isRequired,
+  isZoomFlyoutMenuActive: PropTypes.bool.isRequired,
+  dataElement: PropTypes.string.isRequired,
+  isActive: PropTypes.bool,
+  onClick: PropTypes.func,
+  setFlyoutTriggerRef: PropTypes.func,
+  elementRef: PropTypes.object,
+  size: PropTypes.number,
+  onZoomInClicked: PropTypes.func,
+  onZoomOutClicked: PropTypes.func,
+  getCurrentZoom: PropTypes.func,
+};
 
 export default ZoomControls;

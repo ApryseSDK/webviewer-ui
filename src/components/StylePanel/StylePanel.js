@@ -18,7 +18,6 @@ const StylePanel = () => {
     selectors.getToolButtonObjects(state),
   ]);
 
-  const colorProperties = ['StrokeColor', 'FillColor'];
   const [selectedAnnotation, setSelectedAnnotation] = useState(null);
   const [toolMode, setToolMode] = useState(null);
   const [style, setStyle] = useState({
@@ -43,7 +42,6 @@ const StylePanel = () => {
           StrokeColor: annot.StrokeColor,
           StrokeThickness: annot.StrokeThickness,
           Opacity: annot.Opacity,
-          FillColor: annot.FillColor,
         });
       } else if (toolMode && !selectedAnnotation) {
         setStyle(toolMode.defaults);
@@ -88,21 +86,21 @@ const StylePanel = () => {
     newStyle[property] = value;
     setStyle(newStyle);
     if (selectedAnnotation) {
-      if (colorProperties.includes(property)) {
+      if (property === 'StrokeColor') {
         const colorRGB = hexToRGBA(value);
-        selectedAnnotation[property] = new window.Core.Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
-      } else {
-        selectedAnnotation[property] = value;
+        selectedAnnotation.StrokeColor = new window.Core.Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
+      } else if (property === 'Opacity') {
+        selectedAnnotation.Opacity = value;
       }
       core.getAnnotationManager().redrawAnnotation(selectedAnnotation);
     } else if (toolMode && !selectedAnnotation) {
-      if (colorProperties.includes(property)) {
-        // Changing to the default tool so the style changes of the tool will be reflected
-        // in the tool button once we change to the current tool again.
-        core.setToolMode(defaultTool);
+      // Changing to the default tool so the style changes of the tool will be reflected
+      // in the tool button once we change to the current tool again.
+      core.setToolMode(defaultTool);
+      if (property === 'StrokeColor') {
         const colorRGB = hexToRGBA(value);
-        const color = new window.Core.Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
-        toolMode.setStyles({ [property]: color });
+        const strokeColor = new window.Core.Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
+        toolMode.setStyles({ StrokeColor: strokeColor });
         core.setToolMode(toolMode.name);
       } else if (property === 'Opacity') {
         setToolStyles(toolMode.name, 'Opacity', value);
@@ -139,10 +137,10 @@ const StylePanel = () => {
         <div className='style-panel-header'>
           {t(panelTitle)}
         </div>
-        <StylePicker
+        <div className="label">{t('option.colorPalette.colorLabel')}</div>
+        <StylePicker sliderProperties={['Opacity', 'StrokeThickness']}
           style={style} lineStyleProperties={lineStyleProperties}
-          onStyleChange={onStyleChange} onLineStyleChange={onStyleChange}
-          toolMode={toolMode}/>
+          onStyleChange={onStyleChange} onLineStyleChange={onStyleChange} />
       </>)
   );
 };

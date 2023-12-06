@@ -17,7 +17,7 @@ const PopupAPI = {
   /**
    * Add an array of items after the item that has the given data element.
    * @method UI.Popup#add
-   * @param {Array.<object>} items Same as <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#header-items' target='_blank'>header items</a>
+   * @param {Array.<object>} items Same as <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#header-items' target='_blank'>header items</a>
    * @param {string} [dataElement] An optional string. If not given, items will be added in the beginning
    * @returns {this} The instance itself
    * @example
@@ -98,7 +98,7 @@ WebViewer(...)
       const state = this.store.getState();
       index = selectors
         .getPopupItems(state, this.popupDataElement)
-        .findIndex(obj => obj.dataElement === dataElement);
+        .findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;
