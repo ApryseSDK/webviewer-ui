@@ -8,7 +8,6 @@ export default (dispatch, store) => (newTool, oldTool) => {
     core.clearSelection();
     dispatch(actions.closeElement('textPopup'));
   }
-
   dispatch(actions.setActiveToolNameAndStyle(newTool));
 
   const state = store.getState();

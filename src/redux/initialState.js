@@ -157,8 +157,7 @@ export default {
         },
         { type: 'divider', hidden: ['small-mobile', 'mobile', 'tablet'] },
         { type: 'toolButton', toolName: 'Pan' },
-        // For mobile
-        { type: 'toolButton', toolName: 'TextSelect' },
+        { type: 'toolButton', toolName: 'TextSelect' }, // For mobile
         { type: 'toolButton', toolName: 'AnnotationEdit', hidden: ['small-mobile', 'mobile'] },
         {
           type: 'customElement',
@@ -1722,6 +1721,7 @@ export default {
         showColor: 'never',
       },
       TextSelect: { dataElement: 'textSelectButton', img: 'icon-header-select-line', showColor: 'never' },
+      OfficeEditorTextSelect: { dataElement: 'textSelectButton', img: 'icon-header-select-line', showColor: 'never' },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
       AnnotationEraserTool: {
         dataElement: 'eraserToolButton',
