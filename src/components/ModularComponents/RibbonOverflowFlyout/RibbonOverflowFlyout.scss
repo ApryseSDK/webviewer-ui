@@ -1,0 +1,11 @@
+.Flyout .RibbonOverflowFlyout {
+  .RibbonItem {
+    width: 100%;
+    .Button {
+      justify-content: left;
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}

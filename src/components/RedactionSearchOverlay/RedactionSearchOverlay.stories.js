@@ -43,6 +43,7 @@ export function Basic() {
     <RedactionSearchOverlay
       searchTerms={searchTerms}
       setSearchTerms={setSearchTerms}
-      {...basicProps} />
+      {...basicProps}
+    />
   );
 }

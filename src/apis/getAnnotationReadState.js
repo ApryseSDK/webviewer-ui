@@ -12,7 +12,7 @@ WebViewer(...)
   .then(function(instance) {
     const isAnnotationRead = instance.UI.getAnnotationReadState('test-annotation-id');
  */
-export default store => annotationId => {
+export default (store) => (annotationId) => {
   if (typeof annotationId !== 'string') {
     console.warn('Invalid annotation ID');
     return;

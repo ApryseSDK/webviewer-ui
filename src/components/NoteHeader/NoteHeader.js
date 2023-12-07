@@ -6,14 +6,13 @@ import Icon from 'components/Icon';
 import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import getColor from 'helpers/getColor';
-import { isDarkColorHex } from 'helpers/color';
+import { isDarkColorHex, isLightColorHex } from 'helpers/color';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import Choice from 'components/Choice';
-import core from 'core';
 
 import './NoteHeader.scss';
 
@@ -72,7 +71,7 @@ function NoteHeader(props) {
 
   let date;
   const dateCreated = (sortStrategy === NotesPanelSortStrategy.MODIFIED_DATE || (notesShowLastUpdatedDate && sortStrategy !== NotesPanelSortStrategy.CREATED_DATE)) ? getLatestActivityDate(annotation) : annotation.DateCreated;
-  if (timezone) {
+  if (timezone && dateCreated) {
     const datetimeStr = dateCreated.toLocaleString('en-US', { timeZone: timezone });
     date = new Date(datetimeStr);
   } else {
@@ -84,6 +83,8 @@ function NoteHeader(props) {
 
   if (activeTheme === Theme.DARK && color && isDarkColorHex(color)) {
     color = '#FFFFFF';
+  } else if (activeTheme === Theme.LIGHT && color && isLightColorHex(color)) {
+    color = '#000000';
   }
 
   const fillColor = getColor(annotation.FillColor);
@@ -132,7 +133,6 @@ function NoteHeader(props) {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  core.deselectAllAnnotations();
                   handleMultiSelect(!isMultiSelected);
                 }}
               />}

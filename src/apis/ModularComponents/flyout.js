@@ -3,20 +3,19 @@ import selectors from 'selectors';
 import actions from 'actions';
 
 const { checkTypes, TYPES } = window.Core;
-const flyoutItemTypeBase = {
+const flyoutItemBase = {
   label: TYPES.STRING,
   onClick: TYPES.FUNCTION,
   icon: TYPES.OPTIONAL(TYPES.STRING),
 };
-const flyoutChildType = TYPES.MULTI_TYPE(
-  TYPES.OBJECT({ ...flyoutItemTypeBase }),
-  TYPES.STRING // For dividers
-);
+flyoutItemBase.children = TYPES.OPTIONAL(TYPES.ARRAY(
+  TYPES.MULTI_TYPE(
+    TYPES.OBJECT(flyoutItemBase),
+    TYPES.STRING // For dividers
+  )
+));
 const flyoutItemType = TYPES.MULTI_TYPE(
-  TYPES.OBJECT({
-    ...flyoutItemTypeBase,
-    children: TYPES.OPTIONAL(TYPES.ARRAY(flyoutChildType)),
-  }),
+  TYPES.OBJECT(flyoutItemBase),
   TYPES.STRING // For dividers
 );
 /**
@@ -31,12 +30,9 @@ const flyoutItemType = TYPES.MULTI_TYPE(
  * @param {string} options.items.label
  * @param {Function} options.items.onClick
  * @param {string} options.items.icon
- * @param {Array<Object>} options.items.children
- * @param {string} options.items.children.label
- * @param {Function} options.items.children.onClick
- * @param {string} options.items.children.icon
+ * @param {Array<UI.Components.Flyout>} options.items.children
  */
-export default (store) => class Flyout {
+export class Flyout {
   properties;
 
   constructor(options) {
@@ -48,20 +44,31 @@ export default (store) => class Flyout {
     this.properties = options;
     this.dataElement = dataElement;
     this.type = ITEM_TYPE.FLYOUT;
+    this.store = options.store;
   }
 
   addItems(itemList) {
     checkTypes([itemList], [TYPES.ARRAY(flyoutItemType)], 'Flyout.addItem');
-    const flyoutMap = selectors.getFlyoutMap(store.getState());
+    const flyoutMap = selectors.getFlyoutMap(this.store.getState());
     if (flyoutMap[this.properties.dataElement]) {
       flyoutMap[this.properties.dataElement].items.push(...itemList);
       this.updateStore();
+      return;
     }
     this.properties.items.push(...itemList);
   }
 
+  removeItems(itemList) {
+    const flyoutMap = selectors.getFlyoutMap(this.store.getState());
+    const currentFlyout = flyoutMap[this.properties.dataElement];
+    if (currentFlyout) {
+      currentFlyout.items = currentFlyout.items.filter((item) => !itemList.includes(item.dataElement));
+      this.updateStore();
+    }
+  }
+
   get items() {
-    const flyoutMap = selectors.getFlyoutMap(store.getState());
+    const flyoutMap = selectors.getFlyoutMap(this.store.getState());
     if (flyoutMap[this.properties.dataElement]) {
       return flyoutMap[this.properties.dataElement].items;
     }
@@ -69,8 +76,8 @@ export default (store) => class Flyout {
   }
 
   set items(newItems) {
-    checkTypes([newItems], [TYPES.ARRAY(flyoutChildType)], 'Flyout.initializeFlyoutItem');
-    const flyoutMap = selectors.getFlyoutMap(store.getState());
+    checkTypes([newItems], [TYPES.ARRAY(flyoutItemType)], 'Flyout.initializeFlyoutItem');
+    const flyoutMap = selectors.getFlyoutMap(this.store.getState());
     if (flyoutMap[this.properties.dataElement]) {
       flyoutMap[this.properties.dataElement].items = newItems;
       this.updateStore();
@@ -79,7 +86,12 @@ export default (store) => class Flyout {
   }
 
   updateStore() {
-    const flyoutMap = selectors.getFlyoutMap(store.getState());
-    store.dispatch(actions.updateFlyout(this.properties.dataElement, flyoutMap[this.properties.dataElement]));
+    const flyoutMap = selectors.getFlyoutMap(this.store.getState());
+    this.store.dispatch(actions.updateFlyout(this.properties.dataElement, flyoutMap[this.properties.dataElement]));
   }
+}
+
+export default (store) => (props) => {
+  const propsWithStore = { ...props, store };
+  return new Flyout(propsWithStore);
 };

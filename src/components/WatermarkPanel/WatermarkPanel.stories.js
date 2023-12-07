@@ -1,8 +1,8 @@
 import React from 'react';
-import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from 'reducers/rootReducer';
 import WatermarkPanel from './WatermarkPanel';
-import viewerReducer from 'reducers/viewerReducer';
 import initialState from 'src/redux/initialState';
 import RightPanel from 'components/RightPanel';
 
@@ -11,17 +11,23 @@ export default {
   component: WatermarkPanel,
 };
 
-// Mock some state to show the style popups
-initialState.viewer.openElements.watermarkPanel = true;
-
 const noop = () => { };
 
-const reducer = combineReducers({
-  viewer: viewerReducer(initialState.viewer),
-});
-const store = createStore(reducer);
-
 const WatermarkPanelStoryWrapper = ({ children }) => {
+  const state = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      openElements: {
+        ...initialState.viewer.openElements,
+        watermarkPanel: true,
+      },
+    },
+  };
+  const store = configureStore({
+    preloadedState: state,
+    reducer: rootReducer,
+  });
   return (
     <Provider store={store}>
       <RightPanel

@@ -1,1 +1,3 @@
-export default () => window.documentViewer.getDocument().getPrintablePDF();
+import core from 'core';
+
+export default (documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getDocument().getPrintablePDF();

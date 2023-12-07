@@ -25,19 +25,19 @@ const customRenderWithContext = (component, providerProps = {}) => {
     <RedactionPanelContext.Provider value={providerProps}>
       {component}
     </RedactionPanelContext.Provider>,
-  )
+  );
 };
 
 describe('RedactionPanel', () => {
   it('renders the storybook component with no redaction items correctly', () => {
     expect(() => {
-      render(<EmptyList />)
+      render(<EmptyList />);
     }).not.toThrow();
   });
 
   it('renders the storybook component with redaction items correctly', () => {
     expect(() => {
-      render(<PanelWithRedactionItems />)
+      render(<PanelWithRedactionItems />);
     }).not.toThrow();
   });
 
@@ -60,7 +60,8 @@ describe('RedactionPanel', () => {
       <RedactionPanelWithRedux
         currentWidth={330}
         redactionTypesDictionary={mockRedactionTypesDictionary}
-        redactionAnnotations={mockRedactionAnnotations} />,
+        redactionAnnotations={mockRedactionAnnotations}
+      />,
       providerProps
     );
 
@@ -89,7 +90,8 @@ describe('RedactionPanel', () => {
         applyAllRedactions={mockedRedactAll}
         deleteAllRedactionAnnotations={mockClearAll}
         redactionTypesDictionary={mockRedactionTypesDictionary}
-        redactionAnnotations={[mockTextRedactionAnnotation]} />
+        redactionAnnotations={[mockTextRedactionAnnotation]}
+      />
     );
 
     const redactAllButton = screen.getByRole('button', { name: 'Redact All' });
@@ -110,16 +112,17 @@ describe('RedactionPanel', () => {
         currentWidth={330}
         applyAllRedactions={mockedRedactAll}
         deleteAllRedactionAnnotations={mockClearAll}
-        redactionAnnotations={[]} />
+        redactionAnnotations={[]}
+      />
     );
 
     const redactAllButton = screen.getByRole('button', { name: 'Redact All' });
-    expect(redactAllButton).toBeDisabled()
+    expect(redactAllButton).toBeDisabled();
     userEvent.click(redactAllButton);
     expect(mockedRedactAll).not.toHaveBeenCalled();
 
     const clearAllButton = screen.getByRole('button', { name: 'Clear' });
-    expect(clearAllButton).toBeDisabled()
+    expect(clearAllButton).toBeDisabled();
     userEvent.click(clearAllButton);
     expect(mockClearAll).not.toHaveBeenCalled();
   });
@@ -137,18 +140,18 @@ describe('RedactionPanel', () => {
       currentWidth: 330,
       redactionAnnotations: mockRedactionAnnotations,
       redactionTypesDictionary: mockRedactionTypesDictionary,
-    }
+    };
 
     let selectedRedactionItemId = '';
     const providerProps = {
-      selectedRedactionItemId: selectedRedactionItemId,
+      selectedRedactionItemId,
       setSelectedRedactionItemId: (id) => {
-        selectedRedactionItemId = id
+        selectedRedactionItemId = id;
       },
       isTestMode: true,
     };
 
-    customRenderWithContext(<RedactionPanelWithRedux {...props} />, providerProps)
+    customRenderWithContext(<RedactionPanelWithRedux {...props} />, providerProps);
 
     const redactionItems = screen.getAllByRole('listitem');
     // User clicks on the first item
@@ -173,7 +176,7 @@ describe('RedactionPanel', () => {
       currentWidth: 330,
       redactionAnnotations: mockRedactionAnnotations,
       redactionTypesDictionary: mockRedactionTypesDictionary,
-    }
+    };
 
     const providerProps = {
       selectedRedactionItemId: mockTextRedactionAnnotation.Id,
@@ -181,7 +184,7 @@ describe('RedactionPanel', () => {
       isTestMode: true,
     };
 
-    customRenderWithContext(<RedactionPanelWithRedux {...props} />, providerProps)
+    customRenderWithContext(<RedactionPanelWithRedux {...props} />, providerProps);
 
     const redactionItems = screen.getAllByRole('listitem');
     // First one is selected
@@ -189,4 +192,4 @@ describe('RedactionPanel', () => {
     // Second one is not selected
     expect(redactionItems[1]).toHaveClass('redaction-item', { exact: true });
   });
-})
+});

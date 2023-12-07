@@ -1,4 +1,4 @@
-export default unit => {
+export default (unit) => {
   switch (unit) {
     case 'ft\'':
       return 'ft';

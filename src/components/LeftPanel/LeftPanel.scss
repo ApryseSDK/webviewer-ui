@@ -3,7 +3,7 @@
 
 .LeftPanel {
   z-index: 65;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   background-color: var(--panel-background);
   display: flex;
@@ -32,8 +32,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     z-index: 95;
   }
 
@@ -44,8 +44,8 @@
 
     @include mobile {
       padding-top: 0px;
-      width: 100vw;
-      min-width: 100vw;
+      width: 100%;
+      min-width: 100%;
 
       .close-container {
         display: flex;

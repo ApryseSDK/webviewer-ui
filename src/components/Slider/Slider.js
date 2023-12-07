@@ -26,7 +26,6 @@ class Slider extends React.PureComponent {
     max: PropTypes.number,
     step: PropTypes.number,
     getLocalValue: PropTypes.func,
-    shouldHideSliderTitle: PropTypes.bool,
   };
 
   constructor(props) {
@@ -241,9 +240,9 @@ class Slider extends React.PureComponent {
 
     return (
       <div className="slider" data-element={dataElement}>
-        {!this.props.shouldHideSliderTitle && <div className="slider-property" onMouseDown={(e) => e.preventDefault()}>
+        <div className="slider-property" onMouseDown={(e) => e.preventDefault()}>
           {t(`option.slider.${displayProperty}`)}
-        </div>}
+        </div>
         <div className="slider-element-container">
           <svg
             data-element={dataElement}

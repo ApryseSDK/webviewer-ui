@@ -6,6 +6,10 @@
   align-items: baseline !important;
 }
 
+.ui__choice {
+  align-items: center;
+}
+
 .ui__choice__input--switch {
   .ui__choice__input__switch {
     height: 14px !important;
@@ -14,7 +18,7 @@
     border: none !important;
 
     &.ui__choice__input__switch--disabled {
-      opacity: 0.4;
+      opacity: 0.6;
       cursor: not-allowed;
     }
 

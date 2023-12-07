@@ -1,7 +1,7 @@
 /**
  * Returns whether the tool is disabled.
  * @method UI.isToolDisabled
- * @param {string} toolName Name of the tool, either from <a href='https://www.pdftron.com/documentation/web/guides/annotations-and-tools/#list-of-tool-names' target='_blank'>tool names list</a> or the name you registered your custom tool with.
+ * @param {string} toolName Name of the tool, either from <a href='https://docs.apryse.com/documentation/web/guides/annotations-and-tools/#list-of-tool-names' target='_blank'>tool names list</a> or the name you registered your custom tool with.
  * @returns {boolean} Whether the tool is disabled.
  * @example
 WebViewer(...)
@@ -12,7 +12,7 @@ WebViewer(...)
 
 import selectors from 'selectors';
 
-export default store => toolName => {
+export default (store) => (toolName) => {
   const state = store.getState();
   const dataElement = selectors.getToolButtonDataElement(state, toolName);
 

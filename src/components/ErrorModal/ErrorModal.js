@@ -13,9 +13,10 @@ import DataElements from 'constants/dataElement';
 import './ErrorModal.scss';
 
 const ErrorModal = () => {
-  const [message, isDisabled, isOpen, isMultiTab] = useSelector(
+  const [message, title, isDisabled, isOpen, isMultiTab] = useSelector(
     (state) => [
       selectors.getErrorMessage(state),
+      selectors.getErrorTitle(state),
       selectors.isElementDisabled(state, DataElements.ERROR_MODAL),
       selectors.isElementOpen(state, DataElements.ERROR_MODAL),
       selectors.getIsMultiTab(state),
@@ -79,11 +80,11 @@ const ErrorModal = () => {
       style={isMultiTab ? { height: `calc(100% - ${tabsPadding}px)` } : undefined}
       data-element={DataElements.ERROR_MODAL}
     >
-      <ModalWrapper isOpen={isOpen} title={'message.error'}
+      <ModalWrapper isOpen={isOpen} title={title || 'message.error'}
         closeButtonDataElement={'errorModalCloseButton'}
         onCloseClick={closeErrorModal}
       >
-        <div className="modal-content error-modal-content">
+        <div className="modal-content error-modal-content" aria-hidden="true">
           <p>{shouldTranslate ? t(message) : message}</p>
         </div>
         <div className="modal-footer footer">

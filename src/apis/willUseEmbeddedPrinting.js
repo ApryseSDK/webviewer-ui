@@ -11,4 +11,4 @@ WebViewer(...)
 
 import selectors from 'selectors';
 
-export default store => () => !!selectors.isEmbedPrintSupported(store.getState());
+export default (store) => () => !!selectors.isEmbedPrintSupported(store.getState());

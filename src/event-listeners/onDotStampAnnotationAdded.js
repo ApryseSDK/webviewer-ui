@@ -4,9 +4,9 @@ import actions from 'actions';
 
 const { ToolNames } = window.Core.Tools;
 
-export default dispatch => dotStampAnnotation => {
+export default (dispatch, documentViewerKey) => (dotStampAnnotation) => {
   core.setToolMode(defaultTool);
-  core.getTool(ToolNames.FORM_FILL_DOT).hidePreview();
+  core.getToolsFromAllDocumentViewers(ToolNames.FORM_FILL_DOT).forEach((tool) => tool.hidePreview());
   dispatch(actions.setActiveToolGroup(''));
-  core.selectAnnotation(dotStampAnnotation);
+  core.selectAnnotation(dotStampAnnotation, documentViewerKey);
 };

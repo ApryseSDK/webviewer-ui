@@ -10,6 +10,7 @@ import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 
 import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivnessHelper';
+import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
 
 
 const RibbonItem = (props) => {
@@ -63,12 +64,11 @@ const RibbonItem = (props) => {
   return (
     isFlyoutItem ?
       (
-        <div className="menu-container" onClick={onClick}>
-          <div className="icon-label-wrapper">
-            {iconDOMElement}
-            {label && <div className="flyout-item-label">{t(label)}</div>}
-          </div>
-        </div>
+        innerItemToFlyoutItem({
+          isDisabled: false,
+          icon: iconDOMElement,
+          label: t(label),
+        }, onClick)
       ) :
       (
         <div className={classNames({

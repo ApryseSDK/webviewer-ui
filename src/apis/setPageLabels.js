@@ -16,6 +16,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => pageLabels => {
+export default (store) => (pageLabels) => {
   store.dispatch(actions.setPageLabels(pageLabels));
 };

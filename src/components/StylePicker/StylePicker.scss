@@ -2,6 +2,7 @@
   padding-top: 16px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
 
   .slider-property {
     font-size: 14px;
@@ -19,84 +20,29 @@
       gap: 8px;
     }
 
-    .StyleContainer>* {
+    .StyleContainer > * {
       flex-grow: 1;
       flex-basis: 0;
     }
-
+  
     button {
       &.Dropdown {
         width: 100% !important;
       }
     }
-
+  
     .Dropdown__items {
       width: 100%;
     }
   }
 
   .StyleOption {
-    margin: 15px 0;
-
     .styles-container {
       .styles-title {
         margin: 0 0 16px 0;
         font-size: 14px;
         font-weight: bold;
       }
-
-      [data-element="borderStylePicker"] {
-        margin-top: 8px;
-      }
-    }
-
-    .slider {
-      margin-bottom: 8px;
-
-      .slider-element-container {
-        margin-left: -3px;
-      }
-    }
-  }
-
-  .PanelSection {
-    .collapsible-menu {
-      width: 100%;
-      display: flex;
-      cursor: pointer;
-      position: relative;
-      align-items: center;
-      margin-bottom: 16px;
-
-      .menu-title {
-        padding-top: 6px;
-        padding-bottom: 6px;
-        font-weight: bold;
-        font-size: 14px;
-      }
-
-      .Icon {
-        position: absolute;
-        right: 0;
-
-        height: 18px;
-        width: 18px;
-      }
-    }
-
-    .divider {
-      background-color: var(--divider);
-      width: 100%;
-      height: 1px;
-      margin: 16px 0;
-    }
-    
-    .menu-items .ColorPalette {
-      margin-bottom: 8px;
-    }
-  
-    .palette-controls .button-container {
-        gap:5px;
     }
   }
 }

@@ -17,6 +17,6 @@ WebViewer(...)
   });
  */
 
-export default store => annotationContentOverlayHandler => {
+export default (store) => (annotationContentOverlayHandler) => {
   store.dispatch(action.setAnnotationContentOverlayHandler(annotationContentOverlayHandler));
 };

@@ -33,7 +33,6 @@ const initialState = {
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'shortCutKeysFor3D' },
       { dataElement: 'playSoundButton' },
-      { dataElement: 'annotationClearSignatureButton' }
     ],
     customPanels: [],
     unreadAnnotationIdSet: new Set(),
@@ -75,7 +74,6 @@ const basicHorizontalProps = {
   onDeleteAnnotation: () => console.log('Delete'),
 };
 
-
 export const BasicHorizontal = () => {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
@@ -93,43 +91,6 @@ export const BasicVertical = () => {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <AnnotationPopup {...basicVerticalProps} />
-    </Provider>
-  );
-};
-
-const readOnlySignatureAnnotationProps = {
-  isOpen: true,
-  isRightClickMenu: false,
-  focusedAnnotation: mockAnnotation,
-  position: { top: 0, left: 0 },
-  showCommentButton: false,
-  onCommentAnnotation: () => console.log('Comment'),
-  showEditStyleButton: false,
-  annotationStyle: getAnnotationStyles(mockAnnotation),
-  showLinkButton: false,
-  linkAnnotationToURL: () => console.log('Link'),
-  showDeleteButton: false,
-  onDeleteAnnotation: () => console.log('Delete'),
-  isAppearanceSignature: true
-};
-
-export const SignatureReadOnlyPopUp = () => {
-  return (
-    <Provider store={configureStore({ reducer: () => initialState })}>
-      <AnnotationPopup {...readOnlySignatureAnnotationProps} />
-    </Provider>
-  );
-};
-
-const readOnlySignatureAnnotationPropsDisabled = {
-  ...readOnlySignatureAnnotationProps,
-  isRightClickMenu: true,
-};
-
-export const SignatureReadOnlyDiablePopUp = () => {
-  return (
-    <Provider store={configureStore({ reducer: () => initialState })}>
-      <AnnotationPopup {...readOnlySignatureAnnotationPropsDisabled} />
     </Provider>
   );
 };

@@ -29,7 +29,7 @@ export default function useOnRedactionAnnotationChanged() {
 
   useEffect(() => {
     const setRedactionAnnotations = () => {
-      const redactionAnnotations = core.getAnnotationsList().filter((annotation) => annotation instanceof window.Annotations.RedactionAnnotation);
+      const redactionAnnotations = core.getAnnotationsList().filter((annotation) => annotation instanceof window.Core.Annotations.RedactionAnnotation);
       const mediaAnnotationTypes = [
         redactionTypeMap['FULL_VIDEO_FRAME'],
         redactionTypeMap['FULL_VIDEO_FRAME_AND_AUDIO'],

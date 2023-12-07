@@ -1,7 +1,7 @@
 /**
  * Sets the color palette that will be used as a tool button's icon color.
  * @method UI.setIconColor
- * @param {string} toolName Name of the tool, either from <a href='https://www.pdftron.com/documentation/web/guides/annotations-and-tools/#list-of-tool-names' target='_blank'>tool names list</a> or the name you registered your custom tool with.
+ * @param {string} toolName Name of the tool, either from <a href='https://docs.apryse.com/documentation/web/guides/annotations-and-tools/#list-of-tool-names' target='_blank'>tool names list</a> or the name you registered your custom tool with.
  * @param {string} colorPalette The palette which will be used as a tool button's icon color. One of 'text', 'border' and 'fill'.
  * @example
 WebViewer(...)
@@ -17,12 +17,12 @@ import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import mapPaletteToAnnotationColorProperty from 'constants/mapPaletteToAnnotationColorProperty';
 import mapAnnotationColorPropertyToPalette from 'constants/mapAnnotationColorPropertyToPalette';
 
-export default store => (toolName, colorPalette) => {
-  const availablePalettes = getDataWithKey(mapToolNameToKey(toolName)).availablePalettes;
+export default (store) => (toolName, colorPalette) => {
+  const styleTabs = getDataWithKey(mapToolNameToKey(toolName)).styleTabs;
   const property = mapPaletteToAnnotationColorProperty[colorPalette];
-  if (availablePalettes.includes(property)) {
+  if (styleTabs.includes(property)) {
     store.dispatch(actions.setIconColor(mapToolNameToKey(toolName), property));
   } else {
-    console.warn(`${toolName} does not have ${colorPalette} color, available colors are: ${availablePalettes.map(palette => mapAnnotationColorPropertyToPalette[palette]).join(', ')} `);
+    console.warn(`${toolName} does not have ${colorPalette} color, available colors are: ${styleTabs.map((palette) => mapAnnotationColorPropertyToPalette[palette]).join(', ')} `);
   }
 };

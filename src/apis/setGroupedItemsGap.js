@@ -25,7 +25,10 @@
     });
  */
 import actions from 'actions';
+import { isGapValid } from 'components/ModularComponents/Helpers/validation-helper';
 
 export default (store) => (gap, selectors) => {
-  store.dispatch(actions.setGroupedItemsProperty('gap', gap, selectors?.groupedItem, selectors?.header));
+  if (isGapValid(gap)) {
+    store.dispatch(actions.setGroupedItemsProperty('gap', gap, selectors?.groupedItem, selectors?.header));
+  }
 };

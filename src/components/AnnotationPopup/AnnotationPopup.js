@@ -176,7 +176,7 @@ const AnnotationPopup = ({
   const isInstanceActive = !window.isApryseWebViewerWebComponent || document.activeElement?.shadowRoot === getRootNode();
   let StrokeStyle = 'solid';
   const isContentEdit = focusedAnnotation.isContentEditPlaceholder?.();
-  const isReadOnlySignature = focusedAnnotation instanceof window.Core.Annotations.SignatureWidgetAnnotation && focusedAnnotation.fieldFlags.get(window.Core.Annotations.WidgetFlags.READ_ONLY);
+
   try {
     StrokeStyle = (focusedAnnotation['Style'] === 'dash')
       ? `${focusedAnnotation['Style']},${focusedAnnotation['Dashes']}`
@@ -312,11 +312,10 @@ const AnnotationPopup = ({
                   <ActionButton
                     className="main-menu-button"
                     dataElement="annotationClearSignatureButton"
-                    label={isReadOnlySignature ? 'action.readOnlySignature' : (isRightClickMenu ? 'action.clearSignature' : '')}
-                    title={isReadOnlySignature ? 'action.readOnlySignature' : (!isRightClickMenu ? 'action.clearSignature' : '')}
-                    img={isReadOnlySignature ? '' : 'icon-delete-line'}
+                    label={isRightClickMenu ? 'action.clearSignature' : ''}
+                    title={!isRightClickMenu ? 'action.clearSignature' : ''}
+                    img="icon-delete-line"
                     onClick={onClearAppearanceSignature}
-                    isNotClickableSelector={() => isReadOnlySignature}
                   />
                 )}
                 {showRedactionButton && (
@@ -434,8 +433,8 @@ const AnnotationPopup = ({
         open: isOpen,
         closed: !isOpen,
         stylePopupOpen: isStylePopupOpen,
-        'is-vertical': isReadOnlySignature ? true : isRightClickMenu,
-        'is-horizontal': isReadOnlySignature ? false : !isRightClickMenu,
+        'is-vertical': isRightClickMenu,
+        'is-horizontal': !isRightClickMenu,
       })}
       ref={popupRef}
       data-element={DataElements.ANNOTATION_POPUP}

@@ -1,3 +1,3 @@
 import ColorPalettePickerRedux from './ColorPalettePickerRedux';
 
-export default ColorPalettePickerRedux; 
+export default ColorPalettePickerRedux;

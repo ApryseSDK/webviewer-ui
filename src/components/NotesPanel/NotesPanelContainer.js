@@ -125,7 +125,11 @@ function NotePopupContainer(props) {
         setScrollToSelectedAnnot(true);
       }
       const groupedAnnots = getGroupedAnnots(selectedAnnotations);
-      if (isNotesPanelMultiSelectEnabled && action === 'selected' && selectedAnnotations.length > 1 && groupedAnnots.length !== selectedAnnotations.length) {
+      const shouldDisplayMultiSelect = (selectedAnnotations.length > 1 && groupedAnnots.length !== selectedAnnotations.length) || isMultiSelectMode;
+
+      if (isNotesPanelMultiSelectEnabled
+        && action === 'selected'
+        && shouldDisplayMultiSelect) {
         setMultiSelectMode(true);
         selectedAnnotations.forEach((selectedAnnot) => {
           isMultiSelectedMap[selectedAnnot.Id] = selectedAnnot;

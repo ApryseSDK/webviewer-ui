@@ -5,11 +5,12 @@ import Spinner from '../Spinner';
 import { saveAs } from 'file-saver';
 import Icon from 'components/Icon';
 import core from 'core';
-import './FileAttachmentPanel.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { getIsMultiTab, getTabManager } from 'src/redux/selectors/exposedSelectors';
+import selectors from 'selectors';
 import actions from 'actions';
-import DataElements from 'src/constants/dataElement';
+import DataElements from 'constants/dataElement';
+
+import './FileAttachmentPanel.scss';
 
 const getActualFileName = (filename) => {
   const fileNameRegex = /[^\\\/]+$/g;
@@ -33,15 +34,14 @@ const renderAttachment = (filename, onClickCallback, key, showFileIdProcessSpinn
   );
 };
 
-const FileAttachmentPanel = () => {
+const initialFilesDefault = { embeddedFiles: [], fileAttachmentAnnotations: [] };
+
+const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const [fileAttachments, setFileAttachments] = useState({
-    embeddedFiles: [],
-    fileAttachmentAnnotations: [],
-  });
-  const isMultiTab = useSelector(getIsMultiTab);
-  const tabManager = useSelector(getTabManager);
+  const [fileAttachments, setFileAttachments] = useState(initialFiles);
+  const isMultiTab = useSelector(selectors.getIsMultiTab);
+  const tabManager = useSelector(selectors.getTabManager);
   const [showFileIdProcessSpinner, setFileIdProcessSpinner] = useState(null);
 
   useEffect(() => {

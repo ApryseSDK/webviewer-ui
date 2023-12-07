@@ -26,9 +26,6 @@ const DataElements = {
   WV3D_PROPERTIES_PANEL_TOGGLE: 'wv3dPropertiesPanelToggle',
   LEFT_PANEL: 'leftPanel',
   OUTLINE_PANEL: 'outlinesPanel',
-  STROKE_STYLE_CONTAINER: 'strokeStyleContainer',
-  FILL_COLOR_CONTAINER: 'fillColorContainer',
-  OPACITY_CONTAINER: 'opacityContainer',
   OUTLINE_MULTI_SELECT: 'outlineMultiSelect',
   OUTLINE_CONTROLS: 'outlineControls',
   OUTLINE_ADD_NEW_BUTTON_CONTAINER: 'addNewOutlineButtonContainer',
@@ -182,7 +179,6 @@ const DataElements = {
   // Office Editor
   OFFICE_EDITOR_TOOLS_HEADER: 'officeEditorToolsHeader',
   OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE: 'officeEditorToolsHeaderInsertImage',
-  OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE: 'officeEditorToolsHeaderInsertTable',
   OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
 
   // Insert Page Modal tabs
