@@ -229,6 +229,14 @@ export const setActiveToolGroup = (toolGroup) => (dispatch, getState) => {
   });
 };
 
+export const setLastPickedToolForCustomRibbon = (toolName) => (dispatch, getState) => {
+  const toolbarGroup = selectors.getCurrentToolbarGroup(getState());
+  dispatch({
+    type: 'SET_LAST_PICKED_TOOL_FOR_CUSTOM_RIBBON',
+    payload: { toolName, toolbarGroup },
+  });
+};
+
 export const setSelectedScale = (selectedScale) => ({
   type: 'SET_SELECTED_SCALE',
   payload: { selectedScale }

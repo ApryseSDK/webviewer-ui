@@ -104,6 +104,7 @@ export default {
     documentContainerHeight: null,
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
+    lastPickedToolForCustomRibbon: {},
     highContrastMode: getHashParameters('highContrastMode', false),
     notesInLeftPanel: getHashParameters('notesInLeftPanel', false),
     autoFocusNoteOnAnnotationSelection: getHashParameters('autoFocusNoteOnAnnotationSelection', true),

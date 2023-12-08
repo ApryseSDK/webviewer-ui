@@ -245,6 +245,52 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
   });
   fireEvent(Events.TOOLBAR_GROUP_CHANGED, toolbarGroup);
 };
+
+export const setCustomRibbon = (ribbon, pickTool = true) => (dispatch, getState) => {
+  const state = getState();
+  const toolGroups = state.viewer.headers[ribbon];
+
+  const getFirstToolForRibbon = () => {
+    if (toolGroups) {
+      const firstTool = Object.values(toolGroups).find(({ toolName, dataElement, type }) => {
+        return type === 'toolButton' && toolName && !isElementDisabled(state, dataElement);
+      });
+      return firstTool?.toolName;
+    }
+  };
+
+  // Case the ribbon does not have any associated tools
+  if (toolGroups?.length === 0) {
+    dispatch({
+      type: 'SET_LAST_PICKED_TOOL_FOR_CUSTOM_RIBBON',
+      payload: { toolName: '', toolbarGroup: ribbon },
+    });
+    core.setToolMode(defaultTool);
+  } else {
+    dispatch(openElements(['toolsHeader']));
+
+    const lastPickedToolForRibbon = state.viewer.lastPickedToolForCustomRibbon?.[ribbon] || getFirstToolForRibbon();
+    if (pickTool) {
+      dispatch({
+        type: 'SET_LAST_PICKED_TOOL_FOR_CUSTOM_RIBBON',
+        payload: { toolName: lastPickedToolForRibbon, toolbarGroup: ribbon },
+      });
+      core.setToolMode(lastPickedToolForRibbon);
+    } else {
+      core.setToolMode(defaultTool);
+      dispatch({
+        type: 'SET_LAST_PICKED_TOOL_FOR_CUSTOM_RIBBON',
+        payload: { toolName: '', toolbarGroup: ribbon },
+      });
+    }
+  }
+  dispatch({
+    type: 'SET_TOOLBAR_GROUP',
+    payload: { toolbarGroup: ribbon },
+  });
+  fireEvent(Events.TOOLBAR_GROUP_CHANGED, ribbon);
+};
+
 export const setSelectedStampIndex = (index) => ({
   type: 'SET_SELECTED_STAMP_INDEX',
   payload: { index },

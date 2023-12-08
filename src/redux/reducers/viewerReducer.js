@@ -435,6 +435,14 @@ export default (initialState) => (state = initialState, action) => {
           [payload.toolbarGroup]: payload.toolGroup,
         },
       };
+    case 'SET_LAST_PICKED_TOOL_FOR_CUSTOM_RIBBON':
+      return {
+        ...state,
+        lastPickedToolForCustomRibbon: {
+          ...state.lastPickedToolForCustomRibbon,
+          [payload.toolbarGroup]: payload.toolName,
+        }
+      };
     case 'SET_OUTLINE_CONTROL_VISIBILITY':
       return { ...state, outlineControlVisibility: payload.outlineControlVisibility };
     case 'SET_AUTO_EXPAND_OUTLINES':

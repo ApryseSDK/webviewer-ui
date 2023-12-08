@@ -49,8 +49,10 @@ const ToolButton = (props) => {
 
   const handleClick = () => {
     if (isActive) {
+      dispatch(actions.setLastPickedToolForCustomRibbon(''));
       core.setToolMode(defaultTool);
     } else {
+      dispatch(actions.setLastPickedToolForCustomRibbon(toolName));
       core.setToolMode(toolName);
       if (toolName === 'AnnotationCreateRubberStamp') {
         dispatch(actions.openElement('toolStylePopup'));
