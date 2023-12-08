@@ -106,8 +106,8 @@ const AnnotationPopupContainer = ({
   const [isCalibrationPopupOpen, setCalibrationPopupOpen] = useState(false);
   const popupRef = useRef();
 
-  const isFocusedAnnotationSelected = isRightClickAnnotationPopupEnabled ? core.isAnnotationSelected(focusedAnnotation) : true;
-  const annotManager = core.getAnnotationManager();
+  const isFocusedAnnotationSelected = isRightClickAnnotationPopupEnabled ? core.isAnnotationSelected(focusedAnnotation, activeDocumentViewerKey) : true;
+  const annotManager = core.getAnnotationManager(activeDocumentViewerKey);
   const isNotesPanelOpenOrActive = isNotesPanelOpen || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel');
   // on tablet, the behaviour will be like on desktop, including being draggable
 
@@ -196,7 +196,7 @@ const AnnotationPopupContainer = ({
   const numberOfSelectedAnnotations = selectedAnnotations.length;
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
   const isFreeTextAnnot = focusedAnnotation instanceof Annotations.FreeTextAnnotation;
-  const isDateFreeTextCanEdit = isFreeTextAnnot && !!focusedAnnotation.getDateFormat() && core.canModifyContents(focusedAnnotation);
+  const isDateFreeTextCanEdit = isFreeTextAnnot && !!focusedAnnotation.getDateFormat() && core.canModifyContents(focusedAnnotation, activeDocumentViewerKey);
   const numberOfGroups = core.getNumberOfGroups(selectedAnnotations, activeDocumentViewerKey);
   const canGroup = numberOfGroups > 1;
   const canUngroup = numberOfGroups === 1 && numberOfSelectedAnnotations > 1 && isFocusedAnnotationSelected;
@@ -222,7 +222,7 @@ const AnnotationPopupContainer = ({
 
     dispatch(actions.closeElement('searchPanel'));
     dispatch(actions.closeElement('redactionPanel'));
-    const contentEditManager = core.getContentEditManager();
+    const contentEditManager = core.getContentEditManager(activeDocumentViewerKey);
     if (contentEditManager.isInContentEditMode()) {
       dispatch(actions.closeElement('textEditingPanel'));
       contentEditManager.endContentEditMode();
@@ -298,7 +298,7 @@ const AnnotationPopupContainer = ({
   };
 
   /* REDACTION */
-  const redactionEnabled = core.isAnnotationRedactable(focusedAnnotation);
+  const redactionEnabled = core.isAnnotationRedactable(focusedAnnotation, activeDocumentViewerKey);
   const showRedactionButton = redactionEnabled && !multipleAnnotationsSelected && !includesFormFieldAnnotation;
 
   const onApplyRedaction = () => {
@@ -315,17 +315,17 @@ const AnnotationPopupContainer = ({
     && !includesFormFieldAnnotation;
 
   const onGroupAnnotations = () => {
-    core.groupAnnotations(primaryAnnotation, selectedAnnotations);
+    core.groupAnnotations(primaryAnnotation, selectedAnnotations, activeDocumentViewerKey);
   };
 
   const showUngroupButton = canUngroup;
 
   const onUngroupAnnotations = () => {
-    core.ungroupAnnotations(selectedAnnotations);
+    core.ungroupAnnotations(selectedAnnotations, activeDocumentViewerKey);
   };
 
   /* FORM FIELD */
-  const formFieldCreationManager = core.getFormFieldCreationManager();
+  const formFieldCreationManager = core.getFormFieldCreationManager(activeDocumentViewerKey);
   const isInFormFieldCreationMode = formFieldCreationManager.isInFormFieldCreationMode();
   const showFormFieldButton = includesFormFieldAnnotation && isInFormFieldCreationMode;
 
@@ -356,9 +356,9 @@ const AnnotationPopupContainer = ({
 
   const onDeleteAnnotation = () => {
     if (isFocusedAnnotationSelected) {
-      core.deleteAnnotations(core.getSelectedAnnotations());
+      core.deleteAnnotations(core.getSelectedAnnotations(activeDocumentViewerKey), undefined, activeDocumentViewerKey);
     } else {
-      core.deleteAnnotations([focusedAnnotation]);
+      core.deleteAnnotations([focusedAnnotation], undefined, activeDocumentViewerKey);
     }
     closePopup();
   };
