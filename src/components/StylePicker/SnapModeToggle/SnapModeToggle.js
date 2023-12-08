@@ -17,7 +17,7 @@ const SnapModeToggle = ({
   const wasDocumentSwappedToClientSide =
     core.getDocument()?.getType() === workerTypes.WEBVIEWER_SERVER && core.getDocument().isWebViewerServerDocument();
   const isEligibleDocumentForSnapping = core.getDocument()?.getType().toLowerCase() === workerTypes.PDF || wasDocumentSwappedToClientSide;
-  const showMeasurementSnappingOption = Scale && Precision && isEligibleDocumentForSnapping;
+  const showMeasurementSnappingOption = Scale && Precision && isEligibleDocumentForSnapping && core.isFullPDFEnabled();
 
   const onSnappingChange = (event) => {
     if (!core.isFullPDFEnabled()) {

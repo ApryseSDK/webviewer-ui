@@ -113,9 +113,34 @@ Webviewer.WebComponent({
     toolName: Tools.ToolNames.RECTANGLE,
   });
 
+  const freeHandToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'freeHandToolButton',
+    toolName: Tools.ToolNames.FREEHAND,
+  });
+
   const freeHandHighlightToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'freeHandHighlightToolButton',
     toolName: Tools.ToolNames.FREEHAND_HIGHLIGHT,
+  });
+
+  const lineToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'lineToolButton',
+    toolName: Tools.ToolNames.LINE,
+  });
+
+  const polylineToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'polylineToolButton',
+    toolName: Tools.ToolNames.POLYLINE,
+  });
+
+  const arrowToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'arrowToolButton',
+    toolName: Tools.ToolNames.ARROW,
+  });
+
+  const arcToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'arcToolButton',
+    toolName: Tools.ToolNames.ARC,
   });
 
   const ellipseToolButton = new instance.UI.Components.ToolButton({
@@ -128,8 +153,8 @@ Webviewer.WebComponent({
     toolName: Tools.ToolNames.POLYGON,
   });
 
-  const polygonCloudToolButton = new instance.UI.Components.ToolButton({
-    dataElement: 'polygonCloudToolButton',
+  const cloudToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'cloudToolButton',
     toolName: Tools.ToolNames.POLYGON_CLOUD,
   });
 
@@ -151,6 +176,16 @@ Webviewer.WebComponent({
     toolName: Tools.ToolNames.DISTANCE_MEASUREMENT,
   });
 
+  const arcMeasurementToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'arcMeasurementToolButton',
+    toolName: Tools.ToolNames.ARC_MEASUREMENT,
+  });
+
+  const perimeterMeasurementToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'perimeterMeasurementToolButton',
+    toolName: Tools.ToolNames.PERIMETER_MEASUREMENT,
+  });
+
   const areaMeasurementToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'areaMeasurementToolButton',
     toolName: Tools.ToolNames.AREA_MEASUREMENT,
@@ -159,6 +194,16 @@ Webviewer.WebComponent({
   const ellipseMeasurementToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'ellipseMeasurementToolButton',
     toolName: Tools.ToolNames.ELLIPSE_MEASUREMENT,
+  });
+
+  const rectangularAreaMeasurementToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'rectangularAreaMeasurementToolButton',
+    toolName: Tools.ToolNames.RECTANGULAR_AREA_MEASUREMENT,
+  });
+
+  const cloudyRectangularAreaMeasurementToolButton = new instance.UI.Components.ToolButton({
+    dataElement: 'cloudyRectangularAreaMeasurementToolButton',
+    toolName: Tools.ToolNames.CLOUDY_RECTANGULAR_AREA_MEASUREMENT,
   });
 
   const countMeasurementToolButton = new instance.UI.Components.ToolButton({
@@ -206,11 +251,16 @@ Webviewer.WebComponent({
     dataElement: 'shapesGroupedItems',
     items: [
       rectangleToolButton,
+      freeHandToolButton,
       freeHandHighlightToolButton,
+      lineToolButton,
+      polylineToolButton,
+      arrowToolButton,
+      arcToolButton,
       ellipseToolButton,
       polygonToolButton,
-      polygonCloudToolButton,
-      annotateGroupedItems
+      cloudToolButton,
+      defaultAnnotationUtilities
     ],
   });
 
@@ -228,8 +278,12 @@ Webviewer.WebComponent({
     dataElement: 'measureGroupedItems',
     items: [
       distanceMeasurementToolButton,
+      arcMeasurementToolButton,
+      perimeterMeasurementToolButton,
       areaMeasurementToolButton,
       ellipseMeasurementToolButton,
+      rectangularAreaMeasurementToolButton,
+      cloudyRectangularAreaMeasurementToolButton,
       countMeasurementToolButton,
       defaultAnnotationUtilities,
     ],
@@ -274,7 +328,7 @@ Webviewer.WebComponent({
     dataElement: 'fillAndSignGroupedItems',
     items: [
       rubberStampToolButton,
-      annotateGroupedItems
+      defaultAnnotationUtilities
     ],
   });
 

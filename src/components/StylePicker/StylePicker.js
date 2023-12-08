@@ -6,20 +6,34 @@ import './StylePicker.scss';
 import ColorPicker from './ColorPicker';
 import Slider from 'components/Slider';
 import DataElements from 'constants/dataElement';
-import LineStyleOptions from 'components/LineStyleOptions';
-import StyleOption from 'components/StyleOption';
-import Icon from 'components/Icon';
 import { circleRadius } from 'constants/slider';
+import Dropdown from '../Dropdown';
+import { defaultStartLineStyles, defaultStrokeStyles, defaultEndLineStyles, cloudyStrokeStyle } from 'constants/strokeStyleIcons';
+import Icon from 'components/Icon';
 import SnapModeToggle from './SnapModeToggle';
 import selectors from 'selectors';
 import actions from 'actions';
 import { hasFillColorAndCollapsablePanelSections, shouldHideStrokeSlider } from 'helpers/stylePanelHelper';
 
+const withCloudyStyle = defaultStrokeStyles.concat(cloudyStrokeStyle);
+
 const propTypes = {
   onStyleChange: PropTypes.func.isRequired,
   style: PropTypes.object.isRequired,
   sliderProperties: PropTypes.arrayOf(PropTypes.string),
-  toolMode: PropTypes.object,
+  isFreeText: PropTypes.bool,
+  isEllipse: PropTypes.bool,
+  isRedaction: PropTypes.bool,
+  isFreeHand: PropTypes.bool,
+  showLineStyleOptions: PropTypes.bool,
+  isArc: PropTypes.bool,
+  isInFormBuilderMode: PropTypes.bool,
+  hideSnapModeCheckbox: PropTypes.bool,
+  startLineStyle: PropTypes.string,
+  endLineStyle: PropTypes.string,
+  strokeStyle: PropTypes.string,
+  onLineStyleChange: PropTypes.func,
+  toolName: PropTypes.string,
 };
 
 const MAX_STROKE_THICKNESS = 20;
@@ -27,19 +41,26 @@ const MAX_STROKE_THICKNESS = 20;
 const StylePicker = ({
   onStyleChange,
   style,
-  lineStyleProperties,
   isFreeText,
   isEllipse,
   isRedaction,
-  onLineStyleChange,
+  isFreeHand,
   showLineStyleOptions,
-  isInFormBuilderAndNotFreeText,
+  isArc,
+  isInFormBuilderMode,
   hideSnapModeCheckbox,
-  toolMode
+  startLineStyle,
+  endLineStyle,
+  strokeStyle,
+  onLineStyleChange,
+  toolName
 }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const [strokeColor, setStrokeColor] = useState(style.StrokeColor);
+  const [startingLineStyle, setStartingLineStyle] = useState(startLineStyle);
+  const [endingLineStyle, setEndingLineStyle] = useState(endLineStyle);
+  const [strokeLineStyle, setStrokeLineStyle] = useState(strokeStyle);
   const [fillColor, setFillColor] = useState(style.FillColor);
 
   useEffect(() => {
@@ -47,9 +68,36 @@ const StylePicker = ({
     setFillColor(style.FillColor);
   }, [strokeColor, fillColor, style]);
 
+  useEffect(() => {
+    setStrokeColor(style.StrokeColor);
+    setStartingLineStyle(startLineStyle);
+    setStrokeLineStyle(strokeStyle);
+    setEndingLineStyle(endLineStyle);
+  }, [startLineStyle, endLineStyle, strokeStyle]);
+
   const onStrokeColorChange = (color) => {
     onStyleChange?.('StrokeColor', color);
     setStrokeColor(color);
+  };
+
+  const onStartLineStyleChange = (style) => {
+    onLineStyleChange?.('start', style);
+    setStartingLineStyle(style);
+  };
+
+  const onStrokeStyleChange = (style, value) => {
+    if (value) {
+      onLineStyleChange?.(style, value);
+      setStrokeLineStyle(value);
+    } else {
+      onLineStyleChange?.('middle', style);
+      setStrokeLineStyle(style);
+    }
+  };
+
+  const onEndLineStyleChange = (style) => {
+    onLineStyleChange?.('end', style);
+    setEndingLineStyle(style);
   };
 
   const onFillColorChange = (color) => {
@@ -100,9 +148,13 @@ const StylePicker = ({
 
   const getSliderProps = (type) => {
     const { Opacity, StrokeThickness } = style;
+
     const lineStart = circleRadius;
     switch (type.toLowerCase()) {
       case 'opacity':
+        if (!Opacity) {
+          return null;
+        }
         return {
           property: 'Opacity',
           displayProperty: 'opacity',
@@ -119,6 +171,9 @@ const StylePicker = ({
           getLocalValue: (opacity) => parseInt(opacity) / 100,
         };
       case 'strokethickness':
+        if (!StrokeThickness) {
+          return null;
+        }
         return {
           property: 'StrokeThickness',
           displayProperty: 'thickness',
@@ -163,6 +218,9 @@ const StylePicker = ({
 
   const renderSlider = (property, shouldHideSliderTitle) => {
     const sliderProps = getSliderProps(property);
+    if (!sliderProps) {
+      return null;
+    }
     return <Slider key={property} {...sliderProps} onStyleChange={onSliderChange} onSliderChange={onSliderChange} shouldHideSliderTitle={shouldHideSliderTitle} />;
   };
 
@@ -173,8 +231,8 @@ const StylePicker = ({
   };
 
   const showStrokeStyle = true;
-  const showFillColorAndCollapsablePanelSections = hasFillColorAndCollapsablePanelSections(toolMode?.name);
-  const hideStrokeSlider = shouldHideStrokeSlider(toolMode?.name);
+  const showFillColorAndCollapsablePanelSections = hasFillColorAndCollapsablePanelSections(toolName);
+  const hideStrokeSlider = shouldHideStrokeSlider(toolName);
 
   return (
     <div className="StylePicker">
@@ -213,19 +271,39 @@ const StylePicker = ({
                   {renderSlider('opacity')}
                 </div>
               }
-              {showLineStyleOptions &&
-                <LineStyleOptions properties={lineStyleProperties} onLineStyleChange={onLineStyleChange} />}
-              {
-                !isStyleOptionDisabled &&
-                !showLineStyleOptions &&
-                !isInFormBuilderAndNotFreeText && (
-                  <StyleOption
-                    borderStyle={style.Style}
-                    properties={lineStyleProperties}
-                    isEllipse={isEllipse}
-                    onLineStyleChange={onLineStyleChange}
-                  />
-                )
+              {!!strokeStyle && !(isInFormBuilderMode && !isFreeText) && !isFreeHand && !isArc &&
+                <div className='StylePicker-LineStyleContainer'>
+                  <div className="StylePicker-LineStyleTitle">Style</div>
+                  <div className='StylePicker-LineStyle'>
+                    {showLineStyleOptions &&
+                      <Dropdown
+                        className='StylePicker-StartLineStyleDropdown'
+                        dataElement="startLineStyleDropdown"
+                        images={defaultStartLineStyles}
+                        onClickItem={onStartLineStyleChange}
+                        currentSelectionKey={startingLineStyle}
+                      />
+                    }
+                    {!isStyleOptionDisabled &&
+                      <Dropdown
+                        className={`StylePicker-StrokeLineStyleDropdown${(!!strokeStyle && !showLineStyleOptions) ? ' StyleOptions' : ''}`}
+                        dataElement="middleLineStyleDropdown"
+                        images={ (isEllipse || showLineStyleOptions) ? defaultStrokeStyles : withCloudyStyle }
+                        onClickItem={onStrokeStyleChange}
+                        currentSelectionKey={strokeLineStyle}
+                      />
+                    }
+                    {showLineStyleOptions &&
+                      <Dropdown
+                        className='StylePicker-EndLineStyleDropdown'
+                        dataElement="endLineStyleDropdown"
+                        images={defaultEndLineStyles}
+                        onClickItem={onEndLineStyleChange}
+                        currentSelectionKey={endingLineStyle}
+                      />
+                    }
+                  </div>
+                </div>
               }
             </>
           )}

@@ -22,18 +22,15 @@ const style = {
   ],
   Precision: 0.1,
 };
-const lineStyleProperties = {
-  StartLineStyle: 'None',
-  EndLineStyle: 'None',
-  StrokeStyle: 'solid',
-};
 
 export const StylePicker = () => {
   const props = {
     style: style,
-    lineStyleProperties: lineStyleProperties,
     sliderProperties: ['Opacity', 'StrokeThickness'],
     showLineStyleOptions: true,
+    startLineStyle: 'None',
+    endLineStyle: 'None',
+    strokeStyle: 'solid',
   };
   return (
     <Provider store={store}>
