@@ -228,10 +228,10 @@ const App = ({ removeEventHandlers }) => {
         <ViewControlsOverlay />
         <MenuOverlay />
         <ZoomOverlay />
-        <AnnotationContentOverlay />
         <PageManipulationOverlay />
         <LeftPanelOverlayContainer /> */}
 
+        <AnnotationContentOverlay />
         <AnnotationPopup />
         <FormFieldEditPopup />
         <TextPopup />
