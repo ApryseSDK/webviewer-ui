@@ -511,6 +511,9 @@
       "count": "Számol",
       "length": "Hossz"
     },
+    "freeTextOption": {
+      "autoSizeFont": "A betűméret dinamikus skálázása"
+    },
     "measurementOption": {
       "scale": "Skála"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Behúzás növelése",
     "insertLink": "Link beszúrása",
     "insertImage": "Kép beszúrása",
+    "table": "asztal",
+    "insertRowAbove": "Sor beszúrása fent",
+    "insertRowBelow": "Sor beszúrása alább",
+    "insertColumnRight": "Jobb oldali oszlop beszúrása",
+    "insertColumnLeft": "Oszlop beszúrása balra",
+    "deleteRow": "Sor törlése",
+    "deleteColumn": "Oszlop törlése",
+    "deleteTable": "Táblázat törlése",
     "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön."
   },
   "insertPageModal": {

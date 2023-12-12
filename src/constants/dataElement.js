@@ -184,6 +184,18 @@ const DataElements = {
   OFFICE_EDITOR_TOOLS_HEADER_INSERT_IMAGE: 'officeEditorToolsHeaderInsertImage',
   OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE: 'officeEditorToolsHeaderInsertTable',
   OFFICE_EDITOR_FILE_NAME: 'officeEditorFileName',
+  OFFICE_EDITOR_CUT: 'officeEditorCut',
+  OFFICE_EDITOR_COPY: 'officeEditorCopy',
+  OFFICE_EDITOR_PASTE: 'officeEditorPaste',
+  OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING: 'officeEditorPasteWithoutFormatting',
+  OFFICE_EDITOR_DELETE: 'officeEditorDelete',
+  OFFICE_EDITOR_INSERT_ROW_ABOVE: 'officeEditorInsertRowAbove',
+  OFFICE_EDITOR_INSERT_ROW_BELOW: 'officeEditorInsertRowBelow',
+  OFFICE_EDITOR_INSERT_COLUMN_RIGHT: 'officeEditorInsertColumnRight',
+  OFFICE_EDITOR_INSERT_COLUMN_LEFT: 'officeEditorInsertColumnLeft',
+  OFFICE_EDITOR_DELETE_ROW: 'officeEditorDeleteRow',
+  OFFICE_EDITOR_DELETE_COLUMN: 'officeEditorDeleteColumn',
+  OFFICE_EDITOR_DELETE_TABLE: 'officeEditorDeleteTable',
 
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',

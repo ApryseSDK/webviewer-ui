@@ -511,6 +511,9 @@
       "count": "Räkna",
       "length": "Längd"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Skala teckenstorlek dynamiskt"
+    },
     "measurementOption": {
       "scale": "Skala"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Öka indrag",
     "insertLink": "Infoga länk",
     "insertImage": "Infoga bild",
+    "table": "Tabell",
+    "insertRowAbove": "Infoga rad ovanför",
+    "insertRowBelow": "Infoga rad nedan",
+    "insertColumnRight": "Infoga kolumn höger",
+    "insertColumnLeft": "Infoga kolumn till vänster",
+    "deleteRow": "Ta bort rad",
+    "deleteColumn": "Ta bort kolumn",
+    "deleteTable": "Ta bort tabell",
     "notSupportedOnMobile": "Office-redigering stöds inte på mobila enheter."
   },
   "insertPageModal": {

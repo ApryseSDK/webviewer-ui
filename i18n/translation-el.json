@@ -511,6 +511,9 @@
       "count": "μετρώ",
       "length": "Μήκος"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Κλιμάκωση μεγέθους γραμματοσειράς δυναμικά"
+    },
     "measurementOption": {
       "scale": "Κλίμακα"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Αύξηση εσοχής",
     "insertLink": "Εισαγωγή συνδέσμου",
     "insertImage": "Εισαγωγή εικόνας",
+    "table": "Τραπέζι",
+    "insertRowAbove": "Εισαγάγετε τη σειρά πάνω",
+    "insertRowBelow": "Εισαγάγετε τη σειρά παρακάτω",
+    "insertColumnRight": "Εισαγωγή στήλης δεξιά",
+    "insertColumnLeft": "Εισαγωγή στήλης αριστερά",
+    "deleteRow": "Διαγραφή σειράς",
+    "deleteColumn": "Διαγραφή στήλης",
+    "deleteTable": "Διαγραφή πίνακα",
     "notSupportedOnMobile": "Η επεξεργασία του Office δεν υποστηρίζεται σε κινητές συσκευές."
   },
   "insertPageModal": {

@@ -511,6 +511,9 @@
       "count": "Рахувати",
       "length": "Довжина"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Динамічне масштабування розміру шрифту"
+    },
     "measurementOption": {
       "scale": "Масштаб"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Збільшити відступ",
     "insertLink": "Вставте посилання",
     "insertImage": "Вставте зображення",
+    "table": "Таблиця",
+    "insertRowAbove": "Вставити рядок вище",
+    "insertRowBelow": "Вставити рядок нижче",
+    "insertColumnRight": "Вставити стовпець праворуч",
+    "insertColumnLeft": "Вставити стовпець ліворуч",
+    "deleteRow": "Видалити рядок",
+    "deleteColumn": "Видалити стовпець",
+    "deleteTable": "Видалити таблицю",
     "notSupportedOnMobile": "Редагування Office не підтримується на мобільних пристроях."
   },
   "insertPageModal": {

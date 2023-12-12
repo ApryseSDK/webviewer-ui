@@ -2,7 +2,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import core from 'core';
-import initialState from 'src/redux/initialState';
 import { workerTypes } from 'constants/types';
 import ContextMenuPopup from './ContextMenuPopup';
 
@@ -11,44 +10,94 @@ export default {
   component: ContextMenuPopup,
 };
 
-initialState.viewer.openElements.contextMenuPopup = true;
-const store = configureStore({ reducer: () => initialState });
-
-const BasicComponent = ({ children }) => {
-  return (
-    <Provider store={store}>
-      {children}
-    </Provider>
-  );
+const initialState = {
+  viewer: {
+    disabledElements: {},
+    customElementOverrides: {},
+    contextMenuPopup: [
+      { dataElement: 'panToolButton' },
+      { dataElement: 'stickyToolButton' },
+      { dataElement: 'highlightToolButton' },
+      { dataElement: 'freeHandToolButton' },
+      { dataElement: 'freeHandHighlightToolButton' },
+      { dataElement: 'freeTextToolButton' },
+      { dataElement: 'markInsertTextToolButton' },
+      { dataElement: 'markReplaceTextToolButton' },
+    ],
+    customPanels: [],
+    openElements: {
+      contextMenuPopup: true,
+    },
+    enableRightClickAnnotationPopup: false,
+  }
 };
 
-export function Basic() {
+export const BasicHorizontal = () => {
+  initialState.viewer.enableRightClickAnnotationPopup = false;
   core.getDocument = () => ({
     getType: () => workerTypes.PDF,
   });
 
   return (
-    <BasicComponent>
+    <Provider store={configureStore({ reducer: () => initialState })}>
       <ContextMenuPopup
         clickPosition={{ left: 0, top: 0 }}
       />
-    </BasicComponent>
+    </Provider>
   );
-}
+};
 
-export function OfficeEditor() {
+export const BasicVertical = () => {
+  initialState.viewer.enableRightClickAnnotationPopup = true;
   core.getDocument = () => ({
-    getType: () => workerTypes.OFFICE_EDITOR,
-  });
-  core.getOfficeEditor = () => ({
-    isTextSelected: () => true,
+    getType: () => workerTypes.PDF,
   });
 
   return (
-    <BasicComponent>
+    <Provider store={configureStore({ reducer: () => initialState })}>
       <ContextMenuPopup
         clickPosition={{ left: 0, top: 0 }}
       />
-    </BasicComponent>
+    </Provider>
   );
-}
+};
+
+export const OfficeEditor = () => {
+  core.getOfficeEditor = () => ({
+    isTextSelected: () => true,
+    isCursorInTable: () => false,
+  });
+  core.getDocument = () => ({
+    getType: () => workerTypes.OFFICE_EDITOR,
+  });
+
+  initialState.viewer.enableRightClickAnnotationPopup = false;
+
+  return (
+    <Provider store={configureStore({ reducer: () => initialState })}>
+      <ContextMenuPopup
+        clickPosition={{ left: 0, top: 0 }}
+      />
+    </Provider>
+  );
+};
+
+export const OfficeEditorTable = () => {
+  core.getOfficeEditor = () => ({
+    isTextSelected: () => false,
+    isCursorInTable: () => true,
+  });
+  core.getDocument = () => ({
+    getType: () => workerTypes.OFFICE_EDITOR,
+  });
+
+  initialState.viewer.enableRightClickAnnotationPopup = false;
+
+  return (
+    <Provider store={configureStore({ reducer: () => initialState })}>
+      <ContextMenuPopup
+        clickPosition={{ left: 0, top: 0 }}
+      />
+    </Provider>
+  );
+};

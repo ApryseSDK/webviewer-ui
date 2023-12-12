@@ -511,6 +511,9 @@
       "count": "गिनती",
       "length": "लंबाई"
     },
+    "freeTextOption": {
+      "autoSizeFont": "फ़ॉन्ट आकार को गतिशील रूप से स्केल करें"
+    },
     "measurementOption": {
       "scale": "स्केल"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "बढ़ते हुए अंतर में",
     "insertLink": "लिंक डालें",
     "insertImage": "चित्र डालें",
+    "table": "मेज़",
+    "insertRowAbove": "ऊपर पंक्ति सम्मिलित करें",
+    "insertRowBelow": "नीचे पंक्ति सम्मिलित करें",
+    "insertColumnRight": "दाएँ कॉलम डालें",
+    "insertColumnLeft": "बाईं ओर कॉलम डालें",
+    "deleteRow": "पंक्ति को हटाएं",
+    "deleteColumn": "कॉलम हटाएं",
+    "deleteTable": "तालिका हटाएँ",
     "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।"
   },
   "insertPageModal": {

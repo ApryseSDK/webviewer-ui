@@ -511,6 +511,9 @@
       "count": "Numara",
       "length": "Lungime"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Scalați dimensiunea fontului în mod dinamic"
+    },
     "measurementOption": {
       "scale": "Scară"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Mareste indent-ul",
     "insertLink": "Introduceți linkul",
     "insertImage": "Inserați imaginea",
+    "table": "Masa",
+    "insertRowAbove": "Inserați rândul de deasupra",
+    "insertRowBelow": "Inserați rândul de mai jos",
+    "insertColumnRight": "Inserați coloana la dreapta",
+    "insertColumnLeft": "Inserați coloana la stânga",
+    "deleteRow": "Ștergeți rândul",
+    "deleteColumn": "Șterge coloana",
+    "deleteTable": "Ștergeți tabelul",
     "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile."
   },
   "insertPageModal": {

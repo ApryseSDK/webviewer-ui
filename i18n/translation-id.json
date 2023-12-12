@@ -511,6 +511,9 @@
       "count": "Menghitung",
       "length": "Panjang"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Skala ukuran font secara dinamis"
+    },
     "measurementOption": {
       "scale": "Skala"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Tingkatkan indentasi",
     "insertLink": "Sisipkan tautan",
     "insertImage": "Sisipkan gambar",
+    "table": "Meja",
+    "insertRowAbove": "Sisipkan Baris Di Atas",
+    "insertRowBelow": "Sisipkan Baris Di Bawah",
+    "insertColumnRight": "Sisipkan Kolom Kanan",
+    "insertColumnLeft": "Sisipkan Kolom Kiri",
+    "deleteRow": "Hapus Baris",
+    "deleteColumn": "Hapus Kolom",
+    "deleteTable": "Hapus Tabel",
     "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler."
   },
   "insertPageModal": {

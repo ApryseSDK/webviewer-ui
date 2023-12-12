@@ -511,6 +511,9 @@
       "count": "Contagem",
       "length": "Comprimento"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Dimensione o tamanho da fonte dinamicamente"
+    },
     "measurementOption": {
       "scale": "Escala"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Aumentar recuo",
     "insertLink": "Inserir link",
     "insertImage": "Inserir Imagem",
+    "table": "Mesa",
+    "insertRowAbove": "Inserir linha acima",
+    "insertRowBelow": "Inserir linha abaixo",
+    "insertColumnRight": "Inserir coluna à direita",
+    "insertColumnLeft": "Inserir coluna à esquerda",
+    "deleteRow": "Excluir linha",
+    "deleteColumn": "Excluir coluna",
+    "deleteTable": "Excluir tabela",
     "notSupportedOnMobile": "A edição do Office não é suportada em dispositivos móveis."
   },
   "insertPageModal": {

@@ -511,6 +511,9 @@
       "count": "Số lượng",
       "length": "Chiều dài"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Chia tỷ lệ kích thước phông chữ một cách linh hoạt"
+    },
     "measurementOption": {
       "scale": "Quy mô"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Tăng thụt lề",
     "insertLink": "Chèn đường dẫn",
     "insertImage": "Chèn hình ảnh",
+    "table": "Bảng",
+    "insertRowAbove": "Chèn hàng bên trên",
+    "insertRowBelow": "Chèn hàng bên dưới",
+    "insertColumnRight": "Chèn cột bên phải",
+    "insertColumnLeft": "Chèn cột bên trái",
+    "deleteRow": "Xóa hàng",
+    "deleteColumn": "Xóa cột",
+    "deleteTable": "Xóa bảng",
     "notSupportedOnMobile": "Chỉnh sửa văn phòng không được hỗ trợ trên thiết bị di động."
   },
   "insertPageModal": {

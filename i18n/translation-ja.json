@@ -511,6 +511,9 @@
       "count": "カウント",
       "length": "長さ"
     },
+    "freeTextOption": {
+      "autoSizeFont": "フォントサイズを動的に拡大縮小する"
+    },
     "measurementOption": {
       "scale": "縮尺"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "インデントを増やします",
     "insertLink": "リンクを挿入",
     "insertImage": "画像を挿入",
+    "table": "テーブル",
+    "insertRowAbove": "上に行を挿入",
+    "insertRowBelow": "下に行を挿入",
+    "insertColumnRight": "列を右に挿入",
+    "insertColumnLeft": "列を左に挿入",
+    "deleteRow": "行の削除",
+    "deleteColumn": "列の削除",
+    "deleteTable": "テーブルの削除",
     "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。"
   },
   "insertPageModal": {

@@ -511,6 +511,9 @@
       "count": "Count",
       "length": "Length"
     },
+    "freeTextOption" :{
+      "autoSizeFont": "Scale font size dynamically"
+    },
     "measurementOption": {
       "scale": "Scale"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Increase indent",
     "insertLink": "Insert link",
     "insertImage": "Insert image",
+    "table": "Table",
+    "insertRowAbove": "Insert Row Above",
+    "insertRowBelow": "Insert Row Below",
+    "insertColumnRight": "Insert Column Right",
+    "insertColumnLeft": "Insert Column Left",
+    "deleteRow": "Delete Row",
+    "deleteColumn": "Delete Column",
+    "deleteTable": "Delete Table",
     "notSupportedOnMobile": "Office editing is not supported on mobile devices."
   },
   "insertPageModal": {

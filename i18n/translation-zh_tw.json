@@ -511,6 +511,9 @@
       "count": "計數",
       "length": "長度"
     },
+    "freeTextOption": {
+      "autoSizeFont": "動態縮放字體大小"
+    },
     "measurementOption": {
       "scale": "比例"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "增加縮排",
     "insertLink": "插入鏈接",
     "insertImage": "插入圖片",
+    "table": "桌子",
+    "insertRowAbove": "在上方插入行",
+    "insertRowBelow": "在下面插入行",
+    "insertColumnRight": "右插入列",
+    "insertColumnLeft": "向左插入列",
+    "deleteRow": "刪除行",
+    "deleteColumn": "刪除列",
+    "deleteTable": "刪除表",
     "notSupportedOnMobile": "移動設備不支持 Office 編輯。"
   },
   "insertPageModal": {

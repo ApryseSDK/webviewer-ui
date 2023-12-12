@@ -511,6 +511,9 @@
       "count": "Tel",
       "length": "Lengte"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Schaal de lettergrootte dynamisch"
+    },
     "measurementOption": {
       "scale": "Schaal"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Inspringing vergroten",
     "insertLink": "Koppeling invoegen",
     "insertImage": "Voeg afbeelding in",
+    "table": "Tafel",
+    "insertRowAbove": "Rij erboven invoegen",
+    "insertRowBelow": "Rij hieronder invoegen",
+    "insertColumnRight": "Kolom rechts invoegen",
+    "insertColumnLeft": "Kolom links invoegen",
+    "deleteRow": "Verwijder rij",
+    "deleteColumn": "Kolom verwijderen",
+    "deleteTable": "Tabel verwijderen",
     "notSupportedOnMobile": "Office-bewerking wordt niet ondersteund op mobiele apparaten."
   },
   "insertPageModal": {

@@ -511,6 +511,9 @@
       "count": "Anzahl",
       "length": "Länge"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Skalieren Sie die Schriftgröße dynamisch"
+    },
     "measurementOption": {
       "scale": "Maßstab"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Einzug vergrößern",
     "insertLink": "Verknüpfung einfügen",
     "insertImage": "Bild einfügen",
+    "table": "Tisch",
+    "insertRowAbove": "Zeile darüber einfügen",
+    "insertRowBelow": "Zeile darunter einfügen",
+    "insertColumnRight": "Spalte rechts einfügen",
+    "insertColumnLeft": "Spalte links einfügen",
+    "deleteRow": "Zeile löschen",
+    "deleteColumn": "Spalte löschen",
+    "deleteTable": "Tabelle löschen",
     "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt."
   },
   "insertPageModal": {

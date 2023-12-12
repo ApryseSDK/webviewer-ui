@@ -511,6 +511,9 @@
       "count": "นับ",
       "length": "ความยาว"
     },
+    "freeTextOption": {
+      "autoSizeFont": "ปรับขนาดตัวอักษรแบบไดนามิก"
+    },
     "measurementOption": {
       "scale": "มาตราส่วน"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "เพิ่มการเยื้อง",
     "insertLink": "ใส่ลิงค์",
     "insertImage": "แทรกรูปภาพ",
+    "table": "โต๊ะ",
+    "insertRowAbove": "แทรกแถวด้านบน",
+    "insertRowBelow": "แทรกแถวด้านล่าง",
+    "insertColumnRight": "แทรกคอลัมน์ทางขวา",
+    "insertColumnLeft": "แทรกคอลัมน์ด้านซ้าย",
+    "deleteRow": "ลบแถว",
+    "deleteColumn": "ลบคอลัมน์",
+    "deleteTable": "ลบตาราง",
     "notSupportedOnMobile": "อุปกรณ์พกพาไม่รองรับการแก้ไข Office"
   },
   "insertPageModal": {

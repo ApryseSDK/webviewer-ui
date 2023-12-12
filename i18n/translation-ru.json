@@ -511,6 +511,9 @@
       "count": "подсчитывать",
       "length": "Длина"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Динамическое масштабирование размера шрифта"
+    },
     "measurementOption": {
       "scale": "Масштаб"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Увеличить отступ",
     "insertLink": "Вставить ссылку",
     "insertImage": "Вставить изображение",
+    "table": "Стол",
+    "insertRowAbove": "Вставить строку выше",
+    "insertRowBelow": "Вставить строку ниже",
+    "insertColumnRight": "Вставить столбец справа",
+    "insertColumnLeft": "Вставить столбец слева",
+    "deleteRow": "Удалить строку",
+    "deleteColumn": "Удалить столбец",
+    "deleteTable": "Удалить таблицу",
     "notSupportedOnMobile": "Редактирование Office не поддерживается на мобильных устройствах."
   },
   "insertPageModal": {

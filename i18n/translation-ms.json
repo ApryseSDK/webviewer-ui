@@ -511,6 +511,9 @@
       "count": "Kira",
       "length": "Panjang"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Skalakan saiz fon secara dinamik"
+    },
     "measurementOption": {
       "scale": "Skala"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Tingkatkan inden",
     "insertLink": "Sisipkan pautan",
     "insertImage": "Sisipkan imej",
+    "table": "Jadual",
+    "insertRowAbove": "Sisipkan Baris Di Atas",
+    "insertRowBelow": "Sisipkan Baris Di Bawah",
+    "insertColumnRight": "Sisipkan Lajur Kanan",
+    "insertColumnLeft": "Sisipkan Lajur Kiri",
+    "deleteRow": "Padam Baris",
+    "deleteColumn": "Padam Lajur",
+    "deleteTable": "Padamkan Jadual",
     "notSupportedOnMobile": "Penyuntingan pejabat tidak disokong pada peranti mudah alih."
   },
   "insertPageModal": {

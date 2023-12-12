@@ -511,6 +511,9 @@
       "count": "Compte",
       "length": "Longueur"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Ajuster la taille de la police de manière dynamique"
+    },
     "measurementOption": {
       "scale": "Échelle"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Augmenter le retrait",
     "insertLink": "Insérer un lien",
     "insertImage": "Insérer une image",
+    "table": "Tableau",
+    "insertRowAbove": "Insérer une ligne au-dessus",
+    "insertRowBelow": "Insérer une ligne en dessous",
+    "insertColumnRight": "Insérer une colonne à droite",
+    "insertColumnLeft": "Insérer une colonne à gauche",
+    "deleteRow": "Supprimer la ligne",
+    "deleteColumn": "Supprimer la colonne",
+    "deleteTable": "Supprimer le tableau",
     "notSupportedOnMobile": "L'édition Office n'est pas prise en charge sur les appareils mobiles."
   },
   "insertPageModal": {

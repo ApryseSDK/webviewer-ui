@@ -511,6 +511,9 @@
       "count": "Počet",
       "length": "Délka"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Dynamicky měnit velikost písma"
+    },
     "measurementOption": {
       "scale": "Měřítko"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Zvětšit odsazení",
     "insertLink": "Vložit odkaz",
     "insertImage": "Vložit obrázek",
+    "table": "Stůl",
+    "insertRowAbove": "Vložit řádek výše",
+    "insertRowBelow": "Vložit řádek níže",
+    "insertColumnRight": "Vložit sloupec vpravo",
+    "insertColumnLeft": "Vložit sloupec vlevo",
+    "deleteRow": "Smazat řádek",
+    "deleteColumn": "Smazat sloupec",
+    "deleteTable": "Smazat tabulku",
     "notSupportedOnMobile": "Úpravy Office nejsou podporovány na mobilních zařízeních."
   },
   "insertPageModal": {

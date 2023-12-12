@@ -511,6 +511,9 @@
       "count": "计数",
       "length": "长度"
     },
+    "freeTextOption": {
+      "autoSizeFont": "动态缩放字体大小"
+    },
     "measurementOption": {
       "scale": "比例"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "增加缩进",
     "insertLink": "插入链接",
     "insertImage": "插入图片",
+    "table": "桌子",
+    "insertRowAbove": "在上方插入行",
+    "insertRowBelow": "在下面插入行",
+    "insertColumnRight": "右插入列",
+    "insertColumnLeft": "向左插入列",
+    "deleteRow": "删除行",
+    "deleteColumn": "删除列",
+    "deleteTable": "删除表",
     "notSupportedOnMobile": "移动设备不支持 Office 编辑。"
   },
   "insertPageModal": {

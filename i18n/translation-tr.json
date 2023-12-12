@@ -511,6 +511,9 @@
       "count": "Saymak",
       "length": "Uzunluk"
     },
+    "freeTextOption": {
+      "autoSizeFont": "Yazı tipi boyutunu dinamik olarak ölçeklendirin"
+    },
     "measurementOption": {
       "scale": "Ölçek"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "Girintiyi artır",
     "insertLink": "Bağlantı ekle",
     "insertImage": "Resim ekle",
+    "table": "Masa",
+    "insertRowAbove": "Yukarıya Satır Ekle",
+    "insertRowBelow": "Aşağıya Satır Ekle",
+    "insertColumnRight": "Sağa Sütun Ekle",
+    "insertColumnLeft": "Sola Sütun Ekle",
+    "deleteRow": "Sırayı sil",
+    "deleteColumn": "Sütunu Sil",
+    "deleteTable": "Tabloyu Sil",
     "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez."
   },
   "insertPageModal": {

@@ -511,6 +511,9 @@
       "count": "গণনা",
       "length": "দৈর্ঘ্য"
     },
+    "freeTextOption": {
+      "autoSizeFont": "গতিশীলভাবে ফন্টের আকার স্কেল করুন"
+    },
     "measurementOption": {
       "scale": "স্কেল"
     },
@@ -1166,6 +1169,14 @@
     "increaseIndent": "ইন্ডেন্ট বাড়ান",
     "insertLink": "লিঙ্ক ঢোকান",
     "insertImage": "ছবি ঢোকান",
+    "table": "টেবিল",
+    "insertRowAbove": "উপরে সারি ঢোকান",
+    "insertRowBelow": "নীচে সারি সন্নিবেশ করান",
+    "insertColumnRight": "ডানদিকে কলাম সন্নিবেশ করুন",
+    "insertColumnLeft": "বাম দিকে কলাম সন্নিবেশ করুন",
+    "deleteRow": "সারি মুছুন",
+    "deleteColumn": "কলাম মুছুন",
+    "deleteTable": "টেবিল মুছুন",
     "notSupportedOnMobile": "অফিস সম্পাদনা মোবাইল ডিভাইসে সমর্থিত নয়।"
   },
   "insertPageModal": {
