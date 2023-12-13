@@ -1,0 +1,3 @@
+import useOnContentEditHistoryUndoRedoChanged from './useOnContentEditHistoryUndoRedoChanged';
+
+export default useOnContentEditHistoryUndoRedoChanged;

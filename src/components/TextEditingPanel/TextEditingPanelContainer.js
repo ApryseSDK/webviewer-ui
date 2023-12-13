@@ -9,20 +9,22 @@ import TextEditingPanel from './TextEditingPanel';
 import DataElements from 'constants/dataElement';
 import useDidUpdate from 'hooks/useDidUpdate';
 import { isMobileSize } from 'helpers/getDeviceSize';
+import useOnContentEditHistoryUndoRedoChanged from 'hooks/useOnContentEditHistoryUndoRedoChanged';
 
 const fonts = [];
 
-const TextEditingPanelContainer = () => {
+const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const [isOpen, isDisabled, textEditingPanelWidth, isInDesktopOnlyMode] = useSelector(
     (state) => [
-      selectors.isElementOpen(state, 'textEditingPanel'),
-      selectors.isElementDisabled(state, 'textEditingPanel'),
+      selectors.isElementOpen(state, dataElement),
+      selectors.isElementDisabled(state, dataElement),
       selectors.getTextEditingPanelWidth(state),
       selectors.isInDesktopOnlyMode(state),
     ],
     shallowEqual,
   );
 
+  const undoRedoProperties = useOnContentEditHistoryUndoRedoChanged();
   const isMobile = isMobileSize();
 
   // selection modes used are 'FreeText' and 'ContentBox'
@@ -70,6 +72,9 @@ const TextEditingPanelContainer = () => {
         setTextEditProperties(fontObject);
         handleColorChange(null, color);
         attribute.fontColor = hexColor;
+
+        // remove the fontName attribute so that we don't override the fontName when we set the text attributes
+        delete attribute.fontName;
         window.Core.ContentEdit.setTextAttributes(attribute);
 
         setFormat({ ...attribute, color });
@@ -137,12 +142,12 @@ const TextEditingPanelContainer = () => {
     const handleContentEditModeStart = () => {
       dispatch(actions.closeElements(['searchPanel', 'notesPanel', 'redactionPanel', 'wv3dPropertiesPanel']));
       if (!isMobile) {
-        dispatch(actions.openElement('textEditingPanel'));
+        dispatch(actions.openElement(dataElement));
       }
     };
 
     const handleContentEditModeEnd = () => {
-      dispatch(actions.closeElement('textEditingPanel'));
+      dispatch(actions.closeElement(dataElement));
     };
 
     core.addEventListener('contentEditModeStarted', handleContentEditModeStart);
@@ -171,7 +176,7 @@ const TextEditingPanelContainer = () => {
           annotationRef.current = annotation;
           setSelectionMode('FreeText');
           if (!isDisabled && !isOpen) {
-            dispatch(actions.toggleElement('textEditingPanel'));
+            dispatch(actions.toggleElement(dataElement));
           }
         } else if (annotation.isContentEditPlaceholder()) {
           setSelectedContentBox(annotation);
@@ -182,7 +187,7 @@ const TextEditingPanelContainer = () => {
           setSelectionMode('ContentBox');
           annotationRef.current = null;
           if (!isDisabled && !isOpen) {
-            dispatch(actions.toggleElement('textEditingPanel'));
+            dispatch(actions.toggleElement(dataElement));
           }
         }
       } else if (action === 'deselected') {
@@ -205,9 +210,9 @@ const TextEditingPanelContainer = () => {
     const onResize = () => {
       if (core.getContentEditManager().isInContentEditMode()) {
         if (isMobile) {
-          dispatch(actions.closeElement('textEditingPanel'));
+          dispatch(actions.closeElement(dataElement));
         } else {
-          dispatch(actions.openElement('textEditingPanel'));
+          dispatch(actions.openElement(dataElement));
         }
       }
     };
@@ -313,18 +318,11 @@ const TextEditingPanelContainer = () => {
     if (isTextContentPlaceholder) {
       const contentBoxId = annotation.getCustomData('contentEditBoxId');
 
-      await window.Core.ContentEdit.loadTextAttributes(contentBoxId, 0, 0, {
-        restrictFontName: false,
-        restrictFontSize: false,
-      }, 1);
+      const editManager = core.getDocumentViewer().getContentEditManager();
+      const attribs = await editManager.getContentBoxAttributes(contentBoxId);
 
-      await new Promise((r) => setTimeout(r, 100));
-
-      const manager = core.getContentEditManager();
-      const box = manager.getContentBoxById(contentBoxId);
-      const contentBoxAttributes = box.boxAttributes;
-      const fontName = getFontName(contentBoxAttributes?.fontName);
-      const { bold, italic, underline, fontColors, fontSize, textAlign } = contentBoxAttributes;
+      const fontName = getFontName(attribs.fontName);
+      const { bold, italic, underline, fontColors, fontSize, textAlign } = attribs;
       const color = new window.Core.Annotations.Color(fontColors[0].fontColor);
 
       if (!fonts.includes(fontName)) {
@@ -343,23 +341,8 @@ const TextEditingPanelContainer = () => {
     }
   };
 
-  const handleUndo = async () => {
-    await core.getDocumentViewer().getContentEditHistoryManager().undo();
-  };
-
-  const handleRedo = async () => {
-    await core.getDocumentViewer().getContentEditHistoryManager().redo();
-  };
-
-  const undoRedoProperties = {
-    canUndo: core.getDocumentViewer().getContentEditHistoryManager().canUndo(),
-    canRedo: core.getDocumentViewer().getContentEditHistoryManager().canRedo(),
-    handleUndo: handleUndo,
-    handleRedo: handleRedo
-  };
-
   const closeTextEditingPanel = () => {
-    dispatch(actions.closeElement('textEditingPanel'));
+    dispatch(actions.closeElement(dataElement));
   };
 
   const renderMobileCloseButton = () => {
@@ -377,11 +360,23 @@ const TextEditingPanelContainer = () => {
       ? {}
       : { width: `${textEditingPanelWidth}px`, minWidth: `${textEditingPanelWidth}px` };
 
-  if (isDisabled || !isOpen) {
+  const [renderNull, setRenderNull] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRenderNull(!isOpen);
+    }, 500);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isOpen]);
+
+  if (isDisabled || (!isOpen && renderNull)) {
     return null;
   }
+
   return (
-    <DataElementWrapper dataElement="textEditingPanel" className="Panel TextEditingPanel" style={style}>
+    <DataElementWrapper dataElement={dataElement} className="Panel TextEditingPanel" style={style}>
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
       <TextEditingPanel
         undoRedoProperties={undoRedoProperties}

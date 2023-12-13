@@ -128,12 +128,15 @@ const mockDocument = {
   getViewerCoordinates: () => ({ x: 0, y: 0 }),
   setLayersArray: noop,
   isWebViewerServerDocument: () => false,
+  addEventListener: noop,
+  removeEventListener: noop,
 };
 
 const mockDisplayModeManager = {
   isVirtualDisplayEnabled: () => true,
 };
 
+let currentPage = 0;
 const mockDocumentViewer = {
   doc: {},
   getDocument: () => mockDocument,
@@ -147,7 +150,9 @@ const mockDocumentViewer = {
   getPageHeight: () => DEFAULT_PAGE_HEIGHT,
   getPageWidth: () => DEFAULT_PAGE_WIDTH,
   setCurrentPage: (page) => {
+    currentPage = page;
   },
+  getCurrentPage: () => currentPage,
   setBookmarkIconShortcutVisibility: noop,
   displayBookmark: noop,
   addEventListener: noop,
@@ -170,7 +175,8 @@ const mockDocumentViewer = {
   getAnnotationsLoadedPromise: () => Promise.resolve(),
   getDisplayModeManager: noop,
   refreshAll: noop,
-  updateView: noop
+  updateView: noop,
+  getPageSearchResults: () => [],
 };
 
 core.getTool = () => mockTool;
@@ -207,6 +213,13 @@ core.getContentEditManager = () => ({
 
 window.Core = {
   documentViewer: mockDocumentViewer,
+  annotations: {
+    Color: () => {},
+  },
+  ContentEdit: {
+    addEventListener: noop,
+    removeEventListener: noop,
+  },
   annotationManager: mockAnnotationManager,
   AnnotationManager: mockAnnotationManager,
   Tools: {
@@ -321,6 +334,7 @@ window.Core = {
     }
   },
   setBasePath: noop,
+  getAllowedFileExtensions: () => ['pdf', 'xod'],
 };
 
 const DEFAULT_PAGE_HEIGHT = 792;
@@ -387,6 +401,30 @@ class MockEllipseAnnotation {
   getCustomData = () => '';
 }
 
+class Model3DAnnotation {
+  isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
+  static datePickerOptions = {};
+}
+
+class PolygonAnnotation {
+  isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
+  static datePickerOptions = {};
+}
+
+class RedactionAnnotation {
+  isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
+  static datePickerOptions = {};
+}
+
+class FileAttachmentAnnotation {
+  isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
+  static datePickerOptions = {};
+}
+
 window.Core.Annotations = {
   Annotation: {
     MeasurementUnits: {},
@@ -396,19 +434,19 @@ window.Core.Annotations = {
   LineAnnotation: MockLineAnnotation,
   PolylineAnnotation: MockAnnotation,
   ArcAnnotation: MockAnnotation,
-  PolygonAnnotation: MockAnnotation,
+  PolygonAnnotation: PolygonAnnotation,
   EllipseAnnotation: MockEllipseAnnotation,
   StickyAnnotation: MockAnnotation,
   TextHighlightAnnotation: MockAnnotation,
   TextUnderlineAnnotation: MockAnnotation,
   TextSquigglyAnnotation: MockAnnotation,
   TextStrikeoutAnnotation: MockAnnotation,
-  RedactionAnnotation: MockAnnotation,
+  RedactionAnnotation: RedactionAnnotation,
   RectangleAnnotation: MockRectangleAnnotation,
   StampAnnotation: MockAnnotation,
-  FileAttachmentAnnotation: MockAnnotation,
+  FileAttachmentAnnotation: FileAttachmentAnnotation,
   SoundAnnotation: MockAnnotation,
-  Model3DAnnotation: MockAnnotation,
+  Model3DAnnotation: Model3DAnnotation,
   WidgetAnnotation: MockAnnotation,
   Link: MockAnnotation,
   CaretAnnotation: MockAnnotation,
