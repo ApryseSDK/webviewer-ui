@@ -436,4 +436,80 @@ test.describe('Notes Panel', () => {
     await page.waitForTimeout(200);
     expect(await notesContainer.screenshot()).toMatchSnapshot(['notes-panel', 'note-panel-unselected-annotations.png']);
   });
+
+  test('should be able to select notes without notes panel scrolling to other locations', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
+    const instance = await waitForInstance();
+    await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');    
+    await page.waitForTimeout(5000);
+
+    // open note panel and go to "multi select" mode
+    await instance('openElements', ['notesPanel']);
+    await page.waitForTimeout(1000);
+    await iframe.click('[data-element="multiSelectModeButton"]');
+    await page.waitForTimeout(1000);
+
+    // selection annotations on page 1
+    await iframe.evaluate(async () => {
+      instance.Core.annotationManager.selectAnnotations(instance.Core.annotationManager.getAnnotationsList().filter(a => a.PageNumber === 1));
+    });
+
+    // scroll to the bottom of the note panel virtual list
+    const notesPanelVirtualList = await iframe.$('.ReactVirtualized__Grid__innerScrollContainer');
+    const { x, y } = await notesPanelVirtualList.boundingBox();
+
+    await page.mouse.move(x + 25, y + 50);
+    let listSeparators;
+    let lastText = '';
+
+    while (lastText !== 'Page 51') {
+      await page.mouse.wheel(0, 1000);
+      listSeparators = await iframe.$$('.ListSeparator');
+      lastText = await listSeparators[listSeparators.length - 1].textContent();
+    }
+
+    // select an annotation on the last page
+    const annotIDOnPage51 = await iframe.evaluate(async () => {
+      return instance.Core.annotationManager.getAnnotationsList().filter(a => a.PageNumber === 51 && !a.InReplyTo)[0].Id;
+    });
+    const annotOnLastPage = await iframe.$(`#note-multi-select-toggle_${annotIDOnPage51}`);
+    await annotOnLastPage?.click();
+
+    await page.waitForTimeout(1000);
+
+    // WV should not scroll
+    listSeparators = await iframe.$$('.ListSeparator');
+    let lastPageSeparator;
+
+    for (let i = 0; i < listSeparators.length; i++) {
+      if ((await listSeparators[i].textContent()) === 'Page 51') {
+        lastPageSeparator = listSeparators[i];
+        break;
+      }
+    }
+
+    expect(lastPageSeparator).toBeTruthy();
+  });
+
+  test('should disable multiselect controls if document is readonly', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    const instance = await waitForInstance();
+    await page.waitForTimeout(5000);
+
+    await instance('openElements', ['notesPanel']);
+
+    await iframe.evaluate(async () => {
+      instance.Core.annotationManager.promoteUserToAdmin();
+      instance.Core.annotationManager.enableReadOnlyMode();
+    });
+
+    await page.waitForTimeout(2000);
+
+    await iframe.evaluate(async () => {
+      instance.Core.annotationManager.selectAnnotations(instance.Core.annotationManager.getAnnotationsList().filter(a => a.PageNumber === 1));
+    });
+
+    const multiselectFooter = await iframe.$('.multi-select-footer');
+    expect(await multiselectFooter.screenshot()).toMatchSnapshot(['notes-panel', 'readonly-mode-multiselect-footer.png']);
+  });
 });

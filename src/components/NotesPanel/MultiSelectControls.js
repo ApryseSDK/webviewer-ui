@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import Icon from 'components/Icon';
@@ -65,9 +65,13 @@ const MultiSelectControls = ({
   ] = useState([]);
   const dispatch = useDispatch();
   const [t] = useTranslation();
-  const [activeDocumentViewerKey] = useSelector((state) => [
-    selectors.getActiveDocumentViewerKey(state),
-  ]);
+  const [activeDocumentViewerKey, isDocumentReadOnly] = useSelector(
+    (state) => [
+      selectors.getActiveDocumentViewerKey(state),
+      selectors.isDocumentReadOnly(state),
+    ],
+    shallowEqual,
+  );
 
   useEffect(() => {
     const onAnnotationChanged = (annotations, action) => {
@@ -159,7 +163,7 @@ const MultiSelectControls = ({
       <div className="buttons-container">
         <Button
           dataElement={DataElements.NOTE_MULTI_REPLY_BUTTON}
-          disabled={modifiableMultiSelectAnnotations.length === 0}
+          disabled={isDocumentReadOnly || multiSelectedAnnotations.length === 0}
           img="icon-header-chat-line"
           onClick={() => {
             setShowMultiReply(true);
@@ -171,7 +175,7 @@ const MultiSelectControls = ({
           className={classNames({
             active: showMultiState,
           })}
-          disabled={modifiableMultiSelectAnnotations.length === 0}
+          disabled={isDocumentReadOnly || modifiableMultiSelectAnnotations.length === 0}
           img="icon-annotation-status-none"
           onClick={() => {
             setShowMultiState(!showMultiState);
@@ -193,7 +197,7 @@ const MultiSelectControls = ({
         <Button
           dataElement={DataElements.NOTE_MULTI_STYLE_BUTTON}
           img="icon-menu-style-line"
-          disabled={modifiableMultiSelectAnnotations.length === 0}
+          disabled={isDocumentReadOnly || modifiableMultiSelectAnnotations.length === 0}
           onClick={() => {
             setShowMultiStyle(!showMultiStyle);
           }}
@@ -210,7 +214,7 @@ const MultiSelectControls = ({
         {!canUngroup &&
           <Button
             dataElement={DataElements.NOTE_MULTI_GROUP_BUTTON}
-            disabled={!canGroup}
+            disabled={isDocumentReadOnly || !canGroup}
             img="group-annotations-icon"
             onClick={() => {
               core.groupAnnotations(multiSelectedAnnotations[0], multiSelectedAnnotations, activeDocumentViewerKey);
@@ -228,7 +232,7 @@ const MultiSelectControls = ({
           />}
         <Button
           dataElement={DataElements.NOTE_MULTI_DELETE_BUTTON}
-          disabled={modifiableMultiSelectAnnotations.length === 0}
+          disabled={isDocumentReadOnly || modifiableMultiSelectAnnotations.length === 0}
           img="icon-delete-line"
           onClick={() => {
             const title = t('warning.multiDeleteAnnotation.title');
@@ -240,7 +244,7 @@ const MultiSelectControls = ({
               message,
               confirmBtnText,
               onConfirm: () => {
-                core.deleteAnnotations(modifiableMultiSelectAnnotations, activeDocumentViewerKey);
+                core.deleteAnnotations(modifiableMultiSelectAnnotations, undefined, activeDocumentViewerKey);
               },
             };
             dispatch(actions.showWarningMessage(warning));

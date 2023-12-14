@@ -128,7 +128,6 @@ export default (store, documentViewerKey) => async () => {
 
     const elementsToDisableInOfficeEditor = ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton', 'annotationPopup'];
     if (isOfficeEditorMode()) {
-      dispatch(actions.setReadOnly(true));
       dispatch(actions.enableElement('officeEditorToolsHeader', PRIORITY_ONE));
       setZoomLevel(1);
       dispatch(actions.disableElements(
@@ -146,7 +145,6 @@ export default (store, documentViewerKey) => async () => {
         hotkeysManager.keyHandlerMap[searchShortcutKeys],
       );
     } else {
-      dispatch(actions.setReadOnly(false));
       dispatch(actions.enableElements(
         elementsToDisableInOfficeEditor,
         PRIORITY_ONE, // To allow customers to still disable these elements
