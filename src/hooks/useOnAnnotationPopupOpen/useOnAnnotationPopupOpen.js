@@ -17,14 +17,14 @@ export default function useOnAnnotationPopupOpen() {
     popupItems,
     isRightClickAnnotationPopupEnabled,
     isNotesPanelOpen,
-    isMeasurementOverlayOpen,
+    isScaleOverlayContainerOpen,
     activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.getPopupItems(state, DataElements.ANNOTATION_POPUP),
       selectors.isRightClickAnnotationPopupEnabled(state),
       selectors.isElementOpen(state, DataElements.NOTES_PANEL),
-      selectors.isElementOpen(state, DataElements.MEASUREMENT_OVERLAY),
+      selectors.isElementOpen(state, DataElements.SCALE_OVERLAY_CONTAINER),
       selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
@@ -142,7 +142,7 @@ export default function useOnAnnotationPopupOpen() {
         return;
       }
 
-      if (action === 'modify' && !isMeasurementOverlayOpen) {
+      if (action === 'modify' && !isScaleOverlayContainerOpen) {
         openPopup();
       }
 
@@ -171,7 +171,7 @@ export default function useOnAnnotationPopupOpen() {
       core.removeEventListener('annotationChanged', onAnnotationChanged, null, activeDocumentViewerKey);
       core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, null, activeDocumentViewerKey);
     };
-  }, [canModify, focusedAnnotation, isMeasurementOverlayOpen, activeDocumentViewerKey]);
+  }, [canModify, focusedAnnotation, isScaleOverlayContainerOpen, activeDocumentViewerKey]);
 
   useEffect(() => {
     const onMouseLeftUp = (e) => {
