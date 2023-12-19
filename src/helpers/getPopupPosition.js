@@ -4,25 +4,30 @@ import getRootNode from 'helpers/getRootNode';
 // gap between the annotation selection box and the popup element
 const gap = 17;
 
-export const getAnnotationPopupPositionBasedOn = (annotation, popup) => {
+export const getAnnotationPopupPositionBasedOn = (annotation, popup, documentViewerKey = 1) => {
   const { left, top } = calcAnnotationPopupPosition(
-    getAnnotationPosition(annotation),
-    getPopupDimensions(popup)
+    getAnnotationPosition(annotation, documentViewerKey),
+    getPopupDimensions(popup),
+    documentViewerKey,
   );
 
   return { left: Math.max(left, 4), top };
 };
 
-export const getTextPopupPositionBasedOn = (allQuads, popup) => {
+export const getTextPopupPositionBasedOn = (allQuads, popup, documentViewerKey = 1, isMultiViewerMode = false) => {
   const { left, top } = calcTextPopupPosition(
-    getSelectedTextPosition(allQuads),
-    getPopupDimensions(popup)
+    getSelectedTextPosition(allQuads, documentViewerKey),
+    getPopupDimensions(popup),
+    documentViewerKey,
   );
 
   // Fixes the issue where viewer has space on
   // left side in WebComponent mode
   if (window.isApryseWebViewerWebComponent) {
-    const documentContainer = getRootNode().querySelector('.DocumentContainer');
+    const documentContainer =
+      isMultiViewerMode
+        ? getRootNode().querySelector(`#DocumentContainer${documentViewerKey}`)
+        : getRootNode().querySelector('.DocumentContainer');
     const containerBox = documentContainer.getBoundingClientRect();
     const updatedLeft = left - containerBox.left;
     return { left: updatedLeft, top };
@@ -31,19 +36,21 @@ export const getTextPopupPositionBasedOn = (allQuads, popup) => {
   return { left, top };
 };
 
-export const getAnnotationPosition = (annotation) => {
-  const { left, top, right, bottom } = getAnnotationPageCoordinates(annotation);
-
+export const getAnnotationPosition = (annotation, documentViewerKey = 1) => {
+  const { left, top, right, bottom } = getAnnotationPageCoordinates(annotation, documentViewerKey);
   const pageNumber = annotation.getPageNumber();
-  const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageNumber);
-  const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber);
+  if (pageNumber > core.getDocument().getPageCount()) {
+    return { topLeft: null, bottomRight: null };
+  }
+  const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageNumber, documentViewerKey);
+  const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber, documentViewerKey);
 
   if (annotation['NoZoom']) {
     const isNote = annotation instanceof window.Core.Annotations.StickyAnnotation;
     const rect = annotation.getRect();
     const width = isNote ? window.Core.Annotations.StickyAnnotation['SIZE'] : rect.getWidth();
     const height = isNote ? window.Core.Annotations.StickyAnnotation['SIZE'] : rect.getHeight();
-    const rotation = core.getCompleteRotation(annotation.PageNumber);
+    const rotation = core.getCompleteRotation(annotation.PageNumber, documentViewerKey);
     if (rotation === 0) {
       bottomRight.x = topLeft.x + width;
       bottomRight.y = topLeft.y + height;
@@ -72,14 +79,14 @@ export const getAnnotationPosition = (annotation) => {
   return { topLeft, bottomRight };
 };
 
-const getAnnotationPageCoordinates = (annotation) => {
+const getAnnotationPageCoordinates = (annotation, documentViewerKey = 1) => {
   const rect = annotation.getRect();
   let { x1: left, y1: top, x2: right, y2: bottom } = rect;
 
   const isNote = annotation instanceof window.Core.Annotations.StickyAnnotation;
   const noteAdjustment = window.Core.Annotations.StickyAnnotation['SIZE'];
 
-  const rotation = core.getCompleteRotation(annotation.PageNumber);
+  const rotation = core.getCompleteRotation(annotation.PageNumber, documentViewerKey);
   if (rotation === 1) {
     [top, bottom] = [bottom, top];
     if (isNote) {
@@ -106,7 +113,7 @@ const getAnnotationPageCoordinates = (annotation) => {
   return { left, top, right, bottom };
 };
 
-const getSelectedTextPosition = (allQuads) => {
+const getSelectedTextPosition = (allQuads, documentViewerKey) => {
   const { startPageNumber, endPageNumber } = getSelectedTextPageNumber(allQuads);
   const { left, right, top, bottom } = getSelectedTextPageCoordinates(
     allQuads,
@@ -114,8 +121,8 @@ const getSelectedTextPosition = (allQuads) => {
     endPageNumber
   );
 
-  let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, startPageNumber);
-  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, endPageNumber);
+  let topLeft = convertPageCoordinatesToWindowCoordinates(left, top, startPageNumber, documentViewerKey);
+  let bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, endPageNumber, documentViewerKey);
 
   if (core.getRotation() > 1) {
     const tmp = topLeft;
@@ -173,8 +180,8 @@ const getSelectedTextPageCoordinates = (allQuads, startPageNumber, endPageNumber
   return { left, top, bottom, right };
 };
 
-const convertPageCoordinatesToWindowCoordinates = (x, y, pageNumber) => {
-  const displayMode = core.getDisplayModeObject();
+const convertPageCoordinatesToWindowCoordinates = (x, y, pageNumber, documentViewerKey = 1) => {
+  const displayMode = core.getDisplayModeObject(documentViewerKey);
 
   return displayMode.pageToWindow({ x, y }, pageNumber);
 };
@@ -185,24 +192,30 @@ const getPopupDimensions = (popup) => {
   return { width, height };
 };
 
-const calcAnnotationPopupPosition = (annotationPosition, popupDimension) => {
-  const top = calcPopupTop(annotationPosition, popupDimension);
-  const left = calcPopupLeft(annotationPosition, popupDimension);
+const calcAnnotationPopupPosition = (annotationPosition, popupDimension, documentViewerKey) => {
+  const top = calcPopupTop(annotationPosition, popupDimension, documentViewerKey);
+  const left = calcPopupLeft(annotationPosition, popupDimension, documentViewerKey);
 
   return { left, top };
 };
 
-const calcTextPopupPosition = (selectedTextPosition, popupDimension) => {
-  const top = calcPopupTop(selectedTextPosition, popupDimension);
-  const left = calcPopupLeft(selectedTextPosition, popupDimension);
+const calcTextPopupPosition = (selectedTextPosition, popupDimension, documentViewerKey) => {
+  const top = calcPopupTop(selectedTextPosition, popupDimension, documentViewerKey);
+  const left = calcPopupLeft(selectedTextPosition, popupDimension, documentViewerKey);
 
   return { left, top };
 };
 
-export const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
-  const { scrollLeft } = core.getScrollViewElement();
+export const calcPopupLeft = ({ topLeft, bottomRight }, { width }, documentViewerKey) => {
+  const { scrollLeft } = core.getScrollViewElement(documentViewerKey);
   const center = (topLeft.x + bottomRight.x) / 2 - scrollLeft;
   let left = center - width / 2;
+
+  if (window.isApryseWebViewerWebComponent) {
+    const hostContainer = getRootNode().host;
+    const containerBox = hostContainer.getBoundingClientRect();
+    left -= containerBox.left;
+  }
 
   if (left < 0) {
     left = 0;
@@ -219,9 +232,9 @@ export const calcPopupLeft = ({ topLeft, bottomRight }, { width }) => {
  * @param {number} popupDimension The deminition of the popup (width, height)
  * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
  */
-export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
+export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewerKey) => {
   const padding = 5;
-  const scrollContainer = core.getScrollViewElement();
+  const scrollContainer = core.getScrollViewElement(documentViewerKey);
   const boundingBox = scrollContainer.getBoundingClientRect();
   const visibleRegion = {
     left: boundingBox.left + scrollContainer.scrollLeft,
@@ -246,6 +259,11 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }) => {
     } else { // otherwise, place it to bottom
       top = visibleRegion.bottom - padding - height;
     }
+  }
+  if (window.isApryseWebViewerWebComponent) {
+    const hostContainer = getRootNode().host;
+    const containerBox = hostContainer.getBoundingClientRect();
+    top -= containerBox.top;
   }
 
   return Math.round(top - scrollContainer.scrollTop);

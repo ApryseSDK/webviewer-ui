@@ -22,6 +22,38 @@ test.describe('Notes Panel', () => {
     expect(await notesPanelContainer.screenshot()).toMatchSnapshot(['notes-panel', 'note-panel-order-by-modified.png']);
   });
 
+  test('Ensure the NotesPanel AnnotationNoteConnectorLine does not cause a crash in webviewer when deleting the last page', async ({ page }) => {
+    const { iframe, waitForInstance, pageErrors } = await loadViewerSample(page, 'viewing/viewing');
+    const instance = await waitForInstance();
+    await instance('loadDocument', '/test-files/bookmarkSample.pdf');
+    await page.waitForTimeout(5000);
+    await instance('openElements', ['notesPanel']);
+    const { lastPageCount, listAnnotation } = await iframe.evaluate(async () => {
+      const document = window.instance.Core.documentViewer.getDocument();
+      const annotManager = window.instance.Core.annotationManager;
+      const lastPage = document.getPageCount();
+      const rectAnnot = new Core.Annotations.RectangleAnnotation();
+      rectAnnot.X = 100;
+      rectAnnot.Y = 200;
+      rectAnnot.Width = 100;
+      rectAnnot.Height = 50;
+      rectAnnot.PageNumber = lastPage;
+      annotManager.addAnnotation(rectAnnot);
+      annotManager.selectAnnotation(rectAnnot);
+      setTimeout(async () => {
+        await document.removePages([lastPage]);
+      }, 1000);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      return {
+        lastPageCount: document.getPageCount(),
+        listAnnotation: annotManager.getAnnotationsList()
+      };
+    });
+    expect(pageErrors.length).toBe(0);
+    expect(lastPageCount).toBe(1);
+    expect(listAnnotation.length).toBe(0);
+  });
+
   test('black sticky annotation in dark mode should invert colors', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
     const instance = await waitForInstance();
