@@ -179,10 +179,6 @@ export default {
           img: 'icon-header-chat-line',
           title: 'component.notesPanel',
           element: 'notesPanel',
-          onClick: (dispatch) => {
-            // Trigger with a delay so we ensure the panel is open before we compute correct coordinates of annotation
-            setTimeout(() => dispatch(actions.toggleElement('annotationNoteConnectorLine')), 400);
-          },
           hidden: ['small-mobile'],
         },
         {
@@ -2063,6 +2059,7 @@ export default {
     textSignatureCanvasMultiplier: 1,
     isShowComparisonButtonEnabled: false,
     isMultiViewerModeAvailable: false,
+    isOfficeEditorMode: false,
     colors: [
       '#fdac0f',
       '#fa9933',

@@ -32,6 +32,8 @@ core.getDocumentViewer = () => ({
   }),
 });
 
+const lineAnnot = new window.Core.Annotations.LineAnnotation();
+
 function getMockOnAnnotationChangedHandler(state) {
   const store = configureStore({
     reducer: rootReducer,
@@ -74,17 +76,17 @@ describe('useOnAnnotationPopupOpen hook', () => {
     jest.clearAllMocks();
   });
 
-  it('Modify annotationChanged event opens AnnotationPopup if MeasurementOverlay is closed', () => {
-    reduxState.viewer.openElements.measurementOverlay = false;
+  it('Modify annotationChanged event opens AnnotationPopup if ScaleOverlayContainer is closed', () => {
+    reduxState.viewer.openElements.scaleOverlayContainer = false;
     const onAnnotationChangedHandler = getMockOnAnnotationChangedHandler(reduxState);
-    act(() => onAnnotationChangedHandler([{}], 'modify'));
+    act(() => onAnnotationChangedHandler([lineAnnot], 'modify'));
     expect(mockDispatch.mock.calls.length).toBe(1);
   });
 
-  it('Modify annotationChanged event does not open AnnotationPopup if MeasurementOverlay is open', () => {
-    reduxState.viewer.openElements.measurementOverlay = true;
+  it('Modify annotationChanged event does not open AnnotationPopup if ScaleOverlayContainer is open', () => {
+    reduxState.viewer.openElements.scaleOverlayContainer = true;
     const onAnnotationChangedHandler = getMockOnAnnotationChangedHandler(reduxState);
-    act(() => onAnnotationChangedHandler([{}], 'modify'));
+    act(() => onAnnotationChangedHandler([lineAnnot], 'modify'));
     expect(mockDispatch.mock.calls.length).toBe(0);
   });
 });

@@ -123,6 +123,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         isMultiViewerModeAvailable: payload.isMultiViewerModeAvailable,
       };
+    case 'SET_IS_OFFICE_EDITOR_MODE':
+      return {
+        ...state,
+        isOfficeEditorMode: payload.isOfficeEditorMode,
+      };
     case 'SET_COMPARE_PAGES_BUTTON_ENABLED':
       return {
         ...state,

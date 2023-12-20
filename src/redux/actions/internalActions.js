@@ -748,6 +748,11 @@ export const setIsMultiViewerModeAvailable = (isMultiViewerModeAvailable) => ({
   payload: { isMultiViewerModeAvailable }
 });
 
+export const setIsOfficeEditorMode = (isOfficeEditorMode) => ({
+  type: 'SET_IS_OFFICE_EDITOR_MODE',
+  payload: { isOfficeEditorMode }
+});
+
 export const growCustomElement = (dataElement) => (dispatch, getState) => {
   const currentSize = getState().viewer.customElementSizes[dataElement] || 0;
   const newSize = currentSize + 1;

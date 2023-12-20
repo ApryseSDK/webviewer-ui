@@ -7,6 +7,7 @@ import debounce from 'lodash/debounce';
 import useOnRightClick from 'hooks/useOnRightClick';
 import { isMac } from 'helpers/device';
 import getGroupedLinkAnnotations from 'helpers/getGroupedLinkAnnotations';
+import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import DataElements from 'constants/dataElement';
 
 const { ToolNames } = window.Core.Tools;
@@ -17,14 +18,14 @@ export default function useOnAnnotationPopupOpen() {
     popupItems,
     isRightClickAnnotationPopupEnabled,
     isNotesPanelOpen,
-    isMeasurementOverlayOpen,
+    isScaleOverlayContainerOpen,
     activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.getPopupItems(state, DataElements.ANNOTATION_POPUP),
       selectors.isRightClickAnnotationPopupEnabled(state),
       selectors.isElementOpen(state, DataElements.NOTES_PANEL),
-      selectors.isElementOpen(state, DataElements.MEASUREMENT_OVERLAY),
+      selectors.isElementOpen(state, DataElements.SCALE_OVERLAY_CONTAINER),
       selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
@@ -36,6 +37,7 @@ export default function useOnAnnotationPopupOpen() {
   const [focusedAnnotation, setFocusedAnnotation] = useState(null);
   const [selectedMultipleAnnotations, setSelectedMultipleAnnotations] = useState(false);
   const [canModify, setCanModify] = useState(false);
+  const [focusedAnnotationStyle, setFocusedAnnotationStyle] = useState(null);
   const [isStylePopupOpen, setIsStylePopupOpen] = useState(false);
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
   const [isDatePickerMount, setDatePickerMount] = useState(false);
@@ -77,8 +79,12 @@ export default function useOnAnnotationPopupOpen() {
   };
 
   useEffect(() => {
-    if (focusedAnnotation && !isInContentEditFocusMode(focusedAnnotation)) {
-      openPopup();
+    if (focusedAnnotation) {
+      setFocusedAnnotationStyle(getAnnotationStyles(focusedAnnotation));
+      if (!isInContentEditFocusMode(focusedAnnotation)) {
+        openPopup();
+        dispatch(actions.openElement(DataElements.ANNOTATION_NOTE_CONNECTOR_LINE));
+      }
     }
     // stylePopupRepositionFlag is needed here in order to re-open the popup on scroll
   }, [focusedAnnotation, stylePopupRepositionFlag]);
@@ -142,8 +148,11 @@ export default function useOnAnnotationPopupOpen() {
         return;
       }
 
-      if (action === 'modify' && !isMeasurementOverlayOpen) {
-        openPopup();
+      if (action === 'modify') {
+        setFocusedAnnotationStyle(getAnnotationStyles(annotations[0]));
+        if (!isScaleOverlayContainerOpen) {
+          openPopup();
+        }
       }
 
       const hasLinkAnnotation = annotations.some((annotation) => annotation instanceof Annotations.Link);
@@ -171,7 +180,7 @@ export default function useOnAnnotationPopupOpen() {
       core.removeEventListener('annotationChanged', onAnnotationChanged, null, activeDocumentViewerKey);
       core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, null, activeDocumentViewerKey);
     };
-  }, [canModify, focusedAnnotation, isMeasurementOverlayOpen, activeDocumentViewerKey]);
+  }, [canModify, focusedAnnotation, isScaleOverlayContainerOpen, activeDocumentViewerKey]);
 
   useEffect(() => {
     const onMouseLeftUp = (e) => {
@@ -242,6 +251,7 @@ export default function useOnAnnotationPopupOpen() {
     focusedAnnotation,
     selectedMultipleAnnotations,
     canModify,
+    focusedAnnotationStyle,
     isStylePopupOpen,
     setIsStylePopupOpen,
     isDatePickerOpen,

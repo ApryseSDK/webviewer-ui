@@ -706,6 +706,8 @@ export const getWv3dPropertiesPanelModelData = (state) => state.wv3dPropertiesPa
 
 export const getWv3dPropertiesPanelSchema = (state) => state.wv3dPropertiesPanel.schema;
 
+export const getIsOfficeEditorMode = (state) => state.viewer.isOfficeEditorMode;
+
 export const getOfficeEditorCursorProperties = (state) => state.officeEditor.cursorProperties;
 
 export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.selectionProperties;

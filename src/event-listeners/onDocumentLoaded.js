@@ -128,6 +128,7 @@ export default (store, documentViewerKey) => async () => {
 
     const elementsToDisableInOfficeEditor = ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton', 'annotationPopup'];
     if (isOfficeEditorMode()) {
+      dispatch(actions.setIsOfficeEditorMode(true));
       dispatch(actions.enableElement('officeEditorToolsHeader', PRIORITY_ONE));
       setZoomLevel(1);
       dispatch(actions.disableElements(

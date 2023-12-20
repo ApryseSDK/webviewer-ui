@@ -22,9 +22,11 @@ export default (dispatch, documentViewerKey) => () => {
   if (documentViewerKey === 1) {
     dispatch(actions.setOutlines([]));
     dispatch(actions.setBookmarks({}));
+    dispatch(actions.setPortfolio([]));
     dispatch(actions.setTotalPages(0));
     dispatch(actions.setSearchValue(''));
     core.clearSearchResults();
   }
   dispatch(actions.setZoom(1, documentViewerKey));
+  dispatch(actions.setIsOfficeEditorMode(false));
 };

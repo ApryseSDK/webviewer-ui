@@ -1,7 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector, useStore } from 'react-redux';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
 import core from 'core';
@@ -39,10 +39,10 @@ import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import RibbonOverflowFlyout from 'components/ModularComponents/RibbonOverflowFlyout';
 import GroupedToolsOverflowFlyout from 'components/ModularComponents/GroupedToolsOverflowFlyout';
 import ViewControlsFlyout from 'components/ModularComponents/ViewControls/ViewControlsFlyout';
+import MainMenu from 'components/ModularComponents/MainMenu/MainMenuFlyout';
 import ProgressModal from 'components/ProgressModal';
 import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
 import StylePanel from 'components/StylePanel';
-
 import useOnTextSelected from 'hooks/useOnTextSelected';
 import useOnContextMenuOpen from 'hooks/useOnContextMenuOpen';
 import useOnAnnotationPopupOpen from 'hooks/useOnAnnotationPopupOpen';
@@ -60,7 +60,6 @@ import { prepareMultiTab } from 'helpers/TabManager';
 import hotkeysManager from 'helpers/hotkeysManager';
 import setDefaultDisabledElements from 'helpers/setDefaultDisabledElements';
 import { getInstanceNode } from 'helpers/getRootNode';
-import { isOfficeEditorMode } from 'helpers/officeEditor';
 import { isMobileDevice } from 'helpers/device';
 
 import Events from 'constants/events';
@@ -97,13 +96,15 @@ const App = ({ removeEventHandlers }) => {
     customFlxPanels,
     customModals,
     notesInLeftPanel,
+    isOfficeEditorMode,
   ] = useSelector((state) => [
     selectors.isInDesktopOnlyMode(state),
     selectors.isMultiViewerMode(state),
     selectors.getCustomFlxPanels(state),
     selectors.getCustomModals(state),
     selectors.getNotesInLeftPanel(state),
-  ]);
+    selectors.getIsOfficeEditorMode(state),
+  ], shallowEqual);
 
   useEffect(() => {
     const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
@@ -287,6 +288,10 @@ const App = ({ removeEventHandlers }) => {
         return <MultiViewerWrapper><ComparePanel dataElement={dataElement} /></MultiViewerWrapper>;
       case panelNames.STYLE:
         return <StylePanel />;
+      case panelNames.REDACTION:
+        return <RedactionPanel />;
+      case panelNames.SEARCH:
+        return <LazyLoadWrapper Component={LazyLoadComponents.SearchPanel} dataElement={dataElement}/>;
     }
   };
 
@@ -321,9 +326,10 @@ const App = ({ removeEventHandlers }) => {
         <RibbonOverflowFlyout />
         <GroupedToolsOverflowFlyout />
         <ViewControlsFlyout />
+        <MainMenu />
         <Accessibility />
         <Header />
-        {isOfficeEditorMode() && (
+        {isOfficeEditorMode && (
           <LazyLoadWrapper
             Component={LazyLoadComponents.OfficeEditorToolsHeader}
             dataElement={DataElements.OFFICE_EDITOR_TOOLS_HEADER}

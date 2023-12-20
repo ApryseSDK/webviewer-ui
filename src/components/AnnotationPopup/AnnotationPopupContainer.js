@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
-import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
 import { isMobile, isIE } from 'helpers/device';
 import { useTranslation } from 'react-i18next';
@@ -29,6 +28,7 @@ const propTypes = {
   focusedAnnotation: PropTypes.object,
   selectedMultipleAnnotations: PropTypes.bool,
   canModify: PropTypes.bool,
+  focusedAnnotationStyle: PropTypes.object,
   isStylePopupOpen: PropTypes.bool,
   setIsStylePopupOpen: PropTypes.func,
   isDatePickerOpen: PropTypes.bool,
@@ -46,6 +46,7 @@ const AnnotationPopupContainer = ({
   focusedAnnotation,
   selectedMultipleAnnotations,
   canModify,
+  focusedAnnotationStyle,
   isStylePopupOpen,
   setIsStylePopupOpen,
   isDatePickerOpen,
@@ -149,7 +150,6 @@ const AnnotationPopupContainer = ({
     // canModify is needed here because the effect from useOnAnnotationPopupOpen hook will run again and determine which button to show, which in turn change the popup size and will need to recalculate position
   }, [focusedAnnotation, isStylePopupOpen, isDatePickerMount, canModify, activeDocumentViewerKey]);
 
-
   useEffect(() => {
     if (focusedAnnotation && focusedAnnotation.ToolName === ToolNames.CALIBRATION_MEASUREMENT) {
       setCalibrationPopupOpen(true);
@@ -203,6 +203,7 @@ const AnnotationPopupContainer = ({
   const isAppearanceSignature =
     focusedAnnotation instanceof Annotations.SignatureWidgetAnnotation
     && focusedAnnotation.isSignedByAppearance();
+  const isInReadOnlyMode = core.getIsReadOnly();
 
   const showCommentButton = (
     (!isNotesPanelDisabled || !isInlineCommentingDisabled)
@@ -250,8 +251,7 @@ const AnnotationPopupContainer = ({
   };
 
   /* EDIT STYLE */
-  const annotationStyle = getAnnotationStyles(focusedAnnotation);
-  const hasStyle = Object.keys(annotationStyle).length > 0;
+  const hasStyle = Object.keys(focusedAnnotationStyle).length > 0;
 
   const toolsWithNoStyling = [
     ToolNames.CROP,
@@ -310,7 +310,8 @@ const AnnotationPopupContainer = ({
   const primaryAnnotation = selectedAnnotations.find((selectedAnnotation) => !selectedAnnotation.InReplyTo);
 
   const showGroupButton =
-    isFocusedAnnotationSelected
+    canModify
+    && isFocusedAnnotationSelected
     && canGroup
     && !includesFormFieldAnnotation;
 
@@ -472,7 +473,7 @@ const AnnotationPopupContainer = ({
       hideSnapModeCheckbox={hideSnapModeCheckbox}
       openEditStylePopup={() => setIsStylePopupOpen(true)}
       closeEditStylePopup={() => setIsStylePopupOpen(false)}
-      annotationStyle={annotationStyle}
+      annotationStyle={focusedAnnotationStyle}
       onResize={onResize}
 
       showContentEditButton={showContentEditButton}
@@ -508,6 +509,8 @@ const AnnotationPopupContainer = ({
 
       showCalibrateButton={showCalibrateButton}
       onOpenCalibration={onOpenCalibration}
+
+      isInReadOnlyMode={isInReadOnlyMode}
     />
   );
 };
