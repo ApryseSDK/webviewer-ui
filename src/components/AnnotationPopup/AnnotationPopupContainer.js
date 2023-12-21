@@ -78,6 +78,9 @@ const AnnotationPopupContainer = ({
     leftPanelOpen,
     activeLeftPanel,
     activeDocumentViewerKey,
+    featureFlags,
+    isStylePanelOpen,
+    isStylePanelDisabled,
   ] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, DataElements.ANNOTATION_POPUP),
@@ -98,6 +101,9 @@ const AnnotationPopupContainer = ({
       selectors.isElementOpen(state, DataElements.LEFT_PANEL),
       selectors.getActiveLeftPanel(state),
       selectors.getActiveDocumentViewerKey(state),
+      selectors.getFeatureFlags(state),
+      selectors.isElementOpen(state, DataElements.STYLE_PANEL),
+      selectors.isElementDisabled(state, DataElements.STYLE_PANEL),
     ],
     shallowEqual,
   );
@@ -111,6 +117,15 @@ const AnnotationPopupContainer = ({
   const annotManager = core.getAnnotationManager(activeDocumentViewerKey);
   const isNotesPanelOpenOrActive = isNotesPanelOpen || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel');
   // on tablet, the behaviour will be like on desktop, including being draggable
+
+  const { customizableUI } = featureFlags;
+
+  const openStylePanel = () => {
+    if (!isStylePanelOpen && !isStylePanelDisabled) {
+      dispatch(actions.openElement(DataElements.STYLE_PANEL));
+    }
+    closePopup();
+  };
 
   useOnClickOutside(
     popupRef,
@@ -510,6 +525,9 @@ const AnnotationPopupContainer = ({
       showCalibrateButton={showCalibrateButton}
       onOpenCalibration={onOpenCalibration}
 
+      customizableUI={customizableUI}
+      openStylePanel={openStylePanel}
+      isStylePanelOpen={isStylePanelOpen}
       isInReadOnlyMode={isInReadOnlyMode}
     />
   );

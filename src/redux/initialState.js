@@ -2051,6 +2051,7 @@ export default {
       bottomFloatingContainerHeight: 0,
     },
     toolDefaultStyleUpdateFromAnnotationPopupEnabled: true,
+    annotationToolStyleSyncingEnabled: false,
     shortcutKeyMap: { ...ShortcutKeys },
     flyoutMap: {},
     flyoutPosition: { x: 0, y: 0 },

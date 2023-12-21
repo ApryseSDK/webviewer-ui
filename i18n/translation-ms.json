@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Warna"
     },
+    "colorPalettePicker": {
+      "addColor": "Tambah warna baru",
+      "selectColor": "Pilih warna"
+    },
     "displayMode": {
       "layout": "Susun Atur Halaman",
       "pageTransition": "Peralihan Halaman"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Padamkan warna tersuai",
       "deleteMessage": "Padamkan warna tersuai yang dipilih? Ia akan dialih keluar daripada palet warna anda."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Padamkan warna tersuai"
     },
     "multiDeleteAnnotation": {
       "title": "Padamkan Anotasi?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Gaya"
+      "styles": "Gaya",
+      "annotation": "Anotasi",
+      "annotations": "Anotasi",
+      "tool": "alat",
+      "textStyles": "Gaya Teks",
+      "currentColor": "Warna Semasa",
+      "customColors": "Warna Tersuai"
     },
+    "addColorToCustom": "Tambahkan pada warna tersuai",
     "noToolSelected": "Pilih alat untuk melihat sifat alat"
   }
 }

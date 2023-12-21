@@ -13,7 +13,7 @@ import Icon from 'components/Icon';
 import SnapModeToggle from './SnapModeToggle';
 import selectors from 'selectors';
 import actions from 'actions';
-import { hasFillColorAndCollapsablePanelSections, shouldHideStrokeSlider } from 'helpers/stylePanelHelper';
+import { hasFillColorAndCollapsablePanelSections, shouldHideStrokeSlider, hasSnapModeCheckbox } from 'helpers/stylePanelHelper';
 
 const withCloudyStyle = defaultStrokeStyles.concat(cloudyStrokeStyle);
 
@@ -28,7 +28,6 @@ const propTypes = {
   showLineStyleOptions: PropTypes.bool,
   isArc: PropTypes.bool,
   isInFormBuilderMode: PropTypes.bool,
-  hideSnapModeCheckbox: PropTypes.bool,
   startLineStyle: PropTypes.string,
   endLineStyle: PropTypes.string,
   strokeStyle: PropTypes.string,
@@ -48,7 +47,6 @@ const StylePicker = ({
   showLineStyleOptions,
   isArc,
   isInFormBuilderMode,
-  hideSnapModeCheckbox,
   startLineStyle,
   endLineStyle,
   strokeStyle,
@@ -233,6 +231,7 @@ const StylePicker = ({
   const showStrokeStyle = true;
   const showFillColorAndCollapsablePanelSections = hasFillColorAndCollapsablePanelSections(toolName);
   const hideStrokeSlider = shouldHideStrokeSlider(toolName);
+  const showSnapModeCheckbox = hasSnapModeCheckbox(toolName);
 
   return (
     <div className="StylePicker">
@@ -245,7 +244,9 @@ const StylePicker = ({
               <div className="menu-title">
                 {t('option.annotationColor.StrokeColor')}
               </div>
-              <Icon glyph={`icon-chevron-${isStrokeStyleContainerActive ? 'up' : 'down'}`} />
+              <div className="icon-container">
+                <Icon glyph={`icon-chevron-${isStrokeStyleContainerActive ? 'up' : 'down'}`} />
+              </div>
             </div>
           }
           {(isStrokeStyleContainerActive || !showFillColorAndCollapsablePanelSections) && (
@@ -272,36 +273,38 @@ const StylePicker = ({
                 </div>
               }
               {!!strokeStyle && !(isInFormBuilderMode && !isFreeText) && !isFreeHand && !isArc &&
-                <div className='StylePicker-LineStyleContainer'>
-                  <div className="StylePicker-LineStyleTitle">Style</div>
-                  <div className='StylePicker-LineStyle'>
-                    {showLineStyleOptions &&
-                      <Dropdown
-                        className='StylePicker-StartLineStyleDropdown'
-                        dataElement="startLineStyleDropdown"
-                        images={defaultStartLineStyles}
-                        onClickItem={onStartLineStyleChange}
-                        currentSelectionKey={startingLineStyle}
-                      />
-                    }
-                    {!isStyleOptionDisabled &&
-                      <Dropdown
-                        className={`StylePicker-StrokeLineStyleDropdown${(!!strokeStyle && !showLineStyleOptions) ? ' StyleOptions' : ''}`}
-                        dataElement="middleLineStyleDropdown"
-                        images={ (isEllipse || showLineStyleOptions) ? defaultStrokeStyles : withCloudyStyle }
-                        onClickItem={onStrokeStyleChange}
-                        currentSelectionKey={strokeLineStyle}
-                      />
-                    }
-                    {showLineStyleOptions &&
-                      <Dropdown
-                        className='StylePicker-EndLineStyleDropdown'
-                        dataElement="endLineStyleDropdown"
-                        images={defaultEndLineStyles}
-                        onClickItem={onEndLineStyleChange}
-                        currentSelectionKey={endingLineStyle}
-                      />
-                    }
+                <div className="StyleOption" >
+                  <div className='styles-container lineStyleContainer'>
+                    <div className="styles-title">Style</div>
+                    <div className='StylePicker-LineStyle'>
+                      {showLineStyleOptions &&
+                        <Dropdown
+                          className='StylePicker-StartLineStyleDropdown'
+                          dataElement="startLineStyleDropdown"
+                          images={defaultStartLineStyles}
+                          onClickItem={onStartLineStyleChange}
+                          currentSelectionKey={startingLineStyle}
+                        />
+                      }
+                      {!isStyleOptionDisabled &&
+                        <Dropdown
+                          className={`StylePicker-StrokeLineStyleDropdown${(!!strokeStyle && !showLineStyleOptions) ? ' StyleOptions' : ''}`}
+                          dataElement="middleLineStyleDropdown"
+                          images={ (isEllipse || showLineStyleOptions) ? defaultStrokeStyles : withCloudyStyle }
+                          onClickItem={onStrokeStyleChange}
+                          currentSelectionKey={strokeLineStyle}
+                        />
+                      }
+                      {showLineStyleOptions &&
+                        <Dropdown
+                          className='StylePicker-EndLineStyleDropdown'
+                          dataElement="endLineStyleDropdown"
+                          images={defaultEndLineStyles}
+                          onClickItem={onEndLineStyleChange}
+                          currentSelectionKey={endingLineStyle}
+                        />
+                      }
+                    </div>
                   </div>
                 </div>
               }
@@ -317,7 +320,9 @@ const StylePicker = ({
             <div className="menu-title">
               {t('option.annotationColor.FillColor')}
             </div>
-            <Icon glyph={`icon-chevron-${isFillColorContainerActive ? 'up' : 'down'}`} />
+            <div className="icon-container">
+              <Icon glyph={`icon-chevron-${isFillColorContainerActive ? 'up' : 'down'}`} />
+            </div>
           </div>
           {isFillColorContainerActive && (
             <div className="menu-items">
@@ -341,7 +346,9 @@ const StylePicker = ({
             <div className="menu-title">
               {t('option.slider.opacity')}
             </div>
-            <Icon glyph={`icon-chevron-${isOpacityContainerActive ? 'up' : 'down'}`} />
+            <div className="icon-container">
+              <Icon glyph={`icon-chevron-${isOpacityContainerActive ? 'up' : 'down'}`} />
+            </div>
           </div>
         }
         {/*
@@ -353,9 +360,18 @@ const StylePicker = ({
             {renderSlider('opacity', showFillColorAndCollapsablePanelSections)}
           </div>
         )}
+        {showSnapModeCheckbox && renderDivider()}
       </div>
-      {!hideSnapModeCheckbox &&
-        <SnapModeToggle Scale={style.Scale} Precision={style.Precision} isSnapModeEnabled={isSnapModeEnabled} />
+      {showSnapModeCheckbox &&
+      <>
+        {/* to avoid inline styling when there's no divider */}
+        {!showFillColorAndCollapsablePanelSections &&
+          <div className="spacer" />
+        }
+        <div className="PanelSection">
+          <SnapModeToggle Scale={style.Scale} Precision={style.Precision} isSnapModeEnabled={isSnapModeEnabled} />
+        </div>
+      </>
       }
     </div>
   );

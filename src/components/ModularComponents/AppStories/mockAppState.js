@@ -30,10 +30,8 @@ export const mockHeaders = [
             toggleElement: 'leftPanel'
           },
           {
-            dataElement: 'viewControlsToggle',
-            title: 'component.viewControlsOverlay',
-            type: 'customButton',
-            img: 'icon-header-page-manipulation-line'
+            dataElement: 'view-controls',
+            type: 'viewControls',
           },
           {
             dataElement: 'zoom-container',
@@ -666,7 +664,7 @@ const styleToggleButton = {
   dataElement: 'stylePanelToggle',
   toggleElement: 'stylePanel',
   img: 'icon-style-panel-toggle',
-  title: 'component.notesPanel',
+  title: 'stylePanel.headings.styles',
   type: 'toggleButton'
 };
 const newHeaders = [...mockHeaders];

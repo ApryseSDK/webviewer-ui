@@ -907,6 +907,11 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, enableRightClickAnnotationPopup: payload.isEnabled };
     case 'SET_TOOL_DEFAULT_STYLE_UPDATE_FROM_ANNOTATION_POPUP_ENABLED':
       return { ...state, toolDefaultStyleUpdateFromAnnotationPopupEnabled: payload };
+    case 'SET_ANNOTATION_TOOL_STYLE_SYNCING_ENABLED':
+      return {
+        ...state,
+        annotationToolStyleSyncingEnabled: payload,
+      };
     case 'SET_SHORTCUT_KEY_MAP':
       return { ...state, shortcutKeyMap: payload };
     case 'SET_MULTI_VIEWER_SYNC_SCROLLING_MODE':

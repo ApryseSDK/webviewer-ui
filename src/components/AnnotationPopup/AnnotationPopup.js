@@ -85,6 +85,10 @@ const propTypes = {
 
   showCalibrateButton: PropTypes.bool,
   onOpenCalibration: PropTypes.func,
+
+  customizableUI: PropTypes.bool,
+  openStylePanel: PropTypes.func,
+  isInReadOnlyMode: PropTypes.bool,
 };
 
 const AnnotationPopup = ({
@@ -154,14 +158,17 @@ const AnnotationPopup = ({
 
   showCalibrateButton,
   onOpenCalibration,
+
+  customizableUI,
+  openStylePanel,
+  isInReadOnlyMode,
 }) => {
   const [t] = useTranslation();
   const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(false);
 
   const commentButtonLabel = isDateFreeTextCanEdit ? 'action.changeDate' : 'action.comment';
   const commentButtonImg = isDateFreeTextCanEdit ? 'icon-tool-fill-and-sign-calendar' : 'icon-header-chat-line';
-
-  const show3DShortCutButton = focusedAnnotation instanceof window.Core.Annotations.Model3DAnnotation && !isMobile;
+  const show3DShortCutButton = !isInReadOnlyMode && focusedAnnotation instanceof window.Core.Annotations.Model3DAnnotation && !isMobile;
   const isRectangle = focusedAnnotation instanceof window.Core.Annotations.RectangleAnnotation;
   const isEllipse = focusedAnnotation instanceof window.Core.Annotations.EllipseAnnotation;
   const isPolygon = focusedAnnotation instanceof window.Core.Annotations.PolygonAnnotation;
@@ -201,6 +208,9 @@ const AnnotationPopup = ({
 
   if (isFreeText) {
     const richTextStyles = focusedAnnotation.getRichTextStyle();
+    const isAutoSizeFont = focusedAnnotation.isAutoSizeFont();
+    const calculatedFontSize = focusedAnnotation.getCalculatedFontSize();
+
     properties = {
       Font: focusedAnnotation.Font,
       FontSize: focusedAnnotation.FontSize,
@@ -211,6 +221,8 @@ const AnnotationPopup = ({
       underline: richTextStyles?.[0]?.['text-decoration']?.includes('underline') || richTextStyles?.[0]?.['text-decoration']?.includes('word'),
       strikeout: richTextStyles?.[0]?.['text-decoration']?.includes('line-through') ?? false,
       StrokeStyle,
+      isAutoSizeFont,
+      calculatedFontSize,
     };
   }
 
@@ -295,7 +307,7 @@ const AnnotationPopup = ({
                     label={isRightClickMenu ? 'action.style' : ''}
                     title={!isRightClickMenu ? 'action.style' : ''}
                     img="icon-menu-style-line"
-                    onClick={openEditStylePopup}
+                    onClick={customizableUI ? openStylePanel : openEditStylePopup}
                   />
                 )}
                 {showContentEditButton && (

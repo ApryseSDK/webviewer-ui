@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "色"
     },
+    "colorPalettePicker": {
+      "addColor": "新しい色を追加",
+      "selectColor": "色を選択してください"
+    },
     "displayMode": {
       "layout": "レイアウト",
       "pageTransition": "ページ移動"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "カスタムカラーを削除する",
       "deleteMessage": "選択したカスタムカラーを削除しますか？カラーパレットから削除されます。"
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "カスタムカラーを削除する"
     },
     "multiDeleteAnnotation": {
       "title": "注釈を削除しますか？",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "スタイル"
+      "styles": "スタイル",
+      "annotation": "注釈",
+      "annotations": "注釈",
+      "tool": "道具",
+      "textStyles": "テキストスタイル",
+      "currentColor": "現在の色",
+      "customColors": "カスタムカラー"
     },
+    "addColorToCustom": "カスタムカラーに追加",
     "noToolSelected": "ツールを選択してツールのプロパティを表示します"
   }
 }

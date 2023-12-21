@@ -936,6 +936,11 @@ export const setToolDefaultStyleUpdateFromAnnotationPopupEnabled = (isToolDefaul
   payload: isToolDefaultStyleUpdateFromAnnotationPopupEnabled
 });
 
+export const setAnnotationToolStyleSyncingEnabled = (isAnnotationToolStyleSyncingEnabled) => ({
+  type: 'SET_ANNOTATION_TOOL_STYLE_SYNCING_ENABLED',
+  payload: isAnnotationToolStyleSyncingEnabled
+});
+
 export const setMultiViewerSyncScrollingMode = (multiViewerComparedSyncScrollingMode) => ({
   type: 'SET_MULTI_VIEWER_SYNC_SCROLLING_MODE',
   payload: multiViewerComparedSyncScrollingMode

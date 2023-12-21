@@ -148,6 +148,7 @@ import {
   enableToolDefaultStyleUpdateFromAnnotationPopup,
   disableToolDefaultStyleUpdateFromAnnotationPopup
 } from './toolDefaultStyleUpdateFromAnnotationPopup';
+import { enableAnnotationToolStyleSyncing, disableAnnotationToolStyleSyncing } from './annotationToolStyleSyncing';
 import unregisterTool from './unregisterTool';
 import updateElement from './updateElement';
 import updateTool from './updateTool';
@@ -297,7 +298,6 @@ import enableFeatureFlag from './enableFeatureFlag';
 import disableFeatureFlag from './disableFeatureFlag';
 import enterMultiViewerMode from './enterMultiViewerMode';
 import exitMultiViewerMode from './exitMultiViewerMode';
-import setDefaultPrintMargins from './setDefaultPrintMargins';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -393,7 +393,6 @@ export default (store) => {
     setPageLabels: setPageLabels(store),
     setPrintQuality: setPrintQuality(store),
     setDefaultPrintOptions: setDefaultPrintOptions(store),
-    setDefaultPrintMargins: setDefaultPrintMargins(store),
     setNotesPanelSortStrategy: setNotesPanelSortStrategy(store),
     setSwipeOrientation,
     setTheme: setTheme(store),
@@ -550,6 +549,8 @@ export default (store) => {
     toggleReaderMode: toggleReaderMode(store),
     enableToolDefaultStyleUpdateFromAnnotationPopup: enableToolDefaultStyleUpdateFromAnnotationPopup(store),
     disableToolDefaultStyleUpdateFromAnnotationPopup: disableToolDefaultStyleUpdateFromAnnotationPopup(store),
+    enableAnnotationToolStyleSyncing: enableAnnotationToolStyleSyncing(store),
+    disableAnnotationToolStyleSyncing: disableAnnotationToolStyleSyncing(store),
     addEventListener,
     removeEventListener,
     syncNamespaces,

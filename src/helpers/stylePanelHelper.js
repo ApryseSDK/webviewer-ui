@@ -1,31 +1,43 @@
 
-const ToolNames = window.Core.Tools.ToolNames;
+import core from 'core';
+
+const Tools = window.Core.Tools;
 
 export const hasFillColorAndCollapsablePanelSections = (toolName) => {
   const toolsWithCollapsedStylePanels = [
-    ToolNames.RECTANGLE,
-    ToolNames.ELLIPSE,
-    ToolNames.POLYGON,
-    ToolNames.POLYGON_CLOUD,
-    ToolNames.ELLIPSE_MEASUREMENT,
-    ToolNames.AREA_MEASUREMENT,
-    ToolNames.FREETEXT,
-    ToolNames.CALLOUT,
-    ToolNames.CALENDAR,
+    Tools.RectangleCreateTool,
+    Tools.EllipseCreateTool,
+    Tools.PolygonCreateTool,
+    Tools.PolygonCloudCreateTool,
+    Tools.EllipseMeasurementCreateTool,
+    Tools.AreaMeasurementCreateTool,
+    Tools.FreeTextCreateTool,
+    Tools.CalloutCreateTool,
   ];
 
-  return toolsWithCollapsedStylePanels.includes(toolName);
+  return toolsWithCollapsedStylePanels.some((tool) => core.getTool(toolName) instanceof tool);
 };
 
 export const shouldHideStrokeSlider = (toolName) => {
   const toolsWithHiddenStrokeSlider = [
-    ToolNames.UNDERLINE,
-    ToolNames.HIGHLIGHT,
-    ToolNames.SQUIGGLY,
-    ToolNames.STRIKEOUT,
-    ToolNames.COUNT_MEASUREMENT,
-    ToolNames.RUBBER_STAMP
+    Tools.TextUnderlineCreateTool,
+    Tools.TextHighlightCreateTool,
+    Tools.TextSquigglyCreateTool,
+    Tools.TextStrikeoutCreateTool,
+    Tools.CountMeasurementCreateTool,
+    Tools.RubberStampCreateTool,
   ];
+  return toolsWithHiddenStrokeSlider.some((tool) => core.getTool(toolName) instanceof tool);
+};
 
-  return toolsWithHiddenStrokeSlider.includes(toolName);
+export const hasSnapModeCheckbox = (toolName) => {
+  const toolsWithSnapModeCheckbox = [
+    Tools.DistanceMeasurementCreateTool,
+    Tools.ArcMeasurementCreateTool,
+    Tools.PerimeterMeasurementCreateTool,
+    Tools.AreaMeasurementCreateTool,
+    Tools.RectangularAreaMeasurementCreateTool,
+    Tools.CloudyRectangularAreaMeasurementCreateTool,
+  ];
+  return toolsWithSnapModeCheckbox.some((tool) => core.getTool(toolName) instanceof tool);
 };

@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Culoare"
     },
+    "colorPalettePicker": {
+      "addColor": "Adăugați culoare nouă",
+      "selectColor": "Selectați culoarea"
+    },
     "displayMode": {
       "layout": "Aranjament în pagină",
       "pageTransition": "Tranziție de pagină"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Ștergeți culoarea personalizată",
       "deleteMessage": "Ștergeți culoarea personalizată selectată? Acesta va fi eliminat din paleta dvs. de culori."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Ștergeți culoarea personalizată"
     },
     "multiDeleteAnnotation": {
       "title": "Ștergeți adnotările?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stiluri"
+      "styles": "Stiluri",
+      "annotation": "Adnotare",
+      "annotations": "Adnotări",
+      "tool": "Instrument",
+      "textStyles": "Stiluri de text",
+      "currentColor": "Culoare curentă",
+      "customColors": "Culori personalizate"
     },
+    "addColorToCustom": "Adaugă la culori personalizate",
     "noToolSelected": "Selectați un instrument pentru a vizualiza proprietățile instrumentului"
   }
 }

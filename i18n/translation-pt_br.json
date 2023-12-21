@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Cor"
     },
+    "colorPalettePicker": {
+      "addColor": "Adicionar nova cor",
+      "selectColor": "Selecione a cor"
+    },
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Transição de página"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Excluir cor personalizada",
       "deleteMessage": "Excluir a cor personalizada selecionada? Ele será removido da sua paleta de cores."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Excluir cor personalizada"
     },
     "multiDeleteAnnotation": {
       "title": "Excluir anotações?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Estilos"
+      "styles": "Estilos",
+      "annotation": "Anotação",
+      "annotations": "Anotações",
+      "tool": "Ferramenta",
+      "textStyles": "Estilos de texto",
+      "currentColor": "Cor atual",
+      "customColors": "Cores personalizadas"
     },
+    "addColorToCustom": "Adicionar às cores personalizadas",
     "noToolSelected": "Selecione uma ferramenta para visualizar as propriedades da ferramenta"
   }
 }

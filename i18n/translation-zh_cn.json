@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "颜色"
     },
+    "colorPalettePicker": {
+      "addColor": "添加新颜色",
+      "selectColor": "选择颜色"
+    },
     "displayMode": {
       "layout": "布局",
       "pageTransition": "页面转换"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "删除自定义颜色",
       "deleteMessage": "删除所选的自定义颜色？它将从您的调色板中删除。"
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "删除自定义颜色"
     },
     "multiDeleteAnnotation": {
       "title": "删除注释？",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "风格"
+      "styles": "风格",
+      "annotation": "注解",
+      "annotations": "注释",
+      "tool": "工具",
+      "textStyles": "文本样式",
+      "currentColor": "当前颜色",
+      "customColors": "定制颜色"
     },
+    "addColorToCustom": "添加到自定义颜色",
     "noToolSelected": "选择工具以查看工具属性"
   }
 }

@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Màu"
     },
+    "colorPalettePicker": {
+      "addColor": "Thêm màu mới",
+      "selectColor": "Chọn màu"
+    },
     "displayMode": {
       "layout": "Bố Cục Trang",
       "pageTransition": "Chuyển Tiếp Trang"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Xóa màu tùy chỉnh",
       "deleteMessage": "Xóa màu tùy chỉnh đã chọn? Nó sẽ bị gỡ bỏ khỏi bảng màu của bạn."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Xóa màu tùy chỉnh"
     },
     "multiDeleteAnnotation": {
       "title": "Xóa chú thích?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Kiểu dáng"
+      "styles": "Kiểu dáng",
+      "annotation": "Chú thích",
+      "annotations": "Chú thích",
+      "tool": "Dụng cụ",
+      "textStyles": "Kiểu văn bản",
+      "currentColor": "Màu hiện tại",
+      "customColors": "Màu sắc tùy chỉnh"
     },
+    "addColorToCustom": "Thêm vào màu tùy chỉnh",
     "noToolSelected": "Chọn một công cụ để xem thuộc tính công cụ"
   }
 }

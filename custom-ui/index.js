@@ -66,7 +66,7 @@ Webviewer.WebComponent({
     dataElement: 'stylePanelToggle',
     toggleElement: instance.UI.Panels.STYLE,
     img: 'icon-style-panel-toggle',
-    title: 'component.notesPanel',
+    title: 'stylePanel.headings.styles',
   });
 
   // * Tool Buttons * //

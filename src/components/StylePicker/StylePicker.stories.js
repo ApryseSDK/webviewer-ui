@@ -31,11 +31,12 @@ export const StylePicker = () => {
     startLineStyle: 'None',
     endLineStyle: 'None',
     strokeStyle: 'solid',
+    onStyleChange: () => { },
   };
   return (
     <Provider store={store}>
       <div style={{ width: '310px', padding: '16px' }}>
-        <StylePickerComponent {...props}/>
+        <StylePickerComponent {...props} />
       </div>
     </Provider>
   );

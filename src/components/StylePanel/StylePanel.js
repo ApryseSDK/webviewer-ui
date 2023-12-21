@@ -15,9 +15,10 @@ import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 const StylePanel = () => {
   const [t] = useTranslation();
 
-  const [isPanelOpen, toolButtonObject] = useSelector((state) => [
+  const [isPanelOpen, toolButtonObject, isAnnotationToolStyleSyncingEnabled] = useSelector((state) => [
     selectors.isElementOpen(state, 'stylePanel'),
     selectors.getToolButtonObjects(state),
+    selectors.isAnnotationToolStyleSyncingEnabled(state),
   ]);
 
   const colorProperties = ['StrokeColor', 'FillColor'];
@@ -33,7 +34,7 @@ const StylePanel = () => {
   const [startLineStyle, setStartLineStyle] = useState();
   const [endLineStyle, setEndLineStyle] = useState();
   const [strokeStyle, setStrokeStyle] = useState();
-  const [panelTitle, setPanelTitle] = useState('stylePanel.headings.styles');
+  const [panelTitle, setPanelTitle] = useState(t('stylePanel.headings.styles'));
   const annotationCreateToolNames = getAnnotationCreateToolNames();
   const [showLineStyleOptions, setShowLineStyleOptions] = useState(false);
 
@@ -47,12 +48,19 @@ const StylePanel = () => {
   };
 
   useEffect(() => {
+    if (!selectedAnnotation && showPanel) {
+      const title = toolButtonObject[core.getToolMode().name].title;
+      setPanelTitle(`${t(title)} ${t('stylePanel.headings.tool')}`);
+    }
+  });
+
+  useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
       if (action === 'selected') {
         // We only consider the styles for the style panel if only one annotation is selected
         if (annotations.length === 1) {
           setSelectedAnnotation(annotations[0]);
-          setPanelTitle(toolButtonObject[annotations[0].ToolName].title);
+          setPanelTitle(`${t(toolButtonObject[annotations[0].ToolName].title)} ${t('stylePanel.headings.annotation')}`);
           setIsEllipse(annotations[0] instanceof window.Core.Annotations.EllipseAnnotation);
           setIsFreeText(annotations[0] instanceof window.Core.Annotations.FreeTextAnnotation);
           setIsRedaction(annotations[0] instanceof window.Core.Annotations.RedactionAnnotation);
@@ -61,22 +69,26 @@ const StylePanel = () => {
           setIsInFormBuilderMode(core.getFormFieldCreationManager().isInFormFieldCreationMode());
           setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(annotations[0].ToolName)).hasLineEndings);
         } else {
-          setSelectedAnnotation(null);
+          setPanelTitle(`${t('stylePanel.headings.annotations')} (${annotations.length})`);
         }
         setShowPanel(true);
       } else if (action === 'deselected') {
-        core.setToolMode(annotations[0].ToolName);
+        const currentTool = core.getToolMode();
+        if (currentTool instanceof window.Core.Tools.AnnotationEditTool) {
+          setShowPanel(false);
+        }
+        // reset tool mode to change the tool name in the header
+        core.setToolMode(defaultTool);
+        core.setToolMode(currentTool.name);
         setSelectedAnnotation(null);
       }
     };
 
     const handleToolModeChange = (newTool) => {
       if (annotationCreateToolNames.includes(newTool?.name)) {
-        const panelTitle = toolButtonObject[newTool.name].title;
         if (!panelTitle) {
           setShowPanel(false);
         } else {
-          setPanelTitle(toolButtonObject[newTool.name].title);
           setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(newTool.name)).hasLineEndings);
 
           setIsEllipse(newTool.name === window.Core.Tools.ToolNames.ELLIPSE);
@@ -138,25 +150,32 @@ const StylePanel = () => {
     const newStyle = { ...style };
     newStyle[property] = value;
     setStyle(newStyle);
-    if (selectedAnnotation) {
-      if (colorProperties.includes(property)) {
-        const colorRGB = hexToRGBA(value);
-        selectedAnnotation[property] = new window.Core.Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
-      } else {
-        selectedAnnotation[property] = value;
-      }
-      core.getAnnotationManager().redrawAnnotation(selectedAnnotation);
+
+    const annotationsToUpdate = core.getSelectedAnnotations();
+    if (annotationsToUpdate.length > 0) {
+      annotationsToUpdate.forEach((annot) => {
+        if (colorProperties.includes(property)) {
+          const colorRGB = hexToRGBA(value);
+          const color = new window.Core.Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
+          annot[property] = color;
+          if (isAnnotationToolStyleSyncingEnabled) {
+            setToolStyles(annot.ToolName, property, color);
+          }
+        } else {
+          annot[property] = value;
+          if (isAnnotationToolStyleSyncingEnabled) {
+            setToolStyles(annot.ToolName, property, value);
+          }
+        }
+        core.getAnnotationManager().redrawAnnotation(annot);
+      });
     } else {
       const currentTool = core.getToolMode();
       if (currentTool) {
         if (colorProperties.includes(property)) {
-          // Changing to the default tool so the style changes of the tool will be reflected
-          // in the tool button once we change to the current tool again.
-          core.setToolMode(defaultTool);
           const colorRGB = hexToRGBA(value);
           const color = new window.Core.Annotations.Color(colorRGB.r, colorRGB.g, colorRGB.b, colorRGB.a);
-          currentTool.setStyles({ [property]: color });
-          core.setToolMode(currentTool.name);
+          setToolStyles(currentTool.name, property, color);
         } else if (property === 'Opacity') {
           setToolStyles(currentTool.name, 'Opacity', value);
         } else if (property === 'StrokeThickness') {
@@ -167,6 +186,11 @@ const StylePanel = () => {
   };
 
   const onLineStyleChange = (section, value) => {
+    const sectionPropertyMap = {
+      start: 'StartLineStyle',
+      middle: 'StrokeStyle',
+      end: 'EndLineStyle',
+    };
     if (section === 'start') {
       setStartLineStyle(value);
     } else if (section === 'middle') {
@@ -188,17 +212,14 @@ const StylePanel = () => {
           annot.setEndStyle(value);
         }
         core.getAnnotationManager().redrawAnnotation(annot);
+        if (isAnnotationToolStyleSyncingEnabled) {
+          setToolStyles(annot.ToolName, sectionPropertyMap[section], value);
+        }
       });
     } else {
       const currentTool = core.getToolMode();
       if (currentTool) {
-        if (section === 'start') {
-          setToolStyles(currentTool.name, 'StartLineStyle', value);
-        } else if (section === 'middle') {
-          setToolStyles(currentTool.name, 'StrokeStyle', value);
-        } else if (section === 'end') {
-          setToolStyles(currentTool.name, 'EndLineStyle', value);
-        }
+        setToolStyles(currentTool.name, sectionPropertyMap[section], value);
       }
     }
   };
@@ -221,7 +242,7 @@ const StylePanel = () => {
     !showPanel ? noToolSelected :
       (<>
         <div className='style-panel-header'>
-          {t(panelTitle)}
+          {panelTitle}
         </div>
         <StylePicker
           sliderProperties={['Opacity', 'StrokeThickness']}
@@ -238,7 +259,7 @@ const StylePanel = () => {
           endLineStyle={endLineStyle}
           strokeStyle={strokeStyle}
           onLineStyleChange={onLineStyleChange}
-          toolName={core.getToolMode().name}
+          toolName={selectedAnnotation?.ToolName || core.getToolMode()?.name}
         />
       </>)
   );

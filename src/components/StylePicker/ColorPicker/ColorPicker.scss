@@ -9,6 +9,7 @@
     }
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    row-gap: 8px;
     justify-items: center;
 
     &.padding {
@@ -100,9 +101,16 @@
       min-width: 32px;
       min-height: 32px;
       @include button-reset;
+      cursor: pointer;
+      border-radius: 4px;
 
       &.show-more-button {
-        color: var(--blue-5);
+        color: var(--ribbon-active-color);
+
+        &:hover {
+          background: none;
+          color: var(--primary-button-hover);
+        }
       }
 
       &:disabled {
@@ -111,6 +119,14 @@
 
       &.hidden {
         display: none;
+      }
+
+      &:hover {
+        background: var(--view-header-button-hover);
+
+        .Icon {
+          color: var(--icon-color);
+        }
       }
     }
 

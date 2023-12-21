@@ -15,6 +15,7 @@ const DataElements = {
   FONT_SIZE_SLIDER: 'fontSizeSlider',
   STYLE_OPTION: 'styleOption',
   STYLE_POPUP: 'stylePopup',
+  STYLE_PANEL: 'stylePanel',
   SCALE_INPUT_CONTAINER: 'scaleInputContainer',
   PRECISION_INPUT_CONTAINER: 'precisionInputContainer',
   STYLE_POPUP_TEXT_STYLE_CONTAINER: 'stylePopupTextStyleContainer',

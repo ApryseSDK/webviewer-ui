@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Колір"
     },
+    "colorPalettePicker": {
+      "addColor": "Додайте новий колір",
+      "selectColor": "Виберіть колір"
+    },
     "displayMode": {
       "layout": "Макет сторінки",
       "pageTransition": "Перехід сторінки"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Видалити власний колір",
       "deleteMessage": "Видалити вибраний користувацький колір? Він буде вилучений з вашої колірної палітри."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Видалити спеціальний колір"
     },
     "multiDeleteAnnotation": {
       "title": "Видалити анотації?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Стилі"
+      "styles": "Стилі",
+      "annotation": "Анотація",
+      "annotations": "Анотації",
+      "tool": "Інструмент",
+      "textStyles": "Стилі тексту",
+      "currentColor": "Поточний колір",
+      "customColors": "Спеціальні кольори"
     },
+    "addColorToCustom": "Додати до власних кольорів",
     "noToolSelected": "Виберіть інструмент, щоб переглянути властивості інструмента"
   }
 }

@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Цвет"
     },
+    "colorPalettePicker": {
+      "addColor": "Добавить новый цвет",
+      "selectColor": "Выберите цвет"
+    },
     "displayMode": {
       "layout": "Расположение",
       "pageTransition": "Переход страниц"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Удалить собственный цвет",
       "deleteMessage": "Удалить выбранный пользовательский цвет? Он будет удален из вашей цветовой палитры."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Удалить собственный цвет"
     },
     "multiDeleteAnnotation": {
       "title": "Удалить аннотации?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Стили"
+      "styles": "Стили",
+      "annotation": "Аннотация",
+      "annotations": "Аннотации",
+      "tool": "Инструмент",
+      "textStyles": "Стили текста",
+      "currentColor": "Текущий цвет",
+      "customColors": "Пользовательские цвета"
     },
+    "addColorToCustom": "Добавить в пользовательские цвета",
     "noToolSelected": "Выберите инструмент, чтобы просмотреть свойства инструмента"
   }
 }

@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Szín"
     },
+    "colorPalettePicker": {
+      "addColor": "Új szín hozzáadása",
+      "selectColor": "Válasszon színt"
+    },
     "displayMode": {
       "layout": "Oldal elrendezés",
       "pageTransition": "Oldalátmenet"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Egyéni szín törlése",
       "deleteMessage": "Törli a kiválasztott egyéni színt? El lesz távolítva a színpalettáról."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Egyéni szín törlése"
     },
     "multiDeleteAnnotation": {
       "title": "Törli a megjegyzéseket?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stílusok"
+      "styles": "Stílusok",
+      "annotation": "Annotáció",
+      "annotations": "Annotációk",
+      "tool": "Eszköz",
+      "textStyles": "Szövegstílusok",
+      "currentColor": "Aktuális szín",
+      "customColors": "Egyedi színek"
     },
+    "addColorToCustom": "Adjon hozzá egyedi színekhez",
     "noToolSelected": "Válasszon ki egy eszközt az eszköz tulajdonságainak megtekintéséhez"
   }
 }

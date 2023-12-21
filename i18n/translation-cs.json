@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Barva"
     },
+    "colorPalettePicker": {
+      "addColor": "Přidat novou barvu",
+      "selectColor": "Vyberte barvu"
+    },
     "displayMode": {
       "layout": "Rozvržení stránky",
       "pageTransition": "Přechod stránky"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Smazat vlastní barvu",
       "deleteMessage": "Smazat vybranou vlastní barvu? Bude odstraněn z vaší palety barev."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Smazat vlastní barvu"
     },
     "multiDeleteAnnotation": {
       "title": "Smazat poznámky?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Styly"
+      "styles": "Styly",
+      "annotation": "Anotace",
+      "annotations": "Anotace",
+      "tool": "Nástroj",
+      "textStyles": "Styly textu",
+      "currentColor": "Aktuální barva",
+      "customColors": "Vlastní barvy"
     },
+    "addColorToCustom": "Přidat k vlastním barvám",
     "noToolSelected": "Chcete-li zobrazit vlastnosti nástroje, vyberte nástroj"
   }
 }

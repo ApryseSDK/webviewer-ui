@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Kolor"
     },
+    "colorPalettePicker": {
+      "addColor": "Dodaj nowy kolor",
+      "selectColor": "Wybierz kolor"
+    },
     "displayMode": {
       "layout": "Układ strony",
       "pageTransition": "Przejście strony"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Usuń kolor niestandardowy",
       "deleteMessage": "Usunąć wybrany kolor niestandardowy? Zostanie usunięty z Twojej palety kolorów."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Usuń kolor niestandardowy"
     },
     "multiDeleteAnnotation": {
       "title": "Usunąć adnotacje?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Style"
+      "styles": "Style",
+      "annotation": "Adnotacja",
+      "annotations": "Adnotacje",
+      "tool": "Narzędzie",
+      "textStyles": "Style tekstu",
+      "currentColor": "Aktualny kolor",
+      "customColors": "Niestandardowe kolory"
     },
+    "addColorToCustom": "Dodaj do niestandardowych kolorów",
     "noToolSelected": "Wybierz narzędzie, aby wyświetlić właściwości narzędzia"
   }
 }

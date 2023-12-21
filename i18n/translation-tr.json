@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Renk"
     },
+    "colorPalettePicker": {
+      "addColor": "Yeni renk ekle",
+      "selectColor": "Renk seç"
+    },
     "displayMode": {
       "layout": "Sayfa düzeni",
       "pageTransition": "Sayfa Geçişi"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Özel rengi sil",
       "deleteMessage": "Seçilen özel renk silinsin mi? Renk paletinizden kaldırılacaktır."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Özel rengi sil"
     },
     "multiDeleteAnnotation": {
       "title": "Ek Açıklamalar Silinsin mi?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stiller"
+      "styles": "Stiller",
+      "annotation": "Dipnot",
+      "annotations": "Ek açıklamalar",
+      "tool": "Alet",
+      "textStyles": "Metin Stilleri",
+      "currentColor": "Mevcut Renk",
+      "customColors": "Özel renkler"
     },
+    "addColorToCustom": "Özel renklere ekle",
     "noToolSelected": "Araç özelliklerini görüntülemek için bir araç seçin"
   }
 }

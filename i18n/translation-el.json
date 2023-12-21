@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Χρώμα"
     },
+    "colorPalettePicker": {
+      "addColor": "Προσθέστε νέο χρώμα",
+      "selectColor": "Επιλέξτε χρώμα"
+    },
     "displayMode": {
       "layout": "Διάταξη σελίδας",
       "pageTransition": "Μετάβαση σελίδας"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Διαγραφή προσαρμοσμένου χρώματος",
       "deleteMessage": "Διαγραφή του επιλεγμένου προσαρμοσμένου χρώματος; Θα αφαιρεθεί από την χρωματική σας παλέτα."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Διαγραφή προσαρμοσμένου χρώματος"
     },
     "multiDeleteAnnotation": {
       "title": "Διαγραφή σχολιασμών;",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Στυλ"
+      "styles": "Στυλ",
+      "annotation": "Σχόλιο",
+      "annotations": "Σχολιασμοί",
+      "tool": "Εργαλείο",
+      "textStyles": "Στυλ κειμένου",
+      "currentColor": "Τρέχον χρώμα",
+      "customColors": "Προσαρμοσμένα χρώματα"
     },
+    "addColorToCustom": "Προσθήκη στα προσαρμοσμένα χρώματα",
     "noToolSelected": "Επιλέξτε ένα εργαλείο για να δείτε τις ιδιότητες του εργαλείου"
   }
 }

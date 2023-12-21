@@ -211,10 +211,19 @@ core.getContentEditManager = () => ({
   isInContentEditMode: () => false,
 });
 
+class MockTool {
+  // Mock any methods here or mock a specific tool if needed
+}
+
+class MockRubberStampCreateTool {
+  static FILL_COLORS = ['#4F9964', '#2A85D0', '#D65656'];
+  static TEXT_COLORS = ['#FFFFFF', '#000000'];
+}
+
 window.Core = {
   documentViewer: mockDocumentViewer,
   annotations: {
-    Color: () => {},
+    Color: () => { },
   },
   ContentEdit: {
     addEventListener: noop,
@@ -277,10 +286,7 @@ window.Core = {
       'COMBO_BOX_FIELD': 'ComboBoxFormFieldCreateTool',
       'CHANGEVIEW': 'AnnotationCreateChangeViewTool',
     },
-    RubberStampCreateTool: {
-      FILL_COLORS: ['#4F9964', '#2A85D0', '#D65656'],
-      TEXT_COLORS: ['#FFFFFF', '#000000']
-    },
+    RubberStampCreateTool: MockRubberStampCreateTool,
     SignatureCreateTool: {
       SignatureTypes: {
         FULL_SIGNATURE: 'fullSignature',
@@ -289,7 +295,25 @@ window.Core = {
     },
     CropPage: {
       getIsCropping: () => false,
-    }
+    },
+    RectangleCreateTool: MockTool,
+    PolygonCreateTool: MockTool,
+    EllipseCreateTool: MockTool,
+    PolygonCloudCreateTool: MockTool,
+    EllipseMeasurementCreateTool: MockTool,
+    AreaMeasurementCreateTool: MockTool,
+    FreeTextCreateTool: MockTool,
+    CalloutCreateTool: MockTool,
+    TextUnderlineCreateTool: MockTool,
+    TextHighlightCreateTool: MockTool,
+    TextSquigglyCreateTool: MockTool,
+    TextStrikeoutCreateTool: MockTool,
+    CountMeasurementCreateTool: MockTool,
+    DistanceMeasurementCreateTool: MockTool,
+    ArcMeasurementCreateTool: MockTool,
+    PerimeterMeasurementCreateTool: MockTool,
+    RectangularAreaMeasurementCreateTool: MockTool,
+    CloudyRectangularAreaMeasurementCreateTool: MockTool,
   },
   getHashParameter: (hashParameter, defaultValue) => {
     if (hashParameter === 'a') {

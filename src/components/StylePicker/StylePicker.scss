@@ -6,14 +6,15 @@
   .slider-property {
     font-size: 14px;
     font-weight: bold;
+    margin-bottom: 8px;
   }
 
   .StyleOption {
-    margin: 15px 0;
+    margin-top: 16px;
 
     .styles-container {
       .styles-title {
-        margin: 0 0 16px 0;
+        margin: 0 0 8px 0;
         font-size: 14px;
         font-weight: bold;
       }
@@ -24,8 +25,6 @@
     }
 
     .slider {
-      margin-bottom: 8px;
-
       .slider-element-container {
         margin-left: -3px;
       }
@@ -39,7 +38,7 @@
       cursor: pointer;
       position: relative;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
 
       .menu-title {
         padding-top: 6px;
@@ -48,12 +47,26 @@
         font-size: 14px;
       }
 
-      .Icon {
+      .icon-container {
         position: absolute;
         right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-width: 28px;
+        min-height: 28px;
+        border-radius: 4px;
 
-        height: 18px;
-        width: 18px;
+        .Icon {
+          height: 18px;
+          width: 18px;
+          color: var(--icon-color);
+        }
+
+        &:hover {
+          background: var(--view-header-button-hover);
+        }
       }
     }
 
@@ -73,17 +86,13 @@
     }
   }
 
-  .StylePicker-LineStyleContainer {
-    margin-top: 2px;
-    margin-bottom: 8px;
+  .spacer {
+    width: 100%;
+    margin-top: 16px;
+  }
 
-    .StylePicker-LineStyleTitle {
-      font-size: 14px;
-      font-weight: bold;
-    }
-
+  .lineStyleContainer {
     .StylePicker-LineStyle {
-      margin-top: 4px;
       display: flex;
       flex-direction: row;
       column-gap: 8px;
@@ -101,7 +110,6 @@
 
       .Dropdown__wrapper {
         width: 100%;
-        margin-top: 7px;
       }
       
       .linestyle-image svg {
@@ -137,5 +145,7 @@
       flex-grow: 1;
       flex-basis: 0;
     }
+
+    margin-bottom: 0;
   }
 }

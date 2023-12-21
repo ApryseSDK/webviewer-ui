@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "สี"
     },
+    "colorPalettePicker": {
+      "addColor": "เพิ่มสีใหม่",
+      "selectColor": "เลือกสี"
+    },
     "displayMode": {
       "layout": "เค้าโครงหน้า",
       "pageTransition": "การเปลี่ยนหน้า"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "ลบสีที่กำหนดเอง",
       "deleteMessage": "ลบสีที่กำหนดเองที่เลือก? จะถูกลบออกจากจานสีของคุณ"
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "ลบสีที่กำหนดเอง"
     },
     "multiDeleteAnnotation": {
       "title": "ลบคำอธิบายประกอบ?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "สไตล์"
+      "styles": "สไตล์",
+      "annotation": "คำอธิบายประกอบ",
+      "annotations": "คำอธิบายประกอบ",
+      "tool": "เครื่องมือ",
+      "textStyles": "ลักษณะข้อความ",
+      "currentColor": "สีปัจจุบัน",
+      "customColors": "สีที่กำหนดเอง"
     },
+    "addColorToCustom": "เพิ่มลงในสีที่กำหนดเอง",
     "noToolSelected": "เลือกเครื่องมือเพื่อดูคุณสมบัติของเครื่องมือ"
   }
 }

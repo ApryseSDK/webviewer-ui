@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Kleur"
     },
+    "colorPalettePicker": {
+      "addColor": "Voeg nieuwe kleur toe",
+      "selectColor": "Selecteer kleur"
+    },
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Pagina overgang"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Aangepaste kleur verwijderen",
       "deleteMessage": "De geselecteerde aangepaste kleur verwijderen? Het wordt verwijderd uit uw kleurenpalet."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Aangepaste kleur verwijderen"
     },
     "multiDeleteAnnotation": {
       "title": "Annotaties verwijderen?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stijlen"
+      "styles": "Stijlen",
+      "annotation": "Annotatie",
+      "annotations": "Annotaties",
+      "tool": "Hulpmiddel",
+      "textStyles": "Tekststijlen",
+      "currentColor": "Huidige kleur",
+      "customColors": "Aangepaste kleuren"
     },
+    "addColorToCustom": "Voeg toe aan aangepaste kleuren",
     "noToolSelected": "Selecteer een gereedschap om de gereedschapseigenschappen te bekijken"
   }
 }

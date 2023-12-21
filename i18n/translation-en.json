@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Color"
     },
+    "colorPalettePicker": {
+      "addColor": "Add new color",
+      "selectColor": "Select color"
+    },
     "displayMode": {
       "layout": "Page Layout",
       "pageTransition": "Page Transition"
@@ -511,7 +515,7 @@
       "count": "Count",
       "length": "Length"
     },
-    "freeTextOption" :{
+    "freeTextOption": {
       "autoSizeFont": "Scale font size dynamically"
     },
     "measurementOption": {
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Delete custom color",
       "deleteMessage": "Delete the selected custom color? It will be removed from your color palette."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Delete custom color"
     },
     "multiDeleteAnnotation": {
       "title": "Delete Annotations?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Styles"
+      "styles": "Styles",
+      "annotation": "Annotation",
+      "annotations": "Annotations",
+      "tool": "Tool",
+      "textStyles": "Text Styles",
+      "currentColor": "Current Color",
+      "customColors": "Custom Colors"
     },
+    "addColorToCustom": "Add to custom colors",
     "noToolSelected": "Select a tool to view tool properties"
   }
 }

@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "रंग"
     },
+    "colorPalettePicker": {
+      "addColor": "नया रंग जोड़ें",
+      "selectColor": "रंग चुनो"
+    },
     "displayMode": {
       "layout": "पेज लेआउट",
       "pageTransition": "पृष्ठ संक्रमण"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "कस्टम रंग हटाएं",
       "deleteMessage": "चयनित कस्टम रंग हटाएं? इसे आपके रंग पैलेट से हटा दिया जाएगा।"
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "कस्टम रंग हटाएँ"
     },
     "multiDeleteAnnotation": {
       "title": "एनोटेशन हटाएं?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "शैलियों"
+      "styles": "शैलियों",
+      "annotation": "टिप्पणी",
+      "annotations": "एनोटेशन",
+      "tool": "औजार",
+      "textStyles": "पाठ शैलियाँ",
+      "currentColor": "वर्तमान रंग",
+      "customColors": "रीति रिवाजों के रंग"
     },
+    "addColorToCustom": "कस्टम रंगों में जोड़ें",
     "noToolSelected": "टूल गुण देखने के लिए एक टूल चुनें"
   }
 }

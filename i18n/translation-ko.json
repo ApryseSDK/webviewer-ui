@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "색상"
     },
+    "colorPalettePicker": {
+      "addColor": "새로운 색상 추가",
+      "selectColor": "색상 선택"
+    },
     "displayMode": {
       "layout": "레이아웃",
       "pageTransition": "페이지 전환"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "맞춤색상 삭제",
       "deleteMessage": "선택한 맞춤색상을 제거 하시겠습니까?"
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "맞춤 색상 삭제"
     },
     "multiDeleteAnnotation": {
       "title": "주석을 삭제하시겠습니까?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "스타일"
+      "styles": "스타일",
+      "annotation": "주석",
+      "annotations": "주석",
+      "tool": "도구",
+      "textStyles": "텍스트 스타일",
+      "currentColor": "현재 색상",
+      "customColors": "사용자 정의 색상"
     },
+    "addColorToCustom": "사용자 정의 색상에 추가",
     "noToolSelected": "도구 속성을 보려면 도구를 선택하세요."
   }
 }

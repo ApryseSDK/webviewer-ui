@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Farbe"
     },
+    "colorPalettePicker": {
+      "addColor": "Neue Farbe hinzufügen",
+      "selectColor": "Wähle Farbe"
+    },
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Seitenübergang"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Benutzerdefinierte Farbe löschen",
       "deleteMessage": "Ausgewählte benutzerdefinierte Farbe löschen? Sie wird aus Ihrer Farbpalette entfernt."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Benutzerdefinierte Farbe löschen"
     },
     "multiDeleteAnnotation": {
       "title": "Anmerkungen löschen?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stile"
+      "styles": "Stile",
+      "annotation": "Anmerkung",
+      "annotations": "Anmerkungen",
+      "tool": "Werkzeug",
+      "textStyles": "Textstile",
+      "currentColor": "Aktuelle Farbe",
+      "customColors": "Benutzerdefinierte Farben"
     },
+    "addColorToCustom": "Zu benutzerdefinierten Farben hinzufügen",
     "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen"
   }
 }

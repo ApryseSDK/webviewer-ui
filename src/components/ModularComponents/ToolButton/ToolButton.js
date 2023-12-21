@@ -34,12 +34,15 @@ const ToolButton = (props) => {
     iconColorKey,
     toolButtonObject,
     customOverrides,
+    // use this so that state gets updated when active tool styles change
+    activeToolStyles, // eslint-disable-line no-unused-vars
   ] = useSelector(
     (state) => [
       selectors.getActiveToolName(state) === toolName,
       selectors.getIconColor(state, mapToolNameToKey(toolName)),
       selectors.getToolButtonObject(state, toolName),
       selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
+      selectors.getActiveToolStyles(state),
     ],
     shallowEqual,
   );

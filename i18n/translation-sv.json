@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "Färg"
     },
+    "colorPalettePicker": {
+      "addColor": "Lägg till ny färg",
+      "selectColor": "Välj färg"
+    },
     "displayMode": {
       "layout": "Sidlayout",
       "pageTransition": "Sidövergång"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "Ta bort anpassad färg",
       "deleteMessage": "Vill du ta bort den valda anpassade färgen? Den kommer att tas bort från din färgpalett."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Ta bort anpassad färg"
     },
     "multiDeleteAnnotation": {
       "title": "Ta bort anteckningar?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stilar"
+      "styles": "Stilar",
+      "annotation": "Anteckning",
+      "annotations": "Anteckningar",
+      "tool": "Verktyg",
+      "textStyles": "Textstilar",
+      "currentColor": "Aktuell färg",
+      "customColors": "Anpassade färger"
     },
+    "addColorToCustom": "Lägg till anpassade färger",
     "noToolSelected": "Välj ett verktyg för att se verktygets egenskaper"
   }
 }

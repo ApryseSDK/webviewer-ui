@@ -368,6 +368,10 @@
     "colorPalette": {
       "colorLabel": "রঙ"
     },
+    "colorPalettePicker": {
+      "addColor": "নতুন রঙ যোগ করুন",
+      "selectColor": "রঙ নির্বাচন করুন"
+    },
     "displayMode": {
       "layout": "পৃষ্ঠা বিন্যাস",
       "pageTransition": "পৃষ্ঠা স্থানান্তর"
@@ -771,6 +775,9 @@
     "colorPicker": {
       "deleteTitle": "কাস্টম রঙ মুছুন",
       "deleteMessage": "নির্বাচিত কাস্টম রঙ মুছবেন? এটি আপনার রঙ প্যালেট থেকে সরানো হবে।"
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "কাস্টম রঙ মুছুন"
     },
     "multiDeleteAnnotation": {
       "title": "টীকা মুছবেন?",
@@ -1271,8 +1278,15 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "শৈলী"
+      "styles": "শৈলী",
+      "annotation": "টীকা",
+      "annotations": "টীকা",
+      "tool": "টুল",
+      "textStyles": "পাঠ্য শৈলী",
+      "currentColor": "বর্তমান রঙ",
+      "customColors": "কাস্টম রং"
     },
+    "addColorToCustom": "কাস্টম রং যোগ করুন",
     "noToolSelected": "টুল বৈশিষ্ট্য দেখতে একটি টুল নির্বাচন করুন"
   }
 }
