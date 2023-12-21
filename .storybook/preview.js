@@ -105,7 +105,7 @@ function generateCanvasWithImage() {
 
   return new Promise((resolve) => {
     const img = new Image();
-    img.src = "https://placekitten.com/200/300?image=5";
+    img.src = "/assets/images/191_200x300.jpeg";
     img.onload = () => {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       resolve(canvas);

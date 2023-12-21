@@ -22,7 +22,7 @@ const LineConnectorPortal = ({ children }) => {
   return createPortal(children, el);
 };
 
-const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
+const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPanelOpen }) => {
   const [
     notePanelWidth,
     lineIsOpen,
@@ -82,9 +82,10 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
 
     const viewerWidth = window.isApryseWebViewerWebComponent ? getRootNode().host.clientWidth : window.innerWidth;
     const viewerOffset = window.isApryseWebViewerWebComponent ? getRootNode().host.offsetLeft : 0;
+    const viewerOffsetTop = window.isApryseWebViewerWebComponent ? getRootNode().host.offsetTop : 0;
 
     setRightHorizontalLineRight(notePanelWidth - notePanelLeftPadding);
-    setRightHorizontalLineTop(noteContainerRef.current.getBoundingClientRect().top);
+    setRightHorizontalLineTop(noteContainerRef.current.getBoundingClientRect().top - viewerOffsetTop);
     const lineWidth = viewerWidth + viewerOffset - notePanelWidth - annotationTopLeft.x + notePanelLeftPadding + scrollLeft - annotWidthInPixels;
     const rightHorizontalLineWidthRatio = 0.75;
     setRightHorizontalLineWidth(lineWidth * rightHorizontalLineWidthRatio);
@@ -95,7 +96,7 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
     setLeftHorizontalLineRight(notePanelWidth - notePanelLeftPadding + rightHorizontalLineWidth);
 
     const noZoomRefShiftY = (annotation.NoZoom && noZoomRefPoint.y) ? noZoomRefPoint.y * annotHeightInPixels : 0;
-    setLeftHorizontalLineTop(annotationTopLeft.y + (annotHeightInPixels / 2) - scrollTop - noZoomRefShiftY);
+    setLeftHorizontalLineTop(annotationTopLeft.y + (annotHeightInPixels / 2) - scrollTop - noZoomRefShiftY - viewerOffsetTop);
 
     const onPageNumberUpdated = () => {
       dispatch(actions.closeElement('annotationNoteConnectorLine'));
@@ -108,7 +109,7 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef }) => {
     };
   }, [noteContainerRef, notePanelWidth, annotationBottomRight, annotationTopLeft, documentContainerWidth, documentContainerHeight, dispatch, activeDocumentViewerKey]);
 
-  if (lineIsOpen && notePanelIsOpen && !isLineDisabled) {
+  if (lineIsOpen && (notePanelIsOpen || isCustomPanelOpen) && !isLineDisabled) {
     const verticalHeight = Math.abs(rightHorizontalLineTop - leftHorizontalLineTop);
     const horizontalLineHeight = 2;
     // Add HorizontalLineHeight of 2px when annot is above note to prevent little gap between lines
