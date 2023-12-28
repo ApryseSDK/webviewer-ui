@@ -5,6 +5,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 
 function NotePopupContainer(props) {
+  const isCustomPanelOpen = props.isCustomPanelOpen;
   const [
     isOpen,
     notesInLeftPanel,
@@ -120,12 +121,16 @@ function NotePopupContainer(props) {
       selectedAnnotations.forEach((annot) => {
         ids[annot.Id] = true;
       });
-      if (isOpen || notesInLeftPanel) {
+      if (isCustomPanelOpen || isOpen || notesInLeftPanel) {
         setSelectedNoteIds(ids, documentViewerKey);
         setScrollToSelectedAnnot(true);
       }
       const groupedAnnots = getGroupedAnnots(selectedAnnotations);
-      if (isNotesPanelMultiSelectEnabled && action === 'selected' && selectedAnnotations.length > 1 && groupedAnnots.length !== selectedAnnotations.length) {
+      const shouldDisplayMultiSelect = (selectedAnnotations.length > 1 && groupedAnnots.length !== selectedAnnotations.length) || isMultiSelectMode;
+
+      if (isNotesPanelMultiSelectEnabled
+        && action === 'selected'
+        && shouldDisplayMultiSelect) {
         setMultiSelectMode(true);
         selectedAnnotations.forEach((selectedAnnot) => {
           isMultiSelectedMap[selectedAnnot.Id] = selectedAnnot;
@@ -153,7 +158,7 @@ function NotePopupContainer(props) {
         core.removeEventListener('annotationSelected', onAnnotationSelected2, 2);
       }
     };
-  }, [isOpen, notesInLeftPanel, isMultiSelectMode, isMultiSelectedMap, isNotesPanelMultiSelectEnabled, isMultiViewerMode]);
+  }, [isCustomPanelOpen, isOpen, notesInLeftPanel, isMultiSelectMode, isMultiSelectedMap, isNotesPanelMultiSelectEnabled, isMultiViewerMode]);
 
   function getGroupedAnnots(selectedAnnotations) {
     const mainAnnot = selectedAnnotations.find((annot) => annot.isGrouped());

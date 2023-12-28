@@ -292,6 +292,8 @@ const App = ({ removeEventHandlers }) => {
         return <RedactionPanel />;
       case panelNames.SEARCH:
         return <LazyLoadWrapper Component={LazyLoadComponents.SearchPanel} dataElement={dataElement}/>;
+      case panelNames.NOTES:
+        return <LazyLoadWrapper Component={LazyLoadComponents.NotesPanel} dataElement={dataElement}/>;
     }
   };
 

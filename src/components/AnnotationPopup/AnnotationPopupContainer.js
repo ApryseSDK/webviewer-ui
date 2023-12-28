@@ -78,6 +78,7 @@ const AnnotationPopupContainer = ({
     leftPanelOpen,
     activeLeftPanel,
     activeDocumentViewerKey,
+    isAnyCustomPanelOpen,
     featureFlags,
     isStylePanelOpen,
     isStylePanelDisabled,
@@ -101,6 +102,7 @@ const AnnotationPopupContainer = ({
       selectors.isElementOpen(state, DataElements.LEFT_PANEL),
       selectors.getActiveLeftPanel(state),
       selectors.getActiveDocumentViewerKey(state),
+      selectors.isAnyCustomPanelOpen(state),
       selectors.getFeatureFlags(state),
       selectors.isElementOpen(state, DataElements.STYLE_PANEL),
       selectors.isElementDisabled(state, DataElements.STYLE_PANEL),
@@ -115,7 +117,9 @@ const AnnotationPopupContainer = ({
 
   const isFocusedAnnotationSelected = isRightClickAnnotationPopupEnabled ? core.isAnnotationSelected(focusedAnnotation, activeDocumentViewerKey) : true;
   const annotManager = core.getAnnotationManager(activeDocumentViewerKey);
-  const isNotesPanelOpenOrActive = isNotesPanelOpen || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel');
+  const isNotesPanelOpenOrActive = isNotesPanelOpen
+    || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel')
+    || isAnyCustomPanelOpen;
   // on tablet, the behaviour will be like on desktop, including being draggable
 
   const { customizableUI } = featureFlags;

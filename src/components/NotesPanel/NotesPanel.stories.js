@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import NotesPanel from './NotesPanelContainer';
 import RightPanel from '../RightPanel';
+import Panel from 'components/Panel';
 
 export default {
   title: 'Components/NotesPanel/NotesPanel',
@@ -25,7 +26,8 @@ const initialState = {
     },
     openElements: {
       notesPanel: true,
-      header: true
+      header: true,
+      panel: true,
     },
     panelWidths: { notesPanel: DEFAULT_NOTES_PANEL_WIDTH },
     sortStrategy: 'position',
@@ -58,6 +60,29 @@ export function Basic() {
       <RightPanel dataElement="notesPanel" onResize={noop}>
         <NotesPanel />
       </RightPanel>
+    </Provider>
+  );
+}
+
+export function BasicInGenericPanel() {
+  initialState.viewer.notesPanelCustomEmptyPanel = undefined;
+  const store = configureStore({ reducer: () => initialState });
+  return (
+    <Provider store={store}>
+      <Panel location={'right'} dataElement={'panel'}>
+        <NotesPanel isCustomPanelOpen={true} isCustomPanel={true} />
+      </Panel>
+    </Provider>
+  );
+}
+export function BasicInGenericPanelOnLeft() {
+  initialState.viewer.notesPanelCustomEmptyPanel = undefined;
+  const store = configureStore({ reducer: () => initialState });
+  return (
+    <Provider store={store}>
+      <Panel location={'left'} dataElement={'panel'}>
+        <NotesPanel isCustomPanelOpen={true} isCustomPanel={true} />
+      </Panel>
     </Provider>
   );
 }

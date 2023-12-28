@@ -423,6 +423,8 @@ export const getCustomColors = (state) => state.viewer.customColors;
 
 export const getActiveLeftPanel = (state) => state.viewer.activeLeftPanel;
 
+export const isAnyCustomPanelOpen = (state) => state.viewer.customFlxPanels.some((panel) => state.viewer.openElements[panel.dataElement]);
+
 export const getActiveToolGroup = (state) => state.viewer.activeToolGroup;
 
 export const getNotePopupId = (state) => state.viewer.notePopupId;

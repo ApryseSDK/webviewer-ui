@@ -69,6 +69,13 @@ const Panel = (props) => {
     dispatch(actions.setPanelWidth(props.dataElement, Math.min(_width, maxAllowedWidth)));
   };
 
+  const children = React.cloneElement(props.children, {
+    isCustomPanel: true,
+    dataElement: props.dataElement,
+    isCustomPanelOpen: isVisible,
+    isLeftSide: isLeftSide,
+  });
+
   return (
     <>
       <div
@@ -99,7 +106,7 @@ const Panel = (props) => {
               </div>
             </div>
           )}
-          {props.children}
+          {children}
         </div>
         {isCustom && props.location === 'left' && !isInDesktopOnlyMode && !isMobile &&
           <ResizeBar minWidth={panelMinWidth} dataElement={`${props.dataElement}ResizeBar`} onResize={onResize}/>}

@@ -449,7 +449,8 @@ const ContentArea = ({
     isInlineCommentDisabled,
     isInlineCommentOpen,
     isNotesPanelOpen,
-    activeDocumentViewerKey
+    activeDocumentViewerKey,
+    isAnyCustomPanelOpen,
   ] = useSelector((state) => [
     selectors.getAutoFocusNoteOnAnnotationSelection(state),
     selectors.getIsMentionEnabled(state),
@@ -457,6 +458,7 @@ const ContentArea = ({
     selectors.isElementOpen(state, DataElements.INLINE_COMMENT_POPUP),
     selectors.isElementOpen(state, DataElements.NOTES_PANEL),
     selectors.getActiveDocumentViewerKey(state),
+    selectors.isAnyCustomPanelOpen(state),
   ]);
   const [t] = useTranslation();
   const textareaRef = useRef();
@@ -473,7 +475,7 @@ const ContentArea = ({
 
   useEffect(() => {
     // on initial mount, focus the last character of the textarea
-    if ((isNotesPanelOpen || isInlineCommentOpen) && textareaRef.current) {
+    if (isAnyCustomPanelOpen || (isNotesPanelOpen || isInlineCommentOpen) && textareaRef.current) {
       const editor = textareaRef.current.getEditor();
       const isFreeTextAnnnotation = annotation && annotation instanceof window.Core.Annotations.FreeTextAnnotation;
       isFreeTextAnnnotation && editor.setText('');

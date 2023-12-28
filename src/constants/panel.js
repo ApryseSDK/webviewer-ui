@@ -11,4 +11,7 @@ export const panelNames = {
   TEXT_EDITING: 'textEditingPanel',
   CHANGE_LIST: 'changeListPanel',
   STYLE: 'stylePanel',
+  REDACTION: 'redactionPanel',
+  SEARCH: 'searchPanel',
+  NOTES: 'notesPanel',
 };

@@ -295,6 +295,12 @@ Webviewer.WebComponent({
     location: 'right',
   });
 
+  instance.UI.addPanel({
+    dataElement: 'notesPanel_1',
+    render: instance.UI.Panels.NOTES,
+    location: 'right',
+  });
+
   const redactionPanelToggle = new instance.UI.Components.ToggleElementButton(
     {
       type: 'toggleElementButton',
@@ -446,12 +452,15 @@ Webviewer.WebComponent({
   });
 
   // Notes Panel Toggle
-  const notesPanelToggle = new instance.UI.Components.ToggleElementButton({
-    dataElement: 'notesPanelToggle',
-    toggleElement: 'notesPanel',
-    img: 'icon-header-chat-line',
-    title: 'component.notesPanel',
-  });
+  const notesPanelToggle = new instance.UI.Components.ToggleElementButton(
+    {
+      type: 'toggleElementButton',
+      img: 'icon-header-chat-line',
+      element: 'notesPanel_1',
+      dataElement: 'notes2Button',
+      toggleElement: 'notesPanel_1',
+    },
+  );
 
   // Const Primary Header
   const primaryHeader = new instance.UI.Components.ModularHeader({

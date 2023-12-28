@@ -25,7 +25,23 @@ import ReplyAttachmentPicker from './ReplyAttachmentPicker';
 
 import './NotesPanel.scss';
 
-const NotesPanel = ({ currentLeftPanelWidth }) => {
+const NotesPanel = ({
+  currentLeftPanelWidth,
+  notes,
+  selectedNoteIds,
+  setSelectedNoteIds,
+  searchInput,
+  setSearchInput,
+  isMultiSelectMode,
+  setMultiSelectMode,
+  isMultiSelectedMap,
+  setIsMultiSelectedMap,
+  scrollToSelectedAnnot,
+  setScrollToSelectedAnnot,
+  isCustomPanel,
+  isCustomPanelOpen,
+  isLeftSide,
+}) => {
   const [
     sortStrategy,
     isOpen,
@@ -40,6 +56,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     isInDesktopOnlyMode,
     customEmptyPanel,
     isNotesPanelMultiSelectEnabled,
+    activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
@@ -55,6 +72,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       selectors.isInDesktopOnlyMode(state),
       selectors.getNotesPanelCustomEmptyPanel(state),
       selectors.getIsNotesPanelMultiSelectEnabled(state),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -64,21 +82,15 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
 
   const isMobile = isMobileSize();
 
-  const [notes, setNotes] = useState([]);
-  const [isMultiSelectedMap, setIsMultiSelectedMap] = useState({});
+
   const [multiSelectedAnnotations, setMultiSelectedAnnotations] = useState([]);
-  const [isMultiSelectMode, setMultiSelectMode] = useState(false);
   const [showMultiReply, setShowMultiReply] = useState(false);
   const [showMultiState, setShowMultiState] = useState(false);
   const [showMultiStyle, setShowMultiStyle] = useState(false);
 
   const [curAnnotId, setCurAnnotId] = useState(undefined);
 
-  // the object will be in a shape of { [note.Id]: true }
-  // use a map here instead of an array to achieve an O(1) time complexity for checking if a note is selected
-  const [selectedNoteIds, setSelectedNoteIds] = useState({});
-  const [searchInput, setSearchInput] = useState('');
-  const [scrollToSelectedAnnot, setScrollToSelectedAnnot] = useState(false);
+
   const [t] = useTranslation();
   const listRef = useRef();
   // a ref that is used to keep track of the current scroll position
@@ -87,109 +99,26 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
   const scrollTopRef = useRef(0);
   const VIRTUALIZATION_THRESHOLD = enableNotesPanelVirtualizedList ? (isIE ? 25 : 100) : Infinity;
 
-  useEffect(() => {
-    const onDocumentUnloaded = () => {
-      setNotes([]);
-      setSelectedNoteIds({});
-      setSearchInput('');
-    };
-    core.addEventListener('documentUnloaded', onDocumentUnloaded);
-    return () => core.removeEventListener('documentUnloaded', onDocumentUnloaded);
-  }, []);
 
   useEffect(() => {
     const onAnnotationNumberingUpdated = (isEnabled) => {
       dispatch(actions.setAnnotationNumbering(isEnabled));
     };
+    const onAnnotationSelected = (annotations, action) => {
+      if (action === 'selected') {
+        setCurAnnotId(annotations[0].Id);
+      }
+    };
 
     core.addEventListener('annotationNumberingUpdated', onAnnotationNumberingUpdated);
+    core.addEventListener('annotationSelected', onAnnotationSelected);
 
     return () => {
       core.removeEventListener('annotationNumberingUpdated', onAnnotationNumberingUpdated);
+      core.removeEventListener('annotationSelected', onAnnotationSelected);
     };
   }, []);
 
-  function getGroupedAnnots(selectedAnnotations) {
-    const mainAnnot = selectedAnnotations.find((annot) => annot.isGrouped());
-    const groupedAnnots = [];
-
-    // check if all selected annots are grouped annotations
-    if (mainAnnot) {
-      selectedAnnotations.forEach((annot) => {
-        if (mainAnnot['InReplyTo'] === annot['InReplyTo']
-        || mainAnnot['InReplyTo'] === annot['Id']) {
-          groupedAnnots.push(annot);
-        }
-      });
-    }
-    return groupedAnnots;
-  }
-
-  useEffect(() => {
-    const _setNotes = () => {
-      const selectedAnnotations = core.getSelectedAnnotations();
-      const groupedAnnots = getGroupedAnnots(selectedAnnotations);
-
-      if (groupedAnnots.length === selectedAnnotations.length) {
-        setMultiSelectMode(false);
-      }
-
-      setNotes(
-        core
-          .getAnnotationsList()
-          .filter(
-            (annot) => annot.Listable &&
-              !annot.isReply() &&
-              !annot.Hidden &&
-              !annot.isGrouped() &&
-              annot.ToolName !== window.Core.Tools.ToolNames.CROP &&
-              !annot.isContentEditPlaceholder(),
-          ),
-      );
-    };
-
-    core.addEventListener('annotationChanged', _setNotes);
-    core.addEventListener('annotationHidden', _setNotes);
-    core.addEventListener('updateAnnotationPermission', _setNotes);
-
-    _setNotes();
-
-    return () => {
-      core.removeEventListener('annotationChanged', _setNotes);
-      core.removeEventListener('annotationHidden', _setNotes);
-      core.removeEventListener('updateAnnotationPermission', _setNotes);
-    };
-  }, []);
-
-  useEffect(() => {
-    const onAnnotationSelected = (annotations, action) => {
-      const ids = {};
-
-      core.getSelectedAnnotations().forEach((annot) => {
-        ids[annot.Id] = true;
-      });
-      if (isOpen || notesInLeftPanel) {
-        setSelectedNoteIds(ids);
-        setScrollToSelectedAnnot(true);
-      }
-
-      const selectedAnnotations = core.getSelectedAnnotations();
-      const groupedAnnots = getGroupedAnnots(selectedAnnotations);
-
-      if (isNotesPanelMultiSelectEnabled && action === 'selected' && selectedAnnotations.length > 1 && groupedAnnots.length !== selectedAnnotations.length) {
-        setMultiSelectMode(true);
-        const _isMultiSelectedMap = { ...isMultiSelectedMap };
-        selectedAnnotations.forEach((selectedAnnot) => {
-          _isMultiSelectedMap[selectedAnnot.Id] = selectedAnnot;
-        });
-        setIsMultiSelectedMap(_isMultiSelectedMap);
-      }
-    };
-    onAnnotationSelected();
-
-    core.addEventListener('annotationSelected', onAnnotationSelected);
-    return () => core.removeEventListener('annotationSelected', onAnnotationSelected);
-  }, [isOpen, notesInLeftPanel, isMultiSelectMode, isMultiSelectedMap, isNotesPanelMultiSelectEnabled]);
   let singleSelectedNoteIndex = -1;
 
   const handleScroll = (scrollTop) => {
@@ -343,7 +272,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
           delete clone[currNote.Id];
           return clone;
         });
-        core.deselectAnnotation(currNote);
+        core.deselectAnnotation(currNote, activeDocumentViewerKey);
       }
     };
 
@@ -352,13 +281,12 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       searchInput,
       resize,
       isSelected: selectedNoteIds[currNote.Id],
-      isContentEditable: core.canModifyContents(currNote) && !currNote.getContents(),
+      isContentEditable: core.canModifyContents(currNote, activeDocumentViewerKey) && !currNote.getContents(),
       pendingEditTextMap,
       setPendingEditText,
       pendingReplyMap,
       setPendingReply,
       isDocumentReadOnly,
-      isNotePanelOpen: isOpen || notesInLeftPanel,
       onTopNoteContentClicked: handleNoteClicked,
       isExpandedFromSearch: onlyReplyContainsSearchInput(currNote),
       scrollToSelectedAnnot,
@@ -369,6 +297,7 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
       clearAttachments,
       deleteAttachment,
       addAttachments,
+      documentViewerKey: activeDocumentViewerKey,
     };
 
     if (index === singleSelectedNoteIndex) {
@@ -387,6 +316,8 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
         {listSeparator}
         <NoteContext.Provider value={contextValue}>
           <Note
+            isCustomPanelOpen={isCustomPanelOpen}
+            shouldHideConnectorLine={isLeftSide}
             annotation={currNote}
             isMultiSelected={!!isMultiSelectedMap[currNote.Id]}
             isMultiSelectMode={isMultiSelectMode}
@@ -395,18 +326,20 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
             handleMultiSelect={(checked) => {
               if (checked) {
                 const _isMultiSelectedMap = { ...isMultiSelectedMap };
-                const groupAnnots = core.getGroupAnnotations(currNote);
+                const groupAnnots = core.getGroupAnnotations(currNote, activeDocumentViewerKey);
                 groupAnnots.forEach((groupAnnot) => {
                   _isMultiSelectedMap[groupAnnot.Id] = groupAnnot;
                 });
                 setIsMultiSelectedMap(_isMultiSelectedMap);
+                core.selectAnnotations(groupAnnots);
               } else {
                 const _isMultiSelectedMap = { ...isMultiSelectedMap };
-                const groupAnnots = core.getGroupAnnotations(currNote);
+                const groupAnnots = core.getGroupAnnotations(currNote, activeDocumentViewerKey);
                 groupAnnots.forEach((groupAnnot) => {
                   delete _isMultiSelectedMap[groupAnnot.Id];
                 });
                 setIsMultiSelectedMap(_isMultiSelectedMap);
+                core.deselectAnnotations([currNote, ...groupAnnots]);
               }
             }}
           />
@@ -467,16 +400,17 @@ const NotesPanel = ({ currentLeftPanelWidth }) => {
     const existingSelectedNotes = notesToRender.filter((note) => selectedNoteIds[note.Id]);
 
     if (existingSelectedNotes.length) {
-      singleSelectedNoteIndex = notesToRender.findIndex((note) => note.Id === existingSelectedNotes[0].Id);
+      singleSelectedNoteIndex = notesToRender.findIndex((note) => note.Id === curAnnotId);
     }
   }
 
   let style = {};
-  if (isInDesktopOnlyMode || !isMobile) {
+  if (!isCustomPanel && (isInDesktopOnlyMode || !isMobile)) {
     style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
   }
 
-  const showNotePanel = !isDisabled && (isOpen || notesInLeftPanel);
+  const showNotePanel = !isDisabled && (isOpen || notesInLeftPanel || isCustomPanel);
+
   return !showNotePanel ? null : (
     <div className="notes-panel-container">
       <div
