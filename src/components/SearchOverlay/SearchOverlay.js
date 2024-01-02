@@ -51,6 +51,7 @@ function SearchOverlay(props) {
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
   const searchTextInputRef = useRef();
   const waitTime = 300; // Wait time in milliseconds
+  let allowInitialSearch = false;
 
   useEffect(() => {
     try {
@@ -66,6 +67,7 @@ function SearchOverlay(props) {
       // give time for the search panel to open before focusing on the input
       setTimeout(() => {
         searchTextInputRef.current.focus();
+        allowInitialSearch = true;
       }, waitTime);
     }
 
@@ -76,11 +78,13 @@ function SearchOverlay(props) {
 
   useEffect(() => {
     if (searchValue && searchValue.length > 0) {
-      executeSearch(searchValue, {
-        caseSensitive: isCaseSensitive,
-        wholeWord: isWholeWord,
-        wildcard: isWildcard,
-      });
+      if (allowInitialSearch) {
+        executeSearch(searchValue, {
+          caseSensitive: isCaseSensitive,
+          wholeWord: isWholeWord,
+          wildcard: isWildcard,
+        });
+      }
     } else {
       clearSearchResult();
     }
