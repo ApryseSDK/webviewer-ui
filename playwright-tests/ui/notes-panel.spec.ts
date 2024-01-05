@@ -436,4 +436,26 @@ test.describe('Notes Panel', () => {
     await page.waitForTimeout(200);
     expect(await notesContainer.screenshot()).toMatchSnapshot(['notes-panel', 'note-panel-unselected-annotations.png']);
   });
+
+  test('should disable multiselect controls if document is readonly', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    const instance = await waitForInstance();
+    await page.waitForTimeout(5000);
+
+    await instance('openElements', ['notesPanel']);
+
+    await iframe.evaluate(async () => {
+      instance.Core.annotationManager.promoteUserToAdmin();
+      instance.Core.annotationManager.enableReadOnlyMode();
+    });
+
+    await page.waitForTimeout(2000);
+
+    await iframe.evaluate(async () => {
+      instance.Core.annotationManager.selectAnnotations(instance.Core.annotationManager.getAnnotationsList().filter((a) => a.PageNumber === 1));
+    });
+
+    const multiselectFooter = await iframe.$('.multi-select-footer');
+    expect(await multiselectFooter.screenshot()).toMatchSnapshot(['notes-panel', 'readonly-mode-multiselect-footer.png']);
+  });
 });

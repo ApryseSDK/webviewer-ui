@@ -75,7 +75,23 @@ export default (store, documentViewerKey) => async () => {
 
     outlineUtils.setDoc(core.getDocument(documentViewerKey));
 
-    dispatch(actions.setPortfolio(await getPortfolioFiles()));
+    const setNextActivePanelDueToEmptyCurrentPanel = (currentActivePanel) => {
+      const state = getState();
+      const activeLeftPanel = selectors.getActiveLeftPanel(state);
+      if (activeLeftPanel === currentActivePanel) {
+        // set the active left panel to another one that's not disabled so that users don't see a blank left panel
+        const nextActivePanel = getLeftPanelDataElements(state).find(
+          (dataElement) => !selectors.isElementDisabled(state, dataElement),
+        );
+        dispatch(actions.setActiveLeftPanel(nextActivePanel));
+      }
+    };
+
+    const portfolio = await getPortfolioFiles();
+    dispatch(actions.setPortfolio(portfolio));
+    if (portfolio.length === 0) {
+      setNextActivePanelDueToEmptyCurrentPanel(DataElements.PORTFOLIO_PANEL);
+    }
 
     if (!doc.isWebViewerServerDocument()) {
       doc.addEventListener('layersUpdated', async () => {
@@ -87,16 +103,7 @@ export default (store, documentViewerKey) => async () => {
         if (layers.length === 0) {
           dispatch(actions.disableElement('layersPanel', PRIORITY_ONE));
           dispatch(actions.disableElement('layersPanelButton', PRIORITY_ONE));
-
-          const state = getState();
-          const activeLeftPanel = selectors.getActiveLeftPanel(state);
-          if (activeLeftPanel === 'layersPanel') {
-            // set the active left panel to another one that's not disabled so that users don't see a blank left panel
-            const nextActivePanel = getLeftPanelDataElements(state).find(
-              (dataElement) => !selectors.isElementDisabled(state, dataElement),
-            );
-            dispatch(actions.setActiveLeftPanel(nextActivePanel));
-          }
+          setNextActivePanelDueToEmptyCurrentPanel('layersPanel');
         } else {
           dispatch(actions.enableElement('layersPanel', PRIORITY_ONE));
           dispatch(actions.enableElement('layersPanelButton', PRIORITY_ONE));
@@ -120,7 +127,6 @@ export default (store, documentViewerKey) => async () => {
     }
 
     if (isOfficeEditorMode()) {
-      dispatch(actions.setReadOnly(true));
       dispatch(actions.enableElement('officeEditorToolsHeader', PRIORITY_ONE));
       setZoomLevel(1);
       dispatch(actions.disableElements(
@@ -138,7 +144,6 @@ export default (store, documentViewerKey) => async () => {
         hotkeysManager.keyHandlerMap[searchShortcutKeys],
       );
     } else {
-      dispatch(actions.setReadOnly(false));
       dispatch(actions.enableElements(
         ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton'],
         PRIORITY_ONE, // To allow customers to still disable these elements
