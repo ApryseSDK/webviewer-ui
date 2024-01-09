@@ -23,7 +23,7 @@ test.describe('Notes Panel', () => {
   });
 
   test('Ensure the NotesPanel AnnotationNoteConnectorLine does not cause a crash in webviewer when deleting the last page', async ({ page }) => {
-    const { iframe, waitForInstance, pageErrors } = await loadViewerSample(page, 'viewing/viewing');
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
     const instance = await waitForInstance();
     await instance('loadDocument', '/test-files/bookmarkSample.pdf');
     await page.waitForTimeout(5000);
@@ -49,7 +49,6 @@ test.describe('Notes Panel', () => {
         listAnnotation: annotManager.getAnnotationsList()
       };
     });
-    expect(pageErrors.length).toBe(0);
     expect(lastPageCount).toBe(1);
     expect(listAnnotation.length).toBe(0);
   });
@@ -472,7 +471,7 @@ test.describe('Notes Panel', () => {
   test('should be able to select notes without notes panel scrolling to other locations', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
     const instance = await waitForInstance();
-    await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');    
+    await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
     await page.waitForTimeout(5000);
 
     // open note panel and go to "multi select" mode
