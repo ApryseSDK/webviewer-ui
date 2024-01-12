@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import Draggable from 'react-draggable';
-
 import { useSelector, useDispatch, useStore, shallowEqual } from 'react-redux';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import { useTranslation } from 'react-i18next';
-
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
 import Icon from 'components/Icon';
-
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import actions from 'actions';
@@ -17,10 +14,10 @@ import selectors from 'selectors';
 import core from 'core';
 import { isMobile as isMobileCSS, isIE, isMobileDevice, isFirefox } from 'helpers/device';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
-import DataElements from 'src/constants/dataElement';
+import getRootNode from 'helpers/getRootNode';
+import DataElements from 'constants/dataElement';
 
 import './ContextMenuPopup.scss';
-import getRootNode from 'helpers/getRootNode';
 
 const OfficeActionItem = ({ dataElement, onClick, img, title, shortcut = '', disabled = false }) => {
   const [t] = useTranslation();
@@ -190,62 +187,54 @@ const ContextMenuPopup = ({
                   />
                 </>
               )}
-
               {!core.getOfficeEditor().isCursorInTable() && (
                 <OfficeActionItem
                   title="action.delete"
                   img="icon-delete-line"
                   dataElement={DataElements.OFFICE_EDITOR_DELETE}
                   onClick={() => core.getOfficeEditor().removeSelection()}
-                  disabled={!core.getOfficeEditor().isTextSelected()}
+                  disabled={!(core.getOfficeEditor().isTextSelected() || core.getOfficeEditor().isImageSelected())}
                 />
               )}
-
               {core.getOfficeEditor().isCursorInTable() && (
                 <>
                   <div className="divider"></div>
                   <OfficeActionItem
                     title="officeEditor.insertRowAbove"
                     dataElement={DataElements.OFFICE_EDITOR_INSERT_ROW_ABOVE}
-                    onClick={() => { }}
-                    disabled={false}
+                    onClick={() => core.getOfficeEditor().insertRows(1, true)}
                   />
                   <OfficeActionItem
                     title="officeEditor.insertRowBelow"
                     dataElement={DataElements.OFFICE_EDITOR_INSERT_ROW_BELOW}
-                    onClick={() => { }}
-                    disabled={false}
+                    onClick={() => core.getOfficeEditor().insertRows(1, false)}
                   />
                   <OfficeActionItem
                     title="officeEditor.insertColumnRight"
                     dataElement={DataElements.OFFICE_EDITOR_INSERT_COLUMN_RIGHT}
-                    onClick={() => { }}
-                    disabled={false}
+                    onClick={() => core.getOfficeEditor().insertColumns(1, true)}
                   />
                   <OfficeActionItem
                     title="officeEditor.insertColumnLeft"
                     dataElement={DataElements.OFFICE_EDITOR_INSERT_COLUMN_LEFT}
-                    onClick={() => { }}
-                    disabled={false}
+                    onClick={() => core.getOfficeEditor().insertColumns(1, false)}
                   />
                   <OfficeActionItem
                     title="officeEditor.deleteRow"
                     dataElement={DataElements.OFFICE_EDITOR_DELETE_ROW}
-                    onClick={() => { }}
-                    disabled={false}
+                    onClick={() => core.getOfficeEditor().removeRows()}
                   />
                   <OfficeActionItem
                     title="officeEditor.deleteColumn"
                     dataElement={DataElements.OFFICE_EDITOR_DELETE_COLUMN}
-                    onClick={() => { }}
-                    disabled={false}
+                    onClick={() => core.getOfficeEditor().removeColumns()}
                   />
-                  <OfficeActionItem
+                  {/* <OfficeActionItem
                     title="officeEditor.deleteTable"
                     dataElement={DataElements.OFFICE_EDITOR_DELETE_TABLE}
                     onClick={() => { }}
                     disabled={false}
-                  />
+                  /> */}
                 </>
               )}
             </>
