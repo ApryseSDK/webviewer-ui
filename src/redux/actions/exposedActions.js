@@ -2,7 +2,6 @@ import core from 'core';
 import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
 import { getAllPanels } from 'helpers/getElements';
-import { indexOfHeaderItem } from 'helpers/headers';
 import { getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
 import { disableElements, enableElements, setActiveFlyout } from 'actions/internalActions';
 import defaultTool from 'constants/defaultTool';
@@ -10,6 +9,8 @@ import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 import { getCustomFlxPanels } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
+import pick from 'lodash/pick';
+import { v4 as uuidv4 } from 'uuid';
 
 export const setDefaultPrintMargins = (margins) => ({
   type: 'SET_DEFAULT_PRINT_MARGINS',
@@ -396,8 +397,10 @@ export const setHeaderMaxWidth = (dataElement, maxWidth) => updateHeaderProperty
 
 export const setHeaderMaxHeight = (dataElement, maxHeight) => updateHeaderProperty(dataElement, 'maxHeight', maxHeight);
 
+export const setHeaderStyle = (dataElement, style) => updateHeaderProperty(dataElement, 'style', style);
+
 const updateHeaderProperty = (dataElement, property, value) => ({
-  type: 'UPDATE_MODULAR_HEADERS',
+  type: 'UPDATE_MODULAR_HEADER',
   payload: {
     dataElement,
     property,
@@ -405,37 +408,36 @@ const updateHeaderProperty = (dataElement, property, value) => ({
   }
 });
 
-export const setGroupedItemsProperty = (propertyName, propertyValue, groupedItemsDataElement, headerDataElement) => (dispatch, getState) => {
-  const state = getState();
-  const headers = state.viewer.modularHeaders;
-  const updatedHeaders = headers.map((header) => {
-    // Will change only if there is no specific header for setting the property
-    // or if the specific header is the current one of the loop
-    if (!headerDataElement || header['dataElement'] === headerDataElement) {
-      if (groupedItemsDataElement) {
-        const itemIndex = indexOfHeaderItem(header, groupedItemsDataElement);
-        if (itemIndex > -1) {
-          header.items[itemIndex][propertyName] = propertyValue;
-          const updatedItems = [...header.items];
-          header.items = updatedItems;
-        }
-      } else {
-        const updatedItems = header.items.map((item) => {
-          if (item.hasOwnProperty(propertyName)) {
-            item[propertyName] = propertyValue;
-          }
-          return { ...item };
-        });
+// We may want to expose an API to update the props of any modular component
+// That is why the action refers to modular components and not just grouped items
+export const setGroupedItemsProperty = (property, value, groupedItemsDataElement) => ({
+  type: 'SET_MODULAR_COMPONENTS_PROPERTY',
+  payload: {
+    property,
+    value,
+    groupedItemsDataElement,
+  }
+});
 
-        header.items = updatedItems;
-      }
-    }
-    return { ...header };
-  });
+export const setAllGroupedItemsProperty = (property, value) => ({
+  type: 'SET_ALL_GROUPED_ITEMS_PROPERTY',
+  payload: {
+    property,
+    value,
+  }
+});
 
+export const updateGroupedItems = (groupedItemsDataElement, newGroupedItems) => (dispatch, getState) => {
+  const componentsMap = {};
+  const existingComponentsMap = getState().viewer.modularComponents;
+  const normalizedItems = normalizeItems(newGroupedItems, componentsMap, existingComponentsMap);
   dispatch({
-    type: 'SET_MODULAR_HEADERS',
-    payload: updatedHeaders
+    type: 'UPDATE_GROUPED_ITEMS',
+    payload: {
+      groupedItemsDataElement,
+      normalizedItems,
+      componentsMap
+    }
   });
 };
 
@@ -586,14 +588,99 @@ export const addCustomModal = (modalOptions) => ({
   type: 'ADD_CUSTOM_MODAL',
   payload: modalOptions,
 });
-export const addModularHeaders = (headersList) => ({
-  type: 'ADD_MODULAR_HEADERS',
-  payload: headersList
-});
-export const updateModularHeaders = (modularHeaders) => ({
-  type: 'SET_MODULAR_HEADERS',
-  payload: modularHeaders
-});
+
+const headerKeysToStore = [
+  'dataElement', 'label', 'placement', 'justifyContent',
+  'grow', 'gap', 'position', 'float', 'maxWidth', 'maxHeight',
+  'opacityMode', 'opacity', 'stroke', 'dimension', 'position', 'style'
+];
+
+// These are all the keys from the items we will store
+// There are a few non serializable ones here like the onclick function
+// we can determine their fate later
+const itemKeysToStore = [
+  'dataElement', 'items', 'title', 'disabled', 'type',
+  'isActive', 'label', 'img', 'onClick', 'justifyContent',
+  'groupedItems', 'grow', 'gap', 'position', 'placement', 'alwaysVisible',
+  'style', 'headerDirection', 'icon', 'toolbarGroup', 'direction',
+  'states', 'mount', 'unmount', 'initialState', 'hidden', 'toggleElement',
+  'toolName', 'color', 'buttonType'];
+
+//* Recursively normalize the items in a header
+const normalizeItems = (items, componentsMap, existingComponentsMap) => {
+  return items.map((item) => {
+    const normalizedItem = pick(item, itemKeysToStore);
+
+    // Generate a unique dataElement if there's a collision
+    let dataElementKey = normalizedItem.dataElement;
+    while (existingComponentsMap[dataElementKey]) {
+      const newKey = `${normalizedItem.dataElement}-${uuidv4()}`;
+      console.warn(`Modular component with dataElement ${dataElementKey} already exists. Appending unique ID to prevent collisions: ${newKey} `);
+      dataElementKey = newKey;
+    }
+
+    normalizedItem.dataElement = dataElementKey;
+
+    // If there are nested items, recursively normalize them
+    if (item.items && item.items.length > 0) {
+      const nestedItemsDataElements = normalizeItems(item.items, componentsMap, existingComponentsMap);
+      normalizedItem.items = nestedItemsDataElements;
+    }
+
+    // Update the componentsMap with the uniquely identified normalized item
+    componentsMap[dataElementKey] = normalizedItem;
+    return dataElementKey;
+  });
+};
+
+const prepareModularHeaders = (headersList, existingComponentsMap = {}) => {
+  const headersMap = {};
+  const componentsMap = {};
+
+  headersList.forEach((header) => {
+    if (headersMap[header.dataElement]) {
+      const newKey = `${header.dataElement}-${uuidv4()}`;
+      console.warn(`Modular header with dataElement ${header.dataElement} already exists. Appending unique ID to prevent collisions: ${newKey}`);
+      header.dataElement = newKey;
+    }
+
+    const itemDataElements = normalizeItems(header.items, componentsMap, existingComponentsMap);
+    headersMap[header.dataElement] = { ...pick(header, headerKeysToStore), items: itemDataElements };
+  });
+  return { headersMap, componentsMap };
+};
+
+export const addModularHeaders = (headersList) => (dispatch, getState) => {
+  const existingComponentsMap = getState().viewer.modularComponents;
+  const { headersMap, componentsMap } = prepareModularHeaders(headersList, existingComponentsMap);
+  dispatch({
+    type: 'ADD_MODULAR_HEADERS_AND_COMPONENTS',
+    payload: { headersMap, componentsMap }
+  });
+};
+export const setModularHeaders = (headersList) => (dispatch) => {
+  const { headersMap, componentsMap } = prepareModularHeaders(headersList);
+  dispatch({
+    type: 'SET_MODULAR_HEADERS_AND_COMPONENTS',
+    payload: { headersMap, componentsMap }
+  });
+};
+
+export const setModularHeaderItems = (headerDataElement, items) => (dispatch, getState) => {
+  const existingComponentsMap = getState().viewer.modularComponents;
+  const newComponentsMap = {};
+  const itemsDataElements = normalizeItems(items, newComponentsMap, existingComponentsMap);
+
+  dispatch({
+    type: 'SET_MODULAR_HEADER_ITEMS',
+    payload: {
+      headerDataElement: headerDataElement,
+      normalizedItems: newComponentsMap,
+      itemsDataElements: itemsDataElements
+    }
+  });
+};
+
 export const setRightHeaderWidth = (width) => ({
   type: 'SET_RIGHT_HEADER_WIDTH',
   payload: width

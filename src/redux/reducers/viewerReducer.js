@@ -1,5 +1,6 @@
 import localStorageManager from 'helpers/localStorageManager';
 import { getInstanceID } from 'helpers/getRootNode';
+import { ITEM_TYPE } from 'constants/customizationVariables';
 
 export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
@@ -665,22 +666,128 @@ export default (initialState) => (state = initialState, action) => {
         customModals: [...existingDataElementFiltered, payload],
       };
     }
-    case 'ADD_MODULAR_HEADERS':
-      return { ...state, modularHeaders: state.modularHeaders.concat(payload) };
-    case 'SET_MODULAR_HEADERS':
-      return { ...state, modularHeaders: payload };
-    case 'UPDATE_MODULAR_HEADERS': {
+    case 'UPDATE_MODULAR_HEADER': {
       const { dataElement, property, value } = payload;
-      const updatedModularHeaders = state.modularHeaders.map((header) => {
-        if (header.dataElement === dataElement) {
-          return {
-            ...header,
+      const existingModularHeader = state.modularHeaders[dataElement];
+
+      // This is to prevent the case where the header is not yet initialized
+      if (!existingModularHeader) {
+        return state;
+      }
+
+      // Create a new updatedModularHeader object with the updated property value
+      const updatedModularHeader = {
+        ...existingModularHeader,
+        [property]: value
+      };
+
+      return {
+        ...state,
+        modularHeaders: {
+          ...state.modularHeaders,
+          [dataElement]: updatedModularHeader,
+        },
+      };
+    }
+    case 'SET_MODULAR_COMPONENTS_PROPERTY': {
+      const { groupedItemsDataElement, property, value } = payload;
+      const existingModularComponent = state.modularComponents[groupedItemsDataElement];
+      if (!existingModularComponent) {
+        return state;
+      }
+      const updatedModularComponent = {
+        ...existingModularComponent,
+        [property]: value,
+      };
+      return {
+        ...state,
+        modularComponents: {
+          ...state.modularComponents,
+          [groupedItemsDataElement]: updatedModularComponent,
+        },
+      };
+    }
+    case 'SET_ALL_GROUPED_ITEMS_PROPERTY': {
+      const { property, value } = payload;
+      // Clone the existing modularComponents to avoid direct mutation
+      const newModularComponents = { ...state.modularComponents };
+
+      // Iterate over modularComponents and update grouped items directly
+      Object.keys(newModularComponents).forEach((key) => {
+        if (newModularComponents[key].type === ITEM_TYPE.GROUPED_ITEMS) {
+          newModularComponents[key] = {
+            ...newModularComponents[key],
             [property]: value,
           };
         }
-        return header;
       });
-      return { ...state, modularHeaders: updatedModularHeaders };
+      return {
+        ...state,
+        modularComponents: newModularComponents,
+      };
+    }
+    case 'ADD_MODULAR_HEADERS_AND_COMPONENTS': {
+      const { headersMap, componentsMap } = payload;
+      return {
+        ...state,
+        modularHeaders: { ...state.modularHeaders, ...headersMap },
+        modularComponents: { ...state.modularComponents, ...componentsMap }
+      };
+    }
+    case 'SET_MODULAR_HEADERS_AND_COMPONENTS': {
+      const { headersMap, componentsMap } = payload;
+      return {
+        ...state,
+        modularHeaders: { ...headersMap },
+        modularComponents: { ...componentsMap }
+      };
+    }
+    case 'SET_MODULAR_HEADER_ITEMS': {
+      const { headerDataElement, normalizedItems, itemsDataElements } = payload;
+      const existingModularHeader = state.modularHeaders[headerDataElement];
+
+      // This is to prevent the case where the header is not yet initialized
+      if (!existingModularHeader) {
+        return state;
+      }
+
+      const updatedModularHeader = {
+        ...existingModularHeader,
+        items: [...itemsDataElements]
+      };
+
+      return {
+        ...state,
+        modularHeaders: {
+          ...state.modularHeaders,
+          [headerDataElement]: updatedModularHeader,
+        },
+        modularComponents: {
+          ...state.modularComponents,
+          ...normalizedItems,
+        },
+      };
+    }
+    case 'UPDATE_GROUPED_ITEMS': {
+      const { groupedItemsDataElement, normalizedItems, componentsMap } = payload;
+      const existingGroupedItem = state.modularComponents[groupedItemsDataElement];
+      // This is to prevent the case where the header is not yet initialized
+      if (!existingGroupedItem) {
+        return state;
+      }
+      // How do we handle "dangling" components? i.e. components that are no longer referenced anywhere
+      const updatedGroupedItem = {
+        ...existingGroupedItem,
+        items: normalizedItems,
+      };
+      return {
+        ...state,
+        modularComponents: {
+          ...state.modularComponents,
+          [groupedItemsDataElement]: updatedGroupedItem,
+          ...componentsMap,
+        },
+      };
     }
     case 'SET_RIGHT_HEADER_WIDTH':
       return {

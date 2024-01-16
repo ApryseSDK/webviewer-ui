@@ -24,6 +24,7 @@ export default (store) => (props) => {
         style = {},
         stroke = true,
       } = props;
+      this.type = ITEM_TYPE.MODULAR_HEADER;
       this.label = label;
       this.dataElement = dataElement;
       this.placement = placement;
@@ -34,8 +35,7 @@ export default (store) => (props) => {
       this.float = float;
       this.maxWidth = maxWidth;
       this.maxHeight = maxHeight;
-      // items is a list of things. We want to clone them
-      this.items = items.map((item) => ({ ...item }));
+      this.items = items;
       this.itemValidTypes = Object.values(ITEM_TYPE);
       this.opacityMode = opacityMode;
       this.opacity = opacity;
@@ -47,10 +47,16 @@ export default (store) => (props) => {
         borderWidth: DEFAULT_STYLES.WIDTH,
       };
 
-      this.setStyle(style);
+      this.style = this.validateStyle(style);
     }
 
     setStyle(userDefinedStyle) {
+      const style = this.validateStyle(userDefinedStyle);
+      this.style = style;
+      store.dispatch(actions.setHeaderStyle(this.dataElement, style));
+    }
+
+    validateStyle = (userDefinedStyle) => {
       checkTypes([userDefinedStyle], [TYPES.OPTIONAL([TYPES.OBJECT({
         padding: TYPES.OPTIONAL(TYPES.NUMBER),
         borderColor: TYPES.OPTIONAL(TYPES.STRING),
@@ -58,8 +64,7 @@ export default (store) => (props) => {
         borderStyle: TYPES.OPTIONAL(TYPES.STRING),
       })])], 'ModularHeader.setStyle');
       if (Object.keys(userDefinedStyle).length === 0) {
-        this.style = {};
-        return;
+        return {};
       }
 
       // If user pass 'border-style: solid' the stroke should appear
@@ -75,8 +80,7 @@ export default (store) => (props) => {
       } = userDefinedStyle;
 
       if (!padding) {
-        this.style = { ...userDefinedStyle };
-        return;
+        return { ...userDefinedStyle };
       }
 
       // Calculate top & bottom padding for dimensions
@@ -139,7 +143,7 @@ export default (store) => (props) => {
         style[borderProperty('Color')] = borderColor;
       }
 
-      this.style = style;
+      return style;
     }
 
     getDimensionTotal() {
@@ -193,26 +197,16 @@ export default (store) => (props) => {
       return false;
     };
 
-    addItems = (newItem) => {
-      const state = store.getState();
+    setItems = (newItems) => {
+      // Ensure newItems is always an array, even if it's a single item
+      const itemsArray = Array.isArray(newItems) ? newItems : [newItems];
 
-      if (Array.isArray(newItem)) {
-        newItem.forEach((item) => {
-          this.addItemsHelper(item);
-        });
-      } else {
-        this.addItemsHelper(newItem);
-      }
+      // Filter out invalid items and add them to the array
+      const itemsToAdd = itemsArray.filter((item) => this.isItemTypeValid(item));
 
-      if (state.viewer.modularHeaders.length) {
-        const modularHeaders = state.viewer.modularHeaders;
-        modularHeaders.forEach((header, index, modularHeaders) => {
-          if (header.dataElement === this.dataElement) {
-            modularHeaders[index].items = this.items;
-          }
-        });
-        store.dispatch(actions.updateModularHeaders(modularHeaders));
-      }
+      this.items = itemsToAdd;
+      // We dispatch the update; if the header is not yet added to the store, it will ignore the action
+      store.dispatch(actions.setModularHeaderItems(this.dataElement, itemsToAdd));
     };
 
     setJustifyContent = (justifyContent) => {

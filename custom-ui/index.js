@@ -81,6 +81,8 @@ Webviewer.WebComponent({
     toolName: Tools.ToolNames.ERASER,
   });
 
+  const formFieldEditButton = new instance.UI.Components.PresetButton({ buttonType: instance.UI.PRESET_BUTTON_TYPES.FORM_FIELD_EDIT });
+
   // ** Annotate Tools ** //
   const underlineToolButton = new instance.UI.Components.ToolButton({
     dataElement: 'underlineToolButton',
@@ -217,6 +219,38 @@ Webviewer.WebComponent({
     toolName: Tools.ToolNames.CROP,
   });
 
+  // ** Form Tools ** //
+  const signatureFieldButton = new instance.UI.Components.ToolButton({
+    dataElement: 'signatureFieldButton',
+    toolName: Tools.ToolNames.SIG_FORM_FIELD,
+  });
+
+  const textFieldButton = new instance.UI.Components.ToolButton({
+    dataElement: 'textFieldButton',
+    toolName: Tools.ToolNames.TEXT_FORM_FIELD,
+  });
+
+  const checkboxFieldButton = new instance.UI.Components.ToolButton({
+    dataElement: 'checkboxFieldButton',
+    toolName: Tools.ToolNames.CHECK_BOX_FIELD,
+  });
+
+  const radioFieldButton = new instance.UI.Components.ToolButton({
+    dataElement: 'radioFieldButton',
+    toolName: Tools.ToolNames.RADIO_FORM_FIELD,
+  });
+
+  const listBoxFieldButton = new instance.UI.Components.ToolButton({
+    dataElement: 'listBoxFieldButton',
+    toolName: Tools.ToolNames.LIST_BOX_FIELD,
+  });
+
+  const comboBoxFieldButton = new instance.UI.Components.ToolButton({
+    dataElement: 'comboBoxFieldButton',
+    toolName: Tools.ToolNames.COMBO_BOX_FIELD,
+  });
+
+
   // ** Grouped Items ** //
 
   // This group is made up of the style panel, undo, redo, and eraser
@@ -286,6 +320,23 @@ Webviewer.WebComponent({
       cloudyRectangularAreaMeasurementToolButton,
       countMeasurementToolButton,
       defaultAnnotationUtilities,
+    ],
+  });
+
+  const formsGroupedItems = new instance.UI.Components.GroupedItems({
+    dataElement: 'formsGroupedItems',
+    items: [
+      signatureFieldButton,
+      textFieldButton,
+      freeTextToolButton,
+      checkboxFieldButton,
+      radioFieldButton,
+      listBoxFieldButton,
+      comboBoxFieldButton,
+      createDivider(),
+      formFieldEditButton,
+      createDivider(),
+      stylePanelToggle,
     ],
   });
 
@@ -371,7 +422,7 @@ Webviewer.WebComponent({
     title: 'Annotate',
     toolbarGroup: 'toolbarGroup-Annotate',
     type: 'ribbonItem',
-    groupedItems: [annotateGroupedItems]
+    groupedItems: ['annotateGroupedItems']
   });
 
   const shapesRibbomItem = new instance.UI.Components.RibbonItem({
@@ -380,7 +431,7 @@ Webviewer.WebComponent({
     title: 'Shapes',
     toolbarGroup: 'toolbarGroup-Shapes',
     type: 'ribbonItem',
-    groupedItems: [shapesGroupedItems]
+    groupedItems: ['shapesGroupedItems']
   });
 
   const insertRibbonItem = new instance.UI.Components.RibbonItem({
@@ -388,7 +439,7 @@ Webviewer.WebComponent({
     label: 'Insert',
     title: 'Insert',
     toolbarGroup: 'toolbarGroup-Insert',
-    groupedItems: [insertGroupedItems]
+    groupedItems: ['insertGroupedItems']
   });
 
   const measureRibbonItem = new instance.UI.Components.RibbonItem({
@@ -396,7 +447,7 @@ Webviewer.WebComponent({
     label: 'Measure',
     title: 'Measure',
     toolbarGroup: 'toolbarGroup-Measure',
-    groupedItems: [measureGroupedItems]
+    groupedItems: ['measureGroupedItems']
   });
 
   const redactionRibbonItem = new instance.UI.Components.RibbonItem({
@@ -404,7 +455,7 @@ Webviewer.WebComponent({
     label: 'Redact',
     title: 'Redact',
     toolbarGroup: 'toolbarGroup-Redact',
-    groupedItems: [redactionGroupedItems]
+    groupedItems: ['redactionGroupedItems']
   });
 
   const editRibbonItem = new instance.UI.Components.RibbonItem({
@@ -412,7 +463,7 @@ Webviewer.WebComponent({
     label: 'Edit',
     title: 'Edit',
     toolbarGroup: 'toolbarGroup-Edit',
-    groupedItems: [editGroupedItems]
+    groupedItems: ['editGroupedItems']
   });
 
   const fillAndSignRibbonItem = new instance.UI.Components.RibbonItem({
@@ -420,7 +471,15 @@ Webviewer.WebComponent({
     label: 'Fill and Sign',
     title: 'Fill and Sign',
     toolbarGroup: 'toolbarGroup-FillAndSign',
-    groupedItems: [fillAndSignGroupedItems]
+    groupedItems: ['fillAndSignGroupedItems']
+  });
+
+  const formsRibbonItem = new instance.UI.Components.RibbonItem({
+    dataElement: 'forms-ribbon-item',
+    label: 'Forms',
+    title: 'Forms',
+    toolbarGroup: 'toolbarGroup-Forms',
+    groupedItems: ['formsGroupedItems']
   });
 
   // Ribbon Group
@@ -439,6 +498,7 @@ Webviewer.WebComponent({
       measureRibbonItem,
       editRibbonItem,
       fillAndSignRibbonItem,
+      formsRibbonItem,
     ],
   });
 
@@ -488,6 +548,7 @@ Webviewer.WebComponent({
       measureGroupedItems,
       editGroupedItems,
       fillAndSignGroupedItems,
+      formsGroupedItems,
     ],
   });
 
@@ -506,7 +567,7 @@ Webviewer.WebComponent({
       padding: '8px',
     }
   });
-  bottomHeader.addItems([pageNavigationTool]);
+  bottomHeader.setItems([pageNavigationTool]);
 
   instance.UI.addModularHeaders([
     primaryHeader,
