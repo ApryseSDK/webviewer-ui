@@ -59,6 +59,7 @@ export default (store) => (props) => {
     validateStyle = (userDefinedStyle) => {
       checkTypes([userDefinedStyle], [TYPES.OPTIONAL([TYPES.OBJECT({
         padding: TYPES.OPTIONAL(TYPES.NUMBER),
+        border: TYPES.OPTIONAL(TYPES.STRING),
         borderColor: TYPES.OPTIONAL(TYPES.STRING),
         borderWidth: TYPES.OPTIONAL(TYPES.STRING),
         borderStyle: TYPES.OPTIONAL(TYPES.STRING),
@@ -74,10 +75,25 @@ export default (store) => (props) => {
 
       const {
         padding,
+        border,
+      } = userDefinedStyle;
+
+      let {
         borderColor = DEFAULT_STYLES.BORDER_COLOR,
         borderWidth = DEFAULT_STYLES.WIDTH,
         borderStyle = DEFAULT_STYLES.BORDER_STYLE,
       } = userDefinedStyle;
+
+      if (border) {
+        const borderParts = border.split(' ');
+        if (borderParts.length === 3) {
+          [borderWidth, borderStyle, borderColor] = borderParts;
+        } else if (borderParts.length === 2) {
+          [borderWidth, borderStyle] = borderParts;
+        } else if (borderParts.length === 1) {
+          [borderWidth] = borderParts;
+        }
+      }
 
       if (!padding) {
         return { ...userDefinedStyle };
