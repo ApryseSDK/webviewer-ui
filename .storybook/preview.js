@@ -555,3 +555,46 @@ distanceMeasurement.IT = 'LineDimension';
 distanceMeasurement.getStatus = () => null;
 distanceMeasurement.StrokeColor = new window.Core.Annotations.Color(255, 0, 0);
 distanceMeasurement.Measure = {};
+
+const viewports = {
+  Mobile: {
+    name: 'Mobile',
+    styles: {
+      width: '360px',
+      height: '800px',
+    },
+    type: 'mobile',
+  },
+  Responsive: {
+    name: 'Responsive',
+    styles: {
+      width: '100%',
+      height: '100%',
+    },
+    type: 'desktop',
+  },
+};
+window.storybook = {};
+window.storybook.viewports = viewports;
+window.storybook.MobileParameters = {
+  viewport: {
+    viewports,
+    defaultViewport: 'Mobile',
+  },
+  chromatic: {
+    modes: {
+      mobile: {
+        viewport: 'Mobile',
+      }
+    }
+  },
+};
+
+export default {
+  parameters: {
+    viewport: {
+      viewports,
+      defaultViewport: 'Responsive',
+    }
+  }
+};
