@@ -229,12 +229,11 @@ const ContextMenuPopup = ({
                     dataElement={DataElements.OFFICE_EDITOR_DELETE_COLUMN}
                     onClick={() => core.getOfficeEditor().removeColumns()}
                   />
-                  {/* <OfficeActionItem
+                  <OfficeActionItem
                     title="officeEditor.deleteTable"
                     dataElement={DataElements.OFFICE_EDITOR_DELETE_TABLE}
-                    onClick={() => { }}
-                    disabled={false}
-                  /> */}
+                    onClick={() => core.getOfficeEditor().removeTable()}
+                  />
                 </>
               )}
             </>
