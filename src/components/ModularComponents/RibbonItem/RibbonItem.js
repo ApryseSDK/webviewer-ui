@@ -11,7 +11,7 @@ import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivnessHelper';
 import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
-
+import core from 'core';
 
 const RibbonItem = (props) => {
   const elementRef = useRef();
@@ -46,9 +46,9 @@ const RibbonItem = (props) => {
 
   useEffect(() => {
     if (currentToolbarGroup === toolbarGroup) {
-      dispatch(actions.setCustomRibbon(toolbarGroup));
-      const activeGroups = groupedItems.map((item) => item?.dataElement);
-      dispatch(actions.setCurrentGroupedItem(activeGroups));
+      dispatch(actions.setCurrentGroupedItem(groupedItems));
+      // TODO: Commenting out the last selected tool feature as it needs to be rewritten for a normalized structure
+      // dispatch(actions.setCustomRibbon(toolbarGroup));
     }
   }, []);
 
@@ -56,9 +56,13 @@ const RibbonItem = (props) => {
 
   const onClick = () => {
     if (!isActive) {
-      dispatch(actions.setCustomRibbon(toolbarGroup));
-      const activeGroups = groupedItems.map((item) => item?.dataElement);
-      dispatch(actions.setCurrentGroupedItem(activeGroups));
+      dispatch(actions.setToolbarGroup(toolbarGroup));
+      dispatch(actions.setCurrentGroupedItem(groupedItems));
+      if (groupedItems.length < 1) {
+        core.getFormFieldCreationManager().endFormFieldCreationMode();
+      }
+      // TODO: Commenting out the last selected tool feature as it needs to be rewritten for a normalized structure
+      // dispatch(actions.setCustomRibbon(toolbarGroup));
     }
   };
 

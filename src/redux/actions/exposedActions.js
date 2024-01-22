@@ -1,7 +1,6 @@
 import core from 'core';
 import isDataElementLeftPanel from 'helpers/isDataElementLeftPanel';
 import fireEvent from 'helpers/fireEvent';
-import { getAllPanels } from 'helpers/getElements';
 import { getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
 import { disableElements, enableElements, setActiveFlyout } from 'actions/internalActions';
 import defaultTool from 'constants/defaultTool';
@@ -11,6 +10,8 @@ import { getCustomFlxPanels } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
 import pick from 'lodash/pick';
 import { v4 as uuidv4 } from 'uuid';
+import selectors from 'selectors';
+import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
 
 export const setDefaultPrintMargins = (margins) => ({
   type: 'SET_DEFAULT_PRINT_MARGINS',
@@ -149,9 +150,14 @@ export const enableRibbons = () => (dispatch, getState) => {
   // the active toolbarGroup as what is in the current state and Forms, as redux hasnt dispatched the update to the Forms tool bar yet.
   // We double check here if we are in form mode and set the correct tool bar group
   // We enable ribbons when going into form mode, as we temporarily elevate the user's permissions
+  const featureFlags = selectors.getFeatureFlags(getState());
+  const { customizableUI } = featureFlags;
+
   const isInFormFieldCreationMode = core.getFormFieldCreationManager().isInFormFieldCreationMode();
-  const toolbarGroup = isInFormFieldCreationMode ? 'toolbarGroup-Forms' : state.viewer.toolbarGroup;
-  dispatch(setToolbarGroup(toolbarGroup || 'toolbarGroup-Annotate'));
+  const toolbarGroup = isInFormFieldCreationMode ? DataElements.FORMS_TOOLBAR_GROUP : state.viewer.toolbarGroup;
+  if (!customizableUI) {
+    dispatch(setToolbarGroup(toolbarGroup || DataElements.ANNOTATE_TOOLBAR_GROUP));
+  }
   const toolbarGroupsToEnable = Object.keys(state.viewer.headers).filter((key) => key.includes('toolbarGroup-'));
 
   enableElements(toolbarGroupsToEnable, PRIORITY_TWO)(dispatch, getState);
@@ -327,6 +333,11 @@ export const setSelectedDisplayedInitialsIndex = (index) => ({
   payload: { index },
 });
 
+export const setSelectedSignature = (signature) => ({
+  type: 'SET_SELECTED_SIGNATURE',
+  payload: { signature },
+});
+
 export const setLeftPanelWidth = (width) => ({
   type: 'SET_LEFT_PANEL_WIDTH',
   payload: { width },
@@ -466,7 +477,8 @@ export const openElement = (dataElement) => (dispatch, getState) => {
   const flexPanel = state.viewer.customFlxPanels.find((item) => dataElement === item.dataElement);
   if (flexPanel?.location === 'left' || flexPanel?.location === 'right') {
     const keys = flexPanel.location === 'left' ? ['leftPanel'] : [...rightPanelList];
-    getAllPanels(flexPanel.location).forEach((item) => keys.push(item.dataset.element));
+    const flexPanelsInSameLocation = state.viewer.customFlxPanels.filter((item) => item.location === flexPanel?.location && item.dataElement !== flexPanel?.dataElement);
+    flexPanelsInSameLocation.forEach((item) => keys.push(item.dataElement));
     dispatch(closeElements(keys));
   }
 
@@ -653,6 +665,9 @@ const prepareModularHeaders = (headersList, existingComponentsMap = {}) => {
 export const addModularHeaders = (headersList) => (dispatch, getState) => {
   const existingComponentsMap = getState().viewer.modularComponents;
   const { headersMap, componentsMap } = prepareModularHeaders(headersList, existingComponentsMap);
+
+  checkFeaturesToEnable(componentsMap);
+
   dispatch({
     type: 'ADD_MODULAR_HEADERS_AND_COMPONENTS',
     payload: { headersMap, componentsMap }
