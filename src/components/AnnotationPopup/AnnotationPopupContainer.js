@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
+import { throttle } from 'lodash';
 
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
@@ -120,6 +121,7 @@ const AnnotationPopupContainer = ({
   const isNotesPanelOpenOrActive = isNotesPanelOpen
     || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel')
     || isAnyCustomPanelOpen;
+  const sixtyFramesPerSecondIncrement = 16;
   // on tablet, the behaviour will be like on desktop, including being draggable
 
   const { customizableUI } = featureFlags;
@@ -160,6 +162,20 @@ const AnnotationPopupContainer = ({
       setPosition(getAnnotationPopupPositionBasedOn(focusedAnnotation, popupRef, activeDocumentViewerKey));
     }
   };
+
+  const handleResize = throttle(() => {
+    if (AnnotationPopupContainer) {
+      setPopupPosition();
+    }
+  }, sixtyFramesPerSecondIncrement);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // useLayoutEffect here to avoid flashing issue when popup is close and open on scroll
   useLayoutEffect(() => {
@@ -284,7 +300,7 @@ const AnnotationPopupContainer = ({
   const showEditStyleButton = (
     canModify
     && hasStyle
-    && !isAnnotationStylePopupDisabled
+    && (!isAnnotationStylePopupDisabled || customizableUI)
     && (!multipleAnnotationsSelected || canUngroup || (multipleAnnotationsSelected && !isFocusedAnnotationSelected))
     && !toolsWithNoStyling.includes(focusedAnnotation.ToolName)
     && !(focusedAnnotation instanceof Annotations.Model3DAnnotation)
