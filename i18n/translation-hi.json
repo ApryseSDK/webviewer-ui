@@ -82,6 +82,7 @@
     "exit": "बाहर जाएं",
     "addOption": "विकल्प जोड़ें",
     "formFieldEdit": "प्रपत्र फ़ील्ड संपादित करें",
+    "formFieldEditMode": "प्रपत्र फ़ील्ड संपादित करें",
     "viewShortCutKeysFor3D": "शॉर्टकट कुंजियाँ देखें",
     "markAllRead": "सभी को पढ़ा हुआ मार्क करें",
     "pageInsertion": "पृष्ठ प्रविष्टि",
@@ -811,7 +812,7 @@
     "select": "(Esc)",
     "signature": "(एस)",
     "squiggly": "(जी)",
-    "image": "(मैं)",
+    "image": "(I)",
     "redo": "(Ctrl शिफ्ट जेड)",
     "redo_windows": "(Ctrl वाई)",
     "undo": "(Ctrl जेड)",
@@ -1287,6 +1288,7 @@
       "customColors": "रीति रिवाजों के रंग"
     },
     "addColorToCustom": "कस्टम रंगों में जोड़ें",
-    "noToolSelected": "टूल गुण देखने के लिए एक टूल चुनें"
+    "noToolSelected": "टूल गुण देखने के लिए एक टूल चुनें",
+    "noToolStyle": "टूल में कोई स्टाइलिंग गुण नहीं हैं."
   }
 }

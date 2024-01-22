@@ -82,6 +82,7 @@
     "exit": "çıkış",
     "addOption": "Seçenek Ekle",
     "formFieldEdit": "Form Alanını Düzenle",
+    "formFieldEditMode": "Form Alanlarını Düzenle",
     "viewShortCutKeysFor3D": "Kısayol Tuşlarını Görüntüle",
     "markAllRead": "Tümünü okundu olarak işaretle",
     "pageInsertion": "Sayfa Ekleme",
@@ -811,7 +812,7 @@
     "select": "(ESC)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(İ)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Özel renkler"
     },
     "addColorToCustom": "Özel renklere ekle",
-    "noToolSelected": "Araç özelliklerini görüntülemek için bir araç seçin"
+    "noToolSelected": "Araç özelliklerini görüntülemek için bir araç seçin",
+    "noToolStyle": "Araç herhangi bir stil özelliği içermiyor."
   }
 }

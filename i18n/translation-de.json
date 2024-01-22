@@ -82,6 +82,7 @@
     "exit": "Ausgang",
     "addOption": "Option hinzufügen",
     "formFieldEdit": "Formularfeld bearbeiten",
+    "formFieldEditMode": "Formularfelder bearbeiten",
     "viewShortCutKeysFor3D": "Tastenkombinationen für 3D anzeigen",
     "markAllRead": "Als Gelesen markieren",
     "pageInsertion": "Seiteneinfügung",
@@ -130,7 +131,7 @@
     "arc": "Bogen",
     "arcMeasurement": "Gradmessung",
     "arrow": "Pfeil",
-    "callout": "Callout",
+    "callout": "Textlegende",
     "crop": "Seite zuschneiden",
     "caret": "Caret",
     "dateFreeText": "Kalender",
@@ -317,7 +318,7 @@
       "ellipse": "Ellipse",
       "fileattachment": "Dateianhang",
       "freehand": "Freihand",
-      "callout": "Callout",
+      "callout": "Hervorhebung",
       "freetext": "Freier Text",
       "line": "Leitung",
       "polygon": "Vieleck",
@@ -811,7 +812,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(ICH)",
+    "image": "(I)",
     "redo": "(Strg-Umschalttaste Z)",
     "redo_windows": "(Strg Y)",
     "undo": "(Strg Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Benutzerdefinierte Farben"
     },
     "addColorToCustom": "Zu benutzerdefinierten Farben hinzufügen",
-    "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen"
+    "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen",
+    "noToolStyle": "Das Tool enthält keine Styling-Eigenschaften."
   }
 }

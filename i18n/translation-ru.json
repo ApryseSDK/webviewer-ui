@@ -82,6 +82,7 @@
     "exit": "Выход",
     "addOption": "Добавить вариант",
     "formFieldEdit": "Изменить поле формы",
+    "formFieldEditMode": "Редактировать поля формы",
     "viewShortCutKeysFor3D": "Просмотр горячих клавиш",
     "markAllRead": "Отметить все как прочитанные",
     "pageInsertion": "Вставка страницы",
@@ -811,7 +812,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(Я)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Пользовательские цвета"
     },
     "addColorToCustom": "Добавить в пользовательские цвета",
-    "noToolSelected": "Выберите инструмент, чтобы просмотреть свойства инструмента"
+    "noToolSelected": "Выберите инструмент, чтобы просмотреть свойства инструмента",
+    "noToolStyle": "Инструмент не содержит никаких свойств стиля."
   }
 }

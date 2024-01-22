@@ -82,6 +82,7 @@
     "exit": "প্রস্থান করুন",
     "addOption": "বিকল্প যোগ করুন",
     "formFieldEdit": "ফর্ম ক্ষেত্র সম্পাদনা করুন",
+    "formFieldEditMode": "ফর্ম ক্ষেত্র সম্পাদনা করুন",
     "viewShortCutKeysFor3D": "শর্টকাট কী দেখুন",
     "markAllRead": "সবগুলো পঠিত বলে সনাক্ত কর",
     "pageInsertion": "পৃষ্ঠা সন্নিবেশ",
@@ -811,7 +812,7 @@
     "select": "(প্রস্থান)",
     "signature": "(এস)",
     "squiggly": "(ছ)",
-    "image": "(আমি)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "কাস্টম রং"
     },
     "addColorToCustom": "কাস্টম রং যোগ করুন",
-    "noToolSelected": "টুল বৈশিষ্ট্য দেখতে একটি টুল নির্বাচন করুন"
+    "noToolSelected": "টুল বৈশিষ্ট্য দেখতে একটি টুল নির্বাচন করুন",
+    "noToolStyle": "টুলে কোনো স্টাইলিং বৈশিষ্ট্য নেই।"
   }
 }

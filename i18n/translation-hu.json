@@ -82,6 +82,7 @@
     "exit": "Kijárat",
     "addOption": "Opció hozzáadása",
     "formFieldEdit": "Űrlapmező szerkesztése",
+    "formFieldEditMode": "Űrlapmezők szerkesztése",
     "viewShortCutKeysFor3D": "Gyorsbillentyűk megtekintése",
     "markAllRead": "összes megjelölése olvasottként",
     "pageInsertion": "Oldal beillesztése",
@@ -811,7 +812,7 @@
     "select": "(Kilépés)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(ÉN)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Egyedi színek"
     },
     "addColorToCustom": "Adjon hozzá egyedi színekhez",
-    "noToolSelected": "Válasszon ki egy eszközt az eszköz tulajdonságainak megtekintéséhez"
+    "noToolSelected": "Válasszon ki egy eszközt az eszköz tulajdonságainak megtekintéséhez",
+    "noToolStyle": "Az eszköz nem tartalmaz stílustulajdonságokat."
   }
 }

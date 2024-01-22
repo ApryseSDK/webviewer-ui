@@ -82,6 +82,7 @@
     "exit": "Utgång",
     "addOption": "Lägg till alternativ",
     "formFieldEdit": "Redigera formulärfält",
+    "formFieldEditMode": "Redigera formulärfält",
     "viewShortCutKeysFor3D": "Visa kortkommandon",
     "markAllRead": "Markera allt som läst",
     "pageInsertion": "Sidinsättning",
@@ -811,7 +812,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(jag)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Anpassade färger"
     },
     "addColorToCustom": "Lägg till anpassade färger",
-    "noToolSelected": "Välj ett verktyg för att se verktygets egenskaper"
+    "noToolSelected": "Välj ett verktyg för att se verktygets egenskaper",
+    "noToolStyle": "Verktyget innehåller inga stylingegenskaper."
   }
 }

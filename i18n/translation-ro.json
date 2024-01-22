@@ -82,6 +82,7 @@
     "exit": "Ieșire",
     "addOption": "Adăugați opțiunea",
     "formFieldEdit": "Editați câmpul formularului",
+    "formFieldEditMode": "Editați câmpurile formularului",
     "viewShortCutKeysFor3D": "Vizualizați tastele de comenzi rapide",
     "markAllRead": "Marcheaza totul ca fiind citit",
     "pageInsertion": "Inserarea paginii",
@@ -811,7 +812,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(eu)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Culori personalizate"
     },
     "addColorToCustom": "Adaugă la culori personalizate",
-    "noToolSelected": "Selectați un instrument pentru a vizualiza proprietățile instrumentului"
+    "noToolSelected": "Selectați un instrument pentru a vizualiza proprietățile instrumentului",
+    "noToolStyle": "Instrumentul nu conține nicio proprietate de stil."
   }
 }

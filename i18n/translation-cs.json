@@ -82,6 +82,7 @@
     "exit": "Výstup",
     "addOption": "Přidat možnost",
     "formFieldEdit": "Upravit pole formuláře",
+    "formFieldEditMode": "Upravit pole formuláře",
     "viewShortCutKeysFor3D": "Zobrazit klávesové zkratky",
     "markAllRead": "označit vše jako přečtené",
     "pageInsertion": "Vkládání stránky",
@@ -811,7 +812,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(já)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Vlastní barvy"
     },
     "addColorToCustom": "Přidat k vlastním barvám",
-    "noToolSelected": "Chcete-li zobrazit vlastnosti nástroje, vyberte nástroj"
+    "noToolSelected": "Chcete-li zobrazit vlastnosti nástroje, vyberte nástroj",
+    "noToolStyle": "Nástroj neobsahuje žádné stylingové vlastnosti."
   }
 }

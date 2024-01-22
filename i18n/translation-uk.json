@@ -82,6 +82,7 @@
     "exit": "Вихід",
     "addOption": "Додати параметр",
     "formFieldEdit": "Редагувати поле форми",
+    "formFieldEditMode": "Редагувати поля форми",
     "viewShortCutKeysFor3D": "Перегляд комбінацій клавіш",
     "markAllRead": "Позначити все як прочитане",
     "pageInsertion": "Вставка сторінки",
@@ -811,7 +812,7 @@
     "select": "(Вихід)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(я)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Спеціальні кольори"
     },
     "addColorToCustom": "Додати до власних кольорів",
-    "noToolSelected": "Виберіть інструмент, щоб переглянути властивості інструмента"
+    "noToolSelected": "Виберіть інструмент, щоб переглянути властивості інструмента",
+    "noToolStyle": "Інструмент не містить властивостей стилізації."
   }
 }

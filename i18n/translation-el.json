@@ -82,6 +82,7 @@
     "exit": "Εξοδος",
     "addOption": "Προσθήκη Επιλογής",
     "formFieldEdit": "Επεξεργασία πεδίου φόρμας",
+    "formFieldEditMode": "Επεξεργασία πεδίων φόρμας",
     "viewShortCutKeysFor3D": "Προβολή πλήκτρων συντόμευσης",
     "markAllRead": "Επισήμανση όλων ως αναγνωσμένων",
     "pageInsertion": "Εισαγωγή σελίδας",
@@ -811,7 +812,7 @@
     "select": "(Esc)",
     "signature": "(ΜΙΚΡΟ)",
     "squiggly": "(ΣΟΛ)",
-    "image": "(ΕΓΩ)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Προσαρμοσμένα χρώματα"
     },
     "addColorToCustom": "Προσθήκη στα προσαρμοσμένα χρώματα",
-    "noToolSelected": "Επιλέξτε ένα εργαλείο για να δείτε τις ιδιότητες του εργαλείου"
+    "noToolSelected": "Επιλέξτε ένα εργαλείο για να δείτε τις ιδιότητες του εργαλείου",
+    "noToolStyle": "Το εργαλείο δεν περιέχει ιδιότητες styling."
   }
 }

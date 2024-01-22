@@ -82,6 +82,7 @@
     "exit": "Keluar",
     "addOption": "Tambah Pilihan",
     "formFieldEdit": "Edit Medan Borang",
+    "formFieldEditMode": "Edit Medan Borang",
     "viewShortCutKeysFor3D": "Lihat Kekunci Pintasan",
     "markAllRead": "Tandai semua sebagai dibaca",
     "pageInsertion": "Sisipan Halaman",
@@ -811,7 +812,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(saya)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Warna Tersuai"
     },
     "addColorToCustom": "Tambahkan pada warna tersuai",
-    "noToolSelected": "Pilih alat untuk melihat sifat alat"
+    "noToolSelected": "Pilih alat untuk melihat sifat alat",
+    "noToolStyle": "Alat tidak mengandungi sebarang sifat penggayaan."
   }
 }

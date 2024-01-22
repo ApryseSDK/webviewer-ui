@@ -82,6 +82,7 @@
     "exit": "Sortie",
     "addOption": "Ajouter une option",
     "formFieldEdit": "Modifier le champ de formulaire",
+    "formFieldEditMode": "Modifier les champs du formulaire",
     "viewShortCutKeysFor3D": "Afficher les touches de raccourci",
     "markAllRead": "Marquer tout comme lu",
     "pageInsertion": "Insertion de pages",
@@ -811,7 +812,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(JE)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1287,6 +1288,7 @@
       "customColors": "Couleurs personnalisées"
     },
     "addColorToCustom": "Ajouter aux couleurs personnalisées",
-    "noToolSelected": "Sélectionnez un outil pour afficher les propriétés de l'outil"
+    "noToolSelected": "Sélectionnez un outil pour afficher les propriétés de l'outil",
+    "noToolStyle": "L'outil ne contient aucune propriété de style."
   }
 }
