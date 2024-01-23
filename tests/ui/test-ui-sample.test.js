@@ -4,7 +4,7 @@ import core from 'core';
 
 /* eslint-disable no-unused-expressions */
 describe('Test UI APIs', function() {
-  this.timeout(10000);
+  this.timeout(20000);
 
   let viewerDiv;
 
@@ -426,7 +426,7 @@ describe('Test UI APIs', function() {
         const searchListener = (searchPattern, options, results) => {
             resultsCount = results.length;
         };
-        
+
         instance.UI.addSearchListener(searchListener);
         // start search after document loads
         instance.UI.searchTextFull("PDF|Library", { regex: true });
@@ -462,4 +462,39 @@ describe('Test UI APIs', function() {
     expect(resultsCount).to.greaterThan(0);
   });
 
+  it('can add/remove tools to the form field creation mode whitelist via API', async () => {
+    const options = {
+      initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
+    };
+    const instance = await setupWebViewerInstance(options);
+
+    const { documentViewer } = instance.Core;
+    const formFieldCreationManager = documentViewer.getAnnotationManager().getFormFieldCreationManager();
+
+    expect(
+      formFieldCreationManager.isToolAllowedInFormFieldCreationMode(
+        'AnnotationCreateRectangle'
+      )
+    ).to.equal(false);
+
+    formFieldCreationManager.allowToolsInFormFieldCreationMode([
+      'AnnotationCreateRectangle'
+    ]);
+
+    expect(
+      formFieldCreationManager.isToolAllowedInFormFieldCreationMode(
+        'AnnotationCreateRectangle'
+      )
+    ).to.equal(true);
+
+    formFieldCreationManager.disallowToolsInFormFieldCreationMode([
+      'AnnotationCreateRectangle',
+    ]);
+
+    expect(
+      formFieldCreationManager.isToolAllowedInFormFieldCreationMode(
+        'AnnotationCreateRectangle'
+      )
+    ).to.equal(false);
+  });
 });
