@@ -13,7 +13,7 @@ import DataElementWrapper from '../DataElementWrapper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import DataElements from 'constants/dataElement';
 import { PRIORITY_THREE } from 'constants/actionPriority';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import './FormFieldEditPopup.scss';
 
 function FormFieldEditPopupContainer({ annotation }) {
@@ -211,6 +211,18 @@ function FormFieldEditPopupContainer({ annotation }) {
     closeAndReset();
   }, []);
 
+  const onCancelEmptyFieldName = useCallback((placeholderAnnotation) => {
+    const widget = formFieldCreationManager.getWidgetFromPlaceholder(placeholderAnnotation);
+    if (widget) {
+      // Reset name field to widget's original name.
+      onFieldNameChange(widget.getField().name);
+    } else {
+      deleteFormFieldPlaceholder(placeholderAnnotation);
+    }
+
+    closeFormFieldEditPopup();
+  }, []);
+
   const onCloseRadioButtonPopup = useCallback(() => {
     // Add new radio group (if any) to existing radio groups and we were in a valid state
     if (isValid && radioButtonGroups.indexOf(fieldName) === -1 && fieldName !== '') {
@@ -331,7 +343,7 @@ function FormFieldEditPopupContainer({ annotation }) {
       getPageHeight={getPageHeight}
       getPageWidth={getPageWidth}
       indicator={indicator}
-      deleteAnnotation={deleteFormFieldPlaceholder}
+      onCancelEmptyFieldName={onCancelEmptyFieldName}
     />
   );
 
@@ -349,7 +361,7 @@ function FormFieldEditPopupContainer({ annotation }) {
       onSignatureOptionChange={onSignatureOptionChange}
       getSignatureOptionHandler={getSignatureOption}
       indicator={indicator}
-      deleteAnnotation={deleteFormFieldPlaceholder}
+      onCancelEmptyFieldName={onCancelEmptyFieldName}
     />
   );
 
@@ -365,7 +377,7 @@ function FormFieldEditPopupContainer({ annotation }) {
       getPageHeight={getPageHeight}
       getPageWidth={getPageWidth}
       indicator={indicator}
-      deleteAnnotation={deleteFormFieldPlaceholder}
+      onCancelEmptyFieldName={onCancelEmptyFieldName}
     />
   );
 
@@ -383,7 +395,7 @@ function FormFieldEditPopupContainer({ annotation }) {
       getPageHeight={getPageHeight}
       getPageWidth={getPageWidth}
       indicator={indicator}
-      deleteAnnotation={deleteFormFieldPlaceholder}
+      onCancelEmptyFieldName={onCancelEmptyFieldName}
     />
   );
 
@@ -404,7 +416,7 @@ function FormFieldEditPopupContainer({ annotation }) {
         getPageHeight={getPageHeight}
         getPageWidth={getPageWidth}
         indicator={indicator}
-        deleteAnnotation={deleteFormFieldPlaceholder}
+        onCancelEmptyFieldName={onCancelEmptyFieldName}
       />
     );
   };
@@ -426,7 +438,7 @@ function FormFieldEditPopupContainer({ annotation }) {
         getPageHeight={getPageHeight}
         getPageWidth={getPageWidth}
         indicator={indicator}
-        deleteAnnotation={deleteFormFieldPlaceholder}
+        onCancelEmptyFieldName={onCancelEmptyFieldName}
       />
     );
   };

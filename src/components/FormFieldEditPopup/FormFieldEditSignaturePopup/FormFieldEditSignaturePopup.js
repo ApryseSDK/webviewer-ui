@@ -1,30 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
-import Button from '../Button';
+import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
 import { Choice, Input } from '@pdftron/webviewer-react-toolkit';
-import CreatableDropdown from '../CreatableDropdown';
-import FormFieldPopupDimensionsInput from './FormFieldPopupDimensionsInput';
-import HorizontalDivider from '../HorizontalDivider';
+import FormFieldPopupDimensionsInput from '../FormFieldPopupDimensionsInput';
+import FormFieldEditPopupIndicator from '../FormFieldEditPopupIndicator';
+import SignatureOptionsDropdown from './SignatureOptionsDropdown';
+import HorizontalDivider from 'components/HorizontalDivider';
 
-import './FormFieldEditPopup.scss';
-import CreatableList from '../CreatableList';
-import FormFieldEditPopupIndicator from './FormFieldEditPopupIndicator';
+import '../FormFieldEditPopup.scss';
 
-const FormFieldEditPopup = ({
+const FormFieldEditSignaturePopup = ({
   fields,
   flags,
   closeFormFieldEditPopup,
   isValid,
   validationMessage,
-  radioButtonGroups,
-  options,
-  onOptionsChange,
   annotation,
-  selectedRadioGroup,
   getPageHeight,
   getPageWidth,
   redrawAnnotation,
+  onSignatureOptionChange,
+  getSignatureOptionHandler,
   indicator,
   onCancelEmptyFieldName,
 }) => {
@@ -34,37 +31,13 @@ const FormFieldEditPopup = ({
     FormFieldEditPopup: true,
   });
 
-  const [width, setWidth] = useState(annotation.Width.toFixed(0));
-  const [height, setHeight] = useState(annotation.Height.toFixed(0));
+  const [width, setWidth] = useState((annotation.Width).toFixed(0));
+  const [height, setHeight] = useState((annotation.Height).toFixed(0));
 
-  const [initialWidth] = useState(annotation.Width.toFixed(0));
-  const [initialHeight] = useState(annotation.Height.toFixed(0));
-  const popupRef = useRef(null);
+  const [initialWidth] = useState((annotation.Width).toFixed(0));
+  const [initialHeight] = useState((annotation.Height).toFixed(0));
+  const [indicatorPlaceholder, setIndicatorPlaceholder] = useState(t(`formField.formFieldPopup.indicatorPlaceHolders.SignatureFormField.${getSignatureOptionHandler(annotation)}`));
 
-  // If no radio group is yet set, set this as null as the select input will then show the correct prompt
-  const [radioButtonGroup, setRadioButtonGroup] = useState(
-    selectedRadioGroup === '' ? null : { value: selectedRadioGroup, label: selectedRadioGroup },
-  );
-
-  useEffect(() => {
-    // When we open up the popup the async call to set the right radio group may not be finished
-    // we deal with this timing issue by updating state when the prop is refreshed
-    if (selectedRadioGroup !== '') {
-      setRadioButtonGroup({ value: selectedRadioGroup, label: selectedRadioGroup });
-    } else {
-      setRadioButtonGroup(null);
-    }
-  }, [selectedRadioGroup]);
-
-  function onSelectInputChange(field, input) {
-    if (input === null) {
-      field.onChange('');
-      setRadioButtonGroup(null);
-    } else {
-      field.onChange(input.value);
-      setRadioButtonGroup({ value: input.value, label: input.value });
-    }
-  }
 
   function onWidthChange(width) {
     const validatedWidth = validateWidth(width);
@@ -116,15 +89,6 @@ const FormFieldEditPopup = ({
     closeFormFieldEditPopup();
   }
 
-  function renderInput(field) {
-    if (field.type === 'text') {
-      return renderTextInput(field);
-    }
-    if (field.type === 'select') {
-      return renderSelectInput(field);
-    }
-  }
-
   function renderTextInput(field) {
     return (
       <Input
@@ -139,48 +103,25 @@ const FormFieldEditPopup = ({
     );
   }
 
-  function renderSelectInput(field) {
-    const displayRadioGroups = radioButtonGroups.map((group) => ({ value: group, label: group }));
-    return (
-      <>
-        <CreatableDropdown
-          textPlaceholder={t('formField.formFieldPopup.fieldName')}
-          options={displayRadioGroups}
-          onChange={(inputValue) => onSelectInputChange(field, inputValue)}
-          value={radioButtonGroup}
-          isValid={isValid}
-          messageText={t(validationMessage)}
-        />
-        <div className="radio-group-label">{t('formField.formFieldPopup.radioGroups')}</div>
-      </>
-    );
-  }
-
-  function renderListOptions() {
-    return (
-      <div className="field-options-container">
-        {t('formField.formFieldPopup.options')}
-        <CreatableList options={options} onOptionsUpdated={onOptionsChange} popupRef={popupRef}/>
-      </div>
-    );
-  }
-
-  const indicatorPlaceholder = t(`formField.formFieldPopup.indicatorPlaceHolders.${annotation.getFormFieldPlaceholderType()}`);
+  const onOptionChange = (option) => {
+    onSignatureOptionChange(option);
+    const { value } = option;
+    setIndicatorPlaceholder(t(`formField.formFieldPopup.indicatorPlaceHolders.SignatureFormField.${value}`));
+  };
 
   return (
-    <div className={className} ref={popupRef}>
+    <div className={className}>
+      <SignatureOptionsDropdown onChangeHandler={onOptionChange} initialOption={getSignatureOptionHandler(annotation)} />
       <div className="fields-container">
         {fields.map((field) => (
           <div className="field-input" key={field.label}>
             <label>
-              {t(field.label)}
-              {field.required ? '*' : ''}:
+              {t(field.label)}{field.required ? '*' : ''}:
             </label>
-            {renderInput(field)}
+            {renderTextInput(field)}
           </div>
         ))}
       </div>
-      {options && renderListOptions()}
       <div className="field-flags-container">
         <span className="field-flags-title">{t('formField.formFieldPopup.flags')}</span>
         {flags.map((flag) => (
@@ -222,4 +163,4 @@ const FormFieldEditPopup = ({
   );
 };
 
-export default FormFieldEditPopup;
+export default FormFieldEditSignaturePopup;
