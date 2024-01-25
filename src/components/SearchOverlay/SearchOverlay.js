@@ -71,7 +71,7 @@ function SearchOverlay(props) {
       }, waitTime);
     }
 
-    if (isSearchAndReplaceDisabled && isPanelOpen) {
+    if (!isSearchAndReplaceDisabled && !isReplacementRegexValid && isPanelOpen) {
       console.warn('Search and Replace is not supported in this browser');
     }
   }, [isPanelOpen]);
