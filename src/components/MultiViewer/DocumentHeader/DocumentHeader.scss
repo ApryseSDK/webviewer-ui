@@ -34,15 +34,55 @@
   }
 
   .file-name {
-    font-family: var(--font-family);
-    font-size: var(--font-size-medium);
-    align-self: center;
-    margin-left: 17px;
-    color: #333333;
+    margin-left: 15px;
+    display: flex;
+    max-width: 60%;
+
+    span {
+      font-family: var(--font-family);
+      font-size: 16px;
+      color: #333333;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      ;
+    }
   }
 
   .control-buttons {
     display: flex;
     gap: 8px;
+  }
+
+  .current-file {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F1F9F4;
+    border-radius: 12px;
+    padding: 4px 12px;
+
+    span {
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+    }
+  }
+
+  .reference-file {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #EBF1FF;
+    border-radius: 12px;
+    padding: 4px 12px;
+
+    span {
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+    }
   }
 }

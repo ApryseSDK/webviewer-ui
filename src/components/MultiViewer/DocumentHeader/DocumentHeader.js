@@ -54,42 +54,32 @@ const DocumentHeader = ({ documentViewerKey, docLoaded, isSyncing }) => {
       style={{ background: '#DFDFDF' }}
     >
       {/* <ToggleZoomOverlay documentViewerKey={documentViewerKey} /> */}
-      <Button
-        img="icon-sync"
-        onClick={onClickSync}
-        isActive={isSyncing}
-        title={t(`multiViewer.${isSyncing ? 'stop' : 'start'}Sync`)}
-        style={{ marginLeft: 24, marginRight: 16, color: '#333333' }}
-      />
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+      <div>
+        <Button
+          img="icon-sync"
+          onClick={onClickSync}
+          isActive={isSyncing}
+          title={t(`multiViewer.${isSyncing ? 'stop' : 'start'}Sync`)}
+          style={{ marginLeft: 24, marginRight: 16, color: '#333333' }}
+        />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 'calc( 100% - 115px )' }}>
         {documentViewerKey === 1 ? (
-          <p
-            style={{
-              fontSize: 14,
-              fontWeight: 500,
-              background: '#F1F9F4',
-              borderRadius: 12,
-              padding: '4px 12px',
-              color: '#000000',
-            }}
-          >
-            Current File
-          </p>
+          <div className='current-file'>
+            <span>
+              Current File
+            </span>
+          </div>
         ) : (
-          <p
-            style={{
-              fontSize: 14,
-              fontWeight: 500,
-              background: '#EBF1FF',
-              borderRadius: 12,
-              padding: '4px 12px',
-              color: '#000000',
-            }}
-          >
-            Reference File
-          </p>
+          <div className='reference-file'>
+            <span>
+              Reference File
+            </span>
+          </div>
         )}
-        <div className="file-name">{filename}</div>
+        <div title={filename} className="file-name">
+          <span>{filename}</span>
+        </div>
       </div>
       <div className="control-buttons">
         {!saveButtonDisabled && (
