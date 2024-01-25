@@ -82,6 +82,8 @@
     "exit": "Exit",
     "addOption": "Add Option",
     "formFieldEdit": "Edit Form Field",
+    "formFieldEditMode": "Edit Form Fields",
+    "contentEditMode": "Edit Content",
     "viewShortCutKeysFor3D": "View Shortcut Keys",
     "markAllRead": "Mark all as read",
     "pageInsertion": "Page Insertion",
@@ -1284,9 +1286,24 @@
       "tool": "Tool",
       "textStyles": "Text Styles",
       "currentColor": "Current Color",
-      "customColors": "Custom Colors"
+      "customColors": "Custom Colors",
+      "redactionTextLabel": "Text Label",
+      "redactionMarkOutline": "Mark Outline",
+      "redactionFill": "Redaction Color",
+      "redactionTextPlaceholder": "Insert text label",
+      "contentEdit": "Content Edit"
     },
     "addColorToCustom": "Add to custom colors",
-    "noToolSelected": "Select a tool to view tool properties"
+    "noToolSelected": "Select a tool to view tool properties",
+    "noToolStyle": "Tool does not contain any styling properties."
+  },
+  "signatureListPanel": {
+    "header": "Signature List",
+    "newSignature": "New Signature",
+    "newSignatureAndInitial": "Create New Signature & Initials",
+    "signatureList": {
+      "signature": "Signature",
+      "initials": "Initials"
+    }
   }
 }

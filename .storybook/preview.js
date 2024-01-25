@@ -228,6 +228,7 @@ window.Core = {
   ContentEdit: {
     addEventListener: noop,
     removeEventListener: noop,
+    getContentEditingFonts: noop,
   },
   annotationManager: mockAnnotationManager,
   AnnotationManager: mockAnnotationManager,
@@ -314,6 +315,7 @@ window.Core = {
     PerimeterMeasurementCreateTool: MockTool,
     RectangularAreaMeasurementCreateTool: MockTool,
     CloudyRectangularAreaMeasurementCreateTool: MockTool,
+    RedactionCreateTool: MockTool,
   },
   getHashParameter: (hashParameter, defaultValue) => {
     if (hashParameter === 'a') {

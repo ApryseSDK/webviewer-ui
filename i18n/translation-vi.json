@@ -82,6 +82,8 @@
     "exit": "Thoát",
     "addOption": "Thêm Tùy Chọn",
     "formFieldEdit": "Chỉnh Sửa Trường Biểu Mẫu",
+    "formFieldEditMode": "Chỉnh sửa trường biểu mẫu",
+    "contentEditMode": "Chỉnh sửa nội dung",
     "viewShortCutKeysFor3D": "Xem Phím Tắt",
     "markAllRead": "Đánh dấu tất cả là đọc",
     "pageInsertion": "Chèn trang",
@@ -1284,9 +1286,24 @@
       "tool": "Dụng cụ",
       "textStyles": "Kiểu văn bản",
       "currentColor": "Màu hiện tại",
-      "customColors": "Màu sắc tùy chỉnh"
+      "customColors": "Màu sắc tùy chỉnh",
+      "redactionTextLabel": "Nhãn văn bản",
+      "redactionMarkOutline": "Đánh dấu phác thảo",
+      "redactionFill": "Màu biên tập",
+      "redactionTextPlaceholder": "Chèn nhãn văn bản",
+      "contentEdit": "Chỉnh sửa nội dung"
     },
     "addColorToCustom": "Thêm vào màu tùy chỉnh",
-    "noToolSelected": "Chọn một công cụ để xem thuộc tính công cụ"
+    "noToolSelected": "Chọn một công cụ để xem thuộc tính công cụ",
+    "noToolStyle": "Công cụ không chứa bất kỳ thuộc tính tạo kiểu nào."
+  },
+  "signatureListPanel": {
+    "header": "Danh sách chữ ký",
+    "newSignature": "Chữ ký mới",
+    "newSignatureAndInitial": "Chữ ký mới & Tên viết tắt",
+    "signatureList": {
+      "signature": "Chữ ký",
+      "initials": "Tên viết tắt"
+    }
   }
 }

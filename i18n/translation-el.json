@@ -83,6 +83,7 @@
     "addOption": "Προσθήκη Επιλογής",
     "formFieldEdit": "Επεξεργασία πεδίου φόρμας",
     "formFieldEditMode": "Επεξεργασία πεδίων φόρμας",
+    "contentEditMode": "Επεξεργασία Περιεχομένου",
     "viewShortCutKeysFor3D": "Προβολή πλήκτρων συντόμευσης",
     "markAllRead": "Επισήμανση όλων ως αναγνωσμένων",
     "pageInsertion": "Εισαγωγή σελίδας",
@@ -1285,10 +1286,24 @@
       "tool": "Εργαλείο",
       "textStyles": "Στυλ κειμένου",
       "currentColor": "Τρέχον χρώμα",
-      "customColors": "Προσαρμοσμένα χρώματα"
+      "customColors": "Προσαρμοσμένα χρώματα",
+      "redactionTextLabel": "Ετικέτα κειμένου",
+      "redactionMarkOutline": "Σημειώστε το περίγραμμα",
+      "redactionFill": "Χρώμα επεξεργασίας",
+      "redactionTextPlaceholder": "Εισαγωγή ετικέτας κειμένου",
+      "contentEdit": "Επεξεργασία περιεχομένου"
     },
     "addColorToCustom": "Προσθήκη στα προσαρμοσμένα χρώματα",
     "noToolSelected": "Επιλέξτε ένα εργαλείο για να δείτε τις ιδιότητες του εργαλείου",
     "noToolStyle": "Το εργαλείο δεν περιέχει ιδιότητες styling."
+  },
+  "signatureListPanel": {
+    "header": "Λίστα υπογραφών",
+    "newSignature": "Νέα υπογραφή",
+    "newSignatureAndInitial": "Νέα Υπογραφή & Αρχικό",
+    "signatureList": {
+      "signature": "Υπογραφή",
+      "initials": "Αρχικά"
+    }
   }
 }

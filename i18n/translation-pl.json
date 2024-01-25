@@ -82,6 +82,8 @@
     "exit": "Wyjdź",
     "addOption": "Dodaj opcję",
     "formFieldEdit": "Edytuj pole formularza",
+    "formFieldEditMode": "Edytuj pola formularza",
+    "contentEditMode": "Edytuj treść",
     "viewShortCutKeysFor3D": "Wyświetl klawisze skrótów",
     "markAllRead": "Oznacz wszystkie jako przeczytane",
     "pageInsertion": "Wstawianie strony",
@@ -1284,9 +1286,24 @@
       "tool": "Narzędzie",
       "textStyles": "Style tekstu",
       "currentColor": "Aktualny kolor",
-      "customColors": "Niestandardowe kolory"
+      "customColors": "Niestandardowe kolory",
+      "redactionTextLabel": "Etykieta tekstowa",
+      "redactionMarkOutline": "Zarys Marka",
+      "redactionFill": "Kolor redakcji",
+      "redactionTextPlaceholder": "Wstaw etykietę tekstową",
+      "contentEdit": "Edycja treści"
     },
     "addColorToCustom": "Dodaj do niestandardowych kolorów",
-    "noToolSelected": "Wybierz narzędzie, aby wyświetlić właściwości narzędzia"
+    "noToolSelected": "Wybierz narzędzie, aby wyświetlić właściwości narzędzia",
+    "noToolStyle": "Narzędzie nie zawiera żadnych właściwości stylizacji."
+  },
+  "signatureListPanel": {
+    "header": "Lista podpisów",
+    "newSignature": "Nowy podpis",
+    "newSignatureAndInitial": "Nowy podpis i inicjał",
+    "signatureList": {
+      "signature": "Podpis",
+      "initials": "Inicjały"
+    }
   }
 }

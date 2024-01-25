@@ -83,6 +83,7 @@
     "addOption": "বিকল্প যোগ করুন",
     "formFieldEdit": "ফর্ম ক্ষেত্র সম্পাদনা করুন",
     "formFieldEditMode": "ফর্ম ক্ষেত্র সম্পাদনা করুন",
+    "contentEditMode": "বিষয়বস্তু সম্পাদনা করুন",
     "viewShortCutKeysFor3D": "শর্টকাট কী দেখুন",
     "markAllRead": "সবগুলো পঠিত বলে সনাক্ত কর",
     "pageInsertion": "পৃষ্ঠা সন্নিবেশ",
@@ -1285,10 +1286,24 @@
       "tool": "টুল",
       "textStyles": "পাঠ্য শৈলী",
       "currentColor": "বর্তমান রঙ",
-      "customColors": "কাস্টম রং"
+      "customColors": "কাস্টম রং",
+      "redactionTextLabel": "টেক্সট লেবেল",
+      "redactionMarkOutline": "আউটলাইন চিহ্নিত করুন",
+      "redactionFill": "রিডাকশন কালার",
+      "redactionTextPlaceholder": "টেক্সট লেবেল ঢোকান",
+      "contentEdit": "বিষয়বস্তু সম্পাদনা"
     },
     "addColorToCustom": "কাস্টম রং যোগ করুন",
     "noToolSelected": "টুল বৈশিষ্ট্য দেখতে একটি টুল নির্বাচন করুন",
     "noToolStyle": "টুলে কোনো স্টাইলিং বৈশিষ্ট্য নেই।"
+  },
+  "signatureListPanel": {
+    "header": "স্বাক্ষর তালিকা",
+    "newSignature": "নতুন স্বাক্ষর",
+    "newSignatureAndInitial": "নতুন স্বাক্ষর এবং প্রাথমিক",
+    "signatureList": {
+      "signature": "স্বাক্ষর",
+      "initials": "আদ্যক্ষর"
+    }
   }
 }

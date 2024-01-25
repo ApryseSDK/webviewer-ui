@@ -83,6 +83,7 @@
     "addOption": "Adăugați opțiunea",
     "formFieldEdit": "Editați câmpul formularului",
     "formFieldEditMode": "Editați câmpurile formularului",
+    "contentEditMode": "Editați conținutul",
     "viewShortCutKeysFor3D": "Vizualizați tastele de comenzi rapide",
     "markAllRead": "Marcheaza totul ca fiind citit",
     "pageInsertion": "Inserarea paginii",
@@ -1285,10 +1286,24 @@
       "tool": "Instrument",
       "textStyles": "Stiluri de text",
       "currentColor": "Culoare curentă",
-      "customColors": "Culori personalizate"
+      "customColors": "Culori personalizate",
+      "redactionTextLabel": "Etichetă text",
+      "redactionMarkOutline": "Mark Outline",
+      "redactionFill": "Culoare de redactare",
+      "redactionTextPlaceholder": "Introduceți eticheta text",
+      "contentEdit": "Editare conținut"
     },
     "addColorToCustom": "Adaugă la culori personalizate",
     "noToolSelected": "Selectați un instrument pentru a vizualiza proprietățile instrumentului",
     "noToolStyle": "Instrumentul nu conține nicio proprietate de stil."
+  },
+  "signatureListPanel": {
+    "header": "Lista de semnături",
+    "newSignature": "Semnătura nouă",
+    "newSignatureAndInitial": "Semnătură și inițială nouă",
+    "signatureList": {
+      "signature": "Semnătură",
+      "initials": "Inițiale"
+    }
   }
 }

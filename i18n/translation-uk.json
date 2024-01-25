@@ -83,6 +83,7 @@
     "addOption": "Додати параметр",
     "formFieldEdit": "Редагувати поле форми",
     "formFieldEditMode": "Редагувати поля форми",
+    "contentEditMode": "Редагувати вміст",
     "viewShortCutKeysFor3D": "Перегляд комбінацій клавіш",
     "markAllRead": "Позначити все як прочитане",
     "pageInsertion": "Вставка сторінки",
@@ -1285,10 +1286,24 @@
       "tool": "Інструмент",
       "textStyles": "Стилі тексту",
       "currentColor": "Поточний колір",
-      "customColors": "Спеціальні кольори"
+      "customColors": "Спеціальні кольори",
+      "redactionTextLabel": "Текстова мітка",
+      "redactionMarkOutline": "Позначте контур",
+      "redactionFill": "Колір редакції",
+      "redactionTextPlaceholder": "Вставити текстову мітку",
+      "contentEdit": "Редагування вмісту"
     },
     "addColorToCustom": "Додати до власних кольорів",
     "noToolSelected": "Виберіть інструмент, щоб переглянути властивості інструмента",
     "noToolStyle": "Інструмент не містить властивостей стилізації."
+  },
+  "signatureListPanel": {
+    "header": "Підписний лист",
+    "newSignature": "Новий підпис",
+    "newSignatureAndInitial": "Новий підпис та ініціал",
+    "signatureList": {
+      "signature": "Підпис",
+      "initials": "Ініціали"
+    }
   }
 }

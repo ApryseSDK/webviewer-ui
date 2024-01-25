@@ -83,6 +83,7 @@
     "addOption": "เพิ่มตัวเลือก",
     "formFieldEdit": "แก้ไขแบบฟอร์มฟิลด์",
     "formFieldEditMode": "แก้ไขฟิลด์แบบฟอร์ม",
+    "contentEditMode": "แก้ไขเนื้อหา",
     "viewShortCutKeysFor3D": "ดูปุ่มลัด",
     "markAllRead": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว",
     "pageInsertion": "การแทรกหน้า",
@@ -1285,10 +1286,24 @@
       "tool": "เครื่องมือ",
       "textStyles": "ลักษณะข้อความ",
       "currentColor": "สีปัจจุบัน",
-      "customColors": "สีที่กำหนดเอง"
+      "customColors": "สีที่กำหนดเอง",
+      "redactionTextLabel": "ป้ายข้อความ",
+      "redactionMarkOutline": "ทำเครื่องหมายโครงร่าง",
+      "redactionFill": "สีปฏิกิริยา",
+      "redactionTextPlaceholder": "ใส่ป้ายกำกับข้อความ",
+      "contentEdit": "แก้ไขเนื้อหา"
     },
     "addColorToCustom": "เพิ่มลงในสีที่กำหนดเอง",
     "noToolSelected": "เลือกเครื่องมือเพื่อดูคุณสมบัติของเครื่องมือ",
     "noToolStyle": "เครื่องมือไม่มีคุณสมบัติการจัดรูปแบบใดๆ"
+  },
+  "signatureListPanel": {
+    "header": "รายการลายเซ็น",
+    "newSignature": "ลายเซ็นใหม่",
+    "newSignatureAndInitial": "ลายเซ็นใหม่และชื่อย่อใหม่",
+    "signatureList": {
+      "signature": "ลายเซ็น",
+      "initials": "ชื่อย่อ"
+    }
   }
 }

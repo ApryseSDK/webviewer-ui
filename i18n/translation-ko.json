@@ -83,6 +83,7 @@
     "addOption": "옵션추가",
     "formFieldEdit": "폼편집",
     "formFieldEditMode": "양식 필드 편집",
+    "contentEditMode": "콘텐츠 편집",
     "viewShortCutKeysFor3D": "3D 단축키 보기",
     "markAllRead": "모두 읽은상태로 표시",
     "pageInsertion": "페이지 삽입",
@@ -1285,10 +1286,24 @@
       "tool": "도구",
       "textStyles": "텍스트 스타일",
       "currentColor": "현재 색상",
-      "customColors": "사용자 정의 색상"
+      "customColors": "사용자 정의 색상",
+      "redactionTextLabel": "텍스트 라벨",
+      "redactionMarkOutline": "마크 아웃라인",
+      "redactionFill": "교정 색상",
+      "redactionTextPlaceholder": "텍스트 라벨 삽입",
+      "contentEdit": "내용 편집"
     },
     "addColorToCustom": "사용자 정의 색상에 추가",
     "noToolSelected": "도구 속성을 보려면 도구를 선택하세요.",
     "noToolStyle": "도구에는 스타일 속성이 포함되어 있지 않습니다."
+  },
+  "signatureListPanel": {
+    "header": "서명 목록",
+    "newSignature": "새로운 서명",
+    "newSignatureAndInitial": "새 서명 및 이니셜",
+    "signatureList": {
+      "signature": "서명",
+      "initials": "머리 글자"
+    }
   }
 }

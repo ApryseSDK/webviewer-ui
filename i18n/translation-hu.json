@@ -83,6 +83,7 @@
     "addOption": "Opció hozzáadása",
     "formFieldEdit": "Űrlapmező szerkesztése",
     "formFieldEditMode": "Űrlapmezők szerkesztése",
+    "contentEditMode": "Tartalom szerkesztése",
     "viewShortCutKeysFor3D": "Gyorsbillentyűk megtekintése",
     "markAllRead": "összes megjelölése olvasottként",
     "pageInsertion": "Oldal beillesztése",
@@ -1285,10 +1286,24 @@
       "tool": "Eszköz",
       "textStyles": "Szövegstílusok",
       "currentColor": "Aktuális szín",
-      "customColors": "Egyedi színek"
+      "customColors": "Egyedi színek",
+      "redactionTextLabel": "Szöveg Címke",
+      "redactionMarkOutline": "Mark Outline",
+      "redactionFill": "Redakció színe",
+      "redactionTextPlaceholder": "Szöveges címke beszúrása",
+      "contentEdit": "Tartalom szerkesztése"
     },
     "addColorToCustom": "Adjon hozzá egyedi színekhez",
     "noToolSelected": "Válasszon ki egy eszközt az eszköz tulajdonságainak megtekintéséhez",
     "noToolStyle": "Az eszköz nem tartalmaz stílustulajdonságokat."
+  },
+  "signatureListPanel": {
+    "header": "Aláírások listája",
+    "newSignature": "Új aláírás",
+    "newSignatureAndInitial": "Új aláírás és kezdőbetű",
+    "signatureList": {
+      "signature": "Aláírás",
+      "initials": "Monogram"
+    }
   }
 }

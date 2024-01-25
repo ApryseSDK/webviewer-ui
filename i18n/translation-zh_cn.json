@@ -82,6 +82,8 @@
     "exit": "出口",
     "addOption": "新增选项",
     "formFieldEdit": "编辑表格栏位",
+    "formFieldEditMode": "编辑表单字段",
+    "contentEditMode": "编辑内容",
     "viewShortCutKeysFor3D": "查看快捷键",
     "markAllRead": "将所有内容标记为已读",
     "pageInsertion": "页面插入",
@@ -1284,9 +1286,24 @@
       "tool": "工具",
       "textStyles": "文本样式",
       "currentColor": "当前颜色",
-      "customColors": "定制颜色"
+      "customColors": "定制颜色",
+      "redactionTextLabel": "文字标签",
+      "redactionMarkOutline": "标记轮廓",
+      "redactionFill": "密文颜色",
+      "redactionTextPlaceholder": "插入文本标签",
+      "contentEdit": "内容编辑"
     },
     "addColorToCustom": "添加到自定义颜色",
-    "noToolSelected": "选择工具以查看工具属性"
+    "noToolSelected": "选择工具以查看工具属性",
+    "noToolStyle": "工具不包含任何样式属性。"
+  },
+  "signatureListPanel": {
+    "header": "签名列表",
+    "newSignature": "新签名",
+    "newSignatureAndInitial": "新签名和首字母缩写",
+    "signatureList": {
+      "signature": "签名",
+      "initials": "缩写"
+    }
   }
 }

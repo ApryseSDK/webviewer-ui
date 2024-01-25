@@ -83,6 +83,7 @@
     "addOption": "Přidat možnost",
     "formFieldEdit": "Upravit pole formuláře",
     "formFieldEditMode": "Upravit pole formuláře",
+    "contentEditMode": "Upravit obsah",
     "viewShortCutKeysFor3D": "Zobrazit klávesové zkratky",
     "markAllRead": "označit vše jako přečtené",
     "pageInsertion": "Vkládání stránky",
@@ -1285,10 +1286,24 @@
       "tool": "Nástroj",
       "textStyles": "Styly textu",
       "currentColor": "Aktuální barva",
-      "customColors": "Vlastní barvy"
+      "customColors": "Vlastní barvy",
+      "redactionTextLabel": "Textový štítek",
+      "redactionMarkOutline": "Označte obrys",
+      "redactionFill": "Barva redakce",
+      "redactionTextPlaceholder": "Vložte textový štítek",
+      "contentEdit": "Úprava obsahu"
     },
     "addColorToCustom": "Přidat k vlastním barvám",
     "noToolSelected": "Chcete-li zobrazit vlastnosti nástroje, vyberte nástroj",
     "noToolStyle": "Nástroj neobsahuje žádné stylingové vlastnosti."
+  },
+  "signatureListPanel": {
+    "header": "Seznam podpisů",
+    "newSignature": "Nový podpis",
+    "newSignatureAndInitial": "Nový podpis a iniciála",
+    "signatureList": {
+      "signature": "Podpis",
+      "initials": "Iniciály"
+    }
   }
 }

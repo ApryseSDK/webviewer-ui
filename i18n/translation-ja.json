@@ -82,6 +82,8 @@
     "exit": "終了",
     "addOption": "オプションを追加",
     "formFieldEdit": "フォームフィールドの編集",
+    "formFieldEditMode": "フォームフィールドの編集",
+    "contentEditMode": "コンテンツの編集",
     "viewShortCutKeysFor3D": "ショートカットキーを表示する",
     "markAllRead": "すべて既読にする",
     "pageInsertion": "ページの挿入",
@@ -1284,9 +1286,24 @@
       "tool": "道具",
       "textStyles": "テキストスタイル",
       "currentColor": "現在の色",
-      "customColors": "カスタムカラー"
+      "customColors": "カスタムカラー",
+      "redactionTextLabel": "テキストラベル",
+      "redactionMarkOutline": "マークのアウトライン",
+      "redactionFill": "編集色",
+      "redactionTextPlaceholder": "テキストラベルを挿入",
+      "contentEdit": "コンテンツ編集"
     },
     "addColorToCustom": "カスタムカラーに追加",
-    "noToolSelected": "ツールを選択してツールのプロパティを表示します"
+    "noToolSelected": "ツールを選択してツールのプロパティを表示します",
+    "noToolStyle": "ツールにはスタイル設定プロパティが含まれていません。"
+  },
+  "signatureListPanel": {
+    "header": "署名リスト",
+    "newSignature": "新しい署名",
+    "newSignatureAndInitial": "新しい署名とイニシャル",
+    "signatureList": {
+      "signature": "サイン",
+      "initials": "イニシャル"
+    }
   }
 }

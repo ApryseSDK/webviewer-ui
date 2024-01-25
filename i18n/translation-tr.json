@@ -83,6 +83,7 @@
     "addOption": "Seçenek Ekle",
     "formFieldEdit": "Form Alanını Düzenle",
     "formFieldEditMode": "Form Alanlarını Düzenle",
+    "contentEditMode": "İçeriği Düzenle",
     "viewShortCutKeysFor3D": "Kısayol Tuşlarını Görüntüle",
     "markAllRead": "Tümünü okundu olarak işaretle",
     "pageInsertion": "Sayfa Ekleme",
@@ -1285,10 +1286,24 @@
       "tool": "Alet",
       "textStyles": "Metin Stilleri",
       "currentColor": "Mevcut Renk",
-      "customColors": "Özel renkler"
+      "customColors": "Özel renkler",
+      "redactionTextLabel": "Metin Etiketi",
+      "redactionMarkOutline": "Anahattı İşaretle",
+      "redactionFill": "Redaksiyon Rengi",
+      "redactionTextPlaceholder": "Metin etiketi ekle",
+      "contentEdit": "İçerik Düzenleme"
     },
     "addColorToCustom": "Özel renklere ekle",
     "noToolSelected": "Araç özelliklerini görüntülemek için bir araç seçin",
     "noToolStyle": "Araç herhangi bir stil özelliği içermiyor."
+  },
+  "signatureListPanel": {
+    "header": "İmza Listesi",
+    "newSignature": "Yeni İmza",
+    "newSignatureAndInitial": "Yeni İmza ve Harf",
+    "signatureList": {
+      "signature": "İmza",
+      "initials": "Baş harfler"
+    }
   }
 }

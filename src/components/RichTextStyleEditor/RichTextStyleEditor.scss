@@ -1,0 +1,43 @@
+@import '../../constants/styles.scss';
+@import '../../constants/popup';
+
+.RichTextStyleEditor {
+
+  .menu-items {
+    .icon-grid {
+      padding-top: 12px;
+      row-gap: 12px;
+      .row {
+        padding-top: 0;
+        &.isRedaction {
+          padding-bottom: 8px;
+        }
+      }
+      .auto-size-checkbox {
+        padding-top: 4px;
+        padding-bottom: 8px;
+      }
+    }
+  }
+
+  .Dropdown__wrapper {
+    width: 100%;
+    .Dropdown {
+      width: 100%!important;
+    }
+    .Dropdown__items {
+      right: unset;
+    }
+  }
+  .FontSizeDropdown {
+    width: 100%;
+  }
+
+  .palette-controls {
+    margin-top: 8px;
+  }
+
+  .ColorPalette {
+    padding-top: 8px;
+  }
+}

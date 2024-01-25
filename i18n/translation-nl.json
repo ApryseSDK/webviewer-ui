@@ -82,6 +82,8 @@
     "exit": "Uitgang",
     "addOption": "Optie toevoegen",
     "formFieldEdit": "Formulierveld bewerken",
+    "formFieldEditMode": "Formuliervelden bewerken",
+    "contentEditMode": "Inhoud bewerken",
     "viewShortCutKeysFor3D": "Bekijk sneltoetsen",
     "markAllRead": "Markeer alles als gelezen",
     "pageInsertion": "Pagina-invoeging",
@@ -1284,9 +1286,24 @@
       "tool": "Hulpmiddel",
       "textStyles": "Tekststijlen",
       "currentColor": "Huidige kleur",
-      "customColors": "Aangepaste kleuren"
+      "customColors": "Aangepaste kleuren",
+      "redactionTextLabel": "Tekstlabel",
+      "redactionMarkOutline": "Markeer overzicht",
+      "redactionFill": "Redactiekleur",
+      "redactionTextPlaceholder": "Tekstlabel invoegen",
+      "contentEdit": "Inhoud bewerken"
     },
     "addColorToCustom": "Voeg toe aan aangepaste kleuren",
-    "noToolSelected": "Selecteer een gereedschap om de gereedschapseigenschappen te bekijken"
+    "noToolSelected": "Selecteer een gereedschap om de gereedschapseigenschappen te bekijken",
+    "noToolStyle": "Tool bevat geen stijleigenschappen."
+  },
+  "signatureListPanel": {
+    "header": "Handtekeningenlijst",
+    "newSignature": "Nieuwe handtekening",
+    "newSignatureAndInitial": "Nieuwe handtekening en initiaal",
+    "signatureList": {
+      "signature": "Handtekening",
+      "initials": "Initialen"
+    }
   }
 }

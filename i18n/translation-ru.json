@@ -83,6 +83,7 @@
     "addOption": "Добавить вариант",
     "formFieldEdit": "Изменить поле формы",
     "formFieldEditMode": "Редактировать поля формы",
+    "contentEditMode": "Редактировать контент",
     "viewShortCutKeysFor3D": "Просмотр горячих клавиш",
     "markAllRead": "Отметить все как прочитанные",
     "pageInsertion": "Вставка страницы",
@@ -1285,10 +1286,24 @@
       "tool": "Инструмент",
       "textStyles": "Стили текста",
       "currentColor": "Текущий цвет",
-      "customColors": "Пользовательские цвета"
+      "customColors": "Пользовательские цвета",
+      "redactionTextLabel": "Текстовая метка",
+      "redactionMarkOutline": "Отметить контур",
+      "redactionFill": "Цвет редактирования",
+      "redactionTextPlaceholder": "Вставить текстовую метку",
+      "contentEdit": "Содержимое Редактировать"
     },
     "addColorToCustom": "Добавить в пользовательские цвета",
     "noToolSelected": "Выберите инструмент, чтобы просмотреть свойства инструмента",
     "noToolStyle": "Инструмент не содержит никаких свойств стиля."
+  },
+  "signatureListPanel": {
+    "header": "Список подписей",
+    "newSignature": "Новая подпись",
+    "newSignatureAndInitial": "Новая подпись и инициал",
+    "signatureList": {
+      "signature": "Подпись",
+      "initials": "Инициалы"
+    }
   }
 }

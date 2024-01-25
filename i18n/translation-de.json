@@ -83,6 +83,7 @@
     "addOption": "Option hinzufügen",
     "formFieldEdit": "Formularfeld bearbeiten",
     "formFieldEditMode": "Formularfelder bearbeiten",
+    "contentEditMode": "Inhalt bearbeiten",
     "viewShortCutKeysFor3D": "Tastenkombinationen für 3D anzeigen",
     "markAllRead": "Als Gelesen markieren",
     "pageInsertion": "Seiteneinfügung",
@@ -1285,10 +1286,24 @@
       "tool": "Werkzeug",
       "textStyles": "Textstile",
       "currentColor": "Aktuelle Farbe",
-      "customColors": "Benutzerdefinierte Farben"
+      "customColors": "Benutzerdefinierte Farben",
+      "redactionTextLabel": "Textbeschriftung",
+      "redactionMarkOutline": "Umriss markieren",
+      "redactionFill": "Redaktionsfarbe",
+      "redactionTextPlaceholder": "Textbeschriftung einfügen",
+      "contentEdit": "Inhaltsbearbeitung"
     },
     "addColorToCustom": "Zu benutzerdefinierten Farben hinzufügen",
     "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen",
     "noToolStyle": "Das Tool enthält keine Styling-Eigenschaften."
+  },
+  "signatureListPanel": {
+    "header": "Unterschriftenliste",
+    "newSignature": "Neue Signatur",
+    "newSignatureAndInitial": "Neue Signatur und Initiale",
+    "signatureList": {
+      "signature": "Unterschrift",
+      "initials": "Initialen"
+    }
   }
 }

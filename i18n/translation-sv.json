@@ -83,6 +83,7 @@
     "addOption": "Lägg till alternativ",
     "formFieldEdit": "Redigera formulärfält",
     "formFieldEditMode": "Redigera formulärfält",
+    "contentEditMode": "Redigera innehåll",
     "viewShortCutKeysFor3D": "Visa kortkommandon",
     "markAllRead": "Markera allt som läst",
     "pageInsertion": "Sidinsättning",
@@ -1285,10 +1286,24 @@
       "tool": "Verktyg",
       "textStyles": "Textstilar",
       "currentColor": "Aktuell färg",
-      "customColors": "Anpassade färger"
+      "customColors": "Anpassade färger",
+      "redactionTextLabel": "Textetikett",
+      "redactionMarkOutline": "Markera Outline",
+      "redactionFill": "Redaktionsfärg",
+      "redactionTextPlaceholder": "Infoga textetikett",
+      "contentEdit": "Redigera innehåll"
     },
     "addColorToCustom": "Lägg till anpassade färger",
     "noToolSelected": "Välj ett verktyg för att se verktygets egenskaper",
     "noToolStyle": "Verktyget innehåller inga stylingegenskaper."
+  },
+  "signatureListPanel": {
+    "header": "Signaturlista",
+    "newSignature": "Ny signatur",
+    "newSignatureAndInitial": "Ny signatur & initial",
+    "signatureList": {
+      "signature": "Signatur",
+      "initials": "Initialer"
+    }
   }
 }

@@ -83,6 +83,7 @@
     "addOption": "विकल्प जोड़ें",
     "formFieldEdit": "प्रपत्र फ़ील्ड संपादित करें",
     "formFieldEditMode": "प्रपत्र फ़ील्ड संपादित करें",
+    "contentEditMode": "सामग्री संपादित करें",
     "viewShortCutKeysFor3D": "शॉर्टकट कुंजियाँ देखें",
     "markAllRead": "सभी को पढ़ा हुआ मार्क करें",
     "pageInsertion": "पृष्ठ प्रविष्टि",
@@ -1285,10 +1286,24 @@
       "tool": "औजार",
       "textStyles": "पाठ शैलियाँ",
       "currentColor": "वर्तमान रंग",
-      "customColors": "रीति रिवाजों के रंग"
+      "customColors": "रीति रिवाजों के रंग",
+      "redactionTextLabel": "पाठ लेबल",
+      "redactionMarkOutline": "रूपरेखा अंकित करें",
+      "redactionFill": "रेडेक्शन रंग",
+      "redactionTextPlaceholder": "टेक्स्ट लेबल डालें",
+      "contentEdit": "सामग्री संपादित करें"
     },
     "addColorToCustom": "कस्टम रंगों में जोड़ें",
     "noToolSelected": "टूल गुण देखने के लिए एक टूल चुनें",
     "noToolStyle": "टूल में कोई स्टाइलिंग गुण नहीं हैं."
+  },
+  "signatureListPanel": {
+    "header": "हस्ताक्षर सूची",
+    "newSignature": "नया हस्ताक्षर",
+    "newSignatureAndInitial": "नये हस्ताक्षर एवं प्रथमाक्षर",
+    "signatureList": {
+      "signature": "हस्ताक्षर",
+      "initials": "आद्याक्षर"
+    }
   }
 }

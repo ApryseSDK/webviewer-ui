@@ -83,6 +83,7 @@
     "addOption": "Aggiungi opzione",
     "formFieldEdit": "Modifica campo modulo",
     "formFieldEditMode": "Modifica campi modulo",
+    "contentEditMode": "Modifica contenuto",
     "viewShortCutKeysFor3D": "Visualizza i tasti di scelta rapida",
     "markAllRead": "segna tutto come letto",
     "pageInsertion": "Inserimento pagina",
@@ -1285,10 +1286,24 @@
       "tool": "Attrezzo",
       "textStyles": "Stili di testo",
       "currentColor": "Colore corrente",
-      "customColors": "Colori personalizzati"
+      "customColors": "Colori personalizzati",
+      "redactionTextLabel": "Etichetta di testo",
+      "redactionMarkOutline": "Segna contorno",
+      "redactionFill": "Colore di redazione",
+      "redactionTextPlaceholder": "Inserisci etichetta di testo",
+      "contentEdit": "Modifica contenuto"
     },
     "addColorToCustom": "Aggiungi a colori personalizzati",
     "noToolSelected": "Seleziona uno strumento per visualizzarne le proprietà",
     "noToolStyle": "Lo strumento non contiene alcuna proprietà di stile."
+  },
+  "signatureListPanel": {
+    "header": "Elenco delle firme",
+    "newSignature": "Nuova firma",
+    "newSignatureAndInitial": "Nuova firma e iniziale",
+    "signatureList": {
+      "signature": "Firma",
+      "initials": "Iniziali"
+    }
   }
 }

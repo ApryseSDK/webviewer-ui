@@ -83,6 +83,7 @@
     "addOption": "Tambahkan Opsi",
     "formFieldEdit": "Edit Bidang Formulir",
     "formFieldEditMode": "Edit Bidang Formulir",
+    "contentEditMode": "Sunting Konten",
     "viewShortCutKeysFor3D": "Lihat Tombol Pintasan",
     "markAllRead": "tandai semua telah dibaca",
     "pageInsertion": "Penyisipan Halaman",
@@ -1285,10 +1286,24 @@
       "tool": "Alat",
       "textStyles": "Gaya Teks",
       "currentColor": "Warna Saat Ini",
-      "customColors": "Warna Khusus"
+      "customColors": "Warna Khusus",
+      "redactionTextLabel": "Label Teks",
+      "redactionMarkOutline": "Tandai Garis Besar",
+      "redactionFill": "Warna Redaksi",
+      "redactionTextPlaceholder": "Sisipkan label teks",
+      "contentEdit": "Pengeditan Konten"
     },
     "addColorToCustom": "Tambahkan ke warna khusus",
     "noToolSelected": "Pilih alat untuk melihat properti alat",
     "noToolStyle": "Alat tidak mengandung properti penataan gaya apa pun."
+  },
+  "signatureListPanel": {
+    "header": "Daftar Tanda Tangan",
+    "newSignature": "Tanda Tangan Baru",
+    "newSignatureAndInitial": "Tanda Tangan & Inisial Baru",
+    "signatureList": {
+      "signature": "Tanda tangan",
+      "initials": "Inisial"
+    }
   }
 }

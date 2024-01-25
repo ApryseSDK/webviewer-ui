@@ -3,6 +3,18 @@ import core from 'core';
 
 const Tools = window.Core.Tools;
 
+export const shouldHideStylePanelOptions = (toolName) => {
+  const toolsNoStylePanelOptions = [
+    Tools.SignatureFormFieldCreateTool,
+    Tools.CheckBoxFormFieldCreateTool,
+    Tools.RadioButtonFormFieldCreateTool,
+    Tools.AddParagraphTool,
+    Tools.AddImageContentTool,
+  ];
+
+  return toolsNoStylePanelOptions.some((tool) => core.getTool(toolName) instanceof tool);
+};
+
 export const hasFillColorAndCollapsablePanelSections = (toolName) => {
   const toolsWithCollapsedStylePanels = [
     Tools.RectangleCreateTool,
@@ -13,6 +25,7 @@ export const hasFillColorAndCollapsablePanelSections = (toolName) => {
     Tools.AreaMeasurementCreateTool,
     Tools.FreeTextCreateTool,
     Tools.CalloutCreateTool,
+    Tools.RedactionCreateTool,
   ];
 
   return toolsWithCollapsedStylePanels.some((tool) => core.getTool(toolName) instanceof tool);
@@ -30,6 +43,20 @@ export const shouldHideStrokeSlider = (toolName) => {
   return toolsWithHiddenStrokeSlider.some((tool) => core.getTool(toolName) instanceof tool);
 };
 
+export const shouldShowTextStyle = (toolName) => {
+  const toolsWithHiddenStrokeSlider = [
+    Tools.FreeTextCreateTool,
+    Tools.CalloutCreateTool,
+    Tools.RedactionCreateTool,
+  ];
+  return toolsWithHiddenStrokeSlider.some((tool) => core.getTool(toolName) instanceof tool);
+};
+
+export const shouldHideOpacitySlider = (toolName) => {
+  const toolsWithHiddenOpacitySlider = [Tools.TextFormFieldCreateTool, Tools.RedactionCreateTool];
+  return toolsWithHiddenOpacitySlider.some((tool) => core.getTool(toolName) instanceof tool);
+};
+
 export const hasSnapModeCheckbox = (toolName) => {
   const toolsWithSnapModeCheckbox = [
     Tools.DistanceMeasurementCreateTool,
@@ -40,4 +67,20 @@ export const hasSnapModeCheckbox = (toolName) => {
     Tools.CloudyRectangularAreaMeasurementCreateTool,
   ];
   return toolsWithSnapModeCheckbox.some((tool) => core.getTool(toolName) instanceof tool);
+};
+
+export const shouldHideTransparentFillColor = (toolName) => {
+  const toolsWithHiddenTransparentColor = [Tools.RedactionCreateTool];
+  return toolsWithHiddenTransparentColor.some((tool) => core.getTool(toolName) instanceof tool);
+};
+
+export const stylePanelSectionTitles = (toolName, section) => {
+  const toolTitles = {
+    'AnnotationCreateRedaction': {
+      'Title': 'component.redaction',
+      'StrokeColor': 'stylePanel.headings.redactionMarkOutline',
+      'FillColor': 'stylePanel.headings.redactionFill',
+    },
+  };
+  return toolTitles[toolName] && toolTitles[toolName][section];
 };

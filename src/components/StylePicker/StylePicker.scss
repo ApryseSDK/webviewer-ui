@@ -32,19 +32,27 @@
   }
 
   .PanelSection {
+    .PanelSubsection {
+      margin-bottom: 12px;
+      .menu-subtitle {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 12px;
+      }
+    }
     .collapsible-menu {
       width: 100%;
       display: flex;
       cursor: pointer;
       position: relative;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 16px;
 
       .menu-title {
         padding-top: 6px;
         padding-bottom: 6px;
         font-weight: bold;
-        font-size: 14px;
+        font-size: 16px;
       }
 
       .icon-container {
@@ -76,19 +84,23 @@
       height: 1px;
       margin: 16px 0;
     }
-    
+
     .menu-items .ColorPalette {
       margin-bottom: 8px;
     }
-  
-    .palette-controls .button-container {
-        gap:5px;
-    }
+
   }
 
   .spacer {
     width: 100%;
     margin-top: 16px;
+  }
+
+  .overlay-text-input,
+  .Dropdown,
+  .FontSizeDropdown 
+  {
+    height: 32px;
   }
 
   .lineStyleContainer {
@@ -103,7 +115,7 @@
           width: 100% !important;
         }
       }
-    
+
       .Dropdown__items {
         width: 100%;
       }
@@ -111,27 +123,27 @@
       .Dropdown__wrapper {
         width: 100%;
       }
-      
+
       .linestyle-image svg {
         width: 35px;
         margin-top: 11px;
       }
-    
+
       .linestyle-image.shift-alignment svg {
         margin-top: 8px;
       }
-    
+
       .Dropdown__items .linestyle-image svg {
         width: 45px;
       }
-    
+
       [data-element="middleLineStyleDropdown"] .linestyle-image.shift-alignment {
         padding-top: 0;
         svg {
           margin-top: 11px;
         }
       }
-    
+
       [data-element="middleLineStyleDropdown"] .Dropdown__items  {
         top: -197px;
       }

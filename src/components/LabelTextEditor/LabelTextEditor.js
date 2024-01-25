@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './LabelTextEditor.scss';
 
-const LabelTextEditor = ({ onPropertyChange, properties }) => {
+const LabelTextEditor = ({ onPropertyChange, properties, placeholderText }) => {
   const overlayText = properties.OverlayText || '';
   const [curOverlayText, setCurOverlayText] = useState(overlayText);
   const setOverlayText = (e) => {
@@ -16,6 +16,10 @@ const LabelTextEditor = ({ onPropertyChange, properties }) => {
     }
   };
 
+  useEffect(() => {
+    setCurOverlayText(overlayText);
+  }, [overlayText]);
+
   const [t] = useTranslation();
 
   return (
@@ -25,7 +29,7 @@ const LabelTextEditor = ({ onPropertyChange, properties }) => {
         value={curOverlayText}
         onChange={setOverlayText}
         onKeyDown={onKeyDown}
-        placeholder={t('option.stylePopup.labelTextPlaceholder')}
+        placeholder={placeholderText || t('option.stylePopup.labelTextPlaceholder')}
       />
     </>
   );
