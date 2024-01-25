@@ -246,7 +246,7 @@ export default class TabManager {
         options['filename'] = src.substring(src.lastIndexOf('/') + 1);
       } else if (src instanceof window.Core.Document && src.getFilename && src.getFilename()) {
         options['filename'] = src.getFilename();
-      } else if (src instanceof File) {
+      } else if (src instanceof File || Object.prototype.toString.call(src) === '[object File]') {
         options['filename'] = src['name'];
       }
     }
@@ -442,6 +442,7 @@ export class Tab {
   }
 
   async saveFileData(db, document) {
+    this.saveData.annotInDB = false;
     const xfdfString = await core.exportAnnotations();
     const data = await document.getFileData({
       xfdfString,

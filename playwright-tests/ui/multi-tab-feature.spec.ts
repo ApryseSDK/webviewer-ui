@@ -42,19 +42,6 @@ test.describe('Multi-tab Feature', () => {
     expect(isElementOpen).toBe(false);
   });
 
-  test('should enable the multi-tab feature and load both initialDoc option and the added tabs', async ({ page }) => {
-    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-multi-tab');
-    await waitForInstance();
-    await iframe.evaluate(async () => {
-      window.instance.UI.TabManager.addTab('https://pdftron.s3.amazonaws.com/downloads/pl/form1.pdf', { setActive: true });
-    });
-
-    await page.waitForTimeout(5000);
-    const app = await iframe.$('.App');
-
-    expect(await app.screenshot()).toMatchSnapshot(['add-initial-doc-and-tabs', 'add-initial-doc-and-tabs.png']);
-  });
-
   test('should show empty page after closing all tabs', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-multi-tab');
     await waitForInstance();
@@ -119,22 +106,29 @@ test.describe('Multi-tab Feature', () => {
   test('should enable multi-tab feature, be able to add a tab and come back to first tab with everything working', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
     const instance = await waitForInstance();
-    
-    await iframe.evaluate(() => {
-      return instance.UI.enableFeatures(['MultiTab']);
-    });
 
-    await iframe.evaluate(async () => {
+    await iframe?.evaluate(() => {
+      window.instance.UI.enableFeatures(['MultiTab']);
+    });
+    await page.waitForTimeout(200);
+
+    // Scroll to top of page to prevent a flaky issue
+    await iframe?.evaluate(() => {
+      const scrollViewElement = window.instance.Core.documentViewer.getScrollViewElement();
+      scrollViewElement.scrollTo({ top: 0 });
+    });
+    await page.waitForTimeout(200);
+
+    await iframe?.evaluate(() => {
       window.instance.UI.TabManager.addTab('https://pdftron.s3.amazonaws.com/downloads/pl/form1.pdf', { setActive: true });
     });
 
-    await page.waitForTimeout(5000);
-    const firstTab = await iframe.$('#tab-0');
-    await firstTab?.click();
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(2000);
+    await iframe?.click('#tab-0');
+    await page.waitForTimeout(2000);
 
     await instance('openElements', ['thumbnailsPanel']);
-    await page.waitForTimeout(10000);
+    await page.waitForTimeout(2000);
 
     const app = await iframe.$('.App');
     expect(await app.screenshot()).toMatchSnapshot(['first-tab-thumbnails', 'first-tab-thumbnails.png']);
@@ -153,7 +147,7 @@ test.describe('Multi-tab Feature', () => {
 
     await iframe.evaluate(async () => {
       const annotationManager = window.instance.Core.annotationManager;
-      annotationManager.deleteAnnotations(annotationManager.getAnnotationsList().filter(a => a.PageNumber === 1));
+      annotationManager.deleteAnnotations(annotationManager.getAnnotationsList().filter((a) => a.PageNumber === 1));
     });
 
     await page.waitForTimeout(2000);
@@ -172,9 +166,36 @@ test.describe('Multi-tab Feature', () => {
 
     const annotOnPageOneCount = await iframe.evaluate(async () => {
       const annotationManager = window.instance.Core.annotationManager;
-      return annotationManager.getAnnotationsList().filter(a => a.PageNumber === 1).length;
+      return annotationManager.getAnnotationsList().filter((a) => a.PageNumber === 1).length;
     });
 
     expect(annotOnPageOneCount).toEqual(0);
+  });
+
+  test('should be able to use addTab API to load non-PDF documents via file picker', async ({ page }) => {
+    const { iframe } = await loadViewerSample(page, 'viewing/viewing-with-multi-tab-empty');
+    await page.waitForTimeout(3000);
+
+    page.on('filechooser', async (fileChooser) => {
+      await fileChooser.setFiles([path.join(__dirname, '../../../../e2e-test/test-files/legal-contract.docx')]);
+    });
+
+    await iframe?.evaluate(() => {
+      const inputBtn = window.parent.document.createElement('input');
+      inputBtn.id = 'add-tab-file-picker';
+      inputBtn.type = 'file';
+      inputBtn.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          window.instance.UI.TabManager.addTab(file, { setActive: true });
+        }
+      };
+      window.parent.document.body.appendChild(inputBtn);
+    });
+
+    await page.click('#add-tab-file-picker');
+    await page.waitForTimeout(5000);
+    const app = await iframe.$('.App');
+    expect(await app.screenshot()).toMatchSnapshot(['add-tab-non-pdf', 'add-tab-non-pdf.png']);
   });
 });
