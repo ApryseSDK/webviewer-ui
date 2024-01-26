@@ -5,8 +5,15 @@ import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables
 import DataElements from 'constants/dataElement';
 
 // viewer
+export const getScaleOverlayPosition = (state) => state.viewer.scaleOverlayPosition;
 export const getDefaultPrintMargins = (state) => state.viewer.defaultPrintMargins;
-export const getColors = (state) => state.viewer.colors;
+export const getColors = (state, tool, type) => {
+  type = type ? type.toLowerCase() : type;
+  if (tool && state.viewer.toolColorOverrides[tool]) {
+    return state.viewer.toolColorOverrides[tool];
+  }
+  return type === 'text' ? state.viewer.textColors : state.viewer.colors;
+};
 export const getCustomElementSize = (state, dataElement) => state.viewer.customElementSizes?.[dataElement] || 0;
 export const getActiveFlyout = (state) => state.viewer.activeFlyout;
 export const getFlyoutPosition = (state) => state.viewer.flyoutPosition;

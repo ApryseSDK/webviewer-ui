@@ -27,6 +27,7 @@ import { ShortcutKeys } from 'helpers/hotkeysManager';
 import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
 import { SYNC_MODES } from 'constants/multiViewerContants';
 import { getInstanceID } from 'helpers/getRootNode';
+import { initialColors, initialTextColors } from 'helpers/initialColorStates';
 
 const { ToolNames } = window.Core.Tools;
 const instanceId = getInstanceID();
@@ -2065,29 +2066,11 @@ export default {
     isShowComparisonButtonEnabled: false,
     isMultiViewerModeAvailable: false,
     isOfficeEditorMode: false,
-    colors: [
-      '#fdac0f',
-      '#fa9933',
-      '#f34747',
-      '#21905b',
-      '#c531a4',
-      '#e5631a',
-      '#3e5ece',
-      '#dc9814',
-      '#c27727',
-      '#b11c1c',
-      '#13558c',
-      '#76287b',
-      '#347842',
-      '#318f29',
-      '#ffffff',
-      '#cdcdcd',
-      '#9c9c9c',
-      '#696969',
-      '#272727',
-      '#000000'
-    ],
+    colors: initialColors,
+    textColors: initialTextColors,
+    toolColorOverrides: {},
     defaultPrintMargins: '0',
+    scaleOverlayPosition: 'top-right',
   },
   search: {
     value: '',

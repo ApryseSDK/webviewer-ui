@@ -6,6 +6,11 @@ export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case 'SET_SCALE_OVERLAY_POSITION':
+      return {
+        ...state,
+        scaleOverlayPosition: payload.position,
+      };
     case 'SET_DEFAULT_PRINT_MARGINS':
       return {
         ...state,
@@ -14,7 +19,12 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_COLORS':
       return {
         ...state,
-        colors: payload.colors,
+        colors: payload.tool || !payload.colors ? state.colors : [...payload.colors],
+        textColors: payload.textColors ? [...payload.textColors] : state.textColors,
+        toolColorOverrides: payload.tool ? {
+          ...state.toolColorOverrides,
+          [payload.tool]: [...payload.colors],
+        } : state.toolColorOverrides,
       };
     case 'SET_PANEL_WIDTH':
       return {

@@ -13,6 +13,10 @@ import { v4 as uuidv4 } from 'uuid';
 import selectors from 'selectors';
 import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
 
+export const setScaleOverlayPosition = (position) => ({
+  type: 'SET_SCALE_OVERLAY_POSITION',
+  payload: { position },
+});
 export const setDefaultPrintMargins = (margins) => ({
   type: 'SET_DEFAULT_PRINT_MARGINS',
   payload: { margins },
@@ -1051,7 +1055,17 @@ export const setEnableMeasurementAnnotationsFilter = (isEnabled) => ({
   payload: { isEnabled },
 });
 
-export const setColors = (colors) => ({
-  type: 'SET_COLORS',
-  payload: { colors },
-});
+export const setColors = (colors, tool, type, updateOnly = false) => (dispatch, getState) => {
+  type = type ? type.toLowerCase() : type;
+  const state = getState();
+  if (tool && (!updateOnly || (updateOnly && state.viewer.toolColorOverrides[tool]))) {
+    return dispatch({
+      type: 'SET_COLORS',
+      payload: { tool, colors },
+    });
+  }
+  dispatch({
+    type: 'SET_COLORS',
+    payload: type === 'text' ? { textColors: colors } : { colors },
+  });
+};
