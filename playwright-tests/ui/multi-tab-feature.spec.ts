@@ -104,8 +104,10 @@ test.describe('Multi-tab Feature', () => {
   });
 
   test('should enable multi-tab feature, be able to add a tab and come back to first tab with everything working', async ({ page }) => {
-    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    // This test is incredibly flaky when no license is provided
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-valid-license');
     const instance = await waitForInstance();
+    await page.waitForTimeout(3000);
 
     await iframe?.evaluate(() => {
       window.instance.UI.enableFeatures(['MultiTab']);
@@ -197,5 +199,46 @@ test.describe('Multi-tab Feature', () => {
     await page.waitForTimeout(5000);
     const app = await iframe.$('.App');
     expect(await app.screenshot()).toMatchSnapshot(['add-tab-non-pdf', 'add-tab-non-pdf.png']);
+  });
+
+  test('should be able to save scroll position afer switching tabs', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-multi-tab');
+    const instance = await waitForInstance();
+    await page.waitForTimeout(5000);
+
+    // Zoom and scroll to bottom right corner
+    await instance('setZoomLevel', 6);
+    const previousPosition = await iframe?.evaluate(async () => {
+      const scrollViewElement = window.instance.Core.documentViewer.getScrollViewElement();
+      scrollViewElement.scrollTo({
+        top: scrollViewElement.scrollHeight,
+        left: scrollViewElement.scrollWidth
+      });
+      return {
+        top: scrollViewElement.scrollTop,
+        left: scrollViewElement.scrollLeft,
+      };
+    });
+
+    // Switch tabs and switch back
+    await iframe?.click('#tab-1');
+    await page.waitForTimeout(1000);
+    await iframe?.click('#tab-0');
+    await page.waitForTimeout(2000);
+
+    const newPosition = await iframe?.evaluate(() => {
+      const scrollViewElement = window.instance.Core.documentViewer.getScrollViewElement();
+      return {
+        top: scrollViewElement.scrollTop,
+        left: scrollViewElement.scrollLeft,
+      };
+    });
+
+    // Compare positions with a buffer room
+    const BUFFER_ROOM = 10;
+    expect(newPosition?.top).toBeLessThan(previousPosition?.top + BUFFER_ROOM);
+    expect(newPosition?.top).toBeGreaterThan(previousPosition?.top - BUFFER_ROOM);
+    expect(newPosition?.left).toBeLessThan(previousPosition?.left + BUFFER_ROOM);
+    expect(newPosition?.left).toBeGreaterThan(previousPosition?.left - BUFFER_ROOM);
   });
 });

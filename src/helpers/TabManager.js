@@ -372,8 +372,8 @@ export class Tab {
   saveData = {
     annotInDB: false,
     docInDB: false,
-    scrollTop: null, // Float
-    scrollLeft: null, // Float
+    scrollTop: undefined, // Float
+    scrollLeft: undefined, // Float
     page: null, // Int
     annots: null, // XFDF String
   };
@@ -490,8 +490,10 @@ export class Tab {
 
     const updateScroll = async () => {
       await core.getDocument().getDocumentCompletePromise();
-      docContainer.scrollTop = this.saveData.scrollTop;
-      docContainer.scrollLeft = this.saveData.scrollLeft;
+      docContainer.scrollTo({
+        top: this.saveData.scrollTop,
+        left: this.saveData.scrollLeft,
+      });
     };
 
     viewerState.isNotesPanelOpen && dispatch(actions.openElement('notesPanel'));
@@ -507,7 +509,7 @@ export class Tab {
 
     core.addEventListener('documentLoaded', updateViewer, { once: true });
 
-    this.saveData.scrollTop && core.addEventListener('finishedRendering', updateScroll, { once: true });
+    !isNaN(this.saveData.scrollTop) && core.addEventListener('finishedRendering', updateScroll, { once: true });
     const removeListeners = () => {
       core.removeEventListener('documentLoaded', updateViewer);
       core.removeEventListener('finishedRendering', updateScroll);
