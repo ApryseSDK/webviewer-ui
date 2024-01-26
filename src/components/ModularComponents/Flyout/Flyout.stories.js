@@ -14,113 +14,241 @@ const initialState = {
     customElementOverrides: {},
     openElements: {},
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     flyoutMap: {
       'flyoutMenu': {
         'dataElement': 'flyoutMenu',
         'items': [
           {
-            'label': 'Item 1',
-            'icon': 'icon-tool-highlight',
-            'children': [
+            label: 'Item 1',
+            onClick: () => {
+              console.log('Item 1 clicked');
+            },
+            icon: 'icon-tool-highlight',
+            children: [
               {
-                'label': 'Item 1.1',
-                'icon': 'icon-arrow-right'
+                label: 'Item 1.1',
+                onClick: () => {
+                  console.log('Item 1.1 clicked');
+                },
+                icon: 'icon-arrow-right',
+                children: [
+                  {
+                    label: 'Item 1.1.1',
+                    onClick: () => {
+                      console.log('Item 1.1.1 clicked');
+                    },
+                    icon: 'icon-arrow-right',
+                    children: [
+                      {
+                        label: 'Item 1.1.1.1',
+                        onClick: () => {
+                          console.log('Item 1.1.1.1 clicked');
+                        },
+                        icon: 'icon-arrow-right',
+                        children: [
+                          {
+                            label: 'Item 1.1.1.1.1',
+                            onClick: () => {
+                              console.log('Item 1.1.1.1.1 clicked');
+                            },
+                            icon: 'icon-arrow-right',
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    label: 'Item 1.1.2',
+                    onClick: () => {
+                      console.log('Item 1.1.2 clicked');
+                    },
+                    icon: 'icon-arrow-left',
+                    children: [
+                      {
+                        label: 'Item 1.1.2.1',
+                        onClick: () => {
+                          console.log('Item 1.1.2.1 clicked');
+                        },
+                        icon: 'icon-arrow-right',
+                        children: [
+                          {
+                            label: 'Item 1.1.2.1.1',
+                            onClick: () => {
+                              console.log('Item 1.1.2.1.1 clicked');
+                            },
+                            icon: 'icon-arrow-right',
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  'divider',
+                  {
+                    label: 'Item 1.1.3',
+                    onClick: () => {
+                      console.log('Item 1.1.3 clicked');
+                    },
+                    icon: 'icon-arrow-up',
+                  },
+                ]
               },
               {
-                'label': 'Item 1.2',
-                'icon': 'icon-arrow-left'
+                label: 'Item 1.2',
+                onClick: () => {
+                  console.log('Item 1.2 clicked');
+                },
+                icon: 'icon-arrow-left',
               },
-              'divider'
-            ]
+              'divider',
+            ],
           },
           'divider',
           {
-            'label': 'Item 2',
-            'icon': 'icon-save',
-            'children': [
+            label: 'Item 2',
+            onClick: () => {
+              console.log('Item 2 clicked');
+            },
+            icon: 'icon-save',
+            children: [
               {
-                'label': 'Item 2.1',
-                'icon': 'icon-arrow-right'
+                label: 'Item 2.1',
+                onClick: () => {
+                  console.log('Item 2.1 clicked');
+                },
+                icon: 'icon-arrow-right',
               },
               {
-                'label': 'Item 2.2',
-                'icon': 'icon-arrow-left'
-              },
-              'divider',
-              {
-                'label': 'Item 2.3',
-                'icon': 'icon-arrow-up'
-              }
-            ]
-          },
-          {
-            'label': 'Item 3',
-            'icon': 'icon-save'
-          },
-          {
-            'icon': 'icon-download',
-            'children': [
-              {
-                'label': 'Item 4.1',
-                'icon': 'icon-arrow-right'
-              },
-              {
-                'label': 'Item 4.2',
-                'icon': 'icon-arrow-left'
+                label: 'Item 2.2',
+                onClick: () => {
+                  console.log('Item 2.2 clicked');
+                },
+                icon: 'icon-arrow-left',
               },
               'divider',
               {
-                'label': 'Item 4.3',
-                'icon': 'icon-arrow-up'
-              }
-            ]
+                label: 'Item 2.3',
+                onClick: () => {
+                  console.log('Item 2.3 clicked');
+                },
+                icon: 'icon-arrow-up',
+              },
+            ],
           },
           {
-            'label': 'Item 5',
-            'icon': 'icon-save'
+            label: 'Item 3',
+            onClick: () => {
+              console.log('Item 3 clicked');
+            },
+            icon: 'icon-save',
           },
           {
-            'label': 'Item 6',
-            'icon': 'icon-download',
-            'children': [
+            label: 'Item 4',
+            onClick: () => {
+              console.log('Item 4 clicked');
+            },
+            icon: 'icon-download',
+            children: [
               {
-                'label': 'Item 6.1',
-                'icon': 'icon-arrow-right'
+                label: 'Item 4.1',
+                onClick: () => {
+                  console.log('Item 4.1 clicked');
+                },
+                icon: 'icon-arrow-right',
               },
               {
-                'label': 'Item 6.2',
-                'icon': 'icon-arrow-left'
-              },
-              'divider',
-              {
-                'label': 'Item 6.3',
-                'icon': 'icon-arrow-up'
-              }
-            ]
-          },
-          {
-            'label': 'Item 7',
-          },
-          {
-            'label': 'Item 8',
-            'icon': 'icon-download',
-            'children': [
-              {
-                'label': 'Item 8.1',
-                'icon': 'icon-arrow-right'
-              },
-              {
-                'label': 'Item 8.2',
-                'icon': 'icon-arrow-left'
+                label: 'Item 4.2',
+                onClick: () => {
+                  console.log('Item 4.2 clicked');
+                },
+                icon: 'icon-arrow-left',
               },
               'divider',
               {
-                'label': 'Item 8.3',
-                'icon': 'icon-arrow-up'
-              }
-            ]
-          }
+                label: 'Item 4.3',
+                onClick: () => {
+                  console.log('Item 4.3 clicked');
+                },
+                icon: 'icon-arrow-up',
+              },
+            ],
+          },
+          {
+            label: 'Item 5',
+            onClick: () => {
+              console.log('Item 5 clicked');
+            },
+            icon: 'icon-save',
+          },
+          {
+            label: 'Item 6',
+            onClick: () => {
+              console.log('Item 6 clicked');
+            },
+            icon: 'icon-download',
+            children: [
+              {
+                label: 'Item 6.1',
+                onClick: () => {
+                  console.log('Item 6.1 clicked');
+                },
+                icon: 'icon-arrow-right',
+              },
+              {
+                label: 'Item 6.2',
+                onClick: () => {
+                  console.log('Item 6.2 clicked');
+                },
+                icon: 'icon-arrow-left',
+              },
+              'divider',
+              {
+                label: 'Item 6.3',
+                onClick: () => {
+                  console.log('Item 6.3 clicked');
+                },
+                icon: 'icon-arrow-up',
+              },
+            ],
+          },
+          {
+            label: 'Item 7',
+            onClick: () => {
+              console.log('Item 7 clicked');
+            },
+            icon: 'icon-save',
+          },
+          {
+            label: 'Item 8',
+            onClick: () => {
+              console.log('Item 8 clicked');
+            },
+            icon: 'icon-download',
+            children: [
+              {
+                label: 'Item 8.1',
+                onClick: () => {
+                  console.log('Item 8.1 clicked');
+                },
+                icon: 'icon-arrow-right',
+              },
+              {
+                label: 'Item 8.2',
+                onClick: () => {
+                  console.log('Item 8.2 clicked');
+                },
+                icon: 'icon-arrow-left',
+              },
+              'divider',
+              {
+                label: 'Item 8.3',
+                onClick: () => {
+                  console.log('Item 8.3 clicked');
+                },
+                icon: 'icon-arrow-up',
+              },
+            ],
+          },
         ],
       },
       'noIcons': {
@@ -158,7 +286,7 @@ const initialState = {
     },
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: 'flyoutMenu',
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40

@@ -76,6 +76,10 @@ const Panel = (props) => {
     isLeftSide: isLeftSide,
   });
 
+  if (!isVisible) {
+    return null;
+  }
+
   return (
     <>
       <div

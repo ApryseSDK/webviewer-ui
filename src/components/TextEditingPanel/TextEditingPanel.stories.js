@@ -3,47 +3,37 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import TextEditingPanel from './TextEditingPanel';
 import RightPanel from 'components/RightPanel';
-import core from 'core';
+import { configureStore } from '@reduxjs/toolkit';
+import initialState from 'src/redux/initialState';
+import App from 'components/App';
 
 const noop = () => { };
 
 export default {
   title: 'Components/TextEditingPanel',
   component: TextEditingPanel,
-  includeStories: ['Basic', 'TextEditingUndoRedo'],
+  includeStories: ['Basic', 'TextEditingUndoRedo', 'LeftSide'],
 };
 
-core.getContentEditManager = () => ({
-  isInContentEditMode: () => true,
-});
-
-const initialState = {
+const textEditingPanelInitialState = {
+  ...initialState,
   viewer: {
-    isInDesktopOnlyMode: true,
-    disabledElements: {
-      logoBar: { disabled: true },
-    },
-    customElementOverrides: {},
+    ...initialState.viewer,
     openElements: {
       header: true,
       textEditingPanel: true,
     },
-    currentLanguage: 'en',
     panelWidths: {
       textEditingPanel: 330,
     },
-    modularHeaders: [],
-    modularHeadersHeight: {
-      topHeaders: 40,
-      bottomHeaders: 40
-    },
+
   },
   featureFlags: {
     customizableUI: false,
   },
 };
 
-function rootReducer(state = initialState, action) {
+function rootReducer(state = textEditingPanelInitialState) {
   return state;
 }
 
@@ -61,6 +51,11 @@ const basicProps = {
   handleTextFormatChange: noop,
   textEditProperties: {},
   handleColorChange: noop,
+  rgbColor: {
+    toHexString: () => {
+      return '#FF0000';
+    }
+  }
 };
 
 export const TextEditingPanelStoryWrapper = ({ children }) => {
@@ -100,6 +95,11 @@ export const TextEditingUndoRedo = () => {
       canUndo: true,
       canRedo: true
     },
+    rgbColor: {
+      toHexString: () => {
+        return '#FF0000';
+      }
+    }
   };
 
   return (
@@ -109,4 +109,39 @@ export const TextEditingUndoRedo = () => {
       </div>
     </TextEditingPanelStoryWrapper>
   );
+};
+
+const MockApp = ({ initialState }) => {
+  return (
+    <Provider store={configureStore({
+      reducer: rootReducer,
+      preloadedState: initialState,
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+    })}>
+      <App removeEventHandlers={noop} />
+    </Provider>
+  );
+};
+
+export const LeftSide = () => {
+  const stateTextEditingPanelOnLeft = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      isInDesktopOnlyMode: true,
+      genericPanels: [
+        {
+          dataElement: 'panel1',
+          render: 'textEditingPanel',
+          location: 'left',
+        }
+      ],
+      openElements: {
+        ...initialState.viewer.openElements,
+        contextMenuPopup: false,
+        panel1: true,
+      }
+    },
+  };
+  return <MockApp initialState={stateTextEditingPanelOnLeft} />;
 };

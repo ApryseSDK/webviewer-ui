@@ -26,7 +26,6 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
       dataElements: [
         'toolsHeader',
         'toggleToolsButton',
-        'annotationPopup',
         'linkButton',
         'noteState',
         DataElements.NOTE_MULTI_SELECT_MODE_BUTTON,
@@ -360,7 +359,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     [Feature.Panel]: {
       fn: () => {
         const state = store.getState();
-        const keys = state.viewer.customFlxPanels.map((item) => item.dataElement);
+        const keys = state.viewer.genericPanels.map((item) => item.dataElement);
         if (enable) {
           store.dispatch(actions.enableElements(keys, priority));
         } else {

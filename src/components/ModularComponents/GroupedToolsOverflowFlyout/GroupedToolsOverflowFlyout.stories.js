@@ -102,7 +102,7 @@ const initialState = {
     customElementOverrides: {},
     openElements: {},
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     flyoutMap: {
       'GroupedToolsOverflowFlyout': {
         'dataElement': 'GroupedToolsOverflowFlyout',
@@ -119,7 +119,7 @@ const initialState = {
     activeFlyout: 'GroupedToolsOverflowFlyout',
     headers: {},
     lastPickedToolForGroup: {},
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40

@@ -14,13 +14,13 @@ const initialState = {
     customElementOverrides: {},
     openElements: {},
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     flyoutMap: {},
     headers: {},
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
     toolButtonObjects: {},
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40

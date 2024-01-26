@@ -13,9 +13,15 @@ Webviewer.WebComponent({
   // This makes it easier to access the instance from the browser console
   window.instance = instance;
 
-  const { Tools } = instance.Core;
+  const { UI, Core } = instance;
+  const { Tools } = Core;
 
-  instance.UI.enableFeatureFlag(instance.UI.FeatureFlags.CUSTOMIZABLE_UI);
+  UI.enableFeatureFlag(UI.FeatureFlags.CUSTOMIZABLE_UI);
+  UI.enableFeatures([
+    UI.Feature.Initials,
+    UI.Feature.ContentEdit,
+  ]);
+  UI.enableElements(['bookmarksPanel']);
 
   //* Top Header *//
   // Define the top header items, left to right
@@ -27,227 +33,348 @@ Webviewer.WebComponent({
   });
 
   // Menu Flyout Hamburger button
-  const mainMenu = new instance.UI.Components.MainMenu();
+  const mainMenu = new UI.Components.MainMenu();
 
   // Left panel toggle button
-  const leftPanelToggle = new instance.UI.Components.ToggleElementButton({
+  const leftPanelToggle = new UI.Components.ToggleElementButton({
     dataElement: 'left-panel-toggle',
-    toggleElement: 'leftPanel',
+    toggleElement: 'customLeftPanel',
     title: 'Left Panel',
     img: 'icon-header-sidebar-line'
   });
 
   // View Controls
-  const viewControlsToggle = new instance.UI.Components.ViewControls();
+  const viewControlsToggle = new UI.Components.ViewControls();
 
   // Zoom Controls
-  const zoomControls = new instance.UI.Components.Zoom();
+  const zoomControls = new UI.Components.Zoom();
 
   // Pan Tool Button
-  const panToolButton = new instance.UI.Components.ToolButton({
+  const panToolButton = new UI.Components.ToolButton({
     dataElement: 'panToolButton',
     toolName: Tools.ToolNames.PAN,
   });
 
   // Annotation Edit/Select Tool Button
-  const annotationEditToolButton = new instance.UI.Components.ToolButton({
+  const annotationEditToolButton = new UI.Components.ToolButton({
     dataElement: 'annotationEditToolButton',
     toolName: Tools.ToolNames.EDIT,
   });
 
   // Style Panel & Toggle
-  instance.UI.addPanel({
+  UI.addPanel({
     dataElement: 'stylePanel',
-    render: instance.UI.Panels.STYLE,
+    render: UI.Panels.STYLE,
     location: 'left',
   });
 
-  const stylePanelToggle = new instance.UI.Components.ToggleElementButton({
+  const stylePanelToggle = new UI.Components.ToggleElementButton({
     dataElement: 'stylePanelToggle',
-    toggleElement: instance.UI.Panels.STYLE,
+    toggleElement: UI.Panels.STYLE,
     img: 'icon-style-panel-toggle',
-    title: 'stylePanel.headings.styles',
+    title: 'action.style',
   });
+
+  // Thumbnail Panel
+  UI.addPanel({
+    dataElement: 'thumbnailPanel',
+    render: UI.Panels.THUMBNAIL,
+    location: 'left',
+  });
+
+  // Outline Panel
+  UI.addPanel({
+    dataElement: 'outlinePanel',
+    render: UI.Panels.OUTLINE,
+    location: 'left',
+  });
+
+  // Bookmark Panel
+  UI.addPanel({
+    dataElement: 'bookmarkPanel',
+    render: UI.Panels.BOOKMARKS,
+    location: 'left',
+  });
+
+  // Layers Panel
+  UI.addPanel({
+    dataElement: 'layersPanel',
+    render: UI.Panels.LAYERS,
+    location: 'left',
+  });
+
+  // Signature Panel
+  UI.addPanel({
+    dataElement: 'signatureListPanel',
+    render: UI.Panels.SIGNATURE_LIST,
+    location: 'left',
+  });
+
+  // File Attachment Panel
+  UI.addPanel({
+    dataElement: 'fileAttachmentPanel',
+    render: UI.Panels.FILE_ATTACHMENT,
+    location: 'left',
+  });
+
+  // Text Editing Panel
+  UI.addPanel({
+    dataElement: 'textEditingPanel',
+    render: UI.Panels.TEXT_EDITING,
+    location: 'right',
+  });
+
+  // Left Panel
+  const tabPanel = new UI.Components.TabPanel({
+    dataElement: 'customLeftPanel',
+    panelsList: [
+      {
+        render: 'thumbnailPanel'
+      },
+      {
+        render: 'outlinePanel'
+      },
+      {
+        render: 'bookmarkPanel'
+      },
+      {
+        render: 'layersPanel'
+      },
+      {
+        render: 'signaturePanel'
+      },
+      {
+        render: 'fileAttachmentPanel'
+      },
+    ],
+    location: 'left'
+  });
+
+  UI.addPanel(tabPanel);
+  UI.setPanelWidth('customLeftPanel', 330);
+
+  // Notes Panel
+  UI.addPanel({
+    dataElement: 'notesPanel',
+    render: UI.Panels.NOTES,
+    location: 'right',
+  });
+  UI.setPanelWidth('notesPanel', 330);
+
+  UI.addPanel({
+    dataElement: 'searchPanel',
+    render: UI.Panels.SEARCH,
+    location: 'right',
+  });
+  UI.setPanelWidth('searchPanel', 330);
 
   // * Tool Buttons * //
 
   // ** Common Buttons ** //
-  const undoButton = new instance.UI.Components.PresetButton({ buttonType: instance.UI.PRESET_BUTTON_TYPES.UNDO });
+  const undoButton = new UI.Components.PresetButton({ buttonType: UI.PRESET_BUTTON_TYPES.UNDO });
 
-  const redoButton = new instance.UI.Components.PresetButton({ buttonType: instance.UI.PRESET_BUTTON_TYPES.REDO });
+  const redoButton = new UI.Components.PresetButton({ buttonType: UI.PRESET_BUTTON_TYPES.REDO });
 
-  const eraserToolButton = new instance.UI.Components.ToolButton({
+  const eraserToolButton = new UI.Components.ToolButton({
     dataElement: 'eraserToolButton',
     toolName: Tools.ToolNames.ERASER,
   });
 
-  const formFieldEditButton = new instance.UI.Components.PresetButton({ buttonType: instance.UI.PRESET_BUTTON_TYPES.FORM_FIELD_EDIT });
+  const formFieldEditButton = new UI.Components.PresetButton({ buttonType: UI.PRESET_BUTTON_TYPES.FORM_FIELD_EDIT });
+  const contentEditButton = new UI.Components.PresetButton({ buttonType: instance.UI.PRESET_BUTTON_TYPES.CONTENT_EDIT });
 
   // ** Annotate Tools ** //
-  const underlineToolButton = new instance.UI.Components.ToolButton({
+  const underlineToolButton = new UI.Components.ToolButton({
     dataElement: 'underlineToolButton',
     toolName: Tools.ToolNames.UNDERLINE,
   });
 
-  const highlightToolButton = new instance.UI.Components.ToolButton({
+  const highlightToolButton = new UI.Components.ToolButton({
     dataElement: 'highlightToolButton',
     toolName: Tools.ToolNames.HIGHLIGHT,
   });
 
-  const freeTextToolButton = new instance.UI.Components.ToolButton({
+  const freeTextToolButton = new UI.Components.ToolButton({
     dataElement: 'freeTextToolButton',
     toolName: Tools.ToolNames.FREETEXT,
   });
 
-  const squigglyToolButton = new instance.UI.Components.ToolButton({
+  const squigglyToolButton = new UI.Components.ToolButton({
     dataElement: 'squigglyToolButton',
     toolName: Tools.ToolNames.SQUIGGLY,
   });
 
-  const strikeoutToolButton = new instance.UI.Components.ToolButton({
+  const strikeoutToolButton = new UI.Components.ToolButton({
     dataElement: 'strikeoutToolButton',
     toolName: Tools.ToolNames.STRIKEOUT,
   });
 
   // ** Shapes Tools ** //
-  const rectangleToolButton = new instance.UI.Components.ToolButton({
+  const rectangleToolButton = new UI.Components.ToolButton({
     dataElement: 'rectangleToolButton',
     toolName: Tools.ToolNames.RECTANGLE,
   });
 
-  const freeHandToolButton = new instance.UI.Components.ToolButton({
+  const freeHandToolButton = new UI.Components.ToolButton({
     dataElement: 'freeHandToolButton',
     toolName: Tools.ToolNames.FREEHAND,
   });
 
-  const freeHandHighlightToolButton = new instance.UI.Components.ToolButton({
+  const freeHandHighlightToolButton = new UI.Components.ToolButton({
     dataElement: 'freeHandHighlightToolButton',
     toolName: Tools.ToolNames.FREEHAND_HIGHLIGHT,
   });
 
-  const lineToolButton = new instance.UI.Components.ToolButton({
+  const lineToolButton = new UI.Components.ToolButton({
     dataElement: 'lineToolButton',
     toolName: Tools.ToolNames.LINE,
   });
 
-  const polylineToolButton = new instance.UI.Components.ToolButton({
+  const polylineToolButton = new UI.Components.ToolButton({
     dataElement: 'polylineToolButton',
     toolName: Tools.ToolNames.POLYLINE,
   });
 
-  const arrowToolButton = new instance.UI.Components.ToolButton({
+  const arrowToolButton = new UI.Components.ToolButton({
     dataElement: 'arrowToolButton',
     toolName: Tools.ToolNames.ARROW,
   });
 
-  const arcToolButton = new instance.UI.Components.ToolButton({
+  const arcToolButton = new UI.Components.ToolButton({
     dataElement: 'arcToolButton',
     toolName: Tools.ToolNames.ARC,
   });
 
-  const ellipseToolButton = new instance.UI.Components.ToolButton({
+  const ellipseToolButton = new UI.Components.ToolButton({
     dataElement: 'ellipseToolButton',
     toolName: Tools.ToolNames.ELLIPSE,
   });
 
-  const polygonToolButton = new instance.UI.Components.ToolButton({
+  const polygonToolButton = new UI.Components.ToolButton({
     dataElement: 'polygonToolButton',
     toolName: Tools.ToolNames.POLYGON,
   });
 
-  const cloudToolButton = new instance.UI.Components.ToolButton({
+  const cloudToolButton = new UI.Components.ToolButton({
     dataElement: 'cloudToolButton',
     toolName: Tools.ToolNames.POLYGON_CLOUD,
   });
 
   // ** Insert Tools ** //
-  const rubberStampToolButton = new instance.UI.Components.ToolButton({
+  const rubberStampToolButton = new UI.Components.ToolButton({
     dataElement: 'rubberStampToolButton',
     toolName: Tools.ToolNames.RUBBER_STAMP,
   });
+  const calloutToolButton = new UI.Components.ToolButton({
+    dataElement: 'calloutToolButton',
+    toolName: Tools.ToolNames.CALLOUT,
+  });
+  const calendarToolButton = new UI.Components.ToolButton({
+    dataElement: 'calendarToolButton',
+    toolName: Tools.ToolNames.DATE_FREETEXT,
+  });
+  const signatureCreateToolButton = new UI.Components.ToolButton({
+    dataElement: 'signatureCreateToolButton',
+    toolName: Tools.ToolNames.SIGNATURE,
+  });
+  const fileAttachmentToolButton = new UI.Components.ToolButton({
+    dataElement: 'fileAttachmentButton',
+    toolName: Tools.ToolNames.FILEATTACHMENT
+  });
 
   // ** Redaction Tools ** //
-  const redactionToolButton = new instance.UI.Components.ToolButton({
+  const redactionToolButton = new UI.Components.ToolButton({
     dataElement: 'redactionToolButton',
     toolName: Tools.ToolNames.REDACTION,
   });
 
   // ** Measure Tools ** //
-  const distanceMeasurementToolButton = new instance.UI.Components.ToolButton({
+  const distanceMeasurementToolButton = new UI.Components.ToolButton({
     dataElement: 'distanceMeasurementToolButton',
     toolName: Tools.ToolNames.DISTANCE_MEASUREMENT,
   });
 
-  const arcMeasurementToolButton = new instance.UI.Components.ToolButton({
+  const arcMeasurementToolButton = new UI.Components.ToolButton({
     dataElement: 'arcMeasurementToolButton',
     toolName: Tools.ToolNames.ARC_MEASUREMENT,
   });
 
-  const perimeterMeasurementToolButton = new instance.UI.Components.ToolButton({
+  const perimeterMeasurementToolButton = new UI.Components.ToolButton({
     dataElement: 'perimeterMeasurementToolButton',
     toolName: Tools.ToolNames.PERIMETER_MEASUREMENT,
   });
 
-  const areaMeasurementToolButton = new instance.UI.Components.ToolButton({
+  const areaMeasurementToolButton = new UI.Components.ToolButton({
     dataElement: 'areaMeasurementToolButton',
     toolName: Tools.ToolNames.AREA_MEASUREMENT,
   });
 
-  const ellipseMeasurementToolButton = new instance.UI.Components.ToolButton({
+  const ellipseMeasurementToolButton = new UI.Components.ToolButton({
     dataElement: 'ellipseMeasurementToolButton',
     toolName: Tools.ToolNames.ELLIPSE_MEASUREMENT,
   });
 
-  const rectangularAreaMeasurementToolButton = new instance.UI.Components.ToolButton({
+  const rectangularAreaMeasurementToolButton = new UI.Components.ToolButton({
     dataElement: 'rectangularAreaMeasurementToolButton',
     toolName: Tools.ToolNames.RECTANGULAR_AREA_MEASUREMENT,
   });
 
-  const cloudyRectangularAreaMeasurementToolButton = new instance.UI.Components.ToolButton({
+  const cloudyRectangularAreaMeasurementToolButton = new UI.Components.ToolButton({
     dataElement: 'cloudyRectangularAreaMeasurementToolButton',
     toolName: Tools.ToolNames.CLOUDY_RECTANGULAR_AREA_MEASUREMENT,
   });
 
-  const countMeasurementToolButton = new instance.UI.Components.ToolButton({
+  const countMeasurementToolButton = new UI.Components.ToolButton({
     dataElement: 'countMeasurementToolButton',
     toolName: Tools.ToolNames.COUNT_MEASUREMENT,
   });
 
   // ** Edit Tools ** //
-  const cropToolButton = new instance.UI.Components.ToolButton({
+  const cropToolButton = new UI.Components.ToolButton({
     dataElement: 'cropToolButton',
     toolName: Tools.ToolNames.CROP,
   });
 
   // ** Form Tools ** //
-  const signatureFieldButton = new instance.UI.Components.ToolButton({
+  const signatureFieldButton = new UI.Components.ToolButton({
     dataElement: 'signatureFieldButton',
     toolName: Tools.ToolNames.SIG_FORM_FIELD,
   });
 
-  const textFieldButton = new instance.UI.Components.ToolButton({
+  const textFieldButton = new UI.Components.ToolButton({
     dataElement: 'textFieldButton',
     toolName: Tools.ToolNames.TEXT_FORM_FIELD,
   });
 
-  const checkboxFieldButton = new instance.UI.Components.ToolButton({
+  const checkboxFieldButton = new UI.Components.ToolButton({
     dataElement: 'checkboxFieldButton',
     toolName: Tools.ToolNames.CHECK_BOX_FIELD,
   });
 
-  const radioFieldButton = new instance.UI.Components.ToolButton({
+  const radioFieldButton = new UI.Components.ToolButton({
     dataElement: 'radioFieldButton',
     toolName: Tools.ToolNames.RADIO_FORM_FIELD,
   });
 
-  const listBoxFieldButton = new instance.UI.Components.ToolButton({
+  const listBoxFieldButton = new UI.Components.ToolButton({
     dataElement: 'listBoxFieldButton',
     toolName: Tools.ToolNames.LIST_BOX_FIELD,
   });
 
-  const comboBoxFieldButton = new instance.UI.Components.ToolButton({
+  const comboBoxFieldButton = new UI.Components.ToolButton({
     dataElement: 'comboBoxFieldButton',
     toolName: Tools.ToolNames.COMBO_BOX_FIELD,
+  });
+
+  // ** Content Edit Tools ** //
+  const addParagraphButton = new instance.UI.Components.ToolButton({
+    dataElement: 'addParagraphButton',
+    toolName: Tools.ToolNames.ADD_PARAGRAPH,
+  });
+
+  const addImageContentButton = new instance.UI.Components.ToolButton({
+    dataElement: 'addImageContentButton',
+    toolName: Tools.ToolNames.ADD_IMAGE_CONTENT,
   });
 
 
@@ -255,7 +382,7 @@ Webviewer.WebComponent({
 
   // This group is made up of the style panel, undo, redo, and eraser
   // not all ribbons support these but it DRYs up the code
-  const defaultAnnotationUtilities = new instance.UI.Components.GroupedItems({
+  const defaultAnnotationUtilities = new UI.Components.GroupedItems({
     dataElement: 'defaultAnnotationUtilities',
     items: [
       createDivider(),
@@ -267,7 +394,7 @@ Webviewer.WebComponent({
     ],
   });
   // Each Ribbon item can be linked to one or more grouped items
-  const annotateGroupedItems = new instance.UI.Components.GroupedItems({
+  const annotateGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'annotateGroupedItems',
     justifyContent: 'center',
     items: [
@@ -281,7 +408,7 @@ Webviewer.WebComponent({
     ],
   });
 
-  const shapesGroupedItems = new instance.UI.Components.GroupedItems({
+  const shapesGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'shapesGroupedItems',
     items: [
       rectangleToolButton,
@@ -298,17 +425,23 @@ Webviewer.WebComponent({
     ],
   });
 
-  const insertGroupedItems = new instance.UI.Components.GroupedItems({
+  const insertGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'insertGroupedItems',
     items: [
       rubberStampToolButton,
+      signatureCreateToolButton,
+      fileAttachmentToolButton,
+      calloutToolButton,
+      createDivider(),
+      stylePanelToggle,
+      createDivider(),
       undoButton,
       redoButton,
       eraserToolButton
     ],
   });
 
-  const measureGroupedItems = new instance.UI.Components.GroupedItems({
+  const measureGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'measureGroupedItems',
     items: [
       distanceMeasurementToolButton,
@@ -323,7 +456,17 @@ Webviewer.WebComponent({
     ],
   });
 
-  const formsGroupedItems = new instance.UI.Components.GroupedItems({
+  const contentEditGroupedItems = new UI.Components.GroupedItems({
+    dataElement: 'contentEditGroupedItems',
+    items: [
+      addParagraphButton,
+      addImageContentButton,
+      createDivider(),
+      contentEditButton,
+    ],
+  });
+
+  const formsGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'formsGroupedItems',
     items: [
       signatureFieldButton,
@@ -340,29 +483,24 @@ Webviewer.WebComponent({
     ],
   });
 
-  instance.UI.addPanel({
-    dataElement: 'redactPanel_1',
-    render: instance.UI.Panels.REDACTION,
+  UI.addPanel({
+    dataElement: 'redactionPanel',
+    render: UI.Panels.REDACTION,
     location: 'right',
   });
 
-  instance.UI.addPanel({
-    dataElement: 'notesPanel_1',
-    render: instance.UI.Panels.NOTES,
-    location: 'right',
-  });
+  UI.setPanelWidth('redactionPanel', 330);
 
-  const redactionPanelToggle = new instance.UI.Components.ToggleElementButton(
+  const redactionPanelToggle = new UI.Components.ToggleElementButton(
     {
       type: 'toggleElementButton',
       img: 'icon-redact-panel',
-      element: 'redactPanel_1',
-      dataElement: 'panel2Button',
-      toggleElement: 'redactPanel_1',
+      dataElement: 'redactionPanelToggle',
+      toggleElement: 'redactionPanel',
     },
   );
 
-  const redactionGroupedItems = new instance.UI.Components.GroupedItems({
+  const redactionGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'redactionGroupedItems',
     items: [
       redactionToolButton,
@@ -371,7 +509,7 @@ Webviewer.WebComponent({
     ],
   });
 
-  const editGroupedItems = new instance.UI.Components.GroupedItems({
+  const editGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'editGroupedItems',
     items: [
       cropToolButton,
@@ -381,15 +519,16 @@ Webviewer.WebComponent({
     ],
   });
 
-  const fillAndSignGroupedItems = new instance.UI.Components.GroupedItems({
+  const fillAndSignGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'fillAndSignGroupedItems',
     items: [
       rubberStampToolButton,
+      calendarToolButton,
       defaultAnnotationUtilities
     ],
   });
 
-  const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
+  const groupedLeftHeaderButtons = new UI.Components.GroupedItems({
     dataElement: 'groupedLeftHeaderButtons',
     alwaysVisible: true,
     grow: 1,
@@ -408,7 +547,7 @@ Webviewer.WebComponent({
   });
 
   // Ribbon Items
-  const viewRibbonItem = new instance.UI.Components.RibbonItem({
+  const viewRibbonItem = new UI.Components.RibbonItem({
     dataElement: 'view-ribbon-item',
     label: 'View',
     title: 'View',
@@ -416,7 +555,7 @@ Webviewer.WebComponent({
     type: 'ribbonItem',
     groupedItems: []
   });
-  const annotateRibbonItem = new instance.UI.Components.RibbonItem({
+  const annotateRibbonItem = new UI.Components.RibbonItem({
     dataElement: 'annotations-ribbon-item',
     label: 'Annotate',
     title: 'Annotate',
@@ -425,7 +564,7 @@ Webviewer.WebComponent({
     groupedItems: ['annotateGroupedItems']
   });
 
-  const shapesRibbomItem = new instance.UI.Components.RibbonItem({
+  const shapesRibbomItem = new UI.Components.RibbonItem({
     dataElement: 'shapes-ribbon-item',
     label: 'Shapes',
     title: 'Shapes',
@@ -434,7 +573,7 @@ Webviewer.WebComponent({
     groupedItems: ['shapesGroupedItems']
   });
 
-  const insertRibbonItem = new instance.UI.Components.RibbonItem({
+  const insertRibbonItem = new UI.Components.RibbonItem({
     dataElement: 'insert-ribbon-item',
     label: 'Insert',
     title: 'Insert',
@@ -442,7 +581,7 @@ Webviewer.WebComponent({
     groupedItems: ['insertGroupedItems']
   });
 
-  const measureRibbonItem = new instance.UI.Components.RibbonItem({
+  const measureRibbonItem = new UI.Components.RibbonItem({
     dataElement: 'measure-ribbon-item',
     label: 'Measure',
     title: 'Measure',
@@ -450,7 +589,7 @@ Webviewer.WebComponent({
     groupedItems: ['measureGroupedItems']
   });
 
-  const redactionRibbonItem = new instance.UI.Components.RibbonItem({
+  const redactionRibbonItem = new UI.Components.RibbonItem({
     dataElement: 'redaction-ribbon-item',
     label: 'Redact',
     title: 'Redact',
@@ -458,7 +597,7 @@ Webviewer.WebComponent({
     groupedItems: ['redactionGroupedItems']
   });
 
-  const editRibbonItem = new instance.UI.Components.RibbonItem({
+  const editRibbonItem = new UI.Components.RibbonItem({
     dataElement: 'edit-ribbon-item',
     label: 'Edit',
     title: 'Edit',
@@ -466,7 +605,7 @@ Webviewer.WebComponent({
     groupedItems: ['editGroupedItems']
   });
 
-  const fillAndSignRibbonItem = new instance.UI.Components.RibbonItem({
+  const fillAndSignRibbonItem = new UI.Components.RibbonItem({
     dataElement: 'fillAndSign-ribbon-item',
     label: 'Fill and Sign',
     title: 'Fill and Sign',
@@ -474,7 +613,7 @@ Webviewer.WebComponent({
     groupedItems: ['fillAndSignGroupedItems']
   });
 
-  const formsRibbonItem = new instance.UI.Components.RibbonItem({
+  const formsRibbonItem = new UI.Components.RibbonItem({
     dataElement: 'forms-ribbon-item',
     label: 'Forms',
     title: 'Forms',
@@ -482,8 +621,16 @@ Webviewer.WebComponent({
     groupedItems: ['formsGroupedItems']
   });
 
+  const contentEditRibbonItem = new UI.Components.RibbonItem({
+    dataElement: 'content-edit-ribbon-item',
+    label: 'Content Edit',
+    title: 'Content Edit',
+    toolbarGroup: 'toolbarGroup-EditText',
+    groupedItems: ['contentEditGroupedItems']
+  });
+
   // Ribbon Group
-  const ribbonGroup = new instance.UI.Components.RibbonGroup({
+  const ribbonGroup = new UI.Components.RibbonGroup({
     dataElement: 'default-ribbon-group',
     grow: 2,
     justifyContent: 'start',
@@ -497,6 +644,7 @@ Webviewer.WebComponent({
       redactionRibbonItem,
       measureRibbonItem,
       editRibbonItem,
+      contentEditRibbonItem,
       fillAndSignRibbonItem,
       formsRibbonItem,
     ],
@@ -504,7 +652,7 @@ Webviewer.WebComponent({
 
 
   // Search Panel Toggle
-  const searchPanelToggle = new instance.UI.Components.ToggleElementButton({
+  const searchPanelToggle = new UI.Components.ToggleElementButton({
     dataElement: 'searchPanelToggle',
     toggleElement: 'searchPanel',
     img: 'icon-header-search',
@@ -512,18 +660,15 @@ Webviewer.WebComponent({
   });
 
   // Notes Panel Toggle
-  const notesPanelToggle = new instance.UI.Components.ToggleElementButton(
-    {
-      type: 'toggleElementButton',
-      img: 'icon-header-chat-line',
-      element: 'notesPanel_1',
-      dataElement: 'notes2Button',
-      toggleElement: 'notesPanel_1',
-    },
-  );
+  const notesPanelToggle = new UI.Components.ToggleElementButton({
+    dataElement: 'notesPanelToggle',
+    toggleElement: 'notesPanel',
+    img: 'icon-header-chat-line',
+    title: 'component.notesPanel',
+  });
 
   // Const Primary Header
-  const primaryHeader = new instance.UI.Components.ModularHeader({
+  const primaryHeader = new UI.Components.ModularHeader({
     dataElement: 'default-top-header',
     placement: 'top',
     position: 'start',
@@ -535,7 +680,7 @@ Webviewer.WebComponent({
     ],
   });
 
-  const topToolsHeader = new instance.UI.Components.ModularHeader({
+  const topToolsHeader = new UI.Components.ModularHeader({
     dataElement: 'tools-header',
     placement: 'top',
     justifyContent: 'center',
@@ -547,6 +692,7 @@ Webviewer.WebComponent({
       redactionGroupedItems,
       measureGroupedItems,
       editGroupedItems,
+      contentEditGroupedItems,
       fillAndSignGroupedItems,
       formsGroupedItems,
     ],
@@ -557,7 +703,7 @@ Webviewer.WebComponent({
     type: 'pageControls',
   };
 
-  const bottomHeader = new instance.UI.Components.ModularHeader({
+  const bottomHeader = new UI.Components.ModularHeader({
     dataElement: 'bottomHeader-23ds',
     placement: 'bottom',
     position: 'center',
@@ -569,7 +715,7 @@ Webviewer.WebComponent({
   });
   bottomHeader.setItems([pageNavigationTool]);
 
-  instance.UI.addModularHeaders([
+  UI.addModularHeaders([
     primaryHeader,
     topToolsHeader,
     bottomHeader,

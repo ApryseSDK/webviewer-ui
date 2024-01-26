@@ -87,6 +87,7 @@ export default {
       [DataElements.STYLE_POPUP_LABEL_TEXT_CONTAINER]: true,
       [DataElements.FORM_FIELD_INDICATOR_CONTAINER]: true,
       [DataElements.CUSTOM_MODAL]: true,
+      [DataElements.RICH_TEXT_STYLE_CONTAINER]: true,
     },
     hiddenElements: {},
     panelWidths: {
@@ -98,7 +99,8 @@ export default {
       wv3dPropertiesPanel: 307,
       comparePanel: 330,
       watermarkPanel: 330,
-      stylePanel: 301,
+      stylePanel: 318,
+      signatureListPanel: 330,
     },
     documentContainerWidth: null,
     documentContainerHeight: null,
@@ -1905,6 +1907,7 @@ export default {
         ? JSON.parse(window.localStorage.getItem(`${instanceId}-customColors`))
         : [],
     activeLeftPanel: 'thumbnailsPanel',
+    activeCustomPanel: '',
     activeToolGroup: '',
     notePopupId: '',
     isNoteEditing: false,
@@ -1934,7 +1937,7 @@ export default {
     isReadOnly: getHashParameters('readonly', false),
     customModals: [],
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     useEmbeddedPrint: false,
     pageLabels: [],
     selectedThumbnailPageIndexes: [],
@@ -1956,7 +1959,7 @@ export default {
     },
     measurementScalePreset: getMeasurementScalePreset(),
     isMultipleScalesMode: true,
-    maxSignaturesCount: 4,
+    maxSignaturesCount: 10,
     signatureFonts: ['Satisfy', 'Nothing-You-Could-Do', 'La-Belle-Aurore', 'Whisper'],
     isReplyDisabledFunc: null,
     userData: [],
@@ -2034,11 +2037,12 @@ export default {
     savedSignatureTabEnabled: false,
     replyAttachmentHandler: null,
     customSettings: [],
-    modularHeaders: [],
+    modularHeaders: {},
+    modularComponents: {},
     activeGroupedItems: [],
     fixedGroupedItems: [],
     modularHeadersHeight: {
-      topHeaders: 32,
+      topHeaders: 49,
       bottomHeaders: 32
     },
     modularHeadersWidth: {

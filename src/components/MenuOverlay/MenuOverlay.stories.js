@@ -16,7 +16,7 @@ const initialState = {
       menuOverlay: true
     },
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     menuOverlay: [
       { 'dataElement': 'newDocumentButton' },
       { 'dataElement': 'filePickerButton' },

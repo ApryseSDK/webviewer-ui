@@ -45,7 +45,7 @@ const initialState = {
     customElementOverrides: {},
     openElements: {},
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     flyoutMap: {
       'RibbonOverflowFlyout': {
         'dataElement': 'RibbonOverflowFlyout',
@@ -65,7 +65,7 @@ const initialState = {
     lastPickedToolGroup: {},
     toolButtonObjects: {},
     toolbarGroup: 'toolbarGroup-View',
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40
@@ -92,7 +92,7 @@ const noIconsStore = configureStore({
       viewer: {
         ...initialState.viewer,
         activeFlyout: 'RibbonOverflowFlyoutNoIcons',
-        modularHeaders: [],
+        modularHeaders: {},
         modularHeadersHeight: {
           topHeaders: 40,
           bottomHeaders: 40

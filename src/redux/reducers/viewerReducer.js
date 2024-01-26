@@ -570,7 +570,7 @@ export default (initialState) => (state = initialState, action) => {
     case 'ADD_PANEL':
       return {
         ...state,
-        customFlxPanels: [...state.customFlxPanels, payload.newPanel],
+        genericPanels: [...state.genericPanels, payload.newPanel],
       };
     case 'USE_EMBEDDED_PRINT':
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
@@ -789,6 +789,14 @@ export default (initialState) => (state = initialState, action) => {
         },
       };
     }
+    case 'SET_ACTIVE_CUSTOM_PANEL':
+      return {
+        ...state,
+        activeCustomPanel: {
+          ...state.activeCustomPanel,
+          [payload.wrapperPanel]: payload.tabPanel
+        },
+      };
     case 'SET_RIGHT_HEADER_WIDTH':
       return {
         ...state,

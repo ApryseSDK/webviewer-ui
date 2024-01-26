@@ -14,14 +14,14 @@ const initialState = {
     customElementOverrides: {},
     openElements: {},
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     flyoutMap: {},
     headers: {},
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
     toolButtonObjects: {},
     toolbarGroup: 'toolbarGroup-View',
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40
@@ -133,7 +133,7 @@ export const ribbonGroupDropdown = () => {
   return (
     <Provider store={storeDropdown}>
       <div style={{ display: 'flex', maxWidth: '10%' }}>
-        <RibbonGroup {...props}/>
+        <RibbonGroup {...props} />
       </div>
     </Provider>
   );

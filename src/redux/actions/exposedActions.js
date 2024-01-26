@@ -6,7 +6,7 @@ import { disableElements, enableElements, setActiveFlyout } from 'actions/intern
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
-import { getCustomFlxPanels } from 'selectors/exposedSelectors';
+import { getGenericPanels } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
 import pick from 'lodash/pick';
 import { v4 as uuidv4 } from 'uuid';
@@ -333,11 +333,6 @@ export const setSelectedDisplayedInitialsIndex = (index) => ({
   payload: { index },
 });
 
-export const setSelectedSignature = (signature) => ({
-  type: 'SET_SELECTED_SIGNATURE',
-  payload: { signature },
-});
-
 export const setLeftPanelWidth = (width) => ({
   type: 'SET_LEFT_PANEL_WIDTH',
   payload: { width },
@@ -474,11 +469,11 @@ export const openElement = (dataElement) => (dispatch, getState) => {
     return;
   }
 
-  const flexPanel = state.viewer.customFlxPanels.find((item) => dataElement === item.dataElement);
-  if (flexPanel?.location === 'left' || flexPanel?.location === 'right') {
-    const keys = flexPanel.location === 'left' ? ['leftPanel'] : [...rightPanelList];
-    const flexPanelsInSameLocation = state.viewer.customFlxPanels.filter((item) => item.location === flexPanel?.location && item.dataElement !== flexPanel?.dataElement);
-    flexPanelsInSameLocation.forEach((item) => keys.push(item.dataElement));
+  const genericPanel = state.viewer.genericPanels.find((item) => dataElement === item.dataElement);
+  if (genericPanel?.location === 'left' || genericPanel?.location === 'right') {
+    const keys = genericPanel.location === 'left' ? ['leftPanel'] : [...rightPanelList];
+    const genericPanelsInSameLocation = state.viewer.genericPanels.filter((item) => item.location === genericPanel?.location && item.dataElement !== genericPanel?.dataElement);
+    genericPanelsInSameLocation.forEach((item) => keys.push(item.dataElement));
     dispatch(closeElements(keys));
   }
 
@@ -500,7 +495,7 @@ export const openElement = (dataElement) => (dispatch, getState) => {
     }
 
     if (dataElement === 'leftPanel') {
-      const panels = getCustomFlxPanels(state, 'left');
+      const panels = getGenericPanels(state, 'left');
       const keys = panels.map((item) => item.dataElement);
       dispatch(closeElements(keys));
     }
@@ -569,6 +564,8 @@ export const closeElements = (dataElements) => (dispatch) => {
 const rightPanelList = ['searchPanel', DataElements.NOTES_PANEL, 'comparePanel', 'redactionPanel', 'wv3dPropertiesPanel', 'textEditingPanel', 'watermarkPanel'];
 export const toggleElement = (dataElement) => (dispatch, getState) => {
   const state = getState();
+  const rightGenericPanels = getGenericPanels(state, 'right');
+  const allPanelsOnTheRight = [...rightPanelList, ...rightGenericPanels.map((item) => item.dataElement)];
 
   if (state.viewer.disabledElements[dataElement]?.disabled) {
     return;
@@ -576,15 +573,11 @@ export const toggleElement = (dataElement) => (dispatch, getState) => {
 
   // hack for new ui
   if (!state.viewer.notesInLeftPanel) {
-    if (rightPanelList.includes(dataElement)) {
-      for (const panel of rightPanelList) {
+    if (allPanelsOnTheRight.includes(dataElement)) {
+      for (const panel of allPanelsOnTheRight) {
         if (panel !== dataElement) {
           dispatch(closeElement(panel));
         }
-      }
-      const openFlexPanelsRight = getCustomFlxPanels(state, 'right');
-      for (const panel of openFlexPanelsRight) {
-        dispatch(closeElement(panel.dataElement));
       }
     }
   }

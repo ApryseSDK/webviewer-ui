@@ -6,7 +6,7 @@ import initialState from 'src/redux/initialState';
 import rootReducer from 'reducers/rootReducer';
 import App from 'components/App';
 import Panel from 'components/Panel';
-import { mockHeadersWithStyleButton } from '../ModularComponents/AppStories/mockAppState';
+import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 
 export default {
   title: 'ModularComponents/StylePanel',
@@ -23,7 +23,7 @@ const createStore = (preloadedState) => {
 
 const StylePanelTemplate = ({ mockState, location }) => (
   <Provider store={createStore(mockState)}>
-    <Panel location={location} dataElement={'stylePanel'}>
+    <Panel location={location} dataElement={'stylePanel'} isCustom>
       <StylePanelContainer />
     </Panel>
   </Provider>
@@ -56,9 +56,10 @@ const StylePanelInApp = (location) => {
     ...initialState,
     viewer: {
       ...initialState.viewer,
-      modularHeaders: mockHeadersWithStyleButton,
+      modularHeaders: mockHeadersNormalized,
+      modularComponents: mockModularComponents,
       isInDesktopOnlyMode: true,
-      customFlxPanels: [{
+      genericPanels: [{
         dataElement: 'stylePanel',
         render: 'stylePanel',
         location: location,

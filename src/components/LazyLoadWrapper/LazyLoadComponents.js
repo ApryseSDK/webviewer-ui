@@ -17,6 +17,7 @@ const FormFieldEditPopup = lazy(() => import('components/FormFieldEditPopup'));
 const TextPopup = lazy(() => import('components/TextPopup'));
 const ContextMenuPopup = lazy(() => import('components/ContextMenuPopup'));
 const RichTextPopup = lazy(() => import('components/RichTextPopup'));
+const RichTextStyleEditor = lazy(() => import('components/RichTextStyleEditor'));
 const AudioPlaybackPopup = lazy(() => import('components/AudioPlaybackPopup'));
 const DocumentCropPopup = lazy(() => import('components/DocumentCropPopup'));
 const InlineCommentingPopup = lazy(() => import('components/InlineCommentingPopup'));
@@ -48,8 +49,18 @@ const CustomModal = lazy(() => import('components/CustomModal'));
 const CreatePortfolioModal = lazy(() => import('components/CreatePortfolioModal'));
 
 // Panels
+const GenericOutlinesPanel = lazy(() => import('components/ModularComponents/GenericOutlinesPanel'));
+const SignaturePanel = lazy(() => import('components/SignaturePanel'));
+const BookmarksPanel = lazy(() => import('components/BookmarksPanel'));
+const FileAttachmentPanel = lazy(() => import('components/FileAttachmentPanel'));
+const ThumbnailsPanel = lazy(() => import('components/ThumbnailsPanel'));
+const StylePanel = lazy(() => import('components/StylePanel'));
 const NotesPanel = lazy(() => import('components/NotesPanel'));
 const SearchPanel = lazy(() => import('components/SearchPanel'));
+const TabPanel = lazy(() => import('components/ModularComponents/TabPanel'));
+const SignatureListPanel = lazy(() => import('components/SignatureListPanel'));
+const LeftPanel = lazy(() => import('components/LeftPanel'));
+const RedactionPanel = lazy(() => import('components/RedactionPanel'));
 
 const OfficeEditorToolsHeader = lazy(() => import('components/Header/OfficeEditorToolsHeader'));
 
@@ -60,6 +71,7 @@ const LazyLoadComponents = {
   ContextMenuPopup,
   InlineCommentingPopup,
   RichTextPopup,
+  RichTextStyleEditor,
   AudioPlaybackPopup,
   DocumentCropPopup,
   MeasurementOverlay,
@@ -94,10 +106,20 @@ const LazyLoadComponents = {
   OpenFileModal,
   SignatureValidationModal,
   CustomModal,
+  GenericOutlinesPanel,
+  SignaturePanel,
+  BookmarksPanel,
+  FileAttachmentPanel,
+  ThumbnailsPanel,
+  StylePanel,
   NotesPanel,
   SearchPanel,
+  TabPanel,
+  LeftPanel,
+  RedactionPanel,
   OfficeEditorToolsHeader,
-  CreatePortfolioModal
+  CreatePortfolioModal,
+  SignatureListPanel,
 };
 
 export default LazyLoadComponents;
