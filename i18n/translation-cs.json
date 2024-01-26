@@ -125,7 +125,10 @@
     "readOnlySignature": "Podpis pouze pro čtení nelze smazat",
     "newDocument": "Nový dokument",
     "sideBySideView": "Pohled vedle sebe",
-    "pageNumberInput": "Zadání čísla stránky"
+    "pageNumberInput": "Zadání čísla stránky",
+    "addNewColor": "Přidat novou barvu",
+    "deleteColor": "Smazat vybranou barvu",
+    "copySelectedColor": "Kopírovat vybranou barvu"
   },
   "annotation": {
     "areaMeasurement": "Plocha",
@@ -1305,5 +1308,9 @@
       "signature": "Podpis",
       "initials": "Iniciály"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Známky",
+    "standard": "Standardní razítka"
   }
 }

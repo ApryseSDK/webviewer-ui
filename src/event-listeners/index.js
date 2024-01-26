@@ -23,6 +23,7 @@ import onPagesUpdated from './onPagesUpdated';
 import onLocationSelected from './onLocationSelected';
 import onDotStampAnnotationAdded from './onDotStampAnnotationAdded';
 import onRubberStampAnnotationAdded from './onRubberStampAnnotationAdded';
+import onRubberStampsUpdated from './onRubberStampsUpdated';
 import onReadOnlyModeChanged from './onReadOnlyModeChanged';
 import onPageComplete from './onPageComplete';
 import onFileAttachmentDataAvailable from './onFileAttachmentDataAvailable';
@@ -69,6 +70,7 @@ export {
   onLocationSelected,
   onDotStampAnnotationAdded,
   onRubberStampAnnotationAdded,
+  onRubberStampsUpdated,
   onReadOnlyModeChanged,
   onPageComplete,
   onFileAttachmentAnnotationAdded,

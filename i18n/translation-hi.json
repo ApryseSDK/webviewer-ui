@@ -125,7 +125,10 @@
     "readOnlySignature": "केवल पढ़ने योग्य हस्ताक्षर को हटाया नहीं जा सकता",
     "newDocument": "नया दस्तावेज़",
     "sideBySideView": "अगल-बगल का दृश्य",
-    "pageNumberInput": "पेज नंबर इनपुट"
+    "pageNumberInput": "पेज नंबर इनपुट",
+    "addNewColor": "नया रंग जोड़ें",
+    "deleteColor": "चयनित रंग हटाएँ",
+    "copySelectedColor": "चयनित रंग कॉपी करें"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -1305,5 +1308,9 @@
       "signature": "हस्ताक्षर",
       "initials": "आद्याक्षर"
     }
+  },
+  "rubberStampPanel": {
+    "header": "टिकटों",
+    "standard": "मानक टिकटें"
   }
 }

@@ -125,7 +125,10 @@
     "readOnlySignature": "ลายเซ็นแบบอ่านอย่างเดียวไม่สามารถลบได้",
     "newDocument": "เอกสารใหม่",
     "sideBySideView": "มุมมองด้านข้าง",
-    "pageNumberInput": "การป้อนหมายเลขหน้า"
+    "pageNumberInput": "การป้อนหมายเลขหน้า",
+    "addNewColor": "เพิ่มสีใหม่",
+    "deleteColor": "ลบสีที่เลือก",
+    "copySelectedColor": "คัดลอกสีที่เลือก"
   },
   "annotation": {
     "areaMeasurement": "พื้นที่",
@@ -1305,5 +1308,9 @@
       "signature": "ลายเซ็น",
       "initials": "ชื่อย่อ"
     }
+  },
+  "rubberStampPanel": {
+    "header": "แสตมป์",
+    "standard": "แสตมป์มาตรฐาน"
   }
 }

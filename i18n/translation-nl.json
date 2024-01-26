@@ -125,7 +125,10 @@
     "readOnlySignature": "Alleen-lezen handtekening kan niet worden verwijderd",
     "newDocument": "Nieuw document",
     "sideBySideView": "Zij aan zij weergave",
-    "pageNumberInput": "Invoer van paginanummer"
+    "pageNumberInput": "Invoer van paginanummer",
+    "addNewColor": "Nieuwe kleur toevoegen",
+    "deleteColor": "Geselecteerde kleur verwijderen",
+    "copySelectedColor": "Kopieer geselecteerde kleur"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -1305,5 +1308,9 @@
       "signature": "Handtekening",
       "initials": "Initialen"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Stempels",
+    "standard": "Standaard postzegels"
   }
 }

@@ -117,6 +117,13 @@ Webviewer.WebComponent({
     location: 'left',
   });
 
+  // Stamp panel
+  instance.UI.addPanel({
+    dataElement: 'rubberStampPanel',
+    render: instance.UI.Panels.RUBBER_STAMP,
+    location: 'left',
+  });
+
   // Text Editing Panel
   UI.addPanel({
     dataElement: 'textEditingPanel',

@@ -125,7 +125,10 @@
     "readOnlySignature": "只读签名无法删除",
     "newDocument": "新建文件",
     "sideBySideView": "并排视图",
-    "pageNumberInput": "页码输入"
+    "pageNumberInput": "页码输入",
+    "addNewColor": "添加新颜色",
+    "deleteColor": "删除选定的颜色",
+    "copySelectedColor": "复制选定的颜色"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -1305,5 +1308,9 @@
       "signature": "签名",
       "initials": "缩写"
     }
+  },
+  "rubberStampPanel": {
+    "header": "邮票",
+    "standard": "标准邮票"
   }
 }

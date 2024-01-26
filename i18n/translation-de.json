@@ -125,7 +125,10 @@
     "readOnlySignature": "Die schreibgeschützte Signatur kann nicht gelöscht werden",
     "newDocument": "Neues Dokument",
     "sideBySideView": "Nebeneinander-Ansicht",
-    "pageNumberInput": "Eingabe der Seitenzahl"
+    "pageNumberInput": "Eingabe der Seitenzahl",
+    "addNewColor": "Neue Farbe hinzufügen",
+    "deleteColor": "Ausgewählte Farbe löschen",
+    "copySelectedColor": "Ausgewählte Farbe kopieren"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -1305,5 +1308,9 @@
       "signature": "Unterschrift",
       "initials": "Initialen"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Briefmarken",
+    "standard": "Standardstempel"
   }
 }

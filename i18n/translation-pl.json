@@ -125,7 +125,10 @@
     "readOnlySignature": "Nie można usunąć podpisu tylko do odczytu",
     "newDocument": "Nowy dokument",
     "sideBySideView": "Widok obok siebie",
-    "pageNumberInput": "Wprowadzanie numeru strony"
+    "pageNumberInput": "Wprowadzanie numeru strony",
+    "addNewColor": "Dodaj nowy kolor",
+    "deleteColor": "Usuń wybrany kolor",
+    "copySelectedColor": "Skopiuj wybrany kolor"
   },
   "annotation": {
     "areaMeasurement": "Pomiar powierzchni",
@@ -1305,5 +1308,9 @@
       "signature": "Podpis",
       "initials": "Inicjały"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Znaczki",
+    "standard": "Standardowe znaczki"
   }
 }

@@ -102,6 +102,7 @@ export default {
       watermarkPanel: 330,
       stylePanel: 318,
       signatureListPanel: 330,
+      rubberStampPanel: 330,
     },
     documentContainerWidth: null,
     documentContainerHeight: null,

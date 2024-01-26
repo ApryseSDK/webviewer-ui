@@ -125,7 +125,10 @@
     "readOnlySignature": "Read-only signature cannot be deleted",
     "newDocument": "New Document",
     "sideBySideView": "Side By Side View",
-    "pageNumberInput": "Page number input"
+    "pageNumberInput": "Page number input",
+    "addNewColor": "Add New Color",
+    "deleteColor": "Delete Selected Color",
+    "copySelectedColor": "Copy Selected Color"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -1305,5 +1308,9 @@
       "signature": "Signature",
       "initials": "Initials"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Stamps",
+    "standard": "Standard Stamps"
   }
 }

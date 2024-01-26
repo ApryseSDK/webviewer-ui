@@ -125,7 +125,10 @@
     "readOnlySignature": "La firma de solo lectura no se puede eliminar",
     "newDocument": "Nuevo documento",
     "sideBySideView": "Vista de lado a lado",
-    "pageNumberInput": "Entrada del número de página"
+    "pageNumberInput": "Entrada del número de página",
+    "addNewColor": "Agregar nuevo color",
+    "deleteColor": "Eliminar color seleccionado",
+    "copySelectedColor": "Copiar color seleccionado"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -1305,5 +1308,9 @@
       "signature": "Firma",
       "initials": "Iniciales"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Sellos",
+    "standard": "Sellos estándar"
   }
 }

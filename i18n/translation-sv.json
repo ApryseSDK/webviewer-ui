@@ -125,7 +125,10 @@
     "readOnlySignature": "Skrivskyddad signatur kan inte raderas",
     "newDocument": "Nytt dokument",
     "sideBySideView": "Vy sida vid sida",
-    "pageNumberInput": "Inmatning av sidnummer"
+    "pageNumberInput": "Inmatning av sidnummer",
+    "addNewColor": "Lägg till ny färg",
+    "deleteColor": "Ta bort vald färg",
+    "copySelectedColor": "Kopiera vald färg"
   },
   "annotation": {
     "areaMeasurement": "Område",
@@ -1305,5 +1308,9 @@
       "signature": "Signatur",
       "initials": "Initialer"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Frimärken",
+    "standard": "Standardstämplar"
   }
 }

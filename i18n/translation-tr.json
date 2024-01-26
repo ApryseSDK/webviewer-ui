@@ -125,7 +125,10 @@
     "readOnlySignature": "Salt okunur imza silinemez",
     "newDocument": "Yeni belge",
     "sideBySideView": "Yan Yana Görünüm",
-    "pageNumberInput": "Sayfa numarası girişi"
+    "pageNumberInput": "Sayfa numarası girişi",
+    "addNewColor": "Yeni Renk Ekle",
+    "deleteColor": "Seçilen Rengi Sil",
+    "copySelectedColor": "Seçilen Rengi Kopyala"
   },
   "annotation": {
     "areaMeasurement": "Alan",
@@ -1305,5 +1308,9 @@
       "signature": "İmza",
       "initials": "Baş harfler"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Pullar",
+    "standard": "Standart Pullar"
   }
 }

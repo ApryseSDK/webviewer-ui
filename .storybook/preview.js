@@ -4,6 +4,8 @@ import 'react-quill/dist/quill.snow.css';
 
 import '../src/index.scss';
 import '../src/components/App/App.scss';
+import { approvedStamp } from './static/assets/standardStamps';
+import { customRubberStamps } from './static/assets/customStamps';
 
 // We add this class to the StoryBook root element to mimick how we have
 // structured our classes in the UI, where everythign is wrapped by the App class.
@@ -179,7 +181,12 @@ const mockDocumentViewer = {
   getPageSearchResults: () => [],
 };
 
-core.getTool = () => mockTool;
+core.getTool = (toolName) => {
+  if (toolName === 'AnnotationCreateRubberStamp') {
+    return new MockRubberStampCreateTool();
+  }
+  return mockTool;
+};
 core.setToolMode = noop;
 core.isFullPDFEnabled = () => { return false; };
 core.addEventListener = () => { };
@@ -218,6 +225,35 @@ class MockTool {
 class MockRubberStampCreateTool {
   static FILL_COLORS = ['#4F9964', '#2A85D0', '#D65656'];
   static TEXT_COLORS = ['#FFFFFF', '#000000'];
+  name = 'AnnotationCreateRubberStamp';
+
+  getStandardStampAnnotations = () => [
+    { Icon: 'Approved' },
+    { Icon: 'As Is' },
+    { Icon: 'Completed' },
+    { Icon: 'Confidential' },
+    { Icon: 'Departmental' },
+    { Icon: 'Draft' },
+    { Icon: 'Experimental' },
+    { Icon: 'Expired' },
+    { Icon: 'Final' },
+    { Icon: 'For Comment' },
+    { Icon: 'For Public Release' },
+    { Icon: 'Information Only' },
+    { Icon: 'Not Approved' },
+    { Icon: 'Not For Public Release' },
+    { Icon: 'Preliminary Results' },
+    { Icon: 'Sold' },
+    { Icon: 'Top Secret' },
+    { Icon: 'Void' },
+    { Icon: 'Sign Here' },
+    { Icon: 'Witness' },
+    { Icon: 'Initial Here' },
+    { Icon: 'Accepted' },
+    { Icon: 'Rejected' },
+  ];
+  getPreview = () => approvedStamp;
+  getCustomStampAnnotations = () => customRubberStamps;
 }
 
 window.Core = {
@@ -228,7 +264,7 @@ window.Core = {
   ContentEdit: {
     addEventListener: noop,
     removeEventListener: noop,
-    getContentEditingFonts: noop,
+    getContentEditingFonts: () => Promise.resolve([]),
   },
   annotationManager: mockAnnotationManager,
   AnnotationManager: mockAnnotationManager,

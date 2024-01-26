@@ -125,7 +125,10 @@
     "readOnlySignature": "Підпис лише для читання не можна видалити",
     "newDocument": "Новий документ",
     "sideBySideView": "Пліч-о-пліч",
-    "pageNumberInput": "Введення номера сторінки"
+    "pageNumberInput": "Введення номера сторінки",
+    "addNewColor": "Додати новий колір",
+    "deleteColor": "Видалити вибраний колір",
+    "copySelectedColor": "Копіювати вибраний колір"
   },
   "annotation": {
     "areaMeasurement": "Площа",
@@ -1305,5 +1308,9 @@
       "signature": "Підпис",
       "initials": "Ініціали"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Марки",
+    "standard": "Стандартні штампи"
   }
 }

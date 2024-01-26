@@ -16,6 +16,8 @@ const DataElements = {
   STYLE_OPTION: 'styleOption',
   STYLE_POPUP: 'stylePopup',
   STYLE_PANEL: 'stylePanel',
+  SIGNATURE_LIST_PANEL: 'signatureListPanel',
+  RUBBER_STAMP_PANEL: 'rubberStampPanel',
   SCALE_INPUT_CONTAINER: 'scaleInputContainer',
   PRECISION_INPUT_CONTAINER: 'precisionInputContainer',
   STYLE_POPUP_TEXT_STYLE_CONTAINER: 'stylePopupTextStyleContainer',
@@ -57,6 +59,7 @@ const DataElements = {
   PORTFOLIO_ADD_FILE: 'portfolioAddFile',
   PORTFOLIO_ADD_FOLDER: 'portfolioAddFolder',
   PORTFOLIO_ADD_NEW_BUTTON: 'portfolioAddNewButton',
+  RICH_TEXT_STYLE_CONTAINER: 'richTextStyleContainer',
   CALIBRATION_POPUP_BUTTON: 'calibratePopupButton',
   CALIBRATION_MODAL: 'calibrationModal',
 
@@ -87,6 +90,7 @@ const DataElements = {
   SIGNATURE_OVERLAY: 'signatureOverlay',
   REDACTION_OVERLAY: 'redactionOverlay',
   ANNOTATION_CONTENT_OVERLAY: 'annotationContentOverlay',
+  THUMBNAILS_PANEL: 'thumbnailsPanel',
   THUMBNAILS_CONTROL_ROTATE_POPUP_TRIGGER: 'thumbnailsControlRotatePopupTrigger',
   THUMBNAILS_CONTROL_MANIPULATE_POPUP: 'thumbnailsControlManipulatePopup',
   THUMBNAILS_CONTROL_MANIPULATE_POPUP_TRIGGER: 'thumbnailsControlManipulatePopupTrigger',
@@ -110,6 +114,7 @@ const DataElements = {
   INLINE_COMMENT_POPUP: 'inlineCommentPopup',
   TOOL_STYLE_POPUP: 'toolStylePopup',
   RICH_TEXT_POPUP: 'richTextPopup',
+  RICH_TEXT_EDITOR: 'richTextEditor',
   AUDIO_PLAYBACK_POPUP: 'audioPlaybackPopup',
   DOCUMENT_CROP_POPUP: 'documentCropPopup',
   SNIPPING_TOOL_POPUP: 'snippingToolPopup',
@@ -243,6 +248,10 @@ const DataElements = {
   PRINT_PRESET_BUTTON: 'printPresetButton',
   CREATE_PORTFOLIO_PRESET_BUTTON: 'createPortfolioPresetButton',
   SETTINGS_PRESET_BUTTON: 'settingsPresetButton',
+  FORM_FIELD_EDIT_PRESET_BUTTON: 'formFieldEditPresetButton',
+
+  // Rubber Stamp Panel
+  CREATE_RUBBER_STAMP_BUTTON: 'createRubberStampButton',
 };
 
 DataElements.TOOLBAR_GROUPS = [

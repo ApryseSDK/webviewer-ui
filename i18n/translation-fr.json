@@ -125,7 +125,10 @@
     "readOnlySignature": "La signature en lecture seule ne peut pas être supprimée",
     "newDocument": "Nouveau document",
     "sideBySideView": "Vue côte à côte",
-    "pageNumberInput": "Saisie du numéro de page"
+    "pageNumberInput": "Saisie du numéro de page",
+    "addNewColor": "Ajouter une nouvelle couleur",
+    "deleteColor": "Supprimer la couleur sélectionnée",
+    "copySelectedColor": "Copier la couleur sélectionnée"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -1305,5 +1308,9 @@
       "signature": "Signature",
       "initials": "Initiales"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Timbres",
+    "standard": "Timbres standards"
   }
 }

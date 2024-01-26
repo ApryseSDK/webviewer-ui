@@ -50,7 +50,7 @@ import useOnInlineCommentPopupOpen from 'hooks/useOnInlineCommentPopupOpen';
 import useOnRightClickAnnotation from 'hooks/useOnRightClickAnnotation';
 import useOnAnnotationContentOverlayOpen from 'hooks/useOnAnnotationContentOverlayOpen';
 import useOnAnnotationCreateSignatureToolMode from 'hooks/useOnAnnotationCreateSignatureToolMode';
-
+import useOnAnnotationCreateRubberStampToolMode from 'hooks/useOnAnnotationCreateRubberStampToolMode';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
@@ -102,7 +102,8 @@ const App = ({ removeEventHandlers }) => {
   ], shallowEqual);
 
   const { customizableUI } = featureFlags;
-
+  useOnAnnotationCreateRubberStampToolMode();
+  useOnAnnotationCreateSignatureToolMode();
   useEffect(() => {
     const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
     if (isOfficeEditingEnabled && isMobileDevice) {
@@ -294,7 +295,9 @@ const App = ({ removeEventHandlers }) => {
       case panelNames.TABS:
         return <LazyLoadWrapper Component={LazyLoadComponents.TabPanel} dataElement={dataElement} />;
       case panelNames.SIGNATURE_LIST:
-        return <LazyLoadWrapper Component={LazyLoadComponents.SignatureListPanel} dataElement={dataElement} onOpenHook={useOnAnnotationCreateSignatureToolMode} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.SignatureListPanel} dataElement={dataElement} />;
+      case panelNames.RUBBER_STAMP:
+        return <LazyLoadWrapper Component={LazyLoadComponents.RubberStampPanel} dataElement={dataElement} />;
     }
   };
 

@@ -125,7 +125,10 @@
     "readOnlySignature": "只讀簽名無法刪除",
     "newDocument": "新建文件",
     "sideBySideView": "並排視圖",
-    "pageNumberInput": "頁碼輸入"
+    "pageNumberInput": "頁碼輸入",
+    "addNewColor": "新增顏色",
+    "deleteColor": "刪除選取的顏色",
+    "copySelectedColor": "複製選定的顏色"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -1305,5 +1308,9 @@
       "signature": "簽名",
       "initials": "縮寫"
     }
+  },
+  "rubberStampPanel": {
+    "header": "郵票",
+    "standard": "標準郵票"
   }
 }

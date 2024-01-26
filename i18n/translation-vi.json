@@ -125,7 +125,10 @@
     "readOnlySignature": "Không thể xóa chữ ký chỉ đọc",
     "newDocument": "Tài liệu mới",
     "sideBySideView": "Xem cạnh nhau",
-    "pageNumberInput": "Nhập số trang"
+    "pageNumberInput": "Nhập số trang",
+    "addNewColor": "Thêm màu mới",
+    "deleteColor": "Xóa màu đã chọn",
+    "copySelectedColor": "Sao chép màu đã chọn"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -1305,5 +1308,9 @@
       "signature": "Chữ ký",
       "initials": "Tên viết tắt"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Tem",
+    "standard": "Tem tiêu chuẩn"
   }
 }

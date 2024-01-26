@@ -12,12 +12,14 @@
     margin-right: 0px;
     padding-top: 12px;
   }
+
   .custom-stamp-panel {
     max-height: 270px;
     overflow: auto;
     margin-bottom: 8px;
 
   }
+
   .standard-stamp-panel {
     display: flex;
     align-items: center;
@@ -28,15 +30,16 @@
     max-height: 300px;
     overflow-y: scroll;
   }
+
   .standard-stamp-panel {
     @include mobile {
       height: 236px;
       width: 300px;
     }
   }
-  .custom-stamp-panel {
 
-  }
+  .custom-stamp-panel {}
+
   .rubber-stamp {
     @include button-reset;
     border-radius: 4px;
@@ -45,6 +48,10 @@
 
     &:hover {
       background: var(--popup-button-hover);
+    }
+
+    &.active {
+      background: var(--tools-overlay-button-active);
     }
 
     img {
@@ -62,6 +69,7 @@
     @include mobile {
       justify-content: center;
     }
+
     .icon {
       @include button-reset;
       display: flex;
@@ -76,11 +84,13 @@
         background: var(--tools-overlay-button-hover);
       }
     }
+
     .custom-stamp {
       @include button-reset;
       flex-shrink: initial;
     }
   }
+
   .stamp-row-content {
     width: 162px;
     border-radius: 4px;
@@ -94,6 +104,7 @@
     img {
       max-width: 100%;
       max-height: 100%;
+
       @include ie11 {
         // using this notation for IE11 purposes
         flex-grow: 1;
@@ -106,10 +117,12 @@
         background: var(--popup-button-hover);
       }
     }
+
     &.interactable {
       &:hover {
         background: var(--tools-overlay-button-hover);
       }
+
       &.active {
         background: var(--tools-overlay-button-active);
       }
@@ -122,17 +135,20 @@
 
   .stamp-row-content.add-btn {
     background-color: transparent;
+
     @include mobile {
-      width: 90vw;
+      width: 90%;
       margin-right: 0px;
     }
   }
+
   .tab-header {
     @include mobile {
       width: 300px;
       margin: auto;
     }
   }
+
   .tab-list {
     display: flex;
     margin-bottom: 16px;
@@ -154,6 +170,7 @@
       flex: 1;
       border-radius: 0px;
       cursor: pointer;
+      padding: 0 10px;
 
       &:first-child {
         border-bottom-left-radius: 4px;

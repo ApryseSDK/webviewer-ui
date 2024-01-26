@@ -125,7 +125,10 @@
     "readOnlySignature": "Tanda tangan hanya-baca tidak dapat dihapus",
     "newDocument": "Dokumen Baru",
     "sideBySideView": "Tampilan Berdampingan",
-    "pageNumberInput": "Masukan nomor halaman"
+    "pageNumberInput": "Masukan nomor halaman",
+    "addNewColor": "Tambahkan Warna Baru",
+    "deleteColor": "Hapus Warna yang Dipilih",
+    "copySelectedColor": "Salin Warna yang Dipilih"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -1305,5 +1308,9 @@
       "signature": "Tanda tangan",
       "initials": "Inisial"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Perangko",
+    "standard": "Perangko Standar"
   }
 }

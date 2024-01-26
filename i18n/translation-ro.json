@@ -125,7 +125,10 @@
     "readOnlySignature": "Semnătura numai pentru citire nu poate fi ștearsă",
     "newDocument": "Document nou",
     "sideBySideView": "Vedere alăturată",
-    "pageNumberInput": "Introducerea numărului paginii"
+    "pageNumberInput": "Introducerea numărului paginii",
+    "addNewColor": "Adăugați o nouă culoare",
+    "deleteColor": "Ștergeți culoarea selectată",
+    "copySelectedColor": "Copiați culoarea selectată"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -1305,5 +1308,9 @@
       "signature": "Semnătură",
       "initials": "Inițiale"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Timbre",
+    "standard": "Timbre standard"
   }
 }

@@ -13,6 +13,7 @@ import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import handleFreeTextAutoSizeToggle from 'helpers/handleFreeTextAutoSizeToggle';
 import getTextDecoration from 'helpers/getTextDecoration';
 import { shouldHideStylePanelOptions, stylePanelSectionTitles } from 'helpers/stylePanelHelper';
+import defaultTool from 'constants/defaultTool';
 
 const StylePanel = () => {
   const [t] = useTranslation();
@@ -47,6 +48,14 @@ const StylePanel = () => {
   const annotationCreateToolNames = getAnnotationCreateToolNames();
   const [showLineStyleOptions, setShowLineStyleOptions] = useState(false);
   const [isAutoSizeFont, setIsAutoSizeFont] = useState(style.isAutoSizeFont);
+  const currentTool = core.getToolMode();
+  const [activeTool, setActiveTool] = useState('Edit');
+
+  useEffect(() => {
+    if (currentTool?.name === 'AnnotationCreateRubberStamp') {
+      core.setToolMode(defaultTool);
+    }
+  }, [currentTool]);
 
   const getStrokeStyle = (annot) => {
     const style = annot['Style'];
@@ -83,6 +92,7 @@ const StylePanel = () => {
           }
           setNoToolStyle(false);
 
+          setActiveTool(annotations[0].ToolName);
           setIsEllipse(annotations[0] instanceof window.Core.Annotations.EllipseAnnotation);
           setIsFreeText(annotations[0] instanceof window.Core.Annotations.FreeTextAnnotation);
           setIsRedaction(annotations[0] instanceof window.Core.Annotations.RedactionAnnotation);
@@ -117,6 +127,8 @@ const StylePanel = () => {
           }
           setNoToolStyle(false);
 
+          setActiveTool(newTool.name);
+
           setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(newTool.name)).hasLineEndings);
 
           setIsEllipse(newTool.name === window.Core.Tools.ToolNames.ELLIPSE);
@@ -124,7 +136,7 @@ const StylePanel = () => {
           setIsRedaction(newTool.name === window.Core.Tools.ToolNames.REDACTION);
           setIsFreeHand(
             newTool.name === window.Core.Tools.ToolNames.FREEHAND ||
-              newTool.name === window.Core.Tools.ToolNames.FREEHAND_HIGHLIGHT,
+            newTool.name === window.Core.Tools.ToolNames.FREEHAND_HIGHLIGHT,
           );
           setIsArc(newTool.name === window.Core.Tools.ToolNames.ARC);
           setIsInFormFieldCreationMode(core.getFormFieldCreationManager().isInFormFieldCreationMode());
@@ -390,6 +402,7 @@ const StylePanel = () => {
           onFreeTextSizeToggle={handleAutoSize}
           isFreeTextAutoSize={isAutoSizeFont}
           handleRichTextStyleChange={handleRichTextStyleChange}
+          activeTool={activeTool}
         />
       )}
     </>

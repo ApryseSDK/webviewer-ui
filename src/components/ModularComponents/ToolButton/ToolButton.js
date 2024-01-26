@@ -15,6 +15,7 @@ import defaultTool from 'constants/defaultTool';
 import { shortcutAria } from 'helpers/hotkeysManager';
 import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
+import DataElements from 'src/constants/dataElement';
 
 const ToolButton = (props) => {
   const {
@@ -29,37 +30,52 @@ const ToolButton = (props) => {
     toolName,
     isFlyoutItem = false,
   } = props;
+
   const [
-    isActive,
+    activeToolName,
     iconColorKey,
     toolButtonObject,
     customOverrides,
     // use this so that state gets updated when active tool styles change
     activeToolStyles, // eslint-disable-line no-unused-vars
+    isSignatureListPanelOpen,
+    isRubberStampPanelOpen,
   ] = useSelector(
     (state) => [
-      selectors.getActiveToolName(state) === toolName,
+      selectors.getActiveToolName(state),
       selectors.getIconColor(state, mapToolNameToKey(toolName)),
       selectors.getToolButtonObject(state, toolName),
       selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
       selectors.getActiveToolStyles(state),
+      selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL),
+      selectors.isElementOpen(state, DataElements.RUBBER_STAMP_PANEL),
     ],
     shallowEqual,
   );
 
+  const isActive = (toolName === 'AnnotationCreateSignature' && isSignatureListPanelOpen) ||
+    (toolName === 'AnnotationCreateRubberStamp' && isRubberStampPanelOpen) ||
+    activeToolName === toolName;
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
   const handleClick = () => {
     if (isActive) {
-      dispatch(actions.setLastPickedToolForCustomRibbon(''));
+      if (toolName === 'AnnotationCreateSignature') {
+        dispatch(actions.closeElement(DataElements.SIGNATURE_LIST_PANEL));
+      } else if (toolName === 'AnnotationCreateRubberStamp') {
+        dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
+      }
       core.setToolMode(defaultTool);
     } else {
-      dispatch(actions.setLastPickedToolForCustomRibbon(toolName));
-      core.setToolMode(toolName);
-      if (toolName === 'AnnotationCreateRubberStamp') {
-        dispatch(actions.openElement('toolStylePopup'));
+      if (toolName === 'AnnotationCreateSignature') {
+        dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
+      } else if (toolName === 'AnnotationCreateRubberStamp') {
+        dispatch(actions.openElement(DataElements.RUBBER_STAMP_PANEL));
+      } else {
+        dispatch(actions.setLastPickedToolForCustomRibbon(toolName));
       }
+      core.setToolMode(toolName === 'AnnotationCreateSignature' || toolName === 'AnnotationCreateRubberStamp' ? defaultTool : toolName);
     }
   };
 
@@ -93,7 +109,7 @@ const ToolButton = (props) => {
     return (
       <div className="menu-container" onClick={handleClick}>
         <div className="icon-label-wrapper">
-          <Icon glyph={icon} className="menu-icon"/>
+          <Icon glyph={icon} className="menu-icon" />
           {displayTitle && <div className="flyout-item-label">{displayTitle}</div>}
         </div>
         {ariaKeyshortcuts && <span className="hotkey-wrapper">{`(${ariaKeyshortcuts})`}</span>}

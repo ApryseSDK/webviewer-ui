@@ -125,7 +125,10 @@
     "readOnlySignature": "Tandatangan baca sahaja tidak boleh dipadamkan",
     "newDocument": "Dokumen Baharu",
     "sideBySideView": "Pandangan Sebelah",
-    "pageNumberInput": "Input nombor halaman"
+    "pageNumberInput": "Input nombor halaman",
+    "addNewColor": "Tambah Warna Baru",
+    "deleteColor": "Padamkan Warna yang Dipilih",
+    "copySelectedColor": "Salin Warna yang Dipilih"
   },
   "annotation": {
     "areaMeasurement": "kawasan",
@@ -1305,5 +1308,9 @@
       "signature": "Tandatangan",
       "initials": "Inisial"
     }
+  },
+  "rubberStampPanel": {
+    "header": "setem",
+    "standard": "Setem Standard"
   }
 }

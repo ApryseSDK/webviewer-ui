@@ -125,7 +125,10 @@
     "readOnlySignature": "A csak olvasható aláírás nem törölhető",
     "newDocument": "Új dokumentum",
     "sideBySideView": "Oldalnézet",
-    "pageNumberInput": "Oldalszám bevitele"
+    "pageNumberInput": "Oldalszám bevitele",
+    "addNewColor": "Új szín hozzáadása",
+    "deleteColor": "A kiválasztott szín törlése",
+    "copySelectedColor": "Másolja a kiválasztott színt"
   },
   "annotation": {
     "areaMeasurement": "Terület",
@@ -1305,5 +1308,9 @@
       "signature": "Aláírás",
       "initials": "Monogram"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Bélyegek",
+    "standard": "Szabványos bélyegek"
   }
 }

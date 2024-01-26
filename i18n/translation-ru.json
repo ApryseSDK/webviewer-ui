@@ -125,7 +125,10 @@
     "readOnlySignature": "Подпись только для чтения не может быть удалена",
     "newDocument": "Новый документ",
     "sideBySideView": "Вид сбоку",
-    "pageNumberInput": "Ввод номера страницы"
+    "pageNumberInput": "Ввод номера страницы",
+    "addNewColor": "Добавить новый цвет",
+    "deleteColor": "Удалить выбранный цвет",
+    "copySelectedColor": "Копировать выбранный цвет"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -1305,5 +1308,9 @@
       "signature": "Подпись",
       "initials": "Инициалы"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Марки",
+    "standard": "Стандартные марки"
   }
 }

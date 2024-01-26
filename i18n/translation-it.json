@@ -125,7 +125,10 @@
     "readOnlySignature": "La firma di sola lettura non può essere eliminata",
     "newDocument": "Nuovo documento",
     "sideBySideView": "Vista affiancata",
-    "pageNumberInput": "Inserimento del numero di pagina"
+    "pageNumberInput": "Inserimento del numero di pagina",
+    "addNewColor": "Aggiungi nuovo colore",
+    "deleteColor": "Elimina il colore selezionato",
+    "copySelectedColor": "Copia il colore selezionato"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -1305,5 +1308,9 @@
       "signature": "Firma",
       "initials": "Iniziali"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Francobolli",
+    "standard": "Francobolli standard"
   }
 }

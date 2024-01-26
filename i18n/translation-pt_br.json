@@ -125,7 +125,10 @@
     "readOnlySignature": "A assinatura somente leitura não pode ser excluída",
     "newDocument": "Novo Documento",
     "sideBySideView": "Vista lado a lado",
-    "pageNumberInput": "Entrada do número da página"
+    "pageNumberInput": "Entrada do número da página",
+    "addNewColor": "Adicionar nova cor",
+    "deleteColor": "Excluir cor selecionada",
+    "copySelectedColor": "Copiar cor selecionada"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -1305,5 +1308,9 @@
       "signature": "Assinatura",
       "initials": "Iniciais"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Selos",
+    "standard": "Selos padrão"
   }
 }

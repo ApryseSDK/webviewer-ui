@@ -125,7 +125,10 @@
     "readOnlySignature": "Η υπογραφή μόνο για ανάγνωση δεν μπορεί να διαγραφεί",
     "newDocument": "Νέο Έγγραφο",
     "sideBySideView": "Άποψη δίπλα δίπλα",
-    "pageNumberInput": "Εισαγωγή αριθμού σελίδας"
+    "pageNumberInput": "Εισαγωγή αριθμού σελίδας",
+    "addNewColor": "Προσθήκη νέου χρώματος",
+    "deleteColor": "Διαγραφή επιλεγμένου χρώματος",
+    "copySelectedColor": "Αντιγραφή επιλεγμένου χρώματος"
   },
   "annotation": {
     "areaMeasurement": "Περιοχή",
@@ -1305,5 +1308,9 @@
       "signature": "Υπογραφή",
       "initials": "Αρχικά"
     }
+  },
+  "rubberStampPanel": {
+    "header": "Γραμματόσημα",
+    "standard": "Πρότυπα γραμματόσημα"
   }
 }

@@ -125,7 +125,10 @@
     "readOnlySignature": "শুধুমাত্র পঠনযোগ্য স্বাক্ষর মুছে ফেলা যাবে না",
     "newDocument": "নতুন নথি",
     "sideBySideView": "সাইড বাই সাইড ভিউ",
-    "pageNumberInput": "পৃষ্ঠা নম্বর ইনপুট"
+    "pageNumberInput": "পৃষ্ঠা নম্বর ইনপুট",
+    "addNewColor": "নতুন রঙ যোগ করুন",
+    "deleteColor": "নির্বাচিত রঙ মুছুন",
+    "copySelectedColor": "নির্বাচিত রঙ অনুলিপি করুন"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -1305,5 +1308,9 @@
       "signature": "স্বাক্ষর",
       "initials": "আদ্যক্ষর"
     }
+  },
+  "rubberStampPanel": {
+    "header": "স্ট্যাম্প",
+    "standard": "স্ট্যান্ডার্ড স্ট্যাম্প"
   }
 }

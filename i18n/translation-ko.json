@@ -125,7 +125,10 @@
     "readOnlySignature": "읽기 전용 서명은 삭제할 수 없습니다.",
     "newDocument": "새 문서",
     "sideBySideView": "나란히 보기",
-    "pageNumberInput": "페이지 번호 입력"
+    "pageNumberInput": "페이지 번호 입력",
+    "addNewColor": "새로운 색상 추가",
+    "deleteColor": "선택한 색상 삭제",
+    "copySelectedColor": "선택한 색상 복사"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -1305,5 +1308,9 @@
       "signature": "서명",
       "initials": "머리 글자"
     }
+  },
+  "rubberStampPanel": {
+    "header": "우표",
+    "standard": "표준 스탬프"
   }
 }
