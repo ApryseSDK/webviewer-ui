@@ -14,8 +14,9 @@
     overflow-x: hidden;
     z-index: 200;
     background-color: var(--component-background);
-    min-width: 224px;
+    min-width: 168px;
     max-width: 328px;
+    padding: 4px 0;
     font-size: var(--font-size-default);
     font-family: var(--font-family);
     border: 1px solid var(--divider);
@@ -24,18 +25,23 @@
     text-overflow: ellipsis;
 
     .divider {
+      margin: 6px 0;
       width: 100%;
       height: 1px;
       background-color: var(--divider);
     }
 
     .flyout-item-container {
-      height: 40px;
+      height: 32px;
+      margin: 4px 0;
       display: flex;
       flex-direction: row;
       align-items: center;
       width: 100%;
-      cursor: pointer;
+
+      &:active, &.active {
+        background-color: var(--blue-2);
+      }
 
       .Icon, .menu-icon {
         width: 24px;
@@ -52,10 +58,8 @@
         display: flex;
       }
 
-      .menu-icon,
-      .Icon svg path {
+      .menu-icon.Icon svg path {
         justify-self: flex-start;
-        fill: var(--icon-color);
       }
 
       .menu-container {
@@ -72,28 +76,33 @@
           display: flex;
           align-items: center;
         }
+
+        &:hover:not([disabled]) {
+          background-color: var(--blue-1);
+          cursor: pointer;
+        }
+  
+        &:active, &.active {
+          background-color: var(--blue-2);
+  
+          .Icon svg path {
+            color: var(--blue-6);
+          }
+  
+          .flyout-item-label {
+            color: var(--blue-6);
+          }
+        }
+
+        &[disabled] {
+          opacity: 0.5;
+        }
       }
 
       .flyout-item-label {
         justify-self: flex-start;
         font-size: var(--font-size-default);
         color: var(--gray-8);
-      }
-
-      &:hover {
-        background-color: var(--blue-1);
-      }
-
-      &:active, &.active {
-        background-color: var(--blue-2);
-
-        .Icon svg path {
-          fill: var(--blue-6);
-        }
-
-        .flyout-item-label {
-          color: var(--blue-6);
-        }
       }
 
       .ZoomItem {
@@ -113,6 +122,11 @@
         margin-left: 8px;
         margin-right: 2px;
       }
+    }
+
+    .flyout-label {
+      padding: 8px 18px 8px 12px;
+      font-weight: bold;
     }
   }
 
@@ -134,7 +148,11 @@
     }
 
     &:active {
-      background-color: var(--blue-3);
+      color: var(--blue-6);
+
+      .Icon svg path {
+        fill: var(--blue-6);
+      }
     }
   }
 }

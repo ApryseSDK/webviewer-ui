@@ -60,6 +60,7 @@ const initialState = {
     },
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: 'RibbonOverflowFlyout',
+    activeCustomPanel: '',
     headers: {},
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
@@ -92,6 +93,7 @@ const noIconsStore = configureStore({
       viewer: {
         ...initialState.viewer,
         activeFlyout: 'RibbonOverflowFlyoutNoIcons',
+        activeCustomPanel: '',
         modularHeaders: {},
         modularHeadersHeight: {
           topHeaders: 40,

@@ -117,6 +117,7 @@ const initialState = {
     },
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: 'GroupedToolsOverflowFlyout',
+    activeCustomPanel: '',
     headers: {},
     lastPickedToolForGroup: {},
     modularHeaders: {},

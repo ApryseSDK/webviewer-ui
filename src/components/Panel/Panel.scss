@@ -24,20 +24,50 @@
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     z-index: 95;
   }
 
   .flx-Panel-container {
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 20px;
+    overflow-y: auto;
+
+    // fixes for generic versions of panels
+    .bookmark-outline-panel {
+      padding: 0;
+    }
+
+    .thumbnail-slider-container {
+      width: 100%;
+    }
+
+    .documentControls {
+      margin-top: 16px;
+      border-top: 1.5px solid var(--border);
+      .divider {
+        display: none;
+      }
+    }
+
+    .documentControlsInput {
+      input, .documentControlsButton {
+        height: 32px;
+      }
+    }
+
+    .documentControlsInput, 
+    .bookmark-outline-footer {
+      padding: 12px 0 20px 0;
+    }
+    ////////////////////////////////
 
     @include mobile {
       padding-top: 0px;
-      width: 100vw;
-      min-width: 100vw;
+      width: 100%;
+      min-width: 100%;
 
       .close-container {
         display: flex;
@@ -77,9 +107,4 @@
   &.left.closed {
     transform: translateX(-100%);
   }
-}
-
-.flx-Panel .ThumbnailsPanel,
-.flx-Panel .documentControlsContainer {
-  margin: 0 16px;
 }

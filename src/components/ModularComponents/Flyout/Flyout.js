@@ -17,6 +17,7 @@ import ToolGroupButton from '../ToolGroupButton';
 import PageControlsFlyout from '../PageControls/PageControlsFlyout';
 import { getIconDOMElement, getSubMenuDOMElement } from '../Helpers/responsiveness-helper';
 import { getFlyoutPositionOnElement } from 'helpers/flyoutHelper';
+import PresetButton from '../PresetButton';
 
 const Flyout = () => {
   const { t } = useTranslation();
@@ -40,6 +41,7 @@ const Flyout = () => {
     selectors.getBottomHeadersHeight(state),
     selectors.getCurrentPage(state),
   ]);
+  const activeCustomPanel = useSelector((state) => selectors.getActiveCustomPanel(state, activeFlyout.split('-flyout')[0]));
   const flyoutProperties = flyoutMap[activeFlyout];
   const horizontalHeadersUsedHeight = topHeadersHeight + bottomHeadersHeight + DEFAULT_GAP;
   const {
@@ -126,9 +128,11 @@ const Flyout = () => {
   };
 
   const renderFlyoutItem = (flyoutItem, index, isChild = false) => {
+    const itemIsAPanelTab = !!flyoutItem.tabPanel;
     const itemIsATool = !!flyoutItem.toolName;
     const itemIsAToolGroup = !!flyoutItem.toolGroup;
     const itemIsARibbonItem = flyoutItem.type === ITEM_TYPE.RIBBON_ITEM;
+    const itemIsAPresetButton = flyoutItem.type === ITEM_TYPE.PRESET_BUTTON;
     const itemIsAZoomOptionsButton = flyoutItem.dataElement === 'zoomOptionsButton' || flyoutItem.className === 'ZoomFlyoutMenu';
     const itemIsPageNavButton = flyoutItem.dataElement === 'pageNavigationButton';
     const itemsToRender = isChild ? activeItem.children : items;
@@ -168,7 +172,13 @@ const Flyout = () => {
       />;
       return getFlyoutItemWrapper(ribbonItemElement);
     }
-
+    if (itemIsAPresetButton) {
+      const presetButtonElement = <PresetButton
+        buttonType={flyoutItem.dataElement}
+        isFlyoutItem={true}
+        iconDOMElement={getIconDOMElement(flyoutItem, itemsToRender)}/>;
+      return getFlyoutItemWrapper(presetButtonElement);
+    }
     if (itemIsAZoomOptionsButton) {
       const hasImg = !!flyoutItem.img || !!flyoutItem.icon;
       const zoomOptionsElement = (
@@ -203,9 +213,10 @@ const Flyout = () => {
     }
 
     return (flyoutItem === ITEM_TYPE.DIVIDER ? <div className="divider" key={`divider-${index}`} /> : (
-      <div key={flyoutItem.label} className={classNames({
+      <div key={flyoutItem.label || flyoutItem.dataElement} className={classNames({
         'flyout-item-container': true,
-        'active': flyoutItem.isActive,
+        'active': flyoutItem.isActive
+           || itemIsAPanelTab && activeCustomPanel === flyoutItem.dataElement,
       })}
       data-element={flyoutItem.dataElement} onClick={onClickHandler(flyoutItem, isChild, index)}>
         <div className="menu-container">

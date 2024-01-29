@@ -76,6 +76,7 @@ const initialState = {
     customPanels: [],
     genericPanels: [],
     activeFlyout: 'MainMenuFlyout',
+    activeCustomPanel: '',
     flyoutPosition: { x: 0, y: 0 },
     modularHeadersHeight: {
       topHeaders: 40,

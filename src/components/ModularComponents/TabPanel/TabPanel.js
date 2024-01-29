@@ -10,7 +10,7 @@ import './TabPanel.scss';
 import Button from 'components/Button';
 import Element from 'components/Element';
 import ThumbnailsPanel from 'components/ThumbnailsPanel';
-import OutlinesPanel from 'components/OutlinesPanel';
+import GenericOutlinesPanel from '../GenericOutlinesPanel';
 import BookmarksPanel from 'components/BookmarksPanel';
 import LayersPanel from 'components/LayersPanel';
 import CustomElement from 'components/CustomElement';
@@ -34,6 +34,10 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   const [overflowItems, setOverflowItems] = useState([]);
   const [headerContainerPrevWidth, setHeaderContainerPrevWidth] = useState({ width: 0 });
   const [headerContainerWidth, setHeaderContainerWidth] = useState({ width: 0 });
+  const moreButtonDefaultIcon = 'icon-tools-more';
+  const [moreButtonIcon, setMoreButtonIcon] = useState(moreButtonDefaultIcon);
+  const [labelFlag, setLabelFlag] = useState(false);
+  const [iconFlag, setIconFlag] = useState(false);
 
   const [
     genericPanels,
@@ -60,7 +64,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
       case panelNames.THUMBNAIL:
         return <ThumbnailsPanel panelSelector={`${activeCustomPanel}-tab-panel`} />;
       case panelNames.OUTLINE:
-        return <OutlinesPanel />;
+        return <GenericOutlinesPanel />;
       case panelNames.BOOKMARKS:
         return <BookmarksPanel />;
       case panelNames.LAYERS:
@@ -90,8 +94,13 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
 
   const getPanelsObjectToRender = () => {
     const panelsToRender = {};
-
-    panelsList?.forEach((panel) => {
+    panelsList?.forEach((panel, index) => {
+      if (panel.icon) {
+        setIconFlag(true);
+      }
+      if (panel.label) {
+        setLabelFlag(true);
+      }
       const panelRenderer = panel.render;
       const presetPanels = Object.values(panelNames);
       // Case it is a preset panel
@@ -109,13 +118,30 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
             title: panelInfo.title,
             label: panel.label ?? panelInfo.label,
             icon: panel.icon ?? panelInfo.icon,
+            sortIndex: index,
+            tabPanel: tabPanelDataElement,
             render: renderPanel(customPanel.render)
           };
+          // preset panels may not have these explicitly set by the user
+          // since they have their own defaults
+          if (panelInfo.icon) {
+            setIconFlag(true);
+          }
+          if (panelInfo.label) {
+            setLabelFlag(true);
+          }
         } else {
           panelsToRender[panelRenderer] = {
             ...customPanel,
-            render: createCustomElement(customPanel)
+            render: createCustomElement(customPanel),
+            sortIndex: index,
           };
+          if (customPanel.icon) {
+            setIconFlag(true);
+          }
+          if (customPanel.label) {
+            setLabelFlag(true);
+          }
         }
       } else if (typeof panelRenderer === 'function') {
         dispatch(actions.addPanel(panel));
@@ -123,7 +149,8 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
           title: panel.title,
           label: panel.label,
           icon: panel.icon,
-          render: createCustomElement(panel)
+          render: createCustomElement(panel),
+          sortIndex: index,
         };
       }
     });
@@ -132,9 +159,9 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
 
   const handleActiveTabPanel = () => {
     if (activeCustomPanel && !visiblePanelTabs.includes(activeCustomPanel)) {
-      setVisiblePanelTabs([...visiblePanelTabs, activeCustomPanel]);
-      const overflowItemsToKeep = overflowItems.filter((item) => item !== activeCustomPanel);
-      setOverflowItems(overflowItemsToKeep);
+      setMoreButtonIcon('icon-tools-more-active');
+    } else {
+      setMoreButtonIcon(moreButtonDefaultIcon);
     }
   };
 
@@ -151,10 +178,14 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
           onClick: () => {
             dispatch(actions.setActiveCustomPanel(item, tabPanelDataElement));
             dispatch(actions.closeElements([FLYOUT_NAME]));
-          }
+          },
+          sortIndex: panelsObject[item].sortIndex,
+          tabPanel: tabPanelDataElement,
+          dataElement: item,
         };
         flyout.items.push(flyoutItem);
       }
+      flyout.items.sort((a, b) => a.sortIndex - b.sortIndex);
     }
 
     if (flyoutMap[FLYOUT_NAME]) {
@@ -165,7 +196,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   };
 
   const moveItemsToOverflow = (items) => {
-    setOverflowItems([...overflowItems, ...items]);
+    setOverflowItems([...overflowItems, ...items].sort((a, b) => panelsObject[a].sortIndex - panelsObject[b].sortIndex));
     const itemsToKeepVisible = visiblePanelTabs.filter((item) => !(items.includes(item)));
     setVisiblePanelTabs(itemsToKeepVisible);
   };
@@ -181,13 +212,8 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
     const allItems = [...items];
     const itemsToHide = [];
     while (spaceToFree <= 0 && allItems.length > 1) {
-      const activeIndex = allItems.findIndex((item) => item === activeCustomPanel);
-      const lastIndex = allItems.length - 1;
-      const lastIndexToHide = activeIndex === lastIndex ? lastIndex - 1 : lastIndex;
-
-      const lastItem = allItems[lastIndexToHide];
+      const lastItem = allItems.pop();
       itemsToHide.push(lastItem);
-      allItems.splice(lastIndexToHide, 1);
       const lastItemDom = Array.from(itemsDom).find((item) => item.getAttribute('data-element') === `${lastItem}-${tabPanelDataElement}`);
       const lastItemSpace = lastItemDom.getBoundingClientRect().width;
       spaceToFree += (lastItemSpace);
@@ -226,6 +252,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
         moveItemsToContainer([overflowItems[0]]);
       }
     }
+    handleActiveTabPanel();
   };
 
   useEffect(() => {
@@ -234,7 +261,6 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
 
   useEffect(() => {
     handleActiveTabPanel();
-    setOverflowFlyout();
   }, [activeCustomPanel]);
 
   useEffect(() => {
@@ -293,7 +319,11 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
         const panelInfo = panelsObject[tab];
         return (
           <Button
-            className={'tabPanelButton'}
+            className={classNames({
+              tabPanelButton: true,
+              hasIcon: iconFlag,
+              hasLabel: labelFlag,
+            })}
             key={`${tab}-${tabPanelDataElement}`}
             isActive={tab === activeCustomPanel}
             dataElement={`${tab}-${tabPanelDataElement}`}
@@ -330,13 +360,14 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
                   'moreButton': true,
                   'Button': true,
                   'hidden': overflowItems.length === 0,
+                  'active': moreButtonIcon === 'icon-tools-more-active',
                 })}
               >
                 <ToggleElementButton
                   dataElement={`${tabPanelDataElement}-moreButton`}
                   toggleElement={FLYOUT_NAME}
                   title="action.more"
-                  img={'icon-tools-more'}
+                  img={moreButtonIcon}
                 />
               </div>
             </Element>

@@ -144,7 +144,7 @@ const store = configureStore({ reducer: () => initialState });
 
 export const TabPanelWithIconsOnly = () => (
   <Provider store={store}>
-    <div style={{ width: '218px' }}>
+    <div style={{ width: '258px' }}>
       <TabPanel dataElement='tabPanelIconsOnly' />
     </div>
   </Provider>
@@ -152,7 +152,7 @@ export const TabPanelWithIconsOnly = () => (
 
 export const TabPanelWithLabelsOnly = () => (
   <Provider store={store}>
-    <div style={{ width: '218px' }}>
+    <div style={{ width: '204px' }}>
       <TabPanel dataElement='tabPanelLabelsOnly' />
     </div>
   </Provider>
@@ -160,7 +160,7 @@ export const TabPanelWithLabelsOnly = () => (
 
 export const TabPanelIconsAndLabels = () => (
   <Provider store={store}>
-    <div style={{ width: '218px' }}>
+    <div style={{ width: '246px' }}>
       <TabPanel dataElement='tabPanelIconsAndLabels' />
     </div>
   </Provider>
