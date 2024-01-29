@@ -499,12 +499,6 @@ export const openElement = (dataElement) => (dispatch, getState) => {
         isVisible: true,
       });
     }
-
-    if (dataElement === 'leftPanel') {
-      const panels = getGenericPanels(state, 'left');
-      const keys = panels.map((item) => item.dataElement);
-      dispatch(closeElements(keys));
-    }
   }
 };
 export const openElements = (dataElements) => (dispatch) => {
@@ -680,6 +674,7 @@ export const setModularHeaders = (headersList) => (dispatch) => {
   });
 };
 
+
 export const setModularHeaderItems = (headerDataElement, items) => (dispatch, getState) => {
   const existingComponentsMap = getState().viewer.modularComponents;
   const newComponentsMap = {};
@@ -774,6 +769,11 @@ export const setCustomPanel = (newPanel) => ({
 export const addPanel = (newPanel) => ({
   type: 'ADD_PANEL',
   payload: { newPanel },
+});
+
+export const setGenericPanels = (genericPanels) => ({
+  type: 'SET_GENERIC_PANELS',
+  payload: { genericPanels },
 });
 
 export const setPageLabels = (pageLabels) => (dispatch) => {

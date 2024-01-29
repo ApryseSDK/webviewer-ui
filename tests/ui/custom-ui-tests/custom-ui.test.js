@@ -26,7 +26,7 @@ describe('Test Custom UI APIs', function() {
       const topHeader = createModularHeader(instance, 'top');
       const leftHeader = createModularHeader(instance, 'left');
       const rightHeader = createModularHeader(instance, 'right');
-      instance.UI.addModularHeaders([topHeader, leftHeader, rightHeader]);
+      instance.UI.setModularHeaders([topHeader, leftHeader, rightHeader]);
       const headerList = instance.UI.getModularHeaderList();
       expect(headerList.length).to.equal(3);
     });
@@ -36,7 +36,7 @@ describe('Test Custom UI APIs', function() {
       const topHeader = createModularHeader(instance, 'top');
       const leftHeader = createModularHeader(instance, 'left');
       const rightHeader = createModularHeader(instance, 'right');
-      instance.UI.addModularHeaders([topHeader, leftHeader, rightHeader]);
+      instance.UI.setModularHeaders([topHeader, leftHeader, rightHeader]);
       const headerList = instance.UI.getModularHeaderList();
       expect(headerList.length).to.equal(3);
       const newBottomHeader = createModularHeader(instance, 'bottom');
@@ -50,7 +50,7 @@ describe('Test Custom UI APIs', function() {
       const { UI } = instance;
       const rightHeader = createModularHeader(instance, 'right');
       const bottomHeader = createModularHeader(instance, 'bottom');
-      UI.addModularHeaders([rightHeader, bottomHeader]);
+      UI.setModularHeaders([rightHeader, bottomHeader]);
       const header = UI.getModularHeader('rightHeader');
       expect(header.dataElement).to.equal(rightHeader.dataElement);
       expect(header.placement).to.equal(rightHeader.placement);
@@ -155,7 +155,7 @@ describe('Test Custom UI APIs', function() {
       const header = createModularHeader(instance, 'top', [groupedItem]);
 
       // We should add the modular header in order to see the changes
-      UI.addModularHeaders([header]);
+      UI.setModularHeaders([header]);
       const headerTest = UI.getModularHeader('topHeader');
       const groupOfTopHeader = headerTest.getGroupedItems()[0];
 

@@ -206,6 +206,16 @@ Webviewer.WebComponent({
     toolName: Tools.ToolNames.FREETEXT,
   });
 
+  const createMarkInsertToolButton = new UI.Components.ToolButton({
+    dataElement: 'markInsertTextToolButton',
+    toolName: Tools.ToolNames.MARK_INSERT_TEXT,
+  });
+
+  const createMarkReplaceTextButton = new UI.Components.ToolButton({
+    dataElement: 'markReplaceTextToolButton',
+    toolName: Tools.ToolNames.MARK_REPLACE_TEXT,
+  });
+
   const squigglyToolButton = new UI.Components.ToolButton({
     dataElement: 'squigglyToolButton',
     toolName: Tools.ToolNames.SQUIGGLY,
@@ -214,6 +224,11 @@ Webviewer.WebComponent({
   const strikeoutToolButton = new UI.Components.ToolButton({
     dataElement: 'strikeoutToolButton',
     toolName: Tools.ToolNames.STRIKEOUT,
+  });
+
+  const stickyToolButton = new UI.Components.ToolButton({
+    dataElement: 'stickyToolButton',
+    toolName: Tools.ToolNames.STICKY,
   });
 
   // ** Shapes Tools ** //
@@ -288,6 +303,10 @@ Webviewer.WebComponent({
     dataElement: 'fileAttachmentButton',
     toolName: Tools.ToolNames.FILEATTACHMENT
   });
+  const stampCreateToolButton = new UI.Components.ToolButton({
+    dataElement: 'stampToolButton',
+    toolName: Tools.ToolNames.STAMP,
+  });
 
   // ** Redaction Tools ** //
   const redactionToolButton = new UI.Components.ToolButton({
@@ -326,11 +345,6 @@ Webviewer.WebComponent({
     toolName: Tools.ToolNames.RECTANGULAR_AREA_MEASUREMENT,
   });
 
-  const cloudyRectangularAreaMeasurementToolButton = new UI.Components.ToolButton({
-    dataElement: 'cloudyRectangularAreaMeasurementToolButton',
-    toolName: Tools.ToolNames.CLOUDY_RECTANGULAR_AREA_MEASUREMENT,
-  });
-
   const countMeasurementToolButton = new UI.Components.ToolButton({
     dataElement: 'countMeasurementToolButton',
     toolName: Tools.ToolNames.COUNT_MEASUREMENT,
@@ -340,6 +354,10 @@ Webviewer.WebComponent({
   const cropToolButton = new UI.Components.ToolButton({
     dataElement: 'cropToolButton',
     toolName: Tools.ToolNames.CROP,
+  });
+  const snipToolButton = new UI.Components.ToolButton({
+    dataElement: 'snippingToolButton',
+    toolName: Tools.ToolNames.SNIPPING,
   });
 
   // ** Form Tools ** //
@@ -375,15 +393,30 @@ Webviewer.WebComponent({
 
   // ** Content Edit Tools ** //
   const addParagraphButton = new instance.UI.Components.ToolButton({
-    dataElement: 'addParagraphButton',
+    dataElement: 'addParagraphToolGroupButton',
     toolName: Tools.ToolNames.ADD_PARAGRAPH,
   });
 
   const addImageContentButton = new instance.UI.Components.ToolButton({
-    dataElement: 'addImageContentButton',
+    dataElement: 'addImageContentToolGroupButton',
     toolName: Tools.ToolNames.ADD_IMAGE_CONTENT,
   });
 
+  // ** Fill and Sign Tools ** //
+  const crossStampToolButton = new UI.Components.ToolButton({
+    dataElement: 'crossStampToolButton',
+    toolName: Tools.ToolNames.FORM_FILL_CROSS,
+  });
+
+  const checkStampToolButton = new UI.Components.ToolButton({
+    dataElement: 'checkStampToolButton',
+    toolName: Tools.ToolNames.FORM_FILL_CHECKMARK,
+  });
+
+  const dotStampToolButton = new UI.Components.ToolButton({
+    dataElement: 'dotStampToolButton',
+    toolName: Tools.ToolNames.FORM_FILL_DOT,
+  });
 
   // ** Grouped Items ** //
 
@@ -400,17 +433,23 @@ Webviewer.WebComponent({
       eraserToolButton
     ],
   });
+
   // Each Ribbon item can be linked to one or more grouped items
   const annotateGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'annotateGroupedItems',
     justifyContent: 'center',
     items: [
-      underlineToolButton,
       highlightToolButton,
-      rectangleToolButton,
-      freeTextToolButton,
-      squigglyToolButton,
+      underlineToolButton,
       strikeoutToolButton,
+      squigglyToolButton,
+      freeTextToolButton,
+      createMarkInsertToolButton,
+      createMarkReplaceTextButton,
+      freeHandToolButton,
+      freeHandHighlightToolButton,
+      stickyToolButton,
+      calloutToolButton,
       defaultAnnotationUtilities,
     ],
   });
@@ -419,15 +458,13 @@ Webviewer.WebComponent({
     dataElement: 'shapesGroupedItems',
     items: [
       rectangleToolButton,
-      freeHandToolButton,
-      freeHandHighlightToolButton,
+      ellipseToolButton,
+      arcToolButton,
+      polygonToolButton,
+      cloudToolButton,
       lineToolButton,
       polylineToolButton,
       arrowToolButton,
-      arcToolButton,
-      ellipseToolButton,
-      polygonToolButton,
-      cloudToolButton,
       defaultAnnotationUtilities
     ],
   });
@@ -438,7 +475,7 @@ Webviewer.WebComponent({
       rubberStampToolButton,
       signatureCreateToolButton,
       fileAttachmentToolButton,
-      calloutToolButton,
+      stampCreateToolButton,
       createDivider(),
       stylePanelToggle,
       createDivider(),
@@ -457,7 +494,6 @@ Webviewer.WebComponent({
       areaMeasurementToolButton,
       ellipseMeasurementToolButton,
       rectangularAreaMeasurementToolButton,
-      cloudyRectangularAreaMeasurementToolButton,
       countMeasurementToolButton,
       defaultAnnotationUtilities,
     ],
@@ -507,10 +543,21 @@ Webviewer.WebComponent({
     },
   );
 
+  const fullPageRedactionToggle = new UI.Components.ToggleElementButton(
+    {
+      type: 'toggleElementButton',
+      img: 'icon-tool-page-redact',
+      dataElement: 'pageRedactionToggleButton',
+      toggleElement: 'pageRedactionModal',
+      title: 'action.redactPages',
+    }
+  );
+
   const redactionGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'redactionGroupedItems',
     items: [
       redactionToolButton,
+      fullPageRedactionToggle,
       redactionPanelToggle,
       defaultAnnotationUtilities,
     ],
@@ -520,6 +567,7 @@ Webviewer.WebComponent({
     dataElement: 'editGroupedItems',
     items: [
       cropToolButton,
+      snipToolButton,
       undoButton,
       redoButton,
       eraserToolButton
@@ -529,6 +577,11 @@ Webviewer.WebComponent({
   const fillAndSignGroupedItems = new UI.Components.GroupedItems({
     dataElement: 'fillAndSignGroupedItems',
     items: [
+      signatureCreateToolButton,
+      freeTextToolButton,
+      crossStampToolButton,
+      checkStampToolButton,
+      dotStampToolButton,
       rubberStampToolButton,
       calendarToolButton,
       defaultAnnotationUtilities
@@ -555,7 +608,7 @@ Webviewer.WebComponent({
 
   // Ribbon Items
   const viewRibbonItem = new UI.Components.RibbonItem({
-    dataElement: 'view-ribbon-item',
+    dataElement: 'toolbarGroup-View',
     label: 'View',
     title: 'View',
     toolbarGroup: 'toolbarGroup-View',
@@ -563,7 +616,7 @@ Webviewer.WebComponent({
     groupedItems: []
   });
   const annotateRibbonItem = new UI.Components.RibbonItem({
-    dataElement: 'annotations-ribbon-item',
+    dataElement: 'toolbarGroup-Annotate',
     label: 'Annotate',
     title: 'Annotate',
     toolbarGroup: 'toolbarGroup-Annotate',
@@ -572,7 +625,7 @@ Webviewer.WebComponent({
   });
 
   const shapesRibbomItem = new UI.Components.RibbonItem({
-    dataElement: 'shapes-ribbon-item',
+    dataElement: 'toolbarGroup-Shapes',
     label: 'Shapes',
     title: 'Shapes',
     toolbarGroup: 'toolbarGroup-Shapes',
@@ -581,7 +634,7 @@ Webviewer.WebComponent({
   });
 
   const insertRibbonItem = new UI.Components.RibbonItem({
-    dataElement: 'insert-ribbon-item',
+    dataElement: 'toolbarGroup-Insert',
     label: 'Insert',
     title: 'Insert',
     toolbarGroup: 'toolbarGroup-Insert',
@@ -589,7 +642,7 @@ Webviewer.WebComponent({
   });
 
   const measureRibbonItem = new UI.Components.RibbonItem({
-    dataElement: 'measure-ribbon-item',
+    dataElement: 'toolbarGroup-Measure',
     label: 'Measure',
     title: 'Measure',
     toolbarGroup: 'toolbarGroup-Measure',
@@ -597,7 +650,7 @@ Webviewer.WebComponent({
   });
 
   const redactionRibbonItem = new UI.Components.RibbonItem({
-    dataElement: 'redaction-ribbon-item',
+    dataElement: 'toolbarGroup-Redact',
     label: 'Redact',
     title: 'Redact',
     toolbarGroup: 'toolbarGroup-Redact',
@@ -605,7 +658,7 @@ Webviewer.WebComponent({
   });
 
   const editRibbonItem = new UI.Components.RibbonItem({
-    dataElement: 'edit-ribbon-item',
+    dataElement: 'toolbarGroup-Edit',
     label: 'Edit',
     title: 'Edit',
     toolbarGroup: 'toolbarGroup-Edit',
@@ -613,7 +666,7 @@ Webviewer.WebComponent({
   });
 
   const fillAndSignRibbonItem = new UI.Components.RibbonItem({
-    dataElement: 'fillAndSign-ribbon-item',
+    dataElement: 'toolbarGroup-FillAndSign',
     label: 'Fill and Sign',
     title: 'Fill and Sign',
     toolbarGroup: 'toolbarGroup-FillAndSign',
@@ -621,7 +674,7 @@ Webviewer.WebComponent({
   });
 
   const formsRibbonItem = new UI.Components.RibbonItem({
-    dataElement: 'forms-ribbon-item',
+    dataElement: 'toolbarGroup-Forms',
     label: 'Forms',
     title: 'Forms',
     toolbarGroup: 'toolbarGroup-Forms',
@@ -629,7 +682,7 @@ Webviewer.WebComponent({
   });
 
   const contentEditRibbonItem = new UI.Components.RibbonItem({
-    dataElement: 'content-edit-ribbon-item',
+    dataElement: 'toolbarGroup-EditText',
     label: 'Content Edit',
     title: 'Content Edit',
     toolbarGroup: 'toolbarGroup-EditText',
@@ -648,8 +701,8 @@ Webviewer.WebComponent({
       annotateRibbonItem,
       shapesRibbomItem,
       insertRibbonItem,
-      redactionRibbonItem,
       measureRibbonItem,
+      redactionRibbonItem,
       editRibbonItem,
       contentEditRibbonItem,
       fillAndSignRibbonItem,
@@ -722,7 +775,7 @@ Webviewer.WebComponent({
   });
   bottomHeader.setItems([pageNavigationTool]);
 
-  UI.addModularHeaders([
+  UI.setModularHeaders([
     primaryHeader,
     topToolsHeader,
     bottomHeader,

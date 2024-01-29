@@ -28,6 +28,7 @@ import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineC
 import { SYNC_MODES } from 'constants/multiViewerContants';
 import { getInstanceID } from 'helpers/getRootNode';
 import { initialColors, initialTextColors } from 'helpers/initialColorStates';
+import { defaultModularComponents, defaultModularHeaders } from './modularComponents';
 
 const { ToolNames } = window.Core.Tools;
 const instanceId = getInstanceID();
@@ -103,6 +104,7 @@ export default {
       stylePanel: 318,
       signatureListPanel: 330,
       rubberStampPanel: 330,
+      customLeftPanel: 330
     },
     documentContainerWidth: null,
     documentContainerHeight: null,
@@ -2039,8 +2041,8 @@ export default {
     savedSignatureTabEnabled: false,
     replyAttachmentHandler: null,
     customSettings: [],
-    modularHeaders: {},
-    modularComponents: {},
+    modularHeaders: defaultModularHeaders,
+    modularComponents: defaultModularComponents,
     activeGroupedItems: [],
     fixedGroupedItems: [],
     modularHeadersHeight: {

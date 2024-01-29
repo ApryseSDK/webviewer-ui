@@ -4,7 +4,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
 import rootReducer from 'reducers/rootReducer';
 import App from 'components/App';
-import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import RubberStampPanel from './RubberStampPanel';
 
 export default {
@@ -32,8 +31,6 @@ const RubberStampPanelInApp = (location,) => {
     viewer: {
       ...initialState.viewer,
       toolbarGroup: 'toolbarGroup-Insert',
-      modularHeaders: mockHeadersNormalized,
-      modularComponents: mockModularComponents,
       isInDesktopOnlyMode: false,
       genericPanels: [{
         dataElement: 'rubberStampPanel',

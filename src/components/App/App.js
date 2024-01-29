@@ -64,12 +64,14 @@ import Events from 'constants/events';
 import overlays from 'constants/overlays';
 import { panelNames } from 'constants/panel';
 import DataElements from 'constants/dataElement';
+import { defaultPanels } from '../../redux/modularComponents';
 
 import setLanguage from 'src/apis/setLanguage';
 
 import './App.scss';
 import LayersPanel from 'components/LayersPanel';
 import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
+import FeatureFlags from 'constants/featureFlags';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -110,6 +112,14 @@ const App = ({ removeEventHandlers }) => {
       dispatch(actions.showWarningMessage({
         message: 'officeEditor.notSupportedOnMobile',
       }));
+    }
+  }, []);
+
+  useEffect(() => {
+    const isCustomizableUIEnabled = getHashParameters('ui', 'default') === 'beta';
+    if (isCustomizableUIEnabled) {
+      dispatch(actions.setGenericPanels(defaultPanels));
+      dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
     }
   }, []);
 

@@ -4,12 +4,13 @@ import packageConfig from '../../package.json';
 /* eslint-disable no-console */
 export default () => {
   // log UI and Core versions and warn/error if necessary
-  const coreVersion = window.Core.DocumentViewer.prototype.version;
-  const coreBuild = window.Core.DocumentViewer.prototype.build;
+  const coreVersion = window.Core.getVersion();
+  const coreBuild = window.Core.getBuild();
   const uiVersion = packageConfig.version;
   const webViewerJSVersion = getHashParameters('webViewerJSVersion', null);
   const wvServer = !!getHashParameters('webviewerServerURL', null);
   const fullAPI = !!getHashParameters('pdfnet', false);
+  const ui = getHashParameters('ui', 'default');
   const disableLogs = getHashParameters('disableLogs', false);
   if (disableLogs) {
     return;
@@ -19,17 +20,17 @@ export default () => {
     // we are using semantic versioning (ie ###.###.###) so the first number is the major version, follow by the minor version, and the patch number
     const [coreMajorVersion, coreMinorVersion] = coreVersion
       .split('.')
-      .map(version => parseInt(version, 10));
+      .map((version) => parseInt(version, 10));
     const [uiMajorVersion, uiMinorVersion] = uiVersion
       .split('.')
-      .map(version => parseInt(version, 10));
+      .map((version) => parseInt(version, 10));
 
     let webViewerJSMajorVersion = null;
     let webViewerJSMinorVersion = null;
     if (webViewerJSVersion) {
       [webViewerJSMajorVersion, webViewerJSMinorVersion] = webViewerJSVersion
         .split('.')
-        .map(version => parseInt(version, 10));
+        .map((version) => parseInt(version, 10));
     }
 
     if (console.table) {
@@ -40,7 +41,9 @@ export default () => {
         'Build': coreBuild,
         'WebViewer Server': wvServer,
         'Full API': fullAPI,
+        'UI': ui,
       };
+
       console.table(versions);
     } else {
       console.log(
@@ -93,7 +96,7 @@ export default () => {
     const minorVersionOutdatedComponents = [];
     const latestComponent = webViewerComponents[0];
 
-    webViewerComponents.forEach(component => {
+    webViewerComponents.forEach((component) => {
       if (latestComponent.majorVersion > component.majorVersion) {
         majorVersionOutdatedComponents.push(component.name);
       } else if (latestComponent.minorVersion > component.minorVersion) {

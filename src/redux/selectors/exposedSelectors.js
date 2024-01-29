@@ -244,7 +244,12 @@ export const getActiveHeaders = (state) => {
   // 1. It is not a grouped item
   // 2. It is a grouped item and its dataElement is in the activeGroupedItems or fixedGroupedItems
   const isActiveItem = (item) => {
-    const { type, dataElement } = componentsMap[item];
+    const modularComponent = componentsMap[item];
+    if (!modularComponent) {
+      return false;
+    }
+
+    const { type, dataElement } = modularComponent;
     return type !== ITEM_TYPE.GROUPED_ITEMS ||
       activeGroupedItemsSet.has(dataElement) ||
       fixedGroupedItemsSet.has(dataElement);

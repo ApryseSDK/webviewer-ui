@@ -582,6 +582,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         genericPanels: [...state.genericPanels, payload.newPanel],
       };
+    case 'SET_GENERIC_PANELS':
+      return {
+        ...state,
+        genericPanels: [...payload.genericPanels],
+      };
     case 'USE_EMBEDDED_PRINT':
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
     case 'SET_PAGE_LABELS':
