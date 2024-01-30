@@ -40,7 +40,7 @@ const RibbonGroup = (props) => {
   } = props;
   const [itemsGap, setItemsGap] = useState(gap);
   const [containerWidth, setContainerWidth] = useState(0);
-  const [ribbonItems] = useState(validateItems(items));
+  const [ribbonItems, setRibbonItems] = useState(validateItems(items));
   const [currentToolbarGroup] = useSelector((state) => [
     selectors.getCurrentToolbarGroup(state),
   ]);
@@ -114,6 +114,10 @@ const RibbonGroup = (props) => {
     },
     [dispatch],
   );
+
+  useEffect(() => {
+    setRibbonItems(validateItems(items));
+  }, [items]);
 
   const renderRibbonItems = () => {
     const activeIndex = ribbonItems.findIndex((item) => item.toolbarGroup === currentToolbarGroup);
