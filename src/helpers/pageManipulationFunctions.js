@@ -6,25 +6,7 @@ import i18next from 'i18next';
 import { workerTypes } from 'constants/types';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import DataElements from 'constants/dataElement';
-
-const createAnnouncement = (onClickAnnouncement) => {
-  if (onClickAnnouncement) {
-    const el = document.createElement('div');
-    const id = `speak-${Date.now()}`;
-    el.setAttribute('id', id);
-    el.setAttribute('aria-live', 'assertive');
-    el.classList.add('visually-hidden');
-    document.body.appendChild(el);
-
-    window.setTimeout(function() {
-      document.getElementById(id).innerText = onClickAnnouncement;
-    }, 100);
-
-    window.setTimeout(function() {
-      document.body.removeChild(document.getElementById(id));
-    }, 1000);
-  }
-};
+import { createAnnouncement } from './accessibility';
 
 const getNewRotation = (curr, counterClockwise = false) => {
   const { E_0, E_90, E_180, E_270 } = window.Core.PageRotation;

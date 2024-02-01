@@ -8,6 +8,7 @@ import Icon from 'components/Icon';
 import { shortcutAria } from 'helpers/hotkeysManager';
 import selectors from 'selectors';
 import { getClickMiddleWare, ClickedItemTypes } from 'helpers/clickTracker';
+import { createAnnouncement } from 'helpers/accessibility';
 
 import './Button.scss';
 
@@ -96,31 +97,12 @@ const Button = (props) => {
 
   const imgToShow = img;
 
-  const createAnnouncement = () => {
-    if (onClickAnnouncement) {
-      const el = document.createElement('div');
-      const id = `speak-${Date.now()}`;
-      el.setAttribute('id', id);
-      el.setAttribute('aria-live', 'assertive');
-      el.classList.add('visually-hidden');
-      document.body.appendChild(el);
-
-      window.setTimeout(function() {
-        document.getElementById(id).innerText = onClickAnnouncement;
-      }, 100);
-
-      window.setTimeout(function() {
-        document.body.removeChild(document.getElementById(id));
-      }, 1000);
-    }
-  };
-
   // for backwards compatibility
   const actuallyDisabled = disable || disabled;
   let onClickHandler;
   if (shouldPassActiveDocumentViewerKeyToOnClickHandler) {
     onClickHandler = () => {
-      createAnnouncement();
+      createAnnouncement(onClickAnnouncement);
       getClickMiddleWare()?.(dataElement, { type: ClickedItemTypes.BUTTON });
       if (onClick) {
         return onClick(activeDocumentViewerKey);
@@ -128,7 +110,7 @@ const Button = (props) => {
     };
   } else {
     onClickHandler = (e) => {
-      createAnnouncement();
+      createAnnouncement(onClickAnnouncement);
       getClickMiddleWare()?.(dataElement, { type: ClickedItemTypes.BUTTON });
       if (onClick) {
         return onClick(e);
