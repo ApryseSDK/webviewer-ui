@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef, } from 'react';
+import React, { useEffect, useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import core from 'core';
 import { useTranslation } from 'react-i18next';
@@ -43,15 +43,15 @@ function SearchOverlay(props) {
   const { searchValue, setSearchValue, executeSearch, replaceValue, nextResultValue, setReplaceValue } = props;
   const { isCaseSensitive, setCaseSensitive, isWholeWord, setWholeWord, isWildcard, setWildcard, setSearchStatus, isSearchInProgress, setIsSearchInProgress } = props;
   const { searchStatus, isPanelOpen } = props;
-  const [isReplaceBtnDisabled, setReplaceBtnDisabled] = React.useState(true);
-  const [isReplaceAllBtnDisabled, setReplaceAllBtnDisabled] = React.useState(true);
-  const [isMoreOptionsOpen, setMoreOptionOpen] = React.useState(true);
-  const [showReplaceSpinner, setShowReplaceSpinner] = React.useState(false);
-  const [isReplacementRegexValid, setReplacementRegexValid] = React.useState(true);
+  const [isReplaceBtnDisabled, setReplaceBtnDisabled] = useState(true);
+  const [isReplaceAllBtnDisabled, setReplaceAllBtnDisabled] = useState(true);
+  const [isMoreOptionsOpen, setMoreOptionOpen] = useState(true);
+  const [showReplaceSpinner, setShowReplaceSpinner] = useState(false);
+  const [isReplacementRegexValid, setReplacementRegexValid] = useState(true);
+  const [allowInitialSearch, setAllowInitialSearch] = useState(false);
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
   const searchTextInputRef = useRef();
   const waitTime = 300; // Wait time in milliseconds
-  let allowInitialSearch = false;
 
   useEffect(() => {
     try {
@@ -67,14 +67,14 @@ function SearchOverlay(props) {
       // give time for the search panel to open before focusing on the input
       setTimeout(() => {
         searchTextInputRef.current.focus();
-        allowInitialSearch = true;
+        setAllowInitialSearch(true);
       }, waitTime);
     }
 
     if (!isSearchAndReplaceDisabled && !isReplacementRegexValid && isPanelOpen) {
       console.warn('Search and Replace is not supported in this browser');
     }
-  }, [isPanelOpen]);
+  }, [isPanelOpen, isCaseSensitive]);
 
   useEffect(() => {
     if (searchValue && searchValue.length > 0) {
