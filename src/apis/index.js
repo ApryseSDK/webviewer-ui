@@ -302,6 +302,8 @@ import exitMultiViewerMode from './exitMultiViewerMode';
 import setPanelWidth from './setPanelWidth';
 import setModularHeaders from './setModularHeaders';
 import setScaleOverlayPosition from './setScaleOverlayPosition';
+import setPanels from './setPanels';
+import getPanels from './getPanels';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -473,6 +475,8 @@ export default (store) => {
     setGroupedItemsGap: setGroupedItemsGap(store),
     setGroupedItemsJustifyContent: setGroupedItemsJustifyContent(store),
     setGroupedItemsGrow: setGroupedItemsGrow(store),
+    setPanels: setPanels(store),
+    getPanels: getPanels(store),
     Components: {
       Item,
       GroupedItems: GroupedItems(store),

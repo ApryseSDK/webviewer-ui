@@ -241,4 +241,52 @@ describe('Test Custom UI APIs', function() {
       expect(simpleFlyout.items.length).to.equal(1);
     });
   });
+
+  describe('Test Panels', () => {
+    it('It should be able to add Panel', async () => {
+      const instance = await setupWebViewerInstance({}, true);
+      instance.UI.addPanel({
+        dataElement: 'myNewOutlinesPanel',
+        render: instance.UI.Panels.OUTLINE,
+        location: 'left',
+      });
+      const panelList = instance.UI.getPanels();
+      expect(panelList.length).to.equal(1);
+    });
+    it('It should be able to set Panels', async () => {
+      const instance = await setupWebViewerInstance({}, true);
+      instance.UI.addPanel({
+        dataElement: 'myNewOutlinesPanel',
+        render: instance.UI.Panels.OUTLINE,
+        location: 'left',
+      });
+      const panelList = instance.UI.getPanels();
+      expect(panelList.length).to.equal(1);
+      instance.UI.setPanels([]);
+      const newPanelList = instance.UI.getPanels();
+      expect(newPanelList.length).to.equal(0);
+    });
+    it('It should be able to get Panels', async () => {
+      const instance = await setupWebViewerInstance({}, true);
+      instance.UI.addPanel({
+        dataElement: 'myNewOutlinesPanel',
+        render: instance.UI.Panels.OUTLINE,
+        location: 'left',
+      });
+      const panelList = instance.UI.getPanels();
+      expect(panelList.length).to.equal(1);
+    });
+    it('It should be able to change the location of a Panel', async () => {
+      const instance = await setupWebViewerInstance({}, true);
+      instance.UI.addPanel({
+        dataElement: 'myNewOutlinesPanel',
+        render: instance.UI.Panels.OUTLINE,
+        location: 'left',
+      });
+      const panelList = instance.UI.getPanels();
+      expect(panelList[0].location).to.equal('left');
+      panelList[0].setLocation('right');
+      expect(instance.UI.getPanels()[0].location).to.equal('right');
+    });
+  });
 });
