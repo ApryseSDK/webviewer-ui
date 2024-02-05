@@ -589,8 +589,7 @@ const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
   // draw all annotations
   const widgetContainer = createWidgetContainer(pageNumber - 1);
   return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
-    const node = (window.isApryseWebViewerWebComponent) ? getRootNode() : document.body;
-    node.appendChild(widgetContainer);
+    document.body.appendChild(widgetContainer);
     return import(/* webpackChunkName: 'html2canvas' */ 'html2canvas').then(({ default: html2canvas }) => {
       return html2canvas(widgetContainer, {
         canvas,
@@ -598,7 +597,7 @@ const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
         scale: 1,
         logging: false,
       }).then(() => {
-        node.removeChild(widgetContainer);
+        document.body.removeChild(widgetContainer);
       });
     });
   });
