@@ -19,6 +19,10 @@ export default (dispatch, store) => (newTool, oldTool) => {
     dispatch(actions.setSelectedStampIndex(null));
   }
 
+  if (isCustomizableUI && newTool.name === 'AnnotationCreateSignature') {
+    dispatch(actions.setActiveGroupedItemWithCreateSignatureTool());
+  }
+
   if (activeToolName === 'AnnotationEdit' && (activeToolGroup === 'signatureTools' || activeToolGroup === 'rubberStampTools')) {
     return;
   }

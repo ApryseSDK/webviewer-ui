@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../Button/Button.scss';
 import './ToolButton.scss';
 import classNames from 'classnames';
@@ -17,6 +17,8 @@ import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
 import DataElements from 'src/constants/dataElement';
 
+const { ToolNames } = window.Core.Tools;
+
 const ToolButton = (props) => {
   const {
     title,
@@ -29,6 +31,7 @@ const ToolButton = (props) => {
     headerPlacement,
     toolName,
     isFlyoutItem = false,
+    groupedItem
   } = props;
 
   const [
@@ -38,6 +41,8 @@ const ToolButton = (props) => {
     customOverrides,
     // use this so that state gets updated when active tool styles change
     activeToolStyles, // eslint-disable-line no-unused-vars
+    activeGroupedItems,
+    lastPickedToolForGroupedItems,
     isSignatureListPanelOpen,
     isRubberStampPanelOpen,
   ] = useSelector(
@@ -47,35 +52,77 @@ const ToolButton = (props) => {
       selectors.getToolButtonObject(state, toolName),
       selectors.getCustomElementOverrides(state, selectors.getToolButtonDataElement(state, toolName)),
       selectors.getActiveToolStyles(state),
+      selectors.getActiveGroupedItems(state),
+      selectors.getLastPickedToolForGroupedItems(state, groupedItem),
       selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL),
       selectors.isElementOpen(state, DataElements.RUBBER_STAMP_PANEL),
     ],
     shallowEqual,
   );
 
-  const isActive = (toolName === 'AnnotationCreateSignature' && isSignatureListPanelOpen) ||
-    (toolName === 'AnnotationCreateRubberStamp' && isRubberStampPanelOpen) ||
+  const isActive = (toolName === ToolNames.SIGNATURE && isSignatureListPanelOpen) ||
+    (toolName === ToolNames.RUBBER_STAMP && isRubberStampPanelOpen) ||
     activeToolName === toolName;
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const handleClick = () => {
-    if (isActive) {
-      if (toolName === 'AnnotationCreateSignature') {
-        dispatch(actions.closeElement(DataElements.SIGNATURE_LIST_PANEL));
-      } else if (toolName === 'AnnotationCreateRubberStamp') {
-        dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
-      }
-      core.setToolMode(defaultTool);
+
+  const [isToolInActiveGroupedItems, setIsToolInActiveGroupedItems] = useState(activeGroupedItems.includes(groupedItem));
+  const [isButtonActive, setIsButtonActive] = useState(isActive && isToolInActiveGroupedItems);
+
+  useEffect(() => {
+    if (toolName === lastPickedToolForGroupedItems && activeGroupedItems.includes(groupedItem)) {
+      core.setToolMode(toolName);
+      setIsButtonActive(true);
     } else {
-      if (toolName === 'AnnotationCreateSignature') {
-        dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
-      } else if (toolName === 'AnnotationCreateRubberStamp') {
-        dispatch(actions.openElement(DataElements.RUBBER_STAMP_PANEL));
+      setIsButtonActive(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (toolName === lastPickedToolForGroupedItems && activeGroupedItems.includes(groupedItem)) {
+      setIsButtonActive(true);
+    } else {
+      setIsButtonActive(false);
+    }
+
+    setIsToolInActiveGroupedItems(activeGroupedItems.includes(groupedItem));
+  }, [activeGroupedItems, lastPickedToolForGroupedItems]);
+
+  const handleClick = () => {
+    if (toolName !== ToolNames.EDIT) {
+      dispatch(actions.setActiveGroupedItems([groupedItem]));
+
+      if (isButtonActive) {
+        dispatch(actions.setLastPickedToolForGroupedItems(groupedItem, ''));
+        setIsButtonActive(false);
+
+        if (toolName === ToolNames.SIGNATURE) {
+          dispatch(actions.closeElement(DataElements.SIGNATURE_LIST_PANEL));
+        } else if (toolName === ToolNames.RUBBER_STAMP) {
+          dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
+        }
+
+        core.setToolMode(defaultTool);
       } else {
-        dispatch(actions.setLastPickedToolForCustomRibbon(toolName));
+        if (toolName === ToolNames.SIGNATURE) {
+          dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
+        } else if (toolName === ToolNames.RUBBER_STAMP) {
+          dispatch(actions.openElement(DataElements.RUBBER_STAMP_PANEL));
+        }
+        dispatch(actions.setLastPickedToolForGroupedItems(groupedItem, toolName));
+        core.setToolMode(toolName === ToolNames.SIGNATURE || toolName === ToolNames.RUBBER_STAMP ? defaultTool : toolName);
       }
-      core.setToolMode(toolName === 'AnnotationCreateSignature' || toolName === 'AnnotationCreateRubberStamp' ? defaultTool : toolName);
+    } else {
+      if (isActive) {
+        setIsButtonActive(false);
+      } else {
+        activeGroupedItems.forEach((group) => {
+          dispatch(actions.setLastPickedToolForGroupedItems(group, ''));
+        });
+        setIsButtonActive(true);
+        core.setToolMode(defaultTool);
+      }
     }
   };
 
@@ -85,12 +132,12 @@ const ToolButton = (props) => {
   let fillColor = '';
   let strokeColor = '';
   const showColor = customOverrides?.showColor || toolButtonObject.showColor;
-  if (showColor === 'always' || (showColor === 'active' && isActive)) {
+  if (showColor === 'always' || (showColor === 'active' && isButtonActive)) {
     const toolStyles = getToolStyles(toolName);
     color = toolStyles?.[iconColorKey]?.toHexString?.();
     fillColor = getColor(toolStyles?.FillColor);
     strokeColor = getColor(toolStyles?.StrokeColor);
-    if (toolName.indexOf('AnnotationCreateFreeText') > -1 && toolStyles?.StrokeThickness === 0) {
+    if (toolName.indexOf(ToolNames.FREETEXT) > -1 && toolStyles?.StrokeThickness === 0) {
       // transparent
       strokeColor = 'ff000000';
     }
@@ -133,7 +180,7 @@ const ToolButton = (props) => {
       onClick={handleClick}
       disabled={disabled}
       forceTooltipPosition={forceTooltipPosition}
-      isActive={isActive}
+      isActive={isButtonActive}
       color={color}
       fillColor={fillColor}
       strokeColor={strokeColor}
@@ -148,6 +195,7 @@ ToolButton.propTypes = {
   img: PropTypes.string,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
+  groupedItem: PropTypes.string,
 };
 
 export default ToolButton;

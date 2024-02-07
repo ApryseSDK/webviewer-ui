@@ -101,7 +101,7 @@ export default {
       wv3dPropertiesPanel: 307,
       comparePanel: 330,
       watermarkPanel: 330,
-      stylePanel: 318,
+      stylePanel: 330,
       signatureListPanel: 330,
       rubberStampPanel: 330,
       customLeftPanel: 330
@@ -110,7 +110,7 @@ export default {
     documentContainerHeight: null,
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
-    lastPickedToolForCustomRibbon: {},
+    lastPickedToolForGroupedItems: {},
     highContrastMode: getHashParameters('highContrastMode', false),
     notesInLeftPanel: getHashParameters('notesInLeftPanel', false),
     autoFocusNoteOnAnnotationSelection: getHashParameters('autoFocusNoteOnAnnotationSelection', true),
@@ -121,6 +121,7 @@ export default {
     isAnnotationNumberingEnabled: getHashParameters('enableAnnotationNumbering', false),
     bookmarkIconShortcutVisibility: false,
     hideContentEditWarning: isContentEditWarningHidden(),
+    contentEditWorkersLoaded: false,
     currentContentBeingEdited: null,
     pageManipulationOverlayAlternativePosition: null,
     pageManipulationOverlayOpenByRightClick: true,
@@ -2044,6 +2045,7 @@ export default {
     modularHeaders: defaultModularHeaders,
     modularComponents: defaultModularComponents,
     activeGroupedItems: [],
+    activeCustomRibbon: '',
     fixedGroupedItems: [],
     modularHeadersHeight: {
       topHeaders: 49,

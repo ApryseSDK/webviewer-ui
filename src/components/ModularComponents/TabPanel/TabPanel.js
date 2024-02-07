@@ -182,6 +182,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
           sortIndex: panelsObject[item].sortIndex,
           tabPanel: tabPanelDataElement,
           dataElement: item,
+          label: panelsObject[item].title,
         };
         flyout.items.push(flyoutItem);
       }

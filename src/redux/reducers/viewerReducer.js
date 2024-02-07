@@ -233,10 +233,10 @@ export default (initialState) => (state = initialState, action) => {
           [payload.group]: payload.toolName,
         },
       };
-    case 'SET_CURRENT_GROUPED_ITEMS':
+    case 'SET_ACTIVE_GROUPED_ITEMS':
       return {
         ...state,
-        activeGroupedItems: payload.groupedItems
+        activeGroupedItems: payload.groupedItems,
       };
     case 'SET_FIXED_GROUPED_ITEMS':
       return {
@@ -451,14 +451,16 @@ export default (initialState) => (state = initialState, action) => {
           [payload.toolbarGroup]: payload.toolGroup,
         },
       };
-    case 'SET_LAST_PICKED_TOOL_FOR_CUSTOM_RIBBON':
+    case 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS':
       return {
         ...state,
-        lastPickedToolForCustomRibbon: {
-          ...state.lastPickedToolForCustomRibbon,
-          [payload.toolbarGroup]: payload.toolName,
+        lastPickedToolForGroupedItems: {
+          ...state.lastPickedToolForGroupedItems,
+          [payload.groupedItem]: payload.toolName,
         }
       };
+    case 'SET_ACTIVE_CUSTOM_RIBBON':
+      return { ...state, activeCustomRibbon: payload.customRibbon };
     case 'SET_OUTLINE_CONTROL_VISIBILITY':
       return { ...state, outlineControlVisibility: payload.outlineControlVisibility };
     case 'SET_AUTO_EXPAND_OUTLINES':
@@ -896,6 +898,8 @@ export default (initialState) => (state = initialState, action) => {
         console.error('localStorage is disabled, hideContentEditWarning cannot be restored');
       }
       return { ...state, hideContentEditWarning: payload.hideWarning };
+    case 'SET_CONTENT_EDIT_WORKERS_LOADED':
+      return { ...state, contentEditWorkersLoaded: payload.contentEditWorkersLoaded };
     case 'SET_CURRENT_CONTENT_BEING_EDITED':
       return {
         ...state,

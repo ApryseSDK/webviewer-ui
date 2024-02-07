@@ -229,11 +229,21 @@ export const setActiveToolGroup = (toolGroup) => (dispatch, getState) => {
   });
 };
 
-export const setLastPickedToolForCustomRibbon = (toolName) => (dispatch, getState) => {
-  const toolbarGroup = selectors.getCurrentToolbarGroup(getState());
+export const setActiveCustomPanel = (tabPanel, wrapperPanel) => (dispath, getState) => {
+  const currentActivePanel = selectors.getActiveCustomPanel(getState(), wrapperPanel);
+  if (currentActivePanel === tabPanel) {
+    return;
+  }
+  dispath({
+    type: 'SET_ACTIVE_CUSTOM_PANEL',
+    payload: { wrapperPanel, tabPanel },
+  });
+};
+
+export const setLastPickedToolForGroupedItems = (groupedItem, toolName) => (dispatch) => {
   dispatch({
-    type: 'SET_LAST_PICKED_TOOL_FOR_CUSTOM_RIBBON',
-    payload: { toolName, toolbarGroup },
+    type: 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS',
+    payload: { groupedItem, toolName },
   });
 };
 
@@ -676,6 +686,11 @@ export const setLanguage = (language) => ({
 export const setHideContentEditWarning = (hideWarning) => ({
   type: 'SET_HIDE_CONTENT_EDIT_WARNING',
   payload: { hideWarning },
+});
+
+export const setContentWorkersAsLoaded = () => ({
+  type: 'SET_CONTENT_EDIT_WORKERS_LOADED',
+  payload: { contentEditWorkersLoaded: true },
 });
 
 export const setCurrentContentBeingEdited = ({ content, annotation }) => ({

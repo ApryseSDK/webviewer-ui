@@ -116,8 +116,8 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const isComparePanelOpen = isElementOpen(state, 'comparePanel');
   const isWatermarkPanelOpen = isElementOpen(state, 'watermarkPanel');
 
-  const flxPanelOnLeft = isCustomFlxPanelOpen(state, 'left');
-  const flxPanelOnRight = isCustomFlxPanelOpen(state, 'right');
+  const genericPanelOnLeft = getOpenGenericPanel(state, 'left');
+  const genericPanelOnRight = getOpenGenericPanel(state, 'right');
 
   const { customizableUI } = getFeatureFlags(state);
 
@@ -133,8 +133,8 @@ export const getDocumentContentContainerWidthStyle = (state) => {
       (isComparePanelOpen ? comparePanelWidth : 0) +
       (isWatermarkPanelOpen ? watermarkPanelWidth : 0)
     ) +
-    (flxPanelOnLeft ? getPanelWidth(state, flxPanelOnLeft) : 0) +
-    (flxPanelOnRight ? getPanelWidth(state, flxPanelOnRight) : 0);
+    (genericPanelOnLeft ? getPanelWidth(state, genericPanelOnLeft) : 0) +
+    (genericPanelOnRight ? getPanelWidth(state, genericPanelOnRight) : 0);
 
   // Do not count headers without items
   const activeRightHeaderWidth = getActiveRightHeaderWidth(state);
@@ -143,7 +143,7 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   return `calc(100% - ${spaceTakenUpByPanels + spaceTakenUpByHeaders}px)`;
 };
 
-export const isCustomFlxPanelOpen = (state, location) => {
+export const getOpenGenericPanel = (state, location) => {
   let genericPanels = state.viewer.genericPanels;
 
   if (location) {
@@ -156,10 +156,10 @@ export const isCustomFlxPanelOpen = (state, location) => {
 };
 
 export const getDocumentContainerLeftMargin = (state) => {
-  const flxPanelOpenOnLeft = isCustomFlxPanelOpen(state, 'left');
+  const genericPanelOpenOnLeft = getOpenGenericPanel(state, PLACEMENT.LEFT);
   return 0 +
     (isElementOpen(state, 'leftPanel') ? getLeftPanelWidthWithResizeBar(state) : 0) +
-    (flxPanelOpenOnLeft ? getPanelWidth(state, flxPanelOpenOnLeft) : 0);
+    (genericPanelOpenOnLeft ? getPanelWidth(state, genericPanelOpenOnLeft) : 0);
 };
 
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
@@ -230,9 +230,13 @@ export const getEnabledToolbarGroups = (state) => {
 
 export const getCurrentToolbarGroup = (state) => state.viewer.toolbarGroup;
 
-export const getCurrentGroupedItems = (state) => state.viewer.activeGroupedItems;
+export const getActiveGroupedItems = (state) => state.viewer.activeGroupedItems;
 
 export const getFixedGroupedItems = (state) => state.viewer.fixedGroupedItems;
+
+export const getLastPickedToolForGroupedItems = (state, dataElement) => state.viewer.lastPickedToolForGroupedItems[dataElement];
+
+export const getActiveCustomRibbon = (state) => state.viewer.activeCustomRibbon;
 
 export const getActiveHeaders = (state) => {
   const allHeaders = Object.values(state.viewer.modularHeaders);
@@ -337,11 +341,14 @@ export const getRightHeader = (state) => {
   return getHydratedHeaders(state, PLACEMENT.RIGHT);
 };
 
-export const getTopHeadersHeight = (state) => {
-  const activeHeaders = getActiveHeaders(state)
+export const getActiveTopHeaders = (state) => {
+  return getActiveHeaders(state)
     .filter((header) => header.placement === PLACEMENT.TOP)
     .filter((header) => !header.float);
+};
 
+export const getTopHeadersHeight = (state) => {
+  const activeHeaders = getActiveTopHeaders(state);
   return activeHeaders.length * state.viewer.modularHeadersHeight.topHeaders;
 };
 
@@ -395,6 +402,30 @@ export const getDisabledElementPriority = (state, dataElement) => state.viewer.d
 export const getToolsHeaderItems = (state) => {
   const toolbarGroup = getCurrentToolbarGroup(state);
   return state.viewer.headers[toolbarGroup] || [];
+};
+
+export const getGroupedItemsWithCreateSignatureTool = (state) => {
+  const modularComponents = state.viewer.modularComponents;
+  return Object.keys(modularComponents).filter((dataElement) => {
+    const { type, items } = modularComponents[dataElement];
+
+    return type === ITEM_TYPE.GROUPED_ITEMS &&
+      items.some((item) => {
+        const itemDetails = modularComponents[item];
+        return itemDetails.type === ITEM_TYPE.TOOL_BUTTON &&
+          itemDetails.toolName === 'AnnotationCreateSignature';
+      });
+  });
+};
+
+export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataElement) => {
+  const modularComponents = state.viewer.modularComponents;
+  const ribbonItems = Object.keys(modularComponents).find((component) => {
+    const { type, groupedItems } = modularComponents[component];
+
+    return type === ITEM_TYPE.RIBBON_ITEM && groupedItems?.includes(groupedItemDataElement);
+  });
+  return ribbonItems;
 };
 
 export const getToolbarGroupItems = (toolbarGroup) => (state) => {
@@ -708,6 +739,8 @@ export const shouldFadePageNavigationComponent = (state) => state.viewer.fadePag
 
 export const isContentEditWarningHidden = (state) => state.viewer.hideContentEditWarning;
 
+export const areContentEditWorkersLoaded = (state) => state.viewer.contentEditWorkersLoaded;
+
 export const getCurrentContentBeingEdited = (state) => state.viewer.currentContentBeingEdited;
 
 export const getFeatureFlags = (state) => state.featureFlags;
@@ -798,6 +831,11 @@ export const isRightPanelOpen = (state) => {
   ];
 
   return rightPanelElements.some((element) => isElementOpen(state, element));
+};
+
+export const isLeftPanelOpen = (state) => {
+  const genericPanelOnLeft = getOpenGenericPanel(state, 'left');
+  return genericPanelOnLeft?.length > 0;
 };
 
 export const getOpenRightPanelWidth = (state) => {

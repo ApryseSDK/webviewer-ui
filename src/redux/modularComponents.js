@@ -47,12 +47,14 @@ const defaultModularHeaders = {
       'formsGroupedItems'
     ]
   },
-  'bottomHeader-23ds': {
-    dataElement: 'bottomHeader-23ds',
+  'page-nav-floating-header': {
+    dataElement: 'page-nav-floating-header',
     placement: 'bottom',
     grow: 0,
     gap: 12,
     position: 'center',
+    opacityMode: 'dynamic',
+    opacity: 'none',
     'float': true,
     stroke: true,
     dimension: {
@@ -181,7 +183,6 @@ const defaultModularComponents = {
       'divider-0.3185688355708507',
       'panToolButton',
       'annotationEditToolButton',
-      'divider-0.40614555648868866'
     ],
     type: 'groupedItems',
     grow: 1,
@@ -653,9 +654,6 @@ const defaultModularComponents = {
     items: [
       'cropToolButton',
       'snippingToolButton',
-      'undoButton',
-      'redoButton',
-      'eraserToolButton'
     ],
     type: 'groupedItems',
     grow: 0,

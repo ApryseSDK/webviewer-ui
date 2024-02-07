@@ -14,7 +14,7 @@
     overflow-x: hidden;
     z-index: 200;
     background-color: var(--component-background);
-    min-width: 168px;
+    min-width: 136px;
     max-width: 328px;
     padding: 4px 0;
     font-size: var(--font-size-default);
@@ -39,11 +39,13 @@
       align-items: center;
       width: 100%;
 
-      &:active, &.active {
+      &:active,
+      &.active {
         background-color: var(--blue-2);
       }
 
-      .Icon, .menu-icon {
+      .Icon,
+      .menu-icon {
         width: 24px;
         height: 24px;
         margin-right: 8px;
@@ -81,14 +83,15 @@
           background-color: var(--blue-1);
           cursor: pointer;
         }
-  
-        &:active, &.active {
+
+        &:active,
+        &.active {
           background-color: var(--blue-2);
-  
+
           .Icon svg path {
             color: var(--blue-6);
           }
-  
+
           .flyout-item-label {
             color: var(--blue-6);
           }

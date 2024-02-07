@@ -8,6 +8,7 @@ import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
 import { getGenericPanels } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
+import { ITEM_TYPE } from 'constants/customizationVariables';
 import pick from 'lodash/pick';
 import { v4 as uuidv4 } from 'uuid';
 import selectors from 'selectors';
@@ -179,12 +180,50 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   return dataElements.every((dataElement) => isElementDisabled(state, dataElement));
 };
 
-export const setCurrentGroupedItem = (groupedItems) => (dispatch) => {
-  dispatch({
-    type: 'SET_CURRENT_GROUPED_ITEMS',
-    payload: { groupedItems },
+const getFirstToolForGroupedItems = (state, group) => {
+  const modularComponents = state.viewer.modularComponents;
+  const items = modularComponents[group].items;
+  let firstTool = '';
+
+  items.find((item) => {
+    const { type, toolName, dataElement } = modularComponents[item];
+    if (type === ITEM_TYPE.TOOL_BUTTON && toolName && !isElementDisabled(state, dataElement)) {
+      firstTool = toolName;
+      return toolName;
+    }
+    return false;
   });
+  return firstTool;
 };
+
+export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
+  const state = getState();
+
+  // Check and set the last picked tool for grouped items
+  const isLastPickedToolSet = groupedItems.some((groupedItem) => state.viewer.lastPickedToolForGroupedItems?.[groupedItem]);
+  if (!isLastPickedToolSet) {
+    groupedItems.some((groupedItem) => {
+      const firstTool = getFirstToolForGroupedItems(state, groupedItem);
+      if (firstTool) {
+        dispatch(setLastPickedToolForGroupedItems(firstTool, groupedItem));
+        return true;
+      }
+      return false;
+    });
+  }
+
+  dispatch(setGroupedItems(groupedItems));
+};
+
+const setLastPickedToolForGroupedItems = (toolName, groupedItem) => ({
+  type: 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS',
+  payload: { toolName, groupedItem },
+});
+
+const setGroupedItems = (groupedItems) => ({
+  type: 'SET_ACTIVE_GROUPED_ITEMS',
+  payload: { groupedItems },
+});
 
 export const setFixedGroupedItems = (groupedItems) => (dispatch) => {
   dispatch({
@@ -192,6 +231,11 @@ export const setFixedGroupedItems = (groupedItems) => (dispatch) => {
     payload: { groupedItems }
   });
 };
+
+export const setActiveCustomRibbon = (customRibbon) => ({
+  type: 'SET_ACTIVE_CUSTOM_RIBBON',
+  payload: { customRibbon }
+});
 
 export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') => (dispatch, getState) => {
   const getFirstToolGroupForToolbarGroup = (state, _toolbarGroup) => {
@@ -233,6 +277,9 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
     const lastPickedToolName =
       state.viewer.lastPickedToolForGroup[lastPickedToolGroup] || getFirstToolNameForGroup(state, lastPickedToolGroup);
     if (pickTool) {
+      if (toolbarGroup === DataElements.EDIT_TOOLBAR_GROUP || toolbarGroup === DataElements.EDIT_TEXT_TOOLBAR_GROUP) {
+        dispatch(closeElement(DataElements.STYLE_PANEL));
+      }
       dispatch({
         type: 'SET_ACTIVE_TOOL_GROUP',
         payload: { toolGroup: lastPickedToolGroup, toolbarGroup },
@@ -252,6 +299,7 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
     }
   }
   dispatch(closeElements(['toolsOverlay', 'signatureOverlay', 'toolStylePopup']));
+
   dispatch({
     type: 'SET_TOOLBAR_GROUP',
     payload: { toolbarGroup },
@@ -259,49 +307,25 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
   fireEvent(Events.TOOLBAR_GROUP_CHANGED, toolbarGroup);
 };
 
-export const setCustomRibbon = (ribbon, pickTool = true) => (dispatch, getState) => {
+export const setActiveGroupedItemWithCreateSignatureTool = () => (dispatch, getState) => {
   const state = getState();
-  const toolGroups = state.viewer.headers[ribbon];
+  const groupedItemsWithCreateSignatureTool = selectors.getGroupedItemsWithCreateSignatureTool(state);
+  const activeGroupedItems = selectors.getActiveGroupedItems(state);
+  const activeGroupedItemsHasCreateSignatureTool = activeGroupedItems.some((item) => groupedItemsWithCreateSignatureTool.includes(item));
 
-  const getFirstToolForRibbon = () => {
-    if (toolGroups) {
-      const firstTool = Object.values(toolGroups).find(({ toolName, dataElement, type }) => {
-        return type === 'toolButton' && toolName && !isElementDisabled(state, dataElement);
-      });
-      return firstTool?.toolName;
-    }
-  };
+  // If no active grouped items have the create signature tool, we set the first one as active
+  if (!activeGroupedItemsHasCreateSignatureTool && groupedItemsWithCreateSignatureTool.length > 0) {
+    const firstGroupedItem = groupedItemsWithCreateSignatureTool[0];
+    dispatch(setLastPickedToolForGroupedItems('AnnotationCreateSignature', firstGroupedItem));
+    dispatch(setActiveGroupedItems([firstGroupedItem]));
 
-  // Case the ribbon does not have any associated tools
-  if (toolGroups?.length === 0) {
-    dispatch({
-      type: 'SET_LAST_PICKED_TOOL_FOR_CUSTOM_RIBBON',
-      payload: { toolName: '', toolbarGroup: ribbon },
-    });
-    core.setToolMode(defaultTool);
-  } else {
-    dispatch(openElements(['toolsHeader']));
-
-    const lastPickedToolForRibbon = state.viewer.lastPickedToolForCustomRibbon?.[ribbon] || getFirstToolForRibbon();
-    if (pickTool) {
-      dispatch({
-        type: 'SET_LAST_PICKED_TOOL_FOR_CUSTOM_RIBBON',
-        payload: { toolName: lastPickedToolForRibbon, toolbarGroup: ribbon },
-      });
-      core.setToolMode(lastPickedToolForRibbon);
-    } else {
-      core.setToolMode(defaultTool);
-      dispatch({
-        type: 'SET_LAST_PICKED_TOOL_FOR_CUSTOM_RIBBON',
-        payload: { toolName: '', toolbarGroup: ribbon },
-      });
-    }
+    const associatedRibbonItem = selectors.getRibbonItemAssociatedWithGroupedItem(state, firstGroupedItem);
+    dispatch(setActiveCustomRibbon(associatedRibbonItem));
+  } else if (activeGroupedItemsHasCreateSignatureTool) {
+    // If the active grouped items have the create signature tool, we set the signature create tool for the first one
+    const firstGroupedItem = activeGroupedItems[0];
+    dispatch(setLastPickedToolForGroupedItems('AnnotationCreateSignature', firstGroupedItem));
   }
-  dispatch({
-    type: 'SET_TOOLBAR_GROUP',
-    payload: { toolbarGroup: ribbon },
-  });
-  fireEvent(Events.TOOLBAR_GROUP_CHANGED, ribbon);
 };
 
 export const setSelectedStampIndex = (index) => ({
