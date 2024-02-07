@@ -5,23 +5,29 @@
  * @example
  * WebViewer(...)
   .then(function (instance) {
+    const myToolsGroup = new instance.UI.Components.GroupedItems({
+      dataElement: 'group-1',
+      items: [
+        myButton,
+        myToolButton,
+        highlightToolButton,
+      ],
+    });
+
+    // Group must be added to a header, and then the header must be added to the UI
     const newHeader = new instance.UI.Components.ModularHeader({
       dataElement: 'top-header',
-      location: 'top'
+      location: 'top',
+      items: [myToolsGroup]
     });
+    instance.UI.addModularHeaders([newHeader]);
 
     // Setting the gap of all Grouped Items
     instance.UI.setGroupedItemsGap(20);
 
     // Setting the gap of all Grouped Items with a specific data element
     instance.UI.setGroupedItemsGap(30, {
-      groupedItem: 'group1'
-    });
-
-    // Setting the gap of Grouped Items with a specific data element in a specific header
-    instance.UI.setGroupedItemsGap(40, {
-      groupedItem: 'group1',
-      header: 'top-header'
+      groupedItemsDataElement: 'group-1'
     });
  */
 import actions from 'actions';
@@ -29,6 +35,11 @@ import { isGapValid } from 'components/ModularComponents/Helpers/validation-help
 
 export default (store) => (gap, selectors) => {
   if (isGapValid(gap)) {
-    store.dispatch(actions.setGroupedItemsProperty('gap', gap, selectors?.groupedItem, selectors?.header));
+    const { groupedItemsDataElement } = selectors || {};
+    if (groupedItemsDataElement) {
+      store.dispatch(actions.setGroupedItemsProperty('gap', gap, groupedItemsDataElement));
+    } else {
+      store.dispatch(actions.setAllGroupedItemsProperty('gap', gap));
+    }
   }
 };

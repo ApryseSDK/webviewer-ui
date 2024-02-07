@@ -30,7 +30,7 @@ export const Editable = () => {
         },
         panelWidths: { 'outlines-panel': DEFAULT_NOTES_PANEL_WIDTH },
         isInDesktopOnlyMode: true,
-        modularHeaders: []
+        modularHeaders: {}
       },
       document: {
         outlines: getDefaultOutlines(),
@@ -63,7 +63,7 @@ export const NonEditable = () => {
         },
         panelWidths: { 'outlines-panel': DEFAULT_NOTES_PANEL_WIDTH },
         isInDesktopOnlyMode: true,
-        modularHeaders: []
+        modularHeaders: {}
       },
       document: {
         outlines: getDefaultOutlines(),
@@ -98,7 +98,7 @@ export const Expanded = () => {
         },
         panelWidths: { 'outlines-panel': DEFAULT_NOTES_PANEL_WIDTH },
         isInDesktopOnlyMode: true,
-        modularHeaders: []
+        modularHeaders: {}
       },
       document: {
         outlines: getDefaultOutlines(),
@@ -132,7 +132,7 @@ export const NoOutlines = () => {
         },
         panelWidths: { 'outlines-panel': DEFAULT_NOTES_PANEL_WIDTH },
         isInDesktopOnlyMode: true,
-        modularHeaders: []
+        modularHeaders: {}
       },
       document: {
         outlines: [],

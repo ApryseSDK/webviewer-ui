@@ -72,6 +72,7 @@
     "type": "Schreiben",
     "upload": "Hochladen",
     "link": "Verknüpfung",
+    "unlink": "Link löschen",
     "fileAttachmentDownload": "Anhand herunterladen",
     "prevResult": "Vorheriges Ergebnis",
     "nextResult": "Nächstes Ergebnis",
@@ -82,6 +83,8 @@
     "exit": "Ausgang",
     "addOption": "Option hinzufügen",
     "formFieldEdit": "Formularfeld bearbeiten",
+    "formFieldEditMode": "Formularfelder bearbeiten",
+    "contentEditMode": "Inhalt bearbeiten",
     "viewShortCutKeysFor3D": "Tastenkombinationen für 3D anzeigen",
     "markAllRead": "Als Gelesen markieren",
     "pageInsertion": "Seiteneinfügung",
@@ -120,16 +123,20 @@
     "showComparison": "Vergleich anzeigen",
     "back": "Zurück",
     "clearSignature": "Signatur zurücksetzen",
+    "readOnlySignature": "Die schreibgeschützte Signatur kann nicht gelöscht werden",
     "newDocument": "Neues Dokument",
     "sideBySideView": "Nebeneinander-Ansicht",
-    "pageNumberInput": "Eingabe der Seitenzahl"
+    "pageNumberInput": "Eingabe der Seitenzahl",
+    "addNewColor": "Neue Farbe hinzufügen",
+    "deleteColor": "Ausgewählte Farbe löschen",
+    "copySelectedColor": "Ausgewählte Farbe kopieren"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
     "arc": "Bogen",
     "arcMeasurement": "Gradmessung",
     "arrow": "Pfeil",
-    "callout": "Callout",
+    "callout": "Textlegende",
     "crop": "Seite zuschneiden",
     "caret": "Caret",
     "dateFreeText": "Kalender",
@@ -316,7 +323,7 @@
       "ellipse": "Ellipse",
       "fileattachment": "Dateianhang",
       "freehand": "Freihand",
-      "callout": "Callout",
+      "callout": "Hervorhebung",
       "freetext": "Freier Text",
       "line": "Leitung",
       "polygon": "Vieleck",
@@ -366,6 +373,10 @@
     },
     "colorPalette": {
       "colorLabel": "Farbe"
+    },
+    "colorPalettePicker": {
+      "addColor": "Neue Farbe hinzufügen",
+      "selectColor": "Wähle Farbe"
     },
     "displayMode": {
       "layout": "Layout",
@@ -509,6 +520,9 @@
       "radius": "Radius",
       "count": "Anzahl",
       "length": "Länge"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Skalieren Sie die Schriftgröße dynamisch"
     },
     "measurementOption": {
       "scale": "Maßstab"
@@ -768,6 +782,9 @@
       "deleteTitle": "Benutzerdefinierte Farbe löschen",
       "deleteMessage": "Ausgewählte benutzerdefinierte Farbe löschen? Sie wird aus Ihrer Farbpalette entfernt."
     },
+    "colorPalettePicker": {
+      "deleteTitle": "Benutzerdefinierte Farbe löschen"
+    },
     "multiDeleteAnnotation": {
       "title": "Anmerkungen löschen?",
       "message": "Durch das Löschen werden alle Kommentare, Antworten und Gruppierungen entfernt und können nicht rückgängig gemacht werden.\n\n Möchten Sie diese Anmerkungen wirklich löschen?"
@@ -800,7 +817,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(ICH)",
+    "image": "(I)",
     "redo": "(Strg-Umschalttaste Z)",
     "redo_windows": "(Strg Y)",
     "undo": "(Strg Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Einzug vergrößern",
     "insertLink": "Verknüpfung einfügen",
     "insertImage": "Bild einfügen",
+    "table": "Tisch",
+    "insertRowAbove": "Zeile darüber einfügen",
+    "insertRowBelow": "Zeile darunter einfügen",
+    "insertColumnRight": "Spalte rechts einfügen",
+    "insertColumnLeft": "Spalte links einfügen",
+    "deleteRow": "Zeile löschen",
+    "deleteColumn": "Spalte löschen",
+    "deleteTable": "Tabelle löschen",
     "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stile"
+      "styles": "Stile",
+      "annotation": "Anmerkung",
+      "annotations": "Anmerkungen",
+      "tool": "Werkzeug",
+      "textStyles": "Textstile",
+      "currentColor": "Aktuelle Farbe",
+      "customColors": "Benutzerdefinierte Farben",
+      "redactionTextLabel": "Textbeschriftung",
+      "redactionMarkOutline": "Umriss markieren",
+      "redactionFill": "Redaktionsfarbe",
+      "redactionTextPlaceholder": "Textbeschriftung einfügen",
+      "contentEdit": "Inhaltsbearbeitung"
     },
-    "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen"
+    "addColorToCustom": "Zu benutzerdefinierten Farben hinzufügen",
+    "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen",
+    "noToolStyle": "Das Tool enthält keine Styling-Eigenschaften."
+  },
+  "signatureListPanel": {
+    "header": "Unterschriftenliste",
+    "newSignature": "Neue Signatur",
+    "newSignatureAndInitial": "Neue Signatur und Initiale",
+    "signatureList": {
+      "signature": "Unterschrift",
+      "initials": "Initialen"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Briefmarken",
+    "standard": "Standardstempel"
   }
 }

@@ -72,6 +72,7 @@
     "type": "Jenis",
     "upload": "Mengunggah",
     "link": "Tautan",
+    "unlink": "Hapus Tautan",
     "fileAttachmentDownload": "Unduh file terlampir",
     "prevResult": "Hasil sebelumnya",
     "nextResult": "Hasil selanjutnya",
@@ -82,6 +83,8 @@
     "exit": "keluar",
     "addOption": "Tambahkan Opsi",
     "formFieldEdit": "Edit Bidang Formulir",
+    "formFieldEditMode": "Edit Bidang Formulir",
+    "contentEditMode": "Sunting Konten",
     "viewShortCutKeysFor3D": "Lihat Tombol Pintasan",
     "markAllRead": "tandai semua telah dibaca",
     "pageInsertion": "Penyisipan Halaman",
@@ -120,9 +123,13 @@
     "showComparison": "Tampilkan Perbandingan",
     "back": "Kembali",
     "clearSignature": "Tanda tangan yang jelas",
+    "readOnlySignature": "Tanda tangan hanya-baca tidak dapat dihapus",
     "newDocument": "Dokumen Baru",
     "sideBySideView": "Tampilan Berdampingan",
-    "pageNumberInput": "Masukan nomor halaman"
+    "pageNumberInput": "Masukan nomor halaman",
+    "addNewColor": "Tambahkan Warna Baru",
+    "deleteColor": "Hapus Warna yang Dipilih",
+    "copySelectedColor": "Salin Warna yang Dipilih"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Warna"
     },
+    "colorPalettePicker": {
+      "addColor": "Tambahkan warna baru",
+      "selectColor": "Pilih warna"
+    },
     "displayMode": {
       "layout": "Tata letak halaman",
       "pageTransition": "Transisi Halaman"
@@ -509,6 +520,9 @@
       "radius": "Radius",
       "count": "Menghitung",
       "length": "Panjang"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Skala ukuran font secara dinamis"
     },
     "measurementOption": {
       "scale": "Skala"
@@ -768,6 +782,9 @@
       "deleteTitle": "Hapus warna khusus",
       "deleteMessage": "Hapus warna khusus yang dipilih? Ini akan dihapus dari palet warna Anda."
     },
+    "colorPalettePicker": {
+      "deleteTitle": "Hapus warna khusus"
+    },
     "multiDeleteAnnotation": {
       "title": "Hapus Anotasi?",
       "message": "Menghapus akan menghapus semua komentar, balasan, dan pengelompokan dan tidak dapat diurungkan.\n\n Anda yakin ingin menghapus anotasi ini?"
@@ -800,7 +817,7 @@
     "select": "(ESC)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(SAYA)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Tingkatkan indentasi",
     "insertLink": "Sisipkan tautan",
     "insertImage": "Sisipkan gambar",
+    "table": "Meja",
+    "insertRowAbove": "Sisipkan Baris Di Atas",
+    "insertRowBelow": "Sisipkan Baris Di Bawah",
+    "insertColumnRight": "Sisipkan Kolom Kanan",
+    "insertColumnLeft": "Sisipkan Kolom Kiri",
+    "deleteRow": "Hapus Baris",
+    "deleteColumn": "Hapus Kolom",
+    "deleteTable": "Hapus Tabel",
     "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Gaya"
+      "styles": "Gaya",
+      "annotation": "Anotasi",
+      "annotations": "Anotasi",
+      "tool": "Alat",
+      "textStyles": "Gaya Teks",
+      "currentColor": "Warna Saat Ini",
+      "customColors": "Warna Khusus",
+      "redactionTextLabel": "Label Teks",
+      "redactionMarkOutline": "Tandai Garis Besar",
+      "redactionFill": "Warna Redaksi",
+      "redactionTextPlaceholder": "Sisipkan label teks",
+      "contentEdit": "Pengeditan Konten"
     },
-    "noToolSelected": "Pilih alat untuk melihat properti alat"
+    "addColorToCustom": "Tambahkan ke warna khusus",
+    "noToolSelected": "Pilih alat untuk melihat properti alat",
+    "noToolStyle": "Alat tidak mengandung properti penataan gaya apa pun."
+  },
+  "signatureListPanel": {
+    "header": "Daftar Tanda Tangan",
+    "newSignature": "Tanda Tangan Baru",
+    "newSignatureAndInitial": "Tanda Tangan & Inisial Baru",
+    "signatureList": {
+      "signature": "Tanda tangan",
+      "initials": "Inisial"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Perangko",
+    "standard": "Perangko Standar"
   }
 }

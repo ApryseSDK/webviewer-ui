@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useReducer } from 'react';
+import React, { useEffect, useRef, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -7,6 +7,7 @@ import ToolsDropdown from 'components/ToolsDropdown';
 import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
+import defaultTool from 'constants/defaultTool';
 
 import './SelectedRubberStamp.scss';
 
@@ -23,18 +24,15 @@ const SelectedRubberStamp = () => {
   const dispatch = useDispatch();
   const [t, i18n] = useTranslation();
   const prevLanguage = usePrevious(i18n.language);
-  const [isOpen, setIsOpen] = useState(false);
   // https://legacy.reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const [
     activeToolName,
     selectedStamp,
-    activeToolGroup,
   ] = useSelector((state) => [
     selectors.getActiveToolName(state),
     selectors.getSelectedStamp(state),
-    selectors.getActiveToolGroup(state),
   ]);
 
   useEffect(() => {
@@ -73,13 +71,9 @@ const SelectedRubberStamp = () => {
   );
 
   useEffect(() => {
-    if (!isOpen && activeToolGroup === 'rubberStampTools' && selectedStamp && i18n.language) {
-      setIsOpen(true);
-      core.setToolMode('AnnotationCreateRubberStamp');
-    } else if (isOpen && activeToolGroup !== 'rubberStampTools') {
-      setIsOpen(false);
-    }
-  });
+    // set the tool mode and active tool group when first selected
+    core.setToolMode(defaultTool);
+  }, []);
 
   return (
     <div

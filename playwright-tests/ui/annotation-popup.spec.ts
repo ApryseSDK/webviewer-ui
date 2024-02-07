@@ -172,4 +172,31 @@ test.describe('Annotation Popup tests', () => {
     const errorMessage = consoleLogs.filter((log: string) => (log.includes('Maximum call stack size exceeded')));
     expect(errorMessage.length).toBe(0);
   });
+
+  test('Annotation popup remains centered after the viewport has been resized', async ({ page }) => {
+    const { iframe, waitForWVEvents, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    await waitForWVEvents(['pageComplete', 'annotationsLoaded']);
+    instance = await waitForInstance();
+    await page.waitForTimeout(1500);
+
+    await iframe?.evaluate(() => {
+      const annotManager = window.instance.Core.documentViewer.getAnnotationManager();
+      const annots = annotManager.getAnnotationsList();
+      annotManager.deselectAllAnnotations();
+      annotManager.selectAnnotation(annots[0]);
+    });
+
+    await iframe?.waitForSelector('[data-element=annotationPopup]');
+    await iframe?.$('.AnnotationPopup.open');
+    const pageContainer = await iframe?.$('#pageContainer1');
+    await page.waitForTimeout(1500);
+    
+    const viewportSize = await page.viewportSize();
+    const height = viewportSize?.height;
+    const biggerViewport = viewportSize?.width + 400;
+    await page.setViewportSize({ width: biggerViewport, height });
+    await page.waitForTimeout(1500);
+
+    expect(await pageContainer.screenshot()).toMatchSnapshot(['annotation-popup', 'popup-centered.png'], { maxDiffPixelRatio: .01 });
+  });
 });

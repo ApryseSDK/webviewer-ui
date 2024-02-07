@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import WatermarkPanel from './WatermarkPanel';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
@@ -38,9 +38,21 @@ export const WatermarkPanelContainer = () => {
   const style =
     !isInDesktopOnlyMode && isMobile ? {} : { width: `${watermarkPanelWidth}px`, minWidth: `${watermarkPanelWidth}px` };
 
-  if (isDisabled || !isOpen) {
+  const [renderNull, setRenderNull] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRenderNull(!isOpen);
+    }, 500);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isOpen]);
+
+  if (isDisabled || (!isOpen && renderNull)) {
     return null;
   }
+
   return (
     <DataElementWrapper dataElement="watermarkPanel" className="Panel WatermarkPanel" style={style}>
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}

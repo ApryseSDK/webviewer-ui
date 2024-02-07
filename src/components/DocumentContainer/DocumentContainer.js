@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import actions from 'actions';
@@ -408,10 +408,22 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ConnectedDocumentContainer = connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
 
-const connectedComponent = (props) => {
-  const isMobile = isMobileSize();
+const ConnectedComponent = (props) => {
+  const [isMobile, setIsMobile] = useState(isMobileSize());
+
+  useEffect(() => {
+    const onDocumentLoaded = () => {
+      if (window.isApryseWebViewerWebComponent) {
+        // For the 2nd viewer in multi-webcomponents, we need to delay updating isMobile until the document is loaded
+        // A better solution is to elevate useMedia hook but that requires refactoring DocumentContainer into a functional component
+        setIsMobile(isMobileSize());
+      }
+    };
+    core.addEventListener('documentLoaded', onDocumentLoaded);
+    return () => core.removeEventListener('documentLoaded', onDocumentLoaded);
+  }, []);
 
   return <ConnectedDocumentContainer {...props} isMobile={isMobile} />;
 };
 
-export default connectedComponent;
+export default ConnectedComponent;

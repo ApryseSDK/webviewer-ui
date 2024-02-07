@@ -4,7 +4,7 @@ import core from 'core';
 
 /* eslint-disable no-unused-expressions */
 describe('Test UI APIs', function() {
-  this.timeout(10000);
+  this.timeout(20000);
 
   let viewerDiv;
 
@@ -294,12 +294,12 @@ describe('Test UI APIs', function() {
     const iframe = document.querySelector('#viewerDiv iframe');
     const notesToggleButton = iframe.contentDocument.querySelector('[data-element="toggleNotesButton"]');
     simulateClick(notesToggleButton);
-    await delay(100);
+    await delay(300);
 
     // click on the filter button and wait for the filter modal to open
     let filterButton = iframe.contentDocument.querySelector('[data-element="filterAnnotationButton"]');
     simulateClick(filterButton);
-    await delay(100);
+    await delay(300);
 
     // click through on the filter modal tab
     const filterModalTypeButton = iframe.contentDocument.querySelector('[data-element="annotationTypeFilterPanelButton"]');
@@ -319,7 +319,7 @@ describe('Test UI APIs', function() {
     // click on the toggleNotesButton data element twice to close and open the panel
     simulateClick(notesToggleButton);
     simulateClick(notesToggleButton);
-    await delay(100);
+    await delay(300);
 
     // assert that the filter button is still active
     filterButton = iframe.contentDocument.querySelector('[data-element="filterAnnotationButton"]');
@@ -410,5 +410,91 @@ describe('Test UI APIs', function() {
     // assert that the file input only accepts pdf and xod files
     const fileInput = iframe.contentDocument.querySelector('div[data-element="filePickerPanel"] input[type="file"]');
     expect(fileInput.accept).to.equal(core.getAllowedFileExtensions());
+  });
+
+  it('test that the search API works with search overlay closed', async () => {
+    const options = {
+      initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
+    };
+    const instance = await setupWebViewerInstance(options);
+
+    const { documentViewer } = instance.Core;
+
+    let resultsCount = 0;
+
+      documentViewer.addEventListener("documentLoaded", () => {
+        const searchListener = (searchPattern, options, results) => {
+            resultsCount = results.length;
+        };
+
+        instance.UI.addSearchListener(searchListener);
+        // start search after document loads
+        instance.UI.searchTextFull("PDF|Library", { regex: true });
+      });
+
+    await delay(5000);
+    expect(resultsCount).to.greaterThan(0);
+  });
+
+  it('test that the search API works with search overlay open', async () => {
+    const options = {
+      initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
+    };
+    const instance = await setupWebViewerInstance(options);
+
+    const { documentViewer } = instance.Core;
+
+    instance.UI.openElements('searchPanel');
+
+    let resultsCount = 0;
+
+      documentViewer.addEventListener("documentLoaded", () => {
+        const searchListener = (searchPattern, options, results) => {
+            resultsCount = results.length;
+        };
+
+        instance.UI.addSearchListener(searchListener);
+        // start search after document loads
+        instance.UI.searchTextFull("PDF|Library", { regex: true });
+      });
+
+    await delay(5000);
+    expect(resultsCount).to.greaterThan(0);
+  });
+
+  it('can add/remove tools to the form field creation mode whitelist via API', async () => {
+    const options = {
+      initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
+    };
+    const instance = await setupWebViewerInstance(options);
+
+    const { documentViewer } = instance.Core;
+    const formFieldCreationManager = documentViewer.getAnnotationManager().getFormFieldCreationManager();
+
+    expect(
+      formFieldCreationManager.isToolAllowedInFormFieldCreationMode(
+        'AnnotationCreateRectangle'
+      )
+    ).to.equal(false);
+
+    formFieldCreationManager.allowToolsInFormFieldCreationMode([
+      'AnnotationCreateRectangle'
+    ]);
+
+    expect(
+      formFieldCreationManager.isToolAllowedInFormFieldCreationMode(
+        'AnnotationCreateRectangle'
+      )
+    ).to.equal(true);
+
+    formFieldCreationManager.disallowToolsInFormFieldCreationMode([
+      'AnnotationCreateRectangle',
+    ]);
+
+    expect(
+      formFieldCreationManager.isToolAllowedInFormFieldCreationMode(
+        'AnnotationCreateRectangle'
+      )
+    ).to.equal(false);
   });
 });

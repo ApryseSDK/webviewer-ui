@@ -14,7 +14,7 @@ const initialState = {
     customElementOverrides: {},
     openElements: {},
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     flyoutMap: {
       'flyoutMenu': {
         'dataElement': 'flyoutMenu',
@@ -286,7 +286,8 @@ const initialState = {
     },
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: 'flyoutMenu',
-    modularHeaders: [],
+    activeCustomPanel: '',
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40

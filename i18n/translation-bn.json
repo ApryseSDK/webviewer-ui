@@ -72,6 +72,7 @@
     "type": "টাইপ",
     "upload": "আপলোড করুন",
     "link": "লিঙ্ক",
+    "unlink": "লিঙ্ক মুছুন",
     "fileAttachmentDownload": "সংযুক্ত ফাইল ডাউনলোড করুন",
     "prevResult": "পূর্ববর্তী ফলাফল",
     "nextResult": "পরবর্তী ফলাফল",
@@ -82,6 +83,8 @@
     "exit": "প্রস্থান করুন",
     "addOption": "বিকল্প যোগ করুন",
     "formFieldEdit": "ফর্ম ক্ষেত্র সম্পাদনা করুন",
+    "formFieldEditMode": "ফর্ম ক্ষেত্র সম্পাদনা করুন",
+    "contentEditMode": "বিষয়বস্তু সম্পাদনা করুন",
     "viewShortCutKeysFor3D": "শর্টকাট কী দেখুন",
     "markAllRead": "সবগুলো পঠিত বলে সনাক্ত কর",
     "pageInsertion": "পৃষ্ঠা সন্নিবেশ",
@@ -120,9 +123,13 @@
     "showComparison": "তুলনা দেখান",
     "back": "পেছনে",
     "clearSignature": "সাফ স্বাক্ষর",
+    "readOnlySignature": "শুধুমাত্র পঠনযোগ্য স্বাক্ষর মুছে ফেলা যাবে না",
     "newDocument": "নতুন নথি",
     "sideBySideView": "সাইড বাই সাইড ভিউ",
-    "pageNumberInput": "পৃষ্ঠা নম্বর ইনপুট"
+    "pageNumberInput": "পৃষ্ঠা নম্বর ইনপুট",
+    "addNewColor": "নতুন রঙ যোগ করুন",
+    "deleteColor": "নির্বাচিত রঙ মুছুন",
+    "copySelectedColor": "নির্বাচিত রঙ অনুলিপি করুন"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "রঙ"
     },
+    "colorPalettePicker": {
+      "addColor": "নতুন রঙ যোগ করুন",
+      "selectColor": "রঙ নির্বাচন করুন"
+    },
     "displayMode": {
       "layout": "পৃষ্ঠা বিন্যাস",
       "pageTransition": "পৃষ্ঠা স্থানান্তর"
@@ -509,6 +520,9 @@
       "radius": "ব্যাসার্ধ",
       "count": "গণনা",
       "length": "দৈর্ঘ্য"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "গতিশীলভাবে ফন্টের আকার স্কেল করুন"
     },
     "measurementOption": {
       "scale": "স্কেল"
@@ -768,6 +782,9 @@
       "deleteTitle": "কাস্টম রঙ মুছুন",
       "deleteMessage": "নির্বাচিত কাস্টম রঙ মুছবেন? এটি আপনার রঙ প্যালেট থেকে সরানো হবে।"
     },
+    "colorPalettePicker": {
+      "deleteTitle": "কাস্টম রঙ মুছুন"
+    },
     "multiDeleteAnnotation": {
       "title": "টীকা মুছবেন?",
       "message": "মুছে ফেললে সমস্ত মন্তব্য, উত্তর এবং গ্রুপিং মুছে যাবে এবং পূর্বাবস্থায় ফেরানো যাবে না।\n\n আপনি কি এই টীকাগুলি মুছে ফেলার বিষয়ে নিশ্চিত?"
@@ -800,7 +817,7 @@
     "select": "(প্রস্থান)",
     "signature": "(এস)",
     "squiggly": "(ছ)",
-    "image": "(আমি)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "ইন্ডেন্ট বাড়ান",
     "insertLink": "লিঙ্ক ঢোকান",
     "insertImage": "ছবি ঢোকান",
+    "table": "টেবিল",
+    "insertRowAbove": "উপরে সারি ঢোকান",
+    "insertRowBelow": "নীচে সারি সন্নিবেশ করান",
+    "insertColumnRight": "ডানদিকে কলাম সন্নিবেশ করুন",
+    "insertColumnLeft": "বাম দিকে কলাম সন্নিবেশ করুন",
+    "deleteRow": "সারি মুছুন",
+    "deleteColumn": "কলাম মুছুন",
+    "deleteTable": "টেবিল মুছুন",
     "notSupportedOnMobile": "অফিস সম্পাদনা মোবাইল ডিভাইসে সমর্থিত নয়।"
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "শৈলী"
+      "styles": "শৈলী",
+      "annotation": "টীকা",
+      "annotations": "টীকা",
+      "tool": "টুল",
+      "textStyles": "পাঠ্য শৈলী",
+      "currentColor": "বর্তমান রঙ",
+      "customColors": "কাস্টম রং",
+      "redactionTextLabel": "টেক্সট লেবেল",
+      "redactionMarkOutline": "আউটলাইন চিহ্নিত করুন",
+      "redactionFill": "রিডাকশন কালার",
+      "redactionTextPlaceholder": "টেক্সট লেবেল ঢোকান",
+      "contentEdit": "বিষয়বস্তু সম্পাদনা"
     },
-    "noToolSelected": "টুল বৈশিষ্ট্য দেখতে একটি টুল নির্বাচন করুন"
+    "addColorToCustom": "কাস্টম রং যোগ করুন",
+    "noToolSelected": "টুল বৈশিষ্ট্য দেখতে একটি টুল নির্বাচন করুন",
+    "noToolStyle": "টুলে কোনো স্টাইলিং বৈশিষ্ট্য নেই।"
+  },
+  "signatureListPanel": {
+    "header": "স্বাক্ষর তালিকা",
+    "newSignature": "নতুন স্বাক্ষর",
+    "newSignatureAndInitial": "নতুন স্বাক্ষর এবং প্রাথমিক",
+    "signatureList": {
+      "signature": "স্বাক্ষর",
+      "initials": "আদ্যক্ষর"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "স্ট্যাম্প",
+    "standard": "স্ট্যান্ডার্ড স্ট্যাম্প"
   }
 }

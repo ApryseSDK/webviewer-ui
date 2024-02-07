@@ -4,6 +4,8 @@ import 'react-quill/dist/quill.snow.css';
 
 import '../src/index.scss';
 import '../src/components/App/App.scss';
+import { approvedStamp } from './static/assets/standardStamps';
+import { customRubberStamps } from './static/assets/customStamps';
 
 // We add this class to the StoryBook root element to mimick how we have
 // structured our classes in the UI, where everythign is wrapped by the App class.
@@ -105,7 +107,7 @@ function generateCanvasWithImage() {
 
   return new Promise((resolve) => {
     const img = new Image();
-    img.src = "https://placekitten.com/200/300?image=5";
+    img.src = "/assets/images/191_200x300.jpeg";
     img.onload = () => {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       resolve(canvas);
@@ -128,12 +130,15 @@ const mockDocument = {
   getViewerCoordinates: () => ({ x: 0, y: 0 }),
   setLayersArray: noop,
   isWebViewerServerDocument: () => false,
+  addEventListener: noop,
+  removeEventListener: noop,
 };
 
 const mockDisplayModeManager = {
   isVirtualDisplayEnabled: () => true,
 };
 
+let currentPage = 0;
 const mockDocumentViewer = {
   doc: {},
   getDocument: () => mockDocument,
@@ -147,7 +152,9 @@ const mockDocumentViewer = {
   getPageHeight: () => DEFAULT_PAGE_HEIGHT,
   getPageWidth: () => DEFAULT_PAGE_WIDTH,
   setCurrentPage: (page) => {
+    currentPage = page;
   },
+  getCurrentPage: () => currentPage,
   setBookmarkIconShortcutVisibility: noop,
   displayBookmark: noop,
   addEventListener: noop,
@@ -170,10 +177,16 @@ const mockDocumentViewer = {
   getAnnotationsLoadedPromise: () => Promise.resolve(),
   getDisplayModeManager: noop,
   refreshAll: noop,
-  updateView: noop
+  updateView: noop,
+  getPageSearchResults: () => [],
 };
 
-core.getTool = () => mockTool;
+core.getTool = (toolName) => {
+  if (toolName === 'AnnotationCreateRubberStamp') {
+    return new MockRubberStampCreateTool();
+  }
+  return mockTool;
+};
 core.setToolMode = noop;
 core.isFullPDFEnabled = () => { return false; };
 core.addEventListener = () => { };
@@ -205,8 +218,54 @@ core.getContentEditManager = () => ({
   isInContentEditMode: () => false,
 });
 
+class MockTool {
+  // Mock any methods here or mock a specific tool if needed
+}
+
+class MockRubberStampCreateTool {
+  static FILL_COLORS = ['#4F9964', '#2A85D0', '#D65656'];
+  static TEXT_COLORS = ['#FFFFFF', '#000000'];
+  name = 'AnnotationCreateRubberStamp';
+
+  getStandardStampAnnotations = () => [
+    { Icon: 'Approved' },
+    { Icon: 'As Is' },
+    { Icon: 'Completed' },
+    { Icon: 'Confidential' },
+    { Icon: 'Departmental' },
+    { Icon: 'Draft' },
+    { Icon: 'Experimental' },
+    { Icon: 'Expired' },
+    { Icon: 'Final' },
+    { Icon: 'For Comment' },
+    { Icon: 'For Public Release' },
+    { Icon: 'Information Only' },
+    { Icon: 'Not Approved' },
+    { Icon: 'Not For Public Release' },
+    { Icon: 'Preliminary Results' },
+    { Icon: 'Sold' },
+    { Icon: 'Top Secret' },
+    { Icon: 'Void' },
+    { Icon: 'Sign Here' },
+    { Icon: 'Witness' },
+    { Icon: 'Initial Here' },
+    { Icon: 'Accepted' },
+    { Icon: 'Rejected' },
+  ];
+  getPreview = () => approvedStamp;
+  getCustomStampAnnotations = () => customRubberStamps;
+}
+
 window.Core = {
   documentViewer: mockDocumentViewer,
+  annotations: {
+    Color: () => { },
+  },
+  ContentEdit: {
+    addEventListener: noop,
+    removeEventListener: noop,
+    getContentEditingFonts: () => Promise.resolve([]),
+  },
   annotationManager: mockAnnotationManager,
   AnnotationManager: mockAnnotationManager,
   Tools: {
@@ -264,10 +323,7 @@ window.Core = {
       'COMBO_BOX_FIELD': 'ComboBoxFormFieldCreateTool',
       'CHANGEVIEW': 'AnnotationCreateChangeViewTool',
     },
-    RubberStampCreateTool: {
-      FILL_COLORS: ['#4F9964', '#2A85D0', '#D65656'],
-      TEXT_COLORS: ['#FFFFFF', '#000000']
-    },
+    RubberStampCreateTool: MockRubberStampCreateTool,
     SignatureCreateTool: {
       SignatureTypes: {
         FULL_SIGNATURE: 'fullSignature',
@@ -276,7 +332,26 @@ window.Core = {
     },
     CropPage: {
       getIsCropping: () => false,
-    }
+    },
+    RectangleCreateTool: MockTool,
+    PolygonCreateTool: MockTool,
+    EllipseCreateTool: MockTool,
+    PolygonCloudCreateTool: MockTool,
+    EllipseMeasurementCreateTool: MockTool,
+    AreaMeasurementCreateTool: MockTool,
+    FreeTextCreateTool: MockTool,
+    CalloutCreateTool: MockTool,
+    TextUnderlineCreateTool: MockTool,
+    TextHighlightCreateTool: MockTool,
+    TextSquigglyCreateTool: MockTool,
+    TextStrikeoutCreateTool: MockTool,
+    CountMeasurementCreateTool: MockTool,
+    DistanceMeasurementCreateTool: MockTool,
+    ArcMeasurementCreateTool: MockTool,
+    PerimeterMeasurementCreateTool: MockTool,
+    RectangularAreaMeasurementCreateTool: MockTool,
+    CloudyRectangularAreaMeasurementCreateTool: MockTool,
+    RedactionCreateTool: MockTool,
   },
   getHashParameter: (hashParameter, defaultValue) => {
     if (hashParameter === 'a') {
@@ -321,6 +396,7 @@ window.Core = {
     }
   },
   setBasePath: noop,
+  getAllowedFileExtensions: () => ['pdf', 'xod'],
 };
 
 const DEFAULT_PAGE_HEIGHT = 792;
@@ -387,6 +463,30 @@ class MockEllipseAnnotation {
   getCustomData = () => '';
 }
 
+class Model3DAnnotation {
+  isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
+  static datePickerOptions = {};
+}
+
+class PolygonAnnotation {
+  isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
+  static datePickerOptions = {};
+}
+
+class RedactionAnnotation {
+  isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
+  static datePickerOptions = {};
+}
+
+class FileAttachmentAnnotation {
+  isFormFieldPlaceholder = () => false;
+  getCustomData = () => '';
+  static datePickerOptions = {};
+}
+
 window.Core.Annotations = {
   Annotation: {
     MeasurementUnits: {},
@@ -396,19 +496,19 @@ window.Core.Annotations = {
   LineAnnotation: MockLineAnnotation,
   PolylineAnnotation: MockAnnotation,
   ArcAnnotation: MockAnnotation,
-  PolygonAnnotation: MockAnnotation,
+  PolygonAnnotation: PolygonAnnotation,
   EllipseAnnotation: MockEllipseAnnotation,
   StickyAnnotation: MockAnnotation,
   TextHighlightAnnotation: MockAnnotation,
   TextUnderlineAnnotation: MockAnnotation,
   TextSquigglyAnnotation: MockAnnotation,
   TextStrikeoutAnnotation: MockAnnotation,
-  RedactionAnnotation: MockAnnotation,
+  RedactionAnnotation: RedactionAnnotation,
   RectangleAnnotation: MockRectangleAnnotation,
   StampAnnotation: MockAnnotation,
-  FileAttachmentAnnotation: MockAnnotation,
+  FileAttachmentAnnotation: FileAttachmentAnnotation,
   SoundAnnotation: MockAnnotation,
-  Model3DAnnotation: MockAnnotation,
+  Model3DAnnotation: Model3DAnnotation,
   WidgetAnnotation: MockAnnotation,
   Link: MockAnnotation,
   CaretAnnotation: MockAnnotation,
@@ -493,3 +593,46 @@ distanceMeasurement.IT = 'LineDimension';
 distanceMeasurement.getStatus = () => null;
 distanceMeasurement.StrokeColor = new window.Core.Annotations.Color(255, 0, 0);
 distanceMeasurement.Measure = {};
+
+const viewports = {
+  Mobile: {
+    name: 'Mobile',
+    styles: {
+      width: '360px',
+      height: '800px',
+    },
+    type: 'mobile',
+  },
+  Responsive: {
+    name: 'Responsive',
+    styles: {
+      width: '100%',
+      height: '100%',
+    },
+    type: 'desktop',
+  },
+};
+window.storybook = {};
+window.storybook.viewports = viewports;
+window.storybook.MobileParameters = {
+  viewport: {
+    viewports,
+    defaultViewport: 'Mobile',
+  },
+  chromatic: {
+    modes: {
+      mobile: {
+        viewport: 'Mobile',
+      }
+    }
+  },
+};
+
+export default {
+  parameters: {
+    viewport: {
+      viewports,
+      defaultViewport: 'Responsive',
+    }
+  }
+};

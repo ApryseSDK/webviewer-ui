@@ -10,6 +10,7 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 export default {
   title: 'ModularComponents/MobilePanel',
   component: MobilePanelWrapper,
+  parameters: window.storybook.MobileParameters,
 };
 
 const store = configureStore({

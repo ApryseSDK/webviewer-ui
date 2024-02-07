@@ -41,6 +41,7 @@ const Flyout = () => {
     selectors.getBottomHeadersHeight(state),
     selectors.getCurrentPage(state),
   ]);
+  const activeCustomPanel = useSelector((state) => selectors.getActiveCustomPanel(state, activeFlyout.split('-flyout')[0]));
   const flyoutProperties = flyoutMap[activeFlyout];
   const horizontalHeadersUsedHeight = topHeadersHeight + bottomHeadersHeight + DEFAULT_GAP;
   const {
@@ -127,6 +128,7 @@ const Flyout = () => {
   };
 
   const renderFlyoutItem = (flyoutItem, index, isChild = false) => {
+    const itemIsAPanelTab = !!flyoutItem.tabPanel;
     const itemIsATool = !!flyoutItem.toolName;
     const itemIsAToolGroup = !!flyoutItem.toolGroup;
     const itemIsARibbonItem = flyoutItem.type === ITEM_TYPE.RIBBON_ITEM;
@@ -211,9 +213,10 @@ const Flyout = () => {
     }
 
     return (flyoutItem === ITEM_TYPE.DIVIDER ? <div className="divider" key={`divider-${index}`} /> : (
-      <div key={flyoutItem.label} className={classNames({
+      <div key={flyoutItem.label || flyoutItem.dataElement} className={classNames({
         'flyout-item-container': true,
-        'active': flyoutItem.isActive,
+        'active': flyoutItem.isActive
+           || itemIsAPanelTab && activeCustomPanel === flyoutItem.dataElement,
       })}
       data-element={flyoutItem.dataElement} onClick={onClickHandler(flyoutItem, isChild, index)}>
         <div className="menu-container">

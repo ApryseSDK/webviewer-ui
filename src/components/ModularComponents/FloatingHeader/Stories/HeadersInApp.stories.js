@@ -28,6 +28,7 @@ import {
   floatStarTopHeaderStatic,
   floatCenterTopHeaderDynamic,
   floatEndTopHeaderNone,
+  mockModularComponents,
 } from '../../Helpers/mockHeaders';
 
 export default {
@@ -56,6 +57,7 @@ const Template = (args) => {
     viewer: {
       ...initialState.viewer,
       modularHeaders: args.headers,
+      modularComponents: mockModularComponents,
       openElements: {},
     },
     featureFlags: {
@@ -68,11 +70,14 @@ const Template = (args) => {
 function createTemplate(headers) {
   const template = Template.bind({});
   template.args = { headers };
-  template.parameters = { layout: 'fullscreen' };
+  template.parameters = {
+    layout: 'fullscreen',
+    chromatic: { disableSnapshot: true }
+  };
   return template;
 }
 
-export const TopAndLeftHeaders = createTemplate([
+export const TopAndLeftHeaders = createTemplate({
   defaultLeftHeader,
   secondFloatStartLeftHeader,
   floatStartLeftHeader,
@@ -83,9 +88,9 @@ export const TopAndLeftHeaders = createTemplate([
   secondFloatStartHeader,
   floatCenterHeader,
   floatEndHeader,
-]);
+});
 
-export const TopCenterAndLeftHeaders = createTemplate([
+export const TopCenterAndLeftHeaders = createTemplate({
   defaultLeftHeader,
   secondFloatStartLeftHeader,
   floatStartLeftHeader,
@@ -94,9 +99,9 @@ export const TopCenterAndLeftHeaders = createTemplate([
   defaultTopHeader,
   floatCenterHeader,
   floatEndHeader,
-]);
+});
 
-export const TopAndRightHeaders = createTemplate([
+export const TopAndRightHeaders = createTemplate({
   defaultRightHeader,
   secondFloatStartRightHeader,
   floatStartRightHeader,
@@ -107,9 +112,9 @@ export const TopAndRightHeaders = createTemplate([
   secondFloatStartHeader,
   floatCenterHeader,
   floatEndHeader,
-]);
+});
 
-export const TopCenterAndRightHeaders = createTemplate([
+export const TopCenterAndRightHeaders = createTemplate({
   defaultRightHeader,
   secondFloatStartRightHeader,
   floatStartRightHeader,
@@ -117,9 +122,9 @@ export const TopCenterAndRightHeaders = createTemplate([
   floatEndRightHeader,
   defaultTopHeader,
   floatCenterHeader,
-]);
+});
 
-export const BottomAndLeftHeaders = createTemplate([
+export const BottomAndLeftHeaders = createTemplate({
   defaultLeftHeader,
   secondFloatStartLeftHeader,
   floatStartLeftHeader,
@@ -130,9 +135,9 @@ export const BottomAndLeftHeaders = createTemplate([
   secondFloatStartBottomHeader,
   floatCenterBottomHeader,
   floatEndBottomHeader,
-]);
+});
 
-export const BottomCenterAndLeftHeaders = createTemplate([
+export const BottomCenterAndLeftHeaders = createTemplate({
   defaultLeftHeader,
   secondFloatStartLeftHeader,
   floatStartLeftHeader,
@@ -141,9 +146,9 @@ export const BottomCenterAndLeftHeaders = createTemplate([
   defaultBottomHeader,
   floatCenterBottomHeader,
   floatEndBottomHeader,
-]);
+});
 
-export const BottomAndRightHeaders = createTemplate([
+export const BottomAndRightHeaders = createTemplate({
   defaultRightHeader,
   secondFloatStartRightHeader,
   floatStartRightHeader,
@@ -154,9 +159,9 @@ export const BottomAndRightHeaders = createTemplate([
   secondFloatStartBottomHeader,
   floatCenterBottomHeader,
   floatEndBottomHeader,
-]);
+});
 
-export const BottomCenterAndRightHeaders = createTemplate([
+export const BottomCenterAndRightHeaders = createTemplate({
   defaultRightHeader,
   secondFloatStartRightHeader,
   floatStartRightHeader,
@@ -164,9 +169,9 @@ export const BottomCenterAndRightHeaders = createTemplate([
   floatEndRightHeader,
   defaultBottomHeader,
   floatCenterBottomHeader,
-]);
+});
 
-export const TopAndBottomHeaders = createTemplate([
+export const TopAndBottomHeaders = createTemplate({
   defaultBottomHeader,
   floatStartBottomHeader,
   secondFloatStartBottomHeader,
@@ -177,9 +182,9 @@ export const TopAndBottomHeaders = createTemplate([
   secondFloatStartHeader,
   floatCenterHeader,
   floatEndHeader,
-]);
+});
 
-export const FloatingOnAllSides = createTemplate([
+export const FloatingOnAllSides = createTemplate({
   floatStartHeader,
   secondFloatStartHeader,
   floatCenterHeader,
@@ -196,15 +201,15 @@ export const FloatingOnAllSides = createTemplate([
   secondFloatStartBottomHeader,
   floatCenterBottomHeader,
   floatEndBottomHeader,
-]);
+});
 
-export const FloatiesWithOpacityLevels = createTemplate([
+export const FloatiesWithOpacityLevels = createTemplate({
   floatStarTopHeaderStatic,
   floatCenterTopHeaderDynamic,
   floatEndTopHeaderNone,
-]);
+});
 
-export const AllHeaders = createTemplate([
+export const AllHeaders = createTemplate({
   defaultTopHeader,
   floatStartHeader,
   secondFloatStartHeader,
@@ -225,4 +230,4 @@ export const AllHeaders = createTemplate([
   secondFloatStartBottomHeader,
   floatCenterBottomHeader,
   floatEndBottomHeader,
-]);
+});

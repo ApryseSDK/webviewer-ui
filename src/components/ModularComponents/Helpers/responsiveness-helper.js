@@ -54,8 +54,19 @@ export const getIconDOMElement = (currentItem, allItems) => {
   }
 
   const iconElement = currentItem.icon ? currentItem.icon : currentItem.img;
-  return iconElement ? <Icon className="menu-icon" glyph={iconElement} /> :
-    <div className="menu-icon"></div>;
+  const isBase64 = iconElement?.trim().startsWith('data:');
+
+  // if there is no file extension then assume that this is a glyph
+  const isGlyph =
+  iconElement && !isBase64 && (!iconElement.includes('.') || iconElement.startsWith('<svg'));
+
+  if (isGlyph) {
+    return <Icon className="menu-icon" glyph={iconElement} />;
+  }
+  if (iconElement && !isGlyph) {
+    return <img className="menu-icon" alt="Flyout item icon" src={iconElement} />;
+  }
+  return <div className="menu-icon"></div>;
 };
 
 export const getSubMenuDOMElement = (currentItem, allItems) => {

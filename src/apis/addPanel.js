@@ -1,4 +1,6 @@
 import actions from 'actions';
+import { panelNames } from 'constants/panel';
+import { Panel } from 'src/apis/getPanels';
 
 /**
  * Adds a custom panel in left or right side of the UI.
@@ -15,7 +17,7 @@ WebViewer(...)
       render: instance.UI.Panels.OUTLINE,
     })
 
-    instance.openElement('myNewOutlinesPanel');
+    instance.UI.openElements(['myNewOutlinesPanel']);
   });
  * @example
 WebViewer(...)
@@ -30,7 +32,7 @@ WebViewer(...)
       }
     });
 
-    instance.openElement('fooBarElement');
+    instance.UI.openElements(['fooBarElement']);
   });
  */
 /**
@@ -38,7 +40,20 @@ WebViewer(...)
  * @callback UI.renderCustomPanel
  * @returns {HTMLElement} Panel element.
  */
+const { TYPES } = window.Core;
+const PANEL_TYPE = TYPES.MULTI_TYPE(TYPES.OBJECT({
+  dataElement: TYPES.STRING,
+  location: TYPES.ONE_OF('left', 'right'),
+  render: TYPES.MULTI_TYPE(TYPES.ONE_OF(...Object.values(panelNames)), TYPES.FUNCTION)
+}), TYPES.OBJECT(Panel));
 
 export default (store) => (customPanel) => {
+  const { checkTypes } = window.Core;
+  checkTypes([customPanel], [PANEL_TYPE], 'UI.addPanel');
+  if (customPanel instanceof Panel) {
+    customPanel = customPanel.toObject();
+  }
   store.dispatch(actions.addPanel(customPanel));
 };
+
+export { PANEL_TYPE };

@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import App from 'components/App';
 import initialState from 'src/redux/initialState';
 import rootReducer from 'reducers/rootReducer';
-import { mockHeaders } from './mockAppState';
+import { mockHeadersNormalized, mockModularComponents } from './mockAppState';
 
 export default {
   title: 'ModularComponents/App',
@@ -31,7 +31,18 @@ const Template = (args) => {
     viewer: {
       ...initialState.viewer,
       modularHeaders: args.headers,
+      modularComponents: args.components,
       openElements: {},
+      genericPanels: [{
+        dataElement: 'stylePanel',
+        render: 'stylePanel',
+        location: 'left',
+      }],
+      activeGroupedItems: ['annotateGroupedItems'],
+      lastPickedToolForGroupedItems: {
+        annotateGroupedItems: 'AnnotationCreateTextUnderline',
+      },
+      activeCustomRibbon: 'annotations-ribbon-item',
     },
     featureFlags: {
       customizableUI: true,
@@ -40,12 +51,12 @@ const Template = (args) => {
   return <MockApp initialState={stateWithHeaders} />;
 };
 
-function createTemplate(headers) {
+function createTemplate({ headers, components }) {
   const template = Template.bind({});
-  template.args = { headers };
+  template.args = { headers, components };
   template.parameters = { layout: 'fullscreen' };
   return template;
 }
 
-export const DefaultUI = createTemplate(mockHeaders);
+export const DefaultUI = createTemplate({ headers: mockHeadersNormalized, components: mockModularComponents });
 

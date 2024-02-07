@@ -26,6 +26,7 @@ const DIRECTION = {
 };
 
 const ITEM_TYPE = {
+  MODULAR_HEADER: 'modularHeader',
   BUTTON: 'customButton',
   STATEFUL_BUTTON: 'statefulButton',
   GROUPED_ITEMS: 'groupedItems',
@@ -42,6 +43,7 @@ const ITEM_TYPE = {
   PRESET_BUTTON: 'presetButton',
   VIEW_CONTROLS: 'viewControls',
   MENU: 'menu',
+  TABS_PANEL: 'tabPanel',
 };
 
 const RESPONSIVE_ITEMS = [
@@ -88,6 +90,8 @@ const PRESET_BUTTON_TYPES = {
   PRINT: 'printButton',
   CREATE_PORTFOLIO: 'createPortfolioButton',
   SETTINGS: 'settingsButton',
+  FORM_FIELD_EDIT: 'formFieldEditButton',
+  CONTENT_EDIT: 'contentEditButton',
 };
 
 const DEFAULT_GAP = 12;

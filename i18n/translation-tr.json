@@ -72,6 +72,7 @@
     "type": "Tip",
     "upload": "Yüklemek",
     "link": "Bağlantı",
+    "unlink": "Bağlantıyı Sil",
     "fileAttachmentDownload": "Ekli dosyayı indirin",
     "prevResult": "Önceki sonuç",
     "nextResult": "Sonraki sonuç",
@@ -82,6 +83,8 @@
     "exit": "çıkış",
     "addOption": "Seçenek Ekle",
     "formFieldEdit": "Form Alanını Düzenle",
+    "formFieldEditMode": "Form Alanlarını Düzenle",
+    "contentEditMode": "İçeriği Düzenle",
     "viewShortCutKeysFor3D": "Kısayol Tuşlarını Görüntüle",
     "markAllRead": "Tümünü okundu olarak işaretle",
     "pageInsertion": "Sayfa Ekleme",
@@ -120,9 +123,13 @@
     "showComparison": "Karşılaştırmayı Göster",
     "back": "Geri",
     "clearSignature": "İmzayı temizle",
+    "readOnlySignature": "Salt okunur imza silinemez",
     "newDocument": "Yeni belge",
     "sideBySideView": "Yan Yana Görünüm",
-    "pageNumberInput": "Sayfa numarası girişi"
+    "pageNumberInput": "Sayfa numarası girişi",
+    "addNewColor": "Yeni Renk Ekle",
+    "deleteColor": "Seçilen Rengi Sil",
+    "copySelectedColor": "Seçilen Rengi Kopyala"
   },
   "annotation": {
     "areaMeasurement": "Alan",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Renk"
     },
+    "colorPalettePicker": {
+      "addColor": "Yeni renk ekle",
+      "selectColor": "Renk seç"
+    },
     "displayMode": {
       "layout": "Sayfa düzeni",
       "pageTransition": "Sayfa Geçişi"
@@ -509,6 +520,9 @@
       "radius": "yarıçap",
       "count": "Saymak",
       "length": "Uzunluk"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Yazı tipi boyutunu dinamik olarak ölçeklendirin"
     },
     "measurementOption": {
       "scale": "Ölçek"
@@ -768,6 +782,9 @@
       "deleteTitle": "Özel rengi sil",
       "deleteMessage": "Seçilen özel renk silinsin mi? Renk paletinizden kaldırılacaktır."
     },
+    "colorPalettePicker": {
+      "deleteTitle": "Özel rengi sil"
+    },
     "multiDeleteAnnotation": {
       "title": "Ek Açıklamalar Silinsin mi?",
       "message": "Silme işlemi tüm yorumları, yanıtları ve gruplandırmayı kaldırır ve geri alınamaz.\n\n Bu ek açıklamaları silmek istediğinizden emin misiniz?"
@@ -800,7 +817,7 @@
     "select": "(ESC)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(İ)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Girintiyi artır",
     "insertLink": "Bağlantı ekle",
     "insertImage": "Resim ekle",
+    "table": "Masa",
+    "insertRowAbove": "Yukarıya Satır Ekle",
+    "insertRowBelow": "Aşağıya Satır Ekle",
+    "insertColumnRight": "Sağa Sütun Ekle",
+    "insertColumnLeft": "Sola Sütun Ekle",
+    "deleteRow": "Sırayı sil",
+    "deleteColumn": "Sütunu Sil",
+    "deleteTable": "Tabloyu Sil",
     "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stiller"
+      "styles": "Stiller",
+      "annotation": "Dipnot",
+      "annotations": "Ek açıklamalar",
+      "tool": "Alet",
+      "textStyles": "Metin Stilleri",
+      "currentColor": "Mevcut Renk",
+      "customColors": "Özel renkler",
+      "redactionTextLabel": "Metin Etiketi",
+      "redactionMarkOutline": "Anahattı İşaretle",
+      "redactionFill": "Redaksiyon Rengi",
+      "redactionTextPlaceholder": "Metin etiketi ekle",
+      "contentEdit": "İçerik Düzenleme"
     },
-    "noToolSelected": "Araç özelliklerini görüntülemek için bir araç seçin"
+    "addColorToCustom": "Özel renklere ekle",
+    "noToolSelected": "Araç özelliklerini görüntülemek için bir araç seçin",
+    "noToolStyle": "Araç herhangi bir stil özelliği içermiyor."
+  },
+  "signatureListPanel": {
+    "header": "İmza Listesi",
+    "newSignature": "Yeni İmza",
+    "newSignatureAndInitial": "Yeni İmza ve Harf",
+    "signatureList": {
+      "signature": "İmza",
+      "initials": "Baş harfler"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Pullar",
+    "standard": "Standart Pullar"
   }
 }

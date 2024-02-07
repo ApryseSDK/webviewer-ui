@@ -72,6 +72,7 @@
     "type": "입력",
     "upload": "업로드",
     "link": "링크",
+    "unlink": "링크 삭제",
     "fileAttachmentDownload": "다운로드",
     "prevResult": "이전결과",
     "nextResult": "다음결과",
@@ -82,6 +83,8 @@
     "exit": "나가기",
     "addOption": "옵션추가",
     "formFieldEdit": "폼편집",
+    "formFieldEditMode": "양식 필드 편집",
+    "contentEditMode": "콘텐츠 편집",
     "viewShortCutKeysFor3D": "3D 단축키 보기",
     "markAllRead": "모두 읽은상태로 표시",
     "pageInsertion": "페이지 삽입",
@@ -120,9 +123,13 @@
     "showComparison": "비교 표시",
     "back": "뒤",
     "clearSignature": "명확한 서명",
+    "readOnlySignature": "읽기 전용 서명은 삭제할 수 없습니다.",
     "newDocument": "새 문서",
     "sideBySideView": "나란히 보기",
-    "pageNumberInput": "페이지 번호 입력"
+    "pageNumberInput": "페이지 번호 입력",
+    "addNewColor": "새로운 색상 추가",
+    "deleteColor": "선택한 색상 삭제",
+    "copySelectedColor": "선택한 색상 복사"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "색상"
     },
+    "colorPalettePicker": {
+      "addColor": "새로운 색상 추가",
+      "selectColor": "색상 선택"
+    },
     "displayMode": {
       "layout": "레이아웃",
       "pageTransition": "페이지 전환"
@@ -509,6 +520,9 @@
       "radius": "반지름",
       "count": "카운트",
       "length": "길이"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "글꼴 크기를 동적으로 조정"
     },
     "measurementOption": {
       "scale": "배율"
@@ -768,6 +782,9 @@
       "deleteTitle": "맞춤색상 삭제",
       "deleteMessage": "선택한 맞춤색상을 제거 하시겠습니까?"
     },
+    "colorPalettePicker": {
+      "deleteTitle": "맞춤 색상 삭제"
+    },
     "multiDeleteAnnotation": {
       "title": "주석을 삭제하시겠습니까?",
       "message": "삭제하면 모든 댓글, 답글 및 그룹이 제거되며 취소할 수 없습니다.\n\n 이 주석을 삭제하시겠습니까?"
@@ -800,7 +817,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(NS)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "들여쓰기 증가",
     "insertLink": "링크 삽입",
     "insertImage": "이미지 삽입",
+    "table": "테이블",
+    "insertRowAbove": "위에 행 삽입",
+    "insertRowBelow": "아래에 행 삽입",
+    "insertColumnRight": "오른쪽에 열 삽입",
+    "insertColumnLeft": "왼쪽에 열 삽입",
+    "deleteRow": "행 삭제",
+    "deleteColumn": "열 삭제",
+    "deleteTable": "테이블 삭제",
     "notSupportedOnMobile": "Office 편집은 모바일 장치에서 지원되지 않습니다."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "스타일"
+      "styles": "스타일",
+      "annotation": "주석",
+      "annotations": "주석",
+      "tool": "도구",
+      "textStyles": "텍스트 스타일",
+      "currentColor": "현재 색상",
+      "customColors": "사용자 정의 색상",
+      "redactionTextLabel": "텍스트 라벨",
+      "redactionMarkOutline": "마크 아웃라인",
+      "redactionFill": "교정 색상",
+      "redactionTextPlaceholder": "텍스트 라벨 삽입",
+      "contentEdit": "내용 편집"
     },
-    "noToolSelected": "도구 속성을 보려면 도구를 선택하세요."
+    "addColorToCustom": "사용자 정의 색상에 추가",
+    "noToolSelected": "도구 속성을 보려면 도구를 선택하세요.",
+    "noToolStyle": "도구에는 스타일 속성이 포함되어 있지 않습니다."
+  },
+  "signatureListPanel": {
+    "header": "서명 목록",
+    "newSignature": "새로운 서명",
+    "newSignatureAndInitial": "새 서명 및 이니셜",
+    "signatureList": {
+      "signature": "서명",
+      "initials": "머리 글자"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "우표",
+    "standard": "표준 스탬프"
   }
 }

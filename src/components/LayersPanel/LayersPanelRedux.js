@@ -26,7 +26,7 @@ function LayersPanelRedux(props) {
     if (doc) {
       doc.setLayersArray(layers);
       if (core.isFullPDFEnabled()) {
-        toggleAnnotationsVisibility(layers, core).then(() => {
+        toggleAnnotationsVisibility(layers).then(() => {
           documentViewer.refreshAll();
           documentViewer.updateView();
         });

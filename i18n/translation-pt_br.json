@@ -72,6 +72,7 @@
     "type": "Tipo",
     "upload": "Enviar documento",
     "link": "Link",
+    "unlink": "Excluir link",
     "fileAttachmentDownload": "Baixar arquivo anexado",
     "prevResult": "Resultado anterior",
     "nextResult": "Próximo resultado",
@@ -82,6 +83,8 @@
     "exit": "Saída",
     "addOption": "Adicionar Opção",
     "formFieldEdit": "Editar campo de formulário",
+    "formFieldEditMode": "Editar campos de formulário",
+    "contentEditMode": "Editar conteúdo",
     "viewShortCutKeysFor3D": "Exibir teclas de atalho",
     "markAllRead": "Marcar todas como lidas",
     "pageInsertion": "Inserção de página",
@@ -120,9 +123,13 @@
     "showComparison": "Mostrar comparação",
     "back": "De volta",
     "clearSignature": "Assinatura clara",
+    "readOnlySignature": "A assinatura somente leitura não pode ser excluída",
     "newDocument": "Novo Documento",
     "sideBySideView": "Vista lado a lado",
-    "pageNumberInput": "Entrada do número da página"
+    "pageNumberInput": "Entrada do número da página",
+    "addNewColor": "Adicionar nova cor",
+    "deleteColor": "Excluir cor selecionada",
+    "copySelectedColor": "Copiar cor selecionada"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Cor"
     },
+    "colorPalettePicker": {
+      "addColor": "Adicionar nova cor",
+      "selectColor": "Selecione a cor"
+    },
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Transição de página"
@@ -509,6 +520,9 @@
       "radius": "Raio",
       "count": "Contagem",
       "length": "Comprimento"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Dimensione o tamanho da fonte dinamicamente"
     },
     "measurementOption": {
       "scale": "Escala"
@@ -768,6 +782,9 @@
       "deleteTitle": "Excluir cor personalizada",
       "deleteMessage": "Excluir a cor personalizada selecionada? Ele será removido da sua paleta de cores."
     },
+    "colorPalettePicker": {
+      "deleteTitle": "Excluir cor personalizada"
+    },
     "multiDeleteAnnotation": {
       "title": "Excluir anotações?",
       "message": "A exclusão removerá todos os comentários, respostas e agrupamentos e não poderá ser desfeita.\n\n Tem certeza de que deseja excluir essas anotações?"
@@ -800,7 +817,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(EU)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Aumentar recuo",
     "insertLink": "Inserir link",
     "insertImage": "Inserir Imagem",
+    "table": "Mesa",
+    "insertRowAbove": "Inserir linha acima",
+    "insertRowBelow": "Inserir linha abaixo",
+    "insertColumnRight": "Inserir coluna à direita",
+    "insertColumnLeft": "Inserir coluna à esquerda",
+    "deleteRow": "Excluir linha",
+    "deleteColumn": "Excluir coluna",
+    "deleteTable": "Excluir tabela",
     "notSupportedOnMobile": "A edição do Office não é suportada em dispositivos móveis."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Estilos"
+      "styles": "Estilos",
+      "annotation": "Anotação",
+      "annotations": "Anotações",
+      "tool": "Ferramenta",
+      "textStyles": "Estilos de texto",
+      "currentColor": "Cor atual",
+      "customColors": "Cores personalizadas",
+      "redactionTextLabel": "Etiqueta de texto",
+      "redactionMarkOutline": "Marcar contorno",
+      "redactionFill": "Cor de redação",
+      "redactionTextPlaceholder": "Inserir rótulo de texto",
+      "contentEdit": "Edição de conteúdo"
     },
-    "noToolSelected": "Selecione uma ferramenta para visualizar as propriedades da ferramenta"
+    "addColorToCustom": "Adicionar às cores personalizadas",
+    "noToolSelected": "Selecione uma ferramenta para visualizar as propriedades da ferramenta",
+    "noToolStyle": "A ferramenta não contém nenhuma propriedade de estilo."
+  },
+  "signatureListPanel": {
+    "header": "Lista de assinaturas",
+    "newSignature": "Nova Assinatura",
+    "newSignatureAndInitial": "Nova Assinatura e Inicial",
+    "signatureList": {
+      "signature": "Assinatura",
+      "initials": "Iniciais"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Selos",
+    "standard": "Selos padrão"
   }
 }

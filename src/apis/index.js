@@ -148,6 +148,7 @@ import {
   enableToolDefaultStyleUpdateFromAnnotationPopup,
   disableToolDefaultStyleUpdateFromAnnotationPopup
 } from './toolDefaultStyleUpdateFromAnnotationPopup';
+import { enableAnnotationToolStyleSyncing, disableAnnotationToolStyleSyncing } from './annotationToolStyleSyncing';
 import unregisterTool from './unregisterTool';
 import updateElement from './updateElement';
 import updateTool from './updateTool';
@@ -270,6 +271,7 @@ import PresetButton from './ModularComponents/presetButton';
 import StatefulButton from './ModularComponents/statefulButton';
 import ViewControls from './ModularComponents/viewControls';
 import MainMenu from './ModularComponents/menu';
+import TabPanel from './ModularComponents/tabPanel';
 import setMultiViewerSyncScrollingMode from './setMultiViewerSyncScrollingMode';
 import setTextSignatureQuality from './setTextSignatureQuality';
 import getTextSignatureQuality from './getTextSignatureQuality';
@@ -297,6 +299,11 @@ import enableFeatureFlag from './enableFeatureFlag';
 import disableFeatureFlag from './disableFeatureFlag';
 import enterMultiViewerMode from './enterMultiViewerMode';
 import exitMultiViewerMode from './exitMultiViewerMode';
+import setPanelWidth from './setPanelWidth';
+import setModularHeaders from './setModularHeaders';
+import setScaleOverlayPosition from './setScaleOverlayPosition';
+import setPanels from './setPanels';
+import getPanels from './getPanels';
 
 export default (store) => {
   const CORE_NAMESPACE = 'Core';
@@ -461,12 +468,15 @@ export default (store) => {
       setDefaultOptions: setDefaultOptions(store),
     },
     addModularHeaders: addModularHeaders(store),
+    setModularHeaders: setModularHeaders(store),
     getModularHeader: getModularHeader(store),
     getModularHeaderList: getModularHeaderList(store),
     Flyouts: FlyoutsAPI(store),
     setGroupedItemsGap: setGroupedItemsGap(store),
     setGroupedItemsJustifyContent: setGroupedItemsJustifyContent(store),
     setGroupedItemsGrow: setGroupedItemsGrow(store),
+    setPanels: setPanels(store),
+    getPanels: getPanels(store),
     Components: {
       Item,
       GroupedItems: GroupedItems(store),
@@ -488,6 +498,7 @@ export default (store) => {
       StatefulButton,
       ViewControls,
       MainMenu: MainMenu(store),
+      TabPanel,
     },
     getWatermarkModalOptions: getWatermarkModalOptions(store),
     // undocumented and deprecated, to be removed in 7.0
@@ -548,6 +559,8 @@ export default (store) => {
     toggleReaderMode: toggleReaderMode(store),
     enableToolDefaultStyleUpdateFromAnnotationPopup: enableToolDefaultStyleUpdateFromAnnotationPopup(store),
     disableToolDefaultStyleUpdateFromAnnotationPopup: disableToolDefaultStyleUpdateFromAnnotationPopup(store),
+    enableAnnotationToolStyleSyncing: enableAnnotationToolStyleSyncing(store),
+    disableAnnotationToolStyleSyncing: disableAnnotationToolStyleSyncing(store),
     addEventListener,
     removeEventListener,
     syncNamespaces,
@@ -593,6 +606,8 @@ export default (store) => {
     FeatureFlags,
     enableFeatureFlag: enableFeatureFlag(store),
     disableFeatureFlag: disableFeatureFlag(store),
+    setPanelWidth: setPanelWidth(store),
+    setScaleOverlayPosition: setScaleOverlayPosition(store),
 
     // undocumented
     loadedFromServer: false,

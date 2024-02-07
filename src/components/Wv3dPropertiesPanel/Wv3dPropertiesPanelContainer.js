@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Wv3dPropertiesPanel from './Wv3dPropertiesPanel';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import selectors from 'selectors';
@@ -27,9 +27,21 @@ const Wv3dPropertiesPanelContainer = () => {
     dispatch(actions.closeElement('wv3dPropertiesPanel'));
   };
 
-  if (isDisabled || !isOpen) {
+  const [renderNull, setRenderNull] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRenderNull(!isOpen);
+    }, 500);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isOpen]);
+
+  if (isDisabled || (!isOpen && renderNull)) {
     return null;
   }
+
   return (
     <Wv3dPropertiesPanel
       isInDesktopOnlyMode={isInDesktopOnlyMode}

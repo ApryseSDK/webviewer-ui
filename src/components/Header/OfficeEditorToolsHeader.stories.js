@@ -23,6 +23,7 @@ const BasicComponent = ({ children }) => {
   core.getDocument = () => ({
     getType: () => workerTypes.OFFICE_EDITOR,
     addEventListener: () => {},
+    removeEventListener: () => {},
   });
 
   return (
@@ -41,7 +42,7 @@ export function Basic() {
 }
 Basic.parameters = {
   chromatic: {
-    viewports: [1300]
+    viewports: [1400]
   }
 };
 

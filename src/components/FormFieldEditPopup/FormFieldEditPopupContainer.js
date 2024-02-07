@@ -13,6 +13,7 @@ import DataElementWrapper from '../DataElementWrapper';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import DataElements from 'constants/dataElement';
 import { PRIORITY_THREE } from 'constants/actionPriority';
+import throttle from 'lodash/throttle';
 import './FormFieldEditPopup.scss';
 
 function FormFieldEditPopupContainer({ annotation }) {
@@ -31,6 +32,8 @@ function FormFieldEditPopupContainer({ annotation }) {
   const [showIndicator, setShowIndicator] = useState(false);
   const [indicatorText, setIndicatorText] = useState('');
   const popupRef = useRef();
+  const mountedRef = useRef(true);
+  const sixtyFramesPerSecondIncrement = 16;
 
   const [isOpen] = useSelector(
     (state) => [selectors.isElementOpen(state, DataElements.FORM_FIELD_EDIT_POPUP)],
@@ -92,17 +95,31 @@ function FormFieldEditPopupContainer({ annotation }) {
     setRadioButtonGroups(dedupedRadioGroups);
   }, []);
 
+  const setPopupPosition = () => {
+    if (popupRef.current && mountedRef.current) {
+      setPosition(getAnnotationPopupPositionBasedOn(annotation, popupRef));
+    }
+  };
+
+  const handleResize = throttle(() => {
+    setPopupPosition();
+  }, sixtyFramesPerSecondIncrement);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      mountedRef.current = false;
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   // We use layout effect to avoid a flickering as the popup is repositioned
   // The flow is open popup -> update position.
   // So we first open with an old position and then re-render to the new position. By using layoutEffect
   // we let the hook run and update the position, and then the browser updates
   useLayoutEffect(() => {
-    const setPopupPosition = () => {
-      if (popupRef.current) {
-        setPosition(getAnnotationPopupPositionBasedOn(annotation, popupRef));
-      }
-    };
-
     if (isOpen && annotation) {
       setPopupPosition();
       setFieldName(formFieldCreationManager.getFieldName(annotation));
@@ -192,6 +209,18 @@ function FormFieldEditPopupContainer({ annotation }) {
 
   const closeFormFieldEditPopup = useCallback(() => {
     closeAndReset();
+  }, []);
+
+  const onCancelEmptyFieldName = useCallback((placeholderAnnotation) => {
+    const widget = formFieldCreationManager.getWidgetFromPlaceholder(placeholderAnnotation);
+    if (widget) {
+      // Reset name field to widget's original name.
+      onFieldNameChange(widget.getField().name);
+    } else {
+      deleteFormFieldPlaceholder(placeholderAnnotation);
+    }
+
+    closeFormFieldEditPopup();
   }, []);
 
   const onCloseRadioButtonPopup = useCallback(() => {
@@ -314,7 +343,7 @@ function FormFieldEditPopupContainer({ annotation }) {
       getPageHeight={getPageHeight}
       getPageWidth={getPageWidth}
       indicator={indicator}
-      deleteAnnotation={deleteFormFieldPlaceholder}
+      onCancelEmptyFieldName={onCancelEmptyFieldName}
     />
   );
 
@@ -332,7 +361,7 @@ function FormFieldEditPopupContainer({ annotation }) {
       onSignatureOptionChange={onSignatureOptionChange}
       getSignatureOptionHandler={getSignatureOption}
       indicator={indicator}
-      deleteAnnotation={deleteFormFieldPlaceholder}
+      onCancelEmptyFieldName={onCancelEmptyFieldName}
     />
   );
 
@@ -348,7 +377,7 @@ function FormFieldEditPopupContainer({ annotation }) {
       getPageHeight={getPageHeight}
       getPageWidth={getPageWidth}
       indicator={indicator}
-      deleteAnnotation={deleteFormFieldPlaceholder}
+      onCancelEmptyFieldName={onCancelEmptyFieldName}
     />
   );
 
@@ -366,7 +395,7 @@ function FormFieldEditPopupContainer({ annotation }) {
       getPageHeight={getPageHeight}
       getPageWidth={getPageWidth}
       indicator={indicator}
-      deleteAnnotation={deleteFormFieldPlaceholder}
+      onCancelEmptyFieldName={onCancelEmptyFieldName}
     />
   );
 
@@ -387,7 +416,7 @@ function FormFieldEditPopupContainer({ annotation }) {
         getPageHeight={getPageHeight}
         getPageWidth={getPageWidth}
         indicator={indicator}
-        deleteAnnotation={deleteFormFieldPlaceholder}
+        onCancelEmptyFieldName={onCancelEmptyFieldName}
       />
     );
   };
@@ -409,7 +438,7 @@ function FormFieldEditPopupContainer({ annotation }) {
         getPageHeight={getPageHeight}
         getPageWidth={getPageWidth}
         indicator={indicator}
-        deleteAnnotation={deleteFormFieldPlaceholder}
+        onCancelEmptyFieldName={onCancelEmptyFieldName}
       />
     );
   };

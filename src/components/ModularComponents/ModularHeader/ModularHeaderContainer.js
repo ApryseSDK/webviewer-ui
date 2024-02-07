@@ -12,7 +12,7 @@ const ModularHeaderContainer = React.forwardRef((props, ref) => {
     fixedGroupedItems
   ] = useSelector(
     (state) => [
-      selectors.getCurrentGroupedItems(state),
+      selectors.getActiveGroupedItems(state),
       selectors.getFixedGroupedItems(state),
     ],
     shallowEqual

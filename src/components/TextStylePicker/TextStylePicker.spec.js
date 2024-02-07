@@ -53,6 +53,6 @@ describe.only('TextStylePicker Component', () => {
     userEvent.type(fontSizeInput, '12345');
     // Assert that a warning exists
     await new Promise((r) => setTimeout(r, DEBOUNCE_TIME + 5));
-    expect(screen.getByText('Font size must be in the following range: 1 - 128')).toBeInTheDocument();
+    expect(screen.getByText('Font size must be in the following range: 1 - 512')).toBeInTheDocument();
   });
 });

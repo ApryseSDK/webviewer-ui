@@ -14,7 +14,7 @@ const initialState = {
     customElementOverrides: {},
     openElements: {},
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     headers: {},
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},

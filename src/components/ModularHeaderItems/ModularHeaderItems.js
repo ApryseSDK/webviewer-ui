@@ -65,11 +65,6 @@ const ModularHeaderItems = (props) => {
   const headerDirection = [PLACEMENT.LEFT, PLACEMENT.RIGHT].includes(placement) ? DIRECTION.COLUMN : DIRECTION.ROW;
 
   const headerItems = items?.map((item, index) => {
-    /**
-     * We can think on a better solution later, but this is necessary
-     * because the user can either instantiate a CustomButton and add it
-     * to the header or add the plain object.
-     */
     const hasToShrink = size > 0;
     const indexesToExclude = items.length - size;
     const isLastIndexAndDivider = index === indexesToExclude - 1 && item.type === ITEM_TYPE.DIVIDER;
@@ -77,6 +72,11 @@ const ModularHeaderItems = (props) => {
     if (hasToShrink && shouldExcludeIndex) {
       return null;
     }
+    /**
+     * We can think on a better solution later, but this is necessary
+     * because the user can either instantiate a CustomButton and add it
+     * to the header or add the plain object.
+     */
     let itemProps = item.props || item;
     itemProps = { headerPlacement: placement, justifyContent: justifyContent, ...itemProps };
     const { type, dataElement } = itemProps;
@@ -102,7 +102,7 @@ const ModularHeaderItems = (props) => {
           dataElement={`${flyoutDataElement}Toggle`}
           toggleElement={flyoutDataElement}
           title="action.more"
-          img="icon-double-chevron-down"/>
+          img="icon-double-chevron-down" />
       }
     </div>
   );

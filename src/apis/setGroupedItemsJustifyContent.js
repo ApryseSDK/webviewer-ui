@@ -5,23 +5,29 @@
  * @example
  * WebViewer(...)
   .then(function (instance) {
+    const myToolsGroup = new instance.UI.Components.GroupedItems({
+      dataElement: 'group-1',
+      items: [
+        myButton,
+        myToolButton,
+        highlightToolButton,
+      ],
+    });
+
+    // Group must be added to a header, and then the header must be added to the UI
     const newHeader = new instance.UI.Components.ModularHeader({
       dataElement: 'top-header',
-      location: 'top'
+      location: 'top',
+      items: [myToolsGroup]
     });
+    instance.UI.addModularHeaders([newHeader]);
 
-    // Setting the justifyContent of all Grouped Items
-    instance.UI.setGroupedItemsJustifyContent('center');
+    // Setting the justifyContent property of all Grouped Items
+    instance.UI.setGroupedItemsJustifyContent('start');
 
     // Setting the justifyContent property of all Grouped Items with a specific data element
-    instance.UI.setGroupedItemsJustifyContent('start', {
-      groupedItem: 'group1'
-    });
-
-    // Setting the justifyContent property of Grouped Items with a specific data element in a specific header
     instance.UI.setGroupedItemsJustifyContent('space-between', {
-      groupedItem: 'group1',
-      header: 'top-header'
+      groupedItemsDataElement: 'group-1'
     });
  */
 import actions from 'actions';
@@ -29,6 +35,11 @@ import { isJustifyContentValid } from 'components/ModularComponents/Helpers/vali
 
 export default (store) => (justifyContent, selectors) => {
   if (isJustifyContentValid(justifyContent)) {
-    store.dispatch(actions.setGroupedItemsProperty('justifyContent', justifyContent, selectors?.groupedItem, selectors?.header));
+    const { groupedItemsDataElement } = selectors || {};
+    if (groupedItemsDataElement) {
+      store.dispatch(actions.setGroupedItemsProperty('justifyContent', justifyContent, groupedItemsDataElement));
+    } else {
+      store.dispatch(actions.setAllGroupedItemsProperty('justifyContent', justifyContent));
+    }
   }
 };

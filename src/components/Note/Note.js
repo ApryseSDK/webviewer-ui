@@ -36,6 +36,8 @@ const Note = ({
   isMultiSelectMode,
   isInNotesPanel,
   handleMultiSelect,
+  isCustomPanelOpen,
+  shouldHideConnectorLine,
 }) => {
   const {
     isSelected,
@@ -332,7 +334,13 @@ const Note = ({
           )}
         </>
       )}
-      {isSelected && isInNotesPanel && <AnnotationNoteConnectorLine annotation={annotation} noteContainerRef={containerRef} />}
+      {isSelected && (isInNotesPanel || isCustomPanelOpen) && !shouldHideConnectorLine && (
+        <AnnotationNoteConnectorLine
+          annotation={annotation}
+          noteContainerRef={containerRef}
+          isCustomPanelOpen={isCustomPanelOpen}
+        />
+      )}
     </div>
   );
 };

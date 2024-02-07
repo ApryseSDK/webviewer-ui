@@ -129,6 +129,11 @@ class ToolStylePopup extends React.PureComponent {
     }
   };
 
+  handleAutoSize = () => {
+    const { activeToolName, activeToolStyle } = this.props;
+    setToolStyles(activeToolName, 'isAutoSizeFont', !activeToolStyle.isAutoSizeFont);
+  }
+
   render() {
     const { activeToolGroup, isDisabled, activeToolName, activeToolStyle } = this.props;
     const isFreeText = activeToolName.includes('FreeText') || activeToolName.includes('Callout');
@@ -161,6 +166,7 @@ class ToolStylePopup extends React.PureComponent {
         italic: activeToolStyle['RichTextStyle'][0]['font-style'] === 'italic',
         underline: activeToolStyle['RichTextStyle'][0]['text-decoration']?.includes('underline') || activeToolStyle['text-decoration']?.includes('word'),
         strikeout: activeToolStyle['RichTextStyle'][0]['text-decoration']?.includes('line-through'),
+        isAutosizeFont: activeToolStyle.isAutoSizeFont
       };
     }
 
@@ -187,6 +193,8 @@ class ToolStylePopup extends React.PureComponent {
         colorMapKey={colorMapKey}
         style={activeToolStyle}
         isFreeText={isFreeText}
+        isFreeTextAutoSize={properties.isAutosizeFont}
+        onFreeTextSizeToggle={this.handleAutoSize}
         hideSnapModeCheckbox={isEllipseMeasurementTool || !core.isFullPDFEnabled()}
         onPropertyChange={this.handleStyleChange}
         onStyleChange={this.handleStyleChange}

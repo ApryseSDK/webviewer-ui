@@ -72,6 +72,7 @@
     "type": "taip",
     "upload": "Muat naik",
     "link": "Pautan",
+    "unlink": "Padamkan Pautan",
     "fileAttachmentDownload": "Muat turun fail yang dilampirkan",
     "prevResult": "Keputusan sebelumnya",
     "nextResult": "Keputusan seterusnya",
@@ -82,6 +83,8 @@
     "exit": "Keluar",
     "addOption": "Tambah Pilihan",
     "formFieldEdit": "Edit Medan Borang",
+    "formFieldEditMode": "Edit Medan Borang",
+    "contentEditMode": "Edit Kandungan",
     "viewShortCutKeysFor3D": "Lihat Kekunci Pintasan",
     "markAllRead": "Tandai semua sebagai dibaca",
     "pageInsertion": "Sisipan Halaman",
@@ -120,9 +123,13 @@
     "showComparison": "Tunjukkan Perbandingan",
     "back": "belakang",
     "clearSignature": "Tandatangan yang jelas",
+    "readOnlySignature": "Tandatangan baca sahaja tidak boleh dipadamkan",
     "newDocument": "Dokumen Baharu",
     "sideBySideView": "Pandangan Sebelah",
-    "pageNumberInput": "Input nombor halaman"
+    "pageNumberInput": "Input nombor halaman",
+    "addNewColor": "Tambah Warna Baru",
+    "deleteColor": "Padamkan Warna yang Dipilih",
+    "copySelectedColor": "Salin Warna yang Dipilih"
   },
   "annotation": {
     "areaMeasurement": "kawasan",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Warna"
     },
+    "colorPalettePicker": {
+      "addColor": "Tambah warna baru",
+      "selectColor": "Pilih warna"
+    },
     "displayMode": {
       "layout": "Susun Atur Halaman",
       "pageTransition": "Peralihan Halaman"
@@ -509,6 +520,9 @@
       "radius": "Jejari",
       "count": "Kira",
       "length": "Panjang"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Skalakan saiz fon secara dinamik"
     },
     "measurementOption": {
       "scale": "Skala"
@@ -768,6 +782,9 @@
       "deleteTitle": "Padamkan warna tersuai",
       "deleteMessage": "Padamkan warna tersuai yang dipilih? Ia akan dialih keluar daripada palet warna anda."
     },
+    "colorPalettePicker": {
+      "deleteTitle": "Padamkan warna tersuai"
+    },
     "multiDeleteAnnotation": {
       "title": "Padamkan Anotasi?",
       "message": "Pemadaman akan mengalih keluar semua ulasan, balasan dan pengumpulan dan tidak boleh dibuat asal.\n\n Adakah anda pasti mahu memadamkan anotasi ini?"
@@ -800,7 +817,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(saya)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Tingkatkan inden",
     "insertLink": "Sisipkan pautan",
     "insertImage": "Sisipkan imej",
+    "table": "Jadual",
+    "insertRowAbove": "Sisipkan Baris Di Atas",
+    "insertRowBelow": "Sisipkan Baris Di Bawah",
+    "insertColumnRight": "Sisipkan Lajur Kanan",
+    "insertColumnLeft": "Sisipkan Lajur Kiri",
+    "deleteRow": "Padam Baris",
+    "deleteColumn": "Padam Lajur",
+    "deleteTable": "Padamkan Jadual",
     "notSupportedOnMobile": "Penyuntingan pejabat tidak disokong pada peranti mudah alih."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Gaya"
+      "styles": "Gaya",
+      "annotation": "Anotasi",
+      "annotations": "Anotasi",
+      "tool": "alat",
+      "textStyles": "Gaya Teks",
+      "currentColor": "Warna Semasa",
+      "customColors": "Warna Tersuai",
+      "redactionTextLabel": "Label Teks",
+      "redactionMarkOutline": "Tandakan Garis Besar",
+      "redactionFill": "Warna Redaksi",
+      "redactionTextPlaceholder": "Sisipkan label teks",
+      "contentEdit": "Suntingan Kandungan"
     },
-    "noToolSelected": "Pilih alat untuk melihat sifat alat"
+    "addColorToCustom": "Tambahkan pada warna tersuai",
+    "noToolSelected": "Pilih alat untuk melihat sifat alat",
+    "noToolStyle": "Alat tidak mengandungi sebarang sifat penggayaan."
+  },
+  "signatureListPanel": {
+    "header": "Senarai Tandatangan",
+    "newSignature": "Tandatangan Baru",
+    "newSignatureAndInitial": "Tandatangan & Permulaan Baharu",
+    "signatureList": {
+      "signature": "Tandatangan",
+      "initials": "Inisial"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "setem",
+    "standard": "Setem Standard"
   }
 }

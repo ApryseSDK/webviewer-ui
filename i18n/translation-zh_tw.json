@@ -72,6 +72,7 @@
     "type": "類型",
     "upload": "上載",
     "link": "鏈接",
+    "unlink": "刪除連結",
     "fileAttachmentDownload": "下載附件",
     "prevResult": "先前的結果",
     "nextResult": "下一個結果",
@@ -82,6 +83,8 @@
     "exit": "出口",
     "addOption": "新增選項",
     "formFieldEdit": "編輯表格欄位",
+    "formFieldEditMode": "編輯表單字段",
+    "contentEditMode": "編輯內容",
     "viewShortCutKeysFor3D": "查看快捷鍵",
     "markAllRead": "將所有內容標記為已讀",
     "pageInsertion": "頁面插入",
@@ -120,9 +123,13 @@
     "showComparison": "顯示比較",
     "back": "後退",
     "clearSignature": "清晰的簽名",
+    "readOnlySignature": "只讀簽名無法刪除",
     "newDocument": "新建文件",
     "sideBySideView": "並排視圖",
-    "pageNumberInput": "頁碼輸入"
+    "pageNumberInput": "頁碼輸入",
+    "addNewColor": "新增顏色",
+    "deleteColor": "刪除選取的顏色",
+    "copySelectedColor": "複製選定的顏色"
   },
   "annotation": {
     "areaMeasurement": "測量面積",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "顏色"
     },
+    "colorPalettePicker": {
+      "addColor": "新增顏色",
+      "selectColor": "選擇顏色"
+    },
     "displayMode": {
       "layout": "版面",
       "pageTransition": "頁面切換"
@@ -509,6 +520,9 @@
       "radius": "半徑",
       "count": "計數",
       "length": "長度"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "動態縮放字體大小"
     },
     "measurementOption": {
       "scale": "比例"
@@ -767,6 +781,9 @@
     "colorPicker": {
       "deleteTitle": "刪除自定義顏色",
       "deleteMessage": "刪除所選的自定義顏色？它將從您的調色板中刪除。"
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "刪除自訂顏色"
     },
     "multiDeleteAnnotation": {
       "title": "刪除註釋？",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "增加縮排",
     "insertLink": "插入鏈接",
     "insertImage": "插入圖片",
+    "table": "桌子",
+    "insertRowAbove": "在上方插入行",
+    "insertRowBelow": "在下面插入行",
+    "insertColumnRight": "右插入列",
+    "insertColumnLeft": "向左插入列",
+    "deleteRow": "刪除行",
+    "deleteColumn": "刪除列",
+    "deleteTable": "刪除表",
     "notSupportedOnMobile": "移動設備不支持 Office 編輯。"
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "風格"
+      "styles": "風格",
+      "annotation": "註解",
+      "annotations": "註解",
+      "tool": "工具",
+      "textStyles": "文字樣式",
+      "currentColor": "目前顏色",
+      "customColors": "客製化顏色",
+      "redactionTextLabel": "文字標籤",
+      "redactionMarkOutline": "標記輪廓",
+      "redactionFill": "密文顏色",
+      "redactionTextPlaceholder": "插入文字標籤",
+      "contentEdit": "內容編輯"
     },
-    "noToolSelected": "選擇工具以查看工具屬性"
+    "addColorToCustom": "新增到自訂顏色",
+    "noToolSelected": "選擇工具以查看工具屬性",
+    "noToolStyle": "工具不包含任何樣式屬性。"
+  },
+  "signatureListPanel": {
+    "header": "簽名列表",
+    "newSignature": "新簽名",
+    "newSignatureAndInitial": "新簽名和首字母縮寫",
+    "signatureList": {
+      "signature": "簽名",
+      "initials": "縮寫"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "郵票",
+    "standard": "標準郵票"
   }
 }

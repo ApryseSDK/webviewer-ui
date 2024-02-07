@@ -60,7 +60,8 @@ describe('useOnRedactionAnnotationChanged hook', () => {
 
     // The handler updates the internal state of the hook so it needs to be wrapped in act
     act(() => onAnnotationChangedHandler());
-    expect(result.current.length).toEqual(mockRedactionAnnotations.length);
+    const { redactionAnnotationsList } = result.current;
+    expect(redactionAnnotationsList.length).toEqual(mockRedactionAnnotations.length);
     // In the initial state the notes and search panel are closed, so we should have called dispatch to open
     // the redaction panel
     expect(mockDispatch).toBeCalledTimes(1);
@@ -97,7 +98,8 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     expect(result.error).toBeUndefined();
 
     act(() => onAnnotationChangedHandler());
-    expect(result.current.length).toEqual(mockRedactionAnnotations.length);
+    const { redactionAnnotationsList } = result.current;
+    expect(redactionAnnotationsList.length).toEqual(mockRedactionAnnotations.length);
     expect(mockDispatch).not.toBeCalled();
   });
 
@@ -129,7 +131,9 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     expect(result.error).toBeUndefined();
 
     act(() => onAnnotationChangedHandler());
-    expect(result.current.length).toEqual(mockRedactionAnnotations.length);
+
+    const { redactionAnnotationsList } = result.current;
+    expect(redactionAnnotationsList.length).toEqual(mockRedactionAnnotations.length);
     expect(mockDispatch).not.toBeCalled();
   });
 });

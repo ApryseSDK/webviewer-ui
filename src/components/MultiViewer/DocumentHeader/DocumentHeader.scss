@@ -36,6 +36,9 @@
   .file-name {
     font-family: var(--font-family);
     font-size: var(--font-size-medium);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .control-buttons {

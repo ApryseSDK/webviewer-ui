@@ -5,8 +5,15 @@ import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables
 import DataElements from 'constants/dataElement';
 
 // viewer
+export const getScaleOverlayPosition = (state) => state.viewer.scaleOverlayPosition;
 export const getDefaultPrintMargins = (state) => state.viewer.defaultPrintMargins;
-export const getColors = (state) => state.viewer.colors;
+export const getColors = (state, tool, type) => {
+  type = type ? type.toLowerCase() : type;
+  if (tool && state.viewer.toolColorOverrides[tool]) {
+    return state.viewer.toolColorOverrides[tool];
+  }
+  return type === 'text' ? state.viewer.textColors : state.viewer.colors;
+};
 export const getCustomElementSize = (state, dataElement) => state.viewer.customElementSizes?.[dataElement] || 0;
 export const getActiveFlyout = (state) => state.viewer.activeFlyout;
 export const getFlyoutPosition = (state) => state.viewer.flyoutPosition;
@@ -22,12 +29,13 @@ export const getIsComparisonOverlayEnabled = (state) => state.viewer.isCompariso
 export const getActiveDocumentViewerKey = (state) => (state.viewer.isMultiViewerMode && state.viewer.activeDocumentViewerKey ? state.viewer.activeDocumentViewerKey : 1);
 export const isMultiViewerMode = (state) => state.viewer.isMultiViewerMode;
 export const isMultiViewerReady = (state) => state.viewer.isMultiViewerReady;
-export const getCustomFlxPanels = (state, location) => {
+export const getGenericPanels = (state, location) => {
   if (location) {
-    return state.viewer.customFlxPanels.filter((item) => item.location === location);
+    return state.viewer.genericPanels.filter((item) => item.location === location);
   }
-  return state.viewer.customFlxPanels;
+  return state.viewer.genericPanels;
 };
+export const getActiveCustomPanel = (state, wrapperPanel) => state.viewer.activeCustomPanel[wrapperPanel];
 export const shouldShowApplyCropWarning = (state) => state.viewer.shouldShowApplyCropWarning;
 export const shouldShowApplySnippingWarning = (state) => state.viewer.shouldShowApplySnippingWarning;
 export const getPresetCropDimensions = (state) => state.viewer.presetCropDimensions;
@@ -108,22 +116,25 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   const isComparePanelOpen = isElementOpen(state, 'comparePanel');
   const isWatermarkPanelOpen = isElementOpen(state, 'watermarkPanel');
 
-  const flxPanelOnLeft = isCustomFlxPanelOpen(state, 'left');
-  const flxPanelOnRight = isCustomFlxPanelOpen(state, 'right');
+  const genericPanelOnLeft = getOpenGenericPanel(state, 'left');
+  const genericPanelOnRight = getOpenGenericPanel(state, 'right');
+
+  const { customizableUI } = getFeatureFlags(state);
 
   const spaceTakenUpByPanels =
     0 +
-    (isLeftPanelOpen ? leftPanelWidth : 0) +
-    (isNotesPanelOpen && !notesInLeftPanel ? notesPanelWidth : 0) +
-    (isSearchPanelOpen ? searchPanelWidth : 0) +
-    (isRedactionPanelOpen ? redactionPanelWidth : 0) +
-    (isTextEditingPanelOpen ? textEditingPanelWidth : 0) +
-    (isWv3dPropertiesPanelOpen ? wv3dPropertiesPanelWidth : 0) +
-    (isComparePanelOpen ? comparePanelWidth : 0) +
-    (isWatermarkPanelOpen ? watermarkPanelWidth : 0) +
-    (flxPanelOnLeft ? getPanelWidth(state, flxPanelOnLeft) : 0) +
-    (flxPanelOnRight ? getPanelWidth(state, flxPanelOnRight) : 0);
-
+    (!customizableUI &&
+      (isLeftPanelOpen ? leftPanelWidth : 0) +
+      (isNotesPanelOpen && !notesInLeftPanel ? notesPanelWidth : 0) +
+      (isSearchPanelOpen ? searchPanelWidth : 0) +
+      (isRedactionPanelOpen ? redactionPanelWidth : 0) +
+      (isTextEditingPanelOpen ? textEditingPanelWidth : 0) +
+      (isWv3dPropertiesPanelOpen ? wv3dPropertiesPanelWidth : 0) +
+      (isComparePanelOpen ? comparePanelWidth : 0) +
+      (isWatermarkPanelOpen ? watermarkPanelWidth : 0)
+    ) +
+    (genericPanelOnLeft ? getPanelWidth(state, genericPanelOnLeft) : 0) +
+    (genericPanelOnRight ? getPanelWidth(state, genericPanelOnRight) : 0);
 
   // Do not count headers without items
   const activeRightHeaderWidth = getActiveRightHeaderWidth(state);
@@ -132,23 +143,23 @@ export const getDocumentContentContainerWidthStyle = (state) => {
   return `calc(100% - ${spaceTakenUpByPanels + spaceTakenUpByHeaders}px)`;
 };
 
-export const isCustomFlxPanelOpen = (state, location) => {
-  let customFlxPanels = state.viewer.customFlxPanels;
+export const getOpenGenericPanel = (state, location) => {
+  let genericPanels = state.viewer.genericPanels;
 
   if (location) {
-    customFlxPanels = state.viewer.customFlxPanels.filter((item) => item.location === location);
+    genericPanels = state.viewer.genericPanels.filter((item) => item.location === location);
   }
 
-  return customFlxPanels
+  return genericPanels
     .map((item) => item.dataElement)
     .find((elName) => isElementOpen(state, elName) === true);
 };
 
 export const getDocumentContainerLeftMargin = (state) => {
-  const flxPanelOpenOnLeft = isCustomFlxPanelOpen(state, 'left');
+  const genericPanelOpenOnLeft = getOpenGenericPanel(state, PLACEMENT.LEFT);
   return 0 +
     (isElementOpen(state, 'leftPanel') ? getLeftPanelWidthWithResizeBar(state) : 0) +
-    (flxPanelOpenOnLeft ? getPanelWidth(state, flxPanelOpenOnLeft) : 0);
+    (genericPanelOpenOnLeft ? getPanelWidth(state, genericPanelOpenOnLeft) : 0);
 };
 
 export const getCalibrationInfo = (state) => state.viewer.calibrationInfo;
@@ -219,23 +230,37 @@ export const getEnabledToolbarGroups = (state) => {
 
 export const getCurrentToolbarGroup = (state) => state.viewer.toolbarGroup;
 
-export const getCurrentGroupedItems = (state) => state.viewer.activeGroupedItems;
+export const getActiveGroupedItems = (state) => state.viewer.activeGroupedItems;
 
 export const getFixedGroupedItems = (state) => state.viewer.fixedGroupedItems;
 
+export const getLastPickedToolForGroupedItems = (state, dataElement) => state.viewer.lastPickedToolForGroupedItems[dataElement];
+
+export const getActiveCustomRibbon = (state) => state.viewer.activeCustomRibbon;
+
 export const getActiveHeaders = (state) => {
-  return state.viewer.modularHeaders?.filter((header) => {
-    return header.items?.length && header.items.filter((item) => {
-      const itemProps = item.props || item;
-      const hasActiveGroupedItems = state.viewer.activeGroupedItems?.length;
-      const hasFixedGroupedItems = state.viewer.fixedGroupedItems?.length;
-      if (itemProps.type === ITEM_TYPE.GROUPED_ITEMS && (hasActiveGroupedItems || hasFixedGroupedItems)) {
-        return state.viewer.activeGroupedItems.includes(itemProps.dataElement) ||
-          state.viewer.fixedGroupedItems.includes(itemProps.dataElement);
-      }
-      return true;
-    });
-  });
+  const allHeaders = Object.values(state.viewer.modularHeaders);
+  const activeGroupedItemsSet = new Set(state.viewer.activeGroupedItems);
+  const fixedGroupedItemsSet = new Set(state.viewer.fixedGroupedItems);
+  const componentsMap = state.viewer.modularComponents;
+
+  // An item is active if it meets one of the following conditions:
+  // 1. It is not a grouped item
+  // 2. It is a grouped item and its dataElement is in the activeGroupedItems or fixedGroupedItems
+  const isActiveItem = (item) => {
+    const modularComponent = componentsMap[item];
+    if (!modularComponent) {
+      return false;
+    }
+
+    const { type, dataElement } = modularComponent;
+    return type !== ITEM_TYPE.GROUPED_ITEMS ||
+      activeGroupedItemsSet.has(dataElement) ||
+      fixedGroupedItemsSet.has(dataElement);
+  };
+
+  // if a header contains at least one active item, it is active
+  return allHeaders.filter(({ items }) => items?.length && items.some(isActiveItem));
 };
 
 export const getActiveTheme = (state) => state.viewer.activeTheme;
@@ -246,68 +271,94 @@ export const getDefaultHeaderItems = (state) => {
   return state.viewer.headers.default;
 };
 
-export const getModularHeaderList = (state) => state.viewer.modularHeaders;
-
-export const getModularHeader = (state, dataElement) => {
-  return state.viewer.modularHeaders.find((header) => header.dataElement === dataElement);
-};
-
-export const getBottomHeaders = (state) => {
-  return state.viewer.modularHeaders.filter((header) => header.placement === PLACEMENT.BOTTOM);
-};
-
-export const getBottomHeadersHeight = (state) => {
-  // Floating headers are excluded from the bottom headers height calculation
-  // this is because they have no bearing on the height of the panels, as the float besides them
-  const bottomHeaders = getBottomHeaders(state)
-    .filter((header) => !header.float);
-
-  const sum = bottomHeaders.reduce((accumulator, current) => {
-    if (current.getDimensionTotal) {
-      return accumulator + current.getDimensionTotal();
+//* * The following selectors use the normalized header structure, replacing the exisitng selectors */
+const hydrateItems = (itemIds, components) => {
+  return itemIds.map((itemId) => {
+    const item = components[itemId];
+    if (!item) {
+      return null;
     }
-    return 0;
-  }, 0);
 
-  return sum + (bottomHeaders.length * state.viewer.modularHeadersHeight.bottomHeaders);
+    const hydratedItem = { ...item };
+
+    if (item.items && item.items.length > 0) {
+      hydratedItem.items = hydrateItems(item.items, components);
+    }
+
+    return hydratedItem;
+  }).filter((item) => item !== null);
+};
+
+export const getHydratedHeader = (state, dataElement) => {
+  const header = state.viewer.modularHeaders[dataElement];
+  if (!header) {
+    return null;
+  }
+
+  const components = state.viewer.modularComponents;
+  const hydratedHeader = {
+    ...header,
+    items: hydrateItems(header.items, components)
+  };
+
+  return hydratedHeader;
+};
+
+export const getHydratedHeaders = (state, placement) => {
+  const allHeaders = Object.values(state.viewer.modularHeaders);
+
+  let headersToHydrate;
+  if (placement) {
+    headersToHydrate = allHeaders.filter((header) => header.placement === placement);
+  } else {
+    headersToHydrate = allHeaders;
+  }
+
+  const components = state.viewer.modularComponents;
+  const hydratedHeaders = headersToHydrate.map((header) => {
+    return {
+      ...header,
+      items: hydrateItems(header.items, components)
+    };
+  });
+
+  return hydratedHeaders;
 };
 
 export const getTopHeaders = (state) => {
-  return state.viewer.modularHeaders.filter((header) => header.placement === PLACEMENT.TOP);
+  return getHydratedHeaders(state, PLACEMENT.TOP);
 };
 
-export const getRightHeader = (state) => {
-  return state.viewer.modularHeaders.filter((header) => header.placement === PLACEMENT.RIGHT);
+export const getBottomHeaders = (state) => {
+  return getHydratedHeaders(state, PLACEMENT.BOTTOM);
 };
 
 export const getLeftHeader = (state) => {
-  return state.viewer.modularHeaders.filter((header) => header.placement === PLACEMENT.LEFT);
+  return getHydratedHeaders(state, PLACEMENT.LEFT);
+};
+
+export const getRightHeader = (state) => {
+  return getHydratedHeaders(state, PLACEMENT.RIGHT);
+};
+
+export const getActiveTopHeaders = (state) => {
+  return getActiveHeaders(state)
+    .filter((header) => header.placement === PLACEMENT.TOP)
+    .filter((header) => !header.float);
 };
 
 export const getTopHeadersHeight = (state) => {
-  const topHeaders = getTopHeaders(state);
-  // Dont inclued hidden ones. Refactor this.
-  const topHeadersQuantity = topHeaders.reduce((accumulator, currentHeader) => {
-    const { autoHide } = currentHeader;
-    if (autoHide && !autoHide) {
-      return accumulator + 1;
-    }
-    if (currentHeader.items && !currentHeader.items.length) {
-      return accumulator;
-    }
-
-    const { float } = currentHeader;
-    if (float) {
-      // Floating headers are excluded from the headers height calculation
-      // this is because they have no bearing on the height of the panels, as the float besides them
-      return accumulator;
-    }
-
-    return accumulator + 1;
-  }, 0);
-  return topHeadersQuantity * state.viewer.modularHeadersHeight.topHeaders;
+  const activeHeaders = getActiveTopHeaders(state);
+  return activeHeaders.length * state.viewer.modularHeadersHeight.topHeaders;
 };
 
+export const getBottomHeadersHeight = (state) => {
+  const activeHeaders = getActiveHeaders(state)
+    .filter((header) => header.placement === PLACEMENT.BOTTOM)
+    .filter((header) => !header.float);
+
+  return activeHeaders.length * state.viewer.modularHeadersHeight.bottomHeaders;
+};
 
 export const getRightHeaderWidth = (state) => state.viewer.modularHeadersWidth.rightHeader;
 
@@ -329,21 +380,18 @@ export const getTopFloatingContainerHeight = (state) => state.viewer.floatingCon
 
 export const getBottomFloatingContainerHeight = (state) => state.viewer.floatingContainersDimensions.bottomFloatingContainerHeight;
 
-export const getTopStartFloatingHeaders = (state) => {
-  return getTopHeaders(state).filter((header) => header.position === POSITION.START && header.float);
+// This returns the normalized header, not the fully hydrated header
+export const getFloatingHeaders = (state, placement, position) => {
+  return Object.values(state.viewer.modularHeaders).filter((header) => header.placement === placement &&
+    header.position === position &&
+    header.float
+  );
 };
 
-export const getBottomStartFloatingHeaders = (state) => {
-  return getBottomHeaders(state).filter((header) => header.position === POSITION.START && header.float);
-};
-
-export const getTopEndFloatingHeaders = (state) => {
-  return state.viewer.modularHeaders.filter((header) => header.placement === PLACEMENT.TOP && header.position === POSITION.END && header.float);
-};
-
-export const getBottomEndFloatingHeaders = (state) => {
-  return state.viewer.modularHeaders.filter((header) => header.placement === PLACEMENT.BOTTOM && header.position === POSITION.END && header.float);
-};
+export const getTopStartFloatingHeaders = (state) => getFloatingHeaders(state, PLACEMENT.TOP, POSITION.START);
+export const getBottomStartFloatingHeaders = (state) => getFloatingHeaders(state, PLACEMENT.BOTTOM, POSITION.START);
+export const getTopEndFloatingHeaders = (state) => getFloatingHeaders(state, PLACEMENT.TOP, POSITION.END);
+export const getBottomEndFloatingHeaders = (state) => getFloatingHeaders(state, PLACEMENT.BOTTOM, POSITION.END);
 
 export const getActiveHeaderItems = (state) => {
   return state.viewer.headers[state.viewer.activeHeaderGroup];
@@ -354,6 +402,30 @@ export const getDisabledElementPriority = (state, dataElement) => state.viewer.d
 export const getToolsHeaderItems = (state) => {
   const toolbarGroup = getCurrentToolbarGroup(state);
   return state.viewer.headers[toolbarGroup] || [];
+};
+
+export const getGroupedItemsWithCreateSignatureTool = (state) => {
+  const modularComponents = state.viewer.modularComponents;
+  return Object.keys(modularComponents).filter((dataElement) => {
+    const { type, items } = modularComponents[dataElement];
+
+    return type === ITEM_TYPE.GROUPED_ITEMS &&
+      items.some((item) => {
+        const itemDetails = modularComponents[item];
+        return itemDetails.type === ITEM_TYPE.TOOL_BUTTON &&
+          itemDetails.toolName === 'AnnotationCreateSignature';
+      });
+  });
+};
+
+export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataElement) => {
+  const modularComponents = state.viewer.modularComponents;
+  const ribbonItems = Object.keys(modularComponents).find((component) => {
+    const { type, groupedItems } = modularComponents[component];
+
+    return type === ITEM_TYPE.RIBBON_ITEM && groupedItems?.includes(groupedItemDataElement);
+  });
+  return ribbonItems;
 };
 
 export const getToolbarGroupItems = (toolbarGroup) => (state) => {
@@ -422,6 +494,8 @@ export const getCustomColor = (state) => state.viewer.customColor;
 export const getCustomColors = (state) => state.viewer.customColors;
 
 export const getActiveLeftPanel = (state) => state.viewer.activeLeftPanel;
+
+export const isAnyCustomPanelOpen = (state) => state.viewer.genericPanels.some((panel) => state.viewer.openElements[panel.dataElement]);
 
 export const getActiveToolGroup = (state) => state.viewer.activeToolGroup;
 
@@ -665,6 +739,8 @@ export const shouldFadePageNavigationComponent = (state) => state.viewer.fadePag
 
 export const isContentEditWarningHidden = (state) => state.viewer.hideContentEditWarning;
 
+export const areContentEditWorkersLoaded = (state) => state.viewer.contentEditWorkersLoaded;
+
 export const getCurrentContentBeingEdited = (state) => state.viewer.currentContentBeingEdited;
 
 export const getFeatureFlags = (state) => state.featureFlags;
@@ -706,6 +782,8 @@ export const getWv3dPropertiesPanelModelData = (state) => state.wv3dPropertiesPa
 
 export const getWv3dPropertiesPanelSchema = (state) => state.wv3dPropertiesPanel.schema;
 
+export const getIsOfficeEditorMode = (state) => state.viewer.isOfficeEditorMode;
+
 export const getOfficeEditorCursorProperties = (state) => state.officeEditor.cursorProperties;
 
 export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.selectionProperties;
@@ -730,6 +808,8 @@ export const getCustomSettings = (state) => state.viewer.customSettings;
 
 export const isToolDefaultStyleUpdateFromAnnotationPopupEnabled = (state) => state.viewer.toolDefaultStyleUpdateFromAnnotationPopupEnabled;
 
+export const isAnnotationToolStyleSyncingEnabled = (state) => state.viewer.annotationToolStyleSyncingEnabled;
+
 export const getShortcutKeyMap = (state) => state.viewer.shortcutKeyMap;
 
 export const getMultiViewerSyncScrollMode = (state) => state.viewer.multiViewerSyncScrollMode;
@@ -751,6 +831,11 @@ export const isRightPanelOpen = (state) => {
   ];
 
   return rightPanelElements.some((element) => isElementOpen(state, element));
+};
+
+export const isLeftPanelOpen = (state) => {
+  const genericPanelOnLeft = getOpenGenericPanel(state, 'left');
+  return genericPanelOnLeft?.length > 0;
 };
 
 export const getOpenRightPanelWidth = (state) => {

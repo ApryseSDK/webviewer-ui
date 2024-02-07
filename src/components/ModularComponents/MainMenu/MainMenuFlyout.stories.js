@@ -74,14 +74,15 @@ const initialState = {
       MainMenuFlyout: true
     },
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     activeFlyout: 'MainMenuFlyout',
+    activeCustomPanel: '',
     flyoutPosition: { x: 0, y: 0 },
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40
     },
-    modularHeaders: [],
+    modularHeaders: {},
     flyoutMap: {
       'MainMenuFlyout': {
         dataElement: 'MainMenuFlyout',

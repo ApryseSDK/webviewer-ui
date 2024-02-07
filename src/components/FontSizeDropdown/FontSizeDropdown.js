@@ -20,12 +20,13 @@ const propTypes = {
   maxFontSize: PropTypes.number,
   incrementMap: PropTypes.object,
   onError: PropTypes.func, // Calls this with current error message string whenever it changes
-  applyOnlyOnBlur: PropTypes.bool // If true, apply the font size change only when the element loses focus
+  applyOnlyOnBlur: PropTypes.bool, // If true, apply the font size change only when the element loses focus
+  disabled: PropTypes.bool
 };
 
 const MIN_FONT_SIZE = 1;
 // Default maxFontSize
-const RENDER_ROWS_UPPER_LIMIT = 128;
+const RENDER_ROWS_UPPER_LIMIT = 512;
 // Default increment map
 const BREAKS_AND_INCREMENT = {
   0: 1,
@@ -40,7 +41,8 @@ const FontSizeDropdown = ({
   maxFontSize = RENDER_ROWS_UPPER_LIMIT,
   incrementMap = BREAKS_AND_INCREMENT,
   onError = undefined,
-  applyOnlyOnBlur = false
+  applyOnlyOnBlur = false,
+  disabled = false
 }) => {
   const { t } = useTranslation();
   const inputRef = useRef();
@@ -210,8 +212,13 @@ const FontSizeDropdown = ({
 
   const onOpenDropdown = (e) => {
     e.preventDefault();
-    setOpen(!isOpen);
+    if (!disabled) {
+      setOpen(!isOpen);
+    }
   };
+
+  const isDisabled = disabled === true ? 'disabledText' : null;
+  const className = error ? 'error' : isDisabled;
 
   return (
     <div className="FontSizeDropdown">
@@ -225,16 +232,17 @@ const FontSizeDropdown = ({
         onBlur={blur}
         onSelectCapture={focus}
         ref={inputRef}
-        disabled={isOpen}
-        className={error ? 'error' : undefined}
+        disabled={disabled}
+        className={className}
       />
       <div ref={dropdownContainerRef}>
         <div
           className={classNames('icon-button')}
           onClick={onOpenDropdown}
           onTouchEnd={onOpenDropdown}
-          ref={iconButtonRef}>
-          <Icon glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
+          ref={iconButtonRef}
+        >
+          <Icon className={isDisabled} glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
         </div>
         <div
           className={classNames('Dropdown__items', { 'hidden': !isOpen })}

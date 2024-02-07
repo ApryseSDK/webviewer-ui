@@ -1,4 +1,4 @@
-import GroupedItems from './groupedItems';
+import { GroupedItems } from './groupedItems';
 import { ITEM_TYPE } from 'constants/customizationVariables';
 
 class GroupedTools extends GroupedItems {
@@ -9,8 +9,11 @@ class GroupedTools extends GroupedItems {
     this.type = ITEM_TYPE.GROUPED_TOOLS;
     this.items = items;
     this.headerDirection = headerDirection;
-    this.gap = gap;
+    this._gap = gap;
   }
 }
 
-export default GroupedTools;
+export default (store) => (props) => {
+  const propsWithStore = { ...props, store };
+  return new GroupedTools(propsWithStore);
+};

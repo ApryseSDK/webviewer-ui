@@ -9,12 +9,11 @@
 .BottomHeader {
   display: inline-block;
   width: 100%;
-  transition: transform .3s ease-in-out;
   pointer-events: auto;
 }
 
 .BottomHeader.closed {
-  transform: translateY(100%);
+  display: none;
 }
 
 .BottomHeader.stroke {

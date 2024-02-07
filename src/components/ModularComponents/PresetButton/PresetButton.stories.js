@@ -64,3 +64,11 @@ export function CreatePortfolioButton() {
 export function SettingsButton() {
   return prepareButtonStory(PRESET_BUTTON_TYPES.SETTINGS);
 }
+
+export function FormFieldEditButton() {
+  return prepareButtonStory(PRESET_BUTTON_TYPES.FORM_FIELD_EDIT);
+}
+
+export function ContentEditButton() {
+  return prepareButtonStory(PRESET_BUTTON_TYPES.CONTENT_EDIT);
+}

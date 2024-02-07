@@ -60,17 +60,10 @@ const RedactionSearchOverlay = (props) => {
     executeRedactionSearch(options);
   };
 
-  const textInputOnKeyUp = (event) => {
-    if (event.key === 'Enter') {
-      const options = buildSearchOptions(searchTerms);
-      executeRedactionSearch(options);
-    }
-  };
   return (
     <DataElementWrapper
       className="RedactionSearchOverlay"
       dataElement="redactionSearchOverlay"
-      onKeyUp={textInputOnKeyUp}
     >
       <RedactionSearchMultiSelect
         onFocus={() => setIsRedactionSearchActive(true)}

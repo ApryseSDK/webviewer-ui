@@ -17,7 +17,7 @@ const initialState = {
     },
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     lastPickedToolGroup: '',
   },
 };

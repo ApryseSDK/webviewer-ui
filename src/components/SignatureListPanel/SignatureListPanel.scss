@@ -1,0 +1,152 @@
+@import '../../constants/styles';
+
+.SignatureAddButton {
+  width: 100%;
+  padding: 8px;
+  color: #2B73AB;
+  border: solid 1px #2B73AB;
+  border-radius: 4px;
+  margin: 16px 0;
+
+  &:not(.disabled):hover {
+    color: var(--primary-button-hover);
+    border-color: var(--primary-button-hover);
+  }
+
+  &.disabled {
+    color: #2B73AB;
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    span {
+      color: #2B73AB;
+    }
+  }
+}
+
+.SignatureListPanel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .signature-list-panel-header {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .signature-header {
+    margin: 16px 0px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .signature-list {
+    padding-top: 16px;
+    overflow: auto;
+  }
+
+  .signature-row {
+    display: flex;
+    flex-direction: row;
+    height: 48px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    @include mobile {
+      justify-content: center;
+    }
+
+    .icon-button {
+      @include button-reset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--tools-overlay-button-hover);
+      }
+    }
+  }
+
+  .signature-list-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 8px;
+
+    .signature-title {
+      flex-grow: 2;
+      margin-right: 8px;
+      min-width: 160px;
+    }
+
+    .initials-title {
+      flex-grow: 1;
+      max-width: 65px;
+    }
+
+    .delete-spacer {
+      width: 40px;
+    }
+  }
+
+  .signature-row-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+
+    .signature-row-content {
+      @include button-reset;
+      height: 40px;
+      padding: 4px 8px;
+      border: solid 1px var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-right: 8px;
+      background-color: var(--gray-0);
+      flex-grow: 2;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      &.interactable {
+        &:hover {
+          background: var(--tools-overlay-button-hover);
+        }
+
+        &.active {
+          background: var(--tools-overlay-button-active);
+        }
+      }
+
+      &.active {
+        background: var(--tools-overlay-button-active);
+      }
+
+      &.removal-hovered {
+        background: var(--popup-button-hover) !important;
+      }
+
+      .signature-button-icon {
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+      }
+    }
+
+    .initials {
+      max-width: 65px;
+    }
+  }
+}

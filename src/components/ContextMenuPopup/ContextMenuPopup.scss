@@ -55,41 +55,11 @@
     }
   }
 
-  &.isOfficeEditor {
-    .container {
-      display: block;
-
-      .office-action-item {
-        width: 300px;
-        padding: 8px;
-        display: flex;
-        justify-content: space-between;
-        cursor: pointer;
-
-        &:hover {
-          background-color: var(--blue-4);
-        }
-
-        &.disabled {
-          cursor: default;
-          background-color: inherit;
-          color: var(--disabled-text);
-        }
-
-        .icon-title {
-          display: flex;
-          align-items: center;
-
-          .Icon {
-            margin-right: 10px;
-          }
-        }
-
-        .shortcut {
-          display: flex;
-          align-items: center;
-        }
-      }
-    }
+  .divider {
+    height: 1px;
+    background: var(--divider);
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 100%;
   }
 }

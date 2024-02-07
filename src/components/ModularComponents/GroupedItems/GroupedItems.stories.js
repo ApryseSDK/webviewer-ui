@@ -15,12 +15,13 @@ const initialState = {
     openElements: {},
     customPanels: [],
     flyoutMap: {},
+    lastPickedToolForGroupedItems: {},
   },
 };
 
 
 const button1 = {
-  dataElement: 'button',
+  dataElement: 'button1',
   onClick: () => alert('Added'),
   disabled: false,
   title: 'Button 1',
@@ -29,7 +30,7 @@ const button1 = {
 };
 
 const button2 = {
-  dataElement: 'button',
+  dataElement: 'button2',
   onClick: () => alert('Added'),
   disabled: false,
   title: 'Button 2',

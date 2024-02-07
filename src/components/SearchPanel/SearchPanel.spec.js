@@ -205,7 +205,7 @@ describe('SearchPanelContainer', () => {
     const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
     useDispatchMock.mockReturnValue(mockDispatch);
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockReturnValue([isOpen, null, null, shouldClear]);
+    useSelectorMock.mockReturnValue([isOpen, null, shouldClear, null, null, 1]);
     const actionsSetSearchValueActionMock = jest.spyOn(actions, 'setSearchValue');
     const coreClearSearchResultsMock = jest.spyOn(core, 'clearSearchResults');
 

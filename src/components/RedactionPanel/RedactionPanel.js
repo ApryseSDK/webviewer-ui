@@ -28,7 +28,10 @@ const RedactionPanel = (props) => {
     const redactionPageMap = {};
     redactionAnnotations.forEach((annotation) => {
       const redactionType = mapAnnotationToRedactionType(annotation);
-      const { label, icon } = redactionTypesDictionary[redactionType];
+      const { label, icon } = redactionTypesDictionary[redactionType] || {
+        icon: 'icon-tool-redaction-area',
+        label: 'redactionPanel.redactionItem.regionRedaction'
+      };
       annotation.label = label;
       annotation.icon = icon;
       annotation.redactionType = redactionType;

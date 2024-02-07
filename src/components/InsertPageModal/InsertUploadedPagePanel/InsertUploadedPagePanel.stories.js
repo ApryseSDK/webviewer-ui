@@ -45,7 +45,7 @@ export const FileLoading = () => (
 const mockDocument = {
   getPageCount: () => 20,
   getFilename: () => 'helloDarknessMyOldFriend.pdf',
-  loadThumbnail: (pageNumber, callback) => (Promise.resolve(callback({ pageNumber, currentSrc: 'https://placekitten.com/200/300?image=2' }))),
+  loadThumbnail: (pageNumber, callback) => (Promise.resolve(callback({ pageNumber, currentSrc: '/assets/images/192_200x300.jpeg' }))),
   cancelLoadThumbnail: noop,
 };
 

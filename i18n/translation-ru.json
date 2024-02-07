@@ -72,6 +72,7 @@
     "type": "Тип",
     "upload": "Загрузить",
     "link": "Ссылка на сайт",
+    "unlink": "Удалить ссылку",
     "fileAttachmentDownload": "Скачать прикрепленный файл",
     "prevResult": "Предыдущий результат",
     "nextResult": "Следующий результат",
@@ -82,6 +83,8 @@
     "exit": "Выход",
     "addOption": "Добавить вариант",
     "formFieldEdit": "Изменить поле формы",
+    "formFieldEditMode": "Редактировать поля формы",
+    "contentEditMode": "Редактировать контент",
     "viewShortCutKeysFor3D": "Просмотр горячих клавиш",
     "markAllRead": "Отметить все как прочитанные",
     "pageInsertion": "Вставка страницы",
@@ -120,9 +123,13 @@
     "showComparison": "Показать сравнение",
     "back": "Назад",
     "clearSignature": "Очистить подпись",
+    "readOnlySignature": "Подпись только для чтения не может быть удалена",
     "newDocument": "Новый документ",
     "sideBySideView": "Вид сбоку",
-    "pageNumberInput": "Ввод номера страницы"
+    "pageNumberInput": "Ввод номера страницы",
+    "addNewColor": "Добавить новый цвет",
+    "deleteColor": "Удалить выбранный цвет",
+    "copySelectedColor": "Копировать выбранный цвет"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Цвет"
     },
+    "colorPalettePicker": {
+      "addColor": "Добавить новый цвет",
+      "selectColor": "Выберите цвет"
+    },
     "displayMode": {
       "layout": "Расположение",
       "pageTransition": "Переход страниц"
@@ -509,6 +520,9 @@
       "radius": "Радиус",
       "count": "подсчитывать",
       "length": "Длина"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Динамическое масштабирование размера шрифта"
     },
     "measurementOption": {
       "scale": "Масштаб"
@@ -768,6 +782,9 @@
       "deleteTitle": "Удалить собственный цвет",
       "deleteMessage": "Удалить выбранный пользовательский цвет? Он будет удален из вашей цветовой палитры."
     },
+    "colorPalettePicker": {
+      "deleteTitle": "Удалить собственный цвет"
+    },
     "multiDeleteAnnotation": {
       "title": "Удалить аннотации?",
       "message": "При удалении будут удалены все комментарии, ответы и группировка, и это действие нельзя будет отменить.\n\n Вы уверены, что хотите удалить эти аннотации?"
@@ -800,7 +817,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(Я)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Увеличить отступ",
     "insertLink": "Вставить ссылку",
     "insertImage": "Вставить изображение",
+    "table": "Стол",
+    "insertRowAbove": "Вставить строку выше",
+    "insertRowBelow": "Вставить строку ниже",
+    "insertColumnRight": "Вставить столбец справа",
+    "insertColumnLeft": "Вставить столбец слева",
+    "deleteRow": "Удалить строку",
+    "deleteColumn": "Удалить столбец",
+    "deleteTable": "Удалить таблицу",
     "notSupportedOnMobile": "Редактирование Office не поддерживается на мобильных устройствах."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Стили"
+      "styles": "Стили",
+      "annotation": "Аннотация",
+      "annotations": "Аннотации",
+      "tool": "Инструмент",
+      "textStyles": "Стили текста",
+      "currentColor": "Текущий цвет",
+      "customColors": "Пользовательские цвета",
+      "redactionTextLabel": "Текстовая метка",
+      "redactionMarkOutline": "Отметить контур",
+      "redactionFill": "Цвет редактирования",
+      "redactionTextPlaceholder": "Вставить текстовую метку",
+      "contentEdit": "Содержимое Редактировать"
     },
-    "noToolSelected": "Выберите инструмент, чтобы просмотреть свойства инструмента"
+    "addColorToCustom": "Добавить в пользовательские цвета",
+    "noToolSelected": "Выберите инструмент, чтобы просмотреть свойства инструмента",
+    "noToolStyle": "Инструмент не содержит никаких свойств стиля."
+  },
+  "signatureListPanel": {
+    "header": "Список подписей",
+    "newSignature": "Новая подпись",
+    "newSignatureAndInitial": "Новая подпись и инициал",
+    "signatureList": {
+      "signature": "Подпись",
+      "initials": "Инициалы"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Марки",
+    "standard": "Стандартные марки"
   }
 }

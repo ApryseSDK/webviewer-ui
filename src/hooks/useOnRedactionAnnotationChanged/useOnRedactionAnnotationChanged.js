@@ -63,5 +63,5 @@ export default function useOnRedactionAnnotationChanged() {
     };
   }, [isNotesPanelOpen, isSearchPanelOpen]);
 
-  return redactionAnnotationsList;
+  return { redactionAnnotationsList };
 }

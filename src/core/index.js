@@ -137,6 +137,7 @@ import getSemanticDiffAnnotations from './getSemanticDiffAnnotations';
 import loadBlankOfficeEditorDocument from './loadBlankOfficeEditorDocument';
 import getOfficeEditor from './getOfficeEditor';
 import isValidURI from './isValidURI';
+import openURI from './openURI';
 import getAllowedFileExtensions from './getAllowedFileExtensions';
 
 export default {
@@ -283,5 +284,6 @@ export default {
   getOfficeEditor,
   loadBlankOfficeEditorDocument,
   isValidURI,
+  openURI,
   getAllowedFileExtensions,
 };

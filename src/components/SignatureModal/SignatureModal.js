@@ -82,6 +82,7 @@ const SignatureModal = () => {
     for (const signatureTool of signatureToolArray) {
       signatureTool.clearLocation();
       signatureTool.setSignature(null);
+      signatureTool.setInitials(null);
     }
     dispatch(actions.closeElement(DataElements.SIGNATURE_MODAL));
   };

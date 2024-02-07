@@ -30,7 +30,8 @@ const ScaleOverlay = ({
   onScaleSelected,
   onCancelCalibrationMode,
   onApplyCalibration,
-  onAddingNewScale
+  onAddingNewScale,
+  forceUpdate,
 }) => {
   const [
     { isCalibration, tempScale, previousToolName = 'AnnotationCreateDistanceMeasurement', isFractionalUnit },
@@ -41,6 +42,10 @@ const ScaleOverlay = ({
   ], shallowEqual);
   const [scales, setScales] = useState(core.getScales());
   const shouldShowMeasurementDetail = !!Object.keys(scales).length && !(!selectedTool && (!annotations.length || annotations.length > 1));
+
+  useEffect(() => {
+    forceUpdate();
+  }, [scales]);
 
   useEffect(() => {
     const onScaleUpdated = (newScales) => {

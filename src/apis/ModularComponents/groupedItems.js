@@ -21,9 +21,9 @@ export class GroupedItems {
     this.label = label;
     this.dataElement = dataElement;
     this.placement = placement;
-    this.justifyContent = justifyContent;
-    this.grow = grow;
-    this.gap = gap;
+    this._justifyContent = justifyContent;
+    this._grow = grow;
+    this._gap = gap;
     this.position = position;
     this.items = items;
     this.type = ITEM_TYPE.GROUPED_ITEMS;
@@ -34,21 +34,27 @@ export class GroupedItems {
 
   setGap = (gap) => {
     if (isGapValid(gap)) {
-      this.gap = gap;
+      this._gap = gap;
       this.store.dispatch(actions.setGroupedItemsProperty('gap', gap, this.dataElement));
     }
   };
 
+  setStyle = (style) => {
+    checkTypes([style], [TYPES.OBJECT({})], 'GroupedItem.setStyle');
+    this.style = style;
+    this.store.dispatch(actions.setGroupedItemsProperty('style', style, this.dataElement));
+  };
+
   setJustifyContent = (justifyContent) => {
     if (isJustifyContentValid(justifyContent)) {
-      this.justifyContent = justifyContent;
+      this._justifyContent = justifyContent;
       this.store.dispatch(actions.setGroupedItemsProperty('justifyContent', justifyContent, this.dataElement));
     }
   };
 
   setGrow = (grow) => {
     if (isGrowValid(grow)) {
-      this.grow = grow;
+      this._grow = grow;
       this.store.dispatch(actions.setGroupedItemsProperty('grow', grow, this.dataElement));
     }
   };
@@ -56,8 +62,44 @@ export class GroupedItems {
   setItems = (items) => {
     checkTypes([items], [TYPES.ARRAY(TYPES.ANY)], 'GroupedItems.setItems');
     this.items = items;
-    this.store.dispatch(actions.setGroupedItemsProperty('items', items, this.dataElement));
+    this.store.dispatch(actions.updateGroupedItems(this.dataElement, items));
   };
+
+  getGroupedItemProperty = (property) => {
+    const state = this.store.getState();
+    if (state && state.viewer && state.viewer.modularComponents) {
+      const component = state.viewer.modularComponents[this.dataElement];
+      if (component && component.hasOwnProperty(property)) {
+        return component[property];
+      }
+    }
+    // If the component is not yet in redux we return the property that we have in the class
+    return this[`_${property}`];
+  }
+
+  get gap() {
+    return this.getGroupedItemProperty('gap');
+  }
+
+  set gap(gap) {
+    this.setGap(gap);
+  }
+
+  get justifyContent() {
+    return this.getGroupedItemProperty('justifyContent');
+  }
+
+  set justifyContent(justifyContent) {
+    this.setJustifyContent(justifyContent);
+  }
+
+  get grow() {
+    return this.getGroupedItemProperty('grow');
+  }
+
+  set grow(grow) {
+    this.setGrow(grow);
+  }
 }
 
 export default (store) => (props) => {

@@ -14,18 +14,20 @@ const initialState = {
     customElementOverrides: {},
     openElements: {},
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     flyoutMap: {},
     headers: {},
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
     toolButtonObjects: {},
-    toolbarGroup: 'toolbarGroup-View',
-    modularHeaders: [],
+    activeCustomRibbon: 'Ribbon Item1',
+    activeGroupedItems: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40
     },
+    lastPickedToolForGroupedItems: {},
   },
 };
 
@@ -114,7 +116,9 @@ const initialStateDropdown = {
     ...initialState.viewer,
     customElementSizes: {
       'ribbon-group': 3
-    }
+    },
+    activeGroupedItems: [],
+    activeCustomRibbon: 'toolbarGroup-View',
   }
 };
 
@@ -133,7 +137,7 @@ export const ribbonGroupDropdown = () => {
   return (
     <Provider store={storeDropdown}>
       <div style={{ display: 'flex', maxWidth: '10%' }}>
-        <RibbonGroup {...props}/>
+        <RibbonGroup {...props} />
       </div>
     </Provider>
   );

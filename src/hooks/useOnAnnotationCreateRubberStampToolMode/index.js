@@ -1,0 +1,3 @@
+import useOnAnnotationCreateRubberStampToolMode from './useOnAnnotationCreateRubberStampToolMode';
+
+export default useOnAnnotationCreateRubberStampToolMode;

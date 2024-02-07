@@ -3,7 +3,7 @@ import selectors from 'selectors';
 
 const useFloatingHeaderSelectors = () => {
   return useSelector((state) => ({
-    isLeftPanelOpen: selectors.isElementOpen(state, 'leftPanel'),
+    isLeftPanelOpen: selectors.isLeftPanelOpen(state),
     isRightPanelOpen: selectors.isRightPanelOpen(state),
     leftPanelWidth: selectors.getLeftPanelWidthWithResizeBar(state),
     rightPanelWidth: selectors.getOpenRightPanelWidth(state),

@@ -10,6 +10,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import rootReducer from 'reducers/rootReducer';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import retargetEvents from 'react-shadow-dom-retarget-events';
 
 import core from 'core';
 import actions from 'actions';
@@ -30,12 +31,10 @@ import logDebugInfo from 'helpers/logDebugInfo';
 import getHashParameters from 'helpers/getHashParameters';
 import { addDocumentViewer } from 'helpers/documentViewerHelper';
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
-import retargetEvents from 'react-shadow-dom-retarget-events';
+import getRootNode from 'helpers/getRootNode';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 
 import './index.scss';
-import getRootNode from 'helpers/getRootNode';
-import openURI from './helpers/openURI';
-import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 
 if (window.isApryseWebViewerWebComponent) {
   if (window.webViewerPath.lastIndexOf('/') !== window.webViewerPath.length - 1) {
@@ -168,11 +167,7 @@ if (window.CanvasRenderingContext2D) {
     store.dispatch(actions.showWarningMessage({
       title: 'warning.connectToURL.title',
       message: 'warning.connectToURL.message',
-      onConfirm: () => Promise.resolve(),
-      onSecondary: () => {
-        openURI(uri, isOpenInNewWindow);
-        return Promise.resolve();
-      },
+      onSecondary: () => core.openURI(uri, isOpenInNewWindow),
       confirmBtnText: 'action.cancel',
       secondaryBtnText: 'action.confirm',
       secondaryBtnClass: 'secondary-btn-custom',

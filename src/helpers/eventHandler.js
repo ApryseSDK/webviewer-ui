@@ -29,7 +29,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onPagesUpdated = eventListeners.onPagesUpdated(dispatch);
   const onLocationSelected = eventListeners.onLocationSelected(store, documentViewerKey);
   const onDotStampAnnotationAdded = eventListeners.onDotStampAnnotationAdded(dispatch, documentViewerKey);
-  const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(documentViewerKey);
+  const onRubberStampAnnotationAdded = eventListeners.onRubberStampAnnotationAdded(documentViewerKey, dispatch, store);
+  const onRubberStampsUpdated = eventListeners.onRubberStampsUpdated(dispatch);
   const onReadOnlyModeChanged = eventListeners.onReadOnlyModeChanged(dispatch, store);
   const onPageComplete = eventListeners.onPageComplete(store, documentViewerKey);
   const onFileAttachmentAnnotationAdded = eventListeners.onFileAttachmentAnnotationAdded();
@@ -43,8 +44,8 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
   const onImageContentAdded = eventListeners.onImageContentAdded(dispatch);
   const onInitialSaved = eventListeners.onInitialSaved(dispatch, store);
   const onInitialDeleted = eventListeners.onInitialDeleted(dispatch, store);
-  const onContentEditModeStarted = eventListeners.onContentEditModeStarted(dispatch);
-  const onContentEditModeEnded = eventListeners.onContentEditModeEnded(dispatch);
+  const onContentEditModeStarted = eventListeners.onContentEditModeStarted(dispatch, store);
+  const onContentEditModeEnded = eventListeners.onContentEditModeEnded(dispatch, store);
   const onContentBoxEditStarted = eventListeners.onContentBoxEditStarted(dispatch, hotkeysManager);
   const onContentBoxEditEnded = eventListeners.onContentBoxEditEnded(hotkeysManager);
   const onContentEditDocumentDigitalSigned = eventListeners.onContentEditDocumentDigitalSigned(dispatch);
@@ -108,6 +109,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
       core.getTool('AnnotationCreateSignature', documentViewerKey).addEventListener('annotationAdded', onSignatureAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_DOT, documentViewerKey).addEventListener('annotationAdded', onDotStampAnnotationAdded);
       core.getTool('AnnotationCreateRubberStamp', documentViewerKey).addEventListener('annotationAdded', onRubberStampAnnotationAdded);
+      core.getTool('AnnotationCreateRubberStamp', documentViewerKey).addEventListener('stampsUpdated', onRubberStampsUpdated);
       core.getTool('AnnotationCreateFileAttachment', documentViewerKey).addEventListener('annotationAdded', onFileAttachmentAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CROSS, documentViewerKey).addEventListener('annotationAdded', onCrossStampAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CHECKMARK, documentViewerKey).addEventListener('annotationAdded', onCheckStampAnnotationAdded);
@@ -165,6 +167,7 @@ export default (store, documentViewerKey = 1, skipHotkeys = false) => {
       core.getTool('AnnotationCreateSignature', documentViewerKey).removeEventListener('annotationAdded', onSignatureAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_DOT, documentViewerKey).removeEventListener('annotationAdded', onDotStampAnnotationAdded);
       core.getTool('AnnotationCreateRubberStamp', documentViewerKey).removeEventListener('annotationAdded', onRubberStampAnnotationAdded);
+      core.getTool('AnnotationCreateRubberStamp', documentViewerKey).removeEventListener('stampsUpdated', onRubberStampsUpdated);
       core.getTool('AnnotationCreateFileAttachment', documentViewerKey).removeEventListener('annotationAdded', onFileAttachmentAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CROSS, documentViewerKey).removeEventListener('annotationAdded', onCrossStampAnnotationAdded);
       core.getTool(ToolNames.FORM_FILL_CHECKMARK, documentViewerKey).removeEventListener('annotationAdded', onCheckStampAnnotationAdded);

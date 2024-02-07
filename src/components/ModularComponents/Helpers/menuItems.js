@@ -18,6 +18,20 @@ export const menuItems = {
     label: 'action.redo',
     title: 'action.redo',
   },
+  [PRESET_BUTTON_TYPES.FORM_FIELD_EDIT]: {
+    dataElement: 'formFieldEditButton',
+    presetDataElement: DataElements.FORM_FIELD_EDIT_PRESET_BUTTON,
+    icon: 'ic-fill-and-sign',
+    label: 'action.formFieldEditMode',
+    title: 'action.formFieldEditMode',
+  },
+  [PRESET_BUTTON_TYPES.CONTENT_EDIT]: {
+    dataElement: 'contentEditButton',
+    presetDataElement: DataElements.CONTENT_EDIT_PRESET_BUTTON,
+    icon: 'icon-content-edit',
+    label: 'action.contentEditMode',
+    title: 'action.contentEditMode',
+  },
   [PRESET_BUTTON_TYPES.NEW_DOCUMENT]: {
     dataElement: DataElements.NEW_DOCUMENT_BUTTON,
     presetDataElement: DataElements.NEW_DOCUMENT_PRESET_BUTTON,

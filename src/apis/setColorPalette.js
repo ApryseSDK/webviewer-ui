@@ -6,6 +6,7 @@ import selectors from 'selectors';
  * @typedef UI.PaletteOption
  * @property {string[]} toolNames Tools that will have the same colors in the palette.
  * @property {string[]} colors An array of hex colors. Use 'transparency' for a transparent color.
+ * @property {string[]} [palleteTypes] An array of palette types. Can be 'fill' | 'stroke' | 'text'. (Only for StylePanel)
  */
 
 /**
@@ -37,7 +38,7 @@ export default (store) => (overrides) => {
       currentOverride.global = overrides;
     } else {
       return console.warn(
-        'An array is passed to setColorPalette, but some colors are invalid. A color must be \'transparency\' or a hex color string. For example #F0F0F0'
+        'An array is passed to setColorPalette, but some colors are invalid. A color must be   \'transparency\' or a hex color string. For example #F0F0F0'
       );
     }
   } else if (typeof overrides === 'object') {
@@ -54,6 +55,18 @@ export default (store) => (overrides) => {
   }
 
   store.dispatch(actions.setCustomElementOverrides('colorPalette', currentOverride));
+
+  // Custom-UI pallete override logic
+  if (Array.isArray(overrides)) {
+    const colorPalette = overrides.map((color) => (color === 'transparency' ? 'transparent' : color.toLowerCase()));
+    store.dispatch(actions.setColors(colorPalette, undefined, undefined));
+    store.dispatch(actions.setColors(colorPalette, undefined, 'text'));
+  } else if (typeof overrides === 'object') {
+    overrides.toolNames.forEach((toolName) => {
+      const colorPalette = overrides.colors.map((color) => (color === 'transparency' ? 'transparent' : color.toLowerCase()));
+      store.dispatch(actions.setColors(colorPalette, toolName, undefined));
+    });
+  }
 };
 
 // examples of valid colors are: '#f0f0f0', '#FFFFFF'

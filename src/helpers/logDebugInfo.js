@@ -10,6 +10,7 @@ export default () => {
   const webViewerJSVersion = getHashParameters('webViewerJSVersion', null);
   const wvServer = !!getHashParameters('webviewerServerURL', null);
   const fullAPI = !!getHashParameters('pdfnet', false);
+  const ui = getHashParameters('ui', 'default');
   const disableLogs = getHashParameters('disableLogs', false);
   if (disableLogs) {
     return;
@@ -40,7 +41,9 @@ export default () => {
         'Build': coreBuild,
         'WebViewer Server': wvServer,
         'Full API': fullAPI,
+        'UI': ui,
       };
+
       console.table(versions);
     } else {
       console.log(

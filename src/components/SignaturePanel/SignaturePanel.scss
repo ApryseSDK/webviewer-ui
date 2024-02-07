@@ -4,6 +4,7 @@
 .SignaturePanel {
   margin: 0px 8px 8px 8px;
   display: flex;
+  flex-direction: column;
 
   .center {
     flex-grow: 1;

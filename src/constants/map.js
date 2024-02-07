@@ -761,6 +761,8 @@ export const mapAnnotationToKey = (annotation) => Object.keys(map).find((key) =>
 
 export const mapAnnotationToToolName = (annotation) => map[mapAnnotationToKey(annotation)].toolNames[0];
 
+export const mapKeyToToolNames = (key) => map[key].toolNames;
+
 export const copyMapWithDataProperties = (...properties) => Object.keys(map).reduce((newMap, key) => {
   newMap[key] = {};
   properties.forEach((property) => {
@@ -842,7 +844,7 @@ export const updateAnnotationStylePopupTabs = (annotationKey, newAnnotationStyle
  * @property {string} DISTANCE_MEASUREMENT The key represents the distance measurement annotation
  * @property {string} PERIMETER_MEASUREMENT The key represents the perimeter measurement annotation
  * @property {string} ARC_MEASUREMENT The key represents the arc measurement annotation
- * @property {string} RECTANGULAR_AREA_MEASUREMENT The key represents the rectangualr area measurement annotation
+ * @property {string} RECTANGULAR_AREA_MEASUREMENT The key represents the rectangular area measurement annotation
  * @property {string} CLOUDY_RECTANGULAR_AREA_MEASUREMENT The key represents the cloudy rectangular area measurement annotation
  * @property {string} AREA_MEASUREMENT The key represents the area measurement annotation
  * @property {string} ELLIPSE_MEASUREMENT The key represents the ellipse measurement annotation

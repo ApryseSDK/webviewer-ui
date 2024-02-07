@@ -21,7 +21,7 @@ export function executeSearch(searchValue, options, store) {
       overrideSearchExecution(searchValue, searchOptions);
     } else {
       const searchTextFull = searchTextFullFactory(store);
-      searchTextFull(searchValue, searchOptions);
+      searchTextFull(searchValue, searchOptions, false);
     }
   }
 }

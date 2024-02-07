@@ -1,10 +1,10 @@
 import actions from 'actions';
-import equal from 'fast-deep-equal';
+import _isEqual from 'lodash/isEqual';
 import setUIPropertiesForLayers from 'helpers/setUIPropertiesForLayers';
 
 export default (newOCGLayers, currentOCGLayers, dispatch) => {
-  const isEqual = equal(newOCGLayers, currentOCGLayers);
-  if (!isEqual) {
+  const layersEqual = _isEqual(newOCGLayers, currentOCGLayers);
+  if (!layersEqual) {
     const layersToSet = setUIPropertiesForLayers(newOCGLayers);
     dispatch(actions.setLayers(layersToSet));
   }

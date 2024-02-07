@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import './Divider.scss';
 
 const Divider = ({ headerDirection }) => {
-  const className = classNames('Divider', `${headerDirection}`);
+  const className = classNames('Divider', `${headerDirection || 'column'}`);
 
   return (
     <div className={className} />

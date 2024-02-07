@@ -5,18 +5,21 @@
   display: flex;
   gap: 8px;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
   flex-grow: 0;
 
   .total-page {
     margin: auto;
   }
+
   .paddingTop {
     padding-top: 4px;
   }
+
   .paddingLeft {
     padding-left: 4px;
   }
+
   form {
     height: 100%;
   }
@@ -35,9 +38,10 @@
 }
 
 .pageNavFlyoutMenu {
-  .page-nav-display .flyout-item-label > * {
+  .page-nav-display .flyout-item-label>* {
     margin: auto;
   }
+
   form input {
     font-size: 13px !important;
     width: 17px;
@@ -52,12 +56,14 @@
     min-width: 26px;
     min-height: 22px;
   }
+
   form input:not(:focus) {
     font-weight: 700;
     border: none;
     border-bottom: 1px solid var(--icon-color);
     border-radius: 0;
   }
+
   form input:focus {
     height: 100%;
     background: var(--gray-0);

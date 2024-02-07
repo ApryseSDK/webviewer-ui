@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import actions from 'actions';
+import selectors from 'selectors';
+import Measure from 'react-measure';
+import core from 'core';
 import Dropdown from 'components/Dropdown';
 import ActionButton from 'components/ActionButton';
 import ToggleElementButton from 'components/ToggleElementButton';
 import DataElementWrapper from 'components/DataElementWrapper';
 import OfficeEditorImageFilePickerHandler from 'components/OfficeEditorImageFilePickerHandler';
-import DataElement from 'constants/dataElement';
-import actions from 'actions';
-import core from 'core';
-import selectors from 'selectors';
 import ColorPickerOverlay from 'components/ColorPickerOverlay';
-import { rgbaToHex } from 'src/helpers/color';
-import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
-import Theme from 'src/constants/theme';
+import Icon from 'components/Icon';
+import OfficeEditorCreateTablePopup from 'components/OfficeEditorCreateTablePopup';
+import DataElement from 'constants/dataElement';
+import Theme from 'constants/theme';
 import {
   LINE_SPACING_OPTIONS,
   JUSTIFICATION_OPTIONS,
@@ -20,9 +21,9 @@ import {
   DEFAULT_POINT_SIZE,
   OFFICE_BULLET_OPTIONS,
   OFFICE_NUMBER_OPTIONS
-} from 'src/constants/officeEditor';
-import Measure from 'react-measure';
-
+} from 'constants/officeEditor';
+import { rgbaToHex } from 'helpers/color';
+import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
 import { isSafari, isIOS } from 'helpers/device';
 
 import './Header.scss';
@@ -236,8 +237,11 @@ const ListOptions = ({ listType }) => {
         columns={3}
         onClickItem={(val) => {
           core.getOfficeEditor().setListPreset(val);
+          setTimeout(() => {
+            focusContent();
+          }, 0);
         }}
-        className={'list-style-dropdown'}
+        className='list-style-dropdown'
       />
       <ActionButton
         isActive={listType === LIST_OPTIONS.Ordered}
@@ -256,8 +260,11 @@ const ListOptions = ({ listType }) => {
         columns={3}
         onClickItem={(val) => {
           core.getOfficeEditor().setListPreset(val);
+          setTimeout(() => {
+            focusContent();
+          }, 0);
         }}
-        className={'list-style-dropdown'}
+        className='list-style-dropdown'
       />
       <ActionButton
         dataElement='office-editor-decrease-indent'
@@ -409,7 +416,7 @@ const OfficeEditorToolsHeader = () => {
     const {
       pointSize,
       color: currentColor
-    } = cursorProperties.paragraphTextStyle || cursorProperties;
+    } = cursorProperties.paragraphProperties.paragraphTextStyle || {};
 
     let stylePreset = 'Normal Text';
     if (!pointSize || !currentColor) {
@@ -499,7 +506,7 @@ const OfficeEditorToolsHeader = () => {
                       });
                       core.getDocumentViewer().clearSelection();
                     }}
-                    getCustomItemStyle={(item) => ({ ...availableStylePresetMap[item], padding: '20px 10px', color: 'var(--gray-12)' })}
+                    getCustomItemStyle={(item) => ({ ...availableStylePresetMap[item], padding: '20px 10px', color: 'var(--gray-8)' })}
                     applyCustomStyleToButton={false}
                     currentSelectionKey={convertCursorToStylePreset(cursorProperties)}
                     className="large-dropdown"
@@ -642,6 +649,22 @@ const OfficeEditorToolsHeader = () => {
                     )}
                   />
                   <div className="divider" />
+                  {false && <Dropdown
+                    dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE}
+                    className="insert-table-dropdown"
+                    displayButton={(isOpen) => (
+                      <>
+                        <ActionButton
+                          title='officeEditor.table'
+                          img='ic-table'
+                          isActive={isOpen}
+                        />
+                        <Icon className="arrow" glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
+                      </>
+                    )}
+                  >
+                    <OfficeEditorCreateTablePopup focusViewer={focusContent} />
+                  </Dropdown>}
                   <>
                     <ActionButton
                       className="tool-group-button"

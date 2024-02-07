@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
+import throttle from 'lodash/throttle';
 
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
-import getAnnotationStyles from 'helpers/getAnnotationStyles';
 import applyRedactions from 'helpers/applyRedactions';
 import { isMobile, isIE } from 'helpers/device';
 import { useTranslation } from 'react-i18next';
@@ -29,6 +29,7 @@ const propTypes = {
   focusedAnnotation: PropTypes.object,
   selectedMultipleAnnotations: PropTypes.bool,
   canModify: PropTypes.bool,
+  focusedAnnotationStyle: PropTypes.object,
   isStylePopupOpen: PropTypes.bool,
   setIsStylePopupOpen: PropTypes.func,
   isDatePickerOpen: PropTypes.bool,
@@ -46,6 +47,7 @@ const AnnotationPopupContainer = ({
   focusedAnnotation,
   selectedMultipleAnnotations,
   canModify,
+  focusedAnnotationStyle,
   isStylePopupOpen,
   setIsStylePopupOpen,
   isDatePickerOpen,
@@ -77,6 +79,10 @@ const AnnotationPopupContainer = ({
     leftPanelOpen,
     activeLeftPanel,
     activeDocumentViewerKey,
+    isAnyCustomPanelOpen,
+    featureFlags,
+    isStylePanelOpen,
+    isStylePanelDisabled,
   ] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, DataElements.ANNOTATION_POPUP),
@@ -97,6 +103,10 @@ const AnnotationPopupContainer = ({
       selectors.isElementOpen(state, DataElements.LEFT_PANEL),
       selectors.getActiveLeftPanel(state),
       selectors.getActiveDocumentViewerKey(state),
+      selectors.isAnyCustomPanelOpen(state),
+      selectors.getFeatureFlags(state),
+      selectors.isElementOpen(state, DataElements.STYLE_PANEL),
+      selectors.isElementDisabled(state, DataElements.STYLE_PANEL),
     ],
     shallowEqual,
   );
@@ -106,10 +116,22 @@ const AnnotationPopupContainer = ({
   const [isCalibrationPopupOpen, setCalibrationPopupOpen] = useState(false);
   const popupRef = useRef();
 
-  const isFocusedAnnotationSelected = isRightClickAnnotationPopupEnabled ? core.isAnnotationSelected(focusedAnnotation) : true;
-  const annotManager = core.getAnnotationManager();
-  const isNotesPanelOpenOrActive = isNotesPanelOpen || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel');
+  const isFocusedAnnotationSelected = isRightClickAnnotationPopupEnabled ? core.isAnnotationSelected(focusedAnnotation, activeDocumentViewerKey) : true;
+  const annotManager = core.getAnnotationManager(activeDocumentViewerKey);
+  const isNotesPanelOpenOrActive = isNotesPanelOpen
+    || (notesInLeftPanel && leftPanelOpen && activeLeftPanel === 'notesPanel')
+    || isAnyCustomPanelOpen;
+  const sixtyFramesPerSecondIncrement = 16;
   // on tablet, the behaviour will be like on desktop, including being draggable
+
+  const { customizableUI } = featureFlags;
+
+  const openStylePanel = () => {
+    if (!isStylePanelOpen && !isStylePanelDisabled) {
+      dispatch(actions.openElement(DataElements.STYLE_PANEL));
+    }
+    closePopup();
+  };
 
   useOnClickOutside(
     popupRef,
@@ -141,6 +163,20 @@ const AnnotationPopupContainer = ({
     }
   };
 
+  const handleResize = throttle(() => {
+    if (AnnotationPopupContainer) {
+      setPopupPosition();
+    }
+  }, sixtyFramesPerSecondIncrement);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   // useLayoutEffect here to avoid flashing issue when popup is close and open on scroll
   useLayoutEffect(() => {
     if (focusedAnnotation || isStylePopupOpen || isDatePickerMount) {
@@ -148,7 +184,6 @@ const AnnotationPopupContainer = ({
     }
     // canModify is needed here because the effect from useOnAnnotationPopupOpen hook will run again and determine which button to show, which in turn change the popup size and will need to recalculate position
   }, [focusedAnnotation, isStylePopupOpen, isDatePickerMount, canModify, activeDocumentViewerKey]);
-
 
   useEffect(() => {
     if (focusedAnnotation && focusedAnnotation.ToolName === ToolNames.CALIBRATION_MEASUREMENT) {
@@ -196,13 +231,14 @@ const AnnotationPopupContainer = ({
   const numberOfSelectedAnnotations = selectedAnnotations.length;
   const multipleAnnotationsSelected = numberOfSelectedAnnotations > 1;
   const isFreeTextAnnot = focusedAnnotation instanceof Annotations.FreeTextAnnotation;
-  const isDateFreeTextCanEdit = isFreeTextAnnot && !!focusedAnnotation.getDateFormat() && core.canModifyContents(focusedAnnotation);
+  const isDateFreeTextCanEdit = isFreeTextAnnot && !!focusedAnnotation.getDateFormat() && core.canModifyContents(focusedAnnotation, activeDocumentViewerKey);
   const numberOfGroups = core.getNumberOfGroups(selectedAnnotations, activeDocumentViewerKey);
   const canGroup = numberOfGroups > 1;
   const canUngroup = numberOfGroups === 1 && numberOfSelectedAnnotations > 1 && isFocusedAnnotationSelected;
   const isAppearanceSignature =
     focusedAnnotation instanceof Annotations.SignatureWidgetAnnotation
     && focusedAnnotation.isSignedByAppearance();
+  const isInReadOnlyMode = core.getIsReadOnly();
 
   const showCommentButton = (
     (!isNotesPanelDisabled || !isInlineCommentingDisabled)
@@ -222,7 +258,7 @@ const AnnotationPopupContainer = ({
 
     dispatch(actions.closeElement('searchPanel'));
     dispatch(actions.closeElement('redactionPanel'));
-    const contentEditManager = core.getContentEditManager();
+    const contentEditManager = core.getContentEditManager(activeDocumentViewerKey);
     if (contentEditManager.isInContentEditMode()) {
       dispatch(actions.closeElement('textEditingPanel'));
       contentEditManager.endContentEditMode();
@@ -250,8 +286,7 @@ const AnnotationPopupContainer = ({
   };
 
   /* EDIT STYLE */
-  const annotationStyle = getAnnotationStyles(focusedAnnotation);
-  const hasStyle = Object.keys(annotationStyle).length > 0;
+  const hasStyle = Object.keys(focusedAnnotationStyle).length > 0;
 
   const toolsWithNoStyling = [
     ToolNames.CROP,
@@ -265,7 +300,7 @@ const AnnotationPopupContainer = ({
   const showEditStyleButton = (
     canModify
     && hasStyle
-    && !isAnnotationStylePopupDisabled
+    && (!isAnnotationStylePopupDisabled || customizableUI)
     && (!multipleAnnotationsSelected || canUngroup || (multipleAnnotationsSelected && !isFocusedAnnotationSelected))
     && !toolsWithNoStyling.includes(focusedAnnotation.ToolName)
     && !(focusedAnnotation instanceof Annotations.Model3DAnnotation)
@@ -298,7 +333,7 @@ const AnnotationPopupContainer = ({
   };
 
   /* REDACTION */
-  const redactionEnabled = core.isAnnotationRedactable(focusedAnnotation);
+  const redactionEnabled = core.isAnnotationRedactable(focusedAnnotation, activeDocumentViewerKey);
   const showRedactionButton = redactionEnabled && !multipleAnnotationsSelected && !includesFormFieldAnnotation;
 
   const onApplyRedaction = () => {
@@ -310,22 +345,23 @@ const AnnotationPopupContainer = ({
   const primaryAnnotation = selectedAnnotations.find((selectedAnnotation) => !selectedAnnotation.InReplyTo);
 
   const showGroupButton =
-    isFocusedAnnotationSelected
+    canModify
+    && isFocusedAnnotationSelected
     && canGroup
     && !includesFormFieldAnnotation;
 
   const onGroupAnnotations = () => {
-    core.groupAnnotations(primaryAnnotation, selectedAnnotations);
+    core.groupAnnotations(primaryAnnotation, selectedAnnotations, activeDocumentViewerKey);
   };
 
   const showUngroupButton = canUngroup;
 
   const onUngroupAnnotations = () => {
-    core.ungroupAnnotations(selectedAnnotations);
+    core.ungroupAnnotations(selectedAnnotations, activeDocumentViewerKey);
   };
 
   /* FORM FIELD */
-  const formFieldCreationManager = core.getFormFieldCreationManager();
+  const formFieldCreationManager = core.getFormFieldCreationManager(activeDocumentViewerKey);
   const isInFormFieldCreationMode = formFieldCreationManager.isInFormFieldCreationMode();
   const showFormFieldButton = includesFormFieldAnnotation && isInFormFieldCreationMode;
 
@@ -356,9 +392,9 @@ const AnnotationPopupContainer = ({
 
   const onDeleteAnnotation = () => {
     if (isFocusedAnnotationSelected) {
-      core.deleteAnnotations(core.getSelectedAnnotations());
+      core.deleteAnnotations(core.getSelectedAnnotations(activeDocumentViewerKey), undefined, activeDocumentViewerKey);
     } else {
-      core.deleteAnnotations([focusedAnnotation]);
+      core.deleteAnnotations([focusedAnnotation], undefined, activeDocumentViewerKey);
     }
     closePopup();
   };
@@ -472,7 +508,7 @@ const AnnotationPopupContainer = ({
       hideSnapModeCheckbox={hideSnapModeCheckbox}
       openEditStylePopup={() => setIsStylePopupOpen(true)}
       closeEditStylePopup={() => setIsStylePopupOpen(false)}
-      annotationStyle={annotationStyle}
+      annotationStyle={focusedAnnotationStyle}
       onResize={onResize}
 
       showContentEditButton={showContentEditButton}
@@ -508,6 +544,11 @@ const AnnotationPopupContainer = ({
 
       showCalibrateButton={showCalibrateButton}
       onOpenCalibration={onOpenCalibration}
+
+      customizableUI={customizableUI}
+      openStylePanel={openStylePanel}
+      isStylePanelOpen={isStylePanelOpen}
+      isInReadOnlyMode={isInReadOnlyMode}
     />
   );
 };

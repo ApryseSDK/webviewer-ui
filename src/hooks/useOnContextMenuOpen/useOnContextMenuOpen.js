@@ -4,10 +4,9 @@ import selectors from 'selectors';
 import actions from 'actions';
 import core from 'core';
 import DataElements from 'constants/dataElement';
-
 import useOnRightClick from 'hooks/useOnRightClick';
-
 import { isMobile as isMobileCSS, isMobileDevice } from 'helpers/device';
+import { isOfficeEditorMode } from 'helpers/officeEditor';
 
 export default function useOnContextMenuOpen() {
   const [
@@ -39,13 +38,15 @@ export default function useOnContextMenuOpen() {
   }, [isRightClickAnnotationPopupEnabled]);
 
   useOnRightClick(
-    useCallback((e) => {
+    useCallback(async (e) => {
       const { pageX: left, pageY: top } = e;
-
       const annotationUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
       if ((!isRightClickAnnotationPopupEnabledRef.current && !isMobile) || (isRightClickAnnotationPopupEnabledRef.current && !annotationUnderMouse)) {
         if (popupItems.length > 0) {
           setClickPosition({ left, top });
+          if (isOfficeEditorMode()) {
+            await core.getOfficeEditor().onRightClick(e);
+          }
           dispatch(actions.openElement(DataElements.CONTEXT_MENU_POPUP));
         }
       }

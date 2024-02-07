@@ -9,6 +9,7 @@
     }
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    row-gap: 8px;
     justify-items: center;
 
     &.padding {
@@ -82,7 +83,7 @@
   }
 
   .palette-controls {
-    padding-right: 16px;
+    padding-right: 12px;
     padding-left: 2px;
     display: flex;
     justify-content: space-between;
@@ -100,17 +101,32 @@
       min-width: 32px;
       min-height: 32px;
       @include button-reset;
+      cursor: pointer;
+      border-radius: 4px;
 
       &.show-more-button {
-        color: var(--blue-5);
+        color: var(--ribbon-active-color);
+
+        &:hover {
+          background: none;
+          color: var(--primary-button-hover);
+        }
       }
 
       &:disabled {
-        opacity: 0.5;
+        cursor: default;
+
+        .Icon {
+          color: var(--disabled-icon);
+        }
       }
 
       &.hidden {
         display: none;
+      }
+
+      &:hover {
+        background: var(--view-header-button-hover);
       }
     }
 

@@ -27,7 +27,7 @@ const initialState = {
     panelWidths: { panel: DEFAULT_NOTES_PANEL_WIDTH },
     sortStrategy: 'position',
     isInDesktopOnlyMode: true,
-    modularHeaders: []
+    modularHeaders: {}
   }
 };
 

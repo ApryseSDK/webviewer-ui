@@ -20,7 +20,8 @@ const propTypes = {
   setActiveResult: PropTypes.func,
   isInDesktopOnlyMode: PropTypes.bool,
   isProcessingSearchResults: PropTypes.bool,
-  activeDocumentViewerKey: PropTypes.number
+  activeDocumentViewerKey: PropTypes.number,
+  isCustomPanel: PropTypes.bool,
 };
 
 function noop() { }
@@ -36,7 +37,9 @@ function SearchPanel(props) {
     isMobile = false,
     isInDesktopOnlyMode,
     isProcessingSearchResults,
-    activeDocumentViewerKey
+    activeDocumentViewerKey,
+    dataElement = 'searchPanel',
+    isCustomPanel = false,
   } = props;
 
   const { t } = useTranslation();
@@ -76,12 +79,15 @@ function SearchPanel(props) {
   }, []);
 
   const className = getClassName('Panel SearchPanel', { isOpen });
-  const style = !isInDesktopOnlyMode && isMobile ? {} : { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
+  let style = {};
+  if (!isCustomPanel && (isInDesktopOnlyMode || !isMobile)) {
+    style = { width: `${currentWidth}px`, minWidth: `${currentWidth}px` };
+  }
 
   return (
     <DataElementWrapper
       className={className}
-      dataElement="searchPanel"
+      dataElement={dataElement}
       style={style}
     >
       {!isInDesktopOnlyMode && isMobile &&

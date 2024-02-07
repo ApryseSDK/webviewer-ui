@@ -17,7 +17,7 @@ const initialState = {
       viewControlsOverlay: true
     },
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
   },
   document: {
     totalPages: {

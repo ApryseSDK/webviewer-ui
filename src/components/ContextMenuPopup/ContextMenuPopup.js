@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import Draggable from 'react-draggable';
-
 import { useSelector, useDispatch, useStore, shallowEqual } from 'react-redux';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import { useTranslation } from 'react-i18next';
-
 import ActionButton from 'components/ActionButton';
 import CustomizablePopup from 'components/CustomizablePopup';
 import Icon from 'components/Icon';
-
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import actions from 'actions';
@@ -17,12 +14,12 @@ import selectors from 'selectors';
 import core from 'core';
 import { isMobile as isMobileCSS, isIE, isMobileDevice, isFirefox } from 'helpers/device';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
-import DataElements from 'src/constants/dataElement';
+import getRootNode from 'helpers/getRootNode';
+import DataElements from 'constants/dataElement';
 
 import './ContextMenuPopup.scss';
-import getRootNode from 'helpers/getRootNode';
 
-const OfficeActionItem = ({ onClick, img, title, shortcut = '', disabled = false }) => {
+const OfficeActionItem = ({ dataElement, onClick, img, title, shortcut = '', disabled = false }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
 
@@ -38,10 +35,12 @@ const OfficeActionItem = ({ onClick, img, title, shortcut = '', disabled = false
       className={classNames('office-action-item', { disabled })}
       onClick={() => !disabled && onClick()}
       tabIndex={disabled ? -1 : 0}
+      data-element={dataElement}
       onKeyDown={onKeyDown}
     >
       <div className="icon-title">
-        <Icon glyph={img} disabled={disabled} />
+        {img && <Icon glyph={img} disabled={disabled} />}
+        {!img && <span className="Icon"></span>}
         <div>{t(title)}</div>
       </div>
       <div className="shortcut">{shortcut}</div>
@@ -94,7 +93,7 @@ const ContextMenuPopup = ({
     }
   }, [isOpen]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let { left, top } = clickPosition;
     const { width, height } = popupRef.current.getBoundingClientRect();
     const documentContainer =
@@ -154,6 +153,7 @@ const ContextMenuPopup = ({
               <OfficeActionItem
                 title="action.cut"
                 img="icon-cut"
+                dataElement={DataElements.OFFICE_EDITOR_CUT}
                 onClick={async () => {
                   await core.getOfficeEditor().copySelectedText();
                   core.getOfficeEditor().removeSelection();
@@ -164,6 +164,7 @@ const ContextMenuPopup = ({
               <OfficeActionItem
                 title="action.copy"
                 img="icon-copy"
+                dataElement={DataElements.OFFICE_EDITOR_COPY}
                 onClick={() => core.getOfficeEditor().copySelectedText()}
                 shortcut="Ctrl+C"
                 disabled={!core.getOfficeEditor().isTextSelected()}
@@ -173,23 +174,68 @@ const ContextMenuPopup = ({
                   <OfficeActionItem
                     title="action.paste"
                     img="icon-paste"
+                    dataElement={DataElements.OFFICE_EDITOR_PASTE}
                     onClick={() => core.getOfficeEditor().pasteText()}
                     shortcut="Ctrl+V"
                   />
                   <OfficeActionItem
                     title="action.pasteWithoutFormatting"
                     img="icon-paste-without-formatting"
+                    dataElement={DataElements.OFFICE_EDITOR_PASTE_WITHOUT_FORMATTING}
                     onClick={() => core.getOfficeEditor().pasteText(false)}
                     shortcut="Ctrl+Shift+V"
                   />
                 </>
               )}
-              <OfficeActionItem
-                title="action.delete"
-                img="icon-delete-line"
-                onClick={() => core.getOfficeEditor().removeSelection()}
-                disabled={!core.getOfficeEditor().isTextSelected()}
-              />
+              {!core.getOfficeEditor().isCursorInTable() && (
+                <OfficeActionItem
+                  title="action.delete"
+                  img="icon-delete-line"
+                  dataElement={DataElements.OFFICE_EDITOR_DELETE}
+                  onClick={() => core.getOfficeEditor().removeSelection()}
+                  disabled={!(core.getOfficeEditor().isTextSelected() || core.getOfficeEditor().isImageSelected())}
+                />
+              )}
+              {core.getOfficeEditor().isCursorInTable() && (
+                <>
+                  <div className="divider"></div>
+                  <OfficeActionItem
+                    title="officeEditor.insertRowAbove"
+                    dataElement={DataElements.OFFICE_EDITOR_INSERT_ROW_ABOVE}
+                    onClick={() => core.getOfficeEditor().insertRows(1, true)}
+                  />
+                  <OfficeActionItem
+                    title="officeEditor.insertRowBelow"
+                    dataElement={DataElements.OFFICE_EDITOR_INSERT_ROW_BELOW}
+                    onClick={() => core.getOfficeEditor().insertRows(1, false)}
+                  />
+                  <OfficeActionItem
+                    title="officeEditor.insertColumnRight"
+                    dataElement={DataElements.OFFICE_EDITOR_INSERT_COLUMN_RIGHT}
+                    onClick={() => core.getOfficeEditor().insertColumns(1, true)}
+                  />
+                  <OfficeActionItem
+                    title="officeEditor.insertColumnLeft"
+                    dataElement={DataElements.OFFICE_EDITOR_INSERT_COLUMN_LEFT}
+                    onClick={() => core.getOfficeEditor().insertColumns(1, false)}
+                  />
+                  <OfficeActionItem
+                    title="officeEditor.deleteRow"
+                    dataElement={DataElements.OFFICE_EDITOR_DELETE_ROW}
+                    onClick={() => core.getOfficeEditor().removeRows()}
+                  />
+                  <OfficeActionItem
+                    title="officeEditor.deleteColumn"
+                    dataElement={DataElements.OFFICE_EDITOR_DELETE_COLUMN}
+                    onClick={() => core.getOfficeEditor().removeColumns()}
+                  />
+                  <OfficeActionItem
+                    title="officeEditor.deleteTable"
+                    dataElement={DataElements.OFFICE_EDITOR_DELETE_TABLE}
+                    onClick={() => core.getOfficeEditor().removeTable()}
+                  />
+                </>
+              )}
             </>
           ) : (
             <CustomizablePopup

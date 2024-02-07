@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,7 +11,7 @@ import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivnessHelper';
 import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
-
+import core from 'core';
 
 const RibbonItem = (props) => {
   const elementRef = useRef();
@@ -23,16 +23,23 @@ const RibbonItem = (props) => {
     disabled,
     img,
     label,
-    toolbarGroup,
     groupedItems = [],
     direction,
     justifyContent,
     isFlyoutItem,
     iconDOMElement
   } = props;
-  const [currentToolbarGroup] = useSelector((state) => [
-    selectors.getCurrentToolbarGroup(state),
+  const [
+    activeGroupedItems,
+    activeCustomRibbon,
+    lastPickedToolForGroupedItems,
+  ] = useSelector((state) => [
+    selectors.getActiveGroupedItems(state),
+    selectors.getActiveCustomRibbon(state),
+    selectors.getLastPickedToolForGroupedItems(state, groupedItems),
   ]);
+
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     if (elementRef.current) {
@@ -45,19 +52,25 @@ const RibbonItem = (props) => {
   }, []);
 
   useEffect(() => {
-    if (currentToolbarGroup === toolbarGroup) {
-      const activeGroups = groupedItems.map((item) => item?.dataElement);
-      dispatch(actions.setCurrentGroupedItem(activeGroups));
+    const allActiveGroupedItemsBelongToCurrentRibbonItem = activeGroupedItems?.every((item) => groupedItems.includes(item));
+    if (activeCustomRibbon === dataElement && (allActiveGroupedItemsBelongToCurrentRibbonItem || !activeGroupedItems?.length)) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
     }
-  }, []);
-
-  const isActive = currentToolbarGroup === toolbarGroup;
+  }, [activeGroupedItems, activeCustomRibbon]);
 
   const onClick = () => {
     if (!isActive) {
-      dispatch(actions.setToolbarGroup(toolbarGroup));
-      const activeGroups = groupedItems.map((item) => item?.dataElement);
-      dispatch(actions.setCurrentGroupedItem(activeGroups));
+      dispatch(actions.setActiveGroupedItems(groupedItems));
+      dispatch(actions.setActiveCustomRibbon(dataElement));
+      setIsActive(true);
+      core.setToolMode(lastPickedToolForGroupedItems);
+
+      if (groupedItems.length < 1) {
+        core.getFormFieldCreationManager().endFormFieldCreationMode();
+        core.getContentEditManager().endContentEditMode();
+      }
     }
   };
 
@@ -100,8 +113,6 @@ RibbonItem.propTypes = {
   disabled: PropTypes.bool,
   img: PropTypes.string,
   label: PropTypes.string,
-  getCurrentToolbarGroup: PropTypes.func,
-  toolbarGroup: PropTypes.string,
   groupedItems: PropTypes.array,
   direction: PropTypes.string,
   justifyContent: PropTypes.string,

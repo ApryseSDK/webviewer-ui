@@ -4,7 +4,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import RightHeader from 'components/ModularComponents/RightHeader';
 import initialState from 'src/redux/initialState';
 import rootReducer from 'reducers/rootReducer';
-import { defaultRightHeader, secondFloatStartRightHeader, floatStartRightHeader, floatCenterRightHeader, floatEndRightHeader } from '../../Helpers/mockHeaders';
+import {
+  defaultRightHeader,
+  secondFloatStartRightHeader,
+  floatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
+  mockModularComponents,
+} from '../../Helpers/mockHeaders';
 
 export default {
   title: 'ModularComponents/FloatingHeader/RightHeader',
@@ -15,7 +22,7 @@ const MockDocumentContainer = () => {
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
       Mock Document Container
-      <img src="https://placekitten.com/200/300?image=11" />
+      <img src="/assets/images/193_200x300.jpeg" />
     </div>
   );
 };
@@ -26,6 +33,7 @@ const MockAppWrapperWithRightHeader = ({ modularHeaders }) => {
     viewer: {
       ...initialState.viewer,
       modularHeaders,
+      modularComponents: mockModularComponents,
     },
     featureFlags: {
       customizableUI: true,
@@ -46,36 +54,37 @@ const MockAppWrapperWithRightHeader = ({ modularHeaders }) => {
 };
 
 const Template = (args) => <MockAppWrapperWithRightHeader {...args} />;
+Template.parameters = { chromatic: { disableSnapshot: true } };
 
 export const RightHeaderWithDefaultAndFloaties = Template.bind({});
 RightHeaderWithDefaultAndFloaties.args = {
-  modularHeaders: [
+  modularHeaders: {
     defaultRightHeader,
     secondFloatStartRightHeader,
     floatStartRightHeader,
     floatCenterRightHeader,
     floatEndRightHeader,
-  ],
+  },
 };
 
 export const FloatRightStartHeader = Template.bind({});
 FloatRightStartHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatStartRightHeader,
     secondFloatStartRightHeader,
-  ],
+  },
 };
 
 export const FloatRightCenterHeader = Template.bind({});
 FloatRightCenterHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatCenterRightHeader,
-  ],
+  },
 };
 
 export const FloatRightEndHeader = Template.bind({});
 FloatRightEndHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatEndRightHeader,
-  ],
+  },
 };

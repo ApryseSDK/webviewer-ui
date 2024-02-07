@@ -72,6 +72,7 @@
     "type": "Тип",
     "upload": "Завантажити",
     "link": "Посилання",
+    "unlink": "Видалити посилання",
     "fileAttachmentDownload": "Завантажте вкладений файл",
     "prevResult": "Попередній результат",
     "nextResult": "Наступний результат",
@@ -82,6 +83,8 @@
     "exit": "Вихід",
     "addOption": "Додати параметр",
     "formFieldEdit": "Редагувати поле форми",
+    "formFieldEditMode": "Редагувати поля форми",
+    "contentEditMode": "Редагувати вміст",
     "viewShortCutKeysFor3D": "Перегляд комбінацій клавіш",
     "markAllRead": "Позначити все як прочитане",
     "pageInsertion": "Вставка сторінки",
@@ -120,9 +123,13 @@
     "showComparison": "Показати порівняння",
     "back": "Назад",
     "clearSignature": "Чіткий підпис",
+    "readOnlySignature": "Підпис лише для читання не можна видалити",
     "newDocument": "Новий документ",
     "sideBySideView": "Пліч-о-пліч",
-    "pageNumberInput": "Введення номера сторінки"
+    "pageNumberInput": "Введення номера сторінки",
+    "addNewColor": "Додати новий колір",
+    "deleteColor": "Видалити вибраний колір",
+    "copySelectedColor": "Копіювати вибраний колір"
   },
   "annotation": {
     "areaMeasurement": "Площа",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Колір"
     },
+    "colorPalettePicker": {
+      "addColor": "Додайте новий колір",
+      "selectColor": "Виберіть колір"
+    },
     "displayMode": {
       "layout": "Макет сторінки",
       "pageTransition": "Перехід сторінки"
@@ -509,6 +520,9 @@
       "radius": "Радіус",
       "count": "Рахувати",
       "length": "Довжина"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Динамічне масштабування розміру шрифту"
     },
     "measurementOption": {
       "scale": "Масштаб"
@@ -768,6 +782,9 @@
       "deleteTitle": "Видалити власний колір",
       "deleteMessage": "Видалити вибраний користувацький колір? Він буде вилучений з вашої колірної палітри."
     },
+    "colorPalettePicker": {
+      "deleteTitle": "Видалити спеціальний колір"
+    },
     "multiDeleteAnnotation": {
       "title": "Видалити анотації?",
       "message": "Видалення видалить усі коментарі, відповіді та групування, і цю дію неможливо скасувати.\n\n Ви впевнені, що хочете видалити ці анотації?"
@@ -800,7 +817,7 @@
     "select": "(Вихід)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(я)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Збільшити відступ",
     "insertLink": "Вставте посилання",
     "insertImage": "Вставте зображення",
+    "table": "Таблиця",
+    "insertRowAbove": "Вставити рядок вище",
+    "insertRowBelow": "Вставити рядок нижче",
+    "insertColumnRight": "Вставити стовпець праворуч",
+    "insertColumnLeft": "Вставити стовпець ліворуч",
+    "deleteRow": "Видалити рядок",
+    "deleteColumn": "Видалити стовпець",
+    "deleteTable": "Видалити таблицю",
     "notSupportedOnMobile": "Редагування Office не підтримується на мобільних пристроях."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Стилі"
+      "styles": "Стилі",
+      "annotation": "Анотація",
+      "annotations": "Анотації",
+      "tool": "Інструмент",
+      "textStyles": "Стилі тексту",
+      "currentColor": "Поточний колір",
+      "customColors": "Спеціальні кольори",
+      "redactionTextLabel": "Текстова мітка",
+      "redactionMarkOutline": "Позначте контур",
+      "redactionFill": "Колір редакції",
+      "redactionTextPlaceholder": "Вставити текстову мітку",
+      "contentEdit": "Редагування вмісту"
     },
-    "noToolSelected": "Виберіть інструмент, щоб переглянути властивості інструмента"
+    "addColorToCustom": "Додати до власних кольорів",
+    "noToolSelected": "Виберіть інструмент, щоб переглянути властивості інструмента",
+    "noToolStyle": "Інструмент не містить властивостей стилізації."
+  },
+  "signatureListPanel": {
+    "header": "Підписний лист",
+    "newSignature": "Новий підпис",
+    "newSignatureAndInitial": "Новий підпис та ініціал",
+    "signatureList": {
+      "signature": "Підпис",
+      "initials": "Ініціали"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Марки",
+    "standard": "Стандартні штампи"
   }
 }

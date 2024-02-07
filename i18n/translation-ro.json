@@ -72,6 +72,7 @@
     "type": "Tip",
     "upload": "Încărcați",
     "link": "Legătură",
+    "unlink": "Șterge linkul",
     "fileAttachmentDownload": "Descărcați fișierul atașat",
     "prevResult": "Rezultatul anterior",
     "nextResult": "Următorul rezultat",
@@ -82,6 +83,8 @@
     "exit": "Ieșire",
     "addOption": "Adăugați opțiunea",
     "formFieldEdit": "Editați câmpul formularului",
+    "formFieldEditMode": "Editați câmpurile formularului",
+    "contentEditMode": "Editați conținutul",
     "viewShortCutKeysFor3D": "Vizualizați tastele de comenzi rapide",
     "markAllRead": "Marcheaza totul ca fiind citit",
     "pageInsertion": "Inserarea paginii",
@@ -120,9 +123,13 @@
     "showComparison": "Arată comparația",
     "back": "Înapoi",
     "clearSignature": "Semnătură clară",
+    "readOnlySignature": "Semnătura numai pentru citire nu poate fi ștearsă",
     "newDocument": "Document nou",
     "sideBySideView": "Vedere alăturată",
-    "pageNumberInput": "Introducerea numărului paginii"
+    "pageNumberInput": "Introducerea numărului paginii",
+    "addNewColor": "Adăugați o nouă culoare",
+    "deleteColor": "Ștergeți culoarea selectată",
+    "copySelectedColor": "Copiați culoarea selectată"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Culoare"
     },
+    "colorPalettePicker": {
+      "addColor": "Adăugați culoare nouă",
+      "selectColor": "Selectați culoarea"
+    },
     "displayMode": {
       "layout": "Aranjament în pagină",
       "pageTransition": "Tranziție de pagină"
@@ -509,6 +520,9 @@
       "radius": "Rază",
       "count": "Numara",
       "length": "Lungime"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Scalați dimensiunea fontului în mod dinamic"
     },
     "measurementOption": {
       "scale": "Scară"
@@ -768,6 +782,9 @@
       "deleteTitle": "Ștergeți culoarea personalizată",
       "deleteMessage": "Ștergeți culoarea personalizată selectată? Acesta va fi eliminat din paleta dvs. de culori."
     },
+    "colorPalettePicker": {
+      "deleteTitle": "Ștergeți culoarea personalizată"
+    },
     "multiDeleteAnnotation": {
       "title": "Ștergeți adnotările?",
       "message": "Ștergerea va elimina toate comentariile, răspunsurile și gruparea și nu poate fi anulată.\n\n Sigur doriți să ștergeți aceste adnotări?"
@@ -800,7 +817,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(eu)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Mareste indent-ul",
     "insertLink": "Introduceți linkul",
     "insertImage": "Inserați imaginea",
+    "table": "Masa",
+    "insertRowAbove": "Inserați rândul de deasupra",
+    "insertRowBelow": "Inserați rândul de mai jos",
+    "insertColumnRight": "Inserați coloana la dreapta",
+    "insertColumnLeft": "Inserați coloana la stânga",
+    "deleteRow": "Ștergeți rândul",
+    "deleteColumn": "Șterge coloana",
+    "deleteTable": "Ștergeți tabelul",
     "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stiluri"
+      "styles": "Stiluri",
+      "annotation": "Adnotare",
+      "annotations": "Adnotări",
+      "tool": "Instrument",
+      "textStyles": "Stiluri de text",
+      "currentColor": "Culoare curentă",
+      "customColors": "Culori personalizate",
+      "redactionTextLabel": "Etichetă text",
+      "redactionMarkOutline": "Mark Outline",
+      "redactionFill": "Culoare de redactare",
+      "redactionTextPlaceholder": "Introduceți eticheta text",
+      "contentEdit": "Editare conținut"
     },
-    "noToolSelected": "Selectați un instrument pentru a vizualiza proprietățile instrumentului"
+    "addColorToCustom": "Adaugă la culori personalizate",
+    "noToolSelected": "Selectați un instrument pentru a vizualiza proprietățile instrumentului",
+    "noToolStyle": "Instrumentul nu conține nicio proprietate de stil."
+  },
+  "signatureListPanel": {
+    "header": "Lista de semnături",
+    "newSignature": "Semnătura nouă",
+    "newSignatureAndInitial": "Semnătură și inițială nouă",
+    "signatureList": {
+      "signature": "Semnătură",
+      "initials": "Inițiale"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Timbre",
+    "standard": "Timbre standard"
   }
 }

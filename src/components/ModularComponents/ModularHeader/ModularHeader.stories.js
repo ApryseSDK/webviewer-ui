@@ -28,12 +28,13 @@ export default {
 
 const initialState = {
   viewer: {
-    modularHeaders: [],
+    modularHeaders: {},
     customElementOverrides: {},
     disabledElements: [],
     openElements: {},
     customPanels: [],
     flyoutMap: {},
+    lastPickedToolForGroupedItems: {},
   },
 };
 

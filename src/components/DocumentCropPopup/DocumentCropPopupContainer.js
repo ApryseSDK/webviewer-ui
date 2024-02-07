@@ -13,13 +13,19 @@ import DataElements from 'constants/dataElement';
 
 function DocumentCropPopupContainer() {
   const cropCreateTool = core.getTool(window.Core.Tools.ToolNames['CROP']);
-  const [isOpen, isInDesktopOnlyMode, shouldShowApplyCropWarning, presetCropDimensions] = useSelector((state) => [
+  const [
+    isOpen,
+    isInDesktopOnlyMode,
+    shouldShowApplyCropWarning,
+    presetCropDimensions,
+  ] = useSelector((state) => [
     selectors.getActiveToolName(state) === window.Core.Tools.ToolNames['CROP'] &&
       selectors.isElementOpen(state, DataElements.DOCUMENT_CROP_POPUP),
     selectors.isInDesktopOnlyMode(state),
     selectors.shouldShowApplyCropWarning(state),
     selectors.getPresetCropDimensions(state),
   ]);
+
   const dispatch = useDispatch();
   const [isCropping, setIsCropping] = useState(cropCreateTool.getIsCropping());
 
@@ -121,18 +127,12 @@ function DocumentCropPopupContainer() {
     }
   };
 
-  const [documentContainerWidth, documentContainerHeight] = useSelector((state) => [
-    selectors.getDocumentContainerWidth(state),
-    selectors.getDocumentContainerHeight(state),
-  ]);
-
   const cropPopupRef = useRef();
-
-  const popupWidth = cropPopupRef.current?.getBoundingClientRect().width || 0;
-  const popupHeight = cropPopupRef.current?.getBoundingClientRect().height || 0;
-  const headerHeight = getRootNode().querySelector('[data-element=header]')?.offsetHeight || 0;
-  const headerToolsHeight = getRootNode().querySelector('[data-element=toolsHeader]')?.offsetHeight || 0;
-  const yOffset = headerHeight + headerToolsHeight;
+  const DEFAULT_POPUP_WIDTH = 250;
+  const DEFAULT_POPUP_HEIGHT = 250;
+  const documentContainerElement = core.getScrollViewElement();
+  const popupWidth = cropPopupRef.current?.getBoundingClientRect().width || DEFAULT_POPUP_WIDTH;
+  const popupHeight = cropPopupRef.current?.getBoundingClientRect().height || DEFAULT_POPUP_HEIGHT;
   const documentViewer = core.getDocumentViewer(1);
   // eslint-disable-next-line no-undef
   const xOffset = documentViewer.getViewerElement()?.getBoundingClientRect().right || 0;
@@ -140,10 +140,10 @@ function DocumentCropPopupContainer() {
   const cropPopupOffset = () => {
     const offset = {
       x: xOffset + 35,
-      y: yOffset + 10,
+      y: documentContainerElement?.offsetTop + 10,
     };
     if (cropAnnotation && cropPopupRef?.current) {
-      offset.x = Math.min(offset.x, documentContainerWidth - popupWidth);
+      offset.x = Math.min(offset.x, documentContainerElement.offsetWidth - popupWidth);
     }
     return offset;
   };
@@ -151,9 +151,9 @@ function DocumentCropPopupContainer() {
   const cropPopupBounds = () => {
     const bounds = {
       top: 0,
-      bottom: documentContainerHeight - popupHeight,
+      bottom: documentContainerElement.offsetHeight - popupHeight,
       left: 0 - cropPopupOffset()['x'],
-      right: documentContainerWidth - cropPopupOffset()['x'] - popupWidth,
+      right: documentContainerElement.offsetWidth - cropPopupOffset()['x'] - popupWidth,
     };
     return bounds;
   };

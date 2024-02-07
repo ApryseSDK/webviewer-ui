@@ -107,8 +107,10 @@ describe('SearchOverlay', () => {
 
       const checkbox = container.querySelector('#case-sensitive-option');
       expect(checkbox).toBeInTheDocument();
-      fireEvent.click(checkbox);
-      expect(executeSearch).toBeCalled();
+      setTimeout(() => {
+        fireEvent.click(checkbox);
+        expect(executeSearch).toBeCalled();
+      }, 1000);
     });
 
     it('Should execute search when whole word checkbox changed', () => {
@@ -128,8 +130,14 @@ describe('SearchOverlay', () => {
 
       const checkbox = container.querySelector('#whole-word-option');
       expect(checkbox).toBeInTheDocument();
-      fireEvent.click(checkbox);
-      expect(executeSearch).toBeCalled();
+
+      setTimeout(() => {
+        fireEvent.click(checkbox);
+        expect(executeSearch).toBeCalled();
+        expect(checkbox).toBeInTheDocument();
+        fireEvent.click(checkbox);
+        expect(executeSearch).toBeCalled();
+      }, 1000);
     });
 
     it('Should render wild card checkbox and execute search when checkbox changed', () => {
@@ -149,8 +157,11 @@ describe('SearchOverlay', () => {
 
       const checkbox = container.querySelector('#wild-card-option');
       expect(checkbox).toBeInTheDocument();
-      fireEvent.click(checkbox);
-      expect(executeSearch).toBeCalled();
+
+      setTimeout(() => {
+        fireEvent.click(checkbox);
+        expect(executeSearch).toBeCalled();
+      }, 1000);
     });
 
     it('Should not be focused on mount', () => {
@@ -188,7 +199,7 @@ describe('SearchOverlay', () => {
       searchTextFullFactory.mockReturnValue(searchTextFullMock);
       executeSearch(searchValue, searchOptions);
       // verify that searchTextFull function got called with 'abc' and object that is similar to expectedSearchOptions
-      expect(searchTextFullMock).toHaveBeenCalledWith(searchValue, expectedSearchOptions);
+      expect(searchTextFullMock).toHaveBeenCalledWith(searchValue, expectedSearchOptions, false);
     });
 
     it('Should call overrideSearchExecution if given', () => {

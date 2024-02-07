@@ -10,7 +10,7 @@ import Flyout from '../Flyout';
 import { button8, button9 } from '../Helpers/mockHeaders';
 
 const leftChevron = {
-  onClick: () => {},
+  onClick: () => { },
   dataElement: 'leftChevronBtn',
   title: 'action.pagePrev',
   label: 'action.pagePrev',
@@ -22,7 +22,7 @@ const leftChevron = {
 };
 
 const rightChevron = {
-  onClick: () => {},
+  onClick: () => { },
   dataElement: 'rightChevronBtn',
   title: 'action.pageNext',
   label: 'action.pageNext',
@@ -35,15 +35,16 @@ const rightChevron = {
 
 const initialState = {
   viewer: {
-    modularHeaders: [],
+    modularHeaders: {},
     customElementOverrides: {},
     activeGroupedItems: [],
     disabledElements: [],
     openElements: {},
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     currentPage: 2,
     activeFlyout: 'pageNavFlyoutMenu',
+    activeCustomPanel: '',
     flyoutPosition: { x: 0, y: 0 },
     fixedGroupedItems: ['grouped-item-ABC'],
     pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
@@ -66,11 +67,11 @@ const initialState = {
             input: 2,
             label: 'pageNavigationButton',
             inputWidth: 30,
-            onClick: () => {},
-            onChange: () => {},
-            onSubmit: () => {},
-            onBlur: () => {},
-            onFocus: () => {},
+            onClick: () => { },
+            onChange: () => { },
+            onSubmit: () => { },
+            onBlur: () => { },
+            onFocus: () => { },
 
           },
           leftChevron,
@@ -103,7 +104,7 @@ const onChange = (e) => {
 const props = {
   dataElement: 'foo',
   size: 0,
-  onFlyoutToggle: () => {},
+  onFlyoutToggle: () => { },
   leftChevron,
   rightChevron,
   currentPage: 1,

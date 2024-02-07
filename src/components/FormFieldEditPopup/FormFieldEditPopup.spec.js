@@ -401,11 +401,11 @@ describe('FormFieldEditPopup', () => {
       expect(indicatorText).toBeInTheDocument();
     });
 
-    it('if I click cancel and the field name is empty, it deletes the form field placeholder', () => {
+    it('if I click cancel and the field name is empty, it should call the cancel callback function', () => {
       const dummyAnnotation = createMockAnnotation();
-      const mockDeleteAnnotation = jest.fn();
+      const mockCancelEmptyFieldName = jest.fn();
 
-      const mockInputFieldWithEmtpyName = [
+      const mockInputFieldWithEmptyName = [
         {
           label: 'formField.formFieldPopup.fieldName',
           onChange: noop,
@@ -424,7 +424,7 @@ describe('FormFieldEditPopup', () => {
 
       render(
         <TestFormFieldEditPopup
-          fields={mockInputFieldWithEmtpyName}
+          fields={mockInputFieldWithEmptyName}
           flags={sampleFlags}
           closeFormFieldEditPopup={noop}
           isOpen
@@ -434,7 +434,7 @@ describe('FormFieldEditPopup', () => {
           getPageHeight={noop}
           getPageWidth={noop}
           indicator={indicator}
-          deleteAnnotation={mockDeleteAnnotation}
+          onCancelEmptyFieldName={mockCancelEmptyFieldName}
         />,
       );
 
@@ -442,7 +442,7 @@ describe('FormFieldEditPopup', () => {
       expect(cancelButton).toBeInTheDocument();
       fireEvent.click(cancelButton);
 
-      expect(mockDeleteAnnotation).toHaveBeenCalled();
+      expect(mockCancelEmptyFieldName).toHaveBeenCalled();
     });
   });
 });

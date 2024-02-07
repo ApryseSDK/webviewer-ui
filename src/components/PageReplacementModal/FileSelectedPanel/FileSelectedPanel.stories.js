@@ -26,7 +26,7 @@ const store = createStore(rootReducer);
 const mockDocument = {
   getPageCount: () => 10,
   getFilename: () => 'helloDarknessMyOldFriend.pdf',
-  loadThumbnail: (pageNumber, callback) => (Promise.resolve(callback({ pageNumber, currentSrc: 'https://placekitten.com/200/300?image=11' }))),
+  loadThumbnail: (pageNumber, callback) => (Promise.resolve(callback({ pageNumber, currentSrc: '/assets/images/193_200x300.jpeg' }))),
 };
 
 const props = {

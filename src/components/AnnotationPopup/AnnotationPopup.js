@@ -85,6 +85,10 @@ const propTypes = {
 
   showCalibrateButton: PropTypes.bool,
   onOpenCalibration: PropTypes.func,
+
+  customizableUI: PropTypes.bool,
+  openStylePanel: PropTypes.func,
+  isInReadOnlyMode: PropTypes.bool,
 };
 
 const AnnotationPopup = ({
@@ -154,14 +158,17 @@ const AnnotationPopup = ({
 
   showCalibrateButton,
   onOpenCalibration,
+
+  customizableUI,
+  openStylePanel,
+  isInReadOnlyMode,
 }) => {
   const [t] = useTranslation();
   const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(false);
 
   const commentButtonLabel = isDateFreeTextCanEdit ? 'action.changeDate' : 'action.comment';
   const commentButtonImg = isDateFreeTextCanEdit ? 'icon-tool-fill-and-sign-calendar' : 'icon-header-chat-line';
-
-  const show3DShortCutButton = focusedAnnotation instanceof window.Core.Annotations.Model3DAnnotation && !isMobile;
+  const show3DShortCutButton = !isInReadOnlyMode && focusedAnnotation instanceof window.Core.Annotations.Model3DAnnotation && !isMobile;
   const isRectangle = focusedAnnotation instanceof window.Core.Annotations.RectangleAnnotation;
   const isEllipse = focusedAnnotation instanceof window.Core.Annotations.EllipseAnnotation;
   const isPolygon = focusedAnnotation instanceof window.Core.Annotations.PolygonAnnotation;
@@ -176,7 +183,7 @@ const AnnotationPopup = ({
   const isInstanceActive = !window.isApryseWebViewerWebComponent || document.activeElement?.shadowRoot === getRootNode();
   let StrokeStyle = 'solid';
   const isContentEdit = focusedAnnotation.isContentEditPlaceholder?.();
-
+  const isReadOnlySignature = focusedAnnotation instanceof window.Core.Annotations.SignatureWidgetAnnotation && focusedAnnotation.fieldFlags.get(window.Core.Annotations.WidgetFlags.READ_ONLY);
   try {
     StrokeStyle = (focusedAnnotation['Style'] === 'dash')
       ? `${focusedAnnotation['Style']},${focusedAnnotation['Dashes']}`
@@ -201,6 +208,9 @@ const AnnotationPopup = ({
 
   if (isFreeText) {
     const richTextStyles = focusedAnnotation.getRichTextStyle();
+    const isAutoSizeFont = focusedAnnotation.isAutoSizeFont();
+    const calculatedFontSize = focusedAnnotation.getCalculatedFontSize();
+
     properties = {
       Font: focusedAnnotation.Font,
       FontSize: focusedAnnotation.FontSize,
@@ -211,6 +221,8 @@ const AnnotationPopup = ({
       underline: richTextStyles?.[0]?.['text-decoration']?.includes('underline') || richTextStyles?.[0]?.['text-decoration']?.includes('word'),
       strikeout: richTextStyles?.[0]?.['text-decoration']?.includes('line-through') ?? false,
       StrokeStyle,
+      isAutoSizeFont,
+      calculatedFontSize,
     };
   }
 
@@ -295,7 +307,7 @@ const AnnotationPopup = ({
                     label={isRightClickMenu ? 'action.style' : ''}
                     title={!isRightClickMenu ? 'action.style' : ''}
                     img="icon-menu-style-line"
-                    onClick={openEditStylePopup}
+                    onClick={customizableUI ? openStylePanel : openEditStylePopup}
                   />
                 )}
                 {showContentEditButton && (
@@ -312,10 +324,11 @@ const AnnotationPopup = ({
                   <ActionButton
                     className="main-menu-button"
                     dataElement="annotationClearSignatureButton"
-                    label={isRightClickMenu ? 'action.clearSignature' : ''}
-                    title={!isRightClickMenu ? 'action.clearSignature' : ''}
-                    img="icon-delete-line"
+                    label={isReadOnlySignature ? 'action.readOnlySignature' : (isRightClickMenu ? 'action.clearSignature' : '')}
+                    title={isReadOnlySignature ? 'action.readOnlySignature' : (!isRightClickMenu ? 'action.clearSignature' : '')}
+                    img={isReadOnlySignature ? '' : 'icon-delete-line'}
                     onClick={onClearAppearanceSignature}
+                    isNotClickableSelector={() => isReadOnlySignature}
                   />
                 )}
                 {showRedactionButton && (
@@ -433,8 +446,8 @@ const AnnotationPopup = ({
         open: isOpen,
         closed: !isOpen,
         stylePopupOpen: isStylePopupOpen,
-        'is-vertical': isRightClickMenu,
-        'is-horizontal': !isRightClickMenu,
+        'is-vertical': isReadOnlySignature ? true : isRightClickMenu,
+        'is-horizontal': isReadOnlySignature ? false : !isRightClickMenu,
       })}
       ref={popupRef}
       data-element={DataElements.ANNOTATION_POPUP}

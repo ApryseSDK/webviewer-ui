@@ -18,7 +18,7 @@ const initialState = {
     customElementOverrides: {},
     tab: {},
     panelWidths: { panel: 300 },
-    modularHeaders: [],
+    modularHeaders: {},
   }
 };
 
@@ -26,7 +26,7 @@ export function FileAttachmentPanelLeftEmpty() {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <Panel location={'left'} dataElement={'panel'}>
-        <FileAttachmentPanelComponent/>
+        <FileAttachmentPanelComponent />
       </Panel>
     </Provider>
   );
@@ -36,7 +36,7 @@ export function FileAttachmentPanelRightEmpty() {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <Panel location={'right'} dataElement={'panel'}>
-        <FileAttachmentPanelComponent/>
+        <FileAttachmentPanelComponent />
       </Panel>
     </Provider>
   );
@@ -57,7 +57,7 @@ export function FileAttachmentPanelLeftWithFiles() {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <Panel location={'left'} dataElement={'panel'}>
-        <FileAttachmentPanelComponent initialFiles={filesMock}/>
+        <FileAttachmentPanelComponent initialFiles={filesMock} />
       </Panel>
     </Provider>
   );
@@ -67,7 +67,7 @@ export function FileAttachmentPanelRightWithFiles() {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <Panel location={'right'} dataElement={'panel'}>
-        <FileAttachmentPanelComponent initialFiles={filesMock}/>
+        <FileAttachmentPanelComponent initialFiles={filesMock} />
       </Panel>
     </Provider>
   );

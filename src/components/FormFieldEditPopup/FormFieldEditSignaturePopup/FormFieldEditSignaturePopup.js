@@ -23,7 +23,7 @@ const FormFieldEditSignaturePopup = ({
   onSignatureOptionChange,
   getSignatureOptionHandler,
   indicator,
-  deleteAnnotation
+  onCancelEmptyFieldName,
 }) => {
   const { t } = useTranslation();
   const className = classNames({
@@ -72,21 +72,19 @@ const FormFieldEditSignaturePopup = ({
   }
 
   function onCancel() {
-    // If the field name is empty, delete the annotation
     if (!isValid) {
-      // check if string includes value
       const { value } = fields.find((field) => field.label.includes('fieldName'));
       if (value.trim() === '') {
-        deleteAnnotation(annotation);
-        closeFormFieldEditPopup();
+        onCancelEmptyFieldName(annotation);
         return;
       }
     }
-    // If width/height changed return to original values
+
     if (width !== initialWidth || height !== initialHeight) {
       annotation.setWidth(initialWidth);
       annotation.setHeight(initialHeight);
     }
+
     redrawAnnotation(annotation);
     closeFormFieldEditPopup();
   }

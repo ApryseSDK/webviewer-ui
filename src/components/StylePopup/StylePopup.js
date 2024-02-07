@@ -37,6 +37,8 @@ class StylePopup extends React.PureComponent {
     onRichTextStyleChange: PropTypes.func,
     onLineStyleChange: PropTypes.func,
     isFreeText: PropTypes.bool,
+    onFreeTextSizeToggle: PropTypes.func,
+    isFreeTextAutoSize: PropTypes.bool,
     isEllipse: PropTypes.bool,
     isMeasure: PropTypes.bool,
     colorMapKey: PropTypes.string.isRequired,
@@ -265,7 +267,9 @@ class StylePopup extends React.PureComponent {
       showLineStyleOptions,
       onLineStyleChange,
       isSnapModeEnabled,
-      isInFormBuilderAndNotFreeText
+      isInFormBuilderAndNotFreeText,
+      onFreeTextSizeToggle,
+      isFreeTextAutoSize
     } = this.props;
 
     // We do not have sliders to show up for redaction annots
@@ -360,6 +364,9 @@ class StylePopup extends React.PureComponent {
                       onRichTextStyleChange={onRichTextStyleChange}
                       properties={properties}
                       isRedaction={isRedaction}
+                      isFreeText={isFreeText}
+                      onFreeTextSizeToggle={onFreeTextSizeToggle}
+                      isFreeTextAutoSize={isFreeTextAutoSize}
                     />
                   </div>
                 )}

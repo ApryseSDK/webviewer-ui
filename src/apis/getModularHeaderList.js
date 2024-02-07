@@ -10,6 +10,18 @@ WebViewer(...)
   });
  */
 
-import selectors from 'selectors';
 
-export default (store) => () => selectors.getModularHeaderList(store.getState());
+import selectors from 'selectors';
+import ModularHeader from './ModularComponents/modularHeader';
+import createModularInstance from './ModularComponents/createModularInstance';
+
+export default (store) => () => {
+  const hydratedHeaders = selectors.getHydratedHeaders(store.getState());
+
+  // Now we create instance of each class and return it
+  return hydratedHeaders.map((header) => {
+    const nestedItems = header.items.map((item) => createModularInstance(item, store));
+    const headerInstance = new ModularHeader(store)({ ...header, items: nestedItems });
+    return headerInstance;
+  });
+};

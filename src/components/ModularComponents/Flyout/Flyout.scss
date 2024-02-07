@@ -14,7 +14,7 @@
     overflow-x: hidden;
     z-index: 200;
     background-color: var(--component-background);
-    min-width: 168px;
+    min-width: 136px;
     max-width: 328px;
     padding: 4px 0;
     font-size: var(--font-size-default);
@@ -39,7 +39,13 @@
       align-items: center;
       width: 100%;
 
-      .Icon, .menu-icon {
+      &:active,
+      &.active {
+        background-color: var(--blue-2);
+      }
+
+      .Icon,
+      .menu-icon {
         width: 24px;
         height: 24px;
         margin-right: 8px;
@@ -54,10 +60,8 @@
         display: flex;
       }
 
-      .menu-icon,
-      .Icon svg path {
+      .menu-icon.Icon svg path {
         justify-self: flex-start;
-        fill: var(--icon-color);
       }
 
       .menu-container {
@@ -79,14 +83,15 @@
           background-color: var(--blue-1);
           cursor: pointer;
         }
-  
-        &:active, &.active {
+
+        &:active,
+        &.active {
           background-color: var(--blue-2);
-  
+
           .Icon svg path {
-            fill: var(--blue-6);
+            color: var(--blue-6);
           }
-  
+
           .flyout-item-label {
             color: var(--blue-6);
           }
@@ -146,7 +151,11 @@
     }
 
     &:active {
-      background-color: var(--blue-3);
+      color: var(--blue-6);
+
+      .Icon svg path {
+        fill: var(--blue-6);
+      }
     }
   }
 }

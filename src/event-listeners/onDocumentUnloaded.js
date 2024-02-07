@@ -28,4 +28,5 @@ export default (dispatch, documentViewerKey) => () => {
     core.clearSearchResults();
   }
   dispatch(actions.setZoom(1, documentViewerKey));
+  dispatch(actions.setIsOfficeEditorMode(false));
 };

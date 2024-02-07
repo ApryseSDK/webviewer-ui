@@ -1,3 +1,1 @@
-import core from 'core';
-
-export default () => core.isValidURI;
+export default (uri) => window.Core.isValidURI(uri);

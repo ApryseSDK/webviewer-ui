@@ -12,6 +12,12 @@ import './Dropdown.scss';
 
 const DEFAULT_WIDTH = 100;
 const DEFAULT_HEIGHT = 28;
+const directionMap = {
+  'up': 'down',
+  'down': 'up',
+  'left': 'right',
+  'right': 'left',
+};
 
 const propTypes = {
   items: PropTypes.array,
@@ -70,7 +76,8 @@ function Dropdown({
   customDataValidator = () => true,
   isSearchEnabled = true,
   onOpened = () => {},
-  arrowDirection,
+  arrowDirection = 'down',
+  children,
 }) {
   const { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
@@ -314,7 +321,7 @@ function Dropdown({
       </div>
     );
     dropdownItems = useMemo(renderDropdownObjects, [objects, currentSelectionKey]);
-  } else {
+  } else if (!children) {
     optionIsSelected = items.some((item) => getKey(item) === currentSelectionKey);
     if (optionIsSelected) {
       selectedItem = items.find((item) => getKey(item) === currentSelectionKey);
@@ -413,19 +420,8 @@ function Dropdown({
     customDataValidator
   ]);
 
-  const directionMap = {
-    'up': 'down',
-    'down': 'up',
-    'left': 'right',
-    'right': 'left',
-  };
-
-  if (!arrowDirection) {
-    arrowDirection = 'down';
-  }
-
   return (
-    <DataElementWrapper className={`Dropdown__wrapper ${className}`} dataElement={dataElement}>
+    <DataElementWrapper className={`Dropdown__wrapper ${className} ${isOpen ? 'open' : ''}`} dataElement={dataElement}>
       {!displayButton &&
         <button
           className={classNames({
@@ -450,7 +446,7 @@ function Dropdown({
         </button>
       }
       {displayButton &&
-        <div ref={buttonRef} onClick={onToggle}>
+        <div ref={buttonRef} onClick={onToggle} className='display-button'>
           {displayButton(isOpen)}
         </div>
       }
@@ -462,14 +458,15 @@ function Dropdown({
         style={maxHeight ? scrollItemsStyle : undefined}
         onKeyDown={onOverlayKeyDown}
       >
-        {dropdownItems.length > 0 ?
-          (columns > 1 ?
-            displayDropdownAsList(dropdownItems, columns)
-            : dropdownItems
-          ) :
-          <>
-            <button data-testid="sig-no-result" className="Dropdown__item">{t('message.noResults')}</button>
-          </>
+        {children ? React.cloneElement(children, { onClose }) :
+          dropdownItems.length > 0 ?
+            (columns > 1 ?
+              displayDropdownAsList(dropdownItems, columns) :
+              dropdownItems
+            ) :
+            <>
+              <button data-testid="sig-no-result" className="Dropdown__item">{t('message.noResults')}</button>
+            </>
         }
       </div>
     </DataElementWrapper>

@@ -14,7 +14,7 @@ const divider = {
 };
 
 const leftPanelToggle = {
-  dataElement: 'left-panel-toggle',
+  dataElement: 'leftPanelToggle',
   toggleElement: 'leftPanel',
   disabled: false,
   title: 'Left Panel',
@@ -23,7 +23,7 @@ const leftPanelToggle = {
 };
 
 const notesPanelToggle = {
-  dataElement: 'notes-panel-toggle',
+  dataElement: 'notesPanelToggle',
   toggleElement: 'notesPanel',
   disabled: false,
   title: 'Notes Panel',
@@ -47,7 +47,7 @@ const defaultTopHeader = {
   dataElement: 'defaultHeader',
   placement: 'top',
   gap: 20,
-  items: [button1, button2, divider, button3],
+  items: ['button1', 'button2', 'divider', 'button3'],
 };
 
 const floatStartHeader = {
@@ -55,7 +55,7 @@ const floatStartHeader = {
   placement: 'top',
   float: true,
   position: 'start',
-  items: [button1, button2],
+  items: ['button1', 'button2'],
   gap: 20
 };
 
@@ -64,7 +64,7 @@ const secondFloatStartHeader = {
   placement: 'top',
   float: true,
   position: 'start',
-  items: [button3, button4],
+  items: ['button3', 'button4'],
   gap: 20
 };
 
@@ -73,7 +73,7 @@ const floatCenterHeader = {
   placement: 'top',
   float: true,
   position: 'center',
-  items: [button5, divider, button6],
+  items: ['button5', 'divider', 'button6'],
   gap: 20
 };
 
@@ -82,7 +82,7 @@ const floatEndHeader = {
   placement: 'top',
   float: true,
   position: 'end',
-  items: [button7, divider, button8, button9],
+  items: ['button7', 'divider', 'button8', 'button9'],
   gap: 20
 };
 
@@ -90,7 +90,7 @@ const defaultLeftHeader = {
   dataElement: 'defaultHeader',
   placement: 'left',
   gap: 20,
-  items: [button1, button2, divider, button3],
+  items: ['button1', 'button2', 'divider', 'button3'],
 };
 
 const floatStartLeftHeader = {
@@ -98,7 +98,7 @@ const floatStartLeftHeader = {
   placement: 'left',
   float: true,
   position: 'start',
-  items: [button3, button4, leftPanelToggle],
+  items: ['button3', 'button4', 'leftPanelToggle'],
   gap: 20
 };
 
@@ -107,7 +107,7 @@ const secondFloatStartLeftHeader = {
   placement: 'left',
   float: true,
   position: 'start',
-  items: [button5, button6],
+  items: ['button5', 'button6'],
   gap: 20
 };
 
@@ -116,7 +116,7 @@ const floatCenterLeftHeader = {
   placement: 'left',
   float: true,
   position: 'center',
-  items: [button1, button2],
+  items: ['button1', 'button2'],
   gap: 20
 };
 
@@ -125,7 +125,7 @@ const floatEndLeftHeader = {
   placement: 'left',
   float: true,
   position: 'end',
-  items: [button7, button8, divider, button9],
+  items: ['button7', 'button8', 'divider', 'button9'],
   gap: 20
 };
 
@@ -133,7 +133,7 @@ const defaultRightHeader = {
   dataElement: 'defaultHeader',
   placement: 'right',
   gap: 20,
-  items: [button1, button2, divider, button3],
+  items: ['button1', 'button2', 'divider', 'button3'],
 };
 
 const floatStartRightHeader = {
@@ -141,7 +141,7 @@ const floatStartRightHeader = {
   placement: 'right',
   float: true,
   position: 'start',
-  items: [button3, button4, notesPanelToggle],
+  items: ['button3', 'button4', 'notesPanelToggle'],
   gap: 20
 };
 
@@ -150,7 +150,7 @@ const secondFloatStartRightHeader = {
   placement: 'right',
   float: true,
   position: 'start',
-  items: [button5, button6],
+  items: ['button5', 'button6'],
   gap: 20
 };
 
@@ -159,7 +159,7 @@ const floatCenterRightHeader = {
   placement: 'right',
   float: true,
   position: 'center',
-  items: [button1, button2],
+  items: ['button1', 'button2'],
   gap: 20
 };
 
@@ -168,15 +168,15 @@ const floatEndRightHeader = {
   placement: 'right',
   float: true,
   position: 'end',
-  items: [button7, button8, divider, button9],
+  items: ['button7', 'button8', 'divider', 'button9'],
   gap: 20
 };
 
 const defaultBottomHeader = {
-  dataElement: 'defaultHeader',
+  dataElement: 'defaultBottomHeader',
   placement: 'bottom',
   gap: 20,
-  items: [button1, button2, divider, button3],
+  items: ['button1', 'button2', 'divider', 'button3'],
   getDimensionTotal: () => {
     return 32;
   }
@@ -187,7 +187,7 @@ const floatStartBottomHeader = {
   placement: 'bottom',
   float: true,
   position: 'start',
-  items: [button3, button4],
+  items: ['button3', 'button4'],
   gap: 20
 };
 
@@ -196,7 +196,7 @@ const secondFloatStartBottomHeader = {
   placement: 'bottom',
   float: true,
   position: 'start',
-  items: [button5, button6],
+  items: ['button5', 'button6'],
   gap: 20
 };
 
@@ -205,7 +205,7 @@ const floatCenterBottomHeader = {
   placement: 'bottom',
   float: true,
   position: 'center',
-  items: [button1, button2],
+  items: ['button1', 'button2'],
   gap: 20
 };
 
@@ -214,7 +214,7 @@ const floatEndBottomHeader = {
   placement: 'bottom',
   float: true,
   position: 'end',
-  items: [button7, button8, divider, button9],
+  items: ['button7', 'button8', 'divider', 'button9'],
   gap: 20
 };
 
@@ -223,7 +223,7 @@ const floatStarTopHeaderStatic = {
   placement: 'top',
   float: true,
   position: 'start',
-  items: [button1, button2],
+  items: ['button1', 'button2'],
   opacityMode: 'static',
   opacity: 'full',
 };
@@ -233,7 +233,7 @@ const floatCenterTopHeaderDynamic = {
   placement: 'top',
   float: true,
   position: 'center',
-  items: [button1, button2],
+  items: ['button1', 'button2'],
   opacityMode: 'dynamic',
   opacity: 'low',
 };
@@ -243,9 +243,24 @@ const floatEndTopHeaderNone = {
   placement: 'top',
   float: true,
   position: 'end',
-  items: [button1, button2],
+  items: ['button1', 'button2'],
   opacityMode: 'dynamic',
   opacity: 'none',
+};
+
+const mockModularComponents = {
+  'button1': button1,
+  'button2': button2,
+  'button3': button3,
+  'button4': button4,
+  'button5': button5,
+  'button6': button6,
+  'button7': button7,
+  'button8': button8,
+  'button9': button9,
+  'divider': divider,
+  'leftPanelToggle': leftPanelToggle,
+  'notesPanelToggle': notesPanelToggle,
 };
 
 export {
@@ -281,4 +296,6 @@ export {
   floatStarTopHeaderStatic,
   floatCenterTopHeaderDynamic,
   floatEndTopHeaderNone,
+  // Modular stuff
+  mockModularComponents,
 };

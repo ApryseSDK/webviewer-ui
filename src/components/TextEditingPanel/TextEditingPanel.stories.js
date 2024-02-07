@@ -1,9 +1,9 @@
 import React from 'react';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import TextEditingPanel from './TextEditingPanel';
 import RightPanel from 'components/RightPanel';
 import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from 'reducers/rootReducer';
 import initialState from 'src/redux/initialState';
 import App from 'components/App';
 
@@ -14,6 +14,21 @@ export default {
   component: TextEditingPanel,
   includeStories: ['Basic', 'TextEditingUndoRedo', 'LeftSide'],
 };
+
+const createStore = (preloadedState) => {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState: preloadedState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+  });
+};
+
+const MockApp = ({ initialState }) => (
+  <Provider store={createStore(initialState)}>
+    <App removeEventHandlers={() => { }} />
+  </Provider>
+);
+
 
 const textEditingPanelInitialState = {
   ...initialState,
@@ -26,18 +41,15 @@ const textEditingPanelInitialState = {
     panelWidths: {
       textEditingPanel: 330,
     },
-
+    lastPickedToolForGroupedItems: {
+      'annotateGroupedItems': 'AnnotationCreateFreeText'
+    },
+    activeGroupedItems: ['annotateGroupedItems']
   },
   featureFlags: {
     customizableUI: false,
   },
 };
-
-function rootReducer(state = textEditingPanelInitialState) {
-  return state;
-}
-
-const store = createStore(rootReducer);
 
 const basicProps = {
   currentWidth: 330,
@@ -51,11 +63,16 @@ const basicProps = {
   handleTextFormatChange: noop,
   textEditProperties: {},
   handleColorChange: noop,
+  rgbColor: {
+    toHexString: () => {
+      return '#FF0000';
+    }
+  }
 };
 
 export const TextEditingPanelStoryWrapper = ({ children }) => {
   return (
-    <Provider store={store}>
+    <Provider store={createStore(textEditingPanelInitialState)}>
       <RightPanel dataElement="textEditingPanel" onResize={noop}>
         {children}
       </RightPanel>
@@ -90,6 +107,11 @@ export const TextEditingUndoRedo = () => {
       canUndo: true,
       canRedo: true
     },
+    rgbColor: {
+      toHexString: () => {
+        return '#FF0000';
+      }
+    }
   };
 
   return (
@@ -101,17 +123,6 @@ export const TextEditingUndoRedo = () => {
   );
 };
 
-const MockApp = ({ initialState }) => {
-  return (
-    <Provider store={configureStore({
-      reducer: rootReducer,
-      preloadedState: initialState,
-      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-    })}>
-      <App removeEventHandlers={noop} />
-    </Provider>
-  );
-};
 
 export const LeftSide = () => {
   const stateTextEditingPanelOnLeft = {
@@ -119,7 +130,7 @@ export const LeftSide = () => {
     viewer: {
       ...initialState.viewer,
       isInDesktopOnlyMode: true,
-      customFlxPanels: [
+      genericPanels: [
         {
           dataElement: 'panel1',
           render: 'textEditingPanel',
@@ -130,7 +141,15 @@ export const LeftSide = () => {
         ...initialState.viewer.openElements,
         contextMenuPopup: false,
         panel1: true,
-      }
+      },
+      lastPickedToolForGroupedItems: {
+        'annotateGroupedItems': 'AnnotationCreateFreeText'
+      },
+      activeGroupedItems: ['annotateGroupedItems'],
+      activeCustomRibbon: 'toolbarGroup-Annotate',
+    },
+    featureFlags: {
+      customizableUI: true,
     },
   };
   return <MockApp initialState={stateTextEditingPanelOnLeft} />;

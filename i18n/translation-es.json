@@ -72,6 +72,7 @@
     "type": "Tipo",
     "upload": "Subir",
     "link": "Enlace",
+    "unlink": "Eliminar enlace",
     "fileAttachmentDownload": "Descargar archivo adjunto",
     "prevResult": "Resultado anterior",
     "nextResult": "Siguiente resultado",
@@ -82,6 +83,8 @@
     "exit": "Salida",
     "addOption": "Agregar opción",
     "formFieldEdit": "Editar campo de formulario",
+    "formFieldEditMode": "Editar campos de formulario",
+    "contentEditMode": "Contenido editado",
     "viewShortCutKeysFor3D": "Ver teclas de acceso directo",
     "markAllRead": "marcar todo como leido",
     "pageInsertion": "Inserción de página",
@@ -120,9 +123,13 @@
     "showComparison": "Mostrar comparación",
     "back": "atrás",
     "clearSignature": "Firma clara",
+    "readOnlySignature": "La firma de solo lectura no se puede eliminar",
     "newDocument": "Nuevo documento",
     "sideBySideView": "Vista de lado a lado",
-    "pageNumberInput": "Entrada del número de página"
+    "pageNumberInput": "Entrada del número de página",
+    "addNewColor": "Agregar nuevo color",
+    "deleteColor": "Eliminar color seleccionado",
+    "copySelectedColor": "Copiar color seleccionado"
   },
   "annotation": {
     "areaMeasurement": "Medición del área",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Color"
     },
+    "colorPalettePicker": {
+      "addColor": "Agregar nuevo color",
+      "selectColor": "Seleccionar el color"
+    },
     "displayMode": {
       "layout": "Diseño",
       "pageTransition": "Transición de página"
@@ -509,6 +520,9 @@
       "radius": "Radio",
       "count": "Contar",
       "length": "Longitud"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Escalar el tamaño de fuente dinámicamente"
     },
     "measurementOption": {
       "scale": "Escala"
@@ -767,6 +781,9 @@
     "colorPicker": {
       "deleteTitle": "Eliminar color personalizado",
       "deleteMessage": "¿Eliminar el color personalizado seleccionado? Se eliminará de su paleta de colores."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Eliminar color personalizado"
     },
     "multiDeleteAnnotation": {
       "title": "¿Eliminar anotaciones?",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Aumentar sangría",
     "insertLink": "Insertar el link",
     "insertImage": "Insertar imagen",
+    "table": "Mesa",
+    "insertRowAbove": "Insertar fila arriba",
+    "insertRowBelow": "Insertar fila debajo",
+    "insertColumnRight": "Insertar columna a la derecha",
+    "insertColumnLeft": "Insertar columna a la izquierda",
+    "deleteRow": "Borrar fila",
+    "deleteColumn": "Eliminar columna",
+    "deleteTable": "Eliminar tabla",
     "notSupportedOnMobile": "La edición de Office no es compatible con dispositivos móviles."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Estilos"
+      "styles": "Estilos",
+      "annotation": "Anotación",
+      "annotations": "Anotaciones",
+      "tool": "Herramienta",
+      "textStyles": "Estilos de texto",
+      "currentColor": "Color actual",
+      "customColors": "Colores personalizados",
+      "redactionTextLabel": "Etiqueta de texto",
+      "redactionMarkOutline": "Esquema de marca",
+      "redactionFill": "Color de redacción",
+      "redactionTextPlaceholder": "Insertar etiqueta de texto",
+      "contentEdit": "Editar contenido"
     },
-    "noToolSelected": "Seleccione una herramienta para ver los estilos de la herramienta"
+    "addColorToCustom": "Agregar a colores personalizados",
+    "noToolSelected": "Seleccione una herramienta para ver los estilos de la herramienta",
+    "noToolStyle": "La herramienta no contiene ninguna propiedad de estilo."
+  },
+  "signatureListPanel": {
+    "header": "Lista de firmas",
+    "newSignature": "Nueva firma",
+    "newSignatureAndInitial": "Nueva firma e inicial",
+    "signatureList": {
+      "signature": "Firma",
+      "initials": "Iniciales"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Sellos",
+    "standard": "Sellos estándar"
   }
 }

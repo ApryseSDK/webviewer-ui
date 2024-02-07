@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TextStylePicker.scss';
 import Dropdown from 'components/Dropdown';
 import FontSizeDropdown from 'components/FontSizeDropdown';
 import Button from 'components/Button';
+import Choice from 'components/Choice';
 import PropTypes from 'prop-types';
+import i18next from 'i18next';
 
 const TextStylePicker = ({
   onPropertyChange,
@@ -13,16 +15,41 @@ const TextStylePicker = ({
   isContentEditing,
   fonts,
   stateless = false,
+  textEditFormat = {},
+  textEditHandleFormatChange = () => { },
+  isFreeText = false,
+  onFreeTextSizeToggle,
+  isFreeTextAutoSize,
 }) => {
   // List is not complete
   const supportedFonts = fonts?.length ? fonts : ['Helvetica', 'Times New Roman'];
-
+  const freeTextAutoSizeDataElement = 'freeTextAutoSizeFontButton';
   const font = properties?.Font || supportedFonts[0];
   const changeFont = (font) => {
     onPropertyChange('Font', font);
   };
 
-  const fontSize = properties?.FontSize || '12pt';
+  useEffect(() => {
+    setItalic(properties?.italic || false);
+    setBold(properties?.bold || false);
+    setUnderline(properties?.underline || false);
+    setStrikeout(properties?.strikeout || false);
+  }, [properties]);
+
+  /**
+   * @ignore
+   * We determine the font size by first checking its an AutoSize Font and using the Calculated Font Size if it is. Otherwise
+   * we use the FontSize property. In the case where no properties exist we default to 12pt.
+   * @param {object} properties
+   * @returns {string}
+   */
+  const getFontSize = (properties) => {
+    const defaultFontSize = properties?.FontSize === '0pt' ? properties?.calculatedFontSize : properties?.FontSize;
+    return defaultFontSize || '12pt';
+  };
+
+  const fontSize = getFontSize(properties);
+
   const changeFontSize = (fontSize) => {
     onPropertyChange('FontSize', fontSize);
   };
@@ -44,7 +71,7 @@ const TextStylePicker = ({
   const defaultUnderline = properties?.underline || false;
   const defaultStrikeout = properties?.strikeout || false;
   const [underline, setUnderline] = useState(defaultUnderline);
-  const [strikeout, setStrikeout] = useState(properties?.strikeout || false);
+  const [strikeout, setStrikeout] = useState(defaultStrikeout);
   const toggleUnderline = () => {
     const newUnderline = !underline;
     if (newUnderline) {
@@ -79,6 +106,84 @@ const TextStylePicker = ({
   const [error, setError] = useState('');
   const fontSizePropsToUpdate = (fontSizeProps && parseFloat(fontSizeProps[0])) || 12;
 
+  const defaultConfig = {
+    bold: {
+      dataElement: 'freeTextBoldButton',
+      onClick: toggleBold,
+      isActive: stateless ? defaultBold : bold,
+    },
+    italic: {
+      dataElement: 'freeTextItalicButton',
+      onClick: toggleItalic,
+      isActive: stateless ? defaultItalic : italic,
+    },
+    underline: {
+      dataElement: 'freeTextUnderlineButton',
+      onClick: toggleUnderline,
+      isActive: stateless ? defaultUnderline : underline,
+    },
+    strikeout: {
+      dataElement: 'freeTextStrikeoutButton',
+      onClick: toggleStrikeout,
+      isActive: stateless ? defaultStrikeout : strikeout,
+    },
+    leftAlign: {
+      dataElement: 'freeTextAlignLeftButton',
+      isActive: textAlign === 'left',
+      alignValue: 'left'
+    },
+    centerAlign: {
+      dataElement: 'freeTextAlignCenterButton',
+      isActive: textAlign === 'center',
+      alignValue: 'center'
+    },
+    rightAlign: {
+      dataElement: 'freeTextAlignRightButton',
+      isActive: textAlign === 'right',
+      alignValue: 'right'
+    },
+  };
+
+  const contentEditConfig = {
+    bold: {
+      dataElement: 'richTextBoldButton',
+      onClick: textEditHandleFormatChange('bold'),
+      isActive: textEditFormat?.bold,
+    },
+    italic: {
+      dataElement: 'richTextItalicButton',
+      onClick: textEditHandleFormatChange('italic'),
+      isActive: textEditFormat?.italic,
+    },
+    underline: {
+      dataElement: 'richTextUnderlineButton',
+      onClick: textEditHandleFormatChange('underline'),
+      isActive: textEditFormat?.underline,
+    },
+    strikeout: {
+      dataElement: 'richTextStrikeoutButton',
+      onClick: textEditHandleFormatChange('strike'),
+      isActive: textEditFormat?.strike,
+    },
+    leftAlign: {
+      dataElement: 'richTextAlignLeftButton',
+      isActive: textEditFormat.textAlign === 'Start',
+      alignValue: 'Start'
+    },
+    centerAlign: {
+      dataElement: 'richTextAlignCenterButton',
+      isActive: textEditFormat.textAlign === 'Center',
+      alignValue: 'Center'
+    },
+    rightAlign: {
+      dataElement: 'richTextAlignRightButton',
+      isActive: textEditFormat.textAlign === 'End',
+      alignValue: 'End'
+    },
+  };
+
+  const currentConfig = isContentEditing ? contentEditConfig : defaultConfig;
+
   return (
     <>
       <div className={`container-fluid ${error && 'error'}`}>
@@ -98,64 +203,65 @@ const TextStylePicker = ({
             onFontSizeChange={changeFontSize}
             onError={setError}
             applyOnlyOnBlur={isContentEditing}
+            disabled={isFreeTextAutoSize}
           />
         </div>
         {error && <div className="error-text">{error}</div>}
       </div>
       <div className="icon-grid">
-        {!isRedaction && !isContentEditing && (
+        {!isRedaction && (
           <div className="row rich-text-format">
             <Button
-              dataElement="freeTextBoldButton"
-              onClick={toggleBold}
+              dataElement={currentConfig.bold.dataElement}
+              onClick={currentConfig.bold.onClick}
               img="icon-menu-bold"
               title="option.richText.bold"
-              isActive={stateless ? defaultBold : bold}
+              isActive={currentConfig.bold.isActive}
             />
             <Button
-              dataElement="freeTextItalicButton"
-              onClick={toggleItalic}
+              dataElement={currentConfig.italic.dataElement}
+              onClick={currentConfig.italic.onClick}
               img="icon-menu-italic"
               title="option.richText.italic"
-              isActive={stateless ? defaultItalic : italic}
+              isActive={currentConfig.italic.isActive}
             />
             <Button
-              dataElement="freeTextUnderlineButton"
-              onClick={toggleUnderline}
+              dataElement={currentConfig.underline.dataElement}
+              onClick={currentConfig.underline.onClick}
               img="icon-menu-text-underline"
               title="option.richText.underline"
-              isActive={stateless ? defaultUnderline : underline}
+              isActive={currentConfig.underline.isActive}
             />
             <Button
-              dataElement="freeTextStrikeoutButton"
-              onClick={toggleStrikeout}
+              dataElement={currentConfig.strikeout.dataElement}
+              onClick={currentConfig.strikeout.onClick}
               img="icon-tool-text-manipulation-strikethrough"
               title="option.richText.strikeout"
-              isActive={stateless ? defaultStrikeout : strikeout}
+              isActive={currentConfig.strikeout.isActive}
             />
           </div>
         )}
         <div className={`row text-horizontal-alignment ${isRedaction ? 'isRedaction' : ''}`}>
           <Button
-            dataElement="freeTextAlignLeftButton"
-            onClick={() => changeXAlign('left')}
+            dataElement={currentConfig.leftAlign.dataElement}
+            onClick={() => changeXAlign(currentConfig.leftAlign.alignValue)}
             img="icon-menu-align-left"
             title="option.richText.alignLeft"
-            isActive={!isContentEditing && textAlign === 'left'}
+            isActive={currentConfig.leftAlign.isActive}
           />
           <Button
-            dataElement="freeTextAlignCenterButton"
-            onClick={() => changeXAlign('center')}
+            dataElement={currentConfig.centerAlign.dataElement}
+            onClick={() => changeXAlign(currentConfig.centerAlign.alignValue)}
             img="icon-menu-align-centre"
             title="option.richText.alignCenter"
-            isActive={!isContentEditing && textAlign === 'center'}
+            isActive={currentConfig.centerAlign.isActive}
           />
           <Button
-            dataElement="freeTextAlignRightButton"
-            onClick={() => changeXAlign('right')}
+            dataElement={currentConfig.rightAlign.dataElement}
+            onClick={() => changeXAlign(currentConfig.rightAlign.alignValue)}
             img="icon-menu-align-right"
             title="option.richText.alignRight"
-            isActive={!isContentEditing && textAlign === 'right'}
+            isActive={currentConfig.rightAlign.isActive}
           />
           {/* TODO: Implement justify button below */}
           {!isRedaction && !isContentEditing && (
@@ -189,7 +295,14 @@ const TextStylePicker = ({
               isActive={textVerticalAlign === 'bottom'}
             />
           </div>
-        )}
+        )}{isFreeText && (<div className="row text-vertical-alignment auto-size-checkbox">
+          <Choice
+            label={i18next.t('option.freeTextOption.autoSizeFont')}
+            checked={isFreeTextAutoSize}
+            onChange={onFreeTextSizeToggle}
+            aria-label={freeTextAutoSizeDataElement}
+          />
+        </div>)}
       </div>
     </>
   );
@@ -197,6 +310,14 @@ const TextStylePicker = ({
 
 TextStylePicker.propTypes = {
   onPropertyChange: PropTypes.func.isRequired,
+  properties: PropTypes.object,
+  textEditFormat: PropTypes.object,
+  textEditHandleFormatChange: PropTypes.func,
+  isRedaction: PropTypes.bool,
+  isContentEditing: PropTypes.bool,
+  isFreeText: PropTypes.bool,
+  isFreeTextAutoSize: PropTypes.bool,
+  onFreeTextSizeToggle: PropTypes.func,
 };
 
 export default TextStylePicker;

@@ -72,6 +72,7 @@
     "type": "प्रकार",
     "upload": "डालना",
     "link": "संपर्क",
+    "unlink": "लिंक हटाएँ",
     "fileAttachmentDownload": "संलग्न फ़ाइल डाउनलोड करें",
     "prevResult": "पिछला परिणाम",
     "nextResult": "अगला परिणाम",
@@ -82,6 +83,8 @@
     "exit": "बाहर जाएं",
     "addOption": "विकल्प जोड़ें",
     "formFieldEdit": "प्रपत्र फ़ील्ड संपादित करें",
+    "formFieldEditMode": "प्रपत्र फ़ील्ड संपादित करें",
+    "contentEditMode": "सामग्री संपादित करें",
     "viewShortCutKeysFor3D": "शॉर्टकट कुंजियाँ देखें",
     "markAllRead": "सभी को पढ़ा हुआ मार्क करें",
     "pageInsertion": "पृष्ठ प्रविष्टि",
@@ -120,9 +123,13 @@
     "showComparison": "तुलना दिखाएँ",
     "back": "पीछे",
     "clearSignature": "स्पष्ट हस्ताक्षर",
+    "readOnlySignature": "केवल पढ़ने योग्य हस्ताक्षर को हटाया नहीं जा सकता",
     "newDocument": "नया दस्तावेज़",
     "sideBySideView": "अगल-बगल का दृश्य",
-    "pageNumberInput": "पेज नंबर इनपुट"
+    "pageNumberInput": "पेज नंबर इनपुट",
+    "addNewColor": "नया रंग जोड़ें",
+    "deleteColor": "चयनित रंग हटाएँ",
+    "copySelectedColor": "चयनित रंग कॉपी करें"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "रंग"
     },
+    "colorPalettePicker": {
+      "addColor": "नया रंग जोड़ें",
+      "selectColor": "रंग चुनो"
+    },
     "displayMode": {
       "layout": "पेज लेआउट",
       "pageTransition": "पृष्ठ संक्रमण"
@@ -509,6 +520,9 @@
       "radius": "RADIUS",
       "count": "गिनती",
       "length": "लंबाई"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "फ़ॉन्ट आकार को गतिशील रूप से स्केल करें"
     },
     "measurementOption": {
       "scale": "स्केल"
@@ -768,6 +782,9 @@
       "deleteTitle": "कस्टम रंग हटाएं",
       "deleteMessage": "चयनित कस्टम रंग हटाएं? इसे आपके रंग पैलेट से हटा दिया जाएगा।"
     },
+    "colorPalettePicker": {
+      "deleteTitle": "कस्टम रंग हटाएँ"
+    },
     "multiDeleteAnnotation": {
       "title": "एनोटेशन हटाएं?",
       "message": "हटाने से सभी टिप्पणियां, उत्तर और समूहीकरण हट जाएगा और इसे पूर्ववत नहीं किया जा सकता।\n\n क्या आप वाकई इन टिप्पणियों को हटाना चाहते हैं?"
@@ -800,7 +817,7 @@
     "select": "(Esc)",
     "signature": "(एस)",
     "squiggly": "(जी)",
-    "image": "(मैं)",
+    "image": "(I)",
     "redo": "(Ctrl शिफ्ट जेड)",
     "redo_windows": "(Ctrl वाई)",
     "undo": "(Ctrl जेड)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "बढ़ते हुए अंतर में",
     "insertLink": "लिंक डालें",
     "insertImage": "चित्र डालें",
+    "table": "मेज़",
+    "insertRowAbove": "ऊपर पंक्ति सम्मिलित करें",
+    "insertRowBelow": "नीचे पंक्ति सम्मिलित करें",
+    "insertColumnRight": "दाएँ कॉलम डालें",
+    "insertColumnLeft": "बाईं ओर कॉलम डालें",
+    "deleteRow": "पंक्ति को हटाएं",
+    "deleteColumn": "कॉलम हटाएं",
+    "deleteTable": "तालिका हटाएँ",
     "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।"
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "शैलियों"
+      "styles": "शैलियों",
+      "annotation": "टिप्पणी",
+      "annotations": "एनोटेशन",
+      "tool": "औजार",
+      "textStyles": "पाठ शैलियाँ",
+      "currentColor": "वर्तमान रंग",
+      "customColors": "रीति रिवाजों के रंग",
+      "redactionTextLabel": "पाठ लेबल",
+      "redactionMarkOutline": "रूपरेखा अंकित करें",
+      "redactionFill": "रेडेक्शन रंग",
+      "redactionTextPlaceholder": "टेक्स्ट लेबल डालें",
+      "contentEdit": "सामग्री संपादित करें"
     },
-    "noToolSelected": "टूल गुण देखने के लिए एक टूल चुनें"
+    "addColorToCustom": "कस्टम रंगों में जोड़ें",
+    "noToolSelected": "टूल गुण देखने के लिए एक टूल चुनें",
+    "noToolStyle": "टूल में कोई स्टाइलिंग गुण नहीं हैं."
+  },
+  "signatureListPanel": {
+    "header": "हस्ताक्षर सूची",
+    "newSignature": "नया हस्ताक्षर",
+    "newSignatureAndInitial": "नये हस्ताक्षर एवं प्रथमाक्षर",
+    "signatureList": {
+      "signature": "हस्ताक्षर",
+      "initials": "आद्याक्षर"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "टिकटों",
+    "standard": "मानक टिकटें"
   }
 }

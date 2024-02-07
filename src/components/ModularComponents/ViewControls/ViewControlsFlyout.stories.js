@@ -82,14 +82,15 @@ const initialState = {
       viewControlsFlyout: true
     },
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     activeFlyout: 'viewControlsFlyout',
+    activeCustomPanel: '',
     flyoutPosition: { x: 0, y: 0 },
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40
     },
-    modularHeaders: [],
+    modularHeaders: {},
     flyoutMap: {
       'viewControlsFlyout': {
         dataElement: 'viewControlsFlyout',

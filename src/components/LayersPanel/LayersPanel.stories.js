@@ -1,13 +1,14 @@
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import Panel from 'components/Panel';
+import LayersPanel from 'components/LayersPanel';
 import initialState from 'src/redux/initialState';
 import App from 'components/App';
+import rootReducer from 'src/redux/reducers/rootReducer';
 
 export default {
   title: 'Components/LayersPanel',
-  component: Panel,
+  component: LayersPanel,
 };
 
 function noop() {
@@ -26,42 +27,54 @@ const layers = [
   }
 ];
 
-function rootReducer(state = initialState, action) {
-  return state;
-}
 
-const MockApp = ({ initialState }) => {
-  return (
-    <Provider store={configureStore({
-      reducer: rootReducer,
-      preloadedState: initialState,
-      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-    })}>
-      <App removeEventHandlers={noop} />
-    </Provider>
-  );
+const createStore = (preloadedState) => {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState: preloadedState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+  });
 };
+
+const MockApp = ({ initialState }) => (
+  <Provider store={createStore(initialState)}>
+    <App removeEventHandlers={() => { }} />
+  </Provider>
+);
 
 export function Basic() {
   const stateWithLayersPanel = {
     ...initialState,
     viewer: {
       ...initialState.viewer,
-      customFlxPanels: [
-        {
-          dataElement: 'panel1',
-          render: 'layersPanel',
-        }
-      ],
+      toolbarGroup: 'toolbarGroup-Annotate',
+      isInDesktopOnlyMode: false,
+      genericPanels: [{
+        dataElement: 'panel1',
+        render: 'layersPanel',
+        location: 'left',
+      }],
       openElements: {
         ...initialState.viewer.openElements,
         contextMenuPopup: false,
         panel1: true,
       },
+      disabledElements: {
+        ...initialState.viewer.disabledElements,
+        'layersPanel': { disabled: false, priority: 3 },
+      },
+      lastPickedToolForGroupedItems: {
+        'annotateGroupedItems': '',
+      },
+      activeGroupedItems: ['annotateGroupedItems'],
+      activeCustomRibbon: 'toolbarGroup-Annotate',
     },
     document: {
       ...initialState.document,
       layers: layers,
+    },
+    featureFlags: {
+      customizableUI: true,
     },
   };
   return <MockApp initialState={stateWithLayersPanel} />;
@@ -74,7 +87,7 @@ export const RightSide = () => {
     ...initialState,
     viewer: {
       ...initialState.viewer,
-      customFlxPanels: [
+      genericPanels: [
         {
           dataElement: 'panel1',
           render: 'layersPanel',
@@ -86,10 +99,18 @@ export const RightSide = () => {
         contextMenuPopup: false,
         panel1: true,
       },
+      disabledElements: {
+        ...initialState.viewer.disabledElements,
+        'layersPanel': { disabled: false, priority: 3 },
+      },
+      activeCustomRibbon: 'toolbarGroup-View',
     },
     document: {
       ...initialState.document,
       layers: layers,
+    },
+    featureFlags: {
+      customizableUI: true,
     },
   };
   return <MockApp initialState={stateWithLayersPanelOnRight} />;

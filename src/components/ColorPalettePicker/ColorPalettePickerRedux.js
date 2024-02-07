@@ -87,9 +87,6 @@ function ColorPickerModalRedux(props) {
     onStyleChange(property, new window.Core.Annotations.Color(newColor));
     if (color && color.A !== 0 && color.toHexString().toLowerCase() && newColor === color.toHexString().toLowerCase()) {
       dispatch(actions.setCustomColor(color));
-      if (enableEdit) {
-        openColorPicker(false);
-      }
     }
   };
 

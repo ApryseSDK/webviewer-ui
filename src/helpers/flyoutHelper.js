@@ -33,6 +33,10 @@ export function getFlyoutPositionOnElement(dataElement, flyoutRef) {
     flyoutY -= (targetElement.clientHeight + defaultOffset);
   } else if (availableSpaceAbove >= availableSpaceBelow) {
     flyoutY = referenceButtonRect.bottom - targetElement.clientHeight;
+
+    // This case is not flor flyouts toggled by an elemen on a header
+  } else if (availableSpaceBelow > targetElement.clientHeight && !parentHeader) {
+    flyoutY += referenceButtonRect.height + defaultOffset;
   }
 
   return { x: flyoutX, y: flyoutY };

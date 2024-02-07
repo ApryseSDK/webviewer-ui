@@ -72,6 +72,7 @@
     "type": "típus",
     "upload": "Feltöltés",
     "link": "Link",
+    "unlink": "Hivatkozás törlése",
     "fileAttachmentDownload": "Töltse le a csatolt fájlt",
     "prevResult": "Előző eredmény",
     "nextResult": "Következő eredmény",
@@ -82,6 +83,8 @@
     "exit": "Kijárat",
     "addOption": "Opció hozzáadása",
     "formFieldEdit": "Űrlapmező szerkesztése",
+    "formFieldEditMode": "Űrlapmezők szerkesztése",
+    "contentEditMode": "Tartalom szerkesztése",
     "viewShortCutKeysFor3D": "Gyorsbillentyűk megtekintése",
     "markAllRead": "összes megjelölése olvasottként",
     "pageInsertion": "Oldal beillesztése",
@@ -120,9 +123,13 @@
     "showComparison": "Összehasonlítás megjelenítése",
     "back": "Vissza",
     "clearSignature": "Világos aláírás",
+    "readOnlySignature": "A csak olvasható aláírás nem törölhető",
     "newDocument": "Új dokumentum",
     "sideBySideView": "Oldalnézet",
-    "pageNumberInput": "Oldalszám bevitele"
+    "pageNumberInput": "Oldalszám bevitele",
+    "addNewColor": "Új szín hozzáadása",
+    "deleteColor": "A kiválasztott szín törlése",
+    "copySelectedColor": "Másolja a kiválasztott színt"
   },
   "annotation": {
     "areaMeasurement": "Terület",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Szín"
     },
+    "colorPalettePicker": {
+      "addColor": "Új szín hozzáadása",
+      "selectColor": "Válasszon színt"
+    },
     "displayMode": {
       "layout": "Oldal elrendezés",
       "pageTransition": "Oldalátmenet"
@@ -509,6 +520,9 @@
       "radius": "Sugár",
       "count": "Számol",
       "length": "Hossz"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "A betűméret dinamikus skálázása"
     },
     "measurementOption": {
       "scale": "Skála"
@@ -768,6 +782,9 @@
       "deleteTitle": "Egyéni szín törlése",
       "deleteMessage": "Törli a kiválasztott egyéni színt? El lesz távolítva a színpalettáról."
     },
+    "colorPalettePicker": {
+      "deleteTitle": "Egyéni szín törlése"
+    },
     "multiDeleteAnnotation": {
       "title": "Törli a megjegyzéseket?",
       "message": "A törléssel eltávolítja az összes megjegyzést, választ és csoportosítást, és a művelet nem vonható vissza.\n\n Biztosan törli ezeket a kommentárokat?"
@@ -800,7 +817,7 @@
     "select": "(Kilépés)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(ÉN)",
+    "image": "(I)",
     "redo": "(Ctrl Shift Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Behúzás növelése",
     "insertLink": "Link beszúrása",
     "insertImage": "Kép beszúrása",
+    "table": "asztal",
+    "insertRowAbove": "Sor beszúrása fent",
+    "insertRowBelow": "Sor beszúrása alább",
+    "insertColumnRight": "Jobb oldali oszlop beszúrása",
+    "insertColumnLeft": "Oszlop beszúrása balra",
+    "deleteRow": "Sor törlése",
+    "deleteColumn": "Oszlop törlése",
+    "deleteTable": "Táblázat törlése",
     "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stílusok"
+      "styles": "Stílusok",
+      "annotation": "Annotáció",
+      "annotations": "Annotációk",
+      "tool": "Eszköz",
+      "textStyles": "Szövegstílusok",
+      "currentColor": "Aktuális szín",
+      "customColors": "Egyedi színek",
+      "redactionTextLabel": "Szöveg Címke",
+      "redactionMarkOutline": "Mark Outline",
+      "redactionFill": "Redakció színe",
+      "redactionTextPlaceholder": "Szöveges címke beszúrása",
+      "contentEdit": "Tartalom szerkesztése"
     },
-    "noToolSelected": "Válasszon ki egy eszközt az eszköz tulajdonságainak megtekintéséhez"
+    "addColorToCustom": "Adjon hozzá egyedi színekhez",
+    "noToolSelected": "Válasszon ki egy eszközt az eszköz tulajdonságainak megtekintéséhez",
+    "noToolStyle": "Az eszköz nem tartalmaz stílustulajdonságokat."
+  },
+  "signatureListPanel": {
+    "header": "Aláírások listája",
+    "newSignature": "Új aláírás",
+    "newSignatureAndInitial": "Új aláírás és kezdőbetű",
+    "signatureList": {
+      "signature": "Aláírás",
+      "initials": "Monogram"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Bélyegek",
+    "standard": "Szabványos bélyegek"
   }
 }

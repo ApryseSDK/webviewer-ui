@@ -45,7 +45,7 @@ const initialState = {
     customElementOverrides: {},
     openElements: {},
     customPanels: [],
-    customFlxPanels: [],
+    genericPanels: [],
     flyoutMap: {
       'RibbonOverflowFlyout': {
         'dataElement': 'RibbonOverflowFlyout',
@@ -60,16 +60,19 @@ const initialState = {
     },
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: 'RibbonOverflowFlyout',
+    activeCustomPanel: '',
     headers: {},
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
     toolButtonObjects: {},
     toolbarGroup: 'toolbarGroup-View',
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40
     },
+    activeCustomRibbon: 'Ribbon Item1',
+    lastPickedToolForGroupedItems: {},
   },
 };
 
@@ -92,7 +95,8 @@ const noIconsStore = configureStore({
       viewer: {
         ...initialState.viewer,
         activeFlyout: 'RibbonOverflowFlyoutNoIcons',
-        modularHeaders: [],
+        activeCustomPanel: '',
+        modularHeaders: {},
         modularHeadersHeight: {
           topHeaders: 40,
           bottomHeaders: 40

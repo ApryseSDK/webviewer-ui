@@ -5,7 +5,7 @@ export default (dataElement, state) => getLeftPanelDataElements(state).includes(
 export const getLeftPanelDataElements = (state) => {
   const defaultLeftPanels = [
     DataElements.PORTFOLIO_PANEL,
-    'thumbnailsPanel',
+    DataElements.THUMBNAILS_PANEL,
     DataElements.OUTLINE_PANEL,
     'layersPanel',
     DataElements.BOOKMARK_PANEL,

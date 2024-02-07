@@ -6,13 +6,14 @@ import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import SearchPanel from './SearchPanel';
 import DataElements from 'constants/dataElement';
+import { RESIZE_BAR_WIDTH } from 'constants/panel';
 
 function SearchPanelContainer(props) {
+  const { dataElement = DataElements.SEARCH_PANEL } = props;
   const isMobile = isMobileSize();
 
   const [
     isOpen,
-    currentWidth,
     pageLabels,
     shouldClearSearchPanelOnClose,
     isInDesktopOnlyMode,
@@ -20,8 +21,7 @@ function SearchPanelContainer(props) {
     activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
-      selectors.isElementOpen(state, DataElements.SEARCH_PANEL),
-      selectors.getSearchPanelWidth(state),
+      selectors.isElementOpen(state, dataElement),
       selectors.getPageLabels(state),
       selectors.shouldClearSearchPanelOnClose(state),
       selectors.isInDesktopOnlyMode(state),
@@ -30,11 +30,12 @@ function SearchPanelContainer(props) {
     ],
     shallowEqual,
   );
+  let currentWidth = useSelector((state) => (dataElement === DataElements.SEARCH_PANEL ? selectors.getSearchPanelWidth(state) : selectors.getPanelWidth(state, dataElement)));
 
   const dispatch = useDispatch();
   const closeSearchPanel = React.useCallback(
     function closeSearchPanel() {
-      dispatch(actions.closeElements([DataElements.SEARCH_PANEL]));
+      dispatch(actions.closeElements([dataElement]));
     },
     [dispatch],
   );
@@ -103,6 +104,12 @@ function SearchPanelContainer(props) {
     },
     [isMobile, isOpen, shouldClearSearchPanelOnClose, isInDesktopOnlyMode],
   );
+
+  if (dataElement !== DataElements.SEARCH_PANEL) {
+    // Adjust width for custom panels
+    currentWidth -= 16; // padding
+    currentWidth -= RESIZE_BAR_WIDTH;
+  }
 
   const combinedProps = {
     ...props,

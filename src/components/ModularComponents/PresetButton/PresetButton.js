@@ -12,6 +12,8 @@ import SaveAsButton from './buttons/SaveAs';
 import PrintButton from './buttons/Print';
 import NewPortfolioButton from './buttons/NewPortfolio';
 import SettingsButton from './buttons/Settings';
+import FormFieldEditButton from './buttons/FormFieldEdit';
+import ContentEditButton from './buttons/ContentEdit';
 
 const PresetButton = (props) => {
   const { buttonType } = props;
@@ -37,6 +39,10 @@ const PresetButton = (props) => {
       return <NewPortfolioButton {...props} />;
     case PRESET_BUTTON_TYPES.SETTINGS:
       return <SettingsButton {...props} />;
+    case PRESET_BUTTON_TYPES.FORM_FIELD_EDIT:
+      return <FormFieldEditButton {...props} />;
+    case PRESET_BUTTON_TYPES.CONTENT_EDIT:
+      return <ContentEditButton {...props} />;
     default:
       console.warn(`${buttonType} is not a valid item type.`);
       return null;

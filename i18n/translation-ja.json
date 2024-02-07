@@ -72,6 +72,7 @@
     "type": "タイピング",
     "upload": "アップロード",
     "link": "リンク",
+    "unlink": "リンクの削除",
     "fileAttachmentDownload": "添付ファイルをダウンロード",
     "prevResult": "前の結果",
     "nextResult": "次の結果",
@@ -82,6 +83,8 @@
     "exit": "終了",
     "addOption": "オプションを追加",
     "formFieldEdit": "フォームフィールドの編集",
+    "formFieldEditMode": "フォームフィールドの編集",
+    "contentEditMode": "コンテンツの編集",
     "viewShortCutKeysFor3D": "ショートカットキーを表示する",
     "markAllRead": "すべて既読にする",
     "pageInsertion": "ページの挿入",
@@ -120,9 +123,13 @@
     "showComparison": "比較を表示",
     "back": "戻る",
     "clearSignature": "明確な署名",
+    "readOnlySignature": "読み取り専用の署名は削除できません",
     "newDocument": "新しいドキュメント",
     "sideBySideView": "並べて表示",
-    "pageNumberInput": "ページ番号入力"
+    "pageNumberInput": "ページ番号入力",
+    "addNewColor": "新しい色を追加",
+    "deleteColor": "選択した色を削除",
+    "copySelectedColor": "選択したカラーをコピー"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "色"
     },
+    "colorPalettePicker": {
+      "addColor": "新しい色を追加",
+      "selectColor": "色を選択してください"
+    },
     "displayMode": {
       "layout": "レイアウト",
       "pageTransition": "ページ移動"
@@ -509,6 +520,9 @@
       "radius": "半径",
       "count": "カウント",
       "length": "長さ"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "フォントサイズを動的に拡大縮小する"
     },
     "measurementOption": {
       "scale": "縮尺"
@@ -767,6 +781,9 @@
     "colorPicker": {
       "deleteTitle": "カスタムカラーを削除する",
       "deleteMessage": "選択したカスタムカラーを削除しますか？カラーパレットから削除されます。"
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "カスタムカラーを削除する"
     },
     "multiDeleteAnnotation": {
       "title": "注釈を削除しますか？",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "インデントを増やします",
     "insertLink": "リンクを挿入",
     "insertImage": "画像を挿入",
+    "table": "テーブル",
+    "insertRowAbove": "上に行を挿入",
+    "insertRowBelow": "下に行を挿入",
+    "insertColumnRight": "列を右に挿入",
+    "insertColumnLeft": "列を左に挿入",
+    "deleteRow": "行の削除",
+    "deleteColumn": "列の削除",
+    "deleteTable": "テーブルの削除",
     "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。"
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "スタイル"
+      "styles": "スタイル",
+      "annotation": "注釈",
+      "annotations": "注釈",
+      "tool": "道具",
+      "textStyles": "テキストスタイル",
+      "currentColor": "現在の色",
+      "customColors": "カスタムカラー",
+      "redactionTextLabel": "テキストラベル",
+      "redactionMarkOutline": "マークのアウトライン",
+      "redactionFill": "編集色",
+      "redactionTextPlaceholder": "テキストラベルを挿入",
+      "contentEdit": "コンテンツ編集"
     },
-    "noToolSelected": "ツールを選択してツールのプロパティを表示します"
+    "addColorToCustom": "カスタムカラーに追加",
+    "noToolSelected": "ツールを選択してツールのプロパティを表示します",
+    "noToolStyle": "ツールにはスタイル設定プロパティが含まれていません。"
+  },
+  "signatureListPanel": {
+    "header": "署名リスト",
+    "newSignature": "新しい署名",
+    "newSignatureAndInitial": "新しい署名とイニシャル",
+    "signatureList": {
+      "signature": "サイン",
+      "initials": "イニシャル"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "スタンプ",
+    "standard": "スタンダードスタンプ"
   }
 }

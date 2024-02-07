@@ -1,5 +1,7 @@
 import actions from 'actions';
 import selectors from 'selectors';
+import core from 'core';
+import DataElements from 'constants/dataElement';
 
 export default (dispatch, store, hotkeysManager) => () => {
   dispatch(actions.setCustomElementOverrides('downloadButton', { disabled: false }));
@@ -14,7 +16,14 @@ export default (dispatch, store, hotkeysManager) => () => {
   hotkeysManager.formBuilderDisabledKeys = {};
   // Ensure we are not left in the Forms toolbargroup when we end form builder mode
   const currentToolbarGroup = selectors.getCurrentToolbarGroup(store.getState());
-  if (currentToolbarGroup === 'toolbarGroup-Forms') {
-    dispatch(actions.setToolbarGroup('toolbarGroup-View'));
+  const featureFlags = selectors.getFeatureFlags(store.getState());
+  const { customizableUI } = featureFlags;
+
+  if (!customizableUI) {
+    if (currentToolbarGroup === DataElements.FORMS_TOOLBAR_GROUP) {
+      dispatch(actions.setToolbarGroup(DataElements.VIEW_TOOLBAR_GROUP));
+    }
+  } else {
+    core.setToolMode('AnnotationEdit');
   }
 };

@@ -72,6 +72,7 @@
     "type": "genere",
     "upload": "Caricare",
     "link": "collegamento",
+    "unlink": "Elimina collegamento",
     "fileAttachmentDownload": "Scarica il file allegato",
     "prevResult": "Risultato precedente",
     "nextResult": "Il prossimo risultato",
@@ -82,6 +83,8 @@
     "exit": "Uscita",
     "addOption": "Aggiungi opzione",
     "formFieldEdit": "Modifica campo modulo",
+    "formFieldEditMode": "Modifica campi modulo",
+    "contentEditMode": "Modifica contenuto",
     "viewShortCutKeysFor3D": "Visualizza i tasti di scelta rapida",
     "markAllRead": "segna tutto come letto",
     "pageInsertion": "Inserimento pagina",
@@ -120,9 +123,13 @@
     "showComparison": "Mostra confronto",
     "back": "Di ritorno",
     "clearSignature": "Firma chiara",
+    "readOnlySignature": "La firma di sola lettura non può essere eliminata",
     "newDocument": "Nuovo documento",
     "sideBySideView": "Vista affiancata",
-    "pageNumberInput": "Inserimento del numero di pagina"
+    "pageNumberInput": "Inserimento del numero di pagina",
+    "addNewColor": "Aggiungi nuovo colore",
+    "deleteColor": "Elimina il colore selezionato",
+    "copySelectedColor": "Copia il colore selezionato"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Colore"
     },
+    "colorPalettePicker": {
+      "addColor": "Aggiungi nuovo colore",
+      "selectColor": "Seleziona il colore"
+    },
     "displayMode": {
       "layout": "disposizione",
       "pageTransition": "Transizione di pagina"
@@ -509,6 +520,9 @@
       "radius": "Raggio",
       "count": "Contare",
       "length": "Lunghezza"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Ridimensiona la dimensione del carattere in modo dinamico"
     },
     "measurementOption": {
       "scale": "Scala"
@@ -768,6 +782,9 @@
       "deleteTitle": "Elimina colore personalizzato",
       "deleteMessage": "Eliminare il colore personalizzato selezionato? Verrà rimosso dalla tavolozza dei colori."
     },
+    "colorPalettePicker": {
+      "deleteTitle": "Elimina il colore personalizzato"
+    },
     "multiDeleteAnnotation": {
       "title": "Eliminare le annotazioni?",
       "message": "L'eliminazione rimuoverà tutti i commenti, le risposte e i raggruppamenti e non potrà essere annullata.\n\n Sei sicuro di voler eliminare queste annotazioni?"
@@ -800,7 +817,7 @@
     "select": "(Esc)",
     "signature": "(S)",
     "squiggly": "(G)",
-    "image": "(IO)",
+    "image": "(I)",
     "redo": "(Ctrl Maiusc Z)",
     "redo_windows": "(Ctrl Y)",
     "undo": "(Ctrl Z)",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Aumenta rientro",
     "insertLink": "Inserisci collegamento",
     "insertImage": "Inserisci immagine",
+    "table": "Tavolo",
+    "insertRowAbove": "Inserisci riga sopra",
+    "insertRowBelow": "Inserisci riga sotto",
+    "insertColumnRight": "Inserisci colonna a destra",
+    "insertColumnLeft": "Inserisci colonna a sinistra",
+    "deleteRow": "Elimina riga",
+    "deleteColumn": "Elimina colonna",
+    "deleteTable": "Elimina tabella",
     "notSupportedOnMobile": "La modifica di Office non è supportata sui dispositivi mobili."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stili"
+      "styles": "Stili",
+      "annotation": "Annotazione",
+      "annotations": "Annotazioni",
+      "tool": "Attrezzo",
+      "textStyles": "Stili di testo",
+      "currentColor": "Colore corrente",
+      "customColors": "Colori personalizzati",
+      "redactionTextLabel": "Etichetta di testo",
+      "redactionMarkOutline": "Segna contorno",
+      "redactionFill": "Colore di redazione",
+      "redactionTextPlaceholder": "Inserisci etichetta di testo",
+      "contentEdit": "Modifica contenuto"
     },
-    "noToolSelected": "Seleziona uno strumento per visualizzarne le proprietà"
+    "addColorToCustom": "Aggiungi a colori personalizzati",
+    "noToolSelected": "Seleziona uno strumento per visualizzarne le proprietà",
+    "noToolStyle": "Lo strumento non contiene alcuna proprietà di stile."
+  },
+  "signatureListPanel": {
+    "header": "Elenco delle firme",
+    "newSignature": "Nuova firma",
+    "newSignatureAndInitial": "Nuova firma e iniziale",
+    "signatureList": {
+      "signature": "Firma",
+      "initials": "Iniziali"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Francobolli",
+    "standard": "Francobolli standard"
   }
 }

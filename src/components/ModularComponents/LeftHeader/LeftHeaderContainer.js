@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
 import ModularHeader from 'components/ModularComponents/ModularHeader';
-import DataElements from 'constants/dataElement';
-import { RESIZE_BAR_WIDTH } from 'constants/panel';
 import FloatingHeaderContainer from '../FloatingHeader';
 import useResizeObserver from 'hooks/useResizeObserver';
 import './LeftHeader.scss';
@@ -13,18 +11,21 @@ import { PLACEMENT } from 'constants/customizationVariables';
 function LeftHeaderContainer() {
   const [
     featureFlags,
-    isLeftPanelOpen,
+    leftPanelOpen,
     leftPanelWidth,
     leftHeaders,
     bottomHeadersHeight,
   ] = useSelector(
-    (state) => [
-      selectors.getFeatureFlags(state),
-      selectors.isElementOpen(state, DataElements.LEFT_PANEL),
-      selectors.getLeftPanelWidth(state),
-      selectors.getLeftHeader(state),
-      selectors.getBottomHeadersHeight(state),
-    ]);
+    (state) => {
+      const genericLeftPanelOpen = selectors.getOpenGenericPanel(state, PLACEMENT.LEFT);
+      return [
+        selectors.getFeatureFlags(state),
+        genericLeftPanelOpen,
+        selectors.getPanelWidth(state, genericLeftPanelOpen),
+        selectors.getLeftHeader(state),
+        selectors.getBottomHeadersHeight(state),
+      ];
+    });
 
   const dispatch = useDispatch();
   const { customizableUI } = featureFlags;
@@ -45,14 +46,14 @@ function LeftHeaderContainer() {
 
   let style = useMemo(() => {
     const styleObject = {};
-    if (isLeftPanelOpen) {
-      styleObject['transform'] = `translateX(${leftPanelWidth + RESIZE_BAR_WIDTH}px)`;
+    if (leftPanelOpen) {
+      styleObject['transform'] = `translateX(${leftPanelWidth}px)`;
     }
     if (bottomHeadersHeight !== 0) {
       styleObject['height'] = `calc(100% - ${bottomHeadersHeight}px)`;
     }
     return styleObject;
-  }, [isLeftPanelOpen, leftPanelWidth, bottomHeadersHeight]);
+  }, [leftPanelOpen, leftPanelWidth, bottomHeadersHeight]);
 
 
   style = Object.assign({}, style, userDefinedStyle);
@@ -67,8 +68,8 @@ function LeftHeaderContainer() {
 
     return (
       <>
-        {renderLeftHeader()}
         <FloatingHeaderContainer floatingHeaders={floatingHeaders} placement={PLACEMENT.LEFT} />
+        {renderLeftHeader()}
       </>
     );
   }

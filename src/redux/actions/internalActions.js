@@ -191,7 +191,7 @@ export const setActiveToolNameAndStyle = (toolObject) => (dispatch, getState) =>
     // on desktop, auto switch between AnnotationEdit and TextSelect is true when you hover on text
     // we do this to prevent this action from spamming the console
     name =
-      toolObject.name === 'TextSelect' ? 'AnnotationEdit' : toolObject.name;
+      toolObject.name === 'TextSelect' || toolObject.name === 'OfficeEditorTextSelect' ? 'AnnotationEdit' : toolObject.name;
   }
 
   if (state.viewer.activeToolName === name) {
@@ -226,6 +226,24 @@ export const setActiveToolGroup = (toolGroup) => (dispatch, getState) => {
   dispatch({
     type: 'SET_ACTIVE_TOOL_GROUP',
     payload: { toolGroup, toolbarGroup },
+  });
+};
+
+export const setActiveCustomPanel = (tabPanel, wrapperPanel) => (dispath, getState) => {
+  const currentActivePanel = selectors.getActiveCustomPanel(getState(), wrapperPanel);
+  if (currentActivePanel === tabPanel) {
+    return;
+  }
+  dispath({
+    type: 'SET_ACTIVE_CUSTOM_PANEL',
+    payload: { wrapperPanel, tabPanel },
+  });
+};
+
+export const setLastPickedToolForGroupedItems = (groupedItem, toolName) => (dispatch) => {
+  dispatch({
+    type: 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS',
+    payload: { groupedItem, toolName },
   });
 };
 
@@ -670,6 +688,11 @@ export const setHideContentEditWarning = (hideWarning) => ({
   payload: { hideWarning },
 });
 
+export const setContentWorkersAsLoaded = () => ({
+  type: 'SET_CONTENT_EDIT_WORKERS_LOADED',
+  payload: { contentEditWorkersLoaded: true },
+});
+
 export const setCurrentContentBeingEdited = ({ content, annotation }) => ({
   type: 'SET_CURRENT_CONTENT_BEING_EDITED',
   payload: { content, annotation },
@@ -738,6 +761,11 @@ export const setComparePagesButtonEnabled = (isShowComparisonButtonEnabled) => (
 export const setIsMultiViewerModeAvailable = (isMultiViewerModeAvailable) => ({
   type: 'SET_IS_MULTI_VIEWER_MODE_AVAILABLE',
   payload: { isMultiViewerModeAvailable }
+});
+
+export const setIsOfficeEditorMode = (isOfficeEditorMode) => ({
+  type: 'SET_IS_OFFICE_EDITOR_MODE',
+  payload: { isOfficeEditorMode }
 });
 
 export const growCustomElement = (dataElement) => (dispatch, getState) => {

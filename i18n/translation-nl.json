@@ -72,6 +72,7 @@
     "type": "Type",
     "upload": "Uploaden",
     "link": "Koppeling",
+    "unlink": "Koppeling verwijderen",
     "fileAttachmentDownload": "Download bijgevoegd bestand",
     "prevResult": "Vorig resultaat",
     "nextResult": "Volgend resultaat",
@@ -82,6 +83,8 @@
     "exit": "Uitgang",
     "addOption": "Optie toevoegen",
     "formFieldEdit": "Formulierveld bewerken",
+    "formFieldEditMode": "Formuliervelden bewerken",
+    "contentEditMode": "Inhoud bewerken",
     "viewShortCutKeysFor3D": "Bekijk sneltoetsen",
     "markAllRead": "Markeer alles als gelezen",
     "pageInsertion": "Pagina-invoeging",
@@ -120,9 +123,13 @@
     "showComparison": "Toon vergelijking",
     "back": "Rug",
     "clearSignature": "Duidelijke handtekening",
+    "readOnlySignature": "Alleen-lezen handtekening kan niet worden verwijderd",
     "newDocument": "Nieuw document",
     "sideBySideView": "Zij aan zij weergave",
-    "pageNumberInput": "Invoer van paginanummer"
+    "pageNumberInput": "Invoer van paginanummer",
+    "addNewColor": "Nieuwe kleur toevoegen",
+    "deleteColor": "Geselecteerde kleur verwijderen",
+    "copySelectedColor": "Kopieer geselecteerde kleur"
   },
   "annotation": {
     "areaMeasurement": "Oppervlaktemeting",
@@ -367,6 +374,10 @@
     "colorPalette": {
       "colorLabel": "Kleur"
     },
+    "colorPalettePicker": {
+      "addColor": "Voeg nieuwe kleur toe",
+      "selectColor": "Selecteer kleur"
+    },
     "displayMode": {
       "layout": "Layout",
       "pageTransition": "Pagina overgang"
@@ -509,6 +520,9 @@
       "radius": "Straal",
       "count": "Tel",
       "length": "Lengte"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Schaal de lettergrootte dynamisch"
     },
     "measurementOption": {
       "scale": "Schaal"
@@ -767,6 +781,9 @@
     "colorPicker": {
       "deleteTitle": "Aangepaste kleur verwijderen",
       "deleteMessage": "De geselecteerde aangepaste kleur verwijderen? Het wordt verwijderd uit uw kleurenpalet."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Aangepaste kleur verwijderen"
     },
     "multiDeleteAnnotation": {
       "title": "Annotaties verwijderen?",
@@ -1165,6 +1182,14 @@
     "increaseIndent": "Inspringing vergroten",
     "insertLink": "Koppeling invoegen",
     "insertImage": "Voeg afbeelding in",
+    "table": "Tafel",
+    "insertRowAbove": "Rij erboven invoegen",
+    "insertRowBelow": "Rij hieronder invoegen",
+    "insertColumnRight": "Kolom rechts invoegen",
+    "insertColumnLeft": "Kolom links invoegen",
+    "deleteRow": "Verwijder rij",
+    "deleteColumn": "Kolom verwijderen",
+    "deleteTable": "Tabel verwijderen",
     "notSupportedOnMobile": "Office-bewerking wordt niet ondersteund op mobiele apparaten."
   },
   "insertPageModal": {
@@ -1259,8 +1284,34 @@
   },
   "stylePanel": {
     "headings": {
-      "styles": "Stijlen"
+      "styles": "Stijlen",
+      "annotation": "Annotatie",
+      "annotations": "Annotaties",
+      "tool": "Hulpmiddel",
+      "textStyles": "Tekststijlen",
+      "currentColor": "Huidige kleur",
+      "customColors": "Aangepaste kleuren",
+      "redactionTextLabel": "Tekstlabel",
+      "redactionMarkOutline": "Markeer overzicht",
+      "redactionFill": "Redactiekleur",
+      "redactionTextPlaceholder": "Tekstlabel invoegen",
+      "contentEdit": "Inhoud bewerken"
     },
-    "noToolSelected": "Selecteer een gereedschap om de gereedschapseigenschappen te bekijken"
+    "addColorToCustom": "Voeg toe aan aangepaste kleuren",
+    "noToolSelected": "Selecteer een gereedschap om de gereedschapseigenschappen te bekijken",
+    "noToolStyle": "Tool bevat geen stijleigenschappen."
+  },
+  "signatureListPanel": {
+    "header": "Handtekeningenlijst",
+    "newSignature": "Nieuwe handtekening",
+    "newSignatureAndInitial": "Nieuwe handtekening en initiaal",
+    "signatureList": {
+      "signature": "Handtekening",
+      "initials": "Initialen"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Stempels",
+    "standard": "Standaard postzegels"
   }
 }

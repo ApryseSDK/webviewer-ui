@@ -15,11 +15,10 @@ const TopHeaderContainer = () => {
   ] = useSelector(
     (state) => [
       selectors.getFeatureFlags(state),
-      selectors.getTopHeaders(state)
+      selectors.getTopHeaders(state),
     ]);
   const dispatch = useDispatch();
   const { customizableUI } = featureFlags;
-
   // Top headers can be either normal headers, or floating headers. You can have a max of two normal headers.
   // There is one float container that can hold as many floating headers as you want.
 
@@ -57,9 +56,9 @@ const TopHeaderContainer = () => {
   if (customizableUI) {
     const modularHeaders = sortedTopHeaders.map((header, index) => {
       const { dataElement } = header;
-      const autohide = index === 0 ? false : header.autohide;
+      const autoHide = index === 0 ? false : header.autoHide;
       return (
-        <ModularHeader {...header} key={dataElement} autohide={autohide} />
+        <ModularHeader {...header} key={dataElement} autoHide={autoHide} />
       );
     });
     return (
