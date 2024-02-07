@@ -20,7 +20,8 @@ test.describe('Features', () => {
     await page.waitForTimeout(Timeouts.REACT_RERENDER);
 
     expect(await headerContainer.screenshot()).toMatchSnapshot(['enable-feature', 'redaction-feature-header-disabled.png']);
-    expect(await toolsHeaderContainer.screenshot()).toMatchSnapshot(['enable-feature', 'redaction-feature-tools-header-disabled.png']);
+    const classList = await toolsHeaderContainer.evaluate((el) => [...el.classList]);
+    await expect(classList).toEqual(['HeaderToolsContainer', 'closed']);
 
     await iframe.evaluate(async () => {
       window.instance.UI.enableFeatures(window.instance.UI.Feature.Redaction);

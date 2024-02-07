@@ -148,6 +148,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.Redaction]: {
       dataElements: [
+        'toolbarGroup-Redact',
         'redactionToolGroupButton',
         'redactionPanel',
         'redactionPanelToggle',

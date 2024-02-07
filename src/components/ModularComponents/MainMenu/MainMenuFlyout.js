@@ -28,6 +28,9 @@ const MainMenuFlyout = () => {
     isFullScreen,
     timezone,
     isFilePickerDisabled,
+    isDownloadDisabled,
+    isPrintDisabled,
+    isSaveAsDisabled,
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, 'MainMenuFlyout'),
     selectors.getFlyout(state, 'MainMenuFlyout'),
@@ -37,6 +40,9 @@ const MainMenuFlyout = () => {
     selectors.isFullScreen(state),
     selectors.getTimezone(state),
     selectors.isElementDisabled(state, DataElements.FILE_PICKER_BUTTON),
+    selectors.isElementDisabled(state, DataElements.DOWNLOAD_BUTTON),
+    selectors.isElementDisabled(state, DataElements.PRINT_BUTTON),
+    selectors.isElementDisabled(state, DataElements.SAVE_AS_BUTTON),
   ], shallowEqual);
 
   const isCreatePortfolioButtonEnabled = !useSelector((state) => selectors.isElementDisabled(state, DataElements.CREATE_PORTFOLIO_BUTTON)) && core.isFullPDFEnabled();
@@ -66,7 +72,11 @@ const MainMenuFlyout = () => {
     } else {
       dispatch(actions.updateFlyout(MainMenuFlyout.dataElement, MainMenuFlyout));
     }
-  }, [documentType, isFullScreen]);
+  }, [documentType, isFullScreen,
+    isFilePickerDisabled, isDownloadDisabled, isPrintDisabled,
+    isSaveAsDisabled,
+    isCreatePortfolioButtonEnabled,
+  ]);
 
   if (isDisabled) {
     return;
@@ -127,7 +137,7 @@ const MainMenuFlyout = () => {
       };
       menuFlyoutItems.push(filePickerButton);
     }
-    if (documentType !== workerTypes.XOD && !isOfficeEditorMode()) {
+    if (!isDownloadDisabled && documentType !== workerTypes.XOD && !isOfficeEditorMode()) {
       const downloadButton = {
         ...menuItems.downloadButton,
         onClick: downloadDocument,
@@ -146,7 +156,7 @@ const MainMenuFlyout = () => {
       menuFlyoutItems.push(fullscreenButton);
     }
 
-    if (documentType !== workerTypes.XOD) {
+    if (!isSaveAsDisabled && documentType !== workerTypes.XOD) {
       const saveAsButton = {
         ...menuItems.saveAsButton,
         onClick: openSaveModal,
@@ -154,12 +164,14 @@ const MainMenuFlyout = () => {
       menuFlyoutItems.push(saveAsButton);
     }
 
-    const printButton = {
-      ...menuItems.printButton,
-      onClick: handlePrintButtonClick,
-    };
-    menuFlyoutItems.push(printButton, divider);
-
+    if (!isPrintDisabled) {
+      const printButton = {
+        ...menuItems.printButton,
+        onClick: handlePrintButtonClick,
+      };
+      menuFlyoutItems.push(printButton);
+    }
+    menuFlyoutItems.push(divider);
     if (isCreatePortfolioButtonEnabled) {
       const createPortfolioButton = {
         ...menuItems.createPortfolioButton,

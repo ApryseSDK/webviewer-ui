@@ -128,6 +128,10 @@ const Flyout = () => {
   };
 
   const renderFlyoutItem = (flyoutItem, index, isChild = false) => {
+    if (flyoutItem.hasOwnProperty('hidden') && flyoutItem.hidden) {
+      return null;
+    }
+
     const itemIsAPanelTab = !!flyoutItem.tabPanel;
     const itemIsATool = !!flyoutItem.toolName;
     const itemIsAToolGroup = !!flyoutItem.toolGroup;
