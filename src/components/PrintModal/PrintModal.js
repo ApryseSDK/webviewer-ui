@@ -12,7 +12,6 @@ import ModalWrapper from 'components/ModalWrapper';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
-import getRootNode from 'helpers/getRootNode';
 
 import './PrintModal.scss';
 import DataElementWrapper from '../DataElementWrapper';
@@ -79,28 +78,6 @@ const PrintModal = () => {
       setMaintainPageOrientation(defaultPrintOptions.maintainPageOrientation ?? maintainPageOrientation);
     }
   }, [defaultPrintOptions]);
-
-  useEffect(() => {
-    const adjustHeightIfSinglePage = () => {
-      const print = getRootNode().getElementById('print-handler');
-
-      if (!print) {
-        return;
-      }
-
-      if (print.children.length === 1) {
-        print.parentElement.setAttribute('style', 'height: 99%;');
-      } else {
-        print.parentElement.setAttribute('style', 'height: 100%;');
-      }
-    };
-
-    window.addEventListener('beforeprint', adjustHeightIfSinglePage);
-
-    return () => {
-      window.removeEventListener('beforeprint', adjustHeightIfSinglePage);
-    };
-  }, []);
 
   const isPrinting = count >= 0;
   const className = getClassName('Modal PrintModal', { isOpen });
