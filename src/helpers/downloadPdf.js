@@ -37,12 +37,12 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       printQuality,
       colorMap,
     ] = [
-      selectors.getSortStrategy(state),
-      selectors.getPrintedNoteDateFormat(state),
-      selectors.getCurrentLanguage(state),
-      selectors.getPrintQuality(state),
-      selectors.getColorMap(state),
-    ];
+        selectors.getSortStrategy(state),
+        selectors.getPrintedNoteDateFormat(state),
+        selectors.getCurrentLanguage(state),
+        selectors.getPrintQuality(state),
+        selectors.getColorMap(state),
+      ];
     const id = 'download-handler-css';
     if (!document.getElementById(id)) {
       const style = window.document.createElement('style');
@@ -185,6 +185,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
   if (convertToPDF) {
     const xfdfString = await core.getAnnotationManager(documentViewerKey).exportAnnotations({ fields: true, widgets: true, links: true });
     const fileData = await doc.getFileData({ xfdfString, includeAnnotations, downloadType: 'pdf' });
+    console.log({ fileData });
     doc = await core.createDocument(fileData, { extension: 'pdf' });
     annotationsPromise = Promise.resolve(xfdfString);
   } else if (includeAnnotations && !options.xfdfString && !downloadAsImage) {
@@ -223,6 +224,27 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
     if (clonedOptions.store) {
       delete clonedOptions.store;
     }
+
+    const removeHTMLTagsHelper = innerHTML => {
+      const array = innerHTML.split('&lt;').join('&gt;').split('&gt;');
+      let result = "";
+      array.forEach((item, index) => {
+        if (index % 2 === 0) {
+          result += item;
+        }
+      });
+      return result;
+    };
+
+    const removeHTMLTags = xfdfString => {
+      const parser = new DOMParser();
+      let xmlDoc = parser.parseFromString(xfdfString, "text/xml");
+      var contentEls = xmlDoc.getElementsByTagName('contents');
+      for (let item of contentEls) {
+        item.innerHTML = removeHTMLTagsHelper(item.innerHTML);
+      }
+      return xmlDoc.documentElement.outerHTML;
+    };
 
     const downloadDataAsFile = (data) => {
       const arr = new Uint8Array(data);
@@ -269,8 +291,10 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       fireEvent(Events.FINISHED_SAVING_PDF);
       fireEvent(Events.FILE_DOWNLOADED);
     } else if (pages && pages.length < doc.getPageCount()) {
+      options.xfdfString = removeHTMLTags(options.xfdfString);
       return doc.extractPages(pages, options.xfdfString).then(downloadDataAsFile, handleError);
     } else {
+      clonedOptions.xfdfString = removeHTMLTags(clonedOptions.xfdfString);
       return doc.getFileData(clonedOptions).then(downloadDataAsFile, handleError);
     }
   }).catch((error) => {
