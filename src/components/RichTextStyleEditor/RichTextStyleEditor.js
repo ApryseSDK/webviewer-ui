@@ -21,6 +21,7 @@ const propTypes = {
   onPropertyChange: PropTypes.func,
   onRichTextStyleChange: PropTypes.func,
   isRedaction: PropTypes.bool,
+  isTextStylePickerHidden: PropTypes.bool,
 };
 
 const RichTextStyleEditor = ({
@@ -31,6 +32,9 @@ const RichTextStyleEditor = ({
   onPropertyChange,
   onRichTextStyleChange,
   isRedaction,
+  isTextStylePickerHidden,
+  activeTool,
+  textSizeSliderComponent,
 }) => {
   const [
     fonts,
@@ -267,25 +271,30 @@ const RichTextStyleEditor = ({
         }
       }}
     >
-      <div className="menu-items">
-        <TextStylePicker
-          fonts={fonts}
-          onPropertyChange={handlePropertyChange}
-          onRichTextStyleChange={handleRichTextStyleChange}
-          properties={isRichTextEditMode ? propertiesRef.current : properties}
-          stateless={true}
-          isFreeText={!isRedaction}
-          onFreeTextSizeToggle={onFreeTextSizeToggle}
-          isFreeTextAutoSize={isFreeTextAutoSize}
-          isRedaction={isRedaction}
-        />
-      </div>
+      {!isTextStylePickerHidden && (
+        <div className="menu-items">
+          <TextStylePicker
+            fonts={fonts}
+            onPropertyChange={handlePropertyChange}
+            onRichTextStyleChange={handleRichTextStyleChange}
+            properties={isRichTextEditMode ? propertiesRef.current : properties}
+            stateless={true}
+            isFreeText={!isRedaction}
+            onFreeTextSizeToggle={onFreeTextSizeToggle}
+            isFreeTextAutoSize={isFreeTextAutoSize}
+            isRedaction={isRedaction}
+          />
+        </div>
+      )}
       <ColorPicker
         onColorChange={(color) => {
           handleColorChange('TextColor', new window.Core.Annotations.Color(color));
         }}
         color={isRichTextEditMode ? format.color : style['TextColor']}
+        activeTool={activeTool}
+        type={'Text'}
       />
+      {textSizeSliderComponent}
     </div>
   );
 };
