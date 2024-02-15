@@ -298,7 +298,9 @@ if (window.CanvasRenderingContext2D) {
 
 
 window.addEventListener('hashchange', () => {
-  window.location.reload();
+  if (!window.isApryseWebViewerWebComponent) {
+    window.location.reload();
+  }
 });
 
 /* The following adds a data attribute to `<html>` when user is keyboard navigating. */
