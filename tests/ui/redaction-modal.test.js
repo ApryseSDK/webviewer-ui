@@ -47,6 +47,34 @@ describe('Page Redaction', function() {
     };
     await setupAndCreatePageRedaction(testOptions);
   });
+
+  it(`Should be able to apply redaction when UI is loaded`, async function() {
+    // on load WV will get file attachments and page labels, these operation can cause problems to other operations (like redaction)
+    const options = {
+      initialDoc: '/base/test/fixtures/pdfs/demo-redaction.pdf',
+      fullAPI: true,
+      enableRedaction: true,
+    };
+    const instance = await setupWebViewerInstance(options);
+  
+    const documentLoadedPromise = new Promise((resolve) => {
+      instance.UI.addEventListener('documentLoaded', resolve);
+    });
+    await documentLoadedPromise;
+  
+    const docViewer = instance.Core.documentViewer;
+    const annotManager = docViewer.getAnnotationManager();
+    const redactionAnnot = annotManager.getAnnotationsList().filter(a => a instanceof instance.Core.Annotations.RedactionAnnotation)    
+    await annotManager.applyRedactions(redactionAnnot);
+
+    expect(annotManager.getAnnotationsList().length).to.equal(1);
+
+    // check that the redacted text doesn't exist
+    const pageText = await new Promise((resolve) => {
+      docViewer.getDocument().loadPageText(1, resolve);
+    });
+    expect(pageText.includes('powerful document functionality')).to.equal(false);
+  });
 });
 
 async function setupAndCreatePageRedaction({ options, rotationExpected, documentWidthExpected, documentHeightExpected }) {
