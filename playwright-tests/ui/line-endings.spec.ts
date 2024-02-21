@@ -26,13 +26,11 @@ test.describe('Line Endings', () => {
       const annotation = annotationManager.getAnnotationsList()[0];
       annotationManager.deselectAllAnnotations();
       await annotationManager.selectAnnotation(annotation);
-      return annotation;
     });
   }
 
   async function changeSelectedAnnotationLineStyles() {
     await selectAnnotation();
-
     await iframe.waitForSelector('[data-element=annotationPopup]');
     await iframe.click('[data-element=annotationStyleEditButton]');
     await iframe.click('[data-element=startLineStyleDropdown]');
@@ -85,10 +83,8 @@ test.describe('Line Endings', () => {
     // Create distance measurement annotation.
     const startPoint = { x: pageX + 100, y: pageY + 100 };
     const endPoint = { x: pageX + 200, y: pageY + 100 };
-    await page.mouse.move(startPoint.x, startPoint.y);
-    await page.mouse.down();
-    await page.mouse.move(endPoint.x, endPoint.y);
-    await page.mouse.down();
+    await page.mouse.click(startPoint.x, startPoint.y);
+    await page.mouse.click(endPoint.x, endPoint.y);
     await page.waitForTimeout(Timeouts.REACT_RERENDER);
 
     await changeSelectedAnnotationLineStyles();
@@ -125,7 +121,7 @@ test.describe('Line Endings', () => {
     await iframe.click('[data-element=arrowToolGroupButton]');
     const startPoint = { x: pageX + 100, y: pageY + 100 };
     const point1 = { x: startPoint.x + 100, y: startPoint.y + 100 };
-    const point2 = { x: startPoint.x + 150, y: startPoint.y + 175 };
+    const point2 = { x: startPoint.x + 200, y: startPoint.y + 200 };
     await page.mouse.move(point1.x, point1.y);
     await page.mouse.down();
     await page.mouse.move(point2.x, point2.y);
@@ -172,7 +168,7 @@ test.describe('Line Endings', () => {
     await iframe.click('[data-element=lineToolGroupButton]');
     const startPoint = { x: pageX + 100, y: pageY + 100 };
     const point1 = { x: startPoint.x + 100, y: startPoint.y + 100 };
-    const point2 = { x: startPoint.x + 150, y: startPoint.y + 175 };
+    const point2 = { x: startPoint.x + 200, y: startPoint.y + 200 };
     await page.mouse.move(point1.x, point1.y);
     await page.mouse.down();
     await page.mouse.move(point2.x, point2.y);

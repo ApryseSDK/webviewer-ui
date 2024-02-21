@@ -1,31 +1,60 @@
-import { loadViewerSample } from '../../playwright-utils';
+import { loadViewerSample, Timeouts } from '../../playwright-utils';
 import { expect, test } from '@playwright/test';
 import { drawLine } from '../common/line';
 
 test.describe('Style popup', () => {
+  async function addNewAnnotation(iframe) {
+    await iframe?.evaluate(() => {
+      const { annotationManager } = window.instance.Core;
+      const rectangleAnnotation = new window.instance.Core.Annotations.RectangleAnnotation({
+        PageNumber: 1,
+        X: 50,
+        Y: 100,
+        Width: 150,
+        Height: 100,
+      });
+      annotationManager.addAnnotation(rectangleAnnotation);
+      annotationManager.redrawAnnotation(rectangleAnnotation);
+    });
+  }
+
+  async function selectNewAnnotation(iframe) {
+    await iframe?.evaluate(() => {
+      const { annotationManager } = window.instance.Core;
+      annotationManager.deselectAllAnnotations();
+      const annotations = annotationManager.getAnnotationsList();
+      annotationManager.selectAnnotation(annotations[0]);
+    });
+  }
+
   test('style popup should render correctly for different annotations', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
     const { iframe, waitForInstance, getAnnotationsCount } = await loadViewerSample(page, 'viewing/blank');
     const instance = await waitForInstance();
     await instance('loadDocument', '/test-files/style_popup_test.pdf');
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(Timeouts.REACT_RERENDER);
 
     await instance('openElement', ['stylePopupLabelTextContainer']);
 
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(Timeouts.REACT_RERENDER);
 
     const annotationsCount = await getAnnotationsCount();
 
+    await iframe.evaluate(() => {
+      window.instance.UI.Fonts.addAnnotationFont('Courier');
+    });
+
     for (let i = 0; i < annotationsCount; i++) {
       await iframe.evaluate((i: number) => {
-        const annotationManager = window.instance.Core.annotationManager;
+        const { annotationManager } = window.instance.Core;
         const annotations = annotationManager.getAnnotationsList();
         annotationManager.deselectAllAnnotations();
         annotationManager.selectAnnotation(annotations[i]);
       }, i);
-      await page.waitForTimeout(1000);
+
+      await page.waitForTimeout(Timeouts.REACT_RERENDER);
       await iframe.click('[data-element=annotationStyleEditButton]');
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(Timeouts.REACT_RERENDER);
 
       const stylePopup = await iframe.$('[data-element="annotationStylePopup"]');
       expect(await stylePopup.screenshot()).toMatchSnapshot(['annotation-style-popup', `annotation-style-popup-${i}.png`]);
@@ -35,7 +64,7 @@ test.describe('Style popup', () => {
   test('should have text slider when enable FontSize for LineAnnotation for measurement line annotation', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
     const instance = await waitForInstance();
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(3000);
     await instance('setToolMode', 'AnnotationCreateDistanceMeasurement');
 
     await iframe.evaluate(async () => {
@@ -102,5 +131,85 @@ test.describe('Style popup', () => {
     await iframe.waitForSelector('[data-element=annotationPopup]');
     await iframe.click('[data-element=annotationStyleEditButton]');
     await iframe.waitForSelector('[data-element=fontSizeSlider]');
+
+    const fontSizeSliderInput = await iframe?.$('[data-element=fontSizeSlider] > .slider-element-container > input');
+    await fontSizeSliderInput?.focus();
+    await iframe.waitForSelector('[data-element=fontSizeSlider]');
+    const realInput = await iframe.$('[data-element="fontSizeSlider"] > .slider-element-container > .slider-input-wrapper > input');
+    await realInput.fill('15', {
+      force: true
+    });
+    await page.waitForTimeout(500);
+    expect(await pageContainer?.screenshot()).toMatchSnapshot(['tool-style', 'measurement-font-size-slider.png']);
+  });
+
+  test('Opacity slider input should be 0% if a user enter a negative value', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
+    await waitForInstance();
+    await addNewAnnotation(iframe);
+    await page.waitForTimeout(2000);
+    await selectNewAnnotation(iframe);
+
+    await iframe.waitForSelector('[data-element=annotationPopup]');
+    await iframe.click('[data-element="annotationStyleEditButton"]');
+    await iframe.waitForSelector('[data-element=opacitySlider]');
+    const opacityInput = await iframe.$('[data-element="opacitySlider"] > .slider-element-container > input');
+    await opacityInput?.focus();
+    await iframe.waitForSelector('[data-element=opacitySlider]');
+    const realInput = await iframe.$('[data-element="opacitySlider"] > .slider-element-container > .slider-input-wrapper > input');
+    await realInput.fill('-15', {
+      force: true
+    });
+    await page.waitForTimeout(500);
+    const strokeThicknessInput = await iframe.$('[data-element="strokeThicknessSlider"] > .slider-element-container > input');
+    await strokeThicknessInput?.focus();
+    await iframe.waitForSelector('[data-element=opacitySlider]');
+    const changedOpacityInput = await iframe.$('[data-element="opacitySlider"] > .slider-element-container > input');
+    await iframe.waitForSelector('[data-element=opacitySlider]');
+    await page.waitForTimeout(2000);
+    expect(await changedOpacityInput.evaluate((input) => input.value)).toBe('0%');
+  });
+
+  test('StrokeThickness slider input should be 0.10pt if a user enter a negative value', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
+    await waitForInstance();
+    await addNewAnnotation(iframe);
+    await page.waitForTimeout(2000);
+    await selectNewAnnotation(iframe);
+
+    await iframe.waitForSelector('[data-element=annotationPopup]');
+    await iframe.click('[data-element="annotationStyleEditButton"]');
+    await iframe.waitForSelector('[data-element=strokeThicknessSlider]');
+    const strokeThicknessInput = await iframe.$('[data-element="strokeThicknessSlider"] > .slider-element-container > input');
+    await strokeThicknessInput?.focus();
+    await iframe.waitForSelector('[data-element=strokeThicknessSlider]');
+    const realInput = await iframe.$('[data-element="strokeThicknessSlider"] > .slider-element-container > .slider-input-wrapper > input');
+    await realInput.fill('-15', {
+      force: true
+    });
+    await page.waitForTimeout(500);
+    const opacitySliderInput = await iframe.$('[data-element="opacitySlider"] > .slider-element-container > input');
+    await opacitySliderInput?.focus();
+    await iframe.waitForSelector('[data-element=strokeThicknessSlider]');
+    const changedStrokeThicknessInput = await iframe.$('[data-element="strokeThicknessSlider"] > .slider-element-container > input');
+    await iframe.waitForSelector('[data-element=strokeThicknessSlider]');
+    await page.waitForTimeout(2000);
+    expect(await changedStrokeThicknessInput.evaluate((input) => input.value)).toBe('0.10pt');
+  });
+
+  test('Rectangle style popup test', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/blank');
+    const instance = await waitForInstance();
+    await instance('setToolbarGroup', 'toolbarGroup-Shapes');
+
+    await page.waitForTimeout(500);
+    const isStylePopupOpen = await iframe?.evaluate(() => {
+      window.instance.UI.openElement('toolStylePopup');
+      return window.instance.UI.isElementOpen('toolStylePopup');
+    });
+
+    expect(isStylePopupOpen).toBeTruthy();
+    const toolStylePopup = await iframe?.$('[data-element="toolStylePopup"]');
+    expect(await toolStylePopup?.screenshot()).toMatchSnapshot(['tool-style', 'rectangle-tool-style-popup.png']);
   });
 });

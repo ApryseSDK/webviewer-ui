@@ -54,6 +54,7 @@ test.describe('File attachment panel', () => {
     await instance('enableElements', ['attachmentPanelButton']);
     await page.waitForTimeout(1000);
     await instance('openElement', 'leftPanel');
+    await page.waitForTimeout(1000);
     const fileAttachmentButton = await iframe?.$('[data-element=attachmentPanelButton]');
     await fileAttachmentButton?.click();
     await page.waitForTimeout(2000);
