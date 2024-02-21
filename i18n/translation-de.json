@@ -72,6 +72,7 @@
     "type": "Schreiben",
     "upload": "Hochladen",
     "link": "Verknüpfung",
+    "unlink": "Link löschen",
     "fileAttachmentDownload": "Anhand herunterladen",
     "prevResult": "Vorheriges Ergebnis",
     "nextResult": "Nächstes Ergebnis",

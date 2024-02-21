@@ -72,6 +72,7 @@
     "type": "พิมพ์",
     "upload": "ที่อัพโหลด",
     "link": "ลิงค์",
+    "unlink": "ลบลิงค์",
     "fileAttachmentDownload": "ดาวน์โหลดไฟล์แนบ",
     "prevResult": "ผลลัพธ์ก่อนหน้า",
     "nextResult": "ผลลัพธ์ถัดไป",

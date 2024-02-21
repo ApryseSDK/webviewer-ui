@@ -21,7 +21,7 @@ const symbols = [
   '\u00B3',
   '\u0192',
   '\u0025',
-  "\u2030",
+  '\u2030',
   '\u2031',
   '\u2200',
   '\u2201',
@@ -105,7 +105,7 @@ const MathSymbolsPicker = ({ onClickHandler, maxHeight }) => {
   return (
     <div
       className="mathSymbolsContainer padding"
-      style={{ maxHeight: maxHeight + 'px' }}
+      style={{ maxHeight: `${maxHeight}px` }}
     >
       {symbols.map((symbol, i) => (
         <button

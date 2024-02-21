@@ -114,7 +114,11 @@
       }
 
       &:disabled {
-        opacity: 0.5;
+        cursor: default;
+
+        .Icon {
+          color: var(--disabled-icon);
+        }
       }
 
       &.hidden {
@@ -123,10 +127,6 @@
 
       &:hover {
         background: var(--view-header-button-hover);
-
-        .Icon {
-          color: var(--icon-color);
-        }
       }
     }
 

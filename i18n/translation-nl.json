@@ -72,6 +72,7 @@
     "type": "Type",
     "upload": "Uploaden",
     "link": "Koppeling",
+    "unlink": "Koppeling verwijderen",
     "fileAttachmentDownload": "Download bijgevoegd bestand",
     "prevResult": "Vorig resultaat",
     "nextResult": "Volgend resultaat",

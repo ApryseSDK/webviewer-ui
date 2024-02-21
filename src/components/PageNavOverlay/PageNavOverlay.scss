@@ -27,6 +27,10 @@
   z-index: 0;
   bottom: 20px;
 
+  &.logo-bar-enabled {
+    bottom: 20px + $logo-bar-height;
+  }
+
   .side-arrow-container {
     @include button-reset;
     width: 24px;
@@ -63,6 +67,7 @@
       top: -1px;
       position: relative;
       color: #FFFFFF;
+      margin-bottom: 0;
 
       input {
         min-width: 8px;

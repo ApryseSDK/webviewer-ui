@@ -63,6 +63,11 @@ export function Basic() {
         ...initialState.viewer.disabledElements,
         'layersPanel': { disabled: false, priority: 3 },
       },
+      lastPickedToolForGroupedItems: {
+        'annotateGroupedItems': '',
+      },
+      activeGroupedItems: ['annotateGroupedItems'],
+      activeCustomRibbon: 'toolbarGroup-Annotate',
     },
     document: {
       ...initialState.document,
@@ -98,6 +103,7 @@ export const RightSide = () => {
         ...initialState.viewer.disabledElements,
         'layersPanel': { disabled: false, priority: 3 },
       },
+      activeCustomRibbon: 'toolbarGroup-View',
     },
     document: {
       ...initialState.document,

@@ -72,6 +72,7 @@
     "type": "Tipo",
     "upload": "Enviar documento",
     "link": "Link",
+    "unlink": "Excluir link",
     "fileAttachmentDownload": "Baixar arquivo anexado",
     "prevResult": "Resultado anterior",
     "nextResult": "Próximo resultado",

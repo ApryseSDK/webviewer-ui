@@ -1,3 +1,3 @@
-import CreatableList from './CreatableListContainer'
+import CreatableList from './CreatableListContainer';
 
 export default CreatableList;

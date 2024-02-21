@@ -1,0 +1,20 @@
+.office-editor-create-table {
+  margin: 8px;
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+
+  table, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  td {
+    width: 12px;
+    height: 12px;
+
+    &.selected-cell {
+      background-color: var(--blue-1);
+    }
+  }
+}

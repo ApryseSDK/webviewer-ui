@@ -21,6 +21,7 @@ const RichTextStyleEditor = lazy(() => import('components/RichTextStyleEditor'))
 const AudioPlaybackPopup = lazy(() => import('components/AudioPlaybackPopup'));
 const DocumentCropPopup = lazy(() => import('components/DocumentCropPopup'));
 const InlineCommentingPopup = lazy(() => import('components/InlineCommentingPopup'));
+const LinkAnnotationPopup = lazy(() => import('components/LinkAnnotationPopup'));
 
 // Modals
 const ContentEditLinkModal = lazy(() => import('components/ContentEditLinkModal'));
@@ -121,6 +122,7 @@ const LazyLoadComponents = {
   RedactionPanel,
   OfficeEditorToolsHeader,
   CreatePortfolioModal,
+  LinkAnnotationPopup,
   SignatureListPanel,
   RubberStampPanel,
 };

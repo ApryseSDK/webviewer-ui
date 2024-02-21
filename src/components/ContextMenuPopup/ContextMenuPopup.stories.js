@@ -65,6 +65,7 @@ export const BasicVertical = () => {
 export const OfficeEditor = () => {
   core.getOfficeEditor = () => ({
     isTextSelected: () => true,
+    isImageSelected: () => false,
     isCursorInTable: () => false,
   });
   core.getDocument = () => ({

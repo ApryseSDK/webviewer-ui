@@ -1,0 +1,57 @@
+.RibbonItem {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--faded-text);
+  white-space: nowrap;
+  height: auto;
+
+  .Button {
+    width: 100%;
+    padding: 8px;
+    column-gap: 8px;
+    row-gap: 4px;
+    color: var(--faded-text);
+    &:hover {
+      background-color: var(--blue-1);
+    }
+    &.active {
+      color: var(--ribbon-active-color);
+      background-color: transparent;
+      .Icon {
+        color: var(--ribbon-active-color);
+      }
+    }
+  }
+
+  &:not(.vertical) .Button {
+    &.active {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom: 2px solid var(--ribbon-active-color);
+    }
+  }
+
+  &.vertical {
+    white-space: wrap;
+    .Button {
+      flex-direction: column;
+      height: 100%;
+      &.active {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        border-left: 2px solid var(--ribbon-active-color);
+      }
+    }
+  }
+
+  &.vertical:not(.left) .Button {
+    &.active {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+      border-left: none;
+      border-right: 2px solid var(--ribbon-active-color);
+    }
+  }
+}

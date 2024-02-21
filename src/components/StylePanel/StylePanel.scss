@@ -5,9 +5,16 @@
   display: flex;
   flex-direction: column;
   background-color: var(--panel-background);
+  padding-bottom: 75px;
 
   .style-panel-header {
     font-size: 16px;
+    font-weight: bold;
+  }
+
+  .label {
+    padding-top: 16px;
+    font-size: 14px;
     font-weight: bold;
   }
 

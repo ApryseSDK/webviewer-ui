@@ -164,19 +164,3 @@
   }
 
 }
-
-.flx-Panel-container .notes-panel-container {
-  height: 100%;
-  padding: unset;
-  .NotesPanel {
-    padding-left: 0px;
-    padding-top: 0px;
-    width: 100%;
-    [data-element="notesPanelHeader"] {
-      padding-right: 0px;
-    }
-    .normal-notes-container, .virtualized-notes-container {
-      padding-right: 2px;
-    }
-  }
-}

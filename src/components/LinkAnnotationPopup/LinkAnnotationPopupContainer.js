@@ -21,24 +21,10 @@ import {
   useDispatch
 } from 'react-redux';
 
-const { Annotations } = window.Core;
-
 const propTypes = {
   annotation: PropTypes.object,
   handleOnMouseEnter: PropTypes.func,
   handleOnMouseLeave: PropTypes.func,
-};
-
-export const deleteLinkAnnotationWithGroup = (annotation, activeDocumentViewerKey = 1) => {
-  const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
-  const linkAnnotations = annotationManager.getGroupAnnotations(annotation);
-  linkAnnotations.forEach((linkAnnot, index) => {
-    annotationManager.ungroupAnnotations([linkAnnot]);
-    if (linkAnnot instanceof Annotations.TextHighlightAnnotation && linkAnnot.Opacity === 0 && index === 0) {
-      annotationManager.deleteAnnotation(linkAnnot, null, true);
-    }
-  });
-  annotationManager.deleteAnnotation(annotation, null, true);
 };
 
 const LinkAnnotationPopupContainer = ({
@@ -98,7 +84,9 @@ const LinkAnnotationPopupContainer = ({
   const contents = annotation?.getContents() || '';
 
   const handleUnLink = () => {
-    deleteLinkAnnotationWithGroup(annotation, activeDocumentViewerKey);
+    const group = core.getAnnotationManager().getGroupAnnotations(annotation);
+    core.getAnnotationManager().ungroupAnnotations([annotation]);
+    core.getAnnotationManager().deleteAnnotations(group, null, true);
     closePopup();
     handleOnMouseLeave();
   };

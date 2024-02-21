@@ -1,0 +1,23 @@
+.bottom-headers-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.BottomHeader {
+  display: inline-block;
+  width: 100%;
+  pointer-events: auto;
+}
+
+.BottomHeader.closed {
+  display: none;
+}
+
+.BottomHeader.stroke {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: var(--gray-5);
+}

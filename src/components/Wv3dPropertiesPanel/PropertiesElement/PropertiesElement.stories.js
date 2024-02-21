@@ -106,7 +106,7 @@ const initialState = {
     panelWidths: {
       wv3dPropertiesPanel: 330,
     },
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40

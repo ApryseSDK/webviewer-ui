@@ -50,7 +50,10 @@ const RightPanel = ({ children, dataElement, onResize }) => {
   const legacyToolsHeaderOpen = isToolsHeaderOpen && currentToolbarGroup !== 'toolbarGroup-View';
   const legacyAllHeadersHidden = !isHeaderOpen && !legacyToolsHeaderOpen;
   const { customizableUI } = featureFlags;
-  const style = {};
+  const style = {
+    // prevent panel from appearing until scss is loaded
+    display: 'none',
+  };
   // Calculating its height according to the existing horizontal modular headers
   if (customizableUI) {
     const horizontalHeadersHeight = topHeadersHeight + bottomHeadersHeight;

@@ -33,10 +33,12 @@ const RibbonItem = (props) => {
     activeGroupedItems,
     activeCustomRibbon,
     lastPickedToolForGroupedItems,
+    isRibbonItemDisabled,
   ] = useSelector((state) => [
     selectors.getActiveGroupedItems(state),
     selectors.getActiveCustomRibbon(state),
     selectors.getLastPickedToolForGroupedItems(state, groupedItems),
+    selectors.isElementDisabled(state, dataElement),
   ]);
 
   const [isActive, setIsActive] = useState(false);
@@ -73,6 +75,10 @@ const RibbonItem = (props) => {
       }
     }
   };
+
+  if (isRibbonItemDisabled) {
+    return null;
+  }
 
   return (
     isFlyoutItem ?

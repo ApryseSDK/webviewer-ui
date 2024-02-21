@@ -30,7 +30,6 @@ const RubberStampPanelInApp = (location,) => {
     ...initialState,
     viewer: {
       ...initialState.viewer,
-      toolbarGroup: 'toolbarGroup-Insert',
       isInDesktopOnlyMode: false,
       genericPanels: [{
         dataElement: 'rubberStampPanel',
@@ -42,6 +41,11 @@ const RubberStampPanelInApp = (location,) => {
         contextMenuPopup: false,
         rubberStampPanel: true,
       },
+      lastPickedToolForGroupedItems: {
+        'insertGroupedItems': 'AnnotationCreateRubberStamp'
+      },
+      activeGroupedItems: ['insertGroupedItems'],
+      activeCustomRibbon: 'toolbarGroup-Insert',
     },
     featureFlags: {
       customizableUI: true,

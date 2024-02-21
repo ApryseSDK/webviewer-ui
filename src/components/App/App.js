@@ -16,7 +16,6 @@ import FilePickerHandler from 'components/FilePickerHandler';
 import CopyTextHandler from 'components/CopyTextHandler';
 import PrintHandler from 'components/PrintHandler';
 import FontHandler from 'components/FontHandler';
-import RedactionPanel from 'components/RedactionPanel';
 import TextEditingPanel from 'components/TextEditingPanel';
 import Wv3dPropertiesPanel from 'components/Wv3dPropertiesPanel';
 import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
@@ -49,8 +48,10 @@ import useOnMeasurementToolOrAnnotationSelected from 'hooks/useOnMeasurementTool
 import useOnInlineCommentPopupOpen from 'hooks/useOnInlineCommentPopupOpen';
 import useOnRightClickAnnotation from 'hooks/useOnRightClickAnnotation';
 import useOnAnnotationContentOverlayOpen from 'hooks/useOnAnnotationContentOverlayOpen';
+import useOnLinkAnnotationPopupOpen from 'hooks/useOnLinkAnnotationPopupOpen';
 import useOnAnnotationCreateSignatureToolMode from 'hooks/useOnAnnotationCreateSignatureToolMode';
 import useOnAnnotationCreateRubberStampToolMode from 'hooks/useOnAnnotationCreateRubberStampToolMode';
+import useOnRedactionAnnotationChanged from 'hooks/useOnRedactionAnnotationChanged';
 import loadDocument from 'helpers/loadDocument';
 import getHashParameters from 'helpers/getHashParameters';
 import fireEvent from 'helpers/fireEvent';
@@ -104,8 +105,12 @@ const App = ({ removeEventHandlers }) => {
   ], shallowEqual);
 
   const { customizableUI } = featureFlags;
+  // These hooks control behaviours regarding the opening and closing of panels and in the case
+  // of the redaction hook it creates a reference that tracks the redaction annotations
   useOnAnnotationCreateRubberStampToolMode();
   useOnAnnotationCreateSignatureToolMode();
+  const { redactionAnnotationsList } = useOnRedactionAnnotationChanged();
+
   useEffect(() => {
     const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
     if (isOfficeEditingEnabled && isMobileDevice) {
@@ -119,6 +124,10 @@ const App = ({ removeEventHandlers }) => {
     const isCustomizableUIEnabled = getHashParameters('ui', 'default') === 'beta';
     if (isCustomizableUIEnabled) {
       dispatch(actions.setGenericPanels(defaultPanels));
+      // set panel widths for search and notes panel to 330px for the new UI
+      // we dont want to change this for the legacy panels at this time.
+      dispatch(actions.setPanelWidth(DataElements.SEARCH_PANEL, 330));
+      dispatch(actions.setPanelWidth(DataElements.NOTES_PANEL, 330));
       dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
     }
   }, []);
@@ -297,7 +306,7 @@ const App = ({ removeEventHandlers }) => {
       case panelNames.STYLE:
         return <LazyLoadWrapper Component={LazyLoadComponents.StylePanel} dataElement={dataElement} />;
       case panelNames.REDACTION:
-        return <LazyLoadWrapper Component={LazyLoadComponents.RedactionPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.RedactionPanel} dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} />;
       case panelNames.SEARCH:
         return <LazyLoadWrapper Component={LazyLoadComponents.SearchPanel} dataElement={dataElement} />;
       case panelNames.NOTES:
@@ -375,7 +384,10 @@ const App = ({ removeEventHandlers }) => {
             />}
           </RightPanel>}
           {!customizableUI && <RightPanel dataElement="redactionPanel" onResize={(width) => dispatch(actions.setRedactionPanelWidth(width))}>
-            <RedactionPanel />
+            <LazyLoadWrapper
+              Component={LazyLoadComponents.RedactionPanel}
+              dataElement={DataElements.REDACTION_PANEL}
+              redactionAnnotationsList={redactionAnnotationsList} />
           </RightPanel>}
           <RightPanel dataElement="watermarkPanel" onResize={(width) => dispatch(actions.setWatermarkPanelWidth(width))}>
             <WatermarkPanel />
@@ -416,6 +428,11 @@ const App = ({ removeEventHandlers }) => {
           Component={LazyLoadComponents.AnnotationContentOverlay}
           dataElement={DataElements.ANNOTATION_CONTENT_OVERLAY}
           onOpenHook={useOnAnnotationContentOverlayOpen}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.LinkAnnotationPopup}
+          dataElement={DataElements.LINK_ANNOTATION_POPUP}
+          onOpenHook={useOnLinkAnnotationPopupOpen}
         />
         <LazyLoadWrapper
           Component={LazyLoadComponents.PageManipulationOverlay}

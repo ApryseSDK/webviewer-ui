@@ -72,6 +72,7 @@
     "type": "genere",
     "upload": "Caricare",
     "link": "collegamento",
+    "unlink": "Elimina collegamento",
     "fileAttachmentDownload": "Scarica il file allegato",
     "prevResult": "Risultato precedente",
     "nextResult": "Il prossimo risultato",

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Measure from 'react-measure';
 import selectors from 'selectors';
 import classNames from 'classnames';
-import { ALIGNMENT, ITEM_TYPE, DIRECTION, DEFAULT_GAP } from 'constants/customizationVariables';
+import { JUSTIFY_CONTENT, ITEM_TYPE, DIRECTION, DEFAULT_GAP } from 'constants/customizationVariables';
 import actions from 'actions';
 import InnerItem from '../InnerItem';
 import ToggleElementButton from '../ToggleElementButton';
@@ -18,7 +18,7 @@ const GroupedTools = (props) => {
     headerDirection,
     gap = DEFAULT_GAP,
     grow = 0,
-    alignment = ALIGNMENT.START,
+    justifyContent = JUSTIFY_CONTENT.START,
     uniqueID,
   } = props;
 
@@ -70,7 +70,7 @@ const GroupedTools = (props) => {
     const isHorizontalHeader = headerDirection === DIRECTION.ROW;
     const itemsShown = visibleItemsRef?.current?.getElementsByClassName('ToolGroupButton');
     const moreButtonRect = moreButtonRef.current.getBoundingClientRect();
-    const availableSpace = isThereAvailableSpace(itemsShown, parentRect, headerDirection, alignment);
+    const availableSpace = isThereAvailableSpace(itemsShown, parentRect, headerDirection, justifyContent);
     const sizeNeededForButton = isHorizontalHeader ? moreButtonRect.width + gap : moreButtonRect.height + gap;
 
     if (availableSpace < sizeNeededForButton && visibleItems.length > 1) {
@@ -193,7 +193,7 @@ const GroupedTools = (props) => {
         style={{
           gap: `${itemsGap}px`,
           flexDirection: headerDirection,
-          justifyContent: alignment,
+          justifyContent: justifyContent,
           flexGrow: grow
         }}>
         <Measure
@@ -265,7 +265,7 @@ GroupedTools.propTypes = {
   headerDirection: PropTypes.string,
   gap: PropTypes.number,
   grow: PropTypes.number,
-  alignment: PropTypes.string,
+  justifyContent: PropTypes.string,
   uniqueID: PropTypes.string,
 };
 

@@ -1,15 +1,25 @@
 @import '../../constants/panel';
 
 .BookmarksPanel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  
   .bookmark-switch {
     -webkit-font-smoothing: antialiased;
     margin-top: var(--padding-medium);
-    margin-left: var(--padding);
-    margin-right: var(--padding);
     padding-left: 4px;
 
     label {
       font-size: 11px;
     }
+  }
+
+  .bookmark-outline-single-container {
+    margin-top: var(--padding-medium);
+  }
+
+  .msg-no-bookmark-outline {
+    margin-top: var(--padding);
   }
 }

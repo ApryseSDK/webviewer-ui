@@ -118,6 +118,9 @@ const DataElements = {
   AUDIO_PLAYBACK_POPUP: 'audioPlaybackPopup',
   DOCUMENT_CROP_POPUP: 'documentCropPopup',
   SNIPPING_TOOL_POPUP: 'snippingToolPopup',
+  LINK_ANNOTATION_POPUP: 'linkAnnotationPopup',
+  LINK_ANNOTATION_UNLINK_BUTTON: 'linkAnnotationUnlinkButton',
+  LINK_URI: 'linkUri',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',

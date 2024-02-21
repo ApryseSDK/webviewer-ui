@@ -1,3 +1,4 @@
+import core from 'core';
 import classNames from 'classnames';
 import Icon from 'components/Icon';
 import useOnClickOutside from 'hooks/useOnClickOutside';
@@ -10,11 +11,27 @@ import useArrowFocus from '../../hooks/useArrowFocus';
 import './Dropdown.scss';
 
 const DEFAULT_WIDTH = 100;
+const DEFAULT_HEIGHT = 28;
+const directionMap = {
+  'up': 'down',
+  'down': 'up',
+  'left': 'right',
+  'right': 'left',
+};
 
 const propTypes = {
   items: PropTypes.array,
   images: PropTypes.array,
-  width: PropTypes.number,
+  objects: PropTypes.array,
+  objectKey: PropTypes.string,
+  width: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   columns: PropTypes.number,
   currentSelectionKey: PropTypes.string,
   translationPrefix: PropTypes.string,
@@ -29,13 +46,17 @@ const propTypes = {
   getKey: PropTypes.func,
   getDisplayValue: PropTypes.func,
   className: PropTypes.string,
-  onOpened: PropTypes.func
+  onOpened: PropTypes.func,
+  arrowDirection: PropTypes.string,
 };
 
 function Dropdown({
   items = [],
   images = [],
-  width = DEFAULT_WIDTH,
+  objects = [],
+  objectKey,
+  width = width || DEFAULT_WIDTH,
+  height,
   columns = 1,
   currentSelectionKey,
   translationPrefix,
@@ -54,7 +75,9 @@ function Dropdown({
   displayButton = null,
   customDataValidator = () => true,
   isSearchEnabled = true,
-  onOpened = () => {}
+  onOpened = () => {},
+  arrowDirection = 'down',
+  children,
 }) {
   const { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
@@ -82,15 +105,50 @@ function Dropdown({
       });
     }
 
-    // Checking if there is space to place the overlay under its trigger, if not, place it on the trigger's top.
-    const overlayRect = overlayRef?.current?.getBoundingClientRect();
-    const buttonRect = buttonRef.current.getBoundingClientRect();
-    if (overlayRect && buttonRect.bottom + overlayRect.height > window.innerHeight) {
-      overlayRef.current.style.top = `-${overlayRect.height}px`;
+    // Keep the dropdown within the bounds of the viewer.
+    const overlayBounds = overlayRef?.current?.getBoundingClientRect();
+    const buttonBounds = buttonRef?.current?.getBoundingClientRect();
+    let scrollViewRect = overlayRef?.current?.closest('body')?.getBoundingClientRect();
+    if (core && core.getDocumentViewer()) {
+      scrollViewRect = core.getScrollViewElement().getBoundingClientRect();
+    }
+    if (overlayBounds && !isOpen) {
+      const horizontalOpening = arrowDirection === 'left' || arrowDirection === 'right';
+      const bottomTop = scrollViewRect.top <= overlayBounds.top;
+      const topBottom = scrollViewRect.bottom >= overlayBounds.bottom;
+      const offset = horizontalOpening ? buttonBounds.height : 0;
+      // Check for containment vertically only.
+      if (bottomTop && topBottom) {
+        // Still inside the viewer, no need to adjust.
+        overlayRef.current.style.top = `${buttonBounds.height - offset}px`;
+      } else {
+        // If the overlay is past the bottom of the viewer, move it to the top instead.
+        if (overlayBounds.bottom > scrollViewRect.bottom) {
+          overlayRef.current.style.top = `-${overlayBounds.height - offset}px`;
+        } else {
+          // Otherwise the overlay is past the top of the viewer, move it to the bottom instead.
+          overlayRef.current.style.top = `${buttonBounds.height - offset}px`;
+        }
+      }
+      if (arrowDirection === 'left') {
+        overlayRef.current.style.left = `-${buttonBounds.width}px`;
+      }
+      if (arrowDirection === 'right') {
+        overlayRef.current.style.left = `${buttonBounds.width}px`;
+      }
     } else {
-      overlayRef.current.style.top = '28px';
+      overlayRef.current.style.top = '';
     }
   }, [hasInput, isOpen, disabled]);
+
+  useEffect(() => {
+    if (!isOpen && overlayRef?.current) {
+      // Always reset style when closing to prevent height calculations from being off.
+      overlayRef.current.style.top = '';
+      // Scroll to the top of list when closing.
+      overlayRef.current.scrollTop = 0;
+    }
+  }, [isOpen]);
 
   // Close dropdown if WebViewer loses focus (ie, user clicks outside iframe).
   useEffect(() => {
@@ -109,6 +167,11 @@ function Dropdown({
       setInputVal('');
     } else {
       onOpened();
+    }
+
+    if (isOpen && hasInput && inputRef?.current) {
+      inputRef.current.value = currentSelectionKey;
+      inputRef.current.select();
     }
   }, [isOpen]);
 
@@ -147,7 +210,7 @@ function Dropdown({
   const getDropdownStyles = (item, maxheight) => {
     const dropdownItemStyles = getCustomItemStyle(item);
     if (maxheight) {
-      dropdownItemStyles.lineHeight = '28px';
+      dropdownItemStyles.lineHeight = `${height || DEFAULT_HEIGHT}px`;
     }
     return dropdownItemStyles;
   };
@@ -164,6 +227,29 @@ function Dropdown({
       <Icon glyph={image.src} className={image.className} />
     </DataElementWrapper>
   ));
+
+  const renderDropdownObjects = () => objects.map((object, index) => {
+    const translatedDisplayValue = getTranslatedDisplayValue(object.label || '');
+    return (
+      <DataElementWrapper
+        key={object.dataElement}
+        type="button"
+        dataElement={`dropdown-item-${index}`}
+        className={classNames('Dropdown__item', { active: object.index === currentSelectionKey })}
+        tabIndex={isOpen ? undefined : -1} // Just to be safe.
+        onClick={(e) => onClickDropdownItem(e, object[objectKey])}
+      >
+        <div className={'Dropdown__item-object'}>
+          {object.img &&
+            <Icon glyph={object.img} className={object.className} />
+          }
+          {(translatedDisplayValue) &&
+            <span className={'Dropdown__item-text'}>{translatedDisplayValue}</span>
+          }
+        </div>
+      </DataElementWrapper>
+    );
+  });
 
   const getTranslatedDisplayValue = (item) => getTranslation(translationPrefix, getDisplayValue(item));
 
@@ -194,6 +280,7 @@ function Dropdown({
   let selectedItemDisplay;
 
   const hasImages = images && images.length > 0;
+  const hasObjects = objects && objects.length > 0;
   if (hasImages) {
     const imageKeys = images.map((item) => item.key);
     const selectedImageIndex = getImageIndexFromKey(images, currentSelectionKey);
@@ -210,7 +297,31 @@ function Dropdown({
       <Icon glyph={glyph} className={className} />
     );
     dropdownItems = useMemo(renderDropdownImages, [images, currentSelectionKey]);
-  } else {
+  } else if (hasObjects) {
+    const objectKeys = objects.map((item) => item[objectKey]);
+    const selectedObjectIndex = objectKeys.indexOf(currentSelectionKey);
+    optionIsSelected = objects.some((object) => object[objectKey] === currentSelectionKey);
+
+    let glyph = '';
+    let text = '';
+    let className = '';
+    if (selectedObjectIndex > -1) {
+      glyph = objects[selectedObjectIndex].img;
+      text = objects[selectedObjectIndex].label;
+      className = objects[selectedObjectIndex].className;
+    }
+    selectedItemDisplay = (
+      <div className={'Dropdown__item-object'}>
+        {glyph &&
+          <Icon glyph={glyph} className={className} />
+        }
+        {text &&
+          <span className={'Dropdown__item-text'}>{text}</span>
+        }
+      </div>
+    );
+    dropdownItems = useMemo(renderDropdownObjects, [objects, currentSelectionKey]);
+  } else if (!children) {
     optionIsSelected = items.some((item) => getKey(item) === currentSelectionKey);
     if (optionIsSelected) {
       selectedItem = items.find((item) => getKey(item) === currentSelectionKey);
@@ -231,7 +342,17 @@ function Dropdown({
     ]);
   }
 
+  const onOverlayKeyDown = (e) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown' && isOpen) {
+      // prevent overlay div scrolling when using arrow keys
+      e.preventDefault();
+    }
+  };
+
   const buttonStyle = { width: `${width}px` };
+  if (height) {
+    buttonStyle.height = `${height}px`;
+  }
   const scrollItemsStyle = { maxHeight: `${maxHeight}px` };
 
   const createDropdownButton = useCallback((value) => {
@@ -242,8 +363,12 @@ function Dropdown({
         setInputVal(e.target.value);
       };
 
-      const onBlur = () => {
-        setInputVal('');
+      const onBlur = (e) => {
+        // if the blur event is not caused by clicking on a dropdown item then clear the input
+        const clickedOnDropdownItem = e.relatedTarget?.dataset?.element?.includes('dropdown-item');
+        if (!clickedOnDropdownItem) {
+          setInputVal('');
+        }
       };
 
       const onKeyDown = (e) => {
@@ -265,6 +390,11 @@ function Dropdown({
           onClickItem(itemToClick, -1);
           inputRef?.current?.blur();
           setIsOpen(false);
+        }
+
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown' && isOpen) {
+          // prevents scrolling when moving to overlay div using arrow keys
+          e.preventDefault();
         }
       };
 
@@ -291,7 +421,7 @@ function Dropdown({
   ]);
 
   return (
-    <DataElementWrapper className={`Dropdown__wrapper ${className}`} dataElement={dataElement}>
+    <DataElementWrapper className={`Dropdown__wrapper ${className} ${isOpen ? 'open' : ''}`} dataElement={dataElement}>
       {!displayButton &&
         <button
           className={classNames({
@@ -311,12 +441,12 @@ function Dropdown({
             >
               {createDropdownButton(optionIsSelected ? selectedItemDisplay : (placeholder || ''))}
             </div>
-            <Icon className="arrow" glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
+            <Icon className="arrow" glyph={`icon-chevron-${isOpen ? directionMap[arrowDirection] : arrowDirection}`} />
           </div>
         </button>
       }
       {displayButton &&
-        <div ref={buttonRef} onClick={onToggle}>
+        <div ref={buttonRef} onClick={onToggle} className='display-button'>
           {displayButton(isOpen)}
         </div>
       }
@@ -326,15 +456,17 @@ function Dropdown({
         role="listbox"
         aria-label={t(`${translationPrefix}.dropdownLabel`)}
         style={maxHeight ? scrollItemsStyle : undefined}
+        onKeyDown={onOverlayKeyDown}
       >
-        {dropdownItems.length > 0 ?
-          (columns > 1 ?
-            displayDropdownAsList(dropdownItems, columns)
-            : dropdownItems
-          ) :
-          <>
-            <button data-testid="sig-no-result" className="Dropdown__item">{t('message.noResults')}</button>
-          </>
+        {children ? React.cloneElement(children, { onClose }) :
+          dropdownItems.length > 0 ?
+            (columns > 1 ?
+              displayDropdownAsList(dropdownItems, columns) :
+              dropdownItems
+            ) :
+            <>
+              <button data-testid="sig-no-result" className="Dropdown__item">{t('message.noResults')}</button>
+            </>
         }
       </div>
     </DataElementWrapper>

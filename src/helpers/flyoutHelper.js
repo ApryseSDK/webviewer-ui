@@ -12,7 +12,7 @@ export function getFlyoutPositionOnElement(dataElement, flyoutRef) {
   // Calculate the available space on the left and right sides of the reference element within the container
   const availableSpaceLeft = referenceButtonRect.left - appRect.left;
   const availableSpaceRight = appRect.right - referenceButtonRect.right;
-  let flyoutX = referenceButtonRect.left - appRect.left;
+  let flyoutX = referenceButtonRect.left;
 
   if (parentHeader?.classList.contains('LeftHeader')) {
     flyoutX += referenceButtonRect.width + defaultOffset;
@@ -25,7 +25,7 @@ export function getFlyoutPositionOnElement(dataElement, flyoutRef) {
   // Calculate the available space above and below the reference element within the container
   const availableSpaceAbove = referenceButtonRect.top - appRect.top;
   const availableSpaceBelow = appRect.bottom - referenceButtonRect.bottom;
-  let flyoutY = referenceButtonRect.top - appRect.top;
+  let flyoutY = referenceButtonRect.top;
 
   if (parentHeader?.classList.contains('TopHeader')) {
     flyoutY += referenceButtonRect.height + defaultOffset;
@@ -34,7 +34,7 @@ export function getFlyoutPositionOnElement(dataElement, flyoutRef) {
   } else if (availableSpaceAbove >= availableSpaceBelow) {
     flyoutY = referenceButtonRect.bottom - targetElement.clientHeight;
 
-    // This case is for flyouts toggled by elements that are not on a header
+    // This case is not flor flyouts toggled by an elemen on a header
   } else if (availableSpaceBelow > targetElement.clientHeight && !parentHeader) {
     flyoutY += referenceButtonRect.height + defaultOffset;
   }

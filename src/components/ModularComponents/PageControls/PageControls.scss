@@ -1,0 +1,74 @@
+@import '../../../constants/styles';
+@import '../../../constants/overlay';
+
+.PageControlsWrapper {
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-grow: 0;
+
+  .total-page {
+    margin: auto;
+  }
+
+  .paddingTop {
+    padding-top: 4px;
+  }
+
+  .paddingLeft {
+    padding-left: 4px;
+  }
+
+  form {
+    height: 100%;
+  }
+
+  form input {
+    height: 100%;
+    text-align: center;
+    font-family: Lato, sans-serif;
+    font-weight: 700;
+    background: var(--gray-0);
+    cursor: pointer;
+    outline: none;
+    border-radius: 3px;
+    min-width: 32px;
+  }
+}
+
+.pageNavFlyoutMenu {
+  .page-nav-display .flyout-item-label>* {
+    margin: auto;
+  }
+
+  form input {
+    font-size: 13px !important;
+    width: 17px;
+    font-family: Lato, sans-serif;
+    cursor: pointer;
+    outline: none;
+    margin: 0px 6px;
+    padding: 0;
+    text-align: center;
+    background: transparent;
+
+    min-width: 26px;
+    min-height: 22px;
+  }
+
+  form input:not(:focus) {
+    font-weight: 700;
+    border: none;
+    border-bottom: 1px solid var(--icon-color);
+    border-radius: 0;
+  }
+
+  form input:focus {
+    height: 100%;
+    background: var(--gray-0);
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    min-height: 26px;
+  }
+}

@@ -103,9 +103,11 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
         return;
       }
       const groupedAnnots = annotManager.getGroupAnnotations(annot);
+      // ungroup and delete any previously created links
       if (groupedAnnots.length > 1) {
         const linksToDelete = groupedAnnots.filter((annot) => annot instanceof window.Core.Annotations.Link);
         if (linksToDelete.length > 0) {
+          annotManager.ungroupAnnotations(groupedAnnots);
           core.deleteAnnotations(linksToDelete);
         }
       }

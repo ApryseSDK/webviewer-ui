@@ -72,6 +72,7 @@
     "type": "입력",
     "upload": "업로드",
     "link": "링크",
+    "unlink": "링크 삭제",
     "fileAttachmentDownload": "다운로드",
     "prevResult": "이전결과",
     "nextResult": "다음결과",

@@ -15,7 +15,8 @@ WebViewer(...)
     instance.UI.addEventListener(instance.UI.Events.ANNOTATION_FILTER_CHANGED, listener);
   });
  */
+import { getInstanceNode } from 'helpers/getRootNode';
 
 export default (eventName, listener) => {
-  window.removeEventListener(eventName, listener);
+  getInstanceNode().removeEventListener(eventName, listener);
 };

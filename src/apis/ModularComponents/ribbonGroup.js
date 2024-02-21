@@ -19,11 +19,7 @@ export default (store) => (props) => {
   // Adding the custom ribbon group items to the redux store
   props.items.forEach((item) => {
     if (item.groupedItems?.length) {
-      let ribbonGroupItems = [];
-      item.groupedItems.forEach((groupedItem) => {
-        ribbonGroupItems = ribbonGroupItems.concat(groupedItem.items);
-      });
-      store.dispatch(actions.setHeaderItems(item.toolbarGroup, ribbonGroupItems));
+      store.dispatch(actions.setHeaderItems(item.toolbarGroup, item.groupedItems));
     }
   });
 

@@ -2,13 +2,14 @@ import core from 'core';
 import getRootNode from 'helpers/getRootNode';
 
 // gap between the annotation selection box and the popup element
-const gap = 17;
+const defaultGap = 17;
 
-export const getAnnotationPopupPositionBasedOn = (annotation, popup, documentViewerKey = 1) => {
+export const getAnnotationPopupPositionBasedOn = (annotation, popup, documentViewerKey = 1, gap = defaultGap) => {
   const { left, top } = calcAnnotationPopupPosition(
     getAnnotationPosition(annotation, documentViewerKey),
     getPopupDimensions(popup),
     documentViewerKey,
+    gap,
   );
 
   return { left: Math.max(left, 4), top };
@@ -192,8 +193,8 @@ const getPopupDimensions = (popup) => {
   return { width, height };
 };
 
-const calcAnnotationPopupPosition = (annotationPosition, popupDimension, documentViewerKey) => {
-  const top = calcPopupTop(annotationPosition, popupDimension, documentViewerKey);
+const calcAnnotationPopupPosition = (annotationPosition, popupDimension, documentViewerKey, gap) => {
+  const top = calcPopupTop(annotationPosition, popupDimension, documentViewerKey, gap);
   const left = calcPopupLeft(annotationPosition, popupDimension, documentViewerKey);
 
   return { left, top };
@@ -232,7 +233,7 @@ export const calcPopupLeft = ({ topLeft, bottomRight }, { width }, documentViewe
  * @param {number} popupDimension The deminition of the popup (width, height)
  * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
  */
-export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewerKey) => {
+export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewerKey, gap = defaultGap) => {
   const padding = 5;
   const scrollContainer = core.getScrollViewElement(documentViewerKey);
   const boundingBox = scrollContainer.getBoundingClientRect();
@@ -274,8 +275,8 @@ export const getReaderModePopupPositionBasedOn = (annotPosition, popup, viewer) 
   const viewerRect = viewer.current.getBoundingClientRect();
 
   let top = 5;
-  const annotTop = annotPosition.top - gap;
-  const annotBottom = annotPosition.bottom + gap;
+  const annotTop = annotPosition.top - defaultGap;
+  const annotBottom = annotPosition.bottom + defaultGap;
   if (annotBottom + height < viewerRect.height) {
     top = annotBottom;
   } else if (annotTop > height) {

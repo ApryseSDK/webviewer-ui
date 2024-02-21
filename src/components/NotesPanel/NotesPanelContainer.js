@@ -4,7 +4,7 @@ import NotesPanel from './NotesPanel';
 import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 
-function NotePopupContainer(props) {
+function NotesPanelContainer(props) {
   const isCustomPanelOpen = props.isCustomPanelOpen;
   const [
     isOpen,
@@ -61,7 +61,7 @@ function NotePopupContainer(props) {
       const selectedAnnotations = core.getSelectedAnnotations(documentViewerKey);
       const groupedAnnots = getGroupedAnnots(selectedAnnotations);
 
-      if (groupedAnnots.length === selectedAnnotations.length) {
+      if (isMultiSelectMode && groupedAnnots.length === selectedAnnotations.length) {
         setMultiSelectMode(false);
       }
 
@@ -198,4 +198,4 @@ function NotePopupContainer(props) {
   );
 }
 
-export default NotePopupContainer;
+export default NotesPanelContainer;

@@ -27,7 +27,7 @@
   }
 
   .rubber-stamps-container {
-    overflow-y: scroll;
+    overflow: auto;
     padding: 0px 4px;
 
     .rubber-stamps-list-header {

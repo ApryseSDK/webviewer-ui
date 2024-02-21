@@ -7,7 +7,7 @@ import disableFeatures from 'src/apis/disableFeatures';
 import enableFeatures from 'src/apis/enableFeatures';
 import Feature from 'constants/feature';
 
-export default store => () => {
+export default (store) => () => {
   const { dispatch } = store;
   const isReadOnly = core.getIsReadOnly();
 

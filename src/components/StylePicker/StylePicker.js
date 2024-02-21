@@ -26,8 +26,6 @@ import {
   hasSnapModeCheckbox,
   shouldShowTextStyle,
   shouldHideTransparentFillColor,
-  shouldHideStrokeStyle,
-  shouldHideFillColorAndCollapsablePanelSections,
 } from 'helpers/stylePanelHelper';
 import useOnFreeTextEdit from 'hooks/useOnFreeTextEdit';
 import RichTextStyleEditor from '../RichTextStyleEditor';
@@ -42,12 +40,10 @@ const propTypes = {
   isFreeText: PropTypes.bool,
   isEllipse: PropTypes.bool,
   isRedaction: PropTypes.bool,
-  isTextStylePickerHidden: PropTypes.bool,
   redactionLabelProperties: PropTypes.object,
   isFreeHand: PropTypes.bool,
   showLineStyleOptions: PropTypes.bool,
   isArc: PropTypes.bool,
-  isStamp: PropTypes.bool,
   isInFormFieldCreationMode: PropTypes.bool,
   startLineStyle: PropTypes.string,
   endLineStyle: PropTypes.string,
@@ -68,11 +64,9 @@ const StylePicker = ({
   isFreeText,
   isEllipse,
   isRedaction,
-  isTextStylePickerHidden,
   isFreeHand,
   showLineStyleOptions,
   isArc,
-  isStamp,
   isInFormFieldCreationMode,
   startLineStyle,
   endLineStyle,
@@ -92,9 +86,8 @@ const StylePicker = ({
   const [strokeLineStyle, setStrokeLineStyle] = useState(strokeStyle);
   const [fillColor, setFillColor] = useState(style.FillColor);
 
-  const hideStrokeStyle = shouldHideStrokeStyle(toolName);
+  const showStrokeStyle = true;
   const showFillColorAndCollapsablePanelSections = hasFillColorAndCollapsablePanelSections(toolName);
-  const hideFillColorAndCollapsablePanelSections = shouldHideFillColorAndCollapsablePanelSections(toolName);
   const hideStrokeSlider = shouldHideStrokeSlider(toolName);
   const showSnapModeCheckbox = hasSnapModeCheckbox(toolName);
   const showTextStyle = shouldShowTextStyle(toolName);
@@ -200,7 +193,7 @@ const StylePicker = ({
   const openOpacityContainer = () => togglePanelItem(DataElements.OPACITY_CONTAINER);
 
   const getSliderProps = (type) => {
-    const { Opacity, StrokeThickness, FontSize } = style;
+    const { Opacity, StrokeThickness } = style;
 
     const lineStart = circleRadius;
     switch (type.toLowerCase()) {
@@ -268,25 +261,6 @@ const StylePicker = ({
           step: 1,
           getLocalValue: (strokeThickness) => parseFloat(strokeThickness).toFixed(2),
         };
-      case 'fontsize':
-        if (FontSize === null) {
-          return null;
-        }
-        return {
-          property: 'FontSize',
-          displayProperty: 'text',
-          value: FontSize,
-          getDisplayValue: (FontSize) => `${Math.round(parseInt(FontSize, 10))}pt`,
-          dataElement: DataElements.FONT_SIZE_SLIDER,
-          getCirclePosition: (lineLength, FontSize) => ((parseInt(FontSize, 10) - 5) / 40) * lineLength + lineStart,
-          convertRelativeCirclePositionToValue: (circlePosition) => `${circlePosition * 40 + 5}pt`,
-          min: 5,
-          max: 45,
-          step: 1,
-          withInputField: true,
-          inputFieldType: 'number',
-          getLocalValue: (FontSize) => `${parseFloat(FontSize).toFixed(2)}pt`,
-        };
     }
   };
 
@@ -313,8 +287,6 @@ const StylePicker = ({
   };
 
   const onOpenProps = useOnFreeTextEdit();
-  const textSizeSlider = (isTextStylePickerHidden) ? <div className="StyleOption text-size-slider">{renderSlider('fontsize')}</div> : null;
-  const strokethicknessComponent = renderSlider('strokethickness');
 
   return (
     <div
@@ -357,15 +329,13 @@ const StylePicker = ({
               onRichTextStyleChange={handleRichTextStyleChange}
               isRedaction={isRedaction}
               activeTool={activeTool}
-              isTextStylePickerHidden={isTextStylePickerHidden}
-              textSizeSliderComponent={textSizeSlider}
             />
           )}
           {renderDivider()}
         </div>
       )}
 
-      {!hideStrokeStyle && (
+      {showStrokeStyle && (
         <div className="PanelSection">
           {showFillColorAndCollapsablePanelSections && (
             <div
@@ -383,13 +353,13 @@ const StylePicker = ({
               </div>
             </div>
           )}
-          {(isStrokeStyleContainerActive || !showFillColorAndCollapsablePanelSections) && !isStamp && (
+          {(isStrokeStyleContainerActive || !showFillColorAndCollapsablePanelSections) && (
             <>
               <div className="menu-items">
                 <ColorPicker onColorChange={onStrokeColorChange} onStyleChange={onStyleChange} color={strokeColor}
                   activeTool={activeTool} type={'Stroke'}/>
               </div>
-              {!hideStrokeSlider && strokethicknessComponent && (strokethicknessComponent)}
+              {!hideStrokeSlider && <div className="StyleOption">{renderSlider('strokethickness')}</div>}
               {/*
                 When showLineStyleOptions is true, we want to show the opacity slider together with the stroke slider
               */}
@@ -437,7 +407,7 @@ const StylePicker = ({
           {renderDivider()}
         </div>
       )}
-      {showFillColorAndCollapsablePanelSections && !hideFillColorAndCollapsablePanelSections && (
+      {showFillColorAndCollapsablePanelSections && (
         <div className="PanelSection">
           <div
             className="collapsible-menu FillColorPicker"

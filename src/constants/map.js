@@ -761,6 +761,8 @@ export const mapAnnotationToKey = (annotation) => Object.keys(map).find((key) =>
 
 export const mapAnnotationToToolName = (annotation) => map[mapAnnotationToKey(annotation)].toolNames[0];
 
+export const mapKeyToToolNames = (key) => map[key].toolNames;
+
 export const copyMapWithDataProperties = (...properties) => Object.keys(map).reduce((newMap, key) => {
   newMap[key] = {};
   properties.forEach((property) => {

@@ -53,14 +53,14 @@ function buildSearchModeFlag(options = {}) {
   return searchMode;
 }
 
-export default (store) => (searchValue, options) => {
+export default (store) => (searchValue, options, isUserTriggered = true) => {
   const dispatch = store?.dispatch;
   // Store is optional. Default activeDocumentViewerKey is 1
   const activeDocumentViewerKey = store ? selectors.getActiveDocumentViewerKey(store.getState()) : 1;
   if (dispatch) {
     // dispatch is only set when doing search through API (instance.searchText())
     // When triggering search through UI, then redux updates are already handled inside component
-    dispatch(actions.openElement('searchPanel'));
+    isUserTriggered && dispatch(actions.openElement('searchPanel'));
     dispatch(actions.searchTextFull(searchValue, options));
   }
 

@@ -384,8 +384,11 @@ WebViewer(...)
       hotkeys(_key, { keyup: true, scope: defaultHotkeysScope }, (e) => {
         // Preventing the hotkey from being called multiple times or in the wrong viewer
         // when using the web component version of webviewer.
+        // the escape key is special, it can be triggered with the wrong target if for example we
+        // add a signature from the modal and then choose to not apply it, so we whitelist it
+        const isEscape = e.key === 'Escape';
         const calledFromCurrentViewer = e.currentTarget.activeElement.shadowRoot === getRootNode();
-        if (calledFromCurrentViewer || !window.isApryseWebViewerWebComponent) {
+        if (calledFromCurrentViewer || !window.isApryseWebViewerWebComponent || isEscape) {
           if (e.type === 'keyup') {
             keyup(e);
           }

@@ -26,6 +26,7 @@ const DIRECTION = {
 };
 
 const ITEM_TYPE = {
+  MODULAR_HEADER: 'modularHeader',
   BUTTON: 'customButton',
   STATEFUL_BUTTON: 'statefulButton',
   GROUPED_ITEMS: 'groupedItems',
@@ -38,6 +39,11 @@ const ITEM_TYPE = {
   TOOL_BUTTON: 'toolButton',
   ZOOM: 'zoom',
   FLYOUT: 'flyout',
+  PAGE_CONTROLS: 'pageControls',
+  PRESET_BUTTON: 'presetButton',
+  VIEW_CONTROLS: 'viewControls',
+  MENU: 'menu',
+  TABS_PANEL: 'tabPanel',
 };
 
 const RESPONSIVE_ITEMS = [
@@ -45,6 +51,14 @@ const RESPONSIVE_ITEMS = [
   ITEM_TYPE.GROUPED_TOOLS,
   ITEM_TYPE.RIBBON_GROUP,
   ITEM_TYPE.ZOOM,
+  ITEM_TYPE.PAGE_CONTROLS,
+];
+
+const BUTTON_TYPES = [
+  ITEM_TYPE.BUTTON,
+  ITEM_TYPE.STATEFUL_BUTTON,
+  ITEM_TYPE.TOGGLE_BUTTON,
+  ITEM_TYPE.TOOL_GROUP_BUTTON,
 ];
 
 const OPACITY_MODES = {
@@ -65,6 +79,21 @@ const DEFAULT_STYLES = {
   BORDER_STYLE: 'solid',
 };
 
+const PRESET_BUTTON_TYPES = {
+  UNDO: 'undoButton',
+  REDO: 'redoButton',
+  NEW_DOCUMENT: 'newDocumentButton',
+  FILE_PICKER: 'filePickerButton',
+  DOWNLOAD: 'downloadButton',
+  FULLSCREEN: 'fullscreenButton',
+  SAVE_AS: 'saveAsButton',
+  PRINT: 'printButton',
+  CREATE_PORTFOLIO: 'createPortfolioButton',
+  SETTINGS: 'settingsButton',
+  FORM_FIELD_EDIT: 'formFieldEditButton',
+  CONTENT_EDIT: 'contentEditButton',
+};
+
 const DEFAULT_GAP = 12;
 
 export {
@@ -78,4 +107,6 @@ export {
   OPACITY_MODES,
   RESPONSIVE_ITEMS,
   DEFAULT_STYLES,
+  PRESET_BUTTON_TYPES,
+  BUTTON_TYPES,
 };

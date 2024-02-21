@@ -102,7 +102,7 @@ const ModularHeaderItems = (props) => {
           dataElement={`${flyoutDataElement}Toggle`}
           toggleElement={flyoutDataElement}
           title="action.more"
-          img="icon-double-chevron-down"/>
+          img="icon-double-chevron-down" />
       }
     </div>
   );

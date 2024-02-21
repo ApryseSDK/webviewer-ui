@@ -4,7 +4,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import LeftHeader from 'components/ModularComponents/LeftHeader';
 import initialState from 'src/redux/initialState';
 import rootReducer from 'reducers/rootReducer';
-import { defaultLeftHeader, secondFloatStartLeftHeader, floatStartLeftHeader, floatCenterLeftHeader, floatEndLeftHeader } from '../../Helpers/mockHeaders';
+import {
+  defaultLeftHeader,
+  secondFloatStartLeftHeader,
+  floatStartLeftHeader,
+  floatCenterLeftHeader,
+  floatEndLeftHeader,
+  mockModularComponents
+} from '../../Helpers/mockHeaders';
 
 export default {
   title: 'ModularComponents/FloatingHeader/LeftHeader',
@@ -26,6 +33,7 @@ const MockAppWrapperWithBottomHeader = ({ modularHeaders }) => {
     viewer: {
       ...initialState.viewer,
       modularHeaders,
+      modularComponents: mockModularComponents,
     },
     featureFlags: {
       customizableUI: true,
@@ -47,36 +55,37 @@ const MockAppWrapperWithBottomHeader = ({ modularHeaders }) => {
 };
 
 const Template = (args) => <MockAppWrapperWithBottomHeader {...args} />;
+Template.parameters = { chromatic: { disableSnapshot: true } };
 
 export const LeftHeaderWithDefaultAndFloaties = Template.bind({});
 LeftHeaderWithDefaultAndFloaties.args = {
-  modularHeaders: [
+  modularHeaders: {
     defaultLeftHeader,
     secondFloatStartLeftHeader,
     floatStartLeftHeader,
     floatCenterLeftHeader,
     floatEndLeftHeader,
-  ],
+  },
 };
 
 export const FloatLeftStartHeader = Template.bind({});
 FloatLeftStartHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatStartLeftHeader,
     secondFloatStartLeftHeader,
-  ],
+  },
 };
 
 export const FloatLeftCenterHeader = Template.bind({});
 FloatLeftCenterHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatCenterLeftHeader,
-  ],
+  },
 };
 
 export const FloatLeftEndHeader = Template.bind({});
 FloatLeftEndHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatEndLeftHeader,
-  ],
+  },
 };

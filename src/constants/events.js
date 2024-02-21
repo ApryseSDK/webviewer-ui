@@ -5,7 +5,6 @@
  * @property {string} DOCUMENT_LOADED {@link UI#event:documentLoaded UI.Events.documentLoaded}
  * @property {string} DOCUMENT_MERGED {@link UI#event:documentMerged UI.Events.documentMerged}
  * @property {string} FILE_DOWNLOADED {@link UI#event:fileDownloaded UI.Events.fileDownloaded}
- * @property {string} FINISHED_SAVING_PDF {@link UI#event:finishedSavingPDF UI.Events.finishedSavingPDF}
  * @property {string} LOAD_ERROR {@link UI#event:loaderror UI.Events.loaderror}
  * @property {string} DRAG_OUTLINE {@link UI#event:dragOutline UI.Events.dragOutline}
  * @property {string} DROP_OUTLINE {@link UI#event:dragOutline UI.Events.dragOutline}
@@ -26,6 +25,8 @@
  * @property {string} TAB_MOVED {@link UI#event:tabMoved UI.Events.tabMoved}
  * @property {string} LANGUAGE_CHANGED {@link UI#event:tabMoved UI.Events.languageChanged}
  * @property {string} MULTI_VIEWER_READY {@link UI#event:multiViewerReady  UI.Events.multiViewerReady }
+ * @property {string} COMPARE_ANNOTATIONS_LOADED {@link UI#event:compareAnnotationsLoaded  UI.Events.compareAnnotationsLoaded }
+ * @property {string} TAB_MANAGER_READY {@link UI#event:onTabManagerReady  UI.Events.onTabManagerReady }
  * @example
   WebViewer(...).then(function(instance) {
     const UIEvents = instance.UI.Events;
@@ -41,7 +42,6 @@ export default {
   'DOCUMENT_LOADED': 'documentLoaded',
   'DOCUMENT_MERGED': 'documentMerged',
   'FILE_DOWNLOADED': 'fileDownloaded',
-  'FINISHED_SAVING_PDF': 'finishedSavingPDF',
   'LOAD_ERROR': 'loaderror',
   'DRAG_OUTLINE': 'dragOutline',
   'DROP_OUTLINE': 'dropOutline',
@@ -63,6 +63,7 @@ export default {
   'LANGUAGE_CHANGED': 'languageChanged',
   'MULTI_VIEWER_READY': 'multiViewerReady',
   'COMPARE_ANNOTATIONS_LOADED': 'compareAnnotationsLoaded',
+  'TAB_MANAGER_READY': 'onTabManagerReady',
 };
 
 /**
@@ -91,12 +92,6 @@ export default {
 * @property {string} filename File name
 * @property {number[]} pages Page numbers
 */
-
-/**
- * @name UI#finishedSavingPDF
- * @event
- * @deprecated Since version 8.3. Use [fileDownloaded]{@link UI#event:fileDownloaded UI.Events.fileDownloaded} instead
- */
 
 /**
 * Triggered when the file has finished downloading.
@@ -277,5 +272,10 @@ export default {
 
 /** Triggered when the compare annotations are loaded
 * @name UI#compareAnnotationsLoaded
+* @event
+*/
+
+/** Triggered when the Multi-Tab is ready and TabManager can be interacted with
+* @name UI#onTabManagerReady
 * @event
 */

@@ -72,6 +72,7 @@
     "type": "Typ",
     "upload": "Ladda upp",
     "link": "Länk",
+    "unlink": "Ta bort länk",
     "fileAttachmentDownload": "Ladda ner bifogad fil",
     "prevResult": "Tidigare resultat",
     "nextResult": "Nästa resultat",

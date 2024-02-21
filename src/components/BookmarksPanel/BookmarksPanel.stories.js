@@ -32,6 +32,7 @@ export const Basic = () => {
       customElementOverrides: {},
       pageLabels: pageLabels,
       currentPage: 3,
+      activeCustomRibbon: 'toolbarGroup-Annotate',
     },
     document: {
       bookmarks: {
@@ -60,6 +61,11 @@ export const NoBookmarks = () => {
       isOutlineEditingEnabled: true,
       pageLabels: pageLabels,
       currentPage: 3,
+      lastPickedToolForGroupedItems: {
+        'annotateGroupedItems': 'AnnotationCreateTextHighlight',
+      },
+      activeGroupedItems: ['annotateGroupedItems'],
+      activeCustomRibbon: 'toolbarGroup-View',
     },
     document: {
       bookmarks: {},
@@ -126,6 +132,11 @@ export const CustomBasic = () => {
       },
       pageLabels: pageLabels,
       currentPage: 3,
+      lastPickedToolForGroupedItems: {
+        'annotateGroupedItems': 'AnnotationCreateTextHighlight',
+      },
+      activeGroupedItems: ['annotateGroupedItems'],
+      activeCustomRibbon: 'toolbarGroup-Annotate',
     },
     document: {
       ...initialState.document,
@@ -169,6 +180,7 @@ export const CustomBasicNoBookmarks = () => {
       },
       pageLabels: pageLabels,
       currentPage: 3,
+      activeCustomRibbon: 'toolbarGroup-View',
     },
     document: {
       ...initialState.document,
@@ -205,11 +217,13 @@ export const CustomRightSide = () => {
       sortStrategy: 'position',
       isInDesktopOnlyMode: true,
       disabledElements: {
+        ...initialState.viewer.disabledElements,
         'bookmarksPanel': { disabled: false, priority: 3 },
         'bookmarksPanelButton': { disabled: false, priority: 3 },
       },
       pageLabels: pageLabels,
       currentPage: 3,
+      activeCustomRibbon: 'toolbarGroup-View',
     },
     document: {
       ...initialState.document,
@@ -248,11 +262,13 @@ export const CustomRightSideNoBookmarks = () => {
       sortStrategy: 'position',
       isInDesktopOnlyMode: true,
       disabledElements: {
+        ...initialState.viewer.disabledElements,
         'bookmarksPanel': { disabled: false, priority: 3 },
         'bookmarksPanelButton': { disabled: false, priority: 3 },
       },
       pageLabels: pageLabels,
       currentPage: 3,
+      activeCustomRibbon: 'toolbarGroup-View',
     },
     document: {
       ...initialState.document,

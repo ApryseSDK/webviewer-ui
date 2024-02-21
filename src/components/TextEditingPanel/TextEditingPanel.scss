@@ -1,0 +1,152 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.TextEditingPanel {
+  padding: 16px 16px 0px 16px;
+  display: flex;
+  flex-direction: column;
+
+  .text-editing-panel-text-style-picker {
+    margin-top: 16px;
+  }
+
+  .text-editing-panel-section {
+    .text-editing-panel-heading {
+      font-size:  var(--font-size-default);
+      font-weight: 700;
+    }
+
+    .text-editing-panel-menu-items {
+      margin-top: 16px;
+      margin-bottom: 16px;
+
+      .text-editing-panel-menu-items-buttons {
+        display: flex;
+        gap: 8px;
+      }
+
+      .text-editing-panel-menu-items-buttons.undo-redo {
+        gap: 12px;
+      }
+      
+      // align font family dropdown items right
+      .Dropdown__items {
+        right: auto;
+      }
+
+      .FontSizeDropdown .Dropdown__items {
+        right: 0;
+      }
+
+      .Dropdown__items .Dropdown__item {
+        font-size: var(--font-size-default);
+        font-family: var(--font-family);
+      }
+
+      .Dropdown .picked-option .picked-option-text {
+        font-family: var(--font-family);
+      }
+
+      .inactive {
+        opacity: 0.5;
+        pointer-Events: none;
+      }
+    }
+
+    .top-panel {
+      margin-top: 0px;
+    }
+
+    .icon-grid .row {
+      padding-top: 12px;
+    }
+
+    .link-section {
+      margin-top: 12px;
+    }
+
+    .text-editing-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 8px;
+
+      width: 100%;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      .Button .Icon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .color-picker-container {
+        width: 100%;
+      }
+
+      .ColorPalette {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        align-content: flex-start;
+        gap: 8px;
+      }
+    }
+
+    .custom-colors-pallete {
+      .cell-container {
+        flex: none;
+      }
+    }
+
+    .custom-colors-section {
+      margin-top: 12px;
+    }
+
+    .addToCustomButton {
+      width: 24px;
+      height: 24px;
+      padding-top: 8px;
+      align-self: center;
+    }
+
+    .text-editing-panel-color-palette {
+      display: flex;
+      margin-bottom: 16px;
+    }
+
+    .opacity-slider {
+      @include ie11 {
+        align-items: stretch;
+      }
+    }
+  }
+
+  @include mobile {
+    width: 100%;
+    min-width: 100%;
+    padding-top: 0px;
+
+    .icon-grid .text-horizontal-alignment {
+      float: none;
+    }
+
+    .close-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 64px;
+
+      width: 100%;
+      padding-right: 12px;
+
+      .close-icon-container {
+        cursor: pointer;
+        .close-icon {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+}
+

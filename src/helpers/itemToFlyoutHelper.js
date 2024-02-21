@@ -42,9 +42,8 @@ export const itemToFlyout = (item, {
     flyoutItem.onClick = () => {
       const currentToolbarGroup = selectors.getCurrentToolbarGroup(store.getState());
       if (currentToolbarGroup !== itemProps.toolbarGroup) {
-        store.dispatch(actions.setToolbarGroup(itemProps.toolbarGroup));
-        const activeGroups = itemProps.groupedItems.map((item) => item?.dataElement);
-        store.dispatch(actions.setCurrentGroupedItem(activeGroups));
+        store.dispatch(actions.setActiveCustomRibbon(itemProps.dataElement));
+        store.dispatch(actions.setActiveGroupedItems(itemProps.groupedItems));
       }
       onClick && onClick();
     };

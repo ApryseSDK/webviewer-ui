@@ -68,7 +68,12 @@ const StylePanelInApp = (location) => {
         ...initialState.viewer.openElements,
         contextMenuPopup: false,
         stylePanel: true,
-      }
+      },
+      activeCustomRibbon: 'annotations-ribbon-item',
+      lastPickedToolForGroupedItems: {
+        'annotateGroupedItems': '',
+      },
+      activeGroupedItems: ['annotateGroupedItems'],
     },
     featureFlags: {
       customizableUI: true,

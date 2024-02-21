@@ -1,0 +1,20 @@
+@import '../../../constants/styles.scss';
+
+.LeftHeader {
+  height: 100%;
+  width: $left-header-width;
+  min-width: fit-content;
+  padding: 12px 8px;
+}
+
+.LeftHeader.closed {
+  position: fixed;
+  left: 0;
+  display: none;
+}
+
+.LeftHeader.stroke {
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: var(--gray-5);
+}

@@ -17,7 +17,7 @@ export default function useArrowFocus(isOpen, onClose, overlayRef) {
     if (isOpen) {
       const lastFocusedElement = document.activeElement;
 
-      const keydownListener = e => {
+      const keydownListener = (e) => {
         // Tab and escape close the menu.
         if (e.key === 'Tab' || e.key === 'Escape') {
           onClose();

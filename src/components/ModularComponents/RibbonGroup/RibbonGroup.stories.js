@@ -20,12 +20,14 @@ const initialState = {
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
     toolButtonObjects: {},
-    toolbarGroup: 'toolbarGroup-View',
+    activeCustomRibbon: 'Ribbon Item1',
+    activeGroupedItems: [],
     modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40
     },
+    lastPickedToolForGroupedItems: {},
   },
 };
 
@@ -114,7 +116,9 @@ const initialStateDropdown = {
     ...initialState.viewer,
     customElementSizes: {
       'ribbon-group': 3
-    }
+    },
+    activeGroupedItems: [],
+    activeCustomRibbon: 'toolbarGroup-View',
   }
 };
 

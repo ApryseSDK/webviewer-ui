@@ -277,9 +277,6 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
     const lastPickedToolName =
       state.viewer.lastPickedToolForGroup[lastPickedToolGroup] || getFirstToolNameForGroup(state, lastPickedToolGroup);
     if (pickTool) {
-      if (toolbarGroup === DataElements.EDIT_TOOLBAR_GROUP || toolbarGroup === DataElements.EDIT_TEXT_TOOLBAR_GROUP) {
-        dispatch(closeElement(DataElements.STYLE_PANEL));
-      }
       dispatch({
         type: 'SET_ACTIVE_TOOL_GROUP',
         payload: { toolGroup: lastPickedToolGroup, toolbarGroup },

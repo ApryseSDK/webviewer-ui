@@ -72,6 +72,7 @@
     "type": "Type",
     "upload": "Télécharger",
     "link": "Lier",
+    "unlink": "Supprimer le lien",
     "fileAttachmentDownload": "Télécharger le fichier joint",
     "prevResult": "Résultat précédent",
     "nextResult": "Résultat suivant",

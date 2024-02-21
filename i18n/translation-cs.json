@@ -72,6 +72,7 @@
     "type": "Typ",
     "upload": "nahrát",
     "link": "Odkaz",
+    "unlink": "Smazat odkaz",
     "fileAttachmentDownload": "Stáhnout přiložený soubor",
     "prevResult": "Předchozí výsledek",
     "nextResult": "Další výsledek",

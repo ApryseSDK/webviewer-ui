@@ -40,4 +40,11 @@
   .ColorPalette {
     padding-top: 8px;
   }
+
+  @include mobile {
+    .icon-grid {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }

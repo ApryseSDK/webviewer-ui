@@ -15,7 +15,6 @@ const formBuilderDefaultDisabledKeys = {
   PRINT: 'print',
   BOOKMARK: 'bookmark',
   SWITCH_PAN: 'switchPan',
-  SELECT: 'select',
   PAN: 'pan',
   ARROW: 'arrow',
   CALLOUT: 'callout',

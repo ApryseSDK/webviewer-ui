@@ -5,7 +5,7 @@ title: '[Bug] '
 ---
 
 <!-- First of all, thanks for reaching out and reporting any issues you have found. Your feedback is valuable to the development of WebViewer UI! -->
-<!-- If the issue can only be reproduced on a specific document, or you would need to share some company/personal information, then we recommend you use open a support ticket via https://www.pdftron.com/form/request/ -->
+<!-- If the issue can only be reproduced on a specific document, or you would need to share some company/personal information, then we recommend you use open a support ticket via https://apryse.com/form/request -->
 
 **WebViewer version**
 

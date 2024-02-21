@@ -9,7 +9,15 @@
     background: var(--tools-button-active);
   }
 
-
   width: 32px;
   height: 32px;
+}
+
+button[data-element="signatureFieldButton"], 
+button[data-element="checkboxFieldButton"], 
+button[data-element="radioFieldButton"] 
+{
+  .Icon {
+    color: var(--gray-9) !important;
+  }
 }

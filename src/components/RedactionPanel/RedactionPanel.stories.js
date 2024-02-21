@@ -6,13 +6,20 @@ import RedactionPanelContainerWithProvider from './RedactionPanelContainer';
 import RightPanel from 'components/RightPanel';
 import { RedactionPanelContext } from './RedactionPanelContext';
 import { defaultRedactionTypes, redactionTypeMap } from 'constants/redactionTypes';
+import Panel from 'components/Panel';
 
 const noop = () => { };
 
 export default {
   title: 'Components/RedactionPanel',
   component: RedactionPanel,
-  includeStories: ['EmptyList', 'PanelWithRedactionItems', 'RedactionPanelWithSearch']
+  includeStories: [
+    'EmptyList', 'PanelWithRedactionItems', 'RedactionPanelWithSearch',
+    'RedactionLeftGenericPanel',
+    'RedactionRightGenericPanel',
+    'RightPanelWithRedactionItems',
+    'LeftPanelWithRedactionItems',
+  ]
 };
 
 export const RedactionContextMock = ({ children, mockContext }) => {
@@ -50,12 +57,14 @@ const initialState = {
     openElements: {
       header: true,
       redactionPanel: true,
+      panel: true,
     },
     currentLanguage: 'en',
     panelWidths: {
       redactionPanel: 330,
+      panel: 300,
     },
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40
@@ -200,7 +209,65 @@ export function PanelWithRedactionItems() {
 export function RedactionPanelWithSearch() {
   return (
     <RedactionPanelStoryWrapper>
-      <RedactionPanelContainerWithProvider />
+      <RedactionPanelContainerWithProvider redactionAnnotationsList={[]} />
     </RedactionPanelStoryWrapper>
+  );
+}
+
+
+export function RedactionLeftGenericPanel() {
+  return (
+    <Provider store={store}>
+      <Panel location={'left'} dataElement={'panel'}>
+        <RedactionContextMock>
+          <div className="Panel RedactionPanel">
+            <RedactionPanel {...basicProps} />
+          </div>
+        </RedactionContextMock>
+      </Panel>
+    </Provider >
+  );
+}
+
+export function RedactionRightGenericPanel() {
+  return (
+    <Provider store={store}>
+      <Panel location={'right'} dataElement={'panel'}>
+        <RedactionContextMock>
+          <div className="Panel RedactionPanel">
+            <RedactionPanel {...basicProps} />
+          </div>
+        </RedactionContextMock>
+      </Panel>
+    </Provider >
+  );
+}
+
+
+export function RightPanelWithRedactionItems() {
+  return (
+    <Provider store={store}>
+      <Panel location={'right'} dataElement={'panel'}>
+        <RedactionContextMock>
+          <div className="Panel RedactionPanel">
+            <RedactionPanel {...basicProps} redactionAnnotations={redactionAnnotations} />
+          </div>
+        </RedactionContextMock>
+      </Panel>
+    </Provider >
+  );
+}
+
+export function LeftPanelWithRedactionItems() {
+  return (
+    <Provider store={store}>
+      <Panel location={'left'} dataElement={'panel'}>
+        <RedactionContextMock>
+          <div className="Panel RedactionPanel">
+            <RedactionPanel {...basicProps} redactionAnnotations={redactionAnnotations} />
+          </div>
+        </RedactionContextMock>
+      </Panel>
+    </Provider >
   );
 }

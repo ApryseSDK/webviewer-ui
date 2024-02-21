@@ -71,6 +71,8 @@ const initialState = {
       topHeaders: 40,
       bottomHeaders: 40
     },
+    activeCustomRibbon: 'Ribbon Item1',
+    lastPickedToolForGroupedItems: {},
   },
 };
 

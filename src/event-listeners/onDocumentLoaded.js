@@ -18,6 +18,7 @@ import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
 import { getPortfolioFiles } from 'helpers/portfolio';
+import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 
 let onFirstLoad = true;
 const officeEditorScope = 'office-editor';
@@ -197,7 +198,11 @@ export default (store, documentViewerKey) => async () => {
             }
 
             checkIfDocumentClosed();
-            store.dispatch(actions.setPageLabels(pageLabels));
+            const defaultPageLabels = getDefaultPageLabels(totalPageCount);
+            const newPageLabels = selectors.getPageLabels(getState());
+            if (newPageLabels.every((newLabel, index) => newLabel === defaultPageLabels[index])) {
+              store.dispatch(actions.setPageLabels(pageLabels));
+            }
           } catch (e) {
             console.warn(e);
           }

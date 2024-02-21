@@ -72,6 +72,7 @@
     "type": "típus",
     "upload": "Feltöltés",
     "link": "Link",
+    "unlink": "Hivatkozás törlése",
     "fileAttachmentDownload": "Töltse le a csatolt fájlt",
     "prevResult": "Előző eredmény",
     "nextResult": "Következő eredmény",
