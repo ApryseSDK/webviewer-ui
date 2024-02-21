@@ -105,8 +105,12 @@ const App = ({ removeEventHandlers }) => {
   ], shallowEqual);
 
   const { customizableUI } = featureFlags;
+  // These hooks control behaviours regarding the opening and closing of panels and in the case
+  // of the redaction hook it creates a reference that tracks the redaction annotations
   useOnAnnotationCreateRubberStampToolMode();
   useOnAnnotationCreateSignatureToolMode();
+  const { redactionAnnotationsList } = useOnRedactionAnnotationChanged();
+
   useEffect(() => {
     const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
     if (isOfficeEditingEnabled && isMobileDevice) {
@@ -302,7 +306,7 @@ const App = ({ removeEventHandlers }) => {
       case panelNames.STYLE:
         return <LazyLoadWrapper Component={LazyLoadComponents.StylePanel} dataElement={dataElement} />;
       case panelNames.REDACTION:
-        return <LazyLoadWrapper Component={LazyLoadComponents.RedactionPanel} dataElement={dataElement} onOpenHook={useOnRedactionAnnotationChanged} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.RedactionPanel} dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList} />;
       case panelNames.SEARCH:
         return <LazyLoadWrapper Component={LazyLoadComponents.SearchPanel} dataElement={dataElement} />;
       case panelNames.NOTES:
@@ -383,7 +387,7 @@ const App = ({ removeEventHandlers }) => {
             <LazyLoadWrapper
               Component={LazyLoadComponents.RedactionPanel}
               dataElement={DataElements.REDACTION_PANEL}
-              onOpenHook={useOnRedactionAnnotationChanged} />
+              redactionAnnotationsList={redactionAnnotationsList} />
           </RightPanel>}
           <RightPanel dataElement="watermarkPanel" onResize={(width) => dispatch(actions.setWatermarkPanelWidth(width))}>
             <WatermarkPanel />
