@@ -288,5 +288,14 @@ describe('Test Custom UI APIs', function() {
       panelList[0].setLocation('right');
       expect(instance.UI.getPanels()[0].location).to.equal('right');
     });
+    it('It should be able to change the location of a panel that is shipped by default', async () => {
+      const instance = await setupWebViewerInstance({ ui: 'beta' }, true);
+
+      let stylePanel = instance.UI.getPanels().find((panel) => panel.dataElement === 'stylePanel');
+      expect(stylePanel.location).to.equal('left');
+      stylePanel.setLocation('right');
+      stylePanel = instance.UI.getPanels().find((panel) => panel.dataElement === 'stylePanel');
+      expect(stylePanel.location).to.equal('right');
+    });
   });
 });
