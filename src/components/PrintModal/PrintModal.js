@@ -127,6 +127,7 @@ const PrintModal = () => {
       DataElements.PROGRESS_MODAL,
       DataElements.ERROR_MODAL,
     ]));
+
     core.getWatermark().then((watermark) => {
       setAllowWatermarkModal(
         watermark === undefined ||
