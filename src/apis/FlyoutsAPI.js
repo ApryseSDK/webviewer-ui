@@ -4,7 +4,6 @@ import Flyout from './ModularComponents/flyout';
 import selectors from 'selectors/index';
 
 /**
- * @ignore
  * Namespace used to add, remove, and interact with flyouts in the UI
  * @namespace UI.Flyouts
  * @example
@@ -14,8 +13,7 @@ import selectors from 'selectors/index';
  */
 
 /**
- * @ignore
- * Adds new flyout to the Flyout List
+ * Adds a list of UI.Components.Flyout instances to the UI
  * @method UI.Flyouts.addFlyouts
  * @param {Array<UI.Components.Flyout>} flyoutList Array of flyouts to add
  * @example
@@ -34,7 +32,6 @@ import selectors from 'selectors/index';
  */
 
 /**
- * @ignore
  * Removes flyout from the Flyout List
  * @method UI.Flyouts.removeFlyout
  * @param {string} dataElement Data element of the flyout to remove
@@ -45,10 +42,9 @@ import selectors from 'selectors/index';
  */
 
 /**
- * @ignore
  * Sets the active flyout, set to null to hide the flyout
  * @method UI.Flyouts.setActiveFlyout
- * @param {string} dataElement Data element of the flyout to set as active
+ * @param {string} dataElement Data element of the flyout to set as active, or null to hide the active flyout
  * @example
  * WebViewer(...).then(function(instance) {
  *  instance.UI.Flyouts.setActiveFlyout('customFlyout');
@@ -56,7 +52,6 @@ import selectors from 'selectors/index';
  */
 
 /**
- * @ignore
  * Sets the position of the active flyout, (use UI.Flyouts.setActiveFlyout to show the flyout)
  * Position is relative to the root element of WebViewer
  * Coordinates going out of the WebViewer UI will be clamped
@@ -72,14 +67,12 @@ import selectors from 'selectors/index';
  */
 
 /**
- * @ignore
  * @method UI.Flyouts.getFlyout
  * @param {string} dataElement Data element of the flyout to get
  * @returns {UI.Components.Flyout} Flyout with the given data element
  */
 
 /**
- * @ignore
  * @method UI.Flyouts.getFlyouts
  * @returns {Array<UI.Components.Flyout>} Array of all flyouts registered with the UI
  */
