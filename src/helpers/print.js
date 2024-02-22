@@ -346,6 +346,12 @@ export const printPages = (pages) => {
       }
     }
 
+    if (printHandler.children.length === 1) {
+      printHandler.parentElement.setAttribute('style', 'height: 99.99%;');
+    } else {
+      printHandler.parentElement.setAttribute('style', 'height: 100%;');
+    }
+
     printDocument();
   }
 };

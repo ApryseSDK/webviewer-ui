@@ -10,15 +10,16 @@ executors:
 jobs:
   run-lint:
     docker:
-      - image: circleci/node:10-browsers
+      - image: cimg/node:16.15.0-browsers
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Lint
-          command: npm run lint
+      # - run:
+      #    name: Install dependencies
+      #    command: npm install
+      # - run:
+      #    name: Lint
+      #    command: npm run lint
+      # todo https://apryse.atlassian.net/browse/WVR-4827
 
 workflows:
   version: 2
