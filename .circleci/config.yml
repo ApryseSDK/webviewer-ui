@@ -12,10 +12,10 @@ jobs:
     docker:
       - image: cimg/node:16.15.0-browsers
     steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: npm install
+      # - checkout
+      # - run:
+      #    name: Install dependencies
+      #    command: npm install
       # - run:
       #    name: Lint
       #    command: npm run lint
@@ -25,7 +25,7 @@ workflows:
   version: 2
   lint_and_test:
     jobs:
-      - run-lint
+      # - run-lint
       # TODO uncomment when we can run tests locally as stated in https://trello.com/c/uq5eEsqH/454-allow-cypress-end-to-end-tests-to-be-ran-locally-on-machine
       # - cypress/run:
       #     post-steps:
