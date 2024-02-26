@@ -288,5 +288,61 @@ describe('Test Custom UI APIs', function() {
       panelList[0].setLocation('right');
       expect(instance.UI.getPanels()[0].location).to.equal('right');
     });
+    it('It should be able to change the location of a panel that is shipped by default', async () => {
+      const instance = await setupWebViewerInstance({ ui: 'beta' }, true);
+
+      let stylePanel = instance.UI.getPanels().find((panel) => panel.dataElement === 'stylePanel');
+      expect(stylePanel.location).to.equal('left');
+      stylePanel.setLocation('right');
+      stylePanel = instance.UI.getPanels().find((panel) => panel.dataElement === 'stylePanel');
+      expect(stylePanel.location).to.equal('right');
+    });
+  });
+
+  describe('Test i18n translation feature in custom ui', () => {
+    let viewerDiv;
+    let instance;
+
+    beforeEach(async () => {
+      // Create a new div with an ID and add it to the body before each test
+      viewerDiv = document.createElement('div');
+      viewerDiv.id = 'viewerDiv';
+      document.body.appendChild(viewerDiv);
+    });
+
+    afterEach(() => {
+      // Clean up the div after each test
+      document.body.removeChild(viewerDiv);
+    });
+    it('should correctly apply i18n translation to menu items', async () => {
+      const options = {
+        initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
+        ui: 'beta',
+      };
+      instance = await setupWebViewerInstance(options);
+      // create a promise that resolves when the document loaded event fires
+      await new Promise((resolve) => {
+        instance.UI.setLanguage('ja');
+        instance.UI.addEventListener('documentLoaded', resolve);
+      });
+      const iframe = document.querySelector('#viewerDiv iframe');
+
+      iframe.style.height = '1000px';
+      iframe.style.width = '1000px';
+
+      // These CSS classes are only available in new custom UI so we are testing those
+      iframe.contentDocument.querySelector('.RibbonGroup__moreButton .Button').click();
+      const menuList = iframe.contentDocument.querySelectorAll('#FlyoutContainer .flyout-item-container');
+
+      expect(menuList.length).to.equal(7);
+      expect(menuList[0].innerText).to.equal('挿入');
+      expect(menuList[6].innerText).to.equal('フォーム');
+
+      // Making sure that Dropdown items are translated
+      const Dropdown__item = iframe.contentDocument.querySelectorAll('.Dropdown__item-object');
+      expect(Dropdown__item[0].innerText).to.equal('閲覧');
+      expect(Dropdown__item[1].innerText).to.equal('注釈');
+      expect(Dropdown__item[3].innerText).to.equal('挿入');
+    });
   });
 });

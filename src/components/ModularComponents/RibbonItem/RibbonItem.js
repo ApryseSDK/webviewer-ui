@@ -6,6 +6,7 @@ import actions from 'actions';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import classNames from 'classnames';
+import getToolbarTranslationString from 'helpers/translationKeyMapping';
 import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 
 import './RibbonItem.scss';
@@ -15,7 +16,7 @@ import core from 'core';
 
 const RibbonItem = (props) => {
   const elementRef = useRef();
-  const { t } = useTranslation();
+  const { t, ready: tReady } = useTranslation();
   const dispatch = useDispatch();
   const {
     dataElement,
@@ -27,16 +28,22 @@ const RibbonItem = (props) => {
     direction,
     justifyContent,
     isFlyoutItem,
-    iconDOMElement
+    iconDOMElement,
+    toolbarGroup
   } = props;
+
   const [
     activeGroupedItems,
     activeCustomRibbon,
     lastPickedToolForGroupedItems,
+    isRibbonItemDisabled,
+    customHeadersAdditionalProperties,
   ] = useSelector((state) => [
     selectors.getActiveGroupedItems(state),
     selectors.getActiveCustomRibbon(state),
     selectors.getLastPickedToolForGroupedItems(state, groupedItems),
+    selectors.isElementDisabled(state, dataElement),
+    selectors.getCustomHeadersAdditionalProperties(state),
   ]);
 
   const [isActive, setIsActive] = useState(false);
@@ -74,13 +81,21 @@ const RibbonItem = (props) => {
     }
   };
 
+  if (isRibbonItemDisabled) {
+    return null;
+  }
+
+  const translatedLabel = tReady && toolbarGroup ?
+    t(getToolbarTranslationString(toolbarGroup, customHeadersAdditionalProperties))
+    : label;
+
   return (
     isFlyoutItem ?
       (
         innerItemToFlyoutItem({
           isDisabled: false,
           icon: iconDOMElement,
-          label: t(label),
+          label: translatedLabel,
         }, onClick)
       ) :
       (
@@ -96,8 +111,9 @@ const RibbonItem = (props) => {
             isActive={isActive}
             dataElement={dataElement}
             img={img}
-            label={label}
-            title={title}
+            label={translatedLabel}
+            title={translatedLabel || title}
+            useI18String={false}
             onClick={onClick}
             disabled={disabled}
           >

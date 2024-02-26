@@ -8,6 +8,7 @@ import actions from 'actions';
 import FlexDropdown from '../FlexDropdown';
 import { ITEM_TYPE, DIRECTION } from 'constants/customizationVariables';
 import ToggleElementButton from '../ToggleElementButton';
+import getToolbarTranslationString from 'helpers/translationKeyMapping';
 
 import './RibbonGroup.scss';
 import sizeManager, { storeSizeHook } from 'helpers/responsivnessHelper';
@@ -38,11 +39,13 @@ const RibbonGroup = (props) => {
     justifyContent,
     grow = 0,
   } = props;
+
   const [itemsGap, setItemsGap] = useState(gap);
   const [containerWidth, setContainerWidth] = useState(0);
   const [ribbonItems, setRibbonItems] = useState(validateItems(items));
-  const [currentToolbarGroup] = useSelector((state) => [
-    selectors.getCurrentToolbarGroup(state),
+  const [activeCustomRibbon, customHeadersAdditionalProperties] = useSelector((state) => [
+    selectors.getActiveCustomRibbon(state),
+    selectors.getCustomHeadersAdditionalProperties(state),
   ]);
 
   const elementRef = useRef();
@@ -82,12 +85,12 @@ const RibbonGroup = (props) => {
       items: [],
     };
     if (size > 0) {
-      const activeIndex = ribbonItems.findIndex((item) => item.toolbarGroup === currentToolbarGroup);
+      const activeIndex = ribbonItems.findIndex((item) => item.toolbarGroup === activeCustomRibbon);
       const lastIndex = ribbonItems.length - 1;
       const indexToExcludeFrom = activeIndex >= lastIndex - size ? lastIndex - size : lastIndex - size + 1;
       for (let i = 0; i < ribbonItems.length; i++) {
         const item = ribbonItems[i];
-        if (i < indexToExcludeFrom || item.toolbarGroup === currentToolbarGroup) {
+        if (i < indexToExcludeFrom || item.toolbarGroup === activeCustomRibbon) {
           continue;
         }
         const flyoutItem = itemToFlyout(item, {
@@ -102,15 +105,15 @@ const RibbonGroup = (props) => {
     }
     dispatch(actions.updateFlyout(FLYOUT_NAME, flyout));
     setContainerWidth(elementRef.current?.clientWidth ?? 0);
-  }, [size, currentToolbarGroup]);
+  }, [size, activeCustomRibbon]);
 
   useEffect(() => {
     setItemsGap(gap);
   }, [gap]);
 
-  const setToolbarGroup = useCallback(
-    (group, pickTool) => {
-      dispatch(actions.setToolbarGroup(group, pickTool));
+  const setActiveCustomRibbon = useCallback(
+    (ribbon) => {
+      dispatch(actions.setActiveCustomRibbon(ribbon));
     },
     [dispatch],
   );
@@ -120,11 +123,11 @@ const RibbonGroup = (props) => {
   }, [items]);
 
   const renderRibbonItems = () => {
-    const activeIndex = ribbonItems.findIndex((item) => item.toolbarGroup === currentToolbarGroup);
+    const activeIndex = ribbonItems.findIndex((item) => item.toolbarGroup === activeCustomRibbon);
     const lastIndex = ribbonItems.length - 1;
     const indexToExcludeFrom = activeIndex >= lastIndex - size ? lastIndex - size : lastIndex - size + 1;
     return ribbonItems.map((item, index) => {
-      if (index >= indexToExcludeFrom && item.toolbarGroup !== currentToolbarGroup) {
+      if (index >= indexToExcludeFrom && item.toolbarGroup !== activeCustomRibbon) {
         return null;
       }
       const itemProps = item.props || item;
@@ -190,10 +193,16 @@ const RibbonGroup = (props) => {
             placement={headerPlacement}
             objects={validateItems(items)}
             objectKey={'toolbarGroup'}
-            currentSelectionKey={currentToolbarGroup}
-            onClickItem={(toolbarGroup) => {
-              setToolbarGroup(toolbarGroup);
+            currentSelectionKey={activeCustomRibbon}
+            onClickItem={(customRibbon) => {
+              setActiveCustomRibbon(customRibbon);
             }}
+            getDisplayValue={(item) => {
+              const index = items.findIndex((el) => el.label === item);
+              return items[index]?.toolbarGroup;
+            }}
+            getKey = {(item) => item.toolbarGroup}
+            getTranslationLabel={(key) => getToolbarTranslationString(key, customHeadersAdditionalProperties)}
             arrowDirection={getArrowDirection()}
           />
         </div>

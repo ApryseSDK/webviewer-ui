@@ -20,12 +20,15 @@ const initialState = {
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
     toolButtonObjects: {},
-    toolbarGroup: 'toolbarGroup-View',
+    activeCustomRibbon: 'Ribbon Item1',
+    activeGroupedItems: [],
     modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40
     },
+    lastPickedToolForGroupedItems: {},
+    customHeadersAdditionalProperties: {},
   },
 };
 
@@ -93,10 +96,18 @@ const store = configureStore({
 });
 
 export const ribbonGroupFull = () => {
+  // Removing toolbarGroup for match the testing output
+  // And avoiding re-creating test objects without toolbarGroup
+  const temp1 = Object.assign({}, item1, { toolbarGroup: null });
+  const temp2 = Object.assign({}, item2, { toolbarGroup: null });
+  const temp3 = Object.assign({}, item3, { toolbarGroup: null });
+  const temp4 = Object.assign({}, item4, { toolbarGroup: null });
+  const temp5 = Object.assign({}, item5, { toolbarGroup: null });
+
   const props = {
     dataElement: 'ribbon-group',
     headerDirection: 'row',
-    items: [item1, item2, item3, item4, item5, item6, item7, item8],
+    items: [temp1, temp2, temp3, temp4, temp5, item6, item7, item8],
   };
 
   return (
@@ -114,7 +125,9 @@ const initialStateDropdown = {
     ...initialState.viewer,
     customElementSizes: {
       'ribbon-group': 3
-    }
+    },
+    activeGroupedItems: [],
+    activeCustomRibbon: 'toolbarGroup-View',
   }
 };
 

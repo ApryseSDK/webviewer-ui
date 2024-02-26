@@ -98,6 +98,7 @@ const toolGroupButton5 = {
 
 const initialState = {
   viewer: {
+    customHeadersAdditionalProperties: {},
     disabledElements: {},
     customElementOverrides: {},
     openElements: {},
