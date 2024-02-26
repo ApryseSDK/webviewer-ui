@@ -31,9 +31,9 @@ const MAX_COLUMNS = 16;
 
 const hoverAreaHeight = 25;
 
-const ThumbnailsPanel = ({ panelSelector = 'leftPanel' }) => {
+const ThumbnailsPanel = ({ panelSelector }) => {
   const [
-    isOpen,
+    isLeftPanelOpen,
     isDisabled,
     totalPages,
     currentPage,
@@ -50,7 +50,7 @@ const ThumbnailsPanel = ({ panelSelector = 'leftPanel' }) => {
     isRightClickEnabled,
   ] = useSelector(
     (state) => [
-      selectors.isElementOpen(state, panelSelector),
+      selectors.isElementOpen(state, 'leftPanel'),
       selectors.isElementDisabled(state, 'thumbnailsPanel'),
       selectors.getTotalPages(state),
       selectors.getCurrentPage(state),
@@ -248,6 +248,11 @@ const ThumbnailsPanel = ({ panelSelector = 'leftPanel' }) => {
         );
       }
 
+      const isPageAddedBefore = changes.added && (changes.added[0] - 1) <= updatedPagesIndexes[0];
+      if (updatedPagesIndexes.length === 1 && isPageAddedBefore) {
+        updatedPagesIndexes = changes.added.map((pageNumber) => pageNumber - 1);
+      }
+
       dispatch(actions.setSelectedPageThumbnails(updatedPagesIndexes));
     };
 
@@ -295,8 +300,8 @@ const ThumbnailsPanel = ({ panelSelector = 'leftPanel' }) => {
     }
   }, [isReaderMode, isDocumentReadOnly]);
 
-  // if disabled or left panel is not open when we are not in customize mode, return
-  if (isDisabled || !isOpen || isOfficeEditor) {
+  // if disabled, or is office editor or left panel is not open when we are not in customize mode, return
+  if (isDisabled || isOfficeEditor || (!isLeftPanelOpen && !panelSelector)) {
     return null;
   }
   const onDragEnd = () => {

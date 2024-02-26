@@ -325,4 +325,58 @@ test.describe('Thumbnails Panel', () => {
     expect(enableMultiSelectButton).not.toBeNull();
     expect(closeMultiSelectButton).toBeNull();
   });
+
+  test('Should be able to insert pages without issues', async ({ page }) => {
+    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+    const instance = await waitForInstance();
+    await iframe.locator('#pageWidgetContainer1').waitFor();
+
+    await iframe.evaluate(async() => {
+      await instance.Core.documentViewer.getDocument().getDocumentCompletePromise();
+    });
+
+    const pagesToInsert = 50;
+    await instance('openElements', ['thumbnailsPanel']);
+    await iframe.locator('.documentControlsInput input').waitFor();
+
+    await iframe.evaluate(() => {
+      // make sure no warning message appear when inserting
+      console.warn = (msg) => {
+        window.warningMessage = msg;
+      }
+
+      // check that the input doesn't show "undefined"
+      const targetNode = window.document.querySelector('.documentControlsInput input')
+      const config = { attributes: true, childList: true, subtree: true };
+      
+      const callback = () => {
+        if (window.document.querySelector('.documentControlsInput input').value === 'undefined') {
+          window.undefinedUsed = true;
+        }
+      };
+
+      const observer = new MutationObserver(callback);
+      observer.observe(targetNode, config);
+    });
+
+    // add pages using the UI
+    await iframe.locator('button[data-element="pageManipulationOverlayButton"]').click();
+    await iframe.locator('div[data-element="insertPage"]').click();
+    await iframe.locator('.incrementNumberInput input').fill(`${pagesToInsert}`);
+    await iframe.locator('.insertPageModalConfirmButton').click();
+    await iframe.waitForFunction(() => {
+      return (window.instance.Core.documentViewer.getPageCount() === 59);
+    });
+
+    const undefinedUsed = await iframe.evaluate(() => {
+      return window.undefinedUsed;
+    });
+    expect(undefinedUsed).toBeUndefined();
+
+    const warningMessage = await iframe.evaluate(() => {
+      return window.warningMessage;
+    });
+
+    expect(warningMessage).toBeUndefined();
+  });
 });
