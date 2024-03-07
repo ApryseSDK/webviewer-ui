@@ -74,6 +74,7 @@ import './App.scss';
 import LayersPanel from 'components/LayersPanel';
 import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
 import FeatureFlags from 'constants/featureFlags';
+import { PRIORITY_ONE } from 'constants/actionPriority';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -133,6 +134,18 @@ const App = ({ removeEventHandlers }) => {
       dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
     }
   }, []);
+
+  useEffect(() => {
+    if (customizableUI) {
+      // These elements are disabled in the old UI and need to be enabled in the new UI
+      dispatch(actions.enableElements([
+        'layersPanel',
+        'layersPanelButton',
+        'bookmarksPanel',
+        'bookmarksPanelButton',
+      ], PRIORITY_ONE));
+    }
+  }, [customizableUI]);
 
   useEffect(() => {
     // To avoid race condition with window.dispatchEvent firing before window.addEventListener

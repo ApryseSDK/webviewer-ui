@@ -5,11 +5,13 @@ import Spinner from '../Spinner';
 import { saveAs } from 'file-saver';
 import Icon from 'components/Icon';
 import core from 'core';
-import './FileAttachmentPanel.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { getIsMultiTab, getTabManager } from 'src/redux/selectors/exposedSelectors';
+import selectors from 'selectors';
 import actions from 'actions';
-import DataElements from 'src/constants/dataElement';
+import DataElements from 'constants/dataElement';
+
+import './FileAttachmentPanel.scss';
+import { panelData, panelNames } from 'constants/panel';
 
 const getActualFileName = (filename) => {
   const fileNameRegex = /[^\\\/]+$/g;
@@ -33,15 +35,14 @@ const renderAttachment = (filename, onClickCallback, key, showFileIdProcessSpinn
   );
 };
 
-const FileAttachmentPanel = () => {
+const initialFilesDefault = { embeddedFiles: [], fileAttachmentAnnotations: [] };
+
+const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
   const [t] = useTranslation();
   const dispatch = useDispatch();
-  const [fileAttachments, setFileAttachments] = useState({
-    embeddedFiles: [],
-    fileAttachmentAnnotations: [],
-  });
-  const isMultiTab = useSelector(getIsMultiTab);
-  const tabManager = useSelector(getTabManager);
+  const [fileAttachments, setFileAttachments] = useState(initialFiles);
+  const isMultiTab = useSelector(selectors.getIsMultiTab);
+  const tabManager = useSelector(selectors.getTabManager);
   const [showFileIdProcessSpinner, setFileIdProcessSpinner] = useState(null);
 
   useEffect(() => {
@@ -63,9 +64,11 @@ const FileAttachmentPanel = () => {
     Object.entries(fileAttachments.fileAttachmentAnnotations).length === 0
   ) {
     return (
-      <div className="no-attachment">
-        <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
-        <div className="msg">{t('message.noAttachments')}</div>
+      <div className="fileAttachmentPanel">
+        <div className="empty-panel-container">
+          <Icon className="empty-icon" glyph={panelData[panelNames.FILE_ATTACHMENT].icon}/>
+          <div className="empty-message">{t('message.noAttachments')}</div>
+        </div>
       </div>
     );
   }
