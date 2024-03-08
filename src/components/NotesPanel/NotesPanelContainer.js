@@ -4,8 +4,8 @@ import NotesPanel from './NotesPanel';
 import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 
-function NotePopupContainer(props) {
-  const isCustomPanelOpen = props.isCustomPanelOpen;
+function NotesPanelContainer(props) {
+  const { isCustomPanelOpen, parentDataElement = undefined, dataElement } = props;
   const [
     isOpen,
     notesInLeftPanel,
@@ -14,7 +14,7 @@ function NotePopupContainer(props) {
     activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
-      selectors.isElementOpen(state, 'notesPanel'),
+      selectors.isElementOpen(state, parentDataElement || dataElement || 'notesPanel'),
       selectors.getNotesInLeftPanel(state),
       selectors.getIsNotesPanelMultiSelectEnabled(state),
       selectors.isMultiViewerMode(state),
@@ -61,7 +61,7 @@ function NotePopupContainer(props) {
       const selectedAnnotations = core.getSelectedAnnotations(documentViewerKey);
       const groupedAnnots = getGroupedAnnots(selectedAnnotations);
 
-      if (groupedAnnots.length === selectedAnnotations.length) {
+      if (isMultiSelectMode && groupedAnnots.length === selectedAnnotations.length) {
         setMultiSelectMode(false);
       }
 
@@ -198,4 +198,4 @@ function NotePopupContainer(props) {
   );
 }
 
-export default NotePopupContainer;
+export default NotesPanelContainer;
