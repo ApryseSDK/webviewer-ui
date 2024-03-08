@@ -1,5 +1,4 @@
 import { ITEM_TYPE } from 'constants/customizationVariables';
-import selectors from 'selectors';
 import actions from 'actions';
 
 const { checkTypes, TYPES } = window.Core;
@@ -26,6 +25,7 @@ const flyoutItemType = TYPES.MULTI_TYPE(
  * @param {Object} options
  * @param {string} options.dataElement A unique string that identifies the flyout.
  * @param {Array<Object>} options.items An array of objects that represent the items in the flyout. Each object should have the following properties:
+ * @param {string} options.items.dataElement A unique string that identifies the flyout item.
  * @param {string} options.items.label The text title of the item.
  * @param {Function} options.items.onClick A function that is called when the item is clicked.
  * @param {string} options.items.icon Path to an image or base64 data. Can also be the filename of a .svg from the WebViewer icons folder found here:
@@ -34,8 +34,8 @@ const flyoutItemType = TYPES.MULTI_TYPE(
  */
 
 /**
- * Adds items to the flyout.
- * @method UI.Components.Flyout#addItems
+ * Sets the items of the flyout.
+ * @method UI.Components.Flyout#setItems
  * @param {Array<Object>} items An array of objects that represent the items to be added to the flyout.
  * @param {string} items.label The text title of the item.
  * @param {Function} items.onClick A function that is called when the item is clicked.
@@ -47,7 +47,7 @@ const flyoutItemType = TYPES.MULTI_TYPE(
  *    dataElement: 'exampleFlyout',
  *    label: 'Flyout',
  *  });
- *  flyout.addItems([
+ *  flyout.setItems([
  *    {
  *      label: 'Item 1',
  *      onClick: () => {
@@ -58,18 +58,12 @@ const flyoutItemType = TYPES.MULTI_TYPE(
  */
 
 /**
- * Removes items from the flyout.
- * @method UI.Components.Flyout#removeItems
- * @param {Array<string>} items An array of items to be removed from the flyout.
- */
-
-/**
  * A unique string that identifies the flyout. This property is ReadOnly.
  * @member {string} UI.Components.Flyout#dataElement
  */
 
 /**
- * An array of objects that represent the items in the flyout. can be set to add or remove items from the flyout.
+ * An array of objects that represent the items in the flyout. This property can be used both as a getter and setter.
  * @member {Array<Object>} UI.Components.Flyout#items
  */
 
@@ -89,47 +83,18 @@ export class Flyout {
     this.store = options.store;
   }
 
-  addItems(itemList) {
-    checkTypes([itemList], [TYPES.ARRAY(flyoutItemType)], 'Flyout.addItem');
-    const flyoutMap = selectors.getFlyoutMap(this.store.getState());
-    if (flyoutMap[this.properties.dataElement]) {
-      flyoutMap[this.properties.dataElement].items.push(...itemList);
-      this.updateStore();
-      return;
-    }
-    this.properties.items.push(...itemList);
-  }
-
-  removeItems(itemList) {
-    const flyoutMap = selectors.getFlyoutMap(this.store.getState());
-    const currentFlyout = flyoutMap[this.properties.dataElement];
-    if (currentFlyout) {
-      currentFlyout.items = currentFlyout.items.filter((item) => !itemList.includes(item.dataElement));
-      this.updateStore();
-    }
+  setItems(items) {
+    checkTypes([items], [TYPES.ARRAY(flyoutItemType)], 'Flyout.setItems');
+    this.properties.items = items;
+    this.store.dispatch(actions.setFlyoutItems(this.properties.dataElement, items));
   }
 
   get items() {
-    const flyoutMap = selectors.getFlyoutMap(this.store.getState());
-    if (flyoutMap[this.properties.dataElement]) {
-      return flyoutMap[this.properties.dataElement].items;
-    }
     return this.properties.items;
   }
 
   set items(newItems) {
-    checkTypes([newItems], [TYPES.ARRAY(flyoutItemType)], 'Flyout.initializeFlyoutItem');
-    const flyoutMap = selectors.getFlyoutMap(this.store.getState());
-    if (flyoutMap[this.properties.dataElement]) {
-      flyoutMap[this.properties.dataElement].items = newItems;
-      this.updateStore();
-    }
-    this.properties.items = newItems;
-  }
-
-  updateStore() {
-    const flyoutMap = selectors.getFlyoutMap(this.store.getState());
-    this.store.dispatch(actions.updateFlyout(this.properties.dataElement, flyoutMap[this.properties.dataElement]));
+    this.setItems(newItems);
   }
 }
 

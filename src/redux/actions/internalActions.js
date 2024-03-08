@@ -481,6 +481,13 @@ export const setActiveFlyout = (dataElement) => (dispatch, getState) => {
     payload: { dataElement },
   });
 };
+
+export const setFlyoutItems = (dataElement, items) => {
+  return {
+    type: 'SET_FLYOUT_ITEMS',
+    payload: { dataElement, items },
+  };
+};
 export const updateFlyout = (dataElement, newFlyout) => (dispatch, getState) => {
   const flyoutMap = selectors.getFlyoutMap(getState());
   if (!flyoutMap[dataElement]) {

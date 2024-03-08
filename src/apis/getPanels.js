@@ -1,8 +1,7 @@
 /**
- * @ignore
  * Returns a list of panels that are currently in the UI
  * @method UI.getPanels
- * @return {UI.Panel} Panel object
+ * @return {UI.Components.Panel} Panel object
  * @example
  WebViewer(...)
  .then(function(instance) {
@@ -21,29 +20,18 @@ export default (store) => () => {
 };
 
 /**
- * @ignore
- * Represents a panel in the UI
- * @class UI.Panel
- * @method setLocation Sets the location of the panel in UI
- * @param {string} location Location of the panel in UI, left or right.
+ * Represents a panel abstraction that can be used to manipulate a panel in the UI
+ * @name Panel
+ * @memberOf UI.Components
+ * @class UI.Components.Panel
  * @example
- * WebViewer(...)
- *  .then(function(instance) {
- *  const panelList = instance.UI.getPanels();
- *  panelList[0].setLocation('right');
- *  });
- * @method delete Deletes the panel from the UI
- * @example
- * WebViewer(...)
- * .then(function(instance) {
- * const panelList = instance.UI.getPanels();
- * panelList[0].delete();
- * });
- * @property {string} dataElement The dataElement of the panel, setting this will update the panel in the UI
- * @property {string | UI.renderCustomPanel} render The render function of the panel, setting this will update the panel in the UI
- * @property {string} location The location of the panel, setting this will update the panel in the UI
+ WebViewer(...)
+ .then(function(instance) {
+ // Returns a list of instances of the panel, each instance can be used to manipulate the panel in the UI using the methods below
+ const panelList = instance.UI.getPanels();
+ });
+ *
  */
-
 export class Panel {
   _store;
   _dataElement;
@@ -57,6 +45,17 @@ export class Panel {
     this._location = panel.location;
   }
 
+  /**
+   * Sets the location of the panel in the UI
+   * @method UI.Components.Panel#setLocation
+   * @param {string} location The location of the panel, setting this will update the panel in the UI. It can be either 'left' or 'right'
+   * @example
+   * WebViewer(...)
+   *  .then(function(instance) {
+   *  const panelList = instance.UI.getPanels();
+   *  panelList[0].setLocation('right');
+   *  });
+   */
   setLocation(location) {
     const { TYPES, checkTypes } = window.Core;
     checkTypes([location], [TYPES.ONE_OF('left', 'right')], 'Panel.setLocation');
@@ -71,6 +70,16 @@ export class Panel {
     this._store.dispatch(actions.setGenericPanels(panelList));
   }
 
+  /**
+   * Deletes the panel from the UI
+   * @method UI.Components.Panel#delete
+   * @example
+   * WebViewer(...)
+   * .then(function(instance) {
+   * const panelList = instance.UI.getPanels();
+   * panelList[0].delete();
+   * });
+   */
   delete() {
     const panelList = selectors.getGenericPanels(this._store.getState());
     const panelIndex = panelList.findIndex((panel) => panel.dataElement === this._dataElement);

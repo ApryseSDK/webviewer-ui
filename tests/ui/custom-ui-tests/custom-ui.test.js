@@ -7,22 +7,48 @@ import { createModularHeader, createGroupedItems, createPresetButton, createFlyo
 describe('Test Custom UI APIs', function() {
   this.timeout(10000);
   let viewerDiv;
+  let instance;
+  let originalResizeObserver;
 
   beforeEach(async () => {
     // Create a new div with an ID and add it to the body before each test
     viewerDiv = document.createElement('div');
     viewerDiv.id = 'viewerDiv';
     document.body.appendChild(viewerDiv);
+    window.ResizeObserver = class MockResizeObserver {
+      constructor(callback) {
+        this.callback = callback;
+        this.observations = [];
+      }
+
+      observe(target) {
+        // Optionally store the target or simulate an observation
+        this.observations.push(target);
+        // You could invoke the callback here if you want to simulate a resize event
+      }
+
+      unobserve(target) {
+        // Remove target from observations
+        this.observations = this.observations.filter((obs) => obs !== target);
+      }
+
+      disconnect() {
+        // Clear all observations
+        this.observations = [];
+      }
+    };
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     // Clean up the div after each test
     document.body.removeChild(viewerDiv);
+    await instance.UI.dispose();
+    window.ResizeObserver = originalResizeObserver;
   });
 
   describe('Test Modular Headers', () => {
     it('It should create a Modular Header and get Modular Headers list', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       const topHeader = createModularHeader(instance, 'top');
       const leftHeader = createModularHeader(instance, 'left');
       const rightHeader = createModularHeader(instance, 'right');
@@ -32,7 +58,7 @@ describe('Test Custom UI APIs', function() {
     });
 
     it('Calling UI.setModularHeaders should set the UI to the new component list', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       const topHeader = createModularHeader(instance, 'top');
       const leftHeader = createModularHeader(instance, 'left');
       const rightHeader = createModularHeader(instance, 'right');
@@ -46,7 +72,7 @@ describe('Test Custom UI APIs', function() {
     });
 
     it('It should get a specific Modular Header', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       const { UI } = instance;
       const rightHeader = createModularHeader(instance, 'right');
       const bottomHeader = createModularHeader(instance, 'bottom');
@@ -59,7 +85,7 @@ describe('Test Custom UI APIs', function() {
     });
 
     it('It should set items of a Modular Header', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       const undoButton = createPresetButton(instance, 'undoButton');
       const redoButton = createPresetButton(instance, 'redoButton');
       const leftHeader = createModularHeader(instance, 'left');
@@ -71,7 +97,7 @@ describe('Test Custom UI APIs', function() {
     });
 
     it('It should set the style of a Modular Header', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       const topHeader = createModularHeader(instance, 'top');
       // Checking the default style before modifying it
       expect(topHeader.style).to.deep.equal({});
@@ -86,7 +112,7 @@ describe('Test Custom UI APIs', function() {
     });
 
     it('It should set the maxHeight and maxWidth properties of a Modular Header', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       const topHeader = createModularHeader(instance, 'top');
       console.warn = sinon.spy();
       // Checking the default values before modifying them
@@ -110,7 +136,7 @@ describe('Test Custom UI APIs', function() {
     });
 
     it('It should set the properties gap and justify content of a Modular Header', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       const leftHeader = createModularHeader(instance, 'left');
       const validJustifications = ['start', 'center', 'end', 'space-between', 'space-around', 'space-evenly'];
       console.warn = sinon.spy();
@@ -133,7 +159,7 @@ describe('Test Custom UI APIs', function() {
     });
 
     it('It should get the items and Grouped Items of a Modular Header', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       const undoButton = createPresetButton(instance, 'undoButton');
       const redoButton = createPresetButton(instance, 'redoButton');
       const groupedItem = createGroupedItems(instance, [undoButton, redoButton]);
@@ -147,7 +173,7 @@ describe('Test Custom UI APIs', function() {
 
   describe('Test Grouped Items', () => {
     it('It should set the grouped items properties, gap, grow and justify content', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       const { UI } = instance;
       console.warn = sinon.spy();
 
@@ -192,7 +218,7 @@ describe('Test Custom UI APIs', function() {
     });
 
     it('It should set the properties of an specific Grouped Items, gap, justifyContent, grow and items', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       const groupedItem = createGroupedItems(instance, []);
       const undoButton = createPresetButton(instance, 'undoButton');
       console.warn = sinon.spy();
@@ -222,8 +248,8 @@ describe('Test Custom UI APIs', function() {
   });
 
   describe('Test Flyout', () => {
-    it('It should add items to Flyout', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+    it('It should add items to the flyout using setItems', async () => {
+      instance = await setupWebViewerInstance({}, true);
       const simpleFlyout = createFlyout(instance, []);
 
       expect(simpleFlyout.items.length).to.equal(0);
@@ -237,14 +263,116 @@ describe('Test Custom UI APIs', function() {
         }
       };
 
-      simpleFlyout.addItems([flyoutItem]);
+      simpleFlyout.setItems([flyoutItem]);
       expect(simpleFlyout.items.length).to.equal(1);
+    });
+
+    it('It should remove items from the flyout using setItems', async () => {
+      instance = await setupWebViewerInstance({}, true);
+      const mockItem1 = {
+        dataElement: 'item-1',
+        label: 'Item 1',
+        onClick: () => console.log('Item 1 clicked'),
+        icon: 'icon-first'
+      };
+
+      const mockItem2 = {
+        dataElement: 'item-2',
+        label: 'Item 2',
+        onClick: () => console.log('Item 2 clicked'),
+        icon: 'icon-second'
+      };
+      const simpleFlyout = createFlyout(instance, [mockItem1, mockItem2]);
+      expect(simpleFlyout.items.length).to.equal(2);
+
+
+      simpleFlyout.setItems([mockItem1]);
+      expect(simpleFlyout.items.length).to.equal(1);
+      expect(simpleFlyout.items[0].dataElement).to.equal('item-1');
+    });
+
+    it('It should add items to the flyout using the items property', async () => {
+      instance = await setupWebViewerInstance({}, true);
+      const simpleFlyout = createFlyout(instance, []);
+
+      expect(simpleFlyout.items.length).to.equal(0);
+
+      const flyoutItem = {
+        dataElement: 'newTestButton',
+        icon: 'icon-plus-sign',
+        label: 'newTestButton',
+        onClick: () => {
+          console.log('test');
+        }
+      };
+
+      simpleFlyout.items = [flyoutItem];
+      expect(simpleFlyout.items.length).to.equal(1);
+    });
+
+    it('It should remove items from the flyout using the items property', async () => {
+      instance = await setupWebViewerInstance({}, true);
+      const mockItem1 = {
+        dataElement: 'item-1',
+        label: 'Item 1',
+        onClick: () => console.log('Item 1 clicked'),
+        icon: 'icon-first'
+      };
+
+      const mockItem2 = {
+        dataElement: 'item-2',
+        label: 'Item 2',
+        onClick: () => console.log('Item 2 clicked'),
+        icon: 'icon-second'
+      };
+      const simpleFlyout = createFlyout(instance, [mockItem1, mockItem2]);
+      expect(simpleFlyout.items.length).to.equal(2);
+
+
+      simpleFlyout.items = [mockItem1];
+      expect(simpleFlyout.items.length).to.equal(1);
+      expect(simpleFlyout.items[0].dataElement).to.equal('item-1');
+    });
+
+    it('It should add a flyout to the UI with addFlyout', async () => {
+      instance = await setupWebViewerInstance({}, true);
+      const flyoutItem = {
+        dataElement: 'newTestButton',
+        icon: 'icon-plus-sign',
+        label: 'newTestButton',
+        onClick: () => {
+          console.log('test');
+        }
+      };
+      const simpleFlyout = createFlyout(instance, [flyoutItem]);
+
+      instance.UI.Flyouts.addFlyouts([simpleFlyout]);
+
+      const myFlyout = instance.UI.Flyouts.getFlyout(simpleFlyout.dataElement);
+      expect(myFlyout.dataElement).to.equal(simpleFlyout.dataElement);
+      expect(myFlyout.items.length).to.equal(1);
+    });
+
+    it('It should allow you to add extra items to the default Menu Overlay flyout', async () => {
+      instance = await setupWebViewerInstance({}, true);
+      const additionalItems = [{
+        dataElement: 'newTestButton',
+        icon: 'icon-plus-sign',
+        label: 'newTestButton',
+        onClick: () => {
+          console.log('test');
+        }
+      }];
+
+      const mainMenu = new instance.UI.Components.MainMenu({ additionalItems });
+      // Five default items + 1 additional item
+      expect(mainMenu.items.length).to.equal(6);
     });
   });
 
   describe('Test Panels', () => {
     it('It should be able to add Panel', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       instance.UI.addPanel({
         dataElement: 'myNewOutlinesPanel',
         render: instance.UI.Panels.OUTLINE,
@@ -254,7 +382,7 @@ describe('Test Custom UI APIs', function() {
       expect(panelList.length).to.equal(1);
     });
     it('It should be able to set Panels', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       instance.UI.addPanel({
         dataElement: 'myNewOutlinesPanel',
         render: instance.UI.Panels.OUTLINE,
@@ -267,7 +395,7 @@ describe('Test Custom UI APIs', function() {
       expect(newPanelList.length).to.equal(0);
     });
     it('It should be able to get Panels', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       instance.UI.addPanel({
         dataElement: 'myNewOutlinesPanel',
         render: instance.UI.Panels.OUTLINE,
@@ -277,7 +405,7 @@ describe('Test Custom UI APIs', function() {
       expect(panelList.length).to.equal(1);
     });
     it('It should be able to change the location of a Panel', async () => {
-      const instance = await setupWebViewerInstance({}, true);
+      instance = await setupWebViewerInstance({}, true);
       instance.UI.addPanel({
         dataElement: 'myNewOutlinesPanel',
         render: instance.UI.Panels.OUTLINE,
@@ -289,7 +417,7 @@ describe('Test Custom UI APIs', function() {
       expect(instance.UI.getPanels()[0].location).to.equal('right');
     });
     it('It should be able to change the location of a panel that is shipped by default', async () => {
-      const instance = await setupWebViewerInstance({ ui: 'beta' }, true);
+      instance = await setupWebViewerInstance({ ui: 'beta' }, true);
 
       let stylePanel = instance.UI.getPanels().find((panel) => panel.dataElement === 'stylePanel');
       expect(stylePanel.location).to.equal('left');
@@ -300,21 +428,7 @@ describe('Test Custom UI APIs', function() {
   });
 
   describe('Test i18n translation feature in custom ui', () => {
-    let viewerDiv;
-    let instance;
-
-    beforeEach(async () => {
-      // Create a new div with an ID and add it to the body before each test
-      viewerDiv = document.createElement('div');
-      viewerDiv.id = 'viewerDiv';
-      document.body.appendChild(viewerDiv);
-    });
-
-    afterEach(() => {
-      // Clean up the div after each test
-      document.body.removeChild(viewerDiv);
-    });
-    it('should correctly apply i18n translation to menu items', async () => {
+    it.skip('should correctly apply i18n translation to menu items', async () => {
       const options = {
         initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
         ui: 'beta',

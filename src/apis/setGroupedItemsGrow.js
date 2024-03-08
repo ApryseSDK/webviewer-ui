@@ -1,7 +1,7 @@
 /**
- * Sets the gap of Grouped Items
- * @method UI.setGroupedItemsGap
- * @param {number} gap The gap in pixels between the items in the group.
+ * Sets the grow of Grouped Items
+ * @method UI.setGroupedItemsGrow
+ * @param {number} grow The flex grow value of the group
  * @example
  * WebViewer(...)
   .then(function (instance) {
@@ -22,24 +22,24 @@
     });
     instance.UI.addModularHeaders([newHeader]);
 
-    // Setting the gap of all Grouped Items
-    instance.UI.setGroupedItemsGap(20);
+    // Setting the grow property of all Grouped Items
+    instance.UI.setGroupedItemsGrow(1);
 
-    // Setting the gap of all Grouped Items with a specific data element
-    instance.UI.setGroupedItemsGap(30, {
+    // Setting the grow property of all Grouped Items with a specific data element
+    instance.UI.setGroupedItemsGrow(1, {
       groupedItemsDataElement: 'group-1'
     });
  */
 import actions from 'actions';
-import { isGapValid } from 'components/ModularComponents/Helpers/validation-helper';
+import { isGrowValid } from 'components/ModularComponents/Helpers/validation-helper';
 
-export default (store) => (gap, selectors) => {
-  if (isGapValid(gap)) {
+export default (store) => (grow, selectors) => {
+  if (isGrowValid(grow)) {
     const { groupedItemsDataElement } = selectors || {};
     if (groupedItemsDataElement) {
-      store.dispatch(actions.setGroupedItemsProperty('gap', gap, groupedItemsDataElement));
+      store.dispatch(actions.setGroupedItemsProperty('grow', grow, groupedItemsDataElement));
     } else {
-      store.dispatch(actions.setAllGroupedItemsProperty('gap', gap));
+      store.dispatch(actions.setAllGroupedItemsProperty('grow', grow));
     }
   }
 };

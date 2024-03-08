@@ -73,7 +73,7 @@ import selectors from 'selectors/index';
  */
 
 /**
- * @method UI.Flyouts.getFlyouts
+ * @method UI.Flyouts.getAllFlyouts
  * @returns {Array<UI.Components.Flyout>} Array of all flyouts registered with the UI
  */
 
