@@ -48,6 +48,7 @@ const propTypes = {
   className: PropTypes.string,
   onOpened: PropTypes.func,
   arrowDirection: PropTypes.string,
+  disableFocusing: PropTypes.bool,
 };
 
 function Dropdown({
@@ -78,6 +79,7 @@ function Dropdown({
   onOpened = () => {},
   arrowDirection = 'down',
   children,
+  disableFocusing = false,
 }) {
   const { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
@@ -190,7 +192,10 @@ function Dropdown({
       e.stopPropagation();
       onClickItem(key, i);
       setIsOpen(false);
-      buttonRef.current.focus();
+      if (!disableFocusing) {
+        buttonRef.current.focus();
+      }
+
 
       if (inputRef?.current) {
         inputRef.current.value = displayValue;

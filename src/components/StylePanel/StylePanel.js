@@ -12,11 +12,17 @@ import core from 'core';
 import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import handleFreeTextAutoSizeToggle from 'helpers/handleFreeTextAutoSizeToggle';
 import getTextDecoration from 'helpers/getTextDecoration';
-import { shouldHideStylePanelOptions, stylePanelSectionTitles } from 'helpers/stylePanelHelper';
+import {
+  shouldHideStylePanelOptions,
+  extractUniqueFontFamilies,
+  stylePanelSectionTitles,
+  shouldHideTextStylePicker
+} from 'helpers/stylePanelHelper';
 import defaultTool from 'constants/defaultTool';
 
 const { ToolNames } = window.Core.Tools;
 const { Annotations } = window.Core;
+
 
 const StylePanel = () => {
   const [t] = useTranslation();
@@ -33,13 +39,16 @@ const StylePanel = () => {
     selectors.getActiveDocumentViewerKey(state),
   ]);
 
+
+  const currentTool = core.getToolMode();
+  const currentToolName = currentTool?.name;
   const colorProperties = ['StrokeColor', 'FillColor'];
   const [showStyles, setShowStyles] = useState(false);
-  const [noToolStyle, setNoToolStyle] = useState(false);
+  const [noToolStyle, setNoToolStyle] = useState(shouldHideStylePanelOptions(currentToolName));
   const [isEllipse, setIsEllipse] = useState(false);
   const [isFreeText, setIsFreeText] = useState(false);
-  const [isRedaction, setIsRedaction] = useState(false);
-  const [isTextStylePickerHidden, setIsTextStylePickerHidden] = useState(false);
+  const [isRedaction, setIsRedaction] = useState(currentToolName === ToolNames.REDACTION);
+  const [isTextStylePickerHidden, setIsTextStylePickerHidden] = useState(currentToolName === defaultTool ? false : shouldHideTextStylePicker(currentToolName));
   const [isFreeHand, setIsFreeHand] = useState(false);
   const [isArc, setIsArc] = useState(false);
   const [isStamp, setIsStamp] = useState(false);
@@ -50,10 +59,11 @@ const StylePanel = () => {
   const [strokeStyle, setStrokeStyle] = useState();
   const [panelTitle, setPanelTitle] = useState(t('stylePanel.headings.styles'));
   const annotationCreateToolNames = getAnnotationCreateToolNames();
-  const [showLineStyleOptions, setShowLineStyleOptions] = useState(false);
+  const [showLineStyleOptions, setShowLineStyleOptions] = useState(currentToolName === defaultTool ? false : getDataWithKey(mapToolNameToKey(currentToolName)).hasLineEndings);
   const [isAutoSizeFont, setIsAutoSizeFont] = useState(style.isAutoSizeFont);
-  const currentTool = core.getToolMode();
-  const [activeTool, setActiveTool] = useState('Edit');
+  const [activeTool, setActiveTool] = useState(currentToolName || 'Edit');
+  const [editorInstance, setEditorInstance] = useState(null);
+
 
   useEffect(() => {
     if (currentTool?.name === 'AnnotationCreateRubberStamp') {
@@ -85,57 +95,6 @@ const StylePanel = () => {
     setPanelTitle(`${t(stylePanelSectionTitles(toolName, 'Title') || title)} ${t('stylePanel.headings.tool')}`);
   };
 
-  const handleToolModeChange = (newTool) => {
-    if (annotationCreateToolNames.includes(newTool?.name)) {
-      if (!panelTitle) {
-        setShowStyles(false);
-      } else {
-        if (shouldHideStylePanelOptions(newTool?.name)) {
-          setNoToolStyle(true);
-          setShowStyles(true);
-          setPanelTitleForSelectedTool(newTool);
-          return;
-        }
-
-        setNoToolStyle(false);
-        setActiveTool(newTool.name);
-        setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(newTool.name)).hasLineEndings);
-        setIsEllipse(newTool.name === ToolNames.ELLIPSE);
-        setIsFreeText(newTool.name === ToolNames.FREETEXT);
-        setIsRedaction(newTool.name === ToolNames.REDACTION);
-
-        setIsTextStylePickerHidden(
-          newTool.name === ToolNames.TEXT_FORM_FIELD
-          || newTool.name === ToolNames.LIST_BOX_FIELD
-          || newTool.name === ToolNames.COMBO_BOX_FIELD
-        );
-
-        setIsFreeHand(
-          newTool.name === ToolNames.FREEHAND ||
-          newTool.name === ToolNames.FREEHAND_HIGHLIGHT,
-        );
-        setIsArc(newTool.name === ToolNames.ARC);
-        setIsStamp(newTool.name === ToolNames.STAMP);
-        setIsInFormFieldCreationMode(core.getFormFieldCreationManager().isInFormFieldCreationMode());
-        const toolStyles = getToolStyles(newTool.name);
-
-        if (newTool.name.includes('FreeText') || newTool.name.includes('Callout')) {
-          toolStyles['isAutoSizeFont'] = newTool['defaults']['isAutoSizeFont'];
-          setIsAutoSizeFont(newTool['defaults']['isAutoSizeFont']);
-        }
-
-        setStyle(toolStyles);
-        setStartLineStyle(toolStyles.StartLineStyle);
-        setStrokeStyle(toolStyles.StrokeStyle);
-        setEndLineStyle(toolStyles.EndLineStyle);
-        setShowStyles(true);
-        setPanelTitleForSelectedTool(newTool);
-      }
-    } else {
-      setShowStyles(false);
-    }
-  };
-
   const updateStylePanelProps = (annot) => {
     const extraStyles = {};
 
@@ -158,6 +117,14 @@ const StylePanel = () => {
       extraStyles['StrokeStyle'] = StrokeStyle;
       extraStyles['isAutoSizeFont'] = annot.isAutoSizeFont();
       setIsAutoSizeFont(annot.isAutoSizeFont());
+
+      const { fonts, sizes } = extractUniqueFontFamilies(extraStyles['RichTextStyle'], annot.getContents());
+      if (fonts.length >= 2 || (fonts.length === 1 && fonts[0] !== extraStyles['Font'])) {
+        extraStyles['Font'] = undefined;
+      }
+      if (sizes.length >= 2 || (sizes.length === 1 && sizes[0] !== extraStyles['FontSize'])) {
+        extraStyles['FontSize'] = undefined;
+      }
     }
 
     if (annot instanceof Annotations.RedactionAnnotation) {
@@ -165,6 +132,10 @@ const StylePanel = () => {
       extraStyles['Font'] = annot.Font;
       extraStyles['FontSize'] = annot.FontSize;
       extraStyles['TextAlign'] = annot.TextAlign;
+    }
+
+    if (annot instanceof Annotations.RectangleAnnotation && annot.isFormFieldPlaceholder() && annot.FontSize !== undefined) {
+      extraStyles.FontSize = annot.FontSize;
     }
 
     setStyle({
@@ -181,6 +152,52 @@ const StylePanel = () => {
   };
 
   useEffect(() => {
+    const handleToolModeChange = (newTool) => {
+      if (annotationCreateToolNames.includes(newTool?.name)) {
+        if (!panelTitle) {
+          setShowStyles(false);
+        } else {
+          if (shouldHideStylePanelOptions(newTool?.name)) {
+            setNoToolStyle(true);
+            setShowStyles(true);
+            setPanelTitleForSelectedTool(newTool);
+            return;
+          }
+
+          setNoToolStyle(false);
+          setActiveTool(newTool.name);
+          setShowLineStyleOptions(getDataWithKey(mapToolNameToKey(newTool.name)).hasLineEndings);
+          setIsEllipse(newTool.name === ToolNames.ELLIPSE);
+          setIsFreeText(newTool.name === ToolNames.FREETEXT);
+          setIsRedaction(newTool.name === ToolNames.REDACTION);
+
+          setIsTextStylePickerHidden(shouldHideTextStylePicker(newTool.name));
+
+          setIsFreeHand(
+            newTool.name === ToolNames.FREEHAND ||
+            newTool.name === ToolNames.FREEHAND_HIGHLIGHT,
+          );
+          setIsArc(newTool.name === ToolNames.ARC);
+          setIsStamp(newTool.name === ToolNames.STAMP);
+          setIsInFormFieldCreationMode(core.getFormFieldCreationManager().isInFormFieldCreationMode());
+          const toolStyles = getToolStyles(newTool.name);
+
+          if (newTool.name.includes('FreeText') || newTool.name.includes('Callout')) {
+            toolStyles['isAutoSizeFont'] = newTool['defaults']['isAutoSizeFont'];
+            setIsAutoSizeFont(newTool['defaults']['isAutoSizeFont']);
+          }
+
+          setStyle(toolStyles);
+          setStartLineStyle(toolStyles.StartLineStyle);
+          setStrokeStyle(toolStyles.StrokeStyle);
+          setEndLineStyle(toolStyles.EndLineStyle);
+          setShowStyles(true);
+          setPanelTitleForSelectedTool(newTool);
+        }
+      } else {
+        setShowStyles(false);
+      }
+    };
     const onAnnotationSelected = (annotations, action) => {
       if (action === 'selected') {
         setShowStyles(true);
@@ -195,11 +212,7 @@ const StylePanel = () => {
           setIsEllipse(annotations[0] instanceof Annotations.EllipseAnnotation);
           setIsFreeText(annotations[0] instanceof Annotations.FreeTextAnnotation);
           setIsRedaction(annotations[0] instanceof Annotations.RedactionAnnotation);
-          setIsTextStylePickerHidden(
-            annotations[0].ToolName === ToolNames.TEXT_FORM_FIELD
-            || annotations[0].ToolName === ToolNames.LIST_BOX_FIELD
-            || annotations[0].ToolName === ToolNames.COMBO_BOX_FIELD
-          );
+          setIsTextStylePickerHidden(shouldHideTextStylePicker(annotations[0].ToolName));
           setIsFreeHand(annotations[0] instanceof Annotations.FreeHandAnnotation);
           setIsArc(annotations[0] instanceof Annotations.ArcAnnotation);
           setIsStamp(annotations[0] instanceof Annotations.StampAnnotation);
@@ -260,14 +273,27 @@ const StylePanel = () => {
         }
       }
     }
-  }, [isPanelOpen]);
+  }, [isPanelOpen, isAutoSizeFont]);
+
 
   const onStyleChange = (property, value) => {
     const newStyle = { ...style };
     newStyle[property] = value;
     setStyle(newStyle);
-
     const annotationsToUpdate = core.getSelectedAnnotations();
+
+    // Newly created freetext is not saved in annotationManager yet, so getSelectedAnnotations
+    // will return empty array, but editor has focus and an annotation
+    if (annotationsToUpdate.length === 0 && editorInstance && property === 'FillColor') {
+      const editor = editorInstance[0];
+      if (editor?.hasFocus()) {
+        const annot = editorInstance[1];
+        editor.setStyle({ background: value });
+        annot['FillColor'] = new Annotations.Color(value);
+        return;
+      }
+    }
+
     if (annotationsToUpdate.length > 0) {
       annotationsToUpdate.forEach((annot) => {
         if (colorProperties.includes(property)) {
@@ -281,13 +307,6 @@ const StylePanel = () => {
           annot[property] = value;
           if (isAnnotationToolStyleSyncingEnabled) {
             setToolStyles(annot.ToolName, property, value);
-          }
-        }
-
-        if (property === 'FillColor' && annot instanceof Annotations.FreeTextAnnotation) {
-          const editor = annot.getEditor();
-          if (editor?.hasFocus()) {
-            editor.setStyle({ background: value });
           }
         }
 
@@ -438,11 +457,11 @@ const StylePanel = () => {
           endLineStyle={endLineStyle}
           strokeStyle={strokeStyle}
           onLineStyleChange={onLineStyleChange}
-          toolName={core.getToolMode()?.name}
           onFreeTextSizeToggle={handleAutoSize}
           isFreeTextAutoSize={isAutoSizeFont}
           handleRichTextStyleChange={handleRichTextStyleChange}
           activeTool={activeTool}
+          saveEditorInstance={setEditorInstance}
         />
       )}
     </>

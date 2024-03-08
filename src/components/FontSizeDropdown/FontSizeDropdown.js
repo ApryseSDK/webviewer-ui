@@ -7,8 +7,12 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
 import { restoreSelection, keepTextEditSelectionOnInputFocus } from './pdfEditHelper';
+import getRootNode from 'helpers/getRootNode';
 
 import './FontSizeDropdown.scss';
+import debounce from 'lodash/debounce';
+
+export const DEBOUNCE_TIME = 750;
 
 const propTypes = {
   fontSize: PropTypes.number,
@@ -17,12 +21,14 @@ const propTypes = {
   maxFontSize: PropTypes.number,
   incrementMap: PropTypes.object,
   onError: PropTypes.func, // Calls this with current error message string whenever it changes
-  applyOnlyOnBlur: PropTypes.bool // If true, apply the font size change only when the element loses focus
+  applyOnlyOnBlur: PropTypes.bool, // If true, apply the font size change only when the element loses focus
+  disabled: PropTypes.bool,
+  displayEmpty: PropTypes.bool, // Display empty box
 };
 
 const MIN_FONT_SIZE = 1;
 // Default maxFontSize
-const RENDER_ROWS_UPPER_LIMIT = 128;
+const RENDER_ROWS_UPPER_LIMIT = 512;
 // Default increment map
 const BREAKS_AND_INCREMENT = {
   0: 1,
@@ -32,12 +38,14 @@ const BREAKS_AND_INCREMENT = {
 
 const FontSizeDropdown = ({
   onFontSizeChange,
-  fontSize = 12.0,
+  fontSize = 12,
   fontUnit = 'pt',
   maxFontSize = RENDER_ROWS_UPPER_LIMIT,
   incrementMap = BREAKS_AND_INCREMENT,
   onError = undefined,
-  applyOnlyOnBlur = false
+  applyOnlyOnBlur = false,
+  disabled = false,
+  displayEmpty = false,
 }) => {
   const { t } = useTranslation();
   const inputRef = useRef();
@@ -46,6 +54,7 @@ const FontSizeDropdown = ({
   const dropdownContainerRef = useRef();
   const [sizes, setSizes] = useState([]);
   const [error, setError] = useState(false);
+  const [shouldBeEmpty, setShouldBeEmpty] = useState(displayEmpty);
   const [initialFontSize, setInitialFontSize] = useState(null);
 
   const onClickOutside = useCallback(() => {
@@ -54,12 +63,18 @@ const FontSizeDropdown = ({
   useOnClickOutside(dropdownContainerRef, onClickOutside);
 
   const [currSize, setCurrSize] = useState(fontSize <= maxFontSize ? fontSize : 1);
+  const setValue = (val) => {
+    setShouldBeEmpty(false);
+    setCurrSize(val);
+  };
+
   const isValidNum = (num, arr = []) => num && arr.indexOf(num) === -1 && num <= maxFontSize && num >= MIN_FONT_SIZE;
   useEffect(() => {
     // update the font size indicator in Text Editing Panel
     if (core.getContentEditManager().isInContentEditMode()) {
       setCurrSize(fontSize <= maxFontSize ? fontSize : 1);
     }
+    inputRef.current.value = focused ? fontSize : `${fontSize}pt`;
   }, [fontSize]);
   useEffect(() => {
     incrementMap[maxFontSize] = 12;
@@ -95,33 +110,49 @@ const FontSizeDropdown = ({
     };
     setSizes(getNewNumbers(Math.floor(currSize)));
   }, []);
-  const sizeChange = (e) => {
-    setFocused(true);
-    const newValue = e.target.value;
-    const newSize = typeof newValue === 'string' ?
-      parseFloat(newValue.replace(/[^\d]+/gi, ''))
-      : newValue;
+
+  const sizeChange = async (inputElement) => {
+    let newSize = inputElement.value;
+    const { activeElement } = getRootNode();
+    if (typeof newSize === 'string' && activeElement === inputElement) {
+      // we are flooring to integers here following Adobe's font size behaviour
+      newSize = Math.floor(parseFloat(newSize));
+      inputElement.value = newSize;
+    }
     if (currSize !== newSize) {
-      if (typeof newSize !== 'number') {
-        return setCurrSize(MIN_FONT_SIZE);
+      if (typeof newSize !== 'number' || isNaN(newSize)) {
+        return;
       }
-      setCurrSize(newSize);
-      if (!e.target.checkValidity()) {
-        if (isValidNum(currSize)) {
-          e.target.validFontSize = currSize;
+      if (!inputElement.checkValidity()) {
+        if (isValidNum(newSize)) {
+          inputElement.validFontSize = newSize;
         }
         if (onError) {
-          onError(t('option.stylePopup.invalidFontSize') + maxFontSize);
+          onError(`${t('option.stylePopup.invalidFontSize')}: ${MIN_FONT_SIZE} - ${maxFontSize}`);
           setError(true);
         }
-        return e.preventDefault();
+        return;
       }
-      setError(false);
-      onError && onError('');
+      setCurrSize(newSize);
       !applyOnlyOnBlur && onFontSizeChange(`${newSize}${fontUnit}`);
+    } else if (currSize !== inputElement.value) {
+      // update the input if it has decimal but floored to the same value as currSize.
+      setCurrSize(newSize);
     }
+    setError(false);
+    onError && onError('');
   };
-
+  const debouncedSizeChange = debounce(sizeChange, DEBOUNCE_TIME);
+  // This prevents the debounce function from being re-created after re-rendering
+  const cachedDebouncedSizeChange = useCallback((value) => debouncedSizeChange(value), []);
+  useEffect(() => {
+    if (applyOnlyOnBlur) {
+      sizeChange(inputRef.current);
+    } else {
+      cachedDebouncedSizeChange(inputRef.current);
+    }
+    return () => debouncedSizeChange.cancel();
+  }, [currSize]);
   const [focused, setFocused] = useState(false);
   const focus = (e) => {
     if (applyOnlyOnBlur) {
@@ -160,8 +191,11 @@ const FontSizeDropdown = ({
         itemDistance++;
       }
       dropdownDivRef.current.scrollTop = itemHeight * itemDistance - divHeight / 2;
+      if (shouldBeEmpty) {
+        dropdownDivRef.current.scrollTop = 0;
+      }
     }
-  }, [isOpen]);
+  }, [isOpen, shouldBeEmpty]);
   const onClickDropdownItem = useCallback(
     (e, key) => {
       e.stopPropagation();
@@ -174,48 +208,60 @@ const FontSizeDropdown = ({
   );
 
   const dropdownItems = useMemo(
-    () => sizes.map((key) => (
-      <DataElementWrapper
-        key={key}
-        type="button"
-        dataElement={`dropdown-item-${key}`}
-        className={classNames('Dropdown__item', { active: key === Math.floor(currSize) })}
-        onClick={(e) => onClickDropdownItem(e, key)}
-        tabIndex={isOpen ? undefined : -1}
-      >
-        {key + fontUnit}
-      </DataElementWrapper>
-    )),
+    () => sizes.map((key) => {
+      const active = displayEmpty ? false : key === Math.floor(currSize);
+      return (
+        <DataElementWrapper
+          key={key}
+          type="button"
+          dataElement={`dropdown-item-${key}`}
+          className={classNames('Dropdown__item', { active })}
+          onClick={(e) => onClickDropdownItem(e, key)}
+          tabIndex={isOpen ? undefined : -1}
+        >
+          {key + fontUnit}
+        </DataElementWrapper>);
+    }),
     [currSize, isOpen, onClickDropdownItem, fontUnit, sizes]
   );
 
   const onOpenDropdown = (e) => {
     e.preventDefault();
-    setOpen(!isOpen);
+    if (!disabled) {
+      setOpen(!isOpen);
+    }
   };
 
+  const isDisabled = disabled === true ? 'disabledText' : null;
+  const className = error ? 'error' : isDisabled;
+
+  let value = focused ? currSize : `${currSize}pt`;
+  if (shouldBeEmpty) {
+    value = '';
+  }
   return (
     <div className="FontSizeDropdown">
       <input
         min={MIN_FONT_SIZE}
         max={maxFontSize}
-        value={focused ? currSize : `${currSize}pt`}
-        onChange={sizeChange}
+        value = {value}
+        onChange={(e) => setValue(e.target.value)}
         type={focused ? 'number' : 'string'}
         onFocus={focus}
         onBlur={blur}
         onSelectCapture={focus}
         ref={inputRef}
-        disabled={isOpen}
-        className={error ? 'error' : undefined}
+        disabled={disabled}
+        className={className}
       />
       <div ref={dropdownContainerRef}>
         <div
           className={classNames('icon-button')}
           onClick={onOpenDropdown}
           onTouchEnd={onOpenDropdown}
-          ref={iconButtonRef}>
-          <Icon glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
+          ref={iconButtonRef}
+        >
+          <Icon className={isDisabled} glyph={`icon-chevron-${isOpen ? 'up' : 'down'}`} />
         </div>
         <div
           className={classNames('Dropdown__items', { 'hidden': !isOpen })}

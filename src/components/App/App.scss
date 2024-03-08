@@ -122,12 +122,40 @@ input, textarea, select {
   padding: 0px;
 }
 
+
+// justify-bottom class is used when annotation vertical alignment is
+// bottom and for the scroll bar to show up
+.justify-bottom .ql-editor > :first-child {
+  margin-top: auto !important;
+  /* use !important to prevent breakage from child margin settings */
+}
+.justify-bottom {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 .ql-editor > p {
   margin: 0;
   padding: 0;
 }
 
+.ql-editor > p span {
+  line-height: normal;
+}
+
 .ql-clipboard {
   width: 0;
   height: 1px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
