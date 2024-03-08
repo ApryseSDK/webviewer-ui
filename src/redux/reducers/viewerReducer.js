@@ -478,6 +478,11 @@ export default (initialState) => (state = initialState, action) => {
           [payload.groupedItem]: payload.toolName,
         }
       };
+    case 'SET_LAST_PICKED_TOOL_AND_GROUP':
+      return {
+        ...state,
+        lastPickedToolAndGroup: payload,
+      };
     case 'SET_ACTIVE_CUSTOM_RIBBON':
       return { ...state, activeCustomRibbon: payload.customRibbon };
     case 'SET_OUTLINE_CONTROL_VISIBILITY':

@@ -1,6 +1,9 @@
 @import '../../../constants/styles';
 
 .ToolButton {
+  width: 32px;
+  height: 32px;
+
   &:hover {
     background: var(--tools-button-hover);
   }
@@ -9,7 +12,16 @@
     background: var(--tools-button-active);
   }
 
+  &.button-with-label {
+    width: min-content;
+  }
+}
 
-  width: 32px;
-  height: 32px;
+button[data-element="signatureFieldButton"], 
+button[data-element="checkboxFieldButton"], 
+button[data-element="radioFieldButton"] 
+{
+  .Icon {
+    color: var(--gray-9) !important;
+  }
 }

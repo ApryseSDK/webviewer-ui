@@ -32,7 +32,7 @@ const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
     ...initialState,
     viewer: {
       ...initialState.viewer,
-      toolbarGroup: 'toolbarGroup-Insert',
+      activeCustomRibbon: 'toolbarGroup-Insert',
       modularHeaders: mockHeadersNormalized,
       modularComponents: mockModularComponents,
       isInDesktopOnlyMode: false,
@@ -49,6 +49,14 @@ const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
       savedSignatures: [...signatures],
       savedInitials: [...initials],
       isInitialsModeEnabled: initials.length > 0,
+      lastPickedToolForGroupedItems: {
+        'insertGroupedItems': 'AnnotationCreateSignature',
+      },
+      activeGroupedItems: ['insertGroupedItems'],
+      lastPickedToolAndGroup: {
+        tool: 'AnnotationCreateSignature',
+        group: ['insertGroupedItems'],
+      },
     },
     featureFlags: {
       customizableUI: true,

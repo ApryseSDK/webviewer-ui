@@ -43,6 +43,7 @@ const ToolButton = (props) => {
     activeToolStyles, // eslint-disable-line no-unused-vars
     activeGroupedItems,
     lastPickedToolForGroupedItems,
+    lastPickedToolAndGroup,
     isSignatureListPanelOpen,
     isRubberStampPanelOpen,
   ] = useSelector(
@@ -54,6 +55,7 @@ const ToolButton = (props) => {
       selectors.getActiveToolStyles(state),
       selectors.getActiveGroupedItems(state),
       selectors.getLastPickedToolForGroupedItems(state, groupedItem),
+      selectors.getLastPickedToolAndGroup(state),
       selectors.isElementOpen(state, DataElements.SIGNATURE_LIST_PANEL),
       selectors.isElementOpen(state, DataElements.RUBBER_STAMP_PANEL),
     ],
@@ -67,32 +69,59 @@ const ToolButton = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [isToolInActiveGroupedItems, setIsToolInActiveGroupedItems] = useState(activeGroupedItems.includes(groupedItem));
-  const [isButtonActive, setIsButtonActive] = useState(isActive && isToolInActiveGroupedItems);
+  const isToolInActiveGroupedItems = groupedItem && activeGroupedItems.includes(groupedItem);
+  const [isButtonActive, setIsButtonActive] = useState(isActive && (isToolInActiveGroupedItems || !groupedItem));
 
   useEffect(() => {
-    if (toolName === lastPickedToolForGroupedItems && activeGroupedItems.includes(groupedItem)) {
-      core.setToolMode(toolName);
-      setIsButtonActive(true);
-    } else {
-      setIsButtonActive(false);
-    }
+    const handleToolModeChange = (tool) => {
+      if (tool.name === toolName) {
+        setIsButtonActive(true);
+      } else {
+        setIsButtonActive(false);
+      }
+    };
+
+    core.addEventListener('toolModeUpdated', handleToolModeChange);
+    return () => {
+      core.removeEventListener('toolModeUpdated', handleToolModeChange);
+    };
   }, []);
 
   useEffect(() => {
-    if (toolName === lastPickedToolForGroupedItems && activeGroupedItems.includes(groupedItem)) {
+    const noActiveGroupedItems = !activeGroupedItems.length;
+    const isLastPickedGroupUndefined = lastPickedToolAndGroup.group?.every((group) => group === undefined);
+    const toolDoesNotBelongToAGroupAndIsActive = !groupedItem && isLastPickedGroupUndefined && toolName === lastPickedToolAndGroup.tool;
+    const toolBelongsToAGroupAndIsActive = groupedItem && lastPickedToolAndGroup.group?.includes(groupedItem) &&
+      (toolName === lastPickedToolAndGroup.tool);
+
+    if ((toolName === ToolNames.EDIT && noActiveGroupedItems) ||
+      toolDoesNotBelongToAGroupAndIsActive ||
+      toolBelongsToAGroupAndIsActive
+    ) {
       setIsButtonActive(true);
     } else {
       setIsButtonActive(false);
     }
+  }, [activeGroupedItems, lastPickedToolForGroupedItems, lastPickedToolAndGroup]);
 
-    setIsToolInActiveGroupedItems(activeGroupedItems.includes(groupedItem));
-  }, [activeGroupedItems, lastPickedToolForGroupedItems]);
+  const setToolMode = (toolName) => {
+    dispatch(actions.setLastPickedToolAndGroup({
+      tool: toolName,
+      group: [groupedItem]
+    }));
+    core.setToolMode(toolName === ToolNames.SIGNATURE || toolName === ToolNames.RUBBER_STAMP ? defaultTool : toolName);
+  };
 
   const handleClick = () => {
-    if (toolName !== ToolNames.EDIT) {
-      dispatch(actions.setActiveGroupedItems([groupedItem]));
+    if (groupedItem) {
+      // The tool can be in a grouped item and not be related to a ribbon, so we keep both
+      // grouped items active to not close the ribbon items
+      const combinedGroupedItems = new Set([...activeGroupedItems, groupedItem]);
+      const groupedItemsArray = Array.from(combinedGroupedItems);
+      dispatch(actions.setActiveGroupedItems(groupedItemsArray));
+    }
 
+    if (toolName !== ToolNames.EDIT) {
       if (isButtonActive) {
         dispatch(actions.setLastPickedToolForGroupedItems(groupedItem, ''));
         setIsButtonActive(false);
@@ -103,7 +132,7 @@ const ToolButton = (props) => {
           dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
         }
 
-        core.setToolMode(defaultTool);
+        setToolMode(defaultTool);
       } else {
         if (toolName === ToolNames.SIGNATURE) {
           dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
@@ -111,17 +140,16 @@ const ToolButton = (props) => {
           dispatch(actions.openElement(DataElements.RUBBER_STAMP_PANEL));
         }
         dispatch(actions.setLastPickedToolForGroupedItems(groupedItem, toolName));
-        core.setToolMode(toolName === ToolNames.SIGNATURE || toolName === ToolNames.RUBBER_STAMP ? defaultTool : toolName);
+        setToolMode(toolName);
       }
     } else {
-      if (isActive) {
-        setIsButtonActive(false);
-      } else {
+      if (!isButtonActive) {
         activeGroupedItems.forEach((group) => {
-          dispatch(actions.setLastPickedToolForGroupedItems(group, ''));
+          if (group !== groupedItem) {
+            dispatch(actions.setLastPickedToolForGroupedItems(group, ''));
+          }
         });
-        setIsButtonActive(true);
-        core.setToolMode(defaultTool);
+        setToolMode(defaultTool);
       }
     }
   };
@@ -171,7 +199,8 @@ const ToolButton = (props) => {
         'Button': true,
         [className]: className,
         'confirm-button': preset === 'confirm',
-        'cancel-button': preset === 'cancel'
+        'cancel-button': preset === 'cancel',
+        'button-with-label': label,
       })}
       img={icon}
       label={label}

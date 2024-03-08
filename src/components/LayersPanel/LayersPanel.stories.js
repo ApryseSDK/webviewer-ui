@@ -104,6 +104,10 @@ export const RightSide = () => {
         'layersPanel': { disabled: false, priority: 3 },
       },
       activeCustomRibbon: 'toolbarGroup-View',
+      lastPickedToolAndGroup: {
+        tool: 'AnnotationEdit',
+        group: ['groupedLeftPanelItems'],
+      },
     },
     document: {
       ...initialState.document,

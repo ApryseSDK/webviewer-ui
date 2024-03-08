@@ -37,7 +37,16 @@ const Template = (args) => {
         dataElement: 'stylePanel',
         render: 'stylePanel',
         location: 'left',
-      }]
+      }],
+      activeGroupedItems: ['annotateGroupedItems'],
+      lastPickedToolForGroupedItems: {
+        annotateGroupedItems: 'AnnotationCreateTextUnderline',
+      },
+      activeCustomRibbon: 'annotations-ribbon-item',
+      lastPickedToolAndGroup: {
+        tool: 'AnnotationCreateTextUnderline',
+        group: ['annotateGroupedItems'],
+      },
     },
     featureFlags: {
       customizableUI: true,

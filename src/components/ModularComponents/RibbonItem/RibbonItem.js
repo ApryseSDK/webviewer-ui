@@ -59,18 +59,22 @@ const RibbonItem = (props) => {
   }, []);
 
   useEffect(() => {
-    const allActiveGroupedItemsBelongToCurrentRibbonItem = activeGroupedItems?.every((item) => groupedItems.includes(item));
-    if (activeCustomRibbon === dataElement && (allActiveGroupedItemsBelongToCurrentRibbonItem || !activeGroupedItems?.length)) {
+    const someActiveGroupedItemsBelongToCurrentRibbonItem = activeGroupedItems?.some((item) => groupedItems.includes(item));
+    if (activeCustomRibbon === dataElement && (someActiveGroupedItemsBelongToCurrentRibbonItem || !activeGroupedItems?.length)) {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
-  }, [activeGroupedItems, activeCustomRibbon]);
+  }, [activeGroupedItems, activeCustomRibbon, lastPickedToolForGroupedItems]);
 
   const onClick = () => {
     if (!isActive) {
       dispatch(actions.setActiveGroupedItems(groupedItems));
       dispatch(actions.setActiveCustomRibbon(dataElement));
+      dispatch(actions.setLastPickedToolAndGroup({
+        tool: lastPickedToolForGroupedItems,
+        group: groupedItems
+      }));
       setIsActive(true);
       core.setToolMode(lastPickedToolForGroupedItems);
 

@@ -3,6 +3,7 @@ import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/d
 import { panelMinWidth, RESIZE_BAR_WIDTH } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
+import { getFirstToolForGroupedItems } from '../actions/exposedActions';
 
 // viewer
 export const getScaleOverlayPosition = (state) => state.viewer.scaleOverlayPosition;
@@ -234,9 +235,34 @@ export const getActiveGroupedItems = (state) => state.viewer.activeGroupedItems;
 
 export const getFixedGroupedItems = (state) => state.viewer.fixedGroupedItems;
 
-export const getLastPickedToolForGroupedItems = (state, dataElement) => state.viewer.lastPickedToolForGroupedItems[dataElement];
+export const getLastPickedToolForGroupedItems = (state, group) => {
+  const getLastPickedTool = (group) => {
+    const lastPickedTool = state.viewer.lastPickedToolForGroupedItems[group];
+
+    if (!lastPickedTool) {
+      const firstToolForGroupedItems = getFirstToolForGroupedItems(state, group);
+      return firstToolForGroupedItems;
+    }
+    return lastPickedTool;
+  };
+
+  if (Array.isArray(group)) {
+    let firstTool = '';
+    for (const groupItem of group) {
+      const lastPickedTool = getLastPickedTool(groupItem);
+      if (lastPickedTool) {
+        firstTool = lastPickedTool;
+        break;
+      }
+    }
+    return firstTool;
+  }
+  return getLastPickedTool(group);
+};
 
 export const getActiveCustomRibbon = (state) => state.viewer.activeCustomRibbon;
+
+export const getLastPickedToolAndGroup = (state) => state.viewer.lastPickedToolAndGroup;
 
 export const getActiveHeaders = (state) => {
   const allHeaders = Object.values(state.viewer.modularHeaders);
@@ -404,7 +430,7 @@ export const getToolsHeaderItems = (state) => {
   return state.viewer.headers[toolbarGroup] || [];
 };
 
-export const getGroupedItemsWithCreateSignatureTool = (state) => {
+export const getGroupedItemsWithSelectedTool = (state, toolName) => {
   const modularComponents = state.viewer.modularComponents;
   return Object.keys(modularComponents).filter((dataElement) => {
     const { type, items } = modularComponents[dataElement];
@@ -413,7 +439,7 @@ export const getGroupedItemsWithCreateSignatureTool = (state) => {
       items.some((item) => {
         const itemDetails = modularComponents[item];
         return itemDetails.type === ITEM_TYPE.TOOL_BUTTON &&
-          itemDetails.toolName === 'AnnotationCreateSignature';
+          itemDetails.toolName === toolName;
       });
   });
 };
@@ -777,6 +803,8 @@ export const shouldShowPresets = (state) => {
 export const shouldResetAudioPlaybackPosition = (state) => state.viewer.shouldResetAudioPlaybackPosition;
 
 export const getActiveSoundAnnotation = (state) => state.viewer.activeSoundAnnotation;
+
+export const getEmbeddedJSPopupStyle = (state) => state.viewer.embeddedJSPopupStyle;
 
 export const getWv3dPropertiesPanelModelData = (state) => state.wv3dPropertiesPanel.modelData;
 

@@ -2,14 +2,26 @@ import React from 'react';
 import ModularHeader from './ModularHeader';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { ALIGNMENT } from 'src/constants/customizationVariables';
+import { JUSTIFY_CONTENT } from 'src/constants/customizationVariables';
+import {
+  button1,
+  button2,
+  button3,
+  button4,
+  button5,
+  button6,
+  button7,
+  button8,
+  button9,
+} from '../Helpers/mockHeaders';
+import { mockModularComponents } from '../AppStories/mockAppState';
 
 export default {
   title: 'ModularComponents/ModularHeader',
   component: ModularHeader,
   argTypes: {
-    alignment: {
-      options: Object.values(ALIGNMENT),
+    justifyContent: {
+      options: Object.values(JUSTIFY_CONTENT),
       control: { type: 'select' },
     },
   },
@@ -17,9 +29,18 @@ export default {
 
 const initialState = {
   viewer: {
-    modularHeaders: [],
+    modularHeaders: {},
     customElementOverrides: {},
-    disabledElements: []
+    disabledElements: [],
+    openElements: {},
+    customPanels: [],
+    flyoutMap: {},
+    lastPickedToolForGroupedItems: {},
+    modularComponents: {
+      ...mockModularComponents,
+      button8,
+      button9,
+    },
   },
 };
 
@@ -31,36 +52,17 @@ const MockDocumentContainer = () => {
   );
 };
 
-const baseButton = {
-  dataElement: 'button',
-  onClick: () => alert('Added'),
-  disabled: false,
-  title: 'Button 1',
-  label: 'Add',
-  type: 'customButton'
-};
-
 const divider = {
   type: 'divider',
   dataElement: 'divider-1',
 };
-
-const button1 = { ...baseButton, dataElement: 'button1', label: 'Button 1' };
-const button2 = { ...baseButton, dataElement: 'button2', label: 'Button 2' };
-const button3 = { ...baseButton, dataElement: 'button3', label: 'Button 3' };
-const button4 = { ...baseButton, dataElement: 'button4', label: 'Button 4' };
-const button5 = { ...baseButton, dataElement: 'button5', label: 'Button 5' };
-const button6 = { ...baseButton, dataElement: 'button6', label: 'Button 6' };
-const button7 = { ...baseButton, dataElement: 'button7', label: 'Button 7' };
-const button8 = { ...baseButton, dataElement: 'button8', label: 'Button 8' };
-const button9 = { ...baseButton, dataElement: 'button9', label: 'Button 9' };
 
 const group1 = {
   dataElement: 'group1',
   items: [button8, button9],
   gap: 100,
   grow: 1,
-  alignment: 'center',
+  justifyContent: 'center',
   alwaysVisible: true,
   type: 'groupedItems'
 };
