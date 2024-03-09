@@ -1,37 +1,27 @@
 import core from 'core';
-import getRootNode from 'helpers/getRootNode';
+import { getWebComponentScale } from './getWebComponentScale';
+import getRootNode from './getRootNode';
 
 // gap between the annotation selection box and the popup element
-const gap = 17;
+const defaultGap = 17;
 
-export const getAnnotationPopupPositionBasedOn = (annotation, popup, documentViewerKey = 1) => {
+export const getAnnotationPopupPositionBasedOn = (annotation, popup, documentViewerKey = 1, gap = defaultGap) => {
   const { left, top } = calcAnnotationPopupPosition(
     getAnnotationPosition(annotation, documentViewerKey),
     getPopupDimensions(popup),
     documentViewerKey,
+    gap,
   );
 
   return { left: Math.max(left, 4), top };
 };
 
-export const getTextPopupPositionBasedOn = (allQuads, popup, documentViewerKey = 1, isMultiViewerMode = false) => {
+export const getTextPopupPositionBasedOn = (allQuads, popup, documentViewerKey = 1) => {
   const { left, top } = calcTextPopupPosition(
     getSelectedTextPosition(allQuads, documentViewerKey),
     getPopupDimensions(popup),
     documentViewerKey,
   );
-
-  // Fixes the issue where viewer has space on
-  // left side in WebComponent mode
-  if (window.isApryseWebViewerWebComponent) {
-    const documentContainer =
-      isMultiViewerMode
-        ? getRootNode().querySelector(`#DocumentContainer${documentViewerKey}`)
-        : getRootNode().querySelector('.DocumentContainer');
-    const containerBox = documentContainer.getBoundingClientRect();
-    const updatedLeft = left - containerBox.left;
-    return { left: updatedLeft, top };
-  }
 
   return { left, top };
 };
@@ -192,8 +182,8 @@ const getPopupDimensions = (popup) => {
   return { width, height };
 };
 
-const calcAnnotationPopupPosition = (annotationPosition, popupDimension, documentViewerKey) => {
-  const top = calcPopupTop(annotationPosition, popupDimension, documentViewerKey);
+const calcAnnotationPopupPosition = (annotationPosition, popupDimension, documentViewerKey, gap) => {
+  const top = calcPopupTop(annotationPosition, popupDimension, documentViewerKey, gap);
   const left = calcPopupLeft(annotationPosition, popupDimension, documentViewerKey);
 
   return { left, top };
@@ -209,13 +199,9 @@ const calcTextPopupPosition = (selectedTextPosition, popupDimension, documentVie
 export const calcPopupLeft = ({ topLeft, bottomRight }, { width }, documentViewerKey) => {
   const { scrollLeft } = core.getScrollViewElement(documentViewerKey);
   const center = (topLeft.x + bottomRight.x) / 2 - scrollLeft;
-  let left = center - width / 2;
 
-  if (window.isApryseWebViewerWebComponent) {
-    const hostContainer = getRootNode().host;
-    const containerBox = hostContainer.getBoundingClientRect();
-    left -= containerBox.left;
-  }
+  width /= getWebComponentScale()?.scaleX;
+  let left = center - width / 2;
 
   if (left < 0) {
     left = 0;
@@ -232,7 +218,7 @@ export const calcPopupLeft = ({ topLeft, bottomRight }, { width }, documentViewe
  * @param {number} popupDimension The deminition of the popup (width, height)
  * this is specifically used for the annotation popup to keep the popup on the same side of the annotation.
  */
-export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewerKey) => {
+export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewerKey, gap = defaultGap) => {
   const padding = 5;
   const scrollContainer = core.getScrollViewElement(documentViewerKey);
   const boundingBox = scrollContainer.getBoundingClientRect();
@@ -243,8 +229,19 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewe
     bottom: boundingBox.top + scrollContainer.scrollTop + boundingBox.height,
   };
 
+  const scaleY = getWebComponentScale()?.scaleY;
+  const isWebComponent = window.isApryseWebViewerWebComponent;
+  if (isWebComponent) {
+    const hostContainer = getRootNode().host;
+    const containerBox = hostContainer.getBoundingClientRect();
+    visibleRegion.top = (visibleRegion.top - containerBox.top) / scaleY;
+    visibleRegion.bottom = (visibleRegion.bottom - containerBox.top) / scaleY;
+  }
+
   const annotTop = topLeft.y - gap;
   const annotBottom = bottomRight.y + gap;
+
+  height /= scaleY;
 
   let top;
   if (annotBottom + height < visibleRegion.bottom) {
@@ -260,11 +257,6 @@ export const calcPopupTop = ({ topLeft, bottomRight }, { height }, documentViewe
       top = visibleRegion.bottom - padding - height;
     }
   }
-  if (window.isApryseWebViewerWebComponent) {
-    const hostContainer = getRootNode().host;
-    const containerBox = hostContainer.getBoundingClientRect();
-    top -= containerBox.top;
-  }
 
   return Math.round(top - scrollContainer.scrollTop);
 };
@@ -274,8 +266,8 @@ export const getReaderModePopupPositionBasedOn = (annotPosition, popup, viewer) 
   const viewerRect = viewer.current.getBoundingClientRect();
 
   let top = 5;
-  const annotTop = annotPosition.top - gap;
-  const annotBottom = annotPosition.bottom + gap;
+  const annotTop = annotPosition.top - defaultGap;
+  const annotBottom = annotPosition.bottom + defaultGap;
   if (annotBottom + height < viewerRect.height) {
     top = annotBottom;
   } else if (annotTop > height) {

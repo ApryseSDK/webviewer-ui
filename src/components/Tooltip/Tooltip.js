@@ -5,10 +5,12 @@ import { useTranslation } from 'react-i18next';
 import hotkeysManager from 'helpers/hotkeysManager';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
+import { getWebComponentScale } from 'helpers/getWebComponentScale';
 
 import { isMac, isWindows, isIOS, isAndroid } from 'helpers/device';
 
 import './Tooltip.scss';
+import getRootNode from 'helpers/getRootNode';
 
 const propTypes = {
   children: PropTypes.element.isRequired,
@@ -54,7 +56,10 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       childRef.current?.addEventListener('click', hideTooltip);
     }
     // only enable focus event for non popup buttons
-    if (childRef.current['ariaLabel'] !== 'action.close' && content !== 'action.close' &&
+    if (childRef.current['ariaLabel'] !== 'action.close' &&
+      content !== 'action.close' &&
+      childRef.current['ariaLabel'] !== 'action.cancel' &&
+      content !== 'action.cancel' &&
       !childRef.current.parentElement.parentElement.className.includes('TextPopup')) {
       childRef.current?.addEventListener('focus', showToolTip);
       childRef.current?.addEventListener('blur', hideTooltip);
@@ -64,7 +69,10 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       // hide tooltip when button get disabled, disable buttons don't have "mouseleave" events
       const lastMutation = mutations[mutations.length - 1];
       if (lastMutation && lastMutation.attributeName === 'disabled' && lastMutation.target.disabled) {
-        hideTooltip();
+        // accounts for the delay on showToolTip
+        setTimeout(() => {
+          hideTooltip();
+        }, delayShow);
       }
     });
 
@@ -92,27 +100,40 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
       const childRect = childEle.getBoundingClientRect();
       const tooltipRect = tooltipEle.getBoundingClientRect();
 
+      let hostX = 0;
+      let hostY = 0;
+      if (window.isApryseWebViewerWebComponent) {
+        const shadowRoot = getRootNode();
+        const hostRect = shadowRoot.host.getBoundingClientRect();
+        hostX = hostRect.x;
+        hostY = hostRect.y;
+      }
+
       const locationTopLeftMap = {
         // TODO be able to support other directions too
         bottom: {
-          top: childRect.bottom,
-          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2,
+          top: childRect.bottom - hostY,
+          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2 - hostX,
         },
         bottomLeft: {
-          top: childRect.bottom,
-          left: childRect.left,
-        },
-        left: {
-          top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
-          left: childRect.left - tooltipRect.width,
-        },
-        right: {
-          top: childRect.top + childRect.height / 2 - tooltipRect.height / 2,
-          left: childRect.right,
+          top: childRect.bottom - hostY,
+          left: childRect.left - hostX,
         },
         top: {
-          top: childRect.top - tooltipRect.height,
-          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2,
+          top: childRect.top - tooltipRect.height - hostY,
+          left: childRect.left + childRect.width / 2 - tooltipRect.width / 2 - hostX,
+        },
+        topLeft: {
+          top: childRect.top - tooltipRect.height - hostY,
+          left: childRect.left - hostX,
+        },
+        left: {
+          top: childRect.top + childRect.height / 2 - tooltipRect.height / 2 - hostY,
+          left: childRect.left - tooltipRect.width - hostX,
+        },
+        right: {
+          top: childRect.top + childRect.height / 2 - tooltipRect.height / 2 - hostY,
+          left: childRect.right - hostX,
         },
       };
 
@@ -135,9 +156,11 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
         bestLocation
       ];
 
+      const { scaleX, scaleY } = getWebComponentScale();
+
       setPosition({
-        top: tooltipTop,
-        left: tooltipLeft,
+        top: tooltipTop / scaleY,
+        left: tooltipLeft / scaleX,
       });
       setLocation(bestLocation);
     };
@@ -196,7 +219,7 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
               )}
             </div>
           </div>,
-          document.getElementById('app'),
+          getRootNode().querySelector('#app'),
         )}
     </React.Fragment>
   );
