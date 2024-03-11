@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
@@ -26,12 +26,16 @@ const TextPopup = ({ t, selectedTextQuads }) => {
     isOpen,
     popupItems,
     isRightClickAnnotationPopupEnabled,
+    activeDocumentViewerKey,
+    isMultiViewerMode,
   ] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, DataElements.TEXT_POPUP),
       selectors.isElementOpen(state, DataElements.TEXT_POPUP),
       selectors.getPopupItems(state, DataElements.TEXT_POPUP),
       selectors.isRightClickAnnotationPopupEnabled(state),
+      selectors.getActiveDocumentViewerKey(state),
+      selectors.isMultiViewerMode(state),
     ],
     shallowEqual,
   );
@@ -45,8 +49,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
 
   const setPopupPositionAndShow = () => {
     if (popupRef.current && popupItems.length > 0 && selectedTextQuads) {
-      setPosition(getTextPopupPositionBasedOn(selectedTextQuads, popupRef));
-      dispatch(actions.openElement(DataElements.TEXT_POPUP));
+      setPosition(getTextPopupPositionBasedOn(selectedTextQuads, popupRef, activeDocumentViewerKey));
     }
   };
 
@@ -62,21 +65,9 @@ const TextPopup = ({ t, selectedTextQuads }) => {
 
   useEffect(() => {
     setPopupPositionAndShow();
-  }, [selectedTextQuads]);
+  }, [selectedTextQuads, activeDocumentViewerKey, isMultiViewerMode]);
 
-  const onClose = useCallback(() => dispatch(actions.closeElement(DataElements.TEXT_POPUP)), [dispatch]);
-
-  useEffect(() => {
-    const onScroll = _.debounce(() => {
-      setPopupPositionAndShow();
-    }, 100);
-    const scrollViewElement = core.getDocumentViewer().getScrollViewElement();
-    scrollViewElement?.addEventListener('scroll', onScroll);
-
-    return () => {
-      scrollViewElement?.removeEventListener('scroll', onScroll);
-    };
-  }, [selectedTextQuads]);
+  const onClose = () => dispatch(actions.closeElement(DataElements.TEXT_POPUP));
 
   if (isDisabled) {
     return null;
@@ -99,7 +90,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
       role="listbox"
       aria-label={t('component.textPopup')}
     >
-      <FocusTrap locked={isOpen}>
+      <FocusTrap locked={isOpen && position.top !== 0 && position.left !== 0}>
         <div className="container">
           <CustomizablePopup
             dataElement={DataElements.TEXT_POPUP}
@@ -111,7 +102,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               label={isRightClickAnnotationPopupEnabled ? 'action.copy' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'action.copy' : ''}
               img="ic_copy_black_24px"
-              onClick={() => copyText()}
+              onClick={() => copyText(activeDocumentViewerKey)}
               role="option"
             />
             <ActionButton
@@ -120,7 +111,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               label={isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
               img="icon-tool-highlight"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextHighlightAnnotation)}
+              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextHighlightAnnotation, activeDocumentViewerKey)}
               role="option"
             />
             <ActionButton
@@ -129,7 +120,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               label={isRightClickAnnotationPopupEnabled ? 'annotation.underline' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.underline' : ''}
               img="icon-tool-text-manipulation-underline"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextUnderlineAnnotation)}
+              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextUnderlineAnnotation, activeDocumentViewerKey)}
               role="option"
             />
             <ActionButton
@@ -138,7 +129,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               label={isRightClickAnnotationPopupEnabled ? 'annotation.squiggly' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.squiggly' : ''}
               img="icon-tool-text-manipulation-squiggly"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextSquigglyAnnotation)}
+              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextSquigglyAnnotation, activeDocumentViewerKey)}
               role="option"
             />
             <ActionButton
@@ -146,7 +137,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               label={isRightClickAnnotationPopupEnabled ? 'annotation.strikeout' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.strikeout' : ''}
               img="icon-tool-text-manipulation-strikethrough"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation)}
+              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation, activeDocumentViewerKey)}
               dataElement="textStrikeoutToolButton"
               role="option"
             />
@@ -167,7 +158,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
                 title={!isRightClickAnnotationPopupEnabled ? 'option.redaction.markForRedaction' : ''}
                 fillColor="868E96"
                 img="icon-tool-select-area-redaction"
-                onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.RedactionAnnotation)}
+                onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.RedactionAnnotation, activeDocumentViewerKey)}
                 role="option"
               />
             )}

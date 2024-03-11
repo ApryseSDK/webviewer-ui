@@ -14,7 +14,7 @@ import eventHandler from 'helpers/eventHandler';
 import throttle from 'lodash/throttle';
 import { zoomTo } from 'helpers/zoom';
 import ComparisonButton from 'components/MultiViewer/ComparisonButton';
-import { addDocumentViewer, syncDocumentViewers, removeDocumentViewer } from 'helpers/documentViewerHelper';
+import { addDocumentViewer, syncDocumentViewers, removeDocumentViewer, setupOpenURLHandler } from 'helpers/documentViewerHelper';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import { DISABLED_TOOLS_KEYWORDS, DISABLED_TOOL_GROUPS, SYNC_MODES } from 'constants/multiViewerContants';
@@ -124,6 +124,9 @@ const MultiViewer = () => {
       const isDoc1Loaded = !!core.getDocumentViewer(1).getDocument();
       setDoc1Loaded(isDoc1Loaded);
       addDocumentViewer(2);
+      const newDocViewer = core.getDocumentViewers()[1];
+      setupOpenURLHandler(newDocViewer, store);
+
       syncDocumentViewers(1, 2);
       const { addEventHandlers, removeEventHandlers } = eventHandler(store, 2, true);
       removeHandlersRef.current = removeEventHandlers;

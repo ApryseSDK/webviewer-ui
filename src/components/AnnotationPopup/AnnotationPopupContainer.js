@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
@@ -337,7 +337,7 @@ const AnnotationPopupContainer = ({
   const showRedactionButton = redactionEnabled && !multipleAnnotationsSelected && !includesFormFieldAnnotation;
 
   const onApplyRedaction = () => {
-    dispatch(applyRedactions(focusedAnnotation));
+    dispatch(applyRedactions(focusedAnnotation, undefined, activeDocumentViewerKey));
     dispatch(actions.closeElement(DataElements.ANNOTATION_POPUP));
   };
 
