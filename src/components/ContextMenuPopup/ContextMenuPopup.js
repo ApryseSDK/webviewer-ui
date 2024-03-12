@@ -27,16 +27,6 @@ const OfficeActionItem = ({ dataElement, onClick, img, title, shortcut = '', dis
     if (e.key === 'Enter' && !disabled) {
       onClick();
       dispatch(actions.closeElement(DataElements.CONTEXT_MENU_POPUP));
-      focusOfficeEditorContent();
-    }
-  };
-
-  const focusOfficeEditorContent = () => {
-    if (isOfficeEditorMode()) {
-      // setTimeout needed because the focus can not be set immediately
-      setTimeout(() => {
-        core.getViewerElement().focus();
-      });
     }
   };
 
@@ -46,7 +36,6 @@ const OfficeActionItem = ({ dataElement, onClick, img, title, shortcut = '', dis
       onClick={() => {
         if (!disabled) {
           onClick();
-          focusOfficeEditorContent();
         }
       }}
       tabIndex={disabled ? -1 : 0}
