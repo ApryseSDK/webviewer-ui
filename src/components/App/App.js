@@ -35,7 +35,6 @@ import BottomHeader from 'components/ModularComponents/BottomHeader';
 import TopHeader from 'components/ModularComponents/TopHeader';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import RibbonOverflowFlyout from 'components/ModularComponents/RibbonOverflowFlyout';
-import GroupedToolsOverflowFlyout from 'components/ModularComponents/GroupedToolsOverflowFlyout';
 import ViewControlsFlyout from 'components/ModularComponents/ViewControls/ViewControlsFlyout';
 import MainMenu from 'components/ModularComponents/MainMenu/MainMenuFlyout';
 import ProgressModal from 'components/ProgressModal';
@@ -364,7 +363,6 @@ const App = ({ removeEventHandlers }) => {
       >
         <FlyoutContainer />
         <RibbonOverflowFlyout />
-        <GroupedToolsOverflowFlyout />
         <ViewControlsFlyout />
         <MainMenu />
         <Accessibility />

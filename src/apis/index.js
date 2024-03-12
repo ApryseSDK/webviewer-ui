@@ -115,6 +115,7 @@ import setInlineCommentFilter from './setInlineCommentFilter';
 import setCustomPanel from './setCustomPanel';
 import exportBookmarks from './exportBookmarks';
 import importBookmarks from './importBookmarks';
+import setEmbeddedJSPopupStyle from './setEmbeddedJSPopupStyle';
 import setFitMode from './setFitMode';
 import setHeaderItems from './setHeaderItems';
 import setIconColor from './setIconColor';
@@ -266,10 +267,10 @@ import ToggleElementButton from './ModularComponents/toggleElementButton';
 import ToolGroupButton from './ModularComponents/toolGroupButton';
 import Zoom from './ModularComponents/zoom';
 import Flyout from './ModularComponents/flyout';
-import GroupedTools from './ModularComponents/groupedTools';
 import PresetButton from './ModularComponents/presetButton';
 import StatefulButton from './ModularComponents/statefulButton';
 import ViewControls from './ModularComponents/viewControls';
+import PageControls from './ModularComponents/pageControls';
 import MainMenu from './ModularComponents/menu';
 import TabPanel from './ModularComponents/tabPanel';
 import setMultiViewerSyncScrollingMode from './setMultiViewerSyncScrollingMode';
@@ -385,6 +386,7 @@ export default (store) => {
     exportBookmarks: exportBookmarks(store),
     extractPagesWithAnnotations,
     importBookmarks: importBookmarks(store),
+    setEmbeddedJSPopupStyle: setEmbeddedJSPopupStyle(store),
     setFitMode,
     setHeaderItems: setHeaderItems(store),
     setIconColor: setIconColor(store),
@@ -493,10 +495,10 @@ export default (store) => {
       ToolGroupButton,
       Zoom,
       Flyout: Flyout(store),
-      GroupedTools,
       PresetButton,
       StatefulButton,
       ViewControls,
+      PageControls,
       MainMenu: MainMenu(store),
       TabPanel,
     },

@@ -368,6 +368,14 @@ describe('Test Custom UI APIs', function() {
       // Five default items + 1 additional item
       expect(mainMenu.items.length).to.equal(6);
     });
+
+    it('It should return all flyouts when calling the API getAllFlyouts', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' }, true);
+      const allFlyouts = instance.UI.Flyouts.getAllFlyouts();
+
+      // 9 flyouts are added by default when we add the 'beta' value for the 'ui' key.
+      expect(allFlyouts.length).to.equal(9);
+    });
   });
 
   describe('Test Panels', () => {

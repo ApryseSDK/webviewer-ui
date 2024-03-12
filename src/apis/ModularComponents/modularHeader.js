@@ -243,7 +243,7 @@ const defaultTopHeader = new instance.UI.Components.ModularHeader({
     }
 
     /**
-     * @typedef {('modularHeader' | 'customButton' | 'statefulButton' | 'groupedItems' | 'groupedTools' | 'ribbonItem' | 'divider' | 'toggleButton' | 'ribbonGroup' | 'toolButton' | 'zoom' | 'flyout' | 'pageControls' | 'presetButton' | 'viewControls' | 'menu' | 'tabPanel')} ItemType
+     * @typedef {('modularHeader' | 'customButton' | 'statefulButton' | 'groupedItems' | 'ribbonItem' | 'divider' | 'toggleButton' | 'ribbonGroup' | 'toolButton' | 'zoom' | 'flyout' | 'pageControls' | 'presetButton' | 'viewControls' | 'menu' | 'tabPanel')} ItemType
      * Description of allowable item types.
      */
 
