@@ -29,8 +29,7 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:no-unsanitized/DOM"
+    "plugin:react/recommended"
   ],
   "rules": {
     "radix": "off",
@@ -174,7 +173,17 @@
         "ts": "never"
       }
     ],
-    "@pdftron/webviewer/no-string-events": "off",
+    "@typescript-eslint/no-useless-constructor": "error",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-this-alias": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/class-name-casing": "off",
+    "@typescript-eslint/no-unused-vars": "off",
     "react/prop-types": "off",
     "react/no-danger": "error"
   },
@@ -192,6 +201,7 @@
         "react/prop-types": "off",
         "no-alert": "off",
         "no-unused-vars": "off",
+        "@typescript-eslint/no-useless-constructor": "off",
         "no-useless-constructor": "off"
       }
     },
@@ -202,6 +212,7 @@
         "no-undef": "off",
         "no-unused-vars": "off",
         "no-alert": "off",
+        "@typescript-eslint/no-useless-constructor": "off",
         "no-useless-constructor": "off"
       }
     },
@@ -212,6 +223,7 @@
         "no-undef": "off",
         "no-unused-vars": "off",
         "no-alert": "off",
+        "@typescript-eslint/no-useless-constructor": "off",
         "no-useless-constructor": "off"
       }
     }
