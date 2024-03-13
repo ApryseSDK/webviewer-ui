@@ -12,6 +12,7 @@ import Element from 'components/Element';
 import CustomElement from 'components/CustomElement';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import { panelNames, panelData } from 'constants/panel';
+import PortfolioPanel from 'components/PortfolioPanel';
 import DataElements from 'constants/dataElement';
 import core from 'core';
 import useOnRedactionAnnotationChanged from 'hooks/useOnRedactionAnnotationChanged';
@@ -54,6 +55,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
     bookmarks,
     isBookmarkPanelEnabled,
     isBookmarkIconShortcutVisible,
+    isPortfolioPanelDisabled,
   ] = useSelector(
     (state) => [
       selectors.getGenericPanels(state),
@@ -62,6 +64,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
       selectors.getBookmarks(state),
       !selectors.isElementDisabled(state, DataElements.BOOKMARKS_PANEL),
       selectors.isBookmarkIconShortcutVisible(state),
+      selectors.isElementDisabled(state, DataElements.PORTFOLIO_PANEL),
     ],
   );
 
@@ -85,6 +88,8 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
         return <LayersPanel/>;
       case panelNames.TEXT_EDITING:
         return <TextEditingPanel dataElement={dataElement}/>;
+      case panelNames.PORTFOLIO:
+        return <PortfolioPanel />;
       case panelNames.CHANGE_LIST:
         return <MultiViewerWrapper><ComparePanel dataElement={dataElement}/></MultiViewerWrapper>;
       case panelNames.STYLE:
@@ -118,6 +123,9 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   const getPanelsObjectToRender = () => {
     const panelsToRender = {};
     panelsList?.forEach((panel, index) => {
+      if (panel.render === panelNames.PORTFOLIO && isPortfolioPanelDisabled) {
+        return;
+      }
       if (panel.icon) {
         setIconFlag(true);
       }
@@ -177,6 +185,8 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
         };
       }
     });
+
+    setVisiblePanelTabs(Object.keys(panelsToRender));
     return panelsToRender;
   };
 
@@ -281,7 +291,9 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
 
   useEffect(() => {
     setPanelsObject(getPanelsObjectToRender());
-  }, []);
+    // We set the overflow items to an empty array so we can re-calculate the overflow items when the tabs change
+    setOverflowItems([]);
+  }, [isPortfolioPanelDisabled]);
 
   useEffect(() => {
     handleActiveTabPanel();
@@ -292,7 +304,6 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
       const firstPanel = Object.keys(panelsObject)[0];
       dispatch(actions.setActiveCustomPanel(firstPanel, tabPanelDataElement));
     }
-
     setVisiblePanelTabs(Object.keys(panelsObject));
   }, [panelsObject]);
 

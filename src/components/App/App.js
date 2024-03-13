@@ -331,6 +331,8 @@ const App = ({ removeEventHandlers }) => {
         return <LazyLoadWrapper Component={LazyLoadComponents.SignatureListPanel} dataElement={dataElement} />;
       case panelNames.RUBBER_STAMP:
         return <LazyLoadWrapper Component={LazyLoadComponents.RubberStampPanel} dataElement={dataElement} />;
+      case panelNames.PORTFOLIO:
+        return <LazyLoadWrapper Component={LazyLoadComponents.PortfolioPanel} dataElement={dataElement} />;
     }
   };
 

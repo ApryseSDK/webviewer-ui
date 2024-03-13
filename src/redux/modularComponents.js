@@ -1,3 +1,12 @@
+/**
+ * A namespace which contains APIs Modular UI components.
+ * @namespace Components
+ * @memberof UI
+ * @example
+ * webViewerInstance.UI.Components.someComponent
+ * webViewerInstance.UI.Components.someAPI()
+ */
+
 const defaultModularHeaders = {
   'default-top-header': {
     dataElement: 'default-top-header',
@@ -79,27 +88,31 @@ const defaultModularComponents = {
     dataElement: 'filePickerButton',
     title: 'action.openFile',
     label: 'action.openFile',
-    icon: 'icon-header-file-picker-line'
+    icon: 'icon-header-file-picker-line',
+    hidden: true,
   },
   downloadButton: {
     dataElement: 'downloadButton',
     title: 'action.download',
     label: 'action.download',
-    icon: 'icon-download'
+    icon: 'icon-download',
+    hidden: false,
   },
   saveAsButton: {
     dataElement: 'saveAsButton',
     title: 'saveModal.saveAs',
     isActive: false,
     label: 'saveModal.saveAs',
-    icon: 'icon-save'
+    icon: 'icon-save',
+    hidden: false,
   },
   printButton: {
     dataElement: 'printButton',
     title: 'action.print',
     isActive: false,
     label: 'action.print',
-    icon: 'icon-header-print-line'
+    icon: 'icon-header-print-line',
+    hidden: false,
   },
   undefined: {},
   createPortfolioButton: {
@@ -107,14 +120,16 @@ const defaultModularComponents = {
     title: 'portfolio.createPDFPortfolio',
     isActive: false,
     label: 'portfolio.createPDFPortfolio',
-    icon: 'icon-pdf-portfolio'
+    icon: 'icon-pdf-portfolio',
+    hidden: false,
   },
   settingsButton: {
     dataElement: 'settingsButton',
     title: 'option.settings.settings',
     isActive: false,
     label: 'option.settings.settings',
-    icon: 'icon-header-settings-line'
+    icon: 'icon-header-settings-line',
+    hidden: false,
   },
   MainMenuFlyout: {
     dataElement: 'MainMenuFlyout',
@@ -853,6 +868,11 @@ const defaultPanels = [
     location: 'right'
   },
   {
+    dataElement: 'portfolioPanel',
+    render: 'portfolioPanel',
+    location: 'left'
+  },
+  {
     render: 'tabPanel',
     dataElement: 'customLeftPanel',
     panelsList: [
@@ -873,6 +893,9 @@ const defaultPanels = [
       },
       {
         render: 'fileAttachmentPanel'
+      },
+      {
+        render: 'portfolioPanel'
       }
     ],
     location: 'left'

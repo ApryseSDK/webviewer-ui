@@ -21,7 +21,10 @@ const initialState = {
   document: {
     maxPasswordAttempts: 3,
     passwordAttempts: 0,
-  }
+  },
+  featureFlags: {
+    customizableUI: false,
+  },
 };
 
 const store = configureStore({

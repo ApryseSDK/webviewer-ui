@@ -2,6 +2,7 @@ import React from 'react';
 import TabPanel from './TabPanel';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { panelMinWidth } from 'constants/panel';
 
 export default {
   title: 'ModularComponents/TabPanel',
@@ -39,6 +40,10 @@ const initialState = {
         dataElement: 'signaturePanel',
       },
       {
+        render: 'portfolioPanel',
+        dataElement: 'portfolioPanel',
+      },
+      {
         'render': 'tabPanelIconsOnly',
         'dataElement': 'tabPanelIconsOnly',
         'panelsList': [
@@ -56,6 +61,9 @@ const initialState = {
           },
           {
             'render': 'signaturePanel',
+          },
+          {
+            'render': 'portfolioPanel',
           }
         ]
       },
@@ -136,7 +144,10 @@ const initialState = {
   },
   document: {
     bookmarks: [],
-  }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 const store = configureStore({ reducer: () => initialState });
@@ -144,7 +155,7 @@ const store = configureStore({ reducer: () => initialState });
 
 export const TabPanelWithIconsOnly = () => (
   <Provider store={store}>
-    <div style={{ width: '258px' }}>
+    <div style={{ width: '320px' }}>
       <TabPanel dataElement='tabPanelIconsOnly' />
     </div>
   </Provider>
@@ -165,3 +176,86 @@ export const TabPanelIconsAndLabels = () => (
     </div>
   </Provider>
 );
+
+const initialStateThumbnailsOnly = {
+  viewer: {
+    disabledElements: {},
+    customElementOverrides: {},
+    bookmarkIconShortcutVisibility: false,
+    openElements: {
+      signatureModal: false
+    },
+    toolbarGroup: 'toolbarGroup-Insert',
+    genericPanels: [
+      {
+        'render': 'tabPanelIconsAndLabels',
+        'dataElement': 'tabPanelIconsAndLabels',
+        'panelsList': [
+          {
+            'render': 'icon-label1'
+          },
+        ]
+      },
+      {
+        dataElement: 'icon-label1',
+        icon: 'ic_bookmarks_black_24px',
+        title: 'Tab 1',
+        label: 'Tab 1',
+        render: 'thumbnailsPanel',
+      },
+    ],
+    lastPickedToolGroup: '',
+    flyoutMap: {},
+    customPanels: [],
+    activeCustomPanel: {
+      'tabPanelIconsAndLabels': 'icon-label1',
+    },
+    selectedThumbnailPageIndexes: [],
+    thumbnailSelectingPages: true,
+    panelWidths: {
+      'tabPanelIconsAndLabels': panelMinWidth,
+    }
+  },
+  document: {
+    bookmarks: [],
+    totalPages: {
+      1: 0,
+    }
+  },
+  featureFlags: {
+    customizableUI: true,
+  },
+};
+
+const storeThumbnailsOnly = configureStore({ reducer: () => initialStateThumbnailsOnly });
+
+export const TabPanelWithThumbnailPanelMinWidth = () => (
+  <Provider store={storeThumbnailsOnly}>
+    <div style={{ display: 'flex' }}>
+      <div style={{ width: `${panelMinWidth}px`, height: '75%' }}>
+        <TabPanel dataElement="tabPanelIconsAndLabels"/>
+      </div>
+    </div>
+  </Provider>
+);
+
+const initialStateThumbnailsOnlyMaxWidth = {
+  ...initialStateThumbnailsOnly,
+  viewer: {
+    ...initialStateThumbnailsOnly.viewer,
+    panelWidths: {
+      'tabPanelIconsAndLabels': 600,
+    }
+  }
+};
+const storeThumbnailsOnlyMaxWidth = configureStore({ reducer: () => initialStateThumbnailsOnlyMaxWidth });
+export const TabPanelWithThumbnailPanelMaxWidth = () => (
+  <Provider store={storeThumbnailsOnlyMaxWidth}>
+    <div style={{ display: 'flex' }}>
+      <div style={{ width: '600px', height: '75%' }}>
+        <TabPanel dataElement="tabPanelIconsAndLabels"/>
+      </div>
+    </div>
+  </Provider>
+);
+

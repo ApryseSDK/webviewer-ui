@@ -32,12 +32,65 @@
   .flx-Panel-container {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 16px;
     overflow-y: auto;
+
+    &.searchPanel {
+      padding: 0px;
+
+      .SearchPanel {
+        padding: 16px 0px 0px 16px;
+
+        .SearchOverlay {
+          padding-right: 16px;
+        }
+
+        .results .ReactVirtualized__List {
+          padding-right: 16px;
+        }
+      }
+    }
+
+    &.notesPanel {
+      padding: 0px;
+
+      .NotesPanel {
+        width: 100%;
+
+        [data-element=notesPanelHeader] {
+          padding-right: 16px;
+        }
+
+        .virtualized-notes-container,
+        .normal-notes-container {
+          padding-right: 16px;
+        }
+      }
+
+      .multi-select-footer {
+        margin-bottom: 16px;
+        height: 64px;
+      }
+    }
+
+    &.textEditingPanel {
+      padding: 0px;
+
+      .text-editing-panel-heading {
+        font-size: 14px;
+      }
+    }
 
     // fixes for generic versions of panels
     .bookmark-outline-panel {
       padding: 0;
+    }
+
+    .PortfolioPanel {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      flex: 1;
+      flex-direction: column;
     }
 
     .thumbnail-slider-container {
@@ -47,21 +100,25 @@
     .documentControls {
       margin-top: 16px;
       border-top: 1.5px solid var(--border);
+
       .divider {
         display: none;
       }
     }
 
     .documentControlsInput {
-      input, .documentControlsButton {
+
+      input,
+      .documentControlsButton {
         height: 32px;
       }
     }
 
-    .documentControlsInput, 
+    .documentControlsInput,
     .bookmark-outline-footer {
       padding: 12px 0 20px 0;
     }
+
     ////////////////////////////////
 
     @include mobile {
@@ -74,12 +131,14 @@
         align-items: center;
         justify-content: flex-end;
         height: 64px;
+        min-height: 64px;
         width: 100%;
         padding-right: 5px;
         top: 0;
 
         .close-icon-container {
           cursor: pointer;
+
           .close-icon {
             width: 24px;
             height: 24px;
@@ -89,6 +148,7 @@
     }
   }
 
+
   &.right {
     right: 0;
     border-left: 1px solid var(--side-panel-border);
@@ -97,6 +157,10 @@
   &.left {
     left: 0;
     border-right: 1px solid var(--side-panel-border);
+  }
+
+  &.closed {
+    display: none;
   }
 
   &.right.closed {

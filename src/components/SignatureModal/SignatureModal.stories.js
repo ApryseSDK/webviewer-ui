@@ -26,6 +26,9 @@ const initialState = {
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
   },
+  featureFlags: {
+    customizableUI: false,
+  },
 };
 
 const store = configureStore({
@@ -43,7 +46,10 @@ const inkSignatureWithInitialsStore = configureStore({
     viewer: {
       ...initialState.viewer,
       isInitialsModeEnabled: true,
-    }
+    },
+    featureFlags: {
+      customizableUI: false,
+    },
   })
 });
 
@@ -60,7 +66,10 @@ const drawSignatureStore = configureStore({
       tab: {
         signatureModal: 'textSignaturePanelButton',
       }
-    }
+    },
+    featureFlags: {
+      customizableUI: false,
+    },
   })
 });
 
@@ -78,7 +87,10 @@ const drawSignatureStoreWithInitials = configureStore({
       tab: {
         signatureModal: 'textSignaturePanelButton',
       }
-    }
+    },
+    featureFlags: {
+      customizableUI: false,
+    },
   })
 });
 
@@ -106,6 +118,9 @@ const imageTabState = {
     toolbarGroup: 'toolbarGroup-Insert',
     customPanels: [],
   },
+  featureFlags: {
+    customizableUI: false,
+  },
 };
 
 const imageStore = configureStore({
@@ -123,7 +138,10 @@ const imageStoreWithInitials = configureStore({
     viewer: {
       ...imageTabState.viewer,
       isInitialsModeEnabled: true,
-    }
+    },
+    featureFlags: {
+      customizableUI: false,
+    },
   })
 });
 
@@ -165,6 +183,9 @@ const savedTabsState = {
       signatureModal: 'savedSignaturePanelButton'
     },
     activeToolName: 'AnnotationCreateSignature',
+  },
+  featureFlags: {
+    customizableUI: false,
   },
 };
 const savedTabsStateWithInitials = {

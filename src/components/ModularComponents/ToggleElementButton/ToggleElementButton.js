@@ -8,33 +8,39 @@ import Button from 'components/Button';
 
 const ToggleElementButton = (props) => {
   const buttonRef = useRef();
-  const { dataElement, title, disabled, img, label, toggleElement, onFlyoutToggled = null } = props;
-  const [isActive, flyoutMap] = useSelector((state) => [
+  const { dataElement, title, disabled, img, label, toggleElement, setFlyoutTriggerRef = null } = props;
+  const [
+    isActive,
+    flyoutMap,
+    isToggleElementDisabled,
+  ] = useSelector((state) => [
     selectors.isElementOpen(state, toggleElement),
     selectors.getFlyoutMap(state),
+    selectors.isElementDisabled(state, toggleElement),
   ]);
 
   const [isElementActive, setIsElementActive] = useState(isActive);
+  const [isElementDisabled, setIsElementDisabled] = useState(disabled);
 
   useEffect(() => {
     setIsElementActive(isActive);
   }, [isActive]);
 
+  useEffect(() => {
+    setIsElementDisabled(isToggleElementDisabled);
+  }, [isToggleElementDisabled]);
+
   const dispatch = useDispatch();
 
   const onClick = () => {
     if (flyoutMap[toggleElement]) {
-      if (onFlyoutToggled) {
-        onFlyoutToggled();
+      if (setFlyoutTriggerRef) {
+        setFlyoutTriggerRef();
       } else {
-        dispatch(actions.setFlyoutToggleElement(buttonRef.current));
+        dispatch(actions.setFlyoutToggleElement(dataElement));
       }
     }
-    if (isElementActive) {
-      dispatch(actions.closeElement(toggleElement));
-    } else {
-      dispatch(actions.openElement(toggleElement));
-    }
+    dispatch(actions.toggleElement(toggleElement));
   };
 
   return (
@@ -46,7 +52,7 @@ const ToggleElementButton = (props) => {
         label={label}
         title={title}
         onClick={onClick}
-        disabled={disabled}
+        disabled={isElementDisabled}
       >
         {props.children}
       </Button>
@@ -55,9 +61,13 @@ const ToggleElementButton = (props) => {
 };
 
 ToggleElementButton.propTypes = {
-  isActive: PropTypes.bool,
-  closeElement: PropTypes.func,
-  openElement: PropTypes.func,
+  dataElement: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  disabled: PropTypes.bool,
+  img: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  toggleElement: PropTypes.string.isRequired,
+  setFlyoutTriggerRef: PropTypes.func,
 };
 
 export default ToggleElementButton;

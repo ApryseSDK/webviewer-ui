@@ -96,6 +96,11 @@ describe('TabPanel', () => {
           'location': 'left'
         },
         {
+          'dataElement': 'portfolioPanel',
+          'render': 'portfolioPanel',
+          'location': 'left'
+        },
+        {
           'render': 'tabPanel',
           'dataElement': 'customLeftPanel',
           'panelsList': [
@@ -125,7 +130,10 @@ describe('TabPanel', () => {
             },
             {
               'render': 'notesPanel'
-            }
+            },
+            {
+              'render': 'portfolioPanel'
+            },
           ],
           'location': 'left'
         },

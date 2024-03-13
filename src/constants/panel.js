@@ -17,6 +17,7 @@ export const panelNames = {
   TABS: 'tabPanel',
   SIGNATURE_LIST: 'signatureListPanel',
   RUBBER_STAMP: 'rubberStampPanel',
+  PORTFOLIO: 'portfolioPanel',
 };
 
 export const panelData = {
@@ -67,6 +68,10 @@ export const panelData = {
   [panelNames.NOTES]: {
     icon: 'icon-header-chat-line',
     title: 'component.notesPanel',
+  },
+  [panelNames.PORTFOLIO]: {
+    icon: 'icon-pdf-portfolio',
+    title: 'portfolio.portfolioPanelTitle',
   },
   [panelNames.SIGNATURE_LIST]: {
     icon: 'icon-tool-signature',

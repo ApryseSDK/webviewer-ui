@@ -56,6 +56,9 @@ const DataElements = {
   COMPARE_PANEL: 'comparePanel',
   PORTFOLIO_PANEL: 'portfolioPanel',
   PORTFOLIO_PANEL_BUTTON: 'portfolioPanelButton',
+  LAYERS_PANEL: 'layersPanel',
+  SIGNATURE_PANEL: 'signaturePanel',
+  ATTACHMENT_PANEL: 'attachmentPanel',
   PORTFOLIO_ADD_FILE: 'portfolioAddFile',
   PORTFOLIO_ADD_FOLDER: 'portfolioAddFolder',
   PORTFOLIO_ADD_NEW_BUTTON: 'portfolioAddNewButton',
@@ -118,6 +121,10 @@ const DataElements = {
   AUDIO_PLAYBACK_POPUP: 'audioPlaybackPopup',
   DOCUMENT_CROP_POPUP: 'documentCropPopup',
   SNIPPING_TOOL_POPUP: 'snippingToolPopup',
+  LINK_ANNOTATION_POPUP: 'linkAnnotationPopup',
+  LINK_ANNOTATION_UNLINK_BUTTON: 'linkAnnotationUnlinkButton',
+  LINK_URI: 'linkUri',
+  EMBEDDED_JS_POPUP: 'embeddedJsPopup',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',

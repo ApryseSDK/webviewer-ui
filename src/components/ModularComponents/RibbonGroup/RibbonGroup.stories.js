@@ -30,6 +30,9 @@ const initialState = {
     lastPickedToolForGroupedItems: {},
     customHeadersAdditionalProperties: {},
   },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 const item1 = {

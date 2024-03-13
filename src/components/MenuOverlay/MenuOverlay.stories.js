@@ -28,6 +28,9 @@ const initialState = {
       { 'dataElement': 'languageButton' }
     ]
   },
+  featureFlags: {
+    customizableUI: false,
+  },
 };
 const store = configureStore({
   reducer: () => initialState

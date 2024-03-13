@@ -21,6 +21,7 @@ const RichTextStyleEditor = lazy(() => import('components/RichTextStyleEditor'))
 const AudioPlaybackPopup = lazy(() => import('components/AudioPlaybackPopup'));
 const DocumentCropPopup = lazy(() => import('components/DocumentCropPopup'));
 const InlineCommentingPopup = lazy(() => import('components/InlineCommentingPopup'));
+const LinkAnnotationPopup = lazy(() => import('components/LinkAnnotationPopup'));
 
 // Modals
 const ContentEditLinkModal = lazy(() => import('components/ContentEditLinkModal'));
@@ -62,6 +63,7 @@ const SignatureListPanel = lazy(() => import('components/SignatureListPanel'));
 const LeftPanel = lazy(() => import('components/LeftPanel'));
 const RubberStampPanel = lazy(() => import('components/RubberStampPanel'));
 const RedactionPanel = lazy(() => import('components/RedactionPanel'));
+const PortfolioPanel = lazy(() => import('components/PortfolioPanel'));
 
 
 const OfficeEditorToolsHeader = lazy(() => import('components/Header/OfficeEditorToolsHeader'));
@@ -119,8 +121,10 @@ const LazyLoadComponents = {
   TabPanel,
   LeftPanel,
   RedactionPanel,
+  PortfolioPanel,
   OfficeEditorToolsHeader,
   CreatePortfolioModal,
+  LinkAnnotationPopup,
   SignatureListPanel,
   RubberStampPanel,
 };

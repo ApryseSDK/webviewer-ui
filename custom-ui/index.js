@@ -131,28 +131,38 @@ Webviewer.WebComponent({
     location: 'right',
   });
 
+  // Portfolio Panel
+  UI.addPanel({
+    dataElement: 'portfolioPanel',
+    render: UI.Panels.PORTFOLIO,
+    location: 'left',
+  });
+
   // Left Panel
   const tabPanel = new UI.Components.TabPanel({
     dataElement: 'customLeftPanel',
     panelsList: [
       {
-        render: 'thumbnailPanel'
+        render: UI.Panels.THUMBNAIL
       },
       {
-        render: 'outlinePanel'
+        render: UI.Panels.OUTLINE
       },
       {
-        render: 'bookmarkPanel'
+        render: UI.Panels.BOOKMARKS
       },
       {
-        render: 'layersPanel'
+        render: UI.Panels.LAYERS
       },
       {
-        render: 'signaturePanel'
+        render: UI.Panels.SIGNATURE
       },
       {
-        render: 'fileAttachmentPanel'
+        render: UI.Panels.FILE_ATTACHMENT
       },
+      {
+        render: UI.Panels.PORTFOLIO
+      }
     ],
     location: 'left'
   });
