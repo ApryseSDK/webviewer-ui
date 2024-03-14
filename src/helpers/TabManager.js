@@ -40,6 +40,27 @@ export const enableMultiTab = () => (dispatch, getState) => {
   setTimeout(() => {
     fireEvent(Events.TAB_MANAGER_READY);
   }, 300);
+
+
+  // In some cases, enabling MultiTab and calling loadDocument can result
+  // in a race condition where the viewer opens an empty multi-tab message
+  // page. To prevent this, we are using a timeout.
+  function docLoadedEvent() {
+    const doc = core.getDocument();
+    const tabs = selectors.getTabs(state);
+    const exist = tabs.some((item) => item.options?.filename === doc.filename);
+    if (!exist) {
+      doc.getFileData().then((data) => {
+        try {
+          tabManager.addTab(new File([data], doc.getFilename()));
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    }
+    core.removeEventListener('documentLoaded', docLoadedEvent);
+  }
+  core.addEventListener('documentLoaded', docLoadedEvent);
 };
 
 export function prepareMultiTab(initialDoc, store) {

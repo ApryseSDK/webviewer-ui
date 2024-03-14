@@ -7,6 +7,7 @@ describe('Test UI APIs', function() {
   this.timeout(20000);
 
   let viewerDiv;
+  let instance;
 
   beforeEach(async () => {
     // Create a new div with an ID and add it to the body before each test
@@ -15,9 +16,10 @@ describe('Test UI APIs', function() {
     document.body.appendChild(viewerDiv);
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     // Clean up the div after each test
     document.body.removeChild(viewerDiv);
+    await instance.UI.dispose();
   });
 
 
@@ -25,7 +27,7 @@ describe('Test UI APIs', function() {
     const options = {
       initialDoc: '/base/test/fixtures/pdfs/blank.pdf',
     };
-    const instance = await setupWebViewerInstance(options);
+    instance = await setupWebViewerInstance(options);
     // create a promise that resolves when the document loaded event fires
     const documentLoadedPromise = new Promise((resolve) => {
       instance.UI.addEventListener('documentLoaded', resolve);
@@ -33,20 +35,20 @@ describe('Test UI APIs', function() {
     await documentLoadedPromise;
   });
   it('Check WebComponent for instance.UI.dispose() function', async () => {
-    const options = {
-      initialDoc: '/base/test/fixtures/pdfs/blank.pdf',
-    };
-    const instance = await setupWebViewerInstance(options);
-    // create a promise that resolves when the document loaded event fires
+    instance = await setupWebViewerInstance({}, true);
+    // create a promise that resolves when the viewer loaded event fires
+    const UIEvents = instance.UI.Events;
     const documentLoadedPromise = new Promise((resolve) => {
-      instance.UI.addEventListener('documentLoaded', resolve);
+      instance.UI.addEventListener(UIEvents.VIEWER_LOADED, () => {
+        resolve();
+      });
     });
     await documentLoadedPromise;
-    expect(instance.UI.dispose).to.exists;
+    expect(instance.UI.dispose).to.exist;
   });
 
   it('correctly loads as a web component', async () => {
-    const instance = await setupWebViewerInstance({}, true);
+    instance = await setupWebViewerInstance({}, true);
     // create a promise that resolves when the viewer loaded event fires
     const UIEvents = instance.UI.Events;
     const documentLoadedPromise = new Promise((resolve) => {
@@ -58,7 +60,7 @@ describe('Test UI APIs', function() {
   });
 
   it('starts web component in demo mode by default', async () => {
-    const instance = await setupWebViewerInstance({}, true);
+    instance = await setupWebViewerInstance({}, true);
     await instance.Core.createDocument(
       '/base/test/fixtures/pdfs/demo.pdf'
     );
@@ -67,7 +69,7 @@ describe('Test UI APIs', function() {
 
   it('can use a license with web component', async () => {
     const validLicenseKey = 'Xodo:WEBCPU:1::B+:AMS(20251005):4AFFA5071EE93B85D58C93FCF12FB6654FDEE6AAFE629A39F5C7';
-    const instance = await setupWebViewerInstance({
+    instance = await setupWebViewerInstance({
       l: validLicenseKey,
     }, true);
     await instance.Core.createDocument(
@@ -77,7 +79,7 @@ describe('Test UI APIs', function() {
   });
 
   it('correctly set mentions data in the mentions manager', async () => {
-    const instance = await setupWebViewerInstance();
+    instance = await setupWebViewerInstance();
 
     const user = {
       email: 'zzhang@pdftron.com',
@@ -99,7 +101,7 @@ describe('Test UI APIs', function() {
   });
 
   it('the UI awaits for the set language promise to resolve and does not set a random language', async () => {
-    const instance = await setupWebViewerInstance();
+    instance = await setupWebViewerInstance();
     const { UI } = instance;
 
     async function setLanguageMultipleTimes() {
@@ -122,7 +124,7 @@ describe('Test UI APIs', function() {
     const options = {
       initialDoc: '/base/test/fixtures/pdfs/blank.pdf',
     };
-    const instance = await setupWebViewerInstance(options);
+    instance = await setupWebViewerInstance(options);
 
     // create a promise that resolves when the document loaded event fires
     const documentLoadedPromise = new Promise((resolve) => {
@@ -161,7 +163,7 @@ describe('Test UI APIs', function() {
   });
 
   it('Add custom stamp button can be disabled', async () => {
-    const instance = await setupWebViewerInstance({}, true);
+    instance = await setupWebViewerInstance({}, true);
     const { UI } = instance;
     expect(UI.isElementDisabled('createCustomStampButton')).to.equal(false);
 
@@ -185,7 +187,7 @@ describe('Test UI APIs', function() {
   });
 
   it('Delete custom stamp button can be disabled', async () => {
-    const instance = await setupWebViewerInstance({}, true);
+    instance = await setupWebViewerInstance({}, true);
     const { UI } = instance;
 
     // Pre-load some custom stamps
@@ -227,7 +229,7 @@ describe('Test UI APIs', function() {
   });
 
   it('registers tools to all document viewers when in multiviewer mode', async () => {
-    const instance = await setupWebViewerInstance();
+    instance = await setupWebViewerInstance();
     const { UI } = instance;
     const { Tools, Annotations } = instance.Core;
 
@@ -280,7 +282,7 @@ describe('Test UI APIs', function() {
     const options = {
       initialDoc: '/base/test/fixtures/pdfs/demo-redaction.pdf',
     };
-    const instance = await setupWebViewerInstance(options);
+    instance = await setupWebViewerInstance(options);
 
     const { documentViewer } = instance.Core;
 
@@ -331,7 +333,7 @@ describe('Test UI APIs', function() {
     const options = {
       initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
     };
-    const instance = await setupWebViewerInstance(options);
+    instance = await setupWebViewerInstance(options);
 
     const { documentViewer, annotationManager } = instance.Core;
 
@@ -381,7 +383,7 @@ describe('Test UI APIs', function() {
       fullAPI: true,
       initialDoc: '/base/test/fixtures/pdfs/demo-redaction.pdf',
     };
-    const instance = await setupWebViewerInstance(options);
+    instance = await setupWebViewerInstance(options);
     const acceptFormats = ['pdf', 'xod'];
 
     instance.UI.enableFeatures([instance.UI.Feature.MultiTab]);
@@ -412,25 +414,54 @@ describe('Test UI APIs', function() {
     expect(fileInput.accept).to.equal(core.getAllowedFileExtensions());
   });
 
+  it('should load document using loadDocument and enabling Feature.MultiTab', async () => {
+    const options = {};
+    instance = await setupWebViewerInstance(options);
+
+    const viewerLoadedPromise = new Promise((resolve) => {
+      instance.UI.addEventListener('viewerLoaded', resolve);
+    });
+    await viewerLoadedPromise;
+    await delay(200);
+    instance.UI.loadDocument('https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf');
+    instance.UI.enableFeatures([instance.UI.Feature.MultiTab]);
+    const documentLoadedPromise = new Promise((resolve) => {
+      instance.UI.addEventListener('documentLoaded', resolve);
+    });
+    await documentLoadedPromise;
+
+    await delay(1000);
+    const iframe = document.querySelector('#viewerDiv iframe');
+    const DocumentContainer = iframe.contentDocument.querySelector('#pageContainer1');
+    expect(DocumentContainer).not.to.equal(null);
+
+    const MultiTabEmptyPage = iframe.contentDocument.querySelector('.MultiTabEmptyPage.closed');
+    expect(MultiTabEmptyPage).not.to.equal(null);
+    const fileNameInTab = iframe.contentDocument.querySelector('.file-text');
+    expect(fileNameInTab.innerText).to.equal('Demo-Annotated');
+
+    instance.UI.disableFeatures([instance.UI.Feature.MultiTab]);
+  });
+
   it('test that the search API works with search overlay closed', async () => {
     const options = {
       initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
     };
-    const instance = await setupWebViewerInstance(options);
+    instance = await setupWebViewerInstance(options);
 
     const { documentViewer } = instance.Core;
 
     let resultsCount = 0;
 
-      documentViewer.addEventListener("documentLoaded", () => {
-        const searchListener = (searchPattern, options, results) => {
-            resultsCount = results.length;
-        };
+    documentViewer.addEventListener('documentLoaded', () => {
+      const searchListener = (searchPattern, options, results) => {
+        resultsCount = results.length;
+      };
 
-        instance.UI.addSearchListener(searchListener);
-        // start search after document loads
-        instance.UI.searchTextFull("PDF|Library", { regex: true });
-      });
+      instance.UI.addSearchListener(searchListener);
+      // start search after document loads
+      instance.UI.searchTextFull('PDF|Library', { regex: true });
+    });
 
     await delay(5000);
     expect(resultsCount).to.greaterThan(0);
@@ -440,7 +471,7 @@ describe('Test UI APIs', function() {
     const options = {
       initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
     };
-    const instance = await setupWebViewerInstance(options);
+    instance = await setupWebViewerInstance(options);
 
     const { documentViewer } = instance.Core;
 
@@ -448,15 +479,15 @@ describe('Test UI APIs', function() {
 
     let resultsCount = 0;
 
-      documentViewer.addEventListener("documentLoaded", () => {
-        const searchListener = (searchPattern, options, results) => {
-            resultsCount = results.length;
-        };
+    documentViewer.addEventListener('documentLoaded', () => {
+      const searchListener = (searchPattern, options, results) => {
+        resultsCount = results.length;
+      };
 
-        instance.UI.addSearchListener(searchListener);
-        // start search after document loads
-        instance.UI.searchTextFull("PDF|Library", { regex: true });
-      });
+      instance.UI.addSearchListener(searchListener);
+      // start search after document loads
+      instance.UI.searchTextFull('PDF|Library', { regex: true });
+    });
 
     await delay(5000);
     expect(resultsCount).to.greaterThan(0);
@@ -466,7 +497,7 @@ describe('Test UI APIs', function() {
     const options = {
       initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
     };
-    const instance = await setupWebViewerInstance(options);
+    instance = await setupWebViewerInstance(options);
 
     const { documentViewer } = instance.Core;
     const formFieldCreationManager = documentViewer.getAnnotationManager().getFormFieldCreationManager();
