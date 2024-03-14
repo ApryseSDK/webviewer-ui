@@ -111,7 +111,10 @@ export default {
     lastPickedToolForGroup: {},
     lastPickedToolGroup: {},
     lastPickedToolForGroupedItems: {},
-    lastPickedToolAndGroup: {},
+    lastPickedToolAndGroup: {
+      tool: 'AnnotationEdit',
+      group: [],
+    },
     highContrastMode: getHashParameters('highContrastMode', false),
     notesInLeftPanel: getHashParameters('notesInLeftPanel', false),
     autoFocusNoteOnAnnotationSelection: getHashParameters('autoFocusNoteOnAnnotationSelection', true),

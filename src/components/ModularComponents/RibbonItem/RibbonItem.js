@@ -8,6 +8,7 @@ import Button from 'components/Button';
 import classNames from 'classnames';
 import getToolbarTranslationString from 'helpers/translationKeyMapping';
 import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
+import defaultTool from 'constants/defaultTool';
 
 import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivnessHelper';
@@ -68,6 +69,9 @@ const RibbonItem = (props) => {
   }, [activeGroupedItems, activeCustomRibbon, lastPickedToolForGroupedItems]);
 
   const onClick = () => {
+    if (groupedItems.length < 1) {
+      core.setToolMode(defaultTool);
+    }
     if (!isActive) {
       dispatch(actions.setActiveGroupedItems(groupedItems));
       dispatch(actions.setActiveCustomRibbon(dataElement));

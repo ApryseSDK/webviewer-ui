@@ -74,7 +74,9 @@ const ToolButton = (props) => {
 
   useEffect(() => {
     const handleToolModeChange = (tool) => {
-      if (tool.name === toolName) {
+      // prevent edit tool from deactivating when text is hovered
+      const isEditToolAndItIsActive = toolName === ToolNames.EDIT && lastPickedToolAndGroup.tool === ToolNames.EDIT;
+      if (tool.name === toolName || (isEditToolAndItIsActive && tool.name === ToolNames.TEXT_SELECT)) {
         setIsButtonActive(true);
       } else {
         setIsButtonActive(false);

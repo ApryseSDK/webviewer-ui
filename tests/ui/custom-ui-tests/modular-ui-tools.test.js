@@ -112,6 +112,28 @@ describe('Test Modular UI Tools', function() {
     expect(instance.UI.isElementOpen('rubberStampPanel')).to.equal(false);
   });
 
+  it('does not close the tools header when pressing E to activate the eraser tool', async function() {
+    instance = await setupWebViewerInstance({ ui: 'beta' });
+    instance.UI.disableFeatures([instance.UI.Feature.LocalStorage]);
+
+    const iframe = document.querySelector('#viewerDiv iframe');
+    const annotateRibbonItem = iframe.contentDocument.querySelector('[data-element="toolbarGroup-Annotate"]');
+    annotateRibbonItem.click();
+    await waitFor(500);
+    expect(instance.UI.getToolMode().name).to.equal('AnnotationCreateTextHighlight');
+    triggerKeyboardFocus(window);
+
+    const toolsHeader = iframe.contentDocument.querySelector('[data-element="tools-header"]');
+    expect(toolsHeader.classList.contains('closed')).to.equal(false);
+
+    // 69 is the key code for E which is the eraser tool
+    triggerKeyboardEvent(iframe.contentDocument.body, 69);
+    await waitFor(500);
+    expect(instance.UI.getToolMode().name).to.equal('AnnotationEraserTool');
+
+    expect(toolsHeader.classList.contains('closed')).to.equal(false);
+  });
+
   it('should be able to add tool buttons directly into a header without a grouped item', async () => {
     instance = await setupWebViewerInstance({ ui: 'beta' });
     instance.UI.disableFeatures([instance.UI.Feature.LocalStorage]);

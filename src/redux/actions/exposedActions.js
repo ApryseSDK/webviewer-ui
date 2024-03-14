@@ -13,6 +13,7 @@ import pick from 'lodash/pick';
 import { v4 as uuidv4 } from 'uuid';
 import selectors from 'selectors';
 import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
+import { getModularItem, getNestedGroupedItems } from 'helpers/modularUIHelpers';
 
 export const setScaleOverlayPosition = (position) => ({
   type: 'SET_SCALE_OVERLAY_POSITION',
@@ -204,6 +205,8 @@ export const setLastPickedToolAndGroup = (toolAndGroup) => ({
 export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
   const state = getState();
 
+  const childGroupedItems = getNestedGroupedItems(state, groupedItems);
+
   // Check and set the last picked tool for grouped items
   const isLastPickedToolSet = groupedItems.some((groupedItem) => state.viewer.lastPickedToolForGroupedItems?.[groupedItem]);
   if (!isLastPickedToolSet) {
@@ -221,7 +224,13 @@ export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
     });
   }
 
-  dispatch(setGroupedItems(groupedItems));
+  childGroupedItems.forEach((childGroupedItem) => {
+    if (state.viewer.lastPickedToolForGroupedItems?.[childGroupedItem]) {
+      dispatch(setLastPickedToolForGroupedItems('', childGroupedItem));
+    }
+  });
+
+  dispatch(setGroupedItems([...groupedItems, ...childGroupedItems]));
 };
 
 const setLastPickedToolForGroupedItems = (toolName, groupedItem) => ({
@@ -324,16 +333,28 @@ export const setActiveGroupedItemWithTool = (toolName) => (dispatch, getState) =
 
   // If no active grouped items have the selected tool, we set the first one as active
   if (!activeGroupedItemsContainsTool && groupedItemsWithTool.length > 0) {
-    const firstGroupedItem = groupedItemsWithTool[0];
+    let firstGroupedItem = '';
+    let associatedRibbonItem = '';
+    for (let i = 0; i < groupedItemsWithTool.length; i++) {
+      firstGroupedItem = groupedItemsWithTool[i];
+      associatedRibbonItem = selectors.getRibbonItemAssociatedWithGroupedItem(state, firstGroupedItem);
+      if (associatedRibbonItem) {
+        break;
+      }
+    }
     dispatch(setLastPickedToolForGroupedItems(toolName, firstGroupedItem));
     dispatch(setActiveGroupedItems([firstGroupedItem]));
-
-    const associatedRibbonItem = selectors.getRibbonItemAssociatedWithGroupedItem(state, firstGroupedItem);
     dispatch(setActiveCustomRibbon(associatedRibbonItem));
   } else if (activeGroupedItemsContainsTool) {
     // If the active grouped items have the selected tool, we set the selected tool for the first one
     const firstGroupedItem = activeGroupedItems[0];
-    dispatch(setLastPickedToolForGroupedItems(toolName, firstGroupedItem));
+    const items = getModularItem(state, firstGroupedItem).items;
+    const itemInFirstGroupedItem = items.some((item) => getModularItem(state, item).toolName === toolName);
+    if (itemInFirstGroupedItem) {
+      dispatch(setLastPickedToolForGroupedItems(toolName, firstGroupedItem));
+    } else {
+      dispatch(setLastPickedToolForGroupedItems('', firstGroupedItem));
+    }
   }
 };
 
