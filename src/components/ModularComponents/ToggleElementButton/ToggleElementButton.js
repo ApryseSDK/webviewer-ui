@@ -13,10 +13,12 @@ const ToggleElementButton = (props) => {
     isActive,
     flyoutMap,
     isToggleElementDisabled,
+    isButtonDisabled,
   ] = useSelector((state) => [
     selectors.isElementOpen(state, toggleElement),
     selectors.getFlyoutMap(state),
     selectors.isElementDisabled(state, toggleElement),
+    selectors.isElementDisabled(state, dataElement),
   ]);
 
   const [isElementActive, setIsElementActive] = useState(isActive);
@@ -42,6 +44,10 @@ const ToggleElementButton = (props) => {
     }
     dispatch(actions.toggleElement(toggleElement));
   };
+
+  if (isButtonDisabled) {
+    return null;
+  }
 
   return (
     <div className="ToggleElementButton" data-element={dataElement} ref={buttonRef}>

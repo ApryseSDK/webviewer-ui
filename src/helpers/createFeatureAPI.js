@@ -62,6 +62,13 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'linkButton',
         'toolsHeader',
         'toolsOverlay',
+        'default-ribbon-group',
+        'tools-header',
+        'notesPanelToggle',
+        'rubberStampPanel',
+        'stylePanel',
+        'signatureListPanel',
+        'markReplaceTextToolButton',
       ],
       fn: () => {
         if (isOfficeEditorMode()) {
@@ -79,6 +86,13 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.Download]: {
       dataElements: ['downloadButton'],
+      fn: () => {
+        if (enable) {
+          store.dispatch(actions.enableDeleteTabWarning());
+        } else {
+          store.dispatch(actions.disableDeleteTabWarning());
+        }
+      }
     },
     [Feature.FilePicker]: {
       dataElements: ['filePickerHandler', 'filePickerButton'],
@@ -104,6 +118,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'notesPanelButton',
         'notesPanel',
         'toggleNotesButton',
+        'notesPanelToggle',
       ],
     },
     [Feature.InlineComment]: {
@@ -148,6 +163,7 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
     },
     [Feature.Redaction]: {
       dataElements: [
+        'toolbarGroup-Redact',
         'redactionToolGroupButton',
         'redactionPanel',
         'redactionPanelToggle',
@@ -244,7 +260,10 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
       }
     },
     [Feature.Search]: {
-      dataElements: ['searchButton'],
+      dataElements: [
+        'searchButton',
+        'searchPanelToggle',
+      ],
       fn: () => {
         if (enable) {
           hotkeysManager.enableShortcut(Shortcuts.SEARCH);

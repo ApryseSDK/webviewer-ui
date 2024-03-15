@@ -5,6 +5,8 @@ import { JUSTIFY_CONTENT, PLACEMENT, DEFAULT_GAP } from 'constants/customization
 import ModularHeaderItems from '../../ModularHeaderItems';
 import './ModularHeader.scss';
 import DataElementWrapper from 'src/components/DataElementWrapper';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
 
 const ModularHeader = React.forwardRef((props, ref) => {
   const { dataElement,
@@ -14,21 +16,21 @@ const ModularHeader = React.forwardRef((props, ref) => {
     gap = DEFAULT_GAP,
     justifyContent = JUSTIFY_CONTENT.START,
     style,
-    autohide = true,
+    autoHide = true,
     stroke,
   } = props;
-  const [loadedFirstTime, setLoadedFirstTime] = useState(true);
 
-  useEffect(() => {
-    setLoadedFirstTime(false);
-  }, []);
+  const [
+    isDisabled,
+  ] = useSelector((state) => [
+    selectors.isElementDisabled(state, dataElement),
+  ]);
 
   const [canRemoveItems, setCanRemoveItems] = useState(items.length);
-  const [canApplyAnimation, setApplyAnimation] = useState(false);
   const key = `${dataElement}-${placement}`;
 
   let isClosed = false;
-  if (!autohide) {
+  if (!autoHide) {
     isClosed = false;
   } else if (!items.length) {
     isClosed = true;
@@ -38,11 +40,13 @@ const ModularHeader = React.forwardRef((props, ref) => {
   if (canRemoveItems) {
     originalItems = items;
   }
-  // Why is this here? This needs to be in the right header not the generic one
-  let headerStyle = style;
-  if (placement === PLACEMENT.RIGHT
-    && (canApplyAnimation || (isClosed && !loadedFirstTime))) {
-    headerStyle = Object.assign({}, style, { position: 'fixed', right: 0 });
+
+  useEffect(() => {
+    setCanRemoveItems(!isClosed);
+  }, [isClosed]);
+
+  if (isDisabled) {
+    return null;
   }
 
   return (
@@ -57,13 +61,13 @@ const ModularHeader = React.forwardRef((props, ref) => {
         'stroke': stroke
       }, `${position}`)}
       data-element={dataElement}
+      style={style}
       key={key}
-      style={headerStyle}
       ref={ref}
-      onTransitionEnd={() => {
-        setCanRemoveItems(!isClosed);
-        setApplyAnimation(isClosed);
-      }}
+      // onTransitionEnd={() => {
+      //   setCanRemoveItems(!isClosed);
+      //   setApplyAnimation(isClosed);
+      // }}
     >
       <ModularHeaderItems
         className={classNames({ 'closed': isClosed })}

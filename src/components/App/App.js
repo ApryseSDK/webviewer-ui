@@ -74,6 +74,7 @@ import LayersPanel from 'components/LayersPanel';
 import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
 import FeatureFlags from 'constants/featureFlags';
 import { PRIORITY_ONE } from 'constants/actionPriority';
+import TabsHeader from 'components/TabsHeader';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -375,6 +376,7 @@ const App = ({ removeEventHandlers }) => {
             dataElement={DataElements.OFFICE_EDITOR_TOOLS_HEADER}
           />
         )}
+        {customizableUI && <TabsHeader/>}
         <TopHeader />
         <div className="content">
           <LeftHeader />

@@ -43,9 +43,14 @@ const RibbonGroup = (props) => {
   const [itemsGap, setItemsGap] = useState(gap);
   const [containerWidth, setContainerWidth] = useState(0);
   const [ribbonItems, setRibbonItems] = useState(validateItems(items));
-  const [activeCustomRibbon, customHeadersAdditionalProperties] = useSelector((state) => [
+  const [
+    activeCustomRibbon,
+    customHeadersAdditionalProperties,
+    isRibbonGroupDisabled,
+  ] = useSelector((state) => [
     selectors.getActiveCustomRibbon(state),
     selectors.getCustomHeadersAdditionalProperties(state),
+    selectors.isElementDisabled(state, dataElement),
   ]);
 
   const elementRef = useRef();
@@ -149,6 +154,10 @@ const RibbonGroup = (props) => {
         return 'left';
     }
   };
+
+  if (isRibbonGroupDisabled) {
+    return null;
+  }
 
   if (ribbonItems && ribbonItems.length) {
     return (

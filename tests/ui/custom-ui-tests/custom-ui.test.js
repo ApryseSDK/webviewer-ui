@@ -467,4 +467,43 @@ describe('Test Custom UI APIs', function() {
       expect(Dropdown__item[3].innerText).to.equal('挿入');
     });
   });
+
+  describe('Should correctly enable and disable elements from features API', () => {
+    it('should disable notes panel button', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      const { document } = instance.UI.iframeWindow;
+      instance.UI.disableFeatures([instance.UI.Feature.NotesPanel]);
+      expect(document.querySelector('[data-element="notesPanelToggle"]')).to.be.null;
+      instance.UI.enableFeatures([instance.UI.Feature.NotesPanel]);
+      expect(document.querySelector('[data-element="notesPanelToggle"]')).to.not.be.null;
+    });
+    it('should disable annotation features', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      const { document } = instance.UI.iframeWindow;
+      instance.UI.disableFeatures([instance.UI.Feature.Annotations]);
+      expect(document.querySelector('[data-element="tools-header"]')).to.be.null;
+      expect(document.querySelector('[data-element="notesPanelToggle"]')).to.be.null;
+      expect(document.querySelector('[data-element="default-ribbon-group"]')).to.be.null;
+      instance.UI.enableFeatures([instance.UI.Feature.Annotations]);
+      expect(document.querySelector('[data-element="tools-header"]')).to.not.be.null;
+      expect(document.querySelector('[data-element="notesPanelToggle"]')).to.not.be.null;
+      expect(document.querySelector('[data-element="default-ribbon-group"]')).to.not.be.null;
+    });
+    it('should enable/disable multi-tab', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      const { document } = instance.UI.iframeWindow;
+      instance.UI.disableFeatures([instance.UI.Feature.MultiTab]);
+      expect(document.querySelector('.TabsHeader')).to.be.null;
+      instance.UI.enableFeatures([instance.UI.Feature.MultiTab]);
+      expect(document.querySelector('.TabsHeader')).to.not.be.null;
+    });
+    it('should enable/disable search button', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      const { document } = instance.UI.iframeWindow;
+      instance.UI.disableFeatures([instance.UI.Feature.Search]);
+      expect(document.querySelector('[data-element="searchPanelToggle"]')).to.be.null;
+      instance.UI.enableFeatures([instance.UI.Feature.Search]);
+      expect(document.querySelector('[data-element="searchPanelToggle"]')).to.not.be.null;
+    });
+  });
 });
