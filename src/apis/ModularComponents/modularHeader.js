@@ -5,6 +5,47 @@ import { isGapValid, isJustifyContentValid } from 'components/ModularComponents/
 const { checkTypes, TYPES } = window.Core;
 
 export default (store) => (props) => {
+  /**
+   * @typedef ContainerProperties
+   * @property {string} label - The label of the container.
+   * @property {string} dataElement - The data element of the container.
+   * @property {'top' | 'bottom' | 'left' | 'right'} properties.placement - A string that determines the placement of the header.
+   * @property {'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'} justifyContent - A string that determines the flex justify content value of the container.
+   * @property {number} grow - The flex grow value of the container.
+   * @property {number} gap - The gap between the items in the container.
+   * @property {'start' | 'center' | 'end'} position - A string that determines the position of the container.
+   * @property {Array<Object>} items - The items or other containers within the container.
+   * @property {Object} style - An object that can set the CSS style of the container.
+   */
+  /**
+   * Creates a new instance of ModularHeader.
+   * @name ModularHeader
+   * @memberOf UI.Components
+   * @class UI.Components.ModularHeader
+   * @constructor
+   * @param {ContainerProperties} properties - An object that contains the properties of the header
+   * @example
+const defaultTopHeader = new instance.UI.Components.ModularHeader({
+  dataElement: 'default-top-header',
+  placement: 'top',
+  grow: 0,
+  gap: 12,
+  position: 'start',
+  'float': false,
+  stroke: true,
+  dimension: {
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderWidth: 1
+  },
+  style: {},
+  items: [
+    // these items would need to be defined in your code
+    groupedLeftHeaderButtons,
+    ribbonGroup,
+  ]
+});
+   */
   class ModularHeader {
     constructor(props) {
       const {
@@ -50,6 +91,11 @@ export default (store) => (props) => {
       this.style = this.validateStyle(style);
     }
 
+    /**
+     * Sets the style of the ModularHeader (padding, border, background, etc.)
+     * @method UI.Components.ModularHeader#setStyle
+     * @param {Object} style An object that can change the CSS style of the ModularHeader
+     */
     setStyle(userDefinedStyle) {
       const style = this.validateStyle(userDefinedStyle);
       this.style = style;
@@ -167,6 +213,11 @@ export default (store) => (props) => {
       return paddingTop + paddingBottom + borderWidth;
     }
 
+    /**
+     * Sets the gap between items in the ModularHeader
+     * @method UI.Components.ModularHeader#setGap
+     * @param {number} gap The gap between items in the header
+     */
     setGap(gap) {
       if (isGapValid(gap)) {
         this.gap = gap;
@@ -182,9 +233,26 @@ export default (store) => (props) => {
       });
     };
 
+    /**
+     * Returns the grouped items contained in the ModularHeader
+     * @method UI.Components.ModularHeader#getGroupedItems
+     * @returns {Array<UI.Components.GroupedItems>} The items of the ModularHeader
+     */
     getGroupedItems() {
       return this.getItems(ITEM_TYPE.GROUPED_ITEMS);
     }
+
+    /**
+     * @typedef {('modularHeader' | 'customButton' | 'statefulButton' | 'groupedItems' | 'ribbonItem' | 'divider' | 'toggleButton' | 'ribbonGroup' | 'toolButton' | 'zoom' | 'flyout' | 'pageControls' | 'presetButton' | 'viewControls' | 'menu' | 'tabPanel')} ItemType
+     * Description of allowable item types.
+     */
+
+    /**
+     * Returns the items contained in the ModularHeader.
+     * @method UI.Components.ModularHeader#getItems
+     * @param {ItemType} [type] Optional type of the items to be returned.
+     * @returns {Array<Object>} The items of the ModularHeader.
+     */
 
     getItems(type) {
       if (type) {
@@ -213,7 +281,12 @@ export default (store) => (props) => {
       return false;
     };
 
-    setItems = (newItems) => {
+    /**
+     * Sets the items in the ModularHeader
+     * @method UI.Components.ModularHeader#setItems
+     * @param {Array<Object>} items The items to set in the header
+     */
+    setItems(newItems) {
       // Ensure newItems is always an array, even if it's a single item
       const itemsArray = Array.isArray(newItems) ? newItems : [newItems];
 
@@ -223,32 +296,49 @@ export default (store) => (props) => {
       this.items = itemsToAdd;
       // We dispatch the update; if the header is not yet added to the store, it will ignore the action
       store.dispatch(actions.setModularHeaderItems(this.dataElement, itemsToAdd));
-    };
+    }
 
-    setJustifyContent = (justifyContent) => {
+    /**
+     * Changes the flex justifyContent property of the ModularHeader
+     * @method UI.Components.ModularHeader#setJustifyContent
+     * @param {'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'} justifyContent A string that determines the flex justify content value of the header
+     */
+    setJustifyContent(justifyContent) {
       if (isJustifyContentValid(justifyContent)) {
         this.justifyContent = justifyContent;
         store.dispatch(actions.setHeaderJustifyContent(this.dataElement, justifyContent));
       }
-    };
+    }
 
-    setMaxWidth = (maxWidth) => {
+    // TODO: ADD JS DOC WHEN READY
+    // /**
+    //  * Changes the max width of the ModularHeader
+    //  * @method UI.Components.ModularHeader#setMaxWidth
+    //  * @param {number} maxWidth the max width of the header
+    //  */
+    setMaxWidth(maxWidth) {
       if (isNaN(maxWidth) || maxWidth < 0) {
         console.warn(`${maxWidth} is not a valid value for maxWidth. Please use a number, which represents the maximum width of the header in pixels.`);
         return;
       }
       this.maxWidth = maxWidth;
       store.dispatch(actions.setHeaderMaxWidth(this.dataElement, maxWidth));
-    };
+    }
 
-    setMaxHeight = (maxHeight) => {
+    // TODO: ADD JS DOC WHEN READY
+    // /**
+    //  * Changes the max height of the ModularHeader
+    //  * @method UI.Components.ModularHeader#setMaxHeight
+    //  * @param {number} maxHeight the max height of the header
+    //  */
+    setMaxHeight(maxHeight) {
       if (isNaN(maxHeight) || maxHeight < 0) {
         console.warn(`${maxHeight} is not a valid value for maxHeight. Please use a number, which represents the maximum height of the header in pixels.`);
         return;
       }
       this.maxHeight = maxHeight;
       store.dispatch(actions.setHeaderMaxHeight(this.dataElement, maxHeight));
-    };
+    }
   }
 
   return new ModularHeader(props);

@@ -21,6 +21,7 @@ import Wv3dPropertiesPanel from 'components/Wv3dPropertiesPanel';
 import AudioPlaybackPopup from 'components/AudioPlaybackPopup';
 import DocumentCropPopup from 'components/DocumentCropPopup';
 import SnippingToolPopup from '../SnippingToolPopup';
+import EmbeddedJSPopup from 'components/EmbeddedJSPopup';
 import FormFieldIndicatorContainer from 'components/FormFieldIndicator';
 import MultiTabEmptyPage from 'components/MultiTabEmptyPage';
 import MultiViewer from 'components/MultiViewer';
@@ -34,7 +35,6 @@ import BottomHeader from 'components/ModularComponents/BottomHeader';
 import TopHeader from 'components/ModularComponents/TopHeader';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import RibbonOverflowFlyout from 'components/ModularComponents/RibbonOverflowFlyout';
-import GroupedToolsOverflowFlyout from 'components/ModularComponents/GroupedToolsOverflowFlyout';
 import ViewControlsFlyout from 'components/ModularComponents/ViewControls/ViewControlsFlyout';
 import MainMenu from 'components/ModularComponents/MainMenu/MainMenuFlyout';
 import ProgressModal from 'components/ProgressModal';
@@ -73,6 +73,7 @@ import './App.scss';
 import LayersPanel from 'components/LayersPanel';
 import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
 import FeatureFlags from 'constants/featureFlags';
+import { PRIORITY_ONE } from 'constants/actionPriority';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -122,7 +123,8 @@ const App = ({ removeEventHandlers }) => {
 
   useEffect(() => {
     const isCustomizableUIEnabled = getHashParameters('ui', 'default') === 'beta';
-    if (isCustomizableUIEnabled) {
+    const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
+    if (isCustomizableUIEnabled && !isOfficeEditingEnabled) {
       dispatch(actions.setGenericPanels(defaultPanels));
       // set panel widths for search and notes panel to 330px for the new UI
       // we dont want to change this for the legacy panels at this time.
@@ -131,6 +133,18 @@ const App = ({ removeEventHandlers }) => {
       dispatch(actions.enableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
     }
   }, []);
+
+  useEffect(() => {
+    if (customizableUI) {
+      // These elements are disabled in the old UI and need to be enabled in the new UI
+      dispatch(actions.enableElements([
+        'layersPanel',
+        'layersPanelButton',
+        'bookmarksPanel',
+        'bookmarksPanelButton',
+      ], PRIORITY_ONE));
+    }
+  }, [customizableUI]);
 
   useEffect(() => {
     // To avoid race condition with window.dispatchEvent firing before window.addEventListener
@@ -349,7 +363,6 @@ const App = ({ removeEventHandlers }) => {
       >
         <FlyoutContainer />
         <RibbonOverflowFlyout />
-        <GroupedToolsOverflowFlyout />
         <ViewControlsFlyout />
         <MainMenu />
         <Accessibility />
@@ -548,6 +561,7 @@ const App = ({ removeEventHandlers }) => {
         )}
         <LogoBar />
         <LazyLoadWrapper Component={LazyLoadComponents.CreatePortfolioModal} dataElement={DataElements.CREATE_PORTFOLIO_MODAL} />
+        <EmbeddedJSPopup />
       </div>
 
       <PrintHandler />

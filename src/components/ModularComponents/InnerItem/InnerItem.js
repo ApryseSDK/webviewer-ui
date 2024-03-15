@@ -8,7 +8,6 @@ import RibbonGroup from '../RibbonGroup';
 import ToolGroupButton from '../ToolGroupButton';
 import ToggleElementButton from '../ToggleElementButton';
 import ZoomControls from '../ZoomControls';
-import GroupedTools from '../GroupedTools';
 import ToolButton from '../ToolButton';
 import PageControls from '../PageControls';
 import PresetButton from '../PresetButton';
@@ -36,8 +35,6 @@ const InnerItem = (props) => {
       return <RibbonGroup key={key} {...props} />;
     case ITEM_TYPE.TOOL_GROUP_BUTTON:
       return <ToolGroupButton key={key} {...props} />;
-    case ITEM_TYPE.GROUPED_TOOLS:
-      return <GroupedTools key={key} uniqueID={key} {...props} headerDirection={headerDirection} />;
     case ITEM_TYPE.ZOOM:
       return <ZoomControls {...props} />;
     case ITEM_TYPE.TOOL_BUTTON:

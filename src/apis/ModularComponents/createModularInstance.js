@@ -4,7 +4,6 @@ import MainMenu from './menu';
 import RibbonGroup from './ribbonGroup';
 import RibbonItem from './ribbonItem';
 import PageControls from './pageControls';
-import GroupedTools from './groupedTools';
 import PresetButton from './presetButton';
 import StatefulButton from './statefulButton';
 import ToggleElementButton from './toggleElementButton';
@@ -21,9 +20,6 @@ export default function createModularInstance(item, store) {
     case ITEM_TYPE.GROUPED_ITEMS:
       const nestedItems = item.items.map((nestedItem) => createModularInstance(nestedItem, store));
       return new GroupedItems(store)({ ...item, items: nestedItems });
-    case ITEM_TYPE.GROUPED_TOOLS:
-      const nestedTools = item.items.map((nestedItem) => createModularInstance(nestedItem, store));
-      return new GroupedTools(store)({ ...item, items: nestedTools });
     case ITEM_TYPE.BUTTON:
       return new CustomButton(item);
     case ITEM_TYPE.MENU:

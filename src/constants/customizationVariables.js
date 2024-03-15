@@ -30,7 +30,6 @@ const ITEM_TYPE = {
   BUTTON: 'customButton',
   STATEFUL_BUTTON: 'statefulButton',
   GROUPED_ITEMS: 'groupedItems',
-  GROUPED_TOOLS: 'groupedTools',
   RIBBON_ITEM: 'ribbonItem',
   DIVIDER: 'divider',
   TOGGLE_BUTTON: 'toggleButton',
@@ -48,7 +47,6 @@ const ITEM_TYPE = {
 
 const RESPONSIVE_ITEMS = [
   ITEM_TYPE.GROUPED_ITEMS,
-  ITEM_TYPE.GROUPED_TOOLS,
   ITEM_TYPE.RIBBON_GROUP,
   ITEM_TYPE.ZOOM,
   ITEM_TYPE.PAGE_CONTROLS,
@@ -79,6 +77,24 @@ const DEFAULT_STYLES = {
   BORDER_STYLE: 'solid',
 };
 
+/**
+ * Contains string enums for preset button types.
+ * @name UI.PRESET_BUTTON_TYPES
+ * @property {string} UNDO {@link UI.Components.PresetButton.undoButton}
+ * @property {string} REDO {@link UI.Components.PresetButton.redoButton}
+ * @property {string} NEW_DOCUMENT {@link UI.Components.PresetButton.newDocumentButton}
+ * @property {string} FILE_PICKER {@link UI.Components.PresetButton.filePickerButton}
+ * @property {string} DOWNLOAD {@link UI.Components.PresetButton.downloadButton}
+ * @property {string} FULLSCREEN {@link UI.Components.PresetButton.fullscreenButton}
+ * @property {string} SAVE_AS {@link UI.Components.PresetButton.saveAsButton}
+ * @property {string} PRINT {@link UI.Components.PresetButton.printButton}
+ * @property {string} CREATE_PORTFOLIO {@link UI.Components.PresetButton.createPortfolioButton}
+ * @property {string} SETTINGS {@link UI.Components.PresetButton.settingsButton}
+ * @property {string} FORM_FIELD_EDIT {@link UI.Components.PresetButton.formFieldEditButton}
+ * @property {string} CONTENT_EDIT {@link UI.Components.PresetButton.contentEditButton}
+ * @example
+ * const undoButton = new UI.Components.PresetButton({ buttonType: UI.PRESET_BUTTON_TYPES.UNDO });
+ */
 const PRESET_BUTTON_TYPES = {
   UNDO: 'undoButton',
   REDO: 'redoButton',
