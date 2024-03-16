@@ -122,11 +122,11 @@ const PrintModal = () => {
   const onChange = () => {
     let pagesToPrint = [];
 
-    if (allPages.current.checked) {
+    if (allPages.current?.checked) {
       for (let i = 1; i <= core.getTotalPages(); i++) {
         pagesToPrint.push(i);
       }
-    } else if (currentPageRef.current.checked) {
+    } else if (currentPageRef.current?.checked) {
       const pageCount = core.getTotalPages();
 
       // when displaying 2 pages, "Current" should print both of them
@@ -162,10 +162,10 @@ const PrintModal = () => {
           pagesToPrint.push(currentPage);
           break;
       }
-    } else if (customPages.current.checked) {
+    } else if (customPages.current?.checked) {
       const customInput = customInputRef.current.value.replace(/\s+/g, '');
       pagesToPrint = getPageArrayFromString(customInput, pageLabels);
-    } else if (currentView.current.checked) {
+    } else if (currentView.current?.checked) {
       pagesToPrint = [currentPage];
     }
 
@@ -235,6 +235,7 @@ const PrintModal = () => {
         pageIndexToView={currentPage - 1}
         modalClosed={setWatermarkModalVisibility}
         formSubmitted={(value) => dispatch(actions.setWatermarkModalOptions(value))}
+        watermarkLocations={watermarkModalOptions}
       />
       <div
         className={className}
