@@ -68,6 +68,7 @@ class WatermarkModal extends React.PureComponent {
   static propTypes = {
     isVisible: PropTypes.bool,
     pageIndexToView: PropTypes.number,
+    watermarkLocations: PropTypes.object,
     modalClosed: PropTypes.func,
     formSubmitted: PropTypes.func,
     t: PropTypes.func.isRequired,
@@ -223,7 +224,7 @@ class WatermarkModal extends React.PureComponent {
 
   resetForm = (event) => {
     event.preventDefault();
-    const locationSettings = this.initializeLocationSettings();
+    const locationSettings = this.resetLocationSettings();
     this.setState(
       {
         locationSettings,
@@ -279,7 +280,7 @@ class WatermarkModal extends React.PureComponent {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  initializeLocationSettings = () => {
+  resetLocationSettings = () => {
     const locationSettings = {};
     Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
       // ignore location as it is redundant as we already have location key
@@ -290,6 +291,55 @@ class WatermarkModal extends React.PureComponent {
       };
       locationSettings[key] = temp;
     });
+
+    return locationSettings;
+  };
+
+  // eslint-disable-next-line class-methods-use-this
+  initializeLocationSettings = () => {
+    const locationSettings = this.resetLocationSettings();
+
+    if (this.props.watermarkLocations) {
+      Object.keys(WATERMARK_LOCATIONS).forEach((key) => {
+        const watermarkStrVal = WATERMARK_LOCATIONS[key];
+        const tempWatermarkProps = this.props.watermarkLocations[WATERMARK_API_LOCATIONS[watermarkStrVal]] ?? false;
+        if (!tempWatermarkProps) {
+          return;
+        }
+
+        const temp = this.constructWatermarkOption(
+          tempWatermarkProps
+        );
+
+        locationSettings[key].text = temp.text;
+
+        const colorStr = tempWatermarkProps.color;
+        const colorArray = colorStr.slice(5).replace(')', '').split(',');
+        const color = new window.Core.Annotations.Color(
+          colorArray[0],
+          colorArray[1],
+          colorArray[2],
+          colorArray[3]
+        );
+
+        locationSettings[key].color = color;
+        locationSettings[key].opacity = temp.opacity;
+        locationSettings[key].fontSize = temp.fontSize;
+
+        if (tempWatermarkProps.fontStyles) {
+          locationSettings[key].isBolded = tempWatermarkProps['fontStyles'].includes('BOLD');
+          locationSettings[key].isItalic = tempWatermarkProps['fontStyles'].includes('ITALIC');
+          locationSettings[key].isUnderlined = tempWatermarkProps['fontStyles'].includes('UNDERLINE');
+        }
+
+        const fontFamily = tempWatermarkProps.fontFamily ?? false;
+
+        if (!fontFamily || fontFamily.trim().length === 0) {
+          locationSettings[key] = DEFAULT_VALS.font;
+        }
+      });
+    }
+
     return locationSettings;
   };
 
@@ -374,6 +424,7 @@ class WatermarkModal extends React.PureComponent {
                   <label htmlFor="location">{t('option.watermark.location')}</label>
                   <select
                     id="location"
+                    defaultValue={currLocation}
                     onChange={(event) => {
                       this.onLocationChanged(event.target.value);
                     }}
