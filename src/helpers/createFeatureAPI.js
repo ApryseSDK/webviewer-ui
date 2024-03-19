@@ -31,10 +31,14 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         DataElements.NOTE_MULTI_SELECT_MODE_BUTTON,
       ],
       fn: () => {
-        if (enable) {
-          store.dispatch(actions.enableRibbons());
-        } else {
-          store.dispatch(actions.setReadOnlyRibbons());
+        const state = store.getState();
+        const isCustomizableUI = state.featureFlags.customizableUI;
+        if (!isCustomizableUI) {
+          if (enable) {
+            store.dispatch(actions.enableRibbons());
+          } else {
+            store.dispatch(actions.setReadOnlyRibbons());
+          }
         }
       },
     },

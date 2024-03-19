@@ -45,6 +45,23 @@ describe('Test Modular UI Tools', function() {
     window.ResizeObserver = originalResizeObserver;
   });
 
+  it('should activate the select tool when we select a tool and then press escape', async function() {
+    instance = await setupWebViewerInstance({ ui: 'beta' });
+    instance.UI.disableFeatures([instance.UI.Feature.LocalStorage]);
+
+    const iframe = document.querySelector('#viewerDiv iframe');
+    const annotateRibbonItem = iframe.contentDocument.querySelector('[data-element="toolbarGroup-Annotate"]');
+    annotateRibbonItem.click();
+    await waitFor(500);
+    expect(instance.UI.getToolMode().name).to.equal('AnnotationCreateTextHighlight');
+    triggerKeyboardFocus(window);
+
+    // 27 is the key code for ESC
+    triggerKeyboardEvent(iframe.contentDocument.body, 27);
+    await waitFor(500);
+    expect(instance.UI.getToolMode().name).to.equal('AnnotationEdit');
+  });
+
   it('should update the ribbon when we use a hotkey to select a tool placed on a different ribbon', async function() {
     instance = await setupWebViewerInstance({ ui: 'beta' });
     instance.UI.disableFeatures([instance.UI.Feature.LocalStorage]);
@@ -65,23 +82,6 @@ describe('Test Modular UI Tools', function() {
     await waitFor(500);
     expect(instance.UI.getToolMode().name).to.equal('AnnotationCreateEllipse');
     expect(shapesRibbonItem.classList.contains('active')).to.equal(true);
-  });
-
-  it('should activate the select tool when we select a tool and then press escape', async function() {
-    instance = await setupWebViewerInstance({ ui: 'beta' });
-    instance.UI.disableFeatures([instance.UI.Feature.LocalStorage]);
-
-    const iframe = document.querySelector('#viewerDiv iframe');
-    const annotateRibbonItem = iframe.contentDocument.querySelector('[data-element="toolbarGroup-Annotate"]');
-    annotateRibbonItem.click();
-    await waitFor(500);
-    expect(instance.UI.getToolMode().name).to.equal('AnnotationCreateTextHighlight');
-    triggerKeyboardFocus(window);
-
-    // 27 is the key code for ESC
-    triggerKeyboardEvent(iframe.contentDocument.body, 27);
-    await waitFor(500);
-    expect(instance.UI.getToolMode().name).to.equal('AnnotationEdit');
   });
 
   it('when the signature and rubber stamp panels are open and we press ESC, the panel gets closed and we set the edit tool', async function() {
@@ -155,5 +155,26 @@ describe('Test Modular UI Tools', function() {
     const rectangleButton = iframe.contentDocument.querySelector('[aria-label="Rectangle"]');
     rectangleButton.click();
     expect(instance.Core.documentViewer.getToolMode().name).to.equal('AnnotationCreateRectangle');
+  });
+
+  it('should not enabled all tool when Form tool is selected', async () => {
+    instance = await setupWebViewerInstance({ ui: 'beta' });
+
+    const iframe = document.querySelector('#viewerDiv iframe');
+    iframe.style.width = '1500px';
+    iframe.contentDocument.querySelector('.RibbonGroup__moreButton .Button').click();
+
+    await waitFor(500);
+    const annotateRibbonItem = iframe.contentDocument.querySelector('[data-element="toolbarGroup-Forms"]');
+    annotateRibbonItem.click();
+
+    await waitFor(500);
+    iframe.contentDocument.querySelector('.RibbonGroup__moreButton .Button').click();
+
+    const toolsHeader = iframe.contentDocument.querySelectorAll('.RibbonGroup .RibbonItem');
+    expect(toolsHeader.length).to.equal(7);
+
+    const reductBtn = iframe.contentDocument.querySelector('[data-element="toolbarGroup-Redact"]');
+    expect(reductBtn).to.equal(null);
   });
 });
