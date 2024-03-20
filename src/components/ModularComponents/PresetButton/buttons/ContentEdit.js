@@ -9,6 +9,11 @@ import selectors from 'selectors';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
 
+/**
+ * A button that toggles Content Edit Mode.
+ * @name contentEditButton
+ * @memberof UI.Components.PresetButton
+ */
 const ContentEditButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { label, presetDataElement, icon, title } = menuItems.contentEditButton;

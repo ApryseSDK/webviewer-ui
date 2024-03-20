@@ -4,6 +4,9 @@ import Layer from 'components/Layer';
 
 import './LayersPanel.scss';
 import DataElementWrapper from '../DataElementWrapper';
+import Icon from 'components/Icon';
+import { useTranslation } from 'react-i18next';
+import { panelData, panelNames } from 'constants/panel';
 
 const propTypes = {
   layers: PropTypes.arrayOf(PropTypes.object),
@@ -12,6 +15,7 @@ const propTypes = {
 
 function LayersPanel(props) {
   const { layers = [], setLayers } = props;
+  const { t } = useTranslation();
 
   function onLayerUpdated(updatedLayer, index) {
     // new references for redux state
@@ -22,9 +26,18 @@ function LayersPanel(props) {
     }
   }
 
+  const emptyPanelState = (
+    <div className="empty-panel-container">
+      <Icon className="empty-icon" glyph={panelData[panelNames.LAYERS].icon}/>
+      <div className="empty-message">
+        {t('message.noLayers')}
+      </div>
+    </div>
+  );
+
   return (
     <DataElementWrapper className="Panel LayersPanel" dataElement="layersPanel">
-      {layers.map((layer, i) => (
+      {!layers?.length ? emptyPanelState : layers.map((layer, i) => (
         <Layer
           key={layer.id}
           layer={layer}

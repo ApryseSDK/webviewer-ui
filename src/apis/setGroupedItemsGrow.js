@@ -1,7 +1,7 @@
 /**
- * @ignore
  * Sets the grow of Grouped Items
  * @method UI.setGroupedItemsGrow
+ * @param {number} grow The flex grow value of the group
  * @example
  * WebViewer(...)
   .then(function (instance) {

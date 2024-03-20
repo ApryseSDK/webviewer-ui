@@ -5,6 +5,30 @@ import { isGapValid, isGrowValid, isJustifyContentValid } from 'components/Modul
 const { checkTypes, TYPES } = window.Core;
 
 export class GroupedItems {
+  /**
+   * Creates a new instance of GroupedItems.
+   * @name GroupedItems
+   * @memberOf UI.Components
+   * @class UI.Components.GroupedItems
+   * @constructor
+   * @param {ContainerProperties} properties - An object that contains the properties of the grouped items.
+   * @param {boolean} [properties.alwaysVisible] - Whether the group should always be visible or not. Default is false. Alternatively, visibility can be toggled by changing the active grouped item using a Ribbon Item.
+   * @example
+const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
+  dataElement: 'groupedLeftHeaderButtons',
+  grow: 0,
+  gap: 12,
+  position: 'start',
+  style: {},
+  items: [
+    // these items would need to be defined in your code
+    leftHeaderButton1,
+    leftHeaderButton2,
+    leftHeaderButton3
+  ],
+  alwaysVisible: true,
+});
+   */
   constructor(props) {
     const {
       label,
@@ -32,38 +56,69 @@ export class GroupedItems {
     this.store = props.store;
   }
 
-  setGap = (gap) => {
+  /**
+   * Sets the gap between items in the GroupedItems
+   * @method UI.Components.GroupedItems#setGap
+   * @param {number} gap The gap in pixels between the items in the group.
+   */
+  setGap(gap) {
     if (isGapValid(gap)) {
       this._gap = gap;
       this.store.dispatch(actions.setGroupedItemsProperty('gap', gap, this.dataElement));
     }
-  };
+  }
 
-  setStyle = (style) => {
+  /**
+   * Sets the style of the GroupedItems (padding, border, background, etc.)
+   * @method UI.Components.GroupedItems#setStyle
+   * @param {Object} style An object that can change the CSS style of the group.
+   * @example
+    groupedItems.setStyle({
+      background: 'aliceblue',
+      border: '8px dashed',
+      padding: '8px 12px'
+    });
+   */
+  setStyle(style) {
     checkTypes([style], [TYPES.OBJECT({})], 'GroupedItem.setStyle');
     this.style = style;
     this.store.dispatch(actions.setGroupedItemsProperty('style', style, this.dataElement));
-  };
+  }
 
-  setJustifyContent = (justifyContent) => {
+  /**
+   * Sets the flex justifyContent property of the GroupedItems
+   * @method UI.Components.GroupedItems#setJustifyContent
+   * @param {'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'} justifyContent A string that determines the flex justify content value of the group
+   */
+  setJustifyContent(justifyContent) {
     if (isJustifyContentValid(justifyContent)) {
       this._justifyContent = justifyContent;
       this.store.dispatch(actions.setGroupedItemsProperty('justifyContent', justifyContent, this.dataElement));
     }
-  };
+  }
 
-  setGrow = (grow) => {
+  /**
+   * Sets the flex grow property of the GroupedItems
+   * @method UI.Components.GroupedItems#setGrow
+   * @param {number} grow The flex grow value of the group
+   */
+  setGrow(grow) {
     if (isGrowValid(grow)) {
       this._grow = grow;
       this.store.dispatch(actions.setGroupedItemsProperty('grow', grow, this.dataElement));
     }
-  };
+  }
 
-  setItems = (items) => {
+  /**
+   * Sets the items in the GroupedItems
+   * @method UI.Components.GroupedItems#setItems
+   * @param {Array<Object>} items The items to set in the group.
+   */
+  setItems(items) {
     checkTypes([items], [TYPES.ARRAY(TYPES.ANY)], 'GroupedItems.setItems');
     this.items = items;
     this.store.dispatch(actions.updateGroupedItems(this.dataElement, items));
-  };
+  }
 
   getGroupedItemProperty = (property) => {
     const state = this.store.getState();

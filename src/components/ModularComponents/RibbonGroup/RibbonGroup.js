@@ -8,6 +8,7 @@ import actions from 'actions';
 import FlexDropdown from '../FlexDropdown';
 import { ITEM_TYPE, DIRECTION } from 'constants/customizationVariables';
 import ToggleElementButton from '../ToggleElementButton';
+import getToolbarTranslationString from 'helpers/translationKeyMapping';
 
 import './RibbonGroup.scss';
 import sizeManager, { storeSizeHook } from 'helpers/responsivnessHelper';
@@ -38,11 +39,13 @@ const RibbonGroup = (props) => {
     justifyContent,
     grow = 0,
   } = props;
+
   const [itemsGap, setItemsGap] = useState(gap);
   const [containerWidth, setContainerWidth] = useState(0);
   const [ribbonItems, setRibbonItems] = useState(validateItems(items));
-  const [activeCustomRibbon] = useSelector((state) => [
+  const [activeCustomRibbon, customHeadersAdditionalProperties] = useSelector((state) => [
     selectors.getActiveCustomRibbon(state),
+    selectors.getCustomHeadersAdditionalProperties(state),
   ]);
 
   const elementRef = useRef();
@@ -194,6 +197,12 @@ const RibbonGroup = (props) => {
             onClickItem={(customRibbon) => {
               setActiveCustomRibbon(customRibbon);
             }}
+            getDisplayValue={(item) => {
+              const index = items.findIndex((el) => el.label === item);
+              return items[index]?.toolbarGroup;
+            }}
+            getKey = {(item) => item.toolbarGroup}
+            getTranslationLabel={(key) => getToolbarTranslationString(key, customHeadersAdditionalProperties)}
             arrowDirection={getArrowDirection()}
           />
         </div>

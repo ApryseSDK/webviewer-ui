@@ -9,7 +9,7 @@ import DataElements from 'constants/dataElement';
 import { RESIZE_BAR_WIDTH } from 'constants/panel';
 
 function SearchPanelContainer(props) {
-  const { dataElement = DataElements.SEARCH_PANEL } = props;
+  const { dataElement = DataElements.SEARCH_PANEL, parentDataElement = undefined } = props;
   const isMobile = isMobileSize();
 
   const [
@@ -30,7 +30,11 @@ function SearchPanelContainer(props) {
     ],
     shallowEqual,
   );
-  let currentWidth = useSelector((state) => (dataElement === DataElements.SEARCH_PANEL ? selectors.getSearchPanelWidth(state) : selectors.getPanelWidth(state, dataElement)));
+  let currentWidth = useSelector((state) => (
+    !parentDataElement && dataElement === DataElements.SEARCH_PANEL ?
+      selectors.getSearchPanelWidth(state) :
+      selectors.getPanelWidth(state, parentDataElement || dataElement)
+  ));
 
   const dispatch = useDispatch();
   const closeSearchPanel = React.useCallback(

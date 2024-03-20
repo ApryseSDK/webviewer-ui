@@ -9,19 +9,27 @@ import PropTypes from 'prop-types';
 import './TabPanel.scss';
 import Button from 'components/Button';
 import Element from 'components/Element';
-import ThumbnailsPanel from 'components/ThumbnailsPanel';
-import GenericOutlinesPanel from '../GenericOutlinesPanel';
-import BookmarksPanel from 'components/BookmarksPanel';
-import LayersPanel from 'components/LayersPanel';
 import CustomElement from 'components/CustomElement';
 import ToggleElementButton from 'components/ModularComponents/ToggleElementButton';
 import { panelNames, panelData } from 'constants/panel';
-import StylePanel from 'components/StylePanel/StylePanel';
-import FileAttachmentPanel from 'components/FileAttachmentPanel';
-import SignaturePanel from 'components/SignaturePanel';
-import TextEditingPanel from 'components/TextEditingPanel';
 import DataElements from 'constants/dataElement';
 import core from 'core';
+import useOnRedactionAnnotationChanged from 'hooks/useOnRedactionAnnotationChanged';
+import LayersPanel from 'components/LayersPanel';
+import TextEditingPanel from 'components/TextEditingPanel';
+import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
+import ComparePanel from 'components/MultiViewer/ComparePanel';
+import GenericOutlinesPanel from 'components/ModularComponents/GenericOutlinesPanel';
+import SignaturePanel from 'components/SignaturePanel';
+import BookmarksPanel from 'components/BookmarksPanel';
+import FileAttachmentPanel from 'components/FileAttachmentPanel';
+import ThumbnailsPanel from 'components/ThumbnailsPanel';
+import StylePanel from 'components/StylePanel';
+import RedactionPanel from 'components/RedactionPanel';
+import SearchPanel from 'components/SearchPanel';
+import NotesPanel from 'components/NotesPanel';
+import SignatureListPanel from 'components/SignatureListPanel';
+import RubberStampPanel from 'components/RubberStampPanel';
 
 const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   const dispatch = useDispatch();
@@ -57,26 +65,41 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
     ],
   );
 
+  const { redactionAnnotationsList } = useOnRedactionAnnotationChanged();
+
   const panelsList = genericPanels.find((panel) => panel.dataElement === tabPanelDataElement).panelsList;
 
-  const renderPanel = (panel) => {
-    switch (panel) {
-      case panelNames.THUMBNAIL:
-        return <ThumbnailsPanel panelSelector={`${activeCustomPanel}-tab-panel`} />;
+  const renderPanel = (panelName, dataElement) => {
+    switch (panelName) {
       case panelNames.OUTLINE:
-        return <GenericOutlinesPanel />;
-      case panelNames.BOOKMARKS:
-        return <BookmarksPanel />;
-      case panelNames.LAYERS:
-        return <LayersPanel />;
-      case panelNames.STYLE:
-        return <StylePanel />;
+        return <GenericOutlinesPanel dataElement={dataElement}/>;
       case panelNames.SIGNATURE:
-        return <SignaturePanel />;
+        return <SignaturePanel dataElement={dataElement}/>;
+      case panelNames.BOOKMARKS:
+        return <BookmarksPanel dataElement={dataElement}/>;
       case panelNames.FILE_ATTACHMENT:
-        return <FileAttachmentPanel />;
+        return <FileAttachmentPanel dataElement={dataElement}/>;
+      case panelNames.THUMBNAIL:
+        return <ThumbnailsPanel panelSelector={dataElement} parentDataElement={tabPanelDataElement}/>;
+      case panelNames.LAYERS:
+        return <LayersPanel/>;
       case panelNames.TEXT_EDITING:
-        return <TextEditingPanel />;
+        return <TextEditingPanel dataElement={dataElement}/>;
+      case panelNames.CHANGE_LIST:
+        return <MultiViewerWrapper><ComparePanel dataElement={dataElement}/></MultiViewerWrapper>;
+      case panelNames.STYLE:
+        return <StylePanel dataElement={dataElement}/>;
+      case panelNames.REDACTION:
+        return <RedactionPanel dataElement={dataElement} redactionAnnotationsList={redactionAnnotationsList}/>;
+      case panelNames.SEARCH:
+        return <SearchPanel dataElement={dataElement} parentDataElement={tabPanelDataElement}/>;
+      case panelNames.NOTES:
+        return <NotesPanel dataElement={dataElement} parentDataElement={tabPanelDataElement} isCustomPanel={true}
+          isCustomPanelOpen={true}/>;
+      case panelNames.SIGNATURE_LIST:
+        return <SignatureListPanel dataElement={dataElement}/>;
+      case panelNames.RUBBER_STAMP:
+        return <RubberStampPanel dataElement={dataElement}/>;
       default:
         return <div></div>;
     }
@@ -105,7 +128,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
       const presetPanels = Object.values(panelNames);
       // Case it is a preset panel
       if (typeof panelRenderer === 'string') {
-        const customPanel = genericPanels.find((customPanel) => customPanel.dataElement === panelRenderer);
+        const customPanel = genericPanels.find((customPanel) => [customPanel.render, customPanel.dataElement].includes(panelRenderer));
 
         if (!customPanel) {
           console.warn(`Panel ${panelRenderer} is not a valid custom panel`);
@@ -120,7 +143,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
             icon: panel.icon ?? panelInfo.icon,
             sortIndex: index,
             tabPanel: tabPanelDataElement,
-            render: renderPanel(customPanel.render)
+            render: renderPanel(customPanel.render, `${customPanel.dataElement}-tab-panel`)
           };
           // preset panels may not have these explicitly set by the user
           // since they have their own defaults

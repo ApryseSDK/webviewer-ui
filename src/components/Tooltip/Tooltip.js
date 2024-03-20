@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import hotkeysManager from 'helpers/hotkeysManager';
 import { useSelector } from 'react-redux';
 import selectors from 'selectors';
+import { getWebComponentScale } from 'helpers/getWebComponentScale';
 
 import { isMac, isWindows, isIOS, isAndroid } from 'helpers/device';
 
@@ -155,9 +156,11 @@ const Tooltip = forwardRef(({ content = '', children, hideShortcut, forcePositio
         bestLocation
       ];
 
+      const { scaleX, scaleY } = getWebComponentScale();
+
       setPosition({
-        top: tooltipTop,
-        left: tooltipLeft,
+        top: tooltipTop / scaleY,
+        left: tooltipLeft / scaleX,
       });
       setLocation(bestLocation);
     };

@@ -5,7 +5,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 
 function NotesPanelContainer(props) {
-  const isCustomPanelOpen = props.isCustomPanelOpen;
+  const { isCustomPanelOpen, parentDataElement = undefined, dataElement } = props;
   const [
     isOpen,
     notesInLeftPanel,
@@ -14,7 +14,7 @@ function NotesPanelContainer(props) {
     activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
-      selectors.isElementOpen(state, 'notesPanel'),
+      selectors.isElementOpen(state, parentDataElement || dataElement || 'notesPanel'),
       selectors.getNotesInLeftPanel(state),
       selectors.getIsNotesPanelMultiSelectEnabled(state),
       selectors.isMultiViewerMode(state),

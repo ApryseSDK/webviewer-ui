@@ -7,6 +7,11 @@ import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
 import core from 'core';
 
+/**
+ * A button that performs the redo action.
+ * @name redoButton
+ * @memberof UI.Components.PresetButton
+ */
 const RedoButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { label, presetDataElement, icon, title } = menuItems.redoButton;

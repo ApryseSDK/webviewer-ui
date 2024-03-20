@@ -13,14 +13,12 @@ const item1 = {
   dataElement: 'Ribbon Item1',
   img: 'icon-header-pan',
   title: 'icon only',
-  toolbarGroup: 'toolbarGroup-View',
   type: 'ribbonItem',
 };
 
 const item2 = {
   dataElement: 'Ribbon Item2',
   label: 'label only',
-  toolbarGroup: 'toolbarGroup-Annotate',
   type: 'ribbonItem',
 };
 
@@ -28,19 +26,18 @@ const item3 = {
   dataElement: 'Ribbon Item3',
   label: 'icon and label',
   img: 'icon-header-pan',
-  toolbarGroup: 'toolbarGroup-Shapes',
   type: 'ribbonItem',
 };
 
 const item4 = {
   dataElement: 'Ribbon Item4',
   label: 'label only 2',
-  toolbarGroup: 'toolbarGroup-Shapes',
   type: 'ribbonItem',
 };
 
 const initialState = {
   viewer: {
+    customHeadersAdditionalProperties: {},
     disabledElements: {},
     customElementOverrides: {},
     openElements: {},
@@ -101,6 +98,7 @@ const noIconsStore = configureStore({
           topHeaders: 40,
           bottomHeaders: 40
         },
+        customHeadersAdditionalProperties: {},
       }
     };
   }

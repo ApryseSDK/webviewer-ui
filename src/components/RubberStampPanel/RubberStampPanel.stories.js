@@ -46,6 +46,10 @@ const RubberStampPanelInApp = (location,) => {
       },
       activeGroupedItems: ['insertGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Insert',
+      lastPickedToolAndGroup: {
+        tool: 'AnnotationCreateRubberStamp',
+        group: ['insertGroupedItems'],
+      },
     },
     featureFlags: {
       customizableUI: true,
@@ -55,11 +59,11 @@ const RubberStampPanelInApp = (location,) => {
 };
 
 export const RubberStampPanelInleft = () => RubberStampPanelInApp('left');
-export const RubbeStampPanelInRight = () => RubberStampPanelInApp('right');
+export const RubberStampPanelInRight = () => RubberStampPanelInApp('right');
 
 RubberStampPanelInleft.parameters = {
   layout: 'fullscreen',
 };
-RubbeStampPanelInRight.parameters = {
+RubberStampPanelInRight.parameters = {
   layout: 'fullscreen',
 };

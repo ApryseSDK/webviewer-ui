@@ -21,6 +21,9 @@ const propTypes = {
   onPropertyChange: PropTypes.func,
   onRichTextStyleChange: PropTypes.func,
   isRedaction: PropTypes.bool,
+  isRichTextEditMode: PropTypes.bool,
+  setIsRichTextEditMode: PropTypes.func,
+  isTextStylePickerHidden: PropTypes.bool,
 };
 
 const RichTextStyleEditor = ({
@@ -30,8 +33,12 @@ const RichTextStyleEditor = ({
   onFreeTextSizeToggle,
   onPropertyChange,
   onRichTextStyleChange,
+  isRichTextEditMode,
+  setIsRichTextEditMode,
   isRedaction,
+  isTextStylePickerHidden,
   activeTool,
+  textSizeSliderComponent,
 }) => {
   const [
     fonts,
@@ -42,13 +49,14 @@ const RichTextStyleEditor = ({
     shallowEqual,
   );
 
-  const [isRichTextEditMode, setIsRichTextEditMode] = useState(false);
   const [format, setFormat] = useState({});
   const editorRef = useRef(null);
   const annotationRef = useRef(null);
   const propertiesRef = useRef({});
   const dispatch = useDispatch();
   const oldSelectionRef = useRef();
+  const richTextEditModeRef = useRef();
+  richTextEditModeRef.current = isRichTextEditMode;
 
   useEffect(() => {
     const handleSelectionChange = (range, oldRange) => {
@@ -99,6 +107,8 @@ const RichTextStyleEditor = ({
         underline: stylesTemp?.['text-decoration']?.includes('underline')
           || stylesTemp?.['text-decoration']?.includes('word'),
         strikeout: stylesTemp?.['text-decoration']?.includes('line-through') ?? false,
+        size: stylesTemp?.['font-size'],
+        font: stylesTemp?.['font-family'],
         StrokeStyle,
         calculatedFontSize: annotation.getCalculatedFontSize()
       };
@@ -148,6 +158,14 @@ const RichTextStyleEditor = ({
       format.color = annotationRef.current.TextColor;
     }
 
+    const propertiesToCheck = ['font', 'size', 'originalSize'];
+
+    for (const prop of propertiesToCheck) {
+      if (format[prop] && Array.isArray(format[prop])) {
+        format[prop] = undefined;
+      }
+    }
+
     return format;
   };
 
@@ -165,7 +183,7 @@ const RichTextStyleEditor = ({
   };
 
   const handleColorChange = (name, color) => {
-    if (!isRichTextEditMode) {
+    if (!richTextEditModeRef.current) {
       onPropertyChange(name, color);
       return;
     }
@@ -173,7 +191,11 @@ const RichTextStyleEditor = ({
   };
 
   const applyFormat = (formatKey, value) => {
-    editorRef.current?.format(formatKey, value);
+    if (formatKey === 'size') {
+      editorRef.current?.format('applyCustomFontSize', value);
+    } else {
+      editorRef.current?.format(formatKey, value);
+    }
 
     if (formatKey === 'color') {
       value = new window.Core.Annotations.Color(value);
@@ -200,7 +222,7 @@ const RichTextStyleEditor = ({
 
   // onPropertyChange
   const handlePropertyChange = (property, value) => {
-    if (!isRichTextEditMode) {
+    if (!richTextEditModeRef.current) {
       onPropertyChange(property, value);
       return;
     }
@@ -222,7 +244,7 @@ const RichTextStyleEditor = ({
 
   // onRichTextStyleChange
   const handleRichTextStyleChange = (property, value) => {
-    if (!isRichTextEditMode) {
+    if (!richTextEditModeRef.current) {
       onRichTextStyleChange(property, value);
       return;
     }
@@ -232,10 +254,15 @@ const RichTextStyleEditor = ({
       'font-style': 'italic',
       'underline': 'underline',
       'line-through': 'strike',
+      'font-family': 'font',
+      'font-size': 'size',
     };
-    handleTextFormatChange(propertyTranslation[property])();
+    if (property === 'font-family' || property === 'font-size') {
+      applyFormat(propertyTranslation[property], value);
+    } else {
+      handleTextFormatChange(propertyTranslation[property])();
+    }
   };
-
 
   let properties = {};
 
@@ -245,6 +272,8 @@ const RichTextStyleEditor = ({
     italic: RichTextStyle?.[0]?.['font-style'] === 'italic' ?? false,
     underline: RichTextStyle?.[0]?.['text-decoration']?.includes('underline') || RichTextStyle?.[0]?.['text-decoration']?.includes('word'),
     strikeout: RichTextStyle?.[0]?.['text-decoration']?.includes('line-through') ?? false,
+    font: RichTextStyle?.[0]?.['font-family'],
+    size: RichTextStyle?.[0]?.['font-size'],
     StrokeStyle: 'solid',
   };
 
@@ -258,29 +287,34 @@ const RichTextStyleEditor = ({
     propertiesRef.current.italic = format.italic;
     propertiesRef.current.underline = format.underline;
     propertiesRef.current.strikeout = format.strike;
+    propertiesRef.current.quillFont = format.font || propertiesRef.current.Font;
+    propertiesRef.current.quillFontSize = format.originalSize || propertiesRef.current.FontSize;
   }
 
   return (
     <div className="RichTextStyleEditor"
       onMouseDown={(e) => {
-        if (e.type !== 'touchstart') {
+        if (e.type !== 'touchstart' && isRichTextEditMode) {
           e.preventDefault();
         }
       }}
     >
-      <div className="menu-items">
-        <TextStylePicker
-          fonts={fonts}
-          onPropertyChange={handlePropertyChange}
-          onRichTextStyleChange={handleRichTextStyleChange}
-          properties={isRichTextEditMode ? propertiesRef.current : properties}
-          stateless={true}
-          isFreeText={!isRedaction}
-          onFreeTextSizeToggle={onFreeTextSizeToggle}
-          isFreeTextAutoSize={isFreeTextAutoSize}
-          isRedaction={isRedaction}
-        />
-      </div>
+      {!isTextStylePickerHidden && (
+        <div className="menu-items">
+          <TextStylePicker
+            fonts={fonts}
+            onPropertyChange={handlePropertyChange}
+            onRichTextStyleChange={handleRichTextStyleChange}
+            properties={isRichTextEditMode ? propertiesRef.current : properties}
+            stateless={true}
+            isFreeText={!isRedaction}
+            onFreeTextSizeToggle={onFreeTextSizeToggle}
+            isFreeTextAutoSize={isFreeTextAutoSize}
+            isRichTextEditMode={isRichTextEditMode}
+            isRedaction={isRedaction}
+          />
+        </div>
+      )}
       <ColorPicker
         onColorChange={(color) => {
           handleColorChange('TextColor', new window.Core.Annotations.Color(color));
@@ -289,6 +323,7 @@ const RichTextStyleEditor = ({
         activeTool={activeTool}
         type={'Text'}
       />
+      {textSizeSliderComponent}
     </div>
   );
 };

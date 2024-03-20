@@ -41,6 +41,7 @@ const NotesPanel = ({
   isCustomPanel,
   isCustomPanelOpen,
   isLeftSide,
+  parentDataElement,
 }) => {
   const [
     sortStrategy,
@@ -64,7 +65,7 @@ const NotesPanel = ({
       selectors.isElementDisabled(state, DataElements.NOTES_PANEL),
       selectors.getPageLabels(state),
       selectors.getCustomNoteFilter(state),
-      selectors.getNotesPanelWidth(state),
+      parentDataElement ? selectors.getPanelWidth(state, parentDataElement) : selectors.getNotesPanelWidth(state),
       selectors.getNotesInLeftPanel(state),
       selectors.isDocumentReadOnly(state),
       selectors.isAnnotationNumberingEnabled(state),

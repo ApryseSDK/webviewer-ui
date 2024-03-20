@@ -44,6 +44,7 @@ const CalibrationOverlay = ({ tempScale, onCancelCalibrationMode, onApplyCalibra
           disabled={!(isCalibrationPopupOpen && tempScale && (new Scale(tempScale).worldScale?.value > 0))}
           data-element="calibrationApply"
           onMouseDown={onApplyCalibration}
+          onTouchStart={onApplyCalibration}
         >
           {t('action.apply')}
         </button>

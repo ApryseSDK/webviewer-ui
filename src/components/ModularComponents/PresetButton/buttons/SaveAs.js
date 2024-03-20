@@ -10,6 +10,11 @@ import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * A button that opens the save as modal.
+ * @name saveAsButton
+ * @memberof UI.Components.PresetButton
+ */
 const SaveAsButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { label } = menuItems.saveAsButton;

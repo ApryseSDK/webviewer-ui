@@ -4,8 +4,12 @@ import { fireError } from 'helpers/fireEvent';
 import getHashParameters from 'helpers/getHashParameters';
 import actions from 'actions';
 import DataElements from 'constants/dataElement';
+import FeatureFlags from 'constants/featureFlags';
+
 
 export default (dispatch, src, options = {}, documentViewerKey = 1) => {
+  const isCustomizableUIEnabled = getHashParameters('ui', 'default') === 'beta';
+
   core.closeDocument(documentViewerKey);
   options = { ...getDefaultOptions(), ...options };
 
@@ -28,6 +32,10 @@ export default (dispatch, src, options = {}, documentViewerKey = 1) => {
   }
 
   dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
+
+  if (options.enableOfficeEditing && isCustomizableUIEnabled) {
+    dispatch(actions.disableFeatureFlag(FeatureFlags.CUSTOMIZABLE_UI));
+  }
 
   if (options.enableOfficeEditing && !src) {
     core.loadBlankOfficeEditorDocument(options);

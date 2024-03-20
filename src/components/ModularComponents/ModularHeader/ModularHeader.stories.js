@@ -14,6 +14,7 @@ import {
   button8,
   button9,
 } from '../Helpers/mockHeaders';
+import { mockModularComponents } from '../AppStories/mockAppState';
 
 export default {
   title: 'ModularComponents/ModularHeader',
@@ -35,6 +36,11 @@ const initialState = {
     customPanels: [],
     flyoutMap: {},
     lastPickedToolForGroupedItems: {},
+    modularComponents: {
+      ...mockModularComponents,
+      button8,
+      button9,
+    },
   },
 };
 

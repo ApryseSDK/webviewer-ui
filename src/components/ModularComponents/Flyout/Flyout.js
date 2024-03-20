@@ -18,6 +18,7 @@ import PageControlsFlyout from '../PageControls/PageControlsFlyout';
 import { getIconDOMElement, getSubMenuDOMElement } from '../Helpers/responsiveness-helper';
 import { getFlyoutPositionOnElement } from 'helpers/flyoutHelper';
 import PresetButton from '../PresetButton';
+import getToolbarTranslationString from 'helpers/translationKeyMapping';
 
 const Flyout = () => {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ const Flyout = () => {
     topHeadersHeight,
     bottomHeadersHeight,
     currentPage,
+    customHeadersAdditionalProperties,
   ] = useSelector((state) => [
     selectors.getFlyoutMap(state),
     selectors.getActiveFlyout(state),
@@ -40,6 +42,7 @@ const Flyout = () => {
     selectors.getTopHeadersHeight(state),
     selectors.getBottomHeadersHeight(state),
     selectors.getCurrentPage(state),
+    selectors.getCustomHeadersAdditionalProperties(state),
   ]);
   const activeCustomPanel = useSelector((state) => selectors.getActiveCustomPanel(state, activeFlyout.split('-flyout')[0]));
   const flyoutProperties = flyoutMap[activeFlyout];
@@ -215,6 +218,9 @@ const Flyout = () => {
     if (itemIsALabel) {
       return <div className="flyout-label" key={`label-${index}`}>{t(flyoutItem)}</div>;
     }
+    const alabel = flyoutItem.toolbarGroup
+      ? getToolbarTranslationString(flyoutItem.toolbarGroup, customHeadersAdditionalProperties)
+      : flyoutItem.label;
 
     return (flyoutItem === ITEM_TYPE.DIVIDER ? <div className="divider" key={`divider-${index}`} /> : (
       <div key={flyoutItem.label || flyoutItem.dataElement} className={classNames({
@@ -231,14 +237,14 @@ const Flyout = () => {
                 className={classNames({ ZoomItem: true })}
                 role="option"
                 toolName={flyoutItem.toolName}
-                label={flyoutItem.label}
+                label={alabel}
                 img={flyoutItem.icon}
                 isFlyoutItem={true}
               />
             ) : (
               <div className="icon-label-wrapper">
                 {getIconDOMElement(flyoutItem, itemsToRender)}
-                {<div className="flyout-item-label">{t(flyoutItem.label)}</div>}
+                {<div className="flyout-item-label">{t(alabel)}</div>}
               </div>
             )
           }

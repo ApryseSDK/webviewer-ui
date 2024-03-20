@@ -30,6 +30,13 @@ const setAnnotationRichTextStyle = (editor, annotation) => {
         cssStyle['text-decoration'] = 'line-through';
       }
     }
+    if (attributes === null || attributes === undefined ? undefined : attributes.size) {
+      cssStyle['font-size'] = attributes.size;
+    }
+    if (attributes === null || attributes === undefined ? undefined : attributes.font) {
+      cssStyle['font-family'] = attributes.font;
+    }
+
     richTextStyle[breakpoint] = cssStyle;
     breakpoint += value.length;
   });

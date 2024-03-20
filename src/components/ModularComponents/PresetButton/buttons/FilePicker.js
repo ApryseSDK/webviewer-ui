@@ -8,6 +8,11 @@ import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * A button that allows the opening of a file as the document in the UI.
+ * @name filePickerButton
+ * @memberof UI.Components.PresetButton
+ */
 const FilePickerButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { label } = menuItems.filePickerButton;

@@ -73,6 +73,25 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         flyoutToggleElement: payload.toggleElement,
       };
+    case 'SET_FLYOUT_ITEMS': {
+      const { dataElement, items } = payload;
+      const flyout = state.flyoutMap[dataElement];
+      // Handle the case where the flyout is not yet registered with the UI
+      if (!flyout) {
+        return state;
+      }
+      const updatedFlyout = {
+        ...flyout,
+        items,
+      };
+      return {
+        ...state,
+        flyoutMap: {
+          ...state.flyoutMap,
+          [dataElement]: updatedFlyout,
+        },
+      };
+    }
     case 'SET_INITIALS_OFFSET':
       return {
         ...state,
@@ -459,6 +478,11 @@ export default (initialState) => (state = initialState, action) => {
           [payload.groupedItem]: payload.toolName,
         }
       };
+    case 'SET_LAST_PICKED_TOOL_AND_GROUP':
+      return {
+        ...state,
+        lastPickedToolAndGroup: payload,
+      };
     case 'SET_ACTIVE_CUSTOM_RIBBON':
       return { ...state, activeCustomRibbon: payload.customRibbon };
     case 'SET_OUTLINE_CONTROL_VISIBILITY':
@@ -630,6 +654,8 @@ export default (initialState) => (state = initialState, action) => {
     case 'SET_COLOR_MAP':
       return { ...state, colorMap: payload.colorMap };
     case 'SET_WARNING_MESSAGE':
+      return { ...state, warning: payload };
+    case 'ENABLE_DELETE_TAB_WARNING':
       return { ...state, warning: payload };
     case 'DISABLE_DELETE_TAB_WARNING':
       return { ...state, warning: payload };
@@ -990,6 +1016,11 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, shouldResetAudioPlaybackPosition: payload.shouldResetAudioPlaybackPosition };
     case 'SET_ACTIVE_SOUND_ANNOTATION':
       return { ...state, activeSoundAnnotation: payload.activeSoundAnnotation };
+    case 'SET_EMBEDDED_JS_POPUP_MENU_STYLE':
+      return {
+        ...state,
+        embeddedJSPopupStyle: payload.embeddedJSPopupStyle,
+      };
     case 'SET_ANNOTATION_FILTERS':
       return { ...state, annotationFilters: payload.annotationFilters };
     case 'SET_ZOOM_STEP_FACTORS':

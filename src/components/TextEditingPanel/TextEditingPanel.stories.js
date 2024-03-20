@@ -44,7 +44,11 @@ const textEditingPanelInitialState = {
     lastPickedToolForGroupedItems: {
       'annotateGroupedItems': 'AnnotationCreateFreeText'
     },
-    activeGroupedItems: ['annotateGroupedItems']
+    activeGroupedItems: ['annotateGroupedItems'],
+    lastPickedToolAndGroup: {
+      tool: 'AnnotationCreateFreeText',
+      group: ['annotateGroupedItems'],
+    },
   },
   featureFlags: {
     customizableUI: false,
@@ -147,6 +151,10 @@ export const LeftSide = () => {
       },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Annotate',
+      lastPickedToolAndGroup: {
+        tool: 'AnnotationCreateFreeText',
+        group: ['annotateGroupedItems'],
+      },
     },
     featureFlags: {
       customizableUI: true,

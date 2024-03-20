@@ -38,6 +38,7 @@ export const itemToFlyout = (item, {
   if (itemProps.type === ITEM_TYPE.BUTTON) {
     flyoutItem.className = 'FlyoutCustomButton';
   } else if (itemProps.type === ITEM_TYPE.RIBBON_ITEM) {
+    flyoutItem.toolbarGroup = itemProps.toolbarGroup;
     flyoutItem.className = 'FlyoutRibbonItem';
     flyoutItem.onClick = () => {
       const currentToolbarGroup = selectors.getCurrentToolbarGroup(store.getState());

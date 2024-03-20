@@ -104,6 +104,10 @@ export const RightSide = () => {
         'layersPanel': { disabled: false, priority: 3 },
       },
       activeCustomRibbon: 'toolbarGroup-View',
+      lastPickedToolAndGroup: {
+        tool: 'AnnotationEdit',
+        group: ['groupedLeftPanelItems'],
+      },
     },
     document: {
       ...initialState.document,
@@ -117,3 +121,37 @@ export const RightSide = () => {
 };
 
 RightSide.parameters = { layout: 'fullscreen' };
+
+export const Empty = () => {
+  const stateWithEmptyLayersPanel = {
+    ...initialState,
+    viewer: {
+      ...initialState.viewer,
+      genericPanels: [
+        {
+          dataElement: 'panel1',
+          render: 'layersPanel',
+          location: 'left',
+        }
+      ],
+      openElements: {
+        ...initialState.viewer.openElements,
+        contextMenuPopup: false,
+        panel1: true,
+      },
+      disabledElements: {
+        ...initialState.viewer.disabledElements,
+        'layersPanel': { disabled: false, priority: 3 },
+      },
+      activeCustomRibbon: 'toolbarGroup-View',
+    },
+    document: {
+      ...initialState.document,
+      layers: [],
+    },
+    featureFlags: {
+      customizableUI: true,
+    },
+  };
+  return <MockApp initialState={stateWithEmptyLayersPanel}/>;
+};

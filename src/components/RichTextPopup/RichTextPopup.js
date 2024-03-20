@@ -120,15 +120,18 @@ const RichTextPopup = ({ annotation, editor }) => {
       console.error(err);
     }
     const richTextStyles = annotation.getRichTextStyle();
+    const stylesTemp = richTextStyles[0];
     propertiesRef.current = {
       Font: annotation.Font,
       FontSize: annotation.FontSize,
       TextAlign: annotation.TextAlign,
       TextVerticalAlign: annotation.TextVerticalAlign,
-      bold: richTextStyles?.[0]?.['font-weight'] === 'bold' ?? false,
-      italic: richTextStyles?.[0]?.['font-style'] === 'italic' ?? false,
-      underline: richTextStyles?.[0]?.['text-decoration']?.includes('underline') || richTextStyles?.[0]?.['text-decoration']?.includes('word'),
-      strikeout: richTextStyles?.[0]?.['text-decoration']?.includes('line-through') ?? false,
+      bold: stylesTemp?.['font-weight'] === 'bold' ?? false,
+      italic: stylesTemp?.['font-style'] === 'italic' ?? false,
+      underline: stylesTemp?.['text-decoration']?.includes('underline') || stylesTemp?.['text-decoration']?.includes('word'),
+      strikeout: stylesTemp?.['text-decoration']?.includes('line-through') ?? false,
+      size: stylesTemp?.['font-size'],
+      font: stylesTemp?.['font-family'],
       StrokeStyle,
       calculatedFontSize: annotation.getCalculatedFontSize()
     };
@@ -225,7 +228,11 @@ const RichTextPopup = ({ annotation, editor }) => {
   };
 
   const applyFormat = (formatKey, value) => {
-    editorRef.current?.format(formatKey, value);
+    if (formatKey === 'size') {
+      editorRef.current?.format('applyCustomFontSize', value);
+    } else {
+      editorRef.current?.format(formatKey, value);
+    }
 
     if (formatKey === 'color') {
       value = new window.Core.Annotations.Color(value);
@@ -294,14 +301,20 @@ const RichTextPopup = ({ annotation, editor }) => {
     }, 0);
   };
 
-  const onRichTextStyleChange = (property) => {
+  const onRichTextStyleChange = (property, value) => {
     const propertyTranslation = {
       'font-weight': 'bold',
       'font-style': 'italic',
       'underline': 'underline',
       'line-through': 'strike',
+      'font-family': 'font',
+      'font-size': 'size',
     };
-    handleTextFormatChange(propertyTranslation[property])();
+    if (property === 'font-family' || property === 'font-size') {
+      applyFormat(propertyTranslation[property], value);
+    } else {
+      handleTextFormatChange(propertyTranslation[property])();
+    }
   };
 
 
@@ -309,6 +322,8 @@ const RichTextPopup = ({ annotation, editor }) => {
   propertiesRef.current.italic = format.italic;
   propertiesRef.current.underline = format.underline;
   propertiesRef.current.strikeout = format.strike;
+  propertiesRef.current.quillFont = format.font || propertiesRef.current.Font;
+  propertiesRef.current.quillFontSize = format.originalSize || propertiesRef.current.FontSize;
 
   // TODO for now don't show it in mobile
   return isDisabled || (isMobile() && !isInDesktopOnlyMode) ? null : (
@@ -397,6 +412,7 @@ const RichTextPopup = ({ annotation, editor }) => {
                     isFreeText={true}
                     onFreeTextSizeToggle={() => handleFreeTextAutoSizeToggle(annotation, setAutoSizeFont, isAutoSizeFont)}
                     isFreeTextAutoSize={isAutoSizeFont}
+                    isRichTextEditMode={true}
                   />
                 </div>
               )}

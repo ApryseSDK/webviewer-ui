@@ -11,7 +11,6 @@ const flyoutItemBase = {
 };
 
 /**
- * @ignore
  * @name MainMenu
  * @memberOf UI.Components
  * @class
@@ -29,7 +28,7 @@ class MainMenu extends Flyout {
     this.type = ITEM_TYPE.MENU;
 
     if (props.additionalItems) {
-      this.addItems(props.additionalItems);
+      this.setItems([...this.items, ...props.additionalItems]);
     }
   }
 }

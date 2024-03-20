@@ -7,6 +7,11 @@ import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
 import core from 'core';
 
+/**
+ * A button that performs the undo action.
+ * @name undoButton
+ * @memberof UI.Components.PresetButton
+ */
 const UndoButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { label, presetDataElement, icon, title } = menuItems.undoButton;

@@ -52,7 +52,11 @@ const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
       lastPickedToolForGroupedItems: {
         'insertGroupedItems': 'AnnotationCreateSignature',
       },
-      activeGroupedItems: ['insertGroupedItems']
+      activeGroupedItems: ['insertGroupedItems'],
+      lastPickedToolAndGroup: {
+        tool: 'AnnotationCreateSignature',
+        group: ['insertGroupedItems'],
+      },
     },
     featureFlags: {
       customizableUI: true,

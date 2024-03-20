@@ -22,6 +22,7 @@ const initialState = {
     activeCustomRibbon: 'Ribbon Item1',
     activeGroupedItems: [],
     lastPickedToolForGroupedItems: {},
+    customHeadersAdditionalProperties: {},
   },
 };
 
@@ -56,18 +57,18 @@ export const RibbonItems = () => {
     dataElement: 'Ribbon Item1',
     img: 'icon-header-pan',
     title: 'icon only',
-    activeCustomRibbon: 'toolbarGroup-View'
+    activeCustomRibbon: 'toolbarGroup-View',
   };
   const item2Props = {
     dataElement: 'Ribbon Item2',
     label: 'label only',
-    activeCustomRibbon: 'toolbarGroup-Annotate'
+    activeCustomRibbon: 'toolbarGroup-Annotate',
   };
   const item3Props = {
     dataElement: 'Ribbon Item3',
     label: 'icon and label',
     img: 'icon-header-pan',
-    activeCustomRibbon: 'toolbarGroup-Shapes'
+    activeCustomRibbon: 'toolbarGroup-Shapes',
   };
   const item4Props = {
     dataElement: 'Ribbon Item1',

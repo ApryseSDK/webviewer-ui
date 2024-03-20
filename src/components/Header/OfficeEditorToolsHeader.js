@@ -649,7 +649,7 @@ const OfficeEditorToolsHeader = () => {
                     )}
                   />
                   <div className="divider" />
-                  {false && <Dropdown
+                  <Dropdown
                     dataElement={DataElement.OFFICE_EDITOR_TOOLS_HEADER_INSERT_TABLE}
                     className="insert-table-dropdown"
                     displayButton={(isOpen) => (
@@ -664,7 +664,7 @@ const OfficeEditorToolsHeader = () => {
                     )}
                   >
                     <OfficeEditorCreateTablePopup focusViewer={focusContent} />
-                  </Dropdown>}
+                  </Dropdown>
                   <>
                     <ActionButton
                       className="tool-group-button"

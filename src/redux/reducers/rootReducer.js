@@ -24,6 +24,7 @@ const viewerPersistConfig = {
     'lastPickedToolGroup',
     'activeGroupedItems',
     'lastPickedToolForGroupedItems',
+    'lastPickedToolAndGroup',
     'activeCustomRibbon',
     'currentLanguage',
     'activeTheme',

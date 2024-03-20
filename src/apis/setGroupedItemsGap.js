@@ -1,7 +1,7 @@
 /**
- * @ignore
  * Sets the gap of Grouped Items
  * @method UI.setGroupedItemsGap
+ * @param {number} gap The gap in pixels between the items in the group.
  * @example
  * WebViewer(...)
   .then(function (instance) {
