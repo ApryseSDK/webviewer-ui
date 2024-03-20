@@ -23,6 +23,8 @@ import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
 let onFirstLoad = true;
 const officeEditorScope = 'office-editor';
 
+const getIsCustomUIEnabled = (store) => getHashParameters('ui', 'default') === 'beta' || selectors.getFeatureFlags(store.getState()).customizableUI;
+
 export default (store, documentViewerKey) => async () => {
   const { dispatch, getState } = store;
   const docViewer = core.getDocumentViewer(documentViewerKey);
@@ -102,8 +104,10 @@ export default (store, documentViewerKey) => async () => {
       });
       doc.getLayersArray().then((layers) => {
         if (layers.length === 0) {
-          dispatch(actions.disableElement('layersPanel', PRIORITY_ONE));
-          dispatch(actions.disableElement('layersPanelButton', PRIORITY_ONE));
+          if (!getIsCustomUIEnabled(store)) {
+            dispatch(actions.disableElement('layersPanel', PRIORITY_ONE));
+            dispatch(actions.disableElement('layersPanelButton', PRIORITY_ONE));
+          }
           setNextActivePanelDueToEmptyCurrentPanel('layersPanel');
         } else {
           dispatch(actions.enableElement('layersPanel', PRIORITY_ONE));

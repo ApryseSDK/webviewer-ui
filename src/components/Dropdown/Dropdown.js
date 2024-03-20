@@ -48,6 +48,7 @@ const propTypes = {
   className: PropTypes.string,
   onOpened: PropTypes.func,
   arrowDirection: PropTypes.string,
+  disableFocusing: PropTypes.bool,
 };
 
 function Dropdown({
@@ -78,6 +79,7 @@ function Dropdown({
   onOpened = () => {},
   arrowDirection = 'down',
   children,
+  disableFocusing = false,
 }) {
   const { t, ready: tReady } = useTranslation();
   const overlayRef = useRef(null);
@@ -190,7 +192,10 @@ function Dropdown({
       e.stopPropagation();
       onClickItem(key, i);
       setIsOpen(false);
-      buttonRef.current.focus();
+      if (!disableFocusing) {
+        buttonRef.current.focus();
+      }
+
 
       if (inputRef?.current) {
         inputRef.current.value = displayValue;
@@ -229,13 +234,14 @@ function Dropdown({
   ));
 
   const renderDropdownObjects = () => objects.map((object, index) => {
-    const translatedDisplayValue = getTranslatedDisplayValue(object.label || '');
+    const translatedDisplayValue = (tReady && object.label) ? getTranslation(translationPrefix, getDisplayValue(object.label)) : '';
+    const key = object.index || getKey(object);
     return (
       <DataElementWrapper
         key={object.dataElement}
         type="button"
         dataElement={`dropdown-item-${index}`}
-        className={classNames('Dropdown__item', { active: object.index === currentSelectionKey })}
+        className={classNames('Dropdown__item', { active: key === currentSelectionKey })}
         tabIndex={isOpen ? undefined : -1} // Just to be safe.
         onClick={(e) => onClickDropdownItem(e, object[objectKey])}
       >
@@ -310,6 +316,7 @@ function Dropdown({
       text = objects[selectedObjectIndex].label;
       className = objects[selectedObjectIndex].className;
     }
+    text = (tReady && text) ? getTranslation(translationPrefix, getDisplayValue(text)) : '';
     selectedItemDisplay = (
       <div className={'Dropdown__item-object'}>
         {glyph &&

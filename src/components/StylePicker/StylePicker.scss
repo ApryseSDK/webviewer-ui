@@ -1,5 +1,4 @@
 .StylePicker {
-  padding-top: 16px;
   display: flex;
   flex-direction: column;
 
@@ -10,7 +9,7 @@
   }
 
   .StyleOption {
-    margin-top: 16px;
+    margin-bottom: 16px;
 
     .styles-container {
       .styles-title {
@@ -25,13 +24,20 @@
     }
 
     .slider {
+      &:only-child {
+        margin-bottom: 0;
+      }
       .slider-element-container {
         margin-left: -3px;
       }
     }
   }
+  .StyleOption:last-child {
+    margin-bottom: 0;
+  }
 
   .PanelSection {
+    margin-bottom: 16px;
     .PanelSubsection {
       margin-bottom: 12px;
       .menu-subtitle {
@@ -82,23 +88,36 @@
       background-color: var(--divider);
       width: 100%;
       height: 1px;
-      margin: 16px 0;
     }
 
-    .menu-items .ColorPalette {
-      margin-bottom: 8px;
+    .menu-items {
+      margin-bottom: 16px;
+      &:only-child {
+        margin-bottom: 0;
+      }
+      .ColorPalette {
+        margin-bottom: 8px;
+      }
+    }
+    .slider {
+      &:last-child {
+        margin-bottom: 0px;
+      }
+      margin-bottom: 16px;
     }
 
+    &:last-child, &:empty {
+      margin-bottom: 0px;
+    }
   }
 
   .spacer {
     width: 100%;
-    margin-top: 16px;
   }
 
   .overlay-text-input,
   .Dropdown,
-  .FontSizeDropdown 
+  .FontSizeDropdown
   {
     height: 32px;
   }

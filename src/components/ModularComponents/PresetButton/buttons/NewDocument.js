@@ -7,6 +7,11 @@ import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
 import { useTranslation } from 'react-i18next';
 import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
 
+/**
+ * A button that creates a new document.
+ * @name newDocumentButton
+ * @memberof UI.Components.PresetButton
+ */
 const NewDocumentButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { label } = menuItems.newDocumentButton;

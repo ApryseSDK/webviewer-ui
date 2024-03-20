@@ -292,6 +292,7 @@ const initialState = {
       topHeaders: 40,
       bottomHeaders: 40
     },
+    customHeadersAdditionalProperties: {},
   },
 };
 const store = configureStore({

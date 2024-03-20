@@ -45,27 +45,35 @@ export const panelData = {
     title: 'component.layersPanel',
   },
   [panelNames.TEXT_EDITING]: {
-    icon: '',
-    title: '',
+    icon: 'icon-content-edit',
+    title: 'action.contentEditMode',
   },
   [panelNames.CHANGE_LIST]: {
-    icon: '',
-    title: '',
+    icon: 'icon-header-compare',
+    title: 'component.comparePanel',
   },
   [panelNames.STYLE]: {
-    icon: '',
-    title: '',
+    icon: 'icon-style-panel-toggle',
+    title: 'action.style',
   },
   [panelNames.REDACTION]: {
-    icon: '',
-    title: '',
+    icon: 'icon-redact-panel',
+    title: 'annotation.redact',
   },
   [panelNames.SEARCH]: {
-    icon: '',
-    title: '',
+    icon: 'icon-header-search',
+    title: 'component.searchPanel',
   },
   [panelNames.NOTES]: {
     icon: 'icon-header-chat-line',
     title: 'component.notesPanel',
+  },
+  [panelNames.SIGNATURE_LIST]: {
+    icon: 'icon-tool-signature',
+    title: 'signatureListPanel.header',
+  },
+  [panelNames.RUBBER_STAMP]: {
+    icon: 'icon-tool-stamp-line',
+    title: 'annotation.rubberStamp',
   },
 };

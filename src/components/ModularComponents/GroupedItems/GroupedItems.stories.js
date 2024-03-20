@@ -2,6 +2,11 @@ import React from 'react';
 import GroupedItems from './GroupedItems';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { mockModularComponents } from '../AppStories/mockAppState';
+import {
+  button1,
+  button2,
+} from '../Helpers/mockHeaders';
 
 export default {
   title: 'ModularComponents/GroupedItems',
@@ -16,26 +21,15 @@ const initialState = {
     customPanels: [],
     flyoutMap: {},
     lastPickedToolForGroupedItems: {},
+    modularComponents: {
+      ...mockModularComponents,
+      button1,
+      button2,
+    },
   },
-};
-
-
-const button1 = {
-  dataElement: 'button1',
-  onClick: () => alert('Added'),
-  disabled: false,
-  title: 'Button 1',
-  label: 'Add',
-  type: 'customButton'
-};
-
-const button2 = {
-  dataElement: 'button2',
-  onClick: () => alert('Added'),
-  disabled: false,
-  title: 'Button 2',
-  label: 'OK',
-  type: 'customButton'
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 export const Group = () => {

@@ -1,6 +1,9 @@
 @import '../../../constants/styles';
 
 .ToolButton {
+  width: 32px;
+  height: 32px;
+
   &:hover {
     background: var(--tools-button-hover);
   }
@@ -9,8 +12,9 @@
     background: var(--tools-button-active);
   }
 
-  width: 32px;
-  height: 32px;
+  &.button-with-label {
+    width: min-content;
+  }
 }
 
 button[data-element="signatureFieldButton"], 

@@ -8,6 +8,11 @@ import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
 import { useTranslation } from 'react-i18next';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 
+/**
+ * A button that prints the document.
+ * @name printButton
+ * @memberof UI.Components.PresetButton
+ */
 const PrintButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { label } = menuItems.printButton;

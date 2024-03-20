@@ -37,8 +37,9 @@ export default function useOnLinkAnnotationPopupOpen() {
       }
       const annotations = core.getAnnotationManager().getAnnotationsByMouseEvent(e, true);
       const linkAnnot = annotations.find((annot) => annot instanceof window.Core.Annotations.Link);
+      const contents = linkAnnot?.getContents() || '';
 
-      if (linkAnnot) {
+      if (contents) {
         setAnnotation(linkAnnot);
         dispatch(actions.openElement(DataElements.LINK_ANNOTATION_POPUP));
       } else if (!isEnterComponent) {

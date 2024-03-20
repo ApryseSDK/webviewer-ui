@@ -42,6 +42,7 @@ const OfficeEditorCreateTablePopup = ({ onClose, focusViewer }) => {
           ))}
         </tbody>
       </table>
+      <div className="create-table-rows-columns">{columnIndex + 1} x {rowIndex + 1}</div>
     </div>
   );
 };

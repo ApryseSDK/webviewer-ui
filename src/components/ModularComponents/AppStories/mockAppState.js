@@ -601,5 +601,11 @@ export const mockModularComponents = {
   'page-controls-container': {
     dataElement: 'page-controls-container',
     type: 'pageControls'
-  }
+  },
+  'grouped-item': {
+    items: ['button1', 'button2']
+  },
+  'group1': {
+    items: ['button8', 'button9'],
+  },
 };

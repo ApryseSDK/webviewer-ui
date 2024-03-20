@@ -7,6 +7,11 @@ import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * A button that opens the settings modal.
+ * @name settingsButton
+ * @memberof UI.Components.PresetButton
+ */
 const SettingsButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { label } = menuItems.settingsButton;

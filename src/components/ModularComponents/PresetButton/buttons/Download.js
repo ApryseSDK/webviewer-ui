@@ -9,7 +9,11 @@ import { workerTypes } from 'constants/types';
 import { PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
 import { useTranslation } from 'react-i18next';
-
+/**
+ * A button that downloads the current document.
+ * @name downloadButton
+ * @memberof UI.Components.PresetButton
+ */
 const DownloadButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { label } = menuItems.downloadButton;

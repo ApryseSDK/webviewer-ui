@@ -1,3 +1,12 @@
+/**
+ * A namespace which contains APIs Modular UI components.
+ * @namespace Components
+ * @memberof UI
+ * @example
+ * webViewerInstance.UI.Components.someComponent
+ * webViewerInstance.UI.Components.someAPI()
+ */
+
 const defaultModularHeaders = {
   'default-top-header': {
     dataElement: 'default-top-header',
@@ -81,6 +90,7 @@ const defaultModularComponents = {
     label: 'action.openFile',
     icon: 'icon-header-file-picker-line',
     hidden: true,
+    type: 'presetButton',
   },
   downloadButton: {
     dataElement: 'downloadButton',
@@ -88,6 +98,7 @@ const defaultModularComponents = {
     label: 'action.download',
     icon: 'icon-download',
     hidden: false,
+    type: 'presetButton',
   },
   saveAsButton: {
     dataElement: 'saveAsButton',
@@ -96,6 +107,7 @@ const defaultModularComponents = {
     label: 'saveModal.saveAs',
     icon: 'icon-save',
     hidden: false,
+    type: 'presetButton',
   },
   printButton: {
     dataElement: 'printButton',
@@ -104,6 +116,7 @@ const defaultModularComponents = {
     label: 'action.print',
     icon: 'icon-header-print-line',
     hidden: false,
+    type: 'presetButton',
   },
   undefined: {},
   createPortfolioButton: {
@@ -113,6 +126,7 @@ const defaultModularComponents = {
     label: 'portfolio.createPDFPortfolio',
     icon: 'icon-pdf-portfolio',
     hidden: false,
+    type: 'presetButton',
   },
   settingsButton: {
     dataElement: 'settingsButton',
@@ -121,6 +135,7 @@ const defaultModularComponents = {
     label: 'option.settings.settings',
     icon: 'icon-header-settings-line',
     hidden: false,
+    type: 'presetButton',
   },
   MainMenuFlyout: {
     dataElement: 'MainMenuFlyout',
@@ -547,12 +562,7 @@ const defaultModularComponents = {
       'signatureCreateToolButton',
       'fileAttachmentButton',
       'stampToolButton',
-      'divider-0.8473984212444798',
-      'stylePanelToggle',
-      'divider-0.21070545896105575',
-      'undoButton',
-      'redoButton',
-      'eraserToolButton'
+      'defaultAnnotationUtilities',
     ],
     type: 'groupedItems',
     grow: 0,

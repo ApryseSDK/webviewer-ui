@@ -482,6 +482,7 @@ WebViewer(...)
   createKeyHandlerMap() {
     const store = this.store;
     const { dispatch, getState } = store;
+    const { ToolNames } = window.Core.Tools;
 
     return {
       [ShortcutKeys[Shortcuts.ROTATE_CLOCKWISE]]: (e) => {
@@ -708,47 +709,62 @@ WebViewer(...)
             'customStampModal',
             DataElements.PRINT_MODAL,
             'rubberStampOverlay',
-            DataElements.FILTER_MODAL
+            DataElements.FILTER_MODAL,
+            DataElements.SIGNATURE_LIST_PANEL,
+            DataElements.RUBBER_STAMP_PANEL
           ]),
         );
       },
       [ShortcutKeys[Shortcuts.PAN]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'Pan');
+        setToolModeAndGroup(store, ToolNames.PAN);
       }),
       [ShortcutKeys[Shortcuts.ARROW]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateArrow');
+        setToolModeAndGroup(store, ToolNames.ARROW);
       }),
       [ShortcutKeys[Shortcuts.CALLOUT]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateCallout');
+        setToolModeAndGroup(store, ToolNames.CALLOUT);
       }),
       [ShortcutKeys[Shortcuts.ERASER]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationEraserTool');
+        const state = getState();
+        const isCustomizableUI = state.featureFlags.customizableUI;
+        if (isCustomizableUI) {
+          dispatch(actions.setActiveGroupedItemWithTool(ToolNames.ERASER));
+        }
+        setToolModeAndGroup(store, ToolNames.ERASER);
       }),
       [ShortcutKeys[Shortcuts.FREEHAND]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateFreeHand');
+        setToolModeAndGroup(store, ToolNames.FREEHAND);
       }),
       [ShortcutKeys[Shortcuts.IMAGE]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateStamp');
+        setToolModeAndGroup(store, ToolNames.STAMP);
       }),
       [ShortcutKeys[Shortcuts.LINE]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateLine');
+        setToolModeAndGroup(store, ToolNames.LINE);
       }),
       [ShortcutKeys[Shortcuts.STICKY_NOTE]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateSticky');
+        setToolModeAndGroup(store, ToolNames.STICKY);
       }),
       [ShortcutKeys[Shortcuts.ELLIPSE]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateEllipse');
+        setToolModeAndGroup(store, ToolNames.ELLIPSE);
       }),
       [ShortcutKeys[Shortcuts.RECTANGLE]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateRectangle');
+        setToolModeAndGroup(store, ToolNames.RECTANGLE);
       }),
       [ShortcutKeys[Shortcuts.RUBBER_STAMP]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateRubberStamp');
+        setToolModeAndGroup(store, ToolNames.RUBBER_STAMP);
       }),
       [ShortcutKeys[Shortcuts.FREETEXT]]: this.createToolHotkeyHandler(() => {
-        setToolModeAndGroup(store, 'AnnotationCreateFreeText');
+        setToolModeAndGroup(store, ToolNames.FREETEXT);
       }),
       [ShortcutKeys[Shortcuts.SIGNATURE]]: this.createToolHotkeyHandler(() => {
+        const state = getState();
+        const isCustomizableUI = state.featureFlags.customizableUI;
+        if (isCustomizableUI) {
+          dispatch(actions.setActiveGroupedItemWithTool(ToolNames.SIGNATURE));
+          dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
+          setToolModeAndGroup(store, ToolNames.SIGNATURE);
+          return;
+        }
         dispatch(actions.setToolbarGroup('toolbarGroup-FillAndSign', false));
         const sigToolButton = document.querySelector('[data-element="signatureToolGroupButton"] .Button');
         sigToolButton.click();

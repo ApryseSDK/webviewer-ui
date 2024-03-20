@@ -27,13 +27,28 @@ const OfficeActionItem = ({ dataElement, onClick, img, title, shortcut = '', dis
     if (e.key === 'Enter' && !disabled) {
       onClick();
       dispatch(actions.closeElement(DataElements.CONTEXT_MENU_POPUP));
+      focusOfficeEditorContent();
+    }
+  };
+
+  const focusOfficeEditorContent = () => {
+    if (isOfficeEditorMode()) {
+      // setTimeout needed because the focus can not be set immediately
+      setTimeout(() => {
+        core.getViewerElement().focus();
+      });
     }
   };
 
   return (
     <div
       className={classNames('office-action-item', { disabled })}
-      onClick={() => !disabled && onClick()}
+      onClick={() => {
+        if (!disabled) {
+          onClick();
+          focusOfficeEditorContent();
+        }
+      }}
       tabIndex={disabled ? -1 : 0}
       data-element={dataElement}
       onKeyDown={onKeyDown}
@@ -104,24 +119,34 @@ const ContextMenuPopup = ({
       const containerBox = documentContainer.getBoundingClientRect();
       const horizontalGap = 2;
       const verticalGap = 2;
+      let offsetLeft = 0;
+      let offsetTop = 0;
 
-      if (left < containerBox.left) {
-        left = containerBox.left + horizontalGap;
-      }
-      if (left + width > containerBox.right) {
-        left = containerBox.right - width - horizontalGap;
-      }
-
-      // Fixes the issue where viewer has space on
-      // left side in WebComponent mode
       if (window.isApryseWebViewerWebComponent) {
-        left -= containerBox.left;
+        const node = getRootNode();
+        if (node) {
+          const host = node.host;
+          offsetLeft = host.offsetLeft;
+          offsetTop = host.offsetTop;
+        }
       }
 
-      if (top < containerBox.top) {
-        top = containerBox.top + verticalGap;
+      left -= offsetLeft;
+      top -= offsetTop;
+
+      if (left < containerBox.left - offsetLeft) {
+        left = containerBox.left + horizontalGap - offsetLeft;
       }
-      if (top + height > containerBox.bottom) {
+
+      if (left + width > containerBox.right - offsetLeft) {
+        left = containerBox.right - width - horizontalGap - offsetLeft;
+      }
+
+      if (top < containerBox.top - offsetTop) {
+        top = containerBox.top + verticalGap - offsetTop;
+      }
+
+      if (top + height > containerBox.bottom - offsetTop) {
         top = containerBox.bottom - height - verticalGap;
       }
       setPosition({ left, top });

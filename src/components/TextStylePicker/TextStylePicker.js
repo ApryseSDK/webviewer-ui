@@ -20,13 +20,21 @@ const TextStylePicker = ({
   isFreeText = false,
   onFreeTextSizeToggle,
   isFreeTextAutoSize,
+  isRichTextEditMode,
 }) => {
   // List is not complete
   const supportedFonts = fonts?.length ? fonts : ['Helvetica', 'Times New Roman'];
   const freeTextAutoSizeDataElement = 'freeTextAutoSizeFontButton';
-  const font = properties?.Font || supportedFonts[0];
+  const font = isRichTextEditMode ? properties?.quillFont : properties?.Font;
   const changeFont = (font) => {
-    onPropertyChange('Font', font);
+    if (isContentEditing || isRedaction) {
+      onPropertyChange('Font', font);
+      return;
+    }
+    selectQuillFont(font);
+    if (!isRichTextEditMode) {
+      onPropertyChange('Font', font);
+    }
   };
 
   useEffect(() => {
@@ -34,6 +42,8 @@ const TextStylePicker = ({
     setBold(properties?.bold || false);
     setUnderline(properties?.underline || false);
     setStrikeout(properties?.strikeout || false);
+    setQuillFont(properties?.quillFont || font);
+    setQuillFontSize(properties?.quillFontSize || fontSize);
   }, [properties]);
 
   /**
@@ -45,13 +55,23 @@ const TextStylePicker = ({
    */
   const getFontSize = (properties) => {
     const defaultFontSize = properties?.FontSize === '0pt' ? properties?.calculatedFontSize : properties?.FontSize;
-    return defaultFontSize || '12pt';
+    if (isRichTextEditMode) {
+      return properties.quillFontSize;
+    }
+    return defaultFontSize || undefined;
   };
 
   const fontSize = getFontSize(properties);
 
   const changeFontSize = (fontSize) => {
-    onPropertyChange('FontSize', fontSize);
+    if (isContentEditing || isRedaction) {
+      onPropertyChange('FontSize', fontSize);
+      return;
+    }
+    selectQuillFontSize(fontSize);
+    if (!isRichTextEditMode) {
+      onPropertyChange('FontSize', fontSize);
+    }
   };
 
   const defaultBold = properties?.bold || false;
@@ -60,8 +80,19 @@ const TextStylePicker = ({
     onRichTextStyleChange('font-weight', !bold ? 'bold' : '');
     setBold(!bold);
   };
+  const selectQuillFont = (val) => {
+    onRichTextStyleChange('font-family', val);
+    setQuillFont(val);
+  };
+  const selectQuillFontSize = (val) => {
+    onRichTextStyleChange('font-size', val);
+    setQuillFontSize(val);
+  };
 
   const defaultItalic = properties?.italic || false;
+  const defaultQuillFont = properties?.quillFont || font;
+  const [quillFont, setQuillFont] = useState(defaultQuillFont);
+  const [quillFontSize, setQuillFontSize] = useState(fontSize);
   const [italic, setItalic] = useState(defaultItalic);
   const toggleItalic = () => {
     onRichTextStyleChange('font-style', !italic ? 'italic' : '');
@@ -104,9 +135,19 @@ const TextStylePicker = ({
   const fontSizeProps = fontSize?.match(/([0-9.]+)|([a-z]+)/gi);
 
   const [error, setError] = useState('');
-  const fontSizePropsToUpdate = (fontSizeProps && parseFloat(fontSizeProps[0])) || 12;
+  const fontSizePropsToUpdate = (fontSizeProps && parseFloat(fontSizeProps[0])) || undefined;
 
   const defaultConfig = {
+    quillFont: {
+      dataElement: 'freeTextQuillFontSelection',
+      onClick: selectQuillFont,
+      isActive: stateless ? defaultQuillFont : quillFont,
+    },
+    quillFontSize: {
+      dataElement: 'freeTextQuillFontSizeSelection',
+      onClick: selectQuillFontSize,
+      isActive: stateless ? fontSize : quillFontSize,
+    },
     bold: {
       dataElement: 'freeTextBoldButton',
       onClick: toggleBold,
@@ -191,10 +232,11 @@ const TextStylePicker = ({
           <Dropdown
             items={supportedFonts}
             onClickItem={changeFont}
-            currentSelectionKey={font}
+            currentSelectionKey={defaultQuillFont}
             getCustomItemStyle={(item) => ({ fontFamily: item })}
             maxHeight={200}
             placeholder={isContentEditing ? 'Font' : undefined}
+            disableFocusing={true}
           />
           <FontSizeDropdown
             fontSize={fontSizePropsToUpdate}
@@ -204,6 +246,7 @@ const TextStylePicker = ({
             onError={setError}
             applyOnlyOnBlur={isContentEditing}
             disabled={isFreeTextAutoSize}
+            displayEmpty={isRichTextEditMode && !properties?.quillFontSize || fontSizePropsToUpdate === undefined}
           />
         </div>
         {error && <div className="error-text">{error}</div>}
@@ -318,6 +361,7 @@ TextStylePicker.propTypes = {
   isFreeText: PropTypes.bool,
   isFreeTextAutoSize: PropTypes.bool,
   onFreeTextSizeToggle: PropTypes.func,
+  isRichTextEditMode: PropTypes.bool,
 };
 
 export default TextStylePicker;

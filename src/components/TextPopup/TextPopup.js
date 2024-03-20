@@ -49,7 +49,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
 
   const setPopupPositionAndShow = () => {
     if (popupRef.current && popupItems.length > 0 && selectedTextQuads) {
-      setPosition(getTextPopupPositionBasedOn(selectedTextQuads, popupRef, activeDocumentViewerKey, isMultiViewerMode));
+      setPosition(getTextPopupPositionBasedOn(selectedTextQuads, popupRef, activeDocumentViewerKey));
     }
   };
 

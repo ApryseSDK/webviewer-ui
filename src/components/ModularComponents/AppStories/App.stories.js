@@ -43,6 +43,10 @@ const Template = (args) => {
         annotateGroupedItems: 'AnnotationCreateTextUnderline',
       },
       activeCustomRibbon: 'annotations-ribbon-item',
+      lastPickedToolAndGroup: {
+        tool: 'AnnotationCreateTextUnderline',
+        group: ['annotateGroupedItems'],
+      },
     },
     featureFlags: {
       customizableUI: true,

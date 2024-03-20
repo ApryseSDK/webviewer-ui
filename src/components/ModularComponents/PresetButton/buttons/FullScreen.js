@@ -7,6 +7,11 @@ import { innerItemToFlyoutItem } from 'src/helpers/itemToFlyoutHelper';
 import { getPresetButtonDOM } from '../../Helpers/menuItems';
 import { PRESET_BUTTON_TYPES } from 'src/constants/customizationVariables';
 
+/**
+ * A button that toggles fullscreen mode.
+ * @name fullscreenButton
+ * @memberof UI.Components.PresetButton
+ */
 const FullScreenButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { t } = useTranslation();

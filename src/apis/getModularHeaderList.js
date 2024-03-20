@@ -1,8 +1,7 @@
 /**
- * @ignore
  * Return the list of Custom Headers.
  * @method UI.getModularHeaderList
- * @return {ModularHeader} Custom Header List
+ * @return {UI.Components.ModularHeader} Custom Header List
  * @example
 WebViewer(...)
   .then(function(instance) {

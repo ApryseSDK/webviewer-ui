@@ -4,7 +4,7 @@ import actions from 'actions';
 import core from 'core';
 import DataElements from 'constants/dataElement';
 
-export default function useOnFreeTextEdit() {
+export default function useOnFreeTextEdit(saveEditorInstance) {
   const dispatch = useDispatch();
 
   const [annotation, setAnnotation] = useState(null);
@@ -21,6 +21,9 @@ export default function useOnFreeTextEdit() {
         ) {
           setAnnotation(annotation);
           setEditor(editor);
+          if (saveEditorInstance) {
+            saveEditorInstance([editor, annotation]);
+          }
           dispatch(actions.openElements(DataElements.RICH_TEXT_POPUP));
         }
       }, 0);

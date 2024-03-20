@@ -32,6 +32,7 @@ const GroupedItems = (props) => {
 
   const [
     lastPickedToolForGroupedItems,
+    activeGroupedItems,
   ] = useSelector((state) => [
     selectors.getLastPickedToolForGroupedItems(state, dataElement),
   ]);
@@ -42,7 +43,7 @@ const GroupedItems = (props) => {
     if (alwaysVisible) {
       dispatch(actions.setFixedGroupedItems(dataElement));
     }
-    if (!lastPickedToolForGroupedItems) {
+    if (!lastPickedToolForGroupedItems && activeGroupedItems?.includes(dataElement)) {
       const firstToolButton = validItems?.find((item) => item.type === ITEM_TYPE.TOOL_BUTTON);
       if (firstToolButton) {
         dispatch(actions.setLastPickedToolForGroupedItems(dataElement, firstToolButton.toolName));

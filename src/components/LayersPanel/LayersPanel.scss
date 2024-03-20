@@ -2,6 +2,7 @@
 @import '../../constants/panel';
 
 .LayersPanel {
+  @extend %panel;
   padding-left: 15px;
   // we don't want to style its recursive subchild
   > .Layer:first-child {

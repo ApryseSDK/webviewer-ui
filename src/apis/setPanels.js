@@ -1,5 +1,4 @@
 /**
- * @ignore
  * Sets the list of panels to be used in the UI
  * @method UI.setPanels
  * @property {array} panelList The new list of headers to be used in the UI

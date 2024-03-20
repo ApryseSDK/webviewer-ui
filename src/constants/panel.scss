@@ -18,6 +18,39 @@
     visibility: visible;
     transition: transform .3s ease, visibility 0s ease 0s;
   }
+
+  .empty-panel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 36px;
+    gap: 8px;
+
+    .empty-icon {
+      width: 60px;
+      height: 60px;
+      color: var(--gray-6);
+      fill: var(--gray-6);
+
+      svg {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    .empty-message {
+      text-align: center;
+      max-width: 131px;
+      font-size: 14px;
+
+      @include tablet-and-desktop {
+        line-height: 15px;
+      }
+    }
+  }
 }
 
 @mixin closed($translate) {

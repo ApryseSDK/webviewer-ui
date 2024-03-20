@@ -19,6 +19,9 @@ const NormalList = React.forwardRef(
       scrollToRow: (index) => {
         const parent = listRef.current;
         const child = parent.children[index];
+        if (!child) {
+          return;
+        }
 
         const parentRect = parent.getBoundingClientRect();
         const childRect = child.getBoundingClientRect();

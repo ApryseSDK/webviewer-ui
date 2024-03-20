@@ -503,7 +503,7 @@ const ContentArea = ({
           }
 
           if (autoFocusNoteOnAnnotationSelection) {
-            textareaRef.current.focus();
+            textareaRef.current?.focus();
             const annotRichTextStyle = annotation.getRichTextStyle();
             if (annotRichTextStyle) {
               setReactQuillContent(annotation, editor);
@@ -520,7 +520,9 @@ const ContentArea = ({
       }
 
       setTimeout(() => {
-        editor.setSelection(textLength, textLength);
+        if (textLength) {
+          editor.setSelection(textLength, textLength);
+        }
       }, 100);
     }
   }, [isNotesPanelOpen, isInlineCommentOpen, shouldNotFocusOnInput]);

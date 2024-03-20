@@ -11,6 +11,7 @@ import actions from 'actions';
 import DataElements from 'constants/dataElement';
 
 import './FileAttachmentPanel.scss';
+import { panelData, panelNames } from 'constants/panel';
 
 const getActualFileName = (filename) => {
   const fileNameRegex = /[^\\\/]+$/g;
@@ -63,9 +64,11 @@ const FileAttachmentPanel = ({ initialFiles = initialFilesDefault }) => {
     Object.entries(fileAttachments.fileAttachmentAnnotations).length === 0
   ) {
     return (
-      <div className="no-attachment">
-        <Icon className="empty-icon" glyph="illustration - empty state - outlines" />
-        <div className="msg">{t('message.noAttachments')}</div>
+      <div className="fileAttachmentPanel">
+        <div className="empty-panel-container">
+          <Icon className="empty-icon" glyph={panelData[panelNames.FILE_ATTACHMENT].icon}/>
+          <div className="empty-message">{t('message.noAttachments')}</div>
+        </div>
       </div>
     );
   }

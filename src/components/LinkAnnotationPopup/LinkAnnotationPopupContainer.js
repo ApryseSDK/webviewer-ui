@@ -20,11 +20,27 @@ import {
   shallowEqual,
   useDispatch
 } from 'react-redux';
+import getGroupedLinkAnnotations from 'src/helpers/getGroupedLinkAnnotations';
+
+const { Annotations } = window.Core;
 
 const propTypes = {
   annotation: PropTypes.object,
   handleOnMouseEnter: PropTypes.func,
   handleOnMouseLeave: PropTypes.func,
+};
+
+export const deleteLinkAnnotationWithGroup = (annotation, activeDocumentViewerKey = 1) => {
+  const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
+  const textHighlightAnnotation = annotationManager.getGroupAnnotations(annotation).find((annot, index) => annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0 && index === 0);
+  const linkAnnotations = getGroupedLinkAnnotations(annotation);
+  linkAnnotations.forEach((linkAnnot) => {
+    annotationManager.ungroupAnnotations([linkAnnot]);
+    if (textHighlightAnnotation) {
+      annotationManager.deleteAnnotation(linkAnnot, { 'source': 'unlink' }, true);
+    }
+  });
+  annotationManager.deleteAnnotation(annotation, { 'source': 'unlink' }, true);
 };
 
 const LinkAnnotationPopupContainer = ({
@@ -84,9 +100,7 @@ const LinkAnnotationPopupContainer = ({
   const contents = annotation?.getContents() || '';
 
   const handleUnLink = () => {
-    const group = core.getAnnotationManager().getGroupAnnotations(annotation);
-    core.getAnnotationManager().ungroupAnnotations([annotation]);
-    core.getAnnotationManager().deleteAnnotations(group, null, true);
+    deleteLinkAnnotationWithGroup(annotation, activeDocumentViewerKey);
     closePopup();
     handleOnMouseLeave();
   };

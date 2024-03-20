@@ -11,6 +11,8 @@ import Spinner from './Spinner';
 import WidgetInfo from './WidgetInfo';
 
 import './SignaturePanel.scss';
+import Icon from 'components/Icon';
+import { panelData, panelNames } from 'constants/panel';
 
 const SignaturePanel = () => {
   const dispatch = useDispatch();
@@ -176,8 +178,9 @@ const SignaturePanel = () => {
     }
 
     return (
-      <div className="center">
-        {result}
+      <div className="empty-panel-container">
+        <Icon className="empty-icon" glyph={panelData[panelNames.SIGNATURE].icon}/>
+        <div className="empty-message">{result}</div>
       </div>
     );
   };

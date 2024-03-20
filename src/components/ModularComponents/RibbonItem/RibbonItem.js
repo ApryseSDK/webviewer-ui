@@ -6,7 +6,9 @@ import actions from 'actions';
 import PropTypes from 'prop-types';
 import Button from 'components/Button';
 import classNames from 'classnames';
+import getToolbarTranslationString from 'helpers/translationKeyMapping';
 import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
+import defaultTool from 'constants/defaultTool';
 
 import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivnessHelper';
@@ -15,7 +17,7 @@ import core from 'core';
 
 const RibbonItem = (props) => {
   const elementRef = useRef();
-  const { t } = useTranslation();
+  const { t, ready: tReady } = useTranslation();
   const dispatch = useDispatch();
   const {
     dataElement,
@@ -27,18 +29,22 @@ const RibbonItem = (props) => {
     direction,
     justifyContent,
     isFlyoutItem,
-    iconDOMElement
+    iconDOMElement,
+    toolbarGroup
   } = props;
+
   const [
     activeGroupedItems,
     activeCustomRibbon,
     lastPickedToolForGroupedItems,
     isRibbonItemDisabled,
+    customHeadersAdditionalProperties,
   ] = useSelector((state) => [
     selectors.getActiveGroupedItems(state),
     selectors.getActiveCustomRibbon(state),
     selectors.getLastPickedToolForGroupedItems(state, groupedItems),
     selectors.isElementDisabled(state, dataElement),
+    selectors.getCustomHeadersAdditionalProperties(state),
   ]);
 
   const [isActive, setIsActive] = useState(false);
@@ -54,18 +60,25 @@ const RibbonItem = (props) => {
   }, []);
 
   useEffect(() => {
-    const allActiveGroupedItemsBelongToCurrentRibbonItem = activeGroupedItems?.every((item) => groupedItems.includes(item));
-    if (activeCustomRibbon === dataElement && (allActiveGroupedItemsBelongToCurrentRibbonItem || !activeGroupedItems?.length)) {
+    const someActiveGroupedItemsBelongToCurrentRibbonItem = activeGroupedItems?.some((item) => groupedItems.includes(item));
+    if (activeCustomRibbon === dataElement && (someActiveGroupedItemsBelongToCurrentRibbonItem || !activeGroupedItems?.length)) {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
-  }, [activeGroupedItems, activeCustomRibbon]);
+  }, [activeGroupedItems, activeCustomRibbon, lastPickedToolForGroupedItems]);
 
   const onClick = () => {
+    if (groupedItems.length < 1) {
+      core.setToolMode(defaultTool);
+    }
     if (!isActive) {
       dispatch(actions.setActiveGroupedItems(groupedItems));
       dispatch(actions.setActiveCustomRibbon(dataElement));
+      dispatch(actions.setLastPickedToolAndGroup({
+        tool: lastPickedToolForGroupedItems,
+        group: groupedItems
+      }));
       setIsActive(true);
       core.setToolMode(lastPickedToolForGroupedItems);
 
@@ -80,13 +93,17 @@ const RibbonItem = (props) => {
     return null;
   }
 
+  const translatedLabel = tReady && toolbarGroup ?
+    t(getToolbarTranslationString(toolbarGroup, customHeadersAdditionalProperties))
+    : label;
+
   return (
     isFlyoutItem ?
       (
         innerItemToFlyoutItem({
           isDisabled: false,
           icon: iconDOMElement,
-          label: t(label),
+          label: translatedLabel,
         }, onClick)
       ) :
       (
@@ -102,8 +119,9 @@ const RibbonItem = (props) => {
             isActive={isActive}
             dataElement={dataElement}
             img={img}
-            label={label}
-            title={title}
+            label={translatedLabel}
+            title={translatedLabel || title}
+            useI18String={false}
             onClick={onClick}
             disabled={disabled}
           >

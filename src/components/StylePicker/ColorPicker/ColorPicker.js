@@ -129,7 +129,7 @@ const ColorPicker = ({
   }
 
   if (!selectedColor) {
-    setSelectedColor(palette[0]);
+    setSelectedColor('transparent');
   }
 
   if (palette.indexOf(selectedColor) > 6 && !isExpanded && forceExpandRef.current) {

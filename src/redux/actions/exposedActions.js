@@ -13,6 +13,7 @@ import pick from 'lodash/pick';
 import { v4 as uuidv4 } from 'uuid';
 import selectors from 'selectors';
 import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
+import { getModularItem, getNestedGroupedItems } from 'helpers/modularUIHelpers';
 
 export const setScaleOverlayPosition = (position) => ({
   type: 'SET_SCALE_OVERLAY_POSITION',
@@ -180,12 +181,12 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
   return dataElements.every((dataElement) => isElementDisabled(state, dataElement));
 };
 
-const getFirstToolForGroupedItems = (state, group) => {
+export const getFirstToolForGroupedItems = (state, group) => {
   const modularComponents = state.viewer.modularComponents;
   const items = modularComponents[group].items;
   let firstTool = '';
 
-  items.find((item) => {
+  items?.find((item) => {
     const { type, toolName, dataElement } = modularComponents[item];
     if (type === ITEM_TYPE.TOOL_BUTTON && toolName && !isElementDisabled(state, dataElement)) {
       firstTool = toolName;
@@ -196,8 +197,15 @@ const getFirstToolForGroupedItems = (state, group) => {
   return firstTool;
 };
 
+export const setLastPickedToolAndGroup = (toolAndGroup) => ({
+  type: 'SET_LAST_PICKED_TOOL_AND_GROUP',
+  payload: { tool: toolAndGroup.tool, group: toolAndGroup.group }
+});
+
 export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
   const state = getState();
+
+  const childGroupedItems = getNestedGroupedItems(state, groupedItems);
 
   // Check and set the last picked tool for grouped items
   const isLastPickedToolSet = groupedItems.some((groupedItem) => state.viewer.lastPickedToolForGroupedItems?.[groupedItem]);
@@ -206,13 +214,23 @@ export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
       const firstTool = getFirstToolForGroupedItems(state, groupedItem);
       if (firstTool) {
         dispatch(setLastPickedToolForGroupedItems(firstTool, groupedItem));
+        dispatch(setLastPickedToolAndGroup({
+          tool: firstTool,
+          group: [groupedItem]
+        }));
         return true;
       }
       return false;
     });
   }
 
-  dispatch(setGroupedItems(groupedItems));
+  childGroupedItems.forEach((childGroupedItem) => {
+    if (state.viewer.lastPickedToolForGroupedItems?.[childGroupedItem]) {
+      dispatch(setLastPickedToolForGroupedItems('', childGroupedItem));
+    }
+  });
+
+  dispatch(setGroupedItems([...groupedItems, ...childGroupedItems]));
 };
 
 const setLastPickedToolForGroupedItems = (toolName, groupedItem) => ({
@@ -277,6 +295,9 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
     const lastPickedToolName =
       state.viewer.lastPickedToolForGroup[lastPickedToolGroup] || getFirstToolNameForGroup(state, lastPickedToolGroup);
     if (pickTool) {
+      if (toolbarGroup === DataElements.EDIT_TOOLBAR_GROUP || toolbarGroup === DataElements.EDIT_TEXT_TOOLBAR_GROUP) {
+        dispatch(closeElement(DataElements.STYLE_PANEL));
+      }
       dispatch({
         type: 'SET_ACTIVE_TOOL_GROUP',
         payload: { toolGroup: lastPickedToolGroup, toolbarGroup },
@@ -304,24 +325,36 @@ export const setToolbarGroup = (toolbarGroup, pickTool = true, toolGroup = '') =
   fireEvent(Events.TOOLBAR_GROUP_CHANGED, toolbarGroup);
 };
 
-export const setActiveGroupedItemWithCreateSignatureTool = () => (dispatch, getState) => {
+export const setActiveGroupedItemWithTool = (toolName) => (dispatch, getState) => {
   const state = getState();
-  const groupedItemsWithCreateSignatureTool = selectors.getGroupedItemsWithCreateSignatureTool(state);
+  const groupedItemsWithTool = selectors.getGroupedItemsWithSelectedTool(state, toolName);
   const activeGroupedItems = selectors.getActiveGroupedItems(state);
-  const activeGroupedItemsHasCreateSignatureTool = activeGroupedItems.some((item) => groupedItemsWithCreateSignatureTool.includes(item));
+  const activeGroupedItemsContainsTool = activeGroupedItems.some((item) => groupedItemsWithTool.includes(item));
 
-  // If no active grouped items have the create signature tool, we set the first one as active
-  if (!activeGroupedItemsHasCreateSignatureTool && groupedItemsWithCreateSignatureTool.length > 0) {
-    const firstGroupedItem = groupedItemsWithCreateSignatureTool[0];
-    dispatch(setLastPickedToolForGroupedItems('AnnotationCreateSignature', firstGroupedItem));
+  // If no active grouped items have the selected tool, we set the first one as active
+  if (!activeGroupedItemsContainsTool && groupedItemsWithTool.length > 0) {
+    let firstGroupedItem = '';
+    let associatedRibbonItem = '';
+    for (let i = 0; i < groupedItemsWithTool.length; i++) {
+      firstGroupedItem = groupedItemsWithTool[i];
+      associatedRibbonItem = selectors.getRibbonItemAssociatedWithGroupedItem(state, firstGroupedItem);
+      if (associatedRibbonItem) {
+        break;
+      }
+    }
+    dispatch(setLastPickedToolForGroupedItems(toolName, firstGroupedItem));
     dispatch(setActiveGroupedItems([firstGroupedItem]));
-
-    const associatedRibbonItem = selectors.getRibbonItemAssociatedWithGroupedItem(state, firstGroupedItem);
     dispatch(setActiveCustomRibbon(associatedRibbonItem));
-  } else if (activeGroupedItemsHasCreateSignatureTool) {
-    // If the active grouped items have the create signature tool, we set the signature create tool for the first one
+  } else if (activeGroupedItemsContainsTool) {
+    // If the active grouped items have the selected tool, we set the selected tool for the first one
     const firstGroupedItem = activeGroupedItems[0];
-    dispatch(setLastPickedToolForGroupedItems('AnnotationCreateSignature', firstGroupedItem));
+    const items = getModularItem(state, firstGroupedItem).items;
+    const itemInFirstGroupedItem = items.some((item) => getModularItem(state, item).toolName === toolName);
+    if (itemInFirstGroupedItem) {
+      dispatch(setLastPickedToolForGroupedItems(toolName, firstGroupedItem));
+    } else {
+      dispatch(setLastPickedToolForGroupedItems('', firstGroupedItem));
+    }
   }
 };
 
@@ -827,6 +860,10 @@ export const showWarningMessage = (options) => (dispatch) => {
   dispatch({ type: 'SET_WARNING_MESSAGE', payload: options });
   dispatch(openElement('warningModal'));
 };
+export const enableDeleteTabWarning = () => ({
+  type: 'ENABLE_DELETE_TAB_WARNING',
+  payload: { showDeleteTabWarning: true },
+});
 export const disableDeleteTabWarning = () => ({
   type: 'DISABLE_DELETE_TAB_WARNING',
   payload: { showDeleteTabWarning: false },
@@ -972,7 +1009,10 @@ export const setWatermarkModalOptions = (watermarkModalOptions) => ({
   type: 'SET_WATERMARK_MODAL_OPTIONS',
   payload: { watermarkModalOptions },
 });
-
+export const setEmbeddedPopupMenuStyle = (customStyle) => ({
+  type: 'SET_EMBEDDED_JS_POPUP_MENU_STYLE',
+  payload: { embeddedJSPopupStyle: customStyle },
+});
 export const replaceRedactionSearchPattern = (searchPattern, regex) => ({
   type: 'REPLACE_REDACTION_SEARCH_PATTERN',
   payload: { searchPattern, regex },

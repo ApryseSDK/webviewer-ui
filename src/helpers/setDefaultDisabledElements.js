@@ -5,6 +5,9 @@ import { isIOS, isMobileDevice } from 'helpers/device';
 import { PRIORITY_THREE, PRIORITY_TWO, PRIORITY_ONE } from 'constants/actionPriority';
 import Feature from 'constants/feature';
 import actions from 'actions';
+import selectors from 'selectors';
+
+const getIsCustomUIEnabled = (store) => getHashParameters('ui', 'default') === 'beta' || selectors.getFeatureFlags(store.getState()).customizableUI;
 
 export default (store) => {
   const { dispatch, getState } = store;
@@ -118,7 +121,15 @@ export default (store) => {
 
   dispatch(
     actions.disableElements(
-      [
+      getIsCustomUIEnabled(store) ? [
+        'wildCardSearchOption',
+        'readerPageTransitionButton',
+        'mathSymbolsButton',
+        'threeDToolGroupButton',
+        'attachmentPanelButton',
+        'signatureOptionsDropdown',
+        'savedSignatureAndInitialsTabs',
+      ] : [
         // disable layersPanel by default, it will be enabled in onDocumentLoaded.js
         'layersPanel',
         'layersPanelButton',
