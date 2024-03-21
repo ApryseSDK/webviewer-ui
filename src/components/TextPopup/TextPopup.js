@@ -102,7 +102,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               label={isRightClickAnnotationPopupEnabled ? 'action.copy' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'action.copy' : ''}
               img="ic_copy_black_24px"
-              onClick={() => copyText()}
+              onClick={() => copyText(activeDocumentViewerKey)}
               role="option"
             />
             <ActionButton
@@ -111,7 +111,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               label={isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.highlight' : ''}
               img="icon-tool-highlight"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextHighlightAnnotation)}
+              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextHighlightAnnotation, activeDocumentViewerKey)}
               role="option"
             />
             <ActionButton
@@ -120,7 +120,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               label={isRightClickAnnotationPopupEnabled ? 'annotation.underline' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.underline' : ''}
               img="icon-tool-text-manipulation-underline"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextUnderlineAnnotation)}
+              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextUnderlineAnnotation, activeDocumentViewerKey)}
               role="option"
             />
             <ActionButton
@@ -129,7 +129,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               label={isRightClickAnnotationPopupEnabled ? 'annotation.squiggly' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.squiggly' : ''}
               img="icon-tool-text-manipulation-squiggly"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextSquigglyAnnotation)}
+              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextSquigglyAnnotation, activeDocumentViewerKey)}
               role="option"
             />
             <ActionButton
@@ -137,7 +137,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
               label={isRightClickAnnotationPopupEnabled ? 'annotation.strikeout' : ''}
               title={!isRightClickAnnotationPopupEnabled ? 'annotation.strikeout' : ''}
               img="icon-tool-text-manipulation-strikethrough"
-              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation)}
+              onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.TextStrikeoutAnnotation, activeDocumentViewerKey)}
               dataElement="textStrikeoutToolButton"
               role="option"
             />
@@ -158,7 +158,7 @@ const TextPopup = ({ t, selectedTextQuads }) => {
                 title={!isRightClickAnnotationPopupEnabled ? 'option.redaction.markForRedaction' : ''}
                 fillColor="868E96"
                 img="icon-tool-select-area-redaction"
-                onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.RedactionAnnotation)}
+                onClick={() => createTextAnnotationAndSelect(dispatch, window.Core.Annotations.RedactionAnnotation, activeDocumentViewerKey)}
                 role="option"
               />
             )}

@@ -7,15 +7,15 @@ import downloadPdf from 'helpers/downloadPdf';
 
 function noop() { }
 
-export default (annotations, onRedactionCompleted = noop) => (dispatch) => {
+export default (annotations, onRedactionCompleted = noop, activeDocumentViewerKey = 1) => (dispatch) => {
   if (core.isWebViewerServerDocument()) {
     // when are using Webviewer Server, it'll download the redacted document
-    return webViewerServerApply(annotations, dispatch);
+    return webViewerServerApply(annotations, dispatch, activeDocumentViewerKey);
   }
-  return webViewerApply(annotations, onRedactionCompleted, dispatch);
+  return webViewerApply(annotations, onRedactionCompleted, dispatch, activeDocumentViewerKey);
 };
 
-const webViewerServerApply = (annotations, dispatch) => core.applyRedactions(annotations).then((results) => {
+const webViewerServerApply = (annotations, dispatch, activeDocumentViewerKey) => core.applyRedactions(annotations, activeDocumentViewerKey).then((results) => {
   if (results && results.url) {
     return downloadPdf(dispatch, {
       filename: 'redacted.pdf',
@@ -26,7 +26,7 @@ const webViewerServerApply = (annotations, dispatch) => core.applyRedactions(ann
   console.warn('WebViewer Server did not return a valid result');
 });
 
-const webViewerApply = (annotations, onRedactionCompleted, dispatch) => {
+const webViewerApply = (annotations, onRedactionCompleted, dispatch, activeDocumentViewerKey) => {
   const message = i18next.t('warning.redaction.applyMessage');
   const title = i18next.t('warning.redaction.applyTile');
   const confirmBtnText = i18next.t('action.apply');
@@ -36,7 +36,7 @@ const webViewerApply = (annotations, onRedactionCompleted, dispatch) => {
     title,
     confirmBtnText,
     onConfirm: () => {
-      core.applyRedactions(annotations)
+      core.applyRedactions(annotations, activeDocumentViewerKey)
         .then(() => {
           onRedactionCompleted();
         })

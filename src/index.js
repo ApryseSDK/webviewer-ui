@@ -29,7 +29,7 @@ import setAutoSwitch from 'helpers/setAutoSwitch';
 import setUserPermission from 'helpers/setUserPermission';
 import logDebugInfo from 'helpers/logDebugInfo';
 import getHashParameters from 'helpers/getHashParameters';
-import { addDocumentViewer } from 'helpers/documentViewerHelper';
+import { addDocumentViewer, setupOpenURLHandler } from 'helpers/documentViewerHelper';
 import setEnableAnnotationNumbering from 'helpers/setEnableAnnotationNumbering';
 import getRootNode from 'helpers/getRootNode';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
@@ -162,21 +162,7 @@ if (window.CanvasRenderingContext2D) {
 
   logDebugInfo();
   const documentViewer = addDocumentViewer(1);
-
-  documentViewer.setOpenURIHandler((uri, isOpenInNewWindow) => {
-    store.dispatch(actions.showWarningMessage({
-      title: 'warning.connectToURL.title',
-      message: 'warning.connectToURL.message',
-      onSecondary: () => core.openURI(uri, isOpenInNewWindow),
-      confirmBtnText: 'action.cancel',
-      secondaryBtnText: 'action.confirm',
-      secondaryBtnClass: 'secondary-btn-custom',
-      templateStrings: {
-        uri,
-      },
-      modalClass: 'connect-to-url-modal'
-    }));
-  });
+  setupOpenURLHandler(documentViewer, store);
 
   if (getHashParameters('hideDetachedReplies', false)) {
     documentViewer.getAnnotationManager().hideDetachedReplies();

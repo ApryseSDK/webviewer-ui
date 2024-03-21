@@ -110,6 +110,18 @@ test.describe('Multi Viewer Mode', () => {
     expect(popupX).toBeGreaterThan(expectedPopupX - marginError);
     expect(popupY).toBeLessThan(expectedPopupY + marginError);
     expect(popupY).toBeGreaterThan(expectedPopupY - marginError);
+
+    // check that button in popup works. Try to add a link to the annotation
+    await iframe.locator('[data-element=linkButton]').click();
+    await iframe.locator('.urlInput').fill('www.google.com');
+    await iframe.locator('[data-element=URLPanel] [data-element=linkSubmitButton]').click();
+
+    const wasLinkAdded = await iframe.evaluate(async () => {
+      const WVCore = window.instance.Core;
+      return WVCore.getDocumentViewers()[1].getAnnotationManager().getAnnotationsList()[1] instanceof WVCore.Annotations.Link;
+    });
+
+    expect(wasLinkAdded).toBe(true);
   });
 
   test('Context Menu Popup should work properly on multi-viewer mode', async ({ page }) => {
@@ -158,6 +170,14 @@ test.describe('Multi Viewer Mode', () => {
     expect(popupX).toBeGreaterThan(expectedPopupX - marginError);
     expect(popupY).toBeLessThan(expectedPopupY + marginError);
     expect(popupY).toBeGreaterThan(expectedPopupY - marginError);
+
+    // check that button in popup works. Try to add a highlight to the selected text
+    await iframe.locator('[data-element=textHighlightToolButton]').click();
+    const annotCount = await iframe.evaluate(async () => {
+      return window.instance.Core.getDocumentViewers()[1].getAnnotationManager().getAnnotationsList().length;
+    });
+
+    expect(annotCount).toBe(1);
   });
 
   test('Calling enableMultiViewerSync() should not throw error', async ({ page }) => {

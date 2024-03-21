@@ -1,6 +1,7 @@
 import setupDocViewer from 'helpers/setupDocViewer';
 import setDefaultToolStyles from 'helpers/setDefaultToolStyles';
 import core from 'core';
+import actions from 'actions';
 
 export const addDocumentViewer = (number) => {
   const documentViewer = new window.Core.DocumentViewer();
@@ -30,4 +31,22 @@ export const syncDocumentViewers = (primarydocumentViewerKey, secondarydocumentV
   } else {
     annotationManager2.demoteUserFromAdmin();
   }
+};
+
+export const setupOpenURLHandler = (docViewer, store) => {
+  docViewer.setOpenURIHandler(
+    (uri, isOpenInNewWindow) => {
+      store.dispatch(actions.showWarningMessage({
+        title: 'warning.connectToURL.title',
+        message: 'warning.connectToURL.message',
+        onSecondary: () => core.openURI(uri, isOpenInNewWindow),
+        confirmBtnText: 'action.cancel',
+        secondaryBtnText: 'action.confirm',
+        secondaryBtnClass: 'secondary-btn-custom',
+        templateStrings: {
+          uri,
+        },
+        modalClass: 'connect-to-url-modal'
+      }));
+    });
 };

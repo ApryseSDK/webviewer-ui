@@ -3,19 +3,19 @@ import getToolStyles from 'helpers/getToolStyles';
 import { mapAnnotationToToolName } from 'constants/map';
 import actions from 'actions';
 
-export default (dispatch, annotationConstructor) => {
-  const annotations = createTextAnnotation(annotationConstructor);
+export default (dispatch, annotationConstructor, activeDocumentViewerKey = 1) => {
+  const annotations = createTextAnnotation(annotationConstructor, activeDocumentViewerKey);
 
-  core.clearSelection();
-  core.addAnnotations(annotations);
-  core.selectAnnotations(annotations);
+  core.clearSelection(activeDocumentViewerKey);
+  core.addAnnotations(annotations, activeDocumentViewerKey);
+  core.selectAnnotations(annotations, activeDocumentViewerKey);
   dispatch(actions.closeElement('textPopup'));
 };
 
 
 const createTextAnnotation = (annotationConstructor, activeDocumentViewerKey = 1) => {
   const annotations = [];
-  const quads = core.getSelectedTextQuads();
+  const quads = core.getSelectedTextQuads(activeDocumentViewerKey);
 
   Object.keys(quads).forEach((pageNumber) => {
     pageNumber = parseInt(pageNumber, 10);

@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
+import selectors from 'selectors';
 import core from 'core';
 import DataElements from 'constants/dataElement';
 import _debounce from 'lodash/debounce';
@@ -29,13 +30,14 @@ export default function useOnLinkAnnotationPopupOpen() {
     setIsEnterComponent(false);
     hidePopup();
   };
+  const activeDocumentViewerKey = useSelector((state) => selectors.getActiveDocumentViewerKey(state));
 
   useEffect(() => {
     const onMouseHover = (e) => {
       if (e.buttons !== 0) {
         return;
       }
-      const annotations = core.getAnnotationManager().getAnnotationsByMouseEvent(e, true);
+      const annotations = core.getAnnotationManager(activeDocumentViewerKey).getAnnotationsByMouseEvent(e, true);
       const linkAnnot = annotations.find((annot) => annot instanceof window.Core.Annotations.Link);
       const contents = linkAnnot?.getContents() || '';
 
@@ -54,7 +56,7 @@ export default function useOnLinkAnnotationPopupOpen() {
       core.removeEventListener('mouseMove', onMouseHover);
       hidePopup.cancel();
     };
-  }, [annotation, dispatch, hidePopup, isEnterComponent]);
+  }, [annotation, dispatch, hidePopup, isEnterComponent, activeDocumentViewerKey]);
 
   return { annotation, handleOnMouseEnter, handleOnMouseLeave };
 }

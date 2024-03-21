@@ -337,7 +337,7 @@ const AnnotationPopupContainer = ({
   const showRedactionButton = redactionEnabled && !multipleAnnotationsSelected && !includesFormFieldAnnotation;
 
   const onApplyRedaction = () => {
-    dispatch(applyRedactions(focusedAnnotation));
+    dispatch(applyRedactions(focusedAnnotation, undefined, activeDocumentViewerKey));
     dispatch(actions.closeElement(DataElements.ANNOTATION_POPUP));
   };
 
