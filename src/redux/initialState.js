@@ -1729,7 +1729,7 @@ export default {
         showColor: 'never',
       },
       TextSelect: { dataElement: 'textSelectButton', img: 'icon-header-select-line', showColor: 'never' },
-      OfficeEditorTextSelect: { dataElement: 'textSelectButton', img: 'icon-header-select-line', showColor: 'never' },
+      OfficeEditorContentSelect: { dataElement: 'textSelectButton', img: 'icon-header-select-line', showColor: 'never' },
       MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' },
       AnnotationEraserTool: {
         dataElement: 'eraserToolButton',

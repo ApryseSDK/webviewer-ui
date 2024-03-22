@@ -190,8 +190,8 @@ export const setActiveToolNameAndStyle = (toolObject) => (dispatch, getState) =>
   } else {
     // on desktop, auto switch between AnnotationEdit and TextSelect is true when you hover on text
     // we do this to prevent this action from spamming the console
-    name =
-      toolObject.name === 'TextSelect' || toolObject.name === 'OfficeEditorTextSelect' ? 'AnnotationEdit' : toolObject.name;
+    const toolsName = window.Core.Tools.ToolNames;
+    name = toolObject.name === toolsName['TEXT_SELECT'] || toolObject.name === toolsName['OFFICE_EDITOR_CONTENT_SELECT'] ? toolsName['EDIT'] : toolObject.name;
   }
 
   if (state.viewer.activeToolName === name) {

@@ -141,7 +141,6 @@ export default (store, documentViewerKey) => async () => {
         PRIORITY_ONE, // To allow customers to still disable these elements
       ));
       dispatch(actions.openElement('officeEditorToolsHeader'));
-      core.setToolMode('OfficeEditorTextSelect');
       hotkeys.unbind('*', officeEditorScope);
       hotkeys.setScope(officeEditorScope);
       const searchShortcutKeys = ShortcutKeys[Shortcuts.SEARCH];
