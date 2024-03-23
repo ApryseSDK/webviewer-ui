@@ -113,20 +113,6 @@ export const mockModularComponents = {
     label: 'option.settings.settings',
     icon: 'icon-header-settings-line'
   },
-  MainMenuFlyout: {
-    dataElement: 'MainMenuFlyout',
-    items: [
-      'filePickerButton',
-      'downloadButton',
-      'saveAsButton',
-      'printButton',
-      null,
-      'createPortfolioButton',
-      null,
-      'settingsButton'
-    ],
-    type: 'menu'
-  },
   'divider-0.204250627209541': {
     dataElement: 'divider-0.204250627209541',
     type: 'divider'
@@ -168,10 +154,17 @@ export const mockModularComponents = {
     dataElement: 'divider-0.09340446869658314',
     type: 'divider'
   },
+  'menu-toggle-button': {
+    dataElement: 'menu-toggle-button',
+    img: 'ic-hamburger-menu',
+    title: 'component.menuOverlay',
+    toggleElement: 'MainMenuFlyout',
+    type: 'toggleButton',
+  },
   groupedLeftHeaderButtons: {
     dataElement: 'groupedLeftHeaderButtons',
     items: [
-      'MainMenuFlyout',
+      'menu-toggle-button',
       'divider-0.204250627209541',
       'left-panel-toggle',
       'view-controls',

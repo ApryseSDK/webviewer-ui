@@ -1,43 +1,72 @@
-import { ITEM_TYPE } from 'constants/customizationVariables';
-import selectors from 'selectors';
+import { ITEM_TYPE, PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 import { Flyout } from './flyout';
-
-const { checkTypes, TYPES } = window.Core;
-const flyoutItemBase = {
-  label: TYPES.STRING,
-  onClick: TYPES.FUNCTION,
-  title: TYPES.OPTIONAL(TYPES.STRING),
-  icon: TYPES.OPTIONAL(TYPES.STRING),
-};
+import DataElements from 'constants/dataElement';
+import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 
 /**
  * @name MainMenu
  * @memberOf UI.Components
  * @class
+ * @extends UI.Components.Flyout
  * @constructor
  * @param {Object} options
  * @param {Array<Object>} [options.additionalItems] - An array of extra items to add to the main menu
+ * @param {Object} [options.dataElement] - The data element for the main menu flyout
  */
 class MainMenu extends Flyout {
-  constructor(props = {}) {
-    checkTypes([props], [TYPES.OBJECT({
-      additionalItems: TYPES.OPTIONAL(TYPES.ARRAY(TYPES.OBJECT(flyoutItemBase)))
-    })], 'Menu Flyout Constructor');
-    props.dataElement = 'MainMenuFlyout';
-    super(props);
-    this.type = ITEM_TYPE.MENU;
-
-    if (props.additionalItems) {
-      this.setItems([...this.items, ...props.additionalItems]);
+  constructor(options = {}) {
+    if (!options.dataElement) {
+      options.dataElement = DataElements.MAIN_MENU;
     }
+    super(options);
+    this.items = [...options.defaultItems, ...this.items];
+    options.additionalItems = undefined;
+    options.defaultItems = undefined;
   }
 }
 
 export default (store) => (props) => {
-  const mainMenuFlyout = selectors.getFlyoutMap(store.getState())['MainMenuFlyout'];
-  if (mainMenuFlyout) {
-    return new MainMenu({ ...props, items: mainMenuFlyout.items, store });
-  }
-  const propsWithStore = { ...props, store };
-  return new MainMenu(propsWithStore);
+  const defaultItems = [
+    {
+      ...menuItems[PRESET_BUTTON_TYPES.NEW_DOCUMENT],
+      type: ITEM_TYPE.PRESET_BUTTON,
+    },
+    {
+      ...menuItems[PRESET_BUTTON_TYPES.FILE_PICKER],
+      type: ITEM_TYPE.PRESET_BUTTON,
+    },
+    {
+      ...menuItems[PRESET_BUTTON_TYPES.DOWNLOAD],
+      type: ITEM_TYPE.PRESET_BUTTON,
+    },
+    {
+      ...menuItems[PRESET_BUTTON_TYPES.FULLSCREEN],
+      type: ITEM_TYPE.PRESET_BUTTON,
+    },
+    {
+      ...menuItems[PRESET_BUTTON_TYPES.SAVE_AS],
+      type: ITEM_TYPE.PRESET_BUTTON,
+    },
+    {
+      ...menuItems[PRESET_BUTTON_TYPES.PRINT],
+      type: ITEM_TYPE.PRESET_BUTTON,
+    },
+    'divider',
+    {
+      ...menuItems[PRESET_BUTTON_TYPES.CREATE_PORTFOLIO],
+      type: ITEM_TYPE.PRESET_BUTTON,
+    },
+    'divider',
+    {
+      ...menuItems[PRESET_BUTTON_TYPES.SETTINGS],
+      type: ITEM_TYPE.PRESET_BUTTON,
+    },
+    'divider',
+  ];
+  return new MainMenu({
+    ...props,
+    items: props.additionalItems || [],
+    store,
+    defaultItems,
+  });
 };

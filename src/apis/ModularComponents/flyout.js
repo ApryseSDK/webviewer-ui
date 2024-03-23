@@ -2,7 +2,7 @@ import { ITEM_TYPE } from 'constants/customizationVariables';
 import actions from 'actions';
 
 const { checkTypes, TYPES } = window.Core;
-const flyoutItemBase = {
+export const flyoutItemBase = {
   label: TYPES.STRING,
   onClick: TYPES.FUNCTION,
   icon: TYPES.OPTIONAL(TYPES.STRING),
@@ -13,7 +13,8 @@ flyoutItemBase.children = TYPES.OPTIONAL(TYPES.ARRAY(
     TYPES.STRING // For dividers
   )
 ));
-const flyoutItemType = TYPES.MULTI_TYPE(
+export const flyoutItemType = TYPES.MULTI_TYPE(
+  TYPES.OBJECT({ type: TYPES.ONE_OF(Object.values(ITEM_TYPE)) }),
   TYPES.OBJECT(flyoutItemBase),
   TYPES.STRING // For dividers
 );
@@ -81,6 +82,7 @@ export class Flyout {
     this.dataElement = dataElement;
     this.type = ITEM_TYPE.FLYOUT;
     this.store = options.store;
+    options.store = undefined;
   }
 
   setItems(items) {

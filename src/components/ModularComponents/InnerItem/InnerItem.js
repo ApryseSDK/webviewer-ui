@@ -12,7 +12,6 @@ import ToolButton from '../ToolButton';
 import PageControls from '../PageControls';
 import PresetButton from '../PresetButton';
 import ViewControls from '../ViewControls';
-import MainMenu from '../MainMenu';
 
 const InnerItem = (props) => {
   const { type, dataElement, headerDirection, headerPlacement } = props;
@@ -45,8 +44,6 @@ const InnerItem = (props) => {
       return <PresetButton key={key} {...props} />;
     case ITEM_TYPE.VIEW_CONTROLS:
       return <ViewControls key={key} {...props} />;
-    case ITEM_TYPE.MENU:
-      return <MainMenu key={key} {...props} />;
     default:
       console.warn(`${type} is not a valid item type.`);
       return null;

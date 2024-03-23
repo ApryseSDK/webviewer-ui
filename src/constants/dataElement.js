@@ -125,6 +125,7 @@ const DataElements = {
   LINK_ANNOTATION_UNLINK_BUTTON: 'linkAnnotationUnlinkButton',
   LINK_URI: 'linkUri',
   EMBEDDED_JS_POPUP: 'embeddedJsPopup',
+  MAIN_MENU: 'MainMenuFlyout',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',

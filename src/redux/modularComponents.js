@@ -6,6 +6,7 @@
  * webViewerInstance.UI.Components.someComponent
  * webViewerInstance.UI.Components.someAPI()
  */
+import DataElements from 'constants/dataElement';
 
 const defaultModularHeaders = {
   'default-top-header': {
@@ -137,20 +138,6 @@ const defaultModularComponents = {
     hidden: false,
     type: 'presetButton',
   },
-  MainMenuFlyout: {
-    dataElement: 'MainMenuFlyout',
-    items: [
-      'filePickerButton',
-      'downloadButton',
-      'saveAsButton',
-      'printButton',
-      null,
-      'createPortfolioButton',
-      null,
-      'settingsButton'
-    ],
-    type: 'menu'
-  },
   'divider-0.6859691489224489': {
     dataElement: 'divider-0.6859691489224489',
     type: 'divider'
@@ -192,10 +179,17 @@ const defaultModularComponents = {
     dataElement: 'divider-0.40614555648868866',
     type: 'divider'
   },
+  'menu-toggle-button': {
+    dataElement: 'menu-toggle-button',
+    img: 'ic-hamburger-menu',
+    title: 'component.menuOverlay',
+    toggleElement: 'MainMenuFlyout',
+    type: 'toggleButton',
+  },
   groupedLeftHeaderButtons: {
     dataElement: 'groupedLeftHeaderButtons',
     items: [
-      'MainMenuFlyout',
+      'menu-toggle-button',
       'divider-0.6859691489224489',
       'left-panel-toggle',
       'view-controls',
@@ -918,4 +912,92 @@ const defaultPanels = [
   }
 ];
 
-export { defaultModularComponents, defaultModularHeaders, defaultPanels };
+const defaultFlyoutMap = {
+  [DataElements.MAIN_MENU]: {
+    dataElement: DataElements.MAIN_MENU,
+    'items': [
+      {
+        'dataElement': 'newDocumentButton',
+        'presetDataElement': 'newDocumentPresetButton',
+        'icon': 'icon-plus-sign',
+        'label': 'action.newDocument',
+        'title': 'action.newDocument',
+        'isActive': false,
+        'hidden': false,
+        'type': 'presetButton'
+      },
+      {
+        'dataElement': 'filePickerButton',
+        'presetDataElement': 'filePickerPresetButton',
+        'icon': 'icon-header-file-picker-line',
+        'label': 'action.openFile',
+        'title': 'action.openFile',
+        'hidden': false,
+        'type': 'presetButton'
+      },
+      {
+        'dataElement': 'downloadButton',
+        'presetDataElement': 'downloadPresetButton',
+        'icon': 'icon-download',
+        'label': 'action.download',
+        'title': 'action.download',
+        'hidden': false,
+        'type': 'presetButton'
+      },
+      {
+        'dataElement': 'fullscreenButton',
+        'presetDataElement': 'fullscreenPresetButton',
+        'icon': 'icon-header-full-screen',
+        'label': 'action.enterFullscreen',
+        'title': 'action.enterFullscreen',
+        'hidden': false,
+        'type': 'presetButton'
+      },
+      {
+        'dataElement': 'saveAsButton',
+        'presetDataElement': 'saveAsPresetButton',
+        'icon': 'icon-save',
+        'label': 'saveModal.saveAs',
+        'title': 'saveModal.saveAs',
+        'isActive': false,
+        'hidden': false,
+        'type': 'presetButton'
+      },
+      {
+        'dataElement': 'printButton',
+        'presetDataElement': 'printPresetButton',
+        'icon': 'icon-header-print-line',
+        'label': 'action.print',
+        'title': 'action.print',
+        'isActive': false,
+        'hidden': false,
+        'type': 'presetButton'
+      },
+      'divider',
+      {
+        'dataElement': 'createPortfolioButton',
+        'presetDataElement': 'createPortfolioPresetButton',
+        'icon': 'icon-pdf-portfolio',
+        'label': 'portfolio.createPDFPortfolio',
+        'title': 'portfolio.createPDFPortfolio',
+        'isActive': false,
+        'hidden': false,
+        'type': 'presetButton'
+      },
+      'divider',
+      {
+        'dataElement': 'settingsButton',
+        'presetDataElement': 'settingsPresetButton',
+        'icon': 'icon-header-settings-line',
+        'label': 'option.settings.settings',
+        'title': 'option.settings.settings',
+        'isActive': false,
+        'hidden': false,
+        'type': 'presetButton'
+      },
+      'divider',
+    ]
+  }
+};
+
+export { defaultModularComponents, defaultModularHeaders, defaultPanels, defaultFlyoutMap };

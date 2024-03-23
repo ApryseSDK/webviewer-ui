@@ -1,6 +1,5 @@
 import GroupedItems from './groupedItems';
 import CustomButton from './customButton';
-import MainMenu from './menu';
 import RibbonGroup from './ribbonGroup';
 import RibbonItem from './ribbonItem';
 import PageControls from './pageControls';
@@ -22,8 +21,6 @@ export default function createModularInstance(item, store) {
       return new GroupedItems(store)({ ...item, items: nestedItems });
     case ITEM_TYPE.BUTTON:
       return new CustomButton(item);
-    case ITEM_TYPE.MENU:
-      return new MainMenu(store)(item);
     case ITEM_TYPE.RIBBON_GROUP:
       const ribbonItems = item.items.map((nestedItem) => createModularInstance(nestedItem, store));
       return new RibbonGroup(store)({ ...item, items: ribbonItems });

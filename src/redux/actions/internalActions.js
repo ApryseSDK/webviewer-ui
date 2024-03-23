@@ -450,8 +450,10 @@ export const setFlyoutPosition = (newPosition) => ({
   payload: { newPosition },
 });
 export const addFlyout = (newFlyout) => (dispatch, getState) => {
+  const flyoutsToUpdateInstead = [DataElements.MAIN_MENU];
   const flyoutMap = selectors.getFlyoutMap(getState());
-  while (flyoutMap[newFlyout.dataElement]) {
+  const shouldUpdateInstead = flyoutsToUpdateInstead.includes(newFlyout.dataElement);
+  while (flyoutMap[newFlyout.dataElement] && !shouldUpdateInstead) {
     const oldDataElement = newFlyout.dataElement;
     if (newFlyout.dataElement.match(/[0-9]$/)) {
       const number = parseInt(newFlyout.dataElement.match(/\d+$/)[0], 10);

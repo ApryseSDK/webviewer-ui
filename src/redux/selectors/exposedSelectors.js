@@ -7,6 +7,7 @@ import { getFirstToolForGroupedItems } from '../actions/exposedActions';
 import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
 
 // viewer
+export const getModularComponent = (state, dataElement) => state.viewer.modularComponents[dataElement];
 export const getScaleOverlayPosition = (state) => state.viewer.scaleOverlayPosition;
 export const getDefaultPrintMargins = (state) => state.viewer.defaultPrintMargins;
 export const getColors = (state, tool, type) => {
@@ -461,6 +462,12 @@ export const getGroupedItemsWithSelectedTool = (state, toolName) => {
   };
 
   return Object.keys(modularComponents).filter(filterGroupedItems);
+};
+
+export const getGroupedItemsOfCustomRibbon = (state, customRibbonDataElement) => {
+  const modularComponents = state.viewer.modularComponents;
+
+  return modularComponents[customRibbonDataElement]?.groupedItems || [];
 };
 
 export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataElement) => {

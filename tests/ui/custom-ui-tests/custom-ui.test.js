@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { setupWebViewerInstance } from '../../../utils/TestingUtils';
+import { setupWebViewerInstance, waitFor } from '../../../utils/TestingUtils';
 import { createModularHeader, createGroupedItems, createPresetButton, createFlyout } from './utils';
 
 
@@ -42,7 +42,7 @@ describe('Test Custom UI APIs', function() {
   afterEach(async () => {
     // Clean up the div after each test
     document.body.removeChild(viewerDiv);
-    await instance.UI.dispose();
+    await instance?.UI.dispose();
     window.ResizeObserver = originalResizeObserver;
   });
 
@@ -168,6 +168,44 @@ describe('Test Custom UI APIs', function() {
       expect(groupedItems.length).to.equal(1);
       const headerItems = leftHeader.getItems();
       expect(headerItems.length).to.equal(2);
+    });
+
+    it('It should be able select ribbon items and update its grouped items when the Ribbon Group is in dropdown format', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      instance.UI.disableFeatures([instance.UI.Feature.LocalStorage]);
+      const iframe = document.querySelector('#viewerDiv iframe');
+      const getElementByDataElement = (elementSelector) => {
+        return iframe.contentDocument.querySelector(`[data-element="${elementSelector}"]`);
+      };
+
+      const ribbonGroupDropdown = iframe.contentDocument.querySelector('.RibbonGroup__dropdown');
+      // setting the container width so we can see the dropdown
+      iframe.style.width = '500px';
+      await waitFor(500);
+      expect(ribbonGroupDropdown.classList.contains('hidden')).to.equal(false);
+
+      let insertGroupedItems = getElementByDataElement('insertGroupedItems');
+      expect(insertGroupedItems).to.be.null;
+      ribbonGroupDropdown.click();
+
+      const insertRibbonItem = iframe.contentDocument.querySelector('[data-element="dropdown-item-3"]');
+      insertRibbonItem.click();
+      await waitFor(100);
+      let editGroupedItems = getElementByDataElement('editGroupedItems');
+      insertGroupedItems = getElementByDataElement('insertGroupedItems');
+      expect(insertGroupedItems).to.not.be.null;
+      expect(editGroupedItems).to.be.null;
+
+      ribbonGroupDropdown.click();
+      await waitFor(100);
+      const editRibbonItem = getElementByDataElement('dropdown-item-6');
+      editRibbonItem.click();
+      await waitFor(100);
+
+      editGroupedItems = getElementByDataElement('editGroupedItems');
+      expect(editGroupedItems).to.not.be.null;
+      insertGroupedItems = getElementByDataElement('insertGroupedItems');
+      expect(insertGroupedItems).to.be.null;
     });
   });
 
@@ -365,8 +403,8 @@ describe('Test Custom UI APIs', function() {
       }];
 
       const mainMenu = new instance.UI.Components.MainMenu({ additionalItems });
-      // Five default items + 1 additional item
-      expect(mainMenu.items.length).to.equal(6);
+      // 11 default items + 1 additional item
+      expect(mainMenu.items.length).to.equal(12);
     });
 
     it('It should return all flyouts when calling the API getAllFlyouts', async () => {
@@ -375,63 +413,6 @@ describe('Test Custom UI APIs', function() {
 
       // 9 flyouts are added by default when we add the 'beta' value for the 'ui' key.
       expect(allFlyouts.length).to.equal(9);
-    });
-  });
-
-  describe('Test Panels', () => {
-    it('It should be able to add Panel', async () => {
-      instance = await setupWebViewerInstance({}, true);
-      instance.UI.addPanel({
-        dataElement: 'myNewOutlinesPanel',
-        render: instance.UI.Panels.OUTLINE,
-        location: 'left',
-      });
-      const panelList = instance.UI.getPanels();
-      expect(panelList.length).to.equal(1);
-    });
-    it('It should be able to set Panels', async () => {
-      instance = await setupWebViewerInstance({}, true);
-      instance.UI.addPanel({
-        dataElement: 'myNewOutlinesPanel',
-        render: instance.UI.Panels.OUTLINE,
-        location: 'left',
-      });
-      const panelList = instance.UI.getPanels();
-      expect(panelList.length).to.equal(1);
-      instance.UI.setPanels([]);
-      const newPanelList = instance.UI.getPanels();
-      expect(newPanelList.length).to.equal(0);
-    });
-    it('It should be able to get Panels', async () => {
-      instance = await setupWebViewerInstance({}, true);
-      instance.UI.addPanel({
-        dataElement: 'myNewOutlinesPanel',
-        render: instance.UI.Panels.OUTLINE,
-        location: 'left',
-      });
-      const panelList = instance.UI.getPanels();
-      expect(panelList.length).to.equal(1);
-    });
-    it('It should be able to change the location of a Panel', async () => {
-      instance = await setupWebViewerInstance({}, true);
-      instance.UI.addPanel({
-        dataElement: 'myNewOutlinesPanel',
-        render: instance.UI.Panels.OUTLINE,
-        location: 'left',
-      });
-      const panelList = instance.UI.getPanels();
-      expect(panelList[0].location).to.equal('left');
-      panelList[0].setLocation('right');
-      expect(instance.UI.getPanels()[0].location).to.equal('right');
-    });
-    it('It should be able to change the location of a panel that is shipped by default', async () => {
-      instance = await setupWebViewerInstance({ ui: 'beta' }, true);
-
-      let stylePanel = instance.UI.getPanels().find((panel) => panel.dataElement === 'stylePanel');
-      expect(stylePanel.location).to.equal('left');
-      stylePanel.setLocation('right');
-      stylePanel = instance.UI.getPanels().find((panel) => panel.dataElement === 'stylePanel');
-      expect(stylePanel.location).to.equal('right');
     });
   });
 

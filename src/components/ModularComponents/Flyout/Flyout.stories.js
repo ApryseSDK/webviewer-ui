@@ -2,6 +2,9 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import Flyout from './Flyout';
 import { Provider } from 'react-redux';
+import DataElements from 'constants/dataElement';
+import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
+import { PRESET_BUTTON_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 
 export default {
   title: 'ModularComponents/Flyout',
@@ -282,6 +285,46 @@ const initialState = {
             'label': 'Item 5',
           }
         ],
+      },
+      [DataElements.MAIN_MENU]: {
+        dataElement: DataElements.MAIN_MENU,
+        items: [
+          {
+            ...menuItems[PRESET_BUTTON_TYPES.NEW_DOCUMENT],
+            type: ITEM_TYPE.PRESET_BUTTON,
+          },
+          {
+            ...menuItems[PRESET_BUTTON_TYPES.FILE_PICKER],
+            type: ITEM_TYPE.PRESET_BUTTON,
+          },
+          {
+            ...menuItems[PRESET_BUTTON_TYPES.DOWNLOAD],
+            type: ITEM_TYPE.PRESET_BUTTON,
+          },
+          {
+            ...menuItems[PRESET_BUTTON_TYPES.FULLSCREEN],
+            type: ITEM_TYPE.PRESET_BUTTON,
+          },
+          {
+            ...menuItems[PRESET_BUTTON_TYPES.SAVE_AS],
+            type: ITEM_TYPE.PRESET_BUTTON,
+          },
+          {
+            ...menuItems[PRESET_BUTTON_TYPES.PRINT],
+            type: ITEM_TYPE.PRESET_BUTTON,
+          },
+          'divider',
+          {
+            ...menuItems[PRESET_BUTTON_TYPES.CREATE_PORTFOLIO],
+            type: ITEM_TYPE.PRESET_BUTTON,
+          },
+          'divider',
+          {
+            ...menuItems[PRESET_BUTTON_TYPES.SETTINGS],
+            type: ITEM_TYPE.PRESET_BUTTON,
+          },
+          'divider',
+        ],
       }
     },
     flyoutPosition: { x: 0, y: 0 },
@@ -317,5 +360,20 @@ const store2 = configureStore({
 export const FlyoutWithoutIcons = () => (
   <Provider store={store2}>
     <Flyout />
+  </Provider>
+);
+
+const store3 = configureStore({
+  reducer: () => {
+    return {
+      ...initialState,
+      viewer: { ...initialState.viewer, activeFlyout: DataElements.MAIN_MENU }
+    };
+  }
+});
+
+export const MainMenuFlyout = () => (
+  <Provider store={store3}>
+    <Flyout/>
   </Provider>
 );

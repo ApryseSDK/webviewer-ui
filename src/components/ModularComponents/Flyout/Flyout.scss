@@ -29,6 +29,14 @@
       width: 100%;
       height: 1px;
       background-color: var(--divider);
+
+      // Hide duplicate dividers, or dividers that are the first or last child
+      &:last-child,
+      &:first-child,
+      & + .flyout-item-container:empty + .divider,
+      & + .divider {
+        display: none;
+      }
     }
 
     .flyout-item-container {
@@ -38,6 +46,10 @@
       flex-direction: row;
       align-items: center;
       width: 100%;
+
+      &:empty {
+        display: none;
+      }
 
       &:active,
       &.active {

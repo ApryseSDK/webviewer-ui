@@ -41,7 +41,6 @@ const ITEM_TYPE = {
   PAGE_CONTROLS: 'pageControls',
   PRESET_BUTTON: 'presetButton',
   VIEW_CONTROLS: 'viewControls',
-  MENU: 'menu',
   TABS_PANEL: 'tabPanel',
 };
 

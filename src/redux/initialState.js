@@ -28,7 +28,7 @@ import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineC
 import { SYNC_MODES } from 'constants/multiViewerContants';
 import { getInstanceID } from 'helpers/getRootNode';
 import { initialColors, initialTextColors } from 'helpers/initialColorStates';
-import { defaultModularComponents, defaultModularHeaders } from './modularComponents';
+import { defaultModularComponents, defaultModularHeaders, defaultFlyoutMap } from './modularComponents';
 
 const { ToolNames } = window.Core.Tools;
 const instanceId = getInstanceID();
@@ -2068,7 +2068,7 @@ export default {
     toolDefaultStyleUpdateFromAnnotationPopupEnabled: true,
     annotationToolStyleSyncingEnabled: false,
     shortcutKeyMap: { ...ShortcutKeys },
-    flyoutMap: {},
+    flyoutMap: defaultFlyoutMap,
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: null,
     flyoutToggleElement: null,
