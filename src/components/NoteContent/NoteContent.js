@@ -20,15 +20,15 @@ import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
 import setReactQuillContent from 'helpers/setReactQuillContent';
 import { isDarkColorHex, isLightColorHex } from 'helpers/color';
 import { setAnnotationAttachments } from 'helpers/ReplyAttachmentManager';
+import { isMobile } from 'helpers/device';
 
 import core from 'core';
-import { getDataWithKey, mapAnnotationToKey } from 'constants/map';
+import { getDataWithKey, mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 import Theme from 'constants/theme';
 import useDidUpdate from 'hooks/useDidUpdate';
 import actions from 'actions';
 import selectors from 'selectors';
-import { isMobile } from 'src/helpers/device';
-import DataElements from 'src/constants/dataElement';
+import DataElements from 'constants/dataElement';
 import DataElementWrapper from '../DataElementWrapper';
 
 import './NoteContent.scss';
@@ -102,6 +102,7 @@ const NoteContent = ({
   const [t] = useTranslation();
 
   const isReply = annotation.isReply();
+  const isTrackedChange = mapAnnotationToKey(annotation) === annotationMapKeys.TRACKED_CHANGE;
 
   const [attachments, setAttachments] = useState([]);
 
@@ -186,8 +187,26 @@ const NoteContent = ({
          * just render the value with Text preview component
          */
         if (!searchInput && (shouldCollapseAnnotationText || shouldCollapseReply)) {
+          const beforeContent = () => {
+            if (!isTrackedChange) {
+              return null;
+            }
+            const text = annotation['TrackedChangeType'] === 1 ? t('officeEditor.added') : t('officeEditor.deleted');
+            return (
+              <span style={{ color: annotation.StrokeColor.toString(), fontWeight: 700 }}>{text}</span>
+            );
+          };
+
           return (
-            <NoteTextPreview linesToBreak={3} comment renderRichText={renderRichText} richTextStyle={richTextStyle} resize={resize} style={fontColor}>
+            <NoteTextPreview
+              linesToBreak={3}
+              comment
+              renderRichText={renderRichText}
+              richTextStyle={richTextStyle}
+              resize={resize}
+              style={fontColor}
+              beforeContent={beforeContent}
+            >
               {contents}
             </NoteTextPreview>
           );
@@ -416,6 +435,7 @@ const NoteContent = ({
           isGroupMember={isGroupMember}
           showAnnotationNumbering={showAnnotationNumbering}
           timezone={timezone}
+          isTrackedChange={isTrackedChange}
         />
       );
     }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember, timezone]
@@ -503,7 +523,7 @@ const ContentArea = ({
           }
 
           if (autoFocusNoteOnAnnotationSelection) {
-            textareaRef.current.focus();
+            textareaRef.current?.focus();
             const annotRichTextStyle = annotation.getRichTextStyle();
             if (annotRichTextStyle) {
               setReactQuillContent(annotation, editor);
@@ -520,7 +540,9 @@ const ContentArea = ({
       }
 
       setTimeout(() => {
-        editor.setSelection(textLength, textLength);
+        if (textLength) {
+          editor.setSelection(textLength, textLength);
+        }
       }, 100);
     }
   }, [isNotesPanelOpen, isInlineCommentOpen, shouldNotFocusOnInput]);

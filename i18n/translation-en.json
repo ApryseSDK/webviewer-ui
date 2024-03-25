@@ -1189,6 +1189,8 @@
     "deleteRow": "Delete Row",
     "deleteColumn": "Delete Column",
     "deleteTable": "Delete Table",
+    "deleted": "Deleted: ",
+    "added": "Added: ",
     "notSupportedOnMobile": "Office editing is not supported on mobile devices."
   },
   "insertPageModal": {

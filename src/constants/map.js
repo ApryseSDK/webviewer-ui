@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import { OFFICE_EDITOR_TRACKED_CHANGE_KEY } from './officeEditor';
 
 export const annotationMapKeys = {
   SIGNATURE: 'signature',
@@ -52,7 +53,8 @@ export const annotationMapKeys = {
   LIST_BOX_FORM_FIELD: 'listBoxFormField',
   COMBO_BOX_FORM_FIELD: 'comboBoxFormField',
   ARC: 'arc',
-  CHANGE_VIEW: 'changeView'
+  CHANGE_VIEW: 'changeView',
+  TRACKED_CHANGE: 'trackedChange',
 };
 
 /**
@@ -383,7 +385,8 @@ const map = {
       'AnnotationCreateTextHighlight3',
       'AnnotationCreateTextHighlight4',
     ],
-    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextHighlightAnnotation,
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextHighlightAnnotation &&
+      annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY) === '',
   },
   [annotationMapKeys.UNDERLINE]: {
     icon: 'icon-tool-text-manipulation-underline',
@@ -750,6 +753,16 @@ const map = {
     annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.RectangleAnnotation &&
       annotation.getCustomData('trn-form-field-type') === 'ComboBoxFormField'
   },
+  [annotationMapKeys.TRACKED_CHANGE]: {
+    icon: 'ic-edit-page',
+    iconColor: 'StrokeColor',
+    validStyleTabs: [],
+    currentStyleTab: null,
+    styleTabs: [],
+    toolNames: [],
+    annotationCheck: (annotation) => annotation instanceof window.Core.Annotations.TextHighlightAnnotation &&
+      annotation.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY)
+  },
 };
 
 export const mapToolNameToKey = (toolName) => Object.keys(map).find((key) => map[key].toolNames.includes(toolName));
@@ -760,6 +773,8 @@ export const mapAnnotationToKey = (annotation) => Object.keys(map).find((key) =>
 });
 
 export const mapAnnotationToToolName = (annotation) => map[mapAnnotationToKey(annotation)].toolNames[0];
+
+export const mapKeyToToolNames = (key) => map[key].toolNames;
 
 export const copyMapWithDataProperties = (...properties) => Object.keys(map).reduce((newMap, key) => {
   newMap[key] = {};

@@ -132,15 +132,16 @@ export default (store, documentViewerKey) => async () => {
     }
 
     const elementsToDisableInOfficeEditor = ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton', 'annotationPopup'];
+    const elementsToEnableInOfficeEditor = [DataElements.OFFICE_EDITOR_TOOLS_HEADER, DataElements.INLINE_COMMENT_POPUP];
     if (isOfficeEditorMode()) {
       dispatch(actions.setIsOfficeEditorMode(true));
-      dispatch(actions.enableElement('officeEditorToolsHeader', PRIORITY_ONE));
+      dispatch(actions.enableElements(elementsToEnableInOfficeEditor, PRIORITY_ONE));
       setZoomLevel(1);
       dispatch(actions.disableElements(
         elementsToDisableInOfficeEditor,
         PRIORITY_ONE, // To allow customers to still disable these elements
       ));
-      dispatch(actions.openElement('officeEditorToolsHeader'));
+      dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
       hotkeys.unbind('*', officeEditorScope);
       hotkeys.setScope(officeEditorScope);
       const searchShortcutKeys = ShortcutKeys[Shortcuts.SEARCH];
@@ -154,6 +155,7 @@ export default (store, documentViewerKey) => async () => {
         elementsToDisableInOfficeEditor,
         PRIORITY_ONE, // To allow customers to still disable these elements
       ));
+      dispatch(actions.disableElements(elementsToEnableInOfficeEditor, PRIORITY_ONE));
       hotkeys.setScope(defaultHotkeysScope);
     }
 

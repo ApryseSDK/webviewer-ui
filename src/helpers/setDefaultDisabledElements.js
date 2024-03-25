@@ -152,7 +152,7 @@ export default (store) => {
     Feature.WatermarkPanel,
     Feature.WatermarkPanelImageTab,
     Feature.Portfolio,
-  ]);
+  ], PRIORITY_ONE);
 
   const enableChangeView = getHashParameters('ChangeView', false);
   if (!enableChangeView) {
