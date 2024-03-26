@@ -293,7 +293,8 @@ window.addEventListener('hashchange', () => {
 
 function onTab(event) {
   if (event.key === 'Tab') {
-    document.documentElement.setAttribute('data-tabbing', 'true');
+    const documentElement = window.isApryseWebViewerWebComponent ? getRootNode().host : document.documentElement;
+    documentElement.setAttribute('data-tabbing', 'true');
     window.removeEventListener('keydown', onTab);
     window.addEventListener('mousedown', onMouse);
   }

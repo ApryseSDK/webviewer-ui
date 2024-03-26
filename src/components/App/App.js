@@ -74,6 +74,7 @@ import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
 import FeatureFlags from 'constants/featureFlags';
 import { PRIORITY_ONE } from 'constants/actionPriority';
 import TabsHeader from 'components/TabsHeader';
+import useTabFocus from 'hooks/useTabFocus';
 
 // TODO: Use constants
 const tabletBreakpoint = window.matchMedia('(min-width: 641px) and (max-width: 900px)');
@@ -95,6 +96,7 @@ const App = ({ removeEventHandlers }) => {
     notesInLeftPanel,
     isOfficeEditorMode,
     featureFlags,
+    isAccessibileMode,
   ] = useSelector((state) => [
     selectors.isInDesktopOnlyMode(state),
     selectors.isMultiViewerMode(state),
@@ -103,6 +105,7 @@ const App = ({ removeEventHandlers }) => {
     selectors.getNotesInLeftPanel(state),
     selectors.getIsOfficeEditorMode(state),
     selectors.getFeatureFlags(state),
+    selectors.isAccessibleMode(state),
   ], shallowEqual);
 
   const { customizableUI } = featureFlags;
@@ -110,6 +113,9 @@ const App = ({ removeEventHandlers }) => {
   // of the redaction hook it creates a reference that tracks the redaction annotations
   useOnAnnotationCreateRubberStampToolMode();
   useOnAnnotationCreateSignatureToolMode();
+  if (isAccessibileMode) {
+    useTabFocus();
+  }
   const { redactionAnnotationsList } = useOnRedactionAnnotationChanged();
 
   useEffect(() => {
