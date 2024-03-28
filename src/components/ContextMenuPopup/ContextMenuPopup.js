@@ -33,10 +33,13 @@ const OfficeActionItem = ({ dataElement, onClick, img, title, shortcut = '', dis
   return (
     <div
       className={classNames('office-action-item', { disabled })}
-      onClick={() => {
+      onClick={(e) => {
         if (!disabled) {
           onClick();
+          dispatch(actions.closeElement(DataElements.CONTEXT_MENU_POPUP));
         }
+        // prevent bubbling up click event to control when context menu is closed within this component
+        e.stopPropagation();
       }}
       tabIndex={disabled ? -1 : 0}
       data-element={dataElement}
