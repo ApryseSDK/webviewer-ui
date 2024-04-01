@@ -90,6 +90,7 @@ const mockAnnotationManager = {
   disableRedaction: noop,
   setAnnotationCanvasTransform: noop,
   drawAnnotations: noop,
+  getFieldManager: noop,
 };
 
 const mockFormFieldCreationManager = {
@@ -188,6 +189,7 @@ core.getTool = (toolName) => {
   return mockTool;
 };
 core.setToolMode = noop;
+core.getToolMode = noop;
 core.isFullPDFEnabled = () => { return false; };
 core.addEventListener = () => { };
 core.removeEventListener = () => { };
@@ -255,6 +257,17 @@ class MockRubberStampCreateTool {
   getPreview = () => approvedStamp;
   getCustomStampAnnotations = () => customRubberStamps;
 }
+
+const getNewEmptyToolClass = (OtherTool) => {
+  if (OtherTool) {
+    return class MockToolNew extends OtherTool {
+    };
+  }
+  return class MockToolNew extends MockTool {
+  };
+};
+
+const RectangleCreateTool = getNewEmptyToolClass();
 
 window.Core = {
   documentViewer: mockDocumentViewer,
@@ -333,25 +346,45 @@ window.Core = {
     CropPage: {
       getIsCropping: () => false,
     },
-    RectangleCreateTool: MockTool,
-    PolygonCreateTool: MockTool,
-    EllipseCreateTool: MockTool,
-    PolygonCloudCreateTool: MockTool,
-    EllipseMeasurementCreateTool: MockTool,
-    AreaMeasurementCreateTool: MockTool,
-    FreeTextCreateTool: MockTool,
-    CalloutCreateTool: MockTool,
-    TextUnderlineCreateTool: MockTool,
-    TextHighlightCreateTool: MockTool,
-    TextSquigglyCreateTool: MockTool,
-    TextStrikeoutCreateTool: MockTool,
-    CountMeasurementCreateTool: MockTool,
-    DistanceMeasurementCreateTool: MockTool,
-    ArcMeasurementCreateTool: MockTool,
-    PerimeterMeasurementCreateTool: MockTool,
-    RectangularAreaMeasurementCreateTool: MockTool,
-    CloudyRectangularAreaMeasurementCreateTool: MockTool,
-    RedactionCreateTool: MockTool,
+    RectangleCreateTool: RectangleCreateTool,
+    PolygonCreateTool: getNewEmptyToolClass(),
+    EllipseCreateTool: getNewEmptyToolClass(),
+    PolygonCloudCreateTool: getNewEmptyToolClass(),
+    EllipseMeasurementCreateTool: getNewEmptyToolClass(),
+    AreaMeasurementCreateTool: getNewEmptyToolClass(),
+    FreeTextCreateTool: getNewEmptyToolClass(),
+    CalloutCreateTool: getNewEmptyToolClass(),
+    TextUnderlineCreateTool: getNewEmptyToolClass(),
+    TextHighlightCreateTool: getNewEmptyToolClass(),
+    TextSquigglyCreateTool: getNewEmptyToolClass(),
+    TextStrikeoutCreateTool: getNewEmptyToolClass(),
+    CountMeasurementCreateTool: getNewEmptyToolClass(),
+    DistanceMeasurementCreateTool: getNewEmptyToolClass(),
+    ArcMeasurementCreateTool: getNewEmptyToolClass(),
+    PerimeterMeasurementCreateTool: getNewEmptyToolClass(),
+    RectangularAreaMeasurementCreateTool: getNewEmptyToolClass(),
+    CloudyRectangularAreaMeasurementCreateTool: getNewEmptyToolClass(),
+    RedactionCreateTool: getNewEmptyToolClass(),
+    StampCreateTool: getNewEmptyToolClass(),
+    TextFormFieldCreateTool: getNewEmptyToolClass(RectangleCreateTool),
+    SignatureFormFieldCreateTool: getNewEmptyToolClass(RectangleCreateTool),
+    FileAttachmentCreateTool: getNewEmptyToolClass(),
+    StickyCreateTool: getNewEmptyToolClass(),
+    ListBoxFormFieldCreateTool: getNewEmptyToolClass(RectangleCreateTool),
+    MarkInsertTextCreateTool: getNewEmptyToolClass(),
+    MarkReplaceTextCreateTool: getNewEmptyToolClass(),
+    AnnotationEditTool: getNewEmptyToolClass(),
+    ComboBoxFormFieldCreateTool: getNewEmptyToolClass(),
+    FreeHandCreateTool: getNewEmptyToolClass(),
+    ArcCreateTool: getNewEmptyToolClass(),
+    LineCreateTool: getNewEmptyToolClass(),
+    CropCreateTool: getNewEmptyToolClass(RectangleCreateTool),
+    CheckBoxFormFieldCreateTool: getNewEmptyToolClass(RectangleCreateTool),
+    RadioButtonFormFieldCreateTool: getNewEmptyToolClass(RectangleCreateTool),
+    AddParagraphTool: getNewEmptyToolClass(),
+    AddImageContentTool: getNewEmptyToolClass(),
+    SnippingCreateTool: getNewEmptyToolClass(RectangleCreateTool),
+    EraserTool: getNewEmptyToolClass(),
   },
   getHashParameter: (hashParameter, defaultValue) => {
     if (hashParameter === 'a') {
@@ -393,7 +426,12 @@ window.Core = {
       '8': 'NUMBER_LATIN_ROMAN_2',
       '10': 'LATIN_ROMAN',
       '11': 'ROMAN_LATIN_NUMBER'
-    }
+    },
+    OfficeEditorToggleableStyles: {
+      BOLD: 'bold',
+      ITALIC: 'italic',
+      UNDERLINE: 'underline',
+    },
   },
   setBasePath: noop,
   getAllowedFileExtensions: () => ['pdf', 'xod'],

@@ -66,6 +66,7 @@ const availablePointSizes = ['8', '9', '10', '11', '12', '14', '18', '24', '30',
 const listOptionsWidth = 121;
 const justificationOptionsWidth = 209;
 const moreButtonWidth = 77;
+const officeEditorToggleableStyles = window.Core.Document.OfficeEditorToggleableStyles;
 
 const convertCoreColorToWebViewerColor = (color) => {
   if (!color) {
@@ -80,52 +81,19 @@ const convertCoreColorToWebViewerColor = (color) => {
   );
 };
 
-const TextStyles = ({ cursorProperties, isBold, isItalic, isUnderline }) => {
-  return (
-    <>
-      <ActionButton
-        isActive={isBold}
-        onClick={() => {
-          if (core.getOfficeEditor().isTextSelected()) {
-            core.getOfficeEditor().toggleSelectedTextStyle('bold');
-          } else {
-            core.getOfficeEditor().setCursorStyle({ bold: !cursorProperties.bold });
-          }
-        }}
-        dataElement='office-editor-bold'
-        title='officeEditor.bold'
-        img='icon-text-bold'
-      />
-      <ActionButton
-        isActive={isItalic}
-        onClick={() => {
-          if (core.getOfficeEditor().isTextSelected()) {
-            core.getOfficeEditor().toggleSelectedTextStyle('italic');
-          } else {
-            core.getOfficeEditor().setCursorStyle({ italic: !cursorProperties.italic });
-          }
-        }}
-        dataElement='office-editor-italic'
-        title='officeEditor.italic'
-        img='icon-text-italic'
-      />
-      <ActionButton
-        isActive={isUnderline}
-        onClick={() => {
-          if (core.getOfficeEditor().isTextSelected()) {
-            core.getOfficeEditor().toggleSelectedTextStyle('underline');
-          } else {
-            core.getOfficeEditor().setCursorStyle({
-              underline: cursorProperties.underlineStyle === 'none'
-            });
-          }
-        }}
-        dataElement='office-editor-underline'
-        title='officeEditor.underline'
-        img='icon-text-underline'
-      />
-    </>
-  );
+const TextStyles = ({ activeStates }) => {
+  return Object.values(officeEditorToggleableStyles).map((style) => (
+    <ActionButton
+      key={style}
+      isActive={activeStates[style]}
+      onClick={() => {
+        core.getOfficeEditor().updateSelectionAndCursorStyle({ [style]: true });
+      }}
+      dataElement={`office-editor-${style}`}
+      title={`officeEditor.${style}`}
+      img={`icon-text-${style}`}
+    />
+  ));
 };
 
 const JustificationOptions = ({ justification }) => {
@@ -465,7 +433,7 @@ const OfficeEditorToolsHeader = () => {
                       core.getOfficeEditor().updateParagraphStyle({
                         textStyle: newTextStyle,
                       });
-                      core.getOfficeEditor().setCursorStyle(newTextStyle);
+                      core.getOfficeEditor().setMainCursorStyle(newTextStyle);
                       core.getDocumentViewer().clearSelection();
                     }}
                     getCustomItemStyle={(item) => ({ ...availableStylePresetMap[item], padding: '20px 10px', color: 'var(--gray-8)' })}
@@ -478,9 +446,7 @@ const OfficeEditorToolsHeader = () => {
                     items={availableFontFaces}
                     onOpened={() => setShowMoreTools(false)}
                     onClickItem={(fontFace) => {
-                      core.getOfficeEditor().isTextSelected() && core.getOfficeEditor().updateSelectionStyle({ fontFace });
-
-                      core.getOfficeEditor().setCursorStyle({ fontFace });
+                      core.getOfficeEditor().updateSelectionAndCursorStyle({ fontFace });
                     }}
                     getCustomItemStyle={(item) => ({ ...cssFontValues[item] })}
                     maxHeight={500}
@@ -506,16 +472,7 @@ const OfficeEditorToolsHeader = () => {
                       if (fontPointSize > 72) {
                         fontPointSize = 72;
                       }
-
-                      if (core.getOfficeEditor().isTextSelected()) {
-                        core.getOfficeEditor().updateSelectionStyle({
-                          pointSize: fontPointSize
-                        });
-                      }
-
-                      core.getOfficeEditor().setCursorStyle({
-                        pointSize: fontPointSize
-                      });
+                      core.getOfficeEditor().updateSelectionAndCursorStyle({ pointSize: fontPointSize });
                     }}
                     currentSelectionKey={pointSizeSelectionKey}
                     className="small-dropdown"
@@ -527,10 +484,11 @@ const OfficeEditorToolsHeader = () => {
                     <>
                       <div className="divider" />
                       <TextStyles
-                        cursorProperties={cursorProperties}
-                        isBold={isBold}
-                        isItalic={isItalic}
-                        isUnderline={isUnderline}
+                        activeStates={{
+                          bold: isBold,
+                          italic: isItalic,
+                          underline: isUnderline
+                        }}
                       />
                     </>
                   )}
@@ -552,11 +510,7 @@ const OfficeEditorToolsHeader = () => {
                         b: color.B,
                         a: 255,
                       };
-
-                      core.getOfficeEditor().isTextSelected() && core.getOfficeEditor().updateSelectionStyle({ fontColor });
-
-                      core.getOfficeEditor().setCursorStyle({ fontColor });
-
+                      core.getOfficeEditor().updateSelectionAndCursorStyle({ fontColor });
                       dispatch(actions.closeElements(['colorPickerOverlay']));
                     }}
                     color={wvFontColor}
@@ -575,7 +529,7 @@ const OfficeEditorToolsHeader = () => {
                       core.getOfficeEditor().updateParagraphStyle({
                         'lineHeightMultiplier': lineSpacing
                       });
-                      core.getOfficeEditor().setCursorStyle({
+                      core.getOfficeEditor().setMainCursorStyle({
                         lineHeight,
                       });
                       core.getDocumentViewer().clearSelection();
@@ -645,10 +599,11 @@ const OfficeEditorToolsHeader = () => {
                               {(visibleGroupCount < 4) && (
                                 <>
                                   <TextStyles
-                                    cursorProperties={cursorProperties}
-                                    isBold={isBold}
-                                    isItalic={isItalic}
-                                    isUnderline={isUnderline}
+                                    activeStates={{
+                                      bold: isBold,
+                                      italic: isItalic,
+                                      underline: isUnderline
+                                    }}
                                   />
                                   <div className="divider" />
                                 </>
