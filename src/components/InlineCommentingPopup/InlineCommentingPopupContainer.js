@@ -124,22 +124,12 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
   };
 
   const acceptTrackedChange = (trackedChangeAnnot) => {
-    // TODO - Implement this function
-    const annotManager = core.getAnnotationManager(activeDocumentViewerKey);
-    annotManager.deselectAnnotation(trackedChangeAnnot);
     const trackedChangeId = trackedChangeAnnot.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
-    /* eslint-disable no-console */
-    console.log('acceptTrackedChange() - ', trackedChangeId);
-    /* eslint-enable no-console */
+    core.getOfficeEditor().acceptTrackedChange(trackedChangeId);
   };
   const rejectTrackedChange = (trackedChangeAnnot) => {
-    // TODO - Implement this function
-    const annotManager = core.getAnnotationManager(activeDocumentViewerKey);
-    annotManager.deselectAnnotation(trackedChangeAnnot);
     const trackedChangeId = trackedChangeAnnot.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
-    /* eslint-disable no-console */
-    console.log('rejectTrackedChange() - ', trackedChangeId);
-    /* eslint-enable no-console */
+    core.getOfficeEditor().rejectTrackedChange(trackedChangeId);
   };
 
   const contextValue = {
