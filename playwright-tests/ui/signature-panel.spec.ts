@@ -82,12 +82,13 @@ test.describe('Signature Panel', () => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'full-apis/ViewerEditTest/');
     const instance = await waitForInstance();
     await page.waitForTimeout(5000);
-    const pageContainer = await iframe.$('#pageContainer1');
+    const pageContainer = await iframe?.$('#pageContainer1');
 
     await drawTwoSignaturesRoutine(page, iframe, instance, pageContainer);
+    await page.waitForTimeout(1000);
 
-    const signatures = await iframe.$$('.signature-widget-info');
-    expect(signatures.length).toBe(2);
+    const signatures = await iframe?.$$('.signature-widget-info');
+    expect(signatures?.length).toBe(2);
   });
 
   test('items are removed from the Signature Panel when the item is deleted', async ({ page }) => {
