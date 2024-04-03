@@ -15,6 +15,7 @@ import DataElements from 'constants/dataElement';
 import { PRIORITY_THREE } from 'constants/actionPriority';
 import throttle from 'lodash/throttle';
 import './FormFieldEditPopup.scss';
+import debounce from 'lodash/debounce';
 
 function FormFieldEditPopupContainer({ annotation }) {
   const formFieldCreationManager = core.getFormFieldCreationManager();
@@ -144,6 +145,19 @@ function FormFieldEditPopupContainer({ annotation }) {
       setIndicatorText(formFieldCreationManager.getIndicatorText(annotation));
     }
   }, [isOpen]);
+
+  useLayoutEffect(() => {
+    const setPosition = debounce(() => {
+      if (popupRef.current) {
+        setPopupPosition();
+      }
+    }, 100);
+
+    const scrollViewElement = core.getDocumentViewer().getScrollViewElement();
+    scrollViewElement?.addEventListener('scroll', setPosition);
+
+    return () => scrollViewElement?.removeEventListener('scroll', setPosition);
+  }, [annotation]);
 
   const onFieldNameChange = useCallback((name) => {
     const validatedResponse = formFieldCreationManager.setFieldName(annotation, name);
