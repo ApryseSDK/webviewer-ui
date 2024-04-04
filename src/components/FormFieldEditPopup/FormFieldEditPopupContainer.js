@@ -14,6 +14,7 @@ import { isMobileSize } from 'helpers/getDeviceSize';
 import DataElements from 'constants/dataElement';
 import { PRIORITY_THREE } from 'constants/actionPriority';
 import './FormFieldEditPopup.scss';
+import debounce from 'lodash/debounce';
 
 function FormFieldEditPopupContainer({ annotation }) {
   const formFieldCreationManager = core.getFormFieldCreationManager();
@@ -92,17 +93,17 @@ function FormFieldEditPopupContainer({ annotation }) {
     setRadioButtonGroups(dedupedRadioGroups);
   }, []);
 
+  const setPopupPosition = () => {
+    if (popupRef.current) {
+      setPosition(getAnnotationPopupPositionBasedOn(annotation, popupRef));
+    }
+  };
+
   // We use layout effect to avoid a flickering as the popup is repositioned
   // The flow is open popup -> update position.
   // So we first open with an old position and then re-render to the new position. By using layoutEffect
   // we let the hook run and update the position, and then the browser updates
   useLayoutEffect(() => {
-    const setPopupPosition = () => {
-      if (popupRef.current) {
-        setPosition(getAnnotationPopupPositionBasedOn(annotation, popupRef));
-      }
-    };
-
     if (isOpen && annotation) {
       setPopupPosition();
       setFieldName(formFieldCreationManager.getFieldName(annotation));
@@ -127,6 +128,19 @@ function FormFieldEditPopupContainer({ annotation }) {
       setIndicatorText(formFieldCreationManager.getIndicatorText(annotation));
     }
   }, [isOpen]);
+
+  useLayoutEffect(() => {
+    const setPosition = debounce(() => {
+      if (popupRef.current) {
+        setPopupPosition();
+      }
+    }, 100);
+
+    const scrollViewElement = core.getDocumentViewer().getScrollViewElement();
+    scrollViewElement?.addEventListener('scroll', setPosition);
+
+    return () => scrollViewElement?.removeEventListener('scroll', setPosition);
+  }, [annotation]);
 
   const onFieldNameChange = useCallback((name) => {
     const validatedResponse = formFieldCreationManager.setFieldName(annotation, name);
