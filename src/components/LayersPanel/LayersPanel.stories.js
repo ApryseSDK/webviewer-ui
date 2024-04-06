@@ -68,6 +68,7 @@ export function Basic() {
       },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Annotate',
+      activeToolName: 'AnnotationCreateTextHighlight'
     },
     document: {
       ...initialState.document,

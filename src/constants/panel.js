@@ -82,3 +82,9 @@ export const panelData = {
     title: 'annotation.rubberStamp',
   },
 };
+
+export const PANEL_SIZES = {
+  FULL_SIZE: 'full-size',
+  HALF_SIZE: 'half-size',
+  SMALL_SIZE: 'small-size',
+};

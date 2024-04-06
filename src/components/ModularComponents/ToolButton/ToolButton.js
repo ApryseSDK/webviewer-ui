@@ -76,10 +76,15 @@ const ToolButton = (props) => {
     const handleToolModeChange = (tool) => {
       // prevent edit tool from deactivating when text is hovered
       const isEditToolAndItIsActive = toolName === ToolNames.EDIT && lastPickedToolAndGroup.tool === ToolNames.EDIT;
-      if (tool.name === toolName || (isEditToolAndItIsActive && tool.name === ToolNames.TEXT_SELECT)) {
+      const isSignatureListPanelActive = (toolName === ToolNames.SIGNATURE || toolName === defaultTool) && isSignatureListPanelOpen;
+      if (tool.name === toolName || (isEditToolAndItIsActive && tool.name === ToolNames.TEXT_SELECT) || isSignatureListPanelActive) {
         setIsButtonActive(true);
       } else {
         setIsButtonActive(false);
+      }
+
+      if (tool.name === toolName && tool.name === ToolNames.SIGNATURE) {
+        dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
       }
     };
 
@@ -87,20 +92,25 @@ const ToolButton = (props) => {
     return () => {
       core.removeEventListener('toolModeUpdated', handleToolModeChange);
     };
-  }, []);
+  }, [isSignatureListPanelOpen, isRubberStampPanelOpen]);
 
   useEffect(() => {
     const noActiveGroupedItems = !activeGroupedItems.length;
     const isLastPickedGroupUndefined = lastPickedToolAndGroup.group?.every((group) => group === undefined);
     const toolDoesNotBelongToAGroupAndIsActive = !groupedItem && isLastPickedGroupUndefined && toolName === lastPickedToolAndGroup.tool;
     const toolBelongsToAGroupAndIsActive = groupedItem && lastPickedToolAndGroup.group?.includes(groupedItem) &&
-      (toolName === lastPickedToolAndGroup.tool);
+    (toolName === lastPickedToolAndGroup.tool);
+    const isDefaultToolActive = activeToolName === defaultTool && toolName === defaultTool;
 
     if ((toolName === ToolNames.EDIT && noActiveGroupedItems) ||
       toolDoesNotBelongToAGroupAndIsActive ||
-      toolBelongsToAGroupAndIsActive
+      toolBelongsToAGroupAndIsActive ||
+      isDefaultToolActive
     ) {
       setIsButtonActive(true);
+      if (lastPickedToolAndGroup.tool !== activeToolName) {
+        core.setToolMode(toolName);
+      }
     } else {
       setIsButtonActive(false);
     }

@@ -1,6 +1,6 @@
-import { isAndroid, isChrome } from 'helpers/device';
+import { isAndroid, isChrome, isMobile } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
-import { panelMinWidth, RESIZE_BAR_WIDTH } from 'constants/panel';
+import { panelMinWidth, RESIZE_BAR_WIDTH, panelNames } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
 import { getFirstToolForGroupedItems } from '../actions/exposedActions';
@@ -95,6 +95,7 @@ export const getTextEditingPanelWidth = (state) => state.viewer.panelWidths.text
 
 export const getWatermarkPanelWidth = (state) => state.viewer.panelWidths.watermarkPanel;
 
+export const getMobilePanelSize = (state) => state.viewer.mobilePanelSize;
 export const getLeftPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.leftPanel + RESIZE_BAR_WIDTH;
 export const getSearchPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.searchPanel + RESIZE_BAR_WIDTH;
 export const getNotesPanelWidthWithResizeBar = (state) => state.viewer.panelWidths.notesPanel + RESIZE_BAR_WIDTH;
@@ -148,9 +149,16 @@ export const getDocumentContentContainerWidthStyle = (state) => {
 
 export const getOpenGenericPanel = (state, location) => {
   let genericPanels = state.viewer.genericPanels;
+  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST];
 
   if (location) {
-    genericPanels = state.viewer.genericPanels.filter((item) => item.location === location);
+    genericPanels = state.viewer.genericPanels.filter((item) => {
+      if (!isMobile()) {
+        return item.location === location;
+      }
+      // when we are on mobile, if the panel has a mobile version, we don't need to count on this panel measurement
+      return item.location === location && !panelsWithMobileVersion.includes(item.dataElement);
+    });
   }
 
   return genericPanels

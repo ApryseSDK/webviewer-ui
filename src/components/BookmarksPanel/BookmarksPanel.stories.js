@@ -141,6 +141,7 @@ export const CustomBasic = () => {
         tool: 'AnnotationCreateTextHighlight',
         group: ['annotateGroupedItems'],
       },
+      activeToolName: 'AnnotationCreateTextHighlight',
     },
     document: {
       ...initialState.document,
@@ -281,6 +282,7 @@ export const CustomRightSideNoBookmarks = () => {
       pageLabels: pageLabels,
       currentPage: 3,
       activeCustomRibbon: 'toolbarGroup-View',
+      activeToolName: 'AnnotationCreateTextHighlight'
     },
     document: {
       ...initialState.document,

@@ -45,6 +45,7 @@ const mockTool = {
   resizeCanvas: noop,
   drawCustomStamp: () => 300,
   clearOutlineDestination: noop,
+  clearLocation: noop,
   setInitialsCanvas: noop,
   setInitials: noop,
   clearInitialsCanvas: noop,

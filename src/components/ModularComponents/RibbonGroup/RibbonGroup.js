@@ -47,11 +47,16 @@ const RibbonGroup = (props) => {
     activeCustomRibbon,
     customHeadersAdditionalProperties,
     isRibbonGroupDisabled,
-  ] = useSelector((state) => [
-    selectors.getActiveCustomRibbon(state),
-    selectors.getCustomHeadersAdditionalProperties(state),
-    selectors.isElementDisabled(state, dataElement),
-  ]);
+    groupedItemsOfActiveCustomRibbon,
+  ] = useSelector((state) => {
+    const activeCustomRibbon = selectors.getActiveCustomRibbon(state);
+    return [
+      activeCustomRibbon,
+      selectors.getCustomHeadersAdditionalProperties(state),
+      selectors.isElementDisabled(state, dataElement),
+      selectors.getGroupedItemsOfCustomRibbon(state, activeCustomRibbon),
+    ];
+  });
 
   const elementRef = useRef();
 
@@ -83,6 +88,19 @@ const RibbonGroup = (props) => {
   }, [size]);
   storeSizeHook(dataElement, size, elementRef, headerDirection);
 
+  const setActiveCustomRibbon = useCallback(
+    (ribbon) => {
+      dispatch(actions.setActiveCustomRibbon(ribbon));
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
+    if (!activeCustomRibbon) {
+      setActiveCustomRibbon(ribbonItems[0]?.toolbarGroup);
+    }
+  }, []);
+
   useEffect(() => {
     const flyout = {
       dataElement: FLYOUT_NAME,
@@ -108,6 +126,7 @@ const RibbonGroup = (props) => {
         }
       }
     }
+
     dispatch(actions.updateFlyout(FLYOUT_NAME, flyout));
     setContainerWidth(elementRef.current?.clientWidth ?? 0);
   }, [size, activeCustomRibbon]);
@@ -116,16 +135,13 @@ const RibbonGroup = (props) => {
     setItemsGap(gap);
   }, [gap]);
 
-  const setActiveCustomRibbon = useCallback(
-    (ribbon) => {
-      dispatch(actions.setActiveCustomRibbon(ribbon));
-    },
-    [dispatch],
-  );
-
   useEffect(() => {
     setRibbonItems(validateItems(items));
   }, [items]);
+
+  useEffect(() => {
+    dispatch(actions.setActiveGroupedItems(groupedItemsOfActiveCustomRibbon));
+  }, [activeCustomRibbon]);
 
   const renderRibbonItems = () => {
     const activeIndex = ribbonItems.findIndex((item) => item.toolbarGroup === activeCustomRibbon);

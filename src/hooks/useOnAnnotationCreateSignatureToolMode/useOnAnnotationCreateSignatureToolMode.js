@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -9,26 +8,17 @@ import defaultTool from 'constants/defaultTool';
 
 const ToolNames = window.Core.Tools.ToolNames;
 
-export default function useOnAnnotationCreateRubberStampToolMode() {
+export default function useOnAnnotationCreateSignatureToolMode() {
   const dispatch = useDispatch();
-  const [t] = useTranslation();
   const { customizableUI } = useSelector((state) => selectors.getFeatureFlags(state));
-
-  // Load all the stamps into redux store when the app mounts
-  React.useEffect(() => {
-    if (customizableUI) {
-      dispatch(actions.setStandardStamps(t));
-      dispatch(actions.setCustomStamps(t));
-    }
-  }, [t]);
 
   React.useEffect(() => {
     if (customizableUI) {
       const handleToolModeUpdated = (newTool) => {
-        if (newTool?.name === ToolNames.RUBBER_STAMP) {
-          dispatch(actions.openElement(DataElements.RUBBER_STAMP_PANEL));
+        if (newTool?.name === ToolNames.SIGNATURE) {
+          dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
         } else if (newTool?.name !== defaultTool && newTool?.name !== ToolNames.TEXT_SELECT) {
-          dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
+          dispatch(actions.closeElement(DataElements.SIGNATURE_LIST_PANEL));
         }
       };
 

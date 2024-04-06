@@ -155,6 +155,7 @@ export const LeftSide = () => {
         tool: 'AnnotationCreateFreeText',
         group: ['annotateGroupedItems'],
       },
+      activeToolName: 'AnnotationCreateFreeText'
     },
     featureFlags: {
       customizableUI: true,

@@ -29,6 +29,7 @@ import { SYNC_MODES } from 'constants/multiViewerContants';
 import { getInstanceID } from 'helpers/getRootNode';
 import { initialColors, initialTextColors } from 'helpers/initialColorStates';
 import { defaultModularComponents, defaultModularHeaders, defaultFlyoutMap } from './modularComponents';
+import { PANEL_SIZES } from 'constants/panel';
 
 const { ToolNames } = window.Core.Tools;
 const instanceId = getInstanceID();
@@ -106,6 +107,7 @@ export default {
       rubberStampPanel: 330,
       customLeftPanel: 330
     },
+    mobilePanelSize: PANEL_SIZES.SMALL_SIZE,
     documentContainerWidth: null,
     documentContainerHeight: null,
     lastPickedToolForGroup: {},

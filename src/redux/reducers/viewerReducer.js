@@ -613,6 +613,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         genericPanels: [...payload.genericPanels],
       };
+    case 'SET_MOBILE_PANEL_SIZE':
+      return {
+        ...state,
+        mobilePanelSize: payload.panelSize,
+      };
     case 'USE_EMBEDDED_PRINT':
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
     case 'SET_PAGE_LABELS':

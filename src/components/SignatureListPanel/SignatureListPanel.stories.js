@@ -7,6 +7,8 @@ import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import SignatureListPanel from './SignatureListPanel';
 import { mockSavedSignatures, mockSavedInitials } from '../SignatureStylePopup/mockedSignatures';
+import { setItemToFlyoutStore } from 'src/helpers/itemToFlyoutHelper';
+import PropTypes from 'prop-types';
 
 export default {
   title: 'ModularComponents/SignatureListPanel',
@@ -21,18 +23,22 @@ const createStore = (preloadedState) => {
   });
 };
 
-const MockApp = ({ initialState }) => (
-  <Provider store={createStore(initialState)}>
+const MockApp = ({ store }) => (
+  <Provider store={store}>
     <App removeEventHandlers={() => { }} />
   </Provider>
 );
+
+MockApp.propTypes = {
+  store: PropTypes.object.isRequired,
+};
 
 const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
   const mockState = {
     ...initialState,
     viewer: {
       ...initialState.viewer,
-      activeCustomRibbon: 'toolbarGroup-Insert',
+      activeCustomRibbon: 'insert-ribbon-item',
       modularHeaders: mockHeadersNormalized,
       modularComponents: mockModularComponents,
       isInDesktopOnlyMode: false,
@@ -57,20 +63,27 @@ const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
         tool: 'AnnotationCreateSignature',
         group: ['insertGroupedItems'],
       },
+      activeToolName: 'AnnotationCreateSignature',
     },
     featureFlags: {
       customizableUI: true,
     },
   };
-  return <MockApp initialState={mockState} />;
+
+  const store = createStore(mockState);
+  setItemToFlyoutStore(store);
+
+  return <MockApp store={store} />;
 };
 
 export const EmptySignatureListPanelInAppLeft = () => SignatureListPanelInApp('left');
 export const EmptySignatureListPanelInAppRight = () => SignatureListPanelInApp('right');
+export const EmptySignatureListPanelInMobile = () => SignatureListPanelInApp('right');
 export const SignatureListPanelWithSignaturesInAppLeft = () => SignatureListPanelInApp('left', mockSavedSignatures);
 export const SignatureListPanelWithSignaturesInAppRight = () => SignatureListPanelInApp('right', mockSavedSignatures);
 export const SignatureListPanelWithSignaturesAndInitials = () => SignatureListPanelInApp('left', mockSavedSignatures, mockSavedInitials);
 export const SignatureListPanelWithSignaturesAndInitialsInAppRight = () => SignatureListPanelInApp('right', mockSavedSignatures, mockSavedInitials);
+export const SignatureListPanelInMobile = () => SignatureListPanelInApp('right', mockSavedSignatures, mockSavedInitials);
 
 
 EmptySignatureListPanelInAppLeft.parameters = {
@@ -91,3 +104,6 @@ SignatureListPanelWithSignaturesAndInitials.parameters = {
 SignatureListPanelWithSignaturesAndInitialsInAppRight.parameters = {
   layout: 'fullscreen',
 };
+SignatureListPanelInMobile.parameters = window.storybook.MobileParameters;
+
+EmptySignatureListPanelInMobile.parameters = window.storybook.MobileParameters;

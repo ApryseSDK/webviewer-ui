@@ -50,6 +50,7 @@ const RubberStampPanelInApp = (location,) => {
         tool: 'AnnotationCreateRubberStamp',
         group: ['insertGroupedItems'],
       },
+      activeToolName: 'AnnotationCreateRubberStamp'
     },
     featureFlags: {
       customizableUI: true,

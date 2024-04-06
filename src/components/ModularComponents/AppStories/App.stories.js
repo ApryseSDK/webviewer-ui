@@ -47,6 +47,7 @@ const Template = (args) => {
         tool: 'AnnotationCreateTextUnderline',
         group: ['annotateGroupedItems'],
       },
+      activeToolName: 'AnnotationCreateTextUnderline'
     },
     featureFlags: {
       customizableUI: true,

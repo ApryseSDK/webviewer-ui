@@ -342,9 +342,12 @@ export const setActiveGroupedItemWithTool = (toolName) => (dispatch, getState) =
         break;
       }
     }
+    // We just set the active custom ribbon if there is an associated ribbon item.
+    if (associatedRibbonItem) {
+      dispatch(setActiveCustomRibbon(associatedRibbonItem));
+    }
     dispatch(setLastPickedToolForGroupedItems(toolName, firstGroupedItem));
-    dispatch(setActiveGroupedItems([firstGroupedItem]));
-    dispatch(setActiveCustomRibbon(associatedRibbonItem));
+    dispatch(setActiveGroupedItems([...activeGroupedItems, firstGroupedItem]));
   } else if (activeGroupedItemsContainsTool) {
     // If the active grouped items have the selected tool, we set the selected tool for the first one
     const firstGroupedItem = activeGroupedItems[0];
@@ -828,6 +831,11 @@ export const addPanel = (newPanel) => ({
 export const setGenericPanels = (genericPanels) => ({
   type: 'SET_GENERIC_PANELS',
   payload: { genericPanels },
+});
+
+export const setMobilePanelSize = (panelSize) => ({
+  type: 'SET_MOBILE_PANEL_SIZE',
+  payload: { panelSize },
 });
 
 export const setPageLabels = (pageLabels) => (dispatch) => {

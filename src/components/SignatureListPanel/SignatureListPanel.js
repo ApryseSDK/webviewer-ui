@@ -3,18 +3,23 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import DataElementWrapper from '../DataElementWrapper';
 import defaultTool from 'constants/defaultTool';
+import DataElements from 'constants/dataElement';
+import SignatureModes from 'constants/signatureModes';
+import { PANEL_SIZES } from 'constants/panel';
+import { isMobileSize } from 'helpers/getDeviceSize';
 import selectors from 'selectors';
 import actions from 'actions';
+import classNames from 'classnames';
 import './SignatureListPanel.scss';
 import Divider from '../ModularComponents/Divider';
-import SignatureModes from 'constants/signatureModes';
 import SavedSignatures from './SavedSignatures';
 import SignatureAddButton from './SignatureAddButton';
 import core from 'core';
-import DataElements from 'constants/dataElement';
+import PropTypes from 'prop-types';
 
-const SignatureListPanel = () => {
+const SignatureListPanel = ({ panelSize }) => {
   const [t] = useTranslation();
+  const isMobile = isMobileSize();
 
   const [
     savedSignatures,
@@ -24,6 +29,7 @@ const SignatureListPanel = () => {
     savedInitials,
     selectedSignatureIndex,
     signatureMode,
+    mobilePanelSize
   ] = useSelector(
     (state) => [
       selectors.getSavedSignatures(state),
@@ -33,7 +39,7 @@ const SignatureListPanel = () => {
       selectors.getSavedInitials(state),
       selectors.getSelectedDisplayedSignatureIndex(state),
       selectors.getSignatureMode(state),
-
+      selectors.getMobilePanelSize(state),
     ],
     shallowEqual,
   );
@@ -49,7 +55,6 @@ const SignatureListPanel = () => {
     };
   }, []);
 
-
   // Saved signatures and initials are now in a single object. Merge them
   const [savedSignaturesAndInitials, setSavedSignaturesAndInitials] = React.useState([]);
   useEffect(() => {
@@ -62,6 +67,12 @@ const SignatureListPanel = () => {
     });
     setSavedSignaturesAndInitials(mergedSignaturesAndInitals);
   }, [savedSignatures, savedInitials, displayedSignaturesFilterFunction]);
+
+  useEffect(() => {
+    if (mobilePanelSize !== PANEL_SIZES.SMALL_SIZE && isMobile) {
+      dispatch(actions.setMobilePanelSize(PANEL_SIZES.SMALL_SIZE));
+    }
+  }, [selectedSignatureIndex]);
 
   const dispatch = useDispatch();
 
@@ -128,7 +139,14 @@ const SignatureListPanel = () => {
 
 
   return (
-    <DataElementWrapper dataElement={DataElements.SIGNATURE_LIST_PANEL} className="Panel SignatureListPanel">
+    <DataElementWrapper dataElement={DataElements.SIGNATURE_LIST_PANEL} className={
+      classNames({
+        'Panel': true,
+        'SignatureListPanel': true,
+        'hideAddButton': savedSignatures.length && panelSize === PANEL_SIZES.SMALL_SIZE,
+        [panelSize]: true,
+      })
+    }>
       <div className='signature-list-panel-header'>
         {t('signatureListPanel.header')}
       </div>
@@ -141,9 +159,14 @@ const SignatureListPanel = () => {
         deleteHandler={deleteSignatureAndInitials}
         currentlySelectedSignature={selectedSignatureIndex}
         isDeleteDisabled={isSignatureDeleteButtonDisabled}
-        signatureMode={signatureMode} />
+        signatureMode={signatureMode}
+        panelSize={panelSize} />
     </DataElementWrapper>
   );
+};
+
+SignatureListPanel.propTypes = {
+  panelSize: PropTypes.oneOf(Object.values(PANEL_SIZES)),
 };
 
 export default SignatureListPanel;

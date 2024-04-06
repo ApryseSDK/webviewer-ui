@@ -6,14 +6,15 @@
   @extend %closed;
   @extend %modal-shared-container-style;
   position: fixed;
-  left: 0;
   bottom: 0;
-  z-index: 105;
+  padding-bottom: 10px;
+  z-index: 100;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 
   transition: height, max-height 0.3s ease-out;
 
@@ -27,6 +28,7 @@
 
   &.small-size {
     max-height: 140px;
+    overflow: hidden;
   }
 
   .swipe-indicator {
@@ -35,9 +37,8 @@
     height: 4px;
     width: 38px;
     position: absolute;
-    top: 12px;
-    margin-left: auto;
-    margin-right: auto;
+    top: 3px;
+    margin: 10px auto;
     left: 0;
     right: 0;
 
