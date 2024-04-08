@@ -786,7 +786,7 @@
     },
     "multiDeleteAnnotation": {
       "title": "Delete Annotations?",
-      "message": "Deleteing will remove all comments, replies, and grouping and cannot be undone. \n\n Are you sure you want to delete these annotations?"
+      "message": "Deleting will remove all comments, replies, and grouping and cannot be undone. \n\n Are you sure you want to delete these annotations?"
     },
     "closeFile": {
       "title": "Close without downloading?",
