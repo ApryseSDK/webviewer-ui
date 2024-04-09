@@ -799,6 +799,13 @@ export default (initialState) => (state = initialState, action) => {
         return state;
       }
 
+      // Remove existing items and replace with new one
+      if (itemsDataElements) {
+        itemsDataElements.forEach((key) => {
+          delete state.modularComponents[key];
+        });
+      }
+
       const updatedModularHeader = {
         ...existingModularHeader,
         items: [...itemsDataElements]

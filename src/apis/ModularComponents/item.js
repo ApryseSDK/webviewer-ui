@@ -20,10 +20,16 @@ class Item {
       throw new Error('Abstract class "Item" cannot be instantiated directly.');
     }
     const { dataElement, title, disabled, type } = options;
-    this.dataElement = dataElement;
+    this._dataElement = dataElement;
     this.title = title;
     this.disabled = disabled;
     this.type = type;
+  }
+  get dataElement() {
+    return this._dataElement;
+  }
+  set dataElement(val) {
+    console.warn(`Modular Item's "${this._dataElement}" dataElement property cannot be changed to "${val}"`);
   }
 }
 

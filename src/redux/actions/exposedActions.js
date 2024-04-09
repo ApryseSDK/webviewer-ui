@@ -670,15 +670,15 @@ const itemKeysToStore = [
 
 //* Recursively normalize the items in a header
 const normalizeItems = (items, componentsMap, existingComponentsMap) => {
-  return items.map((item) => {
+  const result = [];
+  for (let i = 0, len = items.length; i < len; i++) {
+    const item = items[i];
     const normalizedItem = pick(item, itemKeysToStore);
+    const dataElementKey = normalizedItem.dataElement;
 
-    // Generate a unique dataElement if there's a collision
-    let dataElementKey = normalizedItem.dataElement;
-    while (existingComponentsMap[dataElementKey]) {
-      const newKey = `${normalizedItem.dataElement}-${uuidv4()}`;
-      console.warn(`Modular component with dataElement ${dataElementKey} already exists. Appending unique ID to prevent collisions: ${newKey} `);
-      dataElementKey = newKey;
+    // if the dataElementKey already exists in the header items, we will just continue
+    if (result.indexOf(dataElementKey) > -1) {
+      continue;
     }
 
     normalizedItem.dataElement = dataElementKey;
@@ -689,10 +689,17 @@ const normalizeItems = (items, componentsMap, existingComponentsMap) => {
       normalizedItem.items = nestedItemsDataElements;
     }
 
-    // Update the componentsMap with the uniquely identified normalized item
-    componentsMap[dataElementKey] = normalizedItem;
-    return dataElementKey;
-  });
+    let newNormalizedItem = normalizedItem;
+    if (existingComponentsMap[dataElementKey]) {
+      console.warn(`Modular component with dataElement ${dataElementKey} already exists.`);
+      const comp = existingComponentsMap[dataElementKey];
+      newNormalizedItem = { ...comp, ...normalizedItem };
+    }
+    componentsMap[dataElementKey] = newNormalizedItem;
+
+    result.push(dataElementKey);
+  }
+  return result;
 };
 
 const prepareModularHeaders = (headersList, existingComponentsMap = {}) => {

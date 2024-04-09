@@ -207,6 +207,101 @@ describe('Test Custom UI APIs', function() {
       insertGroupedItems = getElementByDataElement('insertGroupedItems');
       expect(insertGroupedItems).to.be.null;
     });
+
+    it('It should update header items and cleanup orphan items', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+
+      const iframe = document.querySelector('#viewerDiv iframe');
+      await waitFor(500);
+      iframe.style.width = '1500px';
+
+      const toggleButton = new instance.UI.Components.ToggleElementButton({
+        dataElement: 'newPortfolioPanelToggle',
+        toggleElement: 'newPortfolioPanel',
+        img: 'icon-pdf-portfolio',
+        title: 'component.portfolioPanel',
+      });
+      const topHeader = instance.UI.getModularHeader('default-top-header');
+      let items = topHeader.getItems();
+      topHeader.setItems([...items, toggleButton]);
+
+      // Test case 1
+      await waitFor(200);
+      const ToggleElementButtons = iframe.contentDocument.querySelectorAll('.ModularHeaderItems>.ToggleElementButton');
+      expect(ToggleElementButtons[2].dataset.element).to.equal('newPortfolioPanelToggle');
+      const RibbonItem0 = iframe.contentDocument.querySelectorAll('.RibbonItem');
+      expect(RibbonItem0[0].innerText).to.equal('View');
+
+      // Test case 2 remove "View" ribbonItem, & check that first item is "Annotate"
+      const itemsNewArray = items.concat();
+      const removedItem = itemsNewArray[1].items.shift();
+      topHeader.setItems([...itemsNewArray]);
+      await waitFor(200);
+      const RibbonItem = iframe.contentDocument.querySelectorAll('.RibbonItem');
+      expect(RibbonItem[0].innerText).to.equal('Annotate');
+
+
+      // Test case 3 add "View" ribbonItem back again, so that the first item is "View" again
+      itemsNewArray[1].items.unshift(removedItem);
+      topHeader.setItems([...itemsNewArray]);
+      await waitFor(200);
+      const RibbonItem2 = iframe.contentDocument.querySelectorAll('.RibbonItem');
+      expect(RibbonItem2[0].innerText).to.equal('View');
+    });
+
+    it('It should show warning logs for existing item, no warning log for new item', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' }, true);
+
+      // Test case 1: warning log for "menu-toggle-button"
+      console.warn = sinon.spy();
+      await waitFor(200);
+      const toggleButton = new instance.UI.Components.ToggleElementButton({
+        dataElement: 'newPortfolioPanelToggle',
+        toggleElement: 'newPortfolioPanel',
+        img: 'icon-pdf-portfolio',
+        title: 'component.portfolioPanel',
+      });
+      const topHeader = instance.UI.getModularHeader('default-top-header');
+      let items = topHeader.getItems();
+      topHeader.setItems([...items, toggleButton]);
+      expect(console.warn.getCall(0).args[0]).to.equal(
+        'Modular component with dataElement menu-toggle-button already exists.'
+      );
+
+      // Test case 2: no warning log for "menu-toggle-button", but warning log for the next item
+      console.warn = sinon.spy();
+      const removedItem = items.shift();
+      topHeader.setItems([...items]);
+      expect(console.warn.getCall(0).args[0]).to.equal(
+        'Modular component with dataElement toolbarGroup-View already exists.'
+      );
+
+
+      // Test case 3: warning log for "menu-toggle-button" displayed again
+      console.warn = sinon.spy();
+      items.unshift(removedItem);
+      topHeader.setItems([...items]);
+      expect(console.warn.getCall(0).args[0]).to.equal(
+        'Modular component with dataElement menu-toggle-button already exists.'
+      );
+    });
+
+    it('It should show warning log when existing modular items dataElement gets renamed', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' }, true);
+
+      // Test case: warning log for modifying dataElement for existing item
+      console.warn = sinon.spy();
+      await waitFor(200);
+
+      const topHeader = instance.UI.getModularHeader('default-top-header');
+      let items = topHeader.getItems();
+      const tempVar = 'foobar';
+      const originalName = items[3].dataElement;
+      items[3].dataElement = tempVar;
+      expect(console.warn.getCall(0).args[0]).to.equal(
+        `Modular Item's "${originalName}" dataElement property cannot be changed to "${tempVar}"`
+      );
+    });
   });
 
   describe('Test Grouped Items', () => {
