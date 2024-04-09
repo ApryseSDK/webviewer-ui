@@ -13,6 +13,8 @@ const ResponsiveContainer = ({
 }) => {
   const lastCheckedFreeSpaceRef = useRef(null);
   const isResizingRef = useRef(false);
+  const defaultLoopCounterState = { counter: 0, space: null };
+  const loopingCounterRef = useRef(defaultLoopCounterState);
 
   const resizeResponsively = () => {
     if (isResizingRef.current) {
@@ -30,10 +32,21 @@ const ResponsiveContainer = ({
         freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current);
         const itemToResizeFunc = findItemToResize(items, freeSpace, headerDirection, parent, elementRef.current);
         if (itemToResizeFunc) {
+          // Prevent more than 3 loops with the same free space
+          if (loopingCounterRef.current.counter === 3) {
+            loopingCounterRef.current = defaultLoopCounterState;
+            break;
+          }
+          if (freeSpace && freeSpace === loopingCounterRef.current.space) {
+            loopingCounterRef.current.counter++;
+          } else {
+            loopingCounterRef.current = { counter: 1, space: freeSpace };
+          }
           lastCheckedFreeSpaceRef.current = null;
           itemToResizeFunc();
         } else {
           lastCheckedFreeSpaceRef.current = freeSpace;
+          loopingCounterRef.current = defaultLoopCounterState;
         }
       } catch (e) {
         console.error(e);
