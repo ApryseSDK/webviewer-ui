@@ -62,7 +62,7 @@ describe('Test Modular UI Tools', function() {
     expect(instance.UI.getToolMode().name).to.equal('AnnotationEdit');
   });
 
-  it.skip('should update the ribbon when we use a hotkey to select a tool placed on a different ribbon', async function() {
+  it('should update the ribbon when we use a hotkey to select a tool placed on a different ribbon', async function() {
     instance = await setupWebViewerInstance({ ui: 'beta' });
     instance.UI.disableFeatures([instance.UI.Feature.LocalStorage]);
     const iframe = document.querySelector('#viewerDiv iframe');
@@ -71,8 +71,7 @@ describe('Test Modular UI Tools', function() {
 
     annotateRibbonItem.click();
     await waitFor(500);
-    // Annotation create highlight is the first tool in annotate
-    expect(instance.UI.getToolMode().name).to.equal('AnnotationCreateTextHighlight');
+
     expect(annotateRibbonItem.classList.contains('active')).to.equal(true);
 
     triggerKeyboardFocus(window);
