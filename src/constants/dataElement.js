@@ -86,6 +86,7 @@ const DataElements = {
   MENU_OVERLAY_BUTTON: 'menuButton',
   ZOOM_OVERLAY: 'zoomOverlay',
   ZOOM_OVERLAY_BUTTON: 'zoomOverlayButton',
+  TRACK_CHANGE_OVERLAY_BUTTON: 'trackChangeOverlayButton',
   PAGE_MANIPULATION_OVERLAY: 'pageManipulationOverlay',
   PAGE_MANIPULATION_OVERLAY_BUTTON: 'pageManipulationOverlayButton',
   TOOLS_OVERLAY: 'toolsOverlay',

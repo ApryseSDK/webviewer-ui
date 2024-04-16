@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import { setupWebViewerInstance, waitFor } from '../../../utils/TestingUtils';
 import { createModularHeader, createGroupedItems, createPresetButton, createFlyout } from './utils';
 
-
 describe('Test Custom UI APIs', function() {
   this.timeout(10000);
   let viewerDiv;
@@ -188,7 +187,8 @@ describe('Test Custom UI APIs', function() {
       expect(insertGroupedItems).to.be.null;
       ribbonGroupDropdown.click();
 
-      const insertRibbonItem = iframe.contentDocument.querySelector('[data-element="dropdown-item-3"]');
+      const dropdownItems = iframe.contentDocument.querySelectorAll('.Dropdown__items button');
+      const insertRibbonItem = dropdownItems[3];
       insertRibbonItem.click();
       await waitFor(100);
       let editGroupedItems = getElementByDataElement('editGroupedItems');
@@ -198,7 +198,7 @@ describe('Test Custom UI APIs', function() {
 
       ribbonGroupDropdown.click();
       await waitFor(100);
-      const editRibbonItem = getElementByDataElement('dropdown-item-6');
+      const editRibbonItem = dropdownItems[6];
       editRibbonItem.click();
       await waitFor(100);
 

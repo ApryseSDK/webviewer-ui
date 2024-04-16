@@ -9,10 +9,11 @@ import FlexDropdown from '../FlexDropdown';
 import { ITEM_TYPE, DIRECTION } from 'constants/customizationVariables';
 import ToggleElementButton from '../ToggleElementButton';
 import getToolbarTranslationString from 'helpers/translationKeyMapping';
-
-import './RibbonGroup.scss';
 import sizeManager, { storeSizeHook } from 'helpers/responsivnessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
+import Icon from 'components/Icon';
+
+import './RibbonGroup.scss';
 
 const DEFAULT_DROPDOWN_HEIGHT = 72;
 
@@ -171,11 +172,22 @@ const RibbonGroup = (props) => {
     }
   };
 
-  if (isRibbonGroupDisabled) {
-    return null;
-  }
+  const renderDropdownItem = (item, getTranslatedDisplayValue) => {
+    const glyph = item.img;
+    const text = getTranslatedDisplayValue(item.label);
+    return (
+      <div className='Dropdown__item-object'>
+        {glyph &&
+          <Icon glyph={glyph} className={item.className || ''} />
+        }
+        {(text) &&
+          <span className={'Dropdown__item-text'}>{text}</span>
+        }
+      </div>
+    );
+  };
 
-  if (ribbonItems && ribbonItems.length) {
+  if (!isRibbonGroupDisabled && ribbonItems && ribbonItems.length) {
     return (
       <div ref={elementRef} className={'RibbonGroupContainer'} data-element={dataElement}
         style={{ display: 'flex', flexDirection: headerDirection, justifyContent: justifyContent, flexGrow: grow }}>
@@ -216,8 +228,7 @@ const RibbonGroup = (props) => {
             height={headerDirection === DIRECTION.COLUMN ? DEFAULT_DROPDOWN_HEIGHT : undefined}
             direction={headerDirection}
             placement={headerPlacement}
-            objects={validateItems(items)}
-            objectKey={'toolbarGroup'}
+            items={validateItems(items)}
             currentSelectionKey={activeCustomRibbon}
             onClickItem={(customRibbon) => {
               setActiveCustomRibbon(customRibbon);
@@ -226,9 +237,11 @@ const RibbonGroup = (props) => {
               const index = items.findIndex((el) => el.label === item);
               return items[index]?.toolbarGroup;
             }}
-            getKey = {(item) => item.toolbarGroup}
+            getKey = {(item) => item['toolbarGroup']}
             getTranslationLabel={(key) => getToolbarTranslationString(key, customHeadersAdditionalProperties)}
             arrowDirection={getArrowDirection()}
+            renderItem={renderDropdownItem}
+            renderSelectedItem={renderDropdownItem}
           />
         </div>
       </div>

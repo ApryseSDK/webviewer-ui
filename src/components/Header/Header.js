@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import HeaderItems from 'components/HeaderItems';
+import TabsHeader from 'components/TabsHeader';
 
 import selectors from 'selectors';
 import classNames from 'classnames';
@@ -18,34 +19,52 @@ class Header extends React.PureComponent {
     isInDesktopOnlyMode: PropTypes.bool,
     isToolsHeaderOpen: PropTypes.bool,
     isMultiTab: PropTypes.bool,
+    isOfficeEditorMode: PropTypes.bool,
     currentToolbarGroup: PropTypes.string,
   }
 
   render() {
-    const { isDisabled, activeHeaderItems, isOpen, isToolsHeaderOpen, currentToolbarGroup, isMultiTab, isToolGroupReorderingEnabled, isInDesktopOnlyMode } = this.props;
+    const {
+      isDisabled,
+      activeHeaderItems,
+      isOpen,
+      isToolsHeaderOpen,
+      currentToolbarGroup,
+      isMultiTab,
+      isToolGroupReorderingEnabled,
+      isInDesktopOnlyMode,
+      isOfficeEditorMode,
+    } = this.props;
 
     if (isDisabled || !isOpen) {
       return null;
     }
 
     return (
-      <React.Fragment>
+      <>
+        <TabsHeader />
         <div
           className={classNames({
             Header: true,
+            MainHeader: true,
           })}
           data-element="header"
         >
-          <HeaderItems items={activeHeaderItems} isToolGroupReorderingEnabled={isToolGroupReorderingEnabled} isInDesktopOnlyMode={isInDesktopOnlyMode} />
+          <HeaderItems
+            items={activeHeaderItems}
+            isToolGroupReorderingEnabled={isToolGroupReorderingEnabled}
+            isInDesktopOnlyMode={isInDesktopOnlyMode}
+            isOfficeEditorMode={isOfficeEditorMode}
+          />
           {(!isToolsHeaderOpen || currentToolbarGroup === 'toolbarGroup-View') && !isMultiTab
           && <div className="view-header-border" />}
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isMultiTab: selectors.getIsMultiTab(state),
   currentToolbarGroup: selectors.getCurrentToolbarGroup(state),
   isToolsHeaderOpen: selectors.isElementOpen(state, 'toolsHeader'),
@@ -54,6 +73,7 @@ const mapStateToProps = state => ({
   activeHeaderItems: selectors.getActiveHeaderItems(state),
   isToolGroupReorderingEnabled: selectors.isToolGroupReorderingEnabled(state),
   isInDesktopOnlyMode: selectors.isInDesktopOnlyMode(state),
+  isOfficeEditorMode: selectors.getIsOfficeEditorMode(state),
 });
 
 export default connect(mapStateToProps)(Header);

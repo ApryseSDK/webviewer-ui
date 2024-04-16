@@ -1,0 +1,16 @@
+.track-change-overlay {
+  .Dropdown__item-TrackChange {
+    display: flex;
+    flex-direction: column;
+
+    .Dropdown__item-mode {
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .Dropdown__item-description {
+      font-size: 10px;
+      margin-top: 4px;
+    }
+  }
+}
