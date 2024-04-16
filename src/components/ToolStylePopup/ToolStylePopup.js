@@ -135,19 +135,25 @@ class ToolStylePopup extends React.PureComponent {
     let properties = {};
     const colorMapKey = mapToolNameToKey(activeToolName);
     const isRedaction = activeToolName.includes('AnnotationCreateRedaction');
-    const isRectangle = activeToolName.includes('AnnotationCreateRectangle');
+    const isEllipse = activeToolName.includes('AnnotationCreateEllipse');
     const showLineStyleOptions = getDataWithKey(colorMapKey).hasLineEndings;
 
     if (isDisabled) {
       return null;
     }
 
-    if (showLineStyleOptions) {
-      const toolStyles = getToolStyles(activeToolName);
+    if (activeToolStyle['StrokeStyle']) {
       properties = {
-        StartLineStyle: toolStyles.StartLineStyle,
-        EndLineStyle: toolStyles.EndLineStyle,
-        StrokeStyle: toolStyles.StrokeStyle,
+        StrokeStyle: activeToolStyle['StrokeStyle'],
+      };
+    }
+
+    if (isRedaction) {
+      properties = {
+        OverlayText: activeToolStyle['OverlayText'],
+        Font: activeToolStyle['Font'],
+        FontSize: activeToolStyle['FontSize'],
+        TextAlign: activeToolStyle['TextAlign']
       };
     }
 
@@ -161,23 +167,19 @@ class ToolStylePopup extends React.PureComponent {
         italic: activeToolStyle['RichTextStyle'][0]['font-style'] === 'italic',
         underline: activeToolStyle['RichTextStyle'][0]['text-decoration']?.includes('underline') || activeToolStyle['text-decoration']?.includes('word'),
         strikeout: activeToolStyle['RichTextStyle'][0]['text-decoration']?.includes('line-through'),
-      };
-    }
-
-    if (isRedaction) {
-      properties = {
-        OverlayText: activeToolStyle['OverlayText'],
-        Font: activeToolStyle['Font'],
-        FontSize: activeToolStyle['FontSize'],
-        TextAlign: activeToolStyle['TextAlign']
-      };
-    }
-
-    if (isRectangle) {
-      properties = {
         StrokeStyle: activeToolStyle['StrokeStyle'],
       };
     }
+
+    if (showLineStyleOptions) {
+      const toolStyles = getToolStyles(activeToolName);
+      properties = {
+        StartLineStyle: toolStyles.StartLineStyle,
+        EndLineStyle: toolStyles.EndLineStyle,
+        StrokeStyle: toolStyles.StrokeStyle,
+      };
+    }
+
     const isEllipseMeasurementTool = activeToolName.includes('AnnotationCreateEllipseMeasurement');
 
     let Component = (
@@ -187,6 +189,7 @@ class ToolStylePopup extends React.PureComponent {
         colorMapKey={colorMapKey}
         style={activeToolStyle}
         isFreeText={isFreeText}
+        isEllipse={isEllipse}
         hideSnapModeCheckbox={isEllipseMeasurementTool || !core.isFullPDFEnabled()}
         onPropertyChange={this.handleStyleChange}
         onStyleChange={this.handleStyleChange}
