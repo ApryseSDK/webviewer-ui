@@ -13,6 +13,7 @@ import DataElements from 'src/constants/dataElement';
 import core from 'core';
 import getRootNode from './getRootNode';
 import { getCurrentViewRect, doesCurrentViewContainEntirePage } from './printCurrentViewHelper';
+import { adjustListBoxForPrint } from './printHTMLToCanvasHelper';
 
 let pendingCanvases = [];
 let PRINT_QUALITY = 1;
@@ -578,7 +579,7 @@ const positionCanvas = (canvas, pageIndex) => {
   }
 };
 
-const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
+const drawAnnotationsOnCanvas = async (canvas, pageNumber, isGrayscale) => {
   if (isGrayscale) {
     const ctx = canvas.getContext('2d');
     ctx.filter = 'grayscale(1)';
@@ -587,25 +588,27 @@ const drawAnnotationsOnCanvas = (canvas, pageNumber, isGrayscale) => {
   const widgetAnnotations = core
     .getAnnotationsList()
     .filter((annotation) => annotation.PageNumber === pageNumber && annotation instanceof window.Core.Annotations.WidgetAnnotation);
-  // just draw markup annotations
-  if (widgetAnnotations.length === 0) {
+
+  const hasWidgetAnnotations = widgetAnnotations.length > 0;
+  if (!hasWidgetAnnotations) {
     return core.drawAnnotations(pageNumber, canvas);
   }
-  // draw all annotations
+
   const widgetContainer = createWidgetContainer(pageNumber - 1);
-  return core.drawAnnotations(pageNumber, canvas, true, widgetContainer).then(() => {
-    document.body.appendChild(widgetContainer);
-    return import(/* webpackChunkName: 'html2canvas' */ 'html2canvas').then(({ default: html2canvas }) => {
-      return html2canvas(widgetContainer, {
-        canvas,
-        backgroundColor: null,
-        scale: 1,
-        logging: false,
-      }).then(() => {
-        document.body.removeChild(widgetContainer);
-      });
-    });
+  await core.drawAnnotations(pageNumber, canvas, true, widgetContainer);
+  adjustListBoxForPrint(widgetContainer);
+  document.body.appendChild(widgetContainer);
+
+  const { default: html2canvas } = await import(/* webpackChunkName: 'html2canvas' */ 'html2canvas');
+
+  await html2canvas(widgetContainer, {
+    canvas,
+    backgroundColor: null,
+    scale: 1,
+    logging: false
   });
+
+  document.body.removeChild(widgetContainer);
 };
 
 const getDocumentRotation = (pageIndex) => {
