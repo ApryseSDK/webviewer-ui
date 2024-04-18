@@ -72,7 +72,7 @@ export const itemToFlyout = (item, {
     flyoutItem.icon = itemProps.img || undefined;
     flyoutItem.label = itemProps.label || undefined;
   } else if (itemProps.type === ITEM_TYPE.PRESET_BUTTON) {
-    const { label, dataElement, icon } = menuItems[itemProps.buttonType];
+    const { label, dataElement, icon } = menuItems[itemProps.buttonType || itemProps.dataElement];
     flyoutItem.label = label;
     flyoutItem.onClick = () => {
       itemProps.onClick && itemProps.onClick();

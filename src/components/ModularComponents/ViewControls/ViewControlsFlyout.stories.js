@@ -75,6 +75,7 @@ const divider = 'divider';
 
 const initialState = {
   viewer: {
+    modularComponents: {},
     activeDocumentViewerKey: 1,
     disabledElements: {},
     customElementOverrides: {},

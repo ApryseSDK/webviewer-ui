@@ -13,6 +13,24 @@ export default {
 
 const initialState = {
   viewer: {
+    lastPickedToolForGroupedItems: {
+      undefined: '',
+    },
+    toolButtonObjects: {
+      AnnotationEdit: {
+        'dataElement': 'selectToolButton',
+        'title': 'tool.select',
+        'img': 'multi select',
+        'showColor': 'never'
+      },
+      Pan: {
+        'dataElement': 'panToolButton',
+        'title': 'tool.pan',
+        'img': 'icon-header-pan',
+        'showColor': 'never'
+      },
+    },
+    colorMap: {},
     disabledElements: {},
     customElementOverrides: {},
     openElements: {},
@@ -325,7 +343,28 @@ const initialState = {
           },
           'divider',
         ],
+      },
+      'menuWithComponentItems': {
+        dataElement: 'menuWithComponentItems',
+        items: [
+          { dataElement: 'panToolButton', toolName: 'Pan', className: 'FlyoutToolButton' },
+          { dataElement: 'annotationEditToolButton', toolName: 'AnnotationEdit', className: 'FlyoutToolButton' },
+        ],
       }
+    },
+    modularComponents: {
+      panToolButton: {
+        dataElement: 'panToolButton',
+        type: 'toolButton',
+        toolName: 'Pan',
+        img: 'icon-save',
+      },
+      annotationEditToolButton: {
+        dataElement: 'annotationEditToolButton',
+        type: 'toolButton',
+        toolName: 'AnnotationEdit',
+        img: 'icon-save',
+      },
     },
     flyoutPosition: { x: 0, y: 0 },
     activeFlyout: 'flyoutMenu',
@@ -375,5 +414,21 @@ const store3 = configureStore({
 export const MainMenuFlyout = () => (
   <Provider store={store3}>
     <Flyout/>
+  </Provider>
+);
+
+const store4 = configureStore({
+  reducer: () => {
+    return {
+      ...initialState,
+      viewer: { ...initialState.viewer, activeFlyout: 'menuWithComponentItems' }
+    };
+  }
+});
+
+// Should show save icons instead in the flyout since the modular component has been 'updated' with that icon
+export const FlyoutWithComponentItems = () => (
+  <Provider store={store4}>
+    <Flyout />
   </Provider>
 );

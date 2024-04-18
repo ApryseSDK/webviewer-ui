@@ -37,6 +37,7 @@ const item4 = {
 
 const initialState = {
   viewer: {
+    modularComponents: {},
     customHeadersAdditionalProperties: {},
     disabledElements: {},
     customElementOverrides: {},

@@ -130,7 +130,7 @@ const RibbonGroup = (props) => {
 
     dispatch(actions.updateFlyout(FLYOUT_NAME, flyout));
     setContainerWidth(elementRef.current?.clientWidth ?? 0);
-  }, [size, activeCustomRibbon]);
+  }, [size, activeCustomRibbon, ribbonItems.length]);
 
   useEffect(() => {
     setItemsGap(gap);

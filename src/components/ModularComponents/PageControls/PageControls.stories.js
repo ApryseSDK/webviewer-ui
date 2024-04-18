@@ -35,6 +35,7 @@ const rightChevron = {
 
 const initialState = {
   viewer: {
+    modularComponents: {},
     modularHeaders: {},
     customElementOverrides: {},
     activeGroupedItems: [],

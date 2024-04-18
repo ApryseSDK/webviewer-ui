@@ -9,6 +9,7 @@ import sizeManager, { storeSizeHook } from 'helpers/responsivnessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import ToggleElementButton from '../ToggleElementButton';
+import core from 'core';
 
 const GroupedItems = (props) => {
   const {
@@ -29,11 +30,25 @@ const GroupedItems = (props) => {
     return itemValidTypes.includes(itemType);
   });
 
+  const [
+    lastPickedToolForGroupedItems,
+    activeGroupedItems,
+  ] = useSelector((state) => [
+    selectors.getLastPickedToolForGroupedItems(state, dataElement),
+  ]);
+
   const flyoutDataElement = `${dataElement}Flyout`;
 
   useEffect(() => {
     if (alwaysVisible) {
       dispatch(actions.setFixedGroupedItems(dataElement));
+    }
+    if (!lastPickedToolForGroupedItems && activeGroupedItems?.includes(dataElement)) {
+      const firstToolButton = validItems?.find((item) => item.type === ITEM_TYPE.TOOL_BUTTON);
+      if (firstToolButton) {
+        dispatch(actions.setLastPickedToolForGroupedItems(dataElement, firstToolButton.toolName));
+        core.setToolMode(firstToolButton.toolName);
+      }
     }
   }, []);
 
@@ -79,7 +94,7 @@ const GroupedItems = (props) => {
     }
 
     dispatch(actions.updateFlyout(flyoutDataElement, flyout));
-  }, [size]);
+  }, [size, validItems.length]);
 
   useEffect(() => {
     setItemsGap(gap);
@@ -107,7 +122,7 @@ const GroupedItems = (props) => {
               return null;
             }
             const itemProps = item.props || item;
-            return <InnerItem key={`${dataElement}-${itemProps.dataElement}`} {...itemProps} headerDirection={headerDirection} />;
+            return <InnerItem key={`${dataElement}-${itemProps.dataElement}`} {...itemProps} headerDirection={headerDirection} groupedItem={dataElement} />;
           })
         }
         {size > 0 &&

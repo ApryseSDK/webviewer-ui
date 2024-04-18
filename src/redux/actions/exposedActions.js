@@ -183,7 +183,7 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
 
 export const getFirstToolForGroupedItems = (state, group) => {
   const modularComponents = state.viewer.modularComponents;
-  const items = modularComponents[group].items;
+  const items = modularComponents[group]?.items;
   let firstTool = '';
 
   items?.find((item) => {

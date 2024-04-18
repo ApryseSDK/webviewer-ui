@@ -95,11 +95,11 @@ const ToolButton = (props) => {
   }, [isSignatureListPanelOpen, isRubberStampPanelOpen]);
 
   useEffect(() => {
-    const noActiveGroupedItems = !activeGroupedItems.length;
-    const isLastPickedGroupUndefined = lastPickedToolAndGroup.group?.every((group) => group === undefined);
+    const noActiveGroupedItems = !activeGroupedItems?.length;
+    const isLastPickedGroupUndefined = lastPickedToolAndGroup?.group?.every((group) => group === undefined);
     const toolDoesNotBelongToAGroupAndIsActive = !groupedItem && isLastPickedGroupUndefined && toolName === lastPickedToolAndGroup.tool;
-    const toolBelongsToAGroupAndIsActive = groupedItem && lastPickedToolAndGroup.group?.includes(groupedItem) &&
-    (toolName === lastPickedToolAndGroup.tool);
+    const toolBelongsToAGroupAndIsActive = groupedItem && lastPickedToolAndGroup?.group?.includes(groupedItem) &&
+      (toolName === lastPickedToolAndGroup?.tool);
     const isDefaultToolActive = activeToolName === defaultTool && toolName === defaultTool;
 
     if ((toolName === ToolNames.EDIT && noActiveGroupedItems) ||
@@ -108,7 +108,7 @@ const ToolButton = (props) => {
       isDefaultToolActive
     ) {
       setIsButtonActive(true);
-      if (lastPickedToolAndGroup.tool !== activeToolName) {
+      if (lastPickedToolAndGroup?.tool !== activeToolName) {
         core.setToolMode(toolName);
       }
     } else {
@@ -166,12 +166,12 @@ const ToolButton = (props) => {
     }
   };
 
-  const icon = img || toolButtonObject.img;
-  const toolTipTitle = title || toolButtonObject.title;
+  const icon = img || toolButtonObject?.img;
+  const toolTipTitle = title || toolButtonObject?.title;
   let color = '';
   let fillColor = '';
   let strokeColor = '';
-  const showColor = customOverrides?.showColor || toolButtonObject.showColor;
+  const showColor = customOverrides?.showColor || toolButtonObject?.showColor;
   if (showColor === 'always' || (showColor === 'active' && isButtonActive)) {
     const toolStyles = getToolStyles(toolName);
     color = toolStyles?.[iconColorKey]?.toHexString?.();

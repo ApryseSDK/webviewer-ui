@@ -60,7 +60,7 @@ const ModularHeaderItems = (props) => {
     }
 
     dispatch(actions.updateFlyout(flyoutDataElement, flyout));
-  }, [size]);
+  }, [size, items.length]);
 
   const headerDirection = [PLACEMENT.LEFT, PLACEMENT.RIGHT].includes(placement) ? DIRECTION.COLUMN : DIRECTION.ROW;
 
@@ -102,7 +102,7 @@ const ModularHeaderItems = (props) => {
           dataElement={`${flyoutDataElement}Toggle`}
           toggleElement={flyoutDataElement}
           title="action.more"
-          img="icon-double-chevron-down"/>
+          img="icon-double-chevron-down" />
       }
     </div>
   );
