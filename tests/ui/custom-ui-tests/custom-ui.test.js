@@ -208,7 +208,10 @@ describe('Test Custom UI APIs', function() {
       expect(insertGroupedItems).to.be.null;
     });
 
-    it('It should update header items and cleanup orphan items', async () => {
+    // skipping flaking test because it failed on CircleCI
+    // Expected inner text was in the wrong language
+    // https://apryse.atlassian.net/browse/WVR-5412
+    it.skip('It should update header items and cleanup orphan items', async () => {
       instance = await setupWebViewerInstance({ ui: 'beta' });
 
       const iframe = document.querySelector('#viewerDiv iframe');
