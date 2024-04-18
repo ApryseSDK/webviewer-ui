@@ -55,6 +55,7 @@ export const getLastPickedToolForGroup = (state, group) => state.viewer.lastPick
 export const getStandardStamps = (state) => state.viewer.standardStamps;
 export const getCustomStamps = (state) => state.viewer.customStamps;
 export const getSelectedStampIndex = (state) => state.viewer.selectedStampIndex;
+export const getLastSelectedStampIndex = (state) => state.viewer.lastSelectedStampIndex;
 export const getSelectedStamp = (state) => {
   const standardStamps = getStandardStamps(state);
   const customStamps = getCustomStamps(state);
@@ -149,7 +150,7 @@ export const getDocumentContentContainerWidthStyle = (state) => {
 
 export const getOpenGenericPanel = (state, location) => {
   let genericPanels = state.viewer.genericPanels;
-  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST];
+  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP];
 
   if (location) {
     genericPanels = state.viewer.genericPanels.filter((item) => {

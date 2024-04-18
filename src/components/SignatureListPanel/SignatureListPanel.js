@@ -1,12 +1,13 @@
 import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual, useStore } from 'react-redux';
 import DataElementWrapper from '../DataElementWrapper';
 import defaultTool from 'constants/defaultTool';
 import DataElements from 'constants/dataElement';
 import SignatureModes from 'constants/signatureModes';
-import { PANEL_SIZES } from 'constants/panel';
+import { PANEL_SIZES, panelNames } from 'constants/panel';
 import { isMobileSize } from 'helpers/getDeviceSize';
+import setToolModeAndGroup from 'helpers/setToolModeAndGroup';
 import selectors from 'selectors';
 import actions from 'actions';
 import classNames from 'classnames';
@@ -16,6 +17,7 @@ import SavedSignatures from './SavedSignatures';
 import SignatureAddButton from './SignatureAddButton';
 import core from 'core';
 import PropTypes from 'prop-types';
+import Events from 'constants/events';
 
 const SignatureListPanel = ({ panelSize }) => {
   const [t] = useTranslation();
@@ -43,7 +45,9 @@ const SignatureListPanel = ({ panelSize }) => {
     ],
     shallowEqual,
   );
-  const signatureToolArray = core.getToolsFromAllDocumentViewers('AnnotationCreateSignature');
+  const store = useStore();
+  const TOOL_NAME = 'AnnotationCreateSignature';
+  const signatureToolArray = core.getToolsFromAllDocumentViewers(TOOL_NAME);
 
   useEffect(() => {
     return () => {
@@ -74,13 +78,31 @@ const SignatureListPanel = ({ panelSize }) => {
     }
   }, [selectedSignatureIndex]);
 
+  useEffect(() => {
+    const onVisibilityChanged = (e) => {
+      const activeTool = core.getToolMode();
+      const activeToolName = activeTool?.name;
+      const { element, isVisible } = e.detail;
+      if (element === panelNames.SIGNATURE_LIST && !isVisible) {
+        if (activeToolName === TOOL_NAME || activeToolName === defaultTool) {
+          setToolModeAndGroup(store, defaultTool);
+        }
+      }
+    };
+
+    window.addEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
+    return () => {
+      window.removeEventListener(Events.VISIBILITY_CHANGED, onVisibilityChanged);
+    };
+  }, []);
+
   const dispatch = useDispatch();
 
   const setSignature = useCallback(async (index) => {
     const { fullSignature } = savedSignaturesAndInitials[index];
     const { annotation } = fullSignature;
     dispatch(actions.setSelectedDisplayedSignatureIndex(index));
-    core.setToolMode('AnnotationCreateSignature');
+    core.setToolMode(TOOL_NAME);
     for (const signatureTool of signatureToolArray) {
       await signatureTool.setSignature(annotation);
       if (signatureTool.hasLocation()) {
@@ -96,7 +118,7 @@ const SignatureListPanel = ({ panelSize }) => {
     const { initials } = savedSignaturesAndInitials[index];
     const { annotation } = initials;
     dispatch(actions.setSelectedDisplayedSignatureIndex(index));
-    core.setToolMode('AnnotationCreateSignature');
+    core.setToolMode(TOOL_NAME);
     for (const signatureTool of signatureToolArray) {
       await signatureTool.setInitials(annotation);
       if (signatureTool.hasLocation()) {

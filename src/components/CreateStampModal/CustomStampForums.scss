@@ -14,7 +14,7 @@ $container-margin: 16px;
     padding: 4px 8px;
     .scroll-container {
       width: 100%;
-      max-height: 50vh;
+      max-height: 50%;
       padding-bottom: 0;
       margin-bottom: 0;
       overflow-y: auto;
@@ -110,7 +110,6 @@ $container-margin: 16px;
   .stamp-input-container{
     margin-top: $container-margin;
     padding: 0px;
-    height: 52px;
     .text-customstamp-input {
       width: 100%;
       padding: 6px;
@@ -181,7 +180,6 @@ $container-margin: 16px;
           max-height: 200px;
         }
         z-index: 101;
-        bottom: 100%;
         top: auto;
         left: 0;
         right: auto;
@@ -266,7 +264,6 @@ $container-margin: 16px;
           bottom: auto;
           height: 200px;
         }
-        bottom: 100%;
         top: auto;
         left: 0;
         right: auto;

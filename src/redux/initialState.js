@@ -1991,6 +1991,7 @@ export default {
     standardStamps: [],
     customStamps: [],
     selectedStampIndex: 0,
+    lastSelectedStampIndex: 0,
     signatureMode: SignatureModes.FULL_SIGNATURE,
     savedSignatures: [],
     savedInitials: [],

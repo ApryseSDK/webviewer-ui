@@ -72,19 +72,32 @@ const ToolButton = (props) => {
   const isToolInActiveGroupedItems = groupedItem && activeGroupedItems.includes(groupedItem);
   const [isButtonActive, setIsButtonActive] = useState(isActive && (isToolInActiveGroupedItems || !groupedItem));
 
+  const isToolWithPanelAssociatedActive = (toolName, activeTool) => {
+    const isDefaultToolActive = activeTool === defaultTool;
+    const isActiveToolSameOfToolName = activeTool === toolName;
+    if (isDefaultToolActive || isActiveToolSameOfToolName) {
+      if (toolName === ToolNames.SIGNATURE) {
+        return isSignatureListPanelOpen;
+      }
+      if (toolName === ToolNames.RUBBER_STAMP) {
+        return isRubberStampPanelOpen;
+      }
+    }
+    return false;
+  };
+
   useEffect(() => {
     const handleToolModeChange = (tool) => {
       // prevent edit tool from deactivating when text is hovered
       const isEditToolAndItIsActive = toolName === ToolNames.EDIT && lastPickedToolAndGroup.tool === ToolNames.EDIT;
-      const isSignatureListPanelActive = (toolName === ToolNames.SIGNATURE || toolName === defaultTool) && isSignatureListPanelOpen;
-      if (tool.name === toolName || (isEditToolAndItIsActive && tool.name === ToolNames.TEXT_SELECT) || isSignatureListPanelActive) {
+      const isSignatureToolActive = isToolWithPanelAssociatedActive(toolName, tool.name);
+      const isRubberStampToolActive = isToolWithPanelAssociatedActive(toolName, tool.name);
+      const shouldActivateButton = tool.name === toolName || (isEditToolAndItIsActive && tool.name === ToolNames.TEXT_SELECT) || isSignatureToolActive || isRubberStampToolActive;
+
+      if (shouldActivateButton) {
         setIsButtonActive(true);
       } else {
         setIsButtonActive(false);
-      }
-
-      if (tool.name === toolName && tool.name === ToolNames.SIGNATURE) {
-        dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
       }
     };
 

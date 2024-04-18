@@ -6,7 +6,7 @@ import { disableElements, enableElements, setActiveFlyout } from 'actions/intern
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
-import { getGenericPanels } from 'selectors/exposedSelectors';
+import { getGenericPanels, getOpenGenericPanel } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
 import { ITEM_TYPE } from 'constants/customizationVariables';
 import pick from 'lodash/pick';
@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import selectors from 'selectors';
 import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
 import { getModularItem, getNestedGroupedItems } from 'helpers/modularUIHelpers';
+import { isMobile } from 'helpers/device';
 
 export const setScaleOverlayPosition = (position) => ({
   type: 'SET_SCALE_OVERLAY_POSITION',
@@ -365,6 +366,10 @@ export const setSelectedStampIndex = (index) => ({
   type: 'SET_SELECTED_STAMP_INDEX',
   payload: { index },
 });
+export const setLastSelectedStampIndex = (index) => ({
+  type: 'SET_LAST_SELECTED_STAMP_INDEX',
+  payload: { index },
+});
 export const setOutlineControlVisibility = (outlineControlVisibility) => ({
   type: 'SET_OUTLINE_CONTROL_VISIBILITY',
   payload: { outlineControlVisibility },
@@ -538,6 +543,14 @@ export const openElement = (dataElement) => (dispatch, getState) => {
     const genericPanelsInSameLocation = state.viewer.genericPanels.filter((item) => item.location === genericPanel?.location && item.dataElement !== genericPanel?.dataElement);
     genericPanelsInSameLocation.forEach((item) => keys.push(item.dataElement));
     dispatch(closeElements(keys));
+  }
+
+  // In the mobile UI, we can have only one panel open at a time
+  if (genericPanel && isMobile()) {
+    const openGenericPanel = getOpenGenericPanel(state);
+    if (openGenericPanel) {
+      dispatch(closeElement(openGenericPanel));
+    }
   }
 
   if (isDataElementLeftPanel(dataElement, state) && dataElement !== DataElements.NOTES_PANEL) {

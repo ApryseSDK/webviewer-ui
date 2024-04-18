@@ -15,6 +15,7 @@ export default (dispatch, store) => (newTool, oldTool) => {
   const state = store.getState();
   const activeToolGroup = selectors.getActiveToolGroup(state);
   const activeToolName = selectors.getActiveToolName(state);
+  const selectedStampIndex = selectors.getSelectedStampIndex(state);
   // If we are in the modular UI and switch out of the rubber stamp tool, we need to re-set the active stamp index
   const isCustomizableUI = state.featureFlags.customizableUI;
 
@@ -23,6 +24,7 @@ export default (dispatch, store) => (newTool, oldTool) => {
     const isLastPickedGroupUndefined = activeGroupedItems?.every((group) => group === undefined);
 
     if (oldTool.name === ToolNames.RUBBER_STAMP) {
+      dispatch(actions.setLastSelectedStampIndex(selectedStampIndex));
       dispatch(actions.setSelectedStampIndex(null));
     }
     if (newTool.name === ToolNames.EDIT || isLastPickedGroupUndefined) {

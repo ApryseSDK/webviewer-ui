@@ -5,6 +5,8 @@ import initialState from 'src/redux/initialState';
 import rootReducer from 'reducers/rootReducer';
 import App from 'components/App';
 import RubberStampPanel from './RubberStampPanel';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import PropTypes from 'prop-types';
 
 export default {
   title: 'ModularComponents/RubberStampPanel',
@@ -19,11 +21,15 @@ const createStore = (preloadedState) => {
   });
 };
 
-const MockApp = ({ initialState }) => (
-  <Provider store={createStore(initialState)}>
+const MockApp = ({ store }) => (
+  <Provider store={store}>
     <App removeEventHandlers={() => { }} />
   </Provider>
 );
+
+MockApp.propTypes = {
+  store: PropTypes.object.isRequired,
+};
 
 const RubberStampPanelInApp = (location,) => {
   const mockState = {
@@ -56,11 +62,15 @@ const RubberStampPanelInApp = (location,) => {
       customizableUI: true,
     },
   };
-  return <MockApp initialState={mockState} />;
+  const store = createStore(mockState);
+  setItemToFlyoutStore(store);
+
+  return <MockApp store={store} />;
 };
 
 export const RubberStampPanelInleft = () => RubberStampPanelInApp('left');
 export const RubberStampPanelInRight = () => RubberStampPanelInApp('right');
+export const RubberStampPanelInMobile = () => RubberStampPanelInApp();
 
 RubberStampPanelInleft.parameters = {
   layout: 'fullscreen',
@@ -68,3 +78,4 @@ RubberStampPanelInleft.parameters = {
 RubberStampPanelInRight.parameters = {
   layout: 'fullscreen',
 };
+RubberStampPanelInMobile.parameters = window.storybook.MobileParameters;

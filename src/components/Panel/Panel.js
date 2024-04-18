@@ -73,41 +73,39 @@ const DesktopPanel = ({ children }) => {
   };
 
   return (
-    <>
-      <div
-        className={classNames({
-          'flx-Panel': true,
-          'closed': !isVisible,
-          'left': isLeftSide,
-          'right': isRightSide,
-          'tools-header-open': customizableUI ? activeTopHeaders.length === 2 : legacyToolsHeaderOpen,
-          'tools-header-and-header-hidden': customizableUI ? activeTopHeaders.length === 0 : legacyAllHeadersHidden,
-          'logo-bar-enabled': isLogoBarEnabled,
-        })}
-        data-element={dataElement}
-      >
-        {isCustom && location === 'right' && !isInDesktopOnlyMode && !isMobile &&
-          <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize}
-            leftDirection={true} />}
-        <div className={`flx-Panel-container ${dataElement}`} style={style}>
-          {!isInDesktopOnlyMode && isMobile && (
-            <div className="close-container">
-              <div
-                className="close-icon-container"
-                onClick={() => {
-                  dispatch(actions.closeElements([dataElement]));
-                }}
-              >
-                <Icon glyph="ic_close_black_24px" className="close-icon" />
-              </div>
+    <div
+      className={classNames({
+        'flx-Panel': true,
+        'closed': !isVisible,
+        'left': isLeftSide,
+        'right': isRightSide,
+        'tools-header-open': customizableUI ? activeTopHeaders.length === 2 : legacyToolsHeaderOpen,
+        'tools-header-and-header-hidden': customizableUI ? activeTopHeaders.length === 0 : legacyAllHeadersHidden,
+        'logo-bar-enabled': isLogoBarEnabled,
+      })}
+      data-element={dataElement}
+    >
+      {isCustom && location === 'right' && !isInDesktopOnlyMode && !isMobile &&
+        <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize}
+          leftDirection={true} />}
+      <div className={`flx-Panel-container ${dataElement}`} style={style}>
+        {!isInDesktopOnlyMode && isMobile && (
+          <div className="close-container">
+            <div
+              className="close-icon-container"
+              onClick={() => {
+                dispatch(actions.closeElements([dataElement]));
+              }}
+            >
+              <Icon glyph="ic_close_black_24px" className="close-icon" />
             </div>
-          )}
-          {children}
-        </div>
-        {isCustom && location === 'left' && !isInDesktopOnlyMode && !isMobile &&
-          <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize} />}
+          </div>
+        )}
+        {children}
       </div>
-    </>
+      {isCustom && location === 'left' && !isInDesktopOnlyMode && !isMobile &&
+        <ResizeBar minWidth={panelMinWidth} dataElement={`${dataElement}ResizeBar`} onResize={onResize} />}
+    </div>
   );
 };
 
@@ -140,21 +138,24 @@ const Panel = (props) => {
     location: location,
   });
 
-  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST];
+  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP];
 
-  if (isMobile && panelsWithMobileVersion.includes(dataElement)) {
-    isOpen && dispatch(actions.openElement('MobilePanelWrapper'));
+  if (isOpen) {
+    if (isMobile && panelsWithMobileVersion.includes(dataElement)) {
+      dispatch(actions.openElement('MobilePanelWrapper'));
+      return (
+        <MobilePanelWrapper>
+          {props.children}
+        </MobilePanelWrapper>
+      );
+    }
     return (
-      <MobilePanelWrapper>
-        {props.children}
-      </MobilePanelWrapper>
+      <DesktopPanel>
+        {children}
+      </DesktopPanel>
     );
   }
-  return (
-    <DesktopPanel>
-      {children}
-    </DesktopPanel>
-  );
+  return null;
 };
 
 Panel.propTypes = {

@@ -10,8 +10,6 @@
     font-weight: 700;
   }
 
-
-
   .CreateRubberStampButton {
     width: 100%;
     padding: 8px;
@@ -27,7 +25,7 @@
   }
 
   .rubber-stamps-container {
-    overflow-y: scroll;
+    overflow: auto;
     padding: 0px 4px;
 
     .rubber-stamps-list-header {
@@ -69,12 +67,11 @@
         &.active {
           background: var(--tools-overlay-button-active);
         }
-
-        &.active {
-          background: var(--tools-overlay-button-active);
-        }
-
       }
+    }
+
+    .collapsible-page-group-header {
+      align-items: center;
     }
   }
 
@@ -99,5 +96,57 @@
     }
   }
 
+  @include mobile {
+    width: 100%;
+
+    .rubber-stamp-panel-header {
+      margin: 0 16px 16px 16px;
+    }
+
+    [data-element="createRubberStampButton"] {
+      padding: 0 16px;
+  
+      .CreateRubberStampButton {
+        margin-top: 0;
+      }
+    }
+
+    &.small-size {
+      .CreateRubberStampButton,
+      .Divider,
+      .collapsible-page-group-header,
+      .rubber-stamps-list-header {
+        display: none;
+      }
+    }
+
+    .rubber-stamps-container {
+      position: relative;
+      padding: 0 14px;
+      padding-bottom: 16px;
+      overflow-y: scroll;
+
+      &.small-size {
+        overflow: hidden;
+      }
+
+      .rubber-stamps-list {
+          .rubber-stamp,
+          .icon-button {
+            &:hover {
+              background-color: var(--gray-0);
+            }
+  
+            &.active {
+              background: var(--tools-overlay-button-active);
+            }
+        }
+      }
+
+      .Divider {
+        margin: 0;
+      }
+    }
+  }
 
 }

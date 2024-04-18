@@ -4,7 +4,7 @@ import { panelNames } from 'constants/panel';
 const { checkTypes, TYPES } = window.Core;
 
 const panelItemType = TYPES.OBJECT({
-  dataElement: TYPES.OPTIONAL(TYPES.STRING),
+  dataElement: TYPES.STRING,
   icon: TYPES.OPTIONAL(TYPES.STRING),
   label: TYPES.OPTIONAL(TYPES.STRING),
   render: TYPES.MULTI_TYPE(

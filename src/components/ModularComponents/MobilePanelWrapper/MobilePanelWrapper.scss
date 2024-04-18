@@ -11,7 +11,7 @@
   z-index: 100;
   width: 100%;
   height: 100%;
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -31,19 +31,32 @@
     overflow: hidden;
   }
 
-  .swipe-indicator {
-    background: var(--divider);
-    border-radius: 2px;
-    height: 4px;
-    width: 38px;
-    position: absolute;
-    top: 3px;
-    margin: 10px auto;
-    left: 0;
-    right: 0;
-
-    @include tablet-and-desktop {
-      display: none;
-    }
+  .mobile-panel-body {
+    top: -30px;
+    position: relative;
   }
+
+ .swipe-indicator-wrapper {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    top: 0;
+    z-index: 1;
+    
+    .swipe-indicator {
+      background: var(--divider);
+      border-radius: 2px;
+      height: 4px;
+      width: 38px;
+      position: absolute;
+      top: 3px;
+      margin: 10px auto;
+      left: 0;
+      right: 0;
+      
+      @include tablet-and-desktop {
+        display: none;
+      }
+    }
+  } 
 }

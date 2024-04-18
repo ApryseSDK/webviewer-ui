@@ -18,6 +18,7 @@ test.describe('Flyout Menu', () => {
     for (let i = 0; i < buttons.length; i++) {
       const button = await iframe.$(`button[data-element=${buttons[i]}]`);
       await button.click();
+      await page.waitForTimeout(50);
       const currentFlyoutMenu = await iframe.$('.Overlay.FlyoutMenu');
       const body = await iframe.$('body');
       const flyoutMenuPos = await currentFlyoutMenu.boundingBox();

@@ -7,12 +7,11 @@ import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import defaultTool from 'constants/defaultTool';
 
-const ToolNames = window.Core.Tools.ToolNames;
-
 export default function useOnAnnotationCreateRubberStampToolMode() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const { customizableUI } = useSelector((state) => selectors.getFeatureFlags(state));
+  const { ToolNames } = window.Core.Tools;
 
   // Load all the stamps into redux store when the app mounts
   React.useEffect(() => {
@@ -27,7 +26,7 @@ export default function useOnAnnotationCreateRubberStampToolMode() {
       const handleToolModeUpdated = (newTool) => {
         if (newTool?.name === ToolNames.RUBBER_STAMP) {
           dispatch(actions.openElement(DataElements.RUBBER_STAMP_PANEL));
-        } else if (newTool?.name !== defaultTool && newTool?.name !== ToolNames.TEXT_SELECT) {
+        } else if (newTool?.name !== ToolNames.EDIT && newTool?.name !== ToolNames.TEXT_SELECT && newTool?.name !== defaultTool) {
           dispatch(actions.closeElement(DataElements.RUBBER_STAMP_PANEL));
         }
       };

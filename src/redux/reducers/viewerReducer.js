@@ -272,6 +272,11 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         selectedStampIndex: payload.index,
       };
+    case 'SET_LAST_SELECTED_STAMP_INDEX':
+      return {
+        ...state,
+        lastSelectedStampIndex: payload.index,
+      };
     case 'SET_SELECTED_DISPLAYED_SIGNATURE_INDEX':
       return {
         ...state,

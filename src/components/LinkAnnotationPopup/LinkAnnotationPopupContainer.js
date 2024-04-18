@@ -4,7 +4,7 @@ import core from 'core';
 import DataElements from 'constants/dataElement';
 import DataElementWrapper from '../DataElementWrapper';
 import { getAnnotationPopupPositionBasedOn } from 'helpers/getPopupPosition';
-import { isMobileDevice } from 'helpers/device';
+import { isMobileSize } from 'helpers/getDeviceSize';
 import LinkAnnotationPopup from './LinkAnnotationPopup';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
@@ -20,6 +20,7 @@ import {
   shallowEqual,
   useDispatch
 } from 'react-redux';
+import getGroupedLinkAnnotations from 'src/helpers/getGroupedLinkAnnotations';
 
 const { Annotations } = window.Core;
 
@@ -31,14 +32,15 @@ const propTypes = {
 
 export const deleteLinkAnnotationWithGroup = (annotation, activeDocumentViewerKey = 1) => {
   const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
-  const linkAnnotations = annotationManager.getGroupAnnotations(annotation);
-  linkAnnotations.forEach((linkAnnot, index) => {
+  const textHighlightAnnotation = annotationManager.getGroupAnnotations(annotation).find((annot, index) => annot instanceof Annotations.TextHighlightAnnotation && annot.Opacity === 0 && index === 0);
+  const linkAnnotations = getGroupedLinkAnnotations(annotation);
+  linkAnnotations.forEach((linkAnnot) => {
     annotationManager.ungroupAnnotations([linkAnnot]);
-    if (linkAnnot instanceof Annotations.TextHighlightAnnotation && linkAnnot.Opacity === 0 && index === 0) {
-      annotationManager.deleteAnnotation(linkAnnot, null, true);
+    if (textHighlightAnnotation) {
+      annotationManager.deleteAnnotation(linkAnnot, { 'source': 'unlink' }, true);
     }
   });
-  annotationManager.deleteAnnotation(annotation, null, true);
+  annotationManager.deleteAnnotation(annotation, { 'source': 'unlink' }, true);
 };
 
 const LinkAnnotationPopupContainer = ({
@@ -123,7 +125,7 @@ const LinkAnnotationPopupContainer = ({
         linkText={contents}
         handleUnLink={handleUnLink}
         isAnnotation={isAnnotation}
-        isMobileDevice={isMobileDevice}
+        isMobileDevice={isMobileSize()}
         handleOnMouseEnter={handleOnMouseEnter}
         handleOnMouseLeave={handleOnMouseLeave}
         handleMouseMove={handleMouseMove}

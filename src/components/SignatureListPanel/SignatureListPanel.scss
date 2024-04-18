@@ -157,7 +157,6 @@
 
   @include mobile {
     width: 100%;
-    top: 20px;
     position: relative;
 
     &.small-size {
@@ -182,10 +181,15 @@
       padding: 0 16px;
     }
 
-    .signature-row {
-      justify-content: center;
-      margin-top: 0;
-      margin-bottom: 8px;
+    .signature-list {
+      padding-bottom: 16px;
+      position: relative;
+      
+      .signature-row {
+        justify-content: center;
+        margin-top: 0;
+        margin-bottom: 8px;
+      }
     }
   }
 }
