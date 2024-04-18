@@ -50,7 +50,7 @@ test.describe('Link Annotation Popup', () => {
     expect(annotDeletedCount).toBe(1);
   });
 
-  test.skip('clicking on unlink button should keep annotation grouped', async ({ page }) => {
+  test('clicking on unlink button should keep annotation grouped', async ({ page }) => {
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
     const instance = await waitForInstance();
     await page.waitForTimeout(3000);
