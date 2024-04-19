@@ -8,6 +8,7 @@ import getAnnotationCreateToolNames from 'helpers/getAnnotationCreateToolNames';
 import { hexToRGBA } from 'helpers/color';
 import getToolStyles from 'helpers/getToolStyles';
 import setToolStyles from 'helpers/setToolStyles';
+import adjustFreeTextBoundingBox from 'helpers/adjustFreeTextBoundingBox';
 import core from 'core';
 import { getDataWithKey, mapToolNameToKey } from 'constants/map';
 import handleFreeTextAutoSizeToggle from 'helpers/handleFreeTextAutoSizeToggle';
@@ -275,7 +276,6 @@ const StylePanel = () => {
     }
   }, [isPanelOpen, isAutoSizeFont]);
 
-
   const onStyleChange = (property, value) => {
     const newStyle = { ...style };
     newStyle[property] = value;
@@ -305,6 +305,11 @@ const StylePanel = () => {
           }
         } else {
           annot[property] = value;
+          if (annot instanceof Annotations.FreeTextAnnotation) {
+            if (property === 'FontSize' || property === 'Font' || property === 'StrokeThickness') {
+              adjustFreeTextBoundingBox(annot);
+            }
+          }
           if (isAnnotationToolStyleSyncingEnabled) {
             setToolStyles(annot.ToolName, property, value);
           }
@@ -398,7 +403,7 @@ const StylePanel = () => {
   const handleRichTextStyleChange = (property, value) => {
     const originalProperty = property;
     const originalValue = value;
-    const activeToolRichTextStyle = style['RichTextStyle'][0];
+    const activeToolRichTextStyle = style['RichTextStyle']?.[0];
     if (property === 'underline' || property === 'line-through') {
       value = getTextDecoration({ [property]: value }, activeToolRichTextStyle);
       property = 'text-decoration';

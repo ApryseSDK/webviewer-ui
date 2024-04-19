@@ -9,6 +9,7 @@ import core from 'core';
 import getClassName from 'helpers/getClassName';
 import setToolStyles from 'helpers/setToolStyles';
 import { isMobile } from 'helpers/device';
+import adjustFreeTextBoundingBox from 'helpers/adjustFreeTextBoundingBox';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
@@ -58,22 +59,13 @@ const AnnotationStylePopup = (props) => {
   const [t] = useTranslation();
   const [isAutoSizeFont, setAutoSizeFont] = useState(properties.isAutoSizeFont);
 
-  const adjustFreeTextBoundingBox = (annotation) => {
-    const { FreeTextAnnotation } = window.Core.Annotations;
-    if (annotation instanceof FreeTextAnnotation && annotation.getAutoSizeType() !== FreeTextAnnotation.AutoSizeTypes.NONE) {
-      const doc = core.getDocument(activeDocumentViewerKey);
-      const pageNumber = annotation['PageNumber'];
-      const pageInfo = doc.getPageInfo(pageNumber);
-      const pageMatrix = doc.getPageMatrix(pageNumber);
-      const pageRotation = doc.getPageRotation(pageNumber);
-      annotation.fitText(pageInfo, pageMatrix, pageRotation);
-    }
-  };
-
   const handleSliderChange = (property, value) => {
     const annotationManager = core.getAnnotationManager(activeDocumentViewerKey);
     annotations.forEach((annotation) => {
       annotation[property] = value;
+      if (property === 'StrokeThickness') {
+        adjustFreeTextBoundingBox(annotation);
+      }
       annotationManager.redrawAnnotation(annotation);
     });
   };

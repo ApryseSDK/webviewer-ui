@@ -11,6 +11,7 @@ import HorizontalDivider from 'components/HorizontalDivider';
 import { isMobile } from 'helpers/device';
 import core from 'core';
 import getRichTextPopupPosition from 'helpers/getRichTextPopupPosition';
+import adjustFreeTextBoundingBox from 'helpers/adjustFreeTextBoundingBox';
 import MathSymbolsPicker from '../MathSymbolsPicker';
 import ColorPalettePicker from 'components/ColorPalettePicker';
 
@@ -70,6 +71,7 @@ const RichTextPopup = ({ annotation, editor }) => {
   useEffect(() => {
     // Have to disable instead of closing because annotation popup will reopen itself
     dispatch(actions.disableElements([DataElements.ANNOTATION_STYLE_POPUP]));
+    dispatch(actions.closeElement(DataElements.ANNOTATION_POPUP));
     return () => {
       dispatch(actions.enableElements([DataElements.ANNOTATION_STYLE_POPUP]));
     };
@@ -274,18 +276,6 @@ const RichTextPopup = ({ annotation, editor }) => {
   const openTextStyle = () => toggleMenuItem(DataElements.STYLE_POPUP_TEXT_STYLE_CONTAINER);
   const openColors = () => toggleMenuItem(DataElements.STYLE_POPUP_COLORS_CONTAINER);
 
-  const adjustFreeTextBoundingBox = (annotation) => {
-    const { FreeTextAnnotation } = window.Core.Annotations;
-    if (annotation instanceof FreeTextAnnotation && annotation.getAutoSizeType() !== FreeTextAnnotation.AutoSizeTypes.NONE) {
-      const doc = core.getDocument();
-      const pageNumber = annotation['PageNumber'];
-      const pageInfo = doc.getPageInfo(pageNumber);
-      const pageMatrix = doc.getPageMatrix(pageNumber);
-      const pageRotation = doc.getPageRotation(pageNumber);
-      annotation.fitText(pageInfo, pageMatrix, pageRotation);
-    }
-  };
-
   const onPropertyChange = (property, value) => {
     const { index, length } = editorRef.current.getSelection();
     const annotation = annotationRef.current;
@@ -312,6 +302,11 @@ const RichTextPopup = ({ annotation, editor }) => {
     };
     if (property === 'font-family' || property === 'font-size') {
       applyFormat(propertyTranslation[property], value);
+      const annotation = annotationRef.current;
+      if (annotation.isAutoSized()) {
+        const editBoxManager = core.getAnnotationManager().getEditBoxManager();
+        editBoxManager.resizeAnnotation(annotation);
+      }
     } else {
       handleTextFormatChange(propertyTranslation[property])();
     }

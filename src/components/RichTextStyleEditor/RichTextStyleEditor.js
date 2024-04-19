@@ -8,6 +8,7 @@ import selectors from 'selectors';
 import './RichTextStyleEditor.scss';
 import DataElements from 'constants/dataElement';
 import TextStylePicker from 'components/TextStylePicker';
+import adjustFreeTextBoundingBox from 'helpers/adjustFreeTextBoundingBox';
 
 const propTypes = {
   annotation: PropTypes.object,
@@ -208,18 +209,6 @@ const RichTextStyleEditor = ({
     });
   };
 
-  const adjustFreeTextBoundingBox = (annotation) => {
-    const { FreeTextAnnotation } = window.Core.Annotations;
-    if (annotation instanceof FreeTextAnnotation && annotation.getAutoSizeType() !== FreeTextAnnotation.AutoSizeTypes.NONE) {
-      const doc = core.getDocument();
-      const pageNumber = annotation['PageNumber'];
-      const pageInfo = doc.getPageInfo(pageNumber);
-      const pageMatrix = doc.getPageMatrix(pageNumber);
-      const pageRotation = doc.getPageRotation(pageNumber);
-      annotation.fitText(pageInfo, pageMatrix, pageRotation);
-    }
-  };
-
   // onPropertyChange
   const handlePropertyChange = (property, value) => {
     if (!richTextEditModeRef.current) {
@@ -259,6 +248,11 @@ const RichTextStyleEditor = ({
     };
     if (property === 'font-family' || property === 'font-size') {
       applyFormat(propertyTranslation[property], value);
+      const freeText = annotationRef.current;
+      if (freeText.isAutoSized()) {
+        const editBoxManager = core.getAnnotationManager().getEditBoxManager();
+        editBoxManager.resizeAnnotation(freeText);
+      }
     } else {
       handleTextFormatChange(propertyTranslation[property])();
     }
@@ -267,7 +261,7 @@ const RichTextStyleEditor = ({
   let properties = {};
 
   const { RichTextStyle } = style;
-  const defulats = {
+  const defaults = {
     bold: RichTextStyle?.[0]?.['font-weight'] === 'bold' ?? false,
     italic: RichTextStyle?.[0]?.['font-style'] === 'italic' ?? false,
     underline: RichTextStyle?.[0]?.['text-decoration']?.includes('underline') || RichTextStyle?.[0]?.['text-decoration']?.includes('word'),
@@ -279,7 +273,7 @@ const RichTextStyleEditor = ({
 
   properties = {
     ...style,
-    ...defulats,
+    ...defaults,
   };
 
   if (isRichTextEditMode && annotation) {
