@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector, shallowEqual } from 'react-redux';
+import selectors from 'selectors';
 import Dropdown from 'components/Dropdown';
+import core from 'core';
+import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
 
 import './TrackChangeOverlay.scss';
 
 const items = [
   {
-    key: 'editing',
+    key: OFFICE_EDITOR_EDIT_MODE.EDITING,
     description: 'editingDescription',
   },
   {
-    key: 'reviewing',
+    key: OFFICE_EDITOR_EDIT_MODE.REVIEWING,
     description: 'reviewingDescription',
   },
   {
-    key: 'viewOnly',
+    key: OFFICE_EDITOR_EDIT_MODE.VIEW_ONLY,
     description: 'viewOnlyDescription',
   }
 ];
@@ -22,8 +26,14 @@ const translationPrefix = 'officeEditor.';
 
 const TrackChangeOverlay = () => {
   const [t] = useTranslation();
-
-  const [currentSelectionKey, setCurrentSelectionKey] = useState('editing');
+  const [
+    editMode,
+  ] = useSelector(
+    (state) => [
+      selectors.getOfficeEditorEditMode(state),
+    ],
+    shallowEqual
+  );
 
   const renderDropdownItem = (item) => (
     <div className='Dropdown__item-TrackChange'>
@@ -32,10 +42,8 @@ const TrackChangeOverlay = () => {
     </div>
   );
 
-  const onClickItem = (key) => {
-    // Below is for testing, later need to call 'setCurrentSelectionKey()' only when mode changes in Core.
-    setCurrentSelectionKey(key);
-    // Need to hook up with Core APIs here
+  const onClickItem = (mode) => {
+    core.getOfficeEditor().setEditMode(mode);
   };
 
   return (
@@ -44,7 +52,7 @@ const TrackChangeOverlay = () => {
         items={items}
         getCustomItemStyle={() => ({ width: '144px', height: '48px' })}
         applyCustomStyleToButton={false}
-        currentSelectionKey={currentSelectionKey}
+        currentSelectionKey={editMode}
         onClickItem={onClickItem}
         getDisplayValue={(item) => t(`${translationPrefix}${item.key}`)}
         getKey={(item) => item.key}

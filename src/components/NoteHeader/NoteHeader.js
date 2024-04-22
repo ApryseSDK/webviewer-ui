@@ -162,7 +162,7 @@ function NoteHeader(props) {
                 isReply={isReply}
               />
             }
-            {isTrackedChange &&
+            {isSelected && isTrackedChange &&
               <>
                 <div
                   className="tracked-change-icon-wrapper"

@@ -777,6 +777,11 @@ export const setIsOfficeEditorMode = (isOfficeEditorMode) => ({
   payload: { isOfficeEditorMode }
 });
 
+export const setOfficeEditorEditMode = (editMode) => ({
+  type: 'SET_OFFICE_EDITOR_EDIT_MODE',
+  payload: { editMode }
+});
+
 export const growCustomElement = (dataElement) => (dispatch, getState) => {
   const currentSize = getState().viewer.customElementSizes[dataElement] || 0;
   const newSize = currentSize + 1;

@@ -94,6 +94,7 @@ export function BasicWithAnnotationNumbering() {
 export const testPropsWithTrackedChange = {
   ...testProps,
   isTrackedChange: true,
+  isSelected: true
 };
 
 export function BasicWithTrackedChange() {

@@ -851,6 +851,8 @@ export const getOfficeEditorCursorProperties = (state) => state.officeEditor.cur
 
 export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.selectionProperties;
 
+export const getOfficeEditorEditMode = (state) => state.officeEditor.editMode;
+
 export const getAvailableFontFaces = (state) => state.officeEditor.availableFontFaces;
 
 export const getCSSFontValues = (state) => state.officeEditor.cssFontValues;
