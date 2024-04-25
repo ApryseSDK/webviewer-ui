@@ -258,12 +258,12 @@ const OfficeEditorToolsHeader = () => {
       dispatch(actions.setOfficeEditorSelectionProperties(selectionProperties));
     };
 
-    core.getDocument()?.addEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
+    core.getDocument().addEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
     core.getDocument()?.addEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
 
     return () => {
-      core.getDocument()?.removeEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
-      core.getDocument()?.removeEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
+      core.getDocument().removeEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
+      core.getDocument().removeEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
     };
   }, []);
 
