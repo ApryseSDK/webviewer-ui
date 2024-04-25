@@ -7,6 +7,7 @@ module.exports = {
     "../src/**/*.stories.mdx",
     "../src/**/*.stories.@(js|jsx|ts|tsx)"
   ],
+  staticDirs: ['./static'],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials"
@@ -17,7 +18,7 @@ module.exports = {
     // 'PRODUCTION' is used when building the static version of storybook.
 
     const svgRule = config.module.rules.find((rule) => 'test.svg'.match(rule.test));
-    svgRule.exclude = [ appDirectory ];
+    svgRule.exclude = [appDirectory];
 
     config.module.rules.push({
       test: /\.scss$/,
@@ -71,4 +72,5 @@ module.exports = {
 
     return config;
   },
+  framework: '@storybook/react',
 }
