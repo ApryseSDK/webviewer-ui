@@ -345,7 +345,7 @@ const OfficeEditorToolsHeader = () => {
   const listType = properties.paragraphProperties.listType;
 
   const isLightMode = activeTheme === Theme.LIGHT;
-  const wvFontColor = convertCoreColorToWebViewerColor(cursorProperties.color);
+  const wvFontColor = convertCoreColorToWebViewerColor(properties.color);
   const useColorIconBorder = isLightMode ? wvFontColor.toString() === 'rgba(255,255,255,1)' : wvFontColor.toString() === 'rgba(0,0,0,1)';
 
   const convertCursorToStylePreset = (cursorProperties) => {
