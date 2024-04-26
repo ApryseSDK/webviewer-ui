@@ -86,6 +86,14 @@ const ToolButton = (props) => {
     return false;
   };
 
+  const checkIfNeedsToOpenAPanel = (toolName) => {
+    if (toolName === ToolNames.SIGNATURE) {
+      dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
+    } else if (toolName === ToolNames.RUBBER_STAMP) {
+      dispatch(actions.openElement(DataElements.RUBBER_STAMP_PANEL));
+    }
+  };
+
   useEffect(() => {
     const handleToolModeChange = (tool) => {
       // prevent edit tool from deactivating when text is hovered
@@ -123,6 +131,7 @@ const ToolButton = (props) => {
       setIsButtonActive(true);
       if (lastPickedToolAndGroup?.tool !== activeToolName) {
         core.setToolMode(toolName);
+        checkIfNeedsToOpenAPanel(toolName);
       }
     } else {
       setIsButtonActive(false);
@@ -132,7 +141,7 @@ const ToolButton = (props) => {
   const setToolMode = (toolName) => {
     dispatch(actions.setLastPickedToolAndGroup({
       tool: toolName,
-      group: [groupedItem]
+      group: activeGroupedItems
     }));
     core.setToolMode(toolName === ToolNames.SIGNATURE || toolName === ToolNames.RUBBER_STAMP ? defaultTool : toolName);
   };
@@ -159,12 +168,7 @@ const ToolButton = (props) => {
 
         setToolMode(defaultTool);
       } else {
-        if (toolName === ToolNames.SIGNATURE) {
-          dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
-        } else if (toolName === ToolNames.RUBBER_STAMP) {
-          dispatch(actions.openElement(DataElements.RUBBER_STAMP_PANEL));
-        }
-        dispatch(actions.setLastPickedToolForGroupedItems(groupedItem, toolName));
+        checkIfNeedsToOpenAPanel(toolName);
         setToolMode(toolName);
       }
     } else {

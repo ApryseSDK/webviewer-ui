@@ -7,7 +7,9 @@ import rootReducer from 'reducers/rootReducer';
 import App from 'components/App';
 import Panel from 'components/Panel';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import core from 'core';
+import PropTypes from 'prop-types';
 
 export default {
   title: 'ModularComponents/StylePanel',
@@ -52,11 +54,15 @@ const EmptyStylePanel = (location) => {
 export const EmptyStylePanelOnTheLeft = () => EmptyStylePanel('left');
 export const EmptyStylePanelOnTheRight = () => EmptyStylePanel('right');
 
-const MockApp = ({ initialState }) => (
-  <Provider store={createStore(initialState)}>
+const MockApp = ({ store }) => (
+  <Provider store={store}>
     <App removeEventHandlers={() => { }} />
   </Provider>
 );
+
+MockApp.propTypes = {
+  store: PropTypes.object.isRequired,
+};
 
 const StylePanelInApp = (location) => {
   const mockState = {
@@ -78,7 +84,11 @@ const StylePanelInApp = (location) => {
       },
       activeCustomRibbon: 'annotations-ribbon-item',
       lastPickedToolForGroupedItems: {
-        'annotateGroupedItems': '',
+        'annotateGroupedItems': 'AnnotationEdit',
+      },
+      lastPickedToolAndGroup: {
+        tool: 'AnnotationEdit',
+        group: ['annotateGroupedItems'],
       },
       activeGroupedItems: ['annotateGroupedItems'],
     },
@@ -86,11 +96,15 @@ const StylePanelInApp = (location) => {
       customizableUI: true,
     },
   };
-  return <MockApp initialState={mockState} />;
+  const store = createStore(mockState);
+  setItemToFlyoutStore(store);
+
+  return <MockApp store={store} />;
 };
 
 export const StylePanelInAppLeft = () => StylePanelInApp('left');
 export const StylePanelInAppRight = () => StylePanelInApp('right');
+export const StylePanelInAppMobileVersion = () => StylePanelInApp();
 
 StylePanelInAppLeft.parameters = {
   layout: 'fullscreen',
@@ -98,6 +112,7 @@ StylePanelInAppLeft.parameters = {
 StylePanelInAppRight.parameters = {
   layout: 'fullscreen',
 };
+StylePanelInAppMobileVersion.parameters = window.storybook.MobileParameters;
 
 const useToolHook = (toolClass, toolName, setRender, defaults = {}) => {
   useEffect(() => {
@@ -124,6 +139,12 @@ const useToolHook = (toolClass, toolName, setRender, defaults = {}) => {
     };
   }, []);
 };
+
+const FreeTextDefaults = {
+  StrokeStyle: 'solid',
+  Font: 'Helvetica',
+  FontSize: '12pt',
+};
 export const StylePanelShapeTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
   useToolHook(window.Core.Tools.RectangleCreateTool, window.Core.Tools.ToolNames.RECTANGLE, setShouldRender, {
@@ -138,11 +159,7 @@ export const StylePanelMarkupTool = () => {
 };
 export const StylePanelTextTool = () => {
   const [shouldRender, setShouldRender] = useState(false);
-  useToolHook(window.Core.Tools.FreeTextCreateTool, window.Core.Tools.ToolNames.FREETEXT, setShouldRender, {
-    StrokeStyle: 'solid',
-    Font: 'Helvetica',
-    FontSize: '12pt',
-  });
+  useToolHook(window.Core.Tools.FreeTextCreateTool, window.Core.Tools.ToolNames.FREETEXT, setShouldRender, FreeTextDefaults);
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
 export const StylePanelFreehandTool = () => {
@@ -269,3 +286,6 @@ export const StylePanelEraserTool = () => {
   useToolHook(window.Core.Tools.EraserTool, window.Core.Tools.ToolNames.ERASER, setShouldRender);
   return shouldRender ? <StylePanelTemplate/> : <>Loading...</>;
 };
+
+export const StylePanelFreeTextToolMobileVersion = StylePanelTextTool;
+StylePanelFreeTextToolMobileVersion.parameters = window.storybook.MobileParameters;

@@ -138,8 +138,8 @@ const defaultModularComponents = {
     hidden: false,
     type: 'presetButton',
   },
-  'divider-0.6859691489224489': {
-    dataElement: 'divider-0.6859691489224489',
+  'divider-0.1': {
+    dataElement: 'divider-0.1',
     type: 'divider'
   },
   'left-panel-toggle': {
@@ -153,16 +153,16 @@ const defaultModularComponents = {
     dataElement: 'view-controls',
     type: 'viewControls'
   },
-  'divider-0.9187116511264961': {
-    dataElement: 'divider-0.9187116511264961',
+  'divider-0.3': {
+    dataElement: 'divider-0.3',
     type: 'divider'
   },
   'zoom-container': {
     dataElement: 'zoom-container',
     type: 'zoom'
   },
-  'divider-0.3185688355708507': {
-    dataElement: 'divider-0.3185688355708507',
+  'divider-0.2': {
+    dataElement: 'divider-0.2',
     type: 'divider'
   },
   panToolButton: {
@@ -175,10 +175,6 @@ const defaultModularComponents = {
     type: 'toolButton',
     toolName: 'AnnotationEdit'
   },
-  'divider-0.40614555648868866': {
-    dataElement: 'divider-0.40614555648868866',
-    type: 'divider'
-  },
   'menu-toggle-button': {
     dataElement: 'menu-toggle-button',
     img: 'ic-hamburger-menu',
@@ -190,12 +186,12 @@ const defaultModularComponents = {
     dataElement: 'groupedLeftHeaderButtons',
     items: [
       'menu-toggle-button',
-      'divider-0.6859691489224489',
+      'divider-0.1',
       'left-panel-toggle',
       'view-controls',
-      'divider-0.9187116511264961',
+      'divider-0.3',
       'zoom-container',
-      'divider-0.3185688355708507',
+      'divider-0.2',
       'panToolButton',
       'annotationEditToolButton',
     ],
@@ -393,8 +389,8 @@ const defaultModularComponents = {
     type: 'toolButton',
     toolName: 'AnnotationCreateCallout'
   },
-  'divider-0.4011225832731946': {
-    dataElement: 'divider-0.4011225832731946',
+  'divider-0.4': {
+    dataElement: 'divider-0.4',
     type: 'divider'
   },
   stylePanelToggle: {
@@ -404,8 +400,8 @@ const defaultModularComponents = {
     img: 'icon-style-panel-toggle',
     toggleElement: 'stylePanel'
   },
-  'divider-0.5730925860609144': {
-    dataElement: 'divider-0.5730925860609144',
+  'divider-0.5': {
+    dataElement: 'divider-0.5',
     type: 'divider'
   },
   undoButton: {
@@ -426,9 +422,7 @@ const defaultModularComponents = {
   defaultAnnotationUtilities: {
     dataElement: 'defaultAnnotationUtilities',
     items: [
-      'divider-0.4011225832731946',
-      'stylePanelToggle',
-      'divider-0.5730925860609144',
+      'divider-0.5',
       'undoButton',
       'redoButton',
       'eraserToolButton'
@@ -439,8 +433,8 @@ const defaultModularComponents = {
     alwaysVisible: false,
     style: {}
   },
-  annotateGroupedItems: {
-    dataElement: 'annotateGroupedItems',
+  annotateToolsGroupedItems: {
+    dataElement: 'annotateToolsGroupedItems',
     items: [
       'highlightToolButton',
       'underlineToolButton',
@@ -453,7 +447,21 @@ const defaultModularComponents = {
       'markReplaceTextToolButton',
       'stickyToolButton',
       'calloutToolButton',
-      'defaultAnnotationUtilities'
+    ],
+    type: 'groupedItems',
+    justifyContent: 'center',
+    grow: 0,
+    gap: 12,
+    alwaysVisible: false,
+    style: {}
+  },
+  annotateGroupedItems: {
+    dataElement: 'annotateGroupedItems',
+    items: [
+      'annotateToolsGroupedItems',
+      'divider-0.4',
+      'stylePanelToggle',
+      'defaultAnnotationUtilities',
     ],
     type: 'groupedItems',
     justifyContent: 'center',
@@ -502,8 +510,8 @@ const defaultModularComponents = {
     type: 'toolButton',
     toolName: 'AnnotationCreateArrow'
   },
-  shapesGroupedItems: {
-    dataElement: 'shapesGroupedItems',
+  shapesToolsGroupedItems: {
+    dataElement: 'shapesToolsGroupedItems',
     items: [
       'rectangleToolButton',
       'ellipseToolButton',
@@ -513,6 +521,19 @@ const defaultModularComponents = {
       'lineToolButton',
       'polylineToolButton',
       'arrowToolButton',
+    ],
+    type: 'groupedItems',
+    grow: 0,
+    gap: 12,
+    alwaysVisible: false,
+    style: {}
+  },
+  shapesGroupedItems: {
+    dataElement: 'shapesGroupedItems',
+    items: [
+      'shapesToolsGroupedItems',
+      'divider-0.4',
+      'stylePanelToggle',
       'defaultAnnotationUtilities'
     ],
     type: 'groupedItems',
@@ -541,21 +562,26 @@ const defaultModularComponents = {
     type: 'toolButton',
     toolName: 'AnnotationCreateStamp'
   },
-  'divider-0.8473984212444798': {
-    dataElement: 'divider-0.8473984212444798',
-    type: 'divider'
-  },
-  'divider-0.21070545896105575': {
-    dataElement: 'divider-0.21070545896105575',
-    type: 'divider'
-  },
-  insertGroupedItems: {
-    dataElement: 'insertGroupedItems',
+  insertToolsGroupedItems: {
+    dataElement: 'insertToolsGroupedItems',
     items: [
       'rubberStampToolButton',
       'signatureCreateToolButton',
       'fileAttachmentButton',
       'stampToolButton',
+    ],
+    type: 'groupedItems',
+    grow: 0,
+    gap: 12,
+    alwaysVisible: false,
+    style: {}
+  },
+  insertGroupedItems: {
+    dataElement: 'insertGroupedItems',
+    items: [
+      'insertToolsGroupedItems',
+      'divider-0.4',
+      'stylePanelToggle',
       'defaultAnnotationUtilities',
     ],
     type: 'groupedItems',
@@ -681,8 +707,8 @@ const defaultModularComponents = {
     type: 'toolButton',
     toolName: 'AddImageContentTool'
   },
-  'divider-0.15815136087483705': {
-    dataElement: 'divider-0.15815136087483705',
+  'divider-0.6': {
+    dataElement: 'divider-0.6',
     type: 'divider'
   },
   contentEditButton: {
@@ -695,7 +721,7 @@ const defaultModularComponents = {
     items: [
       'addParagraphToolGroupButton',
       'addImageContentToolGroupButton',
-      'divider-0.15815136087483705',
+      'divider-0.6',
       'contentEditButton'
     ],
     type: 'groupedItems',
@@ -772,8 +798,8 @@ const defaultModularComponents = {
     type: 'toolButton',
     toolName: 'ComboBoxFormFieldCreateTool'
   },
-  'divider-0.28665689608538303': {
-    dataElement: 'divider-0.28665689608538303',
+  'divider-0.7': {
+    dataElement: 'divider-0.7',
     type: 'divider'
   },
   formFieldEditButton: {
@@ -781,12 +807,12 @@ const defaultModularComponents = {
     type: 'presetButton',
     buttonType: 'formFieldEditButton'
   },
-  'divider-0.6745365623803403': {
-    dataElement: 'divider-0.6745365623803403',
+  'divider-0.8': {
+    dataElement: 'divider-0.8',
     type: 'divider'
   },
-  formsGroupedItems: {
-    dataElement: 'formsGroupedItems',
+  formsToolsGroupedItems: {
+    dataElement: 'formsToolsGroupedItems',
     items: [
       'signatureFieldButton',
       'textFieldButton',
@@ -795,9 +821,20 @@ const defaultModularComponents = {
       'radioFieldButton',
       'listBoxFieldButton',
       'comboBoxFieldButton',
-      'divider-0.28665689608538303',
+      'divider-0.7',
       'formFieldEditButton',
-      'divider-0.6745365623803403',
+    ],
+    type: 'groupedItems',
+    grow: 0,
+    gap: 12,
+    alwaysVisible: false,
+    style: {}
+  },
+  formsGroupedItems: {
+    dataElement: 'formsGroupedItems',
+    items: [
+      'formsToolsGroupedItems',
+      'divider-0.8',
       'stylePanelToggle'
     ],
     type: 'groupedItems',

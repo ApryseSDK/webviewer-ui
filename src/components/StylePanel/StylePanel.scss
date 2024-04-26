@@ -5,9 +5,17 @@
   display: flex;
   flex-direction: column;
   background-color: var(--panel-background);
+  padding-bottom: 75px;
 
   .style-panel-header {
     font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+
+  .label {
+    padding-top: 16px;
+    font-size: 14px;
     font-weight: bold;
   }
 
@@ -46,4 +54,13 @@
     }
   }
 
+  @include mobile {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 16px;
+
+    .style-panel-header {
+      margin: 0 16px 16px 16px;
+    }
+  }
 }

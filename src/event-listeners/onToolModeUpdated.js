@@ -2,6 +2,7 @@ import core from 'core';
 import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
+import defaultTool from 'constants/defaultTool';
 
 export default (dispatch, store) => (newTool, oldTool) => {
   const { ToolNames } = window.Core.Tools;
@@ -20,12 +21,17 @@ export default (dispatch, store) => (newTool, oldTool) => {
   const isCustomizableUI = state.featureFlags.customizableUI;
 
   if (isCustomizableUI) {
-    const activeGroupedItems = state.viewer.lastPickedToolAndGroup.group;
+    const activeGroupedItems = state.viewer.activeGroupedItems;
     const isLastPickedGroupUndefined = activeGroupedItems?.every((group) => group === undefined);
 
     if (oldTool.name === ToolNames.RUBBER_STAMP) {
       dispatch(actions.setLastSelectedStampIndex(selectedStampIndex));
       dispatch(actions.setSelectedStampIndex(null));
+    }
+    if (oldTool.name === ToolNames.RUBBER_STAMP || oldTool.name === ToolNames.SIGNATURE) {
+      if (newTool.name === defaultTool) {
+        return;
+      }
     }
     if (newTool.name === ToolNames.EDIT || isLastPickedGroupUndefined) {
       return;

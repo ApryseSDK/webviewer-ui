@@ -111,10 +111,18 @@
           background: none;
           color: var(--primary-button-hover);
         }
+        
+        @include mobile {
+          color: var(--ribbon-active-color);
+        }
       }
 
       &:disabled {
-        opacity: 0.5;
+        cursor: default;
+
+        .Icon {
+          color: var(--disabled-icon);
+        }
       }
 
       &.hidden {
@@ -123,10 +131,6 @@
 
       &:hover {
         background: var(--view-header-button-hover);
-
-        .Icon {
-          color: var(--icon-color);
-        }
       }
     }
 

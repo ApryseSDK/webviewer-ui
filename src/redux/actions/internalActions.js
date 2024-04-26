@@ -240,13 +240,6 @@ export const setActiveCustomPanel = (tabPanel, wrapperPanel) => (dispath, getSta
   });
 };
 
-export const setLastPickedToolForGroupedItems = (groupedItem, toolName) => (dispatch) => {
-  dispatch({
-    type: 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS',
-    payload: { groupedItem, toolName },
-  });
-};
-
 export const setSelectedScale = (selectedScale) => ({
   type: 'SET_SELECTED_SCALE',
   payload: { selectedScale }

@@ -123,13 +123,7 @@ const Panel = (props) => {
   const { isCustom, dataElement, location } = props;
   const isMobile = isMobileSize();
 
-  const [
-    isOpen,
-  ] = useSelector(
-    (state) => [
-      selectors.isElementOpen(state, dataElement),
-    ]
-  );
+  const [isOpen] = useSelector((state) => [selectors.isElementOpen(state, dataElement)]);
   const dispatch = useDispatch();
 
   const children = React.cloneElement(props.children, {
@@ -138,7 +132,7 @@ const Panel = (props) => {
     location: location,
   });
 
-  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP];
+  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP, panelNames.STYLE];
 
   if (isOpen) {
     if (isMobile && panelsWithMobileVersion.includes(dataElement)) {

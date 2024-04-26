@@ -46,16 +46,19 @@ const RibbonGroup = (props) => {
   const [ribbonItems, setRibbonItems] = useState(validateItems(items));
   const [
     activeCustomRibbon,
+    groupedItemsOfActiveCustomRibbon,
     customHeadersAdditionalProperties,
     isRibbonGroupDisabled,
-    groupedItemsOfActiveCustomRibbon,
+    lastPickedToolForGroupedItems,
   ] = useSelector((state) => {
     const activeCustomRibbon = selectors.getActiveCustomRibbon(state);
+    const groupedItemsOfActiveCustomRibbon = selectors.getGroupedItemsOfCustomRibbon(state, activeCustomRibbon);
     return [
       activeCustomRibbon,
+      groupedItemsOfActiveCustomRibbon,
       selectors.getCustomHeadersAdditionalProperties(state),
       selectors.isElementDisabled(state, dataElement),
-      selectors.getGroupedItemsOfCustomRibbon(state, activeCustomRibbon),
+      selectors.getLastPickedToolForGroupedItems(state, groupedItemsOfActiveCustomRibbon),
     ];
   });
 
@@ -142,6 +145,10 @@ const RibbonGroup = (props) => {
 
   useEffect(() => {
     dispatch(actions.setActiveGroupedItems(groupedItemsOfActiveCustomRibbon));
+    dispatch(actions.setLastPickedToolAndGroup({
+      tool: lastPickedToolForGroupedItems,
+      group: groupedItemsOfActiveCustomRibbon,
+    }));
   }, [activeCustomRibbon]);
 
   const renderRibbonItems = () => {
