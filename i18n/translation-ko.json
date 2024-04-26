@@ -715,6 +715,7 @@
       "redoChange": "주석 변경 다시 실행",
       "openFile": "파일 선택기 열기",
       "openSearch": "검색 오버레이 열기",
+      "zoomOptions": "확대/축소 옵션",
       "zoomIn": "확대",
       "zoomOut": "축소",
       "fitScreenWidth": "작은 화면(< 640px)에서 문서를 화면 너비에 맞춥니다. 그렇지 않으면 원본 크기에 맞춥니다.",
@@ -1189,6 +1190,14 @@
     "deleteRow": "행 삭제",
     "deleteColumn": "열 삭제",
     "deleteTable": "테이블 삭제",
+    "deleted": "삭제됨:",
+    "added": "추가됨:",
+    "editing": "편집",
+    "editingDescription": "문서 편집",
+    "reviewing": "검토 중",
+    "reviewingDescription": "의견을 내세요",
+    "viewOnly": "보기 전용",
+    "viewOnlyDescription": "제안 없이 보기",
     "notSupportedOnMobile": "Office 편집은 모바일 장치에서 지원되지 않습니다."
   },
   "insertPageModal": {

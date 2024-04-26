@@ -64,6 +64,14 @@
   .Button.zoomButton {
     background: none !important;
   }
+
+  &.size1 {
+    background: none !important;
+    .Button:hover,
+    .Button.active {
+      background-color: var(--view-header-button-active) !important;
+    }
+  }
 }
 
 .Flyout .ZoomFlyoutMenu {

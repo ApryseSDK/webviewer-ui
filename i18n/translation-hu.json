@@ -715,6 +715,7 @@
       "redoChange": "Ismételje meg a megjegyzés módosítását",
       "openFile": "Nyissa meg a fájlválasztót",
       "openSearch": "Nyissa meg a keresési fedvényt",
+      "zoomOptions": "Nagyítási beállítások",
       "zoomIn": "Ráközelíteni",
       "zoomOut": "Kicsinyítés",
       "fitScreenWidth": "Illessze a dokumentumot a képernyő szélességéhez egy kis képernyőn (< 640 képpont), ellenkező esetben illessze az eredeti méretéhez",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Sor törlése",
     "deleteColumn": "Oszlop törlése",
     "deleteTable": "Táblázat törlése",
+    "deleted": "Törölve:",
+    "added": "Hozzáadva:",
+    "editing": "Szerkesztés",
+    "editingDescription": "Dokumentum szerkesztése",
+    "reviewing": "Áttekintés",
+    "reviewingDescription": "Tegyél javaslatokat",
+    "viewOnly": "Csak megtekintésre",
+    "viewOnlyDescription": "Megtekintés javaslatok nélkül",
     "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön."
   },
   "insertPageModal": {

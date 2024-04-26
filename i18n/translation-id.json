@@ -715,6 +715,7 @@
       "redoChange": "Ulangi perubahan anotasi",
       "openFile": "Buka pemilih file",
       "openSearch": "Buka hamparan pencarian",
+      "zoomOptions": "Opsi Zoom",
       "zoomIn": "Perbesar",
       "zoomOut": "Perkecil",
       "fitScreenWidth": "Sesuaikan dokumen dengan lebar layar di layar kecil (<640px), jika tidak sesuaikan dengan ukuran aslinya",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Hapus Baris",
     "deleteColumn": "Hapus Kolom",
     "deleteTable": "Hapus Tabel",
+    "deleted": "Dihapus:",
+    "added": "Ditambahkan:",
+    "editing": "Mengedit",
+    "editingDescription": "Sunting dokumen",
+    "reviewing": "Meninjau",
+    "reviewingDescription": "Membuat saran",
+    "viewOnly": "Lihat Saja",
+    "viewOnlyDescription": "Lihat tanpa saran",
     "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler."
   },
   "insertPageModal": {

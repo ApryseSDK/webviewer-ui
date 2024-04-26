@@ -584,5 +584,30 @@ describe('Test Custom UI APIs', function() {
       instance.UI.enableFeatures([instance.UI.Feature.Search]);
       expect(document.querySelector('[data-element="searchPanelToggle"]')).to.not.be.null;
     });
+    it('should close the Zoom Options flyout when an option is selected', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      instance.UI.disableFeatures([instance.UI.Feature.LocalStorage]);
+      const { document } = instance.UI.iframeWindow;
+
+      const iframe = window.document.querySelector('#viewerDiv iframe');
+
+      await waitFor(200);
+
+      iframe.style.height = '100vh';
+      iframe.style.width = '100vw';
+
+      instance.UI.openElement('zoom-containerFlyout');
+      await waitFor(200);
+      const zoomOptionsFlyout = document.querySelector('[data-element="zoom-containerFlyout"]');
+      expect(zoomOptionsFlyout).to.not.be.null;
+      const zoomOption = document.querySelector('[data-element="zoom-button-10"]');
+      zoomOption.click();
+      expect(document.querySelector('.ZoomOptionsFlyout')).to.be.null;
+
+      // re-open the flyout and make sure that the correct option is selected
+      instance.UI.openElement('zoom-containerFlyout');
+      await waitFor(200);
+      expect(document.querySelector('[data-element="zoom-button-10"]').classList.contains('active')).to.be.true;
+    });
   });
 });

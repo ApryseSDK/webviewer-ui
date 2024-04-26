@@ -70,6 +70,11 @@
         margin-right: 8px;
         padding-top: 2px;
         display: flex;
+        
+        &:active,
+        &.active {
+          background-color: var(--blue-2);
+        }
       }
 
       .menu-icon.Icon svg path {
@@ -89,6 +94,10 @@
         .icon-label-wrapper {
           display: flex;
           align-items: center;
+        }
+
+        .icon-open-submenu {
+          margin-right: 0;
         }
 
         &:hover:not([disabled]) {

@@ -715,6 +715,7 @@
       "redoChange": "একটি টীকা পরিবর্তন পুনরায় করুন",
       "openFile": "ফাইল পিকার খুলুন",
       "openSearch": "অনুসন্ধান ওভারলে খুলুন",
+      "zoomOptions": "জুম অপশন",
       "zoomIn": "প্রসারিত করো",
       "zoomOut": "ছোট করা",
       "fitScreenWidth": "একটি ছোট স্ক্রিনে (< 640px) পর্দার প্রস্থে ডকুমেন্টটি ফিট করুন, অন্যথায় এটি তার আসল আকারে ফিট করুন",
@@ -1189,6 +1190,14 @@
     "deleteRow": "সারি মুছুন",
     "deleteColumn": "কলাম মুছুন",
     "deleteTable": "টেবিল মুছুন",
+    "deleted": "মুছে ফেলা হয়েছে:",
+    "added": "যোগ করা হয়েছে:",
+    "editing": "সম্পাদনা",
+    "editingDescription": "নথি সম্পাদনা করুন",
+    "reviewing": "পর্যালোচনা করা হচ্ছে",
+    "reviewingDescription": "পরামর্শ করতে",
+    "viewOnly": "শুধু দেখো",
+    "viewOnlyDescription": "পরামর্শ ছাড়াই দেখুন",
     "notSupportedOnMobile": "অফিস সম্পাদনা মোবাইল ডিভাইসে সমর্থিত নয়।"
   },
   "insertPageModal": {

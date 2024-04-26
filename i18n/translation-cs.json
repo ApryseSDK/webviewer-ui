@@ -715,6 +715,7 @@
       "redoChange": "Znovu proveďte změnu anotace",
       "openFile": "Otevřete nástroj pro výběr souboru",
       "openSearch": "Otevřete překryvnou vrstvu vyhledávání",
+      "zoomOptions": "Možnosti přiblížení",
       "zoomIn": "Přiblížit",
       "zoomOut": "Oddálit",
       "fitScreenWidth": "Přizpůsobte dokument šířce obrazovky na malé obrazovce (< 640 pixelů), jinak jej přizpůsobte původní velikosti",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Smazat řádek",
     "deleteColumn": "Smazat sloupec",
     "deleteTable": "Smazat tabulku",
+    "deleted": "Smazáno:",
+    "added": "Přidal:",
+    "editing": "Editace",
+    "editingDescription": "Upravit dokument",
+    "reviewing": "Recenze",
+    "reviewingDescription": "Dělat návrhy",
+    "viewOnly": "Pouze zobrazení",
+    "viewOnlyDescription": "Zobrazit bez návrhů",
     "notSupportedOnMobile": "Úpravy Office nejsou podporovány na mobilních zařízeních."
   },
   "insertPageModal": {

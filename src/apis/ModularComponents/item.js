@@ -11,7 +11,7 @@
  * @name Item
  * @class UI.Components.Item
  * @abstract
- * @param {ItemProperties} options An object that contains the properties of the item.
+ * @param {ItemProperties} [options] An object that contains the properties of the item.
  */
 
 class Item {

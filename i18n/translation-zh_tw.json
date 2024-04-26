@@ -715,6 +715,7 @@
       "redoChange": "重做註釋更改",
       "openFile": "打開文件選擇器",
       "openSearch": "打開搜索疊加層",
+      "zoomOptions": "縮放選項",
       "zoomIn": "放大",
       "zoomOut": "縮小",
       "fitScreenWidth": "在小屏幕（< 640px）中將文檔調整為屏幕寬度，否則將其調整為原始大小",
@@ -1189,6 +1190,14 @@
     "deleteRow": "刪除行",
     "deleteColumn": "刪除列",
     "deleteTable": "刪除表",
+    "deleted": "已刪除：",
+    "added": "添加：",
+    "editing": "編輯",
+    "editingDescription": "編輯文檔",
+    "reviewing": "審閱",
+    "reviewingDescription": "提供建議",
+    "viewOnly": "只讀",
+    "viewOnlyDescription": "查看無建議",
     "notSupportedOnMobile": "移動設備不支持 Office 編輯。"
   },
   "insertPageModal": {

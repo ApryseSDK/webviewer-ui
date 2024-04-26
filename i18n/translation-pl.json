@@ -715,6 +715,7 @@
       "redoChange": "Ponów zmianę adnotacji",
       "openFile": "Otwórz selektor plików",
       "openSearch": "Otwórz nakładkę wyszukiwania",
+      "zoomOptions": "Opcje powiększenia",
       "zoomIn": "Zbliżenie",
       "zoomOut": "Pomniejsz",
       "fitScreenWidth": "Dopasuj dokument do szerokości ekranu na małym ekranie (< 640px), w przeciwnym razie dopasuj go do oryginalnego rozmiaru",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Usuń wiersz",
     "deleteColumn": "Usuń kolumnę",
     "deleteTable": "Usuń tabelę",
+    "deleted": "Usunięto:",
+    "added": "Dodany:",
+    "editing": "Redagowanie",
+    "editingDescription": "Edytuj dokument",
+    "reviewing": "Przeglądanie",
+    "reviewingDescription": "Zasugeruj",
+    "viewOnly": "Tylko podgląd",
+    "viewOnlyDescription": "Zobacz bez sugestii",
     "notSupportedOnMobile": "Edycja pakietu Office nie jest obsługiwana na urządzeniach mobilnych."
   },
   "insertPageModal": {

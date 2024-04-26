@@ -50,7 +50,6 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   useEffect(() => {
     const onZoomUpdated = () => {
       setZoomValue(Math.ceil(core.getZoom() * 100).toString());
-      size === 0 && dispatch(actions.closeElements('zoomFlyoutMenu'));
     };
 
     core.addEventListener('zoomUpdated', onZoomUpdated);
@@ -58,7 +57,7 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
   }, [size]);
 
   const onClickHandler = () => {
-    dispatch(actions.toggleElement('zoomFlyoutMenu'));
+    dispatch(actions.toggleElement('zoom-containerFlyout'));
   };
 
   // This is necessary because the button triggering the flyout menu is not the element we want to set as the trigger for positioning it

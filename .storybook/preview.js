@@ -220,6 +220,7 @@ core.getScrollViewElement = () => ({
 core.getContentEditManager = () => ({
   isInContentEditMode: () => false,
 });
+core.getZoom = () => 1;
 
 class MockTool {
   // Mock any methods here or mock a specific tool if needed

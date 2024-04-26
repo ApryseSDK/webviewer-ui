@@ -715,6 +715,7 @@
       "redoChange": "注釈の変更をやり直す",
       "openFile": "ファイルピッカーを開く",
       "openSearch": "検索オーバーレイを開く",
+      "zoomOptions": "ズームオプション",
       "zoomIn": "ズームイン",
       "zoomOut": "ズームアウトする",
       "fitScreenWidth": "小さな画面 (< 640px) ではドキュメントを画面幅に合わせます。それ以外の場合は元のサイズに合わせます",
@@ -1189,6 +1190,14 @@
     "deleteRow": "行の削除",
     "deleteColumn": "列の削除",
     "deleteTable": "テーブルの削除",
+    "deleted": "削除済み:",
+    "added": "追加した： ",
+    "editing": "編集",
+    "editingDescription": "ドキュメントを編集",
+    "reviewing": "レビュー中",
+    "reviewingDescription": "提案をします",
+    "viewOnly": "表示のみ",
+    "viewOnlyDescription": "提案なしで表示",
     "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。"
   },
   "insertPageModal": {

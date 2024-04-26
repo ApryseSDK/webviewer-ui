@@ -715,6 +715,7 @@
       "redoChange": "Voer een annotatiewijziging opnieuw uit",
       "openFile": "Open de bestandskiezer",
       "openSearch": "Open de zoekoverlay",
+      "zoomOptions": "Zoomopties",
       "zoomIn": "In zoomen",
       "zoomOut": "Uitzoomen",
       "fitScreenWidth": "Pas het document aan de schermbreedte aan in een klein scherm (< 640px), pas het anders aan aan de oorspronkelijke grootte",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Verwijder rij",
     "deleteColumn": "Kolom verwijderen",
     "deleteTable": "Tabel verwijderen",
+    "deleted": "Verwijderd:",
+    "added": "Toegevoegd:",
+    "editing": "Bewerken",
+    "editingDescription": "Document bewerken",
+    "reviewing": "Beoordelen",
+    "reviewingDescription": "Suggesties doen",
+    "viewOnly": "Alleen bekijken",
+    "viewOnlyDescription": "Bekijk zonder suggesties",
     "notSupportedOnMobile": "Office-bewerking wordt niet ondersteund op mobiele apparaten."
   },
   "insertPageModal": {

@@ -715,6 +715,7 @@
       "redoChange": "Ek açıklama değişikliğini yeniden yapma",
       "openFile": "Dosya seçiciyi aç",
       "openSearch": "Arama yer paylaşımını aç",
+      "zoomOptions": "Yakınlaştırma Seçenekleri",
       "zoomIn": "Yakınlaştır",
       "zoomOut": "Uzaklaştır",
       "fitScreenWidth": "Belgeyi küçük bir ekranda (< 640 piksel) ekran genişliğine sığdırın, aksi halde orijinal boyutuna sığdırın",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Sırayı sil",
     "deleteColumn": "Sütunu Sil",
     "deleteTable": "Tabloyu Sil",
+    "deleted": "Silindi:",
+    "added": "Katma:",
+    "editing": "Düzenleme",
+    "editingDescription": "Dokümanı düzenle",
+    "reviewing": "İnceleniyor",
+    "reviewingDescription": "Öneride bulunun",
+    "viewOnly": "Sadece Görüntüle",
+    "viewOnlyDescription": "Öneriler olmadan görüntüle",
     "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez."
   },
   "insertPageModal": {

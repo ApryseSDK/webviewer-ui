@@ -715,6 +715,7 @@
       "redoChange": "Refaceți o modificare de adnotare",
       "openFile": "Deschideți selectorul de fișiere",
       "openSearch": "Deschideți suprapunerea de căutare",
+      "zoomOptions": "Opțiuni de zoom",
       "zoomIn": "A mari",
       "zoomOut": "A micsora",
       "fitScreenWidth": "Potriviți documentul la lățimea ecranului într-un ecran mic (< 640 px), altfel potriviți-l la dimensiunea inițială",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Ștergeți rândul",
     "deleteColumn": "Șterge coloana",
     "deleteTable": "Ștergeți tabelul",
+    "deleted": "Șters:",
+    "added": "Adăugat:",
+    "editing": "Editare",
+    "editingDescription": "Editați documentul",
+    "reviewing": "Revizuirea",
+    "reviewingDescription": "A face recomandări",
+    "viewOnly": "Doar vizualizare",
+    "viewOnlyDescription": "Vizualizați fără sugestii",
     "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile."
   },
   "insertPageModal": {

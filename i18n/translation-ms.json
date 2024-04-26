@@ -715,6 +715,7 @@
       "redoChange": "Buat semula perubahan anotasi",
       "openFile": "Buka pemilih fail",
       "openSearch": "Buka tindanan carian",
+      "zoomOptions": "Pilihan Zum",
       "zoomIn": "Mengezum masuk",
       "zoomOut": "Zum keluar",
       "fitScreenWidth": "Muatkan dokumen dengan lebar skrin dalam skrin kecil (< 640px), jika tidak muatkannya dengan saiz asalnya",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Padam Baris",
     "deleteColumn": "Padam Lajur",
     "deleteTable": "Padamkan Jadual",
+    "deleted": "Dipadamkan:",
+    "added": "Ditambah:",
+    "editing": "Suntingan",
+    "editingDescription": "Edit dokumen",
+    "reviewing": "Mengkaji",
+    "reviewingDescription": "Membuat cadangan",
+    "viewOnly": "Lihat Sahaja",
+    "viewOnlyDescription": "Lihat tanpa cadangan",
     "notSupportedOnMobile": "Penyuntingan pejabat tidak disokong pada peranti mudah alih."
   },
   "insertPageModal": {

@@ -715,6 +715,7 @@
       "redoChange": "Gör om en anteckningsändring",
       "openFile": "Öppna filväljaren",
       "openSearch": "Öppna sököverlägget",
+      "zoomOptions": "Zoomalternativ",
       "zoomIn": "Zooma in",
       "zoomOut": "Zooma ut",
       "fitScreenWidth": "Anpassa dokumentet till skärmens bredd på en liten skärm (< 640px), annars anpassa det till dess ursprungliga storlek",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Ta bort rad",
     "deleteColumn": "Ta bort kolumn",
     "deleteTable": "Ta bort tabell",
+    "deleted": "Raderade:",
+    "added": "Lagt till:",
+    "editing": "Redigering",
+    "editingDescription": "Redigera dokument",
+    "reviewing": "Granskning",
+    "reviewingDescription": "Ge förslag",
+    "viewOnly": "Titta enbart",
+    "viewOnlyDescription": "Visa utan förslag",
     "notSupportedOnMobile": "Office-redigering stöds inte på mobila enheter."
   },
   "insertPageModal": {

@@ -715,6 +715,7 @@
       "redoChange": "Rétablir une modification d'annotation",
       "openFile": "Ouvrir le sélecteur de fichiers",
       "openSearch": "Ouvrir la superposition de recherche",
+      "zoomOptions": "Options de zoom",
       "zoomIn": "Agrandir",
       "zoomOut": "Dézoomer",
       "fitScreenWidth": "Ajustez le document à la largeur de l'écran dans un petit écran (< 640px), sinon adaptez-le à sa taille d'origine",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Supprimer la ligne",
     "deleteColumn": "Supprimer la colonne",
     "deleteTable": "Supprimer le tableau",
+    "deleted": "Supprimé :",
+    "added": "Ajoutée:",
+    "editing": "Édition",
+    "editingDescription": "Modifier le document",
+    "reviewing": "Révision",
+    "reviewingDescription": "Faire des suggestions",
+    "viewOnly": "Afficher uniquement",
+    "viewOnlyDescription": "Afficher sans suggestions",
     "notSupportedOnMobile": "L'édition Office n'est pas prise en charge sur les appareils mobiles."
   },
   "insertPageModal": {

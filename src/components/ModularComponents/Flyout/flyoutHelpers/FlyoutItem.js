@@ -16,9 +16,14 @@ import getToolbarTranslationString from 'helpers/translationKeyMapping';
 import ToolButton from 'components/ModularComponents/ToolButton';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import PropTypes from 'prop-types';
+import core from 'core';
 
 const propTypes = {
-  flyoutItem: PropTypes.object,
+  flyoutItem: PropTypes.oneOfType([
+    // ie. 'divider'
+    PropTypes.string,
+    PropTypes.object
+  ]),
 };
 
 function FlyoutItem(props) {
@@ -55,7 +60,11 @@ FlyoutItem.propTypes = propTypes;
 export default FlyoutItem;
 
 const staticItemPropTypes = {
-  flyoutItem: PropTypes.object,
+  flyoutItem: PropTypes.oneOfType([
+    // ie. 'divider'
+    PropTypes.string,
+    PropTypes.object
+  ]),
   isChild: PropTypes.bool,
   index: PropTypes.number,
   onClickHandler: PropTypes.func,
@@ -89,6 +98,7 @@ function StaticItem({ flyoutItem, isChild, index, onClickHandler, activeItem, it
   const itemIsARibbonItem = flyoutItem.type === ITEM_TYPE.RIBBON_ITEM;
   const itemIsAPresetButton = flyoutItem.type === ITEM_TYPE.PRESET_BUTTON;
   const itemIsAZoomOptionsButton = flyoutItem.dataElement === 'zoomOptionsButton' || flyoutItem.className === 'ZoomFlyoutMenu';
+  const itemIsAZoomButton = flyoutItem.dataElement?.includes('zoom-button-');
   const itemIsPageNavButton = flyoutItem.dataElement === 'pageNavigationButton';
   const itemsToRender = isChild ? activeItem.children : items;
   const itemIsALabel = typeof flyoutItem === 'string' && flyoutItem !== ITEM_TYPE.DIVIDER;
@@ -137,17 +147,15 @@ function StaticItem({ flyoutItem, isChild, index, onClickHandler, activeItem, it
   if (itemIsAZoomOptionsButton) {
     const hasImg = !!flyoutItem.img || !!flyoutItem.icon;
     const zoomOptionsElement = (
-      <>
-        <div className="menu-container">
-          {
-            hasImg ? <div className="icon-label-wrapper">
-              {getIconDOMElement(flyoutItem, itemsToRender)}
-              <ZoomText/>
-            </div> : <ZoomText/>
-          }
-        </div>
+      <div className="menu-container">
+        {
+          hasImg ? <div className="icon-label-wrapper">
+            {getIconDOMElement(flyoutItem, itemsToRender)}
+            <ZoomText/>
+          </div> : <ZoomText/>
+        }
         {flyoutItem.children && <Icon className="icon-open-submenu" glyph="icon-chevron-right"/>}
-      </>
+      </div>
     );
     return getFlyoutItemWrapper(zoomOptionsElement, 'zoom-options');
   }
@@ -174,29 +182,30 @@ function StaticItem({ flyoutItem, isChild, index, onClickHandler, activeItem, it
     <div key={flyoutItem.label || flyoutItem.dataElement} className={classNames({
       'flyout-item-container': true,
       'active': flyoutItem.isActive
-        || itemIsAPanelTab && activeCustomPanel === flyoutItem.dataElement,
+        || itemIsAPanelTab && activeCustomPanel === flyoutItem.dataElement
+        || itemIsATool && core.getToolMode()?.name === flyoutItem.toolName
+        || itemIsAZoomButton && Math.ceil(core.getZoom() * 100).toString() === flyoutItem.dataElement?.split('zoom-button-')[1]
     })}
     data-element={flyoutItem.dataElement} onClick={onClickHandler(flyoutItem, isChild, index)}>
-      <div className="menu-container">
-        {
-          itemIsATool ? (
-            // We should update when we have the customizable Tool Button component
-            <ToolButton
-              className={classNames({ ZoomItem: true })}
-              role="option"
-              toolName={flyoutItem.toolName}
-              label={alabel}
-              img={flyoutItem.icon}
-              isFlyoutItem={true}
-            />
-          ) : (
+      { itemIsATool ? (
+        // We should update when we have the customizable Tool Button component
+        <ToolButton
+          className={classNames({ ZoomItem: true })}
+          role="option"
+          toolName={flyoutItem.toolName}
+          label={alabel}
+          img={flyoutItem.icon}
+          isFlyoutItem={true}
+        />
+      ) :
+        (
+          <div className="menu-container">
             <div className="icon-label-wrapper">
               {getIconDOMElement(flyoutItem, itemsToRender)}
               {<div className="flyout-item-label">{t(alabel)}</div>}
             </div>
-          )
-        }
-      </div>
+          </div>
+        )}
       {getSubMenuDOMElement(flyoutItem, itemsToRender)}
     </div>
   ));

@@ -715,6 +715,7 @@
       "redoChange": "एनोटेशन परिवर्तन फिर से करें",
       "openFile": "फ़ाइल पिकर खोलें",
       "openSearch": "खोज ओवरले खोलें",
+      "zoomOptions": "ज़ूम विकल्प",
       "zoomIn": "ज़ूम इन",
       "zoomOut": "ज़ूम आउट",
       "fitScreenWidth": "छोटे स्क्रीन में दस्तावेज़ को स्क्रीन की चौड़ाई में फ़िट करें (< 640px), अन्यथा इसे उसके मूल आकार में फ़िट करें",
@@ -1189,6 +1190,14 @@
     "deleteRow": "पंक्ति को हटाएं",
     "deleteColumn": "कॉलम हटाएं",
     "deleteTable": "तालिका हटाएँ",
+    "deleted": "हटाया गया:",
+    "added": "जोड़ा गया:",
+    "editing": "संपादन",
+    "editingDescription": "दस्तावेज़ संपादित करें",
+    "reviewing": "की समीक्षा",
+    "reviewingDescription": "सुझाव दो",
+    "viewOnly": "केवल देखें",
+    "viewOnlyDescription": "सुझाव के बिना देखें",
     "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।"
   },
   "insertPageModal": {

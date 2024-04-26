@@ -715,6 +715,7 @@
       "redoChange": "Làm lại thay đổi chú thích",
       "openFile": "Mở bộ chọn tệp",
       "openSearch": "Mở lớp phủ tìm kiếm",
+      "zoomOptions": "Tùy chọn thu phóng",
       "zoomIn": "Phóng to",
       "zoomOut": "Thu nhỏ",
       "fitScreenWidth": "Vừa tài liệu với chiều rộng màn hình trong một màn hình nhỏ (< 640px), nếu không thì vừa với kích thước ban đầu",
@@ -1189,6 +1190,14 @@
     "deleteRow": "Xóa hàng",
     "deleteColumn": "Xóa cột",
     "deleteTable": "Xóa bảng",
+    "deleted": "Đã xóa:",
+    "added": "Thêm:",
+    "editing": "Chỉnh sửa",
+    "editingDescription": "Chỉnh sửa tài liệu",
+    "reviewing": "Đang xem xét",
+    "reviewingDescription": "Góp ý kiến",
+    "viewOnly": "Chỉ xem",
+    "viewOnlyDescription": "Xem không có đề xuất",
     "notSupportedOnMobile": "Chỉnh sửa văn phòng không được hỗ trợ trên thiết bị di động."
   },
   "insertPageModal": {

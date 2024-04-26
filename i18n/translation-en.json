@@ -715,6 +715,7 @@
       "redoChange": "Redo an annotation change",
       "openFile": "Open the file picker",
       "openSearch": "Open the search overlay",
+      "zoomOptions": "Zoom Options",
       "zoomIn": "Zoom in",
       "zoomOut": "Zoom out",
       "fitScreenWidth": "Fit the document to the screen width in a small screen(< 640px), otherwise fit it to its original size",

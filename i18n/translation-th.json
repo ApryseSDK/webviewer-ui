@@ -715,6 +715,7 @@
       "redoChange": "ทำซ้ำการเปลี่ยนแปลงคำอธิบายประกอบ",
       "openFile": "เปิดตัวเลือกไฟล์",
       "openSearch": "เปิดการซ้อนทับการค้นหา",
+      "zoomOptions": "ตัวเลือกการซูม",
       "zoomIn": "ขยายเข้า",
       "zoomOut": "ซูมออก",
       "fitScreenWidth": "ปรับเอกสารให้พอดีกับความกว้างของหน้าจอในหน้าจอขนาดเล็ก (< 640px) มิฉะนั้น ให้พอดีกับขนาดดั้งเดิม",
@@ -1189,6 +1190,14 @@
     "deleteRow": "ลบแถว",
     "deleteColumn": "ลบคอลัมน์",
     "deleteTable": "ลบตาราง",
+    "deleted": "ลบแล้ว:",
+    "added": "เพิ่ม:",
+    "editing": "การแก้ไข",
+    "editingDescription": "แก้ไขเอกสาร",
+    "reviewing": "กำลังทบทวน",
+    "reviewingDescription": "ให้คำแนะนำ",
+    "viewOnly": "สำหรับดูเท่านั้น",
+    "viewOnlyDescription": "ดูโดยไม่มีข้อเสนอแนะ",
     "notSupportedOnMobile": "อุปกรณ์พกพาไม่รองรับการแก้ไข Office"
   },
   "insertPageModal": {
