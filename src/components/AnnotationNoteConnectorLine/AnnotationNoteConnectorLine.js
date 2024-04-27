@@ -81,12 +81,11 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
     const annotHeightInPixels = annotationBottomRight.y - annotationTopLeft.y;
 
     const viewerWidth = window.isApryseWebViewerWebComponent ? getRootNode().host.clientWidth : window.innerWidth;
-    const viewerOffset = window.isApryseWebViewerWebComponent ? getRootNode().host.offsetLeft : 0;
     const viewerOffsetTop = window.isApryseWebViewerWebComponent ? getRootNode().host.offsetTop : 0;
 
     setRightHorizontalLineRight(notePanelWidth - notePanelLeftPadding);
     setRightHorizontalLineTop(noteContainerRef.current.getBoundingClientRect().top - viewerOffsetTop);
-    const lineWidth = viewerWidth + viewerOffset - notePanelWidth - annotationTopLeft.x + notePanelLeftPadding + scrollLeft - annotWidthInPixels;
+    const lineWidth = viewerWidth - notePanelWidth - annotationTopLeft.x + notePanelLeftPadding + scrollLeft - annotWidthInPixels;
     const rightHorizontalLineWidthRatio = 0.75;
     setRightHorizontalLineWidth(lineWidth * rightHorizontalLineWidthRatio);
     const noZoomRefPoint = annotation.getNoZoomReferencePoint();
@@ -96,7 +95,7 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
     setLeftHorizontalLineRight(notePanelWidth - notePanelLeftPadding + rightHorizontalLineWidth);
 
     const noZoomRefShiftY = (annotation.NoZoom && noZoomRefPoint.y) ? noZoomRefPoint.y * annotHeightInPixels : 0;
-    setLeftHorizontalLineTop(annotationTopLeft.y + (annotHeightInPixels / 2) - scrollTop - noZoomRefShiftY - viewerOffsetTop);
+    setLeftHorizontalLineTop(annotationTopLeft.y + (annotHeightInPixels / 2) - scrollTop - noZoomRefShiftY);
 
     const onPageNumberUpdated = () => {
       dispatch(actions.closeElement('annotationNoteConnectorLine'));
