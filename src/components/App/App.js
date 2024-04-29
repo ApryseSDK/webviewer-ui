@@ -67,7 +67,7 @@ import DataElements from 'constants/dataElement';
 import { defaultPanels } from '../../redux/modularComponents';
 
 import setLanguage from 'src/apis/setLanguage';
-
+import { loadDefaultFonts } from 'src/helpers/loadFont';
 import './App.scss';
 import LayersPanel from 'components/LayersPanel';
 import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
@@ -128,6 +128,7 @@ const App = ({ removeEventHandlers }) => {
   }, []);
 
   useEffect(() => {
+    loadDefaultFonts();
     const isCustomizableUIEnabled = getHashParameters('ui', 'default') === 'beta';
     const isOfficeEditingEnabled = getHashParameters('enableOfficeEditing', false);
     if (isCustomizableUIEnabled && !isOfficeEditingEnabled) {

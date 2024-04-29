@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import webFonts from 'constants/webFonts';
-
+import loadFont from 'src/helpers/loadFont';
 import selectors from 'selectors';
 
 // this component is used to preload the font(s) that are used in Annotations and the SignatureModal(TextSignature)
@@ -13,24 +13,6 @@ const FontHandler = () => {
 
   // load webfonts and if using web component load default font and signature fonts.
   useEffect(() => {
-    const loadFont = (font, fontType, isWebFont = false, fileName = null, style = {}) => {
-      const fontTypes = {
-        ttf: 'truetype',
-        woff: 'woff',
-        woff2: 'woff2',
-      };
-      const fontName = font.replace(/\s/g, '');
-      if (!fileName) {
-        fileName = fontName;
-      }
-      // eslint-disable-next-line no-undef, camelcase
-      const fontPath = `${isWebComponent ? __webpack_public_path__ : '.'}/assets/fonts/${isWebFont ? 'webfonts/' : ''}${fileName}.${fontType}`;
-      const fontFace = new FontFace(font, `url(${fontPath}) format("${fontTypes[fontType]}")`, style);
-      fontFace.load().then(function(loadedFace) {
-        document.fonts.add(loadedFace);
-      });
-    };
-
     if (isWebComponent) {
       const defaultFonts = {
         'Lato-Regular': {

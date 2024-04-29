@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 
 import '../src/index.scss';
 import '../src/components/App/App.scss';
+import { loadDefaultFonts } from '../src/helpers/loadFont';
 import { approvedStamp } from './static/assets/standardStamps';
 import { customRubberStamps } from './static/assets/customStamps';
 
@@ -14,6 +15,8 @@ document.getElementById('root').className = 'App';
 
 function noop() {
 }
+
+loadDefaultFonts();
 
 // Some helpful mocked annotations
 let rectangle;

@@ -128,6 +128,7 @@ import setNoteDateFormat from './setNoteDateFormat';
 import setPrintedNoteDateFormat from './setPrintedNoteDateFormat';
 import setNotesPanelSort from './setNotesPanelSort';
 import setPageLabels from './setPageLabels';
+import { setFontPath, getFontPath } from './fontPathHandler';
 import setPrintQuality from './setPrintQuality';
 import setDefaultPrintOptions from './setDefaultPrintOptions';
 import setSelectedTab from './setSelectedTab';
@@ -399,6 +400,8 @@ export default (store) => {
     setPrintedNoteDateFormat: setPrintedNoteDateFormat(store),
     setMeasurementUnits: setMeasurementUnits(store),
     setPageLabels: setPageLabels(store),
+    setFontPath,
+    getFontPath,
     setPrintQuality: setPrintQuality(store),
     setDefaultPrintOptions: setDefaultPrintOptions(store),
     setNotesPanelSortStrategy: setNotesPanelSortStrategy(store),
