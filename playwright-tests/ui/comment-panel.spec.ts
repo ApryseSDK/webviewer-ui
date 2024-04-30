@@ -393,62 +393,6 @@ test.describe('Comment panel', () => {
     expect(selectedText.trim()).toEqual('Great quotes! Do we have any more?');
   });
 
-  // TODO: Investigate why this test is failing. It seems to be a timing issue. Might work with VirtualDisplayMode disabled?
-  test.skip('for VirtualizedList should not scroll, when new comment is added', async ({ page, browserName }) => {
-    test.skip(browserName === 'firefox' || browserName === 'webkit', 'TODO: investigate why this test fails on webkit and firefox');
-    await instance('loadDocument', '/test-files/VirtualizedAnnotTest.pdf');
-    await page.waitForTimeout(5000);
-
-    await instance('openElement', 'notesPanel');
-
-    await page.waitForTimeout(1000);
-
-    await iframe.evaluate(async () => {
-      const annotationManager = window.instance.Core.annotationManager;
-
-      const replyList = annotationManager.getAnnotationsList().filter((annotation) => annotation.InReplyTo).map((annotation) => annotation.InReplyTo);
-      const map = replyList.reduce((acc, e) => {
-        const nextAcc = { ...acc };
-        nextAcc[e] = nextAcc[e] ? (nextAcc[e] + 1) : 1;
-        return nextAcc;
-      }, {});
-
-      const annotationIdWithMostReplies = Array.from(Object.entries(map)).sort((a, b) => (b[1] as number) - (a[1] as number))[0][0];
-      annotationManager.selectAnnotation(annotationManager.getAnnotationById(annotationIdWithMostReplies));
-    });
-
-    await page.waitForTimeout(1000);
-
-    const notePanel = await iframe.$('.NotesPanel .ReactVirtualized__Grid');
-
-    await notePanel.evaluate((node) => {
-      // scroll down a bit so that it looking at the "reply" area
-      node.scrollTop += 300;
-      return node.scrollTop;
-    });
-
-    await page.waitForTimeout(1000);
-
-    await iframe.evaluate(async () => {
-      const annotationManager = window.instance.Core.annotationManager;
-      await annotationManager.importAnnotations(`
-      <?xml version="1.0" encoding="UTF-8"?>
-      <xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve">
-        <annots>
-          <text page="0" rect="96,466,127,497" color="#FFFF00" flags="hidden,print,nozoom,norotate" name="7094c86e-0b2e-fb7b-b611-7cce80589299" title="Guest" subject="Sticky Note" date="D:20210517142304-07'00'" creationdate="D:20210517142304-07'00'" inreplyto="32d38690-104f-fbaa-2fc0-70be1f5eb27d" icon="Comment" state="Accepted" statemodel="Review">
-            <contents>Accepted set by Guest</contents>
-          </text>
-        </annots>
-      </xfdf>`);
-      // blurring so we don't have a blinking text cursor causing screenshot test to fail
-      (document.querySelector('.reply-area-container div.reply-area > .comment-textarea .ql-editor') as HTMLElement).blur();
-    });
-
-    await page.waitForTimeout(1000);
-
-    expect(await notePanel.screenshot()).toMatchSnapshot(['comment-panel', 'note-panel-scrolling-when-added.png']);
-  });
-
   test('Buttons should be disabled if there is nothing to persist', async ({ page }) => {
     await instance('setToolMode', 'AnnotationCreateSticky');
     const pageContainer = await iframe.$('#pageContainer1');
@@ -1036,5 +980,65 @@ test.describe('Comment panel', () => {
 
     const commentTextareaText = await iframe.$(`#note_${annotWithReplyId}`);
     expect(await commentTextareaText.screenshot()).toMatchSnapshot(['comment-panel', 'comment-panel-adding-new-comment.png']);
+  });
+});
+
+
+test.describe('Comment panel test two', () => {
+  test('for VirtualizedList should not scroll, when new comment is added', async ({ page, browserName }) => {
+    test.skip(browserName === 'firefox' || browserName === 'webkit', 'TODO: investigate why this test fails on webkit and firefox');
+
+    const { iframe, waitForWVEvent, waitForInstance } = await loadViewerSample(page, 'viewing/empty');
+    await waitForWVEvent('annotationsLoaded', {
+      code: async () => {
+        window.instance.Core.documentViewer.loadDocument('/test-files/VirtualizedAnnotTest.pdf');
+      }
+    });
+
+    const instance = await waitForInstance();
+    await instance('enableElements', ['richTextPopup']);
+
+    await instance('openElement', 'notesPanel');
+    await page.waitForTimeout(1000);
+
+    await waitForWVEvent('annotManager.annotationSelected', { code: async () => {
+        const annotationManager = window.instance.Core.annotationManager;
+
+        const replyList = annotationManager.getAnnotationsList().filter((annotation) => annotation.InReplyTo).map((annotation) => annotation.InReplyTo);
+        const map = replyList.reduce((acc, e) => {
+          const nextAcc = { ...acc };
+          nextAcc[e] = nextAcc[e] ? (nextAcc[e] + 1) : 1;
+          return nextAcc;
+        }, {});
+
+        const annotationIdWithMostReplies = Array.from(Object.entries(map)).sort((a, b) => b[1] - a[1])[0][0];
+        annotationManager.selectAnnotation(annotationManager.getAnnotationById(annotationIdWithMostReplies));
+      }
+    });
+
+    const notePanel = await iframe.$('.NotesPanel .ReactVirtualized__Grid');
+
+    await notePanel.evaluate((node) => {
+      // scroll down a bit so that it looking at the "reply" area
+      node.scrollTop += 300;
+      return node.scrollTop;
+    });
+
+    await waitForWVEvent('annotManager.annotationsDrawn', { code: async () => {
+        const annotationManager = window.instance.Core.annotationManager;
+        await annotationManager.importAnnotations(`<?xml version="1.0" encoding="UTF-8"?>
+        <xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve">
+          <annots>
+            <text page="0" rect="96,466,127,497" color="#FFFF00" flags="hidden,print,nozoom,norotate" name="7094c86e-0b2e-fb7b-b611-7cce80589299" title="Guest" subject="Sticky Note" date="D:20210517142304-07'00'" creationdate="D:20210517142304-07'00'" inreplyto="32d38690-104f-fbaa-2fc0-70be1f5eb27d" icon="Comment" state="Accepted" statemodel="Review">
+              <contents>Accepted set by Guest</contents>
+            </text>
+          </annots>
+        </xfdf>`);
+        // blurring so we don't have a blinking text cursor causing screenshot test to fail
+        // (document.querySelector('.reply-area-container div.reply-area > .comment-textarea .ql-editor') as HTMLElement).blur();
+      }
+    });
+
+    expect(await notePanel.screenshot()).toMatchSnapshot(['comment-panel', 'note-panel-scrolling-when-added.png']);
   });
 });
