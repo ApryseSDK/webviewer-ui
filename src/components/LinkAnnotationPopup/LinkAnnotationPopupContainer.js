@@ -8,6 +8,7 @@ import { isMobileDevice } from 'helpers/device';
 import LinkAnnotationPopup from './LinkAnnotationPopup';
 import PropTypes from 'prop-types';
 import selectors from 'selectors';
+import getLinkDestination from 'helpers/getLinkDestination';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import React, {
   useState,
@@ -97,7 +98,7 @@ const LinkAnnotationPopupContainer = ({
     }
   };
 
-  const contents = annotation?.getContents() || '';
+  const contents = getLinkDestination(annotation) || '';
 
   const handleUnLink = () => {
     deleteLinkAnnotationWithGroup(annotation, activeDocumentViewerKey);

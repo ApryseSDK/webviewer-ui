@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
+import getLinkDestination from 'helpers/getLinkDestination';
 import core from 'core';
 import DataElements from 'constants/dataElement';
 import _debounce from 'lodash/debounce';
@@ -39,7 +40,7 @@ export default function useOnLinkAnnotationPopupOpen() {
       }
       const annotations = core.getAnnotationManager(activeDocumentViewerKey).getAnnotationsByMouseEvent(e, true);
       const linkAnnot = annotations.find((annot) => annot instanceof window.Core.Annotations.Link);
-      const contents = linkAnnot?.getContents() || '';
+      const contents = getLinkDestination(linkAnnot) || '';
 
       if (contents) {
         setAnnotation(linkAnnot);
