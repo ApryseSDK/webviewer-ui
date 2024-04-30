@@ -156,6 +156,7 @@ export default class TabManager {
       return console.error(`Tab id not found: ${id}`);
     }
     if (currentTab) {
+      await core.getDocumentViewer().getAnnotationManager().exportAnnotations();
       await core.getDocumentViewer().getAnnotationsLoadedPromise();
     }
     fireEvent(Events['BEFORE_TAB_CHANGED'], {
