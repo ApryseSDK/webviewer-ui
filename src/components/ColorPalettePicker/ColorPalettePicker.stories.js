@@ -27,23 +27,3 @@ export function Basic() {
     </div>
   );
 }
-
-export function IgnoredColors() {
-  const [t] = useTranslation();
-  function noop() {}
-  const colorsToIgnore = ['#000000', '#ffffff'];
-  const props = {
-    t,
-    color,
-    customColors,
-    getHexColor: noop,
-    findCustomColorsIndex: noop,
-    setColorToBeDeleted: noop,
-    colorsToIgnore,
-  };
-  return (
-    <div>
-      <ColorPalettePicker {...props} />
-    </div>
-  );
-}

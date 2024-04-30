@@ -1,0 +1,12 @@
+@import '../../constants/styles';
+@import '../../constants/panel';
+
+.PortfolioPanel {
+  .portfolio-panel-control {
+    display: flex;
+  }
+
+  .bookmark-outline-row {
+    padding-top: 6px;
+  }
+}

@@ -6,7 +6,7 @@ module.exports = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: [
-    'webpack-hot-middleware/client?name=ui&path=/__webpack_hmr',
+    'webpack-hot-middleware/client?name=ui&path=/__webpack_hmr&noInfo=true',
     path.resolve(__dirname, 'src'),
   ],
   output: {
@@ -57,29 +57,53 @@ module.exports = {
             loader: 'style-loader',
             options: {
               insert: function (styleTag) {
-                const webComponents = document.getElementsByTagName('apryse-webviewer');
-                if (webComponents.length > 0) {
-                  const clonedStyleTags = [];
-                  for (let i = 0; i < webComponents.length; i++) {
-                    const webComponent = webComponents[i];
-                    if (i === 0) {
-                      webComponent.shadowRoot.appendChild(styleTag);
-                      styleTag.onload = function () {
-                        if (clonedStyleTags.length > 0) {
-                          clonedStyleTags.forEach((styleNode) => {
-                            // eslint-disable-next-line no-unsanitized/property
-                            styleNode.innerHTML = styleTag.innerHTML;
-                          });
-                        }
-                      };
-                    } else {
-                      const styleNode = styleTag.cloneNode(true);
-                      webComponent.shadowRoot.appendChild(styleNode);
-                      clonedStyleTags.push(styleNode);
+                function findNestedWebComponents(tagName, root = document) {
+                  const elements = [];
+
+                  // Check direct children
+                  root.querySelectorAll(tagName).forEach(el => elements.push(el));
+
+                  // Check shadow DOMs
+                  root.querySelectorAll('*').forEach(el => {
+                    if (el.shadowRoot) {
+                      elements.push(...findNestedWebComponents(tagName, el.shadowRoot));
                     }
-                  }
-                } else {
+                  });
+
+                  return elements;
+                }
+                // If its the iframe we just append to the document head
+                if (!window.isApryseWebViewerWebComponent) {
                   document.head.appendChild(styleTag);
+                  return;
+                }
+
+                let webComponents;
+                // First we see if the webcomponent is at the document level
+                webComponents = document.getElementsByTagName('apryse-webviewer');
+                // If not, we check have to check if it is nested in another webcomponent
+                if (!webComponents.length) {
+                  webComponents = findNestedWebComponents('apryse-webviewer');
+                }
+                // Now we append the style tag to each webcomponent
+                const clonedStyleTags = [];
+                for (let i = 0; i < webComponents.length; i++) {
+                  const webComponent = webComponents[i];
+                  if (i === 0) {
+                    webComponent.shadowRoot.appendChild(styleTag);
+                    styleTag.onload = function () {
+                      if (clonedStyleTags.length > 0) {
+                        clonedStyleTags.forEach((styleNode) => {
+                          // eslint-disable-next-line no-unsanitized/property
+                          styleNode.innerHTML = styleTag.innerHTML;
+                        });
+                      }
+                    };
+                  } else {
+                    const styleNode = styleTag.cloneNode(true);
+                    webComponent.shadowRoot.appendChild(styleNode);
+                    clonedStyleTags.push(styleNode);
+                  }
                 }
               },
             },

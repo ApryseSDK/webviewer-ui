@@ -1,0 +1,3 @@
+import OfficeEditorImageFilePickerHandler from './OfficeEditorImageFilePickerHandler';
+
+export default OfficeEditorImageFilePickerHandler;

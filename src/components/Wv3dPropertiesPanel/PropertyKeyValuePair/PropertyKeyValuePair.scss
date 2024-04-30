@@ -1,0 +1,25 @@
+.property-pair {
+  margin-left: 24px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 10px;
+  user-select: all !important;
+}
+
+.property-key {
+  flex-basis: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.property-value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-basis: 300px;
+  padding-left: 20px;
+}

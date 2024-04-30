@@ -1,0 +1,19 @@
+@import '../../../../src/constants/styles';
+
+.PresetButton {
+  &:hover {
+    background: var(--tools-button-hover);
+  }
+
+  &.formFieldEditButton, &.contentEditButton {
+    &.active {
+      background: var(--tools-button-active);
+      color: var(--view-header-icon-active-fill);
+      cursor: default;
+
+      .Icon {
+        color: var(--view-header-icon-active-fill)
+      }
+    }
+  }
+}
