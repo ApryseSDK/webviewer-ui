@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import NotePopup from 'components/NotePopup';
@@ -6,7 +6,6 @@ import NoteState from 'components/NoteState';
 import Icon from 'components/Icon';
 import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
 import Choice from 'components/Choice';
-import NoteContext from 'components/Note/Context';
 
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import getColor from 'helpers/getColor';
@@ -14,8 +13,10 @@ import { isDarkColorHex, isLightColorHex } from 'helpers/color';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import core from 'core';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
+import { OFFICE_EDITOR_TRACKED_CHANGE_KEY } from 'constants/officeEditor';
 
 import './NoteHeader.scss';
 
@@ -74,11 +75,6 @@ function NoteHeader(props) {
 
   const [t] = useTranslation();
 
-  const {
-    acceptTrackedChange,
-    rejectTrackedChange,
-  } = useContext(NoteContext);
-
   let date;
   const dateCreated = (sortStrategy === NotesPanelSortStrategy.MODIFIED_DATE || (notesShowLastUpdatedDate && sortStrategy !== NotesPanelSortStrategy.CREATED_DATE)) ? getLatestActivityDate(annotation) : annotation.DateCreated;
   if (timezone && dateCreated) {
@@ -103,6 +99,15 @@ function NoteHeader(props) {
 
   const authorAndDateClass = classNames('author-and-date', { isReply });
   const noteHeaderClass = classNames('NoteHeader', { parent: !isReply && !isGroupMember });
+
+  const acceptTrackedChange = (trackedChangeAnnot) => {
+    const trackedChangeId = trackedChangeAnnot.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
+    core.getOfficeEditor().acceptTrackedChange(trackedChangeId);
+  };
+  const rejectTrackedChange = (trackedChangeAnnot) => {
+    const trackedChangeId = trackedChangeAnnot.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
+    core.getOfficeEditor().rejectTrackedChange(trackedChangeId);
+  };
 
   return (
     <div className={noteHeaderClass}>
@@ -162,7 +167,7 @@ function NoteHeader(props) {
                 isReply={isReply}
               />
             }
-            {isSelected && isTrackedChange &&
+            {isSelected && isTrackedChange && !isMultiSelectMode &&
               <>
                 <div
                   className="tracked-change-icon-wrapper"

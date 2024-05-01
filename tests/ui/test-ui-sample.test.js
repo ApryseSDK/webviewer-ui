@@ -314,6 +314,7 @@ describe('Test UI APIs', function() {
     // click on the filter modal apply button
     const filterModalApplyButton = iframe.contentDocument.querySelector('.filter-annot-apply');
     simulateClick(filterModalApplyButton);
+    await delay(300);
 
     // assert that the filter button is active
     expect(filterButton.classList.contains('active')).to.equal(true);

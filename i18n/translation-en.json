@@ -313,7 +313,8 @@
     "viewBookmark": "View Bookmark on Page",
     "error": "Error",
     "errorPageNumber": "Invalid page number. Limit is ",
-    "errorLoadingDocument": "There was a problem reading this document and some pages may not be displayed. This indicates the document may be corrupted. The total page count is {{totalPageCount}} and the number pages being displayed is {{displayedPageCount}}."
+    "errorLoadingDocument": "There was a problem reading this document and some pages may not be displayed. This indicates the document may be corrupted. The total page count is {{totalPageCount}} and the number pages being displayed is {{displayedPageCount}}.",
+    "noRevisions": "This document has no revisions."
   },
   "option": {
     "type": {

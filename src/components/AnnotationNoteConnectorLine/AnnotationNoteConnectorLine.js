@@ -4,15 +4,16 @@ import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
 import { createPortal } from 'react-dom';
-import { getAnnotationPosition } from '../../helpers/getPopupPosition';
+import { getAnnotationPosition } from 'helpers/getPopupPosition';
+import getRootNode from 'helpers/getRootNode';
+import DataElements from 'constants/dataElement';
 
 import './AnnotationNoteConnectorLine.scss';
-import getRootNode from 'helpers/getRootNode';
 
 const LineConnectorPortal = ({ children }) => {
   const mount = getRootNode().querySelector('#line-connector-root');
   const el = document.createElement('div');
-  el.setAttribute('data-element', 'annotationNoteConnectorLine');
+  el.setAttribute('data-element', DataElements.ANNOTATION_NOTE_CONNECTOR_LINE);
 
   useEffect(() => {
     mount.appendChild(el);
@@ -34,9 +35,9 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
   ] = useSelector(
     (state) => [
       selectors.getNotesPanelWidth(state),
-      selectors.isElementOpen(state, 'annotationNoteConnectorLine'),
-      selectors.isElementOpen(state, 'notesPanel'),
-      selectors.isElementDisabled(state, 'annotationNoteConnectorLine'),
+      selectors.isElementOpen(state, DataElements.ANNOTATION_NOTE_CONNECTOR_LINE),
+      selectors.isElementOpen(state, DataElements.NOTES_PANEL),
+      selectors.isElementDisabled(state, DataElements.ANNOTATION_NOTE_CONNECTOR_LINE),
       selectors.getDocumentContainerWidth(state),
       selectors.getDocumentContainerHeight(state),
       selectors.getActiveDocumentViewerKey(state),
@@ -74,7 +75,7 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
     const isAnnotationPositionInvalid = !(annotationBottomRight && annotationTopLeft);
     if (isAnnotationPositionInvalid) {
       return () => {
-        dispatch(actions.closeElement('annotationNoteConnectorLine'));
+        dispatch(actions.closeElement(DataElements.ANNOTATION_NOTE_CONNECTOR_LINE));
       };
     }
     const annotWidthInPixels = annotationBottomRight.x - annotationTopLeft.x;
@@ -98,7 +99,7 @@ const AnnotationNoteConnectorLine = ({ annotation, noteContainerRef, isCustomPan
     setLeftHorizontalLineTop(annotationTopLeft.y + (annotHeightInPixels / 2) - scrollTop - noZoomRefShiftY);
 
     const onPageNumberUpdated = () => {
-      dispatch(actions.closeElement('annotationNoteConnectorLine'));
+      dispatch(actions.closeElement(DataElements.ANNOTATION_NOTE_CONNECTOR_LINE));
     };
 
     core.addEventListener('pageNumberUpdated', onPageNumberUpdated, undefined, activeDocumentViewerKey);

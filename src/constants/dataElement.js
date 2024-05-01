@@ -1,4 +1,3 @@
-// TODO - Add more here
 const DataElements = {
   LEGACY_RICH_TEXT_POPUP: 'legacyRichTextPopup',
   ANNOTATION_NOTE_CONNECTOR_LINE: 'annotationNoteConnectorLine',
@@ -71,7 +70,8 @@ const DataElements = {
     DefaultHeader: {
       INPUT_CONTAINER: 'notesPanelHeader-inputContainer',
       COMMENTS_COUNTER: 'notesPanelHeader-commentsCounter',
-      SORT_ROW: 'notesPanelHeader-sortRow'
+      SORT_ROW: 'notesPanelHeader-sortRow',
+      FILTER_ANNOTATION_BUTTON: 'filterAnnotationButton'
     },
     ADD_REPLY_ATTACHMENT_BUTTON: 'addReplyAttachmentButton'
   },

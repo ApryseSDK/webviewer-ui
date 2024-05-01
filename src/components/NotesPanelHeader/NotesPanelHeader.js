@@ -14,7 +14,7 @@ import CustomElement from 'components/CustomElement';
 
 import Events from 'constants/events';
 import { getSortStrategies } from 'constants/sortStrategies';
-import DataElements from 'src/constants/dataElement';
+import DataElements from 'constants/dataElement';
 
 import './NotesPanelHeader.scss';
 
@@ -27,6 +27,7 @@ function NotesPanelHeader({
   isMultiSelectMode,
   toggleMultiSelectMode,
   isMultiSelectEnabled,
+  isOfficeEditorReviewingMode,
 }) {
   const [
     sortStrategy,
@@ -99,11 +100,12 @@ function NotesPanelHeader({
   const originalHeaderElement = (
     <DataElementWrapper
       className="header"
-      dataElement="notesPanelHeader">
-
+      dataElement="notesPanelHeader"
+    >
       <DataElementWrapper
         className="input-container"
-        dataElement={`${DataElements.NotesPanel.DefaultHeader.INPUT_CONTAINER}`}>
+        dataElement={DataElements.NotesPanel.DefaultHeader.INPUT_CONTAINER}
+      >
         <input
           type="text"
           placeholder={t('message.searchCommentsPlaceholder')}
@@ -115,13 +117,15 @@ function NotesPanelHeader({
 
       <DataElementWrapper
         className="comments-counter"
-        dataElement={`${DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}`}>
-        <span className='main-comment'>{t('component.notesPanel')}</span> {`(${notes.length})`}
+        dataElement={DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}
+      >
+        <span className='main-comment'>{isOfficeEditorReviewingMode ? t('officeEditor.reviewing') : t('component.notesPanel')}</span> {`(${notes.length})`}
       </DataElementWrapper>
 
       <DataElementWrapper
         className="sort-row"
-        dataElement={`${DataElements.NotesPanel.DefaultHeader.SORT_ROW}`}>
+        dataElement={DataElements.NotesPanel.DefaultHeader.SORT_ROW}
+      >
         {(isSortContainerDisabled) ? <div className="sort-container"></div> : sortContainer}
         <div
           className="buttons-container"
@@ -142,9 +146,8 @@ function NotesPanelHeader({
             />
           }
           <Button
-            dataElement="filterAnnotationButton"
+            dataElement={DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON}
             className={classNames({
-              filterAnnotationButton: true,
               active: filterEnabled
             })}
             disabled={disableFilterAnnotation}

@@ -19,10 +19,15 @@ import { isOfficeEditorMode } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
 import { getPortfolioFiles } from 'helpers/portfolio';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
+import {
+  officeEditorScope,
+  OFFICE_EDITOR_EDIT_MODE,
+  elementsToDisableInOfficeEditor,
+  elementsToEnableInOfficeEditor
+} from 'constants/officeEditor';
 
 let onFirstLoad = true;
-const officeEditorScope = 'office-editor';
+let notesInLeftPanel;
 
 const getIsCustomUIEnabled = (store) => getHashParameters('ui', 'default') === 'beta' || selectors.getFeatureFlags(store.getState()).customizableUI;
 
@@ -132,8 +137,6 @@ export default (store, documentViewerKey) => async () => {
       dispatch(actions.disableElement('addParagraphToolGroupButton', PRIORITY_ONE));
     }
 
-    const elementsToDisableInOfficeEditor = ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton', 'annotationPopup'];
-    const elementsToEnableInOfficeEditor = [DataElements.OFFICE_EDITOR_TOOLS_HEADER, DataElements.INLINE_COMMENT_POPUP];
     if (isOfficeEditorMode()) {
       dispatch(actions.setIsOfficeEditorMode(true));
       dispatch(actions.enableElements(elementsToEnableInOfficeEditor, PRIORITY_ONE));
@@ -151,6 +154,7 @@ export default (store, documentViewerKey) => async () => {
         officeEditorScope,
         hotkeysManager.keyHandlerMap[searchShortcutKeys],
       );
+      dispatch(actions.setOfficeEditorEditMode(OFFICE_EDITOR_EDIT_MODE.EDITING));
       doc.addEventListener('editModeUpdated', (editMode) => {
         dispatch(actions.setOfficeEditorEditMode(editMode));
         if (editMode === OFFICE_EDITOR_EDIT_MODE.VIEW_ONLY) {
@@ -158,7 +162,14 @@ export default (store, documentViewerKey) => async () => {
         } else {
           dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
         }
+        if (editMode === OFFICE_EDITOR_EDIT_MODE.REVIEWING) {
+          dispatch(actions.openElement(DataElements.LEFT_PANEL));
+        } else {
+          dispatch(actions.closeElement(DataElements.LEFT_PANEL));
+        }
       });
+      notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
+      dispatch(actions.setNotesInLeftPanel(true));
     } else {
       dispatch(actions.enableElements(
         elementsToDisableInOfficeEditor,
@@ -166,6 +177,7 @@ export default (store, documentViewerKey) => async () => {
       ));
       dispatch(actions.disableElements(elementsToEnableInOfficeEditor, PRIORITY_ONE));
       hotkeys.setScope(defaultHotkeysScope);
+      dispatch(actions.setNotesInLeftPanel(notesInLeftPanel));
     }
 
     if (core.isFullPDFEnabled()) {
@@ -234,10 +246,10 @@ export default (store, documentViewerKey) => async () => {
     .getFieldManager()
     .setPrintHandler(() => {
       print(
-        store.dispatch,
-        selectors.isEmbedPrintSupported(store.getState()),
-        selectors.getSortStrategy(store.getState()),
-        selectors.getColorMap(store.getState()),
+        dispatch,
+        selectors.isEmbedPrintSupported(getState()),
+        selectors.getSortStrategy(getState()),
+        selectors.getColorMap(getState()),
       );
     });
 

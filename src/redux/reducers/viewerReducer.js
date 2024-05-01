@@ -1102,6 +1102,8 @@ export default (initialState) => (state = initialState, action) => {
       return { ...state, textSignatureCanvasMultiplier: payload.multiplier };
     case 'SET_ENABLE_MEASUREMENT_ANNOTATIONS_FILTER':
       return { ...state, isMeasurementAnnotationFilterEnabled: payload.isEnabled };
+    case 'SET_NOTES_IN_LEFT_PANEL':
+      return { ...state, notesInLeftPanel: payload };
     default:
       return state;
   }

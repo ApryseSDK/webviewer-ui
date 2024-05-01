@@ -33,7 +33,7 @@ const initialState = {
     sortStrategy: 'position',
     isInDesktopOnlyMode: true,
     isNotesPanelMultiSelectEnabled: true,
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40
@@ -49,6 +49,9 @@ const initialState = {
   },
   featureFlags: {
     customizableUI: false,
+  },
+  officeEditor: {
+    editMode: 'editing'
   },
 };
 

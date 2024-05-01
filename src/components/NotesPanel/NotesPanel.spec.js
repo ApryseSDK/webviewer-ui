@@ -38,7 +38,8 @@ const initialState = {
       typeFilter: [],
       statusFilter: []
     },
-  }
+  },
+  officeEditor: {}
 };
 
 const store = configureStore({ reducer: () => initialState });

@@ -3,7 +3,7 @@
 
 .LeftPanel {
   z-index: 65;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   background-color: var(--panel-background);
   display: flex;
@@ -17,24 +17,28 @@
 
   @include mobile {
     max-width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 95;
   }
-  @include panel-height-fix;
 
-  &.closed {
-    transform: translateX(-100%);
-  }
+  @include panel-height-fix;
 
   @include tablet {
     border-right: 1px solid var(--side-panel-border);
   }
 
-  @include mobile {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    z-index: 95;
+  &.closed {
+    transform: translateX(-100%);
+  }
+
+  &.tracked-change-active {
+    .left-panel-container {
+      padding: 0;
+    }
   }
 
   .left-panel-container {
@@ -44,22 +48,21 @@
 
     @include mobile {
       padding-top: 0px;
-      width: 100vw;
-      min-width: 100vw;
+      width: 100%;
+      min-width: 100%;
 
       .close-container {
         display: flex;
         align-items: center;
         justify-content: flex-end;
         height: 64px;
-
-
         width: 100%;
         padding-right: 5px;
         top: 0;
 
         .close-icon-container {
           cursor: pointer;
+
           .close-icon {
             width: 24px;
             height: 24px;
@@ -67,15 +70,15 @@
         }
       }
     }
-  }
 
-  .left-panel-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-    margin-left: $left-panel-header-margin-left;
-    margin-top: 0px;
-    margin-right: 8px;
+    .left-panel-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      margin-left: $left-panel-header-margin-left;
+      margin-top: 0px;
+      margin-right: 8px;
+    }
   }
 
   .Panel {

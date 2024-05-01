@@ -791,3 +791,8 @@ export const setCustomElementSize = (dataElement, size) => ({
   type: 'SET_CUSTOM_ELEMENT_SIZE',
   payload: { dataElement, size },
 });
+
+export const setNotesInLeftPanel = (notesInLeftPanel) => ({
+  type: 'SET_NOTES_IN_LEFT_PANEL',
+  payload: notesInLeftPanel
+});

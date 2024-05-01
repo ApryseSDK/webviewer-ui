@@ -14,7 +14,7 @@ import SignaturePanel from 'components/SignaturePanel';
 import CustomElement from 'components/CustomElement';
 import ResizeBar from 'components/ResizeBar';
 import Icon from 'components/Icon';
-import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper';
+import NotesPanel from 'components/NotesPanel';
 
 import core from 'core';
 import selectors from 'selectors';
@@ -27,7 +27,6 @@ import './LeftPanel.scss';
 
 const LeftPanel = () => {
   const isMobile = isMobileSize();
-
   const isTabletAndMobile = isTabletAndMobileSize();
 
   const [
@@ -51,6 +50,7 @@ const LeftPanel = () => {
     topHeadersHeight,
     bottomHeadersHeight,
     portfolioFiles,
+    isOfficeEditorMode,
   ] = useSelector(
     (state) => [
       selectors.getCurrentToolbarGroup(state),
@@ -73,6 +73,7 @@ const LeftPanel = () => {
       selectors.getTopHeadersHeight(state),
       selectors.getBottomHeadersHeight(state),
       selectors.getPortfolio(state),
+      selectors.getIsOfficeEditorMode(state),
     ],
     shallowEqual,
   );
@@ -148,6 +149,7 @@ const LeftPanel = () => {
         'outlines-panel-active': activePanel === 'outlinesPanel',
         'multi-tab-active': isMultiTabActive,
         'logo-bar-enabled': isLogoBarEnabled,
+        'tracked-change-active': isOfficeEditorMode,
       })}
       onDrop={onDrop}
       onDragOver={onDragOver}
@@ -173,35 +175,39 @@ const LeftPanel = () => {
                 className="close-icon"
               />
             </div>
-          </div>}
-        <div className="left-panel-header">
-          <LeftPanelTabs showPortfolio={portfolioFiles.length > 0}/>
-        </div>
-        {activePanel === DataElements.PORTFOLIO_PANEL
-          && core.isFullPDFEnabled()
-          && portfolioFiles.length > 0
-          && <PortfolioPanel />}
-        {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel />}
-        {activePanel === 'outlinesPanel' && <OutlinesPanel />}
-        {activePanel === 'bookmarksPanel' && <BookmarksPanel />}
-        {activePanel === 'layersPanel' && <LayersPanel />}
-        {core.isFullPDFEnabled() && activePanel === 'signaturePanel' && <SignaturePanel />}
-        {activePanel === 'attachmentPanel' && <FileAttachmentPanel />}
-        {notesInLeftPanel && activePanel === 'notesPanel' &&
-          <LazyLoadWrapper
-            Component={LazyLoadComponents.NotesPanel}
-            dataElement={DataElements.NOTES_PANEL}
-            currentLeftPanelWidth={currentWidth}
-          />}
-        {customPanels.map(({ panel }, index) => (
-          <CustomElement
-            key={panel.dataElement || index}
-            className={`Panel ${panel.dataElement}`}
-            display={getDisplay(panel.dataElement)}
-            dataElement={panel.dataElement}
-            render={panel.render}
-          />
-        ))}
+          </div>
+        }
+        {isOfficeEditorMode ?
+          <NotesPanel currentLeftPanelWidth={currentWidth} />
+          :
+          <>
+            <div className="left-panel-header">
+              <LeftPanelTabs showPortfolio={portfolioFiles.length > 0} />
+            </div>
+            {activePanel === DataElements.PORTFOLIO_PANEL
+              && core.isFullPDFEnabled()
+              && portfolioFiles.length > 0
+              && <PortfolioPanel />}
+            {activePanel === 'thumbnailsPanel' && <ThumbnailsPanel />}
+            {activePanel === 'outlinesPanel' && <OutlinesPanel />}
+            {activePanel === 'bookmarksPanel' && <BookmarksPanel />}
+            {activePanel === 'layersPanel' && <LayersPanel />}
+            {core.isFullPDFEnabled() && activePanel === 'signaturePanel' && <SignaturePanel />}
+            {activePanel === 'attachmentPanel' && <FileAttachmentPanel />}
+            {notesInLeftPanel && activePanel === 'notesPanel' && (
+              <NotesPanel currentLeftPanelWidth={currentWidth} />
+            )}
+            {customPanels.map(({ panel }, index) => (
+              <CustomElement
+                key={panel.dataElement || index}
+                className={`Panel ${panel.dataElement}`}
+                display={getDisplay(panel.dataElement)}
+                dataElement={panel.dataElement}
+                render={panel.render}
+              />
+            ))}
+          </>
+        }
       </div>
       {(isInDesktopOnlyMode || !isTabletAndMobile) &&
         <ResizeBar

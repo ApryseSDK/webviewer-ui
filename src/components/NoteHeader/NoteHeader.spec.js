@@ -3,19 +3,11 @@ import { render, getByText } from '@testing-library/react';
 import NoteHeader from './NoteHeader';
 import * as reactRedux from 'react-redux';
 import { testProps, testPropsWithAnnotationNumbering } from './NoteHeader.stories';
-import NoteContext from '../Note/Context';
-
-const noop = () => { };
 
 const TestNoteHeader = withProviders(NoteHeader);
 const notSelectedProps = {
   ...testProps,
   isSelected: false,
-};
-
-const context = {
-  acceptTrackedChange: noop,
-  rejectTrackedChange: noop,
 };
 
 const initialState = {
@@ -47,19 +39,13 @@ describe('NoteHeader Component', () => {
 
   it('Should not throw any errors when rendering storybook component', () => {
     expect(() => {
-      render(
-        <NoteContext.Provider value={context}>
-          <TestNoteHeader {...notSelectedProps} />
-        </NoteContext.Provider>
-      );
+      render(<TestNoteHeader {...notSelectedProps} />);
     }).not.toThrow();
   });
 
   it('When component is selected, it does not render reply counter', () => {
     const { container } = render(
-      <NoteContext.Provider value={context}>
-        <TestNoteHeader {...notSelectedProps} />
-      </NoteContext.Provider>
+      <TestNoteHeader {...notSelectedProps} />
     );
 
     expect(container.querySelector('div.num-replies-counter')).not.toBeInTheDocument();
@@ -67,9 +53,7 @@ describe('NoteHeader Component', () => {
 
   it('renders correct author name', () => {
     const { container } = render(
-      <NoteContext.Provider value={context}>
-        <TestNoteHeader {...notSelectedProps} />
-      </NoteContext.Provider>
+      <TestNoteHeader {...notSelectedProps} />
     );
 
     getByText(container, notSelectedProps.annotation.Author);
@@ -77,9 +61,7 @@ describe('NoteHeader Component', () => {
 
   it('renders correct annotation number', () => {
     const { container } = render(
-      <NoteContext.Provider value={context}>
-        <TestNoteHeader {...testPropsWithAnnotationNumbering} />
-      </NoteContext.Provider>
+      <TestNoteHeader {...testPropsWithAnnotationNumbering} />
     );
 
     getByText(container, `#${testPropsWithAnnotationNumbering.annotation.getAssociatedNumber()} -`);

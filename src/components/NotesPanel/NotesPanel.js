@@ -42,6 +42,7 @@ const NotesPanel = ({
   isCustomPanelOpen,
   isLeftSide,
   parentDataElement,
+  isOfficeEditorReviewingMode
 }) => {
   const [
     sortStrategy,
@@ -77,29 +78,25 @@ const NotesPanel = ({
     ],
     shallowEqual,
   );
-  const currentWidth = currentLeftPanelWidth || currentNotesPanelWidth;
 
   const dispatch = useDispatch();
+  const [t] = useTranslation();
 
+  const currentWidth = currentLeftPanelWidth || currentNotesPanelWidth;
   const isMobile = isMobileSize();
-
 
   const [multiSelectedAnnotations, setMultiSelectedAnnotations] = useState([]);
   const [showMultiReply, setShowMultiReply] = useState(false);
   const [showMultiState, setShowMultiState] = useState(false);
   const [showMultiStyle, setShowMultiStyle] = useState(false);
-
   const [curAnnotId, setCurAnnotId] = useState(undefined);
 
-
-  const [t] = useTranslation();
   const listRef = useRef();
   // a ref that is used to keep track of the current scroll position
   // when the number of notesToRender goes over/below the threshold, we will unmount the current list and mount the other one
   // this will result in losing the scroll position and we will use this ref to recover
   const scrollTopRef = useRef(0);
   const VIRTUALIZATION_THRESHOLD = enableNotesPanelVirtualizedList ? (isIE ? 25 : 100) : Infinity;
-
 
   useEffect(() => {
     const onAnnotationNumberingUpdated = (isEnabled) => {
@@ -358,10 +355,12 @@ const NotesPanel = ({
     </div>
   );
 
-  const NoAnnotationsGlyph =
-    customEmptyPanel && customEmptyPanel.icon ? customEmptyPanel.icon : 'illustration - empty state - outlines';
-  const NoAnnotationsMessage =
-    customEmptyPanel && customEmptyPanel.message ? customEmptyPanel.message : t('message.noAnnotations');
+  const NoAnnotationsGlyph = customEmptyPanel?.icon ?
+    customEmptyPanel.icon :
+    (isOfficeEditorReviewingMode ? 'ic-edit-page' : 'illustration - empty state - outlines');
+  const NoAnnotationsMessage = customEmptyPanel?.message ?
+    customEmptyPanel.message :
+    (isOfficeEditorReviewingMode ? t('message.noRevisions') : t('message.noAnnotations'));
   const NoAnnotationsReadOnlyMessage =
     customEmptyPanel && customEmptyPanel.readOnlyMessage
       ? customEmptyPanel.readOnlyMessage
@@ -443,6 +442,7 @@ const NotesPanel = ({
             isMultiSelectMode={isMultiSelectMode}
             toggleMultiSelectMode={toggleMultiSelectMode}
             isMultiSelectEnabled={isNotesPanelMultiSelectEnabled}
+            isOfficeEditorReviewingMode={isOfficeEditorReviewingMode}
           />
           {notesToRender.length === 0 ? (
             notes.length === 0 ? (

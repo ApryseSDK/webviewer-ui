@@ -1,8 +1,6 @@
 import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-
 import InlineCommentingPopup from './InlineCommentingPopup';
-
 import core from 'core';
 import { getAnnotationPopupPositionBasedOn as getPopupPosition } from 'helpers/getPopupPosition';
 import { getOpenedWarningModal, getOpenedColorPicker, getDatePicker } from 'helpers/getElements';
@@ -12,7 +10,6 @@ import selectors from 'selectors';
 import { isMobile as isPhone, isIE, isMobileDevice } from 'helpers/device';
 import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
-import { OFFICE_EDITOR_TRACKED_CHANGE_KEY } from 'constants/officeEditor';
 
 const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
   const [
@@ -123,15 +120,6 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
     }
   };
 
-  const acceptTrackedChange = (trackedChangeAnnot) => {
-    const trackedChangeId = trackedChangeAnnot.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
-    core.getOfficeEditor().acceptTrackedChange(trackedChangeId);
-  };
-  const rejectTrackedChange = (trackedChangeAnnot) => {
-    const trackedChangeId = trackedChangeAnnot.getCustomData(OFFICE_EDITOR_TRACKED_CHANGE_KEY);
-    core.getOfficeEditor().rejectTrackedChange(trackedChangeId);
-  };
-
   const contextValue = {
     searchInput: '',
     resize: () => { },
@@ -152,8 +140,6 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
     addAttachments,
     clearAttachments,
     deleteAttachment,
-    acceptTrackedChange,
-    rejectTrackedChange,
   };
 
   return (

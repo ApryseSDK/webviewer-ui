@@ -1,3 +1,5 @@
+import DataElements from 'constants/dataElement';
+
 export const LINE_SPACING_OPTIONS = {
   'Single': 1,
   '1.15': 1.15,
@@ -44,3 +46,23 @@ export const OFFICE_EDITOR_EDIT_MODE = {
   REVIEWING: 'reviewing',
   VIEW_ONLY: 'viewOnly'
 };
+
+export const officeEditorScope = 'office-editor';
+
+export const elementsToDisableInOfficeEditor = [
+  'toggleNotesButton',
+  'toolsHeader',
+  'viewControlsButton',
+  'textPopup',
+  'marqueeToolButton',
+  'outlinesPanelButton',
+  'outlinesPanel',
+  'leftPanelButton',
+  'annotationPopup',
+  DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON,
+  DataElements.ANNOTATION_NOTE_CONNECTOR_LINE
+];
+export const elementsToEnableInOfficeEditor = [
+  DataElements.OFFICE_EDITOR_TOOLS_HEADER,
+  DataElements.INLINE_COMMENT_POPUP
+];
