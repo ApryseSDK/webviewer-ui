@@ -1,0 +1,47 @@
+.dimension-input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  background: var(--component-background);
+  color: var(--text-color);
+  border-radius: 4px;
+  width: 100%;
+  max-width: 80px;
+  min-width: 64px;
+  height: 28px;
+  padding: 1px 2px;
+
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  input {
+    border: 0;
+  }
+
+  input:focus {
+    border: 0;
+  }
+}
+
+.dimension-input {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin-right: 0;
+  margin-left: 4px;
+  min-width: 1ch;
+}
+
+.dimension-unit {
+  color: var(--text-color);
+  font-size: 13px;
+}

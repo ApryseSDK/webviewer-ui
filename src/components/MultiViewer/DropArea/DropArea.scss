@@ -1,0 +1,44 @@
+@import '../../../constants/styles';
+
+.DropArea {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--document-background-color);
+
+  border: 4px dashed #E1E1E3;
+  box-sizing: border-box;
+
+  .Icon {
+    color: var(--gray-7);
+    height: 65px;
+    width: 65px;
+  }
+  .hidden {
+    display: none;
+  }
+
+  button {
+    width: 105px;
+    height: 32px;
+    border-radius: 4px;
+    inset: 1px;
+    color: var(--blue-5);
+    background-color: var(--document-background-color);
+    border: 1px solid var(--blue-5);
+    pointer-events: auto;
+
+    &:hover {
+      background-color: var(--tools-button-hover);
+    }
+  }
+}

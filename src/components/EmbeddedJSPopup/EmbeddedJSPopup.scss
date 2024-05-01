@@ -1,0 +1,29 @@
+@import '../../constants/popup';
+
+.EmbeddedJSPopup {
+  @extend %popup;
+  box-shadow: 0 0 3px 0 var(--document-box-shadow);
+  background: var(--component-background);
+  border-radius: 4px;
+
+  @include mobile {
+    display: none !important;
+  }
+
+  .menu-option {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+
+    &:hover {
+      background: var(--popup-button-hover);
+    }
+  }
+  
+  hr {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+}

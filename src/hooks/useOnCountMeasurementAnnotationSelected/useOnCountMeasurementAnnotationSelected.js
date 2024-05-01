@@ -59,10 +59,7 @@ export default function useOnCountMeasurementAnnotationSelected() {
       ) {
         setAnnotation(annotations[0]);
         dispatch(actions.openElement(DataElements.MEASUREMENT_OVERLAY));
-      } else if (
-        action === 'deselected' &&
-        !core.isAnnotationSelected(annotation)
-      ) {
+      } else if (action === 'deselected' && !core.isAnnotationSelected(annotation)) {
         dispatch(actions.closeElement(DataElements.MEASUREMENT_OVERLAY));
       }
     };
