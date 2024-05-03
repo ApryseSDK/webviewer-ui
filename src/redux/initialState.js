@@ -2,7 +2,6 @@ import React from 'react';
 import actions from 'actions';
 import core from 'core';
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
-import TrackChangeOverlay from 'components/TrackChangeOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import Ribbons from 'components/Ribbons';
 import ApplyFormFieldButton from 'components/ApplyFormFieldButton';
@@ -23,7 +22,6 @@ import defaultDateTimeFormats from 'constants/defaultDateTimeFormats';
 import { redactionTypeMap } from 'constants/redactionTypes';
 import { getMeasurementScalePreset, initialScale } from 'constants/measurementScale';
 import { availableFontFaces, cssFontValues } from 'constants/officeEditorFonts';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
 import SignatureModes from 'constants/signatureModes';
 import { ShortcutKeys } from 'helpers/hotkeysManager';
 import defaultToolsWithInlineComment from 'src/constants/defaultToolsWithInlineCommentOnAnnotationSelected';
@@ -180,17 +178,17 @@ export default {
           render: () => <Ribbons />,
           className: 'custom-ribbons-container',
         },
-        {
-          type: 'customElement',
-          render: () => <TrackChangeOverlay />,
-          dataElement: DataElements.TRACK_CHANGE_OVERLAY_BUTTON,
-          isOfficeEditorOnly: true,
-        },
-        {
-          type: 'divider',
-          hidden: ['small-mobile'],
-          isOfficeEditorOnly: true,
-        },
+        // {
+        //   type: 'customElement',
+        //   render: () => <TrackChangeOverlay />,
+        //   dataElement: DataElements.TRACK_CHANGE_OVERLAY_BUTTON,
+        //   isOfficeEditorOnly: true,
+        // },
+        // {
+        //   type: 'divider',
+        //   hidden: ['small-mobile'],
+        //   isOfficeEditorOnly: true,
+        // },
         {
           type: 'toggleElementButton',
           dataElement: 'searchButton',
@@ -2189,7 +2187,6 @@ export default {
     },
     availableFontFaces,
     cssFontValues,
-    editMode: OFFICE_EDITOR_EDIT_MODE.EDITING
   },
   digitalSignatureValidation: {
     validationModalWidgetName: '',

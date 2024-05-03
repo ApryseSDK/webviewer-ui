@@ -1,4 +1,4 @@
-export default arg => {
+export default (arg) => {
   let zoomLevel;
 
   if (typeof arg === 'string') {

@@ -8,8 +8,8 @@ const noop = () => { };
 export const mockSearchResults = [
   {
     type: redactionTypeMap['TEXT'],
-    resultStr: "spice",
-    ambientStr: "The spice must flow.",
+    resultStr: 'spice',
+    ambientStr: 'The spice must flow.',
     resultStrStart: 4,
     resultStrEnd: 9,
     index: 0,
@@ -25,21 +25,21 @@ export const mockSearchResults = [
   },
   {
     type: redactionTypeMap['IMAGE'],
-    resultStr: "Image",
+    resultStr: 'Image',
     index: 2,
     pageNum: 2,
     icon: 'redact-icons-image',
   },
   {
     type: redactionTypeMap['PHONE'],
-    resultStr: "867-5309",
+    resultStr: '867-5309',
     index: 3,
     pageNum: 2,
     icon: 'redact-icons-phone-number',
   },
   {
     type: redactionTypeMap['EMAIL'],
-    resultStr: "paul.atreides@dune.com",
+    resultStr: 'paul.atreides@dune.com',
     index: 4,
     pageNum: 3,
     icon: 'redact-icons-email',
@@ -68,15 +68,15 @@ export function StartSearch() {
     isProcessingRedactionResults: false,
     clearRedactionSearchResults: noop,
     searchStatus: 'SEARCH_NOT_INITIATED',
-  }
+  };
   return (
     <RedactionPanelStoryWrapper mockContext={mockContext}>
-      <div className="Panel RedactionPanel" style={{ width: `330px`, minWidth: `$330px` }}>
+      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
         <RedactionSearchPanel {...props} />
       </div>
     </RedactionPanelStoryWrapper>
-  )
-};
+  );
+}
 
 export function SearchInProgress() {
   const props = {
@@ -84,16 +84,16 @@ export function SearchInProgress() {
     isProcessingRedactionResults: true,
     clearRedactionSearchResults: noop,
     searchStatus: 'SEARCH_IN_PROGRESS',
-  }
+  };
 
   return (
     <RedactionPanelStoryWrapper mockContext={mockContext}>
-      <div className="Panel RedactionPanel" style={{ width: `330px`, minWidth: `$330px` }}>
+      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
         <RedactionSearchPanel {...props} />
       </div>
     </RedactionPanelStoryWrapper>
   );
-};
+}
 
 export function SearchInProgressWithIncomingResults() {
   const props = {
@@ -101,16 +101,16 @@ export function SearchInProgressWithIncomingResults() {
     isProcessingRedactionResults: true,
     clearRedactionSearchResults: noop,
     searchStatus: 'SEARCH_IN_PROGRESS',
-  }
+  };
 
   return (
     <RedactionPanelStoryWrapper mockContext={mockContext}>
-      <div className="Panel RedactionPanel" style={{ width: `330px`, minWidth: `$330px` }}>
+      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
         <RedactionSearchPanel {...props} />
       </div>
     </RedactionPanelStoryWrapper>
   );
-};
+}
 
 export function SearchCompleteWithResults() {
   const props = {
@@ -118,16 +118,16 @@ export function SearchCompleteWithResults() {
     isProcessingRedactionResults: false,
     clearRedactionSearchResults: noop,
     searchStatus: 'SEARCH_DONE',
-  }
+  };
 
   return (
     <RedactionPanelStoryWrapper mockContext={mockContext}>
-      <div className="Panel RedactionPanel" style={{ width: `330px`, minWidth: `$330px` }}>
+      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
         <RedactionSearchPanel {...props} />
       </div>
     </RedactionPanelStoryWrapper>
   );
-};
+}
 
 export function SearchCompleteNoResults() {
   const props = {
@@ -135,13 +135,13 @@ export function SearchCompleteNoResults() {
     isProcessingRedactionResults: false,
     clearRedactionSearchResults: noop,
     searchStatus: 'SEARCH_DONE',
-  }
+  };
 
   return (
     <RedactionPanelStoryWrapper mockContext={mockContext}>
-      <div className="Panel RedactionPanel" style={{ width: `330px`, minWidth: `$330px` }}>
+      <div className="Panel RedactionPanel" style={{ width: '330px', minWidth: '$330px' }}>
         <RedactionSearchPanel {...props} />
       </div>
     </RedactionPanelStoryWrapper>
   );
-};
+}

@@ -17,6 +17,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => (id, dataElement) => {
+export default (store) => (id, dataElement) => {
   store.dispatch(actions.setSelectedTab(id, dataElement));
 };

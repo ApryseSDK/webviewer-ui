@@ -1,7 +1,7 @@
 /**
- * Set the number of signatures that can be stored in the WebViewer (default is 2)
+ * Set the number of signatures that can be stored in the WebViewer UI (default is 4)
  * @method UI.setMaxSignaturesCount
- * @param {number} [maxSignaturesCount=2] Number of signature webViewer can store
+ * @param {number} [maxSignaturesCount=4] Number of signature webViewer can store
  * @example
 WebViewer(...)
   .then(function(instance) {
@@ -11,6 +11,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => maxSignaturesCount => {
+export default (store) => (maxSignaturesCount) => {
   store.dispatch(actions.setMaxSignaturesCount(maxSignaturesCount));
 };

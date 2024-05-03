@@ -240,6 +240,13 @@ export const setActiveCustomPanel = (tabPanel, wrapperPanel) => (dispath, getSta
   });
 };
 
+export const setLastPickedToolForGroupedItems = (groupedItem, toolName) => (dispatch) => {
+  dispatch({
+    type: 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS',
+    payload: { groupedItem, toolName },
+  });
+};
+
 export const setSelectedScale = (selectedScale) => ({
   type: 'SET_SELECTED_SCALE',
   payload: { selectedScale }
@@ -768,11 +775,6 @@ export const setIsMultiViewerModeAvailable = (isMultiViewerModeAvailable) => ({
 export const setIsOfficeEditorMode = (isOfficeEditorMode) => ({
   type: 'SET_IS_OFFICE_EDITOR_MODE',
   payload: { isOfficeEditorMode }
-});
-
-export const setOfficeEditorEditMode = (editMode) => ({
-  type: 'SET_OFFICE_EDITOR_EDIT_MODE',
-  payload: { editMode }
 });
 
 export const growCustomElement = (dataElement) => (dispatch, getState) => {

@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import selectors from 'selectors';
 import { isIOS } from 'helpers/device';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
-import useMedia from 'hooks/useMedia';
+import { isMobileSize } from 'helpers/getDeviceSize';
 
 import DataElementWrapper from 'components/DataElementWrapper';
 import Button from 'components/Button';
@@ -25,13 +25,14 @@ class PageNavOverlay extends React.PureComponent {
     pageLabels: PropTypes.array.isRequired,
     allowPageNavigation: PropTypes.bool.isRequired,
     enableFadePageNavigation: PropTypes.bool.isRequired,
+    isLogoBarEnabled: PropTypes.bool,
   };
 
   constructor(props) {
     super(props);
     this.textInput = React.createRef();
     this.state = {
-      input: '',
+      input: this.props.pageLabels?.[this.props.currentPage - 1] ?? '',
       isCustomPageLabels: false,
       isFocused: false,
     };
@@ -39,16 +40,11 @@ class PageNavOverlay extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (prevProps.pageLabels !== this.props.pageLabels) {
-      const isCustomPageLabels = this.props.pageLabels.some(
-        (label, index) => label !== `${index + 1}`
-      );
+      const isCustomPageLabels = this.props.pageLabels.some((label, index) => label !== `${index + 1}`);
       this.setState({ isCustomPageLabels });
     }
 
-    if (
-      prevProps.currentPage !== this.props.currentPage ||
-      prevProps.pageLabels !== this.props.pageLabels
-    ) {
+    if (prevProps.currentPage !== this.props.currentPage || prevProps.pageLabels !== this.props.pageLabels) {
       this.setState({
         input: this.props.pageLabels[this.props.currentPage - 1],
       });
@@ -95,25 +91,21 @@ class PageNavOverlay extends React.PureComponent {
 
   onFocus = () => {
     this.setState({ isFocused: true });
-  }
+  };
 
   goToPrevPage = () => {
     const documentViewer = core.getDocumentViewer();
     if (documentViewer.getCurrentPage() - 1 > 0) {
-      documentViewer.setCurrentPage(
-        Math.max(documentViewer.getCurrentPage() - 1, 1),
-      );
+      documentViewer.setCurrentPage(Math.max(documentViewer.getCurrentPage() - 1, 1));
     }
-  }
+  };
 
   goToNextPage = () => {
     const documentViewer = core.getDocumentViewer();
     if (documentViewer.getCurrentPage() + 1 <= documentViewer.getPageCount()) {
-      documentViewer.setCurrentPage(
-        Math.min(documentViewer.getCurrentPage() + 1, documentViewer.getPageCount())
-      );
+      documentViewer.setCurrentPage(Math.min(documentViewer.getCurrentPage() + 1, documentViewer.getPageCount()));
     }
-  }
+  };
 
   render() {
     const {
@@ -123,11 +115,11 @@ class PageNavOverlay extends React.PureComponent {
       isMobile,
       t,
       dataElement,
-      enableFadePageNavigation
+      enableFadePageNavigation,
     } = this.props;
 
     const documentViewer = core.getDocumentViewer();
-    const inputWidth = this.state.input ? (this.state.input.length) * (isMobile ? 10 : 8) : 0;
+    const inputWidth = this.state.input ? this.state.input.length * (isMobile ? 10 : 8) : 0;
     const isFirstPage = documentViewer.getCurrentPage() === 1;
     const isLastPage = documentViewer.getCurrentPage() === documentViewer.getPageCount();
 
@@ -136,7 +128,8 @@ class PageNavOverlay extends React.PureComponent {
         className={classNames({
           Overlay: true,
           PageNavOverlay: true,
-          FadeOut: enableFadePageNavigation && !this.props.showNavOverlay && !this.state.isFocused
+          FadeOut: enableFadePageNavigation && !this.props.showNavOverlay && !this.state.isFocused,
+          'logo-bar-enabled': this.props.isLogoBarEnabled,
         })}
         dataElement={dataElement || 'pageNavOverlay'}
         onMouseEnter={this.props.onMouseEnter}
@@ -197,17 +190,9 @@ const mapStateToProps = (state) => ({
 const ConnectedPageNavOverlay = connect(mapStateToProps)(withTranslation()(PageNavOverlay));
 
 const connectedComponent = (props) => {
-  const isMobile = useMedia(
-    // Media queries
-    ['(max-width: 640px)'],
-    [true],
-    // Default value
-    false,
-  );
+  const isMobile = isMobileSize();
 
-  return (
-    <ConnectedPageNavOverlay {...props} isMobile={isMobile} />
-  );
+  return <ConnectedPageNavOverlay {...props} isMobile={isMobile} />;
 };
 
 export default connectedComponent;

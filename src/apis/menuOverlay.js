@@ -19,7 +19,7 @@ WebViewer(...)
 import actions from 'actions';
 import selectors from 'selectors';
 
-export default store => Object.create(MenuOverlayAPI).initialize(store);
+export default (store) => Object.create(MenuOverlayAPI).initialize(store);
 
 const MenuOverlayAPI = {
   initialize(store) {
@@ -29,7 +29,7 @@ const MenuOverlayAPI = {
   /**
    * Add an array of Actions Buttons after the item that has the given data element.
    * @method UI.MenuOverlay#add
-   * @param {Array.<object>} items Same as <a href='https://www.pdftron.com/documentation/web/guides/customizing-header#actionbutton' target='_blank'>ActionButton</a>
+   * @param {Array.<object>} items Same as <a href='https://docs.apryse.com/documentation/web/guides/customizing-header/#actionbutton' target='_blank'>ActionButton</a>
    * @param {string} [dataElement] An optional string. If not given, items will be added in the beginning
    * @returns {this} The instance itself
    * @example
@@ -125,7 +125,7 @@ WebViewer(...)
       index = -1;
     } else {
       const state = this.store.getState();
-      index = selectors.getMenuOverlayItems(state).findIndex(obj => obj.dataElement === dataElement);
+      index = selectors.getMenuOverlayItems(state).findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;

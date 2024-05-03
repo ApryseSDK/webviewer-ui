@@ -153,7 +153,7 @@ export const LeftSide = () => {
       activeCustomRibbon: 'toolbarGroup-Annotate',
       lastPickedToolAndGroup: {
         tool: 'AnnotationCreateFreeText',
-        group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
+        group: ['annotateGroupedItems'],
       },
       activeToolName: 'AnnotationCreateFreeText'
     },

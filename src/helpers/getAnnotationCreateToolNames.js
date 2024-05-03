@@ -4,7 +4,7 @@ export default () => {
   const toolNames = [];
   const toolModeMap = core.getToolModeMap();
 
-  Object.keys(toolModeMap).forEach(toolMode => {
+  Object.keys(toolModeMap).forEach((toolMode) => {
     const tool = toolModeMap[toolMode];
     const isAnnotationTool = tool instanceof window.Core.Tools.GenericAnnotationCreateTool || tool instanceof window.Core.Tools.TextAnnotationCreateTool || tool.defaults;
 

@@ -28,7 +28,7 @@ function RightHeaderContainer() {
   }
 
   const rightHeader = fullLengthHeaders[0];
-
+  const userDefinedStyle = rightHeader ? rightHeader.style : {};
   const [elementRef, dimensions] = useResizeObserver();
   useEffect(() => {
     if (dimensions.width !== null) {
@@ -37,13 +37,14 @@ function RightHeaderContainer() {
   }, [dimensions]);
 
   // Memoize this since the ModularHeader is memoized, and we only want to re-render if the style actually changes
-  const style = useMemo(() => {
+  let style = useMemo(() => {
     const styleObject = {};
     if (bottomHeadersHeight !== 0) {
       styleObject['height'] = `calc(100% - ${bottomHeadersHeight}px)`;
     }
     return styleObject;
   }, [bottomHeadersHeight]);
+  style = Object.assign({}, style, userDefinedStyle);
 
   if (customizableUI) {
     const renderRightHeader = () => {

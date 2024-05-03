@@ -5,11 +5,7 @@ import actions from 'actions';
 import { useTranslation } from 'react-i18next';
 import touchEventManager from 'helpers/TouchEventManager';
 import Choice from 'components/Choice';
-import {
-  isToolDefaultStyleUpdateFromAnnotationPopupEnabled,
-  enableToolDefaultStyleUpdateFromAnnotationPopup,
-  disableToolDefaultStyleUpdateFromAnnotationPopup
-} from '../../apis/toolDefaultStyleUpdateFromAnnotationPopup';
+import { SearchWrapper } from './SearchWrapper';
 
 import './AdvancedTab.scss';
 
@@ -25,7 +21,8 @@ const AdvancedTab = () => {
     shouldClearSearchPanelOnClose,
     pageDeletionConfirmationModalEnabled,
     isThumbnailSelectingPages,
-    customSettings
+    customSettings,
+    isToolDefaultStyleUpdateFromAnnotationPopupEnabled
   ] = useSelector((state) => [
     selectors.shouldFadePageNavigationComponent(state),
     selectors.isNoteSubmissionWithEnterEnabled(state),
@@ -35,7 +32,8 @@ const AdvancedTab = () => {
     selectors.shouldClearSearchPanelOnClose(state),
     selectors.pageDeletionConfirmationModalEnabled(state),
     selectors.isThumbnailSelectingPages(state),
-    selectors.getCustomSettings(state)
+    selectors.getCustomSettings(state),
+    selectors.isToolDefaultStyleUpdateFromAnnotationPopupEnabled(state)
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -66,10 +64,8 @@ const AdvancedTab = () => {
     createItem(
       t('option.settings.disableToolDefaultStyleUpdateFromAnnotationPopup'),
       t('option.settings.disableToolDefaultStyleUpdateFromAnnotationPopupDesc'),
-      !isToolDefaultStyleUpdateFromAnnotationPopupEnabled(),
-      (enable) => {
-        enable ? disableToolDefaultStyleUpdateFromAnnotationPopup() : enableToolDefaultStyleUpdateFromAnnotationPopup();
-      }
+      !isToolDefaultStyleUpdateFromAnnotationPopupEnabled,
+      (enable) => dispatch(actions.setToolDefaultStyleUpdateFromAnnotationPopupEnabled(!enable))
     )
   ];
 
@@ -135,28 +131,45 @@ const AdvancedTab = () => {
     [t('option.settings.miscellaneous'), customSettings]
   ];
 
+  const getSectionKeywords = (sectionTitle, sectionItems) => {
+    return [
+      sectionTitle,
+      sectionItems.map((item) => [item.label, item.description]).flat()
+    ].flat();
+  };
+
   return (
     <>
-      {sections.map((section) => ((section[1].length < 1) ? null : (
-        <div className="setting-section" key={section[0]}>
-          <div className="setting-label">{section[0]}</div>
-          {section[1].map((item) => (
-            <div className="setting-item" key={item.label}>
-              <div className="setting-item-info">
-                <div className="setting-item-label">{item.label}</div>
-                <div>{item.description}</div>
-              </div>
-              <Choice
-                isSwitch
-                checked={(typeof item.isChecked === 'function') ? item.isChecked() : item.isChecked}
-                onChange={(e) => {
-                  item.onToggled(e.target.checked);
-                  forceUpdate();
-                }}
-              />
-            </div>
-          ))}
-        </div>
+      {sections.map(([sectionTitle, sectionItems]) => ((sectionItems.length < 1) ? null : (
+        <SearchWrapper
+          key={sectionTitle}
+          keywords={getSectionKeywords(sectionTitle, sectionItems)}
+        >
+          <div className="setting-section">
+            <div className="setting-label">{sectionTitle}</div>
+            {sectionItems.map((item) => (
+              <SearchWrapper
+                key={item.label}
+                keywords={[sectionTitle, item.label, item.description]}
+              >
+                <div className="setting-item">
+                  <div className="setting-item-info">
+                    <div className="setting-item-label">{item.label}</div>
+                    <div>{item.description}</div>
+                  </div>
+                  <Choice
+                    isSwitch
+                    checked={(typeof item.isChecked === 'function') ? item.isChecked() : item.isChecked}
+                    onChange={(e) => {
+                      item.onToggled(e.target.checked);
+                      forceUpdate();
+                    }}
+                  />
+                </div>
+              </SearchWrapper>
+            ))}
+          </div>
+        </SearchWrapper>
       )))}
     </>
   );

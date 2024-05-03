@@ -6,14 +6,14 @@ import { disableElements, enableElements, setActiveFlyout } from 'actions/intern
 import defaultTool from 'constants/defaultTool';
 import { PRIORITY_TWO } from 'constants/actionPriority';
 import Events from 'constants/events';
-import { getGenericPanels, getGroupedItemsWithSelectedTool, getOpenGenericPanel } from 'selectors/exposedSelectors';
+import { getGenericPanels, getOpenGenericPanel } from 'selectors/exposedSelectors';
 import DataElements from 'constants/dataElement';
 import { ITEM_TYPE } from 'constants/customizationVariables';
 import pick from 'lodash/pick';
 import { v4 as uuidv4 } from 'uuid';
 import selectors from 'selectors';
 import checkFeaturesToEnable from 'helpers/checkFeaturesToEnable';
-import { getNestedGroupedItems, getBasicItemsFromGroupedItems, getParentGroupedItems } from 'helpers/modularUIHelpers';
+import { getModularItem, getNestedGroupedItems } from 'helpers/modularUIHelpers';
 import { isMobile } from 'helpers/device';
 
 export const setScaleOverlayPosition = (position) => ({
@@ -184,10 +184,10 @@ export const allButtonsInGroupDisabled = (state, toolGroup) => {
 
 export const getFirstToolForGroupedItems = (state, group) => {
   const modularComponents = state.viewer.modularComponents;
-  const allItems = getBasicItemsFromGroupedItems(state, group);
+  const items = modularComponents[group]?.items;
   let firstTool = '';
 
-  allItems?.find((item) => {
+  items?.find((item) => {
     const { type, toolName, dataElement } = modularComponents[item];
     if (type === ITEM_TYPE.TOOL_BUTTON && toolName && !isElementDisabled(state, dataElement)) {
       firstTool = toolName;
@@ -200,57 +200,44 @@ export const getFirstToolForGroupedItems = (state, group) => {
 
 export const setLastPickedToolAndGroup = (toolAndGroup) => ({
   type: 'SET_LAST_PICKED_TOOL_AND_GROUP',
-  payload: { tool: toolAndGroup.tool, group: toolAndGroup.group },
+  payload: { tool: toolAndGroup.tool, group: toolAndGroup.group }
 });
-
-export const getAllAssociatedGroupedItems = (state, groupedItems) => {
-  const arrayOfGroupedItems = Array.isArray(groupedItems) ? groupedItems : [groupedItems];
-  const parentGroupedItems = getParentGroupedItems(state, groupedItems);
-  const nestedGroupedItems = getNestedGroupedItems(state, groupedItems);
-  const allAssociatedGroupedItems = Array.from(new Set([...arrayOfGroupedItems, ...parentGroupedItems, ...nestedGroupedItems]));
-
-  return allAssociatedGroupedItems;
-};
 
 export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
   const state = getState();
-  const allAssociatedGroupedItems = getAllAssociatedGroupedItems(state, groupedItems);
 
-  const groupedItemsHasLastPickedTool = groupedItems.find((groupedItem) => state.viewer.lastPickedToolForGroupedItems?.[groupedItem]);
-  if (!groupedItemsHasLastPickedTool) {
+  const childGroupedItems = getNestedGroupedItems(state, groupedItems);
+
+  // Check and set the last picked tool for grouped items
+  const isLastPickedToolSet = groupedItems.some((groupedItem) => state.viewer.lastPickedToolForGroupedItems?.[groupedItem]);
+  if (!isLastPickedToolSet) {
     groupedItems.some((groupedItem) => {
       const firstTool = getFirstToolForGroupedItems(state, groupedItem);
       if (firstTool) {
-        dispatch(setLastPickedToolForGroupedItems(groupedItem, firstTool));
+        dispatch(setLastPickedToolForGroupedItems(firstTool, groupedItem));
         dispatch(setLastPickedToolAndGroup({
           tool: firstTool,
-          group: allAssociatedGroupedItems
+          group: [groupedItem]
         }));
-        dispatch(setGroupedItems(allAssociatedGroupedItems));
         return true;
       }
       return false;
     });
-  } else {
-    dispatch(setGroupedItems(allAssociatedGroupedItems));
   }
+
+  childGroupedItems.forEach((childGroupedItem) => {
+    if (state.viewer.lastPickedToolForGroupedItems?.[childGroupedItem]) {
+      dispatch(setLastPickedToolForGroupedItems('', childGroupedItem));
+    }
+  });
+
+  dispatch(setGroupedItems([...groupedItems, ...childGroupedItems]));
 };
 
-export const setLastPickedToolForGroupedItems = (groupedItem, toolName) => (dispatch, getState) => {
-  const state = getState();
-  const groupedItemsWithTool = getGroupedItemsWithSelectedTool(state, toolName);
-  const activeGroupedItems = selectors.getActiveGroupedItems(state);
-  const activeGroupedItemsContainsTool = activeGroupedItems.filter((item) => groupedItemsWithTool.includes(item));
-
-  const arrayOfGroupedItems = Array.isArray(groupedItem) ? groupedItem : [groupedItem];
-  const groupsToSetLastPickedTool = Array.from(new Set(activeGroupedItemsContainsTool.concat(arrayOfGroupedItems)));
-  for (const group of groupsToSetLastPickedTool) {
-    dispatch({
-      type: 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS',
-      payload: { toolName, groupedItem: group },
-    });
-  }
-};
+const setLastPickedToolForGroupedItems = (toolName, groupedItem) => ({
+  type: 'SET_LAST_PICKED_TOOL_FOR_GROUPED_ITEMS',
+  payload: { toolName, groupedItem },
+});
 
 const setGroupedItems = (groupedItems) => ({
   type: 'SET_ACTIVE_GROUPED_ITEMS',
@@ -343,15 +330,15 @@ export const setActiveGroupedItemWithTool = (toolName) => (dispatch, getState) =
   const state = getState();
   const groupedItemsWithTool = selectors.getGroupedItemsWithSelectedTool(state, toolName);
   const activeGroupedItems = selectors.getActiveGroupedItems(state);
-  const activeGroupedItemsContainsTool = activeGroupedItems.filter((item) => groupedItemsWithTool.includes(item));
+  const activeGroupedItemsContainsTool = activeGroupedItems.some((item) => groupedItemsWithTool.includes(item));
 
   // If no active grouped items have the selected tool, we set the first one as active
-  if (!activeGroupedItemsContainsTool.length && groupedItemsWithTool.length > 0) {
+  if (!activeGroupedItemsContainsTool && groupedItemsWithTool.length > 0) {
     let firstGroupedItem = '';
     let associatedRibbonItem = '';
-    for (const groupedItems of groupedItemsWithTool) {
-      firstGroupedItem = groupedItems;
-      associatedRibbonItem = selectors.getRibbonItemAssociatedWithGroupedItem(state, groupedItems);
+    for (let i = 0; i < groupedItemsWithTool.length; i++) {
+      firstGroupedItem = groupedItemsWithTool[i];
+      associatedRibbonItem = selectors.getRibbonItemAssociatedWithGroupedItem(state, firstGroupedItem);
       if (associatedRibbonItem) {
         break;
       }
@@ -360,15 +347,17 @@ export const setActiveGroupedItemWithTool = (toolName) => (dispatch, getState) =
     if (associatedRibbonItem) {
       dispatch(setActiveCustomRibbon(associatedRibbonItem));
     }
-    const parentGroupedItems = getParentGroupedItems(state, firstGroupedItem);
-    const nestedGroupedItems = getNestedGroupedItems(state, parentGroupedItems);
-    const allAssociatedGroupedItems = Array.from(new Set([firstGroupedItem, ...parentGroupedItems, ...nestedGroupedItems]));
-
-    dispatch(setActiveGroupedItems(allAssociatedGroupedItems));
-  } else if (activeGroupedItemsContainsTool.length) {
-    // For all grouped items that contain the selected tool, we set the last picked tool
-    for (const groupedItem of activeGroupedItemsContainsTool) {
-      dispatch(setLastPickedToolForGroupedItems(groupedItem, toolName));
+    dispatch(setLastPickedToolForGroupedItems(toolName, firstGroupedItem));
+    dispatch(setActiveGroupedItems([...activeGroupedItems, firstGroupedItem]));
+  } else if (activeGroupedItemsContainsTool) {
+    // If the active grouped items have the selected tool, we set the selected tool for the first one
+    const firstGroupedItem = activeGroupedItems[0];
+    const items = getModularItem(state, firstGroupedItem).items;
+    const itemInFirstGroupedItem = items.some((item) => getModularItem(state, item).toolName === toolName);
+    if (itemInFirstGroupedItem) {
+      dispatch(setLastPickedToolForGroupedItems(toolName, firstGroupedItem));
+    } else {
+      dispatch(setLastPickedToolForGroupedItems('', firstGroupedItem));
     }
   }
 };

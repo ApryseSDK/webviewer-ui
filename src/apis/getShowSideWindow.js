@@ -1,5 +1,5 @@
 import getSideWindowVisibility from './getSideWindowVisibility';
 
-export default store => () => {
+export default (store) => () => {
   return getSideWindowVisibility(store)();
 };

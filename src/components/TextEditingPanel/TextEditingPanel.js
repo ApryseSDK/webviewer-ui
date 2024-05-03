@@ -1,36 +1,30 @@
 import React, { useEffect } from 'react';
 import i18next from 'i18next';
 
+import './TextEditingPanel.scss';
+import PropTypes from 'prop-types';
 import TextStylePicker from 'components/TextStylePicker';
 import ColorPalette from 'components/ColorPalette';
 import ColorPalettePicker from 'components/ColorPalettePicker';
-
-// //TODO: implement when opacity is available from worker
-// import Slider from 'components/Slider';
-
 import Button from 'components/Button';
 import HorizontalDivider from 'components/HorizontalDivider';
 
-import './TextEditingPanel.scss';
-
 const TextEditingPanel = ({
-  undoRedoProperties,
-  freeTextMode,
+  addActiveColor,
   contentSelectMode,
-  textEditProperties = {},
+  disableLinkButton,
+  fonts,
   format,
+  handleAddLinkToText,
+  handleColorChange,
   handlePropertyChange,
   handleTextFormatChange,
-  handleColorChange,
-  fonts,
-  handleAddLinkToText,
-  disableLinkButton,
-  colorArray = []
+  rgbColor,
+  textEditProperties = {},
+  undoRedoProperties
 }) => {
   const currentPalette = 'TextColor';
-  const DEFAULT_COLOR = new window.Core.Annotations.Color('#000000');
   const FONT_PLACEHOLDER = 'Font';
-  let colorsToIgnore = [];
 
   useEffect(() => {
     if (!('Font' in textEditProperties)) {
@@ -39,10 +33,96 @@ const TextEditingPanel = ({
     }
   }, []);
 
+  /**
+   * @ignore
+   * Prevent the blur event from being triggered when clicking on panel buttons
+   * otherwise we can't style the text inline since a blur event is triggered before a click event
+   * @param {HTMLElement} Component the component to wrap
+   * @returns {HTMLElement}
+   */
+  const textPanelSectionWrapper = (Component) => {
+    return (
+      <div className="text-editing-panel-section">
+        <div
+          className="text-editing-panel-menu-items"
+          onMouseDown={(e) => {
+            if (e.type !== 'touchstart') {
+              e.preventDefault();
+            }
+          }}
+        >
+          {Component}
+        </div>
+      </div>
+    );
+  };
+
+  const textStylesSection = (
+    <div className="text-editing-panel-section">
+      <div className="top-panel text-editing-panel-menu-items">
+        <span className="text-editing-panel-heading" >{i18next.t('stylePanel.headings.textStyles')}</span>
+        <div className={`text-editing-panel-text-style-picker ${contentSelectMode ? '' : 'inactive'}`}>
+          <TextStylePicker
+            fonts={fonts}
+            onPropertyChange={handlePropertyChange}
+            properties={textEditProperties}
+            isContentEditing={true}
+            textEditFormat={format}
+            textEditHandleFormatChange={handleTextFormatChange}
+          />
+        </div>
+        <div className="link-section">
+          <Button
+            dataElement="textPanelAddLinkButton"
+            onClick={handleAddLinkToText}
+            img="icon-tool-link"
+            title="link.urlLink"
+            disabled={disableLinkButton}
+          />
+        </div>
+      </div>
+    </div>
+  );
+
+  const colorPaletteSection = textPanelSectionWrapper(
+    <div className="color-palette-section">
+      <span className="text-editing-panel-heading">{i18next.t('stylePanel.headings.currentColor')}</span>
+      <div className="text-editing-row">
+        <ColorPalette
+          colorMapKey="freeText"
+          color={rgbColor}
+          property={currentPalette}
+          onStyleChange={handleColorChange}
+          overridePalette2={[rgbColor?.toHexString()]}
+        />
+        <Button
+          img="ic-copy-color"
+          onClick={addActiveColor}
+          title={i18next.t('stylePanel.addColorToCustom')}
+          dataElement={'addColorToCustom'}
+          className={'addToCustomButton'}
+        />
+      </div>
+      <div className="custom-colors-section">
+        <span className="text-editing-panel-heading">{i18next.t('stylePanel.headings.customColors')}</span>
+        <div className="text-editing-row custom-colors-pallete">
+          <ColorPalettePicker
+            color={rgbColor}
+            property={currentPalette}
+            onStyleChange={handleColorChange}
+            disableTitle
+            enableEdit
+            getHexColor={(color) => color?.toHexString()}
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   const undoRedoSection = (
     <div className="text-editing-panel-section">
       <div className="text-editing-panel-menu-items">
-        <div className='text-editing-panel-menu-items-buttons'>
+        <div className='text-editing-panel-menu-items-buttons undo-redo'>
           <Button
             img="icon-action-undo"
             dataElement="textPanelUndoButton"
@@ -50,7 +130,6 @@ const TextEditingPanel = ({
             onClick={undoRedoProperties?.handleUndo}
             title={i18next.t('action.undo')}
           />
-
           <Button
             img="icon-action-redo"
             dataElement="textPanelRedoButton"
@@ -63,104 +142,32 @@ const TextEditingPanel = ({
     </div>
   );
 
-  const newColor = format?.color?.toHexString ? format.color.toHexString().toUpperCase() : DEFAULT_COLOR.toHexString().toUpperCase();
-  const shouldUpdateColorsArray = colorArray?.length > 0 && !colorArray.includes(newColor);
-  if (shouldUpdateColorsArray) {
-    colorArray.push(newColor);
-  }
-  colorsToIgnore = colorArray.map((color) => color.toLowerCase());
-  const rgbColor = format?.color || DEFAULT_COLOR;
-
   return (
     <>
       <div className="text-editing-panel">
-        <div className="text-editing-panel-section">
-          <span className="text-editing-panel-heading">{i18next.t('textEditingPanel.paragraph')}</span>
-          <div className="text-editing-panel-menu-items">
-            <div className={`text-editing-panel-text-style-picker ${contentSelectMode ? '' : 'inactive'}`}>
-              <TextStylePicker
-                fonts={fonts}
-                onPropertyChange={handlePropertyChange}
-                properties={textEditProperties}
-                isContentEditing={true}
-              />
-            </div>
-          </div>
-        </div>
-
-        <HorizontalDivider style={{ paddingTop: 0 }} />
-
-        <div className="text-editing-panel-section">
-          <span className="text-editing-panel-heading">{i18next.t('textEditingPanel.text')}</span>
-          <div
-            className="text-editing-panel-menu-items"
-            // prevent the blur event from being triggered when clicking on panel buttons
-            // otherwise we can't style the text inline since a blur event is triggered before a click event
-            onMouseDown={(e) => {
-              if (e.type !== 'touchstart') {
-                e.preventDefault();
-              }
-            }}
-          >
-            <div
-              className={`text-editing-panel-menu-items-buttons ${contentSelectMode || freeTextMode ? '' : 'inactive'}`}
-            >
-              <Button
-                isActive={format?.bold}
-                dataElement="richTextBoldButton"
-                onClick={handleTextFormatChange('bold')}
-                img="icon-text-bold"
-                title="option.richText.bold"
-              />
-              <Button
-                isActive={format?.italic}
-                dataElement="richTextItalicButton"
-                onClick={handleTextFormatChange('italic')}
-                img="icon-text-italic"
-                title="option.richText.italic"
-              />
-              <Button
-                isActive={format?.underline}
-                dataElement="richTextUnderlineButton"
-                onClick={handleTextFormatChange('underline')}
-                img="ic_annotation_underline_black_24px"
-                title="option.richText.underline"
-              />
-            </div>
-            <div className={'text-editing-panel-color-palette'}>
-              <ColorPalette
-                colorMapKey="freeText"
-                color={rgbColor}
-                property={currentPalette}
-                onStyleChange={handleColorChange}
-                overridePalette2={colorArray}
-              />
-              <ColorPalettePicker
-                color={rgbColor}
-                property={currentPalette}
-                onStyleChange={handleColorChange}
-                disableTitle
-                enableEdit
-                colorsToIgnore={colorsToIgnore}
-              />
-            </div>
-            {/* TODO: implement when opacity is available from worker */}
-            {/* <Slider {...sliderProperties} onStyleChange={handleStyleChange} onSliderChange={handleSliderChange}/> */}
-            <Button
-              dataElement="textPanelAddLinkButton"
-              onClick={handleAddLinkToText}
-              img="icon-tool-link"
-              title="link.urlLink"
-              disabled={disableLinkButton}
-            />
-          </div>
-        </div>
-
-        <HorizontalDivider style={{ paddingTop: 0 }} />
+        {textStylesSection}
+        <HorizontalDivider style={{ paddingTop: 0, paddingBottom: 0 }} />
+        {colorPaletteSection}
+        <HorizontalDivider style={{ paddingTop: 0, paddingBottom: 0 }} />
         {undoRedoProperties ? undoRedoSection : undefined }
       </div>
     </>
   );
+};
+
+TextEditingPanel.propTypes = {
+  addActiveColor: PropTypes.func,
+  contentSelectMode: PropTypes.bool,
+  disableLinkButton: PropTypes.bool,
+  fonts: PropTypes.arrayOf(PropTypes.string),
+  format: PropTypes.object,
+  handleAddLinkToText: PropTypes.func,
+  handleColorChange: PropTypes.func,
+  handlePropertyChange: PropTypes.func,
+  handleTextFormatChange: PropTypes.func,
+  rgbColor: PropTypes.object,
+  textEditProperties: PropTypes.object,
+  undoRedoProperties: PropTypes.object
 };
 
 export default TextEditingPanel;

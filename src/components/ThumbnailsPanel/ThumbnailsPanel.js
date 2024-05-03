@@ -31,7 +31,7 @@ const MAX_COLUMNS = 16;
 
 const hoverAreaHeight = 25;
 
-const ThumbnailsPanel = ({ panelSelector }) => {
+const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const [
     isLeftPanelOpen,
     isDisabled,
@@ -622,7 +622,7 @@ const ThumbnailsPanel = ({ panelSelector }) => {
           </div>
         )}
       </Measure>
-      <DocumentControls shouldShowControls={shouldShowControls} parentElement={panelSelector}/>
+      <DocumentControls shouldShowControls={shouldShowControls} parentElement={parentDataElement || panelSelector}/>
     </React.Fragment>
   );
 };

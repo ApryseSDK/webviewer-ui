@@ -134,13 +134,12 @@ export const CustomBasic = () => {
       currentPage: 3,
       lastPickedToolForGroupedItems: {
         'annotateGroupedItems': 'AnnotationCreateTextHighlight',
-        'annotateToolsGroupedItems': 'AnnotationCreateTextHighlight',
       },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Annotate',
       lastPickedToolAndGroup: {
         tool: 'AnnotationCreateTextHighlight',
-        group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
+        group: ['annotateGroupedItems'],
       },
       activeToolName: 'AnnotationCreateTextHighlight',
     },

@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: () => {
     dispatch(actions.toggleElement(ownProps.element));
     if (ownProps.onClick) {
-      ownProps.onClick();
+      ownProps.onClick(dispatch);
     }
   },
 });

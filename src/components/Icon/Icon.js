@@ -85,7 +85,8 @@ class Icon extends React.PureComponent {
           disabled,
         })}
         style={style}
-        // eslint-disable-next-line react/no-danger
+        aria-hidden='true'
+        /* eslint-disable react/no-danger */
         dangerouslySetInnerHTML={{ __html: svgElement }}
       />
     );

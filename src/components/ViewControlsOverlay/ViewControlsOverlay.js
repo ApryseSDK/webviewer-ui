@@ -28,6 +28,7 @@ function ViewControlsOverlay() {
     isFullScreen,
     activeDocumentViewerKey,
     isMultiTab,
+    isMultiViewerModeAvailable,
   ] = useSelector((state) => [
     selectors.getTotalPages(state),
     selectors.getDisplayMode(state),
@@ -36,7 +37,8 @@ function ViewControlsOverlay() {
     selectors.isMultiViewerMode(state),
     selectors.isFullScreen(state),
     selectors.getActiveDocumentViewerKey(state),
-    selectors.getIsMultiTab(state)
+    selectors.getIsMultiTab(state),
+    selectors.getIsMultiViewerModeAvailable(state),
   ]);
 
   const totalPageThreshold = 1000;
@@ -47,8 +49,7 @@ function ViewControlsOverlay() {
   if (displayModeManager && displayModeManager.isVirtualDisplayEnabled()) {
     isPageTransitionEnabled = true;
   }
-
-  const showCompareButton = !isIE11 && !isMultiTab;
+  const showCompareButton = !isIE11 && !isMultiTab && isMultiViewerModeAvailable;
   const toggleCompareMode = () => {
     store.dispatch(actions.setIsMultiViewerMode(!isMultiViewerMode));
   };
@@ -266,7 +267,7 @@ function ViewControlsOverlay() {
                 isActive={isMultiViewerMode}
                 role="option"
               />
-              <div className="title">{t('action.comparePages')}</div>
+              <div className="title">{t('action.sideBySideView')}</div>
             </DataElementWrapper>
           )}
         </>

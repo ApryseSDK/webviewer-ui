@@ -9,10 +9,6 @@ export default (annotation, popup) => {
   const editorContainer = getRootNode().querySelector(
     `#pageWidgetContainer${annotation.PageNumber} [id="freetext-editor-${annotation.Id}"]`
   );
-
-  if (!editorContainer) {
-    return;
-  }
   const scrollContainer = core.getScrollViewElement();
   const padding = 2 * parseFloat(annotation.StrokeThickness) * core.getZoom();
   const cBox = editorContainer.getBoundingClientRect();

@@ -27,7 +27,7 @@ const TextStylePicker = ({
   const freeTextAutoSizeDataElement = 'freeTextAutoSizeFontButton';
   const font = isRichTextEditMode ? properties?.quillFont : properties?.Font;
   const changeFont = (font) => {
-    if (isContentEditing) {
+    if (isContentEditing || isRedaction) {
       onPropertyChange('Font', font);
       return;
     }
@@ -64,7 +64,7 @@ const TextStylePicker = ({
   const fontSize = getFontSize(properties);
 
   const changeFontSize = (fontSize) => {
-    if (isContentEditing) {
+    if (isContentEditing || isRedaction) {
       onPropertyChange('FontSize', fontSize);
       return;
     }

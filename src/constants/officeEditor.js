@@ -38,9 +38,3 @@ export const OFFICE_NUMBER_OPTIONS = [
 ];
 
 export const OFFICE_EDITOR_TRACKED_CHANGE_KEY = 'officeEditorTrackedChangeUID';
-
-export const OFFICE_EDITOR_EDIT_MODE = {
-  EDITING: 'editing',
-  REVIEWING: 'reviewing',
-  VIEW_ONLY: 'viewOnly'
-};

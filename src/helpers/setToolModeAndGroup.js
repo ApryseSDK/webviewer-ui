@@ -14,7 +14,7 @@ export default (store, toolName) => {
   if (isCustomizableUI) {
     const groupedItemsWithTool = selectors.getGroupedItemsWithSelectedTool(state, toolName);
     dispatch(actions.setLastPickedToolAndGroup({ tool: toolName, group: groupedItemsWithTool }));
-    dispatch(actions.setLastPickedToolForGroupedItems(groupedItemsWithTool, toolName));
+    dispatch(actions.setActiveGroupedItemWithTool(toolName));
     core.setToolMode(toolName);
     return;
   }

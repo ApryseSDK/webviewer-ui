@@ -22,7 +22,7 @@
 
 import postcss from 'postcss';
 
-const isInsideRoot = rule => {
+const isInsideRoot = (rule) => {
   return (
     rule.selectors.length !== 1 ||
     rule.selectors[0] !== ':root' ||
@@ -30,7 +30,7 @@ const isInsideRoot = rule => {
   );
 };
 
-const isVariableDeclaration = decl => {
+const isVariableDeclaration = (decl) => {
   return Boolean(decl.value) && decl.prop.startsWith('--');
 };
 
@@ -41,12 +41,12 @@ const parse = (css, options) => {
   });
 
   const variables = {};
-  root.walkRules(rule => {
+  root.walkRules((rule) => {
     if (isInsideRoot(rule)) {
       return;
     }
 
-    rule.each(decl => {
+    rule.each((decl) => {
       if (isVariableDeclaration(decl)) {
         const name = decl.prop.slice(2);
         variables[name] = decl.value;

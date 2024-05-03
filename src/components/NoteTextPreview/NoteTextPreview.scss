@@ -5,6 +5,8 @@
   user-select: text !important;
   cursor: text;
   height: fit-content;
+  width: calc(100% - 12px);
+  overflow: hidden;
 }
 
 .preview-comment {

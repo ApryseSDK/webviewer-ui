@@ -13,7 +13,6 @@ import defaultTool from 'constants/defaultTool';
 import './RibbonItem.scss';
 import sizeManager from 'helpers/responsivnessHelper';
 import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
-import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
 import core from 'core';
 
 const RibbonItem = (props) => {
@@ -40,14 +39,12 @@ const RibbonItem = (props) => {
     lastPickedToolForGroupedItems,
     isRibbonItemDisabled,
     customHeadersAdditionalProperties,
-    allAssociatedGroupedItems,
   ] = useSelector((state) => [
     selectors.getActiveGroupedItems(state),
     selectors.getActiveCustomRibbon(state),
     selectors.getLastPickedToolForGroupedItems(state, groupedItems),
     selectors.isElementDisabled(state, dataElement),
     selectors.getCustomHeadersAdditionalProperties(state),
-    [...groupedItems, ...getNestedGroupedItems(state, groupedItems)],
   ]);
 
   const [isActive, setIsActive] = useState(false);
@@ -63,7 +60,7 @@ const RibbonItem = (props) => {
   }, []);
 
   useEffect(() => {
-    const someActiveGroupedItemsBelongToCurrentRibbonItem = activeGroupedItems?.some((item) => allAssociatedGroupedItems.includes(item));
+    const someActiveGroupedItemsBelongToCurrentRibbonItem = activeGroupedItems?.some((item) => groupedItems.includes(item));
     if (activeCustomRibbon === dataElement && (someActiveGroupedItemsBelongToCurrentRibbonItem || !activeGroupedItems?.length)) {
       setIsActive(true);
     } else {
@@ -76,11 +73,11 @@ const RibbonItem = (props) => {
       core.setToolMode(defaultTool);
     }
     if (!isActive) {
-      dispatch(actions.setActiveGroupedItems(allAssociatedGroupedItems));
+      dispatch(actions.setActiveGroupedItems(groupedItems));
       dispatch(actions.setActiveCustomRibbon(dataElement));
       dispatch(actions.setLastPickedToolAndGroup({
         tool: lastPickedToolForGroupedItems,
-        group: allAssociatedGroupedItems
+        group: groupedItems
       }));
       setIsActive(true);
       core.setToolMode(lastPickedToolForGroupedItems);

@@ -2,12 +2,13 @@ import core from 'core';
 import actions from 'actions';
 import { isIOS } from 'helpers/device';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
+import DataElements from 'constants/dataElement';
 
 export default (dispatch, documentViewerKey) => () => {
   const documentViewer = core.getDocumentViewer(documentViewerKey);
   // if we are opening an password-protected pdf,
   // this event will only be trigger after we enter the correct password, so it's safe to close this modal here
-  dispatch(actions.closeElement('passwordModal'));
+  dispatch(actions.closeElement(DataElements.PASSWORD_MODAL));
 
   const totalPages = core.getTotalPages(documentViewerKey);
 

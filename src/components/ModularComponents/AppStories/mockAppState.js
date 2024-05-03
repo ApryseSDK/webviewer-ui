@@ -1,5 +1,3 @@
-import { defaultModularHeaders, defaultModularComponents } from 'src/redux/modularComponents';
-
 export const mockHeadersNormalized = {
   'default-top-header': {
     dataElement: 'default-top-header',
@@ -23,7 +21,29 @@ export const mockHeadersNormalized = {
     ]
   },
   'tools-header': {
-    ...defaultModularHeaders['tools-header'],
+    dataElement: 'tools-header',
+    placement: 'top',
+    justifyContent: 'center',
+    grow: 0,
+    gap: 12,
+    position: 'end',
+    'float': false,
+    stroke: true,
+    dimension: {
+      paddingTop: 8,
+      paddingBottom: 8,
+      borderWidth: 1
+    },
+    style: {},
+    items: [
+      'annotateGroupedItems',
+      'shapesGroupedItems',
+      'insertGroupedItems',
+      'redactionGroupedItems',
+      'measureGroupedItems',
+      'editGroupedItems',
+      'fillAndSignGroupedItems'
+    ]
   },
   'bottomHeader-23ds': {
     dataElement: 'bottomHeader-23ds',
@@ -93,50 +113,73 @@ export const mockModularComponents = {
     label: 'option.settings.settings',
     icon: 'icon-header-settings-line'
   },
-  'divider-0.1': {
-    dataElement: 'divider-0.1',
-    type: 'divider'
-  },
-  'divider-0.2': {
-    dataElement: 'divider-0.2',
-    type: 'divider'
-  },
-  'divider-0.3': {
-    dataElement: 'divider-0.3',
-    type: 'divider'
-  },
-  'divider-0.4': {
-    dataElement: 'divider-0.4',
-    type: 'divider'
-  },
-  'divider-0.5': {
-    dataElement: 'divider-0.5',
-    type: 'divider'
-  },
-  'divider-0.6': {
-    dataElement: 'divider-0.6',
+  'divider-0.204250627209541': {
+    dataElement: 'divider-0.204250627209541',
     type: 'divider'
   },
   'left-panel-toggle': {
-    ...defaultModularComponents['left-panel-toggle']
+    dataElement: 'left-panel-toggle',
+    title: 'Left Panel',
+    type: 'toggleButton',
+    img: 'icon-header-sidebar-line',
+    toggleElement: 'leftPanel'
   },
   'view-controls': {
-    ...defaultModularComponents['view-controls']
+    dataElement: 'view-controls',
+    type: 'viewControls'
+  },
+  'divider-0.6224949301886946': {
+    dataElement: 'divider-0.6224949301886946',
+    type: 'divider'
   },
   'zoom-container': {
-    ...defaultModularComponents['zoom-container'],
+    dataElement: 'zoom-container',
+    type: 'zoom'
   },
-  'panToolButton': {
-    ...defaultModularComponents['panToolButton']
+  'divider-0.9438428108367993': {
+    dataElement: 'divider-0.9438428108367993',
+    type: 'divider'
   },
-  'annotationEditToolButton': {
-    ...defaultModularComponents['annotationEditToolButton']
+  panToolButton: {
+    dataElement: 'panToolButton',
+    type: 'toolButton',
+    toolName: 'Pan'
+  },
+  annotationEditToolButton: {
+    dataElement: 'annotationEditToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationEdit'
+  },
+  'divider-0.09340446869658314': {
+    dataElement: 'divider-0.09340446869658314',
+    type: 'divider'
   },
   'menu-toggle-button': {
-    ...defaultModularComponents['menu-toggle-button'],
+    dataElement: 'menu-toggle-button',
+    img: 'ic-hamburger-menu',
+    title: 'component.menuOverlay',
+    toggleElement: 'MainMenuFlyout',
+    type: 'toggleButton',
   },
   groupedLeftHeaderButtons: {
-    ...defaultModularComponents.groupedLeftHeaderButtons,
+    dataElement: 'groupedLeftHeaderButtons',
+    items: [
+      'menu-toggle-button',
+      'divider-0.204250627209541',
+      'left-panel-toggle',
+      'view-controls',
+      'divider-0.6224949301886946',
+      'zoom-container',
+      'divider-0.9438428108367993',
+      'panToolButton',
+      'annotationEditToolButton',
+      'divider-0.09340446869658314'
+    ],
+    type: 'groupedItems',
+    grow: 1,
+    gap: 12,
+    alwaysVisible: true,
+    style: {}
   },
   'view-ribbon-item': {
     dataElement: 'view-ribbon-item',
@@ -236,28 +279,48 @@ export const mockModularComponents = {
     style: {}
   },
   searchPanelToggle: {
-    ...defaultModularComponents.searchPanelToggle,
+    dataElement: 'searchPanelToggle',
+    title: 'component.searchPanel',
+    type: 'toggleButton',
+    img: 'icon-header-search',
+    toggleElement: 'searchPanel'
   },
   notesPanelToggle: {
-    ...defaultModularComponents.notesPanelToggle,
+    dataElement: 'notesPanelToggle',
+    title: 'component.notesPanel',
+    type: 'toggleButton',
+    img: 'icon-header-chat-line',
+    toggleElement: 'notesPanel'
   },
   underlineToolButton: {
-    ...defaultModularComponents.underlineToolButton,
+    dataElement: 'underlineToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateTextUnderline'
   },
   highlightToolButton: {
-    ...defaultModularComponents.highlightToolButton,
+    dataElement: 'highlightToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateTextHighlight'
   },
   rectangleToolButton: {
-    ...defaultModularComponents.rectangleToolButton,
+    dataElement: 'rectangleToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateRectangle'
   },
   freeTextToolButton: {
-    ...defaultModularComponents.freeTextToolButton,
+    dataElement: 'freeTextToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateFreeText'
   },
   squigglyToolButton: {
-    ...defaultModularComponents.squigglyToolButton,
+    dataElement: 'squigglyToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateTextSquiggly'
   },
   strikeoutToolButton: {
-    ...defaultModularComponents.strikeoutToolButton,
+    dataElement: 'strikeoutToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateTextStrikeout'
   },
   'divider-0.12046025247094039': {
     dataElement: 'divider-0.12046025247094039',
@@ -275,13 +338,19 @@ export const mockModularComponents = {
     type: 'divider'
   },
   undoButton: {
-    ...defaultModularComponents.undoButton
+    dataElement: 'undoButton',
+    type: 'presetButton',
+    buttonType: 'undoButton'
   },
   redoButton: {
-    ...defaultModularComponents.redoButton
+    dataElement: 'redoButton',
+    type: 'presetButton',
+    buttonType: 'redoButton'
   },
   eraserToolButton: {
-    ...defaultModularComponents.eraserToolButton
+    dataElement: 'eraserToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationEraserTool'
   },
   defaultAnnotationUtilities: {
     dataElement: 'defaultAnnotationUtilities',
@@ -318,31 +387,49 @@ export const mockModularComponents = {
     style: {}
   },
   freeHandToolButton: {
-    ...defaultModularComponents.freeHandToolButton
+    dataElement: 'freeHandToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateFreeHand'
   },
   freeHandHighlightToolButton: {
-    ...defaultModularComponents.freeHandHighlightToolButton
+    dataElement: 'freeHandHighlightToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateFreeHandHighlight'
   },
   lineToolButton: {
-    ...defaultModularComponents.lineToolButton
+    dataElement: 'lineToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateLine'
   },
   polylineToolButton: {
-    ...defaultModularComponents.polylineToolButton
+    dataElement: 'polylineToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreatePolyline'
   },
   arrowToolButton: {
-    ...defaultModularComponents.arrowToolButton
+    dataElement: 'arrowToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateArrow'
   },
   arcToolButton: {
-    ...defaultModularComponents.arcToolButton
+    dataElement: 'arcToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateArc'
   },
   ellipseToolButton: {
-    ...defaultModularComponents.ellipseToolButton
+    dataElement: 'ellipseToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateEllipse'
   },
   polygonToolButton: {
-    ...defaultModularComponents.polygonToolButton
+    dataElement: 'polygonToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreatePolygon'
   },
   cloudToolButton: {
-    ...defaultModularComponents.cloudToolButton
+    dataElement: 'cloudToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreatePolygonCloud'
   },
   shapesGroupedItems: {
     dataElement: 'shapesGroupedItems',
@@ -366,10 +453,14 @@ export const mockModularComponents = {
     style: {}
   },
   rubberStampToolButton: {
-    ...defaultModularComponents.rubberStampToolButton,
+    dataElement: 'rubberStampToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateRubberStamp'
   },
   signatureCreateToolButton: {
-    ...defaultModularComponents.signatureCreateToolButton,
+    dataElement: 'signatureCreateToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateSignature'
   },
   insertGroupedItems: {
     dataElement: 'insertGroupedItems',
@@ -387,7 +478,9 @@ export const mockModularComponents = {
     style: {}
   },
   redactionToolButton: {
-    ...defaultModularComponents.redactionToolButton,
+    dataElement: 'redactionToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateRedaction'
   },
   panel2Button: {
     dataElement: 'panel2Button',
@@ -409,30 +502,44 @@ export const mockModularComponents = {
     style: {}
   },
   distanceMeasurementToolButton: {
-    ...defaultModularComponents.distanceMeasurementToolButton,
+    dataElement: 'distanceMeasurementToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateDistanceMeasurement'
   },
   arcMeasurementToolButton: {
-    ...defaultModularComponents.arcMeasurementToolButton,
+    dataElement: 'arcMeasurementToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateArcMeasurement'
   },
   perimeterMeasurementToolButton: {
-    ...defaultModularComponents.perimeterMeasurementToolButton,
+    dataElement: 'perimeterMeasurementToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreatePerimeterMeasurement'
   },
   areaMeasurementToolButton: {
-    ...defaultModularComponents.areaMeasurementToolButton,
+    dataElement: 'areaMeasurementToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateAreaMeasurement'
   },
   ellipseMeasurementToolButton: {
-    ...defaultModularComponents.ellipseMeasurementToolButton,
+    dataElement: 'ellipseMeasurementToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateEllipseMeasurement'
   },
   rectangularAreaMeasurementToolButton: {
-    ...defaultModularComponents.rectangularAreaMeasurementToolButton,
-  },
-  countMeasurementToolButton: {
-    ...defaultModularComponents.countMeasurementToolButton,
+    dataElement: 'rectangularAreaMeasurementToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateRectangularAreaMeasurement'
   },
   cloudyRectangularAreaMeasurementToolButton: {
     dataElement: 'cloudyRectangularAreaMeasurementToolButton',
     type: 'toolButton',
     toolName: 'AnnotationCreateCloudyRectangularAreaMeasurement'
+  },
+  countMeasurementToolButton: {
+    dataElement: 'countMeasurementToolButton',
+    type: 'toolButton',
+    toolName: 'AnnotationCreateCountMeasurement'
   },
   measureGroupedItems: {
     dataElement: 'measureGroupedItems',
@@ -454,7 +561,9 @@ export const mockModularComponents = {
     style: {}
   },
   cropToolButton: {
-    ...defaultModularComponents.cropToolButton,
+    dataElement: 'cropToolButton',
+    type: 'toolButton',
+    toolName: 'CropPage'
   },
   editGroupedItems: {
     dataElement: 'editGroupedItems',

@@ -7,12 +7,12 @@
  * @example
 WebViewer(...)
   .then(function(instance) {
-    instance.UI.replaceRedactionSearchPattern(instance.UI.RedactionSearchPatterns.EMAILS, '\\w+@\\w+\\.\\w+');
+    instance.UI.replaceRedactionSearchPattern(instance.UI.RedactionSearchPatterns.EMAILS, /\w+@\w+\.\w+/);
   });
  */
 
 import actions from 'actions';
 
-export default store => (searchPattern, regex) => {
+export default (store) => (searchPattern, regex) => {
   store.dispatch(actions.replaceRedactionSearchPattern(searchPattern, regex));
 };

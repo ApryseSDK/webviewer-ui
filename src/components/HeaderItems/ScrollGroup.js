@@ -68,11 +68,11 @@ const ScrollGroup = ({ children }) => {
                   // Move two tools over
                   // don't use scrollTo as it doesn't work in IE11
                   scrollRef.current.scrollTop = 0;
-                  scrollRef.current.scrollLeft = scrollRef.current.scrollLeft - 54 * 2;
+                  scrollRef.current.scrollLeft -= 54 * 2;
                 }}
                 aria-label={t('action.prev')}
               >
-                <Icon  glyph="icon-chevron-left" />
+                <Icon glyph="icon-chevron-left" />
               </button>
             </div>}
           {!isScrolledToEnd &&
@@ -90,11 +90,11 @@ const ScrollGroup = ({ children }) => {
                   // Move two tools over
                   // don't use scrollTo as it doesn't work in IE11
                   scrollRef.current.scrollTop = 0;
-                  scrollRef.current.scrollLeft = scrollRef.current.scrollLeft + 54 * 2;
+                  scrollRef.current.scrollLeft += 54 * 2;
                 }}
                 aria-label={t('action.next')}
               >
-                <Icon  glyph="icon-chevron-right" />
+                <Icon glyph="icon-chevron-right" />
               </button>
             </div>}
           <div
@@ -103,7 +103,7 @@ const ScrollGroup = ({ children }) => {
             onScroll={checkScrollPosition}
           >
             {
-              children           
+              children
             }
           </div>
         </div>

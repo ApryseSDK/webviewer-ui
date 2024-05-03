@@ -14,4 +14,4 @@ WebViewer(...)
 import createToolAPI from 'helpers/createToolAPI';
 
 const enable = false;
-export default store => createToolAPI(enable, store);
+export default (store) => createToolAPI(enable, store);

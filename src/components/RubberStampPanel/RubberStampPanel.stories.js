@@ -54,7 +54,7 @@ const RubberStampPanelInApp = (location,) => {
       activeCustomRibbon: 'toolbarGroup-Insert',
       lastPickedToolAndGroup: {
         tool: 'AnnotationCreateRubberStamp',
-        group: ['insertGroupedItems', 'insertToolsGroupedItems'],
+        group: ['insertGroupedItems'],
       },
       activeToolName: 'AnnotationCreateRubberStamp'
     },

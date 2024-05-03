@@ -1,11 +1,11 @@
 import core from 'core';
 import actions from 'actions';
 import localStorageManager from 'helpers/localStorageManager';
+import { getInstanceID } from 'helpers/getRootNode';
 
-export default dispatch => tool => {
+export default (dispatch) => (tool) => {
   const toolName = tool.name;
   const toolStyles = tool.defaults;
-
   if (toolStyles && localStorageManager.isLocalStorageEnabled()) {
     storeStyle(toolName, toolStyles);
   }
@@ -18,7 +18,8 @@ export default dispatch => tool => {
 
 const storeStyle = (toolName, toolStyles) => {
   try {
-    localStorage.setItem(`toolData-${toolName}`, JSON.stringify(toolStyles));
+    const instanceId = getInstanceID();
+    localStorage.setItem(`${instanceId}-toolData-${toolName}`, JSON.stringify(toolStyles));
   } catch (err) {
     console.warn(`localStorage could not be accessed. ${err.message}`);
   }
