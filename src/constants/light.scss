@@ -81,6 +81,8 @@
 
   --image-signature-drop-background: var(--blue-1);
   --image-signature-drop-border: var(--blue-5);
+  --file-picker-drop-background: var(--blue-1);
+  --file-picker-drop-border: var(--blue-5);
   --signature-draw-background: var(--gray-2);
   --modal-stroke-and-border: var(--gray-5);
   --modal-negative-space: rgba(0, 0, 0, 0.3);
@@ -109,4 +111,8 @@
   --outline-selected: var(--blue-1);
 
   --preset-background: var(--gray-1);
+
+  --scale-overlay-item-hover: var(--blue-4);
+
+  --oe-table-dropdown-highlight: var(--blue-4);
 }

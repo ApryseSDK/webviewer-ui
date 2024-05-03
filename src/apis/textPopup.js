@@ -11,4 +11,4 @@ WebViewer(...)
  */
 import createPopupAPI from 'helpers/createPopupAPI';
 
-export default store => createPopupAPI(store, 'textPopup');
+export default (store) => createPopupAPI(store, 'textPopup');

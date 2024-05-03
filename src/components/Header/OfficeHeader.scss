@@ -13,10 +13,6 @@
         width: 80px !important;
       }
 
-      &.large-dropdown {
-        width: 160px !important;
-      }
-
       margin-left: 8px;
 
       .picked-option {
@@ -106,6 +102,36 @@
           width: $button-width !important;
           height: $button-height !important;
         }
+      }
+    }
+  }
+
+  .insert-table-dropdown {
+    margin: 0 6px;
+
+    &.open {
+      background-color: var(--tools-button-hover);
+      border-radius: 4px;
+    }
+
+    .display-button {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--tools-button-hover);
+        border-radius: 4px;
+      }
+
+      .Button {
+        background-color: transparent !important;
+      }
+
+      .Icon.arrow {
+        width: 12px;
+        height: 12px;
+        margin: 0 2px;
       }
     }
   }

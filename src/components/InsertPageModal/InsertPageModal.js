@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
@@ -9,15 +8,17 @@ import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Button from 'components/Button';
 import { FocusTrap } from '@pdftron/webviewer-react-toolkit';
 import { Swipeable } from 'react-swipeable';
+import { getInstanceNode } from 'helpers/getRootNode';
 
 import core from 'core';
 
-import { insertAbove, insertBelow } from '../../helpers/pageManipulationFunctions';
+import { insertAbove, insertBelow, exitPageInsertionWarning } from '../../helpers/pageManipulationFunctions';
 import InsertBlankPagePanel from './InsertBlankPagePanel';
 import InsertUploadedPagePanel from './InsertUploadedPagePanel';
 
-import './InsertPageModal.scss';
 import FilePickerPanel from '../PageReplacementModal/FilePickerPanel';
+
+import './InsertPageModal.scss';
 
 const options = { loadAsPDF: true, l: window.sampleL /* license key here */ };
 
@@ -29,7 +30,6 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
   ]);
 
   const [selectedDoc, setSelectedDoc] = useState(null);
-  const fileInputId = 'insertPageFileInputId';
   const [insertNewPageBelow, setInsertNewPageBelow] = useState(false);
   const [insertNewPageIndexes, setInsertNewPageIndexes] = useState([]);
   const [numberOfBlankPagesToInsert, setNumberOfBlankPagesToInsert] = useState(1);
@@ -46,6 +46,10 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
 
   const closeModal = () => {
     dispatch(actions.closeElement(DataElements.INSERT_PAGE_MODAL));
+  };
+
+  const showCloseModalWarning = () => {
+    exitPageInsertionWarning(closeModal, dispatch);
   };
 
   const apply = () => {
@@ -66,7 +70,7 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
   const fileProcessedHandler = async (file) => {
     let document;
     // eslint-disable-next-line no-undef
-    if (file instanceof instance.Core.Document) {
+    if (file instanceof getInstanceNode().instance.Core.Document) {
       document = file;
     } else {
       try {
@@ -93,12 +97,6 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
       />
     );
   };
-
-  const modalClass = classNames({
-    Modal: true,
-    InsertPageModal: true,
-    open: true,
-  });
 
   const renderSelectionTabs = () => {
     const isUploadPagePanelActive = selectedTab === DataElements.INSERT_FROM_FILE_TAB;
@@ -139,8 +137,7 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
           <TabPanel dataElement={DataElements.INSERT_FROM_FILE_PANEL}>
             <div className='panel-body'>
               <FilePickerPanel
-                fileInputId={fileInputId}
-                onFileProcessed={(file) => fileProcessedHandler(file)} />
+                onFileProcessed={fileProcessedHandler} />
             </div>
           </TabPanel>
         </Tabs>
@@ -158,7 +155,7 @@ const InsertPageModal = ({ loadedDocumentPageCount }) => {
 
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
-      <div className={modalClass} data-element={DataElements.INSERT_PAGE_MODAL} onMouseDown={closeModal}>
+      <div className="Modal open InsertPageModal" data-element={DataElements.INSERT_PAGE_MODAL} onMouseDown={selectedDoc ? showCloseModalWarning : closeModal}>
         <FocusTrap locked={true}>
           {selectedDoc ? renderFileSelectedPanel() : renderSelectionTabs()}
         </FocusTrap>

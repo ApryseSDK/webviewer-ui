@@ -3,7 +3,14 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import BottomHeader from 'components/ModularComponents/BottomHeader';
 import initialState from 'src/redux/initialState';
-import { defaultBottomHeader, secondFloatStartBottomHeader, floatStartBottomHeader, floatCenterBottomHeader, floatEndBottomHeader } from '../../Helpers/mockHeaders';
+import {
+  defaultBottomHeader,
+  secondFloatStartBottomHeader,
+  floatStartBottomHeader,
+  floatCenterBottomHeader,
+  floatEndBottomHeader,
+  mockModularComponents,
+} from '../../Helpers/mockHeaders';
 
 export default {
   title: 'ModularComponents/FloatingHeader/BottomHeader',
@@ -25,13 +32,17 @@ const MockAppWrapperWithBottomHeader = ({ modularHeaders }) => {
     viewer: {
       ...initialState.viewer,
       modularHeaders,
+      modularComponents: mockModularComponents,
     },
     featureFlags: {
       customizableUI: true,
     },
   };
   return (
-    <Provider store={configureStore({ reducer: () => state })}>
+    <Provider store={configureStore({
+      reducer: () => state,
+      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+    })}>
       <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', boxSizing: 'border-box' }}>
         <MockDocumentContainer />
         <BottomHeader />
@@ -41,36 +52,37 @@ const MockAppWrapperWithBottomHeader = ({ modularHeaders }) => {
 };
 
 const Template = (args) => <MockAppWrapperWithBottomHeader {...args} />;
+Template.parameters = { chromatic: { disableSnapshot: true } };
 
 export const BottomHeaderWithDefaultAndFloaties = Template.bind({});
 BottomHeaderWithDefaultAndFloaties.args = {
-  modularHeaders: [
+  modularHeaders: {
     defaultBottomHeader,
     secondFloatStartBottomHeader,
     floatStartBottomHeader,
     floatCenterBottomHeader,
     floatEndBottomHeader,
-  ],
+  },
 };
 
 export const FloatBottomStartHeader = Template.bind({});
 FloatBottomStartHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatStartBottomHeader,
     secondFloatStartBottomHeader,
-  ],
+  },
 };
 
 export const FloatBottomCenterHeader = Template.bind({});
 FloatBottomCenterHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatCenterBottomHeader,
-  ],
+  },
 };
 
 export const FloatBottomEndHeader = Template.bind({});
 FloatBottomEndHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatEndBottomHeader,
-  ],
+  },
 };

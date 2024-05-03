@@ -22,46 +22,11 @@ import {
   OFFICE_BULLET_OPTIONS,
   OFFICE_NUMBER_OPTIONS
 } from 'constants/officeEditor';
-import { rgbaToHex } from 'helpers/color';
 import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
 
 import './Header.scss';
 import './OfficeHeader.scss';
 
-const availableStylePresetMap = {
-  'Normal Text': {
-    fontSize: '11pt',
-    color: '#000000',
-  },
-  'Title': {
-    fontSize: '26pt',
-    color: '#000000',
-  },
-  'Subtitle': {
-    fontSize: '15pt',
-    color: '#666666',
-  },
-  'Heading 1': {
-    fontSize: '20pt',
-    color: '#000000',
-  },
-  'Heading 2': {
-    fontSize: '16pt',
-    color: '#000000',
-  },
-  'Heading 3': {
-    fontSize: '14pt',
-    color: '#434343',
-  },
-  'Heading 4': {
-    fontSize: '12pt',
-    color: '#666666',
-  },
-  'Heading 5': {
-    fontSize: '11pt',
-    color: '#666666',
-  },
-};
 const availablePointSizes = ['8', '9', '10', '11', '12', '14', '18', '24', '30', '36', '48', '60', '72'];
 const listOptionsWidth = 121;
 const justificationOptionsWidth = 209;
@@ -258,12 +223,12 @@ const OfficeEditorToolsHeader = () => {
       dispatch(actions.setOfficeEditorSelectionProperties(selectionProperties));
     };
 
-    core.getDocument().addEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
+    core.getDocument()?.addEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
     core.getDocument()?.addEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
 
     return () => {
-      core.getDocument().removeEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
-      core.getDocument().removeEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
+      core.getDocument()?.removeEventListener('selectionPropertiesUpdated', onSelectionPropertiesUpdated);
+      core.getDocument()?.removeEventListener('cursorPropertiesUpdated', onCursorPropertiesUpdated);
     };
   }, []);
 
@@ -345,41 +310,8 @@ const OfficeEditorToolsHeader = () => {
   const listType = properties.paragraphProperties.listType;
 
   const isLightMode = activeTheme === Theme.LIGHT;
-  const wvFontColor = convertCoreColorToWebViewerColor(properties.color);
+  const wvFontColor = convertCoreColorToWebViewerColor(cursorProperties.color);
   const useColorIconBorder = isLightMode ? wvFontColor.toString() === 'rgba(255,255,255,1)' : wvFontColor.toString() === 'rgba(0,0,0,1)';
-
-  const convertCursorToStylePreset = (cursorProperties) => {
-    const {
-      pointSize,
-      color: currentColor
-    } = cursorProperties.paragraphProperties.paragraphTextStyle || {};
-
-    let stylePreset = 'Normal Text';
-    if (!pointSize || !currentColor) {
-      return stylePreset;
-    }
-
-    const fontSize = `${pointSize}pt`;
-    let color = '#000000';
-    if (color) {
-      color = rgbaToHex(
-        currentColor.r,
-        currentColor.g,
-        currentColor.b
-      ).slice(0, -2);
-    }
-
-    Object.keys(availableStylePresetMap).forEach((style) => {
-      if (
-        availableStylePresetMap[style].fontSize === fontSize &&
-        availableStylePresetMap[style].color === color
-      ) {
-        stylePreset = style;
-      }
-    });
-
-    return stylePreset;
-  };
 
   return isOpen ? (
     <DataElementWrapper
@@ -409,40 +341,6 @@ const OfficeEditorToolsHeader = () => {
                   ref={measureRef}
                 >
                   <Dropdown
-                    items={Object.keys(availableStylePresetMap)}
-                    onOpened={() => setShowMoreTools(false)}
-                    onClickItem={(item) => {
-                      const stylePreset = availableStylePresetMap[item];
-                      const fontPointSize = parseInt(stylePreset.fontSize, 10);
-                      const fontColor = new window.Core.Annotations.Color(stylePreset.color);
-                      const parsedFontColor = {
-                        r: fontColor.R,
-                        g: fontColor.G,
-                        b: fontColor.B,
-                        a: 255,
-                      };
-
-                      const newTextStyle = {
-                        bold: false,
-                        italic: false,
-                        underline: false,
-                        pointSize: fontPointSize,
-                        color: parsedFontColor
-                      };
-
-                      core.getOfficeEditor().updateParagraphStyle({
-                        textStyle: newTextStyle,
-                      });
-                      core.getOfficeEditor().setMainCursorStyle(newTextStyle);
-                      core.getDocumentViewer().clearSelection();
-                    }}
-                    getCustomItemStyle={(item) => ({ ...availableStylePresetMap[item], padding: '20px 10px', color: 'var(--gray-8)' })}
-                    applyCustomStyleToButton={false}
-                    currentSelectionKey={convertCursorToStylePreset(cursorProperties)}
-                    className="large-dropdown"
-                    dataElement="office-editor-text-format"
-                  />
-                  <Dropdown
                     items={availableFontFaces}
                     onOpened={() => setShowMoreTools(false)}
                     onClickItem={(fontFace) => {
@@ -450,8 +348,8 @@ const OfficeEditorToolsHeader = () => {
                     }}
                     getCustomItemStyle={(item) => ({ ...cssFontValues[item] })}
                     maxHeight={500}
+                    width={200}
                     customDataValidator={(font) => availableFontFaces.includes(font)}
-                    className="large-dropdown"
                     dataElement="office-editor-font"
                     currentSelectionKey={fontFace}
                     hasInput

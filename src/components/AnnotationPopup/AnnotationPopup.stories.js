@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import getAnnotationStyles from 'src/helpers/getAnnotationStyles';
 import DataElements from 'constants/dataElement';
+import core from 'core';
 
 const noop = () => { };
 
@@ -41,6 +42,7 @@ const initialState = {
     openElements: {
       stylePopupTextStyleContainer: false,
     },
+    activeDocumentViewerKey: 1,
   },
 };
 
@@ -93,6 +95,22 @@ export const BasicVertical = () => {
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
       <AnnotationPopup {...basicVerticalProps} />
+    </Provider>
+  );
+};
+
+export const IsReadOnlyMode = (props) => {
+  core.getIsReadOnly = () => true;
+  let annotationProps;
+  if (Object.keys(props).length) {
+    annotationProps = props;
+  } else {
+    annotationProps = basicHorizontalProps;
+  }
+
+  return (
+    <Provider store={configureStore({ reducer: () => initialState })}>
+      <AnnotationPopup {...annotationProps} />
     </Provider>
   );
 };

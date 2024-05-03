@@ -6,24 +6,23 @@ import selectors from 'selectors';
 import actions from 'actions';
 import classNames from 'classnames';
 import useOnClickPrepareSoundAnnotation from 'src/hooks/useOnClickPrepareSoundAnnotation';
-import useMedia from '../../hooks/useMedia';
 import DataElementWrapper from '../DataElementWrapper';
 import AudioPlaybackPopup from './AudioPlaybackPopup';
+import { isMobileSize } from 'helpers/getDeviceSize';
 
 function AudioPlaybackPopupContainer() {
-  const [
-    isOpen,
-    shouldResetAudioPlaybackPosition,
-    activeSoundAnnotation
-  ] = useSelector(state => [
-    selectors.isElementOpen(state, 'audioPlaybackPopup'),
-    selectors.shouldResetAudioPlaybackPosition(state),
-    selectors.getActiveSoundAnnotation(state)
-  ], shallowEqual);
+  const [isOpen, shouldResetAudioPlaybackPosition, activeSoundAnnotation] = useSelector(
+    (state) => [
+      selectors.isElementOpen(state, 'audioPlaybackPopup'),
+      selectors.shouldResetAudioPlaybackPosition(state),
+      selectors.getActiveSoundAnnotation(state),
+    ],
+    shallowEqual,
+  );
 
   const dispatch = useDispatch();
   const draggableRef = useRef();
-  const isMobile = useMedia(['(max-width: 640px)'], [true], false);
+  const isMobile = isMobileSize();
 
   useOnClickPrepareSoundAnnotation();
 
@@ -33,18 +32,16 @@ function AudioPlaybackPopupContainer() {
 
   useEffect(() => {
     function onSoundAnnotationDeleted(annotations, action) {
-      if(action === 'delete') {
-        const shouldClosePopup = annotations.some(annotation => {
+      if (action === 'delete') {
+        const shouldClosePopup = annotations.some((annotation) => {
           return (
             !activeSoundAnnotation ||
-            (
-              annotation instanceof window.Annotations.SoundAnnotation &&
-              annotation.Id === activeSoundAnnotation.Id
-            )
+            (annotation instanceof window.Core.Annotations.SoundAnnotation &&
+              annotation.Id === activeSoundAnnotation.Id)
           );
         });
 
-        if(shouldClosePopup) {
+        if (shouldClosePopup) {
           closeAudioPlaybackPopup();
         }
       }
@@ -57,7 +54,7 @@ function AudioPlaybackPopupContainer() {
   }, [activeSoundAnnotation]);
 
   function resetAudioPlaybackPosition() {
-    if(shouldResetAudioPlaybackPosition && draggableRef.current) {
+    if (shouldResetAudioPlaybackPosition && draggableRef.current) {
       dispatch(actions.triggerResetAudioPlaybackPosition(false));
       draggableRef.current.state.x = 0;
       draggableRef.current.state.y = 0;
@@ -69,7 +66,7 @@ function AudioPlaybackPopupContainer() {
   }
 
   function handleAudioPlaybackError(error) {
-    if(error.toString().includes('no supported source')) {
+    if (error.toString().includes('no supported source')) {
       console.error('Error playing annotation audio. The audio type is not supported in this browser.');
     } else {
       console.error('Error playing annotation audio.');
@@ -88,24 +85,24 @@ function AudioPlaybackPopupContainer() {
         Popup: true,
         AudioPlaybackPopupContainer: true,
         open: isOpen,
-        closed: !isOpen
+        closed: !isOpen,
       })}
     >
       <AudioPlaybackPopup
-        autoplay={true}
+        autoplay
         annotation={activeSoundAnnotation}
         handleAudioPlaybackError={handleAudioPlaybackError}
         handleAudioInitializeError={handleAudioInitializeError}
-        handleCloseAudioPlaybackPopup={closeAudioPlaybackPopup}>
-      </AudioPlaybackPopup>
+        handleCloseAudioPlaybackPopup={closeAudioPlaybackPopup}
+      ></AudioPlaybackPopup>
     </DataElementWrapper>
   );
 
-  if(!isOpen) {
+  if (!isOpen) {
     return null;
   }
 
-  if(isMobile) {
+  if (isMobile) {
     return renderAudioPlaybackPopup();
   }
 

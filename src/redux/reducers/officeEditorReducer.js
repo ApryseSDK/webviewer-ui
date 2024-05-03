@@ -26,11 +26,6 @@ export default (initialState) => (state = initialState, action) => {
         availableFontFaces: fontFaces.sort(),
       };
     }
-    case 'SET_OFFICE_EDITOR_EDIT_MODE':
-      return {
-        ...state,
-        editMode: payload.editMode,
-      };
     default:
       return state;
   }

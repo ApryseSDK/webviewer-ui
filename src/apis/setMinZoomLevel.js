@@ -13,12 +13,12 @@ import actions from 'actions';
 import zoomFactors, { defaultZoomList } from 'constants/zoomFactors';
 import getActualZoomLevel from 'helpers/getActualZoomLevel';
 
-export default store => zoomLevel => {
+export default (store) => (zoomLevel) => {
   const minZoom = getActualZoomLevel(zoomLevel);
 
   if (minZoom) {
     const maxZoom = zoomFactors.getMaxZoomLevel();
-    const zoomList = defaultZoomList.filter(zoom => zoom <= maxZoom && zoom >= minZoom);
+    const zoomList = defaultZoomList.filter((zoom) => zoom <= maxZoom && zoom >= minZoom);
     zoomFactors.setMinZoomLevel(minZoom);
     store.dispatch(actions.setZoomList(zoomList));
     window.Core.Tools.MarqueeZoomTool.setMinZoomLevel(minZoom);

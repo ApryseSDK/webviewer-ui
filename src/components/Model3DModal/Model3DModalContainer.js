@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import Model3DModal from './Model3DModal';
 
 function Model3DModalContainer(props) {

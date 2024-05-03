@@ -1,3 +1,3 @@
 import ColorPickerModalRedux from './ColorPickerModalRedux';
 
-export default ColorPickerModalRedux; 
+export default ColorPickerModalRedux;

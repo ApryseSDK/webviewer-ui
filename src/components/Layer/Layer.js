@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/Icon';
 import Tooltip from 'components/Tooltip';
@@ -18,7 +18,7 @@ function Layer(props) {
   const [isExpanded, setExpanded] = useState(false);
   const [t] = useTranslation();
 
-  const onChange = isVisible => {
+  const onChange = (isVisible) => {
     const newLayer = updateLayerVisibililty(layer, isVisible);
     if (layerUpdated) {
       layerUpdated(newLayer);
@@ -44,7 +44,7 @@ function Layer(props) {
   return (
     <DataElementWrapper className="Layer" dataElement={`layer-${layer.id}-${layer.name}`}>
       <div className="parent-layer">
-        {hasSubLayers ?  (
+        {hasSubLayers ? (
           <div className="arrow" onClick={toggleExpanded}>
             { isExpanded ? <Icon glyph="ic_chevron_down_black_24px" /> : <Icon glyph="ic_chevron_right_black_24px" />}
           </div>
@@ -53,7 +53,7 @@ function Layer(props) {
           <div> <Icon glyph="" /> </div>
         )}
         <Tooltip content={tooltipContent} hideOnClick={false} forcePosition="bottomLeft">
-          {/* this div is mainly to group the choice and lock icon so that tooltip will appear properly  over checkbox*/}
+          {/* this div is mainly to group the choice and lock icon so that tooltip will appear properly  over checkbox */}
           {
             !layer.isLabel ? (
               <div className="content-container">
@@ -82,7 +82,7 @@ function Layer(props) {
               key={subLayer.id}
               layer={subLayer}
               parentLayer={layer}
-              layerUpdated={modifiedSubLayer => {
+              layerUpdated={(modifiedSubLayer) => {
                 // new references for redux state
                 const children = [...layer.children];
                 children[i] = modifiedSubLayer;

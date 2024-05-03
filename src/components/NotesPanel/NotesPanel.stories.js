@@ -33,7 +33,7 @@ const initialState = {
     sortStrategy: 'position',
     isInDesktopOnlyMode: true,
     isNotesPanelMultiSelectEnabled: true,
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40

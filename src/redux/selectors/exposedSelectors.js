@@ -3,7 +3,7 @@ import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/d
 import { panelMinWidth, RESIZE_BAR_WIDTH, panelNames } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables';
 import DataElements from 'constants/dataElement';
-import { getAllAssociatedGroupedItems, getFirstToolForGroupedItems } from '../actions/exposedActions';
+import { getFirstToolForGroupedItems } from '../actions/exposedActions';
 import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
 
 // viewer
@@ -150,7 +150,7 @@ export const getDocumentContentContainerWidthStyle = (state) => {
 
 export const getOpenGenericPanel = (state, location) => {
   let genericPanels = state.viewer.genericPanels;
-  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP, panelNames.STYLE];
+  const panelsWithMobileVersion = [panelNames.SIGNATURE_LIST, panelNames.RUBBER_STAMP];
 
   if (location) {
     genericPanels = state.viewer.genericPanels.filter((item) => {
@@ -475,10 +475,8 @@ export const getGroupedItemsWithSelectedTool = (state, toolName) => {
 
 export const getGroupedItemsOfCustomRibbon = (state, customRibbonDataElement) => {
   const modularComponents = state.viewer.modularComponents;
-  const groupedItems = modularComponents[customRibbonDataElement]?.groupedItems || [];
-  const allAssociatedGroupedItems = getAllAssociatedGroupedItems(state, groupedItems);
 
-  return allAssociatedGroupedItems;
+  return modularComponents[customRibbonDataElement]?.groupedItems || [];
 };
 
 export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataElement) => {
@@ -486,11 +484,7 @@ export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataEle
   const ribbonItems = Object.keys(modularComponents).find((component) => {
     const { type, groupedItems } = modularComponents[component];
 
-    if (type === ITEM_TYPE.RIBBON_ITEM) {
-      const allGroupedItems = [...groupedItems, ...getNestedGroupedItems(state, groupedItems)];
-      return allGroupedItems?.includes(groupedItemDataElement);
-    }
-    return false;
+    return type === ITEM_TYPE.RIBBON_ITEM && groupedItems?.includes(groupedItemDataElement);
   });
   return ribbonItems;
 };
@@ -856,8 +850,6 @@ export const getIsOfficeEditorMode = (state) => state.viewer.isOfficeEditorMode;
 export const getOfficeEditorCursorProperties = (state) => state.officeEditor.cursorProperties;
 
 export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.selectionProperties;
-
-export const getOfficeEditorEditMode = (state) => state.officeEditor.editMode;
 
 export const getAvailableFontFaces = (state) => state.officeEditor.availableFontFaces;
 

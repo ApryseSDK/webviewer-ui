@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useRef, useCallback } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -22,10 +22,14 @@ const CreatePortfolioModal = () => {
   const [
     isDisabled,
     isOpen,
+    isMultiTab,
+    tabManager,
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.CREATE_PORTFOLIO_MODAL),
     selectors.isElementOpen(state, DataElements.CREATE_PORTFOLIO_MODAL),
-  ]);
+    selectors.getIsMultiTab(state),
+    selectors.getTabManager(state),
+  ], shallowEqual);
 
   const [items, setItems] = useState([]);
 
@@ -39,11 +43,19 @@ const CreatePortfolioModal = () => {
     setItems(files);
   };
 
-  const create = async () => {
+  const create = useCallback(async () => {
     const pdfDoc = await createPortfolio(items);
-    loadDocument(dispatch, pdfDoc);
+    if (isMultiTab) {
+      const blob = new Blob([await pdfDoc.saveMemoryBuffer(0)], { type: 'application/pdf' });
+      await tabManager.addTab(blob, {
+        setActive: true,
+        extension: 'pdf',
+      });
+    } else {
+      loadDocument(dispatch, pdfDoc);
+    }
     closeModal();
-  };
+  }, [items, isMultiTab, tabManager]);
 
   const addFiles = (files) => {
     if (files.length > 0) {

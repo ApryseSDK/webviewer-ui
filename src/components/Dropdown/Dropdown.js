@@ -122,8 +122,8 @@ function Dropdown({
     }
     if (overlayBounds && !isOpen) {
       const horizontalOpening = arrowDirection === 'left' || arrowDirection === 'right';
-      const bottomTop = scrollViewRect.top <= overlayBounds.top && scrollViewRect.top <= buttonBounds.top - overlayBounds.height;
-      const topBottom = scrollViewRect.bottom >= overlayBounds.bottom && scrollViewRect.bottom >= buttonBounds.bottom + overlayBounds.height;
+      const bottomTop = scrollViewRect.top <= overlayBounds.top;
+      const topBottom = scrollViewRect.bottom >= overlayBounds.bottom;
       const offset = horizontalOpening ? buttonBounds.height : 0;
       // Check for containment vertically only.
       if (bottomTop && topBottom) {
@@ -131,7 +131,7 @@ function Dropdown({
         overlayRef.current.style.top = `${buttonBounds.height - offset}px`;
       } else {
         // If the overlay is past the bottom of the viewer, move it to the top instead.
-        if (overlayBounds.bottom > scrollViewRect.bottom || buttonBounds.bottom + overlayBounds.height > scrollViewRect.bottom) {
+        if (overlayBounds.bottom > scrollViewRect.bottom) {
           overlayRef.current.style.top = `-${overlayBounds.height - offset}px`;
         } else {
           // Otherwise the overlay is past the top of the viewer, move it to the bottom instead.

@@ -760,6 +760,7 @@ WebViewer(...)
         const state = getState();
         const isCustomizableUI = state.featureFlags.customizableUI;
         if (isCustomizableUI) {
+          dispatch(actions.setActiveGroupedItemWithTool(ToolNames.SIGNATURE));
           dispatch(actions.openElement(DataElements.SIGNATURE_LIST_PANEL));
           setToolModeAndGroup(store, ToolNames.SIGNATURE);
           return;

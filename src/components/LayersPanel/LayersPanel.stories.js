@@ -64,16 +64,11 @@ export function Basic() {
         'layersPanel': { disabled: false, priority: 3 },
       },
       lastPickedToolForGroupedItems: {
-        'annotateGroupedItems': 'AnnotationCreateTextHighlight',
-        'annotateToolsGroupedItems': 'AnnotationCreateTextHighlight',
+        'annotateGroupedItems': '',
       },
       activeGroupedItems: ['annotateGroupedItems'],
       activeCustomRibbon: 'toolbarGroup-Annotate',
-      activeToolName: 'AnnotationCreateTextHighlight',
-      lastPickedToolAndGroup: {
-        tool: 'AnnotationCreateTextHighlight',
-        group: ['annotateGroupedItems', 'annotateToolsGroupedItems'],
-      },
+      activeToolName: 'AnnotationCreateTextHighlight'
     },
     document: {
       ...initialState.document,

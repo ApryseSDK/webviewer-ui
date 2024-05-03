@@ -59,7 +59,6 @@ const DataElements = {
   LAYERS_PANEL: 'layersPanel',
   SIGNATURE_PANEL: 'signaturePanel',
   ATTACHMENT_PANEL: 'attachmentPanel',
-  MOBILE_PANEL_WRAPPER: 'MobilePanelWrapper',
   PORTFOLIO_ADD_FILE: 'portfolioAddFile',
   PORTFOLIO_ADD_FOLDER: 'portfolioAddFolder',
   PORTFOLIO_ADD_NEW_BUTTON: 'portfolioAddNewButton',

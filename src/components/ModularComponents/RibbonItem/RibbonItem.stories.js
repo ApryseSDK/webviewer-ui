@@ -2,7 +2,6 @@ import React from 'react';
 import RibbonItem from './RibbonItem';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { mockModularComponents } from '../AppStories/mockAppState';
 
 export default {
   title: 'ModularComponents/RibbonItem',
@@ -24,7 +23,6 @@ const initialState = {
     activeGroupedItems: [],
     lastPickedToolForGroupedItems: {},
     customHeadersAdditionalProperties: {},
-    modularComponents: mockModularComponents,
   },
 };
 

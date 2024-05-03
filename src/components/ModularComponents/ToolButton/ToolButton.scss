@@ -15,15 +15,6 @@
   &.button-with-label {
     width: min-content;
   }
-
-  @include mobile {
-    &:hover {
-      background: var(--gray-3);
-    }
-    &.active {
-      background: var(--tools-button-active);
-    }
-  }
 }
 
 button[data-element="signatureFieldButton"], 

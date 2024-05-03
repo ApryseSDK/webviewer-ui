@@ -7,6 +7,7 @@ import React from 'react';
 // tests will error out
 const initialState = {
   viewer: {
+    activeDocumentViewerKey: 1,
     disabledElements: {},
     customElementOverrides: {},
     panelWidths: {
@@ -14,6 +15,24 @@ const initialState = {
     },
     currentLanguage: 'en',
     openElements: {},
+    annotationPopup: [
+      { dataElement: 'viewFileButton' },
+      { dataElement: 'annotationCommentButton' },
+      { dataElement: 'annotationStyleEditButton' },
+      { dataElement: 'annotationDateEditButton' },
+      { dataElement: 'annotationRedactButton' },
+      { dataElement: 'annotationCropButton' },
+      { dataElement: 'annotationContentEditButton' },
+      { dataElement: 'annotationClearSignatureButton' },
+      { dataElement: 'annotationGroupButton' },
+      { dataElement: 'annotationUngroupButton' },
+      { dataElement: 'formFieldEditButton' },
+      { dataElement: 'linkButton' },
+      { dataElement: 'fileAttachmentDownload' },
+      { dataElement: 'annotationDeleteButton' },
+      { dataElement: 'shortCutKeysFor3D' },
+      { dataElement: 'playSoundButton' },
+    ],
   },
   search: {
     redactionSearchPatterns: {},

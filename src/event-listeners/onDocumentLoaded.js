@@ -19,7 +19,6 @@ import { isOfficeEditorMode } from 'helpers/officeEditor';
 import DataElements from 'constants/dataElement';
 import { getPortfolioFiles } from 'helpers/portfolio';
 import getDefaultPageLabels from 'helpers/getDefaultPageLabels';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
 
 let onFirstLoad = true;
 const officeEditorScope = 'office-editor';
@@ -133,7 +132,7 @@ export default (store, documentViewerKey) => async () => {
     }
 
     const elementsToDisableInOfficeEditor = ['toggleNotesButton', 'toolsHeader', 'viewControlsButton', 'textPopup', 'marqueeToolButton', 'outlinesPanelButton', 'outlinesPanel', 'leftPanel', 'leftPanelButton', 'annotationPopup'];
-    const elementsToEnableInOfficeEditor = [DataElements.OFFICE_EDITOR_TOOLS_HEADER, DataElements.INLINE_COMMENT_POPUP];
+    const elementsToEnableInOfficeEditor = [DataElements.OFFICE_EDITOR_TOOLS_HEADER];
     if (isOfficeEditorMode()) {
       dispatch(actions.setIsOfficeEditorMode(true));
       dispatch(actions.enableElements(elementsToEnableInOfficeEditor, PRIORITY_ONE));
@@ -151,14 +150,6 @@ export default (store, documentViewerKey) => async () => {
         officeEditorScope,
         hotkeysManager.keyHandlerMap[searchShortcutKeys],
       );
-      doc.addEventListener('editModeUpdated', (editMode) => {
-        dispatch(actions.setOfficeEditorEditMode(editMode));
-        if (editMode === OFFICE_EDITOR_EDIT_MODE.VIEW_ONLY) {
-          dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
-        } else {
-          dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
-        }
-      });
     } else {
       dispatch(actions.enableElements(
         elementsToDisableInOfficeEditor,
@@ -170,6 +161,7 @@ export default (store, documentViewerKey) => async () => {
 
     if (core.isFullPDFEnabled()) {
       const PDFNet = window.Core.PDFNet;
+      const docViewer = core.getDocumentViewer(documentViewerKey);
       let isDocumentClosed = false;
       const documentUnloadedHandler = () => {
         isDocumentClosed = true;
@@ -229,7 +221,8 @@ export default (store, documentViewerKey) => async () => {
   getInstanceNode().instance.UI.loadedFromServer = false;
   getInstanceNode().instance.UI.serverFailed = false;
 
-  docViewer
+  const documentViewer = core.getDocumentViewer(documentViewerKey);
+  documentViewer
     .getAnnotationManager()
     .getFieldManager()
     .setPrintHandler(() => {

@@ -10,7 +10,7 @@ WebViewer(...)
     documentViewer.addEventListener('documentLoaded', async () => {
       const doc = documentViewer.getDocument();
       const pdfDoc = await doc.getPDFDoc();
-      const firstBookmark = await doc.getFirstBookmark();
+      const firstBookmark = await pdfDoc.getFirstBookmark();
 
       const bookmarkToDelete = await firstBookmark.find('bookmark-to-delete');
       if (bookmarkToDelete !== null && await bookmarkToDelete.isValid()) {
@@ -24,8 +24,8 @@ WebViewer(...)
 import core from 'core';
 import actions from 'actions';
 
-export default store => () => {
-  core.getOutlines(outlines => {
+export default (store) => () => {
+  core.getOutlines((outlines) => {
     store.dispatch(actions.setOutlines(outlines));
   });
 };

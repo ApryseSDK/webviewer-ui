@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import FileInputPanel from './FileInputPanel';
 
 const TestFileInputPanel = withProviders(FileInputPanel);
-function noop() { };
+function noop() { }
 
 describe('FileInputPanel', () => {
   describe('Component', () => {
@@ -11,9 +11,9 @@ describe('FileInputPanel', () => {
       render(<TestFileInputPanel
         defaultValue={''}
         onFileSelect={noop}
-      />)
+      />);
 
       screen.getByRole('textbox');
-    })
+    });
   });
 });

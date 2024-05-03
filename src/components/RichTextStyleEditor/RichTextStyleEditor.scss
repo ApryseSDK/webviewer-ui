@@ -2,8 +2,9 @@
 @import '../../constants/popup';
 
 .RichTextStyleEditor {
-
+  margin-bottom: 16px;
   .menu-items {
+    margin-bottom: 8px!important;
     .icon-grid {
       padding-top: 12px;
       row-gap: 12px;
@@ -33,11 +34,18 @@
     width: 100%;
   }
 
-  .palette-controls {
-    margin-top: 8px;
+  .ColorPalette {
+    padding-bottom: 8px;
   }
 
-  .ColorPalette {
-    padding-top: 8px;
+  .text-size-slider {
+    margin-top: 16px;
+  }
+
+  @include mobile {
+    .icon-grid {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

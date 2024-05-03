@@ -13,6 +13,9 @@ $left-header-width: 41px;
 $right-header-width: 41px;
 $logo-bar-height: 24px;
 
+// Modular headers
+$modular-header-min-height: 32px;
+
 // Z-Index
 $popup-z-index: 70;
 $modal-z-index: 100;
@@ -51,6 +54,9 @@ $mobile-width: 640px;
 $small-mobile-width: 430px;
 
 $signature-modal-shared-color: #e1e1e3;
+
+// Headers
+$headers-z-index: 72;
 
 // Dark defaults for new ui:
 $gray-3: #343A40;

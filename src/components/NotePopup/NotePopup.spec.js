@@ -2,12 +2,12 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 import { render, fireEvent } from '@testing-library/react';
 import core from 'core';
-import NotePopupWithOutI18n from "./NotePopup";
-import NotePopupContainerWithOutI18n from "./NotePopupContainer";
-import { Basic, DifferentStates } from "./NotePopup.stories";
+import NotePopupWithOutI18n from './NotePopup';
+import NotePopupContainerWithOutI18n from './NotePopupContainer';
+import { Basic, DifferentStates } from './NotePopup.stories';
 
 const NotePopup = withI18n(NotePopupWithOutI18n);
-const NotePopupContainer = withI18n(NotePopupContainerWithOutI18n);
+const NotePopupContainer = withProviders(NotePopupContainerWithOutI18n);
 const BasicStory = withI18n(Basic);
 const DifferentStatesStory = withI18n(DifferentStates);
 
@@ -76,7 +76,7 @@ describe('NotePopup', () => {
     const dataElement = 'notePopupDelete';
     const state = createDisabledStateForDataElement(dataElement);
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockImplementation(function (selector) {
+    useSelectorMock.mockImplementation(function(selector) {
       return selector(state);
     });
     const { container } = render(
@@ -111,7 +111,7 @@ describe('NotePopup', () => {
     const dataElement = 'notePopupEdit';
     const state = createDisabledStateForDataElement(dataElement);
     const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-    useSelectorMock.mockImplementation(function (selector) {
+    useSelectorMock.mockImplementation(function(selector) {
       return selector(state);
     });
     const { container } = render(
@@ -178,17 +178,23 @@ describe('NotePopup', () => {
 });
 
 describe('NotePopupContainer', () => {
-
   beforeEach(() => {
     jest.resetAllMocks();
+    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
+    useSelectorMock.mockImplementation((callback) => callback({
+      viewer: {
+        activeDocumentViewerKey: 1,
+        disabledElements: {}
+      }
+    }));
   });
 
   it('Should attach updateAnnotationPermission event listener on mount', () => {
     const addEventListenerMock = jest.spyOn(core, 'addEventListener');
     render(
-      <NotePopupContainer />
+      <NotePopupContainer/>
     );
-    expect(addEventListenerMock).toHaveBeenCalledWith('updateAnnotationPermission', expect.any(Function));
+    expect(addEventListenerMock).toHaveBeenCalledWith('updateAnnotationPermission', expect.any(Function), undefined, expect.any(Number));
   });
 
   it('Should remove updateAnnotationPermission event listener on unmount', () => {
@@ -197,6 +203,6 @@ describe('NotePopupContainer', () => {
       <NotePopupContainer />
     );
     unmount();
-    expect(removeEventListenerMock).toHaveBeenCalledWith('updateAnnotationPermission', expect.any(Function));
+    expect(removeEventListenerMock).toHaveBeenCalledWith('updateAnnotationPermission', expect.any(Function), expect.any(Number));
   });
 });

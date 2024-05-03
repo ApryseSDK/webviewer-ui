@@ -1,6 +1,5 @@
 @import '../../../constants/styles';
 @import '../../../constants/modal';
-@import '../../../constants/panel';
 
 .MobilePanelWrapper {
   @extend %open;
@@ -16,7 +15,7 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: var(--panel-background);
+
   transition: height, max-height 0.3s ease-out;
 
   &.full-size {

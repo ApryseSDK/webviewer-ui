@@ -5,17 +5,25 @@
   display: flex;
   align-items: center;
   padding-top: 2px;
+
+  .close-button-wrapper {
+    display: grid;
+    justify-items: end;
+  }
 }
 
 .Tab {
   height: 32px;
   min-width: 140px;
+  width: 180px;
   max-width: 180px;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
   direction: ltr;
+  cursor: pointer;
+  background-color: var(--gray-2);
 
   .file-text {
     min-width: 60%;
@@ -23,6 +31,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    color: var(--gray-7);
 
     p {
       font-size: var(--font-size-default);
@@ -56,6 +65,9 @@
     background-color: var(--divider);
     width: 1px;
     height: 50%;
+    height: 25px;
+    top: 5px;
+    position: absolute;
   }
 
   &:not(.active) {
@@ -67,14 +79,19 @@
     border-top-right-radius: 3px;
     border: 1px solid var(--divider);
     border-bottom: 0;
-    background-color: var(--document-background-color);
+    background-color: var(--gray-1);
     @include mobile {
       background-color: var(--tools-header-background);
     }
-  }
 
-  transition: 400ms ease-in-out;
-  transition-property: background-color;
+    .file-text {
+      color: var(--gray-8);
+    }
+
+    .divider {
+      display: none;
+    }
+  }
 
   &:hover {
     background-color: var(--view-header-button-hover);

@@ -4,7 +4,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import TopHeader from 'components/ModularComponents/TopHeader';
 import rootReducer from 'reducers/rootReducer';
 import initialState from 'src/redux/initialState';
-import { defaultTopHeader, floatStartHeader, secondFloatStartHeader, floatCenterHeader, floatEndHeader } from '../../Helpers/mockHeaders';
+import {
+  defaultTopHeader,
+  floatStartHeader,
+  secondFloatStartHeader,
+  floatCenterHeader,
+  floatEndHeader,
+  mockModularComponents,
+} from '../../Helpers/mockHeaders';
 
 export default {
   title: 'ModularComponents/FloatingHeader/TopHeader',
@@ -26,6 +33,7 @@ const MockAppWrapperWithTopheader = ({ modularHeaders }) => {
     viewer: {
       ...initialState.viewer,
       modularHeaders,
+      modularComponents: mockModularComponents,
     },
     featureFlags: {
       customizableUI: true,
@@ -47,36 +55,37 @@ const MockAppWrapperWithTopheader = ({ modularHeaders }) => {
 };
 
 const Template = (args) => <MockAppWrapperWithTopheader {...args} />;
+Template.parameters = { chromatic: { disableSnapshot: true } };
 
 export const TopHeaderWithDefaultAndFloaties = Template.bind({});
 TopHeaderWithDefaultAndFloaties.args = {
-  modularHeaders: [
+  modularHeaders: {
     defaultTopHeader,
     floatStartHeader,
     secondFloatStartHeader,
     floatCenterHeader,
     floatEndHeader,
-  ],
+  },
 };
 
 export const FloatTopStartHeader = Template.bind({});
 FloatTopStartHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatStartHeader,
     secondFloatStartHeader,
-  ],
+  },
 };
 
 export const FloatTopCenterHeader = Template.bind({});
 FloatTopCenterHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatCenterHeader,
-  ],
+  },
 };
 
 export const FloatTopEndHeader = Template.bind({});
 FloatTopEndHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatEndHeader,
-  ],
+  },
 };
