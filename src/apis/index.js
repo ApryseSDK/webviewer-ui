@@ -252,6 +252,7 @@ import signSignatureWidget from './signSignatureWidget';
 import addModularHeaders from './addModularHeaders';
 import getModularHeader from './getModularHeader';
 import getModularHeaderList from './getModularHeaderList';
+import exportModularComponents from './exportModularComponents';
 import setGroupedItemsGap from './setGroupedItemsGap';
 import setGroupedItemsJustifyContent from './setGroupedItemsJustifyContent';
 import setGroupedItemsGrow from './setGroupedItemsGrow';
@@ -303,6 +304,7 @@ import enterMultiViewerMode from './enterMultiViewerMode';
 import exitMultiViewerMode from './exitMultiViewerMode';
 import setPanelWidth from './setPanelWidth';
 import setModularHeaders from './setModularHeaders';
+import importModularComponents from './importModularComponents';
 import setScaleOverlayPosition from './setScaleOverlayPosition';
 import setPanels from './setPanels';
 import getPanels from './getPanels';
@@ -472,10 +474,12 @@ export default (store) => {
     OutlinesPanel: {
       setDefaultOptions: setDefaultOptions(store),
     },
+    importModularComponents: importModularComponents(store),
     addModularHeaders: addModularHeaders(store),
     setModularHeaders: setModularHeaders(store),
     getModularHeader: getModularHeader(store),
     getModularHeaderList: getModularHeaderList(store),
+    exportModularComponents: exportModularComponents(store),
     Flyouts: FlyoutsAPI(store),
     setGroupedItemsGap: setGroupedItemsGap(store),
     setGroupedItemsJustifyContent: setGroupedItemsJustifyContent(store),

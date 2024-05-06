@@ -1,11 +1,11 @@
 /**
  * Sets the list of panels to be used in the UI
  * @method UI.setPanels
- * @property {array} panelList The new list of headers to be used in the UI
+ * @property {array} panelList The new list of panels to be used in the UI
  * @example
  * WebViewer(...)
  .then(function (instance) {
- instance.UI.setModularHeaders([
+ instance.UI.setPanels([
  {
  dataElement: 'fooBarElement',
  location: 'left',
@@ -17,6 +17,7 @@
  },
  {
  dataElement: 'myNewOutlinesPanel',
+ location: 'right',
  render: instance.UI.Panels.OUTLINE,
  }
  ]);

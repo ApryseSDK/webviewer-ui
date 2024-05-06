@@ -778,6 +778,13 @@ export const setModularHeaderItems = (headerDataElement, items) => (dispatch, ge
   });
 };
 
+export const setModularHeadersAndComponents = (componentsMap, headersMap) => (dispatch) => {
+  dispatch({
+    type: 'SET_MODULAR_HEADERS_AND_COMPONENTS',
+    payload: { headersMap, componentsMap }
+  });
+};
+
 export const setRightHeaderWidth = (width) => ({
   type: 'SET_RIGHT_HEADER_WIDTH',
   payload: width

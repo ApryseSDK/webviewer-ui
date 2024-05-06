@@ -3,12 +3,16 @@ import { panelNames } from 'constants/panel';
 import { Panel } from 'src/apis/getPanels';
 
 /**
+ * @typedef {Object} PanelProperties
+ * @property {string} dataElement The data-element for panel.
+ * @property {string} location Location of the panel in UI, left or right.
+ * @property {string | UI.renderCustomPanel} options.render Either the name of a predefined panel to render or a function that returns a panel element.
+ */
+
+/**
  * Adds a custom panel in left or right side of the UI.
  * @method UI.addPanel
- * @param {object} options
- * @param {string} options.dataElement data-element for panel.
- * @param {string} options.location Location of the panel in UI, left or right.
- * @param {string | UI.renderCustomPanel} options.render Either the name of a predefined panel to render or a function that returns a panel element.
+ * @param {PanelProperties} options an object that contains the properties of the panel.
  * @example
 WebViewer(...)
   .then(function(instance) {

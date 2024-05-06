@@ -610,4 +610,137 @@ describe('Test Custom UI APIs', function() {
       expect(document.querySelector('[data-element="zoom-button-10"]').classList.contains('active')).to.be.true;
     });
   });
+
+  describe('Modular UI Import/Export tests', () => {
+    it('should import modular components from a JSON', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      instance.UI.importModularComponents(testUI);
+      const headerList = instance.UI.getModularHeaderList();
+      expect(headerList.length).to.equal(1);
+      expect(headerList[0].items.length).to.equal(2);
+      const panelList = instance.UI.getPanels();
+      expect(panelList.length).to.equal(1);
+    });
+
+    it('should throw an error if the imported JSON is invalid', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      await expect(instance.UI.importModularComponents(invalidUI)).to.be.rejected;
+    });
+
+    it('should export modular components to a JSON', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      instance.UI.importModularComponents(testUI);
+      const exportedUI = instance.UI.exportModularComponents();
+      expect(exportedUI).to.deep.equal(testUI);
+    });
+
+    it('should remove functions from components in export JSON', async () => {
+      const instance = await setupWebViewerInstance({ ui: 'beta' });
+
+      const testButton = new instance.UI.Components.CustomButton({
+        dataElement: 'testButton',
+        label: 'test',
+        title: 'this is a test button',
+        onClick: () => console.log('button clicked!'),
+        img: 'icon-save',
+      });
+
+      const testButton2 = new instance.UI.Components.CustomButton({
+        label: 'test2',
+        title: 'this is also test button',
+        img: 'icon-save',
+      });
+
+      const defaultHeader = instance.UI.getModularHeader('default-top-header');
+      defaultHeader.setItems([testButton, testButton2]);
+
+      const exportedUI = instance.UI.exportModularComponents();
+
+      expect(exportedUI.modularComponents.testButton.onclick).to.be.undefined;
+      expect(exportedUI.modularHeaders['default-top-header'].items.length).to.equal(1);
+    });
+  });
 });
+
+const testUI = {
+  'modularComponents': {
+    'menu-toggle-button': {
+      'dataElement': 'menu-toggle-button',
+      'img': 'ic-hamburger-menu',
+      'title': 'component.menuOverlay',
+      'toggleElement': 'MainMenuFlyout',
+      'type': 'toggleButton'
+    },
+    'searchPanelToggle': {
+      'dataElement': 'searchPanelToggle',
+      'title': 'component.searchPanel',
+      'type': 'toggleButton',
+      'img': 'icon-header-search',
+      'toggleElement': 'searchPanel'
+    }
+  },
+  'modularHeaders': {
+    'default-top-header': {
+      'dataElement': 'default-top-header',
+      'placement': 'top',
+      'grow': 0,
+      'gap': 12,
+      'position': 'start',
+      'float': false,
+      'stroke': true,
+      'dimension': {
+        'paddingTop': 8,
+        'paddingBottom': 8,
+        'borderWidth': 1
+      },
+      'style': {},
+      'items': [
+        'menu-toggle-button',
+        'searchPanelToggle'
+      ]
+    }
+  },
+  'panels': {
+    'searchPanel': {
+      'dataElement': 'searchPanel',
+      'render': 'searchPanel',
+      'location': 'right'
+    }
+  }
+};
+
+const invalidUI = {
+  'modularComponents': {
+    'menu-toggle-button': {
+      'dataElement': 'menu-toggle-button',
+      'img': 'ic-hamburger-menu',
+      'title': 'component.menuOverlay',
+      'toggleElement': 'MainMenuFlyout',
+    },
+  },
+  'modularHeaders': {
+    'default-top-header': {
+      'dataElement': 'default-top-header',
+      'grow': 0,
+      'gap': 12,
+      'position': 'start',
+      'float': false,
+      'stroke': true,
+      'dimension': {
+        'paddingTop': 8,
+        'paddingBottom': 8,
+        'borderWidth': 1
+      },
+      'style': {},
+      'items': [
+        'searchPanelToggle'
+      ]
+    }
+  },
+  'panels': {
+    'searchPanel': {
+      'dataElement': 'searchPanel',
+      'render': 'searchPanel',
+    }
+  }
+};
