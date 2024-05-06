@@ -145,7 +145,6 @@ export default (store, documentViewerKey) => async () => {
         elementsToDisableInOfficeEditor,
         PRIORITY_ONE, // To allow customers to still disable these elements
       ));
-      dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
       hotkeys.unbind('*', officeEditorScope);
       hotkeys.setScope(officeEditorScope);
       const searchShortcutKeys = ShortcutKeys[Shortcuts.SEARCH];
@@ -154,12 +153,14 @@ export default (store, documentViewerKey) => async () => {
         officeEditorScope,
         hotkeysManager.keyHandlerMap[searchShortcutKeys],
       );
-      dispatch(actions.setOfficeEditorEditMode(OFFICE_EDITOR_EDIT_MODE.EDITING));
-      doc.addEventListener('editModeUpdated', (editMode) => {
+
+      const handleEditModeUpdate = (editMode) => {
         dispatch(actions.setOfficeEditorEditMode(editMode));
         if (editMode === OFFICE_EDITOR_EDIT_MODE.VIEW_ONLY) {
           dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
+          dispatch(actions.disableElement(DataElements.CONTEXT_MENU_POPUP, PRIORITY_TWO));
         } else {
+          dispatch(actions.enableElement(DataElements.CONTEXT_MENU_POPUP, PRIORITY_TWO));
           dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
         }
         if (editMode === OFFICE_EDITOR_EDIT_MODE.REVIEWING) {
@@ -167,7 +168,10 @@ export default (store, documentViewerKey) => async () => {
         } else {
           dispatch(actions.closeElement(DataElements.LEFT_PANEL));
         }
-      });
+      };
+      const initialEditMode = selectors.getOfficeEditorEditMode(getState());
+      handleEditModeUpdate(initialEditMode);
+      doc.addEventListener('editModeUpdated', handleEditModeUpdate);
       notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
       dispatch(actions.setNotesInLeftPanel(true));
     } else {
