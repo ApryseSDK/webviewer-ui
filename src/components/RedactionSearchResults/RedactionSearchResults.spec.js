@@ -4,17 +4,36 @@ import userEvent from '@testing-library/user-event';
 import { mockSearchResults } from '../RedactionSearchPanel/RedactionSearchPanel.stories';
 import RedactionSearchResults from './RedactionSearchResults';
 import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
+import { createRedactionAnnotations } from './RedactionSearchResultsContainer';
 
 const RedactionSearchResultsWithRedux = withProviders(RedactionSearchResults);
 
-function noop() { };
+
+const noop = () => {
+};
+
+jest.mock('core', () => ({
+  addEventListener: noop,
+  removeEventListener: noop,
+  jumpToAnnotation: noop,
+  getDocumentViewer: () => ({
+    getAnnotationManager: () => ({
+      deselectAllAnnotations: noop,
+      selectAnnotation: noop,
+    })
+  }),
+  isFullPDFEnabled: () => true,
+  setCurrentPage: () => {},
+  selectAnnotation: () => {},
+  getCurrentUser: () => 'foo',
+}));
 
 const customRenderWithContext = (component, providerProps = {}) => {
   return render(
     <RedactionPanelContext.Provider value={providerProps}>
       {component}
     </RedactionPanelContext.Provider>,
-  )
+  );
 };
 
 describe('RedactionSearchResults component', () => {
@@ -58,5 +77,35 @@ describe('RedactionSearchResults component', () => {
 
     userEvent.click(redactButton);
     expect(props.redactSelectedResults).toHaveBeenCalledWith([mockSearchResults[0], mockSearchResults[1]]);
-  })
+  });
+
+  it('should be able to create redact annotations from search result using createRedactionAnnotations function', () => {
+    const searchResults = [
+      {
+        page_num: 1,
+        quads: [
+          { getPoints: () => 44, }
+        ],
+        result_str: 'foobar',
+        type: '',
+      }
+    ];
+
+    const activeToolStyles = {
+      StrokeColor: new window.Core.Annotations.Color(255, 0, 0, 1),
+      OverlayText: 'barfoo',
+      FillColor: new window.Core.Annotations.Color(0, 0, 0, 1),
+      Font: 'Helvetica',
+      TextColor: new window.Core.Annotations.Color(77, 77, 0, 1),
+    };
+
+    const annots = createRedactionAnnotations(searchResults, activeToolStyles);
+    const annot = annots[0];
+
+    expect(annot.getContents()).toEqual(searchResults[0].result_str);
+    expect(annot['FillColor']).toEqual(activeToolStyles.FillColor);
+    expect(annot['Font']).toEqual(activeToolStyles.Font);
+    expect(annot['TextColor']).toEqual(activeToolStyles.TextColor);
+    expect(true).toBe(true);
+  });
 });
