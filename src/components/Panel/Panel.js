@@ -27,6 +27,7 @@ const DesktopPanel = ({ children }) => {
     isLogoBarEnabled,
     featureFlags,
     activeTopHeaders,
+    isMultiTabActive,
   ] = useSelector(
     (state) => [
       selectors.getPanelWidth(state, dataElement),
@@ -39,6 +40,7 @@ const DesktopPanel = ({ children }) => {
       !selectors.isElementDisabled(state, 'logoBar'),
       selectors.getFeatureFlags(state),
       selectors.getActiveTopHeaders(state),
+      selectors.getIsMultiTab(state),
     ],
     shallowEqual,
   );
@@ -82,6 +84,7 @@ const DesktopPanel = ({ children }) => {
         'tools-header-open': customizableUI ? activeTopHeaders.length === 2 : legacyToolsHeaderOpen,
         'tools-header-and-header-hidden': customizableUI ? activeTopHeaders.length === 0 : legacyAllHeadersHidden,
         'logo-bar-enabled': isLogoBarEnabled,
+        'multi-tab-active': isMultiTabActive,
       })}
       data-element={dataElement}
     >
