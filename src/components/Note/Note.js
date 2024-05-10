@@ -15,10 +15,11 @@ import actions from 'actions';
 import core from 'core';
 import AnnotationNoteConnectorLine from 'components/AnnotationNoteConnectorLine';
 import useDidUpdate from 'hooks/useDidUpdate';
-import DataElements from 'src/constants/dataElement';
+import DataElements from 'constants/dataElement';
+import getRootNode from 'helpers/getRootNode';
+import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 
 import './Note.scss';
-import getRootNode from 'helpers/getRootNode';
 
 const propTypes = {
   annotation: PropTypes.object.isRequired,
@@ -263,6 +264,7 @@ const Note = ({
     isMultiSelectMode = false;
     isMultiSelected = false;
   }
+  const isTrackedChange = mapAnnotationToKey(annotation) === annotationMapKeys.TRACKED_CHANGE;
   // apply unread reply style to replyArea if the last reply is unread
   const lastReplyId = replies.length > 0 ? replies[replies.length - 1].Id : null;
 
@@ -290,7 +292,7 @@ const Note = ({
         isMultiSelected={isMultiSelected}
         isMultiSelectMode={isMultiSelectMode}
       />
-      {(isSelected || isExpandedFromSearch || shouldExpandCommentThread) && (
+      {(isSelected || isExpandedFromSearch || shouldExpandCommentThread) && !isTrackedChange && (
         <>
           {replies.length > 0 && (
             <div className={repliesClass}>
