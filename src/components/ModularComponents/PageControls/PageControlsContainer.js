@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
-import sizeManager from 'helpers/responsivnessHelper';
+import sizeManager from 'helpers/responsivenessHelper';
 import PageControls from './PageControls';
 import useDidUpdate from 'hooks/useDidUpdate';
 import { useSelector, useDispatch } from 'react-redux';

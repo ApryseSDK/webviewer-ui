@@ -1,13 +1,13 @@
-import { ITEM_TYPE, RESPONSIVE_ITEMS, BUTTON_TYPES } from 'constants/customizationVariables';
+import { ITEM_TYPE, RESPONSIVE_ITEMS, BUTTON_TYPES, DIRECTION } from 'constants/customizationVariables';
 import { useLayoutEffect } from 'react';
 
 const sizeManager = {};
 export default sizeManager;
 
-export const storeSizeHook = (dataElement, size, elementRef, headerDirection) => {
+export const useSizeStore = (dataElement, size, elementRef, headerDirection) => {
   useLayoutEffect(() => {
     if (elementRef.current) {
-      const isVertical = headerDirection === 'column';
+      const isVertical = headerDirection === DIRECTION.COLUMN;
       const freeSpace = getCurrentFreeSpace(headerDirection, elementRef.current, true);
       if (!sizeManager[dataElement]) {
         sizeManager[dataElement] = {};
@@ -34,7 +34,7 @@ const getCSSValue = (style, property) => {
   return pixelToNumber(value);
 };
 export const getCurrentFreeSpace = (headerDirection, element, isChild = false) => {
-  const isVertical = headerDirection === 'column';
+  const isVertical = headerDirection === DIRECTION.COLUMN;
   const widthOrHeight = isVertical ? 'height' : 'width';
   const style = window.getComputedStyle(element);
   const rect = element.getBoundingClientRect();
@@ -51,7 +51,7 @@ export const getCurrentFreeSpace = (headerDirection, element, isChild = false) =
   calculatedFreeSpace -= getCSSValue(style, `margin${leftOrTop}`) + getCSSValue(style, `margin${rightOrBottom}`);
   calculatedFreeSpace -= getCSSValue(style, `border${leftOrTop}Width`) + getCSSValue(style, `border${rightOrBottom}Width`);
   if (element.children.length > 1) {
-    const columnOrRow = isVertical ? 'column' : 'row';
+    const columnOrRow = isVertical ? DIRECTION.COLUMN : DIRECTION.ROW;
     calculatedFreeSpace -= getCSSValue(style, `${columnOrRow}Gap`) * (element.children.length - 1);
   }
   return calculatedFreeSpace;
@@ -61,11 +61,18 @@ const SIZE_CHANGE_TYPES = { GROW: 'grow', SHRINK: 'shrink' };
 const lastSizedElementMap = {};
 const elementToPreventLoop = {};
 
+// To be used in the unit tests
+export const resetLastSizedElementMap = () => {
+  Object.keys(lastSizedElementMap).forEach((key) => {
+    delete lastSizedElementMap[key];
+  });
+};
+
 export const findItemToResize = (items, freeSpace, headerDirection, parentDataElement, parentDomElement) => {
   if (freeSpace === 0 || !items || items.length === 0) {
     return null;
   }
-  const isVertical = headerDirection === 'column';
+  const isVertical = headerDirection === DIRECTION.COLUMN;
   if (lastSizedElementMap[parentDataElement]) {
     const lastSizedElement = lastSizedElementMap[parentDataElement];
     const element = lastSizedElement.getElement();
@@ -87,7 +94,7 @@ export const findItemToResize = (items, freeSpace, headerDirection, parentDataEl
           type: hasToShrink ? SIZE_CHANGE_TYPES.SHRINK : SIZE_CHANGE_TYPES.GROW,
           getElement: lastSizedElement.getElement,
           reverse: () => {
-            lastSizedElement.getElement()[hasToShrink ? 'grow' : 'shrink']();
+            lastSizedElement.getElement()[hasToShrink ? SIZE_CHANGE_TYPES.GROW : SIZE_CHANGE_TYPES.SHRINK]();
           }
         };
         lastSizedElementMap[parentDataElement] = newSizeChangeEntry;
@@ -209,7 +216,7 @@ const getGrowSizeIncrease = (element, parentDataElement, isVertical, items, pare
       itemsCount++;
       itemToBeAdded = items[itemToBeAddedIndex + 1];
     }
-    const columnOrRow = isVertical ? 'column' : 'row';
+    const columnOrRow = isVertical ? DIRECTION.COLUMN : DIRECTION.ROW;
     const paddingSizeIncrease = currentSize === 1 ? 0 : pixelToNumber(getComputedStyle(parentElement)[`${columnOrRow}Gap`]) * itemsCount;
     if (BUTTON_TYPES.includes(itemToBeAdded.type)) {
       if (currentSize === 1) {

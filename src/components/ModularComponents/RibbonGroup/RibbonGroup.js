@@ -9,7 +9,7 @@ import FlexDropdown from '../FlexDropdown';
 import { ITEM_TYPE, DIRECTION } from 'constants/customizationVariables';
 import ToggleElementButton from '../ToggleElementButton';
 import getToolbarTranslationString from 'helpers/translationKeyMapping';
-import sizeManager, { storeSizeHook } from 'helpers/responsivnessHelper';
+import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import Icon from 'components/Icon';
 
@@ -90,7 +90,7 @@ const RibbonGroup = (props) => {
       dispatch(actions.closeElement(FLYOUT_NAME));
     }
   }, [size]);
-  storeSizeHook(dataElement, size, elementRef, headerDirection);
+  useSizeStore(dataElement, size, elementRef, headerDirection);
 
   const setActiveCustomRibbon = useCallback(
     (ribbon) => {

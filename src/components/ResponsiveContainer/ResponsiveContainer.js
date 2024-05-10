@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import throttle from 'lodash/throttle';
-import { getCurrentFreeSpace, findItemToResize } from 'helpers/responsivnessHelper';
+import { getCurrentFreeSpace, findItemToResize } from 'helpers/responsivenessHelper';
 
 const propTypes = {};
 

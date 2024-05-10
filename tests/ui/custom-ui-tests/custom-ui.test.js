@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { setupWebViewerInstance, waitFor } from '../../../utils/TestingUtils';
 import { createModularHeader, createGroupedItems, createPresetButton, createFlyout } from './utils';
+import { getCurrentFreeSpace } from '../../../../../src/ui/src/helpers/responsivenessHelper';
 
 describe('Test Custom UI APIs', function() {
   this.timeout(10000);
@@ -658,6 +659,28 @@ describe('Test Custom UI APIs', function() {
 
       expect(exportedUI.modularComponents.testButton.onclick).to.be.undefined;
       expect(exportedUI.modularHeaders['default-top-header'].items.length).to.equal(1);
+    });
+  });
+
+  describe('Test responsiveness algorithm', () => {
+    it('should correctly add new elements to a header when there is no free space', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      const iframe = window.document.querySelector('#viewerDiv iframe');
+      iframe.style.height = '930px';
+      iframe.style.width = '398px';
+
+      const topHeaderDom = iframe.contentDocument.querySelector('[data-element="default-top-header"]');
+      const currentFreeSpace = getCurrentFreeSpace('row', topHeaderDom);
+      // 32 is the pattern size of a button that we are agoing to add
+      expect(currentFreeSpace).to.lessThan(32);
+
+      const topHeader = instance.UI.getModularHeader('default-top-header');
+      const topHeaderItems = topHeader.getItems();
+      const undoButton = createPresetButton(instance, 'undoButton');
+      topHeader.setItems([...topHeader.getItems(), undoButton]);
+      await waitFor(200);
+      const topHeaderItemsAfterAddingTwoItems = topHeader.getItems();
+      expect(topHeaderItemsAfterAddingTwoItems.length).to.equal(topHeaderItems.length + 1);
     });
   });
 });

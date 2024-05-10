@@ -5,7 +5,7 @@ import './GroupedItems.scss';
 import InnerItem from '../InnerItem/InnerItem';
 import { JUSTIFY_CONTENT, ITEM_TYPE, DEFAULT_GAP } from 'constants/customizationVariables';
 import actions from 'actions';
-import sizeManager, { storeSizeHook } from 'helpers/responsivnessHelper';
+import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import ToggleElementButton from '../ToggleElementButton';
@@ -70,7 +70,7 @@ const GroupedItems = (props) => {
       size: size,
     };
   }, [size, items]);
-  storeSizeHook(dataElement, size, elementRef, headerDirection);
+  useSizeStore(dataElement, size, elementRef, headerDirection);
 
   useEffect(() => {
     const flyout = {

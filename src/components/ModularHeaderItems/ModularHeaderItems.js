@@ -4,7 +4,7 @@ import InnerItem from '../ModularComponents/InnerItem';
 import { PLACEMENT, DIRECTION, ITEM_TYPE } from 'constants/customizationVariables';
 import ResponsiveContainer from 'components/ResponsiveContainer';
 import { useSelector, useDispatch } from 'react-redux';
-import sizeManager from 'helpers/responsivnessHelper';
+import sizeManager from 'helpers/responsivenessHelper';
 import { itemToFlyout } from 'helpers/itemToFlyoutHelper';
 import selectors from 'selectors';
 import actions from 'actions';

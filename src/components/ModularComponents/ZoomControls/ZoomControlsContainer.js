@@ -5,7 +5,7 @@ import actions from 'actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { zoomTo } from 'helpers/zoom';
 import ZoomControls from './ZoomControls';
-import sizeManager, { storeSizeHook } from 'helpers/responsivnessHelper';
+import sizeManager, { useSizeStore } from 'helpers/responsivenessHelper';
 import { getZoomHandlers, getZoomFlyoutItems } from 'components/ModularComponents/ZoomControls/ZoomHelper';
 
 const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection }) => {
@@ -33,7 +33,7 @@ const ZoomControlsContainer = ({ dataElement = 'zoom-container', headerDirection
       size: size,
     };
   }, [size]);
-  storeSizeHook(dataElement, size, elementRef, headerDirection);
+  useSizeStore(dataElement, size, elementRef, headerDirection);
 
   useEffect(() => {
     const onDocumentLoaded = () => setZoomValue(Math.ceil(core.getZoom() * 100).toString());

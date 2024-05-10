@@ -11,7 +11,7 @@ import { JUSTIFY_CONTENT, DIRECTION } from 'constants/customizationVariables';
 import defaultTool from 'constants/defaultTool';
 
 import './RibbonItem.scss';
-import sizeManager from 'helpers/responsivnessHelper';
+import sizeManager from 'helpers/responsivenessHelper';
 import { innerItemToFlyoutItem } from 'helpers/itemToFlyoutHelper';
 import { getNestedGroupedItems } from 'helpers/modularUIHelpers';
 import core from 'core';
