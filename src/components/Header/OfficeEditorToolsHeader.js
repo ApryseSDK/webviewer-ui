@@ -20,7 +20,8 @@ import {
   LIST_OPTIONS,
   DEFAULT_POINT_SIZE,
   OFFICE_BULLET_OPTIONS,
-  OFFICE_NUMBER_OPTIONS
+  OFFICE_NUMBER_OPTIONS,
+  FONT_SIZE,
 } from 'constants/officeEditor';
 import { rgbaToHex } from 'helpers/color';
 import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
@@ -108,7 +109,6 @@ const JustificationOptions = ({ justification }) => {
           core.getOfficeEditor().updateParagraphStyle({
             justification: 'left'
           });
-          core.getDocumentViewer().clearSelection();
         }}
       />
       <ActionButton
@@ -120,7 +120,6 @@ const JustificationOptions = ({ justification }) => {
           core.getOfficeEditor().updateParagraphStyle({
             justification: 'center'
           });
-          core.getDocumentViewer().clearSelection();
         }}
       />
       <ActionButton
@@ -132,7 +131,6 @@ const JustificationOptions = ({ justification }) => {
           core.getOfficeEditor().updateParagraphStyle({
             justification: 'right'
           });
-          core.getDocumentViewer().clearSelection();
         }}
       />
       <ActionButton
@@ -144,7 +142,6 @@ const JustificationOptions = ({ justification }) => {
           core.getOfficeEditor().updateParagraphStyle({
             justification: 'both'
           });
-          core.getDocumentViewer().clearSelection();
         }}
       />
     </>
@@ -410,6 +407,8 @@ const OfficeEditorToolsHeader = () => {
                 >
                   <Dropdown
                     items={Object.keys(availableStylePresetMap)}
+                    // TODO: This shouldn't be closing more tools popup
+                    // It shouldn't know about the existence of it.
                     onOpened={() => setShowMoreTools(false)}
                     onClickItem={(item) => {
                       const stylePreset = availableStylePresetMap[item];
@@ -434,7 +433,6 @@ const OfficeEditorToolsHeader = () => {
                         textStyle: newTextStyle,
                       });
                       core.getOfficeEditor().setMainCursorStyle(newTextStyle);
-                      core.getDocumentViewer().clearSelection();
                     }}
                     getCustomItemStyle={(item) => ({ ...availableStylePresetMap[item], padding: '20px 10px', color: 'var(--gray-8)' })}
                     applyCustomStyleToButton={false}
@@ -466,11 +464,10 @@ const OfficeEditorToolsHeader = () => {
                         fontPointSize = DEFAULT_POINT_SIZE;
                       }
 
-                      // TODO: Setting a pointsize of 96 or higher will cause cursor positions array
-                      // to be empty for the span
-                      // Actually, every large point size seems to break something.
-                      if (fontPointSize > 72) {
-                        fontPointSize = 72;
+                      if (fontPointSize > FONT_SIZE.MAX) {
+                        fontPointSize = FONT_SIZE.MAX;
+                      } else if (fontPointSize < FONT_SIZE.MIN) {
+                        fontPointSize = FONT_SIZE.MIN;
                       }
                       core.getOfficeEditor().updateSelectionAndCursorStyle({ pointSize: fontPointSize });
                     }}
@@ -532,7 +529,6 @@ const OfficeEditorToolsHeader = () => {
                       core.getOfficeEditor().setMainCursorStyle({
                         lineHeight,
                       });
-                      core.getDocumentViewer().clearSelection();
                     }}
                     currentSelectionKey={lineHeight}
                     className="small-dropdown line-spacing-dropdown"

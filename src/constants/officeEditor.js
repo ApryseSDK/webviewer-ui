@@ -1,5 +1,10 @@
 import DataElements from 'constants/dataElement';
 
+export const FONT_SIZE = {
+  MAX: 1638,
+  MIN: 2,
+};
+
 export const LINE_SPACING_OPTIONS = {
   'Single': 1,
   '1.15': 1.15,
@@ -62,6 +67,7 @@ export const elementsToDisableInOfficeEditor = [
   DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON,
   DataElements.ANNOTATION_NOTE_CONNECTOR_LINE
 ];
+
 export const elementsToEnableInOfficeEditor = [
   DataElements.OFFICE_EDITOR_TOOLS_HEADER,
   DataElements.INLINE_COMMENT_POPUP
