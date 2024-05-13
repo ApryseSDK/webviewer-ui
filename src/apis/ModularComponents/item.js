@@ -1,19 +1,19 @@
 /**
+ * Item options
  * @typedef {Object} ItemProperties
- * @property {string} dataElement The data element of the item.
- * @property {string} title The title of the item which appears in a tooltip.
- * @property {boolean} disabled Whether the item is disabled or not.
- * @property {string} type The type of the item.
+ * @property {string} [dataElement] The data element of the item.
+ * @property {string} [title] The tooltip of the item.
+ * @property {boolean} [disabled] Whether the item is disabled or not.
+ * @property {string} [type] The type of the item.
  */
-
 /**
  * An abstract class for creating WebViewer Modular UI items.
  * @name Item
+ * @memberOf UI.Components
  * @class UI.Components.Item
  * @abstract
- * @param {ItemProperties} [options] An object that contains the properties of the item.
- */
-
+ * @param {ItemProperties} properties An object that contains the properties of the item.
+*/
 class Item {
   constructor(options) {
     if (this.constructor === Item) {

@@ -6,24 +6,24 @@ const { checkTypes, TYPES } = window.Core;
 
 export default (store) => (props) => {
   /**
-   * @typedef ContainerProperties
-   * @property {string} label - The label of the container.
-   * @property {string} dataElement - The data element of the container.
-   * @property {'top' | 'bottom' | 'left' | 'right'} properties.placement - A string that determines the placement of the header.
-   * @property {'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'} justifyContent - A string that determines the flex justify content value of the container.
-   * @property {number} grow - The flex grow value of the container.
-   * @property {number} gap - The gap between the items in the container.
-   * @property {'start' | 'center' | 'end'} position - A string that determines the position of the container.
-   * @property {Array<Object>} items - The items or other containers within the container.
-   * @property {Object} style - An object that can set the CSS style of the container.
+   * @typedef {Object} ContainerProperties
+   * @property {string} [label] The label of the container.
+   * @property {string} [dataElement] The data element of the container.
+   * @property {'top' | 'bottom' | 'left' | 'right'} [placement] A string that determines the placement of the header.
+   * @property {'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'} [justifyContent] A string that determines the flex justify content value of the container.
+   * @property {number} [grow] The flex grow value of the container.
+   * @property {number} [gap] The gap between the items in the container.
+   * @property {'start' | 'center' | 'end'} [position] A string that determines the position of the container.
+   * @property {Array<Object>} [items] The items or other containers within the container.
+   * @property {Object} [style] An object that can set the CSS style of the container.
    */
   /**
    * Creates a new instance of ModularHeader.
    * @name ModularHeader
    * @memberOf UI.Components
    * @class UI.Components.ModularHeader
+   * @param {...ContainerProperties} properties An object that contains the properties of the header
    * @constructor
-   * @param {ContainerProperties} properties - An object that contains the properties of the header
    * @example
 const defaultTopHeader = new instance.UI.Components.ModularHeader({
   dataElement: 'default-top-header',
