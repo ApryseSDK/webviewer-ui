@@ -121,6 +121,7 @@ const DataElements = {
   RICH_TEXT_POPUP: 'richTextPopup',
   RICH_TEXT_EDITOR: 'richTextEditor',
   AUDIO_PLAYBACK_POPUP: 'audioPlaybackPopup',
+  ANNOTATION_ALIGNMENT_POPUP: 'annotationAlignmentPopup',
   DOCUMENT_CROP_POPUP: 'documentCropPopup',
   SNIPPING_TOOL_POPUP: 'snippingToolPopup',
   LINK_ANNOTATION_POPUP: 'linkAnnotationPopup',
@@ -212,6 +213,7 @@ const DataElements = {
   OFFICE_EDITOR_DELETE_ROW: 'officeEditorDeleteRow',
   OFFICE_EDITOR_DELETE_COLUMN: 'officeEditorDeleteColumn',
   OFFICE_EDITOR_DELETE_TABLE: 'officeEditorDeleteTable',
+  OFFICE_EDITOR_PAGE_BREAK: 'officeEditorPageBreak',
 
   // Insert Page Modal tabs
   INSERT_BLANK_PAGE_TAB: 'insertBlankPagePanelButton',

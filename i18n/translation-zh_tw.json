@@ -286,6 +286,7 @@
     "signHere": "在這裡簽名",
     "insertTextHere": "在這裡插入文字",
     "imageSignatureAcceptedFileTypes": "僅接受{{acceptedFileTypes}}",
+    "signatureRequired": "需要簽名和姓名縮寫才能繼續",
     "enterMeasurement": "在兩點之間輸入測量值",
     "errorEnterMeasurement": "您輸入的數字無效，您可以輸入7.5或7 1/2之類的值",
     "linkURLorPage": "鏈接網址或頁面",
@@ -313,7 +314,8 @@
     "viewBookmark": "在頁面上查看書籤",
     "error": "錯誤",
     "errorPageNumber": "頁碼無效。限制是",
-    "errorLoadingDocument": "閱讀本文檔時出現問題，某些頁面可能無法顯示。這表明文檔可能已損壞。總頁數為 {{totalPageCount}}，顯示的頁數為 {{displayedPageCount}}。"
+    "errorLoadingDocument": "閱讀本文檔時出現問題，某些頁面可能無法顯示。這表明文檔可能已損壞。總頁數為 {{totalPageCount}}，顯示的頁數為 {{displayedPageCount}}。",
+    "noRevisions": "本文檔沒有任何修訂。"
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "逆時針旋轉頁面",
       "moreOptions": "更多選擇",
       "moreOptionsMenu": "更多縮圖選項選單",
-      "enterPageNumbers": "輸入要選擇的頁碼"
+      "enterPageNumbers": "輸入要選擇的頁碼",
+      "multiSelectPages": "多選頁面",
+      "multiSelectPagesExample": "例如1、3、5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "移動頁面"
@@ -961,6 +965,18 @@
       "combobox": "組合框"
     }
   },
+  "alignmentPopup": {
+    "alignment": "對齊",
+    "alignLeft": "左對齊",
+    "alignHorizontalCenter": "水平居中對齊",
+    "alignVerticalCenter": "垂直居中對齊",
+    "alignRight": "右對齊",
+    "alignTop": "頂部對齊",
+    "alignBottom": "底部對齊",
+    "distribute": "散佈",
+    "distributeHorizontal": "水平分佈",
+    "distributeVertical": "垂直分佈"
+  },
   "digitalSignatureModal": {
     "certification": "認證證書",
     "Certification": "資質認證",
@@ -1194,11 +1210,13 @@
     "added": "添加：",
     "editing": "編輯",
     "editingDescription": "編輯文檔",
+    "pageBreak": "分頁符",
     "reviewing": "審閱",
     "reviewingDescription": "提供建議",
     "viewOnly": "只讀",
     "viewOnlyDescription": "查看無建議",
-    "notSupportedOnMobile": "移動設備不支持 Office 編輯。"
+    "notSupportedOnMobile": "移動設備不支持 Office 編輯。",
+    "previewAllChanges": "預覽所有更改"
   },
   "insertPageModal": {
     "title": "添加新頁面",

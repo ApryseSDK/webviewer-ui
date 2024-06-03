@@ -222,7 +222,7 @@
     "notesPanel": "Yorumlar",
     "outlinePanel": "anahat",
     "outlinesPanel": "Anahatlar",
-    "newOutlineTitle": "Yeni Anahat Başlığı",
+    "newOutlineTitle": "Yeni Taslak Başlığı",
     "outlineTitle": "Anahat Başlığı",
     "destination": "Hedef",
     "bookmarkPanel": "Yer imi",
@@ -286,6 +286,7 @@
     "signHere": "Burayı imzalayın",
     "insertTextHere": "Buraya metin ekleyin",
     "imageSignatureAcceptedFileTypes": "Yalnızca {{acceptedFileTypes}} kabul edilir",
+    "signatureRequired": "Devam etmek için imza ve paraf gerekli",
     "enterMeasurement": "İki nokta arasındaki ölçümü girin",
     "errorEnterMeasurement": "Girdiğiniz sayı geçersiz, 7,5 veya 7 1/2 gibi değerler girebilirsiniz.",
     "linkURLorPage": "Bağlantı URL'si veya Sayfa",
@@ -313,7 +314,8 @@
     "viewBookmark": "Sayfadaki Yer İşaretini Görüntüle",
     "error": "Hata",
     "errorPageNumber": "Geçersiz sayfa numarası. Sınır (şimdiki değeri)",
-    "errorLoadingDocument": "Bu belge okunurken bir sorun oluştu ve bazı sayfalar görüntülenemeyebilir. Bu, belgenin bozuk olabileceğini gösterir. Toplam sayfa sayısı {{totalPageCount}} ve görüntülenen sayfa sayısı {{displayedPageCount}}."
+    "errorLoadingDocument": "Bu belge okunurken bir sorun oluştu ve bazı sayfalar görüntülenemeyebilir. Bu, belgenin bozuk olabileceğini gösterir. Toplam sayfa sayısı {{totalPageCount}} ve görüntülenen sayfa sayısı {{displayedPageCount}}.",
+    "noRevisions": "Bu belgenin revizyonu yoktur."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Sayfayı Saat Yönünün Tersine Döndür",
       "moreOptions": "Daha fazla seçenek",
       "moreOptionsMenu": "Diğer Küçük Resim Seçenekleri Menüsü",
-      "enterPageNumbers": "Seçilecek sayfa numaralarını girin"
+      "enterPageNumbers": "Seçilecek sayfa numaralarını girin",
+      "multiSelectPages": "Çoklu Seçim Sayfaları",
+      "multiSelectPagesExample": "Örneğin. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Sayfaları taşı"
@@ -961,6 +965,18 @@
       "combobox": "Açılan kutu"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Hizala",
+    "alignLeft": "Sola hizalamak",
+    "alignHorizontalCenter": "Yatay Ortaya Hizala",
+    "alignVerticalCenter": "Dikey Ortaya Hizala",
+    "alignRight": "Sağa Hizala",
+    "alignTop": "Üste Hizala",
+    "alignBottom": "Alta Hizala",
+    "distribute": "Dağıt",
+    "distributeHorizontal": "Yatay Olarak Dağıt",
+    "distributeVertical": "Dikey Olarak Dağıt"
+  },
   "digitalSignatureModal": {
     "certification": "sertifika",
     "Certification": "sertifika",
@@ -1194,11 +1210,13 @@
     "added": "Katma:",
     "editing": "Düzenleme",
     "editingDescription": "Dokümanı düzenle",
+    "pageBreak": "Sayfa sonu",
     "reviewing": "İnceleniyor",
     "reviewingDescription": "Öneride bulunun",
     "viewOnly": "Sadece Görüntüle",
     "viewOnlyDescription": "Öneriler olmadan görüntüle",
-    "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez."
+    "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez.",
+    "previewAllChanges": "Tüm değişiklikleri önizleyin"
   },
   "insertPageModal": {
     "title": "Yeni Sayfa Ekle",

@@ -768,6 +768,7 @@ export default {
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'shortCutKeysFor3D' },
       { dataElement: 'playSoundButton' },
+      { dataElement: 'openAlignmentButton' }
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },
@@ -2065,6 +2066,7 @@ export default {
     customSettings: [],
     modularHeaders: defaultModularHeaders,
     modularComponents: defaultModularComponents,
+    modularComponentFunctions: {},
     activeGroupedItems: [],
     activeCustomRibbon: '',
     fixedGroupedItems: [],

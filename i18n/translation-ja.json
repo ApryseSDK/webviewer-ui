@@ -286,6 +286,7 @@
     "signHere": "ここに署名してください",
     "insertTextHere": "ここにテキストを挿入してください",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが許可されています",
+    "signatureRequired": "続行するには署名とイニシャルが必要です",
     "enterMeasurement": "2点間の測定値を入力します",
     "errorEnterMeasurement": "入力した数値は無効です。7.5や7 1/2などの値を入力できます",
     "linkURLorPage": "ページまたはURLのリンクを挿入",
@@ -313,7 +314,8 @@
     "viewBookmark": "ページにブックマークを表示",
     "error": "エラー",
     "errorPageNumber": "ページ番号が無効です。限界は",
-    "errorLoadingDocument": "このドキュメントの読み取り中に問題が発生したため、一部のページが表示されない可能性があります。これは、ドキュメントが破損している可能性があることを示しています。総ページ数は {{totalPageCount}} で、表示されているページ数は {{displayedPageCount}} です。"
+    "errorLoadingDocument": "このドキュメントの読み取り中に問題が発生したため、一部のページが表示されない可能性があります。これは、ドキュメントが破損している可能性があることを示しています。総ページ数は {{totalPageCount}} で、表示されているページ数は {{displayedPageCount}} です。",
+    "noRevisions": "この文書には改訂版はありません。"
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "ページを反時計回りに回転",
       "moreOptions": "より多くのオプション",
       "moreOptionsMenu": "その他のサムネイル オプション メニュー",
-      "enterPageNumbers": "選択するページ番号を入力してください"
+      "enterPageNumbers": "選択するページ番号を入力してください",
+      "multiSelectPages": "複数選択ページ",
+      "multiSelectPagesExample": "例えば1、3、5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "ページを移動する"
@@ -961,6 +965,18 @@
       "combobox": "コンボボックス"
     }
   },
+  "alignmentPopup": {
+    "alignment": "整列",
+    "alignLeft": "左揃え",
+    "alignHorizontalCenter": "水平中央揃え",
+    "alignVerticalCenter": "垂直中央揃え",
+    "alignRight": "右揃え",
+    "alignTop": "上揃え",
+    "alignBottom": "下揃え",
+    "distribute": "配布する",
+    "distributeHorizontal": "水平に分配する",
+    "distributeVertical": "垂直に分配する"
+  },
   "digitalSignatureModal": {
     "certification": "認証",
     "Certification": "認証",
@@ -1194,11 +1210,13 @@
     "added": "追加した： ",
     "editing": "編集",
     "editingDescription": "ドキュメントを編集",
+    "pageBreak": "ページ区切り",
     "reviewing": "レビュー中",
     "reviewingDescription": "提案をします",
     "viewOnly": "表示のみ",
     "viewOnlyDescription": "提案なしで表示",
-    "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。"
+    "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。",
+    "previewAllChanges": "すべての変更をプレビュー"
   },
   "insertPageModal": {
     "title": "新しいページを追加",

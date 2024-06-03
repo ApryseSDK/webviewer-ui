@@ -222,7 +222,7 @@
     "notesPanel": "टिप्पणियाँ",
     "outlinePanel": "खाका",
     "outlinesPanel": "रूपरेखा",
-    "newOutlineTitle": "नई रूपरेखा शीर्षक",
+    "newOutlineTitle": "नया आउटलाइन शीर्षक",
     "outlineTitle": "रूपरेखा शीर्षक",
     "destination": "मंज़िल",
     "bookmarkPanel": "बुकमार्क",
@@ -286,6 +286,7 @@
     "signHere": "यहाँ पर हस्ताक्षर करे",
     "insertTextHere": "यहां टेक्स्ट डालें",
     "imageSignatureAcceptedFileTypes": "केवल {{acceptedFileTypes}} स्वीकार किए जाते हैं",
+    "signatureRequired": "आगे बढ़ने के लिए हस्ताक्षर और आद्याक्षर की आवश्यकता है",
     "enterMeasurement": "दो बिंदुओं के बीच माप दर्ज करें",
     "errorEnterMeasurement": "आपके द्वारा दर्ज किया गया नंबर अमान्य है, आप 7.5 या 7 1/2 . जैसे मान दर्ज कर सकते हैं",
     "linkURLorPage": "लिंक यूआरएल या पेज",
@@ -313,7 +314,8 @@
     "viewBookmark": "पेज पर बुकमार्क देखें",
     "error": "त्रुटि",
     "errorPageNumber": "अमान्य पृष्ठ संख्या। सीमा है",
-    "errorLoadingDocument": "इस दस्तावेज़ को पढ़ने में एक समस्या थी और हो सकता है कि कुछ पृष्ठ प्रदर्शित न हों। यह इंगित करता है कि दस्तावेज़ दूषित हो सकता है। कुल पृष्ठ संख्या {{totalPageCount}} है और प्रदर्शित किए जा रहे पृष्ठों की संख्या {{displayedPageCount}} है।"
+    "errorLoadingDocument": "इस दस्तावेज़ को पढ़ने में एक समस्या थी और हो सकता है कि कुछ पृष्ठ प्रदर्शित न हों। यह इंगित करता है कि दस्तावेज़ दूषित हो सकता है। कुल पृष्ठ संख्या {{totalPageCount}} है और प्रदर्शित किए जा रहे पृष्ठों की संख्या {{displayedPageCount}} है।",
+    "noRevisions": "इस दस्तावेज़ में कोई संशोधन नहीं है।"
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "पृष्ठ को वामावर्त घुमाएँ",
       "moreOptions": "अधिक विकल्प",
       "moreOptionsMenu": "अधिक थंबनेल विकल्प मेनू",
-      "enterPageNumbers": "चयन करने के लिए पृष्ठ क्रमांक दर्ज करें"
+      "enterPageNumbers": "चयन करने के लिए पृष्ठ क्रमांक दर्ज करें",
+      "multiSelectPages": "बहु-चयन पृष्ठ",
+      "multiSelectPagesExample": "जैसे 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "पन्ने ले जाएँ"
@@ -961,6 +965,18 @@
       "combobox": "सम्मिश्रण पटी"
     }
   },
+  "alignmentPopup": {
+    "alignment": "संरेखित",
+    "alignLeft": "बाये को करी",
+    "alignHorizontalCenter": "क्षैतिज केंद्र संरेखित करें",
+    "alignVerticalCenter": "लंबवत केंद्र संरेखित करें",
+    "alignRight": "सही संरेखित",
+    "alignTop": "शीर्ष संरेखित करें",
+    "alignBottom": "नीचे संरेखित करें",
+    "distribute": "बांटो",
+    "distributeHorizontal": "क्षैतिज रूप से वितरित करें",
+    "distributeVertical": "लंबवत वितरित करें"
+  },
   "digitalSignatureModal": {
     "certification": "प्रमाणीकरण",
     "Certification": "प्रमाणीकरण",
@@ -1194,11 +1210,13 @@
     "added": "जोड़ा गया:",
     "editing": "संपादन",
     "editingDescription": "दस्तावेज़ संपादित करें",
+    "pageBreak": "पृष्ठ ब्रेक",
     "reviewing": "की समीक्षा",
     "reviewingDescription": "सुझाव दो",
     "viewOnly": "केवल देखें",
     "viewOnlyDescription": "सुझाव के बिना देखें",
-    "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।"
+    "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।",
+    "previewAllChanges": "सभी परिवर्तनों का पूर्वावलोकन करें"
   },
   "insertPageModal": {
     "title": "नया पेज जोड़ें",

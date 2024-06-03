@@ -286,6 +286,7 @@
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
     "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
+	"signatureRequired": "A signature and initial is required to continue",
     "enterMeasurement": "Enter measurement between the two points",
     "errorEnterMeasurement": "The number you have entered is invalid, you can enter values like 7.5 or 7 1/2",
     "linkURLorPage": "Link URL or a Page",
@@ -621,7 +622,9 @@
       "rotatePageCounterClockwise": "Rotate Page Counterclockwise",
       "moreOptions": "More Options",
       "moreOptionsMenu": "More Thumbnails Options Menu",
-      "enterPageNumbers": "Enter page numbers to select"
+      "enterPageNumbers": "Enter page numbers to select",
+      "multiSelectPages": "Multi-Select Pages",
+      "multiSelectPagesExample": "e.g. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Move pages"
@@ -962,6 +965,18 @@
       "combobox": "Combo box"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Align",
+    "alignLeft": "Align Left",
+    "alignHorizontalCenter": "Align Horizontal Center",
+    "alignVerticalCenter": "Align Vertical Center",
+    "alignRight": "Align Right",
+    "alignTop": "Align Top",
+    "alignBottom": "Align Bottom",
+    "distribute": "Distribute",
+    "distributeHorizontal": "Distribute Horizontally",
+    "distributeVertical": "Distribute Vertically"
+  },
   "digitalSignatureModal": {
     "certification": "certification",
     "Certification": "Certification",
@@ -1195,11 +1210,13 @@
     "added": "Added: ",
     "editing": "Editing",
     "editingDescription": "Edit document",
+    "pageBreak": "Page Break",
     "reviewing": "Reviewing",
     "reviewingDescription": "Make suggestions",
     "viewOnly": "View Only",
     "viewOnlyDescription": "View without suggestions",
-    "notSupportedOnMobile": "Office editing is not supported on mobile devices."
+    "notSupportedOnMobile": "Office editing is not supported on mobile devices.",
+    "previewAllChanges": "Preview all changes"
   },
   "insertPageModal": {
     "title": "Add New Page",

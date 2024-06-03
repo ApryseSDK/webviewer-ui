@@ -286,6 +286,7 @@
     "signHere": "Zde se podepište",
     "insertTextHere": "Zde vložte text",
     "imageSignatureAcceptedFileTypes": "Přijímány jsou pouze {{acceptedFileTypes}}",
+    "signatureRequired": "Pro pokračování je potřeba podpis a paraf",
     "enterMeasurement": "Zadejte měření mezi dvěma body",
     "errorEnterMeasurement": "Zadané číslo je neplatné, můžete zadat hodnoty jako 7,5 nebo 7 1/2",
     "linkURLorPage": "Adresa URL odkazu nebo stránka",
@@ -313,7 +314,8 @@
     "viewBookmark": "Zobrazit záložku na stránce",
     "error": "Chyba",
     "errorPageNumber": "Neplatné číslo stránky. Limit je",
-    "errorLoadingDocument": "Při čtení tohoto dokumentu došlo k problému a některé stránky se nemusí zobrazit. To znamená, že dokument může být poškozen. Celkový počet stránek je {{totalPageCount}} a počet zobrazených stránek je {{displayedPageCount}}."
+    "errorLoadingDocument": "Při čtení tohoto dokumentu došlo k problému a některé stránky se nemusí zobrazit. To znamená, že dokument může být poškozen. Celkový počet stránek je {{totalPageCount}} a počet zobrazených stránek je {{displayedPageCount}}.",
+    "noRevisions": "Tento dokument nemá žádné revize."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Otočit stránku proti směru hodinových ručiček",
       "moreOptions": "Více možností",
       "moreOptionsMenu": "Nabídka možností více miniatur",
-      "enterPageNumbers": "Zadejte čísla stránek, které chcete vybrat"
+      "enterPageNumbers": "Zadejte čísla stránek, které chcete vybrat",
+      "multiSelectPages": "Stránky s vícenásobným výběrem",
+      "multiSelectPagesExample": "např. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Přesunout stránky"
@@ -961,6 +965,18 @@
       "combobox": "Kombinovaný box"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Zarovnat",
+    "alignLeft": "Zarovnat doleva",
+    "alignHorizontalCenter": "Zarovnat vodorovně na střed",
+    "alignVerticalCenter": "Zarovnat svisle na střed",
+    "alignRight": "Zarovnat doprava",
+    "alignTop": "Zarovnat nahoru",
+    "alignBottom": "Zarovnat spodní",
+    "distribute": "Distribuovat",
+    "distributeHorizontal": "Rozmístit vodorovně",
+    "distributeVertical": "Distribuujte svisle"
+  },
   "digitalSignatureModal": {
     "certification": "osvědčení",
     "Certification": "Osvědčení",
@@ -1194,11 +1210,13 @@
     "added": "Přidal:",
     "editing": "Editace",
     "editingDescription": "Upravit dokument",
+    "pageBreak": "Konec stránky",
     "reviewing": "Recenze",
     "reviewingDescription": "Dělat návrhy",
     "viewOnly": "Pouze zobrazení",
     "viewOnlyDescription": "Zobrazit bez návrhů",
-    "notSupportedOnMobile": "Úpravy Office nejsou podporovány na mobilních zařízeních."
+    "notSupportedOnMobile": "Úpravy Office nejsou podporovány na mobilních zařízeních.",
+    "previewAllChanges": "Náhled všech změn"
   },
   "insertPageModal": {
     "title": "Přidat novou stránku",

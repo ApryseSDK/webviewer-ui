@@ -286,6 +286,7 @@
     "signHere": "Itt írd alá",
     "insertTextHere": "Szöveg beszúrása ide",
     "imageSignatureAcceptedFileTypes": "Csak az {{acceptedFileTypes}} fogadható el",
+    "signatureRequired": "A folytatáshoz aláírás és kezdőbetű szükséges",
     "enterMeasurement": "Adja meg a két pont közötti mérést",
     "errorEnterMeasurement": "A megadott szám érvénytelen, olyan értékeket adhat meg, mint 7,5 vagy 7 1/2",
     "linkURLorPage": "Link URL vagy oldal",
@@ -313,7 +314,8 @@
     "viewBookmark": "Könyvjelző megtekintése az oldalon",
     "error": "Hiba",
     "errorPageNumber": "Érvénytelen oldalszám. A határ az",
-    "errorLoadingDocument": "Hiba történt a dokumentum olvasása közben, és előfordulhat, hogy egyes oldalak nem jelennek meg. Ez azt jelzi, hogy a dokumentum sérült. A teljes oldalszám {{totalPageCount}}, a megjelenített oldalak száma pedig {{displayedPageCount}}."
+    "errorLoadingDocument": "Hiba történt a dokumentum olvasása közben, és előfordulhat, hogy egyes oldalak nem jelennek meg. Ez azt jelzi, hogy a dokumentum sérült. A teljes oldalszám {{totalPageCount}}, a megjelenített oldalak száma pedig {{displayedPageCount}}.",
+    "noRevisions": "Ennek a dokumentumnak nincs revíziója."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Oldal elforgatása az óramutató járásával ellentétes irányba",
       "moreOptions": "Több lehetőség",
       "moreOptionsMenu": "További miniatűrök opciók menü",
-      "enterPageNumbers": "Írja be az oldalszámokat a kiválasztáshoz"
+      "enterPageNumbers": "Írja be az oldalszámokat a kiválasztáshoz",
+      "multiSelectPages": "Oldalak többszörös kijelölése",
+      "multiSelectPagesExample": "például. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Oldalak mozgatása"
@@ -961,6 +965,18 @@
       "combobox": "Kombinált doboz"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Igazítsa",
+    "alignLeft": "Balra igazít",
+    "alignHorizontalCenter": "Állítsa be a vízszintes középpontot",
+    "alignVerticalCenter": "Függőleges középre igazítás",
+    "alignRight": "Igazítás jobbra",
+    "alignTop": "Felső igazítása",
+    "alignBottom": "Alulra igazítás",
+    "distribute": "Terjeszteni",
+    "distributeHorizontal": "Vízszintes elosztás",
+    "distributeVertical": "Függőleges elosztás"
+  },
   "digitalSignatureModal": {
     "certification": "tanúsítvány",
     "Certification": "Tanúsítvány",
@@ -1194,11 +1210,13 @@
     "added": "Hozzáadva:",
     "editing": "Szerkesztés",
     "editingDescription": "Dokumentum szerkesztése",
+    "pageBreak": "Oldaltörés",
     "reviewing": "Áttekintés",
     "reviewingDescription": "Tegyél javaslatokat",
     "viewOnly": "Csak megtekintésre",
     "viewOnlyDescription": "Megtekintés javaslatok nélkül",
-    "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön."
+    "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön.",
+    "previewAllChanges": "Tekintse meg az összes módosítás előnézetét"
   },
   "insertPageModal": {
     "title": "Új oldal hozzáadása",

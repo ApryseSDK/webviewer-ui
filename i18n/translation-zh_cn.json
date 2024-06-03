@@ -286,6 +286,7 @@
     "signHere": "在此处签名",
     "insertTextHere": "在这里插入文字",
     "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",
+    "signatureRequired": "需要签名和首字母才能继续",
     "enterMeasurement": "在两点之间输入测量值",
     "errorEnterMeasurement": "您输入的数字无效，您可以输入7.5或7 1/2之类的值",
     "linkURLorPage": "链接网址或页面",
@@ -313,7 +314,8 @@
     "viewBookmark": "在页面上查看书签",
     "error": "错误",
     "errorPageNumber": "页码无效。限制是",
-    "errorLoadingDocument": "阅读本文档时出现问题，某些页面可能无法显示。这表明文档可能已损坏。总页数为 {{totalPageCount}}，显示的页数为 {{displayedPageCount}}。"
+    "errorLoadingDocument": "阅读本文档时出现问题，某些页面可能无法显示。这表明文档可能已损坏。总页数为 {{totalPageCount}}，显示的页数为 {{displayedPageCount}}。",
+    "noRevisions": "本文档没有修订。"
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "逆时针旋转页面",
       "moreOptions": "更多选择",
       "moreOptionsMenu": "更多缩略图选项菜单",
-      "enterPageNumbers": "输入要选择的页码"
+      "enterPageNumbers": "输入要选择的页码",
+      "multiSelectPages": "多选页面",
+      "multiSelectPagesExample": "例如1、3、5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "移动页面"
@@ -961,6 +965,18 @@
       "combobox": "组合框"
     }
   },
+  "alignmentPopup": {
+    "alignment": "对齐",
+    "alignLeft": "左对齐",
+    "alignHorizontalCenter": "水平居中对齐",
+    "alignVerticalCenter": "垂直居中对齐",
+    "alignRight": "右对齐",
+    "alignTop": "顶部对齐",
+    "alignBottom": "底部对齐",
+    "distribute": "分发",
+    "distributeHorizontal": "水平分布",
+    "distributeVertical": "垂直分布"
+  },
   "digitalSignatureModal": {
     "certification": "认证证书",
     "Certification": "资质认证",
@@ -1194,11 +1210,13 @@
     "added": "添加： ",
     "editing": "編輯",
     "editingDescription": "編輯文檔",
+    "pageBreak": "分页符",
     "reviewing": "审阅",
     "reviewingDescription": "提供建议",
     "viewOnly": "只读",
     "viewOnlyDescription": "不带建议查看",
-    "notSupportedOnMobile": "移动设备不支持 Office 编辑。"
+    "notSupportedOnMobile": "移动设备不支持 Office 编辑。",
+    "previewAllChanges": "预览所有更改"
   },
   "insertPageModal": {
     "title": "添加新页面",

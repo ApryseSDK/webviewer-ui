@@ -286,6 +286,7 @@
     "signHere": "여기에 서명하세요",
     "insertTextHere": "여기에 텍스트를 입력하세요",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}} 만 허용됩니다",
+    "signatureRequired": "계속하려면 서명과 이니셜이 필요합니다.",
     "enterMeasurement": "두 지점의 측정 값을 입력하세요.",
     "errorEnterMeasurement": "잘못된 형식의 숫자를 입력하였습니다. 7.5 또는 7 1/2과 같은 값을 입력하세요.",
     "linkURLorPage": "링크URL 또는 페이지",
@@ -313,7 +314,8 @@
     "viewBookmark": "페이지에서 책갈피 보기",
     "error": "오류",
     "errorPageNumber": "잘못된 페이지 번호입니다. 한도",
-    "errorLoadingDocument": "이 문서를 읽는 동안 문제가 발생했으며 일부 페이지가 표시되지 않을 수 있습니다. 이는 문서가 손상되었을 수 있음을 나타냅니다. 총 페이지 수는 {{totalPageCount}}이고 표시되는 페이지 수는 {{displayedPageCount}}입니다."
+    "errorLoadingDocument": "이 문서를 읽는 동안 문제가 발생했으며 일부 페이지가 표시되지 않을 수 있습니다. 이는 문서가 손상되었을 수 있음을 나타냅니다. 총 페이지 수는 {{totalPageCount}}이고 표시되는 페이지 수는 {{displayedPageCount}}입니다.",
+    "noRevisions": "이 문서에는 수정본이 없습니다."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "페이지를 시계 반대 방향으로 회전",
       "moreOptions": "추가 옵션",
       "moreOptionsMenu": "추가 썸네일 옵션 메뉴",
-      "enterPageNumbers": "선택할 페이지 번호를 입력하세요."
+      "enterPageNumbers": "선택할 페이지 번호를 입력하세요.",
+      "multiSelectPages": "다중 선택 페이지",
+      "multiSelectPagesExample": "예를 들어 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "페이지 이동"
@@ -961,6 +965,18 @@
       "combobox": "콤보박스"
     }
   },
+  "alignmentPopup": {
+    "alignment": "맞추다",
+    "alignLeft": "왼쪽 정렬",
+    "alignHorizontalCenter": "수평 중심 정렬",
+    "alignVerticalCenter": "수직 중심 정렬",
+    "alignRight": "오른쪽 정렬",
+    "alignTop": "위쪽 정렬",
+    "alignBottom": "하단 정렬",
+    "distribute": "분배하다",
+    "distributeHorizontal": "수평으로 배포",
+    "distributeVertical": "수직으로 배포"
+  },
   "digitalSignatureModal": {
     "certification": "인증",
     "Certification": "인증",
@@ -1194,11 +1210,13 @@
     "added": "추가됨:",
     "editing": "편집",
     "editingDescription": "문서 편집",
+    "pageBreak": "페이지 나누기",
     "reviewing": "검토 중",
     "reviewingDescription": "의견을 내세요",
     "viewOnly": "보기 전용",
     "viewOnlyDescription": "제안 없이 보기",
-    "notSupportedOnMobile": "Office 편집은 모바일 장치에서 지원되지 않습니다."
+    "notSupportedOnMobile": "Office 편집은 모바일 장치에서 지원되지 않습니다.",
+    "previewAllChanges": "모든 변경사항 미리보기"
   },
   "insertPageModal": {
     "title": "새 페이지 추가",

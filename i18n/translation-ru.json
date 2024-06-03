@@ -222,7 +222,7 @@
     "notesPanel": "Заметки",
     "outlinePanel": "Контур",
     "outlinesPanel": "Контуры",
-    "newOutlineTitle": "Новый заголовок схемы",
+    "newOutlineTitle": "Новое название структуры",
     "outlineTitle": "Схема заголовка",
     "destination": "Назначения",
     "bookmarkPanel": "Закладка",
@@ -286,6 +286,7 @@
     "signHere": "Распишетесь здесь",
     "insertTextHere": "Вставьте текст здесь",
     "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются",
+    "signatureRequired": "Для продолжения необходимы подпись и инициалы.",
     "enterMeasurement": "Введите измерение между двумя точками",
     "errorEnterMeasurement": "Введенное вами число недействительно, вы можете ввести такие значения, как 7,5 или 7 1/2.",
     "linkURLorPage": "Ссылка URL или страница",
@@ -313,7 +314,8 @@
     "viewBookmark": "Посмотреть закладку на странице",
     "error": "Ошибка",
     "errorPageNumber": "Неверный номер страницы. Лимит",
-    "errorLoadingDocument": "При чтении этого документа возникла проблема, и некоторые страницы могут не отображаться. Это указывает на то, что документ может быть поврежден. Общее количество страниц – {{totalPageCount}}, а количество отображаемых страниц – {{displayedPageCount}}."
+    "errorLoadingDocument": "При чтении этого документа возникла проблема, и некоторые страницы могут не отображаться. Это указывает на то, что документ может быть поврежден. Общее количество страниц – {{totalPageCount}}, а количество отображаемых страниц – {{displayedPageCount}}.",
+    "noRevisions": "Этот документ не имеет изменений."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Повернуть страницу против часовой стрелки",
       "moreOptions": "Больше опций",
       "moreOptionsMenu": "Меню дополнительных параметров миниатюр",
-      "enterPageNumbers": "Введите номера страниц, чтобы выбрать"
+      "enterPageNumbers": "Введите номера страниц, чтобы выбрать",
+      "multiSelectPages": "Страницы с множественным выбором",
+      "multiSelectPagesExample": "например 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Переместить страницы"
@@ -961,6 +965,18 @@
       "combobox": "Поле со списком"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Выровнять",
+    "alignLeft": "Выровнять по левому краю",
+    "alignHorizontalCenter": "Выровнять по горизонтальному центру",
+    "alignVerticalCenter": "Выровнять по вертикальному центру",
+    "alignRight": "Выровнять по правому краю",
+    "alignTop": "Выровнять по верху",
+    "alignBottom": "Выровнять по нижнему краю",
+    "distribute": "Распространение",
+    "distributeHorizontal": "Распределить горизонтально",
+    "distributeVertical": "Распределить вертикально"
+  },
   "digitalSignatureModal": {
     "certification": "сертификация",
     "Certification": "Сертификация",
@@ -1194,11 +1210,13 @@
     "added": "Добавлен:",
     "editing": "Редактирование",
     "editingDescription": "Редактировать документ",
+    "pageBreak": "Разрыв страницы",
     "reviewing": "Обзор",
     "reviewingDescription": "Вносить предложения",
     "viewOnly": "Только просмотр",
     "viewOnlyDescription": "Посмотреть без предложений",
-    "notSupportedOnMobile": "Редактирование Office не поддерживается на мобильных устройствах."
+    "notSupportedOnMobile": "Редактирование Office не поддерживается на мобильных устройствах.",
+    "previewAllChanges": "Предварительный просмотр всех изменений"
   },
   "insertPageModal": {
     "title": "Добавить новую страницу",

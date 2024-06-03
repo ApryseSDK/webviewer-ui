@@ -286,6 +286,7 @@
     "signHere": "এখানে স্বাক্ষর কর",
     "insertTextHere": "এখানে পাঠ্য সন্নিবেশ করুন",
     "imageSignatureAcceptedFileTypes": "শুধুমাত্র {{acceptedFileTypes}} গৃহীত হয়",
+    "signatureRequired": "চালিয়ে যাওয়ার জন্য একটি স্বাক্ষর এবং আদ্যক্ষর প্রয়োজন",
     "enterMeasurement": "দুটি বিন্দুর মধ্যে পরিমাপ লিখুন",
     "errorEnterMeasurement": "আপনি যে নম্বরটি লিখেছেন সেটি অবৈধ, আপনি 7.5 বা 7 1/2 এর মতো মান লিখতে পারেন",
     "linkURLorPage": "লিঙ্ক URL বা একটি পৃষ্ঠা",
@@ -313,7 +314,8 @@
     "viewBookmark": "পৃষ্ঠায় বুকমার্ক দেখুন",
     "error": "ত্রুটি",
     "errorPageNumber": "অবৈধ পৃষ্ঠা নম্বর। সীমা হল",
-    "errorLoadingDocument": "এই নথিটি পড়তে একটি সমস্যা হয়েছে এবং কিছু পৃষ্ঠাগুলি প্রদর্শিত নাও হতে পারে৷ এটি নির্দেশ করে যে নথিটি নষ্ট হতে পারে। মোট পৃষ্ঠা সংখ্যা হল {{totalPageCount}} এবং প্রদর্শিত পৃষ্ঠাগুলির সংখ্যা হল {{displayedPageCount}}৷"
+    "errorLoadingDocument": "এই নথিটি পড়তে একটি সমস্যা হয়েছে এবং কিছু পৃষ্ঠাগুলি প্রদর্শিত নাও হতে পারে৷ এটি নির্দেশ করে যে নথিটি নষ্ট হতে পারে। মোট পৃষ্ঠা সংখ্যা হল {{totalPageCount}} এবং প্রদর্শিত পৃষ্ঠাগুলির সংখ্যা হল {{displayedPageCount}}৷",
+    "noRevisions": "এই নথির কোন সংশোধন নেই."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "পৃষ্ঠা ঘড়ির কাঁটার বিপরীত দিকে ঘোরান",
       "moreOptions": "আরও বিকল্প",
       "moreOptionsMenu": "আরও থাম্বনেল বিকল্প মেনু",
-      "enterPageNumbers": "নির্বাচন করতে পৃষ্ঠা নম্বর লিখুন"
+      "enterPageNumbers": "নির্বাচন করতে পৃষ্ঠা নম্বর লিখুন",
+      "multiSelectPages": "মাল্টি-সিলেক্ট পেজ",
+      "multiSelectPagesExample": "যেমন 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "পৃষ্ঠাগুলি সরান"
@@ -961,6 +965,18 @@
       "combobox": "কম্বো বাক্স"
     }
   },
+  "alignmentPopup": {
+    "alignment": "সারিবদ্ধ",
+    "alignLeft": "বাম সারিবদ্ধ করুন",
+    "alignHorizontalCenter": "অনুভূমিক কেন্দ্র সারিবদ্ধ করুন",
+    "alignVerticalCenter": "উল্লম্ব কেন্দ্র সারিবদ্ধ করুন",
+    "alignRight": "ডানে যাও",
+    "alignTop": "সারিবদ্ধ শীর্ষ",
+    "alignBottom": "নীচে সারিবদ্ধ করুন",
+    "distribute": "বিতরণ করুন",
+    "distributeHorizontal": "অনুভূমিকভাবে বিতরণ করুন",
+    "distributeVertical": "উল্লম্বভাবে বিতরণ করুন"
+  },
   "digitalSignatureModal": {
     "certification": "সার্টিফিকেশন",
     "Certification": "সার্টিফিকেশন",
@@ -1194,11 +1210,13 @@
     "added": "যোগ করা হয়েছে:",
     "editing": "সম্পাদনা",
     "editingDescription": "নথি সম্পাদনা করুন",
+    "pageBreak": "পৃষ্ঠা বিরতি",
     "reviewing": "পর্যালোচনা করা হচ্ছে",
     "reviewingDescription": "পরামর্শ করতে",
     "viewOnly": "শুধু দেখো",
     "viewOnlyDescription": "পরামর্শ ছাড়াই দেখুন",
-    "notSupportedOnMobile": "অফিস সম্পাদনা মোবাইল ডিভাইসে সমর্থিত নয়।"
+    "notSupportedOnMobile": "অফিস সম্পাদনা মোবাইল ডিভাইসে সমর্থিত নয়।",
+    "previewAllChanges": "সমস্ত পরিবর্তনের পূর্বরূপ দেখুন"
   },
   "insertPageModal": {
     "title": "নতুন পৃষ্ঠা যোগ করুন",

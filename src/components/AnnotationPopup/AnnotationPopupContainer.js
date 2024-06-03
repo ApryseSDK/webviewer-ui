@@ -167,7 +167,7 @@ const AnnotationPopupContainer = ({
     if (AnnotationPopupContainer) {
       setPopupPosition();
     }
-  }, sixtyFramesPerSecondIncrement);
+  }, sixtyFramesPerSecondIncrement, { 'trailing': true, 'leading': false });
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -180,7 +180,7 @@ const AnnotationPopupContainer = ({
   // useLayoutEffect here to avoid flashing issue when popup is close and open on scroll
   useLayoutEffect(() => {
     if (focusedAnnotation || isStylePopupOpen || isDatePickerMount) {
-      setPopupPosition();
+      handleResize();
     }
     // canModify is needed here because the effect from useOnAnnotationPopupOpen hook will run again and determine which button to show, which in turn change the popup size and will need to recalculate position
   }, [focusedAnnotation, isStylePopupOpen, isDatePickerMount, canModify, activeDocumentViewerKey]);
@@ -274,6 +274,11 @@ const AnnotationPopupContainer = ({
       }
       closePopup();
     }
+  };
+
+  const onOpenAlignmentModal = () => {
+    dispatch(actions.openElement(DataElements.ANNOTATION_ALIGNMENT_POPUP));
+    closePopup();
   };
 
   const handleDateChange = (text) => {
@@ -491,6 +496,7 @@ const AnnotationPopupContainer = ({
       popupRef={popupRef}
       position={position}
       focusedAnnotation={focusedAnnotation}
+      multipleAnnotationsSelected={multipleAnnotationsSelected}
 
       showViewFileButton={showViewFileButton}
       onViewFile={onViewFile}
@@ -549,6 +555,8 @@ const AnnotationPopupContainer = ({
       openStylePanel={openStylePanel}
       isStylePanelOpen={isStylePanelOpen}
       isInReadOnlyMode={isInReadOnlyMode}
+
+      onOpenAlignmentModal={onOpenAlignmentModal}
     />
   );
 };

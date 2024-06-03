@@ -286,6 +286,7 @@
     "signHere": "Tanda tangan di sini",
     "insertTextHere": "Sisipkan teks di sini",
     "imageSignatureAcceptedFileTypes": "Hanya {{acceptedFileTypes}} yang diterima",
+    "signatureRequired": "Tanda tangan dan inisial diperlukan untuk melanjutkan",
     "enterMeasurement": "Masukkan pengukuran antara dua titik",
     "errorEnterMeasurement": "Nomor yang Anda masukkan tidak valid, Anda dapat memasukkan nilai seperti 7,5 atau 7 1/2",
     "linkURLorPage": "Tautan URL atau Halaman",
@@ -313,7 +314,8 @@
     "viewBookmark": "Lihat Bookmark di Halaman",
     "error": "Kesalahan",
     "errorPageNumber": "Nomor halaman tidak valid. Batasnya adalah",
-    "errorLoadingDocument": "Ada masalah saat membaca dokumen ini dan beberapa halaman mungkin tidak ditampilkan. Ini menunjukkan dokumen mungkin rusak. Jumlah halaman total adalah {{totalPageCount}} dan jumlah halaman yang ditampilkan adalah {{displayedPageCount}}."
+    "errorLoadingDocument": "Ada masalah saat membaca dokumen ini dan beberapa halaman mungkin tidak ditampilkan. Ini menunjukkan dokumen mungkin rusak. Jumlah halaman total adalah {{totalPageCount}} dan jumlah halaman yang ditampilkan adalah {{displayedPageCount}}.",
+    "noRevisions": "Dokumen ini tidak memiliki revisi."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Putar Halaman Berlawanan Arah Jarum Jam",
       "moreOptions": "Lebih banyak pilihan",
       "moreOptionsMenu": "Menu Pilihan Gambar Kecil Lainnya",
-      "enterPageNumbers": "Masukkan nomor halaman untuk dipilih"
+      "enterPageNumbers": "Masukkan nomor halaman untuk dipilih",
+      "multiSelectPages": "Halaman Multi-Pilihan",
+      "multiSelectPagesExample": "misalnya 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Pindahkan halaman"
@@ -961,6 +965,18 @@
       "combobox": "Kotak kombo"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Meluruskan",
+    "alignLeft": "Rata kiri",
+    "alignHorizontalCenter": "Sejajarkan Pusat Horizontal",
+    "alignVerticalCenter": "Sejajarkan Pusat Vertikal",
+    "alignRight": "Rata kanan",
+    "alignTop": "Sejajarkan Atas",
+    "alignBottom": "Sejajarkan Bawah",
+    "distribute": "Mendistribusikan",
+    "distributeHorizontal": "Distribusikan Secara Horizontal",
+    "distributeVertical": "Distribusikan Secara Vertikal"
+  },
   "digitalSignatureModal": {
     "certification": "sertifikasi",
     "Certification": "Sertifikasi",
@@ -1194,11 +1210,13 @@
     "added": "Ditambahkan:",
     "editing": "Mengedit",
     "editingDescription": "Sunting dokumen",
+    "pageBreak": "Istirahat Halaman",
     "reviewing": "Meninjau",
     "reviewingDescription": "Membuat saran",
     "viewOnly": "Lihat Saja",
     "viewOnlyDescription": "Lihat tanpa saran",
-    "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler."
+    "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler.",
+    "previewAllChanges": "Pratinjau semua perubahan"
   },
   "insertPageModal": {
     "title": "Tambahkan Halaman Baru",

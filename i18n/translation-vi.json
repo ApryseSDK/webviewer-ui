@@ -286,6 +286,7 @@
     "signHere": "Ký tại đây",
     "insertTextHere": "Chèn văn bản tại đây",
     "imageSignatureAcceptedFileTypes": "Chỉ chấp nhận {{acceptedFileTypes}}",
+    "signatureRequired": "Cần có chữ ký và tên viết tắt để tiếp tục",
     "enterMeasurement": "Nhập phép đo giữa hai điểm",
     "errorEnterMeasurement": "Số bạn đã nhập không hợp lệ, bạn có thể nhập các giá trị như 7,5 hoặc 7 1/2",
     "linkURLorPage": "Liên kết URL hoặc một Trang",
@@ -313,7 +314,8 @@
     "viewBookmark": "Xem dấu trang trên trang",
     "error": "Lỗi",
     "errorPageNumber": "Số trang không hợp lệ. Giới hạn là",
-    "errorLoadingDocument": "Đã xảy ra sự cố khi đọc tài liệu này và một số trang có thể không được hiển thị. Điều này cho thấy tài liệu có thể bị hỏng. Tổng số trang là {{totalPageCount}} và số trang đang được hiển thị là {{displayPageCount}}."
+    "errorLoadingDocument": "Đã xảy ra sự cố khi đọc tài liệu này và một số trang có thể không được hiển thị. Điều này cho thấy tài liệu có thể bị hỏng. Tổng số trang là {{totalPageCount}} và số trang đang được hiển thị là {{displayPageCount}}.",
+    "noRevisions": "Tài liệu này không có sửa đổi."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Xoay trang ngược chiều kim đồng hồ",
       "moreOptions": "Lựa chọn khác",
       "moreOptionsMenu": "Menu tùy chọn hình thu nhỏ khác",
-      "enterPageNumbers": "Nhập số trang để chọn"
+      "enterPageNumbers": "Nhập số trang để chọn",
+      "multiSelectPages": "Trang có nhiều lựa chọn",
+      "multiSelectPagesExample": "ví dụ. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Di chuyển trang"
@@ -961,6 +965,18 @@
       "combobox": "Hộp kết hợp"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Căn chỉnh",
+    "alignLeft": "Căn trái",
+    "alignHorizontalCenter": "Căn giữa theo chiều ngang",
+    "alignVerticalCenter": "Căn chỉnh tâm dọc",
+    "alignRight": "Sắp xếp đúng",
+    "alignTop": "Căn chỉnh trên cùng",
+    "alignBottom": "Căn chỉnh dưới cùng",
+    "distribute": "Phân phát",
+    "distributeHorizontal": "Phân phối theo chiều ngang",
+    "distributeVertical": "Phân phối theo chiều dọc"
+  },
   "digitalSignatureModal": {
     "certification": "chứng nhận",
     "Certification": "Chứng nhận",
@@ -1194,11 +1210,13 @@
     "added": "Thêm:",
     "editing": "Chỉnh sửa",
     "editingDescription": "Chỉnh sửa tài liệu",
+    "pageBreak": "Ngắt trang",
     "reviewing": "Đang xem xét",
     "reviewingDescription": "Góp ý kiến",
     "viewOnly": "Chỉ xem",
     "viewOnlyDescription": "Xem không có đề xuất",
-    "notSupportedOnMobile": "Chỉnh sửa văn phòng không được hỗ trợ trên thiết bị di động."
+    "notSupportedOnMobile": "Chỉnh sửa văn phòng không được hỗ trợ trên thiết bị di động.",
+    "previewAllChanges": "Xem trước tất cả các thay đổi"
   },
   "insertPageModal": {
     "title": "Thêm trang mới",

@@ -222,7 +222,7 @@
     "notesPanel": "ความคิดเห็น",
     "outlinePanel": "เค้าร่าง",
     "outlinesPanel": "โครงร่าง",
-    "newOutlineTitle": "ชื่อเค้าร่างใหม่",
+    "newOutlineTitle": "ชื่อโครงร่างใหม่",
     "outlineTitle": "ชื่อเค้าร่าง",
     "destination": "ปลายทาง",
     "bookmarkPanel": "บุ๊คมาร์ค",
@@ -286,6 +286,7 @@
     "signHere": "ลงชื่อที่นี่",
     "insertTextHere": "ใส่ข้อความที่นี่",
     "imageSignatureAcceptedFileTypes": "ยอมรับเฉพาะ {{acceptedFileTypes}} เท่านั้น",
+    "signatureRequired": "จำเป็นต้องมีลายเซ็นและชื่อย่อเพื่อดำเนินการต่อ",
     "enterMeasurement": "ป้อนการวัดระหว่างจุดสองจุด",
     "errorEnterMeasurement": "ตัวเลขที่คุณป้อนไม่ถูกต้อง คุณสามารถป้อนค่าเช่น 7.5 หรือ 7 1/2",
     "linkURLorPage": "ลิงค์ URL หรือเพจ",
@@ -313,7 +314,8 @@
     "viewBookmark": "ดูบุ๊กมาร์กบนเพจ",
     "error": "ข้อผิดพลาด",
     "errorPageNumber": "หมายเลขหน้าไม่ถูกต้อง ขีดจำกัดคือ",
-    "errorLoadingDocument": "เกิดปัญหาในการอ่านเอกสารนี้และบางหน้าอาจไม่แสดง นี่แสดงว่าเอกสารอาจเสียหาย จำนวนหน้าทั้งหมดคือ {{totalPageCount}} และจำนวนหน้าที่แสดงคือ {{displayedPageCount}}"
+    "errorLoadingDocument": "เกิดปัญหาในการอ่านเอกสารนี้และบางหน้าอาจไม่แสดง นี่แสดงว่าเอกสารอาจเสียหาย จำนวนหน้าทั้งหมดคือ {{totalPageCount}} และจำนวนหน้าที่แสดงคือ {{displayedPageCount}}",
+    "noRevisions": "เอกสารนี้ไม่มีการแก้ไข"
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "หมุนหน้าทวนเข็มนาฬิกา",
       "moreOptions": "ตัวเลือกเพิ่มเติม",
       "moreOptionsMenu": "เมนูตัวเลือกรูปขนาดย่อเพิ่มเติม",
-      "enterPageNumbers": "ใส่หมายเลขหน้าเพื่อเลือก"
+      "enterPageNumbers": "ใส่หมายเลขหน้าเพื่อเลือก",
+      "multiSelectPages": "เลือกหลายหน้า",
+      "multiSelectPagesExample": "เช่น. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "ย้ายหน้า"
@@ -961,6 +965,18 @@
       "combobox": "กล่องคอมโบ"
     }
   },
+  "alignmentPopup": {
+    "alignment": "จัดตำแหน่ง",
+    "alignLeft": "จัดชิดซ้าย",
+    "alignHorizontalCenter": "จัดแนวกึ่งกลางแนวนอน",
+    "alignVerticalCenter": "จัดแนวกึ่งกลางแนวตั้ง",
+    "alignRight": "จัดชิดขวา",
+    "alignTop": "จัดตำแหน่งด้านบน",
+    "alignBottom": "จัดตำแหน่งด้านล่าง",
+    "distribute": "แจกจ่าย",
+    "distributeHorizontal": "กระจายตามแนวนอน",
+    "distributeVertical": "กระจายในแนวตั้ง"
+  },
   "digitalSignatureModal": {
     "certification": "รับรอง",
     "Certification": "ใบรับรอง",
@@ -1194,11 +1210,13 @@
     "added": "เพิ่ม:",
     "editing": "การแก้ไข",
     "editingDescription": "แก้ไขเอกสาร",
+    "pageBreak": "ตัวแบ่งหน้า",
     "reviewing": "กำลังทบทวน",
     "reviewingDescription": "ให้คำแนะนำ",
     "viewOnly": "สำหรับดูเท่านั้น",
     "viewOnlyDescription": "ดูโดยไม่มีข้อเสนอแนะ",
-    "notSupportedOnMobile": "อุปกรณ์พกพาไม่รองรับการแก้ไข Office"
+    "notSupportedOnMobile": "อุปกรณ์พกพาไม่รองรับการแก้ไข Office",
+    "previewAllChanges": "ดูตัวอย่างการเปลี่ยนแปลงทั้งหมด"
   },
   "insertPageModal": {
     "title": "เพิ่มหน้าใหม่",

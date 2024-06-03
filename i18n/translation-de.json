@@ -286,6 +286,7 @@
     "signHere": "Hier unterschreiben",
     "insertTextHere": "Hier Text eingeben",
     "imageSignatureAcceptedFileTypes": "Es werden nur {{allowedFileTypes}} akzeptiert",
+    "signatureRequired": "Zum Fortfahren sind eine Unterschrift und ein Initial erforderlich",
     "enterMeasurement": "Geben Sie das Maß zwischen den beiden Punkten ein",
     "errorEnterMeasurement": "Die eingegebene Nummer ist ungültig. Sie können Werte wie 7,5 oder 7 1/2 eingeben",
     "linkURLorPage": "Link URL oder eine Seite",
@@ -313,7 +314,8 @@
     "viewBookmark": "Lesezeichen auf Seite anzeigen",
     "error": "Fehler",
     "errorPageNumber": "Ungültige Seitenzahl. Grenze ist",
-    "errorLoadingDocument": "Beim Lesen dieses Dokuments ist ein Problem aufgetreten, und einige Seiten werden möglicherweise nicht angezeigt. Dies weist darauf hin, dass das Dokument möglicherweise beschädigt ist. Die Gesamtseitenzahl ist {{totalPageCount}} und die Anzahl der angezeigten Seiten ist {{displayedPageCount}}."
+    "errorLoadingDocument": "Beim Lesen dieses Dokuments ist ein Problem aufgetreten, und einige Seiten werden möglicherweise nicht angezeigt. Dies weist darauf hin, dass das Dokument möglicherweise beschädigt ist. Die Gesamtseitenzahl ist {{totalPageCount}} und die Anzahl der angezeigten Seiten ist {{displayedPageCount}}.",
+    "noRevisions": "Dieses Dokument weist keine Überarbeitungen auf."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Seite gegen den Uhrzeigersinn drehen",
       "moreOptions": "Mehr Optionen",
       "moreOptionsMenu": "Optionsmenü für weitere Miniaturansichten",
-      "enterPageNumbers": "Geben Sie die Seitenzahlen zur Auswahl ein"
+      "enterPageNumbers": "Geben Sie die Seitenzahlen zur Auswahl ein",
+      "multiSelectPages": "Mehrfachauswahl von Seiten",
+      "multiSelectPagesExample": "z.B. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Seiten verschieben"
@@ -961,6 +965,18 @@
       "combobox": "Kombinationsfeld"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Ausrichten",
+    "alignLeft": "Linksbündig",
+    "alignHorizontalCenter": "Horizontal zentriert ausrichten",
+    "alignVerticalCenter": "Vertikal zentriert ausrichten",
+    "alignRight": "Rechts ausrichten",
+    "alignTop": "Oben ausrichten",
+    "alignBottom": "Unten ausrichten",
+    "distribute": "Verteilen",
+    "distributeHorizontal": "Horizontal verteilen",
+    "distributeVertical": "Vertikal verteilen"
+  },
   "digitalSignatureModal": {
     "certification": "Zertifizierung",
     "Certification": "Zertifizierung",
@@ -1194,11 +1210,13 @@
     "added": "Hinzugefügt: ",
     "editing": "Bearbeitung",
     "editingDescription": "Dokument bearbeiten",
+    "pageBreak": "Seitenumbruch",
     "reviewing": "Überprüfung",
     "reviewingDescription": "Vorschläge machen",
     "viewOnly": "Nur anschauen",
     "viewOnlyDescription": "Ohne Vorschläge anzeigen",
-    "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt."
+    "notSupportedOnMobile": "Die Office-Bearbeitung wird auf Mobilgeräten nicht unterstützt.",
+    "previewAllChanges": "Vorschau aller Änderungen"
   },
   "insertPageModal": {
     "title": "Neue Seite hinzufügen",

@@ -41,6 +41,7 @@ import LazyLoadWrapper, { LazyLoadComponents } from 'components/LazyLoadWrapper'
 import useOnTextSelected from 'hooks/useOnTextSelected';
 import useOnContextMenuOpen from 'hooks/useOnContextMenuOpen';
 import useOnAnnotationPopupOpen from 'hooks/useOnAnnotationPopupOpen';
+import useOnAlignmentPopupOpen from 'hooks/useOnAlignmentPopupOpen';
 import useOnFormFieldAnnotationAddedOrSelected from 'hooks/useOnFormFieldAnnotationAddedOrSelected';
 import useOnFreeTextEdit from 'hooks/useOnFreeTextEdit';
 import useOnMeasurementToolOrAnnotationSelected from 'hooks/useOnMeasurementToolOrAnnotationSelected';
@@ -309,7 +310,7 @@ const App = ({ removeEventHandlers }) => {
   const renderPanel = (panelName, dataElement) => {
     switch (panelName) {
       case panelNames.OUTLINE:
-        return <LazyLoadWrapper Component={LazyLoadComponents.GenericOutlinesPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.OutlinesPanel} dataElement={dataElement} />;
       case panelNames.SIGNATURE:
         return <LazyLoadWrapper Component={LazyLoadComponents.SignaturePanel} dataElement={dataElement} />;
       case panelNames.BOOKMARKS:
@@ -331,7 +332,7 @@ const App = ({ removeEventHandlers }) => {
       case panelNames.SEARCH:
         return <LazyLoadWrapper Component={LazyLoadComponents.SearchPanel} dataElement={dataElement} />;
       case panelNames.NOTES:
-        return <LazyLoadWrapper Component={LazyLoadComponents.NotesPanel} dataElement={dataElement} />;
+        return <LazyLoadWrapper Component={LazyLoadComponents.NotesPanel} dataElement={dataElement} isCustomPanel={true} />;
       case panelNames.TABS:
         return <LazyLoadWrapper Component={LazyLoadComponents.TabPanel} dataElement={dataElement} />;
       case panelNames.SIGNATURE_LIST:
@@ -475,6 +476,11 @@ const App = ({ removeEventHandlers }) => {
           Component={LazyLoadComponents.AnnotationPopup}
           dataElement={DataElements.ANNOTATION_POPUP}
           onOpenHook={useOnAnnotationPopupOpen}
+        />
+        <LazyLoadWrapper
+          Component={LazyLoadComponents.AlignmentPopup}
+          dataElement={DataElements.ANNOTATION_ALIGNMENT_POPUP}
+          onOpenHook={useOnAlignmentPopupOpen}
         />
         <LazyLoadWrapper
           Component={LazyLoadComponents.TextPopup}

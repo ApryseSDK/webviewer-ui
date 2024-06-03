@@ -1,0 +1,59 @@
+@import '../../constants/styles.scss';
+@import '../../constants/popup';
+
+.AlignAnnotationPopupContainer {
+  @extend %popup;
+  border-radius: 4px;
+  box-shadow: 0 0 3px 0 var(--document-box-shadow);
+  background: var(--component-background);
+}
+
+.AlignAnnotationPopup {
+  &.is-horizontal {
+    .contents {
+      display: flex;
+      gap: 16px;
+      flex-direction: column;
+      padding: 16px;
+
+      .back-to-menu-button{
+        width: 24px;
+        height: 24px;
+
+        .Icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      .divider {
+        height: 1px;
+        width: 100%;
+        background: var(--divider);
+      }
+    }
+
+    button {
+      padding: 0px;
+      margin: 0px;
+      height: 32px;
+      width: 32px;
+      .Icon {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .button-row-container {
+      display: flex;
+      gap: 8px;
+      flex-direction: column;
+    }
+
+    .button-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+}

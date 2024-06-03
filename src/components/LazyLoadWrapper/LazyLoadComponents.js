@@ -22,6 +22,7 @@ const AudioPlaybackPopup = lazy(() => import('components/AudioPlaybackPopup'));
 const DocumentCropPopup = lazy(() => import('components/DocumentCropPopup'));
 const InlineCommentingPopup = lazy(() => import('components/InlineCommentingPopup'));
 const LinkAnnotationPopup = lazy(() => import('components/LinkAnnotationPopup'));
+const AlignmentPopup = lazy(() => import('components/AlignmentPopup'));
 
 // Modals
 const ContentEditLinkModal = lazy(() => import('components/ContentEditLinkModal'));
@@ -50,7 +51,7 @@ const CustomModal = lazy(() => import('components/CustomModal'));
 const CreatePortfolioModal = lazy(() => import('components/CreatePortfolioModal'));
 
 // Panels
-const GenericOutlinesPanel = lazy(() => import('components/ModularComponents/GenericOutlinesPanel'));
+const OutlinesPanel = lazy(() => import('components/OutlinesPanel'));
 const SignaturePanel = lazy(() => import('components/SignaturePanel'));
 const BookmarksPanel = lazy(() => import('components/BookmarksPanel'));
 const FileAttachmentPanel = lazy(() => import('components/FileAttachmentPanel'));
@@ -77,6 +78,7 @@ const LazyLoadComponents = {
   RichTextPopup,
   RichTextStyleEditor,
   AudioPlaybackPopup,
+  AlignmentPopup,
   DocumentCropPopup,
   MeasurementOverlay,
   ScaleOverlayContainer,
@@ -110,7 +112,7 @@ const LazyLoadComponents = {
   OpenFileModal,
   SignatureValidationModal,
   CustomModal,
-  GenericOutlinesPanel,
+  OutlinesPanel,
   SignaturePanel,
   BookmarksPanel,
   FileAttachmentPanel,

@@ -30,6 +30,7 @@ const propTypes = {
   isContextMenuPopupOpen: PropTypes.bool,
 
   focusedAnnotation: PropTypes.object,
+  multipleAnnotationsSelected: PropTypes.bool,
   popupRef: PropTypes.any,
   position: PropTypes.object,
 
@@ -89,6 +90,7 @@ const propTypes = {
   customizableUI: PropTypes.bool,
   openStylePanel: PropTypes.func,
   isInReadOnlyMode: PropTypes.bool,
+  onOpenAlignmentModal: PropTypes.func,
 };
 
 const AnnotationPopup = ({
@@ -105,6 +107,7 @@ const AnnotationPopup = ({
   focusedAnnotation,
   popupRef,
   position,
+  multipleAnnotationsSelected,
 
   showViewFileButton,
   onViewFile,
@@ -162,6 +165,7 @@ const AnnotationPopup = ({
   customizableUI,
   openStylePanel,
   isInReadOnlyMode,
+  onOpenAlignmentModal,
 }) => {
   const [t] = useTranslation();
   const [shortCutKeysFor3DVisible, setShortCutKeysFor3DVisible] = useState(false);
@@ -359,6 +363,16 @@ const AnnotationPopup = ({
                     title={!isRightClickMenu ? 'action.ungroup' : ''}
                     img="ungroup-annotations-icon"
                     onClick={onUngroupAnnotations}
+                  />
+                )}
+                {multipleAnnotationsSelected && !isMobile && (
+                  <ActionButton
+                    className="main-menu-button"
+                    dataElement='openAlignmentButton'
+                    label={isRightClickMenu ? 'alignment' : ''}
+                    title={!isRightClickMenu ? 'Align' : ''}
+                    img="ic-alignment-main"
+                    onClick={onOpenAlignmentModal}
                   />
                 )}
                 {showFormFieldButton && (

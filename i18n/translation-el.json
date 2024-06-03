@@ -286,6 +286,7 @@
     "signHere": "Υπόγραψε εδώ",
     "insertTextHere": "Εισαγάγετε κείμενο εδώ",
     "imageSignatureAcceptedFileTypes": "Μόνο {{acceptedFileTypes}} γίνονται δεκτά",
+    "signatureRequired": "Απαιτείται υπογραφή και αρχικό για να συνεχίσετε",
     "enterMeasurement": "Εισαγάγετε μέτρηση μεταξύ των δύο σημείων",
     "errorEnterMeasurement": "Ο αριθμός που έχετε εισαγάγει δεν είναι έγκυρος, μπορείτε να εισαγάγετε τιμές όπως 7,5 ή 7 1/2",
     "linkURLorPage": "URL σύνδεσης ή σελίδας",
@@ -313,7 +314,8 @@
     "viewBookmark": "Προβολή σελιδοδείκτη στη σελίδα",
     "error": "Λάθος",
     "errorPageNumber": "Μη έγκυρος αριθμός σελίδας. Όριο είναι",
-    "errorLoadingDocument": "Παρουσιάστηκε πρόβλημα κατά την ανάγνωση αυτού του εγγράφου και ορισμένες σελίδες ενδέχεται να μην εμφανίζονται. Αυτό υποδηλώνει ότι το έγγραφο μπορεί να είναι κατεστραμμένο. Ο συνολικός αριθμός σελίδων είναι {{totalPageCount}} και ο αριθμός σελίδων που εμφανίζονται είναι {{displayedPageCount}}."
+    "errorLoadingDocument": "Παρουσιάστηκε πρόβλημα κατά την ανάγνωση αυτού του εγγράφου και ορισμένες σελίδες ενδέχεται να μην εμφανίζονται. Αυτό υποδηλώνει ότι το έγγραφο μπορεί να είναι κατεστραμμένο. Ο συνολικός αριθμός σελίδων είναι {{totalPageCount}} και ο αριθμός σελίδων που εμφανίζονται είναι {{displayedPageCount}}.",
+    "noRevisions": "Αυτό το έγγραφο δεν έχει αναθεωρήσεις."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Περιστρέψτε τη σελίδα αριστερόστροφα",
       "moreOptions": "Περισσότερες επιλογές",
       "moreOptionsMenu": "Μενού επιλογών περισσότερων μικρογραφιών",
-      "enterPageNumbers": "Εισαγάγετε αριθμούς σελίδων για επιλογή"
+      "enterPageNumbers": "Εισαγάγετε αριθμούς σελίδων για επιλογή",
+      "multiSelectPages": "Σελίδες πολλαπλής επιλογής",
+      "multiSelectPagesExample": "π.χ. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Μετακίνηση σελίδων"
@@ -961,6 +965,18 @@
       "combobox": "Combo box"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Ευθυγραμμίζω",
+    "alignLeft": "Στοίχιση αριστερά",
+    "alignHorizontalCenter": "Ευθυγράμμιση Οριζόντιας Κέντρου",
+    "alignVerticalCenter": "Ευθυγράμμιση κατακόρυφου κέντρου",
+    "alignRight": "Στοίχιση δεξιά",
+    "alignTop": "Ευθυγράμμιση κορυφής",
+    "alignBottom": "Ευθυγράμμιση κάτω",
+    "distribute": "Διανέμω",
+    "distributeHorizontal": "Διανομή Οριζόντια",
+    "distributeVertical": "Κατανομή Κάθετα"
+  },
   "digitalSignatureModal": {
     "certification": "πιστοποίηση",
     "Certification": "Πιστοποίηση",
@@ -1194,11 +1210,13 @@
     "added": "Προστέθηκε:",
     "editing": "Επεξεργασία",
     "editingDescription": "Επεξεργασία εγγράφου",
+    "pageBreak": "Διακοπή σελίδας",
     "reviewing": "Αναθεώρηση",
     "reviewingDescription": "Κάνω προτάσεις",
     "viewOnly": "Μόνο προβολή",
     "viewOnlyDescription": "Προβολή χωρίς προτάσεις",
-    "notSupportedOnMobile": "Η επεξεργασία του Office δεν υποστηρίζεται σε κινητές συσκευές."
+    "notSupportedOnMobile": "Η επεξεργασία του Office δεν υποστηρίζεται σε κινητές συσκευές.",
+    "previewAllChanges": "Προεπισκόπηση όλων των αλλαγών"
   },
   "insertPageModal": {
     "title": "Προσθήκη νέας σελίδας",

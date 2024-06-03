@@ -222,7 +222,7 @@
     "notesPanel": "Appunti",
     "outlinePanel": "Schema",
     "outlinesPanel": "Lineamenti",
-    "newOutlineTitle": "Titolo del nuovo schema",
+    "newOutlineTitle": "Nuovo titolo della struttura",
     "outlineTitle": "Titolo del profilo",
     "destination": "Destinazione",
     "bookmarkPanel": "Segnalibro",
@@ -286,6 +286,7 @@
     "signHere": "Firmare qui",
     "insertTextHere": "Inserisci qui il testo",
     "imageSignatureAcceptedFileTypes": "Sono accettati solo {{AcceptedFileTypes}}",
+    "signatureRequired": "Per continuare è necessaria una firma e un'iniziale",
     "enterMeasurement": "Immettere la misurazione tra i due punti",
     "errorEnterMeasurement": "Il numero che hai inserito non è valido, puoi inserire valori come 7,5 o 7 1/2",
     "linkURLorPage": "Link URL o una pagina",
@@ -313,7 +314,8 @@
     "viewBookmark": "Visualizza segnalibro sulla pagina",
     "error": "Errore",
     "errorPageNumber": "Numero di pagina non valido. Il limite è",
-    "errorLoadingDocument": "Si è verificato un problema durante la lettura di questo documento e alcune pagine potrebbero non essere visualizzate. Ciò indica che il documento potrebbe essere danneggiato. Il conteggio totale delle pagine è {{totalPageCount}} e il numero di pagine visualizzate è {{displayedPageCount}}."
+    "errorLoadingDocument": "Si è verificato un problema durante la lettura di questo documento e alcune pagine potrebbero non essere visualizzate. Ciò indica che il documento potrebbe essere danneggiato. Il conteggio totale delle pagine è {{totalPageCount}} e il numero di pagine visualizzate è {{displayedPageCount}}.",
+    "noRevisions": "Questo documento non ha revisioni."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Ruota la pagina in senso antiorario",
       "moreOptions": "Più opzioni",
       "moreOptionsMenu": "Menu Altre opzioni miniature",
-      "enterPageNumbers": "Immettere i numeri di pagina da selezionare"
+      "enterPageNumbers": "Immettere i numeri di pagina da selezionare",
+      "multiSelectPages": "Pagine a selezione multipla",
+      "multiSelectPagesExample": "per esempio. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Sposta pagine"
@@ -961,6 +965,18 @@
       "combobox": "Casella combinata"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Allineare",
+    "alignLeft": "Allineare a sinistra",
+    "alignHorizontalCenter": "Allinea il centro orizzontale",
+    "alignVerticalCenter": "Allinea il centro verticale",
+    "alignRight": "Allinea a destra",
+    "alignTop": "Allinea in alto",
+    "alignBottom": "Allinea in basso",
+    "distribute": "Distribuire",
+    "distributeHorizontal": "Distribuisci orizzontalmente",
+    "distributeVertical": "Distribuisci verticalmente"
+  },
   "digitalSignatureModal": {
     "certification": "certificazione",
     "Certification": "Certificazione",
@@ -1194,11 +1210,13 @@
     "added": "Aggiunto:",
     "editing": "La modifica",
     "editingDescription": "Modifica documento",
+    "pageBreak": "Interruzione di pagina",
     "reviewing": "Revisione",
     "reviewingDescription": "Dare suggerimenti",
     "viewOnly": "Visualizzare solamente",
     "viewOnlyDescription": "Visualizza senza suggerimenti",
-    "notSupportedOnMobile": "La modifica di Office non è supportata sui dispositivi mobili."
+    "notSupportedOnMobile": "La modifica di Office non è supportata sui dispositivi mobili.",
+    "previewAllChanges": "Anteprima di tutte le modifiche"
   },
   "insertPageModal": {
     "title": "Aggiungi nuova pagina",

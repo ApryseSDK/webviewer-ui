@@ -286,6 +286,7 @@
     "signHere": "Skriv under här",
     "insertTextHere": "Infoga text här",
     "imageSignatureAcceptedFileTypes": "Endast {{acceptedFileTypes}} accepteras",
+    "signatureRequired": "En signatur och initial krävs för att fortsätta",
     "enterMeasurement": "Ange mått mellan de två punkterna",
     "errorEnterMeasurement": "Numret du har angett är ogiltigt, du kan ange värden som 7,5 eller 7 1/2",
     "linkURLorPage": "Länka URL eller en sida",
@@ -313,7 +314,8 @@
     "viewBookmark": "Visa bokmärke på sidan",
     "error": "Fel",
     "errorPageNumber": "Ogiltigt sidnummer. Gränsen är",
-    "errorLoadingDocument": "Det uppstod ett problem med att läsa det här dokumentet och vissa sidor kanske inte visas. Detta indikerar att dokumentet kan vara skadat. Det totala antalet sidor är {{totalPageCount}} och antalet sidor som visas är {{displayedPageCount}}."
+    "errorLoadingDocument": "Det uppstod ett problem med att läsa det här dokumentet och vissa sidor kanske inte visas. Detta indikerar att dokumentet kan vara skadat. Det totala antalet sidor är {{totalPageCount}} och antalet sidor som visas är {{displayedPageCount}}.",
+    "noRevisions": "Detta dokument har inga ändringar."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Rotera sidan moturs",
       "moreOptions": "Fler alternativ",
       "moreOptionsMenu": "Fler miniatyrbilder Alternativmeny",
-      "enterPageNumbers": "Ange sidnummer för att välja"
+      "enterPageNumbers": "Ange sidnummer för att välja",
+      "multiSelectPages": "Flervalssidor",
+      "multiSelectPagesExample": "t.ex. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Flytta sidor"
@@ -961,6 +965,18 @@
       "combobox": "Kombinationsrutan"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Justera",
+    "alignLeft": "Justera vänster",
+    "alignHorizontalCenter": "Rikta in horisontellt mitt",
+    "alignVerticalCenter": "Centrera vertikalt",
+    "alignRight": "Anpassa till höger",
+    "alignTop": "Rikta upp toppen",
+    "alignBottom": "Justera botten",
+    "distribute": "Distribuera",
+    "distributeHorizontal": "Fördela horisontellt",
+    "distributeVertical": "Fördela vertikalt"
+  },
   "digitalSignatureModal": {
     "certification": "certifiering",
     "Certification": "Certifiering",
@@ -1194,11 +1210,13 @@
     "added": "Lagt till:",
     "editing": "Redigering",
     "editingDescription": "Redigera dokument",
+    "pageBreak": "Sidbrytning",
     "reviewing": "Granskning",
     "reviewingDescription": "Ge förslag",
     "viewOnly": "Titta enbart",
     "viewOnlyDescription": "Visa utan förslag",
-    "notSupportedOnMobile": "Office-redigering stöds inte på mobila enheter."
+    "notSupportedOnMobile": "Office-redigering stöds inte på mobila enheter.",
+    "previewAllChanges": "Förhandsgranska alla ändringar"
   },
   "insertPageModal": {
     "title": "Lägg till ny sida",

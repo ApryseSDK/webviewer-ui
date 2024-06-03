@@ -286,6 +286,7 @@
     "signHere": "Підпишіть тут",
     "insertTextHere": "Вставте сюди текст",
     "imageSignatureAcceptedFileTypes": "Приймаються лише {{acceptedFileTypes}}",
+    "signatureRequired": "Для продовження потрібні підпис та ініціал",
     "enterMeasurement": "Введіть вимірювання між двома точками",
     "errorEnterMeasurement": "Введене число недійсне, ви можете ввести такі значення, як 7,5 або 7 1/2",
     "linkURLorPage": "URL-адреса посилання або сторінка",
@@ -313,7 +314,8 @@
     "viewBookmark": "Переглянути закладку на сторінці",
     "error": "Помилка",
     "errorPageNumber": "Недійсний номер сторінки. Обмеження є",
-    "errorLoadingDocument": "Під час читання цього документа виникла проблема, тому деякі сторінки можуть не відображатися. Це означає, що документ може бути пошкоджено. Загальна кількість сторінок становить {{totalPageCount}}, а кількість сторінок, які відображаються, — {{displayedPageCount}}."
+    "errorLoadingDocument": "Під час читання цього документа виникла проблема, тому деякі сторінки можуть не відображатися. Це означає, що документ може бути пошкоджено. Загальна кількість сторінок становить {{totalPageCount}}, а кількість сторінок, які відображаються, — {{displayedPageCount}}.",
+    "noRevisions": "Цей документ не має змін."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Повернути сторінку проти годинникової стрілки",
       "moreOptions": "Більше варіантів",
       "moreOptionsMenu": "Меню додаткових параметрів мініатюр",
-      "enterPageNumbers": "Введіть номери сторінок для вибору"
+      "enterPageNumbers": "Введіть номери сторінок для вибору",
+      "multiSelectPages": "Сторінки Multi-Select",
+      "multiSelectPagesExample": "напр. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Переміщення сторінок"
@@ -961,6 +965,18 @@
       "combobox": "Комбінований ящик"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Вирівняти",
+    "alignLeft": "Вирівняти по лівому краю",
+    "alignHorizontalCenter": "Вирівняти по центру по горизонталі",
+    "alignVerticalCenter": "Вирівняти вертикально по центру",
+    "alignRight": "Вирівняти праворуч",
+    "alignTop": "Вирівняти зверху",
+    "alignBottom": "Вирівняти нижню частину",
+    "distribute": "Поширювати",
+    "distributeHorizontal": "Розподіліть по горизонталі",
+    "distributeVertical": "Розподіліть вертикально"
+  },
   "digitalSignatureModal": {
     "certification": "сертифікація",
     "Certification": "Сертифікація",
@@ -1194,11 +1210,13 @@
     "added": "Додано:",
     "editing": "Редагування",
     "editingDescription": "Редагувати документ",
+    "pageBreak": "Розрив сторінки",
     "reviewing": "Рецензування",
     "reviewingDescription": "Вносити пропозиції",
     "viewOnly": "Лише перегляд",
     "viewOnlyDescription": "Переглянути без пропозицій",
-    "notSupportedOnMobile": "Редагування Office не підтримується на мобільних пристроях."
+    "notSupportedOnMobile": "Редагування Office не підтримується на мобільних пристроях.",
+    "previewAllChanges": "Переглянути всі зміни"
   },
   "insertPageModal": {
     "title": "Додати нову сторінку",

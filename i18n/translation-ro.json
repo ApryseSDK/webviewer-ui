@@ -286,6 +286,7 @@
     "signHere": "Înregistrează aici",
     "insertTextHere": "Introduceți text aici",
     "imageSignatureAcceptedFileTypes": "Sunt acceptate numai {{acceptedFileTypes}}",
+    "signatureRequired": "Este necesară o semnătură și inițiala pentru a continua",
     "enterMeasurement": "Introduceți măsurarea între cele două puncte",
     "errorEnterMeasurement": "Numărul pe care l-ați introdus este nevalid, puteți introduce valori precum 7,5 sau 7 1/2",
     "linkURLorPage": "Link URL sau o pagină",
@@ -313,7 +314,8 @@
     "viewBookmark": "Vizualizați marcajul pe pagină",
     "error": "Eroare",
     "errorPageNumber": "Număr de pagină nevalid. Limita este",
-    "errorLoadingDocument": "A apărut o problemă la citirea acestui document și este posibil ca unele pagini să nu fie afișate. Acest lucru indică faptul că documentul poate fi corupt. Numărul total de pagini este {{totalPageCount}}, iar numărul de pagini afișate este {{displayedPageCount}}."
+    "errorLoadingDocument": "A apărut o problemă la citirea acestui document și este posibil ca unele pagini să nu fie afișate. Acest lucru indică faptul că documentul poate fi corupt. Numărul total de pagini este {{totalPageCount}}, iar numărul de pagini afișate este {{displayedPageCount}}.",
+    "noRevisions": "Acest document nu are revizuiri."
   },
   "option": {
     "type": {
@@ -620,7 +622,9 @@
       "rotatePageCounterClockwise": "Rotiți pagina în sens invers acelor de ceasornic",
       "moreOptions": "Mai multe opțiuni",
       "moreOptionsMenu": "Mai multe miniaturi Meniu Opțiuni",
-      "enterPageNumbers": "Introduceți numerele de pagină pentru a le selecta"
+      "enterPageNumbers": "Introduceți numerele de pagină pentru a le selecta",
+      "multiSelectPages": "Pagini cu selecție multiplă",
+      "multiSelectPagesExample": "de exemplu. 1, 3, 5-10"
     },
     "thumbnailsControlOverlay": {
       "move": "Mutați paginile"
@@ -961,6 +965,18 @@
       "combobox": "Caseta combinată"
     }
   },
+  "alignmentPopup": {
+    "alignment": "Alinia",
+    "alignLeft": "Alinia la stânga",
+    "alignHorizontalCenter": "Aliniați centrul orizontal",
+    "alignVerticalCenter": "Aliniați la centru vertical",
+    "alignRight": "Aliniați dreapta",
+    "alignTop": "Aliniați sus",
+    "alignBottom": "Aliniați partea de jos",
+    "distribute": "Distribui",
+    "distributeHorizontal": "Distribuiți pe orizontală",
+    "distributeVertical": "Distribuiți pe verticală"
+  },
   "digitalSignatureModal": {
     "certification": "certificare",
     "Certification": "Certificare",
@@ -1194,11 +1210,13 @@
     "added": "Adăugat:",
     "editing": "Editare",
     "editingDescription": "Editați documentul",
+    "pageBreak": "Pauza de pagină",
     "reviewing": "Revizuirea",
     "reviewingDescription": "A face recomandări",
     "viewOnly": "Doar vizualizare",
     "viewOnlyDescription": "Vizualizați fără sugestii",
-    "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile."
+    "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile.",
+    "previewAllChanges": "Previzualizează toate modificările"
   },
   "insertPageModal": {
     "title": "Adăugați o pagină nouă",
