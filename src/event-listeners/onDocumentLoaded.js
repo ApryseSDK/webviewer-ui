@@ -156,22 +156,22 @@ export default (store, documentViewerKey) => async () => {
 
       const handleEditModeUpdate = (editMode) => {
         dispatch(actions.setOfficeEditorEditMode(editMode));
-        if (editMode === OFFICE_EDITOR_EDIT_MODE.VIEW_ONLY) {
+        if (editMode === OFFICE_EDITOR_EDIT_MODE.VIEW_ONLY || editMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW) {
           dispatch(actions.closeElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
-          dispatch(actions.disableElement(DataElements.CONTEXT_MENU_POPUP, PRIORITY_TWO));
+          dispatch(actions.disableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
         } else {
-          dispatch(actions.enableElement(DataElements.CONTEXT_MENU_POPUP, PRIORITY_TWO));
           dispatch(actions.openElement(DataElements.OFFICE_EDITOR_TOOLS_HEADER));
+          dispatch(actions.enableElements([DataElements.CONTEXT_MENU_POPUP, DataElements.NOTE_MULTI_SELECT_MODE_BUTTON], PRIORITY_TWO));
         }
-        if (editMode === OFFICE_EDITOR_EDIT_MODE.REVIEWING) {
+        if (editMode === OFFICE_EDITOR_EDIT_MODE.REVIEWING || editMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW) {
           dispatch(actions.openElement(DataElements.LEFT_PANEL));
         } else {
           dispatch(actions.closeElement(DataElements.LEFT_PANEL));
         }
       };
-      const initialEditMode = selectors.getOfficeEditorEditMode(getState());
-      handleEditModeUpdate(initialEditMode);
+      handleEditModeUpdate(OFFICE_EDITOR_EDIT_MODE.EDITING);
       doc.addEventListener('editModeUpdated', handleEditModeUpdate);
+      dispatch(actions.setOfficeEditorEditMode(OFFICE_EDITOR_EDIT_MODE.EDITING));
       notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
       dispatch(actions.setNotesInLeftPanel(true));
     } else {
