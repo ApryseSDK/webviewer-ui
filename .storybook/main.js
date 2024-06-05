@@ -3,15 +3,19 @@ const path = require('path');
 const appDirectory = path.join(__dirname, '..');
 
 module.exports = {
-  stories: [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)"
-  ],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   staticDirs: ['./static'],
+
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials"
+    "@storybook/addon-essentials",
+    '@storybook/addon-webpack5-compiler-swc',
+    '@chromatic-com/storybook',
+    '@storybook/addon-interactions',
+    '@storybook/addon-a11y',
+    'storybook-addon-pseudo-states'
   ],
+
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
     // You can change the configuration based on that.
@@ -72,5 +76,29 @@ module.exports = {
 
     return config;
   },
-  framework: '@storybook/react',
+
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {}
+  },
+
+  docs: {},
+
+  swcLoaderOptions: {
+    jsc: {
+      parser: {
+        syntax: 'ecmascript',
+        jsx: true,
+      },
+      transform: {
+        react: {
+          runtime: 'automatic'
+        }
+      }
+    }
+  },
+
+  typescript: {
+    reactDocgen: 'react-docgen-typescript'
+  }
 }

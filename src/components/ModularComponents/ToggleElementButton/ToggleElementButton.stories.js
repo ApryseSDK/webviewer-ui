@@ -6,6 +6,9 @@ import { Provider } from 'react-redux';
 export default {
   title: 'ModularComponents/ToggleElementButton',
   component: ToggleElementButton,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const initialState = {
@@ -44,8 +47,16 @@ const store = configureStore({
 
 export const ToggleElementButtonComponent = () => (
   <Provider store={store}>
-    <div style={{ width: '32px' }}>
-      <ToggleElementButton img='icon-header-search' toggleElement='signatureModal' dataElement='toggleButton' />
-    </div>
+    <ToggleElementButton img='icon-header-search' toggleElement='signatureModal' dataElement='toggleButton' />
   </Provider>
 );
+
+export const ToggleElementButtonWithLabelOnHoverState = () => (
+  <Provider store={store}>
+    <ToggleElementButton img='icon-header-search' toggleElement='signatureModal' dataElement='toggleButton' label='Toggle Element' />
+  </Provider>
+);
+
+ToggleElementButtonWithLabelOnHoverState.parameters = {
+  pseudo: { hover: true },
+};
