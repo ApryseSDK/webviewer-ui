@@ -1,0 +1,18 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+  <script src='/lib/webviewer.min.js'></script>
+</head>
+
+<body style='padding: 0; margin: 0; display: flex;'>
+  <div id="viewer" style="width: 100vw; height: 100vh"></div>
+  <script type="module">
+    import { loadModule } from 'https://klesun.github.io/ts-browser/src/ts-browser.js';
+    // language=file-reference
+    const entryScriptPath = './index.ts';
+    loadModule(entryScriptPath)
+  </script>
+</body>
+
+</html>
