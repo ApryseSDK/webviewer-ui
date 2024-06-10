@@ -2,30 +2,51 @@ import { loadViewerSample, Timeouts } from '../../playwright-utils';
 import { expect, test } from '@playwright/test';
 
 test.describe('Thumbnails Panel', () => {
-  // skip flaky test
-  // https://app.circleci.com/pipelines/github/XodoDocs/webviewer/99030/workflows/900ca13f-5723-4b59-96f4-029f61e8d33c/jobs/111104/tests#failed-test-2
-  // to be fixed in WVR-5330 https://apryse.atlassian.net/browse/WVR-5330
-  test.skip('Should show page labels', async ({ page }) => {
-    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-pdf-prime');
+  const waitForThumbnailPanelToRender = async (iframe) => {
+    let pageCount = await iframe.evaluate(() => {
+      return window.instance.Core.documentViewer.getDocument().getPageCount()
+    });
+
+    // there shouldn't be more than 4 thumbnails rendered
+    pageCount = pageCount > 4 ? 4 : pageCount;
+
+    for (let i = 0; i < pageCount; i++) {
+      await iframe.waitForSelector(`#pageThumb${i} .annotation-image`);
+      await iframe.waitForSelector(`#pageThumb${i} .page-image`);
+    }
+    const blankCanvasData = await iframe.evaluate((pageCount) => {
+      const annotCanvas = window.document.querySelector(`#pageThumb${pageCount - 1} .page-image`);
+      const blank = window.document.createElement('canvas');
+      blank.width = annotCanvas.width;
+      blank.height = annotCanvas.height;
+
+      return blank.toDataURL();
+    }, pageCount);
+
+    await iframe.waitForFunction(({ blankCanvas, pageCount }) => window.document.querySelector(`#pageThumb${pageCount - 1} .page-image`).toDataURL() !== blankCanvas, { blankCanvas: blankCanvasData, pageCount });
+    await iframe.waitForFunction(({ blankCanvas, pageCount }) => window.document.querySelector(`#pageThumb${pageCount - 1} .annotation-image`).toDataURL() !== blankCanvas, { blankCanvas: blankCanvasData, pageCount });
+  };
+
+  test('Should show page labels', async ({ page }) => {
+    const { iframe, waitForInstance, waitForWVEvent } = await loadViewerSample(page, 'viewing/viewing-with-pdf-prime');
     const instance = await waitForInstance();
     await instance('loadDocument', '/test-files/51-A4-layout.pdf');
+    await waitForWVEvent('documentLoaded');
     await instance('openElements', ['thumbnailsPanel']);
-    await page.waitForTimeout(10000);
+    await waitForThumbnailPanelToRender(iframe);
 
     const leftPanel = await iframe.$('.LeftPanel');
     expect(await leftPanel.screenshot()).toMatchSnapshot(['labels-rendering', 'thumbnail-page-labels.png']);
   });
 
-  // skip flaky test
-  // https://app.circleci.com/pipelines/github/XodoDocs/webviewer/99030/workflows/900ca13f-5723-4b59-96f4-029f61e8d33c/jobs/111104/tests#failed-test-3
-  // to be fixed in WVR-5330 https://apryse.atlassian.net/browse/WVR-5330
-  test.skip('Should be usable in ready only mode', async ({ page, browserName }) => {
+  test('Should be usable in ready only mode', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: Investigate why this test is flaky on webkit');
-    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-pdf-prime');
+    const { iframe, waitForInstance, waitForWVEvent } = await loadViewerSample(page, 'viewing/viewing-with-pdf-prime');
     const instance = await waitForInstance();
     await instance('loadDocument', '/test-files/51-A4-layout.pdf');
+    await waitForWVEvent('documentLoaded');
     await instance('openElements', ['thumbnailsPanel']);
-    await page.waitForTimeout(5000);
+    await waitForThumbnailPanelToRender(iframe);
 
     await iframe.evaluate(() => {
       window.instance.Core.documentViewer.enableReadOnlyMode();
@@ -240,17 +261,12 @@ test.describe('Thumbnails Panel', () => {
     expect(selectedThumbnailPage[0]).toBe(3);
   });
 
-  // skip flaky test
-  // https://app.circleci.com/pipelines/github/XodoDocs/webviewer/99030/workflows/900ca13f-5723-4b59-96f4-029f61e8d33c/jobs/111104/tests#failed-test-4
-  // to be fixed in WVR-5330 https://apryse.atlassian.net/browse/WVR-5330
-  test.skip('We can rotate an active page that is not in the current Thumbnail selection', async ({ page }) => {
-    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+  test('We can rotate an active page that is not in the current Thumbnail selection', async ({ page }) => {
+    const { iframe, waitForInstance, waitForWVEvent } = await loadViewerSample(page, 'viewing/viewing');
     await waitForInstance();
     await page.waitForTimeout(5000);
 
     await iframe.click('[data-element=leftPanelButton]');
-
-    await page.waitForTimeout(2000);
 
     await iframe.evaluate(() => {
       window.instance.UI.ThumbnailsPanel.selectPages([2]);
@@ -260,10 +276,10 @@ test.describe('Thumbnails Panel', () => {
     });
 
     await iframe.click('[data-element=thumbRotateClockwise]');
+    await waitForWVEvent('pageComplete');
 
     const pageRotation = await iframe.evaluate(() => {
       const documentViewer = window.instance.Core.documentViewer;
-
       return documentViewer.getCompleteRotation(1);
     });
 
@@ -342,7 +358,7 @@ test.describe('Thumbnails Panel', () => {
     const instance = await waitForInstance();
     await iframe.locator('#pageWidgetContainer1').waitFor();
 
-    await iframe.evaluate(async() => {
+    await iframe.evaluate(async () => {
       await instance.Core.documentViewer.getDocument().getDocumentCompletePromise();
     });
 
