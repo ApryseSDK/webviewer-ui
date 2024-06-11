@@ -49,7 +49,8 @@ export const OFFICE_EDITOR_TRACKED_CHANGE_KEY = 'officeEditorTrackedChangeUID';
 export const OFFICE_EDITOR_EDIT_MODE = {
   EDITING: 'editing',
   REVIEWING: 'reviewing',
-  VIEW_ONLY: 'viewOnly'
+  VIEW_ONLY: 'viewOnly',
+  PREVIEW: 'preview'
 };
 
 export const officeEditorScope = 'office-editor';
@@ -65,7 +66,8 @@ export const elementsToDisableInOfficeEditor = [
   'leftPanelButton',
   'annotationPopup',
   DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON,
-  DataElements.ANNOTATION_NOTE_CONNECTOR_LINE
+  DataElements.ANNOTATION_NOTE_CONNECTOR_LINE,
+  DataElements.ANNOTATION_CONTENT_OVERLAY,
 ];
 
 export const elementsToEnableInOfficeEditor = [

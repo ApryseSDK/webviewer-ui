@@ -144,7 +144,7 @@ export default function useOnAnnotationPopupOpen() {
 
   useEffect(() => {
     const onAnnotationChanged = (annotations, action) => {
-      if (!core.isAnnotationSelected(focusedAnnotation)) {
+      if (!core.isAnnotationSelected(focusedAnnotation) || annotations.length === 0) {
         return;
       }
 
