@@ -6,10 +6,15 @@ test.describe('Tests for outline bookmarks', () => {
   let iframe: Frame;
 
   test.beforeEach(async ({ page }) => {
-    const { iframe: sampleIframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing-with-pdf-prime');
+    const { iframe: sampleIframe, waitForInstance, waitForWVEvent } = await loadViewerSample(page, 'viewing/viewing-with-pdf-prime');
     iframe = (sampleIframe as Frame);
     instance = await waitForInstance();
-    await instance('loadDocument', '/test-files/outlines-nested.pdf');
+    await waitForWVEvent('pageComplete', {
+      code: async () => {
+        window.instance.UI.loadDocument('/test-files/outlines-nested.pdf');
+      }
+    });
+
     await instance('openElements', ['outlinesPanel']);
     await page.waitForTimeout(Timeouts.PDF_PRIME_DOCUMENT);
 
@@ -71,7 +76,7 @@ test.describe('Tests for outline bookmarks', () => {
     expect(numberOfTimesOutlineBookmarksChangedEventWasTriggered).toBe(1);
   });
 
-  test('should fire an event when new root outline is created', async ({ page, browserName }) => {
+  test('should fire an event when new root outline is created and the new outline should not be selected', async ({ page, browserName }) => {
     test.skip(browserName === 'firefox', 'TODO: investigate why this test is flaky on firefox');
     const addNewOutlineButton = await iframe.$('[data-element=addNewOutlineButton]');
     await addNewOutlineButton?.click();
@@ -86,6 +91,26 @@ test.describe('Tests for outline bookmarks', () => {
     });
 
     expect(numberOfTimesOutlineBookmarksChangedEventWasTriggered).toBe(1);
+    const outlines = await iframe.$$('.bookmark-outline-single-container');
+    expect(outlines.length).toBe(2);
+    expect(await outlines[1].evaluate((outline) => Object.values(outline.classList))).not.toContain('selected');
+  });
+
+  // Flaky test: https://apryse.atlassian.net/browse/WVR-5790
+  test.skip('should keep the outline expanded when create a child outline', async ({ page }) => {
+    const firstOutline = await iframe.$$('.bookmark-outline-single-container');
+    await firstOutline[0]?.click();
+    await page.waitForTimeout(Timeouts.REACT_RERENDER);
+    const addNewOutlineButton = await iframe.$('[data-element=addNewOutlineButton]');
+    await addNewOutlineButton?.click();
+    await page.waitForTimeout(Timeouts.REACT_RERENDER);
+    await page.keyboard.type('HELLO WORLD!');
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+    await page.keyboard.down('Enter');
+    await page.waitForTimeout(Timeouts.REACT_RERENDER);
+
+    const expandCollapseOutlineButtonSelector = '.bookmark-outline-single-container .outline-treeview-toggle.expanded';
+    await expect(iframe.locator(expandCollapseOutlineButtonSelector)).toHaveCount(1);
   });
 
   test('should rerender the outlines panel when the event outlineBookmarksChanged is fired', async ({ page }) => {
@@ -216,5 +241,51 @@ test.describe('Tests for outline bookmarks', () => {
     await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
 
     expect(await instance('getCurrentPage')).toBe(1);
+  });
+
+  test('updated outline and a new outline to the same page should have the same destination even when the page is rotated', async ({ page }) => {
+    await instance('openElements', ['outlinesPanel']);
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION * 3);
+    const addOutlineButton = await iframe.$('[data-element="addNewOutlineButtonContainer"]');
+    await addOutlineButton?.click();
+    await page.waitForTimeout(2000);
+    await page.keyboard.type('Page 1 Outline');
+    let saveButton = await iframe.$('.bookmark-outline-save-button');
+    await saveButton?.click();
+    await page.waitForTimeout(2000);
+    await instance('openElements', ['thumbnailsPanel']);
+    await page.waitForTimeout(2000);
+
+    const clockwiseButton = await iframe.$('.Thumbnail.active [data-element="thumbRotateClockwise"]');
+    await clockwiseButton?.click();
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    await instance('openElements', ['outlinesPanel']);
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    const firstOutline = await iframe.$('.bookmark-outline-single-container');
+    await firstOutline?.hover();
+    const firstOutlineMoreButton = await iframe.$('.bookmark-outline-more-button');
+    await firstOutlineMoreButton?.click();
+    const setDestinationButton = await iframe.$('button[data-element=outlineSetDestinationButton]');
+    await setDestinationButton?.click();
+    saveButton = await iframe.$('.bookmark-outline-save-button');
+    await saveButton?.click();
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+    await instance('openElements', ['thumbnailsPanel']);
+    await instance('openElements', ['outlinesPanel']);
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+    await iframe.click('.bookmark-outline-control-button.add-new-button');
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    await page.keyboard.type('Page 1 Outline duplicated');
+    await page.keyboard.down('Enter');
+    await page.waitForTimeout(Timeouts.UI_CSS_ANIMATION);
+
+    const bookmarks = await instance('getBookmarks');
+    const firstBookmark = bookmarks[0];
+    const secondBookmark = bookmarks[1];
+    expect(firstBookmark['verticalOffset']).toEqual(secondBookmark['verticalOffset']);
+    expect(firstBookmark['horizontalOffset']).toEqual(secondBookmark['horizontalOffset']);
   });
 });
