@@ -102,6 +102,7 @@
     "eslint-plugin-cypress": "^2.8.1",
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-custom": "file:eslint-plugin-custom",
     "eslint-plugin-no-unsanitized": "^4.0.2",
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^2.3.0",
