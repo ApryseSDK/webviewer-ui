@@ -129,6 +129,7 @@ const DataElements = {
   LINK_URI: 'linkUri',
   EMBEDDED_JS_POPUP: 'embeddedJsPopup',
   MAIN_MENU: 'MainMenuFlyout',
+  VIEWER_CONTROLS_FLYOUT: 'viewControlsFlyout',
 
   // Modals
   PAGE_REDACT_MODAL: 'pageRedactionModal',

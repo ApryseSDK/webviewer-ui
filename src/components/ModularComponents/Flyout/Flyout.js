@@ -13,6 +13,7 @@ import getRootNode from 'helpers/getRootNode';
 import ZoomText from './flyoutHelpers/ZoomText';
 import { getFlyoutPositionOnElement } from 'helpers/flyoutHelper';
 import FlyoutItem from 'components/ModularComponents/Flyout/flyoutHelpers/FlyoutItem';
+import DataElements from 'src/constants/dataElement';
 
 const Flyout = () => {
   const { t } = useTranslation();
@@ -113,7 +114,14 @@ const Flyout = () => {
       setActivePath(newActivePath);
     }
     if (flyoutItem.onClick) {
-      flyoutItem.onClick();
+      try {
+        flyoutItem.onClick();
+      } catch (error) {
+        console.error(error);
+      }
+      if (!flyoutItem.children && dataElement !== DataElements.VIEWER_CONTROLS_FLYOUT) {
+        closeFlyout();
+      }
     }
   };
 

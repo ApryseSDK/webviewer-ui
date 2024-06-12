@@ -6,9 +6,16 @@ import DataElements from 'constants/dataElement';
 import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
 import { PRESET_BUTTON_TYPES, ITEM_TYPE } from 'constants/customizationVariables';
 
+import { createTemplate } from 'helpers/storybookHelper';
+import { userEvent, within, expect } from '@storybook/test';
+import { uiWithFlyout } from '../storyModularUIConfigs';
+
 export default {
   title: 'ModularComponents/Flyout',
   component: Flyout,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const initialState = {
@@ -350,7 +357,7 @@ const initialState = {
           { dataElement: 'panToolButton', toolName: 'Pan', className: 'FlyoutToolButton' },
           { dataElement: 'annotationEditToolButton', toolName: 'AnnotationEdit', className: 'FlyoutToolButton' },
         ],
-      }
+      },
     },
     modularComponents: {
       panToolButton: {
@@ -376,6 +383,9 @@ const initialState = {
     },
     customHeadersAdditionalProperties: {},
   },
+  featureFlags: {
+    customizableUI: true,
+  }
 };
 const store = configureStore({
   reducer: () => initialState
@@ -411,12 +421,41 @@ const store3 = configureStore({
   }
 });
 
+
 export const MainMenuFlyout = () => (
   <Provider store={store3}>
     <Flyout/>
   </Provider>
 );
 
+const tmp = Object.assign({}, uiWithFlyout.modularComponents);
+tmp.flyoutToggle = {
+  ...tmp.flyoutToggle,
+  toggleElement: 'viewControlsFlyout'
+};
+export const ViewControlsFlyout = createTemplate({
+  headers: uiWithFlyout.modularHeaders,
+  components: tmp,
+  flyoutMap: {
+    'viewControlsFlyout': {
+      'dataElement': 'viewControlsFlyout',
+      'items': []
+    }
+  }
+});
+
+ViewControlsFlyout.play = async (context) => {
+  const canvas = within(context.canvasElement);
+  // Click the toggle button to open the flyout
+  const flyoutToggle = await canvas.findByRole('button', { 'aria-label': 'View Control Toggle' });
+  await userEvent.click(flyoutToggle);
+  // Check if the flyout is open
+  const flyoutItem = await canvas.findByText('Rotate Clockwise');
+  expect(flyoutItem).toBeInTheDocument();
+  // Click flyoutItem
+  await userEvent.click(flyoutItem);
+  expect(flyoutItem).toBeInTheDocument();
+};
 const store4 = configureStore({
   reducer: () => {
     return {
@@ -432,3 +471,31 @@ export const FlyoutWithComponentItems = () => (
     <Flyout />
   </Provider>
 );
+
+export const FlyoutOpeningTest = createTemplate({ headers: uiWithFlyout.modularHeaders, components: uiWithFlyout.modularComponents, flyoutMap: uiWithFlyout.flyouts });
+
+FlyoutOpeningTest.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  // Click the toggle button to open the flyout
+  const flyoutToggle = await canvas.findByRole('button', { 'aria-label': 'Flyout Toggle' });
+  await userEvent.click(flyoutToggle);
+  // Check if the flyout is open
+  const flyoutItem = await canvas.findByText('Custom Flyout Item');
+  expect(flyoutItem).toBeInTheDocument();
+  // Click the flyout item to open the submenu
+  await userEvent.click(flyoutItem);
+  // Check if the submenu item is open
+  const submenuItem = await canvas.findByText('Submenu Item');
+  expect(submenuItem).toBeInTheDocument();
+  // Click the submenu item to open the second submenu
+  await userEvent.click(submenuItem);
+  // Check if the second submenu item is open
+  const submenuItem2 = await canvas.findByText('Submenu Item 2');
+  expect(submenuItem2).toBeInTheDocument();
+  // Click submenu back button to close it
+  const backBtn = await canvas.findByText('Back');
+  await userEvent.click(backBtn);
+  // Check if the submenu is gone
+  expect(submenuItem2).not.toBeInTheDocument();
+};
+
