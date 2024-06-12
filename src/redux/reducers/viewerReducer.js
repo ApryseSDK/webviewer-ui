@@ -1,6 +1,7 @@
 import localStorageManager from 'helpers/localStorageManager';
 import { getInstanceID } from 'helpers/getRootNode';
 import { ITEM_TYPE } from 'constants/customizationVariables';
+import { defaultPanels } from '../modularComponents';
 
 export default (initialState) => (state = initialState, action) => {
   const { type, payload } = action;
@@ -42,6 +43,13 @@ export default (initialState) => (state = initialState, action) => {
           [payload.dataElement]: payload.size,
         }
       };
+    case 'SET_FLYOUTS': {
+      const { flyoutMap } = payload;
+      return {
+        ...state,
+        flyoutMap: { ...flyoutMap },
+      };
+    }
     case 'SET_ACTIVE_FLYOUT':
       return {
         ...state,
@@ -742,9 +750,9 @@ export default (initialState) => (state = initialState, action) => {
         },
       };
     }
-    case 'SET_MODULAR_COMPONENTS_PROPERTY': {
-      const { groupedItemsDataElement, property, value } = payload;
-      const existingModularComponent = state.modularComponents[groupedItemsDataElement];
+    case 'SET_MODULAR_COMPONENT_PROPERTY': {
+      const { dataElement, property, value } = payload;
+      const existingModularComponent = state.modularComponents[dataElement];
       if (!existingModularComponent) {
         return state;
       }
@@ -756,7 +764,7 @@ export default (initialState) => (state = initialState, action) => {
         ...state,
         modularComponents: {
           ...state.modularComponents,
-          [groupedItemsDataElement]: updatedModularComponent,
+          [dataElement]: updatedModularComponent,
         },
       };
     }
@@ -847,6 +855,29 @@ export default (initialState) => (state = initialState, action) => {
           [groupedItemsDataElement]: updatedGroupedItem,
           ...componentsMap,
         },
+      };
+    }
+    case 'SET_MODULAR_COMPONENT_FUNCTIONS': {
+      const { functionMap } = payload;
+      return {
+        ...state,
+        modularComponentFunctions: { ...functionMap },
+      };
+    }
+    case 'RESET_MODULAR_UI_STATE': {
+      return {
+        ...state,
+        modularHeaders: initialState.modularHeaders,
+        modularComponents: initialState.modularComponents,
+        modularComponentFunctions: initialState.modularComponentFunctions,
+        activeCustomRibbon: initialState.activeCustomRibbon,
+        activeFlyout: initialState.activeFlyout,
+        flyoutToggleElement: initialState.flyoutToggleElement,
+        openElements: initialState.openElements,
+        lastPickedToolAndGroup: initialState.lastPickedToolAndGroup,
+        lastPickedToolForGroupedItems: initialState.lastPickedToolForGroupedItems,
+        flyoutPosition: initialState.flyoutPosition,
+        genericPanels: defaultPanels,
       };
     }
     case 'SET_ACTIVE_CUSTOM_PANEL':

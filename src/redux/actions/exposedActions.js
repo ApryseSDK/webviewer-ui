@@ -213,6 +213,11 @@ export const getAllAssociatedGroupedItems = (state, groupedItems) => {
 };
 
 export const setActiveGroupedItems = (groupedItems) => (dispatch, getState) => {
+  if (!groupedItems.length) {
+    dispatch(setGroupedItems([]));
+    return;
+  }
+
   const state = getState();
   const allAssociatedGroupedItems = getAllAssociatedGroupedItems(state, groupedItems);
 
@@ -494,13 +499,12 @@ const updateHeaderProperty = (dataElement, property, value) => ({
 });
 
 // We may want to expose an API to update the props of any modular component
-// That is why the action refers to modular components and not just grouped items
-export const setGroupedItemsProperty = (property, value, groupedItemsDataElement) => ({
-  type: 'SET_MODULAR_COMPONENTS_PROPERTY',
+export const setModularComponentProperty = (property, value, dataElement) => ({
+  type: 'SET_MODULAR_COMPONENT_PROPERTY',
   payload: {
     property,
     value,
-    groupedItemsDataElement,
+    dataElement,
   }
 });
 
@@ -715,7 +719,7 @@ const normalizeItems = (items, componentsMap, existingComponentsMap) => {
 
     let newNormalizedItem = normalizedItem;
     if (existingComponentsMap[dataElementKey]) {
-      console.warn(`Modular component with dataElement ${dataElementKey} already exists.`);
+      console.warn(`Modular component with dataElement ${dataElementKey} already exists. Existing component's properties have been updated.`);
       const comp = existingComponentsMap[dataElementKey];
       newNormalizedItem = { ...comp, ...normalizedItem };
     }
@@ -730,6 +734,7 @@ const prepareModularHeaders = (headersList, existingComponentsMap = {}) => {
   const headersMap = {};
   const componentsMap = {};
 
+  headersList = Array.isArray(headersList) ? headersList : [headersList];
   headersList.forEach((header) => {
     if (headersMap[header.dataElement]) {
       const newKey = `${header.dataElement}-${uuidv4()}`;
@@ -785,6 +790,23 @@ export const setModularHeadersAndComponents = (componentsMap, headersMap) => (di
   });
 };
 
+export const setModularComponentFunctions = (functionMap) => (dispatch) => {
+  dispatch({
+    type: 'SET_MODULAR_COMPONENT_FUNCTIONS',
+    payload: { functionMap }
+  });
+};
+
+export const setFlyouts = (flyouts) => (dispatch) => {
+  dispatch({
+    type: 'SET_FLYOUTS',
+    payload: { flyouts }
+  });
+};
+
+export const resetModularUIState = () => ({
+  type: 'RESET_MODULAR_UI_STATE',
+});
 export const setRightHeaderWidth = (width) => ({
   type: 'SET_RIGHT_HEADER_WIDTH',
   payload: width

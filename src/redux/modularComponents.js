@@ -667,6 +667,8 @@ const defaultModularComponents = {
       'ellipseMeasurementToolButton',
       'rectangularAreaMeasurementToolButton',
       'countMeasurementToolButton',
+      'divider-0.4',
+      'stylePanelToggle',
       'defaultAnnotationUtilities'
     ],
     type: 'groupedItems',
@@ -760,6 +762,8 @@ const defaultModularComponents = {
       'dotStampToolButton',
       'rubberStampToolButton',
       'calendarToolButton',
+      'divider-0.4',
+      'stylePanelToggle',
       'defaultAnnotationUtilities'
     ],
     type: 'groupedItems',
@@ -861,7 +865,7 @@ const defaultPanels = [
   },
   {
     dataElement: 'outlinePanel',
-    render: 'genericOutlinesPanel',
+    render: 'outlinesPanel',
     location: 'left'
   },
   {
@@ -897,7 +901,7 @@ const defaultPanels = [
   {
     dataElement: 'signaturePanel',
     render: 'signaturePanel',
-    location: 'right'
+    location: 'left'
   },
   {
     dataElement: 'portfolioPanel',

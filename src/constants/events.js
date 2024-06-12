@@ -64,6 +64,7 @@ export default {
   'MULTI_VIEWER_READY': 'multiViewerReady',
   'COMPARE_ANNOTATIONS_LOADED': 'compareAnnotationsLoaded',
   'TAB_MANAGER_READY': 'onTabManagerReady',
+  'MODULAR_UI_IMPORTED': 'modularUIImported',
 };
 
 /**
@@ -279,3 +280,9 @@ export default {
 * @name UI#onTabManagerReady
 * @event
 */
+
+/** Triggered when a Modular UI JSON configuration is imported
+ * @name UI#modularUIImported
+ * @event
+ * @property {object} importedComponents The JSON object containing the imported components
+ */

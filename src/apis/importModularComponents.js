@@ -33,6 +33,9 @@ import actions from 'actions';
 import setPanels from './setPanels';
 import { ITEM_TYPE, PREBUILT_FLYOUTS } from 'constants/customizationVariables';
 import { panelNames } from 'constants/panel';
+import cloneDeep from 'lodash/cloneDeep';
+import fireEvent from 'helpers/fireEvent';
+import Events from 'constants/events';
 
 const { checkTypes, TYPES } = window.Core;
 
@@ -171,11 +174,13 @@ const validateJSONStructure = (jsonData, functionMap) => {
 };
 
 export default (store) => async (components, functions = {}) => {
-  validateJSONStructure(components, functions);
-  const headersMap = components.modularHeaders || {};
-  const componentMap = components.modularComponents || {};
-  const panels = components.panels || {};
-  const flyouts = components.flyouts || {};
+  store.dispatch(actions.resetModularUIState());
+  const componentsToValidate = cloneDeep(components);
+  validateJSONStructure(componentsToValidate, functions);
+  const headersMap = componentsToValidate.modularHeaders || {};
+  const componentMap = componentsToValidate.modularComponents || {};
+  const panels = componentsToValidate.panels || {};
+  const flyouts = componentsToValidate.flyouts || {};
 
   const panelList = Object.values(panels).map((panel) => panel);
 
@@ -183,7 +188,7 @@ export default (store) => async (components, functions = {}) => {
 
   const getFunctionFromFunctionMap = (functionString) => {
     const storedModularComponentFunctions = store.getState().viewer.modularComponentFunctions;
-    return storedModularComponentFunctions[functionString] || (() => {});
+    return storedModularComponentFunctions[functionString] || (() => { });
   };
 
   Object.values(componentMap).forEach((component) => {
@@ -243,4 +248,6 @@ export default (store) => async (components, functions = {}) => {
   Object.values(prebuiltFlyouts).forEach((flyout) => {
     store.dispatch(actions.addFlyout(flyout));
   });
+
+  fireEvent(Events['MODULAR_UI_IMPORTED'], { importedComponents: components });
 };

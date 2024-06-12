@@ -308,7 +308,7 @@ export const getDefaultHeaderItems = (state) => {
   return state.viewer.headers.default;
 };
 
-//* * The following selectors use the normalized header structure, replacing the exisitng selectors */
+//* * The following selectors use the normalized header structure, replacing the existing selectors */
 const hydrateItems = (itemIds, components) => {
   return itemIds.map((itemId) => {
     const item = components[itemId];
@@ -484,7 +484,7 @@ export const getGroupedItemsOfCustomRibbon = (state, customRibbonDataElement) =>
 export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataElement) => {
   const modularComponents = state.viewer.modularComponents;
   const ribbonItems = Object.keys(modularComponents).find((component) => {
-    const { type, groupedItems } = modularComponents[component];
+    const { type, groupedItems = [] } = modularComponents[component];
 
     if (type === ITEM_TYPE.RIBBON_ITEM) {
       const allGroupedItems = [...groupedItems, ...getNestedGroupedItems(state, groupedItems)];
@@ -494,6 +494,8 @@ export const getRibbonItemAssociatedWithGroupedItem = (state, groupedItemDataEle
   });
   return ribbonItems;
 };
+
+export const getModularComponentFunctions = (state) => state.viewer.modularComponentFunctions;
 
 export const getToolbarGroupItems = (toolbarGroup) => (state) => {
   return state.viewer.headers[toolbarGroup];

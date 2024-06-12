@@ -26,7 +26,8 @@ export default (store) => () => {
         // Recursively validate nested objects
         componentObject[key] = validateComponents(value);
         // Check if the object is empty after validation and remove it
-        if (Object.keys(componentObject[key]).length === 0) {
+        // Do not remove groupedItems as they are used in headers, even in an empty state
+        if (Object.keys(componentObject[key]).length === 0 && key !== 'groupedItems') {
           delete componentObject[key];
         }
       } else if (typeof value === 'function') {

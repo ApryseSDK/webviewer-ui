@@ -19,7 +19,7 @@ export default function useOnAnnotationCreateRubberStampToolMode() {
       dispatch(actions.setStandardStamps(t));
       dispatch(actions.setCustomStamps(t));
     }
-  }, [t]);
+  }, [t, customizableUI]);
 
   React.useEffect(() => {
     if (customizableUI) {

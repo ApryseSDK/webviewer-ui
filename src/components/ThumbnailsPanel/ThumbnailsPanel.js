@@ -9,6 +9,7 @@ import { isIE11 } from 'helpers/device';
 import Thumbnail from 'components/Thumbnail';
 import DocumentControls from 'components/DocumentControls';
 import Button from 'components/Button';
+import Slider from 'components/Slider';
 
 import core from 'core';
 import { extractPagesToMerge, mergeDocument, mergeExternalWebViewerDocument } from 'helpers/pageManipulation';
@@ -16,6 +17,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 import Events from 'constants/events';
 import DataElements from 'constants/dataElement';
+import { circleRadius } from 'constants/slider';
 import fireEvent from 'helpers/fireEvent';
 
 import './ThumbnailsPanel.scss';
@@ -31,7 +33,7 @@ const MAX_COLUMNS = 16;
 
 const hoverAreaHeight = 25;
 
-const ThumbnailsPanel = ({ panelSelector }) => {
+const ThumbnailsPanel = ({ panelSelector, parentDataElement }) => {
   const [
     isLeftPanelOpen,
     isDisabled,
@@ -48,6 +50,7 @@ const ThumbnailsPanel = ({ panelSelector }) => {
     totalPagesFromSecondaryDocumentViewer,
     activeDocumentViewerKey,
     isRightClickEnabled,
+    featureFlags,
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, 'leftPanel'),
@@ -65,6 +68,7 @@ const ThumbnailsPanel = ({ panelSelector }) => {
       selectors.getTotalPages(state, 2),
       selectors.getActiveDocumentViewerKey(state),
       selectors.openingPageManipulationOverlayByRightClickEnabled(state),
+      selectors.getFeatureFlags(state),
     ],
     shallowEqual,
   );
@@ -89,6 +93,7 @@ const ThumbnailsPanel = ({ panelSelector }) => {
   const [lastTimeTriggered, setLastTimeTriggered] = useState(0);
   const [globalIndex, setGlobalIndex] = useState(0);
   const pageCount = activeDocumentViewerKey === 2 ? totalPagesFromSecondaryDocumentViewer : totalPages;
+  const customizableUI = featureFlags?.customizableUI;
 
   const dispatch = useDispatch();
 
@@ -301,7 +306,7 @@ const ThumbnailsPanel = ({ panelSelector }) => {
   }, [isReaderMode, isDocumentReadOnly]);
 
   // if disabled, or is office editor or left panel is not open when we are not in customize mode, return
-  if (isDisabled || isOfficeEditor || (!isLeftPanelOpen && !panelSelector)) {
+  if (isDisabled || isOfficeEditor || (!isLeftPanelOpen && !panelSelector && !customizableUI)) {
     return null;
   }
   const onDragEnd = () => {
@@ -544,6 +549,16 @@ const ThumbnailsPanel = ({ panelSelector }) => {
   const thumbnailAutoScrollAreaStyle = {
     'height': `${hoverAreaHeight}px`,
   };
+  const lineStart = circleRadius;
+
+  const onSliderChange = (property, value) => {
+    let zoomValue = Number(value) * ZOOM_RANGE_MAX;
+    if (zoomValue < 100) {
+      zoomValue = 100;
+    }
+    setThumbnailSize(zoomValue);
+    updateNumberOfColumns();
+  };
 
   return (
     <React.Fragment>
@@ -553,31 +568,59 @@ const ThumbnailsPanel = ({ panelSelector }) => {
           title="action.zoomOut"
           hideTooltipShortcut
           onClick={() => {
-            if (thumbnailSize - Number(ZOOM_RANGE_STEP) > Number(ZOOM_RANGE_STEP)) {
-              setThumbnailSize(thumbnailSize - Number(ZOOM_RANGE_STEP));
+            if (thumbnailSize - ZOOM_RANGE_STEP > ZOOM_RANGE_STEP) {
+              setThumbnailSize(thumbnailSize - ZOOM_RANGE_STEP);
               updateNumberOfColumns();
             }
           }}
           dataElement="zoomThumbOutButton"
         />
-        <input
-          role='slider'
-          type="range"
-          aria-label='thumbnail size slider'
-          min={ZOOM_RANGE_MIN}
-          max={ZOOM_RANGE_MAX}
-          value={thumbnailSize}
-          aria-valuemin={ZOOM_RANGE_MIN}
-          aria-valuemax={ZOOM_RANGE_MAX}
-          aria-valuenow={thumbnailSize}
-          onChange={(e) => {
-            setThumbnailSize(Number(e.target.value));
-            updateNumberOfColumns();
-          }}
-          step={ZOOM_RANGE_STEP}
-          className="thumbnail-slider"
-          id="thumbnailSize"
-        />
+        {customizableUI &&
+          <Slider
+            dataElement={'thumbnailsSizeSlider'}
+            property={'zoom'}
+            displayProperty={'zoom'}
+            min={Number(ZOOM_RANGE_MIN)}
+            max={Number(ZOOM_RANGE_MAX)}
+            value={thumbnailSize}
+            getDisplayValue={() => thumbnailSize}
+            customCircleRadius={8}
+            customLineStrokeWidth={4}
+            getCirclePosition={(lineLength, zoom) => {
+              if (zoom > 1) {
+                zoom /= 1000;
+              }
+              return zoom * lineLength + lineStart;
+            }
+            }
+            convertRelativeCirclePositionToValue={(circlePosition) => circlePosition}
+            onSliderChange={onSliderChange}
+            onStyleChange={onSliderChange}
+            step={Number(ZOOM_RANGE_STEP)}
+            shouldHideSliderTitle={true}
+            shouldHideSliderValue={true}
+          />
+        }
+        {!customizableUI &&
+          <input
+            role='slider'
+            type="range"
+            aria-label='thumbnail size slider'
+            min={ZOOM_RANGE_MIN}
+            max={ZOOM_RANGE_MAX}
+            value={thumbnailSize}
+            aria-valuemin={ZOOM_RANGE_MIN}
+            aria-valuemax={ZOOM_RANGE_MAX}
+            aria-valuenow={thumbnailSize}
+            onChange={(e) => {
+              setThumbnailSize(Number(e.target.value));
+              updateNumberOfColumns();
+            }}
+            step={ZOOM_RANGE_STEP}
+            className="thumbnail-slider"
+            id="thumbnailSize"
+          />
+        }
         <Button
           img="icon-zoom-thumb-in"
           title="action.zoomIn"
@@ -622,7 +665,7 @@ const ThumbnailsPanel = ({ panelSelector }) => {
           </div>
         )}
       </Measure>
-      <DocumentControls shouldShowControls={shouldShowControls} parentElement={panelSelector}/>
+      <DocumentControls shouldShowControls={shouldShowControls} parentElement={parentDataElement || panelSelector} />
     </React.Fragment>
   );
 };
