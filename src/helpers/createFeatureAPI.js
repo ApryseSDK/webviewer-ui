@@ -75,6 +75,10 @@ export default (enable, store) => (features, priority = PRIORITY_TWO) => {
         'markReplaceTextToolButton',
       ],
       fn: () => {
+        if (isOfficeEditorMode()) {
+          console.warn('Office Editor doesn\'t support annotations');
+          return;
+        }
         if (enable) {
           core.showAnnotations(core.getAnnotationsList());
           enableTools(store)();

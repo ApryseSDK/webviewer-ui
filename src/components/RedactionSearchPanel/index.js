@@ -1,3 +1,3 @@
-import RedactionSearchPanel from './RedactionSearchPanelContainer';
+import ReactionSearchPanelContainer from './RedactionSearchPanelContainer';
 
-export default RedactionSearchPanel;
+export default ReactionSearchPanelContainer;

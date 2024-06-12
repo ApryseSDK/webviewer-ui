@@ -1,4 +1,5 @@
 import { defaultModularHeaders, defaultModularComponents } from 'src/redux/modularComponents';
+import { ITEM_TYPE, PRESET_BUTTON_TYPES } from 'constants/customizationVariables';
 
 export const mockHeadersNormalized = {
   'default-top-header': {
@@ -43,7 +44,7 @@ export const mockHeadersNormalized = {
       padding: '8px',
       borderStyle: 'solid',
       borderWidth: 1,
-      borderColor: 'var(--gray-5)'
+      borderColor: 'var(--gray-6)'
     },
     items: [
       'page-controls-container'
@@ -56,27 +57,35 @@ export const mockModularComponents = {
     dataElement: 'filePickerButton',
     title: 'action.openFile',
     label: 'action.openFile',
-    icon: 'icon-header-file-picker-line'
+    icon: 'icon-header-file-picker-line',
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.FILE_PICKER,
   },
   downloadButton: {
     dataElement: 'downloadButton',
     title: 'action.download',
     label: 'action.download',
-    icon: 'icon-download'
+    icon: 'icon-download',
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.DOWNLOAD,
   },
   saveAsButton: {
     dataElement: 'saveAsButton',
     title: 'saveModal.saveAs',
     isActive: false,
     label: 'saveModal.saveAs',
-    icon: 'icon-save'
+    icon: 'icon-save',
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.SAVE_AS,
   },
   printButton: {
     dataElement: 'printButton',
     title: 'action.print',
     isActive: false,
     label: 'action.print',
-    icon: 'icon-header-print-line'
+    icon: 'icon-header-print-line',
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.PRINT,
   },
   undefined: {},
   createPortfolioButton: {
@@ -91,7 +100,9 @@ export const mockModularComponents = {
     title: 'option.settings.settings',
     isActive: false,
     label: 'option.settings.settings',
-    icon: 'icon-header-settings-line'
+    icon: 'icon-header-settings-line',
+    type: ITEM_TYPE.PRESET_BUTTON,
+    buttonType: PRESET_BUTTON_TYPES.SETTINGS,
   },
   'divider-0.1': {
     dataElement: 'divider-0.1',

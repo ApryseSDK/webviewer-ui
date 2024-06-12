@@ -6,6 +6,12 @@
   pointer-events: none;
   color: var(--icon-color);
 
+  &.icon-border {
+    rect {
+      stroke: var(--border) !important;
+    }
+  }
+
   // color for svgs
   path:not([fill*='#']),
   circle:not([fill*='#']),

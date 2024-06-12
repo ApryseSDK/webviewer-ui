@@ -1,5 +1,5 @@
 import React from 'react';
-import NoteHeader from './NoteHeader';
+import NoteHeader from 'components/NoteHeader';
 import NoteContext from '../Note/Context';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';

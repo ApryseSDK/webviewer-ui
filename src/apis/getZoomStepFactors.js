@@ -1,3 +1,3 @@
 import selectors from 'selectors';
 
-export default store => () => selectors.getZoomStepFactors(store.getState());
+export default (store) => () => selectors.getZoomStepFactors(store.getState());

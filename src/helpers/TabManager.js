@@ -358,7 +358,7 @@ export default class TabManager {
     };
 
     core.addEventListener('documentUnloaded', removeListeners, { once: true });
-  }
+  };
 
   // eslint-disable-next-line generator-star-spacing
   *[Symbol.iterator]() {

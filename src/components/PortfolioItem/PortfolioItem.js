@@ -9,7 +9,7 @@ import Button from 'components/Button';
 import DataElementWrapper from 'components/DataElementWrapper';
 import PortfolioContext from 'components/PortfolioPanel/PortfolioContext';
 import PortfolioItemContent from 'components/PortfolioItemContent';
-import { hasChildren } from 'helpers/portfolioUtils';
+import { hasChildren } from 'helpers/portfolio';
 
 import './PortfolioItem.scss';
 
@@ -160,8 +160,7 @@ const PortfolioItemNested = DropTarget(
       const { portfolioItem: dropPortfolioItem } = props;
 
       const dropTargetNode = dropTargetContainer.getNode();
-      // portfolio file is not a valid drop target
-      if (!dragSourceNode || !dropTargetNode || !dropPortfolioItem.isFolder) {
+      if (!dragSourceNode || !dropTargetNode) {
         return;
       }
 
@@ -182,11 +181,11 @@ const PortfolioItemNested = DropTarget(
       }
 
       const dropTargetBoundingRect = dropTargetNode.getBoundingClientRect();
-      const dropTargetVerticalMiddlePoint = (dropTargetBoundingRect.bottom - dropTargetBoundingRect.top) / 2;
+      const dropTargetVerticalMiddlePoint = (dropTargetBoundingRect.height / 2) + dropTargetBoundingRect.top;
       const clientOffset = dropTargetMonitor.getClientOffset();
-      const dropTargetClientY = clientOffset.y - dropTargetBoundingRect.top;
+      const dropTargetClientY = clientOffset.y;
       switch (true) {
-        case dropTargetClientY <= dropTargetVerticalMiddlePoint + BUFFER_ROOM && dropTargetClientY >= dropTargetVerticalMiddlePoint - BUFFER_ROOM:
+        case dropPortfolioItem.isFolder && dropTargetClientY <= dropTargetVerticalMiddlePoint + BUFFER_ROOM && dropTargetClientY >= dropTargetVerticalMiddlePoint - BUFFER_ROOM:
           dragObject.dropLocation = DropLocation.ON_TARGET_HORIZONTAL_MIDPOINT;
           if (dropTargetMonitor.isOver({ shallow: true })) {
             dropTargetNode.classList.add('isNesting');
@@ -197,11 +196,11 @@ const PortfolioItemNested = DropTarget(
             }
           }, 100);
           break;
-        case dropTargetClientY > dropTargetVerticalMiddlePoint + BUFFER_ROOM:
+        case dropTargetClientY > dropTargetVerticalMiddlePoint:
           dragObject.dropLocation = DropLocation.BELOW_TARGET;
           dropTargetNode.classList.remove('isNesting');
           break;
-        case dropTargetClientY < dropTargetVerticalMiddlePoint - BUFFER_ROOM:
+        case dropTargetClientY < dropTargetVerticalMiddlePoint:
           dragObject.dropLocation = DropLocation.ABOVE_TARGET;
           dropTargetNode.classList.remove('isNesting');
           break;
@@ -228,10 +227,10 @@ const PortfolioItemNested = DropTarget(
           movePortfolioInward(dragPortfolioItem, dropPortfolioItem);
           break;
         case DropLocation.ABOVE_TARGET:
-          movePortfolioBeforeTarget(dragPortfolioItem, dropPortfolioItem);
+          movePortfolioBeforeTarget(dragPortfolioItem.id, dropPortfolioItem.id);
           break;
         case DropLocation.BELOW_TARGET:
-          movePortfolioAfterTarget(dragPortfolioItem, dropPortfolioItem);
+          movePortfolioAfterTarget(dragPortfolioItem.id, dropPortfolioItem.id);
           break;
         default:
           break;
@@ -254,7 +253,7 @@ const PortfolioItemNested = DropTarget(
       dragSourceNode: dragSourceContainer.getNode(),
       dropLocation: DropLocation.INITIAL,
     }),
-    canDrag: () => false, // remove this to have dragging enabled
+    canDrag: () => true,
   },
   (connect, dragSourceState) => ({
     connectDragSource: connect.dragSource(),

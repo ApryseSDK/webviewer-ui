@@ -12,7 +12,7 @@
  * @memberOf UI.Components
  * @class UI.Components.Item
  * @abstract
- * @param {ItemProperties} properties An object that contains the properties of the item.
+ * @param {ItemProperties} [properties] An object that contains the properties of the item.
 */
 class Item {
   constructor(options) {

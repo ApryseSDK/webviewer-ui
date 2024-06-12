@@ -110,7 +110,7 @@
       @include button-reset;
       height: 40px;
       padding: 4px 8px;
-      border: solid 1px var(--border);
+      border: solid 1px var(--lighter-border);
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -131,7 +131,8 @@
         }
 
         &.active {
-          background: var(--tools-overlay-button-active);
+          background: var(--gray-2);
+          border-color: var(--blue-5);
         }
       }
 

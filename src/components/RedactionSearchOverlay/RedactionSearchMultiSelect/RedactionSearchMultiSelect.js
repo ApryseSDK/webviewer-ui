@@ -4,8 +4,8 @@ import Icon from 'components/Icon';
 import CreatableMultiSelect from 'components/CreatableMultiSelect';
 import { useTranslation } from 'react-i18next';
 
-const getStyles = isDarkMode => ({
-  groupHeading: base => ({
+const getStyles = (isDarkMode) => ({
+  groupHeading: (base) => ({
     ...base,
     textTransform: 'none',
     fontSize: '10px',
@@ -14,20 +14,20 @@ const getStyles = isDarkMode => ({
     paddingLeft: '8px',
     paddingTop: '10px',
   }),
-  group: base => ({
+  group: (base) => ({
     ...base,
     padding: '0px',
   }),
-  menu: base => ({
+  menu: (base) => ({
     ...base,
     padding: '0px 0px 0px 0px',
   }),
-  menuList: base => ({
+  menuList: (base) => ({
     ...base,
     padding: '0px',
     backgroundColor: isDarkMode ? '#000000' : '#FFFFFF',
   }),
-  multiValue: base => ({
+  multiValue: (base) => ({
     ...base,
     backgroundColor: isDarkMode ? '#192530' : '#E7EDF3',
 
@@ -46,13 +46,13 @@ const getStyles = isDarkMode => ({
     },
     backgroundColor: state.isFocused ? (isDarkMode ? '#192530' : '#E7EDF3') : 'transparent',
   }),
-  valueContainer: base => ({
+  valueContainer: (base) => ({
     ...base,
     padding: '1px',
     maxHeight: '70px',
     overflowY: 'scroll',
   }),
-  control: base => ({
+  control: (base) => ({
     ...base,
     backgroundColor: isDarkMode ? '#21242A' : '#FFFFFF',
     minHeight: '29px',
@@ -61,13 +61,13 @@ const getStyles = isDarkMode => ({
       borderColor: isDarkMode ? '#485056' : '#CFD4DA',
     },
   }),
-  placeholder: base => ({
+  placeholder: (base) => ({
     ...base,
     fontSize: '13px',
     color: isDarkMode ? '#868E96' : '#ADB5BD',
     paddingLeft: '4px',
   }),
-  input: base => ({
+  input: (base) => ({
     ...base,
     fontSize: '13px',
     color: isDarkMode ? '#FFFFFF' : '#485056',
@@ -75,7 +75,7 @@ const getStyles = isDarkMode => ({
   }),
 });
 
-const RedactionOption = props => {
+const RedactionOption = (props) => {
   const { data } = props;
   const { t } = useTranslation();
   return (
@@ -97,7 +97,7 @@ const MultiValueLabel = ({ data }) => {
   );
 };
 
-const RedactionSearchMultiSelect = props => {
+const RedactionSearchMultiSelect = (props) => {
   const { t } = useTranslation();
   const { activeTheme, redactionSearchOptions } = props;
 
@@ -117,7 +117,7 @@ const RedactionSearchMultiSelect = props => {
       styles={styles}
       components={{ Option: RedactionOption, MultiValueLabel, IndicatorsContainer: () => null }}
       placeholder={t('redactionPanel.redactionSearchPlaceholder')}
-      formatCreateLabel={value => `${t('component.searchPanel')} ${value}`}
+      formatCreateLabel={(value) => `${t('component.searchPanel')} ${value}`}
       {...props}
     />
   );

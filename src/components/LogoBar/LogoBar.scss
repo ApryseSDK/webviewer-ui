@@ -1,0 +1,38 @@
+@import '../../constants/styles';
+
+.LogoBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 16px;
+  width: 100%;
+  height: $logo-bar-height;
+  background: var(--gray-0);
+  color: #747C84;
+  font-size: 12px;
+  line-height: 16px;
+
+  .logo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .logo-button {
+    width: 100%;
+    gap: 4px;
+    color: #747C84;
+    font-size: 12px !important;
+
+    .Icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .version {
+    text-decoration: none;
+    color: #747C84;
+  }
+}

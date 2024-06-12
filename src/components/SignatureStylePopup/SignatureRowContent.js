@@ -7,9 +7,9 @@ const SignatureRowContent = ({ onClick, imgSrc, isActive, altText }) => {
   return (
     <button
       className={classNames({
-        "signature-row-content": true,
-        "interactable": onClick,
-        "active": isActive,
+        'signature-row-content': true,
+        'interactable': onClick,
+        'active': isActive,
       })}
       onClick={onClick}
     >

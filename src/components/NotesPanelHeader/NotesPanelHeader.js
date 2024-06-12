@@ -27,19 +27,22 @@ function NotesPanelHeader({
   isMultiSelectMode,
   toggleMultiSelectMode,
   isMultiSelectEnabled,
-  isOfficeEditorReviewingMode,
 }) {
   const [
     sortStrategy,
     isSortContainerDisabled,
     customHeaderOptions,
     annotationFilters,
+    featureFlags,
+    isOfficeEditorMode,
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
       selectors.isElementDisabled(state, SORT_CONTAINER_ELEMENT),
       selectors.getNotesPanelCustomHeaderOptions(state),
-      selectors.getAnnotationFilters(state)
+      selectors.getAnnotationFilters(state),
+      selectors.getFeatureFlags(state),
+      selectors.getIsOfficeEditorMode(state),
     ],
     shallowEqual
   );
@@ -47,6 +50,7 @@ function NotesPanelHeader({
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const [filterEnabled, setFilterEnabled] = useState(false);
+  const customizableUI = featureFlags.customizableUI;
 
   useEffect(() => {
     // check if Redux filter state is enabled on mount and set filterEnabled to true
@@ -99,7 +103,11 @@ function NotesPanelHeader({
 
   const originalHeaderElement = (
     <DataElementWrapper
-      className="header"
+      className={
+        classNames({
+          'header': true,
+          'custom-header': customizableUI,
+        })}
       dataElement="notesPanelHeader"
     >
       <DataElementWrapper
@@ -119,7 +127,7 @@ function NotesPanelHeader({
         className="comments-counter"
         dataElement={DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}
       >
-        <span className='main-comment'>{isOfficeEditorReviewingMode ? t('officeEditor.reviewing') : t('component.notesPanel')}</span> {`(${notes.length})`}
+        <span className='main-comment'>{isOfficeEditorMode ? t('officeEditor.reviewing') : t('component.notesPanel')}</span> {`(${notes.length})`}
       </DataElementWrapper>
 
       <DataElementWrapper
@@ -130,7 +138,7 @@ function NotesPanelHeader({
         <div
           className="buttons-container"
         >
-          {(!isMultiSelectEnabled) ? null :
+          {isMultiSelectEnabled && (
             <Button
               dataElement={DataElements.NOTE_MULTI_SELECT_MODE_BUTTON}
               className={classNames({
@@ -144,7 +152,7 @@ function NotesPanelHeader({
               }}
               title={t('component.multiSelectButton')}
             />
-          }
+          )}
           <Button
             dataElement={DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON}
             className={classNames({

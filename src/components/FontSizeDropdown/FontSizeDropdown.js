@@ -19,6 +19,8 @@ const propTypes = {
   fontUnit: PropTypes.string, // Ex: 'pt'
   onFontSizeChange: PropTypes.func.isRequired,
   maxFontSize: PropTypes.number,
+  initialFontValue: PropTypes.number,
+  initialMaxFontValue: PropTypes.number,
   incrementMap: PropTypes.object,
   onError: PropTypes.func, // Calls this with current error message string whenever it changes
   applyOnlyOnBlur: PropTypes.bool, // If true, apply the font size change only when the element loses focus
@@ -41,6 +43,8 @@ const FontSizeDropdown = ({
   fontSize = 12,
   fontUnit = 'pt',
   maxFontSize = RENDER_ROWS_UPPER_LIMIT,
+  initialFontValue = MIN_FONT_SIZE,
+  initialMaxFontValue = maxFontSize,
   incrementMap = BREAKS_AND_INCREMENT,
   onError = undefined,
   applyOnlyOnBlur = false,
@@ -79,10 +83,13 @@ const FontSizeDropdown = ({
   useEffect(() => {
     incrementMap[maxFontSize] = 12;
     const getNewNumbers = (curr) => {
-      const startArr = [MIN_FONT_SIZE];
-      for (let i = 1; i <= maxFontSize; i++) {
+      const startArr = [initialFontValue];
+      for (let i = 1; i <= RENDER_ROWS_UPPER_LIMIT; i++) {
         const higherIncrement = getIncrement(startArr[startArr.length - 1]);
         const higher = (startArr[startArr.length - 1]) + higherIncrement;
+        if (higher > initialMaxFontValue) {
+          break;
+        }
         isValidNum(higher, startArr) && startArr.push(higher);
       }
       if (!startArr.includes(curr)) {

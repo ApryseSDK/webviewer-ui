@@ -1,7 +1,9 @@
 import { useRef, useEffect } from 'react';
+import getRootNode from 'helpers/getRootNode';
 
 /**
  * Creates DOM element to be used as React root.
+ * @ignore
  * @returns {HTMLElement}
  */
 function createRootElement(id) {
@@ -12,12 +14,14 @@ function createRootElement(id) {
 
 /**
  * Appends element as last child of body.
+ * @ignore
  * @param {HTMLElement} rootElem
  */
 function addRootElement(rootElem) {
-  document.body.insertBefore(
+  const node = (window.isApryseWebViewerWebComponent) ? getRootNode() : document.body;
+  node.insertBefore(
     rootElem,
-    document.body.lastElementChild.nextElementSibling,
+    node.lastElementChild.nextElementSibling,
   );
 }
 
@@ -26,6 +30,7 @@ function addRootElement(rootElem) {
  * Automatically handles creating and tearing-down the root elements (no SRR
  * makes this trivial), so there is no need to ensure the parent target already
  * exists.
+ * @ignore
  * @example
  * const target = usePortal(id, [id]);
  * return createPortal(children, target);
@@ -34,9 +39,9 @@ function addRootElement(rootElem) {
  */
 function usePortal(id) {
   const rootElemRef = useRef(null);
-
   useEffect(function setupElement() {
     // Look for existing target dom element to append to
+
     const existingParent = document.querySelector(`#${id}`);
     // Parent is either a new root or the existing dom element
     const parentElem = existingParent || createRootElement(id);

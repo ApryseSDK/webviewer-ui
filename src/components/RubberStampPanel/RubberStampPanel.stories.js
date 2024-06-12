@@ -1,34 +1,15 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
-import rootReducer from 'reducers/rootReducer';
-import App from 'components/App';
 import RubberStampPanel from './RubberStampPanel';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
-import PropTypes from 'prop-types';
+import { MockApp, createStore } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/RubberStampPanel',
   component: RubberStampPanel,
-};
-
-const createStore = (preloadedState) => {
-  return configureStore({
-    reducer: rootReducer,
-    preloadedState: preloadedState,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-  });
-};
-
-const MockApp = ({ store }) => (
-  <Provider store={store}>
-    <App removeEventHandlers={() => { }} />
-  </Provider>
-);
-
-MockApp.propTypes = {
-  store: PropTypes.object.isRequired,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const RubberStampPanelInApp = (location,) => {
@@ -65,7 +46,7 @@ const RubberStampPanelInApp = (location,) => {
   const store = createStore(mockState);
   setItemToFlyoutStore(store);
 
-  return <MockApp store={store} />;
+  return <MockApp initialState={mockState} />;
 };
 
 export const RubberStampPanelInleft = () => RubberStampPanelInApp('left');

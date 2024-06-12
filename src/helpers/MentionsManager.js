@@ -263,6 +263,12 @@ class MentionsManager {
     const isEndOfString = typeof nextChar === 'undefined';
     const allowedChars = this.getAllowedTrailingCharacters();
 
+    // New line character needs to be allowed in testing
+    // mention, otherwise it leads unexpected behaviours
+    if (Array.isArray(allowedChars) && allowedChars.indexOf('\n') === -1) {
+      allowedChars.push('\n');
+    }
+
     return isEndOfString || allowedChars === '*' || allowedChars.includes(nextChar);
   }
 

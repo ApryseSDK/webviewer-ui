@@ -84,6 +84,7 @@ const DesktopPanel = ({ children }) => {
         'tools-header-open': customizableUI ? activeTopHeaders.length === 2 : legacyToolsHeaderOpen,
         'tools-header-and-header-hidden': customizableUI ? activeTopHeaders.length === 0 : legacyAllHeadersHidden,
         'logo-bar-enabled': isLogoBarEnabled,
+        'custom-panel': customizableUI,
         'multi-tab-active': isMultiTabActive,
       })}
       data-element={dataElement}

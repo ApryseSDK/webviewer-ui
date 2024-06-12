@@ -39,7 +39,8 @@ const initialState = {
       statusFilter: []
     },
   },
-  officeEditor: {}
+  officeEditor: {},
+  featureFlags: {},
 };
 
 const store = configureStore({ reducer: () => initialState });

@@ -3,25 +3,24 @@ import selectors from 'selectors';
 import actions from 'actions';
 import { useSelector, useDispatch } from 'react-redux';
 import PageReplacementModalContainer from './PageReplacementModalContainer';
+import DataElements from 'constants/dataElement';
 
 function PageReplacementModalRedux(props) {
   const dispatch = useDispatch();
   const closePageReplacement = () => {
-    dispatch(actions.closeElement('pageReplacementModal'));
+    dispatch(actions.closeElement(DataElements.PAGE_REPLACEMENT_MODAL));
   };
 
-  const selectableFiles = useSelector(state => selectors.getPageReplacementFileList(state));
+  const selectableFiles = useSelector((state) => selectors.getPageReplacementFileList(state));
 
-  const [isOpen] = useSelector(state => [
-    selectors.isElementOpen(state, 'pageReplacementModal'),
+  const [isOpen] = useSelector((state) => [
+    selectors.isElementOpen(state, DataElements.PAGE_REPLACEMENT_MODAL),
   ]);
 
-  const selectedThumbnailPageIndexes = useSelector(state =>
-    selectors.getSelectedThumbnailPageIndexes(state)
+  const selectedThumbnailPageIndexes = useSelector((state) => selectors.getSelectedThumbnailPageIndexes(state)
   );
 
-  const selectedTab = useSelector(state =>
-    selectors.getSelectedTab(state, 'pageReplacementModal')
+  const selectedTab = useSelector((state) => selectors.getSelectedTab(state, DataElements.PAGE_REPLACEMENT_MODAL)
   );
 
   const newProps = {

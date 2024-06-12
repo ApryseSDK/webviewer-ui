@@ -357,7 +357,7 @@ const initialState = {
           { dataElement: 'panToolButton', toolName: 'Pan', className: 'FlyoutToolButton' },
           { dataElement: 'annotationEditToolButton', toolName: 'AnnotationEdit', className: 'FlyoutToolButton' },
         ],
-      },
+      }
     },
     modularComponents: {
       panToolButton: {
@@ -421,7 +421,6 @@ const store3 = configureStore({
   }
 });
 
-
 export const MainMenuFlyout = () => (
   <Provider store={store3}>
     <Flyout/>
@@ -456,6 +455,7 @@ ViewControlsFlyout.play = async (context) => {
   await userEvent.click(flyoutItem);
   expect(flyoutItem).toBeInTheDocument();
 };
+
 const store4 = configureStore({
   reducer: () => {
     return {

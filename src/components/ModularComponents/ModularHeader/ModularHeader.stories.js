@@ -15,6 +15,8 @@ import {
   button9,
 } from '../Helpers/mockHeaders';
 import { mockModularComponents } from '../AppStories/mockAppState';
+import '../LeftHeader/LeftHeader.scss';
+import '../RightHeader/RightHeader.scss';
 
 export default {
   title: 'ModularComponents/ModularHeader',
@@ -24,6 +26,9 @@ export default {
       options: Object.values(JUSTIFY_CONTENT),
       control: { type: 'select' },
     },
+  },
+  parameters: {
+    customizableUI: true,
   },
 };
 

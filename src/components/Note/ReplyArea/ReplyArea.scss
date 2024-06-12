@@ -4,66 +4,62 @@
 .reply-area-container {
   border-top: 1px solid var(--divider);
   display: flex;
+  flex-direction: column;
 
-  .reply-button-container {
+  .reply-attachment-list {
+    margin: 12px 12px 0 12px;
+  }
+
+  .reply-area-with-button {
     display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-  }
 
-  .reply-button {
-    width: 28px;
-    height: 28px;
-    @include button-reset;
-    // for IE only
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      width: 80px;
-    }
-    right: 10px;
-    bottom: 12px;
-    
-    &:hover {
-      background: var(--blue-1)
-    }
+    .reply-area {
+      position: relative;
+      flex: 1;
+      margin: 12px 17px 12px 12px;
+      border-radius: 4px;
+      align-items: center;
 
-    &.disabled {
-      cursor: not-allowed;
-    }
-  }
-}
+      &.unread {
+        background: rgba($color: $pdftron-blue, $alpha: 0.08);
+      }
 
-.reply-area {
-  display: flex;
-  position: relative;
-  flex: 1;
-  margin: 13px 17px 12px 12px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  align-items: center;
-  &.unread {
-    background: rgba($color:$pdftron-blue, $alpha: 0.08);
-  }
-  &:focus-within{
-    border: 1px solid var(--focus-border);
-  }
+      .comment-textarea .ql-container .ql-editor.ql-blank {
+        padding: 4px 4px 4px 4px;
 
-  textarea {
-    width: 100%;
-    padding-left: 8px;
-    border: none;
-    color: var(--text-color);
-    padding: 4px 4px 4px 4px;
-    resize: none;
-    overflow: hidden;
-    height: 24px;
-    box-sizing: border-box;
-    &:focus {
-      outline: none;
-      border: none;
+        &::before {
+          left: 4px;
+        }
+      }
     }
 
-    &::placeholder {
-      color: var(--placeholder-text);
+    .reply-button-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      .reply-button {
+        width: 28px;
+        height: 28px;
+        @include button-reset;
+
+        // for IE only
+        @media all and (-ms-high-contrast: none),
+        (-ms-high-contrast: active) {
+          width: 80px;
+        }
+
+        right: 10px;
+        bottom: 12px;
+
+        &:hover {
+          background: var(--blue-1)
+        }
+
+        &.disabled {
+          cursor: not-allowed;
+        }
+      }
     }
   }
 }

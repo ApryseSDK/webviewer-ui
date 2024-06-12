@@ -4,14 +4,16 @@ import { configureStore } from '@reduxjs/toolkit';
 import ZoomControlsContainer from 'components/ModularComponents/ZoomControls/ZoomControlsContainer';
 import FlyoutContainer from 'components/ModularComponents/FlyoutContainer';
 import rootReducer from 'reducers/rootReducer';
+import { MockApp } from 'helpers/storybookHelper';
 import actions from 'actions';
-import App from 'components/App';
 import initialState from 'src/redux/initialState';
-import PropTypes from 'prop-types';
 
 export default {
   title: 'ModularComponents/ZoomControls',
   component: ZoomControlsContainer,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const store = configureStore({
@@ -40,23 +42,6 @@ export const SmallSize = () => {
   );
 };
 
-const MockApp = ({ mockState }) => {
-  return (
-    <Provider store={configureStore({
-      reducer: rootReducer,
-      preloadedState: mockState,
-      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-    })}
-    >
-      <App removeEventHandlers={() => { }} />
-    </Provider>
-  );
-};
-
-MockApp.propTypes = {
-  mockState: PropTypes.object,
-};
-
 const stateWithFlyoutOpen = {
   ...initialState,
   viewer: {
@@ -74,7 +59,7 @@ const stateWithFlyoutOpen = {
 };
 
 export const OpenWithMockApp = () => {
-  return <MockApp mockState={stateWithFlyoutOpen} />;
+  return <MockApp initialState={stateWithFlyoutOpen} />;
 };
 
 OpenWithMockApp.parameters = {

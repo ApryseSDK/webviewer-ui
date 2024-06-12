@@ -20,6 +20,6 @@ WebViewer(...)
 
 import actions from 'actions';
 
-export default store => filterFunc => {
+export default (store) => (filterFunc) => {
   store.dispatch(actions.setCustomNoteFilter(filterFunc));
 };

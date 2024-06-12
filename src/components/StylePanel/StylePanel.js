@@ -239,6 +239,11 @@ const StylePanel = () => {
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
     core.addEventListener('toolModeUpdated', handleToolModeChange);
+    core.addEventListener('annotationChanged', () => {
+      for (const annot of core.getSelectedAnnotations()) {
+        updateStylePanelProps(annot);
+      }
+    });
     return () => {
       core.removeEventListener('annotationSelected', onAnnotationSelected);
       core.removeEventListener('toolModeUpdated', handleToolModeChange);

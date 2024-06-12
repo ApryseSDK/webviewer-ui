@@ -7,6 +7,9 @@ import { panelMinWidth } from 'constants/panel';
 export default {
   title: 'ModularComponents/TabPanel',
   component: TabPanel,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const initialState = {
@@ -152,30 +155,22 @@ const initialState = {
 
 const store = configureStore({ reducer: () => initialState });
 
+const tabPanelTemplate = (dataElement, width) => {
+  return (
+    <Provider store={store}>
+      <div style={{ width: `${width}px` }}>
+        <TabPanel dataElement={dataElement} />
+      </div>
+    </Provider>
+  );
+};
 
-export const TabPanelWithIconsOnly = () => (
-  <Provider store={store}>
-    <div style={{ width: '320px' }}>
-      <TabPanel dataElement='tabPanelIconsOnly' />
-    </div>
-  </Provider>
-);
+export const TabPanelWithIconsOnly = () => (tabPanelTemplate('tabPanelIconsOnly', 320));
 
-export const TabPanelWithLabelsOnly = () => (
-  <Provider store={store}>
-    <div style={{ width: '204px' }}>
-      <TabPanel dataElement='tabPanelLabelsOnly' />
-    </div>
-  </Provider>
-);
+export const TabPanelWithLabelsOnly = () => (tabPanelTemplate('tabPanelLabelsOnly', 204));
 
-export const TabPanelIconsAndLabels = () => (
-  <Provider store={store}>
-    <div style={{ width: '246px' }}>
-      <TabPanel dataElement='tabPanelIconsAndLabels' />
-    </div>
-  </Provider>
-);
+export const TabPanelIconsAndLabels = () => (tabPanelTemplate('tabPanelIconsAndLabels', 246));
+
 
 const initialStateThumbnailsOnly = {
   viewer: {
@@ -223,7 +218,7 @@ const initialStateThumbnailsOnly = {
     }
   },
   featureFlags: {
-    customizableUI: true,
+    customizableUI: false,
   },
 };
 

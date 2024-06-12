@@ -18,7 +18,7 @@ import actions from 'actions';
  * <span style='font-size: 18px'><b>Please carefully read the documentation and the notes below before using this API</b></span><br><br>
  *
  * <b>This API is experimental and should be used sparingly.</b> If you find you are heavily relying on this function,
- *  it is recommended that you <a href='https://www.pdftron.com/documentation/web/guides/advanced-customization/'>fork the UI repo</a> and make the changes directly in the source code (Note.js).
+ *  it is recommended that you <a href='https://docs.apryse.com/documentation/web/guides/advanced-customization/'>fork the UI repo</a> and make the changes directly in the source code (Note.js).
  * <br><br>
  *
  *
@@ -43,7 +43,7 @@ Webviewer(...)
   .then(instance => {
     instance.UI.dangerouslySetNoteTransformFunction((wrapper, state, createElement) => {
       // Change the title of every note
-      wrapper.querySelector('.author-and-time>span').innerHTML = 'My custom note title';
+      wrapper.querySelector('.author-and-time > .author').innerHTML = 'My custom note title';
 
       // Add a button that alerts the user when clicked
       const button = createElement('button');
@@ -60,7 +60,7 @@ Webviewer(...)
       // Add a button that makes the annotation blue
       const button = createElement('button');
       button.onmousedown = (e) => {
-        state.annotation.StrokeColor = new instance.Annotations.Color(0, 0, 255);
+        state.annotation.StrokeColor = new instance.Core.Annotations.Color(0, 0, 255);
         instance.UI.annotManager.redrawAnnotation(state.annotation)
       };
       button.innerHTML = 'Make me blue'
@@ -68,6 +68,6 @@ Webviewer(...)
     })
   });
  */
-export default store => noteTransformFunction => {
+export default (store) => (noteTransformFunction) => {
   store.dispatch(actions.setNoteTransformFunction(noteTransformFunction));
 };

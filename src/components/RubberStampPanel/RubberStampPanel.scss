@@ -149,4 +149,9 @@
     }
   }
 
+  &.custom-panel {
+    .rubber-stamps-list .rubber-stamp{
+      border-color: var(--lighter-border);
+    }
+  }
 }

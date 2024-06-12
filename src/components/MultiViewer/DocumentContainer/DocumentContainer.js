@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import './DocumentContainer.scss';
 import classNames from 'classnames';
 import loadDocument from 'helpers/loadDocument';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,9 +8,12 @@ import PropTypes from 'prop-types';
 import { getMaxZoomLevel, getMinZoomLevel } from 'constants/zoomFactors';
 import _setCurrentPage from 'helpers/setCurrentPage';
 import { getStep } from 'helpers/zoom';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import core from 'core';
 import getNumberOfPagesToNavigate from 'helpers/getNumberOfPagesToNavigate';
+import getRootNode from 'helpers/getRootNode';
+
+import './DocumentContainer.scss';
 
 const propTypes = {
   documentViewerKey: PropTypes.number.isRequired,
@@ -39,9 +41,11 @@ const DocumentContainer = ({
 
   useEffect(() => {
     const removeListeners = () => {
-      container.current.removeEventListener('dragover', preventDefault);
-      container.current.removeEventListener('drop', onDrop);
-      container.current.removeEventListener('wheel', onWheel, { passive: false });
+      if (container?.current) {
+        container.current.removeEventListener('dragover', preventDefault);
+        container.current.removeEventListener('drop', onDrop);
+        container.current.removeEventListener('wheel', onWheel, { passive: false });
+      }
     };
     documentViewer.setScrollViewElement(container.current);
     documentViewer.setViewerElement(document.current);
@@ -59,6 +63,14 @@ const DocumentContainer = ({
     if (files.length) {
       loadDocument(dispatch, files[0], {}, documentViewerKey);
     }
+  };
+  const handleScroll = () => {
+    dispatch(actions.closeElements([
+      'annotationPopup',
+      'textPopup',
+      'inlineCommentPopup',
+      'annotationNoteConnectorLine'
+    ]));
   };
   const onWheel = (e) => {
     const displayMode = documentViewer.getDisplayModeManager().getDisplayMode();
@@ -88,9 +100,9 @@ const DocumentContainer = ({
         getMinZoomLevel()
       );
     }
-    const yOffset = window.document.getElementById(`header${documentViewerKey}`).getBoundingClientRect().bottom;
-    const xOffset = e.clientX - window.document.getElementById(`container${documentViewerKey}`).getBoundingClientRect().left;
-    documentViewer.zoomToMouse(newZoomFactor, xOffset, yOffset);
+    const yOffset = getRootNode().getElementById(`header${documentViewerKey}`).getBoundingClientRect().bottom;
+    const xOffset = e.clientX - getRootNode().getElementById(`container${documentViewerKey}`).getBoundingClientRect().left;
+    documentViewer.zoomToMouse(newZoomFactor, xOffset, yOffset, e);
   }, 30, { trailing: false });
   const wheelToNavigatePages = (e) => {
     const currentPage = core.getCurrentPage(documentViewerKey);
@@ -122,10 +134,14 @@ const DocumentContainer = ({
   };
   const style = (!docLoaded) ? { position: 'relative' } : {};
   return (
-    <div className={classNames('DocumentContainer', {
-      active: activeDocumentViewerKey === documentViewerKey,
-    })} ref={container} id={`DocumentContainer${documentViewerKey}`}
-    style={style}
+    <div
+      className={classNames('DocumentContainer', {
+        active: activeDocumentViewerKey === documentViewerKey,
+      })}
+      ref={container}
+      id={`DocumentContainer${documentViewerKey}`}
+      onScroll={handleScroll}
+      style={style}
     >
       <div className={'document'} ref={document} id={`Document${documentViewerKey}`} />
     </div>

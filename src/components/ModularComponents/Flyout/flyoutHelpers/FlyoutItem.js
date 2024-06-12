@@ -46,6 +46,7 @@ function FlyoutItem(props) {
     const newFlyoutItemState = {
       ...props.flyoutItem,
       ...itemToFlyout(modularComponent, {
+        useOverrideClickOnly: true,
         onClick: flyoutItem?.onClick,
         children: flyoutItem?.children,
       }),

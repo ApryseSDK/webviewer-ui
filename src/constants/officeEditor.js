@@ -66,11 +66,10 @@ export const elementsToDisableInOfficeEditor = [
   'leftPanelButton',
   'annotationPopup',
   DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON,
-  DataElements.ANNOTATION_NOTE_CONNECTOR_LINE,
-  DataElements.ANNOTATION_CONTENT_OVERLAY,
+  DataElements.ANNOTATION_NOTE_CONNECTOR_LINE
 ];
 
 export const elementsToEnableInOfficeEditor = [
   DataElements.OFFICE_EDITOR_TOOLS_HEADER,
-  DataElements.INLINE_COMMENT_POPUP
+  // DataElements.INLINE_COMMENT_POPUP
 ];

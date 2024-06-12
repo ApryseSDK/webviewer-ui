@@ -6,20 +6,24 @@
   align-items: baseline !important;
 }
 
+.ui__choice {
+  align-items: center;
+}
+
 .ui__choice__input--switch {
   .ui__choice__input__switch {
     height: 14px !important;
     border-radius: 24px !important;
-    background-color: #E7EBEE !important;
+    background-color: var(--gray-3) !important;
     border: none !important;
 
     &.ui__choice__input__switch--disabled {
-      opacity: 0.4;
+      opacity: 0.6;
       cursor: not-allowed;
     }
 
     &.ui__choice__input__switch--checked {
-      background-color: #3183C8 !important;
+      background-color: var(--checked-option) !important;
 
       .ui__choice__input__toggle {
         left: 12px !important;
@@ -29,7 +33,7 @@
     .ui__choice__input__toggle {
       height: 10px !important;
       width: 10px !important;
-      background-color: #FFFFFF !important;
+      background-color: var(--gray-0) !important;
       left: 2px !important;
     }
   }

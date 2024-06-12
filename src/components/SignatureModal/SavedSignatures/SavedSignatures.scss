@@ -48,6 +48,17 @@
 
         .icon-button {
           justify-self: end;
+          @include button-reset;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 34px;
+          border-radius: 4px;
+          cursor: pointer;
+
+          &:hover {
+            background: var(--tools-overlay-button-hover);
+          }
         }
 
         .radioButton {

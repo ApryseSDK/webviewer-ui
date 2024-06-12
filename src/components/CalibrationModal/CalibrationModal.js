@@ -6,25 +6,26 @@ import Button from 'components/Button';
 import core from 'core';
 import { mapAnnotationToKey } from 'constants/map';
 import setToolStyles from 'helpers/setToolStyles';
-import parseMeasurementContents from 'helpers/parseMeasurementContents';
 import evalFraction from 'helpers/evalFraction';
 import actions from 'actions';
 import selectors from 'selectors';
 import { Swipeable } from 'react-swipeable';
+import DataElements from 'constants/dataElement';
 
 import './CalibrationModal.scss';
+
 const parseMeasurementContentsByAnnotation = (annotation) => {
   const factor = annotation.Measure.axis[0].factor;
-  const unit = annotation.Scale[1][1]
+  const unit = annotation.Scale[1][1];
 
-  switch(unit) {
+  switch (unit) {
     case 'ft-in':
       return (annotation.getLineLength() * factor / 12);
     case 'in':
     default:
       return (annotation.getLineLength() * factor);
   }
-}
+};
 
 const numberRegex = /^\d*(\.\d*)?$/;
 const fractionRegex = /^\d*(\s\d\/\d*)$/;
@@ -32,9 +33,9 @@ const pureFractionRegex = /^(\d\/\d*)*$/;
 
 const CalibrationModal = () => {
   const [isOpen, isDisabled, units] = useSelector(
-    state => [
-      selectors.isElementOpen(state, 'calibrationModal'),
-      selectors.isElementDisabled(state, 'calibrationModal'),
+    (state) => [
+      selectors.isElementOpen(state, DataElements.CALIBRATION_MODAL),
+      selectors.isElementDisabled(state, DataElements.CALIBRATION_MODAL),
       selectors.getMeasurementUnits(state),
     ],
     shallowEqual
@@ -50,23 +51,13 @@ const CalibrationModal = () => {
 
   useEffect(() => {
     isOpen && inputRef?.current?.focus();
+    handleAnnotationsSelected(core.getSelectedAnnotations());
   }, [isOpen]);
 
   useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
-      if (
-        annotations?.length === 1 &&
-        mapAnnotationToKey(annotations[0]) === 'distanceMeasurement' &&
-        action === 'selected'
-      ) {
-        const annot = annotations[0];
-        setAnnotation(annot);
-        const value = parseMeasurementContentsByAnnotation(annot).toFixed(2);
-        setValue(value);
-        setUnitTo(annot.Scale[1][1]);
-        // initial new distance should be the same as the value
-        // in case the user doesn't change the input value
-        setNewDistance(parseFloat(value));
+      if (action === 'selected') {
+        handleAnnotationsSelected(annotations);
       } else if (action === 'deselected') {
         setAnnotation(null);
         setValue('');
@@ -76,8 +67,8 @@ const CalibrationModal = () => {
     };
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
-    return () =>
-      core.removeEventListener('annotationSelected', onAnnotationSelected);
+
+    return () => core.removeEventListener('annotationSelected', onAnnotationSelected);
   }, []);
 
   useEffect(() => {
@@ -93,16 +84,30 @@ const CalibrationModal = () => {
     };
 
     core.addEventListener('annotationChanged', onAnnotationChanged);
-    return () =>
-      core.removeEventListener('annotationChanged', onAnnotationChanged);
+    return () => core.removeEventListener('annotationChanged', onAnnotationChanged);
   }, [annotation]);
 
-  const handleInputChange = e => {
+  const handleAnnotationsSelected = (annotations) => {
+    if (
+      annotations?.length === 1 &&
+      mapAnnotationToKey(annotations[0]) === 'distanceMeasurement'
+    ) {
+      const annot = annotations[0];
+      setAnnotation(annot);
+      const value = parseMeasurementContentsByAnnotation(annot).toFixed(2);
+      setValue(value);
+      setUnitTo(annot.Scale[1][1]);
+      // initial new distance should be the same as the value
+      // in case the user doesn't change the input value
+      setNewDistance(parseFloat(value));
+    }
+  };
+
+  const handleInputChange = (e) => {
     setShowError(false);
     setValue(e.target.value);
   };
-
-  const validateInput = e => {
+  const validateInput = (e) => {
     const inputValue = e.target.value.trim();
     if (inputValue === '') {
       setShowError(true);
@@ -137,10 +142,9 @@ const CalibrationModal = () => {
     }
   };
 
-  const handleSelectChange = e => {
+  const handleSelectChange = (e) => {
     setUnitTo(e.target.value);
   };
-
   const handleApply = () => {
     const newScale = getNewScale();
     const accurateNewScale = handleLossOfPrecision(newScale);
@@ -156,10 +160,10 @@ const CalibrationModal = () => {
       accurateNewScale
     );
 
-    dispatch(actions.closeElements(['calibrationModal']));
+    dispatch(actions.closeElements([DataElements.CALIBRATION_MODAL]));
   };
 
-  const handleLossOfPrecision = scale => {
+  const handleLossOfPrecision = (scale) => {
     // when the new distance that's entered in the modal is much bigger than the current distance, loss of precision can happen
     // because internally WebViewer will do several multiplications and divisions to get the value to store in a measure dictionary
     // in this case, setting 'Scale' again should fix this issue because this time the new distance and the current distance is very close, and we should get the accurate scale
@@ -182,9 +186,8 @@ const CalibrationModal = () => {
   };
 
   const closeModal = () => {
-    dispatch(actions.closeElements(['calibrationModal']));
+    dispatch(actions.closeElements([DataElements.CALIBRATION_MODAL]));
   };
-
   return isDisabled || !annotation ? null : (
     <Swipeable
       onSwipedUp={closeModal}
@@ -199,8 +202,7 @@ const CalibrationModal = () => {
           closed: !isOpen,
         })}
         onMouseDown={closeModal}
-      >
-        <div className="container" onMouseDown={e => e.stopPropagation()}>
+      > <div className="container" onMouseDown={(e) => e.stopPropagation()}>
           <div className="swipe-indicator" />
           <div className="calibration__header">
             {t('component.calibration')}
@@ -221,7 +223,7 @@ const CalibrationModal = () => {
                 value={unitTo}
                 onChange={handleSelectChange}
               >
-                {units.to.map(unit => (
+                {units.to.map((unit) => (
                   <option key={unit} value={unit}>
                     {unit}
                   </option>

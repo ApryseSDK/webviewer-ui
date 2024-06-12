@@ -5,6 +5,11 @@ import ActionButton from 'components/ActionButton';
 import { menuItems } from '../../Helpers/menuItems';
 import core from 'core';
 
+/**
+ * A button that toggles form field edit mode.
+ * @name formFieldEditButton
+ * @memberof UI.Components.PresetButton
+ */
 const FormFieldEditButton = (props) => {
   const { isFlyoutItem, iconDOMElement } = props;
   const { label, presetDataElement, icon, title } = menuItems.formFieldEditButton;

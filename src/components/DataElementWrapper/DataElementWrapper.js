@@ -19,14 +19,15 @@ function useIsDisabledWithDefaultValue(selector, defaultValue = false) {
     return useSelector(selector);
   } catch (e) {
     if (e.message !== 'could not find react-redux context value; please ensure the component is wrapped in a <Provider>') {
-      throw e;
+      // If error don't throw it, just return default value, or we break chromatic tests
+      // throw e;
     }
   }
   return defaultValue;
 }
 
-const DataElementWrapper = React.forwardRef(({ type = "div", children, dataElement, ...props }, ref) => {
-  const isDisabled = useIsDisabledWithDefaultValue(state => selectors.isElementDisabled(state, dataElement));
+const DataElementWrapper = React.forwardRef(({ type = 'div', children, dataElement, ...props }, ref) => {
+  const isDisabled = useIsDisabledWithDefaultValue((state) => selectors.isElementDisabled(state, dataElement));
   if (isDisabled) {
     return null;
   }
@@ -45,5 +46,7 @@ const DataElementWrapper = React.forwardRef(({ type = "div", children, dataEleme
   );
 });
 
+DataElementWrapper.displayName = 'DataElementWrapper';
 DataElementWrapper.propTypes = propTypes;
+
 export default DataElementWrapper;

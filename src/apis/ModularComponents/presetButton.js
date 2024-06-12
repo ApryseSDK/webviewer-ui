@@ -9,8 +9,9 @@ const { checkTypes, TYPES } = window.Core;
  * @memberOf UI.Components
  * @class UI.Components.PresetButton
  * @extends UI.Components.Item
- * @property {ItemProperties} properties An object that contains the properties of the PresetButton.
- * @property {string} [properties.buttonType] The type of the button. Refer to: {@link UI.PRESET_BUTTON_TYPES}
+ * @param {Object} properties An object that contains the properties of the PresetButton.
+ * @param {string} [properties.dataElement] The data element of the preset button.
+ * @param {string} [properties.buttonType] The type of the button. Refer to: {@link UI.PRESET_BUTTON_TYPES}
  * @example
 const presetButton = new instance.UI.Components.PresetButton({
   buttonType: 'saveAsButton',

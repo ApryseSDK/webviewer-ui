@@ -3,14 +3,21 @@
 .container-fluid {
   width: 100%;
   display: flex;
+  flex-direction: column;
   position: relative;
   gap: 8px;
+
+  .Dropdown__wrapper {
+    @include mobile {
+      width: 100%;
+    }
+  }
 
   .Dropdown {
     padding: 3px 4px;
     text-align: left;
     @include mobile {
-      width: calc(100vw - 125px) !important;
+      width: 100% !important;
     }
 
     .Icon {
@@ -23,17 +30,16 @@
   .FontSizeDropdown {
     width: 100px;
   }
+  .container-dropdown {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
 
   .error-text {
-    position: absolute;
-    bottom: -20px;
     font-size: var(--font-size-small);
     color: var(--error-text-color);
     text-align: center;
-  }
-
-  &.error{
-    margin-bottom: 20px;
   }
 }
 
@@ -91,4 +97,3 @@
     }
   }
 }
-

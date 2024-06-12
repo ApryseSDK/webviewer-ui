@@ -21,11 +21,15 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
     &.error {
       border-color: var(--error-border-color);
     }
   }
+
+  .disabledText {
+    color: var(--disabled-text);
+  }
+
   // To remove arrows from input
   /* Chrome, Safari, Edge, Opera */
   input::-webkit-outer-spin-button,

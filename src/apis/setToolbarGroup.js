@@ -13,6 +13,6 @@ WebViewer(...)
     instance.UI.setToolbarGroup('toolbarGroup-Shapes');
  */
 
-export default store => (group, pickTool = true) => {
+export default (store) => (group, pickTool = true) => {
   store.dispatch(actions.setToolbarGroup(group, pickTool));
 };

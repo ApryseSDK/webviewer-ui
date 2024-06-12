@@ -8,7 +8,6 @@
   }
 
   display: flex;
-  background-color: var(--panel-background);
   display: flex;
   flex-direction: row;
   position: relative;
@@ -60,7 +59,22 @@
       height: 72px;
     }
 
+    .preview-all-changes {
+      height: 57px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      margin-right: 16px;
 
+      .divider {
+        height: 1px;
+        width: 100%;
+        background: var(--divider);
+        position: absolute;
+        top: 0px;
+      }
+    }
 
     .reply-area-container .reply-button {
       @include ie11 {

@@ -1,4 +1,4 @@
-export default layers => {
+export default (layers) => {
   const newLayers = [];
   if (layers) {
     layers.forEach((layer, index) => {

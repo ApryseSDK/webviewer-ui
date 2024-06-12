@@ -27,7 +27,7 @@ const TextStylePicker = ({
   const freeTextAutoSizeDataElement = 'freeTextAutoSizeFontButton';
   const font = isRichTextEditMode ? properties?.quillFont : properties?.Font;
   const changeFont = (font) => {
-    if (isContentEditing) {
+    if (isContentEditing || isRedaction) {
       onPropertyChange('Font', font);
       return;
     }
@@ -54,7 +54,7 @@ const TextStylePicker = ({
    * @returns {string}
    */
   const getFontSize = (properties) => {
-    const defaultFontSize = properties?.FontSize === '0pt' ? properties?.calculatedFontSize : properties?.FontSize;
+    const defaultFontSize = isFreeTextAutoSize || properties?.FontSize === '0pt' ? properties?.calculatedFontSize : properties?.FontSize;
     if (isRichTextEditMode) {
       return properties.quillFontSize;
     }
@@ -64,7 +64,7 @@ const TextStylePicker = ({
   const fontSize = getFontSize(properties);
 
   const changeFontSize = (fontSize) => {
-    if (isContentEditing) {
+    if (isContentEditing || isRedaction) {
       onPropertyChange('FontSize', fontSize);
       return;
     }
@@ -306,7 +306,6 @@ const TextStylePicker = ({
             title="option.richText.alignRight"
             isActive={currentConfig.rightAlign.isActive}
           />
-          {/* TODO: Implement justify button below */}
           {!isRedaction && !isContentEditing && (
             <Button
               dataElement="freeTextJustifyCenterButton"
@@ -324,18 +323,21 @@ const TextStylePicker = ({
               img="icon-arrow-to-top"
               title="option.richText.alignTop"
               isActive={textVerticalAlign === 'top'}
+              disabled={isFreeTextAutoSize}
             />
             <Button
               onClick={() => changeYAlign('center')}
               img="icon-arrow-to-middle"
               title="option.richText.alignMiddle"
               isActive={textVerticalAlign === 'center'}
+              disabled={isFreeTextAutoSize}
             />
             <Button
               onClick={() => changeYAlign('bottom')}
               img="icon-arrow-to-bottom"
               title="option.richText.alignBottom"
               isActive={textVerticalAlign === 'bottom'}
+              disabled={isFreeTextAutoSize}
             />
           </div>
         )}{isFreeText && (<div className="row text-vertical-alignment auto-size-checkbox">

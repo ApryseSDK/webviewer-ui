@@ -7,6 +7,9 @@ import StylePickerComponent from './StylePicker';
 export default {
   title: 'ModularComponents/StylePicker',
   component: StylePickerComponent,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const store = configureStore({

@@ -20,7 +20,7 @@ import actions from 'actions';
   });
  */
 
-export default store => dateTimeFormat => {
+export default (store) => (dateTimeFormat) => {
   if (typeof dateTimeFormat !== 'object') {
     return console.error('UI.addDateTimeFormat: dateTimeFormat must be an object');
   }

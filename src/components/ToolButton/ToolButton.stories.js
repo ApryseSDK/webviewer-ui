@@ -1,7 +1,7 @@
 import React from 'react';
 import { combineReducers, createStore } from 'redux';
-import { Provider } from "react-redux";
-import ToolButtonComponent from './ToolButton';
+import { Provider } from 'react-redux';
+import ToolButtonComponent from './index';
 import initialState from 'src/redux/initialState';
 import viewerReducer from 'src/redux/reducers/viewerReducer';
 
@@ -30,4 +30,3 @@ ToolButton.args = {
   group: 'freeTextTools',
   color: '#E44234',
 };
-

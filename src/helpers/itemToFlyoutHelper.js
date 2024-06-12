@@ -13,6 +13,7 @@ export const setItemToFlyoutStore = (newStore) => {
 export const itemToFlyout = (item, {
   onClick = undefined,
   children = undefined,
+  useOverrideClickOnly = false,
 } = {}) => {
   const itemProps = item.props || item;
 
@@ -27,7 +28,7 @@ export const itemToFlyout = (item, {
   const flyoutItem = {
     label: itemProps.label || itemProps.title || (itemProps.dataElement ? dataElementToLabel(itemProps.dataElement) : ''),
     onClick: () => {
-      itemProps.onClick && itemProps.onClick();
+      !useOverrideClickOnly && itemProps.onClick && itemProps.onClick();
       onClick && onClick();
     },
     dataElement: itemProps.dataElement,

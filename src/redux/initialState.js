@@ -2,7 +2,7 @@ import React from 'react';
 import actions from 'actions';
 import core from 'core';
 import ToggleZoomOverlay from 'components/ToggleZoomOverlay';
-import TrackChangeOverlay from 'components/TrackChangeOverlay';
+// import TrackChangeOverlay from 'components/TrackChangeOverlay';
 import ToolsOverlay from 'components/ToolsOverlay';
 import Ribbons from 'components/Ribbons';
 import ApplyFormFieldButton from 'components/ApplyFormFieldButton';
@@ -180,17 +180,17 @@ export default {
           render: () => <Ribbons />,
           className: 'custom-ribbons-container',
         },
-        {
-          type: 'customElement',
-          render: () => <TrackChangeOverlay />,
-          dataElement: DataElements.TRACK_CHANGE_OVERLAY_BUTTON,
-          isOfficeEditorOnly: true,
-        },
-        {
-          type: 'divider',
-          hidden: ['small-mobile'],
-          isOfficeEditorOnly: true,
-        },
+        // {
+        //   type: 'customElement',
+        //   render: () => <TrackChangeOverlay />,
+        //   dataElement: DataElements.TRACK_CHANGE_OVERLAY_BUTTON,
+        //   isOfficeEditorOnly: true,
+        // },
+        // {
+        //   type: 'divider',
+        //   hidden: ['small-mobile'],
+        //   isOfficeEditorOnly: true,
+        // },
         {
           type: 'toggleElementButton',
           dataElement: 'searchButton',
@@ -768,7 +768,7 @@ export default {
       { dataElement: 'annotationDeleteButton' },
       { dataElement: 'shortCutKeysFor3D' },
       { dataElement: 'playSoundButton' },
-      { dataElement: 'openAlignmentButton' }
+      { dataElement: 'openAlignmentButton' },
     ],
     textPopup: [
       { dataElement: 'copyTextButton' },

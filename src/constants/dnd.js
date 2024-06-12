@@ -1,5 +1,6 @@
 export const ItemTypes = {
-  OUTLINE: 'outline'
+  OUTLINE: 'outline',
+  PORTFOLIO: 'portfolio',
 };
 
 export const DropLocation = {
@@ -9,4 +10,4 @@ export const DropLocation = {
   INITIAL: 'initial',
 };
 
-export const BUFFER_ROOM = 2;
+export const BUFFER_ROOM = 8;

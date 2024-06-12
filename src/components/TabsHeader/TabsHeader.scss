@@ -5,7 +5,7 @@
   align-items: flex-end;
   background: var(--view-header-background);
   overflow-y: hidden;
-  overflow-x: auto;
+  overflow-x: hidden;
 
   .add-button {
     width: 100%;
@@ -21,6 +21,17 @@
 
       &:hover {
         background-color: var(--view-header-button-hover);
+      }
+
+    }
+    
+    &.add-button-with-label .Button {
+      display: flex;
+      width: fit-content;
+      padding: 10px;
+
+      .Icon {
+        margin-right: 4px;
       }
     }
 

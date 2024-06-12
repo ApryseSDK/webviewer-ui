@@ -1,3 +1,3 @@
-import PageNavOverlay from './PageNavOverlay';
+import connectedComponent from './PageNavOverlay';
 
-export default PageNavOverlay;
+export default connectedComponent;

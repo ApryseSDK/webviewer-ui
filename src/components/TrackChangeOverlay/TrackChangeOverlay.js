@@ -52,7 +52,7 @@ const TrackChangeOverlay = () => {
         items={items}
         getCustomItemStyle={() => ({ width: '144px', height: '48px' })}
         applyCustomStyleToButton={false}
-        currentSelectionKey={editMode}
+        currentSelectionKey={(editMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW) ? OFFICE_EDITOR_EDIT_MODE.REVIEWING : editMode}
         onClickItem={onClickItem}
         getDisplayValue={(item) => t(`${translationPrefix}${item.key}`)}
         getKey={(item) => item.key}

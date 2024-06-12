@@ -1,7 +1,7 @@
 /**
  * Sets the list of panels to be used in the UI
  * @method UI.setPanels
- * @property {array} panelList The new list of panels to be used in the UI
+ * @param {array} panelList The new list of panels to be used in the UI
  * @example
  * WebViewer(...)
  .then(function (instance) {

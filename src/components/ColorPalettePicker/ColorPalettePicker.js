@@ -18,17 +18,17 @@ const ColorPalettePicker = ({
   enableEdit,
   disableTitle = false,
   colorsAreHex = false,
-  colorsToIgnore
 }) => {
+  const [t] = useTranslation();
+
   useEffect(() => {
-    if (!customColors.includes(colorsAreHex ? color : getHexColor(color))) {
+    const isNotInCustomColors = !customColors.includes(colorsAreHex ? color : getHexColor(color));
+    if (isNotInCustomColors) {
       setColorToBeDeleted('');
     } else {
       setColorToBeDeleted(colorsAreHex ? color : getHexColor(color));
     }
   }, [color]);
-
-  const [t] = useTranslation();
 
   const handleAddColor = () => {
     if (openColorPicker) {
@@ -36,12 +36,8 @@ const ColorPalettePicker = ({
     }
   };
 
-  if (colorsToIgnore) {
-    customColors = customColors.filter((color) => !colorsToIgnore.includes(color));
-  }
-
   return (
-    <div>
+    <div className="color-picker-container">
       <div className="colorPicker">
         {!disableTitle && <div className="colorPickerController">
           <span>{t('annotation.custom')}</span>
@@ -50,6 +46,7 @@ const ColorPalettePicker = ({
           {customColors.map((bg, i) => (
             <button
               key={bg}
+              title={t('option.colorPalettePicker.selectColor')}
               className="cell-container"
               onClick={() => handleColorOnClick(bg)}
               aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
@@ -75,7 +72,10 @@ const ColorPalettePicker = ({
           ),
           )}
           {enableEdit && (
-            <button className="cell-container">
+            <button
+              className="cell-container"
+              title={t('option.colorPalettePicker.addColor')}
+            >
               <div className="cell-outer">
                 <div className="cellIcon" id="addCustomColor" onClick={handleAddColor}>
                   <Icon glyph="icon-header-zoom-in-line" />
@@ -89,6 +89,7 @@ const ColorPalettePicker = ({
               id="removeCustomColor"
               disabled={!colorToBeDeleted}
               onClick={openDeleteModal}
+              title={t('warning.colorPalettePicker.deleteTitle')}
             >
               <div className="cell-outer">
                 <div className="cellIcon">

@@ -1,44 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-
+import Dropdown from 'components/Dropdown';
 import './StyleOption.scss';
+import { defaultStrokeStyles, cloudyStrokeStyle } from 'constants/strokeStyleIcons';
+
+
+const withCloudyStyle = defaultStrokeStyles.concat(cloudyStrokeStyle);
 
 function StyleOption(props) {
-  const style = props.borderStyle ? props.borderStyle : 'solid';
-  const styleOptions = ['solid', 'cloudy'];
+  const lineEndingDropdownWidth = 60;
+  const { onLineStyleChange, properties, isEllipse } = props;
+  if (!properties || !properties.hasOwnProperty('StrokeStyle')) {
+    // if there is no StrokeStyle property, there is no point rendering <Dropdown>
+    return null;
+  }
+  const [selectedMiddleLineStyle, setSelectedMiddleLineStyle] = useState(properties.StrokeStyle);
   const [t] = useTranslation();
 
-  const onChange = value => {
-    props.onStyleChange('Style', value);
-  };
+  function onClickMiddleLineStyle(key) {
+    setSelectedMiddleLineStyle(key);
+    onLineStyleChange('middle', key);
+  }
 
   return (
     <div className="StyleOption">
       <div className="styles-container">
         <label className="styles-title" htmlFor="styleOptions">{t('option.styleOption.style')}</label>
-        <div className="styles-layout">
-          <select
-            id="styleOptions"
-            className="styles-input"
-            value={style}
-            onChange={e => onChange(e.target.value)}
-          >
-            {styleOptions.map(option => (
-              <option key={option} value={option}>
-                {t(`option.styleOption.${option}`)}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Dropdown
+          dataElement="borderStylePicker"
+          images={ (isEllipse) ? defaultStrokeStyles : withCloudyStyle }
+          width={lineEndingDropdownWidth}
+          onClickItem={onClickMiddleLineStyle}
+          currentSelectionKey={selectedMiddleLineStyle}
+        />
       </div>
     </div>
   );
 }
 
 StyleOption.propTypes = {
-  onStyleChange: PropTypes.func.isRequired,
   borderStyle: PropTypes.string,
+  isEllipse: PropTypes.bool,
+  properties: PropTypes.object,
+  onLineStyleChange: PropTypes.func.isRequired,
 };
 
 export default StyleOption;

@@ -11,8 +11,16 @@ export class GroupedItems {
    * @memberOf UI.Components
    * @class UI.Components.GroupedItems
    * @constructor
-   * @param {ContainerProperties} properties - An object that contains the properties of the grouped items.
-   * @param {boolean} [properties.alwaysVisible] - Whether the group should always be visible or not. Default is false. Alternatively, visibility can be toggled by changing the active grouped item using a Ribbon Item.
+   * @param {ContainerProperties} properties  An object that contains the properties of the grouped items.
+   * @param {string} [properties.dataElement] The data element of the grouped item.
+   * @param {'top' | 'bottom' | 'left' | 'right'} [properties.placement] A string that determines the placement of the header.
+   * @param {'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'} [properties.justifyContent] A string that determines the flex justify content value of the grouped items container.
+   * @param {number} [properties.grow] The flex grow value of the grouped items container.
+   * @param {number} [properties.gap] The gap between the items in the grouped items container.
+   * @param {'start' | 'center' | 'end'} [properties.position] A string that determines the position of the grouped items container.
+   * @param {boolean} [properties.alwaysVisible]  Whether the group should always be visible or not. Default is false. Alternatively, visibility can be toggled by changing the active grouped item using a Ribbon Item.
+   * @param {Object} [properties.style] An object that can set the CSS style of the grouped items.
+   * @param {Array<Object>} [properties.items] The items within the grouped items container. The valid items are: {@link UI.Components.ModularHeader}, {@link UI.Components.CustomButton}, {@link UI.Components.StatefulButton}, {@link UI.Components.GroupedItems}, {@link UI.Components.RibbonItem}, {@link UI.Components.ToggleElementButton}, {@link UI.Components.RibbonGroup}, {@link UI.Components.ToolButton}, {@link UI.Components.Zoom}, {@link UI.Components.Flyout}, {@link UI.Components.PageControls}, {@link UI.Components.PresetButton}, {@link UI.Components.ViewControls}, {@link UI.Components.TabPanel}.
    * @example
 const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
   dataElement: 'groupedLeftHeaderButtons',
@@ -64,7 +72,7 @@ const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
   setGap(gap) {
     if (isGapValid(gap)) {
       this._gap = gap;
-      this.store.dispatch(actions.setGroupedItemsProperty('gap', gap, this.dataElement));
+      this.store.dispatch(actions.setModularComponentProperty('gap', gap, this.dataElement));
     }
   }
 
@@ -82,7 +90,7 @@ const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
   setStyle(style) {
     checkTypes([style], [TYPES.OBJECT({})], 'GroupedItem.setStyle');
     this.style = style;
-    this.store.dispatch(actions.setGroupedItemsProperty('style', style, this.dataElement));
+    this.store.dispatch(actions.setModularComponentProperty('style', style, this.dataElement));
   }
 
   /**
@@ -93,7 +101,7 @@ const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
   setJustifyContent(justifyContent) {
     if (isJustifyContentValid(justifyContent)) {
       this._justifyContent = justifyContent;
-      this.store.dispatch(actions.setGroupedItemsProperty('justifyContent', justifyContent, this.dataElement));
+      this.store.dispatch(actions.setModularComponentProperty('justifyContent', justifyContent, this.dataElement));
     }
   }
 
@@ -105,7 +113,7 @@ const groupedLeftHeaderButtons = new instance.UI.Components.GroupedItems({
   setGrow(grow) {
     if (isGrowValid(grow)) {
       this._grow = grow;
-      this.store.dispatch(actions.setGroupedItemsProperty('grow', grow, this.dataElement));
+      this.store.dispatch(actions.setModularComponentProperty('grow', grow, this.dataElement));
     }
   }
 
