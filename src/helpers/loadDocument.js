@@ -76,6 +76,10 @@ const transformPasswordOption = (password, dispatch) => {
   return (checkPassword) => {
     dispatch(actions.setPasswordAttempts(attempt++));
 
+    if (!password) {
+      password = '';
+    }
+
     if (!passwordChecked && typeof password === 'string') {
       checkPassword(password);
       passwordChecked = true;
