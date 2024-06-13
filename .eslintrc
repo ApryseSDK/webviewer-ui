@@ -238,7 +238,7 @@
       }
     },
     {
-      "files": ["**/*/languageRules.js"],
+      "files": ["**/*/languageRules.js", "*.spec.js"],
       "rules": {
         "camelcase": "off"
       }
