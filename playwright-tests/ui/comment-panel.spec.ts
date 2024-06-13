@@ -985,8 +985,7 @@ test.describe('Comment panel', () => {
 
 
 test.describe('Comment panel test two', () => {
-  // https://app.circleci.com/pipelines/github/XodoDocs/webviewer/101568/workflows/7c0a9925-5ecf-4bc0-bcd9-32cbbbbdc2b9/jobs/113970
-  test.skip('for VirtualizedList should not scroll, when new comment is added', async ({ page, browserName }) => {
+  test('for VirtualizedList should not scroll, when new comment is added', async ({ page, browserName }) => {
     test.skip(browserName === 'firefox' || browserName === 'webkit', 'TODO: investigate why this test fails on webkit and firefox');
 
     const { iframe, waitForWVEvent, waitForInstance } = await loadViewerSample(page, 'viewing/empty');

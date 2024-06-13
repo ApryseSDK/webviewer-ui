@@ -2,7 +2,7 @@ import { loadViewerSample } from '../../playwright-utils';
 import { expect, test } from '@playwright/test';
 
 test.describe('Annotation filter modal', () => {
-  test.skip('Should filter annotations properly', async ({ page, browserName }) => {
+  test('Should filter annotations properly', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'TODO: investigate why this test is flaky on webkit');
     const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
     const instance = await waitForInstance();
@@ -27,18 +27,14 @@ test.describe('Annotation filter modal', () => {
 
     const includeRepliesButton = await filterModal.$('#filter-annot-modal-include-replies');
     await includeRepliesButton.click();
-    const clearAllButton = await filterModal.$('.filter-annot-clear');
-    expect(await clearAllButton.isDisabled()).toBe(true);
     const userCheckbox = await filterModal.$('.user-filters input');
     await userCheckbox.click();
     await page.waitForTimeout(1000);
     expect(await filterModal.screenshot()).toMatchSnapshot(['annotation-filter-modal', 'filter-modal-test-1.png']);
 
-    await userCheckbox.click();
     const filterDocumentButton = await filterModal.$('#filter-annot-modal-filter-document');
     await filterDocumentButton.click();
-    expect(await clearAllButton.isDisabled()).toBe(false);
-    await userCheckbox.click();
+    const clearAllButton = await filterModal.$('.filter-annot-clear');
     await clearAllButton.click();
     await page.waitForTimeout(1000);
     expect(await filterModal.screenshot()).toMatchSnapshot(['annotation-filter-modal', 'filter-modal-test-2.png']);

@@ -5,18 +5,33 @@ import 'react-quill/dist/quill.snow.css';
 import '../src/index.scss';
 import '../src/components/App/App.scss';
 import { loadDefaultFonts } from '../src/helpers/loadFont';
+import { parse } from '../src/helpers/cssVariablesParser';
 import { approvedStamp } from './static/assets/standardStamps';
 import { customRubberStamps } from './static/assets/customStamps';
+import modularUILightModeString from '!!raw-loader!../src/constants/lightWCAG.scss';
+import lightModeString from '!!raw-loader!../src/constants/light.scss';
 
 // We add this class to the StoryBook root element to mimick how we have
 // structured our classes in the UI, where everythign is wrapped by the App class.
 // If this is not done we miss some styles, and the Stories will look a bit different.
-document.getElementById('root').className = 'App';
+document.getElementById('storybook-root').className = 'App';
 
 function noop() {
 }
 
 loadDefaultFonts();
+
+const setStyleSheet = (storyFn, { parameters }) => {
+  const themeVarString = parameters?.customizableUI ? modularUILightModeString : lightModeString;
+  const root = document.documentElement;
+  const themeVariables = parse(themeVarString, {});
+  Object.keys(themeVariables).forEach((key) => {
+    const themeVariable = themeVariables[key];
+    root.style.setProperty(`--${key}`, themeVariable);
+  });
+
+  return storyFn();
+};
 
 // Some helpful mocked annotations
 let rectangle;
@@ -137,6 +152,7 @@ const mockDocument = {
   isWebViewerServerDocument: () => false,
   addEventListener: noop,
   removeEventListener: noop,
+  isWebViewerServerDocument: noop,
 };
 
 const mockDisplayModeManager = {
@@ -194,7 +210,7 @@ core.getTool = (toolName) => {
 };
 core.setToolMode = noop;
 core.getToolMode = noop;
-core.isFullPDFEnabled = () => { return false; };
+core.isFullPDFEnabled = () => { return true; };
 core.addEventListener = () => { };
 core.removeEventListener = () => { };
 core.getFormFieldCreationManager = () => mockFormFieldCreationManager;
@@ -222,6 +238,7 @@ core.getScrollViewElement = () => ({
 });
 core.getContentEditManager = () => ({
   isInContentEditMode: () => false,
+  endContentEditMode: noop,
 });
 core.getZoom = () => 1;
 
@@ -440,6 +457,8 @@ window.Core = {
   },
   setBasePath: noop,
   getAllowedFileExtensions: () => ['pdf', 'xod'],
+  quillShadowDOMWorkaround: noop,
+  getDocument: () => mockDocument,
 };
 
 const DEFAULT_PAGE_HEIGHT = 792;
@@ -677,5 +696,8 @@ export default {
       viewports,
       defaultViewport: 'Responsive',
     }
-  }
+  },
+  decorators: [
+    setStyleSheet,
+  ]
 };

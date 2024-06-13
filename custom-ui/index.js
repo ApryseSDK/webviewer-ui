@@ -1,10 +1,10 @@
-/// <reference path="../../ts/types.d.ts" />
+const Webviewer = window.WebViewer;
 const hashFile = `/${(window.location.hash || 'webviewer-demo.pdf').replace('#', '')}`;
 // Remove init_timestamp so that the demo doesn't expire
 window.localStorage.removeItem('init_timestamp');
 
 const viewerElement = document.getElementById('viewer');
-WebViewer.WebComponent({
+Webviewer.WebComponent({
   path: '/lib',
   initialDoc: hashFile,
   enableRedaction: true,

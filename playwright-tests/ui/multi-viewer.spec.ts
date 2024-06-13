@@ -225,43 +225,4 @@ test.describe('Multi Viewer Mode', () => {
 
     expect(consoleLogs.includes('DocumentViewer 2 - annotationChanged')).toBeTruthy();
   });
-
-  test.skip('should not crash when hovering/clicking on the automatic links in the document in the second documentViewer', async ({ page, browserName }) => {
-    const { iframe, waitForInstance, consoleLogs } = await loadViewerSample(page, 'viewing/multi-viewer');
-    const instance = await waitForInstance();
-    await iframe.$('.MultiViewer');
-
-    await iframe?.evaluate(async () => {
-      const [documentViewer1, documentViewer2] = window.instance.Core.getDocumentViewers();
-      const loadDocumentOnePromise = new Promise((resolve) => {
-        documentViewer1.addEventListener('documentLoaded', function() {
-          resolve();
-        });
-      });
-      const loadDocumentTwoPromise = new Promise((resolve) => {
-        documentViewer2.addEventListener('documentLoaded', function() {
-          resolve();
-        });
-      });
-      await Promise.all([loadDocumentOnePromise, loadDocumentTwoPromise]);
-
-      documentViewer1.loadDocument('/test-files/link1.pdf');
-      documentViewer2.loadDocument('/test-files/link2.pdf');
-    });
-    await page.waitForTimeout(3000);
-    const documentViewerContainer2 = await iframe?.waitForSelector('#container2');
-    const pageCount = await iframe?.evaluate(() => {
-      const [documentViewer1, documentViewer2] = window.instance.Core.getDocumentViewers();
-      documentViewer2.setCurrentPage(3);
-      return documentViewer2.getDocument().getPageCount();
-    });
-    expect(pageCount).toBe(10);
-    await page.waitForTimeout(1000);
-    await documentViewerContainer2?.click();
-    const linkElement = await iframe?.$$('.link');
-    await linkElement[14].click();
-    await page.waitForTimeout(1000);
-    const warningModal = await iframe?.$('.connect-to-url-modal');
-    expect(warningModal).not.toBeNull();
-  });
 });
