@@ -755,7 +755,7 @@ const map = {
   },
   [annotationMapKeys.TRACKED_CHANGE]: {
     icon: 'ic-edit-page',
-    iconColor: 'StrokeColor',
+    iconColor: 'FillColor',
     validStyleTabs: [],
     currentStyleTab: null,
     styleTabs: [],

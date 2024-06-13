@@ -193,7 +193,7 @@ const NoteContent = ({
             }
             const text = annotation['TrackedChangeType'] === 1 ? t('officeEditor.added') : t('officeEditor.deleted');
             return (
-              <span style={{ color: annotation.StrokeColor.toString(), fontWeight: 700 }}>{text}</span>
+              <span style={{ color: annotation.FillColor.toString(), fontWeight: 700 }}>{text}</span>
             );
           };
 
