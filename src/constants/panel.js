@@ -1,8 +1,29 @@
 export const panelMinWidth = 264;
 export const RESIZE_BAR_WIDTH = 14;
 
+/**
+ * The different available pre-built panels options.
+ * @name UI.Panels
+ * @property {string} OUTLINE - Represents the OUTLINE panel.
+ * @property {string} SIGNATURE - Represents the SIGNATURE panel.
+ * @property {string} BOOKMARKS - Represents the BOOKMARKS panel.
+ * @property {string} FILE_ATTACHMENT - Represents the FILE_ATTACHMENT panel.
+ * @property {string} THUMBNAIL - Represents the THUMBNAIL panel.
+ * @property {string} LAYERS - Represents the LAYERS panel.
+ * @property {string} TEXT_EDITING - Represents the TEXT_EDITING panel.
+ * @property {string} CHANGE_LIST - Represents the CHANGE_LIST panel.
+ * @property {string} STYLE - Represents the STYLE panel.
+ * @property {string} REDACTION - Represents the REDACTION panel.
+ * @property {string} SEARCH - Represents the SEARCH panel.
+ * @property {string} NOTES - Represents the NOTES panel.
+ * @property {string} TABS - Represents the TABS panel.
+ * @property {string} SIGNATURE_LIST - Represents the SIGNATURE_LIST panel.
+ * @property {string} RUBBER_STAMP - Represents the RUBBER_STAMP panel.
+ * @property {string} PORTFOLIO - Represents the PORTFOLIO panel.
+ */
+
 export const panelNames = {
-  OUTLINE: 'genericOutlinesPanel',
+  OUTLINE: 'outlinesPanel',
   SIGNATURE: 'signaturePanel',
   BOOKMARKS: 'bookmarksPanel',
   FILE_ATTACHMENT: 'fileAttachmentPanel',

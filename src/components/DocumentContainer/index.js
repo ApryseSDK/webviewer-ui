@@ -1,3 +1,3 @@
-import DocumentContainer from './DocumentContainer';
+import ConnectedComponent from './DocumentContainer';
 
-export default DocumentContainer;
+export default ConnectedComponent;

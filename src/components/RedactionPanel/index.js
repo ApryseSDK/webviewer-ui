@@ -1,3 +1,3 @@
-import RedactionPanel from './RedactionPanelContainer';
+import RedactionPanelContainerWithProvider from './RedactionPanelContainer';
 
-export default RedactionPanel;
+export default RedactionPanelContainerWithProvider;

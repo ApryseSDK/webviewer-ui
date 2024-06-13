@@ -2,7 +2,7 @@
 import React from 'react';
 import CollapsiblePanelGroup from './CollapsiblePanelGroup';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 
 const initialState = {
   viewer: {
@@ -21,7 +21,7 @@ const CollapsiblePanelGroupWithRedux = (props) => {
     <Provider store={store}>
       <CollapsiblePanelGroup {...props} />
     </Provider>
-  )
+  );
 };
 
 export default {
@@ -34,7 +34,7 @@ const HeaderComponent = () => {
     <div className="redaction-search-results-page-number">
       Page Number 1
     </div>
-  )
+  );
 };
 
 export function Basic() {

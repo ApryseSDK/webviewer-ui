@@ -25,6 +25,7 @@ import Tooltip from 'components/Tooltip';
 import DataElementWrapper from 'components/DataElementWrapper';
 
 import './ScaleModal.scss';
+import '../Choice/Choice.scss';
 
 const Scale = window.Core.Scale;
 

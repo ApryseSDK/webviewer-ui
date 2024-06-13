@@ -18,5 +18,7 @@ export default (dispatch, store) => async () => {
 
   savedSignatures = signatureTool.getSavedSignatures();
   const signaturesToStore = await getSignatureDataToStore(savedSignatures);
+  // get the last element of the array (LIFO) and set it as active so it can be shown in the new signature list panel
+  dispatch(actions.setSelectedDisplayedSignatureIndex(signaturesToStore.length - 1));
   dispatch(actions.setSavedSignatures(signaturesToStore));
 };

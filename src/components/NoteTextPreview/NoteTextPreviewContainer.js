@@ -3,10 +3,9 @@ import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
 import NoteTextPreview from './NoteTextPreview';
 
-
 function NoteTextPreviewContainer(props) {
   const [notePanelWidth] = useSelector(
-    state => [
+    (state) => [
       selectors.getNotesPanelWidth(state),
     ],
     shallowEqual,
@@ -14,7 +13,7 @@ function NoteTextPreviewContainer(props) {
 
   return (
     <NoteTextPreview {...props} panelWidth={notePanelWidth} />
-  )
-};
+  );
+}
 
 export default NoteTextPreviewContainer;

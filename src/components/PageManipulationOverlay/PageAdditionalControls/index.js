@@ -1,3 +1,3 @@
-import PageAdditionalControls from './PageAdditionalControlsContainer';
+import PageAdditionalControlsContainer from './PageAdditionalControlsContainer';
 
-export default PageAdditionalControls;
+export default PageAdditionalControlsContainer;

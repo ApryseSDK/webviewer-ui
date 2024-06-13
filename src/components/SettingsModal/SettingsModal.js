@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import selectors from 'selectors';
@@ -16,17 +16,23 @@ import { SearchContext } from './SearchWrapper';
 
 import './SettingsModal.scss';
 
-const TABS_ID = 'settingsModal';
+const TABS_ID = DataElements.SETTINGS_MODAL;
 
 const SettingsModal = () => {
   const [
     isDisabled,
     isHidden,
-    selectedTab
+    selectedTab,
+    isGeneralTabDisabled,
+    isKeyboardTabDisabled,
+    isAdvancedTabDisabled
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.SETTINGS_MODAL),
     selectors.isElementHidden(state, DataElements.SETTINGS_MODAL),
-    selectors.getSelectedTab(state, TABS_ID)
+    selectors.getSelectedTab(state, TABS_ID),
+    selectors.isElementDisabled(state, DataElements.SETTINGS_GENERAL_BUTTON),
+    selectors.isElementDisabled(state, DataElements.SETTINGS_KEYBOARD_BUTTON),
+    selectors.isElementDisabled(state, DataElements.SETTINGS_ADVANCED_BUTTON)
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -37,6 +43,24 @@ const SettingsModal = () => {
     [DataElements.SETTINGS_KEYBOARD_BUTTON, t('option.settings.keyboardShortcut')],
     [DataElements.SETTINGS_ADVANCED_BUTTON, t('option.settings.advancedSetting')]
   ];
+
+  useEffect(() => {
+    if (
+      (selectedTab === DataElements.SETTINGS_GENERAL_BUTTON && isGeneralTabDisabled) ||
+      (selectedTab === DataElements.SETTINGS_KEYBOARD_BUTTON && isKeyboardTabDisabled) ||
+      (selectedTab === DataElements.SETTINGS_ADVANCED_BUTTON && isAdvancedTabDisabled)
+    ) {
+      let tabToEnable = '';
+      if (!isGeneralTabDisabled) {
+        tabToEnable = DataElements.SETTINGS_GENERAL_BUTTON;
+      } else if (!isKeyboardTabDisabled) {
+        tabToEnable = DataElements.SETTINGS_KEYBOARD_BUTTON;
+      } else if (!isAdvancedTabDisabled) {
+        tabToEnable = DataElements.SETTINGS_ADVANCED_BUTTON;
+      }
+      dispatch(actions.setSelectedTab(TABS_ID, tabToEnable));
+    }
+  }, [isGeneralTabDisabled, isKeyboardTabDisabled, isAdvancedTabDisabled]);
 
   const className = classNames('Modal', 'SettingsModal', {
     open: !isHidden,

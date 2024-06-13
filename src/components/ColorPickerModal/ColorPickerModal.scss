@@ -6,6 +6,7 @@
 
   .container {
     @extend %modal-shared-container-style;
+    @extend %modal-shared-container-style-mobile;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -17,31 +18,10 @@
     width: 250px;
 
     @include mobile {
-      width: 100%;
-      position: fixed;
-      left: 0;
-      bottom: 0;
       padding-top: 24px;
       padding-bottom: 16px;
       padding-left: 24px;
       padding-right: 24px;
-
-      .swipe-indicator {
-        background: var(--divider);
-        border-radius: 2px;
-        height: 4px;
-        width: 38px;
-        position: absolute;
-        top: 12px;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-
-        @include tablet-and-desktop {
-          display: none;
-        }
-      }
     }
 
     // overwrite color picker existing (inline) style
@@ -54,7 +34,7 @@
       > div{
         border-radius: 2px !important;
       }
-      
+
       .saturation-white {
         // Make the color picker dot a little bit bigger
         > div > div {
@@ -86,7 +66,7 @@
             width: 14px !important;
             border-radius: 14px !important;
           }
-        } 
+        }
         // style for color preview
         > div:nth-child(2) {
           height: 24px !important;

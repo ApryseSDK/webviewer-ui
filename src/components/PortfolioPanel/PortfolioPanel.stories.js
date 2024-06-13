@@ -8,7 +8,10 @@ import initialState from 'src/redux/initialState';
 
 export default {
   title: 'ModularComponents/PortfolioPanel',
-  component: PortfolioPanel
+  component: PortfolioPanel,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const mockInitialState = {

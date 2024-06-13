@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
 import Button from 'components/Button';
 import hotkeys from 'hotkeys-js';
 import hotkeysManager, { defaultHotkeysScope } from 'helpers/hotkeysManager';
@@ -11,11 +13,13 @@ const editShortcutHotkeysScope = 'editShortcut';
 const EditKeyboardShortcutModal = ({ currentShortcut, finishEditing, getCommandStrings }) => {
   const [t] = useTranslation();
 
+  const shortcutKeyMap = useSelector(selectors.getShortcutKeyMap);
+
   const [currentCommand, setCurrentCommand] = useState('');
 
   useEffect(() => {
-    setCurrentCommand(hotkeysManager.shortcutKeyMap[currentShortcut]);
-  }, [currentShortcut]);
+    setCurrentCommand(shortcutKeyMap[currentShortcut]);
+  }, [currentShortcut, shortcutKeyMap]);
 
   useEffect(() => {
     const keyHandler = (e) => {
@@ -55,7 +59,7 @@ const EditKeyboardShortcutModal = ({ currentShortcut, finishEditing, getCommandS
     finishEditing();
   };
 
-  const hasConflict = hotkeysManager.hasConflict(currentCommand);
+  const hasConflict = hotkeysManager.hasConflict(currentShortcut, currentCommand);
 
   const renderCurrentKeys = () => getCommandStrings(currentCommand).map((key, i) => (
     <span key={i}>{key}</span>
@@ -76,6 +80,7 @@ const EditKeyboardShortcutModal = ({ currentShortcut, finishEditing, getCommandS
         <div className="body">
           <div className="press-key-note">{t('option.settings.pressKeyToSet')}</div>
           <div className="keyboard-shortcut">{renderCurrentKeys()}</div>
+          {hasConflict && (<div className="conflict-warning">{t('option.settings.shortcutAlreadyExists')}</div>)}
         </div>
         <div className="divider"></div>
         <div className="footer">

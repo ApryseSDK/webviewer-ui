@@ -1,7 +1,8 @@
 /**
  * Sets the justifyContent property of Grouped Items. This property is analogous to the CSS justify-content property.
  * @method UI.setGroupedItemsJustifyContent
-  * @param {'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'} justifyContent A string that determines the flex justify content value of the group
+  * @param {'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'} justifyContent A string that determines the flex justify content value of the group
+  * @param {Object} [selectors]  An object that contains the selectors to filter the Grouped Items to set the justify content property on.
  * @example
  * WebViewer(...)
   .then(function (instance) {
@@ -37,7 +38,7 @@ export default (store) => (justifyContent, selectors) => {
   if (isJustifyContentValid(justifyContent)) {
     const { groupedItemsDataElement } = selectors || {};
     if (groupedItemsDataElement) {
-      store.dispatch(actions.setGroupedItemsProperty('justifyContent', justifyContent, groupedItemsDataElement));
+      store.dispatch(actions.setModularComponentProperty('justifyContent', justifyContent, groupedItemsDataElement));
     } else {
       store.dispatch(actions.setAllGroupedItemsProperty('justifyContent', justifyContent));
     }

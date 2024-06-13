@@ -9,8 +9,6 @@ export default {
   component: ColorPickerOverlay,
 };
 
-initialState.viewer.openElements.colorPickerOverlay = true;
-
 const store = configureStore({ reducer: () => initialState });
 
 const BasicComponent = ({ children }) => {
@@ -23,9 +21,10 @@ const BasicComponent = ({ children }) => {
 };
 
 export function Basic() {
+  store.getState().viewer.openElements.colorPickerOverlay = true;
   return (
     <BasicComponent>
-      <ColorPickerOverlay onStyleChange={() => {}} portalElementId={'root'} />
+      <ColorPickerOverlay onStyleChange={() => { }} portalElementId={'storybook-root'} />
     </BasicComponent>
   );
 }

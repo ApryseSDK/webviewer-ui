@@ -7,7 +7,7 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
     {
       toolGroupButtonsItems.map((toolBtn, i) => {
         const { type, dataElement, hidden } = toolBtn;
-        const mediaQueryClassName = hidden ? hidden.map(screen => `hide-in-${screen}`).join(' ') : '';
+        const mediaQueryClassName = hidden ? hidden.map((screen) => `hide-in-${screen}`).join(' ') : '';
         const innerKey = `${type}-${dataElement || i}`;
 
         return (
@@ -18,7 +18,7 @@ const ToolGroupButtonsScroll = ({ toolGroupButtonsItems }) => {
           </React.Fragment>
         );
       })}
-  </ScrollGroup>
+  </ScrollGroup>;
 };
 
 export default ToolGroupButtonsScroll;

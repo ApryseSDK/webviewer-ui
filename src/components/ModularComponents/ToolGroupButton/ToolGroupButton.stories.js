@@ -6,6 +6,9 @@ import { Provider } from 'react-redux';
 export default {
   title: 'ModularComponents/ToolGroupButton',
   component: ToolGroupButton,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const initialState = {

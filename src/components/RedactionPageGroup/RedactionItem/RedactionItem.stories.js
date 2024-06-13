@@ -1,7 +1,7 @@
 import React from 'react';
 import RedactionItem from './RedactionItem';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import { redactionTypeMap, defaultRedactionTypes } from 'constants/redactionTypes';
 
 const initialState = {
@@ -13,9 +13,9 @@ const initialState = {
     },
   }
 };
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState) {
   return state;
-};
+}
 
 const store = createStore(rootReducer);
 
@@ -58,7 +58,7 @@ export function TextRedactionItem() {
   return (
     <RedactionItemWithRedux {...textRedactionItemProps} />
   );
-};
+}
 
 export function RegionRedactionItem() {
   const { icon, label } = defaultRedactionTypes[redactionTypeMap['REGION']];
@@ -77,7 +77,7 @@ export function RegionRedactionItem() {
   return (
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
-};
+}
 
 export function FullPageRedactionItem() {
   const { icon, label } = defaultRedactionTypes[redactionTypeMap['FULL_PAGE']];
@@ -96,7 +96,7 @@ export function FullPageRedactionItem() {
   return (
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
-};
+}
 
 export function CreditCardRedactionItem() {
   const mockCreditCardRedaction = getMockRedactionAnnotation();
@@ -115,7 +115,7 @@ export function CreditCardRedactionItem() {
   return (
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
-};
+}
 
 export function PhoneNumberRedactionItem() {
   const mockPhoneNumberRedaction = getMockRedactionAnnotation();
@@ -134,7 +134,7 @@ export function PhoneNumberRedactionItem() {
   return (
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
-};
+}
 
 export function EmailRedactionItem() {
   const mockEmailRedaction = getMockRedactionAnnotation();
@@ -152,4 +152,24 @@ export function EmailRedactionItem() {
   return (
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
-};
+}
+
+export function RedactionItemWithLabelText() {
+  const labelTextRedaction = getMockRedactionAnnotation();
+  labelTextRedaction.redactionType = redactionTypeMap['REGION'];
+  const { icon } = defaultRedactionTypes[redactionTypeMap['REGION']];
+  labelTextRedaction.icon = icon;
+  labelTextRedaction.OverlayText = 'This is a label';
+  const textRedactionItemProps = {
+    iconColor: '#E44234',
+    annotation: labelTextRedaction,
+    author: labelTextRedaction.Author,
+    dateFormat: 'MMM D, LT',
+    language: 'en',
+    textPreview: 'Redaction item with label text',
+  };
+
+  return (
+    <RedactionItemWithRedux {...textRedactionItemProps} />
+  );
+}

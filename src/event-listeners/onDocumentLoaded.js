@@ -169,9 +169,9 @@ export default (store, documentViewerKey) => async () => {
           dispatch(actions.closeElement(DataElements.LEFT_PANEL));
         }
       };
-      handleEditModeUpdate(OFFICE_EDITOR_EDIT_MODE.EDITING);
+      const initialEditMode = selectors.getOfficeEditorEditMode(getState());
+      handleEditModeUpdate(initialEditMode);
       doc.addEventListener('editModeUpdated', handleEditModeUpdate);
-      dispatch(actions.setOfficeEditorEditMode(OFFICE_EDITOR_EDIT_MODE.EDITING));
       notesInLeftPanel = selectors.getNotesInLeftPanel(getState());
       dispatch(actions.setNotesInLeftPanel(true));
     } else {

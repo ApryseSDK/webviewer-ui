@@ -1,0 +1,62 @@
+@import "../../../constants/styles";
+
+$padding-main: 0px;
+$padding-inner: 16px;
+
+.ComparePanel {
+  padding: $padding-main;
+  height: 100%;
+
+  .input-container {
+    margin: $padding-inner;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    height: 28px;
+    align-items: center;
+    justify-content: flex-end;
+    color: var(--text-color);
+    padding: 6px 2px 6px 6px;
+    background: var(--gray-0);
+
+    input {
+      width: 100%;
+      padding: 6px 26px 6px 6px;
+      height: 20px;
+      border: none;
+      background: transparent;
+    }
+  }
+
+  .changeListContainer{
+    height: calc(100% - 28px);
+    .changeListTitle {
+      padding: 8px $padding-inner 2px;
+      font-size: var(--font-size-medium);
+      font-family: var(--font-family);
+      font-weight: var(--font-weight-bold);
+      color: var(--gray-8);
+      span {
+        color: var(--gray-7)
+      }
+    }
+
+    .changeList {
+      padding: $padding-inner;
+      height: calc(100% - 43px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .page-number {
+        margin-top: 10px;
+        font-size: var(--font-size-default);
+        font-family: var(--font-family);
+        color: var(--gray-7);
+      }
+    }
+  }
+}

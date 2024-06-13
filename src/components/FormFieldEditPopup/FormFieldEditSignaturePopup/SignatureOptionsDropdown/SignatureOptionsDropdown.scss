@@ -1,0 +1,17 @@
+.signature-options-container {
+  padding: 5px 0px 5px 0px;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  grid-template-areas: "label dropdown";
+  align-items: center;
+
+  label {
+    grid-area: label;
+  }
+}
+
+.arrow {
+  width: 12px;
+  height: 16px;
+  margin-top: 2px;
+}

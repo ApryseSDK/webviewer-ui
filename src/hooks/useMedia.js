@@ -28,9 +28,9 @@ export default (queries, values, defaultValue) => {
       // ... current values of hook args (as this hook callback is created once on mount).
       const handler = () => setValue(() => getValue());
       // Set a listener for each media query with above handler as callback.
-      mediaQueryLists.forEach((mql) => mql.addListener(handler));
+      mediaQueryLists.forEach((mql) => mql?.addListener(handler));
       // Remove listeners on cleanup
-      return () => mediaQueryLists.forEach((mql) => mql.removeListener(handler));
+      return () => mediaQueryLists.forEach((mql) => mql?.removeListener(handler));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [], // Empty array ensures effect is only run on mount and unmount

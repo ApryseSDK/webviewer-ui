@@ -1,9 +1,9 @@
 @import '../../constants/styles';
 
 .apply-form-field-button {
-  background-color: var(--blue-5);
-  border: 1px solid var(--blue-5);
-  color: var(--gray-0);
+  background-color: var(--primary-button);
+  border: 1px solid var(--primary-button);
+  color: var(--primary-button-text);
   padding: 7px 14px;
   width: fit-content;
   border-radius: 5px;
@@ -15,7 +15,8 @@
   }
 
   &:hover {
-    background: #1A4971 !important;
+    background: var(--primary-button-hover) !important;
+    border: 1px solid var(--primary-button-hover) !important;;
     border-radius: 5px !important;
   }
 

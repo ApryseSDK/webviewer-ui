@@ -1,9 +1,11 @@
 @import '../../constants/styles';
 @import '../../constants/panel';
 
-.fileAttachmentPanel{
+.fileAttachmentPanel {
   @extend %panel;
   display: block;
+  font-size: var(--font-size-default);
+
   .section{
     margin-bottom: 10px;
     p.title{

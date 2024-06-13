@@ -1,3 +1,3 @@
-import ToolsOverlay from './ToolsOverlay';
+import connectedComponent from './ToolsOverlay';
 
-export default ToolsOverlay;
+export default connectedComponent;

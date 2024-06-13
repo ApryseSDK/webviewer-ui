@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import RedactionSearchResultGroup from 'components/RedactionSearchResultGroup';
 import Spinner from 'components/Spinner';
-import './RedactionSearchResults.scss'
+import './RedactionSearchResults.scss';
 import classNames from 'classnames';
 import { Virtuoso } from 'react-virtuoso';
 import SearchStatus from 'constants/searchStatus';
@@ -42,7 +42,9 @@ function RedactionSearchResults(props) {
     setRedactionSearchResultPageMap(redactionSearchResultPageMap);
 
     const selectedIndexesMap = {};
-    redactionSearchResults.forEach((value, index) => selectedIndexesMap[index] = false);
+    redactionSearchResults.forEach((value, index) => {
+      selectedIndexesMap[index] = false;
+    });
     setSelectedSearchResultIndexesMap(selectedIndexesMap);
   }, [redactionSearchResults]);
 
@@ -53,15 +55,14 @@ function RedactionSearchResults(props) {
     });
 
     setSelectedIndexes(selectedIndexes);
-
-  }, [selectedSearchResultIndexesMap])
+  }, [selectedSearchResultIndexesMap]);
 
 
   const renderSearchResults = () => {
     const resultGroupPageNumbers = Object.keys(redactionSearchResultPageMap);
     if (resultGroupPageNumbers.length > 0) {
       // Needed for the tests to actually render a list of results
-      const testModeProps = isTestMode ? { initialItemCount: resultGroupPageNumbers.length } : {}
+      const testModeProps = isTestMode ? { initialItemCount: resultGroupPageNumbers.length } : {};
       return (
         <Virtuoso
           data={resultGroupPageNumbers}
@@ -73,7 +74,7 @@ function RedactionSearchResults(props) {
                 searchResults={redactionSearchResultPageMap[pageNumber]}
                 selectedSearchResultIndexes={selectedSearchResultIndexesMap}
                 setSelectedSearchResultIndexes={setSelectedSearchResultIndexesMap}
-              />)
+              />);
           }}
           {...testModeProps}
         />);
@@ -105,13 +106,17 @@ function RedactionSearchResults(props) {
 
   const selectAllResults = () => {
     const searchResultIndexMap = {};
-    redactionSearchResults.forEach((value, index) => searchResultIndexMap[index] = true);
+    redactionSearchResults.forEach((value, index) => {
+      searchResultIndexMap[index] = true;
+    });
     setSelectedSearchResultIndexesMap(searchResultIndexMap);
   };
 
   const unselectAllResults = () => {
     const searchResultIndexMap = {};
-    redactionSearchResults.forEach((value, index) => searchResultIndexMap[index] = false);
+    redactionSearchResults.forEach((value, index) => {
+      searchResultIndexMap[index] = false;
+    });
     setSelectedSearchResultIndexesMap(searchResultIndexMap);
   };
 
@@ -146,13 +151,15 @@ function RedactionSearchResults(props) {
             <button
               onClick={selectAllResults}
               disabled={isEmptyList}
-              aria-label={t('action.selectAll')}>
+              aria-label={t('action.selectAll')}
+            >
               {t('action.selectAll')}
             </button>
             <button
               disabled={isEmptyList}
               onClick={unselectAllResults}
-              aria-label={t('action.unselect')}>
+              aria-label={t('action.unselect')}
+            >
               {t('action.unselect')}
             </button>
           </>)}
@@ -167,7 +174,7 @@ function RedactionSearchResults(props) {
         <button
           onClick={onCancelHandler}
           aria-label={t('action.cancel')}
-          className='cancel'
+          className="cancel"
         >
           {t('action.cancel')}
         </button>
@@ -190,6 +197,6 @@ function RedactionSearchResults(props) {
       </div >
     </>
   );
-};
+}
 
 export default RedactionSearchResults;

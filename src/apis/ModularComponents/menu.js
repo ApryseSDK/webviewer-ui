@@ -9,7 +9,7 @@ import { menuItems } from 'components/ModularComponents/Helpers/menuItems';
  * @class
  * @extends UI.Components.Flyout
  * @constructor
- * @param {Object} options
+ * @param {Object} [options] - An object that contains the properties of the main menu
  * @param {Array<Object>} [options.additionalItems] - An array of extra items to add to the main menu
  * @param {Object} [options.dataElement] - The data element for the main menu flyout
  */

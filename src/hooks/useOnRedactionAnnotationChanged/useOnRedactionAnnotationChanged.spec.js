@@ -9,8 +9,10 @@ jest.mock('core');
 
 // To test a hook with a redux dependency we need to provide a wrapper for it to run.
 // The wrapper must also have a redux provider
+// eslint-disable-next-line react/prop-types
 const MockComponent = ({ children }) => (<div>{children}</div>);
-const wrapper = withProviders(MockComponent)
+// eslint-disable-next-line no-undef
+const wrapper = withProviders(MockComponent);
 
 describe('useOnRedactionAnnotationChanged hook', () => {
   it('adds event listeners to Annotation Changed', () => {
@@ -40,8 +42,8 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     let onAnnotationChangedHandler;
     core.addEventListener = (annotationManagerEvent, handler) => {
       onAnnotationChangedHandler = handler;
-    }
-    const mockRedactionAnnotation = new window.Annotations.RedactionAnnotation();
+    };
+    const mockRedactionAnnotation = new window.Core.Annotations.RedactionAnnotation();
     const mockRedactionAnnotations = [
       mockRedactionAnnotation,
     ];
@@ -58,7 +60,8 @@ describe('useOnRedactionAnnotationChanged hook', () => {
 
     // The handler updates the internal state of the hook so it needs to be wrapped in act
     act(() => onAnnotationChangedHandler());
-    expect(result.current.length).toEqual(mockRedactionAnnotations.length);
+    const { redactionAnnotationsList } = result.current;
+    expect(redactionAnnotationsList.length).toEqual(mockRedactionAnnotations.length);
     // In the initial state the notes and search panel are closed, so we should have called dispatch to open
     // the redaction panel
     expect(mockDispatch).toBeCalledTimes(1);
@@ -69,10 +72,10 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     let onAnnotationChangedHandler;
     core.addEventListener = (annotationManagerEvent, handler) => {
       onAnnotationChangedHandler = handler;
-    }
+    };
 
-    const mockRedactionAnnotation = new window.Annotations.RedactionAnnotation();
-    const mockRedactionAnnotationTwo = new window.Annotations.RedactionAnnotation();
+    const mockRedactionAnnotation = new window.Core.Annotations.RedactionAnnotation();
+    const mockRedactionAnnotationTwo = new window.Core.Annotations.RedactionAnnotation();
 
     const mockRedactionAnnotations = [
       mockRedactionAnnotation,
@@ -88,14 +91,15 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     const isSearchPanelOpen = false;
     useSelectorMock.mockReturnValue([isNotesPanelOpen, isSearchPanelOpen]);
 
-    core.getAnnotationsList = () => [new window.Annotations.PolygonAnnotation(), new window.Annotations.LineAnnotation(), ...mockRedactionAnnotations];
+    core.getAnnotationsList = () => [new window.Core.Annotations.PolygonAnnotation(), new window.Core.Annotations.LineAnnotation(), ...mockRedactionAnnotations];
 
     const { result } = renderHook(() => useOnRedactionAnnotationChanged(), { wrapper });
 
     expect(result.error).toBeUndefined();
 
     act(() => onAnnotationChangedHandler());
-    expect(result.current.length).toEqual(mockRedactionAnnotations.length);
+    const { redactionAnnotationsList } = result.current;
+    expect(redactionAnnotationsList.length).toEqual(mockRedactionAnnotations.length);
     expect(mockDispatch).not.toBeCalled();
   });
 
@@ -104,9 +108,9 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     let onAnnotationChangedHandler;
     core.addEventListener = (annotationManagerEvent, handler) => {
       onAnnotationChangedHandler = handler;
-    }
+    };
 
-    const mockRedactionAnnotation = new window.Annotations.RedactionAnnotation();
+    const mockRedactionAnnotation = new window.Core.Annotations.RedactionAnnotation();
     const mockRedactionAnnotations = [
       mockRedactionAnnotation,
     ];
@@ -127,7 +131,9 @@ describe('useOnRedactionAnnotationChanged hook', () => {
     expect(result.error).toBeUndefined();
 
     act(() => onAnnotationChangedHandler());
-    expect(result.current.length).toEqual(mockRedactionAnnotations.length);
+
+    const { redactionAnnotationsList } = result.current;
+    expect(redactionAnnotationsList.length).toEqual(mockRedactionAnnotations.length);
     expect(mockDispatch).not.toBeCalled();
   });
 });

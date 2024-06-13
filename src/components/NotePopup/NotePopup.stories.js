@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import React from 'react';
 import NotePopup from './NotePopup';
 
@@ -56,6 +57,48 @@ export function Basic() {
   );
 }
 
+export function DifferentLanguages() {
+  const annotation = {};
+  const style = {
+    width: 200,
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    columnGap: 10,
+    rowGap: 15,
+  };
+
+  i18next.changeLanguage('zh_cn');
+  return (
+    <div style={style}>
+      <div>Popup closed</div>
+      <div>Popup open</div>
+      <div style={{ justifySelf: 'start' }}>
+        <NotePopup
+          annotation={annotation}
+          handleEdit={noop}
+          closePopup={close}
+          openPopup={open}
+          isDisable={false}
+          isEditable
+          isDeletable
+        />
+      </div>
+      <div style={{ justifySelf: 'end' }}>
+        <NotePopup
+          annotation={annotation}
+          handleEdit={noop}
+          closePopup={noop}
+          openPopup={noop}
+          isOpen
+          isDisable={false}
+          isEditable
+          isDeletable
+        />
+      </div>
+    </div>
+  );
+}
+
 export function DifferentStates() {
   const annotation = {};
   const style = {
@@ -65,6 +108,9 @@ export function DifferentStates() {
     columnGap: 10,
     rowGap: 15,
   };
+
+  i18next.changeLanguage('en');
+
   return (
     <div style={style}>
       <div>Popup closed</div>

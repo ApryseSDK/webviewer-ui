@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
-import ZoomOverlay from './ZoomOverlay.js';
+import { Provider } from 'react-redux';
+import ZoomOverlay from './ZoomOverlay';
 
 export default {
   title: 'Components/ZoomOverlay',
@@ -12,12 +12,12 @@ const initialState = {
   viewer: {
     disabledElements: {},
     openElements: ['zoomOverlay'],
-    colorMap: [{colorMapKey: '#F1A099'}],
-    toolButtonObjects: {MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' }},
-    customElementOverrides: [{marqueeToolButton: {disabled: true}}]
+    colorMap: [{ colorMapKey: '#F1A099' }],
+    toolButtonObjects: { MarqueeZoomTool: { dataElement: 'marqueeToolButton', showColor: 'never' } },
+    customElementOverrides: [{ marqueeToolButton: { disabled: true } }]
   }
 };
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState) {
   return state;
 }
 const store = createStore(rootReducer);
@@ -55,10 +55,10 @@ export function Basic() {
     fitToPage
   };
   return (
-      <Provider store={store}>
-        <div style={{ width: 150 }}>
-          <ZoomOverlay {...props} />
-        </div>
-      </Provider>
-  )
+    <Provider store={store}>
+      <div style={{ width: 150 }}>
+        <ZoomOverlay {...props} />
+      </div>
+    </Provider>
+  );
 }

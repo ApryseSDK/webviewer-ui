@@ -39,17 +39,20 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
     isDisabled,
     pageLabels,
     isThumbnailSelectingPages,
+    featureFlags,
   ] = useSelector((state) => [
     selectors.getSelectedThumbnailPageIndexes(state),
     selectors.isElementDisabled(state, 'documentControl'),
     selectors.getPageLabels(state),
     selectors.isThumbnailSelectingPages(state),
+    selectors.getFeatureFlags(state),
   ]);
 
   const initialPagesString = getPageString(selectedPageIndexes, pageLabels);
 
   const [pageString, setPageString] = useState(initialPagesString);
   const [previousPageString, setPreviousPageString] = useState(initialPagesString);
+  const customizableUI = featureFlags.customizableUI;
 
   useEffect(() => {
     setPageString(getPageString(selectedPageIndexes, pageLabels));
@@ -98,13 +101,24 @@ const DocumentControls = ({ shouldShowControls, parentElement }) => {
       {shouldShowControls ? (
         <div className={'documentControls'}>
           <div className={'divider'}></div>
-          {isThumbnailSelectingPages && <LeftPanelPageTabs parentElement={parentElement}/>}
+          {isThumbnailSelectingPages && <LeftPanelPageTabs parentElement={parentElement} />}
+          {customizableUI &&
+            <label className={'documentControlsLabel'} htmlFor="pageNumbersInput">
+              <span>
+                {t('option.thumbnailPanel.multiSelectPages')} -
+              </span>
+              <span className='multiSelectExampleLabel'>
+                {t('option.thumbnailPanel.multiSelectPagesExample')}
+              </span>
+            </label>
+          }
           <div className={'documentControlsInput'}>
             <input
+              name="pageNumbersInput"
               onBlur={onBlur}
               onChange={pageStringUpdate}
               value={pageString}
-              placeholder={pageNumberPlaceholder}
+              placeholder={customizableUI ? '' : pageNumberPlaceholder}
               aria-label={t('option.thumbnailPanel.enterPageNumbers')}
               className="pagesInput"
               type="text"

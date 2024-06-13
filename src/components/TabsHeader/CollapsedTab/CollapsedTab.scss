@@ -4,7 +4,7 @@
 
 
   &:hover {
-    background-color: var(--document-background-color);
+    background-color: var(--blue-1);
   }
 }
 
@@ -14,6 +14,8 @@
   justify-content: space-between;
   max-height: 30px;
   width: 100%;
+  min-width: 180px;
+  cursor: pointer;
 
   .file-text {
     width: 100%;
@@ -37,6 +39,12 @@
   }
 
   .Button {
+    height: 30px;
+
+    &.hidden-button {
+      display: none;
+    }
+    
     .Icon {
       margin: 0;
       width: 16px;

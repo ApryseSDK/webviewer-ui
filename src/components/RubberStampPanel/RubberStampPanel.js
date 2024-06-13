@@ -31,16 +31,20 @@ const RubberStampPanel = () => {
     customStamps,
     selectedStampIndex,
     mobilePanelSize,
+    featureFlags,
   ] = useSelector(
     (state) => [
       selectors.getStandardStamps(state),
       selectors.getCustomStamps(state),
       selectors.getSelectedStampIndex(state),
       selectors.getMobilePanelSize(state),
+      selectors.getFeatureFlags(state),
     ],
     shallowEqual,
   );
   const store = useStore();
+  const customizableUI = featureFlags.customizableUI;
+
   const setSelectedRubberStamp = useCallback(async (annotation, index) => {
     core.setToolMode(TOOL_NAME);
     for (const tool of stampToolArray) {
@@ -82,6 +86,7 @@ const RubberStampPanel = () => {
       'Panel': true,
       'RubberStampPanel': true,
       [mobilePanelSize]: isMobile,
+      'custom-panel': customizableUI,
     })}>
       <div className='rubber-stamp-panel-header'>
         {t('rubberStampPanel.header')}

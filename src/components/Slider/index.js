@@ -1,3 +1,3 @@
-import Slider from './Slider';
+import connectedComponent from './Slider';
 
-export default Slider;
+export default connectedComponent;

@@ -14,6 +14,7 @@ import Spinner from '../Spinner';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import './SearchOverlay.scss';
+import '../Button/Button.scss';
 
 const propTypes = {
   isPanelOpen: PropTypes.bool,
@@ -346,10 +347,10 @@ function SearchOverlay(props) {
         (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
           (isMoreOptionsOpen)
             ? <div className="extra-options">
-              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.lessOptions')} <Icon glyph="icon-chevron-up"/></button>
+              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.lessOptions')} <Icon glyph="icon-chevron-up" /></button>
             </div>
             : <div className="extra-options">
-              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.moreOptions')} <Icon glyph="icon-chevron-down"/></button>
+              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.moreOptions')} <Icon glyph="icon-chevron-down" /></button>
             </div>
       }
       {
@@ -367,7 +368,7 @@ function SearchOverlay(props) {
                     />
                   </div>
                   <div className='replace-buttons'>
-                    { (showReplaceSpinner) ? <Spinner width={25} height={25} /> : null }
+                    {(showReplaceSpinner) ? <Spinner width={25} height={25} /> : null}
                     <button className='Button btn-replace-all' disabled={isReplaceAllBtnDisabled}
                       onClick={replaceAllConfirmationWarning}>{t('option.searchPanel.replaceAll')}</button>
                     <button className='Button btn-replace' disabled={isReplaceBtnDisabled || !nextResultValue || !core.getActiveSearchResult()}

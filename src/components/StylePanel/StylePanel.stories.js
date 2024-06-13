@@ -1,27 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import StylePanelContainer from './StylePanelContainer';
-import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
-import rootReducer from 'reducers/rootReducer';
-import App from 'components/App';
 import Panel from 'components/Panel';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
 import core from 'core';
-import PropTypes from 'prop-types';
+import { MockApp, createStore } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/StylePanel',
   component: StylePanelContainer,
-};
-
-const createStore = (preloadedState) => {
-  return configureStore({
-    reducer: rootReducer,
-    preloadedState: preloadedState,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-  });
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 const basicMockState = {
@@ -38,7 +30,6 @@ const basicMockState = {
   }
 };
 
-
 const StylePanelTemplate = ({ mockState = basicMockState, location = 'left' }) => (
   <Provider store={createStore(mockState)}>
     <Panel location={location} dataElement={'stylePanel'} isCustom>
@@ -53,16 +44,6 @@ const EmptyStylePanel = (location) => {
 
 export const EmptyStylePanelOnTheLeft = () => EmptyStylePanel('left');
 export const EmptyStylePanelOnTheRight = () => EmptyStylePanel('right');
-
-const MockApp = ({ store }) => (
-  <Provider store={store}>
-    <App removeEventHandlers={() => { }} />
-  </Provider>
-);
-
-MockApp.propTypes = {
-  store: PropTypes.object.isRequired,
-};
 
 const StylePanelInApp = (location) => {
   const mockState = {
@@ -99,7 +80,7 @@ const StylePanelInApp = (location) => {
   const store = createStore(mockState);
   setItemToFlyoutStore(store);
 
-  return <MockApp store={store} />;
+  return <MockApp initialState={mockState} />;
 };
 
 export const StylePanelInAppLeft = () => StylePanelInApp('left');

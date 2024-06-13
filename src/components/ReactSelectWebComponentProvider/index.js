@@ -1,0 +1,3 @@
+import ReactSelectWebComponentProvider from './ReactSelectWebComponentProvider';
+
+export default ReactSelectWebComponentProvider;

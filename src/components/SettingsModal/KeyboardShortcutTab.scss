@@ -35,7 +35,7 @@
     position: relative;
 
     .shortcut-table-item-command {
-      color: #868E96;
+      color: var(--gray-7);
       width: 220px;
 
       span:not(:last-child) {

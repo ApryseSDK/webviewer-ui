@@ -1,10 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { withContentRect } from 'react-measure';
 import PropTypes from 'prop-types';
 import './SearchResult.scss';
 import VirtualizedList from 'react-virtualized/dist/commonjs/List';
 import CellMeasurer, { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer';
 import ListSeparator from 'components/ListSeparator';
+import classNames from 'classnames';
 
 const SearchResultListSeparatorPropTypes = {
   currentResultIndex: PropTypes.number.isRequired,
@@ -46,6 +48,7 @@ const SearchResultListItemPropTypes = {
 };
 
 function SearchResultListItem(props) {
+  const [customizableUI] = useSelector((state) => [state.featureFlags.customizableUI]);
   const { result, currentResultIndex, activeResultIndex, onSearchResultClick, activeDocumentViewerKey } = props;
   const { ambientStr, resultStrStart, resultStrEnd, resultStr } = result;
   const textBeforeSearchValue = ambientStr.slice(0, resultStrStart);
@@ -62,7 +65,12 @@ function SearchResultListItem(props) {
       }}
     >
       {textBeforeSearchValue}
-      <span className="search-value">{searchValue}</span>
+      <span className={classNames({
+        'search-value': true,
+        'customUI': customizableUI,
+      })}>
+        {searchValue}
+      </span>
       {textAfterSearchValue}
     </button>
   );
@@ -192,4 +200,9 @@ SearchResultWithContentRectHOC.propTypes = {
   ])
 };
 
-export default withContentRect('bounds')(SearchResultWithContentRectHOC);
+const SearchResultWithContentRectHOCAndBounds = withContentRect('bounds')(SearchResultWithContentRectHOC);
+
+const SearchResultsContainer = (props) => {
+  return (<SearchResultWithContentRectHOCAndBounds {...props} />);
+};
+export default SearchResultsContainer;

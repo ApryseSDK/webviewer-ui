@@ -44,6 +44,19 @@ const ITEM_TYPE = {
   TABS_PANEL: 'tabPanel',
 };
 
+const PREBUILT_FLYOUTS = [
+  'ViewControlsFlyout',
+  'ZoomFlyoutMenu',
+  'pageNavFlyoutMenu',
+];
+
+const OVERFLOW_FLYOUTS = [
+  'GroupedItemsFlyout',
+  'RibbonOverflowFlyout',
+  'RibbonGroupFlyout',
+  'tabPanelOverflowFlyout',
+];
+
 const RESPONSIVE_ITEMS = [
   ITEM_TYPE.GROUPED_ITEMS,
   ITEM_TYPE.RIBBON_GROUP,
@@ -117,6 +130,8 @@ export {
   JUSTIFY_CONTENT,
   DIRECTION,
   ITEM_TYPE,
+  PREBUILT_FLYOUTS,
+  OVERFLOW_FLYOUTS,
   DEFAULT_GAP,
   OPACITY_LEVELS,
   OPACITY_MODES,

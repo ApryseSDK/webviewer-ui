@@ -1,3 +1,3 @@
-import ToolGroupButton from './ToolGroupButton';
+import connectedComponent from './ToolGroupButton';
 
-export default ToolGroupButton;
+export default connectedComponent;

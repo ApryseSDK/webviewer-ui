@@ -52,18 +52,17 @@ export default function useOnInlineCommentPopupOpen() {
     };
 
     core.addEventListener('annotationDoubleClicked', onAnnotationDoubleClicked, null, activeDocumentViewerKey);
-    return () => core.removeEventListener('annotationDoubleClicked', onAnnotationDoubleClicked, activeDocumentViewerKey);
+    return () => core.removeEventListener('annotationDoubleClicked', onAnnotationDoubleClicked, null, activeDocumentViewerKey);
   }, [activeDocumentViewerKey]);
 
   useEffect(() => {
     const onAnnotationSelected = (annotations, action) => {
       const selectedAnnotationTool = annotations[0].ToolName;
       const shouldSetCommentingAnnotation =
-        (action === 'selected')
+        action === 'selected'
         && annotations.length
         && !isFreeTextAnnotationAdded
-        && (selectedAnnotationTool !== ToolNames.CROP)
-        && !isOfficeEditorMode;
+        && selectedAnnotationTool !== ToolNames.CROP;
       if (shouldSetCommentingAnnotation) {
         setAnnotation(annotations[0]);
       }
@@ -78,9 +77,9 @@ export default function useOnInlineCommentPopupOpen() {
 
     core.addEventListener('annotationSelected', onAnnotationSelected, null, activeDocumentViewerKey);
     return () => {
-      core.removeEventListener('annotationSelected', onAnnotationSelected, activeDocumentViewerKey);
+      core.removeEventListener('annotationSelected', onAnnotationSelected, null, activeDocumentViewerKey);
     };
-  }, [annotation, isFreeTextAnnotationAdded, activeDocumentViewerKey, isOfficeEditorMode]);
+  }, [annotation, isFreeTextAnnotationAdded, activeDocumentViewerKey]);
 
   useEffect(() => {
     setFreeTextAnnotationAdded(false);
@@ -90,10 +89,10 @@ export default function useOnInlineCommentPopupOpen() {
       // so this component will close due to useOnClickOutside
       // this handler is used to make sure that if we click on the selected annotation, this component will show up again
       const annotUnderMouse = core.getAnnotationByMouseEvent(e, activeDocumentViewerKey);
-      if (annotation || isOfficeEditorMode) {
+
+      if (annotation) {
         if (!annotUnderMouse) {
           closeAndReset();
-          return;
         }
 
         if (core.isAnnotationSelected(annotUnderMouse) && annotUnderMouse !== annotation) {
@@ -113,10 +112,10 @@ export default function useOnInlineCommentPopupOpen() {
     core.addEventListener('mouseLeftUp', onMouseLeftUp, null, activeDocumentViewerKey);
     core.addEventListener('annotationChanged', onAnnotationChanged, null, activeDocumentViewerKey);
     return () => {
-      core.removeEventListener('mouseLeftUp', onMouseLeftUp, activeDocumentViewerKey);
-      core.removeEventListener('annotationChanged', onAnnotationChanged, activeDocumentViewerKey);
+      core.removeEventListener('mouseLeftUp', onMouseLeftUp, null, activeDocumentViewerKey);
+      core.removeEventListener('annotationChanged', onAnnotationChanged, null, activeDocumentViewerKey);
     };
-  }, [annotation, activeDocumentViewerKey, isOfficeEditorMode]);
+  }, [annotation, activeDocumentViewerKey]);
 
   useEffect(() => {
     if (!isNotesPanelOpenOrActive && annotation && inlineCommentFilter(annotation)) {

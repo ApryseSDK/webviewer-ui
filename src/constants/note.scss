@@ -9,7 +9,7 @@
       border: none;
       min-width: 60px;
       height: 32px;
-      color: #ffffff;
+      color: var(--gray-0);
     }
 
     &:nth-child(2) {
@@ -32,7 +32,7 @@
       border: none;
       min-width: 60px;
       height: 32px;
-      color: #ffffff;
+      color: var(--gray-0);
     }
   }
 }

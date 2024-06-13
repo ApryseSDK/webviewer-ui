@@ -82,6 +82,7 @@ const SignatureModal = () => {
     for (const signatureTool of signatureToolArray) {
       signatureTool.clearLocation();
       signatureTool.setSignature(null);
+      signatureTool.setInitials(null);
     }
     dispatch(actions.closeElement(DataElements.SIGNATURE_MODAL));
   };
@@ -260,7 +261,8 @@ const SignatureModal = () => {
               </TabPanel>
               <div className="footer">
                 <button className="signature-create" onClick={isSavedTabSelected ? () => setSignature(selectedIndex) : createSignatures}
-                  disabled={isSavedTabSelected ? (!isSavedTabSelected || !displayedSignatures.length || !isOpen) : (!(isOpen) || createButtonDisabled)}>
+                  disabled={isSavedTabSelected ? (!isSavedTabSelected || !displayedSignatures.length || !isOpen) : (!(isOpen) || createButtonDisabled)}
+                  title={isInitialsModeEnabled ? t('message.signatureRequired') : ''}>
                   {t(isSavedTabSelected ? 'action.apply' : 'action.create')}
                 </button>
               </div>

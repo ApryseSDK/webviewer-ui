@@ -1,0 +1,16 @@
+.Divider {
+  background: var(--divider);
+
+  &.row {
+    width: 1px;
+    height: 20px;
+    margin: 4px 0px;
+    align-self: center;
+  }
+
+  &.column {
+    width: auto;
+    height: 1px;
+    margin: 0px 4px;
+  }
+}

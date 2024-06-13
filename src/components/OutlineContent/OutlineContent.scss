@@ -1,0 +1,13 @@
+.outline-text,
+.outline-destination {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.outline-destination {
+  flex-basis: 100%;
+  font-size: 10px;
+  color: var(--faded-text);
+  margin-top: var(--padding-small);
+}

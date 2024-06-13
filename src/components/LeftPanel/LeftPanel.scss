@@ -38,6 +38,10 @@
   &.tracked-change-active {
     .left-panel-container {
       padding: 0;
+
+      .notes-panel-container {
+        height: 100%;
+      }
     }
   }
 

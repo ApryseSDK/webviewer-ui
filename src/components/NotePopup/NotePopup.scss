@@ -7,8 +7,7 @@
   user-select: none;
   width: 28px;
   height: 28px;
-  right: -10px;
-  top: -8px;
+  position: relative; // needs position: relative so that .note-popup-options can be positioned absolute correctly
 
   .overflow {
     width: 28px;
@@ -45,6 +44,7 @@
     border-radius: 4px;
     background: var(--component-background);
     top: 40px;
+    width: max-content;
 
     .note-popup-option {
       @include button-reset;

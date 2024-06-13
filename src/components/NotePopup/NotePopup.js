@@ -4,8 +4,8 @@ import useOnClickOutside from 'hooks/useOnClickOutside';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-
 import Icon from 'components/Icon';
+
 import './NotePopup.scss';
 
 const propTypes = {
@@ -39,7 +39,7 @@ function NotePopup(props) {
     closePopup();
   });
 
-  const togglePopup = e => {
+  const togglePopup = (e) => {
     e.stopPropagation();
     if (isOpen) {
       closePopup();
@@ -63,8 +63,8 @@ function NotePopup(props) {
     return null;
   }
 
-  const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger', { active: isOpen })
-  const optionsClass = classNames('options note-popup-options', { 'options-reply': isReply })
+  const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger', { active: isOpen });
+  const optionsClass = classNames('options note-popup-options', { 'options-reply': isReply });
   return (
     <DataElementWrapper
       className="NotePopup"

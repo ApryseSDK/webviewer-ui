@@ -8,10 +8,12 @@ import { ITEM_TYPE } from 'constants/customizationVariables';
  * @memberOf UI.Components
  * @class UI.Components.ToggleElementButton
  * @extends UI.Components.Item
- * @property {ItemProperties} properties An object that contains the properties of the ToggleElementButton.
- * @property {string} [properties.toggleElement] The dataElement of the element to toggle.
- * @property {string} [properties.label] The label of the button.
- * @property {string} [properties.img] The title of the button which appears in a tooltip.
+ * @param {Object} properties An object that contains the properties of the ToggleElementButton.
+ * @param {string} [properties.dataElement] The dataElement of toggle button.
+ * @param {string} properties.toggleElement The dataElement of the element to toggle.
+ * @param {string} [properties.title] The tooltip text to be displayed when hovering over the toggle button.
+ * @param {string} [properties.label] The label of the button.
+ * @param {string} [properties.img] The title of the button which appears in a tooltip.
  * @example
 const toggleButton = new instance.UI.Components.ToggleElementButton({
   label: 'Toggle',

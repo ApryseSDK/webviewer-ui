@@ -25,6 +25,9 @@ const initialState = {
       typeFilter: [],
       statusFilter: []
     },
+  },
+  featureFlags: {
+    customizableUI: false,
   }
 };
 

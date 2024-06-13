@@ -54,6 +54,13 @@
     }
   }
 
+  .StylePicker {
+    input,
+    .lineStyleContainer .StylePicker-LineStyle button.Dropdown {
+      border-color: var(--gray-4);
+    }
+  }
+
   @include mobile {
     width: 100%;
     height: 100%;

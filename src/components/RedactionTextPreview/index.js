@@ -1,3 +1,3 @@
-import RedactionTextPreview from './RedactionTextPreviewContainer';
+import RedactionTextPreviewContainer from './RedactionTextPreviewContainer';
 
-export default RedactionTextPreview;
+export default RedactionTextPreviewContainer;

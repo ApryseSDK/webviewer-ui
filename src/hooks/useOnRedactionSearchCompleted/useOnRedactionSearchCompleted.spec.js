@@ -8,7 +8,7 @@ import { redactionTypeMap } from 'constants/redactionTypes';
 
 jest.mock('core');
 
-//These patterns will be used for the tests
+// These patterns will be used for the tests
 const redactionSearchPatterns = {
   creditCards: {
     label: 'redactionPanel.search.creditCards',
@@ -32,8 +32,8 @@ const redactionSearchPatterns = {
 
 const mockSearchResults = [
   {
-    resultStr: "spice",
-    ambientStr: "The spice must flow.",
+    resultStr: 'spice',
+    ambientStr: 'The spice must flow.',
     resultStrStart: 4,
     resultStrEnd: 9,
     index: 0,
@@ -45,12 +45,12 @@ const mockSearchResults = [
     pageNum: 1
   },
   {
-    resultStr: "867-5309",
+    resultStr: '867-5309',
     index: 3,
     pageNum: 2
   },
   {
-    resultStr: "paul.atreides@dune.com",
+    resultStr: 'paul.atreides@dune.com',
     index: 4,
     pageNum: 3
   }
@@ -58,8 +58,10 @@ const mockSearchResults = [
 
 // To test a hook with a redux dependency we need to provide a wrapper for it to run.
 // The wrapper must also have a redux provider
+// eslint-disable-next-line react/prop-types
 const MockComponent = ({ children }) => (<div>{children}</div>);
-const wrapper = withProviders(MockComponent)
+// eslint-disable-next-line no-undef
+const wrapper = withProviders(MockComponent);
 
 describe('useOnRedactionSearchCompleted hook', () => {
   it('adds event listeners to searchResultsChanged and searchInProgress', () => {

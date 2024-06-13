@@ -32,6 +32,9 @@ const initialState = {
       typeFilter: [],
       statusFilter: []
     },
+  },
+  featureFlags: {
+    customizableUI: true,
   }
 };
 

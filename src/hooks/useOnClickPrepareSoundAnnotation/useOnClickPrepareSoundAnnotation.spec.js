@@ -8,7 +8,7 @@ describe('useOnClickPrepareSoundAnnotation hook', () => {
   it('adds event listener to annotationSelected', () => {
     core.addEventListener = jest.fn();
 
-    const { result } = renderHook(function () {
+    const { result } = renderHook(function() {
       return useOnClickPrepareSoundAnnotation();
     });
 
@@ -19,7 +19,7 @@ describe('useOnClickPrepareSoundAnnotation hook', () => {
   it('removes event listener from annotationSelected when component is unmounted', () => {
     core.removeEventListener = jest.fn();
 
-    const { result, unmount } = renderHook(function () {
+    const { result, unmount } = renderHook(function() {
       return useOnClickPrepareSoundAnnotation();
     });
 

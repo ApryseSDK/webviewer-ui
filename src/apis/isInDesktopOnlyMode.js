@@ -9,6 +9,6 @@ WebViewer(...)
     instance.UI.isInDesktopOnlyMode();
   });
  */
-export default store => () => {
+export default (store) => () => {
   return selectors.isInDesktopOnlyMode(store.getState());
 };

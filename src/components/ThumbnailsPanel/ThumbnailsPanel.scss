@@ -23,20 +23,21 @@
   }
   input[type=range]:focus {
     outline: none;
+    box-shadow: 0 0 5px var(--focus-border);
   }
   input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 3px;
     cursor: pointer;
     animate: 0.2s;
-    box-shadow: 0px 0px 0px #000000;
+    box-shadow: 0px 0px 0px var(--gray-12);
     background: var(--slider-filled);
     border-radius: 5px;
-    border: 0px solid #000000;
+    border: 0px solid var(--gray-12);
   }
   input[type=range]::-webkit-slider-thumb {
-    box-shadow: 0px 0px 1px #000000;
-    border: 0px solid #000000;
+    box-shadow: 0px 0px 1px var(--gray-12);
+    border: 0px solid var(--gray-12);
     height: 15px;
     width: 15px;
     border-radius: 50px;
@@ -53,14 +54,14 @@
     height: 3px;
     cursor: pointer;
     animate: 0.2s;
-    box-shadow: 0px 0px 0px #000000;
+    box-shadow: 0px 0px 0px var(--gray-12);
     background: var(--slider-filled);
     border-radius: 5px;
-    border: 0px solid #000000;
+    border: 0px solid var(--gray-12);
   }
   input[type=range]::-moz-range-thumb {
-    box-shadow: 0px 0px 1px #000000;
-    border: 0px solid #000000;
+    box-shadow: 0px 0px 1px var(--gray-12);
+    border: 0px solid var(--gray-12);
     height: 15px;
     width: 15px;
     border-radius: 50px;
@@ -80,19 +81,19 @@
   }
   input[type=range]::-ms-fill-lower {
     background: var(--slider-filled);
-    border: 0px solid #000000;
+    border: 0px solid var(--gray-12);
     border-radius: 10px;
-    box-shadow: 0px 0px 0px #000000;
+    box-shadow: 0px 0px 0px var(--gray-12);
   }
   input[type=range]::-ms-fill-upper {
     background: var(--slider-filled);
-    border: 0px solid #000000;
+    border: 0px solid var(--gray-12);
     border-radius: 10px;
-    box-shadow: 0px 0px 0px #000000;
+    box-shadow: 0px 0px 0px var(--gray-12);
   }
   input[type=range]::-ms-thumb {
-    box-shadow: 0px 0px 1px #000000;
-    border: 0px solid #000000;
+    box-shadow: 0px 0px 1px var(--gray-12);
+    border: 0px solid var(--gray-12);
     height: 15px;
     width: 15px;
     border-radius: 50%;
@@ -116,6 +117,10 @@
       background: var(--view-header-button-hover);
       border-radius: 4px;
     }
+  }
+
+  .slider {
+    width: 100%;
   }
 }
 

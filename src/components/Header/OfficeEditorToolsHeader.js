@@ -28,6 +28,7 @@ import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
 
 import './Header.scss';
 import './OfficeHeader.scss';
+import '../HeaderItems/HeaderItems.scss';
 
 const availableStylePresetMap = {
   'Normal Text': {
@@ -330,9 +331,9 @@ const OfficeEditorToolsHeader = () => {
   const isBold = properties.bold;
   const isItalic = properties.italic;
   const isUnderline = properties.underlineStyle === 'single';
-  const fontFace = properties.fontFace;
+  const fontFace = properties.fontFace || '';
   const pointSize = properties.pointSize;
-  const pointSizeSelectionKey = pointSize === undefined ? undefined : pointSize.toString();
+  const pointSizeSelectionKey = pointSize === undefined ? '' : pointSize.toString();
   const justification = properties.paragraphProperties.justification;
   const lineHeight = calculateLineSpacing(
     properties.paragraphProperties.lineHeightMultiplier,
@@ -349,11 +350,11 @@ const OfficeEditorToolsHeader = () => {
     const {
       pointSize,
       color: currentColor
-    } = cursorProperties.paragraphProperties.paragraphTextStyle || {};
+    } = cursorProperties || {};
 
-    let stylePreset = 'Normal Text';
+    const defaultStylePreset = 'Normal Text';
     if (!pointSize || !currentColor) {
-      return stylePreset;
+      return defaultStylePreset;
     }
 
     const fontSize = `${pointSize}pt`;
@@ -366,16 +367,9 @@ const OfficeEditorToolsHeader = () => {
       ).slice(0, -2);
     }
 
-    Object.keys(availableStylePresetMap).forEach((style) => {
-      if (
-        availableStylePresetMap[style].fontSize === fontSize &&
-        availableStylePresetMap[style].color === color
-      ) {
-        stylePreset = style;
-      }
-    });
-
-    return stylePreset;
+    return Object.keys(availableStylePresetMap).find(
+      (style) => availableStylePresetMap[style].fontSize === fontSize && availableStylePresetMap[style].color === color
+    ) || defaultStylePreset;
   };
 
   return isOpen ? (
@@ -410,7 +404,7 @@ const OfficeEditorToolsHeader = () => {
                     // TODO: This shouldn't be closing more tools popup
                     // It shouldn't know about the existence of it.
                     onOpened={() => setShowMoreTools(false)}
-                    onClickItem={(item) => {
+                    onClickItem={async (item) => {
                       const stylePreset = availableStylePresetMap[item];
                       const fontPointSize = parseInt(stylePreset.fontSize, 10);
                       const fontColor = new window.Core.Annotations.Color(stylePreset.color);
@@ -429,15 +423,13 @@ const OfficeEditorToolsHeader = () => {
                         color: parsedFontColor
                       };
 
-                      core.getOfficeEditor().updateParagraphStyle({
-                        textStyle: newTextStyle,
-                      });
-                      core.getOfficeEditor().setMainCursorStyle(newTextStyle);
+                      await core.getOfficeEditor().updateParagraphStylePresets(newTextStyle);
+                      await core.getOfficeEditor().setMainCursorStyle(newTextStyle);
                     }}
                     getCustomItemStyle={(item) => ({ ...availableStylePresetMap[item], padding: '20px 10px', color: 'var(--gray-8)' })}
                     applyCustomStyleToButton={false}
-                    currentSelectionKey={convertCursorToStylePreset(cursorProperties)}
-                    className="large-dropdown"
+                    currentSelectionKey={convertCursorToStylePreset(properties)}
+                    width={160}
                     dataElement="office-editor-text-format"
                   />
                   <Dropdown
@@ -449,7 +441,7 @@ const OfficeEditorToolsHeader = () => {
                     getCustomItemStyle={(item) => ({ ...cssFontValues[item] })}
                     maxHeight={500}
                     customDataValidator={(font) => availableFontFaces.includes(font)}
-                    className="large-dropdown"
+                    width={160}
                     dataElement="office-editor-font"
                     currentSelectionKey={fontFace}
                     hasInput
@@ -472,7 +464,7 @@ const OfficeEditorToolsHeader = () => {
                       core.getOfficeEditor().updateSelectionAndCursorStyle({ pointSize: fontPointSize });
                     }}
                     currentSelectionKey={pointSizeSelectionKey}
-                    className="small-dropdown"
+                    width={80}
                     dataElement="office-editor-font-size"
                     hasInput
                     isSearchEnabled={false}
@@ -500,14 +492,14 @@ const OfficeEditorToolsHeader = () => {
                     iconClassName={`${useColorIconBorder ? 'icon-border' : ''} icon-text-color`}
                   />
                   <ColorPickerOverlay
-                    onStyleChange={(_, color) => {
-                      const fontColor = {
-                        r: color.R,
-                        g: color.G,
-                        b: color.B,
+                    onStyleChange={(_, newColor) => {
+                      const color = {
+                        r: newColor.R,
+                        g: newColor.G,
+                        b: newColor.B,
                         a: 255,
                       };
-                      core.getOfficeEditor().updateSelectionAndCursorStyle({ fontColor });
+                      core.getOfficeEditor().updateSelectionAndCursorStyle({ color });
                       dispatch(actions.closeElements(['colorPickerOverlay']));
                     }}
                     color={wvFontColor}
@@ -531,7 +523,7 @@ const OfficeEditorToolsHeader = () => {
                       });
                     }}
                     currentSelectionKey={lineHeight}
-                    className="small-dropdown line-spacing-dropdown"
+                    width={80}
                     dataElement="office-editor-line-spacing"
                     displayButton={(isOpen) => (
                       <ActionButton

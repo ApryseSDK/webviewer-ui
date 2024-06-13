@@ -4,11 +4,21 @@ import { configureStore } from '@reduxjs/toolkit';
 import RightHeader from 'components/ModularComponents/RightHeader';
 import initialState from 'src/redux/initialState';
 import rootReducer from 'reducers/rootReducer';
-import { defaultRightHeader, secondFloatStartRightHeader, floatStartRightHeader, floatCenterRightHeader, floatEndRightHeader } from '../../Helpers/mockHeaders';
+import {
+  defaultRightHeader,
+  secondFloatStartRightHeader,
+  floatStartRightHeader,
+  floatCenterRightHeader,
+  floatEndRightHeader,
+  mockModularComponents,
+} from '../../Helpers/mockHeaders';
 
 export default {
   title: 'ModularComponents/FloatingHeader/RightHeader',
   component: RightHeader,
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 const MockDocumentContainer = () => {
@@ -26,6 +36,7 @@ const MockAppWrapperWithRightHeader = ({ modularHeaders }) => {
     viewer: {
       ...initialState.viewer,
       modularHeaders,
+      modularComponents: mockModularComponents,
     },
     featureFlags: {
       customizableUI: true,
@@ -46,36 +57,37 @@ const MockAppWrapperWithRightHeader = ({ modularHeaders }) => {
 };
 
 const Template = (args) => <MockAppWrapperWithRightHeader {...args} />;
+Template.parameters = { chromatic: { disableSnapshot: true } };
 
 export const RightHeaderWithDefaultAndFloaties = Template.bind({});
 RightHeaderWithDefaultAndFloaties.args = {
-  modularHeaders: [
+  modularHeaders: {
     defaultRightHeader,
     secondFloatStartRightHeader,
     floatStartRightHeader,
     floatCenterRightHeader,
     floatEndRightHeader,
-  ],
+  },
 };
 
 export const FloatRightStartHeader = Template.bind({});
 FloatRightStartHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatStartRightHeader,
     secondFloatStartRightHeader,
-  ],
+  },
 };
 
 export const FloatRightCenterHeader = Template.bind({});
 FloatRightCenterHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatCenterRightHeader,
-  ],
+  },
 };
 
 export const FloatRightEndHeader = Template.bind({});
 FloatRightEndHeader.args = {
-  modularHeaders: [
+  modularHeaders: {
     floatEndRightHeader,
-  ],
+  },
 };

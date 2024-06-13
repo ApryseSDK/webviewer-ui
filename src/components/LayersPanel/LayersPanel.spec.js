@@ -43,10 +43,10 @@ describe('Test for Layers Panel', () => {
     // arbitrary unique keys
     const layers = [
       {
-        id:'a'
+        id: 'a'
       },
       {
-        id:'b'
+        id: 'b'
       }
     ];
     const { container } = render(<TestLayersPanel layers={layers}/>);

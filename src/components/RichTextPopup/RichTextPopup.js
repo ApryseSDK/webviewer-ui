@@ -216,8 +216,8 @@ const RichTextPopup = ({ annotation, editor }) => {
       index = newSelection.index;
       length = newSelection.length;
     }
-    const currentFormat = editorRef.current.getFormat(index, length);
 
+    const currentFormat = editorRef.current.getFormat(index, length);
     applyFormat(format, !currentFormat[format]);
   };
 
@@ -240,6 +240,13 @@ const RichTextPopup = ({ annotation, editor }) => {
       value = new window.Core.Annotations.Color(value);
     }
 
+    if (core.isFullPDFEnabled() && formatKey === 'font') {
+      const updated = {
+        ...format,
+        'original-font-family': value
+      };
+      return setFormat(updated);
+    }
     // format the entire editor doesn't trigger the editorTextChanged event, so we set the format state here
     setFormat({
       ...format,
@@ -317,7 +324,7 @@ const RichTextPopup = ({ annotation, editor }) => {
   propertiesRef.current.italic = format.italic;
   propertiesRef.current.underline = format.underline;
   propertiesRef.current.strikeout = format.strike;
-  propertiesRef.current.quillFont = format.font || propertiesRef.current.Font;
+  propertiesRef.current.quillFont = format['original-font-family'] || format.font || propertiesRef.current.Font;
   propertiesRef.current.quillFontSize = format.originalSize || propertiesRef.current.FontSize;
 
   // TODO for now don't show it in mobile

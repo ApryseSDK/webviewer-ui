@@ -1,46 +1,30 @@
 import React from 'react';
-import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
 import LayersPanel from 'components/LayersPanel';
+import { MockApp } from 'helpers/storybookHelper';
 import initialState from 'src/redux/initialState';
-import App from 'components/App';
-import rootReducer from 'src/redux/reducers/rootReducer';
 
 export default {
   title: 'Components/LayersPanel',
   component: LayersPanel,
+  parameters: {
+    customizableUI: true,
+  },
 };
-
-function noop() {
-  // Comment needed to suppress SonarCloud code smell.
-}
 
 const layers = [
   {
     'name': 'Layer 1',
+    'id': 'layer1',
   },
   {
     'name': 'Layer 2',
+    'id': 'layer2',
   },
   {
     'name': 'Layer 3',
+    'id': 'layer3',
   }
 ];
-
-
-const createStore = (preloadedState) => {
-  return configureStore({
-    reducer: rootReducer,
-    preloadedState: preloadedState,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-  });
-};
-
-const MockApp = ({ initialState }) => (
-  <Provider store={createStore(initialState)}>
-    <App removeEventHandlers={() => { }} />
-  </Provider>
-);
 
 export function Basic() {
   const stateWithLayersPanel = {
@@ -159,5 +143,5 @@ export const Empty = () => {
       customizableUI: true,
     },
   };
-  return <MockApp initialState={stateWithEmptyLayersPanel}/>;
+  return <MockApp initialState={stateWithEmptyLayersPanel} />;
 };

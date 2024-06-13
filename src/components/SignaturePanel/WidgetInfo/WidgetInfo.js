@@ -61,7 +61,7 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   collapsible: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
-  field: PropTypes.instanceOf(Annotations.Forms.Field),
+  field: PropTypes.instanceOf(window.Core.Annotations.Forms.Field),
 };
 
 const WidgetInfo = ({ name, collapsible, field }) => {

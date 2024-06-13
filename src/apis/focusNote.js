@@ -21,7 +21,7 @@ WebViewer(...)
 import core from 'core';
 import actions from 'actions';
 
-export default store => id => {
+export default (store) => (id) => {
   // store.dispatch(actions.triggerNoteEditing());
   const annotation = core.getAnnotationById(id);
   store.dispatch(actions.openElement('notesPanel'));

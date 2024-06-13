@@ -1,3 +1,3 @@
-import ToggleElementButton from './ToggleElementButton';
+import connectedComponent from './ToggleElementButton';
 
-export default ToggleElementButton;
+export default connectedComponent;
