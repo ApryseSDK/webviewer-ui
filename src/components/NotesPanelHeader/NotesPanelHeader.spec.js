@@ -25,6 +25,10 @@ const initialState = {
       typeFilter: [],
       statusFilter: []
     },
+  },
+  officeEditor: {},
+  featureFlags: {
+    customizableUI: false,
   }
 };
 

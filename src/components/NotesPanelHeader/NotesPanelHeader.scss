@@ -81,6 +81,10 @@
       &::placeholder {
         color: var(--placeholder-text);
       }
+
+      &[disabled] {
+        opacity: 0.5;
+      }
     }
 
     .input-button {

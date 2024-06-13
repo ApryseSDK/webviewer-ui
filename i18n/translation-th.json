@@ -283,6 +283,7 @@
     "searching": "กำลังค้นหา...",
     "searchCommentsPlaceholder": "ค้นหาความคิดเห็น",
     "searchDocumentPlaceholder": "ค้นหาเอกสาร",
+    "searchSuggestionsPlaceholder": "คำแนะนำการค้นหา",
     "signHere": "ลงชื่อที่นี่",
     "insertTextHere": "ใส่ข้อความที่นี่",
     "imageSignatureAcceptedFileTypes": "ยอมรับเฉพาะ {{acceptedFileTypes}} เท่านั้น",

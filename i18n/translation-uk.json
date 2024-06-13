@@ -283,6 +283,7 @@
     "searching": "Пошук...",
     "searchCommentsPlaceholder": "Шукати коментарі",
     "searchDocumentPlaceholder": "Пошук документа",
+    "searchSuggestionsPlaceholder": "Пошукові пропозиції",
     "signHere": "Підпишіть тут",
     "insertTextHere": "Вставте сюди текст",
     "imageSignatureAcceptedFileTypes": "Приймаються лише {{acceptedFileTypes}}",

@@ -283,6 +283,7 @@
     "searching": "正在搜索…",
     "searchCommentsPlaceholder": "搜索评论",
     "searchDocumentPlaceholder": "搜索文件",
+    "searchSuggestionsPlaceholder": "搜索建议",
     "signHere": "在此处签名",
     "insertTextHere": "在这里插入文字",
     "imageSignatureAcceptedFileTypes": "仅接受{{acceptedFileTypes}}",

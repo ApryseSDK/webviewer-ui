@@ -283,6 +283,7 @@
     "searching": "Поиск...",
     "searchCommentsPlaceholder": "Поиск комментариев",
     "searchDocumentPlaceholder": "Искать документ",
+    "searchSuggestionsPlaceholder": "Поисковые предложения",
     "signHere": "Распишетесь здесь",
     "insertTextHere": "Вставьте текст здесь",
     "imageSignatureAcceptedFileTypes": "Только {{acceptFileTypes}} принимаются",

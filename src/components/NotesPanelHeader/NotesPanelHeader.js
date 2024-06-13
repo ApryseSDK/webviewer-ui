@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -15,11 +16,20 @@ import CustomElement from 'components/CustomElement';
 import Events from 'constants/events';
 import { getSortStrategies } from 'constants/sortStrategies';
 import DataElements from 'constants/dataElement';
+import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
 
 import './NotesPanelHeader.scss';
 
-const SORT_CONTAINER_ELEMENT = 'sortContainer';
+const propTypes = {
+  notes: PropTypes.array.isRequired,
+  disableFilterAnnotation: PropTypes.bool,
+  setSearchInputHandler: PropTypes.func.isRequired,
+  isMultiSelectMode: PropTypes.bool,
+  toggleMultiSelectMode: PropTypes.func,
+  isMultiSelectEnabled: PropTypes.bool,
+};
 
+const SORT_CONTAINER_ELEMENT = 'sortContainer';
 function NotesPanelHeader({
   notes,
   disableFilterAnnotation,
@@ -27,19 +37,24 @@ function NotesPanelHeader({
   isMultiSelectMode,
   toggleMultiSelectMode,
   isMultiSelectEnabled,
-  isOfficeEditorReviewingMode,
 }) {
   const [
     sortStrategy,
     isSortContainerDisabled,
     customHeaderOptions,
     annotationFilters,
+    featureFlags,
+    isOfficeEditorMode,
+    officeEditorEditMode,
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
       selectors.isElementDisabled(state, SORT_CONTAINER_ELEMENT),
       selectors.getNotesPanelCustomHeaderOptions(state),
-      selectors.getAnnotationFilters(state)
+      selectors.getAnnotationFilters(state),
+      selectors.getFeatureFlags(state),
+      selectors.getIsOfficeEditorMode(state),
+      selectors.getOfficeEditorEditMode(state),
     ],
     shallowEqual
   );
@@ -47,6 +62,9 @@ function NotesPanelHeader({
   const [t] = useTranslation();
   const dispatch = useDispatch();
   const [filterEnabled, setFilterEnabled] = useState(false);
+  const [isPreviewingTrackedChanges, setIsPreviewingTrackedChanges] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
+  const customizableUI = featureFlags.customizableUI;
 
   useEffect(() => {
     // check if Redux filter state is enabled on mount and set filterEnabled to true
@@ -70,7 +88,19 @@ function NotesPanelHeader({
     };
   }, []);
 
+  // on oe preview mode, disable and clear the search input
+  useEffect(() => {
+    if (isOfficeEditorMode && officeEditorEditMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW) {
+      setIsPreviewingTrackedChanges(true);
+      setSearchInputHandler('');
+      setSearchInput('');
+    } else {
+      setIsPreviewingTrackedChanges(false);
+    }
+  }, [isOfficeEditorMode, officeEditorEditMode]);
+
   const handleInputChange = (e) => {
+    setSearchInput(e.target.value);
     _handleInputChange(e.target.value);
   };
 
@@ -86,7 +116,7 @@ function NotesPanelHeader({
       <div className="label">{`${t('message.sortBy')}:`}</div>
       <Dropdown
         dataElement="notesOrderDropdown"
-        disabled={notes.length === 0}
+        disabled={notes.length === 0 || isPreviewingTrackedChanges}
         items={Object.keys(getSortStrategies())}
         translationPrefix="option.notesOrder"
         currentSelectionKey={sortStrategy}
@@ -99,7 +129,11 @@ function NotesPanelHeader({
 
   const originalHeaderElement = (
     <DataElementWrapper
-      className="header"
+      className={
+        classNames({
+          'header': true,
+          'custom-header': customizableUI,
+        })}
       dataElement="notesPanelHeader"
     >
       <DataElementWrapper
@@ -107,11 +141,13 @@ function NotesPanelHeader({
         dataElement={DataElements.NotesPanel.DefaultHeader.INPUT_CONTAINER}
       >
         <input
+          disabled={isPreviewingTrackedChanges}
           type="text"
-          placeholder={t('message.searchCommentsPlaceholder')}
-          aria-label={t('message.searchCommentsPlaceholder')}
+          placeholder={isOfficeEditorMode ? t('message.searchSuggestionsPlaceholder') : t('message.searchCommentsPlaceholder')}
+          aria-label={isOfficeEditorMode ? t('message.searchSuggestionsPlaceholder') : t('message.searchCommentsPlaceholder')}
           onChange={handleInputChange}
           id="NotesPanel__input"
+          value={searchInput}
         />
       </DataElementWrapper>
 
@@ -119,7 +155,7 @@ function NotesPanelHeader({
         className="comments-counter"
         dataElement={DataElements.NotesPanel.DefaultHeader.COMMENTS_COUNTER}
       >
-        <span className='main-comment'>{isOfficeEditorReviewingMode ? t('officeEditor.reviewing') : t('component.notesPanel')}</span> {`(${notes.length})`}
+        <span className='main-comment'>{isOfficeEditorMode ? t('officeEditor.reviewing') : t('component.notesPanel')}</span> {`(${notes.length})`}
       </DataElementWrapper>
 
       <DataElementWrapper
@@ -130,7 +166,7 @@ function NotesPanelHeader({
         <div
           className="buttons-container"
         >
-          {(!isMultiSelectEnabled) ? null :
+          {isMultiSelectEnabled && !isOfficeEditorMode && (
             <Button
               dataElement={DataElements.NOTE_MULTI_SELECT_MODE_BUTTON}
               className={classNames({
@@ -144,7 +180,7 @@ function NotesPanelHeader({
               }}
               title={t('component.multiSelectButton')}
             />
-          }
+          )}
           <Button
             dataElement={DataElements.NotesPanel.DefaultHeader.FILTER_ANNOTATION_BUTTON}
             className={classNames({
@@ -175,5 +211,7 @@ function NotesPanelHeader({
     </>
   );
 }
+
+NotesPanelHeader.propTypes = propTypes;
 
 export default NotesPanelHeader;

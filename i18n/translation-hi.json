@@ -283,6 +283,7 @@
     "searching": "खोज कर...",
     "searchCommentsPlaceholder": "टिप्पणियाँ खोजें",
     "searchDocumentPlaceholder": "दस्तावेज़ खोजें",
+    "searchSuggestionsPlaceholder": "खोज सुझाव",
     "signHere": "यहाँ पर हस्ताक्षर करे",
     "insertTextHere": "यहां टेक्स्ट डालें",
     "imageSignatureAcceptedFileTypes": "केवल {{acceptedFileTypes}} स्वीकार किए जाते हैं",

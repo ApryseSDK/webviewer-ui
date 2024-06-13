@@ -283,6 +283,7 @@
     "searching": "অনুসন্ধান করা হচ্ছে...",
     "searchCommentsPlaceholder": "মন্তব্য অনুসন্ধান করুন",
     "searchDocumentPlaceholder": "নথি অনুসন্ধান করুন",
+    "searchSuggestionsPlaceholder": "অনুসন্ধান পরামর্শ",
     "signHere": "এখানে স্বাক্ষর কর",
     "insertTextHere": "এখানে পাঠ্য সন্নিবেশ করুন",
     "imageSignatureAcceptedFileTypes": "শুধুমাত্র {{acceptedFileTypes}} গৃহীত হয়",

@@ -283,6 +283,7 @@
     "searching": "Keresés...",
     "searchCommentsPlaceholder": "Keresés a megjegyzésekben",
     "searchDocumentPlaceholder": "Dokumentum keresése",
+    "searchSuggestionsPlaceholder": "Keresési javaslatok",
     "signHere": "Itt írd alá",
     "insertTextHere": "Szöveg beszúrása ide",
     "imageSignatureAcceptedFileTypes": "Csak az {{acceptedFileTypes}} fogadható el",

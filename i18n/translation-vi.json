@@ -283,6 +283,7 @@
     "searching": "Đang tìm kiếm...",
     "searchCommentsPlaceholder": "Tìm kiếm bình luận",
     "searchDocumentPlaceholder": "Tìm kiếm tài liệu",
+    "searchSuggestionsPlaceholder": "Tìm kiếm gợi ý",
     "signHere": "Ký tại đây",
     "insertTextHere": "Chèn văn bản tại đây",
     "imageSignatureAcceptedFileTypes": "Chỉ chấp nhận {{acceptedFileTypes}}",

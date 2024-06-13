@@ -283,6 +283,7 @@
     "searching": "검색 중...",
     "searchCommentsPlaceholder": "코멘트 검색",
     "searchDocumentPlaceholder": "문서 검색",
+    "searchSuggestionsPlaceholder": "검색 제안",
     "signHere": "여기에 서명하세요",
     "insertTextHere": "여기에 텍스트를 입력하세요",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}} 만 허용됩니다",

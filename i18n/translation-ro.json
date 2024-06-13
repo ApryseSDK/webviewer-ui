@@ -283,6 +283,7 @@
     "searching": "In cautarea...",
     "searchCommentsPlaceholder": "Căutați comentarii",
     "searchDocumentPlaceholder": "Căutați documentul",
+    "searchSuggestionsPlaceholder": "Căutați sugestii",
     "signHere": "Înregistrează aici",
     "insertTextHere": "Introduceți text aici",
     "imageSignatureAcceptedFileTypes": "Sunt acceptate numai {{acceptedFileTypes}}",

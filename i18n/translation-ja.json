@@ -283,6 +283,7 @@
     "searching": "検索中...",
     "searchCommentsPlaceholder": "コメントを検索",
     "searchDocumentPlaceholder": "ドキュメント内を検索",
+    "searchSuggestionsPlaceholder": "検索候補",
     "signHere": "ここに署名してください",
     "insertTextHere": "ここにテキストを挿入してください",
     "imageSignatureAcceptedFileTypes": "{{acceptedFileTypes}}のみが許可されています",

@@ -283,6 +283,7 @@
     "searching": "Procurando...",
     "searchCommentsPlaceholder": "Procurar nos comentários",
     "searchDocumentPlaceholder": "Procurar no documento",
+    "searchSuggestionsPlaceholder": "Sugestões de pesquisa",
     "signHere": "Assine aqui",
     "insertTextHere": "Insira texto aqui",
     "imageSignatureAcceptedFileTypes": "Somente {{acceptFileTypes}} são aceitos",

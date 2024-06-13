@@ -283,6 +283,7 @@
     "searching": "Mencari...",
     "searchCommentsPlaceholder": "Cari komentar",
     "searchDocumentPlaceholder": "Cari dokumen",
+    "searchSuggestionsPlaceholder": "Saran pencarian",
     "signHere": "Tanda tangan di sini",
     "insertTextHere": "Sisipkan teks di sini",
     "imageSignatureAcceptedFileTypes": "Hanya {{acceptedFileTypes}} yang diterima",

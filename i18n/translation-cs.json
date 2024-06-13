@@ -283,6 +283,7 @@
     "searching": "Hledání...",
     "searchCommentsPlaceholder": "Hledat komentáře",
     "searchDocumentPlaceholder": "Vyhledat dokument",
+    "searchSuggestionsPlaceholder": "Návrhy vyhledávání",
     "signHere": "Zde se podepište",
     "insertTextHere": "Zde vložte text",
     "imageSignatureAcceptedFileTypes": "Přijímány jsou pouze {{acceptedFileTypes}}",

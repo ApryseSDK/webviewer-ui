@@ -44,7 +44,6 @@
       .Dropdown__input {
         width: 100%;
         border: none;
-        text-align: center;
       }
     }
   }
@@ -52,6 +51,7 @@
   &:disabled {
     background: none;
     color: var(--disabled-icon);
+    pointer-events: none;
   }
 }
 

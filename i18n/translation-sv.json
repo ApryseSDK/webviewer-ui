@@ -283,6 +283,7 @@
     "searching": "Sökande...",
     "searchCommentsPlaceholder": "Sök kommentarer",
     "searchDocumentPlaceholder": "Sök dokument",
+    "searchSuggestionsPlaceholder": "Sökförslag",
     "signHere": "Skriv under här",
     "insertTextHere": "Infoga text här",
     "imageSignatureAcceptedFileTypes": "Endast {{acceptedFileTypes}} accepteras",

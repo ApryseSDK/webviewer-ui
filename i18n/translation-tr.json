@@ -283,6 +283,7 @@
     "searching": "Aranıyor...",
     "searchCommentsPlaceholder": "Yorum ara",
     "searchDocumentPlaceholder": "Belge ara",
+    "searchSuggestionsPlaceholder": "Önerileri ara",
     "signHere": "Burayı imzalayın",
     "insertTextHere": "Buraya metin ekleyin",
     "imageSignatureAcceptedFileTypes": "Yalnızca {{acceptedFileTypes}} kabul edilir",

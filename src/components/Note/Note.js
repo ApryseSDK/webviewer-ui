@@ -18,6 +18,7 @@ import useDidUpdate from 'hooks/useDidUpdate';
 import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
+import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
 
 import './Note.scss';
 
@@ -65,6 +66,8 @@ const Note = ({
     shouldExpandCommentThread,
     isRightClickAnnotationPopupEnabled,
     documentViewerKey,
+    isOfficeEditorMode,
+    officeEditorEditMode,
   ] = useSelector(
     (state) => [
       selectors.getNoteTransformFunction(state),
@@ -73,6 +76,8 @@ const Note = ({
       selectors.isCommentThreadExpansionEnabled(state),
       selectors.isRightClickAnnotationPopupEnabled(state),
       selectors.getActiveDocumentViewerKey(state),
+      selectors.getIsOfficeEditorMode(state),
+      selectors.getOfficeEditorEditMode(state),
     ],
     shallowEqual,
   );
@@ -175,7 +180,7 @@ const Note = ({
       // Need this delay to ensure all other event listeners fire before we open the line
       setTimeout(() => dispatch(actions.openElement(DataElements.ANNOTATION_NOTE_CONNECTOR_LINE)), 300);
     }
-    if (isInNotesPanel) {
+    if (isInNotesPanel && !(isOfficeEditorMode && officeEditorEditMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW)) {
       core.selectAnnotation(annotation, documentViewerKey);
       setCurAnnotId(annotation.Id);
       core.jumpToAnnotation(annotation, documentViewerKey);
@@ -192,6 +197,7 @@ const Note = ({
     expanded: isSelected,
     'is-multi-selected': isMultiSelected,
     unread: unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies,
+    'disabled': isOfficeEditorMode && officeEditorEditMode === OFFICE_EDITOR_EDIT_MODE.PREVIEW,
   });
 
   const repliesClass = classNames({

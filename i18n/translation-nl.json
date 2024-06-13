@@ -283,6 +283,7 @@
     "searching": "Zoeken...",
     "searchCommentsPlaceholder": "Zoek opmerkingen",
     "searchDocumentPlaceholder": "Document zoeken",
+    "searchSuggestionsPlaceholder": "Zoeksuggesties",
     "signHere": "Teken hier",
     "insertTextHere": "Vul hier tekst in",
     "imageSignatureAcceptedFileTypes": "Alleen {{AcceptFileTypes}} worden geaccepteerd",

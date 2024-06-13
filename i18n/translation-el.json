@@ -283,6 +283,7 @@
     "searching": "Ερευνητικός...",
     "searchCommentsPlaceholder": "Αναζήτηση σχολίων",
     "searchDocumentPlaceholder": "Αναζήτηση εγγράφου",
+    "searchSuggestionsPlaceholder": "Προτάσεις αναζήτησης",
     "signHere": "Υπόγραψε εδώ",
     "insertTextHere": "Εισαγάγετε κείμενο εδώ",
     "imageSignatureAcceptedFileTypes": "Μόνο {{acceptedFileTypes}} γίνονται δεκτά",
