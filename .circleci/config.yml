@@ -10,7 +10,7 @@ executors:
 jobs:
   run-lint:
     docker:
-      - image: circleci/node:10-browsers
+      - image: circleci/node:14-browsers
     steps:
       - checkout
       - run:
