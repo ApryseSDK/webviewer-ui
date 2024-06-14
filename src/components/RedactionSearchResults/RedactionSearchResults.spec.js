@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { mockSearchResults } from '../RedactionSearchPanel/RedactionSearchPanel.stories';
 import RedactionSearchResults from './RedactionSearchResults';
 import { RedactionPanelContext } from '../RedactionPanel/RedactionPanelContext';
-import { createRedactionAnnotations } from './RedactionSearchResultsContainer';
+import { createRedactionAnnotations, defaultRedactionStyles } from './RedactionSearchResultsContainer';
 
 const RedactionSearchResultsWithRedux = withProviders(RedactionSearchResults);
 
@@ -23,8 +23,8 @@ jest.mock('core', () => ({
     })
   }),
   isFullPDFEnabled: () => true,
-  setCurrentPage: () => {},
-  selectAnnotation: () => {},
+  setCurrentPage: () => { },
+  selectAnnotation: () => { },
   getCurrentUser: () => 'foo',
 }));
 
@@ -106,6 +106,26 @@ describe('RedactionSearchResults component', () => {
     expect(annot['FillColor']).toEqual(activeToolStyles.FillColor);
     expect(annot['Font']).toEqual(activeToolStyles.Font);
     expect(annot['TextColor']).toEqual(activeToolStyles.TextColor);
-    expect(true).toBe(true);
+  });
+
+  it('should be able to create redact annotations from search result using createRedactionAnnotations function with defaults', () => {
+    const searchResults = [
+      {
+        page_num: 1,
+        quads: [
+          { getPoints: () => 44, }
+        ],
+        result_str: 'foobar',
+        type: '',
+      }
+    ];
+
+    const annots = createRedactionAnnotations(searchResults);
+    const annot = annots[0];
+
+    expect(annot.getContents()).toEqual(searchResults[0].result_str);
+    expect(annot['StrokeColor']).toEqual(defaultRedactionStyles.StrokeColor);
+    expect(annot['Font']).toEqual('Helvetica');
+    expect(annot['TextColor']).toEqual(defaultRedactionStyles.TextColor);
   });
 });
