@@ -5,8 +5,22 @@ import selectors from 'selectors';
 import applyRedactions from 'helpers/applyRedactions';
 import core from 'core';
 
-export function createRedactionAnnotations(searchResults, activeToolStyles) {
-  const { StrokeColor, OverlayText, FillColor, Font, TextColor } = activeToolStyles;
+
+export const defaultRedactionStyles = {
+  OverlayText: '',
+  StrokeColor: new window.Core.Annotations.Color(255, 0, 0),
+  TextColor: new window.Core.Annotations.Color(255, 0, 0, 1),
+  Font: 'Helvetica',
+};
+
+export function createRedactionAnnotations(searchResults, activeToolStyles = defaultRedactionStyles) {
+  const {
+    StrokeColor,
+    OverlayText,
+    FillColor,
+    Font = 'Helvetica',
+    TextColor
+  } = activeToolStyles;
   const redactionAnnotations = searchResults.map((result) => {
     const redaction = new window.Core.Annotations.RedactionAnnotation();
     redaction.PageNumber = result.page_num;
@@ -31,8 +45,6 @@ export function createRedactionAnnotations(searchResults, activeToolStyles) {
 
   return redactionAnnotations;
 }
-
-const defaultRedactionStyles = { OverlayText: '', StrokeColor: new window.Core.Annotations.Color(255, 0, 0) };
 
 function RedactionSearchResultsContainer(props) {
   const { onCancelSearch } = props;
