@@ -4,6 +4,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import core from 'core';
 import DataElements from 'constants/dataElement';
+import debounce from 'lodash/debounce';
 
 export default function useOnInlineCommentPopupOpen() {
   const [
@@ -30,6 +31,7 @@ export default function useOnInlineCommentPopupOpen() {
 
   const [annotation, setAnnotation] = useState(null);
   const [isFreeTextAnnotationAdded, setFreeTextAnnotationAdded] = useState(false);
+  const [reopenFlag, setReopenFlag] = useState(false);
   const { ToolNames } = window.Core.Tools;
 
   const isNotesPanelOpenOrActive = isNotesPanelOpen || (notesInLeftPanel && leftPanelOpen && (activeLeftPanel === 'notesPanel' || isOfficeEditorMode));
@@ -122,7 +124,18 @@ export default function useOnInlineCommentPopupOpen() {
     if (!isNotesPanelOpenOrActive && annotation && inlineCommentFilter(annotation)) {
       dispatch(actions.openElement(DataElements.INLINE_COMMENT_POPUP));
     }
-  }, [annotation, inlineCommentFilter]);
+    // reopenFlag is needed here in order to re-open the popup on scroll
+  }, [annotation, inlineCommentFilter, reopenFlag]);
+
+  useEffect(() => {
+    const scrollViewElement = core.getScrollViewElement(activeDocumentViewerKey);
+    const onScroll = debounce(() => {
+      setReopenFlag((flag) => !flag);
+    }, 100);
+
+    scrollViewElement?.addEventListener('scroll', onScroll);
+    return () => scrollViewElement?.removeEventListener('scroll', onScroll);
+  }, [activeDocumentViewerKey]);
 
   return { annotation, closeAndReset };
 }

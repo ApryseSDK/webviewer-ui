@@ -215,8 +215,8 @@ export default function useOnAnnotationPopupOpen() {
       setStylePopupRepositionFlag((flag) => !flag);
     }, 100);
 
-    scrollViewElement?.addEventListener('scroll', onScroll, null, activeDocumentViewerKey);
-    return () => scrollViewElement?.removeEventListener('scroll', onScroll, null, activeDocumentViewerKey);
+    scrollViewElement?.addEventListener('scroll', onScroll);
+    return () => scrollViewElement?.removeEventListener('scroll', onScroll);
   }, [activeDocumentViewerKey]);
 
   useOnRightClick(

@@ -10,6 +10,13 @@ import selectors from 'selectors';
 import { isMobile as isPhone, isIE, isMobileDevice } from 'helpers/device';
 import DataElements from 'constants/dataElement';
 import getRootNode from 'helpers/getRootNode';
+import debounce from 'lodash/debounce';
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  annotation: PropTypes.object,
+  closeAndReset: PropTypes.func,
+};
 
 const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
   const [
@@ -41,6 +48,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
   const isMobile = isPhone();
   const isUndraggable = isMobile || !!isMobileDevice || isIE;
   const isNotesPanelOpenOrActive = isNotesPanelOpen || (notesInLeftPanel && isLeftPanelOpen && activeLeftPanel === 'notesPanel');
+  const sixtyFramesPerSecondIncrement = 16;
 
   useOnClickOutside(popupRef, (e) => {
     const notesPanel = getRootNode().querySelector('[data-element="notesPanel"]');
@@ -62,11 +70,27 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
 
   const isNotesPanelClosed = !isNotesPanelOpenOrActive;
 
-  useLayoutEffect(() => {
+  const setPopupPosition = () => {
     if (isNotesPanelClosed && popupRef.current && !isMobile) {
       setPosition(getPopupPosition(annotation, popupRef, activeDocumentViewerKey));
     }
-  }, [activeDocumentViewerKey]);
+  };
+
+  useLayoutEffect(() => {
+    setPopupPosition();
+  }, [activeDocumentViewerKey, annotation]);
+
+  const handleResize = debounce(() => {
+    setPopupPosition();
+  }, sixtyFramesPerSecondIncrement, { 'trailing': true, 'leading': false });
+
+  useLayoutEffect(() => {
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // TO-DO refactor: Lines 189-239 was copied from NotesPanel 228-275
   const [pendingAttachmentMap, setPendingAttachmentMap] = useState({});
@@ -157,5 +181,7 @@ const InlineCommentingPopupContainer = ({ annotation, closeAndReset }) => {
     />
   );
 };
+
+InlineCommentingPopupContainer.propTypes = propTypes;
 
 export default InlineCommentingPopupContainer;

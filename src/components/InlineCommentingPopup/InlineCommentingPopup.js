@@ -11,6 +11,8 @@ import Button from 'components/Button';
 
 import DataElements from 'src/constants/dataElement';
 
+import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
+
 import './InlineCommentingPopup.scss';
 
 const propTypes = {
@@ -41,12 +43,15 @@ const InlineCommentingPopup = ({
   const [t] = useTranslation();
   const [isExpanded, setExpanded] = useState(false);
 
+  const isTrackedChange = mapAnnotationToKey(commentingAnnotation) === annotationMapKeys.TRACKED_CHANGE;
+
   const inlineCommentPopup = (
     <div
       className={classNames({
         Popup: true,
         InlineCommentingPopup: true,
         open: isNotesPanelClosed,
+        trackedChangePopup: isTrackedChange,
       })}
       ref={popupRef}
       data-element={DataElements.INLINE_COMMENT_POPUP}
@@ -106,7 +111,7 @@ const InlineCommentingPopup = ({
     </div>
   );
 
-  return isUndraggable ? (
+  return isUndraggable || isTrackedChange ? (
     inlineCommentPopup
   ) : (
     <Draggable cancel=".Button, .cell, svg, select, button, input, .quill, .note-text-preview">{inlineCommentPopup}</Draggable>
