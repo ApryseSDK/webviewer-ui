@@ -1,10 +1,15 @@
 .draggable-collapsed-tab {
-  height: 30px;
+  height: 32px;
   width: 100%;
 
 
   &:hover {
-    background-color: var(--document-background-color);
+    background-color: var(--multi-tab-flyout-hover);
+    color: var(--multi-tab-flyout-hover-text);
+
+    .Icon {
+      color: var(--multi-tab-flyout-hover-text);
+    }
   }
 }
 
@@ -12,12 +17,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-height: 30px;
+  max-height: 32px;
   width: 100%;
+  min-width: 180px;
+  cursor: pointer;
 
   .file-text {
-    width: 100%;
-    padding-left: 6px;
+    max-width: 140px;
+    padding-left: 8px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -37,10 +44,22 @@
   }
 
   .Button {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+
+    &.hidden-button {
+      display: none;
+    }
+
     .Icon {
       margin: 0;
-      width: 16px;
-      height: 16px;
+    }
+
+    &:hover {
+      .Icon {
+        color: var(--icon-color);
+      }
     }
   }
 }

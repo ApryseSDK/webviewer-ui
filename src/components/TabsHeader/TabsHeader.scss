@@ -3,15 +3,17 @@
   width: 100%;
   justify-content: flex-start;
   align-items: flex-end;
-  background: var(--view-header-background);
+  background: var(--multi-tab-header-background);
   overflow-y: hidden;
-  overflow-x: auto;
+  overflow-x: hidden;
+  height: var(--multi-tab-header-height);
 
   .add-button {
     width: 100%;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--divider);
+    border-bottom: var(--multi-tab-border);
+    padding-left: var(--multi-tab-add-button-padding);
 
     .Button {
       .Icon {
@@ -22,18 +24,37 @@
       &:hover {
         background-color: var(--view-header-button-hover);
       }
+
+    }
+
+    &.add-button-with-label .Button {
+      display: flex;
+      width: fit-content;
+      padding: 10px;
+
+      .Icon {
+        margin-right: 4px;
+      }
     }
 
     .tab-dropdown-button {
+      width: 24px;
+      height: 24px;
       margin: 0 0 2px 6px;
       text-align: center;
-      padding: 2px 6px;
-      border-radius: 2px;
-      border: 1px solid var(--divider);
+      padding: 4px;
+      border-radius: 4px;
+      border: 1px solid var(--multi-tab-divider);
+
+      &.active {
+        border: 1px solid var(--multi-tab-toggle-button-active);
+        color: var(--multi-tab-toggle-button-active);
+      }
 
       &:hover {
         cursor: pointer;
         background-color: var(--tools-button-hover);
+        border: 1px solid var(--multi-tab-hover-border);
       }
     }
   }

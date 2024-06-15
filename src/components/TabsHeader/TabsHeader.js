@@ -12,6 +12,7 @@ import CollapsedTab from 'components/TabsHeader/CollapsedTab/CollapsedTab';
 import classNames from 'classnames';
 import useWindowDimensions from 'helpers/useWindowsDimensions';
 import getRootNode from 'helpers/getRootNode';
+import ToggleElementButton from 'components/ToggleElementButton';
 
 
 const TabsHeader = () => {
@@ -175,13 +176,12 @@ const TabsHeader = () => {
         'add-button': true,
         'add-button-with-label': isEmptyPageOpen
       })}>
-        {additionalTabs?.length > 0 && <div
-          className={'dropdown-menu tab-dropdown-button'}
-          onClick={() => dispatch(actions.toggleElement('tabMenu'))}
-          data-element="tabTrigger"
-        >
-          {additionalTabs.length}
-        </div>}
+        {additionalTabs?.length > 0 && <ToggleElementButton
+          className="dropdown-menu tab-dropdown-button"
+          dataElement="tabTrigger"
+          element="tabMenu"
+          label={additionalTabs.length.toString()}
+        />}
         <Button
           title="action.openFile"
           img="icon-menu-add"

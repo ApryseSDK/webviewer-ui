@@ -6,7 +6,7 @@ import { createTemplate } from 'helpers/storybookHelper';
 export default {
   title: 'ModularComponents/App',
   component: App,
-  includeStories: ['DefaultUI', 'ActiveGroupHeaderTest', 'HeaderButtonsWithLabelsAndIcons'],
+  includeStories: ['DefaultUI', 'ActiveGroupHeaderTest', 'MultiTab', 'HeaderButtonsWithLabelsAndIcons'],
   excludeStories: ['CreateTemplate'],
 };
 
@@ -60,3 +60,9 @@ const customComponents = {
 };
 
 export const HeaderButtonsWithLabelsAndIcons = createTemplate({ headers: customHeaders, components: customComponents });
+
+export const MultiTab = createTemplate({
+  headers: mockHeadersNormalized,
+  components: mockModularComponents,
+  isMultiTab: true
+});

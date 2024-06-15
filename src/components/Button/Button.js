@@ -39,9 +39,10 @@ const propTypes = {
 };
 
 const Button = (props) => {
-  const [removeElement, customOverrides = {}, activeDocumentViewerKey = 1] = useSelector(
+  const [removeElement, isCustomUI, customOverrides = {}, activeDocumentViewerKey = 1] = useSelector(
     (state) => [
       selectors.isElementDisabled(state, props.dataElement),
+      selectors.getFeatureFlags(state)?.customizableUI,
       selectors.getCustomElementOverrides(state, props.dataElement),
       selectors.getActiveDocumentViewerKey(state),
     ],
@@ -131,6 +132,8 @@ const Button = (props) => {
         [mediaQueryClassName]: mediaQueryClassName,
         [className]: className,
         ...customOverrideClasses,
+        'custom-ui': isCustomUI,
+        'icon-only': isGlyph && !label,
       })}
       style={style}
       data-element={dataElement}
