@@ -8,6 +8,7 @@
       ]
     }
   },
+  "root": true,
   "plugins": [
     "babel",
     "react",
