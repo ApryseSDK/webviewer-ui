@@ -2,9 +2,11 @@
 const hashFile = `/${(window.location.hash || 'webviewer-demo.pdf').replace('#', '')}`;
 // Remove init_timestamp so that the demo doesn't expire
 window.localStorage.removeItem('init_timestamp');
+// @ts-ignore
+const WebViewerConstructor = isWebComponent() ? WebViewer.WebComponent : WebViewer;
 
 const viewerElement = document.getElementById('viewer');
-WebViewer.WebComponent({
+WebViewerConstructor({
   path: '/lib',
   initialDoc: hashFile,
   enableRedaction: true,
@@ -546,7 +548,6 @@ WebViewer.WebComponent({
 
   const redactionPanelToggle = new UI.Components.ToggleElementButton(
     {
-      type: 'toggleElementButton',
       img: 'icon-redact-panel',
       dataElement: 'redactionPanelToggle',
       toggleElement: 'redactionPanel',
@@ -555,7 +556,6 @@ WebViewer.WebComponent({
 
   const fullPageRedactionToggle = new UI.Components.ToggleElementButton(
     {
-      type: 'toggleElementButton',
       img: 'icon-tool-page-redact',
       dataElement: 'pageRedactionToggleButton',
       toggleElement: 'pageRedactionModal',
@@ -622,7 +622,6 @@ WebViewer.WebComponent({
     label: 'View',
     title: 'View',
     toolbarGroup: 'toolbarGroup-View',
-    type: 'ribbonItem',
     groupedItems: []
   });
   const annotateRibbonItem = new UI.Components.RibbonItem({
@@ -630,7 +629,6 @@ WebViewer.WebComponent({
     label: 'Annotate',
     title: 'Annotate',
     toolbarGroup: 'toolbarGroup-Annotate',
-    type: 'ribbonItem',
     groupedItems: ['annotateGroupedItems']
   });
 
@@ -639,7 +637,6 @@ WebViewer.WebComponent({
     label: 'Shapes',
     title: 'Shapes',
     toolbarGroup: 'toolbarGroup-Shapes',
-    type: 'ribbonItem',
     groupedItems: ['shapesGroupedItems']
   });
 
@@ -704,8 +701,6 @@ WebViewer.WebComponent({
     dataElement: 'default-ribbon-group',
     grow: 2,
     justifyContent: 'start',
-    title: 'Default Tools',
-    type: 'ribbonGroup',
     items: [
       viewRibbonItem,
       annotateRibbonItem,
