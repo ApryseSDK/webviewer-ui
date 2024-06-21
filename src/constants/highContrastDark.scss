@@ -1,4 +1,5 @@
 :root {
+  /* stylelint-disable color-no-hex */
   --blue-1: #192530;
   --blue-2: #1B2B3A;
   --blue-3: #334250;
@@ -23,6 +24,7 @@
 
   --yellow-1: #e1b90080;
   --red: red;
+  /* stylelint-enable color-no-hex */
 
   --panel-background: var(--gray-3);
   --faded-component-background: var(--gray-1);
@@ -100,4 +102,10 @@
 
   --outline-color: var(--blue-7);
   --outline-hover: var(--blue-3);
+
+  --oe-table-dropdown-highlight: var(--blue-5);
+
+  --bookmark-outline-hover-border: transparent;
+  
+  --checked-option: var(--blue-6);
 }

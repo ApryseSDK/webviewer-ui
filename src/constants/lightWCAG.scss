@@ -1,4 +1,5 @@
 :root {
+  /* stylelint-disable color-no-hex */
   --blue-1: #E7EDF3;
   --blue-2: #DDE6EE;
   --blue-3: #CFD8E0;
@@ -23,6 +24,7 @@
 
   --yellow-1: #FACE0080;
   --red: #D52A2A;
+  /* stylelint-enable color-no-hex */
 
   --component-background: var(--gray-0);
   --mobile-presets-background: var(--gray-1);
