@@ -427,7 +427,9 @@
       "includeAnnotations": "Dołącz adnotacje",
       "includeComments": "Dołącz komentarze",
       "printSettings": "Ustawienia drukowania",
-      "printGrayscale": "Drukuj w skali szarości"
+      "printGrayscale": "Drukuj w skali szarości",
+      "flatten": "Spłaszcz dokument",
+      "printCurrentDisabled": "Widok bieżący jest dostępny tylko podczas przeglądania pojedynczej strony."
     },
     "printInfo": {
       "author": "Autor",

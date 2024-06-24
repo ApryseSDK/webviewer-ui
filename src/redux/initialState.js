@@ -1964,6 +1964,7 @@ export default {
     customPanels: [],
     genericPanels: [],
     useEmbeddedPrint: false,
+    useClientSidePrint: false,
     pageLabels: [],
     selectedThumbnailPageIndexes: [],
     shiftKeyThumbnailPivotIndex: null,

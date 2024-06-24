@@ -427,7 +427,9 @@
       "includeAnnotations": "Inkludera kommentarer",
       "includeComments": "Inkludera kommentarer",
       "printSettings": "Utskriftsinställningar",
-      "printGrayscale": "Skriv ut gråskala"
+      "printGrayscale": "Skriv ut gråskala",
+      "flatten": "Platta till dokument",
+      "printCurrentDisabled": "Aktuell vy är endast tillgänglig när du visar en enskild sida."
     },
     "printInfo": {
       "author": "Författare",

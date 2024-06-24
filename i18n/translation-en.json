@@ -427,7 +427,9 @@
       "includeAnnotations": "Include annotations",
       "includeComments": "Include comments",
       "printSettings": "Print Settings",
-      "printGrayscale": "Print Grayscale"
+      "printGrayscale": "Print Grayscale",
+      "flatten": "Flatten document",
+      "printCurrentDisabled": "Current view is only available when viewing a single page."
     },
     "printInfo": {
       "author": "Author",

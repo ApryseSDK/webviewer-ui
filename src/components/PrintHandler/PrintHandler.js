@@ -20,9 +20,12 @@ const PrintHandler = () => {
     shallowEqual,
   );
   const [documentType, setDocumentType] = useState('');
+  const [canEmbeddedPrintServer, setCanEmbeddedPrintServer] = useState(false);
 
   useEffect(() => {
     const onDocumentLoaded = () => {
+      // check if WebViewer server is enables and if the document is a PDF
+      core.getPrintablePDF() ? setCanEmbeddedPrintServer(true) : setCanEmbeddedPrintServer(false);
       const type = core.getDocument().getType();
       setDocumentType(type);
     };
@@ -56,7 +59,7 @@ const PrintHandler = () => {
         'ios-print': isIOS,
       })}
     >
-      {isEmbedPrintSupported && documentType === workerTypes.PDF ? (
+      {isEmbedPrintSupported && (documentType !== workerTypes.XOD || canEmbeddedPrintServer) ? (
         <iframe id="print-handler" tabIndex={-1}></iframe>
       ) : (
         <div id="print-handler"></div>

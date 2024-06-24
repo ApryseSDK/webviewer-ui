@@ -427,7 +427,9 @@
       "includeAnnotations": "Bao gồm chú thích",
       "includeComments": "Bao gồm bình luận",
       "printSettings": "Cài đặt in",
-      "printGrayscale": "In thang độ xám"
+      "printGrayscale": "In thang độ xám",
+      "flatten": "Làm phẳng tài liệu",
+      "printCurrentDisabled": "Chế độ xem hiện tại chỉ khả dụng khi xem một trang duy nhất."
     },
     "printInfo": {
       "author": "Tác giả",

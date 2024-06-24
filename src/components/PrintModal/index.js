@@ -1,3 +1,3 @@
-import PrintModal from './PrintModal';
+import PrintModalContainer from './PrintModalContainer';
 
-export default PrintModal;
+export default PrintModalContainer;

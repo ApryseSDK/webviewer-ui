@@ -427,7 +427,9 @@
       "includeAnnotations": "Incluir anotações",
       "includeComments": "Incluir comentários",
       "printSettings": "Configurações de impressão",
-      "printGrayscale": "Imprimir escala de cinza"
+      "printGrayscale": "Imprimir escala de cinza",
+      "flatten": "Achatar documento",
+      "printCurrentDisabled": "A visualização atual só está disponível ao visualizar uma única página."
     },
     "printInfo": {
       "author": "Autor",

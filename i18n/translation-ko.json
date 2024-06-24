@@ -427,7 +427,9 @@
       "includeAnnotations": "주석포함",
       "includeComments": "댓글포함",
       "printSettings": "인쇄 설정",
-      "printGrayscale": "인쇄 그레이스케일"
+      "printGrayscale": "인쇄 그레이스케일",
+      "flatten": "문서 병합",
+      "printCurrentDisabled": "현재 보기는 단일 페이지를 볼 때만 사용할 수 있습니다."
     },
     "printInfo": {
       "author": "저자",

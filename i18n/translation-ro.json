@@ -427,7 +427,9 @@
       "includeAnnotations": "Includeți adnotări",
       "includeComments": "Includeți comentarii",
       "printSettings": "Setări de imprimare",
-      "printGrayscale": "Imprimare în tonuri de gri"
+      "printGrayscale": "Imprimare în tonuri de gri",
+      "flatten": "Aplatizați documentul",
+      "printCurrentDisabled": "Vizualizarea curentă este disponibilă numai când vizualizați o singură pagină."
     },
     "printInfo": {
       "author": "Autor",

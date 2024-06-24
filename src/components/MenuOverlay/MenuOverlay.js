@@ -50,7 +50,6 @@ const InitialMenuOverLayItem = ({ dataElement, children }) => {
   });
 };
 
-
 function MenuOverlay() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -58,10 +57,12 @@ function MenuOverlay() {
   const [documentType, setDocumentType] = useState();
 
   const isEmbedPrintSupported = useSelector(selectors.isEmbedPrintSupported);
+  const useClientSidePrint = useSelector(selectors.useClientSidePrint);
   const colorMap = useSelector(selectors.getColorMap);
   const sortStrategy = useSelector(selectors.getSortStrategy);
   const isFullScreen = useSelector((state) => selectors.isFullScreen(state));
   const timezone = useSelector((state) => selectors.getTimezone(state));
+  const isCreatePortfolioButtonEnabled = !useSelector((state) => selectors.isElementDisabled(state, DataElements.CREATE_PORTFOLIO_BUTTON)) && core.isFullPDFEnabled();
 
   const closeMenuOverlay = useCallback(() => dispatch(actions.closeElements([DataElements.MENU_OVERLAY])), [dispatch]);
 
@@ -79,7 +80,7 @@ function MenuOverlay() {
 
   const handlePrintButtonClick = () => {
     closeMenuOverlay();
-    print(dispatch, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled(), timezone });
+    print(dispatch, useClientSidePrint, isEmbedPrintSupported, sortStrategy, colorMap, { isGrayscale: core.getDocumentViewer().isGrayscaleModeEnabled(), timezone });
   };
 
   const downloadDocument = () => {
@@ -118,7 +119,7 @@ function MenuOverlay() {
       <InitialMenuOverLayItem>
         {isOfficeEditorMode() && (
           <ActionButton
-            dataElement="newDocumentButton"
+            dataElement={DataElements.NEW_DOCUMENT_BUTTON}
             className="row"
             img="icon-plus-sign"
             label={t('action.newDocument')}
@@ -128,7 +129,7 @@ function MenuOverlay() {
           />
         )}
         <ActionButton
-          dataElement="filePickerButton"
+          dataElement={DataElements.FILE_PICKER_BUTTON}
           className="row"
           img="icon-header-file-picker-line"
           label={t('action.openFile')}
@@ -138,7 +139,7 @@ function MenuOverlay() {
         />
         {documentType !== workerTypes.XOD && !isOfficeEditorMode() && (
           <ActionButton
-            dataElement="downloadButton"
+            dataElement={DataElements.DOWNLOAD_BUTTON}
             className="row"
             img="icon-download"
             label={t('action.download')}
@@ -149,7 +150,7 @@ function MenuOverlay() {
         )}
         {isOfficeEditorMode() && (
           <ActionButton
-            dataElement="fullscreenButton"
+            dataElement={DataElements.FULLSCREEN_BUTTON}
             className="row"
             img={isFullScreen ? 'icon-header-full-screen-exit' : 'icon-header-full-screen'}
             label={isFullScreen ? t('action.exitFullscreen') : t('action.enterFullscreen')}
@@ -160,7 +161,7 @@ function MenuOverlay() {
         )}
         {documentType !== workerTypes.XOD && (
           <ActionButton
-            dataElement="saveAsButton"
+            dataElement={DataElements.SAVE_AS_BUTTON}
             className="row"
             img="icon-save"
             label={t('saveModal.saveAs')}
@@ -170,7 +171,7 @@ function MenuOverlay() {
           />
         )}
         <ActionButton
-          dataElement="printButton"
+          dataElement={DataElements.PRINT_BUTTON}
           className="row"
           img="icon-header-print-line"
           label={t('action.print')}
@@ -180,10 +181,10 @@ function MenuOverlay() {
         />
       </InitialMenuOverLayItem>
       <div className="divider"></div>
-      {false && core.isFullPDFEnabled() && (
+      {isCreatePortfolioButtonEnabled && (
         <>
           <ActionButton
-            dataElement="portfolioButton"
+            dataElement={DataElements.CREATE_PORTFOLIO_BUTTON}
             className="row"
             img="icon-pdf-portfolio"
             label={t('portfolio.createPDFPortfolio')}
@@ -195,7 +196,7 @@ function MenuOverlay() {
         </>
       )}
       <ActionButton
-        dataElement="settingsButton"
+        dataElement={DataElements.SETTINGS_BUTTON}
         className="row"
         img="icon-header-settings-line"
         label={t('option.settings.settings')}

@@ -427,7 +427,9 @@
       "includeAnnotations": "包括注释",
       "includeComments": "包括评论",
       "printSettings": "打印设置",
-      "printGrayscale": "打印灰度"
+      "printGrayscale": "灰度打印",
+      "flatten": "展平文件",
+      "printCurrentDisabled": "当前视图仅在查看单个页面时可用。"
     },
     "printInfo": {
       "author": "作者",

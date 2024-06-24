@@ -1,6 +1,10 @@
+import { setupWebViewerInstance, waitFor } from '../../utils/TestingUtils';
 import { expect } from 'chai';
+import docUtils from '../../utils/DocumentUtils';
 import { doesCurrentViewContainEntirePage } from '../../../../src/ui/src/helpers/printCurrentViewHelper';
-import { adjustListBoxForPrint, createFakeContainerForSelect, createFakeOption, hideSelectContainer  } from '../../../../src/ui/src/helpers/printHTMLToCanvasHelper';
+import { convertToGrayscaleDocument } from '../../../../src/ui/src/helpers/embeddedPrint';
+import { adjustListBoxForPrint, createFakeContainerForSelect, createFakeOption, hideSelectContainer } from '../../../../src/ui/src/helpers/printHTMLToCanvasHelper';
+import { getCropDimensions } from '../../../../src/ui/src/helpers/embeddedPrint';
 
 describe('Print helper tests', () => {
   describe('doesCurrentViewContainEntirePage', () => {
@@ -48,6 +52,44 @@ describe('Print helper tests', () => {
       expect(result).to.equal(false);
     });
   });
+
+  describe.skip('Grayscale conversion', () => {
+    it('should convert a PDF to grayscale', async () => {
+      Core.resetWorker();
+      await docUtils.loadFullAPI();
+      await Core.PDFNet.initialize();
+
+      const doc = await Core.createDocument('/base/test/fixtures/pdfs/demo.pdf');
+
+      const grayscaleCopy = convertToGrayscaleDocument(doc);
+
+      const handleCanvasLoaded = (canvas) => {
+        const ctx = canvas.getContext('2d');
+
+        // Get the pixel data of the top-left corner (1x1 pixel)
+        const imageData = ctx.getImageData(0, 0, 1, 1);
+        const pixel = imageData.data;
+
+        // Extract the RGB values of the pixel
+        const red = pixel[0];
+        const green = pixel[1];
+        const blue = pixel[2];
+
+        // Check if the pixel is gray/black (you can adjust the threshold values)
+        const threshold = 20; // Adjust as needed
+        const isGrayOrBlack = red < threshold && green < threshold && blue < threshold;
+
+        expect(isGrayOrBlack).to.equal(true);
+      };
+
+      grayscaleCopy.loadCanvas({
+        pageNumber: 1,
+        zoom: 1,
+        pageRotation: 0,
+        drawComplete: handleCanvasLoaded,
+      });
+    });
+  });
 });
 
 const widgetContainerString = `
@@ -86,7 +128,7 @@ describe('HTML to Canvas Helpers', () => {
 
   afterEach(() => {
     document.getElementById('printWidgetContainer').remove();
-});
+  });
 
   it('Should add new divs equal to the select elements + options', () => {
     const selects = widgetContainer.querySelectorAll('select').length;
@@ -130,6 +172,7 @@ describe('HTML to Canvas Helpers', () => {
   it('Create Fake Option Should handle Multi Select', () => {
     const select = document.querySelectorAll('select')[1];
     const option = select.querySelectorAll('option')[2];
+
     const fakeOption = createFakeOption(option);
     expect(fakeOption.style.backgroundColor).to.equal(selectionColor);
   });
@@ -148,3 +191,16 @@ describe('HTML to Canvas Helpers', () => {
     expect(fakeContainer).to.be.an.instanceof(HTMLDivElement);
   });
 })
+
+describe('Embedded Printing Crop Tests', function() {
+  this.timeout(20000);
+
+  it('Check Document Dimensions After Crop', async () => {
+    const renderRect = { x1: 130, x2: 480, y1: 110, y2: 400 };
+    const pageDimensions = { height: 792, width: 612 };
+    const cropRect = getCropDimensions(renderRect, pageDimensions);
+    const expectedRect = { x1: 130, x2: 132, y1: 110, y2: 392 };
+
+    expect(cropRect).to.deep.equals(expectedRect);
+  });
+});

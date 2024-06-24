@@ -13,7 +13,7 @@ WebViewer(...)
   });
  */
 
-import { cancelPrint } from 'helpers/print';
+import { cancelPrint } from 'helpers/rasterPrint';
 
 export default () => {
   cancelPrint();

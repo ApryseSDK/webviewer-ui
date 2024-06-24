@@ -251,6 +251,7 @@ export default (store, documentViewerKey) => async () => {
     .setPrintHandler(() => {
       print(
         dispatch,
+        selectors.useClientSidePrint(getState()),
         selectors.isEmbedPrintSupported(getState()),
         selectors.getSortStrategy(getState()),
         selectors.getColorMap(getState()),

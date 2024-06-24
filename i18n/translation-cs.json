@@ -427,7 +427,9 @@
       "includeAnnotations": "Zahrnout anotace",
       "includeComments": "Zahrnout komentáře",
       "printSettings": "Nastavení tisku",
-      "printGrayscale": "Tisk ve stupních šedi"
+      "printGrayscale": "Tisk ve stupních šedi",
+      "flatten": "Vyrovnat dokument",
+      "printCurrentDisabled": "Aktuální zobrazení je dostupné pouze při prohlížení jedné stránky."
     },
     "printInfo": {
       "author": "Autor",

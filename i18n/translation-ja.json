@@ -427,7 +427,9 @@
       "includeAnnotations": "注釈を含める",
       "includeComments": "コメントを含める",
       "printSettings": "印刷設定",
-      "printGrayscale": "グレースケール印刷"
+      "printGrayscale": "グレースケール印刷",
+      "flatten": "ドキュメントをフラット化する",
+      "printCurrentDisabled": "現在のビューは、単一のページを表示する場合にのみ使用できます。"
     },
     "printInfo": {
       "author": "作成者",

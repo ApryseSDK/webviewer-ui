@@ -427,7 +427,9 @@
       "includeAnnotations": "Sertakan anotasi",
       "includeComments": "Sertakan ulasan",
       "printSettings": "Tetapan Cetak",
-      "printGrayscale": "Cetak Skala Kelabu"
+      "printGrayscale": "Cetak Skala Kelabu",
+      "flatten": "Ratakan dokumen",
+      "printCurrentDisabled": "Paparan semasa hanya tersedia apabila melihat satu halaman."
     },
     "printInfo": {
       "author": "Pengarang",

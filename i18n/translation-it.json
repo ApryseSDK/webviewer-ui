@@ -427,7 +427,9 @@
       "includeAnnotations": "Includi annotazioni",
       "includeComments": "Includi commenti",
       "printSettings": "Impostazioni di stampa",
-      "printGrayscale": "Stampa scala di grigi"
+      "printGrayscale": "Stampa scala di grigi",
+      "flatten": "Documento appiattito",
+      "printCurrentDisabled": "La visualizzazione corrente è disponibile solo quando si visualizza una singola pagina."
     },
     "printInfo": {
       "author": "Autore",

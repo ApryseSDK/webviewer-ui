@@ -4,7 +4,7 @@ import { isIE } from 'helpers/device';
 import fireEvent from 'helpers/fireEvent';
 import Events from 'constants/events';
 import actions from 'actions';
-import { creatingPages } from 'helpers/print';
+import { creatingPages } from 'helpers/rasterPrint';
 import selectors from 'selectors';
 import blobStream from 'blob-stream';
 import { getSortStrategies } from 'constants/sortStrategies';
@@ -180,19 +180,24 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
       `;
       window.document.head.prepend(style);
     }
-    const createdPages = creatingPages(
-      pages,
+
+    const printingOptions = {
       includeComments,
       includeAnnotations,
-      true,
+      maintainPageOrientation: true,
       printQuality,
       sortStrategy,
-      colorMap,
+      colorMap: colorMap,
       dateFormat,
-      undefined,
-      false,
+      isPrintCurrentView: false,
       language,
-      true,
+      createCanvases: true,
+      isGrayscale: false
+    };
+    const createdPages = creatingPages(
+      pages,
+      printingOptions,
+      undefined,
     );
     const addWhiteBackground = (dataURL) => {
       const pagePrintCanvas = document.createElement('canvas');

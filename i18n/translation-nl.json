@@ -427,7 +427,9 @@
       "includeAnnotations": "Voeg annotaties toe",
       "includeComments": "Inclusief commentaar",
       "printSettings": "Afdrukinstellingen",
-      "printGrayscale": "Grijstinten afdrukken"
+      "printGrayscale": "Grijstinten afdrukken",
+      "flatten": "Document plat maken",
+      "printCurrentDisabled": "De huidige weergave is alleen beschikbaar als u één pagina bekijkt."
     },
     "printInfo": {
       "author": "Schrijver",

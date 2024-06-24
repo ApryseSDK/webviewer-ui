@@ -427,7 +427,9 @@
       "includeAnnotations": "Ek açıklamaları dahil et",
       "includeComments": "Yorumları dahil et",
       "printSettings": "Yazdırma Ayarları",
-      "printGrayscale": "Gri Tonlamalı Yazdır"
+      "printGrayscale": "Gri Tonlamalı Yazdır",
+      "flatten": "Belgeyi düzleştir",
+      "printCurrentDisabled": "Geçerli görünüm yalnızca tek bir sayfa görüntülenirken kullanılabilir."
     },
     "printInfo": {
       "author": "Yazar",

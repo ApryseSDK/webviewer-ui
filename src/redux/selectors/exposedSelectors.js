@@ -1,4 +1,4 @@
-import { isAndroid, isChrome, isMobile } from 'helpers/device';
+import { isAndroid, isMobile } from 'helpers/device';
 import { defaultNoteDateFormat, defaultPrintedNoteDateFormat } from 'constants/defaultTimeFormat';
 import { panelMinWidth, RESIZE_BAR_WIDTH, panelNames } from 'constants/panel';
 import { PLACEMENT, POSITION, ITEM_TYPE } from 'constants/customizationVariables';
@@ -609,7 +609,9 @@ export const getDisabledCustomPanelTabs = (state) => state.viewer.customPanels.r
   return disabledTabs;
 }, []);
 
-export const isEmbedPrintSupported = (state) => isChrome && !isAndroid && state.viewer.useEmbeddedPrint;
+export const isEmbedPrintSupported = (state) => !isAndroid && state.viewer.useEmbeddedPrint;
+
+export const useClientSidePrint = (state) => state.viewer.useClientSidePrint;
 
 export const isOutlineControlVisible = (state) => state.viewer.outlineControlVisibility;
 

@@ -427,7 +427,9 @@
       "includeAnnotations": "Включіть анотації",
       "includeComments": "Включіть коментарі",
       "printSettings": "Налаштування друку",
-      "printGrayscale": "Друк у градаціях сірого"
+      "printGrayscale": "Друк у градаціях сірого",
+      "flatten": "Звести документ",
+      "printCurrentDisabled": "Поточний перегляд доступний лише під час перегляду однієї сторінки."
     },
     "printInfo": {
       "author": "Автор",

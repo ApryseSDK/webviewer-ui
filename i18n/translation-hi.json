@@ -427,7 +427,9 @@
       "includeAnnotations": "एनोटेशन शामिल करें",
       "includeComments": "टिप्पणियाँ शामिल करें",
       "printSettings": "प्रिंट सेटिंग्स",
-      "printGrayscale": "ग्रेस्केल प्रिंट करें"
+      "printGrayscale": "ग्रेस्केल प्रिंट करें",
+      "flatten": "दस्तावेज़ समतल करें",
+      "printCurrentDisabled": "वर्तमान दृश्य केवल एकल पृष्ठ देखने पर ही उपलब्ध होता है।"
     },
     "printInfo": {
       "author": "लेखक",

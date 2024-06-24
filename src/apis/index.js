@@ -155,6 +155,7 @@ import unregisterTool from './unregisterTool';
 import updateElement from './updateElement';
 import updateTool from './updateTool';
 import useEmbeddedPrint from './useEmbeddedPrint';
+import useClientSidePrint from './useClientSidePrint';
 import setDisplayedSignaturesFilterFunction from './setDisplayedSignaturesFilterFunction';
 import setMeasurementUnits from './setMeasurementUnits';
 import setMaxSignaturesCount from './setMaxSignaturesCount';
@@ -427,6 +428,7 @@ export default (store) => {
     unregisterTool: unregisterTool(store),
     updateTool: updateTool(store),
     updateElement: updateElement(store),
+    useClientSidePrint: useClientSidePrint(store),
     useEmbeddedPrint: useEmbeddedPrint(store),
     willUseEmbeddedPrinting: willUseEmbeddedPrinting(store),
     setMaxSignaturesCount: setMaxSignaturesCount(store),

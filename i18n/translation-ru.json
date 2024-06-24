@@ -427,7 +427,9 @@
       "includeAnnotations": "Включить аннотации",
       "includeComments": "Приложить комментарии",
       "printSettings": "Параметры печати",
-      "printGrayscale": "Печать оттенков серого"
+      "printGrayscale": "Печать оттенков серого",
+      "flatten": "Сгладить документ",
+      "printCurrentDisabled": "Текущий вид доступен только при просмотре одной страницы."
     },
     "printInfo": {
       "author": "Автор",

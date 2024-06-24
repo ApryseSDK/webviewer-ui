@@ -427,7 +427,9 @@
       "includeAnnotations": "Fügen Sie Anmerkungen hinzu",
       "includeComments": "Kommentare einfügen",
       "printSettings": "Druckeinstellungen",
-      "printGrayscale": "Graustufen drucken"
+      "printGrayscale": "Graustufen drucken",
+      "flatten": "Dokument reduzieren",
+      "printCurrentDisabled": "Die aktuelle Ansicht ist nur beim Anzeigen einer einzelnen Seite verfügbar."
     },
     "printInfo": {
       "author": "Autor",

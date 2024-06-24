@@ -27,10 +27,25 @@ describe('Test Print Modal', function() {
       initialDoc: '/base/test/fixtures/pdfs/blank.pdf',
     };
     instance = await setupWebViewerInstance(options);
-    await waitFor(300);
+    await waitFor(1000);
     instance.UI.disableElements(['allPagesPrintOption', 'currentPagePrintOption']);
+    await waitFor(1000);
     instance.UI.openElements(['printModal']);
-    await waitFor(100);
+    await waitFor(1000);
+    const element = instance.UI.iframeWindow.document.querySelector('[data-element="printModal"]');
+    expect(element).to.not.be.null;
+  });
+
+  it.skip('should be able to download a PDF with annot appearance in WVS', async ({ page }) => {
+    const options = {
+      initialDoc: 'https://apryse-demo.web.app/webviewer-server-file-issue/PS-47617-Problematic_PDF.pdf',
+      webviewerServerURL: 'https://demo.apryse.com/'
+    };
+    instance = await setupWebViewerInstance(options);
+    await waitFor(300);
+    instance.UI.useClientSidePrint(true);
+    instance.UI.print();
+    await waitFor(200);
     const element = instance.UI.iframeWindow.document.querySelector('[data-element="printModal"]');
     expect(element).to.not.be.null;
   });

@@ -969,6 +969,10 @@ export const useEmbeddedPrint = (useEmbeddedPrint = true) => ({
   type: 'USE_EMBEDDED_PRINT',
   payload: { useEmbeddedPrint },
 });
+export const useClientSidePrint = (useClientSidePrint = true) => ({
+  type: 'USE_CLIENT_SIDE_PRINT',
+  payload: { useClientSidePrint },
+});
 export const setMaxSignaturesCount = (maxSignaturesCount) => ({
   type: 'SET_MAX_SIGNATURES_COUNT',
   payload: { maxSignaturesCount },

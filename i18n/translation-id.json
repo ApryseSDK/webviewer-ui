@@ -427,7 +427,9 @@
       "includeAnnotations": "Sertakan anotasi",
       "includeComments": "Sertakan komentar",
       "printSettings": "Pengaturan Cetak",
-      "printGrayscale": "Cetak Skala abu-abu"
+      "printGrayscale": "Cetak Skala abu-abu",
+      "flatten": "Ratakan dokumen",
+      "printCurrentDisabled": "Tampilan saat ini hanya tersedia saat melihat satu halaman."
     },
     "printInfo": {
       "author": "Pengarang",

@@ -427,7 +427,9 @@
       "includeAnnotations": "Adjon meg megjegyzéseket",
       "includeComments": "Tartalmazza a megjegyzéseket",
       "printSettings": "Nyomtatási beállítások",
-      "printGrayscale": "Nyomtatás Szürkeárnyalatos"
+      "printGrayscale": "Nyomtatás Szürkeárnyalatos",
+      "flatten": "Lapos dokumentum",
+      "printCurrentDisabled": "Az aktuális nézet csak egyetlen oldal megtekintésekor érhető el."
     },
     "printInfo": {
       "author": "Szerző",

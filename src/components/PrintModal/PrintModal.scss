@@ -22,6 +22,10 @@
       .ui__choice {
         margin: 10px 4px 4px 0;
       }
+
+      .ui__choice--disabled {
+        opacity: 0.5;
+      }
     }
 
     .divider {

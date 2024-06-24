@@ -633,6 +633,8 @@ export default (initialState) => (state = initialState, action) => {
       };
     case 'USE_EMBEDDED_PRINT':
       return { ...state, useEmbeddedPrint: payload.useEmbeddedPrint };
+    case 'USE_CLIENT_SIDE_PRINT':
+      return { ...state, useClientSidePrint: payload.useClientSidePrint };
     case 'SET_PAGE_LABELS':
       return { ...state, pageLabels: [...payload.pageLabels] };
     case 'SET_SELECTED_THUMBNAIL_PAGE_INDEXES':

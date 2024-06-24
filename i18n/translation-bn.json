@@ -427,7 +427,9 @@
       "includeAnnotations": "টীকা অন্তর্ভুক্ত করুন",
       "includeComments": "মন্তব্য অন্তর্ভুক্ত করুন",
       "printSettings": "প্রিন্ট সেটিংস",
-      "printGrayscale": "গ্রেস্কেল প্রিন্ট করুন"
+      "printGrayscale": "গ্রেস্কেল প্রিন্ট করুন",
+      "flatten": "সমতল নথি",
+      "printCurrentDisabled": "বর্তমান দৃশ্য শুধুমাত্র একটি একক পৃষ্ঠা দেখার সময় উপলব্ধ।"
     },
     "printInfo": {
       "author": "লেখক",

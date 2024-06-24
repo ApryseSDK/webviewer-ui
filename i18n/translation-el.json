@@ -427,7 +427,9 @@
       "includeAnnotations": "Συμπεριλάβετε σχολιασμούς",
       "includeComments": "Συμπεριλάβετε σχόλια",
       "printSettings": "Ρυθμίσεις εκτύπωσης",
-      "printGrayscale": "Εκτύπωση κλίμακας του γκρι"
+      "printGrayscale": "Εκτύπωση κλίμακας του γκρι",
+      "flatten": "Ισοπεδώστε το έγγραφο",
+      "printCurrentDisabled": "Η τρέχουσα προβολή είναι διαθέσιμη μόνο κατά την προβολή μιας σελίδας."
     },
     "printInfo": {
       "author": "Συγγραφέας",
