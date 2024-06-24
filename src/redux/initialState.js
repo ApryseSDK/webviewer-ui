@@ -2185,6 +2185,7 @@ export default {
   officeEditor: {
     cursorProperties: {
       paragraphProperties: {},
+      locationProperties: {},
     },
     selectionProperties: {
       paragraphProperties: {},

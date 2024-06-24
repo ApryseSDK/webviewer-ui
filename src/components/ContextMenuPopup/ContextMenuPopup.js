@@ -64,6 +64,7 @@ const ContextMenuPopup = ({
     isRightClickAnnotationPopupEnabled,
     isMultiViewerMode,
     activeDocumentViewerKey,
+    isCursorInTable,
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, DataElements.CONTEXT_MENU_POPUP),
@@ -71,6 +72,7 @@ const ContextMenuPopup = ({
       selectors.isRightClickAnnotationPopupEnabled(state),
       selectors.isMultiViewerMode(state),
       selectors.getActiveDocumentViewerKey(state),
+      selectors.isCursorInTable(state),
     ],
     shallowEqual,
   );
@@ -204,7 +206,7 @@ const ContextMenuPopup = ({
                   />
                 </>
               )}
-              {!core.getOfficeEditor().isCursorInTable() && (
+              {!isCursorInTable && (
                 <OfficeActionItem
                   title="action.delete"
                   img="icon-delete-line"
@@ -213,7 +215,7 @@ const ContextMenuPopup = ({
                   disabled={!(core.getOfficeEditor().isTextSelected() || core.getOfficeEditor().isImageSelected())}
                 />
               )}
-              {core.getOfficeEditor().isCursorInTable() && (
+              {isCursorInTable && (
                 <>
                   <div className="divider"></div>
                   <OfficeActionItem

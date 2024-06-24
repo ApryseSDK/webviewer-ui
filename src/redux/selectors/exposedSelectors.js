@@ -856,8 +856,8 @@ export const getWv3dPropertiesPanelSchema = (state) => state.wv3dPropertiesPanel
 export const getIsOfficeEditorMode = (state) => state.viewer.isOfficeEditorMode;
 
 export const getOfficeEditorCursorProperties = (state) => state.officeEditor.cursorProperties;
-
 export const getOfficeEditorSelectionProperties = (state) => state.officeEditor.selectionProperties;
+export const isCursorInTable = (state) => getOfficeEditorCursorProperties(state).locationProperties.inTable;
 
 export const getOfficeEditorEditMode = (state) => state.officeEditor.editMode;
 

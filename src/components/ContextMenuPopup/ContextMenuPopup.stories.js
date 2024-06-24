@@ -34,6 +34,14 @@ const initialState = {
   featureFlags: {
     customizableUI: true,
   },
+  officeEditor: {
+    cursorProperties: {
+      paragraphProperties: {},
+      locationProperties: {
+        inTable: false,
+      },
+    },
+  },
 };
 
 export const BasicHorizontal = () => {
@@ -70,7 +78,6 @@ export const OfficeEditor = () => {
   core.getOfficeEditor = () => ({
     isTextSelected: () => true,
     isImageSelected: () => false,
-    isCursorInTable: () => false,
   });
   core.getDocument = () => ({
     getType: () => workerTypes.OFFICE_EDITOR,
@@ -90,13 +97,13 @@ export const OfficeEditor = () => {
 export const OfficeEditorTable = () => {
   core.getOfficeEditor = () => ({
     isTextSelected: () => false,
-    isCursorInTable: () => true,
   });
   core.getDocument = () => ({
     getType: () => workerTypes.OFFICE_EDITOR,
   });
 
   initialState.viewer.enableRightClickAnnotationPopup = false;
+  initialState.officeEditor.cursorProperties.locationProperties.inTable = true;
 
   return (
     <Provider store={configureStore({ reducer: () => initialState })}>
