@@ -30,6 +30,7 @@ import actions from 'actions';
 import selectors from 'selectors';
 import DataElements from 'constants/dataElement';
 import DataElementWrapper from '../DataElementWrapper';
+import { COMMON_COLORS } from 'constants/commonColors';
 
 import './NoteContent.scss';
 
@@ -290,7 +291,7 @@ const NoteContent = ({
       const sections = Object.keys(richTextStyle);
       sections.forEach((a) => {
         if (richTextStyle[a]['color'] && isDarkColorHex(richTextStyle[a]['color'])) {
-          richTextStyle[a]['color'] = '#FFFFFF';
+          richTextStyle[a]['color'] = COMMON_COLORS['white'];
         }
       });
     }
@@ -303,7 +304,7 @@ const NoteContent = ({
       const sections = Object.keys(richTextStyle);
       sections.forEach((a) => {
         if (richTextStyle[a]['color'] && isLightColorHex(richTextStyle[a]['color'])) {
-          richTextStyle[a]['color'] = '#000000';
+          richTextStyle[a]['color'] = COMMON_COLORS['black'];
         }
       });
     }

@@ -1,9 +1,8 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import ButtonComponent from './Button';
-
-const noop = () => { };
+import { initialColors } from 'helpers/initialColorStates';
 
 const initialState = {
   viewer: {
@@ -13,7 +12,7 @@ const initialState = {
 };
 function rootReducer(state = initialState, action) {
   return state;
-};
+}
 
 const store = createStore(rootReducer);
 
@@ -35,9 +34,8 @@ Button.args = {
   title: 'Test Button',
   isActive: true,
   img: 'icon-tool-pen-line',
-  color: '#E44234',
-  fillColor: '#E44234',
-  strokeColor: '#E44234',
+  color: initialColors[0],
+  fillColor: initialColors[0],
+  strokeColor: initialColors[0],
   dataElement: 'test',
 };
-

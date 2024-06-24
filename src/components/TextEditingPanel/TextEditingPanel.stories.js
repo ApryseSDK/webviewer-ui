@@ -2,10 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import TextEditingPanel from './TextEditingPanel';
 import RightPanel from 'components/RightPanel';
-import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from 'reducers/rootReducer';
 import initialState from 'src/redux/initialState';
-import App from 'components/App';
+import { MockApp, createStore } from 'helpers/storybookHelper';
 
 const noop = () => { };
 
@@ -13,22 +11,10 @@ export default {
   title: 'Components/TextEditingPanel',
   component: TextEditingPanel,
   includeStories: ['Basic', 'TextEditingUndoRedo', 'LeftSide'],
+  parameters: {
+    customizableUI: true,
+  }
 };
-
-const createStore = (preloadedState) => {
-  return configureStore({
-    reducer: rootReducer,
-    preloadedState: preloadedState,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-  });
-};
-
-const MockApp = ({ initialState }) => (
-  <Provider store={createStore(initialState)}>
-    <App removeEventHandlers={() => { }} />
-  </Provider>
-);
-
 
 const textEditingPanelInitialState = {
   ...initialState,
@@ -69,6 +55,7 @@ const basicProps = {
   handleColorChange: noop,
   rgbColor: {
     toHexString: () => {
+      // eslint-disable-next-line custom/no-hex-colors
       return '#FF0000';
     }
   }
@@ -113,6 +100,7 @@ export const TextEditingUndoRedo = () => {
     },
     rgbColor: {
       toHexString: () => {
+        // eslint-disable-next-line custom/no-hex-colors
         return '#FF0000';
       }
     }

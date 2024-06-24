@@ -6,6 +6,7 @@ import { rotateRad } from 'helpers/rotate';
 import { rgbaToHex } from 'helpers/color';
 import { getAnnotationClass } from 'helpers/getAnnotationClass';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
+import { COMMON_COLORS } from './commonColors';
 
 function getDocumentCenter(pageNumber) {
   let result;
@@ -30,7 +31,7 @@ function isNoteFreeTextAnnotation(note) {
 }
 
 function getNoteColor(note) {
-  let color = '#485056';
+  let color = COMMON_COLORS['gray8'];
   if (isNoteFreeTextAnnotation(note) && note.TextColor) {
     color = rgbaToHex(note.TextColor.R, note.TextColor.G, note.TextColor.B, note.TextColor.A);
   } else if (note.Color) {

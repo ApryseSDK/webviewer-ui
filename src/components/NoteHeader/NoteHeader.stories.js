@@ -1,8 +1,9 @@
 import React from 'react';
-import NoteHeader from './NoteHeader';
+import NoteHeader from 'components/NoteHeader';
 import NoteContext from '../Note/Context';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { initialColors } from 'helpers/initialColorStates';
 
 export default {
   title: 'Components/Note/NoteHeader',
@@ -42,14 +43,14 @@ const mockAnnotation = {
     'G': 205,
     'B': 69,
     'A': 1,
-    toHexString: () => '#E44234'
+    toHexString: () => initialColors[0]
   },
   FillColor: {
     'R': 255,
     'G': 205,
     'B': 69,
     'A': 1,
-    toHexString: () => '#E44234'
+    toHexString: () => initialColors[0]
   }
 };
 

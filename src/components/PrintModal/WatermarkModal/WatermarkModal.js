@@ -473,7 +473,9 @@ class WatermarkModal extends React.PureComponent {
                     key="fontSize"
                     fontUnit="pt"
                     onFontSizeChange={(val) => this.handleInputChange(FORM_FIELD_KEYS.fontSize, Number.parseInt(val))}
-                    maxFontSize={512}
+                    maxFontSize={1600}
+                    initialFontValue={1}
+                    initialMaxFontValue={512}
                   />
                 </div>
                 <div className="form-field opacity-slider" id="opacitySlider">
@@ -498,6 +500,7 @@ class WatermarkModal extends React.PureComponent {
                   <div className="style-container">
                     <Button
                       id="currentColorCell"
+                      // eslint-disable-next-line custom/no-hex-colors
                       className={`colorSelect ${hexColor === '#FFFFFF' ? 'white-color' : ''}`}
                       ariaLabel="colorSelectButton"
                       style={{

@@ -17,6 +17,7 @@ import core from 'core';
 import { NotesPanelSortStrategy } from 'constants/sortStrategies';
 import Theme from 'constants/theme';
 import { OFFICE_EDITOR_TRACKED_CHANGE_KEY } from 'constants/officeEditor';
+import { COMMON_COLORS } from 'constants/commonColors';
 
 import './NoteHeader.scss';
 
@@ -88,9 +89,9 @@ function NoteHeader(props) {
   let color = annotation[iconColor]?.toHexString?.();
 
   if (activeTheme === Theme.DARK && color && isDarkColorHex(color)) {
-    color = '#FFFFFF';
+    color = COMMON_COLORS['white'];
   } else if (activeTheme === Theme.LIGHT && color && isLightColorHex(color)) {
-    color = '#000000';
+    color = COMMON_COLORS['black'];
   }
 
   const fillColor = getColor(annotation.FillColor);

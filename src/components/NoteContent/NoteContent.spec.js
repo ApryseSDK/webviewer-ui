@@ -4,6 +4,7 @@ import * as reactRedux from 'react-redux';
 import { testProps, testPropsWithSkipAutoLink } from './NoteContent.stories';
 import NoteContent from './NoteContent';
 import NoteContext from '../Note/Context';
+import { initialColors } from 'helpers/initialColorStates';
 
 const TestNoteContent = withProviders(NoteContent);
 const notSelectedProps = {
@@ -17,7 +18,7 @@ const initialState = {
     customElementOverrides: {},
     activeDocumentViewerKey: 1,
     colorMap: {
-      '1': '#E44234'
+      '1': initialColors[0]
     }
   }
 };

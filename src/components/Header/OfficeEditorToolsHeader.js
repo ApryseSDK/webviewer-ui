@@ -29,7 +29,9 @@ import openOfficeEditorFilePicker from 'helpers/openOfficeEditorFilePicker';
 import './Header.scss';
 import './OfficeHeader.scss';
 import '../HeaderItems/HeaderItems.scss';
+import { COMMON_COLORS } from 'constants/commonColors';
 
+/* eslint-disable custom/no-hex-colors */
 const availableStylePresetMap = {
   'Normal Text': {
     fontSize: '11pt',
@@ -64,6 +66,7 @@ const availableStylePresetMap = {
     color: '#666666',
   },
 };
+/* eslint-enable custom/no-hex-colors */
 const availablePointSizes = ['8', '9', '10', '11', '12', '14', '18', '24', '30', '36', '48', '60', '72'];
 const listOptionsWidth = 121;
 const justificationOptionsWidth = 209;
@@ -360,7 +363,7 @@ const OfficeEditorToolsHeader = () => {
     }
 
     const fontSize = `${pointSize}pt`;
-    let color = '#000000';
+    let color = COMMON_COLORS['black'];
     if (color) {
       color = rgbaToHex(
         currentColor.r,

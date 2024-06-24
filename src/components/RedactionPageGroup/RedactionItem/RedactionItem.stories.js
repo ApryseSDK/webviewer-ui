@@ -1,8 +1,9 @@
 import React from 'react';
 import RedactionItem from './RedactionItem';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import { redactionTypeMap, defaultRedactionTypes } from 'constants/redactionTypes';
+import { initialColors } from 'helpers/initialColorStates';
 
 const initialState = {
   viewer: {
@@ -13,9 +14,9 @@ const initialState = {
     },
   }
 };
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState) {
   return state;
-};
+}
 
 const store = createStore(rootReducer);
 
@@ -47,7 +48,7 @@ export function TextRedactionItem() {
   mockTextRedactionAnnotation.redactionType = redactionTypeMap['TEXT'];
   mockTextRedactionAnnotation.icon = 'icon-form-field-text';
   const textRedactionItemProps = {
-    iconColor: '#E44234',
+    iconColor: initialColors[0],
     annotation: mockTextRedactionAnnotation,
     author: mockTextRedactionAnnotation.Author,
     dateFormat: 'MMM D, LT',
@@ -58,7 +59,7 @@ export function TextRedactionItem() {
   return (
     <RedactionItemWithRedux {...textRedactionItemProps} />
   );
-};
+}
 
 export function RegionRedactionItem() {
   const { icon, label } = defaultRedactionTypes[redactionTypeMap['REGION']];
@@ -68,7 +69,7 @@ export function RegionRedactionItem() {
   mockRegionRedactionAnnotation.label = label;
 
   const regionRedactionItemProps = {
-    iconColor: '#E44234',
+    iconColor: initialColors[0],
     annotation: mockRegionRedactionAnnotation,
     author: mockRegionRedactionAnnotation.Author,
     dateFormat: 'MMM D, LT',
@@ -77,7 +78,7 @@ export function RegionRedactionItem() {
   return (
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
-};
+}
 
 export function FullPageRedactionItem() {
   const { icon, label } = defaultRedactionTypes[redactionTypeMap['FULL_PAGE']];
@@ -87,7 +88,7 @@ export function FullPageRedactionItem() {
   mockFullPageRedactionAnnotation.label = label;
 
   const regionRedactionItemProps = {
-    iconColor: '#E44234',
+    iconColor: initialColors[0],
     annotation: mockFullPageRedactionAnnotation,
     author: mockFullPageRedactionAnnotation.Author,
     dateFormat: 'MMM D, LT',
@@ -96,7 +97,7 @@ export function FullPageRedactionItem() {
   return (
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
-};
+}
 
 export function CreditCardRedactionItem() {
   const mockCreditCardRedaction = getMockRedactionAnnotation();
@@ -106,7 +107,7 @@ export function CreditCardRedactionItem() {
 
   mockCreditCardRedaction.getContents = () => '4444 4444 4444 4444';
   const regionRedactionItemProps = {
-    iconColor: '#E44234',
+    iconColor: initialColors[0],
     annotation: mockCreditCardRedaction,
     author: mockCreditCardRedaction.Author,
     dateFormat: 'MMM D, LT',
@@ -115,7 +116,7 @@ export function CreditCardRedactionItem() {
   return (
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
-};
+}
 
 export function PhoneNumberRedactionItem() {
   const mockPhoneNumberRedaction = getMockRedactionAnnotation();
@@ -125,7 +126,7 @@ export function PhoneNumberRedactionItem() {
   mockPhoneNumberRedaction.getContents = () => '867-5309';
   const regionRedactionItemProps = {
     icon: 'icon-header-page-manipulation-page-transition-page-by-page-line',
-    iconColor: '#E44234',
+    iconColor: initialColors[0],
     annotation: mockPhoneNumberRedaction,
     author: mockPhoneNumberRedaction.Author,
     dateFormat: 'MMM D, LT',
@@ -134,7 +135,7 @@ export function PhoneNumberRedactionItem() {
   return (
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
-};
+}
 
 export function EmailRedactionItem() {
   const mockEmailRedaction = getMockRedactionAnnotation();
@@ -143,7 +144,7 @@ export function EmailRedactionItem() {
   mockEmailRedaction.label = 'redactionPanel.search.emails';
   mockEmailRedaction.getContents = () => 'duncan@dune.com';
   const regionRedactionItemProps = {
-    iconColor: '#E44234',
+    iconColor: initialColors[0],
     annotation: mockEmailRedaction,
     author: mockEmailRedaction.Author,
     dateFormat: 'MMM D, LT',
@@ -152,4 +153,24 @@ export function EmailRedactionItem() {
   return (
     <RedactionItemWithRedux {...regionRedactionItemProps} />
   );
-};
+}
+
+export function RedactionItemWithLabelText() {
+  const labelTextRedaction = getMockRedactionAnnotation();
+  labelTextRedaction.redactionType = redactionTypeMap['REGION'];
+  const { icon } = defaultRedactionTypes[redactionTypeMap['REGION']];
+  labelTextRedaction.icon = icon;
+  labelTextRedaction.OverlayText = 'This is a label';
+  const textRedactionItemProps = {
+    iconColor: initialColors[0],
+    annotation: labelTextRedaction,
+    author: labelTextRedaction.Author,
+    dateFormat: 'MMM D, LT',
+    language: 'en',
+    textPreview: 'Redaction item with label text',
+  };
+
+  return (
+    <RedactionItemWithRedux {...textRedactionItemProps} />
+  );
+}

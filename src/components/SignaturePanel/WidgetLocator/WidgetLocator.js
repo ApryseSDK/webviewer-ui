@@ -5,6 +5,7 @@ import React, {
 import ReactDOM from 'react-dom';
 
 import core from 'core';
+import getRootNode from 'helpers/getRootNode';
 
 const WidgetLocator = ({ rect }) => {
   const [show, setShow] = useState(false);
@@ -42,11 +43,12 @@ const WidgetLocator = ({ rect }) => {
           left: rect.x1,
           width: rect.x2 - rect.x1,
           height: rect.y2 - rect.y1,
+          // eslint-disable-next-line custom/no-hex-colors
           border: '1px solid #00a5e4',
           zIndex: 100,
         }}
       />,
-      document.getElementById('app')
+      getRootNode().querySelector('#app')
     )
   );
 };

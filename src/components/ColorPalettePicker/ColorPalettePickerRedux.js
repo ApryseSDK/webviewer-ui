@@ -4,13 +4,14 @@ import actions from 'actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import ColorPalettePicker from './ColorPalettePicker';
+import { COMMON_COLORS } from 'constants/commonColors';
 
 function ColorPickerModalRedux(props) {
   const { property, onStyleChange, color, enableEdit, ...rest } = props;
 
   const dispatch = useDispatch();
   const [t] = useTranslation();
-  const [modifyColorMode, setModifyColorMode] = useState("");
+  const [modifyColorMode, setModifyColorMode] = useState('');
   const [colorToBeDeleted, setColorToBeDeleted] = useState('');
 
   const activeCustomColor = useSelector(selectors.getCustomColor);
@@ -23,20 +24,20 @@ function ColorPickerModalRedux(props) {
   }, [activeCustomColor, modifyColorMode]);
 
   const handleDeleteColor = () => {
-    const updatedCustomColors = customColors.filter(color=>color != colorToBeDeleted)
+    const updatedCustomColors = customColors.filter((color) => color !== colorToBeDeleted);
     dispatch(actions.setCustomColors(updatedCustomColors));
     setColorToBeDeleted('');
     dispatch(actions.setCustomColor(null));
   };
 
-  const getHexColor = givenColor => {
+  const getHexColor = (givenColor) => {
     if (givenColor && givenColor.A) {
       return givenColor.toHexString().toLowerCase();
     }
-    return '#000000';
+    return COMMON_COLORS['black'];
   };
 
-  const openColorPicker = addNew => {
+  const openColorPicker = (addNew) => {
     addNew ? setModifyColorMode('add') : setModifyColorMode('update');
     dispatch(actions.openElement('ColorPickerModal'));
   };
@@ -57,7 +58,7 @@ function ColorPickerModalRedux(props) {
     dispatch(actions.showWarningMessage(warning));
   };
 
-  const handleColorChange = newColor => {
+  const handleColorChange = (newColor) => {
     if (newColor) {
       const newColorHex = getHexColor(newColor);
       const newColorExist = customColors.includes(newColorHex);
@@ -83,13 +84,10 @@ function ColorPickerModalRedux(props) {
     }
   };
 
-  const handleColorOnClick = newColor => {
-    onStyleChange(property, new window.Annotations.Color(newColor));
+  const handleColorOnClick = (newColor) => {
+    onStyleChange(property, new window.Core.Annotations.Color(newColor));
     if (color && color.A !== 0 && color.toHexString().toLowerCase() && newColor === color.toHexString().toLowerCase()) {
       dispatch(actions.setCustomColor(color));
-      if (enableEdit) {
-        openColorPicker(false);
-      }
     }
   };
 

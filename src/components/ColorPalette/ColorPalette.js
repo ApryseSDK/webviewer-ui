@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
 import selectors from 'selectors';
+import { BASIC_PALETTE, COMMON_COLORS } from 'constants/commonColors';
 
 import './ColorPalette.scss';
 
@@ -21,44 +22,15 @@ class ColorPalette extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.palette = [
-      '#F1A099',
-      '#FFC67B',
-      '#FFE6A2',
-      '#80E5B1',
-      '#92E8E8',
-      '#A6A1E6',
-      '#E2A1E6',
-      '#E44234',
-      '#FF8D00',
-      '#FFCD45',
-      '#00CC63',
-      '#25D2D1',
-      '#4E7DE9',
-      '#C544CE',
-      '#88271F',
-      '#B54800',
-      '#F69A00',
-      '#007A3B',
-      '#167E7D',
-      '#2E4B8B',
-      '#76287B',
-      '#FFFFFF',
-      '#CDCDCD',
-      '#9C9C9C',
-      '#696969',
-      '#272727',
-      '#000000',
-      'transparency',
-    ];
+    this.palette = BASIC_PALETTE;
   }
 
-  setColor = bg => {
+  setColor = (bg) => {
     const { property, onStyleChange } = this.props;
     if (!bg) {
-      onStyleChange(property, new window.Annotations.Color(0, 0, 0, 0));
+      onStyleChange(property, new window.Core.Annotations.Color(0, 0, 0, 0));
     } else {
-      const color = new window.Annotations.Color(bg);
+      const color = new window.Core.Annotations.Color(bg);
       onStyleChange(property, color);
     }
   }
@@ -82,11 +54,11 @@ class ColorPalette extends React.PureComponent {
 
     const allowTransparent = !(property === 'TextColor' || property === 'StrokeColor');
 
-    let palette = overridePalette2 ||  overridePalette?.[colorMapKey] || overridePalette?.global || this.palette;
+    let palette = overridePalette2 || overridePalette?.[colorMapKey] || overridePalette?.global || this.palette;
     if (!allowTransparent) {
-      palette = palette.filter(p => p?.toLowerCase() !== 'transparency');
+      palette = palette.filter((p) => p?.toLowerCase() !== 'transparency');
     }
-
+    /* eslint-disable custom/no-hex-colors */
     const transparentIcon = (
       <svg
         width="100%"
@@ -98,6 +70,7 @@ class ColorPalette extends React.PureComponent {
         <line stroke="#d82e28" x1="0" y1="100%" x2="100%" y2="0" strokeWidth="2" strokeLinecap="round" />
       </svg>
     );
+    /* eslint-enable custom/no-hex-colors */
 
     return (
       <div
@@ -108,41 +81,41 @@ class ColorPalette extends React.PureComponent {
         })}
         style={style}
       >
-        {palette.map(bg => bg?.toLowerCase()).map((bg, i) => (
-          !bg 
-          ? <div key={i} className="dummy-cell" /> 
-          : <button
-            key={i}
-            className="cell-container"
-            onClick={() => {
-              this.setColor(bg === 'transparency' ? null : bg);
-            }}
-            aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
-          >
-            <div
-              className={classNames({
-                'cell-outer': true,
-                active: color?.toHexString?.()?.toLowerCase() === bg || (!color?.toHexString?.() && bg === 'transparency'),
-              })}
+        {palette.map((bg) => bg?.toLowerCase()).map((bg, i) => (
+          !bg
+            ? <div key={i} className="dummy-cell" />
+            : <button
+              key={i}
+              className="cell-container"
+              onClick={() => {
+                this.setColor(bg === 'transparency' ? null : bg);
+              }}
+              aria-label={`${t('option.colorPalette.colorLabel')} ${i + 1}`}
             >
               <div
                 className={classNames({
-                  cell: true,
-                  border: bg === '#ffffff' || bg === 'transparency',
+                  'cell-outer': true,
+                  active: color?.toHexString?.()?.toLowerCase() === bg || (!color?.toHexString?.() && bg === 'transparency'),
                 })}
-                style={{ backgroundColor: bg }}
               >
-                { bg === 'transparency' && transparentIcon}
+                <div
+                  className={classNames({
+                    cell: true,
+                    border: bg.toLowerCase() === COMMON_COLORS['white'].toLowerCase() || bg === 'transparency',
+                  })}
+                  style={{ backgroundColor: bg }}
+                >
+                  {bg === 'transparency' && transparentIcon}
+                </div>
               </div>
-            </div>
-          </button>
+            </button>
         ))}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   overridePalette: selectors.getCustomElementOverrides(state, dataElement),
   isDisabled: selectors.isElementDisabled(state, 'colorPalette'),
 });

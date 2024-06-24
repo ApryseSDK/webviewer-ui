@@ -18,6 +18,7 @@ import Choice from 'components/Choice';
 import Button from 'components/Button';
 import { Tabs, Tab, TabPanel } from 'components/Tabs';
 import Tooltip from 'components/Tooltip';
+import { COMMON_COLORS } from 'constants/commonColors';
 
 import './FilterAnnotModal.scss';
 
@@ -106,7 +107,7 @@ const FilterAnnotModal = () => {
           color = similarColorExist(colorFilter, iconColor);
         } else {
           // check for default color if no color is available
-          color = colorFilter.includes('#485056');
+          color = colorFilter.includes(COMMON_COLORS['gray8']);
         }
       }
       if (statusFilter.length > 0) {

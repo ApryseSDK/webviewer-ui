@@ -192,8 +192,7 @@
     "@typescript-eslint/no-var-requires": "off",
     "react/prop-types": "off",
     "react/no-danger": "error",
-    // TODO: Uncomment this when we fix all the hex colors
-    // "custom/no-hex-colors": "error"
+    "custom/no-hex-colors": "error"
   },
   "overrides": [
     {

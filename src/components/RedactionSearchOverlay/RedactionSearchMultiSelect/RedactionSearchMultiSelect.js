@@ -3,34 +3,41 @@ import { components } from 'react-select';
 import Icon from 'components/Icon';
 import CreatableMultiSelect from 'components/CreatableMultiSelect';
 import { useTranslation } from 'react-i18next';
+import { COMMON_COLORS } from 'constants/commonColors';
 
-const getStyles = isDarkMode => ({
-  groupHeading: base => ({
+const getColorForMode = (isDarkMode, darkModeColor, lightModeColor, isFocused = true) => {
+  if (isFocused) {
+    return isDarkMode ? darkModeColor : lightModeColor;
+  }
+  return 'transparent';
+};
+
+const getStyles = (isDarkMode) => ({
+  groupHeading: (base) => ({
     ...base,
     textTransform: 'none',
     fontSize: '10px',
-    color: isDarkMode ? '#FFFFFF' : '#485056',
+    color: getColorForMode(isDarkMode, COMMON_COLORS['white'], COMMON_COLORS['gray8']),
     paddingBottom: '8px',
     paddingLeft: '8px',
     paddingTop: '10px',
   }),
-  group: base => ({
+  group: (base) => ({
     ...base,
     padding: '0px',
   }),
-  menu: base => ({
+  menu: (base) => ({
     ...base,
     padding: '0px 0px 0px 0px',
   }),
-  menuList: base => ({
+  menuList: (base) => ({
     ...base,
     padding: '0px',
-    backgroundColor: isDarkMode ? '#000000' : '#FFFFFF',
+    backgroundColor: getColorForMode(isDarkMode, COMMON_COLORS['black'], COMMON_COLORS['white']),
   }),
-  multiValue: base => ({
+  multiValue: (base) => ({
     ...base,
-    backgroundColor: isDarkMode ? '#192530' : '#E7EDF3',
-
+    backgroundColor: getColorForMode(isDarkMode, COMMON_COLORS['blue1DarkMode'], COMMON_COLORS['blue1LightMode']),
     padding: '2px 8px',
     fontSize: '13px',
     borderRadius: '4px',
@@ -42,40 +49,40 @@ const getStyles = isDarkMode => ({
     fontSize: '13px',
     padding: '6px 8px',
     '&:hover': {
-      backgroundColor: isDarkMode ? '#192530' : '#E7EDF3',
+      backgroundColor: getColorForMode(isDarkMode, COMMON_COLORS['blue1DarkMode'], COMMON_COLORS['blue1LightMode']),
     },
-    backgroundColor: state.isFocused ? (isDarkMode ? '#192530' : '#E7EDF3') : 'transparent',
+    backgroundColor: getColorForMode(isDarkMode, COMMON_COLORS['blue1DarkMode'], COMMON_COLORS['blue1LightMode'], state.isFocused),
   }),
-  valueContainer: base => ({
+  valueContainer: (base) => ({
     ...base,
     padding: '1px',
     maxHeight: '70px',
     overflowY: 'scroll',
   }),
-  control: base => ({
+  control: (base) => ({
     ...base,
-    backgroundColor: isDarkMode ? '#21242A' : '#FFFFFF',
+    backgroundColor: getColorForMode(isDarkMode, COMMON_COLORS['gray10'], COMMON_COLORS['white']),
     minHeight: '29px',
-    borderColor: isDarkMode ? '#485056' : '#CFD4DA',
+    borderColor: getColorForMode(isDarkMode, COMMON_COLORS['gray8'], COMMON_COLORS['gray4']),
     '&:hover': {
-      borderColor: isDarkMode ? '#485056' : '#CFD4DA',
+      borderColor: getColorForMode(isDarkMode, COMMON_COLORS['gray8'], COMMON_COLORS['gray4']),
     },
   }),
-  placeholder: base => ({
+  placeholder: (base) => ({
     ...base,
     fontSize: '13px',
-    color: isDarkMode ? '#868E96' : '#ADB5BD',
+    color: getColorForMode(isDarkMode, COMMON_COLORS['gray7'], COMMON_COLORS['gray5']),
     paddingLeft: '4px',
   }),
-  input: base => ({
+  input: (base) => ({
     ...base,
     fontSize: '13px',
-    color: isDarkMode ? '#FFFFFF' : '#485056',
+    color: getColorForMode(isDarkMode, COMMON_COLORS['white'], COMMON_COLORS['gray8']),
     paddingLeft: '3px',
   }),
 });
 
-const RedactionOption = props => {
+const RedactionOption = (props) => {
   const { data } = props;
   const { t } = useTranslation();
   return (
@@ -97,7 +104,7 @@ const MultiValueLabel = ({ data }) => {
   );
 };
 
-const RedactionSearchMultiSelect = props => {
+const RedactionSearchMultiSelect = (props) => {
   const { t } = useTranslation();
   const { activeTheme, redactionSearchOptions } = props;
 
@@ -117,7 +124,7 @@ const RedactionSearchMultiSelect = props => {
       styles={styles}
       components={{ Option: RedactionOption, MultiValueLabel, IndicatorsContainer: () => null }}
       placeholder={t('redactionPanel.redactionSearchPlaceholder')}
-      formatCreateLabel={value => `${t('component.searchPanel')} ${value}`}
+      formatCreateLabel={(value) => `${t('component.searchPanel')} ${value}`}
       {...props}
     />
   );

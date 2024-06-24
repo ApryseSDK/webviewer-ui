@@ -63,6 +63,7 @@ function createFakeOption(option) {
   optionDiv.textContent = option.text;
   optionDiv.style.padding = '0px';
   optionDiv.style.margin = '0px';
+  // eslint-disable-next-line custom/no-hex-colors
   optionDiv.style.backgroundColor = option.selected ? '#b3d9ff' : 'transparent';
   optionDiv.style.textAlign = 'left';
   optionDiv.style.justifyContent = 'flex-start';
@@ -70,6 +71,7 @@ function createFakeOption(option) {
   const isMultiSelect = option.hasAttribute('selected');
   const isSelected = option.selected;
   if (isMultiSelect || isSelected) {
+    // eslint-disable-next-line custom/no-hex-colors
     optionDiv.style.backgroundColor = '#b3d9ff';
   } else {
     optionDiv.style.backgroundColor = 'transparent';

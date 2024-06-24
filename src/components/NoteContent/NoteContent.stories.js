@@ -1,6 +1,7 @@
 import React from 'react';
 import NoteContent from './NoteContent';
 import NoteContext from '../Note/Context';
+import { initialColors } from 'helpers/initialColorStates';
 
 import { createStore } from 'redux';
 
@@ -19,7 +20,7 @@ const initialState = {
     customElementOverrides: {},
     activeDocumentViewerKey: 1,
     colorMap: {
-      '1': '#E44234'
+      '1': initialColors[0]
     }
   }
 };
@@ -48,14 +49,14 @@ const mockAnnotation = {
     'G': 205,
     'B': 69,
     'A': 1,
-    toHexString: () => '#E44234'
+    toHexString: () => initialColors[0]
   },
   FillColor: {
     'R': 255,
     'G': 205,
     'B': 69,
     'A': 1,
-    toHexString: () => '#E44234'
+    toHexString: () => initialColors[0]
   },
   getCustomData: (key) => {
     const customData = {

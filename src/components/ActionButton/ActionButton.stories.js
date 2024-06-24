@@ -1,7 +1,8 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import ActionButtonComponent from './ActionButton';
+import { initialColors } from 'helpers/initialColorStates';
 
 const initialState = {
   viewer: {
@@ -11,7 +12,7 @@ const initialState = {
 };
 function rootReducer(state = initialState, action) {
   return state;
-};
+}
 
 const store = createStore(rootReducer);
 
@@ -32,11 +33,11 @@ export const ActionButton = BasicComponent.bind({});
 ActionButton.args = {
   title: 'Action Button',
   img: 'icon-tools-more',
-  color: '#E44234',
-  fillColor: '#E44234',
-  strokeColor: '#E44234',
+  color: initialColors[0],
+  fillColor: initialColors[0],
+  strokeColor: initialColors[0],
   dataElement: 'test',
-  onClick: () => { alert('Action Triggered') },
+  onClick: () => {
+    alert('Action Triggered');
+  },
 };
-
-

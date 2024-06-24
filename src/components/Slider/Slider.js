@@ -17,6 +17,8 @@ class Slider extends React.PureComponent {
     onSliderChange: PropTypes.func.isRequired,
     dataElement: PropTypes.string,
     getCirclePosition: PropTypes.func.isRequired,
+    customCircleRadius: PropTypes.number,
+    customLineStrokeWidth: PropTypes.number,
     convertRelativeCirclePositionToValue: PropTypes.func.isRequired,
     onStyleChange: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
@@ -27,6 +29,8 @@ class Slider extends React.PureComponent {
     step: PropTypes.number,
     getLocalValue: PropTypes.func,
     shouldHideSliderTitle: PropTypes.bool,
+    shouldHideSliderValue: PropTypes.bool,
+    isMobile: PropTypes.bool,
   };
 
   constructor(props) {
@@ -240,6 +244,7 @@ class Slider extends React.PureComponent {
     const circleCenter = getCirclePosition(this.lineLength, this.state.localValue);
 
     return (
+      /* eslint-disable custom/no-hex-colors */
       <div className="slider" data-element={dataElement}>
         {!this.props.shouldHideSliderTitle && <div className="slider-property" onMouseDown={(e) => e.preventDefault()}>
           {t(`option.slider.${displayProperty}`)}
@@ -253,32 +258,34 @@ class Slider extends React.PureComponent {
             ref={this.sliderSvg}
           >
             <line
-              x1={getCircleRadius(this.props.isMobile)}
+              x1={getCircleRadius(this.props.isMobile, this.props.customCircleRadius)}
               y1="50%"
               x2={circleCenter}
               y2="50%"
-              strokeWidth="2"
+              strokeWidth={`${this.props.customLineStrokeWidth || 2}`}
               stroke="#00a5e4"
               strokeLinecap="round"
             />
             <line
               x1={circleCenter}
               y1="50%"
-              x2={this.lineLength + getCircleRadius(this.props.isMobile)}
+              x2={this.lineLength + getCircleRadius(this.props.isMobile, this.props.customCircleRadius)}
               y2="50%"
-              strokeWidth="2"
+              strokeWidth={`${this.props.customLineStrokeWidth || 2}`}
               stroke="#e0e0e0"
               strokeLinecap="round"
             />
-            <circle cx={circleCenter} cy="50%" r={getCircleRadius(this.props.isMobile)} fill="#00a5e4" />
+            <circle cx={circleCenter} cy="50%" r={getCircleRadius(this.props.isMobile, this.props.customCircleRadius)} fill="#00a5e4" />
           </svg>
-          {withInputField ? (
-            this.getInputElement()
-          ) : (
-            <div className="slider-value">{getDisplayValue(this.state.localValue)}</div>
-          )}
+          {!this.props.shouldHideSliderValue &&
+            (withInputField ? (
+              this.getInputElement()
+            ) : (
+              <div className="slider-value">{getDisplayValue(this.state.localValue)}</div>
+            ))}
         </div>
       </div>
+      /* eslint-enable custom/no-hex-colors */
     );
   };
 

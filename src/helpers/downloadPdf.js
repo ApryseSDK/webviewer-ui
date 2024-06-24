@@ -14,6 +14,7 @@ import getRootNode from 'helpers/getRootNode';
 import { workerTypes } from 'constants/types';
 import { isOfficeEditorMode } from './officeEditor';
 import DataElements from 'src/constants/dataElement';
+import { COMMON_COLORS } from 'constants/commonColors';
 
 
 export default async (dispatch, options = {}, documentViewerKey = 1) => {
@@ -208,7 +209,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
         printImg.onload = () => {
           pagePrintCanvas.width = printImg.width;
           pagePrintCanvas.height = printImg.height;
-          pagePrintContext.fillStyle = '#FFFFFF';
+          pagePrintContext.fillStyle = COMMON_COLORS['white'];
           pagePrintContext.fillRect(0, 0, pagePrintCanvas.width, pagePrintCanvas.height);
           pagePrintContext.drawImage(printImg, 0, 0);
           res(pagePrintCanvas.toDataURL());
@@ -305,7 +306,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
         // Draw Title
         const text = `Page ${pageNumber}`;
         ctx.font = `${titleFontSize}px Helvetica`;
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = COMMON_COLORS['black'];
         let textSize = ctx.measureText(text);
         ctx.fillText(text, x, y);
         y += textSize.height;
@@ -383,7 +384,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
             async function drawText(text, options = {}) {
               const {
                 bold = false,
-                fillStyle = '#000',
+                fillStyle = COMMON_COLORS['black'],
                 size = bodyFontSize,
                 font = 'Helvetica',
               } = options;
@@ -430,7 +431,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
               hour: 'numeric',
               minute: 'numeric',
             })}`;
-            extractProperties(await drawText(dateText, { fillStyle: '#485056', x, y }));
+            extractProperties(await drawText(dateText, { fillStyle: COMMON_COLORS['gray8'], x, y }));
             x += textSize.width + cardSpacing;
 
             if (!isReply) {
@@ -451,7 +452,7 @@ export default async (dispatch, options = {}, documentViewerKey = 1) => {
             }
 
             // Draw comment text onto canvas
-            ctx.fillStyle = '#000';
+            ctx.fillStyle = COMMON_COLORS['black'];
             const annotContents = annotation.getContents();
             if (annotContents) {
               await drawTextAndWrap(annotation.getContents());

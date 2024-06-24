@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Button from '../Button';
 import classNames from 'classnames';
 import './AudioPlaybackPopup.scss';
+import { COMMON_COLORS } from 'constants/commonColors';
 
 const PLAY_AUDIO_SVG = 'ic_play_24px';
 const PAUSE_AUDIO_SVG = 'ic_pause_24px';
@@ -15,7 +16,6 @@ function AudioPlaybackPopup({
   handleAudioInitializeError,
   handleCloseAudioPlaybackPopup
 }) {
-
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [durationValue, setDurationValue] = useState(0);
   const [durationString, setDurationString] = useState('00:00');
@@ -38,14 +38,14 @@ function AudioPlaybackPopup({
   }, []);
 
   useEffect(() => {
-    if(!annotation || !annotation.audio || !annotation.audio.blob) {
+    if (!annotation || !annotation.audio || !annotation.audio.blob) {
       handleAudioInitializeError('No audio data found. Cannot play this annotation\'s audio.');
       return;
     }
 
     audioElementRef.current.src = URL.createObjectURL(annotation.audio.blob);
 
-    if(autoplay) {
+    if (autoplay) {
       playAudio();
     }
   }, [annotation]);
@@ -53,12 +53,12 @@ function AudioPlaybackPopup({
   async function toggleAudio() {
     let isPlaying = false;
 
-    if(isPlayingAudio) {
+    if (isPlayingAudio) {
       await audioElementRef.current.pause();
     } else {
       isPlaying = true;
       await audioElementRef.current.play()
-        .catch(error => {
+        .catch((error) => {
           isPlaying = false;
           handleAudioPlaybackError(error);
         });
@@ -70,7 +70,7 @@ function AudioPlaybackPopup({
   async function playAudio() {
     let isPlaying = true;
     await audioElementRef.current.play()
-      .catch(error => {
+      .catch((error) => {
         isPlaying = false;
         handleAudioPlaybackError(error);
       });
@@ -79,7 +79,7 @@ function AudioPlaybackPopup({
   }
 
   function handleLoadedAudioMetadata(e) {
-    const duration = e.target.duration
+    const duration = e.target.duration;
     const timeStampString = getTimeStampStringFromSeconds(duration);
     setDurationValue(duration);
     setDurationString(timeStampString);
@@ -110,17 +110,18 @@ function AudioPlaybackPopup({
     <div className={classNames({
       Popup: true,
       AudioPlaybackPopup: true
-    })}>
+    })}
+    >
       <div className="audio-popup-draggable-header">
         <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="12" height="2" rx="1" fill="#CFD4DA"/>
+          <rect width="12" height="2" rx="1" fill={COMMON_COLORS['gray4']}/>
         </svg>
       </div>
       <div className="audio-popup-ui">
         <audio
           data-testid="hidden-audio-element"
           ref={audioElementRef}
-          style={{ display: 'none'}}
+          style={{ display: 'none' }}
           onLoadedMetadata={handleLoadedAudioMetadata}
           onTimeUpdate={handleAudioTimeUpdate}
           onEnded={handleAudioFinished}

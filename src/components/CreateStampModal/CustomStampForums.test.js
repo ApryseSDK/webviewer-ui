@@ -31,6 +31,7 @@ const props = {
   stampTool: {
     drawCustomStamp: noop,
   },
+  /* eslint-disable custom/no-hex-colors */
   state: {
     bold: true,
     color: '#2A85D0',
@@ -45,6 +46,7 @@ const props = {
     underline: false,
     width: 300,
   },
+  /* eslint-enable custom/no-hex-colors */
   userName: 'Guest',
 };
 

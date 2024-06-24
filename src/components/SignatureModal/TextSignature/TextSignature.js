@@ -9,6 +9,7 @@ import { isIOS, isMobile } from 'helpers/device';
 import cropImageFromCanvas from 'helpers/cropImageFromCanvas';
 import selectors from 'selectors';
 import { useTranslation } from 'react-i18next';
+import { COMMON_COLORS, BASIC_PALETTE } from 'constants/commonColors';
 
 import './TextSignature.scss';
 import getRootNode from 'helpers/getRootNode';
@@ -24,7 +25,7 @@ const propTypes = {
 const FONT_SIZE = 72;
 const TYPED_SIGNATURE_FONT_SIZE = (FONT_SIZE * 2) / 3;
 const MAX_SIGNATURE_LENGTH = 350;
-const DEFAULT_FONT_COLOR = '#000000';
+const DEFAULT_FONT_COLOR = COMMON_COLORS['black'];
 const CANVAS_MULTIPLIER = window.Core.getCanvasMultiplier();
 const TEXT_CLIP_PADDING = 100;
 
@@ -127,6 +128,16 @@ const TextSignature = ({
 
   const forceUpdate = useForceUpdate();
 
+  // Create button is only enabled when there's a signature
+  // if initials are enabled, then those must also be filled in
+  useEffect(() => {
+    if (fullSignature?.length > 0 && (!isInitialsModeEnabled || initials)) {
+      enableCreateButton();
+    } else {
+      disableCreateButton();
+    }
+  }, [initials, fullSignature, isInitialsModeEnabled]);
+
   useEffect(() => {
     // this can happen when an user added a new signature font, select it and then removed it
     // in this case we just assume there's at least one font and set the active index to 0
@@ -219,10 +230,8 @@ const TextSignature = ({
     if (signatureValue.trim()) {
       const base64 = cropImageFromCanvas(canvas);
       signatureToolArray.forEach((tool) => tool.setSignature(base64));
-      enableCreateButton();
     } else {
       signatureToolArray.forEach((tool) => tool.setSignature(null));
-      disableCreateButton();
     }
   };
 
@@ -234,10 +243,8 @@ const TextSignature = ({
     if (initialsValue.trim()) {
       const base64 = cropImageFromCanvas(canvas);
       signatureToolArray.forEach((tool) => tool.setInitials(base64));
-      enableCreateButton();
     } else {
       signatureToolArray.forEach((tool) => tool.setInitials(null));
-      disableCreateButton();
     }
   };
 
@@ -301,7 +308,8 @@ const TextSignature = ({
 
   // Renders the font options if initials and text signature are occupied
   const renderFontOptions = () => {
-    if (fullSignature === '' && initials === '') {
+    const isInitialsModeEnabledAndEmpty = isInitialsModeEnabled && initials === '';
+    if (fullSignature === '' && (isInitialsModeEnabledAndEmpty || !isInitialsModeEnabled)) {
       return (
         <Dropdown
           disabled={true}
@@ -396,7 +404,8 @@ const TextSignature = ({
             color={fontColor}
             property="fontColor"
             onStyleChange={(property, value) => handleColorInputChange(property, value)}
-            overridePalette2={['#000000', '#4E7DE9', '#E44234']}
+            /* eslint-disable-next-line custom/no-hex-colors */
+            overridePalette2={[COMMON_COLORS['black'], BASIC_PALETTE[12], BASIC_PALETTE[7]]}
           />
         </div>
       </div>

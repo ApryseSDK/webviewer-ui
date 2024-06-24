@@ -10,8 +10,15 @@ import DataElements from 'constants/dataElement';
 import useDidUpdate from 'hooks/useDidUpdate';
 import { isMobileSize } from 'helpers/getDeviceSize';
 import useOnContentEditHistoryUndoRedoChanged from 'hooks/useOnContentEditHistoryUndoRedoChanged';
+import { COMMON_COLORS } from 'constants/commonColors';
 
 const fonts = [];
+
+const conversionMap = {
+  Font: 'fontName',
+  FontSize: 'fontSize',
+  TextAlign: 'textAlign',
+};
 
 const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
   const [isOpen, isDisabled, textEditingPanelWidth, isInDesktopOnlyMode] = useSelector(
@@ -24,11 +31,20 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     shallowEqual,
   );
 
+  const customColors = useSelector(selectors.getCustomColors);
   const undoRedoProperties = useOnContentEditHistoryUndoRedoChanged();
   const isMobile = isMobileSize();
+  const dispatch = useDispatch();
 
   // selection modes used are 'FreeText' and 'ContentBox'
   const [selectionMode, setSelectionMode] = useState(null);
+
+  const annotationRef = useRef(null);
+  const contentEditorRef = useRef(null);
+  const [selectedContentBox, setSelectedContentBox] = useState(null);
+  const [textEditProperties, setTextEditProperties] = useState({});
+  const [format, setFormat] = useState({});
+  const DEFAULT_COLOR = new window.Core.Annotations.Color(COMMON_COLORS['black']);
 
   useDidUpdate(() => {
     const supportedFonts = window.Core.ContentEdit.getContentEditingFonts();
@@ -40,29 +56,16 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     }));
   }, [selectionMode]);
 
-  const annotationRef = useRef(null);
-  const contentEditorRef = useRef(null);
-
-  const [selectedContentBox, setSelectedContentBox] = useState(null);
-
-  // properties for TextStylePicker
-  const [textEditProperties, setTextEditProperties] = useState({});
-
-  // properties for custom buttons and color picker
-  const [format, setFormat] = useState({});
-
-  const [colorArray] = useState(['#000000', '#FFFFFF']);
-
   useEffect(() => {
     const handleSelectionChange = async () => {
       if (contentEditorRef.current && core.getContentEditManager().isInContentEditMode()) {
         const attribute = await contentEditorRef.current.getTextAttributes();
-        const hexColor = attribute.fontColors[0].fontColor;
-        const color = new window.Core.Annotations.Color(hexColor);
+        const color = new window.Core.Annotations.Color(attribute.fontColor);
 
         const fontObject = {
           FontSize: attribute.fontSize,
           Font: getFontName(attribute.fontName),
+          TextAlign: attribute.textAlign
         };
 
         if (!fonts.includes(fontObject.Font)) {
@@ -71,7 +74,6 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
 
         setTextEditProperties(fontObject);
         handleColorChange(null, color);
-        attribute.fontColor = hexColor;
 
         // remove the fontName attribute so that we don't override the fontName when we set the text attributes
         delete attribute.fontName;
@@ -135,8 +137,6 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     core.addEventListener('contentBoxEditEnded', handleEditorEnd);
     return () => core.removeEventListener('contentBoxEditEnded', handleEditorEnd);
   }, []);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleContentEditModeStart = () => {
@@ -246,11 +246,13 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
       }
     }
 
-    const conversionMap = {
-      Font: 'fontName',
-      FontSize: 'fontSize',
-      TextAlign: 'textAlign',
-    };
+    if (property === 'TextAlign') {
+      property = 'textAlign';
+      setFormat((format) => ({
+        ...format,
+        [property]: value
+      }));
+    }
 
     window.Core.ContentEdit.setTextAttributes({ [conversionMap[property]]: value });
   };
@@ -266,6 +268,9 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
           break;
         case 'underline':
           window.Core.ContentEdit.toggleUnderlineContents(selectedContentBox);
+          break;
+        case 'strike':
+          window.Core.ContentEdit.toggleStrikeContents(selectedContentBox);
           break;
       }
 
@@ -283,15 +288,34 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     }
   };
 
-  const handleColorChange = (_, color) => {
+  const handleColorChange = async (_, color) => {
+    const selection = window.getSelection();
     const textColor = color?.toHexString?.() || color;
+
     if (selectedContentBox) {
-      if (!colorArray.includes(textColor)) {
-        colorArray.push(textColor);
+      const selectionLength = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+      const isParagraphEdit = selectionLength && contentEditorRef.current;
+      if (isParagraphEdit) {
+        const selection = await contentEditorRef.current.getCurrentSelection();
+        const length = selection.endIndex - selection.startIndex;
+        const isValidSelection = length && length > 0;
+        if (isValidSelection) {
+          window.Core.ContentEdit.setTextColor(selectedContentBox, textColor);
+        } else {
+          window.Core.ContentEdit.setTextAttributes({ 'fontColor': textColor });
+        }
+      } else {
+        window.Core.ContentEdit.setTextColor(selectedContentBox, textColor);
       }
-      window.Core.ContentEdit.setTextColor(selectedContentBox, textColor);
     }
     applyFormat('color', textColor);
+  };
+
+  const handleAddActiveColor = () => {
+    if (rgbColor?.toHexString) {
+      const arrayOfColors = new Set([...customColors, rgbColor.toHexString().toLowerCase()]);
+      dispatch(actions.setCustomColors([...arrayOfColors]));
+    }
   };
 
   const applyFormat = (formatKey, value) => {
@@ -320,9 +344,8 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
 
       const editManager = core.getDocumentViewer().getContentEditManager();
       const attribs = await editManager.getContentBoxAttributes(contentBoxId);
-
       const fontName = getFontName(attribs.fontName);
-      const { bold, italic, underline, fontColors, fontSize, textAlign } = attribs;
+      const { bold, italic, underline, fontColors, fontSize, textAlign, strike } = attribs;
       const color = new window.Core.Annotations.Color(fontColors[0].fontColor);
 
       if (!fonts.includes(fontName)) {
@@ -332,11 +355,12 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
       return {
         Font: fontName,
         FontSize: fontSize,
-        TextAlign: textAlign,
+        textAlign,
         bold,
         italic,
         underline,
-        color
+        color,
+        strike
       };
     }
   };
@@ -375,6 +399,8 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
     return null;
   }
 
+  const rgbColor = format?.color || DEFAULT_COLOR;
+
   return (
     <DataElementWrapper dataElement={dataElement} className="Panel TextEditingPanel" style={style}>
       {!isInDesktopOnlyMode && isMobile && renderMobileCloseButton()}
@@ -392,7 +418,8 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
         disableLinkButton={
           (annotationRef.current?.ToolName === window.Core.Tools.ToolNames.ADD_PARAGRAPH) && !contentEditorRef.current
         }
-        colorArray={colorArray}
+        addActiveColor={handleAddActiveColor}
+        rgbColor={rgbColor}
       />
     </DataElementWrapper>
   );

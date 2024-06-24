@@ -51,6 +51,7 @@ class Icon extends React.PureComponent {
 
   render() {
     const { className = '', color, glyph, fillColor = '', strokeColor = '', disabled } = this.props;
+    // eslint-disable-next-line custom/no-hex-colors
     const filter = (color && (color === 'rgba(255, 255, 255, 1)' || color === 'rgb(255, 255, 255)')) ? 'drop-shadow(0 0 .5px #333)' : undefined;
     let svgElement;
 
@@ -66,6 +67,7 @@ class Icon extends React.PureComponent {
     };
 
     if (!disabled) {
+      // eslint-disable-next-line custom/no-hex-colors
       style.color = (color === 'rgba(0, 0, 0, 0)') ? '#808080' : color;
       if (fillColor) {
         svgElement = svgElement.replace('fill="none"', `fill="#${fillColor}"`);
@@ -85,7 +87,8 @@ class Icon extends React.PureComponent {
           disabled,
         })}
         style={style}
-        // eslint-disable-next-line react/no-danger
+        aria-hidden='true'
+        /* eslint-disable react/no-danger */
         dangerouslySetInnerHTML={{ __html: svgElement }}
       />
     );

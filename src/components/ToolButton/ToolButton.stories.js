@@ -1,9 +1,10 @@
 import React from 'react';
 import { combineReducers, createStore } from 'redux';
-import { Provider } from "react-redux";
-import ToolButtonComponent from './ToolButton';
+import { Provider } from 'react-redux';
+import ToolButtonComponent from './index';
 import initialState from 'src/redux/initialState';
 import viewerReducer from 'src/redux/reducers/viewerReducer';
+import { initialColors } from 'helpers/initialColorStates';
 
 const reducer = combineReducers({
   viewer: viewerReducer(initialState.viewer)
@@ -28,6 +29,5 @@ export const ToolButton = BasicComponent.bind({});
 ToolButton.args = {
   toolName: 'AnnotationCreateFreeText',
   group: 'freeTextTools',
-  color: '#E44234',
+  color: initialColors[0],
 };
-
