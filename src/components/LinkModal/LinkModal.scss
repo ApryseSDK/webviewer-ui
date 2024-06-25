@@ -13,9 +13,9 @@
     flex-direction: column;
     align-items: center;
     min-width: 400px;
+    width: 480px;
     border-radius: 4px;
     box-shadow: 0px 0px 3px 0px var(--document-box-shadow);
-    padding: 8px 8px;
     background: var(--component-background);
 
     @include mobile {
@@ -39,9 +39,6 @@
 
     @extend %tab-panel;
 
-    .tab-list {
-      margin: 8px 0;
-    }
 
     @extend %tab-list;
 
@@ -51,24 +48,6 @@
       justify-content: space-between;
     }
 
-    input {
-      margin-top: 8px;
-      width: 100%;
-      height: 30px;
-      padding: 4px 8px 6px 8px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      color: var(--text-color);
-
-      &:focus {
-        outline: none;
-        border: 1px solid var(--focus-border);
-      }
-
-      &::placeholder {
-        color: var(--placeholder-text);
-      }
-    }
 
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -84,36 +63,125 @@
       width: 100%;
     }
 
-    .Button {
+    .header-container {
+      box-shadow: inset 0px -1px 0px var(--modal-stroke-and-border);
+      padding: 20px 16px 16px 16px;
+      width: 100%;
+    }
+
+    .header {
+      margin: 0;
+
       display: flex;
-      justify-content: center;
       align-items: center;
-      color: var(--primary-button-text);
-      font-weight: 600;
-      padding: 6px 18px;
-      margin-top: 8px;
-      margin-left: 5px;
-      width: auto;
-      width: fit-content;
-      background: var(--primary-button);
-      border-radius: 4px;
-      height: 30px;
-      cursor: pointer;
+      width: 100%;
+      height: 24px;
 
-      @include ie11 {
-        padding-left: 11px;
-      }
-
-      &:hover {
-        background: var(--primary-button-hover);
-      }
-
-      &.disabled {
-        background: var(--gray-6);
-        border-color: var(--gray-6);
-        cursor: not-allowed;
-        pointer-events: none;
+      p, label {
+        font-size: 16px;
+        font-weight: 700;
+        width: 89.286%;
+        margin: 0;
+        margin-right: 16px;
       }
     }
+
+    .tab-list {
+      font-size: 14px;
+      margin-top: 12px;
+    }
+
+    .tab-panel {
+      overflow-y: visible;
+
+      .panel-body {
+        width: 100%;
+        height: 140px;
+        position: relative;
+        padding: 16px;
+        font-size: 13px;
+        border-radius: 4px;
+
+        .add-url-link {
+          display: flex;
+          justify-content: center;
+          height: 100%;
+          flex-direction: column;
+          background-color: var(--document-background-color);
+          border-radius: 4px;
+
+          .inputLabel {
+            font-size: 13px;
+            line-height: 16px;
+            padding-left: 16px;
+            padding-bottom: 8px;
+            font-weight: 700;
+          }
+          label.inputLabel {
+            width: 100%;
+            display: inline-block;
+          }
+          .linkInput {
+            padding: 0 16px;
+
+            input {
+              width: 100%;
+              height: 32px;
+              padding-left: 8px;
+              font-size: 13px;
+              box-sizing: border-box;
+            }
+          }
+        }
+      }
+    }
+
+    .footer {
+      display: flex;
+      padding: 16px;
+      align-items: center;
+      justify-content: flex-end;
+      width: 100%;
+      box-shadow: inset 0px 1px 0px var(--modal-stroke-and-border);
+      margin: 0;
+
+      .ok-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--primary-button);
+        border: 1px solid var(--primary-button);
+        color: var(--gray-0);
+        padding: 6px 18px;
+        width: auto;
+        width: fit-content;
+        border-radius: 4px;
+        height: 28px;
+        cursor: pointer;
+
+        &:hover {
+          background: var(--primary-button-hover);
+          border: 1px solid var(--primary-button-hover);
+        }
+        &.disabled {
+          background: var(--disabled-button-color) !important;
+          border: 1px solid var(--disabled-button-color);
+          cursor: not-allowed;
+          span {
+            color: var(--gray-0);
+          }
+        }
+      }
+    }
+    input.urlInput, input.pageInput {
+      &:focus {
+        border-color: var(--outline-color);
+      }
+      &:active {
+        border-color: var(--focus-border);
+      }
+    }
+
+    @include tab-border-defaults;
   }
 }

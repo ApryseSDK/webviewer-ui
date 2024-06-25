@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "Página",
     "enterurl": "Ingrese la URL a la que desea vincular",
-    "enterpage": "Seleccione el número de página que desea vincular",
+    "enterUrlAlt": "Introducir URL",
+    "insertLink": "Insertar el link",
+    "insertLinkOrPage": "Insertar enlace o página",
+    "enterpage": "Ingrese el número de página al que desea vincular",
     "urlLink": "enlace URL"
   },
   "Model3D": {
@@ -865,10 +868,11 @@
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Ingrese una URL o elija un archivo para cargar en WebViewer",
-    "enterUrl": "Introduzca la URL del archivo",
+    "enterUrl": "Ingrese la URL del archivo",
     "extension": "Extensión de archivo",
     "existingFile": "El archivo ya está abierto",
-    "addTab": "Añadir pestaña"
+    "addTab": "Agregar pestaña",
+    "newTab": "Nueva pestaña"
   },
   "datePicker": {
     "previousMonth": "Mes anterior",

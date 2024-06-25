@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "Pagină",
     "enterurl": "Introduceți adresa URL la care doriți să vă conectați",
-    "enterpage": "Selectați numărul paginii la care doriți să vă conectați",
+    "enterUrlAlt": "Introdu URL-ul",
+    "insertLink": "Inserați linkul",
+    "insertLinkOrPage": "Inserați link sau pagină",
+    "enterpage": "Introduceți numărul paginii la care doriți să vă conectați",
     "urlLink": "link URL"
   },
   "Model3D": {
@@ -868,7 +871,8 @@
     "enterUrl": "Introduceți adresa URL a fișierului",
     "extension": "Extensie de fișier",
     "existingFile": "Fișierul este deja deschis",
-    "addTab": "Adăugați fila"
+    "addTab": "Adăugați fila",
+    "newTab": "Filă nouă"
   },
   "datePicker": {
     "previousMonth": "Luna trecută",

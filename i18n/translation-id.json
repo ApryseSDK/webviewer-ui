@@ -854,8 +854,11 @@
     "url": "URL",
     "page": "Halaman",
     "enterurl": "Masukkan URL yang ingin Anda tautkan",
-    "enterpage": "Pilih nomor halaman yang ingin Anda tautkan",
-    "urlLink": "tautan URL"
+    "enterUrlAlt": "Masukkan URL",
+    "insertLink": "Sisipkan Tautan",
+    "insertLinkOrPage": "Sisipkan Tautan atau Halaman",
+    "enterpage": "Masukkan nomor halaman yang ingin Anda tautkan",
+    "urlLink": "Tautan URL"
   },
   "Model3D": {
     "add3D": "Tambahkan objek 3D",
@@ -865,10 +868,11 @@
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Masukkan URL atau pilih file untuk dimuat ke WebViewer",
-    "enterUrl": "Masukkan URL file",
-    "extension": "Ekstensi file",
+    "enterUrl": "Masukkan URL berkas",
+    "extension": "Ekstensi File",
     "existingFile": "File sudah terbuka",
-    "addTab": "Tambahkan Tab"
+    "addTab": "Tambahkan Tab",
+    "newTab": "Tab baru"
   },
   "datePicker": {
     "previousMonth": "Bulan sebelumnya",

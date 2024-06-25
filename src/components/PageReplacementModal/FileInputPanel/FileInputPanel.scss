@@ -4,17 +4,26 @@
   justify-content: center;
   height: 100%;
   flex-direction: column;
+  background-color: var(--document-background-color);
+  border-radius: 4px;
 
   .url-input-header {
     font-size: 13px;
     line-height: 16px;
     padding-left: 16px;
-    padding-bottom: 9px;
+    padding-bottom: 8px;
     font-weight: bold;
   }
 
   .url-input {
     padding: 0 16px;
+
+    input:focus {
+      border-color: var(--outline-color);
+    }
+    input:active {
+      border-color: var(--focus-border);
+    }
   }
 
   ::placeholder {

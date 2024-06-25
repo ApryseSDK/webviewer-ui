@@ -45,24 +45,24 @@
           width: 32px;
           justify-content: center;
         }
-  
+
         .close-button {
           position: static;
           height: 32px;
           width: 32px;
-          
+
           &:hover {
-            background: var(--view-header-button-hover);
+            background: var(--x-button-hover-color);
             border-radius: 4px;
           }
-  
+
           &.selected {
             background: var(--view-header-button-active);
             cursor: default;
           }
         }
       }
-  
+
       input.text-input-modal {
         width: 100%;
         height: 30px;
@@ -78,10 +78,10 @@
         &:focus {
           outline: none;
           border: 1px solid var(--focus-border);
-          
+
           &.correct {
             border: 1px solid var(--focus-border);
-            
+
           }
         }
 

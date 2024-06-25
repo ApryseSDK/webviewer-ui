@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "Sida",
     "enterurl": "Ange URL som du vill länka till",
-    "enterpage": "Välj sidnumret du vill länka till",
+    "enterUrlAlt": "Skriv in URL",
+    "insertLink": "Infoga länk",
+    "insertLinkOrPage": "Infoga länk eller sida",
+    "enterpage": "Ange sidnumret du vill länka till",
     "urlLink": "URL-länk"
   },
   "Model3D": {
@@ -868,7 +871,8 @@
     "enterUrl": "Ange filens URL",
     "extension": "Filtillägg",
     "existingFile": "Filen är redan öppen",
-    "addTab": "Lägg till flik"
+    "addTab": "Lägg till flik",
+    "newTab": "Ny flik"
   },
   "datePicker": {
     "previousMonth": "Förra månaden",

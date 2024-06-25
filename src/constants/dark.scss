@@ -116,4 +116,14 @@
   --bookmark-outline-hover-border: transparent;
 
   --checked-option: var(--blue-6);
+
+  --tab-border-color: var(--border);
+  --tab-border-color-hover: var(--border);
+  --tab-background-color-hover: var(--popup-button-hover);
+  --tab-border-color-selected: var(--border);
+  --tab-text-color-selected: var(--text-color);
+
+  --disabled-button-color: #96b9d6;
+  --tab-footer-button-color: var(--primary-button-text);
+  --x-button-hover-color: var(--view-header-button-hover);
 }

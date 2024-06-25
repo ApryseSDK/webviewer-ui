@@ -854,8 +854,11 @@
     "url": "URL",
     "page": "Trang",
     "enterurl": "Nhập URL bạn muốn liên kết đến",
-    "enterpage": "Chọn số trang bạn muốn liên kết đến",
-    "urlLink": "Liên kết URL"
+    "enterUrlAlt": "Nhập URL",
+    "insertLink": "Chèn đường dẫn",
+    "insertLinkOrPage": "Chèn liên kết hoặc trang",
+    "enterpage": "Nhập số trang bạn muốn liên kết đến",
+    "urlLink": "liên kết URL"
   },
   "Model3D": {
     "add3D": "Thêm đối tượng 3D",
@@ -867,8 +870,9 @@
     "enterUrlOrChooseFile": "Nhập URL hoặc chọn tệp để tải vào WebViewer",
     "enterUrl": "Nhập URL tệp",
     "extension": "Phần mở rộng tệp",
-    "existingFile": "Tệp đã mở",
-    "addTab": "Thêm tab"
+    "existingFile": "Tệp đã được mở",
+    "addTab": "Thêm tab",
+    "newTab": "Tab mới"
   },
   "datePicker": {
     "previousMonth": "Tháng Trước",

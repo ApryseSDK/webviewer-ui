@@ -82,6 +82,7 @@ const SignatureModal = () => {
     for (const signatureTool of signatureToolArray) {
       signatureTool.clearLocation();
       signatureTool.setSignature(null);
+      signatureTool.setInitials(null);
     }
     dispatch(actions.closeElement(DataElements.SIGNATURE_MODAL));
   };
@@ -206,12 +207,16 @@ const SignatureModal = () => {
                   />
                 </div>
                 <div className="tab-list">
-                  {!isSavedTabDisabled && <Tab dataElement="savedSignaturePanelButton">
-                    <button className="tab-options-button">
-                      {t('option.type.saved')}
-                    </button>
-                  </Tab>}
-                  <div className="tab-options-divider" />
+                  {!isSavedTabDisabled &&
+                    <>
+                      <Tab dataElement="savedSignaturePanelButton">
+                        <button className="tab-options-button">
+                          {t('option.type.saved')}
+                        </button>
+                      </Tab>
+                      <div className="tab-options-divider" />
+                    </>
+                  }
                   <Tab dataElement="inkSignaturePanelButton">
                     <button className="tab-options-button">
                       {t('action.draw')}
@@ -260,7 +265,8 @@ const SignatureModal = () => {
               </TabPanel>
               <div className="footer">
                 <button className="signature-create" onClick={isSavedTabSelected ? () => setSignature(selectedIndex) : createSignatures}
-                  disabled={isSavedTabSelected ? (!isSavedTabSelected || !displayedSignatures.length || !isOpen) : (!(isOpen) || createButtonDisabled)}>
+                  disabled={isSavedTabSelected ? (!isSavedTabSelected || !displayedSignatures.length || !isOpen) : (!(isOpen) || createButtonDisabled)}
+                  title={isInitialsModeEnabled ? t('message.signatureRequired') : ''}>
                   {t(isSavedTabSelected ? 'action.apply' : 'action.create')}
                 </button>
               </div>

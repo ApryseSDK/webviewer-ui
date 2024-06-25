@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "Strana",
     "enterurl": "Zadejte adresu URL, na kterou chcete odkazovat",
-    "enterpage": "Vyberte číslo stránky, na kterou chcete odkazovat",
+    "enterUrlAlt": "Zadejte URL adresu",
+    "insertLink": "Vložit odkaz",
+    "insertLinkOrPage": "Vložit odkaz nebo stránku",
+    "enterpage": "Zadejte číslo stránky, na kterou chcete odkazovat",
     "urlLink": "URL odkaz"
   },
   "Model3D": {
@@ -866,9 +869,10 @@
   "OpenFile": {
     "enterUrlOrChooseFile": "Zadejte adresu URL nebo vyberte soubor, který se má načíst do WebViewer",
     "enterUrl": "Zadejte URL souboru",
-    "extension": "Přípona souboru",
+    "extension": "Přípona Souboru",
     "existingFile": "Soubor je již otevřen",
-    "addTab": "Přidat kartu"
+    "addTab": "Přidat kartu",
+    "newTab": "Nová karta"
   },
   "datePicker": {
     "previousMonth": "Předchozí měsíc",

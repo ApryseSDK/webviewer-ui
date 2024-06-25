@@ -53,12 +53,6 @@
       .body {
         padding: 16px;
 
-        .tab-list {
-          .tab-options-button {
-            @include button-reset;
-          }
-        }
-
         @extend %tab-list;
 
         .filter-options {
@@ -195,5 +189,7 @@
         }
       }
     }
+
+    @include tab-border-defaults;
   }
 }

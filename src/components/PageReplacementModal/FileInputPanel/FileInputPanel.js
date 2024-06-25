@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import './FileInputPanel.scss';
 import Dropdown from 'components/Dropdown';
 
-const FileInputPanel = ({ defaultValue, onFileSelect, acceptFormats, extension, setExtension }) => {
+const FileInputPanel = ({ defaultValue, onFileSelect, acceptFormats, extension, setExtension, isCustomUI }) => {
   const [t] = useTranslation();
   const [value, setValue] = useState(defaultValue || '');
 
-  const onChange = e => {
+  const onChange = (e) => {
     setValue(e.target.value);
     onFileSelect(e.target.value);
   };
@@ -20,26 +20,30 @@ const FileInputPanel = ({ defaultValue, onFileSelect, acceptFormats, extension, 
 
   return (
     <div className="FileInputPanel">
-      <div className="url-input-header">{t('link.url')}</div>
+      <label htmlFor="urlInput" className="url-input-header">{t('link.enterUrlAlt')}</label>
       <div className="url-input">
         <input type="text"
+          id="urlInput"
+          className="file-input"
           style={{ width: '100%', height: 32, paddingLeft: 8, fontSize: 13, boxSizing: 'border-box' }}
           value={value}
           onChange={onChange}
-          placeholder={t('link.urlLink')}
+          placeholder={(isCustomUI) ? '' : t('link.urlLink')}
         />
       </div>
       { (!setExtension) ? null :
         <div className="extension-dropdown">
           <Dropdown
             disabled={!value}
-            placeholder={t('tool.select')}
-            onClick={e => e.stopPropagation()}
+            placeholder={t('tool.selectAnOption')}
+            onClick={(e) => e.stopPropagation()}
             items={acceptFormats}
             onClickItem={setExtension}
             currentSelectionKey={extension}
+            maxHeight={200}
+            height={32}
           />
-          <p>{t('OpenFile.extension')}</p>
+          <label>{t('OpenFile.extension')}</label>
         </div>
       }
     </div>

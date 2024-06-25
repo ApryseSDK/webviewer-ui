@@ -138,4 +138,17 @@
   --multi-tab-flyout-hover: var(--blue-1);
   --multi-tab-flyout-hover-text: var(--text-color);
   --multi-tab-toggle-button-active: var(--multi-tab-hover-border);
+
+  --tab-border-color: var(--border);
+  --tab-border-color-hover: var(--border);
+  --tab-background-color-hover: var(--popup-button-hover);
+  --tab-border-color-selected: var(--border);
+  --tab-text-color-selected: var(--text-color);
+  --dropdown-item-hover: var(--popup-button-hover);
+  --dropdown-item-active: var(--popup-button-hover);
+  --dropdown-item-text-hover: var(--text-color);
+
+  --disabled-button-color: #96b9d6;
+  --tab-footer-button-color: var(--primary-button-text);
+  --x-button-hover-color: var(--view-header-button-hover);
 }

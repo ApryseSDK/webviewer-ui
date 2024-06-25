@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "Seite",
     "enterurl": "URL eingeben, auf die der Link verweisen soll",
-    "enterpage": "Wählen Sie die Seitennummer aus, zu der Sie einen Link erstellen möchten",
+    "enterUrlAlt": "URL eingeben",
+    "insertLink": "Link einfügen",
+    "insertLinkOrPage": "Link oder Seite einfügen",
+    "enterpage": "Geben Sie die Seitennummer ein, auf die Sie verlinken möchten",
     "urlLink": "URL-Link"
   },
   "Model3D": {
@@ -867,8 +870,9 @@
     "enterUrlOrChooseFile": "Geben Sie eine URL ein oder wählen Sie eine Datei aus, die in WebViewer geladen werden soll",
     "enterUrl": "Datei-URL eingeben",
     "extension": "Dateierweiterung",
-    "existingFile": "Datei ist bereits geöffnet",
-    "addTab": "Registerkarte hinzufügen"
+    "existingFile": "Die Datei ist bereits geöffnet",
+    "addTab": "Registerkarte „Hinzufügen“",
+    "newTab": "Neue Registerkarte"
   },
   "datePicker": {
     "previousMonth": "Vorheriger Monat",

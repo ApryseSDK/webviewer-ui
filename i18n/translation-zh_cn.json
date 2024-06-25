@@ -854,8 +854,11 @@
     "url": "网址",
     "page": "页",
     "enterurl": "输入您想要链接的URL",
-    "enterpage": "选择您要链接的页码",
-    "urlLink": "网址链接"
+    "enterUrlAlt": "输入网址",
+    "insertLink": "插入链接",
+    "insertLinkOrPage": "插入链接或页面",
+    "enterpage": "输入您想要链接到的页码",
+    "urlLink": "URL 链接"
   },
   "Model3D": {
     "add3D": "通过输入URL添加3D注释",
@@ -867,8 +870,9 @@
     "enterUrlOrChooseFile": "输入 URL 或选择要加载到 WebViewer 的文件",
     "enterUrl": "输入文件网址",
     "extension": "文件扩展名",
-    "existingFile": "文件已经打开",
-    "addTab": "添加标签"
+    "existingFile": "文件已打开",
+    "addTab": "添加标签",
+    "newTab": "新标签"
   },
   "datePicker": {
     "previousMonth": "前一个月",

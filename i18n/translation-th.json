@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "หน้าหนังสือ",
     "enterurl": "ป้อน URL ที่คุณต้องการเชื่อมโยงไปยัง",
-    "enterpage": "เลือกหมายเลขหน้าที่คุณต้องการลิงค์ไป",
+    "enterUrlAlt": "ป้อน URL",
+    "insertLink": "ใส่ลิงค์",
+    "insertLinkOrPage": "แทรกลิงค์หรือเพจ",
+    "enterpage": "กรอกหมายเลขหน้าที่คุณต้องการลิงค์ไป",
     "urlLink": "ลิงค์ URL"
   },
   "Model3D": {
@@ -867,8 +870,9 @@
     "enterUrlOrChooseFile": "ป้อน URL หรือเลือกไฟล์ที่จะโหลดลงใน WebViewer",
     "enterUrl": "ป้อน URL ไฟล์",
     "extension": "นามสกุลไฟล์",
-    "existingFile": "ไฟล์เปิดอยู่แล้ว",
-    "addTab": "เพิ่มแท็บ"
+    "existingFile": "ไฟล์ถูกเปิดอยู่แล้ว",
+    "addTab": "เพิ่มแท็บ",
+    "newTab": "แท็บใหม่"
   },
   "datePicker": {
     "previousMonth": "เดือนที่แล้ว",

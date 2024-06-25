@@ -854,8 +854,11 @@
     "url": "網址",
     "page": "頁",
     "enterurl": "輸入您想要鏈接的URL",
-    "enterpage": "選擇您要鏈接的頁碼",
-    "urlLink": "網址鏈接"
+    "enterUrlAlt": "輸入網址",
+    "insertLink": "插入連結",
+    "insertLinkOrPage": "插入連結或頁面",
+    "enterpage": "輸入您想要連結到的頁碼",
+    "urlLink": "網址連結"
   },
   "Model3D": {
     "add3D": "通過輸入URL添加3D註釋",
@@ -868,7 +871,8 @@
     "enterUrl": "輸入文件網址",
     "extension": "文件擴展名",
     "existingFile": "文件已經打開",
-    "addTab": "添加標籤"
+    "addTab": "新增選項卡",
+    "newTab": "新標籤"
   },
   "datePicker": {
     "previousMonth": "前一個月",

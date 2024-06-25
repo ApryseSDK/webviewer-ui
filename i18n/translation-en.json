@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Pan",
     "select": "Select",
+    "selectAnOption": "Select an option",
     "Marquee": "Marquee Zoom",
     "Link": "Link URL or Page",
     "Standard": "Standard",
@@ -854,7 +855,10 @@
     "url": "URL",
     "page": "Page",
     "enterurl": "Enter URL you would like to link to",
-    "enterpage": "Select the page number you would like to link to",
+    "enterUrlAlt": "Enter URL",
+    "insertLink": "Insert Link",
+    "insertLinkOrPage": "Insert Link or Page",
+    "enterpage": "Enter the page number you would like to link to",
     "urlLink": "URL link"
   },
   "Model3D": {
@@ -866,9 +870,10 @@
   "OpenFile": {
     "enterUrlOrChooseFile": "Enter a URL or choose a file to load into WebViewer",
     "enterUrl": "Enter file URL",
-    "extension": "File extension",
+    "extension": "File Extension",
     "existingFile": "File is already open",
-    "addTab": "Add Tab"
+    "addTab": "Add Tab",
+    "newTab": "New Tab"
   },
   "datePicker": {
     "previousMonth": "Previous Month",

@@ -854,7 +854,10 @@
     "url": "यूआरएल",
     "page": "पृष्ठ",
     "enterurl": "वह URL दर्ज करें जिससे आप लिंक करना चाहते हैं",
-    "enterpage": "उस पृष्ठ संख्या का चयन करें जिसे आप लिंक करना चाहते हैं",
+    "enterUrlAlt": "यू आर एल दर्ज करो",
+    "insertLink": "लिंक डालें",
+    "insertLinkOrPage": "लिंक या पेज डालें",
+    "enterpage": "वह पृष्ठ संख्या दर्ज करें जिसे आप लिंक करना चाहते हैं",
     "urlLink": "यूआरएल लिंक"
   },
   "Model3D": {
@@ -866,9 +869,10 @@
   "OpenFile": {
     "enterUrlOrChooseFile": "URL दर्ज करें या WebViewer में लोड करने के लिए कोई फ़ाइल चुनें",
     "enterUrl": "फ़ाइल URL दर्ज करें",
-    "extension": "दस्तावेज़ विस्तारण",
+    "extension": "फाइल एक्सटेंशन",
     "existingFile": "फ़ाइल पहले से खुली है",
-    "addTab": "टैब जोड़ें"
+    "addTab": "टैब जोड़ें",
+    "newTab": "नया टैब"
   },
   "datePicker": {
     "previousMonth": "पिछला महीना",

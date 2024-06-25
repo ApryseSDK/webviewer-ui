@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "Sayfa",
     "enterurl": "Bağlanmak istediğiniz URL'yi girin",
-    "enterpage": "Bağlantı vermek istediğiniz sayfa numarasını seçin",
+    "enterUrlAlt": "URL girin",
+    "insertLink": "Bağlantı Ekle",
+    "insertLinkOrPage": "Bağlantı veya Sayfa Ekle",
+    "enterpage": "Bağlanmak istediğiniz sayfa numarasını girin",
     "urlLink": "URL bağlantısı"
   },
   "Model3D": {
@@ -868,7 +871,8 @@
     "enterUrl": "Dosya URL'sini girin",
     "extension": "Dosya uzantısı",
     "existingFile": "Dosya zaten açık",
-    "addTab": "Sekme Ekle"
+    "addTab": "Sekme Ekle",
+    "newTab": "Yeni sekme"
   },
   "datePicker": {
     "previousMonth": "Geçtiğimiz ay",

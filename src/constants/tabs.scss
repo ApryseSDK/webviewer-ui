@@ -4,10 +4,10 @@
     height: 28px;
     display: flex;
     border-radius: 4px;
-    border: 1px solid var(--border);
     color: var(--text-color);
 
     .tab-options-button {
+      background-color: transparent;
       text-align: center;
       vertical-align: middle;
       line-height: 24px;
@@ -38,10 +38,6 @@
       }
     }
 
-    .tab-options-divider {
-      width: 1px;
-      background: var(--divider);
-    }
   }
 }
 
@@ -51,5 +47,55 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@mixin tab-border-defaults {
+  .tab-list {
+    .tab-options-divider + .tab-options-button {
+      border-left: none !important;
+    }
+
+    .tab-options-button {
+      border-top: solid 1px var(--tab-border-color);
+      border-bottom: solid 1px var(--tab-border-color);
+
+
+      &:first-child {
+        border-left: 1px solid var(--tab-border-color);
+      }
+
+      &:last-child {
+        border-right: 1px solid var(--tab-border-color);
+      }
+
+      &:hover {
+        background: var(--tab-background-color-hover);
+        border-top: solid 1px var(--tab-border-color-hover);
+        border-bottom: solid 1px var(--tab-border-color-hover);
+        border-right: 1px solid var(--tab-border-color-hover);
+
+        + div {
+          border-left: none;
+        }
+        + button {
+          border-left: none;
+        }
+      }
+
+      &.selected {
+        border: 1px solid var(--tab-border-color-selected);
+        color: var(--tab-text-color-selected);
+        + div {
+          border-left: none !important;
+        }
+        + button {
+          border-left: none !important;
+        }
+      }
+      &:not(.selected) {
+        border-right: solid 1px var(--tab-border-color);
+      }
+    }
   }
 }

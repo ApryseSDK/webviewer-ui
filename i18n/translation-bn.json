@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "পাতা",
     "enterurl": "আপনি লিঙ্ক করতে চান URL লিখুন",
-    "enterpage": "আপনি লিঙ্ক করতে চান পৃষ্ঠা নম্বর নির্বাচন করুন",
+    "enterUrlAlt": "ইউআরএল দিন",
+    "insertLink": "লিঙ্ক ঢোকান",
+    "insertLinkOrPage": "লিঙ্ক বা পৃষ্ঠা ঢোকান",
+    "enterpage": "আপনি লিঙ্ক করতে চান পৃষ্ঠা নম্বর লিখুন",
     "urlLink": "URL লিঙ্ক"
   },
   "Model3D": {
@@ -868,7 +871,8 @@
     "enterUrl": "ফাইল URL লিখুন",
     "extension": "ফাইল এক্সটেনশন",
     "existingFile": "ফাইল ইতিমধ্যে খোলা আছে",
-    "addTab": "ট্যাব যোগ করুন"
+    "addTab": "ট্যাব যোগ করুন",
+    "newTab": "নতুন ট্যাব"
   },
   "datePicker": {
     "previousMonth": "পূর্ববর্তী মাস",

@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "Page",
     "enterurl": "Entrez l'URL vers laquelle vous souhaitez créer un lien",
-    "enterpage": "Sélectionnez le numéro de page que vous souhaitez lier",
+    "enterUrlAlt": "Entrer l'URL",
+    "insertLink": "Insérer un lien",
+    "insertLinkOrPage": "Insérer un lien ou une page",
+    "enterpage": "Entrez le numéro de page vers lequel vous souhaitez créer un lien",
     "urlLink": "Lien URL"
   },
   "Model3D": {
@@ -868,7 +871,8 @@
     "enterUrl": "Entrez l'URL du fichier",
     "extension": "Extension de fichier",
     "existingFile": "Le fichier est déjà ouvert",
-    "addTab": "Ajouter un onglet"
+    "addTab": "Ajouter un onglet",
+    "newTab": "Nouvel onglet"
   },
   "datePicker": {
     "previousMonth": "Mois précédent",

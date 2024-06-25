@@ -102,4 +102,6 @@
       margin-top: 32px;
     }
   }
+
+  @include tab-border-defaults;
 }

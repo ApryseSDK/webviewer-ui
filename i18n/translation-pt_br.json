@@ -854,8 +854,11 @@
     "url": "URL",
     "page": "Página",
     "enterurl": "Digite a URL que você deseja vincular",
-    "enterpage": "Selecione o número da página que você deseja vincular",
-    "urlLink": "link de URL"
+    "enterUrlAlt": "Insira o URL",
+    "insertLink": "Inserir link",
+    "insertLinkOrPage": "Inserir link ou página",
+    "enterpage": "Digite o número da página que você deseja vincular",
+    "urlLink": "URL"
   },
   "Model3D": {
     "add3D": "Adicione uma anotação 3D inserindo URL",
@@ -868,7 +871,8 @@
     "enterUrl": "Digite o URL do arquivo",
     "extension": "Extensão de arquivo",
     "existingFile": "O arquivo já está aberto",
-    "addTab": "Adicionar guia"
+    "addTab": "Adicionar guia",
+    "newTab": "Nova aba"
   },
   "datePicker": {
     "previousMonth": "Mês anterior",

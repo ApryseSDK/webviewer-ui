@@ -1,10 +1,26 @@
 @import '../../constants/styles';
 @import '../../constants/modal';
+@import "../../constants/tabs";
 
 .OpenFileModal {
   .container {
     overflow-y: unset;
     width: 600px;
+
+    .footer .modal-btn {
+      color: var(--tab-footer-button-color);
+
+      &.disabled {
+        background: var(--disabled-button-color) !important;
+        border: 1px solid var(--disabled-button-color);
+        cursor: not-allowed;
+
+        span {
+          color: var(--tab-footer-button-color);
+        }
+      }
+    }
+    @include tab-border-defaults;
   }
 
   .image-signature {
@@ -17,21 +33,21 @@
     margin: 5px;
   }
 
-  .panel-body {
-    background: var(--faded-component-background);
-  }
-
   .extension-dropdown {
     padding: 0 16px;
     display: flex;
     flex-direction: column;
 
-    p {
+    p, label {
       width: 100%;
       font-size: 13px;
       line-height: 16px;
       font-weight: 700;
       order: 1;
+      margin-bottom: 8px;
+    }
+    label {
+      margin-top: 13px;
     }
 
     .Dropdown__wrapper {
@@ -41,7 +57,15 @@
       .Dropdown {
         width: 100% !important; // To ovveride the default with of dropdown
       }
-
+      .Dropdown:disabled {
+        border: 1px solid var(--gray-4);
+        .picked-option {
+          color: var(--gray-5);
+        }
+        .arrow {
+          color: var(--gray-5);
+        }
+      }
       .Dropdown__items {
         width: 100%;
       }
@@ -58,5 +82,13 @@
         width: unset;
       }
     }
+  }
+  .Dropdown__item:hover {
+    background-color: var(--dropdown-item-hover);
+    color: var(--dropdown-item-text-hover);
+  }
+  .Dropdown__item.active {
+    background-color: var(--dropdown-item-active);
+    color: var(--dropdown-item-text-hover);
   }
 }

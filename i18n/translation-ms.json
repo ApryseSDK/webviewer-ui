@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "Halaman",
     "enterurl": "Masukkan URL yang anda ingin pautkan",
-    "enterpage": "Pilih nombor halaman yang anda ingin pautkan",
+    "enterUrlAlt": "Masukkan URL",
+    "insertLink": "Sisipkan Pautan",
+    "insertLinkOrPage": "Sisipkan Pautan atau Halaman",
+    "enterpage": "Masukkan nombor halaman yang anda ingin pautkan",
     "urlLink": "pautan URL"
   },
   "Model3D": {
@@ -868,7 +871,8 @@
     "enterUrl": "Masukkan URL fail",
     "extension": "Sambungan fail",
     "existingFile": "Fail sudah dibuka",
-    "addTab": "Tambah Tab"
+    "addTab": "Tambah Tab",
+    "newTab": "Tab baru"
   },
   "datePicker": {
     "previousMonth": "Bulan lepas",

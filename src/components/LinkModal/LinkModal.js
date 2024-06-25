@@ -23,6 +23,7 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
     pageLabels,
     isRightClickAnnotationPopupEnabled,
     activeDocumentViewerKey,
+    selectedTab,
   ] = useSelector((state) => [
     selectors.isElementDisabled(state, DataElements.LINK_MODAL),
     selectors.isElementOpen(state, DataElements.LINK_MODAL),
@@ -32,6 +33,7 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
     selectors.getPageLabels(state),
     selectors.isRightClickAnnotationPopupEnabled(state),
     selectors.getActiveDocumentViewerKey(state),
+    selectors.getSelectedTab(state, 'linkModal'),
   ]);
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -245,54 +247,85 @@ const LinkModal = ({ rightClickedAnnotation, setRightClickedAnnotation }) => {
         <div className="container" onMouseDown={(e) => e.stopPropagation()}>
           <div className="swipe-indicator" />
           <Tabs id="linkModal">
-            <div className="tab-list">
-              <Tab dataElement="URLPanelButton">
-                <div className="tab-options-button">{t('link.url')}</div>
-              </Tab>
-              <div className="tab-options-divider" />
-              <Tab dataElement="PageNumberPanelButton">
-                <div className="tab-options-button">{t('link.page')}</div>
-              </Tab>
+            <div className="header-container">
+              <div className="header">
+                <p>{t('link.insertLinkOrPage')}</p>
+                <Button img="icon-close" onClick={closeModal} title="action.close" />
+              </div>
+              <div className="tab-list">
+                <Tab dataElement="URLPanelButton" >
+                  <button className="tab-options-button">{t('link.url')}</button>
+                </Tab>
+                <div className="tab-options-divider" />
+                <Tab dataElement="PageNumberPanelButton">
+                  <button className="tab-options-button">{t('link.page')}</button>
+                </Tab>
+              </div>
             </div>
-
+            <div className="divider"></div>
             <TabPanel dataElement="URLPanel">
-              <form onSubmit={addURLLink}>
-                <div>{t('link.enterurl')}</div>
-                <div className="linkInput">
-                  <input
-                    className="urlInput"
-                    ref={urlInput}
-                    value={url}
-                    onChange={(e) => setURL(e.target.value)}
-                  />
+              <div className="panel-body">
+                <div className="add-url-link">
+                  <form onSubmit={addURLLink}>
+                    <label htmlFor="urlInput" className="inputLabel">{t('link.enterUrlAlt')}</label>
+                    <div className="linkInput">
+                      <input
+                        id="urlInput"
+                        className="urlInput"
+                        ref={urlInput}
+                        value={url}
+                        onChange={(e) => setURL(e.target.value)}
+                      />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </TabPanel>
+            <TabPanel dataElement="PageNumberPanel">
+              <div className="panel-body">
+                <div className="add-url-link">
+                  <form onSubmit={addPageLink}>
+                    <label htmlFor="pageInput" className="inputLabel">{t('link.enterpage')}</label>
+                    <div className="linkInput">
+                      <input
+                        id="pageInput"
+                        className="pageInput"
+                        ref={pageLabelInput}
+                        value={pageLabel}
+                        onChange={(e) => setPageLabel(e.target.value)}
+                      />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </TabPanel>
+          </Tabs>
+          <div className="divider"></div>
+          <div className="footer">
+            {
+              (selectedTab === 'URLPanelButton')
+                ?
+                (
                   <Button
+                    className="ok-button"
                     dataElement="linkSubmitButton"
                     label={t('action.link')}
                     onClick={addURLLink}
                     disabled={!url.length}
                   />
-                </div>
-              </form>
-            </TabPanel>
-            <TabPanel dataElement="PageNumberPanel">
-              <form onSubmit={addPageLink}>
-                <div>{t('link.enterpage')}</div>
-                <div className="linkInput">
-                  <input
-                    ref={pageLabelInput}
-                    value={pageLabel}
-                    onChange={(e) => setPageLabel(e.target.value)}
-                  />
+                )
+                :
+                (
                   <Button
+                    className="ok-button"
                     dataElement="linkSubmitButton"
                     label={t('action.link')}
                     onClick={addPageLink}
                     disabled={!isValidPageLabel()}
                   />
-                </div>
-              </form>
-            </TabPanel>
-          </Tabs>
+                )
+            }
+          </div>
         </div>
       </div>
     </Swipeable>

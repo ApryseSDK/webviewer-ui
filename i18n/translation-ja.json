@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "ページ",
     "enterurl": "リンク先URLを入力してください",
-    "enterpage": "リンク先のページ番号を選択してください",
+    "enterUrlAlt": "URLを入力",
+    "insertLink": "リンクを挿入",
+    "insertLinkOrPage": "リンクまたはページを挿入",
+    "enterpage": "リンク先のページ番号を入力してください",
     "urlLink": "URLリンク"
   },
   "Model3D": {
@@ -864,11 +867,12 @@
     "formatError": "glTF（.glb）形式のみがサポートされています"
   },
   "OpenFile": {
-    "enterUrlOrChooseFile": "URLを入力するか、WebViewerにロードするファイルを選択してください",
-    "enterUrl": "ファイルのURLを入力してください",
+    "enterUrlOrChooseFile": "URLを入力するか、WebViewerに読み込むファイルを選択してください",
+    "enterUrl": "ファイルのURLを入力",
     "extension": "ファイル拡張子",
     "existingFile": "ファイルはすでに開いています",
-    "addTab": "タブを追加"
+    "addTab": "タブを追加",
+    "newTab": "新しいタブ"
   },
   "datePicker": {
     "previousMonth": "前月",

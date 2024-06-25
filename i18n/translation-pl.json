@@ -854,8 +854,11 @@
     "url": "URL",
     "page": "Strona",
     "enterurl": "Wpisz adres URL, do którego chcesz utworzyć link",
-    "enterpage": "Wybierz numer strony, do której chcesz utworzyć link",
-    "urlLink": "link URL"
+    "enterUrlAlt": "Wprowadź URL",
+    "insertLink": "Wstaw link",
+    "insertLinkOrPage": "Wstaw link lub stronę",
+    "enterpage": "Wpisz numer strony, do której chcesz utworzyć łącze",
+    "urlLink": "Link URL"
   },
   "Model3D": {
     "add3D": "Dodaj obiekt 3D",
@@ -868,7 +871,8 @@
     "enterUrl": "Wpisz adres URL pliku",
     "extension": "Rozszerzenie pliku",
     "existingFile": "Plik jest już otwarty",
-    "addTab": "Dodaj kartę"
+    "addTab": "Dodaj zakładkę",
+    "newTab": "Nowa karta"
   },
   "datePicker": {
     "previousMonth": "Poprzedni miesiac",

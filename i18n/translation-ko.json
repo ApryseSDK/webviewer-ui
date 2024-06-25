@@ -854,8 +854,11 @@
     "url": "URL",
     "page": "페이지",
     "enterurl": "URL을 입력하세요",
-    "enterpage": "페이지 번호를 입력하세요",
-    "urlLink": "URL링크"
+    "enterUrlAlt": "URL을 입력하세요",
+    "insertLink": "링크 삽입",
+    "insertLinkOrPage": "링크 또는 페이지 삽입",
+    "enterpage": "연결하려는 페이지 번호를 입력하세요.",
+    "urlLink": "URL 링크"
   },
   "Model3D": {
     "add3D": "URL을 입력하여 3D 주석 추가",
@@ -867,8 +870,9 @@
     "enterUrlOrChooseFile": "URL을 입력하거나 WebViewer에 로드할 파일을 선택하세요.",
     "enterUrl": "파일URL 입력",
     "extension": "파일 확장자",
-    "existingFile": "열린 파일입니다.",
-    "addTab": "탭 추가"
+    "existingFile": "파일이 이미 열려 있습니다.",
+    "addTab": "탭 추가",
+    "newTab": "새 탭"
   },
   "datePicker": {
     "previousMonth": "지난달",

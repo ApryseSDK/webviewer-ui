@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "oldal",
     "enterurl": "Adja meg az URL-t, amelyre hivatkozni szeretne",
-    "enterpage": "Válassza ki azt az oldalszámot, amelyre hivatkozni szeretne",
+    "enterUrlAlt": "Írd be az URLt",
+    "insertLink": "Hivatkozás beszúrása",
+    "insertLinkOrPage": "Hivatkozás vagy oldal beszúrása",
+    "enterpage": "Adja meg az oldalszámot, amelyre hivatkozni szeretne",
     "urlLink": "URL link"
   },
   "Model3D": {
@@ -865,10 +868,11 @@
   },
   "OpenFile": {
     "enterUrlOrChooseFile": "Adjon meg egy URL-t, vagy válasszon egy fájlt a WebViewerbe betölteni",
-    "enterUrl": "Írja be a fájl URL-címét",
+    "enterUrl": "Adja meg a fájl URL-címét",
     "extension": "Fájlkiterjesztés",
     "existingFile": "A fájl már nyitva van",
-    "addTab": "Tab hozzáadása"
+    "addTab": "Tab hozzáadása",
+    "newTab": "Új lap"
   },
   "datePicker": {
     "previousMonth": "Előző hónap",

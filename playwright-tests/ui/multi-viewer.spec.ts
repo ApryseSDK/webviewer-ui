@@ -114,7 +114,7 @@ test.describe('Multi Viewer Mode', () => {
     // check that button in popup works. Try to add a link to the annotation
     await iframe.locator('[data-element=linkButton]').click();
     await iframe.locator('.urlInput').fill('www.google.com');
-    await iframe.locator('[data-element=URLPanel] [data-element=linkSubmitButton]').click();
+    await iframe.locator('[data-element=linkSubmitButton]').click();
 
     const wasLinkAdded = await iframe.evaluate(async () => {
       const WVCore = window.instance.Core;

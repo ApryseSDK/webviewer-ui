@@ -854,7 +854,10 @@
     "url": "URL",
     "page": "Bladzijde",
     "enterurl": "Voer de URL in waarnaar u wilt linken",
-    "enterpage": "Selecteer het paginanummer waarnaar u wilt linken",
+    "enterUrlAlt": "URL invoeren",
+    "insertLink": "Link invoegen",
+    "insertLinkOrPage": "Link of pagina invoegen",
+    "enterpage": "Voer het paginanummer in waarnaar u wilt linken",
     "urlLink": "URL-link"
   },
   "Model3D": {
@@ -868,7 +871,8 @@
     "enterUrl": "Voer bestands-URL in",
     "extension": "Bestandsextensie",
     "existingFile": "Bestand is al geopend",
-    "addTab": "Tabblad toevoegen"
+    "addTab": "Tabblad toevoegen",
+    "newTab": "Nieuw tabblad"
   },
   "datePicker": {
     "previousMonth": "Vorige maand",
