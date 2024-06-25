@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { setupWebViewerInstance, waitFor } from '../../../utils/TestingUtils';
 import { createModularHeader, createGroupedItems, createPresetButton, createFlyout } from './utils';
+import { testUI, invalidUI, uiWithButtons } from './modular-components';
 import { getCurrentFreeSpace } from '../../../../../src/ui/src/helpers/responsivenessHelper';
 
 describe('Test Custom UI APIs', function() {
@@ -82,6 +83,15 @@ describe('Test Custom UI APIs', function() {
       expect(header.placement).to.equal(rightHeader.placement);
       expect(header.justifyContent).to.equal(rightHeader.justifyContent);
       expect(header.position).to.equal(rightHeader.position);
+    });
+
+    it('Calling UI.addModularHeaders should accept a single Modular Header', async () => {
+      instance = await setupWebViewerInstance({}, true);
+      const rightHeader = createModularHeader(instance, 'right');
+      const headersListBefore = instance.UI.getModularHeaderList().length;
+      instance.UI.addModularHeaders(rightHeader);
+      const headerList = instance.UI.getModularHeaderList();
+      expect(headerList.length).to.equal(headersListBefore + 1);
     });
 
     it('It should set items of a Modular Header', async () => {
@@ -209,9 +219,6 @@ describe('Test Custom UI APIs', function() {
       expect(insertGroupedItems).to.be.null;
     });
 
-    // skipping flaking test because it failed on CircleCI
-    // Expected inner text was in the wrong language
-    // https://apryse.atlassian.net/browse/WVR-5412
     it.skip('It should update header items and cleanup orphan items', async () => {
       instance = await setupWebViewerInstance({ ui: 'beta' });
 
@@ -219,6 +226,7 @@ describe('Test Custom UI APIs', function() {
       await waitFor(500);
       iframe.style.width = '1500px';
 
+      instance.UI.setLanguage('en');
       const toggleButton = new instance.UI.Components.ToggleElementButton({
         dataElement: 'newPortfolioPanelToggle',
         toggleElement: 'newPortfolioPanel',
@@ -226,7 +234,7 @@ describe('Test Custom UI APIs', function() {
         title: 'component.portfolioPanel',
       });
       const topHeader = instance.UI.getModularHeader('default-top-header');
-      let items = topHeader.getItems();
+      const items = topHeader.getItems();
       topHeader.setItems([...items, toggleButton]);
 
       // Test case 1
@@ -266,10 +274,10 @@ describe('Test Custom UI APIs', function() {
         title: 'component.portfolioPanel',
       });
       const topHeader = instance.UI.getModularHeader('default-top-header');
-      let items = topHeader.getItems();
+      const items = topHeader.getItems();
       topHeader.setItems([...items, toggleButton]);
       expect(console.warn.getCall(0).args[0]).to.equal(
-        'Modular component with dataElement menu-toggle-button already exists.'
+        "Modular component with dataElement menu-toggle-button already exists. Existing component's properties have been updated."
       );
 
       // Test case 2: no warning log for "menu-toggle-button", but warning log for the next item
@@ -277,7 +285,7 @@ describe('Test Custom UI APIs', function() {
       const removedItem = items.shift();
       topHeader.setItems([...items]);
       expect(console.warn.getCall(0).args[0]).to.equal(
-        'Modular component with dataElement toolbarGroup-View already exists.'
+        "Modular component with dataElement toolbarGroup-View already exists. Existing component's properties have been updated."
       );
 
 
@@ -286,7 +294,7 @@ describe('Test Custom UI APIs', function() {
       items.unshift(removedItem);
       topHeader.setItems([...items]);
       expect(console.warn.getCall(0).args[0]).to.equal(
-        'Modular component with dataElement menu-toggle-button already exists.'
+        "Modular component with dataElement menu-toggle-button already exists. Existing component's properties have been updated."
       );
     });
 
@@ -298,7 +306,7 @@ describe('Test Custom UI APIs', function() {
       await waitFor(200);
 
       const topHeader = instance.UI.getModularHeader('default-top-header');
-      let items = topHeader.getItems();
+      const items = topHeader.getItems();
       const tempVar = 'foobar';
       const originalName = items[3].dataElement;
       items[3].dataElement = tempVar;
@@ -515,6 +523,20 @@ describe('Test Custom UI APIs', function() {
     });
   });
 
+  describe('Test Custom Button', () => {
+    it('it should throw an error if the dataElement is not provided', async () => {
+      instance = await setupWebViewerInstance({}, true);
+      expect(() => {
+        new instance.UI.Components.CustomButton({
+          label: 'test',
+          title: 'this is a test button',
+          onClick: () => console.log('button clicked!'),
+          img: 'icon-save',
+        });
+      }).to.throw('Object at argument 1 has invalid key: \'dataElement\', in Custom Button Constructor. Expected string');
+    });
+  });
+
   describe('Test i18n translation feature in custom ui', () => {
     it.skip('should correctly apply i18n translation to menu items', async () => {
       const options = {
@@ -545,6 +567,8 @@ describe('Test Custom UI APIs', function() {
       expect(Dropdown__item[0].innerText).to.equal('閲覧');
       expect(Dropdown__item[1].innerText).to.equal('注釈');
       expect(Dropdown__item[3].innerText).to.equal('挿入');
+
+      instance.UI.setLanguage('en');
     });
   });
 
@@ -615,12 +639,22 @@ describe('Test Custom UI APIs', function() {
   describe('Modular UI Import/Export tests', () => {
     it('should import modular components from a JSON', async () => {
       instance = await setupWebViewerInstance({ ui: 'beta' });
-      instance.UI.importModularComponents(testUI);
+      const ui = JSON.parse(JSON.stringify(testUI));
+      instance.UI.importModularComponents(ui);
+
       const headerList = instance.UI.getModularHeaderList();
-      expect(headerList.length).to.equal(1);
-      expect(headerList[0].items.length).to.equal(2);
+      expect(headerList.length).to.equal(3);
+      expect(headerList[0].items.length).to.equal(4);
+
       const panelList = instance.UI.getPanels();
-      expect(panelList.length).to.equal(1);
+      expect(panelList.length).to.equal(15);
+
+      const flyoutList = instance.UI.Flyouts.getAllFlyouts();
+      // only MainMenuFlyout is imported, but viewControlsFlyout and zoom-containerFlyout get added by default
+      expect(flyoutList.length).to.equal(3);
+
+      const mainMenuFlyout = instance.UI.Flyouts.getFlyout('MainMenuFlyout');
+      expect(mainMenuFlyout.items.length).to.equal(11);
     });
 
     it('should throw an error if the imported JSON is invalid', async () => {
@@ -630,8 +664,9 @@ describe('Test Custom UI APIs', function() {
 
     it('should export modular components to a JSON', async () => {
       instance = await setupWebViewerInstance({ ui: 'beta' });
-      instance.UI.importModularComponents(testUI);
       const exportedUI = instance.UI.exportModularComponents();
+      const ui = JSON.parse(JSON.stringify(testUI));
+      instance.UI.importModularComponents(ui);
       expect(exportedUI).to.deep.equal(testUI);
     });
 
@@ -646,7 +681,9 @@ describe('Test Custom UI APIs', function() {
         img: 'icon-save',
       });
 
+      // this button has no data element and should not get exported
       const testButton2 = new instance.UI.Components.CustomButton({
+        dataElement: 'testButton2',
         label: 'test2',
         title: 'this is also test button',
         img: 'icon-save',
@@ -658,7 +695,42 @@ describe('Test Custom UI APIs', function() {
       const exportedUI = instance.UI.exportModularComponents();
 
       expect(exportedUI.modularComponents.testButton.onclick).to.be.undefined;
-      expect(exportedUI.modularHeaders['default-top-header'].items.length).to.equal(1);
+      expect(exportedUI.modularHeaders['default-top-header'].items.length).to.equal(2);
+    });
+
+    it('can add functions to buttons using a function map', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' });
+      const functionMap = {
+        'alertClick': () => alert('Alert triggered!'),
+        'singlePageOnClick': (update) => {
+          update('DoublePage');
+        },
+        'doublePageOnClick': (update) => {
+          update('SinglePage');
+        },
+        'statefulButtonMount': () => {},
+        'statefulButtonUnmount': () => {},
+      };
+
+      const ui = JSON.parse(JSON.stringify(uiWithButtons));
+      instance.UI.importModularComponents(ui, functionMap);
+
+      const defaultHeader = instance.UI.getModularHeader('default-top-header');
+      const items = defaultHeader.items;
+
+      // check custom button
+      expect(items[0].onClick).to.equal(functionMap['alertClick']);
+
+      // check stateful button
+      expect(items[1].states.DoublePage.onClick).to.equal(functionMap['doublePageOnClick']);
+      expect(items[1].states.SinglePage.onClick).to.equal(functionMap['singlePageOnClick']);
+      // stateful button mount and unmount should be empty functions by default
+      expect(items[1].mount).to.be.a('function');
+      expect(items[1].unmount).to.be.a('function');
+
+      // exported components should match imported ones
+      const exportedUI = instance.UI.exportModularComponents();
+      expect(exportedUI.modularComponents).to.deep.equal(uiWithButtons.modularComponents);
     });
   });
 
@@ -683,87 +755,23 @@ describe('Test Custom UI APIs', function() {
       expect(topHeaderItemsAfterAddingTwoItems.length).to.equal(topHeaderItems.length + 1);
     });
   });
+
+  describe('Test Panels', () => {
+    it('should be able to add existing and new panels to a TabPanel', async () => {
+      instance = await setupWebViewerInstance({ ui: 'beta' }, true);
+      console.log('here');
+      let allPanels = instance.UI.getPanels();
+      let tabPanel = allPanels.find((panel) => panel.dataElement === 'customLeftPanel');
+      const stylePanel = allPanels.find((panel) => panel.dataElement === 'stylePanel');
+      const newPanel = { render: 'searchPanel', dataElement: 'searchPanel' };
+      const newTabPanels = tabPanel.panelsList;
+      newTabPanels.push(newPanel);
+      newTabPanels.push(stylePanel);
+      tabPanel.panelsList = newTabPanels;
+      allPanels = instance.UI.getPanels();
+      tabPanel = allPanels.find((panel) => panel.dataElement === 'customLeftPanel');
+      expect(tabPanel.panelsList.find((panel) => panel.dataElement === 'searchPanel')).to.not.be.undefined;
+      expect(tabPanel.panelsList.find((panel) => panel.dataElement === 'stylePanel')).to.not.be.undefined;
+    });
+  });
 });
-
-const testUI = {
-  'modularComponents': {
-    'menu-toggle-button': {
-      'dataElement': 'menu-toggle-button',
-      'img': 'ic-hamburger-menu',
-      'title': 'component.menuOverlay',
-      'toggleElement': 'MainMenuFlyout',
-      'type': 'toggleButton'
-    },
-    'searchPanelToggle': {
-      'dataElement': 'searchPanelToggle',
-      'title': 'component.searchPanel',
-      'type': 'toggleButton',
-      'img': 'icon-header-search',
-      'toggleElement': 'searchPanel'
-    }
-  },
-  'modularHeaders': {
-    'default-top-header': {
-      'dataElement': 'default-top-header',
-      'placement': 'top',
-      'grow': 0,
-      'gap': 12,
-      'position': 'start',
-      'float': false,
-      'stroke': true,
-      'dimension': {
-        'paddingTop': 8,
-        'paddingBottom': 8,
-        'borderWidth': 1
-      },
-      'style': {},
-      'items': [
-        'menu-toggle-button',
-        'searchPanelToggle'
-      ]
-    }
-  },
-  'panels': {
-    'searchPanel': {
-      'dataElement': 'searchPanel',
-      'render': 'searchPanel',
-      'location': 'right'
-    }
-  }
-};
-
-const invalidUI = {
-  'modularComponents': {
-    'menu-toggle-button': {
-      'dataElement': 'menu-toggle-button',
-      'img': 'ic-hamburger-menu',
-      'title': 'component.menuOverlay',
-      'toggleElement': 'MainMenuFlyout',
-    },
-  },
-  'modularHeaders': {
-    'default-top-header': {
-      'dataElement': 'default-top-header',
-      'grow': 0,
-      'gap': 12,
-      'position': 'start',
-      'float': false,
-      'stroke': true,
-      'dimension': {
-        'paddingTop': 8,
-        'paddingBottom': 8,
-        'borderWidth': 1
-      },
-      'style': {},
-      'items': [
-        'searchPanelToggle'
-      ]
-    }
-  },
-  'panels': {
-    'searchPanel': {
-      'dataElement': 'searchPanel',
-      'render': 'searchPanel',
-    }
-  }
-};
