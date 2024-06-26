@@ -103,26 +103,11 @@ class RubberStampOverlay extends React.Component {
 
     return (
       <div className="rubber-stamp-overlay" data-element="rubberStampOverlay">
-        <Tabs id="rubberStampTab">
-          <TabHeader dataElement={DataElements.RUBBER_STAMP_TAB_HEADER}>
-            <div className="header tab-header">
-              <div className="tab-list">
-                <Tab dataElement={DataElements.STANDARD_STAMPS_PANEL_BUTTON}>
-                  <button className="tab-options-button" title={this.props.t('tool.Standard')}>
-                    {this.props.t('tool.Standard')}
-                  </button>
-                </Tab>
-                <div className="tab-options-divider" />
-                <Tab dataElement={DataElements.CUSTOM_STAMPS_PANEL_BUTTON}>
-                  <button className="tab-options-button" title={this.props.t('tool.Custom')}>
-                    {this.props.t('tool.Custom')}
-                  </button>
-                </Tab>
-              </div>
-            </div>
-          </TabHeader>
-          <TabPanel dataElement={DataElements.STANDARD_STAMPS_PANEL}>
-            {/* Using Swipeable to stop the bubbling of swiping events when scrolling
+        <div className="accordion" title={this.props.t('tool.Standard')}>
+          <span className='title'>{this.props.t('tool.Standard')}</span>
+        </div>
+        <div className="accordion-panel">
+          {/* Using Swipeable to stop the bubbling of swiping events when scrolling
              * Don't know a better way of doing this
              */}
             <Swipeable
@@ -133,21 +118,26 @@ class RubberStampOverlay extends React.Component {
             >
               {rubberStamps}
             </Swipeable>
-          </TabPanel>
-          <TabPanel dataElement={DataElements.CUSTOM_STAMPS_PANEL}>
-            <div className="custom-stamp-panel">{customImgs}</div>
-            <DataElementWrapper
-              dataElement={DataElements.CREATE_CUSTOM_STAMP_BUTTON}
-              className={classNames({
-                'stamp-row-content': true,
-                'add-btn': true,
-              })}
-              onClick={this.openCustomSampModal}
-            >
-              {this.props.t(`component.createStampButton`)}
-            </DataElementWrapper>
-          </TabPanel>
-        </Tabs>
+        </div>
+        <div className="accordion" title={this.props.t('tool.Dynamic')}>
+          <span className='title'>{this.props.t('tool.Dynamic')}</span>
+          <span className='buttons'>
+            <button type='button' className='stamp-row-content add-btn' title='Add New Dynamic Stamp' onClick={this.openCustomSampModal}>Add</button>
+          </span>
+        </div>
+        <div className="accordion-panel">
+          <div className="dynamic-stamp-panel">{customImgs}</div>
+        </div>
+        <div className="accordion" title={this.props.t('tool.Custom')}>
+          <span className='title'>{this.props.t('tool.Custom')}</span>
+          <span className='buttons'>
+            <button type='button' className='stamp-row-content add-btn' title='Add New Custom Stamp'>Add</button>
+            <button type='button' className='stamp-row-content add-btn' title='Manage Custom Stamps'>Manage</button>
+          </span>
+        </div>
+        <div className="accordion-panel">
+          <div className="custom-stamp-panel">{customImgs}</div>
+        </div>
       </div>
     );
   }
