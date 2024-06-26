@@ -105,8 +105,10 @@ const DataElements = {
   // Stamps overlay
   RUBBER_STAMP_TAB_HEADER: 'rubberStampTabHeader',
   STANDARD_STAMPS_PANEL_BUTTON: 'standardStampPanelButton',
+  DYNAMIC_STAMPS_PANEL_BUTTON: 'dynamicStampPanelButton',
   CUSTOM_STAMPS_PANEL_BUTTON: 'customStampPanelButton',
   STANDARD_STAMPS_PANEL: 'standardStampPanel',
+  DYNAMIC_STAMPS_PANEL: 'dynamicStampPanel',
   CUSTOM_STAMPS_PANEL: 'customStampPanel',
   CREATE_CUSTOM_STAMP_BUTTON: 'createCustomStampButton',
   DELETE_CUSTOM_STAMP_BUTTON: 'deleteCustomStampButton',
