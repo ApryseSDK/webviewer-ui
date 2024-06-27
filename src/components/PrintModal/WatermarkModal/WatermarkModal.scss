@@ -10,7 +10,7 @@
 
   .StylePopup {
     position: absolute;
-    margin-top: 60px;
+    margin-top: -140px;
     background: var(--preset-background);
     display: flex;
     flex-direction: column;
@@ -85,7 +85,7 @@
 
       select,
       .text-input {
-        height: 30px;
+        height: 32px;
       }
 
       &.opacity-slider {
@@ -105,16 +105,38 @@
         }
       }
 
+      .Dropdown__wrapper {
+        .Dropdown {
+          text-align: left;
+          height: 32px;
+        }
+
+        .Dropdown__items {
+          width: 100%;
+        }
+
+        &#location {
+          .Dropdown__items {
+            z-index: 81;
+          }
+        }
+      }
+
       .FontSizeDropdown {
         padding: 2px;
+        height: 32px;
 
         .icon-button {
+          cursor: pointer;
           width: 14px;
           height: 14px;
         }
 
         .icon-button > .Icon {
-          color: var(--text-color);
+          color: var(--icon-color);
+          width: 12px;
+          height: 16px;
+          margin-top: 2px;
         }
       }
     }
@@ -130,6 +152,10 @@
     .white-color {
       border: 1px solid var(--white-color-palette-border);
     }
+
+    .slider-input-field {
+      height: 32px;
+    }
   }
 
   .canvas-container {
@@ -137,9 +163,9 @@
     justify-content: center;
     align-items: center;
     width: 500px;
-    height: 420px;
-    background-color: var(--gray-5);
-    border: 1px solid var(--gray-5);
+    height: 436px;
+    background-color: var(--watermark-preview-background);
+    border: 1px solid var(--lighter-border);
 
     // highly unlikely someone will be editing watermarking on mobile
     @include mobile {
@@ -206,7 +232,6 @@
       cursor: pointer;
       background: none;
       border: 0;
-      width: 100%;
       color: var(--secondary-button-text);
       display: flex;
       font-size: 13px;

@@ -1307,7 +1307,7 @@
     "watermark": "Chữ ký ảnh",
     "addWatermark": "Thêm hình mờ",
     "save": "Lưu tập tin",
-    "pageError": "Trang không hợp lệ. Phạm vi trang hợp lệ là từ 1 -",
+    "pageError": "Vui lòng nhập phạm vi từ 1 - ",
     "fileNameCannotBeEmpty": "Tên tệp không được để trống"
   },
   "filePicker": {

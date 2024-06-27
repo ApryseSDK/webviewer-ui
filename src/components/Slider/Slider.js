@@ -41,7 +41,7 @@ class Slider extends React.PureComponent {
     this.lineLength = 0;
     this.state = {
       localValue: props.value,
-      isEiditingInputField: false,
+      isEditingInputField: false,
     };
   }
 
@@ -103,7 +103,7 @@ class Slider extends React.PureComponent {
     onStyleChange(property, value);
     if (this.props.withInputField) {
       this.setState({
-        isEiditingInputField: false,
+        isEditingInputField: false,
       });
     }
     this.isMouseDown = false;
@@ -190,39 +190,39 @@ class Slider extends React.PureComponent {
     }
   };
 
-  onInputBlur = (isEiditingInputField) => {
+  onInputBlur = (isEditingInputField) => {
     const { min, getLocalValue } = this.props;
     if ((this.inputRef.current.value !== 0 && !this.inputRef.current.value) || this.inputRef.current.value < min) {
       this.inputRef.current.value = min;
       const localValue = getLocalValue ? getLocalValue(min) : min;
       this.setState({ localValue });
     }
-    this.setState({ isEiditingInputField });
+    this.setState({ isEditingInputField });
   };
 
-  onInputFocus = (isEiditingInputField) => {
-    this.setState({ isEiditingInputField });
+  onInputFocus = (isEditingInputField) => {
+    this.setState({ isEditingInputField });
   };
 
   getInputElement = () => {
     const { inputFieldType, min, max, step, getDisplayValue } = this.props;
     const displayValue = getDisplayValue(this.state.localValue);
-    if (this.state.isEiditingInputField && inputFieldType === 'number') {
+    if (this.state.isEditingInputField && inputFieldType === 'number') {
       return (
         <div className="slider-input-wrapper">
           <input
+            ref={this.inputRef}
             autoFocus
             defaultValue={parseFloat(displayValue)}
             type={inputFieldType}
             onChange={this.onInputChange}
             onKeyDown={this.onInputKeyDown}
-            className="slider-input-field"
+            className="slider-input-field is-editing"
             onBlur={() => this.onInputBlur(false)}
             // The prop min={} can not be used here, otherwise its impossible to delete everything completely inside input box, which was complained by PM.
             max={max}
             min={min}
             step={step}
-            ref={this.inputRef}
           />
         </div>
       );

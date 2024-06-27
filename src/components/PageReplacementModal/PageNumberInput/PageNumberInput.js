@@ -1,49 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import getPageArrayFromString from 'helpers/getPageArrayFromString';
+import Icon from 'components/Icon';
 import './PageNumberInput.scss';
 
 const propTypes = {
   selectedPageNumbers: PropTypes.arrayOf(PropTypes.number),
   pageCount: PropTypes.number,
-  onSelectedPageNumbersChange: PropTypes.func,
-  onBlurHandler: PropTypes.func,
   placeholder: PropTypes.string,
+  pageNumberError: PropTypes.string,
+  onBlurHandler: PropTypes.func,
+  onError: PropTypes.func,
+  onSelectedPageNumbersChange: PropTypes.func,
 };
 
-const noop = () => {};
+const noop = () => { };
 
 function PageNumberInput({
   selectedPageNumbers,
-  onSelectedPageNumbersChange,
-  onBlurHandler = noop,
   pageCount,
   placeholder,
+  pageNumberError,
+  onSelectedPageNumbersChange,
+  onError = noop,
+  onBlurHandler = noop,
 }) {
   // Since we don't have page labels info we just assume page numbers as labels
   const pageLabels = Array.from({ length: pageCount }, (_, i) => (i + 1).toString());
   const [pageString, setPageString] = useState('');
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    //Whenever we receive a selectedPageNumbers prop, massage it into the nice format
+    // Whenever we receive a selectedPageNumbers prop, massage it into the nice format
     if (selectedPageNumbers) {
       setPageString(getPageString(selectedPageNumbers));
     }
   }, [selectedPageNumbers]);
 
-  const onPagesChange = e => {
+  useEffect(() => {
+    setHasError(!!pageNumberError);
+  }, [pageNumberError]);
+
+  const onPagesChange = (e) => {
     setPageString(e.target.value);
 
     const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pageNumbersArray = !selectedPagesString
-      ? []
-      : getPageArrayFromString(selectedPagesString, pageLabels, pageCount);
+    const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount, onError);
 
-    //Send info back to parent component
+    // Send info back to parent component
     onSelectedPageNumbersChange && onSelectedPageNumbersChange(pageNumbersArray);
   };
 
-  const getPageString = selectedPageArray => {
+  const getPageString = (selectedPageArray) => {
     let pagesToPrint = '';
     const sortedPages = selectedPageArray.sort((a, b) => a - b);
     let prevIndex = null;
@@ -62,27 +71,39 @@ function PageNumberInput({
     return pagesToPrint.slice(0, -2);
   };
 
-  const onBlur = e => {
+  const onBlur = (e) => {
     const selectedPagesString = e.target.value.replace(/ /g, '');
-    const pageNumbersArray = !selectedPagesString
-      ? []
-      : getPageArrayFromString(selectedPagesString, pageLabels, pageCount);
+    const pageNumbersArray = !selectedPagesString ? [] : getPageArrayFromString(selectedPagesString, pageLabels, pageCount, onError);
     const pageNumbersString = getPageString(pageNumbersArray);
     setPageString(pageNumbersString);
 
-    //Send info back to parent component
+    // Send info back to parent component
     onBlurHandler && onBlurHandler(pageNumbersArray);
   };
 
   return (
-    <input
-      className="page-number-input"
-      type="text"
-      onChange={onPagesChange}
-      onBlur={onBlur}
-      value={pageString}
-      placeholder={placeholder}
-    />
+    <div className='PageNumberInput'>
+      <div className='input-wrapper'>
+        <input
+          className={classNames({
+            'page-number-input': true,
+            'page-number-input--error': hasError
+          })}
+          id='PageNumberInput'
+          type='text'
+          onChange={onPagesChange}
+          onBlur={onBlur}
+          value={pageString}
+          placeholder={placeholder}
+          aria-describedby={hasError ? 'PageNumberInputError' : undefined}
+        />
+        {hasError && <Icon glyph="icon-alert" />}
+      </div>
+      {hasError && (
+        <div id="PageNumberInputError" className="page-number-error">
+          {pageNumberError}
+        </div>)}
+    </div>
   );
 }
 

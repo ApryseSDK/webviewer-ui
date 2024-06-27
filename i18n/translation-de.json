@@ -1307,7 +1307,7 @@
     "watermark": "Wasserzeichen",
     "addWatermark": "Wasserzeichen hinzufügen",
     "save": "Datei speichern",
-    "pageError": "Ungültige Seite. Gültige Seitenbereiche liegen zwischen 1 -",
+    "pageError": "Bitte geben Sie einen Bereich zwischen 1 und",
     "fileNameCannotBeEmpty": "Der Dateiname darf nicht leer sein"
   },
   "filePicker": {

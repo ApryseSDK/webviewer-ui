@@ -1307,7 +1307,7 @@
     "watermark": "透かし",
     "addWatermark": "透かしを追加",
     "save": "ファイルを保存",
-    "pageError": "ページが無効です。有効なページ範囲は 1 ～",
+    "pageError": "1～の範囲を入力してください",
     "fileNameCannotBeEmpty": "ファイル名を空にすることはできません"
   },
   "filePicker": {
@@ -1344,7 +1344,7 @@
     }
   },
   "rubberStampPanel": {
-    "header": "スタンプ",
-    "standard": "スタンダードスタンプ"
+    "header": "切手",
+    "standard": "標準切手"
   }
 }

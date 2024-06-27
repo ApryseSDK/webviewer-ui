@@ -1,8 +1,37 @@
-.page-number-input {
-  padding: 6px;
-  width: 108px;
-}
+.PageNumberInput {
+  
+  .input-wrapper{
+    position: relative;
+    display: flex;
+    align-items: center;
 
-.page-number-input::placeholder {
-  color: var(--gray-6);
+    .Icon {
+      position: absolute;
+      right: 8px;
+      color: var(--error-border-color);
+    }
+  }
+
+  .page-number-input {
+    padding: 6px !important;
+    width: 108px;
+    
+    &.page-number-input--error {
+      padding-right: 30px; /* Adjust padding to make space for the error icon */
+      border-color: var(--error-border-color);
+    }
+  }
+  
+  .page-number-input::placeholder {
+    color: var(--gray-6);
+  
+    &.error {
+      border-color: var(--error-text-color);
+    }
+  }
+  
+  .page-number-error {
+    color: var(--error-text-color);
+    margin-top: 8px;
+  }
 }

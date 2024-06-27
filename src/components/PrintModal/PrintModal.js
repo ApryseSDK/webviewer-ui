@@ -1,22 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import actions from 'actions';
-import PropTypes from 'prop-types';
-
-import getClassName from 'helpers/getClassName';
-
+import selectors from 'selectors';
+import classNames from 'classnames';
 import core from 'core';
-
-import getPageArrayFromString from 'helpers/getPageArrayFromString';
+import PropTypes from 'prop-types';
+import getClassName from 'helpers/getClassName';
 import LayoutMode from 'constants/layoutMode';
 import WatermarkModal from 'components/PrintModal/WatermarkModal';
 import Choice from 'components/Choice/Choice';
 import ModalWrapper from 'components/ModalWrapper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import DataElements from 'constants/dataElement';
-
-import './PrintModal.scss';
 import DataElementWrapper from '../DataElementWrapper';
+import Dropdown from '../Dropdown';
+import PageNumberInput from '../PageReplacementModal/PageNumberInput';
+import './PrintModal.scss';
 
 const PrintModal = ({
   isDisabled,
@@ -46,7 +45,6 @@ const PrintModal = ({
   setPagesToPrint,
   count,
   isPrinting,
-  pageLabels,
   layoutMode,
   useEmbeddedPrint,
 }) => {
@@ -78,7 +76,6 @@ const PrintModal = ({
     setPagesToPrint: PropTypes.func,
     count: PropTypes.number,
     isPrinting: PropTypes.bool,
-    pageLabels: PropTypes.any,
     layoutMode: PropTypes.string,
     useEmbeddedPrint: PropTypes.bool
   };
@@ -89,34 +86,72 @@ const PrintModal = ({
   const allPages = useRef();
   const currentPageRef = useRef();
   const customPages = useRef();
-  const customInputRef = useRef();
   const includeCommentsRef = useRef();
   const currentView = useRef();
   const [embedPrintValid, setEmbedPrintValid] = useState(false);
+  const [specifiedPages, setSpecifiedPages] = useState([]);
+  const [pageNumberError, setPageNumberError] = useState('');
+  const [isCustomPagesChecked, setIsCustomPagesChecked] = useState(false);
+
+  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
+
+  const printQualityOptions = {
+    1: `${t('option.print.qualityNormal')}`,
+    2: `${t('option.print.qualityHigh')}`
+  };
 
   const setWatermarkModalVisibility = (visible) => {
     setIsWatermarkModalVisible(visible);
   };
 
   const className = getClassName('Modal PrintModal', { isOpen });
+
+  const handlePageNumberError = (pageNumber) => {
+    if (pageNumber) {
+      setPageNumberError(`${t('message.errorPageNumber')} ${core.getTotalPages()}`);
+    }
+  };
+
+  const handlePageNumberChange = (pageNumbers) => {
+    if (pageNumbers.length > 0) {
+      setPageNumberError('');
+      onChange();
+    }
+  };
+
   const customPagesLabelElement = (
     <>
-      {t('option.print.specifyPages')}
-      <input
-        ref={customInputRef}
-        hidden={!customPages.current || (customPages.current && !customPages.current.checked)}
-        type="text"
-        placeholder={t('message.customPrintPlaceholder')}
-        aria-label={t('message.customPrintPlaceholder')}
-        onChange={onChange}
-        disabled={isPrinting}
-      />
+      <label className="specifyPagesChoiceLabel">
+        <span>{t('option.print.specifyPages')}</span>
+        {isCustomPagesChecked && (
+          <span className="specifyPagesExampleLabel">
+            - {t('option.thumbnailPanel.multiSelectPagesExample')}
+          </span>
+        )}
+      </label>
+      {isCustomPagesChecked && (
+        <div className={classNames('page-number-input-container', { error: !!pageNumberError })}>
+          <PageNumberInput
+            selectedPageNumbers={specifiedPages}
+            pageCount={core.getTotalPages()}
+            onSelectedPageNumbersChange={handlePageNumberChange}
+            onBlurHandler={setSpecifiedPages}
+            onError={handlePageNumberError}
+            pageNumberError={pageNumberError}
+          />
+        </div>
+      )}
     </>
   );
+
+  useEffect(() => {
+    onChange();
+  }, [specifiedPages]);
 
   const onChange = () => {
     let pagesToPrint = [];
     setIsCurrentView(currentView.current?.checked);
+    setIsCustomPagesChecked(customPages.current?.checked);
     if (allPages.current?.checked || (currentView.current?.checked && embedPrintValid)) {
       for (let i = 1; i <= core.getTotalPages(); i++) {
         pagesToPrint.push(i);
@@ -158,8 +193,7 @@ const PrintModal = ({
           break;
       }
     } else if (customPages.current?.checked) {
-      const customInput = customInputRef.current.value.replace(/\s+/g, '');
-      pagesToPrint = getPageArrayFromString(customInput, pageLabels);
+      pagesToPrint = specifiedPages;
     } else if (currentView.current?.checked) {
       pagesToPrint = [currentPage];
     }
@@ -189,6 +223,10 @@ const PrintModal = ({
     (core.getDocument().getType() !== 'xod' && useEmbeddedPrint) ? setEmbedPrintValid(true) : setEmbedPrintValid(false);
   }, [useEmbeddedPrint]);
 
+  const handlePrintQualityChange = (quality) => {
+    dispatch(actions.setPrintQuality(Number(quality)));
+  };
+
   return isDisabled ? null : (
     <>
       <WatermarkModal
@@ -198,6 +236,7 @@ const PrintModal = ({
         modalClosed={setWatermarkModalVisibility}
         formSubmitted={(value) => dispatch(actions.setWatermarkModalOptions(value))}
         watermarkLocations={watermarkModalOptions}
+        isCustomizableUI={customizableUI}
       />
       <div
         className={className}
@@ -297,51 +336,48 @@ const PrintModal = ({
                             checked={shouldFlatten}
                             center
                           />
+                          <Choice
+                            dataElement="commentsPrintOption"
+                            ref={includeCommentsRef}
+                            id="include-comments"
+                            name="comments"
+                            label={t('option.print.includeComments')}
+                            onChange={() => setIncludeComments((prevState) => !prevState)}
+                            disabled={isPrinting}
+                            checked={includeComments}
+                            center
+                          />
                         </>
                       )
                     }
                   </>
                 )}
                 {!embedPrintValid && (
-                  <>
-                    <Choice
-                      dataElement="commentsPrintOption"
-                      ref={includeCommentsRef}
-                      id="include-comments"
-                      name="comments"
-                      label={t('option.print.includeComments')}
-                      onChange={() => setIncludeComments((prevState) => !prevState)}
-                      disabled={isPrinting}
-                      checked={includeComments}
-                      center
-                    />
-                    <Choice
-                      dataElement="grayscalePrintOption"
-                      id="print-grayscale"
-                      name="grayscale"
-                      label={t('option.print.printGrayscale')}
-                      disabled={isPrinting}
-                      onChange={() => setIsGrayscale((prevState) => !prevState)}
-                      checked={isGrayscale}
-                      center
-                    />
-                  </>
+                  <Choice
+                    dataElement="grayscalePrintOption"
+                    id="print-grayscale"
+                    name="grayscale"
+                    label={t('option.print.printGrayscale')}
+                    disabled={isPrinting}
+                    onChange={() => setIsGrayscale((prevState) => !prevState)}
+                    checked={isGrayscale}
+                    center
+                  />
                 )}
               </form>
             </div>
             {!embedPrintValid && (
               <DataElementWrapper className="section" dataElement={DataElements.PRINT_QUALITY}>
-                <div className="section-label">{`${t('option.print.pageQuality')}:`}</div>
-                <label className="printQualitySelectLabel">
-                  <select
-                    className="printQualitySelect"
-                    onChange={(e) => dispatch(actions.setPrintQuality(Number(e.target.value)))}
-                    value={printQuality}
-                  >
-                    <option value="2">{`${t('option.print.qualityHigh')}`}</option>
-                    <option value="1">{`${t('option.print.qualityNormal')}`}</option>
-                  </select>
-                </label>
+                <label className="section-label print-quality-section-label" htmlFor="printQualityOptions">{`${t('option.print.pageQuality')}:`}</label>
+                <Dropdown
+                  id="printQualityOptions"
+                  dataElement="printQualityOptions"
+                  items={Object.keys(printQualityOptions)}
+                  getDisplayValue={(item) => printQualityOptions[item]}
+                  onClickItem={handlePrintQualityChange}
+                  currentSelectionKey={printQuality?.toString()}
+                  width={274}
+                />
                 <div className="total">
                   {isPrinting ? (
                     <div>{`${t('message.processing')} ${count}/${pagesToPrint.length}`}</div>
@@ -351,7 +387,7 @@ const PrintModal = ({
                 </div>
               </DataElementWrapper>
             )}
-            {!isApplyWatermarkDisabled && !embedPrintValid && (
+            {!isApplyWatermarkDisabled && (
               <DataElementWrapper className="section watermark-section" dataElement={DataElements.PRINT_WATERMARK}>
                 <div className="section-label">{t('option.watermark.title')}</div>
                 <button

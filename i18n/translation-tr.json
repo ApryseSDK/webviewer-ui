@@ -1307,7 +1307,7 @@
     "watermark": "Filigran",
     "addWatermark": "Filigran ekle",
     "save": "Dosyayı kaydet",
-    "pageError": "Geçersiz sayfa. Geçerli sayfa aralıkları 1 -",
+    "pageError": "Lütfen 1 - arasında bir aralık girin ",
     "fileNameCannotBeEmpty": "Dosya Adı boş olamaz"
   },
   "filePicker": {

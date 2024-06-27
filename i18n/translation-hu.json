@@ -1307,7 +1307,7 @@
     "watermark": "Vízjel",
     "addWatermark": "Vízjel hozzáadása",
     "save": "Fájl mentése",
-    "pageError": "Érvénytelen oldal. Az érvényes oldaltartományok 1 -",
+    "pageError": "Adjon meg egy tartományt 1 - ",
     "fileNameCannotBeEmpty": "A fájlnév nem lehet üres"
   },
   "filePicker": {

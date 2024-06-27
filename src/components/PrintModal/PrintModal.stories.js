@@ -2,6 +2,7 @@ import React from 'react';
 import PrintModalComponent from './PrintModal';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { userEvent, within, expect } from '@storybook/test';
 import { copyMapWithDataProperties } from 'constants/map';
 
 const NOOP = () => { };
@@ -69,6 +70,19 @@ export const PrintModal = () => (
     </div>
   </Provider>
 );
+
+// Testing if we show an error when the user types a page number that is greater than the total number of pages
+PrintModal.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const customPagesButton = await canvas.findByLabelText('Specify Pages');
+  await userEvent.click(customPagesButton);
+  const customPagesInput = await document.getElementById('PageNumberInput');
+  expect(customPagesInput).toBeInTheDocument();
+  await userEvent.click(customPagesInput);
+  await userEvent.type(customPagesInput, '11', { delay: 100 });
+  const testError = await canvas.getByText('Invalid page number. Limit is 9');
+  expect(testError).toBeInTheDocument();
+};
 
 export const EmbeddedPrintModal = () => (
   <Provider store={store}>

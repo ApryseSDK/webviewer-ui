@@ -1307,8 +1307,8 @@
     "watermark": "Marca d'água",
     "addWatermark": "Adicione uma Marca D'água",
     "save": "Salvar Arquivo",
-    "pageError": "Página inválida. Os intervalos de páginas válidos estão entre 1 -",
-    "fileNameCannotBeEmpty": "O nome do arquivo não pode estar vazio"
+    "pageError": "Insira um intervalo entre 1 - ",
+    "fileNameCannotBeEmpty": "O nome do arquivo não pode ficar vazio"
   },
   "filePicker": {
     "dragAndDrop": "Arraste e solte seu arquivo aqui",

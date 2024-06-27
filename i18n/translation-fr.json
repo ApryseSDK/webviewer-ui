@@ -1307,7 +1307,7 @@
     "watermark": "Filigrane",
     "addWatermark": "Ajouter un filigrane",
     "save": "Enregistrer le fichier",
-    "pageError": "Page invalide. Les plages de pages valides sont comprises entre 1 et",
+    "pageError": "Veuillez saisir une plage comprise entre 1 et ",
     "fileNameCannotBeEmpty": "Le nom du fichier ne peut pas être vide"
   },
   "filePicker": {

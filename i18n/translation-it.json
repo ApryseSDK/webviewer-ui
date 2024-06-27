@@ -1307,7 +1307,7 @@
     "watermark": "Filigrana",
     "addWatermark": "Aggiungi filigrana",
     "save": "Salvare il file",
-    "pageError": "Pagina non valida. Gli intervalli di pagine validi sono compresi tra 1 -",
+    "pageError": "Inserisci un intervallo compreso tra 1 - ",
     "fileNameCannotBeEmpty": "Il nome del file non può essere vuoto"
   },
   "filePicker": {

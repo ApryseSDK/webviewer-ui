@@ -1307,7 +1307,7 @@
     "watermark": "Vattenstämpel",
     "addWatermark": "Lägg till vattenstämpel",
     "save": "Spara fil",
-    "pageError": "Ogiltig sida. Giltiga sidintervall är mellan 1 -",
+    "pageError": "Vänligen ange ett intervall mellan 1 - ",
     "fileNameCannotBeEmpty": "Filnamnet får inte vara tomt"
   },
   "filePicker": {

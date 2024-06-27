@@ -1307,7 +1307,7 @@
     "watermark": "Tanda air",
     "addWatermark": "Tambahkan Tanda Air",
     "save": "Menyimpan file",
-    "pageError": "Halaman tidak valid. Rentang halaman yang valid adalah antara 1 -",
+    "pageError": "Silakan masukkan rentang antara 1 - ",
     "fileNameCannotBeEmpty": "Nama File tidak boleh kosong"
   },
   "filePicker": {

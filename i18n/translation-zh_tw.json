@@ -1307,7 +1307,7 @@
     "watermark": "水印",
     "addWatermark": "加水印",
     "save": "保存存檔",
-    "pageError": "無效頁面。有效頁面範圍介於 1 -",
+    "pageError": "請輸入 1 - 之間的範圍 ",
     "fileNameCannotBeEmpty": "文件名不能為空"
   },
   "filePicker": {

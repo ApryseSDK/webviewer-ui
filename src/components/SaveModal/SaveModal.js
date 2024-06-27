@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState, } from 'react';
 import { useSelector, useDispatch, useStore } from 'react-redux';
 import selectors from 'selectors';
 import actions from 'actions';
@@ -14,7 +11,6 @@ import core from 'core';
 import classNames from 'classnames';
 import Dropdown from 'components/Dropdown';
 import PageNumberInput from 'components/PageReplacementModal/PageNumberInput';
-import pageNumberPlaceholder from 'constants/pageNumberPlaceholder';
 import downloadPdf from 'helpers/downloadPdf';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import { workerTypes } from 'constants/types';
@@ -104,9 +100,20 @@ const SaveModal = () => {
         setPageCount(core.getTotalPages(activeDocumentViewerKey));
       }
     };
+    const documentUnloaded = () => {
+      setFilename('');
+      setPageCount(0);
+      setFileTypes(initalFileTypes);
+      setFiletype(initalFileTypes[0]);
+      dispatch(actions.closeElement(DataElements.SAVE_MODAL));
+    };
     updateFile();
+    core.addEventListener('documentUnloaded', documentUnloaded, undefined, activeDocumentViewerKey);
     core.addEventListener('documentLoaded', updateFile, undefined, activeDocumentViewerKey);
-    return () => core.removeEventListener('documentLoaded', updateFile, activeDocumentViewerKey);
+    return () => {
+      core.removeEventListener('documentUnloaded', documentUnloaded, activeDocumentViewerKey);
+      core.removeEventListener('documentLoaded', updateFile, activeDocumentViewerKey);
+    };
   }, [activeDocumentViewerKey]);
 
   useEffect(() => {
@@ -145,11 +152,14 @@ const SaveModal = () => {
   const onIncludeCommentsChanged = () => setIncludeComments(!includeComments);
   const clearError = () => setErrorText('');
   const onError = () => setErrorText(t('saveModal.pageError') + pageCount);
-  const onSpecifiedPagesChanged = () => {
+  const onSpecifiedPagesChanged = (pageNumbers) => {
     if (!hasTyped) {
       setHasTyped(true);
     }
-    clearError();
+
+    if (pageNumbers.length > 0) {
+      clearError();
+    }
   };
   const onSave = () => {
     if (!filename) {
@@ -175,15 +185,38 @@ const SaveModal = () => {
       pages,
       store,
     }, activeDocumentViewerKey);
-    if (isOfficeEditorMode()) {
-      closeModal();
-    }
+
+    closeModal();
   };
 
   const [hasTyped, setHasTyped] = useState(false);
   const saveDisabled = (errorText || !hasTyped) && pageRange === PAGE_RANGES.SPECIFY || !filename;
 
   const optionsDisabled = filetype.extension === 'office' || isOfficeEditorMode();
+
+  const customPagesLabelElement = (
+    <div className={classNames('page-number-input-container', { error: !!errorText })}>
+      <label className={'specifyPagesChoiceLabel'}>
+        <span>
+          {t('option.print.specifyPages')}
+        </span>
+        {pageRange === PAGE_RANGES.SPECIFY && <span className='specifyPagesExampleLabel'>
+          - {t('option.thumbnailPanel.multiSelectPagesExample')}
+        </span>}
+      </label>
+      {pageRange === PAGE_RANGES.SPECIFY &&
+        <PageNumberInput
+          selectedPageNumbers={specifiedPages}
+          pageCount={pageCount}
+          onBlurHandler={setSpecifiedPages}
+          onSelectedPageNumbersChange={onSpecifiedPagesChanged}
+          onError={onError}
+          pageNumberError={errorText}
+        />
+      }
+    </div>
+  );
+
   return (
     <Swipeable onSwipedUp={closeModal} onSwipedDown={closeModal} preventDefaultTouchmoveEvent>
       <FocusTrap locked={isOpen}>
@@ -196,14 +229,16 @@ const SaveModal = () => {
             <div className='modal-body'>
               <div className='title'>{t('saveModal.general')}</div>
               <div className='input-container'>
-                <div className='label'>{t('saveModal.fileName')}</div>
+                <label htmlFor='fileNameInput' className='label'>{t('saveModal.fileName')}</label>
                 <Input
                   type='text'
+                  id='fileNameInput'
                   data-testid="fileNameInput"
                   onChange={onFilenameChange}
                   value={filename}
                   fillWidth="false"
-                  messageText={filename === '' ? t('saveModal.fileNameCannotBeEmpty') : '' }
+                  padMessageText={true}
+                  messageText={filename === '' ? t('saveModal.fileNameCannotBeEmpty') : ''}
                   message={filename === '' ? 'warning' : 'default'}
                 />
               </div>
@@ -218,49 +253,31 @@ const SaveModal = () => {
               {!optionsDisabled && (<>
                 <div className='title'>{t('saveModal.pageRange')}</div>
                 <form className='radio-container' onChange={onPageRangeChange} onSubmit={preventDefault}>
-                  <Choice
-                    checked={pageRange === PAGE_RANGES.ALL}
-                    radio
-                    name='page-range-option'
-                    label={t('saveModal.all')}
-                    value={PAGE_RANGES.ALL}
-                  />
-                  <Choice
-                    checked={pageRange === PAGE_RANGES.CURRENT_PAGE}
-                    radio
-                    name='page-range-option'
-                    label={t('saveModal.currentPage')}
-                    value={PAGE_RANGES.CURRENT_PAGE}
-                  />
-                  {/* Temporarily commented out */}
-                  {/* <Choice */}
-                  {/*  checked={pageRange === PAGE_RANGES.CURRENT_VIEW} */}
-                  {/*  radio */}
-                  {/*  name='page-range-option' */}
-                  {/*  label={t('saveModal.currentView')} */}
-                  {/*  value={PAGE_RANGES.CURRENT_VIEW} */}
-                  {/* /> */}
-                  <Choice
-                    checked={pageRange === PAGE_RANGES.SPECIFY}
-                    radio
-                    name='page-range-option'
-                    label={t('option.print.specifyPages')}
-                    value={PAGE_RANGES.SPECIFY}
-                  />
-
-                  {pageRange === PAGE_RANGES.SPECIFY && (
-                    <div className={classNames('page-number-input-container', { error: !!errorText })}>
-                      <PageNumberInput
-                        selectedPageNumbers={specifiedPages}
-                        pageCount={pageCount}
-                        onBlurHandler={setSpecifiedPages}
-                        onSelectedPageNumbersChange={onSpecifiedPagesChanged}
-                        placeHolder={pageNumberPlaceholder}
-                        onError={onError}
-                      />
-                      {errorText && <div className="error-text">{errorText}</div>}
-                    </div>
-                  )}
+                  <div className='page-range-column'>
+                    <Choice
+                      checked={pageRange === PAGE_RANGES.ALL}
+                      radio
+                      name='page-range-option'
+                      label={t('saveModal.all')}
+                      value={PAGE_RANGES.ALL}
+                    />
+                    <Choice
+                      checked={pageRange === PAGE_RANGES.CURRENT_PAGE}
+                      radio
+                      name='page-range-option'
+                      label={t('saveModal.currentPage')}
+                      value={PAGE_RANGES.CURRENT_PAGE}
+                    />
+                  </div>
+                  <div className='page-range-column custom-page-ranges'>
+                    <Choice
+                      checked={pageRange === PAGE_RANGES.SPECIFY}
+                      radio
+                      name='page-range-option'
+                      label={customPagesLabelElement}
+                      value={PAGE_RANGES.SPECIFY}
+                    />
+                  </div>
                 </form>
                 <div className='title'>{t('saveModal.properties')}</div>
                 <div className='checkbox-container'>

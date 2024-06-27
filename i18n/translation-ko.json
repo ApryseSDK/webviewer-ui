@@ -1307,7 +1307,7 @@
     "watermark": "양수표",
     "addWatermark": "워터 마크를 추가",
     "save": "파일을 저장",
-    "pageError": "잘못된 페이지입니다. 유효한 페이지 범위는 1 -",
+    "pageError": "1 - 사이의 범위를 입력하십시오. ",
     "fileNameCannotBeEmpty": "파일 이름은 비워둘 수 없습니다."
   },
   "filePicker": {

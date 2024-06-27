@@ -20,6 +20,7 @@ const directionMap = {
 };
 
 const propTypes = {
+  id: PropTypes.string,
   items: PropTypes.array,
   images: PropTypes.array,
   width: PropTypes.oneOfType([
@@ -52,6 +53,7 @@ const propTypes = {
 };
 
 function Dropdown({
+  id = '',
   items = [],
   images = [],
   width = width || DEFAULT_WIDTH,
@@ -379,7 +381,7 @@ function Dropdown({
   ]);
 
   return (
-    <DataElementWrapper className={`Dropdown__wrapper ${className} ${isOpen ? 'open' : ''}`} dataElement={dataElement}>
+    <DataElementWrapper id={id} className={`Dropdown__wrapper ${className} ${isOpen ? 'open' : ''}`} dataElement={dataElement}>
       {!displayButton &&
         <button
           className={classNames({

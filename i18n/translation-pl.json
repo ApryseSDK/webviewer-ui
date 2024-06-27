@@ -1307,7 +1307,7 @@
     "watermark": "znak wodny",
     "addWatermark": "Dodaj znak wodny",
     "save": "Zapisz plik",
-    "pageError": "Nieprawidłowa strona. Prawidłowe zakresy stron mieszczą się w przedziale od 1 do",
+    "pageError": "Proszę wprowadzić zakres pomiędzy 1 - ",
     "fileNameCannotBeEmpty": "Nazwa pliku nie może być pusta"
   },
   "filePicker": {

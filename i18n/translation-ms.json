@@ -1307,7 +1307,7 @@
     "watermark": "Tera air",
     "addWatermark": "Tambah Tera Air",
     "save": "Simpan fail",
-    "pageError": "Halaman tidak sah. Julat halaman yang sah adalah antara 1 -",
+    "pageError": "Sila masukkan julat antara 1 - ",
     "fileNameCannotBeEmpty": "Nama Fail tidak boleh kosong"
   },
   "filePicker": {

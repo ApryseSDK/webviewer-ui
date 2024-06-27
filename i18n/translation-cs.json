@@ -1307,7 +1307,7 @@
     "watermark": "Vodoznak",
     "addWatermark": "Přidat vodoznak",
     "save": "Uložení souboru",
-    "pageError": "Neplatná stránka. Platné rozsahy stránek jsou mezi 1 -",
+    "pageError": "Zadejte rozsah mezi 1 - ",
     "fileNameCannotBeEmpty": "Název souboru nesmí být prázdný"
   },
   "filePicker": {

@@ -1307,7 +1307,7 @@
     "watermark": "Filigran",
     "addWatermark": "Adăugați filigran",
     "save": "Salvează fișierul",
-    "pageError": "Pagina nevalidă. Intervalele de pagini valide sunt cuprinse între 1 -",
+    "pageError": "Vă rugăm să introduceți un interval între 1 - ",
     "fileNameCannotBeEmpty": "Numele fișierului nu poate fi gol"
   },
   "filePicker": {

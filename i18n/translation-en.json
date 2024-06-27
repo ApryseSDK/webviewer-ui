@@ -287,7 +287,7 @@
     "signHere": "Sign here",
     "insertTextHere": "Insert text here",
     "imageSignatureAcceptedFileTypes": "Only {{acceptedFileTypes}} are accepted",
-	"signatureRequired": "A signature and initial is required to continue",
+	  "signatureRequired": "A signature and initial is required to continue",
     "enterMeasurement": "Enter measurement between the two points",
     "errorEnterMeasurement": "The number you have entered is invalid, you can enter values like 7.5 or 7 1/2",
     "linkURLorPage": "Link URL or a Page",
@@ -1310,7 +1310,7 @@
     "watermark": "Watermark",
     "addWatermark": "Add Watermark",
     "save": "Save File",
-    "pageError": "Invalid page. Valid page ranges are between  1 - ",
+    "pageError": "Please enter a range between  1 - ",
     "fileNameCannotBeEmpty": "File Name cannot be empty"
   },
   "filePicker": {

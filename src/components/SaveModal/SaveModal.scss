@@ -52,13 +52,37 @@
         //font-size: var(--font-size-medium);
       }
       .input-container {
-        align-items: center;
+        align-items: baseline;
         display: flex;
         gap: 16px;
         height: 32px;
+        margin-bottom: 20px;
 
         .label {
           min-width: 60px;
+        }
+
+        .ui__input {
+          border-color: var(--border);
+
+          &.ui__input--focused {
+            box-shadow: none;
+            border-color: var(--focus-border);
+          }
+
+          &.ui__input--message-warning {
+            border-color: var(--error-border-color);
+
+            .ui__icon svg {
+              fill: var(--error-border-color);
+            }
+          }
+        }
+
+        .ui__input__messageText {
+          color: var(--error-text-color);
+          margin: 8px 0;
+          font-size: 13px;
         }
 
         input {
@@ -91,6 +115,7 @@
       }
       .radio-container {
         gap: 8px;
+        height: 90px;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
 
@@ -109,12 +134,27 @@
             }
           }
           .page-number-input {
-            width: calc(100% - 20px);
-            //margin-left: 20px; Removed until current view is added
-            grid-column-start: 2;
+            width: 208px;
           }
-          .error-text {
-            color: var(--error-text-color)
+
+          .specifyPagesChoiceLabel {
+            display: flex;
+            margin-bottom: 8px;
+    
+            .specifyPagesExampleLabel {
+              margin-left: 4px;
+              color: var(--faded-text);
+            }
+          }
+        }
+
+        .page-range-column {
+          display: grid;
+          gap: 16px;
+          align-content: baseline;
+
+          &.custom-page-ranges .ui__choice{
+            align-items: unset;
           }
         }
       }
@@ -123,6 +163,7 @@
         grid-template-columns: repeat(2, 1fr);
       }
     }
+
     .footer {
       padding: 16px;
       display: flex;
@@ -132,13 +173,17 @@
       button {
         border: none;
         border-radius: 4px;
-        background: var(--primary-button);
+        background: var(--primary-button) !important;
         width: 82px;
         height: 32px;
         color: var(--primary-button-text);
 
         &:disabled {
           opacity: 0.5;
+
+          span {
+            color: var(--gray-0);
+          }
         }
 
         &:hover {

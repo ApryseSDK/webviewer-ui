@@ -12,6 +12,7 @@ import './WatermarkModal.scss';
 import ModalWrapper from '../../ModalWrapper';
 
 import DataElementWrapper from 'src/components/DataElementWrapper';
+import Dropdown from 'src/components/Dropdown';
 
 const DESIRED_WIDTH = 300;
 const DESIRED_HEIGHT = 300;
@@ -72,6 +73,7 @@ class WatermarkModal extends React.PureComponent {
     modalClosed: PropTypes.func,
     formSubmitted: PropTypes.func,
     t: PropTypes.func.isRequired,
+    isCustomizableUI: PropTypes.bool,
   };
 
   constructor(props) {
@@ -391,7 +393,7 @@ class WatermarkModal extends React.PureComponent {
       return null;
     }
 
-    const { t } = this.props;
+    const { t, isCustomizableUI } = this.props;
 
     const currLocation = this.getCurrentSelectedLocation();
     const formInfo = this.state.locationSettings[currLocation];
@@ -421,18 +423,16 @@ class WatermarkModal extends React.PureComponent {
             <div className="watermark-settings">
               <form id="form" onSubmit={(e) => e.preventDefault()}>
                 <div className="form-field">
-                  <label htmlFor="location">{t('option.watermark.location')}</label>
-                  <select
+                  <label className="section-label print-quality-section-label" htmlFor="location">{t('option.watermark.location')}</label>
+                  <Dropdown
                     id="location"
-                    defaultValue={currLocation}
-                    onChange={(event) => {
-                      this.onLocationChanged(event.target.value);
-                    }}
-                  >
-                    {Object.keys(WATERMARK_LOCATIONS).map((key) => (
-                      <option key={key} value={key}>{t(`option.watermark.locations.${WATERMARK_LOCATIONS[key]}`)}</option>
-                    ))}
-                  </select>
+                    dataElement="watermarkLocation"
+                    items={Object.keys(WATERMARK_LOCATIONS)}
+                    getTranslationLabel={(key) => t(`option.watermark.locations.${WATERMARK_LOCATIONS[key]}`)}
+                    currentSelectionKey={currLocation}
+                    onClickItem={this.onLocationChanged}
+                    width={314}
+                  />
                   <div className="separator divider"></div>
                 </div>
 
@@ -452,19 +452,17 @@ class WatermarkModal extends React.PureComponent {
                 </div>
                 <div className="form-field">
                   <label htmlFor="fonts">{t('option.watermark.font')}</label>
-                  <select
+                  <Dropdown
                     id="fonts"
-                    value={formInfo[FORM_FIELD_KEYS.font]}
-                    onChange={(event) => this.handleInputChange(
+                    dataElement="watermarkFont"
+                    items={FONTS}
+                    currentSelectionKey={formInfo[FORM_FIELD_KEYS.font]}
+                    onClickItem={(key) => this.handleInputChange(
                       FORM_FIELD_KEYS.font,
-                      event.target.value,
-                    )
-                    }
-                  >
-                    {FONTS.map((font) => (
-                      <option key={font}>{font}</option>
-                    ))}
-                  </select>
+                      key
+                    )}
+                    width={314}
+                  />
                 </div>
                 <div className="form-field">
                   <label htmlFor="fontSize">{t('option.watermark.size')}</label>
@@ -480,19 +478,26 @@ class WatermarkModal extends React.PureComponent {
                 </div>
                 <div className="form-field opacity-slider" id="opacitySlider">
                   <Slider
-                    property={'opacity'} // arbitrary property name. this property isn't used in this file
-                    displayProperty={'opacity'} // arbitrary property name. this property isn't used in this file
+                    dataElement={'watermarkOpacitySlider'}
+                    property={'Opacity'}
+                    displayProperty={'opacity'}
+                    min={0}
+                    max={100}
+                    step={1}
+                    customCircleRadius={8}
+                    customLineStrokeWidth={4}
                     value={formInfo[FORM_FIELD_KEYS.opacity] / 100}
                     getDisplayValue={(opacity) => `${Math.round(opacity * 100)}%`}
                     getCirclePosition={this.getCirclePosn}
-                    convertRelativeCirclePositionToValue={(circlePosn) => circlePosn
-                    }
+                    convertRelativeCirclePositionToValue={(circlePosn) => circlePosn}
+                    withInputField={isCustomizableUI}
+                    inputFieldType={'number'}
                     onSliderChange={() => { }}
                     onStyleChange={(property, value) => this.handleInputChange(
                       FORM_FIELD_KEYS.opacity,
                       Math.round(value * 100),
-                    )
-                    }
+                    )}
+                    getLocalValue={(opacity) => parseInt(opacity) / 100}
                   />
                 </div>
                 <div className="form-field">

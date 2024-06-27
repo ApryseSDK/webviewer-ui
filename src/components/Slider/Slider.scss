@@ -35,6 +35,10 @@
     width: 50px;
     text-align: center;
 
+    &.is-editing {
+      border-color: var(--focus-border)
+    }
+
     @include mobile {
       width: 79px;
       height: 32px;

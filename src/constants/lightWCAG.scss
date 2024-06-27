@@ -60,11 +60,11 @@
   --view-header-button-hover: var(--blue-1);
   --view-header-button-active: var(--gray-2);
 
-  --popup-button-hover: var(--blue-1);
+  --popup-button-hover: var(--gray-2);
   --popup-button-active: var(--gray-2);
 
   --primary-button: var(--blue-5);
-  --primary-button-text: var(--gray-1);
+  --primary-button-text: var(--gray-0);
   --primary-button-hover: var(--blue-6);
 
   --secondary-button-text: var(--blue-5);
@@ -78,7 +78,7 @@
   --side-panel-border: var(--divider);
   --border: var(--gray-6);
   --lighter-border: var(--gray-4);
-  --focus-border: var(--blue-6);
+  --focus-border: var(--blue-5);
   --color-palette-border: var(--gray-8);
 
   --image-signature-drop-background: var(--blue-1);
@@ -96,7 +96,6 @@
   --scrollbar-color: var(--gray-6);
   --note-box-shadow: var(--gray-7);
   --note-box-shadow-expanded: rgba(134, 142, 150, 0.24);
-
 
   --tools-header-background: var(--gray-2);
   --view-header-background: var(--gray-1);
@@ -138,6 +137,8 @@
   --multi-tab-flyout-hover: var(--blue-6);
   --multi-tab-flyout-hover-text: var(--gray-0);
   --multi-tab-toggle-button-active: var(--blue-5);
+  
+  --watermark-preview-background: var(--gray-2);
 
   --tab-border-color: var(--border);
   --tab-border-color-hover: var(--blue-6);
@@ -148,7 +149,6 @@
   --dropdown-item-active: var(--blue-5);
   --dropdown-item-text-hover: var(--gray-0);
 
-  --disabled-button-color: #96b9d6;
+  --disabled-button-color: rgba(var(--blue-5), 0.5);
   --tab-footer-button-color: var(--gray-0);
-  --x-button-hover-color: var(--gray-2);
 }
