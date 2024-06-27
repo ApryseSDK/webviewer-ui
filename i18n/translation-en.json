@@ -1224,7 +1224,9 @@
     "viewOnly": "Viewing",
     "viewOnlyDescription": "View without suggestions",
     "notSupportedOnMobile": "Office editing is not supported on mobile devices.",
-    "previewAllChanges": "Preview all changes"
+    "previewAllChanges": "Preview all changes",
+    "accept": "Accept",
+    "reject": "Reject"
   },
   "insertPageModal": {
     "title": "Add New Page",

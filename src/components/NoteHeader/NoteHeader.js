@@ -6,6 +6,7 @@ import NoteState from 'components/NoteState';
 import Icon from 'components/Icon';
 import NoteUnpostedCommentIndicator from 'components/NoteUnpostedCommentIndicator';
 import Choice from 'components/Choice';
+import Tooltip from 'components/Tooltip';
 
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import getColor from 'helpers/getColor';
@@ -170,18 +171,22 @@ function NoteHeader(props) {
             }
             {isSelected && isTrackedChange && !isMultiSelectMode &&
               <>
-                <div
-                  className="tracked-change-icon-wrapper"
-                  onClick={() => acceptTrackedChange(annotation)}
-                >
-                  <Icon className="tracked-change-icon" glyph="icon-menu-checkmark" />
-                </div>
-                <div
-                  className="tracked-change-icon-wrapper"
-                  onClick={() => rejectTrackedChange(annotation)}
-                >
-                  <Icon className="tracked-change-icon" glyph="icon-close" />
-                </div>
+                <Tooltip content={t('officeEditor.accept')}>
+                  <div
+                    className="tracked-change-icon-wrapper accept"
+                    onClick={() => acceptTrackedChange(annotation)}
+                  >
+                    <Icon className="tracked-change-icon" glyph="icon-menu-checkmark" />
+                  </div>
+                </Tooltip>
+                <Tooltip content={t('officeEditor.reject')}>
+                  <div
+                    className="tracked-change-icon-wrapper reject"
+                    onClick={() => rejectTrackedChange(annotation)}
+                  >
+                    <Icon className="tracked-change-icon" glyph="icon-close" />
+                  </div>
+                </Tooltip>
               </>
             }
           </div>

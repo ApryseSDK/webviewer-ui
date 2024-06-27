@@ -99,13 +99,23 @@
         justify-content: flex-end;
 
         .tracked-change-icon-wrapper {
-          margin-left: 8px;
           cursor: pointer;
+          border-radius: 4px;
 
           .tracked-change-icon {
             margin: 2px;
             width: 24px;
             height: 24px;
+          }
+
+          &:hover {
+            &.accept {
+              background-color: #D5F5CA;
+            }
+
+            &.reject {
+              background-color: #FFE8E8;
+            }
           }
         }
       }
