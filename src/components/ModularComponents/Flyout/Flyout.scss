@@ -1,6 +1,6 @@
 @import '../../../constants/styles';
 @import '../../../constants/overlay';
-
+@import '../../../constants/lightWCAG';
 
 .Flyout {
   z-index: 90;
@@ -51,11 +51,6 @@
         display: none;
       }
 
-      &:active,
-      &.active {
-        background-color: var(--blue-2);
-      }
-
       .Icon,
       .menu-icon {
         width: 24px;
@@ -64,17 +59,13 @@
       }
 
       .icon-open-submenu {
+        cursor: pointer;
         justify-self: flex-end;
         width: 16px;
         height: 16px;
         margin-right: 8px;
         padding-top: 2px;
         display: flex;
-        
-        &:active,
-        &.active {
-          background-color: var(--blue-2);
-        }
       }
 
       .menu-icon.Icon svg path {
@@ -100,33 +91,44 @@
           margin-right: 0;
         }
 
-        &:hover:not([disabled]) {
-          background-color: var(--blue-1);
-          cursor: pointer;
+        .flyout-item-label {
+          justify-self: flex-start;
+          font-size: var(--font-size-default);
         }
 
-        &:active,
-        &.active {
-          background-color: var(--blue-2);
-
-          .Icon svg path {
-            color: var(--blue-6);
-          }
-
-          .flyout-item-label {
-            color: var(--blue-6);
-          }
-        }
-
-        &[disabled] {
-          opacity: 0.5;
+        &[disabled], .disabled {
+          color: var(--gray-5);
         }
       }
 
-      .flyout-item-label {
-        justify-self: flex-start;
-        font-size: var(--font-size-default);
-        color: var(--gray-8);
+      &:active:not([disabled]):not(.disabled),
+      &.active:not([disabled]):not(.disabled),
+      &:hover:not([disabled]):not(.disabled) {
+        color: var(--gray-0);
+
+        .Icon, .Icon svg * {
+          color: var(--gray-0);
+        }
+
+        .hotkey-wrapper {
+          color: var(--gray-0);
+        }
+
+        .ZoomText {
+          .label, .value {
+            color: var(--gray-0);
+          }
+        }
+      }
+
+      &:active:not([disabled]):not(.disabled),
+      &.active:not([disabled]):not(.disabled) {
+        background-color: var(--blue-5);
+      }
+
+      &:hover:not([disabled]):not(.disabled) {
+        background-color: var(--blue-6);
+        cursor: pointer;
       }
 
       .ZoomItem {
@@ -145,6 +147,19 @@
         color: var(--gray-7);
         margin-left: 8px;
         margin-right: 2px;
+      }
+
+      &[disabled], &.disabled {
+        color: var(--gray-5);
+
+        .Icon, .Icon svg * {
+          color: var(--gray-5);
+        }
+
+        .hotkey-wrapper {
+          color: var(--gray-5);
+          pointer-events: none;
+        }
       }
     }
 
@@ -166,16 +181,28 @@
       height: 16px;
     }
 
+    &:active,
+    &.active,
     &:hover {
-      background-color: var(--blue-2);
+      color: var(--gray-0);
+
+      .Icon, .Icon svg * {
+        color: var(--gray-0);
+      }
+
+      .hotkey-wrapper {
+        color: var(--gray-0);
+      }
+
+      .ZoomText {
+        .label, .value {
+          color: var(--gray-0);
+        }
+      }
     }
 
-    &:active {
-      color: var(--blue-6);
-
-      .Icon svg path {
-        fill: var(--blue-6);
-      }
+    &:hover {
+      background-color: var(--blue-6);
     }
   }
 }

@@ -57,6 +57,14 @@ const initialState = {
       topHeaders: 40,
       bottomHeaders: 40
     },
+    canUndo: {
+      1: false,
+      2: false,
+    },
+    canRedo: {
+      1: false,
+      2: false,
+    },
     flyoutMap: {
       'pageNavFlyoutMenu': {
         dataElement: 'pageNavFlyoutMenu',
@@ -89,6 +97,9 @@ const initialState = {
 export default {
   title: 'ModularComponents/PageControl Container',
   component: PageControlsContainer,
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 const store = configureStore({

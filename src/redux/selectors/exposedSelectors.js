@@ -944,3 +944,11 @@ export const getIsMultiViewerModeAvailable = (state) => {
 export const getMaxPasswordAttempts = (state) => {
   return state.document.maxPasswordAttempts;
 };
+
+export const canUndo = (state) => {
+  return state.viewer.canUndo[state.viewer.activeDocumentViewerKey];
+};
+
+export const canRedo = (state) => {
+  return state.viewer.canRedo[state.viewer.activeDocumentViewerKey];
+};

@@ -1,3 +1,5 @@
+@import '../../../../constants/styles';
+
 .ZoomText {
   display: flex;
 
@@ -7,5 +9,11 @@
 
   .value {
     color: var(--gray-7);
+  }
+
+  input {
+    @include mobile {
+      font-size : var(--font-size-default);
+    }
   }
 }

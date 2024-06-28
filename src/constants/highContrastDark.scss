@@ -75,6 +75,11 @@
   --popup-button-hover: var(--blue-3);
   --popup-button-active: var(--blue-4);
 
+  --dropdown-item-hover: var(--popup-button-hover);
+  --dropdown-item-active: var(--popup-button-active);
+  --dropdown-item-active-text: var(--text-color);
+  --dropdown-item-active-icon: var(--icon-color);
+
   --primary-button-hover: var(--blue-6);
   --secondary-button-hover: var(--blue-6);
 

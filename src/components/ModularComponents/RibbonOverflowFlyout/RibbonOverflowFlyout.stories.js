@@ -7,6 +7,9 @@ import Flyout from '../Flyout/Flyout';
 export default {
   title: 'ModularComponents/RibbonGroup',
   component: RibbonOverflowFlyout,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const item1 = {
@@ -44,6 +47,14 @@ const initialState = {
     openElements: {},
     customPanels: [],
     genericPanels: [],
+    canUndo: {
+      1: false,
+      2: false,
+    },
+    canRedo: {
+      1: false,
+      2: false,
+    },
     flyoutMap: {
       'RibbonOverflowFlyout': {
         'dataElement': 'RibbonOverflowFlyout',

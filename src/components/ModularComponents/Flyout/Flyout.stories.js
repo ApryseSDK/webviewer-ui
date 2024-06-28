@@ -43,6 +43,14 @@ const initialState = {
     openElements: {},
     customPanels: [],
     genericPanels: [],
+    canUndo: {
+      1: false,
+      2: false,
+    },
+    canRedo: {
+      1: false,
+      2: false,
+    },
     flyoutMap: {
       'flyoutMenu': {
         'dataElement': 'flyoutMenu',
@@ -277,6 +285,14 @@ const initialState = {
               },
             ],
           },
+          {
+            label: 'Disabled Item',
+            onClick: () => {
+              console.warn('Item 9 should not click');
+            },
+            icon: 'icon-close',
+            disabled: 'true',
+          }
         ],
       },
       'noIcons': {
@@ -308,6 +324,10 @@ const initialState = {
           },
           {
             'label': 'Item 5',
+          },
+          {
+            'label': 'Item 6',
+            'disabled': 'true',
           }
         ],
       },
@@ -421,41 +441,12 @@ const store3 = configureStore({
   }
 });
 
-
 export const MainMenuFlyout = () => (
   <Provider store={store3}>
     <Flyout/>
   </Provider>
 );
 
-const tmp = Object.assign({}, uiWithFlyout.modularComponents);
-tmp.flyoutToggle = {
-  ...tmp.flyoutToggle,
-  toggleElement: 'viewControlsFlyout'
-};
-export const ViewControlsFlyout = createTemplate({
-  headers: uiWithFlyout.modularHeaders,
-  components: tmp,
-  flyoutMap: {
-    'viewControlsFlyout': {
-      'dataElement': 'viewControlsFlyout',
-      'items': []
-    }
-  }
-});
-
-ViewControlsFlyout.play = async (context) => {
-  const canvas = within(context.canvasElement);
-  // Click the toggle button to open the flyout
-  const flyoutToggle = await canvas.findByRole('button', { 'aria-label': 'View Control Toggle' });
-  await userEvent.click(flyoutToggle);
-  // Check if the flyout is open
-  const flyoutItem = await canvas.findByText('Rotate Clockwise');
-  expect(flyoutItem).toBeInTheDocument();
-  // Click flyoutItem
-  await userEvent.click(flyoutItem);
-  expect(flyoutItem).toBeInTheDocument();
-};
 const store4 = configureStore({
   reducer: () => {
     return {
@@ -497,5 +488,13 @@ FlyoutOpeningTest.play = async ({ canvasElement }) => {
   await userEvent.click(backBtn);
   // Check if the submenu is gone
   expect(submenuItem2).not.toBeInTheDocument();
-};
 
+  // Check disabled buttons
+  const disabledButton = await canvas.findByText('Disabled Flyout Item');
+  expect(disabledButton).toBeInTheDocument();
+  // Try to click the disabled button
+  await userEvent.click(disabledButton);
+  // Check if the disabled submenu item is not present
+  const disabledSubmenuItem = await canvas.queryByText('Disabled Submenu Item');
+  expect(disabledSubmenuItem).not.toBeInTheDocument();
+};

@@ -91,12 +91,17 @@
       font-size: var(--font-size-default);
       line-height: 28px;
 
-      &.active {
-        background-color: var(--popup-button-active);
+      &.active, &:hover {
+        color: var(--dropdown-item-active-text);
+        .Icon, .Icon svg * {
+          color: var(--dropdown-item-active-icon);
+        }
       }
-
+      &.active {
+        background-color: var(--dropdown-item-active);
+      }
       &:hover {
-        background-color: var(--popup-button-hover);
+        background-color: var(--dropdown-item-hover);
       }
 
       &:first-child {

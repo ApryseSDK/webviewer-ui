@@ -39,24 +39,6 @@ const ViewControlsFlyout = () => {
   const totalPageThreshold = 1000;
   let isPageTransitionEnabled = totalPages < totalPageThreshold;
 
-  useLayoutEffect(() => {
-    const viewControlsFlyout = {
-      dataElement: DataElements.VIEWER_CONTROLS_FLYOUT,
-      className: 'ViewControlsFlyout',
-      items: getViewControlsFlyoutItems()
-    };
-
-    if (!currentFlyout) {
-      dispatch(actions.addFlyout(viewControlsFlyout));
-    } else {
-      dispatch(actions.updateFlyout(viewControlsFlyout.dataElement, viewControlsFlyout));
-    }
-  }, [isFullScreen, isMultiViewerModeAvailable, isMultiViewerMode, displayMode]);
-
-  if (isDisabled) {
-    return;
-  }
-
   const documentViewer = core.getDocumentViewer();
   const displayModeManager = documentViewer?.getDisplayModeManager();
   if (displayModeManager?.isVirtualDisplayEnabled()) {
@@ -92,6 +74,7 @@ const ViewControlsFlyout = () => {
       return;
     }
     enterReaderMode(store);
+    dispatch(actions.closeElement(DataElements.VIEWER_CONTROLS_FLYOUT));
   };
 
   let pageTransition;
@@ -220,6 +203,24 @@ const ViewControlsFlyout = () => {
 
     return viewControlsFlyoutItems;
   };
+
+  useLayoutEffect(() => {
+    const viewControlsFlyout = {
+      dataElement: DataElements.VIEWER_CONTROLS_FLYOUT,
+      className: 'ViewControlsFlyout',
+      items: getViewControlsFlyoutItems()
+    };
+
+    if (!currentFlyout) {
+      dispatch(actions.addFlyout(viewControlsFlyout));
+    } else {
+      dispatch(actions.updateFlyout(viewControlsFlyout.dataElement, viewControlsFlyout));
+    }
+  }, [isFullScreen, isMultiViewerModeAvailable, isMultiViewerMode, displayMode, isReaderMode]);
+
+  if (isDisabled) {
+    return;
+  }
 
   return null;
 };

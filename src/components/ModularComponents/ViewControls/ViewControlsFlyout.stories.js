@@ -4,9 +4,16 @@ import { Provider } from 'react-redux';
 import ViewControlsFlyout from './ViewControlsFlyout';
 import Flyout from '../Flyout';
 
+import { createTemplate } from 'helpers/storybookHelper';
+import { userEvent, within, expect } from '@storybook/test';
+import { uiWithFlyout } from '../storyModularUIConfigs';
+
 export default {
   title: 'ModularComponents/ViewControlsFlyout',
   component: ViewControlsFlyout,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const continuousPageTransitionButton = {
@@ -92,6 +99,14 @@ const initialState = {
       bottomHeaders: 40
     },
     modularHeaders: {},
+    canUndo: {
+      1: false,
+      2: false,
+    },
+    canRedo: {
+      1: false,
+      2: false,
+    },
     flyoutMap: {
       'viewControlsFlyout': {
         dataElement: 'viewControlsFlyout',
@@ -133,4 +148,35 @@ export const Default = () => {
       </div>
     </Provider>
   );
+};
+
+const tmp = {
+  ...uiWithFlyout.modularComponents,
+  flyoutToggle: {
+    ...uiWithFlyout.modularComponents.flyoutToggle,
+    toggleElement: 'viewControlsFlyout'
+  }
+};
+export const ViewControlsFlyoutTest = createTemplate({
+  headers: uiWithFlyout.modularHeaders,
+  components: tmp,
+  flyoutMap: {
+    'viewControlsFlyout': {
+      'dataElement': 'viewControlsFlyout',
+      'items': []
+    }
+  }
+});
+
+ViewControlsFlyoutTest.play = async (context) => {
+  const canvas = within(context.canvasElement);
+  // Click the toggle button to open the flyout
+  const flyoutToggle = await canvas.findByRole('button', { 'aria-label': 'View Control Toggle' });
+  await userEvent.click(flyoutToggle);
+  // Check if the flyout is open
+  const flyoutItem = await canvas.findByText('Rotate Clockwise');
+  expect(flyoutItem).toBeInTheDocument();
+  // Click flyoutItem
+  await userEvent.click(flyoutItem);
+  expect(flyoutItem).toBeInTheDocument();
 };

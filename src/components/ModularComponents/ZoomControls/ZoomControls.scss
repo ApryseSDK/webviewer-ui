@@ -35,6 +35,13 @@
     .ToggleElementButton {
       width: 32px;
       height: 32px;
+      font-size: 13px;
+      
+      button {
+        @include mobile {
+          font-size : var(--font-size-default);
+        }
+      }
 
       .Icon {
         color: var(--icon-color);

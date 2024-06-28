@@ -46,6 +46,7 @@ function FlyoutItem(props) {
     const newFlyoutItemState = {
       ...props.flyoutItem,
       ...itemToFlyout(modularComponent, {
+        useOverrideClickOnly: true,
         onClick: flyoutItem?.onClick,
         children: flyoutItem?.children,
       }),
@@ -79,11 +80,15 @@ function StaticItem({ flyoutItem, isChild, index, onClickHandler, activeItem, it
     currentPage,
     activeToolGroup,
     activeCustomPanel,
+    canUndo,
+    canRedo,
   ] = useSelector((state) => [
     selectors.getCustomHeadersAdditionalProperties(state),
     selectors.getCurrentPage(state),
     selectors.getActiveToolGroup(state),
-    selectors.getActiveCustomPanel(state, activeFlyout.split('-flyout')[0])
+    selectors.getActiveCustomPanel(state, activeFlyout.split('-flyout')[0]),
+    selectors.canUndo(state),
+    selectors.canRedo(state),
   ]);
 
   const { t } = useTranslation();
@@ -103,12 +108,23 @@ function StaticItem({ flyoutItem, isChild, index, onClickHandler, activeItem, it
   const itemsToRender = isChild ? activeItem.children : items;
   const itemIsALabel = typeof flyoutItem === 'string' && flyoutItem !== ITEM_TYPE.DIVIDER;
 
+  const isUndoButton = flyoutItem.dataElement === 'undoButton';
+  const isRedoButton = flyoutItem.dataElement === 'redoButton';
+  const isUndoDisabled = isUndoButton && !canUndo;
+  const isRedoDisabled = isRedoButton && !canRedo;
+  const isDisabled = flyoutItem.disabled || isUndoDisabled || isRedoDisabled;
+
+  if (isDisabled) {
+    onClickHandler = () => {};
+  }
+
   const getFlyoutItemWrapper = (elementDOM, additionalClass) => {
     return (
       <div key={flyoutItem.label} data-element={flyoutItem.dataElement}
         onClick={onClickHandler(flyoutItem, isChild, index)}
         className={classNames({
           'flyout-item-container': true,
+          'disabled': isDisabled,
           [additionalClass]: true
         })}
       >
@@ -147,7 +163,10 @@ function StaticItem({ flyoutItem, isChild, index, onClickHandler, activeItem, it
   if (itemIsAZoomOptionsButton) {
     const hasImg = !!flyoutItem.img || !!flyoutItem.icon;
     const zoomOptionsElement = (
-      <div className="menu-container">
+      <div className={classNames({
+        'menu-container': true,
+        'disabled': isDisabled
+      })}>
         {
           hasImg ? <div className="icon-label-wrapper">
             {getIconDOMElement(flyoutItem, itemsToRender)}
@@ -162,7 +181,10 @@ function StaticItem({ flyoutItem, isChild, index, onClickHandler, activeItem, it
 
   if (itemIsPageNavButton) {
     return getFlyoutItemWrapper((
-      <div className="menu-container" key={flyoutItem.label}>
+      <div className={classNames({
+        'menu-container': true,
+        'disabled': isDisabled
+      })} key={flyoutItem.label}>
         <div className="icon-label-wrapper">
           {getIconDOMElement(flyoutItem, itemsToRender)}
           <PageControlsFlyout {...flyoutItem} currentPage={currentPage}/>
@@ -181,6 +203,7 @@ function StaticItem({ flyoutItem, isChild, index, onClickHandler, activeItem, it
   return (flyoutItem === ITEM_TYPE.DIVIDER ? <div className="divider" key={`divider-${index}`}/> : (
     <div key={flyoutItem.label || flyoutItem.dataElement} className={classNames({
       'flyout-item-container': true,
+      'disabled': isDisabled,
       'active': flyoutItem.isActive
         || itemIsAPanelTab && activeCustomPanel === flyoutItem.dataElement
         || itemIsATool && core.getToolMode()?.name === flyoutItem.toolName
@@ -196,10 +219,14 @@ function StaticItem({ flyoutItem, isChild, index, onClickHandler, activeItem, it
           label={alabel}
           img={flyoutItem.icon}
           isFlyoutItem={true}
+          disabled={isDisabled}
         />
       ) :
         (
-          <div className="menu-container">
+          <div className={classNames({
+            'menu-container': true,
+            'disabled': isDisabled
+          })}>
             <div className="icon-label-wrapper">
               {getIconDOMElement(flyoutItem, itemsToRender)}
               {<div className="flyout-item-label">{t(alabel)}</div>}
