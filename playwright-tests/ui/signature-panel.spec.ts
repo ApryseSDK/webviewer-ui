@@ -38,11 +38,12 @@ async function drawSignaturesAndApply(page, iframe, pageContainer) {
   const { x: xContainer, y: yContainer } = await pageContainer.boundingBox();
 
   await drawRectangle(page, xContainer + signatureConfig[0].x, yContainer + signatureConfig[0].y, signatureConfig[0].width, signatureConfig[0].height);
+  await page.waitForTimeout(300);
+  await iframe.click('[data-element=formFieldOK]');
+  await page.waitForTimeout(100);
   await drawRectangle(page, xContainer + signatureConfig[1].x, yContainer + signatureConfig[1].y, signatureConfig[1].width, signatureConfig[1].height);
-
-  await page.waitForTimeout(1000);
-  await iframe.click('[data-element=applyFormFieldButton]');
-  await page.waitForTimeout(1000);
+  await page.waitForTimeout(300);
+  await iframe.click('[data-element=formFieldOK]');
 }
 
 /**

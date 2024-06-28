@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
 import CreatableListItem from './CreatableListItem';
@@ -6,54 +6,39 @@ import CreatableListItem from './CreatableListItem';
 import './CreatableList.scss';
 
 const CreatableListContainer = ({
-  options,
-  onOptionsUpdated,
+  draggableItems,
   popupRef,
+  fieldSelectionOptions,
+  setFieldSelectionOptions,
 }) => {
   const { t } = useTranslation();
-
-  // In order to be draggable, each item needs a unique Id
-  // These are managed internally in this component and not exposed to the user
-  const draggableItems = options.map((option, index) => {
-    return {
-      id: index,
-      displayValue: option.displayValue,
-      value: option.value,
-    };
-  });
-  const [items, setItems] = useState(draggableItems);
-  const [nextId, setNextId] = useState(draggableItems.length);
+  const [nextId, setNextId] = useState(draggableItems?.length ?? 0);
   const containerRef = useRef();
-
-  useEffect(() => {
-    const sanitizedOptions = items.map((item) => ({ value: item.value, displayValue: item.displayValue }));
-    onOptionsUpdated(sanitizedOptions);
-  }, [items, onOptionsUpdated]);
 
   const onAddItem = useCallback(() => {
     const id = nextId;
     setNextId(nextId + 1);
-    setItems([...items, { id, value: '', displayValue: '' }]);
+    setFieldSelectionOptions([...fieldSelectionOptions, { id, value: '', displayValue: '' }]);
     validatePopupHeight();
-  }, [nextId, items]);
+  }, [nextId, fieldSelectionOptions]);
 
   const handleDeleteItem = (id) => () => {
-    const updatedItems = items.filter((item) => {
+    const updatedItems = fieldSelectionOptions.filter((item) => {
       return id !== item.id;
     });
 
-    setItems(updatedItems);
+    setFieldSelectionOptions(updatedItems);
   };
 
   const handleItemValueChange = (id) => (value) => {
-    const updatedItems = items.map((item) => {
+    const updatedItems = fieldSelectionOptions.map((item) => {
       if (item.id !== id) {
         return item;
       }
       return { ...item, value, displayValue: value };
     });
 
-    setItems(updatedItems);
+    setFieldSelectionOptions(updatedItems);
   };
 
   // We add this helper function that doesn't mutate the original array
@@ -66,17 +51,17 @@ const CreatableListContainer = ({
 
   const moveListItem = useCallback(
     (dragIndex, hoverIndex) => {
-      const dragItem = items[dragIndex];
+      const dragItem = fieldSelectionOptions[dragIndex];
 
       // Update items array without mutating original items array for perf reasons
       // First we remove the element being dragged
-      const itemsWithoutDraggedElement = items.filter((_item, index) => index !== dragIndex);
+      const itemsWithoutDraggedElement = fieldSelectionOptions.filter((_item, index) => index !== dragIndex);
       // Now we add the dragged element at the index it's currently hovering
       const itemsWithDraggedElementAtNewPosition = addItemAtIndex(itemsWithoutDraggedElement, hoverIndex, dragItem);
 
-      setItems(itemsWithDraggedElementAtNewPosition);
+      setFieldSelectionOptions(itemsWithDraggedElementAtNewPosition);
     },
-    [items],
+    [fieldSelectionOptions],
   );
 
   const validatePopupHeight = () => {
@@ -98,7 +83,7 @@ const CreatableListContainer = ({
   return (
     <div>
       <div className="creatable-list" ref={containerRef}>
-        {items.map((item, index) => (
+        {fieldSelectionOptions.map((item, index) => (
           <CreatableListItem
             key={item.id}
             index={index}
