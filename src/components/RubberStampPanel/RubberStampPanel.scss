@@ -13,8 +13,8 @@
   .CreateRubberStampButton {
     width: 100%;
     padding: 8px;
-    color: #2B73AB;
-    border: solid 1px #2B73AB;
+    color: var(--blue-5);
+    border: solid 1px var(--blue-5);
     border-radius: 4px;
     margin: 16px 0;
 
@@ -61,11 +61,12 @@
         }
 
         &:hover {
-          background: var(--tools-overlay-button-hover);
+          border: solid 1px var(--blue-6);
         }
 
         &.active {
-          background: var(--tools-overlay-button-active);
+          border: solid 1px var(--blue-5);
+          background: var(--gray-2);
         }
       }
     }
@@ -91,7 +92,8 @@
       cursor: pointer;
 
       &:hover {
-        background: var(--tools-overlay-button-hover);
+        border: solid 1px var(--blue-6);
+        background: var(--gray-2);
       }
     }
   }
@@ -105,7 +107,7 @@
 
     [data-element="createRubberStampButton"] {
       padding: 0 16px;
-  
+
       .CreateRubberStampButton {
         margin-top: 0;
       }
@@ -136,7 +138,7 @@
             &:hover {
               background-color: var(--gray-0);
             }
-  
+
             &.active {
               background: var(--tools-overlay-button-active);
             }
@@ -149,4 +151,9 @@
     }
   }
 
+  &.custom-panel {
+    .rubber-stamps-list .rubber-stamp{
+      border-color: var(--lighter-border);
+    }
+  }
 }

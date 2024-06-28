@@ -3,8 +3,8 @@
 .SignatureAddButton {
   width: auto;
   padding: 8px;
-  color: #2B73AB;
-  border: solid 1px #2B73AB;
+  color: var(--blue-5);
+  border: solid 1px var(--blue-5);
   border-radius: 4px;
   margin: 16px 0;
 
@@ -14,12 +14,12 @@
   }
 
   &.disabled {
-    color: #2B73AB;
+    color: var(--blue-5);
     opacity: 0.5;
     cursor: not-allowed;
 
     span {
-      color: #2B73AB;
+      color: var(--blue-5);
     }
   }
 
@@ -27,8 +27,8 @@
     margin: 16px;
 
     &:not(.disabled):hover {
-      color: #2B73AB;
-      border: solid 1px #2B73AB;
+      color: var(--blue-5);
+      border: solid 1px var(--blue-5);
     }
   }
 }
@@ -74,7 +74,8 @@
       cursor: pointer;
 
       &:hover {
-        background: var(--tools-overlay-button-hover);
+        border: 1px solid var(--blue-6);
+        background: var(--gray-2);
       }
     }
   }
@@ -88,11 +89,13 @@
       flex-grow: 2;
       margin-right: 8px;
       min-width: 160px;
+      font-weight: var(--font-weight-bold);
     }
 
     .initials-title {
       flex-grow: 1;
       max-width: 65px;
+      font-weight: var(--font-weight-bold);
     }
 
     .delete-spacer {
@@ -110,7 +113,7 @@
       @include button-reset;
       height: 40px;
       padding: 4px 8px;
-      border: solid 1px var(--border);
+      border: solid 1px var(--lighter-border);
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -127,20 +130,17 @@
 
       &.interactable {
         &:hover {
-          background: var(--tools-overlay-button-hover);
+          border-color: var(--blue-6);
         }
 
         &.active {
-          background: var(--tools-overlay-button-active);
+          background: var(--gray-2);
+          border-color: var(--blue-5);
         }
       }
 
       &.active {
         background: var(--tools-overlay-button-active);
-      }
-
-      &.removal-hovered {
-        background: var(--popup-button-hover) !important;
       }
 
       .signature-button-icon {
@@ -184,7 +184,7 @@
     .signature-list {
       padding-bottom: 16px;
       position: relative;
-      
+
       .signature-row {
         justify-content: center;
         margin-top: 0;
