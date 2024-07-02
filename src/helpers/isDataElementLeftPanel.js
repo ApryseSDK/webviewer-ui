@@ -8,7 +8,7 @@ export const getLeftPanelDataElements = (state) => {
   const { customizableUI } = featureFlags;
 
   if (customizableUI) {
-    return state.viewer.genericPanels.filter((item) => item.location === PLACEMENT.LEFT);
+    return state.viewer.genericPanels.filter((item) => item.location === PLACEMENT.LEFT).map((item) => item.dataElement);
   }
 
   const defaultLeftPanels = [
