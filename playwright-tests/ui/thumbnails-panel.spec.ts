@@ -351,10 +351,7 @@ test.describe('Thumbnails Panel', () => {
     expect(closeMultiSelectButton).toBeNull();
   });
 
-  // skip flaky test
-  // https://apryse.atlassian.net/browse/WVR-5453
-  test.skip('Should be able to insert pages without issues', async ({ page }) => {
-    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
+  test('Should be able to insert pages without issues', async ({ page }) => {    const { iframe, waitForInstance } = await loadViewerSample(page, 'viewing/viewing');
     const instance = await waitForInstance();
     await iframe.locator('#pageWidgetContainer1').waitFor();
 
@@ -364,6 +361,7 @@ test.describe('Thumbnails Panel', () => {
 
     const pagesToInsert = 50;
     await instance('openElements', ['thumbnailsPanel']);
+    await waitForThumbnailPanelToRender(iframe);
     await iframe.locator('.documentControlsInput input').waitFor();
 
     await iframe.evaluate(() => {
