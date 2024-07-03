@@ -256,6 +256,7 @@ const TouchEventManager = {
         const isStylusModeDisabled = !docViewer.isStylusModeEnabled();
         const isUsingAnnotationToolsAndStylusIsDisabled = this.isUsingAnnotationTools() && isStylusModeDisabled;
         const isUsingPenAndStylusEnabled = this.isUsingPen() && !isStylusModeDisabled;
+        const { container, document: doc } = this;
 
         if (
           !this.allowSwipe ||
@@ -283,8 +284,9 @@ const TouchEventManager = {
         const isFirstPage = currentPage === 1;
         const isLastPage = currentPage === totalPages;
         const isSingleDisplayMode = !core.isContinuousDisplayMode();
-        const shouldGoToPrevPage = isSingleDisplayMode && !isFirstPage && ((swipedToLeft && this.allowHorizontalSwipe) || (swipedToTop && this.allowVerticalSwipe));
-        const shouldGoToNextPage = isSingleDisplayMode && !isLastPage && ((swipedToRight && this.allowHorizontalSwipe) || (swipedToBottom && this.allowVerticalSwipe));
+        const doesPagesFitOnScreen = doc.clientWidth < container.clientWidth || doc.clientHeight < container.clientHeight;
+        const shouldGoToPrevPage = isSingleDisplayMode && !isFirstPage && ((swipedToLeft && this.allowHorizontalSwipe) || (swipedToTop && this.allowVerticalSwipe)) && doesPagesFitOnScreen;
+        const shouldGoToNextPage = isSingleDisplayMode && !isLastPage && ((swipedToRight && this.allowHorizontalSwipe) || (swipedToBottom && this.allowVerticalSwipe)) && doesPagesFitOnScreen;
 
         if (shouldGoToPrevPage) {
           core.setCurrentPage(Math.max(1, currentPage - numberOfPagesToNavigate));
