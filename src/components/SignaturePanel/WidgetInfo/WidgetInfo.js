@@ -61,7 +61,7 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   collapsible: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
-  field: PropTypes.instanceOf(Annotations.Forms.Field),
+  field: PropTypes.instanceOf(window.Core.Annotations.Forms.Field),
 };
 
 const WidgetInfo = ({ name, collapsible, field }) => {
@@ -134,11 +134,9 @@ const WidgetInfo = ({ name, collapsible, field }) => {
    * Function that invokes the necessary methods when a user interacts with
    * the title of the widget
    *
-   * @param {Event} event The event that is passed from an onClick or onKeyPress
    * interaction
    */
-  const titleInteraction = (event) => {
-    handleArrowClick(event);
+  const titleInteraction = () => {
     jumpToWidget(field);
   };
 
@@ -152,21 +150,23 @@ const WidgetInfo = ({ name, collapsible, field }) => {
     }
     return (
       <div
-        className="title dropdown"
+        className="title collapsible"
+        role="button"
         onClick={titleInteraction}
         onKeyPress={titleInteraction}
-        role="button"
         tabIndex={0}
       >
         {collapsible && (
-          <div
+          <button
             className={classNames({
               arrow: true,
               expanded: isExpanded,
             })}
+            onClick={handleArrowClick}
+            tabIndex={0}
           >
             <Icon glyph="ic_chevron_right_black_24px" />
-          </div>
+          </button>
         )}
         <SignatureIcon badge={badgeIcon} size="small"/>
         <p>{content}</p>
@@ -311,26 +311,24 @@ const WidgetInfo = ({ name, collapsible, field }) => {
       return null;
     }
     return (
-      <div>
-        <div
-          className="title dropdown"
-          onClick={
-            () => setSignatureDetailsExpanded(!signatureDetailsExpanded)
-          }
-          onKeyPress={
-            () => setSignatureDetailsExpanded(!signatureDetailsExpanded)
-          }
-          role="button"
-          tabIndex={0}
-        >
-          <div
+      <button
+        className='signatureDetails'
+        onClick={() => jumpToWidget(field)}
+        tabIndex={-1}
+      >
+        <div className="title collapsible">
+          <button
             className={classNames({
               arrow: true,
               expanded: signatureDetailsExpanded,
             })}
+            onClick={
+              () => setSignatureDetailsExpanded(!signatureDetailsExpanded)
+            }
+            tabIndex={0}
           >
             <Icon glyph="ic_chevron_right_black_24px" />
-          </div>
+          </button>
           <p>
             {
               translate(
@@ -402,7 +400,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
             </div>
           )
         }
-      </div>
+      </button>
     );
   };
 
@@ -421,7 +419,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
         onKeyPress={openSignatureModal}
         role="button"
         tabIndex={0}
-        className="link"
+        className="signatureProperties link"
       >
         <p className="bold underline">{translate('digitalSignatureVerification.signatureProperties')}</p>
       </div>
@@ -429,14 +427,17 @@ const WidgetInfo = ({ name, collapsible, field }) => {
   };
 
   return (
-    <div
-      className="signature-widget-info"
-    >
+    <div className="signature-widget-info">
       {signed ? (
         <React.Fragment>
           {renderTitle()}
           {isExpanded && (
-            <div>
+            <button
+              className='verificationDetails'
+              onClick={() => jumpToWidget(field)}
+              onKeyPress={() => jumpToWidget(field)}
+              tabIndex={-1}
+            >
               <div className="header">
                 {
                   renderVerificationStatus({
@@ -461,7 +462,7 @@ const WidgetInfo = ({ name, collapsible, field }) => {
               <div className="header header-with-arrow">
                 {renderSignatureDetails()}
               </div>
-            </div>
+            </button>
           )}
         </React.Fragment>
       ) : (
@@ -472,7 +473,12 @@ const WidgetInfo = ({ name, collapsible, field }) => {
             onClick={() => jumpToWidget(field)}
             onKeyPress={() => jumpToWidget(field)}
           >
-            <SignatureIcon />
+            <div
+              className={classNames({
+                arrow: true,
+                hidden: true
+              })}
+            ></div>
             <p>{translate('digitalSignatureVerification.unsignedSignatureField', { fieldName: field.name })}</p>
           </div>
         </React.Fragment>

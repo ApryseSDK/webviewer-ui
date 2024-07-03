@@ -45,7 +45,8 @@ const WidgetLocator = ({ rect }) => {
           height: rect.y2 - rect.y1,
           // eslint-disable-next-line custom/no-hex-colors
           border: '1px solid #00a5e4',
-          zIndex: 100,
+          // don't appear above the signature properties modal
+          zIndex: 99,
         }}
       />,
       getRootNode().querySelector('#app')

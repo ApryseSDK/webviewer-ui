@@ -2,6 +2,7 @@
   --widget-header-indent: 49px;
   --widget-body-indent: 22px;
   --arrow-width: 22px;
+  padding: 0 4px;
 
   display: flex;
   flex-direction: column;
@@ -28,25 +29,41 @@
     text-decoration: underline;
   }
 
+  .signatureProperties {
+    &:hover, &:focus {
+      color: var(--blue-5);
+    }
+  }
+
   .link {
     cursor: pointer;
     outline: none;
+    border: 0;
+    background-color: transparent;
   }
 
-  .dropdown {
-    outline: none;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  cursor: pointer;
+  --border-radius-amount: 4px;
+  -moz-border-radius-topleft: var(--border-radius-amount);
+  -moz-border-radius-topright: var(--border-radius-amount);
+  -moz-border-radius-bottomright: var(--border-radius-amount);
+  -moz-border-radius-bottomleft: var(--border-radius-amount);
+  -webkit-border-radius: var(--border-radius-amount);
+  border-radius: var(--border-radius-amount);
+
+  &:hover {
+    border-color: var(--blue-6);
   }
 
-  .dropdown:hover {
-    cursor: pointer;
+  &:active, &:focus-within {
     background: var(--outline-hover);
-    --border-radius-amount: 4px;
-    -moz-border-radius-topleft: var(--border-radius-amount);
-    -moz-border-radius-topright: var(--border-radius-amount);
-    -moz-border-radius-bottomright: var(--border-radius-amount);
-    -moz-border-radius-bottomleft: var(--border-radius-amount);
-    -webkit-border-radius: var(--border-radius-amount);
-    border-radius: var(--border-radius-amount);
+    border-color: var(--blue-5);
+  }
+
+  .collapsible {
+    outline: none;
   }
 
   .title {
@@ -59,13 +76,20 @@
     margin-top: -5px;
     margin-bottom: -5px;
     overflow: hidden;
+    border: 0;
+    background-color: transparent;
 
-    div + * {
+    div + *, button + * {
       margin-left: 2px;
     }
 
     .arrow {
+      min-width: var(--arrow-width);
       transition: transform 0.1s ease;
+      margin-top: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
 
       &.expanded {
         transform: rotate(90deg);
@@ -74,6 +98,18 @@
       .Icon {
         width: var(--arrow-width);
         height: 22px;
+      }
+
+      &.hidden {
+        visibility: hidden;
+        // width of signature icon + margin-right + margin-left
+        padding: 16 + 5 + 2px;
+      }
+
+      &:hover {
+        .Icon {
+          color: var(--blue-6);
+        }
       }
     }
 
@@ -112,5 +148,12 @@
        */
       margin-left: calc(var(--widget-body-indent) + var(--arrow-width));
     }
+  }
+
+  .signatureDetails, .verificationDetails {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    text-align: left;
   }
 }

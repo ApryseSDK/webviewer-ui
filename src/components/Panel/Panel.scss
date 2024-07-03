@@ -39,7 +39,7 @@
       padding: 0px;
 
       .SearchPanel {
-        padding: 16px 0px 0px 16px;
+        padding: 16px 16px 0px 16px;
 
         .SearchOverlay {
           padding-right: 16px;
@@ -81,20 +81,11 @@
       }
     }
 
-    // fixes for generic versions of panels
-    .bookmark-outline-panel {
-      padding: 0;
-    }
-
     .PortfolioPanel {
       overflow: auto;
       -webkit-overflow-scrolling: touch;
       flex: 1;
       flex-direction: column;
-    }
-
-    .thumbnail-slider-container {
-      width: 100%;
     }
 
     .documentControls {
@@ -148,17 +139,24 @@
     }
   }
 
-
   &.right {
     right: 0;
-    border-left: 1px solid var(--side-panel-border);
   }
 
   &.left {
     left: 0;
-    border-right: 1px solid var(--side-panel-border);
   }
 
+  &:not(:has(.resize-bar)) {
+    &.right {
+      border-left: 1px solid var(--side-panel-border);
+    }
+  
+    &.left {
+      border-right: 1px solid var(--side-panel-border);
+    }
+  }
+ 
   &.closed {
     display: none;
   }
@@ -170,5 +168,99 @@
 
   &.left.closed {
     transform: translateX(-100%);
+  }
+
+  // Specific styles for a variety of custom panels
+  &.custom-panel {
+    background-color: var(--gray-0);
+
+    button.Dropdown,
+    .resize-bar {
+      border-color: var(--lighter-border);
+    }
+
+    .bookmark-outline-footer {
+      border-top: 1px solid var(--lighter-border);
+    }
+    
+    .msg.msg-no-bookmark-outline {
+      color: var(--gray-7)
+    }
+
+    &.flx-Panel {
+      .flx-Panel-container {
+        .documentControls {
+          border-color: var(--lighter-border);
+  
+          .documentControlsButton button,
+          .PageControlContainer button {
+            &:hover {
+              @extend %custom-button-hover;
+            }
+          }
+  
+          .PageControlContainer {
+            margin-top: 16px;
+          }
+        }
+
+        .thumbnail-slider-container {
+          width: 100%;
+          margin-bottom: 16px;
+
+          .slider-element-container {
+            margin: 0;
+          }
+
+          Button {
+            width: 24px;
+            height: 24px;
+            padding: 4px;
+            margin: 4px;
+
+            .Icon {
+              width: 16px;
+              height: auto;
+            }
+            
+            &:hover:not(.active) {
+              @extend %custom-button-hover;
+            }
+          }
+        }
+      }
+      
+      .Thumbnail.selected .container canvas {
+        background-color: rgba(43, 115, 171, 0.1);
+      }
+
+      .Thumbnail.active {
+        .container .page-image {
+          border: 1px solid var(--focus-border);
+        }
+
+        .thumbnailControls-overlay.modular-ui {
+          .Button {
+            &:hover:not(.active){
+              @extend %custom-button-hover;
+            }
+
+            &.active {
+              @extend %custom-button-active;
+            }
+          }
+        }
+      }
+    }
+
+    .OutlinesPanel, .BookmarksPanel {
+      padding: 0;
+
+      .bookmark-outline-footer .multi-selection-button {
+        &:hover:not(.disabled) {
+          @extend %custom-button-hover;
+        }
+      }
+    }
   }
 }

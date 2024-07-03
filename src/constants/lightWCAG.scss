@@ -84,6 +84,7 @@
   --border: var(--gray-6);
   --lighter-border: var(--gray-4);
   --focus-border: var(--blue-5);
+  --hover-border: var(--blue-6);
   --color-palette-border: var(--gray-8);
 
   --image-signature-drop-background: var(--blue-1);
@@ -156,4 +157,6 @@
 
   --disabled-button-color: rgba(var(--blue-5), 0.5);
   --tab-footer-button-color: var(--gray-0);
+
+  --input-switch-default-color: var(--gray-6);
 }
