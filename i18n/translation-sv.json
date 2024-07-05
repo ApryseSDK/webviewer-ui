@@ -166,12 +166,12 @@
     "formFillDot": "Punkt",
     "signature": "Signatur",
     "snipping": "Beskärningsverktyg",
-    "squiggly": "Snyggt",
+    "squiggly": "Snirklig",
     "stamp": "Stämpel",
     "stickyNote": "Notera",
     "strikeout": "Överstrykning",
     "underline": "Understrykning",
-    "custom": "Beställnings",
+    "custom": "Anpassad",
     "rubberStamp": "Gummistämpel",
     "note": "Notera",
     "textField": "Textfält",
@@ -210,7 +210,7 @@
     "SHWitness": "Bevittna",
     "SHInitialHere": "Inledande här",
     "SHAccepted": "Accepterad",
-    "SBRejected": "avvisade"
+    "SBRejected": "Avvisade"
   },
   "component": {
     "attachmentPanel": "Bilagor",
@@ -320,7 +320,7 @@
   "option": {
     "type": {
       "caret": "Markör",
-      "custom": "Beställnings",
+      "custom": "Anpassad",
       "ellipse": "Ellips",
       "fileattachment": "Bifogad fil",
       "freehand": "Fri hand",
@@ -368,7 +368,7 @@
       "toolbarGroup-Redact": "Redigera"
     },
     "annotationColor": {
-      "StrokeColor": "Stroke",
+      "StrokeColor": "Streck",
       "FillColor": "Fylla",
       "TextColor": "Text"
     },
@@ -438,7 +438,7 @@
     },
     "searchPanel": {
       "caseSensitive": "Skiftlägeskänsliga",
-      "wholeWordOnly": "Hela världen",
+      "wholeWordOnly": "Hela ord",
       "wildcard": "Jokertecken",
       "replace": "Byta ut",
       "replaceAll": "Ersätt alla",
@@ -498,7 +498,7 @@
     },
     "state": {
       "accepted": "Accepterad",
-      "rejected": "avvisade",
+      "rejected": "Avvisade",
       "completed": "Avslutad",
       "cancelled": "Inställt",
       "set": "Ange status:",
@@ -531,7 +531,7 @@
     "measurement": {
       "scaleModal": {
         "calibrate": "Kalibrera",
-        "custom": "Beställnings",
+        "custom": "Anpassad",
         "fractionalUnits": "Fraktionella enheter",
         "precision": "Precision",
         "preset": "Förinställa",
@@ -673,7 +673,7 @@
       "title": "Stil"
     },
     "settings": {
-      "settings": "inställningar",
+      "settings": "Inställningar",
       "searchSettings": "Sökinställningar",
       "general": "Allmän",
       "language": "Språk",
@@ -845,7 +845,7 @@
     "Marquee": "Marquee Zoom",
     "Link": "Länk URL eller sida",
     "Standard": "Standard",
-    "Custom": "Beställnings"
+    "Custom": "Anpassad"
   },
   "link": {
     "url": "URL",
@@ -1244,7 +1244,7 @@
         "letter": "Brev",
         "halfLetter": "Halv bokstav",
         "juniorLegal": "Junior juridisk",
-        "custom": "Beställnings"
+        "custom": "Anpassad"
       },
       "units": "Enheter"
     },
