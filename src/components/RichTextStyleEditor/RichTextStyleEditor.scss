@@ -2,17 +2,23 @@
 @import '../../constants/popup';
 
 .RichTextStyleEditor {
+  margin-bottom: 16px;
 
   .menu-items {
+    margin-bottom: 8px !important;
+
     .icon-grid {
       padding-top: 12px;
       row-gap: 12px;
+
       .row {
         padding-top: 0;
+
         &.isRedaction {
           padding-bottom: 8px;
         }
       }
+
       .auto-size-checkbox {
         padding-top: 4px;
         padding-bottom: 8px;
@@ -22,22 +28,32 @@
 
   .Dropdown__wrapper {
     width: 100%;
+
     .Dropdown {
-      width: 100%!important;
+      width: 100% !important;
     }
+
     .Dropdown__items {
       right: unset;
     }
   }
-  .FontSizeDropdown {
-    width: 100%;
-  }
 
-  .palette-controls {
-    margin-top: 8px;
+  .FontSizeDropdown {
+    width: 100% !important;
   }
 
   .ColorPalette {
-    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .text-size-slider {
+    margin-top: 16px;
+  }
+
+  @include mobile {
+    .icon-grid {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

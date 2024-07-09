@@ -7,13 +7,12 @@
     height: 32px;
     padding: 5px;
 
-    &:hover,
-    &.active {
-      @extend %custom-button-hover;
+    &:hover {
+      @extend %icon-button-hover;
     }
 
     &.active {
-      color: var(--view-header-icon-active-fill);
+      @extend %icon-button-active;
       cursor: default;
 
       .Icon {

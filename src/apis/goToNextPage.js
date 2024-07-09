@@ -1,7 +1,7 @@
 import core from 'core';
 import selectors from 'selectors';
 
-export default store => () => {
+export default (store) => () => {
   const state = store.getState();
   const currentPage = selectors.getCurrentPage(state);
 

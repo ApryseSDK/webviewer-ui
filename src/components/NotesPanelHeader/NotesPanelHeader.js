@@ -19,6 +19,7 @@ import DataElements from 'constants/dataElement';
 import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
 
 import './NotesPanelHeader.scss';
+import Icon from '../Icon';
 
 const propTypes = {
   notes: PropTypes.array.isRequired,
@@ -43,18 +44,18 @@ function NotesPanelHeader({
     isSortContainerDisabled,
     customHeaderOptions,
     annotationFilters,
-    featureFlags,
     isOfficeEditorMode,
     officeEditorEditMode,
+    customizableUI,
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
       selectors.isElementDisabled(state, SORT_CONTAINER_ELEMENT),
       selectors.getNotesPanelCustomHeaderOptions(state),
       selectors.getAnnotationFilters(state),
-      selectors.getFeatureFlags(state),
       selectors.getIsOfficeEditorMode(state),
       selectors.getOfficeEditorEditMode(state),
+      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual
   );
@@ -64,7 +65,6 @@ function NotesPanelHeader({
   const [filterEnabled, setFilterEnabled] = useState(false);
   const [isPreviewingTrackedChanges, setIsPreviewingTrackedChanges] = useState(false);
   const [searchInput, setSearchInput] = useState('');
-  const customizableUI = featureFlags.customizableUI;
 
   useEffect(() => {
     // check if Redux filter state is enabled on mount and set filterEnabled to true
@@ -127,24 +127,29 @@ function NotesPanelHeader({
     </div>
   );
 
+  const placeholderText = isOfficeEditorMode ? t('message.searchSuggestionsPlaceholder') : t('message.searchCommentsPlaceholder');
   const originalHeaderElement = (
     <DataElementWrapper
       className={
         classNames({
           'header': true,
-          'custom-header': customizableUI,
+          'modular-ui-header': customizableUI,
         })}
       dataElement="notesPanelHeader"
     >
       <DataElementWrapper
-        className="input-container"
+        className={classNames({
+          'input-container': true,
+          'modular-ui-input': customizableUI,
+        })}
         dataElement={DataElements.NotesPanel.DefaultHeader.INPUT_CONTAINER}
       >
+        {customizableUI && <Icon glyph="icon-header-search" />}
         <input
           disabled={isPreviewingTrackedChanges}
           type="text"
-          placeholder={isOfficeEditorMode ? t('message.searchSuggestionsPlaceholder') : t('message.searchCommentsPlaceholder')}
-          aria-label={isOfficeEditorMode ? t('message.searchSuggestionsPlaceholder') : t('message.searchCommentsPlaceholder')}
+          placeholder={customizableUI ? '' : placeholderText}
+          aria-label={placeholderText}
           onChange={handleInputChange}
           id="NotesPanel__input"
           value={searchInput}

@@ -1,15 +1,19 @@
-/**
- * https://www.pdftron.com/api/web/Core.AnnotationManager.html#setDisplayMode__anchor
- * @fires displayModeUpdated on AnnotationManager
- * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:displayModeUpdated__anchor
- * @fires zoomUpdated on AnnotationManager
- * @see https://www.pdftron.com/api/web/Core.AnnotationManager.html#event:zoomUpdated__anchor
- */
-export default mode => {
-  const displayModeManager = window.documentViewer.getDisplayModeManager();
-  const displayMode = (displayModeManager.isVirtualDisplayEnabled())
-    ? new window.Core.VirtualDisplayMode(window.documentViewer, mode)
-    : new window.Core.DisplayMode(window.documentViewer, mode);
+import core from 'core';
 
-  displayModeManager.setDisplayMode(displayMode);
+/**
+ * https://docs.apryse.com/api/web/Core.AnnotationManager.html#setDisplayMode__anchor
+ * @fires displayModeUpdated on AnnotationManager
+ * @see https://docs.apryse.com/api/web/Core.AnnotationManager.html#event:displayModeUpdated__anchor
+ * @fires zoomUpdated on AnnotationManager
+ * @see https://docs.apryse.com/api/web/Core.AnnotationManager.html#event:zoomUpdated__anchor
+ */
+export default (mode) => {
+  for (const documentViewer of core.getDocumentViewers()) {
+    const displayModeManager = documentViewer.getDisplayModeManager();
+    const displayMode = (displayModeManager.isVirtualDisplayEnabled())
+      ? new window.Core.VirtualDisplayMode(documentViewer, mode)
+      : new window.Core.DisplayMode(documentViewer, mode);
+
+    displayModeManager.setDisplayMode(displayMode);
+  }
 };

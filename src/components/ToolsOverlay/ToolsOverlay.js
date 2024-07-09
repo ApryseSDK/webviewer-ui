@@ -161,7 +161,7 @@ class ToolsOverlay extends React.PureComponent {
 
     if (activeToolGroup === 'signatureTools') {
       Component = (
-        <SelectedSignatureRow/>
+        <SelectedSignatureRow />
       );
     } else if (activeToolGroup === 'rubberStampTools') {
       Component = (
@@ -181,7 +181,7 @@ class ToolsOverlay extends React.PureComponent {
       );
     } else if (['crossStampTools', 'checkStampTools', 'dotStampTools'].includes(activeToolGroup)) {
       Component = (
-        <SelectedStamp tReady={tReady} toolName={toolNames[0]}/>
+        <SelectedStamp tReady={tReady} toolName={toolNames[0]} />
       );
     }
 

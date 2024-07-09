@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Pán",
     "select": "Válassza ki",
+    "selectAnOption": "Válassz egy lehetőséget",
     "Marquee": "Marquee Zoom",
     "Link": "Link URL vagy oldal",
     "Standard": "Alapértelmezett",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Csak megtekintésre",
     "viewOnlyDescription": "Megtekintés javaslatok nélkül",
     "notSupportedOnMobile": "Az irodai szerkesztés nem támogatott mobileszközökön.",
-    "previewAllChanges": "Tekintse meg az összes módosítás előnézetét"
+    "previewAllChanges": "Tekintse meg az összes módosítás előnézetét",
+    "accept": "Elfogad",
+    "reject": "Elutasít"
   },
   "insertPageModal": {
     "title": "Új oldal hozzáadása",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Tartalom szerkesztése"
     },
     "addColorToCustom": "Adjon hozzá egyedi színekhez",
-    "noToolSelected": "Válasszon ki egy eszközt az eszköz tulajdonságainak megtekintéséhez",
+    "noToolSelected": "Ez a dokumentum nem tartalmaz rétegeket.",
     "noToolStyle": "Az eszköz nem tartalmaz stílustulajdonságokat."
   },
   "signatureListPanel": {

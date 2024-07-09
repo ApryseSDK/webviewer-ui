@@ -3,6 +3,7 @@ import ToggleElementButton from './toggleElementButton';
 
 /**
  * Creates a new instance of ToolGroupButton.
+ * @ignore
  * @name ToolGroupButton
  * @memberof UI.Components
  * @class UI.Components.ToolGroupButton

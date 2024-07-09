@@ -1,3 +1,3 @@
-import RedactionSearchOverlay from './RedactionSearchOverlayContainer';
+import RedactionSearchOverlayContainer from './RedactionSearchOverlayContainer';
 
-export default RedactionSearchOverlay;
+export default RedactionSearchOverlayContainer;

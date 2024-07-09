@@ -25,9 +25,11 @@
   .multi-select-footer {
     background: var(--panel-background);
     display: flex;
-    border-top: 1px solid #CFD4DA;
+    border-top: 1px solid var(--gray-5);
     margin-top: auto;
-    height: 72px;
+    margin-bottom: 16px;
+    height: 64px;
+    padding: 24px 16px;
     align-items: center;
     justify-content: center;
     position: absolute;
@@ -37,7 +39,7 @@
 
     .close-container {
       margin-top: auto;
-      right: 10px;
+      right: 26px;
       position: absolute;
     }
   }

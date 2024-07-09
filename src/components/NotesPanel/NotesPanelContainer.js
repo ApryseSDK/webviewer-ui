@@ -3,7 +3,6 @@ import core from 'core';
 import NotesPanel from './NotesPanel';
 import { useSelector, shallowEqual } from 'react-redux';
 import selectors from 'selectors';
-import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
 import DataElements from 'constants/dataElement';
 import { mapAnnotationToKey, annotationMapKeys } from 'constants/map';
 
@@ -16,7 +15,6 @@ function NotesPanelContainer(props) {
     isMultiViewerMode,
     activeDocumentViewerKey,
     isOfficeEditorMode,
-    officeEditorEditMode,
   ] = useSelector(
     (state) => [
       selectors.isElementOpen(state, parentDataElement || dataElement || DataElements.NOTES_PANEL),
@@ -25,7 +23,6 @@ function NotesPanelContainer(props) {
       selectors.isMultiViewerMode(state),
       selectors.getActiveDocumentViewerKey(state),
       selectors.getIsOfficeEditorMode(state),
-      selectors.getOfficeEditorEditMode(state),
     ],
     shallowEqual,
   );
@@ -56,8 +53,6 @@ function NotesPanelContainer(props) {
   }, [activeDocumentViewerKey, isMultiSelectedViewerMap[1], isMultiSelectedViewerMap[2], setIsMultiSelectedViewerMap]);
   const isMultiSelectedMap = isMultiSelectedViewerMap[activeDocumentViewerKey] || isMultiSelectedViewerMap[1];
 
-  const isOfficeEditorReviewingMode = isOfficeEditorMode && officeEditorEditMode === OFFICE_EDITOR_EDIT_MODE.REVIEWING;
-
   useEffect(() => {
     const onDocumentUnloaded = (documentViewerKey = activeDocumentViewerKey) => () => {
       setNotes([], documentViewerKey);
@@ -82,7 +77,7 @@ function NotesPanelContainer(props) {
               !annot.isGrouped() &&
               annot.ToolName !== window.Core.Tools.ToolNames.CROP &&
               !annot.isContentEditPlaceholder() &&
-              (!isOfficeEditorReviewingMode || mapAnnotationToKey(annot) === annotationMapKeys.TRACKED_CHANGE),
+              (!isOfficeEditorMode || mapAnnotationToKey(annot) === annotationMapKeys.TRACKED_CHANGE),
           ),
         documentViewerKey,
       );
@@ -120,7 +115,7 @@ function NotesPanelContainer(props) {
       core.removeEventListener('annotationHidden', setNotes1);
       core.removeEventListener('updateAnnotationPermission', setNotes1);
     };
-  }, [isMultiViewerMode, isOfficeEditorReviewingMode]);
+  }, [isMultiViewerMode, isOfficeEditorMode]);
 
   useEffect(() => {
     const onAnnotationSelected = (documentViewerKey = activeDocumentViewerKey) => (annotations, action) => {
@@ -196,7 +191,6 @@ function NotesPanelContainer(props) {
     setIsMultiSelectedMap,
     scrollToSelectedAnnot,
     setScrollToSelectedAnnot,
-    isOfficeEditorReviewingMode,
   };
 
   // We wrap the element in a div so the tooltip works properly

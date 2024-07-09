@@ -7,10 +7,9 @@
   user-select: none;
   width: 28px;
   height: 28px;
-  right: -10px;
-  top: -8px;
+  position: relative; // needs position: relative so that .note-popup-options can be positioned absolute correctly
 
-  .overflow {
+  .Button.overflow {
     width: 28px;
     height: 28px;
     border-radius: 4px;
@@ -45,6 +44,7 @@
     border-radius: 4px;
     background: var(--component-background);
     top: 40px;
+    width: max-content;
 
     .note-popup-option {
       @include button-reset;
@@ -78,11 +78,28 @@
         border-bottom-right-radius: 4px;
       }
     }
+
+    &.modular-ui {
+      .option {
+        &:hover {
+          @extend %custom-flyout-item-hover;
+        }
+      }
+    }
   }
 
   .Button {
+    height: 28px;
+
     &.active {
       background: var(--popup-button-active);
+    }
+
+    &.note-popup-toggle-trigger {
+      @include mobile {
+        width: 28px;
+        height: 28px;
+      }
     }
   }
 }

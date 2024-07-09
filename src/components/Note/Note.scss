@@ -72,6 +72,18 @@
     flex-direction: column;
     row-gap: 4px;
     padding-right: 12px;
+
+    &.modular-ui {
+      .group-child {  
+        &:hover {
+          border: none;
+          // This is a way to add the border without changing the size of the element
+          box-shadow: inset 0 0 0 1px var(--blue-6);
+          background: var(--faded-component-background);
+          border-radius: 4px;
+        }
+      }
+    }
   }
 
   .text-button {

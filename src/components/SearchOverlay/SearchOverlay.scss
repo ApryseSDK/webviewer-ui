@@ -39,6 +39,11 @@
       color: var(--placeholder-text);
     }
 
+    .Icon {
+      width: 16px;
+      height: 16px;
+    }
+
     .clearSearch-button {
       @include button-reset;
       cursor: pointer;
@@ -73,7 +78,7 @@
 
     // toolkit choice component
     > span {
-      margin-right: 8px;
+      margin-right: 16px;
       // label of toolkit choice component
       > label {
         white-space: nowrap;
@@ -81,6 +86,83 @@
     }
   }
 
+  .replace-options {
+    .replace-buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      padding-top: 10px;
+      .spinner {
+        margin: 0;
+        position: absolute;
+        left: 30px;
+      }
+      .btn-replace {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--blue-5);
+        border: 1px solid var(--blue-5);
+        color: var(--gray-0);
+        padding: 6px 18px;
+        width: auto;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        border-radius: 4px;
+        height: 28px;
+        cursor: pointer;
+      }
+
+      .btn-replace-all {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--blue-5);
+        padding: 6px 18px;
+        width: auto;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        height: 28px;
+        cursor: pointer;
+        margin-right: 5px;
+
+        &:hover:not(:disabled) {   
+          color: var(--blue-6);
+        }
+      }
+
+      button {
+        &:disabled {
+          opacity: 0.5;
+          cursor: default;
+        }
+      }
+    }
+  }
+
+  .extra-options {
+    margin-top: 5px;
+    button.Button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--blue-5);
+      width: auto;
+      cursor: pointer;
+      margin-right: 5px;
+      font-weight: 500;
+      height: 25px;
+
+      .Icon {
+        color: var(--blue-5);
+        width: 14px;
+        margin-top: 10px;
+        margin-left: 6px;
+      }
+    }
+  }
   .footer {
     display: flex;
     align-items: center;
@@ -114,7 +196,7 @@
         cursor: pointer;
 
         svg {
-          color: var(--gray-7);
+          color: var(--gray-6);
         }
 
         &:hover {
@@ -125,6 +207,58 @@
       .arrow {
         width: 18px;
         height: 18px;
+      }
+    }
+  }
+
+  &.modular-ui {
+    .replace-buttons {
+      .btn-replace {
+        &:hover:not(:disabled) {
+          @extend %default-button-hover;
+        }
+      }
+      .btn-replace-all {
+        &:hover:not(:disabled) {
+          @extend %tertiary-button-hover;
+        }
+      }
+    }
+
+    .footer .buttons {
+      .button {
+        &:hover {
+          @extend %icon-button-hover;
+        }
+      }
+    }
+
+    .input-container { 
+      &:focus-within {
+        outline: none;
+        border: 1px solid var(--focus-border);
+      }
+
+      .clearSearch-button {
+        &:hover {
+          @extend %icon-button-hover;
+        }
+      }
+
+      .search-panel-input {
+        padding-left: 8px;
+      }
+    }
+
+    .extra-options {
+      .Button {
+        &:hover {
+          @extend %tertiary-button-hover;
+  
+          .Icon {
+            color: var(--blue-6);
+          }
+        }
       }
     }
   }

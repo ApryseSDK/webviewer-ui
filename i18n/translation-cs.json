@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Pánev",
     "select": "Vybrat",
+    "selectAnOption": "Vyberte možnost",
     "Marquee": "Marquee Zoom",
     "Link": "Adresa URL odkazu nebo stránka",
     "Standard": "Standard",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Pouze zobrazení",
     "viewOnlyDescription": "Zobrazit bez návrhů",
     "notSupportedOnMobile": "Úpravy Office nejsou podporovány na mobilních zařízeních.",
-    "previewAllChanges": "Náhled všech změn"
+    "previewAllChanges": "Náhled všech změn",
+    "accept": "Akceptovat",
+    "reject": "Odmítnout"
   },
   "insertPageModal": {
     "title": "Přidat novou stránku",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Úprava obsahu"
     },
     "addColorToCustom": "Přidat k vlastním barvám",
-    "noToolSelected": "Chcete-li zobrazit vlastnosti nástroje, vyberte nástroj",
+    "noToolSelected": "Tento dokument neobsahuje žádné vrstvy.",
     "noToolStyle": "Nástroj neobsahuje žádné stylingové vlastnosti."
   },
   "signatureListPanel": {

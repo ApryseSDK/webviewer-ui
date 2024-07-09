@@ -7,6 +7,9 @@ import { mockModularComponents } from '../AppStories/mockAppState';
 export default {
   title: 'ModularComponents/RibbonItem',
   component: RibbonItem,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const initialState = {

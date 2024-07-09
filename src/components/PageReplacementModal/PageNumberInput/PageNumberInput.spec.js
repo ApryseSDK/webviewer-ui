@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import PageNumberInput from './PageNumberInput';
 import { Basic } from './PageNumberInput.stories';
 import userEvent from '@testing-library/user-event';
 
-function noop() { };
+function noop() { }
 
 describe('PageNumberInput component', () => {
   // These tests are expected to throw warnings so we do this to reduce noise in our output
@@ -14,7 +14,7 @@ describe('PageNumberInput component', () => {
 
   it('Renders the StoryBook component without issues', () => {
     expect(() => {
-      render(<Basic />)
+      render(<Basic />);
     }).not.toThrow();
   });
 
@@ -24,7 +24,7 @@ describe('PageNumberInput component', () => {
     const props = {
       onSelectedPageNumbersChange: noop,
       pageCount: 10,
-      selectedPageNumbers: selectedPageNumbers
+      selectedPageNumbers
     };
 
     render(<PageNumberInput {...props} />);
@@ -106,7 +106,7 @@ describe('PageNumberInput component', () => {
 
   it('When a user enters a page number range with an invalid page number, the callback gets called only with the valid numbers', () => {
     const props = {
-      onSelectedPageNumbersChange: jest.fn(), //Mock fn
+      onSelectedPageNumbersChange: jest.fn(), // Mock fn
       pageCount: 10,
       selectedPageNumbers: []
     };
@@ -121,4 +121,4 @@ describe('PageNumberInput component', () => {
     // Handler should be called only with valid numbers
     expect(props.onSelectedPageNumbersChange).toBeCalledWith([1, 2, 3]);
   });
-})
+});

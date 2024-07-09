@@ -1,3 +1,3 @@
-import NoteTextPreview from './NoteTextPreviewContainer';
+import NoteTextPreviewContainer from './NoteTextPreviewContainer';
 
-export default NoteTextPreview;
+export default NoteTextPreviewContainer;

@@ -3,11 +3,16 @@ import core from 'core';
 import NotePopup from './NotePopup';
 import Tooltip from 'components/Tooltip';
 import { useTranslation } from 'react-i18next';
-
-
+import { useSelector } from 'react-redux';
+import selectors from 'selectors';
 
 function NotePopupContainer(props) {
-  const { annotation, setIsEditing, noteIndex } = props; // eslint-disable-line react/prop-types
+  const [
+    activeDocumentViewerKey,
+  ] = useSelector((state) => [
+    selectors.getActiveDocumentViewerKey(state),
+  ]);
+  const { annotation, setIsEditing, noteIndex } = props;
 
   const [canModify, setCanModify] = React.useState(core.canModify(annotation));
   const [canModifyContents, setCanModifyContents] = React.useState(core.canModifyContents(annotation));
@@ -16,25 +21,26 @@ function NotePopupContainer(props) {
 
   React.useEffect(() => {
     function onUpdateAnnotationPermission() {
-      setCanModify(core.canModify(annotation));
-      setCanModifyContents(core.canModifyContents(annotation));
+      setCanModify(core.canModify(annotation, activeDocumentViewerKey));
+      setCanModifyContents(core.canModifyContents(annotation, activeDocumentViewerKey));
     }
-    core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
-    return () =>
-      core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission);
-  }, [annotation]);
 
-  const handleEdit = React.useCallback(function handleEdit() {
-    const isFreeText = annotation instanceof window.Annotations.FreeTextAnnotation;
-    if (isFreeText && core.getAnnotationManager().isFreeTextEditingEnabled()) {
-      core.getAnnotationManager().trigger('annotationDoubleClicked', annotation);
+    onUpdateAnnotationPermission();
+    core.addEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, undefined, activeDocumentViewerKey);
+    return () => core.removeEventListener('updateAnnotationPermission', onUpdateAnnotationPermission, activeDocumentViewerKey);
+  }, [annotation, activeDocumentViewerKey]);
+
+  const handleEdit = React.useCallback(() => {
+    const isFreeText = annotation instanceof window.Core.Annotations.FreeTextAnnotation;
+    if (isFreeText && core.getAnnotationManager(activeDocumentViewerKey).isFreeTextEditingEnabled()) {
+      core.getAnnotationManager(activeDocumentViewerKey).trigger('annotationDoubleClicked', annotation);
     } else {
       setIsEditing(true, noteIndex);
     }
   }, [annotation, setIsEditing, noteIndex]);
 
-  const handleDelete = React.useCallback(function handleDelete() {
-    core.deleteAnnotations([annotation, ...annotation.getGroupedChildren()]);
+  const handleDelete = React.useCallback(() => {
+    core.deleteAnnotations([annotation, ...annotation.getGroupedChildren()], undefined, activeDocumentViewerKey);
   }, [annotation]);
 
   const openPopup = () => setIsOpen(true);
@@ -64,4 +70,3 @@ function NotePopupContainer(props) {
 }
 
 export default NotePopupContainer;
-

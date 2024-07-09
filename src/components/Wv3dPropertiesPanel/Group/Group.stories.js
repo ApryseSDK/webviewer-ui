@@ -3,6 +3,8 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import RightPanel from 'components/RightPanel';
 import Group from './Group';
+import '../Wv3dPropertiesPanel.scss';
+import '../../Panel/Panel.scss';
 
 export default {
   title: 'Components/Wv3dPropertiesPanel/Group/Group',
@@ -24,7 +26,7 @@ const initialState = {
     panelWidths: {
       wv3dPropertiesPanel: 330,
     },
-    modularHeaders: [],
+    modularHeaders: {},
     modularHeadersHeight: {
       topHeaders: 40,
       bottomHeaders: 40

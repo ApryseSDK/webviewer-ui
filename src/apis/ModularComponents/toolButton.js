@@ -7,10 +7,11 @@ import Item from './item';
  * @memberOf UI.Components
  * @class UI.Components.ToolButton
  * @extends UI.Components.Item
- * @property {ItemProperties} properties An object that contains the properties of the ToolButton.
- * @property {string} [properties.label] The label of the button.
- * @property {string} [properties.img] The icon of the button.
- * @property {string} [properties.toolName] The name of the tool that the button activates. Refer to: {@link Core.Tools.ToolNames}
+ * @param {Object} properties An object that contains the properties of the ToolButton.
+ * @param {string} [properties.dataElement] The data element of the button.
+ * @param {string} [properties.label] The label of the button.
+ * @param {string} [properties.img] The icon of the button.
+ * @param {Core.Tools.ToolNames | string} [properties.toolName] The name of the tool that the button activates. Refer to: {@link Core.Tools.ToolNames}
  * @example
 const toolButton = new instance.UI.Components.ToolButton({
   label: 'Pan',

@@ -186,8 +186,8 @@
           }
         }
 
-        &:hover {
-          background: var(--primary-button-hover);
+        &:hover:not(:disabled) {
+          background: var(--primary-button-hover) !important;
         }
       }
     }

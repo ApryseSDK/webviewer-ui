@@ -20,7 +20,7 @@ import LayersPanel from 'components/LayersPanel';
 import TextEditingPanel from 'components/TextEditingPanel';
 import MultiViewerWrapper from 'components/MultiViewer/MultiViewerWrapper';
 import ComparePanel from 'components/MultiViewer/ComparePanel';
-import GenericOutlinesPanel from 'components/ModularComponents/GenericOutlinesPanel';
+import OutlinesPanel from 'components/OutlinesPanel';
 import SignaturePanel from 'components/SignaturePanel';
 import BookmarksPanel from 'components/BookmarksPanel';
 import FileAttachmentPanel from 'components/FileAttachmentPanel';
@@ -75,7 +75,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
   const renderPanel = (panelName, dataElement) => {
     switch (panelName) {
       case panelNames.OUTLINE:
-        return <GenericOutlinesPanel dataElement={dataElement}/>;
+        return <OutlinesPanel dataElement={dataElement}/>;
       case panelNames.SIGNATURE:
         return <SignaturePanel dataElement={dataElement}/>;
       case panelNames.BOOKMARKS:
@@ -255,34 +255,34 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
     return itemsToHide;
   };
 
-  const getAvailableSpace = (itemsShown, headerRect) => {
+  const calculateAvailableSpace = (itemsShown, headerRect) => {
     const lastItemRect = itemsShown[itemsShown.length - 1]?.getBoundingClientRect();
-    const lastItemEnd = lastItemRect?.right;
-    const parentRectEnd = headerRect?.right;
+    const lastItemEnd = lastItemRect?.right || 0;
+    const parentRectEnd = headerRect?.right || 0;
 
     return parentRectEnd - lastItemEnd;
   };
 
   const handleTabPanelElements = () => {
     dispatch(actions.closeElements([FLYOUT_NAME]));
-    const itemsShown = tabPanelHeaderRef?.current?.querySelectorAll('.tabPanelButton');
-    const headerRect = tabPanelHeaderRef.current.getBoundingClientRect();
-    const availableSpace = getAvailableSpace(itemsShown, headerRect);
-    const moreButtonRect = moreButtonRef.current.getBoundingClientRect();
-    const sizeNeededForButton = moreButtonRect.width;
 
-    if (availableSpace < sizeNeededForButton && visiblePanelTabs.length > 1) {
-      const minAvailableSpaceRequired = availableSpace - sizeNeededForButton;
+    const itemsShown = Array.from(tabPanelHeaderRef?.current?.querySelectorAll('.tabPanelButton'));
+    const headerRect = tabPanelHeaderRef.current.getBoundingClientRect();
+    const availableSpace = calculateAvailableSpace(itemsShown, headerRect);
+    const moreButtonRect = moreButtonRef.current.getBoundingClientRect();
+    const sizeNeededForMoreButton = moreButtonRect.width;
+
+    if (availableSpace < sizeNeededForMoreButton && visiblePanelTabs.length > 1) {
+      const minAvailableSpaceRequired = availableSpace - sizeNeededForMoreButton;
       const itemsToHide = getItemsToHide(visiblePanelTabs, itemsShown, minAvailableSpaceRequired);
       moveItemsToOverflow(itemsToHide);
     } else if (overflowItems.length > 0) {
-      const shownItems = [].slice.call(itemsShown);
-      const largestItem = shownItems.reduce((largestItem, item) => {
+      const largestItem = itemsShown.reduce((largestItem, item) => {
         return largestItem.getBoundingClientRect().width > item.getBoundingClientRect().width ? largestItem : item;
       });
 
       const spaceForLargestItem = largestItem.getBoundingClientRect().width;
-      if (availableSpace > spaceForLargestItem + sizeNeededForButton) {
+      if (availableSpace > spaceForLargestItem + sizeNeededForMoreButton) {
         moveItemsToContainer([overflowItems[0]]);
       }
     }
@@ -350,7 +350,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
 
   const renderTabs = () => {
     if (visiblePanelTabs?.length) {
-      return visiblePanelTabs.map((tab) => {
+      return visiblePanelTabs.map((tab, index) => {
         const panelInfo = panelsObject[tab];
         return (
           <Button
@@ -358,6 +358,7 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
               tabPanelButton: true,
               hasIcon: iconFlag,
               hasLabel: labelFlag,
+              lastButton: overflowItems.length === 0 && index === visiblePanelTabs.length - 1,
             })}
             key={`${tab}-${tabPanelDataElement}`}
             isActive={tab === activeCustomPanel}
@@ -393,7 +394,6 @@ const TabPanel = ({ dataElement: tabPanelDataElement }) => {
                 ref={moreButtonRef}
                 className={classNames({
                   'moreButton': true,
-                  'Button': true,
                   'hidden': overflowItems.length === 0,
                   'active': moreButtonIcon === 'icon-tools-more-active',
                 })}

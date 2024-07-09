@@ -1,3 +1,3 @@
-import ModularHeader from 'src/components/ModularComponents/ModularHeader/ModularHeader';
+import ModularHeaderContainer from './ModularHeaderContainer';
 
-export default ModularHeader;
+export default ModularHeaderContainer;

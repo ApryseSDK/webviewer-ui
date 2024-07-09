@@ -239,6 +239,11 @@ const StylePanel = () => {
 
     core.addEventListener('annotationSelected', onAnnotationSelected);
     core.addEventListener('toolModeUpdated', handleToolModeChange);
+    core.addEventListener('annotationChanged', () => {
+      for (const annot of core.getSelectedAnnotations()) {
+        updateStylePanelProps(annot);
+      }
+    });
     return () => {
       core.removeEventListener('annotationSelected', onAnnotationSelected);
       core.removeEventListener('toolModeUpdated', handleToolModeChange);
@@ -388,9 +393,9 @@ const StylePanel = () => {
 
   const noToolSelected = (
     <>
-      <div className='style-panel-header'>
+      <label className='style-panel-header'>
         {t('stylePanel.headings.styles')}
-      </div>
+      </label>
       <div className="no-tool-selected">
         <div>
           <Icon className="empty-icon" glyph="style-panel-no-tool-selected" />
@@ -436,7 +441,7 @@ const StylePanel = () => {
     noToolSelected
   ) : (
     <>
-      <div className="style-panel-header">{panelTitle}</div>
+      <label className="style-panel-header">{panelTitle}</label>
       {noToolStyle ? (
         <div className="no-tool-selected">
           <div>

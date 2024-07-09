@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 import './ColorPalettePicker.scss';
 import '../ColorPalette/ColorPalette.scss';
-import { COMMON_COLORS } from 'constants/commonColors';
 
 const ColorPalettePicker = ({
   color,
@@ -62,7 +61,7 @@ const ColorPalettePicker = ({
                 <div
                   className={classNames({
                     cell: true,
-                    border: bg.toLowerCase() === COMMON_COLORS['white'].toLowerCase() || bg === 'transparency',
+                    border: true,
                   })}
                   style={{ backgroundColor: bg }}
                 >
@@ -74,7 +73,7 @@ const ColorPalettePicker = ({
           )}
           {enableEdit && (
             <button
-              className="cell-container"
+              className="cell-container cell-tool"
               title={t('option.colorPalettePicker.addColor')}
             >
               <div className="cell-outer">
@@ -86,7 +85,7 @@ const ColorPalettePicker = ({
           )}
           {enableEdit && customColors.length > 0 && (
             <button
-              className="cell-container"
+              className="cell-container cell-tool"
               id="removeCustomColor"
               disabled={!colorToBeDeleted}
               onClick={openDeleteModal}

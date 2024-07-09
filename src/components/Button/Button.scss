@@ -38,25 +38,23 @@
 
   &.disabled {
     background: none!important;
+    cursor: default;
+    
     .Icon {
-      color: var(--disabled-icon);
-
-      g {
-        stroke: var(--disabled-icon);
-      }
+      color: var(--disabled-icon) !important;
     }
     span {
       color: var(--disabled-icon);
     }
-    cursor: default;
   }
 
   &.custom-ui {
     &.icon-only {
-      &:hover {
-        @extend %custom-button-hover;
-      }
+      &:hover:not(:disabled):not(.disabled) {
+        @extend %icon-button-hover;
 
+      }
+      
       &.active {
         box-shadow: inset 0 0 0 1px var(--blue-5);
         background: var(--tools-button-active);

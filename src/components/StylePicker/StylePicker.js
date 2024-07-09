@@ -309,6 +309,8 @@ const StylePicker = ({
         onStyleChange={onSliderChange}
         onSliderChange={onSliderChange}
         shouldHideSliderTitle={shouldHideSliderTitle}
+        customCircleRadius={8}
+        customLineStrokeWidth={5}
       />
     );
   };
@@ -341,8 +343,7 @@ const StylePicker = ({
             onKeyDown={(e) => e.key === 'Enter' && openTextStyleContainer()}
             role={'toolbar'}
           >
-            <div
-              className="menu-title">{t(stylePanelSectionTitles(activeTool, 'OverlayText') || 'option.stylePopup.textStyle')}</div>
+            <label className="menu-title">{t(stylePanelSectionTitles(activeTool, 'OverlayText') || 'option.stylePopup.textStyle')}</label>
             <div className="icon-container">
               <Icon glyph={`icon-chevron-${isTextStyleContainerActive ? 'up' : 'down'}`} />
             </div>
@@ -350,7 +351,7 @@ const StylePicker = ({
           {isTextStyleContainerActive && isRedaction && (
             <div className="PanelSubsection RedactionTextLabel">
               <div className="menu-subtitle">{t('stylePanel.headings.redactionTextLabel')}</div>
-              <LabelTextEditor properties={style} onPropertyChange={onStyleChange} placeholderText={t('stylePanel.headings.redactionTextPlaceholder')} />
+              <LabelTextEditor properties={style} onPropertyChange={onStyleChange} placeholderText={' '} />
             </div>
           )}
           {isTextStyleContainerActive && (

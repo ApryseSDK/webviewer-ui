@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Tava",
     "select": "Seçme",
+    "selectAnOption": "Bir seçenek seçin",
     "Marquee": "Seçim çerçevesi yakınlaştırması",
     "Link": "Bağlantı URL'si veya Sayfa",
     "Standard": "Standart",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Sadece Görüntüle",
     "viewOnlyDescription": "Öneriler olmadan görüntüle",
     "notSupportedOnMobile": "Office düzenlemesi mobil cihazlarda desteklenmez.",
-    "previewAllChanges": "Tüm değişiklikleri önizleyin"
+    "previewAllChanges": "Tüm değişiklikleri önizleyin",
+    "accept": "Kabul etmek",
+    "reject": "Reddetmek"
   },
   "insertPageModal": {
     "title": "Yeni Sayfa Ekle",
@@ -1331,7 +1334,7 @@
       "contentEdit": "İçerik Düzenleme"
     },
     "addColorToCustom": "Özel renklere ekle",
-    "noToolSelected": "Araç özelliklerini görüntülemek için bir araç seçin",
+    "noToolSelected": "Bu belge herhangi bir katman içermiyor.",
     "noToolStyle": "Araç herhangi bir stil özelliği içermiyor."
   },
   "signatureListPanel": {

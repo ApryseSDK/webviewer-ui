@@ -6,15 +6,23 @@ import PageNumberInput from '../PageNumberInput';
 import '../PageReplacementModal.scss';
 import './FileSelectedPanel.scss';
 import PageThumbnailsGrid from 'src/components/PageThumbnailsGrid';
+import { isMobileSize, isTabletSize } from 'helpers/getDeviceSize';
+import ModalWrapper from 'components/ModalWrapper';
+
+const MAX_NAME_LENGTH_BEFORE_TRUNCATION = 25;
+const TRUNCATION_LENGTH = 10;
+const TABLET_TRUNCATION_LENGTH = 4;
 
 // Need to forward the ref so the FocusTrap works correctly
 const FileSelectedPanel = React.forwardRef((
   {
     closeThisModal,
+    clearLoadedFile,
     pageIndicesToReplace,
     sourceDocument,
     replacePagesHandler,
     documentInViewer,
+    closeModalWarning,
   }, ref) => {
   const [t] = useTranslation();
 
@@ -24,12 +32,32 @@ const FileSelectedPanel = React.forwardRef((
   const [sourceDocumentName, setSourceDocumentName] = useState(null);
   const [currentDocumentName, setCurrentDocumentName] = useState(null);
   const [sourceDocumentPageCount, setSourceDocumentPageCount] = useState(0);
+  const [pageNumberError, setPageNumberError] = useState('');
+
+  const isTablet = isTabletSize();
+
+  const isMobile = isMobileSize();
+
+  useEffect(() => {
+    if (sourceDocument) {
+      const pageCount = sourceDocument.getPageCount();
+      const selectedPages = {};
+      for (let i = 1; i <= pageCount; i++) {
+        selectedPages[i] = true;
+      }
+      setSelectedThumbnails(selectedPages);
+    }
+  }, [sourceDocument]);
 
   useEffect(() => {
     function getTruncatedName(documentName) {
       let truncatedName;
-      if (documentName.length > 25) {
-        truncatedName = `"${documentName.slice(0, 10)}...${documentName.slice(documentName.length - 10)}"`;
+      if (documentName.length > MAX_NAME_LENGTH_BEFORE_TRUNCATION) {
+        if (isTablet && !isMobile) {
+          truncatedName = `"${documentName.slice(0, TABLET_TRUNCATION_LENGTH)}...${documentName.slice(documentName.length)}"`;
+        } else {
+          truncatedName = `"${documentName.slice(0, TRUNCATION_LENGTH)}...${documentName.slice(documentName.length - TRUNCATION_LENGTH)}"`;
+        }
       } else {
         truncatedName = `"${documentName}"`;
       }
@@ -66,7 +94,6 @@ const FileSelectedPanel = React.forwardRef((
     return selectedPageNumbers;
   };
 
-
   const onThumbnailSelected = (pageNumber) => {
     if (selectedThumbnails[pageNumber] === undefined) {
       selectedThumbnails[pageNumber] = true;
@@ -77,6 +104,9 @@ const FileSelectedPanel = React.forwardRef((
   };
 
   const isReplaceButtonDisabled = () => {
+    if (currentDocSelectedPageNumbers.length < 1 || pageNumberError) {
+      return true;
+    }
     for (const pageIndex in selectedThumbnails) {
       if (selectedThumbnails[pageIndex]) {
         return false;
@@ -90,58 +120,79 @@ const FileSelectedPanel = React.forwardRef((
     setSelectedThumbnails({ ...selectedPagesMap });
   };
 
+  const handlePageNumbersChanged = (pageNumbers) => {
+    setPageNumberError(null);
+    setCurrentDocSelectedPageNumbers(pageNumbers);
+  };
+
+  const handlePageNumberError = (pageNumber) => {
+    if (pageNumber) {
+      setPageNumberError(`${t('message.errorPageNumber')} ${loadedDocumentPageCount}`);
+    }
+  };
+
+  const onCloseHandler = () => {
+    closeModalWarning();
+  };
 
   const loadedDocumentPageCount = documentInViewer.getPageCount();
 
   return (
-    <div className="container" onMouseDown={(e) => e.stopPropagation()} ref={ref}>
-      <div className="swipe-indicator" />
-      <div className="header">
-        {t('component.pageReplaceModalTitle')}
-        <Button
-          img={'icon-close'}
-          onClick={() => closeThisModal()}
-          dataElement={'pageReplacementModalClose'}
-        />
-      </div>
-      <div className="page-replacement-divider" />
-      <div className="modal-body">
-        <div className="replace-page-input-container">
-          <div className="replace-page-input">{t('option.pageReplacementModal.pageReplaceInputLabel')}</div>
-          <PageNumberInput
-            selectedPageNumbers={currentDocSelectedPageNumbers}
-            pageCount={loadedDocumentPageCount}
-            onBlurHandler={setCurrentDocSelectedPageNumbers}
-          />
-          <div className="replace-page-input"><span className="page-replace-doc-name">{currentDocumentName}</span> {t('option.pageReplacementModal.pageReplaceInputFromSource')}</div>
-          <PageNumberInput
-            selectedPageNumbers={getPageNumbersFromSelectedThumbnails()}
-            pageCount={sourceDocumentPageCount}
-            onBlurHandler={onSourceDocumentNumberInputChange}
-          />
-          <div className="replace-page-input"><span className="page-replace-doc-name">{sourceDocumentName}</span></div>
+    <div className="fileSelectedPanel container" onMouseDown={(e) => e.stopPropagation()} ref={ref}>
+      <ModalWrapper
+        title={t('component.pageReplaceModalTitle')}
+        closeButtonDataElement={'pageReplacementModalClose'}
+        onCloseClick={onCloseHandler}
+        swipeToClose
+        closeHandler={onCloseHandler}
+        backButtonDataElement={'insertFromFileBackButton'}
+        onBackClick={clearLoadedFile}
+      >
+        <div className="swipe-indicator" />
+        <div className="page-replacement-divider" />
+        <div className="modal-body">
+          <div className="replace-page-input-container">
+            <div className="replace-page-input">{t('option.pageReplacementModal.pageReplaceInputLabel')}</div>
+            <div className="replace-page-input-current-doc-containers">
+              <PageNumberInput
+                selectedPageNumbers={currentDocSelectedPageNumbers}
+                pageCount={loadedDocumentPageCount}
+                onBlurHandler={handlePageNumbersChanged}
+                onError={handlePageNumberError}
+              />
+              {pageNumberError && <div className="page-number-error">{pageNumberError}</div>}
+            </div>
+            <div className="replace-page-input"><span className="page-replace-doc-name">{currentDocumentName}</span></div>
+            <span className="page-replacement-text">{t('option.pageReplacementModal.pageReplaceInputFromSource')}</span>
+            <PageNumberInput
+              selectedPageNumbers={getPageNumbersFromSelectedThumbnails()}
+              pageCount={sourceDocumentPageCount}
+              onBlurHandler={onSourceDocumentNumberInputChange}
+            />
+            <div className="replace-page-input"><span className="page-replace-doc-name">{sourceDocumentName}</span></div>
+          </div>
+          <div className={classNames('modal-body-container', { isLoading })}>
+            <PageThumbnailsGrid
+              document={sourceDocument}
+              onThumbnailSelected={onThumbnailSelected}
+              selectedThumbnails={selectedThumbnails}
+              onfileLoadedHandler={setIsLoading}
+            />
+          </div>
         </div>
-        <div className={classNames('modal-body-container', { isLoading })}>
-          <PageThumbnailsGrid
-            document={sourceDocument}
-            onThumbnailSelected={onThumbnailSelected}
-            selectedThumbnails={selectedThumbnails}
-            onfileLoadedHandler={setIsLoading}
+        <div className="page-replacement-divider" />
+        <div className={classNames('footer', { isFileSelected: !isLoading })}>
+          <button className={classNames('deselect-thumbnails', { disabled: isLoading })} onClick={deselectAllThumbnails} disabled={isLoading}>
+            {t('action.deselectAll')}
+          </button>
+          <Button
+            className="modal-btn replace-btn"
+            onClick={() => replacePages()}
+            label={t('action.replace')}
+            disabled={isReplaceButtonDisabled()}
           />
         </div>
-      </div>
-      <div className="page-replacement-divider" />
-      <div className={classNames('footer', { isFileSelected: !isLoading })}>
-        <button className={classNames('deselect-thumbnails', { disabled: isLoading })} onClick={deselectAllThumbnails} disabled={isLoading}>
-          {t('action.deselectAll')}
-        </button>
-        <Button
-          className="modal-btn replace-btn"
-          onClick={() => replacePages()}
-          label={t('action.replace')}
-          disabled={isReplaceButtonDisabled()}
-        />
-      </div>
+      </ModalWrapper>
     </div >
   );
 });

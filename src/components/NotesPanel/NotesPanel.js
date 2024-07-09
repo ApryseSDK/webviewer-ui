@@ -12,11 +12,12 @@ import ListSeparator from 'components/ListSeparator';
 import MultiSelectControls from 'components/NotesPanel/MultiSelectControls';
 import CustomElement from 'components/CustomElement';
 import NotesPanelHeader from 'components/NotesPanelHeader';
-
-import DataElements from 'constants/dataElement';
+import Choice from 'components/Choice';
 
 import core from 'core';
+import DataElements from 'constants/dataElement';
 import { getSortStrategies } from 'constants/sortStrategies';
+import { OFFICE_EDITOR_EDIT_MODE } from 'constants/officeEditor';
 import actions from 'actions';
 import selectors from 'selectors';
 import { isMobileSize } from 'helpers/getDeviceSize';
@@ -42,7 +43,6 @@ const NotesPanel = ({
   isCustomPanelOpen,
   isLeftSide,
   parentDataElement,
-  isOfficeEditorReviewingMode
 }) => {
   const [
     sortStrategy,
@@ -59,6 +59,7 @@ const NotesPanel = ({
     customEmptyPanel,
     isNotesPanelMultiSelectEnabled,
     activeDocumentViewerKey,
+    isOfficeEditorMode,
   ] = useSelector(
     (state) => [
       selectors.getSortStrategy(state),
@@ -75,6 +76,7 @@ const NotesPanel = ({
       selectors.getNotesPanelCustomEmptyPanel(state),
       selectors.getIsNotesPanelMultiSelectEnabled(state),
       selectors.getActiveDocumentViewerKey(state),
+      selectors.getIsOfficeEditorMode(state),
     ],
     shallowEqual,
   );
@@ -357,10 +359,10 @@ const NotesPanel = ({
 
   const NoAnnotationsGlyph = customEmptyPanel?.icon ?
     customEmptyPanel.icon :
-    (isOfficeEditorReviewingMode ? 'ic-edit-page' : 'illustration - empty state - outlines');
+    (isOfficeEditorMode ? 'ic-edit-page' : 'illustration - empty state - outlines');
   const NoAnnotationsMessage = customEmptyPanel?.message ?
     customEmptyPanel.message :
-    (isOfficeEditorReviewingMode ? t('message.noRevisions') : t('message.noAnnotations'));
+    (isOfficeEditorMode ? t('message.noRevisions') : t('message.noAnnotations'));
   const NoAnnotationsReadOnlyMessage =
     customEmptyPanel && customEmptyPanel.readOnlyMessage
       ? customEmptyPanel.readOnlyMessage
@@ -434,7 +436,7 @@ const NotesPanel = ({
             </div>
           </div>
         )}
-        <React.Fragment>
+        <>
           <NotesPanelHeader
             notes={notesToRender}
             disableFilterAnnotation={notes.length === 0}
@@ -442,7 +444,6 @@ const NotesPanel = ({
             isMultiSelectMode={isMultiSelectMode}
             toggleMultiSelectMode={toggleMultiSelectMode}
             isMultiSelectEnabled={isNotesPanelMultiSelectEnabled}
-            isOfficeEditorReviewingMode={isOfficeEditorReviewingMode}
           />
           {notesToRender.length === 0 ? (
             notes.length === 0 ? (
@@ -475,7 +476,17 @@ const NotesPanel = ({
           be overlayed with position absolute and extend into the right panel while
           still being able to not have any notes cut off */}
           {isMultiSelectMode ? (showMultiReply ? MultiReplyPlaceHolder : MultiSelectPlaceHolder) : null}
-        </React.Fragment>
+          {isOfficeEditorMode && !isMultiSelectMode && (notesToRender.length > 0) && (
+            <div className="preview-all-changes">
+              <div className="divider" />
+              <Choice
+                isSwitch
+                label={t('officeEditor.previewAllChanges')}
+                onChange={(e) => core.getOfficeEditor().setEditMode(e.target.checked ? OFFICE_EDITOR_EDIT_MODE.PREVIEW : OFFICE_EDITOR_EDIT_MODE.REVIEWING)}
+              />
+            </div>
+          )}
+        </>
       </div>
       {isMultiSelectMode && (
         <MultiSelectControls

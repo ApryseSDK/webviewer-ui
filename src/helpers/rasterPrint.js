@@ -289,7 +289,7 @@ const getPrintRotation = (pageIndex, maintainPageOrientation) => {
   return core.getRotation(pageIndex + 1);
 };
 
-const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, isPrintCurrentView, createCanvases = false, isGrayscale = false) => new Promise((resolve) => {
+const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, isCurrentView, createCanvases = false, isGrayscale = false) => new Promise((resolve) => {
   const pageIndex = pageNumber - 1;
   const printRotation = getPrintRotation(pageIndex, maintainPageOrientation);
   const onCanvasLoaded = async (canvas) => {
@@ -360,7 +360,7 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
 
   let zoom = 1;
   let renderRect;
-  if (isPrintCurrentView) {
+  if (isCurrentView) {
     zoom = core.getZoom();
     renderRect = getCurrentViewRect(pageNumber);
 
@@ -387,7 +387,7 @@ const creatingImage = (pageNumber, includeAnnotations, maintainPageOrientation, 
   pendingCanvases.push(id);
 });
 
-// printOptions = includeComments, includeAnnotations, maintainPageOrientation, printQuality, sortStrategy, colorMap, dateFormat, isPrintCurrentView, language, timezone, createCanvases, isGrayscale
+// printOptions = includeComments, includeAnnotations, maintainPageOrientation, printQuality, sortStrategy, colorMap, dateFormat, isCurrentView, language, timezone, createCanvases, isGrayscale
 export const creatingPages = (pagesToPrint, printOptions, onProgress) => {
   const createdPages = [];
   pendingCanvases = [];
@@ -398,7 +398,7 @@ export const creatingPages = (pagesToPrint, printOptions, onProgress) => {
     createdPages.push(creatingImage(pageNumber,
       printOptions?.includeAnnotations,
       printOptions?.maintainPageOrientation,
-      printOptions?.isPrintCurrentView,
+      printOptions?.isCurrentView,
       printOptions?.createCanvases,
       printOptions?.isGrayscale));
 

@@ -9,7 +9,7 @@
  * All toolbar groups have the data element in this format <strong>toolbarGroup-&#60;dataElementSuffix&#62</strong>.</p> <p>For example, if you set the dataElementSuffix as 'Draw',
  * the dataElement of your ribbon will be <strong>toolbarGroup-Draw</strong></p>
  * @param {Array} toolbarGroup.children A list of elements to be added on the toolbar group header.
- * Check [this guide]{@link https://www.pdftron.com/documentation/web/guides/customizing-header/#header-items} to see the available options to be used as a toolbar group child.
+ * Check [this guide]{@link https://docs.apryse.com/documentation/web/guides/customizing-header/#header-items} to see the available options to be used as a toolbar group child.
  * @param {boolean} [toolbarGroup.useDefaultElements] <p>If true, the common elements used in most toolbar groups will be added to the children list.</p>
  * <p>These elements are a spacer in the beginning and at the end of the header, the undo and redo buttons, and the eraser button.</p>
  * <p>In the example below you can see these elements being added. By default, the value will be false and these elements will not be added.</p>
@@ -89,7 +89,7 @@
 import { undoButton, redoButton } from 'helpers/commonToolbarElements';
 import actions from 'actions';
 
-export default store => toolbarGroup => {
+export default (store) => (toolbarGroup) => {
   if (toolbarGroup.useDefaultElements) {
     toolbarGroup.children = [
       { type: 'spacer' },

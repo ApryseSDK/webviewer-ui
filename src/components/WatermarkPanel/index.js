@@ -1,3 +1,3 @@
-import WatermarkPanel from './WatermarkPanelContainer';
+import WatermarkPanelContainer from './WatermarkPanelContainer';
 
-export default WatermarkPanel;
+export default WatermarkPanelContainer;

@@ -1,3 +1,3 @@
-import AudioPlaybackPopup from './AudioPlaybackPopupContainer';
+import AudioPlaybackPopupContainer from './AudioPlaybackPopupContainer';
 
-export default AudioPlaybackPopup;
+export default AudioPlaybackPopupContainer;

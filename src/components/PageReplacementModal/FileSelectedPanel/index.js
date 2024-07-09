@@ -1,3 +1,3 @@
-import FileSelectedPanel from './FileSelectedPanelContainer';
+import FileSelectedPanelContainer from './FileSelectedPanelContainer';
 
-export default FileSelectedPanel;
+export default FileSelectedPanelContainer;

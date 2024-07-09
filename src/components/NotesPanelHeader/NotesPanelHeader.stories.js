@@ -13,6 +13,9 @@ export default {
       control: { type: 'radio' },
     },
   },
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 function noop() {

@@ -7,6 +7,9 @@ import initialState from 'src/redux/initialState';
 export default {
   title: 'ModularComponents/ToolButton',
   component: ToolButton,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const toolNames = Object.values(window.Core.Tools.ToolNames);

@@ -1,3 +1,3 @@
-import SearchOverlay from './SearchOverlayRedux';
+import connectedComponent from './SearchOverlayRedux';
 
-export default SearchOverlay;
+export default connectedComponent;

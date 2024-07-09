@@ -7,16 +7,18 @@
   .divider {
     height: 1px;
     background: var(--divider);
-    margin: 16px 8px 8px 16px;
+    margin: 16px 0px 8px 0px;
   }
 
   .documentControlsInput {
     display: flex;
     flex-direction: row;
-    padding-left: 16px;
-    padding-right: 8px;
     padding-bottom: 16px;
     padding-top: 8px;
+
+    &.customizableUI {
+      padding: 8px 0px;
+    }
 
     .pagesInput {
       width: 100%;
@@ -62,6 +64,16 @@
           border-radius: 4px;
         }
       }
+    }
+  }
+
+  // This label only appears in the Modular UI
+  .documentControlsLabel {
+    margin-top: 16px;
+
+    .multiSelectExampleLabel {
+      color: var(--faded-text);
+      margin-left: 2px;
     }
   }
 }

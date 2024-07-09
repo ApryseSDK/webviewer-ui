@@ -1,7 +1,9 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'production',
@@ -32,10 +34,11 @@ module.exports = {
         to: '../build/configorigin.txt',
       },
     ]),
-    new MiniCssExtractPlugin({
-      filename: 'style.css',
-      chunkFilename: 'chunks/[name].chunk.css'
-    }),
+    new NodePolyfillPlugin(),
+    // new MiniCssExtractPlugin({
+    //   filename: 'style.css',
+    //   chunkFilename: 'chunks/[name].chunk.css'
+    // }),
     // new BundleAnalyzerPlugin()
   ],
   module: {
@@ -45,12 +48,16 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
+            ignore: [
+              /\/core-js/,
+            ],
+            sourceType: "unambiguous",
             presets: [
               '@babel/preset-react',
               [
                 '@babel/preset-env',
                 {
-                  useBuiltIns: 'entry',
+                  useBuiltIns: 'usage',
                   corejs: 3,
                 },
               ],
@@ -66,14 +73,67 @@ module.exports = {
           },
         },
         include: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules')],
-        exclude: function(modulePath) {
+        exclude: function (modulePath) {
           return /node_modules/.test(modulePath) && !/node_modules.+react-dnd/.test(modulePath);
         }
       },
       {
         test: /\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          {
+            loader: 'style-loader',
+            options: {
+              insert: function (styleTag) {
+                function findNestedWebComponents(tagName, root = document) {
+                  const elements = [];
+
+                  // Check direct children
+                  root.querySelectorAll(tagName).forEach(el => elements.push(el));
+
+                  // Check shadow DOMs
+                  root.querySelectorAll('*').forEach(el => {
+                    if (el.shadowRoot) {
+                      elements.push(...findNestedWebComponents(tagName, el.shadowRoot));
+                    }
+                  });
+
+                  return elements;
+                }
+                if (!window.isApryseWebViewerWebComponent) {
+                  document.head.appendChild(styleTag);
+                  return;
+                }
+
+                let webComponents;
+                // First we see if the webcomponent is at the document level
+                webComponents = document.getElementsByTagName('apryse-webviewer');
+                // If not, we check have to check if it is nested in another webcomponent
+                if (!webComponents.length) {
+                  webComponents = findNestedWebComponents('apryse-webviewer');
+                }
+                // Now we append the style tag to each webcomponent
+                const clonedStyleTags = [];
+                for (let i = 0; i < webComponents.length; i++) {
+                  const webComponent = webComponents[i];
+                  if (i === 0) {
+                    webComponent.shadowRoot.appendChild(styleTag);
+                    styleTag.onload = function () {
+                      if (clonedStyleTags.length > 0) {
+                        clonedStyleTags.forEach((styleNode) => {
+                          // eslint-disable-next-line no-unsanitized/property
+                          styleNode.innerHTML = styleTag.innerHTML;
+                        });
+                      }
+                    };
+                  } else {
+                    const styleNode = styleTag.cloneNode(true);
+                    webComponent.shadowRoot.appendChild(styleNode);
+                    clonedStyleTags.push(styleNode);
+                  }
+                }
+              },
+            },
+          },
           'css-loader',
           {
             loader: 'postcss-loader',

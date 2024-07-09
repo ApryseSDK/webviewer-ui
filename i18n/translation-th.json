@@ -845,6 +845,7 @@
   "tool": {
     "pan": "กระทะ",
     "select": "เลือก",
+    "selectAnOption": "เลือกตัวเลือก",
     "Marquee": "กระโจมซูม",
     "Link": "ลิงค์ URL หรือเพจ",
     "Standard": "มาตรฐาน",
@@ -1223,7 +1224,9 @@
     "viewOnly": "สำหรับดูเท่านั้น",
     "viewOnlyDescription": "ดูโดยไม่มีข้อเสนอแนะ",
     "notSupportedOnMobile": "อุปกรณ์พกพาไม่รองรับการแก้ไข Office",
-    "previewAllChanges": "ดูตัวอย่างการเปลี่ยนแปลงทั้งหมด"
+    "previewAllChanges": "ดูตัวอย่างการเปลี่ยนแปลงทั้งหมด",
+    "accept": "ยอมรับ",
+    "reject": "ปฏิเสธ"
   },
   "insertPageModal": {
     "title": "เพิ่มหน้าใหม่",
@@ -1331,7 +1334,7 @@
       "contentEdit": "แก้ไขเนื้อหา"
     },
     "addColorToCustom": "เพิ่มลงในสีที่กำหนดเอง",
-    "noToolSelected": "เลือกเครื่องมือเพื่อดูคุณสมบัติของเครื่องมือ",
+    "noToolSelected": "เอกสารนี้ไม่มีเลเยอร์ใดๆ",
     "noToolStyle": "เครื่องมือไม่มีคุณสมบัติการจัดรูปแบบใดๆ"
   },
   "signatureListPanel": {

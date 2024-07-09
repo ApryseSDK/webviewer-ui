@@ -5,4 +5,4 @@
  */
 import selectors from 'selectors';
 
-export default store => () => selectors.getWatermarkModalOptions(store.getState());
+export default (store) => () => selectors.getWatermarkModalOptions(store.getState());

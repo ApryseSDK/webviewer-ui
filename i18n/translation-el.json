@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Τηγάνι",
     "select": "Επιλέγω",
+    "selectAnOption": "Επιλέξτε μια επιλογή",
     "Marquee": "Marquee Zoom",
     "Link": "Σύνδεσμος διεύθυνσης URL ή σελίδας",
     "Standard": "Πρότυπο",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Μόνο προβολή",
     "viewOnlyDescription": "Προβολή χωρίς προτάσεις",
     "notSupportedOnMobile": "Η επεξεργασία του Office δεν υποστηρίζεται σε κινητές συσκευές.",
-    "previewAllChanges": "Προεπισκόπηση όλων των αλλαγών"
+    "previewAllChanges": "Προεπισκόπηση όλων των αλλαγών",
+    "accept": "Αποδέχομαι",
+    "reject": "Απορρίπτω"
   },
   "insertPageModal": {
     "title": "Προσθήκη νέας σελίδας",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Επεξεργασία περιεχομένου"
     },
     "addColorToCustom": "Προσθήκη στα προσαρμοσμένα χρώματα",
-    "noToolSelected": "Επιλέξτε ένα εργαλείο για να δείτε τις ιδιότητες του εργαλείου",
+    "noToolSelected": "Αυτό το έγγραφο δεν περιέχει επίπεδα.",
     "noToolStyle": "Το εργαλείο δεν περιέχει ιδιότητες styling."
   },
   "signatureListPanel": {

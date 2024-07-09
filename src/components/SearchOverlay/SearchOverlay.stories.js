@@ -1,19 +1,27 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { Provider } from "react-redux";
-import SearchOverlay from './SearchOverlay.js';
+import { Provider } from 'react-redux';
+import SearchOverlay from './SearchOverlay';
+import { workerTypes } from 'constants/types';
+import core from 'core';
 
 export default {
   title: 'Components/SearchOverlay',
   component: SearchOverlay,
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 const initialState = {
-  viewer:{
+  viewer: {
     disabledElements: {},
+  },
+  featureFlags: {
+    customizableUI: true,
   }
 };
-function rootReducer(state = initialState, action) {
+function rootReducer(state = initialState) {
   return state;
 }
 
@@ -32,11 +40,17 @@ function selectPreviousResult() {
 }
 
 export function Basic() {
+  core.getDocument = () => ({
+    getType: () => workerTypes.OFFICE_EDITOR,
+    addEventListener: () => {},
+  });
+
   const [searchValue, setSearchValue] = React.useState('');
   const [isCaseSensitive, setCaseSensitive] = React.useState(false);
   const [isWholeWord, setWholeWord] = React.useState(false);
   const [isWildcard, setWildcard] = React.useState(false);
   const [searchStatus, setSearchStatus] = React.useState('SEARCH_NOT_INITIATED');
+  const [replaceValue, setReplaceValue] = React.useState('');
   const props = {
     searchValue,
     setSearchValue,
@@ -48,6 +62,7 @@ export function Basic() {
     setWildcard,
     executeSearch,
     setSearchStatus,
+    setReplaceValue,
     selectNextResult,
     selectPreviousResult
   };
@@ -59,5 +74,3 @@ export function Basic() {
     </Provider>
   );
 }
-
-

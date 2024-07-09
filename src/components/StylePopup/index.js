@@ -1,3 +1,3 @@
-import StylePopup from './StylePopup';
+import connectedComponent from './StylePopup';
 
-export default StylePopup;
+export default connectedComponent;

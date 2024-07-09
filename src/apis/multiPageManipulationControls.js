@@ -34,7 +34,7 @@
 import actions from 'actions';
 import selectors from 'selectors';
 
-export default store => Object.create(MultiPageManipulationControls).initialize(store);
+export default (store) => Object.create(MultiPageManipulationControls).initialize(store);
 
 const MultiPageManipulationControls = {
   initialize(store) {
@@ -47,7 +47,7 @@ const MultiPageManipulationControls = {
    * of operations.
    * @method UI.MultiPageManipulationControls#add
    * @param {Array.<UI.MultiPageManipulationControls.PageManipulationSection>} pageManipulationSections Array of sections to be added, each with its individual operations. See example below.
-   * @param {('leftPanelPageTabsRotate' | 'leftPanelPageTabsInsert' | 'leftPanelPageTabsOperations' | 'leftPanelPageTabsMore')} [dataElementToInsertAfter] An optional string that determines where in the overlay the new section will be added. If not included, the new page manipulation section will be added to the left.
+   * @param {('leftPanelPageTabsRotate' | 'leftPanelPageTabsOperations' | 'leftPanelPageTabsMore')} [dataElementToInsertAfter] An optional string that determines where in the overlay the new section will be added. If not included, the new page manipulation section will be added to the left.
    * You can call {@link UI.MultiPageManipulationControls#getItems getItems} to get existing items and their dataElements.
    * @returns {UI.MultiPageManipulationControls} The instance itself
    * @example
@@ -186,7 +186,7 @@ WebViewer(...)
       index = -1;
     } else {
       const state = this.store.getState();
-      index = selectors.getMultiPageManipulationControlsItems(state).findIndex(obj => obj.dataElement === dataElement);
+      index = selectors.getMultiPageManipulationControlsItems(state).findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;
@@ -198,7 +198,7 @@ WebViewer(...)
       index = -1;
     } else {
       const state = this.store.getState();
-      index = selectors.getMultiPageManipulationControlsItemsSmall(state).findIndex(obj => obj.dataElement === dataElement);
+      index = selectors.getMultiPageManipulationControlsItemsSmall(state).findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;
@@ -210,7 +210,7 @@ WebViewer(...)
       index = -1;
     } else {
       const state = this.store.getState();
-      index = selectors.getMultiPageManipulationControlsItemsLarge(state).findIndex(obj => obj.dataElement === dataElement);
+      index = selectors.getMultiPageManipulationControlsItemsLarge(state).findIndex((obj) => obj.dataElement === dataElement);
     }
 
     return index;

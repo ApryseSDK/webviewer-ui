@@ -1,3 +1,3 @@
-import HeaderItems from './HeaderItems';
+import connectedComponent from './HeaderItems';
 
-export default HeaderItems;
+export default connectedComponent;

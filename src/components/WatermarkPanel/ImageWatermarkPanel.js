@@ -28,7 +28,7 @@ const ImageWatermarkPanel = () => {
         reader.onload = async () => {
           for (let page = 1; page <= pageCount; page++) {
             const { width, height } = document?.getPageInfo(page);
-            const imageWatermark = new Annotations.StampAnnotation({
+            const imageWatermark = new window.Core.Annotations.StampAnnotation({
               PageNumber: page,
               X: width / 2,
               Y: height / 2,

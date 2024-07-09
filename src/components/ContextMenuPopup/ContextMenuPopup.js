@@ -173,10 +173,7 @@ const ContextMenuPopup = ({
                 title="action.cut"
                 img="icon-cut"
                 dataElement={DataElements.OFFICE_EDITOR_CUT}
-                onClick={async () => {
-                  await core.getOfficeEditor().copySelectedText();
-                  core.getOfficeEditor().removeSelection();
-                }}
+                onClick={() => core.getOfficeEditor().cutSelectedText()}
                 shortcut="Ctrl+X"
                 disabled={!core.getOfficeEditor().isTextSelected()}
               />

@@ -8,4 +8,8 @@
   border-right: 1px solid var(--border);
   border-left: 1px solid var(--border);
   z-index: 65;
+
+  &[data-element='stylePanelResizeBar'] {
+    border-color: var(--lighter-border);
+  }
 }

@@ -1,5 +1,21 @@
 let rootNode;
 
+function findNestedWebComponents(tagName, root = document) {
+  const elements = [];
+
+  // Check direct children
+  root.querySelectorAll(tagName).forEach((el) => elements.push(el));
+
+  // Check shadow DOMs
+  root.querySelectorAll('*').forEach((el) => {
+    if (el.shadowRoot) {
+      elements.push(...findNestedWebComponents(tagName, el.shadowRoot));
+    }
+  });
+
+  return elements;
+}
+
 const getRootNode = () => {
   if (!window.isApryseWebViewerWebComponent) {
     return document;
@@ -7,7 +23,13 @@ const getRootNode = () => {
   if (rootNode) {
     return rootNode;
   }
-  const elementList = document.getElementsByTagName('apryse-webviewer');
+
+  let elementList;
+  elementList = document.getElementsByTagName('apryse-webviewer');
+  if (elementList.length === 0) {
+    elementList = findNestedWebComponents('apryse-webviewer');
+  }
+
   if (elementList?.length) {
     for (const element of elementList) {
       const foundNode = element.shadowRoot;

@@ -8,9 +8,11 @@ import DataElements from 'constants/dataElement';
 export default function useOnTextSelected() {
   const [
     popupItems,
+    activeDocumentViewerKey,
   ] = useSelector(
     (state) => [
       selectors.getPopupItems(state, DataElements.TEXT_POPUP),
+      selectors.getActiveDocumentViewerKey(state),
     ],
     shallowEqual,
   );
@@ -20,7 +22,7 @@ export default function useOnTextSelected() {
   const [selectedTextQuads, setSelectedTextQuads] = useState([]);
 
   useEffect(() => {
-    const textSelectTool = core.getTool('TextSelect');
+    const textSelectTool = core.getTool('TextSelect', activeDocumentViewerKey);
     const onSelectionComplete = (startQuad, allQuads) => {
       if (popupItems.length > 0) {
         setSelectedTextQuads(allQuads);
@@ -30,7 +32,7 @@ export default function useOnTextSelected() {
 
     textSelectTool.addEventListener('selectionComplete', onSelectionComplete);
     return () => textSelectTool.removeEventListener('selectionComplete', onSelectionComplete);
-  }, [dispatch, popupItems]);
+  }, [popupItems, activeDocumentViewerKey]);
 
   return { selectedTextQuads };
 }

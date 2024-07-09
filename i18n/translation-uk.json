@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Пан",
     "select": "Виберіть",
+    "selectAnOption": "Виберіть опцію",
     "Marquee": "Масштаб шатра",
     "Link": "URL-адреса посилання або сторінка",
     "Standard": "Стандартний",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Лише перегляд",
     "viewOnlyDescription": "Переглянути без пропозицій",
     "notSupportedOnMobile": "Редагування Office не підтримується на мобільних пристроях.",
-    "previewAllChanges": "Переглянути всі зміни"
+    "previewAllChanges": "Переглянути всі зміни",
+    "accept": "прийняти",
+    "reject": "Відхиляти"
   },
   "insertPageModal": {
     "title": "Додати нову сторінку",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Редагування вмісту"
     },
     "addColorToCustom": "Додати до власних кольорів",
-    "noToolSelected": "Виберіть інструмент, щоб переглянути властивості інструмента",
+    "noToolSelected": "Цей документ не містить шарів.",
     "noToolStyle": "Інструмент не містить властивостей стилізації."
   },
   "signatureListPanel": {

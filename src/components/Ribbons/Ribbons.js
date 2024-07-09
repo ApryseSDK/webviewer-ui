@@ -9,6 +9,7 @@ import DataElementWrapper from 'components/DataElementWrapper';
 import core from 'core';
 import Measure from 'react-measure';
 import { DISABLED_TOOL_GROUPS } from 'constants/multiViewerContants';
+import DataElements from 'constants/dataElement';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 
 import './Ribbons.scss';
@@ -43,16 +44,20 @@ const FileName = () => {
     }
   };
 
-  return isEditing ? (
-    <input
-      value={fileNameWithoutExtension}
-      onChange={(e) => setFileNameWithoutExtension(e.target.value)}
-      onBlur={finishEditing}
-      onKeyDown={handleKeyDown}
-      autoFocus
-    />
-  ) : (
-    <div className="editable-file-name" onClick={onClicked}>{core.getDocument()?.getFilename()}</div>
+  return (
+    <DataElementWrapper dataElement={DataElements.OFFICE_EDITOR_FILE_NAME}>
+      {isEditing ? (
+        <input
+          value={fileNameWithoutExtension}
+          onChange={(e) => setFileNameWithoutExtension(e.target.value)}
+          onBlur={finishEditing}
+          onKeyDown={handleKeyDown}
+          autoFocus
+        />
+      ) : (
+        <div className="editable-file-name" onClick={onClicked}>{core.getDocument()?.getFilename()}</div>
+      )}
+    </DataElementWrapper>
   );
 };
 

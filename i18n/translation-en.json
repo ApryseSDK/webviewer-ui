@@ -1327,14 +1327,14 @@
       "textStyles": "Text Styles",
       "currentColor": "Current Color",
       "customColors": "Custom Colors",
-      "redactionTextLabel": "Text Label",
+      "redactionTextLabel": "Add Text Label",
       "redactionMarkOutline": "Mark Outline",
       "redactionFill": "Redaction Color",
       "redactionTextPlaceholder": "Insert text label",
       "contentEdit": "Content Edit"
     },
     "addColorToCustom": "Add to custom colors",
-    "noToolSelected": "Select a tool to view tool properties",
+    "noToolSelected": "This document does not contain any layers.",
     "noToolStyle": "Tool does not contain any styling properties."
   },
   "signatureListPanel": {

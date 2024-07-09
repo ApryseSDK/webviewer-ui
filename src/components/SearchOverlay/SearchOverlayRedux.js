@@ -1,5 +1,5 @@
-import selectors from 'selectors/index';
-import actions from 'actions/index';
+import selectors from 'selectors';
+import actions from 'actions';
 import { connect } from 'react-redux';
 import React from 'react';
 import SearchOverlayContainer from './SearchOverlayContainer';
@@ -29,7 +29,13 @@ function SearchOverlayRedux(props) {
   return (<SearchOverlayContainer {...props} />);
 }
 
-export default connect(
+const ConnectedSearchOverlayRedux = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(SearchOverlayRedux);
+
+const connectedComponent = (props) => {
+  return <ConnectedSearchOverlayRedux {...props} />;
+};
+
+export default connectedComponent;

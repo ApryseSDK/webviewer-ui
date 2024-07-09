@@ -1,7 +1,7 @@
 /**
  * Returns a list of panels that are currently in the UI
  * @method UI.getPanels
- * @return {UI.Components.Panel} Panel object
+ * @return {Array<UI.Components.Panel>} Array of Panel objects
  * @example
  WebViewer(...)
  .then(function(instance) {
@@ -13,10 +13,11 @@
 import selectors from 'selectors';
 import actions from 'actions';
 import { panelNames } from 'constants/panel';
+import { panelItemType, UNSUPPORTED_PANELS } from 'src/apis/ModularComponents/tabPanel';
 
 export default (store) => () => {
   const panels = selectors.getGenericPanels(store.getState());
-  return panels.map((panel) => new Panel(store, panel));
+  return panels.map((panel) => (panel.render === panelNames.TABS ? new TabPanel(store, panel) : new Panel(store, panel)));
 };
 
 /**
@@ -34,6 +35,11 @@ export default (store) => () => {
  */
 export class Panel {
   _store;
+  /**
+   * The data element string for the panel.
+   * @name UI.Components.Panel#dataElement
+   * @type {string}
+   */
   _dataElement;
   _render;
   _location;
@@ -132,6 +138,11 @@ export class Panel {
     this.updatePanelInStore();
   }
 
+  /**
+   * The location of the panel ('left' or 'right').
+   * @name UI.Components.Panel#location
+   * @type {string}
+   */
   get location() {
     return this._location;
   }
@@ -141,5 +152,59 @@ export class Panel {
     checkTypes([location], [TYPES.ONE_OF('left', 'right')], 'set Panel.location');
     this._location = location;
     this.updatePanelInStore();
+  }
+}
+
+class TabPanel extends Panel {
+  _panelsList;
+
+  constructor(store, panel) {
+    super(store, panel);
+    this._render = 'tabPanel';
+    this._panelsList = panel.panelsList;
+  }
+
+  set render(__) {
+    console.error('TabPanel render cannot be changed. You probably meant to change the render of one of the panels in TabPanel.panelsList');
+  }
+
+  get render() {
+    return this._render;
+  }
+
+  /**
+   * The panels to be displayed in the tab panel.
+   * @name UI.Components.TabPanel#panelsList
+   * @type {Array<Panel>}
+   */
+  get panelsList() {
+    return this._panelsList;
+  }
+
+  set panelsList(panelsList) {
+    const { TYPES, checkTypes } = window.Core;
+    checkTypes([panelsList], [TYPES.ARRAY(TYPES.MULTI_TYPE(TYPES.OBJECT(Panel), panelItemType))], 'set TabPanel.panelsList');
+    panelsList = panelsList.map((panel) => {
+      if (panel instanceof Panel) {
+        return panel.toObject();
+      }
+      return panel;
+    });
+    panelsList = panelsList.filter((panel) => {
+      if (UNSUPPORTED_PANELS.includes(panel.render)) {
+        console.error(`TabPanel: ${panel.render} is not supported in the tab panel`);
+        return false;
+      }
+      return true;
+    });
+    this._panelsList = panelsList;
+    this.updatePanelInStore();
+  }
+
+  toObject() {
+    return {
+      ...super.toObject(),
+      panelsList: this._panelsList,
+    };
   }
 }

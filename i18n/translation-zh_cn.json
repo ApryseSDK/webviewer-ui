@@ -845,6 +845,7 @@
   "tool": {
     "pan": "移动",
     "select": "选择",
+    "selectAnOption": "选择一个选项",
     "Marquee": "选框缩放",
     "Link": "链接网址或页面",
     "Standard": "标准",
@@ -1223,7 +1224,9 @@
     "viewOnly": "只读",
     "viewOnlyDescription": "不带建议查看",
     "notSupportedOnMobile": "移动设备不支持 Office 编辑。",
-    "previewAllChanges": "预览所有更改"
+    "previewAllChanges": "预览所有更改",
+    "accept": "接受",
+    "reject": "拒绝"
   },
   "insertPageModal": {
     "title": "添加新页面",
@@ -1331,7 +1334,7 @@
       "contentEdit": "内容编辑"
     },
     "addColorToCustom": "添加到自定义颜色",
-    "noToolSelected": "选择工具以查看工具属性",
+    "noToolSelected": "该文档不包含任何层。",
     "noToolStyle": "工具不包含任何样式属性。"
   },
   "signatureListPanel": {

@@ -845,6 +845,7 @@
   "tool": {
     "pan": "kuali",
     "select": "Pilih",
+    "selectAnOption": "Pilih satu pilihan",
     "Marquee": "Zum Marquee",
     "Link": "Pautkan URL atau Halaman",
     "Standard": "Standard",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Lihat Sahaja",
     "viewOnlyDescription": "Lihat tanpa cadangan",
     "notSupportedOnMobile": "Penyuntingan pejabat tidak disokong pada peranti mudah alih.",
-    "previewAllChanges": "Pratonton semua perubahan"
+    "previewAllChanges": "Pratonton semua perubahan",
+    "accept": "Terima",
+    "reject": "Tolak"
   },
   "insertPageModal": {
     "title": "Tambah Halaman Baharu",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Suntingan Kandungan"
     },
     "addColorToCustom": "Tambahkan pada warna tersuai",
-    "noToolSelected": "Pilih alat untuk melihat sifat alat",
+    "noToolSelected": "Dokumen ini tidak mengandungi sebarang lapisan.",
     "noToolStyle": "Alat tidak mengandungi sebarang sifat penggayaan."
   },
   "signatureListPanel": {

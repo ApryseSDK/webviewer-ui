@@ -1,4 +1,4 @@
-const castStringToArray = input => {
+const castStringToArray = (input) => {
   if (!Array.isArray(input)) {
     input = [input];
   }

@@ -48,7 +48,6 @@
         width: 32px;
 
         &:hover {
-          background: var(--view-header-button-hover);
           border-radius: 4px;
         }
 
@@ -71,10 +70,14 @@
       }
 
       .scaleSetting {
+        .custom-scale-option {
+          padding: 4px 0px;
+        }
         .custom-option-wrapper {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          margin-bottom: 8px;
 
           .calibrate-btn {
             font-weight: 400;
@@ -84,10 +87,14 @@
             display: flex;
             align-items: center;
             text-align: center;
-            color: #3183c8;
+            color: var(--blue-5);
             background-color: transparent;
             border: none;
             cursor: pointer;
+
+            &:hover {
+              color: var(--blue-6);
+            }
           }
         }
 
@@ -118,14 +125,17 @@
         }
 
         .block {
-          height: 36px;
+          height: 18px;
         }
 
         .custom-scale-container {
-          margin-top: 16px;
-          margin-bottom: 16px;
+          margin-top: 8px;
+          margin-bottom: 8px;
 
           .scale-ratio-display {
+            .unit-label {
+              padding-bottom: 8px;
+            }
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -142,6 +152,7 @@
               width: 94px;
               height: 32px;
               margin-right: 8px;
+              padding-left: 8px;
 
               @include mobile {
                 width: 79px;
@@ -149,7 +160,11 @@
               }
 
               &.invalid-value {
-                border-color: #ff0000;
+                border-color: var(--red);
+              }
+
+              &:not(.invalid-value):focus {
+                border: 1px solid var(--blue-5);
               }
             }
 
@@ -176,12 +191,44 @@
                 height: 2rem;
               }
             }
+
+            // To remove arrows from input
+            /* Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+            /* Firefox */
+            input[type=number] {
+              -moz-appearance: textfield;
+            }
+          }
+          .warning-alert {
+            position: relative;
+            margin-right: 8px;
+            input {
+              margin-right: 0px !important;
+            }
+            .Icon {
+              text-align: center;
+              position: absolute;
+              top: 50%;
+              right: 5px;
+              margin: auto;
+              transform: translateY(-50%);
+              color: var(--red);
+              display: block;
+            }
+          }
+          .warning-alert-icon {
+            display: none;
           }
 
           .warning-messages {
             height: 16px;
             font-weight: 400;
-            color: #ff0000;
+            color: var(--red);
             margin-top: 4px;
             position: relative;
             display: flex;
@@ -201,6 +248,8 @@
         margin-top: 16px;
         align-items: center;
         justify-content: space-between;
+        border-top: 1px solid var(--modal-stroke-and-border);
+        padding-top: 16px;
 
         .precision-selector {
           display: flex;
@@ -245,10 +294,6 @@
         .ui__choice__label {
           font-weight: 400;
         }
-
-        .ui__choice--disabled .ui__choice__label {
-          color: #CFD4DA;
-        }
       }
     }
 
@@ -280,7 +325,8 @@
         }
 
         &:enabled:hover {
-          background: var(--outline-hover);
+          border: solid 1px var(--blue-6);
+          color: var(--blue-6);
         }
 
         &:disabled {
@@ -317,5 +363,12 @@
         }
       }
     }
+  }
+
+
+  .ui__choice__input__check.ui__choice__input__check--checked {
+    border: 3px solid var(--gray-0);
+    outline: solid 1px var(--blue-5);
+    background-color: var(--blue-5);
   }
 }

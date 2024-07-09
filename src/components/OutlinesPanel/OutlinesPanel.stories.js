@@ -1,55 +1,105 @@
 import React from 'react';
-import { createStore } from 'redux';
-import { Provider as ReduxProvider } from 'react-redux';
+import { legacy_createStore as createStore } from 'redux';
+import { Provider } from 'react-redux';
+import core from 'core';
 import OutlinesPanel from './OutlinesPanel';
 import { getDefaultOutlines } from '../Outline/Outline.stories';
-
+import '../LeftPanel/LeftPanel.scss';
 
 export default {
   title: 'Components/OutlinesPanel',
   component: OutlinesPanel,
 };
 
-export function Basic() {
-  function reducer() {
+core.isFullPDFEnabled = () => true;
+
+const basicMockState = {
+  viewer: {
+    disabledElements: {},
+    customElementOverrides: {},
+    isOutlineEditingEnabled: true,
+    pageLabels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+  },
+  document: {
+    outlines: getDefaultOutlines(),
+  },
+  featureFlags: {
+    customizableUI: true,
+  }
+};
+
+const OutlinePanelTemplate = (mockState) => {
+  return (
+    <div className='Panel LeftPanel' style={{ width: '330px', minWidth: '330px' }}>
+      <div className='left-panel-container' style={{ minWidth: '330px' }}>
+        <Provider store={createStore(mockState)}>
+          <OutlinesPanel />
+        </Provider>
+      </div>
+    </div>
+  );
+};
+
+export const Editable = () => {
+  const mockState = () => {
+    return basicMockState;
+  };
+
+  return OutlinePanelTemplate(mockState);
+};
+
+export const NonEditable = () => {
+  const mockState = () => {
     return {
       viewer: {
-        disabledElements: {},
-        customElementOverrides: {},
+        ...basicMockState.viewer,
+        isOutlineEditingEnabled: false,
       },
       document: {
-        outlines: getDefaultOutlines(),
+        ...basicMockState.document,
+      },
+      featureFlags: {
+        customizableUI: true,
       },
     };
-  }
+  };
 
-  return (
-    <ReduxProvider store={createStore(reducer)}>
-      <div style={{ width: 300 }}>
-        <OutlinesPanel />
-      </div>
-    </ReduxProvider>
-  );
-}
+  return OutlinePanelTemplate(mockState);
+};
 
-export function NoOutlines() {
-  function reducer() {
+export const Expanded = () => {
+  const mockState = () => {
     return {
       viewer: {
-        disabledElements: {},
-        customElementOverrides: {},
+        ...basicMockState.viewer,
+        autoExpandOutlines: true,
+      },
+      document: {
+        ...basicMockState.document,
+      },
+      featureFlags: {
+        customizableUI: true,
+      },
+    };
+  };
+
+  return OutlinePanelTemplate(mockState);
+};
+
+export const NoOutlines = () => {
+  const mockState = () => {
+    return {
+      viewer: {
+        ...basicMockState.viewer,
       },
       document: {
         outlines: [],
       },
+      featureFlags: {
+        customizableUI: true,
+      },
     };
-  }
+  };
 
-  return (
-    <ReduxProvider store={createStore(reducer)}>
-      <div style={{ width: 300 }}>
-        <OutlinesPanel />
-      </div>
-    </ReduxProvider>
-  );
-}
+  return OutlinePanelTemplate(mockState);
+};

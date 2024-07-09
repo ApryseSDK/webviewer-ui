@@ -128,16 +128,19 @@ const PrintModalContainer = () => {
     }
     const document = core.getDocument();
     const annotManager = core.getAnnotationManager();
-    const printingOptions = { isCurrentView, includeAnnotations, shouldFlatten };
+    const printingOptions = { isCurrentView, includeAnnotations, shouldFlatten, includeComments };
     let pdf = await createPages(
       document,
       annotManager,
       pagesToPrint,
       printingOptions,
+      watermarkModalOptions
     );
+
     if (isGrayscale) {
       pdf = await convertToGrayscaleDocument(pdf);
     }
+
     printPDF(pdf, windowRef);
   };
 

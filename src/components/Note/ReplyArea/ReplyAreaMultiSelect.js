@@ -8,7 +8,6 @@ import mentionsManager from 'helpers/MentionsManager';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
 import selectors from 'selectors';
 import Button from 'src/components/Button';
-import Icon from 'components/Icon';
 
 import './ReplyAreaMultiSelect.scss';
 
@@ -16,9 +15,13 @@ import './ReplyAreaMultiSelect.scss';
 const ReplyArea = ({ annotations, onSubmit, onClose }) => {
   const [
     isMentionEnabled,
+    activeDocumentViewerKey,
+    customizableUI,
   ] = useSelector(
     (state) => [
       selectors.getIsMentionEnabled(state),
+      selectors.getActiveDocumentViewerKey(state),
+      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual
   );
@@ -42,31 +45,15 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
       return;
     }
     annotations.forEach((annotation) => {
-      const annotationHasNoContents = annotation.getContents() === '' || annotation.getContents() === undefined;
       if (isMentionEnabled) {
-        if (annotationHasNoContents) {
-          const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(replyText);
-
-          annotation.setCustomData('trn-mention', JSON.stringify({
-            contents: replyText,
-            ids,
-          }));
-          core.setNoteContents(annotation, plainTextValue);
-        } else {
-          const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
-          core.addAnnotations([replyAnnotation]);
-          setAnnotationRichTextStyle(editor, replyAnnotation);
-        }
+        const replyAnnotation = mentionsManager.createMentionReply(annotation, replyText);
+        core.addAnnotations([replyAnnotation], activeDocumentViewerKey);
+        setAnnotationRichTextStyle(editor, replyAnnotation);
       } else {
-        if (annotationHasNoContents) {
-          core.setNoteContents(annotation, replyText);
-          setAnnotationRichTextStyle(editor, annotation);
-        } else {
-          // TODO: This is bugged and does not work. createAnnotationReply
-          // does not return an annotation
-          const replyAnnotation = core.createAnnotationReply(annotation, replyText);
-          setAnnotationRichTextStyle(editor, replyAnnotation);
-        }
+        // TODO: This is bugged and does not work. createAnnotationReply
+        // does not return an annotation
+        const replyAnnotation = core.createAnnotationReply(annotation, replyText, activeDocumentViewerKey);
+        setAnnotationRichTextStyle(editor, replyAnnotation);
       }
     });
 
@@ -82,22 +69,21 @@ const ReplyArea = ({ annotations, onSubmit, onClose }) => {
   };
 
   return (
-    <div className='reply-area-multi-container'>
+    <div className={classNames({
+      'reply-area-multi-container': true,
+      'modular-ui': customizableUI,
+    })}>
       <div
         className="reply-area-multi-header"
       >
         <div className="title">
           {t('action.multiReplyAnnotations', { count: annotations.length })}
         </div>
-        <div
-          className="close-icon-container"
+        <Button
+          className="close-icon"
           onClick={onClose}
-        >
-          <Icon
-            glyph="ic_close_black_24px"
-            className="close-icon"
-          />
-        </div>
+          img='ic_close_black_24px'
+        />
       </div>
       <form onSubmit={postReply} >
         <div

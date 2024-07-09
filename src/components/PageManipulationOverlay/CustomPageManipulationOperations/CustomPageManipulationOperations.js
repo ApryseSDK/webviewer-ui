@@ -25,7 +25,7 @@ function CustomPageManipulationOperations(props) {
       >
         {header}
       </DataElementWrapper>
-      {operations.map(operation => {
+      {operations.map((operation) => {
         return (
           <DataElementWrapper
             key={operation.dataElement}

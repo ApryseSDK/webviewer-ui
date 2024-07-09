@@ -13,6 +13,35 @@
     width: 888px;
     height: 445px;
 
+    .settings-search-input {
+      display: flex;
+      border: 1px solid var(--border);
+      align-items: center;
+      height: 32px;
+      padding: 6px;
+      border-radius: 4px;
+      background: var(--component-background);
+      width: 100%;
+
+      &:focus-within {
+        outline: none;
+        border: 1px solid var(--blue-5);
+      }
+
+      .Icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      input {
+        width: 100%;
+        padding-right: 26px;
+        height: 20px;
+        border: none;
+        background: transparent;
+        padding-left: 8px;
+      }
+    }
     .header {
       display: flex;
       flex-direction: column;
@@ -30,11 +59,6 @@
         margin-bottom: 8px;
       }
 
-      input {
-        width: 100%;
-        height: 32px;
-        padding: 8px;
-      }
     }
 
     .body {
@@ -47,6 +71,7 @@
         width: 168px;
         background-color: var(--panel-background);
         flex-shrink: 0;
+        border-right: 1px solid var(--gray-4);
 
         .settings-tabs {
           .settings-tab {
@@ -55,17 +80,18 @@
             display: flex;
             align-items: center;
             padding: 8px;
-            color: var(--gray-8);
+            color: var(--gray-9);
             cursor: pointer;
 
             &:hover {
-              background-color: var(--blue-1);
+              border-right: 2px solid var(--blue-6);
+              color: var(--blue-6);
             }
 
             &.selected {
-              background-color: var(--blue-2) !important;
+              background-color: var(--gray-2) !important;
               border-right: 2px var(--blue-5) solid;
-              color: var(--blue-6);
+              color: var(--blue-5);
               cursor: default;
             }
           }
@@ -85,6 +111,15 @@
             margin-bottom: 8px;
           }
         }
+
+        .Dropdown.language-dropdown {
+          height: 32px;
+        }
+      }
+
+      .Button.custom-ui.icon-only:not([disabled]):hover {
+        box-shadow: none;
+        border: 1px solid var(--blue-6);
       }
     }
 

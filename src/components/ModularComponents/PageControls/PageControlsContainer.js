@@ -86,7 +86,7 @@ const PageControlsContainer = ({ dataElement = 'page-controls-container', header
         input,
         label: 'pageNavigationButton',
         inputWidth,
-        onClick: () => {},
+        onClick: () => { },
         onChange: onChange,
         onSubmit: onSubmit,
         onBlur: onBlur,

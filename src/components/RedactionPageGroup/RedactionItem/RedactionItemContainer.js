@@ -14,11 +14,13 @@ const RedactionItemContainer = (props) => {
     dateFormat,
     language,
     customNoteSelectionFunction,
+    timezone,
   ] = useSelector(
-    state => [
+    (state) => [
       selectors.getNoteDateFormat(state),
       selectors.getCurrentLanguage(state),
       selectors.getCustomNoteSelectionFunction(state),
+      selectors.getTimezone(state)
     ],
     shallowEqual,
   );
@@ -36,13 +38,14 @@ const RedactionItemContainer = (props) => {
   }, [annotation]);
 
   const onRedactionItemDelete = useCallback(() => {
-    core.deleteAnnotations([annotation])
+    core.deleteAnnotations([annotation]);
   }, [annotation]);
 
   return (
     <RedactionItem
       dateFormat={dateFormat}
       language={language}
+      timezone={timezone}
       author={author}
       annotation={annotation}
       iconColor={iconColor}

@@ -2,10 +2,14 @@ import React from 'react';
 import RibbonGroup from './RibbonGroup';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { mockModularComponents } from '../AppStories/mockAppState';
 
 export default {
   title: 'ModularComponents/RibbonGroup',
   component: RibbonGroup,
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 const initialState = {
@@ -29,6 +33,7 @@ const initialState = {
     },
     lastPickedToolForGroupedItems: {},
     customHeadersAdditionalProperties: {},
+    modularComponents: mockModularComponents,
   },
   featureFlags: {
     customizableUI: true,
@@ -131,6 +136,7 @@ const initialStateDropdown = {
     },
     activeGroupedItems: [],
     activeCustomRibbon: 'toolbarGroup-View',
+    modularComponents: mockModularComponents,
   }
 };
 

@@ -1,3 +1,3 @@
-import RedactionItem from './RedactionItemContainer';
+import RedactionItemContainer from './RedactionItemContainer';
 
-export default RedactionItem;
+export default RedactionItemContainer;

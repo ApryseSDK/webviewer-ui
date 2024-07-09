@@ -4,9 +4,10 @@ import { Basic } from './LinkAnnotationPopup.stories';
 import LinkAnnotationPopup from './LinkAnnotationPopup';
 import { deleteLinkAnnotationWithGroup } from './LinkAnnotationPopupContainer';
 import core from 'core';
+import getGroupedLinkAnnotations from 'src/helpers/getGroupedLinkAnnotations';
 
 jest.mock('core');
-
+jest.mock('src/helpers/getGroupedLinkAnnotations');
 const TestAnnotationPopup = withProviders(Basic);
 const LinkAnnotationPopupWithProviders = withProviders(LinkAnnotationPopup);
 
@@ -181,6 +182,7 @@ describe('LinkAnnotationPopup Component', () => {
       const annotationManager = core.getAnnotationManager(1);
       const deleteAnnotation = jest.fn();
       annotationManager.deleteAnnotation = deleteAnnotation;
+      getGroupedLinkAnnotations.mockImplementation(() => [mockRectangleAnnotation]);
 
       const handleUnLink = () => deleteLinkAnnotationWithGroup({}, 1);
 
@@ -199,6 +201,7 @@ describe('LinkAnnotationPopup Component', () => {
       const unlinkButton = screen.getByRole('button', { name: 'Delete Link' });
       unlinkButton.click();
       expect(deleteAnnotation).toBeCalledTimes(1);
+      getGroupedLinkAnnotations.mockRestore();
     });
 
     it('Should call deleteAnnotation twice if group annotation includes a highlight annotation', () => {
@@ -212,6 +215,7 @@ describe('LinkAnnotationPopup Component', () => {
       const annotationManager = core.getAnnotationManager(1);
       const deleteAnnotation = jest.fn();
       annotationManager.deleteAnnotation = deleteAnnotation;
+      getGroupedLinkAnnotations.mockImplementation(() => [mockHighlightAnnotation]);
 
       const handleUnLink = () => deleteLinkAnnotationWithGroup({}, 1);
 
@@ -230,6 +234,7 @@ describe('LinkAnnotationPopup Component', () => {
       const unlinkButton = screen.getByRole('button', { name: 'Delete Link' });
       unlinkButton.click();
       expect(deleteAnnotation).toBeCalledTimes(2);
+      getGroupedLinkAnnotations.mockRestore();
     });
   });
 });

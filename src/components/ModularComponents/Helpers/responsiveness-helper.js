@@ -49,7 +49,8 @@ export const getItemsToHide = (items, itemsDom, missingSpace, headerDirection) =
 
 export const getIconDOMElement = (currentItem, allItems) => {
   const areAllitemsWithoutIcons = allItems.every((item) => !item.icon && !item.img && !item.toolName);
-  if (areAllitemsWithoutIcons) {
+  const currentItemIconWithoutIcon = !currentItem.icon && !currentItem.img && !currentItem.toolName;
+  if (currentItemIconWithoutIcon && areAllitemsWithoutIcons) {
     return null;
   }
 

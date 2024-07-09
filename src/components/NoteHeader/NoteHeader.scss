@@ -55,13 +55,13 @@
 
         .author {
           font-weight: bold;
+          font-size: 13px;
         }
 
         .date-and-num-replies {
           display: flex;
 
           .date-and-time {
-            opacity: 0.8;
             font-size: 10px;
 
             @include mobile {
@@ -84,6 +84,7 @@
             .num-replies {
               opacity: 0.8;
               font-size: 10px;
+              color: var(--gray-7);
 
               @include mobile {
                 font-size: 12px;

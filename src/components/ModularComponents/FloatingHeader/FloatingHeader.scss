@@ -1,0 +1,117 @@
+@import '../../../constants/styles.scss';
+
+.FloatingHeaderContainer {
+  transition: all .3s ease-in-out;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  min-height: $top-bar-height;
+  padding: 24px;
+  z-index: $headers-z-index;
+  pointer-events: none;
+
+  &.bottom {
+    position: relative;
+  }
+
+  &.left {
+    width: $left-header-width;
+    padding: 24px 0px 24px 24px;
+  }
+
+  &.right {
+    width: $right-header-width;
+    align-items: end;
+  }
+
+  &.vertical {
+    flex-direction: column;
+  }
+
+  .FloatSection {
+    display: flex;
+    flex: 1;
+
+    &.vertical {
+      flex-direction: column;
+    }
+
+    // Maybe we'll need these maybe we wont
+    // &.start__top,
+    // &.start__bottom {
+    //   // align-self: flex-start;
+    // }
+
+    // &.start__left,
+    // &.start__right {
+    //   // align-self: flex-start;
+    // }
+
+    &.center__top,
+    &.center__bottom {
+      justify-content: center;
+    }
+
+    &.center__left,
+    &.center__right {
+      justify-content: center;
+    }
+
+    &.end__top,
+    &.end__bottom {
+      justify-content: flex-end;
+    }
+
+    &.end__left,
+    &.end__right {
+      justify-content: flex-end;
+    }
+  }
+}
+
+.FloatingHeader {
+  border-radius: 4px;
+  pointer-events: auto;
+  transition: opacity .2s ease;
+
+  // customizable styles
+  padding: 8px 12px;
+  background: var(--gray-0);
+
+  &.opacity-full {
+    opacity: 1;
+  }
+
+  &.opacity-low {
+    opacity: 0.5;
+
+    &.isVisible {
+      opacity: 1;
+    }
+  }
+
+  &.opacity-none {
+    opacity: 0;
+
+    &.isVisible {
+      opacity: 1;
+    }
+  }
+
+  &.opacity-mode-dynamic:hover {
+    opacity: 1;
+  }
+}
+
+.FloatingHeader.stroke {
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--gray-6);
+}
+
+.FloatingHeader.VerticalHeader {
+  padding: 12px 8px;
+}

@@ -4,9 +4,11 @@ import useOnClickOutside from 'hooks/useOnClickOutside';
 import DataElementWrapper from 'components/DataElementWrapper';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import selectors from 'selectors';
 
-import Icon from 'components/Icon';
 import './NotePopup.scss';
+import Button from '../Button';
+import { useSelector } from 'react-redux';
 
 const propTypes = {
   handleEdit: PropTypes.func,
@@ -34,12 +36,13 @@ function NotePopup(props) {
 
   const [t] = useTranslation();
   const popupRef = React.useRef();
+  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   useOnClickOutside(popupRef, () => {
     closePopup();
   });
 
-  const togglePopup = e => {
+  const togglePopup = (e) => {
     e.stopPropagation();
     if (isOpen) {
       closePopup();
@@ -63,17 +66,20 @@ function NotePopup(props) {
     return null;
   }
 
-  const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger', { active: isOpen })
-  const optionsClass = classNames('options note-popup-options', { 'options-reply': isReply })
+  const notePopupButtonClass = classNames('overflow note-popup-toggle-trigger', { active: isOpen });
+  const optionsClass = classNames('options note-popup-options', { 'options-reply': isReply, 'modular-ui': customizableUI });
   return (
     <DataElementWrapper
       className="NotePopup"
       dataElement="notePopup"
       ref={popupRef}
     >
-      <div className={notePopupButtonClass} onClick={togglePopup}>
-        <Icon glyph="icon-tools-more" />
-      </div>
+      <Button
+        dataElement="notePopupButtonClass"
+        className={notePopupButtonClass}
+        onClick={togglePopup}
+        img="icon-tools-more"
+      />
       {isOpen && (
         <div className={optionsClass}>
           {isEditable && (

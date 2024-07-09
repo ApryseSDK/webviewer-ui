@@ -20,6 +20,7 @@
     &:hover {
       background: var(--tools-overlay-button-hover);
     }
+
     &.active {
       background: var(--tools-overlay-button-active);
     }
@@ -28,5 +29,10 @@
   &.active {
     background: var(--tools-overlay-button-active);
   }
-}
 
+  .signature-button-icon {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+  }
+}

@@ -2,6 +2,7 @@
  * Sets the gap of Grouped Items
  * @method UI.setGroupedItemsGap
  * @param {number} gap The gap in pixels between the items in the group.
+ * @param {Object} [selectors] An object that contains selectors for the Grouped Items.
  * @example
  * WebViewer(...)
   .then(function (instance) {
@@ -37,7 +38,7 @@ export default (store) => (gap, selectors) => {
   if (isGapValid(gap)) {
     const { groupedItemsDataElement } = selectors || {};
     if (groupedItemsDataElement) {
-      store.dispatch(actions.setGroupedItemsProperty('gap', gap, groupedItemsDataElement));
+      store.dispatch(actions.setModularComponentProperty('gap', gap, groupedItemsDataElement));
     } else {
       store.dispatch(actions.setAllGroupedItemsProperty('gap', gap));
     }

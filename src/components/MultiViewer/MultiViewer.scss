@@ -21,6 +21,7 @@
     height: 100%;
     border: 2px solid var(--document-background-color);
     box-sizing: border-box;
+    overflow: hidden;
 
     &.active {
       border: 2px solid var(--blue-5);

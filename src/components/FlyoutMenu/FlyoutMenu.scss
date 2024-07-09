@@ -52,6 +52,7 @@
     margin-bottom: 8px;
     padding-left: 12px;
     padding-right: 18px;
+    font-weight: bold;
   }
 
   // Same as .row
@@ -86,7 +87,7 @@
     padding-bottom: 30px;
 
     .swipe-indicator {
-      background: var(--divider);
+      background: var(--gray-6);
       border-radius: 2px;
       height: 4px;
       width: 38px;

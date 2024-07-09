@@ -1,4 +1,6 @@
+import core from 'core';
+
 /**
  * @see displayModeObjects.js for more information
  */
-export default () => window.documentViewer.getDisplayModeManager().getDisplayMode().isContinuous();
+export default (documentViewerKey = 1) => core.getDocumentViewer(documentViewerKey).getDisplayModeManager().getDisplayMode().isContinuous();

@@ -401,7 +401,7 @@ function Dropdown({
             >
               {createDropdownButton(optionIsSelected ? selectedItemDisplay : (placeholder || ''))}
             </div>
-            <Icon className="arrow" glyph={`icon-chevron-${isOpen ? directionMap[arrowDirection] : arrowDirection}`} />
+            <Icon className="arrow" disabled={disabled} glyph={`icon-chevron-${isOpen ? directionMap[arrowDirection] : arrowDirection}`} />
           </div>
         </button>
       }

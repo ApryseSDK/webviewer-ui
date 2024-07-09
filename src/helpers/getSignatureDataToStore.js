@@ -6,7 +6,7 @@ let previewsPromise = Promise.resolve();
 // returns an array of objects in the shape of: { annotation, preview }
 // annotation: a copy of the annotation passed in
 // imgSrc: preview of the annotation, a base64 string
-export default async annotations => {
+export default async (annotations) => {
   // copy the annotation because we need to mutate the annotation object later if there're any styles changes
   // and we don't want the original annotation to be mutated as well
   // since it's been added to the canvas
@@ -16,7 +16,7 @@ export default async annotations => {
   await previewsPromise;
 
   previewsPromise = Promise.all(
-    newAnnotations.map(annotation => {
+    newAnnotations.map((annotation) => {
       const oldStrokeThickness = annotation['StrokeThickness'];
       // Temporarily changing stroke thickness to 6 because it looks better in the preview image
       annotation['StrokeThickness'] = 6;

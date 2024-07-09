@@ -46,7 +46,7 @@
 
   --text-color: var(--gray-9);
   --faded-text: var(--gray-7);
-  --placeholder-text: var(--gray-6);
+  --placeholder-text: var(--gray-7);
   --ribbon-active-color: var(--blue-5);
 
   --no-presets-text: var(--gray-6);
@@ -57,7 +57,7 @@
   --icon-color: var(--gray-6);
   --selected-icon-color: var(--gray-8);
 
-  --view-header-button-hover: var(--blue-1);
+  --view-header-button-hover: var(--gray-2);
   --view-header-button-active: var(--gray-2);
 
   --popup-button-hover: var(--gray-2);
@@ -85,14 +85,14 @@
   --lighter-border: var(--gray-4);
   --focus-border: var(--blue-5);
   --hover-border: var(--blue-6);
-  --color-palette-border: var(--gray-8);
+  --color-palette-border: var(--blue-5);
 
   --image-signature-drop-background: var(--blue-1);
   --image-signature-drop-border: var(--blue-5);
   --file-picker-drop-background: var(--blue-1);
   --file-picker-drop-border: var(--blue-5);
   --signature-draw-background: var(--gray-2);
-  --modal-stroke-and-border: var(--gray-5);
+  --modal-stroke-and-border: var(--gray-4);
   --modal-negative-space: rgba(0, 0, 0, 0.3);
   --spinner-negative-space: rgba(0, 0, 0, 0.3);
 
@@ -143,7 +143,7 @@
   --multi-tab-flyout-hover: var(--blue-6);
   --multi-tab-flyout-hover-text: var(--gray-0);
   --multi-tab-toggle-button-active: var(--blue-5);
-  
+
   --watermark-preview-background: var(--gray-2);
 
   --tab-border-color: var(--border);
@@ -155,8 +155,19 @@
   --dropdown-item-active: var(--blue-5);
   --dropdown-item-text-hover: var(--gray-0);
 
-  --disabled-button-color: rgba(var(--blue-5), 0.5);
+  --disabled-button-color: rgba(43, 115, 171, 0.5);
   --tab-footer-button-color: var(--gray-0);
+  --x-button-hover-color: var(--gray-2);
+
+  --slider-filler: drop-shadow(0px 0px 1px rgba(145, 145, 145, .7));
+  --style-icon-color: var(--icon-color);
+  --cell-border-size: 30px;
+  --cell-outer-border-size: 30px;
+  --button-icon-color-active: var(--blue-5);
+  --slider-svg-hieght: 25px;
+  --slider-input-focus: var(--blue-5);
+  --colorpicker-tool-shadow: inset 0 0 0 1px var(--blue-6);
+  --colorpicker-tool-bg: var(--tools-button-hover);
 
   --input-switch-default-color: var(--gray-6);
 }

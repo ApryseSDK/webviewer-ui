@@ -37,6 +37,7 @@
 
     &.searchPanel {
       padding: 0px;
+      overflow-x: hidden;
 
       .SearchPanel {
         padding: 16px 16px 0px 16px;
@@ -54,27 +55,27 @@
     &.notesPanel {
       padding: 0px;
 
-      .NotesPanel {
-        width: 100%;
+      .notes-panel-container {
+        position: static;
 
-        [data-element=notesPanelHeader] {
-          padding-right: 16px;
+        .NotesPanel {
+          width: 100%;
+  
+          [data-element=notesPanelHeader] {
+            padding-right: 16px;
+          }
+  
+          .virtualized-notes-container,
+          .normal-notes-container {
+            padding-right: 16px;
+          }
         }
-
-        .virtualized-notes-container,
-        .normal-notes-container {
-          padding-right: 16px;
-        }
-      }
-
-      .multi-select-footer {
-        margin-bottom: 16px;
-        height: 64px;
       }
     }
 
     &.textEditingPanel {
       padding: 0px;
+      overflow-y: unset;
 
       .text-editing-panel-heading {
         font-size: 14px;
@@ -151,12 +152,12 @@
     &.right {
       border-left: 1px solid var(--side-panel-border);
     }
-  
+
     &.left {
       border-right: 1px solid var(--side-panel-border);
     }
   }
- 
+
   &.closed {
     display: none;
   }
@@ -170,19 +171,30 @@
     transform: translateX(-100%);
   }
 
-  // Specific styles for a variety of custom panels
-  &.custom-panel {
+  // Specific styles for a variety of modular UI panels
+  &.modular-ui-panel {
     background-color: var(--gray-0);
 
-    button.Dropdown,
     .resize-bar {
       border-color: var(--lighter-border);
+    }
+
+    button.Dropdown {
+      border-color: var(--border);
+
+      &:disabled {
+        border-color: var(--lighter-border);
+
+        .Icon {
+          color: var(--lighter-border);
+        }
+      }
     }
 
     .bookmark-outline-footer {
       border-top: 1px solid var(--lighter-border);
     }
-    
+
     .msg.msg-no-bookmark-outline {
       color: var(--gray-7)
     }
@@ -191,14 +203,14 @@
       .flx-Panel-container {
         .documentControls {
           border-color: var(--lighter-border);
-  
+
           .documentControlsButton button,
           .PageControlContainer button {
             &:hover {
-              @extend %custom-button-hover;
+              @extend %icon-button-hover;
             }
           }
-  
+
           .PageControlContainer {
             margin-top: 16px;
           }
@@ -222,14 +234,14 @@
               width: 16px;
               height: auto;
             }
-            
+
             &:hover:not(.active) {
-              @extend %custom-button-hover;
+              @extend %icon-button-hover;
             }
           }
         }
       }
-      
+
       .Thumbnail.selected .container canvas {
         background-color: rgba(43, 115, 171, 0.1);
       }
@@ -242,11 +254,11 @@
         .thumbnailControls-overlay.modular-ui {
           .Button {
             &:hover:not(.active){
-              @extend %custom-button-hover;
+              @extend %icon-button-hover;
             }
 
             &.active {
-              @extend %custom-button-active;
+              @extend %icon-button-active;
             }
           }
         }
@@ -258,7 +270,7 @@
 
       .bookmark-outline-footer .multi-selection-button {
         &:hover:not(.disabled) {
-          @extend %custom-button-hover;
+          @extend %icon-button-hover;
         }
       }
     }

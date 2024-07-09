@@ -247,7 +247,7 @@ const FontSizeDropdown = ({
     value = '';
   }
   return (
-    <div className="FontSizeDropdown">
+    <div className={classNames('FontSizeDropdown', { disabled })}>
       <input
         min={MIN_FONT_SIZE}
         max={maxFontSize}

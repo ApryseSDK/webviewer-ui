@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'components/Button';
+import '../ModularComponents/StatefulButton/StatefulButton.scss';
 
 import selectors from 'selectors';
 
@@ -65,7 +66,7 @@ class StatefulButton extends React.PureComponent {
     }
   }
 
-  update = newState => {
+  update = (newState) => {
     if (newState) {
       this.setState({
         activeState: newState,
