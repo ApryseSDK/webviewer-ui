@@ -1,0 +1,1320 @@
+{
+  "action": {
+    "addParagraph": "Tilføj afsnit",
+    "add": "Tilføj",
+    "apply": "Anvend",
+    "applyAll": "Anvend alle",
+    "calendar": "Kalender",
+    "calibrate": "Kalibrer",
+    "cancel": "Annuller",
+    "confirm": "Bekræft",
+    "currentPageIs": "Nuværende side er",
+    "clear": "Ryd",
+    "clearAll": "Ryd alt",
+    "close": "Luk",
+    "undo": "Fortryd",
+    "redo": "Gentag",
+    "comment": "Kommentar",
+    "reply": "Tilføj svar",
+    "copy": "Kopiér",
+    "cut": "Klip",
+    "paste": "Indsæt",
+    "pasteWithoutFormatting": "Indsæt uden formatering",
+    "delete": "Slet",
+    "deleted": "Slettet",
+    "group": "Gruppér",
+    "ungroup": "Opdel gruppe",
+    "download": "Download",
+    "edit": "Rediger",
+    "extract": "Udtræk",
+    "extractPage": "Udtræk side",
+    "enterFullscreen": "Gå til fuld skærm",
+    "exitFullscreen": "Afslut fuld skærm",
+    "fit": "Tilpas",
+    "fitToPage": "Tilpas til side",
+    "fitToWidth": "Tilpas til bredde",
+    "more": "Mere",
+    "openFile": "Åbn fil",
+    "page": "Side",
+    "pagePrev": "Forrige side",
+    "pageNext": "Næste side",
+    "pageSet": "Indstil side",
+    "print": "Udskriv",
+    "proceed": "Fortsæt",
+    "name": "Navn",
+    "rename": "Omdøb",
+    "ok": "OK",
+    "rotate": "Sideretning",
+    "rotate3D": "Roter",
+    "rotateClockwise": "Roter med uret",
+    "rotateCounterClockwise": "Roter mod uret",
+    "rotatedClockwise": "roteret med uret",
+    "rotatedCounterClockwise": "roteret mod uret",
+    "rotationIs": "nuværende siders rotation er",
+    "movedToBottomOfDocument": "flyttet til bunden af dokumentet",
+    "movedToTopofDocument": "flyttet til toppen af dokumentet",
+    "extracted": "udvundet",
+    "save": "Gem",
+    "post": "Opslå",
+    "create": "Opret",
+    "update": "Opdater",
+    "showMoreResults": "Vis flere resultater",
+    "sign": "Underskriv",
+    "style": "Stil",
+    "submit": "Indsend",
+    "zoom": "Zoom",
+    "zoomIn": "Zoom ind",
+    "zoomOut": "Zoom ud",
+    "zoomSet": "Indstil zoom",
+    "zoomChanged": "Nuværende zoom er",
+    "zoomControls": "Zoomindstilinger",
+    "draw": "Tegn",
+    "type": "Skriv",
+    "upload": "Upload",
+    "link": "Link",
+    "unlink": "Slet link",
+    "fileAttachmentDownload": "Download vedhæftet fil",
+    "prevResult": "Forrige resultat",
+    "nextResult": "Næste resultat",
+    "prev": "Forrige",
+    "next": "Næste",
+    "startFormEditing": "Start formularredigering",
+    "exitFormEditing": "Afslut formularredigering",
+    "exit": "Afslut",
+    "addOption": "Tilføj mulighed",
+    "formFieldEdit": "Rediger formularfelt",
+    "formFieldEditMode": "Rediger formularfelter",
+    "contentEditMode": "Rediger indhold",
+    "viewShortCutKeysFor3D": "Se genvejstaster",
+    "markAllRead": "Markér alle som læst",
+    "pageInsertion": "Sideindsættelse",
+    "insertPage": "Indsæt side",
+    "insert": "Indsæt",
+    "pageManipulation": "Sideredigering",
+    "replace": "Erstat",
+    "replacePage": "Erstat side",
+    "modal": "modal",
+    "isOpen": "er åben",
+    "setDestination": "Vælg destination",
+    "showLess": "Vis mindre",
+    "showMore": "...mere",
+    "chooseFile": "Vælg en fil",
+    "changeDate": "Skift dato",
+    "browse": "Gennemse filer",
+    "selectYourOption": "Vælg en mulighed",
+    "open": "Åbn",
+    "deselectAll": "Fravælg alle",
+    "select": "Vælg",
+    "moveToTop": "Flyt til toppen",
+    "moveToBottom": "Flyt til bunden",
+    "movePageToTop": "Flyt side til toppen",
+    "movePageToBottom": "Flyt side til bunden",
+    "backToMenu": "Tilbage til menu",
+    "redactPages": "Rediger sider",
+    "playAudio": "Afspil lyd",
+    "pauseAudio": "Pause lyd",
+    "selectAll": "Vælg alle",
+    "unselect": "Fravælg",
+    "addMark": "Tilføj mærke",
+    "viewFile": "Se fil",
+    "multiReplyAnnotations": "Svar på valgte annotationer ({{count}})",
+    "comparePages": "Sammenlign sider",
+    "startComparison": "Start sammenligning",
+    "showComparison": "Vis sammenligning",
+    "back": "Tilbage",
+    "clearSignature": "Ryd signatur",
+    "readOnlySignature": "Skrivebeskyttet signatur kan ikke slettes",
+    "newDocument": "Nyt dokument",
+    "sideBySideView": "Side ved side visning",
+    "pageNumberInput": "Side nummer input",
+    "addNewColor": "Tilføj ny farve",
+    "deleteColor": "Slet valgte farve",
+    "copySelectedColor": "Kopiér valgte farve"
+  },
+  "annotation": {
+    "areaMeasurement": "Areal",
+    "arc": "Bue",
+    "arcMeasurement": "Buemåling",
+    "arrow": "Pil",
+    "callout": "Callout",
+    "crop": "Beskær side",
+    "caret": "Indsæt",
+    "dateFreeText": "Kalender",
+    "formFillCheckmark": "Flueben",
+    "formFillCross": "Kryds",
+    "distanceMeasurement": "Afstand",
+    "rectangularAreaMeasurement": "Rektangulært areal",
+    "ellipseMeasurement": "Ellipse areal",
+    "countMeasurement": "Tælling",
+    "ellipse": "Ellipse",
+    "eraser": "Viskelæder",
+    "fileattachment": "Fil vedhæftning",
+    "freehand": "Frihånd",
+    "freeHandHighlight": "Frihånds fremhævning",
+    "freetext": "Fri tekst",
+    "markInsertText": "Indsæt tekst",
+    "markReplaceText": "Erstat tekst",
+    "highlight": "Fremhæv",
+    "image": "Billede",
+    "line": "Linje",
+    "perimeterMeasurement": "Perimeter",
+    "polygon": "Polygon",
+    "polygonCloud": "Sky",
+    "polyline": "Polylinje",
+    "rectangle": "Rektangel",
+    "redact": "Rediger",
+    "formFillDot": "Prik",
+    "signature": "Signatur",
+    "snipping": "Klippeværktøj",
+    "squiggly": "Bølget",
+    "stamp": "Stempel",
+    "stickyNote": "Note",
+    "strikeout": "Gennemstregning",
+    "underline": "Understregning",
+    "custom": "Brugerdefineret",
+    "rubberStamp": "Stempel",
+    "note": "Note",
+    "textField": "Tekstfelt",
+    "signatureFormField": "Signaturfelt",
+    "checkBoxFormField": "Afkrydsningsfelt",
+    "radioButtonFormField": "Radioknap felt",
+    "listBoxFormField": "Listefelt",
+    "comboBoxFormField": "Kombinationsfelt",
+    "link": "Link",
+    "other": "Andet",
+    "3D": "3D",
+    "sound": "Lyd",
+    "changeView": "Skift visning",
+    "newImage": "Nyt billede"
+  },
+  "rubberStamp": {
+    "Approved": "Godkendt",
+    "AsIs": "Som udført",
+    "Completed": "Færdigmeldt",
+    "Confidential": "Fortroligt",
+    "Departmental": "Afdeling",
+    "Draft": "Udkast",
+    "Experimental": "Eksperimentel",
+    "Expired": "Udløbet",
+    "Final": "Endelig",
+    "ForComment": "Til kommentar",
+    "ForPublicRelease": "Til offentlig frigivelse",
+    "InformationOnly": "Kun information",
+    "NotApproved": "Ikke godkendt",
+    "NotForPublicRelease": "Ikke til offentlig frigivelse",
+    "PreliminaryResults": "Foreløbige resultater",
+    "Sold": "Solgt",
+    "TopSecret": "Tophemmeligt",
+    "Void": "Ugyldig",
+    "SHSignHere": "Underskriv her",
+    "SHWitness": "Vidne",
+    "SHInitialHere": "Initialer her",
+    "SHAccepted": "Accepteret",
+    "SBRejected": "Afvist"
+  },
+  "component": {
+    "attachmentPanel": "Vedhæftninger",
+    "leftPanel": "Panel",
+    "toolsHeader": "Værktøjer",
+    "searchOverlay": "Søg",
+    "searchPanel": "Søg",
+    "menuOverlay": "Menu",
+    "notesPanel": "Kommentarer",
+    "outlinePanel": "Oversigt",
+    "outlinesPanel": "Oversigter",
+    "newOutlineTitle": "Ny overskrifts titel",
+    "outlineTitle": "Overskrifts titel",
+    "destination": "Destination",
+    "bookmarkPanel": "Bogmærke",
+    "bookmarksPanel": "Bogmærker",
+    "bookmarkTitle": "Bogmærke titel",
+    "bookmarkPage": "Side",
+    "signaturePanel": "Signaturer",
+    "layersPanel": "Lag",
+    "thumbnailsPanel": "Miniaturer",
+    "toolsButton": "Værktøjer",
+    "redaction": "Redaktion",
+    "viewControlsOverlay": "Vis kontrol",
+    "calibration": "Kalibrering",
+    "zoomOverlay": "Zoom overlay",
+    "textPopup": "Tekst pop-up",
+    "createStampButton": "Opret nyt stempel",
+    "filter": "Filter",
+    "multiSelectButton": "Multi vælg",
+    "pageReplaceModalTitle": "Erstat side",
+    "files": "Filer",
+    "editText": "Rediger tekst",
+    "redactionPanel": "Redaktions panel",
+    "noteGroupSection": {
+      "open": "Vis alle annotationer",
+      "close": "Luk alle annotationer"
+    },
+    "comparePanel": "Sammenlign panel",
+    "watermarkPanel": "Vandmærke panel"
+  },
+  "message": {
+    "showMore": "Vis mere",
+    "showLess": "Vis mindre",
+    "toolsOverlayNoPresets": "Ingen forudindstillinger",
+    "badDocument": "Kunne ikke indlæse dokumentet. Dokumentet er enten korrupt eller ugyldigt.",
+    "customPrintPlaceholder": "f.eks. 3, 4-10",
+    "encryptedAttemptsExceeded": "Kunne ikke indlæse krypteret dokument. For mange forsøg.",
+    "encryptedUserCancelled": "Kunne ikke indlæse krypteret dokument. Adgangskode indtastning annulleret.",
+    "enterPassword": "Dette dokument er beskyttet med adgangskode. Indtast venligst en adgangskode",
+    "incorrectPassword": "Forkert adgangskode, forsøg tilbage: {{ remainingAttempts }}",
+    "noAnnotations": "Begynd at lave annotationer for at efterlade en kommentar.",
+    "noAnnotationsReadOnly": "Dette dokument har ingen annotationer.",
+    "noAnnotationsFilter": "Begynd at lave annotationer og filtre vil dukke op her.",
+    "noBookmarks": "Ingen bogmærker tilgængelige",
+    "noOutlines": "Ingen oversigter tilgængelige",
+    "noAttachments": "Dette dokument har ingen vedhæftninger.",
+    "noResults": "Ingen resultater fundet.",
+    "numResultsFound": "resultater fundet",
+    "loadError": "Fejl ved indlæsning af dokument",
+    "notSupported": "Denne filtype understøttes ikke.",
+    "passwordRequired": "Adgangskode påkrævet",
+    "enterPasswordPlaceholder": "Indtast adgangskode",
+    "preparingToPrint": "Forbereder til udskrivning...",
+    "annotationReplyCount": "{{count}} Svar",
+    "annotationReplyCount_plural": "{{count}} Svar",
+    "printTotalPageCount": "I alt: {{count}} side",
+    "printTotalPageCount_plural": "I alt: {{count}} sider",
+    "processing": "Behandler...",
+    "searching": "Søger...",
+    "searchCommentsPlaceholder": "Søg kommentarer",
+    "searchDocumentPlaceholder": "Søg dokument",
+    "searchSuggestionsPlaceholder": "Søg forslag",
+    "signHere": "Underskriv her",
+    "insertTextHere": "Indsæt tekst her",
+    "imageSignatureAcceptedFileTypes": "Kun {{acceptedFileTypes}} er accepteret",
+    "signatureRequired": "En signatur og initialer er påkrævet for at fortsætte",
+    "enterMeasurement": "Indtast måling mellem de to punkter",
+    "errorEnterMeasurement": "Det indtastede nummer er ugyldigt, du kan indtaste værdier som 7,5 eller 7 1/2",
+    "linkURLorPage": "Link til URL eller en side",
+    "warning": "Advarsel",
+    "svgMalicious": "SVG script ignoreret af sikkerhedsmæssige årsager",
+    "doNotShowAgain": "Vis ikke dette igen",
+    "doNotAskAgain": "Spørg ikke igen",
+    "enterReplacementText": "Indtast den tekst du vil erstatte",
+    "sortBy": "Sortér",
+    "emptyCustomStampInput": "Stempeltekst kan ikke være tom",
+    "unpostedComment": "Ikke offentliggjort kommentar",
+    "lockedLayer": "Lag er låst",
+    "layerVisibililtyNoChange": "Lag synlighed kan ikke ændres",
+    "noLayers": "Dette dokument har ingen lag.",
+    "noSignatureFields": "Dette dokument har ingen signaturfelter.",
+    "untitled": "Uden titel",
+    "selectHowToLoadFile": "Vælg hvordan du vil indlæse dit dokument",
+    "openFileByUrl": "Åbn fil via URL:",
+    "enterUrlHere": "Indtast URL her",
+    "openLocalFile": "Åbn lokal fil:",
+    "selectFile": "Vælg fil",
+    "selectPageToReplace": "Vælg de sider i dokumentet, du vil erstatte med.",
+    "embeddedFiles": "Indlejrede filer",
+    "pageNum": "Sidetal",
+    "viewBookmark": "Se bogmærke på side",
+    "error": "Fejl",
+    "errorPageNumber": "Ugyldigt sidetal. Grænse er",
+    "errorLoadingDocument": "Der opstod et problem ved læsning af dette dokument og nogle sider vises muligvis ikke. Dette indikerer, at dokumentet kan være beskadiget. Det samlede sidetal er {{totalPageCount}} og antallet af sider, der vises, er {{displayedPageCount}}.",
+    "noRevisions": "Dette dokument har ingen revisioner."
+  },
+  "option": {
+    "type": {
+      "caret": "Caret",
+      "custom": "Brugerdefineret",
+      "ellipse": "Ellipse",
+      "fileattachment": "Fil vedhæftning",
+      "freehand": "Frihånd",
+      "callout": "Udråbstegn",
+      "freetext": "Fri tekst",
+      "line": "Linje",
+      "polygon": "Polygon",
+      "polyline": "Polylinje",
+      "rectangle": "Rektangel",
+      "redact": "Rediger",
+      "signature": "Signatur",
+      "stamp": "Stempel",
+      "stickyNote": "Sticky Note",
+      "highlight": "Fremhæv",
+      "strikeout": "Gennemstregning",
+      "underline": "Understregning",
+      "squiggly": "Bølget",
+      "3D": "3D",
+      "other": "Andet",
+      "initials": "Initialer",
+      "saved": "Gemt"
+    },
+    "notesOrder": {
+      "dropdownLabel": "Sortér liste efter",
+      "position": "Position",
+      "time": "Tid",
+      "status": "Status",
+      "author": "Forfatter",
+      "type": "Type",
+      "color": "Farve",
+      "createdDate": "Oprettelsesdato",
+      "modifiedDate": "Ændringsdato"
+    },
+    "toolbarGroup": {
+      "dropdownLabel": "Værktøjsgrupper",
+      "toolbarGroup-View": "Vis",
+      "toolbarGroup-Annotate": "Annotér",
+      "toolbarGroup-Shapes": "Former",
+      "toolbarGroup-Insert": "Indsæt",
+      "toolbarGroup-Measure": "Mål",
+      "toolbarGroup-Edit": "Rediger",
+      "toolbarGroup-EditText": "Rediger tekst",
+      "toolbarGroup-FillAndSign": "Udfyld og underskriv",
+      "toolbarGroup-Forms": "Formularer",
+      "toolbarGroup-Redact": "Rediger"
+    },
+    "annotationColor": {
+      "StrokeColor": "Stregfarve",
+      "FillColor": "Fyldfarve",
+      "TextColor": "Tekstfarve"
+    },
+    "colorPalette": {
+      "colorLabel": "Farve"
+    },
+    "colorPalettePicker": {
+      "addColor": "Tilføj ny farve",
+      "selectColor": "Vælg farve"
+    },
+    "displayMode": {
+      "layout": "Sidelayot",
+      "pageTransition": "Sideovergang"
+    },
+    "documentControls": {
+      "selectTooltip": "Vælg flere sider",
+      "closeTooltip": "Luk multi-vælg"
+    },
+    "bookmarkOutlineControls": {
+      "edit": "Rediger",
+      "done": "Færdig",
+      "reorder": "Omarranger"
+    },
+    "layout": {
+      "cover": "Omslagsvisning",
+      "double": "Dobbelt side",
+      "single": "Enkelt side"
+    },
+    "mathSymbols": "Matematiske symboler",
+    "notesPanel": {
+      "separator": {
+        "today": "I dag",
+        "yesterday": "I går",
+        "unknown": "Ukendt"
+      },
+      "noteContent": {
+        "noName": "(ingen navn)",
+        "noDate": "(ingen dato)"
+      }
+    },
+    "pageTransition": {
+      "continuous": "Kontinuerlig side",
+      "default": "Side for side",
+      "reader": "Læser"
+    },
+    "print": {
+      "all": "Alle",
+      "current": "Nuværende side",
+      "pages": "Sider til udskrivning",
+      "specifyPages": "Angiv sider",
+      "view": "Nuværende visning",
+      "pageQuality": "Udskriftskvalitet",
+      "qualityNormal": "Normal",
+      "qualityHigh": "Høj",
+      "includeAnnotations": "Inkluder annotationer",
+      "includeComments": "Inkluder kommentarer",
+      "printSettings": "Udskriftsindstillinger",
+      "printGrayscale": "Udskriv i gråtoner",
+      "flatten": "Udflad dokument",
+      "printCurrentDisabled": "Nuværende visning er kun tilgængelig ved visning af en enkelt side."
+    },
+    "printInfo": {
+      "author": "Forfatter",
+      "subject": "Emne",
+      "date": "Dato"
+    },
+    "redaction": {
+      "markForRedaction": "Markér til redigering"
+    },
+    "searchPanel": {
+      "caseSensitive": "Skelnen mellem store og små bogstaver",
+      "wholeWordOnly": "Kun hele ord",
+      "wildcard": "Asterisk",
+      "replace": "Erstat",
+      "replaceAll": "Erstat alt",
+      "replaceText": "Erstat tekst",
+      "confirmMessageReplaceAll": "Er du sikker på, at du vil erstatte al tekst?",
+      "confirmMessageReplaceOne": "Er du sikker på, at du vil erstatte denne tekst?",
+      "moreOptions": "Flere muligheder",
+      "lessOptions": "Færre muligheder",
+      "confirm": "Bekræft"
+    },
+    "toolsOverlay": {
+      "currentStamp": "Nuværende stempel",
+      "currentSignature": "Nuværende signatur",
+      "signatureAltText": "Signatur"
+    },
+    "stampOverlay": {
+      "addStamp": "Tilføj nyt stempel"
+    },
+    "signatureOverlay": {
+      "addSignature": "Signatur",
+      "addSignatureOrInitials": "Signatur/initialer"
+    },
+    "signatureModal": {
+      "modalName": "Opret ny signatur",
+      "dragAndDrop": "Træk og slip dit billede her",
+      "or": "Eller",
+      "pickImage": "Vælg en signatur",
+      "selectImage": "Vælg dit billede her",
+      "typeSignature": "Skriv signatur*",
+      "typeInitial": "Skriv initialer*",
+      "drawSignature": "Tegn signatur*",
+      "drawInitial": "Tegn initialer*",
+      "pickInitialsFile": "Vælg initialer",
+      "noSignatures": "Der er i øjeblikket ingen gemte signaturer.",
+      "fontStyle": "Skrifttype"
+    },
+    "pageReplacementModal": {
+      "yourFiles": "Dine filer",
+      "chooseFile": "Vælg en fil",
+      "localFile": "Upload",
+      "pageReplaceInputLabel": "Erstat side",
+      "pageReplaceInputFromSource": "med side(r)",
+      "warning": {
+        "title": "Afslut erstat side?",
+        "message": "Hvis du afslutter, vil alle dine valg blive annulleret. Er du sikker på, at du vil afslutte?"
+      }
+    },
+    "filterAnnotModal": {
+      "color": "Farve",
+      "includeReplies": "Inkluder svar",
+      "filters": "Filtre",
+      "user": "Bruger",
+      "type": "Type",
+      "status": "Status",
+      "filterSettings": "Filterindstillinger",
+      "filterDocument": "Filtrér dokument og kommentarpanel"
+    },
+    "state": {
+      "accepted": "Accepteret",
+      "rejected": "Afvist",
+      "completed": "Fuldført",
+      "cancelled": "Annulleret",
+      "set": "Indstil status:",
+      "setBy": "indstillet af",
+      "none": "Ingen",
+      "marked": "Markeret",
+      "unmarked": "Umarkeret"
+    },
+    "measurementOverlay": {
+      "scale": "Skalaforhold",
+      "angle": "Vinkel",
+      "distance": "Afstand",
+      "perimeter": "Perimeter",
+      "area": "Areal",
+      "distanceMeasurement": "Afstandsmåling",
+      "perimeterMeasurement": "Perimetermåling",
+      "arcMeasurement": "Buemåling",
+      "areaMeasurement": "Arealmåling",
+      "countMeasurement": "Tælling",
+      "radius": "Radius",
+      "count": "Tælling",
+      "length": "Længde"
+    },
+    "freeTextOption": {
+      "autoSizeFont": "Skaler skrifttype dynamisk"
+    },
+    "measurementOption": {
+      "scale": "Skala"
+    },
+    "measurement": {
+      "scaleModal": {
+        "calibrate": "Kalibrer",
+        "custom": "Brugerdefineret",
+        "fractionalUnits": "Brøkenheder",
+        "precision": "Præcision",
+        "preset": "Forudindstilling",
+        "paperUnits": "Papirenheder",
+        "displayUnits": "Visningsenheder",
+        "fractionUnitsTooltip": "Brøkenheder gælder kun for in og ft-in",
+        "incorrectSyntax": "Forkert syntaks"
+      },
+      "scaleOverlay": {
+        "addNewScale": "Tilføj ny skala",
+        "selectTwoPoints": "Vælg to punkter med en kendt dimension til kalibrering",
+        "inputKnowDimension": "Indtast kendt dimension og enheder til kalibrering",
+        "multipleScales": "Flere skalaer"
+      },
+      "deleteScaleModal": {
+        "deleteScale": "Slet skala",
+        "scaleIsOn-delete-info": "Denne skala er i øjeblikket i brug på",
+        "page-delete-info": "side",
+        "appliedTo-delete-info": "og anvendt på",
+        "measurement": "måling",
+        "measurements": "målinger",
+        "deletionIs": "Sletning er",
+        "irreversible": "uigenkaldelig",
+        "willDeleteMeasurement": "og vil slette de tilknyttede målinger.",
+        "confirmDelete": "Er du sikker på, at du vil slette denne skala?",
+        "ifChangeScale": "Hvis du ændrer skalaen for den valgte måling eller værktøj, vil skala ",
+        "notUsedWillDelete": " ikke længere blive brugt af nogen målinger eller værktøjer og vil blive slettet. Sletning er uigenkaldelig.",
+        "ifToContinue": "Er du sikker på, at du vil fortsætte?"
+      }
+    },
+    "contentEdit": {
+      "deletionModal": {
+        "title": "Slet indhold",
+        "message": "Er du sikker på, at du vil slette det valgte indhold? Dette kan ikke fortrydes."
+      },
+      "digitalSign": {
+        "title": "Advarsel: Forseglet dokument",
+        "message": "Dette dokument er underskrevet og kan ikke ændres."
+      }
+    },
+    "stylePopup": {
+      "textStyle": "Tekststil",
+      "colors": "Farver",
+      "invalidFontSize": "Skrifttypestørrelsen skal være inden for følgende interval",
+      "labelText": "Labeltekst",
+      "labelTextPlaceholder": "Tilføj labeltekst"
+    },
+    "styleOption": {
+      "style": "Stil",
+      "solid": "Solid",
+      "cloudy": "Skyet"
+    },
+    "slider": {
+      "opacity": "Gennemsigtighed",
+      "thickness": "Stregtykkelse",
+      "text": "Tekststørrelse"
+    },
+    "shared": {
+      "page": "Side",
+      "precision": "Præcision",
+      "enableSnapping": "Aktivér snapping for måleværktøjer"
+    },
+    "watermark": {
+      "title": "Vandmærke",
+      "addWatermark": "Tilføj vandmærke",
+      "size": "Størrelse",
+      "location": "Vælg en placering til at redigere vandmærker",
+      "text": "Tekst",
+      "style": "Stil",
+      "resetAllSettings": "Nulstil alle indstillinger",
+      "font": "Skrifttype",
+      "addNew": "Tilføj ny",
+      "locations": {
+        "center": "Center",
+        "topLeft": "Øverst til venstre",
+        "topRight": "Øverst til højre",
+        "topCenter": "Øverst i midten",
+        "bottomLeft": "Nederst til venstre",
+        "bottomRight": "Nederst til højre",
+        "bottomCenter": "Nederst i midten"
+      }
+    },
+    "thumbnailPanel": {
+      "delete": "Slet side",
+      "rotateClockwise": "Roter med uret",
+      "rotateCounterClockwise": "Roter mod uret",
+      "rotatePageClockwise": "Roter side med uret",
+      "rotatePageCounterClockwise": "Roter side mod uret",
+      "moreOptions": "Flere muligheder",
+      "moreOptionsMenu": "Flere miniature indstillinger",
+      "enterPageNumbers": "Indtast sidetal for at vælge",
+      "multiSelectPages": "Multi-vælg sider",
+      "multiSelectPagesExample": "f.eks. 1, 3, 5-10"
+    },
+    "thumbnailsControlOverlay": {
+      "move": "Flyt sider"
+    },
+    "richText": {
+      "bold": "Fed",
+      "italic": "Kursiv",
+      "underline": "Understregning",
+      "strikeout": "Gennemstregning",
+      "alignLeft": "Venstrejuster",
+      "alignRight": "Højrejuster",
+      "alignCenter": "Centrer",
+      "justifyCenter": "Justér center",
+      "alignTop": "Juster top",
+      "alignMiddle": "Juster midten",
+      "alignBottom": "Juster bund"
+    },
+    "customStampModal": {
+      "modalName": "Opret nyt stempel",
+      "stampText": "Stempeltekst",
+      "timestampText": "Tidsstempeltekst",
+      "Username": "Brugernavn",
+      "Date": "Dato",
+      "Time": "Tid",
+      "fontStyle": "Skrifttype",
+      "dateFormat": "Datoformat",
+      "month": "Måned",
+      "day": "Dag",
+      "year": "År",
+      "hour": "Time",
+      "minute": "Minut",
+      "second": "Sekund",
+      "textColor": "Tekstfarve",
+      "backgroundColor": "Baggrundsfarve"
+    },
+    "pageRedactModal": {
+      "addMark": "Tilføj mærke",
+      "pageSelection": "Sidevalg",
+      "current": "Nuværende side",
+      "specify": "Angiv sider",
+      "odd": "Ulige sider kun",
+      "even": "Lige sider kun",
+      "header": "Markér sider til redigering"
+    },
+    "lineStyleOptions": {
+      "title": "Stil"
+    },
+    "settings": {
+      "settings": "Indstillinger",
+      "searchSettings": "Søgeindstillinger",
+      "general": "Generelt",
+      "language": "Sprog",
+      "theme": "Tema",
+      "darkMode": "Mørk tilstand",
+      "lightMode": "Lys tilstand",
+      "advancedSetting": "Avancerede indstillinger",
+      "viewing": "Visning",
+      "disableFadePageNavigationComponent": "Deaktiver fade af sidens navigationskomponent",
+      "disableFadePageNavigationComponentDesc": "Hold altid sidens navigationskomponent på skærmen. Standardadfærden er at fade den ud efter en vis inaktivitet.",
+      "disableNativeScrolling": "Deaktiver native scrolling",
+      "disableNativeScrollingDesc": "Deaktiver native scrolling på mobile enheder, hvis det tidligere var aktiveret. Bemærk, at native scrolling på mobile enheder er deaktiveret som standard.",
+      "annotations": "Annoteringer",
+      "disableToolDefaultStyleUpdateFromAnnotationPopup": "Deaktiver værktøjets standard stilopdatering fra annoterings popup",
+      "disableToolDefaultStyleUpdateFromAnnotationPopupDesc": "Deaktiver synkronisering af annoteringsstilopdateringer til det værktøj, der oprettede annoteringen. Så hvis en annoterings stil ændres, opdateres værktøjets standardstil ikke.",
+      "notesPanel": "Notepanel",
+      "disableNoteSubmissionWithEnter": "Deaktiver noteindsendelse med Enter",
+      "disableNoteSubmissionWithEnterDesc": "Deaktiver muligheden for at indsende noter kun ved at trykke på Enter, hvis det tidligere var aktiveret. Dette vil gendanne noteindsendelse til standard, som er Ctrl/Cmd + Enter.",
+      "disableAutoExpandCommentThread": "Deaktiver automatisk udvidelse af kommentartråd",
+      "disableAutoExpandCommentThreadDesc": "Deaktiverer den automatiske udvidelse af alle kommentartråde i notepanelet.",
+      "disableReplyCollapse": "Deaktiver sammenfoldning af svar",
+      "disableReplyCollapseDesc": "Deaktiverer sammenfoldningen af svar i notepanelet.",
+      "disableTextCollapse": "Deaktiver sammenfoldning af tekst",
+      "disableTextCollapseDesc": "Deaktiverer sammenfoldningen af annoteringstekst i notepanelet.",
+      "search": "Søg",
+      "disableClearSearchOnPanelClose": "Deaktiver ryd søgning ved lukning af panel",
+      "disableClearSearchOnPanelCloseDesc": "Deaktiver rydning af søgeresultater, når brugeren lukker søgepanelet. Når deaktiveret, beholdes søgeresultaterne, selvom brugeren lukker og genåbner søgepanelet. Bemærk, at mobile enheder aldrig rydder søgeresultater, selvom denne indstilling er aktiveret. Dette skyldes, at panelet skal lukkes for at se søgeresultaterne i dokumentet.",
+      "pageManipulation": "Sidehåndtering",
+      "disablePageDeletionConfirmationModal": "Deaktiver bekræftelsesmodal for sletning af side",
+      "disablePageDeletionConfirmationModalDesc": "Deaktiver bekræftelsesmodalen, når du sletter en side fra miniaturevisningen",
+      "disableMultiselect": "Deaktiver multi-vælg",
+      "disableMultiselectDesc": "Deaktiver multi-vælg i venstre miniaturepanel",
+      "miscellaneous": "Diverse",
+      "keyboardShortcut": "Tastaturgenvej",
+      "command": "Kommando",
+      "description": "Beskrivelse",
+      "action": "Handling",
+      "rotateDocumentClockwise": "Roter dokumentet med uret",
+      "rotateDocumentCounterclockwise": "Roter dokumentet mod uret",
+      "copyText": "Kopiér valgt tekst eller annoteringer",
+      "pasteText": "Indsæt tekst eller annoteringer",
+      "undoChange": "Fortryd en annoteringsændring",
+      "redoChange": "Gentag en annoteringsændring",
+      "openFile": "Åbn filvælger",
+      "openSearch": "Åbn søgeoverlay",
+      "zoomOptions": "Zoommuligheder",
+      "zoomIn": "Zoom ind",
+      "zoomOut": "Zoom ud",
+      "fitScreenWidth": "Tilpas dokumentet til skærmbredden på en lille skærm (< 640px), ellers tilpas til den oprindelige størrelse",
+      "print": "Udskriv",
+      "bookmarkOpenPanel": "Bogmærk en side hurtigt og åbn bogmærkepanelet",
+      "goToPreviousPage": "Gå til forrige side",
+      "goToNextPage": "Gå til næste side",
+      "goToPreviousPageArrowUp": "Gå til forrige side i enkelt layout tilstand (pil op)",
+      "goToNextPageArrowDown": "Gå til næste side i enkelt layout tilstand (pil ned)",
+      "holdSwitchPan": "Hold for at skifte til panoreringstilstand og slip for at vende tilbage til forrige værktøj",
+      "selectAnnotationEdit": "Vælg Annoteringsredigeringsværktøj",
+      "selectPan": "Vælg Panoreringsværktøj",
+      "selectCreateArrowTool": "Vælg Opret Pileværktøj",
+      "selectCreateCalloutTool": "Vælg Opret Udråbstegnværktøj",
+      "selectEraserTool": "Vælg Viskelæderværktøj",
+      "selectCreateFreeHandTool": "Vælg Opret Frihåndsværktøj",
+      "selectCreateStampTool": "Vælg Opret Stempelværktøj",
+      "selectCreateLineTool": "Vælg Opret Linjeværktøj",
+      "selectCreateStickyTool": "Vælg Opret Sticky Note værktøj",
+      "selectCreateEllipseTool": "Vælg Opret Ellipseværktøj",
+      "selectCreateRectangleTool": "Vælg Opret Rektangelværktøj",
+      "selectCreateRubberStampTool": "Vælg Opret Gummistempelværktøj",
+      "selectCreateFreeTextTool": "Vælg Opret Fri Tekst værktøj",
+      "openSignatureModal": "Åbn signaturmodalen eller overlay",
+      "selectCreateTextSquigglyTool": "Vælg Opret Bølgetekst værktøj",
+      "selectCreateTextHighlightTool": "Vælg Opret Fremhævningstekst værktøj",
+      "selectCreateTextStrikeoutTool": "Vælg Opret Gennemstregningstekst værktøj",
+      "selectCreateTextUnderlineTool": "Vælg Opret Understregningstekst værktøj",
+      "editKeyboardShorcut": "Rediger tastaturgenvej",
+      "setShorcut": "Indstil genvej",
+      "pressKeyToSet": "Tryk på tasten eller tasterne for at indstille ny genvej.",
+      "shortcutAlreadyExists": "Tastaturgenvejen ovenfor findes allerede."
+    }
+  },
+  "warning": {
+    "deletePage": {
+      "deleteTitle": "Slet side",
+      "deleteMessage": "Er du sikker på, at du vil slette den valgte side(r). Dette kan ikke fortrydes",
+      "deleteLastPageMessage": "Du kan ikke slette alle sider i dokumentet."
+    },
+    "extractPage": {
+      "title": "Udtræk side",
+      "message": "Er du sikker på, at du vil udtrække den valgte side(r)?",
+      "confirmBtn": "Udtræk",
+      "secondaryBtn": "Udtræk og slet"
+    },
+    "redaction": {
+      "applyTile": "Anvend redaktion",
+      "applyMessage": "Denne handling vil permanent fjerne alle valgte elementer til redigering. Det kan ikke fortrydes."
+    },
+    "deleteBookmark": {
+      "title": "Slet bogmærke?",
+      "message": "Er du sikker på, at du vil slette disse bogmærker? Du kan ikke fortryde denne handling."
+    },
+    "deleteOutline": {
+      "title": "Slet oversigt?",
+      "message": "Er du sikker på, at du vil slette disse oversigter?\n\nSletning af en oversigt, der har indlejrede oversigter, vil resultere i, at hele den indre struktur slettes og, hvis nødvendigt, skal genskabes."
+    },
+    "selectPage": {
+      "selectTitle": "Ingen sider valgt",
+      "selectMessage": "Vælg sider og prøv igen."
+    },
+    "colorPicker": {
+      "deleteTitle": "Slet brugerdefineret farve",
+      "deleteMessage": "Slet den valgte brugerdefinerede farve? Den vil blive fjernet fra din farvepalet."
+    },
+    "colorPalettePicker": {
+      "deleteTitle": "Slet brugerdefineret farve"
+    },
+    "multiDeleteAnnotation": {
+      "title": "Slet annoteringer?",
+      "message": "Sletning vil fjerne alle kommentarer, svar og grupperinger og kan ikke fortrydes. \n\n Er du sikker på, at du vil slette disse annoteringer?"
+    },
+    "closeFile": {
+      "title": "Luk uden at downloade?",
+      "message": "Der er ændringer foretaget i dette dokument, er du sikker på, at du vil lukke det uden at downloade dit arbejde? Du kan ikke fortryde denne handling.",
+      "rejectDownloadButton": "Luk uden download"
+    },
+    "connectToURL": {
+      "title": "Sikkerhedsadvarsel",
+      "message": "Dette dokument forsøger at oprette forbindelse til: \n\n{{- uri}}\n\n Hvis du stoler på dette dokument, skal du klikke på Bekræft for at åbne det."
+    }
+  },
+  "shortcut": {
+    "arrow": "(A)",
+    "callout": "(C)",
+    "copy": "(Ctrl C)",
+    "delete": "(Del)",
+    "ellipse": "(O)",
+    "eraser": "(E)",
+    "freehand": "(F)",
+    "freetext": "(T)",
+    "highlight": "(H)",
+    "line": "(L)",
+    "pan": "(P)",
+    "rectangle": "(R)",
+    "rotateClockwise": "(Ctrl Shift +)",
+    "rotateCounterClockwise": "(Ctrl Shift -)",
+    "select": "(Esc)",
+    "signature": "(S)",
+    "squiggly": "(G)",
+    "image": "(I)",
+    "redo": "(Ctrl Shift Z)",
+    "redo_windows": "(Ctrl Y)",
+    "undo": "(Ctrl Z)",
+    "stickyNote": "(N)",
+    "strikeout": "(K)",
+    "underline": "(U)",
+    "zoomIn": "(Ctrl +)",
+    "zoomOut": "(Ctrl -)",
+    "richText": {
+      "bold": "(Ctrl B)",
+      "italic": "(Ctrl I)",
+      "underline": "(Ctrl U)",
+      "strikeout": "(Ctrl K)"
+    },
+    "rotate3D": "Shift + Træk",
+    "zoom3D": "Shift + Rul"
+  },
+  "tool": {
+    "pan": "Panorér",
+    "select": "Vælg",
+    "selectAnOption": "Vælg en mulighed",
+    "Marquee": "Zoomfelt",
+    "Link": "Link URL eller side",
+    "Standard": "Standard",
+    "Custom": "Brugerdefineret"
+  },
+  "link": {
+    "url": "URL",
+    "page": "Side",
+    "enterurl": "Indtast URL, du vil linke til",
+    "enterUrlAlt": "Indtast URL",
+    "insertLink": "Indsæt link",
+    "insertLinkOrPage": "Indsæt link eller side",
+    "enterpage": "Indtast sidetal, du vil linke til",
+    "urlLink": "URL-link"
+  },
+  "Model3D": {
+    "add3D": "Tilføj 3D objekt",
+    "enterurl": "Indtast URL for 3D-objekt i glTF-format",
+    "enterurlOrLocalFile": "Indtast URL eller upload et 3D-objekt i glTF-format",
+    "formatError": "Kun glTF (.glb) format understøttes"
+  },
+  "OpenFile": {
+    "enterUrlOrChooseFile": "Indtast en URL eller vælg en fil til indlæsning i WebViewer",
+    "enterUrl": "Indtast fil URL",
+    "extension": "Filudvidelse",
+    "existingFile": "Filen er allerede åben",
+    "addTab": "Tilføj fane",
+    "newTab": "Ny fane"
+  },
+  "datePicker": {
+    "previousMonth": "Forrige måned",
+    "nextMonth": "Næste måned",
+    "months": [
+      "Januar",
+      "Februar",
+      "Marts",
+      "April",
+      "Maj",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "December"
+    ],
+    "monthsShort": ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"],
+    "weekdays": ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"],
+    "weekdaysShort": ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"],
+    "today": "I dag",
+    "invalidDateTime": "Ugyldig dato/tid: Input skal matche format"
+  },
+  "formField": {
+    "formFieldPopup": {
+      "fieldName": "Feltnavn",
+      "fieldValue": "Standardværdi",
+      "readOnly": "Skrivebeskyttet",
+      "multiSelect": "Multi vælg",
+      "required": "Påkrævet",
+      "multiLine": "Flere linjer",
+      "apply": "Anvend",
+      "cancel": "Annuller",
+      "flags": "Feltflag",
+      "options": "Muligheder",
+      "radioGroups": "Radioknapper med samme feltnavn vil tilhøre samme gruppe.",
+      "nameRequired": "Feltnavn er påkrævet",
+      "fieldIndicator": "Feltindikatorer",
+      "documentFieldIndicator": "Dokumentfeltindikatorer",
+      "indicatorPlaceHolders": {
+        "TextFormField": "Indsæt tekst her",
+        "CheckBoxFormField": "Tjek",
+        "RadioButtonFormField": "Udfyld",
+        "ListBoxFormField": "Vælg",
+        "ComboBoxFormField": "Vælg",
+        "SignatureFormField": {
+          "fullSignature": "Underskriv her",
+          "initialsSignature": "Initialer her"
+        }
+      },
+      "size": "Størrelse",
+      "width": "Bredde",
+      "height": "Højde",
+      "invalidField": {
+        "duplicate": "Feltnavn findes allerede",
+        "empty": "Feltnavn kan ikke være tomt"
+      }
+    },
+    "apply": "Anvend felter",
+    "type": "Felttype",
+    "types": {
+      "text": "Tekst",
+      "signature": "Signatur",
+      "checkbox": "Afkrydsningsfelt",
+      "radio": "Radioknap",
+      "listbox": "Listeboks",
+      "combobox": "Kombinationsboks"
+    }
+  },
+  "alignmentPopup": {
+    "alignment": "Justér",
+    "alignLeft": "Justér til venstre",
+    "alignHorizontalCenter": "Justér vandret center",
+    "alignVerticalCenter": "Justér lodret center",
+    "alignRight": "Justér til højre",
+    "alignTop": "Justér til toppen",
+    "alignBottom": "Justér til bunden",
+    "distribute": "Fordel",
+    "distributeHorizontal": "Fordel vandret",
+    "distributeVertical": "Fordel lodret"
+  },
+  "digitalSignatureModal": {
+    "certification": "certificering",
+    "Certification": "Certificering",
+    "signature": "signatur",
+    "Signature": "Signatur",
+    "valid": "gyldig",
+    "invalid": "ugyldig",
+    "unknown": "ukendt",
+    "title": "{{type}} Egenskaber",
+    "header": {
+      "documentIntegrity": "Dokumentets integritet",
+      "identitiesTrust": "Identiteter & tillid",
+      "generalErrors": "Generelle fejl",
+      "digestStatus": "Digest status"
+    },
+    "documentPermission": {
+      "noChangesAllowed": "Redaktøren har angivet, at der ikke er tilladt nogen ændringer for dette dokument",
+      "formfillingSigningAllowed": "Redaktøren har angivet, at formularudfyldning og underskrivelse er tilladt for dette dokument. Ingen andre ændringer er tilladt.",
+      "annotatingFormfillingSigningAllowed": "Redaktøren har angivet, at formularudfyldning, underskrivelse og kommentering er tilladt for dette dokument. Ingen andre ændringer er tilladt.",
+      "unrestricted": "Redaktøren har angivet, at der ikke er nogen restriktioner for dette dokument."
+    },
+    "digestAlgorithm": {
+      "preamble": "Den digest-algoritme, der blev brugt til at underskrive signaturen: ",
+      "unknown": "Den digest-algoritme, der blev brugt til at underskrive signaturen, er ukendt."
+    },
+    "trustVerification": {
+      "none": "Ingen detaljeret tillidsverifikationsresultat tilgængelig.",
+      "current": "Tillidsverifikation forsøgt i forhold til nuværende tid",
+      "signing": "Tillidsverifikation forsøgt i forhold til underskriftstidspunktet: {{trustVerificationTime}}",
+      "timestamp": "Tillidsverifikation forsøgt i forhold til indlejret tidsstempel: {{trustVerificationTime}}"
+    },
+    "signerIdentity": {
+      "preamble": "Underskriverens identitet er ",
+      "valid": "gyldig.",
+      "unknown": "ukendt."
+    },
+    "summaryBox": {
+      "summary": "Digital {{type}} er {{status}}",
+      "signedBy": ", underskrevet af {{name}}"
+    }
+  },
+  "digitalSignatureVerification": {
+    "certifier": "certificering",
+    "certified": "certificeret",
+    "Certified": "Certificeret",
+    "Certification": "Certificering",
+    "signer": "underskriver",
+    "signed": "underskrevet",
+    "Signed": "Underskrevet",
+    "Signature": "Signatur",
+    "by": "af",
+    "on": "den",
+    "disallowedChange": "Ikke tilladt ændring: {{type}}, objnum: {{objnum}}",
+    "unsignedSignatureField": "Usigneret signaturfelt: {{fieldName}}",
+    "signatureProperties": "Signatur egenskaber",
+    "trustVerification": {
+      "current": "Verifikationstid brugt var nuværende tid",
+      "signing": "Verifikationstid er fra uret på underskriverens computer",
+      "timestamp": "Verifikationstid er fra det sikre tidsstempel indlejret i dokumentet",
+      "verifiedTrust": "Tillidsverifikationsresultat: Verificeret",
+      "noTrustVerification": "Ingen detaljeret tillidsverifikationsresultat tilgængelig."
+    },
+    "permissionStatus": {
+      "noPermissionsStatus": "Ingen tilladelsesstatus at rapportere.",
+      "permissionsVerificationDisabled": "Tilladelsesverifikation er deaktiveret.",
+      "hasAllowedChanges": "Dokumentet har ændringer, der er tilladt af signaturens tilladelsesindstillinger.",
+      "invalidatedByDisallowedChanges": "Dokumentet har ændringer, der ikke er tilladt af signaturens tilladelsesindstillinger.",
+      "unmodified": "Dokumentet er ikke blevet ændret siden det var"
+    },
+    "trustStatus": {
+      "trustVerified": "Etableret tillid til {{verificationType}} succesfuldt.",
+      "untrusted": "Tillid kunne ikke etableres.",
+      "trustVerificationDisabled": "Tillidsverifikation er deaktiveret.",
+      "noTrustStatus": "Ingen tillidsstatus at rapportere."
+    },
+    "digestStatus": {
+      "digestInvalid": "Digest er forkert.",
+      "digestVerified": "Digest er korrekt.",
+      "digestVerificationDisabled": "Digestverifikation er deaktiveret.",
+      "weakDigestAlgorithmButDigestVerifiable": "Digest er korrekt, men digest-algoritmen er svag og ikke sikker.",
+      "noDigestStatus": "Ingen digest-status at rapportere.",
+      "unsupportedEncoding": "Ingen installeret SignatureHandler kunne genkende signaturens kodning"
+    },
+    "documentStatus": {
+      "noError": "Ingen generel fejl at rapportere.",
+      "corruptFile": "SignatureHandler rapporterede filkorruption.",
+      "unsigned": "Signaturen er endnu ikke blevet kryptografisk underskrevet.",
+      "badByteRanges": "SignatureHandler rapporterer korruption i ByteRanges i den digitale signatur.",
+      "corruptCryptographicContents": "SignatureHandler rapporterer korruption i indholdet af den digitale signatur."
+    },
+    "signatureDetails": {
+      "signatureDetails": "Signaturdetaljer",
+      "contactInformation": "Kontaktinformation",
+      "location": "Lokation",
+      "reason": "Årsag",
+      "signingTime": "Underskriftstidspunkt",
+      "noContactInformation": "Ingen kontaktinformation oplyst",
+      "noLocation": "Ingen lokation oplyst",
+      "noReason": "Ingen årsag oplyst",
+      "noSigningTime": "Ingen underskriftstidspunkt fundet"
+    },
+    "panelMessages": {
+      "noSignatureFields": "Dette dokument har ingen signaturfelter",
+      "certificateDownloadError": "Fejl opstået ved forsøg på at downloade et betroet certifikat",
+      "localCertificateError": "Der er nogle problemer med at læse et lokalt certifikat"
+    },
+    "verificationStatus": {
+      "valid": "{{verificationType}} er gyldig.",
+      "failed": "{{verificationType}} fejlede."
+    }
+  },
+  "cropPopUp": {
+    "title": "Sider til beskæring",
+    "allPages": "Alle",
+    "singlePage": "Nuværende side",
+    "multiPage": "Angiv side",
+    "cropDimensions": "Beskæringsdimensioner",
+    "dimensionInput": {
+      "unitOfMeasurement": "Enhed",
+      "autoTrim": "Forudindstillinger"
+    },
+    "cropModal": {
+      "applyTitle": "Anvend beskæring?",
+      "applyMessage": "Denne handling vil permanent beskære alle valgte sider. Det kan ikke fortrydes.",
+      "cancelTitle": "Annuller beskæring?",
+      "cancelMessage": "Er du sikker på, at du vil annullere beskæring af alle valgte sider?"
+    }
+  },
+  "snippingPopUp": {
+    "title": "Klippeværktøj",
+    "clipboard": "Kopiér til udklipsholder",
+    "download": "Download",
+    "cropAndRemove": "Beskær og fjern",
+    "snippingModal": {
+      "applyTitle": "Anvend klipning?",
+      "applyMessage": "Denne handling vil permanent klippe det specificerede område og fjerne andre sider. Det kan ikke fortrydes.",
+      "cancelTitle": "Annuller klipning?",
+      "cancelMessage": "Er du sikker på, at du vil stoppe klipning?"
+    }
+  },
+  "textEditingPanel": {
+    "paragraph": "Afsnit",
+    "text": "Tekst"
+  },
+  "redactionPanel": {
+    "noMarkedRedactions": "Begynd at redigere ved at markere tekst, regioner, sider eller foretage en søgning.",
+    "redactionSearchPlaceholder": "Tilføj ved søgeordssøgning eller mønstre",
+    "redactionCounter": "Markeret til redaktion",
+    "clearMarked": "Ryd",
+    "redactAllMarked": "Rediger alt",
+    "redactionItem": {
+      "regionRedaction": "Regionsredaktion",
+      "fullPageRedaction": "Fuldsideredaktion",
+      "fullVideoFrameRedaction": "Video redaktion",
+      "audioRedaction": "Lydredaktion",
+      "fullVideoFrameAndAudioRedaction": "Video- og lydredaktion",
+      "image": "Billede"
+    },
+    "expand": "Udvid",
+    "collapse": "Skjul",
+    "searchResults": "Søgeresultater",
+    "search": {
+      "creditCards": "Kreditkort",
+      "phoneNumbers": "Telefonnumre",
+      "images": "Billeder",
+      "emails": "E-mails",
+      "pattern": "Mønster",
+      "start": "Start din søgning"
+    }
+  },
+  "wv3dPropertiesPanel": {
+    "propertiesHeader": "Egenskaber",
+    "miscValuesHeader": "Alle",
+    "emptyPanelMessage": "Vælg et element for at se dets egenskaber."
+  },
+  "watermarkPanel": {
+    "textWatermark": "Tekstvandmærke",
+    "uploadImage": "Upload billede",
+    "browse": "Gennemse",
+    "watermarkOptions": "Vandmærke muligheder",
+    "watermarks": "Vandmærker"
+  },
+  "portfolio": {
+    "createPDFPortfolio": "Opret PDF-portefølje",
+    "uploadFiles": "Upload filer",
+    "uploadFolder": "Upload mappe",
+    "addFiles": "Tilføj filer",
+    "addFile": "Tilføj fil",
+    "addFolder": "Tilføj mappe",
+    "createFolder": "Opret mappe",
+    "portfolioPanelTitle": "PDF-portefølje",
+    "portfolioNewFolder": "Ny mappe",
+    "portfolioFolderPlaceholder": "Mappenavn",
+    "portfolioFilePlaceholder": "Filnavn",
+    "folderNameAlreadyExists": "Mappenavnet findes allerede",
+    "fileNameAlreadyExists": "Filnavnet findes allerede",
+    "openFile": "Åbn i ny fane",
+    "fileAlreadyExists": "Filen findes allerede",
+    "fileAlreadyExistsMessage": "Filen \"{{fileName}}\" findes allerede i porteføljen.",
+    "deletePortfolio": "Er du sikker på, at du vil slette \"{{fileName}}\"?",
+    "reselect": "Vælg igen"
+  },
+  "languageModal": {
+    "selectLanguage": "Vælg sprog"
+  },
+  "officeEditor": {
+    "bold": "Fed",
+    "italic": "Kursiv",
+    "underline": "Understregning",
+    "textColor": "Tekstfarve",
+    "rightAlign": "Højrejuster",
+    "justify": "Justér",
+    "lineSpacing": "Linje- & afsnitsafstand",
+    "bulletList": "Punktopstilling",
+    "numberList": "Nummereret liste",
+    "decreaseIndent": "Formindsk indrykning",
+    "increaseIndent": "Forøg indrykning",
+    "insertLink": "Indsæt link",
+    "insertImage": "Indsæt billede",
+    "table": "Tabel",
+    "insertRowAbove": "Indsæt række over",
+    "insertRowBelow": "Indsæt række under",
+    "insertColumnRight": "Indsæt kolonne til højre",
+    "insertColumnLeft": "Indsæt kolonne til venstre",
+    "deleteRow": "Slet række",
+    "deleteColumn": "Slet kolonne",
+    "deleteTable": "Slet tabel",
+    "deleted": "Slettet: ",
+    "added": "Tilføjet: ",
+    "editing": "Redigerer",
+    "editingDescription": "Rediger dokument",
+    "pageBreak": "Sideskift",
+    "reviewing": "Gennemgår",
+    "reviewingDescription": "Lav forslag",
+    "viewOnly": "Visning",
+    "viewOnlyDescription": "Se uden forslag",
+    "notSupportedOnMobile": "Office-redigering understøttes ikke på mobile enheder.",
+    "previewAllChanges": "Forhåndsvis alle ændringer"
+  },
+  "insertPageModal": {
+    "title": "Tilføj ny side",
+    "tabs": {
+      "blank": "Blank",
+      "upload": "Upload"
+    },
+    "pagePlacements": {
+      "header": "Sideplacering",
+      "above": "Over side",
+      "below": "Under side"
+    },
+    "pageLocations": {
+      "header": "Sideplacering",
+      "specify": "Angiv side",
+      "specifyLocation": "Angiv sidelokation",
+      "amount": "Antal sider",
+      "total": "I alt",
+      "pages": "Sider"
+    },
+    "pageDimensions": {
+      "header": "Sidedimensioner",
+      "subHeader": "Forudindstillinger",
+      "presets": {
+        "letter": "Letter",
+        "halfLetter": "Halv letter",
+        "juniorLegal": "Junior legal",
+        "custom": "Brugerdefineret"
+      },
+      "units": "Enheder"
+    },
+    "browse": "Gennemse filer",
+    "fileSelected": {
+      "title": "Vælg sider til tilføjelse"
+    },
+    "button": "Tilføj side(r)",
+    "selectPages": "Vælg sider til tilføjelse",
+    "page": "Side",
+    "warning": {
+      "title": "Afslut indsættelse af ny side?",
+      "message": "Hvis du afslutter, vil alle dine valg blive annulleret. Er du sikker på, at du vil afslutte?"
+    }
+  },
+  "multiViewer": {
+    "dragAndDrop": "Træk og slip din fil her for at sammenligne",
+    "or": "Eller",
+    "browse": "Gennemse filer",
+    "startSync": "Start synkronisering",
+    "stopSync": "Stop synkronisering",
+    "closeDocument": "Luk dokument",
+    "save": "Gem dokument",
+    "comparePanel": {
+      "Find": "Find i dokument",
+      "changesList": "Ændringsliste",
+      "change": "Ændring",
+      "old": "Gammel",
+      "new": "Ny",
+      "page": "Side",
+      "textContent": "Tekstindhold",
+      "delete": "slet",
+      "insert": "indsæt",
+      "edit": "rediger"
+    }
+  },
+  "saveModal": {
+    "close": "Luk",
+    "saveAs": "Gem som",
+    "general": "Generelt",
+    "fileName": "Filnavn",
+    "fileType": "Filtype",
+    "fileLocation": "Filplacering",
+    "browse": "Gennemse",
+    "pageRange": "Sideområde",
+    "all": "Alle",
+    "currentView": "Nuværende visning",
+    "currentPage": "Nuværende side",
+    "specifyPage": "Angiv side",
+    "properties": "Egenskaber",
+    "includeAnnotation": "Inkluder annoteringer",
+    "includeComments": "Inkluder kommentarer",
+    "watermark": "Vandmærke",
+    "addWatermark": "Tilføj vandmærke",
+    "save": "Gem fil",
+    "pageError": "Ugyldig side. Gyldige sideområder er mellem 1 - ",
+    "fileNameCannotBeEmpty": "Filnavn kan ikke være tomt"
+  },
+  "filePicker": {
+    "dragAndDrop": "Træk og slip din fil her",
+    "selectFile": "Vælg din fil her",
+    "or": "Eller"
+  },
+  "stylePanel": {
+    "headings": {
+      "styles": "Stilarter",
+      "annotation": "Annotering",
+      "annotations": "Annoteringer",
+      "tool": "Værktøj",
+      "textStyles": "Tekststilarter",
+      "currentColor": "Nuværende farve",
+      "customColors": "Brugerdefinerede farver",
+      "redactionTextLabel": "Tekstetiket",
+      "redactionMarkOutline": "Markér kontur",
+      "redactionFill": "Redigeringsfarve",
+      "redactionTextPlaceholder": "Indsæt tekstetiket",
+      "contentEdit": "Indholdsredigering"
+    },
+    "addColorToCustom": "Tilføj til brugerdefinerede farver",
+    "noToolSelected": "Vælg et værktøj for at se værktøjsegenskaber",
+    "noToolStyle": "Værktøjet indeholder ingen stil egenskaber."
+  },
+  "signatureListPanel": {
+    "header": "Signaturliste",
+    "newSignature": "Ny signatur",
+    "newSignatureAndInitial": "Opret ny signatur og initialer",
+    "signatureList": {
+      "signature": "Signatur",
+      "initials": "Initialer"
+    }
+  },
+  "rubberStampPanel": {
+    "header": "Stempler",
+    "standard": "Standard Stempler"
+  }
+}
