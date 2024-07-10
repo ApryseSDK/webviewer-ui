@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Panorera",
     "select": "Välj",
+    "selectAnOption": "Välj ett alternativ",
     "Marquee": "Marquee Zoom",
     "Link": "Länk URL eller sida",
     "Standard": "Standard",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Titta enbart",
     "viewOnlyDescription": "Visa utan förslag",
     "notSupportedOnMobile": "Office-redigering stöds inte på mobila enheter.",
-    "previewAllChanges": "Förhandsgranska alla ändringar"
+    "previewAllChanges": "Förhandsgranska alla ändringar",
+    "accept": "Acceptera",
+    "reject": "Avvisa"
   },
   "insertPageModal": {
     "title": "Lägg till ny sida",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Redigera innehåll"
     },
     "addColorToCustom": "Lägg till anpassade färger",
-    "noToolSelected": "Välj ett verktyg för att se verktygets egenskaper",
+    "noToolSelected": "Detta dokument innehåller inga lager.",
     "noToolStyle": "Verktyget innehåller inga stylingegenskaper."
   },
   "signatureListPanel": {

@@ -3,13 +3,15 @@ import BookmarksPanel from './BookmarksPanel';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import '../LeftPanel/LeftPanel.scss';
-import App from 'components/App';
 import initialState from 'src/redux/initialState';
-import rootReducer from 'src/redux/reducers/rootReducer';
+import { MockApp } from 'helpers/storybookHelper';
 
 export default {
   title: 'Components/BookmarksPanel',
   component: BookmarksPanel,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const pageLabels = [
@@ -39,6 +41,9 @@ export const Basic = () => {
         0: 'B1',
         1: 'B2',
       }
+    },
+    featureFlags: {
+      customizableUI: true,
     }
   };
 
@@ -70,6 +75,9 @@ export const NoBookmarks = () => {
     document: {
       bookmarks: {},
     },
+    featureFlags: {
+      customizableUI: true,
+    },
   };
 
   return (
@@ -84,27 +92,7 @@ export const NoBookmarks = () => {
 };
 
 // Custom panels
-
-function noop() {
-  // Comment needed to suppress SonarCloud code smell.
-}
-
 const DEFAULT_NOTES_PANEL_WIDTH = 293;
-
-const MockApp = ({ mockState }) => {
-  return (
-    <Provider store={configureStore({
-      reducer: rootReducer,
-      preloadedState: mockState,
-      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-    })}
-    >
-      <App removeEventHandlers={noop} />
-    </Provider>
-  );
-};
-
-
 
 export const CustomBasic = () => {
   const stateWithBookmarksPanel = {
@@ -156,10 +144,10 @@ export const CustomBasic = () => {
     },
   };
 
-  return <MockApp mockState={stateWithBookmarksPanel} />;
+  return <MockApp initialState={stateWithBookmarksPanel} />;
 };
 
-CustomBasic.parameters = { layout: 'fullscreen' };
+CustomBasic.parameters = { layout: 'fullscreen', customizableUI: true };
 
 export const CustomBasicNoBookmarks = () => {
   const stateWithBookmarksPanelEmpty = {
@@ -201,10 +189,10 @@ export const CustomBasicNoBookmarks = () => {
     },
   };
 
-  return <MockApp mockState={stateWithBookmarksPanelEmpty} />;
+  return <MockApp initialState={stateWithBookmarksPanelEmpty} />;
 };
 
-CustomBasicNoBookmarks.parameters = { layout: 'fullscreen' };
+CustomBasicNoBookmarks.parameters = { layout: 'fullscreen', customizableUI: true };
 
 export const CustomRightSide = () => {
   const stateWithBookmarksPanelOnRight = {
@@ -251,10 +239,10 @@ export const CustomRightSide = () => {
     },
   };
 
-  return <MockApp mockState={stateWithBookmarksPanelOnRight} />;
+  return <MockApp initialState={stateWithBookmarksPanelOnRight} />;
 };
 
-CustomRightSide.parameters = { layout: 'fullscreen' };
+CustomRightSide.parameters = { layout: 'fullscreen', customizableUI: true };
 
 export const CustomRightSideNoBookmarks = () => {
   const stateWithBookmarksPanelOnRightEmpty = {
@@ -294,7 +282,7 @@ export const CustomRightSideNoBookmarks = () => {
     },
   };
 
-  return <MockApp mockState={stateWithBookmarksPanelOnRightEmpty} />;
+  return <MockApp initialState={stateWithBookmarksPanelOnRightEmpty} />;
 };
 
-CustomRightSideNoBookmarks.parameters = { layout: 'fullscreen' };
+CustomRightSideNoBookmarks.parameters = { layout: 'fullscreen', customizableUI: true };

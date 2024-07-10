@@ -7,6 +7,7 @@ import throttle from 'lodash/throttle';
 import { useSelector, useDispatch } from 'react-redux';
 import actions from 'actions';
 import selectors from 'selectors';
+import classNames from 'classnames';
 
 import Icon from 'components/Icon';
 import Choice from '../Choice/Choice';
@@ -14,6 +15,7 @@ import Spinner from '../Spinner';
 import { getInstanceNode } from 'helpers/getRootNode';
 import { isOfficeEditorMode } from 'helpers/officeEditor';
 import './SearchOverlay.scss';
+import '../Button/Button.scss';
 
 const propTypes = {
   isPanelOpen: PropTypes.bool,
@@ -50,6 +52,7 @@ function SearchOverlay(props) {
   const [isReplacementRegexValid, setReplacementRegexValid] = useState(true);
   const [allowInitialSearch, setAllowInitialSearch] = useState(false);
   const isSearchAndReplaceDisabled = useSelector((state) => selectors.isElementDisabled(state, 'searchAndReplace'));
+  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
   const searchTextInputRef = useRef();
   const waitTime = 300; // Wait time in milliseconds
 
@@ -318,15 +321,20 @@ function SearchOverlay(props) {
   </div>);
 
   return (
-    <div className="SearchOverlay">
-      <div className="input-container">
+    <div className={classNames({
+      'SearchOverlay': true,
+      'modular-ui': customizableUI
+    })}>
+      <div className='input-container'>
+        {customizableUI && <Icon glyph="icon-header-search" />}
         <input
+          className='search-panel-input'
           ref={searchTextInputRef}
           type="text"
           autoComplete="off"
           onChange={textInputOnChange}
           value={searchValue}
-          placeholder={t('message.searchDocumentPlaceholder')}
+          placeholder={customizableUI ? '' : t('message.searchDocumentPlaceholder')}
           aria-label={t('message.searchDocumentPlaceholder')}
           id="SearchPanel__input"
           tabIndex={isPanelOpen ? 0 : -1}
@@ -346,10 +354,10 @@ function SearchOverlay(props) {
         (isSearchAndReplaceDisabled || !isReplacementRegexValid) ? null :
           (isMoreOptionsOpen)
             ? <div className="extra-options">
-              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.lessOptions')} <Icon glyph="icon-chevron-up"/></button>
+              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.lessOptions')} <Icon glyph="icon-chevron-up" /></button>
             </div>
             : <div className="extra-options">
-              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.moreOptions')} <Icon glyph="icon-chevron-down"/></button>
+              <button className='Button' onClick={toggleMoreOptionsBtn}>{t('option.searchPanel.moreOptions')} <Icon glyph="icon-chevron-down" /></button>
             </div>
       }
       {
@@ -367,7 +375,7 @@ function SearchOverlay(props) {
                     />
                   </div>
                   <div className='replace-buttons'>
-                    { (showReplaceSpinner) ? <Spinner width={25} height={25} /> : null }
+                    {(showReplaceSpinner) ? <Spinner width={25} height={25} /> : null}
                     <button className='Button btn-replace-all' disabled={isReplaceAllBtnDisabled}
                       onClick={replaceAllConfirmationWarning}>{t('option.searchPanel.replaceAll')}</button>
                     <button className='Button btn-replace' disabled={isReplaceBtnDisabled || !nextResultValue || !core.getActiveSearchResult()}

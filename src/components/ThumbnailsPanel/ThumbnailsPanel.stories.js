@@ -1,16 +1,14 @@
 import React from 'react';
-import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import Panel from 'components/Panel';
 import ThumbnailsPanel from './ThumbnailsPanel';
 import initialState from 'src/redux/initialState';
-import rootReducer from 'reducers/rootReducer';
+import { createStore } from 'src/helpers/storybookHelper';
 
 export default {
   title: 'Components/Thumbnails',
   component: ThumbnailsPanel,
 };
-
 
 const myState = {
   ...initialState,
@@ -34,15 +32,14 @@ const myState = {
       1: 10,
     },
   },
+  featureFlags: {
+    customizableUI: true,
+  },
 };
 
 export const Thumbnails = () => {
   return (
-    <Provider store={configureStore({
-      reducer: rootReducer,
-      preloadedState: myState,
-      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-    })}>
+    <Provider store={createStore(myState)}>
       <Panel dataElement="thumbnailsPanel">
         <ThumbnailsPanel />
       </Panel>
@@ -60,11 +57,7 @@ export const ThumbnailsMultiSelect = () => {
   };
 
   return (
-    <Provider store={configureStore({
-      reducer: rootReducer,
-      preloadedState: state,
-      middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-    })}>
+    <Provider store={createStore(state)}>
       <Panel dataElement="thumbnailsPanel">
         <ThumbnailsPanel/>
       </Panel>

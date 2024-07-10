@@ -1,3 +1,3 @@
-import Thumbnail from './ThumbnailRedux';
+import ThumbnailRedux from './ThumbnailRedux';
 
-export default Thumbnail;
+export default ThumbnailRedux;

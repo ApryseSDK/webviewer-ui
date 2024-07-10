@@ -1,3 +1,3 @@
-import ToolStylePopup from './ToolStylePopup';
+import connectedComponent from './ToolStylePopup';
 
-export default ToolStylePopup;
+export default connectedComponent;

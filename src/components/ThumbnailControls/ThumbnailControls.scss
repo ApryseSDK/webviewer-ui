@@ -35,6 +35,13 @@
       }
     }
   }
+  
+  &.modular-ui {
+    .Button:hover {
+      border: 1px solid var(--focus-border);
+      background: var(--tools-button-hover);
+    }
+  }
 
   .rotate-button {
     grid-area: rotate;
@@ -46,6 +53,12 @@
 
   .more-options {
     grid-area: more;
+  }
+}
+
+.thumbnailControls-overlay.custom-buttons {
+  .Button {
+    grid-area: auto; // remove gride when buttons are customized
   }
 }
 
@@ -74,5 +87,3 @@
     }
   }
 }
-
-

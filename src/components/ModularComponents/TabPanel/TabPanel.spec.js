@@ -57,7 +57,7 @@ describe('TabPanel', () => {
         },
         {
           'dataElement': 'outlinePanel',
-          'render': 'genericOutlinesPanel',
+          'render': 'outlinesPanel',
           'location': 'left'
         },
         {
@@ -167,7 +167,7 @@ describe('TabPanel', () => {
 
   const panelsToCheck = [
     { name: 'Thumbnails', className: 'ThumbnailsPanel' },
-    { name: 'Outlines', className: 'GenericOutlinesPanel' },
+    { name: 'Outlines', className: 'OutlinesPanel' },
     { name: 'Bookmarks', className: 'BookmarksPanel' },
     { name: 'Layers', className: 'LayersPanel' },
     { name: 'Style', className: 'StylePanel' },

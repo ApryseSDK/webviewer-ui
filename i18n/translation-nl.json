@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Schuiven",
     "select": "Selecteren",
+    "selectAnOption": "Kies een optie",
     "Marquee": "Selectie zoom",
     "Link": "Link URL of pagina",
     "Standard": "Standaard",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Alleen bekijken",
     "viewOnlyDescription": "Bekijk zonder suggesties",
     "notSupportedOnMobile": "Office-bewerking wordt niet ondersteund op mobiele apparaten.",
-    "previewAllChanges": "Bekijk een voorbeeld van alle wijzigingen"
+    "previewAllChanges": "Bekijk een voorbeeld van alle wijzigingen",
+    "accept": "Aanvaarden",
+    "reject": "Afwijzen"
   },
   "insertPageModal": {
     "title": "Nieuwe pagina toevoegen",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Inhoud bewerken"
     },
     "addColorToCustom": "Voeg toe aan aangepaste kleuren",
-    "noToolSelected": "Selecteer een gereedschap om de gereedschapseigenschappen te bekijken",
+    "noToolSelected": "Dit document bevat geen lagen.",
     "noToolStyle": "Tool bevat geen stijleigenschappen."
   },
   "signatureListPanel": {

@@ -3,6 +3,7 @@ import selectors from 'selectors';
 
 import { parse } from 'helpers/cssVariablesParser';
 
+import modularUILightModeString from '!!raw-loader!../constants/lightWCAG.scss';
 import lightModeString from '!!raw-loader!../constants/light.scss';
 import highContastLightModeString from '!!raw-loader!../constants/highContrastLight.scss';
 import darkModeString from '!!raw-loader!../constants/dark.scss';
@@ -27,13 +28,15 @@ export default (store) => {
   let previousIsHighContrastMode = false; // default
 
   store.subscribe(() => {
-    const activeTheme = selectors.getActiveTheme(store.getState());
-    const isHighContrastMode = selectors.getIsHighContrastMode(store.getState());
+    const state = store.getState();
+    const activeTheme = selectors.getActiveTheme(state);
+    const isHighContrastMode = selectors.getIsHighContrastMode(state);
+    const isCustomizableUI = state.featureFlags.customizableUI;
 
-    if (previousActiveTheme !== activeTheme || previousIsHighContrastMode !== isHighContrastMode || window.isApryseWebViewerWebComponent) {
+    if (previousActiveTheme !== activeTheme || previousIsHighContrastMode !== isHighContrastMode || window.isApryseWebViewerWebComponent || isCustomizableUI) {
       previousActiveTheme = activeTheme;
       previousIsHighContrastMode = isHighContrastMode;
-      updateColors(activeTheme, isHighContrastMode);
+      updateColors(activeTheme, isHighContrastMode, isCustomizableUI);
     }
   });
   return (theme) => {
@@ -54,8 +57,10 @@ const setVariables = (themeVarString = '') => {
   });
 };
 
-const updateColors = (activeTheme, isHighContrastMode) => {
-  if (activeTheme === Theme.LIGHT) {
+const updateColors = (activeTheme, isHighContrastMode, isCustomizableUI) => {
+  if (isCustomizableUI) {
+    setVariables(modularUILightModeString);
+  } else if (activeTheme === Theme.LIGHT) {
     setVariables(isHighContrastMode ? highContastLightModeString : lightModeString);
   } else if (activeTheme === Theme.DARK) {
     setVariables(isHighContrastMode ? highContrastDarkModeString : darkModeString);

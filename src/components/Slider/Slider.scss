@@ -8,7 +8,7 @@
   input {
     &:focus {
       outline: none;
-      border: 1px solid var(--focus-border);
+      border: 1px solid var(--slider-input-focus);
     }
   }
 
@@ -19,7 +19,7 @@
   }
 
   svg {
-    height: 18px;
+    height: var(--slider-svg-hieght);
     cursor: pointer;
   }
 

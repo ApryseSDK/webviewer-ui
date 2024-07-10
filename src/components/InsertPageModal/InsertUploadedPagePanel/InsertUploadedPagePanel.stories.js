@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import InsertUploadedPagePanel from './InsertUploadedPagePanel';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import '../../../constants/modal.scss';
+import '../InsertPageModal.scss';
 
 export default {
   title: 'Components/InsertPageModal/InsertUploadedPagePanel',

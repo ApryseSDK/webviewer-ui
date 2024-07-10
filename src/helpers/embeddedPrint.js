@@ -57,7 +57,7 @@ const cropDocumentToCurrentView = async (document) => {
 };
 
 // printingOptions: isCurrentView, includeAnnotations, shouldFlatten
-export const createPages = async (document, annotManager, pagesToPrint, printingOptions) => {
+export const createPages = async (document, annotManager, pagesToPrint, printingOptions, watermarkModalOptions) => {
   const extension = document.getType();
   const bbURLPromise = document.getPrintablePDF();
   let result;
@@ -79,8 +79,17 @@ export const createPages = async (document, annotManager, pagesToPrint, printing
     result = await cropDocumentToCurrentView(result);
   }
 
-  if (printingOptions?.shouldFlatten) {
-    result = await flattenDocument(result);
+  if (watermarkModalOptions) {
+    result.setWatermark(watermarkModalOptions);
+  }
+
+  if (printingOptions?.shouldFlatten || watermarkModalOptions) {
+    const fileDataOptions = { flatten: printingOptions?.shouldFlatten };
+    result = await createDocumentForPrint(result, fileDataOptions);
+  }
+
+  if (printingOptions?.includeComments) {
+    result = await result.formatDocumentForPrint(pagesToPrint);
   }
 
   return result;
@@ -238,9 +247,9 @@ const createLuminositySoftMask = async (doc, boundingBox, matrix, xObj) => {
   return mask;
 };
 
-const flattenDocument = async (document) => {
-  const fileData = await document.getFileData({ flatten: true });
+const createDocumentForPrint = async (document, fileDataOptions) => {
+  const fileData = await document.getFileData(fileDataOptions);
   const blob = new Blob([fileData], { type: 'application/pdf' });
-  const flatDoc = await window.Core.createDocument(blob, { extension: 'pdf' });
-  return flatDoc;
+  const result = await window.Core.createDocument(blob, { extension: 'pdf' });
+  return result;
 };

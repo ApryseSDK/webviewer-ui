@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Quét",
     "select": "Chọn",
+    "selectAnOption": "Chọn một tùy chọn",
     "Marquee": "Thu Phóng Màn",
     "Link": "Liên kết URL hoặc Trang",
     "Standard": "Tiêu Chuẩn",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Chỉ xem",
     "viewOnlyDescription": "Xem không có đề xuất",
     "notSupportedOnMobile": "Chỉnh sửa văn phòng không được hỗ trợ trên thiết bị di động.",
-    "previewAllChanges": "Xem trước tất cả các thay đổi"
+    "previewAllChanges": "Xem trước tất cả các thay đổi",
+    "accept": "Chấp nhận",
+    "reject": "Từ chối"
   },
   "insertPageModal": {
     "title": "Thêm trang mới",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Chỉnh sửa nội dung"
     },
     "addColorToCustom": "Thêm vào màu tùy chỉnh",
-    "noToolSelected": "Chọn một công cụ để xem thuộc tính công cụ",
+    "noToolSelected": "Tài liệu này không chứa bất kỳ lớp nào.",
     "noToolStyle": "Công cụ không chứa bất kỳ thuộc tính tạo kiểu nào."
   },
   "signatureListPanel": {

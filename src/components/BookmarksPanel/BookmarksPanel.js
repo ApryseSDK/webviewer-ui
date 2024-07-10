@@ -94,7 +94,7 @@ const BookmarksPanel = ({ panelSelector }) => {
         'BookmarksPanel': true,
         'bookmark-outline-panel': true,
         [panelSelector]: true,
-        'custom-panel': customizableUI,
+        'modular-ui-panel': customizableUI,
       })}
       data-element={DataElements.BOOKMARK_PANEL}
     >

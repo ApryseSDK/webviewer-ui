@@ -1,8 +1,6 @@
 @import '../../../constants/styles';
 @import '../../../constants/note';
 
-
-
 .multi-reply-place-holder {
   height: 100px;
 }
@@ -37,7 +35,7 @@
       align-items: center;
     }
 
-    .close-icon-container {
+    .close-icon {
       display: flex;
       align-items: center;
       padding-right: 12px;
@@ -62,15 +60,14 @@
     width: 28px;
     height: 28px;
     @include button-reset;
+    right: 10px;
+    bottom: 12px;
 
     // for IE only
     @media all and (-ms-high-contrast: none),
     (-ms-high-contrast: active) {
       width: 80px;
     }
-
-    right: 10px;
-    bottom: 12px;
 
     &:hover {
       background: var(--blue-1)
@@ -80,25 +77,66 @@
       cursor: not-allowed;
     }
   }
-}
 
-.reply-area {
-  position: relative;
-  flex: 1;
-  margin: 13px 17px 12px 16px;
-  border-radius: 4px;
-  align-items: center;
-  background: var(--component-background);
+  .reply-area {
+    position: relative;
+    flex: 1;
+    margin: 13px 17px 12px 16px;
+    border-radius: 4px;
+    align-items: center;
+    background: var(--component-background);
 
-  &.unread {
-    background: rgba($color: $pdftron-blue, $alpha: 0.08);
+    &.unread {
+      background: rgba($color: $pdftron-blue, $alpha: 0.08);
+    }
+
+    .comment-textarea .ql-container .ql-editor.ql-blank {
+      padding: 4px 4px 4px 4px;
+
+      &::before {
+        left: 4px;
+      }
+    }
   }
 
-  .comment-textarea .ql-container .ql-editor.ql-blank {
-    padding: 4px 4px 4px 4px;
+  .add-attachment {
+    display: none;
+  }
 
-    &::before {
-      left: 4px;
+  &.modular-ui {
+    padding: 16px 16px 24px;
+
+    form {
+      margin-bottom: 0px;
+    }
+
+    .reply-area {
+      margin: 13px 16px 24px 0px;
+    }
+
+    .reply-area-multi-header {
+      margin-left: 0px;
+      margin-top: 0px;
+
+      .close-icon {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    .close-icon {
+      padding-right: 0px;
+      margin-right: 16px;
+    }
+
+    .reply-button-container {
+      margin-right: 16px;
+      margin-bottom: 12px;
+    }
+
+    .reply-button {
+      left: 0px;
+      right: 0px;
     }
   }
 }

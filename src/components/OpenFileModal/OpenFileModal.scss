@@ -9,10 +9,10 @@
 
     .footer .modal-btn {
       color: var(--tab-footer-button-color);
+      border: none;
 
       &.disabled {
         background: var(--disabled-button-color) !important;
-        border: 1px solid var(--disabled-button-color);
         cursor: not-allowed;
 
         span {

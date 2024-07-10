@@ -845,6 +845,7 @@
   "tool": {
     "pan": "প্যান",
     "select": "নির্বাচন করুন",
+    "selectAnOption": "যেকোনো একটি নির্বাচন করুন",
     "Marquee": "মার্কি জুম",
     "Link": "লিঙ্ক URL বা পৃষ্ঠা",
     "Standard": "স্ট্যান্ডার্ড",
@@ -1223,7 +1224,9 @@
     "viewOnly": "শুধু দেখো",
     "viewOnlyDescription": "পরামর্শ ছাড়াই দেখুন",
     "notSupportedOnMobile": "অফিস সম্পাদনা মোবাইল ডিভাইসে সমর্থিত নয়।",
-    "previewAllChanges": "সমস্ত পরিবর্তনের পূর্বরূপ দেখুন"
+    "previewAllChanges": "সমস্ত পরিবর্তনের পূর্বরূপ দেখুন",
+    "accept": "গ্রহণ করুন",
+    "reject": "প্রত্যাখ্যান করুন"
   },
   "insertPageModal": {
     "title": "নতুন পৃষ্ঠা যোগ করুন",
@@ -1331,7 +1334,7 @@
       "contentEdit": "বিষয়বস্তু সম্পাদনা"
     },
     "addColorToCustom": "কাস্টম রং যোগ করুন",
-    "noToolSelected": "টুল বৈশিষ্ট্য দেখতে একটি টুল নির্বাচন করুন",
+    "noToolSelected": "এই নথিতে কোনো স্তর নেই।",
     "noToolStyle": "টুলে কোনো স্টাইলিং বৈশিষ্ট্য নেই।"
   },
   "signatureListPanel": {

@@ -16,4 +16,10 @@
     cursor: no-drop;
     opacity: 0.5;
   }
+  .cell-container.cell-tool:not([disabled]):hover {
+    border: none;
+    box-shadow: var(--colorpicker-tool-shadow);
+    background: var(--colorpicker-tool-bg);
+    border-radius: 4px;
+  }
 }

@@ -73,6 +73,7 @@ const NoteContent = ({
     canCollapseReplyPreview,
     activeTheme,
     timezone,
+    customizableUI,
   ] = useSelector(
     (state) => [
       selectors.getNoteDateFormat(state),
@@ -84,6 +85,7 @@ const NoteContent = ({
       selectors.isNotesPanelRepliesCollapsingEnabled(state),
       selectors.getActiveTheme(state),
       selectors.getTimezone(state),
+      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual,
   );
@@ -342,6 +344,7 @@ const NoteContent = ({
     isReply,
     unread: isUnread, // The note content itself is unread or it has unread replies
     clicked: isNonReplyNoteRead, // The top note content is read
+    'modular-ui': customizableUI,
   });
 
   const content = useMemo(

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
 import selectors from 'selectors';
-import { BASIC_PALETTE, COMMON_COLORS } from 'constants/commonColors';
+import { BASIC_PALETTE } from 'constants/commonColors';
 
 import './ColorPalette.scss';
 
@@ -101,7 +101,7 @@ class ColorPalette extends React.PureComponent {
                 <div
                   className={classNames({
                     cell: true,
-                    border: bg.toLowerCase() === COMMON_COLORS['white'].toLowerCase() || bg === 'transparency',
+                    border: true,
                   })}
                   style={{ backgroundColor: bg }}
                 >

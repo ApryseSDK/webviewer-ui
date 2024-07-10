@@ -29,8 +29,8 @@
     flex: 1 0 14%; // fallback for ie11, grid not available
 
     cursor: pointer;
-    width: 28px;
-    height: 28px;
+    width: var(--cell-border-size);
+    height: var(--cell-border-size);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,8 +43,8 @@
     .cell-outer {
       &.active {
         border: 1px solid var(--color-palette-border);
-        width: 26px;
-        height: 26px;
+        width: var(--cell-outer-border-size);
+        height: var(--cell-outer-border-size);
         border-radius: 10000000px;
         display: flex;
         align-items: center;

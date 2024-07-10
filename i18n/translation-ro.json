@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Tigaie",
     "select": "Selectați",
+    "selectAnOption": "Selecteaza o optiune",
     "Marquee": "Marquee Zoom",
     "Link": "Link URL sau pagină",
     "Standard": "Standard",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Doar vizualizare",
     "viewOnlyDescription": "Vizualizați fără sugestii",
     "notSupportedOnMobile": "Editarea Office nu este acceptată pe dispozitivele mobile.",
-    "previewAllChanges": "Previzualizează toate modificările"
+    "previewAllChanges": "Previzualizează toate modificările",
+    "accept": "Accept",
+    "reject": "Respinge"
   },
   "insertPageModal": {
     "title": "Adăugați o pagină nouă",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Editare conținut"
     },
     "addColorToCustom": "Adaugă la culori personalizate",
-    "noToolSelected": "Selectați un instrument pentru a vizualiza proprietățile instrumentului",
+    "noToolSelected": "Acest document nu conține niciun strat.",
     "noToolStyle": "Instrumentul nu conține nicio proprietate de stil."
   },
   "signatureListPanel": {

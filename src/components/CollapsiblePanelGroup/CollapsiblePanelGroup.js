@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
-import './CollapsiblePanelGroup.scss'
+import './CollapsiblePanelGroup.scss';
 
 const CollapsiblePanelGroup = (props) => {
   const {
@@ -21,14 +21,14 @@ const CollapsiblePanelGroup = (props) => {
         {header()}
         <Button
           title={isExpanded ? t('redactionPanel.collapse') : t('redactionPanel.expand')}
-          img={isExpanded ? "icon-chevron-up" : "icon-chevron-down"}
+          img={isExpanded ? 'icon-chevron-up' : 'icon-chevron-down'}
           className="expand-arrow"
           onClick={() => setIsExpanded(!isExpanded)}
         />
       </div>
       {isExpanded && children}
     </div>
-  )
+  );
 };
 
 export default CollapsiblePanelGroup;

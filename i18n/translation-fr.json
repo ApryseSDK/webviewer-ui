@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Panoramique",
     "select": "Sélection",
+    "selectAnOption": "Choisir une option",
     "Marquee": "Zoom sur la sélection",
     "Link": "URL de lien ou page",
     "Standard": "Standard",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Afficher uniquement",
     "viewOnlyDescription": "Afficher sans suggestions",
     "notSupportedOnMobile": "L'édition Office n'est pas prise en charge sur les appareils mobiles.",
-    "previewAllChanges": "Aperçu de toutes les modifications"
+    "previewAllChanges": "Aperçu de toutes les modifications",
+    "accept": "Accepter",
+    "reject": "Rejeter"
   },
   "insertPageModal": {
     "title": "Ajouter une nouvelle page",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Modifier le contenu"
     },
     "addColorToCustom": "Ajouter aux couleurs personnalisées",
-    "noToolSelected": "Sélectionnez un outil pour afficher les propriétés de l'outil",
+    "noToolSelected": "Ce document ne contient aucun calque.",
     "noToolStyle": "L'outil ne contient aucune propriété de style."
   },
   "signatureListPanel": {

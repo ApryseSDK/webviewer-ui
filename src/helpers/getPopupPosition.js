@@ -29,9 +29,12 @@ export const getTextPopupPositionBasedOn = (allQuads, popup, documentViewerKey =
 export const getAnnotationPosition = (annotation, documentViewerKey = 1) => {
   const { left, top, right, bottom } = getAnnotationPageCoordinates(annotation, documentViewerKey);
   const pageNumber = annotation.getPageNumber();
-  if (pageNumber > core.getDocument().getPageCount()) {
+  const currentDocumentPageCount = core.getDocumentViewers()[documentViewerKey - 1].getPageCount();
+
+  if (pageNumber > currentDocumentPageCount) {
     return { topLeft: null, bottomRight: null };
   }
+
   const topLeft = convertPageCoordinatesToWindowCoordinates(left, top, pageNumber, documentViewerKey);
   const bottomRight = convertPageCoordinatesToWindowCoordinates(right, bottom, pageNumber, documentViewerKey);
 

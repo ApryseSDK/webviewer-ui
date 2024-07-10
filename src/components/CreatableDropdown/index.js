@@ -1,3 +1,3 @@
-import CreatableDropdown from './CreatableDropdown'
+import CreatableDropdown from './CreatableDropdown';
 
 export default CreatableDropdown;

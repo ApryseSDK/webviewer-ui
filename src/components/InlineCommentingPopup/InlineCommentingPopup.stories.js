@@ -10,6 +10,9 @@ export default {
   title: 'Components/InlineCommentPopup',
   component: InlineCommentingPopup,
   includeStories: ['Basic', 'Mobile'],
+  parameters: {
+    customizableUI: true
+  }
 };
 
 export const initialState = {
@@ -21,7 +24,10 @@ export const initialState = {
     unreadAnnotationIdSet: new Set(),
     colorMap: [{ colorMapKey: () => BASIC_PALETTE[0] }],
   },
-  officeEditor: {}
+  officeEditor: {},
+  featureFlags: {
+    customizableUI: true,
+  }
 };
 
 export const context = {

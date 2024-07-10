@@ -845,6 +845,7 @@
   "tool": {
     "pan": "이동",
     "select": "선택",
+    "selectAnOption": "옵션을 선택하세요",
     "Marquee": "선택윤곽 확대/축소",
     "Link": "링크URL 또는 페이지",
     "Standard": "일반",
@@ -1223,7 +1224,9 @@
     "viewOnly": "보기 전용",
     "viewOnlyDescription": "제안 없이 보기",
     "notSupportedOnMobile": "Office 편집은 모바일 장치에서 지원되지 않습니다.",
-    "previewAllChanges": "모든 변경사항 미리보기"
+    "previewAllChanges": "모든 변경사항 미리보기",
+    "accept": "수용하다",
+    "reject": "거부하다"
   },
   "insertPageModal": {
     "title": "새 페이지 추가",
@@ -1331,7 +1334,7 @@
       "contentEdit": "내용 편집"
     },
     "addColorToCustom": "사용자 정의 색상에 추가",
-    "noToolSelected": "도구 속성을 보려면 도구를 선택하세요.",
+    "noToolSelected": "이 문서에는 레이어가 포함되어 있지 않습니다.",
     "noToolStyle": "도구에는 스타일 속성이 포함되어 있지 않습니다."
   },
   "signatureListPanel": {

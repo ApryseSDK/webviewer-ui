@@ -845,6 +845,7 @@
   "tool": {
     "pan": "移動瀏覽",
     "select": "選取",
+    "selectAnOption": "選擇一個選項",
     "Marquee": "跑馬燈縮放",
     "Link": "鏈接網址或頁面",
     "Standard": "標準",
@@ -1223,7 +1224,9 @@
     "viewOnly": "只讀",
     "viewOnlyDescription": "查看無建議",
     "notSupportedOnMobile": "移動設備不支持 Office 編輯。",
-    "previewAllChanges": "預覽所有更改"
+    "previewAllChanges": "預覽所有更改",
+    "accept": "接受",
+    "reject": "拒絕"
   },
   "insertPageModal": {
     "title": "添加新頁面",
@@ -1331,7 +1334,7 @@
       "contentEdit": "內容編輯"
     },
     "addColorToCustom": "新增到自訂顏色",
-    "noToolSelected": "選擇工具以查看工具屬性",
+    "noToolSelected": "該文件不包含任何圖層。",
     "noToolStyle": "工具不包含任何樣式屬性。"
   },
   "signatureListPanel": {

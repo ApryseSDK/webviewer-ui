@@ -34,7 +34,7 @@
 
     &:hover {
       cursor: pointer;
-      background-color: #e7edf3;
+      background-color: var(--blue-1);
     }
 
     .Icon {
@@ -56,7 +56,7 @@
       width: 100%;
       height: 100%;
       path {
-        fill: #485056;
+        fill: var(--gray-8);
       }
       
     }

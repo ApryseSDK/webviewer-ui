@@ -13,7 +13,7 @@
     width: 130px;
     height: 182px;
     padding: 12px 24px;
-    background-color: #F8F9FA;
+    background-color: var(--gray-1);
     border: 1px solid var(--tools-overlay-button-hover);
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@
     .portfolio-item-preview {
       width: 100%;
       height: 104px;
-      border: 1px solid #E7EBEE;
+      border: 1px solid var(--gray-3);
 
       .preview-container {
         width: 100%;
@@ -33,7 +33,7 @@
         justify-content: center;
 
         .Icon {
-          color: #ADB5BD;
+          color: var(--gray-6);
         }
       }
     }
@@ -46,7 +46,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-      color: #485056;
+      color: var(--gray-8);
     }
 
     .Button {

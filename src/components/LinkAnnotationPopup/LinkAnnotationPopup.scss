@@ -1,0 +1,52 @@
+@import '../../constants/styles.scss';
+@import '../../constants/popup';
+
+.LinkAnnotationPopupContainer {
+  @extend %popup;
+  border-radius: 4px;
+  box-shadow: 0 0 3px 0 var(--document-box-shadow);
+  background: var(--component-background);
+}
+
+.LinkAnnotationPopup {
+  &.is-horizontal {
+    .contents {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+
+      .link-annot-input {
+        margin: 8px 0 8px 8px;
+        color: var(--gray-8);
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        /* top right bottom left */
+        border: none;
+        width: fit-content;
+        max-width: 240px;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        box-sizing: border-box;
+        word-break: break-all;
+      }
+
+      .divider {
+        width: 1px;
+        height: 20px;
+        background: var(--divider);
+        flex-shrink: 0;
+      }
+
+      .main-menu-button {
+        margin: 4px 8px 4px 0;
+      }
+    }
+  }
+}

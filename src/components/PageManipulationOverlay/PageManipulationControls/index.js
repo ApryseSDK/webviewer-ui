@@ -1,3 +1,3 @@
-import PageManipulationControls from './PageManipulationControlsContainer';
+import PageManipulationControlsContainer from './PageManipulationControlsContainer';
 
-export default PageManipulationControls;
+export default PageManipulationControlsContainer;

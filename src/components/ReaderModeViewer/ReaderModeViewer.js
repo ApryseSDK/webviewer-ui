@@ -7,6 +7,7 @@ import zoomFactors from 'constants/zoomFactors';
 import { connect } from 'react-redux';
 import setMaxZoomLevel from 'helpers/setMaxZoomLevel';
 import ReaderModeStylePopup from 'components/ReaderModeStylePopup';
+import getRootNode from 'helpers/getRootNode';
 
 class ReaderModeViewer extends React.PureComponent {
   static propTypes = {
@@ -108,7 +109,8 @@ class ReaderModeViewer extends React.PureComponent {
         {
           pageNumberUpdateHandler: core.setCurrentPage,
           pageNum: core.getCurrentPage(),
-          editStyleHandler: this.onEditStyle
+          editStyleHandler: this.onEditStyle,
+          rootNode: getRootNode(),
         }
       );
       this.setZoom(core.getZoom());

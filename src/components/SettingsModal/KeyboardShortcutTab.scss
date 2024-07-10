@@ -1,7 +1,7 @@
 @import "../../constants/styles";
 
 .shortcut-table-header {
-  border: 1px var(--border) solid;
+  border: 1px var(--gray-4) solid;
   border-bottom: 0px;
   padding: 12px 16px;
   display: flex;
@@ -23,7 +23,7 @@
 }
 
 .shortcut-table-content {
-  border: 1px var(--border) solid;
+  border: 1px var(--gray-4) solid;
   padding: 0px 16px;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@
     position: relative;
 
     .shortcut-table-item-command {
-      color: #868E96;
+      color: var(--gray-7);
       width: 220px;
 
       span:not(:last-child) {
@@ -50,8 +50,12 @@
     button {
       position: absolute;
       right: 0px;
-      height: 20px;
-      width: 20px;
+      height: 32px;
+      width: 32px;
+      .Icon {
+        height: 20px;
+        width: 20px;
+      }
     }
 
     @include mobile {

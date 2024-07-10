@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Panci",
     "select": "Pilih",
+    "selectAnOption": "Pilih sebuah opsi",
     "Marquee": "Zoom Tenda",
     "Link": "Tautan URL atau Halaman",
     "Standard": "Standar",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Lihat Saja",
     "viewOnlyDescription": "Lihat tanpa saran",
     "notSupportedOnMobile": "Pengeditan Office tidak didukung di perangkat seluler.",
-    "previewAllChanges": "Pratinjau semua perubahan"
+    "previewAllChanges": "Pratinjau semua perubahan",
+    "accept": "Menerima",
+    "reject": "Menolak"
   },
   "insertPageModal": {
     "title": "Tambahkan Halaman Baru",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Pengeditan Konten"
     },
     "addColorToCustom": "Tambahkan ke warna khusus",
-    "noToolSelected": "Pilih alat untuk melihat properti alat",
+    "noToolSelected": "Dokumen ini tidak mengandung lapisan apa pun.",
     "noToolStyle": "Alat tidak mengandung properti penataan gaya apa pun."
   },
   "signatureListPanel": {

@@ -9,6 +9,9 @@ import Panel from 'components/Panel';
 export default {
   title: 'Components/NotesPanel/NotesPanel',
   component: NotesPanel,
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 function noop() {
@@ -48,7 +51,7 @@ const initialState = {
     },
   },
   featureFlags: {
-    customizableUI: false,
+    customizableUI: true,
   },
   officeEditor: {
     editMode: 'editing'

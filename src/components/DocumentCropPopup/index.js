@@ -1,3 +1,3 @@
-import DocumentCropPopup from './DocumentCropPopupContainer';
+import DocumentCropPopupContainer from './DocumentCropPopupContainer';
 
-export default DocumentCropPopup;
+export default DocumentCropPopupContainer;

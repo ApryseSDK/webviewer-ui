@@ -2,6 +2,7 @@
  * Sets the grow of Grouped Items
  * @method UI.setGroupedItemsGrow
  * @param {number} grow The flex grow value of the group
+ * @param {Object} [selectors] An object that contains the selectors to filter the Grouped Items to set the grow property on.
  * @example
  * WebViewer(...)
   .then(function (instance) {
@@ -37,7 +38,7 @@ export default (store) => (grow, selectors) => {
   if (isGrowValid(grow)) {
     const { groupedItemsDataElement } = selectors || {};
     if (groupedItemsDataElement) {
-      store.dispatch(actions.setGroupedItemsProperty('grow', grow, groupedItemsDataElement));
+      store.dispatch(actions.setModularComponentProperty('grow', grow, groupedItemsDataElement));
     } else {
       store.dispatch(actions.setAllGroupedItemsProperty('grow', grow));
     }

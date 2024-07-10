@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import DataElements from 'constants/dataElement';
-
+import classNames from 'classnames';
+import selectors from 'selectors';
 import DataElementWrapper from 'components/DataElementWrapper';
 import PopupPortal from 'components/PopupPortal';
 import Icon from 'components/Icon';
@@ -29,6 +31,7 @@ const NoteStatePopup = ({
   const [position, setPosition] = useState({ left: 'auto', right: 'auto', top: 'auto' });
   const popupRef = useRef();
   const isMultiSelect = triggerElementName === DataElements.NOTE_MULTI_STATE_BUTTON;
+  const customizableUI = useSelector((state) => selectors.getFeatureFlags(state)?.customizableUI);
 
   useOnClickOutside(popupRef, (e) => {
     const querySelector = isMultiSelect ? `[data-element="${DataElements.NOTE_MULTI_STATE_BUTTON}"]` : `[data-id="${triggerElementName}"]`;
@@ -58,7 +61,10 @@ const NoteStatePopup = ({
     >
       <div
         style={style}
-        className="note-state-options"
+        className={classNames({
+          'note-state-options': true,
+          'modular-ui': customizableUI,
+        })}
         ref={popupRef}
       >
         <DataElementWrapper dataElement="notePopupState">

@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Hand",
     "select": "Auswählen",
+    "selectAnOption": "Wähle eine Option",
     "Marquee": "Auswahl Zoom",
     "Link": "Link URL oder Seite",
     "Standard": "Standard",
@@ -1331,7 +1332,7 @@
       "contentEdit": "Inhaltsbearbeitung"
     },
     "addColorToCustom": "Zu benutzerdefinierten Farben hinzufügen",
-    "noToolSelected": "Wählen Sie ein Werkzeug aus, um die Werkzeugeigenschaften anzuzeigen",
+    "noToolSelected": "Dieses Dokument enthält keine Ebenen.",
     "noToolStyle": "Das Tool enthält keine Styling-Eigenschaften."
   },
   "signatureListPanel": {

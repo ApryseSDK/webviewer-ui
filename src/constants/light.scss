@@ -81,6 +81,7 @@
 
   --divider: var(--gray-5);
   --reply-divider: var(--gray-3);
+  
   --side-panel-border: var(--divider);
   --border: var(--gray-5);
   --lighter-border: var(--gray-4);
@@ -154,8 +155,19 @@
   --dropdown-item-active: var(--popup-button-hover);
   --dropdown-item-text-hover: var(--text-color);
 
-  --disabled-button-color: #96b9d6;
+  --disabled-button-color: rgba(173, 181, 189, 0.5);
   --tab-footer-button-color: var(--primary-button-text);
-  
+  --x-button-hover-color: var(--view-header-button-hover);
+
+  --slider-filler: none;
+  --style-icon-color: var(--selected-icon-color);
+  --cell-border-size: 28px;
+  --cell-outer-border-size: 26px;
+  --button-icon-color-active: var(--blue-6);
+  --slider-svg-hieght: 18px;
+  --slider-input-focus: var(--focus-border);
+  --colorpicker-tool-shadow: none;
+  --colorpicker-tool-bg: none;
+
   --input-switch-default-color: var(--gray-3);
 }

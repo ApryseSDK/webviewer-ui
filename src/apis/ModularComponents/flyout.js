@@ -18,31 +18,32 @@ export const flyoutItemType = TYPES.MULTI_TYPE(
   TYPES.OBJECT(flyoutItemBase),
   TYPES.STRING // For dividers
 );
+
+/**
+ * Represents an item in a flyout with optional submenu.
+ * @typedef {Object} FlyoutItem
+ * @property {string} [dataElement] - A unique string that identifies the flyout item.
+ * @property {string} [label] - The label of the flyout item.
+ * @property {Function} [onClick] - A function that is called when the item is clicked.
+ * @property {string} [icon] -  Path to an image or base64 data. Can also be the filename of a .svg from the WebViewer icons folder found here:
+ *   {@link https://github.com/PDFTron/webviewer-ui/tree/master/assets/icons/ assets/icons/} (i.e. `icon-save` to use `icon-save.svg`).
+ * @property {Array<FlyoutItem>} [children] - An array of objects that represents the items in a sub-menu, has the same properties as the parent items property and can be infinitely nested.
+ */
+
 /**
  * @name Flyout
  * @memberOf UI.Components
  * @class UI.Components.Flyout
  * @constructor
- * @param {Object} options
- * @param {string} options.dataElement A unique string that identifies the flyout.
- * @param {Array<Object>} options.items An array of objects that represent the items in the flyout. Each object should have the following properties:
- * @param {string} [options.items.dataElement] A unique string that identifies the flyout item.
- * @param {string} [options.items.label] The text title of the item.
- * @param {Function} [options.items.onClick] A function that is called when the item is clicked.
- * @param {string} [options.items.icon] Path to an image or base64 data. Can also be the filename of a .svg from the WebViewer icons folder found here:
- *   {@link https://github.com/PDFTron/webviewer-ui/tree/master/assets/icons/ assets/icons/} (i.e. `icon-save` to use `icon-save.svg`).
- * @param {Array<UI.Components.Flyout>} [options.items.children] An array of objects that represents the items in a sub-menu, has the same properties as the parent items property and can be infinitely nested.
- */
+ * @param {Object} options - An object that contains the properties of the flyout.
+ * @param {string} options.dataElement - A unique string that identifies the flyout.
+ * @param {Array<FlyoutItem>} options.items - An array of objects that represent the items in the flyout.
+*/
 
 /**
  * Sets the items of the flyout.
  * @method UI.Components.Flyout#setItems
- * @param {Array<Object>} items An array of objects that represent the items to be added to the flyout.
- * @param {string} items.label The text title of the item.
- * @param {Function} items.onClick A function that is called when the item is clicked.
- * @param {string} items.icon Path to an image or base64 data. Can also be the filename of a .svg from the WebViewer icons folder found here:
- *  {@link https://github.com/PDFTron/webviewer-ui/tree/master/assets/icons/ assets/icons/} (i.e. `icon-save` to use `icon-save.svg`).
- * @param {Array<UI.Components.Flyout>} items.children An array of objects that represents the items in a sub-menu, has the same properties as the parent items property and can be infinitely nested.
+ * @param {Array<FlyoutItem>} items An array of objects that represent the items to be added to the flyout.
  * @example
  *  const flyout = new UI.Components.Flyout({
  *    dataElement: 'exampleFlyout',

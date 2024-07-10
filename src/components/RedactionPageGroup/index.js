@@ -1,3 +1,3 @@
-import RedactionPageGroup from './RedactionPageGroupContainer';
+import RedactionPageGroupContainer from './RedactionPageGroupContainer';
 
-export default RedactionPageGroup;
+export default RedactionPageGroupContainer;

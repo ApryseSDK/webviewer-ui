@@ -1,36 +1,17 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
 import initialState from 'src/redux/initialState';
-import rootReducer from 'reducers/rootReducer';
-import App from 'components/App';
 import { mockHeadersNormalized, mockModularComponents } from '../ModularComponents/AppStories/mockAppState';
 import SignatureListPanel from './SignatureListPanel';
 import { mockSavedSignatures, mockSavedInitials } from '../SignatureStylePopup/mockedSignatures';
-import { setItemToFlyoutStore } from 'src/helpers/itemToFlyoutHelper';
-import PropTypes from 'prop-types';
+import { setItemToFlyoutStore } from 'helpers/itemToFlyoutHelper';
+import { MockApp, createStore } from 'helpers/storybookHelper';
 
 export default {
   title: 'ModularComponents/SignatureListPanel',
   component: SignatureListPanel,
-};
-
-const createStore = (preloadedState) => {
-  return configureStore({
-    reducer: rootReducer,
-    preloadedState: preloadedState,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
-  });
-};
-
-const MockApp = ({ store }) => (
-  <Provider store={store}>
-    <App removeEventHandlers={() => { }} />
-  </Provider>
-);
-
-MockApp.propTypes = {
-  store: PropTypes.object.isRequired,
+  parameters: {
+    customizableUI: true,
+  },
 };
 
 const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
@@ -78,7 +59,7 @@ const SignatureListPanelInApp = (location, signatures = [], initials = []) => {
   const store = createStore(mockState);
   setItemToFlyoutStore(store);
 
-  return <MockApp store={store} />;
+  return <MockApp initialState={mockState} />;
 };
 
 export const EmptySignatureListPanelInAppLeft = () => SignatureListPanelInApp('left');

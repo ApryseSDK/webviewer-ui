@@ -5,13 +5,12 @@
   width: fit-content;
   min-width: 32px;
 
-  &:hover,
-  &:active {
-    @extend %custom-button-hover;
+  &:hover {
+    @extend %icon-button-hover;
   }
 
   &:active {
-    color: var(--view-header-icon-active-fill);
+    @extend %icon-button-active;
     cursor: default;
 
     .Icon svg path {

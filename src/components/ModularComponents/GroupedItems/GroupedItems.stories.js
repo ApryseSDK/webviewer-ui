@@ -11,6 +11,9 @@ import {
 export default {
   title: 'ModularComponents/GroupedItems',
   component: GroupedItems,
+  parameters: {
+    customizableUI: true,
+  }
 };
 
 const initialState = {

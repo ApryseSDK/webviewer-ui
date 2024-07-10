@@ -845,6 +845,7 @@
   "tool": {
     "pan": "कड़ाही",
     "select": "चुनते हैं",
+    "selectAnOption": "कोई विकल्प चुनें",
     "Marquee": "शामियाना उड़ना",
     "Link": "लिंक यूआरएल या पेज",
     "Standard": "मानक",
@@ -1223,7 +1224,9 @@
     "viewOnly": "केवल देखें",
     "viewOnlyDescription": "सुझाव के बिना देखें",
     "notSupportedOnMobile": "कार्यालय संपादन मोबाइल उपकरणों पर समर्थित नहीं है।",
-    "previewAllChanges": "सभी परिवर्तनों का पूर्वावलोकन करें"
+    "previewAllChanges": "सभी परिवर्तनों का पूर्वावलोकन करें",
+    "accept": "स्वीकार करना",
+    "reject": "अस्वीकार करना"
   },
   "insertPageModal": {
     "title": "नया पेज जोड़ें",
@@ -1331,7 +1334,7 @@
       "contentEdit": "सामग्री संपादित करें"
     },
     "addColorToCustom": "कस्टम रंगों में जोड़ें",
-    "noToolSelected": "टूल गुण देखने के लिए एक टूल चुनें",
+    "noToolSelected": "इस दस्तावेज़ में कोई परत नहीं है।",
     "noToolStyle": "टूल में कोई स्टाइलिंग गुण नहीं हैं."
   },
   "signatureListPanel": {

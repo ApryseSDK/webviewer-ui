@@ -47,6 +47,23 @@
         max-height: 90%;
       }
     }
+
+    .inline-comment-header {
+      flex-grow: 0;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .inline-comment-header-title {
+        flex-grow: 1;
+        font-size: 16px;
+      }
+
+      .Button {
+        margin: 4px;
+      }
+    }
   }
 
   .Note {
@@ -114,21 +131,9 @@
     }
   }
 
-  .inline-comment-header {
-    flex-grow: 0;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .inline-comment-header-title {
-    flex-grow: 1;
-    font-size: 16px;
-  }
-
   .Button {
-
+    margin: 0;
+  
     &.add-attachment,
     &.reply-button {
       margin: 0;
@@ -149,7 +154,8 @@
       }
     }
 
-    &.reply-button {
+    &.reply-button,
+    &.note-popup-toggle-trigger {
       width: 28px;
       height: 28px;
 

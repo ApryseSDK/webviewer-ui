@@ -31,14 +31,17 @@ const ThumbnailControls = ({ index }) => {
   const [
     currentPage,
     pageThumbnailControlMenuItems,
+    featureFlags,
   ] = useSelector((state) => [
     selectors.getCurrentPage(state),
     selectors.getThumbnailControlMenuItems(state),
+    selectors.getFeatureFlags(state),
   ], shallowEqual);
 
   let pageNumbers = selectedIndexes.length > 0 ? selectedIndexes.map((i) => i + 1) : [index + 1];
 
   const isCurrentPageInTheSelection = pageNumbers.includes(currentPage);
+  const customizableUI = featureFlags.customizableUI;
 
   if (!isCurrentPageInTheSelection) {
     pageNumbers = [currentPage];
@@ -135,6 +138,7 @@ const ThumbnailControls = ({ index }) => {
     <div className={classNames({
       'thumbnailControls-overlay': true,
       'custom-buttons': isCustomized,
+      'modular-ui': customizableUI,
     })}
     data-element={dataElementName}
     >

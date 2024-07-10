@@ -845,6 +845,7 @@
   "tool": {
     "pan": "Padella",
     "select": "Selezionare",
+    "selectAnOption": "Seleziona un'opzione",
     "Marquee": "Zoom tendone",
     "Link": "Link URL o Pagina",
     "Standard": "Standard",
@@ -1223,7 +1224,9 @@
     "viewOnly": "Visualizzare solamente",
     "viewOnlyDescription": "Visualizza senza suggerimenti",
     "notSupportedOnMobile": "La modifica di Office non è supportata sui dispositivi mobili.",
-    "previewAllChanges": "Anteprima di tutte le modifiche"
+    "previewAllChanges": "Anteprima di tutte le modifiche",
+    "accept": "Accettare",
+    "reject": "Rifiutare"
   },
   "insertPageModal": {
     "title": "Aggiungi nuova pagina",
@@ -1331,7 +1334,7 @@
       "contentEdit": "Modifica contenuto"
     },
     "addColorToCustom": "Aggiungi a colori personalizzati",
-    "noToolSelected": "Seleziona uno strumento per visualizzarne le proprietà",
+    "noToolSelected": "Questo documento non contiene alcun livello.",
     "noToolStyle": "Lo strumento non contiene alcuna proprietà di stile."
   },
   "signatureListPanel": {

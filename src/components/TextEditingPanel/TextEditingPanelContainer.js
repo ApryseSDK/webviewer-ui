@@ -21,12 +21,13 @@ const conversionMap = {
 };
 
 const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
-  const [isOpen, isDisabled, textEditingPanelWidth, isInDesktopOnlyMode] = useSelector(
+  const [isOpen, isDisabled, textEditingPanelWidth, isInDesktopOnlyMode, isCustomUI] = useSelector(
     (state) => [
       selectors.isElementOpen(state, dataElement),
       selectors.isElementDisabled(state, dataElement),
       selectors.getTextEditingPanelWidth(state),
       selectors.isInDesktopOnlyMode(state),
+      selectors.getFeatureFlags(state)?.customizableUI,
     ],
     shallowEqual,
   );
@@ -415,11 +416,11 @@ const TextEditingPanelContainer = ({ dataElement = 'textEditingPanel' }) => {
         handleColorChange={handleColorChange}
         fonts={fonts}
         handleAddLinkToText={handleAddLinkToText}
-        disableLinkButton={
-          (annotationRef.current?.ToolName === window.Core.Tools.ToolNames.ADD_PARAGRAPH) && !contentEditorRef.current
-        }
+        disableLinkButton={!contentEditorRef.current}
         addActiveColor={handleAddActiveColor}
         rgbColor={rgbColor}
+        customColors={customColors}
+        isCustomUI={isCustomUI}
       />
     </DataElementWrapper>
   );

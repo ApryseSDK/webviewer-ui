@@ -845,6 +845,7 @@
   "tool": {
     "pan": "パン",
     "select": "選択",
+    "selectAnOption": "選択肢一つを選択してください",
     "Marquee": "拡大鏡",
     "Link": "ページまたはURLをリンク",
     "Standard": "標準",
@@ -1223,7 +1224,9 @@
     "viewOnly": "表示のみ",
     "viewOnlyDescription": "提案なしで表示",
     "notSupportedOnMobile": "Office 編集は、モバイル デバイスではサポートされていません。",
-    "previewAllChanges": "すべての変更をプレビュー"
+    "previewAllChanges": "すべての変更をプレビュー",
+    "accept": "受け入れる",
+    "reject": "拒否する"
   },
   "insertPageModal": {
     "title": "新しいページを追加",
@@ -1331,7 +1334,7 @@
       "contentEdit": "コンテンツ編集"
     },
     "addColorToCustom": "カスタムカラーに追加",
-    "noToolSelected": "ツールを選択してツールのプロパティを表示します",
+    "noToolSelected": "このドキュメントにはレイヤーが含まれていません。",
     "noToolStyle": "ツールにはスタイル設定プロパティが含まれていません。"
   },
   "signatureListPanel": {

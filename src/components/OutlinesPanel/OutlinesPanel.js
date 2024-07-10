@@ -275,7 +275,7 @@ const OutlinesPanel = () => {
 
   return (
     <div
-      className={classNames('Panel OutlinesPanel bookmark-outline-panel', { 'custom-panel': customizableUI })}
+      className={classNames('Panel OutlinesPanel bookmark-outline-panel', { 'modular-ui-panel': customizableUI })}
       data-element={DataElements.OUTLINE_PANEL} ref={panelRef}
     >
       <div className="bookmark-outline-panel-header">

@@ -9,7 +9,6 @@ import Events from 'constants/events';
 import { getInstanceNode } from 'helpers/getRootNode';
 import selectors from 'selectors';
 import Button from 'components/Button';
-import { COMMON_COLORS } from 'constants/commonColors';
 
 const parseColor = (color) => {
   if (!color) {
@@ -172,7 +171,7 @@ const ColorPicker = ({
                 <div
                   className={classNames({
                     cell: true,
-                    border: color === COMMON_COLORS['white'].toLowerCase() || color === TRANSPARENT_COLOR,
+                    border: true,
                   })}
                   style={{ backgroundColor: color }}
                 >

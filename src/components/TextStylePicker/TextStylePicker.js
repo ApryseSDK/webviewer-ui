@@ -21,13 +21,14 @@ const TextStylePicker = ({
   onFreeTextSizeToggle,
   isFreeTextAutoSize,
   isRichTextEditMode,
+  isDisabled = false,
 }) => {
   // List is not complete
   const supportedFonts = fonts?.length ? fonts : ['Helvetica', 'Times New Roman'];
   const freeTextAutoSizeDataElement = 'freeTextAutoSizeFontButton';
   const font = isRichTextEditMode ? properties?.quillFont : properties?.Font;
   const changeFont = (font) => {
-    if (isContentEditing) {
+    if (isContentEditing || isRedaction) {
       onPropertyChange('Font', font);
       return;
     }
@@ -54,7 +55,7 @@ const TextStylePicker = ({
    * @returns {string}
    */
   const getFontSize = (properties) => {
-    const defaultFontSize = properties?.FontSize === '0pt' ? properties?.calculatedFontSize : properties?.FontSize;
+    const defaultFontSize = isFreeTextAutoSize || properties?.FontSize === '0pt' ? properties?.calculatedFontSize : properties?.FontSize;
     if (isRichTextEditMode) {
       return properties.quillFontSize;
     }
@@ -64,7 +65,7 @@ const TextStylePicker = ({
   const fontSize = getFontSize(properties);
 
   const changeFontSize = (fontSize) => {
-    if (isContentEditing) {
+    if (isContentEditing || isRedaction) {
       onPropertyChange('FontSize', fontSize);
       return;
     }
@@ -230,6 +231,7 @@ const TextStylePicker = ({
       <div className={`container-fluid ${error && 'error'}`}>
         <div className="container-dropdown">
           <Dropdown
+            className={'border-color'}
             items={supportedFonts}
             onClickItem={changeFont}
             currentSelectionKey={defaultQuillFont}
@@ -237,6 +239,7 @@ const TextStylePicker = ({
             maxHeight={200}
             placeholder={isContentEditing ? 'Font' : undefined}
             disableFocusing={true}
+            disabled={isDisabled}
           />
           <FontSizeDropdown
             fontSize={fontSizePropsToUpdate}
@@ -245,7 +248,7 @@ const TextStylePicker = ({
             onFontSizeChange={changeFontSize}
             onError={setError}
             applyOnlyOnBlur={isContentEditing}
-            disabled={isFreeTextAutoSize}
+            disabled={isFreeTextAutoSize || isDisabled}
             displayEmpty={isRichTextEditMode && !properties?.quillFontSize || fontSizePropsToUpdate === undefined}
           />
         </div>
@@ -260,6 +263,7 @@ const TextStylePicker = ({
               img="icon-menu-bold"
               title="option.richText.bold"
               isActive={currentConfig.bold.isActive}
+              disabled={isDisabled}
             />
             <Button
               dataElement={currentConfig.italic.dataElement}
@@ -267,6 +271,7 @@ const TextStylePicker = ({
               img="icon-menu-italic"
               title="option.richText.italic"
               isActive={currentConfig.italic.isActive}
+              disabled={isDisabled}
             />
             <Button
               dataElement={currentConfig.underline.dataElement}
@@ -274,6 +279,7 @@ const TextStylePicker = ({
               img="icon-menu-text-underline"
               title="option.richText.underline"
               isActive={currentConfig.underline.isActive}
+              disabled={isDisabled}
             />
             <Button
               dataElement={currentConfig.strikeout.dataElement}
@@ -281,6 +287,7 @@ const TextStylePicker = ({
               img="icon-tool-text-manipulation-strikethrough"
               title="option.richText.strikeout"
               isActive={currentConfig.strikeout.isActive}
+              disabled={isDisabled}
             />
           </div>
         )}
@@ -291,6 +298,7 @@ const TextStylePicker = ({
             img="icon-menu-align-left"
             title="option.richText.alignLeft"
             isActive={currentConfig.leftAlign.isActive}
+            disabled={isDisabled}
           />
           <Button
             dataElement={currentConfig.centerAlign.dataElement}
@@ -298,6 +306,7 @@ const TextStylePicker = ({
             img="icon-menu-align-centre"
             title="option.richText.alignCenter"
             isActive={currentConfig.centerAlign.isActive}
+            disabled={isDisabled}
           />
           <Button
             dataElement={currentConfig.rightAlign.dataElement}
@@ -305,8 +314,8 @@ const TextStylePicker = ({
             img="icon-menu-align-right"
             title="option.richText.alignRight"
             isActive={currentConfig.rightAlign.isActive}
+            disabled={isDisabled}
           />
-          {/* TODO: Implement justify button below */}
           {!isRedaction && !isContentEditing && (
             <Button
               dataElement="freeTextJustifyCenterButton"
@@ -314,6 +323,7 @@ const TextStylePicker = ({
               img="icon-text-justify-center"
               title="option.richText.justifyCenter"
               isActive={textAlign === 'justify'}
+              disabled={isDisabled}
             />
           )}
         </div>
@@ -324,18 +334,21 @@ const TextStylePicker = ({
               img="icon-arrow-to-top"
               title="option.richText.alignTop"
               isActive={textVerticalAlign === 'top'}
+              disabled={isFreeTextAutoSize}
             />
             <Button
               onClick={() => changeYAlign('center')}
               img="icon-arrow-to-middle"
               title="option.richText.alignMiddle"
               isActive={textVerticalAlign === 'center'}
+              disabled={isFreeTextAutoSize}
             />
             <Button
               onClick={() => changeYAlign('bottom')}
               img="icon-arrow-to-bottom"
               title="option.richText.alignBottom"
               isActive={textVerticalAlign === 'bottom'}
+              disabled={isFreeTextAutoSize}
             />
           </div>
         )}{isFreeText && (<div className="row text-vertical-alignment auto-size-checkbox">
@@ -362,6 +375,7 @@ TextStylePicker.propTypes = {
   isFreeTextAutoSize: PropTypes.bool,
   onFreeTextSizeToggle: PropTypes.func,
   isRichTextEditMode: PropTypes.bool,
+  isDisabled: PropTypes.bool,
 };
 
 export default TextStylePicker;

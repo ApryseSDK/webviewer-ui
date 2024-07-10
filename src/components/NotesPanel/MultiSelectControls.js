@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import Icon from 'components/Icon';
 import Button from 'components/Button';
 import ReplyAreaMultiSelect from 'components/Note/ReplyArea/ReplyAreaMultiSelect';
 import MultiStylePopup from 'components/NotesPanel/MultiStylePopup';
@@ -255,17 +254,13 @@ const MultiSelectControls = ({
       <div
         className="close-container"
       >
-        <div
+        <Button
           className="close-icon-container"
           onClick={() => {
             setMultiSelectMode(false);
           }}
-        >
-          <Icon
-            glyph="ic_close_black_24px"
-            className="close-icon"
-          />
-        </div>
+          img='ic_close_black_24px'
+        />
       </div>
     </div>
   );

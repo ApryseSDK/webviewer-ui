@@ -8,7 +8,7 @@
   max-width: calc(100% - 16px);
   @include mobile {
     max-width: 100%;
-  } 
+  }
 
   &.closed {
     transform: translateX(100%);
@@ -18,9 +18,8 @@
   @include mobile {
     z-index: 95;
   }
-  display: flex;
   background-color: var(--panel-background);
-  display: flex;
+  display: flex !important;
   flex-direction: row;
   overflow: hidden;
 
@@ -32,7 +31,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
   }
 }

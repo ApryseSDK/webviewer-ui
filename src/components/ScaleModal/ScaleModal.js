@@ -25,6 +25,7 @@ import Tooltip from 'components/Tooltip';
 import DataElementWrapper from 'components/DataElementWrapper';
 
 import './ScaleModal.scss';
+import '../Choice/Choice.scss';
 
 const Scale = window.Core.Scale;
 
@@ -266,17 +267,19 @@ const ScaleModal = ({ annotations, selectedTool }) => {
                     precision={precisionOption[1]}
                   />
                 ) : (
-                  <div className="block" />
+                  null
                 )}
-                <Choice
-                  data-element="presetScaleOption"
-                  radio
-                  onChange={() => setScaleOption(scaleOptions.PRESET)}
-                  name="setting"
-                  checked={!isCustomOption}
-                  label={`${t('option.measurement.scaleModal.preset')}:`}
-                  center
-                />
+                <div className="custom-scale-option">
+                  <Choice
+                    data-element="presetScaleOption"
+                    radio
+                    onChange={() => setScaleOption(scaleOptions.PRESET)}
+                    name="setting"
+                    checked={!isCustomOption}
+                    label={`${t('option.measurement.scaleModal.preset')}:`}
+                    center
+                  />
+                </div>
                 {!isCustomOption && (
                   <div className="scaleModal__preset-container">
                     <div className="selector">
@@ -288,6 +291,10 @@ const ScaleModal = ({ annotations, selectedTool }) => {
                       />
                     </div>
                   </div>
+                )}
+
+                {isCustomOption ? null : (
+                  <div className="block" />
                 )}
               </div>
               <div className="precision-container">

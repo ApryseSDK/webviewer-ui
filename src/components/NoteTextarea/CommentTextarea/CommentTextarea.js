@@ -54,6 +54,29 @@ class CustomKeyboard extends Keyboard {
 
 Quill.register('modules/keyboard', CustomKeyboard, true);
 
+// Overriding clipboard module to fix cursor issue after pasting text
+const Clipboard = Quill.import('modules/clipboard');
+const Delta = Quill.import('delta');
+const { quillShadowDOMWorkaround } = window.Core;
+
+class QuillPasteExtra extends Clipboard {
+  constructor(quill, options) {
+    quillShadowDOMWorkaround(quill);
+    super(quill, options);
+    this.keepSelection = options.keepSelection;
+  }
+  onPaste() {
+    const range = this.quill.getSelection();
+    const delta = new Delta().retain(range.index).delete(range.length);
+    if (this.keepSelection) {
+      this.quill.setSelection(range.index, delta.length(), Quill.sources.SILENT);
+    } else {
+      this.quill.setSelection(range.index + delta.length(), Quill.sources.SILENT);
+    }
+  }
+}
+Quill.register('modules/clipboard', QuillPasteExtra, true);
+
 // mentionsModule has to be outside the funtion to be able to access it without it being destroyed and recreated
 const mentionModule = {
   mention: {
@@ -64,10 +87,15 @@ const mentionModule = {
     listItemClass: 'mention__suggestions__item',
     renderItem(item) {
       // quill-mentions does not support jsx being returned
+      const div = document.createElement('div');
+      div.innerText = item.value;
       if (item.email) {
-        return (`<div> ${item.value} <p class="email"> ${item.email} </p> </div>`);
+        const para = document.createElement('p');
+        para.innerText = item.email;
+        para.className = 'email';
+        div.appendChild(para);
       }
-      return (`<div> ${item.value} </div>`);
+      return div;
     },
     async source(searchTerm, renderList) {
       const mentionsSearchFunction = mentionsManager.getMentionLookupCallback();
@@ -116,7 +144,12 @@ const CommentTextarea = React.forwardRef(
       const contentArray = value.split('\n');
       if (contentArray.length && contentArray[contentArray.length - 1] === '') {
         contentArray.pop();
-        value = contentArray.map((item) => `<p>${item || '<br>'}</p>`).join('');
+        value = contentArray.map((item) => {
+          const paragraph = document.createElement('p');
+          paragraph.innerText = item || '<br>';
+          return paragraph.outerHTML;
+        }
+        ).join('');
       }
     }
 

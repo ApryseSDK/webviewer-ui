@@ -1,3 +1,3 @@
-import PageRotationControls from './PageRotationControlsContainer';
+import PageRotationControlsContainer from './PageRotationControlsContainer';
 
-export default PageRotationControls
+export default PageRotationControlsContainer;
